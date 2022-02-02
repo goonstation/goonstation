@@ -25,9 +25,9 @@
 	/obj/item/implanter)
 
 /obj/item/storage/box/revimp_kit
-	name = "loyalty implant kit"
+	name = "anti-revolutionary implant kit"
 	icon_state = "implant"
-	desc = "A box containing an implanting tool and five tracking implant cases. The implanter can remove the implants from their cases and inject them in a person, forcing them to be loyal to the Captain and crew."
+	desc = "A box containing an implanting tool and six tracking implant cases. The implanter can remove the implants from their cases and inject them in a person, supressing their will to rebel against the Captain and crew."
 	spawn_contents = list(/obj/item/implantcase/antirev = 6,\
 	/obj/item/implanter)
 

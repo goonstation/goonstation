@@ -377,7 +377,7 @@
 								qdel(found_imp)
 
 								playsound(H.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.9)
-								H.visible_message("<span class='notice'>The loyalty implant inside [H] shatters into one million pieces!</span>")
+								H.visible_message("<span class='notice'>The anti-revolutionary implant inside [H] shatters into one million pieces!</span>")
 
 							if (can_convert && !(H.mind in R.revolutionaries))
 								R.add_revolutionary(H.mind)

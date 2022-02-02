@@ -1152,7 +1152,7 @@ This is basically useless for anyone but miners.
 	name = "Revolutionary Flash"
 	item = /obj/item/device/flash/revolution
 	cost = 5
-	desc = "This flash never runs out and will convert susceptible crew when a rev head uses it. It will also allow the rev head to break loyalty implants."
+	desc = "This flash never runs out and will convert susceptible crew when a rev head uses it. It will also allow the rev head to break anti-revolutionary implants."
 	vr_allowed = 0
 	exclusivemode = list(/datum/game_mode/revolution)
 	not_in_crates = 1

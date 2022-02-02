@@ -1039,15 +1039,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Anti-Biological Hazard Supplies (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
 
-/datum/supply_packs/loyaltyimplant
-	name = "Loyalty Kit"
-	desc = "To ensure unflinching loyalty towards glorious Nanotrasen."
+/datum/supply_packs/antirevimplant
+	name = "Anti-Revolutionary Kit"
+	desc = "Implanters and anti-revolutionary implants to supress rebellion against Nanotrasen."
 	category = "Security Department"
 	contains = list(/obj/item/implantcase/antirev = 4,
 					/obj/item/implanter = 2)
 	cost = 6000
 	containertype = /obj/storage/crate
-	containername = "Loyalty Kit"
+	containername = "Anti-Revolutionary Kit"
 	access = access_security
 
 /datum/supply_packs/furniture
