@@ -29,8 +29,8 @@ var/global/datum/controller/processScheduler/processScheduler
 	// Process highest run time
 	var/tmp/list/datum/controller/process/highest_run_time = new
 
-	// Sleep 1 tick -- This may be too aggressive.
-	var/tmp/scheduler_sleep_interval = 1
+	// Sleep epsilon deciseconds, internally for byond this means to sleep until next tick
+	var/tmp/scheduler_sleep_interval = 0.001
 
 	// When starting more than one queued process, how many ticks apart will they be started
 	var/tmp/process_run_interval = 2
