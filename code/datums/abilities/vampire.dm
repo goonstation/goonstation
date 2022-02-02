@@ -254,6 +254,10 @@
 			for(var/mob/thrall in thralls)
 				boutput(thrall, "<b><span class='alert'>You feel your master's life fading in [A ? A.name : "nowhere"]!</span></b>")
 				thrall.playsound_local(thrall.loc, 'sound/effects/ghost2.ogg', 50, 1)
+				var/datum/abilityHolder/vampiric_thrall/H = thrall.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
+				if(!H.tracker_active)
+					H.tracker_active = 1
+					H.do_tracking()
 		if(owner.health >= 0 && crit_triggered)
 			crit_triggered = 0
 
