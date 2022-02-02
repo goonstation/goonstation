@@ -177,7 +177,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = W_CLASS_BULKY
+	w_class = W_CLASS_NORMAL
 	is_syndicate = 1
 	how_dangerous_is_this_thing = 1 //it gibs differently
 	mats = 14
@@ -193,6 +193,13 @@
 	setupProperties()
 		. = ..()
 		setProperty("deflection", 75)
+
+	attack_self(mob/user as mob)
+		..()
+		if (src.active)
+			w_class = W_CLASS_BULKY
+		else
+			w_class = W_CLASS_NORMAL
 
 /obj/item/saw/syndie/attack(mob/living/carbon/human/target as mob, mob/user as mob)
 	var/mob/living/carbon/human/H = target
