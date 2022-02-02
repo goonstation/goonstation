@@ -9,7 +9,8 @@
 /area/noGenerate)
 "aH" = (
 /turf/simulated/wall/auto/shuttle{
-	icon_state = "7"
+	icon_state = "7";
+	opacity = 1
 	},
 /area/prefab/crashed_hop_shuttle)
 "aJ" = (
@@ -166,10 +167,15 @@
 "hG" = (
 /turf/simulated/floor/carpet/purple/standard/edge/north,
 /area/prefab/crashed_hop_shuttle)
-"iR" = (
-/obj/machinery/door/airlock/gannets/command/alt{
-	opacity = 0
+"hJ" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "13"
 	},
+/area/prefab/crashed_hop_shuttle{
+	opacity = 1
+	})
+"iR" = (
+/obj/machinery/door/airlock/gannets/command/alt,
 /obj/access_spawn/head_of_personnel,
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
@@ -184,6 +190,13 @@
 "jS" = (
 /obj/machinery/chem_dispenser/soda,
 /turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
+"kq" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	opacity = 1
+	},
+/turf/space,
 /area/prefab/crashed_hop_shuttle)
 "lh" = (
 /obj/machinery/light{
@@ -243,7 +256,8 @@
 /area/prefab/crashed_hop_shuttle)
 "pQ" = (
 /turf/simulated/wall/auto/shuttle{
-	icon_state = "11"
+	icon_state = "11";
+	opacity = 1
 	},
 /area/prefab/crashed_hop_shuttle)
 "qA" = (
@@ -334,13 +348,15 @@
 /area/noGenerate)
 "vk" = (
 /obj/indestructible/shuttle_corner{
-	dir = 1
+	dir = 1;
+	opacity = 1
 	},
 /turf/space,
 /area/prefab/crashed_hop_shuttle)
 "vq" = (
 /obj/indestructible/shuttle_corner{
-	dir = 1
+	dir = 1;
+	opacity = 1
 	},
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
@@ -349,7 +365,8 @@
 /area/prefab/crashed_hop_shuttle)
 "wb" = (
 /obj/indestructible/shuttle_corner{
-	dir = 0
+	dir = 0;
+	opacity = 1
 	},
 /turf/space,
 /area/prefab/crashed_hop_shuttle)
@@ -392,13 +409,17 @@
 /area/noGenerate)
 "yf" = (
 /obj/indestructible/shuttle_corner{
-	dir = 4
+	dir = 4;
+	opacity = 1
 	},
 /turf/space,
-/area/prefab/crashed_hop_shuttle)
+/area/prefab/crashed_hop_shuttle{
+	opacity = 1
+	})
 "yy" = (
 /turf/simulated/wall/auto/shuttle{
-	icon_state = "14"
+	icon_state = "14";
+	opacity = 1
 	},
 /area/prefab/crashed_hop_shuttle)
 "yI" = (
@@ -484,14 +505,6 @@
 	dir = 5
 	},
 /area/prefab/crashed_hop_shuttle)
-"Du" = (
-/obj/indestructible/shuttle_corner{
-	dir = 0
-	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 8
-	},
-/area/prefab/crashed_hop_shuttle)
 "EQ" = (
 /obj/lattice,
 /obj/decal/floatingtiles{
@@ -514,7 +527,8 @@
 /area/allowGenerate)
 "Hg" = (
 /turf/simulated/wall/auto/shuttle{
-	icon_state = "12"
+	icon_state = "12";
+	opacity = 1
 	},
 /area/noGenerate)
 "Hz" = (
@@ -625,7 +639,8 @@
 "Oo" = (
 /obj/decoration/clock,
 /turf/simulated/wall/auto/shuttle{
-	icon_state = "12"
+	icon_state = "12";
+	opacity = 1
 	},
 /area/prefab/crashed_hop_shuttle)
 "Op" = (
@@ -636,7 +651,8 @@
 /area/prefab/crashed_hop_shuttle)
 "OE" = (
 /turf/simulated/wall/auto/shuttle{
-	icon_state = "12"
+	icon_state = "12";
+	opacity = 1
 	},
 /area/prefab/crashed_hop_shuttle)
 "OQ" = (
@@ -706,7 +722,8 @@
 /area/prefab/crashed_hop_shuttle)
 "SY" = (
 /turf/simulated/wall/auto/shuttle{
-	icon_state = "13"
+	icon_state = "13";
+	opacity = 1
 	},
 /area/prefab/crashed_hop_shuttle)
 "Ty" = (
@@ -748,6 +765,13 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style,
 /turf/simulated/floor/carpet/blue/fancy,
 /area/prefab/crashed_hop_shuttle)
+"VT" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/prefab/crashed_hop_shuttle{
+	opacity = 1
+	})
 "WZ" = (
 /obj/decal/floatingtiles{
 	dir = 1;
@@ -757,7 +781,8 @@
 /area/prefab/crashed_hop_shuttle)
 "Xn" = (
 /turf/simulated/wall/auto/shuttle{
-	icon_state = "3"
+	icon_state = "3";
+	opacity = 1
 	},
 /area/prefab/crashed_hop_shuttle)
 "Yh" = (
@@ -782,7 +807,8 @@
 /area/prefab/crashed_hop_shuttle)
 "Yz" = (
 /obj/indestructible/shuttle_corner{
-	dir = 8
+	dir = 8;
+	opacity = 1
 	},
 /turf/space,
 /area/prefab/crashed_hop_shuttle)
@@ -845,15 +871,15 @@ xl
 xl
 xl
 xl
-Du
+wb
 Lh
 Yu
-yf
+kq
 xl
 wb
 Lh
 Yu
-yf
+kq
 xl
 xl
 xl
@@ -1105,7 +1131,7 @@ Oo
 ex
 xg
 MQ
-OE
+VT
 xl
 xl
 GO
@@ -1119,7 +1145,7 @@ OE
 yI
 sA
 Dc
-OE
+VT
 tD
 fd
 zB
@@ -1141,7 +1167,7 @@ vq
 Xn
 iR
 Xn
-SY
+hJ
 xl
 Ij
 GO
