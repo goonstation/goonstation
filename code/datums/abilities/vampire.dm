@@ -433,9 +433,10 @@
 
 	proc/kill_thralls()
 		for(var/mob/thrall in src.thralls)
-			boutput(thrall, __red("<b>Your master has been slain! The power sustaining your life fades away...</b>"))
-			SPAWN_DBG(rand(1, 5) SECONDS)
-				thrall.death()
+			boutput(thrall, __red("<b>Your master has been slain! The power sustaining your life begins to fade away...</b>"))
+			SPAWN_DBG(prob(20) ? rand(3,10) SECONDS : rand(1,3) MINUTES)
+				if(isdead(owner))
+					thrall.death()
 
 ///////////////////////////////////////////// Vampire spell parent //////////////////////////////////////////////////
 
