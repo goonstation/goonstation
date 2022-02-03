@@ -71,6 +71,8 @@
 		while(length(src.req_contracts) < src.max_req_contracts)
 			src.add_req_contract()
 
+		update_shipping_data()
+
 		time_between_shifts = 6000 // 10 minutes
 		time_until_shift = time_between_shifts + rand(-900,1200)
 
@@ -229,6 +231,8 @@
 			while(removed_count > 0)
 				removed_count--
 				src.active_traders += new /datum/trader/generic(src)
+
+			update_shipping_data()
 
 	proc/sell_artifact(obj/sell_art, var/datum/artifact/sell_art_datum)
 		var/price = 0
@@ -514,6 +518,11 @@
 			max_y = max(max_y, boundry.y)
 
 		. = block(locate(min_x, min_y, Z_LEVEL_STATION), locate(max_x, max_y, Z_LEVEL_STATION))
+
+	//needs to be called whenever active_traders or req_contracts changes
+	proc/update_shipping_data()
+		for_by_tcl(computer, /obj/machinery/computer/barcode)
+			computer.update_static_data()
 
 
 // Debugging and admin verbs (mostly coder)

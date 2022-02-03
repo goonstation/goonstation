@@ -1,4 +1,13 @@
 
+(t)wed feb 02 22
+(u)LeahTheTech
+(p)7306
+(e)📄|tgui
+(*)The barcode computer now has a new UI, this one shows the scanned ID card clearly so you can keep track of how rich the other QM is getting.
+(u)Emily
+(+)The Retention Center no longer has a sequence break to getting to Dino Jason's early. If you go to Dino Jason's, don't forget to thank the bus driver!
+(u)pali
+(+)The prompt to change your ring message on a PDA now has pre-typed traitor code for your convenience (if you are the owner of the uplink in the PDA).
 (t)tue feb 01 22
 (u)tarmunora
 (+)chainsaw no fall apart
