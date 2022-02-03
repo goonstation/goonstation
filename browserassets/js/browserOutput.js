@@ -40,7 +40,7 @@ var opts = {
 
     //Ping display
     'pingCounter': 0, //seconds counter
-    'pingLimit': 30, //seconds limit
+    'pingLimit': 10, //seconds limit
     'pingTime': 0, //Timestamp of when ping sent
     'pongTime': 0, //Timestamp of when ping received
     'noResponse': false, //Tracks the state of the previous ping request
