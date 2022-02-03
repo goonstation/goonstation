@@ -314,7 +314,7 @@ datum
 				if(M.health > 20)
 					M.take_toxin_damage(5 * mult, 1)	//calomel doesn't damage organs.
 				if(probmult(6))
-					M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>")
+					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>")
 					M.vomit()
 				if(probmult(4))
 					M.emote("piss")
@@ -1536,7 +1536,7 @@ datum
 				if(M.health > 25)
 					M.take_toxin_damage(1 * mult)
 				if(probmult(25))
-					M.visible_message("<span class='alert'>[M] pukes all over \himself!</span>")
+					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)]!</span>")
 					M.vomit()
 				if(probmult(5))
 					var/mob/living/L = M

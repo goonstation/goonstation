@@ -1119,8 +1119,9 @@
 
 	New()
 		..()
-		src.create_reagents(20)
-		reagents.add_reagent("fuel", 20)
+		if (!infinite_fuel)
+			src.create_reagents(20)
+			reagents.add_reagent("fuel", 20)
 
 		src.setItemSpecial(/datum/item_special/flame)
 		return
@@ -1128,6 +1129,8 @@
 	attack_self(mob/user)
 		if (user.find_in_hand(src))
 			if (!src.on)
+				if (infinite_fuel)
+					src.activate(user)
 				if (!reagents)
 					return
 				if (!reagents.get_reagent_amount("fuel"))
@@ -1219,9 +1222,12 @@
 				return
 
 			if (O.reagents.total_volume)
-				O.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.get_reagent_amount("fuel"))
-				boutput(user, "<span class='notice'>[src] has been refueled.</span>")
-				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+				if (O.reagents.has_reagent("fuel"))
+					O.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.get_reagent_amount("fuel"), 1, 1, O.reagents.reagent_list.Find("fuel"))
+					boutput(user, "<span class='notice'>[src] has been refueled.</span>")
+					playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+				else
+					user.show_text("[src] can only be refilled with fuel.", "red")
 			else
 				user.show_text("[O] is empty.", "red")
 			return
@@ -1234,14 +1240,6 @@
 
 	process()
 		if (src.on)
-			if (!reagents)
-				if (ismob(src.loc))
-					src.deactivate(src.loc)
-				else
-					src.deactivate(null)
-				return
-			if (!infinite_fuel && reagents.get_reagent_amount("fuel"))
-				reagents.remove_reagent("fuel", 0.2)
 			var/turf/location = src.loc
 			if (ismob(location))
 				var/mob/M = location
@@ -1250,12 +1248,22 @@
 			var/turf/T = get_turf(src.loc)
 			if (T)
 				T.hotspot_expose(700,5)
-			if (!reagents.get_reagent_amount("fuel"))
+
+			if (infinite_fuel) //skip all fuel checks
+				return
+			if (!reagents)
 				if (ismob(src.loc))
 					src.deactivate(src.loc)
 				else
 					src.deactivate(null)
 				return
+			if (reagents.get_reagent_amount("fuel"))
+				reagents.remove_reagent("fuel", 0.2)
+			if (!reagents.get_reagent_amount("fuel"))
+				if (ismob(src.loc))
+					src.deactivate(src.loc)
+				else
+					src.deactivate(null)
 			//sleep(1 SECOND)
 
 	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)

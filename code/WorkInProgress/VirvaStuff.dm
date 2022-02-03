@@ -122,7 +122,7 @@ obj/item/ammo/bullets/flechette_mag
 	icon_state = "flech_mag"
 	amount_left = 24.0
 	max_amount = 24.0
-	caliber = 0.065 // the actual diameter of the flechette once free of the sabot
+	ammo_cat = AMMO_FLECHETTE // the actual diameter of the flechette once free of the sabot
 	sound_load = 'sound/weapons/gunload_hitek.ogg'
 
 /datum/projectile/bullet/flechette
@@ -137,7 +137,6 @@ obj/item/ammo/bullets/flechette_mag
 	hit_type = DAMAGE_STAB
 	shot_number = 2
 	shot_delay = 0.7
-	caliber = 0.065
 	dissipation_delay = 10
 	dissipation_rate = 3
 	projectile_speed = 56
@@ -155,7 +154,7 @@ obj/item/ammo/bullets/flechette_mag
 	uses_multiple_icon_states = 1
 	force = MELEE_DMG_RIFLE
 	contraband = 8
-	caliber = 0.065 // this is the flechette diameter, which is telescoped in a polymer case.
+	ammo_cats = list(AMMO_FLECHETTE)
 	max_ammo_capacity = 24
 	can_dual_wield = 0
 	two_handed = 1
@@ -176,4 +175,4 @@ obj/item/ammo/bullets/flechette_mag
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "taskumatti"
 	item_state = "taskumatti"
-	initial_reagents = list("omnizine"=10,"wine"=10,"cider"=10,"vodka"=10)
+	initial_reagents = list("omnizine"=10,"energydrink"=10,"methamphetamine"=10,"bourbon"=10)

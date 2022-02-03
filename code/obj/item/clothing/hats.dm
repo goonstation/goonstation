@@ -578,6 +578,12 @@ proc/filter_trait_hats(var/type)
 	icon_state = "rabbihat"
 	item_state = "that"
 
+/obj/item/clothing/head/nunhood
+	name = "nun hood"
+	desc = "A black hood with white adornment, typically worn by nuns. Wearing this does not give enhanced singing capabilities."
+	icon_state = "nun_hood"
+	item_state = "nun_hood"
+
 /obj/item/clothing/head/formal_turban
 	name = "formal turban"
 	desc = "A very stylish formal turban."
@@ -1805,3 +1811,9 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	desc = "Magical, but the friendship and imagination kind, not the remove-your-butt kind."
 	icon_state = "witchhat_mint"
 	item_state = "witchhat_mint"
+
+/obj/item/clothing/head/bouffant
+	name = "bouffant scrub hat"
+	desc = "A surgical hat designed to keep the wearers hair from falling into the patient, essentially a fancier hair net."
+	icon_state = "bouffant"
+	item_state = "bouffant"

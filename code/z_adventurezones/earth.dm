@@ -271,8 +271,8 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	virvatuli
 		ckey = "virvatuli"
 		name = "Office of Virvatuli"
-		sound_loop = 'sound/ambience/loop/officebeats.ogg'
-		sound_loop_vol = 90
+		sound_loop = 'sound/ambience/music/officebeats.ogg'
+		sound_loop_vol = 80
 		sound_group = "virva_office"
 	wire
 		ckey = "wirewraith"

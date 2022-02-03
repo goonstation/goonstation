@@ -623,6 +623,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	logTheThing("debug", null, null, "Revving up the spacebux loop...")
 
+	/// list of ckeys and keypairs to bulk commit
+	var/list/bulk_commit = list()
 	for(var/mob/player in mobs)
 		if (player?.client && player.mind && !player.mind.joined_observer && !istype(player,/mob/new_player))
 			logTheThing("debug", null, null, "Iterating on [player.client]")
@@ -733,24 +735,32 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			earnings = round(earnings)
 			//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] spacebux calc finish: [player.mind.ckey]")
 
-			SPAWN_DBG(0)
-				if(player.client)
-					player.client.add_to_bank(earnings)
-					// Fix for persistent_bank-is-NaN bug
-					if (player.client.persistent_bank != player.client.persistent_bank)
-						player.client.set_persistent_bank(50000)
-					if (player_loses_held_item)
-						logTheThing("debug", null, null, "[player.ckey] lost held item")
-						player.client.set_last_purchase(0)
+			if(player.client)
+				if (player_loses_held_item)
+					logTheThing("debug", null, null, "[player.ckey] lost held item")
+					player.client.persistent_bank_item = "none"
 
+				bulk_commit[player.ckey] = list(
+					"persistent_bank" = list(
+						"command" = "add",
+						"value" = earnings
+					),
+					"persistent_bank_item" = list(
+						"command" = "replace",
+						"value" = player.client.persistent_bank_item
+					)
+				)
+				SPAWN_DBG(0)
 					bank_earnings.pilot_bonus = pilot_bonus
 					bank_earnings.final_payout = earnings
 					bank_earnings.held_item = player.client.persistent_bank_item
-					bank_earnings.new_balance = player.client.persistent_bank
+					bank_earnings.new_balance = player.client.persistent_bank + earnings
 					bank_earnings.Subscribe( player.client )
 
-
-	logTheThing("debug", null, null, "Done with spacebux")
+	//do bulk commit
+	SPAWN_DBG(0)
+		cloud_put_bulk(json_encode(bulk_commit))
+		logTheThing("debug", null, null, "Done with spacebux")
 
 	for_by_tcl(P, /obj/bookshelf/persistent) //make the bookshelf save its contents
 		P.build_curr_contents()

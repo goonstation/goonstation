@@ -62,7 +62,7 @@
 	var/sound_snap = 'sound/impact_sounds/Generic_Snap_1.ogg'
 	var/sound_fingersnap = 'sound/effects/fingersnap.ogg'
 	var/sound_gasp = 'sound/voice/gasps/gasp.ogg'
-	var/voice_type = 0
+	var/voice_type = "1"
 	var/last_voice_sound = 0
 	var/speechbubble_enabled = 1
 	var/speechpopupstyle = null
@@ -792,12 +792,14 @@
 								end = 4
 								secure_headset_mode = lowertext(copytext(message,3,end)) //why did i do this to the players
 							message = copytext(message, end)
-
-						else
+						else // Chances are they're using a regular radio prefix instead of a 2 letter one
+							if (!lowertext(copytext(message,2,3) == " ")) // (This makes the :3 prefixes obsolete but fuck em they mess players up)
+								message_mode = "monitor"
+								secure_headset_mode = lowertext(copytext(message,2,3))
 							message = copytext(message, 3)
 
 				else
-					if (ishuman(src) || ismobcritter(src) || isrobot(src)) // this is shit
+					if (ishuman(src) || ismobcritter(src) || isrobot(src) || isshell(src)) // this is shit
 						message_mode = "secure headset"
 						secure_headset_mode = lowertext(copytext(message,2,3))
 					message = copytext(message, 3)

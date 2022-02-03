@@ -32,6 +32,8 @@
 #define MAX_SPACED_RANGE 6 //diff range for when youre in a vaccuum
 #define CLIENT_IGNORES_SOUND(C) (C?.ignore_sound_flags && ((ignore_flag && C.ignore_sound_flags & ignore_flag) || C.ignore_sound_flags & SOUND_ALL))
 
+#define SOUNDIN_ID (istype(soundin, /sound) ? soundin:file : (islist(soundin) ? ref(soundin) : soundin))
+
 /// returns 0 to 1 based on air pressure in turf
 /proc/attenuate_for_location(var/atom/loc)
 	var/attenuate = 1
@@ -124,13 +126,15 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 /proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 	// don't play if over the per-tick sound limit
-	if (!limiter || !limiter.canISpawn(/sound))
-		return
 
 	var/turf/source_turf = get_turf(source)
 
 	// don't play if the sound is happening nowhere
 	if (isnull(source_turf))
+		return
+
+	var/play_id = "[(source_turf.x / SOUND_LIMITER_GRID_SIZE)] [round(source_turf.y / SOUND_LIMITER_GRID_SIZE)] [source_turf.z] [SOUNDIN_ID]"
+	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
 
 	EARLY_RETURN_IF_QUIET(vol)
@@ -245,10 +249,6 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	if(!src.client)
 		return
 
-	// don't play if over the per-tick sound limit
-	if (!limiter || !limiter.canISpawn(/sound))
-		return
-
 	var/turf/source_turf = get_turf(source)
 
 	// don't play if the sound is happening nowhere
@@ -260,6 +260,10 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 		return
 
 	if (CLIENT_IGNORES_SOUND(src.client))
+		return
+
+	var/play_id = "\ref[src] [SOUNDIN_ID]"
+	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
 
 	vol *= client.getVolume(channel) / 100
@@ -291,6 +295,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	LISTENER_ATTEN(atten_temp)
 
 	var/sound/S = generate_sound(source, soundin, ourvolume, vary, extrarange, pitch)
+	if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source].")
 	client.sound_playing[ S.channel ][1] = ourvolume
 	client.sound_playing[ S.channel ][2] = channel
 
@@ -321,6 +326,10 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 /proc/playsound_global(target, soundin, vol as num, vary, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
 	// don't play if over the per-tick sound limit
 	if (!limiter || !limiter.canISpawn(/sound))
+		return
+
+	var/play_id = "global [SOUNDIN_ID]"
+	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
 
 	EARLY_RETURN_IF_QUIET(vol)
@@ -668,3 +677,5 @@ sound
 		environment = initial(environment)
 		echo = initial(echo)
 */
+
+#undef SOUNDIN_ID

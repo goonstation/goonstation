@@ -12143,7 +12143,10 @@
 /area/station/turret_protected/ai)
 "aHP" = (
 /obj/machinery/power/apc/autoname_west,
-/obj/bookshelf/persistent,
+/obj/bookshelf/persistent{
+	density = 0;
+	pixel_y = 19
+	},
 /obj/cable{
 	icon_state = "0-4"
 	},

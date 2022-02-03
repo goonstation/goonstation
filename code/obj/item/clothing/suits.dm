@@ -134,7 +134,7 @@
 
 	plastic
 		name = "plastic jacket"
-		desc = "A translucent plastic jacket. It looks flimsy and incredibly tacky."
+		desc = "A flimsy and translucent plastic jacket that comes in a variety of colors. Someone who wears this must either have negative fashion or impeccable taste."
 		icon_state = "jacket_plastic"
 		item_state = "jacket_plastic"
 
@@ -464,6 +464,12 @@
 			setProperty("coldprot", 10)
 			setProperty("heatprot", 10)
 			setProperty("movespeed", 0.4)
+
+/obj/item/clothing/suit/apron/surgeon
+	name = "surgeon's apron"
+	desc = "A white apron with a tendency to be spattered with red substances."
+	icon_state = "apron-surgeon"
+	item_state = "apron-surgeon"
 
 /obj/item/clothing/suit/labcoat
 	name = "labcoat"
