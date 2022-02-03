@@ -148,6 +148,8 @@
 		setProperty("deflection", 75)
 
 	attack_self(mob/user as mob)
+		if(ON_COOLDOWN(src, "redsaw_toggle", 1 SECOND))
+			return
 		..()
 		if (src.active)
 			w_class = W_CLASS_BULKY
