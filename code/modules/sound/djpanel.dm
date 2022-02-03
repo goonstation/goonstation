@@ -134,9 +134,10 @@ client/proc/open_dj_panel()
 
 		if("play-preloaded")
 			var/selected = tgui_input_list(usr, "Which sound?", "Sound Selector", preloaded_sounds, timeout = 30 SECONDS, allowIllegal = TRUE)
-			var/sound/selected_sound = preloaded_sounds[selected]
-			if(selected_sound)
+			if (selected)
+				var/sound/selected_sound = preloaded_sounds[selected]
 				usr.client?.play_music_real(selected_sound, sound_frequency)
+				preloaded_sounds.Remove(selected)
 
 		if("toggle-player-dj")
 			var/dude = input(usr, "Choose a client:", "Choose a client:", null) as null|anything in clients
