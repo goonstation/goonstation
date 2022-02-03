@@ -558,10 +558,11 @@ $(function() {
     //Hey look it's a controller loop!
     setInterval(function() {
         if (opts.pingCounter >= opts.pingLimit && !opts.restarting) { //Every pingLimit seconds
+            let pingDuration = (opts.pongTime - opts.pingTime) / 2;
             opts.pingCounter = 0; //reset
             opts.pongTime = 0; //reset
             opts.pingTime = Date.now();
-            runByond('?action=ehjax&window=browseroutput&type=datum&datum=chatOutput&proc=ping');
+            runByond('?action=ehjax&window=browseroutput&type=datum&datum=chatOutput&proc=ping&param[last_ping]=' + pingDuration);
             setTimeout(function() {
                 if (!opts.pongTime) { //If no response within 10 seconds of ping request
                     if (!opts.noResponse) { //Only actually append a message if the previous ping didn't also fail (to prevent spam)
@@ -570,7 +571,6 @@ $(function() {
                         output('<div class="connectionClosed internal" data-count="'+opts.noResponseCount+'">You are either experiencing lag or the connection has closed.</div>');
                     }
                 } else {
-                    opts.pongTime = 0; //reset
                     if (opts.noResponse) { //Previous ping attempt failed ohno
                         $('.connectionClosed[data-count="'+opts.noResponseCount+'"]:not(.restored)').addClass('restored').text('Your connection has been restored (probably)!');
                         opts.noResponse = false;

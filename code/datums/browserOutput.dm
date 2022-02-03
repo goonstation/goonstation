@@ -66,6 +66,8 @@ var/global
 	var/cookieSent = 0
 	/// Contains the connection history passed from chat cookie
 	var/list/connectionHistory = list()
+	/// Last ping value reported by the client
+	var/last_ping = null
 
 /datum/chatOutput/New(client/C)
 	..()
@@ -321,7 +323,10 @@ var/global
 	ehjax.send(src.owner, "browseroutput", data)
 
 /// Called by js client every 60 seconds
-/datum/chatOutput/proc/ping()
+/datum/chatOutput/proc/ping(last_ping)
+	last_ping = text2num(last_ping)
+	if(last_ping > 0)
+		src.last_ping = last_ping
 	return "pong"
 
 
