@@ -153,7 +153,7 @@
 		..()
 		if (src.active)
 			w_class = W_CLASS_BULKY
-			playsound(src, 'sound/machines/chainsaw_red_start.ogg', 70, 0)
+			playsound(src, 'sound/machines/chainsaw_red_start.ogg', 90, 0)
 		else
 			w_class = W_CLASS_NORMAL
 			playsound(src, 'sound/machines/chainsaw_red_stop.ogg', 70, 0)
