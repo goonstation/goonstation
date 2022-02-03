@@ -32,6 +32,6 @@ addLoadEvent(function() {
 	promise
 		.then(function (fp) { return fp.get() })
 		.then(function (result) {
-			byond('command',result.visitorId);
+			byond('data','data', 'val', result.visitorId);
 		})
 });
