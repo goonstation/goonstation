@@ -918,6 +918,12 @@ This is basically useless for anyone but miners.
 	desc = "A roll of duct tape for makeshift handcuffs. Lets you restrain someone 10 times before being used up."
 	blockedmode = list(/datum/game_mode/revolution)
 
+/datum/syndicate_buylist/traitor/glue
+	name = "Cursed glue"
+	item = /obj/item/cursed_glue
+	cost = 3
+	desc = "A bottle of impossibly sticky glue that can be used to stick clothes to people. Lets you glue three items before being used up."
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 /datum/syndicate_buylist/surplus
