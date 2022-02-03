@@ -13,7 +13,7 @@ import { Window } from '../layouts';
 
 export const DJPanel = (props, context) => {
   const { act, data } = useBackend(context);
-  const { loadedSound, adminChannel } = data;
+  const { loadedSound, adminChannel, preloadedSounds } = data;
   return (
     <Window width={430} height={306} title="DJ Panel">
       <Window.Content>
@@ -70,10 +70,17 @@ export const DJPanel = (props, context) => {
               content="Play To Player"
               onClick={() => act('play-player')}
             />
+          </Box>
+          <Box>
             <Button
               disabled={!loadedSound}
               content="Preload Sound"
               onClick={() => act('preload-sound')}
+            />
+            <Button
+              disabled={!Object.keys(preloadedSounds).length}
+              content="Play Preloaded Sound"
+              onClick={() => act('play-preloaded')}
             />
           </Box>
           <Box>
