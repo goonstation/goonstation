@@ -77,15 +77,12 @@
 			helmet.set_loc(getOutputLocation(owner))
 			var/obj/item/fabr = getObjectByPartName("Fabric")
 			var/obj/item/vis = getObjectByPartName("Visor")
-			if(fabr?.material && vis?.material)
+			if (fabr?.material && vis?.material)
 				helmet.setMaterial(fabr.material)
-				helmet.setFabrMaterial(fabr.material) //shaft = fabric
-				helmet.setVisrMaterial(vis.material) //head = visor, keeping things verbatim from arrow code
-
-
-			helmet.setupVisorMat(vis.material, fabr.material)// gives it protective values of visor, but sets color to match the suit
+				helmet.setFabrMaterial(fabr.material)
+				helmet.setVisrMaterial(vis.material)
+			helmet.setupVisorMat(vis.material, fabr.material)// sets color to match the suit, keeps protectiveness from visor
 			suit.setMaterial(fabr.material)
-
 		return
 
 /datum/matfab_recipe/mining_mod_conc
