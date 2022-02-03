@@ -133,8 +133,8 @@ client/proc/open_dj_panel()
 			message_admins("[admin_key(usr.client)] preloaded sound [loaded_sound]")
 
 		if("play-preloaded")
-			var/selected = tgui_input_list(usr, "Which sound?", "Sound Selector", preloaded_sounds, timeout = 30 SECONDS, allowIllegal = TRUE)
-			if (selected)
+			var/selected = tgui_input_list(usr, "Which sound?", "Sound Selector", preloaded_sounds, timeout = 5 MINUTES, allowIllegal = TRUE)
+			if (selected && (selected in preloaded_sounds))
 				var/sound/selected_sound = preloaded_sounds[selected]
 				usr.client?.play_music_real(selected_sound, sound_frequency)
 				preloaded_sounds.Remove(selected)
