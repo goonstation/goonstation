@@ -1,3 +1,6 @@
+(t)thu feb 3 21
+(u)aloe
+(*)You can now preload sounds in the dj panel to avoid freezing the server with your 10 MB nukie music. Tested locally with an hour long album which played pretty seamlessly; feel free to try it on live
 (t)tue jan 15 21
 (u)BatElite
 (*)Added the light switches debug overlay, which shows how many switches are physically present in an area and where to find them.
