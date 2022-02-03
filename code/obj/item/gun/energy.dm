@@ -1028,6 +1028,7 @@
 	item_state = "hunter"
 	base_item_state = "hunter"
 	var/hunter_key = "" // The owner of this rifle.
+	mats = null
 
 	New()
 		..()

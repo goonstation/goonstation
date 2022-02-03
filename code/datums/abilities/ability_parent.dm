@@ -20,6 +20,7 @@
 	var/tabName = "Spells"
 
 	var/mob/owner = null
+	var/datum/abilityHolder/relay = null
 
 	var/x_occupied = 0
 	var/y_occupied = 0

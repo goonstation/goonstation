@@ -1,5 +1,6 @@
 /obj/machinery/atmospherics/unary/cryo_cell
 	name = "cryogenic healing pod"
+	desc = "A glass tube full of a strange fluid that uses supercooled oxygen and cryoxadone to rapidly heal patients."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "celltop-P"
 	density = 1

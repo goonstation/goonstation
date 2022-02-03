@@ -127,7 +127,11 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	SPAWN_DBG(MAX_TIME_ON_SHUTTLE)
 		if(istype(get_area(player.current),/area/shuttle/battle) || istype(get_area(player.current),/area/shuttle_transit_space/west) )
 			boutput(player.current,"<span class='alert'>You are thrown out of the shuttle for taking too long!</span>")
-			player.current.set_loc(pick(get_area_turfs(current_battle_spawn,1)))
+			var/list/found_areas = get_area_turfs(current_battle_spawn,1)
+			if (isnull(found_areas))
+				player.current.set_loc(pick(get_area_turfs(/area/station/maintenance/,1)))
+			else
+				player.current.set_loc(pick(found_areas))
 			player.current.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 			player.current.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
 	SHOW_BATTLE_ROYALE_TIPS(player.current)
@@ -146,8 +150,8 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	else if(someone_died && living_battlers.len % 10 == 0)
 		command_alert("[living_battlers.len] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
 	if(living_battlers.len <= 1)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /datum/game_mode/battle_royale/declare_completion()

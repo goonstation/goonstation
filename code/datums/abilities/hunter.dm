@@ -59,6 +59,7 @@
 		M.equip_if_possible(new /obj/item/clothing/shoes/cowboy/hunter(M), slot_shoes)
 		M.equip_if_possible(new /obj/item/device/radio/headset(M), slot_ears)
 		M.equip_if_possible(new /obj/item/storage/backpack(M), slot_back)
+		M.equip_if_possible(new /obj/item/tank/emergency_oxygen(M), slot_l_store)
 		M.equip_if_possible(new /obj/item/cloaking_device/hunter(M), slot_r_store)
 		M.equip_if_possible(new /obj/item/knife/butcher/hunterspear(M), slot_in_backpack)
 		M.equip_if_possible(new /obj/item/gun/energy/plasma_gun/hunter(M), slot_in_backpack)

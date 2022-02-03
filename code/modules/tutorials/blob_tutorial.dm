@@ -427,7 +427,10 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			target.UpdateOverlays(marker,"marker")
 
 		PerformAction(var/action, var/context)
-			if (action == "clickmove" && context == target)
+			var/datum/tutorial_base/blob/MT = tutorial
+			if (!(context in MT.tutorial_area) || !istype(context, /turf/simulated/floor)) //Stop the player from suicide by cordon
+				return 0
+			else if (action == "clickmove" && context == target)
 				finished = 1
 				return 1
 			return 1 // bad but prevents chat spam which leads to crashes

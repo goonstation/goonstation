@@ -760,8 +760,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	#ifdef UNDERWATER_MAP
 	slot_suit = list(/obj/item/clothing/suit/space/diving/engineering)
 	slot_head = list(/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
-	items_in_backpack = list(/obj/item/crowbar,
-							/obj/item/paper/book/from_file/pocketguide/mining,
+	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/mining,
 							/obj/item/clothing/shoes/flippers,
 							/obj/item/item_box/glow_sticker)
 	#else
@@ -786,7 +785,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 
 /datum/job/engineering/mechanic
 	name = "Mechanic"
-	limit = 3
+	limit = 4
 	wages = PAY_DOCTORATE
 
 	slot_back = list(/obj/item/storage/backpack/engineering)
@@ -942,12 +941,14 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/civilian/janitor
 	name = "Janitor"
-	limit = 2
+	limit = 3
 	wages = PAY_TRADESMAN
 	slot_belt = list(/obj/item/device/pda2/janitor)
 	slot_jump = list(/obj/item/clothing/under/rank/janitor)
 	slot_foot = list(/obj/item/clothing/shoes/galoshes)
+	slot_glov = list(/obj/item/clothing/gloves/long)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	items_in_backpack = list(/obj/item/handheld_vacuum)
 
 	New()
 		..()
@@ -1637,6 +1638,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_suit = list(/obj/item/clothing/suit/bio_suit/beekeeper)
 	slot_head = list(/obj/item/clothing/head/bio_hood/beekeeper)
 	slot_poc1 = list(/obj/item/reagent_containers/food/snacks/beefood)
+	slot_poc2 = list(/obj/item/paper/book/from_file/bee_book)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_belt = list(/obj/item/device/pda2/botanist)
 	slot_foot = list(/obj/item/clothing/shoes/brown)

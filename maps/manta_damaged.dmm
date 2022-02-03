@@ -622,9 +622,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "abf" = (
-/obj/item/device/radio/intercom/AI{
-
-	},
+/obj/item/device/radio/intercom/AI,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "abg" = (
@@ -667,9 +665,7 @@
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
 "abo" = (
-/obj/item/device/radio/intercom/brig{
-
-	},
+/obj/item/device/radio/intercom/brig,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "abp" = (
@@ -700,21 +696,15 @@
 /turf/simulated/floor/damaged2,
 /area/station/security/porttorpedoes)
 "abt" = (
-/obj/item/device/radio/intercom/medical{
-
-	},
+/obj/item/device/radio/intercom/medical,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "abu" = (
-/obj/item/device/radio/intercom/engineering{
-
-	},
+/obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "abv" = (
-/obj/item/device/radio/intercom/science{
-
-	},
+/obj/item/device/radio/intercom/science,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "abx" = (
@@ -3155,9 +3145,7 @@
 	dir = 8;
 	icon_state = "chair-b"
 	},
-/obj/item/device/radio/intercom/science{
-
-	},
+/obj/item/device/radio/intercom/science,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -4352,9 +4340,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "alv" = (
-/obj/item/device/radio/intercom/catering{
-
-	},
+/obj/item/device/radio/intercom/catering,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "alw" = (
@@ -6498,9 +6484,7 @@
 	},
 /area/station/medical/medbay/lobby)
 "apN" = (
-/obj/item/device/radio/intercom/security{
-
-	},
+/obj/item/device/radio/intercom/security,
 /turf/simulated/floor/damaged1,
 /area/station/bridge)
 "apO" = (
@@ -6950,9 +6934,7 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "aqB" = (
-/obj/item/device/radio/intercom/cargo{
-
-	},
+/obj/item/device/radio/intercom/cargo,
 /turf/simulated/floor/damaged4,
 /area/station/bridge)
 "aqC" = (
@@ -8807,9 +8789,7 @@
 "avl" = (
 /obj/disposalpipe/segment,
 /obj/machinery/shieldgenerator/energy_shield,
-/obj/item/device/radio/intercom/loudspeaker/speaker/south{
-
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/south,
 /turf/simulated/floor/bot,
 /area/station/engine/storage)
 "avm" = (
@@ -9286,9 +9266,7 @@
 /area/station/engine/inner)
 "awi" = (
 /obj/machinery/fluid_canister,
-/obj/item/device/radio/intercom/loudspeaker/speaker/north{
-
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/north,
 /turf/simulated/floor/bot,
 /area/station/engine/storage)
 "awj" = (
@@ -10473,9 +10451,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/breakroom)
 "ayF" = (
-/obj/item/device/radio/intercom/loudspeaker/speaker/north{
-
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/north,
 /obj/machinery/portable_atmospherics/canister/air/large,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -11184,9 +11160,7 @@
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/quarters)
 "aAb" = (
-/obj/item/device/radio/intercom/loudspeaker/speaker/south{
-
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/south,
 /obj/cable{
 	icon_state = "4-8";
 	d1 = 4;
@@ -11630,9 +11604,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/device/radio/intercom/loudspeaker/speaker/north{
-
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/north,
 /turf/simulated/floor,
 /area/station/engine/power)
 "aAU" = (
@@ -11983,9 +11955,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/device/radio/intercom/loudspeaker/speaker/south{
-
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/south,
 /turf/simulated/floor,
 /area/station/engine/gas)
 "aBF" = (
@@ -12160,9 +12130,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload_foyer)
 "aBY" = (
-/obj/item/device/radio/intercom/loudspeaker/speaker/north{
-
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/north,
 /obj/machinery/guardbot_dock,
 /obj/cable{
 	d2 = 8;
@@ -19960,9 +19928,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/item/device/radio/intercom/security{
-
-	},
+/obj/item/device/radio/intercom/security,
 /obj/machinery/light/incandescent/warm{
 	dir = 1;
 	nostick = 1
@@ -26456,9 +26422,7 @@
 "bfe" = (
 /obj/table/wood/auto,
 /obj/item/storage/bible,
-/obj/item/device/radio/intercom{
-
-	},
+/obj/item/device/radio/intercom,
 /turf/simulated/floor/carpet{
 	icon_state = "purple1"
 	},
@@ -40925,9 +40889,7 @@
 	dir = 8;
 	nostick = 1
 	},
-/obj/item/device/radio/intercom/science{
-
-	},
+/obj/item/device/radio/intercom/science,
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -41672,9 +41634,7 @@
 /area/station/science/artifact)
 "bKV" = (
 /obj/landmark/artifact,
-/obj/item/device/radio/intercom/science{
-
-	},
+/obj/item/device/radio/intercom/science,
 /turf/simulated/floor,
 /area/station/science/artifact)
 "bKW" = (
@@ -46112,9 +46072,7 @@
 /turf/simulated/floor/damaged5,
 /area/station/engine/engineering/breakroom)
 "bVm" = (
-/obj/item/device/radio/intercom/loudspeaker/speaker/south{
-
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/south,
 /turf/simulated/floor/damaged5,
 /area/station/engine/storage)
 "bVn" = (
@@ -46150,9 +46108,7 @@
 	icon_state = "pipe-s";
 	dir = 4
 	},
-/obj/item/device/radio/intercom/loudspeaker/speaker/south{
-
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/south,
 /turf/simulated/floor/damaged5,
 /area/station/engine/inner)
 "bVs" = (
@@ -46237,9 +46193,7 @@
 /turf/simulated/floor/damaged5,
 /area/station/engine/inner)
 "bVB" = (
-/obj/item/device/radio/intercom/loudspeaker/speaker/south{
-
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/south,
 /turf/simulated/floor/damaged2,
 /area/station/engine/monitoring)
 "bVC" = (
@@ -49276,9 +49230,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/item/device/radio/intercom/science{
-
-	},
+/obj/item/device/radio/intercom/science,
 /obj/item/paper/book/from_file/pharmacopia,
 /obj/access_spawn/research,
 /obj/access_spawn/medical_director,
