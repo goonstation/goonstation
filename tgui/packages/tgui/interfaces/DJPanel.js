@@ -70,6 +70,11 @@ export const DJPanel = (props, context) => {
               content="Play To Player"
               onClick={() => act('play-player')}
             />
+            <Button
+              disabled={!loadedSound}
+              content="Preload Sound"
+              onClick={() => act('preload-sound')}
+            />
           </Box>
           <Box>
             <Button
