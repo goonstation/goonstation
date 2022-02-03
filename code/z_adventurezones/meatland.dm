@@ -502,12 +502,12 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			random_brute_damage(M, 3)
 			switch (.)
 				if ("r_arm")
-					var/obj/item/parts/human_parts/meat_mutant/part = new /obj/item/parts/human_parts/meat_mutant/arm/right {remove_stage = 2;} (M)
+					var/obj/item/parts/human_parts/arm/meat_mutant/part = new /obj/item/parts/human_parts/arm/meat_mutant/right {remove_stage = 2;} (M)
 					H.limbs.vars["r_arm"] = part
 					part.holder = M
 
 				if ("l_arm")
-					var/obj/item/parts/human_parts/meat_mutant/part = new /obj/item/parts/human_parts/meat_mutant/arm/left {remove_stage = 2;} (M)
+					var/obj/item/parts/human_parts/arm/meat_mutant/part = new /obj/item/parts/human_parts/arm/meat_mutant/left {remove_stage = 2;} (M)
 					H.limbs.vars["l_arm"] = part
 					part.holder = M
 
@@ -1579,7 +1579,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 						target_doodad.deactivate()
 
 //Meat limbs: probably not a desirable prize
-/obj/item/parts/human_parts/meat_mutant
+/obj/item/parts/human_parts/arm/meat_mutant
 
 	getMobIcon(var/lying)
 		if (lying)
@@ -1596,21 +1596,21 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			src.standImage = image('icons/mob/human.dmi', "[slot]_mutated")
 			return standImage
 
-	arm
+	left
+		name = "weird left arm"
 		desc = "A weirdo blob of tumors and tendons in the crude form of an arm."
+		icon_state = "arm_left_mutant"
+		slot = "l_arm"
+		side = "left"
+		handlistPart = "l_hand_mutated"
 
-		left
-			name = "weird left arm"
-			icon_state = "arm_left_mutant"
-			slot = "l_arm"
-			handlistPart = "l_hand_mutated"
-
-		right
-			name = "grody right arm"
-			icon_state = "arm_right_mutant"
-			slot = "r_arm"
-			handlistPart = "r_hand_mutated"
-
+	right
+		name = "grody right arm"
+		desc = "A weirdo blob of tumors and tendons in the crude form of an arm."
+		icon_state = "arm_right_mutant"
+		slot = "r_arm"
+		side = "right"
+		handlistPart = "r_hand_mutated"
 
 //Gib gun.  Maybe a prize??? except for the whole "firing your internal organs as projectiles is not healthy" thing.
 /obj/item/gun/gibgun
