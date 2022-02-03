@@ -498,8 +498,8 @@
 		ammo_type = new/datum/projectile/bullet/bullet_9mm/smg
 
 /obj/item/ammo/bullets/nine_mm_NATO
-	sname = "9mm polymer" 
-	name = "9mm polymer magazine"
+	sname = "9mm frangible" 
+	name = "9mm frangible magazine"
 	desc = "Some 9mm incapacitating bullets, made of plastic with rubber tips. Despite being sublethal, they can still do damage."
 	icon_state = "pistol_clip"	//9mm_clip that exists already. Also, put this in hacked manufacturers cause these bullets are not good.
 	amount_left = 18.0
@@ -956,7 +956,7 @@
 /obj/item/ammo/bullets/rpg
 	sname = "MPRT rocket"
 	name = "MPRT rocket"
-	desc = "A mean high-explosive rocket, guaranteed to cause destruction in a 5x5 radius."
+	desc = "A mean high-explosive rocket, guaranteed to cause destruction in a large radius."
 	amount_left = 1
 	max_amount = 1
 	icon = 'icons/obj/projectiles.dmi'
@@ -984,7 +984,7 @@
 /obj/item/ammo/bullets/mininuke
 	sname = "Miniature nuclear warhead"
 	name = "Miniature nuclear warhead"
-	desc = "I am become mini-death, destroy of mini-worlds."
+	desc = "I am become mini-death, the destroyer of mini-worlds."
 	amount_left = 1
 	max_amount = 1
 	icon = 'icons/obj/items/ammo.dmi'
