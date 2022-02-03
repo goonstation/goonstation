@@ -1027,6 +1027,7 @@
 	icon_state = "hunter"
 	item_state = "hunter"
 	base_item_state = "hunter"
+	mats = null
 
 	New()
 		..()
