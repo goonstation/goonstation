@@ -1,5 +1,9 @@
 
 (t)fri feb 04 22
+(u)NightmareChamillian
+(p)7392
+(e)|
+(+)Light switches are now too high for ghost critters
 (u)TTerc
 (e)🗺|mapping
 (+)Donut 3 engine room now has a blast shield you can (and should!) use to protect the crew from bigulo setups.
