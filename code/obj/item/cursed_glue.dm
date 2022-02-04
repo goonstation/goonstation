@@ -7,13 +7,29 @@
 	flags = FPRINT | TABLEPASS | ONBELT
 	w_class = W_CLASS_TINY
 	desc = "Impossibly sticky and very illegal glue."
-	var/uses = 3
+	var/uses = 5
+	var/gluing = TRUE
 
 	get_desc()
 		return "There's enough left to glue [uses] more items."
 
+	attack_self(mob/user)
+		. = ..()
+		flip_sprite()
+		if (gluing)
+			gluing = FALSE
+			user.show_message("The glue will now remove curses.")
+		else
+			gluing = TRUE
+			user.show_message("The glue will now glue.")
+
+	proc/flip_sprite()
+		animate(src, transform = matrix(src.transform, 90, MATRIX_ROTATE), time = 0.1 SECONDS, loop = FALSE, flags = ANIMATION_PARALLEL)
+		sleep(0.1 SECONDS)
+		animate(src, transform = matrix(src.transform, 90, MATRIX_ROTATE), time = 0.1 SECONDS, loop = FALSE, flags = ANIMATION_PARALLEL)
+
 	attack(mob/target, mob/user)
-		if (uses <= 0)
+		if (uses <= 0 && gluing)
 			user.show_message("<span class='alert'>The glue is empty!</span>")
 			return
 		if (target == user)
@@ -22,6 +38,13 @@
 		if (!ishuman(target))
 			return
 
+		if (gluing)
+			try_glue(target, user)
+		else
+			try_unglue(target, user)
+
+
+	proc/try_glue(mob/living/carbon/human/target, mob/living/carbon/human/user)
 		var/obj/item/item = src.get_target_item(target, user)
 
 		if (isnull(item) || !istype(item, /obj/item))
@@ -29,23 +52,13 @@
 			return
 		if (item.cant_self_remove && item.cant_other_remove)
 			user.show_message("<span class='alert'>[item] is already cursed.</span>")
+			return
 		user.visible_message("<span class='alert'>[user] glues [item] onto [target].</span>",\
 			"<span class='alert'>You glue [item] onto [target].</span>")
 		logTheThing("combat", user, target, "[user] glues [item] onto [target] at [log_loc(user)]")
-		var/self = item.cant_self_remove
-		var/other = item.cant_other_remove
 		item.cant_self_remove = TRUE
 		item.cant_other_remove = TRUE
 		uses--
-		SPAWN_DBG(rand(5, 10) SECONDS)
-			if (!item)
-				return
-			item.cant_self_remove = self
-			item.cant_other_remove = other
-			if (item.loc && istype(item.loc, /mob/living/carbon/human))
-				var/mob/living/carbon/human/owner = item.loc
-				owner.show_message("[item] is no longer glued to you.")
-
 
 	proc/get_target_item(mob/living/carbon/human/target, mob/living/carbon/human/user)
 		var/targetZone = user.zone_sel.selecting
@@ -60,3 +73,17 @@
 			return target.gloves
 		else if (targetZone == "l_leg" || targetZone == "r_leg")
 			return target.shoes
+
+	//doesn't touch cant_drop so won't remove cursed horse masks etc.
+	proc/try_unglue(mob/living/carbon/human/target, mob/living/carbon/human/user)
+		//let's leave cluwnes alone
+		if (iscluwne(target))
+			user.show_message("<span class='alert'>That curse is too strong.</span>")
+			return
+		if (!target?.hud)
+			return
+		for (var/obj/item/item in target.hud.inventory_items)
+			item.cant_self_remove = FALSE
+			item.cant_other_remove = FALSE
+		user.visible_message("<span class='alert'>[user] Attempts to purge curses from [target]'s clothes.</span>",\
+		"<span class='alert'>You attempt to remove curses from [target]'s clothes.</span>")

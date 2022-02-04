@@ -922,7 +922,8 @@ This is basically useless for anyone but miners.
 	name = "Cursed glue"
 	item = /obj/item/cursed_glue
 	cost = 3
-	desc = "A bottle of impossibly sticky glue that can be used to stick clothes to people. Lets you glue three items before being used up."
+	desc = "A bottle of impossibly sticky glue that can be used to stick clothes to people. Lets you glue three five before being used up. Inverting the bottle allows it to undo its effects."
+	blockedmode = list(/datum/game_mode/revolution)
 
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
