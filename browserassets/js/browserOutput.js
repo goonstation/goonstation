@@ -457,6 +457,11 @@ function ehjaxCallback(data) {
             var adminCode = data.loadAdminCode;
             $('body').append(adminCode);
             opts.adminLoaded = true;
+		} else if (data.loadPerfMon) {
+            if (opts.perfMonLoaded) {return;}
+            var perfMon = data.loadPerfMon;
+            $('body').append(perfMon);
+            opts.perfMonLoaded = true;
         } else if (data.modeChange) {
             changeMode(data.modeChange);
         } else if (data.firebug) {
