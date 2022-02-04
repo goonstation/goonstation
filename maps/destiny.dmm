@@ -44196,7 +44196,6 @@
 	},
 /area/station/science/research_director)
 "pLl" = (
-/obj/item/device/radio/intercom/catering,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
@@ -46296,6 +46295,7 @@
 	name = "Produce Chute"
 	},
 /obj/disposalpipe/trunk/food,
+/obj/item/device/radio/intercom/catering,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "qPI" = (
