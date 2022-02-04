@@ -90,6 +90,11 @@
 			do new thing(src)	//Two lines! I TOLD YOU I COULD DO IT!!!
 			while (--amt > 0)
 
+	Entered(atom/movable/Obj, OldLoc)
+		. = ..()
+		if(src.open || length(contents) >= src.max_capacity)
+			Obj.set_loc(get_turf(src))
+
 	update_icon()
 
 		if (src.open)

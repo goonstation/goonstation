@@ -297,6 +297,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/togglesoundwaiting,
 		/client/proc/debug_variables,
 		/verb/adminCreateBlueprint,
+		/verb/adminDeleteBlueprint,
 		/client/proc/toggle_text_mode,
 		/client/proc/cmd_mass_modify_object_variables,
 		/client/proc/cmd_debug_mutantrace,
@@ -347,6 +348,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_blindfold_monkeys,
 		/client/proc/cmd_terrainify_station,
 		/client/proc/cmd_special_shuttle,
+		/client/proc/toggle_radio_maptext,
 
 		/datum/admins/proc/toggleaprilfools,
 		/client/proc/cmd_admin_pop_off_all_the_limbs_oh_god,

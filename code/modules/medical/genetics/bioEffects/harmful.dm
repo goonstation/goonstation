@@ -662,7 +662,16 @@
 		if (!istype(L) || (L.stat == 2))
 			return
 		if (probmult(prob_sting))
-			boutput(src, "<span class='alert'>A bee in your cloud stung you! How rude!</span>")
+			if (ishuman(L))
+				var/mob/living/carbon/human/H = L
+				if (prob(50))
+					if (istype(H.wear_suit, /obj/item/clothing/suit/bio_suit/beekeeper))
+						boutput(owner, "<span class='subtle'>A bee in your cloud tries to sting you, but your suit protects you.</span>")
+						return
+				else if (istype(H.head, /obj/item/clothing/head/bio_hood/beekeeper))
+					boutput(owner, "<span class='subtle'>A bee in your cloud tries to sting you, but your hood protects you.</span>")
+					return
+			boutput(owner, "<span class='alert'>A bee in your cloud stung you! How rude!</span>")
 			L.reagents.add_reagent("histamine", 2)
 
 /datum/bioEffect/emp_field
