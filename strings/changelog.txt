@@ -1,5 +1,8 @@
 
 (t)fri feb 04 22
+(u)TTerc
+(e)🗺|mapping
+(+)Donut 3 engine room now has a blast shield you can (and should!) use to protect the crew from bigulo setups.
 (u)Emily
 (p)7390
 (e)|
