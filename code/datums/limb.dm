@@ -1296,6 +1296,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 /proc/ghostcritter_blocked_objects() // Generates an associate list of (type = 1) that can be checked much faster than looping istypes
 	var/blocked_types = list(/obj/item/device/flash,\
 	/obj/item/reagent_containers/glass/beaker,\
+	/obj/machinery/light_switch,\
 	/obj/item/reagent_containers/glass/bottle,\
 	/obj/item/scalpel,\
 	/obj/item/circular_saw,\
