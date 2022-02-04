@@ -1,4 +1,9 @@
 
+(t)fri feb 04 22
+(u)Emily
+(p)7390
+(e)|
+(*)You can no longer struggle out of grabs while stunned
 (t)thu feb 03 22
 (u)Flappybat
 (p)7382
