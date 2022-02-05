@@ -1551,7 +1551,13 @@ var/zapLimiter = 0
 	return 1
 
 /obj/machinery/power/apc/proc/is_not_default()
-	return !operating || !chargemode || (!shorted && (equipment != 3 || lighting != 3 || environ != 3)) || !coverlocked
+	var/vars_to_check = list("operating", "chargemode", "shorted", "equipment", "lighting", "environ", "coverlocked")
+
+	for (var/v in vars_to_check)
+		if (src.vars[v] != initial(src.vars[v]))
+			return TRUE
+
+	return FALSE
 
 /obj/machinery/power/apc/proc/set_default()
 	operating = TRUE

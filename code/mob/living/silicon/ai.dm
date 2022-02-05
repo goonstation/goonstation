@@ -1773,9 +1773,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (!src || !message_mob.client || isdead(src))
 		return
 
-	if(alert("Are you sure?",,"Yes","No") == "Yes")
+	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
 		for_by_tcl(P, /obj/machinery/power/apc)
-			if (P.z == 1 && !(P.status & BROKEN) && !P.aidisabled && P.is_not_default())
+			if (P.z == Z_LEVEL_STATION && !(P.status & BROKEN) && !P.aidisabled && P.is_not_default())
 				P.set_default()
 				count++
 
