@@ -24,7 +24,6 @@
 	var/active_force = 12.0
 	var/off_force = 3.0
 	var/how_dangerous_is_this_thing = 1
-	var/takes_damage = 1
 	health = 10.0
 	throwforce = 5.0
 	throw_speed = 1
@@ -43,7 +42,6 @@
 	stamina_crit_chance = 35
 
 	cyborg
-		takes_damage = 0
 
 	active
 		active = 1
@@ -57,20 +55,6 @@
 		BLOCK_SETUP(BLOCK_ROD)
 		return
 
-	proc/check_health()
-		if (src.health <= 0 && src.takes_damage)
-			SPAWN_DBG(0.2 SECONDS)
-				if (src)
-					usr.u_equip(src)
-					usr.update_inhands()
-					boutput(usr, "<span class='alert'>[src] falls apart!</span>")
-					qdel(src)
-		return
-
-	proc/damage_health(var/amt)
-		src.health -= amt
-		src.check_health()
-		return
 
 	update_icon()
 		set_icon_state("[src.base_state][src.active ? null : "_off"]")
@@ -89,7 +73,6 @@
 
 			if (ishuman(target))
 				if (ishuman(user) && saw_surgery(target,user))
-					src.damage_health(2)
 					take_bleeding_damage(target, user, 2, DAMAGE_CUT)
 					return
 				else if (!isdead(target))
@@ -98,12 +81,6 @@
 						target.emote("scream")
 
 			playsound(target, sawnoise, 60, 1)//need a better sound
-
-			if (src.takes_damage)
-				if (issilicon(target))
-					src.damage_health(4)
-				else
-					src.damage_health(1)
 
 			switch (src.how_dangerous_is_this_thing)
 				if (2) // Red chainsaw.
@@ -197,7 +174,6 @@
 	active_force = 20.0
 	off_force = 6.0
 	health = 10
-	takes_damage = 0
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
@@ -336,7 +312,6 @@
 	off_force = 5.0
 	health = 10
 	how_dangerous_is_this_thing = 3
-	takes_damage = 0
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
@@ -379,14 +354,8 @@
 
 	attack_self(var/mob/user as mob)
 		playsound(src.loc, "sound/machines/click.ogg", 100, 1)
-		var/list/usable = list()
-		for(var/datum/plant/A in hydro_controls.plant_species)
-			if (!A.vending)
-				continue
-			usable += A
-
 		var/holder = src.loc
-		var/datum/plant/pick = input(usr, "Which seed do you want?", "Portable Seed Fabricator", null) in usable
+		var/datum/plant/pick = tgui_input_list(usr, "Which seed do you want?", "Portable Seed Fabricator", hydro_controls.vendable_plants)
 		if (src.loc != holder)
 			return
 		src.selected = pick

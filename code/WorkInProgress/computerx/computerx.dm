@@ -10,7 +10,7 @@ var/compx_gridx_max = 5
 
 /obj/machinery/computerx
 	name = "computer"
-	desc = "A computer workstation."
+	desc = "A computer that uses a bleeding-edge command line OS."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	density = 1

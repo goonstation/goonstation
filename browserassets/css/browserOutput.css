@@ -70,7 +70,18 @@ img.emoji {
 	padding: 0 5px;
 	border: 1px solid gray;
 	border-radius: 2px;
+	color: #121212;
 }
+
+#messages.filter-Admin .admin,
+#messages.filter-Combat .combat,
+#messages.filter-Radios .radio,
+#messages.filter-Speech .say,
+#messages.filter-OOC .ooc,
+#messages.filter-Misc .misc {
+	display: none;
+}
+
 #newMessages {
 	position: fixed;
 	display: block;
@@ -434,7 +445,7 @@ body.theme-dark .popup input[type=submit]:hover, body.theme-dark .popup input[ty
 body.theme-dark a {color: #6464ff;}
 body.theme-dark a:visited {color: #ae6fff;}
 body.theme-dark h1, h2, h3, h4, h5, h6 {color: #6464ff;}
-body.theme-dark #messages .entry > .streak-counter {border: 1px solid rgb(94, 94, 94);}
+body.theme-dark #messages .entry > .streak-counter {color: #dfdfcf; border: 1px solid rgb(94, 94, 94);}
 body.theme-dark #newMessages {
 	background: rgb(63, 63, 63);
 	color: rgb(221, 221, 221);

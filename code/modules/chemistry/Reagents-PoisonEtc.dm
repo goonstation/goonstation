@@ -1131,7 +1131,7 @@ datum
 					random_brute_damage(M, 1 * mult)
 				else if (our_amt < 40)
 					if (probmult(8))
-						M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+						M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 						M.vomit()
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
@@ -1497,7 +1497,7 @@ datum
 						M.take_brain_damage(1 * mult)
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
 				if (probmult(8))
-					M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 					M.vomit()
 				M.take_toxin_damage(1 * mult)
 				M.take_brain_damage(1 * mult)
@@ -1738,31 +1738,47 @@ datum
 			transparency = 255
 			depletion_rate = 0.2
 			var/ticks = 0
+			var/stage = 0
 
 			on_mob_life(var/mob/M, var/mult = 1)
 
 				var/mob/living/carbon/human/H = M
 				if (!istype(H)) return
 
-				switch(ticks+=(1 * mult))
+				ticks += mult
 
-					if(2) //Just started out. Everything's cool
+				switch (stage)
+					if(0)
+						if(ticks >= 2)
+							stage++
+					if(1)
+						//Just started out. Everything's cool
 						H.add_stam_mod_max(src.id, 75)
-					if(3 to 14)
+						if(ticks >= 3)
+							stage++
+					if(2)
 						if(prob(10)) do_stuff(0, H, mult)
-
-					if(15 to 24) //Ok, now it's getting worrying
+						if(ticks >= 15)
+							stage++
+					if(3)
+						//Ok, now it's getting worrying
 						if(prob(30)) do_stuff(1, H, mult)
-					if(25)
+						if(ticks >= 25)
+							stage++
+					if(4)
 						H.remove_stam_mod_max(src.id)
 						H.add_stam_mod_max(src.id, -50)
 						APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, src.id, -2)
-					if(26 to 35)
+						if(ticks >= 26)
+							stage++
+					if(5)
 						if(prob(30)) do_stuff(2, H, mult)
-					if(36 to INFINITY)
-						if(prob(min(ticks, 100))) //Start at 30% chance of bad stuff, increase until death
+						if(ticks >= 36)
+							stage++
+					if(6)
+						//Start at 30% chance of bad stuff, increase until death
+						if(prob(min(ticks, 100)))
 							do_stuff(3, H, mult)
-
 				..()
 
 			on_remove()
@@ -1836,7 +1852,7 @@ datum
 						H.emote(pick_string("chemistry_reagent_messages.txt", "strychnine_deadly_emotes"))
 
 					if(probmult(10))
-						H.visible_message("<span class='alert'>[H] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+						H.visible_message("<span class='alert'>[H] pukes all over [himself_or_herself(H)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 						H.vomit()
 					else if (prob(5))
 						var/damage = rand(1,10)

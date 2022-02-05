@@ -60,6 +60,13 @@
 	if (src.listening)
 		return hearers(7, src.loc)
 
+/obj/item/device/radio/intercom/showMapText(var/mob/target, var/mob/sender, receive, msg, secure, real_name, lang_id, textLoc)
+	if (!isAI(sender) || isdead(sender) || (frequency == R_FREQ_DEFAULT))
+		..() // we also want the AI to be able to tune to any intercom and have maptext, but not the main radio (1459) because of spam
+		return
+	var/maptext = generateMapText(msg, textLoc, style = "color:#7F7FE2;", alpha = 255)
+	target.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
+
 /obj/item/device/radio/intercom/putt
 	name = "Colosseum Intercommunicator"
 	frequency = R_FREQ_INTERCOM_COLOSSEUM
@@ -169,6 +176,20 @@
 	initialize()
 		set_frequency(frequency)
 
+/obj/item/device/radio/intercom/syndicate
+	name = "Syndicate Intercom"
+	frequency = R_FREQ_SYNDICATE
+	broadcasting = TRUE
+	device_color = "#820A16"
+	hardened = TRUE
+
+	initialize()
+		if(istype(ticker.mode, /datum/game_mode/nuclear))
+			var/datum/game_mode/nuclear/N = ticker.mode
+			if(N.agent_radiofreq)
+				set_frequency(N.agent_radiofreq)
+		else
+			set_frequency(frequency)
 
 ////// adventure area intercoms
 

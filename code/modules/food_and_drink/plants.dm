@@ -83,6 +83,9 @@
 	force = 0
 	plant_reagent = "juice_tomato"
 	validforhat = 1
+	sliceable = TRUE
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/tomatoslice
+	slice_amount = 3
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
@@ -905,7 +908,7 @@
 	attack_self(var/mob/user as mob)
 		if (src.icon_state == "banana")
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
-				user.visible_message("<span class='alert'><b>[user]</b> fumbles and pokes \himself in the eye with [src].</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> fumbles and pokes [himself_or_herself(user)] in the eye with [src].</span>")
 				user.change_eye_blurry(5)
 				user.changeStatus("weakened", 3 SECONDS)
 				JOB_XP(user, "Clown", 2)
@@ -1357,6 +1360,27 @@
 	make_reagents()
 		..()
 		reagents.add_reagent("coffee",10)
+
+/obj/item/reagent_containers/food/snacks/plant/coffeeberry/mocha
+	name = "mocha coffee berries"
+	crop_prefix = "mocha "
+	desc = "Smells faintly of rich, bitter cacao. Huh."
+	icon_state = "mochaberries"
+
+	make_reagents()
+		..()
+		reagents.add_reagent("chocolate", 10)
+
+/obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte
+	name = "latte coffee berries"
+	crop_prefix = "latte "
+	desc = "The texture of these berries' skin is vaguely... creamy??"
+	icon_state = "latteberries"
+
+	make_reagents()
+		..()
+		reagents.add_reagent("milk", 5)
+
 
 /obj/item/reagent_containers/food/snacks/plant/coffeebean
 	name = "coffee beans"

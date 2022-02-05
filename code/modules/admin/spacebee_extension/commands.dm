@@ -78,7 +78,7 @@
 /datum/spacebee_extension_command/ban
 	name = "ban"
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
-	help_message = "Bans a given ckey. Arguments in the order of ckey, length (number of minutes, or put \"hour\", \"day\", \"week\", \"month\", \"perma\" or \"untilappeal\"), and ban reason. Make sure you specify the server that the person is on. Also keep in mind that this bans them from all servers. e.g. ban1 shelterfrog perma Lol rip."
+	help_message = "Bans a given ckey. Arguments in the order of ckey, length (number of minutes, or put \"hour\", \"day\", \"halfweek\", \"week\", \"twoweeks\", \"month\", \"perma\" or \"untilappeal\"), and ban reason. Make sure you specify the server that the person is on. Also keep in mind that this bans them from all servers. e.g. ban1 shelterfrog perma Lol rip."
 	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/string="length",
 	/datum/command_argument/the_rest="reason")
 	execute(user, ckey, length, reason)
@@ -109,8 +109,12 @@
 			length = 60
 		else if (length == "day")
 			length = 1440
+		else if (length == "halfweek")
+			length = 5040
 		else if (length == "week")
 			length = 10080
+		else if (length == "twoweeks")
+			length = 20160
 		else if (length == "month")
 			length = 43200
 		else if (length == "perma")
@@ -133,6 +137,80 @@
 		ircmsg["msg"] = "Banned [ckey] from all servers for [length] minutes, reason: [reason]"
 		ircbot.export("admin", ircmsg)
 
+/datum/spacebee_extension_command/serverban
+	name = "serverban"
+	server_targeting = COMMAND_TARGETING_MAIN_SERVER
+	help_message = "Bans a given ckey from a specified server. Arguments in the order of ckey, server ID (for example: main1/1/goon1), length (number of minutes, or put \"hour\", \"day\", \"halfweek\", \"week\", \"twoweeks\", \"month\", \"perma\" or \"untilappeal\"), and ban reason, e.g. serverban shelterfrog goon1 perma Lol rip."
+	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/string/optional="server", /datum/command_argument/string="length",
+	/datum/command_argument/the_rest="reason")
+	execute(user, ckey, server, length, reason)
+		if (!(ckey && server && length && reason))
+			system.reply("Insufficient arguments.", user)
+			return
+		var/data[] = new()
+		data["ckey"] = ckey
+		var/mob/M = ckey_to_mob(ckey)
+		if (M)
+			data["compID"] = M.computer_id
+			data["ip"] = M.lastKnownIP
+		else
+			var/list/response
+			try
+				response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]), forceResponse = 1)
+			catch ()
+				var/ircmsg[] = new()
+				ircmsg["name"] = user
+				ircmsg["msg"] = "Failed to query API, try again later."
+				ircbot.export("admin", ircmsg)
+				return
+			data["ip"] = response["last_ip"]
+			data["compID"] = response["last_compID"]
+		if(server == "main1" || server == "1" || server == "goon1")
+			server = "main1"
+		else if(server == "main2" || server == "2" || server == "goon2")
+			server = "main2"
+		else if(server == "main3" || server == "3" || server == "goon3")
+			server = "main3"
+		else if(server == "main4" || server == "4" || server == "goon4")
+			server = "main4"
+		else
+			system.reply("Invalid server.", user)
+			return
+		data["server"] = server
+		data["text_ban_length"] = length
+		data["reason"] = reason
+		if (length == "hour")
+			length = 60
+		else if (length == "day")
+			length = 1440
+		else if (length == "halfweek")
+			length = 5040
+		else if (length == "week")
+			length = 10080
+		else if (length == "twoweeks")
+			length = 20160
+		else if (length == "month")
+			length = 43200
+		else if (length == "perma")
+			length = 0
+			data["text_ban_length"] = "Permanent"
+		else if (ckey(length) == "untilappeal")
+			length = -1
+			data["text_ban_length"] = "Until Appeal"
+		else
+			length = text2num(length)
+		if (!isnum(length))
+			system.reply("Ban length invalid.", user)
+			return
+		data["mins"] = length
+		data["akey"] = ckey(user) + " (Discord)"
+		addBan(data) // logging, messaging, and noting are all taken care of by this proc
+
+		var/ircmsg[] = new()
+		ircmsg["name"] = user
+		ircmsg["msg"] = "Banned [ckey] from [server] for [length] minutes, reason: [reason]"
+		ircbot.export("admin", ircmsg)
+
 /datum/spacebee_extension_command/boot
 	name = "boot"
 	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
@@ -146,6 +224,28 @@
 				logTheThing("admin", "[user] (Discord)", null, "booted [constructTarget(C,"admin")].")
 				logTheThing("diary", "[user] (Discord)", null, "booted [constructTarget(C,"diary")].", "admin")
 				system.reply("Booted [ckey].", user)
+				return
+		system.reply("Could not locate [ckey].", user)
+
+/datum/spacebee_extension_command/alert
+	name = "alert"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Send an admin alert to a given ckey."
+	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/the_rest="message")
+
+	execute(user, ckey, message)
+		for(var/client/C)
+			if (C.ckey == ckey)
+				message_admins("[user] (Discord) displayed an alert to [ckey] with the message \"[message]\"")
+				system.reply("Displayed an alert to [ckey].", user)
+				logTheThing("admin", "[user] (Discord)", null, "displayed an alert to [constructTarget(C,"admin")] with the message \"[message]\"")
+				logTheThing("diary", "[user] (Discord)", null, "displayed an alert to  [constructTarget(C,"diary")] with the message \"[message]\"", "admin")
+				if (C?.mob)
+					SPAWN_DBG(0)
+						C.mob.playsound_local(C.mob, "sound/voice/animal/goose.ogg", 100, flags = SOUND_IGNORE_SPACE)
+						if (alert(C.mob, message, "!! Admin Alert !!", "OK") == "OK")
+							message_admins("[ckey] acknowledged the alert from [user] (Discord).")
+							system.reply("[ckey] acknowledged the alert.", user)
 				return
 		system.reply("Could not locate [ckey].", user)
 

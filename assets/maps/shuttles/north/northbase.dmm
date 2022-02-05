@@ -228,9 +228,7 @@
 /turf/unsimulated/floor/arrival,
 /area/centcom)
 "gh" = (
-/obj/machinery/door/airlock/pyro/glass/command{
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/command,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -322,7 +320,6 @@
 /area/shuttle/escape/centcom)
 "iQ" = (
 /obj/machinery/door/airlock/pyro/security{
-	density = 0;
 	name = "Secure Transport"
 	},
 /turf/unsimulated/floor/shuttle,

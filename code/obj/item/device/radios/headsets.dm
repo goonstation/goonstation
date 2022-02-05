@@ -115,7 +115,7 @@
 	icon_tooltip = "Captain"
 
 /obj/item/device/radio/headset/command/radio_show_host
-	name = "Radio show host's Headset"
+	name = "Radio Show Host's Headset"
 	icon_state = "radio"
 	secure_frequencies = list(
 		"h" = R_FREQ_COMMAND,
@@ -133,8 +133,29 @@
 		"m" = RADIOCL_MEDICAL,
 		"c" = RADIOCL_CIVILIAN,
 		)
-	icon_override = "civ"
-	icon_tooltip = "Civilian"
+	icon_override = "rh"
+	icon_tooltip = "Radio Show Host"
+
+/obj/item/device/radio/headset/command/comm_officer
+	name = "Communications Officer's Headset"
+	secure_frequencies = list(
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY,
+		"e" = R_FREQ_ENGINEERING,
+		"r" = R_FREQ_RESEARCH,
+		"m" = R_FREQ_MEDICAL,
+		"c" = R_FREQ_CIVILIAN,
+		)
+	secure_classes = list(
+		"h" = RADIOCL_COMMAND,
+		"g" = RADIOCL_SECURITY,
+		"e" = RADIOCL_ENGINEERING,
+		"r" = RADIOCL_RESEARCH,
+		"m" = RADIOCL_MEDICAL,
+		"c" = RADIOCL_CIVILIAN,
+		)
+	icon_override = "co"
+	icon_tooltip = "Communications Officer"
 
 /obj/item/device/radio/headset/command/hos
 	name = "Head of Security's Headset"
@@ -198,6 +219,19 @@
 		)
 	icon_override = "md"
 	icon_tooltip = "Medical Director"
+
+/obj/item/device/radio/headset/command/hs
+	name = "Head Surgeon's Headset"
+	secure_frequencies = list(
+		"h" = R_FREQ_COMMAND,
+		"m" = R_FREQ_MEDICAL,
+	)
+	secure_classes = list(
+		"h" = RADIOCL_COMMAND,
+		"m" = RADIOCL_MEDICAL,
+	)
+	icon_override = "hs"
+	icon_tooltip = "Head Surgeon"
 
 /obj/item/device/radio/headset/command/ce
 	name = "Chief Engineer's Headset"
@@ -322,9 +356,18 @@
 	chat_class = RADIOCL_SYNDICATE
 	secure_frequencies = list("z" = R_FREQ_SYNDICATE)
 	secure_classes = list(RADIOCL_SYNDICATE)
-	protected_radio = 1
+	protected_radio = 1 // Ops can spawn with the deaf trait.
 	icon_override = "syndie"
 	icon_tooltip = "Syndicate Operative"
+
+	New()
+		..()
+		SPAWN_DBG(1 SECOND)
+			var/the_frequency = R_FREQ_SYNDICATE
+			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+				var/datum/game_mode/nuclear/N = ticker.mode
+				the_frequency = N.agent_radiofreq
+			src.frequency = the_frequency // let's see if this stops rounds from being ruined every fucking time
 
 	leader
 		icon_override = "syndieboss"

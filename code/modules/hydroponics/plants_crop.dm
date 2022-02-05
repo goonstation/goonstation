@@ -266,3 +266,4 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	endurance = 0
 	genome = 6
 	commuts = list(/datum/plant_gene_strain/immunity_toxin,/datum/plant_gene_strain/metabolism_slow)
+	mutations = list(/datum/plantmutation/coffee/mocha, /datum/plantmutation/coffee/latte)

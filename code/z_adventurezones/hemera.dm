@@ -409,9 +409,9 @@ Obsidian Crown
 				elecflash(M,power = 4)
 				var/list/randomturfs = new/list()
 
-				if(isrestrictedz(host.z))
+				if(isrestrictedz(M.z))
 					for(var/turf/T in view(M, 4))
-						if (T.loc != get_area(M) && T.loc.type != /area/space) //If we're in a telesci area and this is a change in area.
+						if (!(istype(get_area(M), /area/solarium) && T.loc.type != /area/space)) //If we're in a telesci area and this is a change in area.
 							continue
 						if(T.density)
 							continue

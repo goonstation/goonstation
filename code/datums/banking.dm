@@ -717,6 +717,19 @@
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "bank2"
 
+/obj/submachine
+	name = "You shouldn't see me!"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "atm"
+
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
 /obj/submachine/ATM
 	name = "ATM"
 	icon = 'icons/obj/stationobjs.dmi'

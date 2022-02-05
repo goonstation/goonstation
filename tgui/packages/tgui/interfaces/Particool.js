@@ -3,6 +3,7 @@
  * @copyright 2021 Gomble (https://github.com/AndrewL97)
  * @author Original Gomble (https://github.com/AndrewL97)
  * @author Changes Azrun
+ * @author Changes Sovexe (https://github.com/Sovexe)
  * @license MIT
  */
 

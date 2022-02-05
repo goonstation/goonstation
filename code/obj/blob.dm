@@ -33,7 +33,7 @@
 	var/fire_coefficient = 1
 	var/poison_coefficient = 1
 	var/poison_spread_coefficient = 0.5
-	var/poison_depletion = 1
+	var/poison_depletion = 0.75
 	var/heat_divisor = 15
 	var/temp_tolerance = 40
 	mat_changename = 0
@@ -527,7 +527,7 @@
 			if (!overmind.tutorial.PerformSilentAction("blob-life", src))
 				return 0
 		if (src.poison)
-			var/damage_taken = min(10, src.poison)
+			var/damage_taken = clamp(src.poison, 1, 10)
 			take_damage(damage_taken, 1, "self_poison")
 			src.poison -= damage_taken * poison_depletion
 			src.poison = max(src.poison, 0)
@@ -1090,7 +1090,7 @@
 	can_absorb = 0
 	runOnLife = 1
 	poison_coefficient = 2
-	poison_spread_coefficient = 1
+	poison_spread_coefficient = 2
 	var/heal_range = 2
 	var/heal_amount = 4
 

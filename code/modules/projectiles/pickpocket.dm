@@ -50,6 +50,9 @@
 				if ("l_leg")
 					stolenItem = M.l_store ? M.l_store : M.r_store ? M.r_store : null
 			if (stolenItem) // Found a thing to steal, hurrah
+				if (stolenItem.cant_other_remove)
+					M.throw_at(linkedGun, 3, 0.5)
+					return
 				logTheThing("combat", linkedGun, null, " successfully steals \a [stolenItem]")
 				M.u_equip(stolenItem)
 				linkedGun.heldItem = stolenItem

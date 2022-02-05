@@ -144,9 +144,7 @@
 	},
 /area/shuttle/escape/centcom)
 "hY" = (
-/obj/machinery/door/airlock/pyro/glass/command{
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/command,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -921,7 +919,6 @@
 /area/centcom/outside)
 "Mf" = (
 /obj/machinery/door/airlock/pyro/security{
-	density = 0;
 	name = "Secure Transport"
 	},
 /turf/unsimulated/floor/shuttle{
@@ -1190,9 +1187,7 @@
 /turf/unsimulated/floor/arrival,
 /area/centcom)
 "Xe" = (
-/obj/machinery/door/airlock/pyro/medical/alt{
-	density = 0
-	},
+/obj/machinery/door/airlock/pyro/medical/alt,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
 	},

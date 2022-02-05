@@ -10587,7 +10587,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "atz" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /turf/simulated/floor/sanitary/white,
@@ -11477,7 +11477,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "avI" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -11789,7 +11789,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/crematorium)
 "awu" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /turf/simulated/floor/sanitary/white,
@@ -30049,7 +30049,7 @@
 	on = 1;
 	target_pressure = 1000
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition1";
 	name = "Chamber Ignition Switch";
 	pixel_x = -24
@@ -30865,6 +30865,10 @@
 /area/station/science/artifact)
 "bnT" = (
 /obj/table/reinforced/auto,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 5;
+	pixel_y = 6
+	},
 /obj/item/hand_labeler,
 /obj/item/device/audio_log,
 /obj/item/audio_tape{
@@ -34238,7 +34242,7 @@
 	dir = 4;
 	icon_state = "line2"
 	},
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
 	id = "artlabgun";
 	name = "Emergency Ejection Button";
@@ -34889,7 +34893,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/window/reinforced/west,
 /obj/window/reinforced/north,
 /obj/decal/tile_edge/line/black{
@@ -34936,7 +34940,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/window/reinforced/north,
@@ -35568,7 +35572,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/window/reinforced/west,
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -35604,7 +35608,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/decal/tile_edge/line/black{
@@ -36183,7 +36187,7 @@
 /area/station/medical/morgue)
 "bxC" = (
 /obj/machinery/light,
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/window/reinforced/west,
 /obj/decal/tile_edge/line/black{
 	dir = 10;
@@ -36211,7 +36215,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bxF" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/decal/tile_edge/line/black{
@@ -39852,7 +39856,7 @@
 	name = "autoname  - SS13";
 	pixel_x = -10
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "combustion_ignition";
 	pixel_x = -24
 	},
@@ -43003,7 +43007,10 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/bookshelf/persistent,
+/obj/bookshelf/persistent{
+	density = 0;
+	pixel_y = 19
+	},
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -45720,7 +45727,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "gCc" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -50208,7 +50215,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -50219,7 +50226,7 @@
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -50249,7 +50256,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "sOY" = (
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "sQp" = (

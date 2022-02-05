@@ -65,7 +65,17 @@ const playerLocationTemplate = (config: CellTemplateConfig<PlayerData, string>) 
 };
 
 const alphabeticalSorter = (a: string, b: string) => a.localeCompare(b);
-const ipSorter = (a: string, b: string) => 0; // TODO
+
+// https://stackoverflow.com/a/68147012
+const makeIpNumber = (ip: string) => Number(
+  ip.split('.')
+    .map((subString) => (`00${subString}`).slice(-3))
+    .join('')
+);
+const ipSorter = (a: string, b: string) => makeIpNumber(a) - makeIpNumber(b);
+
+const numberSorter = (a: number, b: number) => a - b;
+
 const dateStringSorter = (a: string, b: string) => 0; // TODO
 
 const createDefaultValueSelector = <Row extends object, Value>(field: string) => (
@@ -90,6 +100,7 @@ const columns: Column<PlayerData, unknown>[] = [
   { ...createDefaultColumnConfig('ip'), name: 'IP', sorter: ipSorter },
   { ...createDefaultColumnConfig('joined'), name: 'Join Date', sorter: dateStringSorter },
   { ...createDefaultColumnConfig('playerLocation'), name: 'Player Location', template: playerLocationTemplate },
+  { ...createDefaultColumnConfig('ping'), name: 'Ping', sorter: numberSorter },
 ];
 
 export const PlayerPanel = (props, context) => {
@@ -139,7 +150,7 @@ export const PlayerPanel = (props, context) => {
     }
   }
   return (
-    <Window width={1000} height={640}>
+    <Window width={1100} height={640} title="Player Panel">
       <Window.Content scrollable>
         <Input
           autoFocus

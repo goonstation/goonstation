@@ -449,6 +449,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			if (src.reagents.total_volume)
 				user.show_text("<b>You start cutting [src], causing it to spill!</b>", "red")
 				src.reagents.reaction(get_turf(src))
+				src.reagents.clear_reagents()
 			else
 				user.show_text("You start cutting [src].")
 			if (!do_mob(user, src))
