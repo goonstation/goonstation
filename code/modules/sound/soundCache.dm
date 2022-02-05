@@ -532,6 +532,7 @@ var/global/list/soundCache = list(
  	"sound/machines/bweep.ogg" = 'sound/machines/bweep.ogg',\
  	"sound/machines/capsulebuy.ogg" = 'sound/machines/capsulebuy.ogg',\
  	"sound/machines/car_screech.ogg" = 'sound/machines/car_screech.ogg',\
+ 	"sound/machines/chainsaw.ogg" = 'sound/machines/chainsaw.ogg',\
  	"sound/machines/chainsaw_green.ogg" = 'sound/machines/chainsaw_green.ogg',\
  	"sound/machines/chainsaw_red.ogg" = 'sound/machines/chainsaw_red.ogg',\
  	"sound/machines/chainsaw_red_start.ogg" = 'sound/machines/chainsaw_red_start.ogg',\

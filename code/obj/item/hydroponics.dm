@@ -12,7 +12,7 @@
 
 /obj/item/saw
 	name = "chainsaw"
-	desc = "A chainsaw used to chop up harmful plants."
+	desc = "An electric chainsaw used to chop up harmful plants."
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "c_saw_off"
@@ -292,7 +292,7 @@
 		var/obj/item/parts/human_parts/arm/new_arm = null
 		if (target == "l_arm")
 			if (H.limbs.l_arm)
-				playsound(H.loc, 'sound/machines/chainsaw_green.ogg', 50, 1)
+				playsound(H.loc, 'sound/machines/chainsaw.ogg', 50, 1)
 				playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				H.limbs.l_arm.sever()
 				H.visible_message("[H] chainsaws their own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
@@ -300,7 +300,7 @@
 			H.limbs.l_arm = new_arm
 		else if (target == "r_arm")
 			if (H.limbs.r_arm)
-				playsound(H.loc, 'sound/machines/chainsaw_green.ogg', 50, 1)
+				playsound(H.loc, 'sound/machines/chainsaw.ogg', 50, 1)
 				playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				H.limbs.r_arm.sever()
 				H.visible_message("[H] chainsaws their own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
