@@ -74,15 +74,16 @@
 		else if (targetZone == "l_leg" || targetZone == "r_leg")
 			return target.shoes
 
-	//doesn't touch cant_drop so won't remove cursed horse masks etc.
 	proc/try_unglue(mob/living/carbon/human/target, mob/living/carbon/human/user)
-		//let's leave cluwnes alone
-		if (iscluwne(target))
+		//exceptions for where this would break things that should not be broken
+		if (iscluwne(target) || isslasher(target) || ishorse(target) || iswaldo(target))
 			user.show_message("<span class='alert'>That curse is too strong.</span>")
 			return
 		if (!target?.hud)
 			return
 		for (var/obj/item/item in target.hud.inventory_items)
+			if (item.cant_drop)
+				continue
 			item.cant_self_remove = FALSE
 			item.cant_other_remove = FALSE
 		user.visible_message("<span class='alert'>[user] Attempts to purge curses from [target]'s clothes.</span>",\
