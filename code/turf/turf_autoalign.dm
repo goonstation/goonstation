@@ -822,7 +822,7 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/adventure)
 	icon = 'icons/turf/walls_martian.dmi'
 	mod = "martian-"
 	connect_overlay = 0
-	connects_to = list(/turf/unsimulated/wall/auto/adventure/martian, /obj/machinery/door/unpowered/martian, /turf/unsimulated/wall/auto/adventure/martian/exterior)
+	connects_to = list(/turf/unsimulated/wall/auto/adventure/martian, /obj/machinery/door/unpowered/martian, /turf/unsimulated/wall/auto/adventure/martian/exterior,/obj/indestructible/shuttle_corner)
 
 	exterior
 		mod = "martout-"

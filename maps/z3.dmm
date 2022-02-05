@@ -353,7 +353,10 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "abj" = (
-/turf/simulated/wall/false_wall/hive,
+/turf/simulated/wall/false_wall/hive{
+	icon = 'icons/turf/walls_beehive.dmi';
+	icon_state = "bee-3"
+	},
 /area/space_hive)
 "abk" = (
 /turf/unsimulated/floor,
@@ -9326,6 +9329,9 @@
 /turf/space,
 /turf/simulated/martian/floor,
 /area/evilreaver/genetics)
+"ayU" = (
+/turf/simulated/wall/auto/old,
+/area/space)
 "ayV" = (
 /obj/item/spraybottle/cleaner/tsunami,
 /turf/simulated/floor/airless/damaged5,
@@ -11959,7 +11965,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/auto/reinforced/old,
 /area/space)
 "aHA" = (
 /turf/simulated/shuttle/wall{
@@ -12231,7 +12237,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/wall,
+/turf/simulated/wall/auto/old,
 /area/space)
 "aIo" = (
 /obj/decal/cleanable/oil,
@@ -12544,7 +12550,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/auto/reinforced/old,
 /area/space)
 "aJh" = (
 /obj/cable{
@@ -12557,7 +12563,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/auto/reinforced/old,
 /area/space)
 "aJi" = (
 /obj/cable{
@@ -12570,7 +12576,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/auto/reinforced/old,
 /area/space)
 "aJj" = (
 /obj/decal/fakeobjects/shuttleengine{
@@ -12720,7 +12726,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/auto/reinforced/old,
 /area/space)
 "aJF" = (
 /obj/cable{
@@ -12728,7 +12734,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/auto/reinforced/old,
 /area/space)
 "aJG" = (
 /obj/cable{
@@ -12736,7 +12742,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/auto/reinforced/old,
 /area/space)
 "aJH" = (
 /obj/cable{
@@ -12744,7 +12750,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/auto/reinforced/old,
 /area/space)
 "aJI" = (
 /turf/simulated/shuttle/wall{
@@ -13471,7 +13477,7 @@
 /obj/decal/cleanable/writing/infrared{
 	words = "WELCOME TO THE NEW DEATH"
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/auto/reinforced/old,
 /area/space)
 "aLv" = (
 /obj/cable{
@@ -13484,7 +13490,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/auto/reinforced/old,
 /area/space)
 "aLw" = (
 /obj/cable{
@@ -13492,7 +13498,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/auto/reinforced/old,
 /area/space)
 "aLx" = (
 /obj/lattice{
@@ -13544,7 +13550,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/wall,
+/turf/simulated/wall/auto/old,
 /area/space)
 "aLE" = (
 /turf/simulated/wall/auto/reinforced/old,
@@ -13584,7 +13590,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/auto/reinforced/old,
 /area/space)
 "aLK" = (
 /obj/machinery/field_generator,
@@ -41480,7 +41486,7 @@ aaf
 gaf
 aal
 gaf
-aaq
+aal
 gaf
 aal
 aaa
@@ -106538,11 +106544,11 @@ aaa
 aaa
 aaa
 aaa
-aHV
+ahm
 aLw
 aLD
 aLw
-aHV
+ahm
 aaa
 aaa
 aaa
@@ -106840,11 +106846,11 @@ aaa
 aaa
 aaa
 aaa
-aHV
+ahm
 aan
 aKI
 aan
-aHV
+ahm
 aaa
 aaa
 aaa
@@ -108343,7 +108349,7 @@ aHz
 aIn
 aHz
 aJh
-aGO
+ayU
 aJZ
 aan
 aan
