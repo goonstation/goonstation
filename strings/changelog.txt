@@ -1,5 +1,9 @@
 
 (t)fri feb 04 22
+(u)Adhara in Space
+(p)7398
+(e)|
+(*)Clicking on a desk (or any table with built in storage) with an empty hand opens the storage now.
 (u)NightmareChamillian
 (p)7392
 (e)|
