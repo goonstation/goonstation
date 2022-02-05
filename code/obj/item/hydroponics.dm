@@ -58,8 +58,8 @@
 
 	update_icon()
 		set_icon_state("[src.base_state][src.active ? null : "_off"]")
-		item_state = "[src.base_state][src.active ? "-A" : "-D"]"
-		arm_icon = "[src.base_arm][src.active ? "-A" : "-D"]"
+		src.item_state = "[src.base_state][src.active ? "-A" : "-D"]"
+		src.arm_icon = "[src.base_arm][src.active ? "-A" : "-D"]"
 		return
 
 	// Fixed a couple of bugs and cleaned code up a little bit (Convair880).
@@ -348,7 +348,7 @@
 	w_class = W_CLASS_BULKY
 	mats = 12
 	sawnoise = 'sound/machines/chainsaw_red.ogg'
-	arm_icon = "chainsaw1"
+	arm_icon = "chainsaw_s-A"
 	stamina_damage = 40
 	stamina_cost = 40
 	stamina_crit_chance = 50
