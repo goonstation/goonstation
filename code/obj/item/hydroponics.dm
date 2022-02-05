@@ -137,7 +137,7 @@
 	w_class = W_CLASS_BULKY
 	is_syndicate = 1
 	mats = 14
-	desc = "This one is the real deal. Time for a space chainsaw massacre."
+	desc = "A gas powered antique. This one is the real deal. Time for a space chainsaw massacre."
 	contraband = 10 //scary
 	sawnoise = 'sound/machines/chainsaw_red.ogg'
 	arm_icon = "chainsaw_s"
