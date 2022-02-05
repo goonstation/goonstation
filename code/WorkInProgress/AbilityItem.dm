@@ -338,7 +338,7 @@
 			boutput(usr, "<span class='alert'>Only a human can do that.</span>")
 			return
 		var/mob/living/carbon/human/H = usr
-		switch (alert(usr, "Which arm  would you like to replace with [the_item]?",,"Left","Right","Cancel"))
+		switch (alert(usr, "Which arm would you like to replace with [the_item]?",,"Left","Right","Cancel"))
 			if ("Cancel")
 				return
 			if ("Right")

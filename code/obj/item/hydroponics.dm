@@ -184,7 +184,6 @@
 				else
 					qdel(C)
 			else
-				C.changeStatus("stunned", 3 SECONDS)
 				C.changeStatus("weakened", 3 SECONDS)
 
 		if (!ishuman(target))
