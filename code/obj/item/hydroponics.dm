@@ -294,15 +294,17 @@
 		if (target == "l_arm")
 			if (H.limbs.l_arm)
 				playsound(H.loc, 'sound/machines/chainsaw_green.ogg', 50, 1)
-				playsound(user.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
+				playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				H.limbs.l_arm.sever()
+				H.visible_message("[H] chainsaws their own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
 			new_arm = new /obj/item/parts/human_parts/arm/left/item(H)
 			H.limbs.l_arm = new_arm
 		else if (target == "r_arm")
 			if (H.limbs.r_arm)
 				playsound(H.loc, 'sound/machines/chainsaw_green.ogg', 50, 1)
-				playsound(user.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
+				playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				H.limbs.r_arm.sever()
+				H.visible_message("[H] chainsaws their own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
 			new_arm = new /obj/item/parts/human_parts/arm/right/item(H)
 			H.limbs.r_arm = new_arm
 		if (!new_arm) return //who knows
@@ -320,6 +322,7 @@
 				H.item_abilities.Remove(B)
 		H.need_update_item_abilities = 1
 		H.update_item_abilities()
+		H.visible_message("[H] attaches a chainsaw to the stump where their arm should be", "You attach your saw to where your arm should be")
 
 /obj/item/saw/syndie/abilities = list(/obj/ability_button/saw_replace_arm)
 
