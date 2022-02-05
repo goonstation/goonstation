@@ -32,7 +32,8 @@
 	tool_flags = TOOL_SAWING
 	mats = 12
 	var/sawnoise = 'sound/machines/chainsaw_green.ogg'
-	arm_icon = "chainsaw0"
+	arm_icon = "chainsaw"
+	var/base_arm = "chainsaw"
 	over_clothes = 1
 	override_attack_hand = 1
 	can_hold_items = 0
@@ -58,6 +59,7 @@
 	update_icon()
 		set_icon_state("[src.base_state][src.active ? null : "_off"]")
 		item_state = "[src.base_state][src.active ? "-A" : "-D"]"
+		arm_icon = "[src.base_arm][src.active ? "-A" : "-D"]"
 		return
 
 	// Fixed a couple of bugs and cleaned code up a little bit (Convair880).
@@ -97,6 +99,7 @@
 			boutput(user, "<span class='notice'>[src] is now off.</span>")
 			src.force = off_force
 		tooltip_rebuild = 1
+		user.set_body_icon_dirty()
 		src.UpdateIcon()
 		user.update_inhands()
 		src.add_fingerprint(user)
@@ -137,7 +140,8 @@
 	desc = "This one is the real deal. Time for a space chainsaw massacre."
 	contraband = 10 //scary
 	sawnoise = 'sound/machines/chainsaw_red.ogg'
-	arm_icon = "chainsaw1"
+	arm_icon = "chainsaw_s"
+	base_arm = "chainsaw_s"
 	stamina_damage = 100
 	stamina_cost = 30
 	stamina_crit_chance = 40
@@ -281,6 +285,38 @@
 				return
 			else
 				return ..()
+
+	proc/end_replace_arm(var/target, var/mob/living/carbon/human/H)
+		if(!H)
+			return
+		var/obj/item/parts/human_parts/arm/new_arm = null
+		if (target == "l_arm")
+			if (H.limbs.l_arm)
+				H.limbs.l_arm.sever()
+			new_arm = new /obj/item/parts/human_parts/arm/left/item(H)
+			H.limbs.l_arm = new_arm
+		else if (target == "r_arm")
+			if (H.limbs.r_arm)
+				H.limbs.r_arm.sever()
+			new_arm = new /obj/item/parts/human_parts/arm/right/item(H)
+			H.limbs.r_arm = new_arm
+		if (!new_arm) return //who knows
+
+		new_arm.holder = H
+		H.remove_item(src)
+
+		new_arm:set_item(src)
+		src.cant_drop = 1
+
+		H.set_body_icon_dirty()
+		H.hud.update_hands()
+		for (var/obj/ability_button/B in src.ability_buttons)
+			if (istype(B, /obj/ability_button/saw_replace_arm))
+				H.item_abilities.Remove(B)
+		H.need_update_item_abilities = 1
+		H.update_item_abilities()
+
+/obj/item/saw/syndie/abilities = list(/obj/ability_button/saw_replace_arm)
 
 /obj/item/saw/syndie/vr
 	icon = 'icons/effects/VR.dmi'
