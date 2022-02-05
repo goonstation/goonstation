@@ -26013,11 +26013,11 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/turret_protected/Zeta)
 "jUG" = (
-/obj/machinery{
-	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be a very loud siren or something.  Maybe you want it away from you so the crew don't bash down your door to remove it for you.";
-	id = "artlabgun";
-	name = "Emergency Ejection Button";
-	pixel_y = 24
+/obj/machinery/activation_button/ignition_switch{
+	desc = "There is a big red button here with many big red arrows pointing to it";
+	id = getitout;
+	name = "Emergancy Ejector Button";
+	pixel_y = 23
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -26044,14 +26044,14 @@
 	desc = "A device that launches objects, like ANCIENT SIRENS, for example, on it at great velocity when activated.";
 	dir = 4;
 	drive_range = 100;
-	id = "artlabgun"
+	id = "getitout"
 	},
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "jXE" = (
 /obj/machinery/door/poddoor/pyro/podbay_autoclose{
 	dir = 4;
-	id = "artlabgun"
+	id = "gititout"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
