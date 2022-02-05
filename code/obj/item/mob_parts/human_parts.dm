@@ -491,7 +491,7 @@
 		if (istype(I))
 			//if(I.over_clothes) handlistPart += "l_arm_[I.arm_icon]"
 			//else partlistPart += "l_arm_[I.arm_icon]"
-			handlistPart += "r_arm_[I.arm_icon]"
+			handlistPart += "l_arm_[I.arm_icon]"
 			override_attack_hand = I.override_attack_hand
 			can_hold_items = I.can_hold_items
 
