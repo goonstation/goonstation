@@ -9314,9 +9314,7 @@
 /area/evilreaver/genetics)
 "ayS" = (
 /obj/lattice,
-/turf/simulated/floor/plating{
-	icon_state = ""
-	},
+/turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
 "ayT" = (
 /obj/indestructible/shuttle_corner{
