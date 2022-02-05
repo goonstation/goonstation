@@ -134,7 +134,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = W_CLASS_NORMAL
+	w_class = W_CLASS_BULKY
 	is_syndicate = 1
 	mats = 14
 	desc = "This one is the real deal. Time for a space chainsaw massacre."
@@ -156,10 +156,8 @@
 			return
 		..()
 		if (src.active)
-			w_class = W_CLASS_BULKY
 			playsound(src, 'sound/machines/chainsaw_red_start.ogg', 90, 0)
 		else
-			w_class = W_CLASS_NORMAL
 			playsound(src, 'sound/machines/chainsaw_red_stop.ogg', 90, 0)
 
 	attack(mob/target as mob, mob/user as mob)
