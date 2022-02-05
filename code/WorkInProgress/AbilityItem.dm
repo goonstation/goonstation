@@ -348,7 +348,7 @@
 					return
 				boutput(H, "<span class='alert'>You need to hold still...</span>")
 				SPAWN_DBG(1 SECOND)
-					SETUP_GENERIC_ACTIONBAR(H, the_item, 5 SECONDS, /obj/item/saw/syndie/proc/end_replace_arm, list("r_arm", H), the_item.icon, the_item.icon_state,"", null)
+					SETUP_GENERIC_ACTIONBAR(H, the_item, 3 SECONDS, /obj/item/saw/syndie/proc/end_replace_arm, list("r_arm", H), the_item.icon, the_item.icon_state,"", null)
 			if ("Left")
 				if (!H.limbs.l_arm)
 					var/obj/item/saw/syndie/S = the_item
@@ -356,7 +356,7 @@
 					return
 				boutput(H, "<span class='alert'>You need to hold still...</span>")
 				SPAWN_DBG(1 SECOND)
-					SETUP_GENERIC_ACTIONBAR(H, the_item, 5 SECONDS, /obj/item/saw/syndie/proc/end_replace_arm, list("l_arm", H), the_item.icon, the_item.icon_state,"", null)
+					SETUP_GENERIC_ACTIONBAR(H, the_item, 3 SECONDS, /obj/item/saw/syndie/proc/end_replace_arm, list("l_arm", H), the_item.icon, the_item.icon_state,"", null)
 		..()
 
 ////////////////////////////////////////////////////////////

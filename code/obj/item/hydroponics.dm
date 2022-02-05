@@ -287,14 +287,21 @@
 	proc/end_replace_arm(var/target, var/mob/living/carbon/human/H)
 		if(!H)
 			return
+		if (!H.find_in_hand(src))
+			boutput(H, "<span class='alert'>You need to be holding your saw!</span>")
+			return
 		var/obj/item/parts/human_parts/arm/new_arm = null
 		if (target == "l_arm")
 			if (H.limbs.l_arm)
+				playsound(H.loc, 'sound/machines/chainsaw_green.ogg', 50, 1)
+				playsound(user.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				H.limbs.l_arm.sever()
 			new_arm = new /obj/item/parts/human_parts/arm/left/item(H)
 			H.limbs.l_arm = new_arm
 		else if (target == "r_arm")
 			if (H.limbs.r_arm)
+				playsound(H.loc, 'sound/machines/chainsaw_green.ogg', 50, 1)
+				playsound(user.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				H.limbs.r_arm.sever()
 			new_arm = new /obj/item/parts/human_parts/arm/right/item(H)
 			H.limbs.r_arm = new_arm
