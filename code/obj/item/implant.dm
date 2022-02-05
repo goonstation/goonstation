@@ -423,8 +423,8 @@ THROWING DARTS
 		..()
 
 
-/obj/item/implant/antirev
-	name = "anti-revolutionary implant"
+/obj/item/implant/counterrev
+	name = "counter-revolutionary implant"
 	icon_state = "implant-b"
 	impcolor = "b"
 
@@ -436,7 +436,7 @@ THROWING DARTS
 
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 			if (H.mind in ticker.mode:head_revolutionaries)
-				H.visible_message("<span class='alert'><b>[H] resists the anti-revolutionary implant!</b></span>")
+				H.visible_message("<span class='alert'><b>[H] resists the counter-revolutionary implant!</b></span>")
 				H.changeStatus("weakened", 1 SECOND)
 				H.force_laydown_standup()
 				playsound(H.loc, "sound/effects/electric_shock.ogg", 60, 0,0,pitch = 2.4)
@@ -1201,9 +1201,9 @@ THROWING DARTS
 	name = "glass case - 'Freedom'"
 	implant_type = "/obj/item/implant/freedom"
 
-/obj/item/implantcase/antirev
-	name = "glass case - 'Anti-Rev'"
-	implant_type = "/obj/item/implant/antirev"
+/obj/item/implantcase/counterrev
+	name = "glass case - 'Counter-Rev'"
+	implant_type = "/obj/item/implant/counterrev"
 
 /obj/item/implantcase/microbomb
 	name = "glass case - 'Microbomb'"
@@ -1460,10 +1460,10 @@ disintegrate into bio-safe elements.<BR>
 circuitry. As a result neurotoxins can cause massive damage.<BR>
 <i>Self-Destruct</i>- This implant will self terminate upon request from an authorized Command Implant <HR>
 <b>Level: 1 Auth</b>"}
-			else if (istype(src.case.imp, /obj/item/implant/antirev))
+			else if (istype(src.case.imp, /obj/item/implant/counterrev))
 				dat += {"
 <b>Implant Specifications:</b><BR>
-<b>Name:</b> Anti-Revolutionary Implant<BR>
+<b>Name:</b> Counter-Revolutionary Implant<BR>
 <b>Zone:</b> Spinal Column> 5-7 vertebrae<BR>
 <b>Power Source:</b> Nervous System Ion Withdrawl Gradient<BR>
 <b>Important Notes:</b> Will make the crewmember loyal to the command staff and prevent thoughts of rebelling.<BR>"}
