@@ -817,14 +817,13 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/adventure)
 	exterior // so i dont have to make more parts for it to look good
 		mod = "beeout-"
 
-// /turf/unsimulated/wall/auto/adventure/martian
-	//name = "organic wall"
-	//icon = 'icons/turf/walls_organic.dmi'
-	//mod = "martian-"
-	//icon_state = "cave-0"
+/turf/unsimulated/wall/auto/adventure/martian
+	name = "organic wall"
+	icon = 'icons/turf/walls_martian.dmi'
+	mod = "martian-"
 
-	//exterior
-		//mod = "martout-"
+	exterior
+		mod = "martout-"
 
 // Some fun walls by Walpvrgis
 ABSTRACT_TYPE(turf/unsimulated/wall/auto/hedge)
