@@ -8335,11 +8335,8 @@
 	},
 /area/owlery/staffhall)
 "aDC" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall3dir"
-	},
-/area/shuttle/merchant_shuttle/left_centcom/destiny)
+/turf/simulated/wall/auto/old,
+/area/crunch)
 "aDD" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = ""
@@ -19054,7 +19051,13 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/drone/engineering)
 "biJ" = (
-/turf/simulated/wall/auto/old,
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/martian/floor,
+/turf/space,
 /area/crunch)
 "biK" = (
 /obj/decal/fakeobjects{
@@ -20152,7 +20155,7 @@
 /area/marsoutpost)
 "blq" = (
 /obj/indestructible/shuttle_corner{
-	dir = 9;
+	dir = 5;
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
@@ -20539,7 +20542,7 @@
 /area/syndicate_station/battlecruiser)
 "bmo" = (
 /obj/indestructible/shuttle_corner{
-	dir = 5;
+	dir = 6;
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
@@ -25346,15 +25349,6 @@
 	},
 /turf/space/fluid/cenote,
 /area/crater)
-"byk" = (
-/obj/indestructible/shuttle_corner{
-	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/martian/floor,
-/turf/space,
-/area/crunch)
 "byl" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5
@@ -61938,24 +61932,6 @@
 "dsf" = (
 /turf/simulated/floor/airless/stairs/wood2,
 /area/afterlife/bar)
-"dsg" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall3dir"
-	},
-/area/shuttle/merchant_shuttle/right_centcom/destiny)
-"dsh" = (
-/turf/simulated/shuttle/wall{
-	dir = 5;
-	icon_state = "wall3dir"
-	},
-/area/shuttle/merchant_shuttle/right_centcom/destiny)
-"dsi" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall3dir"
-	},
-/area/shuttle/merchant_shuttle/right_centcom/destiny)
 "dsj" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 1;
@@ -62034,7 +62010,7 @@
 /area/hospital/underground)
 "dsu" = (
 /obj/indestructible/shuttle_corner{
-	dir = 1;
+	dir = 10;
 	icon_state = "wall3_trans"
 	},
 /turf/unsimulated/floor/shuttle{
@@ -62053,17 +62029,11 @@
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
 "dsw" = (
 /obj/indestructible/shuttle_corner{
-	dir = 8;
+	dir = 9;
 	icon_state = "wall3_trans"
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/right_centcom/destiny)
-"dsx" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall3dir"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
 "dsz" = (
@@ -73985,11 +73955,6 @@
 	},
 /turf/unsimulated/floor/red,
 /area/syndicate_station/assault_pod)
-"kyf" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3dir"
-	},
-/area/shuttle/merchant_shuttle/left_centcom/destiny)
 "kzn" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -75122,6 +75087,7 @@
 /area/centcom/offices/adhara)
 "nwm" = (
 /obj/indestructible/shuttle_corner{
+	dir = 6;
 	icon_state = "wall3_trans"
 	},
 /turf/unsimulated/outdoors/grass,
@@ -76564,11 +76530,6 @@
 	dir = 1
 	},
 /area/centcom/offices/cogwerks)
-"qNe" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3dir"
-	},
-/area/shuttle/merchant_shuttle/right_centcom/destiny)
 "qOO" = (
 /obj/decal/fakeobjects/dreambeach/mars,
 /turf/unsimulated/floor/dream/beach,
@@ -76951,7 +76912,7 @@
 /area/centcom/offices/marknstein)
 "rMc" = (
 /obj/indestructible/shuttle_corner{
-	dir = 4;
+	dir = 5;
 	icon_state = "wall3_trans"
 	},
 /turf/unsimulated/outdoors/grass,
@@ -80533,15 +80494,15 @@ bIY
 bIY
 bIY
 bIY
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
 bIY
 bIY
 bIY
@@ -80834,8 +80795,8 @@ bIY
 bIY
 bIY
 bIY
-biJ
-biJ
+aDC
+aDC
 bLn
 bLn
 cbG
@@ -80843,7 +80804,7 @@ bLn
 bLn
 cdl
 bLn
-biJ
+aDC
 ceO
 ceO
 ceO
@@ -81136,7 +81097,7 @@ bIY
 bIY
 bIY
 bIY
-biJ
+aDC
 bLn
 bLX
 bLX
@@ -81438,7 +81399,7 @@ bIY
 bIY
 bIY
 bIY
-biJ
+aDC
 cai
 bLX
 cbc
@@ -81740,7 +81701,7 @@ bIY
 bTU
 bTU
 bTU
-biJ
+aDC
 caj
 caC
 bLX
@@ -82042,7 +82003,7 @@ bTU
 bTU
 bTU
 bTU
-biJ
+aDC
 bLn
 bLn
 bLn
@@ -82354,7 +82315,7 @@ bLn
 bLn
 bLn
 bLy
-biJ
+aDC
 bLn
 bNW
 bLn
@@ -82637,7 +82598,7 @@ bTU
 bTU
 bTU
 bTU
-blq
+biJ
 bWu
 bYP
 bTU
@@ -82943,11 +82904,11 @@ bWR
 bUv
 bUv
 bTU
-blq
+biJ
 bUv
 bUv
 bTU
-blq
+biJ
 bWl
 bYP
 bTU
@@ -82958,7 +82919,7 @@ bLn
 bLn
 bLn
 bLn
-biJ
+aDC
 cfh
 bLn
 bKw
@@ -83260,9 +83221,9 @@ bLn
 bLn
 bLn
 ceq
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
 bKw
 bKw
 bKw
@@ -83551,9 +83512,9 @@ bVr
 bUv
 bVY
 bTU
-bmo
+blq
 bZI
-byk
+bmo
 bTU
 bLy
 bLn
@@ -83562,7 +83523,7 @@ bLn
 cbG
 bLn
 bLn
-biJ
+aDC
 bKw
 bKw
 bKw
@@ -83864,7 +83825,7 @@ bLm
 cdn
 bLm
 bLn
-biJ
+aDC
 bKw
 bKw
 bKw
@@ -84147,16 +84108,16 @@ bUw
 bUv
 bVY
 bTU
-bmo
+blq
 bUv
-byk
+bmo
 bTU
 bUv
 bUv
 bYP
 bTU
 bTU
-biJ
+aDC
 cak
 bLy
 bLn
@@ -84166,7 +84127,7 @@ bLy
 bNv
 bLy
 diR
-biJ
+aDC
 bIY
 bKw
 bKw
@@ -84428,8 +84389,8 @@ bJE
 bJE
 bJE
 bJE
-biJ
-biJ
+aDC
+aDC
 bLd
 bKB
 bKB
@@ -84452,13 +84413,13 @@ bTU
 bTU
 bTV
 bTU
-blq
+biJ
 bUv
 bUv
 bYQ
 bTU
 bTU
-biJ
+aDC
 cal
 bLn
 bLn
@@ -84730,7 +84691,7 @@ bJV
 bJV
 bJE
 bJE
-biJ
+aDC
 bLn
 bLy
 cte
@@ -84760,7 +84721,7 @@ bUv
 bVY
 bTU
 bTU
-biJ
+aDC
 bOv
 caG
 bLn
@@ -85032,10 +84993,10 @@ bJV
 bJV
 bJE
 bJE
-biJ
+aDC
 bLn
 bRr
-biJ
+aDC
 bKw
 bKw
 bKw
@@ -85062,8 +85023,8 @@ bWR
 bTU
 bTU
 bTU
-biJ
-biJ
+aDC
+aDC
 bLy
 bLn
 bNv
@@ -85334,11 +85295,11 @@ bJV
 bJV
 bJV
 bJE
-biJ
+aDC
 bRb
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
 bKw
 bKw
 bIY
@@ -85358,16 +85319,16 @@ bTU
 bTU
 bTU
 bTU
-bmo
+blq
 bUv
-byk
+bmo
 bTU
 bIY
 bTU
 bTU
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
 bNv
 bNv
 bJE
@@ -85640,7 +85601,7 @@ bLd
 bQy
 bQy
 bRC
-biJ
+aDC
 bKw
 bKw
 bIY
@@ -85942,7 +85903,7 @@ bQy
 bQy
 bQy
 bQK
-biJ
+aDC
 bKw
 bIY
 bIY
@@ -86244,7 +86205,7 @@ bQy
 bRc
 bQy
 bRD
-biJ
+aDC
 bKw
 bIY
 bIY
@@ -86266,18 +86227,18 @@ bIY
 bIY
 bIY
 bIY
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
 bJE
 bJE
 bYi
@@ -86534,19 +86495,19 @@ bKT
 bJV
 diA
 bJE
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
 bQy
 bQJ
 bQy
 bQy
 bRE
-biJ
+aDC
 bIY
 bIY
 bIY
@@ -86568,7 +86529,7 @@ bKw
 bIY
 bIY
 bIY
-biJ
+aDC
 bLy
 bLy
 bLy
@@ -86841,14 +86802,14 @@ bOp
 bOI
 bPh
 bPC
-biJ
-biJ
+aDC
+aDC
 bQz
 bQK
 bQy
 bQy
 bRF
-biJ
+aDC
 bIY
 bIY
 bIY
@@ -86870,7 +86831,7 @@ bKw
 bKw
 bKw
 bIY
-biJ
+aDC
 bLy
 bZe
 bYR
@@ -87144,13 +87105,13 @@ bOJ
 bPi
 bPD
 bPL
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
 bRd
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
 bKw
 bKw
 bKw
@@ -87172,21 +87133,21 @@ bKw
 bKw
 bKw
 bKw
-biJ
+aDC
 bLy
 bZf
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
 caH
-biJ
-biJ
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
+aDC
+aDC
 caH
-biJ
-biJ
+aDC
+aDC
 bJE
 bJE
 bJE
@@ -87447,13 +87408,13 @@ bOq
 bOq
 bOq
 bQj
-biJ
+aDC
 bQL
 bQy
 bQy
 bRG
-biJ
-biJ
+aDC
+aDC
 bKB
 bKB
 bKw
@@ -87477,13 +87438,13 @@ bKw
 bMf
 bLy
 bZf
-biJ
+aDC
 bZJ
 bUP
 bUP
 bUP
 cbH
-biJ
+aDC
 ccM
 bUP
 bUP
@@ -87749,13 +87710,13 @@ bOq
 bOq
 bOq
 bOq
-biJ
+aDC
 bQy
 bQy
 bQy
 bQy
 bRV
-biJ
+aDC
 bLy
 bLy
 bKB
@@ -87779,13 +87740,13 @@ bKw
 bYA
 bYR
 bZg
-biJ
+aDC
 bZK
 bUP
 bUP
 bUP
 cbI
-biJ
+aDC
 bLy
 bUP
 bUP
@@ -88057,8 +88018,8 @@ bQy
 bQy
 bQy
 bRW
-biJ
-biJ
+aDC
+aDC
 bLn
 bLy
 bKB
@@ -88081,13 +88042,13 @@ bKw
 bMh
 bLy
 bZf
-biJ
+aDC
 bZL
 bUP
 bUP
 bUP
 cbJ
-biJ
+aDC
 bZM
 bUP
 bUP
@@ -88353,7 +88314,7 @@ bPj
 bOq
 bPM
 bON
-biJ
+aDC
 bQy
 bQy
 bQy
@@ -88380,16 +88341,16 @@ bKw
 bKw
 bKw
 bKw
-biJ
+aDC
 bLy
 bZf
-biJ
+aDC
 bZM
 bUP
 bUP
 bUP
 bUP
-biJ
+aDC
 ccN
 bUP
 bUP
@@ -88655,14 +88616,14 @@ bOs
 bOq
 bPN
 bOL
-biJ
+aDC
 bQM
 bRe
 bQy
 bQy
 bQy
-biJ
-biJ
+aDC
+aDC
 bLn
 bKU
 bKB
@@ -88682,16 +88643,16 @@ bKw
 bKw
 bKB
 bKB
-biJ
-biJ
+aDC
+aDC
 bZh
-biJ
+aDC
 bZN
 cam
 caI
 cbd
 cbK
-biJ
+aDC
 ccO
 bUP
 bUP
@@ -88943,7 +88904,7 @@ bJX
 bJX
 bJX
 bJX
-biJ
+aDC
 bLz
 bLn
 bLn
@@ -88957,13 +88918,13 @@ bPk
 bOq
 bPO
 bQk
-biJ
+aDC
 bQN
 bQK
 bRs
 bQy
 bQy
-biJ
+aDC
 bSA
 bLn
 bLe
@@ -88984,16 +88945,16 @@ bKw
 bKw
 bKB
 bYi
-biJ
+aDC
 bLy
 bZf
-biJ
+aDC
 bZO
 can
 caJ
 cbe
 bUP
-biJ
+aDC
 bUP
 cdo
 bUP
@@ -89245,7 +89206,7 @@ bJX
 bJX
 bJX
 bJX
-biJ
+aDC
 bLn
 bLn
 bLn
@@ -89259,13 +89220,13 @@ bPl
 bOq
 bPM
 bQl
-biJ
+aDC
 bQy
 bQK
 bQy
 bQy
 bQy
-biJ
+aDC
 bLQ
 bLn
 bLn
@@ -89289,13 +89250,13 @@ bLd
 bYB
 bYS
 bZi
-biJ
+aDC
 bZP
 cao
 caK
 cbf
 bUP
-biJ
+aDC
 bUP
 bUP
 bUP
@@ -89547,7 +89508,7 @@ bJX
 bJX
 bJX
 bJX
-biJ
+aDC
 bLn
 bLn
 bLn
@@ -89561,14 +89522,14 @@ bPm
 bOq
 bPP
 bQm
-biJ
+aDC
 bQy
 bQK
 bQy
 bQy
 bQy
-biJ
-biJ
+aDC
+aDC
 bLn
 bLy
 cte
@@ -89591,19 +89552,19 @@ bLy
 bYC
 bLy
 bLy
-biJ
+aDC
 bZQ
 bUP
 bUP
 bUP
 bLy
-biJ
+aDC
 ccP
 bUP
 bUP
 bUP
 ceR
-biJ
+aDC
 bJE
 bJE
 bKw
@@ -89849,10 +89810,10 @@ bJX
 bJX
 bJX
 bJX
-biJ
+aDC
 bLA
-biJ
-biJ
+aDC
+aDC
 bMz
 bNb
 bNw
@@ -89863,7 +89824,7 @@ bOq
 bOq
 bOq
 bQn
-biJ
+aDC
 bQy
 bQy
 bQy
@@ -89889,23 +89850,23 @@ bRa
 bKw
 bKw
 bKB
-biJ
+aDC
 bLy
 bLy
 bLy
-biJ
+aDC
 bZR
 bUP
 bUP
 bUP
 bLy
-biJ
+aDC
 ccQ
 bUP
 bUP
 bUP
 ceS
-biJ
+aDC
 bKw
 bKw
 bKw
@@ -90151,28 +90112,28 @@ bJX
 bJX
 bJX
 bKw
-biJ
+aDC
 bLB
 bLR
-biJ
-biJ
+aDC
+aDC
 bNc
-biJ
-biJ
+aDC
+aDC
 bOt
 bOP
-biJ
-biJ
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
+aDC
+aDC
 bQO
 bQy
 bQy
 bQy
 bRX
-biJ
-biJ
+aDC
+aDC
 bLn
 bLm
 bSC
@@ -90191,24 +90152,24 @@ bKw
 bKw
 bKw
 bKB
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
 bUP
 bUP
 bUP
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
 bUP
 bUP
 bUP
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
 bKw
 bKw
 bIY
@@ -90453,27 +90414,27 @@ bJX
 bKw
 bKw
 bKw
-biJ
+aDC
 bLC
 bLS
 bZW
 bLn
 bLn
 bLn
-biJ
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
+aDC
 bLX
 bLX
 bLX
-biJ
+aDC
 bQy
 bQy
 bQy
 bQK
 bRY
-biJ
+aDC
 bSC
 bLn
 bLy
@@ -90493,32 +90454,32 @@ bKw
 bKw
 bKw
 bKw
-biJ
+aDC
 bYD
 bLn
-biJ
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
+aDC
 cdL
-biJ
-biJ
+aDC
+aDC
 ccw
-biJ
-biJ
+aDC
+aDC
 cdL
-biJ
-biJ
+aDC
+aDC
 ccw
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
 bQi
 cte
-biJ
+aDC
 cte
 bQi
 bLe
@@ -90755,10 +90716,10 @@ bJX
 bKw
 bKw
 bLb
-biJ
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
+aDC
 bLn
 bLn
 bNx
@@ -90774,8 +90735,8 @@ bQy
 bRf
 bQy
 bRH
-biJ
-biJ
+aDC
+aDC
 bKB
 bSL
 bKB
@@ -91058,7 +91019,7 @@ bKw
 bKB
 cte
 bLm
-biJ
+aDC
 bLT
 bLn
 bLn
@@ -91071,12 +91032,12 @@ bPn
 bLn
 bLn
 bLn
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
 bKw
 bKB
 bKB
@@ -91093,7 +91054,7 @@ bLd
 bLd
 bKw
 bWE
-biJ
+aDC
 bKw
 bKw
 bKw
@@ -91373,19 +91334,19 @@ bPn
 bLU
 bLU
 bLU
-biJ
+aDC
 bQP
 bLn
 bLm
 bLy
-biJ
+aDC
 bKw
 bKw
 bKw
 bKw
 bKw
 bKw
-biJ
+aDC
 cte
 cte
 bUP
@@ -91395,7 +91356,7 @@ bUP
 bUP
 bUP
 bUP
-biJ
+aDC
 bIY
 bKw
 bKw
@@ -91662,7 +91623,7 @@ bKw
 bKB
 bLe
 bLn
-biJ
+aDC
 bLU
 bLU
 bLU
@@ -91687,7 +91648,7 @@ bKw
 bKw
 bKw
 bJE
-biJ
+aDC
 bUP
 bUP
 bUP
@@ -91697,7 +91658,7 @@ bUP
 bUP
 bUP
 bUP
-biJ
+aDC
 bIY
 bXA
 bKw
@@ -91706,26 +91667,26 @@ bKw
 bKw
 bKB
 bYi
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
 bQi
 cte
 bLy
@@ -91963,8 +91924,8 @@ bJX
 bJX
 bKw
 bKB
-biJ
-biJ
+aDC
+aDC
 bLV
 bLl
 bLl
@@ -91989,7 +91950,7 @@ bKw
 bKw
 bJE
 bJE
-biJ
+aDC
 bUQ
 bUP
 bUP
@@ -91999,7 +91960,7 @@ bUP
 bUP
 bUP
 bLy
-biJ
+aDC
 bIY
 bIY
 bIY
@@ -92265,7 +92226,7 @@ bJX
 bJX
 bJX
 bJX
-biJ
+aDC
 bLE
 bLn
 bMf
@@ -92291,8 +92252,8 @@ bJE
 bJE
 bJE
 bJE
-biJ
-biJ
+aDC
+aDC
 bUQ
 bUP
 bUP
@@ -92300,8 +92261,8 @@ bVJ
 bUP
 bUP
 bWv
-biJ
-biJ
+aDC
+aDC
 bIY
 bIY
 bIY
@@ -92567,7 +92528,7 @@ bJX
 bJX
 bJX
 bJX
-biJ
+aDC
 bLF
 bLW
 bMg
@@ -92594,15 +92555,15 @@ bJE
 bJE
 bJE
 bJE
-biJ
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
+aDC
 bVK
 bVZ
 bVK
-biJ
-biJ
+aDC
+aDC
 bIY
 bIY
 aaa
@@ -92869,7 +92830,7 @@ bJX
 bJX
 bJX
 bJX
-biJ
+aDC
 bLG
 bLX
 bMh
@@ -93171,10 +93132,10 @@ bJX
 bJX
 bJX
 bJX
-biJ
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
+aDC
 bMC
 bLn
 bLn
@@ -93476,8 +93437,8 @@ bJX
 bJX
 bJX
 bJX
-biJ
-biJ
+aDC
+aDC
 bLn
 bLn
 bLn
@@ -93491,8 +93452,8 @@ bLn
 bLn
 bLn
 bRu
-biJ
-biJ
+aDC
+aDC
 bIY
 bIY
 bIY
@@ -93793,7 +93754,7 @@ bPF
 bPF
 bRg
 bRv
-biJ
+aDC
 bIY
 bIY
 bIY
@@ -94081,7 +94042,7 @@ bIY
 bJX
 bJX
 bJX
-biJ
+aDC
 bLn
 bLn
 bLn
@@ -94095,7 +94056,7 @@ bLn
 bLn
 bLn
 bRw
-biJ
+aDC
 bIY
 bIY
 bIY
@@ -94383,21 +94344,21 @@ bIY
 bIY
 bIY
 bJX
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
-biJ
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
+aDC
 bIY
 bIY
 bIY
@@ -140154,8 +140115,8 @@ gcn
 aES
 aES
 vNH
-kyf
-aDC
+rWC
+rWC
 wxJ
 rWC
 aEX
@@ -141362,8 +141323,8 @@ gcn
 aES
 aES
 rst
-kyf
-aDC
+rWC
+rWC
 wxJ
 rWC
 aEX
@@ -143781,8 +143742,8 @@ dsj
 dsn
 dsz
 ewR
-qNe
-dsx
+dsz
+dsz
 nwm
 aES
 dFc
@@ -144079,7 +144040,7 @@ aES
 aES
 aES
 aES
-dsg
+dsz
 dsk
 dso
 dsq
@@ -144381,7 +144342,7 @@ aES
 aES
 aES
 aES
-dsh
+dsz
 dsl
 dsq
 dsq
@@ -144683,7 +144644,7 @@ aES
 aES
 aES
 aES
-dsi
+dsz
 dsm
 dso
 dsq
@@ -144989,8 +144950,8 @@ dsj
 dsn
 dsz
 ewR
-qNe
-dsx
+dsz
+dsz
 rMc
 aES
 dFc
