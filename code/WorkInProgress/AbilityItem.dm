@@ -338,7 +338,7 @@
 			boutput(usr, "<span class='alert'>Only a human can do that.</span>")
 			return
 		var/mob/living/carbon/human/H = usr
-		if ((the_item.loc == H.limbs.l_arm) || (the_item.loc == H.limbs.r_arm))
+		if (the_item.temp_flags & IS_LIMB_ITEM)
 			boutput(usr, "<span class='alert'>The saw is already attached as an item.</span>")
 			return
 		switch (alert(usr, "Which arm would you like to replace with [the_item]?",,"Left","Right","Cancel"))
