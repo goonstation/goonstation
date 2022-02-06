@@ -1,5 +1,7 @@
 
 (t)sun feb 06 22
+(u)pali
+(+)Nukies now have a unique radio record on their battlecruiser.
 (u)NightmareChamillian
 (p)7354
 (e)🎨|sprites
