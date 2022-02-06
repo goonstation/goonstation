@@ -1,5 +1,9 @@
 
 (t)sat feb 05 22
+(u)Stonepillar
+(p)7411
+(e)⚖|balance
+(+)Reduced the damage of high-level loaves.
 (u)ThyOverlord
 (p)7378
 (e)🎨|sprites
