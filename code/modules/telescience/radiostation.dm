@@ -260,7 +260,7 @@
 			W.set_loc(src)
 			src.record_inside = W
 			src.has_record = 1
-			var/R = html_encode(input("What is the name of this record?","Record Name") as null|text)
+			var/R = html_encode(input("What is the name of this record?","Record Name", src.record_inside.record_name) as null|text)
 			if(!in_interact_range(src, user))
 				boutput(user, "You're out of range of the [src.name]!")
 				return
