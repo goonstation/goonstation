@@ -1,5 +1,10 @@
 
 (t)sun feb 06 22
+(u)Flappybat and Flaborized
+(p)7269
+(e)🆕🎨|feature, sprites
+(*)Added a Recover Gear ability to Hunters. Use it to teleport your rifle, spear or cloak back to your position if you lose them. Animations by Flaborized.
+(*)New Hunting spear sprite and inhands by Flaborized!
 (u)Flaborized
 (p)7412
 (e)🎨|sprites
