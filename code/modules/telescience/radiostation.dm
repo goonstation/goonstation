@@ -541,7 +541,6 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	name = "record - \"Second Reality\""
 	record_name = "Second Reality"
 	song = "sound/radio_station/music/second_reality.s3m"
-	desc = "A fairly large record. You imagine there are probably some rad songs on this. Rad, get it? Because the station is gonna be irradiated once the nuke detonates. Song by Purple Motion."
 	add_overlay = FALSE
 
 	New()
@@ -549,6 +548,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 		var/image/overlay = new /image(src.icon, "record_3")
 		overlay.color = list(1.5, 0, 0, 0, 0, 0, 0, 0, 0) // very red
 		src.UpdateOverlays(overlay, "recordlabel")
+		src.desc = "A fairly large record. You imagine there are probably some rad songs on this. Rad, get it? Because the station is gonna be irradiated once the nuke detonates. Song by Purple Motion."
 
 ABSTRACT_TYPE(/obj/item/record/random/metal)
 /obj/item/record/random/metal
