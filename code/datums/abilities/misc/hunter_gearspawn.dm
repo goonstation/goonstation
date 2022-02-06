@@ -1,6 +1,6 @@
 /datum/targetable/hunter/hunter_gearspawn
 	name = "Order hunting gear"
-	desc = "Teleports hunting gear to your location."
+	desc = "Equip your hunting gear."
 	targeted = 0
 	target_nodamage_check = 0
 	max_range = 0

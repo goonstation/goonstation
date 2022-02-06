@@ -1374,22 +1374,17 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				for (var/obj/item/grab/G in src.grabbed_by)
 					G.do_resist()
 					struggled_grab = 1
-			else if(src.pulled_by)
-				for (var/mob/O in AIviewers(src, null))
-					O.show_message(text("<span class='alert'>[] breaks free from []'s pulling!</span>", src, src.pulled_by), 1, group = "resist")
-				src.pulled_by.remove_pulling()
-				struggled_grab = 1
+			else
+				if(src.pulled_by)
+					for (var/mob/O in AIviewers(src, null))
+						O.show_message(text("<span class='alert'>[] resists []'s pulling!</span>", src, src.pulled_by), 1, group = "resist")
+					src.pulled_by.remove_pulling()
+					struggled_grab = 1
 		else
-			if(length(src.grabbed_by) > 0)
-				for (var/obj/item/grab/G in src.grabbed_by)
-					if (G.stunned_targets_can_break())
-						G.do_resist()
-						struggled_grab = 1
-			else if(src.pulled_by)
-				for (var/mob/O in AIviewers(src, null))
-					O.show_message(text("<span class='alert'>[] breaks free from []'s pulling!</span>", src, src.pulled_by), 1, group = "resist")
-				src.pulled_by.remove_pulling()
-				struggled_grab = 1
+			for (var/obj/item/grab/G in src.grabbed_by)
+				if (G.stunned_targets_can_break())
+					G.do_resist()
+					struggled_grab = 1
 
 		if (!src.grabbed_by || !src.grabbed_by.len && !struggled_grab)
 			if (src.buckled)

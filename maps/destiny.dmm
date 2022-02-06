@@ -15814,9 +15814,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "bzG" = (
 /turf/simulated/wall/asteroid{
@@ -15833,9 +15831,7 @@
 	},
 /area/space)
 "bzK" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "bzL" = (
 /turf/simulated/wall/asteroid{
@@ -15963,9 +15959,7 @@
 /area/listeningpost)
 "bAe" = (
 /obj/securearea,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "bAf" = (
 /obj/cable{

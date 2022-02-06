@@ -41957,9 +41957,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "bJV" = (
 /turf/simulated/wall/asteroid{
@@ -41983,9 +41981,7 @@
 	},
 /area/listeningpost/solars)
 "bJY" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "bJZ" = (
 /obj/cable{
@@ -41993,9 +41989,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "bKa" = (
 /turf/simulated/wall/asteroid{
@@ -42118,9 +42112,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "bKo" = (
 /obj/cable{
@@ -42128,9 +42120,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "bKp" = (
 /obj/cable,
@@ -42238,9 +42228,7 @@
 /area/space)
 "bKA" = (
 /obj/securearea,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "bKB" = (
 /obj/cable{
@@ -42312,9 +42300,7 @@
 	},
 /area/listeningpost)
 "bKK" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "bKL" = (
 /turf/space,
@@ -42602,9 +42588,7 @@
 /area/listeningpost)
 "bLv" = (
 /obj/submachine/ATM,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "bLw" = (
 /obj/machinery/vending/snack,
@@ -42627,9 +42611,7 @@
 	},
 /area/listeningpost)
 "bLz" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/syndicate_teleporter)
 "bLA" = (
 /obj/cable{

@@ -124,6 +124,9 @@ var/global/list/datum/mind/battle_pass_holders = list()
 		// Stuff them on the shuttle
 	player.current.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
 	equip_battler(player.current)
+	if (ishuman(player.current))
+		var/mob/living/carbon/human/H = player.current
+		H.AddComponent(/datum/component/battleroyale_death)
 	SPAWN_DBG(MAX_TIME_ON_SHUTTLE)
 		if(istype(get_area(player.current),/area/shuttle/battle) || istype(get_area(player.current),/area/shuttle_transit_space/west) )
 			boutput(player.current,"<span class='alert'>You are thrown out of the shuttle for taking too long!</span>")
@@ -150,8 +153,8 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	else if(someone_died && living_battlers.len % 10 == 0)
 		command_alert("[living_battlers.len] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
 	if(living_battlers.len <= 1)
-		return 0
-	return 0
+		return TRUE
+	return FALSE
 
 
 /datum/game_mode/battle_royale/declare_completion()

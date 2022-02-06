@@ -1,4 +1,64 @@
 
+(t)sun feb 06 22
+(u)Flaborized
+(p)7412
+(e)🎨|sprites
+(+)Resprited cloning upgrade modules.
+(u)Colossusqw
+(p)7315
+(e)🆕🎨|feature, sprites
+(+)Made so you can play as a scorpion if an admin wants it.
+(u)Flappybat
+(p)7347
+(e)🆕|feature
+(+)When you die in Battle Royale you are now vaporized and drop your gear.
+(u)Flaborized
+(p)7397
+(e)🎨|sprites
+(+)Resprited the comms dish.
+(u)zjdtmkhzt
+(p)7167
+(e)|
+(+)Added a new option for mechcomponents to connect them without clickdrag.
+(t)sat feb 05 22
+(u)Stonepillar
+(p)7411
+(e)⚖|balance
+(+)Reduced the damage of high-level loaves.
+(u)ThyOverlord
+(p)7378
+(e)🎨|sprites
+(+)Resprited the fish you see around the station.
+(t)fri feb 04 22
+(u)Adhara in Space
+(p)7398
+(e)|
+(*)Clicking on a desk (or any table with built in storage) with an empty hand opens the storage now.
+(u)NightmareChamillian
+(p)7392
+(e)|
+(+)Light switches are now too high for ghost critters
+(u)TTerc
+(e)🗺|mapping
+(+)Donut 3 engine room now has a blast shield you can (and should!) use to protect the crew from bigulo setups.
+(u)Emily
+(p)7390
+(e)|
+(*)You can no longer struggle out of grabs while stunned
+(t)thu feb 03 22
+(u)Flappybat
+(p)7382
+(e)⚖|balance
+(+)Hunter mask now self destructs on death.
+(t)wed feb 02 22
+(u)LeahTheTech
+(p)7306
+(e)📄|tgui
+(*)The barcode computer now has a new UI, this one shows the scanned ID card clearly so you can keep track of how rich the other QM is getting.
+(u)Emily
+(+)The Retention Center no longer has a sequence break to getting to Dino Jason's early. If you go to Dino Jason's, don't forget to thank the bus driver!
+(u)pali
+(+)The prompt to change your ring message on a PDA now has pre-typed traitor code for your convenience (if you are the owner of the uplink in the PDA).
 (t)tue feb 01 22
 (u)tarmunora
 (+)chainsaw no fall apart
