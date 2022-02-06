@@ -1099,7 +1099,7 @@
 				src.icon_state = "ploaf7"
 				src.force = 88
 				src.throwforce = 88
-				src.throw_range = 1
+				src.throw_range = 0
 				src.reagents.add_reagent("george_melonium",50)
 
 				if (!src.processing)
