@@ -16818,10 +16818,6 @@
 "aTQ" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/iss)
-"aTR" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/iss)
 "aTS" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -17603,7 +17599,8 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "aVZ" = (
-/obj/wingrille_spawn/auto,
+/obj/grille/steel,
+/obj/window/reinforced,
 /turf/simulated/floor/plating,
 /area/abandonedmedicalship/robot_trader)
 "aWa" = (
@@ -24707,6 +24704,11 @@
 	},
 /turf/space,
 /area/abandonedmedicalship)
+"vYS" = (
+/obj/grille/steel,
+/obj/window/reinforced,
+/turf/simulated/floor/plating,
+/area/iss)
 "wav" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/airless/caution/northsouth,
@@ -89982,7 +89984,7 @@ aaa
 aaa
 aTP
 aTQ
-aTR
+vYS
 aTQ
 aVc
 aaa
@@ -91767,7 +91769,7 @@ aaa
 aaa
 aTP
 aTQ
-aTR
+vYS
 aTQ
 aVc
 aaa
@@ -92062,8 +92064,8 @@ aaa
 aaa
 aTP
 aTQ
-aTR
-aTR
+vYS
+vYS
 aTQ
 aLx
 aLx
@@ -92362,7 +92364,7 @@ aaa
 aaa
 aaa
 aaa
-aTR
+vYS
 aTZ
 aUe
 aUk
@@ -92393,7 +92395,7 @@ aYs
 aYr
 aTQ
 aTQ
-aTR
+vYS
 aTQ
 aTQ
 bao
@@ -92664,7 +92666,7 @@ aaa
 aaa
 aaa
 aaa
-aTR
+vYS
 aTZ
 aUf
 aUe
@@ -92966,7 +92968,7 @@ aaa
 aaa
 aaa
 aaa
-aTR
+vYS
 aUa
 bmB
 aUl
@@ -92997,7 +92999,7 @@ aYu
 aYH
 aTQ
 aTQ
-aTR
+vYS
 aTQ
 aTQ
 bap
@@ -93270,8 +93272,8 @@ aaa
 aaa
 aTS
 aTQ
-aTR
-aTR
+vYS
+vYS
 aTQ
 aLx
 aLx
@@ -93579,7 +93581,7 @@ aaa
 aaa
 aTS
 aTQ
-aTR
+vYS
 aTQ
 aVe
 aaa
