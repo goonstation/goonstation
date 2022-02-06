@@ -1,6 +1,10 @@
 
 (t)sun feb 06 22
 (u)NightmareChamillian
+(p)7354
+(e)🎨|sprites
+(+)Added unique sprites for the syndicate tranquilizer darts, meowtizer, and .22 smartgun magazines.
+(u)NightmareChamillian
 (p)7236
 (e)🎨|sprites
 (+)The sweatshop that produces NT's pride wardrobe now manufacturers reversible jumpsuits for the MLM sexuality
