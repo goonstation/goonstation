@@ -888,11 +888,6 @@
 
 				LAGCHECK(LAG_MED)
 
-
-
-				if (newIngredient.reagents)
-					newIngredient.reagents.trans_to(newLoaf, 1000)
-
 				if (istype(newIngredient, /obj/item/reagent_containers/food/snacks/prison_loaf))
 					var/obj/item/reagent_containers/food/snacks/prison_loaf/otherLoaf = newIngredient
 					newLoaf.loaf_factor += otherLoaf.loaf_factor * 1.2
@@ -976,7 +971,7 @@
 	icon_state = "eloaf"
 	force = 0
 	throwforce = 0
-	initial_volume = 1000
+	initial_volume = 400
 
 	New()
 		..()
@@ -990,7 +985,7 @@
 	icon_state = "ploaf0"
 	force = 0
 	throwforce = 0
-	initial_volume = 1000
+	initial_volume = 400
 	var/loaf_factor = 1
 	var/processing = 0
 
