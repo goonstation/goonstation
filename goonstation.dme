@@ -255,6 +255,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\components\arable.dm"
 #include "code\datums\components\barber.dm"
 #include "code\datums\components\baseball_bat_reflect.dm"
+#include "code\datums\components\battleroyale_death.dm"
 #include "code\datums\components\biodegradable.dm"
 #include "code\datums\components\cell_holder.dm"
 #include "code\datums\components\clown_disbelief_item.dm"
