@@ -1,5 +1,9 @@
 
 (t)sun feb 06 22
+(u)Colossusqw
+(p)7315
+(e)🆕🎨|feature, sprites
+(+)Made so you can play as a scorpion if an admin wants it.
 (u)Flappybat
 (p)7347
 (e)🆕|feature
