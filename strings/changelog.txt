@@ -1,4 +1,9 @@
 
+(t)sun feb 06 22
+(u)zjdtmkhzt
+(p)7167
+(e)|
+(+)Added a new option for mechcomponents to connect them without clickdrag.
 (t)sat feb 05 22
 (u)Stonepillar
 (p)7411
