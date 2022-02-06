@@ -43368,6 +43368,7 @@
 "cvO" = (
 /obj/table/wood/auto,
 /obj/submachine/record_player,
+/obj/item/record/second_reality,
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/battlecruiser)
 "cvP" = (

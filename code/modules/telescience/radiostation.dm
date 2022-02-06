@@ -536,6 +536,20 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 		..()
 		src.UpdateOverlays(new /image(src.icon, "record_6"), "recordlabel") //it should always be green because I'm so funny.
 
+// nukie record
+/obj/item/record/second_reality
+	name = "record - \"Second Reality\""
+	record_name = "Second Reality"
+	song = "sound/radio_station/music/second_reality.s3m"
+	desc = "A fairly large record. You imagine there are probably some rad songs on this. Rad, get it? Because the station is gonna be irradiated once the nuke detonates. Song by Purple Motion."
+	add_overlay = FALSE
+
+	New()
+		..()
+		var/image/overlay = new /image(src.icon, "record_3")
+		overlay.color = list(1.5, 0, 0, 0, 0, 0, 0, 0, 0) // very red
+		src.UpdateOverlays(overlay, "recordlabel")
+
 ABSTRACT_TYPE(/obj/item/record/random/metal)
 /obj/item/record/random/metal
 	New()
