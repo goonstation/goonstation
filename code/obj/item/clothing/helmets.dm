@@ -118,7 +118,7 @@
 /obj/item/clothing/head/helmet/space/custom
 
 	name = "bespoke space helmet"
-	desc = "Helps protect against vacuum, and is custom-made just for you!"
+	desc = "A custom-built space helmet with a large visor."
 	icon_state = "spacemat"
 
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi' // inhand shit
@@ -137,26 +137,26 @@
 		overlays += fabrImg
 		overlays += visrImg
 
-	proc/setupVisorMat(var/datum/material/F, var/datum/material/C)
+	proc/setupVisorMat(var/datum/material/V, var/datum/material/C)
 		src.color = C.color
-		visr_material = copyMaterial(F)
-		if (F) // protectiveness is still decided off visor, ignore misleading F name
-			if (F.hasProperty("thermal"))
-				var/prot = round((100 - F.getProperty("thermal")) / 2)
+		visr_material = copyMaterial(V)
+		if (V)
+			if (V.hasProperty("thermal"))
+				var/prot = round((100 - V.getProperty("thermal")) / 2)
 				setProperty("coldprot", 10+prot)
 				setProperty("heatprot", 1+round(prot/2))
 			else
 				setProperty("coldprot", 10)
 				setProperty("heatprot", 2)
 
-			if(F.hasProperty("permeable"))
-				var/prot = 100 - F.getProperty("permeable")
+			if (V.hasProperty("permeable"))
+				var/prot = 100 - V.getProperty("permeable")
 				setProperty("viralprot", prot)
 			else
 				setProperty("viralprot", 40)
 
-			if(F.hasProperty("density"))
-				var/prot = round(F.getProperty("density") / 20)
+			if (V.hasProperty("density"))
+				var/prot = round(V.getProperty("density") / 20)
 				setProperty("meleeprot_head", 2+prot)
 			else
 				setProperty("meleeprot_head", 2)

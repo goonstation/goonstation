@@ -1286,8 +1286,8 @@
 	icon_state = "spacemat"
 	inhand_image_icon = "s_suit"
 	item_state = "spacemat"
-	name = "Custom space suit"
-	desc = "A custom-built space suit made to protect your soft tissues from hard vacuum"
+	name = "bespoke space suit"
+	desc = "A custom-built space suit made to protect your soft tissues from hard vacuum."
 
 
 	proc/setupSuitProp(var/datum/material/F, var/datum/material/R) // f is fabric, decides protection, R is reinforcment, decides melee prot
