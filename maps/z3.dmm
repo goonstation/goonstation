@@ -17599,8 +17599,7 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "aVZ" = (
-/obj/grille/steel,
-/obj/window/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/abandonedmedicalship/robot_trader)
 "aWa" = (
@@ -24705,8 +24704,7 @@
 /turf/space,
 /area/abandonedmedicalship)
 "vYS" = (
-/obj/grille/steel,
-/obj/window/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/iss)
 "wav" = (
