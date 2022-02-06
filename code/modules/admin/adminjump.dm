@@ -157,10 +157,14 @@
 	set popup_menu = 0
 	admin_only
 	if(config.allow_admin_jump)
-		var/list/turfs = get_area_turfs(A)
-		if (turfs == null || turfs.len == 0)
-			boutput(src, "Unable to find any turf in that area.")
-			return
+		var/list/turfs = get_area_turfs(A, 1)
+		if (!length(turfs))
+			turfs = get_area_turfs(A, 0)
+			if (!length(turfs))
+				boutput(src, "Unable to find any turf in that area.")
+				return
+			else
+				boutput(src, "warning, no floors found, sending to non-floors.")
 
 		var/turf/T = pick(turfs)
 		M.set_loc(T)
