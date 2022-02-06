@@ -23359,7 +23359,7 @@
 /turf/space,
 /area/space)
 "bkM" = (
-/obj/wingrille_spawn/reinforced/full,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/space)
 "bkN" = (
