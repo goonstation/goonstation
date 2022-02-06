@@ -124,7 +124,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi' // inhand shit
 	item_state = "s_helmet"
 
-	icon = 'icons/obj/clothing/item_hats.dmi' // prep the world icon_state for building
+	icon = 'icons/obj/clothing/item_hats.dmi' // prep the world icon_state for building, is made later
 	var/datum/material/fabr_material = null
 	var/datum/material/visr_material = null
 	var/image/fabrImg = null
@@ -140,7 +140,7 @@
 	proc/setupVisorMat(var/datum/material/F, var/datum/material/C)
 		src.color = C.color
 		visr_material = copyMaterial(F)
-		if (F) // protectiveness is still decided off visor, ignore F variable
+		if (F) // protectiveness is still decided off visor, ignore misleading F name
 			if (F.hasProperty("thermal"))
 				var/prot = round((100 - F.getProperty("thermal")) / 2)
 				setProperty("coldprot", 10+prot)

@@ -1288,29 +1288,38 @@
 	item_state = "spacemat"
 	name = "bespoke space suit"
 	desc = "A suit that protects against low pressure environments, custom-made just for you!"
-	onMaterialChanged()
-		if(src.material)
-			if(material.hasProperty("thermal"))
-				var/prot = 100 - material.getProperty("thermal")
+	proc/setupSuitProp(var/datum/material/F, var/datum/material/R) // f is fabric, decides protection, R is reinforcment, decides melee prot
+		if(F)
+			if(F.hasProperty("thermal"))
+				var/prot = 100 - F.getProperty("thermal")
 				setProperty("coldprot", prot)
 				setProperty("heatprot", round(prot/2))
 			else
 				setProperty("coldprot", 30)
 				setProperty("heatprot", 15)
 
-			if(material.hasProperty("permeable"))
-				var/prot = 100 - material.getProperty("permeable")
+			if(F.hasProperty("permeable"))
+				var/prot = 100 - F.getProperty("permeable")
 				setProperty("viralprot", prot)
 			else
 				setProperty("viralprot", 40)
 
-			if(material.hasProperty("density"))
-				var/prot = round(material.getProperty("density") / 13)
-				setProperty("meleeprot", prot)
+			if(F.hasProperty("density")) // for RANGED
+				var/prot = round(F.getProperty("density") / 13)
 				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
 			else
-				setProperty("meleeprot", 2)
 				setProperty("rangedprot", 0.4)
+
+			if(R.hasProperty("hard")) // for MELEE
+				var/prot = round(R.getProperty("density") / 13)
+				setProperty("meleeprot", prot)
+			else
+				setProperty("meleeprot", 2)
+
+			if(R.hasProperty("density"))  //movement- based off metal's density
+				var/clunk = F.getProperty("density")
+				if(clunk<=15)
+					setProperty("movespeed", 0.4) // since movespeed is already initalized, no need to have an else
 
 // Sealab suits
 

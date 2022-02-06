@@ -77,12 +77,16 @@
 			helmet.set_loc(getOutputLocation(owner))
 			var/obj/item/fabr = getObjectByPartName("Fabric")
 			var/obj/item/vis = getObjectByPartName("Visor")
+			var/obj/item/renf = getObjectByPartName("Reinforcement")
+			suit.setMaterial(fabr.material)
+			suit.setupSuitProp(fabr.material, renf.material)
+
 			if (fabr?.material && vis?.material)
 				helmet.setMaterial(fabr.material)
 				helmet.setFabrMaterial(fabr.material)
 				helmet.setVisrMaterial(vis.material)
 			helmet.setupVisorMat(vis.material, fabr.material)// sets color to match the suit, keeps protectiveness from visor
-			suit.setMaterial(fabr.material)
+
 		return
 
 /datum/matfab_recipe/mining_mod_conc
