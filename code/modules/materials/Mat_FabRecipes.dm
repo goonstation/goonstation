@@ -78,10 +78,10 @@
 			var/obj/item/fabr = getObjectByPartName("Fabric")
 			var/obj/item/vis = getObjectByPartName("Visor")
 			var/obj/item/renf = getObjectByPartName("Reinforcement")
-			suit.setMaterial(fabr.material)
+			suit.setMaterial(fabr.material) //suit stuff
 			suit.setupSuitProp(fabr.material, renf.material)
-
-			if (fabr?.material && vis?.material)
+			suit.setSuitName(fabr.material, renf.material
+			if (fabr?.material && vis?.material) //helmet stuff
 				helmet.setMaterial(fabr.material)
 				helmet.setFabrMaterial(fabr.material)
 				helmet.setVisrMaterial(vis.material)
