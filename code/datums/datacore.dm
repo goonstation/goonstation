@@ -164,6 +164,8 @@
 		S["ma_crim"] = "None"
 		S["ma_crim_d"] = "No major crime convictions."
 
+	S["sec_flag"] = "None"
+
 
 	B["job"] = H.job
 	B["current_money"] = 100.0
