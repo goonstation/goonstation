@@ -1,5 +1,9 @@
 
 (t)sun feb 06 22
+(u)Flaborized
+(p)7412
+(e)🎨|sprites
+(+)Resprited cloning upgrade modules.
 (u)Colossusqw
 (p)7315
 (e)🆕🎨|feature, sprites
