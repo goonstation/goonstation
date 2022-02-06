@@ -506,7 +506,8 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "abE" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
 	name = "Bathroom"
 	},
 /turf/unsimulated/floor/setpieces/hivefloor,
@@ -1995,7 +1996,8 @@
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
 "afV" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
 	name = "Bathroom"
 	},
 /turf/simulated/floor/black,
@@ -2131,13 +2133,14 @@
 /turf/space,
 /area/mining/dock)
 "agu" = (
-/obj/machinery/door/airlock{
-	name = "Maint Crew Quarters"
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro{
+	dir = 2;
+	name = "Maint Crew Quarters"
 	},
 /turf/simulated/floor,
 /area/mining/miningoutpost)
@@ -2396,7 +2399,9 @@
 /turf/simulated/floor/black,
 /area/mining/quarters)
 "ahj" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8
+	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -2417,7 +2422,7 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/space)
 "ahn" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/plating,
 /area/space)
 "aho" = (
@@ -2616,7 +2621,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/mining/miningoutpost)
 "ahQ" = (
@@ -2679,7 +2686,7 @@
 /area/mining/refinery)
 "ahX" = (
 /obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
 	name = "Mineral Magnet";
 	req_access_txt = "51"
 	},
@@ -2732,7 +2739,9 @@
 /turf/space,
 /area/mining/dock)
 "aid" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/mining/dock)
 "aie" = (
@@ -2788,7 +2797,9 @@
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "ail" = (
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/mining/miningoutpost)
 "aim" = (
@@ -2819,7 +2830,7 @@
 /turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "aio" = (
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
 	name = "Manufacturing Room";
 	req_access_txt = "51"
 	},
@@ -3014,7 +3025,9 @@
 /turf/simulated/floor,
 /area/mining/manufacturing)
 "aiP" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/mining/exit_west)
 "aiQ" = (
@@ -3027,7 +3040,9 @@
 /turf/simulated/floor/damaged2,
 /area/mining/manufacturing)
 "aiR" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/mining/exit_east)
 "aiS" = (
@@ -3124,7 +3139,7 @@
 /area/mining/dock)
 "ajf" = (
 /obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
 	name = "Smelter Room";
 	req_access_txt = "51"
 	},
@@ -3233,11 +3248,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/delivery,
 /area/mining/hangar)
 "ajy" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/delivery,
 /area/mining/hangar)
 "ajz" = (
@@ -3359,7 +3374,8 @@
 /area/space)
 "ajR" = (
 /obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
 	name = "Mining Outpost Airlock";
 	req_access_txt = "51"
 	},
@@ -3369,7 +3385,8 @@
 /turf/simulated/floor/caution/east,
 /area/mining/magnet_control)
 "ajT" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
 	name = "Mining Outpost Airlock";
 	req_access_txt = "51"
 	},
@@ -3450,7 +3467,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "akb" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/space)
@@ -3571,7 +3588,7 @@
 /turf/simulated/floor/bot,
 /area/mining/dock)
 "aky" = (
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
 	name = "Emergency Comms Room";
 	req_access_txt = "51|40"
 	},
@@ -3683,7 +3700,8 @@
 /area/mining/power)
 "akH" = (
 /obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
 	name = "Mineral Magnet";
 	req_access_txt = "51"
 	},
@@ -4025,7 +4043,8 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
 	name = "Power Room";
 	req_access_txt = "51"
 	},
@@ -4175,7 +4194,8 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
 	name = "Power Room";
 	req_access_txt = "51"
 	},
@@ -5299,9 +5319,8 @@
 /turf/simulated/floor/grime,
 /area/mining/exit_west)
 "aoK" = (
-/obj/machinery/door/airlock/external{
-	name = "Mining Outpost Airlock";
-	req_access_txt = "51"
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/mining/exit_west)
@@ -5322,14 +5341,15 @@
 /turf/simulated/floor/grime,
 /area/mining/exit_west)
 "aoN" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Mining Outpost";
-	req_access_txt = "51"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	name = "Mining Outpost";
+	req_access_txt = "51"
 	},
 /turf/simulated/floor,
 /area/mining/manufacturing)
@@ -5387,9 +5407,8 @@
 /turf/simulated/floor/grime,
 /area/mining/exit_east)
 "aoU" = (
-/obj/machinery/door/airlock/external{
-	name = "Mining Outpost Airlock";
-	req_access_txt = "51"
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/mining/exit_east)
@@ -5589,7 +5608,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
 	name = "Shuttle Dock";
 	req_access_txt = "51"
 	},
@@ -5597,7 +5616,7 @@
 /area/mining/hangar)
 "apy" = (
 /obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
 	name = "Shuttle Dock";
 	req_access_txt = "51"
 	},
@@ -5958,14 +5977,14 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
 	name = "Mining Outpost Airlock";
 	req_access_txt = "51"
 	},
 /turf/simulated/floor/delivery,
 /area/mining/hangar)
 "aqu" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
 	name = "Mining Outpost Airlock";
 	req_access_txt = "51"
 	},
@@ -6076,7 +6095,8 @@
 /turf/simulated/floor,
 /area/buddyfactory)
 "aqL" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4;
 	req_access_txt = ""
 	},
 /turf/simulated/floor/plating,
@@ -6328,7 +6348,7 @@
 	},
 /area/space)
 "arj" = (
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock/pyro,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -6680,7 +6700,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
 	name = "Mainframe Access";
 	req_access_txt = ""
 	},
@@ -7478,7 +7499,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
 	name = "Office"
 	},
 /turf/simulated/floor,
@@ -7721,7 +7743,7 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
 "aux" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
 	dir = 8
 	},
 /turf/simulated/floor/orangeblack,
@@ -7749,7 +7771,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "auC" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "Factory Floor"
 	},
 /turf/simulated/floor,
@@ -7866,7 +7888,9 @@
 /turf/simulated/floor/shuttlebay,
 /area/buddyfactory)
 "auR" = (
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/buddyfactory)
 "auS" = (
@@ -8035,7 +8059,7 @@
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "avm" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/shuttlebay,
 /area/tech_outpost)
 "avn" = (
@@ -8056,14 +8080,14 @@
 /turf/simulated/floor/shuttlebay,
 /area/buddyfactory)
 "avp" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
 	dir = 8;
 	name = "Pod Bay"
 	},
 /turf/simulated/floor/caution/west,
 /area/buddyfactory)
 "avq" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
 	dir = 8;
 	name = "Pod Bay"
 	},
@@ -8150,7 +8174,7 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/tech_outpost)
 "avC" = (
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock/pyro,
 /turf/simulated/floor/delivery,
 /area/tech_outpost)
 "avD" = (
@@ -8300,7 +8324,7 @@
 /turf/simulated/floor,
 /area/buddyfactory)
 "awb" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "Restroom"
 	},
 /turf/simulated/floor,
@@ -8317,7 +8341,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/buddyfactory)
 "awe" = (
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock/pyro,
 /turf/simulated/floor/yellow,
 /area/tech_outpost)
 "awf" = (
@@ -8352,7 +8376,9 @@
 	},
 /area/tech_outpost)
 "awk" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/tech_outpost)
 "awl" = (
@@ -9405,7 +9431,7 @@
 /turf/simulated/martian/floor,
 /area/martian_trader)
 "azi" = (
-/obj/machinery/door/airlock/classic{
+/obj/machinery/door/airlock/pyro/classic{
 	name = "rusty airlock"
 	},
 /turf/simulated/floor/plating/damaged3,
@@ -9631,7 +9657,9 @@
 /turf/simulated/floor/plating/damaged3,
 /area/spyshack)
 "azM" = (
-/obj/machinery/door/airlock/classic,
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
 /turf/simulated/floor/plating/damaged2,
 /area/tech_outpost)
 "azN" = (
@@ -9858,7 +9886,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
 "aAv" = (
-/obj/machinery/door/airlock/classic{
+/obj/machinery/door/airlock/pyro/classic{
 	name = "rusty airlock"
 	},
 /turf/simulated/floor/plating/damaged3,
@@ -10523,7 +10551,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/evilreaver/chapel)
 "aCP" = (
-/obj/machinery/door/airlock/classic{
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
 	name = "rusty airlock"
 	},
 /turf/simulated/floor/plating/damaged3,
@@ -10835,7 +10864,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/timewarp/ship)
 "aDX" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor,
 /area/timewarp/ship)
 "aDY" = (
@@ -10925,7 +10954,7 @@
 /turf/unsimulated/floor,
 /area/timewarp/ship)
 "aEm" = (
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock/pyro,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
 "aEn" = (
@@ -11081,7 +11110,7 @@
 	},
 /area/timewarp/ship)
 "aEO" = (
-/obj/machinery/door/airlock/medical{
+/obj/machinery/door/airlock/pyro/medical{
 	req_access_txt = ""
 	},
 /turf/unsimulated/floor/black,
@@ -11206,7 +11235,8 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)
 "aFn" = (
-/obj/machinery/door/airlock/classic{
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
 	name = "rusty airlock"
 	},
 /turf/simulated/bar,
@@ -11380,13 +11410,13 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
 "aFI" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "Crew Quarters"
 	},
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
 "aFJ" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "Restroom"
 	},
 /turf/unsimulated/floor/specialroom/chapel{
@@ -11644,6 +11674,7 @@
 /area/radiostation/bedroom)
 "aGy" = (
 /obj/machinery/door/airlock/pyro{
+	dir = 4;
 	name = "Bathroom"
 	},
 /turf/simulated/floor/wood/two,
@@ -13174,7 +13205,9 @@
 	name = "GLOMAR Salvager"
 	})
 "aKH" = (
-/obj/machinery/door/airlock/classic,
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
@@ -15897,7 +15930,7 @@
 /turf/simulated/floor/circuit/vintage,
 /area/derelict_ai_sat)
 "aRu" = (
-/obj/machinery/door/airlock/security{
+/obj/machinery/door/airlock/pyro/security{
 	name = "Prisoner Transfer Ship";
 	req_access_txt = "1"
 	},
@@ -17029,7 +17062,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aUo" = (
-/obj/machinery/door/airlock/classic,
+/obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/grime,
 /area/iss)
 "aUp" = (
@@ -17054,7 +17087,7 @@
 /turf/simulated/floor/plating,
 /area/iss)
 "aUr" = (
-/obj/machinery/door/airlock/classic,
+/obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor,
 /area/iss)
 "aUs" = (
@@ -17253,7 +17286,9 @@
 /turf/simulated/floor/sanitary,
 /area/abandonedoutpostthing)
 "aUX" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
 /turf/simulated/floor/sanitary,
 /area/abandonedoutpostthing)
 "aUY" = (
@@ -17310,7 +17345,8 @@
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
 "aVg" = (
-/obj/machinery/door/airlock/security{
+/obj/machinery/door/airlock/pyro/security{
+	dir = 4;
 	name = "Security Station"
 	},
 /turf/simulated/floor,
@@ -17403,7 +17439,9 @@
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
 "aVu" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
 "aVv" = (
@@ -17418,7 +17456,7 @@
 	},
 /area/abandonedmedicalship/robot_trader)
 "aVx" = (
-/obj/machinery/door/airlock/classic,
+/obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aVy" = (
@@ -17595,7 +17633,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
 	name = "Electrical Substation"
 	},
 /turf/simulated/floor/plating/random,
@@ -17701,7 +17740,7 @@
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aWf" = (
-/obj/machinery/door/airlock/glass/medical{
+/obj/machinery/door/airlock/pyro/glass/med{
 	locked = 1
 	},
 /obj/cable{
@@ -18217,7 +18256,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/obj/machinery/door/airlock/classic,
+/obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/plating,
 /area/iss)
 "aXj" = (
@@ -18237,7 +18276,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/pyro/command{
 	name = "Control Room";
 	req_access_txt = "0"
 	},
@@ -18250,7 +18289,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/pyro/command{
 	name = "Computer Core";
 	req_access_txt = "11"
 	},
@@ -18629,7 +18668,6 @@
 /turf/simulated/floor/bot,
 /area/h7/computer_core)
 "aXY" = (
-/obj/machinery/door/airlock/classic,
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
@@ -18638,6 +18676,9 @@
 	icon_state = "conduit";
 	layer = 2.5;
 	name = "power conduit"
+	},
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/iss)
@@ -19118,7 +19159,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/obj/machinery/door/airlock/classic,
+/obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor,
 /area/iss)
 "aYY" = (
@@ -19142,7 +19183,8 @@
 /turf/simulated/floor/specialroom/bar,
 /area/h7/crew)
 "aZc" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
 	name = "Compact Kitchen"
 	},
 /turf/simulated/floor,
@@ -19302,7 +19344,7 @@
 	icon_state = "1-2"
 	},
 /obj/decal/fakeobjects/firelock_broken,
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "Storage"
 	},
 /turf/simulated/floor,
@@ -19561,7 +19603,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
 	name = "Compartment Hatch"
 	},
 /turf/simulated/floor,
@@ -19609,7 +19651,7 @@
 /turf/simulated/floor/plating/random,
 /area/abandonedoutpostthing)
 "bas" = (
-/obj/machinery/door/airlock/glass/medical{
+/obj/machinery/door/airlock/pyro/glass/med{
 	locked = 1
 	},
 /turf/simulated/floor/white,
@@ -19853,7 +19895,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
 	name = "Compartment Hatch"
 	},
 /turf/simulated/floor,
@@ -19901,7 +19943,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/pyro/glass{
 	icon_state = "door_locked";
 	locked = 1;
 	name = "Damaged Glass Airlock";
@@ -19910,7 +19952,9 @@
 /turf/simulated/floor,
 /area/h7)
 "bbe" = (
-/obj/machinery/door/airlock/maintenance,
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/h7)
 "bbf" = (
@@ -19937,7 +19981,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/iss)
 "bbj" = (
-/obj/machinery/door/airlock/classic,
+/obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/plating/airless,
 /area/iss)
 "bbk" = (
@@ -19951,11 +19995,15 @@
 	},
 /area/abandonedoutpostthing)
 "bbm" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8
+	},
 /turf/simulated/floor/caution/west,
 /area/h7/crew)
 "bbn" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/h7/crew)
 "bbo" = (
@@ -20234,7 +20282,7 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "bbZ" = (
-/obj/machinery/door/airlock/glass/medical{
+/obj/machinery/door/airlock/pyro/glass/med{
 	locked = 1
 	},
 /obj/machinery/door/poddoor{
@@ -20244,7 +20292,7 @@
 /turf/simulated/floor/white,
 /area/abandonedoutpostthing)
 "bcb" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor,
 /area/h7/crew)
 "bcd" = (
@@ -20452,7 +20500,9 @@
 /obj/decal/fakeobjects/firelock_broken{
 	dir = 4
 	},
-/obj/machinery/door/airlock/maintenance,
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/h7)
 "bcM" = (
@@ -20555,8 +20605,9 @@
 /obj/decal/fakeobjects/firelock_broken{
 	dir = 4
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
 	aiControlDisabled = 1;
+	dir = 4;
 	locked = 1;
 	secondsElectrified = -1
 	},
@@ -21022,7 +21073,9 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "bey" = (
-/obj/machinery/door/airlock/maintenance,
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/h7/lab)
 "bez" = (
@@ -21095,7 +21148,8 @@
 /obj/decal/fakeobjects/firelock_broken{
 	dir = 4
 	},
-/obj/machinery/door/airlock/security{
+/obj/machinery/door/airlock/pyro/security{
+	dir = 4;
 	name = "Lab Security";
 	req_access_txt = ""
 	},
@@ -21445,7 +21499,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/medical{
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
 	locked = 1;
 	name = "Anomalous Materials Laboratory";
 	req_access_txt = ""
@@ -21741,7 +21796,7 @@
 /obj/decal/fakeobjects/firelock_broken{
 	dir = 1
 	},
-/obj/machinery/door/airlock/medical{
+/obj/machinery/door/airlock/pyro/medical{
 	locked = 1;
 	name = "Anomalous Materials Laboratory";
 	req_access_txt = ""
@@ -21755,7 +21810,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "Supply Closet"
 	},
 /turf/simulated/floor/plating,
@@ -21934,7 +21989,7 @@
 /turf/simulated/floor/plating,
 /area/h7/lab)
 "bgG" = (
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
 	name = "East Engine Compartment";
 	req_access_txt = ""
 	},
@@ -22100,7 +22155,8 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/helldrone/core)
 "bhd" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
 	name = "Maint Crew Support"
 	},
 /turf/simulated/floor,
@@ -22284,8 +22340,9 @@
 /turf/simulated/floor/black,
 /area/helldrone)
 "bhA" = (
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/pyro/command{
 	aiControlDisabled = 1;
+	dir = 4;
 	name = "Drone Computer Core";
 	req_access_txt = ""
 	},
@@ -22349,7 +22406,8 @@
 /turf/simulated/floor/circuit/red,
 /area/helldrone/core)
 "bhI" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
 	name = "Maint Crew Quarters"
 	},
 /turf/simulated/floor,
@@ -22371,7 +22429,7 @@
 /turf/simulated/floor/plating,
 /area/helldrone)
 "bhL" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
 	name = "Pod Bay"
 	},
 /turf/simulated/floor/plating,
@@ -22523,8 +22581,9 @@
 	},
 /area/helldrone)
 "bid" = (
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/pyro/command{
 	aiControlDisabled = 1;
+	dir = 2;
 	name = "Drone Computer Core";
 	req_access_txt = ""
 	},
@@ -22596,14 +22655,14 @@
 	},
 /area/helldrone)
 "bik" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "Toilet Cubicle";
 	req_access_txt = "0"
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
 "bil" = (
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
 	name = "West Engine Compartment";
 	req_access_txt = ""
 	},
@@ -23017,7 +23076,9 @@
 /turf/simulated/floor/scorched,
 /area/skeleton_trader)
 "bjp" = (
-/obj/machinery/door/airlock/classic,
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
 /turf/simulated/floor/grime,
 /area/skeleton_trader)
 "bjq" = (
@@ -24355,6 +24416,13 @@
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
+"fEk" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
+	name = "rusty airlock"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/genetics)
 "fJe" = (
 /obj/decal/cleanable/oil,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -24649,6 +24717,14 @@
 "qgt" = (
 /turf/simulated/floor/plating/airless,
 /area/abandonedmedicalship)
+"qhA" = (
+/obj/machinery/door/airlock/pyro/security{
+	dir = 4;
+	name = "Prisoner Transfer Ship";
+	req_access_txt = "1"
+	},
+/turf/simulated/floor/delivery,
+/area/abandonedship)
 "qmR" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left,
@@ -24664,6 +24740,12 @@
 	},
 /turf/space,
 /area/space)
+"qWc" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/iss)
 "rdq" = (
 /obj/decal/cleanable/gangtag{
 	icon_state = "gangtag22";
@@ -24686,6 +24768,12 @@
 	stone_color = "#575A5E"
 	},
 /area/space)
+"rKg" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/delivery,
+/area/tech_outpost)
 "rRX" = (
 /obj/lattice{
 	dir = 4;
@@ -24715,6 +24803,12 @@
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/longtile/black,
 /area/space)
+"tha" = (
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/abandonedoutpostthing)
 "txH" = (
 /obj/critter/gunbot/drone/cutterdrone,
 /turf/simulated/floor/plating/airless/asteroid{
@@ -24746,6 +24840,12 @@
 /obj/stool/chair,
 /turf/simulated/floor/black,
 /area/mining/quarters)
+"vNX" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/iss)
 "vPx" = (
 /obj/decal/fakeobjects/lightbulb_broken,
 /obj/decal/cleanable/robot_debris/gib,
@@ -24783,6 +24883,10 @@
 "wAy" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedmedicalship/robot_trader)
+"wFJ" = (
+/obj/machinery/door/airlock/pyro/maintenance,
+/turf/simulated/floor/plating,
+/area/h7)
 "wNJ" = (
 /obj/reagent_dispensers/beerkeg,
 /obj/machinery/light/small/cool{
@@ -24812,6 +24916,10 @@
 	name = "space"
 	},
 /area/abandonedmedicalship)
+"xHN" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/orangeblack,
+/area/buddyfactory)
 "xOl" = (
 /turf/simulated/floor/plating/airless/asteroid{
 	stone_color = "#D1E6FF"
@@ -34574,11 +34682,11 @@ boP
 aaK
 aaK
 aan
-aux
+xHN
 aqn
 aqn
 aqn
-aux
+xHN
 aaF
 aaa
 aaa
@@ -35973,7 +36081,7 @@ aXR
 aXT
 aXT
 aXT
-bbe
+wFJ
 aZp
 aZp
 apw
@@ -38333,7 +38441,7 @@ aQW
 aQE
 iYn
 aRK
-aRu
+qhA
 aRK
 iYn
 aTk
@@ -43682,7 +43790,7 @@ axw
 axw
 axw
 axw
-azi
+fEk
 azB
 axw
 axw
@@ -45402,7 +45510,7 @@ aaU
 acu
 acP
 abk
-gaf
+aaq
 aaO
 aaO
 gaf
@@ -45705,7 +45813,7 @@ acv
 abk
 abk
 aaq
-gaf
+aaq
 aaO
 aaO
 aaO
@@ -68114,7 +68222,7 @@ auy
 auy
 auy
 auy
-avC
+rKg
 auy
 auy
 auy
@@ -91533,7 +91641,7 @@ aaa
 aaa
 aTS
 aTQ
-aUr
+qWc
 aTQ
 aVe
 aaa
@@ -92137,7 +92245,7 @@ aLx
 aTQ
 aTQ
 aTQ
-aUr
+qWc
 aTQ
 aTQ
 aVc
@@ -93345,7 +93453,7 @@ aLx
 aTQ
 aTQ
 aTQ
-aUr
+qWc
 aTQ
 aTQ
 aVe
@@ -93949,7 +94057,7 @@ aaa
 aaa
 aTP
 aTQ
-aUr
+qWc
 aTQ
 aVc
 aaa
@@ -95459,7 +95567,7 @@ aIy
 aaa
 aTS
 aTQ
-bbj
+vNX
 aTQ
 aVe
 aaa
@@ -104814,7 +104922,7 @@ aZK
 aZV
 aUz
 baP
-bas
+tha
 aUz
 aUz
 bcn
@@ -105418,7 +105526,7 @@ aZK
 aZX
 aUz
 baP
-bas
+tha
 aUz
 aUz
 blh
