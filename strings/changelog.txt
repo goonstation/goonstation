@@ -1,5 +1,22 @@
 
+(t)sat feb 05 22
+(u)Stonepillar
+(p)7411
+(e)⚖|balance
+(+)Reduced the damage of high-level loaves.
+(u)ThyOverlord
+(p)7378
+(e)🎨|sprites
+(+)Resprited the fish you see around the station.
 (t)fri feb 04 22
+(u)Adhara in Space
+(p)7398
+(e)|
+(*)Clicking on a desk (or any table with built in storage) with an empty hand opens the storage now.
+(u)NightmareChamillian
+(p)7392
+(e)|
+(+)Light switches are now too high for ghost critters
 (u)TTerc
 (e)🗺|mapping
 (+)Donut 3 engine room now has a blast shield you can (and should!) use to protect the crew from bigulo setups.
