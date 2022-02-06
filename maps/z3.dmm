@@ -8008,33 +8008,11 @@
 /obj/item/weldingtool,
 /turf/simulated/floor/plating,
 /area/buddyfactory)
-"avh" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/turf/simulated/floor/plating,
-/area/tech_outpost)
 "avi" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "avj" = (
@@ -8498,19 +8476,6 @@
 	},
 /turf/simulated/floor/white,
 /area/buddyfactory)
-"awD" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/tech_outpost)
 "awE" = (
 /turf/simulated/floor/caution/corner/nw{
 	dir = 8
@@ -8563,16 +8528,6 @@
 "awM" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/shuttlebay,
-/area/tech_outpost)
-"awN" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
 /area/tech_outpost)
 "awO" = (
 /turf/simulated/floor/caution/west,
@@ -12215,35 +12170,12 @@
 /obj/decal/cleanable/blood/splatter,
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
-"aIh" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/turf/simulated/floor/plating,
-/area/spyshack)
 "aIi" = (
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
-"aIj" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/turf/simulated/floor/plating,
-/area/spyshack)
 "aIk" = (
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall_trans"
@@ -12731,19 +12663,6 @@
 /obj/item/device/flockblocker,
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
-"aJC" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/spyshack)
 "aJD" = (
 /obj/decal/floatingtiles{
 	dir = 8
@@ -13216,13 +13135,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aKJ" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/spyshack)
 "aKK" = (
@@ -16107,12 +16020,11 @@
 /turf/space,
 /area/space)
 "aRO" = (
-/obj/grille,
-/obj/window/auto/reinforced,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
 "aRP" = (
@@ -16907,8 +16819,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/iss)
 "aTR" = (
-/obj/grille/steel,
-/obj/window/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/iss)
 "aTS" = (
@@ -17692,8 +17603,7 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "aVZ" = (
-/obj/grille/steel,
-/obj/window/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/abandonedmedicalship/robot_trader)
 "aWa" = (
@@ -19628,26 +19538,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/iss)
-"baq" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/west,
-/obj/machinery/door/poddoor{
-	id = "patho_lockdown_z3";
-	name = "Lockdown"
-	},
-/turf/simulated/floor/plating/random,
-/area/abandonedoutpostthing)
 "bar" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
 /obj/machinery/door/poddoor{
 	id = "patho_lockdown_z3";
 	name = "Lockdown"
 	},
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
 /area/abandonedoutpostthing)
 "bas" = (
@@ -19807,11 +19703,7 @@
 	},
 /area/abandonedoutpostthing)
 "baP" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/west,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
 /area/abandonedoutpostthing)
 "baQ" = (
@@ -21386,32 +21278,6 @@
 	name = "space"
 	},
 /area/helldrone)
-"bfk" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/helldrone)
-"bfl" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/helldrone)
 "bfm" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/helldrone)
@@ -22419,13 +22285,7 @@
 /turf/simulated/floor,
 /area/helldrone)
 "bhK" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/helldrone)
 "bhL" = (
@@ -23977,16 +23837,7 @@
 /turf/space,
 /area/space)
 "bmA" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "bmB" = (
@@ -65200,13 +65051,13 @@ aaa
 aaa
 aaa
 auy
-awD
+bmA
 bmA
 auy
 auy
-awD
-awN
-awN
+bmA
+bmA
+bmA
 bmA
 auy
 auy
@@ -65813,7 +65664,7 @@ awO
 awO
 awW
 axc
-avh
+bmA
 aac
 aac
 aaa
@@ -67011,7 +66862,7 @@ aab
 aab
 aac
 aac
-avh
+bmA
 avx
 avN
 awg
@@ -67924,7 +67775,7 @@ awj
 awy
 awH
 awR
-avh
+bmA
 awl
 axj
 auy
@@ -69739,7 +69590,7 @@ auy
 art
 arP
 ash
-aJC
+aKJ
 aKJ
 aKJ
 art
@@ -69904,7 +69755,7 @@ aaa
 aaa
 aaa
 bfe
-bfk
+bhK
 bfw
 blB
 biv
@@ -69929,7 +69780,7 @@ bit
 bfw
 bfw
 bfw
-bfk
+bhK
 bfe
 aaa
 aaa
@@ -70206,7 +70057,7 @@ aaa
 aaa
 aaa
 bfe
-bfl
+bhK
 bfw
 blC
 bfw
@@ -70231,7 +70082,7 @@ bit
 bfw
 bfw
 bfw
-bfl
+bhK
 bfe
 aaa
 aaa
@@ -70946,7 +70797,7 @@ awM
 auy
 arO
 arN
-aIh
+aKJ
 biY
 ata
 bkQ
@@ -71248,7 +71099,7 @@ avE
 auy
 azL
 ash
-aIj
+aKJ
 aKK
 aLZ
 bkS
@@ -72320,7 +72171,7 @@ aaa
 aaa
 aaa
 bfe
-bfk
+bhK
 bfw
 blC
 bgb
@@ -72345,7 +72196,7 @@ bfw
 bit
 bfw
 bfw
-bfk
+bhK
 bfe
 aaa
 aaa
@@ -72622,7 +72473,7 @@ aaa
 aaa
 aaa
 bfe
-bfl
+bhK
 bfw
 blC
 bgb
@@ -72647,7 +72498,7 @@ bfw
 bit
 bfw
 bfw
-bfl
+bhK
 bfe
 aaa
 aaa
@@ -104014,7 +103865,7 @@ aaa
 aaa
 aaa
 aaa
-baq
+bar
 baM
 bbk
 bbG
@@ -106128,7 +105979,7 @@ aaa
 aaa
 aaa
 aaa
-baq
+bar
 baS
 aZL
 bbH
