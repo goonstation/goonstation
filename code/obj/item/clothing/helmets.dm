@@ -118,11 +118,7 @@
 /obj/item/clothing/head/helmet/space/custom
 
 	name = "bespoke space helmet"
-<<<<<<< HEAD
 	desc = "A custom built helmet with a visor that encompasses most of the face."
-=======
-	desc = "A custom-built space helmet with a large visor."
->>>>>>> 0182d01639e484d484fb105ef085299cb1f1c5de
 	icon_state = "spacemat"
 
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi' // inhand shit
