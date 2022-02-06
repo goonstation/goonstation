@@ -1317,9 +1317,11 @@
 				setProperty("meleeprot", 2)
 
 			if(R.hasProperty("density"))
-				var/clunk = F.getProperty("density")
-				if(clunk<=15) // lighter metals = faster
+				var/clunk = R.getProperty("density")
+				if (clunk<=15) // lighter metals = faster
 					setProperty("movespeed", 0.4) // since movespeed is already initalized, no need to have an else
+				else if (clunk>=40)
+					setProperty("movespeed", 0.7)
 
 // Sealab suits
 
