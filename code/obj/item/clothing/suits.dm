@@ -1312,16 +1312,20 @@
 
 			if(R.hasProperty("hard")) // for MELEE
 				var/prot = round(R.getProperty("hard") / 13)
+				if(prot < 3)// most metals are very soft, so for balance's sake it'll be (usually) at least that of normal suits
+					setProperty("meleeprot", 3)
+				if(prod < 6 )
+					setProperty("meleeprot", 6) // that having been said, we don't want anything more powerful than security's armor
 				setProperty("meleeprot", prot)
 			else
 				setProperty("meleeprot", 2)
 
 			if(R.hasProperty("density"))
 				var/clunk = R.getProperty("density")
-				if (clunk<=15) // lighter metals = faster
-					setProperty("movespeed", 0.4) // since movespeed is already initalized, no need to have an else
-				else if (clunk>=40)
-					setProperty("movespeed", 0.7)
+				if (clunk <= 15) // lighter metals = faster
+					setProperty("space_movespeed", 0.4) // since movespeed is already initalized, no need to have an else
+				else if (clunk >= 40)
+					setProperty("space_movespeed", 0.7) // .1 above normal spacesuits
 
 // Sealab suits
 
