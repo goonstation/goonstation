@@ -13,8 +13,13 @@
 		if (length(turfs))
 			usr.set_loc(pick(turfs))
 		else
-			boutput(src, "Can't jump there, zero turfs in that area.")
-			return
+			turfs = get_area_turfs(A, 0)
+			if (length(turfs))
+				boutput(src, "No floors found, jumping to a non-floor.")
+				usr.set_loc(pick(turfs))
+			else
+				boutput(src, "Can't jump there, zero turfs in that area.")
+				return
 		logTheThing("admin", usr, null, "jumped to [A] ([showCoords(usr.x, usr.y, usr.z)])")
 		logTheThing("diary", usr, null, "jumped to [A] ([showCoords(usr.x, usr.y, usr.z)])", "admin")
 		message_admins("[key_name(usr)] jumped to [A] ([showCoords(usr.x, usr.y, usr.z)])")
