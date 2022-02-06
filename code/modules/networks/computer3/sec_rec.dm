@@ -710,7 +710,7 @@
 				view_string +={"
 				<br><center><b>Security Data</b></center>
 				<br>\[08]<b>Criminal Status:</b> [src.active_secure["criminal"]]
-				<br>\[09]<b>Sechud Flag:</b> [src.active_secure["sec_flag"]]
+				<br>\[09]<b>SecHUD Flag:</b> [src.active_secure["sec_flag"]]
 				<br>\[10]<b>Minor Crimes:</b> [src.active_secure["mi_crim"]]
 				<br>\[11]<b>Details:</b> [src.active_secure["mi_crim_d"]]
 				<br>\[12]<b><br>Major Crimes:</b> [src.active_secure["ma_crim"]]
