@@ -1287,8 +1287,15 @@
 	inhand_image_icon = "s_suit"
 	item_state = "spacemat"
 	name = "bespoke space suit"
+<<<<<<< HEAD
 	desc = "A custom built suit that protects your soft tissues from the effects of hard vacuum"
+=======
+	desc = "A custom-built space suit made to protect your soft tissues from hard vacuum."
+
+
+>>>>>>> 0182d01639e484d484fb105ef085299cb1f1c5de
 	proc/setupSuitProp(var/datum/material/F, var/datum/material/R) // f is fabric, decides protection, R is reinforcment, decides melee prot
+
 		if(F)
 			if(F.hasProperty("thermal"))
 				var/prot = 100 - F.getProperty("thermal")
@@ -1326,11 +1333,24 @@
 					setProperty("space_movespeed", 0.4) // since movespeed is already initalized, no need to have an else
 				else if (clunk >= 40)
 					setProperty("space_movespeed", 0.7) // .1 above normal spacesuits
+<<<<<<< HEAD
 	proc/setsuitname(var/datum/material/F, var/datum/material/R)
 		if (F && R)
 			name = "[R]-reinforced [F] bespoke space suit"
 		else if (F)
 			name = " [F] bespoke space suit"
+=======
+
+
+	proc/setSuitName(var/datum/material/F, var/datum/material/R)
+		if (F && R)
+			name = "[R]-reinforced [F] custom space suit"
+		else if (visr_material)
+			name = " [F] custom space suit"
+
+
+
+>>>>>>> 0182d01639e484d484fb105ef085299cb1f1c5de
 // Sealab suits
 
 /obj/item/clothing/suit/space/diving
