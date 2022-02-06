@@ -21805,7 +21805,6 @@
 /area/shuttle/arrival/station)
 "gdc" = (
 /obj/machinery/rkit,
-/obj/item/paper/manufacturer_blueprint/loafer,
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
