@@ -1287,7 +1287,7 @@
 	inhand_image_icon = "s_suit"
 	item_state = "spacemat"
 	name = "bespoke space suit"
-	desc = "A suit that protects against low pressure environments, custom-made just for you!"
+	desc = "A custom built suit that protects your soft tissues from the effects of hard vacuum"
 	proc/setupSuitProp(var/datum/material/F, var/datum/material/R) // f is fabric, decides protection, R is reinforcment, decides melee prot
 		if(F)
 			if(F.hasProperty("thermal"))
@@ -1314,7 +1314,7 @@
 				var/prot = round(R.getProperty("hard") / 13)
 				if(prot < 3)// most metals are very soft, so for balance's sake it'll be (usually) at least that of normal suits
 					setProperty("meleeprot", 3)
-				if(prod < 6 )
+				if(prot < 6 )
 					setProperty("meleeprot", 6) // that having been said, we don't want anything more powerful than security's armor
 				setProperty("meleeprot", prot)
 			else
@@ -1326,7 +1326,11 @@
 					setProperty("space_movespeed", 0.4) // since movespeed is already initalized, no need to have an else
 				else if (clunk >= 40)
 					setProperty("space_movespeed", 0.7) // .1 above normal spacesuits
-
+	proc/setsuitname(var/datum/material/F, var/datum/material/R)
+		if (F && R)
+			name = "[R]-reinforced [F] bespoke space suit"
+		else if (F)
+			name = " [F] bespoke space suit"
 // Sealab suits
 
 /obj/item/clothing/suit/space/diving
