@@ -6566,11 +6566,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "arJ" = (
 /obj/decal/fakeobjects/pipe{
@@ -9259,11 +9255,7 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/martian/floor,
 /area/evilreaver/security)
 "ayI" = (
 /obj/indestructible/shuttle_corner{
@@ -9922,11 +9914,7 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "aAE" = (
 /obj/decal/cleanable/machine_debris,
@@ -10373,6 +10361,7 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
+/obj/lattice,
 /turf/simulated/martian/floor,
 /area/evilreaver/chapel)
 "aCq" = (
@@ -10561,6 +10550,7 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
+/obj/lattice,
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
 "aCV" = (
@@ -10569,6 +10559,7 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
+/obj/lattice,
 /turf/simulated/martian/floor,
 /turf/simulated/floor/plating/airless/shuttlebay{
 	icon = 'icons/turf/martian.dmi';
