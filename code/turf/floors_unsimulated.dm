@@ -88,7 +88,9 @@
 			make_cleanable(/obj/decal/cleanable/dirt/dirt4,src)
 		if (prob(2))
 			make_cleanable(/obj/decal/cleanable/dirt/dirt5,src)
-		else if (prob(2))
+		if ((locate(/obj/window) in src) || (locate(/obj/wingrille_spawn) in src))
+			return
+		if (prob(2))
 			var/obj/C = pick(/obj/decal/cleanable/paper, /obj/decal/cleanable/fungus, /obj/decal/cleanable/dirt, /obj/decal/cleanable/ash,\
 			/obj/decal/cleanable/molten_item, /obj/decal/cleanable/machine_debris, /obj/decal/cleanable/oil, /obj/decal/cleanable/rust)
 			make_cleanable( C ,src)
