@@ -40,7 +40,8 @@ var/global/list/bible_contents = list()
 		else
 			var/mob/living/H = M
 			if( istype(H) )
-				if(  prob(25) )
+				if( prob(25) )
+					H.delStatus("bloodcurse")
 					H.cure_disease_by_path(/datum/ailment/disease/cluwneing_around)
 					H.cure_disease_by_path(/datum/ailment/disease/cluwneing_around/cluwne)
 				if(prob(25))
