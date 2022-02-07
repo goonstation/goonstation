@@ -76345,9 +76345,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "dmF" = (
 /turf/simulated/wall/asteroid{
@@ -76378,9 +76376,7 @@
 /turf/simulated/floor/plating,
 /area/research_outpost)
 "dmJ" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "dmK" = (
 /obj/cable{
@@ -76388,9 +76384,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "dmL" = (
 /turf/simulated/wall/asteroid{
@@ -76620,9 +76614,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "dnc" = (
 /obj/cable{
@@ -76630,9 +76622,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "dnd" = (
 /obj/cable,
@@ -76765,9 +76755,7 @@
 /area/space)
 "dnq" = (
 /obj/securearea,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "dnr" = (
 /obj/cable{
@@ -76838,9 +76826,7 @@
 	},
 /area/listeningpost)
 "dnA" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "dnB" = (
 /turf/space,
@@ -77138,9 +77124,7 @@
 /area/listeningpost)
 "dol" = (
 /obj/submachine/ATM,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "dom" = (
 /obj/machinery/vending/snack{
@@ -77166,9 +77150,7 @@
 	},
 /area/listeningpost)
 "dop" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/syndicate_teleporter)
 "doq" = (
 /obj/cable{

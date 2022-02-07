@@ -21805,7 +21805,6 @@
 /area/shuttle/arrival/station)
 "gdc" = (
 /obj/machinery/rkit,
-/obj/item/paper/manufacturer_blueprint/loafer,
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
@@ -71311,12 +71310,6 @@
 	},
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
-"uDF" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall3"
-	},
-/area/listeningpost)
 "uDM" = (
 /obj/disposalpipe/segment/mail{
 	dir = 2;
@@ -81219,9 +81212,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/ranch)
 "xsC" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "xsX" = (
 /obj/table/wood/auto,
@@ -163230,7 +163221,7 @@ csA
 csA
 csA
 csA
-uDF
+xsC
 hzO
 qCC
 dRn
@@ -163238,7 +163229,7 @@ pSb
 lJF
 kjJ
 ifA
-uDF
+xsC
 csA
 csA
 csA
@@ -163532,7 +163523,7 @@ csA
 csA
 csA
 csA
-uDF
+xsC
 mDk
 oRf
 sGi
@@ -163540,7 +163531,7 @@ pSb
 kvx
 oXA
 ifA
-uDF
+xsC
 csA
 csA
 csA
@@ -164751,7 +164742,7 @@ uuX
 uuX
 uuX
 wQY
-uDF
+xsC
 csA
 csA
 csA
@@ -165053,7 +165044,7 @@ cdU
 cdU
 cdU
 iwJ
-uDF
+xsC
 csA
 csA
 csA
@@ -165355,7 +165346,7 @@ spW
 sxd
 sxd
 xiC
-uDF
+xsC
 csA
 csA
 csA
@@ -165637,7 +165628,7 @@ rdj
 csA
 csA
 csA
-uDF
+xsC
 jSL
 cjI
 cjI
@@ -165657,7 +165648,7 @@ spW
 sxd
 sxd
 yeT
-uDF
+xsC
 xsC
 xsC
 xsC
@@ -165939,7 +165930,7 @@ rdj
 csA
 csA
 csA
-uDF
+xsC
 wSw
 cjI
 cjI
@@ -165959,10 +165950,10 @@ spW
 vGb
 sxd
 sxd
-uDF
+xsC
 iTA
 nUn
-uDF
+xsC
 csA
 csA
 csA
@@ -166241,7 +166232,7 @@ rdj
 csA
 csA
 csA
-uDF
+xsC
 uFJ
 cjI
 cjI
@@ -166264,7 +166255,7 @@ sxd
 bhE
 ojt
 bvN
-uDF
+xsC
 csA
 csA
 csA
@@ -166543,7 +166534,7 @@ rdj
 csA
 csA
 csA
-uDF
+xsC
 jSL
 cjI
 cjI
@@ -166563,10 +166554,10 @@ spW
 kRy
 sxd
 sxd
-uDF
+xsC
 xlB
 bnM
-uDF
+xsC
 csA
 csA
 csA
@@ -166865,7 +166856,7 @@ dlF
 kDi
 kDi
 qul
-uDF
+xsC
 xsC
 xsC
 xsC
@@ -167167,7 +167158,7 @@ uuX
 uuX
 uuX
 rNi
-uDF
+xsC
 csA
 csA
 csA
@@ -168369,11 +168360,11 @@ csA
 csA
 csA
 csA
-uDF
+xsC
 phT
 phT
 mbT
-uDF
+xsC
 csA
 csA
 csA
@@ -168671,11 +168662,11 @@ csA
 csA
 csA
 csA
-uDF
+xsC
 phT
 aEf
 phT
-uDF
+xsC
 csA
 csA
 csA
@@ -168973,11 +168964,11 @@ csA
 csA
 csA
 csA
-uDF
+xsC
 qal
 phT
 phT
-uDF
+xsC
 csA
 csA
 csA
