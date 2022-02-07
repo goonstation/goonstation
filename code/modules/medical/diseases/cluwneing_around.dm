@@ -19,12 +19,15 @@
 		name += "[pick("AreoU","UroO","ArU","AoOro","AhRu")][pick("ndE","Ned","nhd")]"
 	cluwne
 		laugh_rate = 18
+		cure = "Incurable"
 
 /datum/ailment/disease/cluwneing_around/on_infection(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	..()
 	if (D)
 		src.oldname = affected_mob.real_name
 		src.oldjob = affected_mob.job
+	if (istype(affected_mob.wear_mask, /obj/item/clothing/mask/cursedclown_hat))
+		D.cure = "Incurable" //If you got infected by putting on the mask, you're outta luck.
 
 /datum/ailment/disease/cluwneing_around/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	if (..())
@@ -54,6 +57,8 @@
 				affected_mob.say("THE RINGMASTER DOESN'T RUN THE CIRCUS... HUNKE!")
 
 		if(3)
+			D.cure = "Incurable"
+
 			if (affected_mob.job != "Cluwne")
 				affected_mob.real_name = "cluwne"
 				affected_mob.stuttering = 120
