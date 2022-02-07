@@ -57,7 +57,8 @@
 				affected_mob.say("THE RINGMASTER DOESN'T RUN THE CIRCUS... HUNKE!")
 
 		if(3)
-			D.cure = "Incurable"
+			if (D.cure != "Incurable")
+				D.cure = "Incurable"
 
 			if (affected_mob.job != "Cluwne")
 				affected_mob.real_name = "cluwne"
