@@ -77449,6 +77449,10 @@
 "sWb" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/lobby)
+"tbw" = (
+/obj/reagent_dispensers/watertank/fountain,
+/turf/unsimulated/floor/white/checker,
+/area/wizard_station)
 "tck" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/blueprint/destiny,
@@ -83138,7 +83142,7 @@ dkb
 rFA
 djQ
 dka
-sjM
+tbw
 dkm
 dkt
 sMO
