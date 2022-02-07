@@ -987,7 +987,6 @@
 	name = "Cargo";
 	req_access_txt = "27"
 	},
-/obj/access_spawn/cargo,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "ct" = (
