@@ -45,18 +45,10 @@ var/global/list/bible_contents = list()
 			if( !istype(H) )
 				return
 			if( prob(25) )
-				if (iscluwne(H))
-					H.cure_disease_by_path(/datum/ailment/disease/cluwneing_around)
-					H.cure_disease_by_path(/datum/ailment/disease/cluwneing_around/cluwne)
-					for(var/obj/item/clothing/W in H) //The Chaplain is able to cure the disease AND the curse. Science can only deal with the disease
-						if(findtext("[W.name]","cursed") && W.cant_self_remove && W.cant_other_remove) //As of committing this only applies to cluwne gear
-							H.u_equip(W)
-							if (W)
-								W.set_loc(H.loc)
-								W.dropped(H)
-								W.layer = initial(W.layer)
+				H.cure_disease_by_path(/datum/ailment/disease/cluwneing_around)
+				H.cure_disease_by_path(/datum/ailment/disease/cluwneing_around/cluwne)
 			if(prob(25))
-				H.cure_disease_by_path(/datum/ailment/disability/clumsy/cluwne) //Outside of the iscluwne check as otherwise we wouldn't be able to cure after decluwne
+				H.cure_disease_by_path(/datum/ailment/disability/clumsy/cluwne)
 
 	attackby(var/obj/item/W, var/mob/user, obj/item/storage/T)
 		if (istype(W, /obj/item/storage/bible))
