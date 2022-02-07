@@ -656,7 +656,7 @@
 	boutput(M, "<span class='alert'><B>You HONK painfully!</B></span>")
 	M.take_brain_damage(80)
 	M.stuttering = 120
-	M.contract_disease(/datum/ailment/disease/cluwneing_around, null, null, 1) // path, name, strain, bypass resist
+	M.contract_disease(/datum/ailment/disease/cluwneing_around/cluwne, null, null, 1) // path, name, strain, bypass resist
 	M.contract_disease(/datum/ailment/disability/clumsy/cluwne, null, null, 1) // path, name, strain, bypass resist
 	M.job = "Cluwne"
 	M.change_misstep_chance(66)

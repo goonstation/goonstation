@@ -19,6 +19,7 @@
 		name += "[pick("AreoU","UroO","ArU","AoOro","AhRu")][pick("ndE","Ned","nhd")]"
 	cluwne
 		laugh_rate = 18
+		cure = "Incurable"
 
 /datum/ailment/disease/cluwneing_around/on_infection(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	..()
@@ -54,6 +55,9 @@
 				affected_mob.say("THE RINGMASTER DOESN'T RUN THE CIRCUS... HUNKE!")
 
 		if(3)
+			if(D.cure != "Incurable")
+				D.cure = "Incurable"
+
 			if (affected_mob.job != "Cluwne")
 				affected_mob.real_name = "cluwne"
 				affected_mob.stuttering = 120
@@ -196,7 +200,7 @@
 								boutput(affected_mob, "<span class='alert'>You feel clumsy and suddenly slip!</span>")
 
 
-/datum/ailment/disease/cluwneing_around/cluwne/on_remove(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/disease/cluwneing_around/on_remove(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	if (affected_mob)
 		if (src.oldname)
 			affected_mob.real_name = src.oldname
