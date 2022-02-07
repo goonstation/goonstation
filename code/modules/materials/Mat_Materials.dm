@@ -273,7 +273,7 @@
 
 	New()
 		setProperty("electrical", 80)
-		setProperty("density", 5)
+		setProperty("density", 35)
 		setProperty("hard", 5)
 		return ..()
 
@@ -293,7 +293,7 @@
 	color = "#574846"
 	New()
 		setProperty("density", 50)
-		setProperty("hard", 15)
+		setProperty("hard", 20)
 		return ..()
 
 /datum/material/metal/copper
@@ -304,8 +304,8 @@
 	New()
 		setProperty("stability", 30)
 		setProperty("electrical", 51)
-		setProperty("density", 5)
-		setProperty("hard", 5)
+		setProperty("density", 20)
+		setProperty("hard", 10)
 		return ..()
 
 /datum/material/metal/pharosium
@@ -383,7 +383,7 @@
 	New()
 		value = 300
 
-		setProperty("density", 2)
+		setProperty("density", 40)
 		setProperty("hard", 2)
 		setProperty("reflective", 55)
 		setProperty("electrical", 60)
@@ -401,8 +401,8 @@
 	New()
 		value = 250
 
-		setProperty("density", 1)
-		setProperty("hard", 1)
+		setProperty("density", 20)
+		setProperty("hard", 10)
 		setProperty("reflective", 50)
 		setProperty("electrical", 60)
 		return ..()
@@ -448,8 +448,8 @@
 	New()
 		value = 10
 
-		setProperty("density", 1)
-		setProperty("hard", 1)
+		setProperty("density", 14) //fucked up values for fucked up material but not silly putty
+		setProperty("hard", 12)
 		setProperty("stability", 3)
 		setProperty("electrical", 20)
 		return ..()
@@ -489,7 +489,8 @@
 	material_flags = MATERIAL_METAL | MATERIAL_ENERGY
 
 	New()
-		setProperty("density", 65)
+		setProperty("density", 60)
+		setProperty("hard", 20)
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
 		return ..()
 
@@ -1044,8 +1045,8 @@
 	material_flags = MATERIAL_ORGANIC
 
 	New()
-		setProperty("density", 25)
-		setProperty("hard", 25)
+		setProperty("density", 20)
+		setProperty("hard", 5)
 		setProperty("flammable", 67)
 		addTrigger(triggersOnBlobHit, new /datum/materialProc/cardboard_blob_hit())
 		addTrigger(triggersOnHit, new /datum/materialProc/cardboard_on_hit())
@@ -1410,8 +1411,8 @@
 	color = "#ccffcc"
 
 	New()
-		setProperty("density", 1)
-		setProperty("hard", 1)
+		setProperty("density", 3)
+		setProperty("hard", 5)
 		setProperty("stability", 3)
 		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
 		return ..()
