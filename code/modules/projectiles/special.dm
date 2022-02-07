@@ -422,7 +422,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/meowitzer/inert
 	explosive_hits = 0
-	damage_type = D_SPECIAL
 
 /datum/projectile/special/spewer
 	name = "volatile bolt"
