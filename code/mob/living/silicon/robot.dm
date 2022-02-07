@@ -1805,7 +1805,6 @@
 
 	proc/uneq_slot(var/i)
 		if (module_states[i])
-			src.contents -= module_states[i]
 			if (src.module)
 				var/obj/I = module_states[i]
 				if (isitem(I))

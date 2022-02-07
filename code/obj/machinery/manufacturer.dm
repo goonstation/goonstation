@@ -2233,6 +2233,7 @@
 		/datum/manufacture/eyepatch,
 		/datum/manufacture/blindfold,
 		/datum/manufacture/muzzle,
+		/datum/manufacture/stress_ball,
 		/datum/manufacture/body_bag,
 		/datum/manufacture/implanter,
 		/datum/manufacture/implant_health,
