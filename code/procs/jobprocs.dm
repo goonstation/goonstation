@@ -432,6 +432,7 @@
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			H.traitHolder.removeTrait("immigrant")
 			H.traitHolder.removeTrait("pilot")
+			H.traitHolder.removeTrait("sleepy")
 			H.traitHolder.removeTrait("puritan")
 
 		H.Equip_Job_Slots(JOB)
@@ -492,6 +493,19 @@
 			for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
 				qdel(snappedDrone)
 			V.finish_board_pod(src)
+
+		if (src.traitHolder && src.traitHolder.hasTrait("sleepy"))
+			var/list/valid_beds = list()
+			for_by_tcl(bed, /obj/stool/bed)
+				if (bed.z == Z_LEVEL_STATION && !istype(get_area(bed), /area/listeningpost) && !istype(get_turf(bed), /turf/space))
+					if (!locate(/mob/living/carbon/human) in get_turf(bed)) //this is slow but it's Probably worth it
+						valid_beds += bed
+
+			if (length(valid_beds) > 0)
+				src.set_loc(get_turf(pick(valid_beds)))
+				src.setStatus("resting", INFINITE_STATUS)
+				src.setStatus("paralysis", 10 SECONDS)
+				src.force_laydown_standup()
 
 		if (prob(10) && islist(random_pod_codes) && length(random_pod_codes))
 			var/obj/machinery/vehicle/V = pick(random_pod_codes)
