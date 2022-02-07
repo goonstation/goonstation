@@ -20,10 +20,7 @@ var/global/noir = 0
 		if (!asay && rank_to_level(C.holder.rank) < LEVEL_MOD) // No confidential info for goat farts (Convair880).
 			continue
 		if (C.player_mode)
-			if (asay && C.player_mode_asay)
-				boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
-			else
-				continue
+			continue
 		else
 			boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
 
