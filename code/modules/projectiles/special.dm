@@ -422,7 +422,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/meowitzer/inert
 	explosive_hits = 0
-	power = 0
 
 /datum/projectile/special/spewer
 	name = "volatile bolt"
