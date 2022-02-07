@@ -57470,10 +57470,6 @@
 "ddh" = (
 /turf/unsimulated/floor/carpet/grime,
 /area/afterlife/bar)
-"ddi" = (
-/obj/disposalpipe/segment/bent/north,
-/turf/unsimulated/wall/other,
-/area/afterlife/bar)
 "ddj" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -104136,7 +104132,7 @@ dTC
 dTH
 dge
 dTF
-ddi
+gwr
 aaa
 bXs
 bXs
