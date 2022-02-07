@@ -624,7 +624,7 @@ obj/item/gnomechompski/elf
 			qdel(src)
 
 /datum/projectile/wonk
-	power = 10
+	power = 0
 	cost = 20
 	dissipation_rate = 1
 	ks_ratio = 0.0
