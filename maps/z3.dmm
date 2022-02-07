@@ -5032,7 +5032,11 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/space,
+/turf/unsimulated/wall{
+	icon = 'icons/turf/space.dmi';
+	icon_state = "1";
+	name = "space"
+	},
 /area/space)
 "anI" = (
 /turf/simulated/wall/auto/supernorn,
@@ -10677,7 +10681,11 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/space,
+/turf/unsimulated/wall{
+	icon = 'icons/turf/space.dmi';
+	icon_state = "1";
+	name = "space"
+	},
 /area/space)
 "aCI" = (
 /turf/simulated/shuttle/wall/flock{
@@ -11518,7 +11526,11 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/space,
+/turf/unsimulated/wall{
+	icon = 'icons/turf/space.dmi';
+	icon_state = "1";
+	name = "space"
+	},
 /area/space)
 "aFO" = (
 /obj/decal/cleanable/dirt,
@@ -11637,7 +11649,11 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/space,
+/turf/unsimulated/wall{
+	icon = 'icons/turf/space.dmi';
+	icon_state = "1";
+	name = "space"
+	},
 /area/space)
 "aGh" = (
 /obj/storage/crate,
