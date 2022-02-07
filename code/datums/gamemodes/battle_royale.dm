@@ -143,7 +143,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 /datum/game_mode/battle_royale/check_finished()
 	var/someone_died = 0
 	for(var/datum/mind/M in living_battlers)
-		if(isdead(M.current) || issilicon(M.current) || isobserver(M.current) || inafterlife(M.current) || isVRghost(M.current))
+		if(isdead(M.current) || !ishuman(M.current) || inafterlife(M.current) || isVRghost(M.current))
 			living_battlers.Remove(M)
 			DEBUG_MESSAGE("[M.current.name] died. There are [living_battlers.len] left!")
 			recently_deceased.Add(M)
