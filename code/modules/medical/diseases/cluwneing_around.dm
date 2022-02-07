@@ -26,8 +26,6 @@
 	if (D)
 		src.oldname = affected_mob.real_name
 		src.oldjob = affected_mob.job
-	if (istype(affected_mob.wear_mask, /obj/item/clothing/mask/cursedclown_hat))
-		D.cure = "Incurable" //If you got infected by putting on the mask, you're outta luck.
 
 /datum/ailment/disease/cluwneing_around/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	if (..())
@@ -55,6 +53,9 @@
 				affected_mob.say("HUNKE HUNKE!")
 			if(prob(8))
 				affected_mob.say("THE RINGMASTER DOESN'T RUN THE CIRCUS... HUNKE!")
+
+			if (istype(affected_mob.wear_mask, /obj/item/clothing/mask/cursedclown_hat) && (D.cure != "Incurable"))
+				D.cure = "Incurable" //Can't be cured if you are visually identifiable as a cluwne.
 
 		if(3)
 			if (D.cure != "Incurable")
