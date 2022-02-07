@@ -891,6 +891,9 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/adventure)
 	mod = "meaty-"
 	icon_state = "meaty-0"
 	connect_overlay = 0
+	connects_to = list(/turf/cordon, /turf/unsimulated/wall/auto/adventure, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/,
+	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom, /turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave,
+	/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner,/turf/unsimulated/wall/auto/adventure/old)
 
 	meatier
 		mod = "meatier-"
@@ -905,6 +908,9 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/adventure)
 	icon = 'icons/turf/walls_derelict.dmi'
 	mod = "old-"
 	icon_state = ""
+	connects_to = list(/turf/cordon, /turf/unsimulated/wall/auto/adventure, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/,
+	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom, /turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave,
+	/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner, /turf/unsimulated/wall/auto/adventure/meat)
 
 	reinforced
 		name = "reinforced wall"
