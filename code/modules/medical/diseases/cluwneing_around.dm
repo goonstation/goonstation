@@ -196,7 +196,7 @@
 								boutput(affected_mob, "<span class='alert'>You feel clumsy and suddenly slip!</span>")
 
 
-/datum/ailment/disease/cluwneing_around/on_remove(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/disease/cluwneing_around/cluwne/on_remove(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	if (affected_mob)
 		if (src.oldname)
 			affected_mob.real_name = src.oldname
