@@ -6566,7 +6566,6 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/turf/simulated/martian/floor,
 /turf/simulated/floor/plating/airless/shuttlebay{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor2";
@@ -6583,7 +6582,6 @@
 	icon_state = "diagonal"
 	},
 /turf/simulated/martian/floor,
-/turf/space,
 /area/evilreaver/storage/tools)
 "arK" = (
 /obj/cable{
@@ -6607,7 +6605,6 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/simulated/martian/floor,
 /turf/simulated/floor/plating/airless/shuttlebay{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor2";
@@ -7079,7 +7076,6 @@
 	icon_state = "diagonal"
 	},
 /turf/simulated/martian/floor,
-/turf/space,
 /area/evilreaver/storage/tools)
 "asR" = (
 /obj/decal/cleanable/machine_debris,
@@ -8684,8 +8680,16 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/space,
-/turf/space,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/space.dmi';
+	icon_state = "placeholder";
+	name = "space"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/space.dmi';
+	icon_state = "placeholder";
+	name = "space"
+	},
 /area/space)
 "axo" = (
 /turf/unsimulated/wall/auto/adventure/martian/exterior,
@@ -8705,8 +8709,16 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/space,
-/turf/space,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/space.dmi';
+	icon_state = "placeholder";
+	name = "space"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/space.dmi';
+	icon_state = "placeholder";
+	name = "space"
+	},
 /area/space)
 "axs" = (
 /turf/unsimulated/wall/auto/adventure/martian,
@@ -8717,7 +8729,11 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/space,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/space.dmi';
+	icon_state = "placeholder";
+	name = "space"
+	},
 /turf/simulated/martian/wall{
 	dir = 8;
 	icon_state = "diagonalWall"
@@ -8786,7 +8802,6 @@
 	icon_state = "diagonal"
 	},
 /turf/simulated/martian/floor,
-/turf/space,
 /area/martian_trader)
 "axD" = (
 /obj/decal/fakeobjects/flock/antenna/broken{
@@ -8907,7 +8922,11 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/space,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/space.dmi';
+	icon_state = "placeholder";
+	name = "space"
+	},
 /turf/simulated/martian/wall{
 	dir = 5;
 	icon_state = "diagonalWall"
@@ -8924,7 +8943,11 @@
 	icon_state = "floor2";
 	name = "organic floor"
 	},
-/turf/space,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
 /area/martian_trader)
 "axT" = (
 /obj/machinery/door/unpowered/martian,
@@ -8944,7 +8967,11 @@
 	icon_state = "floor2";
 	name = "organic floor"
 	},
-/turf/space,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
 /area/martian_trader)
 "axV" = (
 /obj/decal/woodclutter,
@@ -9044,8 +9071,16 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/space,
-/turf/space,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/space.dmi';
+	icon_state = "placeholder";
+	name = "space"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/space.dmi';
+	icon_state = "placeholder";
+	name = "space"
+	},
 /area/space)
 "ayk" = (
 /obj/crevice{
@@ -9066,7 +9101,6 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/turf/simulated/martian/floor,
 /turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "ayn" = (
@@ -9225,7 +9259,6 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/simulated/martian/floor,
 /turf/simulated/floor/plating/airless/shuttlebay{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor2";
@@ -9258,7 +9291,6 @@
 	icon_state = "diagonal"
 	},
 /turf/simulated/martian/floor,
-/turf/space,
 /area/martian_trader)
 "ayM" = (
 /obj/storage/closet/coffin,
@@ -9276,7 +9308,6 @@
 	icon_state = "diagonal"
 	},
 /turf/simulated/martian/floor,
-/turf/space,
 /area/martian_trader)
 "ayO" = (
 /obj/decal/skeleton,
@@ -9301,14 +9332,9 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
 "ayT" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/space,
-/turf/space,
-/turf/simulated/martian/floor,
+/turf/simulated/floor/plating/damaged1,
+/turf/simulated/floor/plating/damaged1,
+/turf/simulated/floor/plating/damaged1,
 /area/evilreaver/genetics)
 "ayU" = (
 /turf/simulated/wall/auto/old,
@@ -9490,7 +9516,11 @@
 	icon_state = "floor2";
 	name = "organic floor"
 	},
-/turf/space,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
 /area/martian_trader)
 "azx" = (
 /obj/decal/fakeobjects{
@@ -9514,7 +9544,11 @@
 	icon_state = "floor2";
 	name = "organic floor"
 	},
-/turf/space,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
 /area/martian_trader)
 "azz" = (
 /obj/item/basketball,
@@ -9888,7 +9922,6 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/simulated/martian/floor,
 /turf/simulated/floor/plating/airless/shuttlebay{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor2";
@@ -9936,7 +9969,6 @@
 	icon_state = "floor2";
 	name = "organic floor"
 	},
-/turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "aAN" = (
 /turf/unsimulated/wall/auto/adventure/martian,
@@ -10013,7 +10045,6 @@
 	icon_state = "diagonal"
 	},
 /turf/simulated/martian/floor,
-/turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "aBc" = (
 /obj/indestructible/shuttle_corner{
@@ -10021,7 +10052,6 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/simulated/martian/floor,
 /turf/simulated/martian/floor,
 /area/evilreaver/atmospherics)
 "aBd" = (
@@ -10046,15 +10076,6 @@
 /obj/lattice,
 /turf/simulated/martian/floor,
 /area/evilreaver/atmospherics)
-"aBh" = (
-/obj/indestructible/shuttle_corner{
-	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/space,
-/turf/space,
-/area/space)
 "aBi" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3_space"
@@ -10353,7 +10374,6 @@
 	icon_state = "diagonal"
 	},
 /turf/simulated/martian/floor,
-/turf/space,
 /area/evilreaver/chapel)
 "aCq" = (
 /turf/simulated/wall/auto/reinforced/old,
@@ -10454,7 +10474,11 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/space,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/space.dmi';
+	icon_state = "placeholder";
+	name = "space"
+	},
 /area/space)
 "aCI" = (
 /turf/simulated/shuttle/wall/flock{
@@ -10483,7 +10507,6 @@
 	icon_state = "diagonal"
 	},
 /turf/simulated/martian/floor,
-/turf/space,
 /area/evilreaver/chapel)
 "aCM" = (
 /obj/indestructible/shuttle_corner{
@@ -10538,7 +10561,6 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/simulated/martian/floor,
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
 "aCV" = (
@@ -10664,7 +10686,6 @@
 	icon_state = "diagonal"
 	},
 /turf/simulated/martian/floor,
-/turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "aDw" = (
 /obj/table/auto,
@@ -10735,7 +10756,6 @@
 	icon_state = "diagonal"
 	},
 /turf/simulated/martian/floor,
-/turf/simulated/martian/floor,
 /area/evilreaver/security)
 "aDI" = (
 /obj/indestructible/shuttle_corner{
@@ -10743,7 +10763,6 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/simulated/martian/floor,
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "aDJ" = (
@@ -11180,7 +11199,6 @@
 	icon_state = "diagonal"
 	},
 /turf/simulated/martian/floor,
-/turf/simulated/martian/floor,
 /area/evilreaver/bar)
 "aFm" = (
 /obj/decal/cleanable/molten_item,
@@ -11401,7 +11419,11 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/space,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/space.dmi';
+	icon_state = "placeholder";
+	name = "space"
+	},
 /area/space)
 "aFO" = (
 /obj/decal/cleanable/dirt,
@@ -11520,7 +11542,11 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/space,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/space.dmi';
+	icon_state = "placeholder";
+	name = "space"
+	},
 /area/space)
 "aGh" = (
 /obj/storage/crate,
@@ -24253,6 +24279,14 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
+"eDY" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/martian/floor,
+/area/space)
 "fgb" = (
 /turf/simulated/wall/asteroid{
 	dir = 1
@@ -40317,7 +40351,7 @@ aaa
 aaa
 axm
 axs
-axC
+eDY
 ayn
 axs
 axs
@@ -43664,7 +43698,7 @@ aCq
 aCE
 aCE
 axo
-aBh
+aGg
 aaa
 aaa
 aaa
@@ -46364,7 +46398,7 @@ axo
 axo
 axo
 axo
-aBh
+aGg
 aaa
 aaa
 aaa
@@ -46678,10 +46712,10 @@ axo
 axo
 axo
 axo
-aBh
+aGg
 axr
 axo
-aBh
+aGg
 aaa
 aaa
 aaa
