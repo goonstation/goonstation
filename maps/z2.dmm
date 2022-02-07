@@ -4285,7 +4285,7 @@
 	icon_state = "barsign";
 	name = "Bar"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "akM" = (
 /obj/decal/fakeobjects/lighttube_broken{
@@ -9605,7 +9605,7 @@
 	},
 /area/owlery/office)
 "aBY" = (
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "aCb" = (
 /turf/unsimulated/wall/auto/adventure/shuttle,
@@ -11426,13 +11426,6 @@
 	},
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty1"
-	},
-/area/marsoutpost)
-"aIY" = (
-/obj/decal/lightshaft,
-/turf/unsimulated/wall/setpieces/martian{
-	dir = 1;
-	icon_state = "mars-c"
 	},
 /area/marsoutpost)
 "aIZ" = (
@@ -14023,12 +14016,6 @@
 /obj/map/light/graveyard,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
-"aQI" = (
-/turf/unsimulated/wall/setpieces/martian{
-	dir = 1;
-	icon_state = "mars-c"
-	},
-/area/marsoutpost)
 "aQJ" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -14541,10 +14528,7 @@
 /area/crater/cave)
 "aSv" = (
 /obj/decal/lightshaft,
-/turf/unsimulated/wall/setpieces/martian{
-	dir = 4;
-	icon_state = "mars-s"
-	},
+/turf/unsimulated/wall/auto/adventure/mars,
 /area/marsoutpost)
 "aSw" = (
 /obj/decal/cleanable/dirt,
@@ -14858,12 +14842,6 @@
 /obj/spacevine,
 /turf/unsimulated/wall/auto/adventure/mars/interior,
 /area/marsoutpost)
-"aTw" = (
-/turf/unsimulated/wall/setpieces/martian{
-	dir = 1;
-	icon_state = "mars-s"
-	},
-/area/marsoutpost)
 "aTx" = (
 /obj/table/auto,
 /turf/unsimulated/floor/grime,
@@ -14894,12 +14872,6 @@
 	},
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty3"
-	},
-/area/marsoutpost)
-"aTB" = (
-/turf/unsimulated/wall/setpieces/martian{
-	dir = 10;
-	icon_state = "mars-c"
 	},
 /area/marsoutpost)
 "aTC" = (
@@ -31238,7 +31210,7 @@
 /area/colosseum/staging)
 "bLN" = (
 /obj/decal/poster/wallsign/space,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "bLO" = (
 /obj/machinery/navbeacon{
@@ -31646,7 +31618,7 @@
 	icon_state = "space";
 	name = "VACUUM AREA"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "bNb" = (
 /obj/item/bananapeel,
@@ -34840,7 +34812,10 @@
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "bXw" = (
-/turf/simulated/wall/false_wall,
+/turf/simulated/wall/false_wall{
+	icon = 'icons/turf/walls_derelict.dmi';
+	icon_state = "old-12"
+	},
 /area/meat_derelict/main)
 "bXx" = (
 /turf/unsimulated/wall/auto/adventure/old,
@@ -43917,7 +43892,7 @@
 /area/owlery/gangzone)
 "cxc" = (
 /obj/decal/cleanable/rust,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "cxd" = (
 /obj/cable{
@@ -43960,7 +43935,7 @@
 /area/owlery/staffhall)
 "cxh" = (
 /obj/decal/poster/wallsign/poster_clown,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "cxi" = (
 /obj/computerframe{
@@ -43989,7 +43964,7 @@
 	dir = 4;
 	req_access_txt = null
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "cxl" = (
 /turf/unsimulated/floor/arrival{
@@ -44170,11 +44145,11 @@
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/staffhall)
 "cxL" = (
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/space)
 "cxM" = (
 /obj/decal/poster/wallsign/escape_right,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "cxN" = (
 /obj/decal/cleanable/blood/gibs{
@@ -44204,7 +44179,7 @@
 /area/owlery/staffhall)
 "cxR" = (
 /obj/decal/poster/wallsign/medbay,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "cxS" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -44242,7 +44217,7 @@
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "u_guilty"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "cxW" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -44775,7 +44750,7 @@
 /area/space)
 "czn" = (
 /obj/decal/cleanable/gangtag,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "czo" = (
 /turf/unsimulated/wall{
@@ -45101,11 +45076,11 @@
 	icon_state = "sign_arrow";
 	name = "arrow sign"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "czZ" = (
 /obj/decal/poster/wallsign/poster_hair,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "cAa" = (
 /obj/stool/chair{
@@ -45121,9 +45096,6 @@
 	},
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/staffhall)
-"cAb" = (
-/turf/unsimulated/wall/auto/reinforced,
-/area/owlery/gangzone)
 "cAc" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Owl Ward";
@@ -45226,7 +45198,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "cAp" = (
 /obj/machinery/light/emergency{
@@ -45239,7 +45211,7 @@
 	},
 /area/owlery/staffhall)
 "cAq" = (
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait)
 "cAr" = (
 /obj/item/tile/steel,
@@ -45333,7 +45305,7 @@
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
 "cAB" = (
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/lab)
 "cAC" = (
 /obj/storage/secure/closet/medical/chemical{
@@ -45342,7 +45314,7 @@
 /turf/unsimulated/floor/white,
 /area/owlery/lab)
 "cAD" = (
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/office)
 "cAE" = (
 /obj/table/reinforced/auto,
@@ -45372,7 +45344,7 @@
 /area/owlery/lab)
 "cAJ" = (
 /obj/decal/cleanable/gangtag,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/gangzone)
 "cAK" = (
 /obj/cable{
@@ -45541,7 +45513,7 @@
 	icon_state = "sign_arrow";
 	name = "arrow sign"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "cBb" = (
 /turf/unsimulated/floor/grime,
@@ -45660,7 +45632,7 @@
 /turf/unsimulated/floor/redblack,
 /area/owlery/gangzone)
 "cBx" = (
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlopen)
 "cBy" = (
 /obj/disposalpipe/segment{
@@ -45710,7 +45682,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "cBG" = (
 /obj/disposalpipe/segment{
@@ -45720,7 +45692,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "cBH" = (
 /obj/lattice,
@@ -45739,7 +45711,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait)
 "cBJ" = (
 /obj/lattice{
@@ -45763,7 +45735,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "cBN" = (
 /obj/lattice{
@@ -45838,7 +45810,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/gangzone)
 "cBU" = (
 /obj/decal/cleanable/blood/gibs{
@@ -46332,7 +46304,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "cDd" = (
 /obj/cable{
@@ -46411,7 +46383,7 @@
 /area/owlery/lab)
 "cDl" = (
 /obj/disposalpipe/segment,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait)
 "cDm" = (
 /obj/item/cable_coil/cut{
@@ -46554,7 +46526,7 @@
 	},
 /area/owlery/owleryhall)
 "cDC" = (
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cDD" = (
 /obj/wingrille_spawn,
@@ -46782,7 +46754,7 @@
 	icon_state = "space";
 	name = "VACUUM AREA"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlopen)
 "cEc" = (
 /obj/storage/secure/closet/fridge,
@@ -46819,7 +46791,7 @@
 	icon_state = "sign_arrow";
 	name = "arrow sign"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cEg" = (
 /obj/decal/glow{
@@ -46833,7 +46805,7 @@
 	icon_state = "sign_arrow";
 	name = "arrow sign"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cEh" = (
 /obj/machinery/light{
@@ -46846,11 +46818,11 @@
 /area/owlery/owleryhall)
 "cEi" = (
 /obj/owlerysign/staffplaque,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cEj" = (
 /obj/disposalpipe/segment,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cEk" = (
 /obj/item/cable_coil/cut{
@@ -47127,13 +47099,13 @@
 /area/owlery/Owlmait)
 "cES" = (
 /obj/disposalpipe/junction/middle/east,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cET" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cEU" = (
 /obj/machinery/conveyor/east{
@@ -47159,7 +47131,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait)
 "cEX" = (
 /obj/item/gun/flamethrower/assembled/loaded,
@@ -47566,7 +47538,7 @@
 /area/owlery/owleryhall)
 "cGa" = (
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait)
 "cGb" = (
 /obj/cable{
@@ -47574,7 +47546,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/office)
 "cGc" = (
 /obj/decal/fakeobjects{
@@ -47929,7 +47901,7 @@
 /area/owlery/office)
 "cGN" = (
 /obj/disposalpipe/segment,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/lab)
 "cGO" = (
 /obj/table/reinforced/auto,
@@ -47958,7 +47930,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "cGR" = (
 /obj/disposalpipe/segment,
@@ -48260,7 +48232,7 @@
 /area/owlery/owleryhall)
 "cHG" = (
 /obj/decal/poster/wallsign/poster_cool,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cHH" = (
 /obj/disposalpipe/segment{
@@ -48320,7 +48292,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait)
 "cHQ" = (
 /obj/storage/crate,
@@ -48385,7 +48357,7 @@
 	name = "OWLERY";
 	pixel_y = -5
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/gangzone)
 "cHY" = (
 /obj/machinery/door/window{
@@ -48564,7 +48536,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cIs" = (
 /obj/cable{
@@ -48573,7 +48545,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/office)
 "cIt" = (
 /obj/window_blinds/cog2{
@@ -48604,7 +48576,7 @@
 /obj/owlerysign/officeplaque{
 	desc = "Office of James Musujasa, Head Of Personnel."
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/office)
 "cIv" = (
 /obj/cable{
@@ -48622,7 +48594,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/office)
 "cIx" = (
 /turf/unsimulated/floor/wizard/carpet/edge{
@@ -48633,7 +48605,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "floor6"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/office)
 "cIz" = (
 /obj/machinery/drainage,
@@ -48679,7 +48651,7 @@
 /area/owlery/office)
 "cIF" = (
 /obj/decal/cleanable/fungus,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/gangzone)
 "cIG" = (
 /turf/unsimulated/floor/yellowblack{
@@ -49664,7 +49636,7 @@
 /area/owlery/owleryhall)
 "cLb" = (
 /obj/owlerysign/officeplaque,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cLc" = (
 /turf/unsimulated/wall/setpieces/fakewindow{
@@ -49798,7 +49770,7 @@
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "u_guilty"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cLu" = (
 /turf/unsimulated/floor/greenwhite,
@@ -49909,7 +49881,7 @@
 /area/owlery/gangzone)
 "cLM" = (
 /obj/decal/cleanable/rust,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/gangzone)
 "cLN" = (
 /obj/stool/chair/couch,
@@ -49956,7 +49928,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait)
 "cLS" = (
 /obj/cable{
@@ -50419,7 +50391,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "handblood"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/gangzone)
 "cNa" = (
 /obj/decal/cleanable/dirt,
@@ -50649,11 +50621,11 @@
 /area/owlery/owleryhall)
 "cNK" = (
 /obj/item/storage/wall/medical,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cNL" = (
 /obj/item/storage/wall/emergency,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cNM" = (
 /obj/cable{
@@ -50677,14 +50649,14 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cNP" = (
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cNQ" = (
 /obj/stool/bed,
@@ -50704,10 +50676,6 @@
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
-"cNT" = (
-/obj/decal/cleanable/rust,
-/turf/unsimulated/wall/auto/reinforced,
-/area/owlery/Owlmait2)
 "cNU" = (
 /obj/cable{
 	d1 = 2;
@@ -51465,7 +51433,7 @@
 /turf/unsimulated/floor/green/checker,
 /area/owlery/owleryhall)
 "cPw" = (
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owllock)
 "cPx" = (
 /obj/machinery/bot/guardbot/bootleg{
@@ -51527,7 +51495,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait)
 "cPG" = (
 /obj/critter/roach,
@@ -51767,7 +51735,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait)
 "cQc" = (
 /turf/unsimulated/floor/grime,
@@ -52108,7 +52076,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/gangzone)
 "cQP" = (
 /turf/unsimulated/floor/black,
@@ -52419,14 +52387,14 @@
 	dir = 4;
 	level = -1
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cRu" = (
 /obj/disposalpipe/segment{
 	dir = 4;
 	level = -1
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owllock)
 "cRv" = (
 /obj/critter/madnessowl{
@@ -52559,7 +52527,7 @@
 	name = "OWLERY";
 	pixel_y = -5
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cRL" = (
 /obj/machinery/light,
@@ -52577,7 +52545,7 @@
 /area/owlery/owleryhall)
 "cRM" = (
 /obj/disposalpipe/segment,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owllock)
 "cRN" = (
 /obj/cable{
@@ -52689,7 +52657,7 @@
 	dir = 8;
 	name = "river pipe"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owllock)
 "cSa" = (
 /obj/reagent_dispensers/watertank/fountain,
@@ -53693,7 +53661,7 @@
 /area/owlery/owleryhall)
 "cUh" = (
 /obj/owlerysign/owlplaque,
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait2)
 "cUi" = (
 /obj/disposalpipe/segment{
@@ -53701,7 +53669,7 @@
 	dir = 1;
 	name = "river pipe"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait2)
 "cUk" = (
 /obj/decal/cleanable/blood{
@@ -53720,7 +53688,7 @@
 	desc = "An underfloor transport pipe.";
 	name = "river pipe"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait2)
 "cUn" = (
 /obj/disposalpipe/segment{
@@ -53743,7 +53711,7 @@
 	dir = 1;
 	name = "river pipe"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait2)
 "cUq" = (
 /obj/machinery/door/airlock/pyro/classic,
@@ -53996,7 +53964,7 @@
 	dir = 1;
 	name = "river pipe"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owllock)
 "cUP" = (
 /obj/decal/fakeobjects/pipe,
@@ -54536,7 +54504,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait)
 "cVU" = (
 /obj/disposalpipe/segment{
@@ -56028,13 +55996,13 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/office)
 "cYI" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/office)
 "cYJ" = (
 /obj/blind_switch{
@@ -56043,7 +56011,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/office)
 "cYK" = (
 /obj/decal/poster/wallsign/poster_sol,
@@ -56052,7 +56020,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/office)
 "cYL" = (
 /obj/machinery/door/poddoor/blast/lunar/tour{
@@ -88913,7 +88881,7 @@ cVv
 cWa
 cWG
 cYn
-cNT
+bLq
 cnw
 cnw
 cnw
@@ -94606,28 +94574,28 @@ cEo
 aly
 cBF
 aBY
-cAb
-cAb
-cAb
-cAb
-cAb
-cAb
-cAb
-cAb
-cAb
-cAb
-cAb
+teq
+teq
+teq
+teq
+teq
+teq
+teq
+teq
+teq
+teq
+teq
 cRm
 cHS
 cHS
 cJt
 cJY
 cKI
-cAb
+teq
 cIF
-cAb
-cAb
-cAb
+teq
+teq
+teq
 cGK
 cUR
 cOn
@@ -94925,7 +94893,7 @@ cHS
 cID
 cJZ
 cJv
-cAb
+teq
 cLE
 cMf
 cMH
@@ -95210,7 +95178,7 @@ czJ
 aOe
 cnw
 cnw
-cAb
+teq
 cBo
 cBZ
 cCL
@@ -95512,7 +95480,7 @@ czJ
 czm
 cnw
 cnw
-cAb
+teq
 cBX
 cCa
 cCM
@@ -95813,19 +95781,19 @@ bxW
 czJ
 aBY
 bCy
-cAb
+teq
 cAJ
 cBq
 cCb
 cBq
-cAb
-cAb
-cAb
+teq
+teq
+teq
 cBq
 cFM
 cBq
 cQO
-cAb
+teq
 cHU
 cIF
 cJv
@@ -96115,7 +96083,7 @@ bxW
 czz
 czn
 aBY
-cAb
+teq
 cCv
 cBr
 cCc
@@ -96127,9 +96095,9 @@ cFi
 cFN
 cGp
 cQa
-cAb
-cAb
-cAb
+teq
+teq
+teq
 aIZ
 cKb
 cKL
@@ -96144,7 +96112,7 @@ cOp
 cOp
 cPl
 cIF
-cAb
+teq
 cQG
 cOp
 cOp
@@ -97021,7 +96989,7 @@ chw
 czD
 czn
 aBY
-cAb
+teq
 cxb
 cBu
 cCf
@@ -97033,7 +97001,7 @@ cCM
 cCM
 cGr
 cQK
-cAb
+teq
 cHX
 cMZ
 cJz
@@ -97049,8 +97017,8 @@ cAJ
 cOp
 cOp
 cPl
-cAb
-cAb
+teq
+teq
 cQJ
 cOp
 cOp
@@ -97323,21 +97291,21 @@ bNa
 cFu
 aBY
 bCx
-cAb
+teq
 cAJ
 cBq
 cBq
 cBq
-cAb
+teq
 cAJ
-cAb
+teq
 cBq
 cFM
 cBq
-cAb
-cAb
+teq
+teq
 cxp
-cAb
+teq
 cJv
 cKe
 cKO
@@ -97626,7 +97594,7 @@ cFv
 aBY
 cnw
 cnw
-cAb
+teq
 cBv
 cCg
 cCN
@@ -97636,7 +97604,7 @@ cEC
 cCN
 cCK
 cGs
-cAb
+teq
 bCx
 bCx
 bCx
@@ -97928,7 +97896,7 @@ cCx
 aBY
 cnw
 cnw
-cAb
+teq
 cBw
 cCh
 cCQ
@@ -97938,7 +97906,7 @@ cCQ
 cDr
 cCQ
 aAR
-cAb
+teq
 cnw
 cnw
 cnw
@@ -97952,16 +97920,16 @@ cKc
 cNl
 cNH
 cIF
-cAb
-cAb
-cAb
+teq
+teq
+teq
 cJv
 cJv
-cAb
-cAb
-cAb
-cAb
-cAb
+teq
+teq
+teq
+teq
+teq
 cJv
 cJv
 teq
@@ -98230,7 +98198,7 @@ cyV
 aBY
 cnw
 cnw
-cAb
+teq
 cJr
 bqs
 cCR
@@ -98240,20 +98208,20 @@ cED
 cFk
 cFO
 cNv
-cAb
+teq
 cnw
 cnw
 cnw
 cnw
 cnw
 cJv
-cAb
+teq
 cLL
 cMq
 cMN
 cNm
-cAb
-cAb
+teq
+teq
 cOq
 cnw
 cnw
@@ -98532,29 +98500,29 @@ cyW
 aBY
 cnw
 cnw
-cAb
-cAb
-cAb
-cAb
-cAb
-cAb
-cAb
-cAb
-cAb
-cAb
-cAb
+teq
+teq
+teq
+teq
+teq
+teq
+teq
+teq
+teq
+teq
+teq
 cnw
 cnw
 cnw
 cnw
 cnw
 cnw
-cAb
+teq
 cLM
-cAb
-cAb
-cAb
-cAb
+teq
+teq
+teq
+teq
 cnw
 cnw
 cnw
@@ -114232,7 +114200,7 @@ aeX
 aeX
 adR
 aec
-acx
+aeX
 aeX
 aeX
 aeX
@@ -119065,7 +119033,7 @@ adH
 acb
 adS
 aer
-abw
+aeX
 afa
 afp
 age
@@ -119367,7 +119335,7 @@ acp
 adU
 acb
 acb
-abw
+aeX
 afb
 afb
 afb
@@ -129736,7 +129704,7 @@ aOn
 aTs
 aIe
 aIe
-aQI
+aIe
 aSw
 aTs
 aTs
@@ -130037,7 +130005,7 @@ aMm
 aOo
 aTs
 aIe
-aQI
+aIe
 aRw
 aSx
 aTv
@@ -130264,7 +130232,7 @@ aFA
 aGx
 aGx
 aGx
-duq
+aGx
 duq
 duq
 duq
@@ -130870,10 +130838,10 @@ aGx
 duq
 duq
 duq
+aGx
 duq
 duq
-duq
-duq
+aGx
 duq
 aaa
 dFc
@@ -131546,11 +131514,11 @@ aMo
 aNw
 aNw
 aTs
-aPU
+aIe
 aKr
 aKS
 aPl
-aTw
+aIe
 aTs
 aTs
 aTs
@@ -131848,11 +131816,11 @@ aTs
 aTs
 aTs
 aTs
-aPU
+aIe
 aKr
 aKS
 aPl
-aTw
+aIe
 aTs
 aUU
 aLI
@@ -132136,8 +132104,8 @@ aES
 aES
 dFc
 aaa
-aIi
-aIx
+aIe
+aIe
 aTs
 aJu
 aJU
@@ -132147,8 +132115,8 @@ aJX
 aTs
 aMp
 aTs
-aIx
-aIx
+aIe
+aIe
 aTs
 aTs
 aQL
@@ -133042,8 +133010,8 @@ aES
 dFl
 dFc
 aaa
-aIk
-aIk
+aIe
+aIe
 aTs
 aJw
 aJX
@@ -133660,7 +133628,7 @@ aTs
 aTs
 aTs
 aTs
-aPU
+aIe
 aKr
 aKS
 aPl
@@ -133962,11 +133930,11 @@ aMT
 aNA
 aOs
 aTs
-aPU
+aIe
 aKr
 aKS
 aPl
-aTB
+aIe
 aTs
 aTs
 aTs
@@ -134250,7 +134218,7 @@ aES
 aES
 dFc
 aaa
-aIm
+aIe
 aIB
 aIX
 aTs
@@ -134553,11 +134521,11 @@ aES
 dFc
 aaa
 aIe
-aIm
+aIe
 aTs
 aTs
-aIi
-aIx
+aIe
+aIe
 aTs
 aLi
 aLJ
@@ -134570,7 +134538,7 @@ aPY
 aKr
 aKS
 aPl
-aTw
+aIe
 aTs
 aKS
 aPl
@@ -134856,7 +134824,7 @@ dFc
 aaa
 aIe
 aIe
-aIY
+aSv
 aIy
 aIB
 aKx
@@ -134872,7 +134840,7 @@ aPZ
 aKr
 aKS
 aSD
-aTw
+aIe
 aTs
 aTs
 aVJ
@@ -135472,7 +135440,7 @@ aMr
 aMr
 aOu
 aTs
-aPU
+aIe
 aKr
 aKS
 aPl
@@ -135774,7 +135742,7 @@ aLm
 aLm
 aOv
 aTs
-aPU
+aIe
 aKr
 aKS
 aPl
@@ -138183,7 +138151,7 @@ aIe
 aIe
 aIe
 aIe
-aQI
+aIe
 djq
 aIi
 aIe
@@ -138481,10 +138449,10 @@ aaa
 aIe
 aIe
 aIe
-aPU
+aIe
 djq
-aTw
-aPU
+aIe
+aIe
 djq
 djq
 djq
@@ -138783,10 +138751,10 @@ aaa
 aIe
 aIe
 aIe
-aPU
+aIe
 djq
-aIi
-aQI
+aIe
+aIe
 djq
 djq
 djq
@@ -139085,7 +139053,7 @@ aaa
 aIe
 aIe
 aIe
-aQI
+aIe
 djq
 djq
 djq
@@ -139386,7 +139354,7 @@ dFc
 aaa
 aIe
 aIe
-aQI
+aIe
 djq
 djq
 djq
@@ -139396,10 +139364,10 @@ djq
 djq
 aIB
 aIy
-aTB
-aIk
-aIk
-aIm
+aIe
+aIe
+aIe
+aIe
 aIy
 aIB
 aIe
@@ -139688,7 +139656,7 @@ dFc
 aaa
 aIe
 aIe
-aIm
+aIe
 djq
 djq
 djq
@@ -139698,10 +139666,10 @@ djq
 djq
 aIB
 aIB
-aIi
-aIx
-aIx
-aQI
+aIe
+aIe
+aIe
+aIe
 aIB
 aIB
 aIe
@@ -139991,8 +139959,8 @@ aaa
 aIe
 aIe
 aIe
-aIk
-aIm
+aIe
+aIe
 djq
 djq
 djq
@@ -140294,9 +140262,9 @@ aIe
 aIe
 aIe
 aIe
-aQI
-bjD
-aIm
+aIe
+aIe
+aIe
 djq
 aIe
 aIe
@@ -140597,8 +140565,8 @@ aIe
 aIe
 djq
 djq
-aIi
-aQI
+aIe
+aIe
 djq
 aIe
 aIe
@@ -142107,8 +142075,8 @@ aIe
 aIe
 djq
 djq
-bjD
-aIm
+aIe
+aIe
 djq
 djq
 djq
@@ -142125,7 +142093,7 @@ djq
 aIe
 aIe
 aIe
-aPU
+aIe
 djq
 djq
 djq
@@ -142409,8 +142377,8 @@ aIe
 djq
 djq
 djq
-aTw
-aPU
+aIe
+aIe
 djq
 djq
 djq
@@ -142427,7 +142395,7 @@ djq
 djq
 aIe
 aIe
-aPU
+aIe
 djq
 djq
 djq
@@ -142710,9 +142678,9 @@ aIe
 aIe
 djq
 djq
-aTB
 aIe
-aQI
+aIe
+aIe
 djq
 djq
 djq
@@ -143013,7 +142981,7 @@ aIe
 aIe
 aIe
 aIe
-aQI
+aIe
 djq
 djq
 djq
@@ -143314,7 +143282,7 @@ aIe
 aIe
 aIe
 aIe
-aPU
+aIe
 djq
 djq
 djq
@@ -143616,7 +143584,7 @@ aIe
 aIe
 aIe
 aIe
-aPU
+aIe
 djq
 djq
 djq
