@@ -453,12 +453,8 @@
 /area/station/crew_quarters/kitchen)
 "aY" = (
 /obj/item/cable_coil/cut{
-	color = "#DD0000"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	color = "#DD0000";
+	transform = list(0,1,0,-1,0,0)
 	},
 /turf/simulated/floor/plating/random,
 /area/station/quartermaster/office)
