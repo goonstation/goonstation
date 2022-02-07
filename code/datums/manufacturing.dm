@@ -1050,6 +1050,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Resource"
 
+/datum/manufacture/stress_ball
+	name = "Stress Ball"
+	item_paths = list("FAB-1")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/toy/plush/small/stress_ball)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 /******************** Robotics **************************/
 
 /datum/manufacture/robo_frame
