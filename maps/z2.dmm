@@ -11092,12 +11092,6 @@
 "aIe" = (
 /turf/unsimulated/wall/auto/adventure/mars,
 /area/marsoutpost)
-"aIi" = (
-/turf/unsimulated/wall/setpieces/martian{
-	dir = 9;
-	icon_state = "mars-c"
-	},
-/area/marsoutpost)
 "aIj" = (
 /turf/unsimulated/floor/setpieces/martian{
 	density = 1;
@@ -11148,12 +11142,6 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/black,
 /area/marsoutpost/vault)
-"aIx" = (
-/turf/unsimulated/wall/setpieces/martian{
-	dir = 4;
-	icon_state = "mars-s"
-	},
-/area/marsoutpost)
 "aIy" = (
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty3"
@@ -137800,7 +137788,7 @@ aIe
 aIe
 aIe
 aIe
-aIx
+aIe
 aIe
 aIe
 aIe
@@ -138103,7 +138091,7 @@ aIe
 aIe
 aIe
 djq
-aIi
+aIe
 aIe
 aIe
 aIe
@@ -138406,7 +138394,7 @@ aIe
 djq
 djq
 djq
-aIi
+aIe
 aIe
 aIe
 djq
