@@ -67,6 +67,7 @@
 	var/clear_invalid_targets = 1 // In relation to world time. Clear list periodically.
 	var/clear_invalid_targets_interval = 30 SECONDS // How frequently?
 
+	var/list/chase_lines = list("Gimme!", "Hey!", "Oi!", "Mine!", "Want!", "Need!")
 
 /obj/machinery/bot/floorbot/New()
 	..()
@@ -314,6 +315,11 @@
 				src.KillPathAndGiveUp(1)
 				return
 		src.point(src.target)
+		var/obj/A = src.target
+		while(!isnull(A) && !istype(A.loc, /turf) && !ishuman(A.loc))
+			A = A.loc
+		if (ishuman(A?.loc) && prob(30))
+			speak(pick(src.chase_lines))
 		src.doing_something = 1
 		src.search_range = 1
 	else
