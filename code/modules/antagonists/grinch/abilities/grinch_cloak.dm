@@ -1,6 +1,7 @@
 /datum/targetable/grinch/grinch_cloak
 	name = "Activate cloak (temp.)"
 	desc = "Activates a cloaking ability for a limited amount of time."
+	icon_state = "grinchcloak"
 	targeted = 0
 	target_anything = 0
 	target_nodamage_check = 0
@@ -22,7 +23,7 @@
 			return 1
 
 		if (ismobcritter(M)) // Placeholder because only humans use bioeffects at the moment.
-			if (M.invisibility != 0)
+			if (M.invisibility != INVIS_NONE)
 				boutput(M, __red("You are already invisible."))
 				return 1
 

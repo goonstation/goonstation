@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 1.0
 	flags = NOSPLASH
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
 	stops_space_move = TRUE
 	mat_changename = 1
@@ -18,6 +18,7 @@
 	var/has_storage = 0
 	var/obj/item/storage/desk_drawer/desk_drawer = null
 	var/slaps = 0
+	var/hulk_immune = FALSE
 
 
 	New(loc, obj/a_drawer)
@@ -30,6 +31,11 @@
 				src.desk_drawer = new(src)
 		else if (a_drawer)
 			a_drawer.set_loc(get_turf(src))
+
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
+			xmasify()
+		#endif
 
 		SPAWN_DBG(0)
 			if (src.auto && ispath(src.auto_type) && src.icon_state == "0") // if someone's set up a special icon state don't mess with it
@@ -50,6 +56,15 @@
 		var/area/Ar = get_area(src)
 		if (Ar)
 			Ar.sims_score = min(Ar.sims_score + bonus, 100)
+
+	proc/xmasify()
+		var/in_cafeteria = istype(get_area(src), /area/station/crew_quarters/cafeteria)
+		if(in_cafeteria && fixed_random(src.x / world.maxx, src.y / world.maxy) <= 0.2)
+			var/obj/item/reagent_containers/food/drinks/eggnog/nog = new(src.loc)
+			nog.layer += 0.1
+		if(fixed_random(src.x / world.maxx, src.y / world.maxy) >= (in_cafeteria ? 0.6 : 0.9))
+			var/obj/item/a_gift/festive/gift = new(src.loc)
+			gift.layer += 0.1
 
 	proc/set_up()
 		if (!ispath(src.auto_type))
@@ -283,12 +298,17 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
-		if (user.is_hulk())
+	attack_hand(mob/user)
+		if (user.is_hulk() && !hulk_immune)
 			user.visible_message("<span class='alert'>[user] destroys the table!</span>")
 			if (prob(40))
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 			deconstruct()
+			return
+
+		if (src.has_storage && src.desk_drawer)
+			src.MouseDrop(user, src.loc, user.loc)
+
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer))
@@ -310,9 +330,7 @@
 				actions.start(new /datum/action/bar/icon/railing_jump/table_jump(user, src), user)
 		return
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if(air_group || (height==0)) return 1
-
+	Cross(atom/movable/mover)
 		if (!src.density || (mover.flags & TABLEPASS || istype(mover, /obj/newmeteor)) )
 			return 1
 		else
@@ -330,8 +348,6 @@
 			return
 
 		var/obj/item/I = O
-		if(I.loc == user && I.cant_drop)
-			return
 		if(I.equipped_in_slot && I.cant_self_remove)
 			return
 		if(istype(O.loc, /obj/item/storage))
@@ -347,7 +363,7 @@
 				for (var/obj/item/thing in S.contents)
 					thing.set_loc(src.loc)
 				S.desc = "A leather bag. It holds 0/[S.maxitems] [S.itemstring]."
-				S.satchel_updateicon()
+				S.UpdateIcon()
 				return
 		if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
 			return
@@ -478,6 +494,26 @@
 	auto
 		auto = 1
 
+/obj/table/neon
+	name = "neon table"
+	desc = "It's almost painfully bright."
+	icon = 'icons/obj/furniture/table_neon.dmi'
+	auto_type = /obj/table/neon/auto
+	parts_type = /obj/item/furniture_parts/table/neon
+
+	auto
+		auto = 1
+
+/obj/table/scrap
+	name = "scrap table"
+	desc = "It's literally made of garbage."
+	icon = 'icons/obj/furniture/table_scrap.dmi'
+	auto_type = /obj/table/scrap/auto
+	parts_type = /obj/item/furniture_parts/table/scrap
+
+	auto
+		auto = 1
+
 /obj/table/folding
 	name = "folding table"
 	desc = "A table with a faux wood top designed for quick assembly and toolless disassembly."
@@ -505,6 +541,25 @@
 				actions.start(new /datum/action/bar/icon/fold_folding_table(src, null), user)
 		return
 
+/obj/table/syndicate
+	name = "crimson glass table"
+	desc = "An industrial grade table with a crimson glass panel on the top. The glass looks extremely sturdy."
+	icon = 'icons/obj/furniture/table_syndicate.dmi'
+	auto_type = /obj/table/syndicate
+	parts_type = /obj/item/furniture_parts/table/syndicate
+
+	auto
+		auto = TRUE
+
+/obj/table/nanotrasen
+	name = "azure glass table"
+	desc = "An industrial grade table with an azure glass panel on the top. The glass looks extremely sturdy."
+	icon = 'icons/obj/furniture/table_nanotrasen.dmi'
+	auto_type = /obj/table/nanotrasen
+	parts_type = /obj/item/furniture_parts/table/nanotrasen
+
+	auto
+		auto = TRUE
 /* ======================================== */
 /* ---------------------------------------- */
 /* ======================================== */
@@ -653,7 +708,7 @@
 			gnesis_smash()
 		else
 			for (var/i=rand(3,4), i>0, i--)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 				G.set_loc(src.loc)
 				if (src.material)
 					G.setMaterial(src.material)
@@ -684,8 +739,8 @@
 				var/duration= round(regrow_duration / loops, 2)
 
 				// Ripple inwards
-				src.filters += filter(type="ripple", x=0, y=0, size=size, repeat=rand()*2.5+3, radius=0, flags=WAVE_BOUNDED)
-				filter = src.filters[src.filters.len]
+				add_filter("gnesis regrowth", 1, ripple_filter(x=0, y=0, size=size, repeat=rand()*2.5+3, radius=0, flags=WAVE_BOUNDED))
+				filter = get_filter("gnesis regrowth")
 				animate(filter, size=0, time=0, loop=loops, radius=12, flags=ANIMATION_PARALLEL)
 				animate(size=size, radius=0, time=duration)
 
@@ -695,7 +750,7 @@
 				sleep(regrow_duration)
 
 				// Remove filter and reset color
-				src.filters -= filter
+				remove_filter("gnesis regrowth")
 				animate(src, loop=0, color=color, time=duration/2)
 				src.visible_message("<span class='alert'>\The [src] fully reforms!</span>")
 				src.glass_broken = GLASS_INTACT

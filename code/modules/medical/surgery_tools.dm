@@ -91,7 +91,7 @@ CONTAINS:
 
 /obj/item/circular_saw
 	name = "circular saw"
-	desc = "A saw used to cut bone with precision."
+	desc = "A saw used to slice through bone in surgeries, and attackers in self defense."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
@@ -347,7 +347,7 @@ CONTAINS:
 
 /obj/item/robodefibrillator
 	name = "defibrillator"
-	desc = "Used to resuscitate critical patients."
+	desc = "Uses electrical currents to restart the hearts of critical patients."
 	flags = FPRINT | TABLEPASS | CONDUCT
 	icon = 'icons/obj/surgery.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
@@ -385,7 +385,7 @@ CONTAINS:
 		if (user)
 			user.show_text("You reapair the on board medical scanner.", "blue")
 			src.desc = null
-			src.desc = "Used to resuscitate critical patients."
+			src.desc = "Uses electrical currents to restart the hearts of critical patients."
 		src.emagged = 0
 		return 1
 
@@ -489,6 +489,7 @@ CONTAINS:
 		else if (isdead(patient))
 			patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond at all!</span>")
 			speak("ERROR: Patient is deceased.")
+			patient.setStatus("defibbed", 1.5 SECONDS)
 			return 1
 
 		else
@@ -581,12 +582,14 @@ CONTAINS:
 				patient.changeStatus("weakened", 0.1 SECONDS)
 				patient.force_laydown_standup()
 				patient.remove_stamina(45)
+				if (isdead(patient) && !patient.bioHolder.HasEffect("resist_electric"))
+					patient.setStatus("defibbed", 1.5 SECONDS)
 
 		return 0
 
 /obj/item/robodefibrillator/emagged
 	emagged = 1
-	desc = "Used to resuscitate critical patients.  The screen only shows the word KILL flashing over and over."
+	desc = "Uses electrical currents to restart the hearts of critical patients. The screen only shows the word KILL flashing over and over."
 
 /obj/item/robodefibrillator/vr
 	icon = 'icons/effects/VR.dmi'
@@ -627,7 +630,7 @@ CONTAINS:
 /obj/machinery/defib_mount
 	name = "mounted defibrillator"
 	icon = 'icons/obj/compact_machines.dmi'
-	desc = "Used to resuscitate critical patients."
+	desc = "Uses electrical currents to restart the hearts of critical patients."
 	icon_state = "defib1"
 	anchored = 1
 	density = 0
@@ -644,7 +647,7 @@ CONTAINS:
 			defib = null
 		..()
 
-	proc/update_icon()
+	update_icon()
 		if (defib && defib.loc == src)
 			icon_state = "defib1"
 		else
@@ -667,7 +670,7 @@ CONTAINS:
 		src.defib.parent = src
 		playsound(src, "sound/items/pickup_defib.ogg", 65, vary=0.2)
 
-		update_icon()
+		UpdateIcon()
 
 		//set move callback (when user moves, defib go back)
 		if (islist(user.move_laying))
@@ -694,7 +697,7 @@ CONTAINS:
 			M.move_laying = null
 
 		playsound(src, "sound/items/putback_defib.ogg", 65, vary=0.2)
-		update_icon()
+		UpdateIcon()
 
 
 /* ================================================ */
@@ -823,7 +826,7 @@ CONTAINS:
 		else
 			return ..()
 
-	proc/update_icon()
+	update_icon()
 		switch (src.uses)
 			if (0 to -INFINITY)
 				src.icon_state = "bandage-item-0"
@@ -895,11 +898,9 @@ CONTAINS:
 			return
 
 		if (zone && surgery_status)
-			duration = duration * surgery_status
 			target.visible_message("<span class='notice'>[owner] begins [vrb]ing the surgical incisions on [owner == target ? his_or_her(owner) : "[target]'s"] [zone_sel2name[zone]] closed with [tool].</span>",\
 			"<span class='notice'>[owner == target ? "You begin" : "[owner] begins"] [vrb]ing the surgical incisions on your [zone_sel2name[zone]] closed with [tool].</span>")
 		else
-			duration = duration * target.bleeding
 			target.visible_message("<span class='notice'>[owner] begins [vrb]ing [owner == target ? his_or_her(owner) : "[target]'s"] wounds closed with [tool].</span>",\
 			"<span class='notice'>[owner == target ? "You begin" : "[owner] begins"] [vrb]ing your wounds closed with [tool].</span>")
 
@@ -946,7 +947,7 @@ CONTAINS:
 				B.in_use = 0
 				B.uses --
 				B.tooltip_rebuild = 1
-				B.update_icon()
+				B.UpdateIcon()
 				if (B.uses <= 0)
 					boutput(ownerMob, "<span class='alert'>You use up the last of the bandages.</span>")
 					ownerMob.u_equip(tool)
@@ -954,7 +955,7 @@ CONTAINS:
 
 			else if (istype(tool, /obj/item/material_piece/cloth))
 				ownerMob.u_equip(tool)
-				pool(tool)
+				qdel(tool)
 
 /* =================================================== */
 /* -------------------- Blood Bag -------------------- */
@@ -1026,7 +1027,7 @@ CONTAINS:
 					else
 						H.blood_volume ++
 						src.volume --
-						src.update_icon()
+						src.UpdateIcon()
 						if (prob(5))
 							var/fluff = pick("better", "a little better", "a bit better", "warmer", "a little warmer", "a bit warmer", "less cold")
 							H.visible_message("<span class='notice'><b>[H]</b> looks [fluff].</span>", \
@@ -1057,8 +1058,8 @@ CONTAINS:
 		else
 			return ..()
 
-	proc/update_icon()
-		var/iv_state = max(min(round(src.volume, 10) / 10, 100), 0)
+	update_icon()
+		var/iv_state = clamp(round(src.volume, 10) / 10, 0, 100)
 		icon_state = "bloodbag-[iv_state]"
 /*		switch (src.volume)
 			if (90 to INFINITY)
@@ -1117,7 +1118,7 @@ CONTAINS:
 			AM.set_loc(src.loc)
 		..()
 
-	proc/update_icon()
+	update_icon()
 		if (src.open && src.open_image)
 			src.overlays += src.open_image
 			src.icon_state = "bodybag-open"
@@ -1141,7 +1142,7 @@ CONTAINS:
 			user.drop_item()
 			pixel_x = 0
 			pixel_y = 0
-			src.update_icon()
+			src.UpdateIcon()
 		else
 			return
 
@@ -1149,7 +1150,7 @@ CONTAINS:
 		add_fingerprint(user)
 		if (src.icon_state == "bodybag" && src.w_class == W_CLASS_TINY)
 			return ..()
-		else
+		else if(!ON_COOLDOWN(user, "bodybag_zip", 1 SECOND))
 			if (src.open)
 				src.close()
 			else
@@ -1191,11 +1192,11 @@ CONTAINS:
 		for (var/obj/O in src)
 			O.set_loc(get_turf(src))
 		for (var/mob/M in src)
-			M.changeStatus("weakened", 2 SECONDS)
+			M.changeStatus("weakened", 0.5 SECONDS)
 			SPAWN_DBG(0.3 SECONDS)
 				M.set_loc(get_turf(src))
 		src.open = 1
-		src.update_icon()
+		src.UpdateIcon()
 
 	proc/close()
 		playsound(src, src.sound_zipper, 100, 1, , 6)
@@ -1208,7 +1209,7 @@ CONTAINS:
 				continue
 			M.set_loc(src)
 		src.open = 0
-		src.update_icon()
+		src.UpdateIcon()
 
 /* ================================================== */
 /* -------------------- Hemostat -------------------- */
@@ -1361,6 +1362,7 @@ CONTAINS:
 	item_state = "pen"
 	icon_on = "penlight1"
 	icon_off = "penlight0"
+	icon_broken = "penlightbroken"
 	w_class = W_CLASS_TINY
 	throwforce = 0
 	throw_speed = 7

@@ -363,10 +363,10 @@
 			var/obj/item/material_piece/D = W
 			var/which = determine_material(D, user)
 			if (which == "metal")
-				pool(W)
+				qdel(W)
 				metal_count += 10
 			else if (which == "glass")
-				pool(W)
+				qdel(W)
 				glass_count += 10
 			else
 				return
@@ -434,7 +434,7 @@
 						metal_count += 10
 					else
 						glass_count += 10
-					pool(M)
+					qdel(M)
 					sleep(0.1 SECONDS)
 			processing = 0
 			user.visible_message("<span class='notice'>[user] finishes stuffing materials into [src].</span>")
@@ -508,7 +508,7 @@
 				//T.icon_state = initial(T.icon_state)
 				if (istype(T, /turf/simulated/wall/auto))
 					var/turf/simulated/wall/auto/W = T
-					W.update_icon()
+					W.UpdateIcon()
 					W.update_neighbors()
 			return
 		var/obj/plan_marker/old = null
@@ -537,7 +537,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 8
+	invisibility = INVIS_CONSTRUCTION
 	var/allows_vehicles = 0
 	var/turf_op = 1
 
@@ -564,7 +564,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 8
+	invisibility = INVIS_CONSTRUCTION
 
 	var/static/image/wE = null
 	var/static/image/wW = null
@@ -775,7 +775,7 @@
 				AT.icon_state = initial(AT.icon_state)
 				AT.set_dir(initial(AT.dir))
 				AT:allows_vehicles = initial(AT.allows_vehicles)
-				AT.update_icon()
+				AT.UpdateIcon()
 				AT.update_neighbors()
 			qdel(src)
 

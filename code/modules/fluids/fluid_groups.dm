@@ -182,14 +182,14 @@
 
 		for (var/obj/fluid/F as anything in src.members)
 			if (!F) continue
-			if (F.pooled) continue
+			if (F.disposed) continue
 			src.remove(F,0,1,1)
 
-		if (!src.pooled)
+		if (!src.disposed)
 			qdel(src)
 
 	proc/add(var/obj/fluid/F, var/gained_fluid = 0, var/do_update = 1, var/guarantee_is_member = 0)
-		if (!F || src.pooled || !members) return
+		if (!F || src.disposed || !members) return
 
 		if (gained_fluid)
 			spread_member = F
@@ -204,7 +204,7 @@
 				F.group = src
 
 		if (length(src.members) == 1)
-			F.update_icon() //update icon of the very first fluid in this group
+			F.UpdateIcon() //update icon of the very first fluid in this group
 
 		src.last_add_time = world.time
 
@@ -229,7 +229,7 @@
 	//fluid has been removed from its tile. use 'lightweight' in evaporation procedure cause we dont need icon updates / try split / update loop checks at that point
 	// if 'lightweight' parameter is 2, invoke an update loop but still ignore icon updates
 	proc/remove(var/obj/fluid/F, var/lost_fluid = 1, var/lightweight = 0, var/allow_zero = 0)
-		if (!F || F.pooled || src.disposed) return 0
+		if (!F || F.disposed || src.disposed) return 0
 		if (!members || !length(src.members) || !(F in members)) return 0
 
 		if (!lightweight)
@@ -238,7 +238,7 @@
 				t = get_step( F, dir )
 				if (t?.active_liquid)
 					t.active_liquid.blocked_dirs = 0
-					t.active_liquid.update_icon(1)
+					t.active_liquid.UpdateIcon(1)
 		else
 			var/turf/t
 			for( var/dir in cardinal )
@@ -246,7 +246,7 @@
 				if (t?.active_liquid)
 					t.active_liquid.blocked_dirs = 0
 
-		if(src.disposed || F.disposed) return 0 // update_icon lagchecks, rip
+		if(src.disposed || F.disposed) return 0 // UpdateIcon lagchecks, rip
 
 		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 		members -= F //remove after amt per tile ok? otherwise bad thing could happen
@@ -260,7 +260,7 @@
 		if(removed_loc)
 			F.turf_remove_cleanup(F.loc)
 
-		pool(F)
+		qdel(F)
 
 		if (!lightweight || lightweight == 2)
 			if (!src.try_split(removed_loc))
@@ -274,7 +274,7 @@
 	/* identical to remove, except this proc returns the fluids removed
 	 * vol_max sets upper limit for fluid volume to be removed */
 	proc/suck(var/obj/fluid/F, var/vol_max, var/lost_fluid = 1, var/lightweight = 0, var/allow_zero = 1)
-		if (!F || F.pooled) return 0
+		if (!F || F.disposed) return 0
 		if (!members || !length(src.members) || !(F in members)) return 0
 
 		var/datum/reagents/R = null
@@ -285,7 +285,7 @@
 				t = get_step( F, dir )
 				if (t?.active_liquid)
 					t.active_liquid.blocked_dirs = 0
-					t.active_liquid.update_icon(1)
+					t.active_liquid.UpdateIcon(1)
 		else
 			var/turf/t
 			for( var/dir in cardinal )
@@ -312,7 +312,7 @@
 				src.reagents.skip_next_update = 1
 				R = src.reagents.remove_any_to(amt_to_remove)
 				src.contained_amt = src.reagents.total_volume
-		pool(F)
+		qdel(F)
 
 		/*if (!lightweight || lightweight == 2)
 			if (!src.try_split(removed_loc))
@@ -501,7 +501,7 @@
 
 		for (var/obj/fluid/F as anything in src.members)
 			LAGCHECK(LAG_HIGH)
-			if (!F || F.pooled || src.qdeled) continue
+			if (!F || F.disposed || src.qdeled) continue
 
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			//Set_amt gets called a lot. Let's reduce proc call overhead : by being stupid and pasting the whole thing in this fuckin loop ugh
@@ -511,7 +511,7 @@
 			if (F.touched_channel)
 				src.displace_channel(get_dir(F,F.touched_channel), F, F.touched_channel)
 				F.touched_channel = 0
-				if (!F || F.pooled || src.qdeled) continue
+				if (!F || F.disposed || src.qdeled) continue
 
 			//We update objects manually here because they don't move. A mob that moves around will call HasEntered on its own, so let that case happen naturally
 
@@ -521,12 +521,12 @@
 				for(var/obj/O in F.loc)
 					LAGCHECK(LAG_MED)
 					if (O?.submerged_images)
-						F.HasEntered(O,O.loc)
+						F.Crossed(O)
 
 				depth_changed = 1
 
 			if (my_depth_level)
-				var/splash_level = max(1,min(my_depth_level, 3))
+				var/splash_level = clamp(my_depth_level, 1, 3)
 				F.step_sound = "sound/misc/splash_[splash_level].ogg"
 
 			F.movement_speed_mod = F.last_depth_level <= 1 ? 0 : (viscosity_SLOW_COMPONENT(F.avg_viscosity,F.max_viscosity,F.max_speed_mod) + DEPTH_SLOW_COMPONENT(F.amt,F.max_reagent_volume,F.max_speed_mod))
@@ -539,9 +539,9 @@
 		fluid_ma.alpha = targetalpha
 
 		for (var/obj/fluid/F as anything in src.members)
-			if (!F || F.pooled || src.qdeled) continue
+			if (!F || F.disposed || src.qdeled) continue
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			//Same shit here with update_icon
+			//Same shit here with UpdateIcon
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			fluid_ma.name = src.master_reagent_name //maybe obscure later?
@@ -608,7 +608,7 @@
 
 				for (var/obj/fluid/C as anything in F.update())
 					LAGCHECK(LAG_HIGH)
-					if (!C || C.pooled) continue
+					if (!C || C.disposed || src.disposed) continue
 					var/turf/T = C.loc
 					if (istype(T) && drains_floor)
 						T.react_all_cleanables() // bug here regarding fluids doing their whole spread immediately if they're in a patch of cleanables. can't figure it out and its not TERRIBLE, fix later!!!

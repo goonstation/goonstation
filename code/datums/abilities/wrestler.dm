@@ -40,6 +40,7 @@
 					APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "wrestler", 5)
 					src.max_health += 50
 					health_update_queue |= src
+				APPLY_MOB_PROPERTY(src, PROP_PASSIVE_WRESTLE, "wrestledoodle")
 				C.abilityHolder.addAbility("/datum/targetable/wrestler/kick[fake_wrestler ? "/fake" : ""]")
 				C.abilityHolder.addAbility("/datum/targetable/wrestler/strike[fake_wrestler ? "/fake" : ""]")
 				C.abilityHolder.addAbility("/datum/targetable/wrestler/drop[fake_wrestler ? "/fake" : ""]")
@@ -291,6 +292,3 @@
 		SPAWN_DBG (rand(200, 900))
 			if (src.holder && src.holder.owner && ismob(src.holder.owner))
 				src.holder.owner.emote("flex")
-
-		SPAWN_DBG(calculate_cooldown() + 5)
-			holder.updateButtons()

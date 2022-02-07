@@ -236,7 +236,7 @@
 						, access_pathology
 						#endif
 						)
-		if("Medical Director", "Head Surgeon")
+		if("Medical Director")
 			return list(access_robotics, access_medical, access_morgue,
 						access_maint_tunnels, access_tech_storage, access_medical_lockers,
 						access_medlab, access_heads, access_eva, access_medical_director, access_ai_upload

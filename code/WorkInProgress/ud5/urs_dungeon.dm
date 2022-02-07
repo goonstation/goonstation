@@ -81,7 +81,7 @@
 
 
 	name = "adventure bomb"
-	invisibility = 20
+	invisibility = INVIS_ADVENTURE
 	icon = 'icons/obj/items/assemblies.dmi'
 	icon_state = "Pipe_Timed"
 	density = 0
@@ -121,7 +121,7 @@
 /obj/adventurepuzzle/triggerable/targetable/portal
 
 	name = "adventure portal"
-	invisibility = 20
+	invisibility = INVIS_ADVENTURE
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
 	density = 0
@@ -198,8 +198,7 @@
 			src.set_loc(get_turf(H))
 			H.unequip_all()
 
-			var/mob/living/carbon/human/V = new(get_turf(src.target),H.client.preferences.AH)
-			H.client.preferences.copy_to(V,H,1)
+			var/mob/living/carbon/human/V = new(get_turf(src.target),H.client.preferences.AH, H.client.preferences, TRUE)
 			if (!H.mind)
 				H.mind = new /datum/mind()
 				H.mind.ckey = H.ckey

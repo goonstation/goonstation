@@ -24,7 +24,6 @@
 	var/active_force = 12.0
 	var/off_force = 3.0
 	var/how_dangerous_is_this_thing = 1
-	var/takes_damage = 1
 	health = 10.0
 	throwforce = 5.0
 	throw_speed = 1
@@ -43,7 +42,6 @@
 	stamina_crit_chance = 35
 
 	cyborg
-		takes_damage = 0
 
 	active
 		active = 1
@@ -53,26 +51,12 @@
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			if (src)
-				src.update_icon()
+				src.UpdateIcon()
 		BLOCK_SETUP(BLOCK_ROD)
 		return
 
-	proc/check_health()
-		if (src.health <= 0 && src.takes_damage)
-			SPAWN_DBG(0.2 SECONDS)
-				if (src)
-					usr.u_equip(src)
-					usr.update_inhands()
-					boutput(usr, "<span class='alert'>[src] falls apart!</span>")
-					qdel(src)
-		return
 
-	proc/damage_health(var/amt)
-		src.health -= amt
-		src.check_health()
-		return
-
-	proc/update_icon()
+	update_icon()
 		set_icon_state("[src.base_state][src.active ? null : "_off"]")
 		return
 
@@ -89,7 +73,6 @@
 
 			if (ishuman(target))
 				if (ishuman(user) && saw_surgery(target,user))
-					src.damage_health(2)
 					take_bleeding_damage(target, user, 2, DAMAGE_CUT)
 					return
 				else if (!isdead(target))
@@ -98,12 +81,6 @@
 						target.emote("scream")
 
 			playsound(target, sawnoise, 60, 1)//need a better sound
-
-			if (src.takes_damage)
-				if (issilicon(target))
-					src.damage_health(4)
-				else
-					src.damage_health(1)
 
 			switch (src.how_dangerous_is_this_thing)
 				if (2) // Red chainsaw.
@@ -166,7 +143,7 @@
 			boutput(user, "<span class='notice'>[src] is now off.</span>")
 			src.force = off_force
 		tooltip_rebuild = 1
-		src.update_icon()
+		src.UpdateIcon()
 		user.update_inhands()
 		src.add_fingerprint(user)
 		return
@@ -197,7 +174,6 @@
 	active_force = 20.0
 	off_force = 6.0
 	health = 10
-	takes_damage = 0
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
@@ -222,7 +198,7 @@
 	var/mob/living/carbon/human/H = target
 
 	if(!active)
-		src.visible_message("<span class='notify'>[user] gently taps [target] with the turned off [src].</span>")
+		src.visible_message("<span class='notice'>[user] gently taps [target] with the turned off [src].</span>")
 
 	if(active && prob(35))
 		gibs(target.loc, blood_DNA=H.bioHolder.Uid, blood_type=H.bioHolder.bloodType, headbits=FALSE, source=H)
@@ -336,7 +312,6 @@
 	off_force = 5.0
 	health = 10
 	how_dangerous_is_this_thing = 3
-	takes_damage = 0
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
@@ -379,14 +354,8 @@
 
 	attack_self(var/mob/user as mob)
 		playsound(src.loc, "sound/machines/click.ogg", 100, 1)
-		var/list/usable = list()
-		for(var/datum/plant/A in hydro_controls.plant_species)
-			if (!A.vending)
-				continue
-			usable += A
-
 		var/holder = src.loc
-		var/datum/plant/pick = input(usr, "Which seed do you want?", "Portable Seed Fabricator", null) in usable
+		var/datum/plant/pick = tgui_input_list(usr, "Which seed do you want?", "Portable Seed Fabricator", hydro_controls.vendable_plants)
 		if (src.loc != holder)
 			return
 		src.selected = pick
@@ -400,10 +369,10 @@
 			// 	S = new /obj/item/seed(src.loc,0)
 			// S.generic_seed_setup(selected)
 			if (selected.unique_seed)
-				S = unpool(selected.unique_seed)
+				S = new selected.unique_seed
 				S.set_loc(src.loc)
 			else
-				S = unpool(/obj/item/seed)
+				S = new /obj/item/seed
 				S.set_loc(src.loc)
 				S.removecolor()
 			S.generic_seed_setup(selected)
@@ -448,14 +417,14 @@
 			var/obj/machinery/plantpot/pot = target
 			if(pot.current)
 				var/datum/plant/p = pot.current
+				if(p.growthmode == "weed")
+					user.visible_message("<b>[user]</b> tries to uproot the [p.name], but it's roots hold firmly to the [pot]!","<span class='alert'>The [p.name] is too strong for you traveller...</span>")
+					return
 				if(pot.GetOverlayImage("plant"))
 					plantyboi = pot.GetOverlayImage("plant")
 					plantyboi.pixel_x = 2
 					src.icon_state = "trowel_full"
 				else
-					return
-				if(p.growthmode == "weed")
-					user.visible_message("<b>[user]</b> tries to uproot the [p.name], but it's roots hold firmly to the [pot]!","<span class='alert'>The [p.name] is too strong for you traveller...</span>")
 					return
 				pot.HYPdestroyplant()
 

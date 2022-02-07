@@ -50,6 +50,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	var/datum/keybind_style/init_style = new style //Can't do static referencing for merge, press F to pay respekts
 	var/datum/keymap/init_keymap = new /datum/keymap(init_style.changed_keys)
 	src.keymap.merge(init_keymap)
+	src.keymap.on_update(src)
 
 /** apply_keybind: Takes a given string style, and finds the datum, then applies it.
  *	External use only.
@@ -80,6 +81,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"EAST" = KEY_RIGHT,
 	"B" = KEY_POINT,
 	"T" = "say",
+	";" = "say_main_radio",
 	"Y" = "say_radio",
 	"ALT+W" = "whisper",
 	"O" = "ooc",
@@ -194,12 +196,23 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /datum/keybind_style/human/tg/azerty
 	name = "human_tg_azerty"
 	changed_keys = list(
-	"W" = "attackself"
+		"W" = "attackself"
 	)
 
 /datum/keybind_style/human/azerty
 	name = "human_azerty"
 	changed_keys = list(
+		"&" = "help",
+		"é" = "disarm",
+		"\"" = "grab",
+		"'" = "harm",
+		"(" = "head",
+		"-" = "chest",
+		"è" = "l_arm",
+		"_" = "r_arm",
+		"ç" = "l_leg",
+		"à" = "r_leg",
+		")" = "walk",
 		"A" = "drop",
 		"Q" = KEY_LEFT
 	)
@@ -253,6 +266,10 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /datum/keybind_style/robot/azerty
 	name = "robot_azerty"
 	changed_keys = list(
+		"&" = "module1",
+		"é" = "module2",
+		"\"" = "module3",
+		"'" = "module4",
 		"A" = "unequip",
 		"Q" = KEY_LEFT
 	)
@@ -296,7 +313,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /datum/keybind_style/pod
 	name = "pod"
 	changed_keys = list(
-		"SPACE" = "fire"
+		"SPACE" = KEY_SHOCK
 	)
 
 /datum/keybind_style/torpedo

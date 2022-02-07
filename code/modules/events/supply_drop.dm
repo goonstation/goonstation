@@ -22,6 +22,11 @@
 				new/obj/effect/supplymarker(pick(turfs), preDropTime)
 		for(var/datum/mind/M in battle_pass_holders)
 			boutput(M.current, "<span class='notice'>A supply drop will happen soon in the [A.name]</span>")
+		SPAWN_DBG(20 SECONDS)
+			for(var/datum/mind/M in ticker.minds)
+				if (M in battle_pass_holders)
+					continue
+				boutput(M.current, "<span class='notice'>A supply drop occured in [A.name]</span>!")
 
 /obj/effect/supplymarker
 	name = ""
@@ -107,7 +112,7 @@
 	var/obj_path
 
 	New(atom/loc, var/obj_path_arg)
-		filters += filter(type="drop_shadow", x=0, y=0, size=5, offset=0, color=rgb(240,202,133))
+		add_filter("loot drop", 1, drop_shadow_filter(x=0, y=0, size=5, offset=0, color=rgb(240,202,133)))
 		obj_path = obj_path_arg
 		return ..()
 
@@ -116,7 +121,7 @@
 		used = 1
 		set_density(0)
 		icon_state = "attachecase_open"
-		filters = list()
+		remove_filter("loot drop")
 		lootbox(user, obj_path)
 		return
 

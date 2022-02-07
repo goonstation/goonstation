@@ -236,11 +236,15 @@
 			// are we there yet
 			if (IN_RANGE(src, src.target, 1))
 				do_the_thing()
+				// stop the bot mover so it doesn't interrupt us if we're already in range
+				src.frustration = 0
+				src.path = null
+				qdel(src.bot_mover)
 				return
 
 			// we are not there. how do we get there
 			if (!src.path || !length(src.path))
-				src.navigate_to(get_turf(src.target), CLEANBOT_MOVE_SPEED, max_dist = 120)
+				src.navigate_to(get_turf(src.target), CLEANBOT_MOVE_SPEED, max_dist = 20)
 				if (!src.path || !length(src.path))
 					// answer: we don't. try to find something else then.
 					src.KillPathAndGiveUp(1)
@@ -342,7 +346,7 @@
 			new bucket_type_on_destruction(T)
 			new /obj/item/device/prox_sensor(T)
 			if (prob(50))
-				new /obj/item/parts/robot_parts/arm/left(T)
+				new /obj/item/parts/robot_parts/arm/left/standard(T)
 
 		qdel(src)
 		return
@@ -394,8 +398,7 @@
 			return
 
 	onInterrupt(flag)
-		master.cleanbottargets -= master.turf2coordinates(get_turf(master.target))
-		master.KillPathAndGiveUp(1)
+		master.KillPathAndGiveUp(0)
 		. = ..()
 
 	onEnd()
@@ -424,8 +427,3 @@
 		..()
 
 #undef CLEANBOT_MOVE_SPEED
-
-/mob/living/critter/bot/cleanbot
-	name = "cleanbot"
-
-	emagged

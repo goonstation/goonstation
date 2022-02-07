@@ -15,7 +15,7 @@
 	var/const/traitors_possible = 169
 
 /datum/game_mode/assday/announce()
-	boutput(world, "<B>The current game mode is - ASS DAY!</B>")
+	boutput(world, "<B>The current game mode is - Everyone is a traitor!</B>")
 	boutput(world, "<B>The entire crew of [station_or_ship()] has defected. Beware of dog.</B>")
 
 
@@ -40,7 +40,7 @@
 		num_wraiths += 1
 
 
-	var/list/possible_traitors = get_possible_traitors(num_traitors)
+	var/list/possible_traitors = get_possible_enemies(ROLE_TRAITOR, num_traitors)
 
 	if (!possible_traitors.len)
 		return 0
@@ -70,7 +70,7 @@
 		possible_traitors.Remove(traitor)
 
 	if(num_wraiths)
-		var/list/possible_wraiths = get_possible_wraiths(num_wraiths)
+		var/list/possible_wraiths = get_possible_enemies(ROLE_WRAITH, num_wraiths)
 		var/list/chosen_wraiths = antagWeighter.choose(pool = possible_wraiths, role = ROLE_WRAITH, amount = num_wraiths, recordChosen = 1)
 		for (var/datum/mind/wraith in chosen_wraiths)
 			traitors += wraith
@@ -80,23 +80,9 @@
 	return 1
 
 /datum/game_mode/assday/post_setup()
-	var/objective_set_path = null
 	for(var/datum/mind/traitor in traitors)
-		objective_set_path = null // Gotta reset this.
 		switch(traitor.special_role)
 			if(ROLE_TRAITOR)
-			#ifdef RP_MODE
-				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-			#else
-				objective_set_path = pick(typesof(/datum/objective_set/traitor))
-			#endif
-
-				new objective_set_path(traitor)
-
-				var/obj_count = 1
-				for(var/datum/objective/objective in traitor.objectives)
-					boutput(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-					obj_count++
 				SHOW_TRAITOR_HARDMODE_TIPS(traitor.current)
 
 			if (ROLE_WRAITH)
@@ -104,66 +90,6 @@
 
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()
-
-/datum/game_mode/assday/proc/get_possible_traitors(minimum_traitors=1)
-	var/list/candidates = list()
-
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_traitor)
-				candidates += player.mind
-
-	if(candidates.len < minimum_traitors)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_traitor set to yes were ready. We need [minimum_traitors] traitors so including players who don't want to be traitors in the pool.")
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-				if ((minimum_traitors > 1) && (candidates.len >= minimum_traitors))
-					break
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
-
-/datum/game_mode/assday/proc/get_possible_wraiths(minimum_traitors=1)
-	var/list/candidates = list()
-
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_wraith)
-				candidates += player.mind
-
-	if(candidates.len < minimum_traitors)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_wraith set to yes were ready. We need [minimum_traitors] wraiths so including players who don't want to be wraiths in the pool.")
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-				if ((minimum_traitors > 1) && (candidates.len >= minimum_traitors))
-					break
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
 
 /datum/game_mode/assday/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"

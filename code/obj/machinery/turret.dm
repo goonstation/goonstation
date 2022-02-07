@@ -7,7 +7,7 @@
 	anchored = 1
 	layer = OBJ_LAYER
 	plane = PLANE_NOSHADOW_BELOW
-	invisibility = 2
+	invisibility = INVIS_CLOAK
 	density = 0
 	machine_registry_idx = MACHINES_TURRETS
 	var/lasers = 0
@@ -157,12 +157,12 @@
 	*/
 
 /obj/machinery/turret/proc/isDown()
-	return (invisibility!=0)
+	return (invisibility != INVIS_NONE)
 
 /obj/machinery/turret/proc/popUp()
 	if (!isDown()) return
 	if ((!isPopping()) || src.popping==-1)
-		invisibility = 0
+		invisibility = INVIS_NONE
 		popping = 1
 		if (src.cover!=null)
 			flick("popup", src.cover)
@@ -180,7 +180,7 @@
 			src.cover.icon_state = "turretCover"
 		SPAWN_DBG(1.3 SECONDS)
 			if (popping==-1)
-				invisibility = 2
+				invisibility = INVIS_CLOAK
 				popping = 0
 				set_density(0)
 
@@ -302,8 +302,8 @@
 				if("setmode")
 					var/list/L = params2list(signal.data["data"])
 					if(!L || !length(L)) return
-					var/new_lethal_state = text2num(L["lethal"])
-					var/new_enabled_state = text2num(L["active"])
+					var/new_lethal_state = text2num_safe(L["lethal"])
+					var/new_enabled_state = text2num_safe(L["active"])
 					if(!isnull(new_lethal_state))
 						if(new_lethal_state)
 							src.lasers = 1
@@ -478,9 +478,9 @@
 		var/area/A = get_area(turret)
 		if (A.type == src.turretArea)
 			turret.setState(enabled, lethal)
-			src.updateicon()
+			src.UpdateIcon()
 
-/obj/machinery/turretid/proc/updateicon()
+/obj/machinery/turretid/update_icon()
 	if (src.enabled)
 		if (src.lethal)
 			icon_state = "ai1"

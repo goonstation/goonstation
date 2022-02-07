@@ -19,6 +19,7 @@
 	directwired = 1
 	var/id = 1
 	var/sun_angle = 0		// sun angle as set by sun datum
+	var/obj/machinery/computer/solar_control/control
 
 	north
 		id = "north"
@@ -40,6 +41,8 @@
 		id = "small_backup4"
 	diner
 		id = "diner"
+	silverglass
+		id = "silverglass"
 
 	// called by datum/sun/calc_position() as sun's angle changes
 	proc/set_angle(var/angle)
@@ -48,14 +51,12 @@
 		//set icon dir to show sun illumination
 		set_dir(turn(NORTH, -angle - 22.5))	// 22.5 deg bias ensures, e.g. 67.5-112.5 is EAST
 
-		// find all solar controls and update them
-		// currently, just update all controllers in world
-		// ***TODO: better communication system using network
 		var/datum/powernet/powernet = src.get_direct_powernet()
-
-		for (var/obj/machinery/computer/solar_control/C in powernet.nodes)
-			if (!isnull(src.id) && src.id == C.solar_id)
-				C.tracker_update(angle)
+		if (!istype(powernet) || !control)
+			return
+		if(control.get_direct_powernet() == powernet)
+			if (!isnull(src.id) && src.id == control.solar_id)
+				control.tracker_update(angle)
 
 	// override power change to do nothing since we don't care about area power
 	// (and it would be pointless anyway given that solar panels and the associated tracker are usually on a separate powernet)
@@ -104,20 +105,15 @@
 		id = "small_backup4"
 	diner
 		id = "diner"
-
-
+	silverglass
+		id = "silverglass"
 
 
 /obj/machinery/power/solar/New()
 	..()
 	SPAWN_DBG(1 SECOND)
-		updateicon()
+		UpdateIcon()
 		update_solar_exposure()
-
-		if(powernet)
-			for(var/obj/machinery/computer/solar_control/SC in powernet.nodes)
-				if(SC.id == id)
-					control = SC
 
 /obj/machinery/power/solar/attackby(obj/item/W, mob/user)
 	..()
@@ -131,16 +127,16 @@
 		if(!(status & BROKEN))
 			broken()
 		else
-			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 			G.set_loc(src.loc)
-			G = unpool(/obj/item/raw_material/shard/glass)
+			G = new /obj/item/raw_material/shard/glass
 			G.set_loc(src.loc)
 
 			qdel(src)
 			return
 	return
 
-/obj/machinery/power/solar/proc/updateicon()
+/obj/machinery/power/solar/update_icon()
 	if(status & BROKEN)
 		icon_state = "solar_panel-b"
 	else
@@ -154,12 +150,8 @@
 		sunfrac = 0
 		return
 	if(isnull(sun))	return
-	var/p_angle = abs((360+adir)%360 - (360+sun.angle)%360)
-	if(p_angle > 90)			// if facing more than 90deg from sun, zero output
-		sunfrac = 0
-		return
-
-	sunfrac = cos(p_angle) ** 2
+	var/p_angle = (360 + adir - sun.angle) % 360
+	sunfrac = max(cos(p_angle), 0) ** 2
 
 // Previous SOLARGENRATE was 1500 WATTS processed every 3.3 SECONDS.  This provides 454.54 WATTS every second
 // Adjust accordingly based on machine proc rate
@@ -183,13 +175,13 @@
 		adir = (360 + adir + clamp(ndir - adir, -max_move, max_move)) % 360
 		if(adir != old_adir)
 			use_power(power_usage)
-			updateicon()
+			UpdateIcon()
 
 		update_solar_exposure()
 
 /obj/machinery/power/solar/proc/broken()
 	status |= BROKEN
-	updateicon()
+	UpdateIcon()
 	UnsubscribeProcess() // Broken solar panels need not process, supposedly there's no way to repair them?
 	return
 
@@ -204,7 +196,7 @@
 		if(1.0)
 			qdel(src)
 			if(prob(15))
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 				G.set_loc(src.loc)
 			return
 		if(2.0)
@@ -259,6 +251,8 @@
 		solar_id = "small_backup4"
 	diner
 		solar_id = "diner"
+	silverglass
+		solar_id = "silverglass"
 
 /obj/machinery/computer/solar_control/New()
 	..()
@@ -268,8 +262,7 @@
 		for(var/obj/machinery/power/solar/S in powernet.nodes)
 			if(S.id != solar_id) continue
 			cdir = S.adir
-
-
+		set_panels(cdir)
 
 /obj/machinery/computer/solar_control/process()
 	..()
@@ -344,22 +337,22 @@
 		return
 
 	if(href_list["dir"])
-		cdir = text2num(href_list["dir"])
+		cdir = text2num_safe(href_list["dir"])
 		SPAWN_DBG(1 DECI SECOND)
 			set_panels(cdir)
 
 	if(href_list["rate control"])
 		if(href_list["cdir"])
-			src.cdir = clamp((360+src.cdir+text2num(href_list["cdir"]))%360, 0, 359)
+			src.cdir = clamp((360+src.cdir+text2num_safe(href_list["cdir"]))%360, 0, 359)
 			SPAWN_DBG(1 DECI SECOND)
 				set_panels(cdir)
 		if(href_list["tdir"])
-			src.trackrate = clamp(src.trackrate+text2num(href_list["tdir"]), -7200,7200)
+			src.trackrate = clamp(src.trackrate+text2num_safe(href_list["tdir"]), -7200,7200)
 			if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
 
 	if(href_list["track"])
 		if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
-		track = text2num(href_list["track"])
+		track = text2num_safe(href_list["track"])
 		if(track == 2)
 			var/obj/machinery/power/tracker/T = locate() in machine_registry[MACHINES_POWER]
 			if(T)
@@ -368,13 +361,22 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/computer/solar_control/proc/set_panels(var/cdir)
+/obj/machinery/computer/solar_control/proc/set_panels(var/cdir=null)
 	var/datum/powernet/powernet = src.get_direct_powernet()
 	if(!powernet) return
 	for(var/obj/machinery/power/solar/S in powernet.nodes)
 		if(S.id != solar_id) continue
 		S.control = src
-		S.ndir = cdir
+		if(cdir)
+			S.ndir = cdir
+
+	for(var/obj/machinery/power/tracker/T in powernet.nodes)
+		if(T.id != solar_id) continue
+		T.control = src
+
+// hotfix until someone edits all maps to add proper wires underneath the computers
+/obj/machinery/computer/solar_control/get_power_wire()
+	return locate(/obj/cable) in get_turf(src)
 
 /obj/machinery/computer/solar_control/connection_scan()
 	// Find the closest solar panel ID and use that for the current one
@@ -391,6 +393,7 @@
 		closest_solar_distance = get_dist(src, S)
 
 	src.solar_id = closest_solar_id
+	set_panels(cdir)
 
 // solar panels which ignore occlusion
 
@@ -412,11 +415,11 @@
 		var/sgen = SOLARGENRATE * sunfrac
 		add_avail(sgen)
 		if(powernet && control)
-			if(control in powernet.nodes) //this line right here...
+			if(control.get_direct_powernet() == powernet) //this line right here...
 				control.gen += sgen
 
 		if(adir != ndir)
 			SPAWN_DBG(10+rand(0,15))
 				adir = (360+adir+clamp(ndir-adir,-10,10))%360
-				updateicon()
+				UpdateIcon()
 				update_solar_exposure()

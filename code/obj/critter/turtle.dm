@@ -2,6 +2,7 @@
 	name = "turtle"
 	desc = "A turtle. They are noble creatures of the land and sea."
 	icon_state = "turtle"
+	var/base_icon_state = "turtle"		//I added this in a poor attempt to add costumes for sylvester and decided not to go with it, but it could be useful for handling other turtle types later on so I'll leave it.
 	density = 1
 	health = 100
 	aggressive = 0
@@ -22,10 +23,18 @@
 	var/rigged = FALSE
 	var/rigger = null
 	var/exploding = FALSE
+	var/costume_name = null
+	var/image/costume_alive = null
+	var/image/costume_shell = null
+	var/image/costume_dead = null
 
 	New(loc)
 		. = ..()
 		START_TRACKING
+		if (costume_name)
+			costume_alive = image(src.icon, "[costume_name]")
+			costume_shell = image(src.icon, "[costume_name]-shell")
+			costume_dead = image(src.icon, "[costume_name]-dead")
 
 	disposing()
 		. = ..()
@@ -105,7 +114,11 @@
 
 			boutput(user, "You inject the solution into [src].")
 
-			if(S.reagents.has_reagent("plasma", 1))
+			if(!rigged && S.reagents.has_reagent("plasma", 1))
+				for (var/mob/living/M in mobs)
+					if (M.mind && M.mind.assigned_role == "Head of Security")
+						boutput(M, "<span class='alert'>You feel a foreboding feeling about the imminent fate of a certain turtle in [get_area(src)], better act quick.</span>")
+
 				message_admins("[key_name(user)] rigged [src] to explode in [user.loc.loc], [showCoords(user.x, user.y, user.z)].")
 				logTheThing("combat", user, null, "rigged [src] to explode in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 				rigged = TRUE
@@ -148,7 +161,11 @@
 
 		brutevuln = 0.2
 		firevuln = 0.5
-		icon_state = "turtle-shell"
+
+		icon_state = "[base_icon_state]-shell"
+		if (costume_name)
+			src.UpdateOverlays(costume_shell, "costume")
+
 		density = 0
 
 		src.visible_message("<span class='alert'><b>[src]</b> retreats into [his_or_her()] shell!")
@@ -162,7 +179,10 @@
 
 		brutevuln = 0.7
 		firevuln = 1
-		icon_state = "turtle"
+		icon_state = base_icon_state
+		if (costume_name)
+			src.UpdateOverlays(costume_alive, "costume")
+
 		density = 1
 
 		src.visible_message("<span class='notice'><b>[src]</b> comes out of [his_or_her()] shell!")
@@ -217,7 +237,13 @@
 	var/obj/item/wearing_beret = 0	//Don't really need this var, but I like it better than checking contents every time we wanna see if he's got the beret
 	var/search_frequency = 30	//number of cycles between searches
 	var/preferred_hat = /obj/item/clothing/head/hos_hat 	//if this is not null then the only hat type he will wear is this path.
+	#ifdef HALLOWEEN
+	costume_name = "sylv_costume_1"
+	#endif
 
+	New()
+		..()
+		UpdateIcon()
 	ai_think()
 		..()
 		//find clown
@@ -242,6 +268,9 @@
 			. += "<br>[src] is wearing an adorable beret!."
 		else
 			. += "<br>[src] looks cold without some sort of hat on."
+
+		if (src.costume_name)
+			. += "And he's wearing an adorable costume! Wow!"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, preferred_hat))
@@ -273,27 +302,27 @@
 			brutevuln = 0.7
 			firevuln = 1
 
-		update_icon()
+		UpdateIcon()
 
 		return 1
 
 	CritterDeath()
 		..()
 		if (src.wearing_beret)
-			src.icon_state = "turtle-dead-beret"
+			src.icon_state = "[base_icon_state]-dead-beret"
 		else
-			src.icon_state = "turtle-dead"
+			src.icon_state = "[base_icon_state]-dead"
 
-		update_icon()
+		UpdateIcon()
 
 	on_revive()
 		..()
 		if (src.wearing_beret)
-			src.icon_state = "turtle-beret"
+			src.icon_state = "[base_icon_state]-beret"
 		else
-			src.icon_state = "turtle"
+			src.icon_state = base_icon_state
 
-		update_icon()
+		UpdateIcon()
 
 	proc/give_beret(var/obj/hat, var/mob/user)
 		if (shell_count || wearing_beret) return 0
@@ -322,7 +351,7 @@
 		wearing_beret = hat
 
 
-		update_icon()
+		UpdateIcon()
 		// if (src.alive)
 		// 	src.icon_state = "turtle-beret"
 		// else
@@ -363,7 +392,7 @@
 			brutevuln = initial(brutevuln)
 			firevuln = initial(firevuln)
 
-			update_icon()
+			UpdateIcon()
 
 			return 1
 		return 0
@@ -377,25 +406,30 @@
 		..()
 
 	//I'm sorry sylvester... I'll fix this later when I have time, I promise. - Kyle
-	proc/update_icon()
+	update_icon()
 		if (src.alive)
 			if (src.wearing_beret)
 				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat))
-					src.icon_state = "turtle-beret"
+					src.icon_state = "[base_icon_state]-beret"
 				else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
-					src.icon_state = "turtle-beret-com"
+					src.icon_state = "[base_icon_state]-beret-com"
 
 			else
-				src.icon_state = "turtle"
+				src.icon_state = base_icon_state
+			if (costume_name)
+				src.UpdateOverlays(costume_alive, "costume")
+
 		else
 			if (src.wearing_beret)
 				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat))
-					src.icon_state = "turtle-dead-beret"
+					src.icon_state = "[base_icon_state]-dead-beret"
 				else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
-					src.icon_state = "turtle-dead-beret-com"
+					src.icon_state = "[base_icon_state]-dead-beret-com"
 
 			else
-				src.icon_state = "turtle-dead"
+				src.icon_state = "[base_icon_state]-dead"
+			if (costume_name)
+				src.UpdateOverlays(costume_dead, "costume")
 
 //Starts with the beret on!
 /obj/critter/turtle/sylvester/HoS
@@ -417,6 +451,7 @@
 
 /obj/critter/turtle/sylvester/Commander
 	icon_state = "turtle-beret-com"
+
 	preferred_hat = /obj/item/clothing/head/NTberet/commander 	//if this is not null then the only hat type he will wear is this path.
 
 	New()

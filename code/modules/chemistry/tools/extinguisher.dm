@@ -37,7 +37,10 @@
 	var/list/melting_reagents = list("acid",
 	"pacid",
 	"phlogiston",
-	"big_bang")
+	"big_bang",
+	"clacid",
+	"nitric_acid",
+	"firedust")
 
 	virtual
 		icon = 'icons/effects/VR.dmi'
@@ -55,6 +58,10 @@
 	reagents.add_reagent("ff-foam", 100)
 	src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 	BLOCK_SETUP(BLOCK_TANK)
+
+/obj/item/extinguisher/on_reagent_change(add)
+	. = ..()
+	src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
 /obj/item/extinguisher/get_desc(dist)
 	if (dist > 1)
@@ -161,7 +168,7 @@
 					return
 				if (!src.reagents)
 					return
-				var/obj/effects/water/W = unpool(/obj/effects/water, user)
+				var/obj/effects/water/W = new /obj/effects/water(user)
 				W.owner = user
 				if (!W) return
 				W.set_loc( get_turf(src) )
@@ -189,15 +196,16 @@
 		user.update_inhands()
 		src.desc = "The safety is off."
 		boutput(user, "The safety is off.")
-		safety = 0
+		ADD_FLAG(src.flags, OPENCONTAINER)
+		safety = FALSE
 	else
 		src.item_state = "fireextinguisher0"
 		set_icon_state("fire_extinguisher0")
 		user.update_inhands()
 		src.desc = "The safety is on."
 		boutput(user, "The safety is on.")
-		safety = 1
-	return
+		REMOVE_FLAG(src.flags, OPENCONTAINER)
+		safety = TRUE
 
 /obj/item/extinguisher/move_trigger(var/mob/M, kindof)
 	if (..() && reagents)

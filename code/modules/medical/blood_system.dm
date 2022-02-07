@@ -413,7 +413,11 @@ this is already used where it needs to be used, you can probably ignore it.
 			B.blood_DNA = "--unidentified substance--"
 			B.blood_type = "--unidentified substance--"
 
-		B.add_volume(blood_color_to_pass, some_idiot.blood_id, num_amount, vis_amount)
+		var/datum/bioHolder/bloodHolder = new/datum/bioHolder(null)
+		bloodHolder.CopyOther(some_idiot.bioHolder)
+		bloodHolder.ownerName = some_idiot.real_name
+
+		B.add_volume(blood_color_to_pass, some_idiot.blood_id, num_amount, vis_amount, blood_reagent_data=bloodHolder)
 		return
 
 	BLOOD_DEBUG("[some_idiot] begins bleed")
@@ -462,7 +466,11 @@ this is already used where it needs to be used, you can probably ignore it.
 				H.blood_volume = 0
 				//BLOOD_DEBUG("[H]'s blood volume dropped below 0 and was reset to 0")
 
-		B.add_volume(blood_color_to_pass, H.blood_id, num_amount, vis_amount)
+		var/datum/bioHolder/bloodHolder = new/datum/bioHolder(null)
+		bloodHolder.CopyOther(some_idiot.bioHolder)
+		bloodHolder.ownerName = some_idiot.real_name
+
+		B.add_volume(blood_color_to_pass, H.blood_id, num_amount, vis_amount, blood_reagent_data=bloodHolder)
 		//BLOOD_DEBUG("[H] adds volume to existing blood decal")
 
 		if (B.reagents && H.reagents?.total_volume)
@@ -520,7 +528,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		var/list/SP = A.reagents.aggregate_pathogens()
 		for (var/uid in some_human_idiot.pathogens)
 			if (!(uid in SP))
-				var/datum/pathogen/P = unpool(/datum/pathogen)
+				var/datum/pathogen/P = new /datum/pathogen
 				P.setup(0, some_human_idiot.pathogens[uid], 0)
 				B.pathogens[uid] = P
 

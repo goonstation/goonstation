@@ -22,13 +22,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		return 0
 	return 1
 
-proc/chemhood_check(mob/living/carbon/human/H)
-	if(H.wear_mask == /obj/item/clothing/head/chemhood && H.wear_suit == /obj/item/clothing/suit/chemsuit )
-		boutput(H, "<span class='alert'>FUCK YOU ACID</span>")
-		return 0
-	else
-		return 1
-
 datum
 	reagents
 		var/list/datum/reagent/reagent_list = new/list()
@@ -48,10 +41,10 @@ datum
 
 		var/list/addiction_tally = null
 
-		var/list/datum/chemical_reaction/possible_reactions = list()
-		var/list/datum/chemical_reaction/active_reactions = list()
+		var/tmp/list/datum/chemical_reaction/possible_reactions = list()
+		var/tmp/list/datum/chemical_reaction/active_reactions = list()
 
-		var/list/covered_cache = 0
+		var/tmp/list/covered_cache = 0
 		var/covered_cache_volume = 0
 
 		var/temperature_cap = 10000
@@ -69,7 +62,7 @@ datum
 				for(var/reagent_id in reagent_list)
 					var/datum/reagent/current_reagent = reagent_list[reagent_id]
 					if(current_reagent)
-						pool(current_reagent)
+						qdel(current_reagent)
 				reagent_list.len = 0
 				reagent_list = null
 			my_atom = null
@@ -95,7 +88,7 @@ datum
 			for(var/reagent_id in reagent_list)
 				var/datum/reagent/current_reagent = reagent_list[reagent_id]
 				if(current_reagent)
-					target.add_reagent(reagent=reagent_id, amount=max(current_reagent.volume * multiplier, 0.001),donotreact=do_not_react, temp_new = newtemp) //mbc : fixed reagent duplication bug by changing max(x,1) to max(x,0.001). Still technically possible to dupe, but not realistically doable.
+					target.add_reagent(reagent=reagent_id, amount=max(current_reagent.volume * multiplier, 0.001),donotreact=do_not_react, temp_new = newtemp, sdata=current_reagent.data) //mbc : fixed reagent duplication bug by changing max(x,1) to max(x,0.001). Still technically possible to dupe, but not realistically doable.
 					current_reagent.on_copy(target.reagent_list[reagent_id])
 				if(!target) return
 
@@ -302,6 +295,7 @@ datum
 
 			var/datum/reagents/target_reagents = target.reagents
 			amount = min(amount, target_reagents.maximum_volume - target_reagents.total_volume)
+			if(amount <= 0) return
 
 			if (do_fluid_react && issimulatedturf(target))
 				var/turf/simulated/T = target
@@ -569,7 +563,7 @@ datum
 
 			if (current_reagent)
 				current_reagent.volume = 0 //mbc : I put these checks here to try to prevent an infloop
-				if (current_reagent.pooled) //Caused some sort of infinite loop? gotta be safe.
+				if (current_reagent.disposed) //Caused some sort of infinite loop? gotta be safe.
 					reagent_list.Remove(reagent)
 					return 0
 				else
@@ -580,7 +574,7 @@ datum
 
 					reagents_changed()
 
-					pool(current_reagent)
+					qdel(current_reagent)
 
 					return 0
 
@@ -772,7 +766,7 @@ datum
 				current_reagent = reagents_cache[reagent]
 
 				if(current_reagent)
-					current_reagent = unpool(current_reagent.type)
+					current_reagent = new current_reagent.type
 					reagent_list[reagent] = current_reagent
 					current_reagent.holder = src
 					current_reagent.volume = 0
@@ -793,6 +787,9 @@ datum
 			if (divison_amount > 0)
 				src.total_temperature = temp_temperature / divison_amount
 
+			if(added_new)
+				current_reagent.on_add()
+
 			if (!donotupdate)
 				update_total()
 
@@ -802,9 +799,8 @@ datum
 			if (!donotupdate)
 				reagents_changed(1)
 
-			if(added_new && !current_reagent.pooled)
+			if(added_new && !current_reagent.disposed)
 				append_possible_reactions(current_reagent.id) //Experimental reaction possibilities
-				current_reagent.on_add()
 				if (!donotreact)
 					src.handle_reactions()
 			return 1
@@ -1002,6 +998,38 @@ datum
 			var/datum/color/average = get_average_color()
 			return rgb(average.r, average.g, average.b)
 
+		/// give a list of the n tastes that are most present in this mixture
+		/// takes argument of how many tastes
+		proc/get_prevalent_tastes(var/num_val)
+			RETURN_TYPE(/list)
+			// create associative list with key = taste, val = total volume
+			var/list/reag_list = list()
+			for (var/current_id in src.reagent_list)
+				var/datum/reagent/current_reagent = src.reagent_list[current_id]
+				if (current_reagent.taste)
+					reag_list[current_reagent.taste] += current_reagent.volume
+			// restrict number of tastes
+			num_val = min(num_val, length(reag_list))
+			// make empty lists for results
+			var/list/result_name[num_val]
+			var/list/result_amount[num_val]
+			// go through all tastes
+			for (var/current_taste in reag_list)
+				// check if it is higher than one of our top values
+				for (var/top_index in 1 to num_val)
+					if (reag_list[current_taste] > result_amount[top_index])
+						// move all the values down
+						for (var/i = num_val; i >= (top_index+1); i--)
+							result_name[i] = result_name[i-1]
+							result_amount[i] = result_amount[i-1]
+						// set new top value
+						result_name[top_index] = current_taste
+						result_amount[top_index] = reag_list[current_taste]
+						break
+			// create associative list for result
+			. = list()
+			for (var/i in 1 to num_val)
+				.[result_name[i]] = result_amount[i]
 
 		//returns whether reagents are solid, liquid, gas, or mixture
 		proc/get_state_description()
@@ -1051,17 +1079,11 @@ datum
 
 		//there were two different implementations, one of which didn't work, so i moved the working one here and both call it now - IM
 		proc/smoke_start(var/volume, var/classic = 0)
-			del_reagent("thalmerite")
-			del_reagent("big_bang") //remove later if we can get a better fix
-			del_reagent("big_bang_precursor")
-			del_reagent("poor_concrete")
-			del_reagent("okay_concrete")
-			del_reagent("good_concrete")
-			del_reagent("perfect_concrete")
+			purge_smoke_blacklist(src)
 
 			var/list/covered = covered_turf()
 
-			var/turf/T = covered.len ? covered[1] : 0
+			var/turf/T = length(covered) ? covered[1] : 0
 			var/mob/our_user = null
 			var/our_fingerprints = null
 

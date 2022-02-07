@@ -12,7 +12,7 @@
 			lastgen = (4800 + rand(-100, 100)) * log(1 + fuel_pellet.material.getProperty("radioactive"))
 			fuel_pellet.material.adjustProperty("radioactive", -1)
 			add_avail(lastgen)
-			updateicon()
+			UpdateIcon()
 
 		// shamelessly stolen from the SMES code, this is kinda stupid
 		src.updateDialog()
@@ -37,7 +37,7 @@
 				user.drop_item()
 				I.set_loc(src)
 				fuel_pellet = I
-				updateicon()
+				UpdateIcon()
 			else
 				boutput(user, "<span class='notice'>A fuel pellet has already been inserted.</span>")
 
@@ -51,7 +51,7 @@
 			fuel_pellet.set_loc(src.loc)
 			usr.put_in_hand_or_eject(src.fuel_pellet) // try to eject it into the users hand, if we can
 			fuel_pellet = null
-			updateicon()
+			UpdateIcon()
 
 
 	proc/interacted(mob/user)
@@ -72,7 +72,7 @@
 		user.Browse(t, "window=rtg")
 		onclose(user, "rtg")
 
-	proc/updateicon()
+	update_icon()
 		if (fuel_pellet)
 			if(status & BROKEN || !lastgen)
 				icon_state = "rtg_off"

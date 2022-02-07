@@ -23,7 +23,7 @@ proc/get_moving_lights_stats()
 	var/turf/_E = get_step(src, EAST); \
 	var/turf/_NE = get_step(src, NORTHEAST); \
 	if(!_N || !_E || !_NE) { break }; \
-	src.RL_MulOverlay.color = list( \
+	src.RL_MulOverlay?.color = list( \
 		src.RL_LumR, src.RL_LumG, src.RL_LumB, 0, \
 		_E.RL_LumR, _E.RL_LumG, _E.RL_LumB, 0, \
 		_N.RL_LumR, _N.RL_LumG, _N.RL_LumB, 0, \
@@ -32,7 +32,7 @@ proc/get_moving_lights_stats()
 		) ; \
 	if (src.RL_NeedsAdditive || _E.RL_NeedsAdditive || _N.RL_NeedsAdditive || _NE.RL_NeedsAdditive) { \
 		if(!src.RL_AddOverlay) { \
-			src.RL_AddOverlay = unpool(/obj/overlay/tile_effect/lighting/add) ; \
+			src.RL_AddOverlay = new /obj/overlay/tile_effect/lighting/add ; \
 			src.RL_AddOverlay.set_loc(src) ; \
 			src.RL_AddOverlay.icon_state = src.RL_OverlayState ; \
 		} \
@@ -42,7 +42,7 @@ proc/get_moving_lights_stats()
 			_N.RL_AddLumR, _N.RL_AddLumG, _N.RL_AddLumB, 0, \
 			_NE.RL_AddLumR, _NE.RL_AddLumG, _NE.RL_AddLumB, 0, \
 			0, 0, 0, 1) ; \
-	} else { if(src.RL_AddOverlay) { pool(src.RL_AddOverlay); src.RL_AddOverlay = null; } } \
+	} else { if(src.RL_AddOverlay) { qdel(src.RL_AddOverlay); src.RL_AddOverlay = null; } } \
 	} while(false)
 
 
@@ -632,9 +632,19 @@ proc
 	plane = PLANE_LIGHTING
 	blend_mode = BLEND_DEFAULT // this maybe (???) fixes a bug where lighting doesn't render on clients when teleporting
 	layer = LIGHTING_LAYER_ROBUST
+	disposing()
+		var/turf/T = src.loc
+		if(T?.RL_MulOverlay == src)
+			T.RL_MulOverlay = null
+		..()
 
 /obj/overlay/tile_effect/lighting/add
 	plane = PLANE_SELFILLUM
+	disposing()
+		var/turf/T = src.loc
+		if(T?.RL_AddOverlay == src)
+			T.RL_AddOverlay = null
+		..()
 
 
 turf
@@ -743,16 +753,16 @@ turf
 			/*
 			if (src.RL_MulOverlay)
 				src.RL_MulOverlay.set_loc(null)
-				pool(src.RL_MulOverlay)
+				qdel(src.RL_MulOverlay)
 				src.RL_MulOverlay = null
 			if (src.RL_AddOverlay)
 				src.RL_AddOverlay.set_loc(null)
-				pool(src.RL_AddOverlay)
+				qdel(src.RL_AddOverlay)
 				src.RL_AddOverlay = null
 			// cirr effort to remove redundant overlays that still persist EVEN THOUGH they shouldn't
 			for(var/obj/overlay/tile_effect/lighting/L in src.contents)
 				L.set_loc(null)
-				pool(L)
+				qdel(L)
 			*/
 
 		RL_Reset()
@@ -762,16 +772,16 @@ turf
 		RL_Init()
 			if (!fullbright && !loc:force_fullbright)
 				if(!src.RL_MulOverlay)
-					src.RL_MulOverlay = unpool(/obj/overlay/tile_effect/lighting/mul)
+					src.RL_MulOverlay = new /obj/overlay/tile_effect/lighting/mul
 					src.RL_MulOverlay.set_loc(src)
 					src.RL_MulOverlay.icon_state = src.RL_OverlayState
 				if (RL_Started) RL_UPDATE_LIGHT(src)
 			else
 				if(src.RL_MulOverlay)
-					pool(src.RL_MulOverlay)
+					qdel(src.RL_MulOverlay)
 					src.RL_MulOverlay = null
 				if(src.RL_AddOverlay)
-					pool(src.RL_AddOverlay)
+					qdel(src.RL_AddOverlay)
 					src.RL_AddOverlay = null
 
 atom

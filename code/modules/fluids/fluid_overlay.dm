@@ -10,8 +10,8 @@
 //Hopefully this operation (adding/removing overlays) isn't too costly - it doesn't seem like it is that bad so far? otherwise I can do the lame old pool overlays i guess
 
 
-/mob/var/list/submerged_images = list()
-/mob/var/is_submerged = 0
+/mob/var/tmp/list/submerged_images = list()
+/mob/var/tmp/is_submerged = 0
 
 /mob/living/New()
 	..()
@@ -80,8 +80,8 @@
 
 	src.is_submerged = depth
 
-/obj/var/list/submerged_images = 0
-/obj/var/is_submerged = 0
+/obj/var/tmp/list/submerged_images = 0
+/obj/var/tmp/is_submerged = 0
 
 //submachine - i cant find the parents for these. just define here ok
 /obj/submachine/flags = FPRINT | FLUID_SUBMERGE

@@ -145,7 +145,7 @@
 	src.anchored = 1 // unfun nerds ruin everything yet again
 	src.is_npc = 0 // technically false, but it turns off the AI
 	src.icon_state = "drone-dormant"
-	src.a_intent = INTENT_DISARM // stop swapping places
+	src.set_a_intent(INTENT_DISARM ) // stop swapping places
 
 /mob/living/critter/flock/drone/proc/undormantize()
 	src.dormant = 0
@@ -154,7 +154,7 @@
 	src.damaged = -1
 	src.check_health() // handles updating the icon to something more appropriate
 	src.visible_message("<span class='notice'><b>[src]</b> begins to glow and hover.</span>")
-	src.a_intent = INTENT_HELP // default
+	src.set_a_intent(INTENT_HELP ) // default
 	if(src.client)
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
 		src.is_npc = 0
@@ -202,7 +202,7 @@
 
 /mob/living/critter/flock/drone/is_spacefaring() return 1
 
-/mob/living/critter/flock/drone/CanPass(atom/movable/mover)
+/mob/living/critter/flock/drone/Cross(atom/movable/mover)
 	if(isflock(mover))
 		return 1
 	else
@@ -308,7 +308,7 @@
 	var/obj/item/I = absorber.item
 
 	if(I)
-		var/absorb = min(src.absorb_rate, max(0, I.health))
+		var/absorb = clamp(src.absorb_rate, 0, I.health)
 		I.health -= absorb
 		src.resources += src.absorb_per_health * absorb
 		playsound(src, "sound/effects/sparks[rand(1,6)].ogg", 50, 1)
@@ -338,7 +338,7 @@
 				src.resources += C.resources
 				boutput(src, "<span class='notice'>You break down the resource cache, adding <span class='bold'>[C.resources]</span> resources to your own (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]). </span>")
 			if(istype(I, /obj/item/raw_material))
-				pool(I) //gotta pool stuff bruh
+				qdel(I) //gotta pool stuff bruh
 			else
 				qdel(I)
 	// AI ticks are handled in mob_ai.dm, as they ought to be
@@ -389,7 +389,7 @@
 	else
 		return ..()
 
-/mob/living/critter/flock/drone/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/living/critter/flock/drone/Cross(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(floorrunning)
 		return 1
 	else
@@ -551,11 +551,11 @@
 	for(var/i=1 to num_pieces)
 		switch(rand(100))
 			if(0 to 45)
-				B = unpool(/obj/item/raw_material/scrap_metal)
+				B = new /obj/item/raw_material/scrap_metal
 				B.set_loc(my_turf)
 				B.setMaterial(getMaterial("gnesis"))
 			if(46 to 90)
-				B = unpool(/obj/item/raw_material/shard)
+				B = new /obj/item/raw_material/shard
 				B.set_loc(my_turf)
 				B.setMaterial(getMaterial("gnesisglass"))
 			if(91 to 100)

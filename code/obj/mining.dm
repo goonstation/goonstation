@@ -128,7 +128,7 @@
 /obj/magnet_target_marker
 	name = "mineral magnet target"
 	desc = "Marks the location of an area of asteroid magnetting."
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	var/width = 15
 	var/height = 15
 	var/scan_range = 7
@@ -271,7 +271,7 @@
 		if (istype(W, /obj/item/raw_material/plasmastone) && !loaded)
 			loaded = 1
 			boutput(user, "<span class='notice'>You charge the magnetizer with the plasmastone.</span>")
-			pool(W)
+			qdel(W)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (!magnet)
@@ -405,7 +405,7 @@
 			for (var/obj/forcefield/mining/M in wall_bits)
 				M.opacity = 1
 				M.set_density(1)
-				M.invisibility = 0
+				M.invisibility = INVIS_NONE
 
 			active = 1
 
@@ -445,7 +445,7 @@
 				for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
 					M.opacity = 0
 					M.set_density(0)
-					M.invisibility = 1
+					M.invisibility = INVIS_INFRA
 				active = 0
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
 				return
@@ -460,7 +460,7 @@
 			for (var/obj/forcefield/mining/M in wall_bits)
 				M.opacity = 0
 				M.set_density(0)
-				M.invisibility = 101
+				M.invisibility = INVIS_ALWAYS
 
 			src.updateUsrDialog()
 			return
@@ -605,7 +605,7 @@
 			return
 
 		src.health -= amount
-		src.health = max(0,min(src.health,100))
+		src.health = clamp(src.health, 0, 100)
 
 		if (src.health < 1 && !src.active)
 			qdel(src)
@@ -632,7 +632,7 @@
 		for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
 			M.opacity = 1
 			M.set_density(1)
-			M.invisibility = 0
+			M.invisibility = INVIS_NONE
 
 		active = 1
 
@@ -683,7 +683,7 @@
 			for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
 				M.opacity = 0
 				M.set_density(0)
-				M.invisibility = 1
+				M.invisibility = INVIS_INFRA
 			active = 0
 			boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
 			return
@@ -704,7 +704,7 @@
 		for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
 			M.opacity = 0
 			M.set_density(0)
-			M.invisibility = 101
+			M.invisibility = INVIS_ALWAYS
 
 		src.updateUsrDialog()
 		return
@@ -1162,7 +1162,7 @@
 				H = L
 			var/obj/item/held = L.equipped()
 			if(istype(held, /obj/item/mining_tool) || istype(held, /obj/item/mining_tools) || (isnull(held) && H && (H.is_hulk() || istype(H.gloves, /obj/item/clothing/gloves/concussive))))
-				L.click(src, list(), null, null)
+				UNLINT(L.click(src, list(), null, null))
 			return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1341,7 +1341,7 @@
 				O.onExcavate(src)
 			var/makeores
 			for(makeores = src.amount, makeores > 0, makeores--)
-				var/obj/item/raw_material/MAT = unpool(ore_to_create)
+				var/obj/item/raw_material/MAT = new ore_to_create
 				MAT.set_loc(src)
 
 				if(MAT.material)
@@ -1365,7 +1365,7 @@
 		src.levelupdate()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/A in range(src,1))
-			A.update_icon()
+			A.UpdateIcon()
 #ifdef UNDERWATER_MAP
 		if (current_state == GAME_STATE_PLAYING)
 			hotspot_controller.disturb_turf(src)
@@ -1437,6 +1437,7 @@
 
 	noborders
 		update_icon()
+
 			return
 		apply_edge_overlay()
 			return
@@ -1450,7 +1451,7 @@
 		icon_state = "astfloor" + "[sprite_variation]"
 		coloration_overlay = image(src.icon,"color_overlay")
 		coloration_overlay.blend_mode = 4
-		update_icon()
+		UpdateIcon()
 		worldgenCandidates += src
 
 	generate_worldgen()
@@ -1474,6 +1475,7 @@
 			src.ReplaceWithSpace()
 
 	update_icon()
+
 		src.overlays = list()
 		/*
 		if (!coloration_overlay)
@@ -1593,10 +1595,6 @@
 		if (powered_overlay)
 			src.overlays = null
 			signal_event("icon_updated")
-		return
-
-
-	proc/update_icon()
 		return
 
 obj/item/clothing/gloves/concussive
@@ -2014,14 +2012,15 @@ obj/item/clothing/gloves/concussive
 /obj/item/cargotele/traitor
 	cost = 15
 	cell_type = /obj/item/ammo/power_cell/med_power
-	var/list/possible_targets = list()
+	var/static/list/possible_targets = list()
 
 	New()
 		..()
-		for(var/turf/T in world) //hate to do this but it's only once per spawn vOv
-			LAGCHECK(LAG_LOW)
-			if(istype(T,/turf/space) && T.z != 1 && !isrestrictedz(T.z))
-				possible_targets += T
+		if (!length(possible_targets))
+			for(var/turf/T in world) //hate to do this but it's only once vOv
+				LAGCHECK(LAG_LOW)
+				if(istype(T,/turf/space) && T.z != 1 && T.z != 6 && !isrestrictedz(T.z)) //do not foot ball, do not collect 200
+					possible_targets += T
 
 	attack_self() // Fixed --melon
 		return
@@ -2157,7 +2156,7 @@ obj/item/clothing/gloves/concussive
 				user.put_in_hand_or_drop(PCEL)
 				boutput(user, "You remove [cell].")
 				if (PCEL) //ZeWaka: fix for null.updateicon
-					PCEL.updateicon()
+					PCEL.UpdateIcon()
 
 				src.cell = null
 			else if (action == "Change the destination")
@@ -2403,7 +2402,7 @@ var/global/list/cargopads = list()
 			user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")
 			for (var/obj/item/I in satchel.contents)
 				I.set_loc(target)
-			satchel.satchel_updateicon()
+			satchel.UpdateIcon()
 			return
 		if (istype(target, /obj/item/satchel/mining))
 			user.swap_hand() //Needed so you don't drop the scoop instead of the satchel

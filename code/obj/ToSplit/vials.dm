@@ -7,7 +7,7 @@
 	name = "water"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	var/canmove = 1
 	density = 0
 	anchored = 1

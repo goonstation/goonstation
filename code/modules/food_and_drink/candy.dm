@@ -38,9 +38,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 			new /obj/item/razor_blade( get_turf(src) )
 		..()
 
-// just a non-abstract version
-/obj/item/reagent_containers/food/snacks/candy/regular
-
 /obj/item/reagent_containers/food/snacks/candy/nougat
 	name = "nougat bar"
 	desc = "Whoa, that totally has nougat. Heck yes."
@@ -310,9 +307,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 			src.icon_state = "lpop-[rand(1,6)]"
 		else
 			SPAWN_DBG(0)
-				src.update_icon()
+				src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if (src.icon_random)
 			return
 		if (src.reagents)

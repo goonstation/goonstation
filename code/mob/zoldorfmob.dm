@@ -26,11 +26,8 @@
 		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 		src.abilityHolder = new /datum/abilityHolder/zoldorf(src)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-		src.see_invisible = 16
+		src.see_invisible = INVIS_GHOST
 		src.see_in_dark = SEE_DARK_FULL
-
-	proc/addAbility(var/abilityType)
-		abilityHolder.addAbility(abilityType)
 
 	proc/addAllAbilities()
 		src.addAbility(/datum/targetable/zoldorfAbility/fortune)
@@ -46,9 +43,6 @@
 		//debug stuffs
 		//src.addAbility(/datum/targetable/zoldorfAbility/addsoul)
 		//src.addAbility(/datum/targetable/zoldorfAbility/removesoul)
-
-	proc/removeAbility(var/abilityType)
-		abilityHolder.removeAbility(abilityType)
 
 	proc/removeAllAbilities()
 		src.removeAbility(/datum/targetable/zoldorfAbility/fortune)
@@ -67,9 +61,6 @@
 
 	proc/updateButtons()
 		abilityHolder.updateButtons()
-
-	proc/getAbility(var/abilityType)
-		return abilityHolder.getAbility(abilityType)
 
 	proc/free() //since making two mobs would be pretty redundant. zoldorf mobs have two states. free and unfree. freed = souldorf, unfree = zoldorf
 		src.free = 1 //this proc handles the transforming of a zoldorf into a souldorf
@@ -146,7 +137,7 @@
 		. = ..()
 		if (. == 100)
 			return 100
-		if((target in range(0,src))&&(istype(target,/obj/item/reagent_containers/food/snacks/ectoplasm))&&(src.invisibility > 0))
+		if((target in range(0,src))&&(istype(target,/obj/item/reagent_containers/food/snacks/ectoplasm))&&(src.invisibility > INVIS_NONE))
 			if(src.emoting)
 				return
 			src.visible_message("<span class='notice'><b>[src.name] rolls around in the ectoplasm, making their soul visible!</b></span>")
@@ -160,7 +151,7 @@
 		else
 			src.examine_verb(target)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		return 1
 
 	say_understands(var/other)

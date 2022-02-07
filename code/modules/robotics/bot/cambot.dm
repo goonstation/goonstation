@@ -114,7 +114,7 @@
 		new /obj/item/camera(T)
 		new /obj/item/device/prox_sensor(T)
 		if (prob(50))
-			new /obj/item/parts/robot_parts/arm/left(T)
+			new /obj/item/parts/robot_parts/arm/left/standard(T)
 
 	qdel(src)
 	return
@@ -180,7 +180,7 @@
 		if (!src)
 			return
 
-		src.navigate_to(get_turf(src.target), CAMBOT_MOVE_SPEED, 1, 60)
+		src.navigate_to(get_turf(src.target), CAMBOT_MOVE_SPEED, 1, 20)
 
 		if (!islist(src.path)) // Woops, couldn't find a path.
 			if (!(src.target in src.targets_invalid))
@@ -225,7 +225,7 @@
 				continue
 
 			if (ismob(M))
-				if ((!isliving(M) || M.invisibility) && prob(99)) // 1% chance to take a picture of a ghost or an invisible thing  :I
+				if ((!isliving(M) || M.invisibility > INVIS_NONE) && prob(99)) // 1% chance to take a picture of a ghost or an invisible thing  :I
 					continue
 				mob_options += (M)
 			else

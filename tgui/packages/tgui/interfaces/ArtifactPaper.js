@@ -1,5 +1,12 @@
+/**
+ * @file
+ * @copyright 2021
+ * @author zjdtmkhzt (https://github.com/zjdtmkhzt)
+ * @license MIT
+ */
+
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section, Flex, TextArea } from '../components';
+import { Button, Section, Flex, TextArea } from '../components';
 import { Window } from '../layouts';
 
 export const ArtifactPaper = (props, context) => {

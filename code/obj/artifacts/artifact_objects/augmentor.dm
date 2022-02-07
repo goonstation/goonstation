@@ -291,10 +291,10 @@
 		return
 
 /datum/artifact_augmentation/borg
-	left_arm = list(/obj/item/parts/robot_parts/arm/left/light, /obj/item/parts/robot_parts/arm/left)
-	right_arm = list(/obj/item/parts/robot_parts/arm/right/light, /obj/item/parts/robot_parts/arm/right)
-	left_leg = list(/obj/item/parts/robot_parts/leg/left, /obj/item/parts/robot_parts/leg/left/light, /obj/item/parts/robot_parts/leg/left/treads)
-	right_leg = list(/obj/item/parts/robot_parts/leg/right, /obj/item/parts/robot_parts/leg/right/light, /obj/item/parts/robot_parts/leg/right/treads)
+	left_arm = list(/obj/item/parts/robot_parts/arm/left/light, /obj/item/parts/robot_parts/arm/left/standard)
+	right_arm = list(/obj/item/parts/robot_parts/arm/right/light, /obj/item/parts/robot_parts/arm/right/standard)
+	left_leg = list(/obj/item/parts/robot_parts/leg/left/standard, /obj/item/parts/robot_parts/leg/left/light, /obj/item/parts/robot_parts/leg/left/treads)
+	right_leg = list(/obj/item/parts/robot_parts/leg/right/standard, /obj/item/parts/robot_parts/leg/right/light, /obj/item/parts/robot_parts/leg/right/treads)
 	eye = list(/obj/item/organ/eye/cyber,/obj/item/organ/eye/cyber/sunglass,/obj/item/organ/eye/cyber/sechud,/obj/item/organ/eye/cyber/thermal,/obj/item/organ/eye/cyber/meson,/obj/item/organ/eye/cyber/spectro,/obj/item/organ/eye/cyber/prodoc,/obj/item/organ/eye/cyber/ecto,/obj/item/organ/eye/cyber/camera,/obj/item/organ/eye/cyber/nightvision,/obj/item/organ/eye/cyber/laser)
 	heart = list(/obj/item/organ/heart/cyber)
 	butt = list(/obj/item/clothing/head/butt/cyberbutt)

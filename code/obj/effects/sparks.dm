@@ -12,14 +12,13 @@
 	anchored = 1.0
 	mouse_opacity = 0
 
-/obj/effects/sparks/unpooled(var/poolname)
-	..(poolname)
+/obj/effects/sparks/New()
+	..()
 	SPAWN_DBG(0.5 SECONDS)
 		playsound(src.loc, "sparks", 100, 1)
 		var/turf/T = src.loc
 		if (istype(T, /turf))
 			T.hotspot_expose(1000,100,usr)
-	return
 
 /obj/effects/sparks/disposing()
 	var/turf/T = get_turf(src)

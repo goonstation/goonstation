@@ -33,6 +33,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/can_selfdestruct = 0
 	var/datum/syndicate_buylist/reading_about = null
 
+	var/owner_ckey = null
+
 	// Spawned uplinks for which setup() wasn't called manually only get the standard (generic) items.
 	New()
 		..()
@@ -50,6 +52,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	proc/setup(var/datum/mind/ownermind, var/obj/item/device/master)
 		if (!src || !istype(src))
 			return
+
+		src.owner_ckey = ownermind?.ckey
 
 		if (!islist(src.items_general))
 			src.items_general = list()
@@ -756,8 +760,11 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					if (istype(B.delivery_area, /area/diner))
 						user.show_text("It can be found at the nearby space diner!", "red")
 					var/turf/end = B.delivery_area.spyturf
-					user.gpsToTurf(end, doText = 0, heuristic = /turf/proc/AllDirsTurfsWithAllAccess) // spy thieves probably need to break in anyway, so screw access check
+					user.gpsToTurf(end, doText = 0) // spy thieves probably need to break in anyway, so screw access check
 					return 0
+				for (var/obj/item/device/pda2/P in delivery.contents) //make sure we don't delete the PDA
+					if (P.uplink == src)
+						return 0
 				user.removeGpsPath(doText = 0)
 				B.claimed = 1
 				for (var/mob/M in delivery.contents) //make sure we dont delete mobs inside the stolen item
@@ -778,7 +785,6 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 							user.show_text("That isn't the right limb!", "red")
 					else
 						M.drop_from_slot(delivery,get_turf(M))
-
 				qdel(delivery)
 				if (user.mind && user.mind.special_role == ROLE_SPY_THIEF)
 					user.mind.spy_stolen_items += B.name
@@ -950,7 +956,123 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		src.print_to_host(src.menu_message)
 		return
 
+#define PLAYERS_PER_UPLINK_POINT 20
 
+/obj/item/device/nukeop_commander_uplink
+	name = "nuclear commander uplink"
+	desc = "A nifty device used by the commander to order powerful equipment for their team."
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "uplink_commander"
+	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	w_class = W_CLASS_SMALL
+	item_state = "uplink_commander"
+	throw_speed = 4
+	throw_range = 20
+	var/points = 2
+	var/list/commander_buylist = list()
+	var/datum/syndicate_buylist/reading_about = null
+
+	New()
+		..()
+		var/num_players
+		for(var/client/C in clients)
+			var/mob/client_mob = C.mob
+			if (!istype(client_mob))
+				continue
+			num_players++
+		points = max(2, round(num_players / PLAYERS_PER_UPLINK_POINT))
+		SPAWN_DBG(1 SECOND)
+			if (src && istype(src) && (!length(src.commander_buylist)))
+				src.setup()
+
+	attackby(obj/item/W, mob/user, params)
+		if(istype(W, /obj/item/remote/reinforcement_beacon))
+			var/obj/item/remote/reinforcement_beacon/R = W
+			if(R.uses >= 1 && !R.anchored)
+				R.force_drop(user)
+				sleep(1 DECI SECOND)
+				boutput(user, "<span class='alert'>The [src] accepts the [R], warping it away.</span>")
+				src.points += 2
+				qdel(R)
+		else
+			..()
+
+	proc/setup()
+		for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
+			if (istype(S, /datum/syndicate_buylist/commander) && !src.commander_buylist.Find(S))
+				src.commander_buylist.Add(S)
+
+		var/list/names = list()
+		var/list/namecounts = list()
+		if (length(src.commander_buylist))
+			var/list/sort1 = list()
+
+			for (var/datum/syndicate_buylist/S in src.commander_buylist)
+				var/name = S.name
+				if (name in names) // sanity check
+					namecounts[name]++
+					name = text("[] ([])", name, namecounts[name])
+				else
+					names.Add(name)
+					namecounts[name] = 1
+
+				sort1[name] = S
+
+			src.commander_buylist = sortList(sort1)
+
+	attack_self(mob/user)
+		return ui_interact(user)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ComUplink")
+			ui.open()
+
+	ui_data(mob/user)
+		. = list(
+			"points" = points,
+		)
+
+	ui_static_data(mob/user)
+		. = list("stock" = list())
+
+		for (var/datum/syndicate_buylist/SB as anything in commander_buylist)
+			var/datum/syndicate_buylist/I = commander_buylist[SB]
+			.["stock"] += list(list(
+				"ref" = "\ref[I]",
+				"name" = I.name,
+				"description" = I.desc,
+				"cost" = I.cost,
+				"category" = I.category,
+			))
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if(.)
+			return
+		switch(action)
+			if ("redeem")
+				for(var/datum/syndicate_buylist/SB as anything in commander_buylist)
+					if(istype(commander_buylist[SB], locate(params["ref"])))
+						var/datum/syndicate_buylist/B = commander_buylist[SB]
+						if (src.points >= B.cost)
+							src.points -= B.cost
+							var/atom/A = new B.item(get_turf(src))
+							if(B.item2)
+								new B.item2(get_turf(src))
+							if(B.item3)
+								new B.item3(get_turf(src))
+							B.run_on_spawn(A, usr)
+							logTheThing("combat", usr, src, "bought a [initial(B.item.name)] from a [src] at [showCoords(usr.x, usr.y, usr.z)].")
+							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B)]-Purchased")
+							if(isnull(loadnum))
+								loadnum = 0
+							world.save_intra_round_value("NuclearCommander-[initial(B)]-Purchased", loadnum + 1)
+							. = TRUE
+							break
+
+#undef PLAYERS_PER_UPLINK_POINT
 ///////////////////////////////////////// Wizard's spellbook ///////////////////////////////////////////////////
 
 /obj/item/SWF_uplink
@@ -1007,6 +1129,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	proc/SWFspell_Purchased(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		if (!user || !book)
 			return
+		logTheThing("debug", null, null, "[constructTarget(user)] purchased the spell [src.name] using the [book] uplink.")
 		if (src.assoc_spell)
 			user.abilityHolder.addAbility(src.assoc_spell)
 			user.abilityHolder.updateButtons()

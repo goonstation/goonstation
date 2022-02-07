@@ -90,7 +90,7 @@ proc/is_weak_rollable_contract(type)
 		H.stuttering = 120
 		H.mind?.assigned_role = "Horse"
 		H.contract_disease(/datum/ailment/disability/clumsy,null,null,1)
-		playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
+		playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, clamp(1.0 + (30 - H.bioHolder.age)/50, 0.7, 1.4))
 		H.change_misstep_chance(66)
 		animate_clownspell(H)
 		H.drop_from_slot(H.wear_suit)
@@ -116,7 +116,7 @@ proc/is_weak_rollable_contract(type)
 	src.partygib()
 
 /proc/soulcheck(var/mob/M as mob)
-	M.abilityHolder.updateText()
+	M?.abilityHolder?.updateText()
 	if ((ishuman(M)) && (isdiabolical(M)))
 		if (total_souls_value >= 10)
 			if (!M.bioHolder.HasEffect("demon_horns"))
@@ -789,7 +789,7 @@ obj/item/contract/greed
 			return 0
 		SPAWN_DBG(1 DECI SECOND)
 			for(var/i in 1 to number_of_cash_piles)
-				var/obj/item/spacecash/random/tourist/S = unpool(/obj/item/spacecash/random/tourist)
+				var/obj/item/spacecash/random/tourist/S = new /obj/item/spacecash/random/tourist
 				S.setup(user.loc)
 			boutput(user, "<span class='notice'>Some money appears at your feet. What, did you expect some sort of catch or trick?</span>")
 			if (prob(90)) //used to be 50/50, now it's only a 10% chance to get midased

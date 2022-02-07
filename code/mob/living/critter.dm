@@ -99,8 +99,9 @@
 		count_healths()
 
 		SPAWN_DBG(0)
-			src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
-			src.attach_hud(zone_sel)
+			if(!src.disposed)
+				src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
+				src.attach_hud(zone_sel)
 
 		for (var/datum/equipmentHolder/EE in equipment)
 			EE.after_setup(hud)
@@ -299,7 +300,7 @@
 			if (src.skinresult && max_skins)
 				if (istype(I, /obj/item/circular_saw) || istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/scalpel) || istype(I, /obj/item/raw_material/shard) || istype(I, /obj/item/sword) || istype(I, /obj/item/saw) || istype(I, /obj/item/wirecutters))
 					for (var/i, i<rand(1, max_skins), i++)
-						var/obj/item/S = unpool(src.skinresult)
+						var/obj/item/S = new src.skinresult
 						S.set_loc(src.loc)
 					src.skinresult = null
 					M.visible_message("<span class='alert'>[M] skins [src].</span>","You skin [src].")
@@ -319,12 +320,12 @@
 
 	proc/butcher(var/mob/M, drop_brain = TRUE)
 		var/i = rand(2,4)
-		var/transfer = src.reagents.total_volume / i
+		var/transfer = src.reagents ? src.reagents.total_volume / i : 0
 
 		while (i-- > 0)
 			var/obj/item/reagent_containers/food/newmeat = new meat_type
 			newmeat.set_loc(src.loc)
-			src.reagents.trans_to(newmeat, transfer)
+			src.reagents?.trans_to(newmeat, transfer)
 			if (name_the_meat)
 				newmeat.name = "[src.name] meat"
 				newmeat.real_name = newmeat.name
@@ -367,6 +368,7 @@
 			return
 
 		var/obj/item/I = src.equipped()
+		var/turf/thrown_from = get_turf(src)
 
 		if (!I || !isitem(I) || I.cant_drop)
 			return
@@ -406,7 +408,7 @@
 			if (istype(I.loc, /turf/space) && ismob(I))
 				var/mob/M = I
 				M.inertia_dir = get_dir(src,target)
-			I.throw_at(target, I.throw_range, I.throw_speed, params)
+			I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
 
 			playsound(src.loc, 'sound/effects/throw.ogg', 50, 1, 0.1)
 
@@ -1209,7 +1211,7 @@
 	proc/on_wake()
 		return
 
-/mob/living/critter/Bump(atom/A, yes)
+/mob/living/critter/bump(atom/A)
 	var/atom/movable/AM = A
 	if(issmallanimal(src) && src.ghost_spawned && istype(AM) && !AM.anchored)
 		return
@@ -1219,16 +1221,16 @@
 /mob/living/critter/hotkey(name)
 	switch (name)
 		if ("help")
-			src.a_intent = INTENT_HELP
+			src.set_a_intent(INTENT_HELP)
 			hud.update_intent()
 		if ("disarm")
-			src.a_intent = INTENT_DISARM
+			src.set_a_intent(INTENT_DISARM)
 			hud.update_intent()
 		if ("grab")
-			src.a_intent = INTENT_GRAB
+			src.set_a_intent(INTENT_GRAB)
 			hud.update_intent()
 		if ("harm")
-			src.a_intent = INTENT_HARM
+			src.set_a_intent(INTENT_HARM )
 			hud.update_intent()
 		if ("drop")
 			src.drop_item()

@@ -260,7 +260,7 @@
 								if(prob(10) && istype(src.loc, /turf/simulated/floor/specialroom/freezer)) //ZeWaka: Fix for null.loc
 									message = "<b>[src]</B> farts. The fart freezes in MID-AIR!!!"
 									new/obj/item/material_piece/fart(src.loc)
-									var/obj/item/material_piece/fart/F = unpool(/obj/item/material_piece/fart)
+									var/obj/item/material_piece/fart/F = new /obj/item/material_piece/fart
 									F.set_loc(src.loc)
 
 						src.expel_fart_gas(oxyplasmafart)
@@ -292,7 +292,7 @@
 				// visible targeted emotes
 				if (!src.restrained())
 					var/M = null
-					var/range = 8
+					var/range = 5
 					if (act == "hug" || act == "sidehug")
 						range = 1
 					if (param)
@@ -301,7 +301,7 @@
 								M = A
 								break
 					else if(act != "wave" && act != "salute") // use *waveto to wave to someone, *saluteto too salute someone
-						var/list/target_list = src.get_targets(range, "both") // Dorko McEnginerd hugs the Thermoelectric Generator!
+						var/list/target_list = src.get_targets(range, "mob")
 						if(length(target_list))
 							var/action_phrase = "emote upon"
 							switch(act)
@@ -379,29 +379,24 @@
 					maptext_out = "<I>struggles to move</I>"
 
 				m_type = 1
-			if ("nod","nodto","glare","stare","look","leer")
+			if ("nod","nodat","glare","glareat","stare","stareat","look")
 				var/M = null
 				if (param)
 					for (var/mob/A in view(null, null))
 						if (ckey(param) == ckey(A.name))
 							M = A
 							break
-				else if(act != "nod") // use *nodto to nod to something
-					var/list/target_list = src.get_targets(8, "both") // Chemmi Dweebus leers at the chemi-compiler!
+				else if(act != "nod" && act != "glare" && act != "stare") // use *nodat to nod to something
+					var/list/target_list = src.get_targets(5, "mob")
 					if(length(target_list))
-						var/action_phrase = "emote upon"
-						switch(act)
-							if("nodat")
-								action_phrase = "nod to"
-							else
-								action_phrase = "[act] at"
+						var/action_phrase = "[act] at"
 						M = tgui_input_list(src, "Pick something to [action_phrase]!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
-						if (M && !IN_RANGE(get_turf(src), get_turf(M), 8))
+						if (M && !IN_RANGE(get_turf(src), get_turf(M), 5))
 							var/inaction_phrase = "emote upon"
 							switch(act)
-								if("nodto")
+								if("nodat")
 									inaction_phrase = "not in acknowledgement distance"
-								if("glare", "stare", "look", "leer")
+								if("glareat", "stareat", "look")
 									inaction_phrase = "[prob(1) ? "out of sight" : "not in sight"]"
 							boutput(src, "<span class='emote'><B>[M]</B> is [inaction_phrase]!</span>")
 							return
@@ -409,13 +404,16 @@
 				act = lowertext(act)
 				if (M)
 					switch(act)
-						if ("nod")
-							message = "<B>[src]</B> [act]s to [M]."
-							maptext_out = "<I>[act]s to [M]</I>"
-						if ("nodto")
-							message = "<B>[src]</B> nods to [M]."
-							maptext_out = "<I>nods to [M]</I>"
-						if ("glare","stare","look","leer")
+						if ("nodat")
+							message = "<B>[src]</B> nods at [M]."
+							maptext_out = "<I>nods at [M]</I>"
+						if ("stareat")
+							message = "<B>[src]</B> stares at [M]."
+							maptext_out = "<I>stares at [M]</I>"
+						if ("glareat")
+							message = "<B>[src]</B> glares at [M]."
+							maptext_out = "<I>glares at [M]</I>"
+						if ("glare","stare","look","nod")
 							message = "<B>[src]</B> [act]s at [M]."
 							maptext_out = "<I>[act]s at [M]</I>"
 				else
@@ -521,13 +519,13 @@
 			if ("listbasic")
 				src.show_text("smile, grin, smirk, frown, scowl, grimace, sulk, pout, nod, blink, drool, shrug, tremble, quiver, shiver, shudder, shake, \
 				think, ponder, clap, wave, salute, flap, aflap, laugh, chuckle, giggle, chortle, guffaw, cough, hiccup, sigh, mumble, grumble, groan, moan, sneeze, \
-				sniff, snore, whimper, yawn, choke, gasp, weep, sob, wail, whine, gurgle, gargle, blush, flinch, blink_r, eyebrow, shakehead, shakebutt, \
+				wheeze, sniff, snore, whimper, yawn, choke, gasp, weep, sob, wail, whine, gurgle, gargle, blush, flinch, blink_r, eyebrow, shakehead, shakebutt, \
 				pale, flipout, rage, shame, raisehand, crackknuckles, stretch, rude, cry, retch, raspberry, tantrum, gesticulate, wgesticulate, smug, \
 				nosepick, flex, facepalm, panic, snap, airquote, twitch, twitch_v, faint, deathgasp, signal, wink, collapse, trip, dance, scream, \
 				burp, fart, monologue, contemplate, custom")
 
 			if ("listtarget")
-				src.show_text("salute, bow, hug, wave, glare, stare, look, leer, nod, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive, fingerguns")
+				src.show_text("salute, bow, hug, wave, glare, stare, look, nod, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive, fingerguns")
 
 			if ("suicide")
 				src.show_text("Suicide is a command, not an emote.  Please type 'suicide' in the input bar at the bottom of the game window to kill yourself.", "red")
@@ -711,11 +709,17 @@
 
 					maptext_out = "<I>stomps on their hat!</I>"
 
-					if (hat_or_beret == "beret")
-						hat.icon_state = "hosberet-smash" // make sure it looks smushed!
-					else
-						hat.icon_state = "hoscap-smash"
 					src.drop_from_slot(hat) // we're done here, drop that hat!
+					hat.pixel_x = 0
+					hat.pixel_y = -16
+
+					animate_stomp(src)
+
+					SPAWN_DBG(0.5 SECONDS)
+						if (hat_or_beret == "beret")
+							hat.icon_state="hosberet-smash"
+						else
+							hat.icon_state="hoscap-smash"
 					if(src.mind && src.mind.assigned_role != "Head of Security")
 						src.add_karma(5)
 				else
@@ -809,7 +813,7 @@
 					maptext_out = "<I>struggles to move</I>"
 				m_type = 1
 
-			if ("cough","hiccup","sigh","mumble","grumble","groan","moan","sneeze","sniff","snore","whimper","yawn","choke","gasp","weep","sob","wail","whine","gurgle","gargle")
+			if ("cough","hiccup","sigh","mumble","grumble","groan","moan","sneeze","wheeze","sniff","snore","whimper","yawn","choke","gasp","weep","sob","wail","whine","gurgle","gargle","wheeze","sputter")
 				// basic audible single-word emotes
 				if (!muzzled)
 					if (lowertext(act) == "sigh" && prob(1)) act = "singh" //1% chance to change sigh to singh. a bad joke for drsingh fans.
@@ -1099,7 +1103,7 @@
 								M = A
 								break
 					else
-						var/list/target_list = src.get_targets(8, "both") // Staffie Graytides flips off the cryptographic sequencer!
+						var/list/target_list = src.get_targets(5, "mob")
 						if(length(target_list))
 							var/action_phrase = "emote upon"
 							switch(act)
@@ -1132,7 +1136,7 @@
 								M = A
 								break
 					else
-						var/list/target_list = src.get_targets(8, "both") // Staffie Graytides flips off the cryptographic sequencer!
+						var/list/target_list = src.get_targets(5, "mob")
 						if(length(target_list))
 							var/action_phrase = "emote upon"
 							switch(act)
@@ -1166,7 +1170,7 @@
 							M = A
 							break
 				else
-					var/list/target_list = src.get_targets(8, "both") // Dr. Dingus boggles at robotics manufacturer's stupidity.
+					var/list/target_list = src.get_targets(5, "both") // Dr. Dingus boggles at robotics manufacturer's stupidity.
 					if(length(target_list))
 						M = tgui_input_list(src, "Pick something to boggle at!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 
@@ -1187,7 +1191,7 @@
 								M = A
 								break
 					else
-						var/list/target_list = src.get_targets(8, "both") // Dr. Dingus boggles at robotics manufacturer's stupidity.
+						var/list/target_list = src.get_targets(5, "mob") // Dr. Dingus boggles at robotics manufacturer's stupidity.
 						if(length(target_list))
 							M = tgui_input_list(src, "Pick something to shake your fist at!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 
@@ -1735,7 +1739,7 @@
 										src.set_loc(newloc)
 										message = "<B>[src]</B> flips onto [T]!"
 
-							var/flipped_a_guy = 0
+							var/flipped_a_guy = FALSE
 							for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 								var/mob/living/M = G.affecting
 								if (M == src)
@@ -1745,7 +1749,7 @@
 								if (src.a_intent == INTENT_HELP)
 									M.emote("flip", 1) // make it voluntary so there's a cooldown and stuff
 									continue
-								flipped_a_guy = 1
+								flipped_a_guy = TRUE
 								var/suplex_result = src.do_suplex(G)
 								if(suplex_result)
 									combatflip |= TRUE
@@ -1753,10 +1757,34 @@
 								if(!combatflip)
 									var/turf/oldloc = src.loc
 									var/turf/newloc = G.affecting.loc
-									if(istype(oldloc) && istype(newloc))
+									var/mob/tmob = G.affecting
+									var/do_flip = TRUE
+									var/orig_src_flags = src.flags
+									var/orig_tmob_flags = tmob.flags
+									src.flags |= TABLEPASS
+									tmob.flags |= TABLEPASS
+									if(!istype(oldloc) || !istype(newloc))
+										do_flip = FALSE
+									if(do_flip && (!oldloc.Enter(tmob) || !newloc.Enter(src)))
+										do_flip = FALSE
+									if(do_flip)
+										for(var/atom/movable/obstacle in oldloc)
+											if(!ismob(obstacle) && !obstacle.Cross(tmob))
+												do_flip = FALSE
+												break
+									if(do_flip)
+										for(var/atom/movable/obstacle in newloc)
+											if(!ismob(obstacle) && !obstacle.Cross(src))
+												do_flip = FALSE
+												break
+									if(do_flip)
 										src.set_loc(newloc)
-										G.affecting.set_loc(oldloc)
-										message = "<B>[src]</B> flips over [G.affecting]!"
+										tmob.set_loc(oldloc)
+										message = "<B>[src]</B> flips over [tmob]!"
+									else
+										flipped_a_guy = FALSE
+									src.flags = orig_src_flags
+									tmob.flags = orig_tmob_flags
 							if (!flipped_a_guy)
 								for (var/mob/living/M in view(1, null))
 									if (M == src)
@@ -2077,7 +2105,7 @@
 						I = P.ID_card
 				if(H && (!H.limbs.l_arm || !H.limbs.r_arm || H.restrained()))
 					src.show_text("You can't do that without free arms!")
-				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isnukeop(H) || ASS_JAM || istype(src.head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
+				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isnukeop(H) || isnukeopgunbot(H) || ASS_JAM || istype(src.head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
 					var/obj/item/card/id/dabbing_license/dab_id = null
 					if(istype(I, /obj/item/card/id/dabbing_license)) // if we are using a dabbing license, save it so we can increment stats
 						dab_id = I
@@ -2085,20 +2113,10 @@
 						dab_id.tooltip_rebuild = 1
 					src.add_karma(-4)
 					if(!dab_id && locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
-						// determine the name of the perp (goes by ID if wearing one)
-						var/perpname = src.name
-						//if(src:wear_id && src:wear_id:registered)
-						//	perpname = src:wear_id:registered
-
-						// find the matching security record
-						for(var/datum/data/record/R in data_core.general)
-							if(R.fields["name"] == perpname)
-								for (var/datum/data/record/S in data_core.security)
-									if (S.fields["id"] == R.fields["id"])
-									// now add to rap sheet
-
-										S.fields["criminal"] = "*Arrest*"
-										S.fields["mi_crim"] = "Public Dabbing."
+						var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
+						if(sec_record && sec_record["criminal"] != "*Arrest*")
+							sec_record["criminal"] = "*Arrest*"
+							sec_record["mi_crim"] = "Public dabbing."
 
 					if(src.reagents) src.reagents.add_reagent("dabs",5)
 
@@ -2228,7 +2246,7 @@
 
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)
-	var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
+	var/datum/gas_mixture/gas = new /datum/gas_mixture
 	gas.vacuum()
 	if(oxyplasmafart == 1)
 		gas.toxins += 1

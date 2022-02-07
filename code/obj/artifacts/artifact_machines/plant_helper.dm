@@ -71,7 +71,7 @@
 					SPAWN_DBG(0)
 						var/lineColor = rgb(r/total, g/total, b/total)
 						var/datum/lineResult/R = drawLine(get_turf(O), P, "smooth", "smoothCap", getCrossed = 0)
-						var/globalImageKey = "linetest[rand(0,INFINITY)]"
+						var/globalImageKey = "plant_helper_line[TIME]_\ref[R]_[rand(1, 1e9)]"
 						R.lineImage.color = lineColor
 						R.lineImage.alpha = 0
 						R.lineImage.plane = PLANE_SELFILLUM

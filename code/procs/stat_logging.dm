@@ -153,15 +153,15 @@
 						special = length(O.mobs_fed_on)
 			if (ROLE_VAMPTHRALL)
 				if (M.master)
-					var/mob/mymaster = whois_ckey_to_mob_reference(M.master)
+					var/mob/mymaster = ckey_to_mob(M.master)
 					if (mymaster) special = mymaster.real_name
 			if ("spyslave")
 				if (M.master)
-					var/mob/mymaster = whois_ckey_to_mob_reference(M.master)
+					var/mob/mymaster = ckey_to_mob(M.master)
 					if (mymaster) special = mymaster.real_name
 			if (ROLE_MINDSLAVE)
 				if (M.master)
-					var/mob/mymaster = whois_ckey_to_mob_reference(M.master)
+					var/mob/mymaster = ckey_to_mob(M.master)
 					if (mymaster) special = mymaster.real_name
 			if (ROLE_NUKEOP)
 				if (istype(ticker.mode, /datum/game_mode/nuclear))

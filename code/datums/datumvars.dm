@@ -28,22 +28,19 @@
 		<tbody>
 	"}
 
-	var/V = global.vars[S]
-	if (V == logs || V == logs["audit"])
-		src.audit(AUDIT_ACCESS_DENIED, "tried to access the logs datum for modification.")
-		boutput(usr, "<span class='alert'>Yeah, no.</span>")
-		return
-	if (V)
+	try
+		var/V = global.vars[S]
+		if (V == logs || V == logs["audit"])
+			src.audit(AUDIT_ACCESS_DENIED, "tried to access the logs datum for modification.")
+			boutput(usr, "<span class='alert'>Yeah, no.</span>")
+			return
 		body += debug_variable(S, V, "GLOB", 0)
-	else
-		boutput(usr, "<span class='alert'>Could not find [S] in the Global Variables list!!</span>" )
-		return
-	body += "</tbody></table>"
+		body += "</tbody></table>"
 
-	var/title = "[S][src.holder.level >= LEVEL_ADMIN ? " (\ref[V])" : ""]"
+		var/title = "[S][src.holder.level >= LEVEL_ADMIN ? " (\ref[V])" : ""]"
 
-	//stole this from view_variables below
-	var/html = {"
+		//stole this from view_variables below
+		var/html = {"
 <html>
 <head>
 	<title>[title]</title>
@@ -61,7 +58,29 @@
 </html>
 "}
 
-	usr.Browse(html, "window=variables\ref[V];size=600x400")
+		usr.Browse(html, "window=variables\ref[V];size=600x400")
+	catch
+		boutput(usr, "<span class='alert'>Could not find [S] in the Global Variables list!!</span>" )
+		return
+
+/client/proc/debug_ref_variables(ref as text)
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "View Ref Variables"
+	set desc = "(reference) Enter a ref to view its variables"
+
+	if (src.holder?.level < LEVEL_ADMIN)
+		src.audit(AUDIT_ACCESS_DENIED, "tried to call debug_ref_variables while being below Administrator rank.")
+		tgui_alert(src.mob, "You must be at least an Administrator to use this command.", "Access Denied")
+		return
+
+	if(ref)
+		var/datum/D = locate(ref)
+		if(!D)
+			D = locate("\[[ref]\]")
+		if(!D)
+			boutput(src, "<span class='alert'>Bad ref or couldn't find that thing. Drats.</span>")
+			return
+		debug_variables(D)
 
 /client/proc/debug_variables(datum/D in world) // causes GC to lock up for a few minutes, the other option is to use atom/D but that doesn't autocomplete in the command bar
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -176,6 +195,7 @@
 
 	html += "<a href='byond://?src=\ref[src];CallProc=\ref[D]'>Call Proc</a>"
 	html += " &middot; <a href='byond://?src=\ref[src];ListProcs=\ref[D]'>List Procs</a>"
+	html += " &middot; <a href='byond://?src=\ref[src];DMDump=\ref[D]'>DM Dump</a>"
 
 	if (src.holder.level >= LEVEL_CODER && D != "GLOB")
 		html += " &middot; <a href='byond://?src=\ref[src];ViewReferences=\ref[D]'>View References</a>"
@@ -386,7 +406,7 @@
 
 			html += "<table><thead><tr><th>Idx</th><th>Value</th></tr></thead><tbody>"
 			var/assoc = 0
-			if(name != "contents" && name != "images" && name != "screen" && name != "vis_contents")
+			if(name != "contents" && name != "images" && name != "screen" && name != "vis_contents" && name != "vis_locs")
 				try
 					assoc = !isnum(L[1]) && !isnull(L[L[1]])
 				catch
@@ -402,6 +422,9 @@
 			html += "</tbody></table>"
 	else
 		html += "\[[name]\]</th><td><em class='value'>[html_encode("[value]")]</em>"
+
+	if(name == "particles")
+		html += " <a href='byond://?src=\ref[src];Particool=\ref[fullvar]' style='font-size:0.65em;'>particool</b></a>"
 
 	html += "</td></tr>"
 
@@ -493,6 +516,18 @@
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to call a proc on something all rude-like.")
 		return
+	if (href_list["DMDump"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_ADMIN)
+			var/target = locate(href_list["DMDump"])
+			var/dump = dm_dump(target)
+			if(isnull(dump))
+				alert(usr, "DM Dump failed. Possibly output too long.", "DM Dump failed")
+			else
+				usr.Browse("<title>DM dump of [target] \ref[target]</title><pre>[dump]</pre>", "window=dm_dump_\ref[target];size=500x700")
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to DM dump something all rude-like.")
+		return
 	if (href_list["AddComponent"])
 		usr_admin_only
 		if(holder && src.holder.level >= LEVEL_PA)
@@ -506,6 +541,15 @@
 			debugRemoveComponent(locate(href_list["RemoveComponent"]))
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to remove a component from something all rude-like.")
+		return
+	if (href_list["Particool"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/datum/D = locate(href_list["Particool"])
+			src.holder.particool = new /datum/particle_editor(D)
+			src.holder.particool.ui_interact(mob)
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to open particool on something all rude-like.")
 		return
 	if (href_list["Delete"])
 		usr_admin_only
@@ -539,7 +583,17 @@
 		usr_admin_only
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/obj/O = locate(href_list["ReplaceExplosive"])
-			O.replace_with_explosive()
+			if(alert("Bad old explosive or fancy new explosive?", "Explosive Object", "Old", "New") == "Old")
+				O.replace_with_explosive()
+			else
+				var/explosion_size = input(src, "Enter the size of the explosion.", "Explosion size", 5) as null|num
+				var/gib = alert("Gib the person?", "Gib?", "Yes", "No") == "Yes"
+				var/limbs_to_remove = input(src, "Enter the number of limbs to remove.", "Limbs to remove", 0) as null|num
+				var/delete_object = alert("Delete the object?", "Delete?", "Yes", "No") == "Yes"
+				var/turf_safe_explosion = FALSE
+				if(explosion_size > 0)
+					turf_safe_explosion = alert("Should the explosion be safe for turfs?", "Safe?", "Yes", "No") == "Yes"
+				O.AddComponent(/datum/component/explode_on_touch, explosion_size, gib, delete_object, limbs_to_remove, turf_safe_explosion)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to replace explosive replica all rude-like.")
 		return
@@ -666,10 +720,15 @@
 	if(D != "GLOB" && (!variable || !D || !(variable in D.vars)))
 		return
 	var/list/locked = list("vars", "key", "ckey", "client", "holder")
+	var/list/pixel_movement_breaking_vars = list("step_x", "step_y", "step_size", "bound_x", "bound_y", "bound_height", "bound_width", "bounds")
 
 	if(!isadmin(src))
 		boutput(src, "Only administrators may use this command.")
 		return
+
+	if(pixel_movement_breaking_vars.Find(variable))
+		if (tgui_alert(usr, "Modifying this variable might break pixel movement. Don't edit this unless you know what you're doing. Continue?", "Confirmation", list("Yes", "No")) == "No")
+			return
 
 	var/default
 	var/var_value = D == "GLOB" ? global.vars[variable] : D.vars[variable]
@@ -762,8 +821,15 @@
 		if(dir)
 			boutput(usr, "If a direction, direction is: [dir]")
 
-	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","num adjust","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list", "matrix","null", "ref", "restore to default")
+	var/list/classes = list("text", "num","num adjust","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list", "matrix","null", "ref", "restore to default")
+	if(variable=="filters" && !istype(D, /image))
+		default = "filter editor"
+		classes += default
+	else if(variable=="particles")
+		default = "particle editor"
+		classes += default
+	var/class = input("What kind of variable?","Variable Type",default) as null|anything in classes
+
 
 	if(!class)
 		return
@@ -1101,6 +1167,14 @@
 							D.vars[variable] = new match(D)
 			else
 				return
+		if ("filter editor")
+			if(src.holder)
+				src.holder.filteriffic = new /datum/filter_editor(D)
+				src.holder.filteriffic.ui_interact(mob)
+		if ("particle editor")
+			if(src.holder)
+				src.holder.particool = new /datum/particle_editor(D)
+				src.holder.particool.ui_interact(mob)
 
 	logTheThing("admin", src, null, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""))
 	logTheThing("diary", src, null, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), "admin")

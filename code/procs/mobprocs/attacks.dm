@@ -4,7 +4,7 @@
 
 	// why is this not in human/attackby?
 
-	if (!(W.object_flags & NO_ARM_ATTACH) && (user.zone_sel && (user.zone_sel.selecting in list("l_arm","r_arm"))) && surgeryCheck(src,user) )
+	if (!(W.object_flags & NO_ARM_ATTACH || W.cant_drop || W.two_handed) && (user.zone_sel && (user.zone_sel.selecting in list("l_arm","r_arm"))) && surgeryCheck(src,user) )
 		var/mob/living/carbon/human/H = src
 
 		if (!H.limbs.vars[user.zone_sel.selecting])

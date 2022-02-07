@@ -13,7 +13,7 @@
 		for(var/obj/kudzu_marker/M in T) qdel(M)
 //		for(var/obj/alien/weeds/V in T) qdel(V)
 
-		var/obj/hotspot/h = unpool(/obj/hotspot)
+		var/obj/hotspot/h = new /obj/hotspot
 		h.temperature = temp
 		h.volume = 400
 		h.set_real_color()
@@ -65,8 +65,8 @@
 
 	SPAWN_DBG(3 SECONDS)
 		for (var/obj/hotspot/A as anything in hotspots)
-			if (!A.pooled)
-				pool(A)
+			if (!A.disposed)
+				qdel(A)
 			//LAGCHECK(LAG_REALTIME)  //MBC : maybe caused lighting bug?
 		hotspots.len = 0
 
@@ -102,7 +102,7 @@
 		var/need_expose = 0
 		var/expose_temp = 0
 		if (!existing_hotspot)
-			var/obj/hotspot/h = unpool(/obj/hotspot)
+			var/obj/hotspot/h = new /obj/hotspot
 			need_expose = 1
 			h.temperature = temp - dist * falloff
 			expose_temp = h.temperature
@@ -126,10 +126,12 @@
 */
 		if(istype(T, /turf/simulated/floor)) T:burn_tile()
 		for (var/mob/living/L in T)
-			L.update_burning(min(55, max(0, expose_temp - 100 / 550)))
+			L.update_burning(clamp(expose_temp - 100 / 550, 0, 55))
 			L.bodytemperature = (2 * L.bodytemperature + temp) / 3
 		SPAWN_DBG(0)
 			for (var/obj/critter/C in T)
+				if(C.z != T.z)
+					continue
 				C.health -= (30 * C.firevuln)
 				C.check_health()
 				LAGCHECK(LAG_REALTIME)
@@ -164,8 +166,8 @@
 
 	SPAWN_DBG(3 SECONDS)
 		for(var/obj/hotspot/A in hotspots)
-			if (!A.pooled)
-				pool(A)
+			if (!A.disposed)
+				qdel(A)
 			//LAGCHECK(LAG_REALTIME)  //MBC : maybe caused lighting bug?
 		hotspots.len = 0
 

@@ -1,6 +1,6 @@
 /obj/item/cell
 	name = "power cell"
-	desc = "A rechargable electrochemical power cell."
+	desc = "A rechargable electrochemical power cell. It's too large to fit into most handheld devices, but can be used to power cyborgs and APCs."
 	icon = 'icons/obj/power.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "cell"
@@ -105,7 +105,7 @@
 //	charge = charge * maxcharge/100.0		// map obj has charge as percentage, convert to real value here
 
 	SPAWN_DBG(0.5 SECONDS)
-		updateicon()
+		UpdateIcon()
 
 	if (genrate)
 		processing_items |= src
@@ -114,8 +114,7 @@
 	processing_items -= src
 	..()
 
-/obj/item/cell/proc/updateicon()
-
+/obj/item/cell/update_icon()
 	if(src.specialicon) return
 
 	if(maxcharge <= 2500) icon_state = "cell"

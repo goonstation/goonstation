@@ -5,19 +5,19 @@ Shield and graivty well generators
 */
 
 /obj/shieldgen
-		name = "shield generator"
-		desc = "Used to seal minor hull breaches."
-		icon = 'icons/obj/objects.dmi'
-		icon_state = "shieldoff"
+	name = "shield generator"
+	desc = "Used to seal minor hull breaches."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "shieldoff"
 
-		density = 1
-		opacity = 0
-		anchored = 0
-		pressure_resistance = 2*ONE_ATMOSPHERE
+	density = 1
+	opacity = 0
+	anchored = 0
+	pressure_resistance = 2*ONE_ATMOSPHERE
 
-		var/active = 0
-		var/health = 100
-		var/malfunction = 0
+	var/active = 0
+	var/health = 100
+	var/malfunction = 0
 
 
 
@@ -128,25 +128,16 @@ Shield and graivty well generators
 		shields_up()
 
 /obj/shield
-		name = "shield"
-		desc = "An energy shield."
-		icon = 'icons/effects/effects.dmi'
-		icon_state = "shieldsparkles"
-		density = 1
-		opacity = 0
-		anchored = 1
-		event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	name = "shield"
+	desc = "An energy shield."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shieldsparkles"
+	density = 1
+	opacity = 0
+	anchored = 1
+	event_handler_flags = USE_FLUID_ENTER 
+	gas_impermeable = TRUE
 
-/obj/shieldwall
-		name = "shield"
-		desc = "An energy shield."
-		icon = 'icons/effects/effects.dmi'
-		icon_state = "test"
-		density = 1
-		opacity = 0
-		anchored = 1
-
-/obj/shield
 	New()
 		src.set_dir(pick(1,2,3,4))
 
@@ -158,11 +149,6 @@ Shield and graivty well generators
 		update_nearby_tiles()
 
 		..()
-
-	CanPass(atom/movable/mover, turf/target, height, air_group)
-		if(!height || air_group) return 0
-		else return ..()
-
 	proc/update_nearby_tiles(need_rebuild)
 		var/turf/simulated/source = loc
 		if (istype(source))
@@ -170,20 +156,30 @@ Shield and graivty well generators
 
 		return 1
 
+/obj/shieldwall
+	name = "shield"
+	desc = "An energy shield."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "test"
+	density = 1
+	opacity = 0
+	anchored = 1
+
+
 /obj/gravity_well_generator
-		name = "gravity well generator"
-		desc = "A complex piece of machinery that alters gravity."
-		icon = 'icons/obj/stationobjs.dmi'
-		icon_state = "gravgen-off"
-		mats = 14
+	name = "gravity well generator"
+	desc = "A complex piece of machinery that alters gravity."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "gravgen-off"
+	mats = 14
 
-		density = 1
-		opacity = 0
-		anchored = 0
-		pressure_resistance = 2*ONE_ATMOSPHERE
+	density = 1
+	opacity = 0
+	anchored = 0
+	pressure_resistance = 2*ONE_ATMOSPHERE
 
-		var/active = 0
-		var/strength = 144		//strength is basically G if you know your newton law of gravitation
+	var/active = 0
+	var/strength = 144		//strength is basically G if you know your newton law of gravitation
 
 /obj/gravity_well_generator
 

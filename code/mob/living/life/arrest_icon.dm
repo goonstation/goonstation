@@ -9,7 +9,6 @@
 
 			//TODO : move this code somewhere else that updates from an event trigger instead of constantly
 			var/arrestState = ""
-			var/added_to_records = FALSE
 			var/see_face = 1
 			if (istype(H.wear_mask) && !H.wear_mask.see_face)
 				see_face = 0
@@ -19,21 +18,15 @@
 				see_face = 0
 			var/visibleName = see_face ? H.real_name : H.name
 
-			for (var/datum/data/record/R as anything in data_core.security)
-				if (R.fields["name"] != H.name && H.traitHolder.hasTrait("immigrant") && H.traitHolder.hasTrait("jailbird"))
-					if(!added_to_records)
-						arrestState = "*Arrest*"
-				else if (R.fields["name"] == H.name && H.traitHolder.hasTrait("immigrant") && H.traitHolder.hasTrait("jailbird"))
-					if(!added_to_records)
-						arrestState = ""
-						added_to_records = TRUE
-
-				if ((R.fields["name"] == visibleName) && ((R.fields["criminal"] == "*Arrest*") || R.fields["criminal"] == "Parolled" || R.fields["criminal"] == "Incarcerated" || R.fields["criminal"] == "Released"))
-					arrestState = R.fields["criminal"] // Found a record of some kind
-					break
+			var/datum/db_record/record = data_core.security.find_record("name", visibleName)
+			if(record)
+				var/criminal = record["criminal"]
+				if(criminal == "*Arrest*" || criminal == "Parolled" || criminal == "Incarcerated" || criminal == "Released")
+					arrestState = criminal
+			else if(H.traitHolder.hasTrait("immigrant") && H.traitHolder.hasTrait("jailbird"))
+				arrestState = "*Arrest*"
 
 			if (arrestState != "*Arrest*") // Contraband overrides non-arrest statuses, now check for contraband
-
 				if (locate(/obj/item/implant/antirev) in H.implant)
 					if (ticker.mode && ticker.mode.type == /datum/game_mode/revolution)
 						var/datum/game_mode/revolution/R = ticker.mode

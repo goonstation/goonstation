@@ -101,7 +101,7 @@
 
 /datum/commodity/trader/josh/hosuniform
 	comname = "HoS' Uniform"
-	comtype = /obj/item/clothing/under/rank/head_of_securityold
+	comtype = /obj/item/clothing/under/rank/head_of_security
 	price_boundary = list(700,7000)
 	possible_names = list("I'm going to a fancy party tonight. Got a slick nasty security uniform for me?",
 	"Got a spare uniform from the HoS? They're fancy as heck.")

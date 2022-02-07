@@ -5,6 +5,7 @@
 	opacity = 0
 	anchored = 1
 	mouse_opacity = 0
+	plane = PLANE_ABOVE_LIGHTING
 
 /obj/effects/expl_particles/New()
 	..()
@@ -36,6 +37,7 @@
 	name = "fire"
 	icon = 'icons/effects/224x224.dmi'
 	icon_state = "superexpl"
+	plane = PLANE_ABOVE_LIGHTING
 	opacity = 0
 	anchored = 1
 	mouse_opacity = 0

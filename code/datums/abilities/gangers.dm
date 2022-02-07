@@ -15,7 +15,7 @@
 				return
 			else
 				owner.waiting_for_hotkey = 1
-				src.updateIcon()
+				src.UpdateIcon()
 				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
 
@@ -182,7 +182,7 @@
 		locker.gang = M.mind.gang
 		ticker.mode:gang_lockers += locker
 		M.mind.gang.locker = locker
-		locker.update_icon()
+		locker.UpdateIcon()
 
 		M.abilityHolder.removeAbility(/datum/targetable/gang/set_gang_base)
 

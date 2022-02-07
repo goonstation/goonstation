@@ -7,10 +7,9 @@
 	flags = TABLEPASS
 	mouse_opacity = 0
 
-/obj/effects/water/pooled(var/poolname)
-	 life = initial(life)
-	 owner = null
-	 ..()
+/obj/effects/water/disposing()
+	owner = null
+	..()
 
 /obj/effects/water/Move(turf/newloc)
 	//var/turf/T = src.loc
@@ -18,17 +17,17 @@
 	//	T.firelevel = 0 //TODO: FIX
 	if (--src.life < 1)
 		if (!disposed)
-			pool(src)
+			qdel(src)
 		return 0
 	if(newloc.density)
 		if (!disposed)
-			pool(src)
+			qdel(src)
 		return 0
 	.=..()
 
 /obj/effects/water/proc/spray_at(var/turf/target, var/datum/reagents/R, var/try_connect_fluid = 0)
 	if (!target || !R)
-		pool(src)
+		qdel(src)
 		return
 	SPAWN_DBG(0)
 		var/turf/T
@@ -60,4 +59,4 @@
 				break
 
 		if (!disposed)
-			pool(src)
+			qdel(src)

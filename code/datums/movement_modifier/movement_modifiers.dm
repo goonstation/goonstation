@@ -44,11 +44,17 @@
 /datum/movement_modifier/staggered_or_blocking
 	additive_slowdown = 0.4
 
+/datum/movement_modifier/poisoned
+	additive_slowdown = 3
+
 /datum/movement_modifier/disoriented
 	additive_slowdown = 8
 
 /datum/movement_modifier/hastened
 	additive_slowdown = -0.8
+
+/datum/movement_modifier/death_march
+	additive_slowdown = -0.4
 
 /datum/movement_modifier/janktank
 	health_deficiency_adjustment = -50
@@ -176,22 +182,24 @@
 /datum/movement_modifier/wheelchair
 	ask_proc = 1
 
-/datum/movement_modifier/wheelchair/modifiers(mob/living/carbon/human/user, move_target, running)
+/datum/movement_modifier/wheelchair/modifiers(mob/living/user, move_target, running)
 	var/missing_arms = 0
 	var/missing_legs = 0
-	if (user.limbs)
-		if (!user.limbs.l_leg)
+	var/mob/living/carbon/human/H = user
+
+	if (istype(H) && H.limbs)
+		if (!H.limbs.l_leg)
 			missing_legs++
-		if (!user.limbs.r_leg)
+		if (!H.limbs.r_leg)
 			missing_legs++
-		if (!user.limbs.l_arm)
+		if (!H.limbs.l_arm)
 			missing_arms++
-		if (!user.limbs.r_arm)
+		if (!H.limbs.r_arm)
 			missing_arms++
 
 	if (user.lying)
 		missing_legs = 2
-	else if (user.shoes && user.shoes.chained)
+	else if (istype(H) && H.shoes && H.shoes.chained)
 		missing_legs = 2
 
 	if (missing_arms == 2)

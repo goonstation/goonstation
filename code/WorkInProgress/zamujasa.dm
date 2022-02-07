@@ -179,15 +179,15 @@
 /obj/invisible_teleporter
 	name = "invisible teleporter side 1"
 	desc = "Totally not a portal."
-	event_handler_flags = USE_HASENTERED
 	icon = 'icons/effects/letter_overlay.dmi'
 	icon_state = "A"
 	anchored = 1
 	density = 0
 	var/id = null
 	var/which_end = 0
-	invisibility = 0
+	invisibility = INVIS_ADVENTURE
 	var/busy = 0
+	var/can_send = TRUE
 
 	New()
 		..()
@@ -200,10 +200,10 @@
 		src.maptext_width = 128
 		*/
 
-	HasEntered(AM as mob|obj)
-		if (AM == src)
+	Crossed(atom/movable/AM as mob|obj)
+		if (AM == src || !can_send)
 			// jesus christ don't teleport OURSELVES
-			return
+			return ..()
 		Z_LOG_DEBUG("shit", "Checking things: event_handler_flags [event_handler_flags], [AM] entered")
 		if (busy || istype(AM, /obj/overlay/tile_effect) || istype(AM, /mob/dead) || istype(AM, /mob/wraith) || istype(AM, /mob/living/intangible))
 			Z_LOG_DEBUG("shit", "Decided not to teleport")
@@ -240,7 +240,7 @@
 		icon_state = "A"
 		which_end = 1
 		color = "#FF0000"
-		event_handler_flags = 0
+		can_send = 0
 
 
 
@@ -326,7 +326,7 @@
 
 	proc/mulch_item(var/obj/I, score)
 		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
-		pool( I )
+		qdel( I )
 		total_score += score
 		round_score += score
 		update_totals()
@@ -569,10 +569,12 @@
 	name = "Space American Football Stadium"
 	force_fullbright = 1
 	icon_state = "purple"
+	dont_log_combat = TRUE
 
 /area/football/field
 	name = "Space American Football Field"
 	icon_state = "green"
+	dont_log_combat = TRUE
 
 	endzone
 		icon_state = "yellow"
@@ -777,7 +779,7 @@
 			src.monitored_ref = null
 
 		if (monitored)
-			if (monitored.pooled || monitored.qdeled)
+			if (monitored.disposed || monitored.qdeled)
 				// The thing we were watching was deleted/removed! Welp.
 				monitored = null
 				return 0
@@ -1151,7 +1153,7 @@
 		src.anchored = 2
 		src.mouse_opacity = 1
 		src.maptext = {"<div class='c pixel sh' style="background: #00000080;"><strong>-- Welcome to Goonstation! --</strong>
-New? <a href="https://mini.xkeeper.net/ss13/tutorial/" style="color: #8888ff; font-weight: bold;" clss="ol">Click here for a tutorial!</a>
+New? <a href="https://mini.xkeeper.net/ss13/tutorial/" style="color: #8888ff; font-weight: bold;" class="ol" target="_blank">Click here for a tutorial!</a>
 Ask mentors for help with <strong>F3</strong>
 Contact admins with <strong>F1</strong>
 Read the rules, don't grief, and have fun!</div>"}
@@ -1220,18 +1222,12 @@ Read the rules, don't grief, and have fun!</div>"}
 			if (length(landmarks[LANDMARK_LOBBY_LEFTSIDE]))
 				src.set_loc(landmarks[LANDMARK_LOBBY_LEFTSIDE][1])
 
-			// This is gross. I'm sorry.
-			var/list/servers = list()
-			servers["main1"] = "1 Classic: Heisenbee"
-			servers["main2"] = "2 Classic: Bombini"
-			servers["main3"] = "3 Roleplay: Morty"
-			servers["main4"] = "4 Roleplay: Sylvester"
-
 			var/serverList = ""
-			for (var/serverId in servers)
-				if (serverId == config.server_id)
+			for (var/serverId in global.game_servers.servers)
+				var/datum/game_server/server = global.game_servers.servers[serverId]
+				if (server.is_me() || !server.publ)
 					continue
-				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[serverId]'>Goonstation [servers[serverId]]</a>"}
+				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name]</a>"}
 
 			src.maptext_x = 0
 			src.maptext_width = 600
@@ -1249,7 +1245,7 @@ Other Goonstation servers:[serverList]</span>"})
 
 /obj/overlay/inventory_counter
 	name = "inventory amount counter"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	plane = PLANE_HUD
 	layer = HUD_LAYER_3
 	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
@@ -1284,15 +1280,10 @@ Other Goonstation servers:[serverList]</span>"})
 		if(src.transform) src.transform = null
 
 	proc/hide_count()
-		invisibility = 101
+		invisibility = INVIS_ALWAYS
 
 	proc/show_count()
-		invisibility = 0
-
-	pooled()
-		src.maptext = ""
-		src.invisibility = 101
-		..()
+		invisibility = INVIS_NONE
 
 
 

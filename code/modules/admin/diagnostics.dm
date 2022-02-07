@@ -206,6 +206,9 @@ proc/debug_map_apc_count(delim,zlim)
 		world.SetConfig( "APP/admin", src.key, "role=admin" )
 		input( src, "Enter '.debug profile' in the next command box. Blame BYOND.", "BYONDSucks", ".debug profile" )
 		winset( usr, null, "command=.command" )
+		if (tgui_alert(usr, "Do you disable automatic profiling for 5 minutes.", "Debug",
+				list("Yes", "No"), timeout = 10 SECOND) == "Yes")
+			lag_detection_process.delay_disable_manual_profiling(5 MINUTES)
 
 /datum/infooverlay
 	var/name = null
@@ -217,18 +220,20 @@ proc/debug_map_apc_count(delim,zlim)
 	proc/OnStartRendering(var/client/C)
 	proc/OnFinishRendering(var/client/C)
 
-	proc/makeText(text, additional_flags=0, align_left=FALSE)
+	proc/makeText(text, additional_flags=0, align_left=FALSE, moreattrib="", tall=FALSE)
 		var/mutable_appearance/mt = new
 		mt.plane = FLOAT_PLANE
 		mt.icon = 'icons/effects/effects.dmi'
 		mt.icon_state = "nothing"
-		mt.maptext = "<span class='pixel [align_left ? "l" : "r"] ol'>[text]</span>"
+		mt.maptext = "<span class='pixel [align_left ? "l" : "r"] ol' [moreattrib]>[text]</span>"
 
 		if(align_left)
 			mt.maptext_width = 32 * 3
 			mt.maptext_x = 2
 		else
 			mt.maptext_x = -3
+		if(tall)
+			mt.maptext_height *= 2
 		mt.appearance_flags = RESET_COLOR | additional_flags
 		return mt
 
@@ -270,6 +275,24 @@ proc/debug_map_apc_count(delim,zlim)
 			img.app.desc = "Area: [area.name]<br/>Type: [area.type]"
 			img.app.icon = initial(theTurf.loc.icon)
 			img.app.icon_state = initial(theTurf.loc.icon_state)
+
+	active_areas
+		name = "active areas"
+		help = "Active areas (with a player in them) in green-ish, rest in red-ish."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/area/area = theTurf.loc
+			img.app.desc = "Area: [area.name]<br/>Type: [area.type]"
+			var/list/lcolor = hex_to_rgb_list(debug_color_of(area))
+			var/color_factor = 4
+			if(area.active)
+				lcolor[1] /= color_factor
+				lcolor[3] /= color_factor
+				lcolor[2] = 255 - (255 - lcolor[2]) / color_factor
+			else
+				lcolor[2] /= color_factor
+				lcolor[3] /= color_factor
+				lcolor[1] = 255 - (255 - lcolor[2]) / color_factor
+			img.app.color = rgb(lcolor[1], lcolor[2], lcolor[3])
 
 	area_power
 		name = "area power"
@@ -522,6 +545,133 @@ proc/debug_map_apc_count(delim,zlim)
 				img.app.color = "#ffffff"
 			else
 				img.app.color = debug_color_of(netnums[1])
+
+	powernet_power
+		name = "power network power"
+		help = {"wite - multiple powernets<br>
+		red - contains 0 (no powernet), that's probably bad<br>
+		orange - mismatch between powernet var and netnum var, call a coder<br>
+		other - coloured based on the single powernet<br>
+		numbers: powernet id, Av: available watts, Ld: load in watts, N#: number of nodes, DN#: number of data nodes, C#: number of cables"}
+		var/list/processed_powernet_nums
+
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/list/netnums = list()
+			var/list/datum/powernet/direct_powernets = list()
+			for(var/obj/machinery/power/M in theTurf)
+				if(M.netnum >= 0)
+					netnums |= M.netnum
+				direct_powernets |= M.powernet
+			for(var/obj/cable/C in theTurf)
+				if(C.netnum >= 0)
+					netnums |= C.netnum
+			if(!length(netnums))
+				img.app.color = "#00000000"
+				img.app.alpha = 0
+				return
+			if(length(netnums) > 1)
+				img.app.color = "#ffffff"
+				img.app.overlays = list(src.makeText("multiple"))
+				return
+			if(0 in netnums)
+				img.app.color = "#ff0000"
+				img.app.overlays = list(src.makeText("null"))
+				return
+			var/datum/powernet/powernet = global.powernets[netnums[1]]
+			if(!(powernet in direct_powernets) && length(direct_powernets))
+				img.app.color = "#ffaa00"
+				img.app.overlays = list(src.makeText("mismatch"))
+				return
+
+			img.app.color = debug_color_of(netnums[1])
+
+			if(powernet.number in processed_powernet_nums)
+				return
+			processed_powernet_nums += powernet.number
+			var/text = "[powernet.number]<br>Av: [powernet.avail]<br>Ld: [powernet.load]<br>N#:[length(powernet.nodes)] DN#:[length(powernet.data_nodes)] C#:[length(powernet.cables)]"
+			img.app.overlays = list(src.makeText(text, align_left=TRUE, moreattrib="style='font-size:6pt;'", tall=TRUE))
+
+		OnStartRendering(client/C)
+			processed_powernet_nums = list()
+
+	var_display
+		name = "var display"
+		help = "Select any variable name of atoms on the turfs to display."
+		var/var_name = null
+
+		OnEnabled(client/C)
+			src.var_name = input(C, "var name to display: ", "var name") as text|null
+			boutput(C, "Displaying var [src.var_name]")
+
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(isnull(var_name))
+				return
+			var/list/results = list()
+			for(var/atom/A as anything in theTurf.contents + list(theTurf, theTurf.loc))
+				if(hasvar(A, src.var_name))
+					var/val = A.vars[src.var_name]
+					if(islist(val))
+						val = json_encode(val)
+					results += "[val]"
+			if(length(results))
+				var/text = jointext(results, " ")
+				img.app.overlays = list(src.makeText(text))
+				img.app.color = debug_color_of(text)
+				img.app.alpha = 100
+			else
+				img.app.alpha = 0
+
+	nested_var_display
+		name = "nested var display"
+		help = "Like var display except you can do stuff like: bioHolder.age<br>You can even index lists using the same syntax, for example: bioHolder.effectPool.1 or blood_pressure.diastolic"
+		var/list/var_names = null
+
+		OnEnabled(client/C)
+			var/inp = input(C, "var name path to display (like in DM, separate by .): ", "var name") as text|null
+			if(!isnull(inp))
+				src.var_names = splittext(inp, ".")
+				boutput(C, "Var path: [jointext(var_names, " ")]")
+			else
+				src.var_names = null
+				boutput(C, "No var path selected.")
+
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(isnull(var_names))
+				return
+			var/list/results = list()
+			for(var/atom/A as anything in theTurf.contents + list(theTurf, theTurf.loc))
+				var/datum/D = A
+				for(var/var_name in src.var_names)
+					if(!istype(D) && !isclient(D) && !islist(D))
+						D = null
+						break
+					if(islist(D))
+						var/list/L = D
+						var/maybe_index = text2num(var_name)
+						if(maybe_index > 0 && maybe_index <= length(L))
+							D = L[maybe_index]
+						else if(var_name in L)
+							D = L[var_name]
+						else
+							D = null
+							break
+					else if(hasvar(D, var_name))
+						D = D.vars[var_name]
+					else
+						D = null
+						break
+				if(!isnull(D))
+					var/val = D
+					if(islist(val))
+						val = json_encode(val)
+					results += "[val]"
+			if(length(results))
+				var/text = jointext(results, " ")
+				img.app.overlays = list(src.makeText(text, align_left=TRUE))
+				img.app.color = debug_color_of(text)
+				img.app.alpha = 100
+			else
+				img.app.alpha = 0
 
 	disposals
 		name = "disposal pipes"
@@ -807,23 +957,11 @@ proc/debug_map_apc_count(delim,zlim)
 		proc/is_ok(atom/A)
 			return TRUE
 
-	checkingcanpass
-		name = "checkingcanpass"
-		help = "Green = yes."
-		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			img.app.color = theTurf.checkingcanpass ? "#0f0" : "#f00"
-
 	checkingexit
 		name = "checkingexit"
 		help = "Green = yes."
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			img.app.color = theTurf.checkingexit ? "#0f0" : "#f00"
-
-	checkinghasentered
-		name = "checkinghasentered"
-		help = "Green = yes."
-		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			img.app.color = theTurf.checkinghasentered ? "#0f0" : "#f00"
 
 	blocked_dirs
 		name = "blocked dirs"
@@ -837,9 +975,9 @@ proc/debug_map_apc_count(delim,zlim)
 
 	checkinghasproximity
 		name = "checkinghasproximity"
-		help = "Green = yes."
+		help = "Green = yes. Red = no. Yellow = next to yes."
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			img.app.color = theTurf.checkinghasproximity ? "#0f0" : "#f00"
+			img.app.color = theTurf.checkinghasproximity ? "#0f0" : (theTurf.neighcheckinghasproximity ? "#ff0" : "#f00")
 
 	blood_owner/no_items
 		name = "blood owner - no items"
@@ -870,6 +1008,58 @@ proc/debug_map_apc_count(delim,zlim)
 			else
 				img.app.alpha = 0
 
+	RL_lights
+		name = "RL lights"
+		help = "Displays number of RL lights on theach turf"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/n_lights = length(theTurf.RL_Lights)
+			if (n_lights)
+				img.app.overlays = list(src.makeText(n_lights))
+				switch(n_lights)
+					if(1) img.app.color = "#00ff00"
+					if(2) img.app.color = "#ffff00"
+					else img.app.color = "#ff0000"
+			else
+				img.app.alpha = 0
+
+	RL_lights_range
+		name = "RL lights range"
+		help = "Displays range of RL lights on each turf"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(!length(theTurf.RL_Lights))
+				img.app.alpha = 0
+				return
+			var/radius = 0
+			for(var/datum/light/light in theTurf.RL_Lights)
+				if(!light.enabled)
+					continue
+				radius = max(radius, light.radius)
+			img.app.icon_state = "circle"
+			img.app.transform = matrix(2 * radius, 2 * radius, MATRIX_SCALE)
+
+
+	navbeacons
+		name = "navbeacons"
+		help = "Displays navbeacons and how they link up to each other."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/obj/machinery/navbeacon/beacon = locate() in theTurf
+			img.app.overlays = null
+			if(isnull(beacon))
+				img.app.alpha = 0
+				return
+			img.app.overlays += src.makeText("[beacon.codes[1]]<br>[beacon.location]", align_left=TRUE)
+			try
+				var/next_id = beacon.codes["next_patrol"] || beacon.codes["next_tour"]
+				var/datum/packet_network/net = get_radio_connection_by_id(beacon, "navbeacon").network
+				var/datum/component/packet_connected/next_device = net.devices_by_tag[next_id][1]
+				var/datum/lineResult/R1 = drawLine(theTurf, get_turf(next_device.parent), "triangle", getCrossed = 0, mode = LINEMODE_SIMPLE)
+				R1.lineImage.color = debug_color_of(beacon.freq)
+				img.app.overlays += R1.lineImage
+				R1.lineImage.loc = null
+				img.app.color = null
+			catch
+				img.app.color = "#f00"
+
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	process_cell_operations
 		name = "process cell stats"
@@ -899,6 +1089,69 @@ proc/debug_map_apc_count(delim,zlim)
 			img.app.alpha = p < 0.1 ? 20 : (p < 0.3 ? 50 : 100)
 			img.app.color = rgb(round(p * 255), round((1-p) * 255), 50)
 #endif
+	gangturf
+		name = "gang turf"
+		help = "Displays the name of gang that owns an area"
+		var/list/area/processed_areas
+
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/area/A = get_area(theTurf)
+			img.app.desc = "Area: [A.name]<br/>Owner: [A.gang_owners?.gang_name]"
+			img.app.color = debug_color_of(A.gang_owners?.gang_name)
+
+			if (!A.gang_owners || (A in processed_areas))
+				return
+			else
+				img.app.overlays = list(src.makeText(A.gang_owners.gang_name, align_left=TRUE))
+				processed_areas += A
+
+		OnStartRendering(client/C)
+			if (isnull(processed_areas))
+				processed_areas = list()
+			else
+				processed_areas.len = 0
+
+	lightswitches //This overlay is a kitbash of areas and active areas, code might be odd as a result
+		name = "light switches"
+		help = {"Shows amount of light switches for non-space areas.<br>
+		Red is none, green is at least one, white turfs have a light switch located on them.<br>
+		This overlay looks only at physical location and does <b>not</b> account for light switches that have otherarea set up."}
+		var/list/area/processed_areas
+		var/list/turf/switch_turfs = list() //Turfs with a light switch on them, to be coloured separately
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/area/area = theTurf.loc
+			var/switchcount = 0
+			var/list/lcolor = hex_to_rgb_list(debug_color_of(area))
+			var/color_factor = 4
+
+			if(!(area in processed_areas))
+				for (var/obj/machinery/light_switch/someswitch in area.machines)
+					switchcount += 1
+					switch_turfs += someswitch.loc
+				img.app.overlays = list(src.makeText(switchcount, align_left=TRUE))
+				processed_areas += area
+				processed_areas[area] = switchcount //Store this for later turfs in the same area
+
+			if(processed_areas[area]) //this reads the area's stored switch count
+				if (theTurf in switch_turfs) //This turf has a switch on it
+					img.app.color = "#ffffff"
+					img.app.alpha = 100
+				else //Area has switch(es) - This code is directly lifted BTW but it somehow makes the area's debug colour a lot greener
+					lcolor[1] /= color_factor
+					lcolor[3] /= color_factor
+					lcolor[2] = 255 - (255 - lcolor[2]) / color_factor
+					img.app.color = rgb(lcolor[1], lcolor[2], lcolor[3])
+			else //Area has none - this time it's tinted redder
+				lcolor[2] /= color_factor
+				lcolor[3] /= color_factor
+				lcolor[1] = 255 - (255 - lcolor[2]) / color_factor
+				img.app.color = rgb(lcolor[1], lcolor[2], lcolor[3])
+
+			img.app.desc = "Area: [area.name]<br/>Number of switches: [processed_areas[area]]" //update tooltip only after the area is processed
+
+
+		OnStartRendering(client/C)
+			processed_areas = list()
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
@@ -943,6 +1196,7 @@ proc/debug_map_apc_count(delim,zlim)
 		src.maptext = initial(src.maptext)
 		src.alpha = initial(src.alpha)
 		src.appearance_flags = initial(src.appearance_flags)
+		src.transform = initial(src.transform)
 
 
 /client/proc/RenderOverlay()
@@ -990,24 +1244,33 @@ proc/debug_map_apc_count(delim,zlim)
 				infoOverlayImages[ "[x]-[y]" ] = overlay
 				src.images += overlay
 
-/client/proc/SetInfoOverlayAlias( )
-	set name = "Info Overlay"
-	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
-	src.SetInfoOverlay()
-
-/client/proc/SetInfoOverlay( )
-	set name = "Debug Overlay"
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+proc/info_overlay_choices()
+	var/static/list/cached = null
+	if(!isnull(cached))
+		return cached
 	var/list/available_overlays = list()
 	for (var/datum/infooverlay/dummy as anything in childrentypesof(/datum/infooverlay))
 		var/name = initial(dummy.name)
 		if(isnull(name))
 			name = replacetext("[dummy]", "/datum/infooverlay/", "")
 		available_overlays[name] = dummy
-	var/name = input("Choose an overlay") as null|anything in (available_overlays + "REMOVE")
+	available_overlays["REMOVE"] = null
+	cached = available_overlays
+	return cached
+
+/client/proc/SetInfoOverlayAlias(name in info_overlay_choices())
+	set name = "Info Overlay"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	src.SetInfoOverlay(name)
+
+/client/proc/SetInfoOverlay(name in info_overlay_choices())
+	set name = "Debug Overlay"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	admin_only
+	var/list/available_overlays = info_overlay_choices()
 	activeOverlay?.OnDisabled(src)
 	if(!name || name == "REMOVE")
+		boutput(src, "Info overlay turned off.")
 		if(infoOverlayImages)
 			for(var/img in infoOverlayImages)
 				img = infoOverlayImages[img]//shhh

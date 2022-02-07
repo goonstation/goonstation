@@ -5,12 +5,13 @@
 	anchored = 1
 	density = 0
 	layer = OBJ_LAYER + 0.9
-	event_handler_flags = USE_CANPASS
+
 	var/const/initial_health = 10
 	_health = initial_health
 	_max_health = initial_health
 	var/c_quality = 0
 	var/created_time = 0
+	gas_impermeable = TRUE
 
 	New()
 		..()
@@ -26,8 +27,8 @@
 	disposing()
 		processing_items -= src
 		..()
-		
-	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+
+	Cross(atom/movable/mover)
 		if(istype(mover, /mob))
 			var/mob/M = mover
 			M.setStatus(statusId = "slowed", duration = 0.5 SECONDS, optional = 4)

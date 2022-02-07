@@ -82,9 +82,9 @@
 		src.add_ability(/datum/blob_ability/set_color)
 		src.add_ability(/datum/blob_ability/tutorial)
 		src.add_ability(/datum/blob_ability/help)
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_SPOOKY)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-		src.see_invisible = 15
+		src.see_invisible = INVIS_SPOOKY
 		src.see_in_dark = SEE_DARK_FULL
 		my_material = copyMaterial(getMaterial("blob"))
 		my_material.color = "#ffffff"
@@ -147,10 +147,10 @@
 
 			//maybe other debuffs here in the future
 
-			newBioPoints = clamp((src.bio_points + (base_gen_rate + genBonus - gen_rate_used) * mult), 0, src.bio_points_max) //these are rounded in point displays
+			newBioPoints = clamp((src.bio_points + (base_gen_rate + genBonus - gen_rate_used) * mult), 0, src.bio_points_max + (base_gen_rate + gen_rate_bonus - gen_rate_used) * (mult - 1)) //these are rounded in point displays
 
 		else
-			newBioPoints = clamp((src.bio_points + (base_gen_rate + gen_rate_bonus - gen_rate_used) * mult), 0, src.bio_points_max) //ditto above
+			newBioPoints = clamp((src.bio_points + (base_gen_rate + gen_rate_bonus - gen_rate_used) * mult), 0, src.bio_points_max + (base_gen_rate + gen_rate_bonus - gen_rate_used) * (mult - 1)) //ditto above
 
 		src.bio_points = newBioPoints
 
@@ -529,7 +529,7 @@
 
 	proc/BlobPointsBezierApproximation(var/t)
 		// t = number of tiles occupied by the blob
-		t = max(0, min(1000, t))
+		t = clamp(t, 0, 1000)
 		var/points
 
 		if (t < 514)

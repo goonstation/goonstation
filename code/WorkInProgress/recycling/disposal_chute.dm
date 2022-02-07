@@ -11,7 +11,7 @@
 
 /obj/machinery/disposal
 	name = "disposal unit"
-	desc = "A pneumatic waste disposal unit."
+	desc = "A pressurized trashcan that flushes things you put into it through pipes, usually to disposals."
 	icon = 'icons/obj/disposal.dmi'
 	icon_state = "disposal"
 	anchored = 1
@@ -37,6 +37,7 @@
 	// find the attached trunk (if present) and init gas resvr.
 	New()
 		..()
+		src.AddComponent(/datum/component/obj_projectile_damage)
 		SPAWN_DBG(0.5 SECONDS)
 			if (src)
 				trunk = locate() in src.loc
@@ -59,12 +60,18 @@
 		trunk = null
 
 		if(air_contents)
-			pool(air_contents)
+			qdel(air_contents)
 			air_contents = null
 		..()
 
+	onDestroy()
+		if (src.powered())
+			elecflash(src, power = 2)
+		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+		. = ..()
+
 	proc/initair()
-		air_contents = unpool(/datum/gas_mixture)
+		air_contents = new /datum/gas_mixture
 		air_contents.volume = 255
 		air_contents.nitrogen = 16.5
 		air_contents.oxygen = 4.4
@@ -89,7 +96,7 @@
 			if (action == "Empty it into the Chute")
 				var/obj/item/satchel/S = I
 				for(var/obj/item/O in S.contents) O.set_loc(src)
-				S.satchel_updateicon()
+				S.UpdateIcon()
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
 		if (istype(I,/obj/item/storage/) && I.contents.len)
@@ -136,18 +143,31 @@
 
 	// mouse drop another mob or self
 	//
-	MouseDrop_T(mob/target, mob/user)
+	MouseDrop_T(atom/target, mob/user)
 		//jesus fucking christ
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user) || isAI(target) || isghostcritter(user))
+		if (!IN_RANGE(src,user,1) || !IN_RANGE(src,target,1) || isAI(user) || is_incapacitated(user) || isghostcritter(user))
 			return
 
-		if (istype(src, /obj/machinery/disposal/mail) && isliving(target))
-			//Is this mob allowed to ride mailchutes?
-			if (!target.canRideMailchutes())
-				boutput(user, "<span class='alert'>That won't fit!</span>")
+		if (iscritter(target))
+			var/obj/critter/corpse = target
+			if (!corpse.alive)
+				corpse.set_loc(src)
+				user.visible_message("[user.name] places \the [corpse] into \the [src].")
+				actions.interrupt(user, INTERRUPT_ACT)
+			return
+
+		if (isliving(target))
+			var/mob/living/mobtarget = target
+			if  (mobtarget.buckled || isAI(mobtarget))
 				return
 
-		actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, target, user), user)
+			if (istype(src, /obj/machinery/disposal/mail))
+				//Is this mob allowed to ride mailchutes?
+				if (!mobtarget.canRideMailchutes())
+					boutput(user, "<span class='alert'>That won't fit!</span>")
+					return
+
+			actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, mobtarget, user), user)
 
 	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		// This feature interferes with mail delivery, i.e. objects bouncing back into the chute.
@@ -172,13 +192,13 @@
 							if(I) I.pixel_x = in_x + rand(-1, 1)
 							sleep(0.1 SECONDS)
 						if(I) I.pixel_x = in_x
-					sleep(delay)
-					if(I && I.loc == src.loc)
-						if(prob(40)) //It goes in!
-							src.visible_message("<span class='alert'>\The [I] slips into \the [src]!</span>")
-							I.set_loc(src)
-						else
-							src.visible_message("<span class='alert'>\The [I] slips off of the edge of \the [src]!</span>")
+					SPAWN_DBG(delay)
+						if(I && I.loc == src.loc)
+							if(prob(40)) //It goes in!
+								src.visible_message("<span class='alert'>\The [I] slips into \the [src]!</span>")
+								I.set_loc(src)
+							else
+								src.visible_message("<span class='alert'>\The [I] slips off of the edge of \the [src]!</span>")
 
 		else if (ishuman(MO))
 			var/mob/living/carbon/human/H = MO
@@ -362,7 +382,7 @@
 		var/atom/L = loc						// recharging from loc turf
 		var/datum/gas_mixture/env = L.return_air()
 		if (!air_contents)
-			air_contents = unpool(/datum/gas_mixture)
+			air_contents = new /datum/gas_mixture
 		var/pressure_delta = (3.5 * ONE_ATMOSPHERE) - MIXTURE_PRESSURE(air_contents) // purposefully trying to overshoot the target of 2 atmospheres to make it faster
 
 		if(env.temperature > 0)
@@ -389,7 +409,7 @@
 		flushing = 1
 		flick("[icon_style]-flush", src)
 
-		var/obj/disposalholder/H = unpool(/obj/disposalholder)	// virtual holder object which actually
+		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
 
 		H.init(src)	// copy the contents of disposer to holder
@@ -528,28 +548,20 @@
 	var/mailgroup = null
 
 	var/net_id = null
-	var/frequency = 1149
-	var/datum/radio_frequency/radio_connection
+	var/frequency = FREQ_PDA
 
 	New()
 		..()
-		SPAWN_DBG(0.8 SECONDS)
-			if(radio_controller)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
-			if(!src.net_id)
-				src.net_id = generate_net_id(src)
-
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
+		if(!src.net_id)
+			src.net_id = generate_net_id(src)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 
 	expel(var/obj/disposalholder/H)
 		..(H)
 
-		if (message && mailgroup && radio_connection)
+		if (message && mailgroup)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
 			newsignal.data["command"] = "text_message"
 			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
 			newsignal.data["message"] = "[message]"
@@ -557,7 +569,7 @@
 			newsignal.data["group"] = list(mailgroup, MGA_MAIL)
 			newsignal.data["sender"] = src.net_id
 
-			radio_connection.post_signal(src, newsignal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
 
 /obj/machinery/disposal/cart_port
 	name = "disposal cart port"
@@ -674,7 +686,6 @@
 			else
 				..()
 				return
-			actions.interrupt(target, INTERRUPT_MOVE)
 			target.set_loc(chute)
 
 			if (msg)

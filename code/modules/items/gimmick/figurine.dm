@@ -33,7 +33,7 @@
 		else if (!istype(src.info))
 			var/datum/figure_info/randomInfo
 
-			var/potential_donator_ckey = usr?.mind.ckey
+			var/potential_donator_ckey = usr?.mind?.ckey
 			var/donator_figtype = null
 			if (potential_donator_ckey) // check if the player has a figurine (therefore a donator)
 				for (var/datum/figure_info/patreon/fig as anything in concrete_typesof(/datum/figure_info/patreon))
@@ -692,8 +692,8 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		ckey = "bunnykimber"
 
 	retrino
-		name = "\improper Neo Xzilon"
-		icon_state = "neoxzilon"
+		name = "\improper Mallow Rhosin"
+		icon_state = "mallowrhosin"
 		ckey = "retrino"
 
 		New()
@@ -737,6 +737,21 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "chefbot"
 		ckey = "skeletondoot"
 
+	flyntloach
+		name = "\improper Flynt Loach"
+		icon_state = "flyntloach"
+		ckey = "profomii"
+
+	dennismccreary
+		name = "\improper Dennis McCreary"
+		icon_state = "dennismccreary"
+		ckey = "lordvoxelrot"
+
+	Stinko
+		name = "\improper Stinko"
+		icon_state = "stinko"
+		ckey = "data_err0r"
+
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."
@@ -755,9 +770,10 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	New()
 		..()
 		src.ccolor = pick("y", "r", "g", "b")
-		src.update_icon()
+		src.UpdateIcon()
 
 	update_icon()
+
 		if (src.icon_state != "cap-[src.ccolor]")
 			src.icon_state = "cap-[src.ccolor]"
 		if (!src.cap_image)

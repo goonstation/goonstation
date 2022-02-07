@@ -30,8 +30,8 @@
 		else
 			boutput(holder.owner, "<span class='alert'>Your spell doesn't last as long without a staff to focus it!</span>")
 		SPAWN_DBG (SPtime)
-			if (holder.owner.bioHolder.HasEffect("hulk"))
-				holder.owner.bioHolder.RemoveEffect("hulk")
-			if(!QDELETED(holder.owner))
+			if (!QDELETED(holder.owner))
+				if (holder.owner.bioHolder.HasEffect("hulk"))
+					holder.owner.bioHolder.RemoveEffect("hulk")
 				REMOVE_MOB_PROPERTY(holder.owner, PROP_PASSIVE_WRESTLE, "empower")
 				REMOVE_MOB_PROPERTY(holder.owner, PROP_STAMINA_REGEN_BONUS, "empower")

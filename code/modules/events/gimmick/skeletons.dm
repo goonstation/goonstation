@@ -37,7 +37,7 @@
 
 		var/sensortext = pick("sensors", "technicians", "probes", "satellites", "monitors")
 		var/pickuptext = pick("picked up", "detected", "found", "sighted", "reported")
-		var/anomlytext = pick("spooky infestation", "loud claking noise","rattling of bones")
+		var/anomlytext = pick("spooky infestation", "loud clacking noise","rattling of bones")
 		var/ohshittext = pick("en route for collision with", "rapidly approaching", "heading towards")
 		command_alert("Our [sensortext] have [pickuptext] \a [anomlytext] [ohshittext] the station. Be wary of closets.", "Anomaly Alert")
 

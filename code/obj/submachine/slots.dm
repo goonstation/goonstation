@@ -12,7 +12,7 @@
 	var/working = 0
 	var/obj/item/card/id/scan = null
 	var/icon_base = "slots"
-	var/datum/data/record/accessed_record = null
+	var/datum/db_record/accessed_record = null
 	var/available_funds = 0
 	var/emagged = 0
 	///break-even point for slots when this is set to 2500. make lower to make slots pay out better, or higher to give the house an edge
@@ -41,7 +41,7 @@
 		"busy" = working,
 		"scannedCard" = src.scan,
 		"money" = available_funds,
-		"account_funds" = src.accessed_record?.fields["current_money"],
+		"account_funds" = src.accessed_record?["current_money"],
 		"plays" = plays,
 		"wager" = wager,
 	)
@@ -86,27 +86,31 @@
 				src.icon_state = "[icon_base]-off"
 
 		if("eject")
-			if(!src.accessed_record)
-				return TRUE // jerks doing that "hide in a chute to glitch auto-update windows out" exploit caused a wall of runtime errors
 			usr.put_in_hand_or_eject(src.scan)
-			src.accessed_record.fields["current_money"] += src.available_funds
-			src.available_funds = 0
 			src.scan = null
-			src.accessed_record = null
 			src.working = FALSE
 			src.icon_state = "[icon_base]-off" // just in case, some fucker broke it earlier
+			if(!src.accessed_record)
+				src.visible_message("<span class='subtle'><b>[src]</b> says, 'Winnings not transferred, thank you for playing!'</span>")
+				return TRUE // jerks doing that "hide in a chute to glitch auto-update windows out" exploit caused a wall of runtime errors
+			src.accessed_record["current_money"] += src.available_funds
+			src.available_funds = 0
+			src.accessed_record = null
 			src.visible_message("<span class='subtle'><b>[src]</b> says, 'Winnings transferred, thank you for playing!'</span>")
 			. = TRUE
 
 		if("cashin")
+			if(!src.accessed_record)
+				boutput(usr, "<span class='alert'>No account connected.</span>")
+				return TRUE
 			var/transfer_amount = input(usr, "Enter how much to transfer from your account.", "Deposit Credits", 0) as null|num
-			transfer_amount = clamp(transfer_amount,0,src.accessed_record.fields["current_money"])
-			src.accessed_record.fields["current_money"] -= transfer_amount
+			transfer_amount = clamp(transfer_amount,0,src.accessed_record["current_money"])
+			src.accessed_record["current_money"] -= transfer_amount
 			src.available_funds += transfer_amount
 			boutput(usr, "<span class='notice'>Funds transferred.</span>")
 
 		if("cashout")
-			src.accessed_record.fields["current_money"] += src.available_funds
+			src.accessed_record["current_money"] += src.available_funds
 			src.available_funds = 0
 			boutput(usr, "<span class='notice'>Funds transferred.</span>")
 
@@ -118,7 +122,7 @@
 	src.add_fingerprint(usr)
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "machineUsed")
 
-/obj/submachine/slot_machine/attackby(var/obj/item/I as obj, user as mob)
+/obj/submachine/slot_machine/attackby(var/obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/card/id))
 		if(src.scan)
 			boutput(user, "<span class='alert'>There is a card already in the slot machine.</span>")
@@ -132,15 +136,20 @@
 				usr.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
-			var/enterpin = input(user, "Please enter your PIN number.", "Enter PIN", 0) as null|num
+			var/enterpin = user.enter_pin("Enter PIN")
 			if (enterpin != idcard.pin)
 				boutput(user, "<span class='alert'>Pin number incorrect.</span>")
 				usr.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
+			src.accessed_record = FindBankAccountByName(idcard.registered)
+			if(isnull(src.accessed_record))
+				boutput(user, "<span class='alert'>That card has no bank account associated.</span>")
+				usr.put_in_hand_or_eject(I)
+				ui_interact(user)
+				return TRUE
 			boutput(user, "<span class='notice'>Card authorized.</span>")
 			src.scan = I
-			src.accessed_record = FindBankAccountByName(src.scan.registered)
 			ui_interact(user)
 			. = TRUE
 	else
@@ -223,7 +232,7 @@
 			return
 
 		if(href_list["ops"])
-			var/operation = text2num(href_list["ops"])
+			var/operation = text2num_safe(href_list["ops"])
 			if(operation == 1) // Play
 				if(src.working) return
 				/*if (src.money < 0)
@@ -287,7 +296,7 @@
 				src.play_money += I.amount
 
 			I.amount = 0
-			pool(I)
+			qdel(I)
 
 	attack_hand(var/mob/user as mob)
 		src.add_dialog(user)
@@ -316,7 +325,7 @@
 			return
 
 		if(href_list["ops"])
-			var/operation = text2num(href_list["ops"])
+			var/operation = text2num_safe(href_list["ops"])
 			if(operation == 1) // Play
 				if(src.working) return
 				if (src.play_money < 20)

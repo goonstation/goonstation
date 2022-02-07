@@ -118,19 +118,11 @@
 			var/perpname = src.name
 			if(src:wear_id && src:wear_id:registered)
 				perpname = src:wear_id:registered
-			// find the matching security record
-			for(var/datum/data/record/R in data_core.general)
-				if(R.fields["name"] == perpname)
-					for (var/datum/data/record/S in data_core.security)
-						if (S.fields["id"] == R.fields["id"])
-							// now add to rap sheet
 
-							S.fields["criminal"] = "*Arrest*"
-							S.fields["mi_crim"] = "Public urination."
-
-							break
-
-
+			var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
+			if(sec_record && sec_record["criminal"] != "*Arrest*")
+				sec_record["criminal"] = "*Arrest*"
+				sec_record["mi_crim"] = "Public urination."
 
 /mob/living/carbon/swap_hand()
 	var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)
@@ -166,7 +158,7 @@
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
-	src.brainloss = max(0,min(src.brainloss + amount,120))
+	src.brainloss = clamp(src.brainloss + amount, 0, 120)
 
 	if (src.brainloss >= 120 && isalive(src))
 		// instant death, we can assume a brain this damaged is no longer able to support life
@@ -180,14 +172,14 @@
 	if (!toxloss && amount < 0)
 		amount = 0
 	if (..())
-		return
+		return 1
 
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
 	var/resist_toxic = src.bioHolder?.HasEffect("resist_toxic")
 
-	if(resist_toxic)
+	if(resist_toxic && amount > 0)
 		if(resist_toxic > 1)
 			src.toxloss = 0
 			return 1 //prevent organ damage
@@ -206,6 +198,11 @@
 	if (HAS_MOB_PROPERTY(src, PROP_BREATHLESS))
 		src.oxyloss = 0
 		return
+
+	if (ispug(src))
+		var/mob/living/carbon/human/H = src
+		amount *= 2
+		H.emote(pick("wheeze", "cough", "sputter"))
 
 	src.oxyloss = max(0,src.oxyloss + amount)
 	return

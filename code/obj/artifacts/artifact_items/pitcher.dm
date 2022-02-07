@@ -5,7 +5,6 @@
 	artifact = 1
 	mat_changename = 0
 	can_recycle = 0
-	can_chug = 0
 
 	New(var/loc, var/forceartiorigin)
 		..()
@@ -145,6 +144,7 @@
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
 	update_icon()
+
 		return //Can't be activated, so the icon should never change
 
 	smash()

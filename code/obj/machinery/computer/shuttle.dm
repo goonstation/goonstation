@@ -13,7 +13,7 @@
 	icon_state = "shuttle-embed"
 	density = 0
 	layer = EFFECTS_LAYER_1 // Must appear over cockpit shuttle wall thingy.
-	plane = PLANE_LIGHTING - 1
+	plane = PLANE_DEFAULT
 
 	north
 		dir = NORTH
@@ -278,7 +278,7 @@
 	if(!active)
 		for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 			active = 1
-			C.visible_message("<span class='alert'>The Mining Shuttle has been Called and will leave shortly!</span>")
+			C.visible_message("<span class='alert'>The Mining Shuttle has been called and will leave shortly!</span>")
 		SPAWN_DBG(10 SECONDS)
 			call_shuttle()
 
@@ -306,7 +306,7 @@
 
 	for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
-		C.visible_message("<span class='alert'>The Mining Shuttle has Moved!</span>")
+		C.visible_message("<span class='alert'>The Mining Shuttle has moved!</span>")
 
 	return
 
@@ -345,7 +345,7 @@
 			if(!active)
 				for(var/obj/machinery/computer/prison_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 					active = 1
-					C.visible_message("<span class='alert'>The Prison Shuttle has been Called and will leave shortly!</span>")
+					C.visible_message("<span class='alert'>The Prison Shuttle has been called and will leave shortly!</span>")
 
 				SPAWN_DBG(10 SECONDS)
 					call_shuttle()
@@ -363,15 +363,17 @@
 	//Prison -> Station -> Outpost -> Prison.
 	//Skip outpost if there's a lockdown there.
 	//drsingh took outpost out for cogmap prison shuttle
+	var/area/start_location
+	var/area/end_location
 	switch(brigshuttle_location)
 		if(0)
-			var/area/start_location = locate(/area/shuttle/brig/prison)
-			var/area/end_location = locate(/area/shuttle/brig/station)
+			start_location = locate(/area/shuttle/brig/prison)
+			end_location = locate(/area/shuttle/brig/station)
 			start_location.move_contents_to(end_location)
 			brigshuttle_location = 1
 		if(1)
-			var/area/start_location = locate(/area/shuttle/brig/station)
-			var/area/end_location = null
+			start_location = locate(/area/shuttle/brig/station)
+			end_location = null
 			//if(researchshuttle_lockdown)
 			end_location = locate(/area/shuttle/brig/prison)
 			//else
@@ -390,9 +392,14 @@
 			brigshuttle_location = 0
 		*/
 
+	if(station_repair.station_generator)
+		var/list/turf/turfs_to_fix = get_area_turfs(start_location)
+		if(length(turfs_to_fix))
+			station_repair.repair_turfs(turfs_to_fix)
+
 	for(var/obj/machinery/computer/prison_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
-		C.visible_message("<span class='alert'>The Prison Shuttle has Moved!</span>")
+		C.visible_message("<span class='alert'>The Prison Shuttle has moved!</span>")
 
 	return
 
@@ -447,7 +454,7 @@
 			if(!active)
 				for(var/obj/machinery/computer/research_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 					active = 1
-					C.visible_message("<span class='alert'>The Research Shuttle has been Called and will leave shortly!</span>")
+					C.visible_message("<span class='alert'>The Research Shuttle has been called and will leave shortly!</span>")
 
 				SPAWN_DBG(10 SECONDS)
 					call_shuttle()
@@ -483,13 +490,10 @@
 		var/list/turf/turfs_to_fix = get_area_turfs(start_location)
 		if(length(turfs_to_fix))
 			station_repair.repair_turfs(turfs_to_fix)
-		turfs_to_fix = get_area_turfs(end_location)
-		if(length(turfs_to_fix))
-			station_repair.repair_turfs(turfs_to_fix)
 
 	for(var/obj/machinery/computer/research_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
-		C.visible_message("<span class='alert'>The Research Shuttle has Moved!</span>")
+		C.visible_message("<span class='alert'>The Research Shuttle has moved!</span>")
 
 	return
 
@@ -588,10 +592,15 @@
 
 			start_location.move_contents_to(end_location)
 
+			if(station_repair.station_generator)
+				var/list/turf/turfs_to_fix = get_area_turfs(start_location)
+				if(length(turfs_to_fix))
+					station_repair.repair_turfs(turfs_to_fix)
+
 			for(var/obj/machinery/computer/asylum_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 				C.active = 0
 				C.shuttle_loc = target_loc
-				C.visible_message("<span class='alert'>The Asylum Shuttle has Moved!</span>")
+				C.visible_message("<span class='alert'>The Asylum Shuttle has moved!</span>")
 			return
 
 

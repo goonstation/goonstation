@@ -303,7 +303,7 @@ var/list/rollList = list()
 		else
 			return ..()
 
-// /obj/item/dice/HasEntered(AM as mob|obj)
+// /obj/item/dice/Crossed(atom/movable/AM as mob|obj)
 // 	if(ismob(AM))
 // 		var/mob/M = AM
 // 		if(ishuman(M))

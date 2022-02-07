@@ -47,7 +47,7 @@
 			F.amount = min(F.amount, 27)
 			return
 
-		F = unpool(/obj/effects/foam)
+		F = new /obj/effects/foam
 		F.foam_id = "\ref[src][world.time]"
 		F.set_up(src.location, metal)
 		F.amount = amount

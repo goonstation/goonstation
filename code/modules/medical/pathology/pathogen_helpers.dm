@@ -54,7 +54,7 @@
 	become_statue(getMaterial("rock"), "Its not too uncommon for our employees to be stoned at work but this is just ridiculous!")
 
 /proc/generate_random_pathogen()
-	var/datum/pathogen/P = unpool(/datum/pathogen)
+	var/datum/pathogen/P = new /datum/pathogen
 	P.setup(1, null, 0)
 	return P
 
@@ -65,7 +65,7 @@
 		R.pathogens[P.pathogen_uid] = P
 
 /proc/ez_pathogen(var/stype)
-	var/datum/pathogen/P = unpool(/datum/pathogen)
+	var/datum/pathogen/P = new /datum/pathogen
 	var/datum/pathogen_cdc/cdc = P.generate_name()
 	cdc.mutations += P.name
 	cdc.mutations[P.name] = P

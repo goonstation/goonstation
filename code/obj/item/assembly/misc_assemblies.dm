@@ -159,7 +159,7 @@ Contains:
 			src.part5.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the pipebomb to the timer/igniter assembly.")
-			logTheThing("bombing", user, null, "made Timer/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing("bombing", user, null, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
 			message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -173,7 +173,7 @@ Contains:
 			W.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the pipebomb to the timer/igniter assembly.")
-			logTheThing("bombing", user, null, "made Timer/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing("bombing", user, null, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
 			message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -378,7 +378,7 @@ Contains:
 			src.part5.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the sensor/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Proximity/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing("bombing", user, null, "made Proximity/Igniter/Pipebomb Assembly at [log_loc(src)].")
 			message_admins("[key_name(user)] made a Proximity/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -392,7 +392,7 @@ Contains:
 			W.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the sensor/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Proximity/Igniter/Beaker Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing("bombing", user, null, "made Proximity/Igniter/Beaker Assembly at [log_loc(src)].")
 			message_admins("[key_name(user)] made a Proximity/Igniter/Beaker Assembly at [showCoords(src.x, src.y, src.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -425,7 +425,7 @@ Contains:
 	if(src.part5)
 		playsound(src.loc, sound_pipebomb, 50, 0)
 		SPAWN_DBG(3 SECONDS)
-			src.part5.do_explode()
+			src.part5?.do_explode()
 			qdel(src)
 	return
 
@@ -554,7 +554,7 @@ Contains:
 			src.part5.set_loc(src)
 			src.c_state()
 			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
+			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
 			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -568,7 +568,7 @@ Contains:
 			W.set_loc(src)
 			src.c_state()
 			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
+			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
 			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -602,7 +602,7 @@ Contains:
 	if(src.part5)
 		playsound(src.loc, sound_pipebomb, 50, 0)
 		SPAWN_DBG(3 SECONDS)
-			src.part5.do_explode()
+			src.part5?.do_explode()
 			qdel(src)
 	return
 
@@ -651,7 +651,7 @@ Contains:
 /obj/item/assembly/anal_ignite //lol
 	name = "Health-Analyzer/Igniter Assembly"
 	desc = "A health-analyzer igniter assembly."
-	icon_state = "timer-igniter0"
+	icon_state = "health-igniter"
 	var/obj/item/device/analyzer/healthanalyzer/part1 = null
 	var/obj/item/device/igniter/part2 = null
 	status = null

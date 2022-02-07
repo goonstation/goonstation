@@ -35,6 +35,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		hud = new(src)
 		src.attach_hud(hud)
 		//src.sight |= SEE_TURFS //Uncomment for meson-like vision. I'm not a fan of it though. -Wire
@@ -176,6 +177,7 @@
 		hud.update_pulling()
 
 	disposing()
+		STOP_TRACKING
 		if (src in available_ghostdrones)
 			available_ghostdrones -= src
 		..()
@@ -350,9 +352,10 @@
 			src.examine_verb(target) // in theory, usr should be us, this is shit though
 			return
 
-		if (src.in_point_mode)
+		if (src.in_point_mode || src.client?.check_key(KEY_POINT))
 			src.point(target)
-			src.toggle_point_mode()
+			if (src.in_point_mode)
+				src.toggle_point_mode()
 			return
 
 		if (get_dist(src, target) > 0) // temporary fix for cyborgs turning by clicking
@@ -399,24 +402,17 @@
 		else
 			stat("No Cell Inserted!")
 
-	Bump(atom/movable/AM as mob|obj, yes)
-		SPAWN_DBG( 0 )
-			if ((!( yes ) || src.now_pushing))
-				return
-			//..()
-			if (!istype(AM, /atom/movable))
-				return
-			if (!src.now_pushing)
-				src.now_pushing = 1
-				if (!AM.anchored)
-					var/t = get_dir(src, AM)
-					step(AM, t)
-				src.now_pushing = null
-			if(AM)
-				AM.last_bumped = world.timeofday
-				AM.Bumped(src)
+	bump(atom/movable/AM as mob|obj)
+		if ( src.now_pushing)
 			return
-		return
+		if (!istype(AM, /atom/movable))
+			return
+		if (!src.now_pushing)
+			src.now_pushing = 1
+			if (!AM.anchored)
+				var/t = get_dir(src, AM)
+				step(AM, t)
+			src.now_pushing = null
 
 	//Four very important procs follow
 	proc/putonHat(obj/item/clothing/head/W as obj, mob/user as mob)
@@ -482,7 +478,7 @@
 					boutput(user, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
 					return
 				if(W:try_weld(user, 1))
-					src.health = max(1,min(src.health + 5,src.max_health))
+					src.health = clamp(src.health + 5, 1, src.max_health)
 					user.visible_message("<b>[user]</b> uses [W] to repair some of [src]'s damage.")
 					if (src.health == src.max_health)
 						boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
@@ -498,7 +494,7 @@
 				boutput(user, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
 				return
 			C.use(1)
-			src.health = max(1,min(src.health + 5,src.max_health))
+			src.health = clamp(src.health + 5, 1, src.max_health)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
 			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 			if (src.health >= 25)
@@ -1012,8 +1008,10 @@
 			return src.emote(copytext(message, 2),1)
 
 		UpdateOverlays(speech_bubble, "speech_bubble")
+		var/speech_bubble_time = src.last_typing
 		SPAWN_DBG(1.5 SECONDS)
-			UpdateOverlays(null, "speech_bubble")
+			if(speech_bubble_time == src.last_typing)
+				UpdateOverlays(null, "speech_bubble")
 
 		return src.drone_broadcast(message)
 		// Removing normal dronesay stuff and changing :d to just ;
@@ -1107,9 +1105,9 @@
 		setFace(pick("happy", "sad", "mad"), random_color())
 
 		if (limiter.canISpawn(/obj/effects/sparks))
-			var/obj/sparks = unpool(/obj/effects/sparks)
+			var/obj/sparks = new /obj/effects/sparks
 			sparks.set_loc(get_turf(src))
-			SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+			SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 
 	ex_act(severity)
 		if (src.nodamage) return
@@ -1338,9 +1336,9 @@
 			src.see_in_dark = SEE_DARK_FULL
 
 			if (client.adventure_view)
-				src.see_invisible = 21
+				src.see_invisible = INVIS_ADVENTURE
 			else
-				src.see_invisible = 9
+				src.see_invisible = INVIS_CONSTRUCTION
 
 		..()
 

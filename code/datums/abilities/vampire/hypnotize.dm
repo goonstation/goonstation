@@ -108,7 +108,7 @@
 			target.remove_stamina(300)
 			target.force_laydown_standup()
 
-			var/obj/itemspecialeffect/glare/E = unpool(/obj/itemspecialeffect/glare)
+			var/obj/itemspecialeffect/glare/E = new /obj/itemspecialeffect/glare
 			E.color = "#AA02FF"
 			E.setup(target.loc)
 

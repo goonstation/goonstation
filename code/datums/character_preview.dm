@@ -46,7 +46,7 @@ datum/character_preview
 		src.handler.screen_loc = "[src.preview_id]:1,1"
 		src.viewer?.screen += src.handler
 
-		var/mob/living/carbon/human/H = new(src.get_mob_spawn_loc())
+		var/mob/living/carbon/human/H = new(global.get_centcom_mob_cloner_spawn_loc())
 		mobs -= H
 		src.preview_mob = H
 		H.screen_loc = "[src.preview_id];1,1"
@@ -54,7 +54,7 @@ datum/character_preview
 		src.viewer?.screen += H
 
 		if(isturf(H.loc))
-			do_gimmick_mob_spawning_stuff(H)
+			put_mob_in_centcom_cloner(H)
 
 	proc/add_background(color)
 		if(isnull(src.background))
@@ -70,37 +70,6 @@ datum/character_preview
 		src.background.mouse_opacity = 0
 		src.handler.vis_contents |= src.background
 		src.viewer?.screen |= src.background
-
-	proc/do_gimmick_mob_spawning_stuff(mob/living/carbon/human/H)
-		H.a_intent = INTENT_HARM
-		H.dir_locked = TRUE
-		playsound(H, "sound/machines/ding.ogg", 50, 1)
-		H.visible_message("<span class='notice'>[H.name || "A clone"] pops out of the cloner.</span>")
-		var/static/list/obj/machinery/conveyor/conveyors = null
-		var/static/conveyor_running_count = 0
-		if(isnull(conveyors))
-			conveyors = list()
-			for(var/obj/machinery/conveyor/C as anything in machine_registry[MACHINES_CONVEYORS])
-				if(C.id == "centcom cloning")
-					conveyors += C
-		if(conveyor_running_count == 0)
-			for(var/obj/machinery/conveyor/conveyor as anything in conveyors)
-				conveyor.operating = 1
-				conveyor.setdir()
-		conveyor_running_count++
-		SPAWN_DBG(8 SECONDS)
-			conveyor_running_count--
-			if(conveyor_running_count == 0)
-				for(var/obj/machinery/conveyor/conveyor as anything in conveyors)
-					conveyor.operating = 0
-					conveyor.setdir()
-
-	proc/get_mob_spawn_loc()
-		if(length(landmarks[LANDMARK_CHARACTER_PREVIEW_SPAWN]))
-			shuffle_list(landmarks[LANDMARK_CHARACTER_PREVIEW_SPAWN])
-			for(var/turf/T in landmarks[LANDMARK_CHARACTER_PREVIEW_SPAWN])
-				if(isnull(locate(/mob/living) in T))
-					return T
 
 	disposing()
 		STOP_TRACKING

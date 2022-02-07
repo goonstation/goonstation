@@ -106,8 +106,8 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 							break
 
 				if("ping")
-					var/vX = text2num(href_list["x"])
-					var/vY = text2num(href_list["y"])
+					var/vX = text2num_safe(href_list["x"])
+					var/vY = text2num_safe(href_list["y"])
 					for(var/A in tele_man.events_active)
 						var/datum/telescope_event/E = tele_man.events_active[A]
 						if(E.id == tracking_id)

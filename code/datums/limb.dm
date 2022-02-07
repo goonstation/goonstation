@@ -179,7 +179,7 @@
 
 			sleep(0.3 SECONDS)
 			for (var/obj/O in affected)
-				pool(O)
+				qdel(O)
 
 			if(istype(target_r, /obj/railgun_trg_dummy)) qdel(target_r)
 
@@ -209,6 +209,7 @@
 	var/reloaded_at = 0
 	var/next_shot_at = 0
 	var/image/default_obscurer
+	var/muzzle_flash = null
 
 	attack_range(atom/target, var/mob/user, params)
 		if (reloaded_at > ticker.round_elapsed_ticks && !current_shots)
@@ -223,6 +224,10 @@
 			var/pox = text2num(params["icon-x"]) - 16
 			var/poy = text2num(params["icon-y"]) - 16
 			shoot_projectile_ST_pixel(user, proj, target, pox, poy)
+			if (src.muzzle_flash)
+				if (isturf(user.loc))
+					var/turf/origin = user.loc
+					muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
 			user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
 			next_shot_at = ticker.round_elapsed_ticks + cooldown
 			if (!current_shots)
@@ -267,6 +272,7 @@
 		current_shots = 3
 		cooldown = 30
 		reload_time = 200
+		muzzle_flash = "muzzle_flash"
 
 	abg
 		proj = new/datum/projectile/bullet/abg
@@ -274,6 +280,7 @@
 		current_shots = 6
 		cooldown = 30
 		reload_time = 300
+		muzzle_flash = "muzzle_flash"
 
 	phaser
 		proj = new/datum/projectile/laser/light
@@ -330,6 +337,13 @@
 		current_shots = 1
 		cooldown = 1 SECOND
 		reload_time = 1 SECOND
+
+	rifle
+		proj = new/datum/projectile/bullet/assault_rifle
+		shots = 5
+		current_shots = 5
+		cooldown = 1 SECOND
+		reload_time = 20 SECONDS
 
 /datum/limb/mouth
 	var/sound_attack = "sound/voice/animal/werewolf_attack1.ogg"
@@ -550,7 +564,7 @@
 		var/obj/item/grab/GD = user.equipped()
 		if (GD && istype(GD) && (GD.affecting && GD.affecting == target))
 			GD.state = GRAB_AGGRESSIVE
-			GD.update_icon()
+			GD.UpdateIcon()
 			user.visible_message("<span class='alert'>[user] grabs hold of [target] aggressively!</span>")
 
 		return
@@ -644,6 +658,7 @@
 		user.lastattacked = target
 
 /datum/limb/wendigo
+	var/log_name = "wendigo limbs"
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
 			return
@@ -678,7 +693,7 @@
 		if(check_target_immunity( target ))
 			return 0
 		if (prob(25))
-			logTheThing("combat", user, target, "accidentally harms [constructTarget(target,"combat")] with wendigo limbs at [log_loc(user)].")
+			logTheThing("combat", user, target, "accidentally harms [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
 			user.visible_message("<span class='alert'><b>[user] accidentally claws [target] while trying to [user.a_intent] them!</b></span>", "<span class='alert'><b>You accidentally claw [target] while trying to [user.a_intent] them!</b></span>")
 			harm(target, user, 1)
 			return 1
@@ -707,7 +722,7 @@
 			return 0
 		var/quality = src.holder.quality
 		if (no_logs != 1)
-			logTheThing("combat", user, target, "mauls [constructTarget(target,"combat")] with wendigo limbs at [log_loc(user)].")
+			logTheThing("combat", user, target, "mauls [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 9, rand(5,9) * quality)
 		user.attack_effects(target, affecting)
@@ -719,6 +734,9 @@
 		if (prob(35 * quality))
 			target.changeStatus("weakened", (4 * quality) SECONDS)
 		user.lastattacked = target
+
+/datum/limb/wendigo/severed_werewolf
+	log_name = "severed werewolf limb"
 
 // Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears, which are currently commented out. Go there to make use of this.
 /datum/limb/hot //because
@@ -903,7 +921,7 @@
 		if (GD && istype(GD) && (GD.affecting && GD.affecting == target))
 			target.changeStatus("stunned", 2 SECONDS)
 			GD.state = GRAB_AGGRESSIVE
-			GD.update_icon()
+			GD.UpdateIcon()
 			user.visible_message("<span class='alert'>[user] grabs hold of [target] aggressively!</span>")
 
 		return
@@ -1223,7 +1241,7 @@
 		if (no_logs != 1)
 			logTheThing("combat", user, target, "claws [constructTarget(target,"combat")] with claw arms at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 2, 7, rand(1,3) * quality)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 10, rand(1,3) * quality)
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "stab", "rip", "claw", "slashe")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
@@ -1278,9 +1296,12 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 /proc/ghostcritter_blocked_objects() // Generates an associate list of (type = 1) that can be checked much faster than looping istypes
 	var/blocked_types = list(/obj/item/device/flash,\
 	/obj/item/reagent_containers/glass/beaker,\
+	/obj/machinery/light_switch,\
 	/obj/item/reagent_containers/glass/bottle,\
 	/obj/item/scalpel,\
 	/obj/item/circular_saw,\
+	/obj/machinery/emitter,\
+	/obj/item/mechanics,\
 	/obj/item/staple_gun,\
 	/obj/item/scissors,\
 	/obj/item/razor_blade,\
@@ -1290,6 +1311,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	/obj/item/reagent_containers/food/snacks/einstein_loaf,\
 	/obj/reagent_dispensers,\
 	/obj/machinery/chem_dispenser,\
+	/obj/machinery/field_generator,\
 	/obj/machinery/portable_atmospherics/canister,\
 	/obj/machinery/networked/teleconsole,\
 	/obj/storage/crate, /obj/storage/closet,\
@@ -1422,6 +1444,15 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 /datum/limb/small_critter/strong
 	max_wclass = 3
 	stam_damage_mult = 1
+
+/datum/limb/small_critter/pincers
+	dmg_type = DAMAGE_STAB
+	max_wclass = 2
+	stam_damage_mult = 0.5
+	dam_low = 2
+	dam_high = 4
+	sound_attack = "sound/items/Wirecutter.ogg"
+	actions = list("snips", "pinches", "slashes")
 
 /datum/limb/small_critter/possum
 	dam_low = 0

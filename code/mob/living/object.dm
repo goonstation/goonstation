@@ -245,6 +245,12 @@
 		src.opacity = src.item.opacity
 
 	death(gibbed)
+
+		if (src.item && !gibbed)
+			src.item.set_dir(src.dir)
+			if (src.item.loc == src)
+				src.item.set_loc(get_turf(src))
+
 		if (src.owner)
 			src.owner.set_loc(get_turf(src))
 			src.visible_message("<span class='alert'><b>[src] is no longer possessed.</b></span>")
@@ -272,13 +278,11 @@
 
 		playsound(src.loc, "sound/voice/wraith/wraithleaveobject.ogg", 40, 1, -1, 0.6)
 
-		if (src.item)
-			src.item.set_dir(src.dir)
-			if (src.item.loc == src)
-				src.item.set_loc(get_turf(src))
-			if (gibbed)
-				qdel(src.item)
+		if (gibbed && src.item)
+			qdel(src.item)
+
 		src.owner = null
+		src.item = null
 		qdel(src)
 		..(gibbed)
 

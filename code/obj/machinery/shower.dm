@@ -67,7 +67,7 @@
 				if (current_reagent.volume < 0.5)
 					src.reagents.del_reagent(current_reagent.id)
 
-			var/datum/effects/system/steam_spread/steam = unpool(/datum/effects/system/steam_spread)
+			var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 			steam.set_up(5, 0, get_turf(src))
 			steam.attach(src)
 			steam.start()

@@ -234,11 +234,15 @@
 	desc = "A terahertz-ray emitter and scanner built into a handy PDA module."
 	icon_state = "pdamod_tscanner"
 	setup_use_menu_badge = 1
-	var/on = 0
 	abilities = list(/obj/ability_button/pda_tray_toggle)
+	var/obj/item/device/t_scanner/pda/scanner
+
+	New()
+		..()
+		scanner = new(src)
 
 	return_menu_badge()
-		var/text = "<a href='byond://?src=\ref[src];toggle=1'>[src.on ? "Disable" : "Enable"] T-Scanner</a>"
+		var/text = "<a href='byond://?src=\ref[src];toggle=1'>[src.scanner.on ? "Disable" : "Enable"] T-Scanner</a>"
 		return text
 
 	Topic(href, href_list)
@@ -246,54 +250,22 @@
 			return
 		if(href_list["toggle"])
 			src.toggle_scan()
-		return
 
 	proc/toggle_scan()
-		src.on = !src.on
-		if(src.on) processing_items |= src
+		scanner.set_on(!scanner.on)
 		for (var/obj/ability_button/pda_tray_toggle/B in src.ability_buttons)
-			B.icon_state = "pda[src.on]"
+			B.icon_state = "pda[scanner.on]"
 		if (src.host)
 			src.host.updateSelfDialog()
 
+	disposing()
+		qdel(scanner)
+		scanner = null
+		..()
+
 	uninstall()
 		..()
-		src.on = 0
-		return
-
-	process()
-		if(!src.on || !src.host)
-			processing_items.Remove(src)
-			return
-		var/loc_to_check = src.host.loc
-
-		for(var/turf/T in range(1, loc_to_check) )
-
-			if(!T.intact)
-				continue
-
-			for(var/obj/O in T.contents)
-				if(O.level != 1)
-					continue
-
-				if(O.invisibility == 101)
-					O.invisibility = 0
-					O.alpha = 128
-					SPAWN_DBG(1 SECOND)
-						if(O)
-							var/turf/U = O.loc
-							if(!istype(U))
-								return
-							if(U.intact)
-								O.invisibility = 101
-								O.alpha = 255
-
-			var/mob/living/M = locate() in T
-			if(M?.invisibility == 2)
-				M.invisibility = 0
-				SPAWN_DBG(0.2 SECONDS)
-					if(M)
-						M.invisibility = 2
+		scanner.set_on(FALSE)
 
 /obj/ability_button/pda_tray_toggle
 	name = "Toggle PDA T-Scanner"
@@ -332,7 +304,6 @@
 			return
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.host
-		signal.transmission_method = TRANSMISSION_RADIO
 		signal.data["address_1"] = "00000000"
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = src.host.owner

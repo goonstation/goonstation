@@ -144,8 +144,8 @@
 	..()
 	src.attack_particle = new /obj/particle/attack //don't use pooling for these particles
 	src.attack_particle.appearance_flags = TILE_BOUND
-	src.attack_particle.filters = filter (type="blur", size=0.2)
-	src.attack_particle.filters += filter (type="drop_shadow", x=1, y=-1, size=0.7)
+	src.attack_particle.add_filter("attack blur", 1, gauss_blur_filter(size=0.2))
+	src.attack_particle.add_filter("attack drop shadow", 2, drop_shadow_filter(x=1, y=-1, size=0.7))
 
 	src.sprint_particle = new /obj/particle/attack/sprint //don't use pooling for these particles
 
@@ -169,13 +169,6 @@
 		icon = 'icons/mob/mob.dmi'
 		alpha = 255
 		plane = PLANE_OVERLAY_EFFECTS
-
-		unpooled()
-			..()
-			src.alpha = 255
-
-		pooled()
-			..()
 
 
 
@@ -473,7 +466,7 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color, var/offset=25)
 	if (!A || firing_angle == null || !muzzle_anim) return
 
-	var/obj/particle/attack/muzzleflash/muzzleflash = unpool(/obj/particle/attack/muzzleflash)
+	var/obj/particle/attack/muzzleflash/muzzleflash = new /obj/particle/attack/muzzleflash
 
 	if(isnull(muzzle_light_color))
 		muzzle_light_color = default_muzzle_flash_colors[muzzle_anim]
@@ -498,7 +491,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 	SPAWN_DBG(0.6 SECONDS)
 		A.vis_contents.Remove(muzzleflash)
-		pool(muzzleflash)
+		qdel(muzzleflash)
 
 
 
@@ -670,6 +663,19 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			animate(time = 0.5, transform = matrix().Turn(-angle), easing = JUMP_EASING, pixel_x = -offx, pixel_y = -offy, flags = ANIMATION_RELATIVE)
 			sleep(0.1 SECONDS)
 
+/proc/violent_standup_twitch_parametrized(var/atom/A, var/off_x = 3, var/off_y = 2, var/input_angle = 45, var/iterations = 7, var/sleep_length = 0.1 SECONDS, var/effect_scale = 1)
+	SPAWN_DBG(-1)
+		var/offx = off_x
+		var/offy = off_y
+		var/angle = input_angle
+		for (var/i = 0, (i < iterations && A), i++)
+			offx = rand(-off_x, off_x) * effect_scale
+			offy = rand(-off_y, off_y) * effect_scale
+			angle = rand(-angle, angle) * effect_scale
+			animate(A, time = 0.5, transform = matrix().Turn(angle), easing = JUMP_EASING, pixel_x = offx, pixel_y = offy, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
+			animate(time = 0.5, transform = matrix().Turn(-angle), easing = JUMP_EASING, pixel_x = -offx, pixel_y = -offy, flags = ANIMATION_RELATIVE)
+			sleep(sleep_length)
+
 /proc/eat_twitch(var/atom/A)
 	var/matrix/squish_matrix = matrix(A.transform)
 	squish_matrix.Scale(1,0.92)
@@ -783,9 +789,9 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		return
 	if (!isnum(amount) || !isnum(x_severity) || !isnum(y_severity))
 		return
-	amount = max(1,min(amount,50))
-	x_severity = max(-32,min(x_severity,32))
-	y_severity = max(-32,min(y_severity,32))
+	amount = clamp(amount, 1, 50)
+	x_severity = clamp(x_severity, -32, 32)
+	y_severity = clamp(y_severity, -32, 32)
 
 	var/x_severity_inverse = 0 - x_severity
 	var/y_severity_inverse = 0 - y_severity
@@ -901,6 +907,46 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
 	return
 
+/proc/animate_peel_slip(atom/A, dir=null, T=0.55 SECONDS, height=16, stun_duration = 2 SECONDS, n_flips=1)
+	if(!A.rest_mult)
+		animate(A) // stop current animations, might be safe to remove later
+		var/matrix/M = A.transform
+		if(isnull(dir))
+			if(A.dir == EAST)
+				dir = "L"
+			else if(A.dir == WEST)
+				dir = "R"
+			else
+				dir = pick("L", "R")
+
+		var/turn = -90
+		if (dir == "R")
+			turn = 90
+
+		var/flip_anim_step_time = T / (1 + 4 * n_flips)
+		animate(A, transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time, flags = ANIMATION_PARALLEL)
+		for(var/i in 1 to n_flips)
+			animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
+			animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
+			animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
+			animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
+		var/matrix/M2 = A.transform
+		animate(transform = matrix(M, 1.2, 0.7, MATRIX_SCALE | MATRIX_MODIFY), time = T/8)
+		animate(transform = M2, time = T/8)
+
+		animate(A, pixel_y=height, time=T/2, flags=ANIMATION_PARALLEL)
+		animate(pixel_y=-4, time=T/2)
+
+		A.rest_mult = turn / 90
+
+	if(isliving(A))
+		var/mob/living/L = A
+		if(!A.hasStatus("weakened"))
+			L.changeStatus("weakened", stun_duration)
+			L.force_laydown_standup()
+		if(!L.lying) // oh no, they didn't fall down actually, time to unflip them 😰
+			animate_rest(L, TRUE)
+
 /proc/animate_handspider_flipoff(var/atom/A, var/dir = "L", var/T = 1, var/looping = -1)
 	if (!istype(A))
 		return
@@ -994,7 +1040,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(stand)
 		animate(A, pixel_x = 0, pixel_y = 0, transform = A.transform.Turn(A.rest_mult * -90), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 		A.rest_mult = 0
-	else
+	else if(!A.rest_mult)
 		var/fall_left_or_right = pick(1, -1) //A multiplier of one makes the atom rotate to the right, negative makes them fall to the left.
 		animate(A, pixel_x = 0, pixel_y = -4, transform = A.transform.Turn(fall_left_or_right * 90), time = 2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 		A.rest_mult = fall_left_or_right
@@ -1072,7 +1118,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/turf/target_turf = get_turf(target)
 	if (!target_turf)
 		return
-	var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
+	var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)
@@ -1080,7 +1126,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	SPAWN_DBG(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
-			pool(swirl)
+			qdel(swirl)
 	return
 
 /proc/leaveresidual(var/atom/target)
@@ -1091,11 +1137,11 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		return
 	if (locate(/obj/decal/residual_energy) in target_turf)
 		return
-	var/obj/decal/residual_energy/e = unpool(/obj/decal/residual_energy)
+	var/obj/decal/residual_energy/e = new /obj/decal/residual_energy
 	e.set_loc(target_turf)
 	SPAWN_DBG(10 SECONDS)
 		if (e)
-			pool(e)
+			qdel(e)
 	return
 
 /proc/leavepurge(var/atom/target, var/current_increment, var/sword_direction)
@@ -1108,16 +1154,16 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(current_increment == 9)
 		if (locate(/obj/decal/purge_beam_end) in target_turf)
 			return
-		e = unpool(/obj/decal/purge_beam_end)
+		e = new /obj/decal/purge_beam_end
 	else
 		if (locate(/obj/decal/purge_beam) in target_turf)
 			return
-		e = unpool(/obj/decal/purge_beam)
+		e = new /obj/decal/purge_beam
 	e.set_loc(target_turf)
 	e.dir = sword_direction
 	SPAWN_DBG(7)
 		if (e)
-			pool(e)
+			qdel(e)
 	return
 
 /proc/leavescan(var/atom/target, var/scan_type)
@@ -1130,15 +1176,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(scan_type == 0)
 		if (locate(/obj/decal/syndicate_destruction_scan_center) in target_turf)
 			return
-		e = unpool(/obj/decal/syndicate_destruction_scan_center)
+		e = new /obj/decal/syndicate_destruction_scan_center
 	else
 		if (locate(/obj/decal/syndicate_destruction_scan_side) in target_turf)
 			return
-		e = unpool(/obj/decal/syndicate_destruction_scan_side)
+		e = new /obj/decal/syndicate_destruction_scan_side
 	e.set_loc(target_turf)
 	SPAWN_DBG(7)
 		if (e)
-			pool(e)
+			qdel(e)
 	return
 
 /proc/sponge_size(var/atom/A, var/size = 1)
@@ -1186,7 +1232,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	sleep(1.5 SECONDS)
 
 /proc/heavenly_spawn(var/atom/movable/A)
-	var/obj/heavenly_light/lightbeam = new /obj/heavenly_light
+	var/obj/effects/heavenly_light/lightbeam = new /obj/effects/heavenly_light
 	lightbeam.set_loc(A.loc)
 	var/was_anchored = A.anchored
 	var/oldlayer = A.layer
@@ -1213,7 +1259,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		var/mob/M = A
 		REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 
-/obj/heavenly_light
+/obj/effects/heavenly_light
 	icon = 'icons/obj/large/32x192.dmi'
 	icon_state = "heavenlight"
 	layer = EFFECTS_LAYER
@@ -1271,14 +1317,14 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "lava_floor"
 	anchored = TRUE
-	event_handler_flags = USE_HASENTERED
+	plane = PLANE_UNDERFLOOR
+	layer = -100
 
 	New()
 		. = ..()
-		src.plane = PLANE_UNDERFLOOR - 1
 		src.icon_state = pick("lava_floor", "lava_floor_bubbling", "lava_floor_bubbling2")
 
-	HasEntered(atom/movable/AM, atom/OldLoc)
+	Crossed(atom/movable/AM)
 		. = ..()
 		if (isliving(AM))
 			var/mob/living/M = AM
@@ -1293,15 +1339,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_scanning(var/atom/target, var/color, var/time=18, var/alpha_hex="96")
 	var/fade_time = time / 2
-	target.filters += filter(type = "layer", blend_mode = BLEND_INSET_OVERLAY, icon = scanline_icon, color = color + "00")
-	var/filter = target.filters[target.filters.len]
+	target.add_filter("scan lines", 1, layering_filter(blend_mode = BLEND_INSET_OVERLAY, icon = scanline_icon, color = color + "00"))
+	var/filter = target.get_filter("scan lines")
 	if(!filter) return
 	animate(filter, y = -28, easing = QUAD_EASING, time = time)
 	// animate(y = 0, easing = QUAD_EASING, time = time / 2) // TODO: add multiple passes option later
 	animate(color = color + alpha_hex, time = fade_time, flags = ANIMATION_PARALLEL, easing = QUAD_EASING | EASE_IN)
 	animate(color = color + "00", time = fade_time, easing = QUAD_EASING | EASE_IN)
 	SPAWN_DBG(time)
-		target.filters -= filter
+		target.remove_filter("scan lines")
 
 /proc/animate_storage_thump(var/atom/A, wiggle=6)
 	if(!istype(A))
@@ -1421,31 +1467,30 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		T.RL_Init()
 
 /proc/animate_open_from_floor(atom/A, time=1 SECOND, self_contained=1)
-	A.filters += filter(type="alpha", icon='icons/effects/white.dmi', x=16)
-	A.filters += filter(type="alpha", icon='icons/effects/black.dmi', x=-16) // has to be a different dmi because byond
-	animate(A.filters[A.filters.len], x=0, time=time, easing=CUBIC_EASING | EASE_IN)
-	animate(A.filters[A.filters.len - 1], x=0, time=time, easing=CUBIC_EASING | EASE_IN, flags=ANIMATION_PARALLEL)
+	A.add_filter("alpha white", 200, alpha_mask_filter(icon='icons/effects/white.dmi', x=16))
+	A.add_filter("alpha black", 201, alpha_mask_filter(icon='icons/effects/black.dmi', x=-16)) // has to be a different dmi because byond
+	animate(A.get_filter("alpha black"), x=0, time=time, easing=CUBIC_EASING | EASE_IN)
+	animate(A.get_filter("alpha white"), x=0, time=time, easing=CUBIC_EASING | EASE_IN, flags=ANIMATION_PARALLEL)
 	if(self_contained) // assume we're starting from being invisible
 		A.alpha = 255
 	if(self_contained)
 		SPAWN_DBG(time)
-			A.filters.len -= 2
+			A.remove_filter(list("alpha white", "alpha black"))
 
 /proc/animate_close_into_floor(atom/A, time=1 SECOND, self_contained=1)
-	A.filters += filter(type="alpha", icon='icons/effects/white.dmi', x=0)
-	A.filters += filter(type="alpha", icon='icons/effects/black.dmi', x=0) // has to be a different dmi because byond
-	animate(A.filters[A.filters.len], x=-16, time=time, easing=CUBIC_EASING | EASE_IN)
-	animate(A.filters[A.filters.len - 1], x=16, time=time, easing=CUBIC_EASING | EASE_IN, flags=ANIMATION_PARALLEL)
+	A.add_filter("alpha white", 200, alpha_mask_filter(icon='icons/effects/white.dmi', x=0))
+	A.add_filter("alpha black", 201, alpha_mask_filter(icon='icons/effects/black.dmi', x=0)) // has to be a different dmi because byond
+	animate(A.get_filter("alpha black"), x=-16, time=time, easing=CUBIC_EASING | EASE_IN)
+	animate(A.get_filter("alpha white"), x=16, time=time, easing=CUBIC_EASING | EASE_IN, flags=ANIMATION_PARALLEL)
 	if(self_contained)
 		SPAWN_DBG(time)
-			A.filters.len -= 2
+			A.remove_filter(list("alpha white", "alpha black"))
 			A.alpha = 0
 
 //size_max really can't go higher than 0.2 on 32x32 sprites that are sized about the same as humans. Can go higher on larger sprite resolutions or smaller sprites that are in the center, like cigarettes or coins.
 /proc/anim_f_ghost_blur(atom/A, var/size_min = 0.075 as num, var/size_max=0.18 as num)
-	A.filters += filter(type="radial_blur",size=size_min)
-
-	animate(A.filters[A.filters.len], time = 10, size=size_max, loop=-1,easing = SINE_EASING, flags=ANIMATION_PARALLEL)
+	A.add_filter("ghost_blur", 0, gauss_blur_filter(size=size_min))
+	animate(A.get_filter("ghost_blur"), time = 10, size=size_max, loop=-1,easing = SINE_EASING, flags=ANIMATION_PARALLEL)
 	animate(time = 10, size=size_min, loop=-1,easing = SINE_EASING)
 
 /proc/animate_bouncy(atom/A) // little bouncy dance for admin and mentor mice, could be used for other stuff
@@ -1459,7 +1504,6 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_wave(atom/A, waves=7) // https://secure.byond.com/docs/ref/info.html#/{notes}/filters/wave
 	if (!istype(A))
 		return
-	var/start = A.filters.len
 	var/X,Y,rsq,i,f
 	for(i=1, i<=waves, ++i)
 		// choose a wave with a random direction and a period between 10 and 30 pixels
@@ -1470,11 +1514,11 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		while(rsq<100 || rsq>900)   // keep trying if we don't like the numbers
 		// keep distortion (size) small, from 0.5 to 3 pixels
 		// choose a random phase (offset)
-		A.filters += filter(type="wave", x=X, y=Y, size=rand()*2.5+0.5, offset=rand())
+		A.add_filter("wave-[i]", i, wave_filter(x=X, y=Y, size=rand()*2.5+0.5, offset=rand()))
 	for(i=1, i<=waves, ++i)
 		// animate phase of each wave from its original phase to phase-1 and then reset;
 		// this moves the wave forward in the X,Y direction
-		f = A.filters[start+i]
+		f = A.get_filter("wave-[i]")
 		animate(f, offset=f:offset, time=0, loop=-1, flags=ANIMATION_PARALLEL)
 		animate(offset=f:offset-1, time=rand()*20+10)
 
@@ -1484,7 +1528,26 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	var/filter,size
 	for(var/i=1, i<=ripples, ++i)
 		size=rand()*2.5+1
-		A.filters += filter(type="ripple", x=0, y=0, size=size, repeat=rand()*2.5+1, radius=0)
-		filter = A.filters[A.filters.len]
+		A.add_filter("ripple-[i]", i, ripple_filter(x=0, y=0, size=size, repeat=rand()*2.5+1, radius=0))
+		filter = A.get_filter("ripple-[i]")
 		animate(filter, size=size, time=0, loop=-1, radius=0, flags=ANIMATION_PARALLEL)
 		animate(size=0, radius=rand()*10+10, time=rand()*20+10)
+
+/proc/animate_stomp(atom/A, stomp_height=8, stomps=3, stomp_duration=0.7 SECONDS)
+	var/mob/M = A
+	if(ismob(A))
+		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, "hatstomp")
+		M.update_canmove()
+	var/one_anim_duration = stomp_duration / 2 / stomps
+	for(var/i = 0 to stomps - 1)
+		if(i == 0)
+			animate(A, time=one_anim_duration, pixel_y=stomp_height, easing=SINE_EASING | EASE_OUT, flags=ANIMATION_PARALLEL)
+		else
+			animate(time=one_anim_duration, pixel_y=stomp_height, easing=SINE_EASING | EASE_OUT)
+		animate(time=one_anim_duration, pixel_y=0, easing=SINE_EASING | EASE_IN)
+	if(ismob(A))
+		SPAWN_DBG(stomp_duration)
+			REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, "hatstomp")
+			M.update_canmove()
+
+

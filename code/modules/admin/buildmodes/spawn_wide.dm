@@ -32,7 +32,9 @@ change the direction of created objects.<br>
 			boutput(usr, delete_area ? "<span class='alert'>Now also deleting areas!</span>" : "<span class='alert'>Now not deleting areas!</span>")
 			return
 
-		objpath = get_one_match(input("Type path", "Type path", "/obj/closet"), /atom)
+		if (!objpath)
+			objpath = /obj/critter/domestic_bee/heisenbee
+		objpath = get_one_match(input("Type path", "Type path", "[objpath]"), /atom)
 		update_button_text(objpath)
 		A = null
 		usr.client?.images -= marker
@@ -68,8 +70,8 @@ change the direction of created objects.<br>
 					//sp.onVarChanged("dir", 2, holder.dir)
 				switch(cinematic)
 					if("Telepad")
-						var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
-						var/obj/decal/fakeobjects/teleport_pad/pad = unpool(/obj/decal/fakeobjects/teleport_pad)
+						var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
+						var/obj/decal/fakeobjects/teleport_pad/pad = new /obj/decal/fakeobjects/teleport_pad
 						swirl.mouse_opacity = 0
 						pad.mouse_opacity = 0
 						pad.loc = Q
@@ -98,12 +100,12 @@ change the direction of created objects.<br>
 							sleep(0.5 SECONDS)
 							swirl.mouse_opacity = 1
 							pad.mouse_opacity = 1
-							pool(swirl)
-							pool(pad)
+							qdel(swirl)
+							qdel(pad)
 					if("Fancy and Inefficient yet Laggy Telepad")
 						SPAWN_DBG(cnt/10)
-							var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
-							var/obj/decal/fakeobjects/teleport_pad/pad = unpool(/obj/decal/fakeobjects/teleport_pad)
+							var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
+							var/obj/decal/fakeobjects/teleport_pad/pad = new /obj/decal/fakeobjects/teleport_pad
 							swirl.mouse_opacity = 0
 							pad.mouse_opacity = 0
 							pad.loc = Q
@@ -132,8 +134,8 @@ change the direction of created objects.<br>
 							sleep(0.5 SECONDS)
 							swirl.mouse_opacity = 1
 							pad.mouse_opacity = 1
-							pool(swirl)
-							pool(pad)
+							qdel(swirl)
+							qdel(pad)
 
 					if("Blink")
 						var/atom/A = 0

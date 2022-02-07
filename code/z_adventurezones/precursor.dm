@@ -589,7 +589,7 @@
 
 					SPAWN_DBG(0.6 SECONDS)
 						for (var/obj/O in lineObjs)
-							pool(O)
+							qdel(O)
 						light.disable()
 
 
@@ -856,7 +856,7 @@
 			if(!src.active)
 				src.active = 1
 				src.set_density(1)
-				src.invisibility = 0
+				src.invisibility = INVIS_NONE
 				changing_state = 1
 				playsound(src.loc, "sound/effects/shielddown.ogg", 60, 1)
 				src.visible_message("<span class='notice'><b>[src] powers up!</b></span>")
@@ -872,7 +872,7 @@
 			if(src.active)
 				src.active = 0
 				src.set_density(0)
-				src.invisibility = 100
+				src.invisibility = INVIS_ALWAYS_ISH
 				playsound(src.loc, "sound/effects/shielddown2.ogg", 60, 1)
 				src.visible_message("<span class='notice'><b>[src] powers down!</b></span>")
 				changing_state = 1
@@ -907,7 +907,7 @@
 			var/mob/living/carbon/user = AM
 			src.shock(user)
 
-	Bump(atom/movable/AM as mob)
+	bump(atom/movable/AM as mob)
 		if(iscarbon(AM))
 			var/mob/living/carbon/user = AM
 			src.shock(user)
@@ -1128,11 +1128,11 @@
 	New()
 		..()
 		if(jumpsuit)
-			overlays += image('icons/mob/jumpsuits/worn_js_rank.dmi', "[jumpsuit]")
+			overlays += image('icons/mob/clothing/jumpsuits/worn_js_rank.dmi', "[jumpsuit]")
 		if(oversuit)
-			overlays += image('icons/mob/overcoats/worn_suit.dmi', "[oversuit]")
+			overlays += image('icons/mob/clothing/overcoats/worn_suit.dmi', "[oversuit]")
 		if(overarmor)
-			overlays += image('icons/mob/overcoats/worn_suit_armor.dmi', "[jumpsuit]")
+			overlays += image('icons/mob/clothing/overcoats/worn_suit_armor.dmi', "[jumpsuit]")
 
 	process()
 		..()
@@ -1170,7 +1170,7 @@
 		overarmor = "heavy"
 
 /obj/effects/ydrone_summon //WIP
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	var/range = 5
 	var/end_float_effect = 0
@@ -1195,9 +1195,9 @@
 			else
 				T_effect_prob = 100 * (1 - (max(T_dist-1,1) / range))
 			if (prob(8) && limiter.canISpawn(/obj/effects/sparks))
-				var/obj/sparks = unpool(/obj/effects/sparks)
+				var/obj/sparks = new /obj/effects/sparks
 				sparks.set_loc(T)
-				SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+				SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 
 			for (var/obj/item/I in T)
 				if ( prob(T_effect_prob) )
@@ -1230,9 +1230,9 @@
 				SPAWN_DBG(rand(80, 100))
 					if (T)
 						playsound(T, pick('sound/effects/elec_bigzap.ogg', 'sound/effects/elec_bzzz.ogg', 'sound/effects/electric_shock.ogg'), 50, 0)
-						var/obj/somesparks = unpool(/obj/effects/sparks)
+						var/obj/somesparks = new /obj/effects/sparks
 						somesparks.set_loc(T)
-						SPAWN_DBG(2 SECONDS) if (somesparks) pool(somesparks)
+						SPAWN_DBG(2 SECONDS) if (somesparks) qdel(somesparks)
 						var/list/tempEffect
 						if (temp_effect_limiter-- > 0)
 							tempEffect = DrawLine(src, somesparks, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
@@ -1248,11 +1248,12 @@
 						else
 							T.ex_act(clamp(T_dist-2,1,3))
 							for (var/atom/A in T)
+								if(A.z != T.z) continue
 								A.ex_act(clamp(T_dist-2,1,3))
 
 						sleep(0.6 SECONDS)
 						for (var/obj/O in tempEffect)
-							pool(O)
+							qdel(O)
 
 
 		sleep (100)
@@ -1330,24 +1331,24 @@
 
 		SPAWN_DBG(0.6 SECONDS)
 			for (var/obj/O in lineObjs)
-				pool(O)
+				qdel(O)
 
 			dispose()
 
 
 	die()
-		pool(src)
+		qdel(src)
 
 /obj/creepy_sound_trigger
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	var/active = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(active) return
 		if(ismob(AM))
 			if(AM:client)
@@ -1361,13 +1362,13 @@
 /obj/creepy_sound_trigger_glacier
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	var/active = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(active) return
 		if(ismob(AM))
 			if(AM:client)

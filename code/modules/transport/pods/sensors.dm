@@ -21,7 +21,7 @@
 	var/antisight = 0
 	var/centerlight = null
 	var/centerlight_color = "#ffffff"
-	var/see_invisible = 2
+	var/see_invisible = INVIS_CLOAK
 	var/scanning = 0
 	var/atom/tracking_target = null
 	var/const/SENSOR_REFRESH_RATE = 10
@@ -43,7 +43,7 @@
 		M.sight &= ~SEE_MOBS
 		M.sight &= ~SEE_OBJS
 		M.see_in_dark = initial(M.see_in_dark)
-		M.see_invisible = 0
+		M.see_invisible = INVIS_NONE
 		end_tracking()
 		scanning = 0
 
@@ -235,9 +235,9 @@
 		scanning = 1
 		if (href_list["dest_cords"])
 			tracking_target = null
-			var/x = text2num(href_list["x"])
-			var/y = text2num(href_list["y"])
-			var/z = text2num(href_list["z"])
+			var/x = text2num_safe(href_list["x"])
+			var/y = text2num_safe(href_list["y"])
+			var/z = text2num_safe(href_list["z"])
 			if (!x || !y/* || !z*/)
 				boutput(usr, "<span class='alert'>'0' is an invalid gps coordinate. Try again.</span>")
 				return
@@ -415,7 +415,7 @@ proc/build_html_gps_form(var/atom/A, var/show_Z=0, var/atom/target)
 /obj/item/shipcomponent/sensor/ecto
 	name = "Ecto-Sensor 900"
 	desc = "The number one choice for reasearchers of the supernatural."
-	see_invisible = 15
+	see_invisible = INVIS_GHOST
 	power_used = 40
 	icon_state = "sensor-g"
 

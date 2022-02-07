@@ -5,7 +5,7 @@
 	icon_state = "repo"
 	item_state = "repo"
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	item_function_flags = IMMUNE_TO_ACID
 	contraband = 3
 	body_parts_covered = TORSO|LEGS|ARMS
@@ -24,9 +24,8 @@
 	desc = "How is the visor glowing like that?"
 	icon_state = "repo"
 	item_state = "repo"
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	wear_image_icon = 'icons/mob/head.dmi'
 	item_function_flags = IMMUNE_TO_ACID
+	blocked_from_petasusaphilic = TRUE
 	color_r = 0.7
 	color_g = 0.7
 	color_b = 0.9
@@ -97,6 +96,7 @@
 	name = "syndicate beret"
 	desc = "A Syndicate officer's beret."
 	icon_state = "beret_base"
+	blocked_from_petasusaphilic = TRUE
 
 	New()
 		..()
@@ -122,7 +122,7 @@ obj/item/ammo/bullets/flechette_mag
 	icon_state = "flech_mag"
 	amount_left = 24.0
 	max_amount = 24.0
-	caliber = 0.065 // the actual diameter of the flechette once free of the sabot
+	ammo_cat = AMMO_FLECHETTE // the actual diameter of the flechette once free of the sabot
 	sound_load = 'sound/weapons/gunload_hitek.ogg'
 
 /datum/projectile/bullet/flechette
@@ -137,7 +137,6 @@ obj/item/ammo/bullets/flechette_mag
 	hit_type = DAMAGE_STAB
 	shot_number = 2
 	shot_delay = 0.7
-	caliber = 0.065
 	dissipation_delay = 10
 	dissipation_rate = 3
 	projectile_speed = 56
@@ -155,16 +154,25 @@ obj/item/ammo/bullets/flechette_mag
 	uses_multiple_icon_states = 1
 	force = MELEE_DMG_RIFLE
 	contraband = 8
-	caliber = 0.065 // this is the flechette diameter, which is telescoped in a polymer case.
+	ammo_cats = list(AMMO_FLECHETTE)
 	max_ammo_capacity = 24
 	can_dual_wield = 0
 	two_handed = 1
 	auto_eject = 1
-	object_flags = NO_ARM_ATTACH
 	w_class = W_CLASS_NORMAL
 	spread_angle = 3
+	default_magazine = /obj/item/ammo/bullets/flechette_mag
 
 	New()
-		ammo = new/obj/item/ammo/bullets/flechette_mag
+		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/flechette)
 		..()
+
+// Office
+/obj/item/reagent_containers/food/drinks/flask/taskumatti
+	name = "taskumatti"
+	desc = "Korpikuusen kyynel...? "
+	icon = 'icons/obj/foodNdrink/bottle.dmi'
+	icon_state = "taskumatti"
+	item_state = "taskumatti"
+	initial_reagents = list("omnizine"=10,"energydrink"=10,"methamphetamine"=10,"bourbon"=10)

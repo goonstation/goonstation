@@ -93,7 +93,7 @@
 					. += "The authenticaion disk has been inserted."
 
 			if (!src.anchored)
-				. += "The floor bolts have been unsecured. The bomb can be moved around."
+				. += "The floor bolts are unsecure. The bomb can be moved around."
 			else
 				. += "It is firmly anchored to the floor by its floor bolts."
 
@@ -153,6 +153,8 @@
 								command_alert("\A [src] has been armed in [A]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [A] to disarm the bomb immediately.", "Nuclear Weapon Detected")
 								playsound_global(world, "sound/machines/bomb_planted.ogg", 90)
 								logTheThing("bombing", user, null, "armed [src] at [log_loc(src)].")
+								if(istype(NUKEMODE, /datum/game_mode/nuclear))
+									NUKEMODE.shuttle_available = 0
 
 					else
 						boutput(user, "<span class='alert'>Deployment area definition missing or invalid! Please report this to a coder.</span>")
@@ -193,6 +195,9 @@
 
 					if (user.mind && user.mind.assigned_role == "Captain") //the fat frog did it!
 						user.unlock_medal("Brown Pants", 1)
+
+					if(istype(ticker.mode, /datum/game_mode/nuclear))
+						ticker.mode.shuttle_available = 1
 
 				playsound(src.loc, "sound/machines/ping.ogg", 100, 0)
 				logTheThing("bombing", user, null, "inserted [W.name] into [src] at [log_loc(src)], modifying the timer by [timer_modifier / 10] seconds.")
@@ -307,7 +312,7 @@
 		return timeleft
 
 	proc/take_damage(var/amount)
-		if(!isitspacemas)
+		if(startswith(src.icon_state, "nuclearbomb") && src.icon == initial(src.icon))
 			switch(src._health)
 				if(80 to 125)
 					src.icon_state = "nuclearbomb1"

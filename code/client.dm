@@ -522,10 +522,14 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			src.cmd_rp_rules()
 #endif
 		//Cloud data
+#ifdef LIVE_SERVER
 		if (cdn)
 			if(!cloud_available())
 				src.player.cloud_fetch()
-
+#else
+		// dev server, uses local save file to simulate clouddata
+		if (src.player.cloud_fetch()) // might needlessly reload, but whatever.
+#endif
 			if(cloud_available())
 				src.load_antag_tokens()
 				src.load_persistent_bank()
@@ -538,6 +542,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							volumes += src.getRealVolume(VOLUME_CHANNEL_GAME)
 						else
 							volumes += old_volumes[i]
+
+				// Show login notice, if one exists
+				src.show_login_notice()
 
 		src.mob.reset_keymap()
 
@@ -645,6 +652,12 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	if(istype(composite))
 		for(var/datum/abilityHolder/inner_holder in composite.holders)
 			inner_holder.locked = FALSE
+
+	if(spooky_light_mode)
+		var/atom/plane_parent = src.get_plane(PLANE_LIGHTING)
+		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
+		src.color = "#AAAAAA"
+
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
@@ -796,13 +809,16 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		load_persistent_bank()
 		if(!persistent_bank_valid)
 			return
-	var/new_bank_value = persistent_bank + amt
-	src.set_persistent_bank(new_bank_value)
+	var/list/earnings = list((ckey) = list("persistent_bank" = list("command" = "add", "value" = amt)))
+	cloud_put_bulk(json_encode(earnings))
+	persistent_bank += amt
 
 /client/proc/sub_from_bank(datum/bank_purchaseable/purchase)
 	add_to_bank(-purchase.cost)
 
 /client/proc/bank_can_afford(amt as num)
+	player.cloud_fetch_data_only()
+	load_persistent_bank()
 	var/new_bank_value = persistent_bank - amt
 	if (new_bank_value >= 0)
 		return 1
@@ -912,25 +928,11 @@ var/global/curr_day = null
 /client/verb/changeServer(var/server as text)
 	set name = "Change Server"
 	set hidden = 1
-	var/serverURL
-	var/serverName
-	switch (server)
-		if (1, "main1")
-			serverName = "Goonstation 1 Classic: Heisenbee"
-			serverURL = "byond://goon1.goonhub.com:26100"
-		if (2, "main2")
-			serverName = "Goonstation 2 Classic: Bombini"
-			serverURL = "byond://goon2.goonhub.com:26200"
-		if (3, "main3")
-			serverName = "Goonstation 3 Roleplay: Morty"
-			serverURL = "byond://goon3.goonhub.com:26300"
-		if (4, "main4")
-			serverName = "Goonstation 4 Roleplay: Sylvester"
-			serverURL = "byond://goon4.goonhub.com:26400"
+	var/datum/game_server/game_server = global.game_servers.find_server(server)
 
-	if (serverURL)
-		boutput(usr, "You are being redirected to [serverName]...")
-		usr << link(serverURL)
+	if (server)
+		boutput(usr, "You are being redirected to [game_server.name]...")
+		usr << link(game_server.url)
 
 
 /*
@@ -970,7 +972,7 @@ var/global/curr_day = null
 	var/mob/M
 	if (href_list["target"])
 		var/targetCkey = href_list["target"]
-		M = whois_ckey_to_mob_reference(targetCkey)
+		M = ckey_to_mob(targetCkey)
 
 	switch(href_list["action"])
 		if ("priv_msg_irc")
@@ -1013,7 +1015,7 @@ var/global/curr_day = null
 			var/target = href_list["nick"]
 			var/t = input("Message:", text("Mentor Message")) as null|text
 			if(!(src.holder && (src.holder.rank in list("Host", "Coder"))))
-				t = strip_html(t,500)
+				t = strip_html(t, 1500)
 			if (!( t ))
 				return
 			boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [target] (Discord)</b>: <span class='message'>[t]</span></span>")
@@ -1049,9 +1051,9 @@ var/global/curr_day = null
 
 				var/t = input("Message:", text("Mentor Message")) as null|text
 				if (href_list["target"])
-					M = whois_ckey_to_mob_reference(href_list["target"])
+					M = ckey_to_mob(href_list["target"])
 				if (!(src.holder && (src.holder.rank in list("Host", "Coder"))))
-					t = strip_html(t,500)
+					t = strip_html(t, 1500)
 				if (!( t ))
 					return
 				if (!src || !src.mob) //ZeWaka: Fix for null.client
@@ -1112,6 +1114,10 @@ var/global/curr_day = null
 		if("resourcePreloadComplete")
 			boutput(src, "<span class='notice'><b>Preload completed.</b></span>")
 			src.Browse(null, "window=resourcePreload")
+			return
+
+		if ("loginnotice_ack")
+			src.acknowledge_login_notice()
 			return
 
 	. = ..()
@@ -1181,9 +1187,9 @@ var/global/curr_day = null
 
 	var/subtr_color = rgb(s_r, s_g, s_b)
 
-	var/si_r = max(min(input("Red spectrum intensity (0-1)", "Intensity", 1.0) as num, 1), 0)
-	var/si_g = max(min(input("Green spectrum intensity (0-1)", "Intensity", 1.0) as num, 1), 0)
-	var/si_b = max(min(input("Blue spectrum intensity (0-1)", "Intensity", 1.0) as num, 1), 0)
+	var/si_r = clamp(input("Red spectrum intensity (0-1)", "Intensity", 1.0) as num, 0, 1)
+	var/si_g = clamp(input("Green spectrum intensity (0-1)", "Intensity", 1.0) as num, 0, 1)
+	var/si_b = clamp(input("Blue spectrum intensity (0-1)", "Intensity", 1.0) as num, 0, 1)
 
 	var/multip_color = rgb(si_r * 255, si_g * 255, si_b * 255)
 
@@ -1413,7 +1419,7 @@ var/global/curr_day = null
 	src.resizeTooltipEvent()
 
 	//tell the interface helpers to recompute data
-	src.mapSizeHelper.update()
+	src.mapSizeHelper?.update()
 
 /client/verb/autoscreenshot()
 	set hidden = 1
@@ -1535,7 +1541,10 @@ input.text-color=[_SKIN_TEXT];\
 saybutton.background-color=[_SKIN_COMMAND_BG];\
 saybutton.text-color=[_SKIN_TEXT];\
 info.tab-background-color=[_SKIN_INFO_TAB_BG];\
-info.tab-text-color=[_SKIN_TEXT]"
+info.tab-text-color=[_SKIN_TEXT];\
+mainwindow.hovertooltip.background-color=[_SKIN_BG];\
+mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
+"
 
 /client/verb/sync_dark_mode()
 	set hidden=1

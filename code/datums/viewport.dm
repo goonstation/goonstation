@@ -24,7 +24,8 @@
 		handler.screen_loc = "map_[viewport_id]:1,1"
 		winshow( viewer, viewport_id, 1 )
 		viewer.screen += handler
-		for(var/atom/movable/screen/plane_parent/p in viewer.plane_parents)
+		for(var/plane_key in viewer.plane_parents)
+			var/atom/movable/screen/plane_parent/p = viewer.plane_parents[plane_key]
 			var/atom/movable/screen/plane_parent/dupe = new
 			dupe.plane = p.plane
 			dupe.appearance = p.appearance

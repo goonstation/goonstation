@@ -8,9 +8,10 @@
 	density = 0
 	opacity = 0
 	var/last_score = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
-	HasEntered(atom/M)
+	Crossed(atom/movable/M)
+		..()
 		if (istype(M, /obj/item/implant/projectile/bardart) && M.dir == 1)
 			M.pixel_y += rand(22,38)
 			M.pixel_x += rand(-8,8)

@@ -367,11 +367,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			return
 		for (var/turf/simulated/floor/target in range(1,location))
 			if(ON_COOLDOWN(target, "plasmastone_plasma_generate", 10 SECONDS)) continue
-			if(!target.blocks_air && target.air)
+			if(!target.gas_impermeable && target.air)
 				if(target.parent?.group_processing)
 					target.parent.suspend_group_processing()
 
-				var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
+				var/datum/gas_mixture/payload = new /datum/gas_mixture
 				payload.toxins = 25
 				total_plasma -= payload.toxins
 				payload.temperature = T20C
@@ -398,7 +398,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/datum/gas_mixture/air = target.return_air()
 		if(!air) return
 
-		var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
+		var/datum/gas_mixture/payload = new /datum/gas_mixture
 		payload.temperature = T20C
 		payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 
@@ -435,7 +435,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(maxexplode <= 0) return
 		var/turf/target = get_turf(location)
 		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
-			var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
+			var/datum/gas_mixture/payload = new /datum/gas_mixture
 			payload.oxygen = 50
 			payload.temperature = T20C
 			target.assume_air(payload)
@@ -534,7 +534,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/owner, var/atom/movable/entering)
 		if (isliving(entering) && isturf(owner) && prob(75))
 			var/mob/living/L = entering
-			if(L.slip())
+			if(L.slip(walking_matters = 1))
 				boutput(L, "You slip on the icy floor!")
 				playsound(owner, "sound/misc/slip.ogg", 30, 1)
 		return
@@ -674,6 +674,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		attacker.visible_message("<span class='alert'>[attacker] cuts [owner] into a sheet.</span>","<span class='notice'>You finish cutting [owner] into a sheet.</span>","The sound of cutting cardboard stops.")
 		var/obj/item/sheet/createdsheet = new /obj/item/sheet(get_turf(owner))
 		createdsheet.setMaterial(owner.material)
+		if (istype(owner, /obj/storage))
+			var/obj/storage/S = owner
+			S.dump_contents(attacker)
 		qdel(owner)
 	else if (istype(owner, /turf))
 		if (istype(owner, /turf/simulated/wall))

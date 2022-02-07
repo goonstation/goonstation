@@ -42,30 +42,33 @@
 				return
 		if (isscrewingtool(W) && src.circuit_type)
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if (do_after(user, 2 SECONDS))
-				var/obj/computerframe/A = new /obj/computerframe(src.loc)
-				if (src.status & BROKEN)
-					user.show_text("The broken glass falls out.", "blue")
-					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-					G.set_loc(src.loc)
-					A.state = 3
-					A.icon_state = "3"
-				else
-					user.show_text("You disconnect the monitor.", "blue")
-					A.state = 4
-					A.icon_state = "4"
-				var/obj/item/circuitboard/M = new src.circuit_type(A)
-				if (src.material)
-					A.setMaterial(src.material)
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.set_dir(src.dir)
-				A.circuit = M
-				A.anchored = 1
-				src.special_deconstruct(A)
-				qdel(src)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer/proc/unscrew_monitor,\
+			list(W, user), W.icon, W.icon_state, null, null)
 		else
 			src.Attackhand(user)
+
+	proc/unscrew_monitor(obj/item/W as obj, mob/user as mob)
+		var/obj/computerframe/A = new /obj/computerframe(src.loc)
+		if (src.status & BROKEN)
+			user.show_text("The broken glass falls out.", "blue")
+			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
+			G.set_loc(src.loc)
+			A.state = 3
+			A.icon_state = "3"
+		else
+			user.show_text("You disconnect the monitor.", "blue")
+			A.state = 4
+			A.icon_state = "4"
+		var/obj/item/circuitboard/M = new src.circuit_type(A)
+		if (src.material)
+			A.setMaterial(src.material)
+		for (var/obj/C in src)
+			C.set_loc(src.loc)
+		A.set_dir(src.dir)
+		A.circuit = M
+		A.anchored = 1
+		src.special_deconstruct(A)
+		qdel(src)
 
 	///Put the code for finding the stuff your computer needs in this proc
 	proc/connection_scan()
@@ -88,10 +91,11 @@
 /obj/machinery/computer/general_alert
 	name = "General Alert Computer"
 	icon_state = "alert:0"
+	circuit_type = /obj/item/circuitboard/general_alert
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
-	var/receive_frequency = "1437"
-	var/respond_frequency = "1149"
+	var/receive_frequency = FREQ_ALARM
+	var/respond_frequency = FREQ_PDA
 
 /obj/machinery/computer/hangar
 	name = "Hangar"

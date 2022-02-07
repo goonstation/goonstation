@@ -38,13 +38,13 @@
 
 	death(var/gibbed)
 		if (!gibbed)
-			playsound(src.loc, "sound/effects/splat.ogg", 100, 1)
+			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 			gibs(src.loc)
 			ghostize()
 			qdel(src)
 		else
-			playsound(src.loc, "sound/effects/splat.ogg", 100, 1)
+			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 			..()
 
@@ -118,7 +118,7 @@
 		HH.can_hold_items = 0
 		HH.can_attack = 1
 
-	Bump(atom/movable/AM)
+	bump(atom/movable/AM)
 		if(smashes_shit)
 			if(isobj(AM))
 				if (istype(AM, /obj/critter) || istype(AM, /obj/machinery/vehicle))
@@ -565,7 +565,7 @@
 		changeIcon()
 		..()
 
-	Bump(atom/O)
+	bump(atom/O)
 		. = ..()
 		changeIcon(0)
 		return .

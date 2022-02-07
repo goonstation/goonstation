@@ -119,7 +119,7 @@ MATERIAL
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			if(src.loc != user)
+			if(!in_interact_range(src, user) || !isnum_safe(splitnum))
 				return
 			splitnum = round(clamp(splitnum, 0, src.amount))
 			if(amount == 0)
@@ -133,6 +133,13 @@ MATERIAL
 			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [src.amount] sheets behind.</span>")
 		else
 			..(user)
+
+	split_stack(toRemove)
+		. = ..()
+		if(src.reinforcement)
+			var/obj/item/sheet/S = .
+			S.set_reinforcement(src.reinforcement)
+			. = S
 
 	attackby(obj/item/W, mob/user as mob)
 		if (istype(W, /obj/item/sheet))
@@ -186,11 +193,11 @@ MATERIAL
 			if (src.material && (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL))
 				var/makesheets = min(min(R.amount,src.amount),50)
 				var/sheetsinput = input("Reinforce how many sheets?","Min: 1, Max: [makesheets]",1) as num
-				if (sheetsinput < 1)
+				if (sheetsinput < 1 || !isnum_safe(sheetsinput))
 					return
 				sheetsinput = min(sheetsinput,makesheets)
 
-				if (!R) //Wire note: Fix for Cannot read null.material (the rods are getting destroyed during the input())
+				if (!in_interact_range(src, user) || !R) //moving, or the rods are getting destroyed during the input()
 					return
 
 				var/obj/item/sheet/S = new /obj/item/sheet(get_turf(user))
@@ -329,8 +336,11 @@ MATERIAL
 				if("rods")
 					var/makerods = min(src.amount,25)
 					var/rodsinput = input("Use how many sheets? (Get 2 rods for each sheet used)","Min: 1, Max: [makerods]",1) as num
-					if (rodsinput < 1) return
+					if (rodsinput < 1 || !isnum_safe(rodsinput)) return
 					rodsinput = min(rodsinput,makerods)
+
+					if (!in_interact_range(src, usr)) //no walking away
+						return
 
 					a_type = /obj/item/rods
 					a_amount = rodsinput * 2
@@ -342,8 +352,11 @@ MATERIAL
 				if("fl_tiles")
 					var/maketiles = min(src.amount,20)
 					var/tileinput = input("Use how many sheets? (Get 4 tiles for each sheet used)","Max: [maketiles]",1) as num
-					if (tileinput < 1) return
+					if (tileinput < 1 || !isnum_safe(tileinput)) return
 					tileinput = min(tileinput,maketiles)
+
+					if (!in_interact_range(src, usr)) //no walking away
+						return
 
 					a_type = /obj/item/tile
 					a_amount = tileinput * 4
@@ -574,8 +587,12 @@ MATERIAL
 				if("remetal")
 					// what the fuck is this
 					var/input = input("Use how many sheets?","Max: [src.amount]",1) as num
-					if (input < 1) return
+					if (input < 1 || !isnum_safe(input)) return
 					input = min(input,src.amount)
+
+					if (!in_interact_range(src, usr)) //no walking away
+						return
+
 					var/obj/item/sheet/C = new /obj/item/sheet(usr.loc)
 					var/obj/item/rods/R = new /obj/item/rods(usr.loc)
 					if(src.material)
@@ -707,6 +724,10 @@ MATERIAL
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many rods do you want to take from the stack?","Stack of [src.amount]",1) as num)
+
+			if (!in_interact_range(src, user) || !isnum_safe(splitnum)) //no walking away
+				return
+
 			var/obj/item/rods/new_stack = split_stack(splitnum)
 			if (!istype(new_stack))
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
@@ -737,6 +758,10 @@ MATERIAL
 				boutput(user, "<span class='notice'>You could make up to [makemetal] sheets by welding this stack.</span>")
 				weldinput = input("How many sheets do you want to make?","Welding",1) as num
 				makemetal = round(src.amount / 2) // could have changed during input()
+
+				if (!in_interact_range(src, user) || !isnum_safe(weldinput)) //no walking away
+					return
+
 				if (weldinput < 1) return
 				if (weldinput > makemetal) weldinput = makemetal
 			var/obj/item/sheet/M = new /obj/item/sheet/steel(user.loc)
@@ -794,7 +819,7 @@ MATERIAL
 					G.health = G.health_max
 					G.set_density(1)
 					G.ruined = 0
-					G.update_icon()
+					G.UpdateIcon()
 					if(src.material)
 						G.setMaterial(src.material)
 					boutput(user, "<span class='notice'>You repair the broken grille.</span>")
@@ -834,8 +859,8 @@ MATERIAL
 			update()
 
 	attack_hand(mob/user as mob)
-		if(heads.len)
-			var/obj/item/organ/head/head = heads[heads.len]
+		if(length(heads))
+			var/obj/item/organ/head/head = heads[length(heads)]
 
 			user.visible_message("<span class='alert'><B>[user.name] pulls [head.name] off of the spike!</B></span>")
 			head.set_loc(user.loc)
@@ -845,7 +870,7 @@ MATERIAL
 			head.pixel_y = rand(-8,8)
 			heads -= head
 
-			if(!heads.len)
+			if(!length(heads))
 				head_offset = 0
 			else
 				head_offset++
@@ -874,7 +899,7 @@ MATERIAL
 				boutput(user, "<span class='alert'>There isn't room on that spike for another head.</span>")
 				return
 
-			if(!heads.len) user.visible_message("<span class='alert'><B>[user.name] impales a [W.name] on the [src.name]!</B></span>")
+			if(!length(heads)) user.visible_message("<span class='alert'><B>[user.name] impales a [W.name] on the [src.name]!</B></span>")
 			else user.visible_message("<span class='alert'><B>[user.name] adds a [W.name] to the spike!</B></span>")
 
 			if(head_offset > 0) head_offset--
@@ -890,10 +915,10 @@ MATERIAL
 	proc/update()
 		src.overlays = null
 
-		if((heads.len < 3 && head_offset > 0) || heads.len == 0)
+		if((length(heads) < 3 && head_offset > 0) || length(heads) == 0)
 			src.overlays += image('icons/obj/metal.dmi',"head_spike_blood")
 
-		switch(heads.len) //fuck it
+		switch(length(heads)) //fuck it
 			if(0)
 				src.name = "bloody spike"
 				src.desc = "A bloody spike."
@@ -907,7 +932,7 @@ MATERIAL
 				src.name = "heads on a spike"
 				var/obj/item/organ/head/head1 = heads[1]
 				var/obj/item/organ/head/head2 = heads[2]
-				src.desc = "The heads of [head1.donor] and [head2.donor] impaled on a spike."
+				src.desc = "The heads of [head1.donor_original] and [head2.donor_original] impaled on a spike."
 				/*	This shit doesn't work ugh
 				src.desc = "The heads of [heads[1]:donor] and [heads[2]:donor] impaled on a spike."*/
 			if(3)
@@ -915,13 +940,13 @@ MATERIAL
 				var/obj/item/organ/head/head1 = heads[1]
 				var/obj/item/organ/head/head2 = heads[2]
 				var/obj/item/organ/head/head3 = heads[3]
-				src.desc = "The heads of [head1.donor], [head2.donor] and [head3.donor] impaled on a spike."
+				src.desc = "The heads of [head1.donor_original], [head2.donor_original] and [head3.donor_original] impaled on a spike."
 				/*	This shit doesn't work ugh
 				src.desc = "The heads of [heads[1]:donor], [heads[2]:donor] and [heads[3]:donor] impaled on a spike."*/
 
 
-		if(heads.len > 0)
-			var/pixely = 8 - 8*head_offset - length(8*heads)
+		if(length(heads) > 0)
+			var/pixely = 8 - 8*head_offset - 8*length(heads)
 			for(var/obj/item/organ/head/H in heads)
 				H.pixel_x = 0
 				H.pixel_y = pixely
@@ -934,11 +959,9 @@ MATERIAL
 		if(anchored)
 			src.overlays += image('icons/obj/metal.dmi',"head_spike_weld")
 
-		return
-
 
 	proc/has_space()
-		if(heads.len < 3) return 1
+		if(length(heads) < 3) return 1
 
 		return 0
 
@@ -1065,9 +1088,17 @@ MATERIAL
 		else
 			var/S = T
 			if (!( istype(S, /turf/space) || istype(S, /turf/simulated/floor/metalfoam)))
-				boutput(user, "You cannot build on or repair this turf!")
-				return
+				// If this isn't space or metal foam...
+				if (istype(T, /turf/simulated/floor))
+					// If it's still a floor, attempt to place or replace the floor tile
+					var/turf/simulated/floor/F = T
+					F.attackby(src, user)
+					tooltip_rebuild = 1
+				else
+					boutput(user, "You cannot build on or repair this turf!")
+					return
 			else
+				// Otherwise, try to build on top of it
 				src.build(S)
 				tooltip_rebuild = 1
 		src.add_fingerprint(user)
@@ -1078,7 +1109,7 @@ MATERIAL
 		if (!( istype(W, /obj/item/tile) ))
 			return
 		if (W.material && src.material && !isSameMaterial(W.material, src.material))
-			boutput(user, "<span class='alert'>You can't mix 2 stacks of different materials!</span>")
+			boutput(user, "<span class='alert'>You can't mix two stacks of different materials!</span>")
 			return
 		var/success = stack_item(W)
 		if (!success)
@@ -1091,7 +1122,7 @@ MATERIAL
 		else
 			boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [src.amount] tiles.</span>")
 		tooltip_rebuild = 1
-		if (!W.pooled)
+		if (!W.disposed)
 			W.add_fingerprint(user)
 			W.tooltip_rebuild = 1
 		return

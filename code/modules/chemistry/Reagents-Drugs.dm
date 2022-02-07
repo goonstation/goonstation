@@ -439,7 +439,12 @@ datum
 				if(M.client && probmult(5))
 					for (var/obj/critter/domestic_bee/bee in view(7,M))
 						var/chat_text = null
-						var/text = pick_smart_string("shit_bees_say_when_youre_high.txt", "strings", list("M"="[M]", "beeMom"=bee.beeMom ? bee.beeMom : "Mom", "other_bee"=istype(bee, /obj/critter/domestic_bee/sea) ? "Seabee" : "Spacebee"), bee)
+						var/text = pick_smart_string("shit_bees_say_when_youre_high.txt", "strings", list(
+							"M"="[M]",
+							"beeMom"=bee.beeMom ? bee.beeMom : "Mom",
+							"other_bee"=istype(bee, /obj/critter/domestic_bee/sea) ? "Spacebee" : "Seabee",
+							"bee"=istype(bee, /obj/critter/domestic_bee/sea) ? "Seabee" : "Spacebee"
+							))
 						if(!M.client.preferences.flying_chat_hidden)
 							var/speechpopupstyle = "font-family: 'Comic Sans MS'; font-size: 8px;"
 							chat_text = make_chat_maptext(bee, text, "color: [rgb(194,190,190)];" + speechpopupstyle, alpha = 140)
@@ -874,6 +879,11 @@ datum
 				if(hascall(holder.my_atom,"addOverlayComposition"))
 					holder.my_atom:addOverlayComposition(/datum/overlayComposition/triplemeth)
 
+				if(holder.has_reagent("synaptizine"))
+					holder.remove_reagent("synaptizine", 5 * mult)
+				if(holder.has_reagent("mannitol"))
+					holder.remove_reagent("mannitol", 5 * mult)
+
 				if(probmult(50)) M.emote(pick("twitch","blink_r","shiver"))
 				M.make_jittery(5)
 				M.make_dizzy(5 * mult)
@@ -933,6 +943,7 @@ datum
 			hunger_value = -0.09
 			thirst_value = -0.09
 			stun_resist = 50
+			var/purge_brain = TRUE
 
 			on_add()
 				if(ismob(holder?.my_atom))
@@ -941,6 +952,9 @@ datum
 				if (ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/energydrink, src.type)
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "triplemeth")
+					M.remove_stun_resist_mod("triplemeth")
+
 				..()
 
 			on_remove()
@@ -962,6 +976,11 @@ datum
 				if(M.sleeping) M.sleeping = 0
 				if(prob(50))
 					M.take_brain_damage(1 * mult)
+				if(purge_brain)
+					if(holder.has_reagent("synaptizine"))
+						holder.remove_reagent("synaptizine", 5 * mult)
+					if(holder.has_reagent("mannitol"))
+						holder.remove_reagent("mannitol", 5 * mult)
 				..()
 				return
 
@@ -998,6 +1017,15 @@ datum
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 2 SECONDS * mult))
 					else if (effect <= 7)
 						M.emote("laugh")
+
+			syndicate
+				name = "methamphetamine"
+				id = "synd_methamphetamine"
+				description = "Methamphetamine is a highly effective and dangerous stimulant drug. This batch seems unusally high-grade and pure."
+				purge_brain = FALSE
+				fluid_r = 115 // This shit's pure and blue
+				fluid_g = 197
+				fluid_b = 250
 
 		drug/hellshroom_extract
 			name = "Hellshroom extract"

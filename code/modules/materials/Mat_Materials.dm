@@ -603,6 +603,7 @@
 	name = "quartz"
 	desc = "Quartz is somewhat valuable but not paticularly useful."
 	color = "#BBBBBB"
+	alpha = 220
 	quality = 50
 	var/gem_tier = 3
 
@@ -1076,7 +1077,7 @@
 
 /datum/material/organic/honey
 	mat_id = "honey"
-	name = "honey"
+	name = "refined honey" //Look calling both the globs and the material just "honey" isn't helping people's confusion wrt making clone pods
 	desc = ""
 	color = "#f1da10"
 	material_flags = MATERIAL_ORGANIC

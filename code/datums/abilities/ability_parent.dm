@@ -20,6 +20,7 @@
 	var/tabName = "Spells"
 
 	var/mob/owner = null
+	var/datum/abilityHolder/relay = null
 
 	var/x_occupied = 0
 	var/y_occupied = 0
@@ -148,7 +149,7 @@
 
 			for(var/datum/targetable/B in src.abilities)
 				if(istype(B.object, /atom/movable/screen/ability) && !istype(B.object, /atom/movable/screen/ability/topBar))
-					B.object.updateIcon()
+					B.object.UpdateIcon()
 			return
 
 	proc/updateText(var/called_by_owner = 0)
@@ -419,7 +420,7 @@
 		owner = null
 		..()
 
-	proc/updateIcon()
+	update_icon()
 		src.overlays.Cut()
 		if (owner.waiting_for_hotkey)
 			src.overlays += src.binding
@@ -596,7 +597,7 @@
 		..()
 
 
-	updateIcon()
+	update_icon()
 		var/mob/M = get_controlling_mob()
 		if (!istype(M) || !M.client)
 			return null
@@ -657,7 +658,7 @@
 
 	proc/update_on_hud(var/pos_x = 0,var/pos_y = 0)
 
-		updateIcon()
+		UpdateIcon()
 
 		if (owner.special_screen_loc)
 			src.screen_loc = owner.special_screen_loc
@@ -866,13 +867,15 @@
 
 	proc
 		handleCast(atom/target, params)
+			var/datum/abilityHolder/localholder = src.holder
 			var/result = tryCast(target, params)
 			if (result && result != 999)
 				last_cast = 0 // reset cooldown
 			else if (result != 999)
 				doCooldown()
 			afterCast()
-			holder.updateButtons()
+			if(!QDELETED(localholder))
+				localholder.updateButtons()
 
 		cast(atom/target)
 			if(interrupt_action_bars) actions.interrupt(holder.owner, INTERRUPT_ACT)
@@ -931,10 +934,12 @@
 			if (!castcheck())
 				src.holder.locked = 0
 				return 998
+			var/datum/abilityHolder/localholder = src.holder
 			. = cast(target, params)
-			src.holder.locked = 0
-			if (!.)
-				holder.deductPoints(pointCost)
+			if(!QDELETED(localholder))
+				localholder.locked = 0
+				if (!.)
+					localholder.deductPoints(pointCost)
 
 		updateObject()
 			return

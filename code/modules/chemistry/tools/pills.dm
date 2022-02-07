@@ -21,15 +21,6 @@
 		..()
 		init()
 
-	pooled(var/pooltype)
-		src.set_loc(locate(1, 1, 1)) // Get them out of mob.contents.
-		..()
-		return
-
-	unpooled(var/poolname)
-		init()
-		..(poolname)
-
 	proc/init()
 		reagents = new/datum/reagents(100)
 		reagents.my_atom = src
@@ -45,13 +36,13 @@
 		if (iscarbon(user) || ismobcritter(user))
 			user.visible_message("[user] swallows [src].",\
 			"<span class='notice'>You swallow [src].</span>")
-			logTheThing("combat", user, null, "swallows a pill [log_reagents(src)] at [log_loc(user)].")
+			logTheThing("combat", user, null, "swallows a [src.name] [log_reagents(src)] at [log_loc(user)].")
 			if (reagents.total_volume)
 				reagents.reaction(user, INGEST)
 				sleep(0.1 SECONDS)
 				reagents.trans_to(user, reagents.total_volume)
 			user.u_equip(src)
-			pool(src)
+			qdel(src)
 		return
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
@@ -70,7 +61,7 @@
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to swallow [src].</span>",\
 				"<span class='alert'>You attempt to force [M] to swallow [src].</span>")
-				logTheThing("combat", user, M, "tries to force-feed a pill [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
+				logTheThing("combat", user, M, "tries to force-feed a [src.name] [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
 
 				if (!do_mob(user, M))
 					if (user && ismob(user))
@@ -82,13 +73,13 @@
 				user.visible_message("<span class='alert'>[user] forces [M] to swallow [src].</span>",\
 				"<span class='alert'>You force [M] to swallow [src].</span>")
 
-			logTheThing("combat", user, M, "[user == M ? "swallows" : "makes [constructTarget(M,"combat")] swallow"] a pill [log_reagents(src)] at [log_loc(user)].")
+			logTheThing("combat", user, M, "[user == M ? "swallows" : "makes [constructTarget(M,"combat")] swallow"] a [src.name] [log_reagents(src)] at [log_loc(user)].")
 			if (reagents.total_volume)
 				reagents.reaction(M, INGEST)
 				sleep(0.1 SECONDS)
 				reagents.trans_to(M, reagents.total_volume)
 			user.u_equip(src)
-			pool(src)
+			qdel(src)
 			return 1
 
 		return 0
@@ -123,10 +114,10 @@
 				user.visible_message("<span class='alert'>[user] puts something in [target].</span>",\
 				"<span class='success'>You dissolve [src] in [target].</span>")
 
-			logTheThing("combat", user, null, "dissolves a pill [log_reagents(src)] in [target] at [log_loc(user)].")
+			logTheThing("combat", user, null, "dissolves a [src.name] [log_reagents(src)] in [target] at [log_loc(user)].")
 			reagents.trans_to(target, src.reagents.total_volume)
 			user.u_equip(src)
-			pool(src)
+			qdel(src)
 			return
 		else
 			return ..()
@@ -184,7 +175,7 @@
 
 /obj/item/reagent_containers/pill/salicylic_acid
 	name = "analgesic pill"
-	desc = "Commonly used to treat moderate pain and fevers."
+	desc = "A painkiller used to treat minor injuries." 
 	icon_state = "pill4"
 
 	New()

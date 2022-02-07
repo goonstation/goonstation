@@ -167,7 +167,7 @@
 
 /obj/item/dummy
 	name = "dummy"
-	invisibility = 101.0
+	invisibility = INVIS_ALWAYS
 	anchored = 1.0
 	flags = TABLEPASS
 	burn_possible = 0
@@ -346,6 +346,7 @@
 
 
 	on_reagent_change(add)
+		..()
 		if (!src.emagged && add)
 			src.check_whitelist()
 

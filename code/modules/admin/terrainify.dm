@@ -3,18 +3,32 @@
 	set name = "Terrainify"
 	set desc = "Turns space into a terrain type"
 	admin_only
+	var/static/client/terrainifier
 
 	var/options = list(
 		"Desert Station"=/client/proc/cmd_desertify_station,
 		"Ice Moon Station"=/client/proc/cmd_ice_moon_station,
+		"Mars Station"=/client/proc/cmd_marsify_station,
 		"Swamp Station"=/client/proc/cmd_swampify_station,
 		"Trench Station"=/client/proc/cmd_trenchify_station,
+		"Void Station"=/client/proc/cmd_voidify_station,
 		"Winter Station"=/client/proc/cmd_winterify_station,
 		)
+
+	if(terrainifier)
+		if(src == terrainifier)
+			boutput(src, "You are already attempting to Terrainify!")
+		else
+			boutput(src, "[terrainifier.key] is already attempting to Terrainify!")
+		return
+	else
+		terrainifier = src
 
 	var/param = tgui_input_list(src,"Transform space around the station...","Terraform Space",options)
 	if(param)
 		call(src, options[param])()
+
+	terrainifier = null
 
 var/datum/station_zlevel_repair/station_repair = new
 /datum/station_zlevel_repair
@@ -22,17 +36,56 @@ var/datum/station_zlevel_repair/station_repair = new
 	var/image/ambient_light
 	var/image/weather_img
 	var/obj/effects/weather_effect
+	var/overlay_delay
 
 	proc/repair_turfs(turf/turfs)
 		if(src.station_generator)
-			src.station_generator.generate_terrain(turfs, reuse_seed=TRUE)
-		for(var/turf/T as anything in turfs)
-			if(src.ambient_light)
-				T.UpdateOverlays(src.ambient_light, "ambient")
-			if(src.weather_img)
-				T.UpdateOverlays(src.weather_img, "weather")
-			if(src.weather_effect)
-				new src.weather_effect(T)
+			src.station_generator.generate_terrain(turfs,reuse_seed=TRUE)
+
+		SPAWN_DBG(overlay_delay)
+			for(var/turf/T as anything in turfs)
+				if(src.ambient_light)
+					T.UpdateOverlays(src.ambient_light, "ambient")
+				if(src.weather_img)
+					T.UpdateOverlays(src.weather_img, "weather")
+				if(src.weather_effect)
+					new src.weather_effect(T)
+
+
+/client/proc/cmd_voidify_station()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Void Station"
+	set desc = "Turns space into the THE VOID..."
+	admin_only
+#ifdef UNDERWATER_MAP
+	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
+	boutput(src, "You cannot use this command on underwater maps. Sorry!")
+	return
+#else
+	if(src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Turn space into the unknowable void? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
+			if("Yes")
+				station_repair.ambient_light = new /image/ambient
+				station_repair.ambient_light.color = rgb(6.9, 4.20, 6.9)
+
+				station_repair.station_generator = new/datum/map_generator/void_generator
+
+				var/list/space = list()
+				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+					space += S
+				station_repair.station_generator.generate_terrain(space)
+				for (var/turf/S in space)
+					S.UpdateOverlays(station_repair.ambient_light, "ambient")
+
+				shippingmarket.clear_path_to_market()
+
+				logTheThing("admin", src, null, "turned space into an THE VOID.")
+				logTheThing("diary", src, null, "turned space into an THE VOID.", "admin")
+				message_admins("[key_name(src)] turned space into THE VOID.")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+#endif
+
 
 /client/proc/cmd_desertify_station()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -183,6 +236,65 @@ var/datum/station_zlevel_repair/station_repair = new
 		boutput(src, "You must be at least an Administrator to use this command.")
 #endif
 
+
+/client/proc/cmd_marsify_station()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Marsify"
+	set desc = "Turns space into a Mars"
+	admin_only
+#ifdef UNDERWATER_MAP
+	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
+	boutput(src, "You cannot use this command on underwater maps. Sorry!")
+	return
+#else
+	if(src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Turn space into the sands of Mars? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
+			if("Yes")
+				var/ambient_value
+
+				station_repair.station_generator = new/datum/map_generator/mars_generator
+				station_repair.overlay_delay = 3.5 SECONDS // Delay to let rocks cull
+				station_repair.weather_img = image(icon = 'icons/turf/areas.dmi', icon_state = "dustverlay", layer = EFFECTS_LAYER_BASE)
+				station_repair.ambient_light = new /image/ambient
+
+				var/list/space = list()
+				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+					space += S
+				station_repair.station_generator.generate_terrain(space)
+				sleep(3 SECONDS) // Let turfs initialize and re-orient before applying overlays
+				for (var/turf/S in space)
+					S.UpdateOverlays(station_repair.weather_img, "weather")
+					ambient_value = lerp(20,80,S.x/300)
+					station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding
+					S.UpdateOverlays(station_repair.ambient_light, "ambient")
+
+				for(var/turf/S in get_area_turfs(/area/mining/magnet))
+					if(S.z != Z_LEVEL_STATION) continue
+					for(var/obj/machinery/M in S)
+						qdel(M)
+
+				shippingmarket.clear_path_to_market()
+
+				var/list/turf/shipping_path = shippingmarket.get_path_to_market()
+				for(var/turf/unsimulated/wall/setpieces/martian/auto/T in shipping_path)
+					T.ReplaceWith(/turf/unsimulated/floor/setpieces/martian/station_duststorm, force=TRUE)
+					T.UpdateOverlays(station_repair.weather_img, "weather")
+					ambient_value = lerp(20,80,T.x/300)
+					station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding
+					T.UpdateOverlays(station_repair.ambient_light, "ambient")
+
+				//Adjust lighting to midway for  ambient light
+				ambient_value = lerp(20,80,0.5)
+				station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value)
+
+				logTheThing("admin", src, null, "turned space into a Mars.")
+				logTheThing("diary", src, null, "turned space into a Mars.", "admin")
+				message_admins("[key_name(src)] turned space into a Mars.")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+#endif
+
+
 /client/proc/cmd_trenchify_station()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Trenchify"
@@ -276,12 +388,23 @@ var/datum/station_zlevel_repair/station_repair = new
 				station_repair.ambient_light = new /image/ambient
 				station_repair.ambient_light.color = ambient_light
 
+				var/snow = alert("Should it be snowing?",, "Yes", "No", "Light")
+				snow = (snow == "No") ? null : snow
+				if(snow == "Light")
+					station_repair.weather_effect = /obj/effects/snow/grey/tile/light
+				else if(snow == "Yes")
+					station_repair.weather_effect = /obj/effects/snow/grey/tile
+
 				var/list/space = list()
 				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 					space += S
 				station_repair.station_generator.generate_terrain(space)
 				for (var/turf/S as anything in space)
 					S.UpdateOverlays(station_repair.ambient_light, "ambient")
+					if(snow)
+						new station_repair.weather_effect(S)
+
+				shippingmarket.clear_path_to_market()
 
 				logTheThing("admin", src, null, "turned space into a snowscape.")
 				logTheThing("diary", src, null, "turned space into a snowscape.", "admin")

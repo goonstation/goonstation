@@ -321,12 +321,9 @@ var/datum/artifact_controller/artifact_controls
 			if(prob(20))
 				distortion_icon = turn(distortion_icon, rand(360))
 			var/size = rand(4, 6 + 8 * rarityMod) * pick(-1, 1)
-			artifact.filters += filter(
-				type="displace",
-				icon=distortion_icon,
-				size=size)
+			artifact.add_filter("martian distortion", 1, displacement_map_filter(icon=distortion_icon, size=size))
 			if(prob(80 * rarityMod))
-				var/filter = artifact.filters[length(artifact.filters)]
+				var/filter = artifact.get_filter("martian distortion")
 				var/anim_time = pick(rand() * 1 SECOND + 1 SECOND, rand() * 5 SECONDS, rand() * 1 MINUTE)
 				var/new_size = size + rand(-8, 8)
 				if(prob(15) || anim_time > 5 SECONDS && prob(70))

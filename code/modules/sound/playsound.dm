@@ -6,7 +6,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 		return
 
 	var/admin_key = admin_key(src)
-	vol = max(min(vol, 100), 0)
+	vol = clamp(vol, 0, 100)
 
 	var/sound/uploaded_sound = new()
 	uploaded_sound.file = S
@@ -142,7 +142,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 				continue
 
 			C.chatOutput.playMusic(data["file"], vol)
-			if (adminC && !(adminC.stealth && !adminC.fakekey))
+			if (!adminC || !(adminC.stealth && !adminC.fakekey))
 				// Stealthed admins won't show the "now playing music" message,
 				// for added ability to be spooky.
 				boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
@@ -155,7 +155,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	else
 		logTheThing("admin", data["key"], null, "loaded remote music: [data["file"]] ([data["filesize"]])")
 		logTheThing("diary", data["key"], null, "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
-		message_admins("[key_name(data["key"])] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
+		message_admins("[data["key"]] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
 	return 1
 
 /client/verb/change_volume(channel_name as anything in audio_channel_name_to_id)
@@ -164,7 +164,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 		alert(usr, "Invalid channel.")
 	var/vol = input("Goes from 0-100. Default is [getDefaultVolume(channel_id) * 100]\n[src.getVolumeChannelDescription(channel_id)]", \
 	 "[capitalize(channel_name)] Volume", src.getRealVolume(channel_id) * 100) as num
-	vol = max(0,min(vol,100))
+	vol = clamp(vol, 0, 100)
 	src.setVolume(channel_id, vol/100 )
 	boutput(usr, "<span class='notice'>You have changed [channel_name] Volume to [vol].</span>")
 

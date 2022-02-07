@@ -58,7 +58,7 @@
 			overlay_key = "sticker[world.timeofday]"
 			A.UpdateOverlays(sticker, overlay_key)
 			//	qdel(src) //Don't delete stickers when applied - remove them later through fire or acetone!
-			src.invisibility = 101
+			src.invisibility = INVIS_ALWAYS
 
 		else
 			src.pixel_x = pox
@@ -92,7 +92,7 @@
 			attached.ClearSpecificOverlays(overlay_key)
 			overlay_key = 0
 		active = 0
-		src.invisibility = 0
+		src.invisibility = INVIS_NONE
 		src.pixel_x = initial(pixel_x)
 		src.pixel_y = initial(pixel_y)
 		attached.visible_message("<span class='alert'><b>[src]</b> un-sticks from [attached] and falls to the floor!</span>")
@@ -402,6 +402,8 @@
 	var/list/skins = list("gold_star" = "gold star", "banana", "umbrella", "heart", "clover", "skull", "Larrow" = "left arrow",
 	"Rarrow" = "right arrow", "no" = "\"no\"", "moon", "smile", "rainbow", "frown", "balloon", "horseshoe", "bee")
 
+	var/pinpointer_category = TR_CAT_SPY_STICKERS_REGULAR
+
 	var/HTML = null
 
 	New()
@@ -444,11 +446,15 @@
 		if (src.camera)
 			src.camera.camera_status = 0
 			src.camera.c_tag = src.camera_tag
+		if(!isnull(pinpointer_category))
+			STOP_TRACKING_CAT(pinpointer_category)
 		..()
 
 	disposing()
 		if ((active) && (attached != null))
 			attached.open_to_sound = 0
+			if(!isnull(pinpointer_category))
+				START_TRACKING_CAT(pinpointer_category)
 		if (src.camera)
 			qdel(src.camera)
 		if (src.radio)
@@ -461,7 +467,7 @@
 			src.camera.camera_status = 1.0
 			src.camera.updateCoverage()
 		if (src.radio)
-			src.radio.invisibility = 101
+			src.radio.invisibility = INVIS_ALWAYS
 		logTheThing("combat", user, A, "places a spy sticker on [constructTarget(A,"combat")] at [log_loc(user)].")
 
 		..()
@@ -472,6 +478,8 @@
 		if (src.radio)
 			src.loc.open_to_sound = 1
 
+		if(!isnull(pinpointer_category))
+			START_TRACKING_CAT(pinpointer_category)
 
 	proc/generate_html()
 		src.HTML = {"<TT>Camera Broadcast Network:<BR>
@@ -546,6 +554,7 @@
 /obj/item/sticker/spy/radio_only/det_only
 	desc = "This sticker contains a tiny radio transmitter that handles audio. Closer inspection reveals that the frequency is locked to the Security channel."
 	radio_path = /obj/item/device/radio/spy/det_only
+	pinpointer_category = TR_CAT_SPY_STICKERS_DET
 
 /obj/item/device/camera_viewer/sticker
 	name = "camera monitor"
@@ -558,9 +567,11 @@
 /obj/item/storage/box/spy_sticker_kit
 	name = "spy sticker kit"
 	desc = "Includes everything you need to spy on your unsuspecting co-workers!"
+	slots = 8
 	spawn_contents = list(/obj/item/sticker/spy = 5,
 	/obj/item/device/camera_viewer/sticker,
-	/obj/item/device/radio/headset)
+	/obj/item/device/radio/headset,
+	/obj/item/pinpointer/category/spysticker)
 
 /obj/item/storage/box/spy_sticker_kit/radio_only
 	spawn_contents = list(/obj/item/sticker/spy/radio_only = 5,
@@ -568,7 +579,8 @@
 
 /obj/item/storage/box/spy_sticker_kit/radio_only/detective
 	spawn_contents = list(/obj/item/sticker/spy/radio_only/det_only = 6,
-	/obj/item/device/radio/headset/detective)
+	/obj/item/device/radio/headset/detective,
+	/obj/item/pinpointer/category/spysticker/det)
 
 /obj/item/device/radio/spy
 	name = "spy radio"
@@ -587,7 +599,7 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 	desc = "A sticker that has been egineered to self-illuminate when stuck to things."
 	dont_make_an_overlay = TRUE
 	icon_state = "glow"
-	var/datum/component/holdertargeting/simple_light/light_c
+	var/datum/component/loctargeting/simple_light/light_c
 	var/col_r = 0
 	var/col_g = 0
 	var/col_b = 0
@@ -596,7 +608,7 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 	New()
 		. = ..()
 		color = rgb(col_r*255, col_g*255, col_b*255)
-		light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, col_r*255, col_g*255, col_b*255, brightness*255)
+		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, col_r*255, col_g*255, col_b*255, brightness*255)
 		light_c.update(0)
 
 	attack_hand(mob/user as mob)

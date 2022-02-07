@@ -144,7 +144,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(split_type == 0)
 			split(P)
 
-	on_hit(var/atom/A,var/obj/projectile/P)
+	on_hit(var/atom/A,var/dir,var/obj/projectile/P)
 		if(split_type == 1)
 			split(P)
 
@@ -350,7 +350,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	brightness = 2
 	projectile_speed = 32
 	impact_range = 32
-	caliber = 40
 	pierces = -1
 	goes_through_walls = 1
 	color_red = 1
@@ -378,7 +377,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/turf/T = get_turf(A)
 		playsound(A, "sound/effects/ExplosionFirey.ogg", 60, 1)
 		if(!src.impacted)
-			playsound_global(world, 'sound/weapons/energy/howitzer_impact.ogg', 60)
+			playsound_global(world, "sound/weapons/energy/howitzer_impact.ogg", 60)
 			src.impacted = 1
 			SPAWN_DBG(1 DECI SECOND)
 				for(var/mob/living/M in mobs)
@@ -387,7 +386,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		SPAWN_DBG(0)
 			explosion_new(null, T, 30, 1)
 		if(prob(10))
-			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 40)
+			playsound_global(world, "sound/effects/creaking_metal1.ogg", 40)
 
 // A weapon by Sovexe
 /datum/projectile/special/meowitzer //what have I done
@@ -573,7 +572,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 					setangle = arctan(desired_y,desired_x)
 
 				P.setDirection(xchanged,ychanged, do_turn = rotate_proj, angle_override = setangle)
-				P.internal_speed = ( max(min_speed, min(max_speed, magnitude)) )
+				P.internal_speed = clamp(magnitude, min_speed, max_speed)
 
 		desired_x = 0
 		desired_y = 0
@@ -1012,7 +1011,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	ks_ratio = 1.0
-	caliber = 2
 	icon_turf_hit = "secbot1-wild"
 	implanted = null
 	typetospawn = /obj/machinery/bot/secbot
@@ -1114,7 +1112,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(length(O.special_data))
 			O.internal_speed = src.projectile_speed * O.special_data["speed_mult"]
 			src.color_icon = O.special_data["proj_color"]
-		O.AddComponent(/datum/component/pierce_non_opaque) // Pierce anything that doesn't block LoS - if you can see it you can burn it
+		O.AddComponent(/datum/component/gaseous_projectile) // Pierce anything that doesn't block LoS - if you can see it you can burn it
 
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		var/turf/T = get_turf(hit)

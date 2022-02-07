@@ -379,8 +379,8 @@
 		// More info would be nice (Convair880).
 		var/dat = ""
 		for (var/mob/living/silicon/S in mobs)
-			if (S.mind && S.mind.special_role == ROLE_VAMPTHRALL && ismob(whois_ckey_to_mob_reference(S.mind.master)))
-				dat += "<br>[S] is a vampire's thrall, only obeying [whois_ckey_to_mob_reference(S.mind.master)]."
+			if (S.mind && S.mind.special_role == ROLE_VAMPTHRALL && ismob(ckey_to_mob(S.mind.master)))
+				dat += "<br>[S] is a vampire's thrall, only obeying [ckey_to_mob(S.mind.master)]."
 			else
 				if (isAI(S)) continue // Rogue AIs modify the global lawset.
 				if (S.mind && !S.dependent)
@@ -686,6 +686,14 @@
 
 	src.holder.viewPlayerNotes(ckey(target))
 
+/client/proc/cmd_admin_set_loginnotice(target as text)
+	set name = "Set Player LoginNotice"
+	set desc = "Change a player's login notice."
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	admin_only
+
+	src.holder.setLoginNotice(ckey(target))
+
 /client/proc/cmd_admin_polymorph(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Polymorph Player"
@@ -806,7 +814,7 @@
 			var/new_age = input(usr, "Please select type in age: [minage]-[maxage]", "Polymorph Menu")  as num
 
 			if(new_age)
-				src.tf_holder.age = max(min(round(text2num(new_age)), maxage), minage)
+				src.tf_holder.age = clamp(round(text2num(new_age)), minage, maxage)
 
 		else if (href_list["blType"])
 			var/blTypeNew = input(usr, "Please select a blood type:", "Polymorph Menu")  as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
@@ -1104,9 +1112,12 @@
 	set name = "Remove All Labels"
 	set popup_menu = 0
 
-	for (var/mob/M in mobs)
-		M.name_suffixes = null
-		M.UpdateName()
+	for (var/atom/A in world)
+		if(!isnull(A.name_suffixes))
+			A.name_suffixes = null
+			A.UpdateName()
+		LAGCHECK(LAG_LOW)
+
 	return
 
 /client/proc/cmd_admin_aview()
@@ -1144,18 +1155,18 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (!adventure_view || mob.see_invisible < 21)
+	if (!adventure_view || mob.see_invisible < INVIS_ADVENTURE)
 		adventure_view = 1
-		mob.see_invisible = 21
+		mob.see_invisible = INVIS_ADVENTURE
 		boutput(src, "Adventure View activated.")
 
 	else
 		adventure_view = 0
 		boutput(src, "Adventure View deactivated.")
 		if (!isliving(mob))
-			mob.see_invisible = 16 // this seems to be quasi-standard for dead and wraith mobs? might fuck up target observers but WHO CARES
+			mob.see_invisible = INVIS_GHOST // this seems to be quasi-standard for dead and wraith mobs? might fuck up target observers but WHO CARES
 		else
-			mob.see_invisible = 0 // it'll sort itself out on the next Life() tick anyway
+			mob.see_invisible = INVIS_NONE // it'll sort itself out on the next Life() tick anyway
 
 /proc/possess(obj/O as obj in world)
 	set name = "Possess"
@@ -1477,7 +1488,7 @@
 
 	A.reagents.add_reagent("pathogen", amount)
 	var/datum/reagent/blood/pathogen/R = A.reagents.get_reagent("pathogen")
-	var/datum/pathogen/P = unpool(/datum/pathogen)
+	var/datum/pathogen/P = new /datum/pathogen
 	P.setup(1)
 	R.pathogens += P.pathogen_uid
 	R.pathogens[P.pathogen_uid] = P
@@ -1562,7 +1573,7 @@
 			Bee.alive = 1
 			//Bee.icon_state = initial(Bee.icon_state)
 			Bee.set_density(initial(Bee.density))
-			Bee.update_icon()
+			Bee.UpdateIcon()
 			Bee.on_revive()
 			Bee.visible_message("<span class='alert'>[Bee] seems to rise from the dead!</span>")
 			revived ++
@@ -1974,6 +1985,44 @@
 	logTheThing("admin", usr, target, "began following [target].")
 	logTheThing("diary", usr, target, "began following [target].", "admin")
 
+/client/proc/admin_observe_random_player()
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Observe Random Player"
+	set desc = "Observe a random living logged-in player."
+	admin_only
+
+	if (!isobserver(src.mob))
+		boutput(src, "<span class='alert'>Error: you must be an observer to use this command.</span>")
+		return
+
+	if (istype(src.mob, /mob/dead/target_observer))
+		var/mob/dead/target_observer/TO = src.mob
+		TO.stop_observing()
+
+	var/mob/dead/observer/O = src.mob
+	var/client/C
+	var/mob/M
+	var/i = 0 // prevent infinite loops in worst case scenario
+
+	while (!isliving(M))
+		i++
+		if (i > 10) // sorry, magic
+			boutput(src, "<span class='alert'>Error: no valid players found.</span>")
+			return
+		C = pick(clients)
+		if (C?.mob)
+			M = C.mob
+
+	O.insert_observer(M)
+
+/client/proc/orp()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "ORP"
+	set popup_menu = 0
+	admin_only
+
+	src.admin_observe_random_player()
+
 /client/proc/admin_pick_random_player()
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set name = "Pick Random Player"
@@ -2026,7 +2075,7 @@ var/global/night_mode_enabled = 0
 		if(APC.area && APC.area.workplace)
 			APC.do_not_operate = night_mode_enabled
 			APC.update()
-			APC.updateicon()
+			APC.UpdateIcon()
 
 /client/proc/admin_set_ai_vox()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
@@ -2296,7 +2345,7 @@ var/global/night_mode_enabled = 0
 	if (!M || !src.mob || !M.client || !M.client.player || M.client.player.shamecubed)
 		return 0
 	if(isdead(M))
-		M.invisibility = 0
+		M.invisibility = INVIS_NONE
 	var/announce = alert("Announce this cubing to the server?", "Announce", "Yes", "No")
 
 	var/turf/targetLoc = src.mob.loc
@@ -2401,11 +2450,11 @@ var/global/night_mode_enabled = 0
 		boutput(src, "No telesci modifiers! Perhaps they haven't been set up yet.")
 	else
 		var/tx = (T.x + XSUBTRACT) / XMULTIPLY
-		tx = (  max(0, min(tx, world.maxx+1)) )
+		tx = clamp(tx, 0, world.maxx+1)
 		var/ty = (T.y + YSUBTRACT) / YMULTIPLY
-		ty = (  max(0, min(ty, world.maxy+1)) )
+		ty = clamp(ty, 0, world.maxy+1)
 		var/tz = T.z + ZSUBTRACT
-		tz = (  max(0, min(tz, world.maxz+1)) )
+		tz = clamp(tz, 0, world.maxz+1)
 		boutput(src, "Telesci Coords: [tx], [ty], [tz]")
 
 
@@ -2435,7 +2484,7 @@ var/global/night_mode_enabled = 0
 			boutput(src, "Failed to clear medal; error!")
 			break
 
-/client/proc/give_mass_medals(var/medal as null|text, var/revoke = 0)
+/client/proc/give_mass_medals(var/medal as null|text)
 	set name = "Give Mass Medals"
 	set desc = "Give a bunch of players a medal. Don't use this while any of them are online please lol."
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -2451,6 +2500,7 @@ var/global/night_mode_enabled = 0
 		if (!medal)
 			return
 
+	var/revoke = (alert(src, "Mass grant or revoke medals?", "Mass grant/revoke", "Grant", "Revoke") == "Revoke")
 	var/key = input("Enter player key", "Player key", null) as null|text
 	while(key)
 		var/player = ckey(key)
@@ -2729,16 +2779,12 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	set desc = "Spawn in a special escape shuttle"
 	admin_only
 	if(src.holder.level >= LEVEL_ADMIN)
-		var/datum/prefab_shuttle/shuttle = tgui_input_list(src, "Select a shuttle", "Special Shuttle", prefab_shuttles)
-		if (!shuttle) return
-		var/loaded = file2text(shuttle.prefab_path)
-		var/turf/T = landmarks[shuttle.landmark][1]
-		if(T && loaded)
-			var/dmm_suite/D = new/dmm_suite()
-			D.read_map(loaded,T.x,T.y,T.z,shuttle.prefab_path, DMM_OVERWRITE_OBJS)
-			logTheThing("admin", src, null, "replaced the shuttle with [shuttle].")
-			logTheThing("diary", src, null, "replaced the shuttle with [shuttle].", "admin")
-			message_admins("[key_name(src)] replaced the shuttle with [shuttle].")
+		var/list/shuttles = get_prefab_shuttles()
+		var/datum/prefab_shuttle/shuttle = shuttles[tgui_input_list(src, "Select a shuttle", "Special Shuttle", shuttles)]
+		if(shuttle.load())
+			logTheThing("admin", src, null, "replaced the shuttle with [shuttle.name].")
+			logTheThing("diary", src, null, "replaced the shuttle with [shuttle.name].", "admin")
+			message_admins("[key_name(src)] replaced the shuttle with [shuttle.name].")
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
 
@@ -2757,3 +2803,28 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 		logTheThing("admin", usr, AM, "has shipped [AM] to cargo.")
 		logTheThing("diary", usr, AM, "has shipped [AM] to cargo.", "admin")
 		message_admins("[key_name(usr)] has shipped [AM] to cargo.")
+
+var/global/force_radio_maptext = FALSE
+/client/proc/toggle_radio_maptext()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Toggle Forced Radio maptext"
+	admin_only
+
+	if(holder && src.holder.level >= LEVEL_ADMIN)
+		if(!force_radio_maptext)
+			switch(alert("Set all radios to use flying text?", "Bad Idea??","Yes","No"))
+				if("Yes")
+					force_radio_maptext = TRUE
+					logTheThing("admin", src, null, "has enabled forced radio maptext.")
+					logTheThing("diary", src, null, "has enabled forced radio maptext.", "admin")
+					message_admins("[key_name(src)] has enabled flying text for all radios!")
+				if("No")
+					return
+		else
+			force_radio_maptext = FALSE
+			logTheThing("admin", src, null, "has disabled forced radio maptext.")
+			logTheThing("diary", src, null, "has disabled forced radio maptext.", "admin")
+			message_admins("[key_name(src)] has disabled forced radio flying text.")
+			return
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")

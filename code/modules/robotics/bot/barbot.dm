@@ -152,12 +152,12 @@
 				var/pickedStuff = pick(possible_stuffs)
 				var/obj/item/cocktail_stuff/U = new pickedStuff(null)
 				W.in_glass = U
-				W.update_icon()
+				W.UpdateIcon()
 			if (prob(25)) // Chance of wedge!
 				var/pickedWedge = pick(possible_wedges)
 				var/obj/item/reagent_containers/food/snacks/plant/P = new pickedWedge(null)
 				W.wedge = P
-				W.update_icon()
+				W.UpdateIcon()
 			hasDrink = 0
 			targets -= moveTowards
 			KillPathAndGiveUp(1)

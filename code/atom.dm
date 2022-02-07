@@ -10,7 +10,6 @@
 	var/flags = FPRINT
 	var/event_handler_flags = 0
 	var/tmp/temp_flags = 0
-	var/tmp/last_bumped = 0
 	var/shrunk = 0
 	var/list/cooldowns
 
@@ -38,6 +37,9 @@
 
 	proc/RawClick(location,control,params)
 		return
+
+	/// If atmos should be blocked by this - special behaviours handled in gas_cross() overrides
+	var/gas_impermeable = FALSE
 
 /* -------------------- name stuff -------------------- */
 	/*
@@ -154,13 +156,14 @@
 		if (temp_flags & (HAS_BAD_SMOKE))
 			ClearBadsmokeRefs(src)
 
-		fingerprintshidden = null
+		fingerprints_full = null
 		tag = null
 
 		if(length(src.statusEffects))
 			for(var/datum/statusEffect/effect as anything in src.statusEffects)
 				src.delStatus(effect)
 			src.statusEffects = null
+		ClearAllParticles()
 		..()
 
 	proc/Turn(var/rot)
@@ -262,16 +265,15 @@
 
 //atom.event_handler_flags & USE_CHECKEXIT MUST EVALUATE AS TRUE OR THIS PROC WONT BE CALLED
 /atom/proc/CheckExit(atom/mover, turf/target)
-	//return !(src.flags & ON_BORDER) || src.CanPass(mover, target, 1, 0)
+	//return !(src.flags & ON_BORDER) || src.Cross(mover, target, 1, 0)
 	return 1 // fuck it
 
-//atom.event_handler_flags & USE_HASENTERED MUST EVALUATE AS TRUE OR THIS PROC WONT BE CALLED
-/atom/proc/HasEntered(atom/movable/AM as mob|obj, atom/OldLoc)
-	return
-
-//atom.event_handler_flags & USE_HASENTERED MUST EVALUATE AS TRUE OR THIS PROC WONT BE CALLED EITHER
-/atom/proc/HasExited(atom/movable/AM as mob|obj, atom/NewLoc)
-	return
+/atom/Crossed(atom/movable/AM)
+	SHOULD_CALL_PARENT(TRUE)
+	#ifdef SPACEMAN_DMM // idk a tiny optimization to omit the parent call here, I don't think it actually breaks anything in byond internals
+	..()
+	#endif
+	SEND_SIGNAL(src, COMSIG_ATOM_CROSSED, AM)
 
 /atom/proc/ProximityLeave(atom/movable/AM as mob|obj)
 	return
@@ -280,13 +282,13 @@
 /atom/proc/HasProximity(atom/movable/AM as mob|obj)
 	return
 
-/atom/proc/EnteredFluid(obj/fluid/F as obj, /atom/oldloc)
+/atom/proc/EnteredFluid(obj/fluid/F as obj, atom/oldloc)
 	.=0
 
-/atom/proc/ExitedFluid(obj/fluid/F as obj, /atom/newloc)
+/atom/proc/ExitedFluid(obj/fluid/F as obj)
 	.=0
 
-/atom/proc/EnteredAirborneFluid(obj/fluid/F as obj, /atom/old_loc)
+/atom/proc/EnteredAirborneFluid(obj/fluid/F as obj, atom/old_loc)
 	.=0
 
 /atom/proc/set_icon_state(var/new_state)
@@ -299,6 +301,24 @@
 		SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGED, src.dir, new_dir)
 #endif
 	src.dir = new_dir
+
+
+/**
+ * DO NOT CALL THIS PROC - Call UpdateIcon(...) Instead!
+ *
+ * Only override this proc!
+ */
+/atom/proc/update_icon(...)
+	PROTECTED_PROC(TRUE)
+	return
+
+/// Call this proc inplace of update_icon(...)
+/atom/proc/UpdateIcon(...)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_PRE_UPDATE_ICON)
+	update_icon(arglist(args))
+	SEND_SIGNAL(src, COMSIG_ATOM_POST_UPDATE_ICON)
+	return
 
 /*
 /atom/MouseEntered()
@@ -339,11 +359,11 @@
 
 /atom/movable
 	layer = OBJ_LAYER
-	var/turf/last_turf = 0
-	var/last_move = null
+	var/tmp/turf/last_turf = 0
+	var/tmp/last_move = null
 	var/anchored = 0
 	var/move_speed = 10
-	var/l_move_time = 1
+	var/tmp/l_move_time = 1
 	var/throwing = 0
 	var/throw_speed = 2
 	var/throw_range = 7
@@ -366,27 +386,26 @@
 //some more of these event handler flag things are handled in set_loc far below . . .
 /atom/movable/New()
 	..()
+	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
 	if (isturf(src.loc))
 		var/turf/T = src.loc
 		if (src.event_handler_flags & USE_CHECKEXIT)
 			T.checkingexit++
-		if (src.event_handler_flags & USE_CANPASS || src.density)
-			if (bound_width + bound_height > 64)
-				for(var/turf/BT in bounds(src))
-					BT.checkingcanpass++
-			else
-				T.checkingcanpass++
-		if (src.event_handler_flags & USE_HASENTERED)
-			T.checkinghasentered++
+
 		if (src.event_handler_flags & USE_PROXIMITY)
 			T.checkinghasproximity++
+			for (var/turf/T2 in range(1, T))
+				T2.neighcheckinghasproximity++
 		if(src.opacity)
 			T.opaque_atom_count++
 	if(!isnull(src.loc))
 		src.loc.Entered(src, null)
 		if(isturf(src.loc)) // call it on the area too
 			src.loc.loc.Entered(src, null)
+			for(var/atom/A in src.loc)
+				if(A != src)
+					A.Crossed(src)
 
 
 /atom/movable/disposing()
@@ -428,7 +447,7 @@
 	//	var/atom/movable/A = atom
 	//	A.glide_size = src.glide_size
 
-	if (direct & (direct - 1))
+	if (!is_cardinal(direct))
 		ignore_simple_light_updates = 1 //to avoid double-updating on diagonal steps when we are really only taking a single step
 
 		if (direct & NORTH)
@@ -474,46 +493,33 @@
 				M.set_loc(src.loc)
 		if (islist(src.tracked_blood))
 			src.track_blood()
-		if (islist(src.tracked_mud))
-			src.track_mud()
 		actions.interrupt(src, INTERRUPT_MOVE)
 		#ifdef COMSIG_MOVABLE_MOVED
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
 		#endif
 	//note : move is still called when we are steping into a wall. sometimes these are unnecesssary i think
 
-	// sometimes last_turf isnt a turf. ok.
-	if (last_turf && isturf(last_turf))
-		if (src.event_handler_flags & USE_CHECKEXIT)
-			last_turf.checkingexit = max(last_turf.checkingexit-1, 0)
-		if (src.event_handler_flags & USE_CANPASS || src.density)
-			if (bound_width + bound_height > 64)
-				for(var/turf/T in bounds(last_turf.x*32, last_turf.y*32, bound_width/2, bound_height/2, last_turf.z))
-					T.checkingcanpass = max(T.checkingcanpass-1, 0)
-			else
-				last_turf.checkingcanpass = max(last_turf.checkingcanpass-1, 0)
-		if (src.event_handler_flags & USE_HASENTERED)
-			last_turf.checkinghasentered = max(last_turf.checkinghasentered-1, 0)
-		if (src.event_handler_flags & USE_PROXIMITY)
-			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
+	if(last_turf == src.loc)
+		return
 
-	if (isturf(src.loc))
-		last_turf = src.loc
-		var/turf/T = src.loc
-		if (src.event_handler_flags & USE_CHECKEXIT)
-			T.checkingexit++
-		if (src.event_handler_flags & USE_CANPASS || src.density)
-			if (bound_width + bound_height > 64)
-				for(var/turf/BT in bounds(src))
-					BT.checkingcanpass++
-			else
-				T.checkingcanpass++
-		if (src.event_handler_flags & USE_HASENTERED)
-			T.checkinghasentered++
-		if (src.event_handler_flags & USE_PROXIMITY)
-			T.checkinghasproximity++
-	else
-		last_turf = 0
+	if (src.event_handler_flags & (USE_CHECKEXIT | USE_PROXIMITY))
+		if (isturf(last_turf))
+			if (src.event_handler_flags & USE_CHECKEXIT)
+				last_turf.checkingexit = max(last_turf.checkingexit-1, 0)
+			if (src.event_handler_flags & USE_PROXIMITY)
+				last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
+				for (var/turf/T2 in range(1, last_turf))
+					T2.neighcheckinghasproximity--
+		if(isturf(src.loc))
+			var/turf/T = src.loc
+			if (src.event_handler_flags & USE_CHECKEXIT)
+				T.checkingexit++
+			if (src.event_handler_flags & USE_PROXIMITY)
+				T.checkinghasproximity++
+				for (var/turf/T2 in range(1, T))
+					T2.neighcheckinghasproximity++
+
+	last_turf = isturf(src.loc) ? src.loc : null
 
 	if (!ignore_simple_light_updates)
 		if(src.medium_lights)
@@ -589,8 +595,6 @@
 
 /atom/proc/examine(mob/user)
 	RETURN_TYPE(/list)
-	if(src.hiddenFrom && (user.client in src.hiddenFrom)) //invislist
-		return list()
 
 	var/dist = get_dist(src, user)
 	if (istype(user, /mob/dead/target_observer))
@@ -602,7 +606,6 @@
 
 	if(special_description)
 		return list(special_description)
-	//////////////////////////////
 
 	. = list("This is \an [src.name].")
 
@@ -610,16 +613,43 @@
 	if (isitem(src) && src.blood_DNA)
 		. = list("<span class='alert'>This is a bloody [src.name].</span>")
 		if (src.desc)
-			if (src.desc && src.blood_DNA == "--conductive_substance--")
-				. += "<br>[src.desc] <span class='alert'>It seems to be covered in an odd azure liquid!</span>"
-			else
-				. += "<br>[src.desc] <span class='alert'>It seems to be covered in blood!</span>"
+			. += "<br>[src.desc] <span class='alert'>It seems to be covered in blood!</span>"
 	else if (src.desc)
 		. += "<br>[src.desc]"
 
 	var/extra = src.get_desc(dist, user)
 	if (extra)
 		. += " [extra]"
+
+	// handles PDA messaging shortcut for the AI
+	if (isAI(user) && ishuman(src))
+		var/mob/living/silicon/ai/mainframe
+		var/mob/living/carbon/human/person = src
+		if (isAIeye(user))
+			var/mob/dead/aieye/ai = user
+			mainframe = ai.mainframe
+		else
+			mainframe = user
+
+		// we need to check to see if any of these are PDAs so that we can render them to the ai.
+		// these are where pdas can be visible in an inventory - lets check to see whats in them!
+		var/list/inv_list = list()
+		inv_list += person.get_slot(SLOT_BELT)
+		inv_list += person.get_slot(SLOT_WEAR_ID)
+		inv_list += person.get_slot(SLOT_L_HAND)
+		inv_list += person.get_slot(SLOT_R_HAND)
+
+		var/hasPDA = FALSE
+		for (var/obj/item/device/pda2/pda in inv_list) // we only care about PDAs
+			var/textToAdd
+			if (pda.host_program.message_on && pda.owner) // is their messenger enabled, is their pda swiped in??
+				textToAdd += "<br>[bicon(pda)][pda.name] - <a href='byond://?src=\ref[mainframe];net_id=[pda.net_id];owner=[pda.owner]'><u>*MESSAGE*</u></a>" // see ai.dm under Topic() to continue from here!
+			else if (pda.owner) // ownerless PDAs will not render, but we'll tell the AI when someone's messenger is disabled!
+				textToAdd += "<br>[bicon(pda)][pda.name] - *MESSENGER DISABLED*"
+			. += textToAdd
+			if (pda.owner) hasPDA = TRUE // we need at least ONE pda to be visible, or else we add the text below
+		if (!hasPDA)
+			. += "<br>*No PDA detected!*"
 
 /atom/proc/MouseDrop_T()
 	return
@@ -768,23 +798,37 @@
 	..()
 	return
 
-/atom/proc/relaymove()
+/atom/proc/relaymove(mob/user, direction, delay, running)
 	.= 0
 
 /atom/proc/on_reagent_change(var/add = 0) // if the reagent container just had something added, add will be 1.
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_REAGENT_CHANGE)
 	return
 
 /atom/proc/Bumped(AM as mob|obj)
+	SHOULD_NOT_SLEEP(TRUE)
 	return
 
-/atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
-	SPAWN_DBG( 0 )
-		if ((A && yes)) //wtf
-			A.last_bumped = world.timeofday
-			A.Bumped(src)
-		return
-	..()
+/// override this instead of Bump
+/atom/movable/proc/bump(atom/A)
+	SHOULD_NOT_SLEEP(TRUE)
 	return
+
+/atom/movable/Bump(var/atom/A as mob|obj|turf|area)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(!(A.flags & ON_BORDER))
+		for(var/atom/other in get_turf(A))
+			if((other.flags & ON_BORDER) && !other.Cross(src))
+				return
+	if(!(src.flags & ON_BORDER))
+		for(var/atom/other in get_turf(src))
+			if((other.flags & ON_BORDER) && !other.CheckExit(src, get_turf(A)))
+				return
+	bump(A)
+	if (!QDELETED(A))
+		A.Bumped(src)
+	..()
 
 // bullet_act called when anything is hit buy a projectile (bullet, tazer shot, laser, etc.)
 // flag is projectile type, can be:
@@ -828,14 +872,25 @@
 	src.last_move = 0
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, oldloc)
+	actions.interrupt(src, INTERRUPT_MOVE)
 
 	oldloc?.Exited(src, newloc)
+
+	if(isturf(oldloc))
+		for(var/atom/A in oldloc)
+			if(A != src)
+				A.Uncrossed(src)
 
 	// area.Exited called if we are on turfs and changing areas or if exiting a turf into a non-turf (just like Move does it internally)
 	if((my_area != new_area || !isturf(newloc)) && isturf(oldloc))
 		my_area.Exited(src, newloc)
 
 	newloc?.Entered(src, oldloc)
+
+	if(isturf(newloc))
+		for(var/atom/A in newloc)
+			if(A != src)
+				A.Crossed(src)
 
 	// area.Entered called if we are on turfs and changing areas or if entering a turf from a non-turf (just like Move does it internally)
 	if((my_area != new_area || !isturf(oldloc)) && isturf(newloc))
@@ -847,36 +902,24 @@
 
 
 	// We only need to do any of these checks if one of the flags is set OR density = 1
-	var/do_checks = (src.event_handler_flags & (USE_CHECKEXIT | USE_CANPASS | USE_HASENTERED | USE_HASENTERED | USE_PROXIMITY)) || src.density == 1
+	var/do_checks = (src.event_handler_flags & (USE_CHECKEXIT  | USE_PROXIMITY)) || src.density == 1
 
 	if (do_checks && last_turf && isturf(last_turf))
 		if (src.event_handler_flags & USE_CHECKEXIT)
 			last_turf.checkingexit = max(last_turf.checkingexit-1, 0)
-		if (src.event_handler_flags & USE_CANPASS || src.density)
-			if (bound_width + bound_height > 64)
-				for(var/turf/T in bounds(last_turf.x*32, last_turf.y*32, bound_width/2, bound_height/2, last_turf.z))
-					T.checkingcanpass = max(T.checkingcanpass-1, 0)
-			else
-				last_turf.checkingcanpass = max(last_turf.checkingcanpass-1, 0)
-		if (src.event_handler_flags & USE_HASENTERED)
-			last_turf.checkinghasentered = max(last_turf.checkinghasentered-1, 0)
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
+			for (var/turf/T2 in range(1, last_turf))
+				T2.neighcheckinghasproximity--
 
 	if (do_checks && isturf(src.loc))
 		last_turf = src.loc
 		if (src.event_handler_flags & USE_CHECKEXIT)
 			last_turf.checkingexit++
-		if (src.event_handler_flags & USE_CANPASS || src.density)
-			if (bound_width + bound_height > 64)
-				for(var/turf/T in bounds(src))
-					T.checkingcanpass++
-			else
-				last_turf.checkingcanpass++
-		if (src.event_handler_flags & USE_HASENTERED)
-			last_turf.checkinghasentered++
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity++
+			for (var/turf/T2 in range(1, last_turf))
+				T2.neighcheckinghasproximity++
 	else
 		last_turf = 0
 
@@ -892,57 +935,7 @@
 	src.density = newdensity
 
 /atom/movable/set_density(var/newdensity)
-	//BASICALLY : if we dont have the USE_CANPASS flag, turf's checkingcanpass value relies entirely on our density.
-	//It is probably important that we update this as density changes immediately. I don't think it breaks anything currently if we dont, but still important for future.
-	if (src.density != newdensity)
-		if (isturf(src.loc))
-			if (!(src.event_handler_flags & USE_CANPASS))
-				if(newdensity == 1)
-					var/turf/T = src.loc
-					if (T)
-						if (bound_width + bound_height > 64)
-							for(var/turf/BT in bounds(src))
-								BT.checkingcanpass++
-						else
-							T.checkingcanpass++
-
-				else
-					var/turf/T = src.loc
-					if (T)
-						if (bound_width + bound_height > 64)
-							for(var/turf/BT in bounds(src))
-								BT.checkingcanpass = max(BT.checkingcanpass-1, 0)
-						else
-							T.checkingcanpass = max(T.checkingcanpass-1, 0)
 	..()
-
-//same as above :)
-/atom/movable/setMaterial(var/datum/material/mat1, var/appearance = 1, var/setname = 1, var/copy = 1, var/use_descriptors = 0)
-	var/prev_mat_triggeronentered = (src.material && src.material.triggersOnEntered && length(src.material.triggersOnEntered))
-	var/prev_added_hasentered = src.material?.owner_hasentered_added
-	..(mat1,appearance,setname,copy,use_descriptors)
-	var/cur_mat_triggeronentered = (src.material && src.material.triggersOnEntered && length(src.material.triggersOnEntered))
-	src.material?.owner_hasentered_added = prev_added_hasentered
-
-	if (prev_mat_triggeronentered != cur_mat_triggeronentered)
-		if (isturf(src.loc))
-			// Check if USE_HASENTERED needs to be added if atom is missing the flag and onEnter trigger was added
-			if (!(src.event_handler_flags & USE_HASENTERED) && cur_mat_triggeronentered)
-				var/turf/T = src.loc
-				if (T)
-					T.checkinghasentered++
-				//Slap flag on so moving the atom will properly adjust checkinghasentered
-				src.event_handler_flags |= USE_HASENTERED
-				src.material.owner_hasentered_added = TRUE
-			// Check USE_HASENTERED needs to be removed when current material doesn't have onEnter trigger now and flag was added
-			else
-				if (!cur_mat_triggeronentered && prev_added_hasentered)
-					var/turf/T = src.loc
-					if (T)
-						T.checkinghasentered = max(T.checkinghasentered-1, 0)
-
-					src.event_handler_flags &= ~USE_HASENTERED
-					src.material.owner_hasentered_added = FALSE
 
 // standardized damage procs
 
