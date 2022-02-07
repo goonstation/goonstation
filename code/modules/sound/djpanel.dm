@@ -22,6 +22,7 @@ client/proc/open_dj_panel()
 	var/sound_volume = 50
 	var/sound_frequency = 1
 	var/admin_sound_channel = 1014
+	var/list/preloaded_sounds = list()
 
 /datum/dj_panel/ui_state(mob/user)
 	return tgui_always_state
@@ -52,6 +53,7 @@ client/proc/open_dj_panel()
 		"volume" = sound_volume,
 		"frequency" = sound_frequency,
 		"announceMode" = user.client?.djmode,
+		"preloadedSounds" = preloaded_sounds,
 	)
 
 /datum/dj_panel/ui_act(action, params)
@@ -121,8 +123,21 @@ client/proc/open_dj_panel()
 			if (!C) return FALSE
 			logTheThing("admin", usr, null, "played sound [loaded_sound] to [C]")
 			logTheThing("diary", usr, null, "played sound [loaded_sound] to [C]", "admin")
-			message_admins("[admin_key(usr)] played sound [loaded_sound] to [C]")
+			message_admins("[admin_key(usr.client)] played sound [loaded_sound] to [C]")
 			playsound(C.mob, loaded_sound, sound_volume, sound_frequency)
+
+		if("preload-sound")
+			preloaded_sounds["[loaded_sound]"] = loaded_sound
+			for (var/client/C in clients)
+				C << load_resource(loaded_sound, -1)
+			message_admins("[admin_key(usr.client)] preloaded sound [loaded_sound]")
+
+		if("play-preloaded")
+			var/selected = tgui_input_list(usr, "Which sound?", "Sound Selector", preloaded_sounds, timeout = 5 MINUTES, allowIllegal = TRUE)
+			if (selected && (selected in preloaded_sounds))
+				var/sound/selected_sound = preloaded_sounds[selected]
+				usr.client?.play_music_real(selected_sound, sound_frequency)
+				preloaded_sounds.Remove(selected)
 
 		if("toggle-player-dj")
 			var/dude = input(usr, "Choose a client:", "Choose a client:", null) as null|anything in clients
