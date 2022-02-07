@@ -25,6 +25,7 @@
 /obj/machinery/computer/pod/old/swf
 	name = "Magix System IV"
 	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorceror's Edition"
+	icon_state = "wizard"
 	circuit_type = /obj/item/circuitboard/swfdoor
 
 	attack_hand(var/mob/user as mob)

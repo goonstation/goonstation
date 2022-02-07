@@ -60606,192 +60606,156 @@
 "djq" = (
 /turf/unsimulated/floor/setpieces/martian,
 /area/marsoutpost)
-"djr" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/area/wizard_station)
-"djv" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/area/wizard_station)
 "djw" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3dir"
+	},
+/area/wizard_station)
+"djy" = (
+/obj/rack,
+/obj/item/staff{
+	pixel_x = -6
+	},
+/obj/item/staff{
+	pixel_x = -1
+	},
+/obj/item/staff{
+	pixel_x = 4
+	},
+/obj/item/staff{
+	pixel_x = 9
+	},
+/obj/item/staff/crystal{
+	pixel_x = 10;
+	pixel_y = -5
+	},
+/obj/item/staff/crystal{
+	pixel_x = 4;
+	pixel_y = -5
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/wizard_station)
+"djI" = (
+/turf/unsimulated/floor/stairs/wood/wide,
+/area/wizard_station)
+"djL" = (
+/obj/decal/poster/wallsign/wizard,
+/turf/unsimulated/wall/auto/supernorn/wood,
+/area/wizard_station)
+"djM" = (
+/obj/decal/skeleton/unanchored,
+/obj/item/clothing/head/wizard,
+/obj/item/reagent_containers/glass/water_pipe/filled,
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+"djN" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 8;
 	icon_state = "alt_propulsion"
 	},
 /turf/space,
 /area/wizard_station)
-"djy" = (
-/obj/table/wood/auto,
-/obj/item/clothing/under/shorts,
-/obj/item/clothing/under/shorts/black,
-/obj/item/clothing/under/shorts/blue,
-/obj/item/clothing/under/shorts/green,
-/obj/item/clothing/under/shorts/psyche,
-/obj/item/clothing/under/shorts/purple,
-/obj/item/clothing/under/shorts/red,
-/turf/unsimulated/floor/carpet{
-	dir = 9;
-	icon_state = "green2"
-	},
-/area/wizard_station)
-"djz" = (
-/obj/storage/closet/wardrobe/wizard,
-/turf/unsimulated/floor/carpet{
-	dir = 1;
-	icon_state = "green2"
-	},
-/area/wizard_station)
-"djA" = (
-/obj/shrub,
-/turf/unsimulated/floor/carpet{
-	dir = 1;
-	icon_state = "green2"
-	},
-/area/wizard_station)
-"djB" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/pink,
-/obj/landmark/start{
-	name = "wizard"
-	},
-/turf/unsimulated/floor/carpet{
-	dir = 1;
-	icon_state = "green2"
-	},
-/area/wizard_station)
-"djC" = (
-/obj/storage/closet,
-/turf/unsimulated/floor/carpet{
-	dir = 5;
-	icon_state = "green2"
-	},
-/area/wizard_station)
-"djE" = (
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 8;
-	icon_state = "alt_heater"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/wizard_station)
-"djF" = (
-/obj/machinery/light,
-/turf/unsimulated/floor/carpet{
-	dir = 10;
-	icon_state = "green2"
-	},
-/area/wizard_station)
-"djG" = (
-/obj/critter/cat,
-/turf/unsimulated/floor/carpet{
-	dir = 3;
-	icon_state = "green2"
-	},
-/area/wizard_station)
-"djH" = (
-/turf/unsimulated/floor/carpet{
-	dir = 10;
-	icon_state = "green3"
-	},
-/area/wizard_station)
-"djI" = (
-/turf/unsimulated/floor/carpet{
-	icon_state = "fgreen1"
-	},
-/area/wizard_station)
-"djJ" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/unsimulated/floor/carpet{
-	dir = 4;
-	icon_state = "green2"
-	},
-/area/wizard_station)
-"djL" = (
-/obj/magicmirror,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/wizard_station)
-"djM" = (
-/obj/machinery/door/window/southleft,
-/turf/unsimulated/floor/carpet{
-	dir = 10;
-	icon_state = "green2"
-	},
-/area/wizard_station)
-"djN" = (
-/obj/window/south,
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/blue,
-/obj/landmark/start{
-	name = "wizard"
-	},
-/turf/unsimulated/floor/carpet{
-	icon_state = "green2"
-	},
-/area/wizard_station)
 "djO" = (
-/obj/storage/closet,
-/turf/unsimulated/floor/carpet{
-	dir = 6;
-	icon_state = "green2"
+/obj/item/device/light/magic_lantern{
+	dir = 8;
+	pixel_x = 16;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor5"
 	},
 /area/wizard_station)
 "djQ" = (
-/obj/storage/secure/closet/fridge/kitchen{
-	locked = 0
-	},
-/turf/unsimulated/floor/blue/checker,
+/turf/unsimulated/floor/white/grime,
 /area/wizard_station)
 "djR" = (
-/obj/table/wood/auto,
-/obj/machinery/microwave,
-/obj/machinery/light/small{
-	dir = 1
+/obj/rack,
+/obj/item/clothing/suit/wizrobe/necro{
+	pixel_x = 7
 	},
-/turf/unsimulated/floor/white,
+/obj/item/clothing/head/wizard/witch{
+	pixel_x = 10;
+	pixel_y = 9
+	},
+/obj/item/clothing/head/wizard/necro{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/item/clothing/suit/wizrobe/red{
+	pixel_x = -2
+	},
+/obj/item/clothing/suit/wizrobe/green,
+/obj/item/clothing/suit/wizrobe/purple{
+	pixel_x = -7
+	},
+/obj/item/clothing/suit/wizrobe{
+	pixel_x = -10
+	},
+/obj/item/clothing/head/wizard/green{
+	pixel_y = 9
+	},
+/obj/item/clothing/head/wizard/red{
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/obj/item/clothing/head/wizard/purple{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/obj/item/clothing/head/wizard{
+	pixel_x = -10;
+	pixel_y = 9
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
 /area/wizard_station)
 "djS" = (
-/obj/table/wood/auto,
-/obj/item/storage/box/donkpocket_kit,
-/turf/unsimulated/floor/white,
-/area/wizard_station)
-"djT" = (
-/obj/machinery/r_door_control/podbay/wizard,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/obj/stool/bench/wooden,
+/obj/item/device/light/magic_lantern{
+	dir = 8;
+	pixel_x = 16
+	},
+/obj/landmark/start{
+	name = "wizard"
+	},
+/turf/unsimulated/floor/white/checker,
 /area/wizard_station)
 "djU" = (
-/obj/table/wood/auto,
-/obj/item/instrument/harmonica,
-/obj/machinery/light/small{
-	dir = 1
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/wizard_station)
 "djV" = (
-/obj/table/wood/auto,
-/obj/machinery/computer/pod/old/swf{
-	id = "hangar_wizard";
-	pixel_x = -4;
-	pixel_y = 8
+/obj/decal/cleanable/writing/infrared{
+	desc = "Someone's scribbled something here, with infrared ink. Ain't that spiffy? It says: 'if you can read this, you are a nerd.'"
 	},
-/turf/unsimulated/floor/shuttlebay,
-/area/wizard_station)
-"djW" = (
-/obj/grille/steel,
-/obj/window/reinforced/north,
-/obj/window/reinforced/west,
-/obj/window/reinforced/south,
-/obj/window/reinforced/east,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor5"
 	},
+/area/wizard_station)
+"djW" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 4
+	},
+/turf/unsimulated/floor/white,
 /area/wizard_station)
 "djX" = (
 /turf/unsimulated/floor/shuttle{
@@ -60799,68 +60763,131 @@
 	},
 /area/wizard_station)
 "djY" = (
-/obj/table/wood/auto,
-/obj/item/clothing/shoes/sandal,
-/obj/item/clothing/shoes/sandal,
-/obj/item/clothing/shoes/sandal,
-/obj/item/clothing/shoes/sandal,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor5"
+/obj/machinery/vending/magivend,
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
 	},
 /area/wizard_station)
 "djZ" = (
-/obj/machinery/vending/magivend,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor5"
+/obj/rack,
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -5
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -2
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = 1
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = 4
+	},
+/obj/item/device/light/magic_lantern{
+	pixel_y = 28
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
 	},
 /area/wizard_station)
 "dka" = (
 /turf/unsimulated/floor/white,
 /area/wizard_station)
 "dkb" = (
-/turf/unsimulated/floor/blue/checker,
-/area/wizard_station)
-"dkc" = (
 /obj/table/wood/auto,
-/obj/item/kitchen/utensil/fork,
-/obj/item/kitchen/utensil/knife,
-/obj/item/kitchen/utensil/spoon,
-/obj/item/reagent_containers/food/drinks/tea/mugwort,
-/obj/item/reagent_containers/food/drinks/tea/mugwort,
+/obj/machinery/microwave,
 /turf/unsimulated/floor/white,
 /area/wizard_station)
-"dkd" = (
-/obj/machinery/door/poddoor/blast/single{
-	dir = 4;
-	id = "hangar_wizard";
-	name = "external blast door"
+"dkc" = (
+/obj/table/wood/round,
+/obj/item/reagent_containers/food/drinks/tea/mugwort{
+	pixel_x = -6;
+	pixel_y = 17
 	},
+/obj/item/reagent_containers/food/snacks/soup/oatmeal,
+/obj/item/kitchen/utensil/spoon{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/white/checker,
+/area/wizard_station)
+"dkd" = (
 /turf/unsimulated/floor/shuttlebay,
 /area/wizard_station)
 "dke" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
 /turf/unsimulated/floor/shuttlebay,
 /area/wizard_station)
 "dkf" = (
-/obj/machinery/door/airlock/external,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor5"
+/obj/table/wood/auto,
+/obj/item/device/light/magic_lantern{
+	pixel_y = 28
 	},
-/area/wizard_station)
-"dkg" = (
-/obj/machinery/door/airlock/glass,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor5"
+/obj/item/storage/box/donkpocket_kit{
+	pixel_x = -6;
+	pixel_y = 5
 	},
-/area/wizard_station)
-"dkh" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 8;
+/obj/item/kitchen/utensil/knife{
 	pixel_x = 8
 	},
-/turf/unsimulated/floor/blue,
+/obj/item/kitchen/utensil/fork{
+	pixel_x = 4
+	},
+/turf/unsimulated/floor/white,
+/area/wizard_station)
+"dkh" = (
+/obj/stool/bench/wooden,
+/obj/landmark/start{
+	name = "wizard"
+	},
+/turf/unsimulated/floor/white/checker,
 /area/wizard_station)
 "dki" = (
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/obj/table/wood/auto,
+/obj/item/clothing/under/shorts/red{
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/obj/item/clothing/under/shorts/purple{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/clothing/under/shorts/psyche{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/clothing/under/shorts/green{
+	pixel_x = -3
+	},
+/obj/item/clothing/under/shorts/blue{
+	pixel_x = 3;
+	pixel_y = 8
+	},
+/obj/item/clothing/under/shorts/black{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/clothing/under/shorts{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/device/light/magic_lantern{
+	pixel_y = 28
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
 /area/wizard_station)
 "dkj" = (
 /obj/machinery/vehicle/miniputt/wizard{
@@ -60874,169 +60901,149 @@
 /obj/item/clothing/head/emerg,
 /obj/item/clothing/mask/breath,
 /obj/item/tank/air,
-/turf/unsimulated/floor/shuttlebay,
-/area/wizard_station)
-"dkl" = (
-/obj/machinery/bot/medbot{
-	no_camera = 1
+/obj/item/device/light/magic_lantern{
+	dir = 8;
+	pixel_x = 16
 	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor5"
-	},
-/area/wizard_station)
-"dkm" = (
-/obj/stool/chair/blue,
-/turf/unsimulated/floor/white,
-/area/wizard_station)
-"dkn" = (
-/turf/unsimulated/floor/blue/checker{
-	dir = 1
-	},
-/area/wizard_station)
-"dko" = (
-/obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/area/wizard_station)
-"dkp" = (
-/obj/machinery/door/window/northright,
-/turf/unsimulated/floor/carpet{
-	dir = 9;
-	icon_state = "blue2"
-	},
-/area/wizard_station)
-"dkq" = (
-/obj/stool/chair/couch{
-	dir = 8
-	},
-/obj/window/north,
-/turf/unsimulated/floor/carpet{
-	dir = 1;
-	icon_state = "blue2"
-	},
-/area/wizard_station)
-"dkr" = (
-/obj/stool/chair/couch{
+/obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/window/north,
-/obj/item/reagent_containers/food/snacks/chips,
-/turf/unsimulated/floor/carpet{
-	dir = 5;
-	icon_state = "blue2"
+/turf/unsimulated/floor/shuttlebay,
+/area/wizard_station)
+"dkm" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/wizard_station)
+"dkn" = (
+/obj/machinery/door/unpowered/wood/pyro,
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
 	},
 /area/wizard_station)
-"dks" = (
-/obj/table/wood/round,
-/obj/item/reagent_containers/food/snacks/soup/queso,
-/obj/item/kitchen/utensil/spoon,
-/turf/unsimulated/floor/blue/checker{
-	dir = 1
+"dkp" = (
+/turf/unsimulated/floor/carpet/wizard/standard/edge/north,
+/area/wizard_station)
+"dkq" = (
+/turf/unsimulated/floor/carpet/wizard/standard/edge/ne,
+/area/wizard_station)
+"dkr" = (
+/obj/table/wood/auto,
+/obj/item/electronics/frame/phone{
+	pixel_y = 3
+	},
+/obj/item/electronics/soldering,
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
 	},
 /area/wizard_station)
 "dkt" = (
-/obj/stool/chair/blue{
-	dir = 8
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
 	},
-/obj/machinery/light/small,
-/turf/unsimulated/floor/white,
 /area/wizard_station)
 "dku" = (
-/obj/reagent_dispensers/watertank/fountain,
-/turf/unsimulated/floor/white,
+/obj/table/wood/auto,
+/obj/item/device/light/magic_lantern{
+	dir = 8;
+	pixel_x = 16
+	},
+/obj/item/device/light/lava_lamp{
+	pixel_y = 11
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
 /area/wizard_station)
 "dkv" = (
-/obj/machinery/light{
-	dir = 1
+/obj/item/device/light/magic_lantern{
+	dir = 4;
+	pixel_x = -21
 	},
-/turf/unsimulated/floor/carpet{
-	dir = 9;
-	icon_state = "blue2"
+/obj/noticeboard/persistent{
+	desc = "A board for pinning important notices upon. Looks like this one doesn't get cleared out at the end of the shift. Must be some sort of magic.";
+	name = "wizard persistent notice board";
+	persistent_id = "wizard"
 	},
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/carpet/wizard/standard/edge/nw,
 /area/wizard_station)
 "dkw" = (
-/obj/stool/chair/comfy,
-/obj/landmark/start{
-	name = "wizard"
-	},
-/turf/unsimulated/floor/carpet{
-	dir = 1;
-	icon_state = "blue2"
-	},
+/turf/unsimulated/floor/carpet/wizard/standard/innercorner/nw,
 /area/wizard_station)
 "dkx" = (
-/turf/unsimulated/floor/carpet{
-	dir = 9;
-	icon_state = "blue3"
-	},
+/obj/stool/chair/comfy,
+/turf/unsimulated/floor/carpet/wizard,
 /area/wizard_station)
 "dky" = (
-/turf/unsimulated/floor/carpet{
-	icon_state = "blue1"
-	},
+/turf/unsimulated/floor/carpet/wizard/standard/edge/east,
 /area/wizard_station)
 "dkz" = (
-/obj/machinery/light{
-	dir = 4
+/obj/item/device/light/magic_lantern{
+	dir = 8;
+	pixel_x = 16
 	},
-/turf/unsimulated/floor/carpet{
-	dir = 4;
-	icon_state = "blue2"
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
 	},
-/area/wizard_station)
-"dkA" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
 /area/wizard_station)
 "dkB" = (
-/obj/table/wood/auto,
-/obj/item/kitchen/everyflavor_box,
-/obj/item/kitchen/everyflavor_box,
-/turf/unsimulated/floor/carpet{
-	dir = 10;
-	icon_state = "blue2"
-	},
+/obj/storage/closet/dresser,
+/obj/item/storage/box/nerd_kit,
+/obj/item/instrument/saxophone,
+/obj/item/dice/magic8ball,
+/turf/unsimulated/floor/carpet/wizard/standard/edge/sw,
 /area/wizard_station)
 "dkC" = (
+/obj/table/wood/auto,
+/obj/item/paper_bin,
+/obj/item/reagent_containers/food/snacks/cookie/oatmeal{
+	pixel_x = 19
+	},
+/turf/unsimulated/floor/carpet/wizard/standard/edge/south,
+/area/wizard_station)
+"dkD" = (
 /obj/table/wood/auto,
 /obj/item/paper{
 	info = "Son, \nI heard about your first assignment - I'm so happy for you! Your mother and I may not get on well these days but we're both tremendously proud, and we know you'll do well. Show those stupid Assistants what for - just be kind to the janitors, never know which of them might be your old Da'! \nLove from Dad xxx";
 	name = "Paper-'To the world's best wizard...'"
 	},
-/obj/item/pen{
-	desc = "Enchanted to write in several shades of grey!";
-	name = "magic pen"
+/obj/item/pen/fancy,
+/obj/item/reagent_containers/food/drinks/tea/mugwort{
+	pixel_x = 14;
+	pixel_y = 7
 	},
-/turf/unsimulated/floor/carpet{
-	icon_state = "blue2"
-	},
-/area/wizard_station)
-"dkD" = (
-/obj/table/wood/auto,
-/obj/machinery/light/lamp,
-/turf/unsimulated/floor/carpet{
-	icon_state = "blue2"
-	},
+/turf/unsimulated/floor/carpet/wizard/standard/edge/south,
 /area/wizard_station)
 "dkE" = (
-/obj/shrub{
-	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
+/obj/table/wood/auto,
+/obj/item/kitchen/everyflavor_box,
+/obj/item/decoration/flower_vase{
+	pixel_x = 11
 	},
-/turf/unsimulated/floor/carpet{
-	icon_state = "blue2"
-	},
+/turf/unsimulated/floor/carpet/wizard/standard/edge/se,
 /area/wizard_station)
 "dkF" = (
 /obj/machinery/computer/security/wooden_tv,
-/turf/unsimulated/floor/carpet{
-	dir = 6;
-	icon_state = "blue2"
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
 	},
 /area/wizard_station)
 "dkG" = (
@@ -72552,6 +72559,12 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"gtW" = (
+/obj/storage/secure/closet/fridge/kitchen{
+	locked = 0
+	},
+/turf/unsimulated/floor/white/checker,
+/area/wizard_station)
 "gun" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -73029,6 +73042,14 @@
 	},
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"hRU" = (
+/obj/item/device/light/magic_lantern{
+	pixel_y = 28
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor5"
+	},
+/area/wizard_station)
 "hSK" = (
 /turf/space,
 /turf/unsimulated/floor{
@@ -73108,6 +73129,12 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
+"iqR" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/wizard_station)
 "isk" = (
 /obj/table/wood/auto/desk,
 /obj/item/storage/photo_album{
@@ -73283,6 +73310,15 @@
 /obj/submachine/chef_oven,
 /turf/unsimulated/floor/void,
 /area/diner/cow)
+"iNm" = (
+/obj/item/device/light/magic_lantern{
+	dir = 4;
+	pixel_x = -21
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor5"
+	},
+/area/wizard_station)
 "iOu" = (
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -73848,6 +73884,10 @@
 	opacity = 1
 	},
 /area/adventure/channel)
+"kmS" = (
+/obj/critter/cat,
+/turf/unsimulated/floor/carpet/wizard/standard/edge/nw,
+/area/wizard_station)
 "kmZ" = (
 /obj/railing/red{
 	dir = 8;
@@ -74246,6 +74286,10 @@
 	dir = 5
 	},
 /area/hospital/samostrel)
+"ltz" = (
+/obj/magicmirror,
+/turf/unsimulated/wall/auto/supernorn/wood,
+/area/wizard_station)
 "luV" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
@@ -74375,6 +74419,10 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
+"lNz" = (
+/obj/machinery/door/poddoor/pyro/podbay_autoclose/wizard_horizontal/vertical,
+/turf/unsimulated/floor/shuttlebay,
+/area/wizard_station)
 "lNP" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It's a pipe manifold.  A grimy one.";
@@ -74430,11 +74478,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
 "lRx" = (
-/obj/indestructible/shuttle_corner{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "wall3_space_end"
-	},
-/turf/space,
+/turf/unsimulated/wall/auto/supernorn/wood,
 /area/wizard_station)
 "lSw" = (
 /obj/decal/cleanable/ripped_poster,
@@ -75795,6 +75839,17 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
+"oYg" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/blue,
+/obj/item/toy/plush/small/kitten/wizard,
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/wizard_station)
 "oYl" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
@@ -76821,6 +76876,12 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/hospital/samostrel)
+"rFA" = (
+/obj/landmark/start{
+	name = "wizard"
+	},
+/turf/unsimulated/floor/white,
+/area/wizard_station)
 "rFC" = (
 /obj/lattice{
 	dir = 4;
@@ -77196,6 +77257,9 @@
 /obj/table/regal/auto,
 /turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
+"sjM" = (
+/turf/unsimulated/floor/white/checker,
+/area/wizard_station)
 "slL" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
@@ -77220,6 +77284,12 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
+"sqg" = (
+/obj/machinery/bot/medbot/hippocrates,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor5"
+	},
+/area/wizard_station)
 "suO" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 1;
@@ -77333,6 +77403,16 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"sMO" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/pink,
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/wizard_station)
 "sNn" = (
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
@@ -77562,12 +77642,8 @@
 /turf/unsimulated/floor/grey/side,
 /area/centcom/offices/cogwerks)
 "tGW" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "wall3_space_end"
-	},
-/turf/space,
+/obj/machinery/r_door_control/podbay/wizard,
+/turf/unsimulated/wall/auto/supernorn/wood,
 /area/wizard_station)
 "tIu" = (
 /obj/decal/poster/wallsign/poster_clown{
@@ -77753,6 +77829,10 @@
 	dir = 4
 	},
 /area/hospital/samostrel)
+"upc" = (
+/obj/decal/poster/wallsign/teleport_sign,
+/turf/unsimulated/wall/auto/supernorn/wood,
+/area/wizard_station)
 "usD" = (
 /obj/item/paper/book/from_file/space_law,
 /turf/unsimulated/floor/redblack{
@@ -78259,6 +78339,18 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"wgP" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/table/wood/auto,
+/obj/machinery/computer/pod/old/swf{
+	id = "hangar_wizard";
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/wizard_station)
 "wgY" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -78627,6 +78719,17 @@
 	},
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/assault_pod)
+"xnv" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/door_control/podbay{
+	id = "hangar_wizard";
+	pixel_x = 21
+	},
+/turf/space,
+/area/space)
 "xnI" = (
 /obj/table/reinforced,
 /obj/item/reagent_containers/food/drinks/bottle/champagne{
@@ -78694,6 +78797,13 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/cogwerks)
+"xAH" = (
+/obj/item/device/light/magic_lantern{
+	dir = 4;
+	pixel_x = -21
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/wizard_station)
 "xAQ" = (
 /obj/random_item_spawner/tools,
 /obj/table/auto,
@@ -79004,6 +79114,14 @@
 /obj/submachine/ice_cream_dispenser,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"yiB" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/obj/table/wood/auto,
+/obj/item/instrument/harmonica,
+/turf/unsimulated/floor/shuttlebay,
+/area/wizard_station)
 "yiP" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-20"
@@ -79695,12 +79813,12 @@ abj
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+bEP
+cCS
+cCS
+cCS
+cCS
+xnv
 cnw
 cnw
 cnw
@@ -79997,11 +80115,11 @@ abj
 cnw
 cnw
 cnw
-cnw
+lRx
 tGW
-bCy
-cCS
-bCy
+lNz
+lNz
+tGW
 lRx
 cnw
 cnw
@@ -80297,16 +80415,16 @@ aaa
 aaa
 abj
 cnw
-cnw
-cnw
-cnw
-dki
-djT
+djN
+djN
+lRx
+wgP
 dkd
-dki
-dki
-cnw
-cnw
+dkd
+xAH
+lRx
+djN
+djN
 cnw
 cnw
 abj
@@ -80599,14 +80717,14 @@ aaa
 aaa
 abj
 cnw
-cnw
 djw
 djw
-dki
+upc
+yiB
 djU
 dke
 dkj
-dki
+lRx
 djw
 djw
 cnw
@@ -80900,18 +81018,18 @@ axy
 aaa
 aaa
 abj
-cnw
-djr
-djE
-djE
-dki
-djV
-dke
+lRx
+lRx
+lRx
+ltz
+djX
+djX
+iqR
 dkk
-dki
-djE
-djE
-dko
+lRx
+lRx
+lRx
+lRx
 cnw
 abj
 aaa
@@ -81202,18 +81320,18 @@ axy
 aaa
 aaa
 abj
-cnw
+lRx
 dki
 djy
-djF
-dki
-djW
-dkf
-djW
-dki
+lRx
+hRU
+djX
+dkm
+lRx
+lRx
 dkv
 dkB
-dki
+lRx
 cnw
 abj
 aaa
@@ -81504,18 +81622,18 @@ axy
 aaa
 aaa
 abj
-cnw
-dki
-djz
-djG
-djL
+lRx
+djR
+dkt
+djI
+djV
 djX
-djX
-dkl
-dki
+iNm
+dkm
+kmS
 dkw
 dkC
-dki
+lRx
 cnw
 abj
 aaa
@@ -81806,18 +81924,18 @@ axy
 aaa
 aaa
 abj
-cnw
-dki
-djA
-djH
-djM
+djL
+djR
+dkt
+djI
 djX
+sqg
 djX
-djX
+dkm
 dkp
 dkx
 dkD
-dki
+lRx
 cnw
 abj
 aaa
@@ -82108,18 +82226,18 @@ axy
 aaa
 aaa
 abj
-cnw
-dki
-djB
-djI
-djN
+lRx
 djY
+dkt
+djI
 djX
 djX
+djX
+dkn
 dkq
 dky
 dkE
-dki
+lRx
 cnw
 abj
 aaa
@@ -82410,18 +82528,18 @@ axy
 aaa
 aaa
 abj
-cnw
-dki
-djC
-djJ
-djO
+lRx
 djZ
+dkt
+dkm
+djO
 djX
-djX
+djO
+dkm
 dkr
 dkz
 dkF
-dki
+lRx
 cnw
 abj
 aaa
@@ -82712,18 +82830,18 @@ aaa
 aaa
 aaa
 abj
-cnw
-djv
-dki
-dki
-dki
+lRx
+lRx
+dkm
+dkm
+dkm
 djW
-dkg
-djW
-dki
-dki
-dki
-dkA
+dkm
+dkm
+dkm
+lRx
+lRx
+lRx
 cnw
 abj
 aaa
@@ -83014,18 +83132,18 @@ axy
 axy
 aaa
 abj
-cnw
-cnw
-djv
-dki
+djM
+lRx
+dkb
+rFA
 djQ
 dka
-dka
+sjM
 dkm
-dks
-dki
-dkA
-cnw
+dkt
+sMO
+lRx
+cOq
 cnw
 abj
 aaa
@@ -83317,16 +83435,16 @@ axy
 aaa
 abj
 cnw
-cnw
-cnw
-dki
-djR
-dkb
+lRx
+dkf
 dka
+dka
+dka
+sjM
 dkn
 dkt
-dki
-cnw
+oYg
+lRx
 cnw
 cnw
 abj
@@ -83619,16 +83737,16 @@ axy
 aaa
 abj
 cnw
-cnw
-cnw
-dki
+lRx
+lRx
+gtW
 djS
 dkc
 dkh
-dka
+dkm
 dku
-dki
-cnw
+lRx
+lRx
 cnw
 cnw
 abj
@@ -83921,16 +84039,16 @@ axy
 aaa
 abj
 cnw
-cnw
-cnw
-djv
-dki
-dki
-dki
-dki
-dki
-dkA
-cnw
+cxq
+lRx
+lRx
+lRx
+lRx
+lRx
+lRx
+lRx
+lRx
+cOq
 cnw
 cnw
 abj
