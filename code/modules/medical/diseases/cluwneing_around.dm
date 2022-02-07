@@ -19,24 +19,12 @@
 		name += "[pick("AreoU","UroO","ArU","AoOro","AhRu")][pick("ndE","Ned","nhd")]"
 	cluwne
 		laugh_rate = 18
-		cure = "Incurable"
 
 /datum/ailment/disease/cluwneing_around/on_infection(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	..()
-
 	if (D)
 		src.oldname = affected_mob.real_name
 		src.oldjob = affected_mob.job
-
-	if (istype(affected_mob.wear_mask, /obj/item/clothing/mask/cursedclown_hat))
-		if (D.cure != "Incurable") //Could just jump to Stage 3 but then we'd lose the honk spam
-			D.cure = "Incurable"
-		if (affected_mob.job != "Cluwne")
-			affected_mob.real_name = "cluwne"
-			affected_mob.stuttering = 120
-			affected_mob.job = "Cluwne"
-			affected_mob.UpdateName()
-			affected_mob.change_misstep_chance(60)
 
 /datum/ailment/disease/cluwneing_around/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	if (..())
@@ -66,15 +54,11 @@
 				affected_mob.say("THE RINGMASTER DOESN'T RUN THE CIRCUS... HUNKE!")
 
 		if(3)
-			if (D.cure != "Incurable")
-				D.cure = "Incurable"
-
 			if (affected_mob.job != "Cluwne")
 				affected_mob.real_name = "cluwne"
 				affected_mob.stuttering = 120
 				affected_mob.job = "Cluwne"
 				affected_mob.UpdateName()
-				affected_mob.change_misstep_chance(60)
 
 			if(prob(10) && isturf(affected_mob.loc))
 				var/turf/T = affected_mob.loc
@@ -226,7 +210,7 @@
 			if(findtext("[W.name]","cursed") && W.cant_self_remove && W.cant_other_remove)
 				affected_mob.u_equip(W)
 				if (W)
-					affected_mob.set_loc(affected_mob.loc)
+					W.set_loc(affected_mob.loc)
 					W.dropped(affected_mob)
 					W.layer = initial(W.layer)
 		affected_mob.change_misstep_chance(-INFINITY)
