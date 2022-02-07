@@ -26,6 +26,8 @@
 	if (D)
 		src.oldname = affected_mob.real_name
 		src.oldjob = affected_mob.job
+	if (istype(affected_mob.wear_mask, /obj/item/clothing/mask/cursedclown_hat))
+		D.cure = "Incurable"
 
 /datum/ailment/disease/cluwneing_around/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	if (..())
