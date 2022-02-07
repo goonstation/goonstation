@@ -24279,14 +24279,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
-"eDY" = (
-/obj/indestructible/shuttle_corner{
-	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/martian/floor,
-/area/space)
 "fgb" = (
 /turf/simulated/wall/asteroid{
 	dir = 1
@@ -40351,7 +40343,7 @@ aaa
 aaa
 axm
 axs
-eDY
+axC
 ayn
 axs
 axs
