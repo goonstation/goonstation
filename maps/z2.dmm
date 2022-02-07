@@ -859,21 +859,6 @@
 	},
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
-"abv" = (
-/turf/unsimulated/wall/setpieces/hospital{
-	dir = 9
-	},
-/area/hospital)
-"abw" = (
-/turf/unsimulated/wall/setpieces/hospital{
-	dir = 4
-	},
-/area/hospital)
-"abx" = (
-/turf/unsimulated/wall/setpieces/hospital{
-	icon_state = "panelwall_junction"
-	},
-/area/hospital)
 "aby" = (
 /obj/stone{
 	dir = 1
@@ -1212,16 +1197,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/hospital)
-"acp" = (
-/turf/unsimulated/wall/setpieces/hospital{
-	dir = 10
-	},
-/area/hospital)
-"acq" = (
-/turf/unsimulated/wall/setpieces/hospital{
-	dir = 5
-	},
-/area/hospital)
 "acr" = (
 /obj/tree1{
 	dir = 8
@@ -1368,12 +1343,6 @@
 /turf/space/no_replace,
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
-"acL" = (
-/turf/unsimulated/wall/setpieces/hospital{
-	dir = 1;
-	icon_state = "panelwall_junction"
-	},
-/area/hospital)
 "acM" = (
 /turf/unsimulated/floor/bluewhite,
 /area/hospital)
@@ -1386,11 +1355,6 @@
 	name = "defunct vent"
 	},
 /turf/unsimulated/floor/bluewhite{
-	dir = 6
-	},
-/area/hospital)
-"acO" = (
-/turf/unsimulated/wall/setpieces/hospital{
 	dir = 6
 	},
 /area/hospital)
@@ -1609,12 +1573,6 @@
 	req_access_txt = ""
 	},
 /turf/unsimulated/floor/blue,
-/area/hospital)
-"adm" = (
-/turf/unsimulated/wall/setpieces/hospital{
-	dir = 8;
-	icon_state = "panelwall_junction"
-	},
 /area/hospital)
 "adn" = (
 /obj/table/auto,
@@ -11148,18 +11106,6 @@
 	opacity = 1
 	},
 /area/marsoutpost)
-"aIk" = (
-/turf/unsimulated/wall/setpieces/martian{
-	dir = 8;
-	icon_state = "mars-s"
-	},
-/area/marsoutpost)
-"aIm" = (
-/turf/unsimulated/wall/setpieces/martian{
-	dir = 8;
-	icon_state = "mars-c"
-	},
-/area/marsoutpost)
 "aIn" = (
 /obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/outercross,
@@ -19683,9 +19629,12 @@
 	},
 /area/marsoutpost)
 "bgh" = (
-/turf/unsimulated/wall/setpieces/bluewall{
-	dir = 8
+/obj/decal/fakeobjects{
+	dir = 1;
+	icon = 'icons/turf/walls_icemoon.dmi';
+	icon_state = "details"
 	},
+/turf/unsimulated/wall/auto/adventure/icemoon/interior,
 /area/precursor)
 "bgi" = (
 /obj/map/light/cyan,
@@ -19828,9 +19777,11 @@
 /turf/unsimulated/floor/setpieces/bluefloor,
 /area/precursor)
 "bgF" = (
-/turf/unsimulated/wall/setpieces/bluewall{
-	dir = 4
+/obj/decal/fakeobjects{
+	icon = 'icons/turf/walls_icemoon.dmi';
+	icon_state = "details"
 	},
+/turf/unsimulated/wall/auto/adventure/icemoon/interior,
 /area/precursor)
 "bgG" = (
 /obj/decal/cleanable/cobweb,
@@ -20009,9 +19960,12 @@
 /area/precursor)
 "bhh" = (
 /obj/map/light/cyan,
-/turf/unsimulated/wall/setpieces/bluewall{
-	dir = 8
+/obj/decal/fakeobjects{
+	dir = 1;
+	icon = 'icons/turf/walls_icemoon.dmi';
+	icon_state = "details"
 	},
+/turf/unsimulated/wall/auto/adventure/icemoon/interior,
 /area/precursor)
 "bhi" = (
 /obj/creepy_sound_trigger,
@@ -22003,9 +21957,7 @@
 /obj/precursor_puzzle/controller{
 	id = "SHIELD_HALL"
 	},
-/turf/unsimulated/wall/setpieces/bluewall{
-	dir = 8
-	},
+/turf/unsimulated/wall/auto/adventure/icemoon/interior,
 /area/precursor)
 "bmd" = (
 /turf/unsimulated/floor/red/side,
@@ -22293,9 +22245,7 @@
 /obj/precursor_puzzle/controller{
 	id = "PIT_ROOM"
 	},
-/turf/unsimulated/wall/setpieces/bluewall{
-	dir = 8
-	},
+/turf/unsimulated/wall/auto/adventure/icemoon/interior,
 /area/precursor)
 "bmV" = (
 /obj/precursor_puzzle/rotator{
@@ -94405,11 +94355,11 @@ aIp
 aIp
 aIp
 aIp
-bgF
-bgF
 bgr
-bgF
-bgF
+bgr
+bgr
+bgr
+bgr
 bgr
 bgr
 bgr
@@ -94701,17 +94651,17 @@ aJi
 aIp
 bgr
 bgr
-bgh
 bgr
 bgr
 bgr
-bgF
+bgr
+bgr
 bgr
 bgF
 bij
 bij
 bij
-bgF
+bgr
 bgr
 bkK
 bgF
@@ -95024,7 +94974,7 @@ bfQ
 bfQ
 bfQ
 bfQ
-bgF
+bgr
 bgr
 aaa
 aaa
@@ -95308,14 +95258,14 @@ bfQ
 bfQ
 bgr
 bgr
-bgF
+bgr
 bfB
-bgF
+bgr
 bgF
 bij
 bij
 bij
-bgF
+bgr
 bgr
 bkK
 bgF
@@ -95613,23 +95563,23 @@ aah
 bfQ
 bfQ
 aaj
-bgF
-bgF
-bgr
-bgF
-bgF
-bgF
-bgr
-bgF
 bgr
 bgr
 bgr
-bgF
-bgF
+bgr
+bgr
+bgr
+bgr
+bgr
+bgr
+bgr
+bgr
+bgr
+bgh
 bxU
 bxU
 bgr
-bgF
+bgr
 aaa
 aaa
 wXY
@@ -95926,12 +95876,12 @@ biA
 bij
 bfQ
 bhA
-bgF
+bgr
 bmE
 bfQ
 bfQ
 bnG
-bgF
+bgr
 aaa
 aaa
 wXY
@@ -96211,7 +96161,7 @@ aJE
 aJi
 bgr
 bgr
-bgh
+bgr
 bgr
 aai
 bfQ
@@ -96228,12 +96178,12 @@ biA
 bij
 bfQ
 bhA
-bgF
-bgh
+bgr
+bgr
 bfQ
 bfQ
-bgh
-bgF
+bgr
+bgr
 aaa
 aaa
 wXY
@@ -96530,12 +96480,12 @@ biA
 bij
 bfQ
 bhA
-bgF
+bgr
 bmE
 bfQ
 bfQ
 bnG
-bgF
+bgr
 aaa
 aaa
 wXY
@@ -96832,12 +96782,12 @@ biA
 bij
 bfQ
 bhA
-bgF
-bgh
+bgr
+bgr
 biA
 biA
-bgh
-bgF
+bgr
+bgr
 aaa
 aaa
 wXY
@@ -97434,13 +97384,13 @@ biT
 bgr
 bgr
 bgr
-bgF
 bgr
-bgF
 bgr
-bgF
 bgr
-bgF
+bgr
+bgr
+bgr
+bgr
 bgr
 aaa
 aaa
@@ -99847,13 +99797,13 @@ bgr
 bgr
 bjE
 bgr
-bgh
-bgh
-bgh
-bgh
-bgh
-bgh
-bgh
+bgr
+bgr
+bgr
+bgr
+bgr
+bgr
+bgr
 bgr
 bgr
 bYU
@@ -100150,10 +100100,10 @@ bij
 bij
 bgr
 bkL
-bgh
+bgr
 bgh
 blN
-bgh
+bgr
 bgh
 bmF
 bgr
@@ -101056,7 +101006,7 @@ biV
 biV
 bgr
 bkM
-bgh
+bgr
 bgh
 blO
 bmc
@@ -101354,19 +101304,19 @@ aJi
 bhY
 aIp
 bgr
-bgh
-bgh
 bgr
-bgh
-bgh
-bgh
-bgh
-bgh
-bgh
-bgh
 bgr
-bgh
-bgh
+bgr
+bgr
+bgr
+bgr
+bgr
+bgr
+bgr
+bgr
+bgr
+bgr
+bgr
 bgr
 aaa
 aaa
@@ -115700,10 +115650,10 @@ aab
 aab
 aaa
 abp
-abv
-abH
-abH
-abH
+aeX
+aeX
+aeX
+aeX
 aeX
 aeX
 aeX
@@ -116002,7 +115952,7 @@ aab
 aab
 aaa
 abp
-abw
+aeX
 abI
 abY
 abY
@@ -116304,7 +116254,7 @@ aab
 aab
 aaa
 abp
-abw
+aeX
 abJ
 abZ
 acm
@@ -116606,10 +116556,10 @@ aab
 aab
 aaa
 abp
-abx
-abH
-abH
-afe
+aeX
+aeX
+aeX
+aeX
 acb
 acM
 adl
@@ -116635,7 +116585,7 @@ aoq
 apl
 aqn
 arf
-adG
+adj
 adQ
 adQ
 adQ
@@ -116908,13 +116858,13 @@ aab
 aab
 aaa
 abp
-abw
+aeX
 abK
 aca
 aco
 acb
 acM
-abw
+aeX
 adD
 acb
 acb
@@ -117210,13 +117160,13 @@ aab
 aab
 aaa
 abp
-abw
+aeX
 abL
 acb
 acb
 acC
 acN
-abw
+aeX
 adE
 acb
 acb
@@ -117512,13 +117462,13 @@ aab
 aab
 aaa
 abp
-abw
+aeX
 abM
 acc
 acc
 acD
-abv
-acL
+aeX
+aeX
 adD
 adS
 acb
@@ -117814,13 +117764,13 @@ aab
 aab
 aaa
 abp
-abx
-abH
-abH
-acp
+aeX
+aeX
+aeX
+aeX
 acE
-abw
-abw
+aeX
+aeX
 adF
 acb
 acb
@@ -118119,10 +118069,10 @@ abp
 abp
 abp
 abp
-acq
-abH
-acO
-abw
+aeX
+aeX
+aeX
+aeX
 adD
 adT
 aed
@@ -118422,9 +118372,9 @@ aaa
 aaa
 abp
 abp
-abv
-abH
-adm
+aeX
+aeX
+aeX
 adG
 adG
 abH
@@ -118724,7 +118674,7 @@ aab
 aaa
 abp
 abp
-abw
+aeX
 acP
 acb
 acb
@@ -119026,7 +118976,7 @@ aab
 aaa
 aaa
 abp
-abw
+aeX
 acQ
 adn
 adH
@@ -119328,10 +119278,10 @@ aab
 aab
 aaa
 abp
-acq
-abH
-abH
-acp
+aeX
+aeX
+aeX
+aeX
 adU
 acb
 acb
@@ -119633,7 +119583,7 @@ abp
 abp
 abp
 abp
-abw
+aeX
 adn
 acb
 acb
@@ -119935,7 +119885,7 @@ aaa
 aaa
 aaa
 abp
-abw
+aeX
 adV
 acb
 aes
@@ -120237,7 +120187,7 @@ aab
 aab
 aaa
 abp
-abx
+aeX
 adG
 aee
 adG
@@ -120539,7 +120489,7 @@ aab
 aab
 aaa
 abp
-abw
+aeX
 adW
 acb
 aet
@@ -120841,7 +120791,7 @@ aab
 aab
 aaa
 abp
-abw
+aeX
 adX
 aef
 acb
@@ -121143,7 +121093,7 @@ aab
 aab
 aaa
 abp
-abw
+aeX
 adY
 aeg
 aeu
@@ -121445,10 +121395,10 @@ aab
 aab
 aaa
 abp
-acq
-abH
-abH
-abH
+aeX
+aeX
+aeX
+aeX
 aeX
 afg
 afs
@@ -130231,8 +130181,8 @@ aCK
 aFA
 aGx
 aGx
-aGx
-aGx
+duq
+duq
 duq
 duq
 duq
@@ -130838,10 +130788,10 @@ aGx
 duq
 duq
 duq
-aGx
 duq
 duq
-aGx
+duq
+duq
 duq
 aaa
 dFc
@@ -131143,7 +131093,7 @@ duq
 aGx
 duL
 duq
-aGx
+duq
 duq
 aaa
 dFc
@@ -131445,7 +131395,7 @@ duq
 aGx
 aCK
 duL
-aGx
+duq
 duq
 aaa
 dFc
@@ -136670,7 +136620,7 @@ aTs
 aTs
 aTs
 aTs
-aIm
+aIe
 bes
 aKv
 aTs
@@ -136690,7 +136640,7 @@ aTs
 biQ
 aIB
 bkn
-bjD
+aIe
 aTs
 aIe
 aIe
@@ -136973,8 +136923,8 @@ aIe
 aIe
 aIe
 aIe
-aIk
-aIk
+aIe
+aIe
 aTs
 aIe
 aIe
@@ -136989,9 +136939,9 @@ aTs
 aTs
 aTs
 aTs
-aIm
-bjD
-aIk
+aIe
+aIe
+aIe
 aIe
 aTs
 aIe
@@ -143298,7 +143248,7 @@ djq
 djq
 aIe
 aIe
-aPU
+aIe
 djq
 djq
 djq
@@ -143594,7 +143544,7 @@ aJA
 aJA
 aTs
 aIe
-aPU
+aIe
 djq
 djq
 djq

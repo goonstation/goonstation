@@ -849,7 +849,6 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/adventure)
 	interior
 		name = "panel wall"
 		mod = "interior-"
-		connect_overlay = 1
 		icon_state = "interior-0"
 		connects_to = list(/turf/cordon, /turf/unsimulated/wall/auto/adventure, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/,
 	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom, /turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave,
@@ -897,7 +896,8 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/adventure)
 	connect_overlay = 0
 	connects_to = list(/turf/cordon, /turf/unsimulated/wall/auto/adventure, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/,
 	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom, /turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave,
-	/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner,/turf/unsimulated/wall/auto/adventure/old)
+	/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner,/turf/unsimulated/wall/auto/adventure/old,/turf/unsimulated/wall/auto/adventure/meat,
+	/turf/unsimulated/wall/auto/adventure/meat/meateyes,/turf/unsimulated/wall/auto/adventure/meat/meatier)
 
 	meatier
 		mod = "meatier-"
