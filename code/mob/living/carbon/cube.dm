@@ -35,7 +35,7 @@
 
 	attack_hand(mob/user as mob)
 		boutput(user, "<span class='notice'>You push the [src.name] but nothing happens!</span>")
-		playsound(src.loc, "sound/weapons/Genhit.ogg", 25, 1)
+		playsound(src.loc, "sound/impact_sounds/Flesh_Crush_1.ogg", 40, 1)
 		src.add_fingerprint(user)
 		return
 
@@ -50,10 +50,6 @@
 					src.gib(1)
 			else
 		return
-
-	build_keybind_styles(client/C)
-		..()
-		C.apply_keybind("cube")
 
 	proc/get_cube_idle()
 		return "cubes cubily"

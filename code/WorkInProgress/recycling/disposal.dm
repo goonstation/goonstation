@@ -454,6 +454,7 @@
 
 		if (user)
 			boutput(user, "You finish slicing [C].")
+			logTheThing("station", user, null, "unwelded the disposal pipe at [log_loc(C)]")
 
 		C.set_dir(dir)
 		C.mail_tag = src.mail_tag
@@ -888,11 +889,6 @@
 
 				LAGCHECK(LAG_MED)
 
-
-
-				if (newIngredient.reagents)
-					newIngredient.reagents.trans_to(newLoaf, 1000)
-
 				if (istype(newIngredient, /obj/item/reagent_containers/food/snacks/prison_loaf))
 					var/obj/item/reagent_containers/food/snacks/prison_loaf/otherLoaf = newIngredient
 					newLoaf.loaf_factor += otherLoaf.loaf_factor * 1.2
@@ -976,7 +972,7 @@
 	icon_state = "eloaf"
 	force = 0
 	throwforce = 0
-	initial_volume = 1000
+	initial_volume = 400
 
 	New()
 		..()
@@ -990,7 +986,7 @@
 	icon_state = "ploaf0"
 	force = 0
 	throwforce = 0
-	initial_volume = 1000
+	initial_volume = 400
 	var/loaf_factor = 1
 	var/processing = 0
 
@@ -1043,8 +1039,8 @@
 				src.name = "super-compressed prison loaf"
 				src.desc = "Hard enough to scratch a diamond, yet still somehow edible, this loaf seems to be emitting decay heat. Dear god."
 				src.icon_state = "ploaf1"
-				src.force = 11
-				src.throwforce = 11
+				src.force = 9
+				src.throwforce = 9
 				src.throw_range = 6
 				src.reagents.add_reagent("thalmerite",25)
 
@@ -1052,8 +1048,8 @@
 				src.name = "fissile loaf"
 				src.desc = "There's so much junk packed into this loaf, the flavor atoms are starting to go fissile. This might make a decent engine fuel, but it definitely wouldn't be good for you to eat."
 				src.icon_state = "ploaf2"
-				src.force = 22
-				src.throwforce = 22
+				src.force = 12
+				src.throwforce = 12
 				src.throw_range = 5
 				src.reagents.add_reagent("uranium",25)
 
@@ -1061,8 +1057,8 @@
 				src.name = "fusion loaf"
 				src.desc = "Forget fission, the flavor atoms in this loaf are so densely packed now that they are undergoing atomic fusion. What terrifying new flavor atoms might lurk within?"
 				src.icon_state = "ploaf3"
-				src.force = 44
-				src.throwforce = 44
+				src.force = 24
+				src.throwforce = 24
 				src.throw_range = 4
 				src.reagents.add_reagent("radium",25)
 
@@ -1070,8 +1066,8 @@
 				src.name = "neutron loaf"
 				src.desc = "Oh good, the flavor atoms in this prison loaf have collapsed down to a a solid lump of neutrons."
 				src.icon_state = "ploaf4"
-				src.force = 66
-				src.throwforce = 66
+				src.force = 32
+				src.throwforce = 32
 				src.throw_range = 3
 				src.reagents.add_reagent("polonium",25)
 
@@ -1079,8 +1075,8 @@
 				src.name = "quark loaf"
 				src.desc = "This nutritional loaf is collapsing into subatomic flavor particles. It is unfathmomably heavy."
 				src.icon_state = "ploaf5"
-				src.force = 88
-				src.throwforce = 88
+				src.force = 44
+				src.throwforce = 44
 				src.throw_range = 2
 				src.reagents.add_reagent("george_melonium",25)
 
@@ -1088,8 +1084,8 @@
 				src.name = "degenerate loaf"
 				src.desc = "You should probably call a physicist."
 				src.icon_state = "ploaf6"
-				src.force = 110
-				src.throwforce = 110
+				src.force = 55
+				src.throwforce = 55
 				src.throw_range = 1
 				src.reagents.add_reagent("george_melonium",50)
 
@@ -1097,22 +1093,13 @@
 				src.name = "strangelet loaf"
 				src.desc = "You should probably call a priest."
 				src.icon_state = "ploaf7"
-				src.force = 220
-				src.throwforce = 220
+				src.force = 88
+				src.throwforce = 88
 				src.throw_range = 0
-				src.reagents.add_reagent("george_melonium",100)
+				src.reagents.add_reagent("george_melonium",50)
 
 				if (!src.processing)
-					src.processing = 1
-
-				/*SPAWN_DBG(rand(100,1000))
-					if(src)
-						src.visible_message("<span class='alert'><b>[src] collapses into a black hole! Holy fuck!</b></span>")
-						world << sound("sound/effects/kaboom.ogg")
-						new /obj/bhole(get_turf(src.loc))*/
-
-
-		return
+					src.processing = TRUE
 
 	process()
 		if(!src.processing)

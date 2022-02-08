@@ -1480,24 +1480,27 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	name = "scorpion"
 	real_name = "scorpion"
 	desc = "Ack! Get it away! AAAAAAAA."
-	icon_state = "scorpion"
-	icon_state_dead = "scorpion-dead"
+	icon_state = "spacescorpion"
+	icon_state_dead = "spacescorpion-dead"
 	speechverb_say = "clicks"
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "chitters"
-	health_brute = 5
-	health_burn = 5
-	flags = TABLEPASS | DOORPASS
+	health_brute = 30
+	health_burn = 30
+	density = 1
+	flags = TABLEPASS
 	fits_under_table = 1
+	add_abilities = list(/datum/targetable/critter/wasp_sting/scorpion_sting,
+						/datum/targetable/critter/pincer_grab)
 
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/small_critter
+		HH.limb = new /datum/limb/small_critter/pincers
 		HH.icon = 'icons/mob/critter_ui.dmi'
-		HH.icon_state = "handn"
-		HH.name = "weird grabby foot thing"
-		HH.limb_name = "foot"
+		HH.icon_state = "pincers"
+		HH.name = "pincers"
+		HH.limb_name = "pincers"
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -1505,11 +1508,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				if (src.emote_check(voluntary, 50))
 					playsound(src, "sound/voice/animal/bugchitter.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> chitters!</span>"
+			if ("snip", "snap")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, "sound/items/Wirecutter.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					return "<span class='emote'><b>[src]</b> snips its pincers!</span>"
 		return null
 
 	specific_emote_type(var/act)
 		switch (act)
-			if ("scream","chitter")
+			if ("scream","chitter", "snip", "snap")
 				return 2
 		return ..()
 

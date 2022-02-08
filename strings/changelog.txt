@@ -1,4 +1,62 @@
 
+(t)mon feb 07 22
+(u)aloe
+(*)QM Requisition payouts have been significantly increased.
+(u)aloe
+(+)The sponge capsule crate from QM now only comes with 1 pack of capsules. That's still 12 animals.
+(u)aloe
+(+)AI eyebots (the shells you start with) can pull things now via... magnets or something. Their health has been reduced to accommodate this.
+(u)aloe
+(+)Traitor chefs can now buy a hotdog cart that crunches people similar to the janitor's trash compactor cart. I didn't make it, I just found it. It's also a little tastier.
+(u)avimour
+(p)7426
+(e)|
+(+)Medical fabricators can now create stress balls.
+(t)sun feb 06 22
+(u)pali
+(+)Nukies now have a unique radio record on their battlecruiser.
+(u)NightmareChamillian
+(p)7354
+(e)🎨|sprites
+(+)Added unique sprites for the syndicate tranquilizer darts, meowtizer, and .22 smartgun magazines.
+(u)NightmareChamillian
+(p)7236
+(e)🎨|sprites
+(+)The sweatshop that produces NT's pride wardrobe now manufacturers reversible jumpsuits for the MLM sexuality
+(u)Flappybat and Flaborized
+(p)7269
+(e)🆕🎨|feature, sprites
+(*)Added a Recover Gear ability to Hunters. Use it to teleport your rifle, spear or cloak back to your position if you lose them. Animations by Flaborized.
+(*)New Hunting spear sprite and inhands by Flaborized!
+(u)Flaborized
+(p)7412
+(e)🎨|sprites
+(+)Resprited cloning upgrade modules.
+(u)Colossusqw
+(p)7315
+(e)🆕🎨|feature, sprites
+(+)Made so you can play as a scorpion if an admin wants it.
+(u)Flappybat
+(p)7347
+(e)🆕|feature
+(+)When you die in Battle Royale you are now vaporized and drop your gear.
+(u)Flaborized
+(p)7397
+(e)🎨|sprites
+(+)Resprited the comms dish.
+(u)zjdtmkhzt
+(p)7167
+(e)|
+(+)Added a new option for mechcomponents to connect them without clickdrag.
+(t)sat feb 05 22
+(u)Stonepillar
+(p)7411
+(e)⚖|balance
+(+)Reduced the damage of high-level loaves.
+(u)ThyOverlord
+(p)7378
+(e)🎨|sprites
+(+)Resprited the fish you see around the station.
 (t)fri feb 04 22
 (u)Adhara in Space
 (p)7398
