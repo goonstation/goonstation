@@ -3,6 +3,7 @@
 	name = "Generic Ammobox"
 	desc = "A generic ammobox for getting some ammunition."
 	icon_state = "lmg_ammo-0-old"
+	/*
 	ammo_type = null
 	caliber = null
 	var/list/valid_calibers = list() //supports lists and single, set to "All" for any gun
@@ -21,6 +22,7 @@
 				qdel(src)
 		else
 			..()
+	*///We'll deal with you later
 
 /obj/item/ammo/ammobox/nukeop
 	name = "Syndicate Ammo Bag"

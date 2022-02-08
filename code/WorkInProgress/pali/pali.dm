@@ -24,7 +24,7 @@
 	max_amount = 10.0
 	ammo_type = new/datum/projectile/special/spawner/beepsky
 
-	caliber = 2
+	ammo_cat = AMMO_BEEPSKY
 	icon_dynamic = 1
 	icon_short = "lmg_ammo"
 	icon_empty = "lmg_ammo-0"
@@ -35,7 +35,7 @@
 	icon_state = "buff_airzooka"
 	color = "#555555"
 	force = 5
-	caliber = 2 // hell if I know
+	ammo_cats = list(AMMO_BEEPSKY)  // hell if I know
 	max_ammo_capacity = 100
 	auto_eject = 0
 

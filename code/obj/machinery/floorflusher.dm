@@ -12,6 +12,7 @@
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/open = 0 //is it open
+	var/opening = FALSE // is the flusher opening/closing? Used for door_timer.dm
 	var/id = null //ID used for brig stuff
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = 1	// item mode 0=off 1=charging 2=charged
@@ -286,15 +287,21 @@
 	//open up, called on trigger
 	proc/openup()
 		open = 1
+		opening = TRUE
 		flick("floorflush_a", src)
 		src.icon_state = "floorflush_o"
 		for(var/atom/movable/AM in src.loc)
 			src.Crossed(AM) // try to flush them
+		SPAWN_DBG(0.7 SECONDS)
+			opening = FALSE
 
 	proc/closeup()
 		open = 0
+		opening = TRUE
 		flick("floorflush_a2", src)
 		src.icon_state = "floorflush_c"
+		SPAWN_DBG(0.7 SECONDS)
+			opening = FALSE
 
 	// called when holder is expelled from a disposal
 	// should usually only occur if the pipe network is modified

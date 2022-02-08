@@ -1050,6 +1050,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Resource"
 
+/datum/manufacture/stress_ball
+	name = "Stress Ball"
+	item_paths = list("FAB-1")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/toy/plush/small/stress_ball)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 /******************** Robotics **************************/
 
 /datum/manufacture/robo_frame
@@ -2193,6 +2202,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/pride/lesb)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/pride_gay
+	name = "Gay Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/gaymasc)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
