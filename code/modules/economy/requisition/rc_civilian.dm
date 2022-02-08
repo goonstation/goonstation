@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/req_contract/civilian)
 
 /datum/req_contract/civilian/event_catering
 	name = "Event Catering"
-	payout = 12000
+	payout = 6000
 	weight = 70
 	var/list/desc_event = list("reception","formal event","welcoming party","going-away party","commemorative dinner","dinner")
 	var/list/desc_honorific = list("an esteemed","an infamous","a famous","a renowned")
@@ -88,7 +88,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/req_contract/civilian/furnishing
 	//name = "Interior Outfitting"
-	payout = 4400
+	payout = 2200
 	var/list/namevary = list("Interior Outfitting","Furnishing Assistance","Interior Decorating","Occupancy Preparations","Last-Minute Furnishing")
 	var/list/desc_whatitdoes = list("A new gaming","An extraction","A medical","A research","A cartographic","A transit")
 	var/list/desc_whatitis = list("vessel","station","platform","outpost")
@@ -161,7 +161,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/req_contract/civilian/greytide
 	//name = "Crew Embarcation"
-	payout = 3000
+	payout = 1500
 	var/list/namevary = list("Crew Embarcation","Crew Onboarding","New Hands on Deck","Expedited Outfitting","Personnel Rotation")
 	var/list/desc_task = list("mining","hydroponics","cargo handling","engineering","medical","research","cartographic")
 	var/list/desc_place = list("vessel","station","platform","outpost")
@@ -268,7 +268,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/req_contract/civilian/birthdaybash
 	//name = "Birthday Party"
-	payout = 4000
+	payout = 2000
 	hide_item_payouts = TRUE
 	var/list/namevary = list("Birthday Party","Birthday Bash","Surprise Party","One Year Older")
 	var/list/desc_event = list("party","celebration","gathering","party","event") //yes party twice

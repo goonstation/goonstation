@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 
 /datum/req_contract/scientific/internalaffairs //get it?
 	//name = "Don't Ask Too Many Questions"
-	payout = 5000
+	payout = 2500
 	weight = 80
 	var/list/namevary = list("Organ Analysis","Organ Research","Biolab Supply","Biolab Partnership","ERROR: CANNOT VERIFY ORIGIN")
 	var/list/desc_begins = list("conducting","performing","beginning","initiating","seeking supplies for","organizing")
@@ -48,7 +48,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/req_contract/scientific/spectrometry
 	//name = "Totally Will Not Result In A Resonance Cascade"
-	payout = 2400
+	payout = 1200
 	var/list/namevary = list("Beamline Calibration","Spectral Analysis","Chromatic Analysis","Refraction Survey")
 	var/list/desc_wherestudy = list(
 		"Optics calibration laboratory",
@@ -114,7 +114,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/req_contract/scientific/botanical
 	//name = "Feed Me, Seymour (Butz)"
-	payout = 7000
+	payout = 2500
 	var/list/namevary = list("Botanical Prototyping","Hydroponic Acclimation","Cultivar Propagation","Plant Genotype Study")
 	var/list/desc_wherestudy = list(
 		"An affiliated hydroponics lab",

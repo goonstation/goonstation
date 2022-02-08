@@ -167,12 +167,12 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 /datum/req_contract/special/pizza_party
 	name = "Pizza Party"
 	req_sheet = new /obj/item/paper/requisition/pizza_party
-	payout = 2600 //pizza adds from 2400 to 3600
+	payout = 1300 //pizza adds from 2400 to 3600
 
 	nt
 		name = "Pizza Party (NanoTrasen)"
 		req_sheet = new /obj/item/paper/requisition/pizza_party/nt
-		payout = 3600
+		payout = 1800
 
 	New()
 		src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pizza,rand(20,30)*6)
@@ -183,7 +183,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 ABSTRACT_TYPE(/datum/req_contract/special/chef)
 /datum/req_contract/special/chef
 	weight = 50
-	payout = 4000
+	payout = 2000
 	req_sheet = new /obj/item/paper/requisition/food_order
 	var/mealflag = MEAL_TIME_BREAKFAST
 	var/list/cornucopia = list()
