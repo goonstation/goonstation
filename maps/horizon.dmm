@@ -13307,6 +13307,7 @@
 /obj/item/robodefibrillator,
 /obj/item/storage/firstaid/brain,
 /obj/item/clothing/glasses/eyepatch,
+/obj/item/cloneModule/genepowermodule,
 /turf/simulated/floor/green,
 /area/station/medical/research{
 	name = "Genetic Research"
