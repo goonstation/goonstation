@@ -618,8 +618,8 @@ This is basically useless for anyone but miners.
 	job = list("Janitor")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
-	run_on_spawn(var/obj/storage/cart/trash/syndicate/cart,var/mob/living/owner, in_surplus_crate)
-		if (istype(cart) && owner)
+	run_on_spawn(var/obj/storage/cart/trash/syndicate/cart,var/mob/living/owner)
+		if (owner)
 			cart.owner_ckey = owner.ckey
 
 /datum/syndicate_buylist/traitor/slip_and_sign
@@ -776,6 +776,20 @@ This is basically useless for anyone but miners.
 	not_in_crates = 1
 	job = list("Chef")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
+
+/datum/syndicate_buylist/traitor/hotdog_cart
+	name = "Syndicate Hot Dog Cart"
+	item = /obj/storage/cart/hotdog/syndicate
+	cost = 4
+	desc = "A sinister hotdog cart which traps people inside and squishes them into, you guessed it, hot dogs."
+	not_in_crates = TRUE
+	vr_allowed = FALSE //i don't know why this is here but it's on the trash compactor cart so w/e
+	job = list("Chef", "Sous-Chef", "Waiter")
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
+
+	run_on_spawn(var/obj/storage/cart/hotdog/syndicatecart, var/mob/living/owner)
+		if (owner)
+			cart.owner_ckey = owner.ckey
 
 /datum/syndicate_buylist/traitor/moonshine
 	name = "Jug of Moonshine"

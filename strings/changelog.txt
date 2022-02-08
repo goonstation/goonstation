@@ -4,6 +4,8 @@
 (*)QM Requisition payouts have been significantly increased.
 (u)aloe
 (+)The sponge capsule crate from QM now only comes with 1 pack of capsules. That's still 12 animals.
+(u)aloe
+(+)Traitor chefs can now buy a hotdog cart that crunches people similar to the janitor's trash compactor cart. I didn't make it, I just found it. It's also a little tastier.
 (u)avimour
 (p)7426
 (e)|
