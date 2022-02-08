@@ -316,6 +316,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	var/line_b1 = null
 	var/line_b2 = null
 	var/line_b3 = null
+	var/author = null
 
 	var/list/plist = null
 
@@ -502,6 +503,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		src.papers --
 		playsound(src, "sound/machines/printer_dotmatrix.ogg", 30, 1)
 		var/obj/item/poster/titled_photo/P = new (src.loc)
+		P.author = user.key
 		P.name = "Wanted: [src.plist["name"]]"
 		P.line_title = "NAME: [src.plist["name"]]"
 		P.poster_image = src.plist["image"]

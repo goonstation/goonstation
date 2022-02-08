@@ -554,6 +554,11 @@
 		..()
 		icon_state += "[rand(1,5)]"
 
+/obj/item/raw_material/scrap_metal/steel
+	New()
+		..()
+		src.setMaterial(getMaterial("steel"))
+
 /obj/item/raw_material/shard
 	// same deal here
 	name = "shard"
@@ -746,7 +751,7 @@
 
 /obj/machinery/portable_reclaimer
 	name = "portable reclaimer"
-	desc = "A sophisticated piece of machinery that quickly processes minerals into bars."
+	desc = "A sophisticated piece of machinery can process raw materials, scrap, and material sheets into bars."
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "reclaimer"
 	anchored = 0

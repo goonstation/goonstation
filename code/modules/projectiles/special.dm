@@ -350,7 +350,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	brightness = 2
 	projectile_speed = 32
 	impact_range = 32
-	caliber = 40
 	pierces = -1
 	goes_through_walls = 1
 	color_red = 1
@@ -1012,7 +1011,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	ks_ratio = 1.0
-	caliber = 2
 	icon_turf_hit = "secbot1-wild"
 	implanted = null
 	typetospawn = /obj/machinery/bot/secbot

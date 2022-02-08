@@ -138,7 +138,7 @@
 
 /obj/reagent_dispensers/foamtank
 	name = "foamtank"
-	desc = "A foamtank"
+	desc = "A massive tank full of firefighting foam, for refilling extinguishers."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "foamtank"
 	amount_per_transfer_from_this = 25
@@ -375,7 +375,7 @@
 
 /obj/reagent_dispensers/beerkeg
 	name = "beer keg"
-	desc = "A beer keg"
+	desc = "Full of delicious alcohol, hopefully."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "beertankTEMP"
 	amount_per_transfer_from_this = 25

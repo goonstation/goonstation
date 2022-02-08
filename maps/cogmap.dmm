@@ -50860,14 +50860,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "czh" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "czk" = (
 /obj/decal/fakeobjects{
@@ -50975,9 +50971,7 @@
 /area/listeningpost)
 "czA" = (
 /obj/securearea,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "czB" = (
 /obj/cable{
@@ -51232,9 +51226,7 @@
 	},
 /area/listeningpost)
 "cAw" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "cAx" = (
 /turf/simulated/shuttle/wall{
@@ -51281,18 +51273,14 @@
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 8
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "cAD" = (
 /obj/lattice{
 	dir = 8;
 	icon_state = "lattice-dir"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "cAE" = (
 /obj/lattice{
@@ -51430,15 +51418,11 @@
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 8
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "cAW" = (
 /obj/decal/cleanable/oil,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "cAX" = (
 /obj/disposalpipe/segment{
@@ -51572,9 +51556,7 @@
 /area/space)
 "cBn" = (
 /obj/decal/fakeobjects/airmonitor_broken,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "cBo" = (
 /obj/table/wood/auto,
@@ -51615,9 +51597,7 @@
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "cBt" = (
 /obj/decal/poster/wallsign/stencil/right/m{
@@ -51665,18 +51645,14 @@
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 8
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "cBz" = (
 /obj/lattice{
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "cBA" = (
 /obj/structure/girder/displaced,

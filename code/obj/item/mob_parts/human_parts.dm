@@ -358,6 +358,7 @@
 
 /obj/item/parts/human_parts/arm/left
 	name = "left arm"
+	desc = "According to superstition, left handed people are unlucky. Whoever lost this sure seems to back that belief up."
 	icon_state = "arm_left"
 	item_state = "arm-left"
 	slot = "l_arm"
@@ -365,6 +366,7 @@
 
 /obj/item/parts/human_parts/arm/right
 	name = "right arm"
+	desc = "Someone's right hand.... hand. Or arm, whatever."
 	icon_state = "arm_right"
 	item_state = "arm-right"
 	slot = "r_arm"
@@ -373,7 +375,7 @@
 
 /obj/item/parts/human_parts/leg
 	name = "placeholder item (don't use this!)"
-	desc = "A human leg."
+	desc = "A human leg, pretty important for mobility."
 	object_flags = NO_ARM_ATTACH
 	var/rebelliousness = 0
 
@@ -489,7 +491,7 @@
 		if (istype(I))
 			//if(I.over_clothes) handlistPart += "l_arm_[I.arm_icon]"
 			//else partlistPart += "l_arm_[I.arm_icon]"
-			handlistPart += "r_arm_[I.arm_icon]"
+			handlistPart += "l_arm_[I.arm_icon]"
 			override_attack_hand = I.override_attack_hand
 			can_hold_items = I.can_hold_items
 

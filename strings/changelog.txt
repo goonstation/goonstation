@@ -1,4 +1,133 @@
 
+(t)mon feb 07 22
+(u)aloe
+(*)QM Requisition payouts have been significantly increased.
+(u)aloe
+(+)The sponge capsule crate from QM now only comes with 1 pack of capsules. That's still 12 animals.
+(u)avimour
+(p)7426
+(e)|
+(+)Medical fabricators can now create stress balls.
+(t)sun feb 06 22
+(u)pali
+(+)Nukies now have a unique radio record on their battlecruiser.
+(u)NightmareChamillian
+(p)7354
+(e)🎨|sprites
+(+)Added unique sprites for the syndicate tranquilizer darts, meowtizer, and .22 smartgun magazines.
+(u)NightmareChamillian
+(p)7236
+(e)🎨|sprites
+(+)The sweatshop that produces NT's pride wardrobe now manufacturers reversible jumpsuits for the MLM sexuality
+(u)Flappybat and Flaborized
+(p)7269
+(e)🆕🎨|feature, sprites
+(*)Added a Recover Gear ability to Hunters. Use it to teleport your rifle, spear or cloak back to your position if you lose them. Animations by Flaborized.
+(*)New Hunting spear sprite and inhands by Flaborized!
+(u)Flaborized
+(p)7412
+(e)🎨|sprites
+(+)Resprited cloning upgrade modules.
+(u)Colossusqw
+(p)7315
+(e)🆕🎨|feature, sprites
+(+)Made so you can play as a scorpion if an admin wants it.
+(u)Flappybat
+(p)7347
+(e)🆕|feature
+(+)When you die in Battle Royale you are now vaporized and drop your gear.
+(u)Flaborized
+(p)7397
+(e)🎨|sprites
+(+)Resprited the comms dish.
+(u)zjdtmkhzt
+(p)7167
+(e)|
+(+)Added a new option for mechcomponents to connect them without clickdrag.
+(t)sat feb 05 22
+(u)Stonepillar
+(p)7411
+(e)⚖|balance
+(+)Reduced the damage of high-level loaves.
+(u)ThyOverlord
+(p)7378
+(e)🎨|sprites
+(+)Resprited the fish you see around the station.
+(t)fri feb 04 22
+(u)Adhara in Space
+(p)7398
+(e)|
+(*)Clicking on a desk (or any table with built in storage) with an empty hand opens the storage now.
+(u)NightmareChamillian
+(p)7392
+(e)|
+(+)Light switches are now too high for ghost critters
+(u)TTerc
+(e)🗺|mapping
+(+)Donut 3 engine room now has a blast shield you can (and should!) use to protect the crew from bigulo setups.
+(u)Emily
+(p)7390
+(e)|
+(*)You can no longer struggle out of grabs while stunned
+(t)thu feb 03 22
+(u)Flappybat
+(p)7382
+(e)⚖|balance
+(+)Hunter mask now self destructs on death.
+(t)wed feb 02 22
+(u)LeahTheTech
+(p)7306
+(e)📄|tgui
+(*)The barcode computer now has a new UI, this one shows the scanned ID card clearly so you can keep track of how rich the other QM is getting.
+(u)Emily
+(+)The Retention Center no longer has a sequence break to getting to Dino Jason's early. If you go to Dino Jason's, don't forget to thank the bus driver!
+(u)pali
+(+)The prompt to change your ring message on a PDA now has pre-typed traitor code for your convenience (if you are the owner of the uplink in the PDA).
+(t)tue feb 01 22
+(u)tarmunora
+(+)chainsaw no fall apart
+(u)Nexusuxen
+(p)6844
+(e)🆕🎨|feature, sprites
+(*)AIs will now produce flying text above intercoms when speaking through them, provided they're not tuned to 145.9.
+(u)Mr. Moriarty
+(p)7180
+(e)🆕📄|feature, tgui
+(+)Added 'Open/Close Floor Flusher' brig door timer buttons.
+(t)mon jan 31 22
+(u)Keiya
+(p)7339
+(e)🆕📄|feature, tgui
+(+)Colorful paper should now work better, and maintain its colors on persistent noticeboards.
+(t)sun jan 30 22
+(u)Keiya
+(p)7356
+(e)|
+(+)The apiculturist's suit now stops small bees. It still doesn't do shit against Space Bees.
+(u)Arborinus
+(p)7184
+(e)🎨|sprites
+(+)New sprites for certain burgers and burger-esque sandwiches.
+(u)CodeJester
+(p)7265
+(e)📄|tgui
+(*)The reagent extractor has a fancy new UI, with changes to allow for quick extraction and transference!
+(u)Flaborized
+(p)7346
+(e)🎨|sprites
+(+)Added unique burning sprites for the changeling horror form.
+(u)Keiya
+(p)7323
+(e)🎨|sprites
+(*)New "Bee Exposition Extravaganza" book, now available at Books4U vendors system-wide! Your local apiculturist might have a copy, too.
+(t)sat jan 29 22
+(u)pali
+(*)Slipping on banana peels has been changed a bit and it now has fancy comedic animation
+(+)MechComp tesla coils now use up a bit of APC power.
+(u)NightmareChamillian
+(p)7258
+(e)🐛🗺|bug, mapping
+(+)After losing a lawsuit, NanoTrasen has now added adequate warning labels to some medicine bottles.
 (t)fri jan 28 22
 (u)pali
 (+)Head of Security now feels a disturbance in the force when Sylvester gets rigged with plasma.

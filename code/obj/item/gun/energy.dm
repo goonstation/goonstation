@@ -1027,12 +1027,22 @@
 	icon_state = "hunter"
 	item_state = "hunter"
 	base_item_state = "hunter"
+	var/hunter_key = "" // The owner of this rifle.
+	mats = null
 
 	New()
 		..()
 		if(istype(src.loc, /mob/living))
 			var/mob/M = src.loc
 			src.AddComponent(/datum/component/self_destruct, M)
+			src.AddComponent(/datum/component/send_to_target_mob, src)
+			src.hunter_key = M.mind.key
+			START_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
+			flick("[src.base_item_state]-tele", src)
+
+	disposing()
+		. = ..()
+		STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
 
 /////////////////////////////////////// Pickpocket Grapple, Grayshift's grif gun
 /obj/item/gun/energy/pickpocket
