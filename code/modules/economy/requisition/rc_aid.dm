@@ -43,33 +43,33 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 /datum/rc_entry/stack/steelsheet
 	name = "NT-spec steel sheet"
 	typepath = /obj/item/sheet/steel
-	feemod = 30
+	feemod = 15
 
 ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 /datum/rc_entry/item/basictool/crowbar
 	name = "crowbar"
 	typepath = /obj/item/crowbar
-	feemod = 260
+	feemod = 130
 
 /datum/rc_entry/item/basictool/screwdriver
 	name = "screwdriver"
 	typepath = /obj/item/screwdriver
-	feemod = 280
+	feemod = 140
 
 /datum/rc_entry/item/basictool/wirecutters
 	name = "wirecutters"
 	typepath = /obj/item/wirecutters
-	feemod = 280
+	feemod = 140
 
 /datum/rc_entry/item/basictool/wrench
 	name = "wrench"
 	typepath = /obj/item/wrench
-	feemod = 280
+	feemod = 140
 
 /datum/rc_entry/item/basictool/welder
 	name = "welding tool"
 	typepath = /obj/item/weldingtool
-	feemod = 440
+	feemod = 220
 
 
 
@@ -118,7 +118,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 
 ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/item/surgical
-	feemod = 360
+	feemod = 240
 
 	scalpel
 		name = "scalpel"
@@ -126,7 +126,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 	saw
 		name = "circular saw"
-		feemod = 380
+		feemod = 250
 		typepath = /obj/item/circular_saw
 
 	scissors
@@ -143,27 +143,27 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 	stapler
 		name = "staple gun"
-		feemod = 660
+		feemod = 330
 		typepath = /obj/item/staple_gun
 
 /datum/rc_entry/item/bandage
 	name = "bandage roll"
-	feemod = 420
+	feemod = 210
 	typepath = /obj/item/bandage
 
 /datum/rc_entry/item/lgloves
 	name = "latex glove pair"
-	feemod = 300
+	feemod = 150
 	typepath = /obj/item/clothing/gloves/latex
 
 /datum/rc_entry/item/hypospray
 	name = "hypospray"
-	feemod = 700
+	feemod = 500
 	typepath = /obj/item/reagent_containers/hypospray
 
 /datum/rc_entry/item/med_analyzer
 	name = "health analyzer"
-	feemod = 1200
+	feemod = 800
 	typepath = /obj/item/device/analyzer/healthanalyzer
 
 
@@ -262,7 +262,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/stack/cable
 	name = "lengths of electrical cabling"
 	typepath = /obj/item/cable_coil
-	feemod = 60
+	feemod = 30
 
 
 
@@ -322,12 +322,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/stack/char
 	name = "char ore"
 	commodity = /datum/commodity/ore/char
-	feemod = 100
+	feemod = 50
 
 /datum/rc_entry/reagent/fuel
 	name = "welding-grade liquid fuel"
 	chemname = "fuel"
-	feemod = 12
+	feemod = 6
 
 /datum/rc_entry/reagent/coffee
 	name = "coffee"
