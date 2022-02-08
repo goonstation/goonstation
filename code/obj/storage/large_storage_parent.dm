@@ -125,6 +125,8 @@
 	relaymove(mob/user as mob)
 		if (is_incapacitated(user))
 			return
+		if (src.crunches_contents && (owner_ckey != user_ckey))
+			return
 		if (world.time < (src.last_relaymove_time + RELAYMOVE_DELAY))
 			return
 		src.last_relaymove_time = world.time
