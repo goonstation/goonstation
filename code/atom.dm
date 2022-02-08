@@ -541,7 +541,6 @@
 	if(src.loc == usr)
 		return
 
-	// eyebots aint got no arms man, how can they be pulling stuff???????
 	if (!isliving(usr))
 		return
 	// no pulling other mobs for ghostdrones (but they can pull other ghostdrones)
