@@ -1808,6 +1808,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
+	density = 1
 	var/infected
 
 	New()
@@ -1863,8 +1864,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		. = istype(src.loc, /obj/item/armadillo_ball)
 
 	proc/ball_up(emote, force)
-		if(ON_COOLDOWN(src, "ball", 1.5 SECONDS))
-			return "<span class='alert'><b>[src]</b> wiggles!</span>"
+		if(ON_COOLDOWN(src, "ball", 3.5 SECONDS))
+			. = "<span class='alert'><b>[src]</b> wiggles!</span>"
+			return
 		if(is_balled())
 			var/obj/item/armadillo_ball/ball = src.loc
 			if(ismob(ball.loc))

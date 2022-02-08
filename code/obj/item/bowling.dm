@@ -77,7 +77,7 @@
 	desc = "Just keep rollin' rollin'."
 	icon_state = "armadillo_ball"
 
-	throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
+	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = THROW_NORMAL, allow_anchored = 0, bonus_throwforce = 0)
 		if(!ismob(target))
 			throw_unlimited = 1
 		..()
