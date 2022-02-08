@@ -125,8 +125,6 @@
 	relaymove(mob/user as mob)
 		if (is_incapacitated(user))
 			return
-		if (src.crunches_contents && (owner_ckey != user_ckey))
-			return
 		if (world.time < (src.last_relaymove_time + RELAYMOVE_DELAY))
 			return
 		src.last_relaymove_time = world.time
@@ -678,35 +676,27 @@
 
 		if (M.ckey && (M.ckey == owner_ckey))
 			return
-		else
-			M.show_text("Is it getting... smaller in here?", "red")
-			SPAWN_DBG(5 SECONDS)
+		src.locked = TRUE
+		M.show_text("Is it getting... smaller in here?", "red")
+		SPAWN_DBG(5 SECONDS)
+			if (M in src.contents)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
+				M.show_text("<b>OH JESUS CHRIST</b>", "red")
+				bleed(M, 500, 5)
+				src.log_me(usr && ismob(usr) ? usr : null, M, "uses trash compactor")
+				var/mob/living/carbon/cube/meat/meatcube = M.make_cube(/mob/living/carbon/cube/meat, rand(10,15), get_turf(src))
+				if (src.crunches_deliciously)
+					meatcube.name = "hotdog"
+					var/obj/item/reagent_containers/food/snacks/hotdog/syndicate/snoopdog = new /obj/item/reagent_containers/food/snacks/hotdog/syndicate(src)
+					snoopdog.victim = meatcube
 
-				var/found = 0
-				for (var/mob/contained_mob in src.contents)
-					if (M == contained_mob)
-						found = 1
+				for (var/obj/item/I in M)
+					if (istype(I, /obj/item/implant))
+						I.set_loc(meatcube)
 
-				if (found)
-					playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
-					M.show_text("<b>OH JESUS CHRIST</b>", "red")
-					bleed(M, 500, 5)
-					src.log_me(usr && ismob(usr) ? usr : null, M, "uses trash compactor")
-					var/mob/living/carbon/cube/meat/W = M.make_cube(/mob/living/carbon/cube/meat, rand(10,15), get_turf(src))
-					if (src.crunches_deliciously)
-						W.name = "hotdog"
-						var/obj/item/reagent_containers/food/snacks/hotdog/syndicate/snoopdog = new /obj/item/reagent_containers/food/snacks/hotdog/syndicate(src)
-						snoopdog.victim = W
+					I.set_loc(src)
 
-					for (var/obj/item/I in M)
-						if (istype(I, /obj/item/implant))
-							I.set_loc(W)
-							continue
-
-						I.set_loc(src)
-
-					src.locked = 0
-					src.open()
+			src.locked = FALSE
 
 	// Added (Convair880).
 	proc/log_me(var/mob/user, var/mob/occupant, var/action = "")
