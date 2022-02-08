@@ -1,3 +1,6 @@
+(t)mon feb 08 22
+(u)TTerc
+(*)Added new admin verb to the Self tab, Set Invisible - makes you invisible and sets your mouse opacity to 0. Using it again undoes it.
 (t)thu feb 03 22
 (u)pali
 (*)Player Options and Player Panel now show people's ping.
