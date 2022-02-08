@@ -76,6 +76,7 @@
 	var/can_use = 0
 	var/obj/overlay/anim = null //The toggle animation overlay will also be retained
 	var/obj/dummy/chameleon/cham = null //No sense creating / destroying this
+	var/obj/item/device/chameleon/holder = null
 	var/active = 0
 	tooltip_flags = REBUILD_DIST
 
@@ -163,6 +164,9 @@
 			if (istype(src.loc, /obj/dummy/chameleon)) //No recursive chameleon projectors!!
 				boutput(usr, "<span class='alert'>As your finger nears the power button, time seems to slow, and a strange silence falls.  You reconsider turning on a second projector.</span>")
 				return
+			if (istype(src.loc, /obj/item/parts/human_parts/arm)) //If it's an item arm, the person who's arm it is gets cloaked
+				var/obj/item/device/chameleon/O = src.loc
+				usr = O.holder
 
 			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
 			cham.master = src
