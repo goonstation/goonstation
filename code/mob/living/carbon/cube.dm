@@ -51,10 +51,6 @@
 			else
 		return
 
-	build_keybind_styles(client/C)
-		..()
-		C.apply_keybind("cube")
-
 	proc/get_cube_idle()
 		return "cubes cubily"
 
