@@ -255,7 +255,6 @@
 						if (!usr.l_hand)
 							usr.u_equip(src)
 							usr.put_in_hand_or_drop(src, 1)
-				return
 
 /obj/item/storage/box/kendo_box
 	name = "kendo box"
