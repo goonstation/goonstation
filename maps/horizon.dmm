@@ -6877,8 +6877,8 @@
 "asr" = (
 /obj/storage/closet/law,
 /obj/item/reagent_containers/patch/nicotine,
-/obj/item/implantcase/antirev,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
 /obj/item/implanter,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/random,
@@ -11566,7 +11566,7 @@
 /area/station/security/armory)
 "aED" = (
 /obj/table/reinforced/auto,
-/obj/item/implantcase/antirev{
+/obj/item/implantcase/counterrev{
 	pixel_y = 6
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log{
@@ -22735,7 +22735,7 @@
 /area/station/hangar/escape)
 "bex" = (
 /obj/storage/secure/closet/security/equipment,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -24894,8 +24894,8 @@
 	},
 /obj/storage/secure/closet/security/forensics,
 /obj/item/device/radio/intercom/security,
-/obj/item/implantcase/antirev,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "bjt" = (
