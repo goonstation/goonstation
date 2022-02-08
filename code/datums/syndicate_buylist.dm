@@ -787,7 +787,7 @@ This is basically useless for anyone but miners.
 	job = list("Chef", "Sous-Chef", "Waiter")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
-	run_on_spawn(var/obj/storage/cart/hotdog/syndicatecart, var/mob/living/owner)
+	run_on_spawn(var/obj/storage/cart/hotdog/syndicate/cart, var/mob/living/owner)
 		if (owner)
 			cart.owner_ckey = owner.ckey
 

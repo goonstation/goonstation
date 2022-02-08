@@ -38,7 +38,6 @@
 			if(!src.move_dir && src.canmove && src.restrained())
 				if (src.pulled_by || length(src.grabbed_by))
 					boutput(src, "<span class='notice'>You're restrained! You can't move!</span>")
-					break
 
 			src.move_dir = angle2dir(arctan(move_y, move_x))
 			attempt_move(src)
