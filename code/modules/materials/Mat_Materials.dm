@@ -292,7 +292,7 @@
 	desc = "Mauxite is a sturdy common metal."
 	color = "#574846"
 	New()
-		setProperty("density", 50)
+		setProperty("density", 40)
 		setProperty("hard", 20)
 		return ..()
 
@@ -335,8 +335,8 @@
 	desc = "Bohrum is a heavy and highly durable metal."
 	color = "#3D692D"
 	New()
-		setProperty("density", 40)
-		setProperty("hard", 30)
+		setProperty("density", 50)
+		setProperty("hard", 40)
 		return ..()
 
 
