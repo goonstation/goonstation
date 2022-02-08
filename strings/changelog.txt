@@ -1,6 +1,8 @@
 
 (t)mon feb 07 22
 (u)aloe
+(*)QM Requisition payouts have been significantly increased.
+(u)aloe
 (+)The sponge capsule crate from QM now only comes with 1 pack of capsules. That's still 12 animals.
 (u)avimour
 (p)7426
