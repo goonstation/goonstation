@@ -62,7 +62,7 @@
 				if(M.client)
 					M.show_message(text("<span class='alert'>You hear something rumbling inside [src]'s stomach...</span>"), 2)
 			var/obj/item/I = user.equipped()
-			if(I.force)
+			if(I?.force)
 				var/d = rand(round(I.force / 4), I.force)
 				src.TakeDamage("chest", d, 0)
 				for(var/mob/M in viewers(user, null))
