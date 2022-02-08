@@ -304,7 +304,7 @@
 	New()
 		setProperty("stability", 30)
 		setProperty("electrical", 51)
-		setProperty("density", 20)
+		setProperty("density", 10)
 		setProperty("hard", 10)
 		return ..()
 
@@ -383,7 +383,7 @@
 	New()
 		value = 300
 
-		setProperty("density", 40)
+		setProperty("density", 45)
 		setProperty("hard", 2)
 		setProperty("reflective", 55)
 		setProperty("electrical", 60)
