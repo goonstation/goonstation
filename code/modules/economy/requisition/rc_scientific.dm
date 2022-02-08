@@ -152,7 +152,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/seed/scientific
 	name = "genetically fussy seed"
 	cropname = "Durian"
-	feemod = 1800
+	feemod = 4000
 	var/crop_genpath = /datum/plant
 
 	fruit

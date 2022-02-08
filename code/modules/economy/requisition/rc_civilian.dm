@@ -136,27 +136,27 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/table
 	name = "table"
 	typepath = /obj/item/furniture_parts/table
-	feemod = 440
+	feemod = 200
 
 /datum/rc_entry/item/rack
 	name = "rack part set"
 	typepath = /obj/item/furniture_parts/rack
-	feemod = 360
+	feemod = 180
 
 /datum/rc_entry/item/chair
 	name = "folding chair"
 	typepath = /obj/item/chair/folded
-	feemod = 380
+	feemod = 180
 
 /datum/rc_entry/item/light_bulb
 	name = "light bulb"
 	typepath = /obj/item/light/bulb
-	feemod = 120
+	feemod = 50
 
 /datum/rc_entry/item/light_tube
 	name = "light bulb"
 	typepath = /obj/item/light/tube
-	feemod = 120
+	feemod = 50
 
 
 /datum/req_contract/civilian/greytide
@@ -202,17 +202,17 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/jumpsuit
 	name = "black jumpsuit"
 	typepath = /obj/item/clothing/under/color
-	feemod = 520
+	feemod = 300
 	exactpath = TRUE
 
 	any
 		name = "single-color jumpsuit"
-		feemod = 380
+		feemod = 200
 		exactpath = FALSE
 
 	scrubs
 		name = "medical scrubs"
-		feemod = 460
+		feemod = 380
 		typepath = /obj/item/clothing/under/scrub
 		exactpath = FALSE
 
@@ -243,12 +243,12 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/backpack
 	name = "backpack"
 	typepath = /obj/item/storage/backpack
-	feemod = 700
+	feemod = 400
 
 /datum/rc_entry/item/shoes
 	name = "pair of shoes"
 	typepath = /obj/item/clothing/shoes
-	feemod = 440
+	feemod = 220
 
 /datum/rc_entry/item/headset
 	name = "radio headset"
@@ -385,7 +385,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/cookie
 	name = "cookie"
 	typepath = /obj/item/reagent_containers/food/snacks/cookie
-	feemod = 480
+	feemod = 360
 
 /datum/rc_entry/stack/pizza
 	name = "slices' worth of pizza"
