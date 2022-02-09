@@ -1150,7 +1150,6 @@
 		. = ..()
 		if(. || action != "disp" || !src.can_vend || !src.working)
 			return
-		//var/getseed = null
 		var/datum/plant/I = locate(text2path(params["path"])) in src.available
 
 		if (!istype(I))
@@ -1163,7 +1162,6 @@
 		var/vend = clamp(params["amount"], 1, 10)
 
 		while(vend > 0)
-			//new getseed(src.loc)
 			var/obj/item/seed/S
 			if (I.unique_seed)
 				S = new I.unique_seed
