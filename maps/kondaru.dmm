@@ -58324,7 +58324,11 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/item/storage/wall/office,
+/obj/item/storage/wall/office{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = 0
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 9
 	},
