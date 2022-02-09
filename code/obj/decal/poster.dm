@@ -766,6 +766,17 @@
 			pixel_y = -4
 			layer = 3
 
+		wizard
+			desc = "A tasteful portrait of a wizard."
+			name = "Portrait"
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "picture_wizard"
+
+		teleport_sign
+			name = "Teleport Sign"
+			desc = "Teleports to the left."
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "wall_teleport"
 
 		landscape
 			desc = "A beautiful painting of a landscape that is engulfed by flames."
@@ -787,6 +798,8 @@
 			icon_state = "fuq3"
 			bound_width  = 96
 			plane = -99
+
+
 
 ///////////////////////////////////////
 // AZUNGAR'S HEAD OF DEPARTMENT ITEMS// + FIREBARRAGE HELPED TOO BUT HE SMELLS
