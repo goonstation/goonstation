@@ -1,5 +1,9 @@
 
 (t)tue feb 08 22
+(u)Flaborized
+(p)7429
+(e)🗺🎨|mapping, sprites
+(*)Updated the wizard shuttle.
 (u)Wisemonster
 (p)7441
 (e)🗺|mapping
