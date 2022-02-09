@@ -1116,13 +1116,14 @@
 	ui_data(mob/user)
 		. = list()
 		.["seedCount"] = src.seedcount
-		.["maxSeed"] = src.maxseed
 		.["canVend"] = src.can_vend
 		.["isWorking"] = src.working
-		.["name"] = src.name
 
 	ui_static_data(mob/user)
 		. = list()
+
+		.["maxSeed"] = src.maxseed
+		.["name"] = src.name
 
 		// Start with associative list, where each key is a seed category
 		var/list/categories = list()
