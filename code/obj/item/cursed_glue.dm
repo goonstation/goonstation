@@ -11,7 +11,7 @@
 	var/gluing = TRUE
 
 	get_desc()
-		return "There's enough left to glue [uses] more items."
+		return uses > 0 ? "There's enough left to glue [uses] more items." : "It's empty."
 
 	attack_self(mob/user)
 		. = ..()
@@ -48,11 +48,13 @@
 		var/obj/item/item = src.get_target_item(target, user)
 
 		if (isnull(item) || !istype(item, /obj/item))
-			user.show_message("<span class='alert'>There's nothing there to glue.</span>")
+			user.show_message("<span class='alert'>Can't glue that.</span>")
 			return
-		if (item.cant_self_remove && item.cant_other_remove)
-			user.show_message("<span class='alert'>[item] is already cursed.</span>")
-			return
+		if (istype(item, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/suit = item
+			if (suit.restrain_wearer) //straightjackets would just be too mean
+				user.show_message("<span class='alert'>[item] fits too tightly to be glued on.</span>")
+				return
 		user.visible_message("<span class='alert'>[user] glues [item] onto [target].</span>",\
 			"<span class='alert'>You glue [item] onto [target].</span>")
 		logTheThing("combat", user, target, "[user] glues [item] onto [target] at [log_loc(user)]")
@@ -65,14 +67,18 @@
 		//welcome to the nested ternaries zone
 		if (targetZone == "chest")
 			//outer suit -> jumpsuit
-			return target.wear_suit ? target.wear_suit : target.w_uniform ? target.w_uniform : null
+			return can_glue(target.wear_suit) ? target.wear_suit : can_glue(target.w_uniform) ? target.w_uniform : null
 		else if (targetZone == "head")
-			//helmet -> mask -> glasses
-			return target.head ? target.head : target.wear_mask ? target.wear_mask : target.glasses ? target.glasses : null
+			//helmet -> mask -> glasses -> headset
+			return can_glue(target.head) ? target.head : can_glue(target.wear_mask) ? target.wear_mask : can_glue(target.glasses) ? target.glasses : can_glue(target.ears) ? target.ears : null
 		else if (targetZone == "l_arm" || targetZone ==  "r_arm")
 			return target.gloves
 		else if (targetZone == "l_leg" || targetZone == "r_leg")
 			return target.shoes
+
+	proc/can_glue(obj/item/item)
+		//make sure it exists, doesn't have cant_drop, and isn't already glued
+		return item && (!item.cant_drop && !(item.cant_self_remove && item.cant_other_remove))
 
 	proc/try_unglue(mob/living/carbon/human/target, mob/living/carbon/human/user)
 		//exceptions for where this would break things that should not be broken
