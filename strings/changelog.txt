@@ -1,5 +1,9 @@
 
 (t)tue feb 08 22
+(u)Ikea
+(p)7316
+(e)⚖|balance
+(+)Due to a shortage in cotton supply, the price of cotton and the price traders purchase jumpsuits for has increased.
 (u)Flaborized
 (p)7429
 (e)🗺🎨|mapping, sprites
