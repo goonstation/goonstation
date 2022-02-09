@@ -1,5 +1,8 @@
 
 (t)tue feb 08 22
+(u)TTerc
+(e)|
+(+)Fire extinguishers no longer automatically switch safety to off when used on another mob on help intent. Being on help intent and using an extinguisher while safety is off still doesn't perform the attack.
 (u)Danger Noodle
 (p)7439
 (e)🗺|mapping
