@@ -499,7 +499,7 @@
 /datum/material/crystal
 	material_flags = MATERIAL_CRYSTAL
 	color = "#A3DCFF"
-		New()
+	New()
 		setProperty("density", 40)
 		setProperty("hard", 40)
 		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
@@ -514,7 +514,7 @@
 	desc = "Terrestrial glass. Inferior to Molitz."
 	color = "#A3DCFF"
 	alpha = 180
-			New()
+	New()
 		setProperty("density", 40)
 		setProperty("hard", 40)
 		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
