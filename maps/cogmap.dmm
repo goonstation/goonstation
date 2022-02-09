@@ -29775,6 +29775,7 @@
 	can_rupture = 0;
 	dir = 6
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "byC" = (
@@ -57666,7 +57667,6 @@
 	dir = 1;
 	level = 2
 	},
-/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "meU" = (
