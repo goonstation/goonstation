@@ -764,20 +764,29 @@
 	name = "Hunting Spear"
 	desc = "A very large, sharp spear."
 	icon = 'icons/obj/items/weapons.dmi'
-	icon_state = "predspear"
-	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-	item_state = "knife_b"
+	icon_state = "hunter_spear"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "hunter_spear"
 	force = 8.0
 	throwforce = 35.0
 	throw_speed = 6
 	throw_range = 10
 	makemeat = 0
+	var/hunter_key = "" // The owner of this spear.
 
 	New()
 		..()
 		if(istype(src.loc, /mob/living))
 			var/mob/M = src.loc
 			src.AddComponent(/datum/component/self_destruct, M)
+			src.AddComponent(/datum/component/send_to_target_mob, src)
+			src.hunter_key = M.mind.key
+			START_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
+			flick("[src.icon_state]-tele", src)
+
+	disposing()
+		. = ..()
+		STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
 
 /////////////////////////////////////////////////// Axe ////////////////////////////////////////////
 

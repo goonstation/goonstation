@@ -579,7 +579,6 @@ THROWING DARTS
 				qdel(src)
 
 			T.hotspot_expose(800,125)
-			//explosion(src, T, -1, -1, 2*explosionPower, 3*explosionPower)
 			explosion_new(src, T, 7 * ., 1) //The . is the tally of explosionPower in this poor slob.
 			return
 

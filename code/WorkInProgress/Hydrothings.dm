@@ -634,6 +634,7 @@ obj/item/gnomechompski/elf
 	window_pass = 1
 	icon = 'icons/effects/hallucinations.dmi'
 	icon_state = "yee"
+	damage_type = D_SPECIAL
 
 	on_hit(atom/hit)
 		if(istype(hit,/mob/living/carbon/human))

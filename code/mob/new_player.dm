@@ -93,6 +93,8 @@ mob/new_player
 
 			else
 				spawned_in_keys += "[src.ckey]"
+				for (var/sound in global.dj_panel.preloaded_sounds)
+					src.client << load_resource(sound, -1)
 
 #ifdef TWITCH_BOT_ALLOWED
 		if (current_state == GAME_STATE_PLAYING)
