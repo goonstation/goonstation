@@ -499,6 +499,14 @@
 /datum/material/crystal
 	material_flags = MATERIAL_CRYSTAL
 	color = "#A3DCFF"
+		New()
+		setProperty("density", 40)
+		setProperty("hard", 40)
+		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
+		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
+		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
+		return ..()
+
 
 /datum/material/crystal/glass
 	mat_id = "glass"
@@ -506,6 +514,13 @@
 	desc = "Terrestrial glass. Inferior to Molitz."
 	color = "#A3DCFF"
 	alpha = 180
+			New()
+		setProperty("density", 40)
+		setProperty("hard", 40)
+		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
+		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
+		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
+		return ..()
 
 /datum/material/crystal/molitz
 	mat_id = "molitz"
@@ -516,7 +531,7 @@
 
 	New()
 		setProperty("density", 40)
-		setProperty("hard", 40)
+		setProperty("hard", 45)
 		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
 		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
 		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
