@@ -283,18 +283,10 @@
 	desc = "Terrestrial steel from Earth."
 	New()
 		setProperty("density", 30)
-		setProperty("hard", 15)
+		setProperty("hard", 30)
 		return ..()
 
-/datum/material/metal/mauxite
-	mat_id = "mauxite"
-	name = "mauxite"
-	desc = "Mauxite is a sturdy common metal."
-	color = "#574846"
-	New()
-		setProperty("density", 40)
-		setProperty("hard", 20)
-		return ..()
+
 
 /datum/material/metal/copper
 	mat_id = "copper"
@@ -339,6 +331,15 @@
 		setProperty("hard", 40)
 		return ..()
 
+/datum/material/metal/mauxite
+	mat_id = "mauxite"
+	name = "mauxite"
+	desc = "Mauxite is a sturdy common metal."
+	color = "#574846"
+	New()
+		setProperty("density", 40)
+		setProperty("hard", 20)
+		return ..()
 
 /datum/material/metal/cerenkite
 	mat_id = "cerenkite"
