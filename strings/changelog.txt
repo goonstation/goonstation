@@ -1,5 +1,9 @@
 
 (t)tue feb 08 22
+(u)Wisemonster
+(p)7441
+(e)🗺|mapping
+(+)Donut 3's medical morgue now comes with a bottle of embalming fluid.
 (u)TTerc
 (e)|
 (+)Fire extinguishers no longer automatically switch safety to off when used on another mob on help intent. Being on help intent and using an extinguisher while safety is off still doesn't perform the attack.
