@@ -8839,7 +8839,6 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/turf/space,
 /area/salyut)
 "axJ" = (
 /turf/simulated/shuttle/wall{
@@ -11646,7 +11645,7 @@
 /area/radiostation/bedroom)
 "aGy" = (
 /obj/machinery/door/airlock/pyro{
-	dir = 4;
+	dir = 2;
 	name = "Bathroom"
 	},
 /turf/simulated/floor/wood/two,
@@ -23220,7 +23219,6 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/turf/space,
 /area/salyut)
 "bkp" = (
 /obj/storage/crate,

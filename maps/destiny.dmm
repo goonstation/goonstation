@@ -25185,6 +25185,20 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/main)
+"fwW" = (
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/storage/cart/hotdog,
+/obj/item/shaker/mustard{
+	pixel_x = -6
+	},
+/obj/item/shaker/ketchup{
+	pixel_x = 6
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "fxq" = (
 /obj/disposalpipe/segment/mail{
 	dir = 2;
@@ -44178,22 +44192,13 @@
 	},
 /area/station/science/research_director)
 "pLl" = (
-/obj/storage/cart/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/shaker/mustard{
-	pixel_x = -6
-	},
-/obj/item/shaker/ketchup{
-	pixel_x = 6
-	},
-/obj/item/device/radio/intercom/catering,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/stove,
+/obj/item/soup_pot,
+/obj/item/ladle,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "pLt" = (
@@ -46282,6 +46287,7 @@
 	name = "Produce Chute"
 	},
 /obj/disposalpipe/trunk/food,
+/obj/item/device/radio/intercom/catering,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "qPI" = (
@@ -110159,7 +110165,7 @@ wNu
 wNu
 wNu
 fWu
-wNu
+fwW
 cor
 fGo
 auT

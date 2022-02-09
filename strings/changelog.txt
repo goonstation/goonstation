@@ -1,5 +1,37 @@
 
+(t)tue feb 08 22
+(u)Josephin23
+(p)7374
+(e)🗺|mapping
+(+)Added a stove to the kitchen in Destiny, also moved the intercom.
+(u)Ikea
+(p)7316
+(e)⚖|balance
+(+)Due to a shortage in cotton supply, the price of cotton and the price traders purchase jumpsuits for has increased.
+(u)Flaborized
+(p)7429
+(e)🗺🎨|mapping, sprites
+(*)Updated the wizard shuttle.
+(u)Wisemonster
+(p)7441
+(e)🗺|mapping
+(+)Donut 3's medical morgue now comes with a bottle of embalming fluid.
+(u)TTerc
+(e)|
+(+)Fire extinguishers no longer automatically switch safety to off when used on another mob on help intent. Being on help intent and using an extinguisher while safety is off still doesn't perform the attack.
+(u)Danger Noodle
+(p)7439
+(e)🗺|mapping
+(+)Horizon's genetics department has been blessed with a gene power module. Enjoy!
 (t)mon feb 07 22
+(u)aloe
+(*)QM Requisition payouts have been significantly increased.
+(u)aloe
+(+)The sponge capsule crate from QM now only comes with 1 pack of capsules. That's still 12 animals.
+(u)aloe
+(+)AI eyebots (the shells you start with) can pull things now via... magnets or something. Their health has been reduced to accommodate this.
+(u)aloe
+(+)Traitor chefs can now buy a hotdog cart that crunches people similar to the janitor's trash compactor cart. I didn't make it, I just found it. It's also a little tastier.
 (u)avimour
 (p)7426
 (e)|

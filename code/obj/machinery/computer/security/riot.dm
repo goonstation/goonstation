@@ -104,6 +104,7 @@
 		if(src.authed)
 			return
 
+		logTheThing("station", usr, null, "authorized armory access")
 		command_announcement("<br><b><span class='alert'>Armory weapons access has been authorized for all security personnel.</span></b>", "Security Level Increased", "sound/misc/announcement_1.ogg")
 		authed = 1
 		icon_state = "drawbr-alert"
@@ -129,6 +130,7 @@
 	proc/unauthorize()
 		if(src.authed)
 
+			logTheThing("station", usr, null, "unauthorized armory access")
 			authed = 0
 			icon_state = "drawbr0"
 

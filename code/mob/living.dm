@@ -1822,7 +1822,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 
 	for (var/mob/V in by_cat[TR_CAT_NERVOUS_MOBS])
-		if (get_dist(src,V) > 6)
+		if (!IN_RANGE(src,V, 6))
 			continue
 		if(prob(8) && src)
 			if(src != V)
