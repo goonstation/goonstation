@@ -392,6 +392,8 @@
 
 	boutput(world, "<span class='notice'><B>Alert: The shuttle is going back!</B></span>") //marker4
 
+	logTheThing("station", user, null, "recalled the Emergency Shuttle")
+	message_admins("<span class='internal'>[key_name(user)] recalled the Emergency Shuttle</span>")
 	emergency_shuttle.recall()
 
 	return 0

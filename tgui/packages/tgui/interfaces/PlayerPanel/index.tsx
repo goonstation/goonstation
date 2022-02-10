@@ -76,7 +76,11 @@ const ipSorter = (a: string, b: string) => makeIpNumber(a) - makeIpNumber(b);
 
 const numberSorter = (a: number, b: number) => a - b;
 
-const dateStringSorter = (a: string, b: string) => 0; // TODO
+const dateStringSorter = (a: string, b: string) => {
+  let aArray = a.split("-").map(parseFloat);
+  let bArray = b.split("-").map(parseFloat);
+  return aArray > bArray ? 1 : aArray < bArray ? -1 : 0;
+};
 
 const createDefaultValueSelector = <Row extends object, Value>(field: string) => (
   (config: CellValueSelectorConfig<Row, Value>): Value => config.row[field]

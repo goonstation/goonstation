@@ -643,7 +643,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		dat += "<A href='?src=\ref[src];settime=1'>Increase Time</A><BR>"
 		dat += "<A href='?src=\ref[src];unsettime=1'>Decrease Time</A><BR>"
 
-		if (user.client.tooltipHolder)
+		if (user.client?.tooltipHolder)
 			user.client.tooltipHolder.showClickTip(src, list(
 				"params" = params,
 				"title" = src.name,
