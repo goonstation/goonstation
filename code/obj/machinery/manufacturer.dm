@@ -2351,15 +2351,19 @@
 
 /obj/machinery/manufacturer/uniform // add more stuff to this as needed, but it should be for regular uniforms the HoP might hand out, not tons of gimmicks. -cogwerks
 	name = "Uniform Manufacturer"
-	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing workplace uniforms."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing workplace uniforms and headsets."
 	icon_state = "fab-jumpsuit"
 	icon_base = "jumpsuit"
 	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/cloth/cottonfabric)
+	free_resources = list(/obj/item/material_piece/cloth/cottonfabric,
+		/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper)
 	accept_blueprints = 0
 	available = list(/datum/manufacture/shoes,	//hey if you update these please remember to add it to /hop_and_uniform's list too
 	/datum/manufacture/shoes_brown,
 	/datum/manufacture/shoes_white,
+	/datum/manufacture/civilian_headset,
+	/datum/manufacture/jumpsuit_assistant,
 	/datum/manufacture/jumpsuit,
 	/datum/manufacture/jumpsuit_white,
 	/datum/manufacture/jumpsuit_red,
@@ -2451,7 +2455,7 @@
 //and i hate this, i do, but you're gonna have to update this list whenever you update /personnel or /uniform
 /obj/machinery/manufacturer/hop_and_uniform
 	name = "Personnel Manufacturer"
-	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing workplace uniforms and identification equipment."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing workplace uniforms, headsets, and identification equipment."
 	icon_state = "fab-access"
 	icon_base = "access"
 	free_resource_amt = 5
@@ -2466,6 +2470,8 @@
 	/datum/manufacture/shoes,
 	/datum/manufacture/shoes_brown,
 	/datum/manufacture/shoes_white,
+	/datum/manufacture/civilian_headset,
+	/datum/manufacture/jumpsuit_assistant,
 	/datum/manufacture/jumpsuit,
 	/datum/manufacture/jumpsuit_white,
 	/datum/manufacture/jumpsuit_red,
