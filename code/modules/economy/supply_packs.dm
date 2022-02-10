@@ -1153,7 +1153,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 /datum/supply_packs/sponge
 	name = "Sponge Capsule Crate"
 	desc = "For all your watery animal needs!"
-	contains = list(/obj/item/spongecaps = 4)
+	contains = list(/obj/item/spongecaps = 1)
 	cost = 5000
 	containertype = /obj/storage/crate/packing
 	containername = "Sponge Capsule Crate"

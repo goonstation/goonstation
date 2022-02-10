@@ -49,7 +49,6 @@
 	var/open_fail_prob = 50
 	var/crunches_contents = 0 // for the syndicate trashcart & hotdog stand
 	var/crunches_deliciously = 0 // :I
-	//var/mob/living/carbon/to_crunch = null
 	var/owner_ckey = null // owner of the crunchy cart, so they don't get crunched
 	var/opening_anim = null
 	var/closing_anim = null
@@ -677,35 +676,27 @@
 
 		if (M.ckey && (M.ckey == owner_ckey))
 			return
-		else
-			M.show_text("Is it getting... smaller in here?", "red")
-			SPAWN_DBG(5 SECONDS)
+		src.locked = TRUE
+		M.show_text("Is it getting... smaller in here?", "red")
+		SPAWN_DBG(5 SECONDS)
+			if (M in src.contents)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
+				M.show_text("<b>OH JESUS CHRIST</b>", "red")
+				bleed(M, 500, 5)
+				src.log_me(usr && ismob(usr) ? usr : null, M, "uses trash compactor")
+				var/mob/living/carbon/cube/meat/meatcube = M.make_cube(/mob/living/carbon/cube/meat, rand(10,15), get_turf(src))
+				if (src.crunches_deliciously)
+					meatcube.name = "hotdog"
+					var/obj/item/reagent_containers/food/snacks/hotdog/syndicate/snoopdog = new /obj/item/reagent_containers/food/snacks/hotdog/syndicate(src)
+					snoopdog.victim = meatcube
 
-				var/found = 0
-				for (var/mob/contained_mob in src.contents)
-					if (M == contained_mob)
-						found = 1
+				for (var/obj/item/I in M)
+					if (istype(I, /obj/item/implant))
+						I.set_loc(meatcube)
 
-				if (found)
-					playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
-					M.show_text("<b>OH JESUS CHRIST</b>", "red")
-					bleed(M, 500, 5)
-					src.log_me(usr && ismob(usr) ? usr : null, M, "uses trash compactor")
-					var/mob/living/carbon/cube/meat/W = M.make_cube(/mob/living/carbon/cube/meat, rand(10,15), get_turf(src))
-					if (src.crunches_deliciously)
-						W.name = "hotdog"
-						var/obj/item/reagent_containers/food/snacks/hotdog/syndicate/snoopdog = new /obj/item/reagent_containers/food/snacks/hotdog/syndicate(src)
-						snoopdog.victim = W
+					I.set_loc(src)
 
-					for (var/obj/item/I in M)
-						if (istype(I, /obj/item/implant))
-							I.set_loc(W)
-							continue
-
-						I.set_loc(src)
-
-					src.locked = 0
-					src.open()
+			src.locked = FALSE
 
 	// Added (Convair880).
 	proc/log_me(var/mob/user, var/mob/occupant, var/action = "")

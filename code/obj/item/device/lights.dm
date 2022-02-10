@@ -462,3 +462,22 @@
 		on = 1
 		set_icon_state(src.icon_on)
 		src.light.enable()
+
+/obj/item/device/light/magic_lantern
+	name = "magical lantern"
+	desc = "A magical lantern that burns with no fuel."
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "wizard1"
+	icon_on = "wizard1"
+	icon_off = "wizard0"
+	anchored = 1
+	col_r = 1
+	col_g = 0.9
+	col_b = 0.9
+	brightness = 0.8
+
+	New()
+		..()
+		on = 1
+		set_icon_state(src.icon_on)
+		src.light.enable()
