@@ -2,6 +2,8 @@
 	name = "mixed (mild)"
 	config_tag = "mixed_rp"
 	latejoin_antag_compatible = 1
+	 //went with a trivial solution of adding more identical items to the list
+	 //Input needed here
 	latejoin_antag_roles = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WRESTLER, ROLE_ARCFIEND, ROLE_TRAITOR)
 	traitor_types = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_SPY_THIEF, ROLE_ARCFIEND, ROLE_TRAITOR)
 
