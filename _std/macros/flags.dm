@@ -7,7 +7,7 @@
 #define HAS_ANY_FLAGS(x, flags) (x & flags)
 
 /// checks if a flags variable (x) has all of flags in the `flags` variable
-#define HAS_ALL_FLAGS(x, flag) ((x & flags) == flags)
+#define HAS_ALL_FLAGS(x, flags) ((x & flags) == flags)
 
 /// adds a flag to a flags variable (x). if the flag is already added, nothing happens
 #define ADD_FLAG(x, flag) (x |= flag)
