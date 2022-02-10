@@ -157,6 +157,7 @@
 	name = "fancy pen"
 	desc = "A pretty swag pen."
 	icon_state = "pen_fancy"
+	item_state = "pen_fancy"
 	font_color = "blue"
 	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"

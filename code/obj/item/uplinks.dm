@@ -33,6 +33,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/can_selfdestruct = 0
 	var/datum/syndicate_buylist/reading_about = null
 
+	var/owner_ckey = null
+
 	// Spawned uplinks for which setup() wasn't called manually only get the standard (generic) items.
 	New()
 		..()
@@ -50,6 +52,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	proc/setup(var/datum/mind/ownermind, var/obj/item/device/master)
 		if (!src || !istype(src))
 			return
+
+		src.owner_ckey = ownermind?.ckey
 
 		if (!islist(src.items_general))
 			src.items_general = list()

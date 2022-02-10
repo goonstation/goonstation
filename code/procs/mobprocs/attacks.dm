@@ -36,7 +36,7 @@
 		SPAWN_DBG( 0 )
 		// drsingh Cannot read null.force
 #ifdef DATALOGGER
-			if (W?.force)
+			if (W.force)
 				game_stats.Increment("violence")
 #endif
 			if (!isnull(W))
@@ -49,7 +49,7 @@
 						attack_twitch(user)
 
 
-				if (W?.force) //Wire: Fix for Cannot read null.force
+				if (W.force)
 					message_admin_on_attack(user, "uses \a [W.name] on")
 			return
 	return

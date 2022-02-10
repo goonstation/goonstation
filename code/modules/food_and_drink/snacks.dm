@@ -318,8 +318,9 @@
 
 	New()
 		..()
-		src.pixel_x = rand(-6, 6)
-		src.pixel_y = rand(-6, 6)
+		if(rand_pos)
+			src.pixel_x = rand(-6, 6)
+			src.pixel_y = rand(-6, 6)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (!frosted && istype(W, /obj/item/reagent_containers/food/snacks/condiment/cream))

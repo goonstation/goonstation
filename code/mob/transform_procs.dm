@@ -169,51 +169,37 @@
 		return make_critter(CT, get_turf(src))
 	return 0
 
-/mob/proc/make_critter(var/CT, var/turf/T, ghost_spawned=FALSE)
-	var/mob/living/critter/W = new CT()
+/mob/proc/make_critter(var/critter_type, var/turf/T, ghost_spawned=FALSE)
+	var/mob/living/critter/newmob = new critter_type()
 	if(ghost_spawned)
-		W.ghost_spawned = ghost_spawned
-	if (!(T && isturf(T)))
+		newmob.ghost_spawned = ghost_spawned
+	if (!T || !isturf(T))
 		T = get_turf(src)
-	/*if (!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
-		var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
-		if (ASLoc)
-			W.set_loc(ASLoc)
-		else
-			W.set_loc(locate(1, 1, 1))
-	else
-		W.set_loc(T)*/
-	W.set_loc(T)
-	W.gender = src.gender
+	newmob.set_loc(T)
+	newmob.gender = src.gender
 	if (src.bioHolder)
-		var/datum/bioHolder/original = new/datum/bioHolder(W)
+		var/datum/bioHolder/original = new/datum/bioHolder(newmob)
 		original.CopyOther(src.bioHolder)
-		if(W.bioHolder)
-			qdel(W.bioHolder)
-		W.bioHolder = original
+		qdel(newmob.bioHolder)
+		newmob.bioHolder = original
 
-	var/mob/selfmob = src
-	src = null
-
-	if (selfmob.mind)
-		selfmob.mind.transfer_to(W)
+	if (src.mind)
+		src.mind.transfer_to(newmob)
 	else
-		if (selfmob.client)
-			var/key = selfmob.client.key
-			selfmob.client.mob = W
-			W.mind = new /datum/mind()
-			ticker.minds += W.mind
-			W.mind.ckey = ckey
-			W.mind.key = key
-			W.mind.current = W
+		if (src.client)
+			src.client.mob = newmob
+			newmob.mind = new /datum/mind()
+			ticker.minds += newmob.mind
+			newmob.mind.key = src.client.key
+			newmob.mind.current = newmob
 
-	if (issmallanimal(W))
-		var/mob/living/critter/small_animal/small = W
+	if (issmallanimal(newmob))
+		var/mob/living/critter/small_animal/small = newmob
 		small.setup_overlays() // this requires the small animal to have a client to set things up properly
 
 	SPAWN_DBG(1 DECI SECOND)
-		qdel(selfmob)
-	return W
+		qdel(src)
+	return newmob
 
 
 /mob/living/carbon/human/proc/Robotize_MK2(var/gory = 0)

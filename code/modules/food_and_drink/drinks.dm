@@ -364,6 +364,8 @@
 
 	update_icon()
 		src.underlays = null
+		if (src.icon_state == "milk_calcium")
+			return
 		if (reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 3 + 1), 1, 3))
 			if (!src.fluid_image)

@@ -107,10 +107,20 @@
 	hunter
 		name = "Hunter cloaking device"
 		desc = "A cloaking device. It doesn't seem to be designed by humans."
+		icon_state = "hunter_cloak"
 		base_icon_state = "hunter_cloak"
+		var/hunter_key = "" // The owner of this cloak.
 
 		New()
 			..()
 			if(istype(src.loc, /mob/living))
 				var/mob/M = src.loc
 				src.AddComponent(/datum/component/self_destruct, M)
+				src.AddComponent(/datum/component/send_to_target_mob, src)
+				src.hunter_key = M.mind.key
+				START_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
+				flick("[src.base_icon_state]-tele", src)
+
+		disposing()
+			. = ..()
+			STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)

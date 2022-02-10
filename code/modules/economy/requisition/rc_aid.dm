@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 
 /datum/req_contract/aid/wrecked
 	//name = "Breach Recovery"
-	payout = 3000
+	payout = 2000
 	var/list/namevary = list("Breach Recovery","Breach Response","Integrity Failure","Crisis Response","Disaster Assistance","Disaster Response")
 	var/list/desc_placejob = list("research","mining","security","cargo transfer")
 	var/list/desc_placetype = list("vessel","ship","station","outpost")
@@ -33,12 +33,12 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 /datum/rc_entry/item/spacesuit
 	name = "space suit"
 	typepath = /obj/item/clothing/suit/space
-	feemod = 630
+	feemod = 1260
 
 /datum/rc_entry/item/spacehelmet
 	name = "space helmet"
 	typepath = /obj/item/clothing/head/helmet/space
-	feemod = 630
+	feemod = 1260
 
 /datum/rc_entry/stack/steelsheet
 	name = "NT-spec steel sheet"
@@ -118,7 +118,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 
 ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/item/surgical
-	feemod = 180
+	feemod = 240
 
 	scalpel
 		name = "scalpel"
@@ -126,7 +126,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 	saw
 		name = "circular saw"
-		feemod = 190
+		feemod = 250
 		typepath = /obj/item/circular_saw
 
 	scissors
@@ -158,12 +158,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 /datum/rc_entry/item/hypospray
 	name = "hypospray"
-	feemod = 350
+	feemod = 500
 	typepath = /obj/item/reagent_containers/hypospray
 
 /datum/rc_entry/item/med_analyzer
 	name = "health analyzer"
-	feemod = 600
+	feemod = 800
 	typepath = /obj/item/device/analyzer/healthanalyzer
 
 
@@ -225,39 +225,39 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/item/mainboard
 	name = "computer mainboard"
 	typepath = /obj/item/motherboard
-	feemod = 520
+	feemod = 1240
 
 /datum/rc_entry/item/cardscan
 	name = "ID scanner module"
 	typepath = /obj/item/peripheral/card_scanner
 	exactpath = TRUE
-	feemod = 560
+	feemod = 1120
 
 /datum/rc_entry/item/netcard
 	name = "wired network card"
 	typepath = /obj/item/peripheral/network/powernet_card
 	exactpath = TRUE
-	feemod = 540
+	feemod = 1080
 
 /datum/rc_entry/item/interfaceboard
 	name = "AI interface board"
 	typepath = /obj/item/ai_interface
-	feemod = 1250
+	feemod = 2500
 
 /datum/rc_entry/item/t_ray
 	name = "T-ray scanner"
 	typepath = /obj/item/device/t_scanner
-	feemod = 340
+	feemod = 680
 
 /datum/rc_entry/item/soldering
 	name = "soldering iron"
 	typepath = /obj/item/electronics/soldering
-	feemod = 260
+	feemod = 520
 
 /datum/rc_entry/item/multitool
 	name = "multitool"
 	typepath = /obj/item/device/multitool
-	feemod = 450
+	feemod = 900
 
 /datum/rc_entry/stack/cable
 	name = "lengths of electrical cabling"
@@ -338,13 +338,13 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 		"expresso",
 		"energydrink"
 	)
-	feemod = 5
+	feemod = 10
 
 /datum/rc_entry/item/medherb
 	name = "medical herb"
 	typepath = /obj/item/plant/herb
 	commodity = /datum/commodity/herbs
-	feemod = 80
+	feemod = 160
 	var/list/herblist = list()
 
 	alpha
