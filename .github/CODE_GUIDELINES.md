@@ -81,6 +81,13 @@ See: `if(x)` vs `if (x)`
 
 Nobody cares about this. This is heavily frowned upon for changing with little to no reason.
 
+## `foo.len` vs. `length(foo)`
+
+Our codebase uses the latter, the `length(foo)` syntax.
+
+The `.len` syntax runtimes on a null `foo`, whereas the `length()` syntax will not.
+It's also faster (~6%), for internal bytecode reasons (which don't really matter).
+
 ## Abstract types and typesof
 
 Some types exist just as a parent and should never be created in-game (e.g. `/obj/item`). Mark those using the `ABSTRACT_TYPE(type)` macro. You can check if a type is abstract using the `IS_ABSTRACT(type)` macro.
