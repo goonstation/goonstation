@@ -78,9 +78,7 @@
 							/obj/item/clothing/shoes/galoshes,
 							/obj/item/reagent_containers/glass/bottle/cleaner,
 							/obj/item/storage/box/body_bag,
-							/obj/item/caution = 6,
-							/obj/item/clothing/gloves/long,
-							/obj/item/handheld_vacuum)
+							/obj/item/caution = 6)
 
 /obj/storage/closet/law
 	name = "\improper Legal closet"
@@ -138,8 +136,8 @@
 #endif
 	/obj/item/clothing/under/misc/syndicate,
 #ifdef XMAS
-	/obj/item/clothing/head/helmet/space/santahat,
-	/obj/item/clothing/suit/space/santa,
+	/obj/item/clothing/head/helmet/space/santahat/noslow,
+	/obj/item/clothing/suit/space/santa/noslow,
 #else
 	/obj/item/clothing/head/helmet/space/syndicate,
 	/obj/item/clothing/suit/space/syndicate,
@@ -182,8 +180,8 @@
 	spawn_contents = list(/obj/item/clothing/under/jersey/red,
 	/obj/item/clothing/under/jersey/red,
 	/obj/item/clothing/shoes/black = 2,
-	/obj/item/knife/butcher/predspear = 2,
-	/obj/item/gun/energy/laser_gun/pred = 2,
+	/obj/item/knife/butcher/hunterspear = 2,
+	/obj/item/gun/energy/plasma_gun = 2,
 	/obj/item/stimpack = 2,
 	/obj/item/storage/belt/wrestling = 2,
 	/obj/item/storage/box/kendo_box = 1,
@@ -196,8 +194,8 @@
 	spawn_contents = list(/obj/item/clothing/under/jersey/green,
 	/obj/item/clothing/under/jersey/green,
 	/obj/item/clothing/shoes/black = 2,
-	/obj/item/knife/butcher/predspear = 2,
-	/obj/item/gun/energy/laser_gun/pred = 2,
+	/obj/item/knife/butcher/hunterspear = 2,
+	/obj/item/gun/energy/plasma_gun = 2,
 	/obj/item/stimpack = 2,
 	/obj/item/storage/belt/wrestling = 2,
 	/obj/item/storage/box/kendo_box = 1,
@@ -412,11 +410,19 @@
 			return
 
 		else if (istype(W, /obj/item/satchel/))
+			if(secure && locked)
+				user.show_text("Access Denied", "red")
+				return
+			if (count_turf_items() >= max_capacity || length(contents) >= max_capacity)
+				user.show_text("[src] cannot fit any more items!", "red")
+				return
 			var/amt = length(W.contents)
 			if (amt)
 				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
 				var/amtload = 0
 				for (var/obj/item/I in W.contents)
+					if(length(contents) >= max_capacity)
+						break
 					if (open)
 						I.set_loc(src.loc)
 					else
@@ -518,9 +524,9 @@
 /obj/storage/closet/medicalclothes
 	name = "medical clothing locker"
 	icon = 'icons/obj/large_storage.dmi'
-	icon_closed = "medical_clothes"
-	icon_state = "medical_clothes"
-	icon_opened = "secure_white-open"
+	icon_closed = "red-medical"
+	icon_state = "red-medical"
+	icon_opened = "open-white"
 	desc = "A handy medical locker for storing your doctoring apparel."
 	spawn_contents = list(/obj/item/clothing/head/nursehat = 3,
 					/obj/item/clothing/suit/nursedress = 3,

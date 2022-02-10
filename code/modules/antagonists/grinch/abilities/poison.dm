@@ -1,6 +1,7 @@
 /datum/targetable/grinch/poison
 	name = "Poison food"
 	desc = "Ruin a food item or drink by adding horrible poison to it."
+	icon_state = "grinchpoison"
 	targeted = 1
 	target_anything = 1
 	target_nodamage_check = 1

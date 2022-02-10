@@ -629,7 +629,7 @@
 				src.doing_something = 1
 				if(!src.path)
 					src.speak("ERROR 99-28: COULD NOT FIND PATH TO SUMMON TARGET. ABORTING.")
-					src.KillPathAndGiveUp(KPAGU_CLEAR_PATH)	// switch back to what we should be
+					src.KillPathAndGiveUp(KPAGU_RETURN_TO_PATROL)	// switch back to what we should be
 
 			/// On guard duty, returning from distraction
 			if(SECBOT_GUARD_IDLE)
@@ -1329,7 +1329,7 @@
 //secbot stunner bar thing
 /datum/action/bar/icon/secbot_stun
 	duration = 10
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	interrupt_flags = 0 //THE SECURITRON STOPS FOR NOTHING
 	id = "secbot_cuff"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "stunbaton_active"

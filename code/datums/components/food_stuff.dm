@@ -3,6 +3,9 @@
 	var/static/list/flock_adjectives_1 = list("Syrupy", "Tangy", "Schlumpy", "Viscous", "Grumpy")
 	var/static/list/flock_adjectives_2 = list("pulsating", "jiggling", "quivering", "flapping")
 	var/static/list/flock_adjectives_3 = list("</span><span style=\"color: teal; font-family: Fixedsys, monospace;\"><i>teal</i></span><span class='notice'>", "electric", "ferrofluid", "assimilatory")
+TYPEINFO(/datum/component/consume)
+	initialization_args = list()
+
 /datum/component/consume/Initialize()
 	if(!istype(parent, /mob))
 		return COMPONENT_INCOMPATIBLE

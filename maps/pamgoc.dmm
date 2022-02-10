@@ -15092,11 +15092,11 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
 "aya" = (
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "ayb" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /turf/simulated/floor/black,
@@ -15485,9 +15485,7 @@
 /area/station/crew_quarters/clown)
 "azf" = (
 /obj/decal/cleanable/dirt,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/raw_material/cerenkite,
 /obj/item/raw_material/cerenkite,
 /obj/item/raw_material/cerenkite,
@@ -34050,7 +34048,9 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 8
 	},
-/obj/morgue,
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "bmS" = (
@@ -36282,7 +36282,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/morgue,
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "brq" = (
@@ -42868,7 +42870,7 @@
 /area/ghostdrone_factory)
 "bDz" = (
 /obj/machinery/espresso_machine,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 28
 	},
 /obj/item/reagent_containers/food/drinks/espressocup,
@@ -44150,7 +44152,7 @@
 "bFO" = (
 /obj/table/wood/auto,
 /obj/machinery/coffeemaker,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = -26
 	},
 /turf/simulated/floor/yellow/side,
@@ -51520,11 +51522,15 @@
 /turf/simulated/floor/purple/side,
 /area/station/janitor/supply)
 "bUu" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "bUv" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "bUw" = (
@@ -51577,7 +51583,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 28
 	},
 /turf/simulated/floor/delivery,
@@ -53272,7 +53278,7 @@
 	pixel_x = -3;
 	pixel_y = 4
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 28
 	},
 /obj/item/spraybottle/cleaner{
@@ -53706,7 +53712,7 @@
 /area/station/hallway/primary/central)
 "bXY" = (
 /obj/shrub,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},
@@ -60161,7 +60167,7 @@
 /obj/machinery/coffeemaker/botany{
 	pixel_y = 3
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = -26
 	},
 /turf/simulated/floor/green/side,
@@ -61496,7 +61502,7 @@
 "ckP" = (
 /obj/table/auto,
 /obj/machinery/shieldgenerator/meteorshield,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 26
 	},
 /obj/machinery/coffeemaker{
@@ -69288,7 +69294,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "qsV" = (
-/obj/mug_rack,
+/obj/drink_rack/mug,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
 "qsW" = (

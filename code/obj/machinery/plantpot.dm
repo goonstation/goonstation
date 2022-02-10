@@ -308,6 +308,7 @@
 		return current_water_level
 
 	on_reagent_change()
+		..()
 		src.do_update_water_icon = 1
 		src.update_water_level()
 
@@ -820,7 +821,7 @@
 
 	MouseDrop(over_object, src_location, over_location)
 		..()
-		if(!isliving(usr)) return // ghosts killing plants fix
+		if(!isliving(usr) || isintangible(usr)) return // ghosts killing plants fix
 		if(get_dist(src, usr) > 1)
 			boutput(usr, "<span class='alert'>You need to be closer to empty the tray out!</span>")
 			return

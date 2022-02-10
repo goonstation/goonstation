@@ -1,5 +1,5 @@
 /obj/grille
-	desc = "A sturdy metal mesh. Blocks large objects, but lets small items, gas, or energy beams through."
+	desc = "A metal mesh often built underneath windows to reinforce them. The holes let fluids, gasses, and energy beams through."
 	name = "grille"
 	icon = 'icons/obj/SL_windows_grilles.dmi'
 	icon_state = "grille0-0"
@@ -277,6 +277,10 @@
 		src.visible_message("<span class='alert'><B>[src] was hit by [AM].</B></span>")
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 		if (ismob(AM))
+			if(src?.material.hasProperty("electrical"))
+				shock(AM, 100 - (60 - src.material.getProperty("electrical")))  // sure loved people being able to throw corpses into these without any consequences.
+			else
+				shock(AM, 100) // no electrical stat means that it returns -1, default value is 60
 			damage_blunt(5)
 		else if (isobj(AM))
 			var/obj/O = AM
@@ -517,6 +521,17 @@
 			return 0
 
 		return src.electrocute(user, prb, net, ignore_gloves)
+
+	proc/lightningrod(lpower)
+		if (!anchored)
+			return FALSE
+		var/net = get_connection()
+		if (!powernets[net])
+			return FALSE
+		if (src?.material.hasProperty("electrical")) // if the material being checked does not have the stat set, it will return -1 which is bad
+			powernets[net].newavail += lpower / 100 * (100 - src.material.getProperty("electrical"))
+		else
+			powernets[net].newavail += lpower / 100 * (100 - 60) // electrical default value is 60 according to Mat_Properties.dm
 
 	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))

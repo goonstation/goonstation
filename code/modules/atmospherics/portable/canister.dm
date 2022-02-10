@@ -36,12 +36,14 @@
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
-			return 0
+			return FALSE
 		if (src.release_pressure < 5*ONE_ATMOSPHERE || MIXTURE_PRESSURE(src.air_contents) < 5*ONE_ATMOSPHERE)
-			return 0
+			boutput(user, "<span class='alert'>You hold your mouth to the release valve and open it. Nothing happens. You close the valve in shame.<br><i>Maybe if you used more pressure...?</i></span>")
+			return FALSE
 		user.visible_message("<span class='alert'><b>[user] holds [his_or_her(user)] mouth to [src]'s release valve and briefly opens it!</b></span>")
+		src.valve_open = TRUE
 		user.gib()
-		return 1
+		return TRUE
 
 	powered()
 		return 1
@@ -308,10 +310,12 @@
 					D.ex_act(1)
 
 				for(var/obj/item/reagent_containers/glass/G in range(4,T))
-					G.smash()
+					if(G.can_recycle)
+						G.smash()
 
 				for(var/obj/item/reagent_containers/food/drinks/drinkingglass/G in range(4,T))
-					G.smash()
+					if(G.can_recycle)
+						G.smash()
 
 				for(var/atom/movable/A in view(3, T)) // wreck shit
 					if(A.anchored) continue

@@ -11,7 +11,7 @@
 	var/item_state = null
 	var/wear_state = null // icon state used for worn sprites, icon_state used otherwise
 	var/image/wear_image = null
-	var/wear_image_icon = 'icons/mob/belt.dmi'
+	var/wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	var/wear_layer = MOB_CLOTHING_LAYER
 	var/image/inhand_image = null
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
@@ -275,6 +275,9 @@
 			if (C)
 				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 		..()
+
+	proc/update_wear_image(mob/living/carbon/human/H, override)
+		return
 
 /obj/item/New()
 	// this is dumb but it won't let me initialize vars to image() for some reason
@@ -587,7 +590,7 @@
 	return 1
 
 /obj/item/proc/split_stack(var/toRemove)
-	if(toRemove >= amount || toRemove < 1) return 0
+	if(toRemove >= amount || toRemove < 1) return null
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)
@@ -1421,6 +1424,7 @@
 	disposing_abilities()
 	setItemSpecial(null)
 	if (src.inventory_counter)
+		src.inventory_counter.vis_locs = null
 		qdel(src.inventory_counter)
 		src.inventory_counter = null
 

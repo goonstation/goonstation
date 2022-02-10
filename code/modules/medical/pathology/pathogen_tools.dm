@@ -18,6 +18,7 @@
 		return
 
 	on_reagent_change()
+		..()
 		reagents.maximum_volume = reagents.total_volume // This should make the blood slide... permanent.
 		if (reagents.has_reagent("blood") || reagents.has_reagent("bloodc"))
 			icon_state = "slide1"
@@ -139,6 +140,7 @@
 					set_dirty("The pathogen in the petri dish starved to death.")
 
 	on_reagent_change()
+		..()
 		if (reagents.total_volume < 0.5)
 			return
 		if (dirty)
@@ -265,6 +267,15 @@
 		R.my_atom = src
 		src.reagents = R
 		..()
+
+/obj/item/reagent_containers/glass/vial/plastic
+	name = "plastic vial"
+	desc = "A 3D-printed vial. Can hold up to 5 units. Barely."
+	can_recycle = FALSE
+
+	New()
+		. = ..()
+		AddComponent(/datum/component/biodegradable)
 
 /obj/item/reagent_containers/glass/vial/prepared
 	name = "Totally Safe(tm) pathogen sample"

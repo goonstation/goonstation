@@ -1293,7 +1293,7 @@ Returns:
 
 /obj/item/experimental/melee/spear
 	name = "Spear"
-	desc = "A primitive spear with a long reach."
+	desc = "An ancient solution to the ancient problem of wanting to stab somebody, but not wanting them to be able to stab you back."
 	force = 10
 	throwforce = 20
 	color = "#ffffff"
@@ -1359,6 +1359,7 @@ Returns:
 		if (shaft)
 			prefix += "[shaft.name]"
 		src.name_prefix(prefix)
+		src.UpdateName()
 
 	proc/buildOverlays()
 		overlays.Cut()
@@ -1968,7 +1969,8 @@ Returns:
 	var/datum/light/light
 
 	New()
-		smoke_part = particleMaster.SpawnSystem(new /datum/particleSystem/barrelSmoke(src))
+		UpdateParticles(new/particles/barrel_embers, "embers")
+		UpdateParticles(new/particles/barrel_smoke, "smoke")
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(1)
@@ -1977,8 +1979,6 @@ Returns:
 		..()
 
 	disposing()
-		particleMaster.RemoveSystem(/datum/particleSystem/barrelSmoke, src)
-		smoke_part = null
 		light.disable()
 		light.detach()
 		light = null
@@ -3104,6 +3104,11 @@ Returns:
 			SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 			qdel(src)
 
+	attack_hand(var/mob/M)
+		..()
+		if (get_turf(M) == get_turf(src) && !ON_COOLDOWN(M, "portal_click", 1 SECOND))
+			src.Bumped(M)
+
 	ex_act()
 		return
 
@@ -3601,7 +3606,7 @@ var/list/lag_list = new/list()
 	name = "Place Button"
 	desc = "Places a Button that can control mass-drivers & pod-doors."
 	used(atom/user, atom/target)
-		var/obj/machinery/driver_button/L = new/obj/machinery/driver_button(get_turf(target))
+		var/obj/machinery/activation_button/driver_button/L = new(get_turf(target))
 		L.set_dir(user:dir)
 		return
 

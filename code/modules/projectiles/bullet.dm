@@ -120,7 +120,7 @@ toxic - poisons
 //0.223
 /datum/projectile/bullet/assault_rifle
 	name = "bullet"
-	shot_sound = 'sound/weapons/ak47shot.ogg'  // todo: single shot sound?
+	shot_sound = 'sound/weapons/assrifle.ogg'  // todo: single shot sound?
 	power = 45
 	cost = 1
 	ks_ratio = 1.0
@@ -138,7 +138,6 @@ toxic - poisons
 
 /datum/projectile/bullet/assault_rifle/burst
 	sname = "burst fire"
-	shot_sound = 'sound/weapons/ak47shot.ogg'
 	power = 45
 	cost = 2
 	shot_number = 2
@@ -420,6 +419,7 @@ toxic - poisons
 	ks_ratio = 0.0
 	dissipation_delay = 6 //One more tick before falloff begins
 	damage_type = D_ENERGY // FUCK YOU.
+	ie_type = "T"
 	hit_type = null
 	icon_turf_hit = null // stun bullets shouldn't actually enter walls should they?
 

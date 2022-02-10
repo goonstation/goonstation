@@ -3,6 +3,7 @@
 // --------------------------------------------------
 /datum/targetable/critter/flamethrower
 	name = "Flamethrower"
+	icon_state = "fire_e_flamethrower"
 	desc = "Throw flames towards a target location up to three squares away."
 	cooldown = 150
 	targeted = 1
@@ -50,6 +51,5 @@
 
 	throwing
 		desc = "Blast targets backwards with flames."
-		icon_state = "fire_e_flamethrower"
 		throws = 1
 		heat = T0C + 60

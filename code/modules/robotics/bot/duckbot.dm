@@ -283,5 +283,6 @@
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
+	new /obj/item/instrument/bikehorn(src.loc)
 	qdel(src)
 	return

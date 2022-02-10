@@ -2012,14 +2012,15 @@ obj/item/clothing/gloves/concussive
 /obj/item/cargotele/traitor
 	cost = 15
 	cell_type = /obj/item/ammo/power_cell/med_power
-	var/list/possible_targets = list()
+	var/static/list/possible_targets = list()
 
 	New()
 		..()
-		for(var/turf/T in world) //hate to do this but it's only once per spawn vOv
-			LAGCHECK(LAG_LOW)
-			if(istype(T,/turf/space) && T.z != 1 && !isrestrictedz(T.z))
-				possible_targets += T
+		if (!length(possible_targets))
+			for(var/turf/T in world) //hate to do this but it's only once vOv
+				LAGCHECK(LAG_LOW)
+				if(istype(T,/turf/space) && T.z != 1 && T.z != 6 && !isrestrictedz(T.z)) //do not foot ball, do not collect 200
+					possible_targets += T
 
 	attack_self() // Fixed --melon
 		return

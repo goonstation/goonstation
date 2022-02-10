@@ -331,6 +331,17 @@
 	..()
 	C.apply_keybind("human")
 
+	if (!C.preferences.use_wasd)
+		C.apply_keybind("human_arrow")
+
+	if (C.preferences.use_azerty)
+		C.apply_keybind("human_azerty")
+
+	if (C.tg_controls)
+		C.apply_keybind("human_tg")
+		if (C.preferences.use_azerty)
+			C.apply_keybind("human_tg_azerty")
+
 /mob/dead/observer/is_spacefaring()
 	return 1
 
@@ -451,7 +462,7 @@
 		// but that's way too much effort to fix and i do not feel like debugging
 		// 2000 different "use after free" issues.
 		// so. your ghost doesnt go away. it just, uh. it takes a break for a while.
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_ALWAYS)
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "clientless", INVIS_ALWAYS)
 	return
 
 /mob/dead/observer/Move(NewLoc, direct)

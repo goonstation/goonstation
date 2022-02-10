@@ -64,6 +64,7 @@ proc/is_teleportation_allowed(var/turf/T)
 	var/obj/perm_portal/start_portal
 	var/obj/perm_portal/end_portal
 	var/image/disconnectedImage
+	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL | DECON_WELDER | DECON_WIRECUTTERS | DECON_WRENCH | DECON_DESTRUCT
 
 	New()
 		..()
@@ -820,6 +821,8 @@ proc/is_teleportation_allowed(var/turf/T)
 	var/readout = "&nbsp;"
 	var/datum/computer/file/record/user_data
 	var/padNum = 1
+
+	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL | DECON_WIRECUTTERS | DECON_WRENCH | DECON_DESTRUCT
 
 	New()
 		..()

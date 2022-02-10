@@ -2,7 +2,7 @@
 	icon = 'icons/obj/atmospherics/vent_pump.dmi'
 	icon_state = "out"
 	name = "Air Vent"
-	desc = "Has a valve and pump attached to it"
+	desc = "A vent used for repressurization. It's probably hooked up to a canister port, somewhere."
 	level = 1
 	plane = PLANE_FLOOR
 	var/on = 1

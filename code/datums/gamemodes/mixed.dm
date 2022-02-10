@@ -183,7 +183,7 @@
 			possible_blobs.Remove(blob)
 
 	if(num_grinches)
-		var/list/possible_grinches = get_possible_enemies(ROLE_GRINCH,num_grinches)
+		var/list/possible_grinches = get_possible_enemies(ROLE_MISC,num_grinches)
 		var/list/chosen_grinches = antagWeighter.choose(pool = possible_grinches, role = ROLE_GRINCH, amount = num_grinches, recordChosen = 1)
 		for (var/datum/mind/grinch in chosen_grinches)
 			traitors += grinch

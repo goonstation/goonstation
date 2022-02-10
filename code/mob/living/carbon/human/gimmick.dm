@@ -80,7 +80,7 @@
 			src.real_name = "Satan"
 			src.name = "Satan"
 			src.equip_new_if_possible(/obj/item/clothing/under/misc/lawyer/red/demonic, src.slot_w_uniform)
-			src.bioHolder.AddEffect("horns", 0, 0, 1)
+			src.bioHolder.AddEffect("demon_horns", 0, 0, 1)
 			src.bioHolder.AddEffect("aura_fire", 0, 0, 1)
 
 /mob/living/carbon/human/satan/gimmick

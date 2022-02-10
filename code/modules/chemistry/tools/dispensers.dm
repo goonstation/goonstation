@@ -138,7 +138,7 @@
 
 /obj/reagent_dispensers/foamtank
 	name = "foamtank"
-	desc = "A foamtank"
+	desc = "A massive tank full of firefighting foam, for refilling extinguishers."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "foamtank"
 	amount_per_transfer_from_this = 25
@@ -322,7 +322,7 @@
 
 /obj/reagent_dispensers/fueltank
 	name = "fueltank"
-	desc = "A fueltank"
+	desc = "A high-pressure tank full of welding fuel. Keep away from open flames and sparks."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
 	amount_per_transfer_from_this = 25
@@ -375,7 +375,7 @@
 
 /obj/reagent_dispensers/beerkeg
 	name = "beer keg"
-	desc = "A beer keg"
+	desc = "Full of delicious alcohol, hopefully."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "beertankTEMP"
 	amount_per_transfer_from_this = 25
@@ -585,6 +585,7 @@
 		fluid_image = image(src.icon, "fluid-[src.icon_state]")
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon()

@@ -2,7 +2,7 @@
 		Oxygen and plasma tank dispenser
 */
 /obj/machinery/dispenser
-	desc = "A simple yet bulky one-way storage device for gas tanks. Holds 10 plasma and 10 oxygen tanks."
+	desc = "A storage device for gas tanks. Holds 10 plasma and 10 oxygen tanks."
 	name = "Tank Storage Unit"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "dispenser-empty"

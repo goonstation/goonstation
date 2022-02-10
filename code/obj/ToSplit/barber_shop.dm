@@ -156,6 +156,7 @@
 		reagents.add_reagent("hairgrownium", 40)
 
 	on_reagent_change()
+		..()
 		src.icon_state = "tonic[src.reagents.total_volume ? "1" : "0"]"
 
 /obj/stool/barber_chair //there shouldn't be any of these, here in case there's a secret map that has one, replace with /obj/stool/chair/comfy/barber_chair if you see one

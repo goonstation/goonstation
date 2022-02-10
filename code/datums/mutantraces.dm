@@ -1133,8 +1133,7 @@ TYPEINFO(/datum/mutantrace)
 	mutant_folder = 'icons/mob/skeleton.dmi'
 	icon_state = "skeleton"
 	voice_override = "skelly"
-	mutant_organs = list("tail" = /obj/item/organ/tail/bone,
-	"left_eye" = /obj/item/organ/eye/skeleton,
+	mutant_organs = list("left_eye" = /obj/item/organ/eye/skeleton,
 	"right_eye" = /obj/item/organ/eye/skeleton)
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/right
@@ -1151,12 +1150,10 @@ TYPEINFO(/datum/mutantrace)
 		if(ishuman(M))
 			M.mob_flags |= IS_BONER
 			M.blood_id = "calcium"
-			M.mob_flags |= SHOULD_HAVE_A_TAIL
 
 	disposing()
 		if (ishuman(mob))
 			mob.mob_flags &= ~IS_BONER
-			mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		. = ..()
 
 

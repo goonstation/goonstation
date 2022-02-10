@@ -19,7 +19,7 @@
 	luminosity = 5
 	seekrange = 15
 	flying = 1
-	mats = 24
+	mats = list("POW-1" = 5, "MET-2" = 12, "CON-2" = 12, "DEN-1" = 6)
 	var/score = 10
 	var/must_drop_loot = 0
 	dead_state = "drone-dead"
@@ -443,7 +443,7 @@
 		droploot = /obj/bomberman
 		projectile_type = /datum/projectile/bullet/glitch
 		current_projectile = new/datum/projectile/bullet/glitch
-
+		mats = null
 		New()
 			..()
 			name = "Dr~n³ *§#-[rand(1,999)]"
@@ -461,6 +461,7 @@
 		projectile_type = /datum/projectile/disruptor/high
 		current_projectile = new/datum/projectile/disruptor/high
 		attack_cooldown = 40
+		mats = list("POW-2" = 10, "MET-3" = 12, "CON-2" = 12, "DEN-2" =9)
 		New()
 			..()
 			name = "Drone HK-[rand(1,999)]"
@@ -544,6 +545,7 @@
 		projectile_type = /datum/projectile/bullet/aex
 		current_projectile = new/datum/projectile/bullet/aex
 		attack_cooldown = 50
+		mats = list("POW-3" = 15, "MET-3" = 17, "CON-2" = 13, "DEN-3" =17, "erebite" =16)
 		New()
 			..()
 			name = "Drone AR-[rand(1,999)]"
@@ -563,6 +565,7 @@
 		projectile_type = /datum/projectile/bullet/ak47
 		current_projectile = new/datum/projectile/bullet/ak47
 		attack_cooldown = 20
+		mats = list("POW-3" = 13, "MET-3" = 24, "CON-2" = 20, "DEN-3" =17)
 		New()
 			..()
 			name = "Drone BML-[rand(1,999)]"
@@ -579,7 +582,7 @@
 		droploot = /obj/item/spacecash/buttcoin // replace with railgun if that's ever safe enough to hand out? idk
 		attack_cooldown = 50
 		smashes_shit = 1
-		mats = 96
+		mats = 	list("POW-3" = 19, "MET-3" = 20, "CON-2" = 24, "DEN-2" =16)
 
 		Shoot(var/atom/target, var/start, var/user, var/bullet = 0)
 			if(target == start)
@@ -643,6 +646,7 @@
 		projectile_type = /datum/projectile/laser/drill/cutter
 		current_projectile = new/datum/projectile/laser/drill/cutter
 		smashes_shit = 1
+		mats = 	list("POW-2" = 19, "MET-2" = 12, "CON-2" = 14, "DEN-2" =26)
 
 		ChaseAttack(atom/M)
 			if(target && !attacking)
@@ -686,6 +690,7 @@
 			current_projectile = new/datum/projectile/laser/drill/saw_teeth
 			smashes_shit = 0
 			event_handler_flags = IMMUNE_MANTA_PUSH
+			mats = 24
 			//TODO : TEENSY REDRAW TO ICON TO MAKE IT A LITTLE MORE ROBOTTY
 
 			New()
@@ -734,6 +739,7 @@
 		dead_state = "vrdrone_red"
 		projectile_type = /datum/projectile/laser
 		current_projectile = new/datum/projectile/laser
+		mats = 	list("POW-2" =11, "MET-2" = 14, "CON-2" = 13, "DEN-2" =12)
 
 		New()
 			..()
@@ -749,7 +755,7 @@
 		dead_state = "vrdrone_orange"
 		projectile_type = /datum/projectile/laser/mining
 		current_projectile = new/datum/projectile/laser/mining
-
+		mats = 	list("POW-1" = 9, "MET-3" = 15, "CON-1" = 7, "DEN-3" =20)
 		New()
 			..()
 			name = "Drone PC-[rand(1,999)]"
@@ -764,6 +770,7 @@
 		dead_state = "vrdrone_blue"
 		projectile_type = /datum/projectile/laser/asslaser
 		current_projectile = new/datum/projectile/laser/asslaser
+		mats = 	list("POW-3" = 30, "MET-3" = 14, "CON-2" = 23, "DEN-3" =22, "butt"=10) //heh
 
 		New()
 			..()
@@ -779,7 +786,7 @@
 		dead_state = "vrdrone_green"
 		projectile_type = /datum/projectile/special/acid
 		current_projectile = new/datum/projectile/special/acid
-
+		mats = 	list("POW-1" = 10, "MET-1" = 15, "CON-2" = 15, "DEN-1" =10)
 		New()
 			..()
 			name = "Drone CA-[rand(1,999)]"
@@ -803,7 +810,7 @@
 		current_projectile = new/datum/projectile/bullet/autocannon/plasma_orb
 		attack_cooldown = 70
 		smashes_shit = 1
-
+		mats = null
 		CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 			if(dying) return
 			var/area/A = get_area(src)
@@ -896,7 +903,7 @@
 	droploot = /obj/item/device/key/iridium
 	alertsound1 = 'sound/machines/engine_alert2.ogg'
 	alertsound2 = 'sound/machines/engine_alert3.ogg'
-	mats = 160
+	mats = null //no
 	projectile_type = /datum/projectile/laser/precursor/sphere
 	current_projectile = new/datum/projectile/laser/precursor/sphere
 	smashes_shit = 1
@@ -1068,6 +1075,8 @@
 			droploot = /obj/item/device/key/virtual
 		else
 			new/obj/item/material_piece/iridiumalloy(src.loc)
+			new/obj/item/material_piece/iridiumalloy(src.loc)
+			new/obj/item/material_piece/iridiumalloy(src.loc)
 		..()
 
 /obj/critter/gunbot/drone/iridium/whydrone
@@ -1082,7 +1091,6 @@
 	bound_width = 96
 	attack_range = 7
 	score = 1500
-	mats = 160
 	dead_state = "ydrone-dead"
 	droploot = /obj/item/device/key/iridium
 	alertsound1 = 'sound/machines/glitch3.ogg'
@@ -1281,6 +1289,7 @@
 	projectile_type = /datum/projectile/bullet/revolver_357
 	current_projectile = new/datum/projectile/bullet/revolver_357
 	attack_cooldown = 20
+	mats = 12 //this should be funny
 
 	var/voice_gender = "male"
 

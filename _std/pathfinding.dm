@@ -2,6 +2,7 @@
  * This file contains the stuff you need for using JPS (Jump Point Search) pathing, an alternative to A* that skips
  * over large numbers of uninteresting tiles resulting in much quicker pathfinding solutions. Mind that diagonals
  * cost the same as cardinal moves currently, so paths may look a bit strange, but should still be optimal.
+ * Ported from TGStation with permission from @Ryll-Ryll, also ryll is cool
  */
 
 /**
@@ -21,6 +22,8 @@
  * * required_goals: How many goals to find to succeed. Null for all.
  */
 /proc/get_path_to(caller, ends, max_distance = 30, mintargetdist, id=null, simulated_only=TRUE, turf/exclude=null, skip_first=FALSE, cardinal_only=TRUE, required_goals=null)
+	if(isnull(ends))
+		return
 	var/single_end = !islist(ends)
 	if(single_end)
 		ends = list(ends)
@@ -447,8 +450,8 @@
 					else //we must be a public door
 						continue
 				return FALSE
-		else if (A.density)
-			return FALSE // not a special case, so this is a blocking object
+		else if(!A.Cross(passer))
+			return FALSE
 
 #undef CAN_STEP
 #undef STEP_NOT_HERE_BUT_THERE
