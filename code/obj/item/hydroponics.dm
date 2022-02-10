@@ -31,7 +31,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	tool_flags = TOOL_SAWING
 	mats = 12
-	var/sawnoise = 'sound/machines/chainsaw_green.ogg'
+	var/sawnoise = "sound/machines/chainsaw_green.ogg"
 	arm_icon = "chainsaw-A"
 	var/base_arm = "chainsaw"
 	over_clothes = 1
@@ -46,6 +46,7 @@
 	active
 		active = 1
 		force = 12
+		hitsound = "sound/machines/chainsaw_green.ogg"
 
 	New()
 		..()
@@ -81,8 +82,6 @@
 					take_bleeding_damage(target, user, 5, DAMAGE_CUT)
 					if (prob(80))
 						target.emote("scream")
-
-			playsound(target, sawnoise, 60, 1)//need a better sound
 		..()
 		return
 
@@ -95,9 +94,11 @@
 		if (src.active)
 			boutput(user, "<span class='notice'>[src] is now active.</span>")
 			src.force = active_force
+			src.hitsound = sawnoise
 		else
 			boutput(user, "<span class='notice'>[src] is now off.</span>")
 			src.force = off_force
+			src.hitsound = initial(src.hitsound)
 		tooltip_rebuild = 1
 		user.set_body_icon_dirty()
 		src.UpdateIcon()
@@ -111,8 +112,8 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] shoves the chainsaw into [his_or_her(user)] chest!</b></span>")
 		blood_slash(user, 25)
-		playsound(user.loc, 'sound/machines/chainsaw_red.ogg', 50, 1)
-		playsound(user.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
+		playsound(user.loc, "sound/machines/chainsaw_red.ogg", 50, 1)
+		playsound(user.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 50, 1)
 		user.u_equip(src)
 		src.set_loc(user.loc)
 		user.gib()
@@ -139,7 +140,7 @@
 	mats = 14
 	desc = "A gas powered antique. This one is the real deal. Time for a space chainsaw massacre."
 	contraband = 10 //scary
-	sawnoise = 'sound/machines/chainsaw_red.ogg'
+	sawnoise = "sound/machines/chainsaw_red.ogg"
 	arm_icon = "chainsaw_s-A"
 	base_arm = "chainsaw_s"
 	stamina_damage = 100
@@ -156,9 +157,9 @@
 			return
 		..()
 		if (src.active)
-			playsound(src, 'sound/machines/chainsaw_red_start.ogg', 90, 0)
+			playsound(src, "sound/machines/chainsaw_red_start.ogg", 90, 0)
 		else
-			playsound(src, 'sound/machines/chainsaw_red_stop.ogg', 90, 0)
+			playsound(src, "sound/machines/chainsaw_red_stop.ogg", 90, 0)
 
 	attack(mob/target as mob, mob/user as mob)
 		if(!active)
@@ -196,7 +197,7 @@
 		if (H.organHolder && active)
 			if (H.organHolder.appendix)
 				H.organHolder.drop_organ("appendix")
-				playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
+				playsound(target.loc,"sound/impact_sounds/Slimy_Splat_2_Short.ogg", 50, 1)
 				target.visible_message(
 					"<span class='alert'><b>[target]'s appendix is ripped out [pick("violently", "brutally", "ferociously", "fiercely")]!</span>"
 					)
@@ -205,7 +206,7 @@
 
 			if (H.organHolder.left_kidney)
 				H.organHolder.drop_organ("left_kidney")
-				playsound(target.loc,'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
+				playsound(target.loc,"sound/impact_sounds/Flesh_Tear_2.ogg", 50, 1)
 				target.visible_message(
 					"<span class='alert'><b>[target]'s kidney is torn out [pick("cruelly", "viciously", "atrociously", "fiercely")]!</span>"
 					)
@@ -214,7 +215,7 @@
 
 			if (H.organHolder.left_lung)
 				H.organHolder.drop_organ("left_lung")
-				playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
+				playsound(target.loc,"sound/impact_sounds/Slimy_Splat_2_Short.ogg", 50, 1)
 				target.visible_message(
 					"<span class='alert'><b>[target]'s lung is gashed out [pick("tempestuously", "impetuously", "sorta meanly", "unpleasantly")]!</span>"
 					)
@@ -223,7 +224,7 @@
 
 			if (H.organHolder.right_kidney)
 				H.organHolder.drop_organ("right_kidney")
-				playsound(target.loc,'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
+				playsound(target.loc,"sound/impact_sounds/Flesh_Tear_2.ogg", 50, 1)
 				target.visible_message(
 					"<span class='alert'><b>[target]'s kidney is torn out [pick("cruelly", "viciously", "atrociously", "fiercely")]!</span>"
 					)
@@ -232,7 +233,7 @@
 
 			if (H.organHolder.right_lung)
 				H.organHolder.drop_organ("right_lung")
-				playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
+				playsound(target.loc,"sound/impact_sounds/Slimy_Splat_2_Short.ogg", 50, 1)
 				target.visible_message(
 					"<span class='alert'><b>[target]'s lung is gashed out [pick("tempestuously", "impetuously", "sorta meanly", "unpleasantly")]!</span>"
 					)
@@ -241,7 +242,7 @@
 
 			if (H.organHolder.liver)
 				H.organHolder.drop_organ("liver")
-				playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
+				playsound(target.loc,"sound/impact_sounds/Slimy_Splat_2_Short.ogg", 50, 1)
 				target.visible_message(
 					"<span class='alert'><b>[target]'s liver is gashed out [pick("unnecessarily", "stylishly", "viciously", "unethically")]!</span>"
 					)
@@ -251,7 +252,7 @@
 
 			if (H.organHolder.heart) //move this up or down to make it kill faster or later
 				H.organHolder.drop_organ("heart")
-				playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
+				playsound(target.loc,"sound/impact_sounds/Slimy_Splat_2_Short.ogg", 50, 1)
 				target.visible_message(
 					"<span class='alert'><b>[target]'s heart is ripped clean out! [pick("HOLY MOLY", "FUCK", "JESUS CHRIST", "THAT'S GONNA LEAVE A MARK", "OH GOD", "OUCH", "DANG", "WOW", "woah")]!!</span>"
 					)
@@ -261,7 +262,7 @@
 
 			if (H.organHolder.spleen)
 				H.organHolder.drop_organ("spleen")
-				playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
+				playsound(target.loc,"sound/impact_sounds/Slimy_Splat_2_Short.ogg", 50, 1)
 				target.visible_message(
 					"<span class='alert'><b>[target]'s spleen is removed with [pick("conviction", "malice", "disregard for safety regulations", "contempt")]!</span>"
 					)
@@ -270,7 +271,7 @@
 
 			if (H.organHolder.pancreas)
 				H.organHolder.drop_organ("pancreas")
-				playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
+				playsound(target.loc,"sound/impact_sounds/Slimy_Splat_2_Short.ogg", 50, 1)
 				target.visible_message(
 					"<span class='alert'><b>[target]'s pancreas is evicted with [pick("anger", "ill intent", "disdain")]!</span>"
 					)
@@ -292,16 +293,16 @@
 		var/obj/item/parts/human_parts/arm/new_arm = null
 		if (target == "l_arm")
 			if (H.limbs.l_arm)
-				playsound(H.loc, 'sound/machines/chainsaw.ogg', 50, 1)
-				playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
+				playsound(H.loc, "sound/machines/chainsaw.ogg", 50, 1)
+				playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 50, 1)
 				H.limbs.l_arm.sever()
 				H.visible_message("[H] chainsaws their own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
 			new_arm = new /obj/item/parts/human_parts/arm/left/item(H)
 			H.limbs.l_arm = new_arm
 		else if (target == "r_arm")
 			if (H.limbs.r_arm)
-				playsound(H.loc, 'sound/machines/chainsaw.ogg', 50, 1)
-				playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
+				playsound(H.loc, "sound/machines/chainsaw.ogg", 50, 1)
+				playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 50, 1)
 				H.limbs.r_arm.sever()
 				H.visible_message("[H] chainsaws their own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
 			new_arm = new /obj/item/parts/human_parts/arm/right/item(H)
@@ -347,7 +348,8 @@
 	throw_range = 5
 	w_class = W_CLASS_BULKY
 	mats = 12
-	sawnoise = 'sound/machines/chainsaw_red.ogg'
+	sawnoise = "sound/machines/chainsaw_red.ogg"
+	hitsound = "sound/machines/chainsaw_red.ogg"
 	arm_icon = "chainsaw_s-A"
 	stamina_damage = 40
 	stamina_cost = 40
