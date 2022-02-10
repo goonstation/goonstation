@@ -82,6 +82,7 @@ datum/mind
 			displayed_key = M.key
 			src.handwriting = pick(handwriting_styles)
 			src.color = pick_string("colors.txt", "colors")
+			SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, M)
 		src.last_death_time = world.timeofday // I DON'T KNOW SHUT UP YOU'RE NOT MY REAL DAD
 
 	proc/transfer_to(mob/new_character)
@@ -110,6 +111,7 @@ datum/mind
 				if(isghostdrone(src.current)) //clear the static overlays on death, qdel, being cloned, etc.
 					current.client.images.Remove(mob_static_icons)
 			current.mind = null
+			SEND_SIGNAL(src, COMSIG_MIND_DETACH_FROM_MOB, current)
 
 		new_character.mind = src
 		current = new_character
@@ -140,6 +142,8 @@ datum/mind
 			var/mob/living/silicon/robot/R = new_character
 			R.show_laws()
 		Z_LOG_DEBUG("Mind/TransferTo", "Complete")
+
+		SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, current)
 
 
 	proc/swap_with(mob/target)
@@ -219,6 +223,8 @@ datum/mind
 		logTheThing("debug", null, null, "<b>Mind</b> Mind for \[[src.key ? src.key : "NO KEY"]] deleted!")
 		Z_LOG_DEBUG("Mind/Disposing", "Mind \ref[src] [src.key ? "([src.key])" : ""] deleted")
 		src.brain?.owner = null
+		if(src.current)
+			SEND_SIGNAL(src, COMSIG_MIND_DETACH_FROM_MOB, current)
 		..()
 
 /datum/mind/proc/add_karma(how_much)

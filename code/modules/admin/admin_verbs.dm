@@ -13,6 +13,7 @@ var/list/admin_verbs = list(
 		/client/proc/admin_changes,
 		/client/proc/admin_play,
 		/client/proc/admin_observe,
+		/client/proc/admin_invisible,
 		/client/proc/game_panel,
 		/client/proc/game_panel_but_called_secrets,
 		/client/proc/player_panel,
@@ -297,6 +298,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/togglesoundwaiting,
 		/client/proc/debug_variables,
 		/verb/adminCreateBlueprint,
+		/verb/adminDeleteBlueprint,
 		/client/proc/toggle_text_mode,
 		/client/proc/cmd_mass_modify_object_variables,
 		/client/proc/cmd_debug_mutantrace,
@@ -347,6 +349,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_blindfold_monkeys,
 		/client/proc/cmd_terrainify_station,
 		/client/proc/cmd_special_shuttle,
+		/client/proc/toggle_radio_maptext,
 
 		/datum/admins/proc/toggleaprilfools,
 		/client/proc/cmd_admin_pop_off_all_the_limbs_oh_god,
@@ -618,6 +621,21 @@ var/list/special_pa_observing_verbs = list(
 	if(src.holder)
 		src.holder.level = 0
 
+/client/proc/admin_invisible()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Set Invisible"
+	if(!src.holder)
+		alert("You are not an admin")
+		return
+	if(src.mob.mouse_opacity)
+		src.mob.mouse_opacity = 0
+		src.mob.alpha = 0
+		boutput(src, "<span class='notice'>You are now invisible.</span>")
+	else
+		src.mob.mouse_opacity = 1
+		src.mob.alpha = 255
+		boutput(src, "<span class='notice'>You are no longer invisible!</span>")
+
 /client/proc/admin_observe()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Set Observe"
@@ -632,7 +650,6 @@ var/list/special_pa_observing_verbs = list(
 	//	src.mob.mind.observing = 1
 		update_admins(rank)
 
-	blink(get_turf(src.mob))
 	if(!istype(src.mob, /mob/dead/observer) && !istype(src.mob, /mob/dead/target_observer))
 		src.mob.mind?.damned = 0
 		src.mob.ghostize()
@@ -654,7 +671,6 @@ var/list/special_pa_observing_verbs = list(
 	//	src.mob.mind.observing = 0
 		update_admins(rank)
 
-	blink(get_turf(src.mob))
 	if(istype(src.mob, /mob/dead/observer))
 		src.mob:reenter_corpse()
 		boutput(src, "<span class='notice'>You are now playing</span>")

@@ -579,6 +579,8 @@
 				if (stuncount > 0)
 					sleep(BATON_DELAY_PER_STUN)
 
+			if (isnull(target))
+				return
 			SPAWN_DBG(0.2 SECONDS)
 				src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 			if (src.target.getStatusDuration("weakened"))

@@ -361,6 +361,15 @@
 /obj/machinery/phone/unlisted
 	unlisted = TRUE
 
+
+/obj/item/electronics/frame/phone
+	name = "Phone Frame"
+	desc = "An undeployed telephone, looks like it could be deployed with a soldering iron. Phones are really that easy!"
+	icon_state = "dbox"
+	store_type = /obj/machinery/phone
+	viewstat = 2
+	secured = 2
+
 //
 //		----------------- CELL PHONE STUFF STARTS HERE ---------------------
 //

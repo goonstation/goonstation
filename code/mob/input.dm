@@ -36,10 +36,8 @@
 			move_x -= 1
 		if (move_x || move_y)
 			if(!src.move_dir && src.canmove && src.restrained())
-				for(var/mob/M in range(src, 1))
-					if ((M.pulling == src && (!M.restrained() && isalive(M))) || length(src.grabbed_by))
-						boutput(src, "<span class='notice'>You're restrained! You can't move!</span>")
-						break
+				if (src.pulled_by || length(src.grabbed_by))
+					boutput(src, "<span class='notice'>You're restrained! You can't move!</span>")
 
 			src.move_dir = angle2dir(arctan(move_y, move_x))
 			attempt_move(src)
@@ -103,9 +101,8 @@
 		src.update_canmove()
 		if (src.canmove)
 			if (src.restrained())
-				for(var/mob/M in range(src, 1))
-					if ((M.pulling == src && (!M.restrained() && isalive(M))) || length(src.grabbed_by))
-						return
+				if (src.pulled_by || length(src.grabbed_by))
+					return
 
 			var/misstep_angle = 0
 			if (src.traitHolder && prob(5) && src.traitHolder.hasTrait("leftfeet"))

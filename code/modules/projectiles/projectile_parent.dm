@@ -497,7 +497,6 @@ datum/projectile
 		implanted                // Path of "bullet" left behind in the mob on successful hit
 		disruption = 0           // planned thing to deal with pod electronics / etc
 		zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
-		caliber = null
 
 		datum/material/material = null
 

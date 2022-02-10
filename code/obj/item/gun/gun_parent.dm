@@ -188,8 +188,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if(continuous && !continuousFire)
 		return 0
 
-	var/pox = text2num(params["icon-x"]) - 16
-	var/poy = text2num(params["icon-y"]) - 16
+	var/pox = text2num(params["icon-x"]) - 16 + target.pixel_x
+	var/poy = text2num(params["icon-y"]) - 16 + target.pixel_y
 	var/turf/user_turf = get_turf(user)
 	var/turf/target_turf = get_turf(target)
 

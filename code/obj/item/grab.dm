@@ -313,7 +313,7 @@
 			src.affecting:was_harmed(src.assailant)
 
 	proc/stunned_targets_can_break()
-		. = TRUE // Allow stunned players to break all grabs
+		.= (src.state == GRAB_PIN)
 
 	proc/check()
 		if(!assailant || !affecting)

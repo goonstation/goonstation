@@ -316,4 +316,15 @@
 /// area's active var set to false (when all clients leave)
 #define COMSIG_AREA_DEACTIVATED "area_deactivated"
 
+// /datum/mind signals
+/// when a mind attaches to a mob (mind, mob)
+#define COMSIG_MIND_ATTACH_TO_MOB "mind_attach_to_mob"
+/// when a mind detaches from a mob (mind, mob)
+#define COMSIG_MIND_DETACH_FROM_MOB "mind_detach_from_mob"
+
+
 #define COMSIG_SUSSY_PHRASE "sussy"
+
+// ---- ability signals ----
+/// Send item to a mob
+#define COMSIG_SEND_TO_MOB "send_to_mob"
