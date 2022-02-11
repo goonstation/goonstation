@@ -3539,7 +3539,6 @@
 					master.scratchpad["targetname"] = ckey(src.protected_name)
 					src.master.add_task(/datum/computer/file/guardbot_task/security/seek, 1, 0)
 
-			return
 
 		check_buddy()
 			return 0
@@ -3593,7 +3592,6 @@
 					master.scratchpad["targetname"] = ckey(src.protected_name)
 					src.master.add_task(/datum/computer/file/guardbot_task/security/seek, 1, 0)
 
-			return
 
 		check_buddy()
 			return 0
