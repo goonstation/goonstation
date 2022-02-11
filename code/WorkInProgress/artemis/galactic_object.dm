@@ -318,6 +318,7 @@ var/global/datum/galaxy/GALAXY = new
 	var/y_old = null
 	var/scale
 	plane = -1
+	max_visibility = (750 * 700)
 
 	New()
 		..()

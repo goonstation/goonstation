@@ -3,7 +3,7 @@
 #define ARTEMIS_ANIMATION_SPEED 2 // 2/10ths of a second. used to calculate various displacements
 #define ARTEMIS_MAX_R 951
 #define ARTEMIS_MAX_R_VIS 500
-#define ARTEMIS_MAX_R_SQUARED_VIS 250000
+#define ARTEMIS_MAX_R_SQUARED_VIS (ARTEMIS_MAX_R_VIS * ARTEMIS_MAX_R_VIS)
 #define ARTEMIS_MAX_R_SQUARED 904401 //951^2 - sqrt(2)*672; radius of circle with the boundary box inscribed in it
 #define ARTEMIS_MAX_R_SQUARED_GALACTIC 35.328 //(951*2/320)**2
 #define ARTEMIS_MAP_SHIP_PIXEL_RATIO 29.7 //3804 pixel diameter circle for rendering ship object, compared to a 128 pixel circle for map object movement; scale diff is 29.7

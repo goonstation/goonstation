@@ -31,6 +31,8 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 
 	var/max_r_squared = ARTEMIS_MAX_R_SQUARED //951^2 - sqrt(2)*672; radius of circle with the boundary box inscribed in it
 
+	var/max_visibility = ARTEMIS_MAX_R_SQUARED_VIS
+
 	//layer = TURF_LAYER-0.01
 	//plane = -2
 
@@ -160,8 +162,9 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 				src.transform = N
 				src.set_state()
 		else
-			if(r_sqrd > ARTEMIS_MAX_R_SQUARED_VIS && src.alpha )
-				src.alpha = 0
+			if(r_sqrd > max_visibility)
+				if( src.alpha )
+					src.alpha = 0
 			else if(!src.alpha)
 				animate(src, time = animation_speed, alpha = 255)
 			var/matrix/M = GLOBAL_ANIMATION_MATRIX.Reset()
