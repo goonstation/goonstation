@@ -29,6 +29,7 @@
 	if(!emagged)
 		boutput(user, "You magnetize the coin, ruining it's chances of ever being used in the Inter-galactic Poker Tournaments ever again.")
 		emagged = TRUE
+		return TRUE
 
 /obj/item/coin/proc/flip()
 	if(!emagged)
