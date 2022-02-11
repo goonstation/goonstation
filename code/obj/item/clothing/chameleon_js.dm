@@ -269,3 +269,927 @@
 		desc = "This suit is ludicrously cheap. They must be embezzling the research budget again."
 		icon_state = "director"
 		item_state = "director"
+
+
+/obj/item/clothing/head/chameleon
+	name = "hat"
+	desc = "A knit cap in black."
+	icon_state = "black"
+	item_state = "swat_gl"
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	uses_multiple_icon_states = 1
+	var/list/clothing_choices = list()
+	blocked_from_petasusaphilic = TRUE
+
+	New()
+		..()
+		for(var/U in (typesof(/datum/chameleon_hat_pattern)))
+			var/datum/chameleon_hat_pattern/P = new U
+			src.clothing_choices += P
+		return
+
+	attackby(obj/item/clothing/head/U as obj, mob/user as mob)
+		if(istype(U, /obj/item/clothing/head/chameleon))
+			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a cataclysmic hat infinite loop!</span>")
+			SPAWN_DBG(1 SECOND)
+				boutput(user, "<span class='alert'>Nah, just yankin' your chain. Doing that still doesn't work though!</span>")
+			return
+
+		if(istype(U, /obj/item/clothing/head/))
+			for(var/datum/chameleon_hat_pattern/P in src.clothing_choices)
+				if(P.name == U.name)
+					boutput(user, "<span class='alert'>That appearance is already saved in the chameleon pattern banks!</span>")
+					return
+
+			var/datum/chameleon_hat_pattern/P = new /datum/chameleon_hat_pattern(src)
+			P.name = U.name
+			P.desc = U.desc
+			P.icon_state = U.icon_state
+			P.item_state = U.item_state
+			P.sprite_item = U.icon
+			P.sprite_worn = U.wear_image_icon
+			P.sprite_hand = U.inhand_image_icon
+			src.clothing_choices += P
+
+			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
+
+	emp_act()
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/M = src.loc
+			boutput(M, "<span class='alert'><B>Your chameleon hat malfunctions!</B></span>")
+			src.name = "hat"
+			src.desc = "A knit cap in...what the hell?"
+			wear_image = image(wear_image_icon)
+			inhand_image = image(inhand_image_icon)
+			src.icon_state = "psyche"
+			src.item_state = "bgloves"
+			M.set_clothing_icon_dirty()
+
+	verb/change()
+		set name = "Change Appearance"
+		set desc = "Alter the appearance of your Chameleon Hat."
+		set category = "Local"
+		set src in usr
+
+		var/datum/chameleon_hat_pattern/which = input("Change the hat to which pattern?", "Chameleon Hat") as null|anything in clothing_choices
+
+		if(!which)
+			return
+
+		src.name = which.name
+		src.desc = which.desc
+		src.icon_state = which.icon_state
+		src.item_state = which.item_state
+		src.icon = which.sprite_item
+		src.wear_image_icon = which.sprite_worn
+		src.inhand_image_icon = which.sprite_hand
+		src.wear_image = image(wear_image_icon)
+		src.inhand_image = image(inhand_image_icon)
+		usr.set_clothing_icon_dirty()
+
+/datum/chameleon_hat_pattern
+	var/name = "hat"
+	var/desc = "A knit cap in black."
+	var/icon_state = "black"
+	var/item_state = "black"
+	var/sprite_item = 'icons/obj/clothing/item_hats.dmi'
+	var/sprite_worn = 'icons/mob/clothing/head.dmi'
+	var/sprite_hand = 'icons/mob/inhand/hand_headgear.dmi'
+
+	NTberet
+		name = "Nanotrasen beret"
+		desc = "For the inner space dictator in you."
+		icon_state = "ntberet"
+		item_state = "ntberet"
+
+	HoS_beret
+		name = "HoS Beret"
+		icon_state = "hosberet"
+		item_state = "hoberet"
+		desc = "Actually, this hat is from a fast-food restaurant, that's why it folds like it was made of paper."
+
+	HoS_hat
+		name = "HoS Hat"
+		icon_state = "hoscap"
+		item_state = "hoscap"
+		desc = "Actually, this hat is from a fast-food restaurant, that's why it folds like it was made of paper."
+
+	caphat
+		name = "Captain's hat"
+		icon_state = "captain"
+		item_state = "caphat"
+		desc = "A symbol of the captain's rank, and the source of all their power."
+
+	janiberet
+		name = "Head of Sanitation beret"
+		desc = "The Chief of Cleaning, the Superintendent of Scrubbing, whatever you call yourself, you know how to make those tiles shine. Good job."
+		icon_state = "janitorberet"
+		item_state = "janitorberet"
+
+	janihat
+		name = "Head of Sanitation hat"
+		desc = "The Chief of Cleaning, the Superintendent of Scrubbing, whatever you call yourself, you know how to make those tiles shine. Good job."
+		icon_state = "janitorhat"
+		item_state = "janitorhat"
+
+	hardhat
+		name = "hard hat"
+		icon_state = "hardhat0"
+		item_state = "hardhat0"
+		desc = "Protects your head from falling objects, and comes with a flashlight. Safety first!"
+
+	security
+		name = "helmet"
+		icon_state = "helmet-sec"
+		item_state = "helmet"
+		desc = "Somewhat protects your head from being bashed in."
+
+/obj/item/clothing/suit/chameleon
+	name = "hoodie"
+	desc = "Nice and comfy on those cold space evenings."
+	icon_state = "hoodie"
+	item_state = "hoodie"
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	uses_multiple_icon_states = 1
+	var/list/clothing_choices = list()
+
+	New()
+		..()
+		for(var/U in (typesof(/datum/chameleon_suit_pattern)))
+			var/datum/chameleon_suit_pattern/P = new U
+			src.clothing_choices += P
+		return
+
+	attackby(obj/item/clothing/suit/U as obj, mob/user as mob)
+		if(istype(U, /obj/item/clothing/suit/chameleon))
+			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a horrible outer suit meltdown death loop!</span>")
+			SPAWN_DBG(1 SECOND)
+				boutput(user, "<span class='alert'>Nah, just making fun. Doing that still doesn't work though!</span>")
+			return
+
+		if(istype(U, /obj/item/clothing/suit))
+			for(var/datum/chameleon_suit_pattern/P in src.clothing_choices)
+				if(P.name == U.name)
+					boutput(user, "<span class='alert'>That appearance is already saved in the chameleon pattern banks!</span>")
+					return
+
+			var/datum/chameleon_suit_pattern/P = new /datum/chameleon_suit_pattern(src)
+			P.name = U.name
+			P.desc = U.desc
+			P.icon_state = U.icon_state
+			P.item_state = U.item_state
+			P.sprite_item = U.icon
+			P.sprite_worn = U.wear_image_icon
+			P.sprite_hand = U.inhand_image_icon
+			src.clothing_choices += P
+
+			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
+
+	emp_act()
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/M = src.loc
+			boutput(M, "<span class='alert'><B>Your chameleon suit malfunctions!</B></span>")
+			src.name = "hoodie"
+			src.desc = "A comfy jacket that's hard on the eyes."
+			wear_image = image(wear_image_icon)
+			inhand_image = image(inhand_image_icon)
+			src.icon_state = "hoodie-psyche"
+			src.item_state = "hoodie-psyche"
+			src.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+			src.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+			M.set_clothing_icon_dirty()
+
+	verb/change()
+		set name = "Change Appearance"
+		set desc = "Alter the appearance of your Chameleon Suit."
+		set category = "Local"
+		set src in usr
+
+		var/datum/chameleon_suit_pattern/which = input("Change the suit to which pattern?", "Chameleon Suit") as null|anything in clothing_choices
+
+		if(!which)
+			return
+
+		src.name = which.name
+		src.desc = which.desc
+		src.icon_state = which.icon_state
+		src.item_state = which.item_state
+		src.icon = which.sprite_item
+		src.wear_image_icon = which.sprite_worn
+		src.inhand_image_icon = which.sprite_hand
+		src.wear_image = image(wear_image_icon)
+		src.inhand_image = image(inhand_image_icon)
+		usr.set_clothing_icon_dirty()
+
+/datum/chameleon_suit_pattern
+	var/name = "hoodie"
+	var/desc = "Nice and comfy on those cold space evenings."
+	var/icon_state = "hoodie"
+	var/item_state = "hoodie"
+	var/sprite_item = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	var/sprite_worn = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	var/sprite_hand = 'icons/mob/inhand/overcoat/hand_suit.dmi'
+
+	labcoat
+		name = "labcoat"
+		desc = "A suit that protects against minor chemical spills and biohazards."
+		icon_state = "labcoat"
+		item_state = "labcoat"
+
+	labcoat_genetics
+		name = "geneticist's labcoat"
+		desc = "A protective laboratory coat with the green markings of a Geneticist."
+		icon_state = "GNlabcoat"
+		item_state = "GNlabcoat"
+
+	labcoat_robotics
+		name = "roboticist's labcoat"
+		desc = "A protective laboratory coat with the black markings of a Roboticist."
+		icon_state = "ROlabcoat"
+		item_state = "ROlabcoat"
+
+	labcoat_medical
+		name = "doctor's labcoat"
+		desc = "A protective laboratory coat with the red markings of a Medical Doctor."
+		icon_state = "MDlabcoat"
+		item_state = "MDlabcoat"
+
+	labcoat_sciene
+		name = "scientist's labcoat"
+		desc = "A protective laboratory coat with the purple markings of a Scientist."
+		icon_state = "SCIlabcoat"
+		item_state = "SCIlabcoat"
+
+	bio_suit
+		name = "bio suit"
+		desc = "A suit that protects against biological contamination."
+		icon_state = "bio_suit"
+		item_state = "bio_suit"
+		sprite_item = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
+		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
+		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
+
+	paramedic
+		name = "paramedic suit"
+		desc = "A protective padded suit for emergency response personnel. Offers limited thermal and biological protection."
+		icon_state = "paramedic"
+		item_state = "paramedic"
+		sprite_item = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
+		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
+		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
+
+	fire_suit
+		name = "firesuit"
+		desc = "A suit that protects against fire and heat."
+		icon_state = "fire"
+		item_state = "fire_suit"
+		sprite_item = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
+		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
+		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
+
+	armor_vest
+		name = "armor vest"
+		desc = "An armored vest that protects against some damage. Contains carbon fibres."
+		icon_state = "armorvest"
+		item_state = "armorvest"
+		sprite_item = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
+		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
+		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
+
+	captain_armor
+		name = "captain's armor"
+		desc = "A suit of protective formal armor made for the station's captain."
+		icon_state = "caparmor"
+		item_state = "caparmor"
+		sprite_item = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
+		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
+		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
+
+	hos_cape
+		name = "Head of Security's cape"
+		desc = "A lightly-armored and stylish cape, made of heat-resistant materials. It probably won't keep you warm, but it would make a great security blanket!"
+		icon_state = "hos-cape"
+		item_state = "hos-cape"
+		sprite_item = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
+		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
+		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
+
+	hos_cape
+		name = "Head of Security's cape"
+		desc = "A lightly-armored and stylish cape, made of heat-resistant materials. It probably won't keep you warm, but it would make a great security blanket!"
+		icon_state = "hos-cape"
+		item_state = "hos-cape"
+		sprite_item = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
+		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
+		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
+
+	hos_jacket
+		name = "Head of Security's jacket"
+		desc = "A slightly armored jacket favored by security personnel. It looks cozy and warm; you could probably sleep in this if you wanted to!"
+		icon_state = "hoscoat"
+		item_state = "hoscoat"
+		sprite_item = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
+		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
+		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
+
+	detective_jacket
+		name = "detective's coat"
+		desc = "Someone who wears this means business."
+		icon_state = "detective"
+		item_state = "det_suit"
+
+/obj/item/clothing/glasses/chameleon
+	name = "prescription glasses"
+	desc = "Corrective lenses, perfect for the near-sighted."
+	icon_state = "glasses"
+	item_state = "glasses"
+	icon = 'icons/obj/clothing/item_glasses.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
+	wear_image_icon = 'icons/mob/clothing/eyes.dmi'
+	uses_multiple_icon_states = 1
+	var/list/clothing_choices = list()
+
+	New()
+		..()
+		for(var/U in (typesof(/datum/chameleon_glasses_pattern)))
+			var/datum/chameleon_glasses_pattern/P = new U
+			src.clothing_choices += P
+		return
+
+	attackby(obj/item/clothing/glasses/U as obj, mob/user as mob)
+		if(istype(U, /obj/item/clothing/glasses/chameleon))
+			boutput(user, "<span class='alert'>No!!! That's a horrible idea! You'll cause a horrible eyewear cascade!</span>")
+			SPAWN_DBG(1 SECOND)
+				boutput(user, "<span class='alert'>Nah, just pulling your leg. Doing that still doesn't work though!</span>")
+			return
+
+		if(istype(U, /obj/item/clothing/glasses/))
+			for(var/datum/chameleon_glasses_pattern/P in src.clothing_choices)
+				if(P.name == U.name)
+					boutput(user, "<span class='alert'>That appearance is already saved in the chameleon pattern banks!</span>")
+					return
+
+			var/datum/chameleon_glasses_pattern/P = new /datum/chameleon_glasses_pattern(src)
+			P.name = U.name
+			P.desc = U.desc
+			P.icon_state = U.icon_state
+			P.item_state = U.item_state
+			P.sprite_item = U.icon
+			P.sprite_worn = U.wear_image_icon
+			P.sprite_hand = U.inhand_image_icon
+			src.clothing_choices += P
+
+			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
+
+	emp_act()
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/M = src.loc
+			boutput(M, "<span class='alert'><B>Your chameleon glasses malfunction!</B></span>")
+			src.name = "glasses"
+			src.desc = "A pair of glasses. They seem to be broken, though."
+			wear_image = image(wear_image_icon)
+			inhand_image = image(inhand_image_icon)
+			src.icon_state = "psyche"
+			src.item_state = "psyche"
+			M.set_clothing_icon_dirty()
+
+	verb/change()
+		set name = "Change Appearance"
+		set desc = "Alter the appearance of your Chameleon Glasses."
+		set category = "Local"
+		set src in usr
+
+		var/datum/chameleon_glasses_pattern/which = input("Change the glasses to which pattern?", "Chameleon Glasses") as null|anything in clothing_choices
+
+		if(!which)
+			return
+
+		src.name = which.name
+		src.desc = which.desc
+		src.icon_state = which.icon_state
+		src.item_state = which.item_state
+		src.icon = which.sprite_item
+		src.wear_image_icon = which.sprite_worn
+		src.inhand_image_icon = which.sprite_hand
+		src.wear_image = image(wear_image_icon)
+		src.inhand_image = image(inhand_image_icon)
+		usr.set_clothing_icon_dirty()
+
+/datum/chameleon_glasses_pattern
+	var/name = "prescription glasses"
+	var/desc = "Corrective lenses, perfect for the near-sighted."
+	var/icon_state = "glasses"
+	var/item_state = "glasses"
+	var/sprite_item = 'icons/obj/clothing/item_glasses.dmi'
+	var/sprite_worn = 'icons/mob/clothing/eyes.dmi'
+	var/sprite_hand = 'icons/mob/inhand/hand_headgear.dmi'
+
+	meson
+		name = "Meson Goggles"
+		desc = "Goggles that allow you to see the structure of the station through walls."
+		icon_state = "meson"
+		item_state = "glasses"
+
+	sunglasses
+		name = "sunglasses"
+		desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
+		icon_state = "sun"
+		item_state = "sunglasses"
+
+	sechud
+		name = "\improper Security HUD"
+		desc = "Sunglasses with a high tech sheen."
+		icon_state = "sec"
+
+	thermal
+		name = "optical thermal scanner"
+		icon_state = "thermal"
+		item_state = "glasses"
+
+	visor
+		name = "\improper VISOR goggles"
+		icon_state = "visor"
+		item_state = "glasses"
+
+	prodoc
+		name = "\improper ProDoc Healthgoggles"
+		desc = "Fitted with an advanced miniature sensor array that allows the user to quickly determine the physical condition of others."
+		icon_state = "prodocs-upgraded"
+
+	spectro
+		name = "spectroscopic scanner goggles"
+		icon_state = "spectro"
+		item_state = "glasses"
+
+/obj/item/clothing/shoes/chameleon
+	name = "black shoes"
+	desc = "These shoes somewhat protect you from fire."
+	icon_state = "black"
+	icon = 'icons/obj/clothing/item_shoes.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
+	wear_image_icon = 'icons/mob/clothing/feet.dmi'
+	uses_multiple_icon_states = 1
+	var/list/clothing_choices = list()
+
+	New()
+		..()
+		for(var/U in (typesof(/datum/chameleon_shoes_pattern)))
+			var/datum/chameleon_shoes_pattern/P = new U
+			src.clothing_choices += P
+		return
+
+	attackby(obj/item/clothing/shoes/U as obj, mob/user as mob)
+		if(istype(U, /obj/item/clothing/shoes/chameleon))
+			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a bad shoe feedback cycle!</span>")
+			SPAWN_DBG(1 SECOND)
+				boutput(user, "<span class='alert'>Nah, just joking. Doing that still doesn't work though!</span>")
+			return
+
+		if(istype(U, /obj/item/clothing/shoes))
+			for(var/datum/chameleon_shoes_pattern/P in src.clothing_choices)
+				if(P.name == U.name)
+					boutput(user, "<span class='alert'>That appearance is already saved in the chameleon pattern banks!</span>")
+					return
+
+			var/datum/chameleon_shoes_pattern/P = new /datum/chameleon_shoes_pattern(src)
+			P.name = U.name
+			P.desc = U.desc
+			P.icon_state = U.icon_state
+			P.item_state = U.item_state
+			P.sprite_item = U.icon
+			P.sprite_worn = U.wear_image_icon
+			P.sprite_hand = U.inhand_image_icon
+			src.clothing_choices += P
+
+			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
+
+	emp_act()
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/M = src.loc
+			boutput(M, "<span class='alert'><B>Your chameleon shoes malfunction!</B></span>")
+			src.name = "shoes"
+			src.desc = "A pair of shoes. Maybe they're those light up kind you had as a kid?"
+			wear_image = image(wear_image_icon)
+			inhand_image = image(inhand_image_icon)
+			src.icon_state = "psyche"
+			M.set_clothing_icon_dirty()
+
+	verb/change()
+		set name = "Change Appearance"
+		set desc = "Alter the appearance of your Chameleon Shoes."
+		set category = "Local"
+		set src in usr
+
+		var/datum/chameleon_shoes_pattern/which = input("Change the shoes to which pattern?", "Chameleon Shoes") as null|anything in clothing_choices
+
+		if(!which)
+			return
+
+		src.name = which.name
+		src.desc = which.desc
+		src.icon_state = which.icon_state
+		src.item_state = which.item_state
+		src.icon = which.sprite_item
+		src.wear_image_icon = which.sprite_worn
+		src.inhand_image_icon = which.sprite_hand
+		src.wear_image = image(wear_image_icon)
+		src.inhand_image = image(inhand_image_icon)
+		usr.set_clothing_icon_dirty()
+
+/datum/chameleon_shoes_pattern
+	var/name = "black shoes"
+	var/desc = "These shoes somewhat protect you from fire."
+	var/icon_state = "black"
+	var/item_state = "black"
+	var/sprite_item = 'icons/obj/clothing/item_shoes.dmi'
+	var/sprite_worn = 'icons/mob/clothing/feet.dmi'
+	var/sprite_hand = 'icons/mob/inhand/hand_feethand.dmi'
+
+	brown
+		name = "brown shoes"
+		icon_state = "brown"
+		item_state = "brown"
+		desc = "Brown shoes, camouflage on this kind of station."
+
+	red
+		name = "red shoes"
+		icon_state = "red"
+		item_state = "red"
+
+	orange
+		name = "orange shoes"
+		icon_state = "orange"
+		item_state = "orange"
+		desc = "Shoes, now in prisoner orange! Can be made into shackles."
+
+	magnetic
+		name = "magnetic shoes"
+		desc = "Keeps the wearer firmly anchored to the ground. Provided the ground is metal, of course."
+		icon_state = "magboots"
+		item_state = "magboots"
+
+	swat
+		name = "military boots"
+		desc = "Polished and very shiny military boots."
+		icon_state = "swat"
+		item_state = "swat"
+
+	galoshes
+		name = "galoshes"
+		desc = "Rubber boots that prevent slipping on wet surfaces."
+		icon_state = "galoshes"
+		item_state = "galoshes"
+
+/obj/item/clothing/gloves/chameleon
+	name = "Black Gloves"
+	desc = "These gloves are fire-resistant."
+	icon_state = "black"
+	item_state = "bgloves"
+	icon = 'icons/obj/clothing/item_gloves.dmi'
+	wear_image_icon = 'icons/mob/clothing/hands.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
+	uses_multiple_icon_states = 1
+	var/list/clothing_choices = list()
+	material_prints = "high-tech nanofibers"
+
+	New()
+		..()
+		for(var/U in (typesof(/datum/chameleon_gloves_pattern)))
+			var/datum/chameleon_gloves_pattern/P = new U
+			src.clothing_choices += P
+		return
+
+	attackby(obj/item/clothing/gloves/U as obj, mob/user as mob)
+		if(istype(U, /obj/item/clothing/gloves/chameleon))
+			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause an awful glove fractal!</span>")
+			SPAWN_DBG(1 SECOND)
+				boutput(user, "<span class='alert'>Nah, just having a laugh. Doing that still doesn't work though!</span>")
+			return
+
+		if(istype(U, /obj/item/clothing/gloves))
+			for(var/datum/chameleon_gloves_pattern/P in src.clothing_choices)
+				if(P.name == U.name)
+					boutput(user, "<span class='alert'>That appearance is already saved in the chameleon pattern banks!</span>")
+					return
+
+			var/datum/chameleon_gloves_pattern/P = new /datum/chameleon_gloves_pattern(src)
+			P.name = U.name
+			P.desc = U.desc
+			P.icon_state = U.icon_state
+			P.item_state = U.item_state
+			P.sprite_item = U.icon
+			P.sprite_worn = U.wear_image_icon
+			P.sprite_hand = U.inhand_image_icon
+			src.clothing_choices += P
+
+			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
+
+	emp_act()
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/M = src.loc
+			boutput(M, "<span class='alert'><B>Your chameleon gloves malfunction!</B></span>")
+			src.name = "gloves"
+			src.desc = "A pair of gloves. Something seems off about them..."
+			wear_image = image(wear_image_icon)
+			inhand_image = image(inhand_image_icon)
+			src.icon_state = "psyche"
+			src.item_state = "psyche"
+			M.set_clothing_icon_dirty()
+
+	verb/change()
+		set name = "Change Appearance"
+		set desc = "Alter the appearance of your Chameleon Gloves."
+		set category = "Local"
+		set src in usr
+
+		var/datum/chameleon_shoes_pattern/which = input("Change the gloves to which pattern?", "Chameleon Gloves") as null|anything in clothing_choices
+
+		if(!which)
+			return
+
+		src.name = which.name
+		src.desc = which.desc
+		src.icon_state = which.icon_state
+		src.item_state = which.item_state
+		src.icon = which.sprite_item
+		src.wear_image_icon = which.sprite_worn
+		src.inhand_image_icon = which.sprite_hand
+		src.wear_image = image(wear_image_icon)
+		src.inhand_image = image(inhand_image_icon)
+		usr.set_clothing_icon_dirty()
+
+/datum/chameleon_gloves_pattern
+	var/name = "Black Gloves"
+	var/desc = "These gloves are fire-resistant."
+	var/icon_state = "black"
+	var/item_state = "bgloves"
+	var/sprite_item = 'icons/obj/clothing/item_gloves.dmi'
+	var/sprite_worn = 'icons/mob/clothing/hands.dmi'
+	var/sprite_hand = 'icons/mob/inhand/hand_feethand.dmi'
+
+	insulated
+		desc = "These gloves are electrically insulated."
+		name = "insulated gloves"
+		icon_state = "yellow"
+		item_state = "ygloves"
+
+	fingerless
+		desc = "These gloves lack fingers."
+		name = "Fingerless Gloves"
+		icon_state = "fgloves"
+		item_state = "finger-"
+
+	latex
+		name = "Latex Gloves"
+		icon_state = "latex"
+		item_state = "lgloves"
+		desc = "Thin gloves that offer minimal protection."
+
+	boxing
+		name = "Boxing Gloves"
+		desc = "These gloves are for competitive boxing."
+		icon_state = "boxinggloves"
+		item_state = "bogloves"
+
+/obj/item/storage/belt/chameleon
+	name = "utility belt"
+	desc = "Can hold various small objects."
+	icon_state = "utilitybelt"
+	item_state = "utility"
+	icon = 'icons/obj/items/belts.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+	wear_image_icon = 'icons/mob/clothing/belt.dmi'
+	uses_multiple_icon_states = 1
+	var/list/clothing_choices = list()
+
+	New()
+		..()
+		for(var/U in (typesof(/datum/chameleon_belt_pattern)))
+			var/datum/chameleon_belt_pattern/P = new U
+			src.clothing_choices += P
+		return
+
+	attackby(obj/item/storage/belt/U as obj, mob/user as mob)
+		if(istype(U, /obj/item/storage/belt/chameleon))
+			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a putrid belt spiral!</span>")
+			SPAWN_DBG(1 SECOND)
+				boutput(user, "<span class='alert'>Nah, just jesting. Doing that still doesn't work though!</span>")
+			return
+
+		if(istype(U, /obj/item/storage/belt))
+			for(var/datum/chameleon_belt_pattern/P in src.clothing_choices)
+				if(P.name == U.name)
+					boutput(user, "<span class='alert'>That appearance is already saved in the chameleon pattern banks!</span>")
+					return
+
+			var/datum/chameleon_belt_pattern/P = new /datum/chameleon_belt_pattern(src)
+			P.name = U.name
+			P.desc = U.desc
+			P.icon_state = U.icon_state
+			P.item_state = U.item_state
+			P.sprite_item = U.icon
+			P.sprite_worn = U.wear_image_icon
+			P.sprite_hand = U.inhand_image_icon
+			src.clothing_choices += P
+
+			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
+
+	emp_act()
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/M = src.loc
+			boutput(M, "<span class='alert'><B>Your chameleon belt malfunctions!</B></span>")
+			src.name = "belt"
+			src.desc = "A flashing belt. Looks like you can still put things in it, though."
+			wear_image = image(wear_image_icon)
+			inhand_image = image(inhand_image_icon)
+			src.icon_state = "psyche"
+			src.item_state = "psyche"
+			M.set_clothing_icon_dirty()
+
+	verb/change()
+		set name = "Change Appearance"
+		set desc = "Alter the appearance of your Chameleon Belt."
+		set category = "Local"
+		set src in usr
+
+		var/datum/chameleon_belt_pattern/which = input("Change the belt to which pattern?", "Chameleon Belt") as null|anything in clothing_choices
+
+		if(!which)
+			return
+
+		src.name = which.name
+		src.desc = which.desc
+		src.icon_state = which.icon_state
+		src.item_state = which.item_state
+		src.icon = which.sprite_item
+		src.wear_image_icon = which.sprite_worn
+		src.inhand_image_icon = which.sprite_hand
+		src.wear_image = image(wear_image_icon)
+		src.inhand_image = image(inhand_image_icon)
+		usr.set_clothing_icon_dirty()
+
+/datum/chameleon_belt_pattern
+	var/name = "utility belt"
+	var/desc = "Can hold various small objects."
+	var/icon_state = "utility"
+	var/item_state = "utility"
+	var/sprite_item = 'icons/obj/items/belts.dmi'
+	var/sprite_worn =  'icons/mob/clothing/belt.dmi'
+	var/sprite_hand = 'icons/mob/inhand/hand_storage.dmi'
+
+	ceshielded
+		name = "aurora MKII utility belt"
+		desc = "An utility belt for usage in high-risk salvage operations. Contains a personal shield generator. Can be activated to overcharge the shields temporarily."
+		icon_state = "cebelt"
+		item_state = "cebelt"
+
+	security
+		name = "security toolbelt"
+		desc = "For the trend-setting officer on the go. Has a place on it to clip a baton and a holster for a small gun."
+		icon_state = "secbelt"
+		item_state = "secbelt"
+
+	medical
+		name = "medical belt"
+		desc = "A specialized belt for treating patients outside medbay in the field. A unique attachment point lets you carry defibrillators."
+		icon_state = "injectorbelt"
+		item_state = "medical"
+
+	shoulder_holster
+		name = "shoulder holster"
+		icon_state = "shoulder_holster"
+		item_state = "shoulder_holster"
+
+/obj/item/storage/backpack/chameleon
+	name = "backpack"
+	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
+	icon_state = "backpack"
+	item_state = "backpack"
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	uses_multiple_icon_states = 1
+	var/list/clothing_choices = list()
+
+	spawn_contents = list(/obj/item/clothing/under/chameleon,\
+	/obj/item/clothing/head/chameleon,\
+	/obj/item/clothing/suit/chameleon,\
+	/obj/item/clothing/glasses/chameleon,\
+	/obj/item/clothing/shoes/chameleon,\
+	/obj/item/storage/belt/chameleon,\
+	/obj/item/clothing/gloves/chameleon)
+
+	New()
+		..()
+		for(var/U in (typesof(/datum/chameleon_backpack_pattern)))
+			var/datum/chameleon_backpack_pattern/P = new U
+			src.clothing_choices += P
+		return
+
+	attackby(obj/item/storage/backpack/U as obj, mob/user as mob)
+		if(istype(U, /obj/item/storage/backpack/chameleon))
+			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a stinky backpack self-cloning freak accident!</span>")
+			SPAWN_DBG(1 SECOND)
+				boutput(user, "<span class='alert'>Nah, just kidding. Doing that still doesn't work though!</span>")
+			return
+
+		if(istype(U, /obj/item/storage/backpack))
+			for(var/datum/chameleon_backpack_pattern/P in src.clothing_choices)
+				if(P.name == U.name)
+					boutput(user, "<span class='alert'>That appearance is already saved in the chameleon pattern banks!</span>")
+					return
+
+			var/datum/chameleon_backpack_pattern/P = new /datum/chameleon_backpack_pattern(src)
+			P.name = U.name
+			P.desc = U.desc
+			P.icon_state = U.icon_state
+			P.item_state = U.item_state
+			P.sprite_item = U.icon
+			P.sprite_worn = U.wear_image_icon
+			P.sprite_hand = U.inhand_image_icon
+			src.clothing_choices += P
+
+			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
+
+	emp_act()
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/M = src.loc
+			boutput(M, "<span class='alert'><B>Your chameleon backpack malfunctions!</B></span>")
+			src.name = "backpack"
+			src.desc = "A flashing backpack. Looks like you can still put things in it, though."
+			wear_image = image(wear_image_icon)
+			inhand_image = image(inhand_image_icon)
+			src.icon_state = "psyche_backpack"
+			src.item_state = "psyche_backpack"
+			M.set_clothing_icon_dirty()
+
+	verb/change()
+		set name = "Change Appearance"
+		set desc = "Alter the appearance of your Chameleon Backpack."
+		set category = "Local"
+		set src in usr
+
+		var/datum/chameleon_backpack_pattern/which = input("Change the backpack to which pattern?", "Chameleon Backpack") as null|anything in clothing_choices
+
+		if(!which)
+			return
+
+		src.name = which.name
+		src.desc = which.desc
+		src.icon_state = which.icon_state
+		src.item_state = which.item_state
+		src.icon = which.sprite_item
+		src.wear_image_icon = which.sprite_worn
+		src.inhand_image_icon = which.sprite_hand
+		src.wear_image = image(wear_image_icon)
+		src.inhand_image = image(inhand_image_icon)
+		usr.set_clothing_icon_dirty()
+
+/datum/chameleon_backpack_pattern
+	var/name = "backpack"
+	var/desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
+	var/icon_state = "backpack"
+	var/item_state = "backpack"
+	var/sprite_item = 'icons/obj/items/storage.dmi'
+	var/sprite_worn =  'icons/mob/clothing/back.dmi'
+	var/sprite_hand = 'icons/mob/inhand/hand_storage.dmi'
+
+	engineer
+		name = "engineering backpack"
+		desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects effectively on the back of engineering personnel."
+		icon_state = "bp_engineering"
+		item_state = "bp_engineering"
+
+	research
+		name = "research backpack"
+		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects efficiently on the back of research personnel."
+		icon_state = "bp_research"
+		item_state = "bp_research"
+
+	security
+		name = "security backpack"
+		desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects adequately on the back of security personnel."
+		icon_state = "bp_security"
+		item_state = "bp_security"
+
+	robotics
+		name = "robotics backpack"
+		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromaticly on the back of roboticists."
+		icon_state = "bp_robotics"
+		item_state = "bp_robotics"
+
+	genetics
+		name = "genetics backpack"
+		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the back of geneticists."
+		icon_state = "bp_genetics"
+		item_state = "bp_genetics"
+
+	medic
+		name = "medic's backpack"
+		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a Medical Doctor's back."
+		icon_state = "bp_medic"
+		item_state = "bp-medic"
+
