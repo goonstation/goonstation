@@ -25,7 +25,7 @@
 
 /obj/submachine/slot_machine/emag_act(mob/user, obj/item/card/emag/E)
 	if (src.emagged)
-		user.show_message("<span class='alert'>The [src] has already had been tampered with.</span>")
+		user?.show_message("<span class='alert'>The [src] has already had been tampered with.</span>")
 		return
 	boutput(user, "<span class='notice'>You short out the random number generator on [src]")
 	src.emagged = 1

@@ -860,7 +860,7 @@
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (src.emagged)
-			user.show_message("<span class='alert'>[src] has already had its safety restrictions disabled.</span>")
+			user?.show_message("<span class='alert'>[src] has already had its safety restrictions disabled.</span>")
 			return
 		src.emagged = TRUE
 		power_up_realtime = 10
