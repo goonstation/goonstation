@@ -1554,6 +1554,11 @@ var/f_color_selector_handler/F_Color_Selector
 				ircmsg["time"] = (world.timeofday - curtime) / 10
 				ircmsg["ticklag"] = world.tick_lag
 				ircmsg["runtimes"] = global.runtime_count
+				if(world.system_type == "UNIX")
+					var/memory_info = splittext(file2text("/proc/meminfo"), "\n")
+					if(length(memory_info) >= 3)
+						memory_info.len = 3
+						ircmsg["meminfo"] = jointext(memory_info, "\n")
 				return ircbot.response(ircmsg)
 
 			if ("rev")
