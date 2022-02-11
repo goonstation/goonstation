@@ -1,4 +1,10 @@
 
+(t)fri feb 11 22
+(u)FlameArrow57
+(p)7071
+(e)🆕⚖|feature, balance
+(*)The AI now has a "Reset All APCs" command, which will attempt to reset all APCs to their default settings.
+(+)Ion storms may now disable AI control on some APCs.
 (t)thu feb 10 22
 (u)avimour
 (p)7459
