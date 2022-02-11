@@ -28829,6 +28829,10 @@
 /area/station/storage/warehouse)
 "bKD" = (
 /obj/rack,
+/obj/item/storage/toolbox/artistic{
+	pixel_y = -6
+	},
+/obj/item/storage/toolbox/artistic,
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/station/storage/warehouse)
 "bKE" = (
