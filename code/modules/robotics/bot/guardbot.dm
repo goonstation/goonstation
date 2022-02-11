@@ -3558,11 +3558,11 @@
 
 			if (src.protected && prob(10))
 				if (prob(40))
-					var/buddy_cheer_up_chooser = rand(1, buddy_cheer_up_phrases.len)
+					var/buddy_cheer_up_chooser = rand(1, length(buddy_cheer_up_phrases))
 					master.speak(buddy_cheer_up_phrases[buddy_cheer_up_chooser])
 					master.point(src.protected, 1)
 				else
-					var/buddy_cheer_up_chooser = rand(1, buddy_cheer_up_starters.len)
+					var/buddy_cheer_up_chooser = rand(1, length(buddy_cheer_up_starters))
 					master.speak(buddy_cheer_up_starters[buddy_cheer_up_chooser])
 					master.point(src.protected, 1)
 					master.speak(buddy_cheer_up_answers[buddy_cheer_up_chooser])
