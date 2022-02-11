@@ -101,7 +101,7 @@
 					var/absorbed_identities = null
 					var/datum/abilityHolder/changeling/C = traitor.current.get_ability_holder(/datum/abilityHolder/changeling)
 					if (C && istype(C))
-						absorbed_identities = null
+						absorbed_identities = list()
 						dna_absorbed = max(0, C.absorbtions)
 						for (var/DNA in C.absorbed_dna)
 							absorbed_identities += DNA
