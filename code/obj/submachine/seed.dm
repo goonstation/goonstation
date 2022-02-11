@@ -1174,8 +1174,7 @@
 			S.generic_seed_setup(I)
 			vend--
 			src.seedcount++
-		SPAWN_DBG(0)
-			for(var/obj/item/seed/S in src.contents) S.set_loc(src.loc)
+
 		if(src.seedcount >= src.maxseed)
 			src.can_vend = 0
 			SPAWN_DBG(10 SECONDS)
