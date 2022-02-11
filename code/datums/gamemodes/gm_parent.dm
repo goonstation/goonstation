@@ -109,7 +109,7 @@
 						dna_absorbed = "N/A (body destroyed)"
 
 					stuff_to_output += "<B>Absorbed DNA:</b> [dna_absorbed]"
-					stuff_to_output += "<B>Absorbed Identities: [isnull(absorbed_identities) ? "N/A (body destroyed)" : absorbed_identities]"
+					stuff_to_output += "<B>Absorbed Identities: [isnull(absorbed_identities) ? "N/A (body destroyed)" : english_list(absorbed_identities)]"
 
 				if (traitor.special_role == ROLE_VAMPIRE && traitor.current)
 					var/blood_acquired = 0
