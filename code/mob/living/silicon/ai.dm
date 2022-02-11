@@ -1552,6 +1552,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set category = "AI Commands"
 	set name = "Set Fake Laws"
 
+	#define FAKE_LAW_LIMIT 12
 	var/law_base_choice = input(usr,"Which lawset would you like to use as a base for your new fake laws?", "Fake Laws", "Fake Laws") in list("Real Laws", "Fake Laws")
 	var/law_base = ""
 	if(law_base_choice == "Real Laws")
@@ -1566,6 +1567,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 	// split into lines
 	var/list/raw_law_list = splittext_char(raw_law_text, "\n")
+	// return if we input an excessive amount of laws
+	if (length(raw_law_list) > FAKE_LAW_LIMIT)
+		boutput(usr, "<span class='alert'>You cannot set more than [FAKE_LAW_LIMIT] laws.</span>")
+		return
 	// clear old fake laws
 	src.fake_laws = list()
 	// cleanse the lines and add them as our laws
@@ -1579,6 +1584,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.show_message("<span class='bold'>Your new fake laws are: </span>")
 	for(var/a_law in src.fake_laws)
 		src.show_message(a_law)
+	#undef FAKE_LAW_LIMIT
 
 /mob/living/silicon/ai/proc/ai_state_fake_laws()
 	set category = "AI Commands"
