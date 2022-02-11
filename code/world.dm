@@ -1563,8 +1563,8 @@ var/f_color_selector_handler/F_Color_Selector
 							memory_info.len = 3
 							ircmsg["meminfo"] = jointext(memory_info, "\n")
 						fdel(meminfo_file)
-					catch
-						// do nothing
+					catch(var/exception/e)
+						stack_trace("[e.name]\n[e.desc]")
 				return ircbot.response(ircmsg)
 
 			if ("rev")
