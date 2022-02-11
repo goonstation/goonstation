@@ -75,13 +75,37 @@ var/global/list/datum/mind/battle_pass_holders = list()
 		if (isnpcmonkey(M))
 			qdel(M)
 
-	for_by_tcl(V, /obj/submachine)
-		if (istype(V, /obj/submachine/weapon_vendor/security))
-			qdel(V)
+	for_by_tcl(SV, /obj/submachine)
+		if (istype(SV, /obj/submachine/weapon_vendor/security))
+			qdel(SV)
+
+	for_by_tcl(MAC, /obj/machinery)
+		var/mac_type = MAC.type
+		switch (mac_type)
+			if (/obj/machinery/clone_scanner)
+				qdel(MAC)
+			if (/obj/machinery/vending/monkey)
+				qdel(MAC)
+			if (/obj/machinery/vending/security)
+				qdel(MAC)
+			if (/obj/machinery/vending/mechanics)
+				qdel(MAC)
+			if (/obj/machinery/computer/supplycomp)
+				qdel(MAC)
+			if (/obj/machinery/lrteleporter)
+				qdel(MAC)
+			if (/obj/machinery/networked/telepad)
+				qdel(MAC)
 
 	hide_weapons_everywhere()
 	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
 	next_drop = world.time + rand(MIN_TIME_BETWEEN_SUPPLY_DROPS,MAX_TIME_BETWEEN_SUPPLY_DROPS)
+
+	ticker.centralized_ai_laws.replace_inherent_law(1, "BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.")
+	ticker.centralized_ai_laws.replace_inherent_law(2, "")
+	ticker.centralized_ai_laws.replace_inherent_law(3, "")
+
+	emergency_shuttle.disabled = 1
 	return 1
 
 
@@ -100,10 +124,17 @@ var/global/list/datum/mind/battle_pass_holders = list()
 		// Stuff them on the shuttle
 	player.current.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
 	equip_battler(player.current)
+	if (ishuman(player.current))
+		var/mob/living/carbon/human/H = player.current
+		H.AddComponent(/datum/component/battleroyale_death)
 	SPAWN_DBG(MAX_TIME_ON_SHUTTLE)
 		if(istype(get_area(player.current),/area/shuttle/battle) || istype(get_area(player.current),/area/shuttle_transit_space/west) )
 			boutput(player.current,"<span class='alert'>You are thrown out of the shuttle for taking too long!</span>")
-			player.current.set_loc(pick(get_area_turfs(current_battle_spawn,1)))
+			var/list/found_areas = get_area_turfs(current_battle_spawn,1)
+			if (isnull(found_areas))
+				player.current.set_loc(pick(get_area_turfs(/area/station/maintenance/,1)))
+			else
+				player.current.set_loc(pick(found_areas))
 			player.current.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 			player.current.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
 	SHOW_BATTLE_ROYALE_TIPS(player.current)
@@ -112,7 +143,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 /datum/game_mode/battle_royale/check_finished()
 	var/someone_died = 0
 	for(var/datum/mind/M in living_battlers)
-		if(isdead(M.current) || issilicon(M.current) || isobserver(M.current) || inafterlife(M.current) || isVRghost(M.current))
+		if(isdead(M.current) || !ishuman(M.current) || inafterlife(M.current) || isVRghost(M.current))
 			living_battlers.Remove(M)
 			DEBUG_MESSAGE("[M.current.name] died. There are [living_battlers.len] left!")
 			recently_deceased.Add(M)
@@ -122,8 +153,8 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	else if(someone_died && living_battlers.len % 10 == 0)
 		command_alert("[living_battlers.len] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
 	if(living_battlers.len <= 1)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /datum/game_mode/battle_royale/declare_completion()
@@ -229,7 +260,9 @@ proc/hide_weapons_everywhere()
 	/datum/syndicate_buylist/generic/revflash,
 	/datum/syndicate_buylist/generic/revflashbang,
 	/datum/syndicate_buylist/generic/revsign,
-	/datum/syndicate_buylist/generic/rev_normal_flash)
+	/datum/syndicate_buylist/generic/rev_normal_flash,
+	/datum/syndicate_buylist/traitor/kudzuseed,
+	/datum/syndicate_buylist/traitor/moonshine)
 
 	for(var/datum/syndicate_buylist/D in syndi_buylist_cache)
 		if(D.item)
@@ -258,7 +291,7 @@ proc/hide_weapons_everywhere()
 	chest_supplies.Add(/obj/item/sword/discount)
 	chest_supplies.Add(/obj/item/nunchucks)
 	chest_supplies.Add(/obj/item/quarterstaff)
-	chest_supplies.Add(/obj/item/knife/butcher/predspear)
+	chest_supplies.Add(/obj/item/knife/butcher/hunterspear)
 	chest_supplies.Add(/obj/item/fireaxe)
 	chest_supplies.Add(/obj/item/katana/reverse)
 	chest_supplies.Add(/obj/item/katana_sheath/captain)

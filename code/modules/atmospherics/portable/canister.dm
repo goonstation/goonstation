@@ -310,10 +310,12 @@
 					D.ex_act(1)
 
 				for(var/obj/item/reagent_containers/glass/G in range(4,T))
-					G.smash()
+					if(G.can_recycle)
+						G.smash()
 
 				for(var/obj/item/reagent_containers/food/drinks/drinkingglass/G in range(4,T))
-					G.smash()
+					if(G.can_recycle)
+						G.smash()
 
 				for(var/atom/movable/A in view(3, T)) // wreck shit
 					if(A.anchored) continue

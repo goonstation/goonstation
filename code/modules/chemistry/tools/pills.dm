@@ -175,7 +175,7 @@
 
 /obj/item/reagent_containers/pill/salicylic_acid
 	name = "analgesic pill"
-	desc = "Commonly used to treat moderate pain and fevers."
+	desc = "A painkiller used to treat minor injuries." 
 	icon_state = "pill4"
 
 	New()

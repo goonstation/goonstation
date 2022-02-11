@@ -559,7 +559,7 @@ datum
 						var/list/covered = holder.covered_turf()
 						var/density = clamp(src.volume / length(covered), 0, 10)
 						for (var/turf/T in covered)//may need to further limit this
-							explosion_new(holder.my_atom, T, 62 * (density/10)^2, 1)
+							explosion_new(holder.my_atom, T, 62 * (density/10)**2, 1)
 
 						holder.del_reagent(id)
 
@@ -719,7 +719,7 @@ datum
 				if((M.health > 20) && (prob(33)))
 					M.take_toxin_damage(1 * mult)
 				if(probmult(1))
-					M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 					M.vomit()
 				..()
 

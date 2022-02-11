@@ -110,13 +110,11 @@ proc/filtered_concrete_typesof(type, filter)
 	*/
 proc/get_singleton(type)
 	RETURN_TYPE(type)
-	if(!singletons)
-		singletons = list()
 	if(!(type in singletons))
 		singletons[type] = new type
 	return singletons[type]
 
-var/global/list/singletons
+var/global/list/singletons = list()
 
 
 /// Find predecessor of a type
@@ -203,6 +201,7 @@ var/list/list/by_cat = list()
 #define TR_CAT_SPY_STICKERS_DET "spysticker_det"
 #define TR_CAT_ARTIFACTS "artifacts"
 #define TR_CAT_NUKE_OP_STYLE "nukie_style_items" //Items that follow the nuke op color scheme and are generally associated with ops. For recoloring!
+#define TR_CAT_HUNTER_GEAR "hunter_gear"
 // powernets? processing_items?
 // mobs? ai-mobs?
 

@@ -658,8 +658,6 @@
 
 	examine()
 		. = list()
-		if(src.hiddenFrom?.Find(usr.client)) //invislist
-			return
 
 		if (isghostdrone(usr))
 			return
@@ -852,10 +850,9 @@
 				dmgmult = 0.2
 			if(D_TOXIC)
 				dmgmult = 0
+			if(D_SPECIAL)
+				dmgmult = 0
 
-		if(P.proj_data.ks_ratio == 0)
-			src.do_disorient(clamp(P.power*4, P.proj_data.power*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
-			src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 
 		log_shot(P, src)
 		src.visible_message("<span class='alert'><b>[src]</b> is struck by [P]!</span>")
@@ -863,6 +860,9 @@
 		if (damage < 1)
 			return
 
+		if(P.proj_data.ks_ratio == 0)
+			src.do_disorient(clamp(P.power*4, P.proj_data.power*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
+			src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 		for (var/obj/item/roboupgrade/R in src.contents)
 			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated && dmgtype == 0)
 				var/obj/item/roboupgrade/physshield/S = R
@@ -1807,7 +1807,6 @@
 
 	proc/uneq_slot(var/i)
 		if (module_states[i])
-			src.contents -= module_states[i]
 			if (src.module)
 				var/obj/I = module_states[i]
 				if (isitem(I))
@@ -2980,13 +2979,9 @@
 	set name = "Recall to Mainframe"
 	return_mainframe()
 
-/mob/living/silicon/robot/proc/return_mainframe()
-	if (mainframe)
-		mainframe.return_to(src)
-		src.update_appearance()
-	else
-		boutput(src, "<span class='alert'>You lack a dedicated mainframe!</span>")
-		return
+/mob/living/silicon/robot/return_mainframe()
+	..()
+	src.update_appearance()
 
 /mob/living/silicon/robot/ghostize()
 	if (src.mainframe)

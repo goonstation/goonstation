@@ -262,6 +262,15 @@
 			)
 			break
 
+	for (var/obj/machinery/floorflusher/FF in range(30, src))
+		if (FF.id == src.id)
+			. += list(
+				"flusher" = TRUE,
+				"flusheropen" = FF.open,
+				"opening" = FF.opening
+			)
+			break
+
 /obj/machinery/door_timer/ui_status(mob/user, datum/ui_state/state)
 	return min(
 		..(),
@@ -308,6 +317,20 @@
 					src.add_fingerprint(usr)
 					F.flash()
 					logTheThing("station", usr, null, "sets off flashers from a door timer: [src] [log_loc(src)].")
+					return TRUE
+
+		if ("toggle-flusher")
+			for (var/obj/machinery/floorflusher/FF in range(30, src))
+				if (FF.id == src.id)
+					src.add_fingerprint(usr)
+					if (FF.flush == TRUE || FF.opening == TRUE)
+						return
+					if (FF.open != 1)
+						FF.openup()
+						logTheThing("station", usr, null, "opens a floor flusher from a door timer: [src] [log_loc(src)].")
+					else
+						FF.closeup()
+						logTheThing("station", usr, null, "closes a floor flusher from a door timer: [src] [log_loc(src)].")
 					return TRUE
 
 /obj/machinery/door_timer/attack_ai(mob/user)

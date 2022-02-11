@@ -132,6 +132,7 @@ var/list/ban_from_airborne_fluid = list()
 		src.touched_channel = 0
 		blocked_dirs = 0
 		spawned_any = 0
+		purge_smoke_blacklist(src.group.reagents)
 
 		var/turf/t
 		if(!waterflow_enabled) return

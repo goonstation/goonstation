@@ -10,7 +10,7 @@ GAUNTLET CARDS
 	name = "card"
 	icon = 'icons/obj/items/card.dmi'
 	icon_state = "id"
-	wear_image_icon = 'icons/mob/mob.dmi'
+	wear_image_icon = 'icons/mob/clothing/card.dmi'
 	w_class = W_CLASS_TINY
 	burn_type = 1
 	stamina_damage = 0

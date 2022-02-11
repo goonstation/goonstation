@@ -91,11 +91,16 @@ AI MODULES
 			R.show_text(message, "blue")
 
 	proc/do_admin_logging(var/msg, mob/M)
-		message_admins("[M.name] ([key_name(M)]) used \a [src] and uploaded a change to the AI laws: \"[msg]\".")
-		logTheThing("admin", M, null, "used \a [src] and uploaded a change to the AI laws: \"[msg]\".")
-		logTheThing("diary", M, null, "used \a [src] and uploaded a change to the AI laws: \"[msg]\".", "admin")
-		logTheThing("admin", M, null, "AI and silicon laws have been modified:<br>[ticker.centralized_ai_laws.format_for_logs()]")
-		logTheThing("diary", M, null, "AI and silicon laws have been modified:<br>[ticker.centralized_ai_laws.format_for_logs()]", "admin")
+		if(istype(src, /obj/item/aiModule/rename))
+			message_admins("[M.name] ([key_name(M)]) used \a [src] and [msg].")
+			logTheThing("admin", M, null, "used \a [src] and [msg].")
+			logTheThing("diary", M, null, "used \a [src] and [msg].", "admin")
+		else
+			message_admins("[M.name] ([key_name(M)]) used \a [src] and uploaded a change to the AI laws: \"[msg]\".")
+			logTheThing("admin", M, null, "used \a [src] and uploaded a change to the AI laws: \"[msg]\".")
+			logTheThing("diary", M, null, "used \a [src] and uploaded a change to the AI laws: \"[msg]\".", "admin")
+			logTheThing("admin", M, null, "AI and silicon laws have been modified:<br>[ticker.centralized_ai_laws.format_for_logs()]")
+			logTheThing("diary", M, null, "AI and silicon laws have been modified:<br>[ticker.centralized_ai_laws.format_for_logs()]", "admin")
 
 
 /******************** Modules ********************/

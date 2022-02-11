@@ -403,6 +403,7 @@
 				src.anchored = !(src.anchored)
 				src.stops_space_move = !(src.stops_space_move)
 				user.show_text("You have [src.anchored ? "fastened the frame to" : "unfastened the frame from"] the floor.", "blue")
+				logTheThing("station", user, null, "[src.anchored ? " anchored" : " unanchored"] [src] at [log_loc(src)].")
 				return 1
 			else
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
@@ -414,6 +415,7 @@
 				src.anchored = !(src.anchored)
 				src.stops_space_move = !(src.stops_space_move)
 				user.show_text("You have [src.anchored ? "fastened the window to" : "unfastened the window from"] the floor.", "blue")
+				logTheThing("station", user, null, "[src.anchored ? " anchored" : " unanchored"] [src] at [log_loc(src)].")
 				return 1
 
 		else if (ispryingtool(W) && state <= 1)
@@ -725,7 +727,7 @@
 		/obj/machinery/door, /obj/window, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/jen/red, /turf/simulated/wall/auto/jen/green, /turf/simulated/wall/auto/jen/yellow, /turf/simulated/wall/auto/jen/cyan, /turf/simulated/wall/auto/jen/purple,  /turf/simulated/wall/auto/jen/blue,
 		/turf/simulated/wall/auto/reinforced/jen, /turf/simulated/wall/auto/reinforced/jen/red, /turf/simulated/wall/auto/reinforced/jen/green, /turf/simulated/wall/auto/reinforced/jen/yellow, /turf/simulated/wall/auto/reinforced/jen/cyan, /turf/simulated/wall/auto/reinforced/jen/purple, /turf/simulated/wall/auto/reinforced/jen/blue,
-		/turf/unsimulated/wall/auto/supernorn/wood)
+		/turf/unsimulated/wall/auto/supernorn/wood, /turf/unsimulated/wall/auto/adventure/shuttle/dark)
 	alpha = 160
 	the_tuff_stuff
 		explosion_resistance = 3

@@ -538,17 +538,17 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	teleport_blocked = 1
 
 	Entered(atom/movable/O)
-		var/dest = null
 		..()
 		if (isobserver(O))
 			return
 		if (ismob(O))
 			var/mob/jerk = O
-			dest = pick(get_area_turfs(current_battle_spawn,1))
-			if(!dest)
-				dest= pick(get_area_turfs(/area/station/maintenance/,1))
+			var/list/found_areas = get_area_turfs(current_battle_spawn,1)
+			if (isnull(found_areas))
+				jerk.set_loc(pick(get_area_turfs(/area/station/maintenance/,1)))
 				boutput(jerk, "You somehow land in maintenance! Weird!")
-			jerk.set_loc(dest)
+			else
+				jerk.set_loc(pick(found_areas))
 			jerk.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 			jerk.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
 		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect))
@@ -1980,6 +1980,10 @@ ABSTRACT_TYPE(/area/station/hallway/secondary)
 	name = "Shuttle Bay"
 	icon_state = "shuttle3"
 
+/area/station/hallway/secondary/researchshuttle
+	name = "Research Transport Dock"
+	icon_state = "shuttle3"
+
 /area/station/mailroom
 	name = "Mailroom"
 	icon_state = "mail"
@@ -2708,6 +2712,8 @@ ABSTRACT_TYPE(/area/station/security)
 		name = "East Hallway Security Checkpoint"
 /area/station/security/checkpoint/medical
 		name = "Medical Security Checkpoint"
+/area/station/security/checkpoint/research
+		name = "Research Security Checkpoint"
 
 /area/station/security/armory //what the fuck this is not the real armory???
 	name = "Armory" //ai_monitored/armory is, shitty ass code
@@ -3261,6 +3267,10 @@ ABSTRACT_TYPE(/area/station/catwalk)
 		name = "firing range"
 		icon_state = "blue"
 
+/area/syndicate_station/assault_pod
+		name = "forward assault pod"
+		icon_state = "red"
+
 /area/syndicate_station/medbay
 		name = "medical bay"
 		icon_state = "purple"
@@ -3720,7 +3730,9 @@ ABSTRACT_TYPE(/area/mining)
   * Updates the icon of the area. Mainly used for flashing it red or blue. See: old party lights
   */
 /area/update_icon()
-	if ((fire || eject) && power_environ)
+	if(irradiated) //From a radiation blowout event
+		icon_state = "blowout"
+	else if ((fire || eject) && power_environ)
 		if(fire && !eject)
 			icon_state = null
 		else if(!fire && eject)
