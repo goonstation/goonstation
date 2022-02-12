@@ -2900,3 +2900,1072 @@
 	price = 21000
 	upperfluc = 20000
 	lowerfluc = -28500
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  ______   _        _______  _______  _                _______  _______  _______  _        _______ _________ //
+// (  ___ \ ( \      (  ___  )(  ____ \| \    /\        (       )(  ___  )(  ____ )| \    /\(  ____ \\__   __/ //
+// | (   ) )| (      | (   ) || (    \/|  \  / /        | () () || (   ) || (    )||  \  / /| (    \/   ) (    //
+// | (__/ / | |      | (___) || |      |  (_/ /         | || || || (___) || (____)||  (_/ / | (__       | |    //
+// |  __ (  | |      |  ___  || |      |   _ (          | |(_)| ||  ___  ||     __)|   _ (  |  __)      | |    //
+// | (  \ \ | |      | (   ) || |      |  ( \ \         | |   | || (   ) || (\ (   |  ( \ \ | (         | |    //
+// | )___) )| (____/\| )   ( || (____/\|  /  \ \        | )   ( || )   ( || ) \ \__|  /  \ \| (____/\   | |    //
+// |/ \___/ (_______/|/     \|(_______/|_/    \/        |/     \||/     \||/   \__/|_/    \/(_______/   )_(    //
+//                                                                                                             //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                //
+//    ▄▄▄▄███▄▄▄▄      ▄████████ ▀████    ▐████▀       ▄█          ▄████████  ▄█     █▄     ▄▄▄▄███▄▄▄▄      ▄████████ ███▄▄▄▄    //
+//  ▄██▀▀▀███▀▀▀██▄   ███    ███   ███▌   ████▀       ███         ███    ███ ███     ███  ▄██▀▀▀███▀▀▀██▄   ███    ███ ███▀▀▀██▄  //
+//  ███   ███   ███   ███    ███    ███  ▐███         ███         ███    ███ ███     ███  ███   ███   ███   ███    ███ ███   ███  //
+//  ███   ███   ███   ███    ███    ▀███▄███▀         ███         ███    ███ ███     ███  ███   ███   ███   ███    ███ ███   ███  //
+//  ███   ███   ███ ▀███████████    ████▀██▄          ███       ▀███████████ ███     ███  ███   ███   ███ ▀███████████ ███   ███  //
+//  ███   ███   ███   ███    ███   ▐███  ▀███         ███         ███    ███ ███     ███  ███   ███   ███   ███    ███ ███   ███  //
+//  ███   ███   ███   ███    ███  ▄███     ███▄       ███▌    ▄   ███    ███ ███ ▄█▄ ███  ███   ███   ███   ███    ███ ███   ███  //
+//   ▀█   ███   █▀    ███    █▀  ████       ███▄      █████▄▄██   ███    █▀   ▀███▀███▀    ▀█   ███   █▀    ███    █▀   ▀█   █▀   //
+//                                                   ▀                                                                            //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Spare sec gear. High price but not ID/emag locked.
+//////////////////////////////////////////////////////////////
+///███████ ███████ ██      ██      ██ ███    ██  ██████     //
+///██      ██      ██      ██      ██ ████   ██ ██       ██ //
+///███████ █████   ██      ██      ██ ██ ██  ██ ██   ███    //
+///     ██ ██      ██      ██      ██ ██  ██ ██ ██    ██ ██ //
+///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
+//////////////////////////////////////////////////////////////
+// NOTE: A full set of armour ordered at the same time shouldn't match, but they should look cool together.
+/datum/commodity/blackmarket/surplus/helmet
+	comname = "Armor Helmet"
+	comtype = null
+	desc = "Got a lot of these in good condition. One size fits all."
+	price = 7000
+	upperfluc = 1000
+	lowerfluc = -1000
+	New()
+		..()
+		switch (lowertext( time2text(world.realtime, "Day") ))
+			if ("monday")
+				comtype = /obj/item/clothing/head/helmet/camera/security
+			if ("tuesday")
+				comtype = /obj/item/clothing/head/helmet/hardhat/security/improved
+			if ("wednesday")
+				comtype = /obj/item/clothing/head/helmet/hardhat/security
+			if ("thursday")
+				comtype = /obj/item/clothing/head/helmet/camera/security
+			if ("friday")
+				comtype = /obj/item/clothing/head/helmet/hardhat/security/improved
+			if ("saturday")
+				comtype = /obj/item/clothing/head/helmet/turd
+			if ("sunday")
+				comtype = /obj/item/clothing/head/helmet/hardhat/security
+
+/datum/commodity/blackmarket/surplus/suit
+//overpriced to avoid dumb money exploits
+	comname = "Security-Grade Jumpsuit"
+	comtype = /obj/item/clothing/under/rank/security
+	desc = "I can get you some genuine security jumpsuits. Original holo-monograms included, of course."
+	price = 4000
+	upperfluc = 2000
+	lowerfluc = -2000
+//	New()
+//		..()
+//		switch (lowertext( time2text(world.realtime, "Day") ))
+//			if ("monday","saturday","friday")
+//				comtype = /obj/item/clothing/under/rank/security
+//			if ("wednesday","tuesday")
+//				comtype = /obj/item/clothing/under/rank/security/surplus
+//			if ("thursday")
+//				comtype = /obj/item/clothing/under/misc/NT
+//			if ("sunday")
+//				comtype = /obj/item/clothing/under/shirt_pants_b/redtie
+
+/datum/commodity/blackmarket/surplus/vest
+	comname = "Armor Vest"
+	comtype = /obj/item/clothing/suit/armor/vest
+	desc = "These will save your life one day. More than one day, if you're smart."
+	price = 8000
+	upperfluc = 2000
+	lowerfluc = -2000
+//		New()
+//		..()
+//		switch (lowertext( time2text(world.realtime, "Day") ))
+//			if ("monday","friday")
+//				comtype = /obj/item/clothing/suit/armor/vest
+//			if ("tuesday","sunday")
+//				comtype = /obj/item/clothing/suit/armor/surplus
+//			if ("wednesday")
+//				comtype = /obj/item/clothing/suit/fire/armored
+//			if ("thursday")
+//				comtype = /obj/item/clothing/suit/armor/turd
+//			if ("saturday")
+//				comtype = /obj/item/clothing/suit/armor/tdome/red
+/datum/commodity/blackmarket/surplus/gloves
+	comname = "Tactical Gloves"
+	comtype = /obj/item/clothing/gloves/swat
+	price = 8400
+	upperfluc = 1400
+	lowerfluc = -1400
+/datum/commodity/blackmarket/surplus/boots
+	comname = "Tactical Boots"
+	comtype = /obj/item/clothing/shoes/swat
+	desc = "I re-sole all the boots. Guaranteed 100% blood free."
+	price = 8000
+	upperfluc = 2000
+	lowerfluc = -2000
+	New()
+		..()
+		switch (lowertext( time2text(world.realtime, "Day") ))
+			if ("monday")
+				comtype = /obj/item/clothing/shoes/swat
+			if ("tuesday")
+				comtype = /obj/item/clothing/shoes/bootsblk
+			if ("wednesday")
+				comtype = /obj/item/clothing/shoes/floppy
+			if ("thursday")
+				comtype = /obj/item/clothing/shoes/westboot/black
+			if ("friday")
+				comtype = /obj/item/clothing/shoes/swat
+			if ("saturday")
+				comtype = /obj/item/clothing/shoes/bootsblk
+			if ("sunday")
+				comtype = /obj/item/clothing/shoes/swat
+/datum/commodity/blackmarket/surplus/gasmask
+	comname = "Tactical Gas Mask"
+	comtype = null
+	desc = "Tested and guaranteed 100% smokebomb-proof, every one of em."
+	price = 2100
+	upperfluc = 500
+	lowerfluc = -500
+	New()
+		..()
+		switch (lowertext( time2text(world.realtime, "Day") ))
+			if ("monday")
+				comtype = /obj/item/clothing/mask/gas/swat
+			if ("tuesday")
+				comtype = /obj/item/clothing/mask/gas
+			if ("wednesday")
+				comtype = /obj/item/clothing/mask/gas/swat
+			if ("thursday")
+				comtype = /obj/item/clothing/mask/gas/emergency
+			if ("friday")
+				comtype = /obj/item/clothing/mask/gas
+			if ("saturday")
+				comtype = /obj/item/clothing/mask/gas/swat
+			if ("sunday")
+				comtype = /obj/item/clothing/mask/gas/NTSO
+/datum/commodity/blackmarket/surplus/backpack
+	comname = "Security Satchel"
+	comtype = /obj/item/storage/backpack/satchel/syndie
+	desc = "Got a few designer bags in. They're spacious, and damn tough."
+	price = 3800
+	upperfluc = 190
+	lowerfluc = -200
+/datum/commodity/blackmarket/surplus/baton
+	comname = "Imported Stun Baton"
+	comtype = /obj/item/baton
+	desc = "Excess stun batons. Highly taxed in your sector, but worth the price."
+	price = 30000
+	upperfluc = 10000
+	lowerfluc = -10000
+/datum/commodity/blackmarket/surplus/sechud
+	comname = "Sechud Glasses"
+	comtype = /obj/item/clothing/glasses/sunglasses/sechud
+	desc = "SecureTech Computerised Heads Up Display Sunglasses. Reveal wanted criminals with just a glance. They connect to your station's security network automatically. A must have in any modern space station."
+	price = 12000
+	upperfluc = 3000
+	lowerfluc = -3000
+/datum/commodity/blackmarket/surplus/breachinghammer
+	//don't make this too cheap or doors will be destroyed en masse every round
+	comname = "Airlock Breaching Hammer"
+	comtype = /obj/item/breaching_hammer
+	desc = "Got some premium breaching hammers in stock. Solid frame, hand-crafted, guaranteed to knock an airlock down in a matter of minutes if not seconds. This is prime stuff, spacer."
+	price = 320000
+	upperfluc = 50000
+	lowerfluc = -50000
+/datum/commodity/blackmarket/surplus/handcuffs
+	comname = "Handcuffs"
+	comtype = /obj/item/handcuffs
+	desc = "I do charge more for these than other merchants."
+	price = 1800
+	upperfluc = 800
+	lowerfluc = -800
+	/obj/item/handcuffs
+/datum/commodity/blackmarket/surplus/riot_grenade
+	comname = "Riot Grenade"
+	comtype = /obj/item/old_grenade/smoke/mustard
+	desc = "Will force a crowd down on the ground quckly, and keep them that way."
+	price = 8000
+	upperfluc = 3000
+	lowerfluc = -3000
+/////////////////////////////////////////////////////////
+///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
+///██   ██ ██    ██  ██  ██  ██ ████   ██ ██       ██ ///
+///██████  ██    ██   ████   ██ ██ ██  ██ ██   ███    ///
+///██   ██ ██    ██    ██    ██ ██  ██ ██ ██    ██ ██ ///
+///██████   ██████     ██    ██ ██   ████  ██████     ///
+/////////////////////////////////////////////////////////
+/datum/commodity/blackmarket/surplus/ak47
+	comname = "AK-744 Rifle"
+	comtype = /obj/item/gun/kinetic/ak47
+	desc = "I need any functional models you have."
+	price = 900000
+	upperfluc = 100000
+	lowerfluc = -100000
+/datum/commodity/blackmarket/surplus/revolver
+	comname = "Predator Revolver"
+	comtype = /obj/item/gun/kinetic/revolver
+	desc = "We have an open bounty on these. Only the real deal counts."
+	price = 260000
+	upperfluc = 40000
+	lowerfluc = -40000
+/datum/commodity/blackmarket/surplus/lasergun
+	comname = "Laser Gun"
+	comtype = /obj/item/gun/energy/laser_gun
+	desc = "Need some of those older NT laser guns. The obsolete ones with the round bodies. The parts are invaluable."
+	price = 12000
+	upperfluc = 3000
+	lowerfluc = -3000
+/datum/commodity/blackmarket/surplus/phaser
+	comname = "Phaser"
+	comtype = /obj/item/gun/energy/phaser_gun
+	desc = "Moon prison in a neighbouring sector needs as many of these as I can get."
+	price = 9000
+	upperfluc = 2000
+	lowerfluc = -1800
+/datum/commodity/blackmarket/surplus/smallpowercell
+	comname = "Small Power Cell"
+	comtype = /obj/item/ammo/power_cell/self_charging/custom
+	desc = "We require more of these power cells."
+	price = 1200
+	upperfluc = 800
+	lowerfluc = -600
+/datum/commodity/blackmarket/surplus/customcell
+	comname = "Power Cell - Custom"
+	comtype = /obj/item/ammo/power_cell/self_charging/custom
+	desc = "Any working small power cells you make, I'll buy."
+	price = 1600
+	upperfluc = 600
+	lowerfluc = -600
+/datum/commodity/blackmarket/surplus/powercell
+	comname = "Power Cell"
+	comtype = /obj/item/cell
+	desc = "All other power cells, this is the price."
+	price = 1200
+	upperfluc = 700
+	lowerfluc = -700
+/datum/commodity/blackmarket/surplus/erebitecell
+	comname = "Erebite Power Cell"
+	comtype = /obj/item/cell/erebite
+	desc = "We can always use more of these cells."
+	price = 8400
+	upperfluc = 500
+	lowerfluc = -500
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                          //
+// ▄▄▄▄▄▄▄▄▄▄▄  ▄         ▄  ▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄          ▄▄▄▄         ▄▄▄▄     //
+//▐░░░░░░░░░░░▌▐░▌       ▐░▌▐░░░░░░░░░░▌ ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌       ▄█░░░░▌      ▄█░░░░▌    //
+//▐░█▀▀▀▀▀▀▀▀▀ ▐░▌       ▐░▌▐░█▀▀▀▀▀▀▀█░▌ ▀▀▀▀▀█░█▀▀▀ ▐░█▀▀▀▀▀▀▀▀▀ ▐░█▀▀▀▀▀▀▀▀▀  ▀▀▀▀█░█▀▀▀▀       ▐░░▌▐░░▌     ▐░░▌▐░░▌    //
+//▐░▌          ▐░▌       ▐░▌▐░▌       ▐░▌      ▐░▌    ▐░▌          ▐░▌               ▐░▌            ▀▀ ▐░░▌      ▀▀ ▐░░▌    //
+//▐░█▄▄▄▄▄▄▄▄▄ ▐░▌       ▐░▌▐░█▄▄▄▄▄▄▄█░▌      ▐░▌    ▐░█▄▄▄▄▄▄▄▄▄ ▐░▌               ▐░▌               ▐░░▌         ▐░░▌    //
+//▐░░░░░░░░░░░▌▐░▌       ▐░▌▐░░░░░░░░░░▌       ▐░▌    ▐░░░░░░░░░░░▌▐░▌               ▐░▌               ▐░░▌         ▐░░▌    //
+// ▀▀▀▀▀▀▀▀▀█░▌▐░▌       ▐░▌▐░█▀▀▀▀▀▀▀█░▌      ▐░▌    ▐░█▀▀▀▀▀▀▀▀▀ ▐░▌               ▐░▌               ▐░░▌         ▐░░▌    //
+//          ▐░▌▐░▌       ▐░▌▐░▌       ▐░▌      ▐░▌    ▐░▌          ▐░▌               ▐░▌               ▐░░▌         ▐░░▌    //
+// ▄▄▄▄▄▄▄▄▄█░▌▐░█▄▄▄▄▄▄▄█░▌▐░█▄▄▄▄▄▄▄█░▌ ▄▄▄▄▄█░▌    ▐░█▄▄▄▄▄▄▄▄▄ ▐░█▄▄▄▄▄▄▄▄▄      ▐░▌           ▄▄▄▄█░░█▄▄▄  ▄▄▄▄█░░█▄▄▄ //
+//▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░▌ ▐░░░░░░░▌    ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌     ▐░▌          ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌//
+// ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀      ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀       ▀            ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀ //
+//                                                                                                                          //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//stuff for kitchen, science & medbay
+/obj/item/reagent_containers/glass/bottle/slurry
+	name = "Flask of Triplepiss"
+	desc = "A grimy bottle with a label on it. The label says 'SLURRYFRUIT ETRACT'."
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 10
+	initial_volume = 50
+	New()
+		..()
+		reagents.add_reagent("glowing slurry", 20)
+		reagents.add_reagent("toxic_slurry", 20)
+		reagents.add_reagent("water", 10)
+/obj/item/reagent_containers/glass/bottle/plasma
+	name = "Flask of Triplepiss"
+	desc = "A bottle with a label on it. The label says 'PLASMA'."
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 10
+	initial_volume = 50
+	New()
+		..()
+		reagents.add_reagent("liquid plasma", 50)
+/obj/item/reagent_containers/glass/flask/blobfood
+	name = "Flask of Triplepiss"
+	desc = "A bottle with a label on it. The label says 'NUTRITION MIX #4'."
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 10
+	initial_volume = 50
+	New()
+		..()
+		reagents.add_reagent("enriched_msg", 5)
+		reagents.add_reagent("tonic water", 5)
+		reagents.add_reagent("beff", 5)
+		reagents.add_reagent("juice_grapefruit", 10)
+		reagents.add_reagent("water", 10)
+/obj/item/reagent_containers/glass/flask/gravy
+	name = "Flask of Gravy"
+	desc = "A bottle with a label on it. The label says 'GRAVY'."
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 10
+	initial_volume = 50
+	New()
+		..()
+		reagents.add_reagent("gravy", 45,"msg", 5)
+/obj/item/reagent_containers/glass/flask/milk
+	name = "Flask of Milk"
+	desc = "A flask with a label on it. The label says 'MILK'."
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 10
+	initial_volume = 50
+	New()
+		..()
+		reagents.add_reagent("milk", 50)
+/obj/item/reagent_containers/glass/flask/insulin
+	name = "Flask of Insulin"
+	desc = "A flask with a label on it. The label says 'INSULIN'."
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 10
+	initial_volume = 50
+	New()
+		..()
+		reagents.add_reagent("insulin", 50)
+/obj/item/reagent_containers/glass/flask/synthflesh
+	name = "Flask of Synthetic Flesh"
+	desc = "A dirty flask with a label on it. The label says 'SYNTHETIC FLESH'."
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 10
+	initial_volume = 50
+	New()
+		..()
+		reagents.add_reagent("synthflesh", 50)
+/obj/item/reagent_containers/glass/flask/triplepiss
+	name = "Flask of Synthetic Flesh"
+	desc = "A dirty flask with a label on it. The label says 'TRIPLEPISS'."
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 10
+	initial_volume = 50
+	New()
+		..()
+		reagents.add_reagent("triplepiss", 50)
+/obj/item/reagent_containers/glass/flask/enzyme
+	name = "Flask of Triplepiss"
+	desc = "A dirty flask with a label on it. The label says 'BOOSTER ENZYME'."
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 10
+	initial_volume = 20
+	New()
+		..()
+		reagents.add_reagent("enzymatic_leftovers", 5)
+		reagents.add_reagent("denatured_enzyme", 5)
+		reagents.add_reagent("booster_enzyme", 10)
+/obj/item/reagent_containers/glass/flask/oil
+	name = "Flask of Triplepiss"
+	desc = "A flask with a label on it. The label says 'OIL'."
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 10
+	initial_volume = 50
+	New()
+		..()
+		reagents.add_reagent("triplepiss", 50)
+/obj/item/reagent_containers/glass/bottle/fungus
+	name = "Bottle of Space Fungus"
+	desc = "A grimy little bottle labled 'FUNGUS'."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 10
+	initial_volume = 50
+	New()
+		..()
+		reagents.add_reagent("space_fungus", 50)
+//////////////////////////////////////////////////////////////
+///███████ ███████ ██      ██      ██ ███    ██  ██████     //
+///██      ██      ██      ██      ██ ████   ██ ██       ██ //
+///███████ █████   ██      ██      ██ ██ ██  ██ ██   ███    //
+///     ██ ██      ██      ██      ██ ██  ██ ██ ██    ██ ██ //
+///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
+//////////////////////////////////////////////////////////////
+/datum/commodity/blackmarket/blob/slurry
+	comname = "GLOWING SLURRY"
+	comtype = /obj/item/reagent_containers/glass/bottle/slurry
+	desc = "POTENT"
+	price = 1820
+	upperfluc = 800
+	lowerfluc = -800
+/datum/commodity/blackmarket/blob/plasma
+	comname = "PLASMA"
+	comtype = /obj/item/reagent_containers/glass/bottle/plasma
+	desc = "THIS RESOURCE IS USEFUL. POWERFUL. WARS ARE FOUGHT OVER IT."
+	price = 1500
+	upperfluc = 600
+	lowerfluc = -600
+/datum/commodity/blackmarket/blob/food
+	comname = "NUTRIENT FORMULA #4"
+	comtype = /obj/item/reagent_containers/glass/flask/blobfood
+	desc = "FOR IMPORTANT BIOLOGICAL SPECIMINS. A FULL DAY MEAL REPLACEMENT."
+	price = 2900
+	upperfluc = 1300
+	lowerfluc = -1300
+/datum/commodity/blackmarket/blob/gravy
+	comname = "GRAVY"
+	comtype = /obj/item/reagent_containers/glass/flask/gravy
+	desc = "NUTRIENT GRUEL. FOR HUMANS."
+	price = 50
+	upperfluc = 40
+	lowerfluc = -40
+/datum/commodity/blackmarket/blob/milk
+	comname = "MILK"
+	comtype = /obj/item/reagent_containers/glass/flask/milk
+	desc = "FROM THE CREATURE."
+	price = 900
+	upperfluc = 500
+	lowerfluc = -500
+/datum/commodity/blackmarket/blob/insulin
+	comname = "INSULIN"
+	comtype = /obj/item/reagent_containers/glass/flask/insulin
+	desc = "COMMON HORMONE. HAS SOME MEDICAL USES."
+	price = 75
+	upperfluc = 50
+	lowerfluc = -50
+/datum/commodity/blackmarket/blob/synthflesh
+	comname = "SYNTHETIC FLESH"
+	comtype = /obj/item/reagent_containers/glass/flask/synthflesh
+	desc = "ADAPTS ITS DNA. MATCHES SURROUNDING TISSUE WITH AN 86% SUCCESS RATE."
+	price = 400
+	upperfluc = 200
+	lowerfluc = -200
+/datum/commodity/blackmarket/blob/triplepiss
+	comname = "TRIPLE PISS"
+	comtype = /obj/item/reagent_containers/glass/flask/triplepiss
+	desc = "EXTRA CONCENTRATED."
+	price = 3200
+	upperfluc = 1100
+	lowerfluc = -1100
+/datum/commodity/blackmarket/blob/enzyme
+	comname = "BOOSTER ENZYME"
+	comtype = /obj/item/reagent_containers/glass/flask/enzyme
+	desc = "POTENT"
+	price = 2800
+	upperfluc = 800
+	lowerfluc = -800
+/datum/commodity/blackmarket/blob/oil
+	comname = "OIL"
+	comtype = /obj/item/reagent_containers/glass/flask/oil
+	desc = "COMPLEX HYDROCARBONS."
+	price = 100
+	upperfluc = 70
+	lowerfluc = -70
+/datum/commodity/blackmarket/blob/fungus
+	comname = "FUNGUS"
+	comtype = /obj/item/reagent_containers/glass/bottle/fungus
+	desc = "SAMPLE OF FUNGUS. TAKEN FROM SPACE VESSELS."
+	price = 470
+	upperfluc = 170
+	lowerfluc = -170
+///obj/item/organ/chest/blob
+//	name = "Weird Torso"
+//	desc = "This thing is disgusting. It appears to be breathing on its own."
+//	made_from = "blob"
+//	icon_state = "chest_blob"
+///obj/item/organ/head/blob
+//	name = "Weird Head"
+//	desc = "This looks like a human head covered in a stringy bad-smelling goo."
+//	made_from = "blob"
+//	icon_state = "head_blob"
+/datum/commodity/blackmarket/blob/chitin
+	comname = "CHITIN"
+	comtype = /obj/item/raw_material/chitin
+	desc = "LAB GROWN."
+	price = 2000
+	upperfluc = 800
+	lowerfluc = -800
+/datum/commodity/blackmarket/blob/chunk
+	comname = "BLOB CHUNK"
+	comtype = /obj/item/material_piece
+	desc = "MY FLESH."
+	price = 780
+	upperfluc = 280
+	lowerfluc = -280
+/datum/commodity/blackmarket/blob/chitin
+	comname = "CHITIN"
+	comtype = /obj/item/raw_material/chitin
+	desc = "LAB GROWN. PERFECT."
+	price = 2000
+	upperfluc = 800
+	lowerfluc = -800
+///datum/commodity/blackmarket/blob/head
+//	comname = "CRANIUM"
+//	comtype = /obj/item/organ/head/blob
+//	price = 6000
+//	desc = "STRONG."
+//	upperfluc = 3000
+//	lowerfluc = -3000
+///datum/commodity/blackmarket/blob/chest
+//	comname = "ABDOMEN"
+//	comtype = /obj/item/organ/chest/blob
+//	price = 6000
+//	desc = "HOLDS ORGANS."
+//	upperfluc = 3000
+//	lowerfluc = -3000
+/datum/commodity/blackmarket/blob/leftleg
+	comname = "LEFT LEG"
+	comtype = /obj/item/parts/human_parts/leg/left/blob
+	price = 4000
+	desc = "POWERFUL ADDUCTORS."
+	upperfluc = 2000
+	lowerfluc = -2000
+/datum/commodity/blackmarket/blob/rightleg
+	comname = "RIGHT LEG"
+	comtype = /obj/item/parts/human_parts/leg/right/blob
+	price = 4000
+	desc = "GENETICALLY PERFECT."
+	upperfluc = 2000
+	lowerfluc = -2000
+/datum/commodity/blackmarket/blob/leftarm
+	comname = "LEFT ARM"
+	comtype = /obj/item/parts/human_parts/arm/left/blob
+	price = 4800
+	desc = "DENTATED HUMERUS."
+	upperfluc = 2000
+	lowerfluc = -2000
+/datum/commodity/blackmarket/blob/rightarm
+	comname = "RIGHT ARM"
+	comtype = /obj/item/parts/human_parts/arm/right/blob
+	price = 4800
+	desc = "WRITHING. STRONG."
+	upperfluc = 2000
+	lowerfluc = -2000
+/datum/commodity/blackmarket/blob/tail
+	comname = "TAIL BONE"
+	comtype = /obj/item/organ/tail/bone
+	price = 9800
+	desc = "IMPROVED. BETTER THAN HUMAN. BALANCED."
+	upperfluc = 6800
+	lowerfluc = -6800
+/////////////////////////////////////////////////////////
+///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
+///██   ██ ██    ██  ██  ██  ██ ████   ██ ██       ██ ///
+///██████  ██    ██   ████   ██ ██ ██  ██ ██   ███    ///
+///██   ██ ██    ██    ██    ██ ██  ██ ██ ██    ██ ██ ///
+///██████   ██████     ██    ██ ██   ████  ██████     ///
+/////////////////////////////////////////////////////////
+/datum/commodity/blackmarket/blob/pugtail
+	comname = "PUG TAIL"
+	comtype = /obj/item/organ/tail/pug
+	price = 24800
+	desc = "DELICIOUS."
+	upperfluc = 6800
+	lowerfluc = -6800
+/datum/commodity/blackmarket/blob/liver
+	comname = "LIVER"
+	comtype = /obj/item/organ/liver
+	desc_buy = "HUMANOID LIVER. HELPS ME METABOLISE."
+	price = 14900
+	upperfluc = 5000
+	lowerfluc = -5000
+/datum/commodity/blackmarket/blob/heisenbee
+	comname = "HEISENBEE"
+	comtype = /obj/critter/domestic_bee/heisenbee
+	desc_buy = "WANT THE BEE. DEAD OR ALIVE."
+	price = 480600
+	upperfluc = 120000
+	lowerfluc = -120000
+/datum/commodity/blackmarket/blob/frog
+	comname = "FROG"
+	comtype = /mob/living/critter/small_animal/frog
+	desc_buy = "NEED MORE FROG PARTS."
+	price = 1600
+	upperfluc = 400
+	lowerfluc = -400
+/datum/commodity/blackmarket/blob/chicken
+	comname = "CHICKEN"
+	comtype = /mob/living/critter/small_animal/ranch_base/chicken
+	desc_buy = "GOOD TEST SUBJECTS. EVEN DECEASED."
+	price = 7200
+	upperfluc = 600
+	lowerfluc = -600
+/datum/commodity/blackmarket/blob/pig
+	comname = "SPACE PIG"
+	comtype = /mob/living/critter/small_animal/pig
+	desc_buy = "TASTY."
+	price = 4800
+	upperfluc = 1200
+	lowerfluc = -1200
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                              //
+//        ██████  ██░ ██    ▄▄▄      ▓█████▄ ▓██   ██▓    ▄▄▄██▀▀▀ ▄▄▄       ███▄    █ ▓█████     //
+//      ▒██    ▒  ▓██░ ██    ▒▒████▄    ▒██▀ ██▌ ▒██  ██▒      ▒██   ▒████▄     ██ ▀█   █ ▓█   ▀     //
+//      ░ ▓██▄  ▒██▀▀██░▒  ██  ▀█▄  ░██   █▌  ▒██ ██░      ░██   ▒██  ▀█▄  ▓██  ▀█ ██▒▒███       //
+//          ██  ▒░▓█░██░   ██▄▄▄▄██ ░▓█▄   ▌  ░ ▐██▓░   ▓██▄██▓  ░██▄▄▄▄██ ▓██▒  ▐▌██▒▒▓█  ▄      //
+//     ▒██████ ▒▒░▓  █▒░  ██▓ ▓█   ▓██▒░▒████▓   ░ ██▒▓░    ▓███▒    ▓█   ▓██▒▒██░   ▓██░░▒████▒     //
+//      ▒ ▒▓▒ ▒░▒   ░░   ▒ ▒▒   ▓▒█░ ▒▒▓  ▒    ██▒▒▒     ▒▓▒▒░    ▒▒   ▓▒█░░ ▒░   ▒ ▒ ░░ ▒░ ░    //
+//       ░▒   ░░▒ ░▒░   ░  ▒   ▒▒ ░ ░ ▒  ▒  ▓██ ░▒░     ▒ ░▒░     ▒   ▒▒ ░░ ░░   ░ ▒░ ░ ░  ░    //
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////////////
+//███████ ███████ ██      ██      ██ ███    ██  ██████     //
+//██      ██      ██      ██      ██ ████   ██ ██       ██ //
+//███████ █████   ██      ██      ██ ██ ██  ██ ██   ███    //
+//     ██ ██      ██      ██      ██ ██  ██ ██ ██    ██ ██ //
+//███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
+/////////////////////////////////////////////////////////////
+//gear for traitors & greyshirts
+/datum/commodity/blackmarket/shady/cursedmask
+	comname = "Boobytrapped Clown Mask"
+	desc = "This one's been modified a little. Have fun!"
+	comtype = /obj/item/clothing/mask/gas/syndie_clown
+	price = 45000
+	upperfluc = 15000
+	lowerfluc = -15000
+/datum/commodity/blackmarket/shady/syndiebomb
+	comname = "Pipe Bomb"
+	desc = "Made with decent materials. They won't blow up in your hands."
+	comtype = /obj/item/pipebomb/bomb/syndicate
+	price = 21000
+	upperfluc = 15000
+	lowerfluc = -15000
+/datum/commodity/blackmarket/shady/omnitool
+	comname = "Omnitool"
+	desc = "This thing is incredibly useful."
+	comtype = /obj/item/tool/omnitool/syndicate
+	price = 35000
+	upperfluc = 6000
+	lowerfluc = -6000
+/datum/commodity/blackmarket/shady/zippo
+	comname = "High-power Zippo Lighter"
+	desc = "Comes with a nice red-and-black finish."
+	comtype = /obj/item/device/light/zippo/syndicate
+	price = 32000
+	upperfluc = 6000
+	lowerfluc = -6000
+/datum/commodity/blackmarket/shady/turboflash
+	comname = "TurboFlash"
+	desc = "Standard flash with an aftermarket improvement."
+	comtype = /obj/item/device/flash/turbo
+	price = 1500
+	upperfluc = 350
+	lowerfluc = -350
+/datum/commodity/blackmarket/shady/multitool
+	comname = "Multitool"
+	desc = "Useful!"
+	comtype = /obj/item/device/multitool
+	price = 500
+	upperfluc = 200
+	lowerfluc = -200
+/datum/commodity/blackmarket/shady/brick
+	comname = "Ceramic Bricks"
+	comtype = /obj/item/brick
+	price = 60
+	upperfluc = 20
+	lowerfluc = -20
+/datum/commodity/blackmarket/shady/balaclava
+	comname = "Balaclava"
+	comtype = /obj/item/clothing/mask/balaclava
+	price = 120
+	upperfluc = 100
+	lowerfluc = -100
+/datum/commodity/blackmarket/shady/welder
+	comname = "High Capacity Welder"
+	desc = "Don't leave your pod without one."
+	comtype = /obj/item/weldingtool/high_cap
+	price = 760
+	upperfluc = 400
+	lowerfluc = -400
+/////////////////////////////////////////////////////////
+///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
+///██   ██ ██    ██  ██  ██  ██ ████   ██ ██       ██ ///
+///██████  ██    ██   ████   ██ ██ ██  ██ ██   ███    ///
+///██   ██ ██    ██    ██    ██ ██  ██ ██ ██    ██ ██ ///
+///██████   ██████     ██    ██ ██   ████  ██████     ///
+/////////////////////////////////////////////////////////
+//reward traitors and greyshirts
+/datum/commodity/blackmarket/shady/pipebomb
+	comname = "Pipe Bomb"
+	comtype = /obj/item/pipebomb/bomb
+	desc_buy = "Don't have to be good, just functional."
+	price = 4500
+	baseprice = 4500
+	upperfluc = 700
+	lowerfluc = -700
+/datum/commodity/blackmarket/shady/flamethrower
+	comname = "Flamethrower"
+	comtype = /obj/item/gun/flamethrower/assembled
+	desc_buy = "Could you make a couple of these for me?"
+	price = 7500
+	baseprice = 7500
+	upperfluc = 1000
+	lowerfluc = -1000
+/datum/commodity/blackmarket/shady/wirecutters
+	comname = "Yellow Wirecutters"
+	comtype = /obj/item/wirecutters/yellow
+	desc_buy = "Only the ones with the yellow handles!"
+	price = 700
+	baseprice = 700
+	upperfluc = 500
+	lowerfluc = -500
+/datum/commodity/blackmarket/shady/crowbar
+	comname = "Red Crowbar"
+	comtype = /obj/item/crowbar/red
+	desc_buy = "They've gotta be red."
+	price = 1000
+	baseprice = 1000
+	upperfluc = 100
+	lowerfluc = -100
+/datum/commodity/blackmarket/shady/barrier
+	comname = "Riot Barrier"
+	comtype = /obj/item/barrier
+	desc_buy = "Need a lot of these."
+	price = 4800
+	baseprice = 2800
+	upperfluc = 1000
+	lowerfluc = -1000
+/datum/commodity/blackmarket/shady/scorpion
+	comname = "Space Scorpion"
+	desc_buy = "Poison in these is worth a lot on certain planets. They don't thrive well in natural gravity, you see."
+	comtype = /mob/living/critter/small_animal/scorpion
+	price = 9200
+	baseprice = 9800
+	upperfluc = 4000
+	lowerfluc = -4000
+/datum/commodity/blackmarket/shady/security_badge
+	comname = "Security Badge"
+	comtype = /obj/item/clothing/suit/security_badge
+	desc_buy = "These things fetch a high price on the black market."
+	price = 9800
+	baseprice = 9800
+	upperfluc = 1200
+	lowerfluc = -1200
+//////////////////////////////////////////////////////////////////////////////////
+//███╗   ███╗  █████╗  ██████╗     ██╗       █████╗  ██████╗  ██████╗  ██╗   ██╗//
+//████╗ ████║ ██╔══██╗ ██╔══██╗    ██║      ██╔══██╗ ██╔══██╗ ██╔══██╗ ╚██╗ ██╔╝//
+//██╔████╔██║ ███  ██║ ██║  ██║    ██║      ███  ██║ ███  █╔╝ ███  █╔╝  ╚████╔╝ //
+//██║╚██╔╝██║ ██╔══██║ ██║  ██║    ██║      ██╔══██║ ██╔══██╗ ██╔══██╗   ╚██╔╝  //
+//██║ ╚═╝ ██║ ██║  ██║ ██████╔╝    ███████╗ ██║  ██║ ██║  ██║ ██║  ██║    ██║   //
+//╚═╝     ╚═╝ ╚═╝  ╚═╝ ╚═════╝     ╚══════╝ ╚═╝  ╚═╝ ╚═╝  ╚═╝ ╚═╝  ╚═╝    ╚═╝   //
+//////////////////////////////////////////////////////////////////////////////////
+// space garbage and telesci oddities
+/obj/item/photo/uglymonkey
+	name = "Ugly Monkey Photograph"
+	icon_state = "photo-monkey"
+	desc = "A poorly drawn picture of a monkey.Apparently it has a name and identification number, on a floppy disc somewhere."
+//todo: monkey names
+//pick( "Zu" , "Old Za" , "Ava" , "Li" , "Captain Ka","Bana" , "Py," , "Krink" , "Mu" , "Hel","King A","Mann","Piz","El L","Fi","Dana","Avi","Mik","Chang","Hi","Hou")
+//pick( "nal" , "mbu" , "lici" , "kkil","ro","na","isp" , "lag" , "ink" , "oya" , "nk" , "abi","angho","yem","sen","kota","illi","phini","fin","ooki","bert Go")
+//pick( "n" , " Kong" , "li" , "lu" , "bury the Third" , "g" , "kle" , "stein" , "mmo" , "yylx'na","fin","gas","ger","bob","kee"," Smith","oik","mn","a","na","-berg")
+//////////////////////////////////////////////////////////////
+///███████ ███████ ██      ██      ██ ███    ██  ██████     //
+///██      ██      ██      ██      ██ ████   ██ ██       ██ //
+///███████ █████   ██      ██      ██ ██ ██  ██ ██   ███    //
+///     ██ ██      ██      ██      ██ ██  ██ ██ ██    ██ ██ //
+///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
+//////////////////////////////////////////////////////////////
+/datum/commodity/blackmarket/wrestler/zippo
+	comname = "Promotional Discunt Dan Zippo Lighter"
+	comtype = /obj/item/device/light/zippo/dan
+	desc = "These things are hella rare! The value skyrocketted when they were banned from trade because of the '48 incident!"
+	price = 1980
+	upperfluc = 600
+	lowerfluc = -600
+/datum/commodity/blackmarket/wrestler/shorts
+	comname = "Wrestling Shorts"
+	comtype = /obj/item/clothing/under/shorts/random
+	desc = "ATHLETIC SHORTS are considered MANDATORY IN THE RING! On most planets, anyway!"
+	price = 40
+	upperfluc = 10
+	lowerfluc = -10
+/datum/commodity/blackmarket/wrestler/swimsuit
+	comname = "Wrestling Outfit"
+	comtype = /obj/item/clothing/under/swimsuit
+	desc = "Most of the leagues allow THESE too!"
+	price = 45
+	upperfluc = 10
+	lowerfluc = -10
+/datum/commodity/blackmarket/wrestler/monkeyphoto
+	comname = "Official Ugly Monkey Photograph"
+	comtype = /obj/item/photo/uglymonkey
+	desc = "Highly collectible picture of a monkey! Each one comes with a number and a name!"
+	price = 500000
+	upperfluc = 1000000
+	lowerfluc = -1000000
+/datum/commodity/blackmarket/wrestler/zippo
+	comname = "Promotional Discunt Dan Zippo Lighter"
+	comtype = /obj/item/device/light/zippo/dan
+	desc = "These things are hella rare! The value skyrocketted when they were banned from trade because of the '48 incident!"
+	price = 1980
+	upperfluc = 600
+	lowerfluc = -600
+/datum/commodity/blackmarket/wrestler/pinpointer
+	comname = "Artifact Pinpointer"
+	comtype = /obj/item/pinpointer/category/artifacts/safe
+	desc = "This machine POINTS OUT ancient alien artifacts near you! EXCELLENT for space explorers!"
+	price = 1520
+	upperfluc = 520
+	lowerfluc = -520
+/datum/commodity/blackmarket/wrestler/mop
+	comname = "Antique Mop"
+	comtype = /obj/item/mop/old
+	desc = "Old style mops! Some SWEAR BY EM!"
+	price = 780
+	upperfluc = 300
+	lowerfluc = -300
+/datum/commodity/blackmarket/wrestler/cigarbox
+	comname = "Golden Cigar Box"
+	comtype = /obj/item/cigarbox/gold
+	desc = "These are the good kind, pal! THE TOP OF THE LINE!"
+	price = 100000
+	upperfluc = 200000
+	lowerfluc = -200000
+/datum/commodity/blackmarket/wrestler/juicer
+	comname = "Box of Juicer Schweet's Rowdy Rillos"
+	comtype = /obj/item/cigpacket/cigarillo/juicer
+	desc = "Get some JUICY SWEETS! Or WHATEVER it says on these!"
+	price = 140
+	upperfluc = 60
+	lowerfluc = -60
+/datum/commodity/blackmarket/wrestler/rubberduck
+	comname = "Cursed Rubber Duck"
+	comtype = /obj/item/rubberduck
+	desc = "DAMN do these ducks have bad vibes!"
+	price = 530
+	upperfluc = 80
+	lowerfluc = -80
+/datum/commodity/blackmarket/wrestler/beerbox
+	comname = "Box of Beer"
+	comtype = /obj/item/storage/box/beer
+	desc = "Get some BEER!"
+	price = 980
+	upperfluc = 600
+	lowerfluc = -600
+/datum/commodity/blackmarket/wrestler/videocard
+	comname = "Advanced Videocard"
+	comtype = /obj/item/peripheral/videocard
+	desc = "JUICE UP your computer's MUSCLES with one of these bad boys. Guaranteed to get you MORE FRAMES of HYPER ROBUST ACTION!"
+	price = 8000
+	upperfluc = 3000
+	lowerfluc = -3000
+/datum/commodity/blackmarket/wrestler/foldingchair
+	comname = "Folding Chair"
+	comtype = /obj/item/chair/folded
+	desc = "FOLDING CHAIRS! You NEED EM!"
+	price = 900
+	upperfluc = 500
+	lowerfluc = -500
+/datum/commodity/blackmarket/wrestler/syndiechair
+	comname = "Donk-Tech Folding Chair"
+	comtype = /obj/stool/chair/syndicate
+	desc = "NOT ONLY are these things fitted with TOP-OF-THE-LINE mechanised ass-holders, they have computerised legs programmed to TRIP UP any FOOLS who invade your personal space!"
+	price = 12000
+	upperfluc = 6000
+	lowerfluc = -6000
+/datum/commodity/blackmarket/wrestler/laptop
+	comname = "Personal Laptop"
+	comtype = /obj/item/luggable_computer/personal
+	desc = "Hey how about a FOLDABLE PERSONAL PLANNER!"
+	price = 5000
+	baseprice = 5000
+	upperfluc = 1000
+	lowerfluc = -2000
+/datum/commodity/blackmarket/wrestler/monkeywrench
+	comname = "Monkey Wrench"
+	comtype = /obj/item/wrench/monkey
+	desc = "An awful and tragic abomination created by space-wizards. Allegedly the result of cruel experiments involving injecting innocent animals with liquid puns. However, they are PRETTY USEFUL!"
+	price = 1200
+	baseprice = 1200
+	upperfluc = 200
+	lowerfluc = -200
+/datum/commodity/blackmarket/wrestler/shirts
+	comname = "Commemorative T-Shirt"
+	comtype = null
+	desc = "Got a bunch of these in from an old storage locker, I don't even know what's inside the boxes! I open a fresh crate every day!"
+	price = 90
+	baseprice = 90
+	upperfluc = 80
+	lowerfluc = -80
+	New()
+		..()
+		switch (lowertext( time2text(world.realtime, "Day") ))
+			if ("monday")
+				comtype = /obj/item/clothing/suit/lunar_tshirt
+			if ("tuesday")
+				comtype = /obj/item/clothing/under/misc/bandshirt
+			if ("wednesday")
+				comtype = /obj/item/clothing/under/misc/fish
+			if ("thursday")
+				comtype = /obj/item/clothing/under/jersey/random
+			if ("friday")
+				comtype = /obj/item/clothing/under/misc/casdresspnk
+			if ("saturday")
+				comtype = /obj/item/clothing/under/misc/america
+			if ("sunday")
+				comtype = /obj/item/clothing/suit/lshirt
+/datum/commodity/blackmarket/wrestler/cowboyboots
+	comname = "Genuine Space-Texan Cowboy Boots"
+	comtype = /obj/item/clothing/shoes/westboot
+	desc = "These bad boys will command RESPECT among any peers you may or may not have!"
+	price = 150
+	baseprice = 150
+	upperfluc = 120
+	lowerfluc = -120
+/datum/commodity/blackmarket/wrestler/capsule
+	comname = "Figurine Capsule"
+	comtype = /obj/item/item_box/figure_capsule/gaming_capsule
+	desc = "Got a bunch of these little plastic capsules with some kind of action figure inside. Apparently some kinda collectible."
+	price = 90
+	baseprice = 90
+	upperfluc = 40
+	lowerfluc = -40
+/////////////////////////////////////////////////////////
+///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
+///██   ██ ██    ██  ██  ██  ██ ████   ██ ██       ██ ///
+///██████  ██    ██   ████   ██ ██ ██  ██ ██   ███    ///
+///██   ██ ██    ██    ██    ██ ██  ██ ██ ██    ██ ██ ///
+///██████   ██████     ██    ██ ██   ████  ██████     ///
+/////////////////////////////////////////////////////////
+/datum/commodity/blackmarket/wrestler/yoyo
+	comname = "Atomic Yo-Yo"
+	comtype = /obj/item/yoyo
+	desc_buy = "They're OUT OF PRODUCTION and HIGH IN VALUE!"
+	price = 16100
+	baseprice = 16100
+	upperfluc = 7100
+	lowerfluc = -7100
+/datum/commodity/blackmarket/wrestler/rarefig
+	comname = "Atomic Yo-Yo"
+	comtype = /obj/item/toy/figure/rare
+	desc_buy = "If you get any RARE PLASTIC FIGURINES, I want em!"
+	price = 1600
+	baseprice = 1600
+	upperfluc = 800
+	lowerfluc = -800
+/datum/commodity/blackmarket/wrestler/tsunami
+	comname = "Tsunami Spray Bottle"
+	comtype = /obj/item/spraybottle/cleaner/tsunami
+	desc_buy = "The ring can get SWEATY! Sometimes there's BLOOD!"
+	price = 7200
+	baseprice = 7200
+	upperfluc = 400
+	lowerfluc = -400
+/datum/commodity/blackmarket/wrestler/pen
+	comname = "Fancy Pens"
+	comtype = /obj/item/pen/fancy
+	desc_buy = "I'll pay top price for any of these you bring in!"
+	price = 350
+	baseprice = 350
+	upperfluc = 50
+	lowerfluc = -50
+/datum/commodity/blackmarket/wrestler/chompskey
+	comname = "Chomp Key"
+	comtype = /obj/item/device/key/chompskey
+	desc_buy = "I need one of these URGENTLY!"
+	price = 20000
+	baseprice = 20000
+	upperfluc = 2000
+	lowerfluc = -2000
+/datum/commodity/blackmarket/wrestler/hairballkey
+	comname = "Hairball Key"
+	comtype = /obj/item/device/key/hairball
+	desc_buy = "DON'T even ASK!"
+	price = 60100
+	baseprice = 60100
+	upperfluc = 25000
+	lowerfluc = -25000
+/datum/commodity/blackmarket/wrestler/brick
+	comname = "Ceramic Bricks"
+	comtype = /obj/item/brick
+	desc_buy = "I go through A LOT of these in my shows!"
+	price = 100
+	baseprice = 40
+	upperfluc = 40
+	lowerfluc = -40
+/datum/commodity/blackmarket/wrestler/ghostgun
+	comname = "Ectoplasmic Destabilizer"
+	comtype = /obj/item/gun/energy/ghost
+	desc_buy = "Ghosts are real and THEY'RE COMING FOR MY ASS! I need some ASS KICKING GHOST MULCHING LASER GUNS!"
+	price = 10200
+	baseprice = 10200
+	upperfluc = 10000
+	lowerfluc = -10000
+/datum/commodity/blackmarket/wrestler/goldfishcracker
+	comname = "Goldfish Cracker"
+	comtype = /obj/item/reagent_containers/food/snacks/goldfish_cracker
+	desc_buy = "These things are LIFESAVERS when it comes to building muscle! I NEED AS MANY AS YOU CAN GET!"
+	price = 900
+	baseprice = 900
+	upperfluc = 490
+	lowerfluc = -490
+/datum/commodity/blackmarket/wrestler/teapot
+	comname = "Handmade Tetsubin"
+	comtype = /obj/item/reagent_containers/food/drinks/teapot
+	desc_buy = "I'm an avid collector of fancy teapots, and I'd like to get my hand on any interesting ones you find."
+	price = 1400
+	upperfluc = 3000
+	lowerfluc = -3000
+/datum/commodity/blackmarket/wrestler/nassa
+	comname = "NASSA space suit"
+	comtype = /obj/item/clothing/under/gimmick/blackstronaut
+	desc_buy = "I'd LOVE to get my hands on a couple sets of that prototype jumpsuit. WRESTLING IN THE COLD VACCUM OF SPACE! I'll pay a BUNCH for any you find in good condition!"
+	price = 6200
+	upperfluc = 800
+	lowerfluc = -800
+/datum/commodity/blackmarket/wrestler/uplink_telecrystal
+	comname = "Pure Telecrystal Token"
+	comtype = /obj/item/uplink_telecrystal
+	desc_buy = "These things are practically CURRENCY on some planets! I can get you a GREAT DEAL on them!"
+	price = 45000
+	upperfluc = 1
+	lowerfluc = -1
+/datum/commodity/blackmarket/wrestler/sacred_sandal
+	comname = "Sacred Sandals"
+	comtype = /obj/item/clothing/shoes/hermes
+	desc_buy = "These things have GOT TO BE ORIGINALS! Not the knock off 'Magic Sandals' the space wizards manufacture in sweatshops!"
+	price = 500000
+	upperfluc = 100000
+	lowerfluc = -100000
+/datum/commodity/blackmarket/wrestler/magic_sandal
+	comname = "Magic Sandals"
+	comtype = /obj/item/clothing/shoes/sandal
+	desc_buy = "That said, those knock offs are DAMN WELL MADE! I'll buy those for a fair price!"
+	price = 6800
+	upperfluc = 1200
+	lowerfluc = -1200
+/datum/commodity/blackmarket/wrestler/glitch_gun
+	comname = "Glitch Gun"
+	comtype = /obj/item/gun/energy/glitch_gun
+	desc_buy = "You hear about the fabled Glitch Gun? It's said to be able to shoot bullets though code itself. If you find it, SELL IT TO ME!"
+	price = 1220000
+	upperfluc = 1200
+	lowerfluc = -1200
+/datum/commodity/blackmarket/wrestler/capsuit
+	comname = "Captain's Space Suit"
+	comtype = /obj/item/clothing/suit/space/captain
+	desc_buy = "The old style green space suits NT used to issue to their captains are hella valuable, but unfortunately also hella rare. Hey, you're a Traser, aren't ya? Could you get your captain's space suit to me?"
+	price = 105000
+	upperfluc = 50000
+	lowerfluc = -50000
+/datum/commodity/blackmarket/wrestler/dagger
+	comname = "Sacrificial Dagger"
+	comtype = /obj/item/dagger
+	desc_buy = "Old knives are great investments! The more occult the better!"
+	price = 210400
+	upperfluc = 30000
+	lowerfluc = -30000
+/datum/commodity/blackmarket/wrestler/shoecrafts
+	comname = "Custom Shoes"
+	comtype = /obj/item/clothing/shoes/crafted
+	desc_buy = "And any shoes YOU HAND CRAFT, I WILL BUY!"
+	price = 800
+	upperfluc = 600
+	lowerfluc = -600
+/datum/commodity/blackmarket/wrestler/katana_nukeop
+	comname = "Syndicate Commander's Sabre"
+	comtype = /obj/item/katana/nukeop
+	desc_buy = "These swords are the HOLY GRAIL for salvage crews!"
+	price = 50000000
+	upperfluc = 0
+	lowerfluc = -1
