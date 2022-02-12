@@ -6,7 +6,7 @@
 			return ..()
 		var/environment_heat_capacity = HEAT_CAPACITY(environment)
 		var/loc_temp = T0C
-		mult = get_multiplier()
+		var/mult = get_multiplier()
 		if (istype(owner.loc, /turf/space))
 			var/turf/space/S = owner.loc
 			environment_heat_capacity = S.heat_capacity
