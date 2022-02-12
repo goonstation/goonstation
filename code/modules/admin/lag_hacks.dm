@@ -58,7 +58,7 @@ client/proc/lightweight_mobs()
 			M.nextpopcheck = 0 //force recheck
 			message_admins("[key_name(src)] un-overrode Mob process interval with Lag Reduction panel.")
 		else
-			M.schedule_override = input("Enter life tick duration (deciseconds):","Num", M.schedule_interval) as num
+			M.schedule_override = clamp((input("Enter life tick duration (2s to 10s):","Num", M.schedule_interval/10) as num) * 10, 2, 10)
 			M.schedule_interval = M.schedule_override
 			message_admins("[key_name(src)] overrode Mob process interval (to [M.schedule_override]) with Lag Reduction panel.")
 
