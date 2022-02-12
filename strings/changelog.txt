@@ -1,6 +1,10 @@
 
 (t)sat feb 12 22
 (u)FlameArrow57
+(p)7460
+(e)🆕|feature
+(+)Civilian headsets and staff assistant jumpsuits can now be printed from uniform manufacturers.
+(u)FlameArrow57
 (p)7458
 (e)🆕|feature
 (+)Sleepy pens can now appear as fancy pens.
