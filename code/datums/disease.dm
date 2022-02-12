@@ -211,16 +211,6 @@
 						if (isnum(reagcure_prob))
 							if (prob(max((percentmult(reagcure_prob, mult)), 100)))
 								we_are_cured = 1
-						else if (islist(reagcure_prob)) // we want to roll more than one prob() in order to succeed, aka we want a very low chance
-							var/list/cureprobs = reagcure_prob
-							var/success = 1
-							for (var/thing in cureprobs)
-								if (!isnum(thing))
-									continue
-								if (!prob(max(percentmult(thing, mult), 100)))
-									success = 0
-							if (success)
-								we_are_cured = 1
 						else if (prob(max(percentmult(recureprob, mult), 100)))
 							we_are_cured = 1
 						if (we_are_cured)

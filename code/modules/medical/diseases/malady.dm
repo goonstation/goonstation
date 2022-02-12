@@ -75,16 +75,6 @@
 						if (isnum(reagcure_prob))
 							if (prob(reagcure_prob))
 								we_are_cured = 1
-						else if (islist(reagcure_prob)) // we want to roll more than one prob() in order to succeed, aka we want a very low chance
-							var/list/cureprobs = reagcure_prob
-							var/success = 1
-							for (var/thing in cureprobs)
-								if (!isnum(thing))
-									continue
-								if (!prob(thing))
-									success = 0
-							if (success)
-								we_are_cured = 1
 						else if (prob(recureprob))
 							we_are_cured = 1
 						if (we_are_cured)
@@ -513,8 +503,8 @@
 	max_stages = 1
 	cure = "Electric Shock"
 	affected_species = list("Human","Monkey")
-	reagentcure = list("atropine" = list(1,1), // atropine is not recommended for use in treating cardiac arrest anymore but SHRUG
-	"epinephrine" = list(1,10)) // epi is recommended though
+	reagentcure = list("atropine" = 0.01, // atropine is not recommended for use in treating cardiac arrest anymore but SHRUG
+	"epinephrine" = 0.1) // epi is recommended though
 
 /datum/ailment/malady/flatline/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/malady/D)
 	if (..())
