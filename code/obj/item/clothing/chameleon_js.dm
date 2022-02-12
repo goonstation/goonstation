@@ -68,13 +68,16 @@
 		if(!which)
 			return
 
-		src.name = which.name
-		src.desc = which.desc
-		src.icon_state = which.icon_state
-		src.item_state = which.item_state
-		src.icon = which.sprite_item
-		src.wear_image_icon = which.sprite_worn
-		src.inhand_image_icon = which.sprite_hand
+		src.change_outfit(which)
+
+	proc/change_outfit(var/datum/chameleon_jumpsuit_pattern/T)
+		src.name = T.name
+		src.desc = T.desc
+		src.icon_state = T.icon_state
+		src.item_state = T.item_state
+		src.icon = T.sprite_item
+		src.wear_image_icon = T.sprite_worn
+		src.inhand_image_icon = T.sprite_hand
 		src.wear_image = image(wear_image_icon)
 		src.inhand_image = image(inhand_image_icon)
 		usr.set_clothing_icon_dirty()
@@ -338,13 +341,16 @@
 		if(!which)
 			return
 
-		src.name = which.name
-		src.desc = which.desc
-		src.icon_state = which.icon_state
-		src.item_state = which.item_state
-		src.icon = which.sprite_item
-		src.wear_image_icon = which.sprite_worn
-		src.inhand_image_icon = which.sprite_hand
+		src.change_outfit(which)
+
+	proc/change_outfit(var/datum/chameleon_hat_pattern/T)
+		src.name = T.name
+		src.desc = T.desc
+		src.icon_state = T.icon_state
+		src.item_state = T.item_state
+		src.icon = T.sprite_item
+		src.wear_image_icon = T.sprite_worn
+		src.inhand_image_icon = T.sprite_hand
 		src.wear_image = image(wear_image_icon)
 		src.inhand_image = image(inhand_image_icon)
 		usr.set_clothing_icon_dirty()
@@ -405,6 +411,18 @@
 		icon_state = "helmet-sec"
 		item_state = "helmet"
 		desc = "Somewhat protects your head from being bashed in."
+
+	fancy
+		name = "fancy hat"
+		icon_state = "rank-fancy"
+		item_state = "that"
+		desc = "What do you mean this is hat isn't fancy?"
+
+	detective
+		name = "Detective's hat"
+		desc = "Someone who wears this will look very smart."
+		icon_state = "detective"
+		item_state = "det_hat"
 
 /obj/item/clothing/suit/chameleon
 	name = "hoodie"
@@ -474,13 +492,16 @@
 		if(!which)
 			return
 
-		src.name = which.name
-		src.desc = which.desc
-		src.icon_state = which.icon_state
-		src.item_state = which.item_state
-		src.icon = which.sprite_item
-		src.wear_image_icon = which.sprite_worn
-		src.inhand_image_icon = which.sprite_hand
+		src.change_outfit(which)
+
+	proc/change_outfit(var/datum/chameleon_suit_pattern/T)
+		src.name = T.name
+		src.desc = T.desc
+		src.icon_state = T.icon_state
+		src.item_state = T.item_state
+		src.icon = T.sprite_item
+		src.wear_image_icon = T.sprite_worn
+		src.inhand_image_icon = T.sprite_hand
 		src.wear_image = image(wear_image_icon)
 		src.inhand_image = image(inhand_image_icon)
 		usr.set_clothing_icon_dirty()
@@ -602,6 +623,42 @@
 		icon_state = "detective"
 		item_state = "det_suit"
 
+	winter_coat_medical
+		name = "medical winter coat"
+		desc = "A padded coat to protect against the cold."
+		icon_state = "wintercoat-medical"
+		item_state = "wintercoat-medical"
+
+	winter_coat_research
+		name = "research winter coat"
+		desc = "A padded coat to protect against the cold."
+		icon_state = "wintercoat-research"
+		item_state = "wintercoat-research"
+
+	winter_coat_engineering
+		name = "engineering winter coat"
+		desc = "A padded coat to protect against the cold."
+		icon_state = "wintercoat-engineering"
+		item_state = "wintercoat-engineering"
+
+	winter_coat_security
+		name = "security winter coat"
+		desc = "A padded coat to protect against the cold."
+		icon_state = "wintercoat-security"
+		item_state = "wintercoat-security"
+
+	winter_coat_command
+		name = "command winter coat"
+		desc = "A padded coat to protect against the cold."
+		icon_state = "wintercoat-command"
+		item_state = "wintercoat-command"
+
+	winter_coat_detective
+		name = "detective's winter coat"
+		desc = "A comfy coat to protect against the cold. Popular with private investigators."
+		icon_state = "wintercoat-detective"
+		item_state = "wintercoat-detective"
+
 /obj/item/clothing/glasses/chameleon
 	name = "prescription glasses"
 	desc = "Corrective lenses, perfect for the near-sighted."
@@ -668,13 +725,16 @@
 		if(!which)
 			return
 
-		src.name = which.name
-		src.desc = which.desc
-		src.icon_state = which.icon_state
-		src.item_state = which.item_state
-		src.icon = which.sprite_item
-		src.wear_image_icon = which.sprite_worn
-		src.inhand_image_icon = which.sprite_hand
+		src.change_outfit(which)
+
+	proc/change_outfit(var/datum/chameleon_glasses_pattern/T)
+		src.name = T.name
+		src.desc = T.desc
+		src.icon_state = T.icon_state
+		src.item_state = T.item_state
+		src.icon = T.sprite_item
+		src.wear_image_icon = T.sprite_worn
+		src.inhand_image_icon = T.sprite_hand
 		src.wear_image = image(wear_image_icon)
 		src.inhand_image = image(inhand_image_icon)
 		usr.set_clothing_icon_dirty()
@@ -789,13 +849,16 @@
 		if(!which)
 			return
 
-		src.name = which.name
-		src.desc = which.desc
-		src.icon_state = which.icon_state
-		src.item_state = which.item_state
-		src.icon = which.sprite_item
-		src.wear_image_icon = which.sprite_worn
-		src.inhand_image_icon = which.sprite_hand
+		src.change_outfit(which)
+
+	proc/change_outfit(var/datum/chameleon_shoes_pattern/T)
+		src.name = T.name
+		src.desc = T.desc
+		src.icon_state = T.icon_state
+		src.item_state = T.item_state
+		src.icon = T.sprite_item
+		src.wear_image_icon = T.sprite_worn
+		src.inhand_image_icon = T.sprite_hand
 		src.wear_image = image(wear_image_icon)
 		src.inhand_image = image(inhand_image_icon)
 		usr.set_clothing_icon_dirty()
@@ -843,6 +906,12 @@
 		desc = "Rubber boots that prevent slipping on wet surfaces."
 		icon_state = "galoshes"
 		item_state = "galoshes"
+
+	detective
+		name = "worn boots"
+		desc = "This pair of leather boots has seen better days."
+		icon_state = "detective"
+		item_state = "detective"
 
 /obj/item/clothing/gloves/chameleon
 	name = "Black Gloves"
@@ -911,13 +980,16 @@
 		if(!which)
 			return
 
-		src.name = which.name
-		src.desc = which.desc
-		src.icon_state = which.icon_state
-		src.item_state = which.item_state
-		src.icon = which.sprite_item
-		src.wear_image_icon = which.sprite_worn
-		src.inhand_image_icon = which.sprite_hand
+		src.change_outfit(which)
+
+	proc/change_outfit(var/datum/chameleon_gloves_pattern/T)
+		src.name = T.name
+		src.desc = T.desc
+		src.icon_state = T.icon_state
+		src.item_state = T.item_state
+		src.icon = T.sprite_item
+		src.wear_image_icon = T.sprite_worn
+		src.inhand_image_icon = T.sprite_hand
 		src.wear_image = image(wear_image_icon)
 		src.inhand_image = image(inhand_image_icon)
 		usr.set_clothing_icon_dirty()
@@ -974,6 +1046,7 @@
 		return
 
 	attackby(obj/item/storage/belt/U as obj, mob/user as mob)
+		..()
 		if(istype(U, /obj/item/storage/belt/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a putrid belt spiral!</span>")
 			SPAWN_DBG(1 SECOND)
@@ -1021,13 +1094,16 @@
 		if(!which)
 			return
 
-		src.name = which.name
-		src.desc = which.desc
-		src.icon_state = which.icon_state
-		src.item_state = which.item_state
-		src.icon = which.sprite_item
-		src.wear_image_icon = which.sprite_worn
-		src.inhand_image_icon = which.sprite_hand
+		src.change_outfit(which)
+
+	proc/change_outfit(var/datum/chameleon_belt_pattern/T)
+		src.name = T.name
+		src.desc = T.desc
+		src.icon_state = T.icon_state
+		src.item_state = T.item_state
+		src.icon = T.sprite_item
+		src.wear_image_icon = T.sprite_worn
+		src.inhand_image_icon = T.sprite_hand
 		src.wear_image = image(wear_image_icon)
 		src.inhand_image = image(inhand_image_icon)
 		usr.set_clothing_icon_dirty()
@@ -1035,10 +1111,10 @@
 /datum/chameleon_belt_pattern
 	var/name = "utility belt"
 	var/desc = "Can hold various small objects."
-	var/icon_state = "utility"
+	var/icon_state = "utilitybelt"
 	var/item_state = "utility"
 	var/sprite_item = 'icons/obj/items/belts.dmi'
-	var/sprite_worn =  'icons/mob/clothing/belt.dmi'
+	var/sprite_worn = 'icons/mob/clothing/belt.dmi'
 	var/sprite_hand = 'icons/mob/inhand/hand_storage.dmi'
 
 	ceshielded
@@ -1073,23 +1149,42 @@
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	uses_multiple_icon_states = 1
 	var/list/clothing_choices = list()
-
-	spawn_contents = list(/obj/item/clothing/under/chameleon,\
-	/obj/item/clothing/head/chameleon,\
-	/obj/item/clothing/suit/chameleon,\
-	/obj/item/clothing/glasses/chameleon,\
-	/obj/item/clothing/shoes/chameleon,\
-	/obj/item/storage/belt/chameleon,\
-	/obj/item/clothing/gloves/chameleon)
+	spawn_contents = list()
 
 	New()
 		..()
+		var/obj/item/remote/chameleon/remote = new /obj/item/remote/chameleon(src.loc)
+		SPAWN_DBG(0)
+			remote.connected_backpack = src
+
+		var/obj/item/clothing/under/chameleon/jumpsuit = new /obj/item/clothing/under/chameleon(src)
+			remote.connected_jumpsuit = jumpsuit
+
+		var/obj/item/clothing/head/chameleon/hat = new /obj/item/clothing/head/chameleon(src)
+			remote.connected_hat = hat
+
+		var/obj/item/clothing/suit/chameleon/suit = new /obj/item/clothing/suit/chameleon(src)
+			remote.connected_suit = suit
+
+		var/obj/item/clothing/glasses/chameleon/glasses = new /obj/item/clothing/glasses/chameleon(src)
+			remote.connected_glasses = glasses
+
+		var/obj/item/clothing/shoes/chameleon/shoes = new /obj/item/clothing/shoes/chameleon(src)
+			remote.connected_shoes = shoes
+
+		var/obj/item/storage/belt/chameleon/belt = new /obj/item/storage/belt/chameleon(src)
+			remote.connected_belt = belt
+
+		var/obj/item/clothing/gloves/chameleon/gloves = new /obj/item/clothing/gloves/chameleon(src)
+			remote.connected_gloves = gloves
+
 		for(var/U in (typesof(/datum/chameleon_backpack_pattern)))
 			var/datum/chameleon_backpack_pattern/P = new U
 			src.clothing_choices += P
 		return
 
 	attackby(obj/item/storage/backpack/U as obj, mob/user as mob)
+		..()
 		if(istype(U, /obj/item/storage/backpack/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a stinky backpack self-cloning freak accident!</span>")
 			SPAWN_DBG(1 SECOND)
@@ -1137,13 +1232,16 @@
 		if(!which)
 			return
 
-		src.name = which.name
-		src.desc = which.desc
-		src.icon_state = which.icon_state
-		src.item_state = which.item_state
-		src.icon = which.sprite_item
-		src.wear_image_icon = which.sprite_worn
-		src.inhand_image_icon = which.sprite_hand
+		src.change_outfit(which)
+
+	proc/change_outfit(var/datum/chameleon_backpack_pattern/T)
+		src.name = T.name
+		src.desc = T.desc
+		src.icon_state = T.icon_state
+		src.item_state = T.item_state
+		src.icon = T.sprite_item
+		src.wear_image_icon = T.sprite_worn
+		src.inhand_image_icon = T.sprite_hand
 		src.wear_image = image(wear_image_icon)
 		src.inhand_image = image(inhand_image_icon)
 		usr.set_clothing_icon_dirty()
@@ -1193,3 +1291,130 @@
 		icon_state = "bp_medic"
 		item_state = "bp-medic"
 
+	captain
+		name = "Captain's Backpack"
+		desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
+		icon_state = "capbackpack"
+		item_state = "capbackpack"
+
+/obj/item/remote/chameleon
+	name = "chameleon outfit remote"
+	desc = "A remote control that allows you to change an entire set of chameleon clothes, all at once."
+	icon = 'icons/obj/porters.dmi'
+	icon_state = "remote"
+	item_state = "electronic"
+	w_class = W_CLASS_SMALL
+
+	var/obj/item/storage/backpack/chameleon/connected_backpack = null
+	var/obj/item/clothing/under/chameleon/connected_jumpsuit = null
+	var/obj/item/clothing/head/chameleon/connected_hat = null
+	var/obj/item/clothing/suit/chameleon/connected_suit = null
+	var/obj/item/clothing/glasses/chameleon/connected_glasses = null
+	var/obj/item/clothing/shoes/chameleon/connected_shoes = null
+	var/obj/item/storage/belt/chameleon/connected_belt = null
+	var/obj/item/clothing/gloves/chameleon/connected_gloves = null
+	var/list/outfit_choices = list()
+
+	New()
+		..()
+		for(var/U in (typesof(/datum/chameleon_outfit_choices)))
+			var/datum/chameleon_outfit_choices/P = new U
+			src.outfit_choices += P
+		return
+
+	attack_self()
+		if (isliving(usr))
+			set src in usr
+			var/datum/chameleon_outfit_choices/which = input(usr, "Change the chameleon outfit to which set?", "Chameleon Outfit Remote") as null|anything in outfit_choices
+
+			if(!which)
+				return
+
+			if(connected_jumpsuit || which.jumpsuit_type)
+				connected_jumpsuit.change_outfit(which.jumpsuit_type)
+
+			if(connected_hat || which.hat_type)
+				connected_hat.change_outfit(which.hat_type)
+
+			if(connected_suit || which.suit_type)
+				connected_suit.change_outfit(which.suit_type)
+
+			if(connected_glasses || which.glasses_type)
+				connected_glasses.change_outfit(which.glasses_type)
+
+			if(connected_shoes || which.shoes_type)
+				connected_shoes.change_outfit(which.shoes_type)
+
+			if(connected_gloves || which.gloves_type)
+				connected_gloves.change_outfit(which.gloves_type)
+
+			if(connected_belt || which.belt_type)
+				connected_belt.change_outfit(which.belt_type)
+
+			if(connected_backpack || which.backpack_type)
+				connected_backpack.change_outfit(which.backpack_type)
+
+/datum/chameleon_outfit_choices
+	var/name = "Staff Assistant"
+	var/jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank
+	var/hat_type = new/datum/chameleon_hat_pattern/
+	var/suit_type = new/datum/chameleon_suit_pattern
+	var/glasses_type = new/datum/chameleon_glasses_pattern
+	var/shoes_type = new/datum/chameleon_shoes_pattern
+	var/gloves_type = null
+	var/belt_type = new/datum/chameleon_belt_pattern
+	var/backpack_type = new/datum/chameleon_backpack_pattern
+
+	captain
+		name = "Captain"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank
+		hat_type = new/datum/chameleon_hat_pattern/caphat
+		suit_type = new/datum/chameleon_suit_pattern/captain_armor
+		glasses_type = new/datum/chameleon_glasses_pattern/sunglasses
+		shoes_type = new/datum/chameleon_shoes_pattern/swat
+		belt_type = null
+		backpack_type = new/datum/chameleon_backpack_pattern/captain
+
+	head_of_security
+		name = "Head Of Security"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/head_of_securityold
+		hat_type = new/datum/chameleon_hat_pattern/HoS_beret
+		suit_type = new/datum/chameleon_suit_pattern/hos_jacket
+		glasses_type = new/datum/chameleon_glasses_pattern/sechud
+		shoes_type = new/datum/chameleon_shoes_pattern/swat
+		gloves_type = null
+		belt_type = new/datum/chameleon_belt_pattern/security
+		backpack_type = new/datum/chameleon_backpack_pattern/security
+
+	head_of_personnel
+		name = "Head of Personnel"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/head_of_personnel
+		hat_type = new/datum/chameleon_hat_pattern/fancy
+		suit_type = new/datum/chameleon_suit_pattern/winter_coat_command
+		glasses_type = new/datum/chameleon_glasses_pattern
+		shoes_type = new/datum/chameleon_shoes_pattern/brown
+		gloves_type = null
+		belt_type = new/datum/chameleon_belt_pattern
+		backpack_type = new/datum/chameleon_backpack_pattern
+
+	security
+		name = "Security Officer"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/security
+		hat_type = new/datum/chameleon_hat_pattern/security
+		suit_type = new/datum/chameleon_suit_pattern/armor_vest
+		glasses_type = new/datum/chameleon_glasses_pattern/sechud
+		shoes_type = new/datum/chameleon_shoes_pattern/swat
+		gloves_type = new/datum/chameleon_gloves_pattern
+		belt_type = new/datum/chameleon_belt_pattern/security
+		backpack_type = new/datum/chameleon_backpack_pattern/security
+
+	detective
+		name = "Detective"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/det
+		hat_type = new/datum/chameleon_hat_pattern/detective
+		suit_type = new/datum/chameleon_suit_pattern/detective_jacket
+		glasses_type = new/datum/chameleon_glasses_pattern/thermal
+		shoes_type = new/datum/chameleon_shoes_pattern/detective
+		gloves_type = new/datum/chameleon_gloves_pattern
+		belt_type = new/datum/chameleon_belt_pattern/shoulder_holster
+		backpack_type = new/datum/chameleon_backpack_pattern
