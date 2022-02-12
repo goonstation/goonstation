@@ -23,7 +23,7 @@
 			qdel(W)
 		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/) || istype(W, /obj/item/reagent_containers/balloon/) || istype(W, /obj/item/soup_pot))
 			var/fill = W.reagents.maximum_volume
-			if (fill == W.reagents.total_volume)
+			if (W.reagents.total_volume >= fill)
 				user.show_text("[W] is too full already.", "red")
 			else
 				fill -= W.reagents.total_volume
@@ -32,7 +32,7 @@
 				playsound(src.loc, "sound/misc/pourdrink.ogg", 100, 1)
 		else if (istype(W, /obj/item/mop)) // dude whatever
 			var/fill = W.reagents.maximum_volume
-			if (fill == W.reagents.total_volume)
+			if (W.reagents.total_volume >= fill)
 				user.show_text("[W] is too wet already.", "red")
 			else
 				fill -= W.reagents.total_volume
