@@ -26,7 +26,6 @@
 	baseprice = 30
 	upperfluc = 20
 	lowerfluc = 10
-
 /datum/commodity/shoes
 	comname = "Shoes"
 	comtype = /obj/item/clothing/shoes
@@ -1078,15 +1077,6 @@
 	upperfluc = 200
 	lowerfluc = -200
 
-/datum/commodity/contraband/ai_kit_syndie
-	comname = "Red AI Kit"
-	comtype = /obj/item/ai_plating_kit/syndicate
-	desc = "A dubiously colored AI core kit, which doesn't match standard designs. It's sold at a discount though, because it's just the casing pieces."
-	price = 1000
-	baseprice = 1000
-	upperfluc = 100
-	lowerfluc = -100
-
 //NT stuff
 
 /datum/commodity/contraband/ntso_uniform
@@ -1305,15 +1295,6 @@
 	baseprice = 15
 	upperfluc = 3
 	lowerfluc = -3
-
-/datum/commodity/junk/ai_kit_clown
-	comname = "Circus AI Parts"
-	comtype = /obj/item/ai_plating_kit/clown
-	desc = "The parts required to plate an AI frame to make it fit for running a circus."
-	price = 800
-	baseprice = 800
-	upperfluc = 50
-	lowerfluc = -50
 
 /////////////////////////////////
 ///////food trader //////////////
@@ -2342,7 +2323,6 @@
 	baseprice = 100
 	upperfluc = 150
 	lowerfluc = -20
-
 /datum/commodity/fartflops
 	comname = "fart-flops"
 	comtype = /obj/item/clothing/shoes/fart
@@ -3177,8 +3157,8 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //stuff for kitchen, science & medbay
 /obj/item/reagent_containers/glass/bottle/slurry
-	name = "Flask of Triplepiss"
-	desc = "A grimy bottle with a label on it. The label says 'SLURRYFRUIT ETRACT'."
+	name = "Bottle of Slurryfruit Extract"
+	desc = "A grimy bottle with a label on it. The label says 'SLURRYFRUIT EXTRACT'."
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
 	initial_volume = 50
@@ -3188,7 +3168,7 @@
 		reagents.add_reagent("toxic_slurry", 20)
 		reagents.add_reagent("water", 10)
 /obj/item/reagent_containers/glass/bottle/plasma
-	name = "Flask of Triplepiss"
+	name = "Bottle of Liquid Plasma"
 	desc = "A bottle with a label on it. The label says 'PLASMA'."
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
@@ -3197,7 +3177,7 @@
 		..()
 		reagents.add_reagent("liquid plasma", 50)
 /obj/item/reagent_containers/glass/flask/blobfood
-	name = "Flask of Triplepiss"
+	name = "Flask of Nutrient Sludge"
 	desc = "A bottle with a label on it. The label says 'NUTRITION MIX #4'."
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
@@ -3246,7 +3226,7 @@
 		..()
 		reagents.add_reagent("synthflesh", 50)
 /obj/item/reagent_containers/glass/flask/triplepiss
-	name = "Flask of Synthetic Flesh"
+	name = "Flask of Triple Piss"
 	desc = "A dirty flask with a label on it. The label says 'TRIPLEPISS'."
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
@@ -3255,7 +3235,7 @@
 		..()
 		reagents.add_reagent("triplepiss", 50)
 /obj/item/reagent_containers/glass/flask/enzyme
-	name = "Flask of Triplepiss"
+	name = "Flask of Booster Enzymes"
 	desc = "A dirty flask with a label on it. The label says 'BOOSTER ENZYME'."
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
@@ -3266,7 +3246,7 @@
 		reagents.add_reagent("denatured_enzyme", 5)
 		reagents.add_reagent("booster_enzyme", 10)
 /obj/item/reagent_containers/glass/flask/oil
-	name = "Flask of Triplepiss"
+	name = "Flask of Oil"
 	desc = "A flask with a label on it. The label says 'OIL'."
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
@@ -3836,7 +3816,7 @@
 	upperfluc = 7100
 	lowerfluc = -7100
 /datum/commodity/blackmarket/wrestler/rarefig
-	comname = "Atomic Yo-Yo"
+	comname = "Rare Plastic Figurine"
 	comtype = /obj/item/toy/figure/rare
 	desc_buy = "If you get any RARE PLASTIC FIGURINES, I want em!"
 	price = 1600
