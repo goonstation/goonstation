@@ -18079,6 +18079,9 @@
 /area/station/chapel/office)
 "aUc" = (
 /obj/table/wood/auto,
+/obj/item/storage/toolbox/artistic{
+	pixel_y = -6
+	},
 /obj/candle_light{
 	pixel_y = 12
 	},
