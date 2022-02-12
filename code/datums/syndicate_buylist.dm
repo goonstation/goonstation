@@ -723,12 +723,16 @@ This is basically useless for anyone but miners.
 /datum/syndicate_buylist/traitor/conversion_chamber
 	name = "Conversion Chamber"
 	item = /obj/machinery/recharge_station/syndicate
-	cost = 6
+	cost = 8
 	vr_allowed = 0
 	desc = "A modified standard-issue cyborg recharging station that will automatically convert any human placed inside into a cyborg. Be aware that cyborgs will follow the active lawset in place on-station."
 	job = list("Roboticist")
 	not_in_crates = 1
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
+
+	run_on_spawn(var/obj/item)
+		new /obj/item/wrench(item.loc) // clarify that we need to wrench it down before use
+
 
 /datum/syndicate_buylist/traitor/safari
 	name = "Safari Kit"

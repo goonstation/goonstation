@@ -840,7 +840,7 @@
 					btype = H.bioHolder.bloodType
 				gibs(src.loc, null, null, bdna, btype)
 
-				H.Robotize_MK2(1)
+				H.Robotize_MK2(TRUE, syndicate=TRUE)
 				src.build_icon()
 				playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
 			else

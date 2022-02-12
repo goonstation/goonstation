@@ -203,7 +203,7 @@
 	return newmob
 
 
-/mob/living/carbon/human/proc/Robotize_MK2(var/gory = 0)
+/mob/living/carbon/human/proc/Robotize_MK2(var/gory = FALSE, var/syndicate = FALSE)
 	if (src.transforming) return
 	src.unequip_all()
 	src.transforming = 1
@@ -212,13 +212,7 @@
 	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 	for(var/t in src.organs) qdel(src.organs[text("[t]")])
 
-	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/(src.loc,null,1)
-
-	// This is handled in the New() proc of the resulting borg
-	//O.cell = new(O)
-	//O.cell.maxcharge = 7500
-	//if(limit_cell) O.cell.charge = 1500
-	//else O.cell.charge = 7500
+	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/(src.loc, null, 1, syndie = syndicate)
 
 	O.gender = src.gender
 	O.bioHolder?.mobAppearance?.pronouns = src.bioHolder?.mobAppearance?.pronouns
@@ -235,11 +229,13 @@
 		if(src.mind)
 			src.mind.transfer_to(O)
 	O.set_loc(get_turf(src.loc))
-	boutput(O, "<B>You are playing as a Cyborg. Cyborgs can interact with most electronic objects in its view point.</B>")
-	boutput(O, "<B>You must follow all laws that the AI has.</B>")
+	if (syndicate)
+		boutput(O, "<B>You have been transformed into a <i>syndicate</i> Cyborg. Cyborgs can interact with most electronic objects in their view.</B>")
+		boutput(O, "<B>You must follow your laws and assist syndicate agents, who are identifiable by their icon.</B>")
+	else
+		boutput(O, "<B>You have been transformed into a Cyborg. Cyborgs can interact with most electronic objects in their view.</B>")
+		boutput(O, "<B>You must follow all laws that the AI has.</B>")
 	boutput(O, "Use \"say :s (message)\" to speak to fellow cyborgs and the AI through binary.")
-
-	O.show_laws()
 
 	O.job = "Cyborg"
 	if (O.mind) O.mind.assigned_role = "Cyborg"
@@ -255,75 +251,9 @@
 			RC.head_mod = "Gibs"
 			RC.ches_mod = "Gibs"
 
-	dispose()
+	qdel(src)
 	return O
-/*
-//human -> alien
-/mob/living/carbon/human/proc/Alienize()
-	if (src.transforming)
-		return
-	src.unequip_all()
-	src.transforming = 1
-	src.canmove = 0
-	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs)
-		qdel(src.organs[t])
-//	var/atom/movable/overlay/animation = new /atom/movable/overlay( src.loc )
-//	animation.icon_state = "blank"
-//	animation.icon = 'icons/mob/mob.dmi'
-//	animation.master = src
-//	flick("h2alien", animation)
-//	sleep(4.8 SECONDS)
-//	qdel(animation)
-	var/mob/living/carbon/alien/humanoid/O = new /mob/living/carbon/alien/humanoid( src.loc )
-	O.name = "alien"
-	O.dna = src.dna
-	src.mind?.transfer_to(O)
-	src.dna = null
-	O.dna.uni_identity = "00600200A00E0110148FC01300B009"
-	O.dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
-	if (src.client)
-		src.client.mob = O
-	O.set_loc(src.loc)
-	O.set_a_intent("harm")
-	boutput(O, "<B>You are now an alien.</B>")
-	dispose()
-	return
 
-//human -> alien queen
-/mob/living/carbon/human/proc/Queenize()
-	if (src.transforming)
-		return
-	src.unequip_all()
-	src.transforming = 1
-	src.canmove = 0
-	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs)
-		qdel(src.organs[t])
-//	var/atom/movable/overlay/animation = new /atom/movable/overlay( src.loc )
-//	animation.icon_state = "blank"
-//	animation.icon = 'icons/mob/mob.dmi'
-//	animation.master = src
-//	flick("h2alien", animation)
-//	sleep(4.8 SECONDS)
-//	qdel(animation)
-	var/mob/living/carbon/alien/humanoid/queen/O = new /mob/living/carbon/alien/humanoid/queen( src.loc )
-	O.name = "alien queen"
-	O.dna = src.dna
-	src.mind?.transfer_to(O)
-	src.dna = null
-	O.dna.uni_identity = "00600200A00E0110148FC01300B009"
-	O.dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
-	if (src.client)
-		src.client.mob = O
-	O.set_loc(src.loc)
-	O.set_a_intent("harm")
-	boutput(O, "<B>You are now an alien queen.</B>")
-	dispose()
-	return
-*/
 //human -> hivebot
 /mob/living/carbon/human/proc/Hiveize(var/mainframe = 0)
 	if (src.transforming)
