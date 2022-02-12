@@ -1,5 +1,12 @@
 
 (t)sat feb 12 22
+(u)Flappybat
+(p)7372
+(e)🎨⚖|sprites, balance
+(*)Red chainsaw gets an ability to chop off your arm and attach with no surgery
+(*)Added start/stop sound to the red chainsaw.
+(*)Made the green chainsaws electric and gave them a new, less abrasive sound.
+(+)Chainsaws now have animated inhands.
 (u)Zonespace
 (p)6794
 (e)🆕⚖|feature, balance
