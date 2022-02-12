@@ -322,7 +322,7 @@
 		..()
 		master = get_disease_from_path(/datum/ailment/disability/memetic_madness)
 
-	stage_act()
+	stage_act(mult)
 		if (!istype(master,/datum/ailment/) || !src.progenitor)
 			affected_mob.ailments -= src
 			qdel(src)
@@ -331,7 +331,7 @@
 		if(stage > master.max_stages)
 			stage = master.max_stages
 
-		if(prob(stage_prob) && stage < master.max_stages)
+		if(probmult(stage_prob) && stage < master.max_stages)
 			stage++
 
 		master.stage_act(affected_mob,src,progenitor)

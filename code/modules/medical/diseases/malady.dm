@@ -13,7 +13,7 @@
 		master = get_disease_from_path(/datum/ailment/malady)
 		master.tickcount = 0
 
-	stage_act()
+	stage_act(mult)
 		if (!affected_mob || disposed)
 			return 1
 
@@ -32,9 +32,8 @@
 		var/advance_prob = stage_prob
 		if (state == "Acute")
 			advance_prob *= 2
-		advance_prob = clamp(advance_prob, 0, 100)
 
-		if (prob(advance_prob))
+		if (probmult(advance_prob))
 			if (state == "Remissive")
 				stage--
 				if (stage < 1)
@@ -47,11 +46,11 @@
 
 		// Common cures
 		if (cure != "Incurable")
-			if (cure == "Sleep" && affected_mob.sleeping && prob(33))
+			if (cure == "Sleep" && affected_mob.sleeping && probmult(33))
 				state = "Remissive"
 				return 1
 
-			else if (cure == "Self-Curing" && prob(5))
+			else if (cure == "Self-Curing" && probmult(5))
 				state = "Remissive"
 				return 1
 
@@ -73,9 +72,9 @@
 						var/we_are_cured = 0
 						var/reagcure_prob = reagentcure[current_id]
 						if (isnum(reagcure_prob))
-							if (prob(reagcure_prob))
+							if (probmult(reagcure_prob))
 								we_are_cured = 1
-						else if (prob(recureprob))
+						else if (probmult(recureprob))
 							we_are_cured = 1
 						if (we_are_cured)
 							state = "Remissive"
