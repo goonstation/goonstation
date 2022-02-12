@@ -1,4 +1,9 @@
 
+(t)sat feb 12 22
+(u)Amylizzle
+(p)7476
+(e)|
+(+)Adds  an additional check to secscanner to prevent scanning intangible living mobs.
 (t)fri feb 11 22
 (u)FlameArrow57
 (p)7071
