@@ -362,3 +362,192 @@
 				update_ore_price(ore, price)
 				. = TRUE
 
+/obj/machinery/ore_terminal
+	name = "Rockbox™ Ore Cloud Storage Container"
+	desc = "A terminal for the rockbox cloud that lets you buy raw materials from anywhere with just your ID. All sales are final."
+	icon = 'icons/obj/mining_cloud_storage.dmi'
+	icon_state = "ore_terminal"
+	density = 1
+	anchored = 1
+	var/obj/item/card/id/scan = null
+	var/temp = null
+	var/list/dat = list()
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
+
+	attack_hand(var/mob/user as mob)
+		var/HTML = {"
+		<title>[src.name]</title>
+		<title>[src.name]</title>
+		<style type='text/css'>
+
+			/* will probaby break chui, dont care */
+			body { background: #222; color: white; font-family: Tahoma, sans-serif; }
+			a { color: #88f; }
+
+			.l { text-align: left; } .r { text-align: right; } .c { text-align: center; }
+			.buttonlink { background: #66c; min-width: 1.1em; height: 1.2em; padding: 0.2em 0.2em; margin-bottom: 2px; border-radius: 4px; font-size: 90%; color: white; text-decoration: none; display: inline-block; vertical-align: middle; }
+			thead { background: #555555; }
+
+			table {
+				border-collapse: collapse;
+				width: 100%;
+				}
+			td, th { padding: 0.2em; 0.5em; }
+			.outline td, .outline th {
+				border: 1px solid #666;
+			}
+
+			img, a img {
+				border: 0;
+				}
+
+			#info {
+				position: absolute;
+				right: 0.5em;
+				top: 0;
+				width: 25%;
+				padding: 0.5em;
+				}
+
+			#products {
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 73%;
+				padding: 0.25em;
+			}
+
+			.queue, .product {
+				position: relative;
+				display: inline-block;
+				width: 12em;
+				padding: 0.25em 0.5em;
+				border-radius: 5px;
+				margin: 0.5em;
+				background: #555;
+				box-shadow: 3px 3px 0 2px #000;
+				}
+
+			.queue {
+				vertical-align: middle;
+				clear: both;
+				}
+			.queue .icon {
+				float: left;
+				margin: 0.2em;
+				}
+			.product {
+				vertical-align: top;
+				text-align: center;
+				}
+			.product .time {
+				position: absolute;
+				bottom: 0.3em;
+				right: 0.3em;
+				}
+			.product .mats {
+				position: absolute;
+				bottom: 0.3em;
+				left: 0.3em;
+				}
+			.product .icon {
+				display: block;
+				height: 64px;
+				width: 64px;
+				margin: 0.2em auto 0.5em auto;
+				-ms-interpolation-mode: nearest-neighbor; /* pixels go cronch */
+				}
+			.product.disabled {
+				background: #333;
+				color: #aaa;
+			}
+			.required {
+				display: none;
+				}
+
+			.product:hover {
+				cursor: pointer;
+				background: #666;
+			}
+			.product:hover .required {
+				display: block;
+				position: absolute;
+				left: 0;
+				right: 0;
+				}
+			.product .delete {
+				color: #c44;
+				background: #222;
+				padding: 0.25em 0.5em;
+				border-radius: 10px;
+				}
+			.required div {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				background: #333;
+				border: 1px solid #888888;
+				padding: 0.25em 0.5em;
+				margin: 0.25em 0.5em;
+				font-size: 80%;
+				text-align: left;
+				border-radius: 5px;
+				}
+			.mat-missing {
+				color: #f66;
+			}
+		</style>
+		<script type="text/javascript">
+			function product(ref) {
+				window.location = "?src=\ref[src];disp=" + ref;
+			}
+
+			function delete_product(ref) {
+				window.location = "?src=\ref[src];delete=1;disp=" + ref;
+			}
+		</script>
+		"}
+
+		var/list/dat = list()
+		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
+		if(scan)
+			var/datum/db_record/account = null
+			account = FindBankAccountByName(src.scan.registered)
+			if (account)
+				dat+="<B>Current Funds</B>: [account["current_money"]] Credits<br>"
+		dat+= src.temp
+		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
+		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
+			if(S.broken)
+				continue
+			dat += "<B>[S.name] at [get_area(S)]:</B><br>"
+			var/list/ores = S.ores
+			for(var/ore in ores)
+				var/datum/ore_cloud_data/OCD = ores[ore]
+				if(!OCD.for_sale || !OCD.amount)
+					continue
+				var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(OCD.price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
+				dat += "[ore]: [OCD.amount] ($[OCD.price+taxes+(!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0)]/ore) (<A href='?src=\ref[src];purchase=1;storage=\ref[S];ore=[ore]'>Purchase</A>)<br>"
+
+		dat += "</small><HR>"
+
+	//	dat += build_control_panel(user)
+
+
+		user.Browse(HTML + dat.Join(), "window=manufact;size=1111x600")
+		onclose(user, "manufact")
+
+		interact_particle(user,src)
+
+/*	proc/build_control_panel(mob/user as mob)
+		var/list/dat = list()
+			return dat.Join()*/
+
