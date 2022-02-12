@@ -1,5 +1,9 @@
 
 (t)sat feb 12 22
+(u)Danger Noodle
+(p)7470
+(e)🗺|mapping
+(+)Added artistic toolboxes to all maps in rotation.
 (u)Flaborized
 (p)7452
 (e)🎨|sprites
