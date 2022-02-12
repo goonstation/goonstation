@@ -1,5 +1,9 @@
 
 (t)sat feb 12 22
+(u)MetricDuck
+(p)7336
+(e)🐛⚖|bug, balance
+(+)Spaceacillin is much less effective at treating cluwnes and will no longer outright cure wizard cluwnes.
 (u)Zonespace
 (p)6816
 (e)⚖|balance
