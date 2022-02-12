@@ -667,6 +667,13 @@
 				boutput(user, "<span class='alert'><b>[G] is now empty.</b></span>")
 			src.reagents.isolate_reagent("fuel")
 			return
+	if (istype(W, /obj/item/grab))
+		var/obj/item/grab/G = W
+		if (G.state < GRAB_AGGRESSIVE)
+			boutput(user, "<span class='alert'>You need a tighter grip!</span>")
+		else
+			src.MouseDrop_T(grab.affecting, user) //lazy
+			qdel(W)
 	..()
 
 /obj/machinery/recharge_station/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -807,7 +814,7 @@
 					'sound/impact_sounds/Metal_Clang_1.ogg',
 					'sound/effects/pump.ogg',
 					'sound/effects/syringeproj.ogg',
-				), 100, 1)
+				), 60, 1)
 				if (prob(15))
 					src.visible_message("<span class='alert'>[src] [pick("whirs", "grinds", "rumbles", "clatters", "clangs")] [pick("horribly", "in a grisly manner", "horrifyingly", "scarily")]!</span>")
 				if (prob(25))
@@ -820,14 +827,9 @@
 							'sound/impact_sounds/Flesh_Tear_1.ogg',
 							'sound/impact_sounds/Generic_Snap_1.ogg',
 							'sound/impact_sounds/Generic_Hit_1.ogg',
-						), 100, 1)
+						), 60, 1)
 					SPAWN_DBG(0.6 SECONDS)
-						// TODO: use character scream choice
-						if (H.gender == "female")
-							playsound(src.loc, "sound/voice/screams/female_scream.ogg", 30, 1, channel=VOLUME_CHANNEL_EMOTE)
-						else
-							playsound(src.loc, "sound/voice/screams/male_scream.ogg", 30, 1, channel=VOLUME_CHANNEL_EMOTE)
-						src.visible_message("<span class='alert'>A muffled scream comes from within [src]!</span>")
+						occupant.emote("scream", FALSE)
 
 			if (H.health <= 2)
 				boutput(H, "<span class='alert'>You feel... different.</span>")
@@ -845,7 +847,7 @@
 				playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
 			else
 				H.bioHolder.AddEffect("eaten")
-				random_brute_damage(H, 3)
+				random_brute_damage(H, 6)
 				H.changeStatus("weakened", 5 SECONDS)
 				if (prob(15))
 					boutput(H, "<span class='alert'>[pick("You feel chunks of your flesh being ripped off!"," Something cold and sharp skewers you!", "You feel your organs being pulped and mashed!", "Machines shred you from every direction!")]</span>")
