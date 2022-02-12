@@ -921,7 +921,7 @@ This is basically useless for anyone but miners.
 	name = "Wiretap Radio Upgrade"
 	item = /obj/item/device/radio_upgrade
 	cost = 3
-	desc = "A small device that may be installed in a headset to grant access to all station channels."
+	desc = "A small device that may be installed in a headset to grant access to all station channels, along with one reserved for Syndicate operatives."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 	vr_allowed = 0
 
