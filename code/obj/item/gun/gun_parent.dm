@@ -188,8 +188,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if(continuous && !continuousFire)
 		return 0
 
-	var/pox = text2num(params["icon-x"]) - 16
-	var/poy = text2num(params["icon-y"]) - 16
+	var/pox = text2num(params["icon-x"]) - 16 + target.pixel_x
+	var/poy = text2num(params["icon-y"]) - 16 + target.pixel_y
 	var/turf/user_turf = get_turf(user)
 	var/turf/target_turf = get_turf(target)
 
@@ -356,7 +356,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if (M && isalive(M))
 			L.lastgasp()
 		M.set_clothing_icon_dirty()
-		src.update_icon()
+		src.UpdateIcon()
 		sleep(current_projectile.shot_delay)
 
 /obj/item/gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
@@ -438,7 +438,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			var/mob/living/carbon/human/H = user
 			H.gunshot_residue = 1
 
-	src.update_icon()
+	src.UpdateIcon()
 	return TRUE
 
 /obj/item/gun/proc/canshoot()
@@ -451,9 +451,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (src.artifact)
 		return list("You have no idea what the hell this thing is!")
 	return ..()
-
-/obj/item/gun/proc/update_icon()
-	return 0
 
 /obj/item/gun/proc/process_ammo(var/mob/user)
 	boutput(user, "<span class='alert'>*click* *click*</span>")

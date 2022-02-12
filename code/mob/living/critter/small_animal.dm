@@ -550,13 +550,14 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			return ..()
 		message = reverse_text(message)
 		..(message)*/
-	visible_message(var/msg, var/self, var/blind, var/group)
-		msg = "<span style='-ms-transform: rotate(180deg)'>[msg]</span>"
-		if(self)
-			self = "<span style='-ms-transform: rotate(180deg)'>[self]</span>"
-		if(blind)
-			blind = "<span style='-ms-transform: rotate(180deg)'>[blind]</span>"
-		return ..(msg,self,blind,group)
+
+	visible_message(var/message, var/self_message, var/blind_message, var/group)
+		message = "<span style='-ms-transform: rotate(180deg)'>[message]</span>"
+		if(self_message)
+			self_message = "<span style='-ms-transform: rotate(180deg)'>[self_message]</span>"
+		if(blind_message)
+			blind_message = "<span style='-ms-transform: rotate(180deg)'>[blind_message]</span>"
+		return ..(message,self_message,blind_message,group)
 
 	audible_message(var/msg)
 		msg = "<span style='-ms-transform: rotate(180deg)'>[msg]</span>"
@@ -1183,7 +1184,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		if(act == "flip" && istype(src.equipped(), /obj/item/grab))
-			return src.do_suplex(src.equipped())
+			if(!ON_COOLDOWN(src, "suplex", 2 SECONDS))
+				return src.do_suplex(src.equipped())
 		return null
 
 /* -------------------- Seagull -------------------- */
@@ -1479,24 +1481,27 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	name = "scorpion"
 	real_name = "scorpion"
 	desc = "Ack! Get it away! AAAAAAAA."
-	icon_state = "scorpion"
-	icon_state_dead = "scorpion-dead"
+	icon_state = "spacescorpion"
+	icon_state_dead = "spacescorpion-dead"
 	speechverb_say = "clicks"
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "chitters"
-	health_brute = 5
-	health_burn = 5
-	flags = TABLEPASS | DOORPASS
+	health_brute = 30
+	health_burn = 30
+	density = 1
+	flags = TABLEPASS
 	fits_under_table = 1
+	add_abilities = list(/datum/targetable/critter/wasp_sting/scorpion_sting,
+						/datum/targetable/critter/pincer_grab)
 
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/small_critter
+		HH.limb = new /datum/limb/small_critter/pincers
 		HH.icon = 'icons/mob/critter_ui.dmi'
-		HH.icon_state = "handn"
-		HH.name = "weird grabby foot thing"
-		HH.limb_name = "foot"
+		HH.icon_state = "pincers"
+		HH.name = "pincers"
+		HH.limb_name = "pincers"
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -1504,11 +1509,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				if (src.emote_check(voluntary, 50))
 					playsound(src, "sound/voice/animal/bugchitter.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> chitters!</span>"
+			if ("snip", "snap")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, "sound/items/Wirecutter.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					return "<span class='emote'><b>[src]</b> snips its pincers!</span>"
 		return null
 
 	specific_emote_type(var/act)
 		switch (act)
-			if ("scream","chitter")
+			if ("scream","chitter", "snip", "snap")
 				return 2
 		return ..()
 
@@ -1895,7 +1904,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	on_pet(mob/user)
 		if (..())
 			return 1
-		src.visible_message("<span class='alert'>You feel uncomfortable now.</span>")
+		boutput(user, "<span class='alert'>You feel uncomfortable now.</span>")
 
 /* ============================================= */
 /* -------------------- Pig -------------------- */

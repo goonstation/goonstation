@@ -115,6 +115,7 @@
 		return
 
 	on_reagent_change()
+		..()
 		src.overlays = null
 
 		if(reagents.total_volume)

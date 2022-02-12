@@ -98,12 +98,18 @@
 
 				if (traitor.special_role == ROLE_CHANGELING && traitor.current)
 					var/dna_absorbed = 0
+					var/absorbed_identities = null
 					var/datum/abilityHolder/changeling/C = traitor.current.get_ability_holder(/datum/abilityHolder/changeling)
 					if (C && istype(C))
+						absorbed_identities = list()
 						dna_absorbed = max(0, C.absorbtions)
+						for (var/DNA in C.absorbed_dna)
+							absorbed_identities += DNA
 					else
 						dna_absorbed = "N/A (body destroyed)"
+
 					stuff_to_output += "<B>Absorbed DNA:</b> [dna_absorbed]"
+					stuff_to_output += "<B>Absorbed Identities: [isnull(absorbed_identities) ? "N/A (body destroyed)" : english_list(absorbed_identities)]"
 
 				if (traitor.special_role == ROLE_VAMPIRE && traitor.current)
 					var/blood_acquired = 0
@@ -118,6 +124,17 @@
 					for (var/datum/objective/specialist/werewolf/feed/O in traitor.objectives)
 						if (O && istype(O, /datum/objective/specialist/werewolf/feed/))
 							stuff_to_output += "<B>No. of victims:</b> [O.mobs_fed_on.len]"
+
+				if (traitor.special_role == ROLE_SLASHER)
+					var/foundmachete = FALSE
+					for_by_tcl(M, /obj/item/slasher_machete)
+						if(M.slasher_key == traitor.current.ckey)
+							foundmachete = TRUE
+							var/outputval = round((M.force - 15) / 2.5)
+							stuff_to_output += "<B>Souls Stolen:</b> [outputval]"
+							break
+					if(!foundmachete)
+						stuff_to_output += "<B>Souls Stolen:</b> They did not finish with a machete!"
 
 				if (traitor.special_role == ROLE_HUNTER)
 					// Same reasoning here, really.
@@ -250,6 +267,7 @@
 		var/mob/new_player/player = C.mob
 		if (!istype(player)) continue
 		if (ishellbanned(player)) continue //No treason for you
+		if (jobban_isbanned(player, "Syndicate")) continue //antag banned
 
 		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !(player.mind in candidates))
 			if (player.client.preferences.vars[get_preference_for_role(type)])

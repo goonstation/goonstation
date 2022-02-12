@@ -20,12 +20,12 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 
 		src.flavor_desc = "An affiliated research group is [pick(desc_begins)] a [pick(desc_whatstudy)] of [organic.name] [pick(desc_whystudy)]"
 		src.flavor_desc += " and requires genetically-human specimens in adequate condition."
-		src.payout += rand(0,40) * 10
+		src.payout += rand(0,40) * 20
 		..()
 
 ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/item/organ
-	feemod = 200
+	feemod = 400
 	exactpath = TRUE
 
 /datum/rc_entry/item/organ/brain
@@ -86,35 +86,35 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/item/lens
 	name = "nano-fabricated lens"
 	typepath = /obj/item/lens
-	feemod = 500
+	feemod = 1000
 
 /datum/rc_entry/stack/gemstone
 	name = "non-anomalous gemstone"
 	typepath = /obj/item/raw_material/gemstone
-	feemod = 1250
+	feemod = 2500
 
 /datum/rc_entry/stack/telec
 	name = "telecrystal"
 	commodity = /datum/commodity/ore/telecrystal
 	typepath_alt = /obj/item/material_piece/telecrystal
-	feemod = 620
+	feemod = 1240
 
 /datum/rc_entry/reagent/cryox
 	name = "cryoxadone coolant"
 	chemname = "cryoxadone"
-	feemod = 30
+	feemod = 60
 
 /datum/rc_entry/item/lambdarod
 	name = "Lambda phase-control rod"
 	typepath = /obj/item/interdictor_rod
 	exactpath = TRUE
-	feemod = 3000
+	feemod = 6000
 
 
 
 /datum/req_contract/scientific/botanical
 	//name = "Feed Me, Seymour (Butz)"
-	payout = 3500
+	payout = 2500
 	var/list/namevary = list("Botanical Prototyping","Hydroponic Acclimation","Cultivar Propagation","Plant Genotype Study")
 	var/list/desc_wherestudy = list(
 		"An affiliated hydroponics lab",
@@ -152,7 +152,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/seed/scientific
 	name = "genetically fussy seed"
 	cropname = "Durian"
-	feemod = 900
+	feemod = 4000
 	var/crop_genpath = /datum/plant
 
 	fruit

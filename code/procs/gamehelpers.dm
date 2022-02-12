@@ -99,7 +99,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 /// For interacting with stuff.
 /proc/in_interact_range(atom/source, atom/user)
 	. = FALSE
-	if(bounds_dist(source, user) == 0 || IN_RANGE(source, user, 1)) // fucking byond
+	if(bounds_dist(source, user) == 0 || IN_RANGE(source, user, 1)) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
 		return TRUE
 	else if (source in bible_contents && locate(/obj/item/storage/bible) in range(1, user)) // whoever added the global bibles, fuck you
 		return TRUE
@@ -141,16 +141,18 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 				return TRUE
 
 
-var/obj/item/dummy/click_dummy = new
 /proc/test_click(turf/from, turf/target)
+	var/obj/item/dummy/click_dummy = get_singleton(/obj/item/dummy)
 	click_dummy.set_loc(from)
 	for (var/atom/A in from)
 		if (A.flags & ON_BORDER)
 			if (!A.CheckExit(click_dummy, target))
+				click_dummy.set_loc(null)
 				return FALSE
 	for (var/atom/A in target)
 		if ((A.flags & ON_BORDER))
 			if (!A.Cross(click_dummy))
+				click_dummy.set_loc(null)
 				return FALSE
 	click_dummy.set_loc(null)
 	return TRUE
@@ -178,9 +180,6 @@ var/obj/item/dummy/click_dummy = new
 		if (T1 == T2)
 			return 1
 		else
-			if (!click_dummy)
-				click_dummy = new
-
 			var/dir = get_dir(T1, T2)
 			if (dir & (dir-1))
 				var/dir1, dir2
@@ -222,12 +221,13 @@ var/obj/item/dummy/click_dummy = new
 	. = list()
 
 	var/turf/T = get_turf(center)
-	for_by_tcl(theAI, /mob/living/silicon/ai)
-		if (theAI.deployed_to_eyecam)
-			var/mob/dead/aieye/AIeye = theAI.eyecam
-			if(IN_RANGE(center, AIeye, distance) && T.cameras && length(T.cameras))
-				. += AIeye
-				. += theAI
+	if(length(T?.cameras))
+		for_by_tcl(theAI, /mob/living/silicon/ai)
+			if (theAI.deployed_to_eyecam)
+				var/mob/dead/aieye/AIeye = theAI.eyecam
+				if(IN_RANGE(center, AIeye, distance))
+					. += AIeye
+					. += theAI
 
 //Kinda sorta like viewers but includes observers. In theory.
 /proc/observersviewers(var/Dist=world.view, var/Center=usr)
@@ -554,7 +554,7 @@ var/obj/item/dummy/click_dummy = new
 		return rgb(r,g,b,a)
 
 
-/area/proc/move_contents_to(var/area/A, var/turftoleave=null, var/ignore_fluid = 0)
+/area/proc/move_contents_to(var/area/A, var/turftoleave=null, var/ignore_fluid = 0, turf_to_skip=null)
 	//Takes: Area. Optional: turf type to leave behind.
 	//Returns: Nothing.
 	//Notes: Attempts to move the contents of one area to another area.
@@ -583,7 +583,7 @@ var/obj/item/dummy/click_dummy = new
 
 	for (var/turf/S in turfs_src)
 		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
-		if(T?.loc != A) continue
+		if(T?.loc != A || istype(S, turf_to_skip)) continue
 		T.ReplaceWith(S.type, keep_old_material = 0, force=1)
 		T.appearance = S.appearance
 		T.set_density(S.density)
@@ -594,6 +594,7 @@ var/obj/item/dummy/click_dummy = new
 		for (var/atom/movable/AM as anything in S)
 			if (istype(AM, /obj/forcefield) || istype(AM, /obj/overlay/tile_effect)) continue
 			if (!ignore_fluid && istype(AM, /obj/fluid)) continue
+			if (istype(AM, /obj/decal/tile_edge) && istype(S, turf_to_skip)) continue
 			AM.set_loc(T)
 		if(turftoleave)
 			S.ReplaceWith(turftoleave, keep_old_material = 0, force=1)
@@ -678,8 +679,9 @@ proc/GetRandomPerimeterTurf(var/atom/A, var/dist = 10, var/dir)
 				out_y = clamp(T_y + dist, 1, world.maxy)
 			else if (dir == SOUTH)
 				out_y = clamp(T_y - dist, 1, world.maxy)
+		else
+			out_y = clamp(pick((T_y + dist), (T_y - dist)), 1, world.maxy)
 		out_x = clamp(rand(T_x - dist, T_x + dist), 1, world.maxx)
-		out_y = clamp(pick((T_y + dist), (T_y - dist)), 1, world.maxy)
 	T = locate(out_x, out_y, T_z)
 	if(isturf(T))
 		return T

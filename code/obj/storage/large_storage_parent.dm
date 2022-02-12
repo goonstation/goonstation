@@ -19,6 +19,7 @@
 	throwforce = 10
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	p_class = 2.5
+	layer = STORAGE_LAYER
 	var/intact_frame = 1 //Variable to create crates and fridges which cannot be closed anymore.
 	var/secure = 0
 	var/personal = 0
@@ -48,7 +49,6 @@
 	var/open_fail_prob = 50
 	var/crunches_contents = 0 // for the syndicate trashcart & hotdog stand
 	var/crunches_deliciously = 0 // :I
-	//var/mob/living/carbon/to_crunch = null
 	var/owner_ckey = null // owner of the crunchy cart, so they don't get crunched
 	var/opening_anim = null
 	var/closing_anim = null
@@ -65,7 +65,7 @@
 		weld_image.pixel_x = weld_image_offset_X
 		weld_image.pixel_y = weld_image_offset_Y
 		SPAWN_DBG(1 DECI SECOND)
-			src.update_icon()
+			src.UpdateIcon()
 
 			if (!src.open && grab_stuff_on_spawn)		// if closed, any item at src's loc is put in the contents
 				for (var/atom/movable/A in src.loc)
@@ -90,7 +90,13 @@
 			do new thing(src)	//Two lines! I TOLD YOU I COULD DO IT!!!
 			while (--amt > 0)
 
-	proc/update_icon()
+	Entered(atom/movable/Obj, OldLoc)
+		. = ..()
+		if(src.open || length(contents) >= src.max_capacity)
+			Obj.set_loc(get_turf(src))
+
+	update_icon()
+
 		if (src.open)
 			flick(src.opening_anim,src)
 			src.icon_state = src.icon_opened
@@ -179,17 +185,25 @@
 			return
 
 		else if (istype(W, /obj/item/satchel/))
+			if(secure && locked)
+				user.show_text("Access Denied", "red")
+				return
+			if (count_turf_items() >= max_capacity || length(contents) >= max_capacity)
+				user.show_text("[src] cannot fit any more items!", "red")
+				return
 			var/amt = length(W.contents)
 			if (amt)
 				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
 				var/amtload = 0
 				for (var/obj/item/I in W.contents)
+					if(length(contents) >= max_capacity)
+						break
 					if (open)
 						I.set_loc(src.loc)
 					else
 						I.set_loc(src)
 					amtload++
-				W:satchel_updateicon()
+				W:UpdateIcon()
 				if (amtload)
 					user.show_text("[amtload] [W:itemstring] dumped into [src]!", "blue")
 				else
@@ -241,7 +255,7 @@
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
 					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
-					src.update_icon()
+					src.UpdateIcon()
 					if (!src.registered)
 						src.registered = I.registered
 						src.name = "[I.registered]'s [src.name]"
@@ -253,7 +267,7 @@
 				if (!src.open)
 					src.locked = !src.locked
 					user.visible_message("<span class='notice'>[src] has been [src.locked ? null : "un"]locked by [user].</span>")
-					src.update_icon()
+					src.UpdateIcon()
 					for (var/mob/M in src.contents)
 						src.log_me(user, M, src.locked ? "locks" : "unlocks")
 					return
@@ -278,6 +292,7 @@
 		var/turf/orig_turf = get_turf(thing)
 		if (orig_turf == dest_turf) return TRUE
 		var/no_go
+
 		//Mostly copy pasted from turf/Enter. Sucks, but we need an object rather than a boolean
 		//First, check for directional blockers on the entering object's tile
 		if (orig_turf.checkingexit > 0)
@@ -302,6 +317,7 @@
 				if(A != src && !A.Cross(L))
 					no_go = A
 					break
+
 		if(no_go)
 			if (istype(L))
 				L.show_text("You bump into \the [no_go] as you try to scoot over \the [src].", "red")
@@ -359,7 +375,7 @@
 		if (!src.open)
 			src.open()
 
-		if (T.contents.len >= src.max_capacity)
+		if (count_turf_items() >= max_capacity)
 			user.show_text("[src] is too full!", "red")
 			return
 
@@ -412,7 +428,7 @@
 						break
 					if (user.loc != staystill)
 						break
-					if (T.contents.len >= src.max_capacity)
+					if (length(T.contents) >= max_capacity)
 						break
 				user.show_text("You finish stuffing [type_name] into [src]!", "blue")
 				SPAWN_DBG(0.5 SECONDS)
@@ -503,7 +519,7 @@
 		else
 			src.dump_contents()
 		src.open = 1
-		src.update_icon()
+		src.UpdateIcon()
 		p_class = initial(p_class)
 		playsound(src.loc, src.open_sound, 15, 1, -3)
 		return 1
@@ -563,7 +579,7 @@
 				AM.set_loc(entangled.open ? entangled.loc : entangled)
 			entangled.open(1)
 
-		src.update_icon()
+		src.UpdateIcon()
 		playsound(src.loc, src.close_sound, 15, 1, -3)
 		return 1
 
@@ -581,11 +597,19 @@
 		if (src.welded || src.locked)
 			return 0
 
+	proc/count_turf_items()
+		var/turf/T = get_turf(src)
+		var/crate_contents = length(T.contents)
+		for(var/obj/O in T.contents)
+			if(!isitem(O) || O == src || O.anchored)
+				crate_contents--
+		return crate_contents
+
 	proc/can_close()
 		. = TRUE
 		var/turf/T = get_turf(src)
 		if (!T) return 0
-		if (T.contents.len > src.max_capacity)
+		if (count_turf_items() > max_capacity)
 			return 0
 		for (var/obj/storage/S in T)
 			if (S != src)
@@ -641,7 +665,7 @@
 		else
 			weldman.visible_message("<span class='alert'>[weldman] unwelds [src].</span>") // walt-fuck_you.ogg
 			src.welded = 0
-		src.update_icon()
+		src.UpdateIcon()
 		for (var/mob/M in src.contents)
 			src.log_me(weldman, M, src.welded ? "welds" : "unwelds")
 		return
@@ -652,35 +676,27 @@
 
 		if (M.ckey && (M.ckey == owner_ckey))
 			return
-		else
-			M.show_text("Is it getting... smaller in here?", "red")
-			SPAWN_DBG(5 SECONDS)
+		src.locked = TRUE
+		M.show_text("Is it getting... smaller in here?", "red")
+		SPAWN_DBG(5 SECONDS)
+			if (M in src.contents)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
+				M.show_text("<b>OH JESUS CHRIST</b>", "red")
+				bleed(M, 500, 5)
+				src.log_me(usr && ismob(usr) ? usr : null, M, "uses trash compactor")
+				var/mob/living/carbon/cube/meat/meatcube = M.make_cube(/mob/living/carbon/cube/meat, rand(10,15), get_turf(src))
+				if (src.crunches_deliciously)
+					meatcube.name = "hotdog"
+					var/obj/item/reagent_containers/food/snacks/hotdog/syndicate/snoopdog = new /obj/item/reagent_containers/food/snacks/hotdog/syndicate(src)
+					snoopdog.victim = meatcube
 
-				var/found = 0
-				for (var/mob/contained_mob in src.contents)
-					if (M == contained_mob)
-						found = 1
+				for (var/obj/item/I in M)
+					if (istype(I, /obj/item/implant))
+						I.set_loc(meatcube)
 
-				if (found)
-					playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
-					M.show_text("<b>OH JESUS CHRIST</b>", "red")
-					bleed(M, 500, 5)
-					src.log_me(usr && ismob(usr) ? usr : null, M, "uses trash compactor")
-					var/mob/living/carbon/cube/meat/W = M.make_cube(/mob/living/carbon/cube/meat, rand(10,15), get_turf(src))
-					if (src.crunches_deliciously)
-						W.name = "hotdog"
-						var/obj/item/reagent_containers/food/snacks/hotdog/syndicate/snoopdog = new /obj/item/reagent_containers/food/snacks/hotdog/syndicate(src)
-						snoopdog.victim = W
+					I.set_loc(src)
 
-					for (var/obj/item/I in M)
-						if (istype(I, /obj/item/implant))
-							I.set_loc(W)
-							continue
-
-						I.set_loc(src)
-
-					src.locked = 0
-					src.open()
+			src.locked = FALSE
 
 	// Added (Convair880).
 	proc/log_me(var/mob/user, var/mob/occupant, var/action = "")
@@ -805,7 +821,7 @@
 	New()
 		..()
 		if (isnum(src.radio_control))
-			radio_control = max(1000, min(round(radio_control), 1500))
+			radio_control = clamp(round(radio_control), 1000, 1500)
 			src.net_id = generate_net_id(src)
 			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, radio_control)
 
@@ -864,7 +880,7 @@
 						. = 1
 						src.locked = !src.locked
 						src.visible_message("[src] clicks[src.open ? "" : " locked"].")
-						src.update_icon()
+						src.UpdateIcon()
 					if (.)
 						reply.data["command"] = "ack"
 					else
@@ -876,7 +892,7 @@
 						. = 1
 						src.locked = !src.locked
 						src.visible_message("[src] clicks[src.open ? "" : " unlocked"].")
-						src.update_icon()
+						src.UpdateIcon()
 					if (.)
 						reply.data["command"] = "ack"
 					else
@@ -901,7 +917,7 @@
 		if (!src.emagged) // secure crates checked for being locked/welded but so long as you aren't telling the thing to open I don't see why that was needed
 			src.emagged = 1
 			src.locked = 0
-			src.update_icon()
+			src.UpdateIcon()
 			playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 			if (user)
 				user.show_text("You short out the lock on [src].", "blue")
@@ -913,7 +929,7 @@
 			return 0
 		else if (src.emagged)
 			src.emagged = 0
-			src.update_icon()
+			src.UpdateIcon()
 			if (user)
 				user.show_text("You repair the lock on [src].", "blue")
 			return 1

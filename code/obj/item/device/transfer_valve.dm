@@ -4,20 +4,37 @@
 	icon_state = "valve_1"
 	desc = "Regulates the transfer of air between two tanks."
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi' //TODO: as of 02/02/2020 only single general plasma+oxygen ttv sprites, no functionality or sprites to change the icon depending on tanks used
 	item_state = "newbomb"
 	var/obj/item/tank/tank_one
 	var/obj/item/tank/tank_two
 	var/obj/item/device/attached_device
 	var/mob/attacher = "Unknown"
-	var/valve_open = 0
-	var/toggle = 1
-	var/force_dud = 0
+	var/valve_open = FALSE
+	var/toggle = TRUE
+	var/force_dud = FALSE
+	var/signalled = FALSE
+	var/tank_one_icon = null
+	var/tank_two_icon = null
+	var/image/tank1 = null
+	var/image/tank2 = null
+	var/image/tank1_under = null
+	var/image/tank2_under = null
 
 	w_class = W_CLASS_GIGANTIC /// HEH
 	p_class = 3 /// H E H
 	mats = 5
+
+	New()
+		..()
+		RegisterSignal(src, COMSIG_BOMB_SIGNAL_START, .proc/signal_start)
+		RegisterSignal(src, COMSIG_BOMB_SIGNAL_CANCEL, .proc/signal_cancel)
+		processing_items |= src
+
+	disposing()
+		processing_items -= src
+		..()
 
 	attackby(obj/item/item, mob/user)
 		if (isghostdrone(user))
@@ -52,7 +69,7 @@
 				logTheThing("bombing", user, null, "made a transfer valve [butt ? "butt" : "bomb"] at [showCoords(T.x, T.y, T.z)].")
 				message_admins("[key_name(user)] made a transfer valve [butt ? "butt" : "bomb"] at [showCoords(T.x, T.y, T.z)].")
 
-			update_icon()
+			UpdateIcon()
 			attacher = user
 
 			if(user.back == src)
@@ -80,7 +97,7 @@
 			message_admins("[key_name(user)] made a bomb using a[extra] [item.name] and a transfer valve.")
 			*/
 			attacher = user
-			update_icon()
+			UpdateIcon()
 
 		else if(istype(item, /obj/item/cable_coil)) //make loops for shoulder straps
 			if(flags & ONBACK)
@@ -95,7 +112,7 @@
 
 			flags |= ONBACK
 			boutput(user, "<span class='notice'>You attach two loops of [item] to the transfer valve!</span>")
-			update_icon()
+			UpdateIcon()
 
 		return
 
@@ -128,11 +145,11 @@
 			if(href_list["tankone"])
 				tank_one.set_loc(get_turf(src))
 				tank_one = null
-				update_icon()
+				UpdateIcon()
 			if(href_list["tanktwo"])
 				tank_two.set_loc(get_turf(src))
 				tank_two = null
-				update_icon()
+				UpdateIcon()
 			if(href_list["open"])
 				if (valve_open)
 					var/turf/bombturf = get_turf(src)
@@ -147,7 +164,7 @@
 				attached_device.set_loc(get_turf(src))
 				attached_device.master = null
 				attached_device = null
-				update_icon()
+				UpdateIcon()
 			if(href_list["device"])
 				attached_device.attack_self(usr)
 			if(href_list["straps"])
@@ -159,7 +176,7 @@
 					var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(location)
 					C.amount = 2
 					boutput(usr, "<span class='notice'>You detach the loops of wire from [src]!</span>")
-					update_icon()
+					UpdateIcon()
 
 			src.attack_self(usr)
 
@@ -176,72 +193,106 @@
 				toggle = 1
 
 	process()
-	proc
-		update_icon()
-			//blank slate
-			src.overlays = new/list()
-			src.underlays = new/list()
-			src.wear_image = image(wear_image_icon, "valve")
+		if(signalled)
+			UpdateIcon()
 
-			if(!tank_one && !tank_two && !attached_device && !(flags & ONBACK))
-				icon_state = "valve_1"
-				return
+	proc/signal_start()
+		signalled = TRUE
 
-			icon_state = "valve"
-			var/tank_one_icon = ""
-			var/tank_two_icon = ""
+	proc/signal_cancel()
+		signalled = FALSE
 
-			if(tank_one)
-				tank_one_icon = tank_one.icon_state
+	update_icon()
+		//blank slate
+		src.overlays = new/list()
+		src.underlays = new/list()
+		src.wear_image = image(wear_image_icon, "valve")
 
-				var/image/I = new(src.icon, icon_state = "[tank_one_icon]")
-				//var/obj/overlay/tank_one_overlay = new
-				//tank_one_overlay.icon = src.icon
-				//tank_one_overlay.icon_state = tank_one_icon
-				src.underlays += I
+		if(!tank_one && !tank_two && !attached_device && !(flags & ONBACK))
+			icon_state = "valve_1"
+			return
 
-				var/image/tank1 = new(src.wear_image_icon, icon_state = "[tank_one_icon]1")
-				var/image/tank1_under = new(src.wear_image_icon, icon_state = "[tank_one_icon]_under")
-				src.wear_image.overlays += tank1
-				src.wear_image.underlays += tank1_under
+		icon_state = "valve"
+		var/device_icon = ""
 
-			if(tank_two)
-				tank_two_icon = tank_two.icon_state
+		if(tank_one)
+			tank_one_icon = tank_one.icon_state
 
-				var/image/J = new(src.icon, icon_state = "[tank_two_icon]")
-				if(istype(tank_two, /obj/item/clothing/head/butt))
-					J.transform = matrix(J.transform, -180, MATRIX_ROTATE | MATRIX_MODIFY)
-					J.pixel_y = -10
-					J.pixel_x = 1
-				else
-					J.pixel_x = -13
-				//var/obj/underlay/tank_two_overlay = new
-				//tank_two_overlay.icon = I
-				src.underlays += J
+			var/image/I = new(src.icon, icon_state = "[tank_one_icon]")
+			//var/obj/overlay/tank_one_overlay = new
+			//tank_one_overlay.icon = src.icon
+			//tank_one_overlay.icon_state = tank_one_icon
+			src.overlays += I
 
-				var/image/tank2 = new(src.wear_image_icon, icon_state = "[tank_two_icon]2")
-				var/image/tank2_under = new(src.wear_image_icon, icon_state = "[tank_two_icon]_under")
-				src.wear_image.overlays += tank2
-				src.wear_image.underlays += tank2_under
+			src.tank1 = new(src.wear_image_icon, icon_state = "[tank_one_icon]1")
+			src.tank1_under = new(src.wear_image_icon, icon_state = "[tank_one_icon]_under")
+			src.wear_image.overlays += tank1
+			src.wear_image.underlays += tank1_under
 
-			if(attached_device)
-				var/image/K = new(src.icon, icon_state = "device")
-				//var/obj/overlay/device_overlay = new
-				//device_overlay.icon = src.icon
-				//device_overlay.icon_state = device_icon
-				src.overlays += K
+		if(tank_two)
+			tank_two_icon = tank_two.icon_state
 
-			if(flags & ONBACK)
-				var/image/straps = new(src.icon, icon_state = "wire_straps")
-				src.underlays += straps
+			var/image/J = new(src.icon, icon_state = "[tank_two_icon]")
+			if(istype(tank_two, /obj/item/clothing/head/butt))
+				J.transform = matrix(J.transform, -180, MATRIX_ROTATE | MATRIX_MODIFY)
+				J.pixel_y = -1
+				J.pixel_x = -1
+			else
+				J.pixel_x = -20
+			//var/obj/underlay/tank_two_overlay = new
+			//tank_two_overlay.icon = I
+			src.overlays += J
+
+			src.tank2 = new(src.wear_image_icon, icon_state = "[tank_two_icon]2")
+			src.tank2_under = new(src.wear_image_icon, icon_state = "[tank_two_icon]_under")
+			src.wear_image.overlays += tank2
+			src.wear_image.underlays += tank2_under
+
+		if(attached_device)
+			device_icon = attached_device.icon_state
+			var/image/K
+			if(istype(attached_device, /obj/item/device/prox_sensor))
+				var/obj/item/device/prox_sensor/prox = attached_device
+				var/state = 0
+				if(prox.armed)
+					state = 1
+				else if(prox.timing)
+					state = 2
+				K = new(src.icon, icon_state = "motion[state]")
+			else if(istype(attached_device, /obj/item/device/timer))
+				var/obj/item/device/timer/time = attached_device
+				var/state = 0
+				if(time.timing && time.time)
+					if(time.time < 5)
+						state = 2
+					else
+						state = 1
+				K = new(src.icon, icon_state = "timer[state]")
+			else
+				K = new(src.icon, icon_state = "[device_icon]")
+			src.overlays += K
+
+		if(flags & ONBACK)
+			var/image/straps = new(src.icon, icon_state = "wire_straps")
+			src.underlays += straps
+
+	update_wear_image(mob/living/carbon/human/H, override) // Doing above but for mutantraces if they have a special varient.
+		src.tank1 = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]1")
+		src.tank1_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]_under",)
+		src.tank2 = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]2")
+		src.tank2_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]_under")
+		src.wear_image.overlays = list(tank1, tank2)
+		src.wear_image.underlays = list(tank1_under, tank2_under)
 
 		/*
 		Exadv1: I know this isn't how it's going to work, but this was just to check
 		it explodes properly when it gets a signal (and it does).
 		*/
-
+	proc
 		toggle_valve()
 			src.valve_open = !valve_open
+			SPAWN_DBG(1 SECOND)
+				signalled = FALSE
 			if(valve_open && force_dud)
 				message_admins("A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [key_name(src.fingerprintslast)]")
 				logTheThing("bombing", null, null, "A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
@@ -292,7 +343,7 @@
 				T.air_contents.zero() //I could also make it vent the gas, I guess, but then it'd be off-limits to non-antagonists. Challenge mode: make a safe ttb?
 				qdel(B)
 				SPAWN_DBG(1 SECOND)
-					update_icon()
+					UpdateIcon()
 				return
 
 			if(valve_open && (tank_one && tank_two) && tank_one.air_contents && tank_two.air_contents)
@@ -313,7 +364,7 @@
 				tank_one.air_contents.merge(temp)
 
 				SPAWN_DBG(2 SECONDS) // In case one tank bursts
-					src.update_icon()
+					src.UpdateIcon()
 
 		// this doesn't do anything but the timer etc. expects it to be here
 		// eventually maybe have it update icon to show state (timer, prox etc.) like old bombs
@@ -366,6 +417,7 @@
 	mats = 8
 
 	update_icon()
+
 		return
 
 /obj/item/device/transfer_valve/vr

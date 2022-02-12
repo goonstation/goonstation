@@ -1,4 +1,52 @@
 //AI HOLOGRAMS
+
+#define HOLOGRAM_PICTURE 1
+#define HOLOGRAM_TEXT 2
+
+/datum/ai_hologram_data
+	var/image_expansion
+	var/holograms = 0
+	var/const/max_holograms = 8
+	var/text_expansion
+	var/text_holograms = 0
+	var/const/max_text_holograms = 3
+
+	proc/reserve(obj/hologram/H)
+		if(!istype(H))
+			return
+		switch(H.hologram_type)
+			if(HOLOGRAM_PICTURE)
+				src.holograms += H.hologram_value
+			if(HOLOGRAM_TEXT)
+				src.text_holograms += H.hologram_value
+
+	proc/free(obj/hologram/H)
+		if(!istype(H))
+			return
+		switch(H.hologram_type)
+			if(HOLOGRAM_PICTURE)
+				src.holograms = max(src.holograms - H.hologram_value, 0)
+			if(HOLOGRAM_TEXT)
+				src.text_holograms = max(src.text_holograms - H.hologram_value, 0)
+
+	proc/check(holotype_string, mob/dead/aieye/E)
+		. = TRUE
+		if(!istype(E))
+			. = FALSE
+		switch(holotype_string)
+			if("write")
+				if (src.text_holograms >= src.max_text_holograms)
+					boutput(E, "Not enough T-RAM to project more text holograms. Delete others to make room.")
+					. = FALSE
+			else
+				if (src.holograms >= src.max_holograms)
+					boutput(E, "Not enough V-RAM to project more holograms. Delete others to make room.")
+					. = FALSE
+
+	proc/expansion(string)
+		text_expansion = string
+
+
 /mob/living/silicon/ai
 	contextLayout = new /datum/contextLayout/experimentalcircle(36)
 
@@ -6,25 +54,57 @@
 		if (!deployed_to_eyecam)
 			boutput(src, "Deploy to an AI Eye first to create a hologram.")
 			return
-		if (length(holograms)>= max_holograms)
-			boutput(eyecam, "Not enough RAM to project more holograms. Delete others to make room.")
-			return
 
 		var/turf/T = get_turf(src.eyecam)
 		src.show_hologram_context(T)
 
-	proc/create_hologram_at_turf(var/turf/T, var/holo_type)
+	proc/create_hologram_at_turf(turf/T, holo_type)
 		if (!deployed_to_eyecam)
 			boutput(src, "Deploy to an AI Eye first to create a hologram.")
 			return
-		if (length(holograms)>= max_holograms)
-			boutput(eyecam, "Not enough RAM to project more holograms. Delete others to make room.")
-			return
+
 		if (!istype(T) || !istype(T.cameras) || T.cameras.len == 0)
 			boutput(eyecam, "No camera available to project a hologram from.")
 			return
 
-		new /obj/hologram(T, owner=src, holo_type=holo_type)
+		if(!src.holoHolder.check(holo_type, eyecam))
+			return
+
+		if(holo_type == "write")
+			var/list/holo_setences = list()
+			var/list/holo_actions = list()
+			var/list/holo_nouns = list()
+			holo_setences += strings("hologram.txt", "sentences")
+			if(src.holoHolder.text_expansion)
+				holo_setences += strings("hologram.txt", "sentences_[src.holoHolder.text_expansion]")
+			holo_setences = sortList(holo_setences)
+			var/text = tgui_input_list(usr, "Select a word:", "Hologram Text", holo_setences, allowIllegal=TRUE)
+			if(!text)
+				return
+
+			switch(text)
+				if("Remember to ...", "Employees must ...")
+					holo_actions += strings("hologram.txt", "verbs")
+					if(src.holoHolder.text_expansion)
+						holo_actions += strings("hologram.txt", "verbs_[src.holoHolder.text_expansion]")
+					holo_actions = sortList(holo_actions)
+					var/selection = tgui_input_list(usr, "Select a word:", text, holo_actions, allowIllegal=TRUE)
+					text = replacetext(text, "...", selection)
+				else
+					holo_nouns = sortList(strings("hologram.txt", "nouns"))
+					if(src.holoHolder.text_expansion)
+						holo_nouns += strings("hologram.txt", "nouns_[src.holoHolder.text_expansion]")
+					holo_nouns = sortList(holo_nouns)
+					var/blank_found = findtext(text,"...")
+					while(blank_found)
+						var/selection = tgui_input_list(usr, "Select a word:", text, holo_nouns, allowIllegal=TRUE)
+						text = replacetext(text, "...", selection, blank_found, blank_found+3)
+						blank_found = findtext(text,"...")
+
+			text = uppertext(text)
+			new /obj/hologram/text(T, owner=src,msg=text)
+		else
+			new /obj/hologram(T, owner=src, holo_type=holo_type)
 
 	proc/show_hologram_context(var/turf/T)
 		showContextActions(hologramContextActions, T, contextLayout)
@@ -89,6 +169,12 @@
 		name = "angry_face"
 		icon_state = "angry_face"
 		holo_type = "angry_face"
+	write
+		name = "write"
+		icon_state = "write"
+		holo_type = "write"
+
+
 
 /obj/hologram
 	name = "hologram"
@@ -101,6 +187,8 @@
 	// plane = PLANE_HUD
 	var/duration = 30 SECONDS
 	var/mob/living/silicon/ai/owner
+	var/hologram_value = 1
+	var/hologram_type = HOLOGRAM_PICTURE
 
 
 	New(var/mob/living/silicon/ai/owner, var/holo_type)
@@ -108,8 +196,7 @@
 		if (istype(owner))
 			src.owner = owner
 			src.color = owner.faceColor
-			if (islist(owner.holograms))
-				owner.holograms += src
+			src.owner.holoHolder.reserve(src)
 
 		name = "[replacetext(holo_type, "_", " ")] hologram"
 		icon_state = holo_type
@@ -143,8 +230,52 @@
 
 	disposing()
 		if (owner)
-			owner.holograms -= src
+			owner.holoHolder.free(src)
 			owner = null
 		..()
 
 
+/obj/effect/distort/hologram
+	icon = 'icons/misc/holograms.dmi' // move to effects?
+	icon_state = "d_slow"
+	var/distort_size = 2
+
+	glitch
+		icon_state = "d_glitch1"
+
+		New()
+			..()
+			if(prob(33))
+				icon_state = pick("d_glitch2", "d_glitch3")
+				distort_size = 10
+
+#define MAX_TILES_PER_HOLOGRAM 3
+/obj/hologram/text
+	var/message
+	var/original_color
+	var/hsv
+	var/obj/effect/distort/hologram/E
+	hologram_type = HOLOGRAM_TEXT
+
+	New(loc, owner, msg)
+		..(owner, null)
+		if(msg)
+			phrase_log.log_phrase("holograms", msg)
+			message = copytext(adminscrub(msg), 1)
+
+		var/original_color = src.color ? src.color : "#fff"
+		var/rgb = hex_to_rgb_list(original_color)
+		src.hsv = rgb2hsv(rgb[1], rgb[2], rgb[3])
+
+		maptext_width = MAX_TILES_PER_HOLOGRAM * 32
+		maptext_x = -(maptext_width / 2) + 16
+
+		maptext = {"<a href="#"><span class='vm c ps2p sh' style='color:white;text-shadow: silver;'>[message]</span></a>"}
+
+		// Add displacement filter for scanline/glitch
+		SPAWN_DBG(1 DECI SECOND) //delayed to resolve issue where color didn't settle yet
+			E = new
+			if(length(msg) > 11)
+				E.icon_state = "d_fast"
+			src.vis_contents += E
+			src.filters += filter(type="displace", size=E.distort_size, render_source = E.render_target)

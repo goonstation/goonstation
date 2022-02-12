@@ -114,7 +114,11 @@
 
 			boutput(user, "You inject the solution into [src].")
 
-			if(S.reagents.has_reagent("plasma", 1))
+			if(!rigged && S.reagents.has_reagent("plasma", 1))
+				for (var/mob/living/M in mobs)
+					if (M.mind && M.mind.assigned_role == "Head of Security")
+						boutput(M, "<span class='alert'>You feel a foreboding feeling about the imminent fate of a certain turtle in [get_area(src)], better act quick.</span>")
+
 				message_admins("[key_name(user)] rigged [src] to explode in [user.loc.loc], [showCoords(user.x, user.y, user.z)].")
 				logTheThing("combat", user, null, "rigged [src] to explode in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 				rigged = TRUE
@@ -239,7 +243,7 @@
 
 	New()
 		..()
-		update_icon()
+		UpdateIcon()
 	ai_think()
 		..()
 		//find clown
@@ -298,7 +302,7 @@
 			brutevuln = 0.7
 			firevuln = 1
 
-		update_icon()
+		UpdateIcon()
 
 		return 1
 
@@ -309,7 +313,7 @@
 		else
 			src.icon_state = "[base_icon_state]-dead"
 
-		update_icon()
+		UpdateIcon()
 
 	on_revive()
 		..()
@@ -318,7 +322,7 @@
 		else
 			src.icon_state = base_icon_state
 
-		update_icon()
+		UpdateIcon()
 
 	proc/give_beret(var/obj/hat, var/mob/user)
 		if (shell_count || wearing_beret) return 0
@@ -347,7 +351,7 @@
 		wearing_beret = hat
 
 
-		update_icon()
+		UpdateIcon()
 		// if (src.alive)
 		// 	src.icon_state = "turtle-beret"
 		// else
@@ -388,7 +392,7 @@
 			brutevuln = initial(brutevuln)
 			firevuln = initial(firevuln)
 
-			update_icon()
+			UpdateIcon()
 
 			return 1
 		return 0
@@ -402,7 +406,7 @@
 		..()
 
 	//I'm sorry sylvester... I'll fix this later when I have time, I promise. - Kyle
-	proc/update_icon()
+	update_icon()
 		if (src.alive)
 			if (src.wearing_beret)
 				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat))

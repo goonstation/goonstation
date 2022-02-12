@@ -126,6 +126,7 @@
 
 	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
+	O.verbs += /mob/living/silicon/ai/proc/reset_apcs
 	O.verbs += /mob/living/silicon/ai/proc/de_electrify_verb
 	O.verbs += /mob/living/silicon/ai/proc/unbolt_all_airlocks
 	O.verbs += /mob/living/silicon/ai/proc/ai_camera_track
@@ -137,7 +138,8 @@
 	O.verbs += /mob/living/silicon/ai/proc/ai_statuschange
 	O.verbs += /mob/living/silicon/ai/proc/ai_state_laws_all
 	O.verbs += /mob/living/silicon/ai/proc/ai_state_laws_standard
-	O.verbs += /mob/living/silicon/ai/proc/ai_state_laws_advanced
+	O.verbs += /mob/living/silicon/ai/proc/ai_set_fake_laws
+	O.verbs += /mob/living/silicon/ai/proc/ai_state_fake_laws
 	//O.verbs += /mob/living/silicon/ai/proc/ai_toggle_arrival_alerts
 	//O.verbs += /mob/living/silicon/ai/proc/ai_custom_arrival_alert
 //	O.verbs += /mob/living/silicon/ai/proc/hologramize
@@ -149,6 +151,7 @@
 	O.verbs += /mob/living/silicon/ai/verb/access_internal_pda
 	O.verbs += /mob/living/silicon/ai/proc/ai_colorchange
 	O.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
+	O.verbs += /mob/living/silicon/ai/proc/view_messageLog
 	O.job = "AI"
 
 	SPAWN_DBG(0)
@@ -167,51 +170,37 @@
 		return make_critter(CT, get_turf(src))
 	return 0
 
-/mob/proc/make_critter(var/CT, var/turf/T, ghost_spawned=FALSE)
-	var/mob/living/critter/W = new CT()
+/mob/proc/make_critter(var/critter_type, var/turf/T, ghost_spawned=FALSE)
+	var/mob/living/critter/newmob = new critter_type()
 	if(ghost_spawned)
-		W.ghost_spawned = ghost_spawned
-	if (!(T && isturf(T)))
+		newmob.ghost_spawned = ghost_spawned
+	if (!T || !isturf(T))
 		T = get_turf(src)
-	/*if (!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
-		var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
-		if (ASLoc)
-			W.set_loc(ASLoc)
-		else
-			W.set_loc(locate(1, 1, 1))
-	else
-		W.set_loc(T)*/
-	W.set_loc(T)
-	W.gender = src.gender
+	newmob.set_loc(T)
+	newmob.gender = src.gender
 	if (src.bioHolder)
-		var/datum/bioHolder/original = new/datum/bioHolder(W)
+		var/datum/bioHolder/original = new/datum/bioHolder(newmob)
 		original.CopyOther(src.bioHolder)
-		if(W.bioHolder)
-			qdel(W.bioHolder)
-		W.bioHolder = original
+		qdel(newmob.bioHolder)
+		newmob.bioHolder = original
 
-	var/mob/selfmob = src
-	src = null
-
-	if (selfmob.mind)
-		selfmob.mind.transfer_to(W)
+	if (src.mind)
+		src.mind.transfer_to(newmob)
 	else
-		if (selfmob.client)
-			var/key = selfmob.client.key
-			selfmob.client.mob = W
-			W.mind = new /datum/mind()
-			ticker.minds += W.mind
-			W.mind.ckey = ckey
-			W.mind.key = key
-			W.mind.current = W
+		if (src.client)
+			src.client.mob = newmob
+			newmob.mind = new /datum/mind()
+			ticker.minds += newmob.mind
+			newmob.mind.key = src.client.key
+			newmob.mind.current = newmob
 
-	if (issmallanimal(W))
-		var/mob/living/critter/small_animal/small = W
+	if (issmallanimal(newmob))
+		var/mob/living/critter/small_animal/small = newmob
 		small.setup_overlays() // this requires the small animal to have a client to set things up properly
 
 	SPAWN_DBG(1 DECI SECOND)
-		qdel(selfmob)
-	return W
+		qdel(src)
+	return newmob
 
 
 /mob/living/carbon/human/proc/Robotize_MK2(var/gory = 0)
@@ -297,7 +286,7 @@
 	if (src.client)
 		src.client.mob = O
 	O.set_loc(src.loc)
-	O.a_intent = "harm"
+	O.set_a_intent("harm")
 	boutput(O, "<B>You are now an alien.</B>")
 	dispose()
 	return
@@ -330,7 +319,7 @@
 	if (src.client)
 		src.client.mob = O
 	O.set_loc(src.loc)
-	O.a_intent = "harm"
+	O.set_a_intent("harm")
 	boutput(O, "<B>You are now an alien queen.</B>")
 	dispose()
 	return
@@ -420,6 +409,7 @@
 			W.mind.ckey = ckey
 			W.mind.key = key
 			W.mind.current = W
+		ticker.mode.Agimmicks += W.mind
 		qdel(src)
 
 /mob/proc/machoize(var/shitty = 0)
@@ -808,8 +798,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	var/turf/target_turf = pick(get_area_turfs(/area/afterlife/bar/barspawn))
 
 	if (!src.client) return //ZeWaka: fix for null.preferences
-	var/mob/living/carbon/human/newbody = new()
-	src.client.preferences.copy_to(newbody,src,1)
+	var/mob/living/carbon/human/newbody = new(null, null, src.client.preferences, TRUE)
 	newbody.real_name = src.real_name
 	if(!src.mind.assigned_role || iswraith(src) || isblob(src) || src.mind.assigned_role == "Cyborg" || src.mind.assigned_role == "AI")
 		src.mind.assigned_role = "Staff Assistant"
@@ -881,8 +870,7 @@ var/respawn_arena_enabled = 0
 		boutput(src, "Whoa whoa, you need to regenerate your ethereal essence to fight again, it'll take [time_to_text(ON_COOLDOWN(src?.client?.player, "ass day arena", 0))].")
 		return
 
-	var/mob/living/carbon/human/newbody = new()
-	src.client.preferences.copy_to(newbody,src,1)
+	var/mob/living/carbon/human/newbody = new(null, null, src.client.preferences, TRUE)
 	newbody.real_name = src.real_name
 
 

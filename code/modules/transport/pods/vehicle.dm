@@ -36,7 +36,6 @@
 	var/flying = 0 // holds the direction the ship is currently drifting, or 0 if stopped
 	var/facing = SOUTH // holds the direction the ship is currently facing
 	var/going_home = 0 // set to 1 when the com system locates the station, next z level crossing will head to 1
-	var/fire_delay = 0 // stop people from firing like crazy
 	var/image/fire_overlay = null
 	var/image/damage_overlay = null
 	var/exploding = 0 // don't blow up a bunch of times sheesh
@@ -63,6 +62,7 @@
 
 	New()
 		src.contextActions = childrentypesof(/datum/contextAction/vehicle)
+		src.facing = src.dir
 
 		. = ..()
 		START_TRACKING
@@ -488,7 +488,7 @@
 	get_desc()
 		if (src.keyed > 0)
 			var/t = strings("descriptors.txt", "keyed")
-			var/t_ind = max(min(round(keyed/10),10),0)
+			var/t_ind = clamp(round(keyed/10), 0, 10)
 			. += "It has been keyed [keyed] time[s_es(keyed)]! [t_ind ? t[t_ind] : null]"
 
 	proc/paint_pod(var/obj/item/pod/paintjob/P as obj, var/mob/user as mob)
@@ -1545,34 +1545,30 @@
 	else
 		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
-/obj/machinery/vehicle/proc/fire_main_weapon()
-	if(is_incapacitated(usr))
-		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
+/obj/machinery/vehicle/proc/fire_main_weapon(mob/user)
+	if(is_incapacitated(user))
+		boutput(user, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
-	if(istype(usr.loc, /obj/machinery/vehicle/))
-		var/obj/machinery/vehicle/ship = usr.loc
+	if(istype(user.loc, /obj/machinery/vehicle/))
+		var/obj/machinery/vehicle/ship = user.loc
 		if(ship.stall)
 			return
 		if(ship.m_w_system)
-			if(ship.m_w_system.active && !ship.fire_delay)
+			if(ship.m_w_system.active)
 				if(ship.m_w_system.r_gunner)
-					if(usr == ship.m_w_system.gunner)
+					if(user == ship.m_w_system.gunner)
 						ship.stall += 1
-						ship.fire_delay += 1
-						ship.m_w_system.Fire(usr, src.facing)
-						SPAWN_DBG(1.5 SECONDS)
-							ship.fire_delay -= 1 // cogwerks: no more spamming lasers until the server dies
-							if (ship.fire_delay > 0) ship.fire_delay = 0
+						ship.m_w_system.Fire(user, src.facing)
 					else
-						boutput(usr, "[ship.ship_message("You must be in the gunner seat!")]")
+						boutput(user, "[ship.ship_message("You must be in the gunner seat!")]")
 				else
-					ship.m_w_system.Fire(usr, src.facing)
+					ship.m_w_system.Fire(user, src.facing)
 			else
-				boutput(usr, "[ship.ship_message("SYSTEM OFFLINE")]")
+				boutput(user, "[ship.ship_message("SYSTEM OFFLINE")]")
 		else
-			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
+			boutput(user, "[ship.ship_message("System not installed in ship!")]")
 	else
-		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
+		boutput(user, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
 /obj/machinery/vehicle/proc/use_external_speaker()
 	if(is_incapacitated(usr))

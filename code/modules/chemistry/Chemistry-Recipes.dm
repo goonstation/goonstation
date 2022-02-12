@@ -688,7 +688,7 @@ datum
 			id = "hard_punch"
 			result = "hard_punch"
 			required_reagents = list("simplesyrup" = 1, "sangria" = 1, "juice_apple" = 1, "ginger_ale" = 1, "juice_pineapple" = 1)
-			result_amount = 2
+			result_amount = 5
 			mix_phrase = "This drink is so disgustingly sweet you start to get a headache from smelling it."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
@@ -2477,13 +2477,15 @@ datum
 							continue
 						if (!M.ears_protected_from_sound())
 							boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
+						else
+							continue
 
 						var/checkdist = get_dist(M, location)
-						var/weak = max(0, 2 * (3 - checkdist))
-						var/misstep = clamp(10 + 6 * (5 - checkdist), 0, 40)
-						var/ear_damage = max(0, 2 * (3 - checkdist))
-						var/ear_tempdeaf = max(0, 2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
-						var/stamina = clamp(50 + 10 * (7 - checkdist), 0, 120)
+						var/weak = max(0, created_volume * 0.2 * (3 - checkdist))
+						var/misstep = clamp(1 + 6 * (5 - checkdist), 0, 40)
+						var/ear_damage = max(0, created_volume * 0.2 * (3 - checkdist))
+						var/ear_tempdeaf = max(0, created_volume * 0.2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
+						var/stamina = clamp(created_volume * (5 + 1 * (7 - checkdist)), 0, 120)
 
 						if (issilicon(M))
 							M.apply_sonic_stun(weak, 0)
@@ -2492,6 +2494,7 @@ datum
 				else
 					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 					var/sound_plays = 4
+					created_volume /= amt
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 						if (sound_plays > 0)
 							sound_plays--
@@ -2506,13 +2509,15 @@ datum
 								continue
 							if (!M.ears_protected_from_sound())
 								boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
+							else
+								continue
 
 							var/checkdist = get_dist(M, location)
-							var/weak = max(0, 2 * (3 - checkdist))
-							var/misstep = clamp(10 + 6 * (5 - checkdist), 0, 40)
-							var/ear_damage = max(0, 2 * (3 - checkdist))
-							var/ear_tempdeaf = max(0, 2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
-							var/stamina = clamp(50 + 10 * (7 - checkdist), 0, 120)
+							var/weak = max(0, created_volume * 0.2 * (3 - checkdist))
+							var/misstep = clamp(1 + 6 * (5 - checkdist), 0, 40)
+							var/ear_damage = max(0, created_volume * 0.2 * (3 - checkdist))
+							var/ear_tempdeaf = max(0, created_volume * 0.2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
+							var/stamina = clamp(created_volume * (5 + 1 * (7 - checkdist)), 0, 120)
 
 							if (issilicon(M))
 								M.apply_sonic_stun(weak, 0)
@@ -2629,13 +2634,13 @@ datum
 				var/turf/location = 0
 				if (holder?.my_atom)
 					location = get_turf(holder.my_atom)
-					fireflash(location, min(max(2,round(created_volume/10)),8)) // This reaction didn't have an upper cap, uh-oh (Convair880).
+					fireflash(location, clamp(round(created_volume/10), 2, 8)) // This reaction didn't have an upper cap, uh-oh (Convair880).
 				else
 					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 						location = pick(holder.covered_cache)
 						holder.covered_cache -= location
-						fireflash(location, min(max(2,round(created_volume/10)),8)/amt)
+						fireflash(location, clamp(round(created_volume/10), 2, 8)/amt)
 				return
 
 		napalm_goo
@@ -2973,7 +2978,7 @@ datum
 					s.start()
 					holder.clear_reagents()
 				else
-					var/amt = min(max(1,holder.covered_cache.len/100), 10)
+					var/amt = clamp(holder.covered_cache.len/100, 1, 10)
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 						location = pick(holder.covered_cache)
 						holder.covered_cache -= location
@@ -3008,7 +3013,7 @@ datum
 					s.set_up(created_volume/2, location, holder, 1)
 					s.start()
 				else
-					var/amt = min(max(1,holder.covered_cache.len/100), 10)
+					var/amt = clamp(holder.covered_cache.len/100, 1, 10)
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 						location = pick(holder.covered_cache)
 						holder.covered_cache -= location
@@ -3043,7 +3048,7 @@ datum
 					s.set_up(created_volume/2, location, holder, 2)
 					s.start()
 				else
-					var/amt = min(max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume))), 5)
+					var/amt = clamp((holder.covered_cache.len * (created_volume / holder.covered_cache_volume)), 1, 5)
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 						location = pick(holder.covered_cache)
 						holder.covered_cache -= location
@@ -3158,7 +3163,7 @@ datum
 			name = "Heparin"
 			id = "heparin"
 			result = "heparin"
-			required_reagents = list("sugar" = 1, "meat_slurry" = 1, "phenol" = 1, "acid" = 1)
+			required_reagents = list("sugar" = 1, "blood" = 1, "phenol" = 1, "acid" = 1)
 			result_amount = 2
 
 		proconvertin // coagulant

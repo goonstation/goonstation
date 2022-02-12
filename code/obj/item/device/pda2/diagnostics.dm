@@ -434,7 +434,7 @@
 
 
 				var/datum/signal/signal = get_free_signal()
-				signal.source = src
+				signal.source = src.master
 
 				for(var/key in keyval)
 					signal.data[key] = keyval[key]

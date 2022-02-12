@@ -23,7 +23,9 @@ change the direction of created objects.<br>
 			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "None")) || cinematic
 			giftwrap_style = (input("Gift wrapping style mode") as null|anything in list("Regular", "Spacemas")) || giftwrap_style
 			return
-		objpath = get_one_match(input("Type path", "Type path", "/obj/closet"), /atom)
+		if (!objpath)
+			objpath = /obj/critter/domestic_bee/heisenbee
+		objpath = get_one_match(input("Type path", "Type path", "[objpath]"), /atom)
 		first_corner = null
 		if(ispath(objpath, /turf))
 			boutput(usr, "<span class='alert'>No gifting turfs!</span>")

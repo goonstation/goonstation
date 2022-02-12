@@ -1098,7 +1098,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 
 /datum/clothingbooth_item/costume/mobilesuit
 	name = "Mobile Robot Suit"
-	path = /obj/item/clothing/under/gimmick/mobile_suit
+	path = /obj/item/clothing/suit/gimmick/mobile_suit
 	cost = PAY_EXECUTIVE
 
 /datum/clothingbooth_item/costume/mobilesuithelmet

@@ -34,8 +34,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	var/tmp/timeDilationLowerBound = MIN_TICKLAG
 	var/tmp/timeDilationUpperBound = OVERLOADED_WORLD_TICKLAG
 	var/tmp/highMapCpuCount = 0 // how many times in a row has the map_cpu been high
-	var/tmp/highCpuCount = 0 // how many times in a row has the cpu been high
-	var/tmp/automatic_profiling_on = FALSE
 
 /datum/controller/gameticker/proc/pregame()
 
@@ -50,6 +48,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	if(master_mode == "battle_royale")
 		lobby_titlecard = new /datum/titlecard/battleroyale()
 		lobby_titlecard.set_pregame_html()
+
+	if(master_mode != "extended")
+		src.hide_mode = TRUE
+	else
+		src.hide_mode = FALSE
 
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
 	pregame_timeleft = 1
@@ -110,10 +113,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 /datum/controller/gameticker/proc/setup()
 	set background = 1
 	//Create and announce mode
-	if(master_mode != "extended")
-		src.hide_mode = TRUE
-	else
-		src.hide_mode = FALSE
 
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
@@ -390,8 +389,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		emergency_shuttle.process()
 
-		automatic_profiling()
-
 		#if DM_VERSION >= 514
 		if (useTimeDilation)//TIME_DILATION_ENABLED set this
 			if (world.time > last_try_dilate + TICKLAG_DILATE_INTERVAL) //interval separate from the process loop. maybe consider moving this for cleanup later (its own process loop with diff. interval?)
@@ -491,35 +488,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 			if (elapsed > 0)
 				ticker.round_elapsed_ticks += elapsed
-
-	proc/automatic_profiling(force_stop=FALSE, force_start=FALSE)
-		var/static/profilerLogID = 0
-		if(automatic_profiling_on)
-			if(world.cpu <= CPU_STOP_PROFILING_THRESHOLD)
-				highCpuCount--
-			else
-				highCpuCount = CPU_STOP_PROFILING_COUNT
-			if(highCpuCount <= 0 || force_stop)
-				var/output = world.Profile(PROFILE_REFRESH | PROFILE_STOP, null, "json")
-				var/fname = "data/logs/profiling/[global.roundLog_date]_automatic_[profilerLogID++].json"
-				rustg_file_write(output, fname)
-				message_admins("CPU back down to [world.cpu], turning off profiling, saved as [fname].")
-				logTheThing("debug", null, null, "Automatic profiling finished, CPU at [world.cpu], saved as [fname].")
-				ircbot.export("admin", list("msg"="Automatic profiling finished, CPU at [world.cpu], saved as [fname]."))
-				highCpuCount = 0
-				automatic_profiling_on = FALSE
-		else
-			if(world.cpu >= CPU_START_PROFILING_THRESHOLD)
-				highCpuCount++
-			else
-				highCpuCount = 0
-			if(highCpuCount >= CPU_START_PROFILING_COUNT || force_start)
-				world.Profile(PROFILE_START | PROFILE_CLEAR, null, "json")
-				message_admins("CPU at [world.cpu], turning on profiling.")
-				logTheThing("debug", null, null, "Automatic profiling started, CPU at [world.cpu].")
-				ircbot.export("admin", list("msg"="Automatic profiling started, CPU at [world.cpu]."))
-				highCpuCount = CPU_STOP_PROFILING_COUNT
-				automatic_profiling_on = TRUE
 
 /datum/controller/gameticker/proc/declare_completion()
 	//End of round statistic collection for goonhub
@@ -655,6 +623,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	logTheThing("debug", null, null, "Revving up the spacebux loop...")
 
+	/// list of ckeys and keypairs to bulk commit
+	var/list/bulk_commit = list()
 	for(var/mob/player in mobs)
 		if (player?.client && player.mind && !player.mind.joined_observer && !istype(player,/mob/new_player))
 			logTheThing("debug", null, null, "Iterating on [player.client]")
@@ -731,7 +701,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			else if (istype(player.loc, /obj/cryotron) || player.mind && (player.mind in all_the_baddies)) // Cryo'd or was a baddie at any point? Keep your shit, but you don't get the extra bux
 				player_loses_held_item = 0
 			//some might not actually have a wage
-			if (!isvirtual(player) && (isnukeop(player) ||  (isblob(player) && (player.mind && player.mind.special_role == ROLE_BLOB)) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == ROLE_WIZARD)) ))
+			if (!isvirtual(player) && ((isnukeop(player) || isnukeopgunbot(player)) ||  (isblob(player) && (player.mind && player.mind.special_role == ROLE_BLOB)) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == ROLE_WIZARD)) ))
 				bank_earnings.wage_base = 0 //only effects the end of round display
 				earnings = 800
 
@@ -765,24 +735,32 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			earnings = round(earnings)
 			//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] spacebux calc finish: [player.mind.ckey]")
 
-			SPAWN_DBG(0)
-				if(player.client)
-					player.client.add_to_bank(earnings)
-					// Fix for persistent_bank-is-NaN bug
-					if (player.client.persistent_bank != player.client.persistent_bank)
-						player.client.set_persistent_bank(50000)
-					if (player_loses_held_item)
-						logTheThing("debug", null, null, "[player.ckey] lost held item")
-						player.client.set_last_purchase(0)
+			if(player.client)
+				if (player_loses_held_item)
+					logTheThing("debug", null, null, "[player.ckey] lost held item")
+					player.client.persistent_bank_item = "none"
 
+				bulk_commit[player.ckey] = list(
+					"persistent_bank" = list(
+						"command" = "add",
+						"value" = earnings
+					),
+					"persistent_bank_item" = list(
+						"command" = "replace",
+						"value" = player.client.persistent_bank_item
+					)
+				)
+				SPAWN_DBG(0)
 					bank_earnings.pilot_bonus = pilot_bonus
 					bank_earnings.final_payout = earnings
 					bank_earnings.held_item = player.client.persistent_bank_item
-					bank_earnings.new_balance = player.client.persistent_bank
+					bank_earnings.new_balance = player.client.persistent_bank + earnings
 					bank_earnings.Subscribe( player.client )
 
-
-	logTheThing("debug", null, null, "Done with spacebux")
+	//do bulk commit
+	SPAWN_DBG(0)
+		cloud_put_bulk(json_encode(bulk_commit))
+		logTheThing("debug", null, null, "Done with spacebux")
 
 	for_by_tcl(P, /obj/bookshelf/persistent) //make the bookshelf save its contents
 		P.build_curr_contents()
@@ -837,8 +815,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		logTheThing("debug", null, null, "playtime was unable to be logged because of: [e.name]")
 		logTheThing("diary", null, null, "playtime was unable to be logged because of: [e.name]", "debug")
 
-	if(automatic_profiling_on)
-		automatic_profiling(force_stop=TRUE)
+	if(global.lag_detection_process.automatic_profiling_on)
+		global.lag_detection_process.automatic_profiling(force_stop=TRUE)
 
 	return 1
 

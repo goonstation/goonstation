@@ -147,6 +147,12 @@ Custom Books
 	icon_state = "hydrohandbook"
 	file_path = "strings/books/hydroponicsguide.txt"
 
+/obj/item/paper/book/from_file/bee_book  // By Keiya, bee-cause she felt like it
+	name = "Bee Exposition Extravaganza"
+	icon_state = "bee_book"
+	desc = "Also called \"The BEE Book\" for short."
+	file_path = "strings/books/bee_book.txt"
+
 //needs a review + bullet reformat
 /obj/item/paper/book/from_file/cookbook
 	name = "To Serve Man"
@@ -299,7 +305,7 @@ Custom Books
 	file_path = "strings/books/grifening.txt"
 
 /obj/item/paper/book/from_file/DNDrulebook
-	name = "Stations and Syndicates 8th Edition Rulebook"
+	name = "Stations and Syndicates 9th Edition Rulebook"
 	desc = "A book detailing the ruleset for the tabletop RPG, Stations and Syndicates. You don't know what happened to the previous 7 editions but maybe its probably not worth looking for them."
 	icon_state = "bookcc"
 	file_path = "strings/books/DNDrulebook.txt"

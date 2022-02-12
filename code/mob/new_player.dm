@@ -93,6 +93,8 @@ mob/new_player
 
 			else
 				spawned_in_keys += "[src.ckey]"
+				for (var/sound in global.dj_panel.preloaded_sounds)
+					src.client << load_resource(sound, -1)
 
 #ifdef TWITCH_BOT_ALLOWED
 		if (current_state == GAME_STATE_PLAYING)
@@ -235,7 +237,7 @@ mob/new_player
 			if (ticker?.mode)
 				var/mob/living/silicon/S = locate(href_list["SelectedJob"]) in mobs
 				if (S)
-					if(jobban_isbanned(src.mind, "Cyborg"))
+					if(jobban_isbanned(src, "Cyborg"))
 						boutput(usr, "<span class='notice'>Sorry, you are banned from playing silicons.</span>")
 						close_spawn_windows()
 						return
@@ -322,15 +324,34 @@ mob/new_player
 				mode.add_latejoin_to_team(character.mind, JOB)
 			else if (istype(JOB, /datum/job/special/syndicate_operative))
 				character.set_loc(pick_landmark(LANDMARK_SYNDICATE))
+			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
+				var/datum/game_mode/battle_royale/battlemode = ticker.mode
+				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
+					boutput(character.mind.current,"<h3 class='notice'>You've arrived on a station with a battle royale in progress! Feel free to spectate!</h3>")
+					character.ghostize()
+					qdel(character)
+					return
+				character.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
+				equip_battler(character)
+				character.mind.assigned_role = "MODE"
+				character.mind.special_role = ROLE_BATTLER
+				battlemode.living_battlers.Add(character.mind)
+				DEBUG_MESSAGE("Adding a new battler")
+				battlemode.battle_shuttle_spawn(character.mind)
 			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
 			else if (character.traitHolder && character.traitHolder.hasTrait("pilot"))
 				boutput(character.mind.current,"<h3 class='notice'>You've become lost on your way to the station! Good luck!</h3>")
+			else if (character.traitHolder && character.traitHolder.hasTrait("sleepy"))
+				SPAWN_DBG(10 SECONDS) //ugly hardcoding- matches the duration you're asleep for
+					boutput(character?.mind?.current,"<h3 class='notice'>Hey, you! You're finally awake!</h3>")
 				//As with the Stowaway trait, location setting is handled elsewhere.
 			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner) || istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/mail_order))
 				// Location is set in bank_purchaseable Create()
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived through an alternative mode of travel! Good luck!</h3>")
+			else if (istype(ticker.mode, /datum/game_mode/assday))
+				character.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
 			else if (map_settings?.arrivals_type == MAP_SPAWN_CRYO)
 				var/obj/cryotron/starting_loc = null
 				if (ishuman(character) && by_type[/obj/cryotron])
@@ -343,18 +364,6 @@ mob/new_player
 					character.set_loc(starting_loc)
 			else if (map_settings?.arrivals_type == MAP_SPAWN_MISSILE)
 				latejoin_missile_spawn(character)
-			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
-				var/datum/game_mode/battle_royale/battlemode = ticker.mode
-				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
-					boutput(character.mind.current,"<h3 class='notice'>You've arrived on a station with a battle royale in progress! Feel free to spectate, but you are not considered one of the contestants!</h3>")
-					return AttemptLateSpawn(new /datum/job/special/tourist)
-				character.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
-				equip_battler(character)
-				character.mind.assigned_role = "MODE"
-				character.mind.special_role = ROLE_BATTLER
-				battlemode.living_battlers.Add(character.mind)
-				DEBUG_MESSAGE("Adding a new battler")
-				battlemode.battle_shuttle_spawn(character.mind)
 			else
 				var/starting_loc = null
 				starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(round(world.maxx / 2), round(world.maxy / 2), 1))
@@ -421,7 +430,7 @@ mob/new_player
 			// probalby could be a define but dont give a shite
 			var/maxslots = 5
 			var/list/slots = list()
-			var/shown = min(max(c, (limit == -1 ? 99 : limit)), maxslots)
+			var/shown = clamp(c, (limit == -1 ? 99 : limit), maxslots)
 			// if there's still an open space, show a final join link
 			if (limit == -1 || (limit > maxslots && c < limit))
 				slots += "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];' title='Join the round as [J.name].'>&#x2713;&#xFE0E;</a>"
@@ -626,13 +635,12 @@ a.latejoin-card:hover {
 
 		var/mob/new_character = null
 		if (J)
-			new_character = new J.mob_type(src.loc, client.preferences.AH)
+			new_character = new J.mob_type(src.loc, client.preferences.AH, client.preferences)
 		else
-			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH) // fallback
+			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH, client.preferences) // fallback
 
 		close_spawn_windows()
 
-		client.preferences.copy_to(new_character,src)
 		if(ishuman(new_character))
 			var/mob/living/carbon/human/H = new_character
 			H.update_colorful_parts()

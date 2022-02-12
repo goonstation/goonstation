@@ -35,7 +35,7 @@
 
 	attack_hand(mob/user as mob)
 		boutput(user, "<span class='notice'>You push the [src.name] but nothing happens!</span>")
-		playsound(src.loc, "sound/weapons/Genhit.ogg", 25, 1)
+		playsound(src.loc, "sound/impact_sounds/Flesh_Crush_1.ogg", 40, 1)
 		src.add_fingerprint(user)
 		return
 
@@ -50,10 +50,6 @@
 					src.gib(1)
 			else
 		return
-
-	build_keybind_styles(client/C)
-		..()
-		C.apply_keybind("cube")
 
 	proc/get_cube_idle()
 		return "cubes cubily"
@@ -191,7 +187,7 @@
 				var/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat(src.loc)
 				meat.name = "cube steak"
 				meat.desc = "Grody."
-			playsound(src.loc, "sound/effects/splat.ogg", 75, 1)
+			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
 			src.visible_message("<span class='alert'><b>The meat cube pops!</b></span>")
 			..()
 

@@ -92,7 +92,7 @@
 		linkText = "Active functions?"
 		nodeText = {"As the ship's A.I. i have access to various sub-systems such as weapons, navigation and the nanite-hive.
 		<br>In case of emergency, the communication-systems may also be accessed.
-		<br>The signal you have recieved is the result of one such emergency."}
+		<br>The signal you have received is the result of one such emergency."}
 
 		onActivate(var/client/C)
 			var/datum/dialogueMaster/telescopeValiant/M = master

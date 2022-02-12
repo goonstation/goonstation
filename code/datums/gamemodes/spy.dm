@@ -36,7 +36,7 @@
 			num_players++
 
 	var/i = rand(5)
-	var/num_teams = max(setup_min_teams, min(round((num_players + i) / 7), setup_max_teams))
+	var/num_teams = clamp(round((num_players + i) / 7), setup_min_teams, setup_max_teams)
 	if (num_teams > leaders_possible.len)
 		num_teams = length(leaders_possible)
 
@@ -219,7 +219,7 @@
 	w_class = W_CLASS_SMALL
 	var/charges = 4
 
-	proc/update_icon()
+	update_icon()
 		src.icon_state = "revimplanter[min(4, round((src.charges/initial(src.charges)), 0.25) * 4)]"
 		return
 
@@ -265,7 +265,7 @@
 			new_imp.implanted(M, user, override)
 
 			src.charges--
-			src.update_icon()
+			src.UpdateIcon()
 
 
 /obj/item/implant/spy_implant

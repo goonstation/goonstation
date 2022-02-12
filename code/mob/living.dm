@@ -62,7 +62,7 @@
 	var/sound_snap = 'sound/impact_sounds/Generic_Snap_1.ogg'
 	var/sound_fingersnap = 'sound/effects/fingersnap.ogg'
 	var/sound_gasp = 'sound/voice/gasps/gasp.ogg'
-	var/voice_type = 0
+	var/voice_type = "1"
 	var/last_voice_sound = 0
 	var/speechbubble_enabled = 1
 	var/speechpopupstyle = null
@@ -127,8 +127,9 @@
 
 	var/const/singing_prefix = "%"
 
-/mob/living/New()
+/mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	..()
+	init_preferences?.copy_to(src, usr, ignore_randomizer, skip_post_new_stuff=TRUE)
 	vision = new()
 	src.attach_hud(vision)
 	src.vis_contents += src.chat_text
@@ -143,6 +144,8 @@
 	SPAWN_DBG(0)
 		src.get_static_image()
 		sleep_bubble.appearance_flags = RESET_TRANSFORM
+		if(!ishuman(src))
+			init_preferences?.apply_post_new_stuff(src)
 
 
 /mob/living/flash(duration)
@@ -432,8 +435,6 @@
 			src.toggle_point_mode()
 		if ("say_radio")
 			src.say_radio()
-		if ("say_main_radio")
-			src.say_radio()
 		else
 			. = ..()
 
@@ -721,7 +722,7 @@
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		// If theres no oxygen
-		if (H.oxyloss > 10 || H.losebreath >= 4 || (H.reagents?.has_reagent("capulettium_plus") && H.hasStatus("resting"))) // Perfluorodecalin cap - normal life() depletion - buffer.
+		if (H.oxyloss > 10 || H.losebreath >= 4 || H.hasStatus("muted") || (H.reagents?.has_reagent("capulettium_plus") && H.hasStatus("resting"))) // Perfluorodecalin cap - normal life() depletion - buffer.
 			H.whisper(message, forced=TRUE)
 			return
 
@@ -791,12 +792,14 @@
 								end = 4
 								secure_headset_mode = lowertext(copytext(message,3,end)) //why did i do this to the players
 							message = copytext(message, end)
-
-						else
+						else // Chances are they're using a regular radio prefix instead of a 2 letter one
+							if (!lowertext(copytext(message,2,3) == " ")) // (This makes the :3 prefixes obsolete but fuck em they mess players up)
+								message_mode = "monitor"
+								secure_headset_mode = lowertext(copytext(message,2,3))
 							message = copytext(message, 3)
 
 				else
-					if (ishuman(src) || ismobcritter(src) || isrobot(src)) // this is shit
+					if (ishuman(src) || ismobcritter(src) || isrobot(src) || isshell(src)) // this is shit
 						message_mode = "secure headset"
 						secure_headset_mode = lowertext(copytext(message,2,3))
 					message = copytext(message, 3)
@@ -1066,6 +1069,7 @@
 		if(!last_heard_name || src.get_heard_name() != src.last_heard_name)
 			var/num = hex2num(copytext(md5(src.get_heard_name()), 1, 7))
 			src.last_chat_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
+			src.last_heard_name = src.get_heard_name()
 
 		var/turf/T = get_turf(src)
 		for(var/i = 0; i < 2; i++) T = get_step(T, WEST)
@@ -1203,7 +1207,7 @@
 	if (..())
 		return
 
-	src.misstep_chance = max(0,min(misstep_chance + amount,100))
+	src.misstep_chance = clamp(misstep_chance + amount, 0, 100)
 
 /mob/living/proc/get_static_image()
 	if (src.disposed)
@@ -1281,10 +1285,28 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			thing = src.l_hand
 		else if (src.r_hand)
 			thing = src.r_hand
-
 		if (!thing)
 			return
 
+	// Prevent attempting to pass item arms
+	if (thing == src.l_hand)
+		if (ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if (!(H.has_hand(1)))
+				if (!(H.has_hand(0)))
+					return
+				else
+					thing = src.r_hand
+	if (thing == src.r_hand)
+		if (ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if (!(H.has_hand(0)))
+				if (!(H.has_hand(1)))
+					return
+				else
+					thing = src.l_hand
+	if (!thing)
+		return
 	//passing grab theoretically could be a mechanic but needs some annoying fixed - swapping around assailant and item grab handling an stuff probably
 	if(istype(thing,/obj/item/grab))
 		return
@@ -1352,22 +1374,17 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				for (var/obj/item/grab/G in src.grabbed_by)
 					G.do_resist()
 					struggled_grab = 1
-			else if(src.pulled_by)
-				for (var/mob/O in AIviewers(src, null))
-					O.show_message(text("<span class='alert'>[] breaks free from []'s pulling!</span>", src, src.pulled_by), 1, group = "resist")
-				src.pulled_by.remove_pulling()
-				struggled_grab = 1
+			else
+				if(src.pulled_by)
+					for (var/mob/O in AIviewers(src, null))
+						O.show_message(text("<span class='alert'>[] resists []'s pulling!</span>", src, src.pulled_by), 1, group = "resist")
+					src.pulled_by.remove_pulling()
+					struggled_grab = 1
 		else
-			if(length(src.grabbed_by) > 0)
-				for (var/obj/item/grab/G in src.grabbed_by)
-					if (G.stunned_targets_can_break())
-						G.do_resist()
-						struggled_grab = 1
-			else if(src.pulled_by)
-				for (var/mob/O in AIviewers(src, null))
-					O.show_message(text("<span class='alert'>[] breaks free from []'s pulling!</span>", src, src.pulled_by), 1, group = "resist")
-				src.pulled_by.remove_pulling()
-				struggled_grab = 1
+			for (var/obj/item/grab/G in src.grabbed_by)
+				if (G.stunned_targets_can_break())
+					G.do_resist()
+					struggled_grab = 1
 
 		if (!src.grabbed_by || !src.grabbed_by.len && !struggled_grab)
 			if (src.buckled)
@@ -1451,9 +1468,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (gloves?.material)
 		gloves.material.triggerOnAttack(gloves, M, src)
-		for (var/atom/A in src)
-			if (A.material)
-				A.material.triggerOnAttacked(A, M, src, gloves)
+	for (var/atom/A in src)
+		if (A.material)
+			A.material.triggerOnAttacked(A, M, src, gloves)
 
 	M.viral_transmission(src,"Contact",1)
 
@@ -1709,6 +1726,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			spell_batpoof(src, cloak = 1)
 		if (special_sprint & SPRINT_SNIPER)
 			begin_sniping()
+		if (special_sprint & SPRINT_DESIGNATOR)
+			begin_designating()
 	else if (src.use_stamina)
 		if (!next_step_delay && world.time >= next_sprint_boost)
 			if (!(HAS_MOB_PROPERTY(src, PROP_CANTMOVE) || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || GET_COOLDOWN(src, "unlying_speed_cheesy")))
@@ -1736,7 +1755,10 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			src.cure_disease(D)
 		for (var/datum/ailment_data/malady/M in src.ailments)
 			src.cure_disease(M)
-
+		for(var/datum/ailment_data/addiction/A in src.ailments)
+			src.ailments -= A
+		for (var/datum/ailment_data/parasite/P in src.ailments)
+			src.cure_disease(P)
 
 /mob/living/proc/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 	SHOULD_CALL_PARENT(TRUE)
@@ -1800,7 +1822,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 
 	for (var/mob/V in by_cat[TR_CAT_NERVOUS_MOBS])
-		if (get_dist(src,V) > 6)
+		if (!IN_RANGE(src,V, 6))
 			continue
 		if(prob(8) && src)
 			if(src != V)

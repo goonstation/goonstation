@@ -368,18 +368,18 @@ var/f_color_selector_handler/F_Color_Selector
 			xpRewardButtons[R] = B
 
 		Z_LOG_DEBUG("Preload", "  /datum/material_recipe")
-		for(var/A in childrentypesof(/datum/material_recipe)) //Caching material recipes.
+		for(var/A in concrete_typesof(/datum/material_recipe)) //Caching material recipes.
 			var/datum/material_recipe/R = new A()
 			materialRecipes.Add(R)
 
 		Z_LOG_DEBUG("Preload", "  /datum/achievementReward")
-		for(var/A in childrentypesof(/datum/achievementReward)) //Caching reward datums.
+		for(var/A in concrete_typesof(/datum/achievementReward)) //Caching reward datums.
 			var/datum/achievementReward/R = new A()
 			rewardDB.Add(R.type)
 			rewardDB[R.type] = R
 
 		Z_LOG_DEBUG("Preload", "  /obj/trait")
-		for(var/A in childrentypesof(/obj/trait)) //Creating trait objects. I hate this.
+		for(var/A in concrete_typesof(/obj/trait)) //Creating trait objects. I hate this.
 			var/obj/trait/T = new A( )							//Sentiment shared -G
 			traitList.Add(T.id)
 			traitList[T.id] = T
@@ -628,10 +628,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
 	map_settings.init()
-
-	Z_LOG_DEBUG("World/Init", "Initialize prefab shuttle datums...")
-	var/datum/prefab_shuttle/D = new
-	D.inialize_prefabs()
 
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
@@ -969,7 +965,7 @@ var/f_color_selector_handler/F_Color_Selector
 							msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 
 							if (msg == INTENT_HELP || msg == INTENT_DISARM || msg == INTENT_GRAB || msg == INTENT_HARM)
-								twitch_mob.a_intent = lowertext(msg)
+								twitch_mob.set_a_intent(lowertext(msg))
 								if (ishuman(twitch_mob))
 									var/mob/living/carbon/human/H = twitch_mob
 									H.hud.update_intent()
@@ -998,7 +994,7 @@ var/f_color_selector_handler/F_Color_Selector
 								var/mob/living/carbon/human/H = twitch_mob
 
 								if (twitch_mob.a_intent != INTENT_HARM && twitch_mob.a_intent != INTENT_DISARM)
-									twitch_mob.a_intent = INTENT_HARM
+									twitch_mob.set_a_intent(INTENT_HARM)
 									H.hud.update_intent()
 
 								var/obj/item/equipped = H.equipped()
@@ -1558,6 +1554,17 @@ var/f_color_selector_handler/F_Color_Selector
 				ircmsg["time"] = (world.timeofday - curtime) / 10
 				ircmsg["ticklag"] = world.tick_lag
 				ircmsg["runtimes"] = global.runtime_count
+				if(world.system_type == "UNIX")
+					try
+						var/meminfo_file = "data/meminfo.txt"
+						fcopy("/proc/meminfo", "meminfo_file")
+						var/list/memory_info = splittext(file2text(meminfo_file), "\n")
+						if(length(memory_info) >= 3)
+							memory_info.len = 3
+							ircmsg["meminfo"] = jointext(memory_info, "\n")
+						fdel(meminfo_file)
+					catch(var/exception/e)
+						stack_trace("[e.name]\n[e.desc]")
 				return ircbot.response(ircmsg)
 
 			if ("rev")
@@ -1743,6 +1750,10 @@ var/f_color_selector_handler/F_Color_Selector
 				var/final_action = action
 				if(plist["average"])
 					final_action |= PROFILE_AVERAGE
+				if(plist["action"] == "stop")
+					lag_detection_process.manual_profiling_on = FALSE
+				else if(plist["action"] == "start")
+					lag_detection_process.manual_profiling_on = TRUE
 				var/output = world.Profile(final_action, type, "json")
 				if(plist["action"] == "refresh" || plist["action"] == "stop")
 					SPAWN_DBG(1)

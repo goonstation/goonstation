@@ -183,8 +183,9 @@
 					P.set_dir(dir)
 					P.dpdir = dpdir
 					P.mail_tag = mail_tag
-					P.updateicon()
+					P.UpdateIcon()
 					boutput(user, "You weld [P] in place.")
+					logTheThing("station", user, null, "welded the disposal pipe in place at [log_loc(P)]")
 
 					qdel(src)
 				else

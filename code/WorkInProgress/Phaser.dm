@@ -199,7 +199,7 @@ var/const/PHASER_SNIPER = 256
 		var/energy_old = min(125,src.charges)
 		P.safeties = src.safeties
 		P.charges = energy_old
-		P.update_icon()
+		P.UpdateIcon()
 		qdel(src)
 
 	examine()
@@ -335,7 +335,7 @@ var/const/PHASER_SNIPER = 256
 
 		return
 
-	proc/update_icon()
+	update_icon()
 		var/ratio = src.charges / maximum_charges
 		ratio = round(ratio, 0.25) * 100
 		src.icon_state = text("phaser[]", ratio)
@@ -369,7 +369,7 @@ var/const/PHASER_SNIPER = 256
 		else
 			src.charges -= charges_per_shot
 
-		update_icon()
+		UpdateIcon()
 
 		SPAWN_DBG(0)
 

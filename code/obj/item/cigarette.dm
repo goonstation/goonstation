@@ -6,7 +6,7 @@
 /obj/item/clothing/mask/cigarette
 	name = "cigarette"
 	icon = 'icons/obj/items/cigarettes.dmi'
-	wear_image_icon = 'icons/mob/mask.dmi'
+	wear_image_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "cig"
 	uses_multiple_icon_states = 1
 	item_state = "cig"
@@ -582,7 +582,7 @@
 // haine: these can just inherit the parent name and description vOv
 	cigtype = /obj/item/clothing/mask/cigarette/syndicate
 
-/obj/item/cigpacket/proc/update_icon()
+/obj/item/cigpacket/update_icon()
 	src.overlays = null
 	if (length(src.contents) == 0)
 		src.icon_state = "[src.package_style]0"
@@ -600,7 +600,7 @@
 		else
 			var/obj/item/clothing/mask/cigarette/W = src.contents[1]
 			user.put_in_hand_or_drop(W)
-		src.update_icon()
+		src.UpdateIcon()
 	else
 		return ..()
 	return
@@ -619,7 +619,7 @@
 			W.set_loc(get_turf(user))
 			user.show_text("You knock a cig out of [src], flopping it to the ground.", "red")
 
-	src.update_icon()
+	src.UpdateIcon()
 
 /obj/item/cigpacket/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/clothing/mask/cigarette))
@@ -631,7 +631,7 @@
 			src.contents += cig
 			user.u_equip(cig)
 			cig.set_loc(src)
-			src.update_icon()
+			src.UpdateIcon()
 			return
 		else
 			user.show_text("The packet is just too full to fit any more cigs.", "red")
@@ -669,9 +669,9 @@
 
 /obj/item/cigarbox/New()
 	..()
-	src.update_icon()
+	src.UpdateIcon()
 
-/obj/item/cigarbox/proc/update_icon()
+/obj/item/cigarbox/update_icon()
 	src.overlays = null
 	if (src.cigcount <= 0)
 		src.icon_state = "[src.package_style]"
@@ -691,7 +691,7 @@
 			user.put_in_hand_or_drop(W)
 			if (src.cigcount != -1)
 				src.cigcount--
-		src.update_icon()
+		src.UpdateIcon()
 	else
 		return ..()
 	return
@@ -712,7 +712,7 @@
 			W.set_loc(get_turf(user))
 			user.show_text("You knock a cigar out of [src], flopping it to the ground.", "red")
 
-	src.update_icon()
+	src.UpdateIcon()
 
 /obj/item/cigarbox/gold
 	name = "deluxe golden cigar box"
@@ -732,6 +732,7 @@
 	rand_pos = 1
 
 /obj/item/cigarbox/gold/update_icon()
+
 	src.overlays = null
 	if (src.cigcount <= 0)
 		src.icon_state = "[src.package_style]"
@@ -751,7 +752,7 @@
 			user.put_in_hand_or_drop(W)
 			if (src.cigcount != -1)
 				src.cigcount--
-		src.update_icon()
+		src.UpdateIcon()
 	else
 		return ..()
 	return
@@ -773,7 +774,7 @@
 			W.set_loc(get_turf(user))
 			user.show_text("You knock a cigar out of [src], flopping it to the ground.", "red")
 
-	src.update_icon()
+	src.UpdateIcon()
 
 // breh
 
@@ -837,7 +838,7 @@
 				if (src.match_amt != -1)
 					src.match_amt --
 					tooltip_rebuild = 1
-			src.update_icon()
+			src.UpdateIcon()
 		else
 			return ..()
 		return
@@ -871,7 +872,7 @@
 	attack()
 		return
 
-	proc/update_icon()
+	update_icon()
 		if (src.match_amt == -1)
 			src.icon_state = "matchbook6"
 			return
@@ -1118,8 +1119,9 @@
 
 	New()
 		..()
-		src.create_reagents(20)
-		reagents.add_reagent("fuel", 20)
+		if (!infinite_fuel)
+			src.create_reagents(20)
+			reagents.add_reagent("fuel", 20)
 
 		src.setItemSpecial(/datum/item_special/flame)
 		return
@@ -1127,6 +1129,8 @@
 	attack_self(mob/user)
 		if (user.find_in_hand(src))
 			if (!src.on)
+				if (infinite_fuel)
+					src.activate(user)
 				if (!reagents)
 					return
 				if (!reagents.get_reagent_amount("fuel"))
@@ -1145,6 +1149,7 @@
 		src.firesource = FIRESOURCE_OPEN_FLAME
 		set_icon_state(src.icon_on)
 		src.item_state = "[item_state_base]on"
+		flick("[icon_state]_open", src)
 		light.enable()
 		processing_items |= src
 		if (user != null)
@@ -1157,6 +1162,7 @@
 		src.firesource = FALSE
 		set_icon_state(src.icon_off)
 		src.item_state = "[item_state_base]"
+		flick("[icon_state]_close", src)
 		light.disable()
 		processing_items.Remove(src)
 		if (user != null)
@@ -1216,9 +1222,12 @@
 				return
 
 			if (O.reagents.total_volume)
-				O.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.get_reagent_amount("fuel"))
-				boutput(user, "<span class='notice'>[src] has been refueled.</span>")
-				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+				if (O.reagents.has_reagent("fuel"))
+					O.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.get_reagent_amount("fuel"), 1, 1, O.reagents.reagent_list.Find("fuel"))
+					boutput(user, "<span class='notice'>[src] has been refueled.</span>")
+					playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+				else
+					user.show_text("[src] can only be refilled with fuel.", "red")
 			else
 				user.show_text("[O] is empty.", "red")
 			return
@@ -1231,14 +1240,6 @@
 
 	process()
 		if (src.on)
-			if (!reagents)
-				if (ismob(src.loc))
-					src.deactivate(src.loc)
-				else
-					src.deactivate(null)
-				return
-			if (!infinite_fuel && reagents.get_reagent_amount("fuel"))
-				reagents.remove_reagent("fuel", 0.2)
 			var/turf/location = src.loc
 			if (ismob(location))
 				var/mob/M = location
@@ -1247,12 +1248,22 @@
 			var/turf/T = get_turf(src.loc)
 			if (T)
 				T.hotspot_expose(700,5)
-			if (!reagents.get_reagent_amount("fuel"))
+
+			if (infinite_fuel) //skip all fuel checks
+				return
+			if (!reagents)
 				if (ismob(src.loc))
 					src.deactivate(src.loc)
 				else
 					src.deactivate(null)
 				return
+			if (reagents.get_reagent_amount("fuel"))
+				reagents.remove_reagent("fuel", 0.2)
+			if (!reagents.get_reagent_amount("fuel"))
+				if (ismob(src.loc))
+					src.deactivate(src.loc)
+				else
+					src.deactivate(null)
 			//sleep(1 SECOND)
 
 	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)

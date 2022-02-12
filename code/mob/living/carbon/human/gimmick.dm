@@ -6,13 +6,14 @@
 		SPAWN_DBG(0)
 			src.gender = "male"
 			src.real_name = "cluwne"
-			src.contract_disease(/datum/ailment/disease/cluwneing_around,null,null,1)
-			src.contract_disease(/datum/ailment/disability/clumsy,null,null,1)
 
 			src.equip_new_if_possible(/obj/item/clothing/under/gimmick/cursedclown, slot_w_uniform)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/cursedclown_shoes, slot_shoes)
 			src.equip_new_if_possible(/obj/item/clothing/mask/cursedclown_hat, slot_wear_mask)
 			src.equip_new_if_possible(/obj/item/clothing/gloves/cursedclown_gloves, slot_gloves)
+
+			src.contract_disease(/datum/ailment/disease/cluwneing_around,null,null,1)
+			src.contract_disease(/datum/ailment/disability/clumsy,null,null,1)
 			src.make_jittery(1000)
 			src.bioHolder.AddEffect("clumsy")
 			src.take_brain_damage(80)
@@ -80,7 +81,7 @@
 			src.real_name = "Satan"
 			src.name = "Satan"
 			src.equip_new_if_possible(/obj/item/clothing/under/misc/lawyer/red/demonic, src.slot_w_uniform)
-			src.bioHolder.AddEffect("horns", 0, 0, 1)
+			src.bioHolder.AddEffect("demon_horns", 0, 0, 1)
 			src.bioHolder.AddEffect("aura_fire", 0, 0, 1)
 
 /mob/living/carbon/human/satan/gimmick
@@ -501,7 +502,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 						else
 							target.Attackhand(src)
 			else if(ai_aggressive)
-				a_intent = INTENT_HARM
+				set_a_intent(INTENT_HARM)
 				for(var/mob/M in oview(5, src))
 					if(M == src)
 						continue
@@ -678,7 +679,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
-			src.a_intent = INTENT_HARM
+			src.set_a_intent(INTENT_HARM)
 			src.ai_set_active(1)
 
 		for (var/mob/JB in by_cat[TR_CAT_JOHNBILLS])
@@ -689,7 +690,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 					M.add_karma(-1)
 				J.target = M
 				J.ai_set_active(1)
-				J.a_intent = INTENT_HARM
+				J.set_a_intent(INTENT_HARM)
 
 
 /mob/living/carbon/human/biker/cow

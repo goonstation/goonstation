@@ -11,6 +11,9 @@
 #define ALL_HAIR 4
 
 
+TYPEINFO(/datum/component/toggle_tool_use)
+	initialization_args = list()
+
 /datum/component/toggle_tool_use
 /datum/component/toggle_tool_use/Initialize()
 	if(!istype(parent, /obj/item))
@@ -54,6 +57,9 @@
 	UnregisterSignal(parent, COMSIG_ITEM_DROPPED)
 	. = ..()
 
+TYPEINFO(/datum/component/barber)
+	initialization_args = list()
+
 /datum/component/barber
 /datum/component/barber/Initialize()
 	if(!istype(parent, /obj/item))
@@ -84,7 +90,7 @@
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(!mutant_barber_fluff(M, user, "haircut"))
-		logTheThing("combat", user, M, "tried to cut [constructTarget(M,"combat")]'s hair but failed due to target's [M?.mutantrace.name] mutant race at [log_loc(user)].")
+		logTheThing("combat", user, M, "tried to cut [constructTarget(M,"combat")]'s hair but failed at [log_loc(user)].")
 		return ATTACK_PRE_DONT_ATTACK
 
 	if(non_murderous_failure)
@@ -151,7 +157,7 @@
 		M.emote("cry")
 		M.emote("scream")
 		if (M.organHolder?.head)
-			M.organHolder.head.update_icon()
+			M.organHolder.head.UpdateIcon()
 		return ATTACK_PRE_DONT_ATTACK // gottem
 
 	if(istype(AH.customization_first,/datum/customization_style/none) && istype(AH.customization_second,/datum/customization_style/none) && istype(AH.customization_third,/datum/customization_style/none))
@@ -287,7 +293,7 @@
 			if("virtual")
 				boutput(user, "You prepare to modify M.bioHolder.mobAppearance.customization_[barbery_type == "haircut" ? "first" : "second"].")
 				return 1
-			if("blank" || "humanoid")
+			if("blank", "humanoid")
 				boutput(user, "You somehow correctly guess which end of [M] is forward.")
 				return 1
 			if("grey")
@@ -359,7 +365,7 @@
 											M, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something on your head.",\
 									 user, "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s fishy head, knocking loose some space barnnacles.")
 				return 0
-			if("monkey" || "sea monkey")
+			if("monkey", "sea monkey")
 				M.emote("scream")
 				playsound(M, "sound/impact_sounds/Slimy_Cut_1.ogg", 100, 1)
 				user.tri_message("[user] [barbery_type == "haircut" ? "snips" : "cuts"] [M]'s ear trying to trim [his_or_her(user)] hair!",\
@@ -407,7 +413,7 @@
 				M.TakeDamage("head", rand(5,10), 0)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				return 0
-			if("amphibian" || "Shelter Amphibian")
+			if("amphibian", "Shelter Amphibian")
 				if(barbery_type == "haircut")
 					playsound(M, "sound/items/Scissor.ogg", 100, 1)
 				user.tri_message("[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head, snipping at nothing!",\

@@ -161,7 +161,7 @@
 		if(get_dist(user,src) > 1)
 			boutput(user, "<span class='alert'>You flail your arms at [src.name] from across the room like a complete muppet. Move closer, genius!</span>")
 			return
-		the_range = max(src.min_range,min(the_range,src.max_range))
+		the_range = clamp(the_range, src.min_range, src.max_range)
 		src.range = the_range
 		var/outcome_text = "You set the range to [src.range]."
 		if(src.active)

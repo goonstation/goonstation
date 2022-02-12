@@ -16,8 +16,6 @@
 #define HAS_KUDZU 64					//if a turf has kudzu.
 #define HAS_NBGG 128					//if a turf has NBGG.
 #define BEING_CRUSHERED 256				//if an atom/movable is in the crusher (so conveyors don't push it around)
-/// Is currently scaled by bubsium
-#define IS_BUBSIUM_SCALED 512
 
 //event_handler_flags
 #define USE_PROXIMITY 1 	//Atom implements HasProximity() call in some way.
@@ -40,6 +38,7 @@
 #define THROW_CHAIRFLIP 2
 #define THROW_GUNIMPACT 4
 #define THROW_SLIP 8
+#define THROW_PEEL_SLIP 16
 
 //For serialization purposes
 #define DESERIALIZE_ERROR 0

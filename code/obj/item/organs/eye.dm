@@ -17,7 +17,7 @@
 	New()
 		..()
 		SPAWN_DBG(0)
-			src.update_icon()
+			src.UpdateIcon()
 
 	disposing()
 		if (holder)
@@ -27,7 +27,7 @@
 				holder.right_eye = null
 		..()
 
-	proc/update_icon()
+	update_icon()
 		if (!src.change_iris)
 			return
 		var/image/iris_image = image(src.icon, src, "[icon_state]-iris")
@@ -173,9 +173,9 @@
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(donor)
 
 	on_removal()
-		..()
 		processing_items.Remove(src)
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(donor)
+		..()
 
 /obj/item/organ/eye/cyber/thermal
 	name = "thermal imager cybereye"
@@ -223,12 +223,12 @@
 				APPLY_MOB_PROPERTY(M, PROP_MESONVISION, src)
 
 	on_removal()
-		..()
 		REMOVE_MOB_PROPERTY(donor, PROP_MESONVISION, src)
 		if (istype(assigned.glasses, /obj/item/clothing/glasses/visor))
 			return
 		else
 			src.assigned.vision.set_scan(0)
+		..()
 
 	proc/toggle()
 		src.on = !src.on
@@ -287,9 +287,9 @@
 		return
 
 	on_removal()
-		..()
 		processing_items.Remove(src)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(donor)
+		..()
 		return
 
 /obj/item/organ/eye/cyber/ecto
@@ -432,3 +432,7 @@ obj/item/organ/eye/skeleton
 	desc = "This takes 'hitting the bullseye' to another level."
 	icon_state = "eye-cow"
 	blood_reagent = "milk"
+
+/obj/item/organ/eye/pug
+	name = "pug eye"
+	desc = "Poor guy."
