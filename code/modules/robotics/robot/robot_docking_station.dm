@@ -673,7 +673,8 @@
 			boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 		else
 			src.MouseDrop_T(grab.affecting, user) //lazy
-			qdel(W)
+			src.add_fingerprint(user)
+			qdel(G)
 	..()
 
 /obj/machinery/recharge_station/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
