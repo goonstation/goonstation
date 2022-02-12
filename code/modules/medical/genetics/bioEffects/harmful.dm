@@ -692,7 +692,7 @@
 
 	OnLife(var/mult)
 		..()
-		if (prob(probmult(50)))
+		if (prob(percentmult(50, mult)))
 			var/turf/T
 			//don't really need this but to make it more harmful to the user.
 			if (prob(5))

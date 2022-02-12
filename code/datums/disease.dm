@@ -110,7 +110,7 @@
 		if (stage > master.max_stages)
 			stage = master.max_stages
 
-		if (prob(probmult(stage_prob)) && stage < master.max_stages)
+		if (prob(percentmult(stage_prob, mult)) && stage < master.max_stages)
 			stage++
 
 		master.stage_act(affected_mob,src)
@@ -170,7 +170,7 @@
 		var/advance_prob = stage_prob
 		if (state == "Acute")
 			advance_prob *= 2
-		advance_prob = clamp(probmult(advance_prob), 0, 100)
+		advance_prob = clamp(percentmult(advance_prob, mult), 0, 100)
 
 		if (prob(advance_prob))
 			if (state == "Remissive")
@@ -183,11 +183,11 @@
 
 		// Common cures
 		if (cure != "Incurable")
-			if (cure == "Sleep" && affected_mob.sleeping && prob(probmult(33)))
+			if (cure == "Sleep" && affected_mob.sleeping && prob(percentmult(33, mult)))
 				state = "Remissive"
 				return 1
 
-			else if (cure == "Self-Curing" && prob(probmult(5)))
+			else if (cure == "Self-Curing" && prob(percentmult(5, mult)))
 				state = "Remissive"
 				return 1
 
@@ -209,9 +209,9 @@
 						var/we_are_cured = 0
 						var/reagcure_prob = reagentcure[current_id]
 						if (isnum(reagcure_prob))
-							if (probmult(reagcure_prob))
+							if (prob(max((percentmult(reagcure_prob, mult)), 100)))
 								we_are_cured = 1
-						else if (probmult(recureprob))
+						else if (prob(max(percentmult(recureprob, mult), 100)))
 							we_are_cured = 1
 						if (we_are_cured)
 							state = "Remissive"
@@ -266,7 +266,7 @@
 		if (stage > master.max_stages)
 			stage = master.max_stages
 
-		if (prob(probmult(stage_prob)) && stage < master.max_stages)
+		if (prob(percentmult(stage_prob, mult)) && stage < master.max_stages)
 			stage++
 
 
