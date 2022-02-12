@@ -823,7 +823,6 @@
 				src.goods_sell += new /datum/commodity/podparts/ballistic(src)
 				src.goods_sell += new /datum/commodity/podparts/artillery(src)
 				src.goods_sell += new /datum/commodity/contraband/artillery_ammo(src)
-				src.goods_sell += new /datum/commodity/contraband/ai_kit_syndie(src)
 #ifdef MAP_OVERRIDE_MANTA
 				src.goods_sell += new /datum/commodity/HEtorpedo(src)
 #endif
@@ -1094,7 +1093,6 @@
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)
 		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)
-		src.goods_sell += new /datum/commodity/junk/ai_kit_clown(src)
 
 
 		/////////////////////////////////////////////////////////
@@ -1381,7 +1379,6 @@
 
 
 /*
-
 /obj/npc/trader/flexx
 	icon = 'icons/obj/64.dmi'
 	icon_state = "flexx"
@@ -1390,7 +1387,6 @@
 	trader_area = "/area/flexx_trader"
 	angrynope = "Not cool, champ!"
 	whotext = "Yo, buddy, name's Flexx. Whaddup?"
-
 	New()
 		..()
 		/////////////////////////////////////////////////////////
@@ -1410,31 +1406,370 @@
 		/////////////////////////////////////////////////////////
 		src.goods_buy += new /datum/commodity/contraband/hosberet(src)
 		/////////////////////////////////////////////////////////
-
 		greeting= {"Hello there, space-faring friend."}
-
 		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
-
 		sell_dialogue = "What can I relieve you of?"
-
 		buy_dialogue = "What would you like to purchase?"
-
 		successful_purchase_dialogue = list("Lovely, lovely.",
 			"Enjoy.",
 			"Cheers.")
-
 		failed_sale_dialogue = list("I'm not interested in that.",
 			"Don't you have anything else?")
-
 		successful_sale_dialogue = list("Sounds good to me.",
 			"Sure, I'll take it.")
-
 		failed_purchase_dialogue = list("You're a bit lacking in funds.",
 			"Take a second look at my prices.")
-
 		pickupdialogue = "Here are your things."
-
 		pickupdialoguefailure = "I don't believe you've bought anything yet."
-
-
 */
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//         ______   _        _______  _______  _                _______  _______  _______  _        _______ _________         //
+//        (  ___ \ ( \      (  ___  )(  ____ \| \    /\        (       )(  ___  )(  ____ )| \    /\(  ____ \\__   __/         //
+//        | (   ) )| (      | (   ) || (    \/|  \  / /        | () () || (   ) || (    )||  \  / /| (    \/   ) (            //
+//        | (__/ / | |      | (___) || |      |  (_/ /         | || || || (___) || (____)||  (_/ / | (__       | |            //
+//        |  __ (  | |      |  ___  || |      |   _ (          | |(_)| ||  ___  ||     __)|   _ (  |  __)      | |            //
+//        | (  \ \ | |      | (   ) || |      |  ( \ \         | |   | || (   ) || (\ (   |  ( \ \ | (         | |            //
+//        | )___) )| (____/\| )   ( || (____/\|  /  \ \        | )   ( || )   ( || ) \ \__|  /  \ \| (____/\   | |            //
+//        |/ \___/ (_______/|/     \|(_______/|_/    \/        |/     \||/     \||/   \__/|_/    \/(_______/   )_(            //
+//                                                                                                                            //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//error console
+/obj/npc/trader/blackmarket
+	desc = "A standard trading terminal. This one is showing an error mesage."
+	icon = 'icons/obj/trader.dmi'
+	icon_state = "blackmarket"
+	picture = "placeholder.gif"
+	name = "! NO CONNECTION !"
+	trader_area = "/area/diner/blackmarket"
+	angrynope = "*Nothing Happens*"
+	whotext = "BE BACK SOON - RANTABULOUS FRANQUE."
+	New()
+		..()
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                //
+//    ▄▄▄▄███▄▄▄▄      ▄████████ ▀████    ▐████▀       ▄█          ▄████████  ▄█     █▄     ▄▄▄▄███▄▄▄▄      ▄████████ ███▄▄▄▄    //
+//  ▄██▀▀▀███▀▀▀██▄   ███    ███   ███▌   ████▀       ███         ███    ███ ███     ███  ▄██▀▀▀███▀▀▀██▄   ███    ███ ███▀▀▀██▄  //
+//  ███   ███   ███   ███    ███    ███  ▐███         ███         ███    ███ ███     ███  ███   ███   ███   ███    ███ ███   ███  //
+//  ███   ███   ███   ███    ███    ▀███▄███▀         ███         ███    ███ ███     ███  ███   ███   ███   ███    ███ ███   ███  //
+//  ███   ███   ███ ▀███████████    ████▀██▄          ███       ▀███████████ ███     ███  ███   ███   ███ ▀███████████ ███   ███  //
+//  ███   ███   ███   ███    ███   ▐███  ▀███         ███         ███    ███ ███     ███  ███   ███   ███   ███    ███ ███   ███  //
+//  ███   ███   ███   ███    ███  ▄███     ███▄       ███▌    ▄   ███    ███ ███ ▄█▄ ███  ███   ███   ███   ███    ███ ███   ███  //
+//   ▀█   ███   █▀    ███    █▀  ████       ███▄      █████▄▄██   ███    █▀   ▀███▀███▀    ▀█   ███   █▀    ███    █▀   ▀█   █▀   //
+//                                                   ▀                                                                            //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// This guy is a security officer on board an allied vessel, run by the space capitalism corporation.
+/obj/npc/trader/blackmarket/surplus
+	desc = "A standard trading terminal. There is a gaunt looking man in a red and black uniform on the screen."
+	icon = 'icons/obj/trader.dmi'
+	icon_state = "surplus"
+	picture = "surplus.gif"
+	name = "Max Lawman's Military Surplus"
+	trader_area = "/area/diner/blackmarket"
+	angrynope = "*Lawman refuses to answer your call*"
+	whotext = "I'm Max Lawman. My surplus store sells a variety of armor and weaponry, new and old."
+	New()
+		..()
+		greeting= {"You've hailed Max Lawman's Military Surplus. I'm Max Lawman. What can I get you?"}
+		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
+		sell_dialogue = "I'm accepting certain goods. Check the bounty board."
+		buy_dialogue = "Here's the goods."
+		successful_purchase_dialogue = list(
+					"That's a good piece of gear.",
+					"Going to miss that one.",
+					"All sales are final.",
+					"Almost new. Barely used."
+					)
+		failed_sale_dialogue = list("It's not on the list.","I'm not buying that.","Check the list of what I'm buying. That's not on it.","Unexpected item in the bagging area.")
+		successful_sale_dialogue = list(
+					"Yes, I can pay out for this.",
+					"Grading is... acceptible. Deal.",
+					"I can take that."
+					)
+		failed_purchase_dialogue = list("You can't afford what's in your cart. Correct that.",
+			"Not enough funds in your account.",
+			"You can't afford it. May I suggest something cheaper?")
+		pickupdialogue = "Warping it in."
+		pickupdialoguefailure = "There's nothing in your shopping cart."
+//////////////////////////////////////////////////////////////
+///███████ ███████ ██      ██      ██ ███    ██  ██████     //
+///██      ██      ██      ██      ██ ████   ██ ██       ██ //
+///███████ █████   ██      ██      ██ ██ ██  ██ ██   ███    //
+///     ██ ██      ██      ██      ██ ██  ██ ██ ██    ██ ██ //
+///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
+//////////////////////////////////////////////////////////////
+// Sells a full set of security gear, with random parts mixed in depending on what day it is.
+// Note: No headset, no taser
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/baton(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/breachinghammer(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/sechud(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/backpack(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/helmet(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/gasmask(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/vest(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/suit(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/gloves(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/boots(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/handcuffs(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/riot_grenade(src)
+/////////////////////////////////////////////////////////
+///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
+///██   ██ ██    ██  ██  ██  ██ ████   ██ ██       ██ ///
+///██████  ██    ██   ████   ██ ██ ██  ██ ██   ███    ///
+///██   ██ ██    ██    ██    ██ ██  ██ ██ ██    ██ ██ ///
+///██████   ██████     ██    ██ ██   ████  ██████     ///
+/////////////////////////////////////////////////////////
+		src.goods_buy += new /datum/commodity/blackmarket/surplus/ak47(src)
+		src.goods_buy += new /datum/commodity/blackmarket/surplus/revolver(src)
+		src.goods_buy += new /datum/commodity/blackmarket/surplus/lasergun(src)
+		src.goods_buy += new /datum/commodity/blackmarket/surplus/phaser(src)
+//		src.goods_buy += new /datum/commodity/blackmarket/surplus/lawbringercell(src)
+		src.goods_buy += new /datum/commodity/blackmarket/surplus/erebitecell(src)
+		src.goods_buy += new /datum/commodity/blackmarket/surplus/powercell(src)
+		src.goods_buy += new /datum/commodity/blackmarket/surplus/customcell(src)
+		src.goods_buy += new /datum/commodity/blackmarket/surplus/smallpowercell(src)
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                          //
+// ▄▄▄▄▄▄▄▄▄▄▄  ▄         ▄  ▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄          ▄▄▄▄         ▄▄▄▄     //
+//▐░░░░░░░░░░░▌▐░▌       ▐░▌▐░░░░░░░░░░▌ ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌       ▄█░░░░▌      ▄█░░░░▌    //
+//▐░█▀▀▀▀▀▀▀▀▀ ▐░▌       ▐░▌▐░█▀▀▀▀▀▀▀█░▌ ▀▀▀▀▀█░█▀▀▀ ▐░█▀▀▀▀▀▀▀▀▀ ▐░█▀▀▀▀▀▀▀▀▀  ▀▀▀▀█░█▀▀▀▀       ▐░░▌▐░░▌     ▐░░▌▐░░▌    //
+//▐░▌          ▐░▌       ▐░▌▐░▌       ▐░▌      ▐░▌    ▐░▌          ▐░▌               ▐░▌            ▀▀ ▐░░▌      ▀▀ ▐░░▌    //
+//▐░█▄▄▄▄▄▄▄▄▄ ▐░▌       ▐░▌▐░█▄▄▄▄▄▄▄█░▌      ▐░▌    ▐░█▄▄▄▄▄▄▄▄▄ ▐░▌               ▐░▌               ▐░░▌         ▐░░▌    //
+//▐░░░░░░░░░░░▌▐░▌       ▐░▌▐░░░░░░░░░░▌       ▐░▌    ▐░░░░░░░░░░░▌▐░▌               ▐░▌               ▐░░▌         ▐░░▌    //
+// ▀▀▀▀▀▀▀▀▀█░▌▐░▌       ▐░▌▐░█▀▀▀▀▀▀▀█░▌      ▐░▌    ▐░█▀▀▀▀▀▀▀▀▀ ▐░▌               ▐░▌               ▐░░▌         ▐░░▌    //
+//          ▐░▌▐░▌       ▐░▌▐░▌       ▐░▌      ▐░▌    ▐░▌          ▐░▌               ▐░▌               ▐░░▌         ▐░░▌    //
+// ▄▄▄▄▄▄▄▄▄█░▌▐░█▄▄▄▄▄▄▄█░▌▐░█▄▄▄▄▄▄▄█░▌ ▄▄▄▄▄█░▌    ▐░█▄▄▄▄▄▄▄▄▄ ▐░█▄▄▄▄▄▄▄▄▄      ▐░▌           ▄▄▄▄█░░█▄▄▄  ▄▄▄▄█░░█▄▄▄ //
+//▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░▌ ▐░░░░░░░▌    ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌     ▐░▌          ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌//
+// ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀      ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀       ▀            ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀ //
+//                                                                                                                          //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//The result of 15 years of horriffic gene splicing to create the ultimate economist. A free-market bioweapon containing blob, changeling and bitcoin DNA.
+/obj/npc/trader/blackmarket/blob
+	desc = "A standard trading terminal. There is a strange blobby meat monster on the screen. The monster is writhing."
+	icon = 'icons/obj/trader.dmi'
+	icon_state = "blob"
+	picture = "blob.gif"
+	name = "Subject 11's Vault of Value"
+	trader_area = "/area/diner/blackmarket"
+	angrynope = "*Subject 11 stares silently*"
+	whotext = "CREATED. AS ULTIMATE BIOWEAPON. DNA FROM MANY SOURCES. SPLICED. MODIFIED. THE ULTIMATE ECONOMIST. ME."
+	New()
+		..()
+		greeting= {"I SEE YOU. I WISH. COMMERCE."}
+		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
+		sell_dialogue = "CONSUMING THE FOLLOWING."
+		buy_dialogue = "I WILL TRADE. MY FLESH. FOR YOUR CREDITS. CAN ALWAYS GROW MORE. FOR BULK ORDER."
+		successful_purchase_dialogue = list("YES. GOOD TRADE.",
+			"I SECRETE.",
+			"FLESH OF MY FLESH.",
+			"YOU WILL RECIEVE. BEWARE ITS BITE.")
+		failed_sale_dialogue = list("NO.",
+			"NO. NOT THAT..",
+			"ONLY WHAT I LISTED.",
+			"NOT ON LIST. MUST REJECT.")
+		successful_sale_dialogue = list("BECOME PART OF MY FLESH.",
+			"I SHALL FEAST. FEAST. FEAST.",
+			"BLOOD AND LIFE.")
+		failed_purchase_dialogue = list("WE REQUIRE MORE MINERALS.",
+			"I HUNGER. MORE CASH.",
+			"FEED MORE CREDITS.")
+		pickupdialogue = "ACTIVATING TELEPORTER."
+		pickupdialoguefailure = "CART EMPTY."
+//////////////////////////////////////////////////////////////
+///███████ ███████ ██      ██      ██ ███    ██  ██████     //
+///██      ██      ██      ██      ██ ████   ██ ██       ██ //
+///███████ █████   ██      ██      ██ ██ ██  ██ ██   ███    //
+///     ██ ██      ██      ██      ██ ██  ██ ██ ██    ██ ██ //
+///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
+//////////////////////////////////////////////////////////////
+		src.goods_sell += new /datum/commodity/blackmarket/blob/triplepiss(src)
+		src.goods_sell += new /datum/commodity/blackmarket/blob/food(src)
+		src.goods_sell += new /datum/commodity/blackmarket/blob/enzyme(src)
+		src.goods_sell += new /datum/commodity/blackmarket/blob/slurry(src)
+		src.goods_sell += new /datum/commodity/blackmarket/blob/plasma(src)
+		src.goods_sell += new /datum/commodity/blackmarket/blob/milk(src)
+		src.goods_sell += new /datum/commodity/blackmarket/blob/fungus(src)
+		src.goods_sell += new /datum/commodity/blackmarket/blob/synthflesh(src)
+		src.goods_sell += new /datum/commodity/blackmarket/blob/oil(src)
+		src.goods_sell += new /datum/commodity/blackmarket/blob/insulin(src)
+		src.goods_sell += new /datum/commodity/blackmarket/blob/gravy(src)
+		src.goods_sell += new /datum/commodity/blackmarket/blob/chunk(src)
+		src.goods_sell += new /datum/commodity/blackmarket/blob/chitin(src)
+//		src.goods_sell += new /datum/commodity/blackmarket/blob/head(src)
+//		src.goods_sell += new /datum/commodity/blackmarket/blob/chest(src)
+//		src.goods_sell += new /datum/commodity/blackmarket/blob/leftarm(src)
+//		src.goods_sell += new /datum/commodity/blackmarket/blob/rightarm(src)
+		src.goods_sell += new /datum/commodity/blackmarket/blob/tail(src)
+//		src.goods_sell += new /datum/commodity/blackmarket/blob/leftleg(src)
+//		src.goods_sell += new /datum/commodity/blackmarket/blob/rightleg(src)
+/////////////////////////////////////////////////////////
+///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
+///██   ██ ██    ██  ██  ██  ██ ████   ██ ██       ██ ///
+///██████  ██    ██   ████   ██ ██ ██  ██ ██   ███    ///
+///██   ██ ██    ██    ██    ██ ██  ██ ██ ██    ██ ██ ///
+///██████   ██████     ██    ██ ██   ████  ██████     ///
+/////////////////////////////////////////////////////////
+		src.goods_buy += new /datum/commodity/blackmarket/blob/heisenbee(src)
+		src.goods_buy += new /datum/commodity/blackmarket/blob/pugtail(src)
+		src.goods_buy += new /datum/commodity/blackmarket/blob/liver(src)
+		src.goods_buy += new /datum/commodity/blackmarket/blob/chicken(src)
+		src.goods_buy += new /datum/commodity/blackmarket/blob/pig(src)
+		src.goods_buy += new /datum/commodity/blackmarket/blob/chicken(src)
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                              //
+//        ██████  ██░ ██  ▄▄▄      ▓█████▄ ▓██   ██▓    ▄▄▄██▀▀▀ ▄▄▄       ███▄    █ ▓█████     //
+//      ▒██    ▒ ▓██░ ██▒▒████▄    ▒██▀ ██▌ ▒██  ██▒      ▒██   ▒████▄     ██ ▀█   █ ▓█   ▀     //
+//      ░ ▓██▄   ▒██▀▀██░▒██  ▀█▄  ░██   █▌  ▒██ ██░      ░██   ▒██  ▀█▄  ▓██  ▀█ ██▒▒███       //
+//       ▒   ██▒░▓█ ░██ ░██▄▄▄▄██ ░▓█▄   ▌  ░ ▐██▓░   ▓██▄██▓  ░██▄▄▄▄██ ▓██▒  ▐▌██▒▒▓█  ▄      //
+//     ▒██████▒▒░▓█▒░██▓ ▓█   ▓██▒░▒████▓   ░ ██▒▓░    ▓███▒    ▓█   ▓██▒▒██░   ▓██░░▒████▒     //
+//      ▒ ▒▓▒ ▒ ░ ▒ ░░▒░▒ ▒▒   ▓▒█░ ▒▒▓  ▒    ██▒▒▒     ▒▓▒▒░    ▒▒   ▓▒█░░ ▒░   ▒ ▒ ░░ ▒░ ░    //
+//      ░ ░▒  ░ ░ ▒ ░▒░ ░  ▒   ▒▒ ░ ░ ▒  ▒  ▓██ ░▒░     ▒ ░▒░     ▒   ▒▒ ░░ ░░   ░ ▒░ ░ ░  ░    //
+//      ░  ░  ░   ░  ░░ ░  ░   ▒    ░ ░  ░  ▒ ▒ ░░      ░ ░ ░     ░   ▒      ░   ░ ░    ░       //
+//            ░   ░  ░  ░      ░  ░   ░     ░ ░         ░   ░         ░  ░         ░    ░  ░    //
+//                                  ░       ░ ░                                                 //
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//Staff assistant who set up a store in a maintenance tunnel somewhere, trading stolen shit.
+/obj/npc/trader/blackmarket/shady
+	icon = 'icons/obj/trader.dmi'
+	icon_state = "shady"
+	picture = "shady.gif"
+	name = "Shady Jane's Back-Alley"
+	trader_area = "/area/diner/blackmarket"
+	angrynope = "*You can't establish a connection with Shady Jane*"
+	whotext = "None of your business, nerd."
+	New()
+		..()
+		greeting= {"Got some goods for sale, and creds if you're looking to pawn some stuff off. No questions asked."}
+		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
+		sell_dialogue = "Here's what I want."
+		buy_dialogue = "Feast your eyes:"
+		successful_purchase_dialogue = list("Yep, let's trade.",
+			"Adding it to your cart.",
+			"You got it.",
+			"Lots of things you can do with those!")
+		failed_sale_dialogue = list("I don't really want that.",
+			"Nah.",
+			"Not quite what I'm looking for.",
+			"Don't want it.")
+		successful_sale_dialogue = list("Thanks, pal.",
+			"Deal!",
+			"Alright, I'll take it.")
+		failed_purchase_dialogue = list("Can't afford it.",
+			"Not enough cash, pal.",
+			"You sure you can afford that?")
+		pickupdialogue = "Enjoy!"
+		pickupdialoguefailure = "Nothing in your cart, pal."
+//////////////////////////////////////////////////////////////
+///███████ ███████ ██      ██      ██ ███    ██  ██████     //
+///██      ██      ██      ██      ██ ████   ██ ██       ██ //
+///███████ █████   ██      ██      ██ ██ ██  ██ ██   ███    //
+///     ██ ██      ██      ██      ██ ██  ██ ██ ██    ██ ██ //
+///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
+//////////////////////////////////////////////////////////////
+		src.goods_sell += new /datum/commodity/blackmarket/shady/cursedmask(src)
+		src.goods_sell += new /datum/commodity/blackmarket/shady/omnitool(src)
+		src.goods_sell += new /datum/commodity/blackmarket/shady/zippo(src)
+		src.goods_sell += new /datum/commodity/blackmarket/shady/syndiebomb(src)
+		src.goods_sell += new /datum/commodity/blackmarket/shady/turboflash(src)
+		src.goods_sell += new /datum/commodity/blackmarket/shady/multitool(src)
+		src.goods_sell += new /datum/commodity/blackmarket/shady/welder(src)
+		src.goods_sell += new /datum/commodity/blackmarket/shady/balaclava(src)
+		src.goods_sell += new /datum/commodity/blackmarket/shady/brick(src)
+/////////////////////////////////////////////////////////
+///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
+///██   ██ ██    ██  ██  ██  ██ ████   ██ ██       ██ ///
+///██████  ██    ██   ████   ██ ██ ██  ██ ██   ███    ///
+///██   ██ ██    ██    ██    ██ ██  ██ ██ ██    ██ ██ ///
+///██████   ██████     ██    ██ ██   ████  ██████     ///
+/////////////////////////////////////////////////////////
+		src.goods_buy += new /datum/commodity/blackmarket/shady/barrier(src)
+		src.goods_buy += new /datum/commodity/blackmarket/shady/security_badge(src)
+		src.goods_buy += new /datum/commodity/blackmarket/shady/scorpion(src)
+		src.goods_buy += new /datum/commodity/blackmarket/shady/flamethrower(src)
+		src.goods_buy += new /datum/commodity/blackmarket/shady/pipebomb(src)
+		src.goods_buy += new /datum/commodity/blackmarket/shady/crowbar(src)
+		src.goods_buy += new /datum/commodity/blackmarket/shady/wirecutters(src)
+//////////////////////////////////////////////////////////////////////////////////
+//███╗   ███╗  █████╗  ██████╗     ██╗       █████╗  ██████╗  ██████╗  ██╗   ██╗//
+//████╗ ████║ ██╔══██╗ ██╔══██╗    ██║      ██╔══██╗ ██╔══██╗ ██╔══██╗ ╚██╗ ██╔╝//
+//██╔████╔██║ ███  ██║ ██║  ██║    ██║      ███  ██║ ███  █╔╝ ███  █╔╝  ╚████╔╝ //
+//██║╚██╔╝██║ ██╔══██║ ██║  ██║    ██║      ██╔══██║ ██╔══██╗ ██╔══██╗   ╚██╔╝  //
+//██║ ╚═╝ ██║ ██║  ██║ ██████╔╝    ███████╗ ██║  ██║ ██║  ██║ ██║  ██║    ██║   //
+//╚═╝     ╚═╝ ╚═╝  ╚═╝ ╚═════╝     ╚══════╝ ╚═╝  ╚═╝ ╚═╝  ╚═╝ ╚═╝  ╚═╝    ╚═╝   //
+//////////////////////////////////////////////////////////////////////////////////
+//Antique dealer and pawn broker from the Wrasslin' Quadrant
+/obj/npc/trader/blackmarket/wrestler/
+	icon = 'icons/obj/trader.dmi'
+	icon_state = "wrestler"
+	picture = "wrestler.gif"
+	name = "Mad Larry's Ring of Deals"
+	trader_area = "/area/diner/blackmarket"
+	angrynope = "This is an automated message - MAD LARRY can't TAKE YOUR CALL right now!"
+	whotext = "BOOM! You're tuned into MAD LARRY'S RING OF DEALS! Not only am I current Borgweight Space League Champion four years running, I sell antiques and KICKASS relics from across the space galaxy - and I always pay TOP CRED for anything space explorers dig up! What are ya waiting for? GET DEALIN'!"
+	New()
+		..()
+		greeting= {"POW! This is Mad Larry! I'm moving on soon but I can squeeze in some LAST MINUTE DEALS!"}
+		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
+		sell_dialogue = "Check out the wanted list! I'm always looking to buy some GENUINE space crap!"
+		buy_dialogue = "Here's the stuff!"
+		successful_purchase_dialogue = list("A deal at HALF the price! That's MAD LARRY for ya!",
+			"CHA CHING!",
+			"And those are TOP QUALITY, lemme tell ya!",
+			"EXCELLENT TASTE!")
+		failed_sale_dialogue = list("NO DEAL, friend!")
+		successful_sale_dialogue = list("DEAL! BOOM!",
+			"CHA CHING! We have another GREAT DEAL!",
+			"YES! YES! YES!")
+		failed_purchase_dialogue = list("HEY SPACER! Not enough in your DANG account!")
+		pickupdialogue = "BOOM! TELL YOUR PALS ABOUT THE GREAT DEAL YOU JUST HAD!"
+		pickupdialoguefailure = "I AIN'T SELLING AIR, PUNK!"
+//////////////////////////////////////////////////////////////
+///███████ ███████ ██      ██      ██ ███    ██  ██████     //
+///██      ██      ██      ██      ██ ████   ██ ██       ██ //
+///███████ █████   ██      ██      ██ ██ ██  ██ ██   ███    //
+///     ██ ██      ██      ██      ██ ██  ██ ██ ██    ██ ██ //
+///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
+//////////////////////////////////////////////////////////////
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/monkeyphoto(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/cigarbox(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/syndiechair(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/videocard(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/laptop(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/zippo(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/pinpointer(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/monkeywrench(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/beerbox(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/foldingchair(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/mop(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/rubberduck(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/cowboyboots(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/juicer(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/shirts(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/shorts(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/swimsuit(src)
+/////////////////////////////////////////////////////////
+///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
+///██   ██ ██    ██  ██  ██  ██ ████   ██ ██       ██ ///
+///██████  ██    ██   ████   ██ ██ ██  ██ ██   ███    ///
+///██   ██ ██    ██    ██    ██ ██  ██ ██ ██    ██ ██ ///
+///██████   ██████     ██    ██ ██   ████  ██████     ///
+/////////////////////////////////////////////////////////
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/katana_nukeop(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/capsuit(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/uplink_telecrystal(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/dagger(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/glitch_gun(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/sacred_sandal(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/magic_sandal(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/hairballkey(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/chompskey(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/ghostgun(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/tsunami(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/teapot(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/rarefig(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/goldfishcracker(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/shoecrafts(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/brick(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/pen(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/brick(src)
+//////////////////////////////////////////////////////////////////////////////////
