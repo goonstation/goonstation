@@ -4,7 +4,7 @@
 	process(var/datum/gas_mixture/environment)
 		if (!environment)
 			return ..()
-		var/mult = get_multiplier
+		var/mult = get_multiplier()
 		var/environment_heat_capacity = HEAT_CAPACITY(environment)
 		var/loc_temp = T0C
 		if (istype(owner.loc, /turf/space))
