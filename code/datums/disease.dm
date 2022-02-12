@@ -170,9 +170,8 @@
 		var/advance_prob = stage_prob
 		if (state == "Acute")
 			advance_prob *= 2
-		advance_prob = clamp(percentmult(advance_prob, mult), 0, 100)
 
-		if (prob(advance_prob))
+		if (probmult(advance_prob))
 			if (state == "Remissive")
 				stage--
 				if (stage < 1)
