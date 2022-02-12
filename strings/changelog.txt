@@ -1,5 +1,9 @@
 
 (t)sat feb 12 22
+(u)Zonespace
+(p)6794
+(e)🆕⚖|feature, balance
+(*)Antagonists can buy Syndicate headsets from CARL, and the wiretap upgrade grants access to the Syndicate channel.
 (u)MetricDuck
 (p)7336
 (e)🐛⚖|bug, balance
