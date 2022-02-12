@@ -1,5 +1,9 @@
 
 (t)sat feb 12 22
+(u)Flaborized
+(p)7452
+(e)🎨|sprites
+(+)Resprited gas canisters.
 (u)FlameArrow57
 (p)7460
 (e)🆕|feature
