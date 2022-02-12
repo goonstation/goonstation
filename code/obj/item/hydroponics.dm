@@ -46,7 +46,10 @@
 	active
 		active = 1
 		force = 12
-		hitsound = "sound/machines/chainsaw_green.ogg"
+
+		New()
+			..()
+			hitsound = "sound/machines/chainsaw_green.ogg"
 
 	New()
 		..()
