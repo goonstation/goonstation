@@ -273,11 +273,28 @@
 		icon_state = "director"
 		item_state = "director"
 
+	rank/medical_director
+		name = "medical director's uniform"
+		desc = "There's some odd stains on this thing. Hm."
+		icon_state = "med_director"
+		item_state = "med_director"
+
+	rank/security_assistant
+		name = "security assistant uniform"
+		desc = "Wait, is that velcro?"
+		icon_state = "security-assistant"
+		item_state = "security-assistant"
+
+	rank/rancher
+		name = "rancher's overalls"
+		desc = "Smells like a barn; hopefully its wearer wasn't raised in one."
+		icon_state = "rancher"
+		item_state = "rancher"
 
 /obj/item/clothing/head/chameleon
 	name = "hat"
-	desc = "A knit cap in black."
-	icon_state = "black"
+	desc = "A knit cap in red."
+	icon_state = "red"
 	item_state = "swat_gl"
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
@@ -285,6 +302,8 @@
 	uses_multiple_icon_states = 1
 	var/list/clothing_choices = list()
 	blocked_from_petasusaphilic = TRUE
+	item_function_flags = IMMUNE_TO_ACID
+	seal_hair = 0
 
 	New()
 		..()
@@ -314,6 +333,7 @@
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
+			P.seal_hair = U.seal_hair
 			src.clothing_choices += P
 
 			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
@@ -328,6 +348,7 @@
 			inhand_image = image(inhand_image_icon)
 			src.icon_state = "psyche"
 			src.item_state = "bgloves"
+			src.seal_hair = 0
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -353,76 +374,144 @@
 		src.inhand_image_icon = T.sprite_hand
 		src.wear_image = image(wear_image_icon)
 		src.inhand_image = image(inhand_image_icon)
+		src.seal_hair = T.seal_hair
 		usr.set_clothing_icon_dirty()
 
 /datum/chameleon_hat_pattern
 	var/name = "hat"
-	var/desc = "A knit cap in black."
-	var/icon_state = "black"
-	var/item_state = "black"
+	var/desc = "A knit cap in red."
+	var/icon_state = "red"
+	var/item_state = "red"
 	var/sprite_item = 'icons/obj/clothing/item_hats.dmi'
 	var/sprite_worn = 'icons/mob/clothing/head.dmi'
 	var/sprite_hand = 'icons/mob/inhand/hand_headgear.dmi'
+	var/seal_hair = 0
 
 	NTberet
 		name = "Nanotrasen beret"
 		desc = "For the inner space dictator in you."
 		icon_state = "ntberet"
 		item_state = "ntberet"
+		seal_hair = 0
 
 	HoS_beret
 		name = "HoS Beret"
 		icon_state = "hosberet"
 		item_state = "hoberet"
 		desc = "Actually, this hat is from a fast-food restaurant, that's why it folds like it was made of paper."
+		seal_hair = 0
 
 	HoS_hat
 		name = "HoS Hat"
 		icon_state = "hoscap"
 		item_state = "hoscap"
 		desc = "Actually, this hat is from a fast-food restaurant, that's why it folds like it was made of paper."
+		seal_hair = 0
 
 	caphat
 		name = "Captain's hat"
 		icon_state = "captain"
 		item_state = "caphat"
 		desc = "A symbol of the captain's rank, and the source of all their power."
+		seal_hair = 0
 
 	janiberet
 		name = "Head of Sanitation beret"
 		desc = "The Chief of Cleaning, the Superintendent of Scrubbing, whatever you call yourself, you know how to make those tiles shine. Good job."
 		icon_state = "janitorberet"
 		item_state = "janitorberet"
+		seal_hair = 0
 
 	janihat
 		name = "Head of Sanitation hat"
 		desc = "The Chief of Cleaning, the Superintendent of Scrubbing, whatever you call yourself, you know how to make those tiles shine. Good job."
 		icon_state = "janitorhat"
 		item_state = "janitorhat"
+		seal_hair = 0
 
 	hardhat
 		name = "hard hat"
 		icon_state = "hardhat0"
 		item_state = "hardhat0"
 		desc = "Protects your head from falling objects, and comes with a flashlight. Safety first!"
+		seal_hair = 0
 
 	security
 		name = "helmet"
 		icon_state = "helmet-sec"
 		item_state = "helmet"
 		desc = "Somewhat protects your head from being bashed in."
+		seal_hair = 0
 
 	fancy
 		name = "fancy hat"
 		icon_state = "rank-fancy"
 		item_state = "that"
 		desc = "What do you mean this is hat isn't fancy?"
+		seal_hair = 0
 
 	detective
 		name = "Detective's hat"
 		desc = "Someone who wears this will look very smart."
 		icon_state = "detective"
 		item_state = "det_hat"
+		seal_hair = 0
+
+	space_helmet
+		name = "space helmet"
+		icon_state = "space"
+		item_state = "s_helmet"
+		desc = "Helps protect against vacuum."
+		seal_hair = 1
+
+	space_helmet_emergency
+		name = "emergency hood"
+		icon_state = "emerg"
+		item_state = "emerg"
+		desc = "Helps protect from vacuum for a short period of time."
+		seal_hair = 1
+
+	space_helmet_engineer
+		name = "engineering space helmet"
+		desc = "Comes equipped with a builtin flashlight."
+		icon_state = "espace0"
+		item_state = "s_helmet"
+		seal_hair = 1
+
+	cowboy_hat
+		name = "cowboy hat"
+		desc = "Yeehaw!"
+		icon_state = "cowboy"
+		item_state = "cowboy"
+		seal_hair = 0
+
+	turban
+		name = "turban"
+		desc = "A very comfortable cotton turban."
+		icon_state = "turban"
+		item_state = "that"
+		seal_hair = 0
+
+	top_hat
+		name = "top hat"
+		desc = "An stylish looking hat"
+		icon_state = "tophat"
+		item_state = "that"
+		seal_hair = 0
+
+	chef_hat
+		name = "Chef's hat"
+		desc = "Your toque blanche, coloured as such so that your poor sanitation is obvious, and the blood shows up nice and crazy."
+		icon_state = "chef"
+		item_state = "chefhat"
+		seal_hair = 0
+
+	bio_hood
+		name = "bio hood"
+		icon_state = "bio"
+		item_state = "bio_hood"
+		desc = "This hood protects you from harmful biological contaminants."
+		seal_hair = 1
 
 /obj/item/clothing/suit/chameleon
 	name = "hoodie"
@@ -545,15 +634,6 @@
 		icon_state = "SCIlabcoat"
 		item_state = "SCIlabcoat"
 
-	bio_suit
-		name = "bio suit"
-		desc = "A suit that protects against biological contamination."
-		icon_state = "bio_suit"
-		item_state = "bio_suit"
-		sprite_item = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
-		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
-		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
-
 	paramedic
 		name = "paramedic suit"
 		desc = "A protective padded suit for emergency response personnel. Offers limited thermal and biological protection."
@@ -658,6 +738,72 @@
 		desc = "A comfy coat to protect against the cold. Popular with private investigators."
 		icon_state = "wintercoat-detective"
 		item_state = "wintercoat-detective"
+
+	badge
+		name = "Security Badge"
+		desc = "An official badge for a Nanotrasen Security Worker."
+		icon_state = "security_badge"
+		item_state = "security_badge"
+		sprite_item = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+
+	space_suit
+		name = "space suit"
+		desc = "A suit that protects against low pressure environments."
+		icon_state = "space"
+		item_state = "s_suit"
+		sprite_item = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
+		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
+		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
+
+	space_suit_emergency
+		name = "emergency suit"
+		desc = "A suit that protects against low pressure environments for a short time. Amazingly, it's even more bulky and uncomfortable than the engineering suits."
+		icon_state = "emerg"
+		item_state = "emerg"
+		sprite_item = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
+		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
+		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
+
+	space_suit_engineering
+		name = "engineering space suit"
+		desc = "An overly bulky space suit designed mainly for maintenance and mining."
+		icon_state = "espace"
+		item_state = "es_suit"
+		sprite_item = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
+		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
+		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
+
+	bio_suit
+		name = "bio suit"
+		desc = "A suit that protects against biological contamination."
+		icon_state = "bio_suit"
+		item_state = "bio_suit"
+		sprite_item = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
+		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
+		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
+
+	botanist_apron
+		name = "blue apron"
+		desc = "This will keep you safe from tomato stains. Unless they're the exploding ones"
+		icon_state = "apron-botany"
+		item_state = "apron-botany"
+
+	adeptus //the only outer suit chaplains get weirdly
+		name = "adeptus mechanicus robe"
+		desc = "A robe of a member of the adeptus mechanicus."
+		icon_state = "adeptus"
+		item_state = "adeptus"
+		sprite_item = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+
+	chef_coat
+		name = "chef's coat"
+		desc = "BuRK BuRK BuRK - Bork Bork Bork!"
+		icon_state = "chef"
+		item_state = "chef"
 
 /obj/item/clothing/glasses/chameleon
 	name = "prescription glasses"
@@ -794,6 +940,7 @@
 	wear_image_icon = 'icons/mob/clothing/feet.dmi'
 	uses_multiple_icon_states = 1
 	var/list/clothing_choices = list()
+	step_sound = "step_default"
 
 	New()
 		..()
@@ -807,6 +954,10 @@
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a bad shoe feedback cycle!</span>")
 			SPAWN_DBG(1 SECOND)
 				boutput(user, "<span class='alert'>Nah, just joking. Doing that still doesn't work though!</span>")
+			return
+
+		if(istype(U, /obj/item/clothing/shoes/cowboy/boom)) //if they're gonna copy sounds they're not gonna work on boom boots
+			boutput(user, "<span class='alert'>It doesn't seem like your chameleon shoes can copy that. Hmm.</span>")
 			return
 
 		if(istype(U, /obj/item/clothing/shoes))
@@ -823,6 +974,7 @@
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
+			P.step_sound = U.step_sound
 			src.clothing_choices += P
 
 			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
@@ -861,6 +1013,7 @@
 		src.inhand_image_icon = T.sprite_hand
 		src.wear_image = image(wear_image_icon)
 		src.inhand_image = image(inhand_image_icon)
+		src.step_sound = T.step_sound
 		usr.set_clothing_icon_dirty()
 
 /datum/chameleon_shoes_pattern
@@ -871,47 +1024,75 @@
 	var/sprite_item = 'icons/obj/clothing/item_shoes.dmi'
 	var/sprite_worn = 'icons/mob/clothing/feet.dmi'
 	var/sprite_hand = 'icons/mob/inhand/hand_feethand.dmi'
+	var/step_sound = "step_default"
 
 	brown
 		name = "brown shoes"
 		icon_state = "brown"
 		item_state = "brown"
 		desc = "Brown shoes, camouflage on this kind of station."
+		step_sound = "step_default"
 
 	red
 		name = "red shoes"
 		icon_state = "red"
 		item_state = "red"
+		step_sound = "step_default"
 
 	orange
 		name = "orange shoes"
 		icon_state = "orange"
 		item_state = "orange"
 		desc = "Shoes, now in prisoner orange! Can be made into shackles."
+		step_sound = "step_default"
+
+	white
+		name = "white shoes"
+		icon_state = "white"
+		item_state = "white"
+		desc = "Protects you against biohazards that would enter your feet."
+		step_sound = "step_default"
 
 	magnetic
 		name = "magnetic shoes"
 		desc = "Keeps the wearer firmly anchored to the ground. Provided the ground is metal, of course."
 		icon_state = "magboots"
 		item_state = "magboots"
+		step_sound = "step_plating"
 
 	swat
 		name = "military boots"
 		desc = "Polished and very shiny military boots."
 		icon_state = "swat"
 		item_state = "swat"
+		step_sound = "step_military"
 
 	galoshes
 		name = "galoshes"
 		desc = "Rubber boots that prevent slipping on wet surfaces."
 		icon_state = "galoshes"
 		item_state = "galoshes"
+		step_sound = "step_rubberboot"
 
 	detective
 		name = "worn boots"
 		desc = "This pair of leather boots has seen better days."
 		icon_state = "detective"
 		item_state = "detective"
+		step_sound = "step_default"
+
+	magic_sandals
+		name = "magic sandals"
+		desc = "They magically stop you from slipping on magical hazards. It's not the mesh on the underside that does that. It's MAGIC. Read a fucking book."
+		icon_state = "wizard"
+		item_state = "wizard"
+		step_sound = "step_flipflop"
+
+	chef
+		name = "chef's clogs"
+		desc = "Sturdy shoes that minimize injury from falling objects or knives."
+		icon_state = "chef"
+		step_sound = "step_wood"
 
 /obj/item/clothing/gloves/chameleon
 	name = "Black Gloves"
@@ -923,7 +1104,9 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 	uses_multiple_icon_states = 1
 	var/list/clothing_choices = list()
-	material_prints = "high-tech nanofibers"
+	material_prints = "black leather fibers"
+	hide_prints = 1
+	scramble_prints = 0
 
 	New()
 		..()
@@ -954,6 +1137,9 @@
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
 			src.clothing_choices += P
+			P.print_type = U.material_prints
+			P.hide_prints = U.hide_prints
+			P.scramble_prints = U.scramble_prints
 
 			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
 
@@ -967,6 +1153,8 @@
 			inhand_image = image(inhand_image_icon)
 			src.icon_state = "psyche"
 			src.item_state = "psyche"
+			src.hide_prints = 1
+			src.material_prints = "high-tech rainbow flashing nanofibers"
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -992,6 +1180,9 @@
 		src.inhand_image_icon = T.sprite_hand
 		src.wear_image = image(wear_image_icon)
 		src.inhand_image = image(inhand_image_icon)
+		src.material_prints = T.print_type
+		src.hide_prints = T.hide_prints
+		src.scramble_prints = T.scramble_prints
 		usr.set_clothing_icon_dirty()
 
 /datum/chameleon_gloves_pattern
@@ -1002,30 +1193,42 @@
 	var/sprite_item = 'icons/obj/clothing/item_gloves.dmi'
 	var/sprite_worn = 'icons/mob/clothing/hands.dmi'
 	var/sprite_hand = 'icons/mob/inhand/hand_feethand.dmi'
+	var/print_type = "black leather fibers"
+	var/hide_prints = 1
+	var/scramble_prints = 0
 
 	insulated
 		desc = "These gloves are electrically insulated."
 		name = "insulated gloves"
 		icon_state = "yellow"
 		item_state = "ygloves"
+		print_type = "insulative fibers"
+		hide_prints = 1
+		scramble_prints = 0
 
 	fingerless
 		desc = "These gloves lack fingers."
 		name = "Fingerless Gloves"
 		icon_state = "fgloves"
 		item_state = "finger-"
+		hide_prints = 0
+		scramble_prints = 0
 
 	latex
 		name = "Latex Gloves"
 		icon_state = "latex"
 		item_state = "lgloves"
 		desc = "Thin gloves that offer minimal protection."
+		scramble_prints = 1
 
 	boxing
 		name = "Boxing Gloves"
 		desc = "These gloves are for competitive boxing."
 		icon_state = "boxinggloves"
 		item_state = "bogloves"
+		print_type = "red leather fibers"
+		hide_prints = 1
+		scramble_prints = 0
 
 /obj/item/storage/belt/chameleon
 	name = "utility belt"
@@ -1139,6 +1342,12 @@
 		name = "shoulder holster"
 		icon_state = "shoulder_holster"
 		item_state = "shoulder_holster"
+
+	miner
+		name = "miner's belt"
+		desc = "Can hold various mining tools."
+		icon_state = "minerbelt"
+		item_state = "mining"
 
 /obj/item/storage/backpack/chameleon
 	name = "backpack"
@@ -1397,7 +1606,40 @@
 		belt_type = new/datum/chameleon_belt_pattern
 		backpack_type = new/datum/chameleon_backpack_pattern
 
-	security
+	chief_engineer
+		name = "Chief Engineer"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/chief_engineer
+		hat_type = new/datum/chameleon_hat_pattern/hardhat
+		suit_type = new/datum/chameleon_suit_pattern/winter_coat_command
+		glasses_type = new/datum/chameleon_glasses_pattern/meson
+		shoes_type = new/datum/chameleon_shoes_pattern/brown
+		gloves_type = new/datum/chameleon_gloves_pattern/insulated
+		belt_type = new/datum/chameleon_belt_pattern/ceshielded
+		backpack_type = new/datum/chameleon_backpack_pattern/engineer
+
+	medical_director
+		name = "Medical Director"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/medical_director
+		hat_type = new/datum/chameleon_hat_pattern/fancy
+		suit_type = new/datum/chameleon_suit_pattern/labcoat
+		glasses_type = new/datum/chameleon_glasses_pattern/prodoc
+		shoes_type = new/datum/chameleon_shoes_pattern
+		gloves_type = new/datum/chameleon_gloves_pattern/latex
+		belt_type = new/datum/chameleon_belt_pattern/medical
+		backpack_type = new/datum/chameleon_backpack_pattern
+
+	research_director
+		name = "Medical Director"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/research_director
+		hat_type = new/datum/chameleon_hat_pattern/fancy
+		suit_type = new/datum/chameleon_suit_pattern/labcoat
+		glasses_type = new/datum/chameleon_glasses_pattern/spectro
+		shoes_type = new/datum/chameleon_shoes_pattern/brown
+		gloves_type = new/datum/chameleon_gloves_pattern/latex
+		belt_type = new/datum/chameleon_belt_pattern
+		backpack_type = new/datum/chameleon_backpack_pattern
+
+	security_officer
 		name = "Security Officer"
 		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/security
 		hat_type = new/datum/chameleon_hat_pattern/security
@@ -1417,4 +1659,170 @@
 		shoes_type = new/datum/chameleon_shoes_pattern/detective
 		gloves_type = new/datum/chameleon_gloves_pattern
 		belt_type = new/datum/chameleon_belt_pattern/shoulder_holster
+		backpack_type = new/datum/chameleon_backpack_pattern
+
+	security_assistant
+		name = "Security Assistant"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/security_assistant
+		hat_type = new/datum/chameleon_hat_pattern
+		suit_type = new/datum/chameleon_suit_pattern/badge
+		glasses_type = new/datum/chameleon_glasses_pattern/sechud
+		shoes_type = new/datum/chameleon_shoes_pattern/brown
+		gloves_type = new/datum/chameleon_gloves_pattern/fingerless
+		belt_type = new/datum/chameleon_belt_pattern/security
+		backpack_type = new/datum/chameleon_backpack_pattern/security
+
+	scientist
+		name = "Scientist"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/scientist
+		hat_type = new/datum/chameleon_hat_pattern
+		suit_type = new/datum/chameleon_suit_pattern/labcoat
+		glasses_type = new/datum/chameleon_glasses_pattern/spectro
+		shoes_type = new/datum/chameleon_shoes_pattern/white
+		gloves_type = new/datum/chameleon_gloves_pattern/latex
+		belt_type = new/datum/chameleon_belt_pattern
+		backpack_type = new/datum/chameleon_backpack_pattern/research
+
+	medical_doctor
+		name = "Medical Doctor"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/medical
+		hat_type = new/datum/chameleon_hat_pattern
+		suit_type = new/datum/chameleon_suit_pattern/labcoat
+		glasses_type = new/datum/chameleon_glasses_pattern/prodoc
+		shoes_type = new/datum/chameleon_shoes_pattern/red
+		gloves_type = new/datum/chameleon_gloves_pattern/latex
+		belt_type = new/datum/chameleon_belt_pattern/medical
+		backpack_type = new/datum/chameleon_backpack_pattern/medic
+
+	roboticist
+		name = "Roboticist"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/roboticist
+		hat_type = new/datum/chameleon_hat_pattern
+		suit_type = new/datum/chameleon_suit_pattern/labcoat_robotics
+		glasses_type = new/datum/chameleon_glasses_pattern/prodoc
+		shoes_type = new/datum/chameleon_shoes_pattern
+		gloves_type = new/datum/chameleon_gloves_pattern/latex
+		belt_type = new/datum/chameleon_belt_pattern
+		backpack_type = new/datum/chameleon_backpack_pattern/robotics
+
+	geneticist
+		name = "Geneticist"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/geneticist
+		hat_type = new/datum/chameleon_hat_pattern
+		suit_type = new/datum/chameleon_suit_pattern/labcoat_genetics
+		glasses_type = new/datum/chameleon_glasses_pattern/prodoc
+		shoes_type = new/datum/chameleon_shoes_pattern/white
+		gloves_type = new/datum/chameleon_gloves_pattern/latex
+		belt_type = new/datum/chameleon_belt_pattern/medical
+		backpack_type = new/datum/chameleon_backpack_pattern/genetics
+
+	quartermaster
+		name = "Quartermaster"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/cargo
+		hat_type = new/datum/chameleon_hat_pattern
+		suit_type = new/datum/chameleon_suit_pattern
+		glasses_type = new/datum/chameleon_glasses_pattern
+		shoes_type = new/datum/chameleon_shoes_pattern
+		gloves_type = new/datum/chameleon_gloves_pattern
+		belt_type = new/datum/chameleon_belt_pattern
+		backpack_type = new/datum/chameleon_backpack_pattern
+
+	engineer
+		name = "Engineer"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/engineer
+		hat_type = new/datum/chameleon_hat_pattern/hardhat
+		suit_type = new/datum/chameleon_suit_pattern/winter_coat_engineering
+		glasses_type = new/datum/chameleon_glasses_pattern/meson
+		shoes_type = new/datum/chameleon_shoes_pattern/orange
+		gloves_type = new/datum/chameleon_gloves_pattern/insulated
+		belt_type = new/datum/chameleon_belt_pattern
+		backpack_type = new/datum/chameleon_backpack_pattern/engineer
+
+	mechanic
+		name = "Mechanic"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/mechanic
+		hat_type = new/datum/chameleon_hat_pattern/hardhat
+		suit_type = new/datum/chameleon_suit_pattern/winter_coat_engineering
+		glasses_type = new/datum/chameleon_glasses_pattern/meson
+		shoes_type = new/datum/chameleon_shoes_pattern/brown
+		gloves_type = new/datum/chameleon_gloves_pattern/insulated
+		belt_type = new/datum/chameleon_belt_pattern
+		backpack_type = new/datum/chameleon_backpack_pattern/engineer
+
+	miner
+		name = "Miner"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/overalls
+		hat_type = new/datum/chameleon_hat_pattern/space_helmet_engineer
+		suit_type = new/datum/chameleon_suit_pattern/space_suit_engineering
+		glasses_type = new/datum/chameleon_glasses_pattern/meson
+		shoes_type = new/datum/chameleon_shoes_pattern/orange
+		gloves_type = new/datum/chameleon_gloves_pattern
+		belt_type = new/datum/chameleon_belt_pattern/miner
+		backpack_type = new/datum/chameleon_backpack_pattern/engineer
+
+
+	rancher
+		name = "Rancher"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/rancher
+		hat_type = new/datum/chameleon_hat_pattern/cowboy_hat
+		suit_type = new/datum/chameleon_suit_pattern/botanist_apron
+		glasses_type = new/datum/chameleon_glasses_pattern
+		shoes_type = new/datum/chameleon_shoes_pattern/brown
+		gloves_type = new/datum/chameleon_gloves_pattern
+		belt_type = new/datum/chameleon_belt_pattern
+		backpack_type = new/datum/chameleon_backpack_pattern
+
+	botanist
+		name = "Botanist"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/hydroponics
+		hat_type = new/datum/chameleon_hat_pattern/cowboy_hat
+		suit_type = new/datum/chameleon_suit_pattern/botanist_apron
+		glasses_type = new/datum/chameleon_glasses_pattern/sunglasses
+		shoes_type = new/datum/chameleon_shoes_pattern/brown
+		gloves_type = new/datum/chameleon_gloves_pattern
+		belt_type = new/datum/chameleon_belt_pattern
+		backpack_type = new/datum/chameleon_backpack_pattern
+
+	janitor
+		name = "Janitor"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/janitor
+		hat_type = new/datum/chameleon_hat_pattern/janiberet
+		suit_type = new/datum/chameleon_suit_pattern/bio_suit
+		glasses_type = new/datum/chameleon_glasses_pattern
+		shoes_type = new/datum/chameleon_shoes_pattern/galoshes
+		gloves_type = new/datum/chameleon_gloves_pattern/latex
+		belt_type = new/datum/chameleon_belt_pattern
+		backpack_type = new/datum/chameleon_backpack_pattern
+
+	chaplain
+		name = "Chaplain"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/chaplain
+		hat_type = new/datum/chameleon_hat_pattern/turban
+		suit_type = new/datum/chameleon_suit_pattern/adeptus
+		glasses_type = new/datum/chameleon_glasses_pattern
+		shoes_type = new/datum/chameleon_shoes_pattern/magic_sandals
+		gloves_type = new/datum/chameleon_gloves_pattern
+		belt_type = new/datum/chameleon_belt_pattern
+		backpack_type = new/datum/chameleon_backpack_pattern
+
+	bartender
+		name = "Bartender"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/bartender
+		hat_type = new/datum/chameleon_hat_pattern/top_hat
+		suit_type = new/datum/chameleon_suit_pattern/armor_vest
+		glasses_type = new/datum/chameleon_glasses_pattern/spectro
+		shoes_type = new/datum/chameleon_shoes_pattern
+		gloves_type = new/datum/chameleon_gloves_pattern/latex
+		belt_type = new/datum/chameleon_belt_pattern
+		backpack_type = new/datum/chameleon_backpack_pattern
+
+	chef
+		name = "Chef"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/chef
+		hat_type = new/datum/chameleon_hat_pattern/chef_hat
+		suit_type = new/datum/chameleon_suit_pattern/chef_coat
+		glasses_type = new/datum/chameleon_glasses_pattern
+		shoes_type = new/datum/chameleon_shoes_pattern/chef
+		gloves_type = new/datum/chameleon_gloves_pattern/latex
+		belt_type = new/datum/chameleon_belt_pattern
 		backpack_type = new/datum/chameleon_backpack_pattern
