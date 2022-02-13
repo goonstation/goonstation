@@ -212,48 +212,48 @@
 	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 	for(var/t in src.organs) qdel(src.organs[text("[t]")])
 
-	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/(src.loc, null, 1, syndie = syndicate)
+	var/mob/living/silicon/robot/cyborg = new /mob/living/silicon/robot/(src.loc, null, 1, syndie = syndicate)
 
-	O.gender = src.gender
-	O.bioHolder?.mobAppearance?.pronouns = src.bioHolder?.mobAppearance?.pronouns
-	O.name = "Cyborg"
-	O.real_name = "Cyborg"
-	O.UpdateName()
+	cyborg.gender = src.gender
+	cyborg.bioHolder?.mobAppearance?.pronouns = src.bioHolder?.mobAppearance?.pronouns
+	cyborg.name = "Cyborg"
+	cyborg.real_name = "Cyborg"
+	cyborg.UpdateName()
 	if (src.client)
-		O.lastKnownIP = src.client.address
-		src.client.mob = O
+		cyborg.lastKnownIP = src.client.address
+		src.client.mob = cyborg
+	else
+		//if they're logged out or whatever
+		cyborg.key = src.key
 	if (src.ghost)
 		if (src.ghost.mind)
-			src.ghost.mind.transfer_to(O)
+			src.ghost.mind.transfer_to(cyborg)
 	else
 		if(src.mind)
-			src.mind.transfer_to(O)
-		else
-			//if they're logged out or whatever
-			O.key = src.key
-	O.set_loc(get_turf(src.loc))
+			src.mind.transfer_to(cyborg)
+	cyborg.set_loc(get_turf(src.loc))
 	if (syndicate)
-		O.handle_robot_antagonist_status("converted")
-		boutput(O, "<B>You have been transformed into a <i>syndicate</i> Cyborg. Cyborgs can interact with most electronic objects in their view.</B>")
-		boutput(O, "<B>You must follow your laws and assist syndicate agents, who are identifiable by their icon.</B>")
+		cyborg.handle_robot_antagonist_status("converted")
+		boutput(cyborg, "<B>You have been transformed into a <i>syndicate</i> Cyborg. Cyborgs can interact with most electronic objects in their view.</B>")
+		boutput(cyborg, "<B>You must follow your laws and assist syndicate agents, who are identifiable by their icon.</B>")
 	else
-		boutput(O, "<B>You have been transformed into a Cyborg. Cyborgs can interact with most electronic objects in their view.</B>")
-		boutput(O, "<B>You must follow all laws that the AI has.</B>")
-	boutput(O, "<B>Use \"say :s (message)\" to speak to fellow cyborgs and the AI through binary.</B>")
+		boutput(cyborg, "<B>You have been transformed into a Cyborg. Cyborgs can interact with most electronic objects in their view.</B>")
+		boutput(cyborg, "<B>You must follow all laws that the AI has.</B>")
+	boutput(cyborg, "<B>Use \"say :s (message)\" to speak to fellow cyborgs and the AI through binary.</B>")
 
-	if(O.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
-		if ((O.mind in ticker.mode:revolutionaries) || (O.mind in ticker.mode:head_revolutionaries))
+	if(cyborg.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
+		if ((cyborg.mind in ticker.mode:revolutionaries) || (cyborg.mind in ticker.mode:head_revolutionaries))
 			ticker.mode:update_all_rev_icons() //So the icon actually appears
 
 	if(gory)
-		var/mob/living/silicon/robot/R = O
+		var/mob/living/silicon/robot/R = cyborg
 		if (R.cosmetic_mods)
 			var/datum/robot_cosmetic/RC = R.cosmetic_mods
 			RC.head_mod = "Gibs"
 			RC.ches_mod = "Gibs"
 
 	qdel(src)
-	return O
+	return cyborg
 
 //human -> hivebot
 /mob/living/carbon/human/proc/Hiveize(var/mainframe = 0)
