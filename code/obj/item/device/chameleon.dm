@@ -82,7 +82,7 @@
 		if (flips < flips_required)
 			shake_hands_adj = pick("frantically","wildly","violently","rapidly","vigorously","furiously")
 			shake_hands_syn = pick("wave","flail","shake","swing","flap")
-			user.show_text("<span class='alert'>You [shake_hands_adj] [shake_hands_syn] your hands at the hologram</span>")
+			user.show_text("<span class='alert'>You [shake_hands_adj] [shake_hands_syn] your hands at the hologram.</span>")
 			playsound(src.loc, "sound/effects/elec_bzzz.ogg", 50, 1)
 			animate(src, pixel_x = off_x, pixel_y = off_y, easing = JUMP_EASING, time = 0.5, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 			animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = JUMP_EASING, time = 0.5, flags = ANIMATION_RELATIVE)
@@ -188,7 +188,7 @@
 			for (var/atom/movable/A in cham)
 				A.set_loc(get_turf(cham))
 			cham.set_loc(src)
-			boutput(usr, "<span class='notice'>You deactivate the [src].</span>")
+			boutput(usr, "<span class='notice'>You deactivate [src].</span>")
 			anim.set_loc(get_turf(usr))
 			flick("emppulse",anim)
 			SPAWN_DBG(0.8 SECONDS)
@@ -205,7 +205,7 @@
 			src.active = 1
 			cham.flips = 0
 
-			boutput(usr, "<span class='notice'>You activate the [src].</span>")
+			boutput(usr, "<span class='notice'>You activate [src].</span>")
 			anim.set_loc(get_turf(usr))
 			flick("emppulse",anim)
 			SPAWN_DBG(0.8 SECONDS)
