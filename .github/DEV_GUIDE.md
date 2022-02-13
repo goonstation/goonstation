@@ -277,7 +277,7 @@ Some concerns you might have while waiting:
 Worry not, friend! Atomization just means to break your PR down into smaller chunks, whether it be for balance reasons, because there's weird or extraneous code, or simply off-topic changes.
 
 -"Man, this sure is taking a long while!"
-The unforunate truth of goonstation is that the developers are, just like you and the admins, unpaid volunteers who do this in their spare time, and can take a while before merging yourrequest. Furthermore, depending on how large it is, how many systems are changed, and how controversial it might be, the developers usually give people ample time to bring up any concerns or problems. **With these two factors in mind, it can take anywhere from a day to two weeks for your PR to finally be merged.** If you want to know if there's any issues, you can always copy the four digit number (E.X: #1111) into the discord to bring up the PR with medibot, and directly ask what might be wrong with it.
+The unforunate truth of goonstation is that the developers are, just like you and the admins, unpaid volunteers who do this in their spare time, and can take a while before merging yourrequest. Furthermore, depending on how large it is, how many systems are changed, and how controversial it might be, the developers usually give people ample time to bring up any concerns or problems. **With these two factors in mind, it can take anywhere from a day to two weeks for your PR to finally be merged.** In the meantime, ensure that there are no merge conflicts, that all comments are resolved, and everything is polished as possible to signal that it's ready for merging. If you want to know if there's any issues, you can always copy the four digit number (E.X: #1111) into the discord to bring up the PR with medibot, and directly ask what might be wrong with it.
 
 -"If I want a picture, how do I add images?"
 Pictures are as easy as taking a screenshot of whatever you're made, then copying and directly pasting it into the text box. For this reason, the windows' snipping tool is excellent at this since it automatically copies whatever you capture.
@@ -305,7 +305,9 @@ Changes will be made to the upstream repo and it's a good idea to keep your mast
 4. Select the upstream/master branch
     ![](https://i.imgur.com/maQ0CAw.png)
 
-If you've done everything correctly this should finish without any problems and now your master is in the same state as upstream/master. But you probably also want to sync up your feature branch.
+If you've done everything correctly this should finish without any problems and now your master is in the same state as upstream/master.
+
+You also might want to sync up your feature branch. This is slightly more complicated, but can be done with the following steps:
 
 :::warning
   Resolving icon and map conflicts might be annoying when done manually. You can install an automatic merge driver for these files by running the `tools/hooks/install.bat` file first.
