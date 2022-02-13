@@ -80,8 +80,8 @@
 		off_y = rand(-amplitude/3, amplitude/3)
 
 		if (flips < flips_required)
-			var/shake_hands_adj = pick("frantically","wildly","violently","rapidly","vigorously","furiously")
-			var/shake_hands_syn = pick("wave","flail","shake","swing","flap")
+			shake_hands_adj = pick("frantically","wildly","violently","rapidly","vigorously","furiously")
+			shake_hands_syn = pick("wave","flail","shake","swing","flap")
 			user.show_text("<span class='alert'>You [shake_hands_adj] [shake_hands_syn] your hands at the hologram</span>")
 			playsound(src.loc, "sound/effects/elec_bzzz.ogg", 50, 1)
 			animate(src, pixel_x = off_x, pixel_y = off_y, easing = JUMP_EASING, time = 0.5, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
@@ -189,7 +189,7 @@
 				A.set_loc(get_turf(cham))
 			cham.set_loc(src)
 			boutput(usr, "<span class='notice'>You deactivate the [src].</span>")
-			anim.set_loc(get_turf(src))
+			anim.set_loc(get_turf(usr))
 			flick("emppulse",anim)
 			SPAWN_DBG(0.8 SECONDS)
 				anim.set_loc(src)
@@ -200,13 +200,13 @@
 
 			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
 			cham.master = src
-			cham.set_loc(get_turf(src))
+			cham.set_loc(get_turf(usr))
 			usr.set_loc(cham)
 			src.active = 1
 			cham.flips = 0
 
 			boutput(usr, "<span class='notice'>You activate the [src].</span>")
-			anim.set_loc(get_turf(src))
+			anim.set_loc(get_turf(usr))
 			flick("emppulse",anim)
 			SPAWN_DBG(0.8 SECONDS)
 				anim.set_loc(src)
