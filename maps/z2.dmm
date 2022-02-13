@@ -35709,11 +35709,6 @@
 	},
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
-"cac" = (
-/turf/unsimulated/wall{
-	icon_state = ""
-	},
-/area/meat_derelict/entry)
 "cad" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -141096,7 +141091,7 @@ cba
 cba
 cba
 cba
-cac
+aqL
 caY
 cbB
 caX
@@ -141109,7 +141104,7 @@ aqL
 cfy
 cfy
 cgE
-cac
+aqL
 aqL
 chL
 cid
@@ -141398,8 +141393,8 @@ bWB
 bWB
 bWB
 bWB
-cac
-cac
+aqL
+aqL
 cbB
 caX
 cbz
@@ -141411,12 +141406,12 @@ aqL
 cfz
 cfX
 cgF
-cac
 aqL
-cac
-cac
+aqL
+aqL
+aqL
 ciq
-cac
+aqL
 aqL
 cjm
 cej
@@ -141701,7 +141696,7 @@ bWB
 bWB
 bWB
 bWB
-cac
+aqL
 cbC
 cck
 ccH
@@ -141713,9 +141708,9 @@ aqL
 cfA
 caX
 cfZ
-cac
 aqL
-cac
+aqL
+aqL
 cie
 chN
 ciC
@@ -142003,12 +141998,12 @@ bWB
 bYg
 bWB
 bWB
-cac
-cac
-cac
-cac
-cac
-cac
+aqL
+aqL
+aqL
+aqL
+aqL
+aqL
 cbB
 caX
 aqL
@@ -142017,7 +142012,7 @@ cfY
 dfL
 dfM
 aqL
-cac
+aqL
 chN
 chN
 chN
@@ -142309,7 +142304,7 @@ bWB
 bWB
 bWB
 bWB
-cac
+aqL
 cdD
 cbB
 caX
@@ -142319,7 +142314,7 @@ cfZ
 caX
 chd
 aqL
-cac
+aqL
 chN
 chN
 chN
@@ -142611,15 +142606,15 @@ bYg
 bYg
 ccl
 bWB
-cac
-cac
+aqL
+aqL
 ceg
 caX
 cfb
 caX
 cfZ
 cgH
-cac
+aqL
 aqL
 chM
 cif
@@ -142913,7 +142908,7 @@ bYg
 bWB
 bWB
 bWB
-cac
+aqL
 cdE
 cbB
 caX
@@ -143215,7 +143210,7 @@ bYg
 bYg
 bYg
 bWB
-cac
+aqL
 cdE
 cbC
 cef
