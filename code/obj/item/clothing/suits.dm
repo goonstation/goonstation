@@ -1619,6 +1619,11 @@
 	icon_state = "wintercoat-medical"
 	item_state = "wintercoat-medical"
 
+/obj/item/clothing/suit/wintercoat/genetics
+	name = "genetics winter coat"
+	icon_state = "wintercoat-genetics"
+	item_state = "wintercoat-genetics"
+
 /obj/item/clothing/suit/wintercoat/research
 	name = "research winter coat"
 	icon_state = "wintercoat-research"
