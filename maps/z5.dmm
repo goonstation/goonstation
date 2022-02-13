@@ -5182,7 +5182,7 @@
 /turf/simulated/floor/grime,
 /area/diner/arcade)
 "us" = (
-/obj/machinery/door/airlock/gannets/toxins/alt{
+/obj/machinery/door/airlock/pyro/toxins_alt{
 	req_access = null
 	},
 /obj/cable{
@@ -5842,7 +5842,7 @@
 /turf/simulated/floor/yellow/checker,
 /area/diner/arcade)
 "Zk" = (
-/obj/machinery/door/airlock/gannets/toxins/alt{
+/obj/machinery/door/airlock/pyro/toxins_alt{
 	req_access = null
 	},
 /turf/simulated/floor/grime,
