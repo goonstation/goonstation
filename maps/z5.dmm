@@ -52,7 +52,7 @@
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto,
+/obj/grille/steel,
 /turf/simulated/floor/shuttlebay,
 /area/diner/tug)
 "al" = (
