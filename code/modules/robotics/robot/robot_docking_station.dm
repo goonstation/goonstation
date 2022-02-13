@@ -822,16 +822,17 @@
 				boutput(H, "<span class='alert'>You feel... different.</span>")
 				src.go_out()
 
-				var/bdna = null // For forensics (Convair880).
-				var/btype = null
-				if (H.bioHolder.Uid && H.bioHolder.bloodType)
-					bdna = H.bioHolder.Uid
-					btype = H.bioHolder.bloodType
-				gibs(src.loc, null, null, bdna, btype)
+				SPAWN_DBG(0) // handle_robot_antagonist_status can sleep if it needs to grab a resource so here we are
+					var/bdna = null // For forensics (Convair880).
+					var/btype = null
+					if (H.bioHolder.Uid && H.bioHolder.bloodType)
+						bdna = H.bioHolder.Uid
+						btype = H.bioHolder.bloodType
+					gibs(src.loc, null, null, bdna, btype)
 
-				H.Robotize_MK2(TRUE, syndicate=TRUE)
-				src.build_icon()
-				playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
+					H.Robotize_MK2(TRUE, syndicate=TRUE)
+					src.build_icon()
+					playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
 			else
 				H.bioHolder.AddEffect("eaten")
 				random_brute_damage(H, 10)
