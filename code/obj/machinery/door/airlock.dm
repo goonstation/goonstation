@@ -548,7 +548,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	has_crush = 0
 	health = 500
 	health_max = 500
-	layer = 6
+	layer = EFFECTS_LAYER_UNDER_1
 	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS | HAS_DIRECTIONAL_BLOCKING
 	flags = FPRINT | IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID | ON_BORDER
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
@@ -558,7 +558,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		. = ..()
 
 	close()
-		layer = 6
+		layer = EFFECTS_LAYER_UNDER_1
 		. = ..()
 
 	bumpopen(mob/user as mob)
