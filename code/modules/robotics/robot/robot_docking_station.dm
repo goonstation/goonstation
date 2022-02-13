@@ -612,8 +612,8 @@
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.clothes.Add(W)
-		return
-	if (istype(W, /obj/item/robot_module))
+
+	else if (istype(W, /obj/item/robot_module))
 		if (user.contents.Find(W))
 			user.drop_item()
 		if (W in src.modules)
@@ -622,8 +622,8 @@
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.modules.Add(W)
-		return
-	if (istype(W, /obj/item/roboupgrade))
+
+	else if (istype(W, /obj/item/roboupgrade))
 		if (user.contents.Find(W))
 			user.drop_item()
 		if (W in src.upgrades)
@@ -632,8 +632,8 @@
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.upgrades.Add(W)
-		return
-	if (istype(W, /obj/item/cell))
+
+	else if (istype(W, /obj/item/cell))
 		if (user.contents.Find(W))
 			user.drop_item()
 		if (W in src.cells)
@@ -642,16 +642,16 @@
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.cells.Add(W)
-		return
-	if (istype(W, /obj/item/cable_coil))
+
+	else if (istype(W, /obj/item/cable_coil))
 		var/obj/item/cable_coil/C = W
 		src.cabling += C.amount
 		boutput(user, "You insert [W]. [src] now has [src.cabling] cable available.")
 		if (user.contents.Find(W))
 			user.drop_item()
 		qdel(W)
-		return
-	if (istype(W, /obj/item/reagent_containers/glass))
+
+	else if (istype(W, /obj/item/reagent_containers/glass))
 		var/obj/item/reagent_containers/glass/G = W
 		if (!G.reagents.total_volume)
 			boutput(user, "<span class='alert'>There is nothing in [G] to pour!</span>")
@@ -666,16 +666,19 @@
 			if (!G.reagents.total_volume)
 				boutput(user, "<span class='alert'><b>[G] is now empty.</b></span>")
 			src.reagents.isolate_reagent("fuel")
-			return
-	if (istype(W, /obj/item/grab))
+
+	else if (istype(W, /obj/item/grab))
 		var/obj/item/grab/G = W
 		if (G.state < GRAB_AGGRESSIVE)
 			boutput(user, "<span class='alert'>You need a tighter grip!</span>")
+			return
 		else
 			src.MouseDrop_T(G.affecting, user) //lazy
 			src.add_fingerprint(user)
 			qdel(G)
-	..()
+
+	else
+		..()
 
 /obj/machinery/recharge_station/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if (get_dist(O, user) > 1 || get_dist(src, user) > 1)
