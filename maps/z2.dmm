@@ -43075,11 +43075,7 @@
 /turf/unsimulated/iomoon/floor/arena,
 /area/afterlife/arena)
 "cvy" = (
-/obj/window{
-	icon_state = "rwindow";
-	reinf = 1
-	},
-/obj/grille,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/blackwhite{
 	dir = 8
 	},
@@ -43501,11 +43497,7 @@
 /turf/unsimulated/floor/lava,
 /area/afterlife/hell)
 "cwJ" = (
-/obj/window{
-	icon_state = "rwindow";
-	reinf = 1
-	},
-/obj/grille,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "cwL" = (
@@ -43871,11 +43863,7 @@
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
 "cxA" = (
-/obj/window{
-	icon_state = "rwindow";
-	reinf = 1
-	},
-/obj/grille,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
 "cxB" = (
@@ -44430,11 +44418,7 @@
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
 "cyZ" = (
-/obj/window{
-	icon_state = "rwindow";
-	reinf = 1
-	},
-/obj/grille,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/staffhall)
 "cza" = (
@@ -45464,7 +45448,7 @@
 	},
 /area/owlery/Owlmait)
 "cBE" = (
-/obj/wingrille_spawn,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cBF" = (
@@ -46065,7 +46049,6 @@
 /turf/unsimulated/floor/black,
 /area/owlery/Owlopen)
 "cCZ" = (
-/obj/wingrille_spawn,
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
@@ -46074,6 +46057,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cDa" = (
@@ -46318,10 +46302,10 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cDD" = (
-/obj/wingrille_spawn,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cDE" = (
@@ -47001,7 +46985,7 @@
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
 "cFg" = (
-/obj/wingrille_spawn,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
 "cFh" = (
@@ -47606,16 +47590,13 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/grille,
 /obj/window_blinds/cog2{
 	dir = 4;
 	id = "owl"
 	},
-/obj/window{
-	icon_state = "rwindow";
-	reinf = 1
+/turf/unsimulated/wall/setpieces/fakewindow{
+	dir = 6
 	},
-/turf/unsimulated/floor/plating,
 /area/owlery/office)
 "cGF" = (
 /obj/stool/chair/office{
@@ -47970,12 +47951,12 @@
 	},
 /area/shuttle/john/owlery)
 "cHz" = (
-/obj/wingrille_spawn,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cHA" = (
@@ -48337,11 +48318,6 @@
 /obj/window_blinds/cog2{
 	id = "owl"
 	},
-/obj/window{
-	icon_state = "rwindow";
-	reinf = 1
-	},
-/obj/grille,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -48351,6 +48327,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/office)
 "cIu" = (
@@ -50500,17 +50477,11 @@
 	},
 /area/owlery/gangzone)
 "cNY" = (
-/obj/window{
-	icon_state = "rwindow";
-	reinf = 1
-	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/redblack/corner,
 /area/owlery/gangzone)
 "cNZ" = (
-/obj/window{
-	icon_state = "rwindow";
-	reinf = 1
-	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/redblack/corner{
 	dir = 4
 	},
@@ -50727,14 +50698,6 @@
 /turf/unsimulated/floor/redblack{
 	dir = 4
 	},
-/area/owlery/gangzone)
-"cOp" = (
-/obj/window{
-	icon_state = "rwindow";
-	reinf = 1
-	},
-/obj/grille,
-/turf/unsimulated/floor/black,
 /area/owlery/gangzone)
 "cOq" = (
 /obj/lattice{
@@ -52300,10 +52263,7 @@
 	},
 /area/owlery/gangzone)
 "cRJ" = (
-/obj/window{
-	icon_state = "rwindow";
-	reinf = 1
-	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/owleryhall)
 "cRK" = (
@@ -52403,21 +52363,13 @@
 /turf/unsimulated/floor/stairs/dark,
 /area/owlery/Owlmait2)
 "cRU" = (
-/obj/window{
-	icon_state = "rwindow";
-	reinf = 1
-	},
-/obj/grille,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/redblack/corner{
 	dir = 8
 	},
 /area/owlery/gangzone)
 "cRV" = (
-/obj/window{
-	icon_state = "rwindow";
-	reinf = 1
-	},
-/obj/grille,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/redblack/corner{
 	dir = 1
 	},
@@ -54470,11 +54422,7 @@
 /turf/unsimulated/grass,
 /area/owlery/Owlmait2)
 "cWh" = (
-/obj/window{
-	icon_state = "rwindow";
-	reinf = 1
-	},
-/obj/grille,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
 "cWi" = (
@@ -75633,9 +75581,8 @@
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
 "sUn" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
+/turf/unsimulated/wall/setpieces/fakewindow{
+	dir = 6
 	},
 /area/shuttle/john/owlery)
 "sWb" = (
@@ -96165,14 +96112,14 @@ cKc
 cKc
 cND
 cAJ
-cOp
-cOp
+cBq
+cBq
 cPl
 cIF
 teq
 cQG
-cOp
-cOp
+cBq
+cBq
 cAJ
 cSv
 cSX
@@ -97071,14 +97018,14 @@ cKc
 cKc
 cNG
 cAJ
-cOp
-cOp
+cBq
+cBq
 cPl
 teq
 teq
 cQJ
-cOp
-cOp
+cBq
+cBq
 cIF
 cSx
 cSZ
