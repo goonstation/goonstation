@@ -363,12 +363,14 @@
 				. = TRUE
 
 /obj/machinery/ore_terminal
-	name = "Rockbox™ Ore Cloud Storage Container"
+	name = "Rockbox™ Ore Cloud Access Terminal"
 	desc = "A terminal for the rockbox cloud that lets you buy raw materials from anywhere with just your ID. All sales are final."
 	icon = 'icons/obj/mining_cloud_storage.dmi'
 	icon_state = "ore_terminal"
 	density = 1
 	anchored = 1
+	mats = 20
+
 	var/obj/item/card/id/scan = null
 	var/temp = null
 	var/list/dat = list()

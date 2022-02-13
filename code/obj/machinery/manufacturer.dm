@@ -1963,6 +1963,13 @@
 /obj/item/paper/manufacturer_blueprint/clonepod
 	blueprint = /datum/manufacture/mechanics/clonepod
 
+/obj/item/paper/manufacturer_blueprint/ore_terminal
+	name = "Rockbox™ Ore Cloud Access Terminal"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "interdictor_blueprint"
+	blueprint = /datum/manufacture/ore_terminal
+
+
 /obj/item/paper/manufacturer_blueprint/clonegrinder
 	blueprint = /datum/manufacture/mechanics/clonegrinder
 

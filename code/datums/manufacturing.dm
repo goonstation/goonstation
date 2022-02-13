@@ -2723,6 +2723,16 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	create = 1
 	category = "Miscellaneous"
 
+/******************** Rockbox Ore Terminal *******************/
+/datum/manufacture/ore_terminal
+	name = "Rockbox™ Ore Cloud Access Terminal"
+	item_paths = list("CON-1", "DEN-1","MET-1")
+	item_amounts = list(5, 10, 5)
+	item_outputs = list(/obj/item/gun/energy/alastor)
+	time = 30 SECONDS
+	create = 1
+	category = "Tool"
+
 /******************** GUNS *******************/
 
 /datum/manufacture/alastor
