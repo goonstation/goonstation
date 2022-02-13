@@ -50,10 +50,18 @@
 
 /obj/item/reagent_containers/glass/bottle/epinephrine
 	name = "bottle (epinephrine)"
-	desc = "A small bottle. Contains epinephrine, also known as adrenaline. Used for stabilizing critical patients and as an antihistamine in severe allergic reactions."
+	desc = "A small bottle containing epinephrine, also known as adrenaline. Used for stabilizing critical patients and as an antihistamine in severe allergic reactions."
 	bottle_style = "1"
 	amount_per_transfer_from_this = 10
 	initial_reagents = "epinephrine"
+
+
+/obj/item/reagent_containers/glass/bottle/ephedrine
+	name = "bottle (ephedrine)"
+	desc = "A small bottle containing ephedrine, a stimulant. Not to be confused with epinephrine, ephedrine is a general purpose medication and stimulant. It has a warning label on it about addiction."
+	bottle_style = "2"
+	amount_per_transfer_from_this = 10
+	initial_reagents = "ephedrine"
 
 /obj/item/reagent_containers/glass/bottle/toxin
 	name = "toxin bottle"
@@ -82,6 +90,13 @@
 	bottle_style = "2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "salicylic_acid"
+
+/obj/item/reagent_containers/glass/bottle/menthol
+	name = "bottle (menthol)"
+	desc = "A small bottle containing menthol, used to treat fevers and minor burns."
+	bottle_style = "2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "menthol"
 
 /obj/item/reagent_containers/glass/bottle/insulin
 	name = "bottle (insulin)"
