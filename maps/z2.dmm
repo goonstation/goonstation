@@ -2572,15 +2572,6 @@
 /obj/stool/chair,
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/hospital/samostrel)
-"afO" = (
-/obj/grille/steel,
-/obj/window/north,
-/obj/window/east,
-/obj/window/west,
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/hospital/samostrel)
 "afP" = (
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 4
@@ -2590,15 +2581,6 @@
 "afQ" = (
 /obj/table,
 /turf/unsimulated/floor/blackwhite/whitegrime,
-/area/hospital/samostrel)
-"afR" = (
-/obj/grille/steel,
-/obj/window/south,
-/obj/window/east,
-/obj/window/west,
-/turf/unsimulated/floor{
-	name = "plating"
-	},
 /area/hospital/samostrel)
 "afS" = (
 /obj/decal/fakeobjects{
@@ -163005,8 +162987,8 @@ agm
 aiH
 abr
 abr
-afO
-afR
+adp
+adp
 abr
 afX
 abr
@@ -163601,7 +163583,7 @@ abr
 aew
 aew
 aeS
-afl
+adZ
 abB
 abB
 abr
