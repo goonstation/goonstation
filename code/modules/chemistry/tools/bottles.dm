@@ -58,7 +58,7 @@
 
 /obj/item/reagent_containers/glass/bottle/ephedrine
 	name = "bottle (ephedrine)"
-	desc = "A small bottle containing ephedrine, a stimulant. Not to be confused with epinephrine, ephedrine is a general purpose medication and stimulant. It has a warning label on it about addiction."
+	desc = "A small bottle containing ephedrine. Not to be confused with epinephrine, ephedrine is a general purpose medication and stimulant. It has a warning label on it about addiction."
 	bottle_style = "2"
 	amount_per_transfer_from_this = 10
 	initial_reagents = "ephedrine"
