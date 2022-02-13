@@ -1,5 +1,7 @@
 
 (t)sat feb 12 22
+(u)aloe
+(*)The cyborg converter (syndicate item) has had its price increased to 8 Baddie Bux. It now makes <b>Syndicate Cyborgs</b>. It also works faster, comes with a wrench, is a little less noisy, and you stuff other people in it by agressively grabbing them and clicking it.
 (u)Flappybat
 (p)7372
 (e)🎨⚖|sprites, balance
