@@ -238,7 +238,7 @@
 		tiles -= marker
 		var/turf/T = locate(marker.x, marker.y, marker.z)
 		processing -= T
-		var/turf/simulated/wall/asteroid/AST = new /turf/simulated/wall/asteroid(T)
+		var/turf/simulated/wall/auto/asteroid/AST = new /turf/simulated/wall/auto/asteroid(T)
 		processing += T
 		var/datum/ore/ORE = null
 		switch (rand(1,5))
@@ -307,7 +307,7 @@
 				M.z = marker.z
 				M.probability = marker.probability * 0.75
 				tiles += M
-	for (var/turf/simulated/wall/asteroid/AST in processing)
+	for (var/turf/simulated/wall/auto/asteroid/AST in processing)
 		AST.space_overlays()
 
 

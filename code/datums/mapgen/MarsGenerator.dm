@@ -17,7 +17,7 @@
 	turf_type = /turf/unsimulated/wall/setpieces/martian/auto
 
 /datum/biome/mars/minable
-	turf_type =  /turf/simulated/wall/asteroid/mars
+	turf_type =  /turf/simulated/wall/auto/asteroid/mars
 
 /datum/map_generator/mars_generator
 	///2D list of all biomes based on heat and humidity combos.
@@ -142,7 +142,7 @@
 		src.UpdateOverlays(weather, "weather")
 
  ///for the mapgen mountains, temp until we get something better
-/turf/simulated/wall/asteroid/mars
+/turf/simulated/wall/auto/asteroid/mars
 	name = "martian rock"
 	desc = "Hey, it's not red at all!"
 	fullbright = 0

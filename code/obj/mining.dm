@@ -215,7 +215,7 @@
 			if (!T)
 				boutput(usr, "<span class='alert'>Error: magnet area spans over construction area bounds.</span>")
 				return 0
-			if (!istype(T, /turf/space) && !istype(T, /turf/simulated/floor/plating/airless/asteroid) && !istype(T, /turf/simulated/wall/asteroid))
+			if (!istype(T, /turf/space) && !istype(T, /turf/simulated/floor/plating/airless/asteroid) && !istype(T, /turf/simulated/wall/auto/asteroid))
 				boutput(usr, "<span class='alert'>Error: [T] detected in [width]x[height] magnet area. Cannot magnetize.</span>")
 				return 0
 
@@ -954,17 +954,11 @@
 // Turf Defines
 
 /turf/simulated/wall/asteroid
-#ifdef UNDERWATER_MAP
-	name = "cavern wall"
-	desc = "A cavern wall, possibly flowing with mineral deposits."
-#else
-	name = "asteroid"
-	desc = "A free-floating mineral deposit from space."
-#endif
 	icon = 'icons/turf/asteroid.dmi'
 	icon_state = "ast1"
 	plane = PLANE_FLOOR
 	var/stone_color = "#CCCCCC"
+
 
 #ifdef UNDERWATER_MAP
 	var/hardness = 1
@@ -986,15 +980,144 @@
 	var/mining_max_health = 120
 	var/mining_toughness = 1 //Incoming damage divided by this unless tool has power enough to overcome.
 
+	dark
+		fullbright = 0
+		luminosity = 1
+
+	lighted
+		fullbright = 1
+
+	ice
+		name = "comet chunk"
+		desc = "That's some cold stuff right there."
+		stone_color = "#D1E6FF"
+		default_ore = /obj/item/raw_material/ice
+
+	geode
+		name = "compacted stone"
+		desc = "This rock looks really hard to dig out."
+		stone_color = "#575A5E"
+		default_ore = null
+		hardness = 10
+
+
+// cogwerks - adding some new wall types for cometmap and whatever else
+
+	comet
+		fullbright = 0
+		name = "regolith"
+		desc = "It's dusty and cold."
+		stone_color = "#95A1AF"
+		icon_state = "comet"
+		hardness = 1
+		default_ore = /obj/item/raw_material/rock
+
+		// varied layers
+
+		ice
+			name = "comet ice"
+			icon_state = "comet_ice"
+			stone_color = "#D1E6FF"
+			default_ore = /obj/item/raw_material/ice
+			hardness = 2
+
+		ice_dense
+			name = "dense ice"
+			desc = "A compressed layer of comet ice."
+			icon_state = "comet_ice_dense"
+			stone_color = "#2070CC"
+			default_ore = /obj/item/raw_material/ice
+			hardness = 5
+			quality = 15
+			amount = 6
+
+		ice_char
+			name = "dark regolith"
+			icon_state = "comet_char"
+			desc = "An inky-black assortment of carbon-rich dust and ice."
+			stone_color = "#111111"
+			default_ore = /obj/item/raw_material/char
+
+		glassy
+			name = "blasted regolith"
+			desc = "This stuff has been blasted and fused by stellar radiation and impacts."
+			icon_state = "comet_glassy"
+			stone_color = "#111111"
+			default_ore = /obj/item/raw_material/molitz
+			hardness = 4
+
+		copper
+			name = "metallic rock"
+			desc = "Rich in soft metals."
+			icon_state = "comet_copper"
+			stone_color = "#553333"
+			default_ore = /obj/item/raw_material/pharosium
+
+		iron
+			name = "ferrous rock"
+			desc = "Dense metallic rock."
+			icon_state = "comet_iron"
+			stone_color = "#333333"
+			default_ore = /obj/item/raw_material/mauxite
+			hardness = 8
+
+		plasma
+			name = "plasma ice"
+			desc = "Concentrated plasma trapped in dense ice."
+			icon_state = "comet_plasma"
+			default_ore = /obj/item/raw_material/plasmastone
+			hardness = 5
+
+		radioactive
+			name = "radioactive metal"
+			desc = "There's a hazardous amount of radioactive material in this metallic layer."
+			icon_state = "comet_radioactive"
+			stone_color = "#114444"
+			default_ore = /obj/item/raw_material/cerenkite
+			hardness = 10
+/turf/simulated/wall/auto/asteroid // perspective asteroids made from sprites found in the files. i put this here to try to get it working more easily
+	icon = 'icons/turf/walls_asteroid.dmi'
+	mod = "asteroid-"
+	light_mod = "wall-"
+	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	connect_overlay = 0
+	connect_diagonal = 1
+	connects_to = list(/turf/simulated/wall/auto/asteroid, /turf/simulated/wall/false_wall)
+#ifdef UNDERWATER_MAP
+	name = "cavern wall"
+	desc = "A cavern wall, possibly flowing with mineral deposits."
+#else
+	name = "asteroid"
+	desc = "A free-floating mineral deposit from space."
+#endif
+
+#ifdef UNDERWATER_MAP
+	var/hardness = 1
+#else
+	var/hardness = 0
+#endif
+
+	var/stone_color = "#CCCCCC"
+	var/weakened = 0
+	var/amount = 2
+	var/invincible = 0
+	var/quality = 0
+	var/default_ore = /obj/item/raw_material/rock
+	var/datum/ore/ore = null
+	var/datum/ore/event/event = null
+	var/list/space_overlays = list()
+
+	//NEW VARS
+	var/mining_health = 120
+	var/mining_max_health = 120
+	var/mining_toughness = 1 //Incoming damage divided by this unless tool has power enough to overcome.
+
 #ifdef UNDERWATER_MAP
 	fullbright = 0
 	luminosity = 1
 #else
 	fullbright = 1
 #endif
-
-	consider_superconductivity(starting)
-		return FALSE
 
 	dark
 		fullbright = 0
@@ -1092,6 +1215,8 @@
 			default_ore = /obj/item/raw_material/cerenkite
 			hardness = 10
 
+	consider_superconductivity(starting)
+		return FALSE
 
 
 	New(var/loc)
@@ -1103,7 +1228,7 @@
 
 	generate_worldgen()
 		. = ..()
-		src.space_overlays()
+		//src.space_overlays()
 
 	ex_act(severity)
 		switch(severity)
@@ -1388,12 +1513,12 @@
 		if (E.nearby_tile_distribution_min > 0 && E.nearby_tile_distribution_max > 0)
 			var/distributions = rand(E.nearby_tile_distribution_min,E.nearby_tile_distribution_max)
 			var/list/usable_turfs = list()
-			for (var/turf/simulated/wall/asteroid/AST in range(E.distribution_range,src))
+			for (var/turf/simulated/wall/auto/asteroid/AST in range(E.distribution_range,src))
 				if (!isnull(AST.event))
 					continue
 				usable_turfs += AST
 
-			var/turf/simulated/wall/asteroid/AST
+			var/turf/simulated/wall/auto/asteroid/AST
 			while (distributions > 0)
 				distributions--
 				if (usable_turfs.len < 1)
@@ -1456,7 +1581,7 @@
 
 	generate_worldgen()
 		. = ..()
-		src.space_overlays()
+		//src.space_overlays()
 
 	ex_act(severity)
 		return
@@ -1490,7 +1615,7 @@
 		#endif
 		SPAWN_DBG(0)
 			if (istype(src)) //Wire note: just roll with this ok
-				for (var/turf/simulated/wall/asteroid/A in orange(src,1))
+				for (var/turf/simulated/wall/auto/asteroid/A in orange(src,1))
 					src.apply_edge_overlay(get_dir(src, A))
 				for (var/turf/space/A in orange(src,1))
 					src.apply_edge_overlay(get_dir(src, A))
@@ -1500,7 +1625,7 @@
 		dig_overlay.color = src.stone_color
 		dig_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 		//dig_overlay.layer = src.layer + 1
-		src.overlays += dig_overlay
+		//src.overlays += dig_overlay
 
 	proc/space_overlays() //For overlays ON THE SPACE TILE
 		for (var/turf/space/A in orange(src,1))
@@ -1826,7 +1951,7 @@ obj/item/clothing/gloves/concussive
 						qdel (src)
 						return
 				else
-					if (istype(target, /turf/simulated/wall/asteroid/) && !src.hacked)
+					if (istype(target, /turf/simulated/wall/auto/asteroid/) && !src.hacked)
 						boutput(user, "<span class='alert'>You slap the charge on [target], [det_time/10] seconds!</span>")
 						user.visible_message("<span class='alert'>[user] has attached [src] to [target].</span>")
 						src.icon_state = "bcharge2"
@@ -1888,7 +2013,7 @@ obj/item/clothing/gloves/concussive
 
 	proc/concussive_blast()
 		playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
-		for (var/turf/simulated/wall/asteroid/A in range(src.expl_flash,src))
+		for (var/turf/simulated/wall/auto/asteroid/A in range(src.expl_flash,src))
 			if(get_dist(src,A) <= src.expl_heavy)
 				A.damage_asteroid(4)
 			if(get_dist(src,A) <= src.expl_light)
@@ -2074,7 +2199,7 @@ obj/item/clothing/gloves/concussive
 	var/list/ores_found = list()
 	var/datum/ore/O
 	var/datum/ore/event/E
-	for (var/turf/simulated/wall/asteroid/AST in range(T,range))
+	for (var/turf/simulated/wall/auto/asteroid/AST in range(T,range))
 		stone++
 		O = AST.ore
 		E = AST.event

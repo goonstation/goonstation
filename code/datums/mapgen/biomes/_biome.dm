@@ -92,4 +92,4 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 	turf_type = /turf/unsimulated/floor/auto/water/ice/rough
 
 /datum/biome/mountain
-	turf_type = /turf/simulated/wall/asteroid/mountain
+	turf_type = /turf/simulated/wall/auto/asteroid/mountain

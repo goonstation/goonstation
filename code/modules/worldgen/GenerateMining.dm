@@ -34,7 +34,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		name = "variable wall"
 		icon_state = "wall"
 		place()
-			src.ReplaceWith(/turf/simulated/wall/asteroid, FALSE, TRUE, FALSE, TRUE)
+			src.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
 
 	clear //Replaced with map appropriate clear tile for mining level (asteroid floor on oshan, space on other maps)
 		name = "variable clear"
@@ -125,7 +125,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 			for(var/y=1,y<=world.maxy,y++)
 				var/turf/T = locate(x,y,z_level)
 				if(map[x][y] && !ISDISTEDGE(T, 3) && T.loc && ((T.loc.type == /area/space) || istype(T.loc , /area/allowGenerate)) )
-					var/turf/simulated/wall/asteroid/N = T.ReplaceWith(/turf/simulated/wall/asteroid/dark, FALSE, TRUE, FALSE, TRUE)
+					var/turf/simulated/wall/auto/asteroid/N = T.ReplaceWith(/turf/simulated/wall/auto/asteroid/dark, FALSE, TRUE, FALSE, TRUE)
 					N.quality = rand(-101,101)
 					generated.Add(N)
 				if(T.loc.type == /area/space || istype(T.loc, /area/allowGenerate))
@@ -136,7 +136,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		for(var/s=0, s<20, s++)
 			var/turf/TU = pick(generated - used)
 			var/list/L = list()
-			for(var/turf/simulated/wall/asteroid/A in orange(5,TU))
+			for(var/turf/simulated/wall/auto/asteroid/A in orange(5,TU))
 				L.Add(A)
 			seeds.Add(TU)
 			seeds[TU] = L
@@ -149,14 +149,14 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 				for(var/j=0, j<rand(AST_RNGWALKCNT,round(AST_RNGWALKCNT*1.5)), j++)
 					holeList.Add(T)
 					T = get_step(T, pick(NORTH,EAST,SOUTH,WEST))
-					if(!istype(T, /turf/simulated/wall/asteroid)) continue
-					var/turf/simulated/wall/asteroid/ast = T
+					if(!istype(T, /turf/simulated/wall/auto/asteroid)) continue
+					var/turf/simulated/wall/auto/asteroid/ast = T
 					ast.destroy_asteroid(0)
 
 
 		for(var/i=0, i<80, i++)
 			var/list/L = list()
-			for (var/turf/simulated/wall/asteroid/dark/A in range(4,pick(generated)))
+			for (var/turf/simulated/wall/auto/asteroid/dark/A in range(4,pick(generated)))
 				L+=A
 
 			Turfspawn_Asteroid_SeedOre(L, rand(2,8), rand(1,70))
@@ -238,7 +238,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 			var/list/placed = list()
 			for(var/turf/T in solidTiles)
 				if((T?.loc?.type == /area/space) || istype(T?.loc , /area/allowGenerate))
-					var/turf/simulated/wall/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/asteroid)
+					var/turf/simulated/wall/auto/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/auto/asteroid)
 					placed.Add(AST)
 					AST.quality = quality
 				LAGCHECK(LAG_REALTIME)
@@ -261,8 +261,8 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 						for(var/j=0, j<rand(AST_RNGWALKCNT,round(AST_RNGWALKCNT*1.5)), j++)
 							holeList.Add(T)
 							T = get_step(T, pick(NORTH,EAST,SOUTH,WEST))
-							if(!istype(T, /turf/simulated/wall/asteroid)) continue
-							var/turf/simulated/wall/asteroid/ast = T
+							if(!istype(T, /turf/simulated/wall/auto/asteroid)) continue
+							var/turf/simulated/wall/auto/asteroid/ast = T
 							ast.destroy_asteroid(0)
 		return miningZ
 

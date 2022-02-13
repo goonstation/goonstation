@@ -212,7 +212,7 @@ var/list/pw_rewards_tier3 = null
 	var/datum/ore_cluster/minor/minor_ores = new /datum/ore_cluster/minor
 	for(var/area/pod_wars/asteroid/minor/A in world)
 		if(!istype(A, /area/pod_wars/asteroid/minor/nospawn))
-			for(var/turf/simulated/wall/asteroid/pod_wars/AST in A)
+			for(var/turf/simulated/wall/auto/asteroid/pod_wars/AST in A)
 				//Do the ore_picking
 				AST.randomize_ore(minor_ores)
 
@@ -225,7 +225,7 @@ var/list/pw_rewards_tier3 = null
 		OC.quantity -= 1
 		if(OC.quantity <= 0) oreClusts -= OC
 		//oreClusts -= OC
-		for(var/turf/simulated/wall/asteroid/pod_wars/AST in A)
+		for(var/turf/simulated/wall/auto/asteroid/pod_wars/AST in A)
 			if(prob(OC.fillerprob))
 				AST.randomize_ore(minor_ores)
 			else
@@ -235,7 +235,7 @@ var/list/pw_rewards_tier3 = null
 
 //////////////////
 ///////////////pod_wars asteroids
-/turf/simulated/wall/asteroid/pod_wars
+/turf/simulated/wall/auto/asteroid/pod_wars
 	fullbright = 1
 	name = "asteroid"
 	desc = "It's asteroid material."

@@ -205,9 +205,9 @@
 	icon_state = "" //intentionaly blank
 	//The pick-variant has a mining animation, but the drill variant does not - and overrides icon_state
 	var/obj/machinery/bot/mining/bot
-	var/turf/simulated/wall/asteroid/target
+	var/turf/simulated/wall/auto/asteroid/target
 
-	New(var/obj/machinery/bot/mining/bot, var/turf/simulated/wall/asteroid/target)
+	New(var/obj/machinery/bot/mining/bot, var/turf/simulated/wall/auto/asteroid/target)
 		..()
 		src.bot = bot
 		src.target = target

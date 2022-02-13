@@ -489,8 +489,8 @@
 		var/list/turf/to_clear = get_path_to_market()
 		for(var/turf/T as anything in to_clear)
 			//Wacks asteroids and skip normal turfs that belong
-			if(istype(T, /turf/simulated/wall/asteroid))
-				var/turf/simulated/wall/asteroid/AST = T
+			if(istype(T, /turf/simulated/wall/auto/asteroid))
+				var/turf/simulated/wall/auto/asteroid/AST = T
 				AST.destroy_asteroid(dropOre=FALSE)
 				continue
 			else if(!istype(T, /turf/unsimulated))
