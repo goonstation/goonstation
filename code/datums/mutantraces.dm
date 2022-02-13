@@ -1547,7 +1547,7 @@ TYPEINFO(/datum/mutantrace)
 						return
 					var/fart_on_other = 0
 					for(var/mob/living/M in mob.loc)
-						if(M == src || !M.lying)
+						if(M == src.mob || !M.lying)
 							continue
 						. = "<span class='alert'><B>[mob]</B> farts in [M]'s face!</span>"
 						fart_on_other = 1
