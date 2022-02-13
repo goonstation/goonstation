@@ -657,33 +657,49 @@
 
 	else if (istype(W, /obj/item/grab))
 		var/obj/item/grab/G = W
+		if (!src.conversion_chamber)
+			boutput(user, "<span class='alert'>Humans cannot enter recharging stations.</span>")
+			return
+		if (!ishuman(G.affecting))
+			boutput(user, "<span class='alert'>Non-Humans are not compatible with this device.</span>")
+			return
+		if (isdead(G.affecting))
+			boutput(user, "<span class='alert'>[H] is dead and cannot be forced inside.</span>")
+			return
 		if (G.state < GRAB_AGGRESSIVE)
 			boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 			return
-		else
-			src.MouseDrop_T(G.affecting, user) //lazy
-			src.add_fingerprint(user)
-			qdel(G)
+
+		var/mob/living/carbon/human/H = grab.affecting
+		logTheThing("combat", user, H, "puts [constructTarget(H,"combat")] into a conversion chamber at [showCoords(src.x, src.y, src.z)]")
+		user.visible_message("<span class='notice>[user] stuffs [H] into \the [src].")
+
+		H.remove_pulling()
+		H.set_loc(src)
+		src.add_fingerprint(user)
+		src.occupant = H
+		src.build_icon()
+		qdel(G)
 
 	else
 		..()
 
-/obj/machinery/recharge_station/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (get_dist(O, user) > 1 || get_dist(src, user) > 1)
+/obj/machinery/recharge_station/MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
+	if (get_dist(AM, user) > 1 || get_dist(src, user) > 1)
 		return
 	if (!isliving(user) || isAI(user))
 		return
 
-	if (isitem(O) && !user.stat)
-		src.Attackby(O, user)
+	if (isitem(AM) && !user.stat)
+		src.Attackby(AM, user)
 		return
 
-	if (isliving(O) && src.occupant)
+	if (isliving(AM) && src.occupant)
 		boutput(user, "<span class='alert'>\The [src] is already occupied!</span>")
 		return
 
-	if (isrobot(O))
-		var/mob/living/silicon/robot/R = O
+	if (isrobot(AM))
+		var/mob/living/silicon/robot/R = AM
 		if (isdead(R))
 			boutput(user, "<span class='alert'>[R] is dead and cannot enter [src].</span>")
 			return
@@ -700,8 +716,8 @@
 		src.add_fingerprint(user)
 		src.build_icon()
 
-	if (isshell(O))
-		var/mob/living/silicon/hivebot/H = O
+	if (isshell(AM))
+		var/mob/living/silicon/hivebot/H = AM
 		if (isdead(H))
 			boutput(user, "<span class='alert'>[H] is dead and cannot enter [src].</span>")
 			return
@@ -718,37 +734,16 @@
 		src.add_fingerprint(user)
 		src.build_icon()
 
-	else if (ishuman(O) && !user.stat)
-		if (!src.conversion_chamber)
-			boutput(user, "<span class='alert'>Humans cannot enter recharging stations.</span>")
-		else
-			var/mob/living/carbon/human/H = O
-			if (isdead(H))
-				boutput(user, "<span class='alert'>[H] is dead and cannot be forced inside.</span>")
-				return
-			var/delay = 0
-			if (user != H)
-				delay = 30
-				logTheThing("combat", user, H, "puts [constructTarget(H,"combat")] into a conversion chamber at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", user, H, "puts [constructTarget(H,"diary")] into a conversion chamber at [showCoords(src.x, src.y, src.z)]", "combat")
-			if (delay)
-				user.visible_message("<b>[user]</b> begins moving [H] into [src].")
-				boutput(user, "Both you and [H] will need to remain still for this action to work.")
-			var/turf/T1 = get_turf(user)
-			var/turf/T2 = get_turf(H)
-			SPAWN_DBG(delay)
-				if (user.loc != T1 || H.loc != T2)
-					return
+	if (ishuman(AM))
+		var/mob/living/carbon/human/H = AM
+		logTheThing("combat", user, null, "puts [himself_or_herself(user)] into a conversion chamber at [showCoords(src.x, src.y, src.z)]")
+		user.visible_message("<span class='notice>[user] stuffs [himself_or_herself(user)] into \the [src].")
 
-				if (user != H)
-					user.visible_message("<b>[user]</b> moves [H] into [src].")
-				else
-					user.visible_message("<b>[user]</b> climbs into [src].")
-				H.remove_pulling()
-				H.set_loc(src)
-				src.occupant = H
-				src.add_fingerprint(user)
-				src.build_icon()
+		H.remove_pulling()
+		H.set_loc(src)
+		src.occupant = H
+		src.add_fingerprint(user)
+		src.build_icon()
 
 /obj/machinery/recharge_station/proc/build_icon()
 	if (src.occupant)
