@@ -49,7 +49,7 @@
 		return
 	if (!src.target)
 		return
-	if (istype(M, /mob/dead/aieye))
+	if (isAIeye(M))
 		return
 	if (istype(M, /atom/movable))
 		animate_portal_tele(src)
