@@ -192,6 +192,8 @@
 						foundAPC.equipment = 0
 						foundAPC.lighting = 0
 				logTheThing("station", null, null, "Ion storm interfered with [foundAPC.name] at [log_loc(foundAPC)]")
+				if (prob(50))
+					foundAPC.aidisabled = TRUE
 				foundAPC.update()
 				foundAPC.UpdateIcon()
 

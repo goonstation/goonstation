@@ -10285,7 +10285,7 @@
 	},
 /area/moon/museum)
 "aEx" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -75695,6 +75695,12 @@
 /obj/decal/fakeobjects/dreambeach/biggest/big_palm,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"sUn" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/john/owlery)
 "sWb" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/lobby)
@@ -78345,8 +78351,8 @@ aNz
 buQ
 caN
 cFc
-cfa
-cfa
+sUn
+sUn
 cFc
 cFc
 caT
@@ -80761,8 +80767,8 @@ but
 car
 caS
 cFc
-cfa
-cfa
+sUn
+sUn
 cFc
 cFc
 cJB

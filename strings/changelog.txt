@@ -1,4 +1,57 @@
 
+(t)sat feb 12 22
+(u)aloe
+(*)The cyborg converter (syndicate item) has had its price increased to 8 Baddie Bux. It now makes <b>Syndicate Cyborgs</b>. It also works faster, comes with a wrench, is a little less noisy, and you stuff other people in it by agressively grabbing them and clicking it.
+(u)Flappybat
+(p)7372
+(e)🎨⚖|sprites, balance
+(*)Red chainsaw gets an ability to chop off your arm and attach with no surgery
+(*)Added start/stop sound to the red chainsaw.
+(*)Made the green chainsaws electric and gave them a new, less abrasive sound.
+(+)Chainsaws now have animated inhands.
+(u)Zonespace
+(p)6794
+(e)🆕⚖|feature, balance
+(*)Antagonists can buy Syndicate headsets from CARL, and the wiretap upgrade grants access to the Syndicate channel.
+(u)MetricDuck
+(p)7336
+(e)🐛⚖|bug, balance
+(+)Spaceacillin is much less effective at treating cluwnes and will no longer outright cure wizard cluwnes.
+(u)Zonespace
+(p)6816
+(e)⚖|balance
+(+)SWAT gloves now are insulated against most regular forms of shocking (such as doors).
+(u)Danger Noodle
+(p)7470
+(e)🗺|mapping
+(+)Added artistic toolboxes to all maps in rotation.
+(u)Flaborized
+(p)7452
+(e)🎨|sprites
+(+)Resprited gas canisters.
+(u)FlameArrow57
+(p)7460
+(e)🆕|feature
+(+)Civilian headsets and staff assistant jumpsuits can now be printed from uniform manufacturers.
+(u)FlameArrow57
+(p)7458
+(e)🆕|feature
+(+)Sleepy pens can now appear as fancy pens.
+(u)Amylizzle
+(p)7476
+(e)|
+(+)Adds  an additional check to secscanner to prevent scanning intangible living mobs.
+(t)fri feb 11 22
+(u)FlameArrow57
+(p)7071
+(e)🆕⚖|feature, balance
+(*)The AI now has a "Reset All APCs" command, which will attempt to reset all APCs to their default settings.
+(+)Ion storms may now disable AI control on some APCs.
+(t)thu feb 10 22
+(u)avimour
+(p)7459
+(e)🎨|sprites
+(+)Stethoscopes have had their speakers removed and given a new appearance.
 (t)tue feb 08 22
 (u)Josephin23
 (p)7374

@@ -697,6 +697,24 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/civilian_headset
+	name = "Civilian Headset"
+	item_paths = list("MET-1", "CON-1")
+	item_amounts = list(2, 1)
+	item_outputs = list(/obj/item/device/radio/headset)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/jumpsuit_assistant
+	name = "Staff Assistant Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/rank)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/jumpsuit
 	name = "Grey Jumpsuit"
 	item_paths = list("FAB-1")

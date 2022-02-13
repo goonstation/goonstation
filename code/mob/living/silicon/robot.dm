@@ -190,11 +190,10 @@
 			if (!src.ai_interface)
 				src.ai_interface = new(src)
 
-		SPAWN_DBG(0.1 SECONDS)
-			if (!src.dependent && !src.shell)
-				boutput(src, "<span class='notice'>Your icons have been generated!</span>")
-				src.syndicate = syndie
-				src.emagged = frame_emagged
+		if (!src.dependent && !src.shell)
+			boutput(src, "<span class='notice'>Your icons have been generated!</span>")
+			src.syndicate = syndie
+			src.emagged = frame_emagged
 		SPAWN_DBG(0.4 SECONDS)
 			if (!src.connected_ai && !syndicate && !(src.dependent || src.shell))
 				for_by_tcl(A, /mob/living/silicon/ai)
@@ -931,13 +930,6 @@
 		boutput(src, "<span class='alert'><B>*BZZZT*</B></span>")
 		for (var/obj/item/parts/robot_parts/RP in src.contents)
 			if (RP.ropart_take_damage(0,10) == 1) src.compborg_lose_limb(RP)
-		/* Bit of a problem when EMPs that are supposed to be strong against cyborgs might just turn them into antagonists ...
-		if (prob(25))
-			src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
-			src.emagged = 1
-			src.handle_robot_antagonist_status("emagged", 0, usr)
-		*/
-		return
 
 	meteorhit(obj/O as obj)
 		src.visible_message("<font color=red><b>[src]</b> is struck by [O]!</font>")

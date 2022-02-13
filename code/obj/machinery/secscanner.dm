@@ -29,7 +29,7 @@
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 	Crossed( atom/movable/O )
-		if(isliving(O))
+		if(isliving(O) && !isintangible(O))
 			do_scan(O)
 		if (istype(O,/obj/item) && (!emagged))
 			do_scan_item(O)
