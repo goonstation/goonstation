@@ -14,7 +14,7 @@ Visit https://code.visualstudio.com/ to download the appropriate installation fo
 
 You should be greeted with a screen that looks like this:![](https://i.imgur.com/HjDKDqj.png)
 
-If this is your first time, take a minute to familiarize yourself with the layout of VS code. Here's an example of what it'll look like when you're working on something:
+If this is your first time, take a minute to familiarize yourself with the layout of VSCode. Here's an example of what it'll look like when you're working on something:
 ![](https://imgur.com/a/msGsO97)
 1: This is your sidebar. From this, you can search the codebase, browse the files, debug your code, and manage your branches
 2: This bar is an extension of whatever you have selected from the smaller sidebar. Here you see the source control window.
@@ -29,7 +29,7 @@ Now, we need to create our own repository to contribute to! :rocket:
 
 ### Step 2: Forking :fork_and_knife: 
 
-Now, visit https://github.com/goonstation/goonstation. If you don't have a github account, this is the step to make one- you'll need it for just about every step from here on out. You'll want to press the `Fork` button in the top right corner. It looks like this:
+Now, visit https://github.com/goonstation/goonstation. If you don't have a GitHub account, this is the step to make one- you'll need it for just about every step from here on out. You'll want to press the `Fork` button in the top right corner. It looks like this:
 
 ![](https://i.imgur.com/C3obiAS.png)
 
@@ -43,7 +43,7 @@ First, we're going to need to download git, which can be found on [this page](ht
 
 Git is what will let you synchronize your code with others, make your own branches and merging them with other people's code, complete with VS Code integration to make the process easy.
 
-Next, go back to VS Code and relaunch it. Under the version control sidebar (looks like a tree branch) click Clone Repository. It should look like this: ![](https://i.imgur.com/pBqGiT2.png)
+Next, go back to VSCode and relaunch it. Under the version control sidebar (looks like a tree branch) click Clone Repository. It should look like this: ![](https://i.imgur.com/pBqGiT2.png)
 
 If that's not there, you can press `Ctrl+Shift+P` to open the command palette, then type `Git: Clone`, and then press enter. 
 
@@ -83,7 +83,7 @@ Now, let's connect the main goonstation repository to your client.
 
 We need to add the main Goonstation repository as a remote now. :satellite:
 
-If you haven't already relaunched VS code, make sure to do this now; otherwise you'll have troubles on this step. To do this, open the command palette (Ctrl+shift+P) and type `Git: Add Remote`. It'll prompt you for a name, which should be `upstream`. Then, put https://github.com/goonstation/goonstation as the URL. Now, you'll have the main Goonstation repository as a remote named upstream: This will let you easily send your pull requests there later.
+If you haven't already relaunched VSCode, make sure to do this now; otherwise you'll have troubles on this step. To do this, open the command palette (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>) and type `Git: Add Remote`. It'll prompt you for a name, which should be `upstream`. Then, put https://github.com/goonstation/goonstation as the URL. Now, you'll have the main Goonstation repository as a remote named upstream: This will let you easily send your pull requests there later.
 
 You're just about done with that! Just one last thing you need to manually do.
 
@@ -104,7 +104,7 @@ That's it! Your local codebase is all set up to contribute now.
 A branch is an alternative version of a codebase. Their lifecycle usually consists of being created, being updated to, then being re-merged into the main codebase.
 A commit is an update you make to a branch. Think of it a saved version of said branch, or a batch of changes you make with an associated timestamp. 
 
-You can access your branches in VScode through the source control menu, which again looks like the tree. Here's what they look like, and the most important things to click on for managing them:
+You can access your branches in VSCode through the source control menu, which again looks like the tree. Here's what they look like, and the most important things to click on for managing them:
 ![](https://imgur.com/a/iOPzpIa)
 1: This lets you expand a branch and see the individual commits
 2: This is the "Switch to this branch" button. If you're already on the branch, hovering over it will read "Switch to another branch" 
@@ -186,7 +186,7 @@ This compiles the code to a dmb file. Then you can run Dream Daemon, select the 
 
 Be sure to always test not only if your changes work, but also if you didn't actually break something else that might be related.
 
-If you ever hit a brick wall, you can always ask the #imcoder channel in the discord. There's no such thing as a stupid question, and while, depending on activity, you might not always get an answer, it never hurts to ask.
+If you ever hit a brick wall, you can always ask the #imcoder channel in the [Discord](https://discord.gg/zd8t6pY). There's no such thing as a stupid question, and while, depending on activity, you might not always get an answer, it never hurts to ask.
 
 #### Using the Debugger
 
@@ -274,13 +274,14 @@ At some point a maintainer will review your PR. Hopefully all is good and the PR
 Some concerns you might have while waiting:
 
 -"Oh no, someone told me to atomize my PR! Do they want me to nuke it?"
-Worry not, friend! Atomization just means to break your PR down into smaller chunks, whether it be for balance reasons, because there's weird or extraneous code, or simply off-topic changes.
+Worry not, friend! Atomization just means to break your PR down into smaller chunks in separate PRs, whether it be for balance reasons, because there's weird or extraneous code, or simply off-topic changes.
 
 -"Man, this sure is taking a long while!"
-The unforunate truth of goonstation is that the developers are, just like you and the admins, unpaid volunteers who do this in their spare time, and can take a while before merging yourrequest. Furthermore, depending on how large it is, how many systems are changed, and how controversial it might be, the developers usually give people ample time to bring up any concerns or problems. **With these two factors in mind, it can take anywhere from a day to two weeks for your PR to finally be merged.** In the meantime, ensure that there are no merge conflicts, that all comments are resolved, and everything is polished as possible to signal that it's ready for merging. If you want to know if there's any issues, you can always copy the four digit number (E.X: #1111) into the discord to bring up the PR with medibot, and directly ask what might be wrong with it.
+The unforunate truth of Goonstation is that the developers are, just like you and the admins, unpaid volunteers who do this in their spare time, and can take a while before merging your request. Furthermore, depending on how large it is, how many systems are changed, and how controversial it might be, the developers usually give people ample time to bring up any concerns or problems. 
+**With these two factors in mind, it can take anywhere from a day to two weeks for your PR to finally be merged.** In the meantime, ensure that there are no merge conflicts, that all comments are resolved, and everything is polished as possible to signal that it's ready for merging. If you want to know if there's any issues, you can always copy the four digit number (e.g., `#1111`) into the discord to bring up the PR with medibot, and directly ask what might be wrong with it.
 
 -"If I want a picture, how do I add images?"
-Pictures are as easy as taking a screenshot of whatever you're made, then copying and directly pasting it into the text box. For this reason, the windows' snipping tool is excellent at this since it automatically copies whatever you capture.
+Pictures are as easy as taking a screenshot of whatever you're made, then copying and directly pasting it into the text box. For this reason, Windows' snipping tool is excellent at this since it automatically copies whatever you capture.
 
 Furthermore, you can also reply to people's comments on your PR to clarify your reasoning / intent behind your changes. Everyone who's commented in a thread will be notified when you update, but if you want to address a fine point, you can use the quote reply feature to do so.
 
