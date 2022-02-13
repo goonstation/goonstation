@@ -1017,10 +1017,27 @@ ABSTRACT_TYPE(/obj/trait/job)
 
 /obj/trait/allears
 	name = "All Ears (0)"
-	cleanName="All ears"
+	cleanName = "All ears"
 	desc = "You lost your headset on the way to work."
 	id = "allears"
 	points = 0
+
+/obj/trait/horns
+	name = "Horns (-1)"
+	cleanName = "Horns"
+	desc = "A pair of horns sprout from your head."
+	id = "horns"
+	icon_state = "horns"
+	points = -1
+
+	onAdd(var/mob/owner)
+		if(owner.bioHolder)
+			if(ishuman(owner)) //we don't want AIs with horns, they're evil enough already
+				owner.bioHolder.AddEffect("horns", 0, 0, 0, 1)
+
+	onLife(var/mob/owner) //Just to be safe.
+		if(owner.bioHolder && !owner.bioHolder.HasEffect("horns"))
+			owner.bioHolder.AddEffect("horns", 0, 0, 0, 1)
 
 /obj/trait/atheist
 	name = "Atheist (0)"
