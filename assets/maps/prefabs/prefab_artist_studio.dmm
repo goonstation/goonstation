@@ -5,7 +5,7 @@
 "cs" = (/obj/machinery/light/incandescent/harsh,/turf/simulated/floor/darkblue,/area/prefab/art_workshop)
 "di" = (/obj/machinery/light/incandescent,/turf/simulated/floor/white,/area/prefab/art_workshop)
 "dq" = (/turf/simulated/floor/carpet/clowncarpet/border{dir = 6},/area/prefab/art_workshop)
-"ej" = (/obj/table/wood/auto/desk,/obj/item/storage/box/crayon{pixel_x = 6; pixel_y = -6},/obj/item/storage/box/crayon/basic{pixel_x = -5},/turf/simulated/floor/longtile/red,/area/prefab/art_workshop)
+"ej" = (/obj/table/wood/auto/desk,/obj/item/item_box/crayon{pixel_x = 3; pixel_y = 2},/obj/item/storage/box/crayon{pixel_x = 6; pixel_y = -6},/obj/item/storage/box/crayon/basic{pixel_x = -5},/turf/simulated/floor/longtile/red,/area/prefab/art_workshop)
 "eB" = (/obj/item/pen/crayon/random{pixel_x = 7; pixel_y = 9},/turf/simulated/floor/carpet/clowncarpet,/area/prefab/art_workshop)
 "fs" = (/turf/simulated/floor/carpet/clowncarpet/border{dir = 8},/area/prefab/art_workshop)
 "ft" = (/obj/table/wood/auto/desk,/obj/item/storage/toolbox/artistic{pixel_x = 3; pixel_y = -7},/obj/item/storage/toolbox/artistic{pixel_y = 6},/obj/machinery/light/incandescent/warm{dir = 8},/turf/simulated/floor/longtile/red,/area/prefab/art_workshop)
