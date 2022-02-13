@@ -478,6 +478,19 @@
 		item_state = "s_helmet"
 		seal_hair = 1
 
+	industrial_helmet
+		icon_state = "indus"
+		item_state = "indus"
+		name = "industrial space helmet"
+		desc = "Goes with Industrial Space Armor. Now with zesty citrus-scented visor!"
+		seal_hair = 1
+
+	industrial_diving_helmet
+		icon_state = "diving_suit-industrial"
+		item_state = "diving_suit-industrial"
+		name = "industrial diving helmet"
+		desc = "Goes with Industrial Diving Suit. Now with a fresh mint-scented visor!"
+
 	cowboy_hat
 		name = "cowboy hat"
 		desc = "Yeehaw!"
@@ -679,15 +692,6 @@
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
 
-	hos_cape
-		name = "Head of Security's cape"
-		desc = "A lightly-armored and stylish cape, made of heat-resistant materials. It probably won't keep you warm, but it would make a great security blanket!"
-		icon_state = "hos-cape"
-		item_state = "hos-cape"
-		sprite_item = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
-		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
-		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
-
 	hos_jacket
 		name = "Head of Security's jacket"
 		desc = "A slightly armored jacket favored by security personnel. It looks cozy and warm; you could probably sleep in this if you wanted to!"
@@ -771,6 +775,24 @@
 		desc = "An overly bulky space suit designed mainly for maintenance and mining."
 		icon_state = "espace"
 		item_state = "es_suit"
+		sprite_item = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
+		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
+		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
+
+	industrial_armor
+		name = "industrial space armor"
+		icon_state = "indus"
+		item_state = "indus"
+		desc = "Very heavy armour for prolonged industrial activity. Protects from radiation and explosions."
+		sprite_item = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
+		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
+		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
+
+	industrial_diving_armor
+		name = "industrial diving suit"
+		desc = "Very heavy armour for prolonged industrial activity. Protects from radiation and explosions."
+		icon_state = "diving_suit-industrial"
+		item_state = "diving_suit-industrial"
 		sprite_item = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
@@ -1094,6 +1116,20 @@
 		icon_state = "chef"
 		step_sound = "step_wood"
 
+	mechanised_diving_boots
+		name = "mechanised diving boots"
+		icon_state = "divindboots"
+		item_state = "divindboots"
+		desc = "Industrial-grade boots fitted with mechanised balancers and stabilisers to increase running speed under a heavy workload."
+		step_sound = "step_default"
+
+	mechanised_boots
+		icon_state = "indboots"
+		item_state = "indboots"
+		name = "mechanised boots"
+		desc = "Industrial-grade boots fitted with mechanised balancers and stabilisers to increase running speed under a heavy workload."
+		step_sound = "step_default"
+
 /obj/item/clothing/gloves/chameleon
 	name = "Black Gloves"
 	desc = "These gloves are fire-resistant."
@@ -1227,6 +1263,24 @@
 		icon_state = "boxinggloves"
 		item_state = "bogloves"
 		print_type = "red leather fibers"
+		hide_prints = 1
+		scramble_prints = 0
+
+	long
+		desc = "These long gloves protect your sleeves and skin from whatever dirty job you may be doing."
+		name = "cleaning gloves"
+		icon_state = "long_gloves"
+		item_state = "long_gloves"
+		print_type = "synthetic silicone rubber fibers"
+		hide_prints = 1
+		scramble_prints = 0
+
+	gauntlets
+		name = "concussion gauntlets"
+		desc = "These gloves enable miners to punch through solid rock with their hands instead of using tools."
+		icon_state = "cgaunts"
+		item_state = "bgloves"
+		print_type = "industrial-grade mineral fibers"
 		hide_prints = 1
 		scramble_prints = 0
 
@@ -1464,11 +1518,23 @@
 	var/sprite_worn =  'icons/mob/clothing/back.dmi'
 	var/sprite_hand = 'icons/mob/inhand/hand_storage.dmi'
 
+	satchel
+		name = "satchel"
+		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder."
+		icon_state = "satchel"
+		item_state = "satchel"
+
 	engineer
 		name = "engineering backpack"
 		desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects effectively on the back of engineering personnel."
 		icon_state = "bp_engineering"
 		item_state = "bp_engineering"
+
+	engineer_satchel
+		name = "engineering satchel"
+		desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects effectively on the shoulder of engineering personnel."
+		icon_state = "satchel_engineering"
+		item_state = "satchel_engineering"
 
 	research
 		name = "research backpack"
@@ -1476,11 +1542,23 @@
 		icon_state = "bp_research"
 		item_state = "bp_research"
 
+	research_satchel
+		name = "research satchel"
+		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects efficiently on the shoulder of research personnel."
+		icon_state = "satchel_research"
+		item_state = "satchel_research"
+
 	security
 		name = "security backpack"
 		desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects adequately on the back of security personnel."
 		icon_state = "bp_security"
 		item_state = "bp_security"
+
+	security_satchel
+		name = "security satchel"
+		desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects stylishly on the shoulder of security personnel."
+		icon_state = "satchel_security"
+		item_state = "satchel_security"
 
 	robotics
 		name = "robotics backpack"
@@ -1488,11 +1566,23 @@
 		icon_state = "bp_robotics"
 		item_state = "bp_robotics"
 
+	robotics_satchel
+		name = "robotics satchel"
+		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromaticly on the shoulder of roboticists."
+		icon_state = "satchel_robotics"
+		item_state = "satchel_robotics"
+
 	genetics
 		name = "genetics backpack"
 		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the back of geneticists."
 		icon_state = "bp_genetics"
 		item_state = "bp_genetics"
+
+	genetics_satchel
+		name = "genetics satchel"
+		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the shoulder of geneticists."
+		icon_state = "satchel_genetics"
+		item_state = "satchel_genetics"
 
 	medic
 		name = "medic's backpack"
@@ -1500,11 +1590,23 @@
 		icon_state = "bp_medic"
 		item_state = "bp-medic"
 
+	medic_satchel
+		name = "medic's satchel"
+		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a Medical Doctor's shoulder."
+		icon_state = "satchel_medic"
+		item_state = "satchel_medic"
+
 	captain
 		name = "Captain's Backpack"
 		desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
 		icon_state = "capbackpack"
 		item_state = "capbackpack"
+
+	captain_satchel
+		name = "Captain's Satchel"
+		desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
+		icon_state = "capsatchel"
+		item_state = "capsatchel"
 
 /obj/item/remote/chameleon
 	name = "chameleon outfit remote"
@@ -1790,7 +1892,7 @@
 		suit_type = new/datum/chameleon_suit_pattern/bio_suit
 		glasses_type = new/datum/chameleon_glasses_pattern
 		shoes_type = new/datum/chameleon_shoes_pattern/galoshes
-		gloves_type = new/datum/chameleon_gloves_pattern/latex
+		gloves_type = new/datum/chameleon_gloves_pattern/long
 		belt_type = new/datum/chameleon_belt_pattern
 		backpack_type = new/datum/chameleon_backpack_pattern
 
