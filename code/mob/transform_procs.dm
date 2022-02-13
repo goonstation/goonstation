@@ -230,15 +230,13 @@
 			src.mind.transfer_to(O)
 	O.set_loc(get_turf(src.loc))
 	if (syndicate)
+		O.handle_robot_antagonist_status("converted")
 		boutput(O, "<B>You have been transformed into a <i>syndicate</i> Cyborg. Cyborgs can interact with most electronic objects in their view.</B>")
 		boutput(O, "<B>You must follow your laws and assist syndicate agents, who are identifiable by their icon.</B>")
 	else
 		boutput(O, "<B>You have been transformed into a Cyborg. Cyborgs can interact with most electronic objects in their view.</B>")
 		boutput(O, "<B>You must follow all laws that the AI has.</B>")
-	boutput(O, "Use \"say :s (message)\" to speak to fellow cyborgs and the AI through binary.")
-
-	O.job = "Cyborg"
-	if (O.mind) O.mind.assigned_role = "Cyborg"
+	boutput(O, "<B>Use \"say :s (message)\" to speak to fellow cyborgs and the AI through binary.</B>")
 
 	if(O.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
 		if ((O.mind in ticker.mode:revolutionaries) || (O.mind in ticker.mode:head_revolutionaries))

@@ -661,6 +661,8 @@ var/global/list/module_editors = list()
 					logTheThing("combat", src, M2 ? M2 : null, "was activated as a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				if ("admin")
 					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot by an admin at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
+				if ("converted")
+					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot by a cyborg converter at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				else
 					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 
