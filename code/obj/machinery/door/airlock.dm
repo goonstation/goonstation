@@ -337,6 +337,14 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	health = 800
 	health_max = 800
 
+/obj/machinery/door/airlock/pyro/command/centcom
+	req_access_txt = "57"
+	cant_emag = 1
+	hardened = 1
+	aiControlDisabled = 1
+	object_flags = BOTS_DIRBLOCK
+	mats = 0
+
 /obj/machinery/door/airlock/pyro/command/alt
 	icon_state = "com2_closed"
 	icon_base = "com2"

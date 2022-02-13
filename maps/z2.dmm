@@ -1320,21 +1320,6 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
 /area/space)
-"acJ" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/hospital/samostrel)
 "acK" = (
 /obj/lattice{
 	dir = 9;
@@ -1404,30 +1389,6 @@
 	},
 /turf/space,
 /area/space)
-"acW" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/hospital/samostrel)
-"acX" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/hospital/samostrel)
 "acY" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -1479,33 +1440,6 @@
 	},
 /turf/space,
 /area/space)
-"adc" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/hospital/samostrel)
-"add" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/hospital/samostrel)
 "ade" = (
 /obj/lattice{
 	dir = 5;
@@ -1568,7 +1502,7 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/hospital)
 "adl" = (
-/obj/machinery/door/airlock/medical{
+/obj/machinery/door/airlock/pyro/medical{
 	name = "Hydrotherapy Room";
 	req_access_txt = ""
 	},
@@ -1584,16 +1518,7 @@
 /turf/unsimulated/floor/grass/leafy,
 /area/hospital/somewhere)
 "adp" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -1943,13 +1868,14 @@
 /turf/unsimulated/floor/white,
 /area/hospital)
 "aee" = (
+/obj/chaser/hospital_trigger,
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/doormed.dmi';
-	icon_state = "door_open";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "research_open";
 	name = "broken airlock"
 	},
-/obj/chaser/hospital_trigger,
 /turf/unsimulated/floor/white,
 /area/hospital)
 "aef" = (
@@ -2031,8 +1957,9 @@
 "aep" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/doormed.dmi';
-	icon_state = "door_open";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "research_open";
 	name = "broken airlock"
 	},
 /turf/unsimulated/floor/white,
@@ -2179,7 +2106,7 @@
 /turf/unsimulated/floor/white,
 /area/hospital)
 "aeJ" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
 	req_access_txt = ""
 	},
 /turf/unsimulated/floor{
@@ -2393,13 +2320,10 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "afi" = (
-/obj/grille/steel,
-/obj/window/north,
-/obj/window/south,
-/obj/window/east,
-/obj/window/west,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor{
-	name = "plating"
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
 "afj" = (
@@ -2716,7 +2640,10 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/mainhall)
 "afX" = (
-/obj/decal/fakeobjects/firelock_broken,
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/hospital/samostrel)
 "afY" = (
@@ -2749,7 +2676,8 @@
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "agc" = (
-/obj/machinery/door/airlock/medical{
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
 	name = "Patient Room";
 	req_access_txt = ""
 	},
@@ -2782,8 +2710,8 @@
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/Doormaint.dmi';
-	icon_state = "door_closed";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "maint_closed";
 	name = "rusted airlock";
 	opacity = 1
 	},
@@ -2792,7 +2720,7 @@
 	},
 /area/hospital)
 "agh" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "Bathroom"
 	},
 /turf/unsimulated/floor{
@@ -2888,8 +2816,10 @@
 /turf/unsimulated/floor/lunar,
 /area/moon)
 "ags" = (
-/obj/machinery/door/lunar_breakdoor,
 /obj/rail{
+	dir = 4
+	},
+/obj/machinery/door/lunar_breakdoor{
 	dir = 4
 	},
 /turf/unsimulated/floor/lunar,
@@ -3074,7 +3004,7 @@
 	},
 /area/hospital/samostrel)
 "agI" = (
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
 	desc = "Oh sure it looks the same, but all the connections and mounting points are different.  Also all the screw heads are those awful triangular ones.";
 	icon = 'icons/obj/doors/Dooreng-sov.dmi';
 	name = "Reactor Control";
@@ -3281,7 +3211,8 @@
 /turf/unsimulated/floor/carpet/office,
 /area/hospital)
 "ahb" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
 	name = "Office door"
 	},
 /turf/unsimulated/floor/carpet/office,
@@ -3915,13 +3846,15 @@
 /turf/unsimulated/wall/auto/virtual,
 /area/titlescreen)
 "ajh" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
 	name = "Bathroom"
 	},
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "aji" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
 	name = "Lounge"
 	},
 /turf/unsimulated/floor{
@@ -3952,7 +3885,7 @@
 	},
 /area/hospital)
 "ajn" = (
-/obj/machinery/door/airlock/security{
+/obj/machinery/door/airlock/pyro/security{
 	locked = 1;
 	name = "Armory";
 	req_access_txt = "37"
@@ -4321,8 +4254,9 @@
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
-	icon = 'icons/obj/doors/Doormaint.dmi';
-	icon_state = "door_closed";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "maint_closed";
 	name = "sealed airlock";
 	opacity = 1
 	},
@@ -4391,7 +4325,7 @@
 	},
 /area/owlery/staffhall)
 "alz" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/pyro/glass{
 	name = "Conference Room"
 	},
 /turf/unsimulated/floor/grey/side{
@@ -4399,7 +4333,7 @@
 	},
 /area/hospital)
 "alA" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/pyro/glass{
 	name = "Information Room"
 	},
 /turf/unsimulated/floor{
@@ -4412,7 +4346,8 @@
 	},
 /area/hospital)
 "alC" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
 	name = "Break Room"
 	},
 /obj/chaser/hospital_trigger,
@@ -4472,7 +4407,8 @@
 	},
 /area/moon/museum)
 "amb" = (
-/obj/machinery/door/airlock/medical{
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
 	name = "Patient Room";
 	req_access_txt = ""
 	},
@@ -5031,7 +4967,7 @@
 /turf/unsimulated/floor/caution/west,
 /area/hospital/samostrel)
 "anP" = (
-/obj/machinery/door/airlock/gannets/command{
+/obj/machinery/door/airlock/pyro/command{
 	name = "captain's quarters";
 	req_access_txt = "1917"
 	},
@@ -5092,9 +5028,9 @@
 /turf/unsimulated/floor/black,
 /area/moon/museum/west)
 "aoa" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4;
 	frequency = 1425;
-	icon_state = "door_locked";
 	locked = 1;
 	name = "Storage Room";
 	radiorange = 25;
@@ -5139,7 +5075,8 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/hospital)
 "aor" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
 	name = "Security Booth";
 	req_access_txt = "1"
 	},
@@ -5245,6 +5182,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
 "aoE" = (
@@ -5736,7 +5674,8 @@
 	dir = 4;
 	name = "grimy pipe"
 	},
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4;
 	req_access_txt = ""
 	},
 /turf/unsimulated/floor,
@@ -5783,8 +5722,9 @@
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
-	icon = 'icons/obj/doors/Doormaint.dmi';
-	icon_state = "door_closed";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "maint_closed";
 	name = "sealed airlock";
 	opacity = 1
 	},
@@ -5879,7 +5819,7 @@
 	},
 /area/hospital)
 "aqv" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
 	name = "Atmospheric Processing";
 	req_access_txt = ""
 	},
@@ -5899,19 +5839,6 @@
 "aqx" = (
 /obj/rail/cap{
 	dir = 8
-	},
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
 	},
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
@@ -5984,7 +5911,9 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "aqK" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "aqL" = (
@@ -6218,13 +6147,13 @@
 /turf/unsimulated/floor/grey/side,
 /area/moon/museum/west)
 "arC" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
 	req_access_txt = ""
 	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "arE" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "Bathroom"
 	},
 /turf/unsimulated/floor{
@@ -6236,7 +6165,7 @@
 	dir = 1;
 	name = "grimy pipe"
 	},
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
 	req_access_txt = ""
 	},
 /turf/unsimulated/floor,
@@ -6414,7 +6343,8 @@
 	},
 /area/hospital/samostrel)
 "asj" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4;
 	name = "Compartment Access";
 	req_access_txt = ""
 	},
@@ -6546,7 +6476,7 @@
 	},
 /area/moon/museum/west)
 "asz" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
 	req_access_txt = "777"
 	},
 /turf/unsimulated/floor,
@@ -6695,7 +6625,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "asX" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "Storage Closet"
 	},
 /turf/unsimulated/floor/grime,
@@ -6962,7 +6892,9 @@
 /turf/unsimulated/floor/lunar,
 /area/moon)
 "atu" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/moon/museum)
 "atv" = (
@@ -6974,7 +6906,9 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "atw" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
 /turf/unsimulated/floor/caution/west,
 /area/moon/museum)
 "atx" = (
@@ -7059,12 +6993,15 @@
 "atK" = (
 /obj/decal/fakeobjects/firelock_broken{
 	dir = 8;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0";
 	tag = "icon-door0 (WEST)"
 	},
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "atL" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
 	name = "Cafeteria"
 	},
 /turf/unsimulated/floor/white/grime,
@@ -7104,7 +7041,7 @@
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
 "atS" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
 	name = "Compartment Access";
 	req_access_txt = ""
 	},
@@ -7399,7 +7336,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4;
 	req_access_txt = ""
 	},
 /turf/unsimulated/floor,
@@ -7451,7 +7389,8 @@
 	},
 /area/moon/museum)
 "auO" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4;
 	req_access_txt = ""
 	},
 /turf/unsimulated/floor,
@@ -7476,7 +7415,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "auX" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/pyro/glass{
 	name = "Laundry"
 	},
 /turf/unsimulated/floor/white/side{
@@ -7515,7 +7454,7 @@
 	},
 /area/hospital/samostrel)
 "avb" = (
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
 	desc = "Oh sure it looks the same, but all the connections and mounting points are different.  Also all the screw heads are those awful triangular ones.";
 	icon = 'icons/obj/doors/Dooreng-sov.dmi';
 	name = "Reactor Control";
@@ -7724,7 +7663,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "avD" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "Bathroom"
 	},
 /turf/unsimulated/floor/grime,
@@ -7765,7 +7704,8 @@
 	},
 /area/hospital)
 "avI" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
 	name = "Kitchen"
 	},
 /turf/unsimulated/floor/specialroom/freezer,
@@ -7825,9 +7765,8 @@
 	},
 /area/hospital/samostrel)
 "avO" = (
-/obj/machinery/door/airlock/external{
-	icon = 'icons/obj/doors/Doorext-sov.dmi';
-	name = "samostrel airlock"
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -8174,17 +8113,16 @@
 	},
 /area/hospital)
 "awU" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/pyro/glass{
 	name = "Cafeteria"
 	},
 /turf/unsimulated/floor/white,
 /area/hospital)
 "awV" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	desc = "What kind of HORRIBLE THINGS could LURK in here???";
 	frequency = 1499;
-	icon_state = "door_locked";
-	id = null;
+	icon_state = "generic_locked";
 	locked = 1;
 	name = "Meat Locker";
 	radiorange = 25;
@@ -8827,7 +8765,7 @@
 /turf/unsimulated/floor/black,
 /area/moon/museum)
 "ayV" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
 	req_access_txt = ""
 	},
 /turf/unsimulated/floor{
@@ -8856,7 +8794,8 @@
 	},
 /area/moon/museum)
 "azn" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4;
 	req_access_txt = ""
 	},
 /turf/unsimulated/floor{
@@ -9234,8 +9173,9 @@
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
-	icon = 'icons/obj/doors/Doormaint.dmi';
-	icon_state = "door_closed";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "maint_closed";
 	name = "sealed airlock";
 	opacity = 1
 	},
@@ -9885,8 +9825,8 @@
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
-	icon = 'icons/obj/doors/Doormaint.dmi';
-	icon_state = "door_closed";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "maint_closed";
 	name = "sealed airlock";
 	opacity = 1
 	},
@@ -10042,7 +9982,7 @@
 /turf/simulated/wall/auto/old,
 /area/crunch)
 "aDD" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
 	req_access_txt = ""
 	},
 /turf/unsimulated/floor{
@@ -10139,8 +10079,8 @@
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/Doormaint.dmi';
-	icon_state = "door_closed";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "maint_closed";
 	name = "rusted airlock";
 	opacity = 1
 	},
@@ -10312,7 +10252,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/hospital/underground)
 "aEE" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
 	name = "Maintenance Office";
 	req_access_txt = ""
 	},
@@ -10417,6 +10357,8 @@
 "aEY" = (
 /obj/decal/fakeobjects/firelock_broken{
 	dir = 8;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0";
 	tag = "icon-door0 (WEST)"
 	},
 /turf/unsimulated/floor{
@@ -10563,8 +10505,9 @@
 /obj/overlay{
 	density = 1;
 	desc = "Somebody removed the control board without unlatching the door bolts.  Rude";
-	icon = 'icons/obj/doors/Door1.dmi';
-	icon_state = "so_door1";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "sec_closed";
 	layer = 6;
 	name = "broken door";
 	opacity = 1
@@ -10659,7 +10602,7 @@
 	},
 /area/hospital/underground)
 "aFT" = (
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock/pyro,
 /turf/unsimulated/floor/delivery,
 /area/moon/museum)
 "aFU" = (
@@ -10673,7 +10616,8 @@
 /turf/unsimulated/floor/red,
 /area/moon/museum)
 "aFV" = (
-/obj/machinery/door/airlock/security{
+/obj/machinery/door/airlock/pyro/security{
+	dir = 4;
 	name = "Security Checkpoint";
 	req_access_txt = "255"
 	},
@@ -10900,6 +10844,8 @@
 	},
 /obj/decal/fakeobjects/firelock_broken{
 	dir = 8;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0";
 	tag = "icon-door0 (WEST)"
 	},
 /turf/unsimulated/floor{
@@ -10964,10 +10910,7 @@
 	},
 /area/moon/museum)
 "aHj" = (
-/obj/grille/steel,
-/obj/window/west,
-/obj/window/east,
-/obj/window/north,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/void,
 /area/diner/cow)
 "aHo" = (
@@ -11002,8 +10945,8 @@
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/Doormaint.dmi';
-	icon_state = "door_closed";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "maint_closed";
 	name = "rusted airlock";
 	opacity = 1
 	},
@@ -11515,7 +11458,7 @@
 /turf/unsimulated/floor/black,
 /area/marsoutpost)
 "aJx" = (
-/obj/machinery/door/airlock/classic,
+/obj/machinery/door/airlock/pyro/classic,
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "aJy" = (
@@ -11525,7 +11468,9 @@
 	},
 /area/marsoutpost)
 "aJz" = (
-/obj/machinery/door/airlock/classic,
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
 /turf/unsimulated/floor/black{
 	dir = 1
 	},
@@ -11950,7 +11895,9 @@
 "aKU" = (
 /obj/item/mousetrap/armed/cleaner,
 /obj/item/tile/steel,
-/obj/machinery/door/airlock/classic,
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "aKV" = (
@@ -11958,7 +11905,7 @@
 /turf/unsimulated/floor/black,
 /area/marsoutpost)
 "aKW" = (
-/obj/machinery/door/airlock/classic,
+/obj/machinery/door/airlock/pyro/classic,
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
 "aKX" = (
@@ -12145,7 +12092,7 @@
 	},
 /area/marsoutpost)
 "aLF" = (
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock/pyro,
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "aLG" = (
@@ -12354,24 +12301,6 @@
 	opacity = 1
 	},
 /turf/unsimulated/floor/grass/leafy,
-/area/crater/biodome/north)
-"aMi" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/turf/unsimulated/floor/plating/scorched,
-/area/crater/biodome/north)
-"aMj" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/north)
 "aMk" = (
 /obj/decal/stalagmite,
@@ -12619,7 +12548,16 @@
 "aMS" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
-	icon_state = "door1";
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "maint_closed";
+	name = "rusted airlock";
+	opacity = 1
+	},
+/obj/decal/fakeobjects/firelock_broken{
+	density = 1;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor1";
 	opacity = 1
 	},
 /turf/unsimulated/floor/grime,
@@ -12926,16 +12864,6 @@
 	},
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
-"aNV" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/turf/unsimulated/floor/plating/scorched,
-/area/crater/biodome/north)
 "aNW" = (
 /obj/spacevine{
 	density = 1;
@@ -13095,8 +13023,9 @@
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/doorint.dmi';
-	icon_state = "door_closed";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "generic_closed";
 	name = "rusted airlock";
 	opacity = 1
 	},
@@ -13169,7 +13098,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
 /turf/unsimulated/floor/delivery,
 /area/upper_arctic/pod2)
 "aOB" = (
@@ -13213,7 +13144,8 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/obj/machinery/door/airlock/medical{
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
 	locked = 1
 	},
 /turf/unsimulated/floor/delivery,
@@ -13686,8 +13618,8 @@
 "aPV" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "bloodydoor";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "generic_open";
 	name = "rusted airlock"
 	},
 /turf/unsimulated/floor/grime,
@@ -13842,16 +13774,6 @@
 /obj/machinery/computer/icebase_elevator,
 /turf/unsimulated/floor/grime,
 /area/lower_arctic/mining)
-"aQp" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/turf/unsimulated/floor/plating/scorched,
-/area/crater/biodome/north)
 "aQq" = (
 /obj/spacevine{
 	density = 1;
@@ -13929,16 +13851,6 @@
 	dir = 8
 	},
 /area/crater/biodome/north)
-"aQF" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/east,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/turf/unsimulated/floor/plating/scorched,
-/area/crater/biodome/north)
 "aQG" = (
 /obj/decal/cleanable/dirt,
 /obj/item/raw_material/syreline,
@@ -13953,8 +13865,18 @@
 "aQJ" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
-	dir = 8;
-	icon_state = "door1";
+	desc = "Rust has rendered this airlock useless.";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "maint_closed";
+	name = "rusted airlock";
+	opacity = 1
+	},
+/obj/decal/fakeobjects/firelock_broken{
+	density = 1;
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor1";
 	opacity = 1
 	},
 /turf/unsimulated/floor/grime,
@@ -14007,7 +13929,7 @@
 /area/upper_arctic/exterior/surface)
 "aQQ" = (
 /obj/decal/cleanable/blood/tracks,
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/pyro/glass,
 /turf/unsimulated/floor/delivery,
 /area/upper_arctic/pod2)
 "aQS" = (
@@ -14280,8 +14202,8 @@
 "aRM" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "bloodydoor";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "generic_open";
 	name = "broken airlock"
 	},
 /turf/unsimulated/floor/arctic/plating,
@@ -14305,7 +14227,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aRT" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
 	locked = 1;
 	name = "Glacier Access"
 	},
@@ -14348,7 +14270,7 @@
 	},
 /area/crater/biodome/crew)
 "aSa" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/pyro/glass{
 	name = "Biodome"
 	},
 /turf/unsimulated/floor/delivery,
@@ -14393,7 +14315,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
 "aSj" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/pyro/glass{
 	name = "Biodome"
 	},
 /obj/cable{
@@ -14402,7 +14324,7 @@
 /turf/unsimulated/floor/delivery,
 /area/crater/biodome/maint)
 "aSk" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/pyro/glass{
 	name = "Biodome"
 	},
 /turf/unsimulated/floor/delivery,
@@ -14438,12 +14360,10 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aSr" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/north,
 /obj/channel{
 	required_to_pass = 1e+009
 	},
+/obj/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/north)
 "aSs" = (
@@ -14483,7 +14403,9 @@
 /area/marsoutpost)
 "aSy" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 8
+	dir = 8;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
 /obj/decal/fakeobjects{
 	icon = 'icons/obj/power_cond.dmi';
@@ -14887,7 +14809,7 @@
 /turf/unsimulated/floor/caution/corner/ne,
 /area/crater/biodome/crew)
 "aTP" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "Crew Quarters"
 	},
 /turf/unsimulated/floor/delivery,
@@ -14935,7 +14857,8 @@
 	},
 /area/crater/biodome/research)
 "aUa" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 2;
 	name = "Break Room"
 	},
 /turf/unsimulated/floor/delivery,
@@ -15008,7 +14931,9 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/upper_arctic/hall)
 "aUm" = (
-/obj/machinery/door/airlock/medical,
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4
+	},
 /turf/unsimulated/floor/delivery,
 /area/upper_arctic/hall)
 "aUn" = (
@@ -15052,9 +14977,10 @@
 	},
 /area/crater/biodome/crew)
 "aUv" = (
-/obj/machinery/door/airlock/medical{
+/obj/machinery/door/airlock/pyro/medical{
 	aiControlDisabled = 1;
 	ai_no_access = 1;
+	dir = 4;
 	locked = 1;
 	name = "Upper Level Access";
 	req_access_txt = "33"
@@ -15586,7 +15512,9 @@
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
 "aVJ" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/marsoutpost)
 "aVK" = (
@@ -15684,17 +15612,18 @@
 	},
 /area/crater/biodome/crew)
 "aVW" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
+	dir = 2;
 	name = "Restroom"
 	},
 /turf/unsimulated/floor/delivery,
 /area/crater/biodome/crew)
 "aVZ" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/pyro/glass,
 /turf/unsimulated/floor/delivery,
 /area/crater/biodome/research)
 "aWd" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
 	name = "Furnace Room"
 	},
 /turf/unsimulated/floor/delivery,
@@ -15820,9 +15749,10 @@
 /turf/unsimulated/floor/specialroom/medbay,
 /area/marsoutpost)
 "aWz" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
 	aiControlDisabled = 1;
 	ai_no_access = 1;
+	dir = 4;
 	locked = 1;
 	secondsElectrified = -1
 	},
@@ -15840,8 +15770,9 @@
 "aWB" = (
 /obj/overlay{
 	density = 1;
-	icon = 'icons/obj/doors/Doorext.dmi';
-	icon_state = "door_closed";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "airlock_closed";
 	name = "broken airlock"
 	},
 /turf/unsimulated/floor/plating/scorched,
@@ -16089,7 +16020,7 @@
 /area/upper_arctic/exterior/surface)
 "aXk" = (
 /obj/decal/cleanable/blood/tracks,
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/pyro/glass,
 /turf/unsimulated/floor/delivery,
 /area/upper_arctic/pod1)
 "aXn" = (
@@ -16929,18 +16860,8 @@
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
-"aZp" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/south,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/turf/unsimulated/floor/plating/scorched,
-/area/crater/biodome/north)
 "aZq" = (
 /obj/grille/steel,
-/obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/west,
 /obj/channel{
 	required_to_pass = 1e+009
@@ -17017,15 +16938,6 @@
 	dir = 8
 	},
 /area/crater/biodome/south)
-"aZC" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/turf/unsimulated/floor/plating/scorched,
-/area/crater/biodome/north)
 "aZD" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/cobweb2,
@@ -17136,7 +17048,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/maintenance,
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
 /turf/unsimulated/floor/delivery,
 /area/upper_arctic/pod1)
 "aZM" = (
@@ -17164,11 +17078,13 @@
 /turf/unsimulated/floor/white,
 /area/upper_arctic/pod1)
 "aZO" = (
-/obj/machinery/door/airlock,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro{
+	dir = 4
 	},
 /turf/unsimulated/floor/grime,
 /area/upper_arctic/pod1)
@@ -17191,7 +17107,9 @@
 	},
 /area/upper_arctic/pod1)
 "aZR" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/upper_arctic/pod1)
 "aZS" = (
@@ -17391,16 +17309,6 @@
 	name = "stairs"
 	},
 /area/upper_arctic/exterior/surface)
-"baA" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/turf/unsimulated/floor/plating/scorched,
-/area/crater/biodome/north)
 "baB" = (
 /obj/lattice{
 	dir = 4;
@@ -17647,7 +17555,7 @@
 /turf/unsimulated/floor/arctic/abyss,
 /area/upper_arctic/exterior/abyss)
 "bbj" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
 	locked = 1;
 	name = "Glacier Access"
 	},
@@ -17874,7 +17782,9 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/lower_arctic/pod1)
 "bbQ" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
 /turf/unsimulated/floor/plating/scorched,
 /area/lower_arctic/pod1)
 "bbR" = (
@@ -18384,14 +18294,14 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "bdd" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/pyro/glass{
 	locked = 1;
 	name = "Biodome"
 	},
 /turf/unsimulated/floor/delivery,
 /area/crater/biodome/south)
 "bde" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/pyro/glass{
 	locked = 1;
 	name = "Biodome"
 	},
@@ -18401,16 +18311,6 @@
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/delivery,
-/area/crater/biodome/south)
-"bdf" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/south)
 "bdg" = (
 /obj/decal/mushrooms/type1,
@@ -18471,7 +18371,7 @@
 	},
 /area/marsoutpost/duststorm)
 "bdk" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty2"
 	},
@@ -18839,8 +18739,9 @@
 /turf/unsimulated/floor/caution/west,
 /area/crater/biodome/entry)
 "bdV" = (
-/obj/machinery/door/airlock/external{
-	icon_state = "door_locked";
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
+	icon_state = "airlock_locked";
 	name = "Botanical Research Biodome";
 	secondsElectrified = -1
 	},
@@ -18850,8 +18751,9 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/entry)
 "bdX" = (
-/obj/machinery/door/airlock/external{
-	icon_state = "door_locked";
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
+	icon_state = "airlock_locked";
 	name = "Botanical Research Biodome";
 	secondsElectrified = -1
 	},
@@ -19385,13 +19287,19 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects/firelock_broken,
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty1"
 	},
 /area/marsoutpost)
 "bfw" = (
-/obj/decal/fakeobjects/firelock_broken,
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "bfx" = (
@@ -19405,7 +19313,10 @@
 	name = "mysterious computer";
 	pixel_x = 32
 	},
-/obj/decal/fakeobjects/firelock_broken,
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "bfy" = (
@@ -19581,7 +19492,9 @@
 /area/marsoutpost)
 "bga" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 8
+	dir = 8;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
@@ -19727,15 +19640,18 @@
 "bgy" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "bloodydoor";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "generic_open";
 	name = "broken airlock"
 	},
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "bgz" = (
-/obj/decal/fakeobjects/firelock_broken,
-/obj/machinery/door/airlock,
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
+/obj/machinery/door/airlock/pyro,
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "bgA" = (
@@ -19820,7 +19736,8 @@
 /turf/unsimulated/floor/wood,
 /area/marsoutpost)
 "bgM" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
 	name = "Bedroom"
 	},
 /turf/unsimulated/floor/grime,
@@ -20275,7 +20192,12 @@
 /area/marsoutpost)
 "bia" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 8
+	dir = 8;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
 	},
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
@@ -21272,7 +21194,7 @@
 	},
 /area/precursor/pit)
 "bks" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "Crew Quarters"
 	},
 /turf/unsimulated/floor/delivery,
@@ -21516,7 +21438,9 @@
 /area/crater/cave/lower)
 "bkZ" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 1
+	dir = 1;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
 /turf/unsimulated/floor/purple{
 	dir = 4
@@ -21524,7 +21448,9 @@
 /area/marsoutpost)
 "bla" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 1
+	dir = 1;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/specialroom/bar,
@@ -21576,7 +21502,8 @@
 /turf/unsimulated/floor/black,
 /area/drone/engineering)
 "blh" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
 	name = "Restroom"
 	},
 /turf/unsimulated/floor/black,
@@ -21647,7 +21574,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "blp" = (
-/obj/machinery/door/airlock/classic,
+/obj/machinery/door/airlock/pyro/classic,
 /turf/unsimulated/floor/specialroom/bar,
 /area/marsoutpost)
 "blr" = (
@@ -21659,7 +21586,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/syndicate{
+/obj/machinery/door/airlock/pyro/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Engineering"
 	},
@@ -21761,7 +21688,9 @@
 /area/marsoutpost)
 "blE" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 4
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
@@ -22012,7 +21941,9 @@
 /area/marsoutpost)
 "bmm" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 8
+	dir = 8;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
 /obj/decal/lightshaft,
 /turf/unsimulated/wall/auto/adventure/mars,
@@ -22139,8 +22070,9 @@
 	},
 /area/precursor)
 "bmG" = (
-/obj/machinery/door/airlock/syndicate{
+/obj/machinery/door/airlock/pyro/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
+	dir = 4;
 	name = "Design Office"
 	},
 /turf/unsimulated/floor/delivery,
@@ -22173,7 +22105,10 @@
 /turf/unsimulated/wall/solidcolor/white,
 /area/afterlife/heaven)
 "bmM" = (
-/obj/decal/fakeobjects/firelock_broken,
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
 "bmN" = (
@@ -22399,11 +22334,7 @@
 /turf/unsimulated/floor/engine,
 /area/marsoutpost)
 "bnn" = (
-/obj/grille/steel,
-/obj/window/reinforced/east,
-/obj/window/reinforced/west,
-/obj/window/reinforced/north,
-/obj/window/reinforced/south,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor,
 /area/marsoutpost)
 "bno" = (
@@ -22672,15 +22603,6 @@
 	dir = 4
 	},
 /area/precursor)
-"bnK" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/turf/unsimulated/floor/plating/scorched,
-/area/crater/biodome/south)
 "bnL" = (
 /obj/overlay{
 	density = 1;
@@ -23064,8 +22986,9 @@
 /turf/unsimulated/wall/auto/adventure/iomoon,
 /area/iomoon)
 "boL" = (
-/obj/machinery/door/airlock/syndicate{
+/obj/machinery/door/airlock/pyro/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
+	dir = 4;
 	name = "Assembly Floor"
 	},
 /turf/unsimulated/floor/delivery,
@@ -23293,8 +23216,9 @@
 "bpB" = (
 /obj/overlay{
 	density = 1;
-	icon = 'icons/obj/doors/Doorext.dmi';
-	icon_state = "door_closed";
+	dir = 2;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "airlock_closed";
 	name = "airlock";
 	opacity = 1
 	},
@@ -23840,8 +23764,9 @@
 /turf/unsimulated/floor/circuit,
 /area/drone/zone)
 "brd" = (
-/obj/machinery/door/airlock/syndicate{
+/obj/machinery/door/airlock/pyro/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
+	dir = 4;
 	name = "Drone Assembly Outpost"
 	},
 /turf/unsimulated/floor/delivery,
@@ -24288,9 +24213,12 @@
 /area/iomoon)
 "bsm" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 8
+	dir = 8;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
 	name = "Surface Airlock"
 	},
 /turf/unsimulated/floor{
@@ -24736,8 +24664,9 @@
 /obj/overlay{
 	density = 1;
 	desc = "It wont budge.";
-	icon = 'icons/obj/doors/Door1.dmi';
-	icon_state = "o_door1";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "generic_closed";
 	layer = 6;
 	name = "broken door";
 	opacity = 1
@@ -24748,8 +24677,8 @@
 /obj/overlay{
 	density = 1;
 	desc = "It wont budge.";
-	icon = 'icons/obj/doors/Door1.dmi';
-	icon_state = "eo_door1";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "eng_closed";
 	layer = 6;
 	name = "broken door";
 	opacity = 1
@@ -24891,9 +24820,11 @@
 /area/iomoon)
 "btS" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 1
+	dir = 1;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
 	name = "Surface Airlock"
 	},
 /turf/unsimulated/floor{
@@ -25379,7 +25310,9 @@
 	},
 /area/iomoon/base)
 "bvs" = (
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -25543,9 +25476,13 @@
 /area/iomoon/base)
 "bvR" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 8
+	dir = 8;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
-/obj/machinery/door/airlock/maintenance,
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/iomoon/base)
 "bvS" = (
@@ -25590,7 +25527,9 @@
 /area/iomoon/base)
 "bvX" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 8
+	dir = 8;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -25698,12 +25637,6 @@
 "bwo" = (
 /obj/critter/ancient_repairbot,
 /turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins)
-"bwp" = (
-/obj/window/crystal/reinforced/south,
-/turf/unsimulated/iomoon/ancient_floor{
-	icon_state = "ancientfloor2"
-	},
 /area/iomoon/robot_ruins)
 "bwq" = (
 /obj/decal/tile_edge/line/black{
@@ -26151,7 +26084,9 @@
 	},
 /area/iomoon/base)
 "bxp" = (
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
 /turf/unsimulated/floor/purple,
 /area/iomoon/base)
 "bxq" = (
@@ -26161,8 +26096,11 @@
 	},
 /area/iomoon/base)
 "bxr" = (
-/obj/decal/fakeobjects/firelock_broken,
-/obj/machinery/door/airlock/glass,
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
+/obj/machinery/door/airlock/pyro/glass,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -26180,11 +26118,14 @@
 	},
 /area/iomoon/base)
 "bxu" = (
-/obj/decal/fakeobjects/firelock_broken,
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
 /obj/overlay{
 	desc = "It seems to be rusted open.";
-	icon = 'icons/misc/rstation.dmi';
-	icon_state = "eng-open";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "eng_open";
 	layer = 6;
 	name = "broken door"
 	},
@@ -26353,9 +26294,12 @@
 /area/iomoon/base)
 "bxY" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 4
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
 	name = "Surface Airlock"
 	},
 /turf/unsimulated/floor,
@@ -26643,18 +26587,24 @@
 /area/iomoon/base)
 "byQ" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 8
+	dir = 8;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
 	name = "Surface Airlock"
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base)
 "byR" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 4
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
 	name = "Surface Airlock"
 	},
 /turf/unsimulated/floor{
@@ -26770,10 +26720,8 @@
 "bzm" = (
 /obj/decal/fakeobjects/firelock_broken,
 /obj/decal/fakeobjects/firelock_broken{
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/misc/rstation.dmi';
-	icon_state = "maint-gap";
-	name = "rusted airlock"
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -26792,7 +26740,7 @@
 /turf/unsimulated/floor/red/side,
 /area/iomoon/base)
 "bzp" = (
-/obj/machinery/door/airlock/maintenance,
+/obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor,
 /area/iomoon/base)
 "bzs" = (
@@ -26855,10 +26803,8 @@
 "bzA" = (
 /obj/decal/fakeobjects/firelock_broken,
 /obj/decal/fakeobjects/firelock_broken{
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/misc/rstation.dmi';
-	icon_state = "maint-gap";
-	name = "rusted airlock"
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
@@ -26889,11 +26835,6 @@
 /obj/decal/fakeobjects/pipe/heat,
 /turf/unsimulated/floor/lava,
 /area/iomoon/caves)
-"bzF" = (
-/obj/window/crystal/reinforced/south,
-/obj/map/light/lava,
-/turf/unsimulated/floor/lava,
-/area/iomoon/robot_ruins)
 "bzG" = (
 /obj/stone{
 	dir = 9
@@ -27009,7 +26950,9 @@
 /area/iomoon/base)
 "bzU" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 4
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
 /obj/cable{
 	d1 = 4;
@@ -27153,7 +27096,8 @@
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
 "bAj" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
 	name = "Cavern Airlock"
 	},
 /turf/unsimulated/floor,
@@ -27162,7 +27106,8 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/iomoon/base/underground)
 "bAl" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
 	name = "Cavern Airlock"
 	},
 /turf/unsimulated/floor/plating/scorched,
@@ -27336,12 +27281,15 @@
 "bAM" = (
 /obj/overlay{
 	desc = "It seems to be rusted open.";
-	icon = 'icons/misc/rstation.dmi';
-	icon_state = "eng-open";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "eng_open";
 	layer = 6;
 	name = "broken door"
 	},
-/obj/decal/fakeobjects/firelock_broken,
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -27549,16 +27497,17 @@
 "bBo" = (
 /obj/decal/fakeobjects/firelock_broken,
 /obj/decal/fakeobjects/firelock_broken{
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/misc/rstation.dmi';
-	icon_state = "maint-gap";
-	name = "rusted airlock"
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base)
 "bBp" = (
-/obj/decal/fakeobjects/firelock_broken,
-/obj/machinery/door/airlock/maintenance{
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
+/obj/machinery/door/airlock/pyro/maintenance{
 	name = "Supplies"
 	},
 /turf/unsimulated/floor{
@@ -27597,10 +27546,8 @@
 	icon_state = "1-2"
 	},
 /obj/decal/fakeobjects/firelock_broken{
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/misc/rstation.dmi';
-	icon_state = "maint-gap";
-	name = "rusted airlock"
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -27713,7 +27660,7 @@
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
 "bBH" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
 	name = "Supplies"
 	},
 /turf/unsimulated/floor,
@@ -28827,13 +28774,11 @@
 	icon_state = "iocrust_corner"
 	},
 /area/iomoon)
-"bER" = (
-/obj/decal/fakeobjects/firelock_broken,
-/turf/unsimulated/floor,
-/area/iomoon/base)
 "bES" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 8
+	dir = 8;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base)
@@ -29344,7 +29289,8 @@
 /turf/space/no_replace,
 /area/colosseum)
 "bGC" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
 	name = "Maintenance Hub"
 	},
 /turf/unsimulated/floor{
@@ -29492,8 +29438,9 @@
 /obj/overlay{
 	density = 1;
 	desc = "It wont budge.";
-	icon = 'icons/obj/doors/Door1.dmi';
-	icon_state = "o_door1";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "generic_closed";
 	layer = 6;
 	name = "broken door";
 	opacity = 1
@@ -31043,7 +30990,8 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "bLA" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
 	name = "Toilet Cubicle";
 	req_access_txt = "0"
 	},
@@ -31063,11 +31011,14 @@
 /turf/unsimulated/floor/specialroom/cafeteria,
 /area/crunch)
 "bLD" = (
-/obj/decal/fakeobjects/firelock_broken,
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
 /obj/overlay{
 	desc = "You could probably squeeze through.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "bloodydoor";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "generic_open";
 	layer = 6;
 	name = "broken door"
 	},
@@ -31187,12 +31138,15 @@
 /area/crunch)
 "bLV" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 8
+	dir = 8;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
 /obj/overlay{
 	desc = "You could probably squeeze through.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "bloodydoor";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "generic_open";
 	layer = 6;
 	name = "broken door"
 	},
@@ -31264,16 +31218,7 @@
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "bMg" = (
-/obj/grille/steel,
-/obj/window{
-	icon_state = "rwindow";
-	reinf = 1
-	},
-/obj/window{
-	dir = 1;
-	icon_state = "rwindow";
-	reinf = 1
-	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "bMh" = (
@@ -31296,7 +31241,7 @@
 /area/crunch)
 "bMm" = (
 /obj/creepy_sound_trigger,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external,
 /obj/map/light/graveyard,
 /turf/unsimulated/floor/wood,
 /area/crypt/sigma/crew)
@@ -31568,7 +31513,8 @@
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "bNc" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
 	name = "Offices"
 	},
 /turf/unsimulated/floor,
@@ -31776,7 +31722,7 @@
 /turf/unsimulated/floor/setpieces/gauntlet,
 /area/colosseum/staging)
 "bNO" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "Bedroom"
 	},
 /turf/unsimulated/floor/black,
@@ -31836,7 +31782,8 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/crypt/sigma/crew)
 "bOa" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
 	name = "Restroom"
 	},
 /turf/unsimulated/floor/delivery,
@@ -31846,9 +31793,13 @@
 /area/crypt/sigma/crew)
 "bOc" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 8
+	dir = 8;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
 /turf/unsimulated/floor/delivery,
 /area/crypt/sigma/crew)
 "bOd" = (
@@ -32511,7 +32462,8 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/crew)
 "bPV" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
 	name = "Crew Quarters"
 	},
 /turf/unsimulated/floor/delivery,
@@ -32682,7 +32634,7 @@
 	},
 /area/crypt/sigma/lab)
 "bQu" = (
-/obj/machinery/door/airlock/medical{
+/obj/machinery/door/airlock/pyro/medical{
 	locked = 1;
 	name = "Test Chamber"
 	},
@@ -32721,14 +32673,14 @@
 /turf/unsimulated/floor/blue/checker,
 /area/crunch)
 "bQA" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "Offices"
 	},
 /obj/trigger/critter,
 /turf/unsimulated/floor/red,
 /area/crunch)
 "bQB" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "Factory Floor"
 	},
 /obj/trigger/critter,
@@ -32871,7 +32823,7 @@
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
 "bQW" = (
-/obj/machinery/door/airlock/medical{
+/obj/machinery/door/airlock/pyro/medical{
 	name = "Morgue";
 	req_access_txt = "5"
 	},
@@ -32898,7 +32850,8 @@
 /turf/unsimulated/floor/void,
 /area/crunch)
 "bRb" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
 	name = "Gift Shop Closet"
 	},
 /turf/unsimulated/floor/arrival{
@@ -32916,8 +32869,9 @@
 /obj/overlay{
 	density = 1;
 	desc = "It wont budge.";
-	icon = 'icons/obj/doors/Door1.dmi';
-	icon_state = "o_door1";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "generic_closed";
 	layer = 6;
 	name = "broken door";
 	opacity = 1
@@ -32986,8 +32940,8 @@
 	},
 /area/crypt/sigma/lab)
 "bRn" = (
-/obj/machinery/door/airlock/external{
-	icon_state = "door_locked";
+/obj/machinery/door/airlock/pyro/external{
+	icon_state = "airlock_locked";
 	name = "Hazardous Gas Storage";
 	secondsElectrified = -1
 	},
@@ -33097,8 +33051,11 @@
 /turf/unsimulated/floor/blue/checker,
 /area/crunch)
 "bRO" = (
-/obj/decal/fakeobjects/firelock_broken,
-/obj/machinery/door/airlock/glass,
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
+/obj/machinery/door/airlock/pyro/glass,
 /turf/unsimulated/floor/delivery,
 /area/crypt/sigma/mainhall)
 "bRQ" = (
@@ -33276,9 +33233,10 @@
 	},
 /area/crypt/sigma/mainhall)
 "bSt" = (
-/obj/machinery/door/airlock/medical{
+/obj/machinery/door/airlock/pyro/medical{
 	aiControlDisabled = 1;
 	ai_no_access = 1;
+	dir = 4;
 	locked = 1;
 	name = "Lower Level Access";
 	req_access_txt = "33"
@@ -33313,8 +33271,11 @@
 /area/gauntlet)
 "bSz" = (
 /obj/creepy_sound_trigger,
-/obj/decal/fakeobjects/firelock_broken,
-/obj/machinery/door/airlock{
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
+/obj/machinery/door/airlock/pyro{
 	name = "Factory Lobby"
 	},
 /obj/trigger/critter,
@@ -33330,8 +33291,8 @@
 /obj/overlay{
 	density = 1;
 	desc = "It wont budge.";
-	icon = 'icons/obj/doors/Door1.dmi';
-	icon_state = "o_door1";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "generic_closed";
 	layer = 6;
 	name = "broken door";
 	opacity = 1
@@ -33348,7 +33309,7 @@
 	},
 /area/crypt/sigma)
 "bSF" = (
-/obj/machinery/door/airlock/security{
+/obj/machinery/door/airlock/pyro/security{
 	name = "Lab Security";
 	req_access_txt = ""
 	},
@@ -33474,10 +33435,16 @@
 	},
 /obj/map/light/graveyard,
 /obj/decal/fakeobjects/firelock_broken{
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
+/obj/decal/fakeobjects/firelock_broken{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
-	icon = 'icons/obj/doors/Doorext.dmi';
-	icon_state = "door_locked";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "airlock_locked";
 	name = "broken airlock"
 	},
 /turf/unsimulated/floor/delivery,
@@ -33657,7 +33624,6 @@
 /area/crypt/sigma/mainhall)
 "bTL" = (
 /obj/window/crystal/reinforced/west,
-/obj/window/crystal/reinforced/south,
 /obj/map/light/lava,
 /turf/unsimulated/floor/lava{
 	desc = "Looks pretty toasty.";
@@ -34069,9 +34035,11 @@
 /area/crunch)
 "bVk" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 1
+	dir = 1;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/pyro/glass,
 /turf/unsimulated/floor/delivery,
 /area/crypt/sigma/mainhall)
 "bVl" = (
@@ -34081,7 +34049,7 @@
 	},
 /area/crypt/sigma/mainhall)
 "bVm" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "Kitchen";
 	req_access_txt = "28"
 	},
@@ -34284,7 +34252,8 @@
 /turf/simulated/martian/floor,
 /area/crunch)
 "bVZ" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
 	name = "Factory Floor"
 	},
 /obj/trigger/critter,
@@ -34337,16 +34306,9 @@
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/doorint.dmi';
-	icon_state = "door_closed";
-	name = "rusted airlock";
-	opacity = 1
-	},
-/obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/doorint.dmi';
-	icon_state = "door_locked";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "generic_closed";
 	name = "rusted airlock";
 	opacity = 1
 	},
@@ -34496,7 +34458,7 @@
 	})
 "bWK" = (
 /obj/creepy_sound_trigger,
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "Kitchen";
 	req_access_txt = "28"
 	},
@@ -34578,7 +34540,7 @@
 /turf/simulated/martian/floor,
 /area/crunch)
 "bWW" = (
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/pyro/command{
 	name = "Research Director's Office";
 	req_access_txt = "19"
 	},
@@ -34653,15 +34615,6 @@
 "bXj" = (
 /turf/unsimulated/floor,
 /area/meat_derelict/main)
-"bXk" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/turf/unsimulated/floor/plating/scorched,
-/area/crater/biodome/south)
 "bXl" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9;
@@ -34830,15 +34783,6 @@
 /obj/map/light/graveyard,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
-"bXI" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/north,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/turf/unsimulated/floor/plating/scorched,
-/area/crater/biodome/south)
 "bXJ" = (
 /obj/decal/fakeobjects/cargopad,
 /obj/storage/crate/haunted,
@@ -34849,7 +34793,8 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crypt/sigma/storage)
 "bXL" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
 	name = "Supply Closet"
 	},
 /turf/unsimulated/floor/plating/scorched,
@@ -35048,15 +34993,6 @@
 /area/sim/test_area{
 	name = "VR Test Area"
 	})
-"bYm" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/turf/unsimulated/floor/plating/scorched,
-/area/crater/biodome/south)
 "bYn" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -35072,15 +35008,6 @@
 /obj/storage/closet/biohazard,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
-"bYp" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/south,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/turf/unsimulated/floor/plating/scorched,
-/area/crater/biodome/south)
 "bYq" = (
 /obj/decal/fakeobjects/pipe/heat,
 /obj/decal/cleanable/dirt,
@@ -35339,11 +35266,13 @@
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "bZh" = (
-/obj/machinery/door/airlock/maintenance,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
 	},
 /turf/unsimulated/floor/plating,
 /area/crunch)
@@ -35547,36 +35476,6 @@
 	name = "Fleshy Floor"
 	},
 /area/meat_derelict/main)
-"bZE" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor,
-/area/meat_derelict/guts)
-"bZF" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor,
-/area/meat_derelict/guts)
-"bZG" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/meat_derelict/guts)
 "bZI" = (
 /obj/decal/aliencomputer{
 	desc = "This appears to be some sort of martian computer. A broken one, at that.";
@@ -35709,16 +35608,6 @@
 	},
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
-"cad" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/meat_derelict/guts)
 "cae" = (
 /obj/table/auto,
 /turf/unsimulated/floor{
@@ -35747,16 +35636,6 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/meat_derelict/guts)
-"cah" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "cai" = (
 /obj/stool/chair,
@@ -35832,7 +35711,7 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "cat" = (
-/obj/machinery/door/airlock/maintenance,
+/obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "cau" = (
@@ -35848,16 +35727,6 @@
 /obj/item/mine/gibs/armed,
 /turf/unsimulated/floor/setpieces/bloodfloor,
 /area/meat_derelict/main)
-"caw" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor,
-/area/meat_derelict/guts)
 "cax" = (
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal/meatland_medical,
@@ -35913,7 +35782,8 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "caH" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4;
 	name = "Lab Maintenance Access";
 	req_access_txt = ""
 	},
@@ -36307,8 +36177,18 @@
 "cch" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
-	dir = 8;
-	icon_state = "door1";
+	desc = "Rust has rendered this airlock useless.";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "maint_closed";
+	name = "rusted airlock";
+	opacity = 1
+	},
+/obj/decal/fakeobjects/firelock_broken{
+	density = 1;
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor1";
 	opacity = 1
 	},
 /turf/unsimulated/floor,
@@ -36474,8 +36354,11 @@
 	},
 /area/afterlife/heaven)
 "ccG" = (
-/obj/decal/fakeobjects/firelock_broken,
-/obj/machinery/door/airlock/maintenance,
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
+/obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "ccH" = (
@@ -36497,8 +36380,8 @@
 "ccJ" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/Doorcom.dmi';
-	icon_state = "door_open";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "com2_open";
 	name = "rusted airlock"
 	},
 /turf/unsimulated/floor{
@@ -36506,7 +36389,10 @@
 	},
 /area/meat_derelict/guts)
 "ccK" = (
-/obj/decal/fakeobjects/firelock_broken,
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -36651,19 +36537,6 @@
 	icon_state = "floor"
 	},
 /area/meat_derelict/guts)
-"cdg" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor,
-/area/meat_derelict/guts)
 "cdh" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 8
@@ -36804,7 +36677,16 @@
 "cdE" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
-	icon_state = "door1";
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "maint_closed";
+	name = "rusted airlock";
+	opacity = 1
+	},
+/obj/decal/fakeobjects/firelock_broken{
+	density = 1;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor1";
 	opacity = 1
 	},
 /turf/unsimulated/floor,
@@ -36848,20 +36730,12 @@
 	},
 /area/meat_derelict/guts)
 "cdK" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "cdL" = (
-/obj/machinery/door/airlock/medical{
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
 	name = "RCD Development Lab"
 	},
 /obj/trigger/critter,
@@ -37163,40 +37037,8 @@
 	icon_state = "floor"
 	},
 /area/meat_derelict/entry)
-"ceJ" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor,
-/area/meat_derelict/entry)
-"ceK" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/turf/unsimulated/floor,
-/area/meat_derelict/entry)
 "ceL" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "ceM" = (
@@ -37212,8 +37054,11 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/crunch)
 "ceP" = (
-/obj/decal/fakeobjects/firelock_broken,
-/obj/machinery/door/airlock,
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
+/obj/machinery/door/airlock/pyro,
 /obj/trigger/critter,
 /turf/unsimulated/floor,
 /area/crunch)
@@ -37248,8 +37093,11 @@
 /turf/unsimulated/floor/setpieces/gauntlet,
 /area/afterlife/heaven)
 "ceZ" = (
-/obj/decal/fakeobjects/firelock_broken,
-/obj/machinery/door/airlock/medical{
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
+/obj/machinery/door/airlock/pyro/medical{
 	name = "Receiver Control";
 	req_access_txt = ""
 	},
@@ -37459,8 +37307,18 @@
 "cfE" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
-	dir = 8;
-	icon_state = "door1";
+	desc = "Rust has rendered this airlock useless.";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "maint_closed";
+	name = "rusted airlock";
+	opacity = 1
+	},
+/obj/decal/fakeobjects/firelock_broken{
+	density = 1;
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor1";
 	opacity = 1
 	},
 /turf/unsimulated/floor,
@@ -37473,10 +37331,14 @@
 	},
 /area/meat_derelict/main)
 "cfH" = (
-/obj/decal/fakeobjects/firelock_broken,
-/obj/machinery/door/airlock/medical{
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
+/obj/machinery/door/airlock/pyro/medical{
 	aiControlDisabled = 1;
 	ai_no_access = 1;
+	dir = 4;
 	locked = 1;
 	name = "Hazardous Materials Storage";
 	req_access_txt = "";
@@ -37627,7 +37489,7 @@
 /turf/unsimulated/wall/auto/adventure/meat/eyes,
 /area/meat_derelict/boss)
 "cgd" = (
-/obj/machinery/door/airlock/pyro/alt{
+/obj/machinery/door/airlock/gannets/alt{
 	dir = 8
 	},
 /turf/unsimulated/floor/black,
@@ -37761,6 +37623,12 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
+"cgt" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/unsimulated/floor/grime,
+/area/marsoutpost)
 "cgu" = (
 /turf/unsimulated/floor/blackwhite{
 	icon_state = "metalfoam"
@@ -38510,11 +38378,13 @@
 /area/meat_derelict/entry)
 "ciq" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 4
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
 /obj/machinery/door/poddoor/blast/single{
 	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
-	dir = 1;
+	dir = 2;
 	id = "meatstation1";
 	name = "Safety Interlock"
 	},
@@ -38688,7 +38558,7 @@
 	},
 /area/sim/area2)
 "ciP" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance{
 	req_access_txt = ""
 	},
 /turf/unsimulated/floor,
@@ -40584,7 +40454,7 @@
 /turf/space,
 /area/owlery/solars)
 "cnu" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "Bedroom"
 	},
 /obj/access_spawn/owlcommand,
@@ -42189,7 +42059,7 @@
 /turf/unsimulated/wall/other,
 /area/crunch/wtc)
 "csF" = (
-/obj/wingrille_spawn/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/crunch/wtc)
 "csG" = (
@@ -42304,7 +42174,7 @@
 /area/crunch/wtc)
 "csV" = (
 /obj/item/mechanics/triplaser,
-/obj/wingrille_spawn/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/crunch/wtc)
 "csW" = (
@@ -42397,7 +42267,8 @@
 /turf/space,
 /area/diner/tug)
 "ctl" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
 	name = "tethered engine"
 	},
 /turf/unsimulated/floor/shuttlebay,
@@ -43602,15 +43473,6 @@
 "cwC" = (
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
-"cwD" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/turf/unsimulated/floor/plating/scorched,
-/area/crater/biodome/south)
 "cwE" = (
 /obj/death_button{
 	pixel_x = -15
@@ -43646,16 +43508,6 @@
 /obj/grille,
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
-"cwK" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/east,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/turf/unsimulated/floor/plating/scorched,
-/area/crater/biodome/south)
 "cwL" = (
 /obj/submachine/slot_machine/cursed,
 /turf/unsimulated/iomoon/floor{
@@ -44012,7 +43864,7 @@
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "cxz" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro{
 	name = "VIP Suite"
 	},
 /obj/access_spawn/owlcommand,
@@ -44517,7 +44369,7 @@
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "cyR" = (
-/obj/machinery/door/airlock/pyro/alt{
+/obj/machinery/door/airlock/gannets/alt{
 	dir = 8;
 	req_access_txt = "12"
 	},
@@ -45482,7 +45334,7 @@
 /turf/unsimulated/floor/black,
 /area/owlery/office)
 "cBi" = (
-/obj/machinery/door/airlock/pyro/medical/alt{
+/obj/machinery/door/airlock/gannets/medical/alt{
 	dir = 8
 	},
 /obj/access_spawn/owlcommand,
@@ -45525,7 +45377,7 @@
 	},
 /area/owlery/staffhall)
 "cBq" = (
-/obj/wingrille_spawn,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/black,
 /area/owlery/gangzone)
 "cBr" = (
@@ -47090,13 +46942,10 @@
 /turf/unsimulated/floor/sanitary/blue,
 /area/owlery/lab)
 "cEZ" = (
-/obj/grille/steel,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/west,
 /obj/channel{
 	required_to_pass = 1e+009
 	},
+/obj/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/south)
 "cFa" = (
@@ -48160,11 +48009,11 @@
 /area/space)
 "cHE" = (
 /obj/decal/cleanable/rust,
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/pyro/glass,
 /turf/unsimulated/floor/caution/northsouth,
 /area/owlery/owleryhall)
 "cHF" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/pyro/glass,
 /turf/unsimulated/floor/caution/northsouth,
 /area/owlery/owleryhall)
 "cHG" = (
@@ -49390,7 +49239,7 @@
 	},
 /area/owlery/office)
 "cKF" = (
-/obj/machinery/door/airlock/pyro/command/alt{
+/obj/machinery/door/airlock/gannets/command/alt{
 	dir = 8
 	},
 /obj/access_spawn/owlcommand,
@@ -49952,7 +49801,7 @@
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cMb" = (
-/obj/machinery/door/airlock/pyro/alt{
+/obj/machinery/door/airlock/gannets/alt{
 	dir = 8
 	},
 /obj/decal/cleanable/blood/tracks{
@@ -51042,11 +50891,11 @@
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cOG" = (
-/obj/wingrille_spawn,
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/black,
 /area/owlery/gangzone)
 "cOH" = (
@@ -52002,10 +51851,10 @@
 	},
 /area/owlery/gangzone)
 "cQN" = (
-/obj/wingrille_spawn,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/black,
 /area/owlery/gangzone)
 "cQO" = (
@@ -61300,8 +61149,8 @@
 "dsZ" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/misc/rstation.dmi';
-	icon_state = "maint-gap";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "maint_open";
 	name = "rusted airlock"
 	},
 /obj/chaser/hospital_trigger,
@@ -61330,7 +61179,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
 "dty" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -61339,8 +61188,8 @@
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
-	icon = 'icons/obj/doors/Doorext.dmi';
-	icon_state = "door_locked";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "airlock_locked";
 	name = "broken airlock"
 	},
 /turf/unsimulated/floor/specialroom/freezer{
@@ -61637,24 +61486,6 @@
 	icon_state = "red2"
 	},
 /area/afterlife/bar)
-"dus" = (
-/obj/grille/steel,
-/obj/window/reinforced/north,
-/obj/window/reinforced/west,
-/obj/window/reinforced/south,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/left_centcom/donut2)
-"dut" = (
-/obj/grille/steel,
-/obj/window/reinforced/north,
-/obj/window/reinforced/south,
-/obj/window/reinforced/east,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/left_centcom/donut2)
 "duu" = (
 /obj/stool/bench/red,
 /turf/unsimulated/floor/carpet{
@@ -61699,11 +61530,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "duB" = (
-/obj/grille/steel,
-/obj/window/reinforced/north,
-/obj/window/reinforced/west,
-/obj/window/reinforced/south,
-/obj/window/reinforced/east,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -61752,7 +61579,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "duI" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -61907,9 +61734,13 @@
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
 "dvf" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 8
+	dir = 8;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
-/obj/machinery/door/airlock/medical,
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4
+	},
 /turf/unsimulated/floor/black,
 /area/crypt/sigma/lab)
 "dvg" = (
@@ -61932,9 +61763,12 @@
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
 "dvj" = (
 /obj/decal/fakeobjects/firelock_broken{
-	dir = 8
+	dir = 8;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
-/obj/machinery/door/airlock/medical{
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
 	name = "Morgue";
 	req_access_txt = "5"
 	},
@@ -65654,14 +65488,22 @@
 /area/crypt/sigma/morgue)
 "dFD" = (
 /obj/creepy_sound_trigger,
-/obj/machinery/door/airlock/medical{
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	name = "Morgue";
+	req_access_txt = "5"
+	},
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
 	name = "Morgue";
 	req_access_txt = "5"
 	},
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "dFE" = (
-/obj/machinery/door/airlock/medical,
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4
+	},
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "dFF" = (
@@ -66095,10 +65937,12 @@
 	},
 /area/centcom/lounge)
 "dGO" = (
-/obj/machinery/door/airlock/gannets/glass,
 /obj/decal/tile_edge/line/green{
 	dir = 1;
 	icon_state = "line1"
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -66118,7 +65962,7 @@
 	},
 /area/centcom/lounge)
 "dGR" = (
-/obj/wingrille_spawn/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -66212,7 +66056,9 @@
 /turf/unsimulated/floor/specialroom/medbay,
 /area/centcom/lounge)
 "dHg" = (
-/obj/machinery/door/airlock/gannets/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
 /turf/unsimulated/floor/specialroom/freezer,
 /area/centcom/lounge)
 "dHh" = (
@@ -66742,7 +66588,9 @@
 /turf/unsimulated/floor/specialroom/arcade,
 /area/centcom/lounge)
 "dIK" = (
-/obj/machinery/door/airlock/gannets/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -67287,7 +67135,7 @@
 	},
 /area/centcom/lounge)
 "dKk" = (
-/obj/wingrille_spawn/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -67543,7 +67391,7 @@
 	},
 /area/centcom/garden)
 "dKL" = (
-/obj/wingrille_spawn/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -67932,7 +67780,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dLM" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/pyro/command/centcom,
 /obj/access_spawn/admin_override,
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
@@ -68216,7 +68064,9 @@
 	},
 /area/centcom/lobby)
 "dMw" = (
-/obj/machinery/door/airlock/gannets/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -68577,7 +68427,9 @@
 	},
 /area/centcom/lobby)
 "dNi" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/pyro/command/centcom{
+	dir = 4
+	},
 /obj/access_spawn/admin_override,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/lobby)
@@ -69314,7 +69166,9 @@
 	},
 /area/centcom/garden)
 "dOZ" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/pyro/command/centcom{
+	dir = 4
+	},
 /obj/access_spawn/admin_override,
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -69575,7 +69429,9 @@
 /turf/unsimulated/floor/white,
 /area/centcom/lobby)
 "dPE" = (
-/obj/machinery/door/airlock/gannets/medical,
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4
+	},
 /turf/unsimulated/floor/white,
 /area/centcom/lobby)
 "dPF" = (
@@ -69702,7 +69558,9 @@
 	},
 /area/centcom/lobby)
 "dPX" = (
-/obj/machinery/door/airlock/gannets/glass/medical,
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
+	},
 /turf/unsimulated/floor/white/side{
 	dir = 4
 	},
@@ -69765,7 +69623,9 @@
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dQh" = (
-/obj/machinery/door/airlock/gannets/security,
+/obj/machinery/door/airlock/pyro/security{
+	dir = 4
+	},
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dQi" = (
@@ -69812,7 +69672,9 @@
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dQp" = (
-/obj/machinery/door/airlock/gannets/glass/security,
+/obj/machinery/door/airlock/pyro/glass/security{
+	dir = 4
+	},
 /turf/unsimulated/floor/black/side{
 	dir = 8
 	},
@@ -69881,7 +69743,9 @@
 	icon_state = "blue"
 	})
 "dQx" = (
-/obj/machinery/door/airlock/gannets/maintenance,
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
 /turf/unsimulated/floor/plating,
 /area/centcom/offices{
 	icon_state = "blue"
@@ -69940,7 +69804,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
 "dRC" = (
-/obj/wingrille_spawn/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -70727,17 +70591,9 @@
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/doorint.dmi';
-	icon_state = "door_locked";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "generic_locked";
 	name = "rusted airlock";
-	opacity = 1
-	},
-/obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "This airlock is jammed.";
-	icon = 'icons/obj/doors/doormed.dmi';
-	icon_state = "door_locked";
-	name = "Artifact Lab";
 	opacity = 1
 	},
 /turf/unsimulated/floor/delivery,
@@ -70987,6 +70843,20 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
+"efm" = (
+/obj/decal/fakeobjects/firelock_broken{
+	density = 1;
+	desc = "Rust has rendered this airlock useless.";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "maint_closed";
+	name = "rusted airlock";
+	opacity = 1
+	},
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/hospital/underground)
 "ehl" = (
 /obj/window/cubicle{
 	dir = 4
@@ -71166,7 +71036,9 @@
 	},
 /area/centcom/offices/katzen)
 "ewR" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -71523,6 +71395,14 @@
 	dir = 10
 	},
 /area/centcom/offices/cogwerks)
+"fNL" = (
+/obj/window/crystal/reinforced/west,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor/plating/scorched,
+/area/crater/biodome/north)
 "fQJ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
@@ -72005,6 +71885,17 @@
 /obj/decal/fakeobjects/dreambeach/seashells,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"hNZ" = (
+/obj/grille/steel,
+/obj/window/crystal/reinforced/east,
+/obj/window/crystal/reinforced/north,
+/obj/window/crystal/reinforced/west,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor/plating/scorched,
+/area/crater/biodome/south)
 "hPi" = (
 /obj/landmark/viscontents_spawn{
 	targetZ = 4
@@ -72048,6 +71939,16 @@
 	icon_state = "floor5"
 	},
 /area/wizard_station)
+"hSC" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4;
+	name = "Compartment Access";
+	req_access_txt = ""
+	},
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/hospital/samostrel)
 "hSU" = (
 /turf/unsimulated/floor/void,
 /area/diner/cow)
@@ -72245,7 +72146,7 @@
 "iLT" = (
 /obj/machinery/door/poddoor/blast/single{
 	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
-	dir = 1;
+	dir = 2;
 	id = "meatstation_wrath";
 	name = "Safety Interlock"
 	},
@@ -73026,7 +72927,7 @@
 /turf/unsimulated/floor/black,
 /area/owlery/office)
 "lkO" = (
-/obj/machinery/door/airlock/gannets/maintenance,
+/obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
 "lll" = (
@@ -74117,7 +74018,9 @@
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "oAZ" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
 "oGk" = (
@@ -74306,13 +74209,6 @@
 	name = "wood floor"
 	},
 /area/wizard_station)
-"oYs" = (
-/obj/grille/steel,
-/obj/window/west,
-/obj/window/east,
-/obj/window/south,
-/turf/unsimulated/outdoors/grass,
-/area/diner/cow)
 "oYO" = (
 /obj/machinery/light{
 	dir = 1
@@ -74574,6 +74470,21 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"pIe" = (
+/obj/overlay{
+	density = 1;
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "airlock_closed";
+	name = "airlock";
+	opacity = 1
+	},
+/turf/unsimulated/floor{
+	carbon_dioxide = 16;
+	name = "warm plating";
+	temperature = 313.15
+	},
+/area/iomoon)
 "pJw" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -74923,7 +74834,7 @@
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
 "qPO" = (
-/obj/machinery/door/airlock/gannets/glass,
+/obj/machinery/door/airlock/pyro/glass,
 /obj/decal/tile_edge/line/green{
 	dir = 8;
 	icon_state = "line1"
@@ -75152,6 +75063,12 @@
 	dir = 4
 	},
 /area/centcom)
+"rwD" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/turf/unsimulated/floor/grime,
+/area/marsoutpost)
 "rAl" = (
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
@@ -75248,6 +75165,21 @@
 /obj/decal/cleanable/paper,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
+"rJF" = (
+/obj/overlay{
+	density = 1;
+	desc = "Somebody removed the control board without unlatching the door bolts.  Rude";
+	dir = 2;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "sec2_closed";
+	layer = 6;
+	name = "broken door";
+	opacity = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/moon/museum)
 "rJY" = (
 /obj/decal/poster/wallsign/bookcase{
 	pixel_y = 28
@@ -75306,7 +75238,8 @@
 	},
 /area/diner/tug)
 "rON" = (
-/obj/machinery/door/airlock/classic{
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
 	name = "Kitchen Door"
 	},
 /turf/unsimulated/outdoors/grass,
@@ -75459,6 +75392,15 @@
 "sbF" = (
 /turf/space,
 /area/centcom/outside)
+"scq" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4;
+	req_access_txt = ""
+	},
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/hospital/underground)
 "scU" = (
 /obj/admin_plaque{
 	name = "Pali's Office"
@@ -75607,7 +75549,7 @@
 /area/centcom/offices/katzen)
 "sBX" = (
 /obj/lattice,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/void,
 /area/diner/cow)
 "sGw" = (
@@ -75720,13 +75662,6 @@
 "teq" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/gangzone)
-"tgk" = (
-/obj/grille/steel,
-/obj/window/west,
-/obj/window/east,
-/obj/window/south,
-/turf/unsimulated/wall/void,
-/area/diner/cow)
 "tiD" = (
 /obj/decal/skeleton{
 	desc = "The remains of a human. How'd they get out there?";
@@ -75930,7 +75865,7 @@
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
 "tZZ" = (
-/obj/wingrille_spawn/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -76032,6 +75967,14 @@
 "uvs" = (
 /turf/unsimulated/floor/carpet/red/decal,
 /area/centcom/offices/grifflez)
+"uvP" = (
+/obj/window/crystal/reinforced/east,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor/plating/scorched,
+/area/crater/biodome/north)
 "uwC" = (
 /obj/table/wood/auto/desk,
 /obj/machinery/light/lamp/green{
@@ -76351,7 +76294,7 @@
 	},
 /area/meat_derelict/guts)
 "vum" = (
-/obj/machinery/door/airlock/gannets/glass,
+/obj/machinery/door/airlock/pyro/glass,
 /obj/decal/tile_edge/line/green{
 	dir = 4;
 	icon_state = "line1"
@@ -76383,9 +76326,11 @@
 	},
 /area/titlescreen)
 "vwU" = (
-/obj/machinery/door/airlock/gannets/glass,
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -76430,6 +76375,33 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"vGz" = (
+/obj/decal/fakeobjects/firelock_broken{
+	density = 1;
+	desc = "Rust has rendered this airlock useless.";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "generic_closed";
+	name = "rusted airlock";
+	opacity = 1
+	},
+/obj/decal/fakeobjects/firelock_broken{
+	density = 1;
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor1";
+	opacity = 1
+	},
+/turf/unsimulated/floor/grime,
+/area/marsoutpost)
+"vLm" = (
+/obj/window/crystal/reinforced/west,
+/obj/channel{
+	required_to_pass = 1e+009
+	},
+/obj/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor/plating/scorched,
+/area/crater/biodome/south)
 "vNH" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -76518,8 +76490,6 @@
 "wkZ" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/glass_recycler,
-/obj/window/west,
-/obj/window/south,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -76530,6 +76500,12 @@
 /obj/map/light/graveyard,
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/crew)
+"wmm" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/turf/unsimulated/floor/white/grime,
+/area/marsoutpost)
 "wnu" = (
 /turf/unsimulated/wall/auto/sengoku{
 	icon_state = "10";
@@ -76565,6 +76541,13 @@
 "wvy" = (
 /turf/unsimulated/floor/carpet/red/fancy/narrow/nw,
 /area/centcom/offices/sovexe)
+"wvB" = (
+/obj/machinery/door/airlock/pyro/command/centcom{
+	dir = 4
+	},
+/obj/access_spawn/admin_override,
+/turf/unsimulated/floor/black,
+/area/centcom/lobby)
 "wwz" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -76579,7 +76562,9 @@
 /turf/unsimulated/grass,
 /area/centcom/lounge)
 "wxJ" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -76721,6 +76706,18 @@
 /obj/decal/fakeobjects/dreambeach/earth,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"wTN" = (
+/obj/decal/fakeobjects/firelock_broken{
+	density = 1;
+	desc = "This airlock is jammed.";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "research_locked";
+	name = "Artifact Lab";
+	opacity = 1
+	},
+/turf/unsimulated/floor/delivery,
+/area/crypt/sigma/lab)
 "wWb" = (
 /obj/decal/poster/wallsign/hazard_caution,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -77043,10 +77040,7 @@
 	icon_state = "blue"
 	})
 "yan" = (
-/obj/grille/steel,
-/obj/window/west,
-/obj/window/east,
-/obj/window/north,
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
 "yaC" = (
@@ -89684,7 +89678,7 @@ bCR
 bDx
 bDX
 izT
-bER
+bES
 izT
 btM
 bxq
@@ -90288,7 +90282,7 @@ bCR
 bDx
 bDX
 izT
-bER
+bES
 izT
 btM
 bxq
@@ -90312,7 +90306,7 @@ bJX
 aDC
 bLE
 bLn
-bMf
+bMg
 bMA
 bNf
 bLn
@@ -90916,7 +90910,7 @@ bJX
 aDC
 bLG
 bLX
-bMh
+bMg
 bMB
 bLn
 bLn
@@ -96604,7 +96598,7 @@ aaa
 wXY
 wXY
 wXY
-bpB
+pIe
 wXY
 wXY
 bqP
@@ -109209,7 +109203,7 @@ kkX
 aFG
 aFW
 amx
-aFC
+rJF
 kkX
 ajI
 ajI
@@ -109530,9 +109524,9 @@ aLB
 aLB
 aLB
 aLB
-aMi
-aZC
-baA
+aSr
+aSr
+aSr
 rtc
 aRX
 aSV
@@ -109543,9 +109537,9 @@ aVW
 aWI
 aXu
 rtc
-bdf
-bnK
-bXk
+cEZ
+cEZ
+cEZ
 aKg
 aKg
 aKg
@@ -109830,9 +109824,9 @@ aKh
 aKg
 aKg
 aLw
-aMi
-aZC
-aZp
+aSr
+aSr
+aSr
 aOR
 aOR
 rtc
@@ -109847,9 +109841,9 @@ aWI
 rtc
 aZr
 aZr
-bXI
-bnK
-bXk
+cEZ
+cEZ
+cEZ
 cwv
 aKg
 aKg
@@ -110131,8 +110125,8 @@ aKh
 aKg
 aKg
 aLw
-aMi
-aZp
+aSr
+aSr
 aNW
 aOQ
 aOR
@@ -110151,8 +110145,8 @@ aZr
 baa
 baC
 baC
-bXI
-bXk
+cEZ
+cEZ
 cwv
 aKg
 aKh
@@ -110432,8 +110426,8 @@ aKh
 aKg
 aKg
 aKg
-aMi
-aZp
+aSr
+uvP
 aMd
 aMd
 aOR
@@ -110454,8 +110448,8 @@ aZr
 aZr
 aZr
 aZr
-bXI
-bXk
+cEZ
+cEZ
 aKg
 aKg
 aLW
@@ -110734,7 +110728,7 @@ aJI
 aKg
 aKg
 aLW
-aMj
+aSr
 aMG
 aMd
 aNs
@@ -110757,7 +110751,7 @@ baD
 aZr
 baa
 aZr
-cwD
+cEZ
 aKg
 aKg
 aKg
@@ -111035,8 +111029,8 @@ aJk
 aJI
 aKg
 aKg
-aMi
-aZp
+aSr
+aSr
 aMH
 aMd
 aNX
@@ -111059,8 +111053,8 @@ baE
 baD
 aZr
 aZr
-bXI
-bXk
+cEZ
+cEZ
 aKg
 aKg
 aKg
@@ -111337,7 +111331,7 @@ aKh
 aKh
 aKg
 aKg
-aMj
+aSr
 aLX
 aMI
 aMN
@@ -111362,7 +111356,7 @@ bbu
 bbU
 aZr
 bcG
-cwD
+cEZ
 aKg
 aKg
 aKg
@@ -111639,7 +111633,7 @@ aJI
 aKg
 aKg
 aLw
-aNV
+aSr
 aLY
 aMd
 aMI
@@ -111664,7 +111658,7 @@ bbu
 bbV
 aZr
 bcH
-cwK
+cEZ
 aKg
 aKg
 aKg
@@ -112545,7 +112539,7 @@ aKh
 aKh
 aKg
 aLz
-aQp
+aSr
 aMb
 aMI
 aMI
@@ -112847,7 +112841,7 @@ aKh
 aKh
 aKg
 aKg
-aMj
+aSr
 aMc
 aMJ
 aML
@@ -113149,7 +113143,7 @@ aKI
 aKI
 aKK
 aLv
-aMj
+aSr
 aMd
 aMK
 aML
@@ -113451,7 +113445,7 @@ aKh
 aKh
 aKg
 aKg
-aMj
+aSr
 aMb
 aML
 aMM
@@ -113753,7 +113747,7 @@ aKh
 aKg
 aKg
 aLw
-aQF
+aSr
 aMe
 aMM
 aML
@@ -114659,7 +114653,7 @@ aJI
 aKg
 aKg
 aLz
-aQp
+aSr
 aLY
 aMI
 aMN
@@ -114961,7 +114955,7 @@ aJI
 aKg
 aLu
 aKg
-aMj
+aSr
 aMh
 aMd
 aMI
@@ -114986,7 +114980,7 @@ bbu
 bbX
 aZr
 bcH
-cwD
+cEZ
 brE
 aKi
 aKi
@@ -115245,10 +115239,10 @@ iBf
 iBf
 uVv
 iBf
-tgk
+uVv
 oAZ
 yan
-oYs
+uVv
 iBf
 iBf
 iBf
@@ -115264,7 +115258,7 @@ aKg
 aKg
 aKg
 aSr
-aZq
+aSr
 aMd
 aMI
 aOh
@@ -115287,8 +115281,8 @@ baM
 baN
 aZr
 aZr
-bYm
-bYp
+cEZ
+cEZ
 brE
 aKi
 aKi
@@ -115566,7 +115560,7 @@ aKK
 aLv
 aKg
 aKg
-aMj
+aSr
 aMO
 aMd
 aMd
@@ -115589,7 +115583,7 @@ baN
 aZr
 aZr
 aZr
-cwD
+cEZ
 aLB
 bsU
 dah
@@ -115869,7 +115863,7 @@ aKg
 aKg
 aTn
 aSr
-aZq
+fNL
 aMd
 aNs
 aPg
@@ -115890,8 +115884,8 @@ aZr
 aZr
 aZr
 baa
-bYm
-bYp
+cEZ
+cEZ
 aKg
 cwt
 byi
@@ -116191,8 +116185,8 @@ aZr
 aZr
 baO
 baO
-bYm
-bYp
+vLm
+cEZ
 cww
 aKg
 cwt
@@ -116475,8 +116469,8 @@ aKg
 aKg
 aLz
 aSr
-aZC
-aZq
+aSr
+fNL
 aMd
 aNs
 fCo
@@ -116491,9 +116485,9 @@ aXD
 wkV
 aZr
 baa
-bYm
-bnK
-bYp
+cEZ
+cEZ
+cEZ
 cww
 aKg
 cGW
@@ -116779,8 +116773,8 @@ aKg
 aKg
 aZZ
 aSr
-aZC
-baA
+fNL
+fNL
 fCo
 aSo
 aTm
@@ -116791,9 +116785,9 @@ aWd
 aWU
 aXE
 wkV
-bdf
-bnK
-bYp
+hNZ
+vLm
+cEZ
 aKg
 cwt
 aKg
@@ -120828,7 +120822,7 @@ aDY
 aDY
 aDY
 aDY
-dTI
+wTN
 aDY
 nuo
 mIm
@@ -128478,7 +128472,7 @@ aGx
 aGx
 aGx
 aGx
-aDD
+scq
 aGx
 aGx
 aGx
@@ -129534,12 +129528,12 @@ bqb
 bpo
 bqd
 bqd
-bwp
+bqd
 bxc
 bxN
 bxN
 bxN
-bzF
+bxN
 bAu
 bqd
 bqd
@@ -129836,12 +129830,12 @@ bqd
 buD
 bqd
 bqd
-bwp
+bqd
 bxc
 bxN
 bxN
 bxN
-bzF
+bxN
 bAu
 bqd
 bqd
@@ -130138,12 +130132,12 @@ bqb
 bpo
 bqd
 bqd
-bwp
+bqd
 bxc
 bxN
 bxN
 bxN
-bzF
+bxN
 bAu
 bqd
 bCa
@@ -130363,9 +130357,9 @@ qkQ
 aKq
 aKS
 aTs
-aLF
+cgt
 aTs
-aLF
+cgt
 aTs
 aOp
 aTs
@@ -130722,7 +130716,7 @@ aKS
 aTs
 aTs
 aTs
-aKW
+wmm
 aTs
 aTs
 aaa
@@ -132513,14 +132507,14 @@ aTs
 aTs
 aTs
 bfM
-aJx
+rwD
 aTs
 aTs
 aTs
 aTs
 aTs
 aTs
-aKW
+aLm
 aTs
 aIe
 aIe
@@ -134879,7 +134873,7 @@ duy
 duy
 duy
 duw
-dus
+duB
 aES
 aES
 aES
@@ -135181,7 +135175,7 @@ duy
 duy
 dhF
 duw
-dut
+duB
 aES
 aES
 aES
@@ -136450,12 +136444,12 @@ bid
 aTs
 aTs
 aTs
-aLF
+cgt
 aTs
 aTs
 aTs
-aQJ
-aQJ
+vGz
+vGz
 bmm
 aTs
 aTs
@@ -138445,7 +138439,7 @@ duq
 duq
 aGx
 aGx
-aDD
+scq
 aGx
 aGx
 duq
@@ -139891,7 +139885,7 @@ aqL
 ccY
 ccY
 ceb
-ceJ
+ceL
 ccY
 cfu
 cfU
@@ -140193,7 +140187,7 @@ aqL
 ccY
 ccY
 cec
-ceK
+ceL
 ccY
 cfv
 cfV
@@ -140257,7 +140251,7 @@ duq
 duq
 aGx
 aGx
-aEa
+efm
 aGx
 aGx
 duq
@@ -146828,9 +146822,9 @@ aaa
 bZd
 bZd
 bZd
-bZE
-caw
-cad
+cdK
+cdK
+cdK
 cay
 ccm
 cba
@@ -147130,7 +147124,7 @@ aaa
 bZd
 bZd
 bZs
-bZF
+cdK
 cae
 cay
 cay
@@ -147432,7 +147426,7 @@ aaa
 bZd
 bZs
 bZs
-bZF
+cdK
 cae
 cay
 cay
@@ -147733,8 +147727,8 @@ cnw
 aaa
 bZd
 bZs
-bZE
-cad
+cdK
+cdK
 cax
 cbb
 cay
@@ -148035,7 +148029,7 @@ cnw
 aaa
 bZd
 bZs
-bZF
+cdK
 cae
 cay
 cay
@@ -148337,7 +148331,7 @@ cnw
 aaa
 bZd
 bZs
-bZF
+cdK
 cae
 cay
 cay
@@ -148453,7 +148447,7 @@ dLj
 dLj
 sWb
 sWb
-dLM
+wvB
 sWb
 sWb
 dOg
@@ -148639,7 +148633,7 @@ cnw
 aaa
 bZd
 bZs
-bZF
+cdK
 caf
 caz
 cay
@@ -148941,7 +148935,7 @@ cnw
 aaa
 bZd
 bZd
-bZF
+cdK
 cag
 cay
 cay
@@ -149243,7 +149237,7 @@ cnw
 aaa
 bZd
 bZd
-bZF
+cdK
 cae
 cay
 cay
@@ -149545,8 +149539,8 @@ cnw
 aaa
 bZd
 bZd
-bZG
-cah
+cdK
+cdK
 caA
 caz
 cay
@@ -149848,7 +149842,7 @@ aaa
 bZd
 bZd
 bZs
-bZF
+cdK
 cae
 cay
 cay
@@ -149960,13 +149954,13 @@ dGR
 aES
 sWb
 sWb
-dLM
+wvB
 dMe
 dMD
 dNb
 dMD
 dNL
-dLM
+wvB
 sWb
 sWb
 aES
@@ -150150,7 +150144,7 @@ aaa
 bZd
 bZs
 bZs
-bZF
+cdK
 caB
 cay
 cay
@@ -150452,9 +150446,9 @@ aaa
 bZd
 bZd
 bZs
-bZG
-caw
-cah
+cdK
+cdK
+cdK
 cay
 ccs
 cba
@@ -150760,7 +150754,7 @@ cba
 cbD
 cct
 cba
-cdg
+cdK
 cdK
 cba
 ceN
@@ -158563,7 +158557,7 @@ kfa
 kfa
 kfa
 acG
-acW
+adp
 adp
 abr
 abr
@@ -158865,7 +158859,7 @@ abl
 kfa
 kfa
 abU
-acX
+adp
 adq
 abB
 abr
@@ -159167,7 +159161,7 @@ abl
 abl
 kfa
 acG
-acX
+adp
 abB
 abB
 adZ
@@ -159469,7 +159463,7 @@ abl
 abl
 abl
 acj
-acJ
+adp
 abB
 adv
 abr
@@ -159498,7 +159492,7 @@ atb
 abr
 abr
 abr
-atS
+hSC
 abr
 abr
 axb
@@ -162218,7 +162212,7 @@ agE
 abB
 agJ
 agL
-adc
+adp
 agQ
 amR
 amR
@@ -162520,7 +162514,7 @@ agF
 agH
 adu
 agM
-acX
+adp
 agQ
 amR
 amR
@@ -162822,7 +162816,7 @@ agG
 abB
 agH
 agN
-acJ
+adp
 ahi
 ahn
 amR
@@ -163697,7 +163691,7 @@ abl
 abl
 abl
 acj
-adc
+adp
 ads
 adN
 abr
@@ -163999,7 +163993,7 @@ abl
 abl
 abl
 acz
-acX
+adp
 adu
 ads
 adZ
@@ -164301,7 +164295,7 @@ kfa
 kfa
 kfa
 abU
-acX
+adp
 adw
 adO
 abr
@@ -164603,7 +164597,7 @@ kfa
 kfa
 kfa
 acG
-add
+adp
 adp
 abr
 abr

@@ -953,8 +953,9 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 /obj/machinery/door/lunar_breakdoor
 	name = "External Airlock"
-	icon = 'icons/misc/lunar.dmi'
-	icon_state = "breakairlock0"
+	icon = 'icons/obj/doors/SL_doors.dmi'
+	icon_state = "airlock_closed"
+	icon_base = "airlock"
 	anchored = 1
 	density = 1
 	opacity = 1
