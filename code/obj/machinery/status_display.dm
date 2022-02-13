@@ -353,7 +353,7 @@
 			return
 		var/mob/living/silicon/ai/A = user
 		if (isAIeye(user))
-			var/mob/dead/aieye/AE = user
+			var/mob/living/intangible/aieye/AE = user
 			A = AE.mainframe
 		if (owner == A) //no free updates for you
 			return

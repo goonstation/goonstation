@@ -617,7 +617,7 @@
 		var/mob/living/silicon/ai/mainframe
 		var/mob/living/carbon/human/person = src
 		if (isAIeye(user))
-			var/mob/dead/aieye/ai = user
+			var/mob/living/intangible/aieye/ai = user
 			mainframe = ai.mainframe
 		else
 			mainframe = user

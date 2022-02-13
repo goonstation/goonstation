@@ -12,7 +12,7 @@
 //Colosseum putts /obj/machinery/colosseum_putt  X
 //Cyborgs /mob/living/silicon/robot  X
 
-/mob/dead/aieye
+/mob/living/intangible/aieye
 	name = "AI Eye"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "a-eye"
@@ -482,7 +482,7 @@
 /*
 /turf/MouseEntered()
 	.=..()
-	if(istype(usr,/mob/dead/aieye))//todo, make this a var for cheapernesseress?
+	if(istype(usr,/mob/living/intangible/aieye))//todo, make this a var for cheapernesseress?
 		if(aiImage)
 			usr.client.show_popup_menus = (length(cameras))
 */
@@ -580,7 +580,7 @@ world/proc/updateCameraVisibility(generateAiImages=FALSE)
 		LAZYLISTADDUNIQUE(camerasToRebuild, cam)
 	world.updateCameraVisibility()
 
-/mob/dead/aieye/proc/check_eye_z(source)
+/mob/living/intangible/aieye/proc/check_eye_z(source)
 	var/atom/movable/temp = source
 	while(!istype(temp.loc, /turf))
 		temp = temp.loc
