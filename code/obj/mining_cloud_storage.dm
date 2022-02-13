@@ -385,7 +385,8 @@
 		. = ..()
 		STOP_TRACKING
 
-	attack_hand(var/mob/user as mob) //html
+	attack_hand(var/mob/user as mob) //html- if there's anything else that can be gutted, PLEASE do let me know
+
 		var/HTML = {"
 		<title>[src.name]</title>
 		<title>[src.name]</title>
@@ -518,7 +519,6 @@
 				dat += "[ore]: [OCD.amount] ($[OCD.price+taxes+(!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0)]/ore) (<A href='?src=\ref[src];purchase=1;storage=\ref[S];ore=[ore]'>Purchase</A>)<br>"
 
 		dat += "</small><HR>"
-
 		user.Browse(HTML + dat.Join(), "window=manufact;size=1111x600")
 		onclose(user, "manufact")
 		interact_particle(user,src)
@@ -553,11 +553,8 @@
 		return src.loc // fuck you, work
 
 
-
-
-
 // html interaction
-	Topic(href, href_list) // BEEEEG CHECK
+	Topic(href, href_list)
 		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1 || isAI(usr)) && istype(src.loc, /turf))))
 			src.add_dialog(usr)
 			if (href_list["card"])
@@ -592,7 +589,6 @@
 					quantity = max(0, input("How many units do you want to purchase?", "Ore Purchase", null, null) as num)
 					if(!isnum_safe(quantity))
 						return
-					////////////
 
 					if(OCD.amount >= quantity && quantity > 0)
 						var/subtotal = round(price * quantity)
