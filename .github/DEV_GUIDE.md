@@ -14,11 +14,22 @@ Visit https://code.visualstudio.com/ to download the appropriate installation fo
 
 You should be greeted with a screen that looks like this:![](https://i.imgur.com/HjDKDqj.png)
 
+If this is your first time, take a minute to familiarize yourself with the layout of VS code. Here's an example of what it'll look like when you're working on something:
+![](https://imgur.com/a/msGsO97)
+1: This is your sidebar. From this, you can search the codebase, browse the files, debug your code, and manage your branches
+2: This bar is an extension of whatever you have selected from the smaller sidebar. Here you see the source control window.
+3: These are the tabs and files you have open. From here, you can see any files you've changed, and any unsaved work
+4: This is the current file you have open.
+5: This is the output terminal. If and when you have any bugs, you'll see them here, and you can track your code compiling from here.
+
+From here, 
+
+
 Now, we need to create our own repository to contribute to! :rocket:
 
 ### Step 2: Forking :fork_and_knife: 
 
-Now, visit https://github.com/goonstation/goonstation. You'll want to press the `Fork` button in the top right corner. It looks like this:
+Now, visit https://github.com/goonstation/goonstation. If you don't have a github account, this is the step to make one- you'll need it for just about every step from here on out. You'll want to press the `Fork` button in the top right corner. It looks like this:
 
 ![](https://i.imgur.com/C3obiAS.png)
 
@@ -32,7 +43,7 @@ First, we're going to need to download git, which can be found on [this page](ht
 
 Git is what will let you synchronize your code with others, make your own branches and merging them with other people's code, complete with VS Code integration to make the process easy.
 
-Now, go back to VS Code and relaunch it. Under the version control sidebar (looks like a tree branch) click Clone Repository. It should look like this: ![](https://i.imgur.com/pBqGiT2.png)
+Next, go back to VS Code and relaunch it. Under the version control sidebar (looks like a tree branch) click Clone Repository. It should look like this: ![](https://i.imgur.com/pBqGiT2.png)
 
 If that's not there, you can press `Ctrl+Shift+P` to open the command palette, then type `Git: Clone`, and then press enter. 
 
@@ -72,7 +83,7 @@ Now, let's connect the main goonstation repository to your client.
 
 We need to add the main Goonstation repository as a remote now. :satellite:
 
-To do this, open the command palette and type `Git: Add Remote`. It'll prompt you for a name, which should be `upstream`. Then, put https://github.com/goonstation/goonstation as the URL. Now, you'll have the main Goonstation repository as a remote named upstream: This will let you easily send your pull requests there later.
+If you haven't already relaunched VS code, make sure to do this now; otherwise you'll have troubles on this step. To do this, open the command palette (Ctrl+shift+P) and type `Git: Add Remote`. It'll prompt you for a name, which should be `upstream`. Then, put https://github.com/goonstation/goonstation as the URL. Now, you'll have the main Goonstation repository as a remote named upstream: This will let you easily send your pull requests there later.
 
 You're just about done with that! Just one last thing you need to manually do.
 
@@ -88,8 +99,29 @@ That's it! Your local codebase is all set up to contribute now.
 
 ## Making Changes :lower_left_fountain_pen: 
 
-First, let's talk about **branches**.
-I hope you've thought of what you actually want to do. First thing to do is to make a new branch on your fork. This is important because you should **never** make changes to the default(master) branch of your fork. It should remain as a clean slate.
+ First, let's talk about **branches**.
+
+A branch is an alternative version of a codebase. Their lifecycle usually consists of being created, being updated to, then being re-merged into the main codebase.
+A commit is an update you make to a branch. Think of it a saved version of said branch, or a batch of changes you make with an associated timestamp. 
+
+You can access your branches in VScode through the source control menu, which again looks like the tree. Here's what they look like, and the most important things to click on for managing them:
+![](https://imgur.com/a/iOPzpIa)
+1: This lets you expand a branch and see the individual commits
+2: This is the "Switch to this branch" button. If you're already on the branch, hovering over it will read "Switch to another branch" 
+3: This is the "Revert commit" button. If you've made a catastrophic mistake and now your code is full of thousands of errors, this button is your friend. Keep in mind, the changes will be staged, and you'll want to discard the changes and/or close and reopen the file in order to fully go back to the change. As tempting as it may seem, **Do not try and fix any mistakes you make by messing with the files or deleting anything from the file brower** If all else fails and your branch is still all schmutzy and gross, you can always just rebranch from master, and copy paste the bulk of your changes from there.
+
+Next, let's (breifly) talk about **Dream Maker.**
+
+ In short, it is the software that comes with BYOND that lets you edit sprites. If whatever you do relates to sprites, which it probably or eventually will, you'll need to know about dream maker. This is by no means an extensive guide, and you should see the spriting sections for more information, but this'll get you started. First off, open the folder that you installed the codebase into. Now, navigate to icons. You should be greeted with something like this: 
+ ![](https://imgur.com/a/uVg2WXh)
+ 
+ These are .DMIs. They're essentially weird PNGs consisting of a 32x32 grid that are used to store associated files together. Double clicking on one of them will, after some loading as a ghost window, open it with Dream Maker. While you don't have to, and it's not recommended to edit sprites with the archaic software, you'll still need to use it for getting the sprites you drew into the game. Double clicking an icon in dream maker will open it further. Here's what it looks like:
+ ![](https://imgur.com/a/oFxrJPk)
+ Highlighted in red for your ease of finding is the back arrow, which lets you return to the main DMI, and the direction-dependent sprites, if there are any. Furthermore, any animation frames will (probably) be accessed here.
+
+
+By now, hopefully you've thought of what you actually want to do. First thing to do is to make a new branch on your fork. This is important because you should **never** make changes to the default(master) branch of your fork. It should remain as a clean slate.
+
 
 **For every PR you make, make a new branch.** This way, each of your individual projects have their own branch. A commit you make to one branch will not affect the other branches, so you can work on multiple projects at once.
 
@@ -132,7 +164,7 @@ Now, save your changes. If we look at the Source Control tab, we'll see that we 
 
 ### Step 3: Testing your code :game_die:
 
-The easiest way to test your changes is to press **F5**. This compiles your code, runs the server and connects you to it, as well as automatically giving you admin permissions. It also starts a debugger that will let you examine what went wrong when a runtime error happens. If you want to avoid the debugger press **Ctrl + F5** instead.
+The easiest way to test your changes is to press **F5**. This compiles your code, runs the server and connects you to it, as well as automatically giving you admin permissions. It also starts a debugger that will let you examine what went wrong when a runtime error happens. If you want to avoid the debugger press **Ctrl + F5** instead. **Keep in mind that this can take anywhere from 5 to 10 minutes**. Be patient, and while waiting, you may want to pay attention to your pets, stand up and walk around, drink water, or do body weight exercises.
 
 :::warning
 If you are on a version of BYOND different from the one specified in buildByond.conf the debugger might be somewhat unstable and not work properly.
@@ -153,6 +185,8 @@ This compiles the code to a dmb file. Then you can run Dream Daemon, select the 
 ![](https://i.imgur.com/MxrZvHp.png)
 
 Be sure to always test not only if your changes work, but also if you didn't actually break something else that might be related.
+
+If you ever hit a brick wall, you can always ask the #imcoder channel in the discord. There's no such thing as a stupid question, and while, depending on activity, you might not always get an answer, it never hurts to ask.
 
 #### Using the Debugger
 
@@ -229,7 +263,7 @@ Now, you can edit your description in-editor, add labels, and request reviewers.
 
 If you want your change to be included in the changelog it is helpful if you include a message that should appear there and the name which we should use to credit you (if different from your GitHub username).
 
-If you want to add more commits to your PR, all you need to do is just push those commits to the branch.
+If you want to add more commits to your PR, all you need to do is just push those commits to the branch from the source control bar.
 
 Wow! Great job on making your PR. :tada: 
 
@@ -237,11 +271,22 @@ Wow! Great job on making your PR. :tada:
 
 At some point a maintainer will review your PR. Hopefully all is good and the PR will get merged into the main repo. But it might happen that you are requested to make changes. That is fortunately very easy; you don't need to touch the PR at all. Just make changes to your branch, push to origin and the PR gets updated automatically.
 
-You can also reply to people's comments on your PR to clarify your reasoning / intent behind your changes.
+Some concerns you might have while waiting:
 
-Automated checks are ran on each PR. If one of those fails (for example because your code does not even compile) you should go fix that immediately.
+-"Oh no, someone told me to atomize my PR! Do they want me to nuke it?"
+Worry not, friend! Atomization just means to break your PR down into smaller chunks, whether it be for balance reasons, because there's weird or extraneous code, or simply off-topic changes.
 
-### Merge Conflicts :negative_squared_cross_mark: 
+-"Man, this sure is taking a long while!"
+The unforunate truth of goonstation is that the developers are, just like you and the admins, unpaid volunteers who do this in their spare time, and can take a while before merging yourrequest. Furthermore, depending on how large it is, how many systems are changed, and how controversial it might be, the developers usually give people ample time to bring up any concerns or problems. **With these two factors in mind, it can take anywhere from a day to two weeks for your PR to finally be merged.** If you want to know if there's any issues, you can always copy the four digit number (E.X: #1111) into the discord to bring up the PR with medibot, and directly ask what might be wrong with it.
+
+-"If I want a picture, how do I add images?"
+Pictures are as easy as taking a screenshot of whatever you're made, then copying and directly pasting it into the text box. For this reason, the windows' snipping tool is excellent at this since it automatically copies whatever you capture.
+
+Furthermore, you can also reply to people's comments on your PR to clarify your reasoning / intent behind your changes. Everyone who's commented in a thread will be notified when you update, but if you want to address a fine point, you can use the quote reply feature to do so.
+
+Lastly, automated checks are ran on each PR. If one of those fails (for example because your code does not even compile) you should go fix that immediately. Most often than not, it's a simple typo or weird indentation that you somehow missed. However, if it isn't, it could be a:
+
+### Merge Conflict :negative_squared_cross_mark: 
 
 It might happen that somewhere in the process of making a PR you see a message about having merge conflicts. That means that you modified code that someone else also modified in the meantime. But don't worry, the next section will help you with that!
 
