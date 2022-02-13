@@ -606,9 +606,6 @@
 			return
 		if (user.contents.Find(W))
 			user.drop_item()
-		if (W in src.clothes)
-			qdel(W)
-			return
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.clothes.Add(W)
@@ -616,9 +613,6 @@
 	else if (istype(W, /obj/item/robot_module))
 		if (user.contents.Find(W))
 			user.drop_item()
-		if (W in src.modules)
-			qdel(W)
-			return
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.modules.Add(W)
@@ -626,9 +620,6 @@
 	else if (istype(W, /obj/item/roboupgrade))
 		if (user.contents.Find(W))
 			user.drop_item()
-		if (W in src.upgrades)
-			qdel(W)
-			return
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.upgrades.Add(W)
@@ -636,9 +627,6 @@
 	else if (istype(W, /obj/item/cell))
 		if (user.contents.Find(W))
 			user.drop_item()
-		if (W in src.cells)
-			qdel(W)
-			return
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.cells.Add(W)
