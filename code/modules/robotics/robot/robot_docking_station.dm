@@ -672,7 +672,7 @@
 		if (G.state < GRAB_AGGRESSIVE)
 			boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 		else
-			src.MouseDrop_T(grab.affecting, user) //lazy
+			src.MouseDrop_T(G.affecting, user) //lazy
 			src.add_fingerprint(user)
 			qdel(G)
 	..()
