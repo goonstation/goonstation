@@ -31200,44 +31200,8 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
-"bMf" = (
-/obj/grille/steel,
-/obj/window{
-	icon_state = "rwindow";
-	reinf = 1
-	},
-/obj/window{
-	dir = 1;
-	icon_state = "rwindow";
-	reinf = 1
-	},
-/obj/window{
-	dir = 8;
-	icon_state = "rwindow";
-	reinf = 1
-	},
-/turf/unsimulated/floor/plating,
-/area/crunch)
 "bMg" = (
 /obj/wingrille_spawn/auto,
-/turf/unsimulated/floor/plating,
-/area/crunch)
-"bMh" = (
-/obj/grille/steel,
-/obj/window{
-	icon_state = "rwindow";
-	reinf = 1
-	},
-/obj/window{
-	dir = 1;
-	icon_state = "rwindow";
-	reinf = 1
-	},
-/obj/window{
-	dir = 4;
-	icon_state = "rwindow";
-	reinf = 1
-	},
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "bMm" = (
@@ -35073,20 +35037,11 @@
 	},
 /area/meat_derelict/main)
 "bYA" = (
-/obj/grille/steel,
-/obj/window{
-	icon_state = "rwindow";
-	reinf = 1
-	},
-/obj/window{
-	dir = 1;
-	icon_state = "rwindow";
-	reinf = 1
-	},
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "bYB" = (
@@ -85460,7 +85415,7 @@ bOv
 bLy
 bKw
 bKw
-bMf
+bMg
 bLy
 bZf
 aDC
@@ -86064,7 +86019,7 @@ bLy
 bKw
 bKw
 bKw
-bMh
+bMg
 bLy
 bZf
 aDC
