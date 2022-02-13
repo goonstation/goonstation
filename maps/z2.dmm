@@ -2710,6 +2710,7 @@
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
+	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "maint_closed";
 	name = "rusted airlock";
