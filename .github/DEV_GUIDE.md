@@ -22,8 +22,6 @@ If this is your first time, take a minute to familiarize yourself with the layou
 4: This is the current file you have open.
 5: This is the output terminal. If and when you have any bugs, you'll see them here, and you can track your code compiling from here.
 
-From here, 
-
 
 Now, we need to create our own repository to contribute to! :rocket:
 
