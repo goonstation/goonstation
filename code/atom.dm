@@ -543,6 +543,10 @@
 
 	if (!isliving(usr))
 		return
+
+	if (isintangible(usr)) //can't pull shit if you can't touch shit
+		return
+
 	// no pulling other mobs for ghostdrones (but they can pull other ghostdrones)
 	else if (isghostdrone(usr) && ismob(src) && !isghostdrone(src))
 		return

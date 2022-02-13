@@ -255,15 +255,6 @@
 			if (plane)
 				plane.alpha = 255
 
-	MouseDrop()
-		return
-
-	MouseDrop_T()
-		return
-
-	meteorhit()
-		return
-
 	is_spacefaring()
 		return 1
 
@@ -567,8 +558,7 @@
 				lipids -= Q
 		return bio_points + lipids.len * 4 >= amt
 
-	projCanHit(datum/projectile/P)
-		return 0
+
 
 	proc/setHat( var/obj/item/clothing/head/hat )
 		hat.pixel_y = 10
