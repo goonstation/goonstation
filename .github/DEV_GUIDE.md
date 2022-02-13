@@ -101,24 +101,9 @@ That's it! Your local codebase is all set up to contribute now.
 
  First, let's talk about **branches**.
 
-A branch is an alternative version of a codebase. Their lifecycle usually consists of being created, being updated to, then being re-merged into the main codebase.
-A commit is an update you make to a branch. Think of it a saved version of said branch, or a batch of changes you make with an associated timestamp. 
-
-You can access your branches in VSCode through the source control menu, which again looks like the tree. Here's what they look like, and the most important things to click on for managing them:
-![](https://imgur.com/a/iOPzpIa)
-1: This lets you expand a branch and see the individual commits
-2: This is the "Switch to this branch" button. If you're already on the branch, hovering over it will read "Switch to another branch" 
-3: This is the "Revert commit" button. If you've made a catastrophic mistake and now your code is full of thousands of errors, this button is your friend. Keep in mind, the changes will be staged, and you'll want to discard the changes and/or close and reopen the file in order to fully go back to the change. As tempting as it may seem, **Do not try and fix any mistakes you make by messing with the files or deleting anything from the file brower** If all else fails and your branch is still all schmutzy and gross, you can always just rebranch from master, and copy paste the bulk of your changes from there.
-
-Next, let's (breifly) talk about **Dream Maker.**
-
- In short, it is the software that comes with BYOND that lets you edit sprites. If whatever you do relates to sprites, which it probably or eventually will, you'll need to know about dream maker. This is by no means an extensive guide, and you should see the spriting sections for more information, but this'll get you started. First off, open the folder that you installed the codebase into. Now, navigate to icons. You should be greeted with something like this: 
- ![](https://imgur.com/a/uVg2WXh)
- 
- These are .DMIs. They're essentially weird PNGs consisting of a 32x32 grid that are used to store associated files together. Double clicking on one of them will, after some loading as a ghost window, open it with Dream Maker. While you don't have to, and it's not recommended to edit sprites with the archaic software, you'll still need to use it for getting the sprites you drew into the game. Double clicking an icon in dream maker will open it further. Here's what it looks like:
- ![](https://imgur.com/a/oFxrJPk)
- Highlighted in red for your ease of finding is the back arrow, which lets you return to the main DMI, and the direction-dependent sprites, if there are any. Furthermore, any animation frames will (probably) be accessed here.
-
+-A branch is an alternative version of a codebase. Their lifecycle usually consists of being created, being committed, then being re-merged into the main codebase.
+-A commit is an update you make to a branch. Think of it a saved version of said branch, or a batch of changes you make with an associated timestamp. 
+The lovely thing about Github is that each individual merge and commit you make is reversible. so if you make a horrible mistake and are plagued with thousands of errors, you can simply revert the changes. There will be more on that in the Git Graph section.
 
 By now, hopefully you've thought of what you actually want to do. First thing to do is to make a new branch on your fork. This is important because you should **never** make changes to the default(master) branch of your fork. It should remain as a clean slate.
 
