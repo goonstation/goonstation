@@ -5,6 +5,13 @@
 	anchored = 1
 	soundproofing = -1
 	var/can_move = 1
+	var/flips = 0
+	var/flips_required = 3
+	var/amplitude = 0
+	var/off_x = 0
+	var/off_y = 0
+	var/shake_hands_adj = null
+	var/shake_hands_syn = null
 	var/obj/item/device/chameleon/master = null
 
 	UpdateName()
@@ -64,6 +71,32 @@
 			step(src,direction)
 		return
 
+	mob_flip_inside(var/mob/user) //Fail-safe in case someone gets cloaked without holding the cloaker, ie: by disarming an item arm
+		if (isnull(master))
+			return
+
+		amplitude = min(4, flips * 20 / flips_required)
+		off_x = rand(-amplitude, amplitude)
+		off_y = rand(-amplitude/3, amplitude/3)
+
+		if (flips < flips_required)
+			var/shake_hands_adj = pick("frantically","wildly","violently","rapidly","vigorously","furiously")
+			var/shake_hands_syn = pick("wave","flail","shake","swing","flap")
+			user.show_text("<span class='alert'>You [shake_hands_adj] [shake_hands_syn] your hands at the hologram</span>")
+			playsound(src.loc, "sound/effects/elec_bzzz.ogg", 50, 1)
+			animate(src, pixel_x = off_x, pixel_y = off_y, easing = JUMP_EASING, time = 0.5, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+			animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = JUMP_EASING, time = 0.5, flags = ANIMATION_RELATIVE)
+			sleep(0.1 SECONDS)
+			flips++
+		else
+			user.show_text("<span class='alert'>You trip and lose your balance! Ouch!</span>")
+			playsound(user.loc, 'sound/impact_sounds/Generic_Hit_2.ogg', 15, 1, -3)
+			user.changeStatus("paralysis", 4 SECONDS)
+			user.changeStatus("weakened", 4 SECONDS)
+			if (isnull(master))
+				return
+			master.disrupt()
+
 /obj/item/device/chameleon
 	name = "chameleon-projector"
 	icon_state = "shield0"
@@ -76,7 +109,6 @@
 	var/can_use = 0
 	var/obj/overlay/anim = null //The toggle animation overlay will also be retained
 	var/obj/dummy/chameleon/cham = null //No sense creating / destroying this
-	var/obj/item/device/chameleon/holder = null
 	var/active = 0
 	tooltip_flags = REBUILD_DIST
 
@@ -151,6 +183,7 @@
 
 		if (active) //active_dummy)
 			active = 0
+			cham.flips = 0
 			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
 			for (var/atom/movable/A in cham)
 				A.set_loc(get_turf(cham))
@@ -164,15 +197,13 @@
 			if (istype(src.loc, /obj/dummy/chameleon)) //No recursive chameleon projectors!!
 				boutput(usr, "<span class='alert'>As your finger nears the power button, time seems to slow, and a strange silence falls.  You reconsider turning on a second projector.</span>")
 				return
-			if (istype(src.loc, /obj/item/parts/human_parts/arm)) //If it's an item arm, the person who's arm it is gets cloaked
-				var/obj/item/device/chameleon/O = src.loc
-				usr = O.holder
 
 			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
 			cham.master = src
 			cham.set_loc(get_turf(src))
 			usr.set_loc(cham)
 			src.active = 1
+			cham.flips = 0
 
 			boutput(usr, "<span class='notice'>You activate the [src].</span>")
 			anim.set_loc(get_turf(src))
@@ -183,6 +214,7 @@
 	proc/disrupt()
 		if (active)
 			active = 0
+			cham.flips = 0
 			elecflash(src)
 			for (var/atom/movable/A in cham)
 				A.set_loc(get_turf(cham))
