@@ -834,7 +834,7 @@
 				playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
 			else
 				H.bioHolder.AddEffect("eaten")
-				random_brute_damage(H, 6)
+				random_brute_damage(H, 10)
 				H.changeStatus("weakened", 5 SECONDS)
 				if (prob(15))
 					boutput(H, "<span class='alert'>[pick("You feel chunks of your flesh being ripped off!"," Something cold and sharp skewers you!", "You feel your organs being pulped and mashed!", "Machines shred you from every direction!")]</span>")
