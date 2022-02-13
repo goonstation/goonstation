@@ -228,6 +228,9 @@
 	else
 		if(src.mind)
 			src.mind.transfer_to(O)
+		else
+			//if they're logged out or whatever
+			O.key = src.key
 	O.set_loc(get_turf(src.loc))
 	if (syndicate)
 		O.handle_robot_antagonist_status("converted")

@@ -816,7 +816,7 @@
 							'sound/impact_sounds/Generic_Hit_1.ogg',
 						), 60, 1)
 					SPAWN_DBG(0.6 SECONDS)
-						occupant.emote("scream", FALSE)
+						occupant?.emote("scream", FALSE)
 
 			if (H.health <= 2)
 				boutput(H, "<span class='alert'>You feel... different.</span>")
