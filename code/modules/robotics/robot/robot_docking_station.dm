@@ -664,13 +664,13 @@
 			boutput(user, "<span class='alert'>Non-Humans are not compatible with this device.</span>")
 			return
 		if (isdead(G.affecting))
-			boutput(user, "<span class='alert'>[H] is dead and cannot be forced inside.</span>")
+			boutput(user, "<span class='alert'>[G.affecting] is dead and cannot be forced inside.</span>")
 			return
 		if (G.state < GRAB_AGGRESSIVE)
 			boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 			return
 
-		var/mob/living/carbon/human/H = grab.affecting
+		var/mob/living/carbon/human/H = G.affecting
 		logTheThing("combat", user, H, "puts [constructTarget(H,"combat")] into a conversion chamber at [showCoords(src.x, src.y, src.z)]")
 		user.visible_message("<span class='notice>[user] stuffs [H] into \the [src].")
 
