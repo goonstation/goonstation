@@ -9,6 +9,7 @@
 "eB" = (/obj/item/pen/crayon/random{pixel_x = 7; pixel_y = 9},/turf/simulated/floor/carpet/clowncarpet,/area/prefab/art_workshop)
 "fs" = (/turf/simulated/floor/carpet/clowncarpet/border{dir = 8},/area/prefab/art_workshop)
 "ft" = (/obj/table/wood/auto/desk,/obj/item/storage/toolbox/artistic{pixel_x = 3; pixel_y = -7},/obj/item/storage/toolbox/artistic{pixel_y = 6},/obj/machinery/light/incandescent/warm{dir = 8},/turf/simulated/floor/longtile/red,/area/prefab/art_workshop)
+"go" = (/obj/grille/catwalk/cross{dir = 9},/turf/space,/area/noGenerate)
 "gB" = (/turf/simulated/floor/darkblue,/area/prefab/art_workshop)
 "gY" = (/obj/stool/chair/wooden{dir = 8},/turf/simulated/floor/darkblue,/area/prefab/art_workshop)
 "hE" = (/turf/simulated/floor/longtile/red,/area/prefab/art_workshop)
@@ -16,6 +17,7 @@
 "jm" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/simulated/floor/blue,/area/prefab/art_workshop)
 "jE" = (/obj/item/pen/crayon/random{pixel_x = 2},/turf/simulated/floor/darkblue,/area/prefab/art_workshop)
 "kU" = (/obj/stool/chair/wooden{dir = 1},/turf/simulated/floor/longtile/red,/area/prefab/art_workshop)
+"lc" = (/obj/grille/catwalk{dir = 10},/turf/space,/area/noGenerate)
 "ly" = (/obj/table/wood/auto/desk,/obj/decal/woodclutter,/turf/simulated/floor/white,/area/prefab/art_workshop)
 "lD" = (/obj/decoration/bookcase{pixel_x = 1; pixel_y = 24},/turf/simulated/floor/carpet/clowncarpet/border{dir = 1},/area/prefab/art_workshop)
 "lE" = (/obj/decoration/decorativeplant{pixel_y = 14},/obj/table/clothred/auto,/turf/simulated/floor/longtile/blue,/area/prefab/art_workshop)
@@ -28,6 +30,7 @@
 "sy" = (/obj/stool/chair/wooden{dir = 8},/obj/machinery/light/incandescent/harsh{dir = 1},/turf/simulated/floor/darkblue,/area/prefab/art_workshop)
 "sA" = (/turf/simulated/floor/carpet/clowncarpet/border,/area/prefab/art_workshop)
 "sQ" = (/turf/space,/area/noGenerate)
+"tq" = (/obj/grille/catwalk{dir = 6},/turf/space,/area/noGenerate)
 "tC" = (/obj/table/wood/auto/desk,/obj/random_item_spawner/desk_stuff/g_clip_bin_pen/some,/turf/simulated/floor/longtile/red,/area/prefab/art_workshop)
 "un" = (/obj/table/wood/auto/desk,/obj/item/material_piece/organic/wood,/obj/item/material_piece/organic/wood{pixel_x = 8},/obj/item/material_piece/organic/wood{pixel_x = 4; pixel_y = 5},/turf/simulated/floor/white,/area/prefab/art_workshop)
 "wp" = (/obj/table/wood/auto,/obj/item/storage/lunchbox/food14,/obj/machinery/light/small/floor/cool/very,/turf/simulated/floor/longtile/blue,/area/prefab/art_workshop)
@@ -43,13 +46,15 @@
 "Cw" = (/obj/stool/chair/comfy{dir = 4},/turf/simulated/floor/darkblue,/area/prefab/art_workshop)
 "CT" = (/obj/item/pen/crayon/random{pixel_x = 7; pixel_y = 9},/turf/simulated/floor/longtile/blue,/area/prefab/art_workshop)
 "DC" = (/obj/table/wood/auto/desk,/obj/item/paper_bin{pixel_x = -6},/obj/item/paper_bin{pixel_x = 6},/turf/simulated/floor/longtile/red,/area/prefab/art_workshop)
+"DH" = (/obj/grille/catwalk/cross{dir = 10},/turf/space,/area/noGenerate)
 "Eq" = (/turf/simulated/floor/white,/area/prefab/art_workshop)
 "EI" = (/obj/table/wood/auto/desk,/obj/item/pen{pixel_x = -4; pixel_y = 8},/obj/item/pen/fancy{pixel_x = 1; pixel_y = 8},/obj/item/pen/red{pixel_x = -8; pixel_y = 7},/turf/simulated/floor/longtile/red,/area/prefab/art_workshop)
 "FX" = (/obj/machinery/light/incandescent/warm,/turf/simulated/floor/darkblue,/area/prefab/art_workshop)
 "Gb" = (/obj/stool/bench/wooden/auto,/turf/simulated/floor/carpet/clowncarpet,/area/prefab/art_workshop)
 "GL" = (/obj/lattice{dir = 4; icon_state = "lattice-dir"},/turf/space,/area/noGenerate)
+"HB" = (/obj/lattice,/turf/space,/area/noGenerate)
 "Ib" = (/obj/table/clothred/auto,/obj/decal/statue/dead_exec_bust{name = "fancy sculpture"},/turf/simulated/floor/longtile/blue,/area/prefab/art_workshop)
-"Iv" = (/obj/table/wood/auto,/obj/item/canvas{pixel_x = 10; pixel_y = 7},/obj/item/canvas,/turf/simulated/floor/longtile/red,/area/prefab/art_workshop)
+"Iv" = (/obj/table/wood/auto,/obj/item/canvas{pixel_x = 10; pixel_y = 7},/obj/item/canvas,/obj/item/canvas,/turf/simulated/floor/longtile/red,/area/prefab/art_workshop)
 "IY" = (/obj/machinery/light/small/floor,/turf/simulated/floor/longtile/blue,/area/prefab/art_workshop)
 "KP" = (/turf/simulated/floor/carpet/clowncarpet/border{dir = 5},/area/prefab/art_workshop)
 "Lw" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/simulated/floor/darkblue,/area/prefab/art_workshop)
@@ -64,12 +69,13 @@
 "QV" = (/obj/table/wood/auto,/obj/item/storage/box/crayon/basic{pixel_x = -5},/obj/item/mop{desc = "The world of painting wouldn't be complete without a brush."; name = "extra large paintbrush"},/turf/simulated/floor/longtile/red,/area/prefab/art_workshop)
 "Sh" = (/obj/decoration/decorativeplant/plant4,/turf/simulated/floor/longtile/blue,/area/prefab/art_workshop)
 "Sn" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/longtile/blue,/area/prefab/art_workshop)
-"Sw" = (/obj/table/wood/auto,/obj/item/canvas,/turf/simulated/floor/longtile/red,/area/prefab/art_workshop)
+"Sw" = (/obj/table/wood/auto,/obj/item/canvas,/obj/item/canvas,/turf/simulated/floor/longtile/red,/area/prefab/art_workshop)
 "Ta" = (/obj/displaycase,/turf/simulated/floor/longtile/red,/area/prefab/art_workshop)
 "TO" = (/obj/table/wood/auto/desk,/obj/item/reagent_containers/food/snacks/yuck,/turf/simulated/floor/carpet/clowncarpet/border{dir = 1},/area/prefab/art_workshop)
 "Ua" = (/turf/simulated/floor/carpet/clowncarpet/border{dir = 4},/area/prefab/art_workshop)
 "Ud" = (/obj/machinery/light/incandescent{dir = 8},/turf/simulated/floor/white,/area/prefab/art_workshop)
 "Uj" = (/obj/machinery/vending/paint,/turf/simulated/floor/white,/area/prefab/art_workshop)
+"UB" = (/obj/lattice{dir = 9; icon_state = "lattice-dir-b"},/turf/space,/area/noGenerate)
 "UM" = (/obj/table/clothred/auto,/obj/decoration/decorativeplant{pixel_y = 14},/turf/simulated/floor/longtile/blue,/area/prefab/art_workshop)
 "VB" = (/turf/space,/area/allowGenerate)
 "Ws" = (/obj/stool/bench/wooden/auto,/turf/simulated/floor/darkblue,/area/prefab/art_workshop)
@@ -85,12 +91,12 @@ VBVBVBVBNZGLGLGLYpYpYpYpYpYpYpYpYpYpYprysQsQsQsQsQ
 VBVBVBsQbYNZGLGLYpnQoOwCTOwGlDKPtCDCsyryryrysQsQsQ
 VBVBVBsQbYbYNZGLYpfseBGbGbABwDUaQPEIgYLLgBryrysQsQ
 VBVBsQsQbYbYbYNZYpmWsAsAsAsAsAdqkUkULLgBqBXmrysQsQ
-VBsQsQYpYpYpYpYpYpfthEgBgBhEhEhEhEhEgBgBCwwprysQsQ
-VBsQsQYplEaqgBIbSnejgBgBgBwSXehEXegBgBgBCwNorysQsQ
-sQsQsQjmgBXmXmgBLwgBjEShIYgBgBgBgBgBgBgBgBXmrysQsQ
-sQsQsQjmgBCTXmgBLwgBgBIYAqgBgBgBgBgBgBgBgBryrysQsQ
-sQsQsQYpUMFXgBIbSnTagBgBgBWsSwXeNWWscsryryrysQsQsQ
-VBsQsQYpYpYpYpYpYpPXhEgBgBQVIvhEzenJYprysQsQsQsQsQ
+VBsQNZYpYpYpYpYpYpfthEgBgBhEhEhEhEhEgBgBCwwprysQsQ
+VBNZHBYplEaqgBIbSnejgBgBgBwSXehEXegBgBgBCwNorysQsQ
+sQgolcjmgBXmXmgBLwgBjEShIYgBgBgBgBgBgBgBgBXmrysQsQ
+sQDHtqjmgBCTXmgBLwgBgBIYAqgBgBgBgBgBgBgBgBryrysQsQ
+sQUBHBYpUMFXgBIbSnTagBgBgBWsSwXeNWWscsryryrysQsQsQ
+VBsQUBYpYpYpYpYpYpPXhEgBgBQVIvhEzenJYprysQsQsQsQsQ
 VBsQsQYpYcEqbCEqEqEqEqEqEqEqEqEqEqYpYpsQsQsQsQsQsQ
 VBsQsQYpUdEqaQaQEqEqEqEqEqaQEqMwYpYpVBsQsQsQsQsQsQ
 VBVBsQYpYpwZiDzXiDdiUjEqPDlyunYpYpVBVBVBsQsQsQsQsQ
