@@ -1130,8 +1130,8 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 /datum/objective/conspiracy/vandalize
 	explanation_text = "Vandalize as much of the station as possible without killing anyone."
 
-/datum/objective/conspiracy/frame
-	explanation_text = "Murder the diner patrons and frame a non-conspirator for it."
+// /datum/objective/conspiracy/frame
+// 	explanation_text = "Murder the diner patrons and frame a non-conspirator for it."
 
 /datum/objective/conspiracy/quiz
 	explanation_text = "Host an insane life-or-death quiz show and kidnap non-conspirators to serve as contestants."
@@ -1148,26 +1148,34 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 /datum/objective/conspiracy/technology
 	explanation_text = "Rid the station of any sort of advanced technology and promote an austere and simple lifestyle."
 
-/datum/objective/conspiracy/curfew
-	explanation_text = "Establish a curfew for the station. Those wandering outside of crew quarters after curfew must be harassed and detained."
+// /datum/objective/conspiracy/curfew
+// 	explanation_text = "Establish a curfew for the station. Those wandering outside of crew quarters after curfew must be harassed and detained."
 
-/datum/objective/conspiracy/party
-	explanation_text = "Throw a surprise party for the rest of the crew."
+// /datum/objective/conspiracy/party
+// 	explanation_text = "Throw a surprise party for the rest of the crew."
 
-/datum/objective/conspiracy/birthday
-	explanation_text = "Throw a birthday party for Shitty Bill."
+// /datum/objective/conspiracy/birthday
+// 	explanation_text = "Throw a birthday party for Shitty Bill."
 
-/datum/objective/conspiracy/teaparty
-	explanation_text = "Host a murder mystery tea party."
+// /datum/objective/conspiracy/teaparty
+// 	explanation_text = "Host a murder mystery tea party."
 
 /datum/objective/conspiracy/embezzle
 	explanation_text = "Embezzle as much money as possible from the station accounts."
 
 /datum/objective/conspiracy/swap
-	explanation_text = "Swap the locations of two entire departments, their staff, and their equipment."
+	set_up()
+		//leaving out some of the more impossible ones like medical and security
+		var/list/departments = list("Genetics", "Robotics", "Cargo", "Mining", "Engineering", "Research", "Catering", "Botany")
 
-/datum/objective/conspiracy/jones
-	explanation_text = "Murder Jones and frame George for it."
+		var/department1 = pick(departments)
+		var/department2 = pick(departments)
+		while (department1 == department2)
+			department2 = pick(departments)
+		explanation_text = "Swap the locations of [department1] and [department2], complete with their staff and equipment."
+
+// /datum/objective/conspiracy/jones
+// 	explanation_text = "Murder Jones and frame George for it."
 
 /datum/objective/conspiracy/remodel
 	explanation_text = "Completely remodel the entire station."
@@ -1184,17 +1192,17 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 /datum/objective/conspiracy/dresscode
 	explanation_text = "Write up a new dress code for the station and enforce it on all crew."
 
-/datum/objective/conspiracy/dnd
-	explanation_text = "Start a D&D campaign and force crewmembers to participate."
+// /datum/objective/conspiracy/dnd
+// 	explanation_text = "Start a D&D campaign and force crewmembers to participate."
 
-/datum/objective/conspiracy/play
-	explanation_text = "Organize a play or musical and persuade crewmembers to participate by offering notions of fame and grandeur."
+// /datum/objective/conspiracy/play
+// 	explanation_text = "Organize a play or musical and persuade crewmembers to participate by offering notions of fame and grandeur."
 
 /datum/objective/conspiracy/flat
 	explanation_text = "Convince the crew that the station and in fact all of space is flat."
 
-/datum/objective/conspiracy/heisenbee
-	explanation_text = "Explain to the crew how, yes, Heisenbee really was framed by the Chompski brothers."
+// /datum/objective/conspiracy/heisenbee
+// 	explanation_text = "Explain to the crew how, yes, Heisenbee really was framed by the Chompski brothers."
 
 /datum/objective/conspiracy/centcom
 	explanation_text = "Convince the crew that Central Command has forsaken them."
@@ -1202,46 +1210,70 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 /datum/objective/conspiracy/spacelaw
 	explanation_text = "Establish and enforce a set of station protocols and policies."
 
-/datum/objective/conspiracy/framemurder
-	var/datum/mind/target
-	var/targetname
+/datum/objective/conspiracy/discountdan
+	explanation_text = "Transfer ownership of the station to Discount Dan. Ensure all the crew are loyal and the station is branded correctly."
 
+/datum/objective/conspiracy/cult
 	set_up()
-		var/list/possible_targets = list()
-		for(var/datum/mind/possible_target in ticker.minds)
-			if (possible_target && (possible_target != owner) && ishuman(possible_target.current))
-				if (possible_target.special_role == ROLE_CONSPIRATOR)
-					continue
-				if (possible_target.current.mind && possible_target.current.mind.is_target) // Cannot read null.is_target
-					continue
-				if (!possible_target.current.client)
-					continue
-				possible_targets += possible_target
+		//not including many of the "pets" that are often murdered immediately (Mr. Rathen, Remy etc.)
+		var/list/deities = list("Heisenbee", "Morty", "Dr. Acula", "Monsieur Stirstir", "Jones the cat", "Sylvester", "Hooty McJudgementowl", "the AI", "Discount Dan")
+		if (map_settings.name != "OSHAN") //pretty sure OSHAN is the only map with no engine
+			deities += "the engine"
+		explanation_text = "Start a cult worshipping [pick(deities)]."
 
-		if(possible_targets.len > 0)
-			target = pick(possible_targets)
-			target.current.mind.is_target = 1
+/datum/objective/conspiracy/underwater
+#ifdef UNDERWATER_MAP
+	explanation_text = "Convince the crew that the station is in space."
+#else
+	explanation_text = "Convince the crew that the station is underwater."
+#endif
 
-		create_objective_string(target)
+/datum/objective/conspiracy/imposters //sus
+	explanation_text = "Replace as many heads of staff with imposters as possible."
 
-		return target
+/datum/objective/conspiracy/crime
+	explanation_text = "Set yourselves up as vigilantes and arrest people for made up crimes."
 
-	proc/find_target_by_role(role)
-		for(var/datum/mind/possible_target in ticker.minds)
-			if((possible_target != owner) && ishuman(possible_target.current) && (possible_target.assigned_role == role || (possible_target.assigned_role == "MODE" && possible_target.special_role == role)))
-				target = possible_target
-				break
+// /datum/objective/conspiracy/framemurder
+// 	var/datum/mind/target
+// 	var/targetname
 
-		create_objective_string(target)
-		return target
+// 	set_up()
+// 		var/list/possible_targets = list()
+// 		for(var/datum/mind/possible_target in ticker.minds)
+// 			if (possible_target && (possible_target != owner) && ishuman(possible_target.current))
+// 				if (possible_target.special_role == ROLE_CONSPIRATOR)
+// 					continue
+// 				if (possible_target.current.mind && possible_target.current.mind.is_target) // Cannot read null.is_target
+// 					continue
+// 				if (!possible_target.current.client)
+// 					continue
+// 				possible_targets += possible_target
 
-	proc/create_objective_string(datum/mind/target)
-		if(!(target?.current))
-			explanation_text = "Be dastardly as heck!"
-			return
-		var/objective_text = "Frame [target.current.real_name], the [target.assigned_role == "MODE" ? target.special_role : target.assigned_role] for murder."
-		explanation_text = objective_text
-		targetname = target.current.real_name
+// 		if(possible_targets.len > 0)
+// 			target = pick(possible_targets)
+// 			target.current.mind.is_target = 1
+
+// 		create_objective_string(target)
+
+// 		return target
+
+// 	proc/find_target_by_role(role)
+// 		for(var/datum/mind/possible_target in ticker.minds)
+// 			if((possible_target != owner) && ishuman(possible_target.current) && (possible_target.assigned_role == role || (possible_target.assigned_role == "MODE" && possible_target.special_role == role)))
+// 				target = possible_target
+// 				break
+
+// 		create_objective_string(target)
+// 		return target
+
+// 	proc/create_objective_string(datum/mind/target)
+// 		if(!(target?.current))
+// 			explanation_text = "Be dastardly as heck!"
+// 			return
+// 		var/objective_text = "Frame [target.current.real_name], the [target.assigned_role == "MODE" ? target.special_role : target.assigned_role] for murder."
+// 		explanation_text = objective_text
+// 		targetname = target.current.real_name
 
 
 /*/datum/objective/conspiracy/escape
