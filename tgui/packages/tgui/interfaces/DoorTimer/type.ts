@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2021
+ * @author Luxizzle (https://github.com/Luxizzle)
+ * @license MIT
+ */
+
 import { BooleanLike } from 'common/react';
 
 export interface DoorTimerData {
@@ -7,4 +14,7 @@ export interface DoorTimerData {
   time: number;
   flasher?: BooleanLike;
   recharging?: BooleanLike;
+  flusher?: BooleanLike;
+  flusheropen?: BooleanLike;
+  opening?: BooleanLike;
 }

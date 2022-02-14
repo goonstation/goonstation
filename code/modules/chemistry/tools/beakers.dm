@@ -16,9 +16,10 @@
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.underlays = null
 		if (reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
@@ -90,6 +91,8 @@
 
 /obj/item/reagent_containers/glass/beaker/cryoxadone
 	name = "beaker (cryoxadone)"
+	icon_state = "roundflask"
+	icon_style = "roundflask"
 	initial_reagents = list("cryoxadone"=40)
 
 /obj/item/reagent_containers/glass/beaker/epinephrine
@@ -200,9 +203,10 @@
 	var/image/fluid_image
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 
-	proc/update_icon() //updates icon based on fluids inside
+	update_icon() //updates icon based on fluids inside
 		src.underlays = null
 		if (src.reagents && src.reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
@@ -227,3 +231,6 @@
 	name = "round flask"
 	icon_state = "roundflask"
 	icon_style = "roundflask"
+
+/obj/item/reagent_containers/glass/flask/black_powder //prefab shit
+	initial_reagents = "blackpowder"

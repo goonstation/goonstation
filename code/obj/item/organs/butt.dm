@@ -41,20 +41,19 @@
 
 	New(loc, datum/organHolder/nholder)
 		..()
-		SPAWN_DBG(0)
-			src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
-			if (istype(nholder) && nholder.donor)
-				src.holder = nholder
-				src.donor = nholder.donor
-			if (src.donor)
-				src.donor_name = src.donor.real_name
-				src.name = "[src.donor_name]'s [initial(src.name)]"
-				src.real_name = "[src.donor_name]'s [initial(src.name)]" // Gotta do this somewhere!
-				src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
-				if (src.toned && src.donor.bioHolder) //NO RACIALLY INSENSITIVE ASSHATS ALLOWED
-					src.s_tone = src.donor.bioHolder.mobAppearance.s_tone
-					if (src.s_tone)
-						src.color = src.s_tone
+		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
+		if (istype(nholder) && nholder.donor)
+			src.holder = nholder
+			src.donor = nholder.donor
+		if (src.donor)
+			src.donor_name = src.donor.real_name
+			src.name = "[src.donor_name]'s [initial(src.name)]"
+			src.real_name = "[src.donor_name]'s [initial(src.name)]" // Gotta do this somewhere!
+			src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
+			if (src.toned && src.donor.bioHolder) //NO RACIALLY INSENSITIVE ASSHATS ALLOWED
+				src.s_tone = src.donor.bioHolder.mobAppearance.s_tone
+				if (src.s_tone)
+					src.color = src.s_tone
 
 	attack(var/mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (!ismob(M))
@@ -76,6 +75,9 @@
 			return 0
 
 		if (!surgeryCheck(M, user))
+			return 0
+
+		if (!can_act(user))
 			return 0
 
 		var/mob/living/carbon/human/H = M
@@ -109,6 +111,7 @@
 			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>")
 			if (user.find_in_hand(src))
 				user.u_equip(src)
+				set_loc(get_turf(H))
 			return null
 		else
 			return 0
@@ -127,7 +130,7 @@
 				src.stapled = 0
 			. = 1
 			allow_staple = 0
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				allow_staple = 1
 
 	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
@@ -166,17 +169,6 @@
 			user.u_equip(src)
 			W.set_loc(B)
 			user.u_equip(W)
-
-		else if (istype(W, /obj/item/spacecash) && W.type != /obj/item/spacecash/buttcoin)
-			user.u_equip(W)
-			pool(W)
-
-			var/obj/item/spacecash/buttcoin/S = unpool(/obj/item/spacecash/buttcoin)
-			S.setup(get_turf(src))
-			user.put_in_hand_or_drop(S)
-
-			user.show_text("You stuff the cash into the butt... (What is wrong with you?)")
-			qdel(src)
 
 		else
 			return ..()

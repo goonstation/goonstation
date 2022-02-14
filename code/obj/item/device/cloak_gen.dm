@@ -19,7 +19,7 @@
 	New()
 		..()
 		var/obj/item/remote/cloak_gen/remote = new /obj/item/remote/cloak_gen(src.loc)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			remote.my_gen = src
 
 	disposing()
@@ -146,7 +146,7 @@
 		set src in view(1)
 		if (!isliving(usr) || !my_gen) return
 		var/input = input(usr,"Range 0-[my_gen.maxrange]:","Set range",my_gen.range) as num
-		if(input > my_gen.maxrange || input < 0)
+		if(input > my_gen.maxrange || input < 0 || !isnum_safe(input))
 			boutput(usr, "<span class='alert'>Invalid setting.</span>")
 			return
 		my_gen.range = input

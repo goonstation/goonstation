@@ -48,7 +48,7 @@
 		if (!ismob(M))
 			return
 		src.add_fingerprint(user)
-		if (ishuman(M))
+		if (ishuman(M) && (user.a_intent != INTENT_HARM))
 			var/mob/living/carbon/human/H = M
 			if (H.bleeding || (H.butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
 				if (!src.cautery_surgery(H, user, 15, src.welding))
@@ -107,6 +107,7 @@
 								return
 						else return ..()
 			else return ..()
+		else return ..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isscrewingtool(W))
@@ -125,9 +126,7 @@
 			var/obj/item/rods/R = new /obj/item/rods
 			R.amount = 1
 			var/obj/item/rods/S = W
-			S.amount = S.amount - 1
-			if (S.amount == 0)
-				qdel(S)
+			S.change_stack_amount(-1)
 			var/obj/item/assembly/weld_rod/F = new /obj/item/assembly/weld_rod( user )
 			src.set_loc(F)
 			F.welder = src

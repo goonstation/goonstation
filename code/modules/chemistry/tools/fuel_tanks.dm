@@ -18,6 +18,7 @@
 	rc_flags = RC_SCALE
 	initial_volume = 400
 	can_recycle = FALSE
+	can_chug = 0
 	initial_reagents = "fuel"
 
 /obj/item/reagent_containers/food/drinks/fueltank/empty

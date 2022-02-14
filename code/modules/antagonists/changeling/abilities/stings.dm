@@ -4,7 +4,7 @@
 	var/stealthy = 1
 	var/venom_id = "toxin"
 	var/inject_amount = 50
-	cooldown = 900
+	cooldown = 1400
 	targeted = 1
 	target_anything = 1
 	target_in_inventory = 1
@@ -14,10 +14,14 @@
 		if (..())
 			return 1
 
-		if (target.is_open_container() || istype(target,/obj/item/reagent_containers/food) || istype(target,/obj/item/reagent_containers/patch))
+		if (isobj(target) && (target.is_open_container() || istype(target,/obj/item/reagent_containers/food) || istype(target,/obj/item/reagent_containers/patch)))
 			if (get_dist(holder.owner, target) > 1)
 				boutput(holder.owner, __red("We cannot reach that target with our stinger."))
 				return 1
+			if (!target.reagents)
+				boutput(holder.owner, "<span class='notice'>We cannot seem to sting [target].</span>")
+				return 1
+
 			if (target.reagents.total_volume >= target.reagents.maximum_volume)
 				boutput(holder.owner, "<span class='alert'>[target] is full.</span>")
 				return 1
@@ -53,6 +57,8 @@
 			holder.owner.visible_message(__red("<b>[holder.owner] stings [target]!</b>"))
 		else
 			holder.owner.show_message(__blue("We stealthily sting [target]."))
+		if(MT.reagents.total_volume + inject_amount > MT.reagents.maximum_volume)
+			MT.reagents.remove_any(MT.reagents.total_volume + inject_amount - MT.reagents.maximum_volume)
 		MT.reagents?.add_reagent(venom_id, inject_amount)
 
 		if (isliving(MT))

@@ -14,7 +14,7 @@ A Flamethrower in various states of assembly
 #define FLAMER_MAX_TEMP 1000 KELVIN + T0C
 #define FLAMER_DEFAULT_CHEM_AMT 40
 #define FLAMER_BACKTANK_CHEM_AMT 40
-#define FLAMER_MIN_CHEM_AMT 25
+#define FLAMER_MIN_CHEM_AMT 35
 #define FLAMER_MAX_CHEM_AMT 100
 #define FLAMER_MODE_AUTO 1
 #define FLAMER_MODE_BURST 2
@@ -147,7 +147,7 @@ A Flamethrower in various states of assembly
 			if(FLAMER_MODE_BACKTANK)
 				rem_ratio = 0.004
 		var/turf/T = get_turf(src)
-		var/datum/gas_mixture/airgas = unpool(/datum/gas_mixture)
+		var/datum/gas_mixture/airgas = new /datum/gas_mixture
 		airgas.volume = 1
 		airgas.merge(gastank_aircontents.remove_ratio(rem_ratio * 0.9))
 		T.assume_air(gastank_aircontents.remove_ratio(rem_ratio * 0.1))
@@ -201,6 +201,7 @@ A Flamethrower in various states of assembly
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.create_reagents(4000)
 		inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
@@ -281,6 +282,7 @@ A Flamethrower in various states of assembly
 
 	disposing()
 		linkedflamer?.gastank = null
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
 /obj/item/gun/flamethrower/backtank
@@ -300,6 +302,7 @@ A Flamethrower in various states of assembly
 
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		var/obj/item/tank/jetpack/backtank/B = new /obj/item/tank/jetpack/backtank(src.loc)
 		src.gastank = B
 		src.fueltank = B
@@ -312,6 +315,7 @@ A Flamethrower in various states of assembly
 		if(istype(gastank, /obj/item/tank/jetpack/backtank/))
 			var/obj/item/tank/jetpack/backtank/B = gastank
 			B.linkedflamer = null
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 /obj/item/gun/flamethrower/backtank/napalm
 	New()
@@ -557,7 +561,7 @@ A Flamethrower in various states of assembly
 	src.icon_state = "flamethrower[src.gastank ? "_oxy" : "_no_oxy"][src.fueltank ? "_fuel" : "_no_fuel"]"
 
 	src.updateSelfDialog()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		playsound(src, "sound/effects/valve_creak.ogg", 40, 1)
 	return TRUE
 
@@ -649,10 +653,10 @@ A Flamethrower in various states of assembly
 		icon_state = "flamethrower_no_oxy[fuel]"
 		item_state = "flamethrower0"
 		playsound(src, "sound/effects/valve_creak.ogg", 15, 1)
-		var/remove_sound = "sound/items/pickup_[max(min(src.w_class,3),1)].ogg"
+		var/remove_sound = "sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg"
 		if(A?.pickup_sfx)
 			remove_sound = A.pickup_sfx
-		SPAWN_DBG(0.2 SECONDS)
+		SPAWN(0.2 SECONDS)
 			if(src)
 				playsound(src, remove_sound, 30, 1)
 
@@ -673,16 +677,16 @@ A Flamethrower in various states of assembly
 			oxy = "_oxy"
 		icon_state = "flamethrower[oxy]_no_fuel"
 		item_state = "flamethrower0"
-		var/remove_sound = "sound/items/pickup_[max(min(src.w_class,3),1)].ogg"
+		var/remove_sound = "sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg"
 		if(A?.pickup_sfx)
 			remove_sound = A.pickup_sfx
 		playsound(src, remove_sound, 30, 1)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if(src)
 				playsound(src, "sound/effects/valve_creak.ogg", 15, 1)
 
 	if (href_list["mode"])
-		mode = text2num(href_list["mode"])
+		mode = text2num_safe(href_list["mode"])
 		playsound(src, "sound/effects/valve_creak.ogg", 15, 1)
 		src.current_projectile.fullauto_valid = 1
 		src.current_projectile.shot_number = 1
@@ -713,7 +717,7 @@ A Flamethrower in various states of assembly
 		if (href_list["temp"] == "reset")
 			src.base_temperature = FLAMER_DEFAULT_TEMP
 		else
-			var/tempnum = text2num(href_list["temp"])
+			var/tempnum = text2num_safe(href_list["temp"])
 			src.base_temperature = clamp(src.base_temperature += tempnum, src.min_temperature, src.max_temperature)
 		playsound(src, "sound/misc/lightswitch.ogg", 20, 1)
 
@@ -721,7 +725,7 @@ A Flamethrower in various states of assembly
 		if (href_list["c_amt"] == "reset")
 			src.amt_chem = FLAMER_DEFAULT_CHEM_AMT
 		else
-			var/tempnum = text2num(href_list["c_amt"])
+			var/tempnum = text2num_safe(href_list["c_amt"])
 			src.amt_chem = clamp(src.amt_chem += tempnum, FLAMER_MIN_CHEM_AMT, src.amt_chem_max)
 		playsound(src, "sound/effects/valve_creak.ogg", 10, 0.2)
 
@@ -805,7 +809,7 @@ A Flamethrower in various states of assembly
 
 	dat += "<br>Launcher Chamber Volume: [src.amt_chem]<BR>"
 	if(src.adjustable_chem_amt)
-		dat += "| <a href='?src=\ref[src];c_amt=-5'>-5</a> | <a href='?src=\ref[src];c_amt=-1'>-1</a> | <a href='?src=\ref[src];c_amt=reset'>reset (10)</a> | <a href='?src=\ref[src];c_amt=1'>+1</a> | <a href='?src=\ref[src];c_amt=5'>+5</a> |"
+		dat += "| <a href='?src=\ref[src];c_amt=-5'>-5</a> | <a href='?src=\ref[src];c_amt=-1'>-1</a> | <a href='?src=\ref[src];c_amt=reset'>reset (40)</a> | <a href='?src=\ref[src];c_amt=1'>+1</a> | <a href='?src=\ref[src];c_amt=5'>+5</a> |"
 
 	dat += "<BR><br><A HREF='?src=\ref[src];close=1'>Close</A></TT>"
 	user.Browse(dat, "window=flamethrower;size=600x300")

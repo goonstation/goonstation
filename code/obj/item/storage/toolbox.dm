@@ -36,7 +36,7 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] slams the toolbox closed on [his_or_her(user)] head repeatedly!</b></span>")
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -89,6 +89,9 @@
 		/obj/item/crowbar/yellow,\
 		/obj/item/wirecutters/yellow,\
 		/obj/item/device/analyzer/atmospheric)
+
+	empty
+		spawn_contents = list()
 
 /obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"
@@ -229,7 +232,7 @@
 
 		M.remove()
 		var/we_need_to_die = (M == original_owner)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (G)
 				qdel(G)
 			if (we_need_to_die)
@@ -319,7 +322,7 @@
 		..()
 		master = get_disease_from_path(/datum/ailment/disability/memetic_madness)
 
-	stage_act()
+	stage_act(mult)
 		if (!istype(master,/datum/ailment/) || !src.progenitor)
 			affected_mob.ailments -= src
 			qdel(src)
@@ -328,7 +331,7 @@
 		if(stage > master.max_stages)
 			stage = master.max_stages
 
-		if(prob(stage_prob) && stage < master.max_stages)
+		if(probmult(stage_prob) && stage < master.max_stages)
 			stage++
 
 		master.stage_act(affected_mob,src,progenitor)
@@ -355,7 +358,7 @@
 			affected_mob.delStatus("weakened")
 			affected_mob.delStatus("paralysis")
 			affected_mob.dizziness = max(0,affected_mob.dizziness-10)
-			affected_mob:drowsyness = max(0,affected_mob:drowsyness-10)
+			affected_mob.changeStatus("drowsy", -20 SECONDS)
 			affected_mob:sleeping = 0
 			D.stage = 1
 			switch (progenitor.hunger)
@@ -380,7 +383,7 @@
 					progenitor.consume(affected_mob)
 					return
 
-			progenitor.hunger += min(max((progenitor.force / 10), 1), 10)
+			progenitor.hunger += clamp((progenitor.force / 10), 1, 10)
 
 		else if(D.stage == 4)
 			if(get_dist(get_turf(progenitor),src) <= 7)

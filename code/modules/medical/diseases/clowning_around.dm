@@ -95,7 +95,7 @@
 					// affected_mob.weakened = max(15, affected_mob.weakened)
 					affected_mob.changeStatus("weakened", 2 SECONDS)
 					affected_mob.make_jittery(1000)
-					SPAWN_DBG(rand(20, 100))
+					SPAWN(rand(20, 100))
 						affected_mob.partygib()
 					return
 #endif

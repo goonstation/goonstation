@@ -37,8 +37,8 @@ datum
 				var/turf/T = pick(covered_turf)
 				message_admins("Nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)].")
 				var/context = "???"
-				if(holder?.my_atom) // Erik: Fix for Cannot read null.fingerprintshidden
-					var/list/fh = holder.my_atom.fingerprintshidden
+				if(holder?.my_atom) // Erik: Fix for Cannot read null.fingerprints_full
+					var/list/fh = holder.my_atom.fingerprints_full
 
 					if (length(fh)) //Wire: Fix for: bad text or out of bounds
 						context = "Fingerprints: [jointext(fh, "")]"
@@ -306,7 +306,7 @@ datum
 						M.change_misstep_chance(-INFINITY)
 					M.HealDamage("All", 10 * mult, 10 * mult)
 					M.dizziness = max(0,M.dizziness-10)
-					M.drowsyness = max(0,M.drowsyness-10)
+					M.changeStatus("drowsy", -20 SECONDS)
 					M.sleeping = 0
 				else
 					M.take_toxin_damage(2 * mult)
@@ -369,7 +369,7 @@ datum
 					if (H.gender == MALE && H.bioHolder.mobAppearance.customization_second.id != "longbeard")
 						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/longbeard
 						somethingchanged = 1
-					if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/moustache)))
+					if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/moustache)) && volume >= 3)
 						somethingchanged = 1
 						for (var/obj/item/clothing/O in H)
 							if (istype(O,/obj/item/clothing/mask))
@@ -382,6 +382,7 @@ datum
 						var/obj/item/clothing/mask/moustache/moustache = new /obj/item/clothing/mask/moustache(H)
 						H.equip_if_possible(moustache, H.slot_wear_mask)
 						H.set_clothing_icon_dirty()
+						holder?.remove_reagent(src.id, 3)
 					if (somethingchanged) boutput(H, "<span class='alert'>Hair bursts forth from every follicle on your head!</span>")
 					H.update_colorful_parts()
 				..()
@@ -507,8 +508,7 @@ datum
 				if (probmult(8))
 					boutput(M, "<span class='alert'>The voices ...</span>")
 					M.playsound_local(M, pick(ghostly_sounds), 100, 1)
-
-				return
+				..()
 
 		strange_reagent
 			name = "strange reagent"
@@ -522,15 +522,24 @@ datum
 			depletion_rate = 0.2
 			value = 28 // 3 3 22
 			viscosity = 0.5
+			on_add()
+				..()
+				if(ismob(src.holder?.my_atom))
+					RegisterSignal(holder.my_atom, COMSIG_MOB_SHOCKED_DEFIB, .proc/revive)
 
-			reaction_mob(var/mob/target, var/method=TOUCH, var/volume_passed)
-				. = ..()
-				if (!volume_passed)
-					return
-				var/mob/living/M = target
+			on_remove()
+				..()
+				UnregisterSignal(holder.my_atom, COMSIG_MOB_SHOCKED_DEFIB)
+			proc/revive(source)
+				var/mob/living/M = source
+				var/volume_passed = holder.get_reagent_amount("strange_reagent")
 				if (!iscarbon(M) && !ismobcritter(M))
 					return
-				if ((method == INGEST || (method == TOUCH && prob(25))) && (isdead(M) || istype(get_area(M),/area/afterlife/bar)))
+				if (!volume_passed)
+					return
+				if (volume_passed < 1)
+					return
+				if (isdead(M) || istype(get_area(M),/area/afterlife/bar))
 					var/came_back_wrong = 0
 					if (M.get_brute_damage() + M.get_burn_damage() >= 150)
 						came_back_wrong = 1
@@ -551,7 +560,7 @@ datum
 							if (G?.mind?.dnr)
 								H.visible_message("<span class='alert'><b>[H]</b> seems to prefer the afterlife!</span>")
 							H.make_jittery(1000)
-							SPAWN_DBG(rand(20, 100))
+							SPAWN(rand(20, 100))
 								H.gib()
 							return
 					else // else just get whoever's the mind
@@ -604,7 +613,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				if (T.icon == 'icons/turf/floors.dmi' && volume >= 5)
-					SPAWN_DBG(1.5 SECONDS)
+					SPAWN(1.5 SECONDS)
 						T.icon_state = "grimy"
 				return
 
@@ -632,15 +641,15 @@ datum
 								lowertemp.toxins = max(lowertemp.toxins-50,0)
 								lowertemp.react()
 								T.assume_air(lowertemp)
-					pool(hotspot)
+					qdel(hotspot)
 
 				var/obj/fire_foam/F = (locate(/obj/fire_foam) in target)
 				if (!F)
-					F = unpool(/obj/fire_foam)
+					F = new /obj/fire_foam
 					F.set_loc(target)
-					SPAWN_DBG(20 SECONDS)
+					SPAWN(20 SECONDS)
 						if (F && !F.disposed)
-							pool(F)
+							qdel(F)
 				return
 
 			reaction_obj(var/obj/item/O, var/volume)
@@ -657,11 +666,23 @@ datum
 						L.changeStatus("burning", -30 SECONDS)
 						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
 					if (istype(L,/mob/living/critter/fire_elemental) && !ON_COOLDOWN(L, "fire_elemental_fffoam", 5 SECONDS))
+						L.emote("scream")
+						for(var/mob/O in AIviewers(M, null))
+							O.show_message(text("<span class='alert'><b>[] sputters and begins to dim!</b></span>", M), 1)
+							boutput(L, "<span class='alert'>The foam starts to smother your flames!</span>")
 						L.changeStatus("weakened", 2 SECONDS)
 						L.force_laydown_standup()
-						L.TakeDamage("All", volume * 1.5, 0, 0, DAMAGE_BLUNT)
+						var/brutedmg = volume * 1.5 //elementals take 1.15x damage, 65 is 74.75. 2 maxcap pitchers goes to .50 brute under death.
+						brutedmg = min(brutedmg, 65) //Ideally acts like vampire with holy water, capping it so they don't instadie.
+						L.TakeDamage("chest", brutedmg, 0, 0, DAMAGE_BLUNT) //120u pitcher of fffoam instantly killed elementals, lol.
 						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.5)
 				return
+
+			grenade_effects(var/obj/grenade, var/atom/A)
+				if (isliving(A))
+					var/mob/living/M = A
+					if (M.hasStatus("burning"))
+						M.delStatus("burning")
 
 		silicate
 			name = "silicate"
@@ -729,10 +750,12 @@ datum
 
 				if (istype(T))
 					if (T.wet >= 2) return
-					var/wet = image('icons/effects/water.dmi',"wet_floor")
+					var/image/wet = image('icons/effects/water.dmi',"wet_floor")
+					wet.blend_mode = BLEND_ADD
+					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
-					SPAWN_DBG(800 * volume_mult)
+					SPAWN(800 * volume_mult)
 						if (istype(T))
 							T.wet = 0
 							T.UpdateOverlays(null, "wet_overlay")
@@ -757,10 +780,12 @@ datum
 				if (istype(T))
 					if (T.wet >= 3) return
 					if (visible)
-						var/wet = image('icons/effects/water.dmi',"wet_floor")
+						var/image/wet = image('icons/effects/water.dmi',"wet_floor")
+						wet.blend_mode = BLEND_ADD
+						wet.alpha = 60
 						T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 3
-					SPAWN_DBG(80 SECONDS)
+					SPAWN(80 SECONDS)
 						if (istype(T))
 							T.wet = 0
 							T.UpdateOverlays(null, "wet_overlay")
@@ -1008,12 +1033,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				if (M.bodytemperature > 0)
+				if (M.bodytemperature > 0 && !M.hasStatus("burning"))
 					M.bodytemperature = max(M.bodytemperature-(10 * mult),0)
-				var/mob/living/L = M //for cryostylane not putting out fires during mob tick -Cirrial
-				var/fireDiff = L.bodytemperature - FIRE_MINIMUM_TEMPERATURE_TO_EXIST
-				if(istype(L) && L.getStatusDuration("burning") && fireDiff < 0)
-					L.changeStatus("burning", fireDiff SECONDS * mult) // by definition fireDiff will be negative
 				..()
 				return
 
@@ -1021,7 +1042,7 @@ datum
 				if (volume >= 3)
 					if (locate(/obj/decal/icefloor) in target) return
 					var/obj/decal/icefloor/B = new /obj/decal/icefloor(target)
-					SPAWN_DBG(80 SECONDS)
+					SPAWN(80 SECONDS)
 						if (B)
 							B.dispose()
 
@@ -1036,7 +1057,7 @@ datum
 							lowertemp.toxins = max(lowertemp.toxins-50,0)
 							lowertemp.react()
 							T.assume_air(lowertemp)
-					pool(hotspot)
+					qdel(hotspot)
 				return
 
 		booster_enzyme
@@ -1049,15 +1070,16 @@ datum
 			fluid_b = 192
 			transparency = 255
 			viscosity = 0.15
+			depletion_rate = 1
 			var/static/list/booster_enzyme_reagents_to_check = list("charcoal","synaptizine","styptic_powder","teporone","salbutamol","methamphetamine","omnizine","perfluorodecalin","penteticacid","oculine","epinephrine","mannitol","synthflesh", "saline", "anti_rad", "salicylic_acid", "menthol", "silver_sulfadiazine"/*,"coffee", "sugar", "espresso", "energydrink", "ephedrine", "crank"*/) //these last ones are probably an awful idea. Uncomment to buff booster a decent amount
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				for (var/i = 1, i <= booster_enzyme_reagents_to_check.len, i++)
 					var/check_amount = holder.get_reagent_amount(booster_enzyme_reagents_to_check[i])
 					if (check_amount && check_amount < 18)
-						var/amt = min(2 * mult, 20-check_amount)
-						holder.add_reagent(booster_enzyme_reagents_to_check[i], amt)
-						holder.add_reagent("enzymatic_leftovers", amt/2)
+						var/amt = min(1 * mult, 20-check_amount)
+						holder.add_reagent(booster_enzyme_reagents_to_check[i], amt, temp_new = holder.total_temperature + 20)
+						holder.add_reagent("enzymatic_leftovers", amt/2, temp_new = holder.total_temperature + 20)
 				..()
 				return
 
@@ -1073,6 +1095,7 @@ datum
 			overdose = 5
 			value = 4 // 2 1 1
 			hygiene_value = 3
+			blob_damage = 1
 
 			reaction_obj(var/obj/O, var/volume)
 				if (!isnull(O))
@@ -1100,10 +1123,10 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				if (volume >= 5)
 					for (var/obj/decal/bloodtrace/B in T)
-						B.invisibility = 0
-						SPAWN_DBG(30 SECONDS)
+						B.invisibility = INVIS_NONE
+						SPAWN(30 SECONDS)
 							if (B)
-								B.invisibility = 101
+								B.invisibility = INVIS_ALWAYS
 					for (var/obj/item/W in T)
 						if (W.get_forensic_trace("bDNA"))
 							var/icon/icon_old = W.icon
@@ -1112,7 +1135,7 @@ datum
 							I.Blend(new /icon('icons/effects/blood.dmi', "lum-item"),ICON_MULTIPLY)
 							I.Blend(new /icon(W.icon, W.icon_state),ICON_UNDERLAY)
 							W.icon = I
-							SPAWN_DBG(30 SECONDS)
+							SPAWN(30 SECONDS)
 								if (W && icon_old)
 									W.icon = icon_old
 
@@ -1137,7 +1160,7 @@ datum
 					var/list/covered = holder.covered_turf()
 					if (covered.len < 4 || (volume / holder.total_volume) > min_req_fluid)
 						for(var/turf/location in covered)
-							fireflash(location, min(max(0,volume/40),8))
+							fireflash(location, clamp(volume/40, 0, 8))
 							if (covered.len < 4 || prob(10))
 								location.visible_message("<b>The oil burns!</b>")
 								var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
@@ -1161,9 +1184,11 @@ datum
 
 			reaction_turf(var/turf/target, var/volume)
 				var/turf/simulated/T = target
-				if (istype(T) && T.wet) //Wire: fix for Undefined variable /turf/space/var/wet (&& T.wet)
+				if (istype(T)) //Wire: fix for Undefined variable /turf/space/var/wet (&& T.wet)
 					if (T.wet >= 2) return
-					var/wet = image('icons/effects/water.dmi',"wet_floor")
+					var/image/wet = image('icons/effects/water.dmi',"wet_floor")
+					wet.blend_mode = BLEND_ADD
+					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
 					if (!locate(/obj/decal/cleanable/oil) in T)
@@ -1176,16 +1201,9 @@ datum
 								make_cleanable(/obj/decal/cleanable/oil/streak,T)
 							if (20 to INFINITY)
 								make_cleanable(/obj/decal/cleanable/oil,T)
-					SPAWN_DBG(20 SECONDS)
+					SPAWN(20 SECONDS)
 						T.wet = 0
 						T.UpdateOverlays(null, "wet_overlay")
-
-				return
-
-			on_mob_life(var/mob/M, var/mult = 1)
-				//if (prob(4)) // it's motor oil, you goof
-					//M.reagents.add_reagent("cholesterol", rand(1,3))
-				return
 
 		capulettium
 			name = "capulettium"
@@ -1200,10 +1218,6 @@ datum
 			var/counter = 1
 			var/fakedeathed = 0
 
-			pooled()
-				..()
-				counter = 1
-				fakedeathed = 0
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -1212,11 +1226,13 @@ datum
 					if (1 to 9)
 						M.change_eye_blurry(10, 10)
 					if (10 to 18)
-						M.drowsyness  = max(M.drowsyness, 10)
+						M.setStatus("drowsy", 20 SECONDS)
 					if (19 to INFINITY)
-						M.changeStatus("paralysis", 3 SECONDS * mult)
+						M.changeStatus("weakened", 3 SECONDS * mult)
+						M.changeStatus("muted", 3 SECONDS * mult)
 				if (counter >= 19 && !fakedeathed)
-					M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 3 SECONDS * mult))
+					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 3 SECONDS * mult))
+					M.setStatus("muted", max(M.getStatusDuration("muted"), 3 SECONDS * mult))
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
 					playsound(M, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
@@ -1236,11 +1252,6 @@ datum
 			var/counter = 1
 			var/fakedeathed = 0
 
-			pooled()
-				..()
-				counter = 1
-				fakedeathed = 0
-
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
@@ -1248,7 +1259,7 @@ datum
 					if (1 to 9)
 						M.change_eye_blurry(10, 10)
 					if (10 to 18)
-						M.drowsyness  = max(M.drowsyness, 10)
+						M.setStatus("drowsy", 20 SECONDS)
 				if (counter >= 19 && !fakedeathed)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
@@ -1284,7 +1295,7 @@ datum
 						if (11)
 							M.lying = 0
 						if (12 to INFINITY)
-							SPAWN_DBG(5 SECONDS)
+							SPAWN(5 SECONDS)
 								if (!M.reagents.has_reagent("montaguone_extra"))
 									M.lying = 1
 									M.emote("deathgasp")
@@ -1341,6 +1352,7 @@ datum
 			fluid_b = 19
 			transparency = 255
 			depletion_rate = 0.01
+			heat_capacity = 200
 
 		// used to make fake initropidril
 		eyeofnewt
@@ -1412,7 +1424,7 @@ datum
 					random_brute_damage(M, 1 * mult)
 				else if (our_amt < 10)
 					if (probmult(8))
-						M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+						M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 						M.vomit()
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
@@ -1421,7 +1433,7 @@ datum
 					M.visible_message("<span class='alert'><B>[M]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
 					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 15 SECONDS * mult))
 					M.make_jittery(1000)
-					SPAWN_DBG(rand(20, 100))
+					SPAWN(rand(20, 100))
 						var/turf/Mturf = get_turf(M)
 						M.gib()
 						new /obj/critter/dog/george (Mturf)
@@ -1452,7 +1464,7 @@ datum
 					random_brute_damage(M, 1 * mult)
 				else if (our_amt < 20)
 					if (probmult(8))
-						M.visible_message("<span class='alert'>[M] hoots all over \himself.</span>", "<span class='alert'>You hoot all over yourself!</span>")
+						M.visible_message("<span class='alert'>[M] hoots all over [himself_or_herself(M)].</span>", "<span class='alert'>You hoot all over yourself!</span>")
 						M.vomit()
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
@@ -1460,7 +1472,7 @@ datum
 					M.visible_message("<span class='alert'><B>[M]</B> starts hooting violently!</span>", "You feel as if your body is hooting itself apart!")
 					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 15 SECONDS * mult))
 					M.make_jittery(1000)
-					SPAWN_DBG(rand(20, 100))
+					SPAWN(rand(20, 100))
 						M.owlgib(control_chance = 100)
 					return
 				..()
@@ -1534,9 +1546,10 @@ datum
 				. = ..()
 				if (method == INGEST)
 					boutput(M, "<span class='alert'>Aaaagh! It tastes fucking horrendous!</span>")
-					SPAWN_DBG(1 SECOND)
-						M.visible_message("<span class='alert'>[M] pukes violently!</span>")
-						M.vomit()
+					SPAWN(1 SECOND)
+						if(!isdead(M) && volume >= 1)
+							M.visible_message("<span class='alert'>[M] pukes violently!</span>")
+							M.vomit()
 				else
 					boutput(M, "<span class='alert'>Oh god! It smells horrific! What the fuck IS this?!</span>")
 					if (prob(50))
@@ -1569,6 +1582,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if(volume < 1)
+					return
 				if (method == TOUCH)
 					. = 0 // for depleting fluid pools
 				if(!ON_COOLDOWN(M, "ants_scream", 3 SECONDS))
@@ -1598,6 +1613,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if(volume < 1)
+					return
 				if(method == TOUCH)
 					. = 0 // for depleting fluid pools
 				if (!ON_COOLDOWN(M, "spiders_scream", 3 SECONDS))
@@ -1706,7 +1723,7 @@ datum
 					M = holder.my_atom
 
 				if (M.a_intent == INTENT_HARM)
-					M.a_intent = INTENT_HELP
+					M.set_a_intent(INTENT_HELP)
 
 				if (probmult(8))
 					. = ""
@@ -2021,7 +2038,7 @@ datum
 				if(method == TOUCH)
 					boutput(M, "<span class='notice'>It feels like you got smudged with oil paints.</span>")
 					M.color = col
-					SPAWN_DBG(3 SECONDS)
+					SPAWN(3 SECONDS)
 						boutput(M, "<span class='alert'>Oh god it's not coming off! You're tinted like this forever!</span>")
 
 			reaction_turf(var/turf/T, var/volume)
@@ -2032,12 +2049,12 @@ datum
 					if (volume >= 10)
 						T.visible_message("<span class='notice'>The substance flows out and takes a solid form.</span>")
 						if(prob(50))
-							var/atom/movable/B = unpool(/obj/item/raw_material/scrap_metal)
+							var/atom/movable/B = new /obj/item/raw_material/scrap_metal
 							B.set_loc(T)
 							var/datum/material/mat = getMaterial("gnesis")
 							B.setMaterial(mat)
 						else
-							var/atom/movable/B = unpool(/obj/item/raw_material/shard)
+							var/atom/movable/B = new /obj/item/raw_material/shard
 							B.set_loc(T)
 							var/datum/material/mat = getMaterial("gnesisglass")
 							B.setMaterial(mat)
@@ -2121,14 +2138,6 @@ datum
 			var/speed = 3
 			stun_resist = 9
 
-			pooled()
-				..()
-				direction = null
-				dir_lock = 0
-				anim_lock = 0
-				speed = 3
-
-
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
@@ -2167,7 +2176,7 @@ datum
 					anim_lock = 1
 
 				M.make_jittery(2)
-				M.drowsyness = max(M.drowsyness-6, 0)
+				M.changeStatus("drowsy", -12 SECONDS)
 				if (M.sleeping) M.sleeping = 0
 				return
 
@@ -2297,7 +2306,7 @@ datum
 					anim_lock = 1
 
 				M.make_jittery(4)
-				M.drowsyness = max(M.drowsyness-12, 0)
+				M.changeStatus("drowsy", -25 SECONDS)
 				if (M.sleeping) M.sleeping = 0
 				return
 
@@ -2310,6 +2319,8 @@ datum
 				animate_spin(M, dir_temp, speed_temp)
 
 			reaction_obj(var/obj/O)
+				if(!O.mouse_opacity)
+					return
 				var/dir_temp = pick("L", "R")
 				var/speed_temp = text2num("[rand(0,10)].[rand(0,9)]")
 				animate_spin(O, dir_temp, speed_temp)
@@ -2373,10 +2384,6 @@ datum
 			overdose = 30
 			var/effect_length = 0
 
-			pooled()
-				..()
-				effect_length = 0
-
 			on_mob_life(var/mob/living/M, var/mult = 1) // humans only! invisible critters would be awful...
 				if(!M)
 					holder.remove_reagent("transparium")
@@ -2392,7 +2399,7 @@ datum
 					M.alpha = 0
 					if(effect_length > 75)
 						M.take_brain_damage(10) // there!
-					SPAWN_DBG(effect_length * 10)
+					SPAWN(effect_length * 10)
 						if(ishuman(M) && M.alpha != 255)
 							boutput(M, "<span class='notice'>You feel yourself returning back to normal. Phew!</span>")
 							M.alpha = 255
@@ -2426,10 +2433,6 @@ datum
 			transparency = 30
 			var/effect_length = 0
 
-			pooled()
-				..()
-				effect_length = 0
-
 			on_mob_life(var/mob/M, var/mult = 1) // now this is ok
 				if(!M) M = holder.my_atom
 
@@ -2441,7 +2444,7 @@ datum
 				if(M)
 					boutput(M, "<span class='alert'>You feel yourself fading.</span>")
 					M.alpha = rand(80,200)
-					SPAWN_DBG(effect_length * 10)
+					SPAWN(effect_length * 10)
 						if(ismob(M) && M.alpha != 255)
 							boutput(M, "<span class='notice'>You feel yourself returning back to normal. Phew!</span>")
 							M.alpha = 255
@@ -2668,6 +2671,16 @@ datum
 			value = 3
 			viscosity = 0.4
 
+			on_add()
+				if (holder && ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_MOB_PROPERTY(M, PROP_GHOSTVISION, src)
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_GHOSTVISION, src)
+
 		voltagen
 			name = "voltagen"
 			id = "voltagen"
@@ -2680,29 +2693,21 @@ datum
 			overdose = 20
 			viscosity = 0.3
 			minimum_reaction_temperature = T0C+100
-			var/multiplier = 1
-			var/grenade_handled = 0
-			pooled()
-				..()
-				multiplier = 1
-				grenade_handled = 0
 
+			on_add()
+				..()
+				if(ismob(src.holder?.my_atom))
+					RegisterSignal(holder.my_atom, COMSIG_ATTACKBY, .proc/zap_dude)
+					RegisterSignal(holder.my_atom, COMSIG_ATTACKHAND, .proc/zap_dude_punching)
+
+			on_remove()
+				..()
+				UnregisterSignal(holder.my_atom, COMSIG_ATTACKBY)
+				UnregisterSignal(holder.my_atom, COMSIG_ATTACKHAND)
 
 			grenade_effects(var/obj/grenade, var/atom/A)
 				if (isliving(A))
-					if (!grenade_handled)
-						multiplier = 15
-						grenade_handled = 1
-					else
-						multiplier /= 2
-					arcFlash(grenade, A, 0)
-
-			reaction_mob(var/mob/M, var/method = TOUCH, volume_passed)
-				. = ..()
-				var/vol = max(1,volume_passed)
-				if (method == TOUCH)
-					M.shock(src.holder.my_atom, min(7500 * multiplier, vol * 100 * multiplier), "chest", 1, 1)
-					. = 0
+					arcFlash(grenade, A, 1 MEGA WATT, 0.75)
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if (reacting)
@@ -2713,18 +2718,25 @@ datum
 				for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
 					count++
 				for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
-					arcFlash(holder.my_atom, L, min(75000 * multiplier / count, volume * 1000 * multiplier / count))
+					arcFlash(holder.my_atom, L, min(75000 / count, volume * 1000 / count))
 
 				holder.del_reagent(id)
 
 			on_mob_life(mob/M, var/mult = 1)
 
 				if (probmult(10))
-					elecflash(M)
+					elecflash(M, 1, 4, 1)
 				..()
 
+			proc/zap_dude_punching(source, mob/attacker)
+				src.zap_dude(source, null, attacker)
+			proc/zap_dude(source, item, mob/attacker)
+				if(volume >= 5 && prob(volume))
+					arcFlash(holder?.my_atom, attacker,  min(75000, volume * 1000), 0.5)
+					holder.remove_reagent(id, 5)
+
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
-				if (prob(10))
+				if (probmult(10))
 					if (severity >= 2)
 						M.shock(M, 100000, "chest", 1, 1)
 						holder.remove_reagent(id, 20)
@@ -2760,7 +2772,7 @@ datum
 				light.set_brightness(lumen_brightness)
 				light.attach(thing)
 				var/life_length = rand(1 MINUTE, 3 MINUTES)
-				SPAWN_DBG(life_length)
+				SPAWN(life_length)
 					qdel(light)
 
 			proc/light_it_up_but_simple(atom/thing, var/volume, var/id="lumen", var/remove=1)
@@ -2771,7 +2783,7 @@ datum
 				thing.add_simple_light(id, list(mycolor.r, mycolor.g, mycolor.b, alpha))
 				var/life_length = rand(1 MINUTE, 3 MINUTES)
 				if(remove)
-					SPAWN_DBG(life_length)
+					SPAWN(life_length)
 						thing.remove_simple_light(id)
 
 			on_add()
@@ -2852,6 +2864,12 @@ datum
 				if (growing.growthmode == "weed")
 					P.HYPdamageplant("poison",2)
 					P.growth -= 3
+
+			reaction_obj(var/obj/O, var/volume)
+				if (istype(O, /obj/spacevine))
+					var/obj/spacevine/kudzu = O
+					kudzu.herbicide(src)
+
 		safrole
 			name = "safrole"
 			id = "safrole"
@@ -2943,12 +2961,7 @@ datum
 			hygiene_value = -2
 			hunger_value = 0.068
 			viscosity = 0.4
-			depletion_rate = 0
-
-			pooled()
-				..()
-				pathogens.Cut()
-				pathogens_processed = 0
+			depletion_rate = 0.4
 
 /*			var
 				blood_DNA = null
@@ -2973,8 +2986,8 @@ datum
 				if (method == INGEST)
 					if (M.mind)
 						var/mob/living/carbon/human/H = M
-						if (istype(H.mutantrace, /datum/mutantrace/vamp_zombie))
-							var/datum/mutantrace/vamp_zombie/V = H.mutantrace
+						if (istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
+							var/datum/mutantrace/vampiric_thrall/V = H.mutantrace
 							var/bloodget = volume_passed / 4
 							V.blood_points += bloodget
 
@@ -3223,6 +3236,37 @@ datum
 				#endif
 				M.reagents.del_reagent(src.id)
 
+		gib_juice
+			// old qgp
+			name = "gib juice"
+			id = "gib_juice"
+			description = "oof ouch owie my bones"
+			random_chem_blacklisted = 1
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_g = 0
+			fluid_b = 0
+			transparency = 255
+			viscosity = 0.7
+
+			pierces_outerwear = 1//shoo, biofool
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if(istype(M, /mob/dead))
+					return
+				M.ex_act(1)
+
+
+			reaction_obj(var/obj/O, var/volume)
+				O.ex_act(1)
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				..()
+				M.ex_act(1)
+				M.gib()
+				M.reagents.del_reagent(src.id)
+
 		cyclopentanol
 			name = "cyclopentanol"
 			id = "cyclopentanol"
@@ -3306,10 +3350,12 @@ datum
 				var/turf/simulated/T = target
 				if (istype(T))
 					if (T.wet >= 2) return
-					var/wet = image('icons/effects/water.dmi',"wet_floor")
+					var/image/wet = image('icons/effects/water.dmi',"wet_floor")
+					wet.blend_mode = BLEND_ADD
+					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
-					SPAWN_DBG(80 SECONDS)
+					SPAWN(80 SECONDS)
 						if (istype(T))
 							T.wet = 0
 							T.UpdateOverlays(null, "wet_overlay")
@@ -3350,8 +3396,8 @@ datum
 					M << sound('sound/misc/yee_music.ogg', repeat = 1, wait = 0, channel = 391, volume = 50) // play them tunes
 					if (M.bioHolder && ishuman(M))			// All mobs get the tunes, only "humans" get the scales
 						var/mob/living/carbon/human/H = M
-						src.the_bioeffect_you_had_before_it_was_affected_by_yee = H?.mutantrace.name			// then write down what your whatsit was
-						src.the_mutantrace_you_were_before_yee_overwrote_it = H?.mutantrace.type		// write that down too
+						src.the_bioeffect_you_had_before_it_was_affected_by_yee = H?.mutantrace?.name			// then write down what your whatsit was
+						src.the_mutantrace_you_were_before_yee_overwrote_it = H?.mutantrace?.type		// write that down too
 						if (src.the_bioeffect_you_had_before_it_was_affected_by_yee != "lizard")				// Dont make me a lizard if im already a lizard
 							H.bioHolder.AddEffect("lizard", timeleft = 180)
 						else
@@ -3359,12 +3405,6 @@ datum
 						H.bioHolder.AddEffect("accent_yee", timeleft = 180)
 						H.visible_message("<span class='emote'><b>[M]</b> yees.</span>")
 						playsound(H, "sound/misc/yee.ogg", 50, 1)
-
-			pooled()
-				..()
-				if (src.music_given_to)
-					src.music_given_to << sound(null, channel = 391) // seriously, make sure we don't leave someone with music playing!!  gotta cover our bases
-					src.music_given_to = null
 
 			on_remove()
 				var/atom/A = holder.my_atom
@@ -3417,20 +3457,10 @@ datum
 			reagent_state = LIQUID
 			depletion_rate = 1
 			minimum_reaction_temperature = -INFINITY
-
-
-
 			var/datum/reagents/contents = null
 			var/hardened = 0
 
 			disposing()
-				..()
-				contents = null
-				hardened = 0
-				reagent_state = LIQUID
-				update_identifiers()
-
-			pooled()
 				..()
 				contents = null
 				hardened = 0
@@ -3596,10 +3626,6 @@ datum
 			var/counter = 1
 			value = 4
 
-			pooled()
-				..()
-				counter = 1
-
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
@@ -3616,7 +3642,7 @@ datum
 						var/mob/badmantarget = M
 						boutput(badmantarget, "<span class='notice'> <B> You feel a sense of dread and patriotism wash over you. </B>")
 						badmantarget.playsound_local(get_turf(badmantarget), "sound/misc/american_patriot.ogg", 50)
-						SPAWN_DBG(10 SECONDS)
+						SPAWN(10 SECONDS)
 							startx = badmantarget.x - rand(-11, 11)
 							starty = badmantarget.y - rand(-11, 11)
 							var/turf/pickedstart = locate(startx, starty, badmantarget.z)
@@ -3639,17 +3665,15 @@ datum
 			value = 4
 
 			on_add()
-				if(!holder || !holder.my_atom || istype(holder.my_atom, /turf) || (holder.my_atom.flags & IS_BUBSIUM_SCALED))
+				if(!holder || !holder.my_atom || istype(holder.my_atom, /turf))
 					return
 				holder.my_atom.SafeScale(4,1.5)
-				holder.my_atom.flags |= IS_BUBSIUM_SCALED
 
 
 			on_remove()
-				if(!holder || !holder.my_atom  || istype(holder.my_atom, /turf) || !(holder.my_atom.flags & IS_BUBSIUM_SCALED))
+				if(!holder || !holder.my_atom  || istype(holder.my_atom, /turf))
 					return
 				holder.my_atom.SafeScale(1/4,1/1.5)
-				holder.my_atom.flags &= ~IS_BUBSIUM_SCALED
 
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -3698,6 +3722,13 @@ datum
 						boutput(M, "<span class='alert'>Oh god! The <i>smell</i>!!!</span>")
 					M.reagents.add_reagent("jenkem",0.1 * volume_passed)
 
+			very_toxic
+				id = "very_toxic_fart"
+				name = "very toxic fart"
+
+				on_mob_life(var/mob/M, var/mult = 1)
+					. =..()
+					M.take_toxin_damage(2 * mult)
 			//on_mob_life(var/mob/M, var/mult = 1)
 			//	if(!M) M = holder.my_atom
 			//	..()
@@ -3776,7 +3807,7 @@ datum
 						return
 					if (!T.icon_old)
 						T.icon_old = T.icon_state
-					//SPAWN_DBG(rand(5,12) * 10) //wait in some other fashion later
+					//SPAWN(rand(5,12) * 10) //wait in some other fashion later
 					T.grassify()
 				return
 
@@ -3955,17 +3986,18 @@ datum
 
 	New(pickedstart, var/mob/badmantarget)
 		deathtarget = badmantarget
-		SPAWN_DBG(0) process()
+		SPAWN(0) process()
 		..()
 
-	Bump(M as turf|obj|mob)
-		M:density = 0
-		SPAWN_DBG(0.4 SECONDS)
-			M:density = 1 //Apparently this is a horrible stinky line of code by don't blame me, this is all the gibshark codes fault.
-		sleep(0.1 SECONDS)
-		var/turf/T = get_turf(M)
-		src.x = T.x
-		src.y = T.y
+	bump(atom/M as turf|obj|mob)
+		if(M.density)
+			M.density = 0
+			SPAWN(0.4 SECONDS)
+				M.density = 1 //Apparently this is a horrible stinky line of code by don't blame me, this is all the gibshark codes fault.
+		SPAWN(0.1 SECONDS)
+			var/turf/T = get_turf(M)
+			src.x = T.x
+			src.y = T.y
 
 	proc/process()
 		while (!disposed)

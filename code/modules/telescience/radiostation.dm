@@ -244,30 +244,39 @@
 	var/is_playing = 0
 	var/obj/item/record/record_inside = null
 
+	New()
+		..()
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+
 /obj/submachine/record_player/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/record))
 		if(has_record)
 			boutput(user, "The record player already has a record inside!")
 		else if(!is_playing)
 			boutput(user, "You insert the record into the record player.")
+			var/inserted_record = W
 			src.visible_message("<span class='notice'><b>[user] inserts the record into the record player.</b></span>")
 			user.drop_item()
 			W.set_loc(src)
 			src.record_inside = W
 			src.has_record = 1
-			var/R = html_encode(input("What is the name of this record?","Record Name") as null|text)
+			var/R = html_encode(input("What is the name of this record?","Record Name", src.record_inside.record_name) as null|text)
+			if(!in_interact_range(src, user))
+				boutput(user, "You're out of range of the [src.name]!")
+				return
+			if(src.is_playing) // someone queuing up several input windows
+				return
+			if(!inserted_record || (inserted_record != src.record_inside)) // record was removed/changed before input confirmation
+				return
 			if(R)
 				phrase_log.log_phrase("record", R)
 			if (!R)
 				R = record_inside.record_name ? record_inside.record_name : pick("rad tunes","hip jams","cool music","neat sounds","magnificent melodies","fantastic farts")
 			user.client.play_music_radio(record_inside.song, R)
 			/// PDA message ///
-			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 			var/datum/signal/pdaSignal = get_free_signal()
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [R].", "group" = MGA_RADIO)
-			pdaSignal.transmission_method = TRANSMISSION_RADIO
-			if(transmit_connection != null)
-				transmit_connection.post_signal(src, pdaSignal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 			//////
 			src.is_playing = 1
 #ifdef UNDERWATER_MAP
@@ -322,7 +331,7 @@
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		playsound(src, "shatter", 70, 1)
-		var/obj/O = unpool (/obj/item/raw_material/shard/glass)
+		var/obj/O = new /obj/item/raw_material/shard/glass
 		O.set_loc(get_turf(M))
 		if (src.material)
 			O.setMaterial(copyMaterial(src.material))
@@ -526,6 +535,20 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	New()
 		..()
 		src.UpdateOverlays(new /image(src.icon, "record_6"), "recordlabel") //it should always be green because I'm so funny.
+
+// nukie record
+/obj/item/record/second_reality
+	name = "record - \"Second Reality\""
+	record_name = "Second Reality"
+	song = "sound/radio_station/music/second_reality.s3m"
+	add_overlay = FALSE
+
+	New()
+		..()
+		var/image/overlay = new /image(src.icon, "record_3")
+		overlay.color = list(1.5, 0, 0, 0, 0, 0, 0, 0, 0) // very red
+		src.UpdateOverlays(overlay, "recordlabel")
+		src.desc = "A fairly large record. You imagine there are probably some rad songs on this. Rad, get it? Because the station is gonna be irradiated once the nuke detonates. Song by Purple Motion."
 
 ABSTRACT_TYPE(/obj/item/record/random/metal)
 /obj/item/record/random/metal
@@ -783,12 +806,9 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 			src.is_playing = 1
 			user.client.play_music_radio(tape_inside.audio)
 			/// PDA message ///
-			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 			var/datum/signal/pdaSignal = get_free_signal()
 			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].", "group" = MGA_RADIO)
-			pdaSignal.transmission_method = TRANSMISSION_RADIO
-			if(transmit_connection != null)
-				transmit_connection.post_signal(src, pdaSignal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 			//////
 			sleep(6000)
 			is_playing = 0

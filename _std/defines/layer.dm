@@ -16,6 +16,7 @@
 #define TURF_EFFECTS_LAYER 	(TURF_LAYER+0.8)
 #define GRILLE_LAYER 		(TURF_LAYER+0.9)
 #define COG2_WINDOW_LAYER 	(TURF_LAYER+0.95)
+#define STORAGE_LAYER		(TURF_LAYER+0.99) // Keep lockers etc below items
 
 // Mob clothing and effect layers
 #define MOB_LAYER_BASE 		4

@@ -23,7 +23,7 @@
 	. = ..()
 	UnregisterSignal(B, COMSIG_BLOCK_BLOCKED)
 	UnregisterSignal(B, COMSIG_TOOLTIP_BLOCKING_APPEND)
-	SPAWN_DBG(1 DECI SECOND) //delay because blocks get ended before clicks fully register -> we want to be able to use the special out of the block
+	SPAWN(1 DECI SECOND) //delay because blocks get ended before clicks fully register -> we want to be able to use the special out of the block
 		used_special(parent, null)
 
 

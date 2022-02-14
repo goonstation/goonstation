@@ -1,3 +1,8 @@
+TYPEINFO(/datum/component/holdertargeting/smartgun)
+	initialization_args = list(
+		ARG_INFO("maxlocks", "num", "Maximum number of lock-ons the gun will get on a given target at once", 3)
+	)
+
 /datum/component/holdertargeting/smartgun
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	mobtype = /mob/living

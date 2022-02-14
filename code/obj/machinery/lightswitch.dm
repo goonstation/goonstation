@@ -22,7 +22,7 @@
 	..()
 	UnsubscribeProcess()
 	light = new /datum/light/point
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		src.area = src.loc.loc
 
 		if(otherarea)
@@ -32,7 +32,7 @@
 			name = "light switch"
 
 		src.on = src.area.lightswitch
-		updateicon()
+		UpdateIcon()
 
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
@@ -50,7 +50,7 @@
 	return
 
 
-/obj/machinery/light_switch/proc/updateicon()
+/obj/machinery/light_switch/update_icon()
 	if(status & NOPOWER)
 		icon_state = "light-p"
 		light.disable()
@@ -85,9 +85,12 @@
 
 	for(var/obj/machinery/light_switch/L in area.machines)
 		L.on = on
-		L.updateicon()
+		L.UpdateIcon()
 
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[on ? "lightOn":"lightOff"]")
+
+	src.add_fingerprint(user)
+	logTheThing("station", user, null, "turns [on ? "on" : "off"] a lightswitch at [log_loc(user)]")
 
 	playsound(src, "sound/misc/lightswitch.ogg", 50, 1)
 
@@ -105,7 +108,7 @@
 		else
 			status |= NOPOWER
 
-		updateicon()
+		UpdateIcon()
 
 /obj/machinery/light_switch/north
 	name = "N light switch"
@@ -128,7 +131,7 @@
 
 	New()
 		var/turf/T = null
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			for (var/dir in cardinal)
 				T = get_step(src,dir)
 				if (istype(T,/turf/simulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))

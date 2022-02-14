@@ -1,6 +1,7 @@
 /datum/hud/ghost_observer
 	var/mob/dead/observer/master
 	var/atom/movable/screen/respawn_timer/respawn_timer
+	var/atom/movable/screen/join_other/join_other
 
 	New(I)
 		master = I
@@ -17,6 +18,20 @@
 			src.respawn_timer = new
 			src.add_object(src.respawn_timer)
 		return src.respawn_timer
+
+	proc/get_join_other()
+		RETURN_TYPE(/atom/movable/screen/join_other)
+		if(src.master.client?.holder && !src.master.client?.player_mode)
+			return
+		var/datum/game_server/buddy = global.game_servers.get_buddy()
+		if(isnull(buddy))
+			return null
+		if(!buddy.ghost_notif_target)
+			return null
+		if(isnull(src.join_other))
+			src.join_other = new(null, buddy.id, buddy.name)
+			src.add_object(src.join_other)
+		return src.join_other
 
 	proc/update_ability_hotbar()
 		if (!master.client)

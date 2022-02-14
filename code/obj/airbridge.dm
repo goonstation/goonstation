@@ -16,7 +16,7 @@
 	desc = "This is an invisible thing. Yet you can see it. You notice reality unraveling around you."
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "airbr"
-	invisibility = 99
+	invisibility = INVIS_ALWAYS_ISH
 	anchored = 1
 	density = 0
 
@@ -78,7 +78,7 @@
 
 		working = 1
 
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			for(var/turf/simulated/T in maintaining_turfs)
 				if(!T.air && T.density)
 					continue
@@ -126,7 +126,7 @@
 		working = 1
 		maintaining_bridge = 1
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			path.Cut()
 
 			var/turf/current = src.loc
@@ -181,7 +181,8 @@
 				light.alpha = 255
 			sleep(1 SECOND)
 			for(var/obj/light in my_lights)
-				light.filters = null
+				light.remove_filter("alpha white")
+				light.remove_filter("alpha black")
 				var/obj/machinery/light/l = light
 				if(istype(l))
 					l.seton(1)
@@ -207,14 +208,15 @@
 		maintaining_bridge = 0
 		playsound(src.loc, "sound/machines/warning-buzzer.ogg", 50, 1)
 
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			var/list/path_reverse = reverse_list(path)
 
 			for(var/obj/light in src.my_lights)
 				animate_close_into_floor(light, time=1 SECOND, self_contained=0)
 			sleep(1 SECOND)
 			for(var/obj/light in my_lights)
-				light.filters = null
+				light.remove_filter("alpha white")
+				light.remove_filter("alpha black")
 				light.alpha = 0
 
 			var/turf/curr
@@ -281,7 +283,7 @@
 		..()
 		update_status()
 		if (starts_established && length(links))
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				do_initial_extend()
 
 	disposing()
@@ -303,7 +305,7 @@
 		..()
 		update_status()
 		if (starts_established && length(links))
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				do_initial_extend()
 		return
 
@@ -449,7 +451,7 @@
 			status &= ~NOPOWER
 			light.enable()
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				icon_state = "airbroff"
 				status |= NOPOWER
 				light.disable()

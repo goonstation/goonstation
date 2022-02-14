@@ -392,7 +392,7 @@
 	var/turf/T = get_turf(src)
 
 	var/datum/artifact/A = src.artifact
-	if(!istype(A))
+	if(!istype(A) || !A.artitype)
 		return
 
 	// Possible stimuli = force, elec, radiate, heat
@@ -447,6 +447,8 @@
 					src.ArtifactActivated()
 
 /obj/proc/ArtifactTouched(mob/user as mob)
+	if (!in_interact_range(get_turf(src), user))
+		return
 	if (isAI(user))
 		return
 	if (isobserver(user))
@@ -487,11 +489,23 @@
 	var/datum/artifact/A = src.artifact
 
 	A.health -= dmg_amount
-	A.health = max(0,min(A.health,100))
+	A.health = clamp(A.health, 0, 100)
 
 	if (A.health <= 0)
 		src.ArtifactDestroyed()
 	return
+
+/// Removes all artifact forms attached to this and makes them fall to the floor
+/// Because artifacts often like to disappear in mysterious ways
+/obj/proc/remove_artifact_forms()
+	var/removed = 0
+	for(var/obj/item/sticker/postit/artifact_paper/AP in src.vis_contents)
+		AP.remove_from_attached()
+		removed++
+	if(removed == 1)
+		src.visible_message("The artifact form that was attached falls to the ground.")
+	else if(removed > 1)
+		src.visible_message("All the artifact forms that were attached fall to the ground.")
 
 /obj/proc/ArtifactDestroyed()
 	// Call this rather than straight disposing() on an artifact if you want to destroy it. This way, artifacts can have their own
@@ -514,6 +528,8 @@
 				T.visible_message("<span class='alert'><B>[src] warps in on itself and vanishes!</B></span>")
 			if("precursor")
 				T.visible_message("<span class='alert'><B>[src] implodes, crushing itself into dust!</B></span>")
+
+	src.remove_artifact_forms()
 
 	src.ArtifactDeactivated()
 
@@ -539,7 +555,7 @@
 
 	if (A.artitype.name == "eldritch")
 		faultprob *= 2 // eldritch artifacts fucking hate you and are twice as likely to go faulty
-	faultprob = max(0,min(faultprob,100))
+	faultprob = clamp(faultprob, 0, 100)
 
 	if (prob(faultprob) && length(A.fault_types))
 		var/new_fault = weighted_pick(A.fault_types)

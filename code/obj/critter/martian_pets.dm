@@ -157,7 +157,7 @@ CritterAttack(atom/M)
       src.task = "thinking"
       walk_to(src,0)
 
-    SPAWN_DBG(attack_cooldown)
+    SPAWN(attack_cooldown)
       src.attacking = 0
   return
 
@@ -178,7 +178,7 @@ CritterAttack(atom/M)
       src.task = "thinking"
       walk_to(src,0)
 
-    SPAWN_DBG(attack_cooldown)
+    SPAWN(attack_cooldown)
       src.attacking = 0
   return
 
@@ -187,7 +187,7 @@ CritterAttack(atom/M)
   if(target == start)
     return
 
-  var/obj/projectile/A = unpool(/obj/projectile)
+  var/obj/projectile/A = new /obj/projectile
   if(!A)  return
   A.set_loc(src.loc)
   if (!current_projectile)
@@ -213,7 +213,7 @@ CritterAttack(atom/M)
 
   A.shooter = src
   src.set_dir(get_dir(src, target))
-  SPAWN_DBG( 0 )
+  SPAWN( 0 )
     A.process()
   return
 */

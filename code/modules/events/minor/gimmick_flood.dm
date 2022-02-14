@@ -51,7 +51,7 @@
 			else
 				var/obj/machinery/drainage/drain = pick(by_type[/obj/machinery/drainage])
 				drain.clogged = 60 // about 3 minutes
-				drain.update_icon()
+				drain.UpdateIcon()
 				src.target = get_turf(drain)
 				target.visible_message("<span class='alert'><b>\The [drain] overflows with [reagent.name]!</b></span>")
 
@@ -65,10 +65,10 @@
 
 		message_admins("Random flood event triggered on ([showCoords(target.x, target.y, target.z)]) with [amount] [reagent.name].")
 
-		var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
+		var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 		swirl.set_loc(target)
-		SPAWN_DBG(1.5 SECONDS)
-			pool(swirl)
+		SPAWN(1.5 SECONDS)
+			qdel(swirl)
 
 		src.target = initial(src.target)
 		src.amount = initial(src.amount)

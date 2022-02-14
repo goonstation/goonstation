@@ -31,7 +31,7 @@
 	onExcavate(var/turf/simulated/wall/asteroid/AST)
 		if (..())
 			return
-		var/obj/item/I = unpool(gem_type)
+		var/obj/item/I = new gem_type
 		I.set_loc(AST)
 		I.quality = AST.quality + rand(-50,50)
 		I.name = "[getGemQualityName(I.quality)] [I.name]"
@@ -125,7 +125,7 @@
 			return
 		AST.overlays += warning_overlay
 		var/timer = rand(3,6) * 10
-		SPAWN_DBG(timer)
+		SPAWN(timer)
 			if (istype(AST)) //Wire note: Fix for Undefined variable /turf/simulated/floor/plating/airless/asteroid/var/invincible
 				AST.invincible = 0
 				explosion(AST, AST, 1, 2, 3, 4, 1)

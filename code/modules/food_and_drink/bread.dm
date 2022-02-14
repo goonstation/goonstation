@@ -26,7 +26,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/knife/butcher))
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
-				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs \himself in the eye with [W].</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W].</span>")
 				user.change_eye_blurry(5)
 				user.changeStatus("weakened", 3 SECONDS)
 				JOB_XP(user, "Clown", 2)
@@ -208,6 +208,7 @@
 		name = "piece of honey cornbread"
 		initial_volume = 20
 		initial_reagents = list("bread"=5,"cornsyrup"=5,"honey"=10)
+		meal_time_flags = MEAL_TIME_DINNER
 
 	New()
 		..()
@@ -224,6 +225,7 @@
 	food_color = "#CC9966"
 	real_name = "toast"
 	food_effects = list("food_warm", "food_hp_up")
+	meal_time_flags = MEAL_TIME_BREAKFAST
 
 	banana
 		name = "slice of banana toast"
@@ -241,6 +243,7 @@
 		heal_amt = 3
 		real_name = "brain toast"
 		food_effects = list("food_warm", "food_hp_up_big")
+		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	elvis
 		name = "slice of elvis toast"
@@ -252,6 +255,7 @@
 		initial_volume = 30
 		initial_reagents = list("bread"=5,"essenseofelvis"=25)
 		food_effects = list("food_warm", "food_energized")
+		meal_time_flags = MEAL_TIME_BREAKFAST | MEAL_TIME_SNACK
 
 	spooky
 		name = "slice of terror toast"
@@ -261,6 +265,7 @@
 		heal_amt = 2
 		real_name = "terror toast"
 		food_effects = list("food_warm", "food_all")
+		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	New()
 		..()
@@ -279,6 +284,7 @@
 	initial_volume = 10
 	initial_reagents = list("bread"=5,"cheese"=5)
 	food_effects = list("food_warm", "food_burn", "food_hp_up")
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_SNACK
 
 	elvis
 		name = "cheese on elvis toast"
@@ -307,6 +313,7 @@
 	initial_volume = 10
 	initial_reagents = list("bread"=5,"porktonium"=5)
 	food_effects = list("food_warm", "food_burn", "food_hp_up")
+	meal_time_flags = MEAL_TIME_BREAKFAST | MEAL_TIME_SNACK
 
 	elvis
 		name = "bacon on elvis toast"
@@ -334,6 +341,7 @@
 	real_name = "eggs on toast"
 	initial_volume = 30
 	food_effects = list("food_hp_up","food_deep_burp")
+	meal_time_flags = MEAL_TIME_BREAKFAST | MEAL_TIME_SNACK
 
 	elvis
 		name = "eggs on elvis toast"
@@ -342,6 +350,7 @@
 		amount = 3
 		heal_amt = 6
 		real_name ="eggs on elvis toast"
+		meal_time_flags = MEAL_TIME_SNACK
 
 		New()
 			..()
@@ -374,7 +383,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/knife/butcher))
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
-				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs \himself in the eye with [W].</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W].</span>")
 				user.change_eye_blurry(5)
 				user.changeStatus("weakened", 3 SECONDS)
 				JOB_XP(user, "Clown", 2)
@@ -408,6 +417,7 @@
 	initial_volume = 20
 	initial_reagents = list("water_holy"=20)
 	food_effects = list("food_tox","food_hp_up_big","food_bad_breath")
+	meal_time_flags = MEAL_TIME_DINNER
 
 /obj/item/reagent_containers/food/snacks/garlicbread_ch
 	name = "cheesy garlic bread"
@@ -420,6 +430,7 @@
 	initial_volume = 20
 	initial_reagents = list("water_holy"=10,"cheese"=10)
 	food_effects = list("food_tox","food_hp_up_big","food_bad_breath","food_energized")
+	meal_time_flags = MEAL_TIME_DINNER
 
 /obj/item/reagent_containers/food/snacks/fairybread
 	name = "fairy bread"
@@ -432,3 +443,4 @@
 	initial_volume = 10
 	initial_reagents = list("bread"=5,"sugar"=5)
 	food_effects = list("food_refreshed_big")
+	meal_time_flags = MEAL_TIME_SNACK

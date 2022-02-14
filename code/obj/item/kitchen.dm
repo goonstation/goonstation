@@ -131,7 +131,7 @@ TRAYS
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and stabs \himself.</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and stabs [himself_or_herself(user)].</span>")
 			random_brute_damage(user, 10)
 			JOB_XP(user, "Clown", 1)
 		if(!saw_surgery(M,user)) // it doesn't make sense, no. but hey, it's something.
@@ -158,6 +158,7 @@ TRAYS
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 7.0
 	throwforce = 10
+	w_class = W_CLASS_SMALL
 	desc = "A long bit of metal that is sharpened on one side, used for cutting foods. Also useful for butchering dead animals. And live ones."
 	dir = NORTH
 
@@ -167,7 +168,7 @@ TRAYS
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts [himself_or_herself(user)].</span>")
 			random_brute_damage(user, 20)
 			JOB_XP(user, "Clown", 1)
 		if(!scalpel_surgery(M,user))
@@ -195,7 +196,7 @@ TRAYS
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and jabs \himself.</span>")
+			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and jabs [himself_or_herself(user)].</span>")
 			random_brute_damage(user, 5)
 		if (prob(20))
 			src.break_utensil(user)
@@ -224,7 +225,7 @@ TRAYS
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and stabs \himself.</span>")
+			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and stabs [himself_or_herself(user)].</span>")
 			random_brute_damage(user, 5)
 		if (prob(20))
 			src.break_utensil(user)
@@ -253,7 +254,7 @@ TRAYS
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts [himself_or_herself(user)].</span>")
 			random_brute_damage(user, 5)
 			JOB_XP(user, "Clown", 1)
 		if(prob(20))
@@ -265,7 +266,7 @@ TRAYS
 	suicide(var/mob/user as mob)
 		user.visible_message("<span class='alert'><b>[user] tries to slash  \his own throat with [src]!</b></span>")
 		src.break_utensil(user)
-		SPAWN_DBG(10 SECONDS)
+		SPAWN(10 SECONDS)
 			if(user)
 				user.suiciding = 0
 		return 1
@@ -359,7 +360,8 @@ TRAYS
 	item_state = "cleaver"
 	desc = "An extremely sharp cleaver in a rectangular shape. Only for the professionals."
 	force = 12.0
-	throwforce = 3.0
+	throwforce = 12
+	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 
@@ -425,7 +427,9 @@ TRAYS
 	amount = 6
 	var/max_amount = 6
 	var/box_type = "donutbox"
+	var/has_closed_state = 1
 	var/contained_food = /obj/item/reagent_containers/food/snacks/donut/custom/random
+	var/allowed_food = /obj/item/reagent_containers/food/snacks/donut
 	var/contained_food_name = "donut"
 	tooltip_flags = REBUILD_DIST
 
@@ -441,6 +445,7 @@ TRAYS
 		max_amount = 12
 		box_type = "eggbox"
 		contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg
+		allowed_food = /obj/item/reagent_containers/food/snacks/ingredient/egg
 		contained_food_name = "egg"
 
 	lollipop
@@ -450,12 +455,15 @@ TRAYS
 		amount = 8
 		max_amount = 8
 		box_type = "lpop"
+		has_closed_state = 0
 		contained_food = /obj/item/reagent_containers/food/snacks/lollipop/random_medical
+		allowed_food = /obj/item/reagent_containers/food/snacks/lollipop
 		contained_food_name = "lollipop"
+		w_class = W_CLASS_SMALL
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(!ispath(src.contained_food))
 				logTheThing("debug", src, null, "has a non-path contained_food, \"[src.contained_food]\", and is being disposed of to prevent errors")
 				qdel(src)
@@ -467,10 +475,10 @@ TRAYS
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(src.amount >= src.max_amount)
-			boutput(user, "You can't fit anything else in this box!")
+			boutput(user, "You can't fit anything else in [src]!")
 			return
 		else
-			if(istype(W, src.contained_food))
+			if(istype(W, src.allowed_food))
 				user.drop_item()
 				W.set_loc(src)
 				src.amount ++
@@ -486,9 +494,13 @@ TRAYS
 				return ..()
 
 	attack_hand(mob/user as mob)
+		if((!istype(src.loc, /turf) && !user.is_in_hands(src)) || src.amount == 0)
+			..()
+			return
 		src.add_fingerprint(user)
-		var/obj/item/reagent_containers/food/snacks/myFood = locate(src.contained_food) in src
-		if(myFood)
+		var/list/obj/item/reagent_containers/food/snacks/myFoodList = src.contents
+		if(myFoodList.len >= 1)
+			var/obj/item/reagent_containers/food/snacks/myFood = myFoodList[myFoodList.len]
 			if(src.amount >= 1)
 				src.amount--
 				tooltip_rebuild = 1
@@ -502,6 +514,15 @@ TRAYS
 				user.put_in_hand_or_drop(newFood)
 				boutput(user, "You take [newFood] out of [src].")
 		src.update()
+
+	attack_self(mob/user as mob)
+		if(!src.has_closed_state) return
+		if(src.icon_state == "[src.box_type]")
+			src.icon_state = "[src.box_type][src.amount]"
+			boutput(user, "You open [src].")
+		else
+			src.icon_state = "[src.box_type]"
+			boutput(user, "You close [src].")
 
 	proc/update()
 		src.icon_state = "[src.box_type][src.amount]"
@@ -543,7 +564,8 @@ TRAYS
 		ordered_contents -= W
 		tooltip_rebuild = 1
 
-	proc/update_icon()
+	update_icon()
+
 		for (var/i = 1, i <= ordered_contents.len, i++)
 			var/obj/item/F = ordered_contents[i]
 			var/image/I = SafeGetOverlayImage("food_[i]", F.icon, F.icon_state)
@@ -569,7 +591,7 @@ TRAYS
 		while (ordered_contents.len > 0)
 			var/obj/item/F = ordered_contents[1]
 			src.remove_contents(F)
-			src.update_icon()
+			src.UpdateIcon()
 			F.set_loc(get_turf(src))
 			F.throw_at(pick(throw_targets), 5, 1)
 
@@ -588,7 +610,7 @@ TRAYS
 			src.set_loc(shardturf)
 
 		for (var/i in 1 to 2)
-			var/obj/O = unpool(/obj/item/raw_material/shard/glass)
+			var/obj/O = new /obj/item/raw_material/shard/glass
 			O.set_loc(shardturf)
 			if(src.material)
 				O.setMaterial(copyMaterial(src.material))
@@ -640,7 +662,7 @@ TRAYS
 				return
 			src.set_loc(user)
 			stack.platenum++
-			stack.update_icon(user)
+			stack.UpdateIcon(user)
 			user.visible_message("<b>[user]</b> adds a plate to the stack.","You add a plate to the stack.")
 			qdel(src)
 			return
@@ -654,7 +676,7 @@ TRAYS
 				if(sel_food in src.contents)
 					return
 				src.remove_contents(sel_food)
-				src.update_icon()
+				src.UpdateIcon()
 				return
 			boutput(user, "[W] isn't food, That doesn't belong on \the [src]!")
 			return
@@ -668,7 +690,7 @@ TRAYS
 		W.set_loc(src)
 		src.add_contents(W)
 		src.ClearAllOverlays()
-		src.update_icon()
+		src.UpdateIcon()
 		boutput(user, "You put [W] on \the [src]")
 
 	MouseDrop(atom/over_object, src_location, over_location)
@@ -683,7 +705,7 @@ TRAYS
 
 			M.put_in_hand_or_drop(food_sel)
 			src.remove_contents(food_sel)
-			src.update_icon()
+			src.UpdateIcon()
 			boutput(M, "You take \the [food_sel] off of \the [src].")
 		else
 			..()
@@ -697,7 +719,7 @@ TRAYS
 			return
 		user.put_in_hand_or_drop(food_sel)
 		src.remove_contents(food_sel)
-		src.update_icon()
+		src.UpdateIcon()
 		boutput(user, "You take \the [food_sel] off of \the [src].")
 
 	attack(mob/M as mob, mob/user as mob)
@@ -741,7 +763,7 @@ TRAYS
 	attack_hand(mob/user as mob)
 		..()
 		src.ClearAllOverlays()
-		src.update_icon()
+		src.UpdateIcon()
 
 	dropped(mob/user as mob) //shit_goes_everwhere doesnt work
 		..()
@@ -826,6 +848,7 @@ TRAYS
 				src.item_state = "tray_6"
 
 	update_icon() //this is what builds the overlays, it looks at the ordered list of food in the tray and does magic
+
 		for (var/i = 1, i <= ordered_contents.len, i++)
 			var/obj/item/F = ordered_contents[i]
 			var/image/I = SafeGetOverlayImage("food_[i]", F.icon, F.icon_state)
@@ -1061,7 +1084,7 @@ TRAYS
 /obj/item/fish/random // used by the Wholetuna Cordata plant
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/fish = pick(/obj/item/fish/salmon,/obj/item/fish/carp,/obj/item/fish/bass)
 			new fish(get_turf(src))
 			qdel(src)
@@ -1080,7 +1103,7 @@ TRAYS
 	var/platemax = 8
 
 
-	proc/update_icon(mob/user as mob)
+	update_icon(mob/user as mob)
 		src.icon_state = "platestack[src.platenum]"
 		src.item_state = "platestack[src.platenum]"
 		user.update_inhands()
@@ -1091,7 +1114,7 @@ TRAYS
 			if(!p.ordered_contents.len)
 				if(!(platenum >= platemax))
 					src.platenum++
-					src.update_icon(user)
+					src.UpdateIcon(user)
 					user.u_equip(p)
 					qdel(p)
 				else
@@ -1105,15 +1128,15 @@ TRAYS
 			if(((src.platenum + (p.platenum+1)) > platemax) && (src.platenum != platemax))
 				keeptrigger = 1
 				p.platenum = (p.platenum - (platemax - src.platenum))
-				p.update_icon(user)
+				p.UpdateIcon(user)
 				src.platenum = platemax
-				src.update_icon(user)
+				src.UpdateIcon(user)
 			else if(src.platenum == platemax)
 				boutput(user,"<span class='alert'><b>The plates are piled too high!</b></span>")
 				return
 			else
 				src.platenum += (p.platenum+1)
-				src.update_icon(user)
+				src.UpdateIcon(user)
 			if(keeptrigger != 1)
 				user.u_equip(p)
 				qdel(p)
@@ -1121,7 +1144,7 @@ TRAYS
 	attack_hand(mob/user as mob)
 		if(src in user.contents)
 			platenum--
-			src.update_icon(user)
+			src.UpdateIcon(user)
 			user.put_in_hand_or_drop(new /obj/item/plate)
 			if(platenum <= 0)
 				user.u_equip(src)
@@ -1150,7 +1173,7 @@ TRAYS
 	attack_self(mob/user as mob)
 		if(src.platenum > 1)
 			src.platenum--
-			src.update_icon(user)
+			src.UpdateIcon(user)
 			user.put_in_hand_or_drop(new /obj/item/plate)
 		else if(src.platenum <= 1)
 			user.u_equip(src)
@@ -1163,7 +1186,7 @@ TRAYS
 			if(src.platenum >= platemax)
 				boutput(user,"<span class='alert'><b>The plates are piled too high!</b></span>")
 				return
-			SPAWN_DBG(0.2 SECONDS)
+			SPAWN(0.2 SECONDS)
 				var/message = 1
 				for (var/obj/item/plate/p in range(1, user))
 					if(p == src)
@@ -1178,7 +1201,7 @@ TRAYS
 						message = 0
 					qdel(p)
 					src.platenum++
-					src.update_icon(user)
+					src.UpdateIcon(user)
 					if(src.platenum == platemax)
 						break
 					else
@@ -1191,7 +1214,7 @@ TRAYS
 		if(src.platenum >= platemax)
 			boutput(user,"<span class='alert'><b>The plates are piled too high!</b></span>")
 			return
-		SPAWN_DBG(0.2 SECONDS)
+		SPAWN(0.2 SECONDS)
 			var/message = 1
 			var/first = 1
 			for (var/obj/item/plate/p in range(1, user))
@@ -1214,7 +1237,7 @@ TRAYS
 					first = 0
 					continue
 				src.platenum++
-				src.update_icon()
+				src.UpdateIcon()
 				if(src.platenum == platemax)
 					break
 				else

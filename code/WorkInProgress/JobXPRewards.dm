@@ -12,7 +12,7 @@ mob/verb/checkrewards()
 	return
 
 /proc/showJobRewards(var/job) //Pass in job instead
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/mob/M = usr
 		if(job)
 			if(!winexists(M, "winjobrewards_[M.ckey]"))
@@ -314,7 +314,7 @@ mob/verb/checkrewards()
 			src.claimedNumbers[usr.key] --
 			return
 		//Don't let em get get a charged power cell for a spent one. Spend the difference
-		SEND_SIGNAL(LG, COMSIG_CELL_USE, max_charge - charge, TRUE)
+		SEND_SIGNAL(LG, COMSIG_CELL_USE, max_charge - charge)
 
 		LG.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(LG)
@@ -545,7 +545,7 @@ mob/verb/checkrewards()
 		boutput(C, "You get a \"banana\"!")
 		var/obj/item/banana = null
 		if (prob(1))
-			banana = new/obj/item/old_grenade/banana()
+			banana = new/obj/item/old_grenade/spawner/banana()
 		else
 			banana = new/obj/item/reagent_containers/food/snacks/plant/banana()
 		banana.set_loc(get_turf(C.mob))

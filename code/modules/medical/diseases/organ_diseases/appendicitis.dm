@@ -3,7 +3,7 @@
 	scantype = "Medical Emergency"
 	max_stages = 3
 	spread = "The patient's appendicitis is dangerously enlarged"
-	cure = "surgery"
+	cure = "Removal of organ"
 	reagentcure = list("organ_drug3")
 	recureprob = 10
 	affected_species = list("Human")
@@ -92,7 +92,7 @@ proc/add_pathogens(var/mob/living/A, var/amount)
 
 	A.reagents.add_reagent("pathogen", amount)
 	var/datum/reagent/blood/pathogen/R = A.reagents.get_reagent("pathogen")
-	var/datum/pathogen/P = unpool(/datum/pathogen)
+	var/datum/pathogen/P = new /datum/pathogen
 	P.setup(1)
 	R.pathogens += P.pathogen_uid
 	R.pathogens[P.pathogen_uid] = P

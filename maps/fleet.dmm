@@ -1249,7 +1249,7 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "cU" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -2837,7 +2837,7 @@
 	name = "Tenebrae Maintenance"
 	})
 "gc" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "tene";
 	name = "Tenebrae solar panel control"
@@ -4585,7 +4585,7 @@
 "jT" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/stma_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/ammo/bullets/smoke,
 /obj/item/gun/kinetic/riot40mm,
 /turf/simulated/floor/redblack{
@@ -5715,9 +5715,9 @@
 	})
 "lX" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/flashbang_kit,
-/obj/item/storage/box/flashbang_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
+/obj/item/chem_grenade/flashbang,
+/obj/item/chem_grenade/flashbang,
 /obj/item/reagent_containers/emergency_injector/atropine,
 /obj/item/reagent_containers/emergency_injector/atropine,
 /obj/item/reagent_containers/emergency_injector/atropine,
@@ -5875,7 +5875,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/hangar/sec)
 "mr" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "ms" = (
@@ -6508,7 +6508,7 @@
 	},
 /area/station/hangar/sec)
 "nA" = (
-/obj/machinery/vehicle/miniputt/nanoputt,
+/obj/machinery/vehicle/miniputt/nanoputt/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "nB" = (
@@ -7776,7 +7776,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/hammer)
 "pZ" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "ham";
 	name = "Hammer solar panel control"
@@ -8960,7 +8960,7 @@
 	name = "Asclepius Command"
 	})
 "sr" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /turf/simulated/floor/sanitary/white,
@@ -9551,7 +9551,7 @@
 	name = "Asclepius Command"
 	})
 "tu" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -12081,7 +12081,7 @@
 	name = "Asclepius Equipment Room"
 	})
 "ya" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "asc";
 	name = "Asclepius solar panel control"
@@ -12848,7 +12848,7 @@
 	name = "Dionysus Maintenance"
 	})
 "zt" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "dio";
 	name = "Dionysus solar panel control"
@@ -13626,7 +13626,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "AT" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /obj/machinery/crema_switch{
@@ -16088,7 +16088,7 @@
 	name = "autoname - SS13";
 	pixel_y = 20
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "maru";
 	name = "Maru solar panel control"
 	},
@@ -16128,7 +16128,7 @@
 /obj/airbridge_controller{
 	id = "escape";
 	primary_controller = 1;
-	tunnel_width = 2
+	tunnel_width = 3
 	},
 /turf/space,
 /area/space)
@@ -16323,7 +16323,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "meri";
 	name = "Meridian solar panel control"
@@ -16994,13 +16994,10 @@
 /area/station/maintenance/south{
 	name = "Demeter Operations Room"
 	})
-"Hs" = (
-/turf/space,
-/area/shuttle/escape/station/cogmap2)
 "Ht" = (
 /obj/airbridge_controller{
 	id = "escape";
-	tunnel_width = 2
+	tunnel_width = 3
 	},
 /turf/space,
 /area/space)
@@ -17058,7 +17055,7 @@
 	name = "Demeter Operations Room"
 	})
 "Hy" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "deme";
 	name = "Demeter solar panel control"
@@ -17830,7 +17827,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "IV" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -22624,6 +22621,9 @@
 /area/station/science/construction{
 	name = "Tenebrae Maintenance"
 	})
+"Rn" = (
+/turf/space,
+/area/shuttle/escape/station)
 "Ro" = (
 /obj/machinery/dispenser,
 /turf/simulated/floor/darkpurple,
@@ -24176,7 +24176,7 @@
 	name = "Erebus Maintenance Room"
 	})
 "Wg" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "erebus";
 	name = "Erebus solar panel control"
@@ -24425,7 +24425,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "WV" = (
-/obj/submachine/chicken_feed_grinder,
+/obj/submachine/ranch_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary{
@@ -66188,16 +66188,16 @@ Aw
 aa
 aa
 aa
+Rn
+Rn
+Rn
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -66488,20 +66488,20 @@ GA
 Hb
 Aw
 aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -66790,20 +66790,20 @@ Gi
 Hb
 Aw
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -67092,20 +67092,20 @@ Gi
 Hb
 Aw
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -67393,21 +67393,21 @@ UF
 GA
 PV
 Aw
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -67695,21 +67695,21 @@ GA
 GA
 Xa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -67997,21 +67997,21 @@ aa
 aa
 Xa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -68300,20 +68300,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -68602,20 +68602,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -68904,20 +68904,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -69206,20 +69206,20 @@ aa
 Xa
 aa
 Ht
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -69508,20 +69508,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -69810,20 +69810,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -70112,20 +70112,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -70414,20 +70414,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -70716,19 +70716,19 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -71018,17 +71018,17 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
 aa
+aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -71321,16 +71321,16 @@ Xa
 aa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
 aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -71623,16 +71623,16 @@ Xa
 aa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
 aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -71926,14 +71926,14 @@ aa
 aa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
 aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -72228,11 +72228,11 @@ aa
 aa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -72531,9 +72531,9 @@ aa
 aa
 aa
 aa
-Hs
-Hs
-Hs
+aa
+aa
+aa
 aa
 aa
 aa

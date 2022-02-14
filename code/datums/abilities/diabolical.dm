@@ -36,7 +36,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -230,7 +230,7 @@
 			return
 
 		holder.owner.say("See you in hell.")
-		H.mind.damned = 1
+		H.mind?.damned = 1
 		animate_blink(H)
 		sleep(0.5 SECONDS)
 		H.implode()
@@ -333,7 +333,7 @@
 			REMOVE_MOB_PROPERTY(usr, PROP_NEVER_DENSE, "floorswitching")
 			usr.set_density(initial(usr.density))
 			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				if(usr)
 					usr.plane = PLANE_DEFAULT
 					usr.layer = 4
@@ -344,7 +344,7 @@
 		else
 			APPLY_MOB_PROPERTY(usr, PROP_CANTMOVE, "floorswitching")
 			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				if(usr)
 					REMOVE_MOB_PROPERTY(usr, PROP_CANTMOVE, "floorswitching")
 					APPLY_MOB_PROPERTY(usr, PROP_NO_MOVEMENT_PUFFS, "floorswitching")
@@ -449,22 +449,22 @@
 
 			if(!isnull(t) || !length(t))
 				src.symbol_setting = t
-		
+
 		t = src.symbol_setting
 
 		if(isnull(t) || !length(t))
 			return
-		
+
 		if(length(t) == 1)
 			src.symbol_setting = null
 			t = t[1]
 		else
 			src.symbol_setting = t.Copy(2) // remove first
 			t = t[1]
-		
+
 		if(t in src.c_char_to_symbol)
 			t = src.c_char_to_symbol[t]
-		
+
 		var/obj/decal/cleanable/writing/spooky/G = make_cleanable(/obj/decal/cleanable/writing/spooky,T)
 		G.artist = user.key
 

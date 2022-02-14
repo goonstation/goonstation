@@ -17,7 +17,7 @@
 	blinded = 0
 	anchored = 1
 	alpha = 180
-	event_handler_flags = USE_CANPASS | IMMUNE_MANTA_PUSH
+	event_handler_flags =  IMMUNE_MANTA_PUSH
 	plane = PLANE_NOSHADOW_ABOVE
 
 	var/deaths = 0
@@ -72,11 +72,12 @@
 	New(var/mob/M)
 		. = ..()
 		src.poltergeists = list()
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_SPOOKY)
+		APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
 		//src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.sight |= SEE_SELF // let's not make it see through walls
-		src.see_invisible = 16
-		src.a_intent = "disarm"
+		src.see_invisible = INVIS_SPOOKY
+		src.set_a_intent("disarm")
 		src.see_in_dark = SEE_DARK_FULL
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
 		src.abilityHolder.points = 50
@@ -84,12 +85,13 @@
 		last_life_update = world.timeofday
 		src.hud = new hud_path (src)
 		src.attach_hud(hud)
+		src.flags |= UNCRUSHABLE
 
 		if (!movement_controller)
 			movement_controller = new /datum/movement_controller/poltergeist (src)
 
-		name = make_name()
-		real_name = name
+		real_name = make_name()
+		src.UpdateName()
 
 	is_spacefaring()
 		return !density
@@ -143,6 +145,7 @@
 			src.abilityHolder.addBonus(src.hauntBonus * (life_time_passed / life_tick_spacing))
 
 		src.abilityHolder.generatePoints(mult = (life_time_passed / life_tick_spacing))
+		src.abilityHolder.updateText()
 
 		if (src.health < 1)
 			src.death(0)
@@ -167,6 +170,7 @@
 		src.abilityHolder.regenRate = 1
 		src.health = initial(src.health) // oh sweet jesus it spammed so hard
 		src.haunting = 0
+		src.flags |= UNCRUSHABLE
 		src.hauntBonus = 0
 		deaths++
 		src.makeIncorporeal()
@@ -179,12 +183,15 @@
 
 		if (deaths < 2)
 			boutput(src, "<span class='alert'><b>You have been defeated...for now. The strain of banishment has weakened you, and you will not survive another.</b></span>")
+			logTheThing("combat", src, null, "lost a life as a wraith at [log_loc(src.loc)].")
 			src.justdied = 1
 			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
-			SPAWN_DBG(15 SECONDS) //15 seconds
+			SPAWN(15 SECONDS) //15 seconds
 				src.justdied = 0
 		else
 			boutput(src, "<span class='alert'><b>Your connection with the mortal realm is severed. You have been permanently banished.</b></span>")
+			message_admins("Wraith [key_name(src)] died with no more respawns at [log_loc(src.loc)].")
+			logTheThing("combat", src, null, "died as a wraith with no more respawns at [log_loc(src.loc)].")
 			if (src.mind)
 				for (var/datum/objective/specialist/wraith/WO in src.mind.objectives)
 					WO.onBanished()
@@ -228,7 +235,7 @@
 			for (var/datum/objective/specialist/wraith/WO in src.mind.objectives)
 				WO.onAbsorb(M)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
 			var/obj/projectile/proj = mover
 			if (proj.proj_data.hits_wraiths)
@@ -305,7 +312,7 @@
 			var/mydir = get_dir(src, NewLoc)
 			var/salted = 0
 			if (mydir == NORTH || mydir == EAST || mydir == WEST || mydir == SOUTH)
-				if (src.density && !NewLoc.Enter(src))
+				if (src.density && !NewLoc.canpass())
 					return
 
 			else
@@ -326,20 +333,20 @@
 				var/horiz = 0
 				var/vert = 0
 
-				if (!src.density || vertical.Enter(src))
+				if (!src.density || vertical.canpass())
 					vert = 1
 					src.set_loc(vertical)
-					if (!src.density || NewLoc.Enter(src))
+					if (!src.density || NewLoc.canpass())
 						blocked = 0
 						for(var/obj/decal/cleanable/saltpile/A in vertical)
 							if (istype(A)) salted = 1
 							if (salted) break
 					src.set_loc(oldloc)
 
-				if (!src.density || horizontal.Enter(src))
+				if (!src.density || horizontal.canpass())
 					horiz = 1
 					src.set_loc(horizontal)
-					if (!src.density || NewLoc.Enter(src))
+					if (!src.density || NewLoc.canpass())
 						blocked = 0
 						for(var/obj/decal/cleanable/saltpile/A in horizontal)
 							if (istype(A)) salted = 1
@@ -362,13 +369,12 @@
 			src.set_dir(get_dir(loc, NewLoc))
 			src.set_loc(NewLoc)
 			OnMove()
-			NewLoc.HasEntered(src)
 
 			//if tile contains salt, wraith becomes corporeal
 			if (salted && !src.density && !src.justdied)
 				src.makeCorporeal()
 				boutput(src, "<span class='alert'>You have passed over salt! You now interact with the mortal realm...</span>")
-				SPAWN_DBG(1 MINUTE) //one minute
+				SPAWN(1 MINUTE) //one minute
 					src.makeIncorporeal()
 
 		//if ((marker && get_dist(src, marker) > 15) && (master && get_dist(P,src) > 12 ))
@@ -517,16 +523,16 @@
 				src.set_density(1)
 				REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
 				src.alpha = 255
-				src.see_invisible = 0
+				src.see_invisible = INVIS_NONE
 				src.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
 
 		makeIncorporeal()
 			if (src.density)
 				src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The wraith dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
 				src.set_density(0)
-				APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+				APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_SPOOKY)
 				src.alpha = 160
-				src.see_invisible = 16
+				src.see_invisible = INVIS_SPOOKY
 
 		haunt()
 			if (src.density)
@@ -535,10 +541,12 @@
 
 			src.makeCorporeal()
 			src.haunting = 1
+			src.flags &= !UNCRUSHABLE
 
-			SPAWN_DBG (haunt_duration)
+			SPAWN(haunt_duration)
 				src.makeIncorporeal()
 				src.haunting = 0
+				src.flags |= UNCRUSHABLE
 
 			return 0
 
@@ -572,17 +580,6 @@
 			src.removeAbility(/datum/targetable/wraithAbility/whisper)
 			src.removeAbility(/datum/targetable/wraithAbility/blood_writing)
 			src.removeAbility(/datum/targetable/wraithAbility/make_poltergeist)
-
-		addAbility(var/abilityType)
-			abilityHolder.addAbility(abilityType)
-
-
-		removeAbility(var/abilityType)
-			abilityHolder.removeAbility(abilityType)
-
-
-		getAbility(var/abilityType)
-			return abilityHolder.getAbility(abilityType)
 
 
 		updateButtons()

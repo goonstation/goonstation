@@ -7,14 +7,12 @@
 	locked = 1
 	var/tier = 1
 	var/image/light = null
-	var/image/stripes = null
 	var/datum/loot_crate_lock/lock = null
 	var/datum/loot_crate_trap/trap = null
 
 	New()
 		..()
 		src.light = image('icons/obj/large_storage.dmi',"lootcratelocklight")
-		src.stripes = image('icons/obj/large_storage.dmi',"lootcratestripes")
 
 		tier = RarityClassRoll(100,0,list(95,70))
 		var/kind = rand(1,5)
@@ -40,7 +38,7 @@
 							items += /obj/item/clothing/gloves/psylink_bracelet
 							item_amounts += 1
 						if(2)
-							items += /obj/item/artifact/teleport_wand
+							items += pick(/obj/item/artifact/teleport_wand, /obj/item/artifact/activator_key, /obj/item/gun/energy/artifact, /obj/item/artifact/melee_weapon, /obj/item/artifact/forcewall_wand) // All of these are pretty useful and it heavily reduces chances of telewand.
 							item_amounts += 1
 						else
 							items += /obj/item/device/voltron
@@ -171,9 +169,9 @@
 							items += /obj/item/device/voltron
 							item_amounts += 1
 						if(2)
-							items += /obj/item/ammo/power_cell/self_charging/disruptor
+							items += /obj/item/ammo/power_cell/self_charging/pod_wars_standard
 							item_amounts += 1
-							items += /obj/item/ammo/power_cell/self_charging
+							items += /obj/item/ammo/power_cell/higherish_power // 400 pu charge, designed to be able to be a trade off of higher capacity at the cost of no self recharging, or vice versa.
 							item_amounts += 1
 						else
 							items += /obj/item/clothing/gloves/ring/titanium
@@ -182,7 +180,7 @@
 					picker = rand(1,10)
 					switch(picker)
 						if(1)
-							items += pick(/obj/item/gun/energy/teleport,/obj/item/gun/energy/laser_gun/pred)
+							items += pick(/obj/item/gun/energy/plasma_gun)
 							item_amounts += 1
 						if(2 to 6)
 							items += /obj/item/gun/energy/phaser_gun
@@ -226,8 +224,8 @@
 							items += /obj/item/gun/bling_blaster
 							item_amounts += 1
 						else
-							items += /obj/item/spacecash/million
-							item_amounts += 1
+							items += /obj/item/spacecash/hundredthousand
+							item_amounts += 3
 				else if (tier == 2)
 					picker = rand(1,4)
 					switch(picker)
@@ -322,19 +320,15 @@
 		var/newtrap = null
 		switch(tier)
 			if(2)
-				newlock = pick(/datum/loot_crate_lock/decacode,/datum/loot_crate_lock/hangman/seven)
-				newtrap = pick(/datum/loot_crate_trap/crusher,/datum/loot_crate_trap/spikes,/datum/loot_crate_trap/zap)
-				name = "fortified " + name
-				desc += " It's pretty heavily secured, too."
+				newlock = pick(/datum/loot_crate_lock/decacode,/datum/loot_crate_lock/hangman/seven, /datum/loot_crate_lock/hangman/nine)
+				newtrap = pick(/datum/loot_crate_trap/crusher,/datum/loot_crate_trap/spikes,/datum/loot_crate_trap/zap, /datum/loot_crate_trap/bomb)
 			if(3)
-				newlock = pick(/datum/loot_crate_lock/hangman/nine)
-				newtrap = pick(/datum/loot_crate_trap/bomb,/datum/loot_crate_trap/zap)
-				name = "heavily reinforced " + name
-				desc += " It's also got more security measures on it than Fort Knox."
+				newlock = pick(/datum/loot_crate_lock/hangman/nine, /datum/loot_crate_lock/hangman/seven)
+				newtrap = pick(/datum/loot_crate_trap/bomb,/datum/loot_crate_trap/zap, /datum/loot_crate_trap/crusher)
 			else
 				trap_prob = 33
 				newlock = pick(/datum/loot_crate_lock/decacode,/datum/loot_crate_lock/hangman)
-				newtrap = pick(/datum/loot_crate_trap/crusher,/datum/loot_crate_trap/spikes)
+				newtrap = /datum/loot_crate_trap/spikes
 
 		if (ispath(newlock))
 			var/datum/loot_crate_lock/L = new newlock
@@ -354,8 +348,8 @@
 				new X(src)
 			list_counter++
 
-		SPAWN_DBG(0)
-			update_icon()
+		SPAWN(0)
+			UpdateIcon()
 
 		return
 
@@ -378,7 +372,7 @@
 				src.locked = 0
 				src.lock = null
 				src.trap = null
-				src.update_icon()
+				src.UpdateIcon()
 			else if (success_state == 0) // Failed
 				lock.fail_attempt(user)
 			// Call -1 or something for cancelled attempts
@@ -402,6 +396,7 @@
 		return
 
 	update_icon()
+
 		if(open) icon_state = icon_opened
 		else icon_state = icon_closed
 
@@ -410,15 +405,6 @@
 		else
 			light.color = "#00FF00"
 		src.UpdateOverlays(src.light, "light")
-
-		switch(tier)
-			if(2)
-				stripes.color = "#EBEB00"
-			if(3)
-				stripes.color = "#C00000"
-			else
-				stripes.color = "#00C000"
-		src.UpdateOverlays(src.stripes, "stripes")
 
 // LOCKS
 
@@ -646,7 +632,7 @@
 		holder.locked = 0
 		holder.lock = null
 		holder.trap = null
-		holder.update_icon()
+		holder.UpdateIcon()
 		return
 
 // Items specific to loot crates

@@ -9,10 +9,10 @@
 	anchored = 1
 	density = 0
 	flags = NOSPLASH
-	event_handler_flags = USE_HASENTERED
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/open = 0 //is it open
+	var/opening = FALSE // is the flusher opening/closing? Used for door_timer.dm
 	var/id = null //ID used for brig stuff
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = 1	// item mode 0=off 1=charging 2=charged
@@ -69,7 +69,8 @@
 	// find the attached trunk (if present) and init gas resvr.
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		START_TRACKING
+		SPAWN(0.5 SECONDS)
 			trunk = locate() in src.loc
 			if(!trunk)
 				mode = 0
@@ -77,15 +78,16 @@
 			else
 				trunk.linked = src	// link the pipe trunk to self
 
-			air_contents = unpool(/datum/gas_mixture)
+			air_contents = new /datum/gas_mixture
 			//gas.volume = 1.05 * CELLSTANDARD
 			update()
 
 	disposing()
 		if(air_contents)
-			pool(air_contents)
+			qdel(air_contents)
 			air_contents = null
 		..()
+		STOP_TRACKING
 
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
@@ -117,7 +119,8 @@
 
 	// mouse drop another mob or self
 
-	HasEntered(atom/AM)
+	Crossed(atom/movable/AM)
+		..()
 		//you can fall in if its open
 		if (open == 1)
 			if (isobj(AM))
@@ -125,6 +128,7 @@
 				var/obj/O = AM
 				src.visible_message("[O] falls into [src].")
 				O.set_loc(src)
+				flush = 1
 				update()
 
 			if (isliving(AM))
@@ -141,7 +145,7 @@
 				update()
 
 			if(current_state <= GAME_STATE_PREGAME)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					flush()
 					sleep(1 SECOND)
 					openup()
@@ -198,11 +202,6 @@
 			src.remove_dialog(user)
 			return
 
-		//fall in hilariously
-		boutput(user, "You slip and fall in.")
-		user.set_loc(src)
-		update()
-
 
 	// eject the contents of the unit
 	proc/eject()
@@ -236,7 +235,7 @@
 			return
 
 		if(open && flush)	// flush can happen even without power, must be open first
-			SPAWN_DBG(0)
+			SPAWN(0)
 				flush()
 
 		if(status & NOPOWER)			// won't charge if no power
@@ -254,7 +253,7 @@
 		flushing = 1
 
 		closeup()
-		var/obj/disposalholder/H = unpool(/obj/disposalholder)	// virtual holder object which actually
+		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
 
 		H.init(src)	// copy the contents of disposer to holder
@@ -288,15 +287,21 @@
 	//open up, called on trigger
 	proc/openup()
 		open = 1
+		opening = TRUE
 		flick("floorflush_a", src)
 		src.icon_state = "floorflush_o"
 		for(var/atom/movable/AM in src.loc)
-			src.HasEntered(AM) // try to flush them
+			src.Crossed(AM) // try to flush them
+		SPAWN(0.7 SECONDS)
+			opening = FALSE
 
 	proc/closeup()
 		open = 0
+		opening = TRUE
 		flick("floorflush_a2", src)
 		src.icon_state = "floorflush_c"
+		SPAWN(0.7 SECONDS)
+			opening = FALSE
 
 	// called when holder is expelled from a disposal
 	// should usually only occur if the pipe network is modified
@@ -312,27 +317,23 @@
 			AM?.throw_at(target, 5, 1)
 
 		H.vent_gas(loc)
-		pool(H)
+		qdel(H)
 
 
 /obj/machinery/floorflusher/industrial
 	name = "industrial loading chute"
 	desc = "Totally just a giant disposal chute"
 	icon = 'icons/obj/delivery.dmi'
-	event_handler_flags = USE_HASENTERED
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			openup()
-
-	Crossed(atom/movable/AM)
-		if (AM && AM.loc == src.loc)
-			HasEntered(AM)
 
 		return 1
 
-	HasEntered(atom/movable/AM)
+	Crossed(atom/movable/AM)
+		..()
 		if (open == 1)
 			if (isobj(AM))
 				if (AM.anchored) return
@@ -360,7 +361,7 @@
 				update()
 
 			if(current_state <= GAME_STATE_PREGAME)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					flush()
 					sleep(1 SECOND)
 					openup()
@@ -370,7 +371,7 @@
 			return
 
 		if(open && flush)	// flush can happen even without power, must be open first
-			SPAWN_DBG(0) flush()
+			SPAWN(0) flush()
 
 		if(status & NOPOWER)			// won't charge if no power
 			return

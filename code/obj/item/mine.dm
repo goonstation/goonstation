@@ -7,29 +7,31 @@
 	layer = OBJ_LAYER
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "mine"
-	is_syndicate = 1
+	is_syndicate = TRUE
 	mats = 6
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
-	var/suppress_flavourtext = 0
-	var/armed = 0
-	var/used_up = 0
+	event_handler_flags = USE_FLUID_ENTER
+	var/suppress_flavourtext = FALSE
+	var/armed = FALSE
+	var/used_up = FALSE
 	var/obj/item/device/timer/our_timer = null
 
 	New()
 		..()
 		if (src.armed)
-			src.update_icon()
+			src.UpdateIcon()
 
 		if (!src.our_timer || !istype(src.our_timer))
 			src.our_timer = new /obj/item/device/timer(src)
 			src.our_timer.master = src
 
-		return
+	disposing()
+		our_timer = null
+		..()
 
 	examine()
 		. = ..()
 		if (!src.suppress_flavourtext)
-			. += "It appears to be [src.armed == 1 ? "armed" : "disarmed"]."
+			. += "It appears to be [src.armed ? "armed" : "disarmed"]."
 
 	attack_hand(mob/user as mob)
 		src.add_fingerprint(user)
@@ -41,7 +43,6 @@
 			return
 
 		..()
-		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (prob(50) && src.armed && !src.used_up)
@@ -51,7 +52,6 @@
 			return
 
 		..()
-		return
 
 	pull(mob/user as mob)
 		if (src.armed && !src.used_up)
@@ -61,41 +61,38 @@
 			return
 
 		..()
-		return
 
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
 
-		if (src.used_up != 0)
+		if (src.used_up)
 			user.show_text("The [src.name] has already been triggered and is no longer functional.", "red")
 			return
 
 		if (src.armed)
-			src.armed = 0
-			src.update_icon()
+			src.armed = FALSE
+			src.UpdateIcon()
 			user.show_text("You disarm the [src.name].", "blue")
 			logTheThing("bombing", user, null, "has disarmed the [src.name] at [log_loc(user)].")
 
 		if (src.our_timer && istype(src.our_timer))
 			src.our_timer.attack_self(user)
 
-		return
 
 	receive_signal()
-		if (src.used_up != 0)
+		if (src.used_up)
 			return
 
 		playsound(src.loc, "sound/weapons/armbomb.ogg", 100, 1)
-		src.armed = 1
-		src.update_icon()
-		return
+		src.armed = TRUE
+		src.UpdateIcon()
 
 	// Timer process() expects this to be here. Could be used for dynamic icon_states updates.
 	proc/c_state()
 		return
 
 	ex_act(severity)
-		if (src.used_up != 0 || !src.armed)
+		if (src.used_up || !src.armed)
 			return
 		if (!src.suppress_flavourtext)
 			src.visible_message("<font color='red'><b>The explosion sets off the [src.name]!</b></span>")
@@ -103,7 +100,7 @@
 		return
 
 	emp_act()
-		if (src.used_up != 0 || !src.armed)
+		if (src.used_up || !src.armed)
 			return
 		if (!src.suppress_flavourtext)
 			src.visible_message("<font color='red'><b>The electromagnetic pulse sets off the [src.name]!</b></span>")
@@ -111,19 +108,20 @@
 		return
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		if (src.used_up != 0 || !src.armed)
-			return 0
+		if (src.used_up || !src.armed)
+			return FALSE
 		if (!src.suppress_flavourtext)
 			src.visible_message("<font color='red'><b>The electric charge sets off the [src.name]!</b></span>")
 		src.triggered(user)
-		return 1
+		return TRUE
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (AM == src || !(istype(AM, /obj/vehicle) || istype(AM, /obj/machinery/bot) || ismob(AM)))
 			return
 		if (ismob(AM) && (!isliving(AM) || isintangible(AM) || iswraith(AM)))
 			return
-		if (src.used_up != 0)
+		if (src.used_up)
 			return
 		if (!src.armed)
 			return
@@ -133,7 +131,8 @@
 		src.triggered(AM)
 		return
 
-	proc/update_icon()
+	update_icon()
+
 		if (!src || !istype(src))
 			return
 
@@ -152,10 +151,10 @@
 		if (!src || !istype(src))
 			return
 
-		if (src.used_up != 0)
+		if (src.used_up)
 			qdel(src)
 			return
-		src.used_up = 1
+		src.used_up = TRUE
 
 		elecflash(src)
 
@@ -163,7 +162,6 @@
 		src.log_me(M)
 
 		qdel(src)
-		return
 
 	// For bioeffects or stuns, basically everything that should affect all mobs located on src.loc when triggered.
 	proc/get_mobs_on_turf(var/radius = 0)
@@ -186,7 +184,6 @@
 			return
 		var/logtarget = (T && ismob(T) ? T : null)
 		logTheThing("bombing", M && ismob(M) ? M : null, logtarget, "The [src.name] was triggered at [log_loc(src)][T && ismob(T) ? ", affecting [constructTarget(logtarget,"bombing")]." : "."] Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
-		return
 
 /obj/item/mine/radiation
 	name = "radiation land mine"
@@ -194,17 +191,17 @@
 	icon_state = "mine_radiation"
 
 	armed
-		armed = 1
+		armed = TRUE
 
 	custom_stuff(var/atom/M)
 		if (!src || !istype(src))
 			return
 
 		var/list/mobs = src.get_mobs_on_turf()
-		if (mobs.len)
+		if (length(mobs))
 			for (var/mob/living/L in mobs)
 				if (istype(L))
-					L.changeStatus("radiation", 80 SECONDS)
+					L.changeStatus("radiation", 60 SECONDS)
 					if (L.bioHolder && ishuman(L))
 						L.bioHolder.RandomEffect("bad")
 					if (L != M)
@@ -219,7 +216,7 @@
 	icon_state = "mine_incendiary"
 
 	armed
-		armed = 1
+		armed = TRUE
 
 	custom_stuff(var/atom/M)
 		if (!src || !istype(src))
@@ -227,59 +224,64 @@
 
 		fireflash_sm(get_turf(src), 3, 3000, 500)
 		playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
-		return
 
 /obj/item/mine/stun
 	name = "stun land mine"
 	desc = "An anti-personnel mine designed to stun its victim nonlethally."
 	icon_state = "mine_stun"
+	var/effect_mult = 1.5
 
 	armed
-		armed = 1
+		armed = TRUE
+
+	nanotrasen
+		name = "NT stun land mine"
+		desc = "A Nanotrasen-brand land mine used to stun victims nonlethally."
+		icon_state = "mine_stun_nt"
+		effect_mult = 1
 
 	custom_stuff(var/atom/M)
 		if (!src || !istype(src))
 			return
 
 		var/list/mobs = src.get_mobs_on_turf(1)
-		if (mobs.len)
+		if (length(mobs))
 			for (var/mob/living/L in mobs)
 				if (istype(L))
-					L.changeStatus("weakened", 15 SECONDS)
-					L.stuttering += 15
+					L.do_disorient(200, (10 SECONDS * effect_mult))
+					L.stuttering += (10 * effect_mult)
 					if (L != M)
 						src.log_me(null, L)
 
 		playsound(src.loc, 'sound/weapons/flashbang.ogg', 50, 1)
-		return
 
 /obj/item/mine/blast
 	name = "high explosive land mine"
 	desc = "An anti-personnel mine rigged with explosives."
 
 	armed
-		armed = 1
+		armed = TRUE
 
 	custom_stuff(var/atom/M)
 		if (!src || !istype(src))
 			return
 
 		explosion(src, src.loc, 0, 1, 2, 3)
-		return
 
 /obj/item/mine/gibs
 	name = "pustule"
 	desc = "Some kind of weird little meat balloon."
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "meatmine"
-	suppress_flavourtext = 1
-	is_syndicate = 0
+	suppress_flavourtext = TRUE
+	is_syndicate = FALSE
 	mats = 0
 
 	armed
-		armed = 1
+		armed = TRUE
 
 	update_icon()
+
 		return
 
 	custom_stuff(var/atom/M)

@@ -11,7 +11,7 @@
 	New()
 		..()
 		src.myhud = new /datum/hud/flight_computer(src)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for(var/obj/artemis/S in world)
 				if(S.stars_id == src.stars_id)
 					src.ship = S

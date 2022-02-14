@@ -109,6 +109,19 @@
 	created_decal = /obj/decal/cleanable/oil
 	var/activated = 0
 
+	get_desc()
+		if (usr?.traitHolder?.hasTrait("training_medical"))
+			if (activated)
+				if (src.owner?.key)
+					if (!find_ghost_by_key(src.owner?.key))
+						. += "<br><span class='notice'>[src]'s indicators show that it once had a conciousness installed, but that conciousness cannot be located.</span>"
+					else
+						. += "<br><span class='notice'>[src]'s indicators show that it is still operational, and can be installed into a new body immediately.</span>"
+				else
+					. += "<br><span class='alert'>[src] has powered down fully.</span>"
+			else
+				. += "<br><span class='alert'>[src] has its factory defaults enabled. No conciousness has entered it yet.</span>"
+
 /obj/item/organ/brain/ai
 	name = "neural net processor"
 	desc = "A heavily augmented human brain, upgraded to deal with the large amount of information an AI unit must process."

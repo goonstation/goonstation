@@ -5,7 +5,7 @@
 	var/obj/adventurepuzzle/triggerer/selected
 
 	initialize()
-		selection = unpool(/obj/adventurepuzzle/marker)
+		selection = new /obj/adventurepuzzle/marker
 		boutput(usr, "<span class='notice'>Left click a triggerer to select it. Left click a triggerable while a triggerer is selected to assign, right click to unassign. Ctrl+click to finish.</span>")
 		boutput(usr, "<span class='notice'>Valid triggerers: trigger, button, pressure pad, key, remote control</span>")
 		boutput(usr, "<span class='notice'>Valid triggerables: door, spawn location, light emitter, sliding wall, traps</span>")
@@ -54,7 +54,7 @@
 
 	disposing()
 		clear_markers()
-		pool(selection)
+		qdel(selection)
 		..()
 
 	proc/clear_markers()

@@ -1,12 +1,10 @@
-#define CLIENT_IMAGE_GROUP_ARREST_ICONS "arrest_icons"
-#define CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS "health_mon_icons"
-
 var/global/list/datum/client_image_group/client_image_groups
 
 /datum/client_image_group
 	var/list/image/images
 	var/list/mob_to_associated_images_lookup
 	var/list/subscribed_mobs_with_subcount
+	var/list/subscribed_minds_with_subcount
 
 	New()
 		. = ..()
@@ -15,6 +13,8 @@ var/global/list/datum/client_image_group/client_image_groups
 		mob_to_associated_images_lookup = list()
 		/// Associative list containing subscribed mobs and the amount of times they subscribed to the image group (to handle multiple sources).
 		subscribed_mobs_with_subcount = list()
+		/// Associative list containing subscribed minds with counts.
+		subscribed_minds_with_subcount = list()
 
 	/// Adds an image to the image list and adds it to all mobs' clients directly where appropriate. Registers signal to track mob invisibility changes.
 	proc/add_image(image/img)
@@ -43,8 +43,8 @@ var/global/list/datum/client_image_group/client_image_groups
 	proc/add_mob(mob/added_mob)
 		subscribed_mobs_with_subcount[added_mob] += 1
 		if (subscribed_mobs_with_subcount[added_mob] == 1) // mob added for the first time, adding images to client and registering signals
-			for (var/image/I in images)
-				if (!I.loc.invisibility || (I.loc == added_mob) || istype(added_mob, /mob/dead/observer))
+			for (var/image/I as() in images)
+				if (I.loc && !I.loc.invisibility || (I.loc == added_mob) || istype(added_mob, /mob/dead/observer))
 					added_mob.client?.images.Add(I)
 
 			RegisterSignal(added_mob, COMSIG_MOB_LOGIN, .proc/add_images_to_client_of_mob)
@@ -59,13 +59,41 @@ var/global/list/datum/client_image_group/client_image_groups
 			removed_mob.client?.images.Remove(images)
 			UnregisterSignal(removed_mob, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_PARENT_PRE_DISPOSING))
 
+	/// Adds a mind to the mind list, adds all images to its client and registers signals on it.
+	proc/add_mind(datum/mind/added_mind)
+		subscribed_minds_with_subcount[added_mind] += 1
+		if (subscribed_minds_with_subcount[added_mind] == 1)
+			if(added_mind.current)
+				add_mob(added_mind.current)
+				RegisterSignal(added_mind, COMSIG_PARENT_PRE_DISPOSING, .proc/remove_mind)
+				RegisterSignal(added_mind, COMSIG_MIND_ATTACH_TO_MOB, .proc/on_mind_attach)
+				RegisterSignal(added_mind, COMSIG_MIND_DETACH_FROM_MOB, .proc/on_mind_detach)
+
+	proc/remove_mind(datum/mind/removed_mind)
+		subscribed_minds_with_subcount[removed_mind] -= 1
+		if (subscribed_minds_with_subcount[removed_mind] <= 0)
+			subscribed_minds_with_subcount.Remove(removed_mind)
+			if(removed_mind.current)
+				remove_mob(removed_mind.current)
+				UnregisterSignal(removed_mind, list(COMSIG_PARENT_PRE_DISPOSING, COMSIG_MIND_ATTACH_TO_MOB, COMSIG_MIND_DETACH_FROM_MOB))
+
 	// private procs for signal purposes:
+
+	/// when a registered mind attaches to a mob
+	proc/on_mind_attach(datum/mind/mind, mob/M)
+		PRIVATE_PROC(TRUE)
+		add_mob(M)
+
+	/// when a registered mind detaches from a mob
+	proc/on_mind_detach(datum/mind/mind, mob/M)
+		PRIVATE_PROC(TRUE)
+		remove_mob(M)
 
 	/// Registered on MOB_LOGIN, when a client enters the mob adds the images to it.
 	proc/add_images_to_client_of_mob(mob/target_mob)
 		PRIVATE_PROC(TRUE)
-		for (var/image/I in images)
-			if (!I.loc.invisibility || (I.loc == target_mob) || istype(target_mob, /mob/dead/observer))
+		for (var/image/I as() in images)
+			if (I.loc && !I.loc.invisibility || (I.loc == target_mob) || istype(target_mob, /mob/dead/observer))
 				target_mob.client?.images.Add(I)
 
 	/// Registered on MOB_LOGOUT, when a client leaves the mob removes the images from it.
@@ -85,11 +113,11 @@ var/global/list/datum/client_image_group/client_image_groups
 		for (var/image/I in mob_to_associated_images_lookup[invis_updated_mob])
 			if (invis_updated_mob.invisibility) // mob is invisible, remove their icons for other mobs
 				for (var/mob/iterated_mob as() in subscribed_mobs_with_subcount)
-					if ((iterated_mob != invis_updated_mob) && !(istype(iterated_mob, /mob/dead/observer))) // do nothing for the same person or ghosts
+					if ((iterated_mob != invis_updated_mob) && (invis_updated_mob.invisibility > iterated_mob.see_invisible)) // do nothing for the same person or ghosts
 						iterated_mob.client?.images.Remove(I)
 			else // mob is visible, add their icons to other mobs
 				for (var/mob/iterated_mob as() in subscribed_mobs_with_subcount)
-					if ((iterated_mob != invis_updated_mob) && !(istype(iterated_mob, /mob/dead/observer))) // do nothing for the same person or ghosts
+					if ((iterated_mob != invis_updated_mob) && (invis_updated_mob.invisibility <= iterated_mob.see_invisible)) // do nothing for the same person or ghosts
 						iterated_mob.client?.images.Add(I)
 
 /// Returns the client image group for a given "key" argument. If one doesn't yet exist, creates it.

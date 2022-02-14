@@ -39,7 +39,7 @@
 			adulterants--
 			reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_adulterants"), rand(1,3))
 
-		update_icon()
+		UpdateIcon()
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -52,8 +52,8 @@
 	g_amt = 40
 	bottle_style = "wine"
 	label = "wine"
-	initial_volume = 50
-	initial_reagents = list("wine"=30)
+	initial_volume = 100
+	initial_reagents = list("wine"=60)
 
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine
 	name = "fortified wine"
@@ -66,8 +66,8 @@
 	label = "vermouth"
 	alt_filled_state = 1
 	var/safe = 0
-	initial_volume = 50
-	initial_reagents = list("wine"=20,"ethanol"=5)
+	initial_volume = 100
+	initial_reagents = list("wine"=80,"ethanol"=20)
 
 	New()
 		..()
@@ -107,8 +107,8 @@
 	alt_filled_state = 1
 	heal_amt = 1
 	g_amt = 60
-	initial_volume = 50
-	initial_reagents = list("champagne"=30)
+	initial_volume = 100
+	initial_reagents = list("champagne"=60)
 	var/makes_shards_on_break = 1
 
 	afterattack(obj/O as obj, mob/user as mob)
@@ -121,12 +121,12 @@
 				user.visible_message("<span class='alert'><b>[user]</b> hits [O] with [src], shattering it open!</span>")
 				playsound(U, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
 				if (makes_shards_on_break)
-					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+					var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 					G.set_loc(U)
 				src.broken = 1
 				src.reagents.reaction(U)
 				src.create_reagents(0)
-				src.update_icon()
+				src.UpdateIcon()
 			var/new_name = input(user, "Enter new name for [O]", "Rename [O]", O.name) as null|text
 			if (isnull(new_name) || !length(new_name) || new_name == " ")
 				return
@@ -147,8 +147,8 @@
 		alt_filled_state = 1
 		heal_amt = 1
 		g_amt = 60
-		initial_volume = 50
-		initial_reagents = list("champagne"=30)
+		initial_volume = 100
+		initial_reagents = list("champagne"=60)
 
 	breakaway_glass
 		makes_shards_on_break = 0
@@ -172,8 +172,8 @@
 	label = "spicedrum"
 	alt_filled_state = 1
 	heal_amt = 1
-	initial_volume = 50
-	initial_reagents = list("rum"=30)
+	initial_volume = 100
+	initial_reagents = list("rum"=60)
 
 /obj/item/reagent_containers/food/drinks/rum_spaced
 	name = "spaced rum"
@@ -188,7 +188,7 @@
 	desc = "The dusty glass bottle has caustic fumes wafting out of it. You're not sure drinking it is a good idea."
 	icon_state = "moonshine"
 	heal_amt = 0
-	initial_volume = 60
+	initial_volume = 120
 	initial_reagents = "grog"
 
 /obj/item/reagent_containers/food/drinks/bottle/mead
@@ -222,8 +222,8 @@
 	label = "none"
 	heal_amt = 1
 	g_amt = 60
-	initial_volume = 50
-	initial_reagents = list("vodka"=30)
+	initial_volume = 100
+	initial_reagents = list("vodka"=60)
 
 /obj/item/reagent_containers/food/drinks/bottle/vodka/vr
 	icon_state = "vr_vodka"
@@ -239,8 +239,8 @@
 	alt_filled_state = 1
 	heal_amt = 1
 	g_amt = 60
-	initial_volume = 50
-	initial_reagents = list("tequila"=30)
+	initial_volume = 100
+	initial_reagents = list("tequila"=60)
 
 /obj/item/reagent_containers/food/drinks/bottle/gin
 	name = "gin"
@@ -252,8 +252,8 @@
 	alt_filled_state = 1
 	heal_amt = 1
 	g_amt = 60
-	initial_volume = 50
-	initial_reagents = list("gin"=30)
+	initial_volume = 100
+	initial_reagents = list("gin"=60)
 
 /obj/item/reagent_containers/food/drinks/bottle/ntbrew
 	name = "NanoTrasen Brew"
@@ -265,8 +265,8 @@
 	alt_filled_state = 1
 	heal_amt = 1
 	g_amt = 60
-	initial_volume = 250
-	initial_reagents = list("wine"=40,"charcoal"=20)
+	initial_volume = 100
+	initial_reagents = list("wine"=60,"charcoal"=30)
 
 /obj/item/reagent_containers/food/drinks/bottle/thegoodstuff
 	name = "Stinkeye's Special Reserve"
@@ -278,8 +278,8 @@
 	alt_filled_state = 1
 	heal_amt = 1
 	g_amt = 60
-	initial_volume = 250
-	initial_reagents = list("champagne"=30,"wine"=30,"cider"=30,"vodka"=30,"ethanol"=30,"eyeofnewt"=30)
+	initial_volume = 120
+	initial_reagents = list("champagne"=20,"wine"=20,"cider"=20,"vodka"=20,"eyeofnewt"=40)
 
 /obj/item/reagent_containers/food/drinks/bottle/bojackson
 	name = "Bo Jack Daniel's"
@@ -300,7 +300,7 @@
 	icon_state = "moonshine"
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
-	initial_volume = 250
+	initial_volume = 125
 	initial_reagents = "moonshine"
 
 /obj/item/reagent_containers/food/drinks/curacao
@@ -309,7 +309,7 @@
 	icon_state = "curacao"
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
-	initial_volume = 50
+	initial_volume = 100
 	initial_reagents = "curacao"
 
 /obj/item/reagent_containers/food/drinks/dehab
@@ -379,7 +379,7 @@
 	g_amt = 40
 	bottle_style = "vermouthC"
 	label = "label-none"
-	initial_volume = 50
+	initial_volume = 100
 
 /obj/item/reagent_containers/food/drinks/bottle/empty/tall
 	name = "tall bottle"
@@ -391,7 +391,7 @@
 	alt_filled_state = 1
 	heal_amt = 1
 	g_amt = 60
-	initial_volume = 50
+	initial_volume = 100
 
 /obj/item/reagent_containers/food/drinks/bottle/empty/rectangular
 	name = "rectangular bottle"
@@ -403,7 +403,7 @@
 	alt_filled_state = 1
 	heal_amt = 1
 	g_amt = 60
-	initial_volume = 50
+	initial_volume = 100
 
 /obj/item/reagent_containers/food/drinks/bottle/empty/square
 	name = "square bottle"
@@ -415,7 +415,7 @@
 	alt_filled_state = 1
 	heal_amt = 1
 	g_amt = 60
-	initial_volume = 50
+	initial_volume = 100
 
 /obj/item/reagent_containers/food/drinks/bottle/empty/masculine
 	name = "wide bottle"
@@ -427,6 +427,6 @@
 	alt_filled_state = 1
 	heal_amt = 1
 	g_amt = 60
-	initial_volume = 50
+	initial_volume = 100
 
 

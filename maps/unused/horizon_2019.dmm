@@ -8242,7 +8242,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "atz" = (
-/obj/machinery/power/solar_control/small_backup3,
+/obj/machinery/computer/solar_control/small_backup3,
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /turf/simulated/floor/grey/blackgrime,
@@ -9228,7 +9228,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/solar_control/alt{
+/obj/machinery/computer/solar_control/alt{
 	dir = 8
 	},
 /turf/simulated/floor/wood/two,
@@ -25117,7 +25117,7 @@
 "bfA" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},
@@ -26183,7 +26183,7 @@
 	},
 /area/station/science/teleporter)
 "bho" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -27602,7 +27602,7 @@
 /area/station/mining/magnet)
 "bkj" = (
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},
@@ -30048,7 +30048,7 @@
 "bpA" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},
@@ -35483,7 +35483,7 @@
 	dir = 1
 	},
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},
@@ -37776,9 +37776,9 @@
 	},
 /obj/item/device/radio/intercom/security,
 /obj/storage/secure/crate/gear/armory/grenades,
-/obj/item/old_grenade/banana,
-/obj/item/old_grenade/banana,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
+/obj/item/old_grenade/spawner/banana,
+/obj/item/old_grenade/spawner/banana,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -41721,7 +41721,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /turf/simulated/floor,
 /area/station/security/main)
 "bPj" = (
@@ -44504,7 +44504,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/solar_control/north{
+/obj/machinery/computer/solar_control/north{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
@@ -45673,7 +45673,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -46666,7 +46666,7 @@
 	name = "Engineering Control Room"
 	})
 "bZl" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8;
 	icon_state = "power2"
 	},
@@ -47027,7 +47027,7 @@
 	},
 /obj/machinery/espresso_machine,
 /obj/item/reagent_containers/food/drinks/espressocup,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = -24
 	},
 /turf/simulated/floor/black,
@@ -48732,7 +48732,7 @@
 /area/station/security/main)
 "cdR" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "cdS" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -50031,7 +50031,7 @@
 	},
 /area/station/crew_quarters/ce)
 "cgE" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /obj/cable{
@@ -51576,7 +51576,7 @@
 /area/station/engine/substation/north)
 "ckr" = (
 /obj/cable,
-/obj/machinery/power/solar_control/small_backup2,
+/obj/machinery/computer/solar_control/small_backup2,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/north)
@@ -51669,7 +51669,7 @@
 	pixel_y = 32
 	},
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},
@@ -52280,7 +52280,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 4;
 	name = "Engine Output Monitoring"
 	},
@@ -53755,7 +53755,7 @@
 	d2 = 8;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/solar_control/south{
+/obj/machinery/computer/solar_control/south{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
@@ -55140,7 +55140,7 @@
 	},
 /area/listeningpost/power)
 "ctr" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -57061,7 +57061,7 @@
 /obj/item/clipboard/with_pen,
 /obj/decal/cleanable/writing{
 	sample_reagent = "blood";
-	words = "racist greg was here"
+	words = "smelly greg was here"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/barber_shop)
@@ -57344,7 +57344,7 @@
 	},
 /area/station/solar/south)
 "cxP" = (
-/obj/machinery/power/solar_control/small_backup4,
+/obj/machinery/computer/solar_control/small_backup4,
 /obj/decal/cleanable/rust,
 /obj/cable{
 	icon_state = "0-2"

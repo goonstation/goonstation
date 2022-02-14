@@ -505,7 +505,7 @@ datum
 			id = "milk_punch"
 			result = "milk_punch"
 			required_reagents = list("simplesyrup" = 1, "juice_lime" = 1, "juice_apple" = 1, "ginger_ale" = 1, "juice_pineapple" = 1, "milk" = 1)
-			result_amount = 2
+			result_amount = 6
 			mix_phrase = "You wonder why you made this drink at all."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
@@ -513,14 +513,14 @@ datum
 		milk_punch/milk_punch2
 			id = "milk_punch2"
 			required_reagents = list("fruit_punch" = 5, "milk" = 1)
-			result_amount = 2
+			result_amount = 6
 
 		fruit_punch
 			name = "Fruit Punch"
 			id = "fruit punch"
 			result = "fruit_punch"
 			required_reagents = list("simplesyrup" = 1, "juice_apple" = 1, "juice_lime" = 1, "ginger_ale" = 1, "juice_pineapple" = 1)
-			result_amount = 3
+			result_amount = 5
 			mix_phrase = "You are reminded of family picnics and school functions as the syrup mixes with the juices."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
@@ -673,12 +673,22 @@ datum
 			mix_sound = 'sound/impact_sounds/slimy_hit_3.ogg'
 			drinkrecipe = 1
 
+		cocktail_wellerman
+			name = "Wellerman"
+			id = "wellerman"
+			result = "wellerman"
+			required_reagents = list("sweet_tea" = 2, "rum" = 1)
+			result_amount = 3
+			mix_phrase = "Soon may the Wellerman come. To bring us sugar and tea and rum."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
 		cocktail_hardpunch
 			name = "Hard Punch"
 			id = "hard_punch"
 			result = "hard_punch"
 			required_reagents = list("simplesyrup" = 1, "sangria" = 1, "juice_apple" = 1, "ginger_ale" = 1, "juice_pineapple" = 1)
-			result_amount = 2
+			result_amount = 5
 			mix_phrase = "This drink is so disgustingly sweet you start to get a headache from smelling it."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
@@ -1098,6 +1108,33 @@ datum
 			required_reagents = list("v_gimlet" = 2, "juice_cran" = 1)
 			result_amount = 3
 
+		cocktail_blackbramble
+			name = "Blackberry Bramble"
+			id = "blackbramble"
+			result = "blackbramble"
+			required_reagents = list("gin" = 1, "juice_blackberry" = 1, "juice_lemon" = 1)
+			result_amount = 3
+			mix_phrase = "The blackberries turn almost purple as you muddle them into the gin and lemon."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		cocktail_frenchmartini
+			name = "French Martini"
+			id = "frenchmartini"
+			result = "frenchmartini"
+			required_reagents = list("vodka" = 1, "juice_raspberry" = 1, "juice_pineapple" = 1)
+			result_amount = 3
+			mix_phrase = "Mon dieu, zis isn't even a martini."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		cocktail_jazzberryhardlemonade
+			name = "Jazzberry Hard Lemonade"
+			id = "jazzlemon"
+			result = "jazzlemon"
+			required_reagents = list("lemonade" = 1, "juice_blueraspberry" = 1, "vodka" = 1)
+			result_amount = 3
+			mix_phrase = "The drink turns radically jazzalicious."
+			mix_sound = 'sound/musical_instruments/saxbonk3.ogg'
+
 		cocktail_v_gimlet
 			name = "Vodka Gimlet"
 			id = "v_gimlet"
@@ -1315,6 +1352,7 @@ datum
 			id = "lingtea"
 			result = "lingtea"
 			required_reagents = list("longisland" = 1, "neurotoxin" = 1)
+			required_temperature = T0C + 100
 			result_amount = 2
 			mix_phrase = "The toxin upsets the delicate balance of alcohol and sours in this mix. Ew."
 
@@ -1435,7 +1473,7 @@ datum
 			name = "Tequila Sunrise"
 			id = "tequilasunrise"
 			result = "tequilasunrise"
-			required_reagents = list("tequila" = 1, "juice_orange" = 1, "sugar" = 1)
+			required_reagents = list("tequila" = 1, "juice_orange" = 1, "grenadine" = 1)
 			result_amount = 3
 			mix_phrase = "The drink fizzes into some liquid sunshine for the soul."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -1641,7 +1679,7 @@ datum
 			result = "pinklemonade"
 			required_reagents = list("grenadine" = 1,"lemonade" = 1)
 			result_amount = 2
-			mix_phrase = "You watch the pink colour dance around the container and slowly combine with the lemonade"
+			mix_phrase = "You watch the pink colour dance around the container and slowly combine with the lemonade."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
@@ -2439,13 +2477,15 @@ datum
 							continue
 						if (!M.ears_protected_from_sound())
 							boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
+						else
+							continue
 
 						var/checkdist = get_dist(M, location)
-						var/weak = max(0, 2 * (3 - checkdist))
-						var/misstep = clamp(10 + 6 * (5 - checkdist), 0, 40)
-						var/ear_damage = max(0, 2 * (3 - checkdist))
-						var/ear_tempdeaf = max(0, 2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
-						var/stamina = clamp(50 + 10 * (7 - checkdist), 0, 120)
+						var/weak = max(0, created_volume * 0.2 * (3 - checkdist))
+						var/misstep = clamp(1 + 6 * (5 - checkdist), 0, 40)
+						var/ear_damage = max(0, created_volume * 0.2 * (3 - checkdist))
+						var/ear_tempdeaf = max(0, created_volume * 0.2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
+						var/stamina = clamp(created_volume * (5 + 1 * (7 - checkdist)), 0, 120)
 
 						if (issilicon(M))
 							M.apply_sonic_stun(weak, 0)
@@ -2454,6 +2494,7 @@ datum
 				else
 					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 					var/sound_plays = 4
+					created_volume /= amt
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 						if (sound_plays > 0)
 							sound_plays--
@@ -2468,13 +2509,15 @@ datum
 								continue
 							if (!M.ears_protected_from_sound())
 								boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
+							else
+								continue
 
 							var/checkdist = get_dist(M, location)
-							var/weak = max(0, 2 * (3 - checkdist))
-							var/misstep = clamp(10 + 6 * (5 - checkdist), 0, 40)
-							var/ear_damage = max(0, 2 * (3 - checkdist))
-							var/ear_tempdeaf = max(0, 2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
-							var/stamina = clamp(50 + 10 * (7 - checkdist), 0, 120)
+							var/weak = max(0, created_volume * 0.2 * (3 - checkdist))
+							var/misstep = clamp(1 + 6 * (5 - checkdist), 0, 40)
+							var/ear_damage = max(0, created_volume * 0.2 * (3 - checkdist))
+							var/ear_tempdeaf = max(0, created_volume * 0.2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
+							var/stamina = clamp(created_volume * (5 + 1 * (7 - checkdist)), 0, 120)
 
 							if (issilicon(M))
 								M.apply_sonic_stun(weak, 0)
@@ -2591,13 +2634,13 @@ datum
 				var/turf/location = 0
 				if (holder?.my_atom)
 					location = get_turf(holder.my_atom)
-					fireflash(location, min(max(2,round(created_volume/10)),8)) // This reaction didn't have an upper cap, uh-oh (Convair880).
+					fireflash(location, clamp(round(created_volume/10), 2, 8)) // This reaction didn't have an upper cap, uh-oh (Convair880).
 				else
 					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 						location = pick(holder.covered_cache)
 						holder.covered_cache -= location
-						fireflash(location, min(max(2,round(created_volume/10)),8)/amt)
+						fireflash(location, clamp(round(created_volume/10), 2, 8)/amt)
 				return
 
 		napalm_goo
@@ -2633,11 +2676,6 @@ datum
 #ifdef CHEM_REACTION_PRIORITY
 			priority = 9
 #endif
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				if(holder)
-					holder.del_reagent("potassium")
-					holder.del_reagent("sugar")
-					holder.del_reagent("phosphorus")
 
 		smoke
 			name = "Smoke"
@@ -2655,9 +2693,6 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 
 				if (holder)
-					holder.del_reagent("potassium")
-					holder.del_reagent("sugar")
-					holder.del_reagent("phosphorus")
 					if(!holder?.my_atom?.is_open_container())
 						if(holder.my_atom)
 							for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
@@ -2943,7 +2978,7 @@ datum
 					s.start()
 					holder.clear_reagents()
 				else
-					var/amt = min(max(1,holder.covered_cache.len/100), 10)
+					var/amt = clamp(holder.covered_cache.len/100, 1, 10)
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 						location = pick(holder.covered_cache)
 						holder.covered_cache -= location
@@ -2978,7 +3013,7 @@ datum
 					s.set_up(created_volume/2, location, holder, 1)
 					s.start()
 				else
-					var/amt = min(max(1,holder.covered_cache.len/100), 10)
+					var/amt = clamp(holder.covered_cache.len/100, 1, 10)
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 						location = pick(holder.covered_cache)
 						holder.covered_cache -= location
@@ -3013,7 +3048,7 @@ datum
 					s.set_up(created_volume/2, location, holder, 2)
 					s.start()
 				else
-					var/amt = min(max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume))), 5)
+					var/amt = clamp((holder.covered_cache.len * (created_volume / holder.covered_cache_volume)), 1, 5)
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 						location = pick(holder.covered_cache)
 						holder.covered_cache -= location
@@ -3128,7 +3163,7 @@ datum
 			name = "Heparin"
 			id = "heparin"
 			result = "heparin"
-			required_reagents = list("sugar" = 1, "meat_slurry" = 1, "phenol" = 1, "acid" = 1)
+			required_reagents = list("sugar" = 1, "blood" = 1, "phenol" = 1, "acid" = 1)
 			result_amount = 2
 
 		proconvertin // coagulant
@@ -3802,7 +3837,7 @@ datum
 			name = "expresso"
 			id = "expresso"
 			result = "expresso"
-			required_reagents = list("espresso" = 1, "neurotoxin" = 3)
+			required_reagents = list("espresso" = 1, "methamphetamine" = 3)
 			result_amount = 3
 			mix_phrase = "Irregardless and for all intense and purposes, the coffee becomes stupider."
 

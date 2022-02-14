@@ -36,14 +36,17 @@ To contribute code to the game, please read our code guide. It details specific 
 [<img src=".github/assets/sprites.png" alt="Spriting Guidelines" width="150" align="left">](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fsprites)
 To contribute sprites to the game, please follow our spriting guidelines! It details the various things we try to keep consistent in our sprites, such as perspective and outlining.
 
+[<img src=".github/assets/audio.png" alt="Audio Guidelines" width="150" align="left">](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Faudio)
+To contribute audio to the game, please follow our audio guidelines! It details what types of sounds we want to include, things to keep in mind, and the sound cache.
+
 [<img src=".github/assets/maps.png" alt="Mapping Guidelines" width="150" align="left">](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fmaps)
-To contribute maps to the game, please follow our mapping guidelines! This details the **required** pieces for a map submission.
+To contribute maps to the game, please follow our mapping guidelines! It details the **required** pieces for a map submission.
 
 ## FAQ (Frequently Asked Question)
 
 #### Q: I'm getting a compilation error like `unable to open +secret\__secret.dme`.
 
-You’ll need to create a file named `__secret.dme` in the +secret subdirectory. It should be blank and have no contents. Read the [Goonstation Development Guide](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fdev) for additional details.
+You’ll need to create a file named `__secret.dme` in the +secret subdirectory. It should be blank and have no contents. You can run the `initial_setup.bat` file to create it automatically. Read the [Goonstation Development Guide](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fdev) for additional details.
 
 
 ## LICENSE

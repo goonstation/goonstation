@@ -59,10 +59,11 @@
 				node = target
 				break
 
-		update_icon()
+		UpdateIcon()
 
 
 	update_icon()
+
 		if(src.node)
 			if(src.on)
 				icon_state = "freezer_1"
@@ -73,7 +74,7 @@
 		return
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
 		src.add_dialog(user)
@@ -100,17 +101,17 @@
 			src.add_dialog(usr)
 			if (href_list["start"])
 				src.on = !src.on
-				update_icon()
+				UpdateIcon()
 			if(href_list["temp"])
-				var/amount = text2num(href_list["temp"])
+				var/amount = text2num_safe(href_list["temp"])
 				if(amount > 0)
 					src.current_temperature = min(T20C, src.current_temperature+amount)
 				else
 					src.current_temperature = max((T0C - 200), src.current_temperature+amount)
 			if (href_list["settemp"])
 				var/change = input(usr,"Target Temperature (-200 C - 20 C):","Enter target temperature",current_temperature - T0C) as num
-				if(!isnum(change)) return
-				current_temperature = min(max(73.15, change + T0C),293.15)
+				if(!isnum_safe(change)) return
+				current_temperature = clamp(change + T0C, 73.15, 293.15)
 				src.updateUsrDialog()
 				return
 

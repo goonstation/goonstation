@@ -42,7 +42,7 @@
 /obj/machinery/computer/genetics/New()
 	..()
 	START_TRACKING
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		connection_scan()
 
 /obj/machinery/computer/genetics/connection_scan()
@@ -65,7 +65,7 @@
 			user.drop_item()
 			qdel(DNA)
 		else
-			src.attack_hand(user)
+			src.Attackhand(user)
 	else
 		var/obj/item/device/pda2/PDA = W
 		if (istype(PDA) && PDA.ID_card)
@@ -74,7 +74,7 @@
 		var/obj/item/card/id/ID = W
 		if (istype(ID))
 			registered_id = ID.registered
-			user.show_text("You swipe the ID on [src]. You will now recieve a cut from gene booth sales.", "blue")
+			user.show_text("You swipe the ID on [src]. You will now receive a cut from gene booth sales.", "blue")
 			return
 
 		..()
@@ -253,7 +253,7 @@
 	playsound(src.loc, 'sound/machines/keypress.ogg', minor ? 25 : 50, 1, -15)
 
 /obj/machinery/computer/genetics/proc/play_emitter_sound()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for (var/i = 0, i < 15 && (i < 3 || prob(genResearch.emitter_radiation)), i++)
 			switch (genResearch.emitter_radiation)
 				if(1 to 15)
@@ -389,9 +389,8 @@
 					return
 				if (!(E in selected_record.dna_pool))
 					return
-			else
-				if (bioEffect_sanity_check(E))
-					return
+			else if (bioEffect_sanity_check(E))
+				return
 			genResearch.addResearch(E)
 			on_ui_interacted(ui.user)
 		if("advancepair")
@@ -510,6 +509,10 @@
 			if (!istype(H) || isprematureclone(H))
 				return
 			var/datum/bioEffect/mutantrace/BE = locate(params["ref"])
+			if (H.mutantrace && !H.mutantrace?.genetics_removable)
+				//this should probably be a UI notification but I'm not touching that code with a ten foot pole
+				scanner_alert(ui.user, "Unable to purge corrupt genotype.")
+				return
 			if (isnull(BE))
 				if (!isnull(H.mutantrace))
 					src.log_me(H, "mutantrace removed")
@@ -601,7 +604,7 @@
 			if (!E.can_make_injector)
 				return
 			genResearch.researchMaterial -= price
-			var/booth_effect_cost = text2num(params["price"])
+			var/booth_effect_cost = text2num_safe(params["price"])
 			booth_effect_cost = clamp(booth_effect_cost, 0, 999999)
 			var/booth_effect_desc = params["desc"]
 			booth_effect_desc = strip_html(booth_effect_desc, 280)
@@ -915,8 +918,8 @@
 		"unlock" = null,
 	)
 
-	for(var/datum/data/record/R as anything in data_core.medical)
-		var/datum/computer/file/genetics_scan/S = R.fields["dnasample"]
+	for(var/datum/db_record/R as anything in data_core.medical.records)
+		var/datum/computer/file/genetics_scan/S = R["dnasample"]
 		if (!istype(S))
 			continue
 		.["samples"] += list(list(
@@ -1007,7 +1010,7 @@
 		.["subject"] = null
 
 	for(var/R as anything in genResearch.researchTreeTiered)
-		if (text2num(R) == 0)
+		if (text2num_safe(R) == 0)
 			continue
 		var/list/availTier = list()
 		var/list/finishedTier = list()
@@ -1034,8 +1037,8 @@
 					"ref" = "\ref[C]",
 				))
 
-		.["availableResearch"][text2num(R)] = availTier
-		.["finishedResearch"][text2num(R)] = finishedTier
+		.["availableResearch"][text2num_safe(R)] = availTier
+		.["finishedResearch"][text2num_safe(R)] = finishedTier
 
 	for(var/datum/geneticsResearchEntry/R as anything in genResearch.currentResearch)
 		.["currentResearch"] += list(list(

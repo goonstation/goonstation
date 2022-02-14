@@ -29,22 +29,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		ensure_reagent_holder()
 		create_initial_reagents(new_initial_reagents)
 
-	proc/setup_reagents(new_initial_reagents) //proccall overhead idk man dont put this in new just copy paste :)
-		ensure_reagent_holder()
-		create_initial_reagents(new_initial_reagents)
-
-	pooled()
-		if (src.reagents)
-			src.reagents.clear_reagents()
-		..()
-
-	unpooled()
-		if (src.reagents)
-			src.reagents.clear_reagents()
-		..()
-		setup_reagents(last_new_initial_reagents)
-
-
 	move_trigger(var/mob/M, kindof)
 		if (..() && reagents)
 			reagents.move_trigger(M, kindof)
@@ -103,12 +87,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			var/atom/target_loc = usr.loc
 			var/ok = 1
 			var/atom/L = src
-			while(!istype(L, /turf) && L != target_loc)
+			while(!istype(L, /turf) && L != target_loc && L.loc)
 				L = L.loc
 				if(istype(L, /turf))
 					ok = 0
 			L = over_object
-			while(!istype(L, /turf) && L != target_loc)
+			while(!istype(L, /turf) && L != target_loc && L.loc)
 				L = L.loc
 				if(istype(L, /turf))
 					ok = 0
@@ -186,7 +170,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 					src.reagents.reaction(target,TOUCH)
 				else
 					src.reagents.reaction(target, TOUCH, min(src.amount_per_transfer_from_this,src.reagents.total_volume))
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					if (src.splash_all_contents) src.reagents.clear_reagents()
 					else src.reagents.remove_any(src.amount_per_transfer_from_this)
 					can_mousedrop = 1
@@ -281,7 +265,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 			if (src.splash_all_contents) src.reagents.reaction(target,TOUCH)
 			else src.reagents.reaction(target, TOUCH, min(src.amount_per_transfer_from_this,src.reagents.total_volume))
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				if (src.splash_all_contents) src.reagents.clear_reagents()
 				else src.reagents.remove_any(src.amount_per_transfer_from_this)
 				can_mousedrop = 1
@@ -322,7 +306,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			boutput(user, "<span class='notice'>You rip up the [I] into tiny pieces and sprinkle it into [src].</span>")
 
 			I.reagents.trans_to(src, I.reagents.total_volume)
-			pool(I)
+			qdel(I)
 
 		else if (istype(I, /obj/item/reagent_containers/food/snacks/breadloaf))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
@@ -409,7 +393,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 	proc/smash()
 		playsound(src.loc, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
-		var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+		var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 		G.set_loc(src.loc)
 		var/turf/U = src.loc
 		src.reagents.reaction(U)
@@ -437,7 +421,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	icon_state = "bucket"
 	item_state = "bucket"
 	amount_per_transfer_from_this = 10
-	initial_volume = 50
+	initial_volume = 120
 	flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	can_recycle = FALSE
@@ -457,7 +441,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		else if (istype(D, /obj/item/mop))
 			if (src.reagents.total_volume >= 2)
 				src.reagents.trans_to(D, 2)
-				user.show_text("You wet the mop", "blue")
+				user.show_text("You wet the mop.", "blue")
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 			else
 				user.show_text("Out of water!", "blue")
@@ -465,6 +449,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			if (src.reagents.total_volume)
 				user.show_text("<b>You start cutting [src], causing it to spill!</b>", "red")
 				src.reagents.reaction(get_turf(src))
+				src.reagents.clear_reagents()
 			else
 				user.show_text("You start cutting [src].")
 			if (!do_mob(user, src))

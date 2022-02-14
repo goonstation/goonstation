@@ -23,7 +23,7 @@
 		if (fart_attack == 1)
 			return
 		fart_attack = 1
-		SPAWN_DBG(12 SECONDS)
+		SPAWN(12 SECONDS)
 			fart_attack = 0
 		if (random_events.announce_events)
 			var/sensortext = pick("sensors", "technicians", "probes", "satellites", "monitors", 20; "neckbeards")
@@ -36,8 +36,8 @@
 		for (var/i=0, i<loops, i++)
 			if (prob(4) || freebie)
 				freebie = 0
-				SPAWN_DBG(50+rand(0,550))
-					world << sound('sound/voice/farts/superfart.ogg', volume = 67)
+				SPAWN(50+rand(0,550))
+					playsound_global(world, "sound/voice/farts/superfart.ogg", 60)
 					for (var/mob/M in mobs)
 						if (M.client)
 							shake_camera(M, 20, 8)
@@ -59,7 +59,7 @@
 											blocked = 1
 											break
 									if (!(!isturf(M.loc) || T1.density) && !(T2.density || blocked == 1))
-										SPAWN_DBG(0)
+										SPAWN(0)
 											M.set_loc(T2)
 
 						if (prob(50))
@@ -91,9 +91,6 @@
 			ThrowRandom(B, dist = 6, speed = 1)
 		H.visible_message("<span class='alert'><b>[H]</b>'s [magical ? "arse" : "ass"] tears itself away from \his body[magical ? " in a magical explosion" : null]!</span>",\
 		"<span class='alert'>[changer ? "Our" : "Your"] [magical ? "arse" : "ass"] tears itself away from [changer ? "our" : "your"] body[magical ? " in a magical explosion" : null]!</span>")
-		if (!magical)
-			H.changeStatus("weakened", 2 SECONDS)
-			H.force_laydown_standup()
 		severed_something = TRUE
 
 	/// If that didn't work, try severing a limb or tail
@@ -160,7 +157,9 @@
 	"<span class='alert'>[nobutt_phrase[assmagic]]</span>")
 	if(!magical)
 		H.changeStatus("weakened", 3 SECONDS)
-		H.force_laydown_standup()
+	else
+		H.changeStatus("weakened", 1 DECI SECOND)
+	H.force_laydown_standup()
 	if(!severed_something)
 		H.emote("scream")
 

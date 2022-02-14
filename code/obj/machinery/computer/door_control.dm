@@ -12,10 +12,10 @@
 	for(var/obj/machinery/door/window/brigdoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			if(M.density)
-				SPAWN_DBG( 0 )
+				SPAWN( 0 )
 					M.open()
 			else
-				SPAWN_DBG( 0 )
+				SPAWN( 0 )
 					M.close()
 	src.updateUsrDialog()
 	return
@@ -52,7 +52,7 @@
 		src.add_dialog(usr)
 		if (href_list["setid"])
 			if(src.allowed(usr))
-				src.id = text2num(href_list["setid"])
+				src.id = text2num_safe(href_list["setid"])
 				src.alarm()
 		if (href_list["openall"])
 			if(src.allowed(usr))

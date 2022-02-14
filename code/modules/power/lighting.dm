@@ -55,7 +55,7 @@
 	#define LIGHTING_POWER_FACTOR 40
 	name = "Area Lighting"
 	event_handler_flags = IMMUNE_SINGULARITY | USE_FLUID_ENTER
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	var/area/my_area = null
 	var/list/lights = list()
 	var/brightness_placeholder = 1	//hey, maybe later use this in a way that is more optimized than iterating through each individual light
@@ -132,7 +132,7 @@
 	proc/autoposition(setdir = null)
 		//auto position these lights so i don't have to mess with dirs in the map editor that's annoying!!!
 		if (nostick == 0) // unless nostick is set to true in which case... dont
-			SPAWN_DBG(1 DECI SECOND) //wait for the wingrille spawners to complete when map is loading (ugly i am sorry)
+			SPAWN(1 DECI SECOND) //wait for the wingrille spawners to complete when map is loading (ugly i am sorry)
 				var/turf/T = null
 				var/list/directions = null
 				if (setdir)
@@ -524,7 +524,7 @@
 	light.set_color(initial(src.light_type.color_r), initial(src.light_type.color_g), initial(src.light_type.color_b))
 	light.set_height(2.4)
 	light.attach(src)
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		update()
 
 // update the icon_state and luminosity of the light depending on its state
@@ -551,7 +551,7 @@
 	else
 		light.disable()
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		// now check to see if the bulb is burned out
 		if(current_lamp.light_status == LIGHT_OK)
 			if(on && current_lamp.rigged)
@@ -660,7 +660,7 @@
 	if (issilicon(user) && !isghostdrone(user))
 		return
 		/*if (isghostdrone(user))
-			return src.attack_hand(user)
+			return src.Attackhand(user)
 		else
 			return*/
 
@@ -670,7 +670,7 @@
 	if (istype(W, /obj/item/magtractor))
 		mag = W
 		if (!mag.holding)
-			return src.attack_hand(user)
+			return src.Attackhand(user)
 		else
 			W = mag.holding
 
@@ -811,7 +811,7 @@
 			elecflash(src,radius = 1, power = 2, exclude_center = 0)
 	current_lamp.light_status = LIGHT_BROKEN
 	current_lamp.update()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		update()
 
 // explosion effect
@@ -879,7 +879,7 @@
 
 /obj/machinery/light/proc/explode()
 	var/turf/T = get_turf(src.loc)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		broken()	// break it first to give a warning
 		sleep(0.2 SECONDS)
 		explosion(src, T, 0, 1, 2, 2)

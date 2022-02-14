@@ -40,7 +40,8 @@
 			src.reagents.temperature_min = 270	//you can remove/adjust these afterr you fix burns from reagnets being super strong
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 		if (src.reagents)
 			src.reagents.temperature_cap = 440
 			src.reagents.temperature_min = 270
@@ -52,6 +53,8 @@
 			if (src.reagents && src.reagents.total_temperature < src.reagents.temperature_min)
 				src.reagents.total_temperature = src.reagents.temperature_min
 
+	proc/can_operate_on(atom/A)
+		.= (iscarbon(A) || ismobcritter(A))
 
 	proc/clamp_reagents()
 		if (src.reagents.total_temperature > src.reagents.temperature_cap)
@@ -60,7 +63,8 @@
 			src.reagents.total_temperature = src.reagents.temperature_min
 
 
-	proc/update_icon()
+	update_icon()
+
 		src.underlays = null
 		if (src.reagents && src.reagents.total_volume)
 			icon_state = "[src.style]1"
@@ -92,7 +96,7 @@
 			if (user && E)
 				user.show_text("You press on the patch with [E]. The current from [E] closes the tamper-proof seal.", "blue")
 			src.medical = 1
-			src.update_icon()
+			src.UpdateIcon()
 			return 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -106,7 +110,7 @@
 			user.show_text("This item is not designed with organic users in mind.", "red")
 			return
 
-		if (iscarbon(user) || ismobcritter(user))
+		if (can_operate_on(user))
 			user.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
 			"<span class='notice'>You apply [src] to yourself.</span>")
 			logTheThing("combat", user, null, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
@@ -115,7 +119,7 @@
 
 	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
-		if (src.medical && !borg && !src.in_use && (iscarbon(M) || ismobcritter(M)))
+		if (src.medical && !borg && !src.in_use && (can_operate_on(M)))
 			if (prob(30) || good_throw && prob(70))
 				src.in_use = 1
 				M.visible_message("<span class='alert'>[src] lands on [M] sticky side down!</span>")
@@ -133,8 +137,7 @@
 			return
 
 		// No src.reagents check here because empty patches can be used to counteract bleeding.
-
-		if (iscarbon(M) || ismobcritter(M))
+		if (can_operate_on(M))
 			src.in_use = 1
 			if (M == user)
 				//M.show_text("You put [src] on your arm.", "blue")
@@ -213,6 +216,8 @@
 
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		.= 0
+		if(!can_operate_on(A))
+			return
 		if (!attached && ismob(A) && medical)
 			//do image stuff
 			var/pox = src.pixel_x
@@ -325,6 +330,7 @@
 	icon_state = "patch_med"
 
 	update_icon()
+
 		return
 
 /obj/item/reagent_containers/patch/vr/bruise
@@ -443,7 +449,7 @@
 				P.attack(H, user, user.zone_sel && user.zone_sel.selecting ? user.zone_sel.selecting : null)
 
 				update_overlay()
-				SPAWN_DBG(6 SECONDS)
+				SPAWN(6 SECONDS)
 					update_overlay()
 
 
@@ -453,6 +459,7 @@
 	desc = "A small electronic device designed to topically apply healing chemicals."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mender"
+	mats = list("MET-2"=5,"CRY-1"=4, "gold"=5)
 	var/image/fluid_image
 	var/tampered = 0
 	var/borg = 0
@@ -474,12 +481,18 @@
 		if (src.reagents)
 			src.reagents.temperature_cap = 330
 			src.reagents.temperature_min = 270
+			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
 
-	on_reagent_change()
-		src.update_icon()
+	on_reagent_change(add)
+		..()
 		if (src.reagents)
 			src.reagents.temperature_cap = 330
 			src.reagents.temperature_min = 270
+			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
+		if (!tampered && add)
+			check_whitelist(src, src.whitelist)
+		src.UpdateIcon()
+
 
 	is_open_container()
 		if (borg)
@@ -490,7 +503,7 @@
 	proc/can_operate_on(atom/A)
 		.= (iscarbon(A) || ismobcritter(A))
 
-	proc/update_icon()
+	update_icon()
 		if (reagents.total_volume)
 			if (!src.fluid_image)
 				src.fluid_image = image('icons/obj/chemical.dmi', "mender-fluid", -1)
@@ -505,18 +518,20 @@
 		if (user && E)
 			user.show_text("You press on [src] with [E]. The anti-tamper lock is broken.", "blue")
 		src.tampered = 1
-		src.update_icon()
+		src.UpdateIcon()
 		return 1
-
-	on_reagent_change(add)
-		if (!tampered && add)
-			check_whitelist(src, src.whitelist)
-		src.update_icon()
 
 	attack_self(mob/user as mob)
 		if (can_operate_on(user))
 			src.attack(user,user) //do self operation
 		return
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/reagent_containers/mender_refill_cartridge))
+			var/obj/item/reagent_containers/mender_refill_cartridge/refill = W
+			refill.do_refill(src, user)
+			return
+		..()
 
 	attack(mob/M as mob, mob/user as mob)
 		if (src.borg == 1 && !issilicon(user))
@@ -656,3 +671,65 @@
 
 		looped++
 		src.onRestart()
+
+//basically the same as ecig_refill_cartridge, but there's no point subtyping it...
+ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
+/obj/item/reagent_containers/mender_refill_cartridge
+	name = "auto-mender refill cartridge"
+	desc = "A container designed to be able to quickly refill medical auto-menders."
+	icon = 'icons/obj/chemical.dmi'
+	initial_volume = 200
+	initial_reagents = "nicotine"
+	// item_state = "ecigrefill"
+	icon_state = "mender-refill"
+	flags = FPRINT | TABLEPASS
+	var/image/fluid_image
+
+	New()
+		..()
+		UpdateIcon()
+
+	update_icon()
+		if (reagents.total_volume)
+			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 4), 1, 4))
+			if (!src.fluid_image)
+				src.fluid_image = image('icons/obj/chemical.dmi', "mender-refill-fluid-4", -1)
+			var/datum/color/average = reagents.get_average_color()
+			src.fluid_image.color = average.to_rgba()
+			src.fluid_image.icon_state = "mender-refill-fluid-[fluid_state]"
+			src.UpdateOverlays(src.fluid_image, "fluid")
+
+		else
+			src.ClearSpecificOverlays("fluid")
+
+		signal_event("icon_updated")
+
+	proc/do_refill(var/obj/item/reagent_containers/mender, var/mob/user)
+		if (src?.reagents.total_volume > 0)
+			src.reagents.trans_to(mender, src.reagents.total_volume)
+			src.UpdateIcon()
+			playsound(src, 'sound/items/mender_refill_juice.ogg', 50, 1)
+			if (src.reagents.total_volume == 0)
+				boutput(user, "<span class='notice'>You refill [mender] to [mender.reagents.total_volume]u and empty [src]!</span>")
+			else
+				boutput(user, "<span class='notice'>You refill [mender] to [mender.reagents.total_volume]u!</span>")
+		else
+			boutput(user, "<span class='alert'>You attempt to refill [mender], but [src] is empty!</span>")
+
+/obj/item/reagent_containers/mender_refill_cartridge/brute
+	name = "brute auto-mender refill cartridge"
+	initial_reagents = "styptic_powder"
+	high_capacity
+		initial_volume = 500
+
+/obj/item/reagent_containers/mender_refill_cartridge/burn
+	name = "burn auto-mender refill cartridge"
+	initial_reagents = "silver_sulfadiazine"
+	high_capacity
+		initial_volume = 500
+
+/obj/item/reagent_containers/mender_refill_cartridge/both
+	name = "synthflesh auto-mender refill cartridge"
+	initial_reagents = "synthflesh"
+	high_capacity
+		initial_volume = 500

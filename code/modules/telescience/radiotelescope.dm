@@ -34,7 +34,7 @@
 
 		onclose(user, "telescope", src)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			callJsFunc(user, "setRef", list("\ref[src]")) //This is shit but without it, it calls the JS before the window is open and doesn't work.
 			loadContent("Starmap", "#contentInner")
 
@@ -144,8 +144,8 @@
 						if(tracking_id)
 							if(tele_man.events_active.Find(tracking_id))
 								var/datum/telescope_event/E = tele_man.events_active[tracking_id]
-								var/posx = text2num(href_list["posx"])
-								var/posy = text2num(href_list["posy"])
+								var/posx = text2num_safe(href_list["posx"])
+								var/posy = text2num_safe(href_list["posy"])
 								var/distx = abs(posx - E.loc_x)
 								var/disty = abs(posy - E.loc_y)
 

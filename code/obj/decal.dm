@@ -15,17 +15,9 @@
 
 		if (!real_name)
 			real_name = name
-
-	pooled()
-		..()
-
-
-	unpooled()
-		..()
+		src.flags |= UNCRUSHABLE
 
 	proc/setup(var/L,var/list/viral_list)
-		set_loc(L)
-
 		if (random_icon_states && length(src.random_icon_states) > 0)
 			src.icon_state = pick(src.random_icon_states)
 		if (src.random_dir)
@@ -71,7 +63,7 @@
 	blend_mode = 2
 
 	New()
-		src.filters += filter(type="motion_blur", x=0, y=3)
+		add_filter("motion blur", 1, motion_blur_filter(x=0, y=3))
 		..()
 
 /obj/decal/skeleton
@@ -128,7 +120,7 @@
 	mouse_opacity = 0
 	New(var/atom/location)
 		src.set_loc(location)
-		SPAWN_DBG(2 SECONDS) qdel(src)
+		SPAWN(2 SECONDS) qdel(src)
 		return ..(location)
 
 /obj/decal/shockwave
@@ -143,7 +135,7 @@
 	mouse_opacity = 0
 	New(var/atom/location)
 		src.set_loc(location)
-		SPAWN_DBG(2 SECONDS) qdel(src)
+		SPAWN(2 SECONDS) qdel(src)
 		return ..(location)
 
 /obj/decal/point
@@ -155,7 +147,7 @@
 	plane = PLANE_HUD
 	anchored = 1
 
-proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=0)
+proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=INVIS_NONE)
 	// note that `target` can also be a turf, but byond sux and I can't declare the var as atom because areas don't have vis_contents
 	var/obj/decal/point/point = new
 	point.pixel_x = pixel_x
@@ -163,7 +155,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	point.color = color
 	point.invisibility = invisibility
 	target.vis_contents += point
-	SPAWN_DBG(time)
+	SPAWN(time)
 		if(target)
 			target.vis_contents -= point
 		qdel(point)
@@ -238,7 +230,7 @@ obj/decal/fakeobjects
 
 obj/decal/fakeobjects/cargopad
 	name = "Cargo Pad"
-	desc = "Used to recieve objects transported by a Cargo Transporter."
+	desc = "Used to receive objects transported by a Cargo Transporter."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "cargopad"
 	anchored = 1
@@ -377,7 +369,7 @@ obj/decal/fakeobjects/teleport_pad
 	name = "PCB constructor"
 	desc = "A combination pick and place machine and wave soldering gizmo.  For making boards.  Buddy boards.   Well, it would if the interface wasn't broken."
 	icon = 'icons/obj/manufacturer.dmi'
-	icon_state = "fab"
+	icon_state = "fab-general"
 	anchored = 1
 	density = 1
 
@@ -403,7 +395,7 @@ obj/decal/fakeobjects/teleport_pad
 	desc = "Oh my!!"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "lum"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	blood_DNA = null
 	blood_type = null
 
@@ -415,14 +407,14 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0) // stolen from window.dm
+	Cross(atom/movable/mover) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
 			return 1
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || src.dir == SOUTH || src.dir == NORTH)
 			return 0
-		if(get_dir(loc, target) == dir)
+		if(get_dir(loc, mover) & dir)
 
 			return !density
 		else
@@ -431,7 +423,7 @@ obj/decal/fakeobjects/teleport_pad
 	CheckExit(atom/movable/O as mob|obj, target as turf)
 		if (!src.density)
 			return 1
-		if (get_dir(O.loc, target) == src.dir)
+		if (get_dir(O.loc, target) & src.dir)
 			return 0
 		return 1
 
@@ -443,7 +435,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 
 	rotatable = 0
 	foldable = 0
@@ -464,12 +456,12 @@ obj/decal/fakeobjects/teleport_pad
 			user.visible_message("<span class='notice'><b>[M]</b> climbs up on [src]!</span>", "<span class='notice'>You climb up on [src].</span>")
 			buckle_in(M, user, 1)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0) // stolen from window.dm
+	Cross(atom/movable/mover) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
 			return 1
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || src.dir == SOUTH || src.dir == NORTH)
 			return 0
-		if(get_dir(loc, target) == dir)
+		if(get_dir(loc, mover) & dir)
 
 			return !density
 		else
@@ -478,7 +470,7 @@ obj/decal/fakeobjects/teleport_pad
 	CheckExit(atom/movable/O as mob|obj, target as turf)
 		if (!src.density)
 			return 1
-		if (get_dir(O.loc, target) == src.dir)
+		if (get_dir(O.loc, target) & src.dir)
 			return 0
 		return 1
 
@@ -515,12 +507,6 @@ obj/decal/fakeobjects/teleport_pad
 		if (prob(20))
 			new /obj/decal/alienflower(src.loc)
 
-	unpooled()
-		..()
-		src.set_dir(pick(cardinal))
-		if (prob(20))
-			new /obj/decal/alienflower(src.loc)
-
 /obj/decal/icefloor
 	name = "ice"
 	desc = "Slippery!"
@@ -530,9 +516,9 @@ obj/decal/fakeobjects/teleport_pad
 	opacity = 0
 	anchored = 1
 	plane = PLANE_FLOOR
-	event_handler_flags = USE_HASENTERED
 
-/obj/decal/icefloor/HasEntered(var/atom/movable/AM)
+/obj/decal/icefloor/Crossed(atom/movable/AM)
+	..()
 	if (iscarbon(AM))
 		var/mob/M =	AM
 		// drsingh fix for undefined variable mob/living/carbon/monkey/var/shoes
@@ -540,7 +526,7 @@ obj/decal/fakeobjects/teleport_pad
 		if (M.getStatusDuration("weakened") || M.getStatusDuration("stunned") || M.getStatusDuration("frozen"))
 			return
 
-		if (M.slip(0))
+		if (!(M.bioHolder?.HasEffect("cold_resist") > 1) && M.slip(walking_matters = 1))
 			boutput(M, "<span class='alert'>You slipped on [src]!</span>")
 			if (prob(5))
 				M.TakeDamage("head", 5, 0, 0, DAMAGE_BLUNT)

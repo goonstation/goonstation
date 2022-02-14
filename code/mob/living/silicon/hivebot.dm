@@ -52,7 +52,7 @@
 
 /mob/living/silicon/hivebot/New(loc, mainframe)
 	boutput(src, "<span class='notice'>Your icons have been generated!</span>")
-	updateicon()
+	UpdateIcon()
 
 	if (mainframe)
 		dependent = 1
@@ -65,7 +65,7 @@
 	src.radio = new /obj/item/device/radio/headset/command/ai(src)
 	src.ears = src.radio
 
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		if (!src.cell)
 			src.cell = new /obj/item/cell/shell_cell/charged (src)
 		src.camera = new /obj/machinery/camera(src)
@@ -90,11 +90,11 @@
 	src.sight |= SEE_OBJS
 
 	src.see_in_dark = SEE_DARK_FULL
-	src.see_invisible = 2
-	src.updateicon()
+	src.see_invisible = INVIS_CLOAK
+	src.UpdateIcon()
 /*
 	if(src.client)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/key = src.ckey
 			recently_dead += key
 			sleep(recently_time)
@@ -260,7 +260,7 @@
 		if ("twitch")
 			message = "<B>[src]</B> twitches."
 			m_type = 1
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/old_x = src.pixel_x
 				var/old_y = src.pixel_y
 				src.pixel_x += rand(-2,2)
@@ -272,7 +272,7 @@
 		if ("twitch_v","twitch_s")
 			message = "<B>[src]</B> twitches violently."
 			m_type = 1
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/old_x = src.pixel_x
 				var/old_y = src.pixel_y
 				src.pixel_x += rand(-3,3)
@@ -381,7 +381,7 @@
 #ifdef DATALOGGER
 				game_stats.Increment("farts")
 #endif
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					src.emote_allowed = 1
 		else
 			src.show_text("Invalid Emote: [act]")
@@ -482,24 +482,17 @@
 		health_update_queue |= src
 	return
 
-/mob/living/silicon/hivebot/Bump(atom/movable/AM as mob|obj, yes)
-	SPAWN_DBG( 0 )
-		if ((!( yes ) || src.now_pushing))
-			return
-		if (!istype(AM, /atom/movable))
-			return
-		if (!src.now_pushing)
-			src.now_pushing = 1
-			if (!AM.anchored)
-				var/t = get_dir(src, AM)
-				step(AM, t)
-			src.now_pushing = null
-
-		if(AM)
-			AM.last_bumped = world.timeofday
-			AM.Bumped(src)
+/mob/living/silicon/hivebot/bump(atom/movable/AM as mob|obj)
+	if (src.now_pushing)
 		return
-	return
+	if (!istype(AM, /atom/movable))
+		return
+	if (!src.now_pushing)
+		src.now_pushing = 1
+		if (!AM.anchored)
+			var/t = get_dir(src, AM)
+			step(AM, t)
+		src.now_pushing = null
 
 /mob/living/silicon/hivebot/attackby(obj/item/W as obj, mob/user as mob)
 	if (isweldingtool(W))
@@ -536,7 +529,7 @@
 	else if (istype(W, /obj/item/clothing/suit/bee))
 		boutput(user, "You stuff [src] into [W]! It fits surprisingly well.")
 		src.beebot = 1
-		src.updateicon()
+		src.UpdateIcon()
 		qdel(W)
 		return
 	else
@@ -552,14 +545,14 @@
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
 				user.visible_message("<span class='notice'>[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
 			if(INTENT_DISARM) //Shove
-				SPAWN_DBG(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
+				SPAWN(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
 				user.visible_message("<span class='alert'><B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B></span>")
 			if(INTENT_GRAB) //Shake
 				if(src.beebot == 1)
 					var/obj/item/clothing/suit/bee/B = new /obj/item/clothing/suit/bee(src.loc)
 					boutput(user, "You pull [B] off of [src]!")
 					src.beebot = 0
-					src.updateicon()
+					src.UpdateIcon()
 				else
 					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 30, 1, -2)
 					user.visible_message("<span class='alert'>[user] shakes [src] [pick_string("descriptors.txt", "borg_shake")]!</span>")
@@ -603,8 +596,7 @@
 			return 0
 	return 1
 
-/mob/living/silicon/hivebot/proc/updateicon()
-
+/mob/living/silicon/hivebot/update_icon()
 	src.overlays = null
 
 	if (isalive(src))
@@ -730,18 +722,14 @@ Frequency:
 	set name = "Recall to Mainframe"
 	return_mainframe()
 
-/mob/living/silicon/hivebot/proc/return_mainframe()
-	if(mainframe)
-		mainframe.return_to(src)
-		src.updateicon()
-	else
-		boutput(src, "<span class='alert'>You lack a dedicated mainframe!</span>")
-		return
+/mob/living/silicon/hivebot/return_mainframe()
+	..()
+	src.UpdateIcon()
 
 /mob/living/silicon/hivebot
 	clamp_values()
 		..()
-		sleeping = max(min(sleeping, 1), 0)
+		sleeping = clamp(sleeping, 0, 1)
 		bruteloss = max(bruteloss, 0)
 		fireloss = max(fireloss, 0)
 		if (src.stuttering)
@@ -798,7 +786,7 @@ Frequency:
 	..()
 
 	update_clothing()
-	updateicon()
+	UpdateIcon()
 
 	if (src.mainframe)
 		src.real_name = "SHELL/[src.mainframe]"
@@ -813,7 +801,7 @@ Frequency:
 
 /mob/living/silicon/hivebot/Logout()
 	..()
-	updateicon()
+	UpdateIcon()
 
 	src.real_name = "AI Shell [copytext("\ref[src]", 6, 11)]"
 	src.name = src.real_name
@@ -939,7 +927,7 @@ Frequency:
 /mob/living/silicon/hivebot/eyebot
 	name = "Eyebot"
 	icon_state = "eyebot"
-	health = 40
+	health = 25
 
 	jetpack = 1 //ZeWaka: I concur with ghostdrone commenter, fuck whoever made this. See spacemove.
 	var/jeton = 0
@@ -950,7 +938,7 @@ Frequency:
 		src.attach_hud(hud)
 		if(!bioHolder)
 			bioHolder = new/datum/bioHolder( src )
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src.module)
 				qdel(src.module)
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/construction))
@@ -999,7 +987,7 @@ Frequency:
 		if (C.tg_controls)
 			C.apply_keybind("robot_tg")
 
-	updateicon() // Haine wandered in here and just junked up this code with bees.  I'm so sorry it's so ugly aaaa
+	update_icon() // Haine wandered in here and just junked up this code with bees.  I'm so sorry it's so ugly aaaa
 		src.overlays = null
 
 		if(isalive(src))
@@ -1010,7 +998,7 @@ Frequency:
 					else
 						src.icon_state = "[initial(icon_state)]"
 				else
-					SPAWN_DBG(0)
+					SPAWN(0)
 						while(src.pixel_y < 10)
 							src.pixel_y++
 							sleep(0.1 SECONDS)

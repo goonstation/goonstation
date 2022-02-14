@@ -25,6 +25,7 @@
 /obj/machinery/computer/pod/old/swf
 	name = "Magix System IV"
 	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorceror's Edition"
+	icon_state = "wizard"
 	circuit_type = /obj/item/circuitboard/swfdoor
 
 	attack_hand(var/mob/user as mob)
@@ -43,7 +44,7 @@
 		return
 	for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				M.open()
 				return
 	sleep(2 SECONDS)
@@ -57,14 +58,14 @@
 	sleep(5 SECONDS)
 	for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				M.close()
 				return
 	return
 
 /obj/machinery/computer/pod/New()
 	..()
-	SPAWN_DBG( 5 )
+	SPAWN( 5 )
 		for(var/obj/machinery/mass_driver/M as anything in machine_registry[MACHINES_MASSDRIVERS])
 			if (M.id == src.id)
 				src.connected = M
@@ -119,7 +120,7 @@
 		if (src.time > 0)
 			src.time = round(src.time) - 1
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				alarm()
 				src.time = 0
 				src.timing = 0
@@ -133,7 +134,7 @@
 		src.add_dialog(usr)
 		if (href_list["spell_teleport"])
 			//src.TPR = 1
-			//SPAWN_DBG(1 MINUTE)
+			//SPAWN(1 MINUTE)
 			//	if(src)
 			//		src.TPR = 0
 			//		src.updateDialog()
@@ -142,8 +143,8 @@
 			usr.teleportscroll(1, 2, src)
 			return
 		if (href_list["power"])
-			var/t = text2num(href_list["power"])
-			t = min(max(0.25, t), 16)
+			var/t = text2num_safe(href_list["power"])
+			t = clamp(t, 0.25, 16)
 			if (src.connected)
 				src.connected.power = t
 		else
@@ -151,22 +152,22 @@
 				src.alarm()
 			else
 				if (href_list["time"])
-					src.timing = text2num(href_list["time"])
+					src.timing = text2num_safe(href_list["time"])
 				else
 					if (href_list["tp"])
-						var/tp = text2num(href_list["tp"])
+						var/tp = text2num_safe(href_list["tp"])
 						src.time += tp
-						src.time = min(max(round(src.time), 0), 120)
+						src.time = clamp(round(src.time), 0, 120)
 					else
 						if (href_list["door"])
 							for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 								if (M.id == src.id)
 									if (M.density)
-										SPAWN_DBG( 0 )
+										SPAWN( 0 )
 											M.open()
 											return
 									else
-										SPAWN_DBG( 0 )
+										SPAWN( 0 )
 											M.close()
 											return
 								//Foreach goto(298)

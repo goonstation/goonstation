@@ -12,7 +12,7 @@
 		if (forceartiorigin)
 			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 
 		gulp_size = rand(2, 10) * 5 //How fast will you drink from this? Who knows!
@@ -144,6 +144,7 @@
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
 	update_icon()
+
 		return //Can't be activated, so the icon should never change
 
 	smash()

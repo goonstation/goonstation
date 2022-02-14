@@ -18,6 +18,8 @@
 // This proc converts a hex color value ("#420CAB") to an RGB list
 // Clamps each of the RGB values between 50 and 190
 /proc/fix_colors(var/hex)
+	if(length(hex) != 7)
+		hex = fix_hex(hex)
 	var/list/L = hex_to_rgb_list(hex)
 	if(isnull(L))
 		return rgb(22, 210, 22)
@@ -28,6 +30,8 @@
 		return rgb(L[1], L[2], L[3])
 	return rgb(22, 210, 22)
 
+/proc/fix_hex(hex)
+	return copytext(hex + "000000", 1, 8)
 
 #define COLOR_MATRIX_PROTANOPIA_LABEL "protanopia"
 #define COLOR_MATRIX_PROTANOPIA list(0.55, 0.45, 0.00, 0.00,\

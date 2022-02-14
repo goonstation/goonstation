@@ -29,6 +29,7 @@
 	var/previous_heal = 0
 	var/portable = 0 //Are we part of a port-a-clone?
 	var/id = null
+	var/emagged = FALSE
 
 	var/cloneslave = 0 //Is a traitor enslaving the clones?
 	var/mob/implant_master = null // Who controls the clones?
@@ -47,8 +48,7 @@
 	var/message = null
 	var/list/mailgroups
 	var/net_id = null
-	var/pdafrequency = 1149
-	var/datum/radio_frequency/pda_connection
+	var/pdafrequency = FREQ_PDA
 
 	var/datum/light/light
 
@@ -69,7 +69,7 @@
 
 		src.create_reagents(100)
 
-		src.update_icon()
+		src.UpdateIcon()
 		genResearch.clonepods.Add(src) //This will be used for genetics bonuses when cloning
 
 		light = new /datum/light/point
@@ -78,15 +78,13 @@
 		light.set_height(0.75)
 		light.attach(src)
 
-		SPAWN_DBG(10 SECONDS)
-			if (radio_controller)
-				pda_connection = radio_controller.add_object(src, "[pdafrequency]")
-			if (!src.net_id)
-				src.net_id = generate_net_id(src)
+		if (!src.net_id)
+			src.net_id = generate_net_id(src)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+
 
 	disposing()
 		mailgroups.len = 0
-		radio_controller.remove_object(src, "[pdafrequency]")
 		genResearch?.clonepods?.Remove(src) //Bye bye
 		connected?.linked_pods -= src
 		if(connected?.scanner?.pods)
@@ -120,12 +118,9 @@
 			msg = src.message
 		else if (!msg)
 			return
-		if(!pda_connection)
-			return
 
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
-		newsignal.transmission_method = TRANSMISSION_RADIO
 		newsignal.data["command"] = "text_message"
 		newsignal.data["sender_name"] = "CLONEPOD-MAILBOT"
 		newsignal.data["message"] = "[msg]"
@@ -134,7 +129,7 @@
 		newsignal.data["group"] = mailgroups + MGA_CLONER
 		newsignal.data["sender"] = src.net_id
 
-		pda_connection.post_signal(src, newsignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
 
 	attack_hand(mob/user as mob)
 		interact_particle(user, src)
@@ -158,7 +153,7 @@
 	is_open_container()
 		return 2
 
-	proc/update_icon()
+	update_icon()
 		if (src.portable) // no need here
 			return
 		if (src.mess)
@@ -185,11 +180,11 @@
 
 		// Create a new human and grow it while we wait for a mind
 		src.occupant = new /mob/living/carbon/human/clone(src)
-		src.update_icon()
+		src.UpdateIcon()
 
 		//Get the clone body ready. They start out with a bunch of damage right off.
 		// changing this to takedamage which should hopefully apply it right away
-		// SPAWN_DBG(0.5 SECONDS) //Organs may not exist yet if we call this right away.
+		// SPAWN(0.5 SECONDS) //Organs may not exist yet if we call this right away.
 		// 	random_brute_damage(src.occupant, 90, 1)
 		src.occupant.TakeDamage("chest", 90, 0, 0, DAMAGE_BLUNT)
 
@@ -210,7 +205,7 @@
 	// Start cloning someone (transferring mind + DNA into new body),
 	// starting a new clone cycle if needed
 	// Returns 1 (stated) or 0 (failed to start for some reason)
-	proc/growclone(mob/ghost as mob, var/clonename, var/datum/mind/mindref, var/datum/bioHolder/oldholder, var/datum/abilityHolder/oldabilities, var/list/traits)
+	proc/growclone(mob/ghost as mob, var/clonename, var/datum/mind/mindref, var/datum/bioHolder/oldholder, var/datum/abilityHolder/oldabilities, var/datum/traitHolder/traits)
 		if (((!ghost) || (!ghost.client)) || src.mess || src.attempting)
 			return 0
 
@@ -238,8 +233,10 @@
 
 		if (istype(oldholder))
 			oldholder.clone_generation++
-			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = connected?.gen_analysis)
 			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.mutant_race?.type)
+			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = connected?.gen_analysis)
+			if(oldholder?.mobAppearance?.mutant_race?.dna_mutagen_banned)
+				src.occupant?.set_mutantrace(null)
 			if(ishuman(src.occupant))
 				var/mob/living/carbon/human/H = src.occupant
 				H.update_colorful_parts()
@@ -265,8 +262,8 @@
 				src.occupant.unlock_medal("Quit Cloning Around")
 
 		src.mess = 0
-		if (length(traits) && src.occupant.traitHolder)
-			src.occupant.traitHolder.traits = traits
+		if (!isnull(traits) && src.occupant.traitHolder)
+			traits.copy_to(src.occupant.traitHolder)
 			if (src.occupant.traitHolder.hasTrait("puritan"))
 				src.mess = 1
 				// Puritans have a bad time.
@@ -339,7 +336,7 @@
 			else
 				if (src.occupant.mind && ticker.mode)
 					if (!src.occupant.mind.special_role)
-						src.occupant.mind.special_role = "mindslave"
+						src.occupant.mind.special_role = ROLE_MINDSLAVE
 					if (!(src.occupant.mind in ticker.mode.Agimmicks))
 						ticker.mode.Agimmicks += src.occupant.mind
 					src.occupant.mind.master = implant_master.ckey
@@ -421,7 +418,7 @@
 					src.failed_tick_counter++
 					if (src.failed_tick_counter == (MAX_FAILED_CLONE_TICKS / 2)) // halfway to ejection
 						src.send_pda_message("Low Biomatter: Preparing to Eject Clone")
-				src.update_icon()
+				src.UpdateIcon()
 				power_usage = 200
 				return ..()
 
@@ -483,7 +480,7 @@
 					src.send_pda_message("Cloning Process Complete")
 					src.go_out(1)
 				else // go_out() updates icon too, so vOv
-					src.update_icon()
+					src.UpdateIcon()
 
 				power_usage = 7500
 				return ..()
@@ -518,7 +515,7 @@
 			src.failed_tick_counter = 0
 			src.locked = 0
 			if (!src.mess)
-				src.update_icon()
+				src.UpdateIcon()
 			power_usage = 200
 
 			if (!src.operating && src.auto_mode)
@@ -532,6 +529,7 @@
 		return ..()
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		src.emagged = TRUE
 		if (isnull(src.occupant))
 			return 0
 		if (user)
@@ -597,13 +595,8 @@
 			logTheThing("combat", src, user, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 			cloneslave = 1
 			implant_master = user
-			// Clone armies are not allowed to use speed or efficiency modules under article 7.2 p5 of the space geneva convention
-			is_speedy = 1
-			is_efficient = 1
-			speed_bonus = DEFAULT_SPEED_BONUS
-			meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 			light.enable()
-			src.update_icon()
+			src.UpdateIcon()
 			user.drop_item()
 			qdel(W)
 			return
@@ -621,7 +614,7 @@
 				boutput(user,"<span class='alert'>The mindslave cloning module falls to the floor with a dull thunk!</span>")
 				playsound(src.loc, "sound/effects/thunk.ogg", 50, 0)
 				light.disable()
-				src.update_icon()
+				src.UpdateIcon()
 			else
 				boutput(user,"<span class='alert'>You were interrupted!</span>")
 			return
@@ -630,6 +623,7 @@
 			..()
 
 	on_reagent_change()
+		..()
 		for(var/reagent_id in src.reagents.reagent_list)
 			if (reagent_id in clonepod_accepted_reagents)
 				var/datum/reagent/theReagent = src.reagents.reagent_list[reagent_id]
@@ -650,7 +644,7 @@
 		src.connected.currentStatusMessage["text"] = message
 		src.connected.currentStatusMessage["status"] = status
 		tgui_process.update_uis(src)
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			if(src.connected.currentStatusMessage == message)
 				src.connected.currentStatusMessage["text"] = ""
 				src.connected.currentStatusMessage["status"] = ""
@@ -660,7 +654,7 @@
 		set src in oview(1)
 		set category = "Local"
 
-		if (!isalive(usr))
+		if (!isalive(usr) || iswraith(usr))
 			return
 		src.go_out()
 		add_fingerprint(usr)
@@ -705,7 +699,7 @@
 			if (src.occupant)
 				src.occupant.set_loc(get_turf(src))
 				src.occupant = null
-			src.update_icon()
+			src.UpdateIcon()
 			return
 
 		if (!src.occupant)
@@ -726,9 +720,10 @@
 
 		src.occupant.changeStatus("paralysis", 10 SECONDS)
 		src.occupant.set_loc(get_turf(src))
+		if (src.emagged) //huck em
+			src.occupant.throw_at(get_edge_target_turf(src, pick(alldirs)), 10, 3)
 		src.occupant = null
-		src.update_icon()
-		return
+		src.UpdateIcon()
 
 	proc/malfunction()
 		if (src.occupant)
@@ -736,9 +731,9 @@
 			src.send_pda_message("Critical Error")
 			src.mess = 1
 			src.failed_tick_counter = 0
-			src.update_icon()
+			src.UpdateIcon()
 			src.occupant.ghostize()
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				qdel(src.occupant)
 		return
 
@@ -830,8 +825,8 @@
 		..()
 		UnsubscribeProcess()
 		src.create_reagents(100)
-		src.update_icon(1)
-		SPAWN_DBG(0)
+		src.UpdateIcon(1)
+		SPAWN(0)
 			src.find_pods()
 
 	disposing()
@@ -857,7 +852,7 @@
 	verb/eject()
 		set src in oview(1)
 		set category = "Local"
-		if (!isalive(usr)) return
+		if (!isalive(usr) || iswraith(usr)) return
 		if (src.process_timer > 0) return
 		src.eject_meats()
 		src.go_out()
@@ -902,12 +897,13 @@
 
 		if (process_timer <= 0)
 			UnsubscribeProcess()
-			update_icon(1)
+			UpdateIcon(1)
 
 		return
 
 	on_reagent_change()
-		src.update_icon(0)
+		..()
+		src.UpdateIcon(0)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged)
@@ -1028,7 +1024,7 @@
 		src.process_timer = ceil(process_total * (src.upgraded ? 0.4 : 0.8))
 		src.process_per_tick = process_total / process_timer
 
-		src.update_icon(1)
+		src.UpdateIcon(1)
 		SubscribeToProcess()
 
 	attackby(obj/item/grab/G as obj, mob/user as mob)
@@ -1049,7 +1045,7 @@
 				boutput(user, "<span class='alert'>There is already enough meat in there! You should not exceed the maximum safe meat level!</span>")
 				return
 
-			if (G.contents && G.contents.len > 0)
+			if (G.contents && length(G.contents) > 0 && !istype(G, /obj/item/reagent_containers/food/snacks/shell))
 				for (var/obj/item/W in G.contents)
 					if (istype(W, /obj/item/skull) || istype(W, /obj/item/organ/brain) || istype(W, /obj/item/organ/eye))
 						continue
@@ -1083,7 +1079,7 @@
 		actions.start(new /datum/action/bar/icon/put_in_reclaimer(G.affecting, src, G, 50), user)
 		return
 
-	proc/update_icon(var/update_grindpaddle=0)
+	update_icon(var/update_grindpaddle=0)
 		var/fluid_level = ((src.reagents.total_volume >= (src.reagents.maximum_volume * 0.6)) ? 2 : (src.reagents.total_volume >= (src.reagents.maximum_volume * 0.2) ? 1 : 0))
 
 		src.icon_state = "grinder[fluid_level]"
@@ -1135,7 +1131,7 @@
 
 		src.start_cycle()
 
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user)) // how????????? ?
 				user.suiciding = 0 // just in case I guess
 		return 1
@@ -1187,9 +1183,12 @@
 				for (var/obj/item/implant/I in target.implant)
 					if (istype(I,/obj/item/implant/projectile))
 						continue
-					var/obj/item/implantcase/newcase = new /obj/item/implantcase(target.loc, usedimplant = I)
 					I.on_remove(target)
 					target.implant.Remove(I)
+					if (istype(I,/obj/item/implant/cloner))
+						qdel(I)
+						continue
+					var/obj/item/implantcase/newcase = new /obj/item/implantcase(target.loc, usedimplant = I)
 					var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")
 					wadblood.color = target.blood_color
 					newcase.UpdateOverlays(wadblood, "blood")

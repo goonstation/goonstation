@@ -19,6 +19,15 @@
 		name += "[pick("AreoU","UroO","ArU","AoOro","AhRu")][pick("ndE","Ned","nhd")]"
 	cluwne
 		laugh_rate = 18
+		cure = "Incurable"
+
+/datum/ailment/disease/cluwneing_around/on_infection(var/mob/living/affected_mob,var/datum/ailment_data/D)
+	..()
+	if (D)
+		src.oldname = affected_mob.real_name
+		src.oldjob = affected_mob.job
+	if (istype(affected_mob.wear_mask, /obj/item/clothing/mask/cursedclown_hat))
+		D.cure = "Incurable"
 
 /datum/ailment/disease/cluwneing_around/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	if (..())
@@ -48,12 +57,14 @@
 				affected_mob.say("THE RINGMASTER DOESN'T RUN THE CIRCUS... HUNKE!")
 
 		if(3)
+			if(D.cure != "Incurable")
+				D.cure = "Incurable"
+
 			if (affected_mob.job != "Cluwne")
-				//src.oldname = affected_mob.real_name
 				affected_mob.real_name = "cluwne"
 				affected_mob.stuttering = 120
-				//src.oldjob = affected_mob.job
 				affected_mob.job = "Cluwne"
+				affected_mob.UpdateName()
 
 			if(prob(10) && isturf(affected_mob.loc))
 				var/turf/T = affected_mob.loc
@@ -99,7 +110,7 @@
 					clownmask.cant_self_remove = 1
 					clownmask.cant_other_remove = 1
 					affected_mob:equip_if_possible( clownmask, affected_mob:slot_wear_mask) //Hope you like your new mask sucka!!!!!
-					SPAWN_DBG(2.5 SECONDS) // Don't remove.
+					SPAWN(2.5 SECONDS) // Don't remove.
 						if (affected_mob) affected_mob.assign_gimmick_skull() // The mask IS your new face (Convair880).
 		if(4)
 			if(prob(10))
@@ -116,7 +127,7 @@
 					clownmask.cant_self_remove = 1
 					clownmask.cant_other_remove = 1
 					affected_mob:equip_if_possible( clownmask, affected_mob:slot_wear_mask)
-					SPAWN_DBG(2.5 SECONDS) // Don't remove.
+					SPAWN(2.5 SECONDS) // Don't remove.
 						if (affected_mob) affected_mob.assign_gimmick_skull() // The mask IS your new face (Convair880).
 
 			if(prob(10))
@@ -191,20 +202,23 @@
 								boutput(affected_mob, "<span class='alert'>You feel clumsy and suddenly slip!</span>")
 
 
-/datum/ailment/disease/cluwneing_around/cluwne/on_remove(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/disease/cluwneing_around/on_remove(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	if (affected_mob)
-		if (src.oldname && src.oldjob)
+		if (src.oldname)
 			affected_mob.real_name = src.oldname
+		if (src.oldjob)
 			affected_mob.job = src.oldjob
 		if(affected_mob.job == "Cluwne" )
 			affected_mob.job = "Cleansed Cluwne"
 		boutput(affected_mob, "<span class='notice'>You feel like yourself again.</span>")
+		affected_mob.UpdateName()
 		for(var/obj/item/clothing/W in affected_mob)
-			if (W.cant_self_remove && W.cant_other_remove)//this might not be a great way to do this.
+			if(findtext("[W.name]","cursed") && W.cant_self_remove && W.cant_other_remove)
 				affected_mob.u_equip(W)
 				if (W)
 					W.set_loc(affected_mob.loc)
 					W.dropped(affected_mob)
 					W.layer = initial(W.layer)
+		affected_mob.change_misstep_chance(-INFINITY)
 		affected_mob = null
 	..()

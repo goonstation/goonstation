@@ -13,6 +13,9 @@
 			return
 		halloween_mode = 1
 
+		if(prob(50))
+			repaint_space(TRUE)
+
 		bust_lights()
 
 		//List of major spooky things (only one is spawned)

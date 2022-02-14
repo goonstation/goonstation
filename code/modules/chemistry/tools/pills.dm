@@ -21,15 +21,6 @@
 		..()
 		init()
 
-	pooled(var/pooltype)
-		src.set_loc(locate(1, 1, 1)) // Get them out of mob.contents.
-		..()
-		return
-
-	unpooled(var/poolname)
-		init()
-		..(poolname)
-
 	proc/init()
 		reagents = new/datum/reagents(100)
 		reagents.my_atom = src
@@ -45,13 +36,13 @@
 		if (iscarbon(user) || ismobcritter(user))
 			user.visible_message("[user] swallows [src].",\
 			"<span class='notice'>You swallow [src].</span>")
-			logTheThing("combat", user, null, "swallows a pill [log_reagents(src)] at [log_loc(user)].")
+			logTheThing("combat", user, null, "swallows a [src.name] [log_reagents(src)] at [log_loc(user)].")
 			if (reagents.total_volume)
 				reagents.reaction(user, INGEST)
 				sleep(0.1 SECONDS)
 				reagents.trans_to(user, reagents.total_volume)
 			user.u_equip(src)
-			pool(src)
+			qdel(src)
 		return
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
@@ -70,7 +61,7 @@
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to swallow [src].</span>",\
 				"<span class='alert'>You attempt to force [M] to swallow [src].</span>")
-				logTheThing("combat", user, M, "tries to force-feed a pill [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
+				logTheThing("combat", user, M, "tries to force-feed a [src.name] [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
 
 				if (!do_mob(user, M))
 					if (user && ismob(user))
@@ -82,13 +73,13 @@
 				user.visible_message("<span class='alert'>[user] forces [M] to swallow [src].</span>",\
 				"<span class='alert'>You force [M] to swallow [src].</span>")
 
-			logTheThing("combat", user, M, "[user == M ? "swallows" : "makes [constructTarget(M,"combat")] swallow"] a pill [log_reagents(src)] at [log_loc(user)].")
+			logTheThing("combat", user, M, "[user == M ? "swallows" : "makes [constructTarget(M,"combat")] swallow"] a [src.name] [log_reagents(src)] at [log_loc(user)].")
 			if (reagents.total_volume)
 				reagents.reaction(M, INGEST)
 				sleep(0.1 SECONDS)
 				reagents.trans_to(M, reagents.total_volume)
 			user.u_equip(src)
-			pool(src)
+			qdel(src)
 			return 1
 
 		return 0
@@ -123,10 +114,10 @@
 				user.visible_message("<span class='alert'>[user] puts something in [target].</span>",\
 				"<span class='success'>You dissolve [src] in [target].</span>")
 
-			logTheThing("combat", user, null, "dissolves a pill [log_reagents(src)] in [target] at [log_loc(user)].")
+			logTheThing("combat", user, null, "dissolves a [src.name] [log_reagents(src)] in [target] at [log_loc(user)].")
 			reagents.trans_to(target, src.reagents.total_volume)
 			user.u_equip(src)
-			pool(src)
+			qdel(src)
 			return
 		else
 			return ..()
@@ -150,17 +141,15 @@
 	name = "charcoal pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
-	initial_volume = 100
 
 	New()
 		..()
-		reagents.add_reagent("charcoal", 50)
+		reagents.add_reagent("charcoal", 20)
 
 /obj/item/reagent_containers/pill/calomel
 	name = "calomel pill"
 	desc = "Can be used to purge impurities, but is highly toxic itself."
 	icon_state = "pill3"
-	initial_volume = 100
 
 	New()
 		..()
@@ -170,7 +159,6 @@
 	name = "cyanide pill"
 	desc = "Highly lethal."
 	icon_state = "pill5"
-	initial_volume = 100
 
 	New()
 		..()
@@ -180,7 +168,6 @@
 	name = "morphine pill"
 	desc = "Used to treat severe pain. Highly addictive."
 	icon_state = "pill8"
-	initial_volume = 100
 
 	New()
 		..()
@@ -188,29 +175,26 @@
 
 /obj/item/reagent_containers/pill/salicylic_acid
 	name = "analgesic pill"
-	desc = "Commonly used to treat moderate pain and fevers."
+	desc = "A painkiller used to treat minor injuries." 
 	icon_state = "pill4"
-	initial_volume = 100
 
 	New()
 		..()
-		reagents.add_reagent("salicylic_acid", 20)
+		reagents.add_reagent("salicylic_acid", 10)
 
 /obj/item/reagent_containers/pill/menthol
 	name = "menthol pill"
 	desc = "This pill looks kinda cool. It's used to treat moderate burns and fevers."
 	icon_state = "pill21"
-	initial_volume = 100
 
 	New()
 		..()
-		reagents.add_reagent("menthol", 20)
+		reagents.add_reagent("menthol", 10)
 
 /obj/item/reagent_containers/pill/silver_sulfadiazine
 	name = "silver sulfadiazine pill" //wtf
 	desc = "Used to treat burns, but it's not meant to be ingested. Welp."
 	icon_state = "pill11"
-	initial_volume = 100
 
 	New()
 		..()
@@ -220,7 +204,6 @@
 	name = "epinephrine pill"
 	desc = "Used to stabilize patients in crisis."
 	icon_state = "pill20"
-	initial_volume = 100
 
 	New()
 		..()
@@ -230,7 +213,6 @@
 	name = "salbutamol pill"
 	desc = "Used to treat respiratory distress."
 	icon_state = "pill16"
-	initial_volume = 100
 
 	New()
 		..()
@@ -240,7 +222,6 @@
 	name = "mutadone pill"
 	desc = "Used to cure genetic abnormalities."
 	icon_state = "pill18"
-	initial_volume = 100
 
 	New()
 		..()
@@ -250,7 +231,6 @@
 	name = "mannitol pill"
 	desc = "Used to treat cranial swelling."
 	icon_state = "pill19"
-	initial_volume = 100
 
 	New()
 		..()
@@ -260,7 +240,6 @@
 	name = "potassium iodide pill"
 	desc = "Used to treat radiation poisoning."
 	icon_state = "pill9"
-	initial_volume = 100
 
 	New()
 		..()
@@ -270,7 +249,6 @@
 	name = "\improper EZ-Hairgrowth pill"
 	desc = "The #1 hair growth product on the market! WARNING: Some side effects may occur."
 	icon_state = "pill6"
-	initial_volume = 100
 
 	New()
 		..()
@@ -282,7 +260,6 @@
 	name = "methamphetamine pill"
 	desc = "Methamphetamine is a highly effective and dangerous stimulant drug."
 	icon_state = "pill9"
-	initial_volume = 100
 
 	New()
 		..()
@@ -292,7 +269,6 @@
 	name = "crank pill"
 	desc = "A cheap and dirty stimulant drug, commonly used by space biker gangs."
 	icon_state = "pill4"
-	initial_volume = 100
 
 	New()
 		..()
@@ -302,7 +278,6 @@
 	name = "bath salts pill"
 	desc = "Sometimes packaged as a refreshing bathwater additive, these crystals are definitely not for human consumption."
 	icon_state = "pill1"
-	initial_volume = 100
 
 	New()
 		..()
@@ -312,7 +287,6 @@
 	name = "cat drugs pill"
 	desc = "Uhhh..."
 	icon_state = "pill5"
-	initial_volume = 100
 
 	New()
 		..()
@@ -321,7 +295,6 @@
 /obj/item/reagent_containers/pill/cyberpunk
 	name = "cyberpunk pill"
 	desc = "A cocktail of illicit designer drugs, who knows what might be in here."
-	initial_volume = 100
 	random_icon = 1
 
 	New()
@@ -347,7 +320,6 @@
 	name = "mannitol pill"
 	desc = "Used to treat cranial swelling."
 	icon_state = "pill1"
-	initial_volume = 100
 
 	New()
 		..()
@@ -357,27 +329,24 @@
 	name = "anti-toxins pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill2"
-	initial_volume = 100
 
 	New()
 		..()
-		reagents.add_reagent("charcoal", 50)
+		reagents.add_reagent("charcoal", 20)
 
 /obj/item/reagent_containers/pill/vr/salicylic_acid
 	name = "analgesic pill"
 	desc = "Commonly used to treat moderate pain and fevers."
 	icon_state = "pill3"
-	initial_volume = 100
 
 	New()
 		..()
-		reagents.add_reagent("salicylic_acid", 20)
+		reagents.add_reagent("salicylic_acid", 10)
 
 /obj/item/reagent_containers/pill/vr/salbutamol
 	name = "salbutamol pill"
 	desc = "Used to treat respiratory distress."
 	icon_state = "pill4"
-	initial_volume = 100
 
 	New()
 		..()

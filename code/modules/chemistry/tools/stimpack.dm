@@ -1,3 +1,8 @@
+/obj/item/storage/box/stimulants
+	name = "stimulants box"
+	desc = "A box containing 3 stimpacks. Use responsibly."
+	spawn_contents = list(/obj/item/stimpack = 3)
+
 /obj/item/stimpack
 	name = "Stimpack"
 	icon = 'icons/obj/items/items.dmi'
@@ -16,7 +21,7 @@
 		src.empty = 1
 		src.icon_state = "stims0"
 		boutput(user, "<span class='notice'>Ah! That's the stuff!</span>")
-		user.changeStatus("stimulants", 4 MINUTES)
+		user.changeStatus("stimulants", 3 MINUTES)
 		return
 
 /obj/item/stimpack/large_dose

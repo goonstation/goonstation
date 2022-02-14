@@ -199,7 +199,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.go_to_vr()
 		..()
 
@@ -212,7 +212,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.respawn_as_animal()
 		..()
 
@@ -228,7 +228,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.respawn_as_mentor_mouse()
 		..()
 
@@ -244,7 +244,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.respawn_as_admin_mouse()
 		..()
 
@@ -257,7 +257,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.enter_ghostdrone_queue()
 		..()
 
@@ -270,7 +270,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.go_to_deadbar()
 		..()
 
@@ -349,7 +349,6 @@
 	icon = 'icons/ui/context32x32.dmi'
 	var/datum/geneboothproduct/GBP = null
 	var/obj/machinery/genetics_booth/GB = null
-	var/spamt = 0
 
 	disposing()
 		GBP = null
@@ -363,14 +362,9 @@
 
 	checkRequirements(atom/target, mob/user)
 		. = FALSE
-		if (get_dist(target,user) <= 1 && isliving(user))
-			. = GBP && GB
-			if (GB?.occupant && world.time > spamt + 5)
-				user.show_text("[target] is currently occupied. Wait until it's done.", "blue")
-				spamt = world.time
-				. = FALSE
-			if(.)
-				GB.show_admin_panel(user)
+		if (GBP && GB && (get_dist(target,user) <= 1 && isliving(user)) && !GB?.occupant)
+			. = TRUE
+			GB.show_admin_panel(user)
 
 	buildBackgroundIcon(atom/target, mob/user)
 		var/image/background = image('icons/ui/context32x32.dmi', src, "[getBackground(target, user)]0")
@@ -597,7 +591,7 @@
 		execute(atom/target, mob/user)
 			..()
 			var/obj/machinery/vehicle/V = target
-			V.fire_main_weapon()
+			V.fire_main_weapon(user)
 
 	use_external_speaker
 		name = "Use External Speaker"
@@ -708,6 +702,9 @@
 	special
 		icon_background = "key_special"
 
+	black
+		icon_background = "keyb"
+
 
 /datum/contextAction/kudzu
 	icon = 'icons/ui/context16x16.dmi'
@@ -762,7 +759,7 @@
 
 	unstack
 		name = "Remove Layer"
-		desc = "Removes a layer of cake."
+		desc = "Remove a layer of cake."
 		icon_state = "unstack"
 
 		execute(var/atom/target, var/mob/user)
@@ -771,7 +768,7 @@
 
 	candle
 		name = "Extinguish"
-		desc = "Blows out the cake's candle."
+		desc = "Blow out the cake's candle."
 		icon_state = "candle"
 
 		execute(var/atom/target, var/mob/user)
@@ -780,7 +777,7 @@
 
 	pickup
 		name = "Pick Up"
-		desc = "Picks up the cake."
+		desc = "Pick up the cake."
 		icon_state = "up_arrow"
 
 		execute(var/atom/target, var/mob/user)
@@ -939,8 +936,8 @@
 		return TRUE
 
 	solitaire
-		name = "solitaire stack"
-		desc = "stacks cards with a slight offset."
+		name = "Solitaire Stack"
+		desc = "Stack cards with a slight offset."
 		icon_state = "solitaire"
 
 		execute(var/atom/target, var/mob/user)
@@ -948,8 +945,8 @@
 			card.solitaire(user)
 
 	fan
-		name = "fan"
-		desc = "spreads the cards into an easily readable fan."
+		name = "Fan"
+		desc = "Spread the cards into an easily readable fan."
 		icon_state = "fan"
 
 		execute(var/atom/target, var/mob/user)
@@ -961,8 +958,8 @@
 				group.fan(user)
 
 	stack
-		name = "stack"
-		desc = "gather the cards into a deck."
+		name = "Stack"
+		desc = "Gather the cards into a deck."
 		icon_state = "stack"
 
 		execute(var/atom/target, var/mob/user)
@@ -974,8 +971,8 @@
 				group.stack(user)
 
 	draw
-		name = "draw"
-		desc = "add a card to your hand."
+		name = "Draw"
+		desc = "Add a card to your hand."
 		icon_state = "draw"
 
 		execute(var/atom/target, var/mob/user)
@@ -983,8 +980,8 @@
 			card.draw(user)
 
 	draw_facedown
-		name = "draw face-down"
-		desc = "add a card to your hand face-down."
+		name = "Draw Face-down"
+		desc = "Add a card to your hand face-down."
 		icon_state = "draw_facedown"
 
 		execute(var/atom/target, var/mob/user)
@@ -992,8 +989,8 @@
 			card.draw(user,1)
 
 	draw_multiple
-		name = "draw multiple cards"
-		desc = "add many cards to your hand."
+		name = "Draw Multiple Cards"
+		desc = "Add many cards to your hand."
 		icon_state = "multiple"
 
 		execute(var/atom/target, var/mob/user)
@@ -1001,8 +998,8 @@
 			card.draw_multiple(user)
 
 	topdeck
-		name = "add to top of deck"
-		desc = "add cards to the top of the deck."
+		name = "Add to Top"
+		desc = "Add cards to the top of the deck."
 		icon_state = "deck_top"
 
 		execute(var/atom/target, var/mob/user)
@@ -1010,8 +1007,8 @@
 			group.top_or_bottom(user,user.equipped(),"top")
 
 	bottomdeck
-		name = "add to bottom of deck"
-		desc = "add cards to the top of the deck."
+		name = "Add to Bottom"
+		desc = "Add cards to the top of the deck."
 		icon_state = "deck_bottom"
 
 		execute(var/atom/target, var/mob/user)
@@ -1019,8 +1016,8 @@
 			card.top_or_bottom(user,user.equipped(),"bottom")
 
 	search
-		name = "search"
-		desc = "search for a card."
+		name = "Search"
+		desc = "Search for a card."
 		icon_state = "search"
 
 		execute(var/atom/target, var/mob/user)
@@ -1028,8 +1025,8 @@
 			group.search(user)
 
 	reveal
-		name = "reveal"
-		desc = "reveal the cards to all players nearby."
+		name = "Reveal"
+		desc = "Reveal the cards to all players nearby."
 		icon_state = "eye"
 
 		execute(var/atom/target, var/mob/user)
@@ -1037,19 +1034,19 @@
 			group.reveal(user)
 
 	pickup
-		name = "pick up"
-		desc = "do the thing."
+		name = "Pick Up"
+		desc = "Pick up cards."
 		icon_state = "up_arrow"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/cards = target
-			if(cards.loc == user)
-				return
+			if(cards.loc == user) //checks hand for card to allow taking from pockets/storage
+				user.u_equip(cards)
 			user.put_in_hand_or_drop(cards)
 
 	close
-		name = "close"
-		desc = "close this menu."
+		name = "Close"
+		desc = "Close this menu."
 		icon_state = "close"
 
 		execute(var/atom/target, var/mob/user)

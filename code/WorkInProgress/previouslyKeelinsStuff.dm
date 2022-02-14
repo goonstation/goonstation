@@ -316,7 +316,7 @@ var/reverse_mode = 0
 
 	proc/loop()
 		if (!active)
-			SPAWN_DBG(1 SECOND) loop()
+			SPAWN(1 SECOND) loop()
 			return
 
 		if (prob(1) && prob(50) && ismob(src.loc))
@@ -332,7 +332,7 @@ var/reverse_mode = 0
 
 		if (prob(3) && prob(50))
 			var/obj/o = new/obj/spook( get_turf(src) )
-			SPAWN_DBG(1 MINUTE) qdel(o)
+			SPAWN(1 MINUTE) qdel(o)
 
 		if (prob(25))
 			for(var/obj/storage/L in range(6, get_turf(src)))
@@ -343,11 +343,11 @@ var/reverse_mode = 0
 			for(var/obj/stool/chair/L in range(6, get_turf(src)))
 				if (prob(15)) L.rotate()
 
-		SPAWN_DBG(1 SECOND) loop()
+		SPAWN(1 SECOND) loop()
 		return
 
 	pickup(var/mob/living/M)
-		SPAWN_DBG(1 MINUTE) active = 1
+		SPAWN(1 MINUTE) active = 1
 
 	attack_self(var/mob/user)
 		if (user != loc)
@@ -381,7 +381,7 @@ var/reverse_mode = 0
 						var/datum/mind/M = user.mind
 						if (M) //Why would this happen? Why wouldn't it happen?
 							M.transfer_to(O)
-							SPAWN_DBG(1 MINUTE)
+							SPAWN(1 MINUTE)
 								if (M && oldmob)
 									var/mob/newmob = M.current
 									M.transfer_to(oldmob)
@@ -395,28 +395,28 @@ var/reverse_mode = 0
 						using = 1
 						boutput(user, "<span class='alert'>You can feel the power of the relic coursing through you...</span>")
 						user.bioHolder.AddEffect("telekinesis_drag")
-						SPAWN_DBG(2 MINUTES)
+						SPAWN(2 MINUTES)
 							using = 0
 							user.bioHolder.RemoveEffect("telekinesis_drag")
 					if ("Use the relic's power to heal your wounds")
 						var/obj/shield/s = new/obj/shield( get_turf(src) )
 						s.name = "energy"
-						SPAWN_DBG(1.3 SECONDS) qdel(s)
+						SPAWN(1.3 SECONDS) qdel(s)
 						user.changeStatus("stunned", 1 SECOND)
 						user.take_toxin_damage(-INFINITY)
 						user:HealDamage("All", 1000, 1000)
 						if (prob(75))
 							boutput(user, "<span class='alert'>The relic crumbles into nothingness...</span>")
 							qdel(src)
-						SPAWN_DBG(1 MINUTE) using = 0
+						SPAWN(1 MINUTE) using = 0
 					if ("Attempt to absorb the relic's power")
 						if (prob(1))
 							user.bioHolder.AddEffect("telekinesis_drag", 0, 0, 1) //because really
 							user.bioHolder.AddEffect("thermal_resist", 0, 0, 1) //if they're lucky enough to get this
-							user.bioHolder.AddEffect("xray", 0, 0, 1) //they're lucky enough to keep it
+							user.bioHolder.AddEffect("xray", 2, 0, 1) //they're lucky enough to keep it
 							user.bioHolder.AddEffect("hulk", 0, 0, 1) //probably
 							boutput(user, "<span class='alert'>The relic crumbles into nothingness...</span>")
-							src.invisibility = 101
+							src.invisibility = INVIS_ALWAYS
 							var/obj/effects/explosion/E = new/obj/effects/explosion( get_turf(src) )
 							E.fingerprintslast = src.fingerprintslast
 							sleep(0.5 SECONDS)
@@ -459,7 +459,7 @@ var/reverse_mode = 0
 /obj/effect_sparker
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "x4"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 
@@ -471,7 +471,7 @@ var/reverse_mode = 0
 		var/area/A = get_area(src)
 		if (A.active)
 			elecflash(src)
-		SPAWN_DBG(rand(10,300))
+		SPAWN(rand(10,300))
 			src.sparks()
 
 /proc/set_on_all()
@@ -560,7 +560,12 @@ var/reverse_mode = 0
 	opacity = 0
 	var/mob/living/carbon/human/my_target = null
 	var/weapon_name = null
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
+
+
+	disposing()
+		my_target = null
+		. = ..()
 
 /obj/fake_attacker/attackby()
 	step_away(src,my_target,2)
@@ -569,7 +574,8 @@ var/reverse_mode = 0
 	my_target.show_message("<span class='alert'><B>[src] has been attacked by [my_target] </B></span>", 1) //Lazy.
 	return
 
-/obj/fake_attacker/HasEntered(var/mob/M, somenumber)
+/obj/fake_attacker/Crossed(atom/movable/M)
+	..()
 	if (M == my_target)
 		step_away(src,my_target,2)
 		if (prob(30))
@@ -578,7 +584,7 @@ var/reverse_mode = 0
 
 /obj/fake_attacker/New(location, target)
 	..()
-	SPAWN_DBG(30 SECONDS)	qdel(src)
+	SPAWN(30 SECONDS)	qdel(src)
 	src.my_target = target
 	step_away(src,my_target,2)
 	process()
@@ -612,14 +618,14 @@ var/reverse_mode = 0
 						fake_blood(my_target)
 
 	if (prob(15)) step_away(src,my_target,2)
-	SPAWN_DBG(0.5 SECONDS) .()
+	SPAWN(0.5 SECONDS) .()
 
 /proc/fake_blood(var/mob/target)
 	var/obj/overlay/O = new/obj/overlay(target.loc)
 	O.name = "blood"
 	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
 	target << I
-	SPAWN_DBG(30 SECONDS)
+	SPAWN(30 SECONDS)
 		qdel(O)
 	return
 
@@ -672,8 +678,8 @@ var/reverse_mode = 0
 	while(current != target_turf)
 		if (steps > length) return 0
 		if (!current) return 0
-		if (current.density) return 0 //If we can avoid the more expensive CanPass check, let's
-		if (!current.CanPass(source, target_turf)) return 0
+		if (current.density) return 0 //If we can avoid the more expensive Cross check, let's
+		if (!current.Cross(source)) return 0
 
 		current = get_step_towards(current, target_turf)
 		steps++

@@ -89,6 +89,11 @@ ABSTRACT_TYPE(/obj/item/parts)
 			limb_data.holder = null
 		limb_data = null
 
+		if(ishuman(holder))
+			var/mob/living/carbon/human/H = holder
+			if(H.limbs.vars[src.slot] == src)
+				H.limbs.vars[src.slot] = null
+
 		if (holder)
 			if (holder.organHolder)
 				for(var/thing in holder.organHolder.organ_list)
@@ -97,8 +102,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 					if(holder.organHolder.organ_list[thing] == src)
 						holder.organHolder.organ_list[thing] = null
 
-			if (holder.organs)
-				holder.organs -= src
+			if (holder?.organs?[src.slot] == src)
+				holder.organs[src.slot] = null
 		holder = null
 
 		if (bones)
@@ -229,7 +234,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
 			holder = null
-			H.limbs.vars[src.slot] = null
+			if(H.limbs.vars[src.slot] == src) //BAD BAD HACK FUCK FUCK UGLY SHITCODE - Tarm
+				H.limbs.vars[src.slot] = null
 			if(remove_object)
 				src.remove_object = null
 				qdel(src)
@@ -254,6 +260,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 
 	//for humans
 	attach(var/mob/living/carbon/human/attachee,var/mob/attacher,var/both_legs = 0)
+		if(!can_act(attacher))
+			return
 		if(!src.easy_attach)
 			if(!surgeryCheck(attachee, attacher))
 				return
@@ -309,7 +317,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 			else
 				boutput(attacher, "<span class='alert'>You attach a [src] to your own stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
 
-			SPAWN_DBG(rand(150,200))
+			SPAWN(rand(150,200))
 				if(remove_stage == 2) src.remove()
 
 		attachee.update_clothing()
@@ -388,7 +396,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 
 	var/list/linepath = getline(src, destination)
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		/// Number of tiles where it should try to make a splatter
 		var/num_splats = rand(round(dist * 0.2), dist) + 1
 		for (var/turf/T in linepath)

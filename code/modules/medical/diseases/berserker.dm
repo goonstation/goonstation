@@ -24,7 +24,7 @@
 		if(2)
 			if (prob(5)) affected_mob.emote(pick("twitch", "scream"))
 			if (prob(5))
-				var/speak = pick("AAARRGGHHH!!!!", "GRR!!!", "FUCK!! FUUUUUUCK!!!", "FUCKING SHITCOCK!!", "WROOAAAGHHH!!")
+				var/speak = pick("AAARRGGHHH!!!!", "GRR!!!", "FUCK!! FUUUUUUCK!!!", "FUCKING SHIT!!", "WROOAAAGHHH!!")
 				affected_mob.say(speak)
 			if (prob(15))
 				for(var/mob/O in viewers(affected_mob, null))

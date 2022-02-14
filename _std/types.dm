@@ -109,12 +109,12 @@ proc/filtered_concrete_typesof(type, filter)
 	* Gets the instance of a singleton type (or a non-singleton type if you decide to use it on one).
 	*/
 proc/get_singleton(type)
-	if(!singletons)
-		singletons = list()
+	RETURN_TYPE(type)
 	if(!(type in singletons))
 		singletons[type] = new type
 	return singletons[type]
-var/global/list/singletons
+
+var/global/list/singletons = list()
 
 
 /// Find predecessor of a type
@@ -188,11 +188,122 @@ var/list/list/by_cat = list()
 #define TR_CAT_JOHNBILLS "johnbills"
 #define TR_CAT_OTHERBILLS "otherbills"
 #define TR_CAT_TELEPORT_JAMMERS "teleport_jammers"
+#define TR_CAT_RADIO_JAMMERS "radio_jammers"
 #define TR_CAT_BURNING_MOBS "dudes_on_fire"
 #define TR_CAT_BURNING_ITEMS "items_on_fire"
 #define TR_CAT_OMNIPRESENT_MOBS "omnipresent_mobs"
 #define TR_CAT_CHAPLAINS "chaplains"
 #define TR_CAT_SOUL_TRACKING_ITEMS "soul_tracking_items"
 #define TR_CAT_CLOWN_DISBELIEF_MOBS "clown_disbelief_mobs"
+#define TR_CAT_CANNABIS_OBJ_ITEMS "cannabis_objective"
+#define TR_CAT_HEAD_SURGEON "head_surgeon"
+#define TR_CAT_SPY_STICKERS_REGULAR "spysticker_regular"
+#define TR_CAT_SPY_STICKERS_DET "spysticker_det"
+#define TR_CAT_ARTIFACTS "artifacts"
+#define TR_CAT_NUKE_OP_STYLE "nukie_style_items" //Items that follow the nuke op color scheme and are generally associated with ops. For recoloring!
+#define TR_CAT_HUNTER_GEAR "hunter_gear"
 // powernets? processing_items?
 // mobs? ai-mobs?
+
+
+/// type-level information type
+/typeinfo
+	parent_type = /datum
+
+/typeinfo/datum
+
+/typeinfo/atom
+	parent_type = /typeinfo/datum
+
+/typeinfo/turf
+	parent_type = /typeinfo/atom
+
+/typeinfo/area
+	parent_type = /typeinfo/atom
+
+/typeinfo/atom/movable
+
+/typeinfo/obj
+	parent_type = /typeinfo/atom/movable
+
+/typeinfo/mob
+	parent_type = /typeinfo/atom/movable
+
+/**
+ * Declares typeinfo for some type.
+ *
+ * Example:
+ * ```
+ * TYPEINFO(/atom)
+ * 	var/monkeys_hate = FALSE
+ *
+ * TYPEINFO(/obj/item/clothing/glasses/blindfold)
+ * 	monkeys_hate = TRUE
+ * ```
+ *
+ * Treat this as if you were defining a type. You can add vars and procs, override vars and procs etc.
+ * There might be minor issues if you define TYPEINFO of one type multiple times. Consider using `/typeinfo/THE_TYPE` for subsequent additions
+ * to the object's typeinfo **if you know it has already been declared once using TYPEINFO**.
+*/
+#define TYPEINFO(TYPE) \
+	TYPE/typeinfo_type = /typeinfo ## TYPE; \
+	TYPE/get_typeinfo() { /* maybe unnecessary, possibly replace the proc with a macro */ \
+		RETURN_TYPE(/typeinfo ## TYPE); \
+		return get_singleton(src.typeinfo_type); \
+	} \
+	/typeinfo ## TYPE
+
+
+/// var storing the subtype of /typeinfo relevant for this object
+/datum/var/typeinfo_type = /typeinfo/datum
+
+/**
+ * Retrieves the typeinfo datum for this datum's type.
+ *
+ * Example:
+ * ```
+ * var/obj/item/item_in_hand = src.equipped()
+ * var/typeinfo/atom/typeinfo = item_in_hand.get_typeinfo()
+ * if(typeinfo.monkeys_hate)
+ * 	src.throw(src.equipped(), somewhere)
+ * ```
+*/
+/datum/proc/get_typeinfo()
+	RETURN_TYPE(/typeinfo/datum)
+	return get_singleton(src.typeinfo_type)
+
+/**
+ * Retrieves the typeinfo datum for a given type.
+ *
+ * Example:
+ * ```
+ * for(var/type in types)
+ * 	var/typeinfo/atom/typeinfo = get_type_typeinfo(type)
+ * 	if(!typeinfo.admin_spawnable)
+ * 		continue
+ * 	valid_types += type
+ * ```
+*/
+proc/get_type_typeinfo(type)
+	RETURN_TYPE(/typeinfo/datum) // change to /typeinfo if we ever implement /typeinfo for non-datums for some reason
+	var/datum/type_dummy = type
+	return get_singleton(initial(type_dummy.typeinfo_type))
+
+/**
+ * Returns the parent type of a given type.
+ * Assumes that parent_type was not overriden.
+ */
+/proc/type2parent(child)
+	var/string_type = "[child]"
+	var/last_slash = findlasttext(string_type, "/")
+	if(last_slash == 1)
+		switch(child)
+			if(/datum)
+				return null
+			if(/obj, /mob)
+				return /atom/movable
+			if(/area, /turf)
+				return /atom
+			else
+				return /datum
+	return text2path(copytext(string_type, 1, last_slash))

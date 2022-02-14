@@ -28,17 +28,15 @@
 			APPLY_MOB_PROPERTY(M, PROP_METABOLIC_RATE, src, chem_metabolism_modifier)
 
 	on_removal()
-		. = ..()
 		REMOVE_MOB_PROPERTY(src.donor, PROP_METABOLIC_RATE, src)
+		. = ..()
 
 	unbreakme()
-		..()
-		if(donor)
+		if(..() && donor)
 			APPLY_MOB_PROPERTY(src.donor, PROP_METABOLIC_RATE, src, chem_metabolism_modifier)
 
 	breakme()
-		..()
-		if(donor)
+		if(..() && donor)
 			REMOVE_MOB_PROPERTY(src.donor, PROP_METABOLIC_RATE, src)
 
 	on_broken(var/mult = 1)

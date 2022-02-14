@@ -92,6 +92,9 @@
 			return 0
 		return 1
 
+	proc/move_callback(var/mob/M, var/turf/source, var/turf/target)
+		return
+
 	proc/onDestroy()
 		qdel(src)
 		return
@@ -132,7 +135,8 @@
 		tag = null
 		mats = null
 		if (artifact && !isnum(artifact))
-			artifact:holder = null
+			qdel(artifact)
+			artifact = null
 		remove_dialogs()
 		..()
 
@@ -328,7 +332,7 @@
 
 
 /obj/lattice
-	desc = "A lightweight support lattice."
+	desc = "Intersecting metal rods, used as a structural skeleton for space stations and to facilitate movement in a vacuum."
 	name = "lattice"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "lattice"
@@ -476,7 +480,7 @@
 	New(newloc, deleteTimer)
 		..()
 		if (deleteTimer)
-			SPAWN_DBG(deleteTimer)
+			SPAWN(deleteTimer)
 				qdel(src)
 
 /obj/projection

@@ -107,7 +107,7 @@ var/sound/iomoon_alarm_sound = null
 		fxlist = iomoon_exterior_sounds
 		if (ambientSound)
 
-			SPAWN_DBG(6 SECONDS)
+			SPAWN(6 SECONDS)
 				var/sound/S = new/sound()
 				S.file = ambientSound
 				S.repeat = 0
@@ -179,7 +179,7 @@ var/sound/iomoon_alarm_sound = null
 					ambientSound.volume = 60
 					H << ambientSound
 					if(S)
-						SPAWN_DBG(sound_delay)
+						SPAWN(sound_delay)
 							H << S
 
 					if (use_alarm && iomoon_blowout_state == 1)
@@ -576,7 +576,7 @@ var/sound/iomoon_alarm_sound = null
 			src.task = "thinking"
 			src.attacking = 0
 			return
-		SPAWN_DBG(3.5 SECONDS)
+		SPAWN(3.5 SECONDS)
 			src.attacking = 0
 
 	ChaseAttack(mob/M)
@@ -627,7 +627,7 @@ var/sound/iomoon_alarm_sound = null
 	CritterDeath()
 		if (!src.alive) return
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			elecflash(src,power = 2)
 			qdel(src)
 
@@ -646,7 +646,7 @@ var/sound/iomoon_alarm_sound = null
 
 	CritterAttack(mob/M)
 		src.attacking = 1
-		SPAWN_DBG(3.5 SECONDS)
+		SPAWN(3.5 SECONDS)
 			src.attacking = 0
 
 		var/atom/last = src
@@ -667,7 +667,7 @@ var/sound/iomoon_alarm_sound = null
 			var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			for(var/obj/O in affected)
-				SPAWN_DBG(0.6 SECONDS) pool(O)
+				SPAWN(0.6 SECONDS) qdel(O)
 
 			if(isliving(target_r)) //Probably unsafe.
 				playsound(target_r:loc, "sound/effects/electric_shock.ogg", 50, 1)
@@ -746,7 +746,7 @@ var/sound/iomoon_alarm_sound = null
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			var/spawntype = pick(/obj/item/artifact/activator_key, /obj/item/gun/energy/artifact, /obj/item/ammo/power_cell/self_charging/artifact, /obj/item/artifact/forcewall_wand)
 			new spawntype(src.loc, "ancient")
 
@@ -794,7 +794,6 @@ var/sound/iomoon_alarm_sound = null
 	icon_state = "radhood"
 	item_state = "radhood"
 
-//obj/closet/iomoon
 /obj/storage/closet/iomoon
 	name = "\improper Thermal Hazard Equipment"
 	desc = "A locker intended to carry protective clothing."
@@ -829,7 +828,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		for(var/mob/N in adjustedArea)
 			N.flash(3 SECONDS)
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				shake_camera(N, 210, 16)
 	//todo: Alarms.  Not the dumb siren, I mean like the power plant's computer systems freaking the fuck out because oh jesus radiation
 
@@ -953,7 +952,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			active = 1
 			src.set_dir(1)
 			src.visible_message("<span class='alert'>[src] begins to whirr ominously!</span>")
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				if (health <= 0)
 					set_dir(2)
 					return
@@ -1001,7 +1000,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 /*
 		//DEBUG
 		default_click()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				activate()
 				sleep(20 SECONDS)
 				//world << zap_somebody(usr)
@@ -1013,7 +1012,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (!tag)
 				tag = "IOMOON_BOSS"
 
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				//target_marker = image('icons/misc/worlds.dmi', "boss_marker")
 				//target_marker.layer = FLY_LAYER
 
@@ -1112,12 +1111,12 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 				active = 1
 				src.icon_state = "powercore_core_startup"
-				SPAWN_DBG(0.6 SECONDS)
+				SPAWN(0.6 SECONDS)
 					src.icon_state = "powercore_core"
 
 				if (rotors)
 					rotors.icon_state = "powercore_rotors_start"
-					SPAWN_DBG(2.4 SECONDS)
+					SPAWN(2.4 SECONDS)
 						rotors.icon_state = "powercore_rotors"
 					playsound(src.loc, "sound/machines/lavamoon_rotors_starting.ogg",50, 0)
 					last_noise_time = ticker.round_elapsed_ticks
@@ -1204,8 +1203,8 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					src.zapMarker = null
 
 				end_iomoon_blowout()
-				SPAWN_DBG(0)
-					var/datum/effects/system/spark_spread/E = unpool(/datum/effects/system/spark_spread)
+				SPAWN(0)
+					var/datum/effects/system/spark_spread/E = new /datum/effects/system/spark_spread
 					E.set_up(8,0, src.loc)
 					E.start()
 					src.icon_state = "powercore_core_die"
@@ -1231,7 +1230,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					playsound(src.loc, "explosion", 75, 1)
 					sleep(2.5 SECONDS)
 					//qdel(rotors)
-					src.invisibility = 100
+					src.invisibility = INVIS_ALWAYS_ISH
 
 					var/obj/decal/exitMarker = locate("IOMOON_BOSSDEATH_EXIT")
 					if (istype(exitMarker))
@@ -1263,9 +1262,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					if (isdead(poorSoul) && prob(25))
 						poorSoul.gib()
 
-				SPAWN_DBG(0.6 SECONDS)
+				SPAWN(0.6 SECONDS)
 					for (var/obj/O in lineObjs)
-						pool(O)
+						qdel(O)
 
 				state = STATE_RECHARGING
 				last_state_time = ticker.round_elapsed_ticks
@@ -1406,7 +1405,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.default_state = src.opened
 			active = 0
 
@@ -1425,7 +1424,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			opacity = 0
 			desc = "One hell of a foreboding door. It's not entirely clear how it opened, as the seams did not exist prior..."
 			src.name = "unsealed door"
-			SPAWN_DBG(1.3 SECONDS)
+			SPAWN(1.3 SECONDS)
 				changing_state = 0
 			return
 
@@ -1444,7 +1443,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			src.icon_state = "ancientwall2"
 			desc = initial(src.desc)
 			src.name = initial(src.name)
-			SPAWN_DBG(1.3 SECONDS)
+			SPAWN(1.3 SECONDS)
 				changing_state = 0
 			return
 
@@ -1499,9 +1498,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				current.next.opened = src.opened
 				current = current.next
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (src.opened)
-				src.invisibility = 100
+				src.invisibility = INVIS_ALWAYS_ISH
 				src.set_density(0)
 				light.enable()
 			else
@@ -1525,9 +1524,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		playsound(src.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1)
 
 		set_density(0)
-		invisibility = 100
+		invisibility = INVIS_ALWAYS_ISH
 		light.disable()
-		SPAWN_DBG(1.3 SECONDS)
+		SPAWN(1.3 SECONDS)
 			changing_state = 0
 
 		if (next && next != src)
@@ -1549,13 +1548,13 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			L.gib()
 
 		set_density(1)
-		invisibility = 0
+		invisibility = INVIS_NONE
 
 		light.enable()
 		if (next && next != src)
 			next.close()
 
-		SPAWN_DBG(1.3 SECONDS)
+		SPAWN(1.3 SECONDS)
 			changing_state = 0
 
 /obj/iomoon_puzzle/floor_pad
@@ -1576,13 +1575,14 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (findtext(id, ";"))
 			id = params2list(id)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for (var/atom/potential_activator in src.loc)
 				if (potential_activator.density)
 					Crossed(potential_activator)
 					break
 
 	Crossed(var/atom/crosser as mob|obj)
+		..()
 		if (!activator || !(activator in src.loc))
 			//if (crosser.density && !isshell(crosser))
 			if (!isitem(crosser) && !isshell(crosser))
@@ -1810,7 +1810,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			id = params2list(id)
 
 	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1 || !user.can_use_hands())
+		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1 || !user.can_use_hands() || !ishuman(user))
 			return
 
 		user.visible_message("<span class='alert'>[user] presses [src].</span>", "<span class='alert'>You press [src].</span>")
@@ -1839,14 +1839,14 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (timer)
 			if (timer > 3)
 				src.icon_state = "ancient_button_timer_slow"
-				SPAWN_DBG ((timer - 3) * 10)
+				SPAWN((timer - 3) * 10)
 					src.icon_state = "ancient_button_timer_fast"
 					sleep(3 SECONDS)
 					src.deactivate()
 
 			else
 				src.icon_state = "ancient_button_timer_fast"
-				SPAWN_DBG (timer * 10)
+				SPAWN(timer * 10)
 					src.deactivate()
 
 		if (id)

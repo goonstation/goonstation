@@ -4,6 +4,7 @@
 	id = "lizard"
 	mutantrace_option = "Lizard"
 	effectType = EFFECT_TYPE_MUTANTRACE
+	effect_group = "mutantrace"
 	probability = 33
 	msgGain = "Your skin feels oddly dry."
 	msgLose = "Your scales fall off."
@@ -131,7 +132,7 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	reclaim_fail = 100
-	stability_loss = 25
+	stability_loss = 50 //nya~~ *gurgle*
 	mutantrace_option = "Cat"
 	mutantrace_path = /datum/mutantrace/cat
 	msgGain = "You feel especially hairy."
@@ -148,6 +149,18 @@
 	msgGain = "You feel like you're ready for some Cow RP."
 	msgLose = "Your udders fall off!"
 	icon_state  = "cow"
+
+/datum/bioEffect/mutantrace/pug
+	name = "Canine Genetics"
+	desc = "The subject takes on the appearance of a fluffy pug."
+	id = "pug"
+	mutantrace_option = "Pug"
+	mutantrace_path = /datum/mutantrace/pug
+	occur_in_genepools = FALSE
+	scanner_visibility = FALSE
+	msgGain = "You feel like barking up the wrong tree."
+	msgLose = "Dog treats no longer look appealing."
+	icon_state  = "pug"
 
 /datum/bioEffect/mutantrace/chicken
 	name = "Experimental Strain Epsilon Gamma Gamma #5"

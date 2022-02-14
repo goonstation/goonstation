@@ -17,7 +17,7 @@
 		src.artifact = AS
 		// The other three are normal for energy gun setup, so proceed as usual i guess
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 			var/datum/artifact/A = src.artifact
 
@@ -28,7 +28,7 @@
 				AS.bullets = forceBullets
 			set_current_projectile(pick(AS.bullets))
 			projectiles = AS.bullets
-			AddComponent(/datum/component/cell_holder, new/obj/item/ammo/power_cell/self_charging/artifact(src,A.artitype,current_projectile.cost))
+			AddComponent(/datum/component/cell_holder, new/obj/item/ammo/power_cell/self_charging/artifact(src,A.artitype,current_projectile.cost), swappable = FALSE)
 
 		src.setItemSpecial(null)
 
@@ -88,6 +88,13 @@
 		SEND_SIGNAL(src, COMSIG_CELL_SWAP, null, null) //swap cell with nothing (drop cell on flooor)
 		. = ..()
 
+	ArtifactActivated()
+		. = ..()
+		AddComponent(/datum/component/cell_holder, swappable = TRUE)
+
+	ArtifactDeactivated()
+		. = ..()
+		AddComponent(/datum/component/cell_holder, swappable = FALSE)
 
 /datum/artifact/energygun
 	associated_object = /obj/item/gun/energy/artifact

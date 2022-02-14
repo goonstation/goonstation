@@ -35,10 +35,12 @@
 	src.set_loc(statueperson)
 	statueperson.appearance = src.appearance
 	statueperson.real_name = "statue of [src.name]"
-	if(desc)
+	statueperson.name = statueperson.real_name
+	if(newDesc)
 		statueperson.real_desc = newDesc
 	else
 		statueperson.real_desc = src.get_desc()
+	statueperson.desc = statueperson.real_desc
 	statueperson.setMaterial(M)
 	statueperson.set_dir(src.dir)
 	if(!survive)
@@ -54,7 +56,7 @@
 	become_statue(getMaterial("rock"), "Its not too uncommon for our employees to be stoned at work but this is just ridiculous!")
 
 /proc/generate_random_pathogen()
-	var/datum/pathogen/P = unpool(/datum/pathogen)
+	var/datum/pathogen/P = new /datum/pathogen
 	P.setup(1, null, 0)
 	return P
 
@@ -65,7 +67,7 @@
 		R.pathogens[P.pathogen_uid] = P
 
 /proc/ez_pathogen(var/stype)
-	var/datum/pathogen/P = unpool(/datum/pathogen)
+	var/datum/pathogen/P = new /datum/pathogen
 	var/datum/pathogen_cdc/cdc = P.generate_name()
 	cdc.mutations += P.name
 	cdc.mutations[P.name] = P

@@ -1,7 +1,7 @@
 /datum/targetable/spell/teleport
 	name = "Teleport"
 	desc = "Teleports you to an area of your choice after a short delay."
-	icon_state = "phaseshift"
+	icon_state = "teleport"
 	targeted = 0
 	cooldown = 450
 	requires_robes = 1

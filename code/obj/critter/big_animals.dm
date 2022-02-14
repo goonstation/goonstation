@@ -204,29 +204,13 @@ obj/critter/bear/care
 				targetLimb.delete()
 				return
 
-		//Old instakill code. Happens when there are no more limbs to chew.
+		//Instakill code. Happens when there are no more limbs to chew.
 		//I want to rework this so the yeti keeps the heads as a trophy and he drops them once dead
 		src.attacking = 1
 		src.visible_message("<span class='combat'><B>[src]</B> devours the rest of [M] in one bite!</span>")
 		logTheThing("combat", M, null, "was devoured by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
 		playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
-		M.death(1)
-		var/atom/movable/overlay/animation = null
-		M.transforming = 1
-		M.canmove = 0
-		M.icon = null
-		APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
-		if(ishuman(M))
-			animation = new(src.loc)
-			animation.icon_state = "blank"
-			animation.icon = 'icons/mob/mob.dmi'
-			animation.master = src
-		if (M.client)
-			var/mob/dead/observer/newmob
-			newmob = new/mob/dead/observer(M)
-			M.client.mob = newmob
-			M.mind.transfer_to(newmob)
-		qdel(M)
+		M.remove()
 		src.task = "thinking"
 		src.seek_target()
 		src.attacking = 0
@@ -306,7 +290,7 @@ obj/critter/bear/care
 				if(!recentsound)
 					playsound(src.loc, "sound/misc/jaws.ogg", 50, 0)
 					recentsound = 1
-					SPAWN_DBG(1 MINUTE) recentsound = 0
+					SPAWN(1 MINUTE) recentsound = 0
 				src.task = "chasing"
 				break
 			else
@@ -324,7 +308,7 @@ obj/critter/bear/care
 			logTheThing("combat", M, null, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
 			playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
 			M.gib()
-			SPAWN_DBG(3 SECONDS) playsound(src.loc, "sound/voice/burp_alien.ogg", 50, 0)
+			SPAWN(3 SECONDS) playsound(src.loc, "sound/voice/burp_alien.ogg", 50, 0)
 			src.task = "thinking"
 			src.seek_target()
 			src.attacking = 0
@@ -503,7 +487,7 @@ obj/critter/bear/care
 
 	CritterDeath()
 		..()
-		src.reagents.add_reagent("woolofbat", 50, null)
+		src.reagents?.add_reagent("woolofbat", 50, null)
 		return
 
 	CritterAttack(mob/M)

@@ -15,7 +15,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			scanner = new /obj/machinery/clone_scanner(src) //Built-in scanner.
 			pod1 = new /obj/machinery/clonepod(src) //Built-in cloning pod.
 			computer = new /obj/machinery/computer/cloning(src) //Inbuilt computer for i/o.
@@ -23,15 +23,15 @@
 
 			if(computer) computer.portable = 1
 			if(pod1) pod1.portable = 1
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			computer.scanner = scanner
 			computer.linked_pods += pod1
 
 			if (!isnull(pod1))
 				pod1.connected = computer
 
-			if (!isnull(computer.scanner) || !isnull(pod1))
-				computer.show_message((isnull(pod1) & "POD1-ERROR") || (isnull(pod1) & "SCNR-ERROR"), "success")
+			if (isnull(computer.scanner) || isnull(pod1))
+				computer.show_message((isnull(pod1) && "POD1-ERROR") || (isnull(computer.scanner) && "SCNR-ERROR"), "success")
 				return
 			else
 				computer.show_message("System ready.", "success")
@@ -52,4 +52,4 @@
 				src.add_fingerprint(user)
 
 	attack_hand(mob/user as mob)
-		return computer.attack_hand(user)
+		return computer.Attackhand(user)

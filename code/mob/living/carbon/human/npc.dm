@@ -18,71 +18,79 @@
 
 /mob/living/carbon/human/npc
 	name = "human"
+	real_name = "human"
 	is_npc = 1
 	ai_attacknpc = 0
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.mind = new(src)
 			if (src.name == "human")
 				randomize_look(src, 1, 1, 1, 1, 1, 0) // change gender/bloodtype/age/name/underwear, keep bioeffects
-				src.organHolder.head.update_icon()
-		SPAWN_DBG(1 SECOND)
+				src.organHolder.head.UpdateIcon()
+		SPAWN(1 SECOND)
 			set_clothing_icon_dirty()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			ai_init()
 
 /mob/living/carbon/human/npc/assistant
 	ai_aggressive = 1
-	var/just_got_griefed = 0
+
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			JobEquipSpawned("Staff Assistant")
+
 	ai_findtarget_new()
 		if((world.timeofday - ai_threatened) < 600)
 			..()
-	proc
-		cry_grief(mob/M)
-			if(!M)
-				return
-			src.target = M
-			src.ai_state = AI_ATTACKING
-			src.ai_threatened = world.timeofday
-			var/target_name = M.name
-			//var/area/current_loc = get_area(src)
-			//var/tmp/loc_name = lowertext(current_loc.name) // removing this because nobody believes it
-			var/complaint = pick("[target_name] [pick("is killing","is griefing","is trying to kill","just fucking tried to kill")] me",\
-			"getting griefed, help",\
-			"security!!!",\
-			"[target_name] just fucking attacked me",\
-			"SOMEONE [prob(40) ? "FUCKING " : ""]ARREST [uppertext(target_name)]",\
-			"need help",\
-			"[pick("HLEP","HELP")] ME [uppertext(target_name)] IS [prob(40) ? "FUCKING " : ""]KILLING ME")
-			if(prob(60))
-				complaint = uppertext(complaint)
-			var/max_excl = rand(-2,4)
-			for(var/i = 0, i < max_excl, i++)
-				complaint += "!"
-			src.say(";[complaint]")
+
+	proc/cry_grief(mob/M)
+		if(!M)
+			return
+		if(isdead(src))
+			return
+		src.target = M
+		src.ai_state = AI_ATTACKING
+		src.ai_threatened = world.timeofday
+		var/target_name = M.name
+		//var/area/current_loc = get_area(src)
+		//var/tmp/loc_name = lowertext(current_loc.name) // removing this because nobody believes it
+		var/complaint = pick("[target_name] [pick("is killing","is griefing","is trying to kill","just fucking tried to kill")] me",\
+		"getting griefed, help",\
+		"security!!!",\
+		"[target_name] just fucking attacked me",\
+		"SOMEONE [prob(40) ? "FUCKING " : ""]ARREST [uppertext(target_name)]",\
+		"need help",\
+		"[uppertext(target_name)] IS [prob(50) ? "A TRAITOR" : "AN ANTAG"] [prob(40) ? "FUCKING" : ""] HELP [prob(40) ? "ME" : ""]",\
+		"[prob(40) ? "please" : ""] I need help can someone [prob(50) ? "hear" : "help"] me",\
+		"[uppertext(target_name)] WON'T [prob(40) ? "FUCKING " : ""]LEAVE ME ALONE, HELP",\
+		"SOMEONE [prob(40) ? "PLEASE " : ""] [prob(40) ? "FUCKING" : ""] HELP [prob(40) ? "ME" : ""] [prob(40) ? "I SWEAR TO GOD" : ""]",\
+		"[prob(40) ? "FUCKING" : ""] GRIEFERES WON'T LEAVE ME ALONE",\
+		"[pick("HLEP","HELP")] ME [uppertext(target_name)] IS [prob(40) ? "FUCKING " : ""]KILLING ME")
+		if(prob(60))
+			complaint = uppertext(complaint)
+		var/max_excl = rand(-2,4)
+		for(var/i = 0, i < max_excl, i++)
+			complaint += "!"
+		src.say(";[complaint]")
+
 	attack_hand(mob/M)
 		..()
-		if(!just_got_griefed && (M.a_intent in list(INTENT_HARM,INTENT_DISARM,INTENT_GRAB)))
-			just_got_griefed = 1
-			SPAWN_DBG(rand(10,30))
-				src.cry_grief(M)
-				just_got_griefed = 0
+		if(M.a_intent in list(INTENT_HARM,INTENT_DISARM,INTENT_GRAB))
+			if(!ON_COOLDOWN(src, "cry_grief", 5 SECONDS))
+				SPAWN(rand(10,30))
+					src.cry_grief(M)
+
 	attackby(obj/item/W, mob/M)
 		var/oldbloss = get_brute_damage()
 		var/oldfloss = get_burn_damage()
 		..()
 		var/damage = ((get_brute_damage() - oldbloss) + (get_burn_damage() - oldfloss))
 		if((damage > 0) || W.force)
-			if(!just_got_griefed)
-				just_got_griefed = 1
-				SPAWN_DBG(rand(10,30))
+			if(!ON_COOLDOWN(src, "cry_grief", 5 SECONDS))
+				SPAWN(rand(10,30))
 					src.cry_grief(M)
-					just_got_griefed = 0
 
 
 
@@ -93,7 +101,7 @@
 	ai_aggressive = 1
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 				src.real_name = "[syndicate_name()] Operative #[ticker.mode:agent_number]"
 				ticker.mode:agent_number++
@@ -107,7 +115,7 @@
 	ai_aggressive = 1
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.real_name = "Junior Syndicate Agent"
 			JobEquipSpawned("Junior Syndicate Operative")
 
@@ -115,7 +123,7 @@
 	ai_aggressive = 1
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.real_name = "Junior Syndicate Agent"
 			JobEquipSpawned("Poorly Equipped Junior Syndicate Operative")
 
@@ -133,8 +141,12 @@
 		ai_active = active
 
 		if (ai_active)
-			ai_mobs.Add(src)
+			if(src.skipped_mobs_list & SKIPPED_MOBS_LIST)
+				src.skipped_mobs_list |= SKIPPED_AI_MOBS_LIST
+			else
+				ai_mobs.Add(src)
 		else
+			src.skipped_mobs_list &= ~SKIPPED_AI_MOBS_LIST
 			ai_mobs.Remove(src)
 
 /mob/living/carbon/human/proc/ai_init()
@@ -172,7 +184,7 @@
 
 	//Moving this up because apparently beds were tripping the AI up.
 	if(src.buckled && !src.hasStatus("handcuffed"))
-		src.buckled.attack_hand(src)
+		src.buckled.Attackhand(src)
 		if(src.buckled) //WE'RE STUCKED :C
 			return
 
@@ -196,7 +208,7 @@
 	ai_move()
 
 	if(ai_target)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			ai_move()
 		action_delay += 10
 	else
@@ -275,7 +287,7 @@
 	switch(ai_state)
 		if(AI_PASSIVE) //Life is good.
 
-			src.a_intent = src.ai_default_intent
+			src.set_a_intent(src.ai_default_intent)
 
 			ai_pickupstuff()
 			ai_obstacle(1)
@@ -299,7 +311,7 @@
 
 		if(AI_ATTACKING)	//Gonna kick your ass.
 
-			src.a_intent = INTENT_HARM
+			src.set_a_intent(INTENT_HARM)
 
 			if(src.health < src.max_health / 8 && !src.ai_suicidal && !src.ai_aggressive)
 				src.ai_state = AI_FLEEING
@@ -411,7 +423,7 @@
 				if(istype(src.equipped(),/obj/item/gun))
 					src.swap_hand()
 
-				src.a_intent = INTENT_HARM
+				src.set_a_intent(INTENT_HARM)
 
 				var/prefer_hand = FALSE
 				if(istype(ai_target, /obj/fitness/speedbag))
@@ -421,7 +433,7 @@
 
 				if(isgrab(src.r_hand) || isgrab(src.l_hand))
 					var/obj/item/grab/grab = locate(/obj/item/grab) in src
-					grab.attack_hand(src)
+					grab.Attackhand(src)
 
 				if(!src.equipped() || prefer_hand)
 					// need to restore this at some point i guess, the "monkeys bite" code is commented out right now
@@ -429,7 +441,7 @@
 					//	target.attack_paw(src) // idiots bite
 					//else
 					if(prob(20) && !ON_COOLDOWN(src, "ai grab", 15 SECONDS))
-						src.a_intent = INTENT_GRAB
+						src.set_a_intent(INTENT_GRAB)
 					src.ai_attack_target(ai_target, null)
 				else // With a weapon
 					if(istype(src.equipped(), /obj/item/sword) && prob(80))
@@ -437,7 +449,7 @@
 						if(!csaber.open)
 							src.ai_attack_target(csaber, null)
 					src.ai_attack_target(ai_target, src.equipped())
-					src.a_intent = INTENT_HARM
+					src.set_a_intent(INTENT_HARM)
 
 
 
@@ -449,7 +461,7 @@
 					ai_pounced = world.timeofday
 					src.visible_message("<span class='alert'>[src] lunges at [ai_target]!</span>")
 					ai_target:changeStatus("weakened", 2 SECONDS)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						step_towards(src,ai_target)
 						step_towards(src,ai_target)
 
@@ -592,14 +604,14 @@
 	if(throw_equipped)
 		var/turf/T = get_turf(src)
 		if(T)
-			SPAWN_DBG(0.2 SECONDS) // todo: probably reorder ai_move stuff and remove this spawn, without this they keep hitting themselves
+			SPAWN(0.2 SECONDS) // todo: probably reorder ai_move stuff and remove this spawn, without this they keep hitting themselves
 				src.throw_item(locate(T.x + rand(-5, 5), T.y + rand(-5, 5), T.z), list("npc_throw"))
 
 	// give
 	if(prob(src.hand ? 5 : 1) && src.equipped() && ai_state != AI_ATTACKING)
 		for(var/mob/living/carbon/human/H in view(1))
 			if(H != src && isalive(H))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.give_to(H)
 				break
 
@@ -889,7 +901,7 @@
 		if(!W.CheckExit(src,targetturf)) return 0
 
 	for (var/obj/machinery/door/window/W in targetturf)
-		if(!W.CanPass(src,targetturf)) return 0
+		if(!W.Cross(src)) return 0
 
 	return 1
 

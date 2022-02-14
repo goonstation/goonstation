@@ -59,7 +59,7 @@
 	relaymove(var/mob/user, direction)
 		if (can_move)
 			can_move = 0
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				can_move = 1
 			step(src,direction)
 		return
@@ -122,7 +122,7 @@
 				user.show_text("You are too far away to do that.", "red")
 			return
 		//Okay, enough scanning shit without actual icons yo.
-		if (!isnull(initial(target.icon)) && !isnull(initial(target.icon_state)) && target.icon && target.icon_state && (isitem(target) || istype(target, /obj/shrub) || istype(target, /obj/critter) || istype(target, /obj/machinery/bot))) // cogwerks - added more fun
+		if (!isnull(initial(target.icon)) && !isnull(initial(target.icon_state)) && target.icon && target.icon_state && isobj(target)) // please blame flourish
 			if (!cham)
 				cham = new(src)
 				cham.master = src
@@ -157,7 +157,7 @@
 			boutput(usr, "<span class='notice'>You deactivate the [src].</span>")
 			anim.set_loc(get_turf(src))
 			flick("emppulse",anim)
-			SPAWN_DBG(0.8 SECONDS)
+			SPAWN(0.8 SECONDS)
 				anim.set_loc(src)
 		else
 			if (istype(src.loc, /obj/dummy/chameleon)) //No recursive chameleon projectors!!
@@ -173,7 +173,7 @@
 			boutput(usr, "<span class='notice'>You activate the [src].</span>")
 			anim.set_loc(get_turf(src))
 			flick("emppulse",anim)
-			SPAWN_DBG(0.8 SECONDS)
+			SPAWN(0.8 SECONDS)
 				anim.set_loc(src)
 
 	proc/disrupt()
@@ -185,7 +185,7 @@
 			cham.set_loc(src)
 			can_use = 0
 			tooltip_rebuild = 1
-			SPAWN_DBG(10 SECONDS)
+			SPAWN(10 SECONDS)
 				can_use = 1
 				tooltip_rebuild = 1
 
@@ -194,7 +194,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "cham_bomb"
 	burn_possible = 0
-	var/strength = 32 // same as syndie pipebombs, calls the same proc
+	var/strength = 12
 
 	dropped()
 		return

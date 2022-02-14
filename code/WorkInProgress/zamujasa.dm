@@ -101,7 +101,7 @@
 
 		// ptoato said to just call del directly so blame them
 		// pali: potato was wrong
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			qdel(src)
 
 
@@ -126,11 +126,11 @@
 		maptext = "<span class='pixel c sh' style=\"[style]\">[msg]</span>"
 		animate(src, alpha = 255, maptext_y = 34, time = 4)
 
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			bump_up()
 
 
-		SPAWN_DBG(7 SECONDS)
+		SPAWN(7 SECONDS)
 			del(src)
 
 	proc/bump_up()
@@ -179,15 +179,15 @@
 /obj/invisible_teleporter
 	name = "invisible teleporter side 1"
 	desc = "Totally not a portal."
-	event_handler_flags = USE_HASENTERED
 	icon = 'icons/effects/letter_overlay.dmi'
 	icon_state = "A"
 	anchored = 1
 	density = 0
 	var/id = null
 	var/which_end = 0
-	invisibility = 0
+	invisibility = INVIS_ADVENTURE
 	var/busy = 0
+	var/can_send = TRUE
 
 	New()
 		..()
@@ -200,10 +200,10 @@
 		src.maptext_width = 128
 		*/
 
-	HasEntered(AM as mob|obj)
-		if (AM == src)
+	Crossed(atom/movable/AM as mob|obj)
+		if (AM == src || !can_send)
 			// jesus christ don't teleport OURSELVES
-			return
+			return ..()
 		Z_LOG_DEBUG("shit", "Checking things: event_handler_flags [event_handler_flags], [AM] entered")
 		if (busy || istype(AM, /obj/overlay/tile_effect) || istype(AM, /mob/dead) || istype(AM, /mob/wraith) || istype(AM, /mob/living/intangible))
 			Z_LOG_DEBUG("shit", "Decided not to teleport")
@@ -240,7 +240,7 @@
 		icon_state = "A"
 		which_end = 1
 		color = "#FF0000"
-		event_handler_flags = 0
+		can_send = 0
 
 
 
@@ -326,7 +326,7 @@
 
 	proc/mulch_item(var/obj/I, score)
 		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
-		pool( I )
+		qdel( I )
 		total_score += score
 		round_score += score
 		update_totals()
@@ -350,7 +350,7 @@
 		animate(transform = matrix(1, 0, 0, 0, 1, 0), time = 5)
 		animate(pixel_y = 20 + 6, time = 5)
 		animate(pixel_y = 20 + 12, alpha = 0, time = 5)
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			working--
 			if (working == 0)
 				// if > 1 then the score is still changing so just wait a while...
@@ -402,7 +402,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			gunsim = locate() in world
 
 	attack_hand(mob/user as mob)
@@ -415,7 +415,7 @@
 		icon_state = "cleanbot-c"
 		user.visible_message("CLEANIN UP THE MURDERBOX STAND CLEAR")
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/obj/item/I in gunsim)
 				if(istype(I, /obj/item/device/radio/intercom)) //lets not delete the intercoms inside shall we?
 					continue
@@ -439,7 +439,7 @@
 			for (var/obj/decal/D in gunsim)
 				qdel(D)
 */
-		SPAWN_DBG(60 SECONDS)
+		SPAWN(60 SECONDS)
 			active = 0
 			alpha = 255
 			icon_state = "cleanbot1"
@@ -462,11 +462,12 @@
 		alpha = 128
 		boutput(user, "Spawning target dummy, stand by") //no need to be rude
 
-		new /mob/living/carbon/human/tdummy(locate(src.x+1, src.y, src.z))
+		var/mob/living/carbon/human/tdummy/tdu = new /mob/living/carbon/human/tdummy(locate(src.x+1, src.y, src.z))
+		tdu.shutup = TRUE
 		//T.x = src.x + 1 // move it to the right
 
 
-		SPAWN_DBG(10 SECONDS)
+		SPAWN(10 SECONDS)
 			active = 0
 			alpha = 255
 
@@ -568,10 +569,12 @@
 	name = "Space American Football Stadium"
 	force_fullbright = 1
 	icon_state = "purple"
+	dont_log_combat = TRUE
 
 /area/football/field
 	name = "Space American Football Field"
 	icon_state = "green"
+	dont_log_combat = TRUE
 
 	endzone
 		icon_state = "yellow"
@@ -719,6 +722,7 @@
 	icon = null
 	anchored = 2
 	density = 0
+	plane = PLANE_HUD - 1
 
 	var/datum/monitored = null
 	var/monitored_var = null
@@ -748,7 +752,7 @@
 		src.update_monitor()
 		if (src.update_delay)
 			UnsubscribeProcess()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				while (src.update_delay)
 					src.update_monitor()
 					sleep(update_delay)
@@ -766,10 +770,16 @@
 			var/datum/thing = locate(src.monitored_ref)
 			if (thing)
 				src.monitored = thing
+			else
+				// Try again with [] enclosing it. who knows. maybe it will work
+				thing = locate("\[[src.monitored_ref]]")
+				if (thing)
+					src.monitored = thing
+
 			src.monitored_ref = null
 
 		if (monitored)
-			if (monitored.pooled || monitored.qdeled)
+			if (monitored.disposed || monitored.qdeled)
 				// The thing we were watching was deleted/removed! Welp.
 				monitored = null
 				return 0
@@ -796,7 +806,7 @@
 				if (src.ding_on_change)
 					playsound(src, src.ding_sound, 33, 0)
 		catch(var/exception/e)
-			src.maptext = "<span class='c pixel sh'>(Err: [e])</span>"
+			src.maptext = "<span class='c pixel sh'>[src.monitored]\n(Err: [e])</span>"
 
 
 	proc/get_value()
@@ -820,16 +830,128 @@
 			if ("round")
 				return round(val)
 
+			if ("time")
+				val /= 10
+				var/sign = ""
+				if (val < 0)
+					val *= -1
+					sign = "-"
+				// @TODO: formatting times like this surely has to be a proc somewhere already, right
+				switch (val)
+					if (3600 to INFINITY)
+						return "[sign][round(val / 3600)]:[add_zero(val / 60 % 60, 2)]:[add_zero(val % 60, 2)]"
+					if (0 to 3600)
+						return "[sign][round(val / 60 % 60)]:[add_zero(val % 60, 2)]"
+			if ("fulltime")
+				val /= 10
+				var/sign = ""
+				if (val < 0)
+					val *= -1
+					sign = "-"
+				return "[sign][round(val / 3600)]:[add_zero(val / 60 % 60, 2)]:[add_zero(val % 60, 2)]"
+
+			if ("time2")
+				// some things use centiseconds. some things dont. fart!
+				var/sign = ""
+				if (val < 0)
+					val *= -1
+					sign = "-"
+				// @TODO: formatting times like this surely has to be a proc somewhere already, right
+				switch (val)
+					if (3600 to INFINITY)
+						return "[sign][round(val / 3600)]:[add_zero(val / 60 % 60, 2)]:[add_zero(val % 60, 2)]"
+					if (0 to 3600)
+						return "[sign][round(val / 60 % 60)]:[add_zero(val % 60, 2)]"
+			if ("fulltime2")
+				var/sign = ""
+				if (val < 0)
+					val *= -1
+					sign = "-"
+				return "[sign][round(val / 3600)]:[add_zero(val / 60 % 60, 2)]:[add_zero(val % 60, 2)]"
+
+			if ("timer")
+				val /= 10
+				return "[round(val)].[val * 10 % 10]"
+
+			if ("timer2")
+				return "[round(val / 10)].[val % 10]"
+
 		return val
 
 
 	ex_act()
 		return
 
+	proc_monitor
+		require_var_or_list = 0
+		var/monitored_proc = null
+		var/datum/effective_callee = null
+		var/list/monitored_args = list()
+
+		validate_monitored()
+			// Do we have a working ref, at least?
+			if (!..())
+				// If not, get out
+				return 0
+			if (!src.monitored_proc)
+				// no proc to check.
+				return 0
+			if (src.monitored_var && !istype(src.monitored[monitored_var], /datum))
+				// If we're calling a proc on a var it better be something we can call a proc on
+				return 0
+
+			// So what ARE we calling this proc on then?
+			src.effective_callee = (src.monitored_var ? src.monitored[src.monitored_var] : src.monitored)
+
+			if (!hascall(src.effective_callee, monitored_proc))
+				// does it have this proc?
+				return 0
+
+			// If we've gotten here then we can probably rest assured that
+			// we can at least call whatever it is. Baby steps.
+			return 1
+
+		get_value()
+			// validate_monitored should handle most of the checks for us
+			// so we can probably just call it
+			if (!src.effective_callee)
+				// no! how did you even get here. jesus
+				return
+
+			return call(src.effective_callee, src.monitored_proc)(src.monitored_args)
+
+
+		emergency_shuttle
+			// remember those radio-controlled displays? i miss those.
+			// we should bring those back.
+			maptext_prefix = "<span class='c pixel sh'>Emergency Shuttle\n<span class='vga'>"
+			display_mode = "time2"
+			update_delay = 1 SECOND
+
+			New()
+				src.monitored = emergency_shuttle
+				src.monitored_proc = "timeleft"
+				..()
+
+			format_value(var/val)
+				// lord have mercy for this one.
+				// get_value will return the seconds, which is passed here.
+				// but we want to see the direction, not just the timer.
+				// so we override this and call the parent to format the time properly
+				switch (emergency_shuttle.location)
+					if (SHUTTLE_LOC_CENTCOM, SHUTTLE_LOC_RETURNED, SHUTTLE_LOC_TRANSIT)
+						if (!emergency_shuttle.online)
+							return "Idle"
+						return "ETA [..(val)]"
+
+					if (SHUTTLE_LOC_STATION)
+						return "Departing in [..(val)]"
+
+
 
 	location
 		require_var_or_list = 0
-		maptext_prefix = "<span class='c pixel sh'><span class='vga'>"
+		maptext_prefix = "<span class='c pixel sh'><span class='xfont'>"
 		maptext_suffix = "</span>"
 
 		get_value()
@@ -838,6 +960,27 @@
 				. = "Unknown</span>\n(?, ?, ?)"
 			else
 				. = "[where.loc]</span>\n([where.x], [where.y], [where.z])"
+
+
+		gps
+			// Automated GPS! Wow!
+			appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
+			update_delay = 1
+
+			New()
+				..()
+				src.pixel_y += 34
+
+				var/atom/movable/home = src.loc
+				// Put it inside something to make it constantly show its location.
+				if (istype(home))
+					home.vis_contents += src
+				else
+					// if we are not home then we are gone, bye
+					qdel(src)
+					return
+				src.monitored = src.loc
+				set_loc(null)
 
 
 	stats
@@ -895,6 +1038,7 @@
 		display_mode = "round"
 		monitored_var = "station_budget"
 		maptext_prefix = "<span class='c pixel sh'>Station Budget:\n<span class='vga'>$"
+		ding_sound = "sound/misc/cashregister.ogg"
 
 		station
 			// the default, but explicit...
@@ -1009,7 +1153,7 @@
 		src.anchored = 2
 		src.mouse_opacity = 1
 		src.maptext = {"<div class='c pixel sh' style="background: #00000080;"><strong>-- Welcome to Goonstation! --</strong>
-New? <a href="https://mini.xkeeper.net/ss13/tutorial/" style="color: #8888ff; font-weight: bold;" clss="ol">Click here for a tutorial!</a>
+New? <a href="https://mini.xkeeper.net/ss13/tutorial/" style="color: #8888ff; font-weight: bold;" class="ol" target="_blank">Click here for a tutorial!</a>
 Ask mentors for help with <strong>F3</strong>
 Contact admins with <strong>F1</strong>
 Read the rules, don't grief, and have fun!</div>"}
@@ -1078,18 +1222,12 @@ Read the rules, don't grief, and have fun!</div>"}
 			if (length(landmarks[LANDMARK_LOBBY_LEFTSIDE]))
 				src.set_loc(landmarks[LANDMARK_LOBBY_LEFTSIDE][1])
 
-			// This is gross. I'm sorry.
-			var/list/servers = list()
-			servers["main1"] = "1 Classic: Heisenbee"
-			servers["main2"] = "2 Classic: Bombini"
-			servers["main3"] = "3 Roleplay: Morty"
-			servers["main4"] = "4 Roleplay: Sylvester"
-
 			var/serverList = ""
-			for (var/serverId in servers)
-				if (serverId == config.server_id)
+			for (var/serverId in global.game_servers.servers)
+				var/datum/game_server/server = global.game_servers.servers[serverId]
+				if (server.is_me() || !server.publ)
 					continue
-				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[serverId]'>Goonstation [servers[serverId]]</a>"}
+				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name]</a>"}
 
 			src.maptext_x = 0
 			src.maptext_width = 600
@@ -1107,7 +1245,7 @@ Other Goonstation servers:[serverList]</span>"})
 
 /obj/overlay/inventory_counter
 	name = "inventory amount counter"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	plane = PLANE_HUD
 	layer = HUD_LAYER_3
 	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
@@ -1142,15 +1280,10 @@ Other Goonstation servers:[serverList]</span>"})
 		if(src.transform) src.transform = null
 
 	proc/hide_count()
-		invisibility = 101
+		invisibility = INVIS_ALWAYS
 
 	proc/show_count()
-		invisibility = 0
-
-	pooled()
-		src.maptext = ""
-		src.invisibility = 101
-		..()
+		invisibility = INVIS_NONE
 
 
 
@@ -1247,3 +1380,76 @@ Other Goonstation servers:[serverList]</span>"})
 	attack_hand(mob/user as mob)
 		..()
 		src.icon_state = "cowbrush[src.on ? "_on" : ""]"
+
+
+
+/obj/maptext_junk/gib_timer
+	mouse_opacity = 0
+	density = 0
+	opacity = 0
+	icon = null
+	plane = PLANE_HUD - 1
+	appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
+	maptext = ""
+	var/gib_time = 60
+	// var/gib_time = null
+	var/mob/victim = null
+
+	two
+		gib_time = 120
+	five
+		gib_time = 300
+	ten
+		gib_time = 600
+	fifteen
+		gib_time = 900
+	twenty
+		gib_time = 1200
+	thirty
+		gib_time = 1800
+
+
+
+	New()
+		..()
+		src.pixel_y += 34
+		src.maptext_x = -20
+		src.maptext_width += 40
+		var/mob/home = src.loc
+		// Put it inside something to make it constantly show its location.
+		if (istype(home))
+			home.vis_contents += src
+		else
+			// if we are not home then we are gone, bye
+			qdel(src)
+			return
+		src.victim = home
+		set_loc(null)
+		// gib_time = ticker.round_elapsed_ticks + time_until_gib
+		SPAWN(0)
+			countdown()
+
+	// These are admin gimmick bombs so a while...sleep() delay isn't going to murder things
+	proc/countdown()
+
+		// var/time_left = INFINITY
+		do
+			sleep(1 SECOND)
+			// time_left = max(0, gib_time - ticker.round_elapsed_ticks)
+			gib_time--
+			switch (gib_time)
+				if (60 to INFINITY)
+					maptext = "<span class='vb c ol ps2p'>[round(gib_time / 60)]:[add_zero(num2text(gib_time % 60), 2)]</span>"
+				if (10 to 60)
+					maptext = "<span class='vb c ol ps2p'>[round(gib_time)]</span>"
+				else
+					maptext = "<span class='vb c ol ps2p' style='color: #ff4444;'>[round(gib_time)]</span>"
+
+		while (gib_time > 0 && !src.qdeled && !victim.qdeled)
+
+		if (victim && !victim.qdeled)
+			victim.vis_contents -= src
+			src.maptext = null
+			victim.gib()
+
+		qdel(src)

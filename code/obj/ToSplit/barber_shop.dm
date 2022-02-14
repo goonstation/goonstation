@@ -64,7 +64,7 @@
 		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -106,7 +106,7 @@
 		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -156,6 +156,7 @@
 		reagents.add_reagent("hairgrownium", 40)
 
 	on_reagent_change()
+		..()
 		src.icon_state = "tonic[src.reagents.total_volume ? "1" : "0"]"
 
 /obj/stool/barber_chair //there shouldn't be any of these, here in case there's a secret map that has one, replace with /obj/stool/chair/comfy/barber_chair if you see one
@@ -262,7 +263,7 @@
 					result_msg2 ="<span class='notice'>You dump the [src] in [M]'s eyes.</span>"
 					result_msg3 ="<span class='alert'>[user] dumps the [src] into your eyes!</span>"
 					if(user.mind.assigned_role == "Barber")
-						SPAWN_DBG(2 SECONDS)
+						SPAWN(2 SECONDS)
 							boutput(M, "Huh, that actually didn't hurt that much. What a great [pick("barber", "stylist", "bangmangler")]!")
 					else
 						M.emote("scream", 0)
@@ -328,7 +329,7 @@
 		return
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
 		if(status & BROKEN)
@@ -401,7 +402,7 @@
 			src.add_fingerprint(usr)
 			for(var/mob/M in viewers(1, src))
 				if (M.using_dialog_of(src))
-					src.attack_hand(M)
+					src.Attackhand(M)
 		else
 			usr.Browse(null, "window=dye_dispenser")
 			return

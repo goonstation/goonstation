@@ -7,7 +7,7 @@
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "critter_devour"
 	icon = 'icons/mob/critter_ui.dmi'
-	icon_state = "devour_over"
+	icon_state = "maneater_munch"
 	var/mob/living/target
 	var/datum/targetable/critter/devour/devour
 
@@ -50,6 +50,7 @@
 	name = "Devour"
 	desc = "After a short delay, instantly devour a mob. Both you and the target must stand still for this."
 	cooldown = 0
+	icon_state = "maneater_munch"
 	var/actual_cooldown = 200
 	targeted = 1
 	target_anything = 1

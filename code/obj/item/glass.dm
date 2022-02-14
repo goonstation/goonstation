@@ -35,14 +35,14 @@ SHARDS
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			var/diff = src.amount - splitnum
-			if (splitnum >= amount || splitnum < 1)
+			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
 			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
 			src.amount = diff
 			var/obj/item/sheet/glass/new_stack = new src.type(user.loc, diff)
 			new_stack.amount = splitnum
-			new_stack.attack_hand(user)
+			new_stack.Attackhand(user)
 			new_stack.add_fingerprint(user)
 		else
 			..(user)
@@ -233,9 +233,9 @@ SHARDS
 	stamina_cost = 15
 	stamina_crit_chance = 35
 
-/obj/item/shard/Bump()
+/obj/item/shard/bump()
 
-	SPAWN_DBG( 0 )
+	SPAWN( 0 )
 		if (prob(20))
 			src.force = 15
 		else
@@ -272,7 +272,7 @@ SHARDS
 	qdel(src)
 	return
 
-/obj/item/shard/HasEntered(AM as mob|obj)
+/obj/item/shard/Crossed(atom/movable/AM as mob|obj)
 	if(ismob(AM))
 		var/mob/M = AM
 		if(ishuman(M))
@@ -321,7 +321,7 @@ SHARDS
 		if(src.material) A.setMaterial(src.material)
 		qdel(src)
 		return
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if(ismob(AM))
 			var/mob/M = AM
 			boutput(M, "<span class='alert'><B>You step on the crystal shard!</B></span>")

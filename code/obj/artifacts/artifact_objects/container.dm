@@ -62,7 +62,7 @@
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
 			return
-		for(var/obj/I in O.contents)
+		for(var/atom/movable/I in (O.contents-O.vis_contents))
 			I.set_loc(O.loc)
 		for(var/mob/N in viewers(O, null))
 			N.flash(3 SECONDS)
@@ -71,6 +71,7 @@
 		O.visible_message("<span class='alert'><b>With a blinding light [O] vanishes, leaving its contents behind.</b></span>")
 		O.ArtifactFaultUsed(user)
 		playsound(O.loc, "sound/effects/warp2.ogg", 50, 1)
+		O.remove_artifact_forms()
 		artifact_controls.artifacts -= src
 		qdel(O)
 		return

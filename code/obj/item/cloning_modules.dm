@@ -80,7 +80,7 @@ Modules to do things with cloning modules
 	icon = 'icons/obj/module.dmi'
 	icon_state = "genemodule"
 	name = "Gene power module"
-	desc = "A module that automatically inserts a gene into clones. It has a slot in the back that looks like it would hold a DNA injector."
+	desc = "A module that automatically inserts a gene into clones. It has a slot on the side that looks like it would hold a DNA injector."
 
 	var/datum/bioEffect/BE = null
 
@@ -88,6 +88,7 @@ Modules to do things with cloning modules
 	if (!BE && istype(W, /obj/item/genetics_injector/dna_injector))
 		var/obj/item/genetics_injector/dna_injector/injector = W
 		boutput(user, "You put the DNA injector into the slot on the cartridge.")
+		set_icon_state("genemodule_loaded")
 		BE = injector.BE
 		user.drop_item()
 		qdel(W)

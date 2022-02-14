@@ -7,7 +7,7 @@
 	anchored = 1
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			var/obj/term = new /obj/machinery/power/terminal(get_step(get_turf(src), dir))
 			term.set_dir(get_dir(get_turf(term), src))
 			new /obj/machinery/power/smes(get_turf(src))
@@ -214,7 +214,7 @@
 			return
 		using = 1
 		boutput(user, "<span class='notice'>Designating room.</span>")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (designated.check_completion(target))
 				boutput(user, "<span class='notice'>Designation successful, room matches required parameters.</span>")
 				//new /obj/machinery/power/apc(get_turf(target))
@@ -363,10 +363,10 @@
 			var/obj/item/material_piece/D = W
 			var/which = determine_material(D, user)
 			if (which == "metal")
-				pool(W)
+				qdel(W)
 				metal_count += 10
 			else if (which == "glass")
-				pool(W)
+				qdel(W)
 				glass_count += 10
 			else
 				return
@@ -434,7 +434,7 @@
 						metal_count += 10
 					else
 						glass_count += 10
-					pool(M)
+					qdel(M)
 					sleep(0.1 SECONDS)
 			processing = 0
 			user.visible_message("<span class='notice'>[user] finishes stuffing materials into [src].</span>")
@@ -508,7 +508,7 @@
 				//T.icon_state = initial(T.icon_state)
 				if (istype(T, /turf/simulated/wall/auto))
 					var/turf/simulated/wall/auto/W = T
-					W.update_icon()
+					W.UpdateIcon()
 					W.update_neighbors()
 			return
 		var/obj/plan_marker/old = null
@@ -537,7 +537,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 8
+	invisibility = INVIS_CONSTRUCTION
 	var/allows_vehicles = 0
 	var/turf_op = 1
 
@@ -564,7 +564,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 8
+	invisibility = INVIS_CONSTRUCTION
 
 	var/static/image/wE = null
 	var/static/image/wW = null
@@ -775,7 +775,7 @@
 				AT.icon_state = initial(AT.icon_state)
 				AT.set_dir(initial(AT.dir))
 				AT:allows_vehicles = initial(AT.allows_vehicles)
-				AT.update_icon()
+				AT.UpdateIcon()
 				AT.update_neighbors()
 			qdel(src)
 

@@ -71,7 +71,7 @@
 	},
 /area/station/engine/vesselpower)
 "aai" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 4;
 	id = "testchamber"
 	},
@@ -1564,7 +1564,7 @@
 "acM" = (
 /obj/machinery/power/terminal,
 /obj/cable,
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "zeta"
 	},
 /turf/simulated/floor/circuit/red,
@@ -1719,7 +1719,7 @@
 "adc" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -3132,7 +3132,7 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "afF" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -6616,7 +6616,7 @@
 /turf/simulated/floor/green,
 /area/station/vesselbridge)
 "alC" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8;
 	name = "Vessel Power Grid Monitoring"
 	},
@@ -7415,7 +7415,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/power/solar_control/east,
+/obj/machinery/computer/solar_control/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "anv" = (
@@ -11095,7 +11095,7 @@
 	pixel_x = 6
 	},
 /obj/item/device/radio/intercom/catering{
-
+	
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -17036,7 +17036,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4;
 	id = "west"
 	},
@@ -27157,7 +27157,7 @@
 /obj/item/device/radio/electropack,
 /obj/item/device/radio/signaler,
 /obj/item/storage/box/stinger_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/storage/box/revimp_kit,
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,
@@ -29688,7 +29688,7 @@
 /area/station/security/main)
 "bgx" = (
 /obj/table/auto,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/device/audio_log,
 /obj/item/audio_tape,
 /turf/simulated/floor/carpet,
@@ -31942,7 +31942,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/power/solar_control/alt{
+/obj/machinery/computer/solar_control/alt{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -32369,7 +32369,7 @@
 /area/station/hallway/secondary/exit)
 "blR" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/table/auto,
 /obj/item/decoration/ashtray,
@@ -32979,7 +32979,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "bnv" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -33891,7 +33891,7 @@
 /area/station/security/main)
 "bpz" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap)
+/area/shuttle/escape/station)
 "bpA" = (
 /obj/storage/secure/crate/weapon/armory/tranquilizer,
 /obj/item/ammo/bullets/tranq_darts,
@@ -34039,7 +34039,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bpW" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 1;
 	name = "Engine Output Monitoring"
 	},
@@ -34162,7 +34162,7 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /turf/simulated/floor/plating,

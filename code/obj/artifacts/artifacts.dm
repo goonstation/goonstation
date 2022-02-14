@@ -18,7 +18,7 @@
 		if (forceartiorigin) AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 
 	disposing()
@@ -125,7 +125,7 @@
 			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 
 	disposing()
@@ -230,7 +230,7 @@
 			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 
 	disposing()
@@ -278,10 +278,10 @@
 		if (cinematic)
 			T.visible_message("<span class='alert'><b>An artifact suddenly warps into existence!</b></span>")
 			playsound(T,"sound/effects/teleport.ogg",50,1)
-			var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
+			var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 			swirl.set_loc(T)
-			SPAWN_DBG(1.5 SECONDS)
-				pool(swirl)
+			SPAWN(1.5 SECONDS)
+				qdel(swirl)
 		Artifact_Spawn(T,forceartiorigin)
 		qdel(src)
 		return
@@ -291,7 +291,10 @@
 
 	New(var/loc)
 		..()
-		Artifact_Spawn(src.loc, forceartitype = pick(src.types))
+		if(length(types))
+			Artifact_Spawn(src.loc, forceartitype = pick(src.types))
+		else
+			CRASH("No artifact types provided.")
 		qdel(src)
 		return
 

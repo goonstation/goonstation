@@ -2008,7 +2008,7 @@
 /turf/simulated/floor/engine/caution/corner,
 /area/station/engine/gas)
 "aei" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -13123,7 +13123,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "aDs" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/science/teleporter)
@@ -15970,7 +15970,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/submachine/chicken_feed_grinder,
+/obj/submachine/ranch_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn,
 /obj/blind_switch/area/south,
 /turf/simulated/floor/grasstodirt{
@@ -16254,13 +16254,13 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
 /obj/access_spawn/rancher,
@@ -17459,7 +17459,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/gas)
 "aNo" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -17982,7 +17982,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "aOG" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
@@ -21480,9 +21480,9 @@
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/genetics)
 "aXq" = (
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /obj/item/bananapeel,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /obj/storage/cart/trash,
 /obj/lattice,
 /turf/simulated/martian/floor,
@@ -23085,7 +23085,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/research_outpost)
 "bbp" = (
@@ -26270,7 +26270,7 @@
 	icon_state = "sideWall";
 	name = "organic wall"
 	},
-/obj/item/storage/box/donkpocket_w_kit,
+/obj/item/storage/box/donkpocket_kit,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)
 "bjr" = (
@@ -28317,7 +28317,7 @@
 /area/station/engine/power)
 "bol" = (
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "Dented Crate"
 	},
@@ -28538,7 +28538,7 @@
 /area/station/engine/inner)
 "boM" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -28768,7 +28768,7 @@
 /area/space)
 "bpo" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /obj/cable{
@@ -29885,7 +29885,7 @@
 	pixel_y = 4
 	},
 /obj/table/reinforced/bar/auto,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
@@ -31744,12 +31744,16 @@
 /area/station/bridge/hos)
 "bwr" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/flashbang_kit{
+/obj/item/chem_grenade/flashbang{
 	pixel_x = -7;
 	pixel_y = 6
 	},
 /obj/item/device/detective_scanner{
 	pixel_x = -6
+	},
+/obj/item/hand_labeler{
+	pixel_x = 8;
+	pixel_y = 10
 	},
 /obj/item/device/detective_scanner{
 	pixel_x = -3
@@ -35777,7 +35781,7 @@
 /area/station/hallway/secondary/exit)
 "bFU" = (
 /turf/space/fluid,
-/area/shuttle/escape/station/sealab)
+/area/shuttle/escape/station)
 "bFV" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/camera{
@@ -38146,7 +38150,7 @@
 /area/station/crew_quarters/radio/lab)
 "bLF" = (
 /obj/storage/secure/closet/personal,
-/obj/item/clothing/under/gimmick/cosby,
+/obj/item/clothing/under/gimmick/sweater,
 /obj/item/device/microphone,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -42016,7 +42020,7 @@
 "bVb" = (
 /obj/rack,
 /obj/item/storage/box/stinger_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/storage/box/revimp_kit,
 /obj/item/gun/energy/phaser_gun,
 /obj/item/gun/energy/phaser_gun,
@@ -44653,7 +44657,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "ccS" = (
@@ -45183,7 +45187,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/submachine/chicken_feed_grinder,
+/obj/submachine/ranch_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn,
 /turf/simulated/floor/green/side{
 	dir = 8
@@ -46680,9 +46684,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/radio/lab)
-"ciK" = (
-/turf/simulated/floor/plating/random,
-/area/station/storage/eeva)
 "ciL" = (
 /obj/cable/reinforced{
 	icon_state = "1-2-thick"
@@ -46736,7 +46737,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/warm,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /turf/simulated/floor/darkblue{
 	dir = 10
 	},
@@ -103292,7 +103293,7 @@ cfS
 cfS
 ckK
 aDr
-ciK
+aDr
 aks
 aks
 bgD

@@ -4,7 +4,7 @@
 	name = "armor"
 	desc = "A suit worn primarily for protection against injury."
 	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_armor.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
 	icon_state = "armor"
 	item_state = "armor"
@@ -90,7 +90,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src && !src.part_vest)
 				src.part_vest = new /obj/item/clothing/suit/armor/vest(src)
 			if (src && !src.part_igniter)
@@ -399,15 +399,15 @@
 	body_parts_covered = TORSO
 
 /obj/item/clothing/suit/armor/NT_alt
-	name = "NT-SO armor"
-	desc = "Durable armor used by NanoTrasen's corporate operatives."
+	name = "old armored vest"
+	desc = "A grungy surplus armored vest. Smelly and not very clean."
 	icon_state = "nt2armor"
 	item_state = "nt2armor"
 	body_parts_covered = TORSO
 	setupProperties()
 		..()
-		setProperty("meleeprot", 8)
-		setProperty("rangedprot", 1.5)
+		setProperty("meleeprot", 6)
+		setProperty("rangedprot", 1)
 
 /obj/item/clothing/suit/armor/EOD
 	name = "bomb disposal suit"

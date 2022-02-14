@@ -17,16 +17,16 @@ client/proc/delete_fluids()
 	var/exenabled = waterflow_enabled
 	enable_waterflow(0)
 	var/i = 0
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for(var/obj/fluid/fluid in world)
-			if (fluid.pooled) continue
+			if (fluid.disposed) continue
 
 			for (var/mob/living/M in fluid.loc)
-				fluid.HasExited(M,M.loc)
+				fluid.Uncrossed(M)
 				M.show_submerged_image(0)
 			for(var/obj/O in fluid.loc)
 				if (O.submerged_images)
-					fluid.HasExited(O,O.loc)
+					fluid.Uncrossed(O)
 					O.show_submerged_image(0)
 			if(fluid.group)
 				fluid.group.evaporate()
@@ -47,7 +47,7 @@ client/proc/special_fullbright()
 	admin_only
 
 	message_admins("[key_name(src)] is making all Z1 Sea Lights static...")
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for(var/turf/space/fluid/F in world)
 			if (F.z == 1)
 				F.fullbright = 0.5
@@ -82,7 +82,7 @@ client/proc/replace_space()
 	logTheThing("admin", src, null, "began to convert all space tiles into an ocean of [reagent.id].")
 	message_admins("[key_name(src)] began to convert all space tiles into an ocean of [reagent.id]. Oh no.")
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		ocean_reagent_id = reagent.id
 		var/datum/reagents/R = new /datum/reagents(100)
 		R.add_reagent(reagent.id, 100)
@@ -125,10 +125,13 @@ client/proc/replace_space_exclusive()
 	logTheThing("admin", src, null, "began to convert all station space tiles into an ocean of [reagent.id].")
 	message_admins("[key_name(src)] began to convert all station space tiles into an ocean of [reagent.id].")
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		ocean_reagent_id = reagent.id
 		var/datum/reagents/R = new /datum/reagents(100)
 		R.add_reagent(reagent.id, 100)
+
+		ocean_fluid_obj?.group?.reagents?.clear_reagents()
+		fluid_turf_setup(first_time=FALSE)
 
 #ifdef UNDERWATER_MAP
 		var/master_reagent_name = R.get_master_reagent_name()
@@ -170,7 +173,7 @@ client/proc/replace_space_exclusive()
 
 client/proc/update_ocean_lighting()
 	admin_only
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for(var/turf/space/fluid/S in world)
 			S.update_light()
 			LAGCHECK(LAG_REALTIME)
@@ -188,7 +191,7 @@ client/proc/dereplace_space()
 	logTheThing("admin", src, null, "began to convert all ocean tiles into space.")
 	message_admins("[key_name(src)] began to convert all ocean tiles into space.")
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		map_currently_underwater = 0
 
 		if (answer == "Yes")

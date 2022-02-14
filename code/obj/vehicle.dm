@@ -31,7 +31,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	var/delay = 2 //speed, lower is faster, minimum of MINIMUM_EFFECTIVE_DELAY
 	var/booster_upgrade = 0 //do we go through space?
 	var/booster_image = null //what overlay icon do we use for the booster upgrade? (we have to initialize this in new)
-
+	var/emagged = FALSE
 
 	New()
 		. = ..()
@@ -256,7 +256,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		return
 
 	weeoo_in_progress = 10
-	SPAWN_DBG(0)
+	SPAWN(0)
 		playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
 		light.enable()
 		src.icon_state = "[src.icon_base][src.icon_weeoo_state]"
@@ -301,12 +301,12 @@ ABSTRACT_TYPE(/obj/vehicle)
 		src.UpdateOverlays(null, "rider")
 		src.underlays = null
 
-/obj/vehicle/segway/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/segway/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)
 		return
-	if(world.timeofday - AM.last_bumped <= 100)
+	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
 	walk(src, 0)
 	update()
@@ -333,7 +333,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		// i guess a borg got on a segway? maybe someone was riding one with nanites
 		if (ishuman(M))
 			if(!istype(M:shoes, /obj/item/clothing/shoes/sandal))
-				M.changeStatus("stunned", 8 SECONDS)
+				M.changeStatus("stunned", 5 SECONDS)
 				M.changeStatus("weakened", 5 SECONDS)
 				M.force_laydown_standup()
 				src.log_me(src.rider, M, "impact")
@@ -346,13 +346,17 @@ ABSTRACT_TYPE(/obj/vehicle)
 						continue
 					C.show_message("<span class='alert'><B>[M] is kept upright by magical sandals!</B></span>", 1)
 		else
-			M.changeStatus("stunned", 8 SECONDS)
+			M.changeStatus("stunned", 5 SECONDS)
 			M.changeStatus("weakened", 5 SECONDS)
 			src.log_me(src.rider, M, "impact")
 		if(prob(10))
 			M.visible_message("<span class='alert'><b>[src]</b> beeps out an automated injury report of [M]'s vitals.</span>")
 			M.visible_message(scan_health(M, visible = 1))
-		eject_rider(2)
+		if (!emagged)
+			eject_rider(2)
+		else
+			playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+			src.weeoo()
 		in_bump = 0
 
 	if(isitem(AM))
@@ -407,7 +411,6 @@ ABSTRACT_TYPE(/obj/vehicle)
 			C.show_message("<span class='alert'><B>[rider] is flung over \the [src]'s handlebars!</B></span>", 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
-		rider.buckled = null
 		rider = null
 		update()
 		return
@@ -417,7 +420,6 @@ ABSTRACT_TYPE(/obj/vehicle)
 			if(C == rider)
 				continue
 			C.show_message("<B>[rider]</B> dismounts from \the [src].", 1)
-	rider.buckled = null
 	rider = null
 	update()
 	return
@@ -545,8 +547,6 @@ ABSTRACT_TYPE(/obj/vehicle)
 	rider.pixel_x = 0
 	rider.pixel_y = 5
 	src.UpdateOverlays(rider, "rider")
-	if(rider.restrained() || rider.stat)
-		rider.buckled = src
 
 	for (var/mob/C in AIviewers(src))
 		if(C == user)
@@ -605,6 +605,14 @@ ABSTRACT_TYPE(/obj/vehicle)
 				logTheThing("vehicle", other_dude, rider, "shoves [constructTarget(rider,"vehicle")] off of a [src] at [log_loc(src)].")
 
 	return
+
+/obj/vehicle/segway/emag_act(mob/user, obj/item/card/emag/E)
+	if (!src.emagged)
+		src.emagged = TRUE
+		src.weeoo()
+		src.desc = src.desc + " It looks like the safety circuits have been shorted out."
+		src.visible_message("<span class='alert'><b>[src] beeps ominously.</b></span>")
+		return 1
 
 ////////////////////////////////////////////////////// Floor buffer /////////////////////////////////////
 
@@ -677,7 +685,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	if(. && rider)
 		pixel_x = rand(-1, 1)
 		pixel_y = rand(-1, 1)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			pixel_x = rand(-1, 1)
 			pixel_y = rand(-1, 1)
 		if (!src.sprayer_active)
@@ -697,7 +705,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 				else
 					T.active_liquid.removed(1)
 			return
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.reagents.total_volume < 1)
 				return
 
@@ -718,7 +726,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			var/obj/decal/D = new/obj/decal(get_turf(src))
 			D.name = null
 			D.icon = null
-			D.invisibility = 101
+			D.invisibility = INVIS_ALWAYS
 			D.create_reagents(5)
 			src.reagents.trans_to(D, 5)
 
@@ -751,12 +759,12 @@ ABSTRACT_TYPE(/obj/vehicle)
 /obj/vehicle/floorbuffer/is_open_container()
 	return 2
 
-/obj/vehicle/floorbuffer/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/floorbuffer/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)
 		return
-	if(world.timeofday - AM.last_bumped <= 100)
+	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
 	walk(src, 0)
 	update()
@@ -814,7 +822,6 @@ ABSTRACT_TYPE(/obj/vehicle)
 			C.show_message("<span class='alert'><B>[rider] is flung over \the [src]'s handlebars!</B></span>", 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
-		rider.buckled = null
 		rider = null
 		update()
 		return
@@ -824,7 +831,6 @@ ABSTRACT_TYPE(/obj/vehicle)
 			if(C == rider)
 				continue
 			C.show_message("<B>[rider]</B> dismounts from \the [src].", 1)
-	rider.buckled = null
 	rider = null
 	update()
 	return
@@ -853,8 +859,6 @@ ABSTRACT_TYPE(/obj/vehicle)
 	rider.pixel_x = 0
 	rider.pixel_y = 10
 	src.UpdateOverlays(rider, "rider")
-	if(rider.restrained() || rider.stat)
-		rider.buckled = src
 
 	for (var/mob/C in AIviewers(src))
 		if(C == user)
@@ -1096,12 +1100,12 @@ ABSTRACT_TYPE(/obj/vehicle)
 		C.show_message(msg, 3)
 	return
 
-/obj/vehicle/clowncar/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/clowncar/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)
 		return
-	if(world.timeofday - AM.last_bumped <= 100)
+	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
 	walk(src, 0)
 	moving = 0
@@ -1201,7 +1205,6 @@ ABSTRACT_TYPE(/obj/vehicle)
 			C.show_message("<span class='alert'><B>[rider] is flung through the [src]'s windshield!</B></span>", 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
-		rider.buckled = null
 		rider = null
 		icon_state = "clowncar"
 		if(prob(40) && length(src.contents))
@@ -1223,7 +1226,6 @@ ABSTRACT_TYPE(/obj/vehicle)
 			if(C == rider)
 				continue
 			C.show_message("<B>[rider]</B> climbs out of the [src].", 1)
-	rider.buckled = null
 	rider = null
 	icon_state = "clowncar"
 	return
@@ -1287,7 +1289,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			eject_rider(1)
 		pixel_x = rand(-6, 6)
 		pixel_y = rand(-2, 2)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			pixel_x = rand(-6, 6)
 			pixel_y = rand(-2, 2)
 		return TRUE
@@ -1303,7 +1305,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	pixel_x = 0
 	pixel_y = 0
 
-/obj/vehicle/clowncar/cluwne/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/clowncar/cluwne/bump(atom/AM as mob|obj|turf)
 	..(AM)
 	icon_state = "cluwnecar"
 	pixel_x = 0
@@ -1351,7 +1353,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 /obj/vehicle/cat
 	name = "Rideable Cat"
 	desc = "He looks happy... how odd!"
-	icon_state = "segwaycat-norider"
+	icon_state = "segwaycat"
 	layer = MOB_LAYER + 1
 	soundproofing = 0
 	throw_dropped_items_overboard = 1
@@ -1368,12 +1370,12 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	desc = "Arf arf arf!"
 	icon_state = "odie"
 
-/obj/vehicle/cat/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/cat/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)
 		return
-	if(world.timeofday - AM.last_bumped <= 100)
+	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
 	walk(src, 0)
 	..()
@@ -1433,6 +1435,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	var/mob/living/rider = src.rider
 	..()
 	rider.pixel_y = 0
+	src.icon_state = initial(src.icon_state)
 	walk(src, 0)
 	if(crashed)
 		if(crashed == 2)
@@ -1446,7 +1449,6 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			C.show_message("<span class='alert'><B>[rider] is flung over the [src]'s head!</B></span>", 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
-		rider.buckled = null
 		rider = null
 		ClearSpecificOverlays("rider")
 		return
@@ -1456,7 +1458,6 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			if(C == rider)
 				continue
 			C.show_message("<B>[rider]</B> dismounts from the [src].", 1)
-	rider.buckled = null
 	rider = null
 	ClearSpecificOverlays("rider")
 	return
@@ -1489,8 +1490,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	rider.pixel_x = 0
 	rider.pixel_y = 5
 	src.UpdateOverlays(rider, "rider")
-	if(rider.restrained() || rider.stat)
-		rider.buckled = src
+	src.icon_state = "[src.icon_state]1"
 
 	for (var/mob/C in AIviewers(src))
 		if(C == user)
@@ -1587,7 +1587,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			playsound(my_mob.loc, src.mysound, src.myvolume, 1)
 		playsound(the_turf, src.mysound, src.myvolume, 1)
 
-		SPAWN_DBG(src.mydelay)
+		SPAWN(src.mydelay)
 			active = 0
 
 /obj/ability_button/loudhorn/clowncar
@@ -1617,7 +1617,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		var/obj/vehicle/v = my_mob.loc
 		v.stop()
 
-		SPAWN_DBG(src.mydelay)
+		SPAWN(src.mydelay)
 			active = 0
 
 	clowncar
@@ -1656,7 +1656,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 // the adminbus has a pressurized cabin!
 /obj/vehicle/adminbus/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
-	var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
+	var/datum/gas_mixture/GM = new /datum/gas_mixture
 
 	var/oxygen = MOLES_O2STANDARD
 	var/nitrogen = MOLES_N2STANDARD
@@ -1777,14 +1777,14 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		C.show_message(msg, 3)
 	return
 
-/obj/vehicle/adminbus/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/adminbus/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)
 		return
-	if(!is_badmin_bus && world.timeofday - AM.last_bumped <= 100)
+	if(!is_badmin_bus && ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
-	if(is_badmin_bus && world.timeofday - AM.last_bumped <= 50)
+	if(is_badmin_bus && ON_COOLDOWN(AM, "vehicle_bump", 5 SECONDS))
 		return
 	walk(src, 0)
 	icon_state = nonmoving_state
@@ -1902,7 +1902,6 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 				continue
 			C.show_message("<B>[rider]</B> climbs out of the [src].", 1)
 
-	rider.buckled = null
 	rider = null
 	src.icon_state = src.nonmoving_state
 	if (src.is_badmin_bus)
@@ -2239,7 +2238,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		return
 
 	var/mob/living/rider = src.rider
-	..()
+	..(ejectall = 0)
 
 	boutput(rider, "You get out of [src].")
 

@@ -27,7 +27,7 @@
 		temp
 
 		pda
-		mainframe
+		eyecam
 
 	var/list/screen_tools = list()
 
@@ -264,8 +264,8 @@
 		pda = create_screen("pda", "Cyborg PDA", 'icons/mob/hud_ai.dmi', "pda", "WEST, NORTH+0.5", HUD_LAYER)
 		pda.underlays += "button"
 
-		mainframe = create_screen("mainframe", "Return to Mainframe", 'icons/mob/screen1.dmi', "x", "SOUTH,EAST", HUD_LAYER)
-		mainframe.underlays += "block"
+		eyecam = create_screen("eyecam", "Eject to eyecam", 'icons/mob/screen1.dmi', "x", "SOUTH,EAST", HUD_LAYER)
+		eyecam.underlays += "block"
 
 
 	scrolled(id, dx, dy, user, parms, atom/movable/screen/hud/scr)
@@ -331,15 +331,33 @@
 				master.radio_menu()
 			if ("intent")
 				if (master.a_intent == INTENT_HELP)
-					master.a_intent = INTENT_HARM
+					master.set_a_intent(INTENT_HARM)
 				else
-					master.a_intent = INTENT_HELP
+					master.set_a_intent(INTENT_HELP)
 				update_intent()
 			if ("pulling")
 				if (master.pulling)
 					unpull_particle(master,pulling)
-				master.pulling = null
-				update_pulling()
+					master.remove_pulling()
+					src.update_pulling()
+				else if(!isturf(master.loc))
+					boutput(master, "<span class='notice'>You can't pull things while inside \a [master.loc].</span>")
+				else
+					var/list/atom/movable/pullable = list()
+					for(var/atom/movable/AM in range(1, get_turf(master)))
+						if(AM.anchored || !AM.mouse_opacity || AM.invisibility > master.see_invisible || AM == master)
+							continue
+						pullable += AM
+					var/atom/movable/to_pull = null
+					if(length(pullable) == 1)
+						to_pull = pullable[1]
+					else if(length(pullable) < 1)
+						boutput(master, "<span class='notice'>There is nothing to pull.</span>")
+					else
+						to_pull = tgui_input_list(master, "Which do you want to pull? You can also Ctrl+Click on things to pull them.", "Which thing to pull?", pullable)
+					if(!isnull(to_pull) && GET_DIST(master, to_pull) <= 1)
+						usr = master // gross
+						to_pull.pull()
 			if ("upgrades")
 				set_show_upgrades(!src.show_upgrades)
 			if ("upgrade1") // this is horrifying
@@ -377,8 +395,8 @@
 				last_health = -1
 			if ("pda")
 				master.access_internal_pda()
-			if ("mainframe")
-				master.return_mainframe()
+			if ("eyecam")
+				master.become_eye()
 
 	proc/update_status_effects()
 		for(var/atom/movable/screen/statusEffect/G in src.objects)
@@ -386,7 +404,7 @@
 
 		for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
 			if(!master.statusEffects || !(S in master.statusEffects))
-				pool(statusUiElements[S])
+				qdel(statusUiElements[S])
 				src.statusUiElements.Remove(S)
 				qdel(S)
 
@@ -405,7 +423,7 @@
 					pos_x -= spacing
 				else
 					if(S.visible)
-						var/atom/movable/screen/statusEffect/U = unpool(/atom/movable/screen/statusEffect)
+						var/atom/movable/screen/statusEffect/U = new /atom/movable/screen/statusEffect
 						U.init(master,S)
 						U.icon = icon_hud
 						statusUiElements.Add(S)
@@ -547,8 +565,8 @@
 
 			// I put this here because there's nowhere else for it right now.
 			// @TODO robot hud needs a general update() call imo.
-			if (src.mainframe)
-				mainframe.invisibility = (master.mainframe ? 0 : 101)
+			if (src.eyecam)
+				eyecam.invisibility = (master.mainframe ? INVIS_NONE : INVIS_ALWAYS)
 
 
 		update_pulling()

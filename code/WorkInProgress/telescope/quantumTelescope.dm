@@ -22,7 +22,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 			rebuildEventList(using)
 
 	proc/boot_if_away()
-		if(using && (!using.client || using.client.inactivity >= 600 || get_dist(src, using) > 1))
+		if(using && (!using.client || using.client.inactivity >= 600 || !in_interact_range(src, using)))
 			using.Browse(null, "window=qtelescope;override_setting=1")
 			using = null
 		return
@@ -45,7 +45,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 
 		onclose(user, "telescope", src)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			callJsFunc(user, "setRef", list("\ref[src]")) //This is shit but without it, it calls the JS before the window is open and doesn't work. (Is this still true?!?!)
 			rebuildEventList(user)
 			callJsFunc(using, "showFooterMsg", list("Left-Click: Ping , Right-Click: Clear map"))
@@ -106,8 +106,8 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 							break
 
 				if("ping")
-					var/vX = text2num(href_list["x"])
-					var/vY = text2num(href_list["y"])
+					var/vX = text2num_safe(href_list["x"])
+					var/vY = text2num_safe(href_list["y"])
 					for(var/A in tele_man.events_active)
 						var/datum/telescope_event/E = tele_man.events_active[A]
 						if(E.id == tracking_id)

@@ -10,8 +10,8 @@
 	_max_health = 150
 	var/armed = 0
 	var/det_time = 0
-	var/timer_default = 6000 // 10 min.
-	var/timer_modifier_disk = 1800 // +3 (crew member) or -3 (nuke ops) min.
+	var/timer_default = 10 MINUTES
+	var/timer_modifier_disk = 3 MINUTES // +3 (crew member) or -3 (nuke ops) min.
 	var/motion_sensor_triggered = 0
 	var/done = 0
 	var/debugmode = 0
@@ -67,14 +67,14 @@
 				S.visible_message("<span class='alert'>[S] cannot withstand the intense radiation and crumbles to pieces!</span>")
 				qdel(S)
 
-		if(det_time && src.simple_light && !src.started_light_animation && det_time - ticker.round_elapsed_ticks <= 2 MINUTES)
+		if(det_time && src.simple_light && !src.started_light_animation && det_time - TIME <= 2 MINUTES)
 			src.started_light_animation = 1
 			var/matrix/trans = matrix()
 			trans.Scale(3)
 			animate(src.simple_light, time = 2 MINUTES, alpha = 255, color = "#ff4444", transform = trans)
 
-		if (det_time && ticker.round_elapsed_ticks >= det_time)
-			SPAWN_DBG(0)
+		if (det_time && TIME >= det_time)
+			SPAWN(0)
 				explode()
 			src.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">--:--</span>"
 		else
@@ -93,7 +93,7 @@
 					. += "The authenticaion disk has been inserted."
 
 			if (!src.anchored)
-				. += "The floor bolts have been unsecured. The bomb can be moved around."
+				. += "The floor bolts are unsecure. The bomb can be moved around."
 			else
 				. += "It is firmly anchored to the floor by its floor bolts."
 
@@ -139,6 +139,10 @@
 							boutput(user, "<span class='alert'>You need to deploy the bomb in [target_name].</span>")
 						else
 							if (alert("Deploy and arm [src.name] here?", src.name, "Yes", "No") == "Yes" && !src.armed && get_dist(src, user) <= 1 && !(is_incapacitated(user) || user.restrained()))
+								A = get_area(src)
+								if (!target_area || !istype(A) || !((ispath(target_area) && istype(A, target_area)) || (islist(target_area) && (A.type in target_area))))
+									boutput(user, "<span class='alert'>You need to deploy the bomb in [target_name].</span>")
+									return
 								src.armed = 1
 								src.anchored = 1
 								if (!src.image_light)
@@ -148,11 +152,13 @@
 									src.image_light.icon_state = "nblightc"
 									src.UpdateOverlays(src.image_light, "light")
 								//src.icon_state = "nuclearbomb2"
-								src.det_time = ticker.round_elapsed_ticks + src.timer_default
+								src.det_time = TIME + src.timer_default
 								src.add_simple_light("nuke", list(255, 127, 127, 127))
 								command_alert("\A [src] has been armed in [A]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [A] to disarm the bomb immediately.", "Nuclear Weapon Detected")
-								world << sound('sound/machines/bomb_planted.ogg')
+								playsound_global(world, "sound/machines/bomb_planted.ogg", 90)
 								logTheThing("bombing", user, null, "armed [src] at [log_loc(src)].")
+								if(istype(NUKEMODE, /datum/game_mode/nuclear))
+									NUKEMODE.shuttle_available = 0
 
 					else
 						boutput(user, "<span class='alert'>Deployment area definition missing or invalid! Please report this to a coder.</span>")
@@ -194,6 +200,9 @@
 					if (user.mind && user.mind.assigned_role == "Captain") //the fat frog did it!
 						user.unlock_medal("Brown Pants", 1)
 
+					if(istype(ticker.mode, /datum/game_mode/nuclear))
+						ticker.mode.shuttle_available = 1
+
 				playsound(src.loc, "sound/machines/ping.ogg", 100, 0)
 				logTheThing("bombing", user, null, "inserted [W.name] into [src] at [log_loc(src)], modifying the timer by [timer_modifier / 10] seconds.")
 				user.u_equip(W)
@@ -216,9 +225,9 @@
 								S.recharging = 1
 								src.set_loc(R.loc)
 								showswirl(src.loc)
-								SPAWN_DBG(S.recharge)
+								SPAWN(S.recharge)
 									S.recharging = 0
-								SPAWN_DBG(R.recharge)
+								SPAWN(R.recharge)
 									R.recharging = 0
 
 			if (user.mind in NUKEMODE.syndicates && !src.anyone_can_activate)
@@ -302,12 +311,12 @@
 		user.attach_hud(src.wirepanel)
 
 	proc/get_countdown_timer()
-		var/timeleft = round((det_time - ticker.round_elapsed_ticks)/10 ,1)
+		var/timeleft = round((det_time - TIME)/10 ,1)
 		timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 		return timeleft
 
 	proc/take_damage(var/amount)
-		if(!isitspacemas)
+		if(startswith(src.icon_state, "nuclearbomb") && src.icon == initial(src.icon))
 			switch(src._health)
 				if(80 to 125)
 					src.icon_state = "nuclearbomb1"
@@ -418,13 +427,13 @@
 	onEnd()
 		..()
 		if (owner && the_bomb)
-			var/timer_modifier = round((the_bomb.det_time - ticker.round_elapsed_ticks) / 2)
+			var/timer_modifier = round((the_bomb.det_time - TIME) / 2)
 			the_bomb.anchored = 0
 
 			for (var/mob/O in AIviewers(owner))
 				O.show_message("<span class='alert'><b>[owner]</b> unscrews [the_bomb]'s floor bolts.</span>", 1)
 
-			if (ticker.round_elapsed_ticks < (the_bomb.det_time - timer_modifier) && !the_bomb.motion_sensor_triggered)
+			if (TIME < (the_bomb.det_time - timer_modifier) && !the_bomb.motion_sensor_triggered)
 				the_bomb.motion_sensor_triggered = 1
 				the_bomb.det_time -= timer_modifier
 				the_bomb.visible_message("<span class='alert'><b>[the_bomb]'s motion sensor was triggered! The countdown has been halved to [the_bomb.get_countdown_timer()]!</b></span>")

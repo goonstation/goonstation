@@ -206,16 +206,6 @@
 	initial_volume = 50
 	initial_reagents = list("coffee"=30)
 
-/obj/item/reagent_containers/food/drinks/eggnog
-	name = "Egg Nog"
-	desc = "A festive beverage made with eggs. Please eat the eggs. Eat the eggs up."
-	icon_state = "nog"
-	heal_amt = 1
-	festivity = 1
-	rc_flags = RC_FULLNESS
-	initial_volume = 50
-	initial_reagents = list("eggnog"=40)
-
 /obj/item/reagent_containers/food/drinks/chickensoup
 	name = "Chicken Soup"
 	desc = "Got something to do with souls. Maybe. Do chickens even have souls?"
@@ -239,19 +229,19 @@
 	name = "space cola"
 	desc = "Cola. in space."
 	icon = 'icons/obj/foodNdrink/can.dmi'
-	icon_state = "cola-1"
+	icon_state = "cola-1-small"
 	item_state = "cola-1"
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
+	can_chug = 0
 	initial_reagents = list("cola"=20,"VHFCS"=10)
 	var/is_sealed = 1 //can you drink out of it?
 	var/standard_override //is this a random cola or a standard cola (for crushed icons)
 
 	New()
 		..()
-		if (prob(50))
-			src.icon_state = "cola-2"
+		setup_soda()
 
 	attack(mob/M as mob, mob/user as mob)
 		if (is_sealed)
@@ -264,6 +254,7 @@
 		if (src.is_sealed)
 			user.visible_message("[user] pops the tab on \the [src]!", "You pop \the [src] open!")
 			is_sealed = 0
+			can_chug = 1
 			playsound(src.loc, "sound/items/can_open.ogg", 50, 1)
 			return
 		if (!src.reagents || !src.reagents.total_volume)
@@ -282,6 +273,10 @@
 			if (!drop_this_shit) //see?
 				user.put_in_hand_or_drop(C)
 			qdel(src)
+
+	proc/setup_soda() // made to be overridden, so that the Spess-Pepsi/Space-Coke debacle can continue
+		if (prob(50)) // without having to change the Space-Cola path
+			src.icon_state = "cola-2-small"
 
 /obj/item/crushed_can
 	name = "crushed can"
@@ -317,6 +312,28 @@
 		reagents.add_reagent("VHFCS, 10")
 		reagents.add_reagent(pick_string("chemistry_tools.txt", "COLA_flavors"), 5, 3)
 
+/obj/item/reagent_containers/food/drinks/cola/custom
+	name = "beverage can"
+	desc = "An aluminium can with custom branding."
+	icon = 'icons/obj/foodNdrink/can.dmi'
+	heal_amt = 1
+	icon_state = "cola-13"
+	rc_flags = RC_FULLNESS
+	initial_reagents = null
+	initial_volume = 50
+
+	New()
+		..()
+
+	setup_soda()
+		return
+
+	small
+		icon_state = "cola-13-small"
+		initial_volume = 30
+
+
+
 /obj/item/reagent_containers/food/drinks/peach
 	name = "Delightful Dan's Peachy Punch"
 	desc = "A vibrantly colored can of 100% all natural peach juice."
@@ -337,15 +354,18 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = "milk"
-	var/canbequilty = 1
+	var/canberandom = 1
 
 	var/image/fluid_image
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.underlays = null
+		if (src.icon_state == "milk_calcium")
+			return
 		if (reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 3 + 1), 1, 3))
 			if (!src.fluid_image)
@@ -361,11 +381,11 @@
 
 	New()
 		..()
-		if(canbequilty == 1)
-			if( prob(10))
-				name = "Quilty Farms Milk"
-				desc = "For ages 1[pick("0","8")] and under."
-				icon_state = "milk_quilty"
+		if(canberandom == 1)
+			if(prob(10))
+				name = "Mootimer's Calcium Drink"
+				desc = "Blue-ribbon winning secret family recipe."
+				icon_state = "milk_calcium"
 
 /obj/item/reagent_containers/food/drinks/milk/rancid
 	name = "Rancid Space Milk"
@@ -382,7 +402,7 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("rainbow fluid" = 7, "milk" = 19)
-	canbequilty = 0
+	canberandom = 0
 
 /obj/item/reagent_containers/food/drinks/milk/cluwnespider
 	name = "Honkey Gibbersons - Cluwnespider Milk"
@@ -391,7 +411,7 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("painbow fluid" = 13, "milk" = 20)
-	canbequilty = 0
+	canberandom = 0
 
 /obj/item/reagent_containers/food/drinks/milk/soy
 	name = "Creaca's Space Soy Milk"
