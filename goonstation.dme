@@ -1301,6 +1301,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\artifacts\artifact_objects\darkness_field.dm"
 #include "code\obj\artifacts\artifact_objects\forcefield.dm"
 #include "code\obj\artifacts\artifact_objects\healer.dm"
+#include "code\obj\artifacts\artifact_objects\implanter.dm"
 #include "code\obj\artifacts\artifact_objects\injector.dm"
 #include "code\obj\artifacts\artifact_objects\lamp.dm"
 #include "code\obj\artifacts\artifact_objects\power_gen.dm"
