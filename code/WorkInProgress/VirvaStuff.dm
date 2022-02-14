@@ -175,4 +175,4 @@ obj/item/ammo/bullets/flechette_mag
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "taskumatti"
 	item_state = "taskumatti"
-	initial_reagents = list("omnizine"=10,"energydrink"=10,"methamphetamine"=10,"bourbon"=10)
+	initial_reagents = list("omnizine"=10,"energydrink"=10,"methamphetamine"=10,"irishcoffee"=10)

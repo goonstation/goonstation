@@ -72266,6 +72266,8 @@
 /area/titlescreen)
 "jJr" = (
 /obj/loudspeaker{
+	desc = "This could probably cause an earthquake.";
+	name = "studio speaker";
 	pixel_x = 3;
 	pixel_y = 10
 	},
@@ -73227,6 +73229,8 @@
 /area/titlescreen)
 "mPW" = (
 /obj/loudspeaker{
+	desc = "This could probably cause an earthquake.";
+	name = "studio speaker";
 	pixel_x = -3;
 	pixel_y = 10
 	},
@@ -74524,7 +74528,14 @@
 	triggerable_id = "virva_light";
 	triggerer_id = "virva_trigger"
 	},
-/obj/table/clothred/auto,
+/obj/table/clothred/auto{
+	desc = "The tablecloth definitely isn't there to hide anything.";
+	name = "cool table"
+	},
+/obj/item/decoration/virvase{
+	anchored = 1;
+	pixel_y = 11
+	},
 /turf/unsimulated/floor/carpet/purple/fancy/edge/east,
 /area/centcom/offices/virvatuli)
 "qan" = (

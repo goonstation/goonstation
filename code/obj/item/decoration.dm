@@ -18,6 +18,11 @@
 	vase7
 		icon_state = "vase7"
 
+/obj/item/decoration/virvase
+	name = "pretty purple hibiscus"
+	desc = "A lovely flower from a dear friend."
+	icon_state = "virvase"
+
 /obj/item/decoration/ashtray
 	name = "ashtray"
 	desc = "The rarely visited graveyard for cigarettes."
