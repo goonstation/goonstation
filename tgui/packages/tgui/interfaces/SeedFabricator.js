@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from "../backend";
-import { Blink, Box, Button, Collapsible, Flex, Icon, Modal, NumberInput, ProgressBar, Section, Stack } from '../components';
+import { Blink, Box, Button, Collapsible, Flex, Icon, Modal, NumberInput, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 import { pluralize } from "./common/stringUtils";
 
@@ -10,8 +10,6 @@ const DefaultSort = {
   Flower: 4,
   Miscellaneous: 5,
 };
-
-const SeedsPerRow = 3;
 
 export const SeedFabricator = (props, context) => {
   const { data } = useBackend(context);
@@ -110,34 +108,32 @@ const SeedCategory = (props, context) => {
   return (
     <Collapsible
       title={name}>
-      <Stack vertical>
-        <Box>
-          {seeds.map((seed, index) => (
-            <Box key={seed.name} as="span">
-              <Button width="155px" height="32px" px={0} m={0.25}
-                onClick={() => act('disp', { path: seed.path, amount: dispenseAmount })}>
-                <Flex direction="row" align="center">
-                  <Flex.Item>
-                    <img
-                      src={`data:image/png;base64,${seed.img}`}
-                      style={{
-                        'vertical-align': 'middle',
-                        'horizontal-align': 'middle',
-                      }}
-                      height="32px"
-                      width="32px" />
-                  </Flex.Item>
-                  <Flex.Item
-                    overflow="hidden"
-                    style={{ 'text-overflow': 'ellipsis' }}>
-                    {seed.name}
-                  </Flex.Item>
-                </Flex>
-              </Button>
-            </Box>
-          ))}
-        </Box>
-      </Stack>
+      <Box>
+        {seeds.map((seed, index) => (
+          <Box key={seed.name} as="span">
+            <Button width="155px" height="32px" px={0} m={0.25}
+              onClick={() => act('disp', { path: seed.path, amount: dispenseAmount })}>
+              <Flex direction="row" align="center">
+                <Flex.Item>
+                  <img
+                    src={`data:image/png;base64,${seed.img}`}
+                    style={{
+                      'vertical-align': 'middle',
+                      'horizontal-align': 'middle',
+                    }}
+                    height="32px"
+                    width="32px" />
+                </Flex.Item>
+                <Flex.Item
+                  overflow="hidden"
+                  style={{ 'text-overflow': 'ellipsis' }}>
+                  {seed.name}
+                </Flex.Item>
+              </Flex>
+            </Button>
+          </Box>
+        ))}
+      </Box>
     </Collapsible>
   );
 
