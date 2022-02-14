@@ -10,11 +10,12 @@
 * Don't use `goto`. Bad.
 * Don't use the `:` operator to override type safety checks. Instead, cast the variable to the proper type.
 
-## Procs To Use
+## Stuff To Use
 
 * Use `SPAWN()` instead of `spawn()`
 * Use `TIME` instead of `world.timeofday`
 * Bitflags (`&`) - Write as `bitfield & bitflag`
+* Use `'foo.ogg'` instead of `"foo.ogg"` for resources unless you need to build a string (e.g. `"foo_[rand(2)].ogg"`).
 
 # Syntax
 
