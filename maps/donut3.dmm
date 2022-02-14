@@ -7979,11 +7979,6 @@
 /obj/disposalpipe/switch_junction/right/north{
 	mail_tag = "refinery"
 	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "cbj" = (
@@ -9518,15 +9513,6 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/hallway/primary/east)
-"cyV" = (
-/obj/disposalpipe/segment/mail,
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/simulated/floor,
 /area/station/hallway/primary/east)
 "czj" = (
 /obj/machinery/door/airlock/pyro/glass/security{
@@ -26154,11 +26140,13 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "hrD" = (
-/obj/disposalpipe/segment/mail,
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -26399,11 +26387,10 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "huC" = (
@@ -79315,8 +79302,10 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "wPZ" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 8
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -83385,7 +83374,9 @@
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce)
 "xXM" = (
-/obj/disposalpipe/segment/mail,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -139865,10 +139856,10 @@ xUo
 aBc
 mXg
 huy
+hrD
 wPZ
-xPd
-dOa
-yhr
+xXM
+nEO
 jPR
 ffz
 heB
@@ -140166,11 +140157,11 @@ aCT
 nJk
 bhZ
 kow
-yhr
+xPd
 xPd
 xPd
 dOa
-yhr
+xPd
 dOa
 anO
 bhZ
@@ -140468,11 +140459,11 @@ gQz
 usL
 gQz
 gQz
-hrD
-xXM
-xXM
+gQz
+gQz
+gQz
 cbg
-cyV
+gQz
 qct
 gQz
 gQz
