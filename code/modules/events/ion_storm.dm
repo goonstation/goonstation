@@ -2,7 +2,8 @@
 	name = "Ion Storm"
 	centcom_headline = "Equipment Malfunction"
 	centcom_message = "An electromagnetic storm recently passed by the station. Sensitive electrical equipment may require maintenance."
-	message_delay = 5 SECONDS //CHANGE THIS BACK YOU DUMBASS
+	message_delay = 5 MINUTES
+	var/stage_delay = 0.2
 	var/list/new_laws = list()
 	var/list/categories
 
@@ -154,17 +155,18 @@
 				S << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 				ticker.centralized_ai_laws.show_laws(S)
 
-		SPAWN_DBG(message_delay * 0.25)
+		SPAWN_DBG(message_delay * stage_delay)
 
 			// Fuck up some categories
 			for (var/datum/ion_category/category in categories)
 				category.fuck_up()
-				sleep(message_delay * 0.25)
+				sleep(message_delay * stage_delay)
 
 	proc/build_categories()
 		categories = list()
 		for (var/category in childrentypesof(/datum/ion_category))
 			categories += new category
+		stage_delay = 1 / (length(categories) + 1)
 
 /datum/ion_category
 	var/amount
