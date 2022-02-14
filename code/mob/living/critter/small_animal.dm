@@ -550,13 +550,14 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			return ..()
 		message = reverse_text(message)
 		..(message)*/
-	visible_message(var/msg, var/self, var/blind, var/group)
-		msg = "<span style='-ms-transform: rotate(180deg)'>[msg]</span>"
-		if(self)
-			self = "<span style='-ms-transform: rotate(180deg)'>[self]</span>"
-		if(blind)
-			blind = "<span style='-ms-transform: rotate(180deg)'>[blind]</span>"
-		return ..(msg,self,blind,group)
+
+	visible_message(var/message, var/self_message, var/blind_message, var/group)
+		message = "<span style='-ms-transform: rotate(180deg)'>[message]</span>"
+		if(self_message)
+			self_message = "<span style='-ms-transform: rotate(180deg)'>[self_message]</span>"
+		if(blind_message)
+			blind_message = "<span style='-ms-transform: rotate(180deg)'>[blind_message]</span>"
+		return ..(message,self_message,blind_message,group)
 
 	audible_message(var/msg)
 		msg = "<span style='-ms-transform: rotate(180deg)'>[msg]</span>"

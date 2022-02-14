@@ -100,7 +100,7 @@
 				donor.take_oxygen_deprivation(1.8 * mult/LUNG_COUNT) // Lets hurt em a little, let them know we mean business
 				if (world.time - donor.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 					donor.take_oxygen_deprivation(7 * mult/LUNG_COUNT)
-			if (prob(percentmult(20, mult))) // Lets give them some chance to know somethings not right though I guess.
+			if (probmult(20)) // Lets give them some chance to know somethings not right though I guess.
 				update.emotes |= "cough"
 		else
 			donor.co2overloadtime = 0
@@ -119,7 +119,7 @@
 					if (SA_pp > SA_sleep_min) // Enough to make us sleep as well
 						donor.sleeping = max(donor.sleeping, 2)
 				else if (SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-					if (prob(percentmult(20, mult)))
+					if (probmult(20))
 						update.emotes |= pick("giggle", "laugh")
 
 		if (prob(15) && (FARD_pp > fart_smell_min))

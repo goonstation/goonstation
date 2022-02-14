@@ -176,12 +176,12 @@
 
 						if(sigcommand == "call")
 							//don't spam call it you buttes
-							if(emergency_shuttle.online || call_shuttle_proc(call_reason=call_reason)) //Returns 1 on failure
+							if(emergency_shuttle.online || call_shuttle_proc(signal.author, call_reason=call_reason)) //Returns 1 on failure
 								src.post_reply("SHUTL_E_DIS", target)
 								return
 							src.post_reply("SHUTL_E_SEN", target)
 						else if(sigcommand == "recall")
-							if(!emergency_shuttle.online || cancel_call_proc())
+							if(!emergency_shuttle.online || cancel_call_proc(signal.author))
 								src.post_reply("SHUTL_E_DIS", target)
 								return
 							src.post_reply("SHUTL_E_RET", target)

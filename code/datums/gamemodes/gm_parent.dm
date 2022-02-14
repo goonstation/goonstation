@@ -98,12 +98,18 @@
 
 				if (traitor.special_role == ROLE_CHANGELING && traitor.current)
 					var/dna_absorbed = 0
+					var/absorbed_identities = null
 					var/datum/abilityHolder/changeling/C = traitor.current.get_ability_holder(/datum/abilityHolder/changeling)
 					if (C && istype(C))
+						absorbed_identities = list()
 						dna_absorbed = max(0, C.absorbtions)
+						for (var/DNA in C.absorbed_dna)
+							absorbed_identities += DNA
 					else
 						dna_absorbed = "N/A (body destroyed)"
+
 					stuff_to_output += "<B>Absorbed DNA:</b> [dna_absorbed]"
+					stuff_to_output += "<B>Absorbed Identities: [isnull(absorbed_identities) ? "N/A (body destroyed)" : english_list(absorbed_identities)]"
 
 				if (traitor.special_role == ROLE_VAMPIRE && traitor.current)
 					var/blood_acquired = 0

@@ -419,6 +419,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				src.show_laws()
 				src.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 				src.verbs += /mob/living/silicon/ai/proc/show_laws_verb
+				src.verbs += /mob/living/silicon/ai/proc/reset_apcs
 				src.verbs += /mob/living/silicon/ai/proc/de_electrify_verb
 				src.verbs += /mob/living/silicon/ai/proc/unbolt_all_airlocks
 				src.verbs += /mob/living/silicon/ai/proc/ai_camera_track
@@ -1552,6 +1553,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set category = "AI Commands"
 	set name = "Set Fake Laws"
 
+	#define FAKE_LAW_LIMIT 12
 	var/law_base_choice = input(usr,"Which lawset would you like to use as a base for your new fake laws?", "Fake Laws", "Fake Laws") in list("Real Laws", "Fake Laws")
 	var/law_base = ""
 	if(law_base_choice == "Real Laws")
@@ -1566,6 +1568,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 	// split into lines
 	var/list/raw_law_list = splittext_char(raw_law_text, "\n")
+	// return if we input an excessive amount of laws
+	if (length(raw_law_list) > FAKE_LAW_LIMIT)
+		boutput(usr, "<span class='alert'>You cannot set more than [FAKE_LAW_LIMIT] laws.</span>")
+		return
 	// clear old fake laws
 	src.fake_laws = list()
 	// cleanse the lines and add them as our laws
@@ -1579,6 +1585,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.show_message("<span class='bold'>Your new fake laws are: </span>")
 	for(var/a_law in src.fake_laws)
 		src.show_message(a_law)
+	#undef FAKE_LAW_LIMIT
 
 /mob/living/silicon/ai/proc/ai_state_fake_laws()
 	set category = "AI Commands"
@@ -1761,6 +1768,28 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		colors[3] = colors[3] / 255
 		light.set_color(colors[1], colors[2], colors[3])
 		update_appearance()
+
+/mob/living/silicon/ai/proc/reset_apcs()
+	set category = "AI Commands"
+	set name = "Reset All APCs"
+	set desc = "Resets all APCs on the station."
+	var/count = 0
+
+	var/mob/message_mob = src.get_message_mob()
+	if (!src || !message_mob.client || isdead(src))
+		return
+
+	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
+		for_by_tcl(P, /obj/machinery/power/apc)
+			if (P.z == Z_LEVEL_STATION && !(P.status & BROKEN) && !P.aidisabled && P.is_not_default())
+				P.set_default()
+				count++
+
+		message_admins("[key_name(message_mob)] globally reset [count] APCs.")
+		boutput(message_mob, "Reset [count] APCs.")
+		src.verbs -= /mob/living/silicon/ai/proc/reset_apcs
+		sleep(10 SECONDS)
+		src.verbs += /mob/living/silicon/ai/proc/reset_apcs
 
 // drsingh new AI de-electrify thing
 

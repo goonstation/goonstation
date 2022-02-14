@@ -329,6 +329,39 @@
 
 ////////////////////////////////////////////////////////////
 
+/obj/ability_button/saw_replace_arm
+	name = "Replace arm"
+	icon_state = "saw"
+
+	execute_ability()
+		if (!ishuman(usr))
+			boutput(usr, "<span class='alert'>Only a human can do that.</span>")
+			return
+		var/mob/living/carbon/human/H = usr
+		if (the_item.temp_flags & IS_LIMB_ITEM)
+			boutput(usr, "<span class='alert'>The saw is already attached as an arm.</span>")
+			return
+		switch (alert(usr, "Which arm would you like to replace with [the_item]?",,"Left","Right","Cancel"))
+			if ("Cancel")
+				return
+			if ("Right")
+				if (!H.limbs.r_arm)
+					var/obj/item/saw/syndie/S = the_item
+					S.end_replace_arm("r_arm", H)
+					return
+				boutput(H, "<span class='alert'>You need to hold still...</span>")
+				SETUP_GENERIC_ACTIONBAR(H, the_item, 3 SECONDS, /obj/item/saw/syndie/proc/end_replace_arm, list("r_arm", H), the_item.icon, the_item.icon_state,"", INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION)
+			if ("Left")
+				if (!H.limbs.l_arm)
+					var/obj/item/saw/syndie/S = the_item
+					S.end_replace_arm("l_arm", H)
+					return
+				boutput(H, "<span class='alert'>You need to hold still...</span>")
+				SETUP_GENERIC_ACTIONBAR(H, the_item, 3 SECONDS, /obj/item/saw/syndie/proc/end_replace_arm, list("l_arm", H), the_item.icon, the_item.icon_state,"", INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION)
+		..()
+
+////////////////////////////////////////////////////////////
+
 /obj/ability_button/cable_toggle
 	name = "Toggle auto-laying mode"
 	icon_state = "coil"

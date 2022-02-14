@@ -136,11 +136,7 @@ datum/mind
 		if (new_character.abilityHolder)
 			Z_LOG_DEBUG("Mind/TransferTo", "Transferring abilityHolder")
 			new_character.abilityHolder.transferOwnership(new_character)
-
-
-		if (isrobot(new_character))
-			var/mob/living/silicon/robot/R = new_character
-			R.show_laws()
+			
 		Z_LOG_DEBUG("Mind/TransferTo", "Complete")
 
 		SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, current)
