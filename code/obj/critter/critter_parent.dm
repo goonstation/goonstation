@@ -14,7 +14,7 @@
 	var/is_template = 0
 	var/alive = 1
 	var/health = 10
-	var/max_health = 100
+	var/maxhealth = 100
 
 	// "sleeping" is a special state that sleeps for 10 cycles, wakes up, sleeps again unless someone is found
 	// "hibernating" is another special state where it does nothing unless explicitly woken up
@@ -75,7 +75,6 @@
 	var/wander_check = 0
 	var/sleeping_icon_state = null
 	var/mob/living/wrangler = null
-
 
 	var/butcherable = 0
 	var/meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
@@ -257,7 +256,7 @@
 			if (src.feed_text)
 				src.visible_message("<span class='notice'>[src] [src.feed_text]</span>")
 			eat_twitch(src)
-			src.health += src.health_gain_from_food
+			src.health = min(src.maxhealth, src.health + health_gain_from_food)
 			user.drop_item()
 			qdel(W)
 			return
