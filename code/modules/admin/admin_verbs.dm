@@ -2020,7 +2020,7 @@ var/list/fun_images = list()
 
 /client/proc/clear_nukeop_uplink_purchases()
 	set popup_menu = 0
-	set name = "Clear NukeOp Commander Uplink Purchase Stats"
+	set name = "Wipe Nukie Boss Stats"
 	set desc = "Wipe the intra-round stats of the nukeop commander's uplink purchases"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	admin_only

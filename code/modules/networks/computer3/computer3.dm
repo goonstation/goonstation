@@ -328,12 +328,13 @@
 
 		src.post_system()
 
-		switch(rand(1,3))
-			if(1)
-				setup_font_color = "#E79C01"
-			if(2)
-				setup_font_color = "#A5A5FF"
-				setup_bg_color = "#4242E7"
+		if (prob(60))
+			switch(rand(1,2))
+				if(1)
+					setup_font_color = "#E79C01"
+				if(2)
+					setup_font_color = "#A5A5FF"
+					setup_bg_color = "#4242E7"
 
 	return
 
