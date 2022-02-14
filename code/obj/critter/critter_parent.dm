@@ -711,7 +711,7 @@
 							qdel(src.food_target)
 						src.task = "thinking"
 						src.food_target = null
-						src.health += src.health_gain_from_food
+						src.health = min(src.maxhealth, src.health + health_gain_from_food)
 
 			if ("chasing corpse")
 

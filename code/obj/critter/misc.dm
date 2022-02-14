@@ -498,27 +498,27 @@
 				src.task = "thinking"
 			else
 				src.visible_message("<span class='notice'>[src] hated the [W]! It bit [M]'s hand!</span>")
-				take_bleeding_damage(M, M, rand(6,12), DAMAGE_STAB, 1)
+				random_brute_damage(M, rand(6,12),1)
 				playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
 				M.emote("scream")
 			M.drop_item()
 			qdel(W)
 			src.health = min(src.maxhealth, src.health + health_gain_from_food)
 			eat_twitch(src)
-		..()
+		else
+			..()
 
 
 	ChaseAttack(mob/M)
 		..()
 		if(!ON_COOLDOWN(src, "scorpion_ability", 10 SECONDS))
 			if(prob(50))
-				if (M.reagents)
-					M.visible_message("<span class='combat'><B>[src]</B> stings [src.target]!</span>")
-					M.reagents.add_reagent("neurotoxin", 15)
-					M.reagents.add_reagent("toxin", 6)
-					playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
-					M.emote("scream")
-					M.add_karma(1)
+				M.visible_message("<span class='combat'><B>[src]</B> stings [src.target]!</span>")
+				M.reagents?.add_reagent("neurotoxin", 15)
+				M.reagents?.add_reagent("toxin", 6)
+				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+				M.emote("scream")
+				M.add_karma(1)
 			else
 				random_brute_damage(M, rand(5,10),1)
 				M.visible_message("<span class='combat'><B>[src]</B> tries to grab [src.target] with its pincers!</span>")
