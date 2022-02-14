@@ -292,7 +292,7 @@
 
 			if(src.gender == MALE) playsound(src, "sound/voice/screams/male_scream.ogg", 100, 0, 0, 0.91, channel=VOLUME_CHANNEL_EMOTE)
 			else playsound(src, "sound/voice/screams/female_scream.ogg", 100, 0, 0, 0.9, channel=VOLUME_CHANNEL_EMOTE)
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				src.emote_allowed = 1
 			return "screams!"
 		else
@@ -413,7 +413,7 @@
 						user.show_text("You feel a spooky rumbling in your guts! Maybe you ate a ghoooooost?!","#8218A8")
 					if (C.bioHolder)
 						C.bioHolder.age += 125
-						SPAWN_DBG(1 MINUTE)
+						SPAWN(1 MINUTE)
 							C.bioHolder.age -= 125
 			if("NULL MOSS NOOK") // Anagram: SKULL MONSOON
 				particleMaster.SpawnSystem(new /datum/particleSystem/skull_rain(get_turf(user)))
@@ -426,7 +426,7 @@
 				user.blend_mode = 2
 				user.alpha = 150
 				user.show_text("You feel extra spooky!","#8218A8")
-				SPAWN_DBG(2 MINUTES)
+				SPAWN(2 MINUTES)
 					user.blend_mode = 0
 					user.alpha = 255
 			else
@@ -525,7 +525,7 @@
 			src.spam_flag = 1
 			if (prob(66)) // our sensor isn't the best
 				src.scare_some_people()
-			SPAWN_DBG(src.spam_timer)
+			SPAWN(src.spam_timer)
 				if (src)
 					src.spam_flag = 0
 

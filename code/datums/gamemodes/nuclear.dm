@@ -218,7 +218,7 @@
 		for(var/i = 1 to 5)
 			new /obj/item/breaching_charge/thermite(T)
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 	return

@@ -1010,7 +1010,7 @@ Broken RCD + Effects
 		..()
 		lifespan = rand(2,4)
 		rangeout = lifespan
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			void_shatter()
 			void_loop()
 
@@ -1044,10 +1044,10 @@ Broken RCD + Effects
 			if (prob(5 + lifespan) && limiter.canISpawn(/obj/effects/sparks))
 				var/obj/sparks = new /obj/effects/sparks
 				sparks.set_loc(T)
-				SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
+				SPAWN(2 SECONDS) if (sparks) qdel(sparks)
 
 			T.ex_act((rangeout-lifespan) < 2 ? 1 : 2)
 
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			void_loop()
 		return

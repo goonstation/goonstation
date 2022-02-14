@@ -10,7 +10,7 @@
 #define HANDHELD_CAPACITY 6
 #define WIFI_NOISE_COOLDOWN 5 SECONDS
 #define WIFI_NOISE_VOLUME 30
-#define LIGHT_UP_HOUSING SPAWN_DBG(0) src.light_up_housing()
+#define LIGHT_UP_HOUSING SPAWN(0) src.light_up_housing()
 #define SEND_COOLDOWN_ID "MechComp send cooldown"
 
 // mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
@@ -81,11 +81,11 @@
 		if (!src.user_can_suicide(user))
 			return 0
 		user.visible_message("<span class='alert'><b>[user] stares into the [src], trying to make sense of its function!</b></span>")
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			user.visible_message("<span class='alert'><b>[user]'s brain melts!</b></span>")
 			playsound(user, "sound/effects/mindkill.ogg", 50)
 			user.take_brain_damage(69*420)
-		SPAWN_DBG(20 SECONDS)
+		SPAWN(20 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return
@@ -314,7 +314,7 @@
 			return
 		if(level == 1)
 			src.icon_state=icon_down
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				src.UpdateIcon()
 			LIGHT_UP_HOUSING
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG)
@@ -818,7 +818,7 @@
 		..()
 		if (isobserver(AM) || !AM.density) return
 		if (!istype(AM, /obj/mechbeam))
-			SPAWN_DBG(0) tripped()
+			SPAWN(0) tripped()
 
 /obj/item/mechanics/triplaser
 	name = "Trip laser"
@@ -957,7 +957,7 @@
 		if(input)
 			if(active) return
 			particleMaster.SpawnSystem(new /datum/particleSystem/gravaccel(src.loc, src.dir))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				icon_state = "[under_floor ? "u":""]comp_accel1"
 				active = 1
 				drivecurrent()
@@ -1068,7 +1068,7 @@
 		if(input)
 			if(active) return
 			LIGHT_UP_HOUSING
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if(src)
 					icon_state = "[under_floor ? "u":""]comp_wait1"
 					active = 1
@@ -1126,7 +1126,7 @@
 			inp2 = 0
 			return
 
-		SPAWN_DBG(timeframe)
+		SPAWN(timeframe)
 			inp1 = 0
 
 		return
@@ -1143,7 +1143,7 @@
 			inp2 = 0
 			return
 
-		SPAWN_DBG(timeframe)
+		SPAWN(timeframe)
 			inp2 = 0
 
 		return
@@ -1687,7 +1687,7 @@
 		LIGHT_UP_HOUSING
 		flick("[under_floor ? "u":""]comp_relay1", src)
 		var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
-		SPAWN_DBG(0) SEND_SIGNAL(src,transmissionStyle,input)
+		SPAWN(0) SEND_SIGNAL(src,transmissionStyle,input)
 		return
 
 	update_icon()
@@ -1830,11 +1830,11 @@
 				logTheThing("pdamsg", usr, null, "sends a PDA message <b>[input.signal]</b> using a wifi component at [log_loc(src)].")
 		if(input.data_file)
 			sendsig.data_file = input.data_file.copy_file()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(src.noise_enabled)
 				src.noise_enabled = false
 				playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
-				SPAWN_DBG(WIFI_NOISE_COOLDOWN)
+				SPAWN(WIFI_NOISE_COOLDOWN)
 					src.noise_enabled = true
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, sendsig, src.range, "main")
 
@@ -1856,11 +1856,11 @@
 				pingsignal.data["command"] = "ping_reply"
 				pingsignal.data["data"] = "Wifi Component"
 
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					if(src.noise_enabled)
 						src.noise_enabled = false
 						playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
-						SPAWN_DBG(WIFI_NOISE_COOLDOWN)
+						SPAWN(WIFI_NOISE_COOLDOWN)
 							src.noise_enabled = true
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, src.range)
 
@@ -2103,7 +2103,7 @@
 		else
 			input.signal = signals[current_index]
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		return
 
@@ -2235,7 +2235,7 @@
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		input.signal = (on ? signal_on : signal_off)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		return
 
@@ -2332,7 +2332,7 @@
 				M.set_loc(get_turf(picked.loc))
 				count_sent++
 			input.signal = count_sent
-			SPAWN_DBG(0)
+			SPAWN(0)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 				SEND_SIGNAL(picked,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		return
@@ -2407,7 +2407,7 @@
 				color = input.signal
 			selcolor = input.signal
 			tooltip_rebuild = 1
-			SPAWN_DBG(0) light.set_color(GetRedPart(selcolor) / 255, GetGreenPart(selcolor) / 255, GetBluePart(selcolor) / 255)
+			SPAWN(0) light.set_color(GetRedPart(selcolor) / 255, GetGreenPart(selcolor) / 255, GetBluePart(selcolor) / 255)
 
 	proc/turnon(var/datum/mechanicsMessage/input)
 		if(level == 2) return

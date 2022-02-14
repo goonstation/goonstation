@@ -1348,7 +1348,7 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 			if (ispath(escape_path))
 				ticker.mode.bestow_objective(enemy,escape_path)
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			qdel(src)
 		return 0
 

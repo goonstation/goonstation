@@ -1322,7 +1322,7 @@
 					current_projectile.cost = 170
 					item_state = "lawg-bigshot"
 					playsound(M, "sound/vox/high.ogg", 50)
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						playsound(M, "sound/vox/explosive.ogg", 50)
 				if ("clownshot","clown")
 					set_current_projectile(projectiles["clownshot"])
@@ -1358,7 +1358,7 @@
 					playsound(src.loc, "sound/weapons/armbomb.ogg", 75, 1, -3)
 					logTheThing("combat", src, null, "Is not the law. Caused explosion with Lawbringer.")
 
-					SPAWN_DBG(2 SECONDS)
+					SPAWN(2 SECONDS)
 						src.blowthefuckup(15)
 					return 0
 				else

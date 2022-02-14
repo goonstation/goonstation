@@ -46,7 +46,7 @@ PIPE BOMBS + CONSTRUCTION
 				src.icon_state = src.icon_state_armed
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					if (src) prime()
 					return
 			else
@@ -54,7 +54,7 @@ PIPE BOMBS + CONSTRUCTION
 				src.icon_state = src.icon_state_armed
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
-				SPAWN_DBG(src.det_time)
+				SPAWN(src.det_time)
 					if (src) prime()
 					return
 		return
@@ -71,7 +71,7 @@ PIPE BOMBS + CONSTRUCTION
 				logGrenade(user)
 				boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
-				SPAWN_DBG(src.det_time)
+				SPAWN(src.det_time)
 					if (src) prime()
 					return
 			user.drop_item()
@@ -209,7 +209,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				flick(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					if (src) prime()
 					return
 			else
@@ -218,7 +218,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				flick(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
-				SPAWN_DBG(src.det_time)
+				SPAWN(src.det_time)
 					if (src) prime()
 					return
 		return
@@ -274,7 +274,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				flick(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					if (src) prime()
 					return
 			else
@@ -283,7 +283,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				flick(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
-				SPAWN_DBG(src.det_time)
+				SPAWN(src.det_time)
 					if (src) prime()
 					return
 		return
@@ -340,7 +340,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				M = src
 			playsound(T, "sound/effects/smoke.ogg", 50, 1, -3)
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (src)
 					if (M && istype(M, /obj/item/old_grenade/smoke/mustard))
 						M.mustard_gas.start()
@@ -416,7 +416,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				F = src
 			if (F)
 				playsound(T, "sound/effects/smoke.ogg", 20, 1, -2)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if (F?.smoke) //Wire note: Fix for Cannot execute null.start()
 						for(var/i = 1 to 6)
 							F.smoke.start()
@@ -430,7 +430,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			var/targety = src.y - rand(-5,5)
 			var/turf/newtarget = locate(targetx, targety, src.z)
 			shoot_projectile_ST(src, PJ, newtarget)
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				qdel(O)
 				qdel(src)
 		else
@@ -472,7 +472,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 			O.icon = 'icons/effects/64x64.dmi'
 			O.icon_state = "explo_fiery"
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				qdel(O)
 				qdel(src)
 		else
@@ -546,7 +546,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			pulse.icon_state = "emppulse"
 			pulse.name = "emp pulse"
 			pulse.anchored = 1
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				if (pulse) qdel(pulse)
 
 			for (var/turf/tile in range(world.view-1, T))
@@ -719,7 +719,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		if (src.state == 0)
 			..()
 		else
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
 				if (old_light_grenade)
 					for (var/obj/item/W in user)
@@ -782,7 +782,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		E.fingerprintslast = src.fingerprintslast
 
 		invisibility = INVIS_ALWAYS_ISH
-		SPAWN_DBG(15 SECONDS)
+		SPAWN(15 SECONDS)
 			qdel (src)
 
 	proc/beep(i)
@@ -801,7 +801,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			if (O.client)
 				O.show_message("<span class='alert'><B>[usr] has armed the [src.name]! Run!</B></span>", 1)
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.beep(10)
 
 	proc/playbeep(var/atom/source, i as num, sound)
@@ -837,7 +837,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		for(var/mob/living/carbon/human/M in range(5, src))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
-			SPAWN_DBG(0)
+			SPAWN(0)
 				M.owlgib()
 		..()
 
@@ -851,7 +851,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		for(var/mob/living/carbon/human/M in range(5, src))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (!(M.wear_mask && istype(M.wear_mask, /obj/item/clothing/mask/owl_mask)))
 					for(var/obj/item/clothing/O in M)
 						M.u_equip(O)
@@ -880,7 +880,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		for(var/mob/living/carbon/human/M in range(5, src))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (!(M.wear_suit && istype(M.wear_suit, /obj/item/clothing/suit/gimmick/hotdog)))
 					for(var/obj/item/clothing/O in M)
 						M.u_equip(O)
@@ -919,7 +919,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		for(var/mob/living/carbon/human/M in range(3, src))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
-			SPAWN_DBG(0)
+			SPAWN(0)
 				M.become_statue(getMaterial("gold"))
 		..()
 
@@ -929,7 +929,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	anchored = 1
 
 	New()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.beep(10)
 		return ..()
 
@@ -938,7 +938,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	anchored = 1
 
 	New()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.beep(10)
 		return ..()
 
@@ -947,7 +947,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	anchored = 1
 
 	New()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.beep(10)
 		return ..()
 
@@ -991,7 +991,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 			else if (src.slashed)
 				boutput(user, "<span class='alert'>You accidentally prime the firework! [det_time/10] seconds!</span>")
-				SPAWN_DBG( src.det_time )
+				SPAWN( src.det_time )
 					boutput(user, "<span class='alert'>The firework probably should have exploded by now.</span>")
 					src.primer_burnt = TRUE
 					return
@@ -999,14 +999,14 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			else if (user.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 				src.primed = TRUE
-				SPAWN_DBG( 5 )
+				SPAWN( 5 )
 					boom(user)
 					return
 
 			else
 				boutput(user, "<span class='alert'>You accidentally prime the firework! [det_time/10] seconds!</span>")
 				src.primed = TRUE
-				SPAWN_DBG( src.det_time )
+				SPAWN( src.det_time )
 					boom(user)
 					return
 
@@ -1041,7 +1041,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 			else if (src.slashed)
 				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
-				SPAWN_DBG( src.det_time )
+				SPAWN( src.det_time )
 					boutput(user, "<span class='alert'>The firework probably should have exploded by now. Fuck.</span>")
 					src.primer_burnt = TRUE
 					return
@@ -1049,14 +1049,14 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			else if (user.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 				src.primed = TRUE
-				SPAWN_DBG( 5 )
+				SPAWN( 5 )
 					boom(user)
 					return
 
 			else
 				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
 				src.primed = TRUE
-				SPAWN_DBG( src.det_time )
+				SPAWN( src.det_time )
 					boom(user)
 					return
 
@@ -1165,7 +1165,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					var/area/A = get_area(src)
 					if(!A.dont_log_combat)
 						logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						user.u_equip(src)
 						src.boom()
 						return
@@ -1183,7 +1183,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					if(!A.dont_log_combat)
 						logTheThing("combat", user, null, "attaches a [src] to [target] at [log_loc(target)].")
 
-					SPAWN_DBG (src.det_time)
+					SPAWN(src.det_time)
 						if (src)
 							src.boom()
 							if (target)
@@ -1270,7 +1270,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					var/area/A = get_area(src)
 					if(!A.dont_log_combat)
 						logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						user.u_equip(src)
 						src.boom()
 						return
@@ -1288,7 +1288,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					if(!A.dont_log_combat)
 						logTheThing("combat", user, null, "attaches a [src] to [target] at [log_loc(target)].")
 
-					SPAWN_DBG (src.det_time)
+					SPAWN(src.det_time)
 						if (src)
 							src.boom()
 		return
@@ -1371,7 +1371,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				M.TakeDamage("chest", 0, damage)
 				M.update_burning(damage)
 
-			SPAWN_DBG(10 SECONDS)
+			SPAWN(10 SECONDS)
 				if (src)
 					for (var/obj/overlay/O in range(src.expl_range, location))
 						if (O.name == "Thermite")
@@ -1594,9 +1594,9 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			logTheThing("combat", user, null, "arms a [src.name] (power [strength]) at [log_loc(src)])")
 
 		if (sound_effect)
-			SPAWN_DBG(4 SECONDS) //you can use a sound effect to hold a bomb in hand and throw it at the very last moment!
+			SPAWN(4 SECONDS) //you can use a sound effect to hold a bomb in hand and throw it at the very last moment!
 				playsound(src, sound_effect, 50, 1)
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			do_explode()
 
 	ex_act(severity)

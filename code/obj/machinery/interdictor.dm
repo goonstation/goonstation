@@ -210,10 +210,10 @@
 
 	src.canInterdict = 1
 	playsound(src.loc, src.sound_interdict_on, 40, 0)
-	SPAWN_DBG(rand(30,40)) //after it's been on for a little bit, check for tears
+	SPAWN(rand(30,40)) //after it's been on for a little bit, check for tears
 		if(src.canInterdict)
 			for (var/obj/forcefield/event/tear in by_type[/obj/forcefield/event])
-				SPAWN_DBG(rand(8,22)) //stagger stabilizations, since it's getting stabilized post-formation
+				SPAWN(rand(8,22)) //stagger stabilizations, since it's getting stabilized post-formation
 					if (!tear.stabilized && IN_RANGE(src,tear,src.interdict_range) && src.expend_interdict(800))
 						tear.stabilize()
 	src.UpdateIcon()

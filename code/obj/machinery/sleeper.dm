@@ -33,7 +33,7 @@
 	New()
 		..()
 		if (src.find_sleeper_in_range)
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				our_sleeper = locate() in get_step(src,src.dir)
 				if (!our_sleeper)
 					our_sleeper = locate() in orange(src,1)
@@ -270,7 +270,7 @@
 	New()
 		..()
 		src.UpdateIcon()
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			if (src && !src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
@@ -553,7 +553,7 @@
 			user.drop_item()
 			target.Attackhand(user)
 			user.set_a_intent(previous_user_intent)
-			SPAWN_DBG(user.combat_click_delay + 2)
+			SPAWN(user.combat_click_delay + 2)
 				if (can_operate(user))
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)
@@ -638,7 +638,7 @@
 				pingsignal.data["command"] = "ping_reply"
 				pingsignal.data["sender"] = src.net_id
 				pingsignal.transmission_method = TRANSMISSION_WIRE
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.link.post_signal(src, pingsignal)
 
 			return
@@ -659,7 +659,7 @@
 				reply.data["address_1"] = signal.data["sender"]
 				reply.data["sender"] = src.net_id
 				reply.transmission_method = TRANSMISSION_WIRE
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					src.link.post_signal(src, reply)
 
 			if("inject")

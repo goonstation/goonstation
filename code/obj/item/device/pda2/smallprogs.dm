@@ -215,7 +215,7 @@ Code:
 			if(last_transmission && world.time < (last_transmission + 5))
 				return
 			last_transmission = world.time
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				logTheThing("signalers", usr, null, "used [src.master] @ location ([showCoords(src.master.loc.x, src.master.loc.y, src.master.loc.z)]) <B>:</B> [format_frequency(send_freq)]/[send_code]")
 
 				var/datum/signal/signal = get_free_signal()
@@ -442,10 +442,10 @@ Code:
 				if (M.id != src.id)
 					continue
 				if (M.density)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						M.open()
 				else
-					SPAWN_DBG(0)
+					SPAWN(0)
 						M.close()
 
 		src.master.add_fingerprint(usr)
@@ -825,7 +825,7 @@ Code:
 
 		if(!detonating)
 			src.detonating = 1
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				src.master.explode()
 
 		return dat
@@ -1032,7 +1032,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 
 			logTheThing("admin", usr, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
-			SPAWN_DBG(3 SECONDS)
+			SPAWN(3 SECONDS)
 				var/obj/item/paper/p = new /obj/item/paper
 				p.set_loc(get_turf(src.master))
 				p.name = "Official Caution - [ticket_target]"
@@ -1081,7 +1081,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			if(PDAownerjob in list("Head of Security","Head of Personnel","Captain"))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
 				playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					F.approve(PDAowner,PDAownerjob)
 					var/obj/item/paper/p = new /obj/item/paper
 					p.set_loc(get_turf(src.master))
@@ -1098,7 +1098,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			var/datum/fine/F = locate(href_list["approve"])
 
 			playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
-			SPAWN_DBG(3 SECONDS)
+			SPAWN(3 SECONDS)
 				F.approve(PDAowner,PDAownerjob)
 				var/ticket_text = "[F.target] has been fined [F.amount] credits by Nanotrasen Corporate Security for [F.reason] on [time2text(world.realtime, "DD/MM/53")].<br>Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [PDAowner] - [PDAownerjob]<br>"
 				var/obj/item/paper/p = new /obj/item/paper

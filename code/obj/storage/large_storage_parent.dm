@@ -64,7 +64,7 @@
 		weld_image = image(src.icon, src.icon_welded)
 		weld_image.pixel_x = weld_image_offset_X
 		weld_image.pixel_y = weld_image_offset_Y
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.UpdateIcon()
 
 			if (!src.open && grab_stuff_on_spawn)		// if closed, any item at src's loc is put in the contents
@@ -147,7 +147,7 @@
 					sleep(0.1 SECONDS)
 				src.pixel_x = 0
 				src.pixel_y = 0
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					src.jiggled = 0
 
 			if (prob(10) && src.can_flip_bust)
@@ -393,7 +393,7 @@
 			O.set_loc(get_turf(O))
 			storage.hud.remove_item(O)
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			var/stuffed = FALSE
 			var/list/draggable_types = list(
 				/obj/item/plant = "produce",
@@ -431,7 +431,7 @@
 					if (length(T.contents) >= max_capacity)
 						break
 				user.show_text("You finish stuffing [type_name] into [src]!", "blue")
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					if (src.open)
 						src.close()
 			if(!stuffed)
@@ -440,7 +440,7 @@
 					if (user != O)
 						user.visible_message("<span class='alert'>[user] stuffs [O] into [src]!</span>",\
 						"<span class='alert'>You stuff [O] into [src]!</span>")
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						if (src.open)
 							src.close()
 		return ..()
@@ -653,7 +653,7 @@
 		if (src.health <= 0)
 			src.visible_message("<span class='alert'>[src] breaks apart!</span>")
 			src.dump_contents()
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				var/newloc = get_turf(src)
 				make_cleanable( /obj/decal/cleanable/machine_debris,newloc)
 				qdel(src)
@@ -678,7 +678,7 @@
 			return
 		src.locked = TRUE
 		M.show_text("Is it getting... smaller in here?", "red")
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			if (M in src.contents)
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
 				M.show_text("<b>OH JESUS CHRIST</b>", "red")
@@ -900,7 +900,7 @@
 						reply.data["data"] = "badpass"
 				else
 					return //COMMAND NOT RECOGNIZED
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply, 2)
 
 		else if (signal.data["address_1"] == "ping")
@@ -910,7 +910,7 @@
 			reply.data["command"] = "ping_reply"
 			reply.data["device"] = "WNET_SECLOCKER"
 			reply.data["netid"] = src.net_id
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply, 2)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)

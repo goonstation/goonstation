@@ -64,7 +64,7 @@
 		R.add_reagent("sarin", 50)
 		smoke_reaction(R, 7, get_turf(src))
 		qdel(src)
-		SPAWN_DBG(30 SECONDS) qdel(R)
+		SPAWN(30 SECONDS) qdel(R)
 		return
 
 /obj/machinery/torpedo_tube/syndicate
@@ -251,7 +251,7 @@
 		tube.pixel_y = 16
 		underlays.Add(tube)
 
-		SPAWN_DBG(1 SECOND) //You might wonder what is going on here. IF I DON'T SPAWN THIS THE DIRECTION IS NOT SET IS WHAT'S GOING ON HERE.
+		SPAWN(1 SECOND) //You might wonder what is going on here. IF I DON'T SPAWN THIS THE DIRECTION IS NOT SET IS WHAT'S GOING ON HERE.
 			set_dir(NORTH)
 
 		rebuildOverlays()
@@ -338,7 +338,7 @@
 				T.set_dir(src.dir)
 				T.lockdir = src.dir
 				T.fired = 1
-				SPAWN_DBG(0)
+				SPAWN(0)
 					T.launch(target)
 
 			loaded = null
@@ -410,7 +410,7 @@
 			thrown_person.set_loc(src.loc)
 			parent?.close()
 			if (prob(25) || thrown_person.bioHolder.HasEffect("clumsy"))
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					JOB_XP(thrown_person, "Clown", 5)
 					src.parent?.launch()
 		else
@@ -709,7 +709,7 @@
 		var/atom/target = get_edge_target_turf(src, src.dir)
 		src.lockdir = src.dir
 		src.fired = 1
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.launch(target)
 		return
 

@@ -253,7 +253,7 @@
 
 			var/mob/living/carbon/human/human_target = target
 			if (human_target && rand(1,5) == 1)
-				SPAWN_DBG(0) target.emote("cough")
+				SPAWN(0) target.emote("cough")
 		else
 			var/message
 			switch(rand(1, 10))
@@ -310,7 +310,7 @@
 			if (src.exploding)
 				src.on = 0 //Let's not keep looping while we're busy blowing up, ok?
 				processing_items.Remove(src)
-				SPAWN_DBG((20)+(rand(1,10)))
+				SPAWN((20)+(rand(1,10)))
 					trick_explode()
 				return
 			else
@@ -925,7 +925,7 @@
 			user.visible_message("<span class='alert'><b>[user]</b> calmly drops and treads on the lit [src.name], putting it out instantly.</span>")
 			src.put_out(user)
 			return
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.loc != user)
 				light.attach(src)
 
@@ -1287,7 +1287,7 @@
 		user.take_oxygen_deprivation(75)
 		user.TakeDamage("chest", 0, 100)
 		user.emote("scream")
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		qdel(src)

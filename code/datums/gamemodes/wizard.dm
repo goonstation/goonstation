@@ -85,7 +85,7 @@
 		var/randomname
 		if (wizard.current.gender == "female") randomname = pick_string_autokey("names/wizard_female.txt")
 		else randomname = pick_string_autokey("names/wizard_male.txt")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/newname = adminscrub(input(wizard.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname) as text)
 			if(newname && newname != randomname)
 				phrase_log.log_phrase("name-wizard", newname, no_duplicates=TRUE)
@@ -98,7 +98,7 @@
 				wizard.current.real_name = newname
 				wizard.current.UpdateName()
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/wizard/send_intercept()

@@ -28,7 +28,7 @@ ENGINE
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			setupLinks()
 
 
@@ -307,7 +307,7 @@ REACTOR
 					T:air:trace_gases = list()
 				T:air:trace_gases += rad
 
-		SPAWN_DBG(0.8 SECONDS)
+		SPAWN(0.8 SECONDS)
 			meltdown = 2.0
 
 

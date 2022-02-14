@@ -404,7 +404,7 @@
 		return
 
 	if (JOB.announce_on_join)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			boutput(world, "<b>[src.name] is the [JOB.name]!</b>")
 	boutput(src, "<B>You are the [JOB.name].</B>")
 	src.job = JOB.name
@@ -565,7 +565,7 @@
 					var/datum/abilityHolder/A = src.abilityHolder.deepCopy()
 					R.fields["abilities"] = A
 
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if(!isnull(src.traitHolder))
 						R.fields["traits"] = src.traitHolder.copy()
 
@@ -667,7 +667,7 @@
 
 	if (src.traitHolder && src.traitHolder.hasTrait("onearmed"))
 		if (src.limbs)
-			SPAWN_DBG(6 SECONDS)
+			SPAWN(6 SECONDS)
 				if (prob(50))
 					if (src.limbs.l_arm)
 						qdel(src.limbs.l_arm.remove(0))

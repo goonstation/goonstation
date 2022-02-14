@@ -98,7 +98,7 @@
 			message_coders("ALERT: Critter [type] ([name]) does not have health holders.")
 		count_healths()
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(!src.disposed)
 				src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
 				src.attach_hud(zone_sel)
@@ -133,7 +133,7 @@
 				if (ispath(abil))
 					abilityHolder.addAbility(abil)
 
-		SPAWN_DBG(0.5 SECONDS) //if i don't spawn, no abilities even show up
+		SPAWN(0.5 SECONDS) //if i don't spawn, no abilities even show up
 			if (abilityHolder)
 				abilityHolder.updateButtons()
 
@@ -1162,11 +1162,11 @@
 			severity++
 		switch(severity)
 			if (1)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					gib()
 			if (2)
 				if (health < max_health * 0.35 && prob(50))
-					SPAWN_DBG(0)
+					SPAWN(0)
 						gib()
 				else
 					TakeDamage("All", rand(10, 30), rand(10, 30))

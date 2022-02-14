@@ -441,7 +441,7 @@
 		global.ai_mobs |= src
 
 	if(!src.last_ckey)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/area/AR = get_area(src)
 			AR?.wake_critters(src)
 
@@ -489,20 +489,20 @@
 				logTheThing("admin", src, M, "has same computer ID as [constructTarget(M,"admin")]")
 				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")]", "access")
 				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B><font class='internal'> as [key_name(M)]</span>")
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if(M.lastKnownIP == src.client.address)
 						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 			else if (M && M.computer_id && M.computer_id == src.client.computer_id && M.ckey != src.ckey && M.key)
 				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", null, "access")
 				logTheThing("admin", M, null, "is no longer logged in.")
 				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B></span><span class='internal'> as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if(M.lastKnownIP == src.client.address)
 						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 /*  don't get me wrong this was awesome but it's leading to false positives now and we stopped caring about that guy
 	var/evaderCheck = copytext(lastKnownIP,1, findtext(lastKnownIP, ".", 5))
 	if (evaderCheck in list("174.50", "69.245", "71.228", "69.247", "71.203", "98.211", "68.53"))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/joinstring = "???"
 			var/list/response = world.Export("http://www.byond.com/members/[src.ckey]?format=text")
 			if (response && response["CONTENT"])
@@ -706,7 +706,7 @@
 							break
 						M.throw_at(source, 20, 3)
 						LAGCHECK(LAG_MED)
-					SPAWN_DBG(5 SECONDS)
+					SPAWN(5 SECONDS)
 						src.now_pushing = 0
 						if (tmob) //Wire: Fix for: Cannot modify null.now_pushing
 							tmob.now_pushing = 0
@@ -910,7 +910,7 @@
 
 	var/key = src.key
 	var/displayed_key = src.mind.displayed_key
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/result = world.SetMedal(title, key, config.medal_hub, config.medal_password)
 
 		if (result == 1)
@@ -960,7 +960,7 @@
 
 	boutput(src, "Retrieving your medal information...")
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/list/output = list()
 		var/medals = world.GetMedal("", src.key, config.medal_hub, config.medal_password)
 
@@ -1864,7 +1864,7 @@
 			light.set_height(height)
 			light.attach(animation)
 			light.enable()
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				qdel(light)
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
@@ -2078,7 +2078,7 @@
 
 /mob/proc/cluwnegib(var/duration = 30, var/anticheat = 0)
 	if(isobserver(src)) return
-	SPAWN_DBG(0) //multicluwne
+	SPAWN(0) //multicluwne
 		duration = clamp(duration, 10, 100)
 
 	#ifdef DATALOGGER
@@ -2380,7 +2380,7 @@
 	dizziness = min(500, dizziness + amount)	// store what will be new value
 													// clamped to max 500
 	if (dizziness > 100 && !is_dizzy)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			dizzy_process()
 
 
@@ -2411,7 +2411,7 @@
 	jitteriness = min(500, jitteriness + amount)	// store what will be new value
 													// clamped to max 500
 	if (jitteriness > 100 && !is_jittery)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			jittery_process()
 
 
@@ -2579,7 +2579,7 @@
 					eyeblind = 5
 					src.change_eye_blurry(5)
 					src.bioHolder.AddEffect("bad_eyesight")
-					SPAWN_DBG(10 SECONDS)
+					SPAWN(10 SECONDS)
 						src.bioHolder.RemoveEffect("bad_eyesight")
 
 			if (25 to INFINITY)
@@ -2978,7 +2978,7 @@
 	animation.master = src
 	animation.icon_state = "ungibbed"
 	src = null //Detach this, what if we get deleted before the animation ends??
-	SPAWN_DBG(0.7 SECONDS) //Length of animation.
+	SPAWN(0.7 SECONDS) //Length of animation.
 		newbody.set_loc(animation.loc)
 		qdel(animation)
 		newbody.anchored = 1 // Stop running into the lava every half second jeez!
@@ -2992,7 +2992,7 @@
 	src.nodamage = 1
 	var/duration = 30
 
-	SPAWN_DBG(0) //multisatan
+	SPAWN(0) //multisatan
 		logTheThing("combat", src, null, "is damned to hell from [log_loc(src)].")
 		src.transforming = 1
 		src.canmove = 0

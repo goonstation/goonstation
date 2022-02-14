@@ -64,7 +64,7 @@
 		if (src.client) // fix for "Cannot modify null.suicide"
 			src.client.suicide = 1
 		src.suicide_can_succumb = 1
-		SPAWN_DBG(15 SECONDS)
+		SPAWN(15 SECONDS)
 			src.suicide_can_succumb = 0
 		logTheThing("combat", src, null, "commits suicide")
 		do_suicide() //                           <------ put mob unique behaviour here in an override!!!!
@@ -72,7 +72,7 @@
 			if (src.suicide_alert)
 				message_attack("[key_name(src)] commits suicide shortly after joining.")
 				src.suicide_alert = 0
-			SPAWN_DBG(20 SECONDS)
+			SPAWN(20 SECONDS)
 				src.suiciding = 0
 		else
 			src.suicide_can_succumb = 0
@@ -136,7 +136,7 @@
 	if (!isnull(src.on_chair) && selection == src.on_chair)
 		src.visible_message("<span class='alert'><b>[src] jumps off of the chair straight onto [his_or_her(src)] head!</b></span>")
 		src.TakeDamage("head", 200, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (src && !isdead(src))
 				src.suiciding = 0
 		src.pixel_y = 0
@@ -146,14 +146,14 @@
 		return
 	else if (istype(selection))
 		selection.suicide(src)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (src && !isdead(src))
 				src.suiciding = 0
 	else
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
 		src.visible_message("<span class='alert'><b>[src] is holding [his_or_her(src)] breath. It looks like [hes_or_shes(src)] trying to commit suicide.</b></span>")
 		src.take_oxygen_deprivation(175)
-		SPAWN_DBG(20 SECONDS) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
+		SPAWN(20 SECONDS) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
 			if (src && !isdead(src))
 				src.suiciding = 0
 		return
@@ -165,15 +165,15 @@
 /mob/living/silicon/ai/do_suicide()
 	src.visible_message("<span class='alert'><b>[src] is powering down. It looks like \he's trying to commit suicide.</b></span>")
 	src.unlock_medal("Damned", 1)
-	SPAWN_DBG(3 SECONDS)
+	SPAWN(3 SECONDS)
 		src.death()
 
 /mob/living/silicon/robot/do_suicide()
 	var/mob/living/silicon/robot/R = src
 	src.visible_message("<span class='alert'><b>[src] is clutching its head strangely!</b></span>")
-	SPAWN_DBG(2 SECONDS)
+	SPAWN(2 SECONDS)
 		R.emote("scream")
-	SPAWN_DBG(3 SECONDS)
+	SPAWN(3 SECONDS)
 		R.unlock_medal("Damned", 1)
 		R.eject_brain()
 		R.borg_death_alert(ROBOT_DEATH_MOD_SUICIDE)

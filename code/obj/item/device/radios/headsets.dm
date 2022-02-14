@@ -364,7 +364,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			var/the_frequency = R_FREQ_SYNDICATE
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 				var/datum/game_mode/nuclear/N = ticker.mode
@@ -392,7 +392,7 @@
 
 		pickup(mob/user)
 			if(isvirtual(user))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/obj/item/clothing/ears/plugs = new /obj/item/clothing/ears/earmuffs/earplugs(src.loc)
 					plugs.name = src.name
 					plugs.desc = src.desc

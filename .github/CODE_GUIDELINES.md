@@ -12,7 +12,7 @@
 
 ## Procs To Use
 
-* Use `SPAWN_DBG()` instead of `spawn()`
+* Use `SPAWN()` instead of `spawn()`
 * Use `TIME` instead of `world.timeofday`
 * Bitflags (`&`) - Write as `bitfield & bitflag`
 

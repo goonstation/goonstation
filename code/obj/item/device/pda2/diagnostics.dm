@@ -78,7 +78,7 @@
 			return
 
 		if (href_list["send"])
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				if(result) result.Cut()
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
@@ -430,7 +430,7 @@
 
 		else if (href_list["send"])
 			mode = 1
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 
 
 				var/datum/signal/signal = get_free_signal()

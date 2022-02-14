@@ -24,7 +24,7 @@
 			src.update_neighbors()
 
 		if (current_state > GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(0) //worldgen overrides ideally
+			SPAWN(0) //worldgen overrides ideally
 				src.UpdateIcon()
 
 		else
@@ -578,7 +578,7 @@
 		if (map_setting && ticker)
 			src.update_neighbors()
 		if (current_state > GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(0) //worldgen overrides ideally
+			SPAWN(0) //worldgen overrides ideally
 				src.UpdateIcon()
 
 		else

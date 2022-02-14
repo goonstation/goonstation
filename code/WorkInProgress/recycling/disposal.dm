@@ -64,7 +64,7 @@
 		set_loc(D.trunk)
 		active = 1
 		set_dir(DOWN)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			process()		// spawn off the movement process
 
 		return
@@ -358,7 +358,7 @@
 			// otherswise, do normal expel from turf
 			expel(H, T, 0)
 
-		SPAWN_DBG(0.2 SECONDS)	// delete pipe after 2 ticks to ensure expel proc finished
+		SPAWN(0.2 SECONDS)	// delete pipe after 2 ticks to ensure expel proc finished
 			qdel(src)
 
 
@@ -1142,7 +1142,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", "activate")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", "deactivate")
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			switch_dir = turn(dir, 90)
 			dpdir = dir | switch_dir | turn(dir,180)
 
@@ -1233,7 +1233,7 @@
 
 		bioHolder.active = 1
 		bioHolder.set_dir(biodir)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			bioHolder.process()
 
 		return nonBioPipe
@@ -1268,7 +1268,7 @@
 		..()
 
 		dpdir = dir | turn(dir, 270) | turn(dir, 90)
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			stuff_chucking_target = get_ranged_target_turf(src, dir, 1)
 
 	welded()
@@ -1335,7 +1335,7 @@
 		..()
 
 		dpdir = dir | turn(dir, 270) | turn(dir, 90)
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			stuff_chucking_target = get_ranged_target_turf(src, dir, 1)
 
 	welded()
@@ -1556,7 +1556,7 @@
 	New()
 		..()
 		dpdir = dir
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			getlinked()
 
 		update()
@@ -1714,7 +1714,7 @@
 	New()
 		..()
 
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			target = get_ranged_target_turf(src, dir, range)
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)

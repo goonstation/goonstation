@@ -19,7 +19,7 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 		#if !defined(LIVE_SERVER)
 		manual_profiling_on = TRUE
 		#endif
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while(TRUE)
 				sleep(0.001)
 				process()

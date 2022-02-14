@@ -120,7 +120,7 @@
 	mouse_opacity = 0
 	New(var/atom/location)
 		src.set_loc(location)
-		SPAWN_DBG(2 SECONDS) qdel(src)
+		SPAWN(2 SECONDS) qdel(src)
 		return ..(location)
 
 /obj/decal/shockwave
@@ -135,7 +135,7 @@
 	mouse_opacity = 0
 	New(var/atom/location)
 		src.set_loc(location)
-		SPAWN_DBG(2 SECONDS) qdel(src)
+		SPAWN(2 SECONDS) qdel(src)
 		return ..(location)
 
 /obj/decal/point
@@ -155,7 +155,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	point.color = color
 	point.invisibility = invisibility
 	target.vis_contents += point
-	SPAWN_DBG(time)
+	SPAWN(time)
 		if(target)
 			target.vis_contents -= point
 		qdel(point)

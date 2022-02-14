@@ -82,7 +82,7 @@ var/list/asteroid_blocked_turfs = list()
 			magnet_shields += S
 
 	proc/spawn_mining_z_asteroids(var/amt, var/zlev)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/the_mining_z = zlev ? zlev : src.mining_z
 			var/turf/T
 			var/spawn_amount = amt ? amt : src.mining_z_asteroids_max

@@ -91,7 +91,7 @@
 			boutput(rev_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/revolution/proc/equip_revolutionary(mob/living/carbon/human/rev_mob)

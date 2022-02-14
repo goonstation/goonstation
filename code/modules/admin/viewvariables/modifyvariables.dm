@@ -702,5 +702,5 @@
 	logTheThing("admin", src, null, "modified [original_name]'s [variable] to [O.vars[variable]]")
 	logTheThing("diary", src, null, "modified [original_name]'s [variable] to [O.vars[variable]]", "admin")
 	message_admins("[key_name(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
-	SPAWN_DBG(0)
+	SPAWN(0)
 		O.onVarChanged(variable, oldVal, O.vars[variable])

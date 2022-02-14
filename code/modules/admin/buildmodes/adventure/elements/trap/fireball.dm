@@ -161,7 +161,7 @@
 	proc/launch()
 		if (!target)
 			qdel(src)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while (loc != get_turf(target))
 				if (exploding)
 					return

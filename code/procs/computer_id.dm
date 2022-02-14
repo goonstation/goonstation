@@ -87,7 +87,7 @@ proc/check_compid_list(var/client/C)
 						cid_test[C.ckey] = C.computer_id
 						cid_tested += C.ckey
 						msg += " Executing automatic test."
-						SPAWN_DBG(1 SECOND)
+						SPAWN(1 SECOND)
 							del(C) //RIP
 					message_admins("[key_name(C)][msg]")
 					logTheThing("admin", C, null, msg)

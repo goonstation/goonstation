@@ -1388,7 +1388,7 @@ datum/achievementReward/ai_dwaine
 	animate_emote(usr, /obj/effect/smug)
 	usr.verbs -= /proc/smugproc
 	usr.verbs += /proc/smugprocCD
-	SPAWN_DBG(30 SECONDS)
+	SPAWN(30 SECONDS)
 		boutput(usr, "<span class='notice'>You can now be smug again! Go hog wild.</span>")
 		usr.verbs += /proc/smugproc
 		usr.verbs -= /proc/smugprocCD
@@ -1457,7 +1457,7 @@ datum/achievementReward/ai_dwaine
 		activator.gib()
 		return 1
 		/* This is dumb we just gibbed the mob
-		SPAWN_DBG(20 SECONDS)
+		SPAWN(20 SECONDS)
 			if(activator && !isdead(activator))
 				activator.suiciding = 0*/
 /*                                  / Management stuff below. /              */
@@ -1519,7 +1519,7 @@ datum/achievementReward/ai_dwaine
 	set category = "Commands"
 	set popup_menu = 0
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		src.verbs -= /client/verb/claimreward
 		boutput(usr, "<span class='alert'>Checking your eligibility. There might be a short delay, please wait.</span>")
 		var/list/eligible = list()
