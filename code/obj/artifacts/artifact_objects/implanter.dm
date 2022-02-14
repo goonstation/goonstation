@@ -41,7 +41,7 @@
 			if ("eldritch")
 				var/eldritchImp = pick(/obj/item/implant/artifact/eldritch/eldritch_good, /obj/item/implant/artifact/eldritch/eldritch_gimmick, /obj/item/implant/artifact/eldritch/eldritch_bad)
 				imp = new eldritchImp
-			else if ("silicon")
+			if ("silicon")
 				var/siliconImp = pick(/obj/item/implant/artifact/ancient/ancient_good, /obj/item/implant/artifact/ancient/ancient_gimmick, /obj/item/implant/artifact/ancient/ancient_bad)
 				imp = new siliconImp
 			else

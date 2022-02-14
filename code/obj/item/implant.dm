@@ -1016,10 +1016,12 @@ THROWING DARTS
 			var/mob/living/carbon/human/H = owner
 
 			var/organ_found = null
+			var/obj/item/organ/current_organ = null
 
 			for (var/organ in organs)
 				if (!organ_found)
-					if (!H.get_organ(organ) || H.get_organ(organ).get_damage() > H.get_organ(organ).FAIL_DAMAGE)
+					current_organ = H.get_organ(organ)
+					if (!current_organ || current_organ.get_damage() > current_organ.FAIL_DAMAGE)
 						organ_found = organ
 
 			if (organ_found)
