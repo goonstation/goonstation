@@ -93,7 +93,13 @@
 		if (C.tg_controls)
 			C.apply_keybind("robot_tg")
 
-	Move(NewLoc, direct)//Ewww!
+	process_move(keys) //override process_move so we can cease tracking with keys
+		if(keys && src.move_dir && !src.use_movement_controller && !istype(src.loc, /turf)) //Pop observers and Follow-Thingers out!!
+			var/mob/living/intangible/aieye/O = src
+			O.set_loc(get_turf(src))
+		. = ..()
+
+	Move(var/turf/NewLoc, direct)//Ewww!
 		last_loc = src.loc
 
 		src.closeContextActions()
