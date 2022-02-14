@@ -96,7 +96,7 @@ var/datum/particleMaster/particleMaster = new
 	// Called by the particle process loop in the game controller
 	// Runs every effect that's ready to go and cleans up anything that's finished or in an invalid location
 	proc/Tick()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/count = 1
 			for (var/datum/particleSystem/system in particleSystems)
 				if (!(count++ % allowed_particles_per_tick))

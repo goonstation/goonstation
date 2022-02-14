@@ -176,7 +176,7 @@
 			CRASH("human HUD created with no master")
 		master = M
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(master?.disposed)
 				qdel(src)
 				return

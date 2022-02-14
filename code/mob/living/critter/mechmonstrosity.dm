@@ -513,7 +513,7 @@
 			playsound(src.loc, "punch", 30, 1, -2)
 			random_brute_damage(M, rand(10,15),1)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 	CritterDeath(mob/M)
@@ -521,7 +521,7 @@
 		..()
 		if (rand(100) <= revivalChance)
 			src.revivalChance -= revivalDecrement
-			SPAWN_DBG(rand(400,800))
+			SPAWN(rand(400,800))
 				src.alive = 1
 				src.set_density(1)
 				src.health = initial(src.health)

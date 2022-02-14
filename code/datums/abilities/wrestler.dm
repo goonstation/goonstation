@@ -128,7 +128,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -289,6 +289,6 @@
 			return
 
 		// Why isn't this in afterCast()? Well, failed attempts to use an abililty call it too.
-		SPAWN_DBG (rand(200, 900))
+		SPAWN(rand(200, 900))
 			if (src.holder && src.holder.owner && ismob(src.holder.owner))
 				src.holder.owner.emote("flex")

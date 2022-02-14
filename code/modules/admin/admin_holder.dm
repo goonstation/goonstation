@@ -44,7 +44,7 @@
 	New()
 		..()
 		src.hidden_categories = list()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			if (src.owner)
 				var/client/C = src.owner
 				C.chatOutput.getContextFlag()

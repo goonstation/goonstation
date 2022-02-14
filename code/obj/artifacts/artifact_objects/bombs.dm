@@ -46,7 +46,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if(recharge_delay && ON_COOLDOWN(O, "bomb_cooldown", recharge_delay))
 			T.visible_message("<b><span class='alert'>[O] [text_cooldown]</span></b>")
 			playsound(T, sound_cooldown, 100, 1)
-			SPAWN_DBG(3 SECONDS)
+			SPAWN(3 SECONDS)
 				O.ArtifactDeactivated() // lol get rekt spammer
 			return
 
@@ -87,7 +87,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				animate(O.simple_light, flags=ANIMATION_PARALLEL, time = 10 SECONDS, transform = matrix() * animationScale)
 
 			// actual boom
-			SPAWN_DBG(10 SECONDS)
+			SPAWN(10 SECONDS)
 				if (!O.disposed && src.activated)
 					blewUp = 1
 					deploy_payload(O)
@@ -99,7 +99,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		animate(O, pixel_y = 0, pixel_y = 0, time = 3,loop = 1, easing = LINEAR_EASING)
 		if(O.simple_light)
 			animate(O.simple_light, flags=ANIMATION_PARALLEL, time= 3 SECONDS, transform = null)
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			O.remove_simple_light("artbomb")
 		var/turf/T = get_turf(O)
 		T.visible_message("<b><span class='notice'>[O] [text_disarmed]</b></span>")
@@ -301,7 +301,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 		O.reagents.clear_reagents()
 
-		SPAWN_DBG(recharge_delay)
+		SPAWN(recharge_delay)
 			if (O)
 				O.ArtifactDeactivated()
 
@@ -453,7 +453,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		animate(O.get_filter("rays"), size=16*range, time=0.5 SECONDS, offset=base_offset+50)
 		animate(size=32*range, time=0.5 SECONDS, offset=base_offset+50, alpha=0)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			var/range_squared = range**2
 			var/turf/T = get_turf(O)
 			for(var/atom/G in range(range, T))

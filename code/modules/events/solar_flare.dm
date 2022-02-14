@@ -13,7 +13,7 @@
 			if(IX.z == 1 && IX.expend_interdict(4000))
 				var/itdr_strength = IX.interdict_range
 				signal_loss_current = max(0,signal_loss_current - rand(itdr_strength,itdr_strength*2))
-				SPAWN_DBG(flare_start_time)
+				SPAWN(flare_start_time)
 					if(IX && IX.canInterdict) //just in case
 						playsound(IX,'sound/machines/firealarm.ogg',50,0,5,0.6)
 						var/adjusted_est = max(signal_loss_current + rand(-5,5),0)
@@ -22,7 +22,7 @@
 
 		if (random_events.announce_events)
 			command_alert("A solar flare has been detected near the [station_or_ship()]. We estimate a signal interference rate of [headline_estimate]% lasting anywhere between three to five minutes.", "Solar Flare")
-		SPAWN_DBG(flare_start_time)
+		SPAWN(flare_start_time)
 			signal_loss += signal_loss_current
 
 	#ifndef UNDERWATER_MAP

@@ -36,7 +36,7 @@
 	New()
 		hud = new(src)
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.make_my_stuff()
 
 	Entered(Obj, OldLoc)
@@ -97,7 +97,7 @@
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O in src.contents)
 			user.drop_item()
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				O.Attackhand(user)
 		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored)
 			user.swap_hand()

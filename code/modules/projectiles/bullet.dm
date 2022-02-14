@@ -773,7 +773,7 @@ toxic - poisons
 
 		..()
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			//hit.setTexture()
 
 			var/turf/T = get_turf(hit)
@@ -1017,7 +1017,7 @@ datum/projectile/bullet/autocannon
 			if(!(A in centerview)) continue
 			var/obj/smokeDummy/D = new(A)
 			smokeLocs.Add(D)
-			SPAWN_DBG(smokeLength) qdel(D)
+			SPAWN(smokeLength) qdel(D)
 		particleMaster.SpawnSystem(new/datum/particleSystem/areaSmoke("#ffffff", smokeLength, trgloc))
 		return*/
 
@@ -1167,14 +1167,14 @@ datum/projectile/bullet/autocannon
 				var/obj/item/chem_grenade/C = SEMI_DEEP_COPY(CHEM)
 				C.set_loc(T)
 				src.has_det = 1
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					C.explode()
 				return
 			else if (src.OLD != null)
 				var/obj/item/old_grenade/O = SEMI_DEEP_COPY(OLD)
 				O.set_loc(T)
 				src.has_det = 1
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					O.prime()
 				return
 			else //what the hell happened

@@ -89,7 +89,7 @@
 		if(!src.chat_text)
 			src.chat_text = new
 		src.vis_contents += src.chat_text
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.botcard = new /obj/item/card/id(src)
 			src.botcard.access = get_access(src.access_lookup)
 			src.botnet_id = format_net_id("\ref[src]")
@@ -167,7 +167,7 @@
 		if (src.speech2text && src.chat_text && !just_chat)
 			if(src.use_speech_bubble)
 				UpdateOverlays(bot_speech_bubble, "bot_speech_bubble")
-				SPAWN_DBG(1.5 SECONDS)
+				SPAWN(1.5 SECONDS)
 					UpdateOverlays(null, "bot_speech_bubble")
 			if(!src.bot_speech_color)
 				var/num = hex2num(copytext(md5("[src.name][TIME]"), 1, 7))
@@ -188,7 +188,7 @@
 		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"<span style=\"[src.bot_chat_style]\">[message]\"</span>", just_maptext = just_float, assoc_maptext = chatbot_text)
 		playsound(src, src.bot_voice, 40, 1)
 		if (src.text2speech)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/audio = dectalk("\[:nk\][message]")
 				if (audio && audio["audio"])
 					for (var/mob/O in hearers(src, null))
@@ -235,7 +235,7 @@
 	P.pixel_x = target.pixel_x
 	P.pixel_y = target.pixel_y
 	P.color = src.bot_speech_color
-	SPAWN_DBG(2 SECONDS)
+	SPAWN(2 SECONDS)
 		P.invisibility = INVIS_ALWAYS
 		qdel(P)
 
@@ -333,7 +333,7 @@
 			qdel(src)
 			return
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (!istype(master) || (master && (!length(master.path) || !src.the_target)))
 				qdel(src)
 				return
@@ -362,7 +362,7 @@
 						I.icon_state = "blank"
 						I.pixel_x = master.pixel_x
 						I.pixel_y = master.pixel_y
-						SPAWN_DBG( 20 )
+						SPAWN( 20 )
 							if (I && !I.disposed) qdel(I)
 
 					step_to(master, master?.path[1])

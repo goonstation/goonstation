@@ -71,5 +71,5 @@
 		else if(sound == 3)
 			playsound(src.loc, "sound/effects/screech2.ogg", 100, 5,0)
 	if(containment_fail == 1)
-		SPAWN_DBG(9 SECONDS)
+		SPAWN(9 SECONDS)
 		emittsound()

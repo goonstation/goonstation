@@ -31,7 +31,7 @@
 			animate(time = 0.1 SECONDS, alpha = 0, easing = JUMP_EASING | EASE_IN)
 			animate(time = 0.1 SECONDS, alpha = 255, easing = JUMP_EASING | EASE_IN)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for(var/obj/O in affected)
 				O.alpha = initial(O.alpha)
 				O.color = initial(O.color)
@@ -62,7 +62,7 @@
 		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
 		for(var/obj/O in affected)
 			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for(var/obj/O in affected)
 				O.alpha = initial(O.alpha)
 				qdel(O)

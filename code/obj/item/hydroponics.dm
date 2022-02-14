@@ -53,7 +53,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src)
 				src.UpdateIcon()
 		BLOCK_SETUP(BLOCK_ROD)

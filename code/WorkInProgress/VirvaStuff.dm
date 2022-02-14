@@ -112,7 +112,7 @@
 	desc = "An odd plastic casing, entirely hollow and slightly melted."
 	New()
 		..()
-		SPAWN_DBG(rand(1, 3))
+		SPAWN(rand(1, 3))
 			playsound(src.loc, "sound/weapons/casings/casing-shell-0[rand(1,7)].ogg", 15, 0.1, 0, 0.7)
 
 obj/item/ammo/bullets/flechette_mag

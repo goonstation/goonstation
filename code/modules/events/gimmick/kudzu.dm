@@ -360,7 +360,7 @@
 	New(turf/loc, var/to_spread = KUDZU_TO_SPREAD_INITIAL)
 		if (..(loc, to_spread))
 			return 1
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (prob(20) && !locate(/obj/spacevine/alien/flower) in get_turf(src))
 				var/obj/spacevine/alien/flower/F = new /obj/spacevine/alien/flower()
 				F.set_loc(src.loc)
@@ -410,7 +410,7 @@
 	New(loc, mob/M as mob)
 		..()
 		if (ishuman(M))
-			SPAWN_DBG(bulb_time)
+			SPAWN(bulb_time)
 				if (src)
 					name = "huge bulb"
 					desc = "A huge botanical bulb. It looks like there's something inside it..."
@@ -423,7 +423,7 @@
 					M.gib()
 					flick("bulb-open-animation", src)
 					new/obj/decal/opened_kudzu_bulb(get_turf(src))
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						qdel(src)
 
 				else if (!destroyed && ishuman(M))

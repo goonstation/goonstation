@@ -30,7 +30,7 @@
 	else if(prob(10))
 		boutput(user, "<span class='alert'><B>Something has clamped down on your hand!</B></span>")
 		user.changeStatus("stunned", 10 SECONDS)
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			if(prob(25))
 				boutput(user, "<span class='alert'><B>You fail to break free!</B></span>")
 				sleep(1 SECONDS)

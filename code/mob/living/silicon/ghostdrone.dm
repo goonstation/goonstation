@@ -90,7 +90,7 @@
 		for (var/obj/item/O in src.tools)
 			O.cant_drop = 1
 
-		/*SPAWN_DBG(0)
+		/*SPAWN(0)
 			out(src, "<b>Use \"say ; (message)\" to speak to fellow drones through the spooky power of spirits within machines.</b>")
 			src.show_laws_drone()*/
 
@@ -533,7 +533,7 @@
 					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
 					user.visible_message("<span class='notice'>[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
 				if(INTENT_DISARM) //Shove
-					SPAWN_DBG(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
+					SPAWN(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
 					user.visible_message("<span class='alert'><B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B></span>")
 					if (src.hat)
 						user.visible_message("<b>[user]</b> knocks \the [src.hat] off [src]!", "You knock the hat off [src]!")
@@ -783,7 +783,7 @@
 			if ("twitch")
 				message = "<B>[src]</B> twitches."
 				m_type = 1
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/old_x = src.pixel_x
 					var/old_y = src.pixel_y
 					src.pixel_x += rand(-2,2)
@@ -795,7 +795,7 @@
 			if ("twitch_v","twitch_s")
 				message = "<B>[src]</B> twitches violently."
 				m_type = 1
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/old_x = src.pixel_x
 					var/old_y = src.pixel_y
 					src.pixel_x += rand(-3,3)
@@ -919,7 +919,7 @@
 					O.show_message("<span class='emote'>[message]</span>", m_type)
 
 			if (m_anim) //restart our passive animation
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					animate_bumble(src, floatspeed = 15, Y1 = 2, Y2 = -2)
 
 		return
@@ -1009,7 +1009,7 @@
 
 		UpdateOverlays(speech_bubble, "speech_bubble")
 		var/speech_bubble_time = src.last_typing
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			if(speech_bubble_time == src.last_typing)
 				UpdateOverlays(null, "speech_bubble")
 
@@ -1107,23 +1107,23 @@
 		if (limiter.canISpawn(/obj/effects/sparks))
 			var/obj/sparks = new /obj/effects/sparks
 			sparks.set_loc(get_turf(src))
-			SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
+			SPAWN(2 SECONDS) if (sparks) qdel(sparks)
 
 	ex_act(severity)
 		if (src.nodamage) return
 		src.flash(3 SECONDS)
 		switch (severity)
 			if (1.0)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.gib(1)
 
 			if (2.0)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.TakeDamage(null, round(src.health / 2, 1.0))
 					src.changeStatus("stunned", 10 SECONDS)
 
 			if (3.0)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.TakeDamage(null, round(src.health / 3, 1.0))
 					src.changeStatus("stunned", 5 SECONDS)
 
@@ -1298,7 +1298,7 @@
 	if (G.mind)
 		G.Browse(grabResource("html/ghostdrone.html"),"window=ghostdrone;size=600x440;title=Ghostdrone Help")
 
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		G.show_laws_drone()
 
 	theMind.transfer_to(G)

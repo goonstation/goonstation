@@ -15,7 +15,7 @@
 
 	src.ai = new /datum/aiHolder/flock/bit(src)
 
-	SPAWN_DBG(1 SECOND) // aaaaaaa
+	SPAWN(1 SECOND) // aaaaaaa
 		animate_bumble(src)
 		src.zone_sel.change_hud_style('icons/mob/flock_ui.dmi')
 
@@ -91,7 +91,7 @@
 				return "<b>[src]</b> chimes."
 		if ("flip")
 			if (src.emote_check(voluntary, 50) && !src.shrunk)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					animate_bumble(src) // start the floaty animation again (stolen from bees of course)
 				return null
 	return null

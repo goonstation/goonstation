@@ -261,7 +261,7 @@ datum
 				else if(!ignited)
 					ignited = 1
 					var/vol = volume
-					SPAWN_DBG(1 DECI SECOND)
+					SPAWN(1 DECI SECOND)
 						myholder.smoke_start(vol) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 				myholder.del_reagent(id)
 
@@ -286,7 +286,7 @@ datum
 				else if(!ignited)
 					ignited = TRUE
 					var/vol = volume
-					SPAWN_DBG(1 DECI SECOND)
+					SPAWN(1 DECI SECOND)
 						myholder.smoke_start(vol,classic = 1) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 				myholder.del_reagent(id)
 
@@ -480,7 +480,7 @@ datum
 				//T.reagents.add_reagent("infernite", 5, null)
 				tfireflash(T, clamp(volume/10, 0, 8), 7000)
 				if(!istype(T, /turf/space))
-					SPAWN_DBG(max(10, rand(20))) // let's burn right the fuck through the floor
+					SPAWN(max(10, rand(20))) // let's burn right the fuck through the floor
 						switch(volume)
 							if(0 to 15)
 								if(prob(15))
@@ -757,7 +757,7 @@ datum
 							continue
 
 					elecflash(location)
-					SPAWN_DBG(rand(5,15))
+					SPAWN(rand(5,15))
 						if(!holder || !holder.my_atom) return // runtime error fix
 						switch(our_amt)
 							if(0 to 20)
@@ -853,7 +853,7 @@ datum
 					explosion(holder.my_atom, holder.my_atom.loc, max_dev, max_heavy, max_light, max_flash)
 
 					var/datum/reagents/H = holder
-					SPAWN_DBG(0)
+					SPAWN(0)
 						H.del_reagent("nitrotri_wet")
 						H.del_reagent("nitrotri_dry")
 						H.del_reagent("nitrotri_parent")
@@ -884,7 +884,7 @@ datum
 
 			New()
 				..()
-				SPAWN_DBG(200 + rand(10, 600) * rand(1, 4)) //Random time until it becomes HIGHLY VOLATILE
+				SPAWN(200 + rand(10, 600) * rand(1, 4)) //Random time until it becomes HIGHLY VOLATILE
 					dry()
 
 		combustible/nitrogentriiodide/dry
@@ -898,7 +898,7 @@ datum
 
 			New()
 				..()
-				SPAWN_DBG(10 * rand(11,600)) //At least 11 seconds, at most 10 minutes
+				SPAWN(10 * rand(11,600)) //At least 11 seconds, at most 10 minutes
 					bang()
 
 			reaction_turf(var/turf/T, var/volume)

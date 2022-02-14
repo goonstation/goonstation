@@ -36,7 +36,7 @@
 
 	//for(var/mob/M in mob_list)
 	for (var/client/C in clients)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(C.mob)//M.client)
 				var/mob/M = C.mob
 				var/client/rand_client_mult = pick(clients)

@@ -53,6 +53,6 @@
 				C.HealDamage("All", heal_amt, heal_amt)
 				O.ArtifactFaultUsed(C)
 				boutput(C, "<span class='notice'>Waves of soothing energy wash over you, making you feel refreshed and healthy.</span>")
-		SPAWN_DBG(recharge_time)
+		SPAWN(recharge_time)
 			recharging = 0
 			T.visible_message("<b>[O]</b> becomes energized.")

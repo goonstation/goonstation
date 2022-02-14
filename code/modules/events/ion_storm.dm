@@ -155,7 +155,7 @@
 				S << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 				ticker.centralized_ai_laws.show_laws(S)
 
-		SPAWN_DBG(message_delay * stage_delay)
+		SPAWN(message_delay * stage_delay)
 
 			// Fuck up some categories
 			for (var/datum/ion_category/category in categories)

@@ -371,7 +371,7 @@ var/const/PHASER_SNIPER = 256
 
 		UpdateIcon()
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 
 			var/obj/phaser_projectile/O = new/obj/phaser_projectile(get_turf(src))
 			O.damage = prop_dmg
@@ -383,7 +383,7 @@ var/const/PHASER_SNIPER = 256
 			O.dest = get_turf(target)
 			O.origin = user
 			O.impactsounds = shot_impactsounds.Copy()
-			SPAWN_DBG(1.5 SECONDS) qdel(O)
+			SPAWN(1.5 SECONDS) qdel(O)
 
 			if(shot_overlays.len)
 				for(var/S in shot_overlays)
@@ -425,7 +425,7 @@ var/const/PHASER_SNIPER = 256
 						var/turf/myloc = O.loc
 						for(var/mob/living/M in view(2,O.loc))
 							if(M == O.origin) continue
-							SPAWN_DBG(0)
+							SPAWN(0)
 								step_towards(M,myloc)
 								sleep(0.5 SECONDS)
 								step_towards(M,myloc)
@@ -442,7 +442,7 @@ var/const/PHASER_SNIPER = 256
 							B.bullet_act(PLas)
 						if(O.upgrades & PHASER_CONC)
 							var/dir_old = O.dir
-							SPAWN_DBG(0)
+							SPAWN(0)
 								step(B,dir_old)
 								sleep(0.3 SECONDS)
 								step(B,dir_old)
@@ -451,7 +451,7 @@ var/const/PHASER_SNIPER = 256
 						C.bullet_act(PLas)
 						if(O.upgrades & PHASER_CONC)
 							var/dir_old = O.dir
-							SPAWN_DBG(0)
+							SPAWN(0)
 								step(C,dir_old)
 								sleep(0.3 SECONDS)
 								step(C,dir_old)
@@ -484,7 +484,7 @@ var/const/PHASER_SNIPER = 256
 
 						if(O.upgrades & PHASER_CONC)
 							var/dir_old = O.dir
-							SPAWN_DBG(0)
+							SPAWN(0)
 								M.weakened += 2
 								step(M,dir_old)
 								sleep(0.3 SECONDS)
@@ -496,7 +496,7 @@ var/const/PHASER_SNIPER = 256
 								var/obj/OV = new /obj/effects/sparks
 								OV.set_loc(T)
 								OV.set_dir(pick(alldirs))
-								SPAWN_DBG(2 SECONDS) if (OV) qdel(OV)
+								SPAWN(2 SECONDS) if (OV) qdel(OV)
 						if(34 to 66)
 							playsound(O.loc, "sound/effects/exlow.ogg", 65, 1)
 							for(var/turf/simulated/floor/T in view(O.range,O.loc))
@@ -504,7 +504,7 @@ var/const/PHASER_SNIPER = 256
 								OV.icon = 'icons/effects/effects.dmi'
 								OV.icon_state = "empdisable"
 								OV.set_dir(pick(alldirs))
-								SPAWN_DBG(0.3 SECONDS) qdel(OV)
+								SPAWN(0.3 SECONDS) qdel(OV)
 								if(prob(O.power/2) || !O.range)
 									T.burn_tile()
 						if(67 to 100)
@@ -554,7 +554,7 @@ var/const/PHASER_SNIPER = 256
 			boutput(usr, "<span class='alert'>Your phaser overloads.</span>");
 			overloading = 1
 			playsound(usr, "sound/weapons/phaseroverload.ogg", 65, 1) //this sound is now gone so find a new one if this code gets reimplemented
-			SPAWN_DBG(6 SECONDS)
+			SPAWN(6 SECONDS)
 				var/turf/curr = get_turf(src)
 				curr.hotspot_expose(700,125)
 				explosion(src, curr, 0, 0, 2, 4)

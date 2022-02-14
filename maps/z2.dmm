@@ -34654,10 +34654,7 @@
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "bXw" = (
-/turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_derelict.dmi';
-	icon_state = "old-12"
-	},
+/turf/simulated/wall/false_wall/reinforced,
 /area/meat_derelict/main)
 "bXx" = (
 /turf/unsimulated/wall/auto/adventure/old,
@@ -69317,9 +69314,7 @@
 /turf/unsimulated/floor/white,
 /area/centcom/lobby)
 "dPE" = (
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4
-	},
+/obj/machinery/door/airlock/gannets/medical,
 /turf/unsimulated/floor/white,
 /area/centcom/lobby)
 "dPF" = (
@@ -69446,9 +69441,7 @@
 	},
 /area/centcom/lobby)
 "dPX" = (
-/obj/machinery/door/airlock/pyro/glass/med{
-	dir = 4
-	},
+/obj/machinery/door/airlock/gannets/glass/medical,
 /turf/unsimulated/floor/white/side{
 	dir = 4
 	},
@@ -69511,9 +69504,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dQh" = (
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4
-	},
+/obj/machinery/door/airlock/gannets/security,
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dQi" = (
@@ -69560,9 +69551,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dQp" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4
-	},
+/obj/machinery/door/airlock/gannets/glass/security,
 /turf/unsimulated/floor/black/side{
 	dir = 8
 	},
@@ -76674,6 +76663,9 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"xdm" = (
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/meat_derelict/main)
 "xgE" = (
 /turf/unsimulated/floor/carpet/red/fancy/narrow/east,
 /area/titlescreen)
@@ -141613,7 +141605,7 @@ aaa
 bXx
 bWB
 bXi
-bXx
+xdm
 bXx
 aiM
 aiM
@@ -142217,7 +142209,7 @@ aaa
 bWD
 bWQ
 bXj
-bXx
+xdm
 bXG
 bYe
 bYx
@@ -142519,8 +142511,8 @@ aaa
 bWB
 bWB
 bWB
-bXx
-bXx
+xdm
+xdm
 bWB
 bWB
 bYg

@@ -50,7 +50,7 @@
 	G["dna"] = H.bioHolder.Uid
 	G["p_stat"] = "Active"
 	G["m_stat"] = "Stable"
-	SPAWN_DBG(2 SECONDS)
+	SPAWN(2 SECONDS)
 		if (H && G)
 			var/icon/I = H.build_flat_icon(SOUTH)
 			H.flat_icon = I
@@ -330,7 +330,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			statlog_ticket(src, usr)
 
 /datum/fine
@@ -353,7 +353,7 @@
 	New()
 		..()
 		generate_ID()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			bank_record = data_core.bank.find_record("name", target)
 			if(!bank_record) qdel(src)
 			statlog_fine(src, usr)
@@ -373,7 +373,7 @@
 	else
 		paid_amount += bank_record["current_money"]
 		bank_record["current_money"] = 0
-		SPAWN_DBG(30 SECONDS) process_payment()
+		SPAWN(30 SECONDS) process_payment()
 
 /datum/fine/proc/process_payment()
 	if(bank_record["current_money"] >= (amount-paid_amount))
@@ -383,7 +383,7 @@
 	else
 		paid_amount += bank_record["current_money"]
 		bank_record["current_money"] = 0
-		SPAWN_DBG(30 SECONDS) process_payment()
+		SPAWN(30 SECONDS) process_payment()
 
 /datum/fine/proc/generate_ID()
 	if(!ID) ID = (data_core.fines.len + 1)
