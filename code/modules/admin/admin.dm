@@ -4409,7 +4409,6 @@ var/global/noir = 0
 				M.mind.special_role = ROLE_GANG_LEADER
 		var/done = 0
 		var/select_objective = null
-		var/datum/objective/new_objective = null
 		var/custom_text = "Go hog wild!"
 		while (done != 1)
 			select_objective = input(usr, "Add a new objective. Hit cancel when finished adding.", "Traitor Objectives") as null|anything in eligible_objectives
@@ -4419,11 +4418,11 @@ var/global/noir = 0
 			if (select_objective == /datum/objective/regular)
 				custom_text = input(usr,"Enter custom objective text.","Traitor Objectives","Go hog wild!") as null|text
 				if (custom_text)
-					new_objective = new select_objective(custom_text, M.mind)
+					new select_objective(custom_text, M.mind)
 				else
 					boutput(usr, "<span class='alert'>No text was entered. Objective not given.</span>")
 			else
-				new_objective = new select_objective(null, M.mind)
+				new select_objective(null, M.mind)
 
 		if (M.mind.objectives.len < 1)
 			boutput(usr, "<span class='alert'>Not enough objectives specified.</span>")

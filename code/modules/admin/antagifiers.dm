@@ -20,7 +20,7 @@
 		*/
 		if (M?.mind && !M.mind.special_role)
 			makeAntag(M)
-			var/datum/objective/newObj = new /datum/objective(attachedObjective, M.mind)
+			new /datum/objective(attachedObjective, M.mind)
 			uses--
 			if (uses == 0)
 				qdel(src)
