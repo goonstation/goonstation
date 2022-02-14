@@ -1,7 +1,7 @@
 /datum/projectile/bioeffect_beam
 	name = "ionising blast"
 	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "waveG"
+	icon_state = "wave-g"
 	brightness = 1
 	//How much of a punch this has, tends to be seconds/damage before any resist
 	power = 0
