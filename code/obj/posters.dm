@@ -58,7 +58,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 					continue
 				flick("printer-printing",P)
 				playsound(P.loc, "sound/machines/printer_dotmatrix.ogg", 50, 1)
-				SPAWN_DBG(3.2 SECONDS)
+				SPAWN(3.2 SECONDS)
 					var/obj/item/poster/titled_photo/np = new(get_turf(P))
 					if (p_title)
 						np.line_title = p_title
@@ -162,7 +162,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 					continue
 				flick("printer-printing",P)
 				playsound(P.loc, "sound/machines/printer_dotmatrix.ogg", 50, 1)
-				SPAWN_DBG(3.2 SECONDS)
+				SPAWN(3.2 SECONDS)
 					var/obj/item/poster/titled_photo/wp = new(get_turf(P))
 					if (w_name)
 						wp.line_title = w_name
@@ -322,7 +322,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (!src.poster_HTML)
 				src.generate_poster()
 

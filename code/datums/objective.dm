@@ -341,7 +341,6 @@ proc/create_fluff(datum/mind/target)
 		"Sneak into a department of your choice every once in awhile and mess with all the things inside.",
 		"Try to deprive the station of medical items and objects.",
 		"Try to deprive the station of tools and useful items.",
-		"Try to deprive the station of clothing.",
 		"Try to deprive the station of their ID cards.",
 		"Make the station as ugly and visually unpleasant as you can.",
 		"Become a literal arms dealer. Harvest as many body parts as possible from the crew.",
@@ -1349,7 +1348,7 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 			if (ispath(escape_path))
 				ticker.mode.bestow_objective(enemy,escape_path)
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			qdel(src)
 		return 0
 

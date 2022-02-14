@@ -962,6 +962,27 @@
 		set_current_projectile(new/datum/projectile/shrink_beam/grow)
 		projectiles = list(current_projectile)
 
+// stinky ray
+/obj/item/gun/energy/stinkray
+	name = "stink ray"
+	item_state = "gun"
+	force = 5.0
+	icon_state = "ghost"
+	cell_type = /obj/item/ammo/power_cell/med_power
+	uses_multiple_icon_states = 1
+
+	New()
+		set_current_projectile(new/datum/projectile/bioeffect_beam/stinky)
+		projectiles = list(current_projectile)
+		..()
+
+	update_icon()
+		..()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			ratio = round(ratio, 0.25) * 100
+			src.icon_state = "ghost[ratio]"
 
 ///////////////////////////////////////Glitch Gun
 /obj/item/gun/energy/glitch_gun
@@ -1301,7 +1322,7 @@
 					current_projectile.cost = 170
 					item_state = "lawg-bigshot"
 					playsound(M, "sound/vox/high.ogg", 50)
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						playsound(M, "sound/vox/explosive.ogg", 50)
 				if ("clownshot","clown")
 					set_current_projectile(projectiles["clownshot"])
@@ -1337,7 +1358,7 @@
 					playsound(src.loc, "sound/weapons/armbomb.ogg", 75, 1, -3)
 					logTheThing("combat", src, null, "Is not the law. Caused explosion with Lawbringer.")
 
-					SPAWN_DBG(2 SECONDS)
+					SPAWN(2 SECONDS)
 						src.blowthefuckup(15)
 					return 0
 				else

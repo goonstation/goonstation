@@ -135,7 +135,7 @@
 	// explode the turtle
 
 	proc/explode()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.rigged = FALSE
 			src.rigger = null
 			enter_shell()	//enter shell first to give a warning

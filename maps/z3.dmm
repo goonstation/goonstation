@@ -11645,7 +11645,7 @@
 /area/radiostation/bedroom)
 "aGy" = (
 /obj/machinery/door/airlock/pyro{
-	dir = 4;
+	dir = 2;
 	name = "Bathroom"
 	},
 /turf/simulated/floor/wood/two,

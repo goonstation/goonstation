@@ -550,7 +550,7 @@ var/datum/artifact_controller/artifact_controls
 			var/n_balls = rand(1, 4) + round(rarityMod * 3)
 			for(var/i = 1 to n_balls)
 				var/delay = (i - 1) * time / n_balls
-				SPAWN_DBG(delay)
+				SPAWN(delay)
 					var/obj/effect/ball = new
 					ball.icon = 'icons/obj/artifacts/artifactEffects.dmi'
 					ball.icon_state = icon_state

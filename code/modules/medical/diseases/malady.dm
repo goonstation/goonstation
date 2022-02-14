@@ -13,7 +13,7 @@
 		master = get_disease_from_path(/datum/ailment/malady)
 		master.tickcount = 0
 
-	stage_act()
+	stage_act(mult)
 		if (!affected_mob || disposed)
 			return 1
 
@@ -32,9 +32,8 @@
 		var/advance_prob = stage_prob
 		if (state == "Acute")
 			advance_prob *= 2
-		advance_prob = clamp(advance_prob, 0, 100)
 
-		if (prob(advance_prob))
+		if (probmult(advance_prob))
 			if (state == "Remissive")
 				stage--
 				if (stage < 1)
@@ -47,11 +46,11 @@
 
 		// Common cures
 		if (cure != "Incurable")
-			if (cure == "Sleep" && affected_mob.sleeping && prob(33))
+			if (cure == "Sleep" && affected_mob.sleeping && probmult(33))
 				state = "Remissive"
 				return 1
 
-			else if (cure == "Self-Curing" && prob(5))
+			else if (cure == "Self-Curing" && probmult(5))
 				state = "Remissive"
 				return 1
 
@@ -73,19 +72,9 @@
 						var/we_are_cured = 0
 						var/reagcure_prob = reagentcure[current_id]
 						if (isnum(reagcure_prob))
-							if (prob(reagcure_prob))
+							if (probmult(reagcure_prob))
 								we_are_cured = 1
-						else if (islist(reagcure_prob)) // we want to roll more than one prob() in order to succeed, aka we want a very low chance
-							var/list/cureprobs = reagcure_prob
-							var/success = 1
-							for (var/thing in cureprobs)
-								if (!isnum(thing))
-									continue
-								if (!prob(thing))
-									success = 0
-							if (success)
-								we_are_cured = 1
-						else if (prob(recureprob))
+						else if (probmult(recureprob))
 							we_are_cured = 1
 						if (we_are_cured)
 							state = "Remissive"
@@ -94,7 +83,7 @@
 		if (state == "Asymptomatic")
 			return 1
 
-		SPAWN_DBG(rand(1,5))
+		SPAWN(rand(1,5))
 			// vary it up a bit so the processing doesnt look quite as transparent
 			if (master)
 				master.stage_act(affected_mob,src)
@@ -444,29 +433,29 @@
 			boutput(H, "<span class='alert'>Your cyberheart detects a cardiac event and attempts to return to its normal rhythm!</span>")
 			if (prob(40) && oH.heart.emagged)
 				D.robo_restart = 1
-				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
+				SPAWN(oH.heart.emagged ? 200 : 300)
 					D.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if (H)
 						H.cure_disease(D)
 						boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 			else if (prob(25))
 				D.robo_restart = 1
-				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
+				SPAWN(oH.heart.emagged ? 200 : 300)
 					if (D) //ZeWaka: Fix for null.robo_restart
 						D.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if (H)
 						H.cure_disease(D)
 						boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 			else
 				D.robo_restart = 1
-				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
+				SPAWN(oH.heart.emagged ? 200 : 300)
 					if (D)
 						D.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if (H)
 						boutput(H, "<span class='alert'>Your cyberheart fails to return to its normal rhythm!</span>")
 
@@ -513,8 +502,8 @@
 	max_stages = 1
 	cure = "Electric Shock"
 	affected_species = list("Human","Monkey")
-	reagentcure = list("atropine" = list(1,1), // atropine is not recommended for use in treating cardiac arrest anymore but SHRUG
-	"epinephrine" = list(1,10)) // epi is recommended though
+	reagentcure = list("atropine" = 0.01, // atropine is not recommended for use in treating cardiac arrest anymore but SHRUG
+	"epinephrine" = 0.1) // epi is recommended though
 
 /datum/ailment/malady/flatline/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/malady/D)
 	if (..())
@@ -534,12 +523,12 @@
 				H.cure_disease(D)
 				D.robo_restart = 1
 				if (H.organHolder.heart.emagged)
-					SPAWN_DBG(20 SECONDS)
+					SPAWN(20 SECONDS)
 						D.robo_restart = 0
 				else
-					SPAWN_DBG(30 SECONDS)
+					SPAWN(30 SECONDS)
 						D.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 
@@ -547,28 +536,28 @@
 				H.cure_disease(D)
 				D.robo_restart = 1
 				if (H.organHolder.heart.emagged)
-					SPAWN_DBG(20 SECONDS)
+					SPAWN(20 SECONDS)
 						if (D) //ZeWaka: Fix for null.robo_restart x4
 							D.robo_restart = 0
 				else
-					SPAWN_DBG(30 SECONDS)
+					SPAWN(30 SECONDS)
 						if (D)
 							D.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 
 			else
 				D.robo_restart = 1
 				if (H.organHolder.heart.emagged)
-					SPAWN_DBG(20 SECONDS)
+					SPAWN(20 SECONDS)
 						if (D)
 							D.robo_restart = 0
 				else
-					SPAWN_DBG(30 SECONDS)
+					SPAWN(30 SECONDS)
 						if (D)
 							D.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					boutput(H, "<span class='alert'>Your cyberheart fails to return to its normal rhythm!</span>")
 		else
 			if (H.get_oxygen_deprivation())

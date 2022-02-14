@@ -209,7 +209,7 @@
 		if (src.tracking_target && get_dist(src,src.tracking_target) <= seekrange)
 			scanning = 0		//remove this if we want to force the user to manually stop tracking before trying to track something else
 			boutput(usr, "<span class='notice'>Tracking target: [src.tracking_target.name]</span>")
-			SPAWN_DBG(0)		//Doing this to redraw the scanner window after the topic call that uses this fires.
+			SPAWN(0)		//Doing this to redraw the scanner window after the topic call that uses this fires.
 				begin_tracking(0)
 		else
 			boutput(usr, "<span class='notice'>Unable to locate target.</span>")
@@ -222,7 +222,7 @@
 			return
 		src.tracking_target = O
 		boutput(usr, "<span class='notice'>Tracking target: [src.tracking_target.name]</span>")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			begin_tracking(0)
 		for(var/mob/M in ship)
 			if (M.using_dialog_of(src))
@@ -256,7 +256,7 @@
 				src.tracking_target = T
 				boutput(usr, "<span class='notice'>Now tracking: <b>X</b>: [T.x], <b>Y</b>: [T.y]</span>")
 				scanning = 0		//remove this if we want to force the user to manually stop tracking before trying to track something else
-				SPAWN_DBG(0)		//Doing this to redraw the scanner window after the topic call that uses this fires.
+				SPAWN(0)		//Doing this to redraw the scanner window after the topic call that uses this fires.
 					begin_tracking(1)
 		sleep(1 SECOND)
 		scanning = 0

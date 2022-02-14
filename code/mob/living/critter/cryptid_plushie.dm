@@ -62,7 +62,7 @@
 			src.visible_message("<span class='alert'>[src] lets out a haunting shriek as its body begins to lose its form and fades into mist...</span>",
 				"<span class='alert'>Your grasp on the physical realm weakens. Your form dissolves...</span>")
 			playsound(get_turf(src), "sound/ambience/spooky/Hospital_Haunted3.ogg", 50, 1)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				animate(src, alpha=0, time=7 SECONDS)
 				sleep(0.1 SECONDS)
 				if(src.disposed)
@@ -79,7 +79,7 @@
 		// resurrection attempt
 		if(!ghost_mob)
 			return
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (tgui_alert(ghost_mob, "You have fallen, but the curse is not lifted this easily. Do you wish to return to the physical realm?", "Resurrection",
 				list("Yes", "No"), timeout = 60 SECOND) == "Yes")
 				// get a random not locked station container
@@ -115,7 +115,7 @@
 					var/cryptid_mob_path = get_cryptid_mob_for_icon_state(our_icon_state)
 					var/mob/living/critter/small_animal/plush/cryptid/reborn_cryptid = new cryptid_mob_path(location_of_plushie)
 					reborn_cryptid.ckey = ckey_of_dead_player
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						if(reborn_cryptid && !reborn_cryptid.disposed)
 							playsound(get_turf(reborn_cryptid), "sound/misc/jester_laugh.ogg", 60, 1)
 			else
@@ -199,7 +199,7 @@
 			return 1
 
 		being_seen_status_update()
-		SPAWN_DBG(2 SECONDS)  // gross bandaid to work around the life loop being a tad too slow
+		SPAWN(2 SECONDS)  // gross bandaid to work around the life loop being a tad too slow
 			being_seen_status_update()
 
 	proc/set_dormant_status(var/enabled)
@@ -322,7 +322,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 		else if(roll >= 90)
 			major_event()
 
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			our_plushie.override_steps = 0
 
 		return 0
@@ -472,7 +472,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 		if (target == get_turf(holder.owner))
 			return 1
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			teleport_to_a_target(teleportation_target = target)
 		return 0
 
@@ -488,7 +488,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 		if (..())
 			return 1
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			teleport_to_a_target(target_a_random_container = TRUE)
 		return 0
 
@@ -513,7 +513,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 				E.setup(holder.owner.loc)
 				playsound(holder.owner.loc,"sound/effects/screech_tone.ogg", 50, 1, pitch = 1, extrarange = -4)
 
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					var/obj/itemspecialeffect/glare/EE = new /obj/itemspecialeffect/glare
 					EE.color = "#ff0000"
 					EE.setup(attacker.loc)
@@ -523,7 +523,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 
 				holder.owner.lastattacker = null
 
-				SPAWN_DBG(0)
+				SPAWN(0)
 					teleport_to_a_target(target_a_random_container = TRUE)
 				return 0
 		else

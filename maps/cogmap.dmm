@@ -7697,7 +7697,7 @@
 /obj/table/auto,
 /obj/item/device/analyzer/atmospheric{
 	pixel_x = 9;
-	pixel_y = 6
+	pixel_y = 12
 	},
 /obj/item/weldingtool{
 	pixel_x = -3;
@@ -7705,6 +7705,9 @@
 	},
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/item/storage/toolbox/artistic{
+	pixel_y = -6
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -29775,6 +29778,7 @@
 	can_rupture = 0;
 	dir = 6
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "byC" = (
@@ -57642,7 +57646,6 @@
 	dir = 1;
 	level = 2
 	},
-/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "meU" = (

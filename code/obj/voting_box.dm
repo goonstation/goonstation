@@ -89,7 +89,7 @@
 			qdel( S )
 			animate_storage_rustle(src)
 			playsound(src.loc, "sound/machines/ping.ogg", 75)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				playsound(src.loc, "sound/machines/paper_shredder.ogg", 90, 1)
 			return
 

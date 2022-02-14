@@ -421,36 +421,40 @@
 		..()
 
 	update_icon()
-		src.overlays.Cut()
 		if (owner.waiting_for_hotkey)
-			src.overlays += src.binding
+			UpdateOverlays(src.binding, "binding")
+		else
+			UpdateOverlays(null, "binding")
+
 		if(owner.action_key_number > -1)
-			set_number_overlay(owner.action_key_number)
+			UpdateOverlays(set_number_overlay(owner.action_key_number), "action_key_number")
+		else
+			UpdateOverlays(null, "action_key_number")
 		return
 
 	proc/set_number_overlay(var/num)
+
 		switch(num)
 			if(1)
-				src.overlays += src.one
+				. = src.one
 			if(2)
-				src.overlays += src.two
+				. = src.two
 			if(3)
-				src.overlays += src.three
+				. = src.three
 			if(4)
-				src.overlays += src.four
+				. = src.four
 			if(5)
-				src.overlays += src.five
+				. = src.five
 			if(6)
-				src.overlays += src.six
+				. += src.six
 			if(7)
-				src.overlays += src.seven
+				. = src.seven
 			if(8)
-				src.overlays += src.eight
+				. = src.eight
 			if(9)
-				src.overlays += src.nine
+				. = src.nine
 			if(0)
-				src.overlays += src.zero
-		return
+				. = src.zero
 
 	// Switch to targeted only if multiple mobs are in range. All screen abilities customize their clicked(),
 	// and you have to call this proc there if you want to use it. You also need to set 'target_selection_check = 1'
@@ -472,7 +476,7 @@
 				use_targeted = 2 // Abort parent proc.
 			else if (targets.len == 1) // Only one guy nearby, but we need the mob reference for handleCast() then.
 				use_targeted = 0
-				SPAWN_DBG(0)
+				SPAWN(0)
 					spell.handleCast(targets[1])
 				use_targeted = 2 // Abort parent proc.
 			else
@@ -507,7 +511,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND) //sorry, some race condition i couldt figure out
+		SPAWN(1 SECOND) //sorry, some race condition i couldt figure out
 			if (ishuman(owner?.owner))
 				var/mob/living/carbon/human/H = owner?.owner
 				H.hud?.update_ability_hotbar()
@@ -582,7 +586,7 @@
 		if (isnull(darkener)) // fuck. -drsingh
 			darkener = image('icons/mob/spell_buttons.dmi',"darkener")
 		darkener.alpha = 100
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(owner)
 				T.color = owner.cd_text_color
 				S.color = owner.cd_text_color
@@ -602,19 +606,31 @@
 		if (!istype(M) || !M.client)
 			return null
 
-		src.overlays = list()
 		if (owner.holder)
-			if (src == owner.holder.shiftPower)
-				src.overlays += src.shift_highlight
-			if (src == owner.holder.ctrlPower)
-				src.overlays += src.ctrl_highlight
-			if (src == owner.holder.altPower)
-				src.overlays += src.alt_highlight
+			if (src.owner == src.owner.holder.shiftPower)
+				UpdateOverlays(src.shift_highlight, "shift_highlight")
+			else
+				UpdateOverlays(null, "shift_highlight")
+
+			if (src.owner == owner.holder.ctrlPower)
+				UpdateOverlays(src.ctrl_highlight, "ctrl_highlight")
+			else
+				UpdateOverlays(null, "ctrl_highlight")
+
+			if (src.owner == owner.holder.altPower)
+				UpdateOverlays(src.alt_highlight, "alt_highlight")
+			else
+				UpdateOverlays(null, "alt_highlight")
+
 			if (owner.waiting_for_hotkey)
-				src.overlays += src.binding
+				UpdateOverlays(src.binding, "binding")
+			else
+				UpdateOverlays(null, "binding")
 
 		if(owner.action_key_number > -1)
-			set_number_overlay(owner.action_key_number)
+			UpdateOverlays(set_number_overlay(owner.action_key_number), "action_key_number")
+		else
+			UpdateOverlays(null, "action_key_number")
 
 		update_cooldown_cost()
 		return

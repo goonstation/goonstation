@@ -996,7 +996,7 @@
 
 		New()
 			..()
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				src.name = initial(src.name)
 				src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
 
@@ -1081,7 +1081,7 @@
 			T = T.loc
 		src.set_loc(T)
 		user.u_equip(src)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			qdel(src)
 
 /obj/item/clothing/suit/space/captain
@@ -1618,6 +1618,11 @@
 	name = "medical winter coat"
 	icon_state = "wintercoat-medical"
 	item_state = "wintercoat-medical"
+
+/obj/item/clothing/suit/wintercoat/genetics
+	name = "genetics winter coat"
+	icon_state = "wintercoat-genetics"
+	item_state = "wintercoat-genetics"
 
 /obj/item/clothing/suit/wintercoat/research
 	name = "research winter coat"

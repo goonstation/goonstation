@@ -558,7 +558,10 @@ datum
 					del_reagent(current_id)
 					update_total()
 
-		proc/del_reagent(var/reagent)
+		/// deletes a reagent from a container
+		/// the first argument is the reagent id
+		/// the second whether or not the total volume of the container should update, which may be undesirable in the update_total proc
+		proc/del_reagent(var/reagent, var/update_total = TRUE)
 			var/datum/reagent/current_reagent = reagent_list[reagent]
 
 			if (current_reagent)
@@ -570,7 +573,8 @@ datum
 					current_reagent.on_remove()
 					remove_possible_reactions(current_reagent.id) //Experimental structure
 					reagent_list.Remove(reagent)
-					update_total()
+					if(update_total)
+						update_total()
 
 					reagents_changed()
 
@@ -588,8 +592,8 @@ datum
 			for(var/current_id in reagent_list)
 				var/datum/reagent/current_reagent = reagent_list[current_id]
 				if(current_reagent)
-					if(current_reagent.volume <= 0.001)
-						del_reagent(current_id)
+					if(current_reagent.volume <= CHEM_EPSILON)
+						del_reagent(current_id, update_total = FALSE)
 					else
 						current_reagent.volume = max(round(current_reagent.volume, 0.001), 0.001)
 						composite_heat_capacity = total_volume/(total_volume+current_reagent.volume)*composite_heat_capacity + current_reagent.volume/(total_volume+current_reagent.volume)*current_reagent.heat_capacity
@@ -721,18 +725,18 @@ datum
 						var/turf_reaction_success = 0
 						if(current_reagent && current_reagent.volume > minimum_react)
 							if(ismob(A) && !isobserver(A))
-								//SPAWN_DBG(0)
+								//SPAWN(0)
 									//if (current_reagent) //This is in a spawn. Between our first check and the execution, this may be bad.
 								if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction))
 									.+= current_id
 							if(isturf(A))
-								//SPAWN_DBG(0)
+								//SPAWN(0)
 									//if (current_reagent)
 								if (!current_reagent.reaction_turf(A, current_reagent.volume*volume_fraction))
 									turf_reaction_success = 1
 									.+= current_id
 							if(isobj(A))
-								//SPAWN_DBG(0)
+								//SPAWN(0)
 									//if (current_reagent)
 								if (!current_reagent.reaction_obj(A, current_reagent.volume*volume_fraction))
 									.+= current_id

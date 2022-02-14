@@ -650,7 +650,6 @@ var/list/special_pa_observing_verbs = list(
 	//	src.mob.mind.observing = 1
 		update_admins(rank)
 
-	blink(get_turf(src.mob))
 	if(!istype(src.mob, /mob/dead/observer) && !istype(src.mob, /mob/dead/target_observer))
 		src.mob.mind?.damned = 0
 		src.mob.ghostize()
@@ -672,7 +671,6 @@ var/list/special_pa_observing_verbs = list(
 	//	src.mob.mind.observing = 0
 		update_admins(rank)
 
-	blink(get_turf(src.mob))
 	if(istype(src.mob, /mob/dead/observer))
 		src.mob:reenter_corpse()
 		boutput(src, "<span class='notice'>You are now playing</span>")
@@ -1063,12 +1061,12 @@ var/list/fun_images = list()
 	set popup_menu = 0
 
 	if (!ticker)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			alert("Wait until the game starts.")
 		return
 
 	if (istype(M, /mob/new_player) || istype(M, /mob/dead/target_observer)/* || istype(M, /mob/living/intangible/aicamera)*/)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			alert("You can't humanize new_player mobs or target observers.")
 		return
 
@@ -1958,7 +1956,7 @@ var/list/fun_images = list()
 			H.implant.Add(MB)
 			MB.implanted(H, 0)
 			implanted ++
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			boutput(usr, "<span class='alert'>Implanted [implanted] people with microbombs. Any further humans that spawn will also have bombs.</span>")
 	else
 		boutput(usr, "<span class='alert'>Turned off spawning with microbombs. No existing microbombs have been deleted or disabled.</span>")
@@ -2022,7 +2020,7 @@ var/list/fun_images = list()
 
 /client/proc/clear_nukeop_uplink_purchases()
 	set popup_menu = 0
-	set name = "Clear NukeOp Commander Uplink Purchase Stats"
+	set name = "Wipe Nukie Boss Stats"
 	set desc = "Wipe the intra-round stats of the nukeop commander's uplink purchases"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	admin_only

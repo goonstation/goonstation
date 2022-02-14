@@ -38,7 +38,7 @@
 
 		M.visible_message("<span class='alert'><B>[M] lifts [HH] up!</B></span>")
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (HH)
 				animate(HH, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
 				sleep (15)

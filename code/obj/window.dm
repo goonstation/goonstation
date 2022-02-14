@@ -51,7 +51,7 @@
 			//DEBUG ("[src.name] [log_loc(src)] has [health] health / [health_max] max health ([health_multiplier] multiplier).")
 
 		if(current_state >= GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				initialize()
 
 	initialize()
@@ -371,7 +371,7 @@
 			if (ishuman(user))
 				src.visible_message("<span class='alert'><b>[user]</b> knocks on [src].</span>")
 				playsound(src.loc, src.hitsound, 100, 1)
-				SPAWN_DBG(-1) //uhhh maybe let's not sleep() an attack_hand. fucky effects up the chain?
+				SPAWN(-1) //uhhh maybe let's not sleep() an attack_hand. fucky effects up the chain?
 					sleep(0.3 SECONDS)
 					playsound(src.loc, src.hitsound, 100, 1)
 					sleep(0.3 SECONDS)
@@ -727,7 +727,7 @@
 		/obj/machinery/door, /obj/window, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/jen/red, /turf/simulated/wall/auto/jen/green, /turf/simulated/wall/auto/jen/yellow, /turf/simulated/wall/auto/jen/cyan, /turf/simulated/wall/auto/jen/purple,  /turf/simulated/wall/auto/jen/blue,
 		/turf/simulated/wall/auto/reinforced/jen, /turf/simulated/wall/auto/reinforced/jen/red, /turf/simulated/wall/auto/reinforced/jen/green, /turf/simulated/wall/auto/reinforced/jen/yellow, /turf/simulated/wall/auto/reinforced/jen/cyan, /turf/simulated/wall/auto/reinforced/jen/purple, /turf/simulated/wall/auto/reinforced/jen/blue,
-		/turf/unsimulated/wall/auto/supernorn/wood, /turf/unsimulated/wall/auto/adventure/shuttle/dark)
+		/turf/unsimulated/wall/auto/supernorn/wood, /turf/unsimulated/wall/auto/adventure/shuttle/dark, /turf/simulated/wall/auto/reinforced/old, /turf/unsimulated/wall/auto/lead/blue, /turf/unsimulated/wall/auto/adventure/old, /turf/unsimulated/wall/auto/adventure/mars/interior, /turf/unsimulated/wall/auto/adventure/shuttle, /turf/unsimulated/wall/auto/reinforced/supernorn)
 	alpha = 160
 	the_tuff_stuff
 		explosion_resistance = 3
@@ -737,7 +737,7 @@
 		if (map_setting && ticker)
 			src.update_neighbors()
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.UpdateIcon()
 
 	disposing()
@@ -795,7 +795,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			ini_dir = 5//gurgle
 			set_dir(5)//grumble
 
@@ -839,7 +839,7 @@
 	disposing()
 		SHOULD_CALL_PARENT(0) //These are ACTUALLY indestructible.
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			loc = initialPos
 			qdeled = 0// L   U    L
 
@@ -903,7 +903,7 @@
 	New()
 		..()
 		if(current_state >= GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				initialize()
 
 	initialize()

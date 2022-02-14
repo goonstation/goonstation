@@ -256,7 +256,7 @@
 		MT.changeStatus("weakened", 6 SECONDS)
 		MT.force_laydown_standup()
 		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, "pincergrab")
-		SPAWN_DBG(6 SECONDS)
+		SPAWN(6 SECONDS)
 			REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, "pincergrab")
 		return 0
 
@@ -282,6 +282,6 @@
 		D.anchored = 1
 		D.layer = EFFECTS_LAYER_2
 		holder.owner.attached_objs += D
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			qdel(D)
 

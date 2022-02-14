@@ -37,7 +37,7 @@ client/proc/lightweight_doors()
 	admin_only
 
 	message_admins("[key_name(src)] is removing light/camera interactions from doors...")
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for(var/obj/machinery/door/D in by_type[/obj/machinery/door])
 			D.ignore_light_or_cam_opacity = 1
 			LAGCHECK(LAG_REALTIME)
@@ -45,17 +45,23 @@ client/proc/lightweight_doors()
 
 
 client/proc/lightweight_mobs()
-	set name = "Slow Mob Processing"
-	set desc = "Reduces load of Life(). Extremely safe - Life() compensates for the change automatically :)"
+	set name = "Override Life() tick spacing"
+	set desc = "Reduces (or increases if you're feeling spicy) load of Life(). Extremely safe - Life() compensates for the change automatically :)"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	admin_only
 
-	if (processScheduler.hasProcess("Lighting"))
+	if (processScheduler.hasProcess("Mob"))
 		var/datum/controller/process/mobs/M = processScheduler.nameToProcessMap["Mob"]
-		M.schedule_interval = 65
+		if(isnum_safe(M.schedule_override))
+			M.schedule_override = null
+			M.nextpopcheck = 0 //force recheck
+			message_admins("[key_name(src)] un-overrode Mob process interval with Lag Reduction panel.")
+		else
+			M.schedule_override = clamp((input("Enter life tick duration (2s to 10s):","Num", M.schedule_interval/10) as num) * 10, 20, 100)
+			M.schedule_interval = M.schedule_override
+			message_admins("[key_name(src)] overrode Mob process interval (to [M.schedule_override]) with Lag Reduction panel.")
 
-		message_admins("[key_name(src)] slowed Mob process interval with Lag Reduction panel.")
 
 client/proc/slow_fluids()
 	set name = "Slow Fluid Processing"

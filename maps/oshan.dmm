@@ -45011,6 +45011,11 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
+"dKK" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/storage/toolbox/artistic,
+/turf/simulated/floor,
+/area/station/crew_quarters/lounge/port)
 "dLb" = (
 /obj/decal/cleanable/paper,
 /obj/machinery/power/apc/autoname_south,
@@ -81460,7 +81465,7 @@ bSu
 bTt
 bUG
 bVE
-bUG
+dKK
 bUp
 bXP
 bXb

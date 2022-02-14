@@ -99,7 +99,7 @@
 		if (istype(crate))
 			crate.close()
 		C.set_loc(src.loc)
-		SPAWN_DBG(0.2 SECONDS)
+		SPAWN(0.2 SECONDS)
 			if (C && C.loc == src.loc)
 				C.set_loc(src)
 				load = C
@@ -182,7 +182,7 @@
 				return
 
 			weeoo_in_progress = 10
-			SPAWN_DBG(0)
+			SPAWN(0)
 				playsound(src.loc, "sound/machines/siren_police.ogg", 60, 1)
 				light.enable()
 				src.icon_state = "tractor-sec2"

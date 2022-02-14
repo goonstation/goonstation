@@ -186,7 +186,7 @@
 	logTheThing("diary", src.mob, Mclient.mob, "displayed an alert to [constructTarget(Mclient.mob,"diary")] with the message \"[t]\"", "admin")
 
 	if(Mclient?.mob)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/sound/honk = sound('sound/voice/animal/goose.ogg')
 			honk.volume = 75
 			Mclient.mob << honk
@@ -596,7 +596,7 @@
 	set name = "Stabilize Atmos."
 	set desc = "Resets the air contents of every turf in view to normal."
 	admin_only
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for(var/turf/simulated/T in view())
 			if(!T.air)
 				continue
@@ -656,9 +656,9 @@
 	boutput(M, "<span class='alert'><B>You HONK painfully!</B></span>")
 	M.take_brain_damage(80)
 	M.stuttering = 120
+	M.contract_disease(/datum/ailment/disease/cluwneing_around/cluwne, null, null, 1) // path, name, strain, bypass resist
+	M.contract_disease(/datum/ailment/disability/clumsy/cluwne, null, null, 1) // path, name, strain, bypass resist
 	M.job = "Cluwne"
-	M.contract_disease(/datum/ailment/disease/cluwneing_around, null, null, 1) // path, name, strain, bypass resist
-	M.contract_disease(/datum/ailment/disability/clumsy, null, null, 1) // path, name, strain, bypass resist
 	M.change_misstep_chance(66)
 
 	M.unequip_all()
@@ -675,7 +675,8 @@
 		message_admins("[key_name(usr)] clownified [key_name(M)]")
 
 		M.real_name = "cluwne"
-		SPAWN_DBG(2.5 SECONDS) // Don't remove.
+		M.UpdateName()
+		SPAWN(2.5 SECONDS) // Don't remove.
 			if (M) M.assign_gimmick_skull() // The mask IS your new face (Convair880).
 
 /client/proc/cmd_admin_view_playernotes(target as text)
@@ -1252,7 +1253,7 @@
 	set popup_menu = 0
 	admin_only
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		boutput(usr, "<span class='alert'>Generating reward list.</span>")
 		var/list/eligible = list()
 		for (var/A in rewardDB)

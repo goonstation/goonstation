@@ -145,7 +145,7 @@
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 				if (istype(O, /obj/machinery/door) && O.density)
 					var/obj/machinery/door/D = O
-					SPAWN_DBG(0)
+					SPAWN(0)
 						D.try_force_open(src)
 					return
 				if (istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
@@ -267,7 +267,7 @@
 			var/mob/hitMob = hit_atom
 			if (ishuman(hitMob))
 				var/mob/living/carbon/human/user = usr
-				SPAWN_DBG( 0 )
+				SPAWN( 0 )
 					if (istype(user))
 						if (check_target_immunity(hitMob))
 							hitMob.visible_message("<span class='alert'>The [src] bounces off of [hit_atom]!</span>")

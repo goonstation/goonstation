@@ -131,7 +131,7 @@
 
 
 			if (!src.custom)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.choose_name(3)
 
 		else if (src.part_head && src.part_chest) // some wee child of ours sent us some parts, how nice c:
@@ -190,12 +190,11 @@
 			if (!src.ai_interface)
 				src.ai_interface = new(src)
 
-		SPAWN_DBG(0.1 SECONDS)
-			if (!src.dependent && !src.shell)
-				boutput(src, "<span class='notice'>Your icons have been generated!</span>")
-				src.syndicate = syndie
-				src.emagged = frame_emagged
-		SPAWN_DBG(0.4 SECONDS)
+		if (!src.dependent && !src.shell)
+			boutput(src, "<span class='notice'>Your icons have been generated!</span>")
+			src.syndicate = syndie
+			src.emagged = frame_emagged
+		SPAWN(0.4 SECONDS)
 			if (!src.connected_ai && !syndicate && !(src.dependent || src.shell))
 				for_by_tcl(A, /mob/living/silicon/ai)
 					src.connected_ai = A
@@ -214,7 +213,7 @@
 			src.camera.c_tag = src.real_name
 			src.camera.network = "Robots"
 
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			if (!src.brain && src.key && !(src.dependent || src.shell || src.ai_interface))
 				var/obj/item/organ/brain/B = new /obj/item/organ/brain(src)
 				B.owner = src.mind
@@ -272,7 +271,7 @@
 				break
 		if (!( cancel ))
 			boutput(world, "<B>Everyone is dead! Resetting in 30 seconds!</B>")
-			SPAWN_DBG( 300 )
+			SPAWN( 300 )
 				logTheThing("diary", null, null, "Rebooting because of no live players", "game")
 				Reboot_server()
 				return
@@ -457,7 +456,7 @@
 			if ("twitch")
 				message = "<B>[src]</B> twitches."
 				m_type = 1
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/old_x = src.pixel_x
 					var/old_y = src.pixel_y
 					src.pixel_x += rand(-2,2)
@@ -469,7 +468,7 @@
 			if ("twitch_v","twitch_s")
 				message = "<B>[src]</B> twitches violently."
 				m_type = 1
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/old_x = src.pixel_x
 					var/old_y = src.pixel_y
 					src.pixel_x += rand(-3,3)
@@ -615,7 +614,7 @@
 	#ifdef DATALOGGER
 					game_stats.Increment("farts")
 	#endif
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						src.emote_allowed = 1
 			else
 				src.show_text("Invalid Emote: [act]")
@@ -624,7 +623,7 @@
 			return
 		if (maptext_out)
 			var/image/chat_maptext/chat_text = null
-			SPAWN_DBG(0) //blind stab at a life() hang - REMOVE LATER
+			SPAWN(0) //blind stab at a life() hang - REMOVE LATER
 				if (speechpopups && src.chat_text)
 					chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
 					if(chat_text)
@@ -812,13 +811,13 @@
 		var/damage = 0
 		switch(severity)
 			if(1.0)
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					src.gib(1)
 				return
 			if(2.0) damage = 40
 			if(3.0) damage = 20
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/obj/item/parts/robot_parts/RP in src.contents)
 				if (RP.ropart_take_damage(damage,damage) == 1)
 					src.compborg_lose_limb(RP)
@@ -826,7 +825,7 @@
 		if (istype(cell,/obj/item/cell/erebite) && fire_protect != 1)
 			src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
 			explosion(cell, src.loc, 1, 2, 4, 6, 1)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				qdel (src.cell)
 				src.cell = null
 
@@ -931,13 +930,6 @@
 		boutput(src, "<span class='alert'><B>*BZZZT*</B></span>")
 		for (var/obj/item/parts/robot_parts/RP in src.contents)
 			if (RP.ropart_take_damage(0,10) == 1) src.compborg_lose_limb(RP)
-		/* Bit of a problem when EMPs that are supposed to be strong against cyborgs might just turn them into antagonists ...
-		if (prob(25))
-			src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
-			src.emagged = 1
-			src.handle_robot_antagonist_status("emagged", 0, usr)
-		*/
-		return
 
 	meteorhit(obj/O as obj)
 		src.visible_message("<font color=red><b>[src]</b> is struck by [O]!</font>")
@@ -971,7 +963,7 @@
 				if (istype(cell, /obj/item/cell/erebite))
 					src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
 					explosion(cell, src.loc, 1, 2, 4, 6, 1)
-					SPAWN_DBG(1 DECI SECOND)
+					SPAWN(1 DECI SECOND)
 						qdel(src.cell)
 						src.cell = null
 			src.update_bodypart()
@@ -993,7 +985,7 @@
 			if (istype(cell,/obj/item/cell/erebite))
 				src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
 				explosion(cell, src.loc, 1, 2, 4, 6, 1)
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					qdel (src.cell)
 					src.cell = null
 
@@ -1509,7 +1501,7 @@
 						playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
 						user.visible_message("<span class='notice'>[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
 					if(INTENT_DISARM) //Shove
-						SPAWN_DBG(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
+						SPAWN(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
 						user.visible_message("<span class='alert'><B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B></span>")
 					if(INTENT_GRAB) //Shake
 						playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 30, 1, -2)
@@ -2144,7 +2136,7 @@
 		else if (!src.locked && !src.opened && !src.wiresexposed && !src.brainexposed && !src.locking)
 			src.locking = 1
 			boutput(src, "<span class='alert'>Locking interface...</span>")
-			SPAWN_DBG(12 SECONDS)
+			SPAWN(12 SECONDS)
 				if (!src.locking)
 					boutput(src, "<span class='alert'>The lock was interrupted before it could finish!</span>")
 				else

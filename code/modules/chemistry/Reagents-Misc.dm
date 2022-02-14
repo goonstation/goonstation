@@ -560,7 +560,7 @@ datum
 							if (G?.mind?.dnr)
 								H.visible_message("<span class='alert'><b>[H]</b> seems to prefer the afterlife!</span>")
 							H.make_jittery(1000)
-							SPAWN_DBG(rand(20, 100))
+							SPAWN(rand(20, 100))
 								H.gib()
 							return
 					else // else just get whoever's the mind
@@ -613,7 +613,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				if (T.icon == 'icons/turf/floors.dmi' && volume >= 5)
-					SPAWN_DBG(1.5 SECONDS)
+					SPAWN(1.5 SECONDS)
 						T.icon_state = "grimy"
 				return
 
@@ -647,7 +647,7 @@ datum
 				if (!F)
 					F = new /obj/fire_foam
 					F.set_loc(target)
-					SPAWN_DBG(20 SECONDS)
+					SPAWN(20 SECONDS)
 						if (F && !F.disposed)
 							qdel(F)
 				return
@@ -755,7 +755,7 @@ datum
 					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
-					SPAWN_DBG(800 * volume_mult)
+					SPAWN(800 * volume_mult)
 						if (istype(T))
 							T.wet = 0
 							T.UpdateOverlays(null, "wet_overlay")
@@ -785,7 +785,7 @@ datum
 						wet.alpha = 60
 						T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 3
-					SPAWN_DBG(80 SECONDS)
+					SPAWN(80 SECONDS)
 						if (istype(T))
 							T.wet = 0
 							T.UpdateOverlays(null, "wet_overlay")
@@ -1042,7 +1042,7 @@ datum
 				if (volume >= 3)
 					if (locate(/obj/decal/icefloor) in target) return
 					var/obj/decal/icefloor/B = new /obj/decal/icefloor(target)
-					SPAWN_DBG(80 SECONDS)
+					SPAWN(80 SECONDS)
 						if (B)
 							B.dispose()
 
@@ -1124,7 +1124,7 @@ datum
 				if (volume >= 5)
 					for (var/obj/decal/bloodtrace/B in T)
 						B.invisibility = INVIS_NONE
-						SPAWN_DBG(30 SECONDS)
+						SPAWN(30 SECONDS)
 							if (B)
 								B.invisibility = INVIS_ALWAYS
 					for (var/obj/item/W in T)
@@ -1135,7 +1135,7 @@ datum
 							I.Blend(new /icon('icons/effects/blood.dmi', "lum-item"),ICON_MULTIPLY)
 							I.Blend(new /icon(W.icon, W.icon_state),ICON_UNDERLAY)
 							W.icon = I
-							SPAWN_DBG(30 SECONDS)
+							SPAWN(30 SECONDS)
 								if (W && icon_old)
 									W.icon = icon_old
 
@@ -1201,7 +1201,7 @@ datum
 								make_cleanable(/obj/decal/cleanable/oil/streak,T)
 							if (20 to INFINITY)
 								make_cleanable(/obj/decal/cleanable/oil,T)
-					SPAWN_DBG(20 SECONDS)
+					SPAWN(20 SECONDS)
 						T.wet = 0
 						T.UpdateOverlays(null, "wet_overlay")
 
@@ -1295,7 +1295,7 @@ datum
 						if (11)
 							M.lying = 0
 						if (12 to INFINITY)
-							SPAWN_DBG(5 SECONDS)
+							SPAWN(5 SECONDS)
 								if (!M.reagents.has_reagent("montaguone_extra"))
 									M.lying = 1
 									M.emote("deathgasp")
@@ -1433,7 +1433,7 @@ datum
 					M.visible_message("<span class='alert'><B>[M]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
 					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 15 SECONDS * mult))
 					M.make_jittery(1000)
-					SPAWN_DBG(rand(20, 100))
+					SPAWN(rand(20, 100))
 						var/turf/Mturf = get_turf(M)
 						M.gib()
 						new /obj/critter/dog/george (Mturf)
@@ -1472,7 +1472,7 @@ datum
 					M.visible_message("<span class='alert'><B>[M]</B> starts hooting violently!</span>", "You feel as if your body is hooting itself apart!")
 					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 15 SECONDS * mult))
 					M.make_jittery(1000)
-					SPAWN_DBG(rand(20, 100))
+					SPAWN(rand(20, 100))
 						M.owlgib(control_chance = 100)
 					return
 				..()
@@ -1546,7 +1546,7 @@ datum
 				. = ..()
 				if (method == INGEST)
 					boutput(M, "<span class='alert'>Aaaagh! It tastes fucking horrendous!</span>")
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						if(!isdead(M) && volume >= 1)
 							M.visible_message("<span class='alert'>[M] pukes violently!</span>")
 							M.vomit()
@@ -2038,7 +2038,7 @@ datum
 				if(method == TOUCH)
 					boutput(M, "<span class='notice'>It feels like you got smudged with oil paints.</span>")
 					M.color = col
-					SPAWN_DBG(3 SECONDS)
+					SPAWN(3 SECONDS)
 						boutput(M, "<span class='alert'>Oh god it's not coming off! You're tinted like this forever!</span>")
 
 			reaction_turf(var/turf/T, var/volume)
@@ -2399,7 +2399,7 @@ datum
 					M.alpha = 0
 					if(effect_length > 75)
 						M.take_brain_damage(10) // there!
-					SPAWN_DBG(effect_length * 10)
+					SPAWN(effect_length * 10)
 						if(ishuman(M) && M.alpha != 255)
 							boutput(M, "<span class='notice'>You feel yourself returning back to normal. Phew!</span>")
 							M.alpha = 255
@@ -2444,7 +2444,7 @@ datum
 				if(M)
 					boutput(M, "<span class='alert'>You feel yourself fading.</span>")
 					M.alpha = rand(80,200)
-					SPAWN_DBG(effect_length * 10)
+					SPAWN(effect_length * 10)
 						if(ismob(M) && M.alpha != 255)
 							boutput(M, "<span class='notice'>You feel yourself returning back to normal. Phew!</span>")
 							M.alpha = 255
@@ -2772,7 +2772,7 @@ datum
 				light.set_brightness(lumen_brightness)
 				light.attach(thing)
 				var/life_length = rand(1 MINUTE, 3 MINUTES)
-				SPAWN_DBG(life_length)
+				SPAWN(life_length)
 					qdel(light)
 
 			proc/light_it_up_but_simple(atom/thing, var/volume, var/id="lumen", var/remove=1)
@@ -2783,7 +2783,7 @@ datum
 				thing.add_simple_light(id, list(mycolor.r, mycolor.g, mycolor.b, alpha))
 				var/life_length = rand(1 MINUTE, 3 MINUTES)
 				if(remove)
-					SPAWN_DBG(life_length)
+					SPAWN(life_length)
 						thing.remove_simple_light(id)
 
 			on_add()
@@ -3355,7 +3355,7 @@ datum
 					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
-					SPAWN_DBG(80 SECONDS)
+					SPAWN(80 SECONDS)
 						if (istype(T))
 							T.wet = 0
 							T.UpdateOverlays(null, "wet_overlay")
@@ -3642,7 +3642,7 @@ datum
 						var/mob/badmantarget = M
 						boutput(badmantarget, "<span class='notice'> <B> You feel a sense of dread and patriotism wash over you. </B>")
 						badmantarget.playsound_local(get_turf(badmantarget), "sound/misc/american_patriot.ogg", 50)
-						SPAWN_DBG(10 SECONDS)
+						SPAWN(10 SECONDS)
 							startx = badmantarget.x - rand(-11, 11)
 							starty = badmantarget.y - rand(-11, 11)
 							var/turf/pickedstart = locate(startx, starty, badmantarget.z)
@@ -3807,7 +3807,7 @@ datum
 						return
 					if (!T.icon_old)
 						T.icon_old = T.icon_state
-					//SPAWN_DBG(rand(5,12) * 10) //wait in some other fashion later
+					//SPAWN(rand(5,12) * 10) //wait in some other fashion later
 					T.grassify()
 				return
 
@@ -3986,15 +3986,15 @@ datum
 
 	New(pickedstart, var/mob/badmantarget)
 		deathtarget = badmantarget
-		SPAWN_DBG(0) process()
+		SPAWN(0) process()
 		..()
 
 	bump(atom/M as turf|obj|mob)
 		if(M.density)
 			M.density = 0
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				M.density = 1 //Apparently this is a horrible stinky line of code by don't blame me, this is all the gibshark codes fault.
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			var/turf/T = get_turf(M)
 			src.x = T.x
 			src.y = T.y

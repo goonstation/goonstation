@@ -12,7 +12,7 @@
 
 /obj/item/saw
 	name = "chainsaw"
-	desc = "A chainsaw used to chop up harmful plants."
+	desc = "An electric chainsaw used to chop up harmful plants."
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "c_saw_off"
@@ -23,7 +23,6 @@
 	force = 3.0
 	var/active_force = 12.0
 	var/off_force = 3.0
-	var/how_dangerous_is_this_thing = 1
 	health = 10.0
 	throwforce = 5.0
 	throw_speed = 1
@@ -32,8 +31,9 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	tool_flags = TOOL_SAWING
 	mats = 12
-	var/sawnoise = 'sound/machines/chainsaw_green.ogg'
-	arm_icon = "chainsaw0"
+	var/sawnoise = "sound/machines/chainsaw_green.ogg"
+	arm_icon = "chainsaw-A"
+	var/base_arm = "chainsaw"
 	over_clothes = 1
 	override_attack_hand = 1
 	can_hold_items = 0
@@ -47,9 +47,13 @@
 		active = 1
 		force = 12
 
+		New()
+			..()
+			hitsound = "sound/machines/chainsaw_green.ogg"
+
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src)
 				src.UpdateIcon()
 		BLOCK_SETUP(BLOCK_ROD)
@@ -58,6 +62,8 @@
 
 	update_icon()
 		set_icon_state("[src.base_state][src.active ? null : "_off"]")
+		src.item_state = "[src.base_state][src.active ? "-A" : "-D"]"
+		src.arm_icon = "[src.base_arm][src.active ? "-A" : "-D"]"
 		return
 
 	// Fixed a couple of bugs and cleaned code up a little bit (Convair880).
@@ -79,54 +85,6 @@
 					take_bleeding_damage(target, user, 5, DAMAGE_CUT)
 					if (prob(80))
 						target.emote("scream")
-
-			playsound(target, sawnoise, 60, 1)//need a better sound
-
-			switch (src.how_dangerous_is_this_thing)
-				if (2) // Red chainsaw.
-					if (iscarbon(target))
-						var/mob/living/carbon/C = target
-						if (!isdead(C))
-							C.changeStatus("stunned", 3 SECONDS)
-							C.changeStatus("weakened", 3 SECONDS)
-						else
-							logTheThing("combat", user, C, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
-							var/sourcename = C.real_name
-							var/sourcejob = "Stowaway"
-							if (C.mind && C.mind.assigned_role)
-								sourcejob = C.mind.assigned_role
-							else if (C.ghost && C.ghost.mind && C.ghost.mind.assigned_role)
-								sourcejob = C.ghost.mind.assigned_role
-							for (var/i=0, i<3, i++)
-								var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C))
-								meat.name = sourcename + meat.name
-								meat.subjectname = sourcename
-								meat.subjectjob = sourcejob
-							if (C.mind)
-								C.ghostize()
-								qdel(C)
-								return
-							else
-								qdel(C)
-								return
-
-				if (3) // Elimbinator.
-					if (ishuman(target))
-						var/mob/living/carbon/human/H = target
-						var/list/limbs = list("l_arm","r_arm","l_leg","r_leg")
-						var/the_limb = null
-
-						if (user.zone_sel.selecting in limbs)
-							the_limb = user.zone_sel.selecting
-						else
-							the_limb = pick("l_arm","r_arm","l_leg","r_leg")
-
-						if (!the_limb)
-							return //who knows
-
-						H.sever_limb(the_limb)
-						H.changeStatus("stunned", 3 SECONDS)
-						bleed(H, 3, 5)
 		..()
 		return
 
@@ -139,10 +97,13 @@
 		if (src.active)
 			boutput(user, "<span class='notice'>[src] is now active.</span>")
 			src.force = active_force
+			src.hitsound = sawnoise
 		else
 			boutput(user, "<span class='notice'>[src] is now off.</span>")
 			src.force = off_force
+			src.hitsound = initial(src.hitsound)
 		tooltip_rebuild = 1
+		user.set_body_icon_dirty()
 		src.UpdateIcon()
 		user.update_inhands()
 		src.add_fingerprint(user)
@@ -154,8 +115,8 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] shoves the chainsaw into [his_or_her(user)] chest!</b></span>")
 		blood_slash(user, 25)
-		playsound(user.loc, 'sound/machines/chainsaw_red.ogg', 50, 1)
-		playsound(user.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
+		playsound(user.loc, "sound/machines/chainsaw_red.ogg", 50, 1)
+		playsound(user.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 50, 1)
 		user.u_equip(src)
 		src.set_loc(user.loc)
 		user.gib()
@@ -179,12 +140,12 @@
 	throw_range = 5
 	w_class = W_CLASS_BULKY
 	is_syndicate = 1
-	how_dangerous_is_this_thing = 1 //it gibs differently
 	mats = 14
-	desc = "This one is the real deal. Time for a space chainsaw massacre."
+	desc = "A gas powered antique. This one is the real deal. Time for a space chainsaw massacre."
 	contraband = 10 //scary
-	sawnoise = 'sound/machines/chainsaw_red.ogg'
-	arm_icon = "chainsaw1"
+	sawnoise = "sound/machines/chainsaw_red.ogg"
+	arm_icon = "chainsaw_s-A"
+	base_arm = "chainsaw_s"
 	stamina_damage = 100
 	stamina_cost = 30
 	stamina_crit_chance = 40
@@ -194,105 +155,179 @@
 		. = ..()
 		setProperty("deflection", 75)
 
-/obj/item/saw/syndie/attack(mob/living/carbon/human/target as mob, mob/user as mob)
-	var/mob/living/carbon/human/H = target
-
-	if(!active)
-		src.visible_message("<span class='notice'>[user] gently taps [target] with the turned off [src].</span>")
-
-	if(active && prob(35))
-		gibs(target.loc, blood_DNA=H.bioHolder.Uid, blood_type=H.bioHolder.bloodType, headbits=FALSE, source=H)
-
-	if (H.organHolder && active)
-		if (H.organHolder.appendix)
-			H.organHolder.drop_organ("appendix")
-			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
-			target.visible_message(
-				"<span class='alert'><b>[target]'s appendix is ripped out [pick("violently", "brutally", "ferociously", "fiercely")]!</span>"
-				)
-			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
-			return ..()
-
-		if (H.organHolder.left_kidney)
-			H.organHolder.drop_organ("left_kidney")
-			playsound(target.loc,'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
-			target.visible_message(
-				"<span class='alert'><b>[target]'s kidney is torn out [pick("cruelly", "viciously", "atrociously", "fiercely")]!</span>"
-				)
-			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
-			return ..()
-
-		if (H.organHolder.left_lung)
-			H.organHolder.drop_organ("left_lung")
-			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
-			target.visible_message(
-				"<span class='alert'><b>[target]'s lung is gashed out [pick("tempestuously", "impetuously", "sorta meanly", "unpleasantly")]!</span>"
-				)
-			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
-			return ..()
-
-		if (H.organHolder.right_kidney)
-			H.organHolder.drop_organ("right_kidney")
-			playsound(target.loc,'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
-			target.visible_message(
-				"<span class='alert'><b>[target]'s kidney is torn out [pick("cruelly", "viciously", "atrociously", "fiercely")]!</span>"
-				)
-			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
-			return ..()
-
-		if (H.organHolder.right_lung)
-			H.organHolder.drop_organ("right_lung")
-			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
-			target.visible_message(
-				"<span class='alert'><b>[target]'s lung is gashed out [pick("tempestuously", "impetuously", "sorta meanly", "unpleasantly")]!</span>"
-				)
-			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
-			return ..()
-
-		if (H.organHolder.liver)
-			H.organHolder.drop_organ("liver")
-			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
-			target.visible_message(
-				"<span class='alert'><b>[target]'s liver is gashed out [pick("unnecessarily", "stylishly", "viciously", "unethically")]!</span>"
-				)
-			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
-
-			return ..()
-
-		if (H.organHolder.heart) //move this up or down to make it kill faster or later
-			H.organHolder.drop_organ("heart")
-			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
-			target.visible_message(
-				"<span class='alert'><b>[target]'s heart is ripped clean out! [pick("HOLY MOLY", "FUCK", "JESUS CHRIST", "THAT'S GONNA LEAVE A MARK", "OH GOD", "OUCH", "DANG", "WOW", "woah")]!!</span>"
-				)
-			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
-			return ..()
-
-
-		if (H.organHolder.spleen)
-			H.organHolder.drop_organ("spleen")
-			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
-			target.visible_message(
-				"<span class='alert'><b>[target]'s spleen is removed with [pick("conviction", "malice", "disregard for safety regulations", "contempt")]!</span>"
-				)
-			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
-			return ..()
-
-		if (H.organHolder.pancreas)
-			H.organHolder.drop_organ("pancreas")
-			playsound(target.loc,'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
-			target.visible_message(
-				"<span class='alert'><b>[target]'s pancreas is evicted with [pick("anger", "ill intent", "disdain")]!</span>"
-				)
-			make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
-			return ..()
-
-		if (H.health < -500) //gib if it can't take any more organs and target is very damaged
-			target.gib()
+	attack_self(mob/user as mob)
+		if(ON_COOLDOWN(src, "redsaw_toggle", 1 SECOND))
 			return
-
+		..()
+		if (src.active)
+			playsound(src, "sound/machines/chainsaw_red_start.ogg", 90, 0)
 		else
+			playsound(src, "sound/machines/chainsaw_red_stop.ogg", 90, 0)
+
+	attack(mob/target as mob, mob/user as mob)
+		if(!active)
 			return ..()
+		if (iscarbon(target))
+			var/mob/living/carbon/C = target
+			if (isdead(C))
+				logTheThing("combat", user, C, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
+				var/sourcename = C.real_name
+				var/sourcejob = "Stowaway"
+				if (C.mind && C.mind.assigned_role)
+					sourcejob = C.mind.assigned_role
+				else if (C.ghost && C.ghost.mind && C.ghost.mind.assigned_role)
+					sourcejob = C.ghost.mind.assigned_role
+				for (var/i=0, i<3, i++)
+					var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C))
+					meat.name = sourcename + meat.name
+					meat.subjectname = sourcename
+					meat.subjectjob = sourcejob
+				if (C.mind)
+					C.ghostize()
+					qdel(C)
+				else
+					qdel(C)
+			else
+				C.changeStatus("weakened", 3 SECONDS)
+
+		if (!ishuman(target))
+			return ..()
+
+		var/mob/living/carbon/human/H = target
+		if(prob(35))
+			gibs(target.loc, blood_DNA=H.bioHolder.Uid, blood_type=H.bioHolder.bloodType, headbits=FALSE, source=H)
+
+		if (H.organHolder && active)
+			if (H.organHolder.appendix)
+				H.organHolder.drop_organ("appendix")
+				playsound(target.loc,"sound/impact_sounds/Slimy_Splat_2_Short.ogg", 50, 1)
+				target.visible_message(
+					"<span class='alert'><b>[target]'s appendix is ripped out [pick("violently", "brutally", "ferociously", "fiercely")]!</span>"
+					)
+				make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
+				return ..()
+
+			if (H.organHolder.left_kidney)
+				H.organHolder.drop_organ("left_kidney")
+				playsound(target.loc,"sound/impact_sounds/Flesh_Tear_2.ogg", 50, 1)
+				target.visible_message(
+					"<span class='alert'><b>[target]'s kidney is torn out [pick("cruelly", "viciously", "atrociously", "fiercely")]!</span>"
+					)
+				make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
+				return ..()
+
+			if (H.organHolder.left_lung)
+				H.organHolder.drop_organ("left_lung")
+				playsound(target.loc,"sound/impact_sounds/Slimy_Splat_2_Short.ogg", 50, 1)
+				target.visible_message(
+					"<span class='alert'><b>[target]'s lung is gashed out [pick("tempestuously", "impetuously", "sorta meanly", "unpleasantly")]!</span>"
+					)
+				make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
+				return ..()
+
+			if (H.organHolder.right_kidney)
+				H.organHolder.drop_organ("right_kidney")
+				playsound(target.loc,"sound/impact_sounds/Flesh_Tear_2.ogg", 50, 1)
+				target.visible_message(
+					"<span class='alert'><b>[target]'s kidney is torn out [pick("cruelly", "viciously", "atrociously", "fiercely")]!</span>"
+					)
+				make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
+				return ..()
+
+			if (H.organHolder.right_lung)
+				H.organHolder.drop_organ("right_lung")
+				playsound(target.loc,"sound/impact_sounds/Slimy_Splat_2_Short.ogg", 50, 1)
+				target.visible_message(
+					"<span class='alert'><b>[target]'s lung is gashed out [pick("tempestuously", "impetuously", "sorta meanly", "unpleasantly")]!</span>"
+					)
+				make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
+				return ..()
+
+			if (H.organHolder.liver)
+				H.organHolder.drop_organ("liver")
+				playsound(target.loc,"sound/impact_sounds/Slimy_Splat_2_Short.ogg", 50, 1)
+				target.visible_message(
+					"<span class='alert'><b>[target]'s liver is gashed out [pick("unnecessarily", "stylishly", "viciously", "unethically")]!</span>"
+					)
+				make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
+
+				return ..()
+
+			if (H.organHolder.heart) //move this up or down to make it kill faster or later
+				H.organHolder.drop_organ("heart")
+				playsound(target.loc,"sound/impact_sounds/Slimy_Splat_2_Short.ogg", 50, 1)
+				target.visible_message(
+					"<span class='alert'><b>[target]'s heart is ripped clean out! [pick("HOLY MOLY", "FUCK", "JESUS CHRIST", "THAT'S GONNA LEAVE A MARK", "OH GOD", "OUCH", "DANG", "WOW", "woah")]!!</span>"
+					)
+				make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
+				return ..()
+
+
+			if (H.organHolder.spleen)
+				H.organHolder.drop_organ("spleen")
+				playsound(target.loc,"sound/impact_sounds/Slimy_Splat_2_Short.ogg", 50, 1)
+				target.visible_message(
+					"<span class='alert'><b>[target]'s spleen is removed with [pick("conviction", "malice", "disregard for safety regulations", "contempt")]!</span>"
+					)
+				make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
+				return ..()
+
+			if (H.organHolder.pancreas)
+				H.organHolder.drop_organ("pancreas")
+				playsound(target.loc,"sound/impact_sounds/Slimy_Splat_2_Short.ogg", 50, 1)
+				target.visible_message(
+					"<span class='alert'><b>[target]'s pancreas is evicted with [pick("anger", "ill intent", "disdain")]!</span>"
+					)
+				make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
+				return ..()
+
+			if (H.health < -500) //gib if it can't take any more organs and target is very damaged
+				target.gib()
+				return
+			else
+				return ..()
+
+	proc/end_replace_arm(var/target, var/mob/living/carbon/human/H)
+		if(!H)
+			return
+		if (!H.find_in_hand(src))
+			boutput(H, "<span class='alert'>You need to be holding your saw!</span>")
+			return
+		var/obj/item/parts/human_parts/arm/new_arm = null
+		if (target == "l_arm")
+			if (H.limbs.l_arm)
+				playsound(H.loc, "sound/machines/chainsaw.ogg", 50, 1)
+				playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 50, 1)
+				H.limbs.l_arm.sever()
+				H.visible_message("[H] chainsaws their own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
+			new_arm = new /obj/item/parts/human_parts/arm/left/item(H)
+			H.limbs.l_arm = new_arm
+		else if (target == "r_arm")
+			if (H.limbs.r_arm)
+				playsound(H.loc, "sound/machines/chainsaw.ogg", 50, 1)
+				playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 50, 1)
+				H.limbs.r_arm.sever()
+				H.visible_message("[H] chainsaws their own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
+			new_arm = new /obj/item/parts/human_parts/arm/right/item(H)
+			H.limbs.r_arm = new_arm
+		if (!new_arm) return //who knows
+
+		new_arm.holder = H
+		H.remove_item(src)
+
+		new_arm:set_item(src)
+		src.cant_drop = 1
+
+		H.set_body_icon_dirty()
+		H.hud.update_hands()
+		for (var/obj/ability_button/B in src.ability_buttons)
+			if (istype(B, /obj/ability_button/saw_replace_arm))
+				H.item_abilities.Remove(B)
+		H.need_update_item_abilities = 1
+		H.update_item_abilities()
+		H.visible_message("[H] attaches a chainsaw to the stump where their arm should be", "You attach your saw to where your arm should be")
+
+/obj/item/saw/syndie/abilities = list(/obj/ability_button/saw_replace_arm)
 
 /obj/item/saw/syndie/vr
 	icon = 'icons/effects/VR.dmi'
@@ -311,17 +346,36 @@
 	active_force = 10.0
 	off_force = 5.0
 	health = 10
-	how_dangerous_is_this_thing = 3
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_BULKY
 	mats = 12
-	sawnoise = 'sound/machines/chainsaw_red.ogg'
-	arm_icon = "chainsaw1"
+	sawnoise = "sound/machines/chainsaw_red.ogg"
+	hitsound = "sound/machines/chainsaw_red.ogg"
+	arm_icon = "chainsaw_s-A"
 	stamina_damage = 40
 	stamina_cost = 40
 	stamina_crit_chance = 50
+
+	attack(mob/target as mob, mob/user as mob)
+		if (ishuman(target))
+			var/mob/living/carbon/human/H = target
+			var/list/limbs = list("l_arm","r_arm","l_leg","r_leg")
+			var/the_limb = null
+
+			if (user.zone_sel.selecting in limbs)
+				the_limb = user.zone_sel.selecting
+			else
+				the_limb = pick("l_arm","r_arm","l_leg","r_leg")
+
+			if (!the_limb)
+				return //who knows
+
+			H.sever_limb(the_limb)
+			H.changeStatus("stunned", 3 SECONDS)
+			bleed(H, 3, 5)
+		return ..()
 
 ////////////////////////////////////// Plant analyzer //////////////////////////////////////
 

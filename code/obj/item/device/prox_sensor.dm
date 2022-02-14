@@ -14,7 +14,7 @@
 
 /obj/item/device/prox_sensor/dropped()
 	..()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		src.sense()
 
 /obj/item/device/prox_sensor/update_icon()
@@ -32,7 +32,7 @@
 /obj/item/device/prox_sensor/proc/sense()
 	if (src.armed == 1)
 		if (src.master)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
 				signal.data["message"] = "ACTIVATE"

@@ -127,7 +127,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	if (ishuman(player.current))
 		var/mob/living/carbon/human/H = player.current
 		H.AddComponent(/datum/component/battleroyale_death)
-	SPAWN_DBG(MAX_TIME_ON_SHUTTLE)
+	SPAWN(MAX_TIME_ON_SHUTTLE)
 		if(istype(get_area(player.current),/area/shuttle/battle) || istype(get_area(player.current),/area/shuttle_transit_space/west) )
 			boutput(player.current,"<span class='alert'>You are thrown out of the shuttle for taking too long!</span>")
 			var/list/found_areas = get_area_turfs(current_battle_spawn,1)
@@ -204,7 +204,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	if(src.next_storm < world.time)
 		src.next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
 		storm.event_effect()
-		SPAWN_DBG(85 SECONDS)
+		SPAWN(85 SECONDS)
 			var/you_died_good_work = recently_deceased.len > 0 ? "The following players recently died: " : ""
 			for(var/datum/mind/M in recently_deceased)
 				you_died_good_work += " [M.current.name],"
@@ -214,7 +214,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	// Is it time for a supply drop?
 	if(src.next_drop < world.time)
 		next_drop = world.time + rand(MIN_TIME_BETWEEN_SUPPLY_DROPS,MAX_TIME_BETWEEN_SUPPLY_DROPS)
-		SPAWN_DBG(0) dropper.event_effect("Gamemode", drop_locations[pick(drop_locations)])
+		SPAWN(0) dropper.event_effect("Gamemode", drop_locations[pick(drop_locations)])
 
 
 // Does what it says on the tin

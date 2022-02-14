@@ -74,7 +74,7 @@
 			animate(src.simple_light, time = 2 MINUTES, alpha = 255, color = "#ff4444", transform = trans)
 
 		if (det_time && TIME >= det_time)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				explode()
 			src.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">--:--</span>"
 		else
@@ -139,6 +139,10 @@
 							boutput(user, "<span class='alert'>You need to deploy the bomb in [target_name].</span>")
 						else
 							if (alert("Deploy and arm [src.name] here?", src.name, "Yes", "No") == "Yes" && !src.armed && get_dist(src, user) <= 1 && !(is_incapacitated(user) || user.restrained()))
+								A = get_area(src)
+								if (!target_area || !istype(A) || !((ispath(target_area) && istype(A, target_area)) || (islist(target_area) && (A.type in target_area))))
+									boutput(user, "<span class='alert'>You need to deploy the bomb in [target_name].</span>")
+									return
 								src.armed = 1
 								src.anchored = 1
 								if (!src.image_light)
@@ -221,9 +225,9 @@
 								S.recharging = 1
 								src.set_loc(R.loc)
 								showswirl(src.loc)
-								SPAWN_DBG(S.recharge)
+								SPAWN(S.recharge)
 									S.recharging = 0
-								SPAWN_DBG(R.recharge)
+								SPAWN(R.recharge)
 									R.recharging = 0
 
 			if (user.mind in NUKEMODE.syndicates && !src.anyone_can_activate)

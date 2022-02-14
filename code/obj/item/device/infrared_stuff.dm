@@ -49,13 +49,13 @@ Contains:
 		I.left = 10
 	for(var/obj/item/device/infra/I in range(src.loc))
 		I.visible = 1
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			if (I?.first)
 				I.first.vis_spread(1)
 			return
 	for(var/obj/item/assembly/rad_infra/I in range(src.loc))
 		I.part2.visible = 1
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			if ((I.part2 && I.part2.first))
 				I.part2.first.vis_spread(1)
 			return
@@ -78,7 +78,7 @@ Contains:
 			src.passive = !( src.passive )
 			if(passive) processing_items |= src
 		if (href_list["active"])
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				src.burst()
 				return
 		if (!( src.master ))
@@ -104,7 +104,7 @@ Contains:
 
 /obj/item/device/infra/proc/hit()
 	if (src.master)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/datum/signal/signal = new
 			signal.data["message"] = "ACTIVATE"
 			src.master.receive_signal(signal)
@@ -133,7 +133,7 @@ Contains:
 			src.first = I
 			//boutput(world, "infra : vis_spread")
 			I.vis_spread(src.visible)
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				if (I)
 					//boutput(world, "infra: setting limit")
 					I.limit = 20
@@ -185,7 +185,7 @@ Contains:
 			if(state) processing_items |= src
 		if (href_list["visible"])
 			src.visible = !( src.visible )
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				if (src.first)
 					src.first.vis_spread(src.visible)
 				return

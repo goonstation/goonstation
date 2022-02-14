@@ -24,7 +24,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			door_delay = door_delay SECONDS
 			var/list/drivers = new/list()
 			for(var/obj/machinery/mass_driver/D in range(1,src))
@@ -46,7 +46,7 @@
 		operating = 1
 		flick("launcher_loader_1",src)
 		playsound(src, "sound/effects/pump.ogg",50, 1)
-		SPAWN_DBG(0.3 SECONDS)
+		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM in src.loc)
 				if(AM.anchored || AM == src || isobserver(AM) || isintangible(AM)) continue
 				if(trash && AM.delivery_destination != "Disposals")
@@ -59,19 +59,19 @@
 		if(driver && !driver_operating)
 			driver_operating = 1
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/obj/machinery/door/poddoor/door = null
 				for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 					if (P.id == driver.id)
 						door = P
-						SPAWN_DBG(0)
+						SPAWN(0)
 							if (door)
 								door.open()
-						SPAWN_DBG(door_delay)
+						SPAWN(door_delay)
 							if (door)
 								door.close()
 
-				SPAWN_DBG(door ? door_delay : 2 SECONDS) driver_operating = FALSE
+				SPAWN(door ? door_delay : 2 SECONDS) driver_operating = FALSE
 
 				sleep(door ? 20 : 10)
 				if (driver)
@@ -151,7 +151,7 @@
 		flick("amdl_1",src)
 		playsound(src, "sound/effects/pump.ogg",50, 1)
 
-		SPAWN_DBG(0.3 SECONDS)
+		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM2 in src.loc)
 				if(AM2.anchored || AM2 == src || isobserver(AM2) || isintangible(AM2)) continue
 				step(AM2,src.dir)
@@ -165,7 +165,7 @@
 		if(driver && !driver_operating)
 			driver_operating = 1
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				sleep(1 SECOND)
 				if (driver)
 					driver.drive()
@@ -321,7 +321,6 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	var/printing = FALSE
-	var/print_amount = 1
 
 	// log account information for QM sales
 	var/obj/item/card/id/scan = null
@@ -330,13 +329,13 @@
 
 	var/list/destinations = list("Airbridge", "Cafeteria", "EVA", "Engine", "Disposals", "QM", "Catering", "MedSci", "Security") //These have to match the ones on the cargo routers for the routers to work.
 
-	proc/print(var/destination)
+	proc/print(var/destination, var/amount)
 		if (printing)
 			return
 		printing = TRUE
 		playsound(src.loc, "sound/machines/printer_cargo.ogg", 75, 0)
 		sleep(1.75 SECONDS)
-		for (var/i in 1 to src.print_amount)
+		for (var/i in 1 to amount)
 			var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
 			B.name = "Barcode Sticker ([destination])"
 			B.destination = destination
@@ -359,9 +358,7 @@
 
 
 	ui_data(mob/user)
-		. = list(
-			"amount" = print_amount,
-		)
+		. = list()
 		if (scan)
 			//we have to do this mess because bicon returns the full img tag which tgui won't render
 			var/bicon_split = splittext(bicon(scan), "\"")
@@ -382,15 +379,8 @@
 			return
 		else if (action == "print")
 			var/destination = strip_html(params["crate_tag"], 64)
-			print(destination)
-		else if (action == "set_amount")
-			if (printing)
-				return
-			var/amount = params["value"]
-			if (!amount || !isnum_safe(amount))
-				return
-			print_amount = clamp(amount, 1,5)
-			. = TRUE
+			var/amount = clamp(round(params["amount"]), 1, 5)
+			print(destination, amount)
 		else if (action == "reset_id")
 			scan = null
 			account = null

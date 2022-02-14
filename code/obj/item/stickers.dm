@@ -427,7 +427,7 @@
 				src.radio = new src.radio_path (src)
 			else
 				src.radio = new /obj/item/device/radio/spy (src)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				src.radio.broadcasting = 0
 				//src.radio.listening = 0
 

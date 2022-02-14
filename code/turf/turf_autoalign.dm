@@ -24,7 +24,7 @@
 			src.update_neighbors()
 
 		if (current_state > GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(0) //worldgen overrides ideally
+			SPAWN(0) //worldgen overrides ideally
 				src.UpdateIcon()
 
 		else
@@ -578,7 +578,7 @@
 		if (map_setting && ticker)
 			src.update_neighbors()
 		if (current_state > GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(0) //worldgen overrides ideally
+			SPAWN(0) //worldgen overrides ideally
 				src.UpdateIcon()
 
 		else
@@ -694,7 +694,7 @@
 	connect_overlay = 1
 	connect_diagonal = 1
 	connects_to = list(/turf/unsimulated/wall/auto/supernorn, /turf/unsimulated/wall/auto/reinforced/supernorn, /obj/machinery/door,
-	/obj/window)
+	/obj/window, /turf/simulated/wall/false_wall/reinforced, /turf/unsimulated/wall/auto/adventure/old, /turf/unsimulated/wall/setpieces/fakewindow, /turf/unsimulated/wall/auto/adventure/meat)
 	connects_with_overlay = list(/obj/machinery/door, /obj/window)
 
 /turf/unsimulated/wall/auto/supernorn/wood
@@ -826,6 +826,101 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/adventure)
 
 	exterior
 		mod = "martout-"
+
+/turf/unsimulated/wall/auto/adventure/iomoon // fancy walls part 3: the rest of z2
+	name = "silicate crust"
+	icon = 'icons/turf/walls_iomoon.dmi'
+	mod = "silicate-"
+	connect_overlay = 0
+	icon_state = "silicate-0"
+
+	interior
+		name = "strange wall"
+		mod = "interior-"
+		icon_state = "interior-0"
+
+/turf/unsimulated/wall/auto/adventure/hospital
+	name = "asteroid"
+	icon = 'icons/turf/walls_hospital.dmi'
+	mod = "exterior-"
+	connect_overlay = 0
+	icon_state = "exterior-0"
+
+	interior
+		name = "panel wall"
+		mod = "interior-"
+		icon_state = "interior-0"
+		connects_to = list(/turf/cordon, /turf/unsimulated/wall/auto/adventure, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/,
+	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom, /turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave,
+	/turf/simulated/shuttle/wall, /turf/unsimulated/wall/setpieces/hospital/window)
+
+
+/turf/unsimulated/wall/auto/adventure/icemoon
+	name = "ice wall"
+	icon = 'icons/turf/walls_icemoon.dmi'
+	mod = "ice-"
+	connect_overlay = 0
+	icon_state = "ice-0"
+
+	interior
+		name = "blue wall"
+		mod = "interior-"
+		icon_state = "interior-0"
+
+/turf/unsimulated/wall/auto/adventure/moon
+	name = "moon rock"
+	icon = 'icons/turf/walls_planet.dmi'
+	mod = "moon-"
+	connect_overlay = 0
+	icon_state = "moon-0"
+
+/turf/unsimulated/wall/auto/adventure/mars
+	name = "martian rock"
+	icon = 'icons/turf/walls_planet.dmi'
+	mod = "mars-"
+	connect_overlay = 0
+	icon_state = "mars-0"
+
+	interior
+		name = "wall"
+		mod = "interior-"
+		icon = 'icons/turf/walls_marsoutpost.dmi'
+		connect_overlay = 1
+		icon_state = "interior-0"
+
+/turf/unsimulated/wall/auto/adventure/meat
+	name = "wall"
+	icon = 'icons/turf/walls_meat.dmi'
+	mod = "meaty-"
+	icon_state = "meaty-0"
+	connect_overlay = 0
+	connects_to = list(/turf/cordon, /turf/unsimulated/wall/auto/adventure, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/,
+	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom, /turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave,
+	/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner,/turf/unsimulated/wall/auto/adventure/old,/turf/unsimulated/wall/auto/adventure/meat,
+	/turf/unsimulated/wall/auto/adventure/meat/eyes, /turf/unsimulated/wall/auto/adventure/meat/meatier, /turf/unsimulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/false_wall/reinforced)
+
+	meatier
+		mod = "meatier-"
+		icon_state = "meatier-0"
+
+	eyes
+		mod = "meateyes-"
+		icon_state = "meateyes-0"
+
+/turf/unsimulated/wall/auto/adventure/old
+	name = "wall"
+	icon = 'icons/turf/walls_derelict.dmi'
+	mod = "old-"
+	icon_state = ""
+	connects_to = list(/turf/cordon, /turf/unsimulated/wall/auto/adventure, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/,
+	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom, /turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave,
+	/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner, /turf/unsimulated/wall/auto/adventure/meat, /turf/unsimulated/wall/setpieces/fakewindow, /turf/unsimulated/wall/auto/reinforced/supernorn)
+
+	reinforced
+		name = "reinforced wall"
+		icon = 'icons/turf/walls_derelict.dmi'
+		mod = "oldr-"
+		icon_state = "oldr"
 
 // Some fun walls by Walpvrgis
 ABSTRACT_TYPE(turf/unsimulated/wall/auto/hedge)

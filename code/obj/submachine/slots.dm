@@ -83,7 +83,7 @@
 			playsound(src, "sound/machines/ding.ogg", 50, 1)
 			. = TRUE
 			ui_interact(usr, ui)
-			SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
+			SPAWN(2.5 SECONDS) // why was this at ten seconds, christ
 				money_roll(wager)
 				src.working = 0
 				src.icon_state = "[icon_base]-off"
@@ -251,7 +251,7 @@
 				var/roll = rand(1,101)
 
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-				SPAWN_DBG(2.5 SECONDS)
+				SPAWN(2.5 SECONDS)
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'JACKPOT! [usr.name] has won their freedom!'</span>", src), 1)
@@ -349,7 +349,7 @@
 				var/roll = rand(1,1350)
 
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-				SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
+				SPAWN(2.5 SECONDS) // why was this at ten seconds, christ
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'JACKPOT! You have won a MILLION CREDITS!'</span>", src), 1)

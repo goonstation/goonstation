@@ -52,7 +52,7 @@
 		for(var/key in aiImages)
 			var/image/I = aiImages[key]
 			src.client << I
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/sleep_counter = 0
 			for(var/key in aiImagesLowPriority)
 				var/image/I = aiImagesLowPriority[key]
@@ -68,7 +68,7 @@
 			for(var/key in aiImages)
 				var/image/I = aiImages[key]
 				cl.images -= I
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/sleep_counter = 0
 			for(var/key in aiImagesLowPriority)
 				var/image/I = aiImagesLowPriority[key]
@@ -346,6 +346,12 @@
 		if (mainframe)
 			mainframe.ai_colorchange()
 
+	verb/reset_apcs()
+		set category = "AI Commands"
+		set name = "Reset All APCs"
+		set desc = "Resets all APCs on the station."
+		mainframe?.reset_apcs()
+
 	verb/de_electrify_verb()
 		set category = "AI Commands"
 		set name = "Remove All Electrification"
@@ -417,7 +423,7 @@
 
 		..()
 		mainframe?.cancel_camera()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.return_mainframe()
 
 	verb/ai_call_shuttle()

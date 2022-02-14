@@ -40,7 +40,7 @@
 		var/throwy = world.maxy
 
 		for(var/atom/A as obj|mob in end_location)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				A.ex_act(1)
 
 		for(var/turf/T in end_location)
@@ -68,7 +68,7 @@
 
 		start_location.move_contents_to(end_location, centcom_turf)
 
-		SPAWN_DBG(rand(3000,6000))
+		SPAWN(rand(3000,6000))
 			command_alert("The merchant shuttle is preparing to undock, please stand clear.", "Merchant Departure Alert")
 
 			sleep(30 SECONDS)

@@ -146,7 +146,7 @@ client/proc/open_dj_panel()
 
 		if("stop-sound")
 			move_admin_sound_channel(TRUE)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/sound/stopsound = sound(null, wait = 0, channel=admin_sound_channel)
 				for (var/client/C in clients)
 					C << stopsound
@@ -154,7 +154,7 @@ client/proc/open_dj_panel()
 			. = TRUE
 
 		if("stop-radio")
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/sound/stopsound = sound(null, wait = 0, channel=1013)
 				for (var/client/C in clients)
 					C << stopsound

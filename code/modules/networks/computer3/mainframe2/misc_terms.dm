@@ -161,7 +161,7 @@
 
 		src.net_id = generate_net_id(src)
 
-		SPAWN_DBG(1 SECONDS)
+		SPAWN(1 SECONDS)
 
 			if(!src.link)
 				var/turf/T = get_turf(src)
@@ -316,7 +316,7 @@
 			src.host_id = null
 			src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -376,7 +376,7 @@
 		//Otherwise, if they aren't addressing us, ignore them
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[src.net_number]")
 
 			return
@@ -391,7 +391,7 @@
 //					//WHAT IS THIS, HOW COULD THIS HAPPEN??
 //					src.host_id = null
 //					src.updateUsrDialog()
-//					SPAWN_DBG(0.3 SECONDS)
+//					SPAWN(0.3 SECONDS)
 //						src.post_status(target, "command","term_disconnect")
 //					return
 
@@ -405,7 +405,7 @@
 				if(signal.data["data"] != "noreply")
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
-				SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 					src.post_status(target,"command","term_message","data","command=register&data=[src.bank_id]")
 				return
 
@@ -443,7 +443,7 @@
 							for(var/datum/computer/file/F in tape.root.contents)
 								catrec.fields[F.name] = "[F.extension] - [F.size]"
 
-						SPAWN_DBG(0.2 SECONDS)
+						SPAWN(0.2 SECONDS)
 							src.post_file(target, "data","command=catalog",catrec)
 							//qdel(catrec) //A copy is sent, the original is no longer needed.
 							if (catrec)
@@ -609,7 +609,7 @@
 			icon_state = "[base_icon_state]1"
 			status &= ~NOPOWER
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				icon_state = "[base_icon_state]-p"
 				status |= NOPOWER
 
@@ -689,7 +689,7 @@
 			status &= ~NOPOWER
 			UpdateIcon()
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				status |= NOPOWER
 				UpdateIcon()
 				if(vrbomb)
@@ -866,7 +866,7 @@
 			src.host_id = null
 			src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -1046,7 +1046,7 @@
 		..()
 		src.net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, status_display_freq)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if(!src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
@@ -1101,7 +1101,7 @@
 			src.host_id = null
 			src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -1164,7 +1164,7 @@
 			else
 				src.icon_state = "net_nuke0"
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				icon_state = "net_nuke-p"
 				status |= NOPOWER
 
@@ -1195,7 +1195,7 @@
 		//Otherwise, if they aren't addressing us, ignore them
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[src.net_number]")
 
 			return
@@ -1210,7 +1210,7 @@
 //					//WHAT IS THIS, HOW COULD THIS HAPPEN??
 //					src.host_id = null
 //					src.updateUsrDialog()
-//					SPAWN_DBG(0.3 SECONDS)
+//					SPAWN(0.3 SECONDS)
 //						src.post_status(target, "command","term_disconnect")
 //					return
 
@@ -1224,7 +1224,7 @@
 				if(signal.data["data"] != "noreply")
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
-				SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 					src.post_status(target,"command","term_message","data","command=register&data=nucharge")
 				return
 
@@ -1244,7 +1244,7 @@
 					if("status")
 						var/status_string = "command=n_status"
 						status_string += "&active=[src.timing]&timeleft=[src.time]&session=[sessionid]"
-						SPAWN_DBG(0)
+						SPAWN(0)
 							src.post_status(target,"command","term_message","data",status_string)
 						return
 
@@ -1369,7 +1369,7 @@
 
 		src.net_id = generate_net_id(src)
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 
 			if (radio_controller)
 				add_frequency(FREQ_AIRLOCK)
@@ -1455,7 +1455,7 @@
 			src.host_id = null
 			src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -1470,7 +1470,7 @@
 			icon_state = "net_radio"
 			status &= ~NOPOWER
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				icon_state = "net_radio0"
 				status |= NOPOWER
 
@@ -1511,7 +1511,7 @@
 		//We care very deeply about address_1.
 		if(!cmptext(signal.data["address_1"], src.net_id))
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")))
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					if (signal.transmission_method == TRANSMISSION_RADIO)
 						var/datum/signal/rsignal = get_free_signal()
 						rsignal.source = src
@@ -1558,7 +1558,7 @@
 			if (theFreq)
 				workparams += "&_freq=[theFreq]"
 
-			SPAWN_DBG(0.2 SECONDS)
+			SPAWN(0.2 SECONDS)
 				if(working_file)
 					src.post_file(src.host_id,"data",workparams,working_file)
 				else
@@ -1575,7 +1575,7 @@
 //				if(target == src.host_id)
 //					src.host_id = null
 //					src.updateUsrDialog()
-//					SPAWN_DBG(0.3 SECONDS)
+//					SPAWN(0.3 SECONDS)
 //						src.post_status(target, "command","term_disconnect")
 //					return
 
@@ -1589,7 +1589,7 @@
 				if(signal.data["data"] != "noreply")
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
-				SPAWN_DBG(0.5 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				SPAWN(0.5 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 					src.post_status(target,"command","term_message","data","command=register[(length(frequencies)) ? "&freqs=[jointext(frequencies,",")]" : ""]")
 				return
 
@@ -1641,7 +1641,7 @@
 
 				rsignal.data["sender"] = src.net_id
 
-				SPAWN_DBG(0)
+				SPAWN(0)
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, rsignal, transmission_range, "f[newFreq]")
 					flick("net_radio-blink", src)
 				src.post_status(target,"command","term_message","data","command=status&status=success")
@@ -1696,7 +1696,7 @@
 		if(!print_id)
 			src.print_id = "GENERIC"
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
 
 			if(!src.link)
@@ -1839,7 +1839,7 @@
 			src.host_id = null
 			src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -1891,7 +1891,7 @@
 
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[net_number]")
 
 			return
@@ -1907,7 +1907,7 @@
 					//WHAT IS THIS, HOW COULD THIS HAPPEN??
 					src.host_id = null
 					src.updateUsrDialog()
-					SPAWN_DBG(0.3 SECONDS)
+					SPAWN(0.3 SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 */
@@ -1921,7 +1921,7 @@
 				if(signal.data["data"] != "noreply")
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
-				SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 					src.post_status(target,"command","term_message","data","command=register&data=[src.print_id]")
 				return
 
@@ -2030,7 +2030,7 @@
 
 			flick("printer-printing",src)
 			playsound(src.loc, "sound/machines/printer_dotmatrix.ogg", 50, 1)
-			SPAWN_DBG(3.2 SECONDS)
+			SPAWN(3.2 SECONDS)
 
 				if (istype(print_text, /datum/computer/file/image)) // trying to print a photo! :I
 					var/datum/computer/file/image/IMG = print_text
@@ -2209,7 +2209,7 @@
 			W.set_loc(src)
 			scanned_thing = W
 			power_change()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				scan_document()
 			src.updateUsrDialog()
 
@@ -2257,7 +2257,7 @@
 			status &= ~NOPOWER
 			src.icon_state = "scanner[!isnull(scanned_thing)]"
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				status |= NOPOWER
 				src.icon_state = "scanner[!isnull(scanned_thing)]-p"
 		return
@@ -2401,7 +2401,7 @@
 		light.set_color(0.20, 0.65, 0.20)
 		light.attach(src)
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
 
 			if(!src.link)
@@ -2490,7 +2490,7 @@
 			src.host_id = null
 			src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -2562,7 +2562,7 @@
 
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[src.net_number]")
 
 			return
@@ -2577,7 +2577,7 @@
 
 //					src.host_id = null
 //					src.updateUsrDialog()
-//					SPAWN_DBG(0.3 SECONDS)
+//					SPAWN(0.3 SECONDS)
 //						src.post_status(target, "command","term_disconnect")
 //					return
 
@@ -2591,7 +2591,7 @@
 				if(signal.data["data"] != "noreply")
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
-				SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 					src.post_status(target,"command","term_message","data","command=register&data=[src.detector_id]")
 				return
 
@@ -2681,12 +2681,12 @@
 			if (1)
 				light.disable()
 				if (src.host_id && change)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						src.post_status(src.host_id,"command","term_message","data","command=statechange&state=idle")
 			if (0)
 				light.disable()
 				if (src.host_id && change)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						src.post_status(src.host_id,"command","term_message","data","command=statechange&state=inactive")
 
 		return
@@ -2746,7 +2746,7 @@
 		..()
 		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration) || isobserver(AM) || isintangible(AM))
 			return
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			src.hit(AM)
 			return
 		return
@@ -2792,7 +2792,7 @@
 		..()
 		if (newLimit != null)
 			src.limit = newLimit
-		SPAWN_DBG(0.3 SECONDS)
+		SPAWN(0.3 SECONDS)
 			generate_next()
 		return
 /*
@@ -2814,7 +2814,7 @@
 		if(isobserver(AM) || isintangible(AM)) return
 		if (istype(AM, /obj/beam))
 			return
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			src.hit()
 			return
 		return
@@ -2858,7 +2858,7 @@
 	New()
 		..()
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
 
 			if(!src.link)
@@ -3026,7 +3026,7 @@
 			src.host_id = null
 			src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -3060,7 +3060,7 @@
 
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[src.net_number]")
 
 			return
@@ -3075,7 +3075,7 @@
 
 					src.host_id = null
 					src.updateUsrDialog()
-					SPAWN_DBG(0.3 SECONDS)
+					SPAWN(0.3 SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 */
@@ -3089,7 +3089,7 @@
 				if(signal.data["data"] != "noreply")
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
-				SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 					src.post_status(target,"command","term_message","data","command=register&data=[isnull(src.beam) ? "0" : "1"]")
 				return
 
@@ -3140,7 +3140,7 @@
 			status &= ~NOPOWER
 			src.UpdateIcon()
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				status |= NOPOWER
 				src.UpdateIcon()
 
@@ -3225,7 +3225,7 @@
 		if (newPower != null)
 			src.power = newPower
 		src.icon_state = "h7beam[min(src.power, 5)]"
-		SPAWN_DBG(0.2 SECONDS)
+		SPAWN(0.2 SECONDS)
 			generate_next()
 		return
 
@@ -3260,7 +3260,7 @@
 	Crossed(atom/movable/AM as mob|obj)
 		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration))
 			return
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			src.hit(AM)
 			return
 		return
@@ -3390,7 +3390,7 @@
 	New()
 		..()
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
 
 			if(!src.link)
@@ -3504,7 +3504,7 @@
 			src.host_id = null
 			src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -3538,7 +3538,7 @@
 
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[src.net_number]")
 
 			return
@@ -3554,7 +3554,7 @@
 
 					src.host_id = null
 					src.updateUsrDialog()
-					SPAWN_DBG(0.3 SECONDS)
+					SPAWN(0.3 SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 */
@@ -3568,7 +3568,7 @@
 				if(signal.data["data"] != "noreply")
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
-				SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 					src.message_host("command=register&id=[src.setup_test_id]&data=[isnull(src.active) ? "0" : "1"]&capability=[setup_capability_value]")
 				return
 
@@ -3612,7 +3612,7 @@
 			status &= ~NOPOWER
 			src.UpdateIcon()
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				status |= NOPOWER
 				src.UpdateIcon()
 
@@ -4378,7 +4378,7 @@
 							src.sensed[4] = "NO"
 							src.sensed[5] = "NONE"
 
-					SPAWN_DBG(5 SECONDS)
+					SPAWN(5 SECONDS)
 						src.visible_message("<b>[src.name]</b> finishes working and shuts down.")
 						playsound(src, "sound/machines/chime.ogg", 50, 1)
 						active = 0

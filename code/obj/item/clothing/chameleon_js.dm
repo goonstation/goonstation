@@ -20,7 +20,7 @@
 	attackby(obj/item/clothing/under/U as obj, mob/user as mob)
 		if(istype(U, /obj/item/clothing/under/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a horrible jumpsuit chain reaction!</span>")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				boutput(user, "<span class='alert'>Nah, just kidding. Doing that still doesn't work though!</span>")
 			return
 

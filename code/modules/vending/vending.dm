@@ -232,12 +232,12 @@
 				return
 		if(3.0)
 			if (prob(25))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.malfunction()
 					return
 				return
 			else if (prob(25))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.fall()
 					return
 		else
@@ -245,7 +245,7 @@
 
 /obj/machinery/vending/blob_act(var/power)
 	if (prob(power * 1.25))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (prob(power / 3) && can_fall == 2)
 				for (var/i = 0, i < rand(4,7), i++)
 					src.malfunction()
@@ -480,7 +480,7 @@
 		attack_particle(user,src)
 		playsound(src,"sound/impact_sounds/Metal_Clang_2.ogg",50,1)
 		..()
-		if (W?.force >= 5 && prob(4 + (W.force - 5)))
+		if (W.force >= 5 && prob(4 + (W.force - 5)))
 			src.fall(user)
 
 /obj/machinery/vending/hitby(atom/movable/M, datum/thrown_thing/thr)
@@ -601,7 +601,7 @@
 						return
 
 			if (((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.speak(src.vend_reply)
 					src.last_reply = world.time
 
@@ -626,13 +626,13 @@
 					wagesystem.shipping_budget += round(R.product_cost * (1 - profit))
 				if(R.product_amount <= 0 && !isplayer == 0)
 					src.player_list -= R
-			//Gotta do this before the SPAWN_DBG
+			//Gotta do this before the SPAWN
 			var/obj/item/playervended
 			if (player_list)
 				var/datum/data/vending_product/player_product/T = R
 				playervended = T.contents[1]
 				T.contents -= playervended
-			SPAWN_DBG(src.vend_delay)
+			SPAWN(src.vend_delay)
 				src.vend_ready = 1 // doin this at the top here just in case something goes fucky and the proc crashes
 
 				if (ispath(product_path))
@@ -679,7 +679,7 @@
 			src.generate_HTML(1)
 
 		if (href_list["return_credits"])
-			SPAWN_DBG(src.vend_delay)
+			SPAWN(src.vend_delay)
 				if (src.credit > 0)
 					var/obj/item/spacecash/returned = new /obj/item/spacecash
 					returned.setup(src.get_output_location(), src.credit)
@@ -776,7 +776,7 @@
 			status &= ~NOPOWER
 			light.enable()
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				src.icon_state = icon_off ? icon_off : "[initial(icon_state)]-off"
 				status |= NOPOWER
 				light.disable()
@@ -788,9 +788,9 @@
 	status |= BROKEN
 	var/turf/vicTurf = get_turf(victim)
 	src.icon_state = "[initial(icon_state)]-fallen"
-//	SPAWN_DBG(0)
+//	SPAWN(0)
 //		src.icon_state = "[initial(icon_state)]-fall"
-//		SPAWN_DBG(2 SECONDS)
+//		SPAWN(2 SECONDS)
 //			src.icon_state = "[initial(icon_state)]-fallen"
 	if (istype(victim) && vicTurf && (get_dist(vicTurf, src) <= 1))
 		victim.changeStatus("weakened", 30 SECONDS)
@@ -881,7 +881,7 @@
 		var/sound/S = sound(R.product_path)
 		if (S)
 			R.product_amount--
-			SPAWN_DBG(0)
+			SPAWN(0)
 				playsound(src.loc, S, 50, 0)
 				src.visible_message("<span class='alert'><b>[src] launches [R.product_name] at [target.name]!</b></span>")
 				src.generate_HTML(1)

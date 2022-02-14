@@ -127,7 +127,7 @@
 
 	relay_drop(mob/user)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.host)
 				if (src.host.loc != user)
 					if (!use_simple_light && !use_medium_light)

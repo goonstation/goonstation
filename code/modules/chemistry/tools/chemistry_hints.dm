@@ -29,7 +29,7 @@
 			user.client.add_to_bank(3500)
 			boutput(user,"You slowly unfurl the the scroll","red")
 			icon_state = "scroll_open"
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				boutput(user,"<B>THE HORROR!</B>")
 				user.emote("scream")
 				sleep(1 SECOND)
@@ -46,7 +46,7 @@
 			return
 		icon_state = "scroll_open"
 		boutput(user, "You read the scroll:<br><div style='border: 3px solid #cf9f5f; font-size: 120%; color: #4f2f0f; text-align: center; background: #ffffdf;'><div style='font-size: 120%; color: #4f2f0f; text-align: center; background: #dfcf9f;padding:4px;'>[chem_name]</div><div style=' padding: 5px'>[hint_text]</div></div>", "blue")
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			boutput(src.loc, "The chem hint scroll self-destructs!")
 			playsound(src,"sound/effects/bamf.ogg")
 			qdel(src)

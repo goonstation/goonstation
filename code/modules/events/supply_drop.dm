@@ -18,11 +18,11 @@
 		if (!turfs)	DEBUG_MESSAGE("Getting turfs failed for [A]")
 
 		for(var/x=0, x<howMany, x++)
-			SPAWN_DBG(rand(0, 20)) //Looks better with a bit of variance
+			SPAWN(rand(0, 20)) //Looks better with a bit of variance
 				new/obj/effect/supplymarker(pick(turfs), preDropTime)
 		for(var/datum/mind/M in battle_pass_holders)
 			boutput(M.current, "<span class='notice'>A supply drop will happen soon in the [A.name]</span>")
-		SPAWN_DBG(20 SECONDS)
+		SPAWN(20 SECONDS)
 			for(var/datum/mind/M in ticker.minds)
 				if (M in battle_pass_holders)
 					continue
@@ -40,7 +40,7 @@
 
 	New(var/atom/location, var/preDropTime = 100, var/obj_path, var/no_lootbox)
 		src.set_loc(location)
-		SPAWN_DBG(preDropTime)
+		SPAWN(preDropTime)
 			if (gib_mobs)
 				new/obj/effect/supplydrop(src.loc, obj_path, no_lootbox)
 			else
@@ -65,7 +65,7 @@
 		pixel_y = 480
 		animate(src, pixel_y = 0, time = dropTime)
 		playsound(src.loc, 'sound/effects/flameswoosh.ogg', 75, 0)
-		SPAWN_DBG(dropTime)
+		SPAWN(dropTime)
 			new/obj/effect/supplyexplosion(src.loc)
 			playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 50, 1)
 			for(var/mob/M in view(7, src.loc))
@@ -96,7 +96,7 @@
 	pixel_y = -32
 
 	New()
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			qdel(src)
 		..()
 
@@ -284,7 +284,7 @@
 			icon_state = "lootb2"
 			flick("lootb1", src)
 
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				var/mob/living/carbon/human/H = usr
 				var/atom/movable/AM = null
 				if (obj_path)
@@ -306,7 +306,7 @@
 						var/mob/living/carbon/human/dude = usr
 						dude.put_in_hand_or_drop(AM)
 
-					SPAWN_DBG(2.5 SECONDS)
+					SPAWN(2.5 SECONDS)
 						del(B)
 						del(S)
 						del(P)

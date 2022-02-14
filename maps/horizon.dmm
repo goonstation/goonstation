@@ -13261,6 +13261,7 @@
 /obj/item/robodefibrillator,
 /obj/item/storage/firstaid/brain,
 /obj/item/clothing/glasses/eyepatch,
+/obj/item/cloneModule/genepowermodule,
 /turf/simulated/floor/green,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -18078,6 +18079,9 @@
 /area/station/chapel/office)
 "aUc" = (
 /obj/table/wood/auto,
+/obj/item/storage/toolbox/artistic{
+	pixel_y = -6
+	},
 /obj/candle_light{
 	pixel_y = 12
 	},
@@ -25424,10 +25428,7 @@
 	layer = 4;
 	name = "Crusher Door"
 	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
+/obj/disposalpipe/junction/left/north,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bkK" = (
@@ -46565,6 +46566,7 @@
 	operating = 1
 	},
 /obj/map/light/dimreddish,
+/obj/disposalpipe/segment/ejection,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
@@ -46577,7 +46579,6 @@
 	},
 /obj/machinery/crusher,
 /obj/map/light/dimreddish,
-/obj/disposalpipe/segment/ejection,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
@@ -55779,7 +55780,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southwest)
 "kKb" = (
-/obj/disposalpipe/junction/right/north,
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/disposal)
 "kLr" = (
@@ -58382,7 +58386,10 @@
 /turf/space,
 /area/space)
 "rhT" = (
-/obj/disposalpipe/segment/ejection,
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/disposal)
 "rjk" = (
@@ -60816,6 +60823,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/lobby)
+"wUo" = (
+/obj/securearea{
+	desc = "It looks pretty dangerous in there.";
+	name = "HAZARDOUS AREA"
+	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/disposal)
 "wUH" = (
 /obj/item/chair/folded,
 /obj/machinery/light/incandescent/harsh/very,
@@ -121692,7 +121710,7 @@ arE
 aaa
 aaa
 aaa
-bHl
+wUo
 cmR
 bkJ
 pax
