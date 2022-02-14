@@ -2989,7 +2989,7 @@
 "agI" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	desc = "Oh sure it looks the same, but all the connections and mounting points are different.  Also all the screw heads are those awful triangular ones.";
-	icon = 'icons/obj/doors/Dooreng-sov.dmi';
+	dir = 4;
 	name = "Reactor Control";
 	req_access_txt = ""
 	},
@@ -7439,7 +7439,7 @@
 "avb" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	desc = "Oh sure it looks the same, but all the connections and mounting points are different.  Also all the screw heads are those awful triangular ones.";
-	icon = 'icons/obj/doors/Dooreng-sov.dmi';
+	dir = 4;
 	name = "Reactor Control";
 	req_access_txt = ""
 	},
