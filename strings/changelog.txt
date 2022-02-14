@@ -1,5 +1,9 @@
 
 (t)sun feb 13 22
+(u)Sovexe
+(p)7486
+(e)🐛🆕🎨|bug, feature, sprites
+(+)Added stink lines for smelly RP players
 (u)Vantatrauma
 (p)7442
 (e)🆕🎨|feature, sprites
