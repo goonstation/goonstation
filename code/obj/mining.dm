@@ -1228,7 +1228,7 @@
 
 	generate_worldgen()
 		. = ..()
-		//src.space_overlays()
+		src.space_overlays()
 
 	ex_act(severity)
 		switch(severity)
@@ -1359,7 +1359,7 @@
 
 	proc/space_overlays()
 		for (var/turf/space/A in orange(src,1))
-			var/image/edge_overlay = image('icons/turf/asteroid.dmi', "edge[get_dir(A,src)]")
+			var/image/edge_overlay = image('icons/turf/walls_asteroid.dmi', "edge[get_dir(A,src)]")
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.layer = src.layer + 1
 			edge_overlay.plane = PLANE_FLOOR
@@ -1488,7 +1488,13 @@
 		src.stone_color = new_color
 		src.opacity = 0
 		src.levelupdate()
-
+		for (var/turf/simulated/wall/auto/asteroid/A in range(src,1))
+			A.UpdateIcon()
+			A.ClearAllOverlays()
+			if(A?.ore) // make sure ores dont turn invisible
+				var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[A.ore.name][pick(1,2,3)]")
+				ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask[A.icon_state]"))
+				A.overlays += ore_overlay
 		for (var/turf/simulated/floor/plating/airless/asteroid/A in range(src,1))
 			A.UpdateIcon()
 #ifdef UNDERWATER_MAP
@@ -1581,7 +1587,7 @@
 
 	generate_worldgen()
 		. = ..()
-		//src.space_overlays()
+		src.space_overlays()
 
 	ex_act(severity)
 		return
@@ -1629,7 +1635,7 @@
 
 	proc/space_overlays() //For overlays ON THE SPACE TILE
 		for (var/turf/space/A in orange(src,1))
-			var/image/edge_overlay = image('icons/turf/asteroid.dmi', "edge[get_dir(A,src)]")
+			var/image/edge_overlay = image('icons/turf/walls_asteroid.dmi', "edge[get_dir(A,src)]")
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.plane = PLANE_FLOOR
 			edge_overlay.layer = TURF_EFFECTS_LAYER

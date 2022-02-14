@@ -875,10 +875,8 @@
 			AST.ore = O
 			AST.hardness += O.hardness_mod
 			AST.amount = rand(O.amount_per_tile_min,O.amount_per_tile_max)
-			var/image/ore_overlay = image('icons/turf/asteroid.dmi',O.name)
-			ore_overlay.transform = turn(ore_overlay.transform, pick(0,90,180,-90))
-			ore_overlay.pixel_x += rand(-6,6)
-			ore_overlay.pixel_y += rand(-6,6)
+			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][pick(1,2,3)]")
+			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask[AST.icon_state]"))
 			AST.overlays += ore_overlay
 			O.onGenerate(AST)
 			AST.mining_health = O.mining_health
@@ -930,10 +928,8 @@
 			AST.ore = O
 			AST.hardness += O.hardness_mod
 			AST.amount = rand(O.amount_per_tile_min,O.amount_per_tile_max)
-			var/image/ore_overlay = image('icons/turf/asteroid.dmi',O.name)
-			ore_overlay.transform = turn(ore_overlay.transform, pick(0,90,180,-90))
-			ore_overlay.pixel_x += rand(-6,6)
-			ore_overlay.pixel_y += rand(-6,6)
+			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][pick(1,2,3)]")
+			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask[AST.icon_state]"))
 			AST.overlays += ore_overlay
 			O.onGenerate(AST)
 			AST.mining_health = O.mining_health
