@@ -169,7 +169,8 @@ var/list/asteroid_blocked_turfs = list()
 
 	proc/check_for_unacceptable_content()
 		for (var/mob/living/L in src.contents)
-			return 1
+			if(!isintangible(L)) //neither blob overmind or AI eye should block this
+				return 1
 		for (var/obj/machinery/vehicle in src.contents)
 			return 1
 		return 0
