@@ -1240,10 +1240,9 @@
 		if (!target.mind.special_role)
 			target.mind.special_role = ROLE_GANG_MEMBER
 		SHOW_GANG_MEMBER_TIPS(target)
-		var/datum/objective/gangObjective = new /datum/objective/specialist/gang(  )
-		gangObjective.owner = target.mind
-		gangObjective.explanation_text = "Protect your boss, recruit new members, tag up the station and beware the other gangs! [src.gang.gang_name] FOR LIFE!"
-		target.mind.objectives += gangObjective
+		new /datum/objective/specialist/gang(
+			"Protect your boss, recruit new members, tag up the station and beware the other gangs! [src.gang.gang_name] FOR LIFE!",
+			target.mind)
 		boutput(target, "<span class='notice'>You are now a member of [src.gang.gang_name]!</span>")
 		boutput(target, "<span class='notice'>Your boss has the blue G and your fellow gang members have the red G! Work together and do some crime!</span>")
 		boutput(target, "<span class='notice'>You are free to harm anyone who isn't in your gang, but be careful, they can do the same to you!</span>")
