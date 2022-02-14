@@ -434,6 +434,7 @@ SYNDICATE DRONE FACTORY AREAS
 	density = 0
 	anchored = 1
 	opacity = 0
+	mouse_opacity = 0
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_ABOVE
 	icon = 'icons/effects/64x64.dmi'

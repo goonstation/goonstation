@@ -1,4 +1,13 @@
 
+(t)sun feb 13 22
+(u)Sovexe
+(p)7486
+(e)🐛🆕🎨|bug, feature, sprites
+(+)Added stink lines for smelly RP players
+(u)Vantatrauma
+(p)7442
+(e)🆕🎨|feature, sprites
+(+)Added a genetics-themed winter coat to the game, findable in geneticists equipment boxes!
 (t)sat feb 12 22
 (u)aloe
 (*)The cyborg converter (syndicate item) has had its price increased to 8 Baddie Bux. It now makes <b>Syndicate Cyborgs</b>. It also works faster, comes with a wrench, is a little less noisy, and you stuff other people in it by agressively grabbing them and clicking it.
