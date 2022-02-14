@@ -174,7 +174,7 @@
 			checkloc = checkloc.loc
 
 		if (T && istype(T, /obj/item/storage))
-			if (W in bible_contents) //Because we aren't calling attackhand we need to do this manually
+			if (W in bible_contents)
 				bible_contents.Remove(W)
 				for_by_tcl(bible, /obj/item/storage/bible)
 					bible.hud?.remove_item(W)
