@@ -6,10 +6,14 @@ ABSTRACT_TYPE(/datum/objective)
 	var/medal_name = null // Called by ticker.mode.declare_completion().
 	var/medal_announce = 1
 
-	New(text)
+	New(text, datum/mind/owner)
 		..()
 		if(text)
 			src.explanation_text = text
+		if(owner)
+			src.owner = owner
+			owner.objectives += src
+		src.set_up()
 
 	proc/check_completion()
 		return 1
