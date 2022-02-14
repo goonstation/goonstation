@@ -387,7 +387,7 @@
 		setProperty("density", 45)
 		setProperty("hard", 2)
 		setProperty("reflective", 55)
-		setProperty("electrical", 60)
+		setProperty("electrical", 75)
 
 		addTrigger(triggersOnAdd, new /datum/materialProc/gold_add())
 		return ..()
