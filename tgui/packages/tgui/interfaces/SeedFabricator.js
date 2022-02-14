@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from "../backend";
-import { Blink, Button, Collapsible, Flex, Icon, Modal, NumberInput, ProgressBar, Section, Stack } from '../components';
+import { Blink, Box, Button, Collapsible, Flex, Icon, Modal, NumberInput, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { pluralize } from "./common/stringUtils";
 
@@ -64,8 +64,8 @@ export const SeedFabricator = (props, context) => {
                 value={Math.max(0, maxSeed - seedCount)}
                 maxValue={maxSeed}
                 ranges={{
-                  yellow: [0.25, Infinity],
-                  bad: [-Infinity, 0.25],
+                  yellow: [5, Infinity],
+                  bad: [-Infinity, 5],
                 }}
               >
                 <Icon name="bolt" />
@@ -100,75 +100,45 @@ export const SeedFabricator = (props, context) => {
 };
 
 const SeedCategory = (props, context) => {
+  const { act } = useBackend(context);
   const { category, dispenseAmount } = props;
   const { name } = category;
   const seeds = category.seeds;
   if (!seeds) return false;
   seeds.sort((a, b) => a.name.localeCompare(b.name));
 
-  let seedsDivided = [];
-  for (let i = 0; i < seeds.length; i=i+SeedsPerRow) {
-    seedsDivided.push(seeds.slice(i, i+SeedsPerRow));
-  }
-
   return (
     <Collapsible
       title={name}>
       <Stack vertical>
-        {seedsDivided.map((seedRow, rowIndex) => (
-          <Stack.Item key={rowIndex}>
-            <Stack>
-              <SeedRow
-                seedRow={seedRow}
-                dispenseAmount={dispenseAmount} />
-            </Stack>
-          </Stack.Item>
-        ))}
+        <Box>
+          {seeds.map((seed, index) => (
+            <Box key={seed.name} as="span">
+              <Button width="155px" height="32px" px={0} m={0.25}
+                onClick={() => act('disp', { path: seed.path, amount: dispenseAmount })}>
+                <Flex direction="row" align="center">
+                  <Flex.Item>
+                    <img
+                      src={`data:image/png;base64,${seed.img}`}
+                      style={{
+                        'vertical-align': 'middle',
+                        'horizontal-align': 'middle',
+                      }}
+                      height="32px"
+                      width="32px" />
+                  </Flex.Item>
+                  <Flex.Item
+                    overflow="hidden"
+                    style={{ 'text-overflow': 'ellipsis' }}>
+                    {seed.name}
+                  </Flex.Item>
+                </Flex>
+              </Button>
+            </Box>
+          ))}
+        </Box>
       </Stack>
     </Collapsible>
   );
 
-};
-
-const SeedRow = (props, context) => {
-  const { act } = useBackend(context);
-  const { seedRow, dispenseAmount } = props;
-  let content = [];
-  for (let i = 0; i < SeedsPerRow; i++) {
-    if (i < seedRow.length) {
-      let seed = seedRow[i];
-      content[i] = (
-        <Stack.Item key={seed.path} grow basis={0}>
-          <Button height="32px" px={0} fluid
-            onClick={() => act('disp', { path: seed.path, amount: dispenseAmount })}>
-            <Flex direction="row" align="center">
-              <Flex.Item>
-                <img
-                  src={`data:image/png;base64,${seed.img}`}
-                  style={{
-                    'vertical-align': 'middle',
-                    'horizontal-align': 'middle',
-                  }}
-                  height="32px"
-                  width="32px" />
-              </Flex.Item>
-              <Flex.Item
-                overflow="hidden"
-                style={{ 'text-overflow': 'ellipsis' }}>
-                {seed.name}
-              </Flex.Item>
-            </Flex>
-          </Button>
-        </Stack.Item>
-      );
-    }
-
-    else {
-      content[i] = (
-        <Stack.Item grow basis={0} />
-      );
-    }
-  }
-
-  return content;
 };
