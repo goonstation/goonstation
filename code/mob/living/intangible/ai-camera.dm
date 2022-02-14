@@ -93,8 +93,8 @@
 		if (C.tg_controls)
 			C.apply_keybind("robot_tg")
 
-	process_move(keys) //override process_move so we can cease tracking with keys
-		if(keys && src.move_dir && !src.use_movement_controller && !istype(src.loc, /turf)) //Pop observers and Follow-Thingers out!!
+	process_move(keys)
+		if(keys && src.move_dir && !src.use_movement_controller && !istype(src.loc, /turf)) //when a movement key is pressed, move out of tracked mob
 			var/mob/living/intangible/aieye/O = src
 			O.set_loc(get_turf(src))
 		. = ..()
