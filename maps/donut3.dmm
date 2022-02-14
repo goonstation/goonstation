@@ -7979,6 +7979,11 @@
 /obj/disposalpipe/switch_junction/right/north{
 	mail_tag = "refinery"
 	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "cbj" = (
@@ -9513,6 +9518,15 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
+/area/station/hallway/primary/east)
+"cyV" = (
+/obj/disposalpipe/segment/mail,
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
 /area/station/hallway/primary/east)
 "czj" = (
 /obj/machinery/door/airlock/pyro/glass/security{
@@ -20721,9 +20735,6 @@
 	dir = 10;
 	icon_state = "line1"
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -26143,14 +26154,11 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "hrD" = (
-/obj/decal/tile_edge/line/yellow{
-	dir = 8;
-	icon_state = "line1"
-	},
+/obj/disposalpipe/segment/mail,
 /obj/cable{
-	d1 = 1;
+	d1 = 2;
 	d2 = 8;
-	icon_state = "1-8"
+	icon_state = "2-8"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -26391,6 +26399,11 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "huC" = (
@@ -33896,12 +33909,13 @@
 	icon_state = "line1"
 	},
 /obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
 "jIL" = (
@@ -56148,21 +56162,14 @@
 	},
 /obj/machinery/disposal/mail/small/autoname/qm/refinery/south,
 /obj/disposalpipe/trunk/mail,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
 /obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = -25
 	},
 /obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "4-8"
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
@@ -79308,8 +79315,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "wPZ" = (
-/obj/cable{
-	icon_state = "1-2"
+/obj/machinery/light/incandescent/netural{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -83378,12 +83385,11 @@
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce)
 "xXM" = (
-/obj/machinery/power/apc/autoname_north,
+/obj/disposalpipe/segment/mail,
 /obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/light/incandescent/netural{
-	dir = 1
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -139557,10 +139563,10 @@ xUo
 xUo
 xUo
 uwt
-xXM
-wPZ
+ffz
+xPd
 fKb
-hrD
+aOS
 dYj
 heB
 uXB
@@ -139859,10 +139865,10 @@ xUo
 aBc
 mXg
 huy
-xPd
+wPZ
 xPd
 dOa
-xPd
+yhr
 jPR
 ffz
 heB
@@ -140160,11 +140166,11 @@ aCT
 nJk
 bhZ
 kow
-xPd
+yhr
 xPd
 xPd
 dOa
-xPd
+yhr
 dOa
 anO
 bhZ
@@ -140462,11 +140468,11 @@ gQz
 usL
 gQz
 gQz
-gQz
-gQz
-gQz
+hrD
+xXM
+xXM
 cbg
-gQz
+cyV
 qct
 gQz
 gQz
