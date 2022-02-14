@@ -349,7 +349,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	setupProperties()
 		..()
 		setProperty("heatprot", 10)
-		setProperty("conductivity", 0.3)
+		setProperty("conductivity", 0.25)
 		setProperty("deflection", 20)
 
 	disposing()

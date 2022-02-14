@@ -1111,6 +1111,48 @@ proc/debug_map_apc_count(delim,zlim)
 			else
 				processed_areas.len = 0
 
+	lightswitches //This overlay is a kitbash of areas and active areas, code might be odd as a result
+		name = "light switches"
+		help = {"Shows amount of light switches for non-space areas.<br>
+		Red is none, green is at least one, white turfs have a light switch located on them.<br>
+		This overlay looks only at physical location and does <b>not</b> account for light switches that have otherarea set up."}
+		var/list/area/processed_areas
+		var/list/turf/switch_turfs = list() //Turfs with a light switch on them, to be coloured separately
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/area/area = theTurf.loc
+			var/switchcount = 0
+			var/list/lcolor = hex_to_rgb_list(debug_color_of(area))
+			var/color_factor = 4
+
+			if(!(area in processed_areas))
+				for (var/obj/machinery/light_switch/someswitch in area.machines)
+					switchcount += 1
+					switch_turfs += someswitch.loc
+				img.app.overlays = list(src.makeText(switchcount, align_left=TRUE))
+				processed_areas += area
+				processed_areas[area] = switchcount //Store this for later turfs in the same area
+
+			if(processed_areas[area]) //this reads the area's stored switch count
+				if (theTurf in switch_turfs) //This turf has a switch on it
+					img.app.color = "#ffffff"
+					img.app.alpha = 100
+				else //Area has switch(es) - This code is directly lifted BTW but it somehow makes the area's debug colour a lot greener
+					lcolor[1] /= color_factor
+					lcolor[3] /= color_factor
+					lcolor[2] = 255 - (255 - lcolor[2]) / color_factor
+					img.app.color = rgb(lcolor[1], lcolor[2], lcolor[3])
+			else //Area has none - this time it's tinted redder
+				lcolor[2] /= color_factor
+				lcolor[3] /= color_factor
+				lcolor[1] = 255 - (255 - lcolor[2]) / color_factor
+				img.app.color = rgb(lcolor[1], lcolor[2], lcolor[3])
+
+			img.app.desc = "Area: [area.name]<br/>Number of switches: [processed_areas[area]]" //update tooltip only after the area is processed
+
+
+		OnStartRendering(client/C)
+			processed_areas = list()
+
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
 

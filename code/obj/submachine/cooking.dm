@@ -23,7 +23,7 @@
 			qdel(W)
 		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/) || istype(W, /obj/item/reagent_containers/balloon/) || istype(W, /obj/item/soup_pot))
 			var/fill = W.reagents.maximum_volume
-			if (fill == W.reagents.total_volume)
+			if (W.reagents.total_volume >= fill)
 				user.show_text("[W] is too full already.", "red")
 			else
 				fill -= W.reagents.total_volume
@@ -32,7 +32,7 @@
 				playsound(src.loc, "sound/misc/pourdrink.ogg", 100, 1)
 		else if (istype(W, /obj/item/mop)) // dude whatever
 			var/fill = W.reagents.maximum_volume
-			if (fill == W.reagents.total_volume)
+			if (W.reagents.total_volume >= fill)
 				user.show_text("[W] is too wet already.", "red")
 			else
 				fill -= W.reagents.total_volume
@@ -381,12 +381,14 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/scarewich_s(src)
 			src.recipes += new /datum/cookingrecipe/scarewich_m(src)
 			src.recipes += new /datum/cookingrecipe/scarewich_c(src)
+			src.recipes += new /datum/cookingrecipe/scarewich_blt(src)
 			src.recipes += new /datum/cookingrecipe/elviswich_m_h(src)
 			src.recipes += new /datum/cookingrecipe/elviswich_m_m(src)
 			src.recipes += new /datum/cookingrecipe/elviswich_m_s(src)
 			src.recipes += new /datum/cookingrecipe/elviswich_c(src)
 			src.recipes += new /datum/cookingrecipe/elviswich_p_h(src)
 			src.recipes += new /datum/cookingrecipe/elviswich_p(src)
+			src.recipes += new /datum/cookingrecipe/elviswich_blt(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_mb(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_mbalt(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_egg(src)
@@ -398,6 +400,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/sandwich_c(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_p_h(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_p(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_blt(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_custom(src)
 			src.recipes += new /datum/cookingrecipe/coconutcurry(src)
 			src.recipes += new /datum/cookingrecipe/chickenpineapplecurry(src)
@@ -411,6 +414,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/butterburger(src)
 			src.recipes += new /datum/cookingrecipe/cheeseburger_m(src)
 			src.recipes += new /datum/cookingrecipe/cheeseburger(src)
+			src.recipes += new /datum/cookingrecipe/wcheeseburger(src)
 			src.recipes += new /datum/cookingrecipe/tikiburger(src)
 			src.recipes += new /datum/cookingrecipe/luauburger(src)
 			src.recipes += new /datum/cookingrecipe/coconutburger(src)
@@ -524,6 +528,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/cake_fruit(src)
 			#endif
 			src.recipes += new /datum/cookingrecipe/cake_custom(src)
+			src.recipes += new /datum/cookingrecipe/meatloaf(src)
 			src.recipes += new /datum/cookingrecipe/hotdog(src)
 			src.recipes += new /datum/cookingrecipe/stroopwafel(src)
 			src.recipes += new /datum/cookingrecipe/cookie_spooky(src)
@@ -577,7 +582,6 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/steak_m(src)
 			src.recipes += new /datum/cookingrecipe/steak_s(src)
 			src.recipes += new /datum/cookingrecipe/fish_fingers(src)
-			src.recipes += new /datum/cookingrecipe/meatloaf(src)
 			src.recipes += new /datum/cookingrecipe/hardboiled(src)
 			src.recipes += new /datum/cookingrecipe/bakedpotato(src)
 			src.recipes += new /datum/cookingrecipe/rice_ball(src)

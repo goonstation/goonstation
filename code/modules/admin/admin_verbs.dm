@@ -13,6 +13,7 @@ var/list/admin_verbs = list(
 		/client/proc/admin_changes,
 		/client/proc/admin_play,
 		/client/proc/admin_observe,
+		/client/proc/admin_invisible,
 		/client/proc/game_panel,
 		/client/proc/game_panel_but_called_secrets,
 		/client/proc/player_panel,
@@ -278,8 +279,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,
 		/client/proc/spawn_survival_shit,
-		/client/proc/respawn_heavenly,
-		/client/proc/respawn_demonically,
+		/client/proc/respawn_cinematic,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
@@ -298,6 +298,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/togglesoundwaiting,
 		/client/proc/debug_variables,
 		/verb/adminCreateBlueprint,
+		/verb/adminDeleteBlueprint,
 		/client/proc/toggle_text_mode,
 		/client/proc/cmd_mass_modify_object_variables,
 		/client/proc/cmd_debug_mutantrace,
@@ -348,6 +349,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_blindfold_monkeys,
 		/client/proc/cmd_terrainify_station,
 		/client/proc/cmd_special_shuttle,
+		/client/proc/toggle_radio_maptext,
 
 		/datum/admins/proc/toggleaprilfools,
 		/client/proc/cmd_admin_pop_off_all_the_limbs_oh_god,
@@ -440,12 +442,11 @@ var/list/admin_verbs = list(
 		/client/proc/set_nukie_score,
 		/client/proc/set_pod_wars_score,
 		/client/proc/set_pod_wars_deaths,
+		/client/proc/clear_nukeop_uplink_purchases,
 
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
 		/client/proc/persistent_lag,
-
-		/client/proc/player_panel_tgui,
 
 #ifdef MACHINE_PROCESSING_DEBUG
 		/client/proc/cmd_display_detailed_machine_stats,
@@ -620,6 +621,21 @@ var/list/special_pa_observing_verbs = list(
 	if(src.holder)
 		src.holder.level = 0
 
+/client/proc/admin_invisible()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Set Invisible"
+	if(!src.holder)
+		alert("You are not an admin")
+		return
+	if(src.mob.mouse_opacity)
+		src.mob.mouse_opacity = 0
+		src.mob.alpha = 0
+		boutput(src, "<span class='notice'>You are now invisible.</span>")
+	else
+		src.mob.mouse_opacity = 1
+		src.mob.alpha = 255
+		boutput(src, "<span class='notice'>You are no longer invisible!</span>")
+
 /client/proc/admin_observe()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Set Observe"
@@ -634,7 +650,6 @@ var/list/special_pa_observing_verbs = list(
 	//	src.mob.mind.observing = 1
 		update_admins(rank)
 
-	blink(get_turf(src.mob))
 	if(!istype(src.mob, /mob/dead/observer) && !istype(src.mob, /mob/dead/target_observer))
 		src.mob.mind?.damned = 0
 		src.mob.ghostize()
@@ -656,7 +671,6 @@ var/list/special_pa_observing_verbs = list(
 	//	src.mob.mind.observing = 0
 		update_admins(rank)
 
-	blink(get_turf(src.mob))
 	if(istype(src.mob, /mob/dead/observer))
 		src.mob:reenter_corpse()
 		boutput(src, "<span class='notice'>You are now playing</span>")
@@ -678,13 +692,6 @@ var/list/special_pa_observing_verbs = list(
 
 /client/proc/player_panel()
 	set name = "Player Panel"
-	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
-	if (src.holder && !src.holder.tempmin)
-		src.holder.player()
-	return
-
-/client/proc/player_panel_tgui()
-	set name = "Player Panel TGUI"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	admin_only
 	if (src.holder.tempmin)
@@ -936,31 +943,26 @@ var/list/fun_images = list()
 	boutput(src, "<b>Last touched by:</b> [key_name(O.fingerprintslast)].")
 	return
 
-/client/proc/respawn_heavenly()
-	set name = "Respawn Heavenly"
+/client/proc/respawn_cinematic()
+	set name = "Respawn Cinematic"
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
-	set desc = "Respawn yourself from the heavens"
+	set desc = "Respawn yourself with a special effect"
 	set popup_menu = 0
 	admin_only
 
-	src.respawn_as_self()
-
-	var/mob/M = src.mob
-	M.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
-	heavenly_spawn(M)
-
-/client/proc/respawn_demonically()
-	set name = "Respawn Demonically"
-	SET_ADMIN_CAT(ADMIN_CAT_SELF)
-	set desc = "Respawn yourself from the depths of the underfloor."
-	set popup_menu = 0
-	admin_only
-
-	src.respawn_as_self()
-
-	var/mob/living/carbon/human/M = src.mob
-	M.bioHolder.AddEffect("hell_fire", magical = 1)
-	demonic_spawn(M)
+	var/list/respawn_types = list("Heavenly", "Demonically")
+	var/selection = tgui_input_list(usr, "Select Respawn type.", "Cinematic Respawn", respawn_types)
+	switch(selection)
+		if("Heavenly")
+			src.respawn_as_self()
+			var/mob/M = src.mob
+			M.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+			heavenly_spawn(M)
+		if("Demonically")
+			src.respawn_as_self()
+			var/mob/living/carbon/human/M = src.mob
+			M.bioHolder.AddEffect("hell_fire", magical = 1)
+			demonic_spawn(M)
 
 /client/proc/respawn_as(var/client/cli in clients)
 	set name = "Respawn As"
@@ -2016,6 +2018,22 @@ var/list/fun_images = list()
 	logTheThing("diary", usr ? usr : src, null, "set pod war death values to [nt_death_value] Nanotrasen deaths and [sy_death_value] Syndicate deaths.", "admin")
 	message_admins("[key_name(usr ? usr : src)] set pod war death values to [nt_death_value] Nanotrasen deaths and [sy_death_value] Syndicate deaths.")
 
+/client/proc/clear_nukeop_uplink_purchases()
+	set popup_menu = 0
+	set name = "Wipe Nukie Boss Stats"
+	set desc = "Wipe the intra-round stats of the nukeop commander's uplink purchases"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	admin_only
+
+	var/confirm = input(usr, "Are you SURE you want to clear the stats?") in list("Yes", "No")
+	if(!(confirm == "Yes"))
+		return
+	for(var/datum/syndicate_buylist/commander/commander_datum in syndi_buylist_cache)
+		world.save_intra_round_value("NuclearCommander-[commander_datum]-Purchased", 0)
+
+	logTheThing("admin", usr ? usr : src, null, "wiped the Nuclear Operative Commander uplink purchase stats.")
+	logTheThing("diary", usr ? usr : src, null, "wiped the Nuclear Operative Commander uplink purchase stats.", "admin")
+	message_admins("[key_name(usr ? usr : src)] wiped the Nuclear Operative Commander uplink purchase stats.")
 
 /mob/verb/admin_interact_verb()
 	set name = "admin_interact"

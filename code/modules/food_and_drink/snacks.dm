@@ -318,8 +318,9 @@
 
 	New()
 		..()
-		src.pixel_x = rand(-6, 6)
-		src.pixel_y = rand(-6, 6)
+		if(rand_pos)
+			src.pixel_x = rand(-6, 6)
+			src.pixel_y = rand(-6, 6)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (!frosted && istype(W, /obj/item/reagent_containers/food/snacks/condiment/cream))
@@ -1441,7 +1442,7 @@
 
 		robusted
 			name = "robusted donut"
-			desc = "A donut for those critical moments."
+			desc = "A donut for those harsh moments. Contains a mix of chemicals for cardiac emergency recovery and any minor trauma that accompanies it."
 			icon_state = "donut5"
 			amount = 6
 			initial_volume = 48
@@ -1943,7 +1944,7 @@
 
 			return
 
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/cheese))
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice))
 			switch(src.stage)
 				if(0)
 					boutput(user, "<span class='alert'>You really should add the meat first.</span>")

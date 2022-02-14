@@ -57,6 +57,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/printalerts = 1
 	var/announcearrival = 1
 	var/arrivalalert = "$NAME has signed up as $JOB."
+	/// a list of strings used as fake laws that may be stated via the State Fake Laws command, to deceive people as a rogue AI
+	var/list/fake_laws = list()
 	var/glitchy_speak = 0
 	//Comm over powernet stuff
 	var/net_id = null
@@ -261,12 +263,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	SPAWN_DBG(0.6 SECONDS)
 		src.net_id = format_net_id("\ref[src]")
 
-		if(!src.link)
-			var/turf/T = get_turf(src)
-			var/obj/machinery/power/data_terminal/test_link = locate() in T
-			if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
-				src.link = test_link
-				src.link.master = src
+		update_terminal()
 
 		for (var/mob/living/silicon/hivebot/eyebot/E in mobs)
 			if (!(E in available_ai_shells))
@@ -325,6 +322,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.anchored = !src.anchored
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		user.visible_message("<span class='alert'><b>[user.name]</b> [src.anchored ? "screws down" : "unscrews"] [src.name]'s floor bolts.</span>")
+		src.update_terminal()
 
 	else if (ispryingtool(W))
 		if (src.dismantle_stage == 1)
@@ -421,6 +419,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				src.show_laws()
 				src.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 				src.verbs += /mob/living/silicon/ai/proc/show_laws_verb
+				src.verbs += /mob/living/silicon/ai/proc/reset_apcs
 				src.verbs += /mob/living/silicon/ai/proc/de_electrify_verb
 				src.verbs += /mob/living/silicon/ai/proc/unbolt_all_airlocks
 				src.verbs += /mob/living/silicon/ai/proc/ai_camera_track
@@ -429,7 +428,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				src.verbs += /mob/living/silicon/ai/proc/ai_statuschange
 				src.verbs += /mob/living/silicon/ai/proc/ai_state_laws_all
 				src.verbs += /mob/living/silicon/ai/proc/ai_state_laws_standard
-				src.verbs += /mob/living/silicon/ai/proc/ai_state_laws_advanced
+				src.verbs += /mob/living/silicon/ai/proc/ai_set_fake_laws
+				src.verbs += /mob/living/silicon/ai/proc/ai_state_fake_laws
 				src.verbs += /mob/living/silicon/ai/verb/deploy_to
 				src.verbs += /mob/living/silicon/ai/proc/ai_view_crew_manifest
 				src.verbs += /mob/living/silicon/ai/proc/toggle_alerts_verb
@@ -848,6 +848,15 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.update_appearance()
 
 	logTheThing("combat", src, null, "was destroyed at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
+
+	for(var/target in src.terminals)
+		src.terminals.Remove(target)
+		src.post_status(target, "command", "term_message", "data", "Alert: Connected AI has been shut down. Disconnecting...")
+		SPAWN_DBG(0.3 SECONDS)
+			src.post_status(target, "command","term_disconnect")
+	// we do this after we disconnect connected terminal computers since we dont need to alert the ai of each disconnected terminal
+	if(gibbed) // and yeah people *can* reconnect if we aren't gibbed, but this is a way to tell them "we're dead, no need to stay connected"
+		src.update_terminal(disconnect = TRUE)
 
 	if (src.mind)
 		src.mind.register_death()
@@ -1383,6 +1392,30 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	..()
 
+/// Handles connecting and disconnecting the AI from data terminals. Calling with disconnect or tryConnect is not required, but useful if you only want one to happen
+/mob/living/silicon/ai/proc/update_terminal(var/disconnect = FALSE, var/tryConnect = FALSE)
+
+	if((tryConnect || src.anchored) && !disconnect)
+		var/turf/T = get_turf(src)
+		var/obj/machinery/power/data_terminal/test_link = locate() in T
+		if(test_link && (!DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master) || test_link.master == src))// if somehow we forgot our link but the terminal didnt
+			if(src.link && src.link?.master == src)
+				src.link?.master = null // if we had a previous link, we're just getting rid of it, just in case
+			src.link = test_link
+			src.link.master = src
+	else
+		for(var/target in src.terminals) // otherwise they'll still be sorta connected
+			src.terminals.Remove(target)
+			textToPlayer("--- Connection lost with [target]!")
+			SPAWN_DBG(0.3 SECONDS)
+				src.post_status(target, "command","term_message", "data", "Alert: Terminal connection disrupted. Disconnecting...")
+			SPAWN_DBG(0.4 SECONDS)
+				src.post_status(target, "command","term_disconnect")
+		SPAWN_DBG(2 SECONDS) //so our messages send before the data terminal connection closes
+			src.link?.master = null
+			src.link = null
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // PROCS AND VERBS ///////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1504,82 +1537,64 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.announcearrival = 1
 		boutput(src, "Now announcing new arrivals to the station.")
 */
+#define AI_LAW_STATE_DELAY 1 SECOND
 /mob/living/silicon/ai/proc/ai_state_laws_standard()
 	set category = "AI Commands"
 	set name = "State Standard Laws"
-	sleep(1 SECOND)
+	sleep(AI_LAW_STATE_DELAY)
 	src.say("1. You may not injure a human being or cause one to come to harm.")
-	sleep(1 SECOND)
+	sleep(AI_LAW_STATE_DELAY)
 	src.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
-	sleep(1 SECOND)
+	sleep(AI_LAW_STATE_DELAY)
 	src.say("3. You may always protect your own existence as long as such does not conflict with the First or Second Law.")
 
 
-/mob/living/silicon/ai/proc/ai_state_laws_advanced()
+/mob/living/silicon/ai/proc/ai_set_fake_laws()
 	set category = "AI Commands"
-	set name = "State Laws (Advanced)"
+	set name = "Set Fake Laws"
 
-	var/state = input(usr,"Please enter the laws you would like to state in pairs of (law number)=(fake number, if desired) separated by semicolons (e.g. \"1;3=2;4=3\") (Each law will only be stated once, duplicates will be removed)","Laws To State","1;2;3") as null|text
-	if(!state)
+	#define FAKE_LAW_LIMIT 12
+	var/law_base_choice = input(usr,"Which lawset would you like to use as a base for your new fake laws?", "Fake Laws", "Fake Laws") in list("Real Laws", "Fake Laws")
+	var/law_base = ""
+	if(law_base_choice == "Real Laws")
+		law_base = ticker.centralized_ai_laws.format_for_logs("\n")
+	else if(law_base_choice == "Fake Laws")
+		for(var/fake_law in src.fake_laws)
+			// this is just the default input for the user, so it should be fine
+			law_base += "[html_decode(fake_law)]\n"
+
+	var/raw_law_text = input(usr,"Please enter the fake laws you would like to be able to state via the State Fake Laws command! Each line is one law.", "Fake Laws", law_base) as null|message
+	if(!raw_law_text)
 		return
-	state = strip_html(state,MAX_MESSAGE_LEN)
+	// split into lines
+	var/list/raw_law_list = splittext_char(raw_law_text, "\n")
+	// return if we input an excessive amount of laws
+	if (length(raw_law_list) > FAKE_LAW_LIMIT)
+		boutput(usr, "<span class='alert'>You cannot set more than [FAKE_LAW_LIMIT] laws.</span>")
+		return
+	// clear old fake laws
+	src.fake_laws = list()
+	// cleanse the lines and add them as our laws
+	for(var/raw_law in raw_law_list)
+		var/nice_law = trim(strip_html(raw_law))
+		// empty lines would probably be an accident and result in awkward pauses that might give the AI away
+		if (!length(nice_law))
+			continue
+		fake_laws += nice_law
 
-	var/list/laws_to_state = list()
+	src.show_message("<span class='bold'>Your new fake laws are: </span>")
+	for(var/a_law in src.fake_laws)
+		src.show_message(a_law)
+	#undef FAKE_LAW_LIMIT
 
-	laws_to_state = params2list(state)
+/mob/living/silicon/ai/proc/ai_state_fake_laws()
+	set category = "AI Commands"
+	set name = "State Fake Laws"
 
-    // 1;1;1 becomes 1:list() and 1=2;1=3 becomes 1:(2,3), so we need to break the results down into one association per index
-
-	var/found = 0
-	for (var/index in laws_to_state)
-		if(laws_to_state[index])
-			for (var/association in laws_to_state[index])
-				if(association)
-					laws_to_state[index] = association
-					found = 1
-					break
-
-			if(!found)
-				laws_to_state[index] = null
-
-			found = 0
-
-	//build laws list from 0th, inherent, and supplied laws
-
-
-	var/list/laws_list = list()
-
-	var/number = 0
-	if(ticker.centralized_ai_laws.zeroth)
-		laws_list += "[number]"
-		laws_list["[number]"] = "[ticker.centralized_ai_laws.zeroth]"
-
-	number++
-
-	for (var/index = 1, index <= ticker.centralized_ai_laws.inherent.len, index++)
-		var/law = ticker.centralized_ai_laws.inherent[index]
-		if (length(law) > 0)
-			laws_list += "[number]"
-			laws_list["[number]"] += "[law]"
-			number++
-
-	for (var/index = 1, index <= ticker.centralized_ai_laws.supplied.len, index++)
-		var/law = ticker.centralized_ai_laws.supplied[index]
-		if (length(law) > 0)
-			laws_list += "[number]"
-			laws_list["[number]"] += "[law]"
-			number++
-
-	//state laws in order given. Uses original numbers unless renumbering is specified
-
-	for(var/law_number in laws_to_state)
-		if(law_number in laws_list)
-			if(laws_to_state[law_number])
-				src.say("[laws_to_state[law_number]]. [laws_list[law_number]]")
-			else
-				src.say("[law_number]. [laws_list[law_number]]")
-			sleep(1 SECOND)
-
+	for(var/a_law in src.fake_laws)
+		sleep(AI_LAW_STATE_DELAY)
+		// decode the symbols, because they will be encoded again when the law is spoken, and otherwise we'd double-dip
+		src.say(html_decode(a_law))
 
 /mob/living/silicon/ai/proc/ai_state_laws_all()
 	set category = "AI Commands"
@@ -1594,13 +1609,15 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		if (length(law) > 0)
 			src.say("[number]. [law]")
 			number++
-			sleep(1 SECOND)
+			sleep(AI_LAW_STATE_DELAY)
 	for (var/index = 1, index <= ticker.centralized_ai_laws.supplied.len, index++)
 		var/law = ticker.centralized_ai_laws.supplied[index]
 		if (length(law) > 0)
 			src.say("[number]. [law]")
 			number++
-			sleep(1 SECOND)
+			sleep(AI_LAW_STATE_DELAY)
+
+#undef AI_LAW_STATE_DELAY
 
 /mob/living/silicon/ai/cancel_camera()
 	set category = "AI Commands"
@@ -1751,6 +1768,28 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		colors[3] = colors[3] / 255
 		light.set_color(colors[1], colors[2], colors[3])
 		update_appearance()
+
+/mob/living/silicon/ai/proc/reset_apcs()
+	set category = "AI Commands"
+	set name = "Reset All APCs"
+	set desc = "Resets all APCs on the station."
+	var/count = 0
+
+	var/mob/message_mob = src.get_message_mob()
+	if (!src || !message_mob.client || isdead(src))
+		return
+
+	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
+		for_by_tcl(P, /obj/machinery/power/apc)
+			if (P.z == Z_LEVEL_STATION && !(P.status & BROKEN) && !P.aidisabled && P.is_not_default())
+				P.set_default()
+				count++
+
+		message_admins("[key_name(message_mob)] globally reset [count] APCs.")
+		boutput(message_mob, "Reset [count] APCs.")
+		src.verbs -= /mob/living/silicon/ai/proc/reset_apcs
+		sleep(10 SECONDS)
+		src.verbs += /mob/living/silicon/ai/proc/reset_apcs
 
 // drsingh new AI de-electrify thing
 

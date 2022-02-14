@@ -434,6 +434,7 @@ SYNDICATE DRONE FACTORY AREAS
 	density = 0
 	anchored = 1
 	opacity = 0
+	mouse_opacity = 0
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_ABOVE
 	icon = 'icons/effects/64x64.dmi'
@@ -560,8 +561,8 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/shifting_wall/sneaky/cave
 	name = "strange wall"
 	desc = "This wall seems strangely out-of-place."
-	icon_state = "cave-dark"
-	icon = 'icons/turf/walls.dmi'
+	icon_state = "cave-0"
+	icon = 'icons/turf/walls_cave.dmi'
 
 	var/active = 0
 

@@ -656,9 +656,9 @@
 	boutput(M, "<span class='alert'><B>You HONK painfully!</B></span>")
 	M.take_brain_damage(80)
 	M.stuttering = 120
+	M.contract_disease(/datum/ailment/disease/cluwneing_around/cluwne, null, null, 1) // path, name, strain, bypass resist
+	M.contract_disease(/datum/ailment/disability/clumsy/cluwne, null, null, 1) // path, name, strain, bypass resist
 	M.job = "Cluwne"
-	M.contract_disease(/datum/ailment/disease/cluwneing_around, null, null, 1) // path, name, strain, bypass resist
-	M.contract_disease(/datum/ailment/disability/clumsy, null, null, 1) // path, name, strain, bypass resist
 	M.change_misstep_chance(66)
 
 	M.unequip_all()
@@ -675,6 +675,7 @@
 		message_admins("[key_name(usr)] clownified [key_name(M)]")
 
 		M.real_name = "cluwne"
+		M.UpdateName()
 		SPAWN_DBG(2.5 SECONDS) // Don't remove.
 			if (M) M.assign_gimmick_skull() // The mask IS your new face (Convair880).
 
@@ -2803,3 +2804,28 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 		logTheThing("admin", usr, AM, "has shipped [AM] to cargo.")
 		logTheThing("diary", usr, AM, "has shipped [AM] to cargo.", "admin")
 		message_admins("[key_name(usr)] has shipped [AM] to cargo.")
+
+var/global/force_radio_maptext = FALSE
+/client/proc/toggle_radio_maptext()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Toggle Forced Radio maptext"
+	admin_only
+
+	if(holder && src.holder.level >= LEVEL_ADMIN)
+		if(!force_radio_maptext)
+			switch(alert("Set all radios to use flying text?", "Bad Idea??","Yes","No"))
+				if("Yes")
+					force_radio_maptext = TRUE
+					logTheThing("admin", src, null, "has enabled forced radio maptext.")
+					logTheThing("diary", src, null, "has enabled forced radio maptext.", "admin")
+					message_admins("[key_name(src)] has enabled flying text for all radios!")
+				if("No")
+					return
+		else
+			force_radio_maptext = FALSE
+			logTheThing("admin", src, null, "has disabled forced radio maptext.")
+			logTheThing("diary", src, null, "has disabled forced radio maptext.", "admin")
+			message_admins("[key_name(src)] has disabled forced radio flying text.")
+			return
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")

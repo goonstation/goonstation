@@ -439,7 +439,7 @@
 ////////////////////////////////////////////////////////////////no
 /obj/machinery/rkit
 	name = "ruckingenur kit"
-	desc = "Used for reverse engineering certain items."
+	desc = "A device that takes data scans from a device analyser, then interprets and encodes them into blueprints for fabricators to read."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "rkit"
 	anchored = 1
@@ -845,7 +845,7 @@
 	item_state = "deconstruction-saw"
 	force = 10
 	throwforce = 4
-	hitsound = 'sound/machines/chainsaw_green.ogg'
+	hitsound = 'sound/machines/chainsaw.ogg'
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_SAWING
 	w_class = W_CLASS_NORMAL

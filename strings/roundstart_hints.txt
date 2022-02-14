@@ -135,3 +135,4 @@ Use a wrench on a water cooler dispenser to take the bottle off.
 Russian revolvers will only ever kill the user, no matter how hard you try to shoot someone else with it.
 Certain items have unique suicide options. Feel free to experiment with them if you ever want to go out with a bang (or a squelch).
 While holding an object, you can press C (Z on TG Controls) to Use/Interact with it. This can either open the crafting menu when holding a sheet of metal, activate a welding tool or make you eat a burger.
+Most PDAs start with a writing utensil which can be ejected to access it! Other things fit in the pen slot as well!

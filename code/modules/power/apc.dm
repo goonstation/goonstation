@@ -19,7 +19,7 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc
 	name = "area power controller"
-	desc = "The smaller, more numerous sibling of the SMES. Protects electrical equipment from extreme power fluctuations, and if the generator goes offline, can supply electricity to its room from an internal cell."
+	desc = "The smaller, more numerous sibling of the SMES. Controls the power of entire rooms, and if the generator goes offline, can supply electricity from an internal cell."
 	icon_state = "apc0"
 	anchored = 1
 	plane = PLANE_NOSHADOW_ABOVE
@@ -1549,3 +1549,24 @@ var/zapLimiter = 0
 /obj/machinery/power/apc/powered()
 	//Always powered
 	return 1
+
+/obj/machinery/power/apc/proc/is_not_default()
+	var/vars_to_check = list("operating", "chargemode", "shorted", "equipment", "lighting", "environ", "coverlocked")
+
+	for (var/v in vars_to_check)
+		if (src.vars[v] != initial(src.vars[v]))
+			return TRUE
+
+	return FALSE
+
+/obj/machinery/power/apc/proc/set_default()
+	operating = TRUE
+	chargemode = TRUE
+	if (!shorted)
+		equipment = 3
+		lighting = 3
+		environ = 3
+	coverlocked = TRUE
+
+	update()
+	UpdateIcon()

@@ -623,6 +623,7 @@
 
 /obj/item/storage/belt/medical
 	name = "medical belt"
+	desc = "A specialized belt for treating patients outside medbay in the field. A unique attachment point lets you carry defibrillators."
 	icon_state = "injectorbelt"
 	item_state = "medical"
 	can_hold = list(

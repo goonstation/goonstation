@@ -72,6 +72,8 @@
 	src.flock?.removeDrone(src)
 	playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
 	flockdronegibs(get_turf(src))
+	if (src.mind || src.client) //Shouldn't be possible, but someone managed it
+		src.ghostize()
 	qdel(src)
 
 // okay so this might be fun for gimmicks

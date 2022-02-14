@@ -25,6 +25,9 @@
 	New()
 		..()
 		src.vchange = new(src) // Built-in voice changer (Convair880).
+		if(istype(src.loc, /mob/living))
+			var/mob/M = src.loc
+			src.AddComponent(/datum/component/self_destruct, M)
 
 	equipped(mob/user)
 		. = ..()
@@ -360,7 +363,6 @@
 		src.desc = "This is never coming off... oh god..."
 		// Mostly for spawning a cluwne car and clothes manually.
 		// Clown's Revenge and Cluwning Around take care of every other scenario (Convair880).
-		user.job = "Cluwne"
 		src.cant_self_remove = 1
 		src.cant_other_remove = 1
 		if(src.infectious && user.reagents)
@@ -423,6 +425,7 @@
 	desc = "Hey, still looks pretty happy for being so blue."
 	icon_state = "blessedclown"
 	item_state = "bclown_hat"
+	bald_desc_state = "For sad clowns who want to show off their hair!"
 
 /obj/item/clothing/under/misc/clown/blue
 	name = "blue clown suit"
@@ -447,6 +450,7 @@
 	desc = "Purple is a very flattering color on almost everyone."
 	icon_state = "purpleclown"
 	//item_state = "purpleclown"
+	bald_desc_state = "For fancy clowns who want to show off their hair!"
 
 /obj/item/clothing/under/misc/clown/purple
 	name = "purple clown suit"
@@ -467,6 +471,7 @@
 	desc = "This reminds you of cotton candy."
 	icon_state = "pinkclown"
 	//item_state = "pinkclown"
+	bald_desc_state = "For sweet clowns who want to show off their hair!"
 
 /obj/item/clothing/under/misc/clown/pink
 	name = "pink clown suit"
@@ -487,6 +492,7 @@
 	desc = "A ray of sunshine."
 	icon_state = "yellowclown"
 	//item_state = "yellowclown"
+	bald_desc_state = "For bright clowns who want to show off their hair!"
 
 /obj/item/clothing/under/misc/clown/yellow
 	name = "yellow clown suit"
@@ -1706,24 +1712,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	desc = "It has a little hood you can flip up and down. Rawr!"
 	icon_state = "dinosaur"
 	item_state = "dinosaur"
-	var/hood = 0
 
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_hood, hood_style="dinosaur")
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 25)
-
-	attack_self(mob/user as mob)
-		src.hood = !(src.hood)
-		user.show_text("You flip [src]'s hood [src.hood ? "up" : "down"].")
-		if (src.hood)
-			src.over_hair = 1
-			src.icon_state = "dinosaur-up"
-			src.item_state = "dinosaur-up"
-		else
-			src.over_hair = 0
-			src.icon_state = "dinosaur"
-			src.item_state = "dinosaur"
 
 /obj/item/clothing/head/biglizard
 	name = "giant novelty lizard head"

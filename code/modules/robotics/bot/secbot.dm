@@ -579,6 +579,8 @@
 				if (stuncount > 0)
 					sleep(BATON_DELAY_PER_STUN)
 
+			if (isnull(target))
+				return
 			SPAWN_DBG(0.2 SECONDS)
 				src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 			if (src.target.getStatusDuration("weakened"))
@@ -1329,7 +1331,7 @@
 //secbot stunner bar thing
 /datum/action/bar/icon/secbot_stun
 	duration = 10
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	interrupt_flags = 0 //THE SECURITRON STOPS FOR NOTHING
 	id = "secbot_cuff"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "stunbaton_active"

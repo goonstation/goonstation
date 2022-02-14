@@ -38,6 +38,7 @@
 #define THROW_CHAIRFLIP 2
 #define THROW_GUNIMPACT 4
 #define THROW_SLIP 8
+#define THROW_PEEL_SLIP 16
 
 //For serialization purposes
 #define DESERIALIZE_ERROR 0

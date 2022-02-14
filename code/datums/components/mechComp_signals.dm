@@ -1,4 +1,5 @@
 #define DC_ALL "Disconnect All"
+#define CONNECT_COMP "Connect Component"
 #define SET_SEND "Set Send-Signal"
 #define TOGGLE_MATCH "Toggle Exact Match"
 #define MECHFAILSTRING "You must be holding a Multitool to change Connections or Options."
@@ -78,13 +79,16 @@
 
 	var/defaultSignal = "1"
 
+TYPEINFO(/datum/component/mechanics_holder)
+	initialization_args = list()
+
 /datum/component/mechanics_holder/Initialize()
 	src.connected_outgoing = list()
 	src.connected_incoming = list()
 	src.inputs = list()
 	src.configs = list()
 
-	src.configs.Add(list(DC_ALL))
+	src.configs.Add(list(DC_ALL, CONNECT_COMP))
 	..()
 
 /datum/component/mechanics_holder/RegisterWithParent()
@@ -265,6 +269,9 @@
 	if(trigger in src.connected_outgoing)
 		boutput(user, "<span class='alert'>Can not create a direct loop between 2 components.</span>")
 		return
+	if(!IN_RANGE(receiver, trigger, WIDE_TILE_WIDTH))
+		boutput(user, "<span class='alert'>These two components are too far apart to connect.</span>")
+		return
 	if(!src.inputs.len)
 		boutput(user, "<span class='alert'>[receiver.name] has no input slots. Can not connect [trigger.name] as Trigger.</span>")
 		return
@@ -297,6 +304,13 @@
 
 //If it's a multi-tool, let the user configure the device.
 /datum/component/mechanics_holder/proc/attackby(var/comsig_target, obj/item/W as obj, mob/user)
+	if(!ispulsingtool(W) || !isliving(user) || user.stat)
+		return FALSE
+	// check if the multitool has a connector component - if so, we are connecting components, not configuring!
+	var/datum/component/mechanics_connector/connector = W.GetComponent(/datum/component/mechanics_connector)
+	if(connector)
+		src.link_devices(null, connector.connectee, user)
+		return TRUE
 	if(istype(comsig_target, /obj/machinery/door))
 		var/obj/machinery/door/hacked_door = comsig_target
 		if(hacked_door.p_open)
@@ -305,8 +319,6 @@
 		var/obj/machinery/vending/hacked_vendor = comsig_target
 		if(hacked_vendor.panel_open)
 			return
-	if(!ispulsingtool(W) || !isliving(user) || user.stat)
-		return 0
 	if(length(src.configs))
 		var/selected_config = input("Select a config to modify!", "Config", null) as null|anything in src.configs
 		if(selected_config && in_interact_range(parent, user))
@@ -324,6 +336,10 @@
 					if(istype(parent, /atom))
 						var/atom/AP = parent
 						boutput(user, "<span class='notice'>You disconnect [AP.name].</span>")
+				if(CONNECT_COMP)
+					W.AddComponent(/datum/component/mechanics_connector, src.parent)
+					boutput(user, "<span class='notice'>Your [W] will now link other mechanics components to [src.parent]! Use it in hand to stop linking!</span>")
+					return TRUE
 				else
 					//must be a custom config specific to the device, so let the device handle it
 					var/path = src.configs[selected_config]
@@ -337,3 +353,23 @@
 #undef DC_ALL
 #undef SET_SEND
 #undef TOGGLE_MATCH
+
+/// component for pulsing tools that will connect mechcomponents the user clicks on to the specified mechcomponent
+/datum/component/mechanics_connector
+	/// the specific mechcomponent, this is the one we will connect the clicked component to
+	var/atom/connectee
+
+/datum/component/mechanics_connector/Initialize(var/datum/component/mechanics_holder/C)
+	if(!ispulsingtool(parent))
+		return COMPONENT_INCOMPATIBLE
+	src.connectee = C
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/stop_linking)
+
+/// we remove ourself here, the user no longer wishes to link components via us :(
+/datum/component/mechanics_connector/proc/stop_linking(var/obj/item/thing, mob/user)
+	boutput(user, "<span class='notice'>You stop linking with the [parent].</span>")
+	src.RemoveComponent()
+
+/datum/component/mechanics_connector/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
+	. = ..()

@@ -26,6 +26,7 @@ var opts = {
     'volume': 0.5,
     'lastMessage': '', //the last message sent to chat
     'maxStreakGrowth': 20, //at what streak point should we stop growing the last entry?
+	'messageClasses': ['admin','combat','radio','say','ooc','internal'],
 
     //Options menu
     'subOptionsLoop': null, //Contains the interval loop for closing the options menu
@@ -39,7 +40,7 @@ var opts = {
 
     //Ping display
     'pingCounter': 0, //seconds counter
-    'pingLimit': 30, //seconds limit
+    'pingLimit': 10, //seconds limit
     'pingTime': 0, //Timestamp of when ping sent
     'pongTime': 0, //Timestamp of when ping received
     'noResponse': false, //Tracks the state of the previous ping request
@@ -182,63 +183,9 @@ function output(message, group, skipNonEssential, forceScroll) {
     }
 
 
-    //The behemoth of filter-code (for Admin message filters)
-    //Note: This is proooobably hella inefficient
-    var filteredOut = false;
-    if (opts.hasOwnProperty('showMessagesFilters') && !opts.showMessagesFilters['All'].show) {
-        //Get this filter type (defined by class on message)
-        var messageHtml = $.parseHTML(message),
-            messageClasses;
-        if (opts.hasOwnProperty('filterHideAll') && opts.filterHideAll) {
-            var internal = false;
-            messageClasses = (!!$(messageHtml).attr('class') ? $(messageHtml).attr('class').split(/\s+/) : false);
-            if (messageClasses) {
-                for (var i = 0; i < messageClasses.length; i++) { //Every class
-                    if (messageClasses[i] == 'internal') {
-                        internal = true;
-                        break;
-                    }
-                }
-            }
-            if (!internal) {
-                filteredOut = 'All';
-            }
-        } else {
-            //If the element or it's child have any classes
-            if (!!$(messageHtml).attr('class') || !!$(messageHtml).children().attr('class')) {
-                messageClasses = $(messageHtml).attr('class').split(/\s+/);
-                if (!!$(messageHtml).children().attr('class')) {
-                    messageClasses = messageClasses.concat($(messageHtml).children().attr('class').split(/\s+/));
-                }
-                var tempCount = 0;
-                for (var i = 0; i < messageClasses.length; i++) { //Every class
-                    var thisClass = messageClasses[i];
-                    $.each(opts.showMessagesFilters, function(key, val) { //Every filter
-                        if (key !== 'All' && val.show === false && typeof val.match != 'undefined') {
-                            for (var i = 0; i < val.match.length; i++) {
-                                var matchClass = val.match[i];
-                                if (matchClass == thisClass) {
-                                    filteredOut = key;
-                                    break;
-                                }
-                            }
-                        }
-                        if (filteredOut) return false;
-                    });
-                    if (filteredOut) break;
-                    tempCount++;
-                }
-            } else {
-                if (!opts.showMessagesFilters['Misc'].show) {
-                    filteredOut = 'Misc';
-                }
-            }
-        }
-    }
-
     //Stuff we do along with appending a message
     var atBottom = false;
-    if (!filteredOut && !skipNonEssential) {
+    if (!skipNonEssential) {
         var bodyHeight = $('body').height();
         var messagesHeight = $messages.outerHeight();
         var scrollPos = document.documentElement.scrollTop;
@@ -316,15 +263,24 @@ function output(message, group, skipNonEssential, forceScroll) {
             entry = document.createElement('div');
             entry.className = 'entry';
 
-            if (filteredOut) {
-                entry.className += ' hidden';
-                entry.setAttribute('data-filter', filteredOut);
-            }
-
             if (group) {
                 entry.className += ' hasGroup';
                 entry.setAttribute('data-group', group);
-            }
+			}
+
+			//get classes from messages, compare if its in messageclasses, and if so, add to entry
+			let addedClass = false;
+			let $message = $('<span>'+message+'</span>');
+			$.each(opts.messageClasses, function (key, value) {
+				if ($message.find("." + value).length !== 0 || $message.hasClass(value)) {
+					entry.className += ' ' + value;
+					addedClass = true;
+				}
+			});
+			// fallback, if no class found in the classlist
+			if (!addedClass) {
+				entry.className += ' misc';
+			}
 
             entry.innerHTML = message;
             $lastEntry = $($messages[0].appendChild(entry));
@@ -338,7 +294,7 @@ function output(message, group, skipNonEssential, forceScroll) {
     }
 
     //Actually do the snap
-    if (!filteredOut && atBottom && !skipNonEssential) {
+    if (atBottom && !skipNonEssential) {
         window.scrollTo(0, document.body.scrollHeight);
     }
 }
@@ -501,6 +457,11 @@ function ehjaxCallback(data) {
             var adminCode = data.loadAdminCode;
             $('body').append(adminCode);
             opts.adminLoaded = true;
+        } else if (data.loadPerfMon) {
+            if (opts.perfMonLoaded) {return;}
+            var perfMon = data.loadPerfMon;
+            $('body').append(perfMon);
+            opts.perfMonLoaded = true;
         } else if (data.modeChange) {
             changeMode(data.modeChange);
         } else if (data.firebug) {
@@ -602,10 +563,11 @@ $(function() {
     //Hey look it's a controller loop!
     setInterval(function() {
         if (opts.pingCounter >= opts.pingLimit && !opts.restarting) { //Every pingLimit seconds
+            let pingDuration = (opts.pongTime - opts.pingTime) / 2;
             opts.pingCounter = 0; //reset
             opts.pongTime = 0; //reset
             opts.pingTime = Date.now();
-            runByond('?action=ehjax&window=browseroutput&type=datum&datum=chatOutput&proc=ping');
+            runByond('?action=ehjax&window=browseroutput&type=datum&datum=chatOutput&proc=ping&param[last_ping]=' + pingDuration);
             setTimeout(function() {
                 if (!opts.pongTime) { //If no response within 10 seconds of ping request
                     if (!opts.noResponse) { //Only actually append a message if the previous ping didn't also fail (to prevent spam)
@@ -614,7 +576,6 @@ $(function() {
                         output('<div class="connectionClosed internal" data-count="'+opts.noResponseCount+'">You are either experiencing lag or the connection has closed.</div>');
                     }
                 } else {
-                    opts.pongTime = 0; //reset
                     if (opts.noResponse) { //Previous ping attempt failed ohno
                         $('.connectionClosed[data-count="'+opts.noResponseCount+'"]:not(.restored)').addClass('restored').text('Your connection has been restored (probably)!');
                         opts.noResponse = false;

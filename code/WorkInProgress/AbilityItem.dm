@@ -34,7 +34,7 @@
 				qdel(E)
 				return
 
-		the_mob.visible_message("<span class='alert'>[the_mob] prepares to spray the contents of the extinguisher all around \himself!</span>")
+		the_mob.visible_message("<span class='alert'>[the_mob] prepares to spray the contents of the extinguisher all around [himself_or_herself(the_mob)]!</span>")
 
 		E.special = 1
 		the_mob.transforming = 1
@@ -115,31 +115,8 @@
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/welding/W = the_item
-		if(W.up)
-			W.up = !W.up
-			W.icon_state = "welding"
-			boutput(the_mob, "You flip the mask down. The mask is now protecting you from eye damage.")
-			if (!W.nodarken) //Used for The Slasher
-				W.see_face = !W.see_face
-				W.color_r = 0.3 // darken
-				W.color_g = 0.3
-				W.color_b = 0.3
-			the_mob.set_clothing_icon_dirty()
-			icon_state = "weldup"
-
-			W.flip_down()
-		else
-			W.up = !W.up
-			W.see_face = !W.see_face
-			W.icon_state = "welding-up"
-			boutput(the_mob, "You flip the mask up. The mask is now providing greater armor to your head.")
-			W.color_r = 1 // default
-			W.color_g = 1
-			W.color_b = 1
-			the_mob.set_clothing_icon_dirty()
-			icon_state = "welddown"
-
-			W.flip_up()
+		W.up ? W.flip_down(the_mob) : W.flip_up(the_mob)
+		icon_state = "[W.up ? "welddown" : "weldup"]"
 		..()
 
 
@@ -153,6 +130,15 @@
 			W.unbutton()
 		else
 			W.button()
+		..()
+
+/obj/ability_button/hood_toggle
+	name = "Toggle Hood"
+	icon_state = "hood_up"
+
+	execute_ability()
+		var/obj/item/clothing/suit/W = the_item
+		W.attack_self(the_mob)
 		..()
 
 /obj/ability_button/magboot_toggle
@@ -339,6 +325,39 @@
 	execute_ability()
 		var/obj/item/saw/S = the_item
 		S.attack_self(usr)
+		..()
+
+////////////////////////////////////////////////////////////
+
+/obj/ability_button/saw_replace_arm
+	name = "Replace arm"
+	icon_state = "saw"
+
+	execute_ability()
+		if (!ishuman(usr))
+			boutput(usr, "<span class='alert'>Only a human can do that.</span>")
+			return
+		var/mob/living/carbon/human/H = usr
+		if (the_item.temp_flags & IS_LIMB_ITEM)
+			boutput(usr, "<span class='alert'>The saw is already attached as an arm.</span>")
+			return
+		switch (alert(usr, "Which arm would you like to replace with [the_item]?",,"Left","Right","Cancel"))
+			if ("Cancel")
+				return
+			if ("Right")
+				if (!H.limbs.r_arm)
+					var/obj/item/saw/syndie/S = the_item
+					S.end_replace_arm("r_arm", H)
+					return
+				boutput(H, "<span class='alert'>You need to hold still...</span>")
+				SETUP_GENERIC_ACTIONBAR(H, the_item, 3 SECONDS, /obj/item/saw/syndie/proc/end_replace_arm, list("r_arm", H), the_item.icon, the_item.icon_state,"", INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION)
+			if ("Left")
+				if (!H.limbs.l_arm)
+					var/obj/item/saw/syndie/S = the_item
+					S.end_replace_arm("l_arm", H)
+					return
+				boutput(H, "<span class='alert'>You need to hold still...</span>")
+				SETUP_GENERIC_ACTIONBAR(H, the_item, 3 SECONDS, /obj/item/saw/syndie/proc/end_replace_arm, list("l_arm", H), the_item.icon, the_item.icon_state,"", INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 		..()
 
 ////////////////////////////////////////////////////////////

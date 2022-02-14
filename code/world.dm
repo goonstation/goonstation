@@ -368,18 +368,18 @@ var/f_color_selector_handler/F_Color_Selector
 			xpRewardButtons[R] = B
 
 		Z_LOG_DEBUG("Preload", "  /datum/material_recipe")
-		for(var/A in childrentypesof(/datum/material_recipe)) //Caching material recipes.
+		for(var/A in concrete_typesof(/datum/material_recipe)) //Caching material recipes.
 			var/datum/material_recipe/R = new A()
 			materialRecipes.Add(R)
 
 		Z_LOG_DEBUG("Preload", "  /datum/achievementReward")
-		for(var/A in childrentypesof(/datum/achievementReward)) //Caching reward datums.
+		for(var/A in concrete_typesof(/datum/achievementReward)) //Caching reward datums.
 			var/datum/achievementReward/R = new A()
 			rewardDB.Add(R.type)
 			rewardDB[R.type] = R
 
 		Z_LOG_DEBUG("Preload", "  /obj/trait")
-		for(var/A in childrentypesof(/obj/trait)) //Creating trait objects. I hate this.
+		for(var/A in concrete_typesof(/obj/trait)) //Creating trait objects. I hate this.
 			var/obj/trait/T = new A( )							//Sentiment shared -G
 			traitList.Add(T.id)
 			traitList[T.id] = T
@@ -1554,6 +1554,17 @@ var/f_color_selector_handler/F_Color_Selector
 				ircmsg["time"] = (world.timeofday - curtime) / 10
 				ircmsg["ticklag"] = world.tick_lag
 				ircmsg["runtimes"] = global.runtime_count
+				if(world.system_type == "UNIX")
+					try
+						var/meminfo_file = "data/meminfo.txt"
+						fcopy("/proc/meminfo", "meminfo_file")
+						var/list/memory_info = splittext(file2text(meminfo_file), "\n")
+						if(length(memory_info) >= 3)
+							memory_info.len = 3
+							ircmsg["meminfo"] = jointext(memory_info, "\n")
+						fdel(meminfo_file)
+					catch(var/exception/e)
+						stack_trace("[e.name]\n[e.desc]")
 				return ircbot.response(ircmsg)
 
 			if ("rev")

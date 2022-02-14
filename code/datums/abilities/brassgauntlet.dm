@@ -9,6 +9,7 @@
 	cooldown = 600
 
 	execute_ability()
+		logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 		SPAWN_DBG(0)
 			the_mob.teleportscroll(1, 0, null)
 
@@ -25,6 +26,7 @@
 	execute_ability()
 		SPAWN_DBG(0)
 			usr.visible_message("<span class='alert'><B>[usr] channels souls into all nearby objects!</B></span>")
+			logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 			for(var/obj/item/I in oview(5, usr)) //No longer brings your organs to life, killing you as they desperately try to attack you from the inside!
 				if (I.anchored || I.invisibility) continue
 				var/obj/critter/livingobj/L = new/obj/critter/livingobj(I.loc)
@@ -53,6 +55,7 @@
 
 	execute_ability()
 		//Presumably explode a dude
+		logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 		boutput(the_mob, "<span class='alert'>You totally would've exploded a dude. If it was implemented. This power stone is kinda chumpy, huh?</span>")
 		..()
 		return 1
@@ -65,6 +68,7 @@
 	var/casting = 0
 
 	execute_ability()
+		logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 		usr.visible_message("<span class='alert'><B>[usr] flicks his hand and begins to warp time!</B></span>")
 		SPAWN_DBG(0)
 			usr.full_heal()
@@ -79,6 +83,7 @@
 	cooldown = 600
 
 	execute_ability()
+		logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 		SPAWN_DBG(0)
 			var/distance = 1
 			var/list/affected = list()
@@ -124,6 +129,7 @@
 	cooldown = 600
 
 	execute_ability()
+		logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 		SPAWN_DBG(0)
 			boutput(usr,"<span class='alert'><B>You spead the energies of the owl around you.</B></span>")
 			playsound(usr.loc, "sound/voice/animal/hoot.ogg", 100, 1)
@@ -200,6 +206,7 @@
 	cooldown = 3000
 
 	execute_ability()
+		logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 		SPAWN_DBG(0)
 			boutput(usr, "<span class='alert'><B>You spread a feeling of sickness.</B></span>") //Gross
 			for(var/mob/living/carbon/human/M in range(5, usr))

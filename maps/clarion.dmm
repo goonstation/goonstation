@@ -10587,7 +10587,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "atz" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /turf/simulated/floor/sanitary/white,
@@ -11477,7 +11477,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "avI" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -11789,7 +11789,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/crematorium)
 "awu" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /turf/simulated/floor/sanitary/white,
@@ -13232,6 +13232,7 @@
 	icon_state = "2-4"
 	},
 /obj/storage/crate/clown,
+/obj/item/storage/toolbox/artistic,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown)
 "azZ" = (
@@ -30049,7 +30050,7 @@
 	on = 1;
 	target_pressure = 1000
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition1";
 	name = "Chamber Ignition Switch";
 	pixel_x = -24
@@ -30865,6 +30866,10 @@
 /area/station/science/artifact)
 "bnT" = (
 /obj/table/reinforced/auto,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 5;
+	pixel_y = 6
+	},
 /obj/item/hand_labeler,
 /obj/item/device/audio_log,
 /obj/item/audio_tape{
@@ -34238,7 +34243,7 @@
 	dir = 4;
 	icon_state = "line2"
 	},
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
 	id = "artlabgun";
 	name = "Emergency Ejection Button";
@@ -34889,7 +34894,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/window/reinforced/west,
 /obj/window/reinforced/north,
 /obj/decal/tile_edge/line/black{
@@ -34936,7 +34941,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/window/reinforced/north,
@@ -35568,7 +35573,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/window/reinforced/west,
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -35604,7 +35609,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/decal/tile_edge/line/black{
@@ -36183,7 +36188,7 @@
 /area/station/medical/morgue)
 "bxC" = (
 /obj/machinery/light,
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/window/reinforced/west,
 /obj/decal/tile_edge/line/black{
 	dir = 10;
@@ -36211,7 +36216,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bxF" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/decal/tile_edge/line/black{
@@ -39852,7 +39857,7 @@
 	name = "autoname  - SS13";
 	pixel_x = -10
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "combustion_ignition";
 	pixel_x = -24
 	},
@@ -41953,9 +41958,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "bJV" = (
 /turf/simulated/wall/asteroid{
@@ -41979,9 +41982,7 @@
 	},
 /area/listeningpost/solars)
 "bJY" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "bJZ" = (
 /obj/cable{
@@ -41989,9 +41990,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "bKa" = (
 /turf/simulated/wall/asteroid{
@@ -42114,9 +42113,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "bKo" = (
 /obj/cable{
@@ -42124,9 +42121,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "bKp" = (
 /obj/cable,
@@ -42234,9 +42229,7 @@
 /area/space)
 "bKA" = (
 /obj/securearea,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "bKB" = (
 /obj/cable{
@@ -42308,9 +42301,7 @@
 	},
 /area/listeningpost)
 "bKK" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "bKL" = (
 /turf/space,
@@ -42598,9 +42589,7 @@
 /area/listeningpost)
 "bLv" = (
 /obj/submachine/ATM,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "bLw" = (
 /obj/machinery/vending/snack,
@@ -42623,9 +42612,7 @@
 	},
 /area/listeningpost)
 "bLz" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/syndicate_teleporter)
 "bLA" = (
 /obj/cable{
@@ -43003,7 +42990,10 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/bookshelf/persistent,
+/obj/bookshelf/persistent{
+	density = 0;
+	pixel_y = 19
+	},
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -50249,7 +50239,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "sOY" = (
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "sQp" = (

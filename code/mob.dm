@@ -759,11 +759,13 @@
 			var/mob/victim = AM
 			deliver_move_trigger("bump")
 			victim.deliver_move_trigger("bump")
+			var/was_in_space = istype(victim.loc, /turf/space)
+			var/was_in_fire = locate(/obj/hotspot) in victim.loc
 			if (victim.buckled && !victim.buckled.anchored)
 				step(victim.buckled, t)
-			if (istype(victim.loc, /turf/space))
+			if (!was_in_space && istype(victim.loc, /turf/space))
 				logTheThing("combat", src, victim, "pushes [constructTarget(victim,"combat")] into space.")
-			else if (locate(/obj/hotspot) in victim.loc)
+			else if (!was_in_fire && (locate(/obj/hotspot) in victim.loc))
 				logTheThing("combat", src, victim, "pushes [constructTarget(victim,"combat")] into a fire.")
 
 		step(src,t)
@@ -1843,13 +1845,27 @@
 	src.icon = null
 	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
-
+	var/col_r = 0.4
+	var/col_g = 0.8
+	var/col_b = 1.0
+	var/brightness = 0.7
+	var/height = 1
+	var/datum/light/light
+	var/light_type = /datum/light/point
 
 	if (ishuman(src))
 		animation = new(src.loc)
 		animation.master = src
 		flick("elecgibbed", animation)
-
+		if(ispath(light_type))
+			light = new light_type
+			light.set_brightness(brightness)
+			light.set_color(col_r, col_g, col_b)
+			light.set_height(height)
+			light.attach(animation)
+			light.enable()
+			SPAWN_DBG(1 SECOND)
+				qdel(light)
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
@@ -2427,9 +2443,19 @@
 	SEND_SIGNAL(src, COMSIG_MOB_THROW_ITEM, target, params)
 
 /mob/throw_impact(atom/hit, datum/thrown_thing/thr)
+	if (thr.throw_type & THROW_PEEL_SLIP)
+		var/stun_duration = ("peel_stun" in thr.params) ? thr.params["peel_stun"] : 3 SECONDS
+		if(("slip_obj" in thr.params) && istype(thr.params["slip_obj"], /obj/item/device/pda2/clown))
+			animate_peel_slip(src, stun_duration=stun_duration, T = 0.85 SECONDS, n_flips = 2, height = 24)
+		else
+			animate_peel_slip(src, stun_duration=stun_duration)
+		if(!isturf(hit) || hit.density)
+			random_brute_damage(src, min((6 + (thr?.get_throw_travelled() / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
+		return ..()
+
 	if(!isturf(hit) || hit.density)
 		if (thr?.get_throw_travelled() <= 410)
-			if (!((src.throwing & THROW_CHAIRFLIP) && ismob(hit)))
+			if (!((thr.throw_type & THROW_CHAIRFLIP) && ismob(hit)))
 				random_brute_damage(src, min((6 + (thr?.get_throw_travelled() / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
 				if (!src.hasStatus("weakened"))
 					src.changeStatus("weakened", 2 SECONDS)
