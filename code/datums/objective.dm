@@ -10,9 +10,11 @@ ABSTRACT_TYPE(/datum/objective)
 		..()
 		if(text)
 			src.explanation_text = text
-		if(owner)
+		if(istype(owner))
 			src.owner = owner
 			owner.objectives += src
+		else
+			stack_trace("objective/New got called without a mind")
 		src.set_up()
 
 	proc/check_completion()
