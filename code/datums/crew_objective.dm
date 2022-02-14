@@ -38,12 +38,8 @@
 		while (assignCount && length(objectiveTypes))
 			assignCount--
 			var/selectedType = pick(objectiveTypes)
-			var/datum/objective/crew/newObjective = new selectedType
-			objectiveTypes -= newObjective.type
-
-			newObjective.owner = crewMind
-			crewMind.objectives += newObjective
-			newObjective.setup()
+			var/datum/objective/crew/newObjective = new selectedType(null, crewMind)
+			objectiveTypes -= selectedType
 
 			if (obj_count <= 1)
 				boutput(crewMind.current, "<B>Your OPTIONAL Crew Objectives are as follows:</b>")

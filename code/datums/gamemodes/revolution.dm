@@ -75,10 +75,8 @@
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		for(var/datum/mind/head_mind in heads)
-			var/datum/objective/regular/assassinate/rev_obj = new
-			rev_obj.owner = rev_mind
+			var/datum/objective/regular/assassinate/rev_obj = new(null, rev_mind)
 			rev_obj.find_target_by_role(head_mind.assigned_role)
-			rev_mind.objectives += rev_obj
 
 		equip_revolutionary(rev_mind.current)
 		SHOW_REVHEAD_TIPS(rev_mind.current)

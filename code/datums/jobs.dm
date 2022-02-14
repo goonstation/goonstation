@@ -118,7 +118,7 @@
 
 			if (src.objective)
 				var/objType = spawn_miscreant ? /datum/objective/miscreant : /datum/objective/crew
-				var/datum/objective/newObjective = new(objType, src.objective, M.mind)
+				var/datum/objective/newObjective = new objType(src.objective, M.mind)
 				if (spawn_miscreant)
 					boutput(M, "<B>You are a miscreant!</B>")
 					boutput(M, "You should try to complete your objectives, but don't commit any traitorous acts.")
