@@ -56299,6 +56299,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/ore_terminal,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},

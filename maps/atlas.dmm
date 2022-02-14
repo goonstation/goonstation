@@ -17172,6 +17172,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
 /area/station/mining/refinery)
 "Qh" = (
@@ -17768,7 +17769,7 @@
 	},
 /area/station/crew_quarters/heads)
 "RM" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/ore_terminal,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},

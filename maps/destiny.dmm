@@ -9291,6 +9291,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
 /turf/simulated/floor/yellow,
 /area/station/mining/refinery)
 "aLC" = (
@@ -13520,6 +13523,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/portable_reclaimer,
+/obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/grey,
 /area/station/mining/refinery)
 "bkN" = (
@@ -39215,15 +39219,12 @@
 /turf/simulated/floor/purple/checker,
 /area/station/janitor/supply)
 "ndI" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/stool/chair/yellow{
-	dir = 8
-	},
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/yellow,
+/obj/machinery/ore_terminal,
+/turf/simulated/floor/industrial,
 /area/station/mining/refinery)
 "ndP" = (
 /turf/simulated/floor/purpleblack{
@@ -49205,8 +49206,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 6
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
 	},
 /turf/simulated/floor/grey,
 /area/station/mining/refinery)

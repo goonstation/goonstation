@@ -25271,11 +25271,11 @@
 "heg" = (
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /obj/machinery/nanofab/refining,
-/obj/decal/tile_edge/line/yellow{
-	dir = 6;
-	icon_state = "line2"
-	},
 /obj/machinery/light/incandescent/warm,
+/obj/decal/tile_edge/line/yellow{
+	dir = 4;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
 "hek" = (
@@ -29815,10 +29815,15 @@
 	},
 /area/station/medical/medbooth)
 "ivj" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
 /obj/decal/tile_edge/line/yellow{
 	dir = 6;
-	icon_state = "line1"
+	icon_state = "line2"
 	},
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/ore_terminal,
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
 "ivk" = (
@@ -33892,6 +33897,10 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
@@ -56143,6 +56152,18 @@
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
 "qiw" = (
@@ -63686,17 +63707,12 @@
 	},
 /area/station/engine/engineering/breakroom)
 "smU" = (
-/obj/machinery/power/apc/autoname_east,
-/obj/decal/tile_edge/line/yellow{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/disposalpipe/segment/transport{
 	dir = 4
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 6;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
@@ -75012,17 +75028,13 @@
 /turf/simulated/floor/white/checker,
 /area/station/hallway/primary/south)
 "vDZ" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable,
 /obj/disposalpipe/segment/transport{
 	dir = 4
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
@@ -138939,7 +138951,7 @@ iQY
 fNb
 hzd
 hzd
-ivj
+hzd
 smU
 qio
 bmd
@@ -139242,7 +139254,7 @@ lGB
 gVQ
 hTW
 heg
-uwt
+ivj
 xUo
 xUo
 pIM

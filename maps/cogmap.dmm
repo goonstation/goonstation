@@ -31776,7 +31776,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/computer/barcode,
+/obj/machinery/ore_terminal,
 /turf/simulated/floor/bot,
 /area/station/storage/warehouse)
 "bDN" = (

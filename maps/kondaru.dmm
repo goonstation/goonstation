@@ -24266,7 +24266,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/machinery/nanofab/refining,
+/obj/machinery/ore_terminal,
 /turf/simulated/floor/engine,
 /area/station/mining/refinery)
 "bwS" = (
@@ -24622,9 +24622,6 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/mining/refinery)
 "bya" = (
-/obj/stool/chair/yellow{
-	dir = 1
-	},
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;

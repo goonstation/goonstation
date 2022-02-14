@@ -35701,6 +35701,7 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent/harsh,
+/obj/machinery/ore_terminal,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
