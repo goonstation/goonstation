@@ -770,7 +770,7 @@
 /atom/MouseDrop(atom/over_object as mob|obj|turf)
 	SPAWN_DBG( 0 )
 		if (istype(over_object, /atom))
-			if (isalive(usr))
+			if (isalive(usr) && !isintangible(usr))
 				//To stop ghostdrones dragging people anywhere
 				if (isghostdrone(usr) && ismob(src) && src != usr)
 					return
