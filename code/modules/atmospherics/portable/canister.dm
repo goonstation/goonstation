@@ -219,8 +219,8 @@
 		if (src.det.part_fs.timing) //If it's counting down
 			if (src.det.part_fs.time > 9)
 				src.add_simple_light("canister", list(0.94 * 255, 0.94 * 255, 0.3 * 255, 0.6 * 255))
-				if (prob(15))
-					switch(rand(1,10))
+				if (prob(8)) //originally 5ish
+					switch(rand(1,6))
 						if (1)
 							playsound(src.loc, "sparks", 75, 1, -1)
 							elecflash(src)

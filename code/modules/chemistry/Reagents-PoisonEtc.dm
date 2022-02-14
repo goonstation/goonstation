@@ -385,18 +385,17 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				if (!M.nutrition)
-					switch(rand(1,3))
+				if (!M.nutrition && prob(60))
+					switch(rand(1,2))
 						if (1)
 							boutput(M, "<span class='alert'>You feel hungry...</span>")
 						if (2)
 							M.take_toxin_damage(1 * mult)
 							boutput(M, "<span class='alert'>Your stomach grumbles painfully!</span>")
 
-				else
-					if (prob(60))
-						var/fat_to_burn = max(round(M.nutrition/100,1) * mult, 5)
-						M.nutrition = max(M.nutrition-fat_to_burn,0)
+				else if (prob(60))
+					var/fat_to_burn = max(round(M.nutrition/100,1) * mult, 5)
+					M.nutrition = max(M.nutrition-fat_to_burn,0)
 				..()
 				return
 

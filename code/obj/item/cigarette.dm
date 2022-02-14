@@ -238,16 +238,17 @@
 
 		if (target)
 			var/message_append = ""
-			switch(rand(1, 13))
-				if (1) message_append = " Ouch!"
-				if (2) message_append = " Are they just going to take that?"
-				if (3) message_append = " Whoa!"
-				if (4) message_append = " What a jerk!"
-				if (5) message_append = " That's bad-ass."
-				if (6) message_append = " That looks pretty cool!"
-				if (7) message_append = " That's cold."
-				if (8) message_append = " How rude."
-				if (9) message_append = " Wow!"
+			if (prob(60))
+				switch(rand(1, 9))
+					if (1) message_append = " Ouch!"
+					if (2) message_append = " Are they just going to take that?"
+					if (3) message_append = " Whoa!"
+					if (4) message_append = " What a jerk!"
+					if (5) message_append = " That's bad-ass."
+					if (6) message_append = " That looks pretty cool!"
+					if (7) message_append = " That's cold."
+					if (8) message_append = " How rude."
+					if (9) message_append = " Wow!"
 			user.visible_message("<span class='alert'><B>[user]</B> blows smoke right into <B>[target]</B>'s face![message_append]</span>", group = "[user]_blow_smoke_at_[target]")
 
 			var/mob/living/carbon/human/human_target = target
@@ -255,7 +256,7 @@
 				SPAWN_DBG(0) target.emote("cough")
 		else
 			var/message
-			switch(rand(1, 8))
+			switch(rand(1, 10))
 				if (1) message = "<B>[user]</B> takes a drag and blows a cloud of smoke!"
 				if (2) message = "<B>[user]</B> puffs out a smoke cloud!"
 				if (3) message = "<B>[user]</B> exhales a huge cloud of smoke!"
