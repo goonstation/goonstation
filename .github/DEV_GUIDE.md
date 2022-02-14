@@ -147,7 +147,7 @@ Now, save your changes. If we look at the Source Control tab, we'll see that we 
 
 ### Step 3: Testing your code :game_die:
 
-The easiest way to test your changes is to press **F5**. This compiles your code, runs the server and connects you to it, as well as automatically giving you admin permissions. It also starts a debugger that will let you examine what went wrong when a runtime error happens. If you want to avoid the debugger press **Ctrl + F5** instead. **Keep in mind that this can take anywhere from 5 to 10 minutes**. Be patient, and while waiting, you may want to pay attention to your pets, stand up and walk around, drink water, or do body weight exercises.
+The easiest way to test your changes is to press <kbd>F5</<kbd>. This compiles your code, runs the server and connects you to it, as well as automatically giving you admin permissions. It also starts a debugger that will let you examine what went wrong when a runtime error happens. If you want to avoid the debugger press <kbd>Ctrl</kbd> + <kbd>F5</kbd> instead. **Keep in mind that this can take anywhere from 2 to 10 minutes**. Be patient, and while waiting, you may want to pay attention to your pets, stand up and walk around, or drink some water.
 
 :::warning
 If you are on a version of BYOND different from the one specified in buildByond.conf the debugger might be somewhat unstable and not work properly.
