@@ -469,7 +469,7 @@ THROWING DARTS
 					ticker.mode:remove_revolutionary(H.mind)
 				else
 					if (prob(30))
-						H.show_text("<B>The [src] burns and rattles inside your chest! It's attempting to prevent you revolting!</B>", "blue")
+						H.show_text("<B>The [src] burns and rattles inside your chest! It's attempting to force your loyalty to the heads of staff!</B>", "blue")
 						playsound(H.loc, "sound/effects/electric_shock_short.ogg", 60, 0,0,pitch = 0.8)
 						H.emote("twitch_v")
 
