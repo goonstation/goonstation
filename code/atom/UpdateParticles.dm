@@ -1,6 +1,6 @@
 /atom/var/list/particle_refs = null
 
-/atom/proc/UpdateParticles(particles/P, key, force=0)
+/atom/proc/UpdateParticles(particles/P, key, effect_appearance_flags, force=0)
 	if(!key)
 		CRASH("UpdateParticles called without a key.")
 	LAZYLISTINIT(particle_refs)
@@ -16,6 +16,8 @@
 	holder.particles = P
 	holder.vis_locs |= src
 	particle_refs[key] = holder
+	for (var/flag in effect_appearance_flags)
+		ADD_FLAG(holder.appearance_flags, flag)
 
 /atom/proc/ClearSpecificParticles(key)
 	if(!key)
