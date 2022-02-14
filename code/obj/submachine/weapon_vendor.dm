@@ -95,6 +95,8 @@
 
 
 	proc/vended(var/atom/A)
+		if(A.layer <= src.layer)
+			A.layer = src.layer + 0.1
 		if(log_purchase)
 			logTheThing("debug", usr, null, "bought [A] from [src] at [log_loc(get_turf(src))]")
 		.= 0

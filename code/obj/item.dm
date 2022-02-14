@@ -34,7 +34,7 @@
 	/*______*/
 	/*Combat*/
 	/*‾‾‾‾‾‾*/
-	var/force = null
+	var/force = 0
 	var/hit_type = DAMAGE_BLUNT // for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
 	throwforce = 1
 	var/r_speed = 1.0
@@ -1197,7 +1197,7 @@
 	user.violate_hippocratic_oath()
 
 	for (var/mob/V in by_cat[TR_CAT_NERVOUS_MOBS])
-		if (get_dist(user,V) > 6)
+		if (!IN_RANGE(user, V, 6))
 			continue
 		if (prob(8) && user)
 			if (M != V)

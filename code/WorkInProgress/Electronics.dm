@@ -845,7 +845,7 @@
 	item_state = "deconstruction-saw"
 	force = 10
 	throwforce = 4
-	hitsound = 'sound/machines/chainsaw_green.ogg'
+	hitsound = 'sound/machines/chainsaw.ogg'
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_SAWING
 	w_class = W_CLASS_NORMAL

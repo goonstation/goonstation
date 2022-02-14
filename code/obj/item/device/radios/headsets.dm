@@ -31,6 +31,7 @@
 				"r" = R_FREQ_RESEARCH,
 				"m" = R_FREQ_MEDICAL,
 				"c" = R_FREQ_CIVILIAN,
+				"z" = R_FREQ_SYNDICATE,
 				)
 			src.secure_classes = list(
 				"h" = RADIOCL_COMMAND,
@@ -39,6 +40,7 @@
 				"r" = RADIOCL_RESEARCH,
 				"m" = RADIOCL_MEDICAL,
 				"c" = RADIOCL_CIVILIAN,
+				"z" = RADIOCL_SYNDICATE,
 				)
 			boutput(user, "<span class='notice'>Wiretap Radio Upgrade successfully installed in the [src].</span>")
 			playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
@@ -486,7 +488,7 @@ Secure Frequency:
 
 /obj/item/device/radio_upgrade //traitor radio upgrader
 	name = "Wiretap Radio Upgrade"
-	desc = "An illegal device capable of picking up and sending all secure station radio signals. Can be installed in a radio headset. Does not actually work by wiretapping."
+	desc = "An illegal device capable of picking up and sending all secure station radio signals, along with a secure Syndicate frequency. Can be installed in a radio headset. Does not actually work by wiretapping."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "syndie_upgr"
 	w_class = W_CLASS_TINY

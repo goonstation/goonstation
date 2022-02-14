@@ -1445,6 +1445,15 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	max_wclass = 3
 	stam_damage_mult = 1
 
+/datum/limb/small_critter/pincers
+	dmg_type = DAMAGE_STAB
+	max_wclass = 2
+	stam_damage_mult = 0.5
+	dam_low = 2
+	dam_high = 4
+	sound_attack = "sound/items/Wirecutter.ogg"
+	actions = list("snips", "pinches", "slashes")
+
 /datum/limb/small_critter/possum
 	dam_low = 0
 	dam_high = 0

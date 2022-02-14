@@ -6,13 +6,14 @@
 		SPAWN_DBG(0)
 			src.gender = "male"
 			src.real_name = "cluwne"
-			src.contract_disease(/datum/ailment/disease/cluwneing_around,null,null,1)
-			src.contract_disease(/datum/ailment/disability/clumsy,null,null,1)
 
 			src.equip_new_if_possible(/obj/item/clothing/under/gimmick/cursedclown, slot_w_uniform)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/cursedclown_shoes, slot_shoes)
 			src.equip_new_if_possible(/obj/item/clothing/mask/cursedclown_hat, slot_wear_mask)
 			src.equip_new_if_possible(/obj/item/clothing/gloves/cursedclown_gloves, slot_gloves)
+
+			src.contract_disease(/datum/ailment/disease/cluwneing_around,null,null,1)
+			src.contract_disease(/datum/ailment/disability/clumsy,null,null,1)
 			src.make_jittery(1000)
 			src.bioHolder.AddEffect("clumsy")
 			src.take_brain_damage(80)

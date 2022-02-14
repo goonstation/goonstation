@@ -72,10 +72,8 @@
 
 /obj/item/extinguisher/attack(mob/M as mob, mob/user as mob)
 	src.hide_attack = 0
-	if(user.a_intent == "help") //don't smack people with a deadly weapon while you're trying to extinguish them, thanks
+	if(user.a_intent == "help" && !safety) //don't smack people with a deadly weapon while you're trying to extinguish them, thanks
 		src.hide_attack = 1
-		if (safety)
-			src.attack_self(user)
 		return
 	..()
 

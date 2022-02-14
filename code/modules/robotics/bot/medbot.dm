@@ -100,6 +100,11 @@
 		STOP_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
 		. = ..()
 
+/obj/machinery/bot/medbot/hippocrates
+	name = "Hippocrates The Cleric"
+	desc = "A mage practicing in the art of healing magic. He's not very good but he's enthusiastic."
+	skin = "wizard"
+
 /obj/machinery/bot/medbot/head_surgeon/no_camera
 	no_camera = 1
 

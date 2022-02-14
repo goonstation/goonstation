@@ -287,6 +287,7 @@
 /obj/item/ammo/bullets/custom
 	sname = ".22 LR Custom"
 	name = "custom .22 ammo box"
+	desc = "Custom made ammunition, in your favorite plinking caliber"
 	icon_state = "custom-8"
 	amount_left = 8.0
 	max_amount = 8.0
@@ -324,6 +325,7 @@
 /obj/item/ammo/bullets/bullet_22
 	sname = ".22 LR"
 	name = ".22 magazine"
+	desc = "Despite being very small, these bullets are still lethal."
 	icon_state = "pistol_magazine"
 	amount_left = 10.0
 	max_amount = 10.0
@@ -332,6 +334,8 @@
 
 /obj/item/ammo/bullets/bullet_22/smartgun
 	name = ".22 smartgun magazine"
+	desc = "A fancy, high-tech extended magazine of .22 bullets."
+	icon_state = "pistol_magazine_smart"
 	amount_left = 20.0
 	max_amount = 20.0
 	ammo_type = new/datum/projectile/bullet/bullet_22/smartgun
@@ -343,6 +347,7 @@
 /obj/item/ammo/bullets/bullet_22HP
 	sname = ".22 Hollow Point"
 	name = ".22 HP magazine"
+	desc = "Some JHP bullets. They expand as they penetrate, causing additional tissue damage at the cost of less armor penetration."
 	icon_state = "pistol_magazine_hp"
 	amount_left = 10.0
 	max_amount = 10.0
@@ -353,6 +358,7 @@
 /obj/item/ammo/bullets/assault_rifle
 	sname = "5.56x45mm NATO"
 	name = "STENAG magazine" //heh
+	desc = "A magazine of 5.56 rounds, an intermediate rifle cartridge."
 	ammo_type = new/datum/projectile/bullet/assault_rifle
 	icon_state = "stenag_mag"
 	amount_left = 20.0
@@ -363,6 +369,7 @@
 	armor_piercing
 		sname = "5.56x45mm NATO AP"
 		name = "AP STENAG magazine"
+		desc = "5.56 AP bullets. The iron core prevents deformation and causes rounds to pierce further, but reduces the overall force of the bullet."
 		ammo_type = new/datum/projectile/bullet/assault_rifle/armor_piercing
 		icon_state = "stenag_mag-AP"
 
@@ -371,8 +378,8 @@
 	sname = "7.62×51mm NATO"
 	name = "Minigun cartridge"
 	ammo_type = new/datum/projectile/bullet/minigun
-	icon_state = "40mmR"
-	icon_empty = "40mmR-0"
+	icon_state = "lmg_ammo-old" // reusing old sprites for variety
+	icon_empty = "lmg_ammo-0-old"
 	amount_left = 100.0
 	max_amount = 100.0
 	ammo_cat = AMMO_AUTO_308
@@ -381,6 +388,7 @@
 /obj/item/ammo/bullets/ak47
 	sname = ".308 Auto" // This makes little sense, but they're all chambered in the same caliber, okay (Convair880)?
 	name = "AK magazine"
+	desc = "30 some rounds of 7.62 x 39 in an old iron banana magazine."
 	ammo_type = new/datum/projectile/bullet/ak47
 	icon_state = "ak47"
 	amount_left = 30.0
@@ -391,6 +399,7 @@
 /obj/item/ammo/bullets/rifle_3006
 	sname = ".308 AP"
 	name = ".308 rifle magazine"
+	desc = "An old magazine of .308 bullets, ready to rip through whatever they hit."
 	ammo_type = new/datum/projectile/bullet/rifle_3006
 	icon_state = "rifle_clip"
 	amount_left = 4
@@ -400,6 +409,7 @@
 /obj/item/ammo/bullets/rifle_762_NATO
 	sname = "7.62×51mm NATO"
 	name = "7.62 NATO magazine"
+	desc = "Some powerful 7.62 cartridges."
 	ammo_type = new/datum/projectile/bullet/rifle_762_NATO
 	icon_state = "rifle_box_mag" //todo
 	amount_left = 6
@@ -409,6 +419,7 @@
 /obj/item/ammo/bullets/tranq_darts
 	sname = ".308 Tranquilizer"
 	name = ".308 tranquilizer darts"
+	desc = "A box of haloperidol darts. Although not lethal, you wouldn't want to be in a fight under the influence of these."
 	ammo_type = new/datum/projectile/bullet/tranq_dart
 	icon_state = "tranq_clip"
 	amount_left = 4
@@ -422,6 +433,8 @@
 		pistol
 			sname = ".355 Tranqilizer"
 			name = ".355 tranquilizer pistol darts"
+			desc = "A magazine of 10 sodium thiopentinal knockout darts."
+			icon_state = "pistol_tranq"
 			amount_left = 10
 			max_amount = 15
 			ammo_cat = AMMO_TRANQ_9MM//i prefer having tranqs grouped up- owari.
@@ -429,12 +442,14 @@
 
 	anti_mutant
 		sname = ".308 Mutadone"
+		desc = "Some mutadone darts, for forcefully removing mutations without getting into melee range"
 		name = ".308 mutadone darts"
 		ammo_type = new/datum/projectile/bullet/tranq_dart/anti_mutant
 
 /obj/item/ammo/bullets/lmg
 	sname = "7.62×51mm NATO"
 	name = "LMG belt"
+	desc = "A belt of 7.62 LMG rounds. They have less gunpowder in them to prevent overheating and cookoffs."
 	ammo_type = new/datum/projectile/bullet/lmg
 	icon_state = "lmg_ammo"
 	icon_empty = "lmg_ammo-0"
@@ -446,6 +461,7 @@
 	weak
 		sname = "7.62×51mm NATO W"
 		name = "discount LMG belt"
+		desc = "A belt of really FISHY bullets."
 		ammo_type = new/datum/projectile/bullet/lmg/weak
 		amount_left = 25.0
 		max_amount = 25.0
@@ -454,6 +470,7 @@
 /obj/item/ammo/bullets/bullet_9mm
 	sname = "9×19mm Parabellum"
 	name = "9mm magazine"
+	desc = "A handgun magazine full of 9x19mm rounds, an intermediate pistol cartridge."
 	icon_state = "pistol_magazine"
 	amount_left = 15.0
 	max_amount = 15.0
@@ -465,14 +482,16 @@
 
 	smg
 		name = "9mm SMG magazine"
+		desc = "An extended 9mm magazine."
 		amount_left = 30.0
 		max_amount = 30.0
 		ammo_cat = AMMO_SMG_9MM
 		ammo_type = new/datum/projectile/bullet/bullet_9mm/smg
 
 /obj/item/ammo/bullets/nine_mm_NATO
-	sname = "9mm NATO"
-	name = "9mm magazine"
+	sname = "9mm frangible" 
+	name = "9mm frangible magazine"
+	desc = "Some 9mm incapacitating bullets, made of plastic with rubber tips. Despite being sublethal, they can still do damage."
 	icon_state = "pistol_clip"	//9mm_clip that exists already. Also, put this in hacked manufacturers cause these bullets are not good.
 	amount_left = 18.0
 	max_amount = 18.0
@@ -486,6 +505,7 @@
 /obj/item/ammo/bullets/a357
 	sname = ".357 Mag"
 	name = ".357 speedloader"
+	desc = "A speedloader of .357 magnum revolver bullets."
 	icon_state = "38-7"
 	amount_left = 7.0
 	max_amount = 7.0
@@ -498,6 +518,7 @@
 /obj/item/ammo/bullets/a357/AP
 	sname = ".357 Mag AP"
 	name = ".357 AP speedloader"
+	desc = "A speedloader of .357 magnum armor piercing bullets. The iron core increases penetration at the cost of stopping power."
 	icon_state = "38A-7"
 	ammo_type = new/datum/projectile/bullet/revolver_357/AP
 	icon_dynamic = 1
@@ -507,6 +528,7 @@
 /obj/item/ammo/bullets/a38
 	sname = ".38 Spc"
 	name = ".38 speedloader"
+	desc = "A speedloader of .38 special, a popular police and detective cartridge."
 	icon_state = "38-7"
 	amount_left = 7.0
 	max_amount = 7.0
@@ -520,6 +542,7 @@
 /obj/item/ammo/bullets/a38/AP
 	sname = ".38 Spc AP"
 	name = ".38 AP speedloader"
+	desc = "A speedloader of .38 special armor piercing bullets. The iron core increases penetration at the cost of stopping power."
 	icon_state = "38A-7"
 	amount_left = 7.0
 	max_amount = 7.0
@@ -531,6 +554,7 @@
 /obj/item/ammo/bullets/a38/stun
 	sname = ".38 Spc Stun"
 	name = ".38 Stun speedloader"
+	desc = "A speedloader of .38 stun bullets."
 	icon_state = "38S-7"
 	amount_left = 7.0
 	max_amount = 7.0
@@ -591,6 +615,7 @@
 /obj/item/ammo/bullets/derringer
 	sname = ".41 RF"
 	name = ".41 ammo box"
+	desc = "A pair of really small derringer bullets."
 	icon_state = "357-2"
 	amount_left = 2.0
 	max_amount = 2.0
@@ -604,6 +629,7 @@
 /obj/item/ammo/bullets/c_45
 	sname = "Cold .45"
 	name = "Colt .45 speedloader"
+	desc = "A speedloader of .45 caliber revolver bullets."
 	icon_state = "38-7"
 	amount_left = 7.0
 	max_amount = 7.0
@@ -627,6 +653,7 @@
 /obj/item/ammo/bullets/a12
 	sname = "12ga Buckshot"
 	name = "12ga buckshot ammo box"
+	desc = "A box of buckshot shells, capable of tearing through soft tissue."
 	ammo_type = new/datum/projectile/bullet/a12
 	icon_state = "12"
 	amount_left = 8.0
@@ -642,6 +669,7 @@
 /obj/item/ammo/bullets/buckshot_burst // real spread shotgun ammo
 	sname = "Buckshot"
 	name = "buckshot ammo box"
+	desc = "This buckshot looks a little old..."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/
 	icon_state = "12"
 	amount_left = 8.0
@@ -654,6 +682,7 @@
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"
 	name = "nailshot ammo box"
+	desc = "You're unsure about the effectiveness of these shells."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/nails
 	icon_state = "custom-8"
 	icon_short = "custom"
@@ -667,6 +696,7 @@
 /obj/item/ammo/bullets/aex
 	sname = "12ga AEX"
 	name = "12ga AEX ammo box"
+	desc = "Some really fancy HE shotgun shells. The smallish size limits the explosive potential, but it's nothing to scoff at."
 	ammo_type = new/datum/projectile/bullet/aex
 	icon_state = "AEX"
 	amount_left = 8.0
@@ -679,6 +709,7 @@
 /obj/item/ammo/bullets/abg
 	sname = "12ga Rubber Slug"
 	name = "12ga rubber slugs"
+	desc = "A box of rubber slugs. Despite being nonlethal, they still pack a punch."
 	ammo_type = new/datum/projectile/bullet/abg
 	icon_state = "bg"
 	amount_left = 8.0
@@ -691,6 +722,7 @@
 /obj/item/ammo/bullets/flare
 	sname = "12ga Flare"
 	name = "12ga flares"
+	desc = "Some incendiary flares. Ironically enough, they don't burn long enough to be very good at illumination."
 	amount_left = 8
 	max_amount = 8
 	icon_state = "flare"
@@ -738,6 +770,7 @@
 /obj/item/ammo/bullets/autocannon
 	sname = "40mm HE"
 	name = "40mm HE shells"
+	desc = "Some high explosive grenades, for use in 40MM weapons."
 	amount_left = 2
 	max_amount = 2
 	icon_state = "40mmR"
@@ -755,16 +788,19 @@
 	seeker
 		sname = "40mm HE Seeker"
 		name = "40mm HE pod-seeking shells"
+		desc = "Some fancy high explosive shells that really, really love pods."
 		ammo_type = new/datum/projectile/bullet/autocannon/seeker/pod_seeking
 
 	knocker
 		sname = "40mm HE Knocker"
 		name = "40mm HE airlock-breaching shells"
+		desc = "Some explosive breaching shells."
 		ammo_type = new/datum/projectile/bullet/autocannon/knocker
 
 /obj/item/ammo/bullets/grenade_round
 	sname = "40mm HEDP"
 	name = "40mm HEDP shells"
+	desc = "A box of general utility 40mm grenades."
 	amount_left = 8
 	max_amount = 8
 	icon_state = "40mmR"
@@ -790,6 +826,7 @@
 /obj/item/ammo/bullets/smoke
 	sname = "40mm Smoke"
 	name = "40mm smoke shells"
+	desc = "Some smoke shells, for the 40mm platform."
 	amount_left = 5
 	max_amount = 5
 	icon_state = "40mmB"
@@ -807,6 +844,7 @@
 /obj/item/ammo/bullets/marker
 	sname = "40mm Paint Marker Rounds"
 	name = "40mm paint marker rounds"
+	desc = "An experimental 40mm round that causes whoever is hit with it to leave a trail behind them."
 	ammo_type = new/datum/projectile/bullet/marker
 	amount_left = 5
 	max_amount = 5
@@ -820,6 +858,7 @@
 /obj/item/ammo/bullets/pbr
 	sname = "40mm Plastic Baton Rounds"
 	name = "40mm plastic baton rounds"
+	desc = "Some mean-looking plastic projectiles. Keep in mind non-lethal doesn't mean non-maiming."
 	ammo_type = new/datum/projectile/bullet/pbr
 	amount_left = 5
 	max_amount = 5
@@ -908,6 +947,7 @@
 /obj/item/ammo/bullets/rpg
 	sname = "MPRT rocket"
 	name = "MPRT rocket"
+	desc = "A mean high-explosive rocket, guaranteed to cause destruction in a large radius."
 	amount_left = 1
 	max_amount = 1
 	icon = 'icons/obj/projectiles.dmi'
@@ -921,6 +961,7 @@
 /obj/item/ammo/bullets/antisingularity
 	sname = "Singularity buster rocket"
 	name = "Singularity buster rocket"
+	desc = "An experimental rocket containing an energy payload designed to collapse singularities. It's made mostly of electronics and seems pretty fragile."
 	amount_left = 1
 	max_amount = 1
 	icon = 'icons/obj/items/ammo.dmi'
@@ -934,6 +975,7 @@
 /obj/item/ammo/bullets/mininuke
 	sname = "Miniature nuclear warhead"
 	name = "Miniature nuclear warhead"
+	desc = "I am become mini-death, the destroyer of mini-worlds."
 	amount_left = 1
 	max_amount = 1
 	icon = 'icons/obj/items/ammo.dmi'
@@ -992,8 +1034,8 @@
 	sname = "meowitzer"
 	name = "meowitzer"
 	desc = "A box containg a single meowitzer. It's shaking violently and feels warm to the touch. You probably don't want to be anywhere near this when it goes off. Wait is that a cat?"
-	icon_state = "lmg_ammo"
-	icon_empty = "lmg_ammo-0"
+	icon_state = "meow_ammo"
+	icon_empty = "meow_ammo-0"
 	amount_left = 1
 	max_amount = 1
 	ammo_type = new/datum/projectile/special/meowitzer

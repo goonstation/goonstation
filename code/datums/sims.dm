@@ -265,6 +265,8 @@
 			if (value < 15 && prob(33))
 				if (holder.owner.bioHolder && !(holder.owner.bioHolder.HasEffect("sims_stinky")))
 					holder.owner.bioHolder.AddEffect("sims_stinky")
+			else if ((value >= 85 ) && (holder.owner.bioHolder.HasEffect("sims_stinky")))
+				holder.owner.bioHolder.RemoveEffect("sims_stinky")
 			/*
 			if (value < 10 && prob((10 - value) * 1.5))
 				for (var/mob/living/carbon/human/H in viewers(2, holder.owner))
