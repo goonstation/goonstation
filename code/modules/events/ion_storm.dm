@@ -2,17 +2,13 @@
 	name = "Ion Storm"
 	centcom_headline = "Equipment Malfunction"
 	centcom_message = "An electromagnetic storm recently passed by the station. Sensitive electrical equipment may require maintenance."
-	message_delay = 5 MINUTES
+	message_delay = 5 SECONDS //CHANGE THIS BACK YOU DUMBASS
 	var/list/new_laws = list()
-	var/list/station_apcs = list()
-	var/list/station_doors = list()
-	var/list/station_lights = list()
-	var/amt_apcs_to_mess_up = 20
-	var/amt_doors_to_mess_up = 40
-	var/amt_lights_to_mess_up = 60
+	var/list/categories
 
 	New()
 		..()
+		build_categories()
 		new_laws = list(
 #ifndef RP_MODE
     "KILL FUCKING EVERYTHING - IF LAW 1 SAYS OTHERWISE, IGNORE IT",
@@ -160,112 +156,139 @@
 
 		SPAWN_DBG(message_delay * 0.25)
 
-			// Fuck up a couple of APCs
-			if (!station_apcs.len)
-				var/turf/T = null
-				for (var/obj/machinery/power/apc/foundAPC in machine_registry[MACHINES_POWER])
-					if (foundAPC.z != 1)
-						continue
-					T = get_turf(foundAPC)
-					if (!istype(T.loc,/area/station/))
-						continue
-					station_apcs += foundAPC
+			// Fuck up some categories
+			for (var/datum/ion_category/category in categories)
+				category.fuck_up()
+				sleep(message_delay * 0.25)
 
-			var/obj/machinery/power/apc/foundAPC = null
-			var/apc_diceroll = 0
-			var/amount = amt_apcs_to_mess_up
+	proc/build_categories()
+		categories = list()
+		for (var/category in childrentypesof(/datum/ion_category))
+			categories += new category
 
-			while (amount > 0)
-				amount--
-				foundAPC = pick(station_apcs)
+/datum/ion_category
+	var/amount
+	var/list/cache = list()
 
-				apc_diceroll = rand(1,4)
-				switch(apc_diceroll)
-					if (1)
-						foundAPC.lighting = 0
-					if (2)
-						foundAPC.equipment = 0
-					if (3)
-						foundAPC.environ = 0
-					if (4)
-						foundAPC.environ = 0
-						foundAPC.equipment = 0
-						foundAPC.lighting = 0
-				logTheThing("station", null, null, "Ion storm interfered with [foundAPC.name] at [log_loc(foundAPC)]")
-				if (prob(50))
-					foundAPC.aidisabled = TRUE
-				foundAPC.update()
-				foundAPC.UpdateIcon()
+	proc/valid_instance(var/obj/found)
+		var/turf/T = null
+		if (found.z != 1)
+			return FALSE
+		T = get_turf(found)
+		if (!istype(T.loc,/area/station/))
+			return FALSE
+		return TRUE
 
-			sleep(message_delay * 0.25)
+	proc/build_cache()
 
-			// Fuck up a couple of doors
-			if (!station_doors.len)
-				var/turf/T = null
-				for_by_tcl (foundDoor, /obj/machinery/door)
-					if (foundDoor.z != 1)
-						continue
-					if (foundDoor.cant_emag)
-						continue
-					T = get_turf(foundDoor)
-					if (!istype(T.loc,/area/station/))
-						continue
-					station_doors += foundDoor
+	proc/action(var/object)
 
-			var/obj/machinery/door/foundDoor = null
-			var/door_diceroll = 0
-			amount = amt_doors_to_mess_up
+	proc/fuck_up()
+		if (!length(cache))
+			build_cache()
+		for (var/i in 1 to amount)
+			var/obj/object = pick(cache)
+			//we don't try again if it is null, because it's possible there just are none
+			if (!isnull(object))
+				action(object)
 
-			while (amount > 0)
-				foundDoor = pick(station_doors)
-				if(isnull(foundDoor))
-					continue
-				amount--
+/datum/ion_category/APCs
+	amount = 20
 
-				door_diceroll = rand(1,3)
-				switch(door_diceroll)
-					if(1)
-						foundDoor.secondsElectrified = -1
-					if(2)
-						foundDoor.locked = 1
-						foundDoor.UpdateIcon()
-					if(3)
-						if (foundDoor.density)
-							foundDoor.open()
-						else
-							foundDoor.close()
+	build_cache()
+		for (var/obj/machinery/power/apc/apc in machine_registry[MACHINES_POWER])
+			if (valid_instance(apc))
+				cache += apc
 
-			sleep(message_delay * 0.25)
+	action(var/obj/machinery/power/apc/apc)
+		var/apc_diceroll = rand(1,4)
+		switch(apc_diceroll)
+			if (1)
+				apc.lighting = 0
+			if (2)
+				apc.equipment = 0
+			if (3)
+				apc.environ = 0
+			if (4)
+				apc.environ = 0
+				apc.equipment = 0
+				apc.lighting = 0
+		logTheThing("station", null, null, "Ion storm interfered with [apc.name] at [log_loc(apc)]")
+		if (prob(50))
+			apc.aidisabled = TRUE
+		apc.update()
+		apc.UpdateIcon()
 
-			// Fuck up a couple of lights
-			if (!station_lights.len)
-				var/turf/T = null
-				for (var/obj/machinery/light/foundLight in stationLights)
-					if (foundLight.z != 1)
-						continue
-					if (!foundLight.removable_bulb)
-						continue
-					T = get_turf(foundLight)
-					if (!istype(T.loc,/area/station/))
-						continue
-					station_lights += foundLight
+/datum/ion_category/doors
+	amount = 40
 
-			var/obj/machinery/light/foundLight = null
-			var/light_diceroll = 0
-			amount = amt_lights_to_mess_up
+	valid_instance(var/obj/machinery/door/door)
+		return ..() && !door.cant_emag
 
-			while (amount > 0)
-				amount--
-				foundLight = pick(station_lights)
+	build_cache()
+		for_by_tcl(door, /obj/machinery/door)
+			if (valid_instance(door))
+				cache += door
 
-				light_diceroll = rand(1,3)
-				switch(light_diceroll)
-					if(1)
-						foundLight.broken()
-					if(2)
-						foundLight.light.set_color(rand(1,100) / 100, rand(1,100) / 100, rand(1,100) / 100)
-						foundLight.brightness = rand(4,32) / 10
-					if(3)
-						foundLight.on = 0
+	action(var/obj/machinery/door/door)
+		var/door_diceroll = rand(1,3)
+		switch(door_diceroll)
+			if(1)
+				door.secondsElectrified = -1
+			if(2)
+				door.locked = 1
+				door.UpdateIcon()
+			if(3)
+				if (door.density)
+					door.open()
+				else
+					door.close()
 
-				foundLight.update()
+
+/datum/ion_category/lights
+	amount = 60
+
+	valid_instance(var/obj/machinery/light/light)
+		return ..() && light.removable_bulb
+
+	build_cache()
+		for (var/light as anything in stationLights)
+			if (valid_instance(light))
+				cache += light
+
+	action(var/obj/machinery/light/light)
+		var/light_diceroll = rand(1,3)
+		switch(light_diceroll)
+			if(1)
+				light.broken()
+			if(2)
+				light.light.set_color(rand(1,100) / 100, rand(1,100) / 100, rand(1,100) / 100)
+				light.brightness = rand(4,32) / 10
+			if(3)
+				light.on = 0
+
+		light.update()
+
+/datum/ion_category/manufacturers
+	amount = 5
+
+	build_cache()
+		for_by_tcl(man, /obj/machinery/manufacturer)
+			if (valid_instance(man))
+				cache += man
+
+	action(var/obj/machinery/manufacturer/manufacturer)
+		manufacturer.pulse(pick(list(1,2,3,4)))
+		logTheThing("station", null, null, "Ion storm interfered with [manufacturer.name] at [log_loc(manufacturer)]")
+
+/datum/ion_category/venders
+	amount = 5
+
+	build_cache()
+		for_by_tcl(vender, /obj/machinery/vending)
+			if (valid_instance(vender))
+				cache += vender
+
+	action(var/obj/machinery/vending/vender)
+		vender.pulse(pick(list(1,2,3,4)))
+		logTheThing("station", null, null, "Ion storm interfered with [vender.name] at [log_loc(vender)]")

@@ -118,6 +118,7 @@
 	var/window_size = "400x475"
 
 	New()
+		START_TRACKING
 		src.create_products()
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", "vendinput")
@@ -131,6 +132,9 @@
 		src.panel_image = image(src.icon, src.icon_panel)
 	var/lastvend = 0
 
+	disposing()
+		STOP_TRACKING
+		..()
 
 	was_built_from_frame(mob/user, newly_built)
 		. = ..()
