@@ -16845,7 +16845,6 @@
 /area/lower_arctic/lower)
 "aZq" = (
 /obj/grille/steel,
-/obj/window/crystal/reinforced/west,
 /obj/channel{
 	required_to_pass = 1e+009
 	},
@@ -33572,6 +33571,7 @@
 "bTL" = (
 /obj/window/crystal/reinforced/west,
 /obj/map/light/lava,
+/obj/window/crystal/reinforced/south,
 /turf/unsimulated/floor/lava{
 	desc = "Looks pretty toasty.";
 	icon = 'icons/effects/fire.dmi';
@@ -71284,13 +71284,11 @@
 	},
 /area/centcom/offices/cogwerks)
 "fNL" = (
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
+/obj/window/crystal/reinforced/south,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
 	},
-/obj/wingrille_spawn/auto/crystal,
-/turf/unsimulated/floor/plating/scorched,
-/area/crater/biodome/north)
+/area/iomoon/robot_ruins)
 "fQJ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
@@ -71776,9 +71774,6 @@
 /area/titlescreen)
 "hNZ" = (
 /obj/grille/steel,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/west,
 /obj/channel{
 	required_to_pass = 1e+009
 	},
@@ -75930,13 +75925,10 @@
 /turf/unsimulated/floor/carpet/red/decal,
 /area/centcom/offices/grifflez)
 "uvP" = (
-/obj/window/crystal/reinforced/east,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/wingrille_spawn/auto/crystal,
-/turf/unsimulated/floor/plating/scorched,
-/area/crater/biodome/north)
+/obj/map/light/lava,
+/obj/window/crystal/reinforced/south,
+/turf/unsimulated/floor/lava,
+/area/iomoon/robot_ruins)
 "uwC" = (
 /obj/table/wood/auto/desk,
 /obj/machinery/light/lamp/green{
@@ -76352,14 +76344,6 @@
 	},
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
-"vLm" = (
-/obj/window/crystal/reinforced/west,
-/obj/channel{
-	required_to_pass = 1e+009
-	},
-/obj/wingrille_spawn/auto/crystal,
-/turf/unsimulated/floor/plating/scorched,
-/area/crater/biodome/south)
 "vNH" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -110376,7 +110360,7 @@ aKg
 aKg
 aKg
 aSr
-uvP
+aSr
 aMd
 aMd
 aOR
@@ -115812,7 +115796,7 @@ aKg
 aKg
 aTn
 aSr
-fNL
+aSr
 aMd
 aNs
 aPg
@@ -116134,7 +116118,7 @@ aZr
 aZr
 baO
 baO
-vLm
+cEZ
 cEZ
 cww
 aKg
@@ -116419,7 +116403,7 @@ aKg
 aLz
 aSr
 aSr
-fNL
+aSr
 aMd
 aNs
 fCo
@@ -116722,8 +116706,8 @@ aKg
 aKg
 aZZ
 aSr
-fNL
-fNL
+aSr
+aSr
 fCo
 aSo
 aTm
@@ -116735,7 +116719,7 @@ aWU
 aXE
 wkV
 hNZ
-vLm
+cEZ
 cEZ
 aKg
 cwt
@@ -129477,12 +129461,12 @@ bqb
 bpo
 bqd
 bqd
-bqd
+fNL
 bxc
 bxN
 bxN
 bxN
-bxN
+uvP
 bAu
 bqd
 bqd
@@ -129779,12 +129763,12 @@ bqd
 buD
 bqd
 bqd
-bqd
+fNL
 bxc
 bxN
 bxN
 bxN
-bxN
+uvP
 bAu
 bqd
 bqd
@@ -130081,12 +130065,12 @@ bqb
 bpo
 bqd
 bqd
-bqd
+fNL
 bxc
 bxN
 bxN
 bxN
-bxN
+uvP
 bAu
 bqd
 bCa
