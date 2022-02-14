@@ -443,7 +443,7 @@
 
 /obj/critter/spacescorpion
 	name = "space scorpion"
-	desc = "A scorpion in space."
+	desc = "A scorpion in space, it might be less angry if you offer it something..."
 	icon_state = "spacescorpion"
 	critter_family = BUG
 	density = 1
@@ -457,9 +457,13 @@
 	firevuln = 1
 	brutevuln = 1
 	angertext = "snips at"
-	butcherable = 0
+	chases_food = 1
+	health_gain_from_food = 8
+	feed_text = "chitters happily!"
+	butcherable = 1
 	flags = NOSPLASH | OPENCONTAINER | TABLEPASS
 	flying = 0
+	var/attackdelay = 0
 
 	CritterDeath()
 		..()
@@ -487,9 +491,26 @@
 			else
 				continue
 
+	attackby(obj/item/W as obj, mob/M as mob)
+		if(istype(W, /obj/item/reagent_containers/food/snacks) && !(M in src.friends))
+			if(prob(20))
+				src.visible_message("<span class='notice'>[src] chitters happily at the [W], it will no longer attack [M]!</span>")
+				friends += M
+				playsound(src.loc, "sound/misc/bugchitter.ogg", 50, 0)
+				M.drop_item()
+				W.set_loc(src)
+				src.task = "thinking"
+			else
+				src.visible_message("<span class='notice'>[src] hated the [W]! It bit [M]'s hand!</span>")
+				take_bleeding_damage(M, M, rand(6,12), DAMAGE_STAB, 1)
+				playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
+				M.emote("scream")
+				M.drop_item()
+				W.set_loc(src)
+
 	ChaseAttack(mob/M)
 		..()
-		if(prob(50))
+		if(prob(50) && (attackdelay == 0))
 			if (M.reagents)
 				M.visible_message("<span class='combat'><B>[src]</B> stings [src.target]!</span>")
 				M.reagents.add_reagent("neurotoxin", 15)
@@ -497,12 +518,18 @@
 				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 				M.emote("scream")
 				M.add_karma(1)
-		else
+				attackdelay = 1
+				SPAWN_DBG(10 SECONDS)
+					attackdelay = 0
+		else if(attackdelay == 0)
 			random_brute_damage(M, rand(5,10),1)
 			M.visible_message("<span class='combat'><B>[src]</B> tries to grab [src.target] with its pincers!</span>")
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
 			M.changeStatus("weakened", 4 SECONDS)
 			M.force_laydown_standup()
+			attackdelay = 1
+			SPAWN_DBG(10 SECONDS)
+				attackdelay = 0
 
 	CritterAttack(mob/M)
 		take_bleeding_damage(M, M, rand(3,6), DAMAGE_STAB, 1)
