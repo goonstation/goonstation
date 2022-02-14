@@ -72,7 +72,6 @@
 
 ABSTRACT_TYPE(/datum/objective/crew)
 /datum/objective/crew
-	proc/setup()
 
 ABSTRACT_TYPE(/datum/objective/crew/captain)
 /datum/objective/crew/captain/hat
