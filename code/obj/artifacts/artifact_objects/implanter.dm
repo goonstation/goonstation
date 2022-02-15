@@ -59,4 +59,4 @@
 
 		notReady = TRUE
 
-		SPAWN_DBG(2 MINUTES) notReady = FALSE
+		SPAWN(2 MINUTES) notReady = FALSE
