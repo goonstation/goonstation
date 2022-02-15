@@ -918,6 +918,29 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/revolver_38/stunners)
+
+
+//38 ACP gang gun, supports speedloaders because it's cheap and weird, maybe.
+/obj/item/gun/kinetic/hipoint
+	desc = "A cheap .38 handgun, used as a throwaway gun all around the galaxy."
+	name = "Hi-Tek"
+	icon_state = "hipoint"
+	item_state = "hipoint"
+	shoot_delay = 2
+	spread_angle = 4
+	w_class = W_CLASS_SMALL
+	force = MELEE_DMG_PISTOL
+	ammo_cats = list(AMMO_REVOLVER_DETECTIVE)
+	max_ammo_capacity = 10
+	auto_eject = 1
+	has_empty_state = 1
+	gildable = FALSE
+	fire_animation = FALSE
+	default_magazine = /obj/item/ammo/bullets/a38_mag
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/revolver_38)
 		..()
 
 //0.393
@@ -1327,7 +1350,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		force = MELEE_DMG_PISTOL //no stock to whack em with
 		default_magazine = /obj/item/ammo/bullets/buckshot_burst/six
 		contraband = 5
-		caliber = 0.72
 		auto_eject = 0
 		can_dual_wield = 0
 		two_handed = 1

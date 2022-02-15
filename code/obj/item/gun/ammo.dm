@@ -543,12 +543,6 @@
 		amount_left = 30.0
 		max_amount = 30.0
 
-	mag_ten
-		name = "9mm Hi-Tek magazine"
-		icon_state = "pistol_magazine"
-		amount_left = 10.0
-		max_amount = 10.0
-
 	mag_fifteen
 		icon_state = "pistol_magazine"
 		name = "9mm Purretta magazine"
@@ -616,6 +610,17 @@
 	icon_dynamic = 1
 	icon_short = "38"
 	icon_empty = "speedloader_empty"
+
+
+/obj/item/ammo/bullets/a38_mag
+	sname = ".38 Spc"
+	name = ".38 Hi-Tek magazine"
+	icon_state = "pistol_magazine"
+	ammo_type = new/datum/projectile/bullet/revolver_38
+	ammo_cat = AMMO_REVOLVER_DETECTIVE
+	amount_left = 10.0
+	max_amount = 10.0
+
 
 //0.38
 /obj/item/ammo/bullets/a38/AP
@@ -870,7 +875,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_short = "custom"
 	amount_left = 8.0
 	max_amount = 8.0
-	caliber = 0.77
+	ammo_cat = AMMO_COACHGUN
 	icon_dynamic = 1
 	icon_empty = "custom-0"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
@@ -880,7 +885,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	loose //for spawning in tiny volumes in gang crates
 		name = "10 gauge buckshot shell"
 		icon = 'icons/obj/items/casings.dmi'
-		icon_state = "shotgun_red"
+		icon_state = "shotgun_gray"
 		icon_dynamic = 0
 		amount_left = 1
 		max_amount = 2 //for convenience carrying one spare coachgun load
