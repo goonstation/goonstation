@@ -184,7 +184,6 @@
 				boutput(user, "<span class='alert'>The plasma reacts with the erebite and explodes violently!</span>")
 				src.explode()
 			else
-				message_admins("[key_name(user)] rigged [src] to explode at [log_loc(user)].")
 				logTheThing("combat", user, null, "rigged [src] to explode at [log_loc(user)].")
 				rigged = 1
 				rigger = user
