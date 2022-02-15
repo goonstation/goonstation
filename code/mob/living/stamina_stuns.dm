@@ -105,7 +105,7 @@
 	if(!src.use_stamina) return
 	if(!isnum(x)) return
 	if(prob(4) && ishellbanned(src)) //Chances are this will happen during combat
-		SPAWN_DBG(rand(5, 80)) //Detach the cause (hit, reduced stamina) from the consequence (disconnect)
+		SPAWN(rand(5, 80)) //Detach the cause (hit, reduced stamina) from the consequence (disconnect)
 			var/dur = src.client.fake_lagspike()
 			sleep(dur)
 			del(src.client)

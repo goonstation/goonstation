@@ -18587,15 +18587,16 @@
 /turf/simulated/floor/delivery,
 /area/station/maintenance/solar/north)
 "hNj" = (
-/obj/machinery/driver_button{
-	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
-	id = "artlabgun";
-	name = "Emergency Ejection Button";
-	pixel_y = 28
-	},
 /obj/decal/tile_edge/stripe{
 	dir = 8;
 	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/machinery/activation_button/driver_button{
+	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
+	id = "artlabgun";
+	interesting = "This button has many scorch marks from explosions. That's a good thing, right?";
+	name = "Oh shit a bomb";
+	pixel_y = 28
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
@@ -21428,16 +21429,16 @@
 	d2 = 4;
 	icon_state = "6-8"
 	},
-/obj/machinery/ignition_switch{
-	id = "toxins_1";
-	pixel_x = -24;
-	pixel_y = 8
-	},
 /obj/machinery/door_control{
 	id = "tox_vent1";
 	name = "Chamber 1 Vent Control";
 	pixel_x = -24;
 	pixel_y = -4
+	},
+/obj/machinery/activation_button/ignition_switch{
+	id = "toxins_1";
+	pixel_x = -24;
+	pixel_y = 8
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -27225,16 +27226,16 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/machinery/ignition_switch{
-	id = "toxins_2";
-	pixel_x = -24;
-	pixel_y = 8
-	},
 /obj/machinery/door_control{
 	id = "tox_vent2";
 	name = "Chamber 2 Vent Control";
 	pixel_x = -24;
 	pixel_y = -4
+	},
+/obj/machinery/activation_button/ignition_switch{
+	id = "toxins_2";
+	pixel_x = -24;
+	pixel_y = 8
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)

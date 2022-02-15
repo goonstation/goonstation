@@ -466,7 +466,7 @@
 		if (src.armed && src.mousetrap)
 			src.visible_message("<span class='alert'>[src] bumps against [AM]!</span>")
 			walk(src, 0)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				src.mousetrap.triggered(AM && ismob(AM) ? AM : null)
 
 				if (src.mousetrap)

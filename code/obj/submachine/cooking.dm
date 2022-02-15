@@ -693,7 +693,7 @@ table#cooktime a#start {
 			src.working = 1
 			src.icon_state = "oven_bake"
 			src.updateUsrDialog()
-			SPAWN_DBG(cook_amt * 10)
+			SPAWN(cook_amt * 10)
 
 				if(recook && bonus !=0)
 					for (var/obj/item/reagent_containers/food/snacks/F in src)
@@ -778,7 +778,7 @@ table#cooktime a#start {
 		user.TakeDamage("head", 0, 150)
 		sleep(5 SECONDS)
 		src.icon_state = "oven_off"
-		SPAWN_DBG(55 SECONDS)
+		SPAWN(55 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -1220,7 +1220,7 @@ var/list/mixer_recipes = list()
 			if (R.useshumanmeat)
 				derivename = 1
 			break
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 
 			if (!isnull(output))
 				var/obj/item/reagent_containers/food/snacks/F

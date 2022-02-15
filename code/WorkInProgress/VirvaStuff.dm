@@ -112,7 +112,7 @@
 	desc = "An odd plastic casing, entirely hollow and slightly melted."
 	New()
 		..()
-		SPAWN_DBG(rand(1, 3))
+		SPAWN(rand(1, 3))
 			playsound(src.loc, "sound/weapons/casings/casing-shell-0[rand(1,7)].ogg", 15, 0.1, 0, 0.7)
 
 obj/item/ammo/bullets/flechette_mag
@@ -175,4 +175,9 @@ obj/item/ammo/bullets/flechette_mag
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "taskumatti"
 	item_state = "taskumatti"
-	initial_reagents = list("omnizine"=10,"energydrink"=10,"methamphetamine"=10,"bourbon"=10)
+	initial_reagents = list("omnizine"=10,"energydrink"=10,"methamphetamine"=10,"irishcoffee"=10)
+
+/obj/item/decoration/virvase
+	name = "pretty purple hibiscus"
+	desc = "A lovely flower from a dear friend."
+	icon_state = "virvase"

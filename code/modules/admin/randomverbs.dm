@@ -186,7 +186,7 @@
 	logTheThing("diary", src.mob, Mclient.mob, "displayed an alert to [constructTarget(Mclient.mob,"diary")] with the message \"[t]\"", "admin")
 
 	if(Mclient?.mob)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/sound/honk = sound('sound/voice/animal/goose.ogg')
 			honk.volume = 75
 			Mclient.mob << honk
@@ -596,7 +596,7 @@
 	set name = "Stabilize Atmos."
 	set desc = "Resets the air contents of every turf in view to normal."
 	admin_only
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for(var/turf/simulated/T in view())
 			if(!T.air)
 				continue
@@ -676,7 +676,7 @@
 
 		M.real_name = "cluwne"
 		M.UpdateName()
-		SPAWN_DBG(2.5 SECONDS) // Don't remove.
+		SPAWN(2.5 SECONDS) // Don't remove.
 			if (M) M.assign_gimmick_skull() // The mask IS your new face (Convair880).
 
 /client/proc/cmd_admin_view_playernotes(target as text)
@@ -1253,7 +1253,7 @@
 	set popup_menu = 0
 	admin_only
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		boutput(usr, "<span class='alert'>Generating reward list.</span>")
 		var/list/eligible = list()
 		for (var/A in rewardDB)

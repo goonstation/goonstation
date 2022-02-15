@@ -784,7 +784,7 @@
 					pingreply.data["address_1"] = signal.data["sender"]
 					pingreply.data["command"] = "ping_reply"
 					pingreply.data["data"] = src.master.owner
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						src.post_signal(pingreply)
 					return
 
@@ -862,7 +862,7 @@
 					if((signal.data["batt_adjust"] == netpass_syndicate) && (signal.data["address_1"] == src.master.net_id) && !(src.master.exploding))
 						if (src.master)
 							src.master.exploding = 1
-						SPAWN_DBG(2 SECONDS)
+						SPAWN(2 SECONDS)
 							if (src.master)
 								src.master.explode()
 

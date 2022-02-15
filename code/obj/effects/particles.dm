@@ -11,7 +11,7 @@ obj/effects/tatara
 		if(!ON_COOLDOWN(src,"spark_up",2.0 SECONDS))
 			sparks.particles.spawning = 16
 			playsound(src, "sound/impact_sounds/burn_sizzle.ogg", 30)
-			SPAWN_DBG(1 SECONDS)
+			SPAWN(1 SECONDS)
 				sparks.particles.spawning = 0
 
 obj/effects/welding

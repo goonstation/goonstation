@@ -805,7 +805,7 @@
 				if (prob(15))
 					src.visible_message("<span class='alert'>[src] [pick("whirs", "grinds", "rumbles", "clatters", "clangs")] [pick("horribly", "in a grisly manner", "horrifyingly", "scarily")]!</span>")
 				if (prob(25))
-					SPAWN_DBG(0.3 SECONDS)
+					SPAWN(0.3 SECONDS)
 						playsound(src.loc, pick(
 							'sound/impact_sounds/Flesh_Stab_1.ogg',
 							'sound/impact_sounds/Slimy_Hit_3.ogg',
@@ -815,14 +815,14 @@
 							'sound/impact_sounds/Generic_Snap_1.ogg',
 							'sound/impact_sounds/Generic_Hit_1.ogg',
 						), 60, 1)
-					SPAWN_DBG(0.6 SECONDS)
+					SPAWN(0.6 SECONDS)
 						occupant?.emote("scream", FALSE)
 
 			if (H.health <= 2)
 				boutput(H, "<span class='alert'>You feel... different.</span>")
 				src.go_out()
 
-				SPAWN_DBG(0) // handle_robot_antagonist_status can sleep if it needs to grab a resource so here we are
+				SPAWN(0) // handle_robot_antagonist_status can sleep if it needs to grab a resource so here we are
 					var/bdna = null // For forensics (Convair880).
 					var/btype = null
 					if (H.bioHolder.Uid && H.bioHolder.bloodType)

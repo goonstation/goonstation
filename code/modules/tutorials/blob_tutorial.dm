@@ -282,7 +282,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/datum/tutorial_base/blob/MT = tutorial
 				var/tx = MT.initial_turf.x
 				var/ty = MT.initial_turf.y + 1
@@ -359,7 +359,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/datum/tutorial_base/blob/MT = tutorial
 				var/tx = MT.initial_turf.x
 				var/ty = MT.initial_turf.y + 1

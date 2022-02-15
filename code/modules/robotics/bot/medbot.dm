@@ -151,7 +151,7 @@
 
 /obj/item/firstaid_arm_assembly/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src.skin)
 			src.overlays += "medskin-[src.skin]"
 			src.overlays += "medibot-arm"
@@ -192,7 +192,7 @@
 /obj/machinery/bot/medbot/New()
 	..()
 	add_simple_light("medbot", list(220, 220, 255, 0.5*255))
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src)
 			src.UpdateIcon()
 	return
@@ -655,7 +655,7 @@
 					'sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
 					playsound(master.loc, glitchsound, 50, 1)
 					// let's grustle a bit
-					SPAWN_DBG(1 DECI SECOND)
+					SPAWN(1 DECI SECOND)
 						master.pixel_x += rand(-2,2)
 						master.pixel_y += rand(-2,2)
 						sleep(0.1 SECONDS)

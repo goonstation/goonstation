@@ -180,7 +180,7 @@
 
 	clicked(list/params)
 		if(action.checkRequirements(target, user)) // Let's just check again, just in case.
-			SPAWN_DBG(0)
+			SPAWN(0)
 				action.execute(target, user)
 			if (action.flick_on_click)
 				flick(action.flick_on_click, src)

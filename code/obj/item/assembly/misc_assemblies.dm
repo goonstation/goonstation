@@ -51,7 +51,7 @@ Contains:
 
 /obj/item/assembly/time_ignite/New()
 	..()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if(!part1)
 			part1 = new(src)
 			part1.master = src
@@ -87,7 +87,7 @@ Contains:
 		src.part3.reagents.temperature_reagents(4000, 400)
 	if(src.part5)
 		playsound(src.loc, sound_pipebomb, 50, 0)
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			src.part5.do_explode()
 			qdel(src)
 	return
@@ -254,7 +254,7 @@ Contains:
 	return
 
 /obj/item/assembly/prox_ignite/dropped()
-	SPAWN_DBG( 0 )
+	SPAWN( 0 )
 		if (src.part1)
 			src.part1.sense()
 		return
@@ -262,7 +262,7 @@ Contains:
 
 /obj/item/assembly/prox_ignite/New()
 	..()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if(!part1)
 			part1 = new(src)
 			part1.master = src
@@ -424,7 +424,7 @@ Contains:
 		src.part3.reagents.temperature_reagents(4000, 400)
 	if(src.part5)
 		playsound(src.loc, sound_pipebomb, 50, 0)
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			src.part5?.do_explode()
 			qdel(src)
 	return
@@ -462,7 +462,7 @@ Contains:
 
 /obj/item/assembly/rad_ignite/New()
 	..()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if(!part1)
 			part1 = new(src)
 			part1.master = src
@@ -601,7 +601,7 @@ Contains:
 		src.part3.reagents.temperature_reagents(4000, 400)
 	if(src.part5)
 		playsound(src.loc, sound_pipebomb, 50, 0)
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			src.part5?.do_explode()
 			qdel(src)
 	return
@@ -660,7 +660,7 @@ Contains:
 
 /obj/item/assembly/anal_ignite/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src && !src.part1)
 			src.part1 = new /obj/item/device/analyzer/healthanalyzer(src)
 			src.part1.master = src
@@ -707,7 +707,7 @@ Contains:
 
 /obj/item/assembly/radio_horn/New()
 	..()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if(!part1)
 			part1 = new(src)
 			part1.master = src
@@ -864,7 +864,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	return
 
 /obj/item/assembly/rad_prox/dropped()
-	SPAWN_DBG( 0 )
+	SPAWN( 0 )
 		src.part2.sense()
 		return
 	return

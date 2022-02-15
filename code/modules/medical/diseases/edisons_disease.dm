@@ -64,7 +64,7 @@
 					O.show_message(text("<span class='alert'><B>[]</B> starts convulsing violently!</span>", affected_mob), 1)
 				affected_mob.changeStatus("weakened", 15 SECONDS)
 				affected_mob.make_jittery(1000)
-				SPAWN_DBG(rand(20, 100))
+				SPAWN(rand(20, 100))
 					if (affected_mob)
 						var/list/gibs = affected_mob.gib()
 						for(var/obj/decal/cleanable/gib in gibs)

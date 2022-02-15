@@ -199,7 +199,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.go_to_vr()
 		..()
 
@@ -212,7 +212,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.respawn_as_animal()
 		..()
 
@@ -228,7 +228,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.respawn_as_mentor_mouse()
 		..()
 
@@ -244,7 +244,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.respawn_as_admin_mouse()
 		..()
 
@@ -257,7 +257,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.enter_ghostdrone_queue()
 		..()
 
@@ -270,7 +270,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.go_to_deadbar()
 		..()
 

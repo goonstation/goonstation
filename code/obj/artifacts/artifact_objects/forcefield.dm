@@ -47,7 +47,7 @@
 			if(get_dist(O,T) == field_radius)
 				var/obj/forcefield/wand/FF = new /obj/forcefield/wand(T,0,src.icon_state,O)
 				src.forcefields += FF
-		SPAWN_DBG(field_time)
+		SPAWN(field_time)
 			if (O)
 				O.ArtifactDeactivated()
 

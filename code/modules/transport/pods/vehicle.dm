@@ -577,7 +577,7 @@
 
 			if (ismob(target) && target != hitmob)
 				hitmob = target
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					hitmob = 0
 				var/mob/M = target
 				var/vehicular_manslaughter
@@ -590,7 +590,7 @@
 				var/turf/throw_at = get_edge_target_turf(src, src.dir)
 				M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
 				logTheThing("combat", src, target, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
-				SPAWN_DBG(2.5 SECONDS)
+				SPAWN(2.5 SECONDS)
 					if(M.health > 0)
 						vehicular_manslaughter = 0 //we now check if person was sent into crit after hit, if they did we get the achievement
 					if(vehicular_manslaughter && ishuman(M))
@@ -610,7 +610,7 @@
 				if (power > 20)
 					if (istype(O, /obj/machinery/door) && O.density)
 						var/obj/machinery/door/D = O
-						SPAWN_DBG(0)
+						SPAWN(0)
 							D.try_force_open(src)
 					if (istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 						qdel(O)
@@ -643,7 +643,7 @@
 			if (sec_system.type == /obj/item/shipcomponent/secondary_system/crash)
 				if (sec_system:crashable)
 					sec_system:crashtime2(target)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			..()
 			return
 		return
@@ -833,7 +833,7 @@
 	if(exploding)
 		return
 	exploding = 1
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		src.visible_message("<b>[src] is breaking apart!</b>")
 		new /obj/effects/explosion (src.loc)
 		playsound(src.loc, "explosion", 50, 1)
@@ -1182,9 +1182,9 @@
 
 		src.leave_pod(M)
 		//var/atom/target = get_edge_target_turf(M,pick(alldirs))
-		//SPAWN_DBG(0)
+		//SPAWN(0)
 		//M.throw_at(target, 10, 2)
-		SPAWN_DBG(0)
+		SPAWN(0)
 		step_rand(M, 0)
 		step_rand(M, 0)
 		step_rand(M, 0)
@@ -1901,7 +1901,7 @@
 	finish_board_pod(var/mob/boarder)
 		..()
 		if (!src.pilot) return //if they were stopped from entering by other parts of the board proc from ..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.escape()
 
 	proc/escape()
@@ -1993,7 +1993,7 @@
 					var/mob/living/carbon/human/H = pilot
 					for(var/effect in list("sever_left_leg","sever_right_leg","sever_left_arm","sever_right_arm"))
 						if(prob(40))
-							SPAWN_DBG(rand(0,5))
+							SPAWN(rand(0,5))
 								H.bioHolder.AddEffect(effect)
 				src.leave_pod(pilot)
 				src.icon_state = "escape_nowindow"

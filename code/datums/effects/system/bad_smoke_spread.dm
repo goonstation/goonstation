@@ -52,7 +52,7 @@ proc/ClearBadsmokeRefs(var/atom/A)
 	for(i=0, i<src.number, i++)
 		if(src.total_smoke > 20)
 			return
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(holder)
 				src.location = get_turf(holder)
 			var/obj/effects/bad_smoke/smoke = new /obj/effects/bad_smoke

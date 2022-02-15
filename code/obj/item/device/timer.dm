@@ -18,7 +18,7 @@
 	src.c_state(0)
 
 	if (src.master)
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			var/datum/signal/signal = get_free_signal()
 			signal.source = src
 			signal.data["message"] = "ACTIVATE"

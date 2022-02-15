@@ -17,7 +17,7 @@ atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
 	else if(!anchored)
 		if(pressure_difference > pressure_resistance)
 			last_forced_movement = air_master.current_cycle
-			SPAWN_DBG(0)
+			SPAWN(0)
 				step(src, direction) // ZEWAKA-ATMOS: HIGH PRESSURE DIFFERENTIAL HERE
 		return 1
 

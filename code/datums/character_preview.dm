@@ -73,7 +73,7 @@ datum/character_preview
 
 	disposing()
 		STOP_TRACKING
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.viewer)
 				winset(src.viewer, "[src.window_id].[src.preview_id]", "parent=")
 		if (src.handler)
@@ -123,7 +123,7 @@ datum/character_preview/window
 
 	disposing()
 		. = ..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.viewer)
 				winset(src.viewer, "[src.window_id]", "parent=")
 

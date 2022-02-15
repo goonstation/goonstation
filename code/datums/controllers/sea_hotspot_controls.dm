@@ -388,7 +388,7 @@
 				logTheThing("bombing", null, null, logmsg)
 				logTheThing("diary", null, null, logmsg, "game")
 
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				LAGCHECK(LAG_HIGH)
 				src.do_phenomena( recursion++, heat - (9000 + (9000 * recursion)) )
 		else
@@ -571,7 +571,7 @@
 
 				speech_bubble.icon_state = "[val]"
 				UpdateOverlays(speech_bubble, "speech_bubble")
-				SPAWN_DBG(1.5 SECONDS)
+				SPAWN(1.5 SECONDS)
 					UpdateOverlays(null, "speech_bubble")
 
 
@@ -955,7 +955,7 @@
 		flick("stomper2",src)
 
 		if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 99, 1, 0.1, 0.7)
 
 		for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))

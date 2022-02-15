@@ -60,7 +60,7 @@
 				return
 		message_admins("<span class='internal'>Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]</span>")
 		logTheThing("admin", null, null, "Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.lock = 1
 			do_event(source=="spawn_antag", source)
 
@@ -83,7 +83,7 @@
 				else
 					num_agents = 0
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			broadcast_sound(signal_intro)
 			sleep(8 SECONDS)
 			play_all_numbers()

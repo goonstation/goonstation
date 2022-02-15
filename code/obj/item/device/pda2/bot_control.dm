@@ -181,7 +181,7 @@
 						if (!botlist.len)
 							PDA.updateSelfDialog()
 							return
-						SPAWN_DBG(0)
+						SPAWN(0)
 							// yeah its cheating, but holy heck is it laggy to send a zillion signals via PDA
 							var/list/bots = list()
 							for(var/obj/machinery/bot/secbot/bot in src.botlist)
@@ -212,7 +212,7 @@
 				if (!botlist.len)
 					PDA.updateSelfDialog()
 					return
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/list/bots = list()
 					// again, yeah, cheating, but let's just pretend it isnt
 					for(var/obj/machinery/bot/secbot/bot in src.botlist)

@@ -60,7 +60,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 
 
 	post_setup()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			// yeah this is shit. i do not care
 			var/delta = 0
 			last_tick = ticker.round_elapsed_ticks
@@ -83,7 +83,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 								the_football = new /obj/item/football/the_big_one()
 							the_football.set_loc(pick(football_spawns["football"]))
 							the_football.invisibility = INVIS_NONE
-							SPAWN_DBG(1 SECOND)
+							SPAWN(1 SECOND)
 								playsound_global(world, 'sound/items/police_whistle2.ogg', 50)
 						else
 							src.wave_timer.update_timer(time_next_state / 10)
@@ -152,7 +152,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 
 			the_football.blowthefuckup(100, delete = 0)
 			the_football.invisibility = INVIS_ALWAYS
-			SPAWN_DBG(3 SECONDS)
+			SPAWN(3 SECONDS)
 				the_football.invisibility = INVIS_NONE
 				the_football.set_loc(pick(football_spawns["football"]))
 			//qdel(the_football)

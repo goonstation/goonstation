@@ -238,7 +238,7 @@ var/list/dirty_keystates = list()
 
 		if (isnum(next) && src.preferences.use_click_buffer && src.queued_click != object && next <= max(user.click_delay, user.combat_click_delay))
 			src.queued_click = object
-			SPAWN_DBG(next+1)
+			SPAWN(next+1)
 				if (src.queued_click == object)
 					user.click(object, parameters, location, control)
 					src.queued_click = 0
@@ -330,7 +330,7 @@ var/list/dirty_keystates = list()
 	dirty_keystates.len = 0
 
 /proc/start_input_loop()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		while (1)
 			process_keystates()
 

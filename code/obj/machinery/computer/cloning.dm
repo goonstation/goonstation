@@ -61,7 +61,7 @@
 					icon_state = initial(icon_state)
 					status &= ~NOPOWER
 				else
-					SPAWN_DBG(rand(0, 15))
+					SPAWN(rand(0, 15))
 						src.icon_state = "old20"
 						status |= NOPOWER
 
@@ -84,7 +84,7 @@
 /obj/machinery/computer/cloning/New()
 	..()
 	START_TRACKING
-	SPAWN_DBG(0.7 SECONDS)
+	SPAWN(0.7 SECONDS)
 		connection_scan()
 	return
 
@@ -187,7 +187,7 @@
 	//prevents us from overwriting the wrong message
 	currentMessageNumber += 1
 	var/messageNumber = currentMessageNumber
-	SPAWN_DBG(MESSAGE_SHOW_TIME)
+	SPAWN(MESSAGE_SHOW_TIME)
 	if(src.currentMessageNumber == messageNumber)
 		src.currentStatusMessage["text"] = ""
 		src.currentStatusMessage["status"] = ""
@@ -450,7 +450,7 @@ proc/find_ghost_by_key(var/find_key)
 			user.drop_item()
 			target.Attackhand(user)
 			user.set_a_intent(previous_user_intent)
-			SPAWN_DBG(user.combat_click_delay + 2)
+			SPAWN(user.combat_click_delay + 2)
 				if (can_operate(user))
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)
@@ -646,7 +646,7 @@ proc/find_ghost_by_key(var/find_key)
 		if(prob(50))
 			playsound(src, 'sound/machines/mixer.ogg', 50, 1)
 		if(prob(30))
-			SPAWN_DBG(0.3 SECONDS)
+			SPAWN(0.3 SECONDS)
 				playsound(src.loc, pick('sound/impact_sounds/Flesh_Stab_1.ogg', \
 									'sound/impact_sounds/Slimy_Hit_3.ogg', \
 									'sound/impact_sounds/Slimy_Hit_4.ogg', \

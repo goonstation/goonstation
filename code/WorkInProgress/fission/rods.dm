@@ -98,7 +98,7 @@
 			if(locate(src.loc))
 				new /obj/item/rod/fuel/neptunium/TwoThreeNine(src.loc)
 				qdel(src)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			process()
 
 /*****************************************
@@ -166,5 +166,5 @@
 			if(locate(src.loc))
 				new /obj/item/rod/fuel/plutonium/TwoThreeNine(src.loc)
 				qdel(src)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			process()

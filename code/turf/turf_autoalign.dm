@@ -24,7 +24,7 @@
 			src.update_neighbors()
 
 		if (current_state > GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(0) //worldgen overrides ideally
+			SPAWN(0) //worldgen overrides ideally
 				src.UpdateIcon()
 
 		else
@@ -578,7 +578,7 @@
 		if (map_setting && ticker)
 			src.update_neighbors()
 		if (current_state > GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(0) //worldgen overrides ideally
+			SPAWN(0) //worldgen overrides ideally
 				src.UpdateIcon()
 
 		else
@@ -694,7 +694,7 @@
 	connect_overlay = 1
 	connect_diagonal = 1
 	connects_to = list(/turf/unsimulated/wall/auto/supernorn, /turf/unsimulated/wall/auto/reinforced/supernorn, /obj/machinery/door,
-	/obj/window)
+	/obj/window, /turf/simulated/wall/false_wall/reinforced, /turf/unsimulated/wall/auto/adventure/old, /turf/unsimulated/wall/setpieces/fakewindow, /turf/unsimulated/wall/auto/adventure/meat)
 	connects_with_overlay = list(/obj/machinery/door, /obj/window)
 
 /turf/unsimulated/wall/auto/supernorn/wood
@@ -897,7 +897,7 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/adventure)
 	connects_to = list(/turf/cordon, /turf/unsimulated/wall/auto/adventure, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/,
 	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom, /turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave,
 	/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner,/turf/unsimulated/wall/auto/adventure/old,/turf/unsimulated/wall/auto/adventure/meat,
-	/turf/unsimulated/wall/auto/adventure/meat/eyes,/turf/unsimulated/wall/auto/adventure/meat/meatier)
+	/turf/unsimulated/wall/auto/adventure/meat/eyes, /turf/unsimulated/wall/auto/adventure/meat/meatier, /turf/unsimulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/false_wall/reinforced)
 
 	meatier
 		mod = "meatier-"
@@ -914,7 +914,7 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/adventure)
 	icon_state = ""
 	connects_to = list(/turf/cordon, /turf/unsimulated/wall/auto/adventure, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/,
 	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom, /turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave,
-	/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner, /turf/unsimulated/wall/auto/adventure/meat)
+	/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner, /turf/unsimulated/wall/auto/adventure/meat, /turf/unsimulated/wall/setpieces/fakewindow, /turf/unsimulated/wall/auto/reinforced/supernorn)
 
 	reinforced
 		name = "reinforced wall"

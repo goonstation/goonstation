@@ -54,7 +54,7 @@ MATERIAL
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			update_appearance()
 		create_inventory_counter()
 		BLOCK_SETUP(BLOCK_ALL)
@@ -681,7 +681,7 @@ MATERIAL
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			update_stack_appearance()
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -833,7 +833,7 @@ MATERIAL
 				return
 			user.visible_message("<span class='notice'><b>[user]</b> begins building a grille.</span>")
 			var/turf/T = user.loc
-			SPAWN_DBG(1.5 SECONDS)
+			SPAWN(1.5 SECONDS)
 				if (T == user.loc && !user.getStatusDuration("weakened") && !user.getStatusDuration("stunned") && src.amount >= 2)
 					var/atom/G = new /obj/grille(user.loc)
 					G.setMaterial(src.material)
@@ -855,7 +855,7 @@ MATERIAL
 
 	New()
 		..()
-		SPAWN_DBG(0) //wait for the head to be added
+		SPAWN(0) //wait for the head to be added
 			update()
 
 	attack_hand(mob/user as mob)
@@ -978,7 +978,7 @@ MATERIAL
 		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 		if(prob(40)) user.emote("scream")
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			user.visible_message("<span class='alert'><b>[user] tears [his_or_her(user)] body away from the spike, leaving [his_or_her(user)] head behind!</b></span>")
 			var/obj/head = user.organHolder.drop_organ("head")
 			head.set_loc(src)
@@ -987,7 +987,7 @@ MATERIAL
 			make_cleanable( /obj/decal/cleanable/blood,user.loc)
 			playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 
@@ -1027,7 +1027,7 @@ MATERIAL
 		..()
 		src.pixel_x = rand(0, 14)
 		src.pixel_y = rand(0, 14)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			update_stack_appearance()
 			src.inventory_counter?.update_number(amount)
 		return

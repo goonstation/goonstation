@@ -57,7 +57,7 @@
 		healthbar.onStart()
 		healthbar.onUpdate()
 
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			for (var/mob/living/carbon/human/H in src.loc)
 				if (H.decomp_stage == 4 || check_target_immunity(H))//too decomposed or too cool to be eaten
 					continue
@@ -404,7 +404,7 @@
 					src.poison += amount * damage_mult
 					updatePoisonOverlay()
 					if (!overmind)
-						SPAWN_DBG(1 SECOND)
+						SPAWN(1 SECOND)
 							while (poison)
 								Life()
 								sleep(1 SECOND)

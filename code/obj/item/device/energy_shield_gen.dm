@@ -107,7 +107,7 @@
 			S.health = 0
 			S.icon_state = "shield0"
 			S.name = "weakened shield"
-			SPAWN_DBG(20 SECONDS)
+			SPAWN(20 SECONDS)
 				if(S)
 					S.health = S.health_max
 					S.check()
@@ -180,7 +180,7 @@
 			icon_state = "shield0"
 			name = "weakened shield"
 			playsound(src, "sound/effects/shielddown2.ogg", 45, 1)
-			SPAWN_DBG(45 SECONDS)
+			SPAWN(45 SECONDS)
 				health = health_max
 				check()
 		else

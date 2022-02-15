@@ -208,7 +208,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 			var/datum/reagent/blood/B = O.reagents.reagent_list["blood"]
 			B.data = D //Give the blood Jean's bioHolder info.
 
-		SPAWN_DBG(5 SECONDS) //Jean's just here to set up the puzzle, we don't want him sticking around.
+		SPAWN(5 SECONDS) //Jean's just here to set up the puzzle, we don't want him sticking around.
 		qdel(M)
 
 	attack_hand(mob/user as mob)

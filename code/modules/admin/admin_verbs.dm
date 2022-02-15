@@ -1061,12 +1061,12 @@ var/list/fun_images = list()
 	set popup_menu = 0
 
 	if (!ticker)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			alert("Wait until the game starts.")
 		return
 
 	if (istype(M, /mob/new_player) || istype(M, /mob/dead/target_observer)/* || istype(M, /mob/living/intangible/aicamera)*/)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			alert("You can't humanize new_player mobs or target observers.")
 		return
 
@@ -1956,7 +1956,7 @@ var/list/fun_images = list()
 			H.implant.Add(MB)
 			MB.implanted(H, 0)
 			implanted ++
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			boutput(usr, "<span class='alert'>Implanted [implanted] people with microbombs. Any further humans that spawn will also have bombs.</span>")
 	else
 		boutput(usr, "<span class='alert'>Turned off spawning with microbombs. No existing microbombs have been deleted or disabled.</span>")

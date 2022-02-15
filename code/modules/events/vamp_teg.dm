@@ -80,7 +80,7 @@
 			C.reagents.add_reagent("black_goop", 10)
 
 		// Delayed Warning and Instruction
-		SPAWN_DBG(warning_delay)
+		SPAWN(warning_delay)
 			if(event_active)
 				command_alert("Reports indicate that the engine on-board [station_name()] is behaving unusually. Stationwide power failures may occur or worse.", "Engine Warning")
 				sleep(30 SECONDS)
@@ -92,7 +92,7 @@
 				pda_msg("Unknown substance detected in Themo-Electric Generator Circulators. Please drain and replace lubricants.")
 
 		// FAILURE EVENT
-		SPAWN_DBG(event_duration)
+		SPAWN(event_duration)
 			if(event_active)
 				event_active = FALSE
 				for (var/obj/machinery/light_switch/L as() in station_switches)
@@ -101,7 +101,7 @@
 						L.Attackhand(null)
 				generator.transformation_mngr.transform_to_type(/datum/teg_transformation/vampire)
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/area/A = get_area(generator)
 			var/obj/machinery/teg_light_switch = locate(/obj/machinery/light_switch) in A.machines
 
@@ -113,7 +113,7 @@
 				elecflash(A.area_apc)
 				if(!A.area_apc.lighting)
 					A.area_apc.lighting = 0
-					SPAWN_DBG(rand(5 SECONDS,10 SECONDS))
+					SPAWN(rand(5 SECONDS,10 SECONDS))
 						A.area_apc.lighting = 3
 
 			while(event_active)
@@ -147,7 +147,7 @@
 									if (D.secondsElectrified == 0)
 										elecflash(D)
 										D.secondsElectrified = -1
-										SPAWN_DBG(10 SECONDS)
+										SPAWN(10 SECONDS)
 											if (D)
 												D.secondsElectrified = 0
 						if(5)
@@ -164,7 +164,7 @@
 								apc.lighting = 0
 								apc.equipment = 0
 								apc.environ = 0
-								SPAWN_DBG(20 SECONDS)
+								SPAWN(20 SECONDS)
 									apc.equipment = 3
 									apc.environ = 3
 
@@ -307,7 +307,7 @@ datum/teg_transformation/vampire
 				reagents.remove_any_to(100)
 				make_cleanable(/obj/decal/cleanable/blood,get_step(src.teg, SOUTH))
 				src.teg.efficiency_controller += 5
-				SPAWN_DBG(45 SECONDS)
+				SPAWN(45 SECONDS)
 					if(src.teg?.active_form == src)
 						src.teg?.efficiency_controller -= 5
 		else
@@ -413,7 +413,7 @@ datum/teg_transformation/vampire
 		E.setup(O.loc)
 		playsound(O.loc,"sound/effects/glare.ogg", 50, 1, pitch = 1, extrarange = -4)
 
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			var/obj/itemspecialeffect/glare/EE = new /obj/itemspecialeffect/glare
 			EE.color = "#FFFFFF"
 			EE.setup(target.loc)

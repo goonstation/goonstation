@@ -487,7 +487,7 @@ datum
 						if (volume_passed + H.reagents.get_reagent_amount("bojack") > 10)
 
 							boutput(M, "<span class='alert'>Oh god, this stuff is far too manly to keep down...!</span>")
-							SPAWN_DBG(pick(30,50,70))
+							SPAWN(pick(30,50,70))
 								M.visible_message("<span class='alert'>[M] pukes everywhere and passes out!</span>")
 								M.vomit()
 								M.reagents.del_reagent("bojack")
@@ -656,7 +656,7 @@ datum
 									old_glasses.layer = initial(old_glasses.layer)
 							else
 								qdel(H.glasses)
-							SPAWN_DBG(0.5 SECONDS)
+							SPAWN(0.5 SECONDS)
 								if (H)
 									var/obj/item/clothing/glasses/eyepatch/E = new /obj/item/clothing/glasses/eyepatch(H)
 									E.name = "Pirate Eyepatch"
@@ -855,7 +855,7 @@ datum
 				var/power_granted = pick(mutini_effects)
 				var/power_time = rand(1,10)
 				M.bioHolder.AddEffect(power_granted)//, 0, power_time) the timeLeft var either wasn't working here or was grumpy about something so now we manually remove this below
-				SPAWN_DBG(power_time*10)
+				SPAWN(power_time*10)
 					if (M?.bioHolder)
 						M.bioHolder.RemoveEffect(power_granted)
 
@@ -867,7 +867,7 @@ datum
 				var/power_granted = pick(mutini_effects)
 				var/power_time = rand(1,10)
 				M.bioHolder.AddEffect(power_granted)//, 0, power_time)
-				SPAWN_DBG(power_time*10)
+				SPAWN(power_time*10)
 					if (M?.bioHolder)
 						M.bioHolder.RemoveEffect(power_granted)
 				..()
@@ -1108,7 +1108,7 @@ datum
 					if(istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", 100 SECONDS * mult)
 					if (prob(50))
-						SPAWN_DBG(2 SECONDS)
+						SPAWN(2 SECONDS)
 							//Roast up the player
 							if (M)
 								boutput(M, "<span class='alert'><b>IT BURNS!!!!</b></span>")
@@ -1596,7 +1596,7 @@ datum
 				if(probmult(0.2 * volume))
 					M.emote("scream")
 					boutput(M, "<span class='notice'><b>Oh. God.</b></span>")
-					SPAWN_DBG(2 SECONDS)
+					SPAWN(2 SECONDS)
 						if (M)
 							M.become_statue_ice()
 				..()
@@ -3966,7 +3966,7 @@ datum
 					if(istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", 100 SECONDS * mult)
 					if(prob(50))
-						SPAWN_DBG(2 SECONDS)
+						SPAWN(2 SECONDS)
 							//Roast up the player
 							if (M)
 								boutput(M, "<span class='alert'><b>IT BURNS!!!!</b></span>")

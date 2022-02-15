@@ -224,7 +224,7 @@
 			return
 		src.dialing = 1
 		src.handset.holder?.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			// Is it busy?
 			if(target.answered || target.linked || target.connected == 0)
 				playsound(src.loc,"sound/machines/phones/phone_busy.ogg" ,50,0)
