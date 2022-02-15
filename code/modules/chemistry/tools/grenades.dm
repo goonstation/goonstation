@@ -171,7 +171,7 @@
 		src.state = 1
 		src.icon_state = icon_state_armed
 		playsound(src, "sound/weapons/armbomb.ogg", 75, 1, -3)
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			if (src && !src.disposed)
 				if(user?.equipped() == src)
 					user.u_equip(src)
@@ -208,7 +208,7 @@
 
 		invisibility = INVIS_ALWAYS_ISH //Why am i doing this?
 		if (src.master) src.master.invisibility = INVIS_ALWAYS_ISH
-		SPAWN_DBG(5 SECONDS)		   //To make sure all reagents can work
+		SPAWN(5 SECONDS)		   //To make sure all reagents can work
 			if (src.master) qdel(src.master)
 			if (src) qdel(src)	   //correctly before deleting the grenade.
 

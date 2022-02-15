@@ -24,7 +24,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			door_delay = door_delay SECONDS
 			var/list/drivers = new/list()
 			for(var/obj/machinery/mass_driver/D in range(1,src))
@@ -46,7 +46,7 @@
 		operating = 1
 		flick("launcher_loader_1",src)
 		playsound(src, "sound/effects/pump.ogg",50, 1)
-		SPAWN_DBG(0.3 SECONDS)
+		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM in src.loc)
 				if(AM.anchored || AM == src || isobserver(AM) || isintangible(AM)) continue
 				if(trash && AM.delivery_destination != "Disposals")
@@ -59,19 +59,19 @@
 		if(driver && !driver_operating)
 			driver_operating = 1
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/obj/machinery/door/poddoor/door = null
 				for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 					if (P.id == driver.id)
 						door = P
-						SPAWN_DBG(0)
+						SPAWN(0)
 							if (door)
 								door.open()
-						SPAWN_DBG(door_delay)
+						SPAWN(door_delay)
 							if (door)
 								door.close()
 
-				SPAWN_DBG(door ? door_delay : 2 SECONDS) driver_operating = FALSE
+				SPAWN(door ? door_delay : 2 SECONDS) driver_operating = FALSE
 
 				sleep(door ? 20 : 10)
 				if (driver)
@@ -151,7 +151,7 @@
 		flick("amdl_1",src)
 		playsound(src, "sound/effects/pump.ogg",50, 1)
 
-		SPAWN_DBG(0.3 SECONDS)
+		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM2 in src.loc)
 				if(AM2.anchored || AM2 == src || isobserver(AM2) || isintangible(AM2)) continue
 				step(AM2,src.dir)
@@ -165,7 +165,7 @@
 		if(driver && !driver_operating)
 			driver_operating = 1
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				sleep(1 SECOND)
 				if (driver)
 					driver.drive()

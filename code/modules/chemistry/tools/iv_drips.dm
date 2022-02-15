@@ -65,7 +65,7 @@
 
 	dropped(mob/user)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.UpdateIcon()
 
 	attack_self(mob/user as mob)

@@ -24,7 +24,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	logTheThing("admin", src, null, "played sound [S]")
 	logTheThing("diary", src, null, "played sound [S]", "admin")
 	message_admins("[key_name(src)] played sound [S]")
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for (var/client/C in clients)
 			C.sound_playing[ admin_sound_channel ][1] = vol
 			C.sound_playing[ admin_sound_channel ][2] = VOLUME_CHANNEL_ADMIN
@@ -54,7 +54,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	music_sound.environment = -1
 	music_sound.echo = -1
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/admin_key = admin_key(src)
 		for (var/client/C in clients)
 			LAGCHECK(LAG_LOW)
@@ -91,7 +91,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	music_sound.channel = 1013 // This probably works?
 	music_sound.environment = -1
 	music_sound.echo = -1
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for (var/client/C in clients)
 			LAGCHECK(LAG_LOW)
 			C.verbs += /client/verb/stop_the_radio
@@ -123,7 +123,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 		if (C.key == data["key"])
 			adminC = C
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for (var/client/C in clients)
 			LAGCHECK(LAG_LOW)
 			C.verbs += /client/verb/stop_the_music
@@ -210,7 +210,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	stopsound.channel = mute_channel
 	src << 	stopsound
 	//DEBUG_MESSAGE("Muting sound channel [stopsound.channel] for [src]")
-	SPAWN_DBG(5 SECONDS)
+	SPAWN(5 SECONDS)
 		src.verbs += /client/verb/stop_the_radio
 
 /client/verb/stop_all_sounds()
@@ -229,7 +229,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 		src << s
 
 	//DEBUG_MESSAGE("Muting sound channel [stopsound.channel] for [src]")
-	SPAWN_DBG(5 SECONDS)
+	SPAWN(5 SECONDS)
 		src.verbs += /client/verb/stop_all_sounds
 
 /client/proc/play_youtube_audio()

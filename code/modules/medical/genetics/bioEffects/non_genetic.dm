@@ -193,7 +193,7 @@
 
 	OnAdd()
 		. = ..()
-		holder.owner?.UpdateParticles(new/particles/stink_lines, "stink_lines")
+		holder.owner?.UpdateParticles(new/particles/stink_lines, "stink_lines", list(KEEP_APART, RESET_TRANSFORM))
 
 	OnLife(var/mult)
 		if(..()) return
@@ -244,7 +244,7 @@
 
 	proc/deactivate(var/time)
 		active = 0
-		SPAWN_DBG(time)
+		SPAWN(time)
 			active = 1
 
 /datum/bioEffect/hidden/magnetic/positive

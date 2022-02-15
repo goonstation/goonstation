@@ -109,7 +109,7 @@
 			T.equip_if_possible(new /obj/item/clothing/shoes/cursedclown_shoes(T), T.slot_shoes)
 			T.equip_if_possible(new /obj/item/clothing/mask/cursedclown_hat(T), T.slot_wear_mask)
 			T.equip_if_possible(new /obj/item/clothing/gloves/cursedclown_gloves(T), T.slot_gloves)
-			SPAWN_DBG(2.5 SECONDS) // Don't remove.
+			SPAWN(2.5 SECONDS) // Don't remove.
 				if (T) T.assign_gimmick_skull() // The mask IS your new face, my friend (Convair880).
 		else
 			boutput(T, "<span class='alert'><b>You don't feel very funny.</b></span>")

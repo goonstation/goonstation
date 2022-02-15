@@ -43,7 +43,7 @@ datum/pathogeneffects
 				if(istype(M, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = I
 					if(prob(100-H.get_disease_protection()))
-						SPAWN_DBG(rand(0.5,2) SECONDS)
+						SPAWN(rand(0.5,2) SECONDS)
 							H.show_message("Pretty catchy tune...")
 							H.emote("snap") // consider yourself lucky I haven't implemented snap infection yet, human
 
@@ -1545,7 +1545,7 @@ datum/pathogeneffects/malevolent/seriouschills
 	proc/create_icing(var/mob/M)
 		var/obj/decal/icefloor/I = new /obj/decal/icefloor
 		I.set_loc(get_turf(M))
-		SPAWN_DBG(30 SECONDS)
+		SPAWN(30 SECONDS)
 			qdel(I)
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
@@ -1824,7 +1824,7 @@ datum/pathogeneffects/malevolent/leprosy
 						if (limb.remove_stage < 2)
 							limb.remove_stage = 2
 							M.show_message("<span class='alert'>Your [limb] comes loose!</span>")
-							SPAWN_DBG(rand(150, 200))
+							SPAWN(rand(150, 200))
 								if (limb.remove_stage == 2)
 									limb.remove(0)
 	may_react_to()

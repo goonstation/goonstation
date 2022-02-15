@@ -299,7 +299,7 @@
 			return
 		last_cast = world.time + cooldown
 		holder.updateButtons()
-		SPAWN_DBG(cooldown + 5)
+		SPAWN(cooldown + 5)
 			holder.updateButtons()
 
 
@@ -338,7 +338,7 @@
 					current_prob *= 0.75
 					thrown += O
 					animate_float(O)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(target, 32, 2)
 
@@ -356,7 +356,7 @@
 
 	proc/shock(var/turf/T)
 		playsound(usr.loc, "sound/voice/wraith/revshock.ogg", 30, 0)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/mob/living/carbon/human/M in T)
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
 					M.changeStatus("weakened", 2 SECONDS)
@@ -395,7 +395,7 @@
 		for (var/turf/T in orange(1, origin))
 			next += T
 			next[T] = get_dir(origin, T)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/i = 1, i <= iteration_depth, i++)
 				for (var/turf/T in next)
 					shock(T)
@@ -521,7 +521,7 @@
 		if (!RH || !istype(RH, /datum/abilityHolder/revenant/))
 			return
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			var/iterations = 0
 			while (holder.owner.loc == location && isalive(holder.owner) && !holder.owner.equipped())
 				iterations++

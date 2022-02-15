@@ -253,7 +253,7 @@
 								if (src.getStatusDuration("food_space_farts"))
 									src.inertia_dir = src.dir
 									step(src, inertia_dir)
-									SPAWN_DBG(1 DECI SECOND)
+									SPAWN(1 DECI SECOND)
 										src.inertia_dir = src.dir
 										step(src, inertia_dir)
 							else
@@ -611,7 +611,7 @@
 						playsound(src, 'sound/vox/uguu.ogg', 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 					else
 						playsound(src, 'sound/voice/uguu.ogg', 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						src.wear_mask.set_loc(src.loc)
 						src.wear_mask = null
 						src.gib()
@@ -675,7 +675,7 @@
 					if (istype(src.head, /obj/item/clothing/head/fedora))
 						src.visible_message("[src] tips [his_or_her(src)] fedora and smirks.")
 						src.say ("M'lady")
-						SPAWN_DBG(1 SECOND)
+						SPAWN(1 SECOND)
 							src.add_karma(-10)
 							src.gib()
 
@@ -715,7 +715,7 @@
 
 					animate_stomp(src)
 
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						if (hat_or_beret == "beret")
 							hat.icon_state="hosberet-smash"
 						else
@@ -878,7 +878,7 @@
 				m_type = 1
 				src.add_karma(-3)
 
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					var/beeMax = 15
 					for (var/obj/critter/domestic_bee/responseBee in range(5, src))
 						if (!responseBee.alive)
@@ -1372,7 +1372,7 @@
 			if ("twitch")
 				message = "<B>[src]</B> twitches."
 				m_type = 1
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/old_x = src.pixel_x
 					var/old_y = src.pixel_y
 					src.pixel_x += rand(-2,2)
@@ -1384,7 +1384,7 @@
 			if ("twitch_v","twitch_s")
 				message = "<B>[src]</B> twitches violently."
 				m_type = 1
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/old_x = src.pixel_x
 					var/old_y = src.pixel_y
 					src.pixel_x += rand(-3,3)
@@ -1500,7 +1500,7 @@
 							src.say("GHEIT DAUN!")
 							animate_flash_color_fill(src,"#5C0E80", 1, 10)
 							animate_levitate(src, 1, 10)
-							SPAWN_DBG(0) // some movement to make it look cooler
+							SPAWN(0) // some movement to make it look cooler
 								for (var/i in 0 to 9)
 									src.set_dir(turn(src.dir, 90))
 									sleep(0.2 SECONDS)
@@ -1535,7 +1535,7 @@
 										message = "<B>[src]</B> is the life of the party!"
 									else
 										message = "<B>[src]</B> is raving super hard!"
-								SPAWN_DBG(0)
+								SPAWN(0)
 									for (var/i = 0, i < 4, i++)
 										src.set_dir(turn(src.dir, 90))
 										sleep(0.2 SECONDS)
@@ -1546,21 +1546,21 @@
 								switch(dancemove)
 									if (1)
 										message = "<B>[src]</B> busts out some mad moves."
-										SPAWN_DBG(0)
+										SPAWN(0)
 											for (var/i = 0, i < 4, i++)
 												src.set_dir(turn(src.dir, 90))
 												sleep(0.2 SECONDS)
 
 									if (2)
 										message = "<B>[src]</B> does the twist, like they did last summer."
-										SPAWN_DBG(0)
+										SPAWN(0)
 											for (var/i = 0, i < 4, i++)
 												src.set_dir(turn(src.dir, -90))
 												sleep(0.2 SECONDS)
 
 									if (3)
 										message = "<B>[src]</B> moonwalks."
-										SPAWN_DBG(0)
+										SPAWN(0)
 											for (var/i = 0, i < 4, i++)
 												src.pixel_x+= 2
 												sleep(0.2 SECONDS)
@@ -1570,7 +1570,7 @@
 
 									if (4)
 										message = "<B>[src]</B> boogies!"
-										SPAWN_DBG(0)
+										SPAWN(0)
 											for (var/i = 0, i < 4, i++)
 												src.pixel_x+= 2
 												src.set_dir(turn(src.dir, 90))
@@ -1582,7 +1582,7 @@
 
 									if (5)
 										message = "<B>[src]</B> gets on down."
-										SPAWN_DBG(0)
+										SPAWN(0)
 											for (var/i = 0, i < 4, i++)
 												src.pixel_y-= 2
 												sleep(0.2 SECONDS)
@@ -1592,7 +1592,7 @@
 
 									if (6)
 										message = "<B>[src]</B> dances!"
-										SPAWN_DBG(0)
+										SPAWN(0)
 											for (var/i = 0, i < 4, i++)
 												src.pixel_x+= 1
 												src.pixel_y+= 1
@@ -1604,7 +1604,7 @@
 
 									else
 										message = "<B>[src]</B> cranks out some dizzying windmills."
-										SPAWN_DBG(0)
+										SPAWN(0)
 											for (var/i = 0, i < 4, i++)
 												src.pixel_x+= 1
 												src.pixel_y+= 1
@@ -1619,7 +1619,7 @@
 
 									// todo: add context-sensitive break dancing and some other goofy shit
 
-						SPAWN_DBG(0.5 SECONDS)
+						SPAWN(0.5 SECONDS)
 							//i hate these checks - too lazy to fix for real now but lets throw on some lagchecks since we're already spawning
 							LAGCHECK(LAG_MED)
 							var/beeMax = 15
@@ -1653,7 +1653,7 @@
 
 						if (src.traitHolder && src.traitHolder.hasTrait("happyfeet"))
 							if (prob(33))
-								SPAWN_DBG(0.5 SECONDS)
+								SPAWN(0.5 SECONDS)
 									for (var/mob/living/carbon/human/responseMonkey in orange(1, src)) // they don't have to be monkeys, but it's signifying monkey code
 										LAGCHECK(LAG_MED)
 										if (!can_act(responseMonkey, 0))
@@ -1697,7 +1697,7 @@
 							src.changeStatus("weakened", 2 SECONDS)
 							src.set_stamina(min(1, src.stamina))
 							src.emote_allowed = 0
-							SPAWN_DBG(1 SECOND)
+							SPAWN(1 SECOND)
 								src.emote_allowed = 1
 							goto showmessage
 
@@ -1722,7 +1722,7 @@
 								src.remove_stamina(STAMINA_FLIP_COST * 2.0)
 								message = "<B>[src]</B> does a tactical flip!"
 								src.stance = "dodge"
-								SPAWN_DBG(0.2 SECONDS) //I'm sorry for my transgressions there's probably a way better way to do this
+								SPAWN(0.2 SECONDS) //I'm sorry for my transgressions there's probably a way better way to do this
 									if(src?.stance == "dodge")
 										src.stance = "normal"
 
@@ -1851,7 +1851,7 @@
 						if (!FB)
 							FB = src.hasStatus("food_fireburp_big")
 						if (FB)
-							SPAWN_DBG(0)
+							SPAWN(0)
 								FB.cast()
 					else
 						message = "<B>[src]</B> vomits in [his_or_her(src)] own mouth a bit."
@@ -2197,7 +2197,7 @@
 
 	if (maptext_out && !ON_COOLDOWN(src, "emote maptext", 0.5 SECONDS))
 		var/image/chat_maptext/chat_text = null
-		SPAWN_DBG(0) //blind stab at a life() hang - REMOVE LATER
+		SPAWN(0) //blind stab at a life() hang - REMOVE LATER
 			if (speechpopups && src.chat_text)
 				chat_text = make_chat_maptext(src, maptext_out, "color: #C2BEBE;" + src.speechpopupstyle, alpha = 140)
 				if(chat_text)
@@ -2299,7 +2299,7 @@
 	left_arm.loc = get_turf(O)*/
 	animate(left_arm, transform = turn(left_arm.transform, -110), pixel_y = 10, pixel_x = -1, 5, 1, CIRCULAR_EASING)
 	animate(right_arm, transform = turn(right_arm.transform, -95), pixel_y = 1, pixel_x = 10, 5, 1, CIRCULAR_EASING)
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		animate(left_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		animate(right_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		sleep(0.5 SECONDS)
@@ -2352,7 +2352,7 @@
 
 
 		G.affecting.force_laydown_standup()
-		SPAWN_DBG(1 SECOND) //let us do that combo shit people like with throwing
+		SPAWN(1 SECOND) //let us do that combo shit people like with throwing
 			src.force_laydown_standup()
 
 		G.affecting.TakeDamage("head", 9, 0, 0, DAMAGE_BLUNT)
@@ -2361,7 +2361,7 @@
 		var/obj/table/glass/g_tabl = tabl
 		if (!g_tabl.glass_broken)
 			if ((prob(g_tabl.reinforced ? 60 : 80)) || (src.bioHolder.HasEffect("clumsy") && (!g_tabl.reinforced || prob(90))))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					g_tabl.smash()
 					src.changeStatus("weakened", 7 SECONDS)
 					random_brute_damage(src, rand(20,40))

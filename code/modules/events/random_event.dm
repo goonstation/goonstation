@@ -18,7 +18,7 @@
 			logTheThing("admin", null, null, "Random event [src.name] was triggered. Source: [source]")
 
 		if (centcom_headline && centcom_message && random_events.announce_events)
-			SPAWN_DBG(message_delay)
+			SPAWN(message_delay)
 				command_alert("[centcom_message]", "[centcom_headline]")
 
 	proc/admin_call(var/source)

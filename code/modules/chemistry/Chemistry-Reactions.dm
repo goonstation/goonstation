@@ -36,7 +36,7 @@
 					psource:visible_message("<span class='alert'>[psource] implodes!</span>")
 					qdel(psource)
 					return
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for(var/atom/movable/M in view(clamp(2+round(created_volume/15), 0, 4), source))
 					if(M.anchored || M == source || M.throwing) continue
 					M.throw_at(source, 20 + round(created_volume * 2), 1 + round(created_volume / 10))
@@ -61,7 +61,7 @@
 				continue
 			new/obj/decal/shockwave(source)
 			playsound(source, "sound/weapons/flashbang.ogg", 25, 1)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for(var/atom/movable/M in view(clamp(2+round(created_volume/15), 0, 4), source))
 					if(M.anchored || M == source || M.throwing) continue
 					M.throw_at(get_edge_cheap(source, get_dir(source, M)),  20 + round(created_volume * 2), 1 + round(created_volume / 10))

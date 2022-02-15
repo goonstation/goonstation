@@ -123,7 +123,7 @@ MATERIAL
 				return
 			user.visible_message("<span class='notice'><b>[user]</b> begins building a grille.</span>")
 			var/turf/T = user.loc
-			SPAWN_DBG(1.5 SECONDS)
+			SPAWN(1.5 SECONDS)
 				if (T == user.loc && !user.weakened && !user.getStatusDuration("stunned"))
 					src.amount -= 2
 					var/atom/G = new /obj/grille(user.loc)
@@ -387,7 +387,7 @@ MATERIAL
 
 
 				return
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			src.attack_self(usr)
 			return
 		return
@@ -499,7 +499,7 @@ MATERIAL
 
 
 				return
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			src.attack_self(usr)
 			return
 		return

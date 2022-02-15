@@ -179,7 +179,7 @@
 						H.emote("sneeze")
 						src.shakes ++
 						for (var/i = 1, i <= 30, i++)
-							SPAWN_DBG(50*i)
+							SPAWN(50*i)
 								if (H && prob(20)) //Wire: Fix for Cannot execute null.emote().
 									H.emote("sneeze")
 						return

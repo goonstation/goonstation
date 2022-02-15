@@ -316,7 +316,7 @@
 				// Necessary, as the foamer doesn't use the global fire proc (Convair880).
 				logTheThing("combat", user, null, "driving [ship.name] fires [src.name], creating metal foam at [log_loc(ship)].")
 
-				SPAWN_DBG(0)
+				SPAWN(0)
 					step_towards(D, get_step(D, D.dir))
 					var/location = get_turf(D)
 					for(var/mob/M in AIviewers(5, location))
@@ -407,7 +407,7 @@
 			purge.pixel_x -= 144
 			purge.pixel_y -= 144
 
-		SPAWN_DBG(1.2 SECONDS)
+		SPAWN(1.2 SECONDS)
 			var/destruction_point_x
 			var/destruction_point_y
 			ship.vis_contents -= purge

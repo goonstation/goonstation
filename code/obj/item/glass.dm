@@ -235,7 +235,7 @@ SHARDS
 
 /obj/item/shard/bump()
 
-	SPAWN_DBG( 0 )
+	SPAWN( 0 )
 		if (prob(20))
 			src.force = 15
 		else

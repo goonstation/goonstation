@@ -88,7 +88,7 @@
 		if(fixed_random(src.x / world.maxx, src.y / world.maxy) <= 0.01)
 			new /obj/decal/wreath(src)
 		if(istype(get_area(src), /area/station/crew_quarters/cafeteria) && fixed_random(src.x / world.maxx + 0.001, src.y / world.maxy - 0.00001) <= 0.4)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				var/turf/T = get_step(src, SOUTH)
 				if(!T.density && !(locate(/obj/window) in T) && !(locate(/obj/machinery/door) in T))
 					var/obj/stocking/stocking = new(T)

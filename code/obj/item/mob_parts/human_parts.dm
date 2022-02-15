@@ -89,7 +89,7 @@
 			src.add_fingerprint(holder)
 			//https://forum.ss13.co/showthread.php?tid=1774
 			// zam note - removing this again.
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				if (new_holder && istype(new_holder))
 					name = "[new_holder.real_name]'s [initial(name)]"
 		if (src.skintoned)
@@ -97,7 +97,7 @@
 				colorize_limb_icon()
 				set_skin_tone()
 			else if(holder)	//
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					colorize_limb_icon()
 					set_skin_tone()
 					holder.set_body_icon_dirty()
@@ -166,7 +166,7 @@
 			if(2)
 				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] saws through the bone of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You saw through the bone of [holder.name]'s [src.name] with [tool].</span>")
 
-				SPAWN_DBG(rand(150,200))
+				SPAWN(rand(150,200))
 					if(remove_stage == 2)
 						src.remove(0)
 			if(3)

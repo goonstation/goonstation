@@ -48,12 +48,12 @@
 
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
 	src.add_fingerprint(user)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		attack_self(user)
 
 /obj/item/device/radio/intercom/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		attack_self(user)
 
 /obj/item/device/radio/intercom/send_hear()

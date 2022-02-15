@@ -50,7 +50,7 @@
 						H.changeStatus("drowsy", 30 SECONDS)
 					src.triggered_transformation = 1
 
-					SPAWN_DBG (rand(100, 300))
+					SPAWN(rand(100, 300))
 						if (H && D)
 							if (!istype(H.mutantrace, /datum/mutantrace/werewolf))
 								D.stage_prob = 0

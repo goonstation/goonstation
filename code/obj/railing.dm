@@ -16,7 +16,7 @@
 	var/is_reinforced = 0
 
 	proc/layerify()
-		SPAWN_DBG(3 DECI SECONDS)
+		SPAWN(3 DECI SECONDS)
 		if (dir == SOUTH)
 			layer = MOB_LAYER + 0.1
 		else
