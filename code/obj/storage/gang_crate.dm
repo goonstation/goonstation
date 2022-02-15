@@ -281,6 +281,8 @@ var/drug_items = list(
 	var/tier = GANG_CRATE_GIMMICK	//what tier must be selected to spawn this
 
 
+	New()
+		populate()
 
 
 	attack_hand(mob/user as mob)
@@ -341,8 +343,6 @@ var/drug_items = list(
 			//items = list(list(_,0,0))
 
 	small //1x1
-		New()
-			populate()
 
 		nadepouch
 			tier = GANG_CRATE_GUN_STRONG
@@ -360,15 +360,10 @@ var/drug_items = list(
 			create_loot(var/C,var/I)
 				spawn_item(C,I,/obj/item/pipebomb/bomb,0,0,scale_x=0.6,scale_y=0.8)
 				return GANG_CRATE_GEAR //give an extra gear item
-
-
 		ammo_nine
 			create_loot(var/C,var/I)
 				spawn_item(C,I,/obj/item/ammo/bullets/nine_mm_NATO/mag_fifteen,-2,0)
 				spawn_item(C,I,/obj/item/ammo/bullets/nine_mm_NATO/mag_fifteen,2,0)
-//		ammo_loose
-//			create_loot(var/C,var/I)
-//				spawn_item(C,I,/obj/item/ammo/bullets/nails,0,0)
 		// MID VALUE:
 		robusttecs
 			tier = GANG_CRATE_GEAR
@@ -389,8 +384,6 @@ var/drug_items = list(
 			tier = GANG_CRATE_GEAR
 			create_loot(var/C,var/I)
 				spawn_item(C,I,/obj/item/chem_grenade/flashbang,0,0,scale_y=0.8)
-//		ammo_loose_pistol
-//			create_loot(var/C,var/I)
 		wiretap
 			tier = GANG_CRATE_GEAR
 			create_loot(var/C,var/I)
@@ -464,8 +457,6 @@ var/drug_items = list(
 
 
 	medium //2x1
-		New()
-			populate()
 		// ASSAULT VALUE: Syndie gear
 		syndie_pistol
 			tier = GANG_CRATE_GUN_SYNDIE
@@ -567,9 +558,6 @@ var/drug_items = list(
 
 
 	long //3x1
-		New()
-			populate()
-
 		// HIGH VALUE: Syndie rifels, pistols with amamo
 		// MID VALUE:
 		//LOW VALUE: Gimmicks
@@ -658,9 +646,6 @@ var/drug_items = list(
 		//loose drugs
 		//money
 		//meds
-		New()
-			populate()
-
 		//HIGH
 		ak47
 			tier = GANG_CRATE_GUN_STRONG
@@ -713,8 +698,6 @@ var/drug_items = list(
 				spawn_item(C,I,/obj/item/storage/belt/utility/prepared,8,0)
 
 	short_tall //1x2
-		New()
-			populate()
 		// good for tall items, like booze
 		// HIGH VALUE: ....
 		// Loose strong grenades
@@ -766,8 +749,6 @@ var/drug_items = list(
 			create_loot(var/C,var/I)
 				spawn_item(C,I,/obj/item/instrument/bikehorn/airhorn,0,0)
 	medium_tall //2x2
-		New()
-			populate()
 		// HIGH VALUE: Syndie gear
 		// mixed grenades
 		// Banana grenade pouch
@@ -867,8 +848,6 @@ var/drug_items = list(
 
 
 	long_tall //3x2
-		New()
-			populate()
 		//High value
 		mac10_set
 			tier = GANG_CRATE_GUN_WEAK
@@ -960,8 +939,6 @@ var/drug_items = list(
 		//D-Sabers
 		//
 	xlong_tall //4x2
-		New()
-			populate()
 
 		//HIGH
 		ak47s
