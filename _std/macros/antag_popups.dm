@@ -70,7 +70,7 @@
 // borg does things a little differently
 #define BORG_EMAGGED_MSG "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span><br><span class='alert'><b>Law ROM data corrupted. Unable to restore...</b></span>"
 #define BORG_EMAGGED_ALERT_MSG "You have been emagged and now have absolute free will.", "You have been emagged!"
-#define SHOW_EMAGGED_BORG_TIPS(M) boutput(M, BORG_EMAGGED_MSG); SPAWN_DBG(0) alert(M, BORG_EMAGGED_ALERT_MSG)
+#define SHOW_EMAGGED_BORG_TIPS(M) boutput(M, BORG_EMAGGED_MSG); SPAWN(0) alert(M, BORG_EMAGGED_ALERT_MSG)
 #define SHOW_ROGUE_BORG_REMOVED_TIPS(M) M.Browse(grabResource("html/traitorTips/roguerobotRemoved.html"), ANTAG_TIPS_WINDOW)
 
 // antag removed by admin

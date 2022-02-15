@@ -134,7 +134,7 @@ var/list/pw_rewards_tier3 = null
 
 /datum/game_mode/pod_wars/post_setup()
 	//Setup Capture Points. We do it based on the Capture point computers. idk why. I don't have much time, and I'm tired.
-	SPAWN_DBG(-1)
+	SPAWN(-1)
 		//search each of these areas for the computer, then make the control_point datum from em.
 		// add_control_point(/area/pod_wars/spacejunk/reliant, RELIANT)
 		// add_control_point(/area/pod_wars/spacejunk/fstation, FORTUNA)
@@ -144,7 +144,7 @@ var/list/pw_rewards_tier3 = null
 		setup_critical_systems()
 		setup_manufacturer_resources()
 
-	SPAWN_DBG(-1)
+	SPAWN(-1)
 		setup_asteroid_ores()
 
 	round_start_time = TIME
@@ -154,7 +154,7 @@ var/list/pw_rewards_tier3 = null
 
 
 	if(round_limit > 0)
-		SPAWN_DBG (round_limit) // this has got to end soon
+		SPAWN(round_limit) // this has got to end soon
 			command_alert("Something something radiation.","Emergency Update")
 			sleep(10 MINUTES)
 			command_alert("More radiation, too much...", "Emergency Update")
@@ -892,7 +892,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -938,7 +938,7 @@ proc/setup_pw_crate_lists()
 	O.pixel_y = -96
 	O.icon = 'icons/effects/214x246.dmi'
 	O.icon_state = "explosion"
-	SPAWN_DBG(3.5 SECONDS)
+	SPAWN(3.5 SECONDS)
 		qdel(O)
 
 /obj/decoration/memorial/

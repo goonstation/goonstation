@@ -190,7 +190,7 @@
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 
 	equipped(var/mob/user, var/slot)
@@ -251,7 +251,7 @@
 				else
 					REMOVE_MOB_PROPERTY(H, PROP_THERMALVISION, src)
 
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 					if(H.glasses == src)
 						if(upgraded)
@@ -370,7 +370,7 @@
 		setProperty("disorient_resist_eye", 28)
 
 	New()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			if (src)
 				src.name += " - '[src.network]'" // They otherwise all look the same (Convair880).
 		..()
@@ -531,7 +531,7 @@
 		..()
 		if (slot == SLOT_GLASSES)
 			assigned = user.client
-			SPAWN_DBG(-1)
+			SPAWN(-1)
 				//updateIcons()
 				processing_items |= src
 		return
@@ -588,7 +588,7 @@
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 
 

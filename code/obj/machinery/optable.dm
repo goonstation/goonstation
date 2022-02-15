@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 1.0
 	mats = 25
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	var/mob/living/carbon/human/victim = null
 	var/strapped = 0.0
 
@@ -15,7 +15,7 @@
 
 /obj/machinery/optable/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		src.computer = locate(/obj/machinery/computer/operating, orange(2,src))
 
 /obj/machinery/optable/ex_act(severity)

@@ -137,7 +137,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 					boutput(user,"<span class='success'><b>You have been queued for succession!</b></span>")
 					src.usurper = user
 					if(z.client)
-						SPAWN_DBG(300) //starting the afk timer, in case the zoldorf is afk or theyre deliberately not answering the prompt
+						SPAWN(300) //starting the afk timer, in case the zoldorf is afk or theyre deliberately not answering the prompt
 							if(!src.usurper) //after the wait, making sure the usurper still exists
 								return
 							if(!src.usurper.client || isdead(src.usurper)) //making sure the usurper is still in the game and not dead

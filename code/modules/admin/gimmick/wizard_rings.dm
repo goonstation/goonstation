@@ -255,7 +255,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 		new path(src.loc)
 		possible_rings = null
 		//Need the spawn for it to work with the admin spawn menu properly
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			qdel(src)
 
 	offensive

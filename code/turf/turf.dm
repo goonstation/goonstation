@@ -409,7 +409,7 @@ proc/generate_space_color()
 			else if ((abs(OldLoc.x - warptarget.x) > 1) || (abs(OldLoc.y - warptarget.y) > 1))
 				// double set_loc is a fix for the warptarget gliding bug
 				M.set_loc(get_step(warptarget, get_dir(src, OldLoc)))
-				SPAWN_DBG(0.001) // rounds to the nearest tick, about as smooth as it's gonna get
+				SPAWN(0.001) // rounds to the nearest tick, about as smooth as it's gonna get
 					M.set_loc(warptarget)
 			else
 				M.set_loc(warptarget)

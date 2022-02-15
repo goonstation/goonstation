@@ -30,7 +30,7 @@ Ctrl + RMB on buildmode button     = Reset selection<br>
 			if (A.z != B.z)
 				boutput(usr, "<span class='alert'>Corners must be on the same Z-level!</span>")
 				return
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for (var/turf/Q in block(A,B))
 					revert(Q)
 				A = null

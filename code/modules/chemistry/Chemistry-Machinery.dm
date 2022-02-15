@@ -62,7 +62,7 @@
 				B.set_loc(src)
 		else
 			roboworking = user
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				robot_disposal_check()
 
 		if(src.beaker || roboworking)
@@ -225,7 +225,7 @@
 
 		src.updateUsrDialog()
 
-		SPAWN_DBG(1 SECOND) active()
+		SPAWN(1 SECOND) active()
 
 	proc/robot_disposal_check()
 		// Without this, the heater might occasionally show that a beaker is still inserted
@@ -247,7 +247,7 @@
 			beaker = null
 			set_inactive()
 		else
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				robot_disposal_check()
 
 	proc/set_inactive()
@@ -780,7 +780,7 @@ datum/chemicompiler_core/stationaryCore
 				light.set_brightness(0.4)
 				light.enable()
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				icon_state = initial(icon_state)
 				status |= NOPOWER
 				light.disable()

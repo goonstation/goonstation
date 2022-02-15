@@ -324,7 +324,7 @@
 
 /mob/living/silicon/lastgasp()
 	// making this spawn a new proc since lastgasps seem to be related to the mob loop hangs. this way the loop can keep rolling in the event of a problem here. -drsingh
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if (!src || !src.client) return											// break if it's an npc or a disconnected player
 		var/enteredtext = winget(src, "mainwindow.input", "text")				// grab the text from the input bar
 		if ((copytext(enteredtext,1,6) == "say \"") && length(enteredtext) > 5)	// check if the player is trying to say something

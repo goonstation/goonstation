@@ -1288,7 +1288,7 @@ proc/info_overlay_choices()
 		GenerateOverlay()
 		activeOverlay.OnEnabled(src)
 		RenderOverlay()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			var/client/X = src
 			while (X?.activeOverlay)
 				// its a debug overlay so f u

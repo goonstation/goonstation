@@ -120,7 +120,7 @@
 					O.visible_message("<span class='alert'>[O] pukes all over [himself_or_herself(O)]!</span>", "<span class='alert'>You feel [pick("<b>really</b>", "")] ill from watching that.</span>")
 
 		if (prob(40))
-			SPAWN_DBG(0) // linter demands this
+			SPAWN(0) // linter demands this
 				occupant.emote("scream")
 
 

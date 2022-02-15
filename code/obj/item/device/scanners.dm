@@ -227,7 +227,7 @@ that cannot be itched
 				icon_state = "fs_pinmedium"
 			if(16 to INFINITY)
 				icon_state = "fs_pinfar"
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			.(T)
 
 /obj/item/device/detective_scanner/detective
@@ -501,7 +501,7 @@ that cannot be itched
 				det.attachments.Remove(src)
 			if ("leak")
 				det.attachedTo.visible_message("<style class='combat bold'>\The [src] picks up the rapid atmospheric change of the canister, and signals the detonator.</style>")
-				SPAWN_DBG(0)
+				SPAWN(0)
 					det.detonate()
 		return
 
@@ -730,7 +730,7 @@ that cannot be itched
 
 		logTheThing("admin", user, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
 		playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			var/obj/item/paper/p = new /obj/item/paper
 			p.set_loc(get_turf(src))
 			p.name = "Official Caution - [ticket_target]"

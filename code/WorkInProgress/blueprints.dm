@@ -181,7 +181,7 @@
 		building = 1
 		icon_state = "builder1"
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 
 			for(var/datum/tileinfo/T in currentBp.roominfo)
 				var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)

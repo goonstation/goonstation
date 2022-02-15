@@ -65,7 +65,7 @@
 	// Fix for the backpack exploit. Spawn call is necessary for some reason (Convair880).
 	dropped(var/mob/user)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (!src) return
 			if (!user)
 				src.deactivate()

@@ -1139,7 +1139,7 @@ datum
 					M.visible_message("<span class='alert'><B>[M]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
 					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 15 SECONDS * mult))
 					M.make_jittery(1000)
-					SPAWN_DBG(rand(20, 100))
+					SPAWN(rand(20, 100))
 						if (M) //ZeWaka: Fix for null.gib
 							M.gib()
 					return

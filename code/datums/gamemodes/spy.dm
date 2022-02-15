@@ -72,7 +72,7 @@
 
 		equip_leader(leaderMind.current)
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/spy/send_intercept()

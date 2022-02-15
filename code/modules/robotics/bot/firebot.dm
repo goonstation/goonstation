@@ -53,7 +53,7 @@
 
 /obj/machinery/bot/firebot/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src)
 			src.icon_state = "firebot[src.on]"
 

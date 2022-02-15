@@ -124,7 +124,7 @@
 				else
 					if (prob(5))
 						var/obj/artifact/lamp/L = new /obj/artifact/lamp(T)
-						SPAWN_DBG(1 SECOND)
+						SPAWN(1 SECOND)
 							L.ArtifactActivated()
 					if (prob(100 / (picks + 1)))
 						new /obj/item/mining_tool(T)

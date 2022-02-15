@@ -241,7 +241,7 @@
 				logTheThing("admin", "[user] (Discord)", null, "displayed an alert to [constructTarget(C,"admin")] with the message \"[message]\"")
 				logTheThing("diary", "[user] (Discord)", null, "displayed an alert to  [constructTarget(C,"diary")] with the message \"[message]\"", "admin")
 				if (C?.mob)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						C.mob.playsound_local(C.mob, "sound/voice/animal/goose.ogg", 100, flags = SOUND_IGNORE_SPACE)
 						if (alert(C.mob, message, "!! Admin Alert !!", "OK") == "OK")
 							message_admins("[ckey] acknowledged the alert from [user] (Discord).")

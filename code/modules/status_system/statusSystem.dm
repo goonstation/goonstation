@@ -8,7 +8,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 
 /proc/testStatus()
 	var/inp = input(usr,"Which status?","Test status","airrit") as text
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for(var/datum/statusEffect/status as anything in usr.statusEffects)
 			usr.delStatus(status)
 		usr.changeStatus(inp, 15 MINUTES)

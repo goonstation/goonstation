@@ -56,7 +56,7 @@
 	src.charge -= 1e6
 	if (src.charge < 0)
 		src.charge = 0
-	SPAWN_DBG(10 SECONDS)
+	SPAWN(10 SECONDS)
 		src.output = initial(src.output)
 		src.charging = initial(src.charging)
 		src.online = initial(src.online)
@@ -65,7 +65,7 @@
 /obj/machinery/power/smes/New()
 	..()
 
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		dir_loop:
 			for(var/d in cardinal)
 				var/turf/T = get_step(src, d)
@@ -153,7 +153,7 @@
 
 	if (online)		// if outputting
 		if (prob(5))
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				playsound(src.loc, pick(ambience_power), 60, 1)
 
 		lastout = min(charge, output)		//limit output to that stored

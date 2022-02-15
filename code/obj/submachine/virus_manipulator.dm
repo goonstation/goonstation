@@ -79,7 +79,7 @@
 								if (current_disease.Rvaccine) src.datavaccine = "Yes"
 								else src.datavaccine = "No"
 
-				SPAWN_DBG(rand(100,150))
+				SPAWN(rand(100,150))
 					src.working = 0
 					src.icon_state = "DAn-off"
 					var/vacannounce
@@ -127,7 +127,7 @@
 							if(prob(50))
 								current_disease.Rprob = rand(-3,3)
 								src.dataprob = current_disease.Rprob
-				SPAWN_DBG(rand(100,150))
+				SPAWN(rand(100,150))
 					src.working = 0
 					src.icon_state = "DAn-off"
 					for(var/mob/O in hearers(src, null))

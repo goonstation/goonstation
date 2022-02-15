@@ -23,14 +23,14 @@
 	ai_attacknpc = 0
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.mind = new(src)
 			if (src.name == "human")
 				randomize_look(src, 1, 1, 1, 1, 1, 0) // change gender/bloodtype/age/name/underwear, keep bioeffects
 				src.organHolder.head.UpdateIcon()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			set_clothing_icon_dirty()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			ai_init()
 
 /mob/living/carbon/human/npc/assistant
@@ -38,7 +38,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			JobEquipSpawned("Staff Assistant")
 
 	ai_findtarget_new()
@@ -79,7 +79,7 @@
 		..()
 		if(M.a_intent in list(INTENT_HARM,INTENT_DISARM,INTENT_GRAB))
 			if(!ON_COOLDOWN(src, "cry_grief", 5 SECONDS))
-				SPAWN_DBG(rand(10,30))
+				SPAWN(rand(10,30))
 					src.cry_grief(M)
 
 	attackby(obj/item/W, mob/M)
@@ -89,7 +89,7 @@
 		var/damage = ((get_brute_damage() - oldbloss) + (get_burn_damage() - oldfloss))
 		if((damage > 0) || W.force)
 			if(!ON_COOLDOWN(src, "cry_grief", 5 SECONDS))
-				SPAWN_DBG(rand(10,30))
+				SPAWN(rand(10,30))
 					src.cry_grief(M)
 
 
@@ -101,7 +101,7 @@
 	ai_aggressive = 1
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 				src.real_name = "[syndicate_name()] Operative #[ticker.mode:agent_number]"
 				ticker.mode:agent_number++
@@ -115,7 +115,7 @@
 	ai_aggressive = 1
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.real_name = "Junior Syndicate Agent"
 			JobEquipSpawned("Junior Syndicate Operative")
 
@@ -123,7 +123,7 @@
 	ai_aggressive = 1
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.real_name = "Junior Syndicate Agent"
 			JobEquipSpawned("Poorly Equipped Junior Syndicate Operative")
 
@@ -208,7 +208,7 @@
 	ai_move()
 
 	if(ai_target)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			ai_move()
 		action_delay += 10
 	else
@@ -461,7 +461,7 @@
 					ai_pounced = world.timeofday
 					src.visible_message("<span class='alert'>[src] lunges at [ai_target]!</span>")
 					ai_target:changeStatus("weakened", 2 SECONDS)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						step_towards(src,ai_target)
 						step_towards(src,ai_target)
 
@@ -604,14 +604,14 @@
 	if(throw_equipped)
 		var/turf/T = get_turf(src)
 		if(T)
-			SPAWN_DBG(0.2 SECONDS) // todo: probably reorder ai_move stuff and remove this spawn, without this they keep hitting themselves
+			SPAWN(0.2 SECONDS) // todo: probably reorder ai_move stuff and remove this spawn, without this they keep hitting themselves
 				src.throw_item(locate(T.x + rand(-5, 5), T.y + rand(-5, 5), T.z), list("npc_throw"))
 
 	// give
 	if(prob(src.hand ? 5 : 1) && src.equipped() && ai_state != AI_ATTACKING)
 		for(var/mob/living/carbon/human/H in view(1))
 			if(H != src && isalive(H))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.give_to(H)
 				break
 

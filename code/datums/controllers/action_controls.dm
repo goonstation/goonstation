@@ -195,7 +195,7 @@ var/datum/action_controller/actions
 		if (place_to_put_bar)
 			place_to_put_bar.vis_contents -= target_bar
 			place_to_put_bar.vis_contents -= target_border
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (bar)
 				bar.set_loc(null)
 				qdel(bar)

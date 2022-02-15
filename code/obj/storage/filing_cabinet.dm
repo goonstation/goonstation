@@ -15,7 +15,7 @@
 				boutput(user, "You file the folder.")
 			user.drop_item()
 			W.set_loc(src)
-			SPAWN_DBG(5 DECI SECONDS)
+			SPAWN(5 DECI SECONDS)
 				icon_state = "filecabinet"
 
 	attack_hand(var/mob/user as mob)

@@ -62,7 +62,7 @@
 			return
 		last_cast = world.time + cooldown
 		holder.updateButtons()
-		SPAWN_DBG(cooldown + 5)
+		SPAWN(cooldown + 5)
 			holder.updateButtons()
 
 
@@ -182,7 +182,7 @@
 				W.corpsecount += 1
 		last_cast = world.time + cooldown
 		holder.updateButtons()
-		SPAWN_DBG(cooldown + 5)
+		SPAWN(cooldown + 5)
 			holder.updateButtons()
 
 
@@ -210,10 +210,10 @@
 		boutput(holder.owner, "<span class='alert'><strong>[pick("You extend your will into [T].", "You force [T] to do your bidding.")]</strong></span>")
 		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithpossesobject.ogg", 50, 0)
 		var/mob/living/object/O = new/mob/living/object(T, holder.owner)
-		SPAWN_DBG(45 SECONDS)
+		SPAWN(45 SECONDS)
 			if (O)
 				boutput(O, "<span class='alert'>You feel your control of this vessel slipping away!</span>")
-		SPAWN_DBG(60 SECONDS) //time limit on possession: 1 minute
+		SPAWN(60 SECONDS) //time limit on possession: 1 minute
 			if (O)
 				boutput(O, "<span class='alert'><strong>Your control is wrested away! The item is no longer yours.</strong></span>")
 				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithleaveoject.ogg", 50, 0)
@@ -343,7 +343,7 @@
 					current_prob *= 0.35 // very steep. probably grabs 3 or 4 objects per cast -- much less effective than revenant command
 					thrown += O
 					animate_float(O)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(T, 32, 2)
 
@@ -561,7 +561,7 @@
 				for(var/obj/machinery/door/G in range(10, holder.owner))
 					if (prob(c_prob))
 						c_prob *= 0.4
-						SPAWN_DBG(1 DECI SECOND)
+						SPAWN(1 DECI SECOND)
 							if (G.density)
 								G.open()
 							else
@@ -570,7 +570,7 @@
 				for(var/obj/storage/F in range(10, holder.owner))
 					if (prob(c_prob))
 						c_prob *= 0.4
-						SPAWN_DBG(1 DECI SECOND)
+						SPAWN(1 DECI SECOND)
 							if (F.open)
 								F.close()
 							else
@@ -715,7 +715,7 @@
 			else
 				boutput(W, "Couldn't set up poltergeist ; no spirits responded. Trying again in 3 minutes.")
 				qdel(marker)
-				SPAWN_DBG(3 MINUTES)
+				SPAWN(3 MINUTES)
 					make_poltergeist(W, T, tries++)
 			return
 		var/datum/mind/lucky_dude = pick(candidates)

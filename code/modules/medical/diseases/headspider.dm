@@ -128,7 +128,7 @@
 					logTheThing("combat", affected_mob, null, "'s headspider successfully assumes control of new host at [log_loc(affected_mob)].")
 
 					D.stealth_asymptomatic = 1 //Retain the disease but don't actually do anything with it
-					SPAWN_DBG(2 MINUTES) //Disease stays for two minutes after a complete infection, then it removes itself.
+					SPAWN(2 MINUTES) //Disease stays for two minutes after a complete infection, then it removes itself.
 						affected_mob.cure_disease_by_path(/datum/ailment/parasite/headspider)
 
 				return

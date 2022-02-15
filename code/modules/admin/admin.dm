@@ -454,7 +454,7 @@ var/global/noir = 0
 						return
 
 					addPlayerNote(player, usr.ckey, the_note)
-					SPAWN_DBG(2 SECONDS) src.viewPlayerNotes(player)
+					SPAWN(2 SECONDS) src.viewPlayerNotes(player)
 
 					logTheThing("admin", usr, null, "added a note for [player]: [the_note]")
 					logTheThing("diary", usr, null, "added a note for [player]: [the_note]", "admin")
@@ -1823,7 +1823,7 @@ var/global/noir = 0
 						ticker.mode.Agimmicks += B.mind
 						B.antagonist_overlay_refresh(1, 0)
 
-						SPAWN_DBG(0)
+						SPAWN(0)
 							var/newname = input(B, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
 
 							if (newname)
@@ -2057,7 +2057,7 @@ var/global/noir = 0
 							else
 								evilize(M, selection)
 						/*	else
-								SPAWN_DBG(0) alert("An error occurred, please try again.")*/
+								SPAWN(0) alert("An error occurred, please try again.")*/
 					else
 						var/list/traitor_types = list(ROLE_TRAITOR, ROLE_WIZARD, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WEREWOLF, ROLE_HUNTER, ROLE_WRESTLER, ROLE_GRINCH, ROLE_OMNITRAITOR, ROLE_SPY_THIEF, ROLE_ARCFIEND)
 						if(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang))
@@ -2072,7 +2072,7 @@ var/global/noir = 0
 							else
 								evilize(M, selection)
 							/*else
-								SPAWN_DBG(0) alert("An error occurred, please try again.")*/
+								SPAWN(0) alert("An error occurred, please try again.")*/
 			//they're a ghost/hivebotthing/etc
 			else
 				alert("Cannot make this mob a traitor")
@@ -2541,7 +2541,7 @@ var/global/noir = 0
 									if(AffectedArea.name != "Space" && AffectedArea.name != "Ocean" && AffectedArea.name != "Engine Walls" && AffectedArea.name != "Chemical Lab Test Chamber" && AffectedArea.name != "Escape Shuttle" && AffectedArea.name != "Arrival Area" && AffectedArea.name != "Arrival Shuttle" && AffectedArea.name != "start area" && AffectedArea.name != "Engine Combustion Chamber")
 										AffectedArea.power_light = 0
 										AffectedArea.power_change()
-										SPAWN_DBG(rand(55,185))
+										SPAWN(rand(55,185))
 											AffectedArea.power_light = 1
 											AffectedArea.power_change()
 										var/Message = rand(1,4)
@@ -2760,7 +2760,7 @@ var/global/noir = 0
 									else
 										string_version = "\"[pick]\""
 
-								SPAWN_DBG(0)
+								SPAWN(0)
 									for(var/mob/living/carbon/X in mobs)
 										for(pick in picklist)
 											if (adding)
@@ -2824,7 +2824,7 @@ var/global/noir = 0
 									else
 										string_version = "[amt] \"[pick]\""
 
-								SPAWN_DBG(0)
+								SPAWN(0)
 									for(var/mob/living/carbon/X in mobs)
 										for(pick in picklist)
 											var/amt = picklist[pick]
@@ -3114,7 +3114,7 @@ var/global/noir = 0
 							logTheThing("diary", src, null, "created a shake effect (intensity [intensity], length [time])", "admin")
 							message_admins("[key_name(usr)] has created a shake effect (intensity [intensity], length [time]).")
 							for (var/mob/M in mobs)
-								SPAWN_DBG(0)
+								SPAWN(0)
 									shake_camera(M, time * 10, intensity)
 								if (intensity >= 64)
 									M.changeStatus("weakened", 2 SECONDS)

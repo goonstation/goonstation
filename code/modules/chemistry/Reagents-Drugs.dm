@@ -47,7 +47,7 @@ datum
 						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/tramp
 						H.set_face_icon_dirty()
 						boutput(M, "<span class='alert'><b>You feel gruff!</b></span>")
-						SPAWN_DBG(0.3 SECONDS)
+						SPAWN(0.3 SECONDS)
 							M.visible_message("<span class='alert'><b>[M.name]</b> has a wild look in their eyes!</span>")
 					if(check < 60)
 						if(H.getStatusDuration("paralysis")) H.delStatus("paralysis")
@@ -702,7 +702,7 @@ datum
 							boutput(M, "<B>The Emergency Shuttle has docked with the station! You have 3 minutes to board the Emergency Shuttle.</B>")
 						if(2)
 							boutput(M, "<span class='alert'><b>Restarting world!</b> </span><span class='notice'>Initiated by Administrator!</span>")
-							SPAWN_DBG(2 SECONDS) M.playsound_local(M.loc, pick('sound/misc/NewRound.ogg', 'sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg', 'sound/misc/TimeForANewRound.ogg'), 50, 1)
+							SPAWN(2 SECONDS) M.playsound_local(M.loc, pick('sound/misc/NewRound.ogg', 'sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg', 'sound/misc/TimeForANewRound.ogg'), 50, 1)
 						if(3)
 							switch (rand(1,4))
 								if(1)

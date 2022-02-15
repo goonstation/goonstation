@@ -37,7 +37,7 @@ client/proc/lightweight_doors()
 	admin_only
 
 	message_admins("[key_name(src)] is removing light/camera interactions from doors...")
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for(var/obj/machinery/door/D in by_type[/obj/machinery/door])
 			D.ignore_light_or_cam_opacity = 1
 			LAGCHECK(LAG_REALTIME)

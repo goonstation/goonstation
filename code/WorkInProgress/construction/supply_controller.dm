@@ -519,7 +519,7 @@
 	proc/used()
 		charge = 0
 		has_crystal--
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while (charge < 100)
 				charge++
 				sleep(0.1 SECONDS)
@@ -609,7 +609,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			recheck()
 
 	proc/is_sellable(var/obj/O)

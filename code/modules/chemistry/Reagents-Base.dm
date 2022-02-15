@@ -423,7 +423,7 @@ datum
 					if(holder)
 						var/list/covered = holder.covered_turf()
 						for(var/turf/t in covered)
-							SPAWN_DBG(1 DECI SECOND) fireflash(t, clamp(((volume/covered.len)/15), 0, 6))
+							SPAWN(1 DECI SECOND) fireflash(t, clamp(((volume/covered.len)/15), 0, 6))
 				if(holder)
 					holder.del_reagent(id)
 

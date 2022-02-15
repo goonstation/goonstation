@@ -284,7 +284,7 @@
 		if (!r_arm) r_arm = new /obj/item/parts/human_parts/arm/right(holder, AHolLimb)
 		if (!l_leg) l_leg = new /obj/item/parts/human_parts/leg/left(holder, AHolLimb)
 		if (!r_leg) r_leg = new /obj/item/parts/human_parts/leg/right(holder, AHolLimb)
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			if (holder && (!l_arm || !r_arm || !l_leg || !r_leg))
 				logTheThing("debug", holder, null, "<B>SpyGuy/Limbs:</B> [src] is missing limbs after creation for some reason - recreating.")
 				create(AHolLimb)
@@ -657,7 +657,7 @@
 
 		else
 		//Changelings' heads pop off and crawl away - but only if they're not gibbed and have some spare DNA points. Oy vey!
-			SPAWN_DBG(0)
+			SPAWN(0)
 				emote("deathgasp")
 				src.visible_message("<span class='alert'><B>[src]</B> head starts to shift around!</span>")
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
@@ -783,7 +783,7 @@
 			break
 
 	if (!cancel && !abandon_allowed)
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			cancel = 0
 			for (var/client/C)
 				if (!C.mob) continue
@@ -794,7 +794,7 @@
 			if (!cancel && !abandon_allowed)
 				boutput(world, "<B>Everyone is dead! Resetting in 30 seconds!</B>")
 
-				SPAWN_DBG(30 SECONDS)
+				SPAWN(30 SECONDS)
 					logTheThing("diary", null, null, "Rebooting because of no live players", "game")
 					Reboot_server()
 #endif
@@ -880,14 +880,14 @@
 		src.unkillable = 0 //Don't want this lying around to repeatedly die or whatever.
 		src.spell_soulguard = 0 // clear this as well
 		src = null //Detach this, what if we get deleted before the animation ends??
-		SPAWN_DBG(0.7 SECONDS) //Length of animation.
+		SPAWN(0.7 SECONDS) //Length of animation.
 			newbody.set_loc(animation.loc)
 			qdel(animation)
 	else
 		src.unkillable = 0
 		src.spell_soulguard = 0
 		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
-		SPAWN_DBG(2.2 SECONDS) // Has to at least match the organ/limb replacement stuff (Convair880).
+		SPAWN(2.2 SECONDS) // Has to at least match the organ/limb replacement stuff (Convair880).
 			if (src) qdel(src)
 
 	return
@@ -1408,7 +1408,7 @@
 
 	/*
 	if (src.ckey == "wonkmin") //If you mention this i will shank you.
-		SPAWN_DBG(15 SECONDS)
+		SPAWN(15 SECONDS)
 			src.make_critter(/mob/living/critter/small_animal/bird/owl/large/hooter)
 	*/
 	return
@@ -1727,7 +1727,7 @@
 	speech_bubble.icon_state = "speech"
 	UpdateOverlays(speech_bubble, "speech_bubble")
 	var/speech_bubble_time = src.last_typing
-	SPAWN_DBG(1.5 SECONDS)
+	SPAWN(1.5 SECONDS)
 		if(speech_bubble_time == src.last_typing)
 			UpdateOverlays(null, "speech_bubble")
 
@@ -2352,7 +2352,7 @@
 
 		var/loc = usr.loc
 
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			if (usr.loc != loc || H.loc != loc)
 				boutput(usr, "<span class='alert'>Your consumption of [H] was interrupted!</span>")
 				return
@@ -2361,7 +2361,7 @@
 
 			if (prob(10) && !H.mutantrace)
 				usr.reagents.add_reagent("prions", 10)
-				SPAWN_DBG(rand(20,50)) boutput(usr, "<span class='alert'>You don't feel so good.</span>")
+				SPAWN(rand(20,50)) boutput(usr, "<span class='alert'>You don't feel so good.</span>")
 
 			H.TakeDamageAccountArmor("chest", rand(30,50), 0, 0, DAMAGE_STAB)
 			if (!isdead(H) && prob(50))
@@ -2654,7 +2654,7 @@
 		flick("spidergib", animation)
 		src.visible_message("<span class='alert'><font size=4><B>A swarm of spiders erupts from [src]'s mouth and devours them! OH GOD!</B></font></span>", "<span class='alert'><font size=4><B>A swarm of spiders erupts from your mouth! OH GOD!</B></font></span>", "<span class='alert'>You hear a vile chittering sound.</span>")
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 100, 1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			make_cleanable(/obj/decal/cleanable/vomit/spiders,src.loc)
 			for (var/i in 1 to 4)
 				new /obj/critter/spider/baby(src.loc)
@@ -2665,7 +2665,7 @@
 	if (animation)
 		animation.delaydispose()
 
-	SPAWN_DBG(1.5 SECONDS)
+	SPAWN(1.5 SECONDS)
 		qdel(src)
 
 /mob/living/carbon/human/get_equipped_items()
@@ -3121,7 +3121,7 @@
 	// If attacker is targeting the chest and a chest item exists, activate it.
 	if (M && M.zone_sel && M.zone_sel.selecting == "chest" && src.chest_item != null && (src.chest_item in src.contents))
 		logTheThing("combat", M, src, "activates [src.chest_item] embedded in [src]'s chest cavity at [log_loc(src)]")
-		SPAWN_DBG(0) //might sleep/input/etc, and we don't want to hold anything up
+		SPAWN(0) //might sleep/input/etc, and we don't want to hold anything up
 			src.chest_item.attack_self(src)
 	return
 
