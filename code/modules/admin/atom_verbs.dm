@@ -13,7 +13,7 @@ var/global/atom_emergency_stop = 0
 		logTheThing("admin", usr, null, "used the emergency stop command for atom verbs.")
 		logTheThing("diary", usr, null, "used the emergency stop command for atom verbs.", "admin")
 		message_admins("[key_name(usr)] used the emergency stop command for atom verbs.")
-		SPAWN_DBG(10 SECONDS) // after 10 seconds, turn it off
+		SPAWN(10 SECONDS) // after 10 seconds, turn it off
 			atom_emergency_stop = 0
 			message_admins("The emergency stop for atom verbs has turned off again.")
 	else

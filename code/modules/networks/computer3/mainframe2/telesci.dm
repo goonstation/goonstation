@@ -78,7 +78,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		disconnectedImage = image('icons/obj/stationobjs.dmi', "pad-noconnect")
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
 
 			if(!src.link)
@@ -142,7 +142,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			src.host_id = null
 			//src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -172,7 +172,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[net_number]")
 
 			return
@@ -186,7 +186,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				if(target == src.host_id)
 					src.host_id = null
 					src.updateUsrDialog()
-					SPAWN_DBG(0.3 SECONDS)
+					SPAWN(0.3 SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 
@@ -200,7 +200,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				if(signal.data["data"] != "noreply")
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
-				SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 					src.post_status(target,"command","term_message","data","command=register")
 				return
 
@@ -233,7 +233,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 						src.icon_state = "pad1"
 						recharging = 1
-						SPAWN_DBG(0)
+						SPAWN(0)
 
 							var/turf/turfcheck = doturfcheck(1)
 							if(!istype(turfcheck))
@@ -262,7 +262,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 						src.icon_state = "pad1"
 						recharging = 1
-						SPAWN_DBG(0)
+						SPAWN(0)
 
 							var/turf/turfcheck = doturfcheck(1)
 							if(!istype(turfcheck))
@@ -314,7 +314,7 @@ proc/is_teleportation_allowed(var/turf/T)
 						if (istype(sourceturf) && istype(endturf))
 							if (coords.can_cheat || (is_teleportation_allowed(endturf) && is_teleportation_allowed(sourceturf)))
 								src.receive(sourceturf)
-								SPAWN_DBG(0)
+								SPAWN(0)
 									sleep(1 SECOND)
 									recharging = 0
 									sleep(4 SECONDS)
@@ -351,7 +351,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 						src.icon_state = "pad1"
 						recharging = 1
-						SPAWN_DBG(0)
+						SPAWN(0)
 
 							var/turf/turfcheck = doturfcheck(1)
 							if(!istype(turfcheck))
@@ -502,7 +502,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				processbadeffect(pick("flash","buzz","scatter","ignite","chill"))
 
 		return 0
@@ -531,7 +531,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				processbadeffect(pick("flash","buzz","minorsummon","tinyfire","chill"))
 
 		return 0
@@ -565,7 +565,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				processbadeffect(pick("flash","buzz","scatter","ignite","chill"))
 		if(prob(5) && !locate(/obj/dfissure_to) in get_step(src, EAST))
 			new/obj/dfissure_to(get_step(src, EAST))
@@ -827,7 +827,7 @@ proc/is_teleportation_allowed(var/turf/T)
 	New()
 		..()
 		START_TRACKING
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
 
 			if(!src.link)
@@ -855,7 +855,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[net_number]")
 
 			return
@@ -869,7 +869,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				if(target == src.host_id)
 					src.host_id = null
 					src.updateUsrDialog()
-					SPAWN_DBG(0.3 SECONDS)
+					SPAWN(0.3 SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 
@@ -903,7 +903,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					src.link.post_signal(src, newsignal)
 
 				src.updateUsrDialog(1)
-				//SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				//SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 				//	src.post_status(target,"command","term_message","data","command=register")
 				return
 
@@ -1054,7 +1054,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			newsignal.data["sender"] = src.net_id
 
 			src.link.post_signal(src, newsignal)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				if (!old_host_id)
 					old_host_id = old
 

@@ -422,7 +422,7 @@ THROWING DARTS
 				if (!H.reagents.has_reagent("omnizine", 10))
 					H.reagents.add_reagent("omnizine", 10)
 				src.inactive = 1
-				SPAWN_DBG(30 SECONDS) src.inactive = 0
+				SPAWN(30 SECONDS) src.inactive = 0
 		..()
 
 
@@ -561,7 +561,7 @@ THROWING DARTS
 				if(cutoff <= 25)
 					throwjunk += I
 
-			SPAWN_DBG(0) //Delete the overlay when finished with it.
+			SPAWN(0) //Delete the overlay when finished with it.
 				if(!QDELETED(source))
 					source?.gib()
 
@@ -719,7 +719,7 @@ THROWING DARTS
 
 		if (expire)
 			//25 minutes +/- 5
-			SPAWN_DBG((25 + rand(-5,5)) MINUTES)
+			SPAWN((25 + rand(-5,5)) MINUTES)
 				if (src && !ishuman(src.loc)) // Drop-all, gibbed etc (Convair880).
 					if (src.expire && (src.expired != 1)) src.expired = 1
 					return
@@ -867,7 +867,7 @@ THROWING DARTS
 			return
 
 	src.bleed_timer = bleed_time
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 //		boutput(C, "<span class='alert'>You start bleeding!</span>") // the blood system takes care of this bit now
 		src.bleed_loop()
 
@@ -900,7 +900,7 @@ THROWING DARTS
 			C.take_toxin_damage(rand(1,3))
 			C.stamina -= 30
 			boutput(C, "<span class='alert'>You feel a [pick("searing", "hot", "burning")] pain in your chest![pick("", "There's gotta be silver in there!", )]</span>")
-	SPAWN_DBG(rand(40,70))
+	SPAWN(rand(40,70))
 		src.bleed_loop()
 	return
 
@@ -1717,7 +1717,7 @@ THROWING DARTS
 		update()
 	else
 		if (src in user.contents)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				src.attack_self(user)
 				return
 		else

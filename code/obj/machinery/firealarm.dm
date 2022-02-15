@@ -131,7 +131,7 @@
 		status &= ~NOPOWER
 		UpdateIcon()
 	else
-		SPAWN_DBG(rand(0,15))
+		SPAWN(rand(0,15))
 			status |= NOPOWER
 			UpdateIcon()
 
@@ -190,7 +190,7 @@
 
 
 	src.dont_spam = 1
-	SPAWN_DBG(5 SECONDS)
+	SPAWN(5 SECONDS)
 		src.dont_spam = 0
 
 	return
@@ -240,5 +240,5 @@
 		reply.data["alert"] = !alarm_active ? "reset" : "fire"
 		reply.data["zone"] = alarm_zone
 		reply.data["type"] = "Fire"
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply)

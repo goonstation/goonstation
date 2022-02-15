@@ -164,7 +164,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if (active == 1)
 		move()
-		SPAWN_DBG(1.1 SECONDS) // slowing this baby down a little -drsingh
+		SPAWN(1.1 SECONDS) // slowing this baby down a little -drsingh
 			move()
 	else//this should probably be modified to use the enclosed test of the generator
 		var/checkpointC = 0
@@ -223,7 +223,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
 	if(!maxboom)
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			if(severity == 1 && (maxboom ? prob(maxboom*5) : prob(30))) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
 				qdel(src)
 			maxboom = 0
@@ -326,7 +326,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 // totally rewrote this proc from the ground-up because it was puke but I want to keep this comment down here vvv so we can bask in the glory of What Used To Be - haine
 		/* uh why was lighting a cig causing the singularity to have an extra process()?
 		   this is dumb as hell, commenting this. the cigarette will get processed very soon. -drsingh
-		SPAWN_DBG(0) //start fires while it's lit
+		SPAWN(0) //start fires while it's lit
 			src.process()
 		*/
 
@@ -475,7 +475,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/field_generator/New()
 	START_TRACKING
 	..()
-	SPAWN_DBG(0.6 SECONDS)
+	SPAWN(0.6 SECONDS)
 		if(!src.link && (state == WELDED))
 			src.get_link()
 
@@ -744,7 +744,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	//Otherwise, ff they aren't addressing us, ignore them
 	if(signal.data["address_1"] != src.net_id)
 		if((signal.data["address_1"] == "ping") && signal.data["sender"])
-			SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+			SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 				src.post_status(target, "command", "ping_reply", "device", "PNET_ENG_FIELD", "netid", src.net_id)
 
 		return
@@ -921,7 +921,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/emitter/New()
 	..()
-	SPAWN_DBG(0.6 SECONDS)
+	SPAWN(0.6 SECONDS)
 		if(!src.link && (state == WELDED))
 			src.get_link()
 
@@ -1145,7 +1145,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	//Otherwise, ff they aren't addressing us, ignore them
 	if(signal.data["address_1"] != src.net_id)
 		if((signal.data["address_1"] == "ping") && signal.data["sender"])
-			SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+			SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 				src.post_status(target, "command", "ping_reply", "device", "PNET_ENG_EMITR", "netid", src.net_id)
 
 		return
@@ -1191,7 +1191,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/power/collector_array/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		UpdateIcon()
 
 
@@ -1321,7 +1321,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/power/collector_control/New()
 	..()
 	START_TRACKING
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		updatecons()
 
 /obj/machinery/power/collector_control/disposing()
@@ -1373,12 +1373,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			S1 = null
 
 		UpdateIcon()
-		SPAWN_DBG(1 MINUTE)
+		SPAWN(1 MINUTE)
 			updatecons()
 
 	else
 		UpdateIcon()
-		SPAWN_DBG(1 MINUTE)
+		SPAWN(1 MINUTE)
 			updatecons()
 
 /obj/machinery/power/collector_control/update_icon()
@@ -1692,7 +1692,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		animate_shake(TF,5,1 * get_dist(TF,T),1 * get_dist(TF,T))
 	particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(T))
 
-	SPAWN_DBG(3 SECONDS)
+	SPAWN(3 SECONDS)
 		for (var/mob/M in range(7,T))
 			boutput(M, "<span class='bold alert'>The containment field on \the [src] fails completely!</span>")
 			shake_camera(M, 5, 16)

@@ -58,7 +58,7 @@
 		animate(src.ping, transform = M, time = 1 SECOND, easing = BACK_EASING, flags = ANIMATION_PARALLEL)
 		qdel(M)
 
-		SPAWN_DBG(1 SECONDS)
+		SPAWN(1 SECONDS)
 			if(my_id == src.ping_id) // spam clicking and stuff
 				animate(src.ping, alpha = 0, time = 0.3 SECOND, easing = SINE_EASING)
 				animate(src.ping, transform = null, time = 0.3 SECOND, easing = SINE_EASING, flags = ANIMATION_PARALLEL)

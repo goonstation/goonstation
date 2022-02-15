@@ -22,7 +22,7 @@
 				V.addAbility(/datum/targetable/vampire/glare)
 				V.addAbility(/datum/targetable/vampire/hypnotize)
 
-			SPAWN_DBG(2.5 SECONDS) // Don't remove.
+			SPAWN(2.5 SECONDS) // Don't remove.
 				if (src) src.assign_gimmick_skull()
 
 		else if (ismobcritter(src)) // For testing. Just give them all abilities that are compatible.
@@ -182,7 +182,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 

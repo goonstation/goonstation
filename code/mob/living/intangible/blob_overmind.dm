@@ -98,7 +98,7 @@
 		src.nucleus_overlay.alpha = 0
 		src.nucleus_overlay.appearance_flags = RESET_COLOR
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while (src)
 				if (src.client)
 					update_cooldown_costs()
@@ -211,7 +211,7 @@
 
 			boutput(src, "<span class='alert'><b>With no nuclei to bind it to your biomass, your consciousness slips away into nothingness...</b></span>")
 			src.ghostize()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				qdel(src)
 
 	Stat()
@@ -670,7 +670,7 @@
 					return
 				var/my_upgrade_id = user.upgrade_id
 				user.upgrading = my_upgrade_id
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					if (user.upgrading <= my_upgrade_id)
 						user.upgrading = 0
 					else

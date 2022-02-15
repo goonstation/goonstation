@@ -8,7 +8,7 @@
 
 		if (!ticker)
 			ticker = new /datum/controller/gameticker()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				ticker.pregame()
 
 	doWork()

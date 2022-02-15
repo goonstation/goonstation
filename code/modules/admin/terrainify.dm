@@ -41,7 +41,7 @@ var/datum/station_zlevel_repair/station_repair = new
 		if(src.station_generator)
 			src.station_generator.generate_terrain(turfs,reuse_seed=TRUE)
 
-		SPAWN_DBG(overlay_delay)
+		SPAWN(overlay_delay)
 			for(var/turf/T as anything in turfs)
 				if(src.ambient_light)
 					T.UpdateOverlays(src.ambient_light, "ambient")

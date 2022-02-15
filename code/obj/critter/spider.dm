@@ -47,7 +47,7 @@
 
 		flailing = 10
 		playsound(src.loc, "rustle", 50, 0)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while(flailing-- > 0 && src.alive)
 				src.set_loc(M.loc)
 				src.pixel_x = rand(-2,2) * 2
@@ -239,7 +239,7 @@
 						else
 							feeding = 0
 
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				src.attacking = 0
 
 	ChaseAttack(mob/M)
@@ -269,7 +269,7 @@
 		flailing = 10
 		if (src.stepsound)
 			playsound(src.loc, src.stepsound, 50, 0)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while(flailing-- > 0 && src.alive)
 				src.set_loc(M.loc)
 				src.pixel_x = rand(-2,2) * 2
@@ -319,7 +319,7 @@
 
 	// don't ask
 	proc/streak(var/list/directions)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
 				if (step_to(src, get_step(src, pick(directions)), 0))

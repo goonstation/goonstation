@@ -143,7 +143,7 @@
 						if ("bee")
 							A.color = "#FFDD00"
 					H.losebreath ++
-					//SPAWN_DBG(4 SECONDS)
+					//SPAWN(4 SECONDS)
 						//H.losebreath --
 					qdel(src)
 

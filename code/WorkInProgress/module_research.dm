@@ -693,7 +693,7 @@ var/global/datum/module_research_controller/module_control = new
 				module_control.add_points(to_add)
 				to_add.len = 0
 				icon_state = "moduler-off"
-				SPAWN_DBG(0)
+				SPAWN(0)
 					check_unlocks()
 			update_all_users()
 

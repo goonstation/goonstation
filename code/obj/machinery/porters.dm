@@ -774,7 +774,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 					if(81 to INFINITY) //Travel sickness!
 						for(var/mob/living/carbon/M in src.contents)
-							SPAWN_DBG(rand(10,40))
+							SPAWN(rand(10,40))
 								M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>Oh god, that was terrible!</span>", "<span class='alert'>You hear a splat!</span>")
 								M.change_misstep_chance(40)
 								M.changeStatus("drowsy", 10 SECONDS)

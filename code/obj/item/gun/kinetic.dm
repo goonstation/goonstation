@@ -275,7 +275,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "Seems to be a small pistol cartridge."
 		New()
 			..()
-			SPAWN_DBG(rand(1, 3))
+			SPAWN(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-small-0[rand(1,6)].ogg", 20, 0.1)
 
 	medium
@@ -283,7 +283,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "Seems to be a common revolver cartridge."
 		New()
 			..()
-			SPAWN_DBG(rand(1, 3))
+			SPAWN(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1)
 
 	rifle
@@ -291,7 +291,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "Seems to be a rifle cartridge."
 		New()
 			..()
-			SPAWN_DBG(rand(1, 3))
+			SPAWN(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1, 0, 0.8)
 
 
@@ -300,7 +300,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "Seems to be a rifle cartridge."
 		New()
 			..()
-			SPAWN_DBG(rand(1, 3))
+			SPAWN(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-large-0[rand(1,4)].ogg", 25, 0.1)
 
 	derringer
@@ -308,7 +308,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "A fat and stumpy bullet casing. Looks pretty old."
 		New()
 			..()
-			SPAWN_DBG(rand(1, 3))
+			SPAWN(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1)
 
 	deagle
@@ -316,7 +316,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "An uncomfortably large pistol cartridge."
 		New()
 			..()
-			SPAWN_DBG(rand(1, 3))
+			SPAWN(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1, 0, 0.9)
 	shotgun
 		red
@@ -336,7 +336,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			desc = "An gray shotgun shell."
 		New()
 			..()
-			SPAWN_DBG(rand(4, 7))
+			SPAWN(rand(4, 7))
 				playsound(src.loc, "sound/weapons/casings/casing-shell-0[rand(1,7)].ogg", 20, 0.1)
 
 	cannon
@@ -345,7 +345,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		w_class = W_CLASS_SMALL
 		New()
 			..()
-			SPAWN_DBG(rand(2, 4))
+			SPAWN(rand(2, 4))
 				playsound(src.loc, "sound/weapons/casings/casing-large-0[rand(1,4)].ogg", 35, 0.1, 0, 0.8)
 
 	grenade
@@ -354,7 +354,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "A 40mm grenade round casing. Huh."
 		New()
 			..()
-			SPAWN_DBG(rand(3, 6))
+			SPAWN(rand(3, 6))
 				playsound(src.loc, "sound/weapons/casings/casing-xl-0[rand(1,6)].ogg", 15, 0.1)
 
 
@@ -656,7 +656,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					src.silenced = initial(src.silenced)
 
 			prob_clonk = min(prob_clonk + 5, 100)
-			SPAWN_DBG(1 SECONDS)
+			SPAWN(1 SECONDS)
 				prob_clonk = max(prob_clonk - 5, 0)
 
 		return ..(hit_atom)

@@ -837,7 +837,7 @@
 		if(doThumps) return
 		doThumps = 1
 		Thumper_thump(1)
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			while(src.doThumps)
 				Thumper_thump(0)
 				sleep(2 SECONDS)

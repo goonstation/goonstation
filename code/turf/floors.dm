@@ -157,7 +157,7 @@
 			src.icon_old = P.icon_state
 			allows_vehicles = P.allows_vehicles
 			var/pdir = P.dir
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.set_dir(pdir)
 			qdel(P)
 
@@ -2088,7 +2088,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 				else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			random_brute_damage(M, 50)
 			M.changeStatus("paralysis", 7 SECONDS)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				playsound(M.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Flesh_Break_1.ogg'), 75, 1)
 		A.set_loc(T)
 		return

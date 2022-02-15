@@ -623,7 +623,7 @@
 	New()
 		..()
 		setactive(0)
-		SPAWN_DBG(1 SECOND)//yucky...
+		SPAWN(1 SECOND)//yucky...
 			var/obj/machinery/door/door = (locate() in src.loc)
 			if(door)
 				door.linked_forcefield = src

@@ -76,7 +76,7 @@ CONTAINS:
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -141,7 +141,7 @@ CONTAINS:
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -209,7 +209,7 @@ CONTAINS:
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -396,9 +396,9 @@ CONTAINS:
 			JOB_XP(user, "Medical Doctor", 5)
 			src.charged = 0
 			set_icon_state("[src.icon_base]-shock")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				set_icon_state("[src.icon_base]-off")
-			SPAWN_DBG(src.charge_time)
+			SPAWN(src.charge_time)
 				src.charged = 1
 				set_icon_state("[src.icon_base]-on")
 				playsound(user.loc, "sound/items/defib_charge.ogg", 90, 0)
@@ -414,9 +414,9 @@ CONTAINS:
 		playsound(src.loc, "sound/impact_sounds/Energy_Hit_3.ogg", 75, 1, pitch = 0.92)
 		src.charged = 0
 		set_icon_state("[src.icon_base]-shock")
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			set_icon_state("[src.icon_base]-off")
-		SPAWN_DBG(src.charge_time)
+		SPAWN(src.charge_time)
 			src.charged = 1
 			set_icon_state("[src.icon_base]-on")
 			playsound(src.loc, "sound/items/defib_charge.ogg", 90, 0)
@@ -445,7 +445,7 @@ CONTAINS:
 		if (!src.user_can_suicide(user))
 			return 0
 		if (src.defibrillate(user, user, src.emagged, src.makeshift, src.cell, 1))
-			SPAWN_DBG(50 SECONDS)
+			SPAWN(50 SECONDS)
 				if (user && !isdead(user))
 					user.suiciding = 0
 		else
@@ -752,7 +752,7 @@ CONTAINS:
 			return 0
 		user.visible_message("<span class='alert'><b>[user] rapidly sews [his_or_her(user)] mouth and nose closed with [src]! Holy shit, how?!</b></span>")
 		user.take_oxygen_deprivation(160)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -1193,7 +1193,7 @@ CONTAINS:
 			O.set_loc(get_turf(src))
 		for (var/mob/M in src)
 			M.changeStatus("weakened", 0.5 SECONDS)
-			SPAWN_DBG(0.3 SECONDS)
+			SPAWN(0.3 SECONDS)
 				M.set_loc(get_turf(src))
 		src.open = 1
 		src.UpdateIcon()
@@ -1557,7 +1557,7 @@ keeping this here because I want to make something else with it eventually
 		if (!islist(src.attached_objs))
 			src.attached_objs = list()
 		if (!ticker) // pre-roundstart, this is a thing made on the map so we want to grab whatever's been placed on top of us automatically
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/stuff_added = 0
 				for (var/obj/item/I in src.loc.contents)
 					if (I.anchored || I.layer < src.layer)
@@ -1620,7 +1620,7 @@ keeping this here because I want to make something else with it eventually
 		src.attached_objs.Add(I) // attach the item to the table
 		I.glide_size = 0 // required for smooth movement with the tray
 		// register for pickup, register for being pulled off the table, register for item deletion while attached to table
-		SPAWN_DBG(0)
+		SPAWN(0)
 			RegisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING), .proc/detach)
 
 	proc/detach(obj/item/I as obj) //remove from the attached items list and deregister signals
@@ -1701,5 +1701,5 @@ keeping this here because I want to make something else with it eventually
 	bloody
 		New()
 			. = ..()
-			SPAWN_DBG(1 DECI SECOND) //sync with the organs spawn
+			SPAWN(1 DECI SECOND) //sync with the organs spawn
 				make_cleanable(/obj/decal/cleanable/blood/gibs, src.loc)

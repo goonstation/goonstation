@@ -161,7 +161,7 @@
 		user.lastattacked = target
 
 		for (var/a = 0, a < reagents_per_dist, a++)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (disposed)
 					return
 				if (!src.reagents)
@@ -178,7 +178,7 @@
 			step(user, user.inertia_dir)
 		else if( user.buckled && !user.buckled.anchored )
 			var/wooshdir = get_dir( target, user )
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for( var/i = 1, (user?.buckled && !user.buckled.anchored && i <= rand(3,5)), i++ )
 					step( user.buckled, wooshdir )
 					sleep( rand(1,3) )

@@ -1639,7 +1639,7 @@ datum/preferences
 				else
 					character.bioHolder.bloodType = blType
 
-			SPAWN_DBG(0) // avoid blocking
+			SPAWN(0) // avoid blocking
 				if(jobban_isbanned(user, "Custom Names"))
 					randomize_name()
 					randomizeLook()
@@ -1992,7 +1992,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	if (H?.organHolder?.head?.donor_appearance) // aaaa
 		H.organHolder.head.donor_appearance.CopyOther(AH)
 
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		H?.update_colorful_parts()
 
 // Generates a real crap checkbox for html toggle links.

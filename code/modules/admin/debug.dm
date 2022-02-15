@@ -441,7 +441,7 @@ var/global/debug_messages = 0
 	if(ishuman(M))
 		logTheThing("admin", src, M, "has mobile-AIized [constructTarget(M,"admin")]")
 		logTheThing("diary", src, M, "has mobile-AIized [constructTarget(M,"diary")]", "admin")
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			M:AIize(1)
 
 	else
@@ -511,7 +511,7 @@ var/global/debug_messages = 0
 	if(ishuman(M) && M.mind != null)
 		logTheThing("admin", src, M, "has made [constructTarget(M,"admin")] a changeling.")
 		logTheThing("diary", src, M, "has made [constructTarget(M,"diary")] a changeling.", "admin")
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			M.mind.absorbed_dna[M.bioHolder] = M.real_name
 			M.make_changeling()
 	else
@@ -1295,7 +1295,7 @@ var/datum/flock/testflock
 		src.holder = null
 		src.clear_admin_verbs()
 		src.update_admins(null)
-		SPAWN_DBG(seconds * 10)
+		SPAWN(seconds * 10)
 			src.init_admin()
 			boutput(src, "<B><I>Your adminnery has returned.</I></B>")
 
@@ -1307,7 +1307,7 @@ var/datum/flock/testflock
 	proc/edit(var/client/user)
 		var/editor = grabResource("html/admin/color_matrix.html")
 		user.Browse(editor, "window=colormatrix;can_close=1")
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			callJsFunc(usr, "setRef", list("\ref[src]")) //This is shit but without it, it calls the JS before the window is open and doesn't work.
 
 	Topic(href, href_list)

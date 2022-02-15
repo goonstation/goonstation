@@ -180,7 +180,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.auto && ispath(src.auto_path))
 				src.set_up(1)
 
@@ -771,14 +771,14 @@
 			reset_anchored(M)
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				H.on_chair = 0
 				src.buckledIn = 0
 		else if ((M.buckled))
 			reset_anchored(M)
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.buckledIn = 0
 
 		src.buckled_guy = null
@@ -1389,7 +1389,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			if (src)
 				if (!(src.part1 && istype(src.part1)))
 					src.part1 = new /obj/item/assembly/shock_kit(src)

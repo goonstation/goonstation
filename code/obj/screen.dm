@@ -68,7 +68,7 @@
 		if (C && istype(C))
 			src.desc = src.getDesc(C)
 		if (ishuman(C))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/icon/hud_style = hud_style_selection[get_hud_style(C)]
 				if (isicon(hud_style))
 					src.icon = hud_style

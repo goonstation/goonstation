@@ -98,7 +98,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 		src.target.TakeDamage("All", rand(10, 20), rand(10, 20))
 		src.target.organHolder.damage_organs(1, 6, 10, target_organs)
 
-		SPAWN_DBG(0.5 SECOND) // Delay for JobEquipSpawned to resolve
+		SPAWN(0.5 SECOND) // Delay for JobEquipSpawned to resolve
 			for(var/slot in list(SLOT_EARS, SLOT_WEAR_ID, SLOT_BACK, SLOT_BELT))
 				var/obj/O = src.target.get_slot(slot)
 				if(O)

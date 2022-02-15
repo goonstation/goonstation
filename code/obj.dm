@@ -480,7 +480,7 @@
 	New(newloc, deleteTimer)
 		..()
 		if (deleteTimer)
-			SPAWN_DBG(deleteTimer)
+			SPAWN(deleteTimer)
 				qdel(src)
 
 /obj/projection

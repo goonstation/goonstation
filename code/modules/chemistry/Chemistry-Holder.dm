@@ -725,18 +725,18 @@ datum
 						var/turf_reaction_success = 0
 						if(current_reagent && current_reagent.volume > minimum_react)
 							if(ismob(A) && !isobserver(A))
-								//SPAWN_DBG(0)
+								//SPAWN(0)
 									//if (current_reagent) //This is in a spawn. Between our first check and the execution, this may be bad.
 								if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction))
 									.+= current_id
 							if(isturf(A))
-								//SPAWN_DBG(0)
+								//SPAWN(0)
 									//if (current_reagent)
 								if (!current_reagent.reaction_turf(A, current_reagent.volume*volume_fraction))
 									turf_reaction_success = 1
 									.+= current_id
 							if(isobj(A))
-								//SPAWN_DBG(0)
+								//SPAWN(0)
 									//if (current_reagent)
 								if (!current_reagent.reaction_obj(A, current_reagent.volume*volume_fraction))
 									.+= current_id

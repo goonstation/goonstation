@@ -26,7 +26,7 @@
 
 	dropped(mob/user)
 		..()
-		SPAWN_DBG(0) // Ported from cloaking device. Spawn call is necessary for some reason (Convair880).
+		SPAWN(0) // Ported from cloaking device. Spawn call is necessary for some reason (Convair880).
 			if (!src) return
 			if (ismob(src.loc) && src.loc == user)
 				if (ishuman(user))
@@ -79,7 +79,7 @@
 		var/obj/overlay/T = new/obj/overlay(get_turf(src))
 		T.icon = 'icons/effects/effects.dmi'
 		flick("emppulse",T)
-		SPAWN_DBG(0.8 SECONDS)
+		SPAWN(0.8 SECONDS)
 			if (T) qdel(T)
 		return 1
 
@@ -96,7 +96,7 @@
 			var/obj/overlay/T = new/obj/overlay(get_turf(src))
 			T.icon = 'icons/effects/effects.dmi'
 			flick("emppulse",T)
-			SPAWN_DBG(0.8 SECONDS)
+			SPAWN(0.8 SECONDS)
 				if (T) qdel(T)
 		src.active = 0
 		src.icon_state = "enshield0"

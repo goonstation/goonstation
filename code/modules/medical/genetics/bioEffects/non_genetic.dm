@@ -244,7 +244,7 @@
 
 	proc/deactivate(var/time)
 		active = 0
-		SPAWN_DBG(time)
+		SPAWN(time)
 			active = 1
 
 /datum/bioEffect/hidden/magnetic/positive

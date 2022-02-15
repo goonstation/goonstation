@@ -220,7 +220,7 @@
 
 	animate(M.attack_particle, transform = t_size, time = 6, easing = BOUNCE_EASING)
 	animate(pixel_x = diff_x*32, pixel_y = diff_y*32, time = 2, easing = BOUNCE_EASING,  flags = ANIMATION_PARALLEL)
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		//animate(M.attack_particle, alpha = 0, time = 2, flags = ANIMATION_PARALLEL)
 		M.attack_particle?.alpha = 0
 
@@ -231,7 +231,7 @@
 	if (world.time <= M.last_interact_particle + M.combat_click_delay) return
 	var/diff_x = target.x - M.x
 	var/diff_y = target.y - M.y
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if (!M || !M.attack_particle) //ZeWaka: Fix for Cannot modify null.icon.
 			return
 
@@ -314,7 +314,7 @@
 
 	var/diff_x = target.x
 	var/diff_y = target.y
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if (target && M) //I want these to be recent, but sometimes they can be deleted during course of a spawn
 			diff_x = diff_x - M.x
 			diff_y = diff_y - M.y
@@ -352,7 +352,7 @@
 
 	var/diff_x = target.x
 	var/diff_y = target.y
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if (target && M) //I want these to be recent, but sometimes they can be deleted during course of a spawn
 			diff_x = diff_x - M.x
 			diff_y = diff_y - M.y
@@ -404,7 +404,7 @@
 	var/matrix/t_size = matrix()
 
 	animate(M.attack_particle, transform = t_size, time = 2, easing = BOUNCE_EASING)
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		M.attack_particle.alpha = 0
 
 /proc/block_spark(var/mob/M, armor = 0)
@@ -430,11 +430,11 @@
 
 	M.attack_particle.transform.Turn(rand(0,360))
 
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		M.attack_particle.alpha = 0
 
 proc/fuckup_attack_particle(var/mob/M)
-	SPAWN_DBG(0.1 SECONDS)
+	SPAWN(0.1 SECONDS)
 		if (!M || !M.attack_particle) return
 		var/r = rand(0,360)
 		var/x = cos(r)
@@ -489,7 +489,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(muzzleflash, time=0.4 SECONDS)
 	animate(alpha=0, easing=SINE_EASING, time=0.2 SECONDS)
 
-	SPAWN_DBG(0.6 SECONDS)
+	SPAWN(0.6 SECONDS)
 		A.vis_contents.Remove(muzzleflash)
 		qdel(muzzleflash)
 
@@ -508,7 +508,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	M.sprint_particle.icon_state = "sprint_cloud"
 
 
-	SPAWN_DBG(0.6 SECONDS)
+	SPAWN(0.6 SECONDS)
 		if (M.sprint_particle.loc == T)
 			M.sprint_particle.loc = null
 
@@ -524,7 +524,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		flick("sprint_cloud_small",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud_small"
 
-	SPAWN_DBG(0.4 SECONDS)
+	SPAWN(0.4 SECONDS)
 		if (M.sprint_particle?.loc == T)
 			M.sprint_particle.loc = null
 
@@ -540,7 +540,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		flick("sprint_cloud_tiny",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud_tiny"
 
-	SPAWN_DBG(0.3 SECONDS)
+	SPAWN(0.3 SECONDS)
 		if (M.sprint_particle.loc == T)
 			M.sprint_particle.loc = null
 
@@ -549,7 +549,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		return		//^ possessed objects use an animate loop that is important for readability. let's not interrupt that with this dumb animation
 	var/which = A.dir
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/ipx = A.pixel_x
 		var/ipy = A.pixel_y
 		var/movepx = 0
@@ -631,7 +631,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 //only call this from disorient. ITS NOT YOURS DAD
 /proc/violent_twitch(var/atom/A)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/matrix/target = matrix(A.transform)
 		var/deg = rand(-45,45)
 		target.Turn(deg)
@@ -651,7 +651,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 // for vampire standup :)
 /proc/violent_standup_twitch(var/atom/A)
-	SPAWN_DBG(-1)
+	SPAWN(-1)
 		var/offx
 		var/offy
 		var/angle
@@ -664,7 +664,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			sleep(0.1 SECONDS)
 
 /proc/violent_standup_twitch_parametrized(var/atom/A, var/off_x = 3, var/off_y = 2, var/input_angle = 45, var/iterations = 7, var/sleep_length = 0.1 SECONDS, var/effect_scale = 1)
-	SPAWN_DBG(-1)
+	SPAWN(-1)
 		var/offx = off_x
 		var/offy = off_y
 		var/angle = input_angle
@@ -711,7 +711,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/side = 1
 	if(random_side) side = pick(-1, 1)
 
-	SPAWN_DBG(rand(1,10))
+	SPAWN(rand(1,10))
 		if (A)
 			animate(A, pixel_y = 32, transform = matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE), time = floatspeed, loop = loopnum, easing = SINE_EASING)
 			animate(pixel_y = 0, transform = matrix(floatdegrees * (side == 1 ? -1:1), MATRIX_ROTATE), time = floatspeed, loop = loopnum, easing = SINE_EASING)
@@ -724,7 +724,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/side = 1
 	if(random_side) side = pick(-1, 1)
 
-	SPAWN_DBG(rand(1,10))
+	SPAWN(rand(1,10))
 		if (A)
 			var/initial_y = A.pixel_y
 			animate(A, pixel_y = initial_y + 4, transform = matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE), time = floatspeed, loop = loopnum, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
@@ -738,7 +738,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/side = 1
 	if(random_side) side = pick(-1, 1)
 
-	SPAWN_DBG(rand(1,10))
+	SPAWN(rand(1,10))
 		if (A)
 			animate(A, pixel_y = 8, transform = matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE), time = floatspeed, loop = loopnum, easing = SINE_EASING)
 			animate(pixel_y = 0, transform = matrix(floatdegrees * (side == 1 ? -1:1), MATRIX_ROTATE), time = floatspeed, loop = loopnum, easing = SINE_EASING)
@@ -797,7 +797,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/y_severity_inverse = 0 - y_severity
 
 	animate(A, pixel_y = return_y+rand(y_severity_inverse,y_severity), pixel_x = return_x+rand(x_severity_inverse,x_severity),time = 1,loop = amount, easing = ELASTIC_EASING, flags=ANIMATION_PARALLEL)
-	SPAWN_DBG(amount)
+	SPAWN(amount)
 		if (A)
 			animate(A, pixel_y = return_y, pixel_x = return_x,time = 1,loop = 1, easing = LINEAR_EASING)
 	return
@@ -1013,7 +1013,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	E.alpha = 0
 	animate(E,transform = matrix(0.5, MATRIX_SCALE), time = 20, alpha = 255, pixel_y = 27, easing = ELASTIC_EASING)
 	animate(time = 5, alpha = 0, pixel_y = -16, easing = CIRCULAR_EASING)
-	SPAWN_DBG(3 SECONDS) qdel(E)
+	SPAWN(3 SECONDS) qdel(E)
 	return
 
 /proc/animate_horizontal_wiggle(var/atom/A, var/loopnum = 5, speed = 10, X1 = 3, X2 = -3, var/slightly_random = 1)
@@ -1123,7 +1123,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	swirl.pixel_y = 10
 	if (play_sound)
 		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
-	SPAWN_DBG(1.5 SECONDS)
+	SPAWN(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
 			qdel(swirl)
@@ -1139,7 +1139,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		return
 	var/obj/decal/residual_energy/e = new /obj/decal/residual_energy
 	e.set_loc(target_turf)
-	SPAWN_DBG(10 SECONDS)
+	SPAWN(10 SECONDS)
 		if (e)
 			qdel(e)
 	return
@@ -1161,7 +1161,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		e = new /obj/decal/purge_beam
 	e.set_loc(target_turf)
 	e.dir = sword_direction
-	SPAWN_DBG(7)
+	SPAWN(7)
 		if (e)
 			qdel(e)
 	return
@@ -1182,7 +1182,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			return
 		e = new /obj/decal/syndicate_destruction_scan_side
 	e.set_loc(target_turf)
-	SPAWN_DBG(7)
+	SPAWN(7)
 		if (e)
 			qdel(e)
 	return
@@ -1208,7 +1208,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(teleporter, transform = null, time = 9, alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
 	//HAXXX sorry - kyle
 	if (istype(teleporter, /mob/dead/observer))
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			animate_bumble(teleporter)
 
 
@@ -1283,7 +1283,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 	if (play_sound)
 		playsound(center,"sound/effects/darkspawn.ogg",50,0)
-	SPAWN_DBG(5 SECONDS)
+	SPAWN(5 SECONDS)
 		var/turf/TA = locate(A.x - size, A.y - size, A.z)
 		var/turf/TB = locate(A.x + size, A.y + size, A.z)
 		if (!TA || !TB) return
@@ -1346,7 +1346,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	// animate(y = 0, easing = QUAD_EASING, time = time / 2) // TODO: add multiple passes option later
 	animate(color = color + alpha_hex, time = fade_time, flags = ANIMATION_PARALLEL, easing = QUAD_EASING | EASE_IN)
 	animate(color = color + "00", time = fade_time, easing = QUAD_EASING | EASE_IN)
-	SPAWN_DBG(time)
+	SPAWN(time)
 		target.remove_filter("scan lines")
 
 /proc/animate_storage_thump(var/atom/A, wiggle=6)
@@ -1474,7 +1474,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	if(self_contained) // assume we're starting from being invisible
 		A.alpha = 255
 	if(self_contained)
-		SPAWN_DBG(time)
+		SPAWN(time)
 			A.remove_filter(list("alpha white", "alpha black"))
 
 /proc/animate_close_into_floor(atom/A, time=1 SECOND, self_contained=1)
@@ -1483,7 +1483,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	animate(A.get_filter("alpha black"), x=-16, time=time, easing=CUBIC_EASING | EASE_IN)
 	animate(A.get_filter("alpha white"), x=16, time=time, easing=CUBIC_EASING | EASE_IN, flags=ANIMATION_PARALLEL)
 	if(self_contained)
-		SPAWN_DBG(time)
+		SPAWN(time)
 			A.remove_filter(list("alpha white", "alpha black"))
 			A.alpha = 0
 
@@ -1546,7 +1546,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 			animate(time=one_anim_duration, pixel_y=stomp_height, easing=SINE_EASING | EASE_OUT)
 		animate(time=one_anim_duration, pixel_y=0, easing=SINE_EASING | EASE_IN)
 	if(ismob(A))
-		SPAWN_DBG(stomp_duration)
+		SPAWN(stomp_duration)
 			REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, "hatstomp")
 			M.update_canmove()
 

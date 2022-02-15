@@ -83,7 +83,7 @@
 		if (state == "Asymptomatic")
 			return 1
 
-		SPAWN_DBG(rand(1,5))
+		SPAWN(rand(1,5))
 			// vary it up a bit so the processing doesnt look quite as transparent
 			if (master)
 				master.stage_act(affected_mob,src)
@@ -433,29 +433,29 @@
 			boutput(H, "<span class='alert'>Your cyberheart detects a cardiac event and attempts to return to its normal rhythm!</span>")
 			if (prob(40) && oH.heart.emagged)
 				D.robo_restart = 1
-				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
+				SPAWN(oH.heart.emagged ? 200 : 300)
 					D.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if (H)
 						H.cure_disease(D)
 						boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 			else if (prob(25))
 				D.robo_restart = 1
-				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
+				SPAWN(oH.heart.emagged ? 200 : 300)
 					if (D) //ZeWaka: Fix for null.robo_restart
 						D.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if (H)
 						H.cure_disease(D)
 						boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 			else
 				D.robo_restart = 1
-				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
+				SPAWN(oH.heart.emagged ? 200 : 300)
 					if (D)
 						D.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if (H)
 						boutput(H, "<span class='alert'>Your cyberheart fails to return to its normal rhythm!</span>")
 
@@ -523,12 +523,12 @@
 				H.cure_disease(D)
 				D.robo_restart = 1
 				if (H.organHolder.heart.emagged)
-					SPAWN_DBG(20 SECONDS)
+					SPAWN(20 SECONDS)
 						D.robo_restart = 0
 				else
-					SPAWN_DBG(30 SECONDS)
+					SPAWN(30 SECONDS)
 						D.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 
@@ -536,28 +536,28 @@
 				H.cure_disease(D)
 				D.robo_restart = 1
 				if (H.organHolder.heart.emagged)
-					SPAWN_DBG(20 SECONDS)
+					SPAWN(20 SECONDS)
 						if (D) //ZeWaka: Fix for null.robo_restart x4
 							D.robo_restart = 0
 				else
-					SPAWN_DBG(30 SECONDS)
+					SPAWN(30 SECONDS)
 						if (D)
 							D.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 
 			else
 				D.robo_restart = 1
 				if (H.organHolder.heart.emagged)
-					SPAWN_DBG(20 SECONDS)
+					SPAWN(20 SECONDS)
 						if (D)
 							D.robo_restart = 0
 				else
-					SPAWN_DBG(30 SECONDS)
+					SPAWN(30 SECONDS)
 						if (D)
 							D.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					boutput(H, "<span class='alert'>Your cyberheart fails to return to its normal rhythm!</span>")
 		else
 			if (H.get_oxygen_deprivation())

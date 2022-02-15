@@ -26,7 +26,7 @@
 	New()
 		..()
 		if(src.auto)
-			SPAWN_DBG(0) //fix for sometimes not joining on map load
+			SPAWN(0) //fix for sometimes not joining on map load
 				if (map_setting && ticker)
 					src.update_neighbors()
 

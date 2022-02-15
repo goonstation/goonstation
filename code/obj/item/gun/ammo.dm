@@ -66,7 +66,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			if (!src.disposed)
 				src.UpdateIcon() // So we get dynamic updates right off the bat. Screw static descs.
 		return
@@ -489,7 +489,7 @@
 		ammo_type = new/datum/projectile/bullet/bullet_9mm/smg
 
 /obj/item/ammo/bullets/nine_mm_NATO
-	sname = "9mm frangible" 
+	sname = "9mm frangible"
 	name = "9mm frangible magazine"
 	desc = "Some 9mm incapacitating bullets, made of plastic with rubber tips. Despite being sublethal, they can still do damage."
 	icon_state = "pistol_clip"	//9mm_clip that exists already. Also, put this in hacked manufacturers cause these bullets are not good.

@@ -112,19 +112,19 @@
 	event_handler_flags = USE_FLUID_ENTER
 
 /obj/warp_portal/Bumped(mob/M as mob|obj)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		src.teleport(M)
 		return
 	return
 
 /obj/warp_portal/Crossed(atom/movable/AM as mob|obj)
 	..()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		src.teleport(AM)
 
 /obj/warp_portal/New()
 	..()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		// animate_portal_appear(src)
 		playsound(src.loc, "warp", 50, 1, 0.1, 0.7)
 		sleep(30 SECONDS)
@@ -166,7 +166,7 @@
 /obj/warp_beacon/proc/startpack()
 	src.packable = 0
 	src.icon_state = "beaconpack"
-	SPAWN_DBG(14) //wait until packing is complete
+	SPAWN(14) //wait until packing is complete
 		var/obj/beacon_deployer/packitup = new /obj/beacon_deployer(src.loc)
 		playsound(src, "sound/machines/heater_off.ogg", 20, 1)
 		if(src.beaconid)
@@ -221,7 +221,7 @@
 /obj/beacon_deployer/proc/deploybeacon()
 	src.icon_state = "beacondeploy"
 	src.anchored = 1
-	SPAWN_DBG(16) //wait until unpacking is complete
+	SPAWN(16) //wait until unpacking is complete
 		var/obj/warp_beacon/depbeac = new /obj/warp_beacon/deployed(src.loc)
 		playsound(src, "sound/machines/heater_off.ogg", 20, 1)
 		depbeac.name = "Buoy [src.beaconid]"

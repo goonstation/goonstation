@@ -77,7 +77,7 @@
 
 	Entered(mob/living/carbon/M as mob )
 		..()
-		SPAWN_DBG(0.8)
+		SPAWN(0.8)
 			if(ishuman(M))
 				var/image/F = image('icons/misc/mars_outpost.dmi', icon_state = "footprint", dir = M.dir)
 				src.overlays += F
@@ -365,7 +365,7 @@
 		src.attacking = 1
 		src.visible_message("<span class='combat'>The <B>[src]</B> slams itself against [src.target]!</span>")
 		random_brute_damage(src.target, rand(7,17), 1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 
@@ -606,7 +606,7 @@
 		S.volume = 60
 		S.priority = 255
 		S.status = SOUND_UPDATE
-		SPAWN_DBG(1 SECOND) process()
+		SPAWN(1 SECOND) process()
 
 	Entered(atom/movable/Obj,atom/OldLoc)
 		..()
@@ -641,7 +641,7 @@
 						mysound.status = SOUND_UPDATE
 						H << mysound
 						if(S)
-							SPAWN_DBG(sound_delay)
+							SPAWN(sound_delay)
 								playsound(H, S, 70, channel = VOLUME_CHANNEL_AMBIENT)
 
 /area/marsoutpost/duststorm
@@ -738,7 +738,7 @@
 
 					playsound(src.loc, 'sound/weapons/ak47shot.ogg', 50, 1)
 					var/tturf = get_turf(target)
-					SPAWN_DBG(0.2 SECONDS)
+					SPAWN(0.2 SECONDS)
 						Shoot(tturf, src.loc, src)
 						src.pixel_x += rand(-3,3)
 						src.pixel_y += rand(-3,3)
@@ -747,7 +747,7 @@
 						var/glitchsound = pick('sound/machines/romhack1.ogg', 'sound/machines/romhack2.ogg', 'sound/machines/romhack3.ogg','sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
 						playsound(src.loc, glitchsound, 50, 1)
 					if(prob(75))
-						SPAWN_DBG(0) step_to(src,target)
+						SPAWN(0) step_to(src,target)
 					src.attack = 0
 					return
 				else continue
@@ -799,7 +799,7 @@
 					LAGCHECK(LAG_LOW)
 				for_by_tcl(P, /obj/machinery/door/poddoor)
 					if (P.id == "mars_vault")
-						SPAWN_DBG(0)
+						SPAWN(0)
 							P.open()
 				for_by_tcl(M, /obj/item/storage/secure/ssafe/marsvault)
 					M.disabled = 0

@@ -115,7 +115,7 @@
 	activate()
 		for(var/obj/machinery/sparker/M in machine_registry[MACHINES_SPARKERS])
 			if (M.id == src.id)
-				SPAWN_DBG( 0 )
+				SPAWN( 0 )
 					M.ignite()
 			LAGCHECK(LAG_MED)
 

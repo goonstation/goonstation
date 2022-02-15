@@ -125,7 +125,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -793,7 +793,7 @@
 			lightbeam.alpha = 0
 			playsound(T, "sound/voice/heavenly.ogg", 100, 1, 0)
 			animate(lightbeam, alpha=255, time=3.5 SECONDS)
-			SPAWN_DBG(30)
+			SPAWN(30)
 				animate(lightbeam,alpha = 0, time=3.5 SECONDS)
 				sleep(3.5 SECONDS)
 				qdel(lightbeam)

@@ -377,7 +377,7 @@ obj/machinery/atmospherics/retrofilter
 		if( powered(ENVIRON) )
 			status &= ~NOPOWER
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				status |= NOPOWER
 
 		src.update_overlays()
