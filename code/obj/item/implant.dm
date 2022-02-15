@@ -1009,7 +1009,7 @@ THROWING DARTS
 /obj/item/implant/artifact/eldritch/eldritch_good
 	var/active = FALSE
 	var/list/organs = list("left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney",
-						   "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")//, "tail")
+						   "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
 
 	do_process(var/mult = 1)
 		if (ishuman(src.owner) && !active)
