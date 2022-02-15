@@ -1077,6 +1077,7 @@
 			hardness = 10
 /turf/simulated/wall/auto/asteroid // perspective asteroids made from sprites found in the files. i put this here to try to get it working more easily
 	icon = 'icons/turf/walls_asteroid.dmi'
+	icon_state = "asteroid-0"
 	mod = "asteroid-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -1111,6 +1112,8 @@
 	var/mining_health = 120
 	var/mining_max_health = 120
 	var/mining_toughness = 1 //Incoming damage divided by this unless tool has power enough to overcome.
+	var/topnumber = 1
+	var/orenumber = 1
 
 #ifdef UNDERWATER_MAP
 	fullbright = 0
@@ -1220,7 +1223,8 @@
 
 
 	New(var/loc)
-		src.icon_state = pick("ast1","ast2","ast3")
+		src.topnumber = pick(1,2,3)
+		src.orenumber = pick(1,2,3)
 		..()
 		worldgenCandidates += src
 		if(current_state <= GAME_STATE_PREGAME)
@@ -1229,6 +1233,7 @@
 	generate_worldgen()
 		. = ..()
 		src.space_overlays()
+		src.top_overlays()
 
 	ex_act(severity)
 		switch(severity)
@@ -1357,6 +1362,11 @@
 		*/
 		src.color = src.stone_color
 
+	proc/top_overlays() // replaced what was here with cool stuff for autowalls
+		var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[src.topnumber]")
+		top_overlay.color = src.stone_color
+		top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[src.icon_state]"))
+		src.overlays += top_overlay
 	proc/space_overlays()
 		for (var/turf/space/A in orange(src,1))
 			var/image/edge_overlay = image('icons/turf/walls_asteroid.dmi', "edge[get_dir(A,src)]")
@@ -1489,12 +1499,18 @@
 		src.opacity = 0
 		src.levelupdate()
 		for (var/turf/simulated/wall/auto/asteroid/A in range(src,1))
+			A.ClearAllOverlays() // i know theres probably a better way to handle this
 			A.UpdateIcon()
-			A.ClearAllOverlays()
+			var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[A.topnumber]")
+			top_overlay.color = A.stone_color
+			top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[A.icon_state]"))
+			A.overlays += top_overlay
 			if(A?.ore) // make sure ores dont turn invisible
-				var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[A.ore.name][pick(1,2,3)]")
+				var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[A.ore.name][A.orenumber]")
 				ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask[A.icon_state]"))
+				ore_overlay.layer = A.layer + 0.01 // so meson goggle nerds can still nerd away
 				A.overlays += ore_overlay
+			A.overlays += /image/fullbright
 		for (var/turf/simulated/floor/plating/airless/asteroid/A in range(src,1))
 			A.UpdateIcon()
 #ifdef UNDERWATER_MAP
@@ -1570,8 +1586,6 @@
 		update_icon()
 
 			return
-		apply_edge_overlay()
-			return
 		space_overlays()
 			return
 
@@ -1619,19 +1633,6 @@
 		if (fullbright)
 			src.overlays += /image/fullbright //Fixes perma-darkness
 		#endif
-		SPAWN_DBG(0)
-			if (istype(src)) //Wire note: just roll with this ok
-				for (var/turf/simulated/wall/auto/asteroid/A in orange(src,1))
-					src.apply_edge_overlay(get_dir(src, A))
-				for (var/turf/space/A in orange(src,1))
-					src.apply_edge_overlay(get_dir(src, A))
-
-	proc/apply_edge_overlay(var/thedir) //For overlays ON THE FLOOR TILE
-		var/image/dig_overlay = image('icons/turf/asteroid.dmi', "edge[thedir]")
-		dig_overlay.color = src.stone_color
-		dig_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
-		//dig_overlay.layer = src.layer + 1
-		//src.overlays += dig_overlay
 
 	proc/space_overlays() //For overlays ON THE SPACE TILE
 		for (var/turf/space/A in orange(src,1))

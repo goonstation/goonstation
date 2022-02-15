@@ -875,7 +875,10 @@
 			AST.ore = O
 			AST.hardness += O.hardness_mod
 			AST.amount = rand(O.amount_per_tile_min,O.amount_per_tile_max)
-			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][pick(1,2,3)]")
+			AST.ClearAllOverlays() // i know theres probably a better way to handle this
+			AST.UpdateIcon()
+			AST.overlays += /image/fullbright
+			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][AST.orenumber]")
 			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask[AST.icon_state]"))
 			AST.overlays += ore_overlay
 			O.onGenerate(AST)
@@ -928,8 +931,12 @@
 			AST.ore = O
 			AST.hardness += O.hardness_mod
 			AST.amount = rand(O.amount_per_tile_min,O.amount_per_tile_max)
-			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][pick(1,2,3)]")
+			AST.ClearAllOverlays() // i know theres probably a better way to handle this
+			AST.UpdateIcon()
+			AST.overlays += /image/fullbright
+			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][AST.orenumber]")
 			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask[AST.icon_state]"))
+			ore_overlay.layer = AST.layer + 0.01 // so meson goggle nerds can still nerd away
 			AST.overlays += ore_overlay
 			O.onGenerate(AST)
 			AST.mining_health = O.mining_health

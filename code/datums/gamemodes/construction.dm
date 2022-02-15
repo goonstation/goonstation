@@ -241,20 +241,22 @@
 		var/turf/simulated/wall/auto/asteroid/AST = new /turf/simulated/wall/auto/asteroid(T)
 		processing += T
 		var/datum/ore/ORE = null
-		switch (rand(1,5))
-			if (3 to 4)
+		switch (rand(1,3))
+			if (1 to 2)
 				ORE = major_ore
-			if (5)
+			if (3)
 				ORE = pick(minor_ores)
 		if (ORE)
 			AST.ore = ORE
 			AST.hardness += ORE.hardness_mod
 			AST.amount = rand(ORE.amount_per_tile_min,ORE.amount_per_tile_max)
-			var/image/ore_overlay = image('icons/turf/asteroid.dmi',ORE.name)
-			ore_overlay.transform = turn(ore_overlay.transform, pick(0,90,180,-90))
-			ore_overlay.pixel_x += rand(-6,6)
-			ore_overlay.pixel_y += rand(-6,6)
+			AST.ClearAllOverlays() // i know theres probably a better way to handle this
+			AST.UpdateIcon()
+			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[ORE.name][AST.orenumber]")
+			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask[AST.icon_state]"))
+			ore_overlay.layer = AST.layer + 0.01 // so meson goggle nerds can still nerd away
 			AST.overlays += ore_overlay
+			AST.overlays += /image/fullbright
 			ORE.onGenerate(AST)
 			AST.mining_health = ORE.mining_health
 			AST.mining_max_health = ORE.mining_health
