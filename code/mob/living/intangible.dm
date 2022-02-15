@@ -43,6 +43,13 @@
 	shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)
 		return 0
 
+	//can't be on fire if you're intangible either
+	set_burning(var/new_value)
+		return 0
+
+	update_burning(var/change)
+		return 0
+
 	// No log entries for unaffected mobs (Convair880).
 	ex_act(severity)
 		return
