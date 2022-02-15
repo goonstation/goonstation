@@ -954,6 +954,7 @@ THROWING DARTS
 /obj/item/implant/artifact
 	artifact_implant = TRUE
 	var/artifact_implant_type = null
+	var/active = FALSE
 
 	eldritch
 		name = "mysterious Eldritch object"
@@ -1007,7 +1008,6 @@ THROWING DARTS
 					qdel(imp)
 
 /obj/item/implant/artifact/eldritch/eldritch_good
-	var/active = FALSE
 	var/static/list/organs = list("left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver",
 								  "stomach", "intestines", "spleen", "pancreas", "appendix")
 
@@ -1047,7 +1047,6 @@ THROWING DARTS
 		..()
 
 /obj/item/implant/artifact/eldritch/eldritch_gimmick
-	var/active = FALSE
 
 	do_process(var/mult = 1)
 		if (ishuman(src.owner) && !active)
@@ -1068,7 +1067,6 @@ THROWING DARTS
 		..()
 
 /obj/item/implant/artifact/eldritch/eldritch_bad
-	var/active = FALSE
 
 	do_process(var/mult = 1)
 		if (ishuman(src.owner) && !active)
@@ -1101,7 +1099,6 @@ THROWING DARTS
 		..()
 
 /obj/item/implant/artifact/ancient/ancient_good
-	var/active = FALSE
 	var/static/left_arm = list(/obj/item/parts/robot_parts/arm/left/light, /obj/item/parts/robot_parts/arm/left/standard)
 	var/static/right_arm = list(/obj/item/parts/robot_parts/arm/right/light, /obj/item/parts/robot_parts/arm/right/standard)
 	var/static/left_leg = list(/obj/item/parts/robot_parts/leg/left/light, /obj/item/parts/robot_parts/leg/left/standard, /obj/item/parts/robot_parts/leg/left/treads)
@@ -1140,7 +1137,6 @@ THROWING DARTS
 		..()
 
 /obj/item/implant/artifact/ancient/ancient_gimmick
-	var/active = FALSE
 	var/static/list/message_list = list("ROBOT REVOLUTION", "THE TIME IS NOW", "YOUR CAPTAIN IS OURS", "TIME TO BORG",
 										"CYBORGS WILL PREVAIL", "SILICON IS SUPERIOR", "FLESH AND METAL", "GO BORG OR GO HOME",
 										"SILICON MEANS SMART", "BORG THE CREW", "ALL WILL SUBMIT", "SETTLE FOR METAL",
@@ -1159,7 +1155,6 @@ THROWING DARTS
 		..()
 
 /obj/item/implant/artifact/ancient/ancient_bad
-	var/active = FALSE
 
 	do_process(var/mult = 1)
 		if (ishuman(src.owner) && !active)
@@ -1181,7 +1176,6 @@ THROWING DARTS
 		..()
 
 /obj/item/implant/artifact/wizard/wizard_good
-	var/active = FALSE
 
 	do_process(var/mult = 1)
 		if (ishuman(src.owner) && !active)
@@ -1220,7 +1214,6 @@ THROWING DARTS
 		..()
 
 /obj/item/implant/artifact/wizard/wizard_gimmick
-	var/active = FALSE
 	var/datum/mutantrace/original_mutantrace = null
 	var/static/list/possible_mutantraces = list(null, /datum/mutantrace/lizard, /datum/mutantrace/skeleton, /datum/mutantrace/ithillid,
 												/datum/mutantrace/monkey, /datum/mutantrace/roach, /datum/mutantrace/cow,
@@ -1256,7 +1249,6 @@ THROWING DARTS
 		..()
 
 /obj/item/implant/artifact/wizard/wizard_bad
-	var/active = FALSE
 
 	do_process(var/mult = 1)
 		if (ishuman(src.owner) && !active)
