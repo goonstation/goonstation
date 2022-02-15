@@ -132,7 +132,7 @@
 			boutput( usr, "Could not locate a path! Try moving around, or if its an area you don't have access to, get more access!" )
 		return
 	client.GPS_Images = list()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/list/path = client.GPS_Path
 		for(var/i = 2, i < path.len, i++)
 			if(!client.GPS_Path) break

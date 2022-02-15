@@ -341,11 +341,11 @@
 			if ("process")
 				var/times = rand(1,5)
 				for (var/i = 1, i <= times, i++)
-					SPAWN_DBG(4*i)
+					SPAWN(4*i)
 						playsound(det.attachedTo.loc, sound_to_play, src.volume, src.randomized_pitch)
 			if ("prime")
 				for (var/i = 1, i < 15, i++)
-					SPAWN_DBG(3*i)
+					SPAWN(3*i)
 						playsound(det.attachedTo.loc, sound_to_play, min(src.volume*10, 750), src.randomized_pitch)
 
 /* -------------------- Dramatic Bike Horn -------------------- */
@@ -479,11 +479,11 @@
 				if (prob(45))
 					var/times = rand(1,5)
 					for (var/i = 1, i <= times, i++)
-						SPAWN_DBG(4*i)
+						SPAWN(4*i)
 							playsound(det.attachedTo.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
 			if ("prime")
 				for (var/i = 1, i < 15, i++)
-					SPAWN_DBG(4*i)
+					SPAWN(4*i)
 						playsound(det.attachedTo.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 500, 1)
 
 /* -------------------- Trumpet -------------------- */
@@ -612,7 +612,7 @@
 			ghost_to_toss.set_loc(soul_stuff)
 
 		soul_stuff.throw_at(T, 10, 1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (soul_stuff && ghost_to_toss)
 				ghost_to_toss.set_loc(soul_stuff.loc)
 

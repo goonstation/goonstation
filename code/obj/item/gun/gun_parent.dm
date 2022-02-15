@@ -58,7 +58,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		lastTooltipContent = .
 
 	New()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			src.forensic_ID = src.CreateID()
 			forensic_IDs.Add(src.forensic_ID)
 		return ..()
@@ -82,7 +82,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		var/mob/living/carbon/human/H = usr
 		if(H.in_throw_mode) return
 	c_mouse_down = 1
-	SPAWN_DBG(c_windup)
+	SPAWN(c_windup)
 		if(!c_firing && c_mouse_down)
 			continuousFire(object, params, usr)
 
@@ -98,7 +98,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	if(!c_firing)
 		c_firing = 1
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while(src?.c_mouse_down)
 				pixelaction(src.c_target.target, src.c_target.params, src.c_target.user, 0, 1)
 				suppress_fire_msg = 1
@@ -206,7 +206,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			if (G && G.can_dual_wield && G.canshoot())
 				is_dual_wield = 1
 				if(!ON_COOLDOWN(G, "shoot_delay", G.shoot_delay))
-					SPAWN_DBG(0.2 SECONDS)
+					SPAWN(0.2 SECONDS)
 						G.shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield)
 
 		else if(ismobcritter(user))
@@ -217,7 +217,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 					is_dual_wield = 1
 					if (H.item:canshoot())
 						guns += H.item
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for(var/obj/item/gun/gun in guns)
 					if(!ON_COOLDOWN(gun, "shoot_delay", gun.shoot_delay))
 						sleep(0.2 SECONDS)
@@ -271,7 +271,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			if(user.hand && istype(user.r_hand, /obj/item/gun) && user.r_hand:can_dual_wield)
 				var/target_turf = get_turf(M)
 				is_dual_wield = 1
-				SPAWN_DBG(0.2 SECONDS)
+				SPAWN(0.2 SECONDS)
 					if (get_dist(user,M)<=1)
 						user.r_hand:shoot_point_blank(M,user,second_shot = 1)
 					else
@@ -279,7 +279,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			else if(!user.hand && istype(user.l_hand, /obj/item/gun) && user.l_hand:can_dual_wield)
 				var/target_turf = get_turf(M)
 				is_dual_wield = 1
-				SPAWN_DBG(0.2 SECONDS)
+				SPAWN(0.2 SECONDS)
 					if (get_dist(user,M)<=1)
 						user.l_hand:shoot_point_blank(M,user,second_shot = 11)
 					else
@@ -319,7 +319,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 
 	if(slowdown && ismob(user))
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			user.movement_delay_modifier += slowdown
 			sleep(slowdown_time)
 			user.movement_delay_modifier -= slowdown
@@ -397,7 +397,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			for(var/obj/item/grab/gunpoint/G in M.grabbed_by)
 				G.shoot()
 		if(slowdown)
-			SPAWN_DBG(-1)
+			SPAWN(-1)
 				M.movement_delay_modifier += slowdown
 				sleep(slowdown_time)
 				M.movement_delay_modifier -= slowdown

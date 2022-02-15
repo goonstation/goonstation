@@ -152,7 +152,7 @@
 		next_shot_at = ticker.round_elapsed_ticks + cooldown
 
 		playsound(user, "sound/effects/mag_warp.ogg", 50, 1)
-		SPAWN_DBG(rand(1,3)) // so it might miss, sometimes, maybe
+		SPAWN(rand(1,3)) // so it might miss, sometimes, maybe
 			var/obj/target_r = new/obj/railgun_trg_dummy(target)
 
 			playsound(user, "sound/weapons/railgun.ogg", 50, 1)
@@ -838,11 +838,11 @@
 			var/obj/critter/victim = target
 
 			if (src.weak == 1)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					step_away(victim, user, 15)
 
 				playsound(user.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-				SPAWN_DBG(0.1 SECONDS)
+				SPAWN(0.1 SECONDS)
 					if (user) playsound(user.loc, "sound/impact_sounds/Flesh_Tear_3.ogg", 40, 1, -1)
 
 				user.visible_message("<span class='alert'><B>[user] slashes viciously at [victim]!</B></span>")

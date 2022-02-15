@@ -22,7 +22,7 @@
 	..()
 	UnsubscribeProcess()
 	light = new /datum/light/point
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		src.area = src.loc.loc
 
 		if(otherarea)
@@ -131,7 +131,7 @@
 
 	New()
 		var/turf/T = null
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			for (var/dir in cardinal)
 				T = get_step(src,dir)
 				if (istype(T,/turf/simulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))

@@ -101,7 +101,7 @@
 
 		// ptoato said to just call del directly so blame them
 		// pali: potato was wrong
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			qdel(src)
 
 
@@ -126,11 +126,11 @@
 		maptext = "<span class='pixel c sh' style=\"[style]\">[msg]</span>"
 		animate(src, alpha = 255, maptext_y = 34, time = 4)
 
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			bump_up()
 
 
-		SPAWN_DBG(7 SECONDS)
+		SPAWN(7 SECONDS)
 			del(src)
 
 	proc/bump_up()
@@ -350,7 +350,7 @@
 		animate(transform = matrix(1, 0, 0, 0, 1, 0), time = 5)
 		animate(pixel_y = 20 + 6, time = 5)
 		animate(pixel_y = 20 + 12, alpha = 0, time = 5)
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			working--
 			if (working == 0)
 				// if > 1 then the score is still changing so just wait a while...
@@ -402,7 +402,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			gunsim = locate() in world
 
 	attack_hand(mob/user as mob)
@@ -415,7 +415,7 @@
 		icon_state = "cleanbot-c"
 		user.visible_message("CLEANIN UP THE MURDERBOX STAND CLEAR")
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/obj/item/I in gunsim)
 				if(istype(I, /obj/item/device/radio/intercom)) //lets not delete the intercoms inside shall we?
 					continue
@@ -439,7 +439,7 @@
 			for (var/obj/decal/D in gunsim)
 				qdel(D)
 */
-		SPAWN_DBG(60 SECONDS)
+		SPAWN(60 SECONDS)
 			active = 0
 			alpha = 255
 			icon_state = "cleanbot1"
@@ -467,7 +467,7 @@
 		//T.x = src.x + 1 // move it to the right
 
 
-		SPAWN_DBG(10 SECONDS)
+		SPAWN(10 SECONDS)
 			active = 0
 			alpha = 255
 
@@ -752,7 +752,7 @@
 		src.update_monitor()
 		if (src.update_delay)
 			UnsubscribeProcess()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				while (src.update_delay)
 					src.update_monitor()
 					sleep(update_delay)
@@ -1426,7 +1426,7 @@ Other Goonstation servers:[serverList]</span>"})
 		src.victim = home
 		set_loc(null)
 		// gib_time = ticker.round_elapsed_ticks + time_until_gib
-		SPAWN_DBG(0)
+		SPAWN(0)
 			countdown()
 
 	// These are admin gimmick bombs so a while...sleep() delay isn't going to murder things

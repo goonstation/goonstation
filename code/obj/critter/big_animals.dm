@@ -290,7 +290,7 @@ obj/critter/bear/care
 				if(!recentsound)
 					playsound(src.loc, "sound/misc/jaws.ogg", 50, 0)
 					recentsound = 1
-					SPAWN_DBG(1 MINUTE) recentsound = 0
+					SPAWN(1 MINUTE) recentsound = 0
 				src.task = "chasing"
 				break
 			else
@@ -308,7 +308,7 @@ obj/critter/bear/care
 			logTheThing("combat", M, null, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
 			playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
 			M.gib()
-			SPAWN_DBG(3 SECONDS) playsound(src.loc, "sound/voice/burp_alien.ogg", 50, 0)
+			SPAWN(3 SECONDS) playsound(src.loc, "sound/voice/burp_alien.ogg", 50, 0)
 			src.task = "thinking"
 			src.seek_target()
 			src.attacking = 0

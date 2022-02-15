@@ -12,7 +12,7 @@ mob/verb/checkrewards()
 	return
 
 /proc/showJobRewards(var/job) //Pass in job instead
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/mob/M = usr
 		if(job)
 			if(!winexists(M, "winjobrewards_[M.ckey]"))

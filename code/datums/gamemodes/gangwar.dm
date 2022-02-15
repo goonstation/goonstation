@@ -109,13 +109,13 @@
 
 	find_potential_hot_zones()
 
-	SPAWN_DBG (10 MINUTES)
+	SPAWN(10 MINUTES)
 		process_hot_zones()
 
-	SPAWN_DBG (15 MINUTES)
+	SPAWN(15 MINUTES)
 		process_kidnapping_event()
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 	return 1
@@ -307,7 +307,7 @@
 
 	frequencies_used += leaderMind.gang.gang_frequency
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		pick_name(leaderMind)
 		pick_theme(leaderMind)
 
@@ -409,7 +409,7 @@
 
 	broadcast_to_all_gangs("The [hot_zone.name] is a high priority area. Ensure that your gang has control of it five minutes from now!")
 
-	SPAWN_DBG(hot_zone_timer-600)
+	SPAWN(hot_zone_timer-600)
 		if(hot_zone != null) broadcast_to_all_gangs("You have a minute left to control the [hot_zone.name]!")
 		sleep(1 MINUTE)
 		if(hot_zone != null && hot_zone.gang_owners != null)
@@ -462,7 +462,7 @@
 	boutput(kidnapping_target, "<span class='alert'>You get the feeling that [top_gang.gang_name] wants you dead! Run and hide or ask security for help!</span>")
 
 
-	SPAWN_DBG(kidnapping_timer - 1 MINUTE)
+	SPAWN(kidnapping_timer - 1 MINUTE)
 		if(kidnapping_target != null) broadcast_to_all_gangs("[target_name] has still not been captured by [top_gang.gang_name] and they have 1 minute left!")
 		sleep(1 MINUTE)
 		//if they didn't kidnap em, then give points to other gangs depending on whether they are alive or not.
@@ -919,7 +919,7 @@
 			overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
 
 		src.UpdateOverlays(overlay, "screen")
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.UpdateOverlays(default_screen_overlay, "screen")
 
 	update_icon()
@@ -1018,7 +1018,7 @@
 		if(istype(ticker.mode,/datum/game_mode/gang) && damage_warning_timeout == 0)
 			ticker.mode:broadcast_to_gang("Your locker is under attack!",src.gang)
 			damage_warning_timeout = 1
-			SPAWN_DBG(1 MINUTE)
+			SPAWN(1 MINUTE)
 				damage_warning_timeout = 0
 
 		if(health <= 0)
@@ -1675,7 +1675,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 		..()
 		if (!ishuman(src.owner))
 			return
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			qdel(src)
 
 /obj/item/implanter/gang

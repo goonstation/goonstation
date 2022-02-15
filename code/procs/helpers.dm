@@ -100,7 +100,7 @@ var/global/obj/flashDummy
 	var/list/affected = DrawLine(from, O, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 	for(var/obj/Q in affected)
-		SPAWN_DBG(0.6 SECONDS) qdel(Q)
+		SPAWN(0.6 SECONDS) qdel(Q)
 
 	for(var/mob/living/M in get_turf(target))
 		M.shock(from, wattage, "chest", 1, 1)
@@ -132,7 +132,7 @@ var/global/obj/flashDummy
 	var/list/affected = DrawLine(from, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 	for(var/obj/O in affected)
-		SPAWN_DBG(0.6 SECONDS) qdel(O)
+		SPAWN(0.6 SECONDS) qdel(O)
 
 	if(wattage && isliving(target)) //Probably unsafe.
 		target:shock(from, wattage, "chest", stun_coeff, 1)
@@ -1080,7 +1080,7 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
 /proc/shake_camera(mob/M, duration, strength=1, delay=0.2)
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		if(!M || !M.client || M.shakecamera)
 			return
 		M.shakecamera = 1
@@ -1847,7 +1847,7 @@ proc/countJob(rank)
 				if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
 					continue
 
-				SPAWN_DBG(0) // Don't lock up the entire proc.
+				SPAWN(0) // Don't lock up the entire proc.
 					M.current.playsound_local(M.current, "sound/misc/lawnotify.ogg", 50, flags=SOUND_IGNORE_SPACE)
 					boutput(M.current, text_chat_alert)
 

@@ -68,8 +68,8 @@ var/list/magnet_locations = list()
 				if(ismob(M))
 					var/mob/O = M
 					O.changeStatus("stunned", 2 SECONDS)
-				SPAWN_DBG(6 DECI SECONDS) M.set_loc(target)
-			SPAWN_DBG(1 SECOND) busy = 0
+				SPAWN(6 DECI SECONDS) M.set_loc(target)
+			SPAWN(1 SECOND) busy = 0
 			return 1
 		return 0
 
@@ -93,8 +93,8 @@ var/list/magnet_locations = list()
 				if(ismob(M))
 					var/mob/O = M
 					O.changeStatus("stunned", 2 SECONDS)
-				SPAWN_DBG(6 DECI SECONDS) M.set_loc(src.loc)
-			SPAWN_DBG(1 SECOND) busy = 0
+				SPAWN(6 DECI SECONDS) M.set_loc(src.loc)
+			SPAWN(1 SECOND) busy = 0
 			return 1
 		return 0
 
@@ -230,7 +230,7 @@ var/list/magnet_locations = list()
 			walk_to(src, src.target,1,4)
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
-			SPAWN_DBG(attack_cooldown)
+			SPAWN(attack_cooldown)
 				attacking = 0
 		return
 
@@ -242,7 +242,7 @@ var/list/magnet_locations = list()
 
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
-			SPAWN_DBG(attack_cooldown)
+			SPAWN(attack_cooldown)
 				attacking = 0
 		return
 
@@ -255,7 +255,7 @@ var/list/magnet_locations = list()
 		if(prob(20) && alive)
 			src.visible_message("<span class='alert'><b>[src]</b> begins to reassemble!</span>")
 			var/turf/T = src.loc
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				new/obj/critter/gunbot/drone/buzzdrone/naniteswarm(T)
 				if(src)
 					qdel(src)

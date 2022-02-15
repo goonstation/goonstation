@@ -1,4 +1,11 @@
 
+(t)mon feb 14 22
+(u)Flaborized
+(p)7502
+(e)🎨|sprites
+(+)Updated the sprites for shuttle and airbridge floors.
+(u)Kyle
+(*)You can now handcuff people that have only one arm. (If they're cuffed and lose an arm, they'll still be uncuffed like normal)
 (t)sun feb 13 22
 (u)Sovexe
 (p)7486

@@ -113,7 +113,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 				if (isrestrictedz(Z) || isrestrictedz(user:z))
 					boutput(user, "<span class='alert'>Your telekinetic powers don't seem to work here.</span>")
 					return 0
-				SPAWN_DBG(0)
+				SPAWN(0)
 					//I really shouldnt put this here but i dont have a better idea
 					var/obj/overlay/O = new /obj/overlay ( locate(X,Y,Z) )
 					O.name = "sparkles"

@@ -205,7 +205,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 					C.add_stain(src.stain)
 					return
 			else
-				SPAWN_DBG(0) //sorry. i want to lagcheck this. DO SOMETHING BETTER LATER ARUUGh
+				SPAWN(0) //sorry. i want to lagcheck this. DO SOMETHING BETTER LATER ARUUGh
 					for (var/mob/living/carbon/human/H in src.loc)
 						if (H.lying)
 							if (H.wear_suit)
@@ -292,7 +292,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 		..()
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (!src.disposed && src.loc && length(src.loc.contents) < 15)
 				for (var/obj/O in src.loc)
 					LAGCHECK(LAG_LOW)
@@ -1231,7 +1231,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	Cross(atom/A)
 		if (ismob(A))
 			A.changeStatus("slowed", 0.2 SECONDS)
-			SPAWN_DBG(-1)
+			SPAWN(-1)
 				qdel(src)		//break when walked over
 		else return 1
 		..()
@@ -1570,7 +1570,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		on_fire = image('icons/effects/fire.dmi', "2old")
 		visible_message("<span class='alert'>[src] ignites!</span>")
 		src.overlays += on_fire
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/turf/T = get_turf(src)
 			while (burn_time > 0)
 				if (loc == T && !disposed && on_fire)
@@ -1757,7 +1757,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		kind_of_cleanable = "FLOCK"
 	else
 		kind_of_cleanable = "BLOOD"
-	SPAWN_DBG(0)
+	SPAWN(0)
 		/// Number of tiles where it should try to make a splatter
 		var/num_splats = rand(round(dist * 0.2), dist) + 1
 		for (var/turf/T in linepath)

@@ -58,7 +58,7 @@
 			return
 
 		on_cooldown = 1
-		SPAWN_DBG(cooldown_delay)
+		SPAWN(cooldown_delay)
 			if (O.loc == user)
 				boutput(user, "<b>[O]</b> [recharge_phrase]")
 			on_cooldown = 0

@@ -163,5 +163,5 @@ proc/latejoin_missile_spawn(var/mob/character)
 	var/turf/T = pick_landmark(LANDMARK_LATEJOIN_MISSILE)
 	var/missile_dir = landmarks[LANDMARK_LATEJOIN_MISSILE][T]
 	M.set_loc(T)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		M.lunch(character, missile_dir)

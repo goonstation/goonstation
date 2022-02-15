@@ -151,7 +151,7 @@ TOILET
 
 	playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 	health_update_queue |= user
-	SPAWN_DBG(10 SECONDS)
+	SPAWN(10 SECONDS)
 		if (user)
 			user.suiciding = 0
 	return 1

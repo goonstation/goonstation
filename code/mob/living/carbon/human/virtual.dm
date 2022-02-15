@@ -13,7 +13,7 @@
 		sound_fart = 'sound/voice/virtual_gassy.ogg'
 		sound_snap = 'sound/voice/virtual_snap.ogg'
 		sound_fingersnap = 'sound/voice/virtual_snap.ogg'
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.set_mutantrace(/datum/mutantrace/virtual)
 
 	Life(datum/controller/process/mobs/parent)
@@ -158,7 +158,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 		*/

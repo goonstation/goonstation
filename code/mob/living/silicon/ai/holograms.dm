@@ -215,7 +215,7 @@
 		// 	if ("sad_face")
 		// 	if ("angry_face")
 
-		SPAWN_DBG(duration)
+		SPAWN(duration)
 			qdel(src)
 		..()
 
@@ -273,7 +273,7 @@
 		maptext = {"<a href="#"><span class='vm c ps2p sh' style='color:white;text-shadow: silver;'>[message]</span></a>"}
 
 		// Add displacement filter for scanline/glitch
-		SPAWN_DBG(1 DECI SECOND) //delayed to resolve issue where color didn't settle yet
+		SPAWN(1 DECI SECOND) //delayed to resolve issue where color didn't settle yet
 			E = new
 			if(length(msg) > 11)
 				E.icon_state = "d_fast"

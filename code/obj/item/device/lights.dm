@@ -29,7 +29,7 @@
 	dropped(mob/user)
 		..()
 		if (light)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (src.loc != user)
 					light.attach(src)
 
@@ -383,7 +383,7 @@
 		..()
 		var/spookydegrees = rand(5, 20)
 
-		SPAWN_DBG(rand(1, 10))
+		SPAWN(rand(1, 10))
 			animate(src, pixel_y = 32, transform = matrix(spookydegrees, MATRIX_ROTATE), time = 20, loop = -1, easing = SINE_EASING)
 			animate(pixel_y = 0, transform = matrix(spookydegrees * -1, MATRIX_ROTATE), time = 20, loop = -1, easing = SINE_EASING)
 

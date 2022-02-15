@@ -207,7 +207,7 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 			V.vomit()
 	if (user) //ZeWaka: Fix for null.loc
 		health_update_queue |= user
-	SPAWN_DBG(50 SECONDS)
+	SPAWN(50 SECONDS)
 		if (user && !isdead(user))
 			user.suiciding = 0
 	return 1

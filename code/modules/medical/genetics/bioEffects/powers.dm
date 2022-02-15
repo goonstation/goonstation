@@ -72,7 +72,7 @@
 		var/obj/decal/icefloor/B
 		for (var/turf/TF in range(linked_power.power - 1,T))
 			B = new /obj/decal/icefloor(TF)
-			SPAWN_DBG(80 SECONDS)
+			SPAWN(80 SECONDS)
 				B.dispose()
 
 		for (var/mob/living/L in T.contents)
@@ -303,7 +303,7 @@
 			var/prevLayer = owner.layer
 			owner.layer = EFFECTS_LAYER_BASE
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for(var/i=0, i < jump_tiles, i++)
 					step(owner, owner.dir)
 					if(i < jump_tiles / 2)
@@ -323,7 +323,7 @@
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[owner.loc]</b> emits a loud thump and rattles a bit.</span>")
 			playsound(owner.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/wiggle = 6
 				while(wiggle > 0)
 					wiggle--
@@ -359,7 +359,7 @@
 			owner.changeStatus("weakened", 10 SECONDS)
 			owner.changeStatus("stunned", 5 SECONDS)
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for(var/i=0, i < jump_tiles, i++)
 					if(i < jump_tiles / 2)
 						owner.pixel_y += pixel_move
@@ -378,7 +378,7 @@
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[owner.loc]</b> emits a loud thump and rattles a bit.</span>")
 			playsound(owner.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/wiggle = 6
 				while(wiggle > 0)
 					wiggle--
@@ -443,7 +443,7 @@
 		playsound(owner.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
 		owner.visible_message("<span class='alert'><b>[owner]</b> touches [target], then begins to shifts and contort!</span>")
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(H && owner)
 				playsound(owner.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 				owner.bioHolder.CopyOther(H.bioHolder, copyAppearance = 1, copyPool = 0, copyEffectBlocks = 0, copyActiveEffects = 0)
@@ -1390,7 +1390,7 @@
 
 			owner.visible_message("<span class='alert'><b>[owner] appears in a burst of blue light!</b></span>")
 			playsound(owner.loc, "sound/effects/ghost2.ogg", 50, 0)
-			SPAWN_DBG(0.7 SECONDS)
+			SPAWN(0.7 SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
 				active = 0
@@ -1434,7 +1434,7 @@
 			playsound(owner.loc, "sound/effects/ghost2.ogg", 50, 0)
 			animate(owner, color = "#0000FF", time = 5, easing = LINEAR_EASING)
 			animate(alpha = 0, time = 5, easing = LINEAR_EASING)
-			SPAWN_DBG(0.7 SECONDS)
+			SPAWN(0.7 SECONDS)
 				owner.canmove = 1
 				owner.restrain_time = 0
 				var/obj/dummy/spell_invis/invis_object = new /obj/dummy/spell_invis(get_turf(owner))
@@ -1456,7 +1456,7 @@
 
 			owner.visible_message("<span class='alert'><b>[owner] appears in a burst of blue light!</b></span>")
 			playsound(owner.loc, "sound/effects/ghost2.ogg", 50, 0)
-			SPAWN_DBG(0.7 SECONDS)
+			SPAWN(0.7 SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
 				P.active = 0
@@ -1526,7 +1526,7 @@
 		light.enable()
 
 		if (isnum(time))
-			SPAWN_DBG(time)
+			SPAWN(time)
 				qdel(src)
 
 	disposing()
@@ -1758,7 +1758,7 @@
 					current_prob *= modifier // very steep. probably grabs 3 or 4 objects per cast -- much less effective than revenant command
 					thrown += O
 					animate_float(O)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(T, 32, 2)
 
@@ -1779,7 +1779,7 @@
 					current_prob *= modifier // very steep. probably grabs 3 or 4 objects per cast -- much less effective than revenant command
 					thrown += O
 					animate_float(O)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(owner, 32, 2)
 
@@ -2195,7 +2195,7 @@
 				thrown_limb = H.limbs.r_arm.remove(0)
 			else
 				return 1
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				if (istype(thrown_limb))
 					//double power if the ability is empowered (doesn't really do anything, but w/e)
 					var/tmp_force = thrown_limb.throwforce
@@ -2217,7 +2217,7 @@
 
 					owner.visible_message("<span class='alert'><b>[thrown_limb][linked_power.power > 1 ? " violently " : " "]bursts off of its socket and flies towards [target]!</b></span>")
 					logTheThing("combat", owner, target, "shoot_limb [!linked_power.safety ? "Accidently" : ""] at [ismob(target)].")
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						if (thrown_limb)
 							thrown_limb.throwforce = tmp_force
 

@@ -201,7 +201,7 @@
 			New()
 				..()
 				real_name = pick("Krampus", "Krampus 3.0", "The Krampmeister", "The Krampster") //For deadchat
-				SPAWN_DBG(2 SECONDS) //I do not know where the hell you get a bioholder from =I
+				SPAWN(2 SECONDS) //I do not know where the hell you get a bioholder from =I
 					if(src.bioHolder) src.bioHolder.age = 110
 
 			// people were somehow being shit even as a meatcube, so i'm removing the small mercy they had with being unpoppable - cirr

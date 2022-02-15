@@ -178,7 +178,7 @@
 						I.icon_state = "blank"
 						I.pixel_x = src.pixel_x
 						I.pixel_y = src.pixel_y
-						SPAWN_DBG( 20 )
+						SPAWN( 20 )
 							if (I && !I.disposed) qdel(I)
 
 				if (!spacemove) // buh

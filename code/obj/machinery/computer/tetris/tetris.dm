@@ -7,7 +7,7 @@
 		return null
 	for(var/datum/game/tetris/T in by_type[/datum/game/tetris]) // JFC this a world loop before this. aaaAAAAAAA
 		if (T.highscore && T.highscorekey)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/list/response = world.GetScores(T.highscorekey, "Tetris", config.medal_hub, config.medal_password)
 				var/currScore = -1
 				if(response)
@@ -57,7 +57,7 @@
 			icon_state = initial(icon_state)
 			status &= ~NOPOWER
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				src.icon_state = "tetris0"
 				status |= NOPOWER
 

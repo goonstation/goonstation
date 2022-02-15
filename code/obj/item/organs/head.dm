@@ -53,7 +53,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.donor)
 				if(!src.bones)
 					src.bones = new /datum/bone(src)
@@ -444,7 +444,7 @@
 				user.u_equip(src)
 			H.organHolder.receive_organ(src, "head", 3.0)
 
-			SPAWN_DBG(rand(50,500))
+			SPAWN(rand(50,500))
 				if (H?.organHolder?.head && H.organHolder.head == src) // aaaaaa
 					if (src.op_stage != 0.0)
 						H.visible_message("<span class='alert'><b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b></span>",\

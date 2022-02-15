@@ -348,7 +348,7 @@
 	icon = 'icons/mob/mob.dmi'
 
 /atom/movable/overlay/gibs/proc/delaydispose()
-	SPAWN_DBG(3 SECONDS)
+	SPAWN(3 SECONDS)
 		if (src)
 			dispose(src)
 
@@ -768,7 +768,7 @@
 	return null
 
 /atom/MouseDrop(atom/over_object as mob|obj|turf)
-	SPAWN_DBG( 0 )
+	SPAWN( 0 )
 		if (istype(over_object, /atom))
 			if (isalive(usr) && !isintangible(usr))
 				//To stop ghostdrones dragging people anywhere

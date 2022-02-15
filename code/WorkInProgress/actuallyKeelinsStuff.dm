@@ -315,7 +315,7 @@ Returns:
 
 	New()
 		..()
-		SPAWN_DBG(50) setup()
+		SPAWN(50) setup()
 
 /atom/proc/cabinetGlassIcon(var/atom/A, var/targetWidth = 12, var/targetHeight= 10, var/iconSize = 32)
 	var/icon/I = icon(A.icon, A.icon_state)
@@ -522,7 +522,7 @@ Returns:
 		light.set_brightness(0.5)
 		light.attach(src)
 		light.enable()
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			if (target_tag)
 				var/atom/target = locate(target_tag)
 				if(target)
@@ -573,7 +573,7 @@ Returns:
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")
 			var/obj/sparks = new /obj/effects/sparks
 			sparks.set_loc(get_turf(src))
-			SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
+			SPAWN(2 SECONDS) if (sparks) qdel(sparks)
 			qdel(src)
 		return
 
@@ -586,7 +586,7 @@ Returns:
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")
 			var/obj/sparks = new /obj/effects/sparks
 			sparks.set_loc(get_turf(src))
-			SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
+			SPAWN(2 SECONDS) if (sparks) qdel(sparks)
 			qdel(src)
 		return
 	*/
@@ -837,7 +837,7 @@ Returns:
 	C.shake(steps, length, delay, strength, anim_easing)
 
 	if(!persist)
-		SPAWN_DBG(max(length*2,delay) * steps)
+		SPAWN(max(length*2,delay) * steps)
 			C.stop()
 
 	return
@@ -860,7 +860,7 @@ Returns:
 	C.lookAt(target, duration, easing)
 
 	if(!persist)
-		SPAWN_DBG(duration)
+		SPAWN(duration)
 			C.stop()
 
 	return
@@ -877,7 +877,7 @@ Returns:
 	anchored = 1
 
 	proc/shake(var/steps = 20, var/length = 1, var/delay = 0, var/strength = 32, var/anim_easing = LINEAR_EASING)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for(var/i=0, i<steps, i++)
 				var/off_x = (rand(0, strength) * (prob(50) ? -1:1))
 				var/off_y = (rand(0, strength) * (prob(50) ? -1:1))
@@ -950,27 +950,27 @@ Returns:
 	pixel_y = -16
 	blend_mode = 2
 	New()
-		SPAWN_DBG(10 SECONDS)
+		SPAWN(10 SECONDS)
 			name = "growing wormhole"
 			desc = "a slowly growing wormhole"
 			icon_state = "whole-growing"
 			blend_mode = 2
-		SPAWN_DBG(20 SECONDS)
+		SPAWN(20 SECONDS)
 			name = "stable wormhole"
 			desc = "a wormhole leading who-knows-where"
 			icon_state = "whole"
 			blend_mode = 1
-		SPAWN_DBG(30 SECONDS)
+		SPAWN(30 SECONDS)
 			name = "massive wormhole"
 			desc = "a huge wormhole leading to unknown space"
 			icon_state = "whole-massive"
 			blend_mode = 1
-		SPAWN_DBG(40 SECONDS)
+		SPAWN(40 SECONDS)
 			name = "unstable wormhole"
 			desc = "an unstable wormhole, about to collapse"
 			icon_state = "whole-unstable"
 			blend_mode = 1
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			qdel(src)
 		..()
 
@@ -983,7 +983,7 @@ Returns:
 	layer = EFFECTS_LAYER_1
 
 	New()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			qdel(src)
 		..()
 
@@ -1030,7 +1030,7 @@ Returns:
 		var/image/I = image(S)
 		I.appearance_flags = 0
 		src.overlays += image(S)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			qdel(src)
 		..()
 
@@ -1668,7 +1668,7 @@ Returns:
 				pixels += P
 
 	qdel(A)
-	SPAWN_DBG(7 SECONDS)
+	SPAWN(7 SECONDS)
 		for(var/datum/D in pixels)
 			qdel(D)
 
@@ -1775,7 +1775,7 @@ Returns:
 				return item2.attack(M, user, def_zone)
 		else
 			if(r < 90)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					item1.attack(M, user, def_zone)
 					item2.attack(M, user, def_zone)
 				return
@@ -1797,7 +1797,7 @@ Returns:
 				return item2.attack_self(user)
 		else
 			if(r <= 80)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					item1.attack_self(user)
 					item2.attack_self(user)
 				return
@@ -2225,7 +2225,7 @@ Returns:
 							T:break_tile()
 						else
 							T:burn_tile()
-			SPAWN_DBG(0.6 SECONDS) qdel(B)
+			SPAWN(0.6 SECONDS) qdel(B)
 			sleep(0.3 SECONDS)
 		sleep(0.1 SECONDS)
 
@@ -2276,7 +2276,7 @@ Returns:
 		..()
 		if(!canTrigger) return
 		canTrigger = 0
-		SPAWN_DBG(procCooldown) canTrigger = 1
+		SPAWN(procCooldown) canTrigger = 1
 
 		if(length(procName))
 			var/list/modList = list()
@@ -2385,7 +2385,7 @@ Returns:
 			if(!(locate(spawn_type) in src.loc))
 				sleep(spawn_rate)
 				new spawn_type(src.loc)
-		SPAWN_DBG(spawn_check_rate)
+		SPAWN(spawn_check_rate)
 			runIt()
 		return
 
@@ -2402,7 +2402,7 @@ Returns:
 		return
 
 	New()
-		SPAWN_DBG(0) runIt()
+		SPAWN(0) runIt()
 		return ..()
 
 	ex_act()
@@ -2459,7 +2459,7 @@ Returns:
 		boutput(user, "<span class='alert'>The fireworks go off as soon as you touch the box. This is some high quality stuff.</span>")
 		anchored = 1
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for(var/i=0, i<rand(30,40), i++)
 				particleMaster.SpawnSystem(new /datum/particleSystem/fireworks(src.loc))
 				sleep(rand(2, 15))
@@ -2490,7 +2490,7 @@ Returns:
 
 		var/spoopydegrees = rand(5, 20)
 
-		SPAWN_DBG(rand(1,10))
+		SPAWN(rand(1,10))
 			animate(src, pixel_y = 32, transform = matrix(spoopydegrees, MATRIX_ROTATE), time = 20, loop = -1, easing = SINE_EASING)
 			animate(pixel_y = 0, transform = matrix(-1 * spoopydegrees, MATRIX_ROTATE), time = 20, loop = -1, easing = SINE_EASING)
 
@@ -2569,7 +2569,7 @@ Returns:
 			qdel(src)
 			return
 		step_towards(src, src.current)
-		SPAWN_DBG( 1 )
+		SPAWN( 1 )
 			process()
 			return
 		return
@@ -2623,7 +2623,7 @@ Returns:
 			return
 		var/turf/fire_target_tile = get_step(get_step(get_step(get_step(src, src.dir), src.dir), direction), direction)
 
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			playsound(src, "sound/weapons/rocket.ogg", 50, 1)
 
 			var/obj/item/rpg_rocket/R = new
@@ -2637,7 +2637,7 @@ Returns:
 
 			R.process()
 
-		SPAWN_DBG(2.5 SECONDS) ready = 1
+		SPAWN(2.5 SECONDS) ready = 1
 */
 
 /obj/movable_area_controller
@@ -2780,7 +2780,7 @@ Returns:
 	active_spread += A
 	active_spread[A] = num_gens
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		while(num_spread > 0 || num_spread == -1)
 			for(var/atom/curr in active_spread)
 				var/can_spread = null
@@ -2959,7 +2959,7 @@ Returns:
 					playsound(H.loc, "swing_hit", 50, 1)
 
 				prob_clonk = min(prob_clonk + 5, 40)
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					prob_clonk = max(prob_clonk - 5, 0)
 
 		return ..(hit_atom)
@@ -3088,7 +3088,7 @@ Returns:
 		light.set_brightness(0.5)
 		light.attach(src)
 		light.enable()
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			if (target_tag)
 				target = locate(target_tag)
 
@@ -3101,7 +3101,7 @@ Returns:
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")
 			var/obj/sparks = new /obj/effects/sparks
 			sparks.set_loc(get_turf(src))
-			SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
+			SPAWN(2 SECONDS) if (sparks) qdel(sparks)
 			qdel(src)
 
 	attack_hand(var/mob/M)
@@ -3200,15 +3200,15 @@ Returns:
 			possible +=  current
 
 		if(!possible.len)
-			SPAWN_DBG(3 SECONDS) update()
+			SPAWN(3 SECONDS) update()
 			return
 
 		var/turf/picked = pick(possible)
 		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
 		src.set_loc(picked)
-		SPAWN_DBG(0.5 SECONDS) picked.invisibility = INVIS_ALWAYS_ISH
+		SPAWN(0.5 SECONDS) picked.invisibility = INVIS_ALWAYS_ISH
 
-		SPAWN_DBG(rand(50,80)) update()
+		SPAWN(rand(50,80)) update()
 
 /obj/shifting_wall/sneaky
 
@@ -3240,13 +3240,13 @@ Returns:
 
 	update()
 		if(someone_can_see_me()) //Award for the most readable code GOES TO THIS LINE.
-			SPAWN_DBG(rand(50,80)) update()
+			SPAWN(rand(50,80)) update()
 			return
 
 		var/list/possible = find_suitable_tiles()
 
 		if(!possible.len)
-			SPAWN_DBG(3 SECONDS) update()
+			SPAWN(3 SECONDS) update()
 			return
 
 		var/turf/picked = pick(possible)
@@ -3255,11 +3255,11 @@ Returns:
 
 		src.set_loc(picked)
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			picked.invisibility = INVIS_ALWAYS_ISH
 			picked.opacity = 1
 
-		SPAWN_DBG(rand(50,80)) update()
+		SPAWN(rand(50,80)) update()
 
 
 /obj/pool
@@ -3362,7 +3362,7 @@ Returns:
 			user.end_chair_flip_targeting()
 			if(suiciding || deadly)
 				src.visible_message("<span class='alert'><b>[user.name] dives headfirst at the [target.name]!</b></span>")
-				SPAWN_DBG(0.3 SECONDS) //give them time to land
+				SPAWN(0.3 SECONDS) //give them time to land
 					if (user)
 						user.TakeDamage("head", 200, 0)
 						playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
@@ -3382,7 +3382,7 @@ Returns:
 		suiciding = 1 //reset in attack_hand() at the same time as in_use
 		attack_hand(user)
 
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (src)
 				src.suiciding = 0
 			if (user && !isdead(user))
@@ -3421,7 +3421,7 @@ var/list/lag_list = new/list()
 	var/before = world.timeofday
 	sleep(0.1 SECONDS)
 	add_and_average( (world.timeofday - before) )
-	SPAWN_DBG(0.5 SECONDS) lag_loop()
+	SPAWN(0.5 SECONDS) lag_loop()
 
 /proc/get_lag_average()
 	boutput(usr, "<span class='success'>[average_tenth] at [lag_list.len] samples.</span>")
@@ -3446,7 +3446,7 @@ var/list/lag_list = new/list()
 	proc/loop()
 
 		if(active)
-			SPAWN_DBG(3 SECONDS) loop()
+			SPAWN(3 SECONDS) loop()
 			return
 
 
@@ -3454,7 +3454,7 @@ var/list/lag_list = new/list()
 			if(prob(20)) spook(L)
 			break
 
-		SPAWN_DBG(2 SECONDS) loop()
+		SPAWN(2 SECONDS) loop()
 
 	proc/spook(var/mob/living/L)
 		if (narrator_mode)
@@ -3470,7 +3470,7 @@ var/list/lag_list = new/list()
 		src.invisibility = INVIS_ALWAYS_ISH
 		src.set_loc(startloc)
 		walk(src,0)
-		SPAWN_DBG(10 SECONDS) active = 0
+		SPAWN(10 SECONDS) active = 0
 
 
 /datum/engibox_mode
@@ -3825,7 +3825,7 @@ var/list/lag_list = new/list()
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			process()
 
 	proc/process()

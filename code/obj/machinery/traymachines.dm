@@ -323,7 +323,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		if (M == my_tray) continue //no cremating the tray tyvm
 		if (isliving(M))
 			var/mob/living/L = M
-			SPAWN_DBG(0)
+			SPAWN(0)
 				L.changeStatus("stunned", 10 SECONDS)
 
 				var/i
@@ -346,7 +346,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 				ashes += 1
 			qdel(M)
 
-	SPAWN_DBG(10 SECONDS)
+	SPAWN(10 SECONDS)
 		if (src)
 			src.visible_message("<span class='alert'>\The [src.name] finishes and shuts down.</span>")
 			src.locked = FALSE
@@ -495,7 +495,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 					M.remove()
 					make_cleanable( /obj/decal/cleanable/ash,src)
 
-		SPAWN_DBG(src.settime)
+		SPAWN(src.settime)
 			if (src)
 				src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
 				src.locked = FALSE

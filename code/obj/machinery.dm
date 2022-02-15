@@ -41,7 +41,7 @@
 	src.processing_bucket = machines_counter++ & 31 // this is just modulo 32 but faster due to power-of-two memes
 	SubscribeToProcess()
 	if (current_state > GAME_STATE_WORLD_INIT)
-		SPAWN_DBG(5 DECI SECONDS)
+		SPAWN(5 DECI SECONDS)
 			src.power_change()
 			var/area/A = get_area(src)
 			if (A && src) //fixes a weird runtime wrt qdeling crushers in crusher/New()
@@ -324,7 +324,7 @@
 	pulse2.anchored = 1
 	pulse2.set_dir(pick(cardinal))
 
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		src.flags &= ~EMP_SHORT
 		qdel(pulse2)
 	return

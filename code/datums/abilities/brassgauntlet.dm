@@ -10,7 +10,7 @@
 
 	execute_ability()
 		logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			the_mob.teleportscroll(1, 0, null)
 
 		return 1
@@ -24,7 +24,7 @@
 	cooldown = 3000
 
 	execute_ability()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			usr.visible_message("<span class='alert'><B>[usr] channels souls into all nearby objects!</B></span>")
 			logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 			for(var/obj/item/I in oview(5, usr)) //No longer brings your organs to life, killing you as they desperately try to attack you from the inside!
@@ -70,7 +70,7 @@
 	execute_ability()
 		logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 		usr.visible_message("<span class='alert'><B>[usr] flicks his hand and begins to warp time!</B></span>")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			usr.full_heal()
 			timeywimey(100)
 		..()
@@ -84,7 +84,7 @@
 
 	execute_ability()
 		logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/distance = 1
 			var/list/affected = list()
 
@@ -130,7 +130,7 @@
 
 	execute_ability()
 		logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			boutput(usr,"<span class='alert'><B>You spead the energies of the owl around you.</B></span>")
 			playsound(usr.loc, "sound/voice/animal/hoot.ogg", 100, 1)
 			for(var/mob/living/carbon/human/M in range(5, usr))
@@ -207,11 +207,11 @@
 
 	execute_ability()
 		logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			boutput(usr, "<span class='alert'><B>You spread a feeling of sickness.</B></span>") //Gross
 			for(var/mob/living/carbon/human/M in range(5, usr))
 				boutput(M,"<span class='alert'><B>Your insides feel like they're fighting to escape your body.</B></span>")
-				SPAWN_DBG(rand(30,50)) //Let's stagger out the vomitting a bit
+				SPAWN(rand(30,50)) //Let's stagger out the vomitting a bit
 					M.visible_message("<span class='alert'><B>[M] is violently sick everywhere!</B></span>")
 					random_brute_damage(M, rand(5,30))
 					M.changeStatus("weakened", 0.5 SECONDS)

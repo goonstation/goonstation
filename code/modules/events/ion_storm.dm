@@ -158,7 +158,7 @@
 				S << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 				ticker.centralized_ai_laws.show_laws(S)
 
-		SPAWN_DBG(message_delay * 0.25)
+		SPAWN(message_delay * 0.25)
 
 			// Fuck up a couple of APCs
 			if (!station_apcs.len)

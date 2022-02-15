@@ -17,23 +17,23 @@
 	light.set_brightness(portal_lums / 6)
 	light.attach(src)
 	light.enable()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		animate_portal_appear(src)
 		playsound(src.loc, "warp", 50, 1, 0.1, 0.7)
 
 /obj/portal/Bumped(mob/M as mob|obj)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		src.teleport(M)
 		return
 	return
 
 /obj/portal/Crossed(atom/movable/AM as mob|obj)
 	..()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		src.teleport(AM)
 
 /obj/portal/attack_hand(mob/M as mob)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		src.teleport(M)
 
 /obj/portal/disposing()
@@ -100,7 +100,7 @@
 	desc = "Enter this to return to your ghostly form"
 
 	Bumped(mob/M as mob|obj)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			M.ghostize()
 			qdel(src)
 			return
@@ -108,13 +108,13 @@
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(istype(AM,/mob))
 				var/mob/M = AM
 				M.ghostize()
 			qdel(src)
 
 	attack_hand(mob/M as mob)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			M.ghostize()
 			qdel(src)

@@ -74,7 +74,7 @@
 	..()
 	src.create_reagents(10)
 	reagents.add_reagent("paper", 10)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if (src.info && src.icon_state == "paper_blank")
 			icon_state = "paper"
 	if (!src.rand_pos)
@@ -1686,7 +1686,7 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 	New()
 		. = ..()
 		if(!length(syndi_buylist_cache))
-			SPAWN_DBG(30 SECONDS) //This spawns empty on-map otherwise, 30s is a safe bet
+			SPAWN(30 SECONDS) //This spawns empty on-map otherwise, 30s is a safe bet
 				build_paper()
 		else
 			build_paper()

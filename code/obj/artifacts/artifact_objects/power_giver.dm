@@ -43,6 +43,6 @@
 			O.ArtifactFaultUsed(user)
 			if (recharge_time > 0)
 				ready = 0
-				SPAWN_DBG(recharge_time)
+				SPAWN(recharge_time)
 					T.visible_message("<b>[O]</b> begins to glow again.")
 					ready = 1
