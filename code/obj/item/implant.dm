@@ -1076,7 +1076,7 @@ THROWING DARTS
 
 			if (H.get_brute_damage() > 100)
 				active = TRUE
-				src.implant_activate(50, 1)
+				src.implant_activate(50, TRUE)
 
 				SPAWN(2 SECONDS)
 					if (H && src)
@@ -1167,7 +1167,7 @@ THROWING DARTS
 			var/mob/living/carbon/human/H = owner
 			if (H.get_oxygen_deprivation() > 100)
 				active = TRUE
-				src.implant_activate(50, 1)
+				src.implant_activate(50, TRUE)
 				boutput(H, "<span class='alert'><b>You feel something start to rip apart your insides!</b></span>")
 
 				SPAWN(3 SECONDS)
@@ -1265,7 +1265,7 @@ THROWING DARTS
 			var/mob/living/carbon/human/H = owner
 			if (H.get_burn_damage() > 100)
 				active = TRUE
-				src.implant_activate(50, 1)
+				src.implant_activate(50, TRUE)
 
 				SPAWN(2 SECONDS)
 					if (H && src)
