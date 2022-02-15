@@ -774,6 +774,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	var/armed = 0
 	var/sound_explode = 'sound/effects/Explosion2.ogg'
 	var/sound_beep = 'sound/machines/twobeep.ogg'
+	var/is_dangerous = TRUE
 
 	proc/detonate()
 		playsound(src.loc, sound_explode, 45, 1)
@@ -794,6 +795,13 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			src.beep(i-1)
 		else
 			src.detonate()
+
+	proc/logGrenade(mob/user)
+		var/area/A = get_area(src)
+		if(!A.dont_log_combat)
+			if(is_dangerous)
+				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
+			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
 
 	proc/arm(mob/usr as mob)
 		usr.show_message("<span class='alert'><B>You have armed the [src.name]!</span>")
@@ -825,6 +833,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	attack_self(mob/user as mob)
 		if (usr.equipped() == src && !armed)
 			src.arm(usr)
+			logGrenade(user)
 			armed = 1
 
 /obj/item/gimmickbomb/owlgib
@@ -902,6 +911,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "fartbomb"
 	sound_beep = 'sound/voice/farts/poo2.ogg'
 	sound_explode = 'sound/voice/farts/superfart.ogg'
+	is_dangerous = FALSE
 
 /obj/item/gimmickbomb/gold
 	name = "Gold Bomb"
