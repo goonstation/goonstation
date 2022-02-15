@@ -30,7 +30,7 @@
 		var/quality = rand(-101,101)
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
-			//AST.space_overlays()
+			AST.space_overlays()
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
@@ -75,7 +75,8 @@
 		var/quality = rand(-101,101)
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
-			//AST.space_overlays()
+			AST.space_overlays()
+			AST.top_overlays()
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
@@ -105,7 +106,8 @@
 		var/quality = rand(-101,101)
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
-			//AST.space_overlays()
+			AST.space_overlays()
+			AST.top_overlays()
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
@@ -150,7 +152,8 @@
 		var/quality = rand(0,101)
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
-			//AST.space_overlays()
+			AST.space_overlays()
+			AST.top_overlays()
 			AST.build_icon()
 
 		var/list/floors = list()
@@ -192,7 +195,8 @@
 		var/quality = rand(-101,101)
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
-			//AST.space_overlays()
+			AST.space_overlays()
+			AST.top_overlays()
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
@@ -222,7 +226,8 @@
 		var/quality = rand(-101,101)
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
-			//AST.space_overlays()
+			AST.space_overlays()
+			AST.top_overlays()
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
@@ -253,7 +258,8 @@
 		var/quality = rand(-101,101)
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
-			//AST.space_overlays()
+			AST.space_overlays()
+			AST.top_overlays()
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
@@ -285,7 +291,8 @@
 		var/quality = rand(-101,101)
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
-			//AST.space_overlays()
+			AST.space_overlays()
+			AST.top_overlays()
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
@@ -316,7 +323,8 @@
 		var/quality = rand(-101,101)
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
-			//AST.space_overlays()
+			AST.space_overlays()
+			AST.top_overlays()
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
@@ -347,7 +355,8 @@
 		var/quality = rand(-101,101)
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
-			//AST.space_overlays()
+			AST.space_overlays()
+			AST.top_overlays()
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
@@ -378,7 +387,8 @@
 		var/quality = rand(-101,101)
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
-			//AST.space_overlays()
+			AST.space_overlays()
+			AST.top_overlays()
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
@@ -409,7 +419,8 @@
 		var/quality = rand(-101,101)
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
-			//AST.space_overlays()
+			AST.space_overlays()
+			AST.top_overlays()
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
@@ -439,7 +450,7 @@
 		var/quality = rand(-101,101)
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
-			//AST.space_overlays()
+			AST.space_overlays()
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
@@ -469,7 +480,8 @@
 		var/quality = rand(-101,101)
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
-			//AST.space_overlays()
+			AST.space_overlays()
+			AST.top_overlays()
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
@@ -499,7 +511,8 @@
 		var/quality = rand(-101,101)
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
-			//AST.space_overlays()
+			AST.space_overlays()
+			AST.top_overlays()
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
@@ -529,7 +542,8 @@
 		var/quality = rand(-101,101)
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
-			//AST.space_overlays()
+			AST.space_overlays()
+			AST.top_overlays()
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
@@ -559,7 +573,8 @@
 		var/quality = rand(-101,101)
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
-			//AST.space_overlays()
+			AST.space_overlays()
+			AST.top_overlays()
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
@@ -596,7 +611,9 @@
 	var/quality = rand(-101,101)
 	for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 		AST.quality = quality
-		//AST.space_overlays()
+		AST.space_overlays()
+		AST.top_overlays()
+		AST.build_icon()
 
 	Turfspawn_Asteroid_SeedOre(generated_turfs)
 	Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs))
@@ -878,6 +895,7 @@
 			AST.ClearAllOverlays() // i know theres probably a better way to handle this
 			AST.UpdateIcon()
 			AST.overlays += /image/fullbright
+			AST.top_overlays()
 			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][AST.orenumber]")
 			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask[AST.icon_state]"))
 			AST.overlays += ore_overlay
@@ -934,6 +952,7 @@
 			AST.ClearAllOverlays() // i know theres probably a better way to handle this
 			AST.UpdateIcon()
 			AST.overlays += /image/fullbright
+			AST.top_overlays()
 			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][AST.orenumber]")
 			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask[AST.icon_state]"))
 			ore_overlay.layer = AST.layer + 0.01 // so meson goggle nerds can still nerd away

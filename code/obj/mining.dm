@@ -1229,9 +1229,6 @@
 		worldgenCandidates += src
 		if(current_state <= GAME_STATE_PREGAME)
 			src.build_icon()
-		else
-			src.space_overlays()
-			src.top_overlays()
 
 	generate_worldgen()
 		. = ..()
@@ -1367,7 +1364,6 @@
 
 	proc/top_overlays() // replaced what was here with cool stuff for autowalls
 		var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[src.topnumber]")
-		top_overlay.color = src.stone_color
 		top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[src.icon_state]"))
 		src.overlays += top_overlay
 	proc/space_overlays()
@@ -1505,7 +1501,6 @@
 			A.ClearAllOverlays() // i know theres probably a better way to handle this
 			A.UpdateIcon()
 			var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[A.topnumber]")
-			top_overlay.color = A.stone_color
 			top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[A.icon_state]"))
 			A.overlays += top_overlay
 			if(A?.ore) // make sure ores dont turn invisible
