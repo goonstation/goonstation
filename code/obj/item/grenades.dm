@@ -1564,6 +1564,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 	var/strength = 5
 	var/armed = 0
+	var/is_dangerous = TRUE
 
 	var/glowsticks = 0
 	var/butt = 0
@@ -1590,7 +1591,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		armed = 1
 		var/area/A = get_area(src)
 		if(!A.dont_log_combat)
-			message_admins("[key_name(user)] arms a [src.name] (power [strength]) at [log_loc(src)] by [key_name(user)].")
+			if(is_dangerous)
+				message_admins("[key_name(user)] arms a [src.name] (power [strength]) at [log_loc(src)] by [key_name(user)].")
 			logTheThing("combat", user, null, "arms a [src.name] (power [strength]) at [log_loc(src)])")
 
 		if (sound_effect)
@@ -1767,6 +1769,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	desc = "A weak explosive designed to blast open holes in the sea floor."
 	icon_state = "Pipe_Yellow"
 	strength = 1
+	is_dangerous = FALSE
 
 	on_blowthefuckup(strength) //always blow hole!
 		..(strength)
