@@ -1028,7 +1028,7 @@ THROWING DARTS
 				active = TRUE
 				src.implant_activate(50)
 
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					if (H && src && (src in H.implant))
 						if (!H.get_organ(organ_found))
 							var/obj/item/organ_to_receive = H.organHolder.organ_type_list[organ_found]
@@ -1054,7 +1054,7 @@ THROWING DARTS
 			active = TRUE
 			var/mob/living/carbon/human/H = owner
 
-			SPAWN_DBG((180 + rand(-60, 60)) SECONDS)
+			SPAWN((180 + rand(-60, 60)) SECONDS)
 				active = FALSE
 				if (H && src && (src in H.implant))
 					var/obj/decal/cleanable/blood/dynamic/B = make_cleanable(/obj/decal/cleanable/blood/dynamic, get_turf(H))
@@ -1078,7 +1078,7 @@ THROWING DARTS
 				active = TRUE
 				src.implant_activate(50, 1)
 
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					if (H && src)
 						H.make_jittery(1000)
 						boutput(H, "<span class='alert'><b>You feel an ancient force begin to seize your body!</b></span>")
@@ -1119,7 +1119,7 @@ THROWING DARTS
 				active = TRUE
 				src.implant_activate(50)
 
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					if (H && src && (src in H.implant))
 						playsound(get_turf(H), "sound/impact_sounds/Flesh_Tear_2.ogg", 50, 1)
 						if (!l_arm)
@@ -1153,7 +1153,7 @@ THROWING DARTS
 
 			var/mob/living/carbon/human/H = owner
 
-			SPAWN_DBG(10 SECONDS)
+			SPAWN(10 SECONDS)
 				active = FALSE
 				if (H && src && (src in H.implant))
 					H.say(pick(message_list))
@@ -1170,7 +1170,7 @@ THROWING DARTS
 				src.implant_activate(50, 1)
 				boutput(H, "<span class='alert'><b>You feel something start to rip apart your insides!</b></span>")
 
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					for (var/limb in list("l_arm", "r_arm", "l_leg", "r_leg"))
 						if (H && src)
 							playsound(get_turf(H), pick("sound/impact_sounds/circsaw.ogg", "sound/machines/rock_drill.ogg"), 50, 1)
@@ -1196,7 +1196,7 @@ THROWING DARTS
 				var/teleFound = FALSE
 				var/teleMargin = 25
 
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					if (H && src && (src in H.implant))
 						var/list/telePatch = block(locate(max(H.x - teleMargin, 1), max(H.y - teleMargin, 1), Z_LEVEL_STATION), locate(min(H.x + teleMargin, world.maxx), min(H.y + teleMargin, world.maxy), Z_LEVEL_STATION))
 
@@ -1240,7 +1240,7 @@ THROWING DARTS
 
 			var/mob/living/carbon/human/H = owner
 
-			SPAWN_DBG((300 + rand(-120, 120)) SECONDS)
+			SPAWN((300 + rand(-120, 120)) SECONDS)
 				active = FALSE
 				src.implant_activate(50)
 				sleep(2 SECONDS)
@@ -1267,7 +1267,7 @@ THROWING DARTS
 				active = TRUE
 				src.implant_activate(50, 1)
 
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					if (H && src)
 						if (prob(50))
 							boutput(H, "<span class='alert'><b>You feel really, REALLY HOT!</b></span>")
