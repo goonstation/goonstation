@@ -1,4 +1,9 @@
 
+(t)tue feb 15 22
+(u)Conchuckter
+(p)7511
+(e)🐛|bug
+(+)Fixes computer frames always giving 5 sheets instead of their proper amount
 (t)mon feb 14 22
 (u)Flaborized
 (p)7502
