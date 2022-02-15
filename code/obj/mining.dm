@@ -1230,8 +1230,8 @@
 		if(current_state <= GAME_STATE_PREGAME)
 			src.build_icon()
 		else
-		src.space_overlays()
-		src.top_overlays()
+			src.space_overlays()
+			src.top_overlays()
 
 	generate_worldgen()
 		. = ..()
