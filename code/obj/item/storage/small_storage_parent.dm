@@ -174,6 +174,10 @@
 			checkloc = checkloc.loc
 
 		if (T && istype(T, /obj/item/storage))
+			if (W in bible_contents)
+				bible_contents.Remove(W)
+				for_by_tcl(bible, /obj/item/storage/bible)
+					bible.hud?.remove_item(W)
 			src.add_contents(W)
 //			T.hud.remove_item(W)
 		else
