@@ -31,11 +31,11 @@
 			boutput(H, "<b>[O]</b> shifts slightly but remains inactive.")
 			return
 
-		if (user.key in implantedUsers)
+		if (H.key in implantedUsers)
 			boutput(H, "<b>[O]</b> stays still.")
 			return
 
-		implantedUsers += user.key
+		implantedUsers += H.key
 
 		switch(artitype.name)
 			if ("eldritch")
@@ -50,13 +50,13 @@
 
 		H.implant.Add(imp)
 		imp.set_loc(H)
-		imp.implanted(H, user)
+		imp.implanted(H, H)
 
 		O.ArtifactFaultUsed(H)
 
 		var/turf/T = get_turf(O)
 		playsound(T, "sound/machines/click.ogg", 50, 1)
-		T.visible_message("<b>[O]</b> shoots a small object into [user]!")
+		T.visible_message("<b>[O]</b> shoots a small object into [H]!")
 
 		ready = FALSE
 
