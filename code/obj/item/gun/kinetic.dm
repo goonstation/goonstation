@@ -753,6 +753,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	item_state = "makarov"
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
+<<<<<<< HEAD
 	contraband = 4
 	ammo_cats = list(AMMO_PISTOL_9MM_SOVIET)
 	max_ammo_capacity = 8
@@ -762,6 +763,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	fire_animation = TRUE
 	gildable = TRUE
 	default_magazine = /obj/item/ammo/bullets/nine_mm_soviet
+=======
+	max_ammo_capacity = 30
+	auto_eject = 1
+	has_empty_state = 1
+	gildable = FALSE
+	default_magazine = /obj/item/ammo/bullets/nine_mm_NATO/mac10
+>>>>>>> 0348e4d5e (fix guns post-calibre rework)
 
 	New()
 		ammo = new default_magazine
@@ -797,8 +805,70 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 			spread_angle = 6
 			shoot_delay = 3 DECI SECONDS
 		else
+<<<<<<< HEAD
 			spread_angle = 0
 			shoot_delay = 2 DECI SECONDS
+=======
+			user.visible_message("You don't think you'll hit anything easier, but it gives you peace of mind.")
+
+
+/obj/item/gun/kinetic/beretta //somewhat less common gang pistol
+	desc = "The world's handgun of choice before the Clock-188, it quickly flooded black markets after the Clock dominated the market."
+	name = "Purretta"
+	icon_state = "beretta"
+	item_state = "beretta"
+	shoot_delay = 1
+	spread_angle = 3
+	w_class = W_CLASS_SMALL
+	force = MELEE_DMG_PISTOL
+	max_ammo_capacity = 15
+	auto_eject = 1
+	has_empty_state = 1
+	gildable = FALSE
+	fire_animation = FALSE
+	default_magazine = /obj/item/ammo/bullets/nine_mm_NATO/mag_fifteen
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/nine_mm_NATO)
+		..()
+
+
+	on_spin_emote(var/src)
+		if (prob(30))
+			playsound(src, "sound/voice/animal/cat.ogg", 70, 1)
+		..()
+
+
+/obj/item/gun/kinetic/coachgun
+	desc = "An old 10-gauge shotgun, sawed down short enough to be almost impossible to handle recoil."
+	name = "Coach Gun"
+	icon_state = "coachgun"
+	item_state = "coachgun"
+	shoot_delay = 16
+	spread_angle = 3
+	w_class = W_CLASS_SMALL
+	force = MELEE_DMG_PISTOL
+	max_ammo_capacity = 2
+	auto_eject = 0
+	has_empty_state = 1
+	gildable = FALSE
+	fire_animation = FALSE
+	default_magazine = /obj/item/ammo/bullets/tengauge/twoshot
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst/wideshot)
+		..()
+
+
+	on_spin_emote(var/src)
+		if (prob(30))
+			playsound(src, "sound/voice/animal/cat.ogg", 70, 1)
+		..()
+
+
+
+>>>>>>> 0348e4d5e (fix guns post-calibre rework)
 
 /obj/item/gun/kinetic/SMG_briefcase
 	name = "secure briefcase"
@@ -1410,7 +1480,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		force = MELEE_DMG_PISTOL //no stock to whack em with
 		default_magazine = /obj/item/ammo/bullets/buckshot_burst/six
 		contraband = 5
-		caliber = 0.72
 		auto_eject = 0
 		can_dual_wield = 0
 		two_handed = 1
