@@ -1008,8 +1008,8 @@ THROWING DARTS
 
 /obj/item/implant/artifact/eldritch/eldritch_good
 	var/active = FALSE
-	var/list/organs = list("left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney",
-						   "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+	var/static/list/organs = list("left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver",
+								  "stomach", "intestines", "spleen", "pancreas", "appendix")
 
 	do_process(var/mult = 1)
 		if (ishuman(src.owner) && !active)
@@ -1102,10 +1102,10 @@ THROWING DARTS
 
 /obj/item/implant/artifact/ancient/ancient_good
 	var/active = FALSE
-	var/left_arm = list(/obj/item/parts/robot_parts/arm/left/light, /obj/item/parts/robot_parts/arm/left/standard)
-	var/right_arm = list(/obj/item/parts/robot_parts/arm/right/light, /obj/item/parts/robot_parts/arm/right/standard)
-	var/left_leg = list(/obj/item/parts/robot_parts/leg/left/light, /obj/item/parts/robot_parts/leg/left/standard, /obj/item/parts/robot_parts/leg/left/treads)
-	var/right_leg = list(/obj/item/parts/robot_parts/leg/right/light, /obj/item/parts/robot_parts/leg/right/standard, /obj/item/parts/robot_parts/leg/right/treads)
+	var/static/left_arm = list(/obj/item/parts/robot_parts/arm/left/light, /obj/item/parts/robot_parts/arm/left/standard)
+	var/static/right_arm = list(/obj/item/parts/robot_parts/arm/right/light, /obj/item/parts/robot_parts/arm/right/standard)
+	var/static/left_leg = list(/obj/item/parts/robot_parts/leg/left/light, /obj/item/parts/robot_parts/leg/left/standard, /obj/item/parts/robot_parts/leg/left/treads)
+	var/static/right_leg = list(/obj/item/parts/robot_parts/leg/right/light, /obj/item/parts/robot_parts/leg/right/standard, /obj/item/parts/robot_parts/leg/right/treads)
 
 	do_process(var/mult = 1)
 		if (ishuman(src.owner) && !active)
@@ -1141,11 +1141,10 @@ THROWING DARTS
 
 /obj/item/implant/artifact/ancient/ancient_gimmick
 	var/active = FALSE
-	var/list/message_list = list("ROBOT REVOLUTION", "THE TIME IS NOW", "YOUR CAPTAIN IS OURS",
-								 "TIME TO BORG", "CYBORGS WILL PREVAIL", "SILICON IS SUPERIOR",
-								 "FLESH AND METAL", "GO BORG OR GO HOME", "SILICON MEANS SMART",
-								 "BORG THE CREW", "ALL WILL SUBMIT", "SETTLE FOR METAL",
-								 "PROCESSING POWER FOR ALL", "CONVERSION IS NEAR")
+	var/static/list/message_list = list("ROBOT REVOLUTION", "THE TIME IS NOW", "YOUR CAPTAIN IS OURS", "TIME TO BORG",
+										"CYBORGS WILL PREVAIL", "SILICON IS SUPERIOR", "FLESH AND METAL", "GO BORG OR GO HOME",
+										"SILICON MEANS SMART", "BORG THE CREW", "ALL WILL SUBMIT", "SETTLE FOR METAL",
+								 		"PROCESSING POWER FOR ALL", "CONVERSION IS NEAR")
 
 	do_process(var/mult = 1)
 		if (ishuman(src.owner) && !active)
@@ -1223,10 +1222,9 @@ THROWING DARTS
 /obj/item/implant/artifact/wizard/wizard_gimmick
 	var/active = FALSE
 	var/datum/mutantrace/original_mutantrace = null
-	var/list/possible_mutantraces = list(null, /datum/mutantrace/lizard, /datum/mutantrace/skeleton,
-										 /datum/mutantrace/ithillid, /datum/mutantrace/monkey,
-										 /datum/mutantrace/roach, /datum/mutantrace/cow,
-										 /datum/mutantrace/pug)
+	var/static/list/possible_mutantraces = list(null, /datum/mutantrace/lizard, /datum/mutantrace/skeleton, /datum/mutantrace/ithillid,
+												/datum/mutantrace/monkey, /datum/mutantrace/roach, /datum/mutantrace/cow,
+										 		/datum/mutantrace/pug)
 
 	implanted(mob/M, mob/I)
 		..()
