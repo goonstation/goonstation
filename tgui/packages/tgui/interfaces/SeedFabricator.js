@@ -9,6 +9,7 @@ const DefaultSort = {
   Herb: 3,
   Flower: 4,
   Miscellaneous: 5,
+  Other: 6,
 };
 
 export const SeedFabricator = (props, context) => {
@@ -16,9 +17,7 @@ export const SeedFabricator = (props, context) => {
   const { canVend, isWorking, maxSeed, name, seedCount } = data;
   const categories = data.seedCategories || [];
 
-  categories.sort((a, b) => (
-    (DefaultSort[a.name] || a.name).toString().localeCompare((DefaultSort[b.name] || b.name).toString())
-  ));
+  categories.sort((a, b) => ((DefaultSort[a.name] || DefaultSort.Other) - (DefaultSort[b.name] || DefaultSort.Other)));
 
   const [dispenseAmount, setDispenseAmount] = useLocalState(context, 'dispenseAmount', 1);
 
