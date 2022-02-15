@@ -16,7 +16,7 @@
 	react_xray = list(9, 70, 75, 11, "SEGMENTED")
 
 	var/obj/item/implant/artifact/imp = null
-	var/notReady = FALSE
+	var/ready = TRUE
 	var/list/implantedUsers = list()
 
 	effect_touch(var/obj/O, var/mob/living/user)
@@ -57,6 +57,6 @@
 		var/turf/T = get_turf(O)
 		T.visible_message("<b>[O]</b> shoots a small object into [user]!")
 
-		notReady = TRUE
+		ready = FALSE
 
-		SPAWN(2 MINUTES) notReady = FALSE
+		SPAWN(2 MINUTES) ready = TRUE
