@@ -27,7 +27,7 @@
 
 		var/mob/living/carbon/human/H = user
 
-		if (ready)
+		if (!ready)
 			boutput(H, "<b>[O]</b> shifts slightly but remains inactive.")
 			return
 
