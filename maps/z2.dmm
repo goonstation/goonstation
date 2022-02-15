@@ -30460,7 +30460,7 @@
 /turf/unsimulated/floor/ancient,
 /area/crunch)
 "bJX" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/crunch)
 "bJY" = (
 /obj/decal/fakeobjects/teleport_pad,
