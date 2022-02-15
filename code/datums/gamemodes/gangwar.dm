@@ -1,4 +1,3 @@
-#define CASH_DIVISOR 200
 /datum/game_mode/gang
 	name = "Gang War (Beta)"
 	config_tag = "gang"
@@ -8,7 +7,9 @@
 	var/list/leaders = list()
 	var/list/gangs = list()
 
+
 	//List of gang stuff already used so that there are no repeats.
+	var/list/colors_left = list("#88CCEE","#117733","#332288","#DDCC77","#CC6677","#AA4499") //Colorblind friendly palette
 	var/list/tags_used = list()
 	var/list/part1_used = list()
 	var/list/part2_used = list()
@@ -39,12 +40,17 @@
 	var/kidnapping_score = 20000
 	var/kidnap_success = 0			//true if the gang successfully kidnaps.
 
+
+
 	var/obj/item/device/radio/headset/gang/announcer_radio = new /obj/item/device/radio/headset/gang()
 	var/datum/generic_radio_source/announcer_source = new /datum/generic_radio_source()
 	var/slow_process = 0			//number of ticks to skip the extra gang process loops
 	var/janktank_price = 300		//should start the same as /datum/gang_item/misc/janktank.
 	var/shuttle_called = FALSE
 	var/mob/kidnapping_target
+
+	var/gangtag_scheduler = new /datum/controller/processScheduler()
+	gangtag_scheduler
 
 /datum/game_mode/gang/announce()
 	boutput(world, "<B>The current game mode is - Gang War!</B>")
@@ -133,8 +139,12 @@
 /datum/game_mode/gang/proc/equip_leader(mob/living/carbon/human/leader)
 	// leader.verbs += /client/proc/set_gang_base
 	var/datum/abilityHolder/holder = leader.add_ability_holder(/datum/abilityHolder/gang)
+	holder.addAbility(/datum/targetable/gang/toggle_overlay)
 	holder.addAbility(/datum/targetable/gang/set_gang_base)
+	leader.AddComponent(/datum/component/death_gang_respawn)
 
+	var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+	imgroup.add_mind(leader.mind)
 	//add gang channel to headset
 	if(leader.ears != null && istype(leader.ears,/obj/item/device/radio/headset))
 		var/obj/item/device/radio/headset/H = leader.ears
@@ -192,15 +202,13 @@
 		shuttle_called = TRUE
 		force_shuttle()
 	slow_process ++
-	if (slow_process < 60)
+	boutput(world, slow_process)
+	if (slow_process < 20)
 		return
 	else
 		slow_process = 0
 
 	for(var/datum/gang/G in gangs)
-		var/tmp_turf_points = G.num_areas_controlled()*15
-		G.score_turf += tmp_turf_points
-		G.spendable_points += tmp_turf_points
 
 		if (G.leader)
 			var/mob/living/carbon/human/H = G.leader.current
@@ -278,6 +286,8 @@
 	leaderMind.gang.leader = leaderMind
 
 	leaderMind.gang.gang_tag = rand(0,22) // increase if you add more tags!
+	leaderMind.gang.color = pick(colors_left)
+	colors_left -= leaderMind.gang.color
 
 	while(leaderMind.gang.gang_tag in tags_used)
 		leaderMind.gang.gang_tag = rand(0,22) // increase if you add more tags!
@@ -464,6 +474,10 @@
 		process_kidnapping_event()
 
 
+
+
+
+
 //bleh
 /datum/game_mode/gang/proc/broadcast_to_all_gangs(var/message)
 	if(announcer_source.name == "Unknown")
@@ -504,12 +518,67 @@
 	var/spendable_points = 0						//The usable number of points that a gang has to spend with
 	var/theme = "misc"					//determines the type of items they can buy from lockers
 	var/list/items_purchased = list()
+	var/datum/client_image_group/turf_image_group = new/datum/client_image_group()
+	var/color = "#DDDDDD"
 
 	var/score_turf = 0					//points gained from owning turfs
 	var/score_cash = 0					//The total amount of cash a gang has deposited
 	var/score_gun = 0					//points gained from gun deposits
 	var/score_drug = 0					//points gained from drugs
 	var/score_event = 0					//points from hotzones
+
+	proc/unclaim_tiles(var/location)
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		var/turf/sourceturf = get_turf(location)
+		for (var/turf/turftile in range(GANG_TAG_INFLUENCE,sourceturf))
+			var/tileDistance = GET_SQUARED_EUCLIDEAN_DIST(turftile, sourceturf)
+			if(tileDistance > GANG_TAG_INFLUENCE_SQUARED) continue
+			if (turftile.gang_control[src])
+				turftile.gang_control[src][3] -= 1
+				if (tileDistance <= GANG_TAG_MINIMUM_RANGE_SQUARED)
+					turftile.gang_control[src][2] -= 1
+
+				if (turftile.gang_control[src][2] == 0)
+					turftile.gang_control[src][1].alpha = 80
+
+				if (turftile.gang_control[src][3] == 0)
+					imgroup.remove_image(turftile.gang_control[src][1])
+					qdel(turftile.gang_control[src][1])
+					turftile.gang_control[src] = null
+
+
+	proc/claim_tiles(var/location)
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		var/turf/sourceturf = get_turf(location)
+		if (!sourceturf.gang_control[src])
+			var/image/img = image('icons/effects/white.dmi', sourceturf)
+			img.alpha = 230
+			img.color = src.color
+			sourceturf.gang_control[src] = list(img,1,1)
+			imgroup.add_image(img)
+		else
+			sourceturf.gang_control[src][1].alpha = 230
+			sourceturf.gang_control[src][2] += 1
+			sourceturf.gang_control[src][3] += 1
+
+		for (var/turf/turftile in orange(GANG_TAG_INFLUENCE,sourceturf))
+			var/distance = GET_SQUARED_EUCLIDEAN_DIST(turftile, sourceturf)
+			if(distance > GANG_TAG_INFLUENCE_SQUARED) continue
+			if (!turftile.gang_control[src])
+				var/image/img = image('icons/effects/white.dmi', turftile)
+				if(distance > GANG_TAG_MINIMUM_RANGE_SQUARED)
+					turftile.gang_control[src] = list(img,0,1)
+					img.alpha = 80
+				else
+					turftile.gang_control[src] = list(img,1,1)
+					img.alpha = 170
+				img.color = src.color
+				imgroup.add_image(img)
+			else
+				if(distance <= GANG_TAG_MINIMUM_RANGE_SQUARED)
+					turftile.gang_control[src][1].alpha = 170
+					turftile.gang_control[src][2] += 1
+				turftile.gang_control[src][3] += 1
 
 
 	proc/num_areas_controlled()
@@ -595,6 +664,7 @@
 	locker.name = "[usr.mind.gang.gang_name] Locker"
 	locker.desc = "A locker with a small screen attached to the door, and the words 'Property of [usr.mind.gang.gang_name] - DO NOT TOUCH!' scratched into both sides."
 	locker.gang = usr.mind.gang
+	locker.gang.claim_tiles(locker)
 	ticker.mode:gang_lockers += locker
 	usr.mind.gang.locker = locker
 	locker.UpdateIcon()
@@ -613,8 +683,9 @@
 	w_class = W_CLASS_SMALL
 	var/in_use = 0
 
+
 	afterattack(target as turf|obj, mob/user as mob)
-		if(!istype(target,/turf) && !istype(target,/obj/decal/cleanable/gangtag)) return
+		if(!istype(target,/turf) && !istype(target,/obj/decal/gangtag)) return
 
 		if (!user)
 			return
@@ -631,6 +702,59 @@
 			boutput(user, "<span class='alert'>You aren't in a gang, why would you do that?</span>")
 			return
 
+
+
+		for (var/obj/decal/gangtag/tag in orange(GANG_TAG_MINIMUM_RANGE,target))
+			if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_MINIMUM_RANGE)) continue
+			if (tag.owners == user.mind.gang)
+				boutput(user, "<span class='alert'>This is too close to an existing tag!</span>")
+				return
+		for (var/obj/ganglocker/locker in orange(GANG_TAG_MINIMUM_RANGE,target))
+			if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_MINIMUM_RANGE)) continue
+			if (locker.gang == user.mind.gang)
+				boutput(user, "<span class='alert'>This is too close to your locker!</span>")
+				return
+
+		var/validLocation = false
+		if (istype(target,/obj/decal/gangtag))
+			var/obj/decal/gangtag/tag = target
+			if (tag.owners != user.mind.gang)
+				//if we're tagging over someone's tag, double our search radius
+				//(this will find any tags whose influence intersects with the target tag's influence)
+				for (var/obj/ganglocker/locker in orange(GANG_TAG_INFLUENCE*2,target))
+					if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_INFLUENCE*2)) continue
+					if (locker.gang == user.mind.gang)
+						validLocation = true
+				for (var/obj/decal/gangtag/otherTag in orange(GANG_TAG_INFLUENCE*2,target))
+					if(!IN_EUCLIDEAN_RANGE(otherTag, target, GANG_TAG_INFLUENCE*2)) continue
+					if (otherTag.owners && otherTag.owners == user.mind.gang)
+						validLocation = true
+			else
+				boutput(user, "<span class='alert'>You can't spray over your own tags!</span>")
+				return
+		else
+			//we're tagging a wall, check it's in our territory and not someone else's territory
+			for (var/obj/decal/gangtag/tag in orange(GANG_TAG_INFLUENCE,target))
+				if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_INFLUENCE)) continue
+				if (tag.owners == user.mind.gang)
+					validLocation = true
+				else if (tag.owners)
+					boutput(user, "<span class='alert'>You can't spray in another gang's territory! Spray over their tag, instead!</span>")
+					return
+			for (var/obj/ganglocker/locker in orange(GANG_TAG_INFLUENCE,target))
+				if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_INFLUENCE)) continue
+				if (locker.gang == user.mind.gang)
+					validLocation = true
+				else
+					boutput(user, "<span class='alert'>There's better places to tag than here! </span>")
+					return
+
+		if(!validLocation)
+			boutput(user, "<span class='alert'>This is outside your gang's influence!</span>")
+			return
+
+
+
 		var/area/getarea = get_area(turftarget)
 		if(!getarea)
 			boutput(user, "<span class='alert'>You can't claim this place!</span>")
@@ -646,15 +770,9 @@
 			return
 		if(!ishuman(user))
 			boutput(user, "<span class='alert'>You don't have the dexterity to spray paint a gang tag!</span>")
-		if(getarea.gang_owners && getarea.gang_owners != user.mind.gang && !turftarget.tagged)
-			boutput(user, "<span class='alert'>[getarea.gang_owners.gang_name] own this area! You must paint over their tag to capture it!</span>")
-			return
-		if(getarea.being_captured)
-			boutput(user, "<span class='alert'>Somebody is already tagging that area!</span>")
-			return
-		if(getarea.gang_owners == user.mind.gang)
-			boutput(user, "<span class='alert'>This place is already owned by your gang!</span>")
-			return
+//		if(getarea.being_captured)
+//			boutput(user, "<span class='alert'>Somebody is already tagging that area!</span>")
+//			return
 
 		user.visible_message("<span class='alert'>[user] begins to paint a gang tag on the [turftarget.name]!</span>")
 		actions.start(new/datum/action/bar/icon/spray_gang_tag(turftarget, src), user)
@@ -731,13 +849,16 @@
 
 		S.in_use = 0
 		target_area.being_captured = 0
+		for (var/obj/decal/gangtag/otherTag in range(1,target_turf))
+			otherTag.owners.unclaim_tiles(target_turf)
+			otherTag.owners = null
 
-		var/obj/decal/cleanable/gangtag/T = make_cleanable(/obj/decal/cleanable/gangtag,target_turf)
+		var/obj/decal/gangtag/T = new /obj/decal/gangtag(target_turf)
 		T.icon_state = "gangtag[M.mind.gang.gang_tag]"
 		T.name = "[M.mind.gang.gang_name] tag"
 		T.owners = M.mind.gang
 		T.delete_same_tags()
-		target_turf.tagged = 1
+		M.mind.gang.claim_tiles(target_turf)
 		target_area.gang_owners = M.mind.gang
 		boutput(M, "<span class='notice'>You have claimed this area for your gang!</span>")
 
@@ -918,6 +1039,30 @@
 			src.UpdateOverlays(image('icons/obj/large_storage.dmi', "greenlight"), "light")
 		else
 			src.UpdateOverlays(image('icons/obj/large_storage.dmi', "redlight"), "light")
+
+
+	proc/respawn_member(var/mob/H)
+		if (H.mind && H.mind.gang != src.gang)
+			return
+		var/mob/living/carbon/human/clone = new /mob/living/carbon/human/clone(src.loc)
+		clone.bioHolder.CopyOther(H.bioHolder, copyActiveEffects = TRUE)
+		clone.set_mutantrace(H.bioHolder?.mobAppearance?.mutant_race?.type)
+		clone.update_colorful_parts()
+		if (H.abilityHolder)
+			clone.abilityHolder = H.abilityHolder.deepCopy()
+			clone.abilityHolder.transferOwnership(clone)
+			clone.abilityHolder.remove_unlocks()
+		if(!isnull(H.traitHolder))
+			H.traitHolder.copy_to(clone.traitHolder)
+		clone.real_name = H.real_name
+		clone.UpdateName()
+
+		if(clone.client)
+			clone.client.set_layout(clone.client.tg_layout)
+
+		if(H.mind)
+			H.mind.transfer_to(clone)
+		get_gang_gear(clone)
 
 	proc/insert_item(var/obj/item/item,var/mob/user)
 		if(!user)
@@ -1224,6 +1369,12 @@
 		if (!target.mind.special_role)
 			target.mind.special_role = ROLE_GANG_MEMBER
 		target.show_antag_popup("gang_member")
+		var/datum/abilityHolder/holder = target.add_ability_holder(/datum/abilityHolder/gang)
+		holder.addAbility(/datum/targetable/gang/toggle_overlay)
+
+		target.AddComponent(/datum/component/death_gang_respawn)
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		imgroup.add_mind(target.mind)
 		new /datum/objective/specialist/gang(
 			"Protect your boss, recruit new members, tag up the station and beware the other gangs! [src.gang.gang_name] FOR LIFE!",
 			target.mind)
@@ -1682,3 +1833,62 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 // 		B1.reagents.add_reagent("infernite", 20)
 // 		beakers += B1
 #undef CASH_DIVISOR
+
+
+// GANG TAGS
+
+/obj/decal/gangtag
+	name = "gang tag"
+	desc = "A gang tag, sprayed with nigh-uncleanable heavy metals."
+	density = 0
+	anchored = 1
+	layer = OBJ_LAYER
+	icon = 'icons/obj/decals/graffiti.dmi'
+	icon_state = "gangtag0"
+	var/datum/gang/owners = null
+	var/list/mobs[0]
+	proc/delete_same_tags()
+		for(var/obj/decal/gangtag/T in get_turf(src))
+			if(T.owners == src.owners && T != src) qdel(T)
+
+	proc/find_players()
+		for(var/mob/M in view(GANG_TAG_INFLUENCE, src.loc))
+			if(M.client)
+				mobs[M] = 1
+	proc/score_players()
+		var/score = 0
+		for(var/thing in mobs)
+			score = score + GANG_TAG_POINTS_PER_VIEWER
+
+		owners.score_turf += score
+		owners.spendable_points += score
+
+		mobs = list()
+		boutput(world, "Scored [score] points for [owners.gang_name]")
+
+
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_GANGTAGS)
+		for(var/obj/decal/gangtag/T in get_turf(src))
+			T.layer = 3
+
+		src.layer = 4
+	Del()
+		STOP_TRACKING_CAT(TR_CAT_GANGTAGS)
+		..()
+	setup()
+		..()
+		for(var/obj/decal/gangtag/T in get_turf(src))
+			T.layer = 3
+		src.layer = 4
+
+
+
+	disposing(var/uncapture = 1)
+		var/area/tagarea = get_area(src)
+		if(tagarea.gang_owners == src.owners && uncapture)
+			tagarea.gang_owners = null
+			var/turf/T = get_turf(src)
+			T.tagged = 0
+		..()

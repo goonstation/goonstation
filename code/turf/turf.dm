@@ -50,6 +50,8 @@
 	var/tmp/blocked_dirs = 0
 	/// this turf is allowing unrestricted hotbox reactions
 	var/tmp/allow_unrestricted_hotbox = 0
+	var/list/gang_control[0]
+
 	var/wet = 0
 	var/sticky = FALSE
 	throw_unlimited = 0 //throws cannot stop on this tile if true (also makes space drift)

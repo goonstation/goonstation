@@ -1,4 +1,3 @@
-//stole this from vampire. prevents runtimes. IDK why this isn't in the parent.
 /atom/movable/screen/ability/topBar/gang
 	clicked(params)
 		var/datum/targetable/gang/spell = owner
@@ -138,6 +137,45 @@
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		return
 
+
+
+/datum/targetable/gang/toggle_overlay
+	name = "Toggle gang territory overlay"
+	desc = "Toggles the colored gang overlay."
+	icon = 'icons/mob/spell_buttons.dmi'
+	icon_state = "blob-help0"
+	targeted = 0
+	target_nodamage_check = 0
+	max_range = 0
+	cooldown = 0
+	pointCost = 0
+	when_stunned = 2
+	not_when_handcuffed = 0
+	dont_lock_holder = 1
+	ignore_holder_lock = 1
+
+	cast(mob/target)
+		if (!holder)
+			return 1
+
+		var/mob/living/M = holder.owner
+
+		if (!M)
+			return 1
+
+		if (!M.mind && !M.mind.gang)
+			boutput(M, __red("Gang territory? What? You'd need to be in a gang to get it."))
+			return 1
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		if (imgroup.subscribed_minds_with_subcount[M.mind] && imgroup.subscribed_minds_with_subcount[M.mind] > 0)
+			imgroup.remove_mind(M.mind)
+		else
+			imgroup.add_mind(M.mind)
+
+		boutput(M, __blue("Gang territories turned [imgroup.subscribed_minds_with_subcount[M.mind] ? "on" : "off"]."))
+		return 0
+
+
 /datum/targetable/gang/set_gang_base
 	name = "Set Gang Base"
 	desc = "Permanently sets the area you're currently in as your gang's base and spawns your gang's locker."
@@ -180,6 +218,7 @@
 		locker.name = "[M.mind.gang.gang_name] Locker"
 		locker.desc = "A locker with a small screen attached to the door, and the words 'Property of [usr.mind.gang.gang_name] - DO NOT TOUCH!' scratched into both sides."
 		locker.gang = M.mind.gang
+		locker.gang.claim_tiles(locker)
 		ticker.mode:gang_lockers += locker
 		M.mind.gang.locker = locker
 		locker.UpdateIcon()
