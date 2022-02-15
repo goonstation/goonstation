@@ -168,6 +168,7 @@
 			categories += new category
 		stage_delay = 1 / (length(categories) + 1)
 
+ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category
 	var/amount
 	var/list/cache = list()
@@ -294,3 +295,14 @@
 	action(var/obj/machinery/vending/vender)
 		vender.pulse(pick(list(1,2,3,4)))
 		logTheThing("station", null, null, "Ion storm interfered with [vender.name] at [log_loc(vender)]")
+
+/datum/ion_category/fire_alarms
+	amount = 3
+
+	build_cache()
+		for(var/obj/machinery/firealarm/alarm as anything in machine_registry[MACHINES_FIREALARMS])
+			if (valid_instance(alarm))
+				cache += alarm
+
+	action(var/obj/machinery/firealarm/alarm)
+		alarm.alarm()
