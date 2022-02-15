@@ -169,10 +169,11 @@ var/datum/explosion_controller/explosions
 			if(!A.dont_log_combat)
 				// Cannot read null.name
 				var/logmsg = "[turf_safe ? "Turf-safe e" : "E"]xplosion with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(source?.fingerprintslast)] (usr: [ismob(user) ? key_name(user) : user])"
+				var/mob/M = null
 				if(ismob(user))
-					var/mob/M = user
-					if(power > 10 && (source?.fingerprintslast || M?.client))
-						message_admins(logmsg)
+					M = user
+				if(power > 10 && (source?.fingerprintslast || M?.client))
+					message_admins(logmsg)
 				if (source?.fingerprintslast)
 					logTheThing("bombing", source.fingerprintslast, null, logmsg)
 					logTheThing("diary", source.fingerprintslast, null, logmsg, "combat")
