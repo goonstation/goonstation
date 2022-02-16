@@ -488,7 +488,7 @@
 			if (account)
 				dat+="<B>Current Funds</B>: [account["current_money"]] Credits<br>"
 		dat+= src.temp
-		dat += "<HR><B><h2>Ores Available for Purchase:</h2></B><br><BR><small>"
+		dat += "<HR><B><h3>Ores Available for Purchase:</h3></B><small>"
 		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
 			if(S.broken)
 				continue
