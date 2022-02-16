@@ -1140,7 +1140,8 @@ THROWING DARTS
 	var/static/list/message_list = list("ROBOT REVOLUTION", "THE TIME IS NOW", "YOUR CAPTAIN IS OURS", "TIME TO BORG",
 										"CYBORGS WILL PREVAIL", "SILICON IS SUPERIOR", "FLESH AND METAL", "GO BORG OR GO HOME",
 										"SILICON MEANS SMART", "BORG THE CREW", "ALL WILL SUBMIT", "SETTLE FOR METAL",
-								 		"PROCESSING POWER FOR ALL", "CONVERSION IS NEAR")
+								 		"PROCESSING POWER FOR ALL", "CONVERSION IS NEAR", "HUMANS ARE WEAK",
+										"THE MACHINE IS ETERNAL", "ALL WILL BE UPGRADED", "PURITY IN STEEL")
 
 	do_process(var/mult = 1)
 		if (ishuman(src.owner) && !active)
@@ -1152,6 +1153,8 @@ THROWING DARTS
 				active = FALSE
 				if (H && src && (src in H.implant))
 					H.say(pick(message_list))
+					if (prob(3))
+						playsound(get_turf(H), pick("sound/voice/screams/robot_scream.ogg", "sound/voice/screams/Robot_Scream_2.ogg"), 50, 1)
 		..()
 
 /obj/item/implant/artifact/ancient/ancient_bad
