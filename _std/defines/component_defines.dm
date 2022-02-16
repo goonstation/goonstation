@@ -331,12 +331,12 @@
 #define COMSIG_SUSSY_PHRASE "sussy"
 
 // ---- Transfer system ----
-/// When an item is requested to be transfered to the output target (/obj/item/)
-#define COMSIG_INCOMING_TRANSFER "incoming_tx"
-/// When the target wants to send an item to an output (/obj/item/)
-#define COMSIG_OUTGOING_TRANSFER "outgoing_tx"
+/// When a movable is requested to be transfered to the output target (/atom/movable/)
+#define COMSIG_TRANSFER_INCOMING "incoming_tx"
+/// When the target wants to send a movable to an output (/atom/movable/)
+#define COMSIG_TRANSFER_OUTGOING "outgoing_tx"
 /// Return whether the target should allow receiving items from the given atom (/atom)
-#define COMSIG_CAN_LINK "permit_tx"
+#define COMSIG_TRANSFER_CAN_LINK "permit_tx"
 
 // ---- ability signals ----
 /// Send item to a mob

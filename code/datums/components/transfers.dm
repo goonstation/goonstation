@@ -1,6 +1,6 @@
 /// Components for common machine item tasks (setting output turf, filtering attackby, etc.)
 
-#define cant_do_shit(nerd) (!isliving(nerd) || isintangible(nerd) || is_incapacitated(nerd))
+#define cant_do_shit(nerd) (!isliving(nerd) || isintangible(nerd) || !can_act(nerd))
 
 /// Provides ability to output items directly into item transfer-supporting things.
 /datum/component/transfer_output
@@ -13,21 +13,21 @@
 
 /datum/component/transfer_output/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_MOUSEDROP, .proc/handle_drop)
-	RegisterSignal(parent, COMSIG_OUTGOING_TRANSFER, .proc/handle_outgoing)
+	RegisterSignal(parent, COMSIG_TRANSFER_OUTGOING, .proc/handle_outgoing)
 
 /datum/component/transfer_output/proc/handle_outgoing(comsig_target, obj/item/outgoing)
 	if(!output_target)
-		return
+		return FALSE
 
 	if(!in_interact_range(parent, output_target))
 		src.output_target = null
-		return
+		return FALSE
 
 	if(isturf(output_target))
 		outgoing.set_loc(output_target)
 		return TRUE
 
-	return SEND_SIGNAL(output_target, COMSIG_INCOMING_TRANSFER, outgoing)
+	return SEND_SIGNAL(output_target, COMSIG_TRANSFER_INCOMING, outgoing)
 
 /datum/component/transfer_output/proc/handle_drop(comsig_target, mob/dropper, atom/over_object)
 	if(cant_do_shit(dropper))
@@ -45,9 +45,10 @@
 		boutput(dropper, "<span class='alert'>[over_object] is too far away!</span>")
 		return
 
-	if (isturf(over_object) || SEND_SIGNAL(over_object, COMSIG_CAN_LINK, parent))
+	if (isturf(over_object) || SEND_SIGNAL(over_object, COMSIG_TRANSFER_CAN_LINK, parent))
 		boutput(dropper, "<span class='notice'>You set [parent] to output to [over_object].</span>")
 		output_target = over_object
+		return TRUE
 	else
 		boutput(dropper, "<span class='alert'>\The [over_object] cannot be used as an output for [parent].</span>")
 
@@ -55,66 +56,80 @@
 /// Provides many common item input features.
 /datum/component/transfer_input
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	/// Optional proc name on parent, for transfer side-effects.
+	/// Optional proc on parent, for transfer side-effects.
 	var/transfer_proc
+	/// Optional list of permitted object paths.
 	var/list/filter
+	/// Optional proc, for filtering movables based on state.
 	var/filter_proc
+	/// Optional proc, for preventing things from linking.
 	var/filter_link_proc
+
+#define DEFAULT_TRANSFER_FILTER list(/obj/item/)
 
 /datum/component/transfer_input/Initialize(list/filter=null, transfer=null, filter_proc=null, filter_link_proc=null)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	src.transfer_proc = transfer
-	src.filter = filter
+	src.filter = isnull(filter) ? list(/obj/item/) : filter
+	src.transfer_proc = transfer || DEFAULT_TRANSFER_FILTER
 	src.filter_proc = filter_proc
 	src.filter_link_proc = filter_link_proc
 
+#undef DEFAULT_TRANSFER_FILTER
+
 /datum/component/transfer_input/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_INCOMING_TRANSFER, .proc/handle_incoming)
-	RegisterSignal(parent, COMSIG_CAN_LINK, .proc/handle_incoming_link)
+	RegisterSignal(parent, COMSIG_TRANSFER_INCOMING, .proc/handle_incoming)
+	RegisterSignal(parent, COMSIG_TRANSFER_CAN_LINK, .proc/handle_incoming_link)
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/handle_attackby)
 
 /datum/component/transfer_input/proc/handle_incoming_link(comsig_target, obj/other)
 	return !filter_link_proc || call(parent, filter_link_proc)(other)
 
-/datum/component/transfer_input/proc/handle_incoming(comsig_target, obj/item/incoming)
-	if (!isitem(incoming))
-		return
+/datum/component/transfer_input/proc/is_permitted(atom/movable/AM)
+	var/matches_filter = isnull(filter)
+	for(var/type in filter)
+		if (istype(AM, type))
+			matches_filter = TRUE
+			break
 
-	if (filter && !(incoming.type in filter))
-		return
+	if(isitem(AM))
+		var/obj/item/I = AM
+		if (I.cant_drop)
+			return FALSE
 
-	if(!filter_proc || call(parent, filter_proc)(incoming))
+	return matches_filter && (!filter_proc || call(parent, filter_proc)(AM))
+
+
+/datum/component/transfer_input/proc/handle_incoming(comsig_target, atom/movable/incoming)
+	if(is_permitted(incoming))
 		incoming.set_loc(parent)
 		if (transfer_proc)
 			call(parent, transfer_proc)(incoming)
 		return TRUE
+	return FALSE
 
 #define CONTAINER_CHOICE_PLACE "Place container inside"
 #define CONTAINER_CHOICE_DUMP  "Dump its contents inside"
 
-/datum/component/transfer_input/proc/handle_attackby(comsig_target, obj/item/incoming, mob/attacker)
-	if(!isitem(incoming))
-		return
-
-	if (istype(incoming, /obj/item/deconstructor) || isgrab(incoming))
+/datum/component/transfer_input/proc/handle_attackby(comsig_target, atom/movable/incoming, mob/attacker)
+	if (istype(incoming, /obj/item/deconstructor))
 		return
 
 	if(cant_do_shit(attacker))
 		return
 
-	if (istype(incoming, /obj/item/magtractor))
+	if (isgrab(incoming))
+		var/obj/item/grab/G = incoming
+		if (G.affecting)
+			incoming = G.affecting
+	else if (istype(incoming, /obj/item/magtractor))
 		var/obj/item/magtractor/M = incoming
 		if (M.holding)
 			incoming = M.holding
 
-	if(incoming.cant_drop)
-		boutput(attacker, "<span class='alert'>You can't put that in [parent] when it's attached to you!</span>")
-		return
-
 	if ((istype(incoming, /obj/item/storage) || istype(incoming, /obj/item/satchel) || istype(incoming, /obj/item/ore_scoop)) && length(incoming.contents))
 		var/action
-		if(!filter_proc || call(parent, filter_proc)(incoming))
+		if(is_permitted(incoming))
 			action = input(attacker, "What do you want to do with [incoming]?") as null|anything in list(CONTAINER_CHOICE_PLACE, CONTAINER_CHOICE_DUMP)
 		else
 			action = CONTAINER_CHOICE_DUMP
@@ -131,17 +146,15 @@
 				var/obj/item/ore_scoop/scoop = incoming
 				incoming = scoop.satchel
 			for(var/obj/item/I in incoming)
-				if (SEND_SIGNAL(parent, COMSIG_INCOMING_TRANSFER, I))
-					attacker.u_equip(I)
-					I.dropped()
+				SEND_SIGNAL(parent, COMSIG_TRANSFER_INCOMING, I)
 			attacker.visible_message("<span class='notice'>[attacker] dumps out [incoming] into [parent].</span>")
 			return TRUE
 
-	if (SEND_SIGNAL(parent, COMSIG_INCOMING_TRANSFER, incoming))
+	if (SEND_SIGNAL(parent, COMSIG_TRANSFER_INCOMING, incoming))
 		attacker.visible_message("<span class='notice'>[attacker] places [incoming] into [parent]</span>")
-		attacker.u_equip(incoming)
 		if(isitem(incoming))
 			var/obj/item/I = incoming
+			attacker.u_equip(incoming)
 			I.dropped()
 		return TRUE
 
@@ -173,11 +186,11 @@
 			return
 
 		for(var/obj/item/AM in S.contents)
-			SEND_SIGNAL(parent, COMSIG_INCOMING_TRANSFER, AM)
+			SEND_SIGNAL(parent, COMSIG_TRANSFER_INCOMING, AM)
 		user.visible_message("<span class='notice'>[user] quick-loads [S] into [parent]</span>")
 	else if (isitem(dropped))
 		var/obj/item/I = dropped
-		if(SEND_SIGNAL(parent, COMSIG_INCOMING_TRANSFER, I))
+		if(SEND_SIGNAL(parent, COMSIG_TRANSFER_INCOMING, I))
 			actions.start(new /datum/action/bar/quickload(parent, I.type), user)
 
 
@@ -219,7 +232,7 @@
 				continue
 			if (M.type != load_type)
 				continue
-			if(SEND_SIGNAL(target, COMSIG_INCOMING_TRANSFER, M))
+			if(SEND_SIGNAL(target, COMSIG_TRANSFER_INCOMING, M))
 				playsound(target, "sound/items/Deconstruct.ogg", 40, 1)
 				onRestart()
 				return
