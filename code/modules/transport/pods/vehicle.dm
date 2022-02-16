@@ -441,8 +441,14 @@
 				src.health -= damage/1.7
 				hitsound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
 			if(D_PIERCING)
-				src.health -= damage/1
+				src.health -= damage/.8
 				hitsound = 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg'
+				if (prob(15))//seems reasonable
+				var/list/mobs = list()
+				for (var/mob/M in src)
+						mobs+=M
+				var/mob/M = pick(mobs)
+
 			if(D_ENERGY)
 				src.health -= damage/1.5
 				hitsound = 'sound/impact_sounds/Energy_Hit_3.ogg'

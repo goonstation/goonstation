@@ -255,6 +255,7 @@ toxic - poisons
 	color_blue = 1
 	icon_turf_hit = "burn2"
 	projectile_speed = 42
+	damage_type = D_PIERCING
 
 /datum/projectile/laser/precursor // for precursor traps
 	name = "energy bolt"
