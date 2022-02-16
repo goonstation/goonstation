@@ -153,7 +153,7 @@ proc/load_intraround_jars()
 	New(newloc, obj/item/pickled)
 		..(newloc)
 		if (istype(pickled))
-			src.icon = getFlatIcon(pickled)
+			src.icon = getFlatIcon(pickled, no_anim=TRUE)
 			src.color = rgb(63,103,24)
 			src.desc = "A pickled version of \a [pickled], it smells of vinegar."
 			src.name = "pickled [pickled.name]"
