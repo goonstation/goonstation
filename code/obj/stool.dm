@@ -873,9 +873,9 @@
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
 	HasProximity(atom/movable/AM as mob|obj)
-		if (isliving(AM) && prob(40))
+		if (isliving(AM) && prob(40) && !AM.hasStatus("weakened"))
 			src.visible_message("<span class='alert'>[src] trips [AM]!</span>", "<span class='alert'>You hear someone fall.</span>")
-			AM:changeStatus("weakened", 2 SECONDS)
+			AM.changeStatus("weakened", 2 SECONDS)
 		return
 
 /* ======================================================= */
