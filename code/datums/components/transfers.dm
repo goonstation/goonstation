@@ -147,6 +147,7 @@
 				incoming = scoop.satchel
 			for(var/obj/item/I in incoming)
 				SEND_SIGNAL(parent, COMSIG_TRANSFER_INCOMING, I)
+			incoming.UpdateIcon()
 			attacker.visible_message("<span class='notice'>[attacker] dumps out [incoming] into [parent].</span>")
 			return TRUE
 
