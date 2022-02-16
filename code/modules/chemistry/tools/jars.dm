@@ -5,7 +5,6 @@
 
 /obj/item/reagent_containers/glass/jar
 	name = "glass jar"
-
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mason_jar"
 	uses_multiple_icon_states = 1
@@ -137,7 +136,6 @@ proc/load_intraround_jars()
 			var/obj/item/reagent_containers/food/snacks/pickle_holder/pickled = I
 			if(istype(pickled))
 				pickled.pickle_age++
-				pickled.desc += " It has been [pickled.pickle_age] shift[pickled.pickle_age > 1 ? "s" : ""] since it was pickled."
 			else
 				stack_trace("Unpickled item [I] of type [I.type] found in pickle jar [jarname]")
 				if(!emitted_full_savefile)
@@ -160,3 +158,8 @@ proc/load_intraround_jars()
 			src.desc = "A pickled version of \a [pickled], it smells of vinegar."
 			src.name = "pickled [pickled.name]"
 			src.pickle_age = 0
+
+	get_desc(dist, mob/user)
+		. = ..()
+		if(src.pickle_age)
+			. += " It has been [src.pickle_age] shift[src.pickle_age > 1 ? "s" : ""] since it was pickled."
