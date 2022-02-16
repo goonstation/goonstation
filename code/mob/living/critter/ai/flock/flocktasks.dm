@@ -420,7 +420,7 @@
 			F.hand_attack(container_target)
 			if(F.equipped() == container_target)
 				// we've picked up a container, just eat it, dump it onto the floor
-				container_target.MouseDrop(get_turf(F))
+				container_target.mouse_drop(get_turf(F))
 				F.drop_item() // might as well eat the container now
 				return
 			else

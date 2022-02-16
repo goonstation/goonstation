@@ -397,7 +397,7 @@
 			return 1
 		return 0
 
-	MouseDrop(atom/over_object as mob|obj)
+	mouse_drop(atom/over_object as mob|obj)
 		if (over_object == usr && ishuman(usr))
 			var/mob/living/carbon/human/H = usr
 			if (in_interact_range(src, H))

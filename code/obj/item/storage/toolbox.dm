@@ -160,7 +160,7 @@
 			if (!original_owner)
 				original_owner = H
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!ishuman(usr) || !usr:find_ailment_by_type(/datum/ailment/disability/memetic_madness))
 			boutput(usr, "<span class='alert'>You can't seem to find the latch. Maybe you need to examine it more thoroughly?</span>")
 			return

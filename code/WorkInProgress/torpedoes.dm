@@ -507,7 +507,7 @@
 			add(target)
 		return
 
-	MouseDrop(atom/over_object,src_location,over_location,src_control,over_control,params)
+	mouse_drop(atom/over_object,src_location,over_location,src_control,over_control,params)
 		if(loaded && get_dist(src,over_object) <= 1)
 			var/turf/T = get_turf(over_object)
 			if(T.density) return

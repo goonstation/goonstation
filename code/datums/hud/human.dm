@@ -683,10 +683,10 @@
 				//sel.icon_state = "sel"
 				sel.appearance = default_sel_appearance
 
-	MouseDrop(atom/movable/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
+	mouse_drop(atom/movable/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
 		if (!H) return
 		var/obj/item/W = null
-		#define mdrop_slot(slot) W = master.get_slot(master.slot); if (W) { W.MouseDrop(over_object, src_location, over_location, over_control, params); }
+		#define mdrop_slot(slot) W = master.get_slot(master.slot); if (W) { W.mouse_drop(over_object, src_location, over_location, over_control, params); }
 		switch(H.id)
 			if("belt")
 				mdrop_slot(slot_belt)

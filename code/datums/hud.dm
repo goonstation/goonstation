@@ -46,9 +46,9 @@
 		if (master && (!master.click_check || (usr in master.mobs)))
 			master.scrolled(src.id, dx, dy, usr, parms, src)
 
-	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		if (master && (!master.click_check || (usr in master.mobs)))
-			master.MouseDrop(src, over_object, src_location, over_location, over_control, params)
+			master.mouse_drop(src, over_object, src_location, over_location, over_control, params)
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if (master && (!master.click_check || (user in master.mobs)))
@@ -208,7 +208,7 @@
 	proc/scrolled(id, dx, dy, user, parms)
 	proc/MouseEntered(id,location, control, params)
 	proc/MouseExited(id)
-	proc/MouseDrop(var/atom/movable/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
+	proc/mouse_drop(var/atom/movable/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
 	proc/MouseDrop_T(var/atom/movable/screen/hud/H, atom/movable/O as obj, mob/user as mob)
 
 /*

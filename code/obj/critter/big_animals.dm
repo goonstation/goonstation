@@ -353,7 +353,7 @@ obj/critter/bear/care
 	var/const/blood_sip_amt = 20	//amount of blood a single sip this bat takes contains.
 
 
-	MouseDrop(atom/over_object as mob|obj)
+	mouse_drop(atom/over_object as mob|obj)
 		//if this bat is attacking/chasing someone, they won't stop just because you point at blood. Come on.
 		if (src.target)
 			return ..()

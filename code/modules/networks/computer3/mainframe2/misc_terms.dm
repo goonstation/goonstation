@@ -3461,7 +3461,7 @@
 			src.UpdateIcon()
 		else return
 
-	MouseDrop(obj/over_object as obj, src_location, over_location)
+	mouse_drop(obj/over_object as obj, src_location, over_location)
 		ejectContents(usr, over_object)
 
 	verb/eject()

@@ -108,7 +108,7 @@ obj/item/chesspiece
 		..()
 		name = "[chess_color ? "black" : "white" ] [name]"
 
-	MouseDrop(obj/over_object as obj, src_location, over_location, mob/user as mob)
+	mouse_drop(obj/over_object as obj, src_location, over_location, mob/user as mob)
 		..()
 		var/turf/Tb = get_turf(over_location)
 		var/turf/Ta = get_turf(src_location)

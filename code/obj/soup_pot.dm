@@ -424,7 +424,7 @@
 			return src.Attackby(W, user)
 		return ..()
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		if (usr.is_in_hands(src))
 			var/turf/T = over_object
 			if (!(usr in range(1, T)))

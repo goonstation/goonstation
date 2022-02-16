@@ -84,7 +84,7 @@
 #define COMSIG_ATOM_POST_UPDATE_ICON "atom_after_update_icon"
 /// When reagents change
 #define COMSIG_ATOM_REAGENT_CHANGE "atm_reag"
-/// When an atom is dragged onto something (over_object, src_location, over_location)
+/// When an atom is dragged onto something (usr, over_object, src_location, over_location, over_control, params)
 #define COMSIG_ATOM_MOUSEDROP "atom_mousedrop"
 /// When something is dragged onto an atom (object, usr)
 #define COMSIG_ATOM_MOUSEDROP_T "atom_mousedrop_t"
