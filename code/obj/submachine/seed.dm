@@ -888,6 +888,12 @@
 				if (target && target.reagents)
 					target.reagents.remove_reagent(id, 500)
 					. = TRUE
+			if("isolate")
+				var/obj/item/reagent_containers/glass/target = containers[params["container_id"]]
+				var/id = params["reagent_id"]
+				if (target && target.reagents)
+					target.reagents.isolate_reagent(id)
+					. = TRUE
 			if("flush")
 				var/obj/item/reagent_containers/glass/target = containers[params["container_id"]]
 				if (target)

@@ -117,13 +117,22 @@ const ReagentDisplay = (props, context) => {
       <ReagentList container={container}
         buttonsForEach={(reagent) => {
           return (
-            <Button
-              px={0.5}
-              icon="times"
-              color="red"
-              tooltip="Flush"
-              onClick={() => act('flush_reagent', { container_id: container.id, reagent_id: reagent.id })}
-            />
+            <>
+              <Button
+                px={0.5}
+                icon="filter"
+                color="red"
+                tooltip="Isolate"
+                onClick={() => act('isolate', { container_id: container.id, reagent_id: reagent.id })}
+              />
+              <Button
+                px={0.5}
+                icon="times"
+                color="red"
+                tooltip="Flush"
+                onClick={() => act('flush_reagent', { container_id: container.id, reagent_id: reagent.id })}
+              />
+            </>
           );
         }}
       />
