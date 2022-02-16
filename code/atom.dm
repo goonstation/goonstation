@@ -645,13 +645,12 @@
 /// Internal wrapper. Should only be called by MouseDrop.
 /atom/proc/_MouseDrop_T(dropped, user)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	SPAWN(0)
+	SPAWN(0) // Yes, things break if this isn't a spawn.
 		if(SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP_T, dropped, user))
 			return
 		src.MouseDrop_T(dropped, user)
 
 /atom/proc/MouseDrop_T(dropped, user)
-	//SHOULD_NOT_SLEEP(TRUE)
 	return
 
 /atom/proc/Attackhand(mob/user as mob)
