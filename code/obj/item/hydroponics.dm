@@ -32,7 +32,7 @@
 	tool_flags = TOOL_SAWING
 	mats = 12
 	var/sawnoise = "sound/machines/chainsaw_green.ogg"
-	arm_icon = "chainsaw-A"
+	arm_icon = "chainsaw-D"
 	var/base_arm = "chainsaw"
 	over_clothes = 1
 	override_attack_hand = 1
@@ -46,6 +46,7 @@
 	active
 		active = 1
 		force = 12
+		arm_icon = "chainsaw-A"
 
 		New()
 			..()
@@ -151,7 +152,7 @@
 	desc = "A gas powered antique. This one is the real deal. Time for a space chainsaw massacre."
 	contraband = 10 //scary
 	sawnoise = "sound/machines/chainsaw_red.ogg"
-	arm_icon = "chainsaw_s-A"
+	arm_icon = "chainsaw_s-D"
 	base_arm = "chainsaw_s"
 	stamina_damage = 100
 	stamina_cost = 30
@@ -361,6 +362,7 @@
 	sawnoise = "sound/machines/chainsaw_red.ogg"
 	hitsound = "sound/machines/chainsaw_red.ogg"
 	arm_icon = "chainsaw_s-A"
+	base_arm = "chainsaw_s"
 	stamina_damage = 40
 	stamina_cost = 40
 	stamina_crit_chance = 50
