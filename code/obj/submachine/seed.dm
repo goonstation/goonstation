@@ -1093,7 +1093,7 @@
 			var/icon/result_icon
 			if(plant.crop)
 				var/atom/crop = plant.crop
-				result_icon = icon(initial(crop.icon), initial(crop.icon_state))
+				result_icon = icon(initial(crop.icon), initial(crop.icon_state), frame=1)
 			else if(plant.plant_icon)
 				if(plant.sprite)
 					result_icon = icon(plant.plant_icon, "[plant.sprite]-G4", frame=1)
