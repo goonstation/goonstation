@@ -71,7 +71,7 @@
 	if(user && !user.stat)
 		return "A light switch. It is [on? "on" : "off"]."
 
-/obj/machinery/light_switch/toggle(mob/user=null)
+/obj/machinery/light_switch/proc/toggle(mob/user=null)
 	on = !on
 
 	area.lightswitch = on
