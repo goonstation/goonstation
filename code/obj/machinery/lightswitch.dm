@@ -46,7 +46,8 @@
 		light.enable()
 
 /obj/machinery/light_switch/proc/trigger(var/datum/mechanicsMessage/inp)
-	toggle(null)
+	if(!ON_COOLDOWN(src, "mechcomp_toggle", 1 SECOND))
+		toggle(null)
 
 /obj/machinery/light_switch/update_icon()
 	if(status & NOPOWER)
