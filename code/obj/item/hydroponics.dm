@@ -64,6 +64,13 @@
 		set_icon_state("[src.base_state][src.active ? null : "_off"]")
 		src.item_state = "[src.base_state][src.active ? "-A" : "-D"]"
 		src.arm_icon = "[src.base_arm][src.active ? "-A" : "-D"]"
+		if (src.temp_flags & IS_LIMB_ITEM)
+			if (istype(src.loc,/obj/item/parts/human_parts/arm/left/item))
+				var/obj/item/parts/human_parts/arm/left/item/I = src.loc
+				I.handlistPart = "l_arm_[src.arm_icon]"
+			else
+				var/obj/item/parts/human_parts/arm/right/item/I = src.loc
+				I.handlistPart = "r_arm_[src.arm_icon]"
 		return
 
 	// Fixed a couple of bugs and cleaned code up a little bit (Convair880).
