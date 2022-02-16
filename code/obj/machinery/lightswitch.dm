@@ -46,9 +46,7 @@
 		light.enable()
 
 /obj/machinery/light_switch/proc/trigger(var/datum/mechanicsMessage/inp)
-	attack_hand(usr) //bit of a hack but hey.
-	return
-
+	toggle(null)
 
 /obj/machinery/light_switch/update_icon()
 	if(status & NOPOWER)
@@ -73,15 +71,15 @@
 	if(user && !user.stat)
 		return "A light switch. It is [on? "on" : "off"]."
 
-/obj/machinery/light_switch/attack_hand(mob/user)
-
+/obj/machinery/light_switch/toggle(mob/user=null)
 	on = !on
 
 	area.lightswitch = on
 
 	area.power_change()
 
-	interact_particle(user,src)
+	if(user)
+		interact_particle(user,src)
 
 	for(var/obj/machinery/light_switch/L in area.machines)
 		L.on = on
@@ -89,16 +87,20 @@
 
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[on ? "lightOn":"lightOff"]")
 
-	src.add_fingerprint(user)
-	logTheThing("station", user, null, "turns [on ? "on" : "off"] a lightswitch at [log_loc(user)]")
+	if(user)
+		src.add_fingerprint(user)
+		logTheThing("station", user, null, "turns [on ? "on" : "off"] a lightswitch at [log_loc(user)]")
 
-	playsound(src, "sound/misc/lightswitch.ogg", 50, 1)
+	if(!ON_COOLDOWN(src, "flicksound", 0.1 SECOND))
+		playsound(src, "sound/misc/lightswitch.ogg", 50, 1)
 
-	if(on)
+	if(on && !ON_COOLDOWN(src, "turtlesplode", 10 SECONDS))
 		for_by_tcl(S, /obj/critter/turtle)
 			if(get_area(S) == src.area && S.rigged)
 				S.explode()
 
+/obj/machinery/light_switch/attack_hand(mob/user)
+	toggle(user)
 
 /obj/machinery/light_switch/power_change()
 
