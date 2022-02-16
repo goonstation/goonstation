@@ -392,12 +392,12 @@
 		<title>[src.name]</title>
 		<style type='text/css'>
 
-			/* will probaby break chui, dont care */
+
 			body { background: #222; color: white; font-family: Tahoma, sans-serif; }
 			a { color: #88f; }
 
 			.l { text-align: left; } .r { text-align: right; } .c { text-align: center; }
-			.buttonlink { background: #66c; min-width: 1.1em; height: 1.2em; padding: 0.2em 0.2em; margin-bottom: 2px; border-radius: 4px; font-size: 90%; color: white; text-decoration: none; display: inline-block; vertical-align: middle; }
+			.buttonlink { background: #66c; min-width: 0.6em; height: 0.8em; padding: 0.2em 0.2em; margin-bottom: 2px; border-radius: 4px; font-size: 150%; color: white; text-decoration: none; display: inline-block; vertical-align: middle; }
 			thead { background: #555555; }
 
 			table {
@@ -448,26 +448,9 @@
 				float: left;
 				margin: 0.2em;
 				}
-			.product {
-				vertical-align: top;
-				text-align: center;
-				}
-
-			.product .icon {
-				display: block;
-				height: 64px;
-				width: 64px;
-				margin: 0.2em auto 0.5em auto;
-				-ms-interpolation-mode: nearest-neighbor; /* pixels go cronch */
-				}
-			.product.disabled {
-				background: #333;
-				color: #aaa;
-			}
 			.required {
 				display: none;
 				}
-
 
 			.required div {
 				position: absolute;
@@ -478,7 +461,7 @@
 				border: 1px solid #888888;
 				padding: 0.25em 0.5em;
 				margin: 0.25em 0.5em;
-				font-size: 80%;
+				font-size: 130%;
 				text-align: left;
 				border-radius: 5px;
 				}
@@ -505,21 +488,21 @@
 			if (account)
 				dat+="<B>Current Funds</B>: [account["current_money"]] Credits<br>"
 		dat+= src.temp
-		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
+		dat += "<HR><B><h2>Ores Available for Purchase:</h2></B><br><BR><small>"
 		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
 			if(S.broken)
 				continue
-			dat += "<B>[S.name] at [get_area(S)]:</B><br>"
+			dat += "<h3><B>[S.name] at [get_area(S)]:</B><br></h3>"
 			var/list/ores = S.ores
 			for(var/ore in ores)
 				var/datum/ore_cloud_data/OCD = ores[ore]
 				if(!OCD.for_sale || !OCD.amount)
 					continue
 				var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(OCD.price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
-				dat += "[ore]: [OCD.amount] ($[OCD.price+taxes+(!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0)]/ore) (<A href='?src=\ref[src];purchase=1;storage=\ref[S];ore=[ore]'>Purchase</A>)<br>"
+				dat += "<h4>[ore]: [OCD.amount] ($[OCD.price+taxes+(!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0)]/ore) (<A href='?src=\ref[src];purchase=1;storage=\ref[S];ore=[ore]'>Purchase</A>)</h4><br>"
 
 		dat += "</small><HR>"
-		user.Browse(HTML + dat.Join(), "window=manufact;size=1111x600")
+		user.Browse(HTML + dat.Join(), "window=manufact;size=500x400")
 		onclose(user, "manufact")
 		interact_particle(user,src)
 
