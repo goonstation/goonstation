@@ -658,6 +658,30 @@ var/list/headset_channel_lookup
 	item_state = "signaler"
 	desc = "A small beacon that is tracked by the Teleporter Computer, allowing things to be sent to its general location."
 	burn_possible = 0
+	anchored = 1
+
+	attackby(obj/item/I as obj, mob/user as mob)
+		if (isscrewingtool(I))
+			if (src.anchored)
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				user.show_text("You start unscrewing [src] from the floor.", "blue")
+				if (do_after(user, 3 SECONDS))
+					user.show_text("You unscrew [src] from the floor.", "blue")
+					src.anchored = 0
+					return
+			else
+				var/turf/T = get_turf(src)
+				if (istype(T, /turf/space))
+					user.show_text("What exactly are you gonna secure [src] to?", "red")
+					return
+				else
+					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+					user.show_text("You start securing [src] to [T].", "blue")
+					if (do_after(user, 3 SECONDS))
+						user.show_text("You secure [src] to [T].", "blue")
+						src.anchored = 1
+						return
+		..()
 
 /obj/item/device/radio/beacon/New()
 	..()
