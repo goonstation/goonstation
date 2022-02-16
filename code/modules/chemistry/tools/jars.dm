@@ -109,6 +109,7 @@ proc/save_intraround_jars()
 				var/obj/item/reagent_containers/food/snacks/pickle_holder/pickled = new(jar, I)
 				qdel(I)
 				I = pickled
+			I.removeMaterial()
 			jar_contents += I
 
 		jar_save["jar[jar_count]/contents"] << jar_contents
