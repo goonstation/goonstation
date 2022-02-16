@@ -1,5 +1,7 @@
 
 (t)tue feb 15 22
+(u)Kyle
+(+)One Armed Spaceman trait now costs 0 points.
 (u)Conchuckter
 (p)7511
 (e)🐛|bug

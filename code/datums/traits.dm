@@ -566,12 +566,12 @@
 	category = list("trinkets", "nopug")
 
 /obj/trait/one_armed
-	name = "One Armed Spaceman (-2)"	//it's so expensive cause right now, one arm is a benefit in that you can't be handcuffed...
+	name = "One Armed Spaceman (0)"	//it's so expensive cause right now, one arm is a benefit in that you can't be handcuffed...
 	cleanName = "One Armed Spaceman"
 	desc = "You only have one arm. But which one? It's a mystery... or is it a thriller?"
 	id = "onearmed"
 	icon_state = "placeholder"
-	points = -2
+	points = 0
 
 // Skill - White Border
 
