@@ -1530,50 +1530,6 @@ var/list/zalgo_mid = list(
     P.chars_used = used
     return P
 
-//OwO whats this?
-/proc/owotalk(var/string)
-	var/modded = ""
-	var/datum/text_roamer/T = new/datum/text_roamer(string)
-
-	if(prob(13))
-		modded += "rawr x3 "
-
-	if(prob(10))
-		modded += "whats this? "
-
-	if(prob(9))
-		modded += "owo "
-
-	if(prob(8))
-		modded += "uwu "
-
-	if(prob(3))
-		modded += "fucko boingo "
-
-
-	for(var/i = 0, i < length(string), i=i)
-		var/datum/parse_result/P = owo_parse(T)
-		modded += P.string
-		i += P.chars_used
-		T.curr_char_pos = T.curr_char_pos + P.chars_used
-		T.update()
-
-	if(prob(15))
-		modded += " :3c"
-
-	if(prob(13))
-		modded += "~"
-
-	if(prob(10))
-		modded += " uwu"
-
-	if(prob(11))
-		modded += " owo"
-
-
-	return modded
-
-
 /**
 * uwutalk
 *
