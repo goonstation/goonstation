@@ -22,7 +22,7 @@
 	var/name_prefix = "living "
 
 	New(var/atom/loc, var/obj/possessed, var/mob/controller)
-		..()
+		..(loc, null, null)
 
 		src.possessed_thing = possessed
 
@@ -145,12 +145,11 @@
 
 		src.show_message("<span class='alert'>The blob attacks you!</span>")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.a_intent == "help")
 			user.visible_message("<span class='alert'>[user] pets [src]!</span>")
 		else
-			user.visible_message("<span class='alert'>[user] punches [src]!</span>")
-			src.TakeDamage(null, rand(4, 7), 0) //TODO figure out how to let people punch these without this godawful shit
+			..()
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		health -= burn
@@ -192,6 +191,8 @@
 
 		//To reflect updates of the items appearance etc caused by interactions.
 		src.update_appearance()
+
+		src.item_position_check()
 
 	death(gibbed)
 
@@ -258,6 +259,5 @@
 		src.icon = src.possessed_thing.icon
 		src.icon_state = src.possessed_thing.icon_state
 		//src.overlays = src.possessed_thing.overlays
-		
 		src.set_density(initial(src.possessed_thing.density))
 		src.opacity = src.possessed_thing.opacity
