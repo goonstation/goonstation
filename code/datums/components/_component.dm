@@ -192,7 +192,8 @@ TYPEINFO(/datum/component)
   *
   * Arguments:
   * * datum/target The target to listen for signals from
-  * * sig_type_or_types Either a string signal name, or a list of signal names (strings)
+  * * sig_type_or_types Either a string signal name, or a list of signal names (strings).
+	* 		Complex signals (of the form list(component_type, string) can also be used.)
   * * proctype The proc to call back when the signal is emitted
   * * override If a previous registration exists you must explicitly set this
 	* * other arguments get passed to complexsignal/register in the case of a complex signal
