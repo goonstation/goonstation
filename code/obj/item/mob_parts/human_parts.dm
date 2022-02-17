@@ -89,7 +89,7 @@
 			src.add_fingerprint(holder)
 			//https://forum.ss13.co/showthread.php?tid=1774
 			// zam note - removing this again.
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				if (new_holder && istype(new_holder))
 					name = "[new_holder.real_name]'s [initial(name)]"
 		if (src.skintoned)
@@ -97,7 +97,7 @@
 				colorize_limb_icon()
 				set_skin_tone()
 			else if(holder)	//
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					colorize_limb_icon()
 					set_skin_tone()
 					holder.set_body_icon_dirty()
@@ -166,7 +166,7 @@
 			if(2)
 				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] saws through the bone of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You saw through the bone of [holder.name]'s [src.name] with [tool].</span>")
 
-				SPAWN_DBG(rand(150,200))
+				SPAWN(rand(150,200))
 					if(remove_stage == 2)
 						src.remove(0)
 			if(3)
@@ -358,6 +358,7 @@
 
 /obj/item/parts/human_parts/arm/left
 	name = "left arm"
+	desc = "According to superstition, left handed people are unlucky. Whoever lost this sure seems to back that belief up."
 	icon_state = "arm_left"
 	item_state = "arm-left"
 	slot = "l_arm"
@@ -365,6 +366,7 @@
 
 /obj/item/parts/human_parts/arm/right
 	name = "right arm"
+	desc = "Someone's right hand.... hand. Or arm, whatever."
 	icon_state = "arm_right"
 	item_state = "arm-right"
 	slot = "r_arm"
@@ -373,7 +375,7 @@
 
 /obj/item/parts/human_parts/leg
 	name = "placeholder item (don't use this!)"
-	desc = "A human leg."
+	desc = "A human leg, pretty important for mobility."
 	object_flags = NO_ARM_ATTACH
 	var/rebelliousness = 0
 
@@ -489,7 +491,7 @@
 		if (istype(I))
 			//if(I.over_clothes) handlistPart += "l_arm_[I.arm_icon]"
 			//else partlistPart += "l_arm_[I.arm_icon]"
-			handlistPart += "r_arm_[I.arm_icon]"
+			handlistPart += "l_arm_[I.arm_icon]"
 			override_attack_hand = I.override_attack_hand
 			can_hold_items = I.can_hold_items
 

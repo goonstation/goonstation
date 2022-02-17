@@ -401,7 +401,7 @@ obj/item/gnomechompski/elf
 			playsound(user, "sound/voice/animal/hoot.ogg", 70, 1)
 			for(var/mob/O in AIviewers(user, null))
 				if (O.client)	O.show_message("<span class='alert'><B>HOOT!</B> [user] explodes revealing an owl within.</span>", 1, "<span class='alert'>You hear an owl.</span>", 2)
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 				user.owlgib()
 			return 1
 		else
@@ -634,6 +634,7 @@ obj/item/gnomechompski/elf
 	window_pass = 1
 	icon = 'icons/effects/hallucinations.dmi'
 	icon_state = "yee"
+	damage_type = D_SPECIAL
 
 	on_hit(atom/hit)
 		if(istype(hit,/mob/living/carbon/human))
@@ -866,7 +867,7 @@ obj/critter/madnessowl
 			src.set_loc(turftarget)
 			playsound(src.loc, "sound/impact_sounds/Flesh_Tear_3.ogg", 35, 1, -1)
 			random_brute_damage(src.target, 2,1)
-			SPAWN_DBG(rand(1,10))
+			SPAWN(rand(1,10))
 				src.attacking = 0
 
 		return
@@ -909,9 +910,9 @@ obj/critter/madnessowl/gun
 				src.visible_message("<span class='alert'><b>[src]</b> fires at [src.target]!</span>")
 
 				var/tturf = get_turf(target)
-				SPAWN_DBG(rand(2,7))
+				SPAWN(rand(2,7))
 					Shoot(tturf, src.loc, src)
-			//	SPAWN_DBG(rand(8,12))
+			//	SPAWN(rand(8,12))
 
 				src.attack = 0
 				return
@@ -933,7 +934,7 @@ obj/critter/madnessowl/switchblade
 			playsound(src.loc, "sound/impact_sounds/Blade_Small.ogg", 40, 1, -1)
 			random_brute_damage(src.target, 5)//shivved
 			take_bleeding_damage(target, null, 5, DAMAGE_STAB, 1, get_turf(target))
-			SPAWN_DBG(rand(1,10))
+			SPAWN(rand(1,10))
 				src.attacking = 0
 
 
@@ -961,7 +962,7 @@ obj/critter/madnessowl/switchblade
 				playsound(src.loc, "sound/impact_sounds/Blade_Small.ogg", 40, 1, -1)
 				random_brute_damage(src.target, 3,1)
 				take_bleeding_damage(target, null, 2, DAMAGE_STAB, 1, get_turf(target))
-			SPAWN_DBG(rand(1,10))
+			SPAWN(rand(1,10))
 				src.attacking = 0
 		return
 
@@ -1232,7 +1233,7 @@ obj/critter/madnessowl/switchblade
 				M.gib()
 				src.target = null
 
-		SPAWN_DBG(attack_delay)
+		SPAWN(attack_delay)
 			src.attacking = 0
 
 
@@ -1241,7 +1242,7 @@ obj/critter/madnessowl/switchblade
 			return
 
 		flailing = 25
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while(flailing-- > 0)
 				src.pixel_x = rand(-2,2) * 2
 				src.pixel_y = rand(-2,2) * 2
@@ -1258,7 +1259,7 @@ obj/critter/madnessowl/switchblade
 		if (src.frenzied)
 			return
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.visible_message("<span class='alert'><b>[src] goes [pick("on a rampage", "into a bloodlust", "berserk", "hog wild", "feral")]!</b></span>")
 			playsound(src.loc, "sound/voice/animal/hoot.ogg", 70, 1)
 			src.set_loc(M.loc)
@@ -1288,7 +1289,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			process()
 
 	proc/process()
@@ -1413,9 +1414,9 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	world << siren
 	command_alert("A massive influx of Owl Quarks has been detected in [get_area(M)]. A Owl Slam is imminent. All personnel currently on [station_name()] have 10 seconds to reach minimum safe distance. This is not a test.")
 	for(var/mob/N in mobs)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			shake_camera(N, 120, 24)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/thunder = 70
 		while(thunder > 0)
 			thunder--
@@ -1439,10 +1440,10 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	M.visible_message("<span class='alert'>[M] successfully executes a Owl Slam!</span>")
 	explosion_new(M, get_turf(M), 1, 75)
 	for(var/mob/living/carbon/human/M1 in range(5, M))
-		SPAWN_DBG(0)
+		SPAWN(0)
 		M1.owlgib()
 	for(var/mob/living/carbon/human/M2 in range(50, M))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (!(M2.wear_mask && istype(M2.wear_mask, /obj/item/clothing/mask/owl_mask)))
 				for(var/obj/item/clothing/O in M2)
 					M2.u_equip(O)

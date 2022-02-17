@@ -43,7 +43,7 @@ Reported on: [time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]
 		qdel(form)
 	if(success)
 		tgui_alert(user, "Issue reported!", "Issue reported!")
-		if(easteregg_chance)
+		if(prob(easteregg_chance))
 			var/obj/critter/roach/actual_bug = new(user.loc)
 			actual_bug.name = title
 	else

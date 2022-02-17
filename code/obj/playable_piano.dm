@@ -261,7 +261,7 @@
 	proc/play_notes(var/is_master) //how notes are handled, using while and spawn to set a very strict interval, solo piano process loop was too variable to work for music
 		if (linked_pianos.len > 0 && is_master)
 			for (var/obj/player_piano/p in linked_pianos)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					p.ready_piano(1)
 		while (curr_note <= song_length)
 			curr_note++

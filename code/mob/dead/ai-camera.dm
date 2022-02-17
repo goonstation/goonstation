@@ -33,6 +33,8 @@
 	var/y_edge = 0
 	var/turf/T = 0
 
+	var/outer_eye_atom = null
+
 	New()
 		src.cancel_camera()
 		last_loc = src.loc
@@ -50,7 +52,7 @@
 		for(var/key in aiImages)
 			var/image/I = aiImages[key]
 			src.client << I
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/sleep_counter = 0
 			for(var/key in aiImagesLowPriority)
 				var/image/I = aiImagesLowPriority[key]
@@ -66,7 +68,7 @@
 			for(var/key in aiImages)
 				var/image/I = aiImages[key]
 				cl.images -= I
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/sleep_counter = 0
 			for(var/key in aiImagesLowPriority)
 				var/image/I = aiImagesLowPriority[key]
@@ -133,6 +135,25 @@
 		else
 			last_loc = src.loc
 			..()
+
+	set_eye(atom/new_eye)
+		var/turf/T = new_eye ? get_turf(new_eye) : get_turf(src)
+		if( !(T && isrestrictedz(T.z)) )
+			src.sight |= (SEE_TURFS | SEE_MOBS | SEE_OBJS)
+		else
+			src.sight &= ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
+
+		if(new_eye && new_eye != src)
+			var/atom/movable/temp = new_eye
+			while(!istype(temp.loc, /turf))
+				temp = temp.loc
+			UnregisterSignal(outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
+			RegisterSignal(temp, COMSIG_MOVABLE_SET_LOC, .proc/check_eye_z)
+			outer_eye_atom = temp
+		else
+			UnregisterSignal(src.outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
+		. = ..()
+
 
 	click(atom/target, params, location, control)
 		if (!src.mainframe) return
@@ -325,6 +346,12 @@
 		if (mainframe)
 			mainframe.ai_colorchange()
 
+	verb/reset_apcs()
+		set category = "AI Commands"
+		set name = "Reset All APCs"
+		set desc = "Resets all APCs on the station."
+		mainframe?.reset_apcs()
+
 	verb/de_electrify_verb()
 		set category = "AI Commands"
 		set name = "Remove All Electrification"
@@ -396,7 +423,7 @@
 
 		..()
 		mainframe?.cancel_camera()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.return_mainframe()
 
 	verb/ai_call_shuttle()
@@ -553,3 +580,17 @@ world/proc/updateCameraVisibility(generateAiImages=FALSE)
 		LAZYLISTADDUNIQUE(camerasToRebuild, cam)
 	world.updateCameraVisibility()
 
+/mob/dead/aieye/proc/check_eye_z(source)
+	var/atom/movable/temp = source
+	while(!istype(temp.loc, /turf))
+		temp = temp.loc
+	if(temp != source)
+		RegisterSignal(temp, COMSIG_MOVABLE_SET_LOC, .proc/check_eye_z)
+		UnregisterSignal(outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
+		outer_eye_atom = temp
+
+	var/turf/T = get_turf(temp)
+	if(isrestrictedz(T?.z))
+		src.sight &= ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
+	else
+		src.sight |= (SEE_TURFS | SEE_MOBS | SEE_OBJS)

@@ -18,16 +18,15 @@
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/win_check_freq = 30 SECONDS //frequency of checks on the win conditions
-	var/round_limit = 45 MINUTES //see post_setup
+	var/round_limit = 40 MINUTES //see post_setup
 	var/endthisshit = 0
 	var/gibwave_started = FALSE
 	do_antag_random_spawns = 0
 	escape_possible = 0
 
-/datum/game_mode/revolution/extended
+/datum/game_mode/revolution/extended //Does not end prematurely
 	name = "extended revolution"
 	config_tag = "revolution_extended"
-	round_limit = 0 //Do not end prematurely
 
 /datum/game_mode/revolution/announce()
 	boutput(world, "<B>The current game mode is - Revolution!</B>")
@@ -92,7 +91,7 @@
 			boutput(rev_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/revolution/proc/equip_revolutionary(mob/living/carbon/human/rev_mob)
@@ -157,7 +156,7 @@
 
 /datum/game_mode/revolution/process()
 	..()
-	if (ticker.round_elapsed_ticks >= round_limit && !gibwave_started)
+	if (!istype(ticker.mode, /datum/game_mode/revolution/extended) && ticker.round_elapsed_ticks >= round_limit && !gibwave_started)
 		gibwave_started = TRUE
 		start_gibwave()
 	if (world.time > win_check_freq)

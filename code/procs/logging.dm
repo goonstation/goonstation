@@ -144,7 +144,7 @@ var/global/logLength = 0
 		src_object = window.locked_by.src_object
 	// Insert src_object info
 	if(src_object)
-		entry += "<br>Using: [src_object.type] [\ref(src_object)]" // |GOONSTATION-CHANGE| (\n->br, REF->\ref)
+		entry += "<br>Using: [src_object.type] \ref[src_object]" // |GOONSTATION-CHANGE| (\n->br, REF->\ref)
 	// Insert message
 	if(message)
 		entry += "<br>[message]" // |GOONSTATION-CHANGE| (\n->br)

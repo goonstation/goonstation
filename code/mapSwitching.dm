@@ -135,7 +135,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		//if the vote was triggered with a duration, wait that long and end it
 		if (duration)
 			var/currentVoteIndex = src.voteIndex
-			SPAWN_DBG(duration)
+			SPAWN(duration)
 				//it's possible that a vote was started, cancelled, and then another started again. we don't want this spawn to prematurely end the new one
 				if (currentVoteIndex != src.voteIndex)
 					return

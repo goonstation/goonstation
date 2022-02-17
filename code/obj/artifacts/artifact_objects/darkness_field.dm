@@ -30,7 +30,7 @@
 		var/turf/T = get_turf(O)
 		darkfields += new /obj/overlay/darkness_field(T, null, radius = 0.5 + field_radius, max_alpha = max_alpha)
 		darkfields += new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, null, radius = 0.5 + field_radius, max_alpha = max_alpha)
-		SPAWN_DBG(field_time)
+		SPAWN(field_time)
 			if (O)
 				O.ArtifactDeactivated()
 
@@ -61,10 +61,10 @@
 		src.alpha = 0
 		animate(src, time = 2 SECONDS, alpha = max_alpha, easing = LINEAR_EASING)
 		if(!isnull(duration))
-			SPAWN_DBG(duration)
+			SPAWN(duration)
 				src.deactivate()
 
 	proc/deactivate()
 		animate(src, time = 2 SECONDS, alpha = 0, easing = LINEAR_EASING)
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			qdel(src)

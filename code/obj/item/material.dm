@@ -554,6 +554,11 @@
 		..()
 		icon_state += "[rand(1,5)]"
 
+/obj/item/raw_material/scrap_metal/steel
+	New()
+		..()
+		src.setMaterial(getMaterial("steel"))
+
 /obj/item/raw_material/shard
 	// same deal here
 	name = "shard"
@@ -612,7 +617,7 @@
 		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -746,7 +751,7 @@
 
 /obj/machinery/portable_reclaimer
 	name = "portable reclaimer"
-	desc = "A sophisticated piece of machinery that quickly processes minerals into bars."
+	desc = "A sophisticated piece of machinery can process raw materials, scrap, and material sheets into bars."
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "reclaimer"
 	anchored = 0

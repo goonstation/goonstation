@@ -1,5 +1,5 @@
 /obj/grille
-	desc = "A sturdy metal mesh. Blocks large objects, but lets small items, gas, or energy beams through."
+	desc = "A metal mesh often built underneath windows to reinforce them. The holes let fluids, gasses, and energy beams through."
 	name = "grille"
 	icon = 'icons/obj/SL_windows_grilles.dmi'
 	icon_state = "grille0-0"
@@ -26,7 +26,7 @@
 	New()
 		..()
 		if(src.auto)
-			SPAWN_DBG(0) //fix for sometimes not joining on map load
+			SPAWN(0) //fix for sometimes not joining on map load
 				if (map_setting && ticker)
 					src.update_neighbors()
 

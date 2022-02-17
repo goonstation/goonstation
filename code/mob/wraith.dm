@@ -186,7 +186,7 @@
 			logTheThing("combat", src, null, "lost a life as a wraith at [log_loc(src.loc)].")
 			src.justdied = 1
 			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
-			SPAWN_DBG(15 SECONDS) //15 seconds
+			SPAWN(15 SECONDS) //15 seconds
 				src.justdied = 0
 		else
 			boutput(src, "<span class='alert'><b>Your connection with the mortal realm is severed. You have been permanently banished.</b></span>")
@@ -312,7 +312,7 @@
 			var/mydir = get_dir(src, NewLoc)
 			var/salted = 0
 			if (mydir == NORTH || mydir == EAST || mydir == WEST || mydir == SOUTH)
-				if (src.density && !NewLoc.Enter(src))
+				if (src.density && !NewLoc.canpass())
 					return
 
 			else
@@ -333,20 +333,20 @@
 				var/horiz = 0
 				var/vert = 0
 
-				if (!src.density || vertical.Enter(src))
+				if (!src.density || vertical.canpass())
 					vert = 1
 					src.set_loc(vertical)
-					if (!src.density || NewLoc.Enter(src))
+					if (!src.density || NewLoc.canpass())
 						blocked = 0
 						for(var/obj/decal/cleanable/saltpile/A in vertical)
 							if (istype(A)) salted = 1
 							if (salted) break
 					src.set_loc(oldloc)
 
-				if (!src.density || horizontal.Enter(src))
+				if (!src.density || horizontal.canpass())
 					horiz = 1
 					src.set_loc(horizontal)
-					if (!src.density || NewLoc.Enter(src))
+					if (!src.density || NewLoc.canpass())
 						blocked = 0
 						for(var/obj/decal/cleanable/saltpile/A in horizontal)
 							if (istype(A)) salted = 1
@@ -374,7 +374,7 @@
 			if (salted && !src.density && !src.justdied)
 				src.makeCorporeal()
 				boutput(src, "<span class='alert'>You have passed over salt! You now interact with the mortal realm...</span>")
-				SPAWN_DBG(1 MINUTE) //one minute
+				SPAWN(1 MINUTE) //one minute
 					src.makeIncorporeal()
 
 		//if ((marker && get_dist(src, marker) > 15) && (master && get_dist(P,src) > 12 ))
@@ -543,7 +543,7 @@
 			src.haunting = 1
 			src.flags &= !UNCRUSHABLE
 
-			SPAWN_DBG (haunt_duration)
+			SPAWN(haunt_duration)
 				src.makeIncorporeal()
 				src.haunting = 0
 				src.flags |= UNCRUSHABLE

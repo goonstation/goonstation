@@ -147,6 +147,7 @@
 			H.stamina_stun(mult)
 			if(H.stamina <= -75)
 				H.losebreath += (3 * mult)
+				H.setStatus("paralysis", max(getStatusDuration("paralysis"), STAMINA_NEG_CAP_STUN_TIME * mult)) //not ideal
 			else if(H.stamina <= -50)
 				H.losebreath += (1.5 * mult)
 			else if(H.stamina <= -33)
@@ -313,7 +314,7 @@
 			src.affecting:was_harmed(src.assailant)
 
 	proc/stunned_targets_can_break()
-		. = TRUE // Allow stunned players to break all grabs
+		.= (src.state == GRAB_PIN)
 
 	proc/check()
 		if(!assailant || !affecting)
@@ -604,7 +605,8 @@
 	.= 0
 	if (src.chokehold && src.chokehold.state == GRAB_KILL)
 		if (tool_flags & TOOL_CUTTING && hit_type == DAMAGE_CUT)		//bleed em a bit
-			take_bleeding_damage(src.chokehold.affecting, src.chokehold.assailant, 0.5 * mult, bloodsplatter = 0)
+			src.chokehold.affecting.TakeDamage(zone="All", brute=(1 * mult))  //hurt em a bit
+			take_bleeding_damage(src.chokehold.affecting, src.chokehold.assailant, 1.4 * mult, bloodsplatter = 0)
 
 /obj/item/proc/try_grab(var/mob/living/target, var/mob/living/user)
 	.= 0

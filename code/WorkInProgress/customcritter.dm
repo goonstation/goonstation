@@ -149,7 +149,7 @@
 		tokenized_message(chase_text, target)
 		play_optional_sound(chase_sound)
 		if (stun_prob)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				if (get_dist(src, target) <= 1)
 					if (prob(stun_prob))
 						M.changeStatus("stunned", 3 SECONDS)
@@ -184,7 +184,7 @@
 		for (var/datum/critterEvent/E in events)
 			if (E.attachment_point == EVENT_ATTACHMENT_POINT_MELEE)
 				E.trigger()
-		SPAWN_DBG(2.5 SECONDS)
+		SPAWN(2.5 SECONDS)
 			src.attacking = 0
 
 	CritterDeath()
@@ -576,7 +576,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 
 	doOnDeath()
 		var/L = C.loc
-		SPAWN_DBG (delay)
+		SPAWN(delay)
 			explosion_new(C, L, power)
 			qdel(C)
 
@@ -615,7 +615,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 
 	doOnDeath()
 		var/L = C.loc
-		SPAWN_DBG (delay)
+		SPAWN(delay)
 			var/datum/reagents/holder = new()
 			holder.my_atom = C
 			holder.add_reagent(reagent, 50)
@@ -1319,10 +1319,10 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 		C.tokenized_message(frenzy_text)
 		C.play_optional_sound(frenzy_sound)
 		C.suspend_ai = 1
-		SPAWN_DBG(frenzy_duration)
+		SPAWN(frenzy_duration)
 			frenzying = 0
 			C.suspend_ai = 0
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while(frenzying)
 				var/turf/T = get_turf(atmob)
 				if (!T)
@@ -1604,7 +1604,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			arcFlash(C, M, curr_W)
 			affected -= M
 			previous += M
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while (chain_depth > 0)
 				sleep(0.2 SECONDS)
 				curr_W /= 2

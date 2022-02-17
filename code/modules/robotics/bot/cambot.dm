@@ -35,7 +35,7 @@
 /obj/machinery/bot/cambot/New()
 	..()
 	src.clear_invalid_targets = TIME
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src)
 			src.camera = new /obj/item/camera(src)
 			src.icon_state = "cambot[src.on]"
@@ -271,7 +271,7 @@
 	src.photographing = 1
 	src.flash_blink(3, 1)
 
-	SPAWN_DBG(5 SECONDS)
+	SPAWN(5 SECONDS)
 		if (src.on)
 			if (get_dist(src,target) <= 1)
 				src.flash_blink(1, 5)

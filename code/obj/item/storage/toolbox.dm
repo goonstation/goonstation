@@ -36,7 +36,7 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] slams the toolbox closed on [his_or_her(user)] head repeatedly!</b></span>")
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -232,7 +232,7 @@
 
 		M.remove()
 		var/we_need_to_die = (M == original_owner)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (G)
 				qdel(G)
 			if (we_need_to_die)
@@ -322,7 +322,7 @@
 		..()
 		master = get_disease_from_path(/datum/ailment/disability/memetic_madness)
 
-	stage_act()
+	stage_act(mult)
 		if (!istype(master,/datum/ailment/) || !src.progenitor)
 			affected_mob.ailments -= src
 			qdel(src)
@@ -331,7 +331,7 @@
 		if(stage > master.max_stages)
 			stage = master.max_stages
 
-		if(prob(stage_prob) && stage < master.max_stages)
+		if(probmult(stage_prob) && stage < master.max_stages)
 			stage++
 
 		master.stage_act(affected_mob,src,progenitor)

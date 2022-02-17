@@ -420,12 +420,12 @@
 			if (M.density)
 				M.open()
 				if (src.timer)
-					SPAWN_DBG(src.timer)
+					SPAWN(src.timer)
 						M.close()
 			else
 				M.close()
 				if (src.timer)
-					SPAWN_DBG(src.timer)
+					SPAWN(src.timer)
 						M.open()
 
 	for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
@@ -440,12 +440,12 @@
 			if (M.operating)
 				M.operating = 0
 				if (src.timer)
-					SPAWN_DBG(src.timer)
+					SPAWN(src.timer)
 						M.operating = 1
 			else
 				M.operating = 1
 				if (src.timer)
-					SPAWN_DBG(src.timer)
+					SPAWN(src.timer)
 						M.operating = 0
 			M.setdir()
 
@@ -454,7 +454,7 @@
 		sleep(src.cooldown)
 		inuse = FALSE
 
-	SPAWN_DBG(1.5 SECONDS)
+	SPAWN(1.5 SECONDS)
 		if(!(status & NOPOWER))
 			icon_state = "doorctrl0"
 	src.add_fingerprint(user)

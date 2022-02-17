@@ -63,7 +63,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for(var/obj/machinery/derelict_aiboss/ai/A in get_area(src))
 				src.ai = A
 				break
@@ -107,7 +107,7 @@
 			src.icon_state = "oldai_mem-1"
 			sleep(1 SECOND)
 			src.icon_state = "oldai_mem-2"
-			SPAWN_DBG(5 SECONDS) src.icon_state = "oldai_mem-1"
+			SPAWN(5 SECONDS) src.icon_state = "oldai_mem-1"
 			if(ai) ai.load_tape(tape_no)
 		else
 			src.visible_message("[user] prods the databank's tape slot with [W]. Nothing happens.",1)

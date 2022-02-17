@@ -112,6 +112,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	atomicthumbs
 		ckey = ""
 		name = "Office of Atomicthumbs"
+	azrun
+		ckey = "azrun"
+		name = "Office of Azrun"
 	bubs
 		ckey = "insanoblan"
 		name = "Office of bubs"
@@ -271,8 +274,8 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	virvatuli
 		ckey = "virvatuli"
 		name = "Office of Virvatuli"
-		sound_loop = 'sound/ambience/loop/officebeats.ogg'
-		sound_loop_vol = 90
+		sound_loop = 'sound/ambience/music/officebeats.ogg'
+		sound_loop_vol = 80
 		sound_group = "virva_office"
 	wire
 		ckey = "wirewraith"
@@ -542,7 +545,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		boutput(user, "<span class='alert'>You can feel a proud and angry presence probing your mind...</span>")
 		src.cant_self_remove = true
 		src.cant_other_remove = true
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (user.bioHolder && user.bioHolder.HasEffect("accent_scots"))
 				boutput(user, "<span class='notice'>YE AR' ALREADY BLESSED!!!</span>")
 			else if (prob(50) && user.bioHolder && !src.rejected_mobs.Find(user))
@@ -644,7 +647,7 @@ proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
 			conveyor.operating = 1
 			conveyor.setdir()
 	conveyor_running_count++
-	SPAWN_DBG(8 SECONDS)
+	SPAWN(8 SECONDS)
 		conveyor_running_count--
 		if(conveyor_running_count == 0)
 			for(var/obj/machinery/conveyor/conveyor as anything in conveyors)

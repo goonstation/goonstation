@@ -159,6 +159,9 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/ore_scoop))
 			var/obj/item/ore_scoop/scoop = W
+			if (!scoop?.satchel)
+				boutput(user, "<span class='alert'>No ore satchel to unload from [W].</span>")
+				return
 			W = scoop.satchel
 
 		if (istype(W, /obj/item/raw_material/) && src.accept_loading(user))
@@ -179,9 +182,10 @@
 				src.load_item(R, user)
 				amtload++
 			satchel.UpdateIcon()
-			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [satchel]!</span>")
-			else boutput(user, "<span class='alert'>[satchel] is empty!</span>")
-
+			if (amtload)
+				boutput(user, "<span class='notice'>[amtload] materials loaded from [satchel]!</span>")
+			else
+				boutput(user, "<span class='alert'>[satchel] is empty!</span>")
 		else
 			src.health = max(src.health-W.force,0)
 			src.check_health()

@@ -23,7 +23,7 @@
 
 	New(var/is_control = 0)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.holder)
 				var/icon/hud_style = hud_style_selection[get_hud_style(src.holder.owner)]
 				if (isicon(hud_style))
@@ -265,6 +265,8 @@
 			if (value < 15 && prob(33))
 				if (holder.owner.bioHolder && !(holder.owner.bioHolder.HasEffect("sims_stinky")))
 					holder.owner.bioHolder.AddEffect("sims_stinky")
+			else if ((value >= 85 ) && (holder.owner.bioHolder.HasEffect("sims_stinky")))
+				holder.owner.bioHolder.RemoveEffect("sims_stinky")
 			/*
 			if (value < 10 && prob((10 - value) * 1.5))
 				for (var/mob/living/carbon/human/H in viewers(2, holder.owner))
@@ -518,11 +520,11 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND) //Give it some time to finish creating the simsController because fak
+		SPAWN(1 SECOND) //Give it some time to finish creating the simsController because fak
 			for (var/M in childrentypesof(/datum/simsMotive))
 				motives[M] = new M(1)
 #ifdef RP_MODE
-			SPAWN_DBG(0)
+			SPAWN(0)
 				set_multiplier(1)
 #endif
 

@@ -110,7 +110,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 				if(2)
 					tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] saws through the base mount of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You saw through the base mount of [holder.name]'s [src.name] with [tool].</span>")
 
-					SPAWN_DBG(rand(150,200))
+					SPAWN(rand(150,200))
 						if(remove_stage == 2)
 							src.remove(0)
 				if(3)
@@ -1168,7 +1168,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 					ticker.mode:update_rev_icons_added(O.mind)
 				if (src.emagged)
 					O.emagged = 1
-					SPAWN_DBG(0)
+					SPAWN(0)
 						O.update_appearance()
 				else if (src.syndicate)
 					O.syndicate = 1

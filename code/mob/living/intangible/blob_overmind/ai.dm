@@ -234,7 +234,7 @@
 			return
 		ai_ticks_queued_up++
 		src.ai_process()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/max_extra_ticks = 4
 			var/extra_ticks_left = max_extra_ticks
 			while(bio_points >= bio_points_max * 2/3 && ai_ticks_queued_up <= 4 && extra_ticks_left-- && APPROX_TICK_USE < 80)
@@ -285,7 +285,7 @@
 						continue
 					else
 						var/turf/H_turf = H.loc
-						SPAWN_DBG(-1)
+						SPAWN(-1)
 							for(var/dir in cardinal)
 								var/turf/T = get_step(H, dir)
 								if(H.loc != H_turf)

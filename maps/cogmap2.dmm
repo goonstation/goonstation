@@ -19197,6 +19197,7 @@
 	pixel_x = -3;
 	pixel_y = 12
 	},
+/obj/item/storage/toolbox/artistic,
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/quartersA)
 "aSc" = (
@@ -36829,6 +36830,14 @@
 /obj/item/clothing/glasses/thermal,
 /obj/item/clothing/glasses/nightvision,
 /obj/item/clothing/glasses/nightvision,
+/obj/item/breaching_charge{
+	pixel_x = 7;
+	pixel_y = -6
+	},
+/obj/item/breaching_charge{
+	pixel_x = -6;
+	pixel_y = -6
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bEL" = (
@@ -68164,7 +68173,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/bookshelf/persistent,
+/obj/bookshelf/persistent{
+	density = 0;
+	pixel_y = 19
+	},
 /turf/simulated/floor/arrival{
 	dir = 9
 	},
@@ -76334,9 +76346,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "dmF" = (
 /turf/simulated/wall/asteroid{
@@ -76367,9 +76377,7 @@
 /turf/simulated/floor/plating,
 /area/research_outpost)
 "dmJ" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "dmK" = (
 /obj/cable{
@@ -76377,9 +76385,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "dmL" = (
 /turf/simulated/wall/asteroid{
@@ -76609,9 +76615,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "dnc" = (
 /obj/cable{
@@ -76619,9 +76623,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "dnd" = (
 /obj/cable,
@@ -76754,9 +76756,7 @@
 /area/space)
 "dnq" = (
 /obj/securearea,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "dnr" = (
 /obj/cable{
@@ -76827,9 +76827,7 @@
 	},
 /area/listeningpost)
 "dnA" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "dnB" = (
 /turf/space,
@@ -77127,9 +77125,7 @@
 /area/listeningpost)
 "dol" = (
 /obj/submachine/ATM,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "dom" = (
 /obj/machinery/vending/snack{
@@ -77155,9 +77151,7 @@
 	},
 /area/listeningpost)
 "dop" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/syndicate_teleporter)
 "doq" = (
 /obj/cable{
@@ -78289,6 +78283,14 @@
 /obj/item/breaching_hammer{
 	pixel_x = -1;
 	pixel_y = 1
+	},
+/obj/item/breaching_charge{
+	pixel_x = 7;
+	pixel_y = -6
+	},
+/obj/item/breaching_charge{
+	pixel_x = -6;
+	pixel_y = -6
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)

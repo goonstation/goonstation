@@ -1,6 +1,6 @@
-#include "..\pod_wars.dmm"
-#include "..\z2.dmm"	//we'll keep centcom.
-// #include "..\z3.dmm"
+INCLUDE_MAP("../pod_wars.dmm")
+INCLUDE_MAP("../z2.dmm")	//we'll keep centcom.
+// INCLUDE_MAP("../z3.dmm")
 // #include "z4.dm"
-// #include "..\z5.dmm"
+// INCLUDE_MAP("../z5.dmm")
 #define MAP_MODE "pod_wars"

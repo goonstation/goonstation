@@ -1,7 +1,15 @@
-(t)tue jan 15 21
+(t)mon feb 08 22
+(u)TTerc
+(*)Added new admin verb to the Self tab, Set Invisible - makes you invisible and sets your mouse opacity to 0. Using it again undoes it.
+(t)thu feb 03 22
+(u)pali
+(*)Player Options and Player Panel now show people's ping.
+(u)aloe
+(*)You can now preload sounds in the dj panel to avoid freezing the server with your 10 MB nukie music. Tested locally with an hour long album which played pretty seamlessly; feel free to try it on live
+(t)tue jan 15 22
 (u)BatElite
 (*)Added the light switches debug overlay, which shows how many switches are physically present in an area and where to find them.
-(t)tue jan 4 21
+(t)tue jan 4 22
 (u)aloe
 (*) Object spawning build modes now default to the currently selected path when changing the path, rather than always defaulting to '/obj/closet'. Yell at me if you don't like this.
 (t)sun dec 26 21

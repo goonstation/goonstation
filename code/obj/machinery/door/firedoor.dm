@@ -9,7 +9,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.setup()
 			sleep(1 SECOND)
 			qdel(src)
@@ -55,7 +55,7 @@
 
 /obj/machinery/door/firedoor/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		var/list/zones = list()
 		for (var/d in list(0) + cardinal)
 			var/turf/T = get_step(src,d)
@@ -129,7 +129,7 @@
 
 	if (!src.blocked && !src.operating)
 		if(src.density)
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				src.operating = 1
 
 				play_animation("opening")
@@ -144,7 +144,7 @@
 				src.operating = 0
 				return
 		else //close it up again
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				src.operating = 1
 
 				play_animation("closing")

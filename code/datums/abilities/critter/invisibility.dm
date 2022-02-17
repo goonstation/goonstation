@@ -83,7 +83,7 @@
 			wait = fade_anim_length
 		else
 			animate(holder.owner, alpha=64, time=5)
-		SPAWN_DBG (wait)
+		SPAWN(wait)
 			APPLY_MOB_PROPERTY(holder.owner, PROP_INVISIBILITY, src, inv_level)
 			holder.owner.alpha = 64
 			actions.start(I, holder.owner)
@@ -94,7 +94,7 @@
 			boutput(holder.owner, __red("You fade back into sight!"))
 			disabled = 0
 			doCooldown()
-			SPAWN_DBG(linger_time)
+			SPAWN(linger_time)
 				REMOVE_MOB_PROPERTY(holder.owner, PROP_INVISIBILITY, src)
 				if (fade_in_icon_state)
 					flick(fade_in_icon_state, holder.owner)

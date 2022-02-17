@@ -73,7 +73,7 @@ var/list/genetek_hair_styles = list()
 			user.drop_item()
 			target.Attackhand(user)
 			user.set_a_intent(previous_user_intent)
-			SPAWN_DBG(user.combat_click_delay + 2)
+			SPAWN(user.combat_click_delay + 2)
 				if (can_operate(user,target))
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)
@@ -121,7 +121,6 @@ var/list/genetek_hair_styles = list()
 		set category = "Local"
 
 		move_mob_inside(usr)
-		return
 
 	attack_hand(mob/user as mob)
 		..()
@@ -139,7 +138,6 @@ var/list/genetek_hair_styles = list()
 		set category = "Local"
 
 		eject_occupant(usr)
-		return
 
 
 	verb/eject_occupant(var/mob/user)
@@ -153,10 +151,7 @@ var/list/genetek_hair_styles = list()
 		add_fingerprint(user)
 
 	attackby(var/obj/item/grab/G as obj, user as mob)
-		if ((!( istype(G, /obj/item/grab) ) || !( ismob(G.affecting) )))
-			return
-		if (!isliving(user))
-			boutput(user, "<span class='alert'>You're dead! Quit that!</span>")
+		if (!istype(G))
 			return
 
 		if (src.occupant)
@@ -183,7 +178,6 @@ var/list/genetek_hair_styles = list()
 
 		src.add_fingerprint(user)
 		qdel(G)
-		return
 
 	verb/lock()
 		set name = "Scanner Lock"

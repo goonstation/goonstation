@@ -306,23 +306,22 @@ ABSTRACT_TYPE(/obj/item/parts)
 		if (src.easy_attach) //No need to make it drop off later if it attaches instantly.
 			if(attachee != attacher)
 				boutput(attachee, "<span class='alert'>[attacher] attaches a [src] to your stump[both_legs? "s" : ""]. It fuses instantly with the muscles and tendons!</span>")
-				boutput(attacher, "<span class='alert'>You attach a [src] to [attachee]'s stump[both_legs? "s" : ""]. It fuses instantly with the muscle and tendons!</span>")
+				boutput(attacher, "<span class='alert'>You attach \the [src] to [attachee]'s stump[both_legs? "s" : ""]. It fuses instantly with the muscle and tendons!</span>")
 			else
-				boutput(attacher, "<span class='alert'>You attach a [src] to your own stump[both_legs? "s" : ""]. It fuses instantly with the muscle and tendons!</span>")
+				boutput(attacher, "<span class='alert'>You attach \the [src] to your own stump[both_legs? "s" : ""]. It fuses instantly with the muscle and tendons!</span>")
 			src.remove_stage = 0
 		else
 			if(attachee != attacher)
-				boutput(attachee, "<span class='alert'>[attacher] attaches a [src] to your stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
-				boutput(attacher, "<span class='alert'>You attach a [src] to [attachee]'s stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
+				boutput(attachee, "<span class='alert'>[attacher] attaches \the [src] to your stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
+				boutput(attacher, "<span class='alert'>You attach \the [src] to [attachee]'s stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
 			else
-				boutput(attacher, "<span class='alert'>You attach a [src] to your own stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
+				boutput(attacher, "<span class='alert'>You attach \the [src] to your own stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
 
-			SPAWN_DBG(rand(150,200))
+			SPAWN(rand(150,200))
 				if(remove_stage == 2) src.remove()
 
 		attachee.update_clothing()
 		attachee.update_body()
-		attachee.set_body_icon_dirty()
 		attachee.UpdateDamageIcon()
 		if (src.slot == "l_arm" || src.slot == "r_arm")
 			attachee.hud.update_hands()
@@ -396,7 +395,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 
 	var/list/linepath = getline(src, destination)
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		/// Number of tiles where it should try to make a splatter
 		var/num_splats = rand(round(dist * 0.2), dist) + 1
 		for (var/turf/T in linepath)

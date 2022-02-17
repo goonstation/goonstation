@@ -45,14 +45,14 @@
 		if (ismob(src.loc))
 			var/mob/M = src.loc
 			if (M.machine == src)
-				SPAWN_DBG( 0 )
+				SPAWN( 0 )
 					src.attack_self(M)
 					return
 	return
 
 /obj/item/fcardholder/attack_hand(mob/user as mob)
 	if (user.contents.Find(src))
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			src.attack_self(user)
 			return
 		src.add_fingerprint(user)
@@ -84,7 +84,7 @@
 		else
 			return
 	src.update()
-	SPAWN_DBG( 0 )
+	SPAWN( 0 )
 		attack_self(user)
 		return
 	return

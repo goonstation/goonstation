@@ -15,7 +15,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	New()
 		..()
 		if (!src.load())
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				if (!src.loaded)
 					src.load()
 
@@ -69,7 +69,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 				if (src.debugging)
 					src.logDebug("Export, message queued due to unloaded config")
 
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					if (!src.loaded)
 						src.load()
 				return "queued"

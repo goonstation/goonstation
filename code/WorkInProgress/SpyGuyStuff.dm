@@ -67,12 +67,12 @@ Fibre wire
 		src.set_loc(H.loc)
 		src.layer = EFFECTS_LAYER_4
 		playsound(src.loc, 'sound/ambience/spooky/Void_Calls.ogg', 40, 1)
-		SPAWN_DBG(0) animate_levitate(src, -1)
+		SPAWN(0) animate_levitate(src, -1)
 		H.emote("scream")
 
 		H.changeStatus("weakened", 10 SECONDS)
 
-		SPAWN_DBG(7 SECONDS)
+		SPAWN(7 SECONDS)
 			if(!H)
 				being_mean = 0
 				return
@@ -122,7 +122,7 @@ proc/Create_Tommyname()
 	else
 		T.key = src.key
 
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		qdel(src)
 
 /mob/living/carbon/human/proc/tommyize_reshape()
@@ -602,7 +602,7 @@ proc/Create_Tommyname()
 		walker = get_step(walker,extension_dir)
 		/*
 		if(i == 0)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir1, paneldir2 | extension_dir)
 			move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir2, paneldir1 | turn(extension_dir, 180))
 		*/
@@ -624,11 +624,11 @@ proc/Create_Tommyname()
 	DEBUG_MESSAGE("Creating solar panels")
 	var/list/solar_list = list(/turf/simulated/floor/airless/solar, /obj/machinery/power/solar)
 	for(var/turf/T in panelturfs)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/turf/w1 = T
 			var/turf/w2 = T
 			for(var/i = 0; i < panel_length; i++)
-				SPAWN_DBG(-1)
+				SPAWN(-1)
 					move_create_obj(solar_list, w1, paneldir1, paneldir1)
 				w1 = get_step(w1, paneldir1)
 				move_create_obj(solar_list, w2, paneldir2, paneldir2)
@@ -637,7 +637,7 @@ proc/Create_Tommyname()
 	DEBUG_MESSAGE("Creating solar controller")
 	move_create_obj(list(/turf/simulated/floor/plating/airless, /obj/machinery/power/tracker), walker, extension_dir)
 	walker = get_step(walker,extension_dir)
-	SPAWN_DBG(0) move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir1, paneldir2)
+	SPAWN(0) move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir1, paneldir2)
 	move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir2, paneldir1)
 
 	status = STAT_EXTENDED
@@ -652,7 +652,7 @@ proc/Create_Tommyname()
 	for(var/i = panels.len; i > 0; i--)
 		var/list/atom/L = panels[i]
 		for(var/atom/A in L)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				move_and_delete_object(A)
 		sleep(DEFAULT_ANIMATION_TIME)
 
@@ -742,7 +742,7 @@ proc/Create_Tommyname()
 		if(ispath(t_type, /turf))
 			turf_type = t_type
 			break
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for(var/t_type in to_create)
 			var/obj/O
 			is_turf = ispath(t_type, /turf) //If it's a turf we need some special handling.
@@ -812,7 +812,7 @@ proc/Create_Tommyname()
 	src.layer = initial(T.layer)
 	src.invisibility = INVIS_NONE
 	if(TTL)
-		SPAWN_DBG(TTL)
+		SPAWN(TTL)
 			qdel(src)
 
 #undef STAT_STANDBY

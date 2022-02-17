@@ -91,7 +91,7 @@ change the direction of created objects.<br>
 					mtx.Translate(0, 64)
 					pad.transform = mtx
 					animate(pad, alpha = 255, transform = mtx.Reset(), time = 5, easing=SINE_EASING)
-					SPAWN_DBG(0.7 SECONDS)
+					SPAWN(0.7 SECONDS)
 						swirl.loc = T
 						flick("portswirl", swirl)
 
@@ -147,7 +147,7 @@ change the direction of created objects.<br>
 						mtx.Translate(0, 64)
 						pad.transform = mtx
 						animate(pad, alpha = 255, transform = mtx.Reset(), time = 5, easing=SINE_EASING)
-						SPAWN_DBG(0.7 SECONDS)
+						SPAWN(0.7 SECONDS)
 							swirl.loc = Q
 							flick("portswirl", swirl)
 

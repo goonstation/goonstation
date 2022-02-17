@@ -284,7 +284,7 @@
 
 	New()
 		. = ..()
-		SPAWN_DBG(1 SECOND) //Give time to actually generate network passes I guess.
+		SPAWN(1 SECOND) //Give time to actually generate network passes I guess.
 			if (!root) return
 			var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "GENAUTH";} (src)
 			authrec.fields = list("HEADS"="[netpass_heads]",

@@ -341,7 +341,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			var/mob/living/carbon/human/H = owner
 			last_cast = world.time + linked_power.cooldown
 			if (linked_power.cooldown > 0)
-				SPAWN_DBG(linked_power.cooldown)
+				SPAWN(linked_power.cooldown)
 					if (src && H?.hud)
 						H.hud.update_ability_hotbar()
 

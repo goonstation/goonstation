@@ -1,6 +1,9 @@
 /datum/component/obj_projectile_damage
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
+TYPEINFO(/datum/component/obj_projectile_damage)
+	initialization_args = list()
+
 /datum/component/obj_projectile_damage/Initialize()
 	if(!istype(parent, /obj))
 		return COMPONENT_INCOMPATIBLE

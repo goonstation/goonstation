@@ -95,6 +95,8 @@
 
 
 	proc/vended(var/atom/A)
+		if(A.layer <= src.layer)
+			A.layer = src.layer + 0.1
 		if(log_purchase)
 			logTheThing("debug", usr, null, "bought [A] from [src] at [log_loc(get_turf(src))]")
 		.= 0
@@ -126,7 +128,7 @@
 	vended(var/atom/A)
 		..()
 		if (istype(A,/obj/item/storage/belt/security))
-			SPAWN_DBG(2 DECI SECONDS) //ugh belts do this on spawn and we need to wait
+			SPAWN(2 DECI SECONDS) //ugh belts do this on spawn and we need to wait
 				var/list/tracklist = list()
 				for(var/atom/C in A.contents)
 					if (istype(C,/obj/item/gun) || istype(C,/obj/item/baton))

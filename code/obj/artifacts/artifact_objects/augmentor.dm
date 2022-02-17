@@ -152,7 +152,7 @@
 			T.visible_message("<b>[O]</b> withdraws its instruments and slams shut.")
 			working = 0
 			recharging = 1
-			SPAWN_DBG(recharge_time)
+			SPAWN(recharge_time)
 			recharging = 0
 			T.visible_message("<b>[O]</b> opens itself up again.")
 		else

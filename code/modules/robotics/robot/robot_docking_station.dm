@@ -606,52 +606,40 @@
 			return
 		if (user.contents.Find(W))
 			user.drop_item()
-		if (W in src.clothes)
-			qdel(W)
-			return
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.clothes.Add(W)
-		return
-	if (istype(W, /obj/item/robot_module))
+
+	else if (istype(W, /obj/item/robot_module))
 		if (user.contents.Find(W))
 			user.drop_item()
-		if (W in src.modules)
-			qdel(W)
-			return
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.modules.Add(W)
-		return
-	if (istype(W, /obj/item/roboupgrade))
+
+	else if (istype(W, /obj/item/roboupgrade))
 		if (user.contents.Find(W))
 			user.drop_item()
-		if (W in src.upgrades)
-			qdel(W)
-			return
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.upgrades.Add(W)
-		return
-	if (istype(W, /obj/item/cell))
+
+	else if (istype(W, /obj/item/cell))
 		if (user.contents.Find(W))
 			user.drop_item()
-		if (W in src.cells)
-			qdel(W)
-			return
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.cells.Add(W)
-		return
-	if (istype(W, /obj/item/cable_coil))
+
+	else if (istype(W, /obj/item/cable_coil))
 		var/obj/item/cable_coil/C = W
 		src.cabling += C.amount
 		boutput(user, "You insert [W]. [src] now has [src.cabling] cable available.")
 		if (user.contents.Find(W))
 			user.drop_item()
 		qdel(W)
-		return
-	if (istype(W, /obj/item/reagent_containers/glass))
+
+	else if (istype(W, /obj/item/reagent_containers/glass))
 		var/obj/item/reagent_containers/glass/G = W
 		if (!G.reagents.total_volume)
 			boutput(user, "<span class='alert'>There is nothing in [G] to pour!</span>")
@@ -666,25 +654,52 @@
 			if (!G.reagents.total_volume)
 				boutput(user, "<span class='alert'><b>[G] is now empty.</b></span>")
 			src.reagents.isolate_reagent("fuel")
-			return
-	..()
 
-/obj/machinery/recharge_station/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (get_dist(O, user) > 1 || get_dist(src, user) > 1)
+	else if (istype(W, /obj/item/grab))
+		var/obj/item/grab/G = W
+		if (!src.conversion_chamber)
+			boutput(user, "<span class='alert'>Humans cannot enter recharging stations.</span>")
+			return
+		if (!ishuman(G.affecting))
+			boutput(user, "<span class='alert'>Non-Humans are not compatible with this device.</span>")
+			return
+		if (isdead(G.affecting))
+			boutput(user, "<span class='alert'>[G.affecting] is dead and cannot be forced inside.</span>")
+			return
+		if (G.state < GRAB_AGGRESSIVE)
+			boutput(user, "<span class='alert'>You need a tighter grip!</span>")
+			return
+
+		var/mob/living/carbon/human/H = G.affecting
+		logTheThing("combat", user, H, "puts [constructTarget(H,"combat")] into a conversion chamber at [showCoords(src.x, src.y, src.z)]")
+		user.visible_message("<span class='notice>[user] stuffs [H] into \the [src].")
+
+		H.remove_pulling()
+		H.set_loc(src)
+		src.add_fingerprint(user)
+		src.occupant = H
+		src.build_icon()
+		qdel(G)
+
+	else
+		..()
+
+/obj/machinery/recharge_station/MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
+	if (get_dist(AM, user) > 1 || get_dist(src, user) > 1)
 		return
 	if (!isliving(user) || isAI(user))
 		return
 
-	if (isitem(O) && !user.stat)
-		src.Attackby(O, user)
+	if (isitem(AM) && !user.stat)
+		src.Attackby(AM, user)
 		return
 
-	if (isliving(O) && src.occupant)
+	if (isliving(AM) && src.occupant)
 		boutput(user, "<span class='alert'>\The [src] is already occupied!</span>")
 		return
 
-	if (isrobot(O))
-		var/mob/living/silicon/robot/R = O
+	if (isrobot(AM))
+		var/mob/living/silicon/robot/R = AM
 		if (isdead(R))
 			boutput(user, "<span class='alert'>[R] is dead and cannot enter [src].</span>")
 			return
@@ -701,8 +716,8 @@
 		src.add_fingerprint(user)
 		src.build_icon()
 
-	if (isshell(O))
-		var/mob/living/silicon/hivebot/H = O
+	if (isshell(AM))
+		var/mob/living/silicon/hivebot/H = AM
 		if (isdead(H))
 			boutput(user, "<span class='alert'>[H] is dead and cannot enter [src].</span>")
 			return
@@ -719,37 +734,16 @@
 		src.add_fingerprint(user)
 		src.build_icon()
 
-	else if (ishuman(O) && !user.stat)
-		if (!src.conversion_chamber)
-			boutput(user, "<span class='alert'>Humans cannot enter recharging stations.</span>")
-		else
-			var/mob/living/carbon/human/H = O
-			if (isdead(H))
-				boutput(user, "<span class='alert'>[H] is dead and cannot be forced inside.</span>")
-				return
-			var/delay = 0
-			if (user != H)
-				delay = 30
-				logTheThing("combat", user, H, "puts [constructTarget(H,"combat")] into a conversion chamber at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", user, H, "puts [constructTarget(H,"diary")] into a conversion chamber at [showCoords(src.x, src.y, src.z)]", "combat")
-			if (delay)
-				user.visible_message("<b>[user]</b> begins moving [H] into [src].")
-				boutput(user, "Both you and [H] will need to remain still for this action to work.")
-			var/turf/T1 = get_turf(user)
-			var/turf/T2 = get_turf(H)
-			SPAWN_DBG(delay)
-				if (user.loc != T1 || H.loc != T2)
-					return
+	if (ishuman(AM))
+		var/mob/living/carbon/human/H = AM
+		logTheThing("combat", user, null, "puts [himself_or_herself(user)] into a conversion chamber at [showCoords(src.x, src.y, src.z)]")
+		user.visible_message("<span class='notice>[user] stuffs [himself_or_herself(user)] into \the [src].")
 
-				if (user != H)
-					user.visible_message("<b>[user]</b> moves [H] into [src].")
-				else
-					user.visible_message("<b>[user]</b> climbs into [src].")
-				H.remove_pulling()
-				H.set_loc(src)
-				src.occupant = H
-				src.add_fingerprint(user)
-				src.build_icon()
+		H.remove_pulling()
+		H.set_loc(src)
+		src.occupant = H
+		src.add_fingerprint(user)
+		src.build_icon()
 
 /obj/machinery/recharge_station/proc/build_icon()
 	if (src.occupant)
@@ -807,11 +801,11 @@
 					'sound/impact_sounds/Metal_Clang_1.ogg',
 					'sound/effects/pump.ogg',
 					'sound/effects/syringeproj.ogg',
-				), 100, 1)
+				), 60, 1)
 				if (prob(15))
 					src.visible_message("<span class='alert'>[src] [pick("whirs", "grinds", "rumbles", "clatters", "clangs")] [pick("horribly", "in a grisly manner", "horrifyingly", "scarily")]!</span>")
 				if (prob(25))
-					SPAWN_DBG(0.3 SECONDS)
+					SPAWN(0.3 SECONDS)
 						playsound(src.loc, pick(
 							'sound/impact_sounds/Flesh_Stab_1.ogg',
 							'sound/impact_sounds/Slimy_Hit_3.ogg',
@@ -820,32 +814,28 @@
 							'sound/impact_sounds/Flesh_Tear_1.ogg',
 							'sound/impact_sounds/Generic_Snap_1.ogg',
 							'sound/impact_sounds/Generic_Hit_1.ogg',
-						), 100, 1)
-					SPAWN_DBG(0.6 SECONDS)
-						// TODO: use character scream choice
-						if (H.gender == "female")
-							playsound(src.loc, "sound/voice/screams/female_scream.ogg", 30, 1, channel=VOLUME_CHANNEL_EMOTE)
-						else
-							playsound(src.loc, "sound/voice/screams/male_scream.ogg", 30, 1, channel=VOLUME_CHANNEL_EMOTE)
-						src.visible_message("<span class='alert'>A muffled scream comes from within [src]!</span>")
+						), 60, 1)
+					SPAWN(0.6 SECONDS)
+						occupant?.emote("scream", FALSE)
 
 			if (H.health <= 2)
 				boutput(H, "<span class='alert'>You feel... different.</span>")
 				src.go_out()
 
-				var/bdna = null // For forensics (Convair880).
-				var/btype = null
-				if (H.bioHolder.Uid && H.bioHolder.bloodType)
-					bdna = H.bioHolder.Uid
-					btype = H.bioHolder.bloodType
-				gibs(src.loc, null, null, bdna, btype)
+				SPAWN(0) // handle_robot_antagonist_status can sleep if it needs to grab a resource so here we are
+					var/bdna = null // For forensics (Convair880).
+					var/btype = null
+					if (H.bioHolder.Uid && H.bioHolder.bloodType)
+						bdna = H.bioHolder.Uid
+						btype = H.bioHolder.bloodType
+					gibs(src.loc, null, null, bdna, btype)
 
-				H.Robotize_MK2(1)
-				src.build_icon()
-				playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
+					H.Robotize_MK2(TRUE, syndicate=TRUE)
+					src.build_icon()
+					playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
 			else
 				H.bioHolder.AddEffect("eaten")
-				random_brute_damage(H, 3)
+				random_brute_damage(H, 10)
 				H.changeStatus("weakened", 5 SECONDS)
 				if (prob(15))
 					boutput(H, "<span class='alert'>[pick("You feel chunks of your flesh being ripped off!"," Something cold and sharp skewers you!", "You feel your organs being pulped and mashed!", "Machines shred you from every direction!")]</span>")

@@ -172,7 +172,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				return
 			else //GUN THEM DOWN
 				if(src.target)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
 							flick("[src.icon_tag]_fire",src)
 							muzzle_flash_any(src, 0, "muzzle_flash")
@@ -521,7 +521,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 			if(target == get_turf(my_turret))
 				return
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				src.my_turret.set_angle(get_angle(my_turret,target))
 
 			return 0

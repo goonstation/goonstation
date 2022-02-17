@@ -16,13 +16,13 @@
 	var/list/supply_access_list = list(access_hangar, access_cargo, access_supply_console, access_mining, access_mining_shuttle, access_mining_outpost)
 	var/list/research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_medical_lockers, access_research, access_robotics, access_chemistry, access_pathology)
 	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_securitylockers, access_carrypermit, access_contrabandpermit)
-	var/list/command_access_list = list(access_research_director, access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_ghostdrone)
+	var/list/command_access_list = list(access_research_director, access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_dwaine_superuser)
 	var/list/allowed_access_list
 	req_access = list(access_change_ids)
 	desc = "A computer that allows an authorized user to change the identification of other ID cards."
 
 	deconstruct_flags = DECON_MULTITOOL
-	light_r =0.7
+	light_r = 0.7
 	light_g = 1
 	light_b = 0.1
 
@@ -419,6 +419,8 @@
 
 			if (t1 == "Custom Assignment")
 				t1 = input(usr, "Enter a custom job assignment.", "Assignment")
+				if(!src.modify || !src.authenticated)
+					return
 				t1 = strip_html(t1, 100, 1)
 				logTheThing("station", usr, null, "changes the assignment on the ID card from [src.modify.assignment] to [t1]")
 				playsound(src.loc, "keyboard", 50, 1, -15)

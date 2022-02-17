@@ -910,7 +910,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 					P.pixel_y = V * 5
 	ex_act(severity)
 		if(!maxboom)
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				..()
 				maxboom = 0
 		maxboom = max(severity, maxboom)
@@ -1139,7 +1139,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		src.pilot = M
 		src.ion_trail.start()
 
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		boarding = 0*/
 
 
@@ -1149,7 +1149,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		boutput(M, "<span class='alert'><b>You are ejected from [src]!</b></span>")
 		src.eject(M)
 		var/atom/target = get_edge_target_turf(M,pick(alldirs))
-		SPAWN_DBG(0)
+		SPAWN(0)
 		M.throw_at(target, 10, 2)*/
 
 //Returns the correct tile to spawn projectiles on for either side of the ship, given the current direction.
@@ -1411,7 +1411,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	finish_board_pod(var/mob/boarder)
 		..()
 		if (!src.pilot) return //if they were stopped from entering by other parts of the board proc from ..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.escape()
 
 	proc/escape()
@@ -1503,7 +1503,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 					var/mob/living/carbon/human/H = pilot
 					for(var/effect in list("sever_left_leg","sever_right_leg","sever_left_arm","sever_right_arm"))
 						if(prob(40))
-							SPAWN_DBG(rand(0,5))
+							SPAWN(rand(0,5))
 								H.bioHolder.AddEffect(effect)
 				src.leave_pod(pilot)
 				src.icon_state = "escape_nowindow"

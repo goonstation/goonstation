@@ -18,7 +18,7 @@
 		// vr wizards only get magic missile
 		H.addAbility(/datum/targetable/spell/magicmissile)
 
-	SPAWN_DBG(2.5 SECONDS) // Don't remove.
+	SPAWN(2.5 SECONDS) // Don't remove.
 		if (wizard_mob) wizard_mob.assign_gimmick_skull() // For variety and hunters (Convair880).
 
 	wizard_mob.bioHolder.mobAppearance.customization_first_color = "#FFFFFF"
@@ -191,7 +191,7 @@
 			usr.targeting_ability = owner
 			usr.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 
 /datum/abilityHolder/wizard
@@ -233,7 +233,7 @@
 
 	doCooldown()
 		src.last_cast = world.time + calculate_cooldown()
-		SPAWN_DBG(calculate_cooldown() + 5)
+		SPAWN(calculate_cooldown() + 5)
 			holder.updateButtons()
 
 	//mbc : i don't see why the wizard needs a specialized tryCast() proc. someone fix it later for me!

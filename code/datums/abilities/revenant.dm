@@ -4,7 +4,6 @@
 	cast_while_dead = 1
 	var/channeling = 0
 
-	var/datum/abilityHolder/wraith/relay = null
 	var/datum/bioEffect/hidden/revenant/revenant = null
 	pointName = "Wraith Points"
 
@@ -39,8 +38,9 @@
 	onAbilityStat()
 		..()
 		.= list()
-		.["Points:"] = round(relay.points)
-		.["Gen. rate:"] = round(relay.regenRate + relay.lastBonus)
+		if (relay) // Avoids a runtime whilst setting up revenant verbs
+			.["Points:"] = round(relay.points)
+			.["Gen. rate:"] = round(relay.regenRate + relay.lastBonus)
 
 /datum/bioEffect/hidden/revenant
 	name = "Revenant"
@@ -244,13 +244,39 @@
 			owner.mind.spells.len = 0
 		return*/
 
+/atom/movable/screen/ability/topBar/revenant
+	update_cooldown_cost()
+		var/newcolor = null
+		var/on_cooldown = round((owner.last_cast - world.time) / 10)
+
+		if (owner.pointCost)
+			if (owner.pointCost > owner.holder.relay.points)
+				newcolor = rgb(64, 64, 64)
+				point_overlay.maptext = "<span class='sh vb r ps2p' style='color: #cc2222;'>[owner.pointCost]</span>"
+			else
+				point_overlay.maptext = "<span class='sh vb r ps2p'>[owner.pointCost]</span>"
+		else
+			src.maptext = null
+
+		if (on_cooldown > 0)
+			newcolor = rgb(96, 96, 96)
+			cooldown_overlay.alpha = 255
+			cooldown_overlay.maptext = "<span class='sh vb c ps2p'>[min(999, on_cooldown)]</span>"
+			point_overlay.alpha = 64
+		else
+			cooldown_overlay.alpha = 0
+			point_overlay.alpha = 255
+
+		if (newcolor != src.color)
+			src.color = newcolor
+
 /datum/targetable/revenantAbility
 	icon = 'icons/mob/wraith_ui.dmi'
 	preferred_holder_type = /datum/abilityHolder/revenant
 	theme = "wraith"
 
 	New()
-		var/atom/movable/screen/ability/topBar/B = new /atom/movable/screen/ability/topBar(null)
+		var/atom/movable/screen/ability/topBar/revenant/B = new /atom/movable/screen/ability/topBar/revenant(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -273,7 +299,7 @@
 			return
 		last_cast = world.time + cooldown
 		holder.updateButtons()
-		SPAWN_DBG(cooldown + 5)
+		SPAWN(cooldown + 5)
 			holder.updateButtons()
 
 
@@ -312,7 +338,7 @@
 					current_prob *= 0.75
 					thrown += O
 					animate_float(O)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(target, 32, 2)
 
@@ -330,7 +356,7 @@
 
 	proc/shock(var/turf/T)
 		playsound(usr.loc, "sound/voice/wraith/revshock.ogg", 30, 0)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/mob/living/carbon/human/M in T)
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
 					M.changeStatus("weakened", 2 SECONDS)
@@ -369,7 +395,7 @@
 		for (var/turf/T in orange(1, origin))
 			next += T
 			next[T] = get_dir(origin, T)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/i = 1, i <= iteration_depth, i++)
 				for (var/turf/T in next)
 					shock(T)
@@ -495,7 +521,7 @@
 		if (!RH || !istype(RH, /datum/abilityHolder/revenant/))
 			return
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			var/iterations = 0
 			while (holder.owner.loc == location && isalive(holder.owner) && !holder.owner.equipped())
 				iterations++

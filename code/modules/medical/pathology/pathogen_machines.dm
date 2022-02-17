@@ -357,18 +357,18 @@
 								if (P.curable_by_suppression)
 									act += "<br>The culture appears to be severely damaged by the suppressing agent."
 								src.supp_action[P.name] = act
-								SPAWN_DBG(10 SECONDS) // 100
+								SPAWN(10 SECONDS) // 100
 									src.supp_action -= P.name
 							for (var/datum/pathogeneffects/E in P.effects)
 								var/a_in = "[P.name]: " + E.react_to(R.id, 1)
 								var/a_out = "[P.name]: " + E.react_to(R.id, 0)
 								if (a_in && !(a_in in src.symptom_action_in))
 									src.symptom_action_in += a_in
-									SPAWN_DBG(10 SECONDS) // 100
+									SPAWN(10 SECONDS) // 100
 										src.symptom_action_in -= a_in
 								if (a_out && !(a_out in src.symptom_action_out))
 									src.symptom_action_out += a_out
-									SPAWN_DBG(10 SECONDS) // 100
+									SPAWN(10 SECONDS) // 100
 										src.symptom_action_out -= a_out
 
 #define PATHOGEN_MANIPULATOR_STATE_MAIN 0
@@ -407,7 +407,7 @@
 		..()
 		gui = new("html/pathoComp.html", "pathology", "size=715x685", src)
 		gui.validate_user = 1
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			rescan()
 
 	proc/rescan()
@@ -1215,7 +1215,7 @@
 		src.reagents.my_atom = src
 		flags |= NOSPLASH
 		if (!pathogen_controller || !pathogen_controller.cure_bases || !length(pathogen_controller.cure_bases))
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				for (var/C in pathogen_controller.cure_bases)
 					src.reagents.add_reagent(C, 1)
 		else
@@ -1537,25 +1537,25 @@
 				machine_state = 1
 				icon_state = "synth2"
 				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN_DBG(2 SECONDS) // 80
+				SPAWN(2 SECONDS) // 80
 					finish_creation(1, 1)
 			else if (href_list["serumrad"])
 				machine_state = 1
 				icon_state = "synth2"
 				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN_DBG (2 SECONDS) // 120
+				SPAWN(2 SECONDS) // 120
 					finish_creation(0, 1)
 			else if (href_list["vaccine"])
 				machine_state = 1
 				icon_state = "synth2"
 				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN_DBG(2 SECONDS) // 80
+				SPAWN(2 SECONDS) // 80
 					finish_creation(1, 0)
 			else if (href_list["vaccinerad"])
 				machine_state = 1
 				icon_state = "synth2"
 				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN_DBG (2 SECONDS) // 120
+				SPAWN(2 SECONDS) // 120
 					finish_creation(0, 0)
 			else if (href_list["antiagent"])
 				var/new_antiagent = href_list["antiagent"]
@@ -1583,7 +1583,7 @@
 						machine_state = 1
 						icon_state = "synth2"
 						src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-						SPAWN_DBG (0 SECONDS)
+						SPAWN(0 SECONDS)
 							while(count > 0)
 								count--
 								sleep(5 SECONDS)

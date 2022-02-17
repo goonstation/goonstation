@@ -124,7 +124,7 @@
 	..()
 
 	START_TRACKING
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		addToNetwork()
 		updateCoverage()
 
@@ -211,7 +211,7 @@
 	src.network = null                   //Not the best way but it will do. I think.
 	camera_status--
 
-	SPAWN_DBG(90 SECONDS)
+	SPAWN(90 SECONDS)
 		camera_status++
 		src.network = initial(src.network)
 		if(!istype(src, /obj/machinery/camera/television))

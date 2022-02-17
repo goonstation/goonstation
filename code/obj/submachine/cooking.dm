@@ -23,7 +23,7 @@
 			qdel(W)
 		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/) || istype(W, /obj/item/reagent_containers/balloon/) || istype(W, /obj/item/soup_pot))
 			var/fill = W.reagents.maximum_volume
-			if (fill == W.reagents.total_volume)
+			if (W.reagents.total_volume >= fill)
 				user.show_text("[W] is too full already.", "red")
 			else
 				fill -= W.reagents.total_volume
@@ -32,7 +32,7 @@
 				playsound(src.loc, "sound/misc/pourdrink.ogg", 100, 1)
 		else if (istype(W, /obj/item/mop)) // dude whatever
 			var/fill = W.reagents.maximum_volume
-			if (fill == W.reagents.total_volume)
+			if (W.reagents.total_volume >= fill)
 				user.show_text("[W] is too wet already.", "red")
 			else
 				fill -= W.reagents.total_volume
@@ -693,7 +693,7 @@ table#cooktime a#start {
 			src.working = 1
 			src.icon_state = "oven_bake"
 			src.updateUsrDialog()
-			SPAWN_DBG(cook_amt * 10)
+			SPAWN(cook_amt * 10)
 
 				if(recook && bonus !=0)
 					for (var/obj/item/reagent_containers/food/snacks/F in src)
@@ -778,7 +778,7 @@ table#cooktime a#start {
 		user.TakeDamage("head", 0, 150)
 		sleep(5 SECONDS)
 		src.icon_state = "oven_off"
-		SPAWN_DBG(55 SECONDS)
+		SPAWN(55 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -1220,7 +1220,7 @@ var/list/mixer_recipes = list()
 			if (R.useshumanmeat)
 				derivename = 1
 			break
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 
 			if (!isnull(output))
 				var/obj/item/reagent_containers/food/snacks/F

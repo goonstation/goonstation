@@ -95,7 +95,7 @@
 		src.work_display = image('icons/obj/manufacturer.dmi', "")
 		src.activity_display = image('icons/obj/manufacturer.dmi', "")
 		src.panel_sprite = image('icons/obj/manufacturer.dmi', "")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.build_icon()
 
 	disposing()
@@ -171,7 +171,7 @@
 			use_power(src.powconsumption)
 			if (src.timeleft < 1)
 				src.output_loop(src.queue[1])
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if (src.queue.len < 1)
 						src.manual_stop = 0
 						playsound(src.loc, src.sound_happy, 50, 1)
@@ -240,7 +240,7 @@
 				status &= ~NOPOWER
 				src.build_icon()
 			else
-				SPAWN_DBG(rand(0, 15))
+				SPAWN(rand(0, 15))
 					status |= NOPOWER
 					src.build_icon()
 
@@ -2233,6 +2233,7 @@
 		/datum/manufacture/eyepatch,
 		/datum/manufacture/blindfold,
 		/datum/manufacture/muzzle,
+		/datum/manufacture/stress_ball,
 		/datum/manufacture/body_bag,
 		/datum/manufacture/implanter,
 		/datum/manufacture/implant_health,
@@ -2350,15 +2351,19 @@
 
 /obj/machinery/manufacturer/uniform // add more stuff to this as needed, but it should be for regular uniforms the HoP might hand out, not tons of gimmicks. -cogwerks
 	name = "Uniform Manufacturer"
-	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing workplace uniforms."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing workplace uniforms and headsets."
 	icon_state = "fab-jumpsuit"
 	icon_base = "jumpsuit"
 	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/cloth/cottonfabric)
+	free_resources = list(/obj/item/material_piece/cloth/cottonfabric,
+		/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper)
 	accept_blueprints = 0
 	available = list(/datum/manufacture/shoes,	//hey if you update these please remember to add it to /hop_and_uniform's list too
 	/datum/manufacture/shoes_brown,
 	/datum/manufacture/shoes_white,
+	/datum/manufacture/civilian_headset,
+	/datum/manufacture/jumpsuit_assistant,
 	/datum/manufacture/jumpsuit,
 	/datum/manufacture/jumpsuit_white,
 	/datum/manufacture/jumpsuit_red,
@@ -2375,6 +2380,7 @@
 	/datum/manufacture/pride_bi,
 	/datum/manufacture/pride_inter,
 	/datum/manufacture/pride_lesb,
+	/datum/manufacture/pride_gay,
 	/datum/manufacture/pride_nb,
 	/datum/manufacture/pride_pan,
 	/datum/manufacture/pride_poly,
@@ -2449,7 +2455,7 @@
 //and i hate this, i do, but you're gonna have to update this list whenever you update /personnel or /uniform
 /obj/machinery/manufacturer/hop_and_uniform
 	name = "Personnel Manufacturer"
-	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing workplace uniforms and identification equipment."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing workplace uniforms, headsets, and identification equipment."
 	icon_state = "fab-access"
 	icon_base = "access"
 	free_resource_amt = 5
@@ -2464,6 +2470,8 @@
 	/datum/manufacture/shoes,
 	/datum/manufacture/shoes_brown,
 	/datum/manufacture/shoes_white,
+	/datum/manufacture/civilian_headset,
+	/datum/manufacture/jumpsuit_assistant,
 	/datum/manufacture/jumpsuit,
 	/datum/manufacture/jumpsuit_white,
 	/datum/manufacture/jumpsuit_red,
@@ -2480,6 +2488,7 @@
 	/datum/manufacture/pride_bi,
 	/datum/manufacture/pride_inter,
 	/datum/manufacture/pride_lesb,
+	/datum/manufacture/pride_gay,
 	/datum/manufacture/pride_nb,
 	/datum/manufacture/pride_pan,
 	/datum/manufacture/pride_poly,
@@ -2613,7 +2622,7 @@
 		..()
 		MA.action_bar = null
 		if (src.completed && length(MA.queue))
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				MA.begin_work(1)
 
 

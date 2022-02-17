@@ -280,7 +280,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src)
 				// Why range 30? COG2 places linked fixtures much further away from the timer than originally envisioned.
 				for (var/obj/machinery/door_timer/DT in range(30, src))
@@ -617,9 +617,7 @@
 	/obj/item/reagent_containers/glass/bottle/acetone/janitors = 1,\
 	/obj/item/reagent_containers/glass/bottle/ammonia/janitors = 1,\
 	/obj/item/device/light/flashlight,\
-	/obj/item/caution = 4,
-	/obj/item/clothing/gloves/long,
-	/obj/item/handheld_vacuum)
+	/obj/item/caution = 4)
 
 /obj/storage/secure/closet/civilian/hydro
 	name = "\improper Botanical supplies locker"
@@ -672,6 +670,8 @@
 	/obj/item/clothing/head/formal_turban,\
 	/obj/item/clothing/head/turban,\
 	/obj/item/clothing/shoes/sandal,\
+	/obj/item/clothing/under/misc/chaplain/nun,\
+	/obj/item/clothing/head/nunhood,\
 	/obj/item/clothing/suit/flockcultist,\
 	/obj/item/storage/box/holywaterkit)
 

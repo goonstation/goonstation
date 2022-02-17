@@ -385,18 +385,17 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				if (!M.nutrition)
-					switch(rand(1,3))
+				if (!M.nutrition && prob(60))
+					switch(rand(1,2))
 						if (1)
 							boutput(M, "<span class='alert'>You feel hungry...</span>")
 						if (2)
 							M.take_toxin_damage(1 * mult)
 							boutput(M, "<span class='alert'>Your stomach grumbles painfully!</span>")
 
-				else
-					if (prob(60))
-						var/fat_to_burn = max(round(M.nutrition/100,1) * mult, 5)
-						M.nutrition = max(M.nutrition-fat_to_burn,0)
+				else if (prob(60))
+					var/fat_to_burn = max(round(M.nutrition/100,1) * mult, 5)
+					M.nutrition = max(M.nutrition-fat_to_burn,0)
 				..()
 				return
 
@@ -1131,7 +1130,7 @@ datum
 					random_brute_damage(M, 1 * mult)
 				else if (our_amt < 40)
 					if (probmult(8))
-						M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+						M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 						M.vomit()
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
@@ -1140,7 +1139,7 @@ datum
 					M.visible_message("<span class='alert'><B>[M]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
 					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 15 SECONDS * mult))
 					M.make_jittery(1000)
-					SPAWN_DBG(rand(20, 100))
+					SPAWN(rand(20, 100))
 						if (M) //ZeWaka: Fix for null.gib
 							M.gib()
 					return
@@ -1497,7 +1496,7 @@ datum
 						M.take_brain_damage(1 * mult)
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
 				if (probmult(8))
-					M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 					M.vomit()
 				M.take_toxin_damage(1 * mult)
 				M.take_brain_damage(1 * mult)
@@ -1852,7 +1851,7 @@ datum
 						H.emote(pick_string("chemistry_reagent_messages.txt", "strychnine_deadly_emotes"))
 
 					if(probmult(10))
-						H.visible_message("<span class='alert'>[H] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+						H.visible_message("<span class='alert'>[H] pukes all over [himself_or_herself(H)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 						H.vomit()
 					else if (prob(5))
 						var/damage = rand(1,10)

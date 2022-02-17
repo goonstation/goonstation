@@ -146,7 +146,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(delay)
+		SPAWN(delay)
 			R = new /datum/reagents(amount)
 			R.add_reagent(reagent_id, amount)
 
