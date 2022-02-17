@@ -1,5 +1,8 @@
 
 (t)tue feb 15 22
+(u)TTerc
+(e)🆕|feature
+(+)You can now show off your security badge to people by clicking them with it.
 (u)Kyle
 (+)One Armed Spaceman trait now costs 0 points.
 (u)Conchuckter
