@@ -2261,7 +2261,7 @@ Returns:
 		P.procCooldown = src.procCooldown
 		return
 
-	MouseDrop(over_object,src_location,over_location,src_control,over_control,params)
+	mouse_drop(over_object,src_location,over_location,src_control,over_control,params)
 		var/turf/trgTurf = get_turf(over_object)
 		if(istype(trgTurf))
 			switch(alert("Do you want to create a copy of the trigger on this tile?",,"Yes","No"))

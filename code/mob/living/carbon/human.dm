@@ -1344,7 +1344,7 @@
 	return
 	//	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
 
-/mob/living/carbon/human/MouseDrop(mob/M as mob)
+/mob/living/carbon/human/mouse_drop(mob/M as mob)
 	..()
 	if (M != usr) return
 	if (usr == src) return

@@ -157,7 +157,7 @@
 	proc/create_products()
 		return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!istype(usr,/mob/living/))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the output target for [src].</span>")
 			return

@@ -84,6 +84,11 @@
 #define COMSIG_ATOM_POST_UPDATE_ICON "atom_after_update_icon"
 /// When reagents change
 #define COMSIG_ATOM_REAGENT_CHANGE "atm_reag"
+/// When an atom is dragged onto something (usr, over_object, src_location, over_location, over_control, params)
+#define COMSIG_ATOM_MOUSEDROP "atom_mousedrop"
+/// When something is dragged onto an atom (object, usr)
+#define COMSIG_ATOM_MOUSEDROP_T "atom_mousedrop_t"
+
 // ---- atom/movable signals ----
 
 /// when an AM moves (thing, previous_loc, direction)
@@ -324,6 +329,14 @@
 
 
 #define COMSIG_SUSSY_PHRASE "sussy"
+
+// ---- Transfer system ----
+/// When a movable is requested to be transfered to the output target (/atom/movable/)
+#define COMSIG_TRANSFER_INCOMING "incoming_tx"
+/// When the target wants to send a movable to an output (/atom/movable/)
+#define COMSIG_TRANSFER_OUTGOING "outgoing_tx"
+/// Return whether the target should allow receiving items from the given atom (/atom)
+#define COMSIG_TRANSFER_CAN_LINK "permit_tx"
 
 // ---- ability signals ----
 /// Send item to a mob

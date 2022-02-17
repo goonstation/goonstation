@@ -91,7 +91,7 @@
 		else
 			return
 
-	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object
+	mouse_drop(over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
 			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
 			return
@@ -921,7 +921,7 @@
 		else
 			. = ..()
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Get your filthy dead fingers off that!</span>")
 			return

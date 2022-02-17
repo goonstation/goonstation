@@ -599,7 +599,7 @@
 		..()
 		eject_occupant(user)
 
-	MouseDrop(mob/user as mob)
+	mouse_drop(mob/user as mob)
 		if (can_operate(user))
 			eject_occupant(user)
 		else
@@ -709,7 +709,7 @@
 		. += "Home turf: [get_area(src.homeloc)]."
 
 	// Could be useful (Convair880).
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if (src.occupant)
 			..()
 			return

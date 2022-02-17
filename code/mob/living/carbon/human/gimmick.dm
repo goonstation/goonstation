@@ -799,7 +799,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		return illusion_expire(user)
 	attackby(obj/item/W, mob/user)
 		return illusion_expire(user)
-	MouseDrop(mob/M)
+	mouse_drop(mob/M)
 		if(iscarbon(M) && !M.hasStatus("handcuffed"))
 			return illusion_expire(M)
 
