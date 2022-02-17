@@ -15,7 +15,7 @@ export const ReagentGraph = props => {
       <Flex height="100%" direction="column">
         <Flex.Item grow>
           <Flex height="100%">
-            {contents.map((reagent, index) => (
+            {contents.map(reagent => (
               <Flex.Item grow={reagent.volume/maxVolume} key={reagent.id}>
                 <Tooltip content={`${reagent.name} (${reagent.volume}u)`} position="bottom">
                   <Box
@@ -79,7 +79,7 @@ export const ReagentList = props => {
   return (
     <Section scrollable>
       <Box {...rest}>
-        {contents.length ? contents.map((reagent, index) => (
+        {contents.length ? contents.map(reagent => (
           <Flex key={reagent.id} mb={0.5}>
             <Flex.Item grow>
               <Icon
