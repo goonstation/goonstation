@@ -832,7 +832,7 @@ datum
 				var/turf/simulated/T = target
 				if(T.sticky == TRUE) return
 				if (istype(T))
-					var/wet = image('icons/effects/water.dmi',"wet_floor")
+					var/wet = image('icons/effects/water.dmi',"sticky_floor")
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.sticky = TRUE
 					T.wet = 0
