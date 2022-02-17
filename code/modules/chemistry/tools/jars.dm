@@ -30,6 +30,8 @@
 		if (length(src.contents) > 16)
 			boutput(user, "<span class='alert'>There is no way that will fit into this jar.  This VERY FULL jar.</span>")
 			return
+		if(istype(W, /obj/item/toy/plush))
+			return ..()
 
 		user.drop_item()
 		W.set_loc(src)
