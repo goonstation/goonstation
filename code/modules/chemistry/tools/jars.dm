@@ -232,7 +232,7 @@ proc/load_intraround_jars()
 			src.paint_pickly_color()
 			src.desc = "A pickled version of \a [pickled], it smells of vinegar."
 			src.real_desc = src.desc
-			src.name = "pickled [pickled]"
+			src.name = "pickled [pickled.name]"
 			src.pickle_age = 0
 
 	proc/paint_pickly_color()
