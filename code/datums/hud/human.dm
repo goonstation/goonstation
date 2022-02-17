@@ -683,7 +683,7 @@
 				//sel.icon_state = "sel"
 				sel.appearance = default_sel_appearance
 
-	mouse_drop(atom/movable/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
+	MouseDrop(atom/movable/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
 		if (!H) return
 		var/obj/item/W = null
 		#define mdrop_slot(slot) W = master.get_slot(master.slot); if (W) { W.MouseDrop(over_object, src_location, over_location, over_control, params); }
