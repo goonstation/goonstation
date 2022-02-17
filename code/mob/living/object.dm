@@ -157,10 +157,12 @@
 
 	MouseDrop(var/atom/other_thing) //remove this if it leads to excessive fuckery
 		..()
+		update_appearance()
 		return src.possessed_thing.MouseDrop(other_thing)
 
 	MouseDrop_T(var/atom/movable/other_thing, var/mob/user) //ditto
 		..()
+		update_appearance()
 		return src.possessed_thing.MouseDrop_T(other_thing, user)
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
