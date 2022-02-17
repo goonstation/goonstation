@@ -140,6 +140,7 @@ proc/save_intraround_jars()
 				qdel(AM)
 			if(pickled.material)
 				pickled.removeMaterial()
+			pickled?.reagents.clear_reagents()
 			if(istype(pickled))
 				pickled.paint_pickly_color()
 			jar_contents += pickled
