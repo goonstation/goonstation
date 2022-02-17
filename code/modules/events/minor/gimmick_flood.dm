@@ -63,7 +63,7 @@
 
 		playsound(target,"sound/effects/teleport.ogg",50,1)
 
-		message_admins("Random flood event triggered on ([showCoords(target.x, target.y, target.z)]) with [amount] [reagent.name].")
+		message_admins("Random flood event triggered on ([log_loc(target)]) with [amount] [reagent.name].")
 
 		var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 		swirl.set_loc(target)

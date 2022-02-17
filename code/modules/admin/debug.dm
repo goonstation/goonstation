@@ -1214,9 +1214,9 @@ proc/display_camera_paths()
 	admin_only
 
 	if(alert("This will IRREVERSIBLY FUCK UP THE STATION and might be laggy, do not use this live. Are you sure?","Misclick Prevention","Yes","No") == "Yes")
-		logTheThing("admin", usr, null, "started a mass flocktile conversion at [showCoords(usr.x, usr.y, usr.z)]")
-		logTheThing("diary", usr, null, "started a mass flocktile conversion at [showCoords(usr.x, usr.y, usr.z)]", "admin")
-		message_admins("[key_name(usr)] started a mass flocktile conversion at [showCoords(usr.x, usr.y, usr.z)]")
+		logTheThing("admin", usr, null, "started a mass flocktile conversion at [log_loc(usr)]")
+		logTheThing("diary", usr, null, "started a mass flocktile conversion at [log_loc(usr)]", "admin")
+		message_admins("[key_name(usr)] started a mass flocktile conversion at [log_loc(usr)]")
 		mass_flock_convert_turf(get_turf(usr))
 
 var/datum/flock/testflock

@@ -1050,6 +1050,6 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/hedge)
 			if (WALL_PRYSHEATH)
 				self_message = "You remove the outer sheath."
 				message = "[owner] removes \the [the_wall]'s outer sheath."
-				logTheThing("station", owner, null, "dismantles a Reinforced Wall in [owner.loc.loc] ([showCoords(owner.x, owner.y, owner.z)])")
+				logTheThing("station", owner, null, "dismantles a Reinforced Wall in [owner.loc.loc] ([log_loc(owner)])")
 				the_wall.dismantle_wall()
 		owner.visible_message("<span class='alert'>[message]</span>", "<span class='notice'>[self_message]</span>")

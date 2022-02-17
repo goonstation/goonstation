@@ -35,7 +35,7 @@
 		src.zone_sel = new(src)
 		src.attach_hud(zone_sel)
 
-		message_admins("[key_name(controller)] possessed [loc] at [showCoords(loc.x, loc.y, loc.z)].")
+		message_admins("[key_name(controller)] possessed [loc] at [log_loc(loc)].")
 		var/obj/item/possessed
 		if (!isitem(loc))
 			if (isobj(loc))
