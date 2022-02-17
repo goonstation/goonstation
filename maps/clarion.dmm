@@ -6251,7 +6251,7 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/sec)
 "alj" = (
-/obj/machinery/vehicle/miniputt/nanoputt,
+/obj/machinery/vehicle/miniputt/nanoputt/security,
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "alk" = (
@@ -6281,11 +6281,6 @@
 /obj/item/crowbar,
 /obj/item/device/gps,
 /obj/item/storage/belt/utility,
-/obj/machinery/door_control{
-	id = "pod_port";
-	name = "Hangar Door Control";
-	pixel_y = 28
-	},
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -6562,27 +6557,8 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/space)
-"alN" = (
-/obj/machinery/door/poddoor/blast{
-	autoclose = 1;
-	doordir = "left";
-	icon_state = "bdoorright1";
-	id = "pod_port";
-	layer = 4;
-	name = "West Pod Hangar"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/engine{
-	icon_state = "engine_caution_we"
-	},
-/area/station/hangar/sec)
 "alO" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "alP" = (
@@ -6934,23 +6910,6 @@
 	icon_state = "engine_caution_we"
 	},
 /area/station/hangar/main)
-"amh" = (
-/obj/machinery/door/poddoor/blast{
-	autoclose = 1;
-	id = "pod_port";
-	layer = 4;
-	name = "West Pod Hangar"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/engine{
-	icon_state = "engine_caution_we"
-	},
-/area/station/hangar/sec)
 "ami" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7113,23 +7072,14 @@
 	},
 /area/station/hangar/main)
 "amy" = (
-/obj/machinery/door/poddoor/blast{
-	autoclose = 1;
-	doordir = "left";
-	icon_state = "bdoorleft1";
-	id = "pod_port";
-	layer = 4;
-	name = "West Pod Hangar"
-	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	dir = 4;
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/engine{
-	icon_state = "engine_caution_we"
-	},
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal/vertical,
+/turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "amz" = (
 /obj/disposalpipe/segment{
@@ -7573,7 +7523,7 @@
 /area/station/hangar/sec)
 "ani" = (
 /obj/machinery/light,
-/obj/machinery/vehicle/miniputt/nanoputt,
+/obj/machinery/vehicle/miniputt/nanoputt/security,
 /turf/simulated/floor/engine{
 	dir = 6;
 	icon_state = "engine_caution_corners2"
@@ -7586,7 +7536,7 @@
 	},
 /area/station/hangar/sec)
 "ank" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
 	icon_state = "engine_caution_south"
@@ -32225,9 +32175,7 @@
 	},
 /area/station/hallway/primary/east)
 "bqv" = (
-/obj/machinery/door_control{
-	id = "pod_port";
-	name = "Hangar Door Control";
+/obj/machinery/door_control/podbay/security/new_walls/north{
 	pixel_y = 28
 	},
 /turf/simulated/floor/engine,
@@ -47737,6 +47685,12 @@
 	dir = 5
 	},
 /area/station/security/hos)
+"ltT" = (
+/obj/machinery/r_door_control/podbay/security/new_walls/west{
+	pixel_x = -24
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/sec)
 "lzZ" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2"
@@ -77913,8 +77867,8 @@ aay
 aac
 aaT
 aiW
-alN
-amh
+amy
+amy
 amy
 aiW
 aiW
@@ -78173,7 +78127,7 @@ aiW
 bqv
 all
 all
-all
+ltT
 ali
 aoe
 anh
