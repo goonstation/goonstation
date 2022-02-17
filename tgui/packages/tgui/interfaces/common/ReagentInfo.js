@@ -80,7 +80,7 @@ export const ReagentList = props => {
     <Section scrollable>
       <Box {...rest}>
         {contents.length ? contents.map(reagent => (
-          <Flex key={reagent.id} mb={0.5}>
+          <Flex key={reagent.id} mb={0.5} align="center">
             <Flex.Item grow>
               <Icon
                 pr={0.9}
@@ -92,7 +92,7 @@ export const ReagentList = props => {
               />
               {`( ${reagent.volume}u ) ${reagent.name}`}
             </Flex.Item>
-            <Flex.Item>
+            <Flex.Item nowrap>
               {renderButtons(reagent)}
             </Flex.Item>
           </Flex>
