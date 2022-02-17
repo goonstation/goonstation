@@ -101,7 +101,8 @@
 				S.explode()
 
 /obj/machinery/light_switch/attack_hand(mob/user)
-	toggle(user)
+	if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
+		toggle(null)
 
 /obj/machinery/light_switch/power_change()
 
