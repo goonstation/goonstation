@@ -120,7 +120,7 @@ var/global/deathConfettiActive = 0
 
 /mob/proc/deathConfetti()
 	particleMaster.SpawnSystem(new /datum/particleSystem/confetti(src.loc))
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		playsound(src.loc, "sound/voice/yayyy.ogg", 50, 1)
 
 /client/proc/toggle_death_confetti()
@@ -220,7 +220,6 @@ var/global/deathConfettiActive = 0
 
 	admin_only
 
-	var/hardRebootFilePath = "data/hard-reboot"
 	var/hardRebootFileExists = fexists(hardRebootFilePath)
 	var/logMessage = ""
 

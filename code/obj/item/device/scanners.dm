@@ -21,13 +21,23 @@ Contains:
 	item_state = "electronic"
 	m_amt = 150
 	mats = 5
+	var/scan_range = 3
+	var/client/last_client = null
+	var/image/last_display = null
+	var/find_interesting = TRUE
+
+	proc/set_on(new_on, mob/user=null)
+		on = new_on
+		set_icon_state("t-ray[on]")
+		if(user)
+			boutput(user, "You switch [src] [on ? "on" : "off"].")
+		if(!on)
+			hide_displays()
+		else
+			processing_items |= src
 
 	attack_self(mob/user)
-		on = !on
-		set_icon_state("t-ray[on]")
-		boutput(user, "You switch [src] [on ? "on" : "off"].")
-
-		if(on) processing_items |= src
+		set_on(!on, user)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (istype(A, /turf))
@@ -43,79 +53,81 @@ Contains:
 			user.visible_message("<span class='alert'><b>[user]</b> has scanned the [A].</span>")
 			boutput(user, "<br><i>Analysis failed:</i><br><span class='notice'>Unable to determine signature</span>")
 
+	proc/hide_displays()
+		if(last_client)
+			last_client.images -= last_display
+		qdel(last_display)
+		last_display = null
+		last_client = null
+
+	disposing()
+		hide_displays()
+		last_display = null
+		last_client = null
+		..()
+
 	process()
+		hide_displays()
+
 		if(!on)
 			processing_items.Remove(src)
 			return null
 
-		var/loc_to_check = istype(src.loc, /obj/item/magtractor) ? src.loc.loc : src.loc
-		for(var/turf/T in range(1, loc_to_check))
+		var/mob/our_mob = src
+		while(!isnull(our_mob) && !istype(our_mob, /turf) && !ismob(our_mob)) our_mob = our_mob.loc
+		if(!istype(our_mob) || !our_mob.client)
+			return null
+		var/client/C = our_mob.client
+		var/turf/center = get_turf(our_mob)
 
-			if(T.interesting)
+		var/image/main_display = image(null)
+		for(var/turf/T in range(src.scan_range, our_mob))
+			if(T.interesting && find_interesting)
 				playsound(T, "sound/machines/ping.ogg", 55, 1)
 
-			if(!T.intact)
-				continue
+			var/image/display = new
 
-			for(var/obj/O in T.contents)
+			for(var/atom/A in T)
+				if(A.interesting && find_interesting)
+					playsound(A, "sound/machines/ping.ogg", 55, 1)
+				if(ismob(A))
+					var/mob/M = A
+					if(M?.invisibility != INVIS_CLOAK || !IN_RANGE(src, M, 1))
+						continue
+				else if(isobj(A))
+					var/obj/O = A
+					if(O.level != 1)
+						continue
+				var/image/img = image(A.icon, icon_state=A.icon_state, dir=A.dir)
+				img.plane = PLANE_SCREEN_OVERLAYS
+				img.color = A.color
+				img.overlays = A.overlays
+				img.alpha = 100
+				img.appearance_flags = RESET_ALPHA | RESET_COLOR
+				display.overlays += img
 
-				if(O.level != 1)
-					continue
+			if( length(display.overlays))
+				display.plane = PLANE_SCREEN_OVERLAYS
+				display.pixel_x = (T.x - center.x) * 32
+				display.pixel_y = (T.y - center.y) * 32
+				main_display.overlays += display
 
-				if(O.invisibility == 101)
-					O.invisibility = 0
-					O.alpha = 128
-					SPAWN_DBG(1 SECOND)
-						if(O && isturf(O.loc))
-							var/turf/U = O.loc
-							if(U.intact)
-								O.invisibility = 101
-								O.alpha = 255
+		main_display.loc = our_mob.loc
 
-			var/mob/living/M = locate() in T
-			if(M?.invisibility == 2)
-				M.invisibility = 0
-				SPAWN_DBG(0.6 SECONDS)
-					if(M)
-						M.invisibility = 2
-
-
-
-		for(var/obj/O in range(1, loc_to_check) )
-			if(O.interesting)
-				playsound(O.loc, "sound/machines/ping.ogg", 55, 1)
+		C.images += main_display
+		last_display = main_display
+		last_client = C
 
 /obj/item/device/t_scanner/abilities = list(/obj/ability_button/tscanner_toggle)
 
 /obj/item/device/t_scanner/adventure
 	name = "experimental scanner"
 	desc = "a bodged-together T-Ray scanner with a few coils cut, and a few extra coils tied-in."
-//	var/trange = 2 //depending how sluggish this is, could go up to 3 with a toggle perhaps?
+	scan_range = 4
 
-	process()
-		if(!on)
-			processing_items.Remove(src)
-			return null
-
-		var/loc_to_check = istype(src.loc, /obj/item/magtractor) ? src.loc.loc : src.loc
-		for(var/turf/T in range(2, loc_to_check))
-
-			if(T.interesting)
-				playsound(T, "sound/machines/ping.ogg", 55, 1)
-
-			if(!T.intact)
-				continue
-
-			var/mob/living/M = locate() in T
-			if(M?.invisibility == 2)
-				M.invisibility = 0
-				SPAWN_DBG(0.6 SECONDS)
-					if(M)
-						M.invisibility = 2
-
-		for(var/obj/O in range(2, loc_to_check) )
-			if(O.interesting)
-				playsound(O.loc, "sound/machines/ping.ogg", 55, 1)
+/obj/item/device/t_scanner/pda
+	name = "PDA T-ray scanner"
+	find_interesting = FALSE
 
 /*
 he`s got a craving
@@ -149,14 +161,14 @@ that cannot be itched
 		search = copytext(sanitize(search), 1, 200)
 		search = lowertext(search)
 
-		for (var/datum/data/record/R in data_core.general)
-			if (search == lowertext(R.fields["dna"]) || search == lowertext(R.fields["fingerprint"]) || search == lowertext(R.fields["name"]))
+		for (var/datum/db_record/R as anything in data_core.general.records)
+			if (search == lowertext(R["dna"]) || search == lowertext(R["fingerprint"]) || search == lowertext(R["name"]))
 
 				var/data = "--------------------------------<br>\
-				<font color='blue'>Match found in security records:<b> [R.fields["name"]]</b> ([R.fields["rank"]])</font><br>\
+				<font color='blue'>Match found in security records:<b> [R["name"]]</b> ([R["rank"]])</font><br>\
 				<br>\
-				<i>Fingerprint:</i><font color='blue'> [R.fields["fingerprint"]]</font><br>\
-				<i>Blood DNA:</i><font color='blue'> [R.fields["dna"]]</font>"
+				<i>Fingerprint:</i><font color='blue'> [R["fingerprint"]]</font><br>\
+				<i>Blood DNA:</i><font color='blue'> [R["dna"]]</font>"
 
 				boutput(user, data)
 				return
@@ -215,7 +227,7 @@ that cannot be itched
 				icon_state = "fs_pinmedium"
 			if(16 to INFINITY)
 				icon_state = "fs_pinfar"
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			.(T)
 
 /obj/item/device/detective_scanner/detective
@@ -489,7 +501,7 @@ that cannot be itched
 				det.attachments.Remove(src)
 			if ("leak")
 				det.attachedTo.visible_message("<style class='combat bold'>\The [src] picks up the rapid atmospheric change of the canister, and signals the detonator.</style>")
-				SPAWN_DBG(0)
+				SPAWN(0)
 					det.detonate()
 		return
 
@@ -560,14 +572,18 @@ that cannot be itched
 	desc = "A device used to scan in prisoners and update their security records."
 	icon_state = "recordtrak"
 	var/mode = 1
-	var/datum/data/record/active1 = null
-	var/datum/data/record/active2 = null
+	var/datum/db_record/active1 = null
+	var/datum/db_record/active2 = null
 	w_class = W_CLASS_NORMAL
 	item_state = "recordtrak"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | EXTRADELAY
 	mats = 3
 
 	attack(mob/living/carbon/human/M as mob, mob/user as mob)
+		if (!istype(M))
+			boutput(user, "<span class='alert'>The device displays an error about an \"incompatible target\".</span>")
+			return
+
 		////General Records
 		var/found = 0
 		//if( !istype(get_area(src), /area/security/prison) && !istype(get_area(src), /area/security/main))
@@ -575,70 +591,69 @@ that cannot be itched
 		//	return
 		boutput(user, "<span class='notice'>You scan in [M]</span>")
 		boutput(M, "<span class='alert'>[user] scans you with the Securotron-5000</span>")
-		for(var/datum/data/record/R in data_core.general)
-			if (lowertext(R.fields["name"]) == lowertext(M.name))
+		for(var/datum/db_record/R as anything in data_core.general.records)
+			if (lowertext(R["name"]) == lowertext(M.name))
 				//Update Information
-				R.fields["name"] = M.name
-				R.fields["sex"] = M.gender
-				R.fields["age"] = M.bioHolder.age
+				R["name"] = M.name
+				R["sex"] = M.gender
+				R["age"] = M.bioHolder.age
 				if (M.gloves)
-					R.fields["fingerprint"] = "Unknown"
+					R["fingerprint"] = "Unknown"
 				else
-					R.fields["fingerprint"] = M.bioHolder.uid_hash
-				R.fields["p_stat"] = "Active"
-				R.fields["m_stat"] = "Stable"
+					R["fingerprint"] = M.bioHolder.uid_hash
+				R["p_stat"] = "Active"
+				R["m_stat"] = "Stable"
 				src.active1 = R
 				found = 1
 
 		if(found == 0)
-			src.active1 = new /datum/data/record()
-			src.active1.fields["id"] = num2hex(rand(1, 1.6777215E7),6)
-			src.active1.fields["rank"] = "Unassigned"
+			src.active1 = new /datum/db_record()
+			src.active1["id"] = num2hex(rand(1, 1.6777215E7),6)
+			src.active1["rank"] = "Unassigned"
 			//Update Information
-			src.active1.fields["name"] = M.name
-			src.active1.fields["sex"] = M.gender
-			src.active1.fields["age"] = M.bioHolder.age
+			src.active1["name"] = M.name
+			src.active1["sex"] = M.gender
+			src.active1["age"] = M.bioHolder.age
 			/////Fingerprint record update
 			if (M.gloves)
-				src.active1.fields["fingerprint"] = "Unknown"
+				src.active1["fingerprint"] = "Unknown"
 			else
-				src.active1.fields["fingerprint"] = M.bioHolder.uid_hash
-			src.active1.fields["p_stat"] = "Active"
-			src.active1.fields["m_stat"] = "Stable"
-			data_core.general += src.active1
+				src.active1["fingerprint"] = M.bioHolder.uid_hash
+			src.active1["p_stat"] = "Active"
+			src.active1["m_stat"] = "Stable"
+			data_core.general.add_record(src.active1)
 			found = 0
 
 		////Security Records
-		for(var/datum/data/record/E in data_core.security)
-			if (E.fields["name"] == src.active1.fields["name"])
-				if(src.mode == 1)
-					E.fields["criminal"] = "Incarcerated"
-				else if(src.mode == 2)
-					E.fields["criminal"] = "Parolled"
-				else if(src.mode == 3)
-					E.fields["criminal"] = "Released"
-				else
-					E.fields["criminal"] = "None"
-				return
+		var/datum/db_record/E = data_core.security.find_record("name", src.active1["name"])
+		if(E)
+			if(src.mode == 1)
+				E["criminal"] = "Incarcerated"
+			else if(src.mode == 2)
+				E["criminal"] = "Parolled"
+			else if(src.mode == 3)
+				E["criminal"] = "Released"
+			else
+				E["criminal"] = "None"
+			return
 
-		src.active2 = new /datum/data/record()
-		src.active2.fields["name"] = src.active1.fields["name"]
-		src.active2.fields["id"] = src.active1.fields["id"]
-		src.active2.name = text("Security Record #[]", src.active1.fields["id"])
+		src.active2 = new /datum/db_record()
+		src.active2["name"] = src.active1["name"]
+		src.active2["id"] = src.active1["id"]
 		if(src.mode == 1)
-			src.active2.fields["criminal"] = "Incarcerated"
+			src.active2["criminal"] = "Incarcerated"
 		else if(src.mode == 2)
-			src.active2.fields["criminal"] = "Parolled"
+			src.active2["criminal"] = "Parolled"
 		else if(src.mode == 3)
-			src.active2.fields["criminal"] = "Released"
+			src.active2["criminal"] = "Released"
 		else
-			src.active2.fields["criminal"] = "None"
-		src.active2.fields["mi_crim"] = "None"
-		src.active2.fields["mi_crim_d"] = "No minor crime convictions."
-		src.active2.fields["ma_crim"] = "None"
-		src.active2.fields["ma_crim_d"] = "No major crime convictions."
-		src.active2.fields["notes"] = "No notes."
-		data_core.security += src.active2
+			src.active2["criminal"] = "None"
+		src.active2["mi_crim"] = "None"
+		src.active2["mi_crim_d"] = "No minor crime convictions."
+		src.active2["ma_crim"] = "None"
+		src.active2["ma_crim_d"] = "No major crime convictions."
+		src.active2["notes"] = "No notes."
+		data_core.security.add_record(src.active2)
 
 		return
 
@@ -715,8 +730,8 @@ that cannot be itched
 
 		logTheThing("admin", user, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
 		playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
-		SPAWN_DBG(3 SECONDS)
-			var/obj/item/paper/p = unpool(/obj/item/paper)
+		SPAWN(3 SECONDS)
+			var/obj/item/paper/p = new /obj/item/paper
 			p.set_loc(get_turf(src))
 			p.name = "Official Caution - [ticket_target]"
 			p.info = ticket_text

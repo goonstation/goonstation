@@ -1,7 +1,7 @@
 
 // ---- object_flags ----
 
-/// bot considers this solid object that can be opened with a Bump() in pathfinding DirBlockedWithAccess
+/// bot considers this solid object that can be opened with a bump() in pathfinding DirBlockedWithAccess
 #define BOTS_DIRBLOCK 			 (1<<0)
 /// illegal for arm attaching
 #define NO_ARM_ATTACH 			 (1<<1)

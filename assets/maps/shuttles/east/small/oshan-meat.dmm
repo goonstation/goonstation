@@ -1,0 +1,689 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"gM" = (
+/obj/table/auto,
+/obj/random_item_spawner/med_kit,
+/obj/random_item_spawner/med_kit,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"iz" = (
+/obj/grassplug{
+	desc = "Gross";
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/grassplug{
+	desc = "Gross";
+	dir = 8;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/railing{
+	dir = 8;
+	layer = 3.3;
+	name = "bone railing"
+	},
+/obj/railing{
+	layer = 3.2;
+	name = "bone railing"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"iN" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-R"
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"iS" = (
+/obj/grassplug{
+	desc = "Gross";
+	dir = 8;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/railing{
+	dir = 8;
+	layer = 3.3;
+	name = "bone railing"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"jh" = (
+/obj/grassplug{
+	desc = "Gross";
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/grassplug{
+	desc = "Gross";
+	dir = 8;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/railing{
+	layer = 3.2;
+	name = "bone railing"
+	},
+/obj/railing{
+	dir = 8;
+	layer = 3.3;
+	name = "bone railing"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"lO" = (
+/obj/machinery/light/small/floor/harsh,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"nJ" = (
+/obj/grassplug{
+	desc = "Gross";
+	dir = 1;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/grassplug{
+	desc = "Gross";
+	dir = 8;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/railing{
+	dir = 1;
+	layer = 3.2;
+	name = "bone railing"
+	},
+/obj/railing{
+	dir = 8;
+	layer = 3.3;
+	name = "bone railing"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"qJ" = (
+/obj/machinery/door/unpowered/martian/meat{
+	opacity = 0
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"ru" = (
+/obj/stomachacid,
+/obj/map/light/meatland,
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"sI" = (
+/obj/grassplug{
+	desc = "Gross";
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/grassplug{
+	desc = "Gross";
+	dir = 1;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/grassplug{
+	desc = "Gross";
+	dir = 8;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/pool_springboard{
+	dir = 4;
+	pixel_x = 16
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"tv" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-L"
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"tK" = (
+/obj/machinery/light/small/floor/harsh,
+/obj/railing{
+	dir = 8;
+	layer = 3.3;
+	name = "bone railing"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"vZ" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 4
+	},
+/obj/machinery/light/small/floor/harsh,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_3"
+	},
+/area/shuttle/escape/centcom)
+"ww" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_3"
+	},
+/area/shuttle/escape/centcom)
+"xb" = (
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_3"
+	},
+/area/shuttle/escape/centcom)
+"xA" = (
+/obj/machinery/door/unpowered/martian/meat{
+	opacity = 0
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor,
+/area/shuttle/escape/centcom)
+"xL" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-M"
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"yB" = (
+/obj/table/auto,
+/obj/random_item_spawner/med_kit,
+/obj/machinery/light/small/floor/harsh,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"zq" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 4
+	},
+/obj/machinery/light/small/floor/harsh,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"zU" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor,
+/area/shuttle/escape/centcom)
+"Ao" = (
+/obj/pool_springboard,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"CM" = (
+/obj/stool/chair/comfy/shuttle/red,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"DY" = (
+/obj/machinery/computer/shuttle{
+	dir = 8
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor,
+/area/shuttle/escape/centcom)
+"Fs" = (
+/obj/grassplug{
+	desc = "Gross";
+	dir = 8;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"Hj" = (
+/obj/stomachacid,
+/obj/grassplug{
+	desc = "Gross";
+	dir = 1;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"HZ" = (
+/obj/stomachacid,
+/obj/grassplug{
+	desc = "Gross";
+	dir = 1;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/railing{
+	dir = 1;
+	layer = 3.2;
+	name = "bone railing"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"Ip" = (
+/obj/railing{
+	dir = 8;
+	layer = 3.3;
+	name = "bone railing"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"Mk" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"Nq" = (
+/obj/grassplug{
+	desc = "Gross";
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"OR" = (
+/obj/grassplug{
+	desc = "Gross";
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/railing{
+	layer = 3.2;
+	name = "bone railing"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"PX" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"QK" = (
+/turf/unsimulated/floor/setpieces/bloodfloor,
+/area/shuttle/escape/centcom)
+"Ul" = (
+/obj/machinery/sleeper/compact{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"We" = (
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
+"Wp" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 1
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"WT" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "alt_propulsion"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom)
+"Xb" = (
+/turf/unsimulated/wall/setpieces/bloodwall{
+	icon_state = "bloodwall_2";
+	name = "Meaty Wall";
+	opacity = 0
+	},
+/area/shuttle/escape/centcom)
+"XZ" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 8
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"Yv" = (
+/obj/stomachacid,
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"Yw" = (
+/obj/meatlight,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"Yx" = (
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"YK" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+
+(1,1,1) = {"
+We
+We
+We
+WT
+WT
+WT
+We
+We
+We
+WT
+WT
+WT
+We
+We
+We
+"}
+(2,1,1) = {"
+WT
+Xb
+Xb
+tv
+xL
+iN
+Xb
+Xb
+Xb
+tv
+xL
+iN
+Xb
+Xb
+WT
+"}
+(3,1,1) = {"
+Xb
+Xb
+gM
+Ul
+Ul
+Ul
+YK
+PX
+PX
+YK
+yB
+PX
+PX
+Xb
+Xb
+"}
+(4,1,1) = {"
+Xb
+Yw
+Yx
+Yx
+lO
+Yx
+Xb
+PX
+zq
+Xb
+Xb
+CM
+Yx
+Yw
+Xb
+"}
+(5,1,1) = {"
+Xb
+CM
+Yx
+Xb
+YK
+Xb
+Xb
+PX
+PX
+PX
+Xb
+Xb
+Yx
+Wp
+Xb
+"}
+(6,1,1) = {"
+Xb
+Xb
+qJ
+Xb
+lO
+Yx
+Yx
+Yx
+sI
+Yx
+lO
+Xb
+qJ
+YK
+Xb
+"}
+(7,1,1) = {"
+YK
+Yw
+Yx
+Yx
+Yx
+nJ
+iS
+iS
+Yv
+iz
+Yx
+Yx
+Yx
+Yw
+YK
+"}
+(8,1,1) = {"
+YK
+PX
+Yx
+Yx
+Yw
+Hj
+ru
+Yv
+ru
+Nq
+Yw
+Yx
+Yx
+PX
+YK
+"}
+(9,1,1) = {"
+Mk
+Yx
+Yx
+Yx
+HZ
+Yv
+Yv
+Yv
+Yv
+Yv
+Fs
+jh
+Yx
+Yx
+Mk
+"}
+(10,1,1) = {"
+YK
+Yx
+lO
+Yx
+HZ
+ru
+Yv
+Yv
+Yv
+Yv
+ru
+OR
+lO
+Yx
+YK
+"}
+(11,1,1) = {"
+Mk
+Yx
+Yx
+Yx
+Yw
+Hj
+OR
+tK
+Ao
+HZ
+Yv
+OR
+Yx
+Yx
+Mk
+"}
+(12,1,1) = {"
+YK
+PX
+Yx
+Yx
+Yx
+Ip
+Ip
+Yx
+Yx
+Ip
+Ip
+Ip
+Yx
+PX
+YK
+"}
+(13,1,1) = {"
+YK
+PX
+Yx
+Xb
+Xb
+YK
+Xb
+xA
+Xb
+YK
+Xb
+Xb
+Yx
+PX
+YK
+"}
+(14,1,1) = {"
+Xb
+Yw
+Yx
+Xb
+zU
+xb
+QK
+QK
+QK
+xb
+ww
+Xb
+Yx
+Yw
+Xb
+"}
+(15,1,1) = {"
+Xb
+Xb
+XZ
+Xb
+ww
+vZ
+zU
+DY
+ww
+vZ
+ww
+Xb
+XZ
+Xb
+Xb
+"}
+(16,1,1) = {"
+We
+Xb
+YK
+Xb
+YK
+YK
+YK
+Xb
+YK
+YK
+YK
+Xb
+YK
+Xb
+We
+"}

@@ -6,7 +6,7 @@
 # to the same file or dir, add them to the end under Multiple Owners
 
 # Adharainspace
-#/_std/ @Adharainspace
+/_std/ @Adharainspace
 
 # Emily
 /maps/manta.dmm @UrsulaMejor
@@ -14,6 +14,9 @@
 # Flourish
 /code/obj/item/toys.dm @flrsh
 /maps/oshan.dmm @flrsh
+
+# Gannets 
+/code/datums/gamemodes/nuclear.dm @Gannets
 
 # Kyle
 /code/WorkInProgress/JobXpRewards.dm @Kyle2143
@@ -23,6 +26,9 @@
 
 # Mordent (mordent-goonstation)
 /code/modules/robotics/ @mordent-goonstation
+
+# Sovexe
+/code/modules/antagonists/arcfiend/ @Sovexe
 
 # Tarmunora
 /code/modules/projectiles/projectile_parent.dm @Tarmunora
@@ -34,6 +40,7 @@
 /code/modules/chemistry/Reagents-Medical.dm @Tarmunora
 /code/modules/chemistry/Reagents-Misc.dm @Tarmunora
 /code/modules/chemistry/Reagents-PoisonEtc.dm @Tarmunora
+/code/modules/chemistry/Chemistry-Recipes.dm @Tarmunora
 
 # Virvatuli
 /sound/ @virvatuli-gh
@@ -44,10 +51,10 @@
 /tools/ @ZeWaka
 
 # Pali
-#/code/datums/components/ @pali6
-#/code/obj/artifacts/ @pali6
-#/code/datums/controllers/artifact_controls.dm @pali6
-#/code/WorkInProgress/pali.dm @pali6
+/code/datums/components/ @pali6
+/code/obj/artifacts/ @pali6
+/code/datums/controllers/artifact_controls.dm @pali6
+/code/WorkInProgress/pali.dm @pali6
 
 # Multiple Owners
 /tgui/ @mordent-goonstation @ZeWaka

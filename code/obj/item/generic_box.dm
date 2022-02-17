@@ -84,6 +84,16 @@
 		name = "box of bee stickers"
 		contained_item = /obj/item/sticker/bee
 
+	glow_sticker
+		name = "glow stickers"
+		desc = "A box of stickers that glow when stuck to things."
+		contained_item = null
+		item_amount = 20
+
+		New()
+			. = ..()
+			contained_item = pick(concrete_typesof(/obj/item/sticker/glow))
+
 	googly_eyes
 		name = "box of googly eyes"
 		desc = "If you give it googly eyes, it immediately becomes better!"
@@ -151,7 +161,7 @@
 			desc = "Oh my god.. ALL THE STICKERS! ALL IN ONE PLACE? WHAT CAN THIS MEAN!!!"
 
 			set_contained_items()
-				contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - childrentypesof( /obj/item/sticker/barcode )
+				contained_items = concrete_typesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - typesof( /obj/item/sticker/barcode, /obj/item/sticker/glow )
 
 			robot//this type sticks things by clicking on them with a cooldown
 				name = "box shaped sticker dispenser"
@@ -182,7 +192,16 @@
 				max_item_amount = 10
 
 				set_contained_items()
-					contained_items = childrentypesof( /obj/item/sticker/ ) - childrentypesof( /obj/item/sticker/barcode ) - /obj/item/sticker/spy - /obj/item/sticker/ribbon/first_place - /obj/item/sticker/ribbon/second_place - /obj/item/sticker/ribbon/third_place
+					contained_items = concrete_typesof( /obj/item/sticker/ ) - typesof( /obj/item/sticker/barcode, /obj/item/sticker/glow ) - /obj/item/sticker/spy - /obj/item/sticker/ribbon/first_place - /obj/item/sticker/ribbon/second_place - /obj/item/sticker/ribbon/third_place
+
+			glow_sticker
+				name = "glow stickers"
+				desc = "A box of stickers that glow various colors when stuck to things."
+				contained_item = null
+				item_amount = 20
+
+				set_contained_items()
+					contained_items = concrete_typesof(/obj/item/sticker/glow)
 
 		ornaments
 			name = "box of assorted ornaments"
@@ -310,7 +329,7 @@
 			src.set_contained_items()
 			src.inventory_counter.update_number(src.item_amount)
 		else
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				if (QDELETED(src)) return
 				if (!ispath(src.contained_item))
 					logTheThing("debug", src, null, "has a non-path contained_item, \"[src.contained_item]\", and is being disposed of to prevent errors")
@@ -337,7 +356,7 @@
 			src.open = 1
 		else
 			boutput(user, "<span class='alert'>[src] is already open!</span>")
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
@@ -355,7 +374,7 @@
 			if (I)
 				user.put_in_hand_or_drop(I)
 				boutput(user, "You take \an [I] out of [src].")
-				src.update_icon()
+				src.UpdateIcon()
 				return
 			else
 				boutput(user, "<span class='alert'>[src] is empty!</span>")
@@ -363,7 +382,7 @@
 		else
 			return ..()
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		..()
 		if (usr?.is_in_hands(src))
 			if (!src.open)
@@ -428,14 +447,14 @@
 			if (src.item_amount >= 1)
 				src.item_amount--
 				tooltip_rebuild = 1
-			src.update_icon()
+			src.UpdateIcon()
 			return myItem
 		else if (src.item_amount != 0) // should be either a positive number or -1
 			if (src.item_amount >= 1)
 				src.item_amount--
 				tooltip_rebuild = 1
 			var/obj/item/newItem = new src.contained_item(src)
-			src.update_icon()
+			src.UpdateIcon()
 			return newItem
 		else
 			return 0
@@ -461,7 +480,7 @@
 			if (src.item_amount != -1)
 				src.item_amount ++
 				tooltip_rebuild = 1
-			src.update_icon()
+			src.UpdateIcon()
 			if (user && show_messages)
 				boutput(user, "You stuff [I] into [src].")
 				user.u_equip(I)
@@ -472,7 +491,8 @@
 				boutput(user, "<span class='alert'>You can't seem to make [I] fit into [src].</span>")
 			return 0
 
-	proc/update_icon()
+	update_icon()
+
 		src.inventory_counter.update_number(src.item_amount)
 		if (src.open && !src.item_amount)
 			src.icon_state = src.icon_empty

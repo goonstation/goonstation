@@ -26,10 +26,11 @@
 /mob/proc/showContextActions(list/datum/contextAction/applicable, atom/target, datum/contextLayout/customContextLayout)
 	if(length(contextButtons))
 		closeContextActions()
+		return
 
 	var/list/buttons = list()
 	for(var/datum/contextAction/C as anything in applicable)
-		var/atom/movable/screen/contextButton/B = unpool(/atom/movable/screen/contextButton)
+		var/atom/movable/screen/contextButton/B = new /atom/movable/screen/contextButton
 		B.setup(C, src, target)
 		B.alpha = 0
 		buttons.Add(B)
@@ -83,7 +84,7 @@
 		contextButtons.Remove(C)
 		if(C.overlays)
 			C.overlays = list()
-		pool(C)
+		qdel(C)
 
 /atom/New()
 	if(contextActions != null)
@@ -135,7 +136,7 @@
 		icon_state = action.getIconState(target, user)
 		name = action.getName(target, user)
 
-		var/matrix/trans = unpool(/matrix)
+		var/matrix/trans = new /matrix
 		trans = trans.Reset()
 		trans.Translate(8, 16)
 		transform = trans
@@ -179,7 +180,7 @@
 
 	clicked(list/params)
 		if(action.checkRequirements(target, user)) // Let's just check again, just in case.
-			SPAWN_DBG(0)
+			SPAWN(0)
 				action.execute(target, user)
 			if (action.flick_on_click)
 				flick(action.flick_on_click, src)

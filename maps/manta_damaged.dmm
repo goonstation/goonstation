@@ -222,7 +222,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/machinery/power/monitor/console_upper,
+/obj/machinery/computer/power_monitor/console_upper,
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
 	nostick = 1
@@ -622,9 +622,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "abf" = (
-/obj/item/device/radio/intercom/AI{
-	
-	},
+/obj/item/device/radio/intercom/AI,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "abg" = (
@@ -667,9 +665,7 @@
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
 "abo" = (
-/obj/item/device/radio/intercom/brig{
-	
-	},
+/obj/item/device/radio/intercom/brig,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "abp" = (
@@ -700,21 +696,15 @@
 /turf/simulated/floor/damaged2,
 /area/station/security/porttorpedoes)
 "abt" = (
-/obj/item/device/radio/intercom/medical{
-	
-	},
+/obj/item/device/radio/intercom/medical,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "abu" = (
-/obj/item/device/radio/intercom/engineering{
-	
-	},
+/obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "abv" = (
-/obj/item/device/radio/intercom/science{
-	
-	},
+/obj/item/device/radio/intercom/science,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "abx" = (
@@ -3155,9 +3145,7 @@
 	dir = 8;
 	icon_state = "chair-b"
 	},
-/obj/item/device/radio/intercom/science{
-	
-	},
+/obj/item/device/radio/intercom/science,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -3195,7 +3183,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "air" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
@@ -3210,7 +3198,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "ais" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -4352,9 +4340,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "alv" = (
-/obj/item/device/radio/intercom/catering{
-	
-	},
+/obj/item/device/radio/intercom/catering,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "alw" = (
@@ -6498,9 +6484,7 @@
 	},
 /area/station/medical/medbay/lobby)
 "apN" = (
-/obj/item/device/radio/intercom/security{
-	
-	},
+/obj/item/device/radio/intercom/security,
 /turf/simulated/floor/damaged1,
 /area/station/bridge)
 "apO" = (
@@ -6950,9 +6934,7 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "aqB" = (
-/obj/item/device/radio/intercom/cargo{
-	
-	},
+/obj/item/device/radio/intercom/cargo,
 /turf/simulated/floor/damaged4,
 /area/station/bridge)
 "aqC" = (
@@ -8807,9 +8789,7 @@
 "avl" = (
 /obj/disposalpipe/segment,
 /obj/machinery/shieldgenerator/energy_shield,
-/obj/item/device/radio/intercom/loudspeaker/speaker/south{
-	
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/south,
 /turf/simulated/floor/bot,
 /area/station/engine/storage)
 "avm" = (
@@ -9043,7 +9023,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost/syndicateassaultvessel)
 "avK" = (
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -32;
 	pixel_y = 0
 	},
@@ -9286,9 +9266,7 @@
 /area/station/engine/inner)
 "awi" = (
 /obj/machinery/fluid_canister,
-/obj/item/device/radio/intercom/loudspeaker/speaker/north{
-	
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/north,
 /turf/simulated/floor/bot,
 /area/station/engine/storage)
 "awj" = (
@@ -9934,7 +9912,7 @@
 /obj/disposalpipe/segment,
 /obj/table/auto,
 /obj/machinery/coffeemaker,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -32
 	},
 /turf/simulated/floor{
@@ -10473,9 +10451,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/breakroom)
 "ayF" = (
-/obj/item/device/radio/intercom/loudspeaker/speaker/north{
-	
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/north,
 /obj/machinery/portable_atmospherics/canister/air/large,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -10561,7 +10537,7 @@
 	},
 /area/station/engine/engineering/ce)
 "ayL" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	icon_state = "power";
 	dir = 8
 	},
@@ -11184,9 +11160,7 @@
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/quarters)
 "aAb" = (
-/obj/item/device/radio/intercom/loudspeaker/speaker/south{
-	
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/south,
 /obj/cable{
 	icon_state = "4-8";
 	d1 = 4;
@@ -11630,9 +11604,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/device/radio/intercom/loudspeaker/speaker/north{
-	
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/north,
 /turf/simulated/floor,
 /area/station/engine/power)
 "aAU" = (
@@ -11983,9 +11955,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/device/radio/intercom/loudspeaker/speaker/south{
-	
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/south,
 /turf/simulated/floor,
 /area/station/engine/gas)
 "aBF" = (
@@ -12160,9 +12130,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload_foyer)
 "aBY" = (
-/obj/item/device/radio/intercom/loudspeaker/speaker/north{
-	
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/north,
 /obj/machinery/guardbot_dock,
 /obj/cable{
 	d2 = 8;
@@ -15646,7 +15614,7 @@
 	},
 /obj/table/reinforced/bar/auto,
 /obj/machinery/espresso_machine,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_x = -26
 	},
 /obj/machinery/light/incandescent/warm{
@@ -16999,7 +16967,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4;
 	icon_state = "power"
 	},
@@ -19960,9 +19928,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/item/device/radio/intercom/security{
-	
-	},
+/obj/item/device/radio/intercom/security,
 /obj/machinery/light/incandescent/warm{
 	dir = 1;
 	nostick = 1
@@ -20642,7 +20608,7 @@
 "aTE" = (
 /obj/table/wood/auto,
 /obj/machinery/coffeemaker/security,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 32;
 	pixel_y = 0
 	},
@@ -22792,7 +22758,7 @@
 /area/station/security/checkpoint/sec_foyer)
 "aXO" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/flashbang_kit{
+/obj/item/chem_grenade/flashbang{
 	pixel_x = -7;
 	pixel_y = 6
 	},
@@ -26456,9 +26422,7 @@
 "bfe" = (
 /obj/table/wood/auto,
 /obj/item/storage/bible,
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /turf/simulated/floor/carpet{
 	icon_state = "purple1"
 	},
@@ -27931,7 +27895,7 @@
 "bhZ" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker/botany,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 32
 	},
 /obj/machinery/light/incandescent/netural{
@@ -28610,7 +28574,7 @@
 "bjr" = (
 /obj/table/glass/reinforced/auto,
 /obj/machinery/coffeemaker/medbay,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 0;
 	pixel_y = 32
 	},
@@ -34780,21 +34744,21 @@
 	dir = 9
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bvI" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
 	dir = 1
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bvJ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
 	dir = 5
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bvK" = (
 /obj/machinery/manufacturer/hangar,
 /obj/machinery/power/apc/autoname_north,
@@ -35522,17 +35486,17 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bxp" = (
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bxq" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bxr" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -38427,14 +38391,14 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bDq" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5;
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bDr" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -40480,7 +40444,7 @@
 "bIf" = (
 /obj/item/beach_ball,
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bIg" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -40925,9 +40889,7 @@
 	dir = 8;
 	nostick = 1
 	},
-/obj/item/device/radio/intercom/science{
-	
-	},
+/obj/item/device/radio/intercom/science,
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -41346,28 +41308,28 @@
 	dir = 10
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bKf" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10;
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bKg" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6;
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bKh" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
 	dir = 6
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bKi" = (
 /obj/machinery/firealarm{
 	pixel_x = 1;
@@ -41672,9 +41634,7 @@
 /area/station/science/artifact)
 "bKV" = (
 /obj/landmark/artifact,
-/obj/item/device/radio/intercom/science{
-	
-	},
+/obj/item/device/radio/intercom/science,
 /turf/simulated/floor,
 /area/station/science/artifact)
 "bKW" = (
@@ -41824,7 +41784,7 @@
 	pixel_y = -16
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bLq" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/poster/wallsign/stencil/left/c{
@@ -41840,7 +41800,7 @@
 	pixel_y = -16
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bLr" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/poster/wallsign/stencil/left/e{
@@ -41848,7 +41808,7 @@
 	pixel_y = -16
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bLs" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -42922,7 +42882,7 @@
 /turf/simulated/floor,
 /area/station/engine/power)
 "bNL" = (
-/obj/machinery/power/monitor/smes,
+/obj/machinery/computer/power_monitor/smes,
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /turf/simulated/floor,
@@ -44106,7 +44066,7 @@
 "bQn" = (
 /obj/item/raw_material/shard/glass,
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bQo" = (
 /turf/simulated/floor/damaged3,
 /area/station/ai_monitored/storage/eva)
@@ -45568,7 +45528,7 @@
 /area/station/science/restroom)
 "bTU" = (
 /obj/machinery/coffeemaker/research,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 0;
 	pixel_y = 32
 	},
@@ -46112,9 +46072,7 @@
 /turf/simulated/floor/damaged5,
 /area/station/engine/engineering/breakroom)
 "bVm" = (
-/obj/item/device/radio/intercom/loudspeaker/speaker/south{
-	
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/south,
 /turf/simulated/floor/damaged5,
 /area/station/engine/storage)
 "bVn" = (
@@ -46150,9 +46108,7 @@
 	icon_state = "pipe-s";
 	dir = 4
 	},
-/obj/item/device/radio/intercom/loudspeaker/speaker/south{
-	
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/south,
 /turf/simulated/floor/damaged5,
 /area/station/engine/inner)
 "bVs" = (
@@ -46237,9 +46193,7 @@
 /turf/simulated/floor/damaged5,
 /area/station/engine/inner)
 "bVB" = (
-/obj/item/device/radio/intercom/loudspeaker/speaker/south{
-	
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/south,
 /turf/simulated/floor/damaged2,
 /area/station/engine/monitoring)
 "bVC" = (
@@ -46780,7 +46734,7 @@
 /area/station/medical/medbay/lobby)
 "bWV" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor/console_upper,
+/obj/machinery/computer/power_monitor/console_upper,
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
 	nostick = 1
@@ -49276,9 +49230,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/item/device/radio/intercom/science{
-	
-	},
+/obj/item/device/radio/intercom/science,
 /obj/item/paper/book/from_file/pharmacopia,
 /obj/access_spawn/research,
 /obj/access_spawn/medical_director,

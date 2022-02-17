@@ -20,7 +20,7 @@
 	help_message = "Locates a given ckey on all servers."
 	argument_types = list(/datum/command_argument/string/ckey="ckey")
 	execute(user, ckey)
-		var/mob/M = whois_ckey_to_mob_reference(ckey, exact=FALSE)
+		var/mob/M = ckey_to_mob(ckey, exact=FALSE)
 		if(!M)
 			return
 		var/list/result = list()
@@ -49,10 +49,36 @@
 		ircmsg["msg"] = "Added a note for [ckey]: [note]"
 		ircbot.export("admin", ircmsg)
 
+/datum/spacebee_extension_command/addnotice
+	name = "addnotice"
+	server_targeting = COMMAND_TARGETING_MAIN_SERVER
+	help_message = "Adds a login notice to a given ckey."
+	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/the_rest="notice")
+
+	execute(user, ckey, notice)
+		var/datum/player/player = make_player(ckey)
+		player.cloud_fetch()
+		if (player.cloud_get("login_notice"))
+			system.reply("Error, [ckey] already has a login notice set.", user)
+			return
+		var/message = "Message from Admin [user] at [roundLog_date]:\n\n[notice]"
+		if (!player.cloud_put("login_notice", message))
+			system.reply("Error, issue saving login notice, try again later.", user)
+			return
+		// else it succeeded
+		addPlayerNote(ckey, user + " (Discord)", "New login notice set:\n\n[notice]")
+		logTheThing("admin", "[user] (Discord)", null, "added a login notice for [ckey]: [notice]")
+		logTheThing("diary", "[user] (Discord)", null, "added a login notice for [ckey]: [notice]", "admin")
+		message_admins("<span class='internal'>[user] (Discord) added a login notice for [ckey]: [notice]</span>")
+
+		ircbot.export("admin", list(
+		"name" = user,
+		"msg" = "added an admin notice for [ckey]:\n[notice]"))
+
 /datum/spacebee_extension_command/ban
 	name = "ban"
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
-	help_message = "Bans a given ckey. Arguments in the order of ckey, length (number of minutes, or put \"hour\", \"day\", \"week\", \"month\",or \"perma\"), and ban reason. Make sure you specify the server that the person is on. Also keep in mind that this bans them from all servers. e.g. ban1 shelterfrog perma Lol rip."
+	help_message = "Bans a given ckey. Arguments in the order of ckey, length (number of minutes, or put \"hour\", \"day\", \"halfweek\", \"week\", \"twoweeks\", \"month\", \"perma\" or \"untilappeal\"), and ban reason. Make sure you specify the server that the person is on. Also keep in mind that this bans them from all servers. e.g. ban1 shelterfrog perma Lol rip."
 	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/string="length",
 	/datum/command_argument/the_rest="reason")
 	execute(user, ckey, length, reason)
@@ -61,7 +87,7 @@
 			return
 		var/data[] = new()
 		data["ckey"] = ckey
-		var/mob/M = whois_ckey_to_mob_reference(ckey)
+		var/mob/M = ckey_to_mob(ckey)
 		if (M)
 			data["compID"] = M.computer_id
 			data["ip"] = M.lastKnownIP
@@ -77,17 +103,26 @@
 				return
 			data["ip"] = response["last_ip"]
 			data["compID"] = response["last_compID"]
+		data["text_ban_length"] = length
 		data["reason"] = reason
 		if (length == "hour")
 			length = 60
 		else if (length == "day")
 			length = 1440
+		else if (length == "halfweek")
+			length = 5040
 		else if (length == "week")
 			length = 10080
+		else if (length == "twoweeks")
+			length = 20160
 		else if (length == "month")
 			length = 43200
 		else if (length == "perma")
 			length = 0
+			data["text_ban_length"] = "Permanent"
+		else if (ckey(length) == "untilappeal")
+			length = -1
+			data["text_ban_length"] = "Until Appeal"
 		else
 			length = text2num(length)
 		if (!isnum(length))
@@ -100,6 +135,80 @@
 		var/ircmsg[] = new()
 		ircmsg["name"] = user
 		ircmsg["msg"] = "Banned [ckey] from all servers for [length] minutes, reason: [reason]"
+		ircbot.export("admin", ircmsg)
+
+/datum/spacebee_extension_command/serverban
+	name = "serverban"
+	server_targeting = COMMAND_TARGETING_MAIN_SERVER
+	help_message = "Bans a given ckey from a specified server. Arguments in the order of ckey, server ID (for example: main1/1/goon1), length (number of minutes, or put \"hour\", \"day\", \"halfweek\", \"week\", \"twoweeks\", \"month\", \"perma\" or \"untilappeal\"), and ban reason, e.g. serverban shelterfrog goon1 perma Lol rip."
+	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/string/optional="server", /datum/command_argument/string="length",
+	/datum/command_argument/the_rest="reason")
+	execute(user, ckey, server, length, reason)
+		if (!(ckey && server && length && reason))
+			system.reply("Insufficient arguments.", user)
+			return
+		var/data[] = new()
+		data["ckey"] = ckey
+		var/mob/M = ckey_to_mob(ckey)
+		if (M)
+			data["compID"] = M.computer_id
+			data["ip"] = M.lastKnownIP
+		else
+			var/list/response
+			try
+				response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]), forceResponse = 1)
+			catch ()
+				var/ircmsg[] = new()
+				ircmsg["name"] = user
+				ircmsg["msg"] = "Failed to query API, try again later."
+				ircbot.export("admin", ircmsg)
+				return
+			data["ip"] = response["last_ip"]
+			data["compID"] = response["last_compID"]
+		if(server == "main1" || server == "1" || server == "goon1")
+			server = "main1"
+		else if(server == "main2" || server == "2" || server == "goon2")
+			server = "main2"
+		else if(server == "main3" || server == "3" || server == "goon3")
+			server = "main3"
+		else if(server == "main4" || server == "4" || server == "goon4")
+			server = "main4"
+		else
+			system.reply("Invalid server.", user)
+			return
+		data["server"] = server
+		data["text_ban_length"] = length
+		data["reason"] = reason
+		if (length == "hour")
+			length = 60
+		else if (length == "day")
+			length = 1440
+		else if (length == "halfweek")
+			length = 5040
+		else if (length == "week")
+			length = 10080
+		else if (length == "twoweeks")
+			length = 20160
+		else if (length == "month")
+			length = 43200
+		else if (length == "perma")
+			length = 0
+			data["text_ban_length"] = "Permanent"
+		else if (ckey(length) == "untilappeal")
+			length = -1
+			data["text_ban_length"] = "Until Appeal"
+		else
+			length = text2num(length)
+		if (!isnum(length))
+			system.reply("Ban length invalid.", user)
+			return
+		data["mins"] = length
+		data["akey"] = ckey(user) + " (Discord)"
+		addBan(data) // logging, messaging, and noting are all taken care of by this proc
+
+		var/ircmsg[] = new()
+		ircmsg["name"] = user
+		ircmsg["msg"] = "Banned [ckey] from [server] for [length] minutes, reason: [reason]"
 		ircbot.export("admin", ircmsg)
 
 /datum/spacebee_extension_command/boot
@@ -118,6 +227,54 @@
 				return
 		system.reply("Could not locate [ckey].", user)
 
+/datum/spacebee_extension_command/alert
+	name = "alert"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Send an admin alert to a given ckey."
+	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/the_rest="message")
+
+	execute(user, ckey, message)
+		for(var/client/C)
+			if (C.ckey == ckey)
+				message_admins("[user] (Discord) displayed an alert to [ckey] with the message \"[message]\"")
+				system.reply("Displayed an alert to [ckey].", user)
+				logTheThing("admin", "[user] (Discord)", null, "displayed an alert to [constructTarget(C,"admin")] with the message \"[message]\"")
+				logTheThing("diary", "[user] (Discord)", null, "displayed an alert to  [constructTarget(C,"diary")] with the message \"[message]\"", "admin")
+				if (C?.mob)
+					SPAWN(0)
+						C.mob.playsound_local(C.mob, "sound/voice/animal/goose.ogg", 100, flags = SOUND_IGNORE_SPACE)
+						if (alert(C.mob, message, "!! Admin Alert !!", "OK") == "OK")
+							message_admins("[ckey] acknowledged the alert from [user] (Discord).")
+							system.reply("[ckey] acknowledged the alert.", user)
+				return
+		system.reply("Could not locate [ckey].", user)
+
+/datum/spacebee_extension_command/prison
+	name = "prison"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Sends a given ckey to the prison zone."
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
+
+	execute(user, ckey)
+		for(var/client/C)
+			if (C.ckey == ckey)
+				var/mob/M = C.mob
+				if (M && ismob(M) && !isAI(M) && !isobserver(M))
+					var/prison = pick_landmark(LANDMARK_PRISONWARP)
+					if (prison)
+						M.changeStatus("paralysis", 8 SECONDS)
+						M.set_loc(prison)
+						M.show_text("<h2><font color=red><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></font></h2>", "red")
+						logTheThing("admin", "[user] (Discord)", null, "prisoned [constructTarget(C,"admin")].")
+						logTheThing("diary", "[user] (Discord)", null, "prisoned [constructTarget(C,"diary")].", "admin")
+						system.reply("Prisoned [ckey].", user)
+						return
+					system.reply("Could not locate prison zone.", user)
+					return
+				system.reply("[ckey] was of mob type [M.type] and could not be prisoned.", user)
+				return
+		system.reply("Could not locate [ckey].", user)
+
 /datum/spacebee_extension_command/where_is
 	name = "whereis"
 	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
@@ -125,7 +282,7 @@
 	argument_types = list(/datum/command_argument/string/ckey="ckey")
 
 	execute(user, ckey)
-		var/mob/M = whois_ckey_to_mob_reference(ckey)
+		var/mob/M = ckey_to_mob(ckey)
 		if (!M)
 			system.reply("Could not locate [ckey].", user)
 			return
@@ -148,6 +305,35 @@
 		message_admins("[user] (Discord) has created a command report")
 		system.reply("Command report created.", user)
 		global.cooldowns["transmit_centcom"] = 0 // reset cooldown for reply
+
+/datum/spacebee_extension_command/mode
+	name = "mode"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Check the gamemode of a server or set it by providing an argument (\"secret\", \"intrigue\", \"extended\")."
+	argument_types = list(/datum/command_argument/string/optional="new_mode")
+
+	execute(user, new_mode)
+		if(new_mode in global.valid_modes)
+			var/which = "next round's "
+			if (current_state <= GAME_STATE_PREGAME)
+				master_mode = new_mode
+				which = ""
+			world.save_mode(new_mode)
+			logTheThing("admin", "[user] (Discord)", null, "set the [which]mode as [new_mode]")
+			logTheThing("diary", "[user] (Discord)", null, "set the [which]mode as [new_mode]", "admin")
+			message_admins("[user] (Discord) set the [which]mode as [new_mode].")
+			system.reply("Set the [which]mode to [new_mode].", user)
+		else if(length(new_mode) > 0)
+			system.reply("Invalid mode [new_mode]. Available game modes: [jointext(global.valid_modes, ", ")].", user)
+		else
+			var/detail_mode = isnull(ticker?.mode) ? "not started yet" : ticker.mode.name
+			var/next_mode = "N/A"
+			var/next_mode_text = file2text("data/mode.txt")
+			if(next_mode_text)
+				var/list/lines = splittext(next_mode_text, "\n")
+				if (lines[1])
+					next_mode = lines[1]
+			system.reply("Current mode is [master_mode] ([detail_mode]) ([ticker.hide_mode ? "hidden" : "not hidden"]). Next mode is [next_mode].", user)
 
 /datum/spacebee_extension_command/help
 	name = "help"
@@ -194,6 +380,22 @@
 		message_admins("[user] (Discord) gibbed [key_name(target)].")
 		target.transforming = 1
 		target.gib()
+		return TRUE
+
+/datum/spacebee_extension_command/state_based/confirmation/mob_targeting/delimb
+	name = "delimb"
+	help_message = "Delimbs a given ckey on a server."
+	action_name = "delimb"
+
+	perform_action(user, mob/target)
+		if(!ishuman(target))
+			system.reply("Error, target is not human.", user)
+			return FALSE
+		var/mob/living/carbon/human/H = target
+		H.limbs.sever("all")
+		logTheThing("admin", "[user] (Discord)", target, "delimbed [constructTarget(target,"admin")]")
+		logTheThing("diary", "[user] (Discord)", target, "delimbed [constructTarget(target,"diary")].", "admin")
+		message_admins("[user] (Discord) delimbed [key_name(target)].")
 		return TRUE
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/send_to_arrivals
@@ -307,7 +509,7 @@
 	help_message = "Sends items in a crate to cargo. Separate typepaths by spaces."
 	argument_types = list(/datum/command_argument/the_rest="types")
 	execute(user, types)
-		var/obj/to_send = new /obj/storage/crate/packing
+		var/obj/to_send = new /obj/storage/crate/wooden
 		var/list/type_str_list = splittext(types, " ")
 		for(var/type_str in type_str_list)
 			var/type = text2path(type_str)
@@ -371,3 +573,23 @@
 		logTheThing("admin", "[user] (Discord)", null, "Ckey [ckey] added to the VPN whitelist.")
 		system.reply("[ckey] added to the VPN whitelist.")
 		return TRUE
+
+/datum/spacebee_extension_command/hard_reboot
+	name = "hardreboot"
+	help_message = "Toggle a hard server reboot"
+	argument_types = list()
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+
+	execute(user)
+		var/logMessage = ""
+		if (fexists(hardRebootFilePath))
+			fdel(hardRebootFilePath)
+			logMessage = "removed a server hard reboot"
+		else
+			file(hardRebootFilePath) << ""
+			logMessage = "queued a server hard reboot"
+
+		logTheThing("debug", "[user] (Discord)", null, logMessage)
+		logTheThing("diary", "[user] (Discord)", null, logMessage, "admin")
+		message_admins("[user] (Discord) [logMessage]")
+		system.reply(logMessage)

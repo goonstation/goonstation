@@ -13,7 +13,7 @@ var/global/atom_emergency_stop = 0
 		logTheThing("admin", usr, null, "used the emergency stop command for atom verbs.")
 		logTheThing("diary", usr, null, "used the emergency stop command for atom verbs.", "admin")
 		message_admins("[key_name(usr)] used the emergency stop command for atom verbs.")
-		SPAWN_DBG(10 SECONDS) // after 10 seconds, turn it off
+		SPAWN(10 SECONDS) // after 10 seconds, turn it off
 			atom_emergency_stop = 0
 			message_admins("The emergency stop for atom verbs has turned off again.")
 	else
@@ -34,7 +34,7 @@ var/global/atom_emergency_stop = 0
 		var/transmute_thing = input("enter path of the things you want to transmute", "Enter Path", pick("/obj", "/mob", "/turf")) as null|text
 		if (!transmute_thing)
 			return
-		var/transmute_path = get_one_match(transmute_thing, /atom, use_concrete_types = FALSE)
+		var/transmute_path = get_one_match(transmute_thing, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 		if (!transmute_path)
 			return
 
@@ -60,7 +60,7 @@ var/global/atom_emergency_stop = 0
 		var/transmute = 0
 		var/transmute_total = 0
 
-		for (var/atom/A in world)
+		for (var/atom/A as anything in find_all_by_type(transmute_path))
 			LAGCHECK(LAG_LOW)
 			if (atom_emergency_stop)
 				logTheThing("admin", usr, null, "type transmute command terminated due to an emergency stop.")
@@ -68,13 +68,12 @@ var/global/atom_emergency_stop = 0
 				message_admins("[key_name(usr)]'s type transmute command terminated due to an emergency stop!")
 				break
 			else
-				if (istype(A, transmute_path))
-					A.setMaterial(getMaterial(mat))
-					transmute ++
-					transmute_total ++
-					if (transmute >= amount_to_transmute)
-						transmute = 0
-						sleep(sleep_time)
+				A.setMaterial(getMaterial(mat))
+				transmute ++
+				transmute_total ++
+				if (transmute >= amount_to_transmute)
+					transmute = 0
+					sleep(sleep_time)
 
 		logTheThing("admin", usr, null, "transmuted [transmute_total] of [transmute_path] into [mat].")
 		logTheThing("diary", usr, null, "transmuted [transmute_total] of [transmute_path] into [mat].", "admin")
@@ -139,7 +138,7 @@ var/global/atom_emergency_stop = 0
 		var/emag_thing = input("enter path of the things you want to emag", "Enter Path", pick("/obj", "/mob", "/turf")) as null|text
 		if (!emag_thing)
 			return
-		var/emag_path = get_one_match(emag_thing, /atom, use_concrete_types = FALSE)
+		var/emag_path = get_one_match(emag_thing, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 		if (!emag_path)
 			return
 
@@ -157,7 +156,7 @@ var/global/atom_emergency_stop = 0
 		var/emagged = 0
 		var/emagged_total = 0
 
-		for (var/atom/A in world)
+		for (var/atom/A as anything in find_all_by_type(emag_path))
 			LAGCHECK(LAG_LOW)
 			if (atom_emergency_stop)
 				logTheThing("admin", usr, null, "type emagging command terminated due to an emergency stop.")
@@ -165,7 +164,7 @@ var/global/atom_emergency_stop = 0
 				message_admins("[key_name(usr)]'s type emagging command terminated due to an emergency stop!")
 				break
 			else
-				if (istype(A, emag_path) && A.emag_act())
+				if (A.emag_act())
 					A.emag_act(null,null)
 					emagged ++
 					emagged_total ++
@@ -193,9 +192,9 @@ var/global/atom_emergency_stop = 0
 	if (target?.emag_act())
 		target.emag_act(null,null)
 
-		logTheThing("admin", usr, null, "emagged [target] via Emag Target ([showCoords(target.x, target.y, target.z)] in [target.loc])")
-		logTheThing("diary", usr, null, "emagged [target] via Emag Target ([showCoords(target.x, target.y, target.z)] in [target.loc])", "admin")
-		message_admins("[key_name(usr)] emagged [target] via Emag Target ([showCoords(target.x, target.y, target.z)] in [target.loc])")
+		logTheThing("admin", usr, null, "emagged [target] via Emag Target ([log_loc(target)] in [target.loc])")
+		logTheThing("diary", usr, null, "emagged [target] via Emag Target ([log_loc(target)] in [target.loc])", "admin")
+		message_admins("[key_name(usr)] emagged [target] via Emag Target ([log_loc(target)] in [target.loc])")
 	else
 		boutput(usr, "<span class='alert'>Could not emag [target]!</span>")
 	return
@@ -264,7 +263,7 @@ var/global/atom_emergency_stop = 0
 		var/scale_thing = input("enter path of the things you want to scale", "Enter Path", pick("/obj", "/mob", "/turf")) as null|text
 		if (!scale_thing)
 			return
-		var/scale_path = get_one_match(scale_thing, /atom, use_concrete_types = FALSE)
+		var/scale_path = get_one_match(scale_thing, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 		if (!scale_path)
 			return
 
@@ -289,7 +288,7 @@ var/global/atom_emergency_stop = 0
 		var/scaled = 0
 		var/scaled_total = 0
 
-		for (var/atom/A in world)
+		for (var/atom/A as anything in find_all_by_type(scale_path))
 			LAGCHECK(LAG_LOW)
 			if (atom_emergency_stop)
 				logTheThing("admin", usr, null, "type scaling command terminated due to an emergency stop.")
@@ -297,13 +296,12 @@ var/global/atom_emergency_stop = 0
 				message_admins("[key_name(usr)]'s type scaling command terminated due to an emergency stop!")
 				break
 			else
-				if (istype(A, scale_path))
-					A.Scale(scalex, scaley)
-					scaled ++
-					scaled_total ++
-					if (scaled >= amount_to_scale)
-						scaled = 0
-						sleep(sleep_time)
+				A.Scale(scalex, scaley)
+				scaled ++
+				scaled_total ++
+				if (scaled >= amount_to_scale)
+					scaled = 0
+					sleep(sleep_time)
 
 		logTheThing("admin", usr, null, "scaled [scaled_total] of [scale_path].")
 		logTheThing("diary", usr, null, "scaled [scaled_total] of [scale_path].", "admin")
@@ -329,9 +327,9 @@ var/global/atom_emergency_stop = 0
 	if (!scaley)
 		return
 
-	logTheThing("admin", usr, null, "scaled [target] by X:[scalex] Y:[scaley] ([showCoords(target.x, target.y, target.z)] in [target.loc])")
-	logTheThing("diary", usr, null, "scaled [target] by X:[scalex] Y:[scaley] ([showCoords(target.x, target.y, target.z)] in [target.loc])", "admin")
-	message_admins("[key_name(usr)] scaled [target] by X:[scalex] Y:[scaley] ([showCoords(target.x, target.y, target.z)] in [target.loc])")
+	logTheThing("admin", usr, null, "scaled [target] by X:[scalex] Y:[scaley] ([log_loc(target)] in [target.loc])")
+	logTheThing("diary", usr, null, "scaled [target] by X:[scalex] Y:[scaley] ([log_loc(target)] in [target.loc])", "admin")
+	message_admins("[key_name(usr)] scaled [target] by X:[scalex] Y:[scaley] ([log_loc(target)] in [target.loc])")
 
 	target.Scale(scalex, scaley)
 	return
@@ -397,7 +395,7 @@ var/global/atom_emergency_stop = 0
 		var/rotate_thing = input("enter path of the things you want to rotate", "Enter Path", pick("/obj", "/mob", "/turf")) as null|text
 		if (!rotate_thing)
 			return
-		var/rotate_path = get_one_match(rotate_thing, /atom, use_concrete_types = FALSE)
+		var/rotate_path = get_one_match(rotate_thing, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 		if (!rotate_path)
 			return
 
@@ -419,7 +417,7 @@ var/global/atom_emergency_stop = 0
 		var/rotated = 0
 		var/rotated_total = 0
 
-		for (var/atom/A in world)
+		for (var/atom/A as anything in find_all_by_type(rotate_path))
 			LAGCHECK(LAG_LOW)
 			if (atom_emergency_stop)
 				logTheThing("admin", usr, null, "type rotating command terminated due to an emergency stop.")
@@ -427,13 +425,12 @@ var/global/atom_emergency_stop = 0
 				message_admins("[key_name(usr)]'s type rotating command terminated due to an emergency stop!")
 				break
 			else
-				if (istype(A, rotate_path))
-					A.Turn(rot)
-					rotated ++
-					rotated_total ++
-					if (rotated >= amount_to_rotate)
-						rotated = 0
-						sleep(sleep_time)
+				A.Turn(rot)
+				rotated ++
+				rotated_total ++
+				if (rotated >= amount_to_rotate)
+					rotated = 0
+					sleep(sleep_time)
 
 		logTheThing("admin", usr, null, "rotated [rotated_total] of [rotate_path].")
 		logTheThing("diary", usr, null, "rotated [rotated_total] of [rotate_path].", "admin")
@@ -456,9 +453,9 @@ var/global/atom_emergency_stop = 0
 	if (!rot)
 		return
 
-	logTheThing("admin", usr, null, "rotated [target] by [rot] degrees ([showCoords(target.x, target.y, target.z)] in [target.loc])")
-	logTheThing("diary", usr, null, "rotated [target] by [rot] degrees ([showCoords(target.x, target.y, target.z)] in [target.loc])", "admin")
-	message_admins("[key_name(usr)] rotated [target] by [rot] degrees ([showCoords(target.x, target.y, target.z)] in [target.loc])")
+	logTheThing("admin", usr, null, "rotated [target] by [rot] degrees ([log_loc(target)] in [target.loc])")
+	logTheThing("diary", usr, null, "rotated [target] by [rot] degrees ([log_loc(target)] in [target.loc])", "admin")
+	message_admins("[key_name(usr)] rotated [target] by [rot] degrees ([log_loc(target)] in [target.loc])")
 
 	target.Turn(rot)
 	return
@@ -537,7 +534,7 @@ var/global/atom_emergency_stop = 0
 		var/spin_thing = input("enter path of the things you want to spin", "Enter Path", pick("/obj", "/mob", "/turf")) as null|text
 		if (!spin_thing)
 			return
-		var/spin_path = get_one_match(spin_thing, /atom, use_concrete_types = FALSE)
+		var/spin_path = get_one_match(spin_thing, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 		if (!spin_path)
 			return
 
@@ -569,7 +566,7 @@ var/global/atom_emergency_stop = 0
 		var/spun = 0
 		var/spun_total = 0
 
-		for (var/atom/A in world)
+		for (var/atom/A as anything in find_all_by_type(spin_path))
 			LAGCHECK(LAG_LOW)
 			if (atom_emergency_stop)
 				logTheThing("admin", usr, null, "type spinning command terminated due to an emergency stop.")
@@ -577,13 +574,12 @@ var/global/atom_emergency_stop = 0
 				message_admins("[key_name(usr)]'s type spinning command terminated due to an emergency stop!")
 				break
 			else
-				if (istype(A, spin_path))
-					animate_spin(A, direction, time, looping, FALSE)
-					spun ++
-					spun_total ++
-					if (spun >= amount_to_spin)
-						spun = 0
-						sleep(sleep_time)
+				animate_spin(A, direction, time, looping, FALSE)
+				spun ++
+				spun_total ++
+				if (spun >= amount_to_spin)
+					spun = 0
+					sleep(sleep_time)
 
 		logTheThing("admin", usr, null, "spun [spun_total] of [spin_path].")
 		logTheThing("diary", usr, null, "spun [spun_total] of [spin_path].", "admin")
@@ -616,9 +612,9 @@ var/global/atom_emergency_stop = 0
 	else
 		looping = 0
 
-	logTheThing("admin", usr, null, "spun [target] (details: [direction] direction, [time] animate time, [looping] looping, [showCoords(target.x, target.y, target.z)] in [target.loc])")
-	logTheThing("diary", usr, null, "spun [target] (details: [direction] direction, [time] animate time, [looping] looping, [showCoords(target.x, target.y, target.z)] in [target.loc]))", "admin")
-	message_admins("[key_name(usr)] spun [target] (details: [direction] direction, [time] animate time, [looping] looping, [showCoords(target.x, target.y, target.z)] in [target.loc]))")
+	logTheThing("admin", usr, null, "spun [target] (details: [direction] direction, [time] animate time, [looping] looping, [log_loc(target)] in [target.loc])")
+	logTheThing("diary", usr, null, "spun [target] (details: [direction] direction, [time] animate time, [looping] looping, [log_loc(target)] in [target.loc]))", "admin")
+	message_admins("[key_name(usr)] spun [target] (details: [direction] direction, [time] animate time, [looping] looping, [log_loc(target)] in [target.loc]))")
 
 	animate_spin(target, direction, time, looping, FALSE)
 	return
@@ -686,7 +682,7 @@ var/global/atom_emergency_stop = 0
 		var/get_thing = input("enter path of the things you want to get", "Enter Path", pick("/obj", "/mob")) as null|text
 		if (!get_thing)
 			return
-		var/get_path = get_one_match(get_thing, /atom, use_concrete_types = FALSE)
+		var/get_path = get_one_match(get_thing, /atom/movable, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 		if (!get_path)
 			return
 
@@ -706,7 +702,7 @@ var/global/atom_emergency_stop = 0
 		var/gotten = 0
 		var/gotten_total = 0
 
-		for (var/atom/A in world)
+		for (var/atom/movable/A as anything in find_all_by_type(get_path))
 			LAGCHECK(LAG_LOW)
 			if (atom_emergency_stop)
 				logTheThing("admin", usr, null, "teleport command terminated due to an emergency stop.")
@@ -714,15 +710,14 @@ var/global/atom_emergency_stop = 0
 				message_admins("[key_name(usr)]'s teleport command terminated due to an emergency stop!")
 				break
 			else
-				if (istype(A, get_path))
-					if (A == user_location)
-						continue
-					A:set_loc(user_location)
-					gotten ++
-					gotten_total ++
-					if (gotten >= amount_to_get)
-						gotten = 0
-						sleep(sleep_time)
+				if (A == user_location)
+					continue
+				A.set_loc(user_location)
+				gotten ++
+				gotten_total ++
+				if (gotten >= amount_to_get)
+					gotten = 0
+					sleep(sleep_time)
 
 		logTheThing("admin", usr, null, "teleported [gotten_total] of [get_path].")
 		logTheThing("diary", usr, null, "teleported [gotten_total] of [get_path].", "admin")

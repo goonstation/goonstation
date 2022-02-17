@@ -48,7 +48,7 @@
 	gas_contained = new
 	inturf = get_step(src, dir)
 
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		turbine = locate() in get_step(src, get_dir(inturf, src))
 		if(!turbine)
 			status |= BROKEN
@@ -101,7 +101,7 @@
 
 	outturf = get_step(src, dir)
 
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 
 		compressor = locate() in get_step(src, get_dir(outturf, src))
 		if(!compressor)
@@ -199,7 +199,7 @@
 		else if( href_list["str"] )
 			compressor.starter = !compressor.starter
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for(var/mob/M in viewers(1, src))
 				if (M.using_dialog_of(src))
 					src.interacted(M)
@@ -221,7 +221,7 @@
 
 /obj/machinery/computer/turbine_computer/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		for(var/obj/machinery/compressor/C in machine_registry[MACHINES_MISC])
 			if(id == C.comp_id)
 				compressor = C
@@ -272,11 +272,11 @@
 		else if (href_list["doors"])
 			for(var/obj/machinery/door/poddoor/D in src.doors)
 				if (door_status == 0)
-					SPAWN_DBG( 0 )
+					SPAWN( 0 )
 						D.open()
 						door_status = 1
 				else
-					SPAWN_DBG( 0 )
+					SPAWN( 0 )
 						D.close()
 						door_status = 0
 		else if( href_list["close"] )

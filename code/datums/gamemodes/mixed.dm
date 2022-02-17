@@ -39,7 +39,7 @@
 	var/num_enemies = 1
 
 	if(traitor_scaling)
-		num_enemies = max(1, min(round((num_players + i) / num_enemies_divisor), traitors_possible)) // adjust divisor as needed
+		num_enemies = clamp(round((num_players + i) / num_enemies_divisor), 1, traitors_possible) // adjust divisor as needed
 
 	var/num_wizards = 0
 	var/num_traitors = 0
@@ -51,7 +51,7 @@
 	var/num_spy_thiefs = 0
 	var/num_werewolves = 0
 	var/num_arcfiends = 0
-#ifdef XMAS
+#if defined(XMAS) && !defined(RP_MODE)
 	src.traitor_types += ROLE_GRINCH
 	src.latejoin_antag_roles += ROLE_GRINCH
 #endif
@@ -183,7 +183,7 @@
 			possible_blobs.Remove(blob)
 
 	if(num_grinches)
-		var/list/possible_grinches = get_possible_enemies(ROLE_GRINCH,num_grinches)
+		var/list/possible_grinches = get_possible_enemies(ROLE_MISC,num_grinches)
 		var/list/chosen_grinches = antagWeighter.choose(pool = possible_grinches, role = ROLE_GRINCH, amount = num_grinches, recordChosen = 1)
 		for (var/datum/mind/grinch in chosen_grinches)
 			traitors += grinch
@@ -261,7 +261,7 @@
 				else
 					randomname = pick_string_autokey("names/wizard_male.txt")
 
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/newname = input(traitor.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname)
 					if(newname && newname != randomname)
 						phrase_log.log_phrase("name-wizard", randomname, no_duplicates=TRUE)
@@ -272,7 +272,7 @@
 						if (length(newname) >= 26) newname = copytext(newname, 1, 26)
 						newname = strip_html(newname)
 						traitor.current.real_name = newname
-						traitor.current.name = newname
+						traitor.current.UpdateName()
 
 			if (ROLE_WRAITH)
 				generate_wraith_objectives(traitor)
@@ -293,7 +293,7 @@
 
 			if (ROLE_BLOB)
 				objective_set_path = /datum/objective_set/blob
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/newname = input(traitor.current, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
 
 					if (newname)
@@ -305,7 +305,7 @@
 
 			if (ROLE_SPY_THIEF)
 				objective_set_path = /datum/objective_set/spy_theft
-				SPAWN_DBG(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs
+				SPAWN(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs
 					equip_spy_theft(traitor.current)
 
 				if (!src.spy_market)
@@ -324,9 +324,7 @@
 			#else
 				objective_set_path = pick(typesof(/datum/objective_set/traitor))
 			#endif
-			#ifdef SECRETS_ENABLED
 				traitor.current.make_arcfiend()
-			#endif
 
 		if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]
 			new objective_set_path(traitor)
@@ -335,60 +333,8 @@
 			boutput(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
-
-/datum/game_mode/mixed/proc/get_possible_enemies(type,number)
-	var/list/candidates = list()
-
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			switch(type)
-				if(ROLE_WIZARD)
-					if(player.client.preferences.be_wizard) candidates += player.mind
-				if(ROLE_TRAITOR)
-					if(player.client.preferences.be_traitor) candidates += player.mind
-				if(ROLE_CHANGELING)
-					if(player.client.preferences.be_changeling) candidates += player.mind
-				if(ROLE_VAMPIRE)
-					if(player.client.preferences.be_vampire) candidates += player.mind
-				if(ROLE_WRAITH)
-					if(player.client.preferences.be_wraith) candidates += player.mind
-				if(ROLE_BLOB)
-					if(player.client.preferences.be_blob) candidates += player.mind
-				if(ROLE_SPY_THIEF)
-					if(player.client.preferences.be_spy) candidates += player.mind
-				if(ROLE_WEREWOLF)
-					if(player.client.preferences.be_werewolf) candidates += player.mind
-				if(ROLE_ARCFIEND)
-					if(player.client.preferences.be_arcfiend) candidates += player.mind
-				else
-					if(player.client.preferences.be_misc) candidates += player.mind
-
-	if(candidates.len < number)
-		if(type in list(ROLE_WIZARD, ROLE_TRAITOR, ROLE_CHANGELING, ROLE_WRAITH, ROLE_BLOB, ROLE_WEREWOLF))
-			logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
-		else
-			logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_misc set to yes, including players who don't want to be misc enemies in the pool for [type] assignment.")
-
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-				if ((number > 1) && (candidates.len >= number))
-					break
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
 
 /datum/game_mode/mixed/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"

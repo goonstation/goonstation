@@ -1452,7 +1452,7 @@
 	},
 /area/space)
 "dE" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/caution/north,
 /area/space)
 "dF" = (
@@ -2053,7 +2053,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},

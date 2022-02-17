@@ -47,7 +47,7 @@
 				globalStatusInstances -= S
 
 		for(var/atom/A in notifyUiUpdate)
-			SPAWN_DBG(0) if(A?.statusEffects) A.updateStatusUi()
+			SPAWN(0) if(A?.statusEffects) A.updateStatusUi()
 
 		lastUpdate = world.timeofday
 		lastProcessLength =  (world.timeofday - lastProcessLength)

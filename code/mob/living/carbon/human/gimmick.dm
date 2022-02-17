@@ -3,16 +3,17 @@
 /mob/living/carbon/human/cluwne
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.gender = "male"
 			src.real_name = "cluwne"
-			src.contract_disease(/datum/ailment/disease/cluwneing_around,null,null,1)
-			src.contract_disease(/datum/ailment/disability/clumsy,null,null,1)
 
 			src.equip_new_if_possible(/obj/item/clothing/under/gimmick/cursedclown, slot_w_uniform)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/cursedclown_shoes, slot_shoes)
 			src.equip_new_if_possible(/obj/item/clothing/mask/cursedclown_hat, slot_wear_mask)
 			src.equip_new_if_possible(/obj/item/clothing/gloves/cursedclown_gloves, slot_gloves)
+
+			src.contract_disease(/datum/ailment/disease/cluwneing_around,null,null,1)
+			src.contract_disease(/datum/ailment/disability/clumsy,null,null,1)
 			src.make_jittery(1000)
 			src.bioHolder.AddEffect("clumsy")
 			src.take_brain_damage(80)
@@ -28,7 +29,7 @@
 		take_oxygen_deprivation(-INFINITY)
 		take_toxin_damage(-INFINITY)
 		if(prob(5))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				src.say("HANK!")
 				playsound(src.loc, "sound/musical_instruments/Boathorn_1.ogg", 22, 1)
 
@@ -41,7 +42,7 @@
 	var/name_override = "floor cluwne"
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			ailments.Cut()
 			real_name = name_override
 			name = name_override
@@ -59,12 +60,12 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.add_ability_holder(/datum/abilityHolder/gimmick)
 			abilityHolder.addAbility(/datum/targetable/gimmick/reveal)
 			abilityHolder.addAbility(/datum/targetable/gimmick/movefloor)
 			abilityHolder.addAbility(/datum/targetable/gimmick/floorgrab)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				abilityHolder.updateButtons()
 
 // Come to collect a poor unfortunate soul
@@ -75,12 +76,12 @@
 	plane = PLANE_UNDERFLOOR
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.gender = "male"
 			src.real_name = "Satan"
 			src.name = "Satan"
 			src.equip_new_if_possible(/obj/item/clothing/under/misc/lawyer/red/demonic, src.slot_w_uniform)
-			src.bioHolder.AddEffect("horns", 0, 0, 1)
+			src.bioHolder.AddEffect("demon_horns", 0, 0, 1)
 			src.bioHolder.AddEffect("aura_fire", 0, 0, 1)
 
 /mob/living/carbon/human/satan/gimmick
@@ -101,7 +102,7 @@
 		abilityHolder.addAbility(/datum/targetable/gimmick/highway2hell)
 		abilityHolder.addAbility(/datum/targetable/gimmick/reveal)
 		abilityHolder.addAbility(/datum/targetable/gimmick/movefloor)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			abilityHolder.updateButtons()
 
 			src.equip_new_if_possible(/obj/item/clothing/under/misc/lawyer/red/demonic, src.slot_w_uniform)
@@ -124,7 +125,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.real_name = "Jester"
 			src.add_ability_holder(/datum/abilityHolder/gimmick)
 			src.nodamage = 1
@@ -133,7 +134,7 @@
 			abilityHolder.addAbility(/datum/targetable/gimmick/Jestershift)
 			abilityHolder.addAbility(/datum/targetable/gimmick/scribble)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			abilityHolder.updateButtons()
 
 			src.equip_new_if_possible(/obj/item/clothing/under/gimmick/jester, src.slot_w_uniform)
@@ -149,7 +150,7 @@
 mob/living/carbon/human/cluwne/satan
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.bioHolder.AddEffect("horns", 0, 0, 0, 1)
 			src.bioHolder.AddEffect("aura_fire", 0, 0, 0, 1)
 			src.bioHolder.AddEffect("superfartgriff")
@@ -159,7 +160,7 @@ mob/living/carbon/human/cluwne/satan
 mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this for an admin gimmick.
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.unkillable = 1 //for the megasatan in you
 
 /*
@@ -174,7 +175,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 #endif
 	New()
 		. = ..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (!src.disposed)
 				src.bioHolder.AddEffect("chicken", 0, 0, 1)
 
@@ -224,13 +225,13 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 			return 1
 
 		if(prob(1) && !src.stat)
-			SPAWN_DBG(0) src.say(pick( "DRINK!", "FECK!", "ARSE!", "GIRLS!","That would be an ecumenical matter."))
+			SPAWN(0) src.say(pick( "DRINK!", "FECK!", "ARSE!", "GIRLS!","That would be an ecumenical matter."))
 
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/postcard/owlery))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
 			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				say("Aye! Bill won't stop talking about it!")
 			return
 		..()
@@ -247,6 +248,15 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		//Whoever does eventually put him back in the game : Use a global list of bartenders or something. Dont check all_viewers
 		//	for (var/mob/living/carbon/human/npc/diner_bartender/BT in all_viewers(7, src))
 			//	BT.protect_from(M, src)
+
+/mob/living/carbon/human/fatherjack/cow
+	New()
+		..()
+		src.bioHolder.AddEffect("cow")
+
+	initializeBioholder()
+		. = ..()
+		src.real_name = "Father Milk"
 
 //biker // cogwerks - bringing back the bikers for the diner, now less offensive
 
@@ -346,7 +356,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	/*
 	proc/n()
 		keys_changed(KEY_FORWARD, KEY_FORWARD)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			keys_changed(0,0xFFFF)
 	proc/s()
 		src.process_move(SOUTH)
@@ -360,7 +370,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		src.process_move(SOUTHWEST)
 	proc/ne()
 		keys_changed(KEY_FORWARD|KEY_RIGHT, KEY_FORWARD|KEY_RIGHT)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			keys_changed(0,KEY_FORWARD|KEY_BACKWARD|KEY_RIGHT|KEY_LEFT)
 	proc/se()
 		src.process_move(SOUTHEAST)
@@ -372,7 +382,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		..()
 		START_TRACKING_CAT(TR_CAT_SHITTYBILLS)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/brown, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/under/misc/head_of_security, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/clothing/under/misc/dirty_vest, slot_w_uniform)
 		src.equip_new_if_possible(/obj/item/paper/postcard/owlery, slot_l_hand)
 		//src.equip_new_if_possible(/obj/item/device/radio/headset/civilian, slot_ears)
 		//src.equip_new_if_possible(/obj/item/clothing/suit, slot_wear_suit)
@@ -388,8 +398,10 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	initializeBioholder()
 		. = ..()
-		bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/tramp
-		bioHolder.mobAppearance.customization_third = new /datum/customization_style/beard/longbeard
+		bioHolder.mobAppearance.customization_first_color = "#292929"
+		bioHolder.mobAppearance.customization_second_color = "#292929"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/gimmick/shitty_hair
+		bioHolder.mobAppearance.customization_second = new /datum/customization_style/hair/gimmick/shitty_beard
 		bioHolder.age = 62
 		bioHolder.bloodType = "A-"
 		bioHolder.mobAppearance.gender = "male"
@@ -406,8 +418,10 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		STOP_TRACKING_CAT(TR_CAT_SHITTYBILLS)
 
 		if (!src.client && src.z != 2)
-			var/turf/target_turf = pick(get_area_turfs(/area/afterlife/bar/barspawn))
-
+			var/list/afterlife_bar_turfs = get_area_turfs(/area/afterlife/bar/barspawn)
+			if(!length(afterlife_bar_turfs))
+				return
+			var/turf/target_turf = pick(afterlife_bar_turfs)
 			var/mob/living/carbon/human/biker/newbody = new()
 			newbody.set_loc(target_turf)
 			newbody.overlays += image('icons/misc/32x64.dmi',"halo")
@@ -422,7 +436,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 
 			//FUCK I AM GOOG GOOD GOOD CODER
-			SPAWN_DBG(50 SECONDS)
+			SPAWN(50 SECONDS)
 				if (!twitch_mob || !twitch_mob.client)
 					for (var/client/C in clients)
 						if (C.ckey == TWITCH_BOT_CKEY)
@@ -433,7 +447,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 
 
-			SPAWN_DBG(100 SECONDS)
+			SPAWN(100 SECONDS)
 				if (!twitch_mob || !twitch_mob.client)
 					for (var/client/C in clients)
 						if (C.ckey == TWITCH_BOT_CKEY)
@@ -443,7 +457,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 					boutput(twitch_mob, "<span class='bold notice'>Roughly 1 minute left for respawn.</span>")
 
 
-			SPAWN_DBG(1500)
+			SPAWN(1500)
 				if (!twitch_mob || !twitch_mob.client)
 					for (var/client/C in clients)
 						if (C.ckey == TWITCH_BOT_CKEY)
@@ -488,7 +502,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 						else
 							target.Attackhand(src)
 			else if(ai_aggressive)
-				a_intent = INTENT_HARM
+				set_a_intent(INTENT_HARM)
 				for(var/mob/M in oview(5, src))
 					if(M == src)
 						continue
@@ -504,13 +518,13 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			if(src.canmove && prob(20) && isturf(src.loc))
 				step(src, pick(NORTH, SOUTH, EAST, WEST))
 			if(prob(2))
-				SPAWN_DBG(0) emote(BILL_PICK("emotes"))
+				SPAWN(0) emote(BILL_PICK("emotes"))
 
 			if(prob(talk_prob))
 				src.speak()
 
 	proc/speak()
-		SPAWN_DBG(0)
+		SPAWN(0)
 
 			var/obj/machinery/bot/guardbot/old/tourguide/murray = pick(by_type[/obj/machinery/bot/guardbot/old/tourguide])
 			if (murray && get_dist(src,murray) > 7)
@@ -536,7 +550,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 				if (murray && !greeted_murray)
 					greeted_murray = 1
 					say("[BILL_PICK("greetings")] Murray! How's it [BILL_PICK("verbs")]?")
-					SPAWN_DBG(rand(20,40))
+					SPAWN(rand(20,40))
 						if (murray?.on && !murray.idle)
 							murray.speak("Hi, Bill! It's [BILL_PICK("murraycompliment")] to see you again!")
 
@@ -583,7 +597,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 							say("I think my [BILL_PICK("friends")] [BILL_PICK("friendsactions")].")
 /* commenting out the bartender stuff because he aint around much. replacing with john bill retorts.
 					if (prob(10))
-						SPAWN_DBG(4 SECONDS)
+						SPAWN(4 SECONDS)
 							for (var/mob/living/carbon/human/npc/diner_bartender/BT in all_hearers(7, src))
 								switch (speech_type)
 									if (4)
@@ -605,7 +619,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 */
 
 					if (length(by_cat[TR_CAT_JOHNBILLS]) && prob(25))
-						SPAWN_DBG(4 SECONDS)
+						SPAWN(4 SECONDS)
 							var/mob/living/carbon/human/john/MJ = pick(by_cat[TR_CAT_JOHNBILLS])
 							switch (speech_type)
 								if (4)
@@ -634,13 +648,13 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		if (istype(W, /obj/item/paper/tug/invoice))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
 			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				say("Hard to believe, but I think my [BILL_PICK("friends")] would be proud to see it.")
 			return
 		if (istype(W, /obj/item/paper/postcard/owlery))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
 			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				say("Yep, can't wait to go on that trip! That [pick_string("johnbill.txt", "insults")] oughta be here soon!")
 			return
 		if (istype(W, /obj/item/ursium/U))
@@ -650,7 +664,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			var/obj/item/ursium/antiU/aU = W
 			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
 			say("Whoa nelly! Mind if i have a taste?")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				M.visible_message("<span class='alert'>[src] touches the [W]! Something isnt right! </span>")
 				aU:annihilation(2 * aU.ursium)
 			return
@@ -665,7 +679,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
-			src.a_intent = INTENT_HARM
+			src.set_a_intent(INTENT_HARM)
 			src.ai_set_active(1)
 
 		for (var/mob/JB in by_cat[TR_CAT_JOHNBILLS])
@@ -676,7 +690,15 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 					M.add_karma(-1)
 				J.target = M
 				J.ai_set_active(1)
-				J.a_intent = INTENT_HARM
+				J.set_a_intent(INTENT_HARM)
+
+
+/mob/living/carbon/human/biker/cow
+	real_name = "Beefy Bill"
+
+	New()
+		..()
+		src.bioHolder.AddEffect("cow")
 
 
 // merchant
@@ -684,7 +706,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 /mob/living/carbon/human/merchant
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.gender = "male"
 			src.real_name = pick("Slick", "Fast", "Frugal", "Thrifty", "Clever", "Shifty") + " " + pick_string_autokey("names/first_male.txt")
 			src.equip_new_if_possible(/obj/item/clothing/shoes/black, slot_shoes)
@@ -710,9 +732,9 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			return 1
 		src.changeStatus("weakened", 5 SECONDS)
 		if(prob(15))
-			SPAWN_DBG(0) emote(pick("giggle", "laugh"))
+			SPAWN(0) emote(pick("giggle", "laugh"))
 		if(prob(1))
-			SPAWN_DBG(0) src.say(pick("You guys wanna hear me play bass?", stutter("HUFFFF"), "I missed my AA meeting to play Left 4 Dead...", "I got my license suspended AGAIN", "I got fired from [pick("McDonald's", "Boston Market", "Wendy's", "Burger King", "Starbucks", "Menard's")]..."))
+			SPAWN(0) src.say(pick("You guys wanna hear me play bass?", stutter("HUFFFF"), "I missed my AA meeting to play Left 4 Dead...", "I got my license suspended AGAIN", "I got fired from [pick("McDonald's", "Boston Market", "Wendy's", "Burger King", "Starbucks", "Menard's")]..."))
 
 // waldo
 
@@ -721,7 +743,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 /mob/living/carbon/human/waldo
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.gender = "male"
 			src.real_name = "Waldo"
 
@@ -770,14 +792,14 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 		smoke.set_up(1, 0, src.loc)
 		smoke.start()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			qdel(src)
 		return
 	attack_hand(mob/user)
 		return illusion_expire(user)
 	attackby(obj/item/W, mob/user)
 		return illusion_expire(user)
-	MouseDrop(mob/M)
+	mouse_drop(mob/M)
 		if(iscarbon(M) && !M.hasStatus("handcuffed"))
 			return illusion_expire(M)
 
@@ -805,7 +827,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		if (istype(W, /obj/item/paper/postcard/owlery))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
 			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				say("Oh yeah sure, I seen it. That ol- how would he say it, [BILL_PICK("insults")]? He won't stop going on and on and on...")
 		..()
 
@@ -821,6 +843,14 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		//Whoever does eventually put him back in the game : Use a global list of bartenders or something. Dont check all_viewers
 		//	for (var/mob/living/carbon/human/npc/diner_bartender/BT in all_viewers(7, src))
 			//	BT.protect_from(M, src)
+
+/mob/living/carbon/human/don_glab/cow
+	real_name = "Donald \"Don\" Glabs" //NEED COW JOKE NAME!
+
+	New()
+		..()
+		src.bioHolder.AddEffect("cow")
+
 
 /mob/living/carbon/human/tommy
 	sound_list_laugh = list('sound/voice/tommy_hahahah.ogg', 'sound/voice/tommy_hahahaha.ogg')
@@ -852,7 +882,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 		JobEquipSpawned("Waiter")
 
 	Life(datum/controller/process/mobs/parent)
@@ -860,9 +890,9 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			return 1
 
 		if(prob(1) && !src.stat)
-			SPAWN_DBG(0) src.say(pick( "Oh my god!", "No, no, they can't be gone!", "This can't be happening!", "How did I get here?!","Where is everyone else?!"))
+			SPAWN(0) src.say(pick( "Oh my god!", "No, no, they can't be gone!", "This can't be happening!", "How did I get here?!","Where is everyone else?!"))
 		if(prob(1) && !src.stat)
-			SPAWN_DBG(0) src.emote(pick("shiver","shudder","blink","sob","faint","pale","twitch","scream"))
+			SPAWN(0) src.emote(pick("shiver","shudder","blink","sob","faint","pale","twitch","scream"))
 
 /mob/living/carbon/human/secret
 	unobservable = 1
@@ -915,7 +945,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	initializeBioholder()
 		. = ..()
-		SPAWN_DBG(0) // ok, this crap actually needs to be spawned (for now!) because of organHolders being initialized at weird times
+		SPAWN(0) // ok, this crap actually needs to be spawned (for now!) because of organHolders being initialized at weird times
 			randomize_look(src, 1, 1, 1, 1, 1, 0)
 			real_name = spacer_name(pick("spacer","juicer"))
 			gender = pick(MALE,FEMALE)
@@ -971,7 +1001,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		if (istype(W, /obj/item/paper/tug/invoice))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
 			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				say(pick("Brudder, I did that job months ago. Fuck outta here with that.","Oh come on, quit wastin my time [pick_string("johnbill.txt", "insults")]."))
 			return
 		..()

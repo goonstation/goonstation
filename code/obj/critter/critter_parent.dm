@@ -10,7 +10,7 @@
 	density = 1
 	anchored = 0
 	flags = FPRINT | CONDUCT | USEDELAY | FLUID_SUBMERGE
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/is_template = 0
 	var/alive = 1
 	var/health = 10
@@ -168,7 +168,7 @@
 	proc/wake_from_hibernation()
 		if(task != "hibernating") return
 
-		//DEBUG_MESSAGE("[src] woke from hibernation at [showCoords(src.x, src.y, src.z)] in [registered_area ? registered_area.name : "nowhere"] due to [usr ? usr : "some mysterious fucking reason"]")
+		//DEBUG_MESSAGE("[src] woke from hibernation at [log_loc(src)] in [registered_area ? registered_area.name : "nowhere"] due to [usr ? usr : "some mysterious fucking reason"]")
 		//Ok, now we look to see if we should get murdlin'
 		task = "sleeping"
 		hibernate_check = 20 //20 sleep_checks
@@ -189,7 +189,7 @@
 			task = "hibernating"
 			registered_area.registered_critters |= src
 			anchored = 1
-			//DEBUG_MESSAGE("[src] started hibernating at [showCoords(src.x, src.y, src.z)] in [registered_area ? registered_area.name : "nowhere"].")
+			//DEBUG_MESSAGE("[src] started hibernating at [log_loc(src)] in [registered_area ? registered_area.name : "nowhere"].")
 			//critters -= src //Stop processing this critter
 
 
@@ -294,7 +294,7 @@
 			attack_force = rand(attack_force, round(attack_force * W.getProperty("unstable")))
 
 		if(W.hasProperty("frenzy"))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/frenzy = W.getProperty("frenzy")
 				W.click_delay -= frenzy
 				sleep(3 SECONDS)
@@ -346,13 +346,13 @@
 
 	proc/on_damaged(mob/user)
 		if(registered_area) //In case some butt fiddles with a hibernating critter
-			registered_area.wake_critters()
+			registered_area.wake_critters(user)
 		return
 
 
 	proc/on_pet(mob/user)
 		if(registered_area) //In case some nice person fiddles with a hibernating critter
-			registered_area.wake_critters()
+			registered_area.wake_critters(user)
 		if (!user)
 			return 1 // so things can do if (..())
 		return
@@ -414,12 +414,9 @@
 	proc/patrol_to(var/towhat)
 		step_to(src, towhat)
 
-	Bump(M as mob|obj)
-		if (istype(M, /obj/machinery/door/))
-			var/obj/machinery/door/D = M
-			D.Bumped(src) // Doesn't call that automatically for some inexplicable reason.
-		else if ((isliving(M)) && (!src.anchored))
-			src.set_loc(M:loc)
+	bump(atom/M as mob|obj)
+		if ((isliving(M)) && (!src.anchored))
+			src.set_loc(M.loc)
 			src.frustration = 0
 
 	bullet_act(var/obj/projectile/P)
@@ -610,7 +607,7 @@
 
 		if(task == "following path")
 			follow_path()
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				follow_path()
 		else if(task == "sleeping")
 			do_wake_check()
@@ -709,7 +706,7 @@
 							food_target.reagents.trans_to(src, 5)
 					if (src.food_target != null && src.food_target.amount <= 0)
 						src.food_target.set_loc(null)
-						SPAWN_DBG(1 SECOND)
+						SPAWN(1 SECOND)
 							qdel(src.food_target)
 						src.task = "thinking"
 						src.food_target = null
@@ -924,7 +921,7 @@
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
-		SPAWN_DBG(src.atk_delay)
+		SPAWN(src.atk_delay)
 			src.attacking = 0
 		if (iscarbon(M) && src.atk_diseases && prob(src.atk_disease_prob))
 			var/mob/living/carbon/C = M
@@ -1073,7 +1070,7 @@
 					user.u_equip(src)
 				src.set_loc(get_turf(src))
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (shouldThrow && T)
 					src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
 					playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)

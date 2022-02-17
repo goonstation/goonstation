@@ -6,7 +6,7 @@
 
 	src.fakeloss += amount
 
-	SPAWN_DBG(seconds * 10)
+	SPAWN(seconds * 10)
 		src.fakeloss -= amount
 
 /mob/proc/false_death(var/seconds)
@@ -17,7 +17,7 @@
 	boutput(src, "<B>[src]</B> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...")
 	src.changeStatus("weakened", 5 SECONDS)
 
-	SPAWN_DBG(seconds * 10)
+	SPAWN(seconds * 10)
 		src.fakedead = 0
 		src.delStatus("weakened")
 
@@ -248,7 +248,7 @@
 			world << siren
 			for(var/area/A in world)
 				A.eject = 1
-				A.updateicon()
+				A.UpdateIcon()
 				LAGCHECK(LAG_LOW)
 
 			sleep(30 SECONDS)
@@ -260,7 +260,7 @@
 			for(var/area/A in world)
 				LAGCHECK(LAG_LOW)
 				A.eject = 0
-				A.updateicon()
+				A.UpdateIcon()
 
 			for_by_tcl(G, /obj/critter/dog/george)
 				G.visible_message("<span class='alert'><b>[G]</b> pees on the floor. Bad dog!</span>")

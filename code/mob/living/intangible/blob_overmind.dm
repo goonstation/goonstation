@@ -82,9 +82,9 @@
 		src.add_ability(/datum/blob_ability/set_color)
 		src.add_ability(/datum/blob_ability/tutorial)
 		src.add_ability(/datum/blob_ability/help)
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_SPOOKY)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-		src.see_invisible = 15
+		src.see_invisible = INVIS_SPOOKY
 		src.see_in_dark = SEE_DARK_FULL
 		my_material = copyMaterial(getMaterial("blob"))
 		my_material.color = "#ffffff"
@@ -98,7 +98,7 @@
 		src.nucleus_overlay.alpha = 0
 		src.nucleus_overlay.appearance_flags = RESET_COLOR
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while (src)
 				if (src.client)
 					update_cooldown_costs()
@@ -147,10 +147,10 @@
 
 			//maybe other debuffs here in the future
 
-			newBioPoints = clamp((src.bio_points + (base_gen_rate + genBonus - gen_rate_used) * mult), 0, src.bio_points_max) //these are rounded in point displays
+			newBioPoints = clamp((src.bio_points + (base_gen_rate + genBonus - gen_rate_used) * mult), 0, src.bio_points_max + (base_gen_rate + gen_rate_bonus - gen_rate_used) * (mult - 1)) //these are rounded in point displays
 
 		else
-			newBioPoints = clamp((src.bio_points + (base_gen_rate + gen_rate_bonus - gen_rate_used) * mult), 0, src.bio_points_max) //ditto above
+			newBioPoints = clamp((src.bio_points + (base_gen_rate + gen_rate_bonus - gen_rate_used) * mult), 0, src.bio_points_max + (base_gen_rate + gen_rate_bonus - gen_rate_used) * (mult - 1)) //ditto above
 
 		src.bio_points = newBioPoints
 
@@ -211,7 +211,7 @@
 
 			boutput(src, "<span class='alert'><b>With no nuclei to bind it to your biomass, your consciousness slips away into nothingness...</b></span>")
 			src.ghostize()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				qdel(src)
 
 	Stat()
@@ -255,7 +255,7 @@
 			if (plane)
 				plane.alpha = 255
 
-	MouseDrop()
+	mouse_drop()
 		return
 
 	MouseDrop_T()
@@ -296,19 +296,20 @@
 			src.update_buttons()
 			return
 		else
-			if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && restricted_z_allowed(src, T)) || src.tutorial || (src.client && src.client.holder)))
-				if (src.tutorial)
-					if (!tutorial.PerformAction("clickmove", T))
-						return
-				src.set_loc(T)
-				return
+			if(params["right"])
+				if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && restricted_z_allowed(src, T)) || src.tutorial || (src.client && src.client.holder)))
+					if (src.tutorial)
+						if (!tutorial.PerformAction("clickmove", T))
+							return
+					src.set_loc(T)
+					return
 
-			if (T && isghostrestrictedz(T.z) && !restricted_z_allowed(src, T) && !(src.client && src.client.holder))
-				var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-				if (OS)
-					src.set_loc(OS)
-				else
-					src.z = 1
+				if (T && isghostrestrictedz(T.z) && !restricted_z_allowed(src, T) && !(src.client && src.client.holder))
+					var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
+					if (OS)
+						src.set_loc(OS)
+					else
+						src.z = 1
 
 	say_understands() return 1
 	can_use_hands()	return 0
@@ -528,7 +529,7 @@
 
 	proc/BlobPointsBezierApproximation(var/t)
 		// t = number of tiles occupied by the blob
-		t = max(0, min(1000, t))
+		t = clamp(t, 0, 1000)
 		var/points
 
 		if (t < 514)
@@ -669,7 +670,7 @@
 					return
 				var/my_upgrade_id = user.upgrade_id
 				user.upgrading = my_upgrade_id
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					if (user.upgrading <= my_upgrade_id)
 						user.upgrading = 0
 					else

@@ -19,7 +19,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 		fxlist = hospital_fx_sounds
 		if (ambientSound)
 
-			SPAWN_DBG(6 SECONDS)
+			SPAWN(6 SECONDS)
 				var/sound/S = new/sound()
 				S.file = ambientSound
 				S.repeat = 0
@@ -71,7 +71,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 					ambientSound.volume = 60
 					H << ambientSound
 					if(S)
-						SPAWN_DBG(sound_delay)
+						SPAWN(sound_delay)
 							H << S
 
 
@@ -116,10 +116,10 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 				var/turf/T = locate(Obj.x, 4, 1)
 				Obj.set_loc(T)
 				playsound(T, pick('sound/effects/elec_bigzap.ogg', 'sound/effects/elec_bzzz.ogg', 'sound/effects/electric_shock.ogg'), 50, 0)
-				var/obj/somesparks = unpool(/obj/effects/sparks)
+				var/obj/somesparks = new /obj/effects/sparks
 				somesparks.set_loc(T)
-				SPAWN_DBG(2 SECONDS)
-					if (somesparks) pool(somesparks)
+				SPAWN(2 SECONDS)
+					if (somesparks) qdel(somesparks)
 
 				Obj.throw_at(get_edge_target_turf(T, NORTH), 200, 1)
 
@@ -162,19 +162,19 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	name = "malevolent thing trigger"
 	icon = 'icons/misc/hospital.dmi'
 	icon_state = "specter"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(!maniac_active)
 			if(isliving(AM))
 				if(AM:client)
 					if(prob(75))
 						maniac_active |= 2
-						SPAWN_DBG(1 MINUTE) maniac_active &= ~2
-						SPAWN_DBG(rand(10,30))
+						SPAWN(1 MINUTE) maniac_active &= ~2
+						SPAWN(rand(10,30))
 							var/obj/chaser/hospital/C = new /obj/chaser/hospital(src.loc)
 							C.target = AM
 
@@ -192,7 +192,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			process()
 
 	proximity_act()
@@ -205,7 +205,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 			if (LANDMARK_SAMOSTREL_WARP in landmarks)
 				var/target_original_loc = target.loc
 				target.setStatus("paralysis", max(target.getStatusDuration("paralysis"), 10 SECONDS))
-				do_teleport(target, pick_landmark(LANDMARK_SAMOSTREL_WARP), 0)
+				do_teleport(target, pick_landmark(LANDMARK_SAMOSTREL_WARP), 0, 0)
 
 				if (ishuman(target))
 					var/atom/movable/overlay/animation = new(target_original_loc)
@@ -230,7 +230,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 		if(!targeting)
 			targeting = 1
 			//target<< 'sound/misc/chefsong_start.ogg'
-			SPAWN_DBG(8 SECONDS)
+			SPAWN(8 SECONDS)
 				aaah.repeat = 1
 				target << aaah
 				sleep(rand(100,400))
@@ -244,13 +244,13 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 /obj/gurney_trap
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "x4"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	var/ready = 1
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(ready && ismob(AM) && isliving(AM))
 			if(AM:client)
 				ready = 0
@@ -476,16 +476,16 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	setup_default_startup_task = /datum/computer/file/guardbot_task/soviet
 
 	beacon_freq = 1440
-	control_freq = 1917
+	control_freq = FREQ_AINLEY_BUDDY
 
 	New()
 		..()
 #ifndef SAMOSTREL_LIVE
 		del(src)
 #endif
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (src.botcard)
-				src.botcard.access += 1917
+				src.botcard.access += FREQ_AINLEY_BUDDY
 
 	speak(var/message)
 		return ..("<font face=Consolas>[russify( uppertext(message) )]</font>")
@@ -526,7 +526,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 			src.mover.master = null
 			qdel(src.mover)
 
-		src.invisibility = 100
+		src.invisibility = INVIS_ALWAYS_ISH
 		var/obj/overlay/Ov = new/obj/overlay(T)
 		Ov.anchored = 1
 		Ov.name = "Explosion"
@@ -550,7 +550,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 			var/edge = get_edge_target_turf(src, pick(alldirs))
 			O.throw_at(edge, 100, 4)
 
-		SPAWN_DBG(0) //Delete the overlay when finished with it.
+		SPAWN(0) //Delete the overlay when finished with it.
 			src.on = 0
 			sleep(1.5 SECONDS)
 			qdel(Ov)
@@ -660,9 +660,9 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	proc/find_nearest_beacon()
 		nearest_beacon = null
 		new_destination = "__nearest__"
-		master.post_status("!BEACON!", "findbeacon", "patrol")
+		master.post_find_beacon("patrol")
 		awaiting_beacon = 5
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(!master || !master.on || master.stunned || master.idle)
 				return
 			if(master.task != src)
@@ -677,7 +677,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 
 	proc/set_destination(var/new_dest)
 		new_destination = new_dest
-		master.post_status("!BEACON!", "findbeacon", "patrol")
+		master.post_find_beacon(new_dest || "patrol")
 		awaiting_beacon = 5
 
 	receive_signal(datum/signal/signal)

@@ -24,7 +24,7 @@
 /obj/item/basketball/suicide(var/mob/user as mob)
 	user.visible_message("<span class='alert'><b>[user] fouls out, permanently.</b></span>")
 	user.TakeDamage("head", 175, 0)
-	SPAWN_DBG(30 SECONDS)
+	SPAWN(30 SECONDS)
 		if (user)
 			user.suiciding = 0
 	return 1
@@ -52,9 +52,10 @@
 			M.changeStatus("stunned", 2 SECONDS)
 			return
 
-/obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
+/obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
+			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
 	src.icon_state = "bball_spin"
-	..()
+	. = ..()
 
 /obj/item/basketball/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/plutonium_core))
@@ -93,7 +94,7 @@
 	anchored = 0
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bbasket0"
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	var/mounted = 0
 	var/active = 0
 	var/probability = 40
@@ -119,7 +120,7 @@
 				JOB_XP(user, "Clown", 1)
 
 			if (!src.shoot(W, user))
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					src.visible_message("<span class='alert'>[user] whiffs the dunk.</span>")
 		return
 
@@ -151,7 +152,8 @@
 							src.pixel_x = -20
 		return
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
+		..()
 		if (src.active)
 			return
 		if (istype(A, /obj/item/bballbasket)) // oh for FUCK'S SAKE
@@ -176,7 +178,7 @@
 				src.visible_message("<span class='alert'>[O] teeters on the edge of [src]!</span>")
 				var/delay = rand(5, 15)
 				animate_horizontal_wiggle(O, delay, 5, 1, -1) // target, number of animation loops, speed, positive x variation, negative x variation
-				SPAWN_DBG(delay)
+				SPAWN(delay)
 					if (O && O.loc == src.loc)
 						if (prob(40)) // It goes in!
 							src.visible_message("<span class='notice'>[O] slips into [src]!</span>")
@@ -197,10 +199,10 @@
 			return
 		src.active = 1
 		playsound(src, "rustle", 75, 1)
-		A.invisibility = 100
+		A.invisibility = INVIS_ALWAYS_ISH
 		flick("bbasket1", src)
-		SPAWN_DBG(1.5 SECONDS)
-			A.invisibility = 0
+		SPAWN(1.5 SECONDS)
+			A.invisibility = INVIS_NONE
 			src.active = 0
 
 /obj/item/bballbasket/testing
@@ -290,7 +292,7 @@
 
 /obj/item/bloodbowlball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
 	src.icon_state = "bloodbowlball_air"
-	..()
+	. = ..()
 
 /obj/item/bloodbowlball/attack(target as mob, mob/user as mob)
 	playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)

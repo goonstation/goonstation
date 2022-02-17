@@ -38,7 +38,7 @@
 			if (holder.owner.wizard_spellpower(src)) forcefield4 =  new /obj/forcefield(locate(holder.owner.x,holder.owner.y + 2,holder.owner.z))
 			if (holder.owner.wizard_spellpower(src)) forcefield5 =  new /obj/forcefield(locate(holder.owner.x,holder.owner.y - 2,holder.owner.z))
 
-		SPAWN_DBG(30 SECONDS)
+		SPAWN(30 SECONDS)
 			qdel(forcefield1)
 			qdel(forcefield2)
 			qdel(forcefield3)
@@ -57,6 +57,11 @@
 	opacity = 0
 	density = 1
 	luminosity = 3
+	flags = USEDELAY
+
+	attackby(obj/item/I, mob/user)
+		. = ..()
+		user.lastattacked = src
 
 /obj/forcefield/artifact
 	var/obj/artifact/forcefield_generator/source = null

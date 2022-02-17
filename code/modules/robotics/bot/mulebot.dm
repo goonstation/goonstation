@@ -16,9 +16,11 @@
 	locked = 1
 	access_lookup = "Captain"
 	var/atom/movable/load = null		// the loaded crate (usually)
+	///sanitycheck so we can't try to unload during an unload operation
+	var/unloading = FALSE
 
-	var/beacon_freq = 1445
-	var/control_freq = 1447
+	var/beacon_freq = FREQ_NAVBEACON
+	var/control_freq = FREQ_BOT_CONTROL
 
 	suffix = ""
 
@@ -84,10 +86,8 @@
 			cell.maxcharge = 2000
 		setup_wires()
 
-		SPAWN_DBG(0.5 SECONDS)	// must wait for map loading to finish
-			if(radio_controller)
-				radio_controller.add_object(src, "[control_freq]")
-				radio_controller.add_object(src, "[beacon_freq]")
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("beacon", beacon_freq)
 
 	// set up the wire colours in random order
 	// and the random wire display order
@@ -103,7 +103,7 @@
 			colours -= colour
 
 			var/order = orders[ rand(1,orders.len) ]
-			wire_order += text2num(order)
+			wire_order += text2num_safe(order)
 			orders -= order
 
 	// attack by item
@@ -302,7 +302,7 @@
 						usr.put_in_hand_or_drop(cell)
 
 						cell.add_fingerprint(usr)
-						cell.updateicon()
+						cell.UpdateIcon()
 						cell = null
 
 						usr.visible_message("<span class='notice'>[usr] removes the power cell from [src].</span>", "<span class='notice'>You remove the power cell from [src].</span>")
@@ -368,7 +368,7 @@
 
 				if("wirecut")
 					if (usr.find_tool_in_hand(TOOL_SNIPPING))
-						var/wirebit = text2num(href_list["wire"])
+						var/wirebit = text2num_safe(href_list["wire"])
 						if (wirebit == wire_mobavoid)
 							logTheThing("vehicle", usr, null, "disables the safety of a MULE ([src.name]) at [log_loc(usr)].")
 							src.emagger = usr
@@ -377,7 +377,7 @@
 						boutput(usr, "<span class='notice'>You need wirecutters!</span>")
 				if("wiremend")
 					if (usr.find_tool_in_hand(TOOL_SNIPPING))
-						var/wirebit = text2num(href_list["wire"])
+						var/wirebit = text2num_safe(href_list["wire"])
 						if (wirebit == wire_mobavoid)
 							logTheThing("vehicle", usr, null, "reactivates the safety of a MULE ([src.name]) at [log_loc(usr)].")
 							src.emagger = null
@@ -457,14 +457,16 @@
 	// called to unload the bot
 	// argument is optional direction to unload
 	// if zero, unload at bot's location
-	proc/unload(var/dirn = 0)
-		if(!load)
+	proc/unload(var/dirn = 0, var/setloc = 1)
+		if(!load || unloading)
 			return
+		unloading = TRUE
 
 		mode = 1
 		overlays = null
 
-		load.set_loc(src.loc)
+		if(setloc)
+			load.set_loc(src.loc)
 		load.pixel_y -= 9
 		load.layer = initial(load.layer)
 		if(ismob(load))
@@ -489,7 +491,14 @@
 			AM.pixel_y = initial(AM.pixel_y)
 		mode = 0
 
+		unloading = FALSE
+
 	var/last_process_time
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == load)
+			unload(0, 0)
 
 	process()
 		. = ..()
@@ -499,7 +508,7 @@
 			on = 0
 			return
 		if(on)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				// speed varies between 1-4 depending on how many wires are cut (and which of the two)
 				var/speed = ((wires & wire_motor1) ? 1:0) + ((wires & wire_motor2) ? 2:0) + 1
 				// both wires results in no speed at all :(
@@ -558,7 +567,7 @@
 							path -= loc
 
 							if(mode==4)
-								SPAWN_DBG(1 DECI SECOND)
+								SPAWN(1 DECI SECOND)
 									send_status()
 
 							if(destination == home_destination)
@@ -567,8 +576,11 @@
 								mode = 2
 
 						else		// failed to move
-
-							//boutput(world, "Unable to move.")
+							// we did not move, so let us see if we are being blocked by a door
+							var/obj/machinery/door/block_door = locate(/obj/machinery/door/) in next
+							if (block_door)
+								// we patiently wait for the door - they only need half their operation time until they are non-dense
+								sleep(block_door.operation_time/2)
 
 							blockcount++
 							mode = 4
@@ -581,7 +593,7 @@
 								src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
 								playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 0)
 
-								SPAWN_DBG(0.2 SECONDS)
+								SPAWN(0.2 SECONDS)
 									calc_path(next)
 									if(path)
 										src.visible_message("[src] makes a delighted ping!", "You hear a ping.")
@@ -604,7 +616,7 @@
 			if(5)		// calculate new path
 				//boutput(world, "Calc new path.")
 				mode = 6
-				SPAWN_DBG(0)
+				SPAWN(0)
 
 					calc_path()
 
@@ -628,15 +640,15 @@
 	// calculates a path to the current destination
 	// given an optional turf to avoid
 	proc/calc_path(var/turf/avoid = null)
-		src.path = AStar(src.loc, src.target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 500, botcard, avoid)
+		src.path = get_path_to(src, src.target, max_distance=200, id=src.botcard, skip_first=FALSE, exclude=avoid, cardinal_only=TRUE)
 
 	// sets the current destination
 	// signals all beacons matching the delivery code
 	// beacons will return a signal giving their locations
 	proc/set_destination(var/new_dest)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			new_destination = new_dest
-			post_signal(beacon_freq, "findbeacon", "delivery")
+			post_signal_multiple("beacon", list("findbeacon" = "delivery", "address_tag" = "delivery"))
 			updateDialog()
 
 	// starts bot moving to current destination
@@ -650,7 +662,7 @@
 	// starts bot moving to home
 	// sends a beacon query to find
 	proc/start_home()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			set_destination(home_destination)
 			mode = 4
 		icon_state = "mulebot[(wires & wire_mobavoid) == wire_mobavoid]"
@@ -691,7 +703,7 @@
 		return
 
 	// called when bot bumps into anything
-	Bump(var/atom/obs)
+	bump(var/atom/obs)
 		if(!(wires & wire_mobavoid))		//usually just bumps, but if avoidance disabled knock over mobs
 			var/mob/M = obs
 			if(ismob(M))
@@ -699,7 +711,7 @@
 					src.visible_message("<span class='alert'>[src] bumps into [M]!</span>")
 				else
 					src.visible_message("<span class='alert'>[src] knocks over [M]!</span>")
-					M.pulling = null
+					M.remove_pulling()
 					M.changeStatus("stunned", 8 SECONDS)
 					M.changeStatus("weakened", 5 SECONDS)
 					M.lying = 1
@@ -709,7 +721,7 @@
 	alter_health()
 		return get_turf(src)
 
-	// called from mob/living/carbon/human/HasEntered()
+	// called from mob/living/carbon/human/Crossed(atom/movable/)
 	// when mulebot is in the same loc
 	proc/RunOver(var/mob/living/carbon/human/H)
 		src.visible_message("<span class='alert'>[src] drives over [H]!</span>")
@@ -793,11 +805,11 @@
 					return
 
 				if("autoret")
-					auto_return = text2num(signal.data["value"])
+					auto_return = text2num_safe(signal.data["value"])
 					return
 
 				if("autopick")
-					auto_pickup = text2num(signal.data["value"])
+					auto_pickup = text2num_safe(signal.data["value"])
 					return
 
 		// receive response from beacon
@@ -809,7 +821,7 @@
 				target = signal.source.loc
 				var/direction = signal.data["dir"]	// this will be the load/unload dir
 				if(direction)
-					loaddir = text2num(direction)
+					loaddir = text2num_safe(direction)
 				else
 					loaddir = 0
 				icon_state = "mulebot[(wires & wire_mobavoid) == wire_mobavoid]"
@@ -828,17 +840,12 @@
 		if(freq == control_freq && !(wires & wire_remote_tx))
 			return
 
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
-
-		if(!frequency) return
-
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
-		signal.transmission_method = 1
+		signal.data["sender"] = src.botnet_id
 		for(var/key in keyval)
 			signal.data[key] = keyval[key]
-			//boutput(world, "sent [key],[keyval[key]] on [freq]")
-		frequency.post_signal(src, signal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, freq)
 
 	// signals bot status etc. to controller
 	proc/send_status()

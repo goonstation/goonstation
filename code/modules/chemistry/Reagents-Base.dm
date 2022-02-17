@@ -157,7 +157,6 @@ datum
 					var/ethanol_amt = holder.get_reagent_amount(src.id)
 					if(H?.reagents.has_reagent("moonshine"))
 						mult *= 7
-						ethanol_amt *= 2
 					var/liver_damage = 0
 					if (!isalcoholresistant(H) || H?.reagents.has_reagent("moonshine"))
 						if (ethanol_amt >= 15)
@@ -190,7 +189,7 @@ datum
 							if(prob(4))
 								H.change_misstep_chance(20 * mult)
 							if(probmult(6))
-								H.visible_message("<span class='alert'>[H] pukes all over \himself.</span>")
+								H.visible_message("<span class='alert'>[H] pukes all over [himself_or_herself(H)].</span>")
 								H.vomit()
 							if(prob(15))
 								H.make_dizzy(5 * mult)
@@ -294,8 +293,7 @@ datum
 					if (M.nutrition > 10) // Not good for your stomach either
 						for(var/mob/O in viewers(M, null))
 							O.show_message(text("<span class='alert'>[] vomits on the floor profusely!</span>", M), 1)
-						playsound(M.loc, "sound/effects/splat.ogg", 50, 1)
-						make_cleanable(/obj/decal/cleanable/vomit,M.loc)
+						M.vomit()
 						M.nutrition -= rand(3,5)
 						M.take_toxin_damage(10) // im bad
 						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS))
@@ -351,8 +349,12 @@ datum
 				if(!M) M = holder.my_atom
 				if(prob(70))
 					M.take_brain_damage(1*mult)
+				if (probmult(5) && isliving(M)) //folk treatment for the black plague- drinking mercury
+					var/mob/living/L = M
+					var/datum/ailment_data/disease/plague = L.find_ailment_by_type(/datum/ailment/disease/space_plague)
+					if (istype(plague))
+						L.cure_disease(plague)
 				..()
-				return
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison",1)
@@ -415,17 +417,13 @@ datum
 			minimum_reaction_temperature = T0C + 100
 			var/reacted_to_temp = 0 // prevent infinite loop in a fluid
 
-			pooled()
-				..()
-				reacted_to_temp = 0
-
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(!reacted_to_temp)
 					reacted_to_temp = 1
 					if(holder)
 						var/list/covered = holder.covered_turf()
 						for(var/turf/t in covered)
-							SPAWN_DBG(1 DECI SECOND) fireflash(t, min(max(0,((volume/covered.len)/15)),6))
+							SPAWN(1 DECI SECOND) fireflash(t, clamp(((volume/covered.len)/15), 0, 6))
 				if(holder)
 					holder.del_reagent(id)
 
@@ -835,7 +833,7 @@ datum
 							O.show_message(text("<span class='alert'><b>[] begins to crisp and burn!</b></span>", M), 1)
 						boutput(M, "<span class='alert'>Holy Water! It burns!</span>")
 						var/burndmg = volume * 1.25
-						burndmg = min(burndmg, 110) //cap burn at 110 so we can't instant-kill vampires. just crit em ok.
+						burndmg = min(burndmg, 80) //cap burn at 110(80 now >:) so we can't instant-kill vampires. just crit em ok.
 						M.TakeDamage("chest", 0, burndmg, 0, DAMAGE_BURN)
 						M.change_vampire_blood(-burndmg)
 						reacted = 1
@@ -931,7 +929,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				if (volume >= 5 && !(locate(/obj/item/raw_material/ice) in T))
-					var/obj/item/raw_material/ice/I = unpool(/obj/item/raw_material/ice)
+					var/obj/item/raw_material/ice/I = new /obj/item/raw_material/ice
 					I.set_loc(T)
 				return
 

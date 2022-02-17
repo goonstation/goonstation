@@ -4,7 +4,7 @@
 /area/space)
 "aab" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "aac" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -1658,7 +1658,7 @@
 /area/station/maintenance/solar/west)
 "adS" = (
 /obj/cable,
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "westsolar";
 	name = "West Solar Control";
 	track = 2
@@ -2160,7 +2160,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "eastsolar";
 	name = "East Solar Control";
 	track = 2
@@ -6569,7 +6569,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "aoh" = (
@@ -30254,7 +30254,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "bll" = (
@@ -32294,7 +32294,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/station/engine/power)
 "bpV" = (

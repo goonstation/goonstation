@@ -11,27 +11,18 @@
 	var/const/shuttle_waittime = 4000
 
 /datum/game_mode/disaster/pre_setup()
-	var/list/candidates = list()
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (ishellbanned(player))
-			continue
-		if (player.ready && !candidates.Find(player.mind) && player.client.preferences.be_wraith)
-			candidates += player.mind
-	if (candidates.len == 0)
-		return 0
-	var/datum/mind/twraith = pick(candidates) // Just one for now
-	twraith.special_role = ROLE_WRAITH
-	Agimmicks += twraith
+	var/list/candidates = get_possible_enemies(ROLE_WRAITH, 0)
+	if (length(candidates))
+		var/datum/mind/twraith = pick(candidates) // Just one for now
+		twraith.special_role = ROLE_WRAITH
+		Agimmicks += twraith
 
 	return 1
 
 /datum/game_mode/disaster/announce()
 	if(derelict_mode)
 		boutput(world, "<tt>BUG: MEM ERR 0000FF88 00F90045</tt>")
-		playsound_global(world, 'sound/machines/glitch1.ogg', 60)
+		playsound_global(world, "sound/machines/glitch1.ogg", 60)
 		boutput(world, "<B>We are experiencing technical difficulties. Please remain calm. Help is on the way.</B>")
 		boutput(world, "<B>Report to your station's emergency rally point: CHAPEL.</B>")
 	else
@@ -47,7 +38,7 @@
 	emergency_shuttle.disabled = 1 //Disable the shuttle temporarily.
 
 	if(derelict_mode)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			var/list/CORPSES = landmarks[LANDMARK_PESTSTART]
 			var/list/JUNK = landmarks[LANDMARK_HALLOWEEN_SPAWN]
 			for(var/turf/T in CORPSES)
@@ -67,57 +58,57 @@
 						new/obj/critter/floateye(T)
 					if(4)
 						var/obj/item/device/light/glowstick/G = new/obj/item/device/light/glowstick(T)
-						SPAWN_DBG(2 SECONDS)
+						SPAWN(2 SECONDS)
 							G.on = 1
 							G.icon_state = "glowstick-on"
 							G.light?.enable()
 
 	var/start_wait = rand(waittime_l, waittime_h)
 
-	SPAWN_DBG (start_wait)
+	SPAWN(start_wait)
 		start_disaster()
 //
-	SPAWN_DBG (start_wait + shuttle_waittime)
+	SPAWN(start_wait + shuttle_waittime)
 		emergency_shuttle.disabled = 0
 		emergency_shuttle.incall()
 		if(derelict_mode)
 			command_alert("Ev4C**!on shu9999999__ called. Prepare fo# evacua ****SIGNAL LOST****","Emergency Al&RT")
-			playsound_global(world, 'sound/machines/engine_alert2.ogg', 60)
+			playsound_global(world, "sound/machines/engine_alert2.ogg", 60)
 		else
 			command_alert("The shuttle has been called.","Emergency Shuttle Update")
 
 	if(derelict_mode) // ready up some effects and noises
-		SPAWN_DBG(0.2 SECONDS)
+		SPAWN(0.2 SECONDS)
 			for(var/mob/living/carbon/human/H in mobs)
 				H.flash(3 SECONDS)
 
-		SPAWN_DBG(10 SECONDS)
-			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 60)
+		SPAWN(10 SECONDS)
+			playsound_global(world, "sound/effects/creaking_metal1.ogg", 60)
 			for(var/mob/living/carbon/human/H in mobs)
 				shake_camera(H, 8, 32)
 				H.change_misstep_chance(5)
 
-		SPAWN_DBG(20 SECONDS)
+		SPAWN(20 SECONDS)
 			if(length(scarysounds))
 				playsound_global(world, pick(scarysounds), 50)
 
-		SPAWN_DBG(30 SECONDS)
+		SPAWN(30 SECONDS)
 			if(length(scarysounds))
 				playsound_global(world, pick(scarysounds), 50)
 
-		SPAWN_DBG(40 SECONDS)
-			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 60)
+		SPAWN(40 SECONDS)
+			playsound_global(world, "sound/effects/creaking_metal1.ogg", 60)
 			for(var/mob/living/carbon/human/H in mobs)
 				shake_camera(H, 8, 24)
 				H.change_misstep_chance(5)
 
-		SPAWN_DBG(1 MINUTE)
-			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 60)
+		SPAWN(1 MINUTE)
+			playsound_global(world, "sound/effects/creaking_metal1.ogg", 60)
 			for(var/mob/living/carbon/human/H in mobs)
 				shake_camera(H, 7, 16)
 				H.change_misstep_chance(5)
 
-		SPAWN_DBG(80 SECONDS)
+		SPAWN(80 SECONDS)
 			if(length(scarysounds))
 				playsound_global(world, pick(scarysounds), 50)
 
@@ -169,8 +160,8 @@
 
 	if(derelict_mode)
 		command_alert("[disaster_name] eve## de####ed on **e stat!on. **$00AA curren#_ unava!l4ble due t0 [contrived_excuse]. All per#############ERR","Haz4rD*## Ev##_ A**Rt")
-		playsound_global(world, 'sound/machines/siren_generalquarters_quiet.ogg', 90)
-		SPAWN_DBG(0.5 SECONDS)
+		playsound_global(world, "sound/machines/siren_generalquarters_quiet.ogg", 90)
+		SPAWN(0.5 SECONDS)
 			random_events.announce_events = 0
 			random_events.force_event("Power Outage","Scripted Disaster Mode Event")
 
@@ -179,7 +170,7 @@
 
 	for(var/turf/T in world)
 		if(prob(21) && T.z == 1 && istype(T,/turf/simulated/floor))
-			SPAWN_DBG(50+rand(0,6250))
+			SPAWN(50+rand(0,6250))
 				var/obj/vortex/P = new /obj/vortex( T )
 				P.name = disaster_name
 				if(prob(6) && length(scarysounds))

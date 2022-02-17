@@ -20,7 +20,7 @@
 	var/image/fluid_icon
 
 	New(var/datum/custom_soup/S)
-		if(!S)
+		if(!S || !istype(S))
 			qdel(src)
 			return
 		src.name = S.name
@@ -350,6 +350,7 @@
 		. += "."
 
 	on_reagent_change()
+		..()
 		if(my_soup)
 			return
 		if(reagents.total_volume)
@@ -423,7 +424,7 @@
 			return src.Attackby(W, user)
 		return ..()
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		if (usr.is_in_hands(src))
 			var/turf/T = over_object
 			if (!(usr in range(1, T)))

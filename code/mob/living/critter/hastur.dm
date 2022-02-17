@@ -13,7 +13,7 @@ var/HasturPresent = 0
 	can_grab = 1
 	can_disarm = 1
 	can_help = 1
-	see_invisible = 21
+	see_invisible = INVIS_ADVENTURE
 	stat = 2
 	stepsound = "sound/misc/hastur/tentacle_walk.ogg"
 	speechverb_say = "states"
@@ -41,7 +41,7 @@ var/HasturPresent = 0
 		abilityHolder.addAbility(/datum/targetable/hastur/masswhisper)
 		abilityHolder.addAbility(/datum/targetable/hastur/ancientinvisibility)
 
-	Bump(atom/O)
+	bump(atom/O)
 		. = ..()
 		changeIcon(0)
 		return .
@@ -162,7 +162,7 @@ var/HasturPresent = 0
 		M.visible_message(pick("<span class='alert'><B>[M] reveals their true form for a moment and -COMPLETELY- devours [target]!</B></span>","<span class='alert'><B>Huge mouth emerges underneath [M]'s robes and DEVOURS [target]!</B></span>","<span class='alert'><B>[M] growls angrily as they reveal their true form, completely devouring [target]!</B></span>"))
 		playsound(M.loc, pick('sound/misc/hastur/devour1.ogg','sound/misc/hastur/devour2.ogg','sound/misc/hastur/devour3.ogg','sound/misc/hastur/devour4.ogg'), 90,1)
 		flick("hastur-devour", M)
-		SPAWN_DBG(7 DECI SECONDS)
+		SPAWN(7 DECI SECONDS)
 			target.gib()
 			target.icon_state = "lost"
 			target.name = "Soulless [target.real_name]"
@@ -184,7 +184,7 @@ var/HasturPresent = 0
 			M.updateOverlaysClient(M.client)
 			boutput(M, pick("<font color=purple><b>The reality around you fades out..</b></font>","<font color=purple><b>Suddenly your mind feels extremely frail and vulnerable..</b></font>","<font color=purple><b>Your sanity starts to fail you...</b></font>"))
 			playsound(M, "sound/ambience/spooky/Void_Song.ogg", 50, 1)
-			SPAWN_DBG(62 SECONDS)
+			SPAWN(62 SECONDS)
 				M.removeOverlayComposition(/datum/overlayComposition/insanity)
 				M.updateOverlaysClient(M.client)
 
@@ -238,7 +238,7 @@ var/HasturPresent = 0
 			APPLY_MOB_PROPERTY(H, PROP_INVISIBILITY, src, INVIS_GHOST)
 			H.alpha = 160
 			H.stepsound = null
-			H.see_invisible = 16
+			H.see_invisible = INVIS_GHOST
 			stage = 1
 
 //TENTACLE LONG RANGE WHIP//
@@ -250,26 +250,13 @@ var/HasturPresent = 0
 	density = 0
 	opacity = 0
 
-	unpooled(var/pool)
-		name = initial(name)
-		desc = initial(desc)
-		anchored = initial(anchored)
-		density = initial(density)
-		opacity = initial(opacity)
-		icon = initial(icon)
-		icon_state = initial(icon_state)
-		layer = initial(layer)
-		pixel_x = initial(pixel_x)
-		pixel_y = initial(pixel_y)
-		..()
-
 /obj/tentacle_trg_dummy
 	name = ""
 	desc = ""
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 99
+	invisibility = INVIS_ALWAYS_ISH
 
 
 /datum/limb/longtentacle
@@ -296,7 +283,7 @@ var/HasturPresent = 0
 		next_shot_at = ticker.round_elapsed_ticks + cooldown
 
 		playsound(user, "sound/misc/hastur/tentacle_hit.ogg", 50, 1)
-		SPAWN_DBG(rand(1,3)) // so it might miss, sometimes, maybe
+		SPAWN(rand(1,3)) // so it might miss, sometimes, maybe
 			var/obj/target_r = new/obj/tentacle_trg_dummy(target)
 
 			playsound(user, "sound/misc/hastur/tentacle_hit.ogg", 50, 1)
@@ -336,7 +323,7 @@ var/HasturPresent = 0
 
 			sleep(0.7 SECONDS)
 			for (var/obj/O in affected)
-				pool(O)
+				qdel(O)
 
 			if(istype(target_r, /obj/tentacle_trg_dummy)) qdel(target_r)
 
@@ -366,7 +353,7 @@ var/HasturPresent = 0
 		next_shot_at = ticker.round_elapsed_ticks + cooldown
 
 		playsound(user, "sound/misc/hastur/tentacle_hit.ogg", 50, 1)
-		SPAWN_DBG(rand(1,3)) // so it might miss, sometimes, maybe
+		SPAWN(rand(1,3)) // so it might miss, sometimes, maybe
 			var/obj/target_r = new/obj/tentacle_trg_dummy(target)
 
 			playsound(user, "sound/misc/hastur/tentacle_hit.ogg", 50, 1)
@@ -409,6 +396,6 @@ var/HasturPresent = 0
 
 			sleep(0.7 SECONDS)
 			for (var/obj/O in affected)
-				pool(O)
+				qdel(O)
 
 			if(istype(target_r, /obj/tentacle_trg_dummy)) qdel(target_r)

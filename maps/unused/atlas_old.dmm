@@ -1233,7 +1233,7 @@
 /area/station/crew_quarters/catering)
 "dO" = (
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "Dented Crate"
 	},
@@ -1553,7 +1553,7 @@
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/signaler,
 /obj/item/storage/box/stinger_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/storage/box/revimp_kit,
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,
@@ -2064,7 +2064,7 @@
 /obj/table/wood/round,
 /obj/machinery/espresso_machine,
 /obj/item/reagent_containers/food/drinks/espressocup,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /turf/simulated/floor/wood,
@@ -2139,7 +2139,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
 "gi" = (
-/obj/machinery/power/monitor/smes,
+/obj/machinery/computer/power_monitor/smes,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 2;
@@ -5726,7 +5726,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/coldloop)
 "op" = (
-/obj/machinery/power/monitor/smes,
+/obj/machinery/computer/power_monitor/smes,
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/caution/corner/sw,
@@ -6162,7 +6162,7 @@
 /area/station/crew_quarters/bathroom)
 "pq" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "pr" = (
 /obj/cable{
 	d1 = 1;
@@ -10053,7 +10053,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/machinery/power/solar_control/north{
+/obj/machinery/computer/solar_control/north{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -11913,7 +11913,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -12761,7 +12761,7 @@
 /turf/simulated/floor/red,
 /area/station/engine/core)
 "DI" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 4;
 	name = "Engine Output Monitoring"
 	},
@@ -14588,7 +14588,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost/power)
 "Ii" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 2;
@@ -14597,7 +14597,7 @@
 /turf/simulated/floor/circuit/red,
 /area/listeningpost)
 "Ij" = (
-/obj/machinery/power/solar_control/small_backup4,
+/obj/machinery/computer/solar_control/small_backup4,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 2;

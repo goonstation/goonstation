@@ -2,6 +2,7 @@
 	name = "Glowy"
 	desc = "Endows the subject with bioluminescent skin. Color and intensity may vary by subject."
 	id = "glowy"
+	icon_state = "glowy"
 	probability = 99
 	effectType = EFFECT_TYPE_POWER
 	blockCount = 3
@@ -21,6 +22,7 @@
 	name = "Cranial Keratin Formation"
 	desc = "Enables the growth of a compacted keratin formation on the subject's head."
 	id = "horns"
+	icon_state = "horns"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "A pair of horns erupt from your head."
@@ -61,6 +63,7 @@
 	name = "Dermal Glitter"
 	desc = "Causes the subject's skin to shine and gleam."
 	id = "shiny"
+	icon_state = "dermal_glitter"
 	effectType = EFFECT_TYPE_POWER
 	probability = 66
 	msgGain = "Your skin looks all blinged out."
@@ -122,6 +125,7 @@
 	name = "Melanin Suppressor"
 	desc = "Shuts down all melanin production in the subject's body."
 	id = "albinism"
+	icon_state = "albinism"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	isBad = 1
@@ -219,7 +223,9 @@
 			for(var/mob/living/carbon/C in view(6,get_turf(owner)))
 				if (C == owner)
 					continue
-				if (src.personalized_stink)
+				if (ispug(C))
+					boutput(C, "<span class='alert'>Wow, [owner] sure [pick("stinks", "smells", "reeks")]!")
+				else if (src.personalized_stink)
 					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
 				else
 					boutput(C, "<span class='alert'>[stinkString()]</span>")
@@ -242,13 +248,14 @@
 
 	OnAdd()
 		. = ..()
-		owner.filters += filter(type="displace", size=0, render_source = src.distort.render_target)
+		owner.add_filter("dwarfism", 1, displacement_map_filter(size=src.size, render_source = src.distort.render_target))
 		owner.vis_contents += src.distort
-		src.filter = owner.filters[length(owner.filters)]
-		animate(src.filter, size=src.size, time=0.7 SECONDS, easing=SINE_EASING, flags=ANIMATION_PARALLEL)
+		src.filter = owner.get_filter("dwarfism")
+		animate(src.filter, size=0, time=0)
+		animate(size=src.size, time=0.7 SECONDS, easing=SINE_EASING)
 
 	OnRemove()
-		owner.filters -= filter
+		owner.remove_filter("dwarfism")
 		owner.vis_contents -= src.distort
 		src.filter = null
 		. = ..()
@@ -261,12 +268,14 @@
 	onVarChanged(variable, oldval, newval)
 		. = ..()
 		if(variable == "size" && src.filter)
-			animate(src.filter, size=newval, time=0.7 SECONDS, easing=SINE_EASING, flags=ANIMATION_PARALLEL)
+			animate(src.filter, size=0, time=0)
+			animate(size=src.size, time=0.7 SECONDS, easing=SINE_EASING)
 
 /datum/bioEffect/drunk
 	name = "Ethanol Production"
 	desc = "Encourages growth of ethanol-producing symbiotic fungus in the subject's body."
 	id = "drunk"
+	icon_state = "ethanol_prod"
 	isBad = 1
 	msgGain = "You feel drunk!"
 	msgLose = "You feel sober."
@@ -382,6 +391,7 @@
 	name = "Dactyl Crystallization"
 	desc = "The subject's digits crystallize and, when struck together, emit a pleasant noise."
 	id = "chime_snaps"
+	icon_state = "chime_snaps"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "Your fingers and toes turn transparent and crystalline."
@@ -391,6 +401,7 @@
 	name = "Dermal Glow"
 	desc = "Causes the subject's skin to emit faint light patterns."
 	id = "aura"
+	icon_state = "aura"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "You start to emit a pulsing glow."
@@ -453,6 +464,7 @@
 	name = "Blazing Aura"
 	desc = "Causes the subject's skin to emit harmless false fire."
 	id = "aura_fire"
+	icon_state = "blazing_aura"
 	effectType = EFFECT_TYPE_POWER
 	occur_in_genepools = 0
 	msgGain = "You burst into flames!"

@@ -18,6 +18,12 @@
 
 	var/const/spies_possible = 7
 
+#ifdef RP_MODE
+	var/const/pop_divisor = 10
+#else
+	var/const/pop_divisor = 6
+#endif
+
 	var/list/station_bounties = list()			// On-station items that can have bounties placed on them, pair list
 	var/list/big_station_bounties = list()	// On-station machines/other big objects that can have bounties placed on them, pair list
 	var/list/personal_bounties = list() 		// Things that belong to people like trinkets, pair list
@@ -153,9 +159,9 @@
 	var/num_spies = 2 //minimum
 
 	if (traitor_scaling)
-		num_spies = max(2, min(round((num_players + randomizer) / 6), spies_possible))
+		num_spies = clamp(round((num_players + randomizer) / pop_divisor), 2, spies_possible)
 
-	var/list/possible_spies = get_possible_spies(num_spies)
+	var/list/possible_spies = get_possible_enemies(ROLE_SPY_THIEF, num_spies)
 
 	if (!possible_spies.len)
 		return 0
@@ -185,7 +191,7 @@
 		objective_set_path = pick(typesof(/datum/objective_set/spy_theft))
 
 		new objective_set_path(spy)
-		SPAWN_DBG(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs (can't find PDA)
+		SPAWN(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs (can't find PDA)
 			equip_spy_theft(spy.current)
 
 		var/obj_count = 1
@@ -195,41 +201,11 @@
 
 		//spy_name_list += spy.current.real_name
 
-	SPAWN_DBG(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
+	SPAWN(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
 		build_bounty_list()
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
-
-/datum/game_mode/spy_theft/proc/get_possible_spies(minimum_traitors=1)
-	var/list/candidates = list()
-
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if (player.client.preferences.be_spy)
-				candidates += player.mind
-
-	if (candidates.len < minimum_traitors)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_spy set to yes were ready. We need [minimum_traitors] traitors so including players who don't want to be traitors in the pool.")
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-				if ((minimum_traitors > 1) && (candidates.len >= minimum_traitors))
-					break
-
-	if (candidates.len < 1)
-		return list()
-	else
-		return candidates
 
 /datum/game_mode/spy_theft/process()
 	..()
@@ -270,9 +246,9 @@
 
 	for(var/datum/mind/M in ticker.mode.traitors) //We loop through ticker.mode.traitors and do spy checks here because the mode might not actually be spy thief. And this instance of the datum may be held by the TRUE MODE
 		LAGCHECK(LAG_LOW)
-		if (M.special_role == ROLE_SPY_THIEF)
+		if (M.special_role == ROLE_SPY_THIEF && M.current)
 			boutput(M.current, "<span class='notice'><b>Spy Console</b> has been updated with new requests.</span>") //MAGIC SPY SENSE (I feel this is justified, spies NEED to know this)
-			M.current << sound('sound/machines/twobeep.ogg')
+			M.current.playsound_local(M.current, 'sound/machines/twobeep.ogg', 35)
 
 /datum/game_mode/spy_theft/proc/get_mob_list()
 	var/list/mobs = list()
@@ -522,7 +498,7 @@
 	big_station_bounties[/obj/machinery/vending/monkey] = 1
 	big_station_bounties[/obj/machinery/vending/security] = 2
 
-	big_station_bounties[/obj/morgue] = 1
+	big_station_bounties[/obj/machinery/traymachine/morgue] = 1
 	big_station_bounties[/obj/machinery/optable] = 2
 	big_station_bounties[/obj/machinery/clonegrinder] = 1
 	big_station_bounties[/obj/machinery/genetics_scanner] = 2

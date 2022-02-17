@@ -460,6 +460,15 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			zapped
 				name = "Zapped"
 				id = "zapped"
+			shitty_hair
+				name = "Shitty Hair"
+				id = "shitty_hair"
+			shitty_beard
+				name = "Shitty Beard"
+				id = "shitty_beard"
+			shitty_beard_stains
+				name = "Shitty Beard Stains"
+				id = "shitty_beard_stains"
 	moustache
 		fu
 			name = "Biker"

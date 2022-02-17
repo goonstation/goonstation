@@ -74,7 +74,7 @@
 				return
 
 		// Don't lock up the event controller.
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src) src.do_event(source)
 
 		return
@@ -170,7 +170,6 @@
 		var/objective_path = null
 		var/send_to = 1 // 1: arrival shuttle/latejoin missile | 2: wizard shuttle | 3: safe start for incorporeal antags
 		var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
-		var/WSLoc = job_start_locations["wizard"] ? pick(job_start_locations["wizard"]) : null
 		var/failed = 0
 
 		switch (src.antagonist_type)
@@ -182,7 +181,7 @@
 					objective_path = /datum/objective_set/blob
 					send_to = 3
 
-					SPAWN_DBG(0)
+					SPAWN(0)
 						var/newname = input(B, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
 						if (B && newname)
 							phrase_log.log_phrase("name-blob", newname, no_duplicates=TRUE)
@@ -219,12 +218,12 @@
 				if (R && istype(R))
 					M3 = R
 					R.unequip_all(1)
-					equip_wizard(R)
+					equip_wizard(R, 1)
 					send_to = 2
 					role = ROLE_WIZARD
 					objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 
-					SPAWN_DBG(0)
+					SPAWN(0)
 						if (R.gender && R.gender == "female")
 							R.real_name = pick_string_autokey("names/wizard_female.txt")
 						else
@@ -263,7 +262,7 @@
 					objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 
 					var/antag_type = src.antagonist_type
-					SPAWN_DBG(0)
+					SPAWN(0)
 						R2.choose_name(3, antag_type, R2.real_name + " the " + antag_type)
 				else
 					failed = 1
@@ -277,7 +276,7 @@
 					objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 
 					var/antag_type = src.antagonist_type
-					SPAWN_DBG(0)
+					SPAWN(0)
 						C.choose_name(3, antag_type, C.real_name + " the " + antag_type)
 				else
 					failed = 1
@@ -316,9 +315,7 @@
 			if ("Arcfiend")
 				var/mob/living/L = M3.humanize()
 				if (istype(L))
-#ifdef SECRETS_ENABLED
 					L.make_arcfiend()
-#endif
 					role = ROLE_ARCFIEND
 #ifdef RP_MODE
 					objective_path = /datum/objective_set/traitor/rp_friendly
@@ -330,7 +327,7 @@
 			else
 				failed = 1
 
-		if (!ASLoc && !WSLoc)
+		if (!ASLoc)
 			failed = 1
 
 		if (failed != 0)
@@ -367,16 +364,17 @@
 				else
 					M3.set_loc(ASLoc)
 			if (2)
-				if (!WSLoc)
+				if (!job_start_locations["wizard"])
+					boutput(M3, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 					M3.set_loc(ASLoc)
 				else
-					M3.set_loc(WSLoc)
+					M3.set_loc(pick(job_start_locations["wizard"]))
 			if (3)
 				M3.set_loc(ASLoc)
 		//nah
 		/*
 		if (src.centcom_headline && src.centcom_message && random_events.announce_events)
-			SPAWN_DBG (src.message_delay)
+			SPAWN(src.message_delay)
 				command_alert("[src.centcom_message]", "[src.centcom_headline]")
 		*/
 

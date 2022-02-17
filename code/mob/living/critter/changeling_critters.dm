@@ -58,12 +58,12 @@
 			user.drop_item()
 			W.set_loc(src)
 
-			src.update_icon()
+			src.UpdateIcon()
 			user.visible_message("<b>[user]</b> puts a hat on [src]!","You put a hat on [src]!")
 			return
 		..()
 
-	proc/update_icon()
+	update_icon()
 		if (src.hat && !src.hat_shown)
 			var/image/hat_image = image(src.hat_icon, "bhat-[src.hat.icon_state]",,layer = src.layer + 0.005)
 			hat_image.pixel_x = hat_x_offset
@@ -87,7 +87,7 @@
 		if (hat)
 			hat.set_loc(src.loc)
 			hat = 0
-			update_icon()
+			UpdateIcon()
 		if (!gibbed)
 			playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1, 0.2, 1)
 		death_effect()
@@ -178,7 +178,7 @@
 
 						src.icon_state = "[icon_prefix]handspider-flip"
 						animate_handspider_flipoff(src, prob(50) ? "L" : "R", 1, 0)
-						SPAWN_DBG(0.7 SECONDS)
+						SPAWN(0.7 SECONDS)
 							//Adding check for icon_state in case they die mid-flipoff (heck)
 							if(!isdead(src)) src.icon_state = "[icon_prefix]handspider"
 						//Flipoff
@@ -221,7 +221,7 @@
 					src.layer = target.layer - 0.01
 					src.visible_message("[src] hides under [target]!")
 				src.hat_shown = 0
-				update_icon()
+				UpdateIcon()
 
 	setup_hands()
 		..()
@@ -334,7 +334,7 @@
 		// EYE CAN SEE FOREVERRRR
 		src.sight |= SEE_MOBS | SEE_TURFS | SEE_OBJS
 		src.see_in_dark = SEE_DARK_FULL
-		src.see_invisible = 2
+		src.see_invisible = INVIS_CLOAK
 
 	// a slight breeze will kill these guys, such is life as a squishy li'l eye
 	setup_healths()
@@ -427,7 +427,7 @@
 					src.layer = target.layer - 0.01
 					src.visible_message("[src] hides under [target]!")
 				src.hat_shown = 0
-				update_icon()
+				UpdateIcon()
 
 	setup_hands()
 		..()
@@ -506,7 +506,7 @@
 				if (src.emote_check(voluntary, 50))
 					playsound(src,"sound/voice/farts/fart[rand(1,6)].ogg", 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
 					var/turf/fart_turf = get_turf(src)
-					fart_turf.fluid_react_single("toxic_fart",1,airborne = 1)
+					fart_turf.fluid_react_single("[prob(20)?"very_":""]toxic_fart",1,airborne = 1)
 					return "<b><span class='alert'>[src] farts!</span></b>"
 		return null
 
@@ -645,7 +645,7 @@
 				src.layer = target.layer - 0.01
 				src.visible_message("[src] hides under [target]!")
 			src.hat_shown = 0
-			update_icon()
+			UpdateIcon()
 
 /mob/living/critter/changeling/headspider/death_effect()
 	var/datum/abilityHolder/changeling/C = changeling

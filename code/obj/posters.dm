@@ -52,13 +52,12 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	var/print_or_place = alert(usr, "Print out at all printers or place on your tile?", "Selection", "Place", "Print")
 	if (alert(usr, "Confirm poster creation", "Confirmation", "OK", "Cancel") == "OK")
 		if (print_or_place == "Print")
-			for (var/obj/machinery/networked/printer/P in world)
-				LAGCHECK(LAG_LOW)
+			for_by_tcl(P, /obj/machinery/networked/printer)
 				if (P.status & (NOPOWER|BROKEN))
 					continue
 				flick("printer-printing",P)
 				playsound(P.loc, "sound/machines/printer_dotmatrix.ogg", 50, 1)
-				SPAWN_DBG(3.2 SECONDS)
+				SPAWN(3.2 SECONDS)
 					var/obj/item/poster/titled_photo/np = new(get_turf(P))
 					if (p_title)
 						np.line_title = p_title
@@ -156,13 +155,12 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	var/print_or_place = alert(usr, "Print out at all printers or place on your tile?", "Selection", "Place", "Print")
 	if (alert(usr, "Confirm poster creation", "Confirmation", "OK", "Cancel") == "OK")
 		if (print_or_place == "Print")
-			for (var/obj/machinery/networked/printer/P in world)
-				LAGCHECK(LAG_LOW)
+			for_by_tcl(P, /obj/machinery/networked/printer)
 				if (P.status & (NOPOWER|BROKEN))
 					continue
 				flick("printer-printing",P)
 				playsound(P.loc, "sound/machines/printer_dotmatrix.ogg", 50, 1)
-				SPAWN_DBG(3.2 SECONDS)
+				SPAWN(3.2 SECONDS)
 					var/obj/item/poster/titled_photo/wp = new(get_turf(P))
 					if (w_name)
 						wp.line_title = w_name
@@ -316,12 +314,13 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	var/line_b1 = null
 	var/line_b2 = null
 	var/line_b3 = null
+	var/author = null
 
 	var/list/plist = null
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (!src.poster_HTML)
 				src.generate_poster()
 
@@ -418,7 +417,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			"You load [W] into [src].")
 			src.papers ++
 			user.u_equip(W)
-			pool(W)
+			qdel(W)
 			return
 
 		else if (istype(W, /obj/item/paper_bin))
@@ -436,7 +435,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 				if (B.amount <= 0)
 					var/obj/item/paper/P = locate(/obj/item/paper) in B
 					if (P)
-						pool(P)
+						qdel(P)
 				else
 					B.amount --
 			B.update()
@@ -502,6 +501,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		src.papers --
 		playsound(src, "sound/machines/printer_dotmatrix.ogg", 30, 1)
 		var/obj/item/poster/titled_photo/P = new (src.loc)
+		P.author = user.key
 		P.name = "Wanted: [src.plist["name"]]"
 		P.line_title = "NAME: [src.plist["name"]]"
 		P.poster_image = src.plist["image"]
@@ -547,18 +547,15 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			var/ptext = scrubbed_input(usr, "Enter name or ID of crew to search for:", "Locate File Photo", src.plist["name"])
 			if (isnull(ptext) || !length(ptext) || get_dist(usr,src) > 1)
 				return
-			var/datum/data/record/R
-			for (var/datum/data/record/rec in data_core.general)
-				if ((ckey(rec.fields["name"]) == ckey(ptext) || rec.fields["id"] == ptext))
+			var/datum/db_record/R
+			for (var/datum/db_record/rec as anything in data_core.general.records)
+				if ((ckey(rec["name"]) == ckey(ptext) || rec["id"] == ptext))
 					R = rec
 					break
 			if (!istype(R))
 				boutput(usr, "<span class='alert'>No record found for \"[ptext]\".</span>")
 				return
-			if (!islist(R.fields) || !length(R.fields))
-				boutput(usr, "<span class='alert'>Records for \"[ptext]\" are corrupt.</span>")
-				return
-			var/datum/computer/file/image/IMG = R.fields["file_photo"]
+			var/datum/computer/file/image/IMG = R["file_photo"]
 			if (!istype(IMG) || !IMG.ourIcon)
 				boutput(usr, "<span class='alert'>No photo exists on file for \"[ptext]\".</span>")
 				return

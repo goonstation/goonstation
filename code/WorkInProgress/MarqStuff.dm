@@ -229,7 +229,7 @@
 	desc = "Huh."
 	anchored = 1
 	density = 0
-	invisibility = 2
+	invisibility = INVIS_CLOAK
 	blend_mode = 4
 	icon = 'icons/misc/old_or_unused.dmi'
 	icon_state = "noise5"
@@ -487,7 +487,7 @@
 	name = "quiver"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "quiver-0"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	item_state = "quiver"
 	flags = FPRINT | TABLEPASS | ONBACK | ONBELT
 	move_triggered = 1
@@ -534,7 +534,7 @@
 			return
 		..()
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		..()
 		var/atom/movable/screen/hud/S = over_object
 		if (istype(S))

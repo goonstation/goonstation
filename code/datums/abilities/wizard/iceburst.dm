@@ -48,7 +48,7 @@
 			playsound(holder.owner.loc, "sound/effects/mag_iceburstlaunch.ogg", 25, 1, -1)
 			if ((!holder.owner.wizard_spellpower(src) && count >= 1) || (count >= moblimit)) break
 			count++
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/obj/overlay/A = new /obj/overlay( holder.owner.loc )
 				A.icon_state = "icem"
 				A.icon = 'icons/obj/wizard.dmi'
@@ -65,7 +65,7 @@
 							var/obj/decal/icefloor/B = new /obj/decal/icefloor(A.loc)
 							//B.sd_SetLuminosity(1)
 							//B.sd_SetColor(0, 0.1, 0.8)
-							SPAWN_DBG(20 SECONDS)
+							SPAWN(20 SECONDS)
 								qdel (B)
 					step_to(A,M,0)
 					if (get_dist(A,M) == 0)
@@ -88,7 +88,7 @@
 /obj/icecube
 	name = "ice cube"
 	desc = "That is a surprisingly large ice cube."
-	icon = 'icons/effects/effects.dmi'
+	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "icecube"
 	density = 1
 	layer = EFFECTS_LAYER_BASE
@@ -128,7 +128,7 @@
 
 		if (steam_on_death)
 			if (!(locate(/datum/effects/system/steam_spread) in src.loc))
-				var/datum/effects/system/steam_spread/steam = unpool(/datum/effects/system/steam_spread)
+				var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 				steam.set_up(10, 0, get_turf(src))
 				steam.attach(src)
 				steam.start(clear_holder=1)
@@ -194,6 +194,6 @@
 	ex_act(severity)
 		for(var/atom/A in src)
 			A.ex_act(severity)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			takeDamage(20 / severity)
 		..()

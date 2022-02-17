@@ -8,20 +8,19 @@
 	layer = EFFECTS_LAYER_UNDER_3
 	mouse_opacity = 0
 	var/float_anim = 1
-	event_handler_flags = USE_HASENTERED
 
 	New()
 		..()
 		src.create_reagents(10)
 		reagents.add_reagent("cleaner", 5)
 		reagents.add_reagent("water", 5)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src.float_anim)
 				for (var/atom/movable/A in src.loc)
 					if (!A.anchored)
 						animate_bumble(A, floatspeed = 8, Y1 = 3, Y2 = 0)
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
 		if (src.float_anim)
 			if (istype(A, /atom/movable) && !isobserver(A) && !istype(A, /mob/living/critter/small_animal/bee) && !istype(A, /obj/critter/domestic_bee))
 				var/atom/movable/AM = A
@@ -33,8 +32,8 @@
 		reagents.reaction(A, TOUCH, 2)
 		return ..()
 
-	HasExited(atom/movable/A, atom/newloc)
-		var/turf/T = get_turf(newloc)
+	Uncrossed(atom/movable/A)
+		var/turf/T = get_turf(A)
 		if (istype(T))
 			var/obj/poolwater/P = locate() in T
 			if (!istype(P))
@@ -114,14 +113,14 @@
 
 /obj/river
 	name = "River"
-	desc = "Its a river."
+	desc = "Some flowing water."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "river"
 	anchored = 1
 
 /obj/stone
 	name = "Stone"
-	desc = "Its a stone."
+	desc = "Rock and stone, son. Rock and stone."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "stone"
 	anchored = 1
@@ -144,6 +143,7 @@
 
 /obj/shrub
 	name = "shrub"
+	desc = "A bush. Despite your best efforts, you can't tell if it's real or not."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "shrub"
 	anchored = 1
@@ -164,6 +164,11 @@
 		..()
 		max_uses = rand(0, 5)
 		spawn_chance = rand(1, 40)
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION)
+			src.UpdateOverlays(image(src.icon, "[icon_state]-xmas"), "xmas")
+		#endif
+
 	ex_act(var/severity)
 		switch(severity)
 			if(1,2)
@@ -181,7 +186,7 @@
 		var/original_y = pixel_y
 		var/wiggle = 6
 
-		SPAWN_DBG(0) //need spawn, why would we sleep in attack_hand that's disgusting
+		SPAWN(0) //need spawn, why would we sleep in attack_hand that's disgusting
 			while (wiggle > 0)
 				wiggle--
 				animate(src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 2, easing = EASE_IN)
@@ -220,6 +225,28 @@
 
 		interact_particle(user,src)
 
+	Crossed(atom/movable/AM)
+		. = ..()
+		if(isliving(AM))
+			var/mob/living/L = AM
+			L.name_tag?.set_visibility(FALSE)
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			H.arrestIcon?.alpha = 0
+			H.health_implant?.alpha = 0
+			H.health_mon?.alpha = 0
+
+	Uncrossed(atom/movable/AM)
+		. = ..()
+		if(isliving(AM))
+			var/mob/living/L = AM
+			L.name_tag?.set_visibility(TRUE)
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			H.arrestIcon?.alpha = 255
+			H.health_implant?.alpha = 255
+			H.health_mon?.alpha = 255
+
 	attackby(var/obj/item/W as obj, mob/user as mob)
 		user.lastattacked = src
 		hit_twitch(src)
@@ -233,7 +260,7 @@
 		if (src.health <= 0)
 			src.visible_message("<span class='alert'><b>The [src.name] falls apart!</b></span>")
 			new /obj/decal/cleanable/leaves(get_turf(src))
-			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 0)
+			playsound(src.loc, "sound/impact_sounds/Wood_Snap.ogg", 90, 1)
 			qdel(src)
 			return
 
@@ -259,7 +286,7 @@
 		. = ..()
 		var/turf/T = get_turf(src.loc)
 		var/obj/machinery/power/data_terminal/link = locate() in T
-		link.master = src
+		link?.master = src
 
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
@@ -271,9 +298,7 @@
 	layer = EFFECTS_LAYER_UNDER_1
 	dir = EAST
 
-	// Added ex_act and meteorhit handling here (Convair880).
-	proc/update_icon()
-		if (!src) return
+	proc/destroy()
 		src.set_dir(NORTHEAST)
 		src.destroyed = 1
 		src.set_density(0)
@@ -288,7 +313,6 @@
 		for (var/mob/living/M in mobs)
 			if (M.mind && M.mind.assigned_role == "Captain")
 				boutput(M, "<span class='alert'>You suddenly feel hollow. Something very dear to you has been lost.</span>")
-		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (!W) return
@@ -303,7 +327,7 @@
 			else
 				boutput(user, "<span class='alert'>Why would you ever destroy your precious bonsai tree?</span>")
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
-			src.update_icon()
+			src.destroy()
 			boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
 			src.visible_message("<b><span class='alert'>[user] ravages the [src] with [W].</span></b>", 1)
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
@@ -311,13 +335,13 @@
 
 	meteorhit(obj/O as obj)
 		src.visible_message("<b><span class='alert'>The meteor smashes right through [src]!</span></b>")
-		src.update_icon()
+		src.destroy()
 		src.interesting = "Looks like it was crushed by a giant fuck-off meteor."
 		return
 
 	ex_act(severity)
 		src.visible_message("<b><span class='alert'>[src] is ripped to pieces by the blast!</span></b>")
-		src.update_icon()
+		src.destroy()
 		src.interesting = "Looks like it was blown to pieces by some sort of explosive."
 		return
 
@@ -332,7 +356,7 @@
 	var/destroyed = 0
 
 	// stole all of this from the captain's shrub lol
-	proc/update_icon()
+	update_icon()
 		if (!src) return
 		src.destroyed = 1
 		src.desc = "The scattered remains of a once-beautiful ship in a bottle."
@@ -357,7 +381,7 @@
 		if (user.mind && user.mind.assigned_role == "Captain")
 			boutput(user, "<span class='alert'>Why would you ever destroy your precious ship in a bottle?</span>")
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
-			src.update_icon()
+			src.UpdateIcon()
 			boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
 			src.visible_message("<b><span class='alert'>[user] ravages the [src] with [W].</span></b>", 1)
 			src.interesting = "Inexplicably, the signal flags on the shattered mast just say 'fuck [user.real_name]'."
@@ -365,18 +389,19 @@
 
 	meteorhit(obj/O as obj)
 		src.visible_message("<b><span class='alert'>The meteor smashes right through [src]!</span></b>")
-		src.update_icon()
+		src.UpdateIcon()
 		src.interesting = "Looks like it was crushed by a giant fuck-off meteor."
 		return
 
 	ex_act(severity)
 		src.visible_message("<b><span class='alert'>[src] is shattered and pulverized by the blast!</span></b>")
-		src.update_icon()
+		src.UpdateIcon()
 		src.interesting = "Looks like it was blown to pieces by some sort of explosive."
 		return
 
 /obj/potted_plant
 	name = "potted plant"
+	desc = "Considering the fact that plants communicate through their roots, you wonder if this one ever feels lonely."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ppot0"
 	anchored = 1
@@ -410,6 +435,7 @@
 
 /obj/window_blinds
 	name = "blinds"
+	desc = "Thin strips of plastic that can be angled to prevent light from passing through. There's probably a switch that controls them nearby."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "blindsH-o"
 	anchored = 1
@@ -449,13 +475,13 @@
 			src.open = force_state
 		else
 			src.open = !(src.open)
-		src.update_icon()
+		src.UpdateIcon()
 
 	proc/toggle_group()
 		if (istype(src.mySwitch))
 			src.mySwitch.toggle()
 
-	proc/update_icon()
+	update_icon()
 		if (src.open)
 			src.icon_state = "[src.base_state]-c"
 			src.opacity = 1
@@ -516,7 +542,7 @@
 		..()
 		if (!src.name || (src.name in list("N blind switch", "E blind switch", "S blind switch", "W blind switch")))//== "N light switch" || name == "E light switch" || name == "S light switch" || name == "W light switch")
 			src.name = "blind switch"
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.locate_blinds()
 	ex_act(var/severity)
 		switch(severity)
@@ -650,9 +676,9 @@
 
 /obj/effects/background_objects
 	icon = 'icons/misc/512x512.dmi'
-	icon_state = "moon-dark"
-	name = "X7"
-	desc = "A nearby moon orbiting the gas giant. Forbidden for landings, its exotic atmosphere and roiling electromagnetic storms deter much observation."
+	icon_state = "moon-ice"
+	name = "X15"
+	desc = "A nearby icy moon orbiting the gas giant. Deep reserves of liquid water have been detected below the fractured and desolate surface."
 	mouse_opacity = 0
 	opacity = 0
 	anchored = 2
@@ -662,12 +688,12 @@
 	x3
 		icon_state = "moon-green"
 		name = "X3"
-		desc = "A nearby Earthlike moon orbiting the gas giant. Steady intake of icy debris from the giant's ring system feeds moisture into the shallow, chilly atmosphere."
+		desc = "A nearby rocky moon orbiting the gas giant. Steady intake of icy debris from the giant's ring system feeds moisture into the shallow, chilly atmosphere."
 
 	x5
 		icon_state = "moon-chunky"
 		name = "X5"
-		desc = "A nearby Earthlike moon orbiting the gas giant. The stormy, humid atmosphere is quite breathable and the surface has been extensively seeded by terraforming efforts."
+		desc = "A nearby moon orbiting the gas giant. At certain elevations the atmosphere is thick enough to support terraforming efforts.."
 
 	x4
 		icon = 'icons/obj/large/160x160.dmi'
@@ -680,6 +706,18 @@
 		icon_state = "plasma_giant"
 		name = "X0"
 		desc = "Your neighborhood plasma giant, a fair bit larger than Jupiter. The atmosphere is primarily composed of volatile FAAE. Little can be discerned of the denser layers below the plasma storms."
+
+	star_red
+		icon = 'icons/misc/galactic_objects_large.dmi'
+		icon_state = "star-red"
+		name = "Fugg"
+		desc = "A dying red subgiant star shrouded in cast-off shells of gas."
+
+	star_blue
+		icon = 'icons/misc/galactic_objects_large.dmi'
+		icon_state = "star-blue"
+		name = "Shidd"
+		desc = "A blazing young blue star."
 
 	station
 		name = "Space Station 14"
@@ -794,7 +832,7 @@ obj/decoration/ceilingfan
 		light.set_color(col_r, col_g, col_b)
 		light.attach(src)
 
-	proc/update_icon()
+	update_icon()
 		if (src.lit == 1)
 			src.icon_state = src.icon_on
 			light.enable()
@@ -809,38 +847,38 @@ obj/decoration/ceilingfan
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				boutput(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
 				boutput(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if (istype(W, /obj/item/device/igniter))
 				boutput(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if (istype(W, /obj/item/device/light/zippo) && W:on)
 				boutput(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
 				boutput(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if (W.burning)
 				boutput(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
 				src.lit = 1
-				update_icon ()
+				UpdateIcon ()
 
 	attack_hand(mob/user as mob)
 		if (src.lit)
 			var/fluff = pick("snuff", "blow")
 			src.lit = 0
-			update_icon()
+			UpdateIcon()
 			user.visible_message("<b>[user]</b> [fluff]s out the [src].",\
 			"You [fluff] out the [src].")
 
@@ -1151,10 +1189,10 @@ obj/decoration/ceilingfan
 		light = new /datum/light/point
 		light.set_brightness(brightness)
 		light.set_color(col_r, col_g, col_b)
-		update_icon()
+		UpdateIcon()
 		light.attach(src)
 
-	proc/update_icon()
+	update_icon()
 		if (src.lit == 1)
 			src.icon_state = src.icon_on
 			light.enable()
@@ -1169,38 +1207,38 @@ obj/decoration/ceilingfan
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				boutput(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
 				boutput(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if (istype(W, /obj/item/device/igniter))
 				boutput(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if (istype(W, /obj/item/device/light/zippo) && W:on)
 				boutput(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
 				boutput(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if (W.burning)
 				boutput(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
 				src.lit = 1
-				update_icon ()
+				UpdateIcon ()
 
 	attack_hand(mob/user as mob)
 		if (src.lit)
 			var/fluff = pick("snuff", "blow")
 			src.lit = 0
-			update_icon()
+			UpdateIcon()
 			user.visible_message("<b>[user]</b> [fluff]s out the [src].",\
 			"You [fluff] out the [src].")
 
@@ -1254,3 +1292,10 @@ obj/decoration/floralarrangement
 	anchored = 1
 	density = 1
 
+obj/decoration/pottedfern
+	name = "potted fern"
+	desc = "These look... Very plastic. Huh."
+	icon = 'icons/misc/walp_decor.dmi'
+	icon_state = "plant_fern"
+	anchored = 1
+	density = 1

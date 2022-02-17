@@ -2,16 +2,19 @@
 	name = "Blob Tutorial Zone 1"
 	icon_state = "yellow"
 	sound_group = "blob1"
+	dont_log_combat = TRUE
 
 /area/blob/tutorial_zone_2
 	name = "Blob Tutorial Zone 2"
 	icon_state = "green"
 	sound_group = "blob2"
+	dont_log_combat = TRUE
 
 /area/blob/tutorial_zone_3
 	name = "Blob Tutorial Zone 3"
 	icon_state = "blue"
 	sound_group = "blob3"
+	dont_log_combat = TRUE
 
 var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blob/tutorial_zone_2, /area/blob/tutorial_zone_3)
 
@@ -279,7 +282,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/datum/tutorial_base/blob/MT = tutorial
 				var/tx = MT.initial_turf.x
 				var/ty = MT.initial_turf.y + 1
@@ -356,7 +359,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/datum/tutorial_base/blob/MT = tutorial
 				var/tx = MT.initial_turf.x
 				var/ty = MT.initial_turf.y + 1
@@ -410,7 +413,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 	clickmove
 		name = "Click moving"
-		instructions = "Moving around with arrow keys or WASD is vastly inefficient when you need to cover large distances at once. You can also move around by clicking a tile, however. Click the marked tile to move there and proceed."
+		instructions = "Moving around with arrow keys or WASD is vastly inefficient when you need to cover large distances at once. You can also move around by right-clicking a tile, however. Right-click the marked tile to move there and proceed."
 		var/turf/target
 		finished = 0
 
@@ -424,7 +427,10 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			target.UpdateOverlays(marker,"marker")
 
 		PerformAction(var/action, var/context)
-			if (action == "clickmove" && context == target)
+			var/datum/tutorial_base/blob/MT = tutorial
+			if (!(context in MT.tutorial_area) || !istype(context, /turf/simulated/floor)) //Stop the player from suicide by cordon
+				return 0
+			else if (action == "clickmove" && context == target)
 				finished = 1
 				return 1
 			return 1 // bad but prevents chat spam which leads to crashes

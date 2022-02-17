@@ -40,7 +40,7 @@
 
 	blood_id = "black_goop"
 
-	var/bite_transfer_amt = 2
+	var/bite_transfer_amt = 1
 
 	New()
 		..()
@@ -129,7 +129,7 @@
 		src.unequip_all()
 		src.visible_message("<span class='alert'><b>[src] grows up!</b></span>",\
 		"<span class='notice'><b>You grow up!</b></span>")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.make_critter(src.adultpath)
 
 /mob/living/critter/spider/nice
@@ -164,7 +164,7 @@
 	venom2 = "black_goop"
 	babyspider = 1
 	adultpath = /mob/living/critter/spider/med
-	bite_transfer_amt = 0.5
+	bite_transfer_amt = 0.3
 
 /mob/living/critter/spider/med
 	name = "medium space spider"
@@ -183,7 +183,7 @@
 	venom2 = "black_goop"
 	babyspider = 1
 	adultpath = /mob/living/critter/spider
-	bite_transfer_amt = 1.2
+	bite_transfer_amt = 0.6
 
 /mob/living/critter/spider/ice
 	name = "ice spider"
@@ -299,6 +299,7 @@
 					var/turf/T = get_edge_target_turf(I, pick(alldirs))
 					if (T)
 						I.throw_at(T, 12, 3)
+			src.organHolder.drop_and_throw_organ("brain")
 			src.gib(1)
 
 	cluwne
@@ -406,7 +407,7 @@
 			defenders++
 
 /proc/funnygibs(atom/location, var/list/ejectables, var/bDNA, var/btype)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		playsound(location, "sound/musical_instruments/Bikehorn_1.ogg", 100, 1)
 		playsound(location, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 	var/obj/decal/cleanable/blood/splatter/extra/blood = null
@@ -450,7 +451,7 @@
 
 			I.set_loc(location)
 			I.layer = initial(I.layer)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				I.throw_at(target, 12, 3)
 
 	return bloods

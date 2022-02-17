@@ -1,6 +1,6 @@
 /obj/item/device/igniter
 	name = "igniter"
-	desc = "A small electronic device able to ignite combustable substances."
+	desc = "A small electronic device can be paired with other electronics, or used to heat chemicals directly."
 	icon_state = "igniter"
 	var/status = 1.0
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT | USEDELAY
@@ -11,7 +11,7 @@
 	throw_speed = 3
 	throw_range = 10
 	mats = 2
-	firesource = TRUE
+	firesource = FIRESOURCE_IGNITER
 
 	//blcok spamming shit because inventory uncaps click speed and kinda makes this an exploit
 	//its still a bit stronger than non-inventory interactions, why not
@@ -124,7 +124,7 @@
 /obj/item/device/igniter/attack_self(mob/user as mob)
 
 	src.add_fingerprint(user)
-	SPAWN_DBG( 5 )
+	SPAWN( 5 )
 		ignite()
 		return
 	return

@@ -7,7 +7,7 @@
 	name = "shoes"
 	icon = 'icons/obj/clothing/item_shoes.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
-	wear_image_icon = 'icons/mob/feet.dmi'
+	wear_image_icon = 'icons/mob/clothing/feet.dmi'
 	var/chained = 0
 	var/laces = LACES_NORMAL // Laces for /obj/item/gun/energy/pickpocket harass mode.
 	var/kick_bonus = 0 //some shoes will yield extra kick damage!
@@ -682,3 +682,48 @@
 	icon_state = "mjwhite"
 	desc = "Dainty and formal. This pair is white."
 	step_sound = "footstep"
+
+/obj/item/clothing/shoes/slasher_shoes
+	name = "Industrial Boots"
+	icon_state = "boots"
+	desc = "Bulky boots with thick soles, protecting your feet."
+	step_sound = "step_plating"
+
+	noslip
+		magnetic = 1
+		c_flags = NOSLIP
+		cant_self_remove = 1
+		cant_other_remove = 1
+		step_sound = "step_lattice"
+
+		setupProperties()
+			..()
+			setProperty("coldprot", 5)
+			setProperty("heatprot", 5)
+			setProperty("exploprot", 15)
+
+/obj/item/clothing/shoes/witchboots
+	name = "Witch Boots"
+	icon_state = "witchboots"
+	desc = "The curved front of these boots is reminiscent of a crescent moon, how magical."
+	step_sound = "footstep"
+
+//Western Boots
+
+/obj/item/clothing/shoes/westboot
+	name = "Real Cowboy Boots"
+	icon_state = "westboot"
+	desc = "Perfect for riding horses, if only you had one!"
+
+/obj/item/clothing/shoes/westboot/black
+	name = "Black Cowboy Boots"
+	icon_state = "westboot_black"
+
+/obj/item/clothing/shoes/westboot/dirty
+	name = "Dirty Cowboy Boots"
+	icon_state = "westboot_dirty"
+
+/obj/item/clothing/shoes/westboot/brown
+	name = "Brown Cowboy Boots"
+	icon_state = "westboot_brown"
+

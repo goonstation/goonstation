@@ -3,7 +3,7 @@
 /obj/item/clothing/mask
 	name = "mask"
 	icon = 'icons/obj/clothing/item_masks.dmi'
-	wear_image_icon = 'icons/mob/mask.dmi'
+	wear_image_icon = 'icons/mob/clothing/mask.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	var/obj/item/voice_changer/vchange = 0
 	body_parts_covered = HEAD
@@ -74,7 +74,7 @@
 			src.stapled = 0
 		. = 1
 		allow_staple = 0
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			allow_staple = 1
 
 /obj/item/clothing/mask/handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
@@ -152,10 +152,52 @@
 	item_state = "moustache"
 	see_face = 1
 
+/obj/item/clothing/mask/moustache/Italian
+	name = "fake Italian moustache"
+	desc = "For those who can't cut the lasagna."
+	icon_state = "moustache-i"
+	item_state = "moustache-i"
+	see_face = 1
+
+
 /obj/item/clothing/mask/gas/emergency
 	name = "emergency gas mask"
 	icon_state = "gas_alt"
 	item_state = "gas_alt"
+
+	unremovable
+		name = "slasher's gas mask"
+		desc = "A close-fitting sealed gas mask, this one seems to be protruding some kind of dark aura."
+		cant_self_remove = 1
+		cant_other_remove = 1
+		icon_state = "slasher_mask"
+		item_state = "slasher_mask"
+		item_function_flags = IMMUNE_TO_ACID
+		see_face = 1.0
+		setupProperties()
+			..()
+			setProperty("meleeprot_head", 6)
+			setProperty("disorient_resist_eye", 100)
+			setProperty("movespeed", 0.2)
+			setProperty("exploprot", 40)
+
+		equipped(mob/user, slot)
+			. = ..()
+			APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
+
+		unequipped(mob/user)
+			. = ..()
+			REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
+
+	postpossession
+		name = "worn gas mask"
+		desc = "A close-fitting sealed gas mask, from the looks of it, it's well over a hundred years old."
+		icon_state = "slasher_mask"
+		item_state = "slasher_mask"
+		see_face = 1.0
+		setupProperties()
+			..()
+			setProperty("movespeed", 0.2)
 
 /obj/item/clothing/mask/gas/swat
 	name = "SWAT mask"
@@ -194,13 +236,12 @@
 	name = "vocal translator"
 	desc = "Nanotechnology and questionable science combine to make a face-hugging translator, capable of making monkeys speak human language. Or whoever wears this."
 	icon = 'icons/obj/items/items.dmi'
-	wear_image_icon = 'icons/mob/mask.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	icon_state = "voicechanger"
 	item_state = "muzzle"			// @TODO new sprite ok
 	mats = 12	// 2x voice changer cost. It's complicated ok
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH	// NOT usable for internals.
+	compatible_species = list("human", "cow", "werewolf", "martian")
 	var/new_language = "english"	// idk maybe you can varedit one so that humans speak monkey instead. who knows
 
 /obj/item/clothing/mask/breath
@@ -258,7 +299,7 @@
 
 /obj/item/clothing/mask/clown_hat
 	name = "clown wig and mask"
-	desc = "Clowns are dumb and so are you for even considering wearing this."
+	desc = "A mask depicting the grinning facial expression of a prototypical clown. There's a place to tuck the attached wig in if you don't want it interfering with your own hair."
 	icon_state = "clown"
 	item_state = "clown_hat"
 	see_face = 0.0
@@ -268,6 +309,8 @@
 	var/list/sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
 	var/volume = 50
 	var/randomized_pitch = 1
+	var/mask_bald = FALSE
+	var/bald_desc_state = "For clowns who want to show off their hair!"
 
 	proc/honk_nose(mob/user as mob)
 		if (!spam_flag)
@@ -275,10 +318,26 @@
 			src.add_fingerprint(user)
 			user?.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
 			playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
-			SPAWN_DBG(src.spam_timer)
+			SPAWN(src.spam_timer)
 				spam_flag = 0
 			return 1
 		return 0
+
+	attack_self(mob/user as mob)
+		if(!src.mask_bald)
+			src.mask_bald = TRUE
+			src.name = "wigless clown mask"
+			src.desc = bald_desc_state
+			src.icon_state = "[src.icon_state]_bald"
+			src.item_state = "clown_bald"
+			user.show_text("You tuck back the wig on the [src].")
+		else
+			src.mask_bald = FALSE
+			src.name = initial(src.name)
+			src.desc = initial(src.desc)
+			src.icon_state = initial(src.icon_state)
+			src.item_state = "clown_hat"
+			user.show_text("You untuck the wig from the [src].")
 
 /obj/item/clothing/mask/gas/syndie_clown
 	name = "clown wig and mask"
@@ -391,6 +450,8 @@
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH | COVERSEYES
 	permeability_coefficient = 0.50
+	var/bee = FALSE
+	var/randcol
 
 	setupProperties()
 		..()
@@ -400,9 +461,10 @@
 	New()
 		..()
 		var/image/inventory = image('icons/obj/clothing/item_masks.dmi', "")
-		var/image/onhead = image('icons/mob/mask.dmi', "")
+		var/image/onhead = image('icons/mob/clothing/mask.dmi', "")
 
 		if (prob(1))
+			bee = TRUE
 			name = "surgical face bee-ld"
 			inventory.icon_state = "surgicalshield-bee"
 			onhead.icon_state = "surgicalshield-bee"
@@ -410,12 +472,22 @@
 		else
 			inventory.icon_state = "surgicalshield-overlay"
 			onhead.icon_state = "surgicalshield-overlay"
-			var/randcol = random_hex(6)
+			randcol = random_hex(6)
 			inventory.color = "#[randcol]"
 			onhead.color = "#[randcol]"
 
 		src.UpdateOverlays(inventory, "surgmaskcolour")
 		src.wear_image.overlays += onhead
+
+	update_wear_image(mob/living/carbon/human/H, override)
+		var/image/onhead
+		if(bee)
+			onhead = image(src.wear_image.icon,"[override ? "mask-" : ""]surgicalshield-bee")
+		else
+			onhead = image(src.wear_image.icon,"[override ? "mask-" : ""]surgicalshield-overlay")
+			onhead.color = "#[randcol]"
+		src.wear_image.overlays = list(onhead)
+
 
 /obj/item/paper_mask
 	name = "unfinished paper mask"

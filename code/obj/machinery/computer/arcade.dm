@@ -140,14 +140,14 @@
 		var/prizeselect = rand(1,8)
 		switch(prizeselect)
 			if(1)
-				var/obj/item/spacecash/P = unpool(/obj/item/spacecash)
+				var/obj/item/spacecash/P = new /obj/item/spacecash
 				P.setup(src.loc)
 				prize = P
 				prize.name = "space ticket"
 				prize.desc = "It's almost like actual currency!"
 			if(2)
 				if (isrestrictedz(z))
-					var/obj/item/spacecash/P = unpool(/obj/item/spacecash)
+					var/obj/item/spacecash/P = new /obj/item/spacecash
 					P.setup(src.loc)
 					prize = P
 					prize.name = "space ticket"
@@ -227,6 +227,6 @@
 			icon_state = initial(icon_state)
 			status &= ~NOPOWER
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				src.icon_state = "arcade0"
 				status |= NOPOWER

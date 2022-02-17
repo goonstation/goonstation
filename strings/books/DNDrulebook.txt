@@ -3,7 +3,7 @@
 <hr>
 <p>
 <br>1 – Select your race as well as a job assignment appropriate to the setting of your session. Job assignments can be provided by your GM
-<br><b>Human/Lizard/Roach/Skeleton/Squid/Cow/Monkey</b>
+<br><b>Human/Lizard/Roach/Skeleton/Squid/Cow/Pug/Monkey</b>
 <br>
 <br>2 – Rank your attributes.<br>
 Apply one of each of the following modifiers to an attribute listed below.

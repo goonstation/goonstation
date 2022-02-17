@@ -158,7 +158,7 @@
 				S << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 				ticker.centralized_ai_laws.show_laws(S)
 
-		SPAWN_DBG(message_delay * 0.25)
+		SPAWN(message_delay * 0.25)
 
 			// Fuck up a couple of APCs
 			if (!station_apcs.len)
@@ -191,8 +191,11 @@
 						foundAPC.environ = 0
 						foundAPC.equipment = 0
 						foundAPC.lighting = 0
+				logTheThing("station", null, null, "Ion storm interfered with [foundAPC.name] at [log_loc(foundAPC)]")
+				if (prob(50))
+					foundAPC.aidisabled = TRUE
 				foundAPC.update()
-				foundAPC.updateicon()
+				foundAPC.UpdateIcon()
 
 			sleep(message_delay * 0.25)
 
@@ -202,7 +205,7 @@
 				for_by_tcl (foundDoor, /obj/machinery/door)
 					if (foundDoor.z != 1)
 						continue
-					if (istype(foundDoor, /obj/machinery/door/poddoor))
+					if (foundDoor.cant_emag)
 						continue
 					T = get_turf(foundDoor)
 					if (!istype(T.loc,/area/station/))
@@ -225,7 +228,7 @@
 						foundDoor.secondsElectrified = -1
 					if(2)
 						foundDoor.locked = 1
-						foundDoor.update_icon()
+						foundDoor.UpdateIcon()
 					if(3)
 						if (foundDoor.density)
 							foundDoor.open()

@@ -14,7 +14,7 @@
 	boutput(world, "<B><span class='alert'>A man named Waldo</span> is likely to be somewhere on the station. You must find him (And beware of any of his compatriots!)</B>")
 
 /datum/game_mode/waldo/pre_setup()
-	var/list/possible_waldos = get_possible_waldos()
+	var/list/possible_waldos = get_possible_enemies(ROLE_MISC, 1)
 
 	if(possible_waldos.len < 1)
 		return 0
@@ -23,7 +23,7 @@
 	for(var/mob/new_player/player in mobs)
 		if (player.client && player.ready) num_players++
 
-	var/num_waldos = max(1, min(round(num_players / 6), waldos_possible))
+	var/num_waldos = clamp(round(num_players / 6), 1, waldos_possible)
 
 	var/list/chosen_waldos = antagWeighter.choose(pool = possible_waldos, role = "waldo", amount = num_waldos, recordChosen = 1)
 	for (var/datum/mind/waldo in chosen_waldos)
@@ -129,26 +129,8 @@
 //			waldo.current << browse('waldo.jpg',"window=some;titlebar=1;size=550x400;can_minimize=0;can_resize=0")
 
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
-
-/datum/game_mode/waldo/proc/get_possible_waldos()
-	var/list/candidates = list()
-
-	for(var/mob/new_player/player in mobs)
-		if((player.client) &&  (player.ready))
-			if(player.client.preferences.be_syndicate)
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		for(var/mob/new_player/player in mobs)
-			if((player.client) && (player.ready))
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		return null
-	else
-		return candidates
 
 /datum/game_mode/waldo/proc/equip_waldo(mob/living/carbon/human/waldo_mob)
 	if (!istype(waldo_mob))

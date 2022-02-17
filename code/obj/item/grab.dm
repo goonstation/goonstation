@@ -10,7 +10,7 @@
 	name = "grab"
 	w_class = W_CLASS_HUGE
 	anchored = 1
-	var/break_prob = 45
+	var/prob_mod = 1
 	var/assailant_stam_drain = 30
 	var/affecting_stam_drain = 20
 	var/resist_count = 0
@@ -127,7 +127,7 @@
 			var/obj/item/I = src.loc
 			I.process_grab(mult)
 
-		update_icon()
+		UpdateIcon()
 
 	attack(atom/target, mob/user)
 		if (check())
@@ -144,9 +144,10 @@
 		if(H)
 			choke_count += 1 * mult
 			H.remove_stamina((STAMINA_REGEN+8.5) * mult)
-			H.stamina_stun()
+			H.stamina_stun(mult)
 			if(H.stamina <= -75)
 				H.losebreath += (3 * mult)
+				H.setStatus("paralysis", max(getStatusDuration("paralysis"), STAMINA_NEG_CAP_STUN_TIME * mult)) //not ideal
 			else if(H.stamina <= -50)
 				H.losebreath += (1.5 * mult)
 			else if(H.stamina <= -33)
@@ -245,7 +246,7 @@
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message("<span class='alert'>[src.assailant] has loosened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
 				user.next_click = world.time + user.combat_click_delay
-		update_icon()
+		UpdateIcon()
 
 	proc/upgrade_to_kill(var/msg_overridden = 0)
 		if (!assailant || !affecting)
@@ -335,7 +336,8 @@
 
 		return 0
 
-	proc/update_icon()
+	update_icon()
+
 		switch (src.state)
 			if (GRAB_PASSIVE)
 				icon_state = "reinforce"
@@ -353,16 +355,21 @@
 		src.affecting.set_dir(pick(alldirs))
 		resist_count += 1
 
+		if (is_incapacitated(src.affecting))
+			prob_mod = 0.7
+		else
+			prob_mod = 1
+
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 
-		if (src.state == GRAB_PASSIVE)
+		if (src.state == GRAB_PASSIVE && prob(STAMINA_P_GRAB_RESIST_CHANCE * prob_mod))
 			for (var/mob/O in AIviewers(src.affecting, null))
 				O.show_message(text("<span class='alert'>[] has broken free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
 			qdel(src)
 		else if (src.state == GRAB_PIN)
 			var/succ = 0
 
-			if (resist_count >= 8 && prob(7)) //after 8 resists, start rolling for breakage. this is to make sure people with stamina buffs cant infinite-pin someone
+			if (resist_count >= 8 && prob(7 * prob_mod)) //after 8 resists, start rolling for breakage. this is to make sure people with stamina buffs cant infinite-pin someone
 				succ = 1
 			else if (ishuman(src.assailant))
 				src.assailant.remove_stamina(19)
@@ -370,7 +377,7 @@
 				var/mob/living/carbon/human/H = src.assailant
 				if (H.stamina <= 0)
 					succ = 1
-			else if (prob(13)) //the grabber must be a critter or some shit
+			else if (prob(13 * prob_mod)) //the grabber must be a critter or some shit
 				succ = 1
 
 
@@ -383,7 +390,7 @@
 					O.show_message(text("<span class='alert'>[] attempts to break free of []'s pin!</span>", src.affecting, src.assailant), 1, group = "resist")
 
 		else
-			if (prob(break_prob))
+			if (prob(STAMINA_U_GRAB_RESIST_CHANCE * prob_mod))
 				for (var/mob/O in AIviewers(src.affecting, null))
 					O.show_message(text("<span class='alert'>[] has broken free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
 				qdel(src)
@@ -598,7 +605,8 @@
 	.= 0
 	if (src.chokehold && src.chokehold.state == GRAB_KILL)
 		if (tool_flags & TOOL_CUTTING && hit_type == DAMAGE_CUT)		//bleed em a bit
-			take_bleeding_damage(src.chokehold.affecting, src.chokehold.assailant, 0.5 * mult, bloodsplatter = 0)
+			src.chokehold.affecting.TakeDamage(zone="All", brute=(1 * mult))  //hurt em a bit
+			take_bleeding_damage(src.chokehold.affecting, src.chokehold.assailant, 1.4 * mult, bloodsplatter = 0)
 
 /obj/item/proc/try_grab(var/mob/living/target, var/mob/living/user)
 	.= 0
@@ -765,99 +773,133 @@
 			assailant.last_resist = world.time + COMBAT_BLOCK_DELAY
 		..()
 
-	attack(atom/target, mob/user)
-		qdel(src)
+/obj/item/grab/block/attack(atom/target, mob/user)
+	qdel(src)
 
-	attack_self(mob/user)
-		qdel(src)
+/obj/item/grab/block/attack_self(mob/user)
+	qdel(src)
 
-	update_icon()
-		.= 0
+/obj/item/grab/block/update_icon()
+	return
 
-	do_resist()
-		.= 0
-		if (assailant)
-			playsound(assailant.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, 0, 1.5)
-		qdel(src)
+/obj/item/grab/block/do_resist()
+	.= 0
+	if (assailant)
+		playsound(assailant.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, 0, 1.5)
+	qdel(src)
 
-	setProperty(propId, propVal)
-		var/datum/objectProperty/equipment/P = ..()
-		if(istype(P))
-			P.updateMob(src, src.assailant, propVal)
+/obj/item/grab/block/setProperty(propId, propVal)
+	var/datum/objectProperty/equipment/P = ..()
+	if(istype(P))
+		P.updateMob(src, src.assailant, propVal)
 
-	delProperty(propId)
-		var/propVal = getProperty(propId)
-		var/datum/objectProperty/equipment/P = ..()
-		if(istype(P))
-			P.removeFromMob(src, src.assailant, propVal)
+/obj/item/grab/block/delProperty(propId)
+	var/propVal = getProperty(propId)
+	var/datum/objectProperty/equipment/P = ..()
+	if(istype(P))
+		P.removeFromMob(src, src.assailant, propVal)
 
-	proc/can_block(var/hit_type = null, real_hit = 1)
-		.= UNARMED_BLOCK_PROTECTION_BONUS
-		if (isitem(src.loc) && hit_type)
-			var/obj/item/I = src.loc
+/obj/item/grab/block/proc/can_block(var/hit_type = null, real_hit = 1)
+	.= UNARMED_BLOCK_PROTECTION_BONUS
+	if (isitem(src.loc) && hit_type)
+		var/obj/item/I = src.loc
 
-			var/prop = DAMAGE_TYPE_TO_STRING(hit_type)
-			if(real_hit && prop == "burn" && I?.reagents)
-				I.reagents.temperature_reagents(4000,10)
-			.= src.getProperty("I_block_[prop]")
-		if(real_hit)
-			SEND_SIGNAL(src, COMSIG_BLOCK_BLOCKED)
-			block_spark(src.assailant)
-			fuckup_attack_particle()
+		var/prop = DAMAGE_TYPE_TO_STRING(hit_type)
+		if(real_hit && prop == "burn" && I?.reagents)
+			I.reagents.temperature_reagents(4000,10)
+		.= src.getProperty("I_block_[prop]")
+	if(real_hit)
+		var/ret = list(.)
+		SEND_SIGNAL(src, COMSIG_BLOCK_BLOCKED, hit_type, ret)
+		. = ret[1]
+		block_spark(src.assailant)
+		fuckup_attack_particle()
 
 
-	proc/play_block_sound(var/hit_type = DAMAGE_BLUNT)
-		switch(hit_type)
-			if (DAMAGE_BLUNT)
-				playsound(src, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1)
-			if (DAMAGE_CUT)
-				playsound(src, 'sound/impact_sounds/block_cut.ogg', 50, 1, -1)
-			if (DAMAGE_STAB)
-				playsound(src, 'sound/impact_sounds/block_stab.ogg', 50, 1, -1)
-			if (DAMAGE_BURN)
-				playsound(src, 'sound/impact_sounds/block_burn.ogg', 50, 1, -1)
+/obj/item/grab/block/proc/play_block_sound(var/hit_type = DAMAGE_BLUNT)
+	switch(hit_type)
+		if (DAMAGE_BLUNT)
+			playsound(src, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1)
+		if (DAMAGE_CUT)
+			playsound(src, 'sound/impact_sounds/block_cut.ogg', 50, 1, -1)
+		if (DAMAGE_STAB)
+			playsound(src, 'sound/impact_sounds/block_stab.ogg', 50, 1, -1)
+		if (DAMAGE_BURN)
+			playsound(src, 'sound/impact_sounds/block_burn.ogg', 50, 1, -1)
 
-	handle_throw(var/mob/living/user,var/atom/target)
-		if (isturf(user.loc) && target)
-			var/turf/T = user.loc
-			if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying) && can_act(user))
-				user.changeStatus("weakened", max(user.movement_delay()*2, 0.5 SECONDS))
-				user.force_laydown_standup()
+/obj/item/grab/block/handle_throw(mob/living/user, atom/target)
+	if (isturf(user.loc) && target)
+		var/turf/T = user.loc
+		if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying) && can_act(user))
+			user.changeStatus("weakened", max(user.movement_delay()*2, 0.5 SECONDS))
+			user.force_laydown_standup()
 
-				var/turf/target_turf = get_step(user,get_dir(user,target))
-				if (!target_turf)
-					target_turf = T
+			var/target_dir = get_dir(user,target)
+			var/turf/target_turf = get_step(user, target_dir)
+			if (!target_turf)
+				target_turf = T
 
-				var/mob/living/dive_attack_hit = null
+			var/mob/living/dive_attack_hit = null
 
-				for (var/mob/living/L in target_turf)
-					if (user == L) continue
-					dive_attack_hit = L
-					break
+			for (var/mob/living/L in target_turf)
+				if (user == L) continue
+				dive_attack_hit = L
+				break
 
-				if (dive_attack_hit)
-					var/damage = rand(1,6)
-					if (ishuman(user))
-						var/mob/living/carbon/human/H = user
-						if (H.shoes)
-							damage += H.shoes.kick_bonus
-						else if (H.limbs.r_leg)
-							damage += H.limbs.r_leg.limb_hit_bonus
-						else if (H.limbs.l_leg)
-							damage += H.limbs.l_leg.limb_hit_bonus
+			if (dive_attack_hit)
+				var/damage = rand(1,6)
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
+					if (H.shoes)
+						damage += H.shoes.kick_bonus
+					else if (H.limbs.r_leg)
+						damage += H.limbs.r_leg.limb_hit_bonus
+					else if (H.limbs.l_leg)
+						damage += H.limbs.l_leg.limb_hit_bonus
 
-					dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
-					playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
-					for (var/mob/O in AIviewers(user))
-						O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
-					logTheThing("combat", user, dive_attack_hit, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
-				else
-					for (var/mob/O in AIviewers(user))
-						O.show_message("<span class='alert'><B>[user] slides to the ground!</B></span>", 1, group = "resist")
+				dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
+				playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
+				for (var/mob/O in AIviewers(user))
+					O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
+				logTheThing("combat", user, dive_attack_hit, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
+			else
+				for (var/mob/O in AIviewers(user))
+					O.show_message("<span class='alert'><B>[user] slides to the ground!</B></span>", 1, group = "resist")
 
-				step_to(user,target_turf)
+				// Slidekick to throw items on the turf
+				var/item_num_to_throw = 0
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
+					item_num_to_throw += !!H.limbs.r_leg
+					item_num_to_throw += !!H.limbs.l_leg
+				else if (ismobcritter(user))
+					//TODO: When mobcritters keep track of how many legs they have, replace the below.
+					item_num_to_throw += 2
 
-		user.u_equip(src)
+				if (item_num_to_throw)
+					for (var/obj/item/itm in target_turf) // We want to kick items only
+						if (itm.w_class >= W_CLASS_HUGE)
+							continue
+
+						var/cardinal_throw_dir = target_dir
+						if (!is_cardinal(cardinal_throw_dir))
+							if(prob(50))
+								cardinal_throw_dir &= NORTH | SOUTH
+							else
+								cardinal_throw_dir &= EAST | WEST
+
+						var/atom/throw_target = get_edge_target_turf(itm, cardinal_throw_dir)
+						if (throw_target)
+							item_num_to_throw--
+							playsound(itm, "swing_hit", 50, 1)
+							itm.throw_at(throw_target, W_CLASS_HUGE - itm.w_class, (1 / itm.w_class) + 0.8) // Range: 1-4, Speed: 1-2
+
+						if (!item_num_to_throw)
+							break
+
+			step_to(user, target_turf)
+
+	user.u_equip(src)
 
 ////////////////////////////
 //SPECIAL GRAB ITEMS STUFF//

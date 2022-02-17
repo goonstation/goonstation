@@ -87,20 +87,20 @@
 				src.clogged = 0
 				user.show_text("The drain clog melts away.")
 
-			src.update_icon()
+			src.UpdateIcon()
 			return
 		if (istype(I,/obj/item/material_piece/cloth))
 			var/obj/item/material_piece/cloth/C = I
 			src.clogged += (20 * C.amount) //One piece of cloth clogs for about 1 minute. (cause the machine loop updates ~3 second interval)
 			user.show_text("You stuff [I] into the drain.")
 			logTheThing("station", user, null, "clogs [name] shut temporarily at [log_loc(user)].")
-			pool(I)
-			src.update_icon()
+			qdel(I)
+			src.UpdateIcon()
 			return
 
 		return ..()
 
-	proc/update_icon()
+	update_icon()
 		if (clogged)
 			icon_state = "[base_icon]_clogged"
 		else if (welded)
@@ -124,7 +124,7 @@
 
 	New()
 		..()
-		src.invisibility = 100
+		src.invisibility = INVIS_ALWAYS_ISH
 
 ///////////////////
 //////spawner//////
@@ -146,7 +146,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(delay)
+		SPAWN(delay)
 			R = new /datum/reagents(amount)
 			R.add_reagent(reagent_id, amount)
 
@@ -238,7 +238,7 @@
 		..()
 		src.reagents = new /datum/reagents(bladder)
 		src.reagents.my_atom = src
-		update_icon()
+		UpdateIcon()
 
 
 	ex_act(severity)
@@ -271,7 +271,7 @@
 					T.active_liquid.group.drain(T.active_liquid,slurp,src)
 					if (prob(80))
 						playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 0.1, 0.7)
-				update_icon()
+				UpdateIcon()
 
 		else if (pissing)
 			if (src.reagents.total_volume > 0)
@@ -285,9 +285,9 @@
 						src.reagents.clear_reagents()
 					else T.fluid_react(src.reagents,min(piss,src.reagents.total_volume))
 
-				update_icon()
+				UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		var/amt = round((src.reagents.total_volume / bladder) * 12,1)
 		icon_state = "[base_icon][amt]"
 
@@ -309,17 +309,17 @@
 			if (href_list["slurp"])
 				slurping = 1
 				pissing = 0
-				update_icon()
+				UpdateIcon()
 
 			if (href_list["piss"])
 				slurping = 0
 				pissing = 1
-				update_icon()
+				UpdateIcon()
 
 			if (href_list["off"])
 				slurping = 0
 				pissing = 0
-				update_icon()
+				UpdateIcon()
 
 			src.updateUsrDialog()
 			src.add_fingerprint(usr)
@@ -420,7 +420,7 @@
 	desc = "A deployable sea ladder that will allow you to descend to and ascend from the trench."
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "ladder_off"
-	item_state = "folded_chair"
+	item_state = "sea_ladder"
 	w_class = W_CLASS_NORMAL
 	throwforce = 10
 	flags = FPRINT | TABLEPASS | CONDUCT

@@ -5,7 +5,7 @@
 	icon_state = "itemspawn"
 	density = 0
 	anchored = 1.0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/amt2spawn = 0
 	var/min_amt2spawn = 0
@@ -18,7 +18,7 @@
 	// TODO: initialize
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.spawn_items()
 			sleep(10 SECONDS)
 			qdel(src)
@@ -78,8 +78,7 @@
 	icon_state = "rand_snacks"
 	min_amt2spawn = 1
 	max_amt2spawn = 1
-	items2spawn = list(/obj/item/reagent_containers/food/snacks/candy/regular,
-	/obj/item/reagent_containers/food/snacks/candy/chocolate,
+	items2spawn = list(/obj/item/reagent_containers/food/snacks/candy/chocolate,
 	/obj/item/reagent_containers/food/snacks/candy/nougat,
 	/obj/item/reagent_containers/food/snacks/candy/butterscotch,
 	/obj/item/reagent_containers/food/snacks/sandwich/meat_h,
@@ -937,13 +936,13 @@
 	icon_state = "podspawn"
 	density = 0
 	anchored = 1.0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/obj/machinery/vehicle/pod2spawn = null
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.set_up()
 			sleep(1 SECOND)
 			qdel(src)
@@ -1490,6 +1489,30 @@
 		min_amt2spawn = 5
 		max_amt2spawn = 7
 
+/obj/random_item_spawner/pizza
+	name = "random pizza spawner"
+	icon_state = "rand_pizza"
+	min_amt2spawn = 2
+	max_amt2spawn = 2
+	rare_chance = 1
+	items2spawn = list(/obj/item/reagent_containers/food/snacks/pizza/bad,
+						/obj/item/reagent_containers/food/snacks/pizza/pepperbad,
+						/obj/item/reagent_containers/food/snacks/pizza/mushbad)
+	rare_items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza)
+
+/obj/random_item_spawner/cola
+	name = "random cola spawner"
+	icon_state = "rand_pizza"
+	min_amt2spawn = 2
+	max_amt2spawn = 2
+	rare_chance = 2
+	items2spawn = list(/obj/item/reagent_containers/food/drinks/cola,
+						/obj/item/reagent_containers/food/drinks/cola/random,
+						/obj/item/reagent_containers/food/drinks/peach,
+						/obj/item/reagent_containers/food/drinks/bottle/soda/orange,
+						/obj/item/reagent_containers/food/drinks/bottle/soda/grones)
+	rare_items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza)
+
 /obj/random_item_spawner/hat
 	name = "random hat spawner"
 	icon_state = "rand_hat"
@@ -1837,7 +1860,7 @@
 /obj/random_item_spawner/organs/bloody
 	New()
 		. = ..()
-		SPAWN_DBG(1 DECI SECOND) //sync with the organs spawn
+		SPAWN(1 DECI SECOND) //sync with the organs spawn
 			make_cleanable(/obj/decal/cleanable/blood/gibs, src.loc)
 
 	one_to_three

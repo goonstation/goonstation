@@ -65,7 +65,7 @@
 		if (ispulsingtool(W) && (src.open == 1) && (!src.locked) && (!src.l_hacking))
 			user.show_message(text("<span class='alert'>Now attempting to reset internal memory, please hold.</span>"), 1)
 			src.l_hacking = 1
-			SPAWN_DBG(10 SECONDS)
+			SPAWN(10 SECONDS)
 				if (prob(40))
 					src.l_setshort = 1
 					configure_mode = 1
@@ -89,7 +89,7 @@
 		return
 	return ..()
 
-/obj/item/storage/secure/MouseDrop(atom/over_object, src_location, over_location)
+/obj/item/storage/secure/mouse_drop(atom/over_object, src_location, over_location)
 	if ((usr.is_in_hands(src) || over_object == usr) && src.locked == 1)
 		boutput(usr, "<span class='alert'>[src] is locked and cannot be opened!</span>")
 		return
@@ -472,41 +472,41 @@
 			if (1)
 				new /obj/item/material_piece/gold(src)
 				for (var/i=6, i>0, i--)
-					var/obj/item/spacecash/thousand/S = unpool(/obj/item/spacecash/thousand)
+					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 					S.setup(src)
 			if (2)
 				for (var/i=2, i>0, i--)
 					new /obj/item/material_piece/gold(src)
 				for (var/i=4, i>0, i--)
-					var/obj/item/spacecash/thousand/S = unpool(/obj/item/spacecash/thousand)
+					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 					S.setup(src)
 			if (3)
 				for (var/i=5, i>0, i--)
-					var/obj/item/spacecash/thousand/S = unpool(/obj/item/spacecash/thousand)
+					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 					S.setup(src)
 			if (4)
 				for (var/i=4, i>0, i--)
 					new /obj/item/skull(src)
 				for (var/i=2, i>0, i--)
-					var/obj/item/spacecash/thousand/S = unpool(/obj/item/spacecash/thousand)
+					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 					S.setup(src)
 			if (5)
 				for (var/i=2, i>0, i--)
 					new /obj/item/skull(src)
 				for (var/i=2, i>0, i--)
-					var/obj/item/spacecash/thousand/S = unpool(/obj/item/spacecash/thousand)
+					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 					S.setup(src)
 			if (6)
 				for (var/i=2, i>0, i--)
 					new /obj/item/gun/energy/laser_gun(src)
 				for (var/i=3, i>0, i--)
-					var/obj/item/spacecash/thousand/S = unpool(/obj/item/spacecash/thousand)
+					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 					S.setup(src)
 			if (7)
 				new /obj/item/gun/kinetic/riotgun(src)
 				new /obj/item/ammo/bullets/abg(src)
 				for (var/i=3, i>0, i--)
-					var/obj/item/spacecash/thousand/S = unpool(/obj/item/spacecash/thousand)
+					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 					S.setup(src)
 			if (8)
 				for (var/i=7, i>0, i--)
@@ -583,7 +583,7 @@
 				new /obj/item/storage/firstaid/brain(src)
 				new /obj/item/storage/firstaid/toxin(src)
 				new /obj/item/storage/firstaid/old(src)
-				new /obj/item/parts/robot_parts/head(src)
+				new /obj/item/parts/robot_parts/head/standard(src)
 			if (2)
 				new /obj/item/injector_belt(src)
 				new /obj/item/reagent_containers/glass/bottle/morphine(src)
@@ -637,7 +637,7 @@
 				new /obj/item/reagent_containers/pill/crank(src)
 				new /obj/item/reagent_containers/patch/LSD(src)
 				new /obj/item/paint_can/random(src)
-				var/obj/item/spacecash/random/tourist/S = unpool(/obj/item/spacecash/random/tourist)
+				var/obj/item/spacecash/random/tourist/S = new /obj/item/spacecash/random/tourist
 				S.setup(src)
 
 /obj/item/paper/orangeroomsafe
@@ -674,7 +674,7 @@
 				new /obj/item/skull(src)
 			if (2)
 				new /obj/item/material_piece/gold(src)
-				var/obj/item/spacecash/random/tourist/S = unpool(/obj/item/spacecash/random/tourist)
+				var/obj/item/spacecash/random/tourist/S = new /obj/item/spacecash/random/tourist
 				S.setup(src)
 			if (3)
 				new /obj/item/gun/kinetic/riotgun(src)
@@ -742,27 +742,27 @@
 				new /obj/item/skull(src)
 				new /obj/item/parts/human_parts/arm/left(src)
 				new /obj/item/parts/human_parts/leg/right(src)
-				var/obj/item/spacecash/thousand/S = unpool(/obj/item/spacecash/thousand)
+				var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 				S.setup(src)
-				S = unpool(/obj/item/spacecash/thousand)
+				S = new /obj/item/spacecash/thousand
 				S.setup(src)
 
 			if (3)
 				new /obj/item/material_piece/gold(src)
 				new /obj/item/material_piece/gold(src)
 				new /obj/item/football(src)
-				var/obj/item/spacecash/thousand/S = unpool(/obj/item/spacecash/thousand)
+				var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 				S.setup(src)
-				S = unpool(/obj/item/spacecash/thousand)
+				S = new /obj/item/spacecash/thousand
 				S.setup(src)
 
 			if (4)
 				new /obj/item/material_piece/gold(src)
 				new /obj/item/material_piece/gold(src)
 				new	/obj/item/instrument/saxophone(src)
-				var/obj/item/spacecash/thousand/S = unpool(/obj/item/spacecash/thousand)
+				var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 				S.setup(src)
-				S = unpool(/obj/item/spacecash/thousand)
+				S = new /obj/item/spacecash/thousand
 				S.setup(src)
 
 			if (5)
@@ -771,9 +771,9 @@
 				new /obj/item/skull(src)
 				new /obj/item/skull(src)
 				new /obj/item/skull(src)
-				var/obj/item/spacecash/thousand/S = unpool(/obj/item/spacecash/thousand)
+				var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 				S.setup(src)
-				S = unpool(/obj/item/spacecash/thousand)
+				S = new /obj/item/spacecash/thousand
 				S.setup(src)
 
 	disposing()

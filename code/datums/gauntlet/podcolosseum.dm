@@ -2,6 +2,8 @@
 	name = "The Colosseum"
 	virtual = 1
 	ambient_light = "#bfbfbf"
+	dont_log_combat = TRUE
+
 
 	Entered(var/atom/A)
 		..()
@@ -133,7 +135,7 @@
 			return
 		state = 1
 		for (var/obj/machinery/door/poddoor/buff/staging/S in staging)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				S.close()
 		var/mobn = 0
 		for (var/mob/M in staging)
@@ -178,13 +180,13 @@
 		announceAll("The Pod Colosseum Arena has now entered staging phase. No more players may enter the game area. The game will start once all players enter the colosseum space inside a pod.")
 		var/spawned_match_id = current_match_id
 		for (var/obj/machinery/door/poddoor/buff/gauntlet/S in colosseum)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				S.open()
 		for (var/obj/machinery/door/poddoor/buff/gauntlet/S in staging)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				S.open()
 		allow_processing = 1
-		SPAWN_DBG(2 MINUTES)
+		SPAWN(2 MINUTES)
 			if (state == 1 && current_match_id == spawned_match_id)
 				announceAll("Game did not start after 2 minutes. Resetting arena.")
 				resetArena()
@@ -195,10 +197,10 @@
 		state = 2
 
 		for (var/obj/machinery/door/poddoor/buff/gauntlet/S in colosseum)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				S.close()
 		for (var/obj/machinery/door/poddoor/buff/gauntlet/S in staging)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				S.close()
 		for (var/mob/living/M in colosseum)
 			if (M in moblist || !ishuman(M) || isdead(M))
@@ -330,7 +332,7 @@
 			command_alert(command_report, "Pod Colosseum match finished")
 		statlog_gauntlet(moblist_names, score, 0)
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/obj/machinery/colosseum_putt/P in staging)
 				for (var/mob/living/M in P)
 					M.gib()
@@ -358,13 +360,13 @@
 					qdel(D)
 
 			for (var/obj/machinery/door/poddoor/buff/staging/S in staging)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					S.open()
 			for (var/obj/machinery/door/poddoor/buff/gauntlet/S in colosseum)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					S.close()
 			for (var/obj/machinery/door/poddoor/buff/gauntlet/S in staging)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					S.close()
 
 		moblist.len = 0
@@ -376,7 +378,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			viewing = locate() in world
 			staging = locate() in world
 			for (var/area/G in world)
@@ -475,7 +477,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 
 	src.debug_variables(colosseum_controller)
 
-/turf/unsimulated/floor/setpieces/gauntlet/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/unsimulated/floor/setpieces/gauntlet/Cross(atom/movable/mover)
 	if (istype(mover, /obj/machinery/colosseum_putt))
 		return 0
 	return ..()
@@ -484,9 +486,9 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 	name = "Colosseum Hangar Floor"
 	desc = "You wonder if that little flashing white thing is a pod or a butt."
 	icon_state = "gauntfloorPod"
-	event_handler_flags = USE_CANPASS
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+
+	Cross(atom/movable/mover)
 		if (istype(mover, /obj/machinery/colosseum_putt))
 			return 1
 		return ..()
@@ -869,7 +871,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 						else
 							Wall.set_dir(1)
 						affected += Wall
-				SPAWN_DBG(forcewall_time)
+				SPAWN(forcewall_time)
 					for (var/obj/W in affected)
 						qdel(W)
 
@@ -1138,7 +1140,7 @@ proc/get_colosseum_message(var/name, var/message)
 			boutput(usr, "<span class='alert'>You currently have no secondary weapon.</span>")
 		update_indicators(INDICATOR_SECONDARY)
 
-	Bump(atom/A)
+	bump(atom/A)
 		//walk(src, 0)
 		flying = 0
 		src.set_dir(facing)
@@ -1230,7 +1232,7 @@ proc/get_colosseum_message(var/name, var/message)
 		update_indicators(INDICATOR_ALL)
 		add_indicators(M)
 		may_exit = 0
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			may_exit = 1
 
 	proc/on_exit(var/mob/M)
@@ -1393,7 +1395,7 @@ proc/get_colosseum_message(var/name, var/message)
 		update_indicators(INDICATOR_HEALTH)
 
 	ex_act(var/severity)
-		var/actual_severity = max(min(4 - severity, 3), 1)
+		var/actual_severity = clamp(4 - severity, 1, 3)
 		var/multiplier = actual_severity * actual_severity
 		var/damage = rand(25, 75) * 0.1 * multiplier
 		take_damage(damage, 2, 2)
@@ -1425,7 +1427,7 @@ proc/get_colosseum_message(var/name, var/message)
 		if(dying)
 			return
 		dying = 1
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.visible_message("<b>[src] is breaking apart!</b>")
 			new /obj/effects/explosion (src.loc)
 			var/sound/expl_sound = sound('sound/effects/Explosion1.ogg')
@@ -1456,7 +1458,7 @@ proc/get_colosseum_message(var/name, var/message)
 				remove_indicators(piloting)
 				piloting = null
 				M.set_loc(Q)
-				SPAWN_DBG(0.2 SECONDS)
+				SPAWN(0.2 SECONDS)
 					var/dx = rand(-10, 10)
 					var/dy = rand(-10, 10)
 					var/turf/T = locate(Q.x + dx, Q.y + dy, Q.z)
@@ -1469,7 +1471,7 @@ proc/get_colosseum_message(var/name, var/message)
 				explosion_new(src, T, 5)
 			for(T in range(src,1))
 				make_cleanable(/obj/decal/cleanable/machine_debris, T)
-				var/obj/decal/cleanable/machine_debris/C = unpool(/obj/decal/cleanable/machine_debris)
+				var/obj/decal/cleanable/machine_debris/C = new /obj/decal/cleanable/machine_debris
 				C.setup(T)
 
 			qdel(src)
@@ -1524,7 +1526,7 @@ proc/get_colosseum_message(var/name, var/message)
 		..()
 
 		if (!is_template)
-			SPAWN_DBG(rand(150, 300))
+			SPAWN(rand(150, 300))
 				icon = null
 				qdel(src)
 
@@ -1544,6 +1546,7 @@ proc/get_colosseum_message(var/name, var/message)
 				icon_state = "powerup_primary"
 
 		Crossed(var/atom/A)
+			..()
 			if (disposed)
 				return
 			if (istype(A, /obj/machinery/colosseum_putt))
@@ -1577,6 +1580,7 @@ proc/get_colosseum_message(var/name, var/message)
 			return 1
 
 		Crossed(var/atom/A)
+			..()
 			if (disposed)
 				return
 			if (istype(A, /obj/machinery/colosseum_putt))
@@ -1668,7 +1672,7 @@ proc/get_colosseum_message(var/name, var/message)
 				. = ..()
 				C.simple.power += amount
 				C.update_indicators(INDICATOR_SHOTDAMAGE)
-				C.simple.update_icon()
+				C.simple.UpdateIcon()
 
 			t2
 				amount = 4
@@ -1751,6 +1755,7 @@ proc/get_colosseum_message(var/name, var/message)
 			explosion_new(src, get_turf(src), 5)
 
 	Crossed(var/atom/A)
+		..()
 		if (disposed)
 			return
 		if (istype(A, /obj/machinery/colosseum_putt) || istype(A, /obj/critter/gunbot/drone))

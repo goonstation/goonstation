@@ -57,7 +57,7 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 			var/area/T = get_turf(src)
 			T.visible_message("<span class='alert'>[src]'s glass housing shatters!</span>")
 			playsound(T, pick("sound/impact_sounds/Glass_Shatter_1.ogg","sound/impact_sounds/Glass_Shatter_2.ogg","sound/impact_sounds/Glass_Shatter_3.ogg"), 100, 1)
-			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 			G.set_loc(get_turf(user))
 			src.usageState = 2
 			src.icon_state = "shipalert2"

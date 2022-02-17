@@ -20,9 +20,10 @@
 	hide_attack = 2
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.underlays = null
 		if (reagents.total_volume)
 			icon_state = "emerg_inj-[label]"
@@ -250,18 +251,21 @@
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/cardiac
 	name = "cardiac combi-injector"
+	desc = "A combination medical injector containing saline and epinephrine."
 	initial_reagents = list("saline" = 25, "epinephrine" = 25)
-	label = "blue"
+	label = "yellow"
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/bloodloss
 	name = "bloodloss combi-injector"
+	desc = "A combination medical injector containing filgrastim and proconvertin."
 	initial_reagents = list("filgrastim" = 25, "proconvertin" = 25)
 	label = "red"
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport
 	name = "lifesupport combi-injector"
+	desc = "A combination medical injector containing salbutamol and mannitol."
 	initial_reagents = list("salbutamol" = 25, "mannitol" = 25)
-	label = "yellow"
+	label = "blue"
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut
 	name = "Juggernaut injector"

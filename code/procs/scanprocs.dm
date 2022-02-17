@@ -26,7 +26,9 @@
 	else colored_health = "<span class='alert'>[health_percent]</span>"
 
 	var/optimal_temp = M.base_body_temp
-	var/body_temp = "[M.bodytemperature - T0C]&deg;C ([M.bodytemperature * 1.8-459.67]&deg;F)"
+	var/body_temp_C = round(M.bodytemperature - T0C, M.bodytemperature - T0C < 1000 ? 0.01 : 1)
+	var/body_temp_F = round(M.bodytemperature * 1.8 - T0F, M.bodytemperature * 1.8 - T0F < 1000 ? 0.01 : 1)
+	var/body_temp = "[body_temp_C]&deg;C ([body_temp_F]&deg;F)"
 	var/colored_temp = ""
 	if (M.bodytemperature >= (optimal_temp + 60))
 		colored_temp = "<span class='alert'>[body_temp]</span>"
@@ -39,10 +41,10 @@
 	else
 		colored_temp = "[body_temp]"
 
-	var/oxy = M.get_oxygen_deprivation()
-	var/tox = M.get_toxin_damage()
-	var/burn = M.get_burn_damage()
-	var/brute = M.get_brute_damage()
+	var/oxy = round(M.get_oxygen_deprivation(), 0.01)
+	var/tox = round(M.get_toxin_damage(), 0.01)
+	var/burn = round(M.get_burn_damage(), 0.01)
+	var/brute = round(M.get_brute_damage(), 0.01)
 
 	// contained here in order to change them easier
 	var/oxy_font = "<span style='color:#1F75D1'>"
@@ -75,9 +77,9 @@
 		if (blood_system)
 			var/bp_col
 			switch (L.blood_pressure["total"])
-				if (-INFINITY to 374) // very low (90/60)
+				if (-INFINITY to 299) // very low (70/50)
 					bp_col = "red"
-				if (375 to 414) // low (100/65)
+				if (300 to 414) // low (100/65)
 					bp_col = "#CC7A1D"
 				if (415 to 584) // normal (120/80)
 					bp_col = "#138015"
@@ -263,10 +265,12 @@
 		ret += "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
 	else if (damage > 0)
 		ret += "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"
-	else if (O.robotic)
+	else if (O.robotic || O.unusual)
 		ret += "<br><span style='color:purple'><b>[O.name]</b></span>"
 	if (O.robotic)
 		ret += "<span style='color:purple'> - Robotic organ detected</span>"
+	else if (O.unusual)
+		ret += "<span style='color:purple'> - Unknown organ detected</span>"
 	return ret.Join()
 
 /datum/genetic_prescan
@@ -352,28 +356,26 @@
 	if (M:wear_id && M:wear_id:registered)
 		patientname = M.wear_id:registered
 
-	for (var/datum/data/record/E in data_core.general)
-		if (E.fields["name"] == patientname)
-			switch (M.stat)
-				if (0)
-					if (M.bioHolder && M.bioHolder.HasEffect("strong"))
-						E.fields["p_stat"] = "Very Active"
-					else
-						E.fields["p_stat"] = "Active"
-				if (1)
-					E.fields["p_stat"] = "*Unconscious*"
-				if (2)
-					E.fields["p_stat"] = "*Deceased*"
-			for (var/datum/data/record/R in data_core.medical)
-				if ((R.fields["id"] == E.fields["id"]))
-					R.fields["bioHolder.bloodType"] = M.bioHolder.bloodType
-					R.fields["cdi"] = english_list(M.ailments, "No diseases have been diagnosed at the moment.")
-					if (M.ailments.len)
-						R.fields["cdi_d"] = "Diseases detected at [time2text(world.realtime,"hh:mm")]."
-					else
-						R.fields["cdi_d"] = "No notes."
-					break
-			break
+	var/datum/db_record/E = data_core.general.find_record("name", patientname)
+	if(E)
+		switch (M.stat)
+			if (0)
+				if (M.bioHolder && M.bioHolder.HasEffect("strong"))
+					E["p_stat"] = "Very Active"
+				else
+					E["p_stat"] = "Active"
+			if (1)
+				E["p_stat"] = "*Unconscious*"
+			if (2)
+				E["p_stat"] = "*Deceased*"
+		var/datum/db_record/R = data_core.medical.find_record("id", E["id"])
+		if(R)
+			R["bioHolder.bloodType"] = M.bioHolder.bloodType
+			R["cdi"] = english_list(M.ailments, "No diseases have been diagnosed at the moment.")
+			if (M.ailments.len)
+				R["cdi_d"] = "Diseases detected at [time2text(world.realtime,"hh:mm")]."
+			else
+				R["cdi_d"] = "No notes."
 	return
 
 // output a health pop-up overhead thing to the client
@@ -409,8 +411,8 @@
 		animate_scanning(M, "#0AEFEF")
 
 	var/mob/living/carbon/human/H = M
-	var/datum/data/record/GR = FindRecordByFieldValue(data_core.general, "name", H.name)
-	var/datum/data/record/MR = FindRecordByFieldValue(data_core.medical, "name", H.name)
+	var/datum/db_record/GR = data_core.general.find_record("name", H.name)
+	var/datum/db_record/MR = data_core.medical.find_record("name", H.name)
 	if (!MR)
 		return "<span class='alert'>ERROR: NO RECORD FOUND</span>"
 
@@ -470,7 +472,7 @@
 				data += "[reagent_data]"
 
 			if (show_temp)
-				data += "<br><span class='notice'>Overall temperature: [reagents.total_temperature - T0C]&deg;C ([reagents.total_temperature * 1.8-459.67]&deg;F)</span>"
+				data += "<br><span class='notice'>Overall temperature: [reagents.total_temperature - T0C]&deg;C ([reagents.total_temperature * 1.8 - T0F]&deg;F)</span>"
 		else
 			data = "<span class='notice'>No active chemical agents found in [A].</span>"
 	else

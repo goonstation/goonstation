@@ -2,7 +2,7 @@
 	name = "wall"
 	icon = 'icons/obj/doors/Doorf.dmi'
 	icon_state = "door1"
-	blocks_air = 0
+	gas_impermeable = 0
 	var/operating = null
 	var/visible = 1
 	var/floorname
@@ -30,18 +30,18 @@
 		..()
 		//Hide the wires or whatever THE FUCK
 		src.levelupdate()
-		src.blocks_air = 1
+		src.gas_impermeable = 1
 		src.layer = src.layer - 0.1
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.find_icon_state()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			// so that if it's getting created by the map it works, and if it isn't this will just return
 			src.setFloorUnderlay('icons/turf/floors.dmi', "plating", 0, 100, 0, "plating")
 			if (src.can_be_auto)
 				for (var/turf/simulated/wall/auto/W in orange(1,src))
-					W.update_icon()
+					W.UpdateIcon()
 				for (var/obj/grille/G in orange(1,src))
-					G.update_icon()
+					G.UpdateIcon()
 
 	Del()
 		src.RL_SetSprite(null)
@@ -139,7 +139,7 @@
 					A.setMaterial(M)
 					B.setMaterial(M)
 				F.levelupdate()
-				logTheThing("station", user, null, "dismantles a False Wall in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+				logTheThing("station", user, null, "dismantles a False Wall in [user.loc.loc] ([log_loc(user)])")
 				return
 			else
 				return ..()
@@ -158,11 +158,11 @@
 		src.operating = 1
 		src.name = "false wall"
 		animate(src, time = delay, pixel_x = 25, easing = BACK_EASING)
-		SPAWN_DBG(delay)
+		SPAWN(delay)
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits
 			//actually do the opening things
 			src.set_density(0)
-			src.blocks_air = 0
+			src.gas_impermeable = 0
 			src.pathable = 1
 			src.update_air_properties()
 			src.RL_SetOpacity(0)
@@ -181,14 +181,14 @@
 		src.name = "wall"
 		animate(src, time = delay, pixel_x = 0, easing = BACK_EASING)
 		src.set_density(1)
-		src.blocks_air = 1
+		src.gas_impermeable = 1
 		src.pathable = 0
 		src.update_air_properties()
 		if (src.visible)
 			src.RL_SetOpacity(1)
 		src.setIntact(TRUE)
 		update_nearby_tiles()
-		SPAWN_DBG(delay)
+		SPAWN(delay)
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits
 			src.operating = 0
 		return 1
@@ -208,15 +208,14 @@
 				var/turf/T = get_step(src, dir)
 				if (istype(T, /turf/simulated/wall/auto))
 					var/turf/simulated/wall/auto/W = T
-					// neither of us are reinforced
-					if (!istype(W, r_wall_path) && !istype(src, /turf/simulated/wall/false_wall/reinforced))
-						dirs |= dir
-					// both of us are reinforced
-					else if (istype(W, r_wall_path) && istype(src, /turf/simulated/wall/false_wall/reinforced))
+					if (istype(W, /turf/simulated/wall/false_wall) || \
+							istype(W, wall_path) || \
+							istype(W, r_wall_path) && istype(src, /turf/simulated/wall/false_wall/reinforced)
+						)
 						dirs |= dir
 					if (W.light_mod) //If the walls have a special light overlay, apply it.
 						src.RL_SetSprite("[W.light_mod][num2text(dirs)]")
-			var/turf/simulated/wall/auto/T = wall_path
+			var/turf/simulated/wall/auto/T = istype(src, /turf/simulated/wall/false_wall/reinforced) ? r_wall_path : wall_path
 			mod = initial(T.mod)
 			src.icon_state = "[mod][num2text(dirs)]"
 		return src.icon_state
@@ -228,7 +227,7 @@
 	//Temp false walls turn back to regular walls when closed.
 	temp/New()
 		..()
-		SPAWN_DBG(1.1 SECONDS)
+		SPAWN(1.1 SECONDS)
 			src.open()
 
 	temp/close()
@@ -239,7 +238,7 @@
 		animate(src, time = delay, pixel_x = 0, easing = BACK_EASING)
 		src.icon_state = "door1"
 		src.set_density(1)
-		src.blocks_air = 1
+		src.gas_impermeable = 1
 		src.pathable = 0
 		src.update_air_properties()
 		if (src.visible)

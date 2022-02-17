@@ -12,7 +12,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.update_dir()
 			for (var/obj/machinery/mining_magnet/MM in range(1,src))
 				linked_magnet = MM
@@ -128,7 +128,7 @@
 /obj/magnet_target_marker
 	name = "mineral magnet target"
 	desc = "Marks the location of an area of asteroid magnetting."
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	var/width = 15
 	var/height = 15
 	var/scan_range = 7
@@ -271,7 +271,7 @@
 		if (istype(W, /obj/item/raw_material/plasmastone) && !loaded)
 			loaded = 1
 			boutput(user, "<span class='notice'>You charge the magnetizer with the plasmastone.</span>")
-			pool(W)
+			qdel(W)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (!magnet)
@@ -389,7 +389,7 @@
 					last_delay = world.time + auto_delay
 					return
 				else
-					SPAWN_DBG(0)
+					SPAWN(0)
 						pull_new_source()
 
 		proc/get_encounter(var/rarity_mod)
@@ -405,7 +405,7 @@
 			for (var/obj/forcefield/mining/M in wall_bits)
 				M.opacity = 1
 				M.set_density(1)
-				M.invisibility = 0
+				M.invisibility = INVIS_NONE
 
 			active = 1
 
@@ -445,7 +445,7 @@
 				for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
 					M.opacity = 0
 					M.set_density(0)
-					M.invisibility = 1
+					M.invisibility = INVIS_INFRA
 				active = 0
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
 				return
@@ -460,7 +460,7 @@
 			for (var/obj/forcefield/mining/M in wall_bits)
 				M.opacity = 0
 				M.set_density(0)
-				M.invisibility = 101
+				M.invisibility = INVIS_ALWAYS
 
 			src.updateUsrDialog()
 			return
@@ -477,7 +477,7 @@
 		damage_overlays += image(src.icon, "damage-2")
 		damage_overlays += image(src.icon, "damage-3")
 		damage_overlays += image(src.icon, "damage-4")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/obj/machinery/magnet_chassis/MC in range(1,src))
 				linked_chassis = MC
 				MC.linked_magnet = src
@@ -496,7 +496,7 @@
 				last_delay = world.time + auto_delay
 				return
 			else
-				SPAWN_DBG(0) //Did you know that if you sleep directly in process() you are the old lady at the mall who only pays in quarters.
+				SPAWN(0) //Did you know that if you sleep directly in process() you are the old lady at the mall who only pays in quarters.
 					//Do not be quarter lady.
 					pull_new_source()
 
@@ -605,7 +605,7 @@
 			return
 
 		src.health -= amount
-		src.health = max(0,min(src.health,100))
+		src.health = clamp(src.health, 0, 100)
 
 		if (src.health < 1 && !src.active)
 			qdel(src)
@@ -632,7 +632,7 @@
 		for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
 			M.opacity = 1
 			M.set_density(1)
-			M.invisibility = 0
+			M.invisibility = INVIS_NONE
 
 		active = 1
 
@@ -650,6 +650,9 @@
 			if (!istype(T,/turf/simulated/floor/airless/plating/catwalk/))
 				T.ReplaceWithSpace()
 				//qdel(T)
+		if(station_repair.station_generator)
+			for (var/turf/unsimulated/UT in mining_controls.magnet_area.contents)
+				UT.ReplaceWith("Space", force=TRUE)
 		for (var/turf/space/S in mining_controls.magnet_area.contents)
 			S.overlays = list()
 
@@ -680,10 +683,16 @@
 			for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
 				M.opacity = 0
 				M.set_density(0)
-				M.invisibility = 1
+				M.invisibility = INVIS_INFRA
 			active = 0
 			boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
 			return
+
+		if(station_repair.station_generator)
+			var/list/turf/space/repair_turfs = list()
+			for(var/turf/space/T in mining_controls.magnet_area.contents)
+				repair_turfs += T
+			station_repair.repair_turfs(repair_turfs)
 
 		sleep(sleep_time)
 		if (malfunctioning && prob(20))
@@ -695,7 +704,7 @@
 		for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
 			M.opacity = 0
 			M.set_density(0)
-			M.invisibility = 101
+			M.invisibility = INVIS_ALWAYS
 
 		src.updateUsrDialog()
 		return
@@ -817,7 +826,7 @@
 			if (src.check_for_unacceptable_content())
 				src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 			else
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if (src) src.pull_new_source(href_list["activate_selectable"])
 
 		else if (href_list["activate_magnet"])
@@ -828,7 +837,7 @@
 			if (src.check_for_unacceptable_content())
 				src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 			else
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if (src) src.pull_new_source()
 
 		else if (href_list["override_cooldown"])
@@ -870,7 +879,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.connection_scan()
 
 	attack_hand(var/mob/user as mob)
@@ -1153,7 +1162,7 @@
 				H = L
 			var/obj/item/held = L.equipped()
 			if(istype(held, /obj/item/mining_tool) || istype(held, /obj/item/mining_tools) || (isnull(held) && H && (H.is_hulk() || istype(H.gloves, /obj/item/clothing/gloves/concussive))))
-				L.click(src, list(), null, null)
+				UNLINT(L.click(src, list(), null, null))
 			return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1271,7 +1280,7 @@
 				dig_feedback = "This rock is tough. You may need a stronger tool."
 			if (2)
 				dig_chance = 10
-				dig_feedback = "This rock is very tough. You need a stronger tool."
+				dig_feedback = "This rock is very tough. You'll be faster with a stronger tool."
 			if (3 to INFINITY)
 				dig_chance = 0
 				dig_feedback = "You can't even make a dent! You need a stronger tool."
@@ -1332,7 +1341,7 @@
 				O.onExcavate(src)
 			var/makeores
 			for(makeores = src.amount, makeores > 0, makeores--)
-				var/obj/item/raw_material/MAT = unpool(ore_to_create)
+				var/obj/item/raw_material/MAT = new ore_to_create
 				MAT.set_loc(src)
 
 				if(MAT.material)
@@ -1356,7 +1365,7 @@
 		src.levelupdate()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/A in range(src,1))
-			A.update_icon()
+			A.UpdateIcon()
 #ifdef UNDERWATER_MAP
 		if (current_state == GAME_STATE_PLAYING)
 			hotspot_controller.disturb_turf(src)
@@ -1428,6 +1437,7 @@
 
 	noborders
 		update_icon()
+
 			return
 		apply_edge_overlay()
 			return
@@ -1441,7 +1451,7 @@
 		icon_state = "astfloor" + "[sprite_variation]"
 		coloration_overlay = image(src.icon,"color_overlay")
 		coloration_overlay.blend_mode = 4
-		update_icon()
+		UpdateIcon()
 		worldgenCandidates += src
 
 	generate_worldgen()
@@ -1465,6 +1475,7 @@
 			src.ReplaceWithSpace()
 
 	update_icon()
+
 		src.overlays = list()
 		/*
 		if (!coloration_overlay)
@@ -1477,7 +1488,7 @@
 		if (fullbright)
 			src.overlays += /image/fullbright //Fixes perma-darkness
 		#endif
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (istype(src)) //Wire note: just roll with this ok
 				for (var/turf/simulated/wall/asteroid/A in orange(src,1))
 					src.apply_edge_overlay(get_dir(src, A))
@@ -1584,10 +1595,6 @@
 		if (powered_overlay)
 			src.overlays = null
 			signal_event("icon_updated")
-		return
-
-
-	proc/update_icon()
 		return
 
 obj/item/clothing/gloves/concussive
@@ -1814,7 +1821,7 @@ obj/item/clothing/gloves/concussive
 					else
 						boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 					logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						concussive_blast()
 						qdel (src)
 						return
@@ -1834,7 +1841,7 @@ obj/item/clothing/gloves/concussive
 						var/t = (isturf(target) ? target : target.loc)
 						step_towards(src, t)
 
-						SPAWN_DBG( src.det_time )
+						SPAWN( src.det_time )
 							concussive_blast()
 							if(target)
 								if(istype(target,/obj/machinery))
@@ -2005,14 +2012,15 @@ obj/item/clothing/gloves/concussive
 /obj/item/cargotele/traitor
 	cost = 15
 	cell_type = /obj/item/ammo/power_cell/med_power
-	var/list/possible_targets = list()
+	var/static/list/possible_targets = list()
 
 	New()
 		..()
-		for(var/turf/T in world) //hate to do this but it's only once per spawn vOv
-			LAGCHECK(LAG_LOW)
-			if(istype(T,/turf/space) && T.z != 1 && !isrestrictedz(T.z))
-				possible_targets += T
+		if (!length(possible_targets))
+			for(var/turf/T in world) //hate to do this but it's only once vOv
+				LAGCHECK(LAG_LOW)
+				if(istype(T,/turf/space) && T.z != 1 && T.z != 6 && !isrestrictedz(T.z)) //do not foot ball, do not collect 200
+					possible_targets += T
 
 	attack_self() // Fixed --melon
 		return
@@ -2100,7 +2108,7 @@ obj/item/clothing/gloves/concussive
 	if(!user || !T || !decalicon) return
 	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,AREA_LAYER+1)
 	user << O
-	SPAWN_DBG(2 MINUTES)
+	SPAWN(2 MINUTES)
 		if (user?.client)
 			user.client.images -= O
 			user.client.screen -= O
@@ -2148,7 +2156,7 @@ obj/item/clothing/gloves/concussive
 				user.put_in_hand_or_drop(PCEL)
 				boutput(user, "You remove [cell].")
 				if (PCEL) //ZeWaka: fix for null.updateicon
-					PCEL.updateicon()
+					PCEL.UpdateIcon()
 
 				src.cell = null
 			else if (action == "Change the destination")
@@ -2356,15 +2364,17 @@ var/global/list/cargopads = list()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/satchel/mining/))
-			var/obj/item/satchel/mining/S = W
-			if (satchel)
-				boutput(user, "<span class='alert'>There's already a satchel hooked up to [src].</span>")
-				return
-			user.drop_item()
-			S.set_loc(src)
-			satchel = S
-			icon_state = "scoop-bag"
-			user.visible_message("[user] inserts [S] into [src].", "You insert [S] into [src].")
+			if (!issilicon(usr))
+				var/obj/item/satchel/mining/S = W
+				user.drop_item()
+				if (satchel)
+					user.put_in_hand_or_drop(satchel)
+				S.set_loc(src)
+				satchel = S
+				icon_state = "scoop-bag"
+				user.visible_message("[user] inserts [S] into [src].", "You insert [S] into [src].")
+			else
+				boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
 		else
 			..()
 			return
@@ -2373,27 +2383,31 @@ var/global/list/cargopads = list()
 		if(!issilicon(user))
 			if (satchel)
 				user.visible_message("[user] unloads [satchel] from [src].", "You unload [satchel] from [src].")
-				satchel.set_loc(get_turf(user))
+				user.put_in_hand_or_drop(satchel)
 				satchel = null
 				icon_state = "scoop"
 			else
 				boutput(user, "<span class='alert'>There's no satchel in [src] to unload.</span>")
 		else
-			boutput(user, "<span class='alert'>The satchel is firmly secured.</span>")
+			boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
-		if (!isturf(target))
-			target = get_turf(target)
-		if (!satchel)
-			boutput(user, "<span class='alert'>There's no satchel in [src] to dump out.</span>")
+		if(isturf(target))
+			if (!satchel)
+				boutput(user, "<span class='alert'>There's no satchel in [src] to dump out.</span>")
+				return
+			if (satchel.contents.len < 1)
+				boutput(user, "<span class='alert'>The satchel in [src] is empty.</span>")
+				return
+			user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")
+			for (var/obj/item/I in satchel.contents)
+				I.set_loc(target)
+			satchel.UpdateIcon()
 			return
-		if (satchel.contents.len < 1)
-			boutput(user, "<span class='alert'>The satchel in [src] is empty.</span>")
-			return
-		user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")
-		for (var/obj/item/I in satchel.contents)
-			I.set_loc(target)
-		satchel.satchel_updateicon()
+		if (istype(target, /obj/item/satchel/mining))
+			user.swap_hand() //Needed so you don't drop the scoop instead of the satchel
+			src.attackby(target, user)
+			user.swap_hand()
 
 ////// Shit that goes in the asteroid belt, might split it into an exploring.dm later i guess
 

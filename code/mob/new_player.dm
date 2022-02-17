@@ -5,6 +5,7 @@ mob/new_player
 	var/spawning = 0
 	var/keyd
 	var/adminspawned = 0
+	var/is_respawned_player = 0
 
 #ifdef TWITCH_BOT_ALLOWED
 	var/twitch_bill_spawn = 0
@@ -21,6 +22,9 @@ mob/new_player
 	New()
 		. = ..()
 		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_ALWAYS)
+	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
+		ready = 1
+	#endif
 
 	// How could this even happen? Regardless, no log entries for unaffected mobs (Convair880).
 	ex_act(severity)
@@ -89,6 +93,8 @@ mob/new_player
 
 			else
 				spawned_in_keys += "[src.ckey]"
+				for (var/sound in global.dj_panel.preloaded_sounds)
+					src.client << load_resource(sound, -1)
 
 #ifdef TWITCH_BOT_ALLOWED
 		if (current_state == GAME_STATE_PLAYING)
@@ -115,7 +121,7 @@ mob/new_player
 		// explanation for isnull(src.key) from the reference: In the case of a player switching to another mob, by the time Logout() is called, the original mob's key will be null,
 		if (isnull(src.key) && pregameHTML && isclient(src.last_client))
 			// Removed dupe "if (src.last_client)" check since it was still runtiming anyway
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if(isclient(src.last_client))
 					winshow(src.last_client, "pregameBrowser", 0)
 					src.last_client << browse("", "window=pregameBrowser")
@@ -151,21 +157,7 @@ mob/new_player
 		else if(client)
 			winshow(src.last_client, "pregameBrowser", 0)
 			src.last_client << browse("", "window=pregameBrowser")
-/*
-		var/output = "<HR><B>New Player Options</B><BR>"
-		output += "<HR><br><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A><BR><BR>"
-		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
-			if(!ready)
-				output += "<a href='byond://?src=\ref[src];ready=1'>Declare Ready</A><BR>"
-			else
-				output += "You are ready.<BR>"
-		else
-			output += "<a href='byond://?src=\ref[src];late_join=1'>Join Game!</A><BR>"
 
-		output += "<BR><a href='byond://?src=\ref[src];observe=1'>Observe</A><BR>"
-
-		src.Browse(output,"window=playersetup;size=250x200;can_close=0")
-*/
 	Stat()
 		..()
 		if(current_state <= GAME_STATE_PREGAME)
@@ -184,6 +176,7 @@ mob/new_player
 						stat("[player.key]", (player.ready)?("(Playing)"):(null)) // show them normally
 
 	Topic(href, href_list[])
+
 		if(href_list["show_preferences"])
 			client.preferences.ShowChoices(src)
 			return 1
@@ -244,7 +237,7 @@ mob/new_player
 			if (ticker?.mode)
 				var/mob/living/silicon/S = locate(href_list["SelectedJob"]) in mobs
 				if (S)
-					if(jobban_isbanned(src.mind, "Cyborg"))
+					if(jobban_isbanned(src, "Cyborg"))
 						boutput(usr, "<span class='notice'>Sorry, you are banned from playing silicons.</span>")
 						close_spawn_windows()
 						return
@@ -252,8 +245,9 @@ mob/new_player
 					if(latejoin)
 						close_spawn_windows()
 						latejoin.activated = 1
+						latejoin.owner = src.mind
 						src.mind.transfer_to(S)
-						SPAWN_DBG(1 DECI SECOND)
+						SPAWN(1 DECI SECOND)
 							S.choose_name()
 							qdel(src)
 					else
@@ -328,16 +322,36 @@ mob/new_player
 			else if(istype(ticker.mode, /datum/game_mode/pod_wars))
 				var/datum/game_mode/pod_wars/mode = ticker.mode
 				mode.add_latejoin_to_team(character.mind, JOB)
-
+			else if (istype(JOB, /datum/job/special/syndicate_operative))
+				character.set_loc(pick_landmark(LANDMARK_SYNDICATE))
+			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
+				var/datum/game_mode/battle_royale/battlemode = ticker.mode
+				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
+					boutput(character.mind.current,"<h3 class='notice'>You've arrived on a station with a battle royale in progress! Feel free to spectate!</h3>")
+					character.ghostize()
+					qdel(character)
+					return
+				character.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
+				equip_battler(character)
+				character.mind.assigned_role = "MODE"
+				character.mind.special_role = ROLE_BATTLER
+				battlemode.living_battlers.Add(character.mind)
+				DEBUG_MESSAGE("Adding a new battler")
+				battlemode.battle_shuttle_spawn(character.mind)
 			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
 			else if (character.traitHolder && character.traitHolder.hasTrait("pilot"))
 				boutput(character.mind.current,"<h3 class='notice'>You've become lost on your way to the station! Good luck!</h3>")
+			else if (character.traitHolder && character.traitHolder.hasTrait("sleepy"))
+				SPAWN(10 SECONDS) //ugly hardcoding- matches the duration you're asleep for
+					boutput(character?.mind?.current,"<h3 class='notice'>Hey, you! You're finally awake!</h3>")
 				//As with the Stowaway trait, location setting is handled elsewhere.
 			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner) || istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/mail_order))
 				// Location is set in bank_purchaseable Create()
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived through an alternative mode of travel! Good luck!</h3>")
+			else if (istype(ticker.mode, /datum/game_mode/assday))
+				character.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
 			else if (map_settings?.arrivals_type == MAP_SPAWN_CRYO)
 				var/obj/cryotron/starting_loc = null
 				if (ishuman(character) && by_type[/obj/cryotron])
@@ -350,18 +364,6 @@ mob/new_player
 					character.set_loc(starting_loc)
 			else if (map_settings?.arrivals_type == MAP_SPAWN_MISSILE)
 				latejoin_missile_spawn(character)
-			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
-				var/datum/game_mode/battle_royale/battlemode = ticker.mode
-				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
-					boutput(character.mind.current,"<h3 class='notice'>You've arrived on a station with a battle royale in progress! Feel free to spectate, but you are not considered one of the contestants!</h3>")
-					return AttemptLateSpawn(new /datum/job/special/tourist)
-				character.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
-				equip_battler(character)
-				character.mind.assigned_role = "MODE"
-				character.mind.special_role = ROLE_BATTLER
-				battlemode.living_battlers.Add(character.mind)
-				DEBUG_MESSAGE("Adding a new battler")
-				battlemode.battle_shuttle_spawn(character.mind)
 			else
 				var/starting_loc = null
 				starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(round(world.maxx / 2), round(world.maxy / 2), 1))
@@ -399,7 +401,7 @@ mob/new_player
 				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
 				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
 					participationRecorder.record(character.mind.ckey)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				qdel(src)
 
 		else
@@ -423,12 +425,12 @@ mob/new_player
 
 			//If it's Revolution time, lets show all command jobs as filled to (try to) prevent metagaming.
 			if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution))
-				c = limit
+				c = max(c, limit)
 
 			// probalby could be a define but dont give a shite
 			var/maxslots = 5
 			var/list/slots = list()
-			var/shown = min(max(c, (limit == -1 ? 99 : limit)), maxslots)
+			var/shown = clamp(c, (limit == -1 ? 99 : limit), maxslots)
 			// if there's still an open space, show a final join link
 			if (limit == -1 || (limit > maxslots && c < limit))
 				slots += "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];' title='Join the round as [J.name].'>&#x2713;&#xFE0E;</a>"
@@ -633,13 +635,12 @@ a.latejoin-card:hover {
 
 		var/mob/new_character = null
 		if (J)
-			new_character = new J.mob_type(src.loc, client.preferences.AH)
+			new_character = new J.mob_type(src.loc, client.preferences.AH, client.preferences)
 		else
-			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH) // fallback
+			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH, client.preferences) // fallback
 
 		close_spawn_windows()
 
-		client.preferences.copy_to(new_character,src)
 		if(ishuman(new_character))
 			var/mob/living/carbon/human/H = new_character
 			H.update_colorful_parts()
@@ -652,7 +653,7 @@ a.latejoin-card:hover {
 			new_character.mind.late_special_role = 1
 			logTheThing("debug", new_character, null, "<b>Late join</b>: assigned antagonist role: [bad_type].")
 		else
-			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !C.hellbanned) // no new evils for the first 10 minutes or last 5 before shuttle
+			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !C.hellbanned && !src.is_respawned_player) // no new evils for the first 10 minutes or last 5 before shuttle
 				if (late_traitors && ticker.mode && ticker.mode.latejoin_antag_compatible == 1)
 					var/livingtraitor = 0
 
@@ -749,7 +750,6 @@ a.latejoin-card:hover {
 				traitormob.make_wraith()
 				generate_wraith_objectives(traitor)
 
-#ifdef SECRETS_ENABLED
 			if (ROLE_ARCFIEND)
 				traitor.special_role = ROLE_ARCFIEND
 				traitormob.make_arcfiend()
@@ -758,7 +758,6 @@ a.latejoin-card:hover {
 			#else
 				objective_set_path = pick(typesof(/datum/objective_set/traitor))
 			#endif
-#endif
 
 			else // Fallback if role is unrecognized.
 				traitor.special_role = ROLE_TRAITOR
@@ -793,6 +792,9 @@ a.latejoin-card:hover {
 		set hidden = 1
 		set name = ".ready_antag"
 
+		if (src.client.has_login_notice_pending(TRUE))
+			return
+
 		if(!(!ticker || current_state <= GAME_STATE_PREGAME))
 			src.show_text("Round has already started. You can't redeem tokens now. (You have [src.client.antag_tokens].)", "red")
 		else if(src.client.antag_tokens > 0)
@@ -808,8 +810,11 @@ a.latejoin-card:hover {
 		set hidden = 1
 		set name = ".ready"
 
+		if (src.client.has_login_notice_pending(TRUE))
+			return
+
 		if (ticker)
-			if(ticker.round_elapsed_ticks > 0 && ticker.round_elapsed_ticks < 3 SECONDS)
+			if(current_state == GAME_STATE_SETTING_UP || (current_state <= GAME_STATE_PREGAME && ticker.pregame_timeleft <= 1))
 				boutput(usr, "<span class='alert'>The round is currently being set up. Please wait.</span>")
 				return
 
@@ -839,6 +844,9 @@ a.latejoin-card:hover {
 		set hidden = 1
 		set name = ".cancel_ready"
 
+		if (src.client.has_login_notice_pending(TRUE))
+			return
+
 		if (ticker)
 			if(ticker.pregame_timeleft <= 3)
 				boutput(usr, "<span class='alert'>It is too close to roundstart for you to unready. Please wait until setup finishes.</span>")
@@ -864,6 +872,9 @@ a.latejoin-card:hover {
 		set hidden = 1
 		set name = ".observe_round"
 
+		if (src.client.has_login_notice_pending(TRUE))
+			return
+
 		if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
 			if(!src.client) return
 			var/mob/dead/observer/observer = new()
@@ -882,14 +893,16 @@ a.latejoin-card:hover {
 			observer.observe_round = 1
 			if(client.preferences && client.preferences.be_random_name) //Wire: fix for Cannot read null.be_random_name (preferences &&)
 				client.preferences.randomize_name()
-			observer.name = client.preferences.real_name
+			observer.real_name = client.preferences.real_name
+			observer.bioHolder.mobAppearance.CopyOther(client.preferences.AH)
+			observer.gender = observer.bioHolder.mobAppearance.gender
+			observer.UpdateName()
 
 			if(!src.mind) src.mind = new(src)
 
 			//src.mind.dnr=1
 			src.mind.joined_observer=1
 			src.mind.transfer_to(observer)
-			observer.real_name = observer.name
 			if(observer?.client)
 				observer.client.loadResources()
 

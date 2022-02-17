@@ -98,7 +98,6 @@ names@=
 	Merlyn
 	Merlin
 	Cap'n Chimpy
-	Mr. Fisting
 	Vortigem
 	Choo Choo McBoogie
 	The Librarian
@@ -230,3 +229,14 @@ names@=
 	Lab Accident #41
 	Chuckles
 	Pip
+	Able
+	Miss Baker
+	Gordo
+	Old Reliable
+	Bonny
+	Yorick
+	Patricia
+	Mike
+	Enos
+	Miss Sam
+	George

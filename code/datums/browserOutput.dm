@@ -66,6 +66,8 @@ var/global
 	var/cookieSent = 0
 	/// Contains the connection history passed from chat cookie
 	var/list/connectionHistory = list()
+	/// Last ping value reported by the client
+	var/last_ping = null
 
 /datum/chatOutput/New(client/C)
 	..()
@@ -106,7 +108,7 @@ var/global
 		src.owner << browse(grabResource("html/browserOutput.html"), "window=browseroutput")
 
 		if (src.loadAttempts < 5) //To a max of 5 load attempts
-			SPAWN_DBG(20 SECONDS) //20 seconds
+			SPAWN(20 SECONDS) //20 seconds
 				if (src.owner && !src.loaded)
 					src.loadAttempts++
 					src.load()
@@ -140,7 +142,7 @@ var/global
 		else
 			src.sendClientData()
 			/* WIRE TODO: Fix this so the CDN dying doesn't break everyone
-			SPAWN_DBG(1 MINUTE) //60 seconds
+			SPAWN(1 MINUTE) //60 seconds
 				if (!src.cookieSent) //Client has very likely futzed with their local html/js chat file
 					out(src.owner, "<div class='fatalError'>Chat file tampering detected. Closing connection.</div>")
 					del(src.owner)
@@ -321,7 +323,10 @@ var/global
 	ehjax.send(src.owner, "browseroutput", data)
 
 /// Called by js client every 60 seconds
-/datum/chatOutput/proc/ping()
+/datum/chatOutput/proc/ping(last_ping)
+	last_ping = text2num(last_ping)
+	if(last_ping > 0)
+		src.last_ping = last_ping
 	return "pong"
 
 
@@ -334,6 +339,7 @@ var/global
 	if (!isicon(icon)) return 0
 
 	iconCache[iconKey] << icon
+	iconCache[iconKey + "_ts"] << world.time
 	var/iconData = iconCache.ExportText(iconKey)
 	var/list/partial = splittext(iconData, "{")
 	return copytext(partial[2], 3, -5)
@@ -355,8 +361,10 @@ var/global
 		var/iconData
 
 		//See if key already exists in savefile
+		var/iconTimestamp
+		iconCache["[iconKey]_ts"] >> iconTimestamp
 		iconData = iconCache.ExportText(iconKey)
-		if (iconData)
+		if (iconData && iconTimestamp && (world.time - iconTimestamp) < 1 WEEK)
 			//It does! Ok, parse out the base64
 			var/list/partial = splittext(iconData, "{")
 
@@ -428,7 +436,7 @@ var/global
 					C.chatOutput.burstQueue = list(
 						list("message" = message, "group" = group)
 					)
-					SPAWN_DBG(CHAT_BURST_TIME)
+					SPAWN(CHAT_BURST_TIME)
 						target << output(list2params(list(
 							json_encode(C.chatOutput.burstQueue)
 						)), "browseroutput:outputBatch")

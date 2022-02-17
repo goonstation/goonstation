@@ -10,6 +10,10 @@
 #define TOP_DETAIL 3
 #define ALL_HAIR 4
 
+
+TYPEINFO(/datum/component/toggle_tool_use)
+	initialization_args = list()
+
 /datum/component/toggle_tool_use
 /datum/component/toggle_tool_use/Initialize()
 	if(!istype(parent, /obj/item))
@@ -53,6 +57,9 @@
 	UnregisterSignal(parent, COMSIG_ITEM_DROPPED)
 	. = ..()
 
+TYPEINFO(/datum/component/barber)
+	initialization_args = list()
+
 /datum/component/barber
 /datum/component/barber/Initialize()
 	if(!istype(parent, /obj/item))
@@ -83,6 +90,7 @@
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(!mutant_barber_fluff(M, user, "haircut"))
+		logTheThing("combat", user, M, "tried to cut [constructTarget(M,"combat")]'s hair but failed at [log_loc(user)].")
 		return ATTACK_PRE_DONT_ATTACK
 
 	if(non_murderous_failure)
@@ -92,7 +100,7 @@
 		else
 			return 0
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/list/region = list(
 			"Top Detail ([M.bioHolder.mobAppearance.customization_third.name])" = TOP_DETAIL,
 			"Middle Detail ([M.bioHolder.mobAppearance.customization_second.name])" = MIDDLE_DETAIL,
@@ -149,7 +157,7 @@
 		M.emote("cry")
 		M.emote("scream")
 		if (M.organHolder?.head)
-			M.organHolder.head.update_icon()
+			M.organHolder.head.UpdateIcon()
 		return ATTACK_PRE_DONT_ATTACK // gottem
 
 	if(istype(AH.customization_first,/datum/customization_style/none) && istype(AH.customization_second,/datum/customization_style/none) && istype(AH.customization_third,/datum/customization_style/none))
@@ -157,6 +165,7 @@
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(!mutant_barber_fluff(M, user, "shave"))
+		logTheThing("combat", user, M, "tried to shave [constructTarget(M,"combat")]'s hair but failed due to target's [M?.mutantrace?.name] mutant race at [log_loc(user)].")
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(non_murderous_failure)
@@ -166,7 +175,7 @@
 		else
 			return 0
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 
 		var/list/region = list(
 			"Top Detail ([M.bioHolder.mobAppearance.customization_third.name])" = TOP_DETAIL,
@@ -284,7 +293,7 @@
 			if("virtual")
 				boutput(user, "You prepare to modify M.bioHolder.mobAppearance.customization_[barbery_type == "haircut" ? "first" : "second"].")
 				return 1
-			if("blank" || "humanoid")
+			if("blank", "humanoid")
 				boutput(user, "You somehow correctly guess which end of [M] is forward.")
 				return 1
 			if("grey")
@@ -356,7 +365,7 @@
 											M, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something on your head.",\
 									 user, "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s fishy head, knocking loose some space barnnacles.")
 				return 0
-			if("monkey" || "sea monkey")
+			if("monkey", "sea monkey")
 				M.emote("scream")
 				playsound(M, "sound/impact_sounds/Slimy_Cut_1.ogg", 100, 1)
 				user.tri_message("[user] [barbery_type == "haircut" ? "snips" : "cuts"] [M]'s ear trying to trim [his_or_her(user)] hair!",\
@@ -404,7 +413,7 @@
 				M.TakeDamage("head", rand(5,10), 0)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				return 0
-			if("amphibian" || "Shelter Amphibian")
+			if("amphibian", "Shelter Amphibian")
 				if(barbery_type == "haircut")
 					playsound(M, "sound/items/Scissor.ogg", 100, 1)
 				user.tri_message("[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head, snipping at nothing!",\
@@ -487,6 +496,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 		switch (degree_of_success)
 			if (0) // cut their head up and hair off
 				playsound(M, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
+				logTheThing("combat", user, M, "mangles (barbery failure with moderate damage) [constructTarget(M,"combat")]'s head at [log_loc(user)].")
 				user.tri_message("<span class='alert'>[user] mangles the absolute fuck out of [M]'s head!.</span>",\
 				M, "<span class='alert'>[user] mangles the absolute fuck out of your head!</span>",\
 				user, "<span class='alert'>You mangle the absolute fuck out of [M]'s head!</span>")
@@ -498,6 +508,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 				M.emote("scream")
 			if (1) // same, but it makes a wig
 				playsound(M, "sound/impact_sounds/Slimy_Cut_1.ogg", 100, 1)
+				logTheThing("combat", user, M, "cuts all of [constructTarget(M,"combat")]'s hair off (barbery failure with small damage) at [log_loc(user)].")
 				user.tri_message("<span class='alert'>[user] [cuts] all of [M]'s hair off!.</span>",\
 				M, "<span class='alert'>[user] [cuts] all of your hair off!</span>",\
 				user, "<span class='alert'>You [cut] all of [M]'s hair off!</span>")
@@ -511,6 +522,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 				M.emote("scream")
 			if (2) // you cut their hair into something else
 				playsound(M, "sound/items/Scissor.ogg", 100, 1)
+				logTheThing("combat", user, M, "cuts [constructTarget(M,"combat")]'s hair into a random one at [log_loc(user)].")
 				var/hair_type = pick(hair_list)
 				new_style = new hair_type
 				switch(rand(1,3))
@@ -526,6 +538,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 			if (3) // you did it !!
 				playsound(M, "sound/items/Scissor.ogg", 100, 1)
 				if (src.which_part == ALL_HAIR)
+					logTheThing("combat", user, M, "cuts all of [constructTarget(M,"combat")]'s hair into a wig at [log_loc(user)].")
 					user.tri_message("[user] [cuts] all of [M]'s hair off and makes it into a wig.",\
 					M, "<span class='notice'>[user] [cuts] all your hair off and makes it into a wig.</span>",\
 					user, "<span class='notice'>You [cut] all of [M]'s hair off and make it into a wig.</span>")
@@ -535,6 +548,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 					M.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
 					M.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 				else
+					logTheThing("combat", user, M, "cuts [constructTarget(M,"combat")]'s hair at [log_loc(user)].")
 					user.tri_message("[user] [cuts] [M]'s hair.",\
 					M, "<span class='notice'>[user] [cuts] your hair.</span>",\
 					user, "<span class='notice'>You [cut] [M]'s hair.</span>")

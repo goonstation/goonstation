@@ -108,7 +108,7 @@
 				return
 			else
 				owner.waiting_for_hotkey = 1
-				src.updateIcon()
+				src.UpdateIcon()
 				boutput(usr, "<span class='hint'>Please press a number to bind this ability to...</span>")
 				return
 
@@ -125,7 +125,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -788,12 +788,12 @@
 		if (did_something)
 			var/turf/T = get_turf(target)
 			T.visible_message("<span class='notice'>As [user] brings \the [src] near [target], \the [src] spontaneously bursts into flames and [target]'s wounds appear to fade away!</span>")
-			var/obj/heavenly_light/lightbeam = new /obj/heavenly_light
+			var/obj/effects/heavenly_light/lightbeam = new /obj/effects/heavenly_light
 			lightbeam.set_loc(T)
 			lightbeam.alpha = 0
 			playsound(T, "sound/voice/heavenly.ogg", 100, 1, 0)
 			animate(lightbeam, alpha=255, time=3.5 SECONDS)
-			SPAWN_DBG(30)
+			SPAWN(30)
 				animate(lightbeam,alpha = 0, time=3.5 SECONDS)
 				sleep(3.5 SECONDS)
 				qdel(lightbeam)

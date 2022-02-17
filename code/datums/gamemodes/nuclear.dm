@@ -41,7 +41,7 @@
 			num_players++
 	var/num_synds = clamp( round(num_players / 6 ), 1, agents_possible)
 
-	possible_syndicates = get_possible_syndicates(num_synds)
+	possible_syndicates = get_possible_enemies(ROLE_NUKEOP, num_synds)
 
 	if (!islist(possible_syndicates) || possible_syndicates.len < 1)
 		boutput(world, "<span class='alert'><b>ERROR: couldn't assign any players as Syndicate operatives, aborting nuke round pre-setup.</b></span>")
@@ -108,7 +108,6 @@
 			"the central warehouse" = list(/area/station/storage/warehouse),
 			"the courtroom" = list(/area/station/crew_quarters/courtroom, /area/station/crew_quarters/juryroom),
 			"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery, /area/station/medical/medbay/lobby),
-			"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 			"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
 			"the main bridge" = list(/area/station/bridge),
 			"the robotics lab" = list(/area/station/medical/robotics))
@@ -156,13 +155,24 @@
 
 	return 1
 
+/datum/game_mode/nuclear/proc/pick_leader()
+	RETURN_TYPE(/datum/mind)
+	var/list/datum/mind/possible_leaders = list()
+	for(var/datum/mind/mind in syndicates)
+		if(mind.current.client.preferences.be_syndicate_commander)
+			possible_leaders += mind
+	if(length(possible_leaders))
+		return pick(possible_leaders)
+	return pick(syndicates)
+
 /datum/game_mode/nuclear/post_setup()
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
-	var/leader_selected = 0
 
 	var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors", "birds", "mammals", "moons")
 	//Alphabetical agent callsign lists are delcared here, seperated in to catagories.
 	var/list/callsign_list = strings("agent_callsigns.txt", pick(callsign_pool_keys))
+
+	var/datum/mind/leader_mind = src.pick_leader()
 
 	for(var/datum/mind/synd_mind in syndicates)
 		bestow_objective(synd_mind,/datum/objective/specialist/nuclear)
@@ -176,24 +186,26 @@
 		synd_mind.store_memory("The bomb must be armed in <B>[src.target_location_name]</B>.", 0, 0)
 		boutput(synd_mind.current, "We have identified a major structural weakness in the [station_or_ship()]'s design. Arm the bomb in <B>[src.target_location_name]</B> to obliterate [station_name(1)].")
 
-		if(!leader_selected)
+		if(synd_mind == leader_mind)
 			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE_BOSS))
 			if(!synd_mind.current.loc)
 				synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 			equip_syndicate(synd_mind.current, 1)
 			new /obj/item/device/audio_log/nuke_briefing(synd_mind.current.loc, target_location_name)
-			leader_selected = 1
+			SHOW_NUKEOP_COMMANDER_TIPS(synd_mind.current)
 		else
 			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			var/callsign = pick(callsign_list)
 			synd_mind.current.real_name = "[syndicate_name()] Operative [callsign]" //new naming scheme
 			callsign_list -= callsign
 			equip_syndicate(synd_mind.current, 0)
+			var/obj/item/device/radio/headset/syndicate/headset = synd_mind.current.ears
+			headset.icon_override = "syndie_letters/[copytext(callsign, 1, 2)]"
+			SHOW_NUKEOP_TIPS(synd_mind.current)
 		boutput(synd_mind.current, "<span class='alert'>Your headset allows you to communicate on the syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\").</span>")
 
 		synd_mind.current.antagonist_overlay_refresh(1, 0)
-		SHOW_NUKEOP_TIPS(synd_mind.current)
 
 	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
 	new /obj/storage/closet/syndicate/nuclear(pick_landmark(LANDMARK_NUCLEAR_CLOSET))
@@ -206,7 +218,7 @@
 		for(var/i = 1 to 5)
 			new /obj/item/breaching_charge/thermite(T)
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 	return
@@ -344,36 +356,6 @@
 	if (opcount == opdeathcount) return 1
 	else return 0
 
-/datum/game_mode/nuclear/proc/get_possible_syndicates(minimum_syndicates=1)
-	var/list/candidates = list()
-
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.ready) && !(player.mind in syndicates) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_syndicate)
-				candidates += player.mind
-
-	if(candidates.len < minimum_syndicates)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_syndicate set to yes, including players who don't want to be syndicates in the pool.")
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-			if (ishellbanned(player)) continue //No treason for you
-
-			if ((player.ready) && !(player.mind in syndicates) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-				if ((minimum_syndicates > 1) && (candidates.len >= minimum_syndicates))
-					break
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
-
 /datum/game_mode/nuclear/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
 	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
@@ -425,7 +407,7 @@ var/syndicate_name = null
 #elif defined(HALLOWEEN)
 	name += pick("Hell", "Demon", "Blood", "Murder", "Gore", "Grave", "Sin", "Slaughter")
 #else
-	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib", "Funk", "Joint")
+	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib", "Funk", "Joint", "Donk", "Elec")
 #endif
 	// Suffix
 	if (prob(80))
@@ -433,7 +415,7 @@ var/syndicate_name = null
 
 		// Full
 		if (prob(60))
-			name += pick("Syndicate", "Consortium", "Collective", "Corporation", "Consolidated", "Group", "Holdings", "Biotech", "Industries", "Systems", "Products", "Chemicals", "Enterprises", "Family", "Creations", "International", "Intergalactic", "Interplanetary", "Foundation", "Positronics", "Hive", "Cartel")
+			name += pick("Syndicate", "Consortium", "Collective", "Corporation", "Consolidated", "Group", "Holdings", "Biotech", "Industries", "Systems", "Products", "Chemicals", "Enterprises", "Family", "Creations", "International", "Intergalactic", "Interplanetary", "Foundation", "Positronics", "Hive", "Cartel", "Company")
 		// Broken
 		else
 			name += pick("Syndi", "Corp", "Bio", "System", "Prod", "Chem", "Inter", "Hive")

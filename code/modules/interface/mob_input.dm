@@ -47,7 +47,7 @@
 					update_cursor()
 				return 100
 			actions.interrupt(src, INTERRUPT_ACTION)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				S.handleCast(target)
 				if(S)
 					if((S.ignore_sticky_cooldown && !S.cooldowncheck()) || (S.sticky && S.cooldowncheck()))
@@ -75,7 +75,7 @@
 		if (istype(target, B))
 			return 100
 		actions.interrupt(src, INTERRUPT_ACTION)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			B.execute_ability(target)
 			src.targeting_ability = null
 			src.update_cursor()
@@ -92,7 +92,7 @@
 		if(params["ctrl"])
 			if (src.pulling)
 				unpull_particle(src,pulling)
-			src.pulling = null
+			src.remove_pulling()
 
 	//circumvented by some rude hack in client.dm; uncomment if hack ceases to exist
 	//if (istype(target, /atom/movable/screen/ability))
@@ -125,7 +125,7 @@
 		if ("stop_pull")
 			if (src.pulling)
 				unpull_particle(src,pulling)
-			src.pulling = null
+			src.remove_pulling()
 
 /**
 	* Return the ability bound to the pressed ability hotkey combination
@@ -176,6 +176,7 @@
 	if (!isnull(fetched_keylist)) //The client has a list of custom keybinds.
 		var/datum/keymap/new_map = new /datum/keymap(json_decode(fetched_keylist))
 		C.keymap.overwrite_by_action(new_map)
+		C.keymap.on_update(C)
 
 /**
 	* Builds the mob's keybind styles, checks for valid movement controllers, and finally sets the keymap.

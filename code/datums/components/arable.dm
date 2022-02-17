@@ -18,6 +18,9 @@
 	manual_water
 		auto_water = FALSE
 
+TYPEINFO(/datum/component/arable)
+	initialization_args = list()
+
 /datum/component/arable/Initialize()
 	if(!istype(parent, /turf) && !istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
@@ -65,7 +68,7 @@
 					P.contributors += user
 			else
 				boutput(user, "<span class='alert'>You plant the seed, but nothing happens.</span>")
-				pool (SEED)
+				qdel(SEED)
 			return TRUE
 
 		else if(istype(I, /obj/item/seedplanter/))
@@ -76,9 +79,9 @@
 			user.visible_message("<span class='notice'>[user] plants a seed in \the [A].</span>")
 
 			if(SP.selected.unique_seed)
-				SEED = unpool(SP.selected.unique_seed)
+				SEED = new SP.selected.unique_seed
 			else
-				SEED = unpool(/obj/item/seed)
+				SEED = new /obj/item/seed
 			SEED.generic_seed_setup(SP.selected)
 			SEED.set_loc(P)
 			if(SEED.planttype)
@@ -89,7 +92,7 @@
 					P.contributors += user
 			else
 				boutput(user, "<span class='alert'>You plant the seed, but nothing happens.</span>")
-				pool (SEED)
+				qdel(SEED)
 			return TRUE
 
 

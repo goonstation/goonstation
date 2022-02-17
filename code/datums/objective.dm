@@ -144,6 +144,11 @@ proc/create_fluff(datum/mind/target)
 		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "Head of Security\'s war medal", "Research Director\'s Diploma", "Medical Director\'s Medical License", "Head of Personnel\'s First Bill",
 		"much coveted Gooncode")
 
+		if(!countJob("Head of Security"))
+			items.Remove("Head of Security\'s beret")
+		if(!countJob("Captain"))
+			items.Remove("authentication disk")
+
 		target_name = pick(items)
 		switch(target_name)
 			if("Head of Security\'s beret")
@@ -180,6 +185,11 @@ proc/create_fluff(datum/mind/target)
 	set_up()
 		var/list/items = list("Head of Security\'s beret", "prisoner\'s beret", "DetGadget hat", "horse mask", "authentication disk",
 		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "much coveted Gooncode", "golden crayon")
+
+		if(!countJob("Head of Security"))
+			items.Remove("Head of Security\'s beret")
+		if(!countJob("Captain"))
+			items.Remove("authentication disk")
 
 		target_name = pick(items)
 		switch(target_name)
@@ -331,7 +341,6 @@ proc/create_fluff(datum/mind/target)
 		"Sneak into a department of your choice every once in awhile and mess with all the things inside.",
 		"Try to deprive the station of medical items and objects.",
 		"Try to deprive the station of tools and useful items.",
-		"Try to deprive the station of clothing.",
 		"Try to deprive the station of their ID cards.",
 		"Make the station as ugly and visually unpleasant as you can.",
 		"Become a literal arms dealer. Harvest as many body parts as possible from the crew.",
@@ -452,9 +461,7 @@ proc/create_fluff(datum/mind/target)
 			for (var/obj/item/spacecash/C in L)
 				current_cash += C.amount
 
-		for (var/datum/data/record/Ba in data_core.bank)
-			if (Ba.fields["name"] == owner.current.real_name)
-				current_cash += Ba.fields["current_money"]
+		current_cash += data_core.bank.find_record("id", owner.current.datacore_id)?["current_money"] || 0
 
 		if (current_cash >= target_cash)
 			return 1
@@ -675,7 +682,7 @@ proc/create_fluff(datum/mind/target)
 
 	set_up()
 #ifdef RP_MODE
-		absorb_count = max(1, min(6, round((ticker.minds.len - 1) * 0.75)))
+		absorb_count = clamp(round((ticker.minds.len - 1) * 0.75), 1, 6)
 #else
 		absorb_count = min(10, (ticker.minds.len - 1))
 #endif
@@ -824,7 +831,7 @@ proc/create_fluff(datum/mind/target)
 		stat("Currently absorbed:", "[absorbs] souls")
 
 	set_up()
-		absorb_target = max(1, min(7, round((ticker.minds.len - 5) / 2)))
+		absorb_target = clamp(round((ticker.minds.len - 5) / 2), 1, 7)
 		explanation_text = "Absorb and retain the life essence of at least [absorb_target] mortal(s) that inhabit this material structure."
 
 	check_completion()
@@ -905,7 +912,7 @@ proc/create_fluff(datum/mind/target)
 	var/max_escapees
 
 	set_up()
-		max_escapees = max(min(5, round(ticker.minds.len / 10)), 1)
+		max_escapees = clamp(round(ticker.minds.len / 10), 1, 5)
 		explanation_text = "Force the mortals to remain stranded on this structure. No more than [max_escapees] may escape!"
 
 	check_completion()
@@ -1234,7 +1241,7 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 		var/objective_text = "Frame [target.current.real_name], the [target.assigned_role == "MODE" ? target.special_role : target.assigned_role] for murder."
 		explanation_text = objective_text
 		targetname = target.current.real_name
-	
+
 
 /*/datum/objective/conspiracy/escape
 	explanation_text = "Survive and ensure more living conspirators escape to Centcom than non-conspirators."
@@ -1341,7 +1348,7 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 			if (ispath(escape_path))
 				ticker.mode.bestow_objective(enemy,escape_path)
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			qdel(src)
 		return 0
 

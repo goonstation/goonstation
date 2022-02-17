@@ -4,7 +4,7 @@
 /mob/living/carbon/human/batman
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(src.bioHolder)
 				src.bioHolder.age = 120
 				src.bioHolder.AddEffect("nightvision", 0, 0, 0)
@@ -81,7 +81,7 @@
 	var/pow_type = pick(/obj/decal/batman_pow, /obj/decal/batman_pow/wham)
 	var/obj/decal/batman_pow/pow = new pow_type(target_location)
 	animate_portal_appear(pow)
-	SPAWN_DBG(1 SECOND) qdel(pow)
+	SPAWN(1 SECOND) qdel(pow)
 
 /mob/proc/batsmoke()
 	set category = "Batman"
@@ -196,7 +196,7 @@
 	if(usr.stat)
 		boutput(usr, "<span class='alert'>Not when you're incapped!</span>")
 		return
-	SPAWN_DBG(0)
+	SPAWN(0)
 		T.setStatus("stunned", 10 SECONDS)
 		usr.visible_message("<span class='alert'><B>[usr] leaps into the air, shocking [T]!</B></span>", "<span class='alert'><B>You leap into the air, shocking [T]!</B></span>")
 		for(var/i = 0, i < 5, i++)
@@ -265,7 +265,7 @@
 	set name = "Bat Spin \[Finisher]"
 	set desc = "Grab someone and spin them around until they explode"
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		usr.visible_message("<span class='alert'><B>[usr] grabs [T] tightly!</B></span>", "<span class='alert'><B>You grab [T] tightly!</B></span>")
 		T.u_equip(l_hand)
 		T.u_equip(r_hand)
@@ -346,3 +346,31 @@
 				T.throw_at(tturf, 4, 2)
 		sleep(0.1 SECONDS)
 
+obj/item/batarang
+	name = "Batarang"
+	desc = "A metal boomerang in the shape of a bat, it looks sharp."
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "batarang"
+
+	force = 5
+	contraband = 4
+
+	throwforce = 8
+	throw_range = 10
+	throw_speed = 1
+	throw_return = 1
+	hitsound = "sound/impact_sounds/Flesh_Stab_3.ogg"
+	hit_type = DAMAGE_CUT
+
+
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		..()
+		if (ishuman(hit_atom))
+			var/mob/living/carbon/human/H = hit_atom
+			H.changeStatus("weakened", 1 SECONDS)
+			H.force_laydown_standup()
+			take_bleeding_damage(H, null, 10)
+			playsound(src, hitsound, 60, 1)
+
+		else
+			return

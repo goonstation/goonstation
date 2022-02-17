@@ -46,7 +46,7 @@
 		if (master && (!master.click_check || (usr in master.mobs)))
 			master.scrolled(src.id, dx, dy, usr, parms, src)
 
-	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		if (master && (!master.click_check || (usr in master.mobs)))
 			master.MouseDrop(src, over_object, src_location, over_location, over_control, params)
 
@@ -173,17 +173,17 @@
 		var/atom/movable/screen/S = get_by_id(id)
 		if(S)
 			if(visible)
-				S.invisibility = 0
+				S.invisibility = INVIS_NONE
 			else
-				S.invisibility = 101
+				S.invisibility = INVIS_ALWAYS
 		return
 
 	proc/set_visible(atom/movable/screen/S, visible)
 		if(S)
 			if(visible)
-				S.invisibility = 0
+				S.invisibility = INVIS_NONE
 			else
-				S.invisibility = 101
+				S.invisibility = INVIS_ALWAYS
 		return
 
 	proc/remove_screen(atom/movable/screen/S)

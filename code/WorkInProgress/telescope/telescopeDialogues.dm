@@ -92,7 +92,7 @@
 		linkText = "Active functions?"
 		nodeText = {"As the ship's A.I. i have access to various sub-systems such as weapons, navigation and the nanite-hive.
 		<br>In case of emergency, the communication-systems may also be accessed.
-		<br>The signal you have recieved is the result of one such emergency."}
+		<br>The signal you have received is the result of one such emergency."}
 
 		onActivate(var/client/C)
 			var/datum/dialogueMaster/telescopeValiant/M = master
@@ -187,6 +187,35 @@
 
 		canShow(var/client/C)
 			if(!special_places.Find("Hidden Workshop"))
+				return 1
+			else
+				return 0
+
+/* COW DINER DIALOGUE BELOW */
+
+/datum/dialogueMaster/telescopeCow
+	dialogueName = "Void Diner"
+	start = /datum/dialogueNode/telCowStart
+	visibleDialogue = 0
+
+/datum/dialogueNode
+	telCowStart
+		nodeImage = "milk.png"
+		nodeText = "This place seems... familiar.<br>Have you been here before?"
+		linkText = "..."
+		links = list(/datum/dialogueNode/telCowEnable)
+
+	telCowEnable
+		linkText = "Save the location."
+		nodeText = "The location is now available at the long-range teleporter."
+
+		onActivate(var/client/C)
+			if(!special_places.Find("Void Diner"))
+				special_places.Add("Void Diner")
+			return
+
+		canShow(var/client/C)
+			if(!special_places.Find("Void Diner"))
 				return 1
 			else
 				return 0

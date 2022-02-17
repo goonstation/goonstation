@@ -3,7 +3,7 @@
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/item_glasses.dmi'
-	wear_image_icon = 'icons/mob/eyes.dmi'
+	wear_image_icon = 'icons/mob/clothing/eyes.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	item_state = "glasses"
 	w_class = W_CLASS_SMALL
@@ -190,7 +190,7 @@
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 
 	equipped(var/mob/user, var/slot)
@@ -251,12 +251,13 @@
 				else
 					REMOVE_MOB_PROPERTY(H, PROP_THERMALVISION, src)
 
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
-					if(upgraded)
-						APPLY_MOB_PROPERTY(H, PROP_THERMALVISION_MK2, src)
-					else
-						APPLY_MOB_PROPERTY(H, PROP_THERMALVISION, src)
+					if(H.glasses == src)
+						if(upgraded)
+							APPLY_MOB_PROPERTY(H, PROP_THERMALVISION_MK2, src)
+						else
+							APPLY_MOB_PROPERTY(H, PROP_THERMALVISION, src)
 		return
 
 /obj/item/clothing/glasses/thermal/traitor //sees people through walls
@@ -369,7 +370,7 @@
 		setProperty("disorient_resist_eye", 28)
 
 	New()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			if (src)
 				src.name += " - '[src.network]'" // They otherwise all look the same (Convair880).
 		..()
@@ -530,7 +531,7 @@
 		..()
 		if (slot == SLOT_GLASSES)
 			assigned = user.client
-			SPAWN_DBG(-1)
+			SPAWN(-1)
 				//updateIcons()
 				processing_items |= src
 		return
@@ -587,5 +588,27 @@
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
+
+
+
+/obj/item/clothing/glasses/packetvision
+	name = "\improper Packetvision HUD"
+	desc = "These let you see wireless packets like some sort of a hackerman."
+	item_state = "glasses"
+	icon_state = "glasses"
+	color = "#a0ffa0"
+	color_r = 0.9
+	color_g = 1.0
+	color_b = 0.9
+
+	equipped(var/mob/user, var/slot)
+		..()
+		if (slot == SLOT_GLASSES)
+			get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).add_mob(user)
+
+	unequipped(var/mob/user)
+		if(src.equipped_in_slot == SLOT_GLASSES)
+			get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).remove_mob(user)
+		..()

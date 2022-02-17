@@ -37,7 +37,7 @@
 	lockedDiff = 4
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
-	icon_state  = "bad"
+	icon_state  = "speech_mime"
 
 /datum/bioEffect/deaf
 	name = "Deafness"
@@ -134,7 +134,7 @@
 	msgLose = "You feel more in control."
 	reclaim_fail = 15
 	var/talk_prob = 10
-	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","TITS","ARGH","WOOF","CRAP","BALLS")
+	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","ARGH","WOOF","CRAP","HECK","FRICK","JESUS")
 	icon_state  = "bad"
 
 	OnLife(var/mult)
@@ -263,40 +263,6 @@
 			if (prob(tox_prob))
 				C.take_toxin_damage(tox_amount*mult)
 
-/datum/bioEffect/tourettes
-	name = "Tourettes"
-	desc = "Alters the subject's brain structure, causing periodic involuntary movements and outbursts."
-	id = "tourettes"
-	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
-	probability = 66
-	msgGain = "You feel like you can't control your actions fully."
-	msgLose = "You feel in full control of yourself once again."
-	reclaim_fail = 15
-	stability_loss = -10
-	icon_state  = "bad"
-
-	OnLife(var/mult)
-		if(..()) return
-		if (isdead(owner))
-			return
-		if ((probmult(10) && !owner.getStatusDuration("paralysis")))
-			owner.changeStatus("stunned", 3 SECONDS)
-			SPAWN_DBG( 0 )
-				switch(rand(1, 3))
-					if (1 to 2)
-						owner.emote("twitch")
-					if (3)
-						if (owner.client)
-							var/enteredtext = winget(owner, "mainwindow.input", "text")
-							if ((copytext(enteredtext,1,6) == "say \"") && length(enteredtext) > 5)
-								winset(owner, "mainwindow.input", "text=\"\"")
-								if (prob(50))
-									owner.say(uppertext(copytext(enteredtext,6,0)))
-								else
-									owner.say(copytext(enteredtext,6,0))
-		return
-
 /datum/bioEffect/cough
 	name = "Chronic Cough"
 	desc = "Enhances the sensitivity of nerves in the subject's throat, causing periodic coughing fits."
@@ -315,7 +281,7 @@
 			return
 		if ((probmult(5) && !owner.getStatusDuration("paralysis")))
 			owner:drop_item()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				owner:emote("cough")
 				return
 		return
@@ -681,18 +647,31 @@
 	stability_loss = -10	//maybe 5
 	var/prob_sting = 10;
 	icon_state  = "bad"
+	var/obj/effects/bees/effect
 
 	OnAdd()
 		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "buzz", layer = MOB_EFFECT_LAYER)
+			effect = new/obj/effects/bees(owner)
 		..()
+
+	OnRemove()
+		qdel(effect)
 
 	OnLife(var/mult)
 		var/mob/living/L = owner
 		if (!istype(L) || (L.stat == 2))
 			return
 		if (probmult(prob_sting))
-			boutput(src, "<span class='alert'>A bee in your cloud stung you! How rude!</span>")
+			if (ishuman(L))
+				var/mob/living/carbon/human/H = L
+				if (prob(50))
+					if (istype(H.wear_suit, /obj/item/clothing/suit/bio_suit/beekeeper))
+						boutput(owner, "<span class='subtle'>A bee in your cloud tries to sting you, but your suit protects you.</span>")
+						return
+				else if (istype(H.head, /obj/item/clothing/head/bio_hood/beekeeper))
+					boutput(owner, "<span class='subtle'>A bee in your cloud tries to sting you, but your hood protects you.</span>")
+					return
+			boutput(owner, "<span class='alert'>A bee in your cloud stung you! How rude!</span>")
 			L.reagents.add_reagent("histamine", 2)
 
 /datum/bioEffect/emp_field
@@ -713,7 +692,7 @@
 
 	OnLife(var/mult)
 		..()
-		if (prob(percentmult(50, mult)))
+		if (probmult(50))
 			var/turf/T
 			//don't really need this but to make it more harmful to the user.
 			if (prob(5))
@@ -726,7 +705,7 @@
 			pulse.icon_state = "emppulse"
 			pulse.name = "emp pulse"
 			pulse.anchored = 1
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				if (pulse) qdel(pulse)
 
 			//maybe have this only emp some things on the tile.

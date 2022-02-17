@@ -1,8 +1,9 @@
 /obj/item/device/flash
 	name = "flash"
-	desc = "A device that emits an extremely bright light when used. Useful for briefly stunning people or starting a dance party."
+	desc = "A device that emits a complicated strobe when used, causing disorientation. Useful for stunning people or starting a dance party."
 	uses_multiple_icon_states = 1
 	icon_state = "flash"
+	force = 1
 	throwforce = 5
 	w_class = W_CLASS_TINY
 	throw_speed = 4
@@ -113,7 +114,7 @@
 			logTheThing("combat", user, M, "tries to blind [constructTarget(M,"combat")] with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				if (src) qdel(src)
 			return
 		if (src.cell)
@@ -130,7 +131,7 @@
 
 	// Play animations.
 	if (isrobot(user))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/atom/movable/overlay/animation = new(user.loc)
 			animation.layer = user.layer + 1
 			animation.icon_state = "blank"
@@ -229,7 +230,7 @@
 			logTheThing("combat", user, null, "tries to area-flash with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				if (src) qdel(src)
 			return
 
@@ -239,7 +240,7 @@
 	src.l_time = world.time
 
 	if (isrobot(user))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/atom/movable/overlay/animation = new(user.loc)
 			animation.layer = user.layer + 1
 			animation.icon_state = "blank"
@@ -250,14 +251,22 @@
 			qdel(animation)
 
 	// Flash target mobs.
-	for (var/mob/living/M in oviewers((3 + src.range_mod), get_turf(src)))
-		if (src.turboflash)
-			M.apply_flash(35, 0, 0, 25)
-		else
-			var/dist = get_dist(get_turf(src),M)
-			dist = min(dist,4)
-			dist = max(dist,1)
-			M.apply_flash(20, weak = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)
+	for (var/atom/A in oviewers((3 + src.range_mod), get_turf(src)))
+		var/mob/living/M
+		if (istype(A, /obj/vehicle))
+			var/obj/vehicle/V = A
+			if (V.rider && V.rider_visible)
+				M = V.rider
+		else if (ismob(A))
+			M = A
+		if (M)
+			if (src.turboflash)
+				M.apply_flash(35, 0, 0, 25)
+			else
+				var/dist = get_dist(get_turf(src),M)
+				dist = min(dist,4)
+				dist = max(dist,1)
+				M.apply_flash(20, weak = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)
 
 
 	// Handle bulb wear.
@@ -376,7 +385,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(!src.cell)
 				src.cell = new /obj/item/cell(src)
 				src.cell.maxcharge = max_flash_power

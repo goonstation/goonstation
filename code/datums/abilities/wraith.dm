@@ -3,6 +3,11 @@
 	pointName = "Wraith Points"
 	cast_while_dead = 1
 	var/corpsecount = 0
+	onAbilityStat()
+		..()
+		.= list()
+		.["Points:"] = round(src.points)
+		.["Gen. rate:"] = round(src.regenRate + src.lastBonus)
 
 /atom/movable/screen/ability/topBar/wraith
 	tens_offset_x = 19
@@ -57,7 +62,7 @@
 			return
 		last_cast = world.time + cooldown
 		holder.updateButtons()
-		SPAWN_DBG(cooldown + 5)
+		SPAWN(cooldown + 5)
 			holder.updateButtons()
 
 
@@ -75,9 +80,10 @@
 			return 1
 		if (holder.help_mode)
 			holder.help_mode = 0
+			boutput(holder.owner, "<span class='notice'><strong>Help Mode has been deactivated.</strong></span>")
 		else
 			holder.help_mode = 1
-			boutput(holder.owner, "<span class='notice'><strong>Help Mode has been activated  To disable it, click on this button again.</strong></span>")
+			boutput(holder.owner, "<span class='notice'><strong>Help Mode has been activated. To disable it, click on this button again.</strong></span>")
 			boutput(holder.owner, "<span class='notice'>Hold down Shift, Ctrl or Alt while clicking the button to set it to that key.</span>")
 			boutput(holder.owner, "<span class='notice'>You will then be able to use it freely by holding that button and left-clicking a tile.</span>")
 			boutput(holder.owner, "<span class='notice'>Alternatively, you can click with your middle mouse button to use the ability on your current tile.</span>")
@@ -176,7 +182,7 @@
 				W.corpsecount += 1
 		last_cast = world.time + cooldown
 		holder.updateButtons()
-		SPAWN_DBG(cooldown + 5)
+		SPAWN(cooldown + 5)
 			holder.updateButtons()
 
 
@@ -204,10 +210,10 @@
 		boutput(holder.owner, "<span class='alert'><strong>[pick("You extend your will into [T].", "You force [T] to do your bidding.")]</strong></span>")
 		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithpossesobject.ogg", 50, 0)
 		var/mob/living/object/O = new/mob/living/object(T, holder.owner)
-		SPAWN_DBG(45 SECONDS)
+		SPAWN(45 SECONDS)
 			if (O)
 				boutput(O, "<span class='alert'>You feel your control of this vessel slipping away!</span>")
-		SPAWN_DBG(60 SECONDS) //time limit on possession: 1 minute
+		SPAWN(60 SECONDS) //time limit on possession: 1 minute
 			if (O)
 				boutput(O, "<span class='alert'><strong>Your control is wrested away! The item is no longer yours.</strong></span>")
 				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithleaveoject.ogg", 50, 0)
@@ -337,7 +343,7 @@
 					current_prob *= 0.35 // very steep. probably grabs 3 or 4 objects per cast -- much less effective than revenant command
 					thrown += O
 					animate_float(O)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(T, 32, 2)
 
@@ -461,7 +467,6 @@
 	special_screen_loc="NORTH,EAST-1"
 	min_req_dist = 10
 
-	var/datum/radio_frequency/pda_connection
 	var/obj/spookMarker/marker = new /obj/spookMarker()		//removed for now
 	var/status = 0
 	var/static/list/effects = list("Flip light switches" = 1, "Burn out lights" = 2, "Create smoke" = 3, "Create ectoplasm" = 4, "Sap APC" = 5, "Haunt PDAs" = 6, "Open doors, lockers, crates" = 7, "Random" = 8)
@@ -470,7 +475,6 @@
 
 	New()
 		..()
-		pda_connection = radio_controller.return_frequency("1149")
 		object.contextLayout = new /datum/contextLayout/screen_HUD_default(2, 16, 16)//, -32, -32)
 		if (!object.contextActions)
 			object.contextActions = list()
@@ -479,25 +483,18 @@
 			var/datum/contextAction/wraith_spook_button/newcontext = new /datum/contextAction/wraith_spook_button(i)
 			object.contextActions += newcontext
 
-	disposing()
-		radio_controller.remove_object(src,"1149")
-		..()
-
 	proc/haunt_pda(var/obj/item/device/pda2/pda)
-		if (!pda_connection)
-			return
 		var/message = pick("boo", "git spooked", "BOOM", "there's a skeleton inside of you", "DEHUMANIZE YOURSELF AND FACE TO BLOODSHED", "ICARUS HAS FOUND YOU!!!!! RUN WHILE YOU CAN!!!!!!!!!!!")
 
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.holder.owner
-		signal.transmission_method = TRANSMISSION_RADIO
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = holder.owner.name
 		signal.data["message"] = "[message]" // (?)
 		signal.data["sender"] = "00000000" // surely this isn't going to be a problem
 		signal.data["address_1"] = pda.net_id
 
-		pda_connection.post_signal(src, signal)
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
 
 	cast()
 		if (..())
@@ -564,7 +561,7 @@
 				for(var/obj/machinery/door/G in range(10, holder.owner))
 					if (prob(c_prob))
 						c_prob *= 0.4
-						SPAWN_DBG(1 DECI SECOND)
+						SPAWN(1 DECI SECOND)
 							if (G.density)
 								G.open()
 							else
@@ -573,7 +570,7 @@
 				for(var/obj/storage/F in range(10, holder.owner))
 					if (prob(c_prob))
 						c_prob *= 0.4
-						SPAWN_DBG(1 DECI SECOND)
+						SPAWN(1 DECI SECOND)
 							if (F.open)
 								F.close()
 							else
@@ -718,7 +715,7 @@
 			else
 				boutput(W, "Couldn't set up poltergeist ; no spirits responded. Trying again in 3 minutes.")
 				qdel(marker)
-				SPAWN_DBG(3 MINUTES)
+				SPAWN(3 MINUTES)
 					make_poltergeist(W, T, tries++)
 			return
 		var/datum/mind/lucky_dude = pick(candidates)
@@ -744,8 +741,8 @@
 	desc = "What is this? You feel like you shouldn't be able to see it, but it has an ominous and slightly mischevious aura."
 	icon = 'icons/effects/wraitheffects.dmi'
 	icon_state = "acursed"
-	// invisibility = 101
-	invisibility = 10
+	// invisibility = INVIS_ALWAYS
+	invisibility = INVIS_GHOST
 	anchored = 1
 	density = 0
 	opacity = 0

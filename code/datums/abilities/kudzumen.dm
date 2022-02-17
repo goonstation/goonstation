@@ -15,7 +15,7 @@
 				return
 			else
 				owner.waiting_for_hotkey = 1
-				src.updateIcon()
+				src.UpdateIcon()
 				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
 
@@ -32,7 +32,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -204,7 +204,7 @@
 /obj/kudzu_marker
 	name = "benign kudzu"
 	desc = "A flowering subspecies of the kudzu plant that, is a non-invasive plant on space stations."
-	// invisibility = 101
+	// invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	opacity = 0

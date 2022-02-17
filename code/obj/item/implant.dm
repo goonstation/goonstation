@@ -32,23 +32,19 @@ THROWING DARTS
 	var/uses_radio = 0
 	var/list/mailgroups = null
 	var/net_id = null
-	var/pda_alert_frequency = 1149
-	var/datum/radio_frequency/radio_connection
+	var/pda_alert_frequency = FREQ_PDA
 
 	New()
 		..()
 		if (uses_radio)
-			SPAWN_DBG(10 SECONDS)
-				if (radio_controller)
-					radio_connection = radio_controller.add_object(src, "[pda_alert_frequency]")
-				if (!src.net_id)
-					src.net_id = generate_net_id(src)
+			if (!src.net_id)
+				src.net_id = generate_net_id(src)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, pda_alert_frequency)
 
 	disposing()
 		owner = null
 		former_implantee = null
 		if (uses_radio)
-			radio_controller.remove_object(src, "[pda_alert_frequency]")
 			mailgroups.Cut()
 		. = ..()
 
@@ -134,11 +130,8 @@ THROWING DARTS
 
 	proc/send_message(var/message, var/alertgroup, var/sender_name)
 		DEBUG_MESSAGE("sending message: [message]")
-		if(!radio_connection)
-			return
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
-		newsignal.transmission_method = TRANSMISSION_RADIO
 		newsignal.data["command"] = "text_message"
 		newsignal.data["sender_name"] = sender_name
 		newsignal.data["message"] = "[message]"
@@ -147,7 +140,7 @@ THROWING DARTS
 		newsignal.data["group"] = mailgroups + alertgroup
 		newsignal.data["sender"] = src.net_id
 
-		radio_connection.post_signal(src, newsignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
 
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (!istype(src, /obj/item/implant/projectile))
@@ -276,13 +269,9 @@ THROWING DARTS
 		if (!H.mini_health_hud)
 			H.mini_health_hud = 1
 
-		var/datum/data/record/probably_my_record = null
-		for (var/datum/data/record/R in data_core.medical)
-			if (R.fields["name"] == H.real_name)
-				probably_my_record = R
-				break
+		var/datum/db_record/probably_my_record = data_core.medical.find_record("id", H.datacore_id)
 		if (probably_my_record)
-			probably_my_record.fields["h_imp"] = "[src.sensehealth()]"
+			probably_my_record["h_imp"] = "[src.sensehealth()]"
 		..()
 
 	on_crit()
@@ -380,7 +369,7 @@ THROWING DARTS
 	uses_radio = 1
 	mailgroups = list(MGD_SECURITY)
 	var/id = 1.0
-	var/frequency = 1451		//This is the nonsense frequency that the implant uses. I guess it was never finished. -kyle
+	var/frequency = FREQ_TRACKING_IMPLANT		//This is the nonsense frequency that the implant uses. I guess it was never finished. -kyle
 
 	New()
 		..()
@@ -430,7 +419,7 @@ THROWING DARTS
 				if (!H.reagents.has_reagent("omnizine", 10))
 					H.reagents.add_reagent("omnizine", 10)
 				src.inactive = 1
-				SPAWN_DBG(30 SECONDS) src.inactive = 0
+				SPAWN(30 SECONDS) src.inactive = 0
 		..()
 
 
@@ -546,7 +535,8 @@ THROWING DARTS
 				source.visible_message("<span class='alert'><b>[source] emits a loud clunk!</b></span>")
 			else
 				source.visible_message("[source] emits a small clicking noise.")
-			logTheThing("bombing", source, null, "triggered a micro-/macrobomb implant on death.")
+			logTheThing("bombing", source, null, "triggered a micro-/macrobomb implant on death at [log_loc(source)].")
+			message_admins("[key_name(source)] triggered a micro-/macrobomb implant on death at [log_loc(source)].")
 			var/turf/T = get_turf(src)
 			src.set_loc(null) //so we don't get deleted prematurely by the blast.
 
@@ -569,7 +559,7 @@ THROWING DARTS
 				if(cutoff <= 25)
 					throwjunk += I
 
-			SPAWN_DBG(0) //Delete the overlay when finished with it.
+			SPAWN(0) //Delete the overlay when finished with it.
 				if(!QDELETED(source))
 					source?.gib()
 
@@ -590,7 +580,6 @@ THROWING DARTS
 				qdel(src)
 
 			T.hotspot_expose(800,125)
-			//explosion(src, T, -1, -1, 2*explosionPower, 3*explosionPower)
 			explosion_new(src, T, 7 * ., 1) //The . is the tally of explosionPower in this poor slob.
 			return
 
@@ -728,13 +717,13 @@ THROWING DARTS
 
 		if (expire)
 			//25 minutes +/- 5
-			SPAWN_DBG((25 + rand(-5,5)) MINUTES)
+			SPAWN((25 + rand(-5,5)) MINUTES)
 				if (src && !ishuman(src.loc)) // Drop-all, gibbed etc (Convair880).
 					if (src.expire && (src.expired != 1)) src.expired = 1
 					return
 				if (!src || !owner || (M != owner) || src.expired)
 					return
-				boutput(M, "<span class='alert'>Your will begins to return. What is this strange compulsion [I.real_name] has over you? Yet you must obey.</span>")
+				boutput(M, "<h3><span class='alert'>Your will begins to return. What is this strange compulsion [I.real_name] has over you? Yet you must obey.</span></h3>")
 
 				// 1 minute left
 				sleep(1 MINUTE)
@@ -844,6 +833,11 @@ THROWING DARTS
 		desc = "A small hollow dart."
 		icon_state = "syringeproj"
 
+	blowdart
+		name = "blowdart"
+		desc = "a sharp little dart with a little poison reservoir."
+		icon_state = "blowdart"
+
 	flintlock
 		name= "flintlock round"
 		desc = "Rather unperfect round ball. Looks very old."
@@ -871,7 +865,7 @@ THROWING DARTS
 			return
 
 	src.bleed_timer = bleed_time
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 //		boutput(C, "<span class='alert'>You start bleeding!</span>") // the blood system takes care of this bit now
 		src.bleed_loop()
 
@@ -904,7 +898,7 @@ THROWING DARTS
 			C.take_toxin_damage(rand(1,3))
 			C.stamina -= 30
 			boutput(C, "<span class='alert'>You feel a [pick("searing", "hot", "burning")] pain in your chest![pick("", "There's gotta be silver in there!", )]</span>")
-	SPAWN_DBG(rand(40,70))
+	SPAWN(rand(40,70))
 		src.bleed_loop()
 	return
 
@@ -1148,7 +1142,7 @@ THROWING DARTS
 	sneaky = 1
 	New()
 		var/obj/item/implant/microbomb/macrobomb/newbomb = new/obj/item/implant/microbomb/macrobomb( src )
-		newbomb.explosionPower = rand(20,30)
+		newbomb.explosionPower = rand(22,32)
 		src.imp = newbomb
 		..()
 		return
@@ -1373,7 +1367,7 @@ THROWING DARTS
 		update()
 	else
 		if (src in user.contents)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				src.attack_self(user)
 				return
 		else
@@ -1486,7 +1480,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 <b>Name:</b> Machine Language Translator<br>
 <b>Zone:</b> Cerebral Cortex<br>
 <b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
-<b>Important Notes:</b> Enables the host to transmit, recieve and understand digital transmissions used by most mechanoids.<BR>"}
+<b>Important Notes:</b> Enables the host to transmit, receive and understand digital transmissions used by most mechanoids.<BR>"}
 			else if (istype(src.case.imp, /obj/item/implant/bloodmonitor))
 				dat += {"
 <b>Implant Specifications:</b><br>
@@ -1520,12 +1514,12 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 		if (href_list["freq"])
 			if ((istype(src.case, /obj/item/implantcase) && istype(src.case.imp, /obj/item/implant/tracking)))
 				var/obj/item/implant/tracking/T = src.case.imp
-				T.frequency += text2num(href_list["freq"])
+				T.frequency += text2num_safe(href_list["freq"])
 				T.frequency = sanitize_frequency(T.frequency)
 		if (href_list["id"])
 			if ((istype(src.case, /obj/item/implantcase) && istype(src.case.imp, /obj/item/implant/tracking)))
 				var/obj/item/implant/tracking/T = src.case.imp
-				T.id += text2num(href_list["id"])
+				T.id += text2num_safe(href_list["id"])
 				T.id = min(100, T.id)
 				T.id = max(1, T.id)
 		if (ismob(src.loc))

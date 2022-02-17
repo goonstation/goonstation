@@ -57,6 +57,8 @@ datum
 				for(var/datum/ailment_data/disease/virus in M.ailments)
 					if (virus.cure == "Antibiotics")
 						virus.state = "Remissive"
+				if(M.hasStatus("poisoned"))
+					M.changeStatus("poisoned", -10 SECONDS * mult)
 				..()
 				return
 
@@ -74,10 +76,6 @@ datum
 			overdose = 20
 			var/counter = 1 //Data is conserved...so some jerkbag could inject a monkey with this, wait for data to build up, then extract some instant KO juice.  Dumb.
 			value = 5
-
-			pooled()
-				..()
-				counter = 1
 
 			on_add()
 				if(ismob(holder?.my_atom))
@@ -126,10 +124,6 @@ datum
 			overdose = 20
 			var/counter = 1 //Data is conserved...so some jerkbag could inject a monkey with this, wait for data to build up, then extract some instant KO juice.  Dumb.
 			value = 5
-
-			pooled()
-				..()
-				counter = 1
 
 			on_add()
 				if(ismob(holder?.my_atom))
@@ -320,7 +314,7 @@ datum
 				if(M.health > 20)
 					M.take_toxin_damage(5 * mult, 1)	//calomel doesn't damage organs.
 				if(probmult(6))
-					M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>")
+					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>")
 					M.vomit()
 				if(probmult(4))
 					M.emote("piss")
@@ -393,6 +387,8 @@ datum
 
 				if(method == TOUCH)
 					. = 0
+					if(issilicon(M)) //Metal flesh isn't repaired by synthflesh
+						return
 					M.HealDamage("All", volume_passed * 1.5, volume_passed * 1.5)
 					if (isliving(M))
 						var/mob/living/H = M
@@ -678,11 +674,15 @@ datum
 					M = holder.my_atom
 
 				if (M.bioHolder)
-					if (probmult(50) && M.bioHolder.HasEffect("bad_eyesight"))
+					var/datum/bioEffect/BE
+					BE = M.bioHolder.GetEffect("bad_eyesight")
+					if (probmult(50) && BE?.curable_by_mutadone)
 						M.bioHolder.RemoveEffect("bad_eyesight")
-					if (probmult(30) && M.bioHolder.HasEffect("blind"))
+					BE = M.bioHolder.GetEffect("blind")
+					if (probmult(30) && BE?.curable_by_mutadone)
 						M.bioHolder.RemoveEffect("blind")
-					if (probmult(30) && (M.get_ear_damage() && M.get_ear_damage() <= M.get_ear_damage_natural_healing_threshold()) && M.bioHolder.HasEffect("deaf") || M.ear_disability)
+					BE = M.bioHolder.GetEffect("deaf")
+					if (probmult(30) && (M.get_ear_damage() && M.get_ear_damage() <= M.get_ear_damage_natural_healing_threshold()) && BE?.curable_by_mutadone)
 						M.bioHolder.RemoveEffect("deaf")
 
 				if (M.get_eye_blurry())
@@ -754,6 +754,8 @@ datum
 					holder.remove_reagent("epinephrine", 5 * mult)
 				if(holder.has_reagent("ephedrine"))
 					holder.remove_reagent("ephedrine", 5 * mult)
+				if(holder.has_reagent("synaptizine"))
+					holder.remove_reagent("synaptizine", 5 * mult)
 				if(M.hasStatus("stimulants"))
 					M.changeStatus("stimulants", -15 SECONDS * mult)
 				if(probmult(5))
@@ -996,6 +998,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
 				. = ..()
+				if(issilicon(M)) // borgs shouldn't heal from this
+					return
 				if (!volume_passed)
 					return
 				volume_passed = clamp(volume_passed, 0, 10)
@@ -1073,9 +1077,6 @@ datum
 			value = 9 // 4c + 3c + 1c + 1c
 			var/remove_buff = 0
 			stun_resist = 15
-
-			pooled()
-				..()
 
 			on_add()
 				if(ismob(holder?.my_atom))
@@ -1224,6 +1225,8 @@ datum
 					return
 				if(!isliving(M)) // fucking human shitfucks
 					return
+				if(issilicon(M)) // Borgs shouldn't heal from this
+					return
 				volume_passed = clamp(volume_passed, 0, 10)
 				if(method == TOUCH)
 					. = 0
@@ -1285,7 +1288,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature < M.base_body_temp - 100)
+				if(M.bodytemperature < M.base_body_temp - 100 && !M.hasStatus("burning"))
 					var/health_before = M.health
 
 					if(M.get_oxygen_deprivation())
@@ -1321,10 +1324,6 @@ datum
 			var/remove_buff = 0
 			var/total_misstep = 0
 			value = 18 // 5 4 5 3 1
-
-			pooled()
-				..()
-				remove_buff = 0
 
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
@@ -1537,7 +1536,7 @@ datum
 				if(M.health > 25)
 					M.take_toxin_damage(1 * mult)
 				if(probmult(25))
-					M.visible_message("<span class='alert'>[M] pukes all over \himself!</span>")
+					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)]!</span>")
 					M.vomit()
 				if(probmult(5))
 					var/mob/living/L = M

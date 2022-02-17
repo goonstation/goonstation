@@ -11,7 +11,7 @@
 	icon_state = "ghostcatcher0"
 	mats = 0
 	//var/id = "ghostdrone"
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		. = ..()
@@ -21,7 +21,7 @@
 		. = ..()
 		STOP_TRACKING
 
-	HasEntered(atom/movable/O)
+	Crossed(atom/movable/O)
 		if (!istype(O, /mob/dead/observer))
 			return ..()
 		var/mob/dead/observer/G = O
@@ -40,7 +40,7 @@
 			return ..()
 
 		. = ..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (alert(G, "Add yourself to the ghostdrone queue?", "Confirmation", "Yes", "No") == "No")
 				return
 
@@ -53,7 +53,7 @@
 		if (available_ghostdrones.len && length(ghostdrone_candidates))
 			src.icon_state = "ghostcatcher1"
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/datum/mind/M = dequeue_next_ghostdrone_candidate()
 				if(istype(M))
 					var/mob/dead/D = M.current
@@ -140,7 +140,7 @@ var/global/list/ghostdrone_candidates = list()
 	New()
 		..()
 		src.icon_state = "factory[src.factory_section][src.working]"
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.update_conveyors()
 			src.update_rechargers()
 
@@ -169,7 +169,7 @@ var/global/list/ghostdrone_candidates = list()
 	disposing()
 		..()
 		if (src.current_assembly)
-			pool(src.current_assembly)
+			qdel(src.current_assembly)
 		if (src.conveyors.len)
 			src.conveyors.len = 0
 
@@ -198,7 +198,7 @@ var/global/list/ghostdrone_candidates = list()
 				return
 
 			if (prob(40))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.shake(rand(4,6))
 				playsound(src, pick("sound/impact_sounds/Wood_Hit_1.ogg", "sound/impact_sounds/Metal_Hit_Heavy_1.ogg"), 30, 1, -3)
 			if (prob(40))
@@ -242,7 +242,7 @@ var/global/list/ghostdrone_candidates = list()
 			src.icon_state = "factory[src.factory_section]1"
 
 		else if ((src.factory_section == 1 || src.single_system) && !ghostdrone_factory_working && !src.current_assembly)
-			src.current_assembly = unpool(/obj/item/ghostdrone_assembly)
+			src.current_assembly = new /obj/item/ghostdrone_assembly
 			if (!src.current_assembly)
 				src.current_assembly = new(src)
 			src.current_assembly.set_loc(src)
@@ -289,7 +289,7 @@ var/global/list/ghostdrone_candidates = list()
 		return 1
 
 	proc/force_new_drone()
-		var/obj/item/ghostdrone_assembly/G = unpool(/obj/item/ghostdrone_assembly)
+		var/obj/item/ghostdrone_assembly/G = new /obj/item/ghostdrone_assembly
 		ghostdrone_factory_working = G
 		src.start_work(G)
 
@@ -309,15 +309,14 @@ var/global/list/ghostdrone_candidates = list()
 	mats = 0
 	var/stage = 1
 
-	pooled()
-		..()
-		if (ghostdrone_factory_working == src)
-			ghostdrone_factory_working = null
-		stage = 1
-
-	unpooled()
+	New()
 		..()
 		src.icon_state = "drone-stage[src.stage]"
+
+	disposing()
+		if (ghostdrone_factory_working == src)
+			ghostdrone_factory_working = null
+		..()
 
 /obj/machinery/ghostdrone_conveyor_sensor
 	name = "conveyor sensor"
@@ -335,7 +334,7 @@ var/global/list/ghostdrone_candidates = list()
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.update_conveyors()
 			src.update_rechargers()
 

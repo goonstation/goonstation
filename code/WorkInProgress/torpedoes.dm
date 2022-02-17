@@ -64,7 +64,7 @@
 		R.add_reagent("sarin", 50)
 		smoke_reaction(R, 7, get_turf(src))
 		qdel(src)
-		SPAWN_DBG(30 SECONDS) qdel(R)
+		SPAWN(30 SECONDS) qdel(R)
 		return
 
 /obj/machinery/torpedo_tube/syndicate
@@ -251,7 +251,7 @@
 		tube.pixel_y = 16
 		underlays.Add(tube)
 
-		SPAWN_DBG(1 SECOND) //You might wonder what is going on here. IF I DON'T SPAWN THIS THE DIRECTION IS NOT SET IS WHAT'S GOING ON HERE.
+		SPAWN(1 SECOND) //You might wonder what is going on here. IF I DON'T SPAWN THIS THE DIRECTION IS NOT SET IS WHAT'S GOING ON HERE.
 			set_dir(NORTH)
 
 		rebuildOverlays()
@@ -310,14 +310,14 @@
 		if(tray_obj) return
 		if(loaded != null)
 
-			logTheThing("combat", usr, null, " launches \a [src.loaded] from the torpedo tube at [showCoords(src.x, src.y, src.z)]")
-			logTheThing("diary", usr, null, " launches \a [src.loaded] from the torpedo tube at [showCoords(src.x, src.y, src.z)]", "combat")
+			logTheThing("combat", usr, null, " launches \a [src.loaded] from the torpedo tube at [log_loc(src)]")
+			logTheThing("diary", usr, null, " launches \a [src.loaded] from the torpedo tube at [log_loc(src)]", "combat")
 			var/turf/start = getLaunchTurf()
 			var/atom/target
 			if(targetTurf)
 				target = targetTurf
 			else
-				target = get_edge_target_turf(src, src.dir)
+				target = get_steps(start, src.dir, 3)
 
 			if(ismob(loaded))
 				var/mob/M = loaded
@@ -338,7 +338,7 @@
 				T.set_dir(src.dir)
 				T.lockdir = src.dir
 				T.fired = 1
-				SPAWN_DBG(0)
+				SPAWN(0)
 					T.launch(target)
 
 			loaded = null
@@ -370,20 +370,20 @@
 			if (istype(target, /obj/storage/closet) && get_dist(src,target) <= 1 && can_act(user) && can_reach(user, src) && can_reach(user, target))
 				var/obj/storage/closet/O = target
 				O.set_loc(src.loc)
-				logTheThing("combat", user, null, " loads \a [O] into \the [src] at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", user, null, " loads \a [O] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
+				logTheThing("combat", user, null, " loads \a [O] into \the [src] at [log_loc(src)]")
+				logTheThing("diary", user, null, " loads \a [O] into \the [src] at [log_loc(src)]", "combat")
 			var/mob/M = target
 			if (ishuman(M))
 				M.setStatus("resting", INFINITE_STATUS)
 				M.force_laydown_standup()
 				M.set_loc(src.loc)
-				logTheThing("combat", user, target, " laods [constructTarget(target,"combat")] onto \the [src] at [showCoords(user.x, user.y, user.z)]")
-				logTheThing("diary", user, target, " laods [constructTarget(target,"diary")] onto \the [src] at [showCoords(user.x, user.y, user.z)]", "combat")
+				logTheThing("combat", user, target, " laods [constructTarget(target,"combat")] onto \the [src] at [log_loc(user)]")
+				logTheThing("diary", user, target, " laods [constructTarget(target,"diary")] onto \the [src] at [log_loc(user)]", "combat")
 				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto [src]!</b></span>")
 			else
 				M.set_loc(src.loc)
-				logTheThing("combat", user, target, " loads [constructTarget(target,"combat")] into \the [src] at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", user, target, " loads [constructTarget(target,"diary")] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
+				logTheThing("combat", user, target, " loads [constructTarget(target,"combat")] into \the [src] at [log_loc(src)]")
+				logTheThing("diary", user, target, " loads [constructTarget(target,"diary")] into \the [src] at [log_loc(src)]", "combat")
 				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto \the [src]!</b></span>")
 				return
 
@@ -396,11 +396,25 @@
 				GM.setStatus("resting", INFINITE_STATUS)
 				GM.force_laydown_standup()
 				user.visible_message("<span class='alert'><b>[user.name] shoves [GM.name] onto [src]!</b></span>")
-				logTheThing("combat", user, GM, " loads [constructTarget(GM,"combat")] into \the [src] at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", user, GM, " loads [constructTarget(GM,"diary")] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
+				logTheThing("combat", user, GM, " loads [constructTarget(GM,"combat")] into \the [src] at [log_loc(src)]")
+				logTheThing("diary", user, GM, " loads [constructTarget(GM,"diary")] into \the [src] at [log_loc(src)]", "combat")
 				qdel(G)
 		else
 			return ..(I,user)
+
+	hitby(var/atom/movable/M, var/datum/thrown_thing/thr)
+		if (ishuman(M) && M.throwing)
+			var/mob/living/carbon/human/thrown_person = M
+			M.visible_message("<span class='alert'><b>[thrown_person] [thrown_person.throwing & THROW_SLIP ? "slips" : "falls"] onto [src]! [src] slams closed!</b></span>")
+			logTheThing("combat", thrown_person, null, " falls into \the [src] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"])")
+			thrown_person.set_loc(src.loc)
+			parent?.close()
+			if (prob(25) || thrown_person.bioHolder.HasEffect("clumsy"))
+				SPAWN(0.5 SECONDS)
+					JOB_XP(thrown_person, "Clown", 5)
+					src.parent?.launch()
+		else
+			..()
 
 /obj/torpedo_tray
 	name = "torpedo tray"
@@ -424,7 +438,7 @@
 		changeIcon()
 		..()
 
-	Bump(atom/O)
+	bump(atom/O)
 		. = ..()
 		changeIcon(1)
 		return .
@@ -477,9 +491,10 @@
 		changeIcon()
 		return
 
-	proc/remove(var/turf/target, var/direction = null)
+	proc/remove(var/turf/target, var/direction = null, var/force = FALSE)
 		if(loaded == null) return
-		if(!can_act(usr) || !can_reach(usr, src) || !can_reach(usr, target)) return
+		if(!force && (!can_act(usr) || !can_reach(usr, src) || !can_reach(usr, target)))
+			return
 		var/obj/torpedo/T = loaded
 		loaded = null
 		T.set_dir((direction ? direction : src.dir))
@@ -492,7 +507,7 @@
 			add(target)
 		return
 
-	MouseDrop(atom/over_object,src_location,over_location,src_control,over_control,params)
+	mouse_drop(atom/over_object,src_location,over_location,src_control,over_control,params)
 		if(loaded && get_dist(src,over_object) <= 1)
 			var/turf/T = get_turf(over_object)
 			if(T.density) return
@@ -501,6 +516,18 @@
 				remove(trg)
 			else if(istype(trg, /obj/torpedo_tube_tray))
 				remove(get_turf(over_object), trg.dir)
+
+	hitby(var/atom/movable/M, var/datum/thrown_thing/thr)
+		if (src.loaded && ishuman(M) && M.throwing)
+			var/mob/living/carbon/human/thrown_person = M
+			if (thrown_person.throwing & THROW_CHAIRFLIP)
+				logTheThing("combat", thrown_person, null, " flips into \the [src] at [log_loc(src)], setting it off.")
+				loaded.breakLaunch()
+			else if (prob(25) || thrown_person.bioHolder.HasEffect("clumsy"))
+				logTheThing("combat", thrown_person, null, " is thrown into \the [src] at [log_loc(src)], setting it off. (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"])")
+				loaded.breakLaunch()
+				JOB_XP(thrown_person, "Clown", 5)
+		..()
 
 /obj/torpedo_tray/explosive_loaded
 	icon = 'icons/obj/large/32x64.dmi'
@@ -598,12 +625,12 @@
 
 	attackby(var/obj/item/I as obj, var/mob/user as mob)
 		..()
-		logTheThing("combat", user, null, " hits [src] with [I] at [showCoords(user.x, user.y, user.z)]")
-		logTheThing("diary", user, null, " hits [src] with [I] at [showCoords(user.x, user.y, user.z)]", "combat")
+		logTheThing("combat", user, null, " hits [src] with [I] at [log_loc(user)]")
+		logTheThing("diary", user, null, " hits [src] with [I] at [log_loc(user)]", "combat")
 		dmg += I.force
 		if(dmg >= dmg_threshold)
-			logTheThing("combat", user, null, " caused [src] to detonate at [showCoords(user.x, user.y, user.z)]")
-			logTheThing("diary", user, null, " caused [src] to detonate at [showCoords(user.x, user.y, user.z)]", "combat")
+			logTheThing("combat", user, null, " caused [src] to detonate at [log_loc(user)]")
+			logTheThing("diary", user, null, " caused [src] to detonate at [log_loc(user)]", "combat")
 			breakLaunch()
 		return
 
@@ -671,18 +698,18 @@
 			for(var/atom/movable/M in T)
 				if(M == src) continue
 				if(istype(M, /obj/machinery/the_singularity)) numPierce = 0 //detonate instantly on the singularity
-				if(!M.CanPass(src, T)) return 1
+				if(!M.Cross(src)) return 1
 				if(M.density) return 1
 		return 0
 
 	proc/breakLaunch()
 		var/obj/torpedo_tray/T = src.loc
 		if(istype(T))
-			T.remove(get_turf(src))
+			T.remove(get_turf(src), force = TRUE)
 		var/atom/target = get_edge_target_turf(src, src.dir)
 		src.lockdir = src.dir
 		src.fired = 1
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.launch(target)
 		return
 

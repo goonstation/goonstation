@@ -27,3 +27,12 @@
 	src.f = 0
 	src.disposed = 0
 	return src
+
+/matrix/proc/is_identity()
+	return \
+		src.a == 1 && \
+		src.b == 0 && \
+		src.c == 0 && \
+		src.d == 0 && \
+		src.e == 1 && \
+		src.f == 0

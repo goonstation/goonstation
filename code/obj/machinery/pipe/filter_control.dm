@@ -3,7 +3,7 @@
 
 /obj/machinery/filter_control/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)	//wait for world
+	SPAWN(0.5 SECONDS)	//wait for world
 		for(var/obj/machinery/inlet/filter/F as anything in machine_registry[MACHINES_INLETS])
 			if(F.control == src.control)
 				F.f_mask = src.f_mask
@@ -20,20 +20,20 @@
 		user.show_message(text("<span class='alert'>Now [] the panel...</span>", (src.locked) ? "unscrewing" : "reattaching"), 1)
 		sleep(3 SECONDS)
 		src.locked =! src.locked
-		src.updateicon()
+		src.UpdateIcon()
 		return
 	if (issnippingtool(W) && !src.locked)
 		status ^= BROKEN
 		src.add_fingerprint(user)
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("<span class='alert'>[] has []activated []!</span>", user, (stat&BROKEN) ? "de" : "re", src), 1)
-		src.updateicon()
+		src.UpdateIcon()
 		return
 	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
 		emagged++
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("<span class='alert'>[] has shorted out the []'s access system with an electromagnetic card!</span>", user, src), 1)
-		src.updateicon()
+		src.UpdateIcon()
 		return src.Attackhand(user)
 	return src.Attackhand(user)
 
@@ -42,7 +42,7 @@
 		use_power(5,ENVIRON)
 		AutoUpdateAI(src)
 		src.updateUsrDialog()
-	src.updateicon()
+	src.UpdateIcon()
 
 /obj/machinery/filter_control/attack_hand(mob/user as mob)
 	if(status & NOPOWER)
@@ -94,10 +94,10 @@
 		if (src.allowed(usr) || src.emagged && !(status & BROKEN))
 			if (href_list["tg"])	//someone modified the html so I added a check here
 				// toggle gas
-				src.f_mask ^= text2num(href_list["tg"])
+				src.f_mask ^= text2num_safe(href_list["tg"])
 				for(var/obj/machinery/inlet/filter/FI as anything in machine_registry[MACHINES_INLETS])
 					if(FI.control == src.control)
-						FI.f_mask ^= text2num(href_list["tg"])
+						FI.f_mask ^= text2num_safe(href_list["tg"])
 		else
 			usr.see("<span class='alert'>Access Denied ([src.name] operation restricted to authorized atmospheric technicians.)</span>")
 		AutoUpdateAI(src)
@@ -108,7 +108,7 @@
 		usr.machine = null
 		return
 
-/obj/machinery/filter_control/proc/updateicon()
+/obj/machinery/filter_control/UpdateIcon()
 	overlays = null
 	if(status & NOPOWER)
 		icon_state = "filter_control-nopower"
@@ -154,6 +154,6 @@
 		status &= ~NOPOWER
 	else
 		status |= NOPOWER
-	SPAWN_DBG(rand(1,15))
-		src.updateicon()
+	SPAWN(rand(1,15))
+		src.UpdateIcon()
 	return

@@ -28,7 +28,7 @@
 	New()
 		..()
 
-		air_contents = unpool(/datum/gas_mixture)
+		air_contents = new /datum/gas_mixture
 
 		air_contents.volume = volume
 		air_contents.temperature = T20C
@@ -48,15 +48,12 @@
 
 	disposing()
 		if (air_contents)
-			pool(air_contents)
+			qdel(air_contents)
 			air_contents = null
 
 		..()
 
 	proc
-		update_icon()
-			return null
-
 		connect(obj/machinery/atmospherics/portables_connector/new_port)
 			//Make sure not already connected to something else
 			if(connected_port || !new_port || new_port.connected_device)
@@ -66,7 +63,7 @@
 			if(new_port.loc != loc)
 				return 0
 
-			//logTheThing("combat", usr, null, "attaches [src] to [new_port] at [showCoords(new_port.x, new_port.y, new_port.z)].")
+			//logTheThing("combat", usr, null, "attaches [src] to [new_port] at [log_loc(new_port)].")
 
 			add_fingerprint(usr)
 
@@ -103,7 +100,7 @@
 		holding.set_loc(loc)
 		usr.put_in_hand_or_eject(holding) // try to eject it into the users hand, if we can
 		holding = null
-		update_icon()
+		UpdateIcon()
 	return
 
 /obj/machinery/portable_atmospherics/attackby(var/obj/item/W as obj, var/mob/user as mob)
@@ -113,7 +110,7 @@
 			user.drop_item()
 			W.set_loc(src)
 			src.holding = W
-			update_icon()
+			UpdateIcon()
 			tgui_process.update_uis(src) //update UI immediately
 
 	else if (iswrenchingtool(W))

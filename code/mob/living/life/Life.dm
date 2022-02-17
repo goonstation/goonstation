@@ -32,8 +32,13 @@
 		robot_owner = null
 		critter_owner = null
 
-	proc/process(var/datum/gas_mixture/environment, mult)
+	proc/Process(datum/gas_mixture/environment)
+		SHOULD_NOT_OVERRIDE(TRUE)
+		process(environment)
 		last_process = TIME
+
+	proc/process(datum/gas_mixture/environment)
+		PROTECTED_PROC(TRUE)
 
 	proc/get_multiplier()
 		.= clamp(TIME - last_process, tick_spacing, cap_tick_spacing) / tick_spacing
@@ -58,11 +63,11 @@
 			L = new type(src,arguments)
 		else
 			L = new type(src)
-		lifeprocesses[type] = L
+		lifeprocesses?[type] = L
 		return L
 
 	proc/remove_lifeprocess(type)
-		var/datum/lifeprocess/L = lifeprocesses[type]
+		var/datum/lifeprocess/L = lifeprocesses?[type]
 		lifeprocesses -= type
 		qdel(L)
 
@@ -79,9 +84,11 @@
 	last_life_tick = TIME
 
 /mob/living/disposing()
-	..()
 	for (var/datum/lifeprocess/L in lifeprocesses)
 		remove_lifeprocess(L)
+	lifeprocesses.len = 0
+	lifeprocesses = null
+	..()
 
 /mob/living/carbon/human
 	var/list/heartbeatOverlays = list()
@@ -148,21 +155,19 @@
 
 /mob/living/silicon/hivebot/New()
 	..()
-	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/statusupdate)
+	add_lifeprocess(/datum/lifeprocess/hivebot_statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/silicon/robot/New()
 	..()
-	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/statusupdate)
+	add_lifeprocess(/datum/lifeprocess/robot_statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/robot_oil)
@@ -171,12 +176,11 @@
 
 /mob/living/silicon/drone/New()
 	..()
-	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 
 /mob/living/Life(datum/controller/process/mobs/parent)
-	set invisibility = 0
+	set invisibility = INVIS_NONE
 	if (..())
 		return 1
 
@@ -202,11 +206,11 @@
 		var/datum/lifeprocess/L
 		for (var/thing in src.lifeprocesses)
 			if(src.disposed) return
-			L = src.lifeprocesses[thing]
+			L = src.lifeprocesses?[thing]
 			if(!L)
 				logTheThing("debug", src, null, "had lifeprocess [thing] removed during Life() probably.")
 				continue
-			L.process(environment)
+			L.Process(environment)
 
 		for (var/obj/item/implant/I in src.implant)
 			I.on_life(life_mult)
@@ -231,8 +235,8 @@
 
 		//Regular Trait updates
 		if(src.traitHolder)
-			for(var/T in src.traitHolder.traits)
-				var/obj/trait/O = getTraitById(T)
+			for(var/id in src.traitHolder.traits)
+				var/obj/trait/O = src.traitHolder.traits[id]
 				O.onLife(src, life_mult)
 
 		update_icons_if_needed()
@@ -532,25 +536,27 @@
 							O:score++
 
 	proc/update_sight()
-		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/sight]
+		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/sight]
 		if (L)
-			L.process()
+			L.Process()
 
 	update_canmove()
-		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/canmove]
+		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/canmove]
 		if (L)
-			L.process()
+			L.Process()
 
 	force_laydown_standup() //immediately force a laydown
-		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/stuns_lying]
+		if(!lifeprocesses)
+			return
+		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/stuns_lying]
 		if (L)
-			L.process()
-		L = lifeprocesses[/datum/lifeprocess/canmove]
+			L.Process()
+		L = lifeprocesses?[/datum/lifeprocess/canmove]
 		if (L)
-			L.process()
-		L = lifeprocesses[/datum/lifeprocess/blindness]
+			L.Process()
+		L = lifeprocesses?[/datum/lifeprocess/blindness]
 		if (L)
-			L.process()
+			L.Process()
 
 		if (src.client)
 			updateOverlaysClient(src.client)
@@ -831,7 +837,7 @@
 		if(doThumps) return
 		doThumps = 1
 		Thumper_thump(1)
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			while(src.doThumps)
 				Thumper_thump(0)
 				sleep(2 SECONDS)

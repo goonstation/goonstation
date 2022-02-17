@@ -31,8 +31,9 @@
 		var/datum/reagents/R = new /datum/reagents(initial_volume)
 		src.reagents = R
 		R.my_atom = src //grumble
-		iced.addOverlayComposition(/datum/overlayComposition/flockmindcircuit)
-		occupant = iced
+		if(iced)
+			iced.addOverlayComposition(/datum/overlayComposition/flockmindcircuit)
+			occupant = iced
 		processing_items |= src
 		src.setMaterial(getMaterial("gnesis"))
 

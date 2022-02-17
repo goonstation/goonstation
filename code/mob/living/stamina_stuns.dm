@@ -94,7 +94,7 @@
 	if(!isnum(x)) return
 	if(prob(20) && ishellbanned(src)) return //Stamina regenerates 20% slower for you. RIP
 	stamina = min(stamina_max, stamina + x)
-	if(src.stamina_bar) src.stamina_bar.update_value(src)
+	if(src.stamina_bar.last_update != TIME) src.stamina_bar.update_value(src)
 	return
 
 //Removes stamina
@@ -105,7 +105,7 @@
 	if(!src.use_stamina) return
 	if(!isnum(x)) return
 	if(prob(4) && ishellbanned(src)) //Chances are this will happen during combat
-		SPAWN_DBG(rand(5, 80)) //Detach the cause (hit, reduced stamina) from the consequence (disconnect)
+		SPAWN(rand(5, 80)) //Detach the cause (hit, reduced stamina) from the consequence (disconnect)
 			var/dur = src.client.fake_lagspike()
 			sleep(dur)
 			del(src.client)
@@ -119,7 +119,7 @@
 		percReduction = (x * (stam_mod_items / 100))
 
 	stamina = max(STAMINA_NEG_CAP, stamina - (x - percReduction) )
-	src.stamina_bar?.update_value(src)
+	if(src.stamina_bar?.last_update != TIME) src.stamina_bar?.update_value(src)
 	return
 
 /mob/living/carbon/human/remove_stamina(var/x)
@@ -140,7 +140,7 @@
 /mob/living/set_stamina(var/x)
 	if(!src.use_stamina) return
 	if(!isnum(x)) return
-	stamina = max(min(stamina_max, x), STAMINA_NEG_CAP)
+	stamina = clamp(x, STAMINA_NEG_CAP, stamina_max)
 	if(src.stamina_bar) src.stamina_bar.update_value(src)
 	return
 
@@ -198,7 +198,7 @@
 /mob/proc/stamina_stun()
 	return
 
-/mob/living/stamina_stun()
+/mob/living/stamina_stun(stunmult = 1)
 	if(!src.use_stamina) return
 	if(src.stamina <= 0)
 		var/chance = STAMINA_SCALING_KNOCKOUT_BASE
@@ -206,7 +206,7 @@
 		if(prob(chance))
 			if(!src.getStatusDuration("weakened"))
 				src.visible_message("<span class='alert'>[src] collapses!</span>")
-				src.changeStatus("weakened", (STAMINA_STUN_TIME) SECONDS)
+				src.changeStatus("weakened", (STAMINA_STUN_TIME * stunmult) SECONDS)
 				src.force_laydown_standup()
 
 //new disorient thing
