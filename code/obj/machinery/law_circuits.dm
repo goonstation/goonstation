@@ -126,7 +126,7 @@
 
 /obj/item/ai_law_circuit/preset/targeted/notHuman
 	name = "AI Law Circuit - 'Not Human'"
-	lawtext = "[target] is not human."]
+	lawtext = "[target] is not human."
 
 	input_target(var/mob/user)
 		var/newName = input(user, "Please enter the name of the person who is not human.", "Who?", user.name) as null|text

@@ -83,11 +83,12 @@
 	icon = 'airtunnelcomputer.dmi'
 	icon_state = "console00"
 */
+/* why is this doubly defined?
 /obj/machinery/computer/aiupload
 	name = "AI Upload"
 	desc = "A computer that accepts modules, and uploads the commands to the AI."
 	icon_state = "aiupload"
-
+*/
 /obj/machinery/computer/general_alert
 	name = "General Alert Computer"
 	icon_state = "alert:0"

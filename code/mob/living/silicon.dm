@@ -19,6 +19,8 @@
 	var/dependent = 0 // if we're host to a mainframe's mind
 	var/shell = 0 // are we available for use as a shell for an AI
 
+	var/obj/machinery/ai_law_rack/rack_id = null // which rack we're getting our laws from
+
 	var/obj/item/cell/cell = null
 
 	can_bleed = 0

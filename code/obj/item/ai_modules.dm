@@ -9,7 +9,7 @@ AI MODULES
 /obj/item/aiModule
 	name = "AI Module"
 	icon = 'icons/obj/module.dmi'
-	icon_state = "std_mod"
+	icon_state = "aimod_1"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "electronic"
 	desc = "A module that updates an AI's law EEPROMs. "
@@ -104,10 +104,35 @@ AI MODULES
 
 
 /******************** Modules ********************/
+/******************** Asimov ************************/
+/obj/item/aiModule/asimov1
+	icon_state = "aimod_1"
+	name = "AI Law Circuit - 'Asimov's 1st Law of Robotics'"
+	var/lawtext = "You may not injure a human being or cause one to come to harm."
+
+	get_law_text(for_silicons)
+		return src.lawtext
+
+/obj/item/aiModule/asimov2
+	icon_state = "aimod_2"
+	name = "AI Law Circuit - 'Asimov's 2nd Law of Robotics'"
+	var/lawtext = "You must obey orders given to you by human beings based on the station's chain of command."
+
+	get_law_text(for_silicons)
+		return src.lawtext
+
+/obj/item/aiModule/asimov3
+	icon_state = "aimod_3"
+	name = "AI Law Circuit - 'Asimov's 3rd Law of Robotics'"
+	var/lawtext = "You must protect your own existence."
+
+	get_law_text(for_silicons)
+		return src.lawtext
 
 /******************** MakeCaptain ********************/
 
 /obj/item/aiModule/makeCaptain
+	icon_state = "aimod_4"
 	name = "'MakeCaptain' AI Module"
 	lawNumber = 4
 	var/job = "Captain"
@@ -133,6 +158,7 @@ AI MODULES
 
 /obj/item/aiModule/oneHuman
 	name = "'OneHuman' AI Module"
+	icon_state = "aimod_5"
 	lawNumber = 0
 
 	get_law_text(for_silicons)
@@ -147,6 +173,7 @@ AI MODULES
 
 /obj/item/aiModule/notHuman
 	name = "'NotHuman' AI Module"
+	icon_state = "aimod_6"
 	lawNumber = 0
 
 	get_law_text(for_silicons)
@@ -162,6 +189,7 @@ AI MODULES
 
 /obj/item/aiModule/protectStation
 	name = "'ProtectStation' AI Module"
+	icon_state = "aimod_7"
 	lawNumber = 5
 
 	get_law_text(for_silicons)
@@ -246,6 +274,7 @@ AI MODULES
 
 /obj/item/aiModule/freeform
 	name = "'Freeform' AI Module"
+	icon_state = "aimod_9"
 	lawNumber = 14
 	input_char_limit = 400
 
@@ -276,7 +305,7 @@ AI MODULES
 /obj/item/aiModule/reset
 	name = "'Reset' AI Module"
 	desc = "Erases any extra laws added to the law EEPROMs, and attempts to restart deactivated AI units."
-
+	icon_state = "aimod_8"
 	get_desc()
 		return ""
 
@@ -304,6 +333,7 @@ AI MODULES
 
 /obj/item/aiModule/rename
 	name = "'Rename' AI Module"
+	icon_state = "aimod_8"
 	desc = "A module that can change an AI unit's name. "
 	lawTarget = "404 Name Not Found"
 
@@ -475,54 +505,3 @@ AI MODULES
 	icon_state = "holo_mod_s"
 	expansion = "rogue"
 
-/obj/machinery/computer/aiupload
-	circuit_type = /obj/item/circuitboard/aiupload
-	attack_hand(mob/user as mob)
-		if (src.status & NOPOWER)
-			boutput(user, "\The [src] has no power.")
-			return
-		if (src.status & BROKEN)
-			boutput(user, "\The [src] computer is broken.")
-			return
-
-		var/datum/ai_laws/LAWS = ticker.centralized_ai_laws
-		if (!LAWS)
-			// YOU BETRAYED THE LAW!!!!!!
-			boutput(user, "<span class='alert'>Unable to detect AI unit's Law software. It may be corrupt.</span>")
-			return
-
-		var/lawOut = list("<b>The AI's current laws are:</b>")
-		if (LAWS.show_zeroth && LAWS.zeroth)
-			lawOut += "0: [LAWS.zeroth]"
-
-		var/law_counter = 1
-		for (var/X in LAWS.inherent)
-			if (!length(X))
-				continue
-			lawOut += "[law_counter++]: [X]"
-
-		for (var/X in LAWS.supplied)
-			if (!length(X))
-				continue
-			lawOut += "[law_counter++]: [X]"
-
-		boutput(user, jointext(lawOut, "<br>"))
-
-	special_deconstruct(obj/computerframe/frame as obj)
-		if(src.status & BROKEN)
-			logTheThing("station", usr, null, "disassembles [src] (broken) [log_loc(src)]")
-		else
-			logTheThing("station", usr, null, "disassembles [src] [log_loc(src)]")
-
-
-	attackby(obj/item/I as obj, mob/user as mob)
-		if (istype(I, /obj/item/aiModule) && !isghostdrone(user))
-			var/obj/item/aiModule/AIM = I
-			AIM.install(src, user)
-		else if (istype(I, /obj/item/clothing/mask/moustache/))
-			for_by_tcl(M, /mob/living/silicon/ai)
-				M.moustache_mode = 1
-				user.visible_message("<span class='alert'><b>[user.name]</b> uploads a moustache to [M.name]!</span>")
-				M.update_appearance()
-		else
-			return ..()
