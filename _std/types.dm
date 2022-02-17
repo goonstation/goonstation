@@ -335,7 +335,13 @@ proc/find_all_by_type(type, procedure=null, procedure_src=null, arguments=null, 
 	while(ancestor != null)
 		if(ancestor in global.by_type)
 			if(length(global.by_type[ancestor]))
-				. = global.by_type[ancestor].Copy()
+				if(ancestor == type)
+					. = global.by_type[ancestor].Copy()
+				else
+					. = list()
+					for(var/D in global.by_type[ancestor])
+						if(istype(D, type))
+							. += D
 			else
 				return list()
 		ancestor = type2parent(ancestor)
