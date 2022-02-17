@@ -6,28 +6,27 @@
 
 /mob/living/object
 	name = "living object"
-	var/obj/item/item
+	var/obj/possessed_thing
 	var/mob/owner
 	var/obj/item/attackdummy/dummy
 	var/datum/hud/object/hud
 	density = 0
 	canmove = 1
 
-	var/canattack = 0
-	blinded = 0
-	anchored = 0
+	var/we_are_an_item = FALSE //to prevent a ton of istype checks
+	blinded = FALSE
+	anchored = FALSE
 	a_intent = "disarm" // todo: This should probably be selectable. Cyborg style - help/harm.
 	health = 50
 	max_health = 50
 	var/name_prefix = "living "
 
-	var/last_life_update = 0
-	var/const/life_tick_spacing = 20
-
-	New(var/atom/loc as mob|obj|turf, var/mob/controller)
+	New(var/atom/loc, var/obj/possessed, var/mob/controller)
 		..()
 
-		if (istype(loc,/obj/machinery/the_singularity))
+		src.possessed_thing = possessed
+
+		if (istype(src.possessed_thing, /obj/machinery/the_singularity))
 			event_handler_flags |= IMMUNE_SINGULARITY
 
 		hud = new(src)
@@ -36,39 +35,23 @@
 		src.attach_hud(zone_sel)
 
 		message_admins("[key_name(controller)] possessed [loc] at [showCoords(loc.x, loc.y, loc.z)].")
-		var/obj/item/possessed
-		if (!isitem(loc))
-			if (isobj(loc))
-				possessed = loc
-				set_loc(get_turf(possessed))
-				canattack = 0
+		if (!src.we_are_an_item)
+			if (isobj(possessed))
 				dummy = new /obj/item/attackdummy(src)
 				dummy.name = loc.name
 			else
-				possessed = new /obj/item/paper()
-				logTheThing("admin", usr, null, "living object mob created with no item.")
-				var/turf/T = get_turf(loc)
-				if (!T)
-					logTheThing("admin", usr, null, "additionally, no turf could be found at creation loc [loc]")
-					var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
-					if (ASLoc)
-						src.set_loc(ASLoc)
-					else
-						src.set_loc(locate(1, 1, 1))
-				else
-					src.set_loc(T)
-				canattack = 1
-		else
-			canattack = 1
-			possessed = loc
-			set_loc(get_turf(possessed))
+				stack_trace("Tried to create a possessed object from invalid atom {src.possessed_thing} of type {src.possessed_thing.type}!")
+				boutput(controller, "<h3 class='alert'>Uh oh, you tried to possess something illegal! Here's a toolbox instead!</h3>")
+				src.possessed_thing = new /obj/item/storage/toolbox/artistic
 
-		if (!src.canattack)
+		set_loc(get_turf(src.possessed_thing))
+
+		if (!src.we_are_an_item)
 			src.set_density(1)
 		possessed.set_loc(src)
 		src.name = "[name_prefix][possessed.name]"
 		src.real_name = src.name
-		src.desc = "[possessed.desc]"
+		src.desc = possessed.desc
 		src.icon = possessed.icon
 		src.icon_state = possessed.icon_state
 		src.pixel_x = possessed.pixel_x
@@ -76,7 +59,6 @@
 		src.set_dir(possessed.dir)
 		src.color = possessed.color
 		src.overlays = possessed.overlays
-		src.item = possessed
 		src.sight |= SEE_SELF
 		src.set_density(possessed.density)
 		src.RL_SetOpacity(possessed.opacity)
@@ -90,11 +72,9 @@
 				src.owner.mind.key = src.owner.key
 				src.owner.mind.current = src.owner
 				ticker.minds += src.owner.mind
-			//if (src.owner.client)
-				// src.owner.client.mob = src
 			src.owner.mind.transfer_to(src)
 
-		src.visible_message("<span class='alert'><b>[possessed] comes to life!</b></span>") // was [src] but: "the living space thing comes alive!"
+		src.visible_message("<span class='alert'><b>[src.possessed_thing] comes to life!</b></span>") // was [src] but: "the living space thing comes alive!"
 		animate_levitate(src, -1, 20, 1)
 		src.add_stun_resist_mod("living_object", 1000)
 
@@ -103,30 +83,26 @@
 		..()
 
 	equipped()
-		if (canattack)
-			return src.item
+		if (we_are_an_item)
+			return src.possessed_thing
 		else
 			return src.dummy
 
-	examine()
+	get_desc()
 		. = ..()
-		. += "<span class='alert'>It seems to be alive.</span>"
+		. += "<span class='alert'>It seems to be alive.</span><br>"
 		if (health < 25)
-			. += "<span class='notice'>The ethereal grip on this object appears to be weak.</span>"
+			. += "<span class='notice'>The ethereal grip on this object appears to be weakening.</span>"
 
 	meteorhit(var/obj/O as obj)
-		src.death(1)
-		return
-
-	restrained()
-		return 0
+		src.death(TRUE)
 
 	updatehealth()
 		return
 
 	is_spacefaring()
 		// Let's just say it's powered by ethereal bullshit like ghost farts.
-		return 1
+		return TRUE
 
 	clamp_values()
 		delStatus("slowed")
@@ -163,21 +139,18 @@
 			return
 
 		var/modifier = power / 20
-		var/damage = null
-		if (!isdead(src))
-			damage = rand(modifier, 12 + 8 * modifier)
+		var/damage = rand(modifier, 12 + 8 * modifier)
 
 		src.TakeDamage(null, damage, 0)
 
 		src.show_message("<span class='alert'>The blob attacks you!</span>")
-		return
 
 	attack_hand(mob/user as mob)
 		if (user.a_intent == "help")
 			user.visible_message("<span class='alert'>[user] pets [src]!</span>")
 		else
 			user.visible_message("<span class='alert'>[user] punches [src]!</span>")
-			src.TakeDamage(null, rand(4, 7), 0)
+			src.TakeDamage(null, rand(4, 7), 0) //TODO figure out how to let people punch these without this godawful shit
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		health -= burn
@@ -209,47 +182,23 @@
 
 	click(atom/target, params)
 		if (target == src)
-			if (canattack)
-				src.item.attack_self(src)
+			if (we_are_an_item)
+				var/obj/item/posessed_item = src.possessed_thing
+				possessed_item.attack_self(src)
 			else
-				if(!isitem(src.item))
-					src.item.Attackhand(src)
-				else //This shouldnt ever happen.
-					src.item.Attackby(src.item, src)
+				src.possessed_thing.Attackhand(src)
 		else
-			if(src.a_intent == INTENT_GRAB && istype(target, /atom/movable) && get_dist(src, target) <= 1)
-				var/atom/movable/M = target
-				if(ismob(target) || !M.anchored)
-					src.visible_message("<span class='alert'>[src] grabs [target]!</span>")
-					M.set_loc(src.loc)
-			else
-				. = ..()
-			if (src.item.loc != src)
-				if (isturf(src.item.loc))
-					src.item.set_loc(src)
-				else
-					src.death(0)
+			. = ..()
 
 		//To reflect updates of the items appearance etc caused by interactions.
-		src.name = "[name_prefix][src.item.name]"
-		src.real_name = src.name
-		src.desc = "[src.item.desc]"
-		src.item.set_dir(src.dir)
-		src.icon = src.item.icon
-		src.icon_state = src.item.icon_state
-		//src.pixel_x = src.item.pixel_x
-		//src.pixel_y = src.item.pixel_y
-		src.color = src.item.color
-		src.overlays = src.item.overlays
-		src.set_density(initial(src.item.density))
-		src.opacity = src.item.opacity
+		src.update_appearance()
 
 	death(gibbed)
 
-		if (src.item && !gibbed)
-			src.item.set_dir(src.dir)
-			if (src.item.loc == src)
-				src.item.set_loc(get_turf(src))
+		if (src.possessed_thing && !gibbed)
+			src.possessed_thing.set_dir(src.dir)
+			if (src.possessed_thing.loc == src)
+				src.possessed_thing.set_loc(get_turf(src))
 
 		if (src.owner)
 			src.owner.set_loc(get_turf(src))
@@ -278,22 +227,16 @@
 
 		playsound(src.loc, "sound/voice/wraith/wraithleaveobject.ogg", 40, 1, -1, 0.6)
 
-		if (gibbed && src.item)
-			qdel(src.item)
+		if (gibbed)
+			qdel(src.possessed_thing)
 
 		src.owner = null
-		src.item = null
+		src.possessed_thing = null
 		qdel(src)
-		..(gibbed)
+		..()
 
 	movement_delay()
 		return 4 + movement_delay_modifier
-
-	put_in_hand(obj/item/I, hand)
-		return 0
-
-	swap_hand()
-		return 0
 
 	item_attack_message(var/mob/T, var/obj/item/S, var/d_zone)
 		if (d_zone)
@@ -306,3 +249,14 @@
 
 	assume_air(datum/air_group/giver)
 		return loc?.assume_air(giver)
+
+	proc/update_appearance() //TODO test this more
+		src.appearance = src.possessed_thing.appearance
+		src.name = "[name_prefix][src.possessed_thing.name]"
+		src.real_name = src.name
+		src.possessed_thing.set_dir(src.dir)
+		src.icon = src.possessed_thing.icon
+		src.icon_state = src.possessed_thing.icon_state
+		src.overlays = src.possessed_thing.overlays
+		src.set_density(initial(src.possessed_thing.density))
+		src.opacity = src.possessed_thing.opacity

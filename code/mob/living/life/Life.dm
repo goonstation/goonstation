@@ -418,26 +418,25 @@
 	if (..(parent))
 		return 1
 
-	if (!src.item)
+	if (!src.possessed_thing)
 		src.death(0)
+		return
 
-	if (src.item && src.item.loc != src) //ZeWaka: Fix for null.loc
-		if (isturf(src.item.loc))
-			src.item.set_loc(src)
-		else
-			src.death(0)
+	if (src.possessed_thing?.loc != src) //item somewhere else? we no longer exist
+		src.death(0)
+		return
 
-	for (var/atom/A as obj|mob in src)
-		if (A != src.item && A != src.dummy && A != src.owner && !istype(A, /atom/movable/screen))
+	for (var/atom/A in src) //TODO investigate why this is completely nonfunctional
+		if (A != src.possessed_thing && A != src.dummy && A != src.owner && !istype(A, /atom/movable/screen))
 			if (isobj(A) || ismob(A)) // what the heck else would this be?
 				A:set_loc(src.loc)
 
-	src.set_density(src.item ? src.item.density : 0)
-	src.item.set_dir(src.dir)
-	src.icon = src.item.icon
-	src.icon_state = src.item.icon_state
-	src.color = src.item.color
-	src.overlays = src.item.overlays
+	src.set_density(src.possessed_thing.density)
+	src.possessed_thing.set_dir(src.dir)
+	src.icon = src.possessed_thing.icon
+	src.icon_state = src.possessed_thing.icon_state
+	src.color = src.possessed_thing.color
+	src.overlays = src.possessed_thing.overlays
 
 /mob/living/carbon/cube
 	Life(datum/controller/process/mobs/parent)
