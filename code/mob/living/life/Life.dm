@@ -418,25 +418,6 @@
 	if (..(parent))
 		return 1
 
-	if (!src.possessed_thing)
-		src.death(0)
-		return
-
-	if (!src.item_position_check())
-		return
-
-	for (var/atom/A in src) //TODO investigate why this is completely nonfunctional
-		if (A != src.possessed_thing && A != src.dummy && A != src.owner && !istype(A, /atom/movable/screen))
-			if (isobj(A) || ismob(A)) // what the heck else would this be?
-				A:set_loc(src.loc)
-
-	src.set_density(src.possessed_thing.density)
-	src.possessed_thing.set_dir(src.dir)
-	src.icon = src.possessed_thing.icon
-	src.icon_state = src.possessed_thing.icon_state
-	src.color = src.possessed_thing.color
-	src.overlays = src.possessed_thing.overlays
-
 /mob/living/carbon/cube
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))

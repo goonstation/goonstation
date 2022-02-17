@@ -6,10 +6,10 @@
 
 /mob/living/object
 	name = "living object"
-	var/obj/possessed_thing
-	var/obj/item/possessed_item
-	var/mob/owner
-	var/obj/item/attackdummy/dummy
+	var/obj/possessed_thing //possessed thing which is PROBABLY an object. We error out in New() if it isn't.
+	var/obj/item/possessed_item //if the possessed thing is an item, this var is set to it.
+	var/mob/owner //mob who's driving this. makkes sense for wraiths, but humans can also get stuffed in. very silly.
+	var/obj/item/attackdummy/dummy //dummy attack, used for non-items so they have something to slap people with
 	var/datum/hud/object/hud
 	density = 0
 	canmove = 1
@@ -17,7 +17,7 @@
 
 	blinded = FALSE
 	anchored = FALSE
-	a_intent = "disarm" // todo: This should probably be selectable. Cyborg style - help/harm.
+	a_intent = "disarm"
 	health = 50
 	max_health = 50
 	var/name_prefix = "living "
@@ -25,7 +25,7 @@
 	New(var/atom/loc, var/obj/possessed, var/mob/controller)
 		..(loc, null, null)
 
-		if (isitem(possessed_thing))
+		if (isitem(possessed))
 			src.possessed_item = possessed
 		src.possessed_thing = possessed
 
@@ -97,7 +97,7 @@
 
 	equipped()
 		if (src.possessed_item)
-			return src.possessed_thing
+			return src.possessed_item
 		else
 			return src.dummy
 
@@ -173,7 +173,7 @@
 		health -= brute
 		health = min(max_health, health)
 		if (src.health <= 0)
-			src.death(0)
+			src.death(FALSE)
 
 	HealDamage(zone, brute, burn)
 		TakeDamage(zone, -brute, -burn)
@@ -211,11 +211,13 @@
 		src.item_position_check()
 
 	death(gibbed)
-
+	
 		if (src.possessed_thing && !gibbed)
 			src.possessed_thing.set_dir(src.dir)
 			if (src.possessed_thing.loc == src)
 				src.possessed_thing.set_loc(get_turf(src))
+			if (src.possessed_item)
+				possessed_item.cant_drop = initial(possessed_item.cant_drop)
 
 		if (src.owner)
 			src.owner.set_loc(get_turf(src))
@@ -243,6 +245,9 @@
 					src.mind.transfer_to(O)
 
 		playsound(src.loc, "sound/voice/wraith/wraithleaveobject.ogg", 40, 1, -1, 0.6)
+
+		for (var/atom/movable/AM in src.contents)
+			AM.set_loc(src.loc)
 
 		if (gibbed)
 			qdel(src.possessed_thing)
