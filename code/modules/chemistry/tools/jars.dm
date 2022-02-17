@@ -216,6 +216,9 @@ proc/load_intraround_jars()
 				logTheThing("debug", null, null, "<b>Pickle Jar:</b> Jar creation process hit maximum limit of [MAX_JAR_COUNT], further jars are lost to time.")
 				return
 
+	// in case we have less than the required amount generate more
+	generate_backup_jars()
+
 /obj/item/reagent_containers/food/snacks/pickle_holder
 	name = "ethereal pickle"
 	desc = "You can't see anything, but there is an unmistakable presence of vinegar and spices here. Kosher dill."
