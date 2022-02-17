@@ -772,7 +772,7 @@
 
 	return null
 
-/// Override mouse_drop instead of this. Call this instead of MouseDrop, but you probably shouldn't!
+/// Override mouse_drop instead of this. Call this instead of mouse_drop, but you probably shouldn't!
 /atom/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!isatom(over_object))
