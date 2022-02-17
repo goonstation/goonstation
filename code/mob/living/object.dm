@@ -12,6 +12,7 @@
 	var/datum/hud/object/hud
 	density = 0
 	canmove = 1
+	use_stamina = FALSE
 
 	blinded = FALSE
 	anchored = FALSE
@@ -47,20 +48,20 @@
 
 		if (!isitem(src.possessed_thing))
 			src.set_density(1)
-		possessed.set_loc(src)
-		src.name = "[name_prefix][possessed.name]"
+		possessed_thing.set_loc(src)
+		src.name = "[name_prefix][possessed_thing.name]"
 		src.real_name = src.name
-		src.desc = possessed.desc
-		src.icon = possessed.icon
-		src.icon_state = possessed.icon_state
-		src.pixel_x = possessed.pixel_x
-		src.pixel_y = possessed.pixel_y
-		src.set_dir(possessed.dir)
-		src.color = possessed.color
-		src.overlays = possessed.overlays
+		src.desc = possessed_thing.desc
+		src.icon = possessed_thing.icon
+		src.icon_state = possessed_thing.icon_state
+		src.pixel_x = possessed_thing.pixel_x
+		src.pixel_y = possessed_thing.pixel_y
+		src.set_dir(possessed_thing.dir)
+		src.color = possessed_thing.color
+		//src.overlays = possessed_thing.overlays
 		src.sight |= SEE_SELF
-		src.set_density(possessed.density)
-		src.RL_SetOpacity(possessed.opacity)
+		src.set_density(possessed_thing.density)
+		src.RL_SetOpacity(possessed_thing.opacity)
 
 		src.owner = controller
 		if (src.owner)
@@ -256,6 +257,7 @@
 		src.possessed_thing.set_dir(src.dir)
 		src.icon = src.possessed_thing.icon
 		src.icon_state = src.possessed_thing.icon_state
-		src.overlays = src.possessed_thing.overlays
+		//src.overlays = src.possessed_thing.overlays
+		
 		src.set_density(initial(src.possessed_thing.density))
 		src.opacity = src.possessed_thing.opacity
