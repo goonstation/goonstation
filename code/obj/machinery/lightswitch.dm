@@ -91,8 +91,6 @@
 	if(user)
 		src.add_fingerprint(user)
 		logTheThing("station", user, null, "turns [on ? "on" : "off"] a lightswitch at [log_loc(user)]")
-
-	if(!ON_COOLDOWN(src, "flicksound", 0.1 SECOND))
 		playsound(src, "sound/misc/lightswitch.ogg", 50, 1)
 
 	if(on && !ON_COOLDOWN(src, "turtlesplode", 10 SECONDS))
