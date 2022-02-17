@@ -139,7 +139,7 @@
 					A.setMaterial(M)
 					B.setMaterial(M)
 				F.levelupdate()
-				logTheThing("station", user, null, "dismantles a False Wall in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+				logTheThing("station", user, null, "dismantles a False Wall in [user.loc.loc] ([log_loc(user)])")
 				return
 			else
 				return ..()

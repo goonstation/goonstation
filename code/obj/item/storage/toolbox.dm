@@ -26,7 +26,7 @@
 	New()
 		..()
 		if (src.type == /obj/item/storage/toolbox)
-			message_admins("BAD: [src] ([src.type]) spawned at [showCoords(src.x, src.y, src.z)]")
+			message_admins("BAD: [src] ([src.type]) spawned at [log_loc(src)]")
 			qdel(src)
 		BLOCK_SETUP(BLOCK_ROD)
 

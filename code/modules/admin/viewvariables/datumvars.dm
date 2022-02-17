@@ -1171,7 +1171,7 @@
 	set category = "Debug"
 	switch (alert("Are you sure you wish to delete \the [A.name] at ([A.x],[A.y],[A.z]) ?", "Admin Delete Object","Yes","No"))
 		if("Yes")
-			logTheThing("admin", usr, null, "deleted [A.name] at ([showCoords(A.x, A.y, A.z)])")
+			logTheThing("admin", usr, null, "deleted [A.name] at ([log_loc(A)])")
 			logTheThing("diary", usr, null, "deleted [A.name] at ([showCoords(A.x, A.y, A.z, 1)])", "admin")
 
 /proc/debug_overlays(target_thing, client/user, indent="")

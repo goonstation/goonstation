@@ -151,7 +151,7 @@
 				boutput(user, "<span class='notice'>You unsecure the [src].</span>")
 			else if(secured == 2)
 				boutput(user, "<span class='alert'>You deploy the [src]!</span>")
-				logTheThing("station", user, null, "deploys a [src.name] in [user.loc.loc] ([showCoords(src.x, src.y, src.z)])")
+				logTheThing("station", user, null, "deploys a [src.name] in [user.loc.loc] ([log_loc(src)])")
 				if (!istype(user.loc,/turf) && (store_type in typesof(/obj/critter)))
 					qdel(user.loc)
 
@@ -854,7 +854,7 @@
 		if (!isobj(target))
 			return
 		var/obj/O = target
-		logTheThing("station", user, null, "deconstructs [target] in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+		logTheThing("station", user, null, "deconstructs [target] in [user.loc.loc] ([log_loc(user)])")
 		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<B>[user.name]</B> deconstructs [target].")
 

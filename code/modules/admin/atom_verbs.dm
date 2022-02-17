@@ -192,9 +192,9 @@ var/global/atom_emergency_stop = 0
 	if (target?.emag_act())
 		target.emag_act(null,null)
 
-		logTheThing("admin", usr, null, "emagged [target] via Emag Target ([showCoords(target.x, target.y, target.z)] in [target.loc])")
-		logTheThing("diary", usr, null, "emagged [target] via Emag Target ([showCoords(target.x, target.y, target.z)] in [target.loc])", "admin")
-		message_admins("[key_name(usr)] emagged [target] via Emag Target ([showCoords(target.x, target.y, target.z)] in [target.loc])")
+		logTheThing("admin", usr, null, "emagged [target] via Emag Target ([log_loc(target)] in [target.loc])")
+		logTheThing("diary", usr, null, "emagged [target] via Emag Target ([log_loc(target)] in [target.loc])", "admin")
+		message_admins("[key_name(usr)] emagged [target] via Emag Target ([log_loc(target)] in [target.loc])")
 	else
 		boutput(usr, "<span class='alert'>Could not emag [target]!</span>")
 	return
@@ -327,9 +327,9 @@ var/global/atom_emergency_stop = 0
 	if (!scaley)
 		return
 
-	logTheThing("admin", usr, null, "scaled [target] by X:[scalex] Y:[scaley] ([showCoords(target.x, target.y, target.z)] in [target.loc])")
-	logTheThing("diary", usr, null, "scaled [target] by X:[scalex] Y:[scaley] ([showCoords(target.x, target.y, target.z)] in [target.loc])", "admin")
-	message_admins("[key_name(usr)] scaled [target] by X:[scalex] Y:[scaley] ([showCoords(target.x, target.y, target.z)] in [target.loc])")
+	logTheThing("admin", usr, null, "scaled [target] by X:[scalex] Y:[scaley] ([log_loc(target)] in [target.loc])")
+	logTheThing("diary", usr, null, "scaled [target] by X:[scalex] Y:[scaley] ([log_loc(target)] in [target.loc])", "admin")
+	message_admins("[key_name(usr)] scaled [target] by X:[scalex] Y:[scaley] ([log_loc(target)] in [target.loc])")
 
 	target.Scale(scalex, scaley)
 	return
@@ -453,9 +453,9 @@ var/global/atom_emergency_stop = 0
 	if (!rot)
 		return
 
-	logTheThing("admin", usr, null, "rotated [target] by [rot] degrees ([showCoords(target.x, target.y, target.z)] in [target.loc])")
-	logTheThing("diary", usr, null, "rotated [target] by [rot] degrees ([showCoords(target.x, target.y, target.z)] in [target.loc])", "admin")
-	message_admins("[key_name(usr)] rotated [target] by [rot] degrees ([showCoords(target.x, target.y, target.z)] in [target.loc])")
+	logTheThing("admin", usr, null, "rotated [target] by [rot] degrees ([log_loc(target)] in [target.loc])")
+	logTheThing("diary", usr, null, "rotated [target] by [rot] degrees ([log_loc(target)] in [target.loc])", "admin")
+	message_admins("[key_name(usr)] rotated [target] by [rot] degrees ([log_loc(target)] in [target.loc])")
 
 	target.Turn(rot)
 	return
@@ -612,9 +612,9 @@ var/global/atom_emergency_stop = 0
 	else
 		looping = 0
 
-	logTheThing("admin", usr, null, "spun [target] (details: [direction] direction, [time] animate time, [looping] looping, [showCoords(target.x, target.y, target.z)] in [target.loc])")
-	logTheThing("diary", usr, null, "spun [target] (details: [direction] direction, [time] animate time, [looping] looping, [showCoords(target.x, target.y, target.z)] in [target.loc]))", "admin")
-	message_admins("[key_name(usr)] spun [target] (details: [direction] direction, [time] animate time, [looping] looping, [showCoords(target.x, target.y, target.z)] in [target.loc]))")
+	logTheThing("admin", usr, null, "spun [target] (details: [direction] direction, [time] animate time, [looping] looping, [log_loc(target)] in [target.loc])")
+	logTheThing("diary", usr, null, "spun [target] (details: [direction] direction, [time] animate time, [looping] looping, [log_loc(target)] in [target.loc]))", "admin")
+	message_admins("[key_name(usr)] spun [target] (details: [direction] direction, [time] animate time, [looping] looping, [log_loc(target)] in [target.loc]))")
 
 	animate_spin(target, direction, time, looping, FALSE)
 	return
