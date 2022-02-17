@@ -102,9 +102,9 @@
 /// send this signal to send a radio packet (datum/signal/signal, receive_param / range, frequency), if frequency is null all registered frequencies are used
 #define COMSIG_MOVABLE_POST_RADIO_PACKET "mov_post_radio_packet"
 /// when the outermost movable in the .loc chain changes (thing, old_outermost_movable, new_outermost_movable)
-#define COMSIG_OUTERMOST_MOVABLE_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_outermost_changed")
+#define XSIG_OUTERMOST_MOVABLE_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_outermost_changed")
 /// when the z-level of a movable changes (works in nested contents) (thing, old_z_level, new_z_level)
-#define COMSIG_MOVABLE_Z_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_z-level_changed")
+#define XSIG_MOVABLE_Z_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_z-level_changed")
 
 // ---- item signals ----
 
