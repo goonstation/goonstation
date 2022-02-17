@@ -1737,41 +1737,6 @@ TYPEINFO(/datum/mutantrace)
 			REMOVE_MOB_PROPERTY(mob, PROP_RADPROT, src)
 		. = ..()
 
-/datum/mutantrace/cat // we have the sprites so ~why not add them~? (I fully expect to get shit for this)
-	name = "cat"
-	icon = 'icons/mob/cat.dmi'
-	icon_state = "body_m"
-	jerk = 1
-	override_attack = 0
-	firevuln = 1.5 // very flammable catthings
-	race_mutation = /datum/bioEffect/mutantrace/cat
-	mutant_organs = list("tail" = /obj/item/organ/tail/cat)
-	mutant_folder = 'icons/mob/cat.dmi'
-	special_head = HEAD_CAT
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
-
-	New(mob/living/carbon/human/M)
-		. = ..()
-		if(ishuman(M))
-			M.mob_flags |= SHOULD_HAVE_A_TAIL
-
-	say_verb()
-		return "meows"
-
-	sight_modifier()
-		mob.see_in_dark = SEE_DARK_HUMAN + 1
-		mob.see_invisible = INVIS_INFRA
-
-	disposing()
-		if(ishuman(mob))
-			mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
-		. = ..()
-
-
 /datum/mutantrace/amphibian
 	name = "amphibian"
 	icon = 'icons/mob/amphibian.dmi'
