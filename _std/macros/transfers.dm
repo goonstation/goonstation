@@ -1,4 +1,4 @@
 /// Transfer signal helpers
 
-/// Transfer the given movable to the output of the given target or to the loc of the target.
+/// Transfer AM to the output target of T if possible. If this fails, set AM to the loc of T.
 #define TRANSFER_OR_DROP(T, AM) if (!SEND_SIGNAL(T, COMSIG_TRANSFER_OUTGOING, AM)){AM.set_loc(T.loc)}

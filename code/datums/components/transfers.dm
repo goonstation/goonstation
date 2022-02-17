@@ -130,7 +130,7 @@
 	if ((istype(incoming, /obj/item/storage) || istype(incoming, /obj/item/satchel) || istype(incoming, /obj/item/ore_scoop)) && length(incoming.contents))
 		var/action
 		if(is_permitted(incoming))
-			action = input(attacker, "What do you want to do with [incoming]?") as null|anything in list(CONTAINER_CHOICE_PLACE, CONTAINER_CHOICE_DUMP)
+			action = tgui_input_list(attacker, "What do you want to do with [incoming]?", "[parent]", list(CONTAINER_CHOICE_PLACE, CONTAINER_CHOICE_DUMP))
 		else
 			action = CONTAINER_CHOICE_DUMP
 
@@ -198,8 +198,10 @@
 /datum/action/bar/quickload
 	duration = 0.1 SECONDS
 	id = "quickloading"
-	var/atom/target // where we are sending the transfers
-	var/load_type // what type we should load
+	/// The target of transfers during quickloading
+	var/atom/target
+	/// The type of the item we are stuffing into the target.
+	var/load_type
 
 	New(atom/target, load_type)
 		..()

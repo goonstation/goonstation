@@ -651,6 +651,7 @@
 		src.MouseDrop_T(dropped, user)
 
 /atom/proc/MouseDrop_T(dropped, user)
+	PROTECTED_PROC(TRUE)
 	return
 
 /atom/proc/Attackhand(mob/user as mob)
@@ -771,7 +772,7 @@
 
 	return null
 
-// Do not override, use mouse_drop instead.
+/// Do not override, use mouse_drop instead.
 /atom/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!isatom(over_object))
@@ -784,6 +785,7 @@
 	src.mouse_drop(over_object, src_location, over_location, over_control, params)
 
 /atom/proc/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+	PROTECTED_PROC(TRUE)
 	return
 
 /atom/proc/relaymove(mob/user, direction, delay, running)
