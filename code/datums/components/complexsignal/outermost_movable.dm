@@ -36,9 +36,9 @@
 	var/new_z = isnull(new_turf) ? 0 : new_turf.z
 
 	if(new_outermost != old_outermost)
-		SEND_COMPLEX_SIGNAL(src, X_OUTERMOST_MOVABLE_CHANGED, old_outermost, new_outermost)
+		SEND_COMPLEX_SIGNAL(src, XSIG_OUTERMOST_MOVABLE_CHANGED, old_outermost, new_outermost)
 	if(new_z != old_z)
-		SEND_COMPLEX_SIGNAL(src, X_MOVABLE_Z_CHANGED, old_z, new_z)
+		SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_Z_CHANGED, old_z, new_z)
 
 /datum/component/complexsignal/outermost_movable/Initialize()
 	if(!ismovable(parent))
