@@ -196,6 +196,9 @@ proc/load_intraround_jars()
 						emitted_full_savefile = TRUE
 			jar.reagents.add_reagent("juice_pickle", 75)
 			logTheThing("debug", null, null, "<b>Pickle Jar:</b> Jar created at [log_loc(jar)] containing [json_encode(jar_contents)]")
+			if(in_centcom(jar))
+				SPAWN(randfloat(5 MINUTES, 30 MINUTES))
+					shippingmarket.receive_crate(jar)
 			if(length(length(by_type[/obj/item/reagent_containers/glass/jar])) >= MAX_JAR_COUNT)
 				logTheThing("debug", null, null, "<b>Pickle Jar:</b> Jar creation process hit maximum limit of [MAX_JAR_COUNT], further jars are lost to time.")
 				return
