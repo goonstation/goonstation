@@ -13,7 +13,6 @@
 	density = 0
 	canmove = 1
 
-	var/we_are_an_item = FALSE //to prevent a ton of istype checks
 	blinded = FALSE
 	anchored = FALSE
 	a_intent = "disarm" // todo: This should probably be selectable. Cyborg style - help/harm.
@@ -35,18 +34,18 @@
 		src.attach_hud(zone_sel)
 
 		message_admins("[key_name(controller)] possessed [loc] at [showCoords(loc.x, loc.y, loc.z)].")
-		if (!src.we_are_an_item)
-			if (isobj(possessed))
+		if (!isitem(src.possessed_thing))
+			if (isobj(possessed_thing))
 				dummy = new /obj/item/attackdummy(src)
 				dummy.name = loc.name
 			else
-				stack_trace("Tried to create a possessed object from invalid atom {src.possessed_thing} of type {src.possessed_thing.type}!")
+				stack_trace("Tried to create a possessed object from invalid atom [src.possessed_thing] of type [src.possessed_thing.type]!")
 				boutput(controller, "<h3 class='alert'>Uh oh, you tried to possess something illegal! Here's a toolbox instead!</h3>")
 				src.possessed_thing = new /obj/item/storage/toolbox/artistic
 
 		set_loc(get_turf(src.possessed_thing))
 
-		if (!src.we_are_an_item)
+		if (!isitem(src.possessed_thing))
 			src.set_density(1)
 		possessed.set_loc(src)
 		src.name = "[name_prefix][possessed.name]"
@@ -83,7 +82,7 @@
 		..()
 
 	equipped()
-		if (we_are_an_item)
+		if (isitem(src.possessed_thing))
 			return src.possessed_thing
 		else
 			return src.dummy
@@ -182,8 +181,8 @@
 
 	click(atom/target, params)
 		if (target == src)
-			if (we_are_an_item)
-				var/obj/item/posessed_item = src.possessed_thing
+			if (isitem(src.possessed_thing))
+				var/obj/item/possessed_item = src.possessed_thing
 				possessed_item.attack_self(src)
 			else
 				src.possessed_thing.Attackhand(src)

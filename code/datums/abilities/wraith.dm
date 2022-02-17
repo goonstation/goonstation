@@ -195,7 +195,7 @@
 	pointCost = 300
 	cooldown = 150 SECONDS //Tweaked this down from 3 minutes to 2 1/2, let's see if that ruins anything
 
-	cast(atom/T)
+	cast(var/atom/target)
 		if (..())
 			return 1
 
@@ -203,13 +203,16 @@
 			boutput(usr, "<span class='alert'>You cannot force your consciousness into a body while corporeal.</span>")
 			return 1
 
-		if (!isitem(T) || istype(T, /obj/item/storage/bible))
+		if (istype(target, /obj/item/storage/bible))
+			boutput(holder.owner, "<span class='alert'><b>You feel rebuffed by a holy force!<b></span>")
+
+		if (!isitem(target))
 			boutput(holder.owner, "<span class='alert'>You cannot possess this!</span>")
 			return 1
 
-		boutput(holder.owner, "<span class='alert'><strong>[pick("You extend your will into [T].", "You force [T] to do your bidding.")]</strong></span>")
+		boutput(holder.owner, "<span class='alert'><strong>[pick("You extend your will into [target].", "You force [target] to do your bidding.")]</strong></span>")
 		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithpossesobject.ogg", 50, 0)
-		var/mob/living/object/O = new/mob/living/object(T, holder.owner)
+		var/mob/living/object/O = new/mob/living/object(get_turf(target), target, holder.owner)
 		SPAWN(45 SECONDS)
 			if (O)
 				boutput(O, "<span class='alert'>You feel your control of this vessel slipping away!</span>")
