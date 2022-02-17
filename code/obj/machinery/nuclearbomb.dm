@@ -116,8 +116,7 @@
 		user.lastattacked = src
 
 		var/datum/game_mode/nuclear/gamemode = ticker?.mode
-		if(!istype(gamemode))
-			gamemode = null
+		ENSURE_TYPE(gamemode)
 
 		var/target_area = src.target_override
 		if(isnull(target_area))
