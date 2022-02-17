@@ -824,14 +824,15 @@ body
 	return replacetext(showCoords(x,y,z), "%admin_ref%", "\ref[src.holder]")
 
 /client/proc/print_instance(var/atom/theinstance)
+	var/varedit_link = "<a href='byond://?src=\ref[src];Refresh=\ref[theinstance]'>[theinstance] \ref[theinstance]</a>"
 	if (isarea(theinstance))
 		var/turf/T = locate(/turf) in theinstance
 		if (!T)
-			boutput(usr, "<span class='notice'>[theinstance] (no turfs in area).</span>")
+			boutput(usr, "<span class='notice'>[varedit_link] (no turfs in area).</span>")
 		else
-			boutput(usr, "<span class='notice'>[theinstance] including [showMyCoords(T.x, T.y, T.z)].</span>")
+			boutput(usr, "<span class='notice'>[varedit_link] including [showMyCoords(T.x, T.y, T.z)].</span>")
 	else if (isturf(theinstance))
-		boutput(usr, "<span class='notice'>[theinstance] at [showMyCoords(theinstance.x, theinstance.y, theinstance.z)].</span>")
+		boutput(usr, "<span class='notice'>[varedit_link] at [showMyCoords(theinstance.x, theinstance.y, theinstance.z)].</span>")
 	else
 		var/turf/T = get_turf(theinstance)
 		var/in_text = ""
@@ -839,7 +840,7 @@ body
 		while (Q && Q != T)
 			in_text += " in [Q]"
 			Q = Q.loc
-		boutput(usr, "<span class='notice'>[theinstance][in_text] at [isnull(T) ? "null" : showMyCoords(T.x, T.y, T.z)]</span>")
+		boutput(usr, "<span class='notice'>[varedit_link][in_text] at [isnull(T) ? "null" : showMyCoords(T.x, T.y, T.z)]</span>")
 
 /client/proc/find_one_of(var/typename as text)
 	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
