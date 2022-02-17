@@ -390,7 +390,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					50;"bone",
 					20;"blob",
 					20;"pizza",
-					2;"butt")
+					20;"butt")
 			if("ancient") // industrial type stuff
 				material = pick(
 					100;"electrum",
@@ -416,8 +416,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					30;"carbonfibre",
 					30;"diamond",
 					30;"dyneema",
-					10;"iridiumalloy",
-					1;"neutronium")
+					20;"iridiumalloy",
+					20;"neutronium")
 			if("precursor") // uh, the rest
 				material = pick(
 					100;"rock",
