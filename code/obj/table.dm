@@ -374,7 +374,7 @@
 
 	mouse_drop(atom/over_object, src_location, over_location)
 		if (usr && usr == over_object && src.desk_drawer)
-			return src.desk_drawer.mouse_drop(over_object, src_location, over_location)
+			return src.desk_drawer.MouseDrop(over_object, src_location, over_location)
 		..()
 
 	Bumped(atom/AM)
