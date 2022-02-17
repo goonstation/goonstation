@@ -5,7 +5,7 @@
 
 #define JARS_FILE "data/jars.sav"
 #define JARS_VERSION 1
-#define DEFAULT_JAR_COUNT 3
+#define DEFAULT_JAR_COUNT 4
 #define MAX_JAR_COUNT 32
 #define JAR_MAX_ITEMS 16
 
@@ -156,7 +156,7 @@ proc/save_intraround_jars()
 proc/generate_backup_jars()
 	var/tries_left = 10
 	while(length(by_type[/obj/item/reagent_containers/glass/jar]) < DEFAULT_JAR_COUNT && tries_left > 0)
-		var/areatype = pick(/area/diner/kitchen, /area/station/crew_quarters/kitchen)
+		var/areatype = pick(prob(10); /area/diner/kitchen, /area/station/crew_quarters/kitchen)
 		var/list/turf/turfs = get_area_turfs(areatype, 1)
 		if(length(turfs))
 			var/turf/T = pick(turfs)
