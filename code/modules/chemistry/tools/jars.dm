@@ -5,7 +5,6 @@
 
 /obj/item/reagent_containers/glass/jar
 	name = "glass jar"
-
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mason_jar"
 	uses_multiple_icon_states = 1
@@ -16,29 +15,59 @@
 
 	New()
 		..()
-		jars += src
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/reagent_containers/food/snacks))
-			if (src.contents.len > 16)
-				boutput(user, "<span class='alert'>There is no way that will fit into this jar.  This VERY FULL jar.</span>")
-				return
+		if (length(src.contents) > 16)
+			boutput(user, "<span class='alert'>There is no way that will fit into this jar.  This VERY FULL jar.</span>")
+			return
 
-			user.drop_item()
-			W.set_loc(src)
-			user.visible_message("<b>[user]</b> puts [W] into [src].", "You stuff [W] into [src].")
-			src.UpdateIcon()
+		user.drop_item()
+		W.set_loc(src)
+		user.visible_message("<span class='notice'><b>[user]</b> puts [W] into [src].</span>", "<span class='notice'>You stuff [W] into [src].</span>")
+		src.UpdateIcon()
 
+	get_desc(dist, mob/user)
+		. = ..()
+		if(length(src.contents))
+			var/list/stuff_inside = list()
+			for(var/obj/item/I in src)
+				stuff_inside += "\a [I]"
+			var/obj/item/last = stuff_inside[length(stuff_inside)]
+			stuff_inside.len--
+			if(length(stuff_inside))
+				. += "It contains [jointext(stuff_inside, ", ")], and [last]."
+			else
+				. += "It contains [last]."
 		else
-			..()
+			. += "It is empty."
 
 	attack_self(mob/user as mob)
 		if (src.contents.len)
-			var/obj/item/yoinked_out_thing = pick(src.contents)
-			if (istype(yoinked_out_thing))
-				user.put_in_hand_or_drop(yoinked_out_thing)
-				user.visible_message("<b>[user]</b> pulls [yoinked_out_thing] out of [src]","You pull [yoinked_out_thing] out of [src]")
-				src.UpdateIcon()
+			yoink(user)
+		else
+			. = ..()
+
+	attack_hand(mob/user)
+		if(length(src.contents) && (src in user.equipped_list()))
+			yoink(user)
+		else
+			. = ..()
+
+	proc/yoink(mob/user)
+		if(!length(src.contents))
+			return FALSE
+		var/obj/item/yoinked_out_thing = pick(src.contents)
+		if(!istype(yoinked_out_thing))
+			return FALSE
+		user.put_in_hand_or_drop(yoinked_out_thing)
+		user.visible_message("<span class='notice'><b>[user]</b> pulls [yoinked_out_thing] out of [src].</span>","<span class='notice'>You pull [yoinked_out_thing] out of [src].</span>")
+		src.UpdateIcon()
+		return TRUE
 
 	on_reagent_change()
 		..()
@@ -62,85 +91,75 @@
 		else
 			src.icon_state = "mason_jar"
 
-var/list/jars = list()
 proc/save_intraround_jars()
-	. = ""
-	var/jarCount = 0
-	var/jar_innard_string = ""
-	for (var/obj/item/reagent_containers/glass/jar/jar in jars)
-
-		var/turf/jarTurf = get_turf(jar)
-		if (!jarTurf)
+	var/jar_count = 0
+	var/savefile/jar_save = new("data/jars.sav")
+	jar_save.Lock()
+	for_by_tcl(jar, /obj/item/reagent_containers/glass/jar)
+		var/turf/jar_turf = get_turf(jar)
+		if (!jar_turf)
 			continue
+		jar_count++
+		jar_save["jar[jar_count]/loc"] << list(jar_turf.x, jar_turf.y, jar_turf.z)
 
-		jar_innard_string = ""
+		var/list/jar_contents = list()
 		for (var/obj/item/I in jar)
-			jar_innard_string += ",[I.type]"
+			if(!istype(I, /obj/item/reagent_containers/food/snacks/pickle_holder))
+				var/obj/item/reagent_containers/food/snacks/pickle_holder/pickled = new(jar, I)
+				qdel(I)
+				I = pickled
+			I.removeMaterial()
+			jar_contents += I
 
-		. += "Jar[++jarCount]=[jarTurf.x],[jarTurf.y],[jarTurf.z][jar_innard_string];"
-
-		if (jarCount >= 32)
-			break
-
-	world.save_intra_round_value("Jars", .)
+		jar_save["jar[jar_count]/contents"] << jar_contents
+	jar_save.Flush()
+	jar_save.Unlock()
 
 proc/load_intraround_jars()
 	set background = 1
-	var/list/jars_encoded = params2list(world.load_intra_round_value("Jars"))
-	var/jarX = 0
-	var/jarY = 0
-	var/jarZ = 0
-	for (var/jar_entry in jars_encoded)
-		//boutput(world, "[jar_entry] = [jars_encoded[jar_entry]]")
-		var/list/decode_list = splittext(jars_encoded[jar_entry], ",")
-		if (!decode_list || decode_list.len < 3)
+
+	var/savefile/jar_save = new("data/jars.sav")
+	jar_save.Lock()
+	var/emitted_full_savefile = FALSE
+	for(var/jarname in jar_save.dir)
+		var/list/coords
+		jar_save["[jarname]/loc"] >> coords
+		var/turf/jar_turf = locate(coords[1], coords[2], coords[3])
+		if(isnull(jar_turf))
 			continue
-
-		jarX = text2num(decode_list[1])
-		jarY = text2num(decode_list[2])
-		jarZ = text2num(decode_list[3])
-		//boutput(world, "[jarX] [jarY] [jarZ]")
-
-		var/obj/item/reagent_containers/glass/jar/newJar = new /obj/item/reagent_containers/glass/jar (locate(jarX,jarY,jarZ))
-		var/potential_new_item_path
-		var/obj/item/potential_new_item
-		var/obj/item/reagent_containers/food/snacks/pickle_holder/new_pickle
-		. = ""
-		for (var/i = 4, i <= decode_list.len && i <= 20, i++)
-			potential_new_item_path = text2path(decode_list[i])
-			//boutput(world, "[decode_list[i]], [potential_new_item_path]")
-			if (ispath(potential_new_item_path, /obj/item/reagent_containers/food))
-				potential_new_item = new potential_new_item_path //Isn't this ugly?  This is ugly.
-				//todo
-				new_pickle = new /obj/item/reagent_containers/food/snacks/pickle_holder (null, potential_new_item)
-				new_pickle.set_loc( newJar )
-				if (potential_new_item.reagents)
-					potential_new_item.reagents.trans_to(new_pickle, 100)
-
-				. += "[decode_list[i]] "
-				potential_new_item.dispose()
-
-		if (newJar.reagents)
-			newJar.reagents.add_reagent("juice_pickle", 75)
-
-		logTheThing("debug", null, null, "<b>Pickle Jar:</b> Jar created at \[[jarX],[jarY],[jarZ]\] containing [.]")
-
-	world.save_intra_round_value("Jars","")
+		var/obj/item/reagent_containers/glass/jar/jar = new(jar_turf)
+		var/list/jar_contents
+		jar_save["[jarname]/contents"] >> jar_contents
+		for(var/obj/item/I in jar_contents)
+			I.set_loc(jar)
+			I.reagents?.trans_to(jar, 100)
+			var/obj/item/reagent_containers/food/snacks/pickle_holder/pickled = I
+			if(istype(pickled))
+				pickled.pickle_age++
+			else
+				stack_trace("Unpickled item [I] of type [I.type] found in pickle jar [jarname]")
+				if(!emitted_full_savefile)
+					logTheThing("debug", null, null, "<b>Pickle Jar:</b> full savefile<br>[jar_save.ExportText()]")
+					emitted_full_savefile = TRUE
+		jar.reagents.add_reagent("juice_pickle", 75)
+		logTheThing("debug", null, null, "<b>Pickle Jar:</b> Jar created at [log_loc(jar)] containing [json_encode(jar_contents)]")
+	jar_save.Unlock()
 
 /obj/item/reagent_containers/food/snacks/pickle_holder
 	name = "ethereal pickle"
-	desc = "You can't see anything, but there is an unmistakable presence of vinegar and spices here.  Kosher dill."
+	desc = "You can't see anything, but there is an unmistakable presence of vinegar and spices here. Kosher dill."
+	var/pickle_age
 
-	New(newloc, var/obj/item/reagent_containers/pickled)
+	New(newloc, obj/item/pickled)
 		..(newloc)
 		if (istype(pickled))
-
-			src.icon = pickled.icon
-			src.icon_state = pickled.icon_state
-			src.overlays = pickled.overlays
-			src.underlays = pickled.underlays
-
+			src.icon = getFlatIcon(pickled, no_anim=TRUE)
 			src.color = rgb(63,103,24)
-
-			src.desc = "A pickled version of \a [pickled], It smells of vinegar."
+			src.desc = "A pickled version of \a [pickled], it smells of vinegar."
 			src.name = "pickled [pickled.name]"
+			src.pickle_age = 0
+
+	get_desc(dist, mob/user)
+		. = ..()
+		if(src.pickle_age)
+			. += " It has been [src.pickle_age] shift[src.pickle_age > 1 ? "s" : ""] since it was pickled."

@@ -1335,7 +1335,6 @@
 		boutput(user, "You inject the solution into the [src].")
 
 		if(S.reagents.has_reagent("plasma", 1))
-			message_admins("[key_name(user)] rigged [src] to explode in [user.loc.loc], [showCoords(user.x, user.y, user.z)].")
 			logTheThing("combat", user, null, "rigged [src] to explode in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 			rigged = 1
 			rigger = user

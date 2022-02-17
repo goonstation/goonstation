@@ -1,4 +1,15 @@
 
+(t)wed feb 16 22
+(u)TTerc
+(e)🆕|feature
+(+)You can now show off your security badge to people by clicking them with it.
+(t)tue feb 15 22
+(u)Kyle
+(+)One Armed Spaceman trait now costs 0 points.
+(u)Conchuckter
+(p)7511
+(e)🐛|bug
+(+)Fixes computer frames always giving 5 sheets instead of their proper amount
 (t)mon feb 14 22
 (u)Flaborized
 (p)7502
