@@ -152,11 +152,21 @@ proc/save_intraround_jars()
 	jar_save.Flush()
 
 proc/generate_backup_jars()
-	while(length(by_type[/obj/item/reagent_containers/glass/jar]) < DEFAULT_JAR_COUNT)
+	var/tries_left = 10
+	while(length(by_type[/obj/item/reagent_containers/glass/jar]) < DEFAULT_JAR_COUNT && tries_left > 0)
 		var/areatype = pick(/area/diner/kitchen, /area/station/crew_quarters/kitchen)
 		var/list/turf/turfs = get_area_turfs(areatype, 1)
 		if(length(turfs))
 			new/obj/item/reagent_containers/glass/jar(pick(turfs))
+		else
+			tries_left--
+	tries_left = 50
+	while(length(by_type[/obj/item/reagent_containers/glass/jar]) < DEFAULT_JAR_COUNT)
+		var/turf/simulated/floor/T = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION)
+		if(istype(T))
+			new/obj/item/reagent_containers/glass/jar(T)
+		else
+			tries_left--
 
 proc/load_intraround_jars()
 	set background = 1
