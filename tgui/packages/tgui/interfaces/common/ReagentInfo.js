@@ -69,7 +69,7 @@ export const ReagentGraph = props => {
 export const ReagentList = props => {
   const {
     container,
-    buttonsForEach,
+    renderButtons,
     height,
     ...rest
   } = props;
@@ -93,7 +93,7 @@ export const ReagentList = props => {
               {`( ${reagent.volume}u ) ${reagent.name}`}
             </Flex.Item>
             <Flex.Item>
-              {buttonsForEach(reagent)}
+              {renderButtons(reagent)}
             </Flex.Item>
           </Flex>
         )) : (

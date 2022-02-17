@@ -114,7 +114,7 @@ const ReagentDisplay = (props, context) => {
       )}
       <ReagentGraph container={container} />
       <ReagentList container={container}
-        buttonsForEach={(reagent) => {
+        renderButtons={(reagent) => {
           return (
             <>
               <Button
