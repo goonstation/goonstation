@@ -108,11 +108,11 @@ proc/save_intraround_jars()
 			continue
 
 		var/list/jar_contents = list()
-		for (var/obj/item/I in jar)
-			var/obj/item/reagent_containers/food/snacks/pickle_holder/pickled = I
-			if(!istype(I, /obj/item/reagent_containers/food/snacks/pickle_holder))
-				pickled = new(jar, I)
-				qdel(I)
+		for (var/atom/movable/AM in jar)
+			var/obj/item/reagent_containers/food/snacks/pickle_holder/pickled = AM
+			if(!istype(AM, /obj/item/reagent_containers/food/snacks/pickle_holder))
+				pickled = new(jar, AM)
+				qdel(AM)
 			pickled.removeMaterial()
 			if(istype(pickled))
 				pickled.paint_pickly_color()
@@ -181,14 +181,14 @@ proc/load_intraround_jars()
 	initial_volume = 0
 	var/pickle_age
 
-	New(newloc, obj/item/pickled)
+	New(newloc, atom/movable/pickled)
 		..(newloc)
 		if (istype(pickled))
 			src.icon = getFlatIcon(pickled, no_anim=TRUE)
 			src.paint_pickly_color()
 			src.desc = "A pickled version of \a [pickled], it smells of vinegar."
 			src.real_desc = src.desc
-			src.name = "pickled [pickled.name]"
+			src.name = "pickled [pickled]"
 			src.pickle_age = 0
 
 	proc/paint_pickly_color()
