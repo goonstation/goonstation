@@ -145,7 +145,6 @@ proc/load_intraround_jars()
 		return
 
 	var/emitted_full_savefile = FALSE
-	var/jar_count = 0
 	for(var/datum/zlevel/zlevel in global.zlevels)
 		var/zname = zlevel.name
 		var/list/jars_data
@@ -172,7 +171,6 @@ proc/load_intraround_jars()
 						emitted_full_savefile = TRUE
 			jar.reagents.add_reagent("juice_pickle", 75)
 			logTheThing("debug", null, null, "<b>Pickle Jar:</b> Jar created at [log_loc(jar)] containing [json_encode(jar_contents)]")
-			jar_count++
 
 /obj/item/reagent_containers/food/snacks/pickle_holder
 	name = "ethereal pickle"
