@@ -310,8 +310,8 @@
 		if(tray_obj) return
 		if(loaded != null)
 
-			logTheThing("combat", usr, null, " launches \a [src.loaded] from the torpedo tube at [showCoords(src.x, src.y, src.z)]")
-			logTheThing("diary", usr, null, " launches \a [src.loaded] from the torpedo tube at [showCoords(src.x, src.y, src.z)]", "combat")
+			logTheThing("combat", usr, null, " launches \a [src.loaded] from the torpedo tube at [log_loc(src)]")
+			logTheThing("diary", usr, null, " launches \a [src.loaded] from the torpedo tube at [log_loc(src)]", "combat")
 			var/turf/start = getLaunchTurf()
 			var/atom/target
 			if(targetTurf)
@@ -370,20 +370,20 @@
 			if (istype(target, /obj/storage/closet) && get_dist(src,target) <= 1 && can_act(user) && can_reach(user, src) && can_reach(user, target))
 				var/obj/storage/closet/O = target
 				O.set_loc(src.loc)
-				logTheThing("combat", user, null, " loads \a [O] into \the [src] at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", user, null, " loads \a [O] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
+				logTheThing("combat", user, null, " loads \a [O] into \the [src] at [log_loc(src)]")
+				logTheThing("diary", user, null, " loads \a [O] into \the [src] at [log_loc(src)]", "combat")
 			var/mob/M = target
 			if (ishuman(M))
 				M.setStatus("resting", INFINITE_STATUS)
 				M.force_laydown_standup()
 				M.set_loc(src.loc)
-				logTheThing("combat", user, target, " laods [constructTarget(target,"combat")] onto \the [src] at [showCoords(user.x, user.y, user.z)]")
-				logTheThing("diary", user, target, " laods [constructTarget(target,"diary")] onto \the [src] at [showCoords(user.x, user.y, user.z)]", "combat")
+				logTheThing("combat", user, target, " laods [constructTarget(target,"combat")] onto \the [src] at [log_loc(user)]")
+				logTheThing("diary", user, target, " laods [constructTarget(target,"diary")] onto \the [src] at [log_loc(user)]", "combat")
 				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto [src]!</b></span>")
 			else
 				M.set_loc(src.loc)
-				logTheThing("combat", user, target, " loads [constructTarget(target,"combat")] into \the [src] at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", user, target, " loads [constructTarget(target,"diary")] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
+				logTheThing("combat", user, target, " loads [constructTarget(target,"combat")] into \the [src] at [log_loc(src)]")
+				logTheThing("diary", user, target, " loads [constructTarget(target,"diary")] into \the [src] at [log_loc(src)]", "combat")
 				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto \the [src]!</b></span>")
 				return
 
@@ -396,8 +396,8 @@
 				GM.setStatus("resting", INFINITE_STATUS)
 				GM.force_laydown_standup()
 				user.visible_message("<span class='alert'><b>[user.name] shoves [GM.name] onto [src]!</b></span>")
-				logTheThing("combat", user, GM, " loads [constructTarget(GM,"combat")] into \the [src] at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", user, GM, " loads [constructTarget(GM,"diary")] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
+				logTheThing("combat", user, GM, " loads [constructTarget(GM,"combat")] into \the [src] at [log_loc(src)]")
+				logTheThing("diary", user, GM, " loads [constructTarget(GM,"diary")] into \the [src] at [log_loc(src)]", "combat")
 				qdel(G)
 		else
 			return ..(I,user)
@@ -406,7 +406,7 @@
 		if (ishuman(M) && M.throwing)
 			var/mob/living/carbon/human/thrown_person = M
 			M.visible_message("<span class='alert'><b>[thrown_person] [thrown_person.throwing & THROW_SLIP ? "slips" : "falls"] onto [src]! [src] slams closed!</b></span>")
-			logTheThing("combat", thrown_person, null, " falls into \the [src] at [showCoords(src.x, src.y, src.z)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"])")
+			logTheThing("combat", thrown_person, null, " falls into \the [src] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"])")
 			thrown_person.set_loc(src.loc)
 			parent?.close()
 			if (prob(25) || thrown_person.bioHolder.HasEffect("clumsy"))
@@ -507,7 +507,7 @@
 			add(target)
 		return
 
-	MouseDrop(atom/over_object,src_location,over_location,src_control,over_control,params)
+	mouse_drop(atom/over_object,src_location,over_location,src_control,over_control,params)
 		if(loaded && get_dist(src,over_object) <= 1)
 			var/turf/T = get_turf(over_object)
 			if(T.density) return
@@ -521,10 +521,10 @@
 		if (src.loaded && ishuman(M) && M.throwing)
 			var/mob/living/carbon/human/thrown_person = M
 			if (thrown_person.throwing & THROW_CHAIRFLIP)
-				logTheThing("combat", thrown_person, null, " flips into \the [src] at [showCoords(src.x, src.y, src.z)], setting it off.")
+				logTheThing("combat", thrown_person, null, " flips into \the [src] at [log_loc(src)], setting it off.")
 				loaded.breakLaunch()
 			else if (prob(25) || thrown_person.bioHolder.HasEffect("clumsy"))
-				logTheThing("combat", thrown_person, null, " is thrown into \the [src] at [showCoords(src.x, src.y, src.z)], setting it off. (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"])")
+				logTheThing("combat", thrown_person, null, " is thrown into \the [src] at [log_loc(src)], setting it off. (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"])")
 				loaded.breakLaunch()
 				JOB_XP(thrown_person, "Clown", 5)
 		..()
@@ -625,12 +625,12 @@
 
 	attackby(var/obj/item/I as obj, var/mob/user as mob)
 		..()
-		logTheThing("combat", user, null, " hits [src] with [I] at [showCoords(user.x, user.y, user.z)]")
-		logTheThing("diary", user, null, " hits [src] with [I] at [showCoords(user.x, user.y, user.z)]", "combat")
+		logTheThing("combat", user, null, " hits [src] with [I] at [log_loc(user)]")
+		logTheThing("diary", user, null, " hits [src] with [I] at [log_loc(user)]", "combat")
 		dmg += I.force
 		if(dmg >= dmg_threshold)
-			logTheThing("combat", user, null, " caused [src] to detonate at [showCoords(user.x, user.y, user.z)]")
-			logTheThing("diary", user, null, " caused [src] to detonate at [showCoords(user.x, user.y, user.z)]", "combat")
+			logTheThing("combat", user, null, " caused [src] to detonate at [log_loc(user)]")
+			logTheThing("diary", user, null, " caused [src] to detonate at [log_loc(user)]", "combat")
 			breakLaunch()
 		return
 

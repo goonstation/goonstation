@@ -23,7 +23,7 @@
 		..()
 		power_granted = pick("blind","mute","clumsy","fire_resist","cold_resist","resist_electric",
 		"psy_resist","glowy","hulk","xray","horns","stinky","monkey","mattereater","jumpy","telepathy","empath",
-		"immolate","eyebeams","melt")
+		"immolate","eyebeams","melt","accent_uwu")
 		power_time = rand(30,180)
 		if (prob(5))
 			power_time = 0

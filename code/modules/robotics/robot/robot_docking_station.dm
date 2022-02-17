@@ -671,7 +671,7 @@
 			return
 
 		var/mob/living/carbon/human/H = G.affecting
-		logTheThing("combat", user, H, "puts [constructTarget(H,"combat")] into a conversion chamber at [showCoords(src.x, src.y, src.z)]")
+		logTheThing("combat", user, H, "puts [constructTarget(H,"combat")] into a conversion chamber at [log_loc(src)]")
 		user.visible_message("<span class='notice>[user] stuffs [H] into \the [src].")
 
 		H.remove_pulling()
@@ -736,7 +736,7 @@
 
 	if (ishuman(AM))
 		var/mob/living/carbon/human/H = AM
-		logTheThing("combat", user, null, "puts [himself_or_herself(user)] into a conversion chamber at [showCoords(src.x, src.y, src.z)]")
+		logTheThing("combat", user, null, "puts [himself_or_herself(user)] into a conversion chamber at [log_loc(src)]")
 		user.visible_message("<span class='notice>[user] stuffs [himself_or_herself(user)] into \the [src].")
 
 		H.remove_pulling()

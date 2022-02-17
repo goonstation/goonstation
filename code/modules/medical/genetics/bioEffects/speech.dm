@@ -240,7 +240,7 @@
 	OnAdd()
 		var/mob/living/L = owner
 		if (istype(L))
-			L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: black !important; -dm-text-outline: 1px #ff0000;"
+			L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: red !important; text-shadow: 1px 1px 0 black; -dm-text-outline: 1px black;"
 
 	OnRemove()
 		var/mob/living/L = owner

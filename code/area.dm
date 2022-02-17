@@ -1313,6 +1313,10 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/secbot_academy
 	name = "Securitron Academy"
 	icon_state = "red"
+
+/area/prefab/art_workshop
+	name = "The Pastel Space Workshop"
+	icon_state = "purple"
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room

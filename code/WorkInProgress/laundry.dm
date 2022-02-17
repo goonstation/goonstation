@@ -161,7 +161,7 @@
 		src.generate_html()
 	user.Browse(src.HTML, "window=laundry_machine;size=300x200;title=[capitalize(src.name)]")
 
-/obj/submachine/laundry_machine/MouseDrop(over_object,src_location,over_location)
+/obj/submachine/laundry_machine/mouse_drop(over_object,src_location,over_location)
 	var/mob/user = usr
 	if (!user || !over_object || get_dist(user, src) > 1 || get_dist(user, over_object) > 1 || is_incapacitated(user) || (issilicon(user) && get_dist(src,user) > 1))
 		return

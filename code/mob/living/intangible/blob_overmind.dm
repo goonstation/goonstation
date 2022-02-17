@@ -255,6 +255,15 @@
 			if (plane)
 				plane.alpha = 255
 
+	mouse_drop()
+		return
+
+	MouseDrop_T()
+		return
+
+	meteorhit()
+		return
+
 	is_spacefaring()
 		return 1
 

@@ -1398,7 +1398,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 
 	M.verbs -= /proc/owl_slam
 
-	logTheThing("combat", M, null, "<b>triggers a owl slam in [M.loc.loc] ([showCoords(M.x, M.y, M.z)])!</b>")
+	logTheThing("combat", M, null, "<b>triggers a owl slam in [M.loc.loc] ([log_loc(M)])!</b>")
 
 	M.visible_message("<span class='alert'>[M] flies through the ceiling!</span>")
 	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)

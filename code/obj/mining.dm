@@ -279,8 +279,7 @@
 				magnet = target:linked_magnet
 			else
 				magnet = target
-			if (!istype(magnet))
-				magnet = null
+			ENSURE_TYPE(magnet)
 			else
 				if (!loaded)
 					boutput(user, "<span class='alert'>The magnetizer needs to be loaded with a plasmastone chunk first.</span>")

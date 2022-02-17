@@ -173,7 +173,7 @@
 
 //no, this isnt even an item its not allowed. if you wanna move racks around, code an unscrew behavior or something
 /*
-	MouseDrop(mob/user as mob) // no I ain't even touchin this mess it can keep doin whatever it's doin
+	mouse_drop(mob/user as mob) // no I ain't even touchin this mess it can keep doin whatever it's doin
 		// I finally came back and touched that mess because it was broke - Haine
 		// When I was working on this in the 2016 release, some stuff was broken and I didn't know why. Then when I got coder, it'd already been fixed! Thanks Haine! ~Gannets
 		if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))

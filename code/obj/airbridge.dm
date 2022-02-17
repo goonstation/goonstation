@@ -421,21 +421,21 @@
 				boutput(usr, "<span class='alert'>Access denied.</span>")
 				return
 			if (src.establish_bridge())
-				logTheThing("station", usr, null, "extended the airbridge at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+				logTheThing("station", usr, null, "extended the airbridge at [usr.loc.loc] ([log_loc(usr)])")
 
 		else if (href_list["remove"])
 			if (!(src.allowed(usr)))
 				boutput(usr, "<span class='alert'>Access denied.</span>")
 				return
 			if (src.remove_bridge())
-				logTheThing("station", usr, null, "retracted the airbridge at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+				logTheThing("station", usr, null, "retracted the airbridge at [usr.loc.loc] ([log_loc(usr)])")
 
 		else if (href_list["air"])
 			if (!(src.allowed(usr)))
 				boutput(usr, "<span class='alert'>Access denied.</span>")
 				return
 			if (src.pressurize())
-				logTheThing("station", usr, null, "pressurized the airbridge at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+				logTheThing("station", usr, null, "pressurized the airbridge at [usr.loc.loc] ([log_loc(usr)])")
 
 		update_status()
 		src.updateDialog()

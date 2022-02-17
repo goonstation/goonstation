@@ -1433,7 +1433,7 @@
 							sense_mode = SENSE_TAG
 							sense_tag_filter = .
 
-	MouseDrop(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)
+	mouse_drop(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)
 
 		if(!isliving(usr))
 			return

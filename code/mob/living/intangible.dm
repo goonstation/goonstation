@@ -30,7 +30,7 @@
 	meteorhit()
 		return
 
-	MouseDrop()
+	mouse_drop()
 		return
 
 	MouseDrop_T()

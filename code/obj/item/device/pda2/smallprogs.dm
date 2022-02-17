@@ -216,7 +216,7 @@ Code:
 				return
 			last_transmission = world.time
 			SPAWN( 0 )
-				logTheThing("signalers", usr, null, "used [src.master] @ location ([showCoords(src.master.loc.x, src.master.loc.y, src.master.loc.z)]) <B>:</B> [format_frequency(send_freq)]/[send_code]")
+				logTheThing("signalers", usr, null, "used [src.master] @ location ([log_loc(src.master.loc)]) <B>:</B> [format_frequency(send_freq)]/[send_code]")
 
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
