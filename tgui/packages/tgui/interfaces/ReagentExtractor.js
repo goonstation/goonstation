@@ -118,14 +118,15 @@ const ReagentDisplay = (props, context) => {
           return (
             <>
               <Button
-                px={0.5}
+                px={0.75}
+                mr={1.5}
                 icon="filter"
                 color="red"
                 tooltip="Isolate"
                 onClick={() => act('isolate', { container_id: container.id, reagent_id: reagent.id })}
               />
               <Button
-                px={0.5}
+                px={0.75}
                 icon="times"
                 color="red"
                 tooltip="Flush"
