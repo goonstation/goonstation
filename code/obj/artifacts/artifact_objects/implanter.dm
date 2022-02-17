@@ -15,9 +15,14 @@
 	deact_text = "closes itself up."
 	react_xray = list(9, 70, 75, 11, "SEGMENTED")
 
-	var/obj/item/implant/artifact/imp = null
 	var/ready = TRUE
+	var/rechargeTime = null
+	var/obj/item/implant/artifact/imp = null
 	var/list/implantedUsers = list()
+
+	New()
+		..()
+		rechargeTime = rand(1, 3) MINUTES
 
 	effect_touch(var/obj/O, var/mob/living/user)
 		if (..())
@@ -60,4 +65,4 @@
 
 		ready = FALSE
 
-		SPAWN(2 MINUTES) ready = TRUE
+		SPAWN(rechargeTime) ready = TRUE
