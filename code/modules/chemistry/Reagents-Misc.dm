@@ -797,8 +797,9 @@ datum
 					. = 0
 
 					if(L.getStatusDuration("slowed")>100)
-						L.setStatus("stunned", max(M.getStatusDuration("staggered"), 1.5*volume_passed))
-						boutput(M, "<span class='notice'>You get stuck in the glue!</span>")
+						L.setStatus("staggered", max(M.getStatusDuration("staggered"), 3*volume_passed))
+						if(!ON_COOLDOWN(M, "stuck in glue", 15 SECOND))
+							boutput(M, "<span class='notice'>You get stuck in the glue!</span>")
 					if(L.getStatusDuration("slowed")<100)
 						if(volume_passed<25)
 							L.changeStatus("slowed", 4*volume_passed, optional = 4)
@@ -808,8 +809,8 @@ datum
 
 			reaction_turf(var/turf/target, var/volume)
 				var/turf/simulated/T = target
+				if(T.sticky == TRUE) return
 				if (istype(T))
-					if (T.wet >= 3) return
 					var/wet = image('icons/effects/water.dmi',"wet_floor")
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.sticky = TRUE
