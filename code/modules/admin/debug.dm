@@ -202,7 +202,6 @@ var/global/debug_messages = 0
 		return
 	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 	if (thetype)
-		var/counter = 0
 		var/procname = input("Procpath","path:", null) as text
 		var/argnum = input("Number of arguments:","Number", 0) as num
 		var/list/listargs = list()
@@ -255,18 +254,9 @@ var/global/debug_messages = 0
 					listargs += input("Pick icon:","Icon", null) as null|icon
 			if (listargs == null) return
 
-		for (var/atom/theinstance in world)
-			if (!istype(theinstance, thetype))
-				continue
-			counter++
-			if(listargs.len)
-				call(theinstance,procname)(arglist(listargs))
-			else
-				call(theinstance,procname)()
+		var/list/results = find_all_by_type(thetype, procname, "instance", listargs)
 
-			LAGCHECK(LAG_LOW)
-
-		boutput(usr, "<span class='notice'>'[procname]' called on [counter] instances of '[typename]'</span>")
+		boutput(usr, "<span class='notice'>'[procname]' called on [length(results)] instances of '[typename]'</span>")
 		message_admins("<span class='alert'>Admin [key_name(src)] called '[procname]' on all instances of '[typename]'</span>")
 		logTheThing("admin", src, null, "called [procname] on all instances of [typename]")
 		logTheThing("diary", src, null, "called [procname] on all instances of [typename]")
@@ -526,7 +516,7 @@ var/global/debug_messages = 0
 	// to prevent REALLY stupid deletions
 	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human)
 	var/hsbitem = get_one_match(typename, /atom)
-	var/background =  alert("Run the process in the background?",,"Yes (High)","Yes (Low)" ,"No")
+	var/background =  alert("Run the process in the background?",,"Yes" ,"No")
 
 	for(var/V in blocked)
 		if(V == hsbitem)
@@ -849,7 +839,7 @@ body
 		while (Q && Q != T)
 			in_text += " in [Q]"
 			Q = Q.loc
-		boutput(usr, "<span class='notice'>[theinstance][in_text] at [showMyCoords(T.x, T.y, T.z)]</span>")
+		boutput(usr, "<span class='notice'>[theinstance][in_text] at [isnull(T) ? "null" : showMyCoords(T.x, T.y, T.z)]</span>")
 
 /client/proc/find_one_of(var/typename as text)
 	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
@@ -858,7 +848,7 @@ body
 
 	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 	if (thetype)
-		var/atom/theinstance = locate(thetype) in world
+		var/atom/theinstance = find_first_by_type(thetype)
 		if (!theinstance)
 			boutput(usr, "<span class='alert'>Cannot locate an instance of [thetype].</span>")
 			return
@@ -875,15 +865,9 @@ body
 
 	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 	if (thetype)
-		var/counter = 0
 		boutput(usr, "<span class='notice'><b>All instances of [thetype]: </b></span>")
-		for (var/atom/theinstance in world)
-			LAGCHECK(LAG_LOW)
-			if (!istype(theinstance, thetype))
-				continue
-			counter++
-			print_instance(theinstance)
-		boutput(usr, "<span class='notice'>Found [counter] instances total.</span>")
+		var/list/all_instances = find_all_by_type(thetype, .proc/print_instance, src)
+		boutput(usr, "<span class='notice'>Found [length(all_instances)] instances total.</span>")
 	else
 		boutput(usr, "No type matches for [typename].")
 		return
@@ -907,13 +891,7 @@ body
 
 	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 	if (thetype)
-		var/counter = 0
-		for (var/atom/theinstance in world)
-			LAGCHECK(LAG_LOW)
-			if (!istype(theinstance, thetype))
-				continue
-			counter++
-		boutput(usr, "<span class='notice'>There are <b>[counter]</b> instances total of [thetype].</span>")
+		boutput(usr, "<span class='notice'>There are <b>[length(find_all_by_type(thetype))]</b> instances total of [thetype].</span>")
 	else
 		boutput(usr, "<span class='alert'><b>No type matches for [typename].</b></span>")
 		return

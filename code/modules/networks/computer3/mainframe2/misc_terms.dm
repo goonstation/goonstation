@@ -1691,6 +1691,7 @@
 #define MAX_PRINTBUFFER_SIZE 10
 
 	New()
+		START_TRACKING
 		..()
 		src.AddComponent(/datum/component/obj_projectile_damage)
 		if(!print_id)
@@ -1708,6 +1709,10 @@
 
 			src.UpdateIcon() //Update the icon
 		return
+
+	disposing()
+		STOP_TRACKING
+		..()
 
 
 	attackby(obj/item/W as obj, mob/user as mob)

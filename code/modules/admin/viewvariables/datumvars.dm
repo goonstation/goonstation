@@ -711,9 +711,8 @@
 		for(var/client/c)
 			c:vars[variable] = var_value
 	else
-		for(var/x in world)
-			if(!istype(x, D.type)) continue
-			x:vars[variable] = var_value
+		for(var/datum/x as anything in find_all_by_type(D.type))
+			x.vars[variable] = var_value
 			LAGCHECK(LAG_LOW)
 
 /client/proc/modify_variable(datum/D, variable, set_global = 0)
@@ -847,9 +846,8 @@
 	switch(class)
 		if("null")
 			if(set_global)
-				for(var/x in world)
-					if(!istype(x, D.type)) continue
-					x:vars[variable] = null
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = null
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -869,9 +867,8 @@
 					boutput(src, "<span class='alert'>Bad ref or couldn't find that thing. Drats.</span>")
 					return
 				if(set_global)
-					for(var/x in world)
-						if(!istype(x, D.type)) continue
-						x:vars[variable] = thing
+					for(var/datum/x as anything in find_all_by_type(D.type))
+						x.vars[variable] = thing
 						LAGCHECK(LAG_LOW)
 				else
 					if(D == "GLOB")
@@ -892,9 +889,8 @@
 				val = json_decode(val)
 				if(!isnull(val))
 					if(set_global)
-						for(var/x in world)
-							if(!istype(x, D.type)) continue
-							x:vars[variable] = val
+						for(var/datum/x as anything in find_all_by_type(D.type))
+							x.vars[variable] = val
 							LAGCHECK(LAG_LOW)
 					else
 						if(D == "GLOB")
@@ -904,9 +900,8 @@
 
 		if("restore to default")
 			if(set_global)
-				for(var/x in world)
-					if(!istype(x, D.type)) continue
-					x:vars[variable] = initial(x:vars[variable])
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = initial(x.vars[variable])
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -922,9 +917,8 @@
 
 		if("create new list")
 			if(set_global)
-				for(var/x in world)
-					if(!istype(x, D.type)) continue
-					x:vars[variable] = list()
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = list()
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -938,12 +932,11 @@
 			if(set_global)
 				if(isclient(D))
 					for(var/client/x)
-						x:vars[variable] = theInput
+						x.vars[variable] = theInput
 						LAGCHECK(LAG_LOW)
 				else
-					for(var/x in world)
-						if(!istype(x, D.type)) continue
-						x:vars[variable] = theInput
+					for(var/datum/x as anything in find_all_by_type(D.type))
+						x.vars[variable] = theInput
 						LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -955,9 +948,8 @@
 			var/theInput = input("Enter new number:","[variable]", D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|num
 			if(theInput == null) return
 			if(set_global)
-				for(var/x in world)
-					if(!istype(x, D.type)) continue
-					x:vars[variable] = theInput
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = theInput
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -970,9 +962,8 @@
 			var/val = input("Enter value to adjust by:","[variable]", D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|num
 			if(!isnull(val))
 				if(set_global)
-					for(var/x in world)
-						if(!istype(x, D.type)) continue
-						x:vars[variable] += val
+					for(var/datum/x as anything in find_all_by_type(D.type))
+						x.vars[variable] += val
 						LAGCHECK(LAG_LOW)
 				else
 					if(D == "GLOB")
@@ -987,9 +978,8 @@
 				var/match = get_one_match(typename, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 				if (match)
 					if (set_global)
-						for (var/datum/x in world)
+						for(var/datum/x as anything in find_all_by_type(D.type))
 							LAGCHECK(LAG_LOW)
-							if (!istype(x, D.type)) continue
 							x.vars[variable] = match
 					else
 						if(D == "GLOB")
@@ -1001,9 +991,8 @@
 			var/theInput = input("Select reference:","[variable]", D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|mob|obj|turf|area in world
 			if(theInput == null) return
 			if(set_global)
-				for(var/x in world)
-					if(!istype(x, D.type)) continue
-					x:vars[variable] = theInput
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = theInput
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -1015,9 +1004,8 @@
 			var/theInput = input("Select reference:","[variable]", D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|mob in world
 			if(theInput == null) return
 			if(set_global)
-				for(var/x in world)
-					if(!istype(x, D.type)) continue
-					x:vars[variable] = theInput
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = theInput
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -1029,9 +1017,8 @@
 			var/theInput = input("Pick file:","[variable]",D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|file
 			if(theInput == null) return
 			if(set_global)
-				for(var/x in world)
-					if(!istype(x, D.type)) continue
-					x:vars[variable] = theInput
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = theInput
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -1043,9 +1030,8 @@
 			var/theInput = input("Pick icon:","[variable]",D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|icon
 			if(theInput == null) return
 			if(set_global)
-				for(var/x in world)
-					if(!istype(x, D.type)) continue
-					x:vars[variable] = theInput
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = theInput
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -1059,12 +1045,11 @@
 			if(set_global)
 				if(isclient(D))
 					for(var/client/x)
-						x:vars[variable] = theInput
+						x.vars[variable] = theInput
 						LAGCHECK(LAG_LOW)
 				else
-					for(var/x in world)
-						if(!istype(x, D.type)) continue
-						x:vars[variable] = theInput
+					for(var/datum/x as anything in find_all_by_type(D.type))
+						x.vars[variable] = theInput
 						LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -1099,9 +1084,8 @@
 				return
 
 			if(set_global)
-				for(var/x in world)
-					if(!istype(x, D.type)) continue
-					x:vars[variable] = M
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = M
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -1117,9 +1101,8 @@
 			var/turf/T = locate(x, y, z)
 			if (istype(T))
 				if (set_global)
-					for (var/datum/q in world)
+					for(var/datum/q as anything in find_all_by_type(D.type))
 						LAGCHECK(LAG_LOW)
-						if (!istype(q, D.type)) continue
 						q.vars[variable] = T
 				else
 					if(D == "GLOB")
@@ -1155,9 +1138,8 @@
 				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 				if (match)
 					if (set_global)
-						for (var/datum/x in world)
+						for(var/datum/x as anything in find_all_by_type(D.type))
 							LAGCHECK(LAG_LOW)
-							if (!istype(x, D.type)) continue
 							x.vars[variable] = new match(x)
 					else
 						if(D == "GLOB")
