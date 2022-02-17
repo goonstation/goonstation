@@ -422,8 +422,7 @@
 		src.death(0)
 		return
 
-	if (src.possessed_thing?.loc != src) //item somewhere else? we no longer exist
-		src.death(0)
+	if (!src.item_position_check())
 		return
 
 	for (var/atom/A in src) //TODO investigate why this is completely nonfunctional

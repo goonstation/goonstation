@@ -82,6 +82,11 @@
 		src.remove_stun_resist_mod("living_object")
 		..()
 
+	Exited(var/atom/movable/AM, var/atom/newloc)
+		if (AM == src.possessed_thing && newloc != src)
+			src.death(0) //uh oh
+			boutput(src, "<span class='alert'>You feel yourself being ripped away from this object!</h1>") //no destroying spacetime
+
 	equipped()
 		if (isitem(src.possessed_thing))
 			return src.possessed_thing
@@ -191,7 +196,6 @@
 
 		//To reflect updates of the items appearance etc caused by interactions.
 		src.update_appearance()
-
 		src.item_position_check()
 
 	death(gibbed)
@@ -251,13 +255,21 @@
 	assume_air(datum/air_group/giver)
 		return loc?.assume_air(giver)
 
+	///Update the mob's appearance to match the item's
 	proc/update_appearance() //TODO test this more
 		src.appearance = src.possessed_thing.appearance
 		src.name = "[name_prefix][src.possessed_thing.name]"
 		src.real_name = src.name
 		src.possessed_thing.set_dir(src.dir)
-		src.icon = src.possessed_thing.icon
-		src.icon_state = src.possessed_thing.icon_state
 		//src.overlays = src.possessed_thing.overlays
 		src.set_density(initial(src.possessed_thing.density))
 		src.opacity = src.possessed_thing.opacity
+
+	///Ensure the item is still inside us. If it isn't, die and return false. Otherwise, return true.
+	proc/item_position_check()
+		if (!src.possessed_thing || src.possessed_thing.loc != src) //item somewhere else? we no longer exist
+			boutput(src, "<span class='alert'>You feel yourself being ripped away from this object!</h1>")
+			src.death(0)
+			return FALSE
+		return TRUE
+
