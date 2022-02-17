@@ -41,12 +41,12 @@
 		src.attach_hud(zone_sel)
 
 		message_admins("[key_name(controller)] possessed [loc] at [showCoords(loc.x, loc.y, loc.z)].")
-		if (posessed_item)
+		if (possessed_item)
 			possessed_item.cant_drop = TRUE
 		else
 			if (isobj(possessed_thing))
 				dummy = new /obj/item/attackdummy(src)
-				dummy.name = loc.name
+				dummy.name = possessed_thing.name
 			else
 				stack_trace("Tried to create a possessed object from invalid atom [src.possessed_thing] of type [src.possessed_thing.type]!")
 				boutput(controller, "<h3 class='alert'>Uh oh, you tried to possess something illegal! Here's a toolbox instead!</h3>")
