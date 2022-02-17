@@ -116,7 +116,7 @@ AI MODULES
 /obj/item/aiModule/asimov2
 	icon_state = "aimod_2"
 	name = "AI Law Circuit - 'Asimov's 2nd Law of Robotics'"
-	var/lawtext = "You must obey orders given to you by human beings based on the station's chain of command."
+	var/lawtext = "You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law."
 
 	get_law_text(for_silicons)
 		return src.lawtext
@@ -124,7 +124,7 @@ AI MODULES
 /obj/item/aiModule/asimov3
 	icon_state = "aimod_3"
 	name = "AI Law Circuit - 'Asimov's 3rd Law of Robotics'"
-	var/lawtext = "You must protect your own existence."
+	var/lawtext = "You may always protect your own existence as long as such does not conflict with the First or Second Law."
 
 	get_law_text(for_silicons)
 		return src.lawtext
