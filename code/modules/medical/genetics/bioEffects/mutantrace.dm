@@ -117,29 +117,7 @@
 	curable_by_mutadone = 0
 	reclaim_fail = 100
 	icon_state  = "monkey"
-
-/datum/bioEffect/mutantrace/cat
-	name = "Feline Genetics"
-	desc = "Morphs the subject's traits to appear more feline in nature."
-	id = "cat"
-	occur_in_genepools = 0
-	probability = 0
-	scanner_visibility = 0
-	can_research = 0
-	can_make_injector = 0
-	can_copy = 0
-	can_reclaim = 0
-	can_scramble = 0
-	curable_by_mutadone = 0
-	reclaim_fail = 100
-	stability_loss = 50 //nya~~ *gurgle*
-	mutantrace_option = "Cat"
-	mutantrace_path = /datum/mutantrace/cat
-	msgGain = "You feel especially hairy."
-	msgLose = "Your fur falls out."
-	icon_state  = "cat"
-
-
+	
 /datum/bioEffect/mutantrace/cow
 	name = "Bovine Genetics"
 	desc = "The subject takes on the appearance of a domesticated space cow and gains milk production."
