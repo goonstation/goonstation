@@ -96,15 +96,10 @@
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O in src.contents)
-			if (src.cant_drop) //if they can't drop this just dump the item out
-				O.set_loc(user.loc)
-				return
 			user.drop_item()
 			SPAWN(1 DECI SECOND)
 				O.Attackhand(user)
 		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored)
-			if (istype(user, /mob/living/object)) //living storage objects get to slurp up items
-				src.Attackby(O, user)
 			user.swap_hand()
 			if(user.equipped() == null)
 				O.Attackhand(user)
