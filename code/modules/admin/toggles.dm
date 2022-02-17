@@ -377,6 +377,7 @@ client/proc/toggle_ghost_respawns()
 	admin_only
 	usr.client.noclip()
 
+
 /client/proc/cmd_admin_omnipresence()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Your Mob's Omnipresence"
