@@ -733,7 +733,9 @@
 		else if (src.mind.master)
 			remove_mindslave_status(src, "otherslave", "death")
 #ifdef DATALOGGER
-		game_stats.Increment("playerdeaths")
+		if (src.mind.ckey)
+			// game_stats.Increment("playerdeaths")
+			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
 #endif
 
 	logTheThing("combat", src, null, "dies [log_health(src)] at [log_loc(src)].")
