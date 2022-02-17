@@ -159,7 +159,9 @@ proc/generate_backup_jars()
 		var/areatype = pick(/area/diner/kitchen, /area/station/crew_quarters/kitchen)
 		var/list/turf/turfs = get_area_turfs(areatype, 1)
 		if(length(turfs))
-			new/obj/item/reagent_containers/glass/jar(pick(turfs))
+			var/turf/T = pick(turfs)
+			new/obj/item/reagent_containers/glass/jar(T)
+			logTheThing("debug", null, null, "<b>Pickle Jar:</b> New empty jar created at [log_loc(T)]")
 		else
 			tries_left--
 	tries_left = 50
@@ -167,6 +169,7 @@ proc/generate_backup_jars()
 		var/turf/simulated/floor/T = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION)
 		if(istype(T))
 			new/obj/item/reagent_containers/glass/jar(T)
+			logTheThing("debug", null, null, "<b>Pickle Jar:</b> New empty jar created at [log_loc(T)]")
 		else
 			tries_left--
 
