@@ -28,7 +28,7 @@
 		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/toy))
+		if(istype(W, /obj/item/toy) || istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
 			return ..()
 
 		if (length(src.contents) > JAR_MAX_ITEMS || (locate(/mob/living) in src))
