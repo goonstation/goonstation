@@ -261,6 +261,9 @@ var/f_color_selector_handler/F_Color_Selector
 			Z_LOG_DEBUG("Preload", "Loading local browserassets...")
 			recursiveFileLoader("browserassets/")
 
+		Z_LOG_DEBUG("Preload", "Z-level datums...")
+		init_zlevel_datums()
+
 		Z_LOG_DEBUG("Preload", "Adding overlays...")
 		var/overlayList = childrentypesof(/datum/overlayComposition)
 		for(var/over in overlayList)
