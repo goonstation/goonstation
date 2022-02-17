@@ -1004,7 +1004,7 @@
 	edible = 1
 
 	New()
-		setProperty("density", 65)
+		setProperty("density", 45)
 		setProperty("hard", 3)
 		setProperty("corrosion", 70)
 		setProperty("permeable", 95)
