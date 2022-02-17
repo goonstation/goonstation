@@ -642,7 +642,7 @@
 		if (!hasPDA)
 			. += "<br>*No PDA detected!*"
 
-/// Internal wrapper. Should only be called by MouseDrop.
+/// Override MouseDrop_T instead of this. Call this instead of MouseDrop_T, but you probably shouldn't!
 /atom/proc/_MouseDrop_T(dropped, user)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	SPAWN(0) // Yes, things break if this isn't a spawn.
@@ -772,7 +772,7 @@
 
 	return null
 
-/// Do not override, use mouse_drop instead.
+/// Override mouse_drop instead of this. Call this instead of MouseDrop, but you probably shouldn't!
 /atom/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!isatom(over_object))
