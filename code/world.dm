@@ -1779,6 +1779,7 @@ var/f_color_selector_handler/F_Color_Selector
 	return src.maxz
 
 /world/proc/setupZLevel(new_zlevel)
+	global.zlevels += new/datum/zlevel("dyn[new_zlevel]", length(global.zlevels) + 1)
 	init_spatial_map(new_zlevel)
 
 /// EXPERIMENTAL STUFF
