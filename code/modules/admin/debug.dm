@@ -528,14 +528,11 @@ var/global/debug_messages = 0
 		src.verbs += /client/proc/cmd_debug_del_all_check
 		boutput(usr, "Deleting [hsbitem]...")
 		var/numdeleted = 0
-		for(var/atom/O in world)
-			if(istype(O, hsbitem))
-				qdel(O)
-				numdeleted++
-				if(background == "Yes (Low)")
-					LAGCHECK(LAG_LOW)
-				else if(background == "Yes (High)")
-					LAGCHECK(LAG_REALTIME)
+		for(var/atom/O as anything in find_all_by_type(hsbitem, lagcheck=(background == "yes")))
+			qdel(O)
+			numdeleted++
+			if(background == "Yes")
+				LAGCHECK(LAG_LOW)
 			if (src.delete_state == DELETE_STOP)
 				break
 			else if (src.delete_state == DELETE_CHECK)
@@ -559,7 +556,7 @@ var/global/debug_messages = 0
 	// to prevent REALLY stupid deletions
 	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human)
 	var/hsbitem = get_one_match(typename, /atom)
-	var/background =  alert("Run the process in the background?",,"Yes (High)","Yes (Low)" ,"No")
+	var/background =  alert("Run the process in the background?",,"Yes" ,"No")
 
 	for(var/V in blocked)
 		if(V == hsbitem)
@@ -572,16 +569,13 @@ var/global/debug_messages = 0
 		boutput(usr, "Deleting [hsbitem]...")
 		var/numdeleted = 0
 		var/numtotal = 0
-		for(var/atom/O in world)
-			if(istype(O, hsbitem))
-				numtotal++
-				if(prob(50))
-					qdel(O)
-					numdeleted++
-				if(background == "Yes (Low)")
-					LAGCHECK(LAG_LOW)
-				else if(background == "Yes (High)")
-					LAGCHECK(LAG_REALTIME)
+		for(var/atom/O as anything in find_all_by_type(hsbitem, lagcheck=(background == "yes")))
+			numtotal++
+			if(prob(50))
+				qdel(O)
+				numdeleted++
+			if(background == "Yes")
+				LAGCHECK(LAG_LOW)
 			if (src.delete_state == DELETE_STOP)
 				break
 			else if (src.delete_state == DELETE_CHECK)
