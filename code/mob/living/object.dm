@@ -25,11 +25,9 @@
 	New(var/atom/loc, var/obj/possessed, var/mob/controller)
 		..(loc, null, null)
 
-		//only set one of these so we can check them in lieu of an istype
 		if (isitem(possessed_thing))
 			src.possessed_item = possessed
-		else
-			src.possessed_thing = possessed
+		src.possessed_thing = possessed
 
 
 		if (istype(src.possessed_thing, /obj/machinery/the_singularity))
@@ -129,6 +127,7 @@
 		is_jittery = 0
 		jitteriness = 0
 
+
 	bullet_act(var/obj/projectile/P)
 		var/damage = 0
 		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
@@ -165,6 +164,9 @@
 			user.visible_message("<span class='alert'>[user] pets [src]!</span>")
 		else
 			..()
+
+	MouseDrop(var/atom/other_thing) //remove this if it leads to excessive fuckery
+		src.possessed_thing.MouseDrop(other_thing)
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		health -= burn
