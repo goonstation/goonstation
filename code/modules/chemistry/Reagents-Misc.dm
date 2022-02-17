@@ -811,10 +811,6 @@ datum
 			pierces_outerwear = 1
 			var/counter
 
-			pooled()
-				..()
-				counter = 1
-
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
 				if(method == TOUCH)
@@ -840,10 +836,9 @@ datum
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.sticky = TRUE
 					T.wet = 0
-					SPAWN_DBG(80 SECONDS)
-						if (istype(T))
-							T.UpdateOverlays(null, "wet_overlay")
-							T.sticky = FALSE
+					SPAWN(80 SECONDS)
+						T.UpdateOverlays(null, "wet_overlay")
+						T.sticky = FALSE
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1, var/method, var/volume_passed)
