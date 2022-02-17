@@ -31,6 +31,10 @@
 		if(istype(W, /obj/item/toy) || istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
 			return ..()
 
+		if(W.two_handed || W.w_class >= W_CLASS_GIGANTIC)
+			boutput(user, "<span class='alert'>That's too large to fit into the jar.</span>")
+			return
+
 		if (length(src.contents) > JAR_MAX_ITEMS || (locate(/mob/living) in src))
 			boutput(user, "<span class='alert'>There is no way that will fit into this jar.  This VERY FULL jar.</span>")
 			return
