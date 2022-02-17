@@ -161,7 +161,6 @@ proc/load_intraround_jars()
 			var/list/jar_contents = jar_data[3]
 			for(var/obj/item/I in jar_contents)
 				I.set_loc(jar)
-				I.reagents?.trans_to(jar, 100)
 				var/obj/item/reagent_containers/food/snacks/pickle_holder/pickled = I
 				if(istype(pickled))
 					pickled.pickle_age++
@@ -179,6 +178,7 @@ proc/load_intraround_jars()
 /obj/item/reagent_containers/food/snacks/pickle_holder
 	name = "ethereal pickle"
 	desc = "You can't see anything, but there is an unmistakable presence of vinegar and spices here. Kosher dill."
+	initial_volume = 0
 	var/pickle_age
 
 	New(newloc, obj/item/pickled)
