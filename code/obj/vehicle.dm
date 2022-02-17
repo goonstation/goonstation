@@ -750,7 +750,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			boutput(user, "<span class='alert'>The [src.name]'s holding tank is full!</span>")
 			return
 
-		logTheThing("combat", user, null, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for floor buffers (Convair880).
+		logTheThing("chemistry", user, null, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for floor buffers (Convair880).
 		var/trans = W.reagents.trans_to(src, W.reagents.total_volume)
 		boutput(user, "<span class='notice'>You empty [trans] units of the solution into the [src.name]'s holding tank.</span>")
 		return

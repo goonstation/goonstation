@@ -80,7 +80,7 @@
 				continue
 			if(isliving(A))
 				var/mob/living/L = A
-				logTheThing("combat", L, null, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
+				logTheThing("chemistry", L, null, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
 			if (reagents)
 				reagents.reaction(A, TOUCH, 5, 0)
 		if (reagents)
@@ -164,7 +164,7 @@
 		var/mob/living/carbon/human/M = AM
 
 		if (M.slip())
-			logTheThing("combat", M, null, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
+			logTheThing("chemistry", M, null, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
 			reagents.reaction(M, TOUCH, 5)
 
 			M.show_text("You slip on the foam!", "red")

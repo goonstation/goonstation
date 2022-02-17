@@ -563,7 +563,7 @@
 				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>","<span class='notice'>You take a sip from [src].</span>\n[tasteMessage]", group = "drinkMessages")
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src].</span>")
-				logTheThing("combat", user, M, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
+				logTheThing(LOG_CHEMISTRY_COMBAT, user, M, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
 
 				if (!do_mob(user, M))
 					if (user && ismob(user))
@@ -577,7 +577,7 @@
 				 group = "drinkMessages")
 
 			if (src.reagents.total_volume)
-				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
+				logTheThing(user == M ? LOG_CHEM_DRINK : LOG_CHEMISTRY_COMBAT, user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
 				src.reagents.reaction(M, INGEST, clamp(reagents.total_volume, CHEM_EPSILON, min(gulp_size, (M.reagents?.maximum_volume - M.reagents?.total_volume))))
 				SPAWN(0.5 SECONDS)
 					if (src?.reagents && M?.reagents)
@@ -615,7 +615,7 @@
 
 			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
 				var/turf/T = get_turf(F)
-				logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
+				logTheThing("chemistry", user, null, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
 				var/trans = src.reagents.trans_to(T, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
 				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [T].</span>")
 
@@ -641,7 +641,7 @@
 				boutput(user, "<span class='alert'>[target] is full.</span>")
 				return
 
-			logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].") // Added reagents (Convair880).
+			logTheThing("chemistry", user, null, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].") // Added reagents (Convair880).
 			var/trans = src.reagents.trans_to(target, 10)
 			boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
@@ -654,7 +654,7 @@
 				boutput(user, "<span class='alert'>[target] is full.</span>")
 				return
 
-			logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].")
+			logTheThing("chemistry", user, null, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].")
 			var/trans = src.reagents.trans_to(target, 10)
 			boutput(user, "<span class='notice'>You dump [trans] units of the solution to [target].</span>")
 
@@ -665,7 +665,7 @@
 				if (target:flags & NOSPLASH) return
 			can_mousedrop = 0
 			boutput(user, "<span class='notice'>You [src.splash_all_contents ? "pour all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target].</span>")
-			logTheThing("combat", user, target, "pours [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
+			logTheThing("chemistry", user, target, "pours [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
 			if (reagents)
 				reagents.physical_shock(14)
 
@@ -1380,7 +1380,7 @@
 			glassholder.visible_message("[glassholder.name] starts chugging the [glass.name]!")
 		else
 			glassholder.visible_message("[glassholder.name] starts forcing [target.name] to chug the [glass.name]!")
-		logTheThing("combat", glassholder, target, "[glassholder == target ? "starts chugging from" : "makes [constructTarget(target,"combat")] chug from"] [glass] [log_reagents(glass)] at [log_loc(target)].")
+		logTheThing(LOG_CHEM_DRINK, glassholder, target, "[glassholder == target ? "starts chugging from" : "makes [constructTarget(target,"combat")] chug from"] [glass] [log_reagents(glass)] at [log_loc(target)].")
 		return
 
 	loopStart()

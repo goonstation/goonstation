@@ -219,13 +219,13 @@
 			user.drop_item()
 			G.set_loc(src)
 			user.visible_message("[user] adds a beaker to \the [src]!", "You add a beaker to the [src]!")
-			logTheThing("combat", user, null, "adds a beaker [log_reagents(G)] to [src] at [log_loc(src)].") // Rigging cryo is advertised in the 'Tip of the Day' list (Convair880).
+			logTheThing("chemistry", user, null, "adds a beaker [log_reagents(G)] to [src] at [log_loc(src)].") // Rigging cryo is advertised in the 'Tip of the Day' list (Convair880).
 			src.add_fingerprint(user)
 		else if(istype(G, /obj/item/grab))
 			push_in(G, user)
 		else if (istype(G, /obj/item/reagent_containers/syringe))
 			//this is in syringe.dm
-			logTheThing("combat", user, null, "injects [log_reagents(G)] to [src] at [log_loc(src)].")
+			logTheThing("chemistry", user, null, "injects [log_reagents(G)] to [src] at [log_loc(src)].")
 			if (src.beaker == null)
 				boutput(user, "<span class='alert'>There is no beaker in [src] for you to inject reagents.</span>")
 				return

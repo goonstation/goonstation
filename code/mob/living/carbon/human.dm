@@ -3125,7 +3125,7 @@
 		var/maxVolumeAdd = src.reagents.maximum_volume - src.reagents.total_volume	// Get max available volume in human
 		if (maxVolumeAdd > 0)	// If we can add reagents to human, print message and dump shit into human
 			boutput(src, "<span class='alert'><b>[src.chest_item] spills its contents inside your chest!</span>")
-			logTheThing("combat", src, src.chest_item, "transfers chemicals from [src.chest_item] [log_reagents(src.chest_item)] to [src] at [log_loc(src)]")
+			logTheThing("chemistry", src, src.chest_item, "transfers chemicals from [src.chest_item] [log_reagents(src.chest_item)] to [src] at [log_loc(src)]")
 			src.chest_item.reagents.trans_to(src, maxVolumeAdd)
 	return
 

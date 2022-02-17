@@ -113,7 +113,7 @@
 		if (can_operate_on(user))
 			user.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
 			"<span class='notice'>You apply [src] to yourself.</span>")
-			logTheThing("combat", user, null, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(LOG_CHEM_HEALING, user, null, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
 			user.Attackby(src, user)
 		return
 
@@ -123,7 +123,7 @@
 			if (prob(30) || good_throw && prob(70))
 				src.in_use = 1
 				M.visible_message("<span class='alert'>[src] lands on [M] sticky side down!</span>")
-				logTheThing("combat", M, usr, "is stuck by a patch [log_reagents(src)] thrown by [constructTarget(usr,"combat")] at [log_loc(M)].")
+				logTheThing(LOG_CHEM_HEALING, M, usr, "is stuck by a patch [log_reagents(src)] thrown by [constructTarget(usr,"combat")] at [log_loc(M)].")
 				apply_to(M,usr)
 				attach_sticker_manual(M)
 
@@ -147,7 +147,7 @@
 				if (medical == 0)
 					user.visible_message("<span class='alert'><b>[user]</b> is trying to stick [src] to [M]'s arm!</span>",\
 					"<span class='alert'>You try to stick [src] to [M]'s arm!</span>")
-					logTheThing("combat", user, M, "tries to apply a patch [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
+					logTheThing(LOG_CHEM_HEALING, user, M, "tries to apply a patch [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
 
 					if (!do_mob(user, M))
 						if (user && ismob(user))
@@ -175,7 +175,7 @@
 							H.patchesused ++
 						JOB_XP(user, "Medical Doctor", 1)
 
-			logTheThing("combat", user, M, "applies a patch to [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(LOG_CHEM_HEALING, user, M, "applies a patch to [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 
 			src.clamp_reagents()
 
@@ -548,7 +548,7 @@
 				if (M.health < 90)
 					JOB_XP(user, "Medical Doctor", 2)
 
-			logTheThing("combat", user, M, "begins automending [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(LOG_CHEM_HEALING, user, M, "begins automending [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 			begin_application(M,user=user)
 			return 1
 
@@ -575,7 +575,7 @@
 				var/datum/reagents/R = new
 				reagents.copy_to(R)
 				R.trans_to(M, use_volume_adjusted/2)
-			logTheThing("combat", user, M, " automends [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(LOG_CHEM_HEALING, user, M, " automends [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 
 			playsound(src, pick(sfx), 50, 1)
 
