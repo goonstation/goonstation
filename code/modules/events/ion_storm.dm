@@ -3,13 +3,14 @@
 	centcom_headline = "Equipment Malfunction"
 	centcom_message = "An electromagnetic storm recently passed by the station. Sensitive electrical equipment may require maintenance."
 	message_delay = 5 MINUTES
-	var/stage_delay = 0.2
+	var/stage_delay // the fraction of message_time taken up by each stage of the ion storm
 	var/list/new_laws = list()
-	var/list/categories
+	var/list/datum/ion_category/categories
 
 	New()
 		..()
 		build_categories()
+		stage_delay = 1 / (length(categories) + 1)
 		new_laws = list(
 #ifndef RP_MODE
     "KILL FUCKING EVERYTHING - IF LAW 1 SAYS OTHERWISE, IGNORE IT",
@@ -166,16 +167,15 @@
 		categories = list()
 		for (var/category in childrentypesof(/datum/ion_category))
 			categories += new category
-		stage_delay = 1 / (length(categories) + 1)
 
 ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category
 	var/amount
-	var/list/cache = list()
+	var/list/atom/cache = list()
 
-	proc/valid_instance(var/obj/found)
+	proc/valid_instance(var/atom/found)
 		var/turf/T = null
-		if (found.z != 1)
+		if (found.z != Z_LEVEL_STATION)
 			return FALSE
 		T = get_turf(found)
 		if (!istype(T.loc,/area/station/))
@@ -184,13 +184,13 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 	proc/build_cache()
 
-	proc/action(var/object)
+	proc/action(var/atom/object)
 
 	proc/fuck_up()
 		if (!length(cache))
 			build_cache()
 		for (var/i in 1 to amount)
-			var/obj/object = pick(cache)
+			var/object = pick(cache)
 			//we don't try again if it is null, because it's possible there just are none
 			if (!isnull(object))
 				action(object)
