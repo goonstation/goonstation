@@ -1,5 +1,9 @@
 
 (t)thu feb 17 22
+(u)Flappybat
+(p)7522
+(e)|
+(+)Tracking beacons start anchored. You can unanchor them with a screwdriver.
 (u)TTerc
 (+)Fish now deal 0 damage. Invite your friends for a fish slap fight!
 (u)pali
