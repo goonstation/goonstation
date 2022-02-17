@@ -7,6 +7,7 @@
 /mob/living/object
 	name = "living object"
 	var/obj/possessed_thing
+	var/obj/item/possessed_item
 	var/mob/owner
 	var/obj/item/attackdummy/dummy
 	var/datum/hud/object/hud
@@ -24,7 +25,12 @@
 	New(var/atom/loc, var/obj/possessed, var/mob/controller)
 		..(loc, null, null)
 
-		src.possessed_thing = possessed
+		//only set one of these so we can check them in lieu of an istype
+		if (isitem(possessed_thing))
+			src.possessed_item = possessed
+		else
+			src.possessed_thing = possessed
+
 
 		if (istype(src.possessed_thing, /obj/machinery/the_singularity))
 			event_handler_flags |= IMMUNE_SINGULARITY
@@ -35,7 +41,9 @@
 		src.attach_hud(zone_sel)
 
 		message_admins("[key_name(controller)] possessed [loc] at [showCoords(loc.x, loc.y, loc.z)].")
-		if (!isitem(src.possessed_thing))
+		if (posessed_item)
+			possessed_item.cant_drop = TRUE
+		else
 			if (isobj(possessed_thing))
 				dummy = new /obj/item/attackdummy(src)
 				dummy.name = loc.name
@@ -44,10 +52,12 @@
 				boutput(controller, "<h3 class='alert'>Uh oh, you tried to possess something illegal! Here's a toolbox instead!</h3>")
 				src.possessed_thing = new /obj/item/storage/toolbox/artistic
 
+
 		set_loc(get_turf(src.possessed_thing))
 
-		if (!isitem(src.possessed_thing))
+		if (!src.possessed_item)
 			src.set_density(1)
+
 		possessed_thing.set_loc(src)
 		src.name = "[name_prefix][possessed_thing.name]"
 		src.real_name = src.name
@@ -88,7 +98,7 @@
 			boutput(src, "<span class='alert'>You feel yourself being ripped away from this object!</h1>") //no destroying spacetime
 
 	equipped()
-		if (isitem(src.possessed_thing))
+		if (src.possessed_item)
 			return src.possessed_thing
 		else
 			return src.dummy
@@ -186,7 +196,7 @@
 
 	click(atom/target, params)
 		if (target == src)
-			if (isitem(src.possessed_thing))
+			if (possessed_item)
 				var/obj/item/possessed_item = src.possessed_thing
 				possessed_item.attack_self(src)
 			else
