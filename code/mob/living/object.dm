@@ -54,12 +54,14 @@
 		set_loc(get_turf(src.possessed_thing))
 		possessed_thing.set_loc(src)
 
-		src.update_appearance()
+		src.update_icon()
 		src.desc = possessed_thing.desc
 		src.pixel_x = possessed_thing.pixel_x
 		src.pixel_y = possessed_thing.pixel_y
 		src.set_density(possessed_thing.density)
 		src.RL_SetOpacity(possessed_thing.opacity)
+
+		RegisterSignal(src.possessed_thing, COMSIG_ATOM_POST_UPDATE_ICON, /atom/proc/UpdateIcon)
 
 		src.owner = controller
 		if (src.owner)
@@ -157,12 +159,10 @@
 
 	MouseDrop(var/atom/other_thing) //remove this if it leads to excessive fuckery
 		..()
-		update_appearance()
 		return src.possessed_thing.MouseDrop(other_thing)
 
 	MouseDrop_T(var/atom/movable/other_thing, var/mob/user) //ditto
 		..()
-		update_appearance()
 		return src.possessed_thing.MouseDrop_T(other_thing, user)
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
@@ -204,7 +204,6 @@
 			. = ..()
 
 		//To reflect updates of the items appearance etc caused by interactions.
-		src.update_appearance()
 		src.update_density()
 		src.item_position_check()
 
@@ -276,8 +275,8 @@
 	Cross(atom/movable/mover) //CLOSETS MADE ME DO IT OK
 		return src.possessed_thing.Cross(mover)
 
-	///Update the mob's appearance to match the item's
-	proc/update_appearance()
+	update_icon()
+		..()
 		src.appearance = src.possessed_thing.appearance
 		src.name = "[name_prefix][src.possessed_thing.name]"
 		src.real_name = src.name
