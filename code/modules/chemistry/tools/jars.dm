@@ -7,6 +7,7 @@
 #define JARS_VERSION 1
 #define DEFAULT_JAR_COUNT 3
 #define MAX_JAR_COUNT 32
+#define JAR_MAX_ITEMS 16
 
 /obj/item/reagent_containers/glass/jar
 	name = "glass jar"
@@ -27,11 +28,12 @@
 		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (length(src.contents) > 16)
+		if(istype(W, /obj/item/toy))
+			return ..()
+
+		if (length(src.contents) > JAR_MAX_ITEMS || (locate(/mob/living) in src))
 			boutput(user, "<span class='alert'>There is no way that will fit into this jar.  This VERY FULL jar.</span>")
 			return
-		if(istype(W, /obj/item/toy/plush))
-			return ..()
 
 		user.drop_item()
 		W.set_loc(src)
@@ -70,6 +72,11 @@
 			return FALSE
 		var/obj/item/yoinked_out_thing = pick(src.contents)
 		if(!istype(yoinked_out_thing))
+			if(yoinked_out_thing)
+				var/pronoun = "it"
+				if(ismob(yoinked_out_thing))
+					pronoun = he_or_she(yoinked_out_thing)
+				boutput(user, "<span class='notice'>You try to pull [yoinked_out_thing] out of \the [src] but it seems like [pronoun] is stuck.</span>")
 			return FALSE
 		user.put_in_hand_or_drop(yoinked_out_thing)
 		user.visible_message("<span class='notice'><b>[user]</b> pulls [yoinked_out_thing] out of [src].</span>","<span class='notice'>You pull [yoinked_out_thing] out of [src].</span>")
@@ -94,9 +101,25 @@
 	update_icon()
 		if (src.contents.len)
 			src.icon_state = "mason_jar_green"
-
 		else
 			src.icon_state = "mason_jar"
+
+	custom_suicide = TRUE
+	suicide(mob/user)
+		if(length(src.contents) > 0)
+			boutput(user, "<span class='alert'>You need to empty \the [src] first!</span>")
+			return 0
+		user.visible_message("<span class='alert'><b>[user] somehow climbs into \the [src]! How is that even possible?!</b></span>")
+		user.u_equip(src)
+		src.set_loc(user.loc)
+		src.dropped(user)
+		user.set_loc(src)
+		src.UpdateIcon()
+		return 1
+
+	handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
+		// no air inside
+		return new/datum/gas_mixture
 
 proc/save_intraround_jars()
 	var/savefile/jar_save = new(JARS_FILE)
@@ -205,3 +228,4 @@ proc/load_intraround_jars()
 #undef JARS_VERSION
 #undef DEFAULT_JAR_COUNT
 #undef MAX_JAR_COUNT
+#undef JAR_MAX_ITEMS
