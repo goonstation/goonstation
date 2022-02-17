@@ -1067,12 +1067,12 @@
 			require_var_or_list = 0
 			maptext_prefix = "<span class='c pixel sh'>Last Death:<br><span class='vga'>"
 			maptext_suffix = "</span>"
+			ding_sound = "sound/misc/lose.ogg"
 
 			get_value()
 				if (!src.monitored["stats"]["lastdeath"])
 					return "None... yet</span>"
 				return "[src.monitored["stats"]["lastdeath"]["name"]]</span><br>[src.monitored["stats"]["lastdeath"]["whereText"]]"
-				ding_sound = "sound/misc/lose.ogg"
 
 
 
