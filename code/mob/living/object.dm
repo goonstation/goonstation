@@ -38,36 +38,26 @@
 		src.zone_sel = new(src)
 		src.attach_hud(zone_sel)
 
-		message_admins("[key_name(controller)] possessed [loc] at [showCoords(loc.x, loc.y, loc.z)].")
+		message_admins("[key_name(controller)] possessed [possessed_thing] at [showCoords(loc.x, loc.y, loc.z)].")
 		if (possessed_item)
 			possessed_item.cant_drop = TRUE
 		else
 			if (isobj(possessed_thing))
 				dummy = new /obj/item/attackdummy(src)
 				dummy.name = possessed_thing.name
+				dummy.cant_drop = TRUE
 			else
 				stack_trace("Tried to create a possessed object from invalid atom [src.possessed_thing] of type [src.possessed_thing.type]!")
 				boutput(controller, "<h3 class='alert'>Uh oh, you tried to possess something illegal! Here's a toolbox instead!</h3>")
 				src.possessed_thing = new /obj/item/storage/toolbox/artistic
 
-
 		set_loc(get_turf(src.possessed_thing))
-
-		if (!src.possessed_item)
-			src.set_density(1)
-
 		possessed_thing.set_loc(src)
-		src.name = "[name_prefix][possessed_thing.name]"
-		src.real_name = src.name
+
+		src.update_appearance()
 		src.desc = possessed_thing.desc
-		src.icon = possessed_thing.icon
-		src.icon_state = possessed_thing.icon_state
 		src.pixel_x = possessed_thing.pixel_x
 		src.pixel_y = possessed_thing.pixel_y
-		src.set_dir(possessed_thing.dir)
-		src.color = possessed_thing.color
-		//src.overlays = possessed_thing.overlays
-		src.sight |= SEE_SELF
 		src.set_density(possessed_thing.density)
 		src.RL_SetOpacity(possessed_thing.opacity)
 
@@ -166,7 +156,12 @@
 			..()
 
 	MouseDrop(var/atom/other_thing) //remove this if it leads to excessive fuckery
-		src.possessed_thing.MouseDrop(other_thing)
+		..()
+		return src.possessed_thing.MouseDrop(other_thing)
+
+	MouseDrop_T(var/atom/movable/other_thing, var/mob/user) //ditto
+		..()
+		return src.possessed_thing.MouseDrop_T(other_thing, user)
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		health -= burn
@@ -208,10 +203,11 @@
 
 		//To reflect updates of the items appearance etc caused by interactions.
 		src.update_appearance()
+		src.update_density()
 		src.item_position_check()
 
 	death(gibbed)
-	
+
 		if (src.possessed_thing && !gibbed)
 			src.possessed_thing.set_dir(src.dir)
 			if (src.possessed_thing.loc == src)
@@ -272,15 +268,17 @@
 	assume_air(datum/air_group/giver)
 		return loc?.assume_air(giver)
 
+	can_strip()
+		return FALSE
+
+	Cross(atom/movable/mover) //CLOSETS MADE ME DO IT OK
+		return src.possessed_thing.Cross(mover)
+
 	///Update the mob's appearance to match the item's
-	proc/update_appearance() //TODO test this more
+	proc/update_appearance()
 		src.appearance = src.possessed_thing.appearance
 		src.name = "[name_prefix][src.possessed_thing.name]"
 		src.real_name = src.name
-		src.possessed_thing.set_dir(src.dir)
-		//src.overlays = src.possessed_thing.overlays
-		src.set_density(initial(src.possessed_thing.density))
-		src.opacity = src.possessed_thing.opacity
 
 	///Ensure the item is still inside us. If it isn't, die and return false. Otherwise, return true.
 	proc/item_position_check()
@@ -290,3 +288,6 @@
 			return FALSE
 		return TRUE
 
+	///Update the density of ourselves
+	proc/update_density()
+		src.density = src.possessed_thing.density
