@@ -24,8 +24,10 @@ var/global/logLength = 0
 /proc/logTheThing(type, source, target, text, diaryType)
 	var/diaryLogging
 	var/forceNonDiaryLoggingToo = FALSE
+	var/area/A
 
 	if (source)
+		A = get_area(source)
 		source = constructName(source, type)
 	else
 		if (type != "diary") source = "<span class='blank'>(blank)</span>"
@@ -77,7 +79,11 @@ var/global/logLength = 0
 			if ("ooc") logs["ooc"] += ingameLog
 			if ("whisper") logs["speech"] += ingameLog
 			if ("station") logs["station"] += ingameLog
-			if ("combat") logs["combat"] += ingameLog
+			if ("combat")
+				if (!isnull(A))
+					if (A.dont_log_combat)
+						return
+				logs["combat"] += ingameLog
 			if ("telepathy") logs["telepathy"] += ingameLog
 			if ("debug") logs["debug"] += ingameLog
 			if ("pdamsg") logs["pdamsg"] += ingameLog
@@ -255,6 +261,10 @@ var/global/logLength = 0
 proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	if (!P || !SHOT)
 		return
+	var/area/A = get_area(SHOT)
+	if (!isnull(A))
+		if (A.dont_log_combat)
+			return
 	var/shooter_data = null
 	var/vehicle
 	if (P.mob_shooter)
