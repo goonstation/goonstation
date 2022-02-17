@@ -4623,7 +4623,7 @@ var/global/noir = 0
 			var/typeinfo/atom/typeinfo = get_type_typeinfo(path)
 			if(!typeinfo.admin_spawnable)
 				continue
-		if(findtext("[path]", object))
+		if(findtext("[path]$", object))
 			matches += path
 
 	. = matches
