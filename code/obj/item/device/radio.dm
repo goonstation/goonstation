@@ -664,21 +664,18 @@ var/list/headset_channel_lookup
 		if (isscrewingtool(I))
 			if (src.anchored)
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				user.show_text("You start unscrewing [src] from the floor.", "blue")
-				if (do_after(user, 3 SECONDS))
-					user.show_text("You unscrew [src] from the floor.", "blue")
-					src.anchored = 0
-					return
+				user.visible_message("[user] unscrews [src] from the floor.", "You unscrew [src] from the floor.", "You hear a screwdriver.")
+				src.anchored = 0
+				return
 			else
-				var/turf/T = get_turf(src)
-				if (istype(T, /turf/space))
-					user.show_text("What exactly are you gonna secure [src] to?", "red")
-					return
-				else
-					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-					user.show_text("You start securing [src] to [T].", "blue")
-					if (do_after(user, 3 SECONDS))
-						user.show_text("You secure [src] to [T].", "blue")
+				if (isturf(src.loc))
+					var/turf/T = get_turf(src)
+					if (istype(T, /turf/space))
+						user.show_text("What exactly are you gonna secure [src] to?", "red")
+						return
+					else
+						playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+						user.visible_message("[user] screws [src] to the floor, anchoring it in place.", "You screw [src] to the floor, anchoring it in place.", "You hear a screwdriver.")
 						src.anchored = 1
 						return
 		..()
