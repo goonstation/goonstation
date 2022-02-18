@@ -340,6 +340,7 @@ var/global
 		"vehicle" = list (  ),
 		"tgui" = list (), //me 2
 		"computers" = list(),
+		"chemistry" = list(),
 		"audit" = list()//im a rebel, i refuse to add that gross SPACING
 	)
 	savefile/compid_file 	//The file holding computer ID information

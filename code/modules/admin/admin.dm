@@ -4136,7 +4136,9 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=view_logs;type=vehicle_log'>Vehicle Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=vehicle_log_string'><small>(Search)</small></A><br>
 				<A href='?src=\ref[src];action=view_logs;type=computers_log'>Computers Log</A>
-				<A href='?src=\ref[src];action=view_logs;type=computers_log_string'><small>(Search)</small></A>
+				<A href='?src=\ref[src];action=view_logs;type=computers_log_string'><small>(Search)</small></A><br>
+				<A href='?src=\ref[src];action=view_logs;type=chemistry_log'>Chemistry Log</A>
+				<A href='?src=\ref[src];action=view_logs;type=chemistry_log_string'><small>(Search)</small></A>
 				<hr>
 				<A href='?src=\ref[src];action=view_runtimes'>View Runtimes</A>
 			"}
