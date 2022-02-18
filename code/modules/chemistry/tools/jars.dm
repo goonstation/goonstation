@@ -140,7 +140,7 @@ proc/save_intraround_jars()
 		for (var/atom/movable/AM in jar)
 			var/obj/item/reagent_containers/food/snacks/pickle_holder/pickled = AM
 			if(!istype(AM, /obj/item/reagent_containers/food/snacks/pickle_holder))
-				pickled = new(jar, AM)
+				pickled = AM.picklify(jar)
 				qdel(AM)
 			if(pickled.material)
 				pickled.removeMaterial()
@@ -226,6 +226,14 @@ proc/load_intraround_jars()
 	// in case we have less than the required amount generate more
 	generate_backup_jars()
 
+
+
+// the food that represents the pickled object
+
+/atom/movable/proc/picklify(atom/loc)
+	RETURN_TYPE(/obj/item/reagent_containers/food/snacks/pickle_holder)
+	return new/obj/item/reagent_containers/food/snacks/pickle_holder(loc, src)
+
 /obj/item/reagent_containers/food/snacks/pickle_holder
 	name = "ethereal pickle"
 	desc = "You can't see anything, but there is an unmistakable presence of vinegar and spices here. Kosher dill."
@@ -233,7 +241,7 @@ proc/load_intraround_jars()
 	var/pickle_age
 
 	New(newloc, atom/movable/pickled)
-		..(newloc)
+		..()
 		if (istype(pickled))
 			src.icon = getFlatIcon(pickled, no_anim=TRUE)
 			src.paint_pickly_color()
@@ -249,6 +257,80 @@ proc/load_intraround_jars()
 		. = ..()
 		if(src.pickle_age)
 			. += " It has been [src.pickle_age] shift[src.pickle_age > 1 ? "s" : ""] since it was pickled."
+
+
+
+// overrides of pickling for specific objects go here
+
+/obj/item/paper/picklify(atom/loc)
+	return new/obj/item/reagent_containers/food/snacks/pickle_holder/paper(loc, src)
+
+/obj/item/reagent_containers/food/snacks/pickle_holder/paper
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | TGUI_INTERACTIVE
+	var/sizex
+	var/sizey
+	var/info
+	var/list/stamps
+	var/list/form_fields
+	var/field_counter
+
+	New(newloc, obj/item/paper/pickled)
+		..()
+		if (istype(pickled))
+			src.sizex = pickled.sizex
+			src.sizey = pickled.sizey
+			src.info = pickled.info
+			src.stamps = pickled.stamps?.Copy()
+			src.form_fields = pickled.form_fields?.Copy()
+			src.field_counter = pickled.field_counter
+
+	attack_self(mob/user)
+		// show both the text and take a bite! consuming both information and food at the same time!
+		ui_interact(user)
+		. = ..()
+
+	examine(mob/user)
+		. = ..()
+		ui_interact(user)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "PaperSheet")
+			ui.open()
+
+	ui_status(mob/user, datum/ui_state/state)
+		if(!user.literate)
+			boutput(user, "<span class='alert'>You don't know how to read.</span>")
+			return UI_CLOSE
+		. = max(..(), UI_DISABLED)
+		if(IN_RANGE(user, src, 8))
+			. = max(., UI_UPDATE)
+
+	ui_static_data(mob/user)
+		. = list(
+			"name" = src.name,
+			"sizeX" = src.sizex,
+			"sizeY" = src.sizey,
+			"text" = src.info,
+			"max_length" = 5000,
+			"paperColor" = src.color || "white",	// color might not be set
+			"stamps" = src.stamps,
+			"stampable" = FALSE,
+			"sealed" = TRUE,
+		)
+
+	ui_data(mob/user)
+		. = list(
+			"editUsr" = "[user]",
+			"fieldCounter" = field_counter,
+			"formFields" = form_fields,
+			"editMode" = 0,
+			"penFont" = "FAKE",
+			"penColor" = "FAKE",
+			"isCrayon" = FALSE,
+			"stampClass" = "FAKE",
+		)
 
 #undef JARS_FILE
 #undef JARS_VERSION
