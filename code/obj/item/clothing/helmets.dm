@@ -125,7 +125,6 @@
 	item_state = "s_helmet"
 
 	icon = 'icons/obj/clothing/item_hats.dmi' // prep the world icon_state for building, is made later
-	var/datum/material/fabr_material = null
 	var/datum/material/visr_material = null
 	var/image/fabrImg = null
 	var/image/visrImg = null
@@ -138,7 +137,6 @@
 		overlays += visrImg
 
 	proc/setupVisorMat(var/datum/material/V, var/datum/material/C)
-		src.color = C.color
 		visr_material = copyMaterial(V)
 		if (V)
 			if (V.hasProperty("thermal"))
@@ -171,25 +169,24 @@
 			visrImg.color = null
 			visrImg.alpha = 255
 		overlays += visrImg
-		setName()
 
-	proc/setFabrMaterial(var/datum/material/M)// since color already initalized in setup visor mat, only take alpha
-		fabr_material = copyMaterial(M)
-		src.setMaterial(fabr_material,copy = 0, appearance = 0, setname = 0)
+
+	onMaterialChanged()// since color already initalized in setup visor mat, only take alpha
+
 		overlays -= fabrImg
-		if (M)
-			fabrImg.alpha = M.alpha
+		if (src.material)
+			fabrImg.alpha = src.material.alpha
 		else
 			fabrImg.color = null
 			fabrImg.alpha = 255
 		overlays += fabrImg
-		setName()
 
-	proc/setName()
-		if (visr_material && fabr_material)
-			name = "[visr_material]-visored [fabr_material] helmet"
+
+	UpdateName()
+		if (visr_material && src.material)
+			name = "[visr_material]-visored [src.material] helmet"
 		else if (visr_material)
-			name = " [fabr_material] helmet"
+			name = " [src.material] helmet"
 
 // Sealab helmets
 

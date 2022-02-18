@@ -78,15 +78,13 @@
 			var/obj/item/fabr = getObjectByPartName("Fabric")
 			var/obj/item/vis = getObjectByPartName("Visor")
 			var/obj/item/renf = getObjectByPartName("Reinforcement")
-			suit.setMaterial(fabr.material)// suit stuff
-			suit.setupSuitProp(fabr.material, renf.material)
-			suit.setsuitname(fabr, renf)
-			if (fabr?.material && vis?.material) // helmet stuff
-				helmet.setMaterial(fabr.material)
-				helmet.setFabrMaterial(fabr.material)
-				helmet.setVisrMaterial(vis.material)
+			suit.setMaterial(fabr.material) // suit stuff
+			suit.setupReinforcement(renf.material)
+			suit.UpdateName()
+			helmet.setMaterial(fabr.material) // helmet stuff
+			helmet.setVisrMaterial(vis.material)
 			helmet.setupVisorMat(vis.material, fabr.material)// sets color to match the suit, keeps protectiveness from visor
-
+			helmet.UpdateName()
 		return
 
 /datum/matfab_recipe/mining_mod_conc

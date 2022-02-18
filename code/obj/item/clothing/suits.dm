@@ -1288,31 +1288,33 @@
 	item_state = "spacemat"
 	name = "bespoke space suit"
 	desc = "A custom built suit that protects your soft tissues from hard vacuum."
-	proc/setupSuitProp(var/datum/material/F, var/datum/material/R) // f is fabric, decides protection, R is reinforcment, decides melee prot
+	var/datum/material/reinf=null
 
-		if(F)
-			if(F.hasProperty("thermal"))
-				var/prot = 100 - F.getProperty("thermal")
+	proc/setupReinforcement(var/datum/material/R) // passes the reinforcement variable, sets up protection
+		reinf = R
+		if (src.material && reinf)
+			if (src.material.hasProperty("thermal"))
+				var/prot = 100 - src.material.getProperty("thermal")
 				setProperty("coldprot", prot)
 				setProperty("heatprot", round(prot/2))
 			else
 				setProperty("coldprot", 30)
 				setProperty("heatprot", 15)
 
-			if(F.hasProperty("permeable"))
-				var/prot = 100 - F.getProperty("permeable")
+			if (src.material.hasProperty("permeable"))
+				var/prot = 100 - src.material.getProperty("permeable")
 				setProperty("viralprot", prot)
 			else
 				setProperty("viralprot", 40)
 
-			if(F.hasProperty("density")) // for RANGED
-				var/prot = round(F.getProperty("density") / 13)
+			if(src.material.hasProperty("density")) // for RANGED
+				var/prot = round(src.material.getProperty("density") / 13)
 				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
 			else
 				setProperty("rangedprot", 0.4)
 
-			if(R.hasProperty("hard")) // for MELEE
-				var/prot = round(R.getProperty("hard") / 13)
+			if(reinf.hasProperty("hard")) // for MELEE
+				var/prot = round(reinf.getProperty("hard") / 13)
 				if(prot < 3)// most metals are very soft, so for balance's sake it'll be (usually) at least that of normal suits
 					setProperty("meleeprot", 3)
 				if(prot < 6 )
@@ -1321,17 +1323,18 @@
 			else
 				setProperty("meleeprot", 2)
 
-			if(R.hasProperty("density"))
-				var/clunk = R.getProperty("density")
+			if(reinf.hasProperty("density"))
+				var/clunk = reinf.getProperty("density")
 				if (clunk <= 15) // lighter metals = faster
 					setProperty("space_movespeed", 0.4) // since movespeed is already initalized, no need to have an else
 				else if (clunk >= 40)
 					setProperty("space_movespeed", 0.7) // .1 above normal spacesuits
-	proc/setsuitname(var/datum/material/F, var/datum/material/R)
-		if (F && R)
-			name = "[R]-reinforced [F] bespoke space suit"
-		else if (F)
-			name = " [F] bespoke space suit"
+
+	UpdateName()
+		if (src.material && reinf)
+			name = "[reinf]-reinforced [src.material] bespoke space suit"
+		else if (src.material)
+			name = " [src.material] bespoke space suit"
 // Sealab suits
 
 /obj/item/clothing/suit/space/diving
