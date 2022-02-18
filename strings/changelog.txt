@@ -1,4 +1,9 @@
 
+(t)fri feb 18 22
+(u)tarmunora
+(+)blob poisoning change:
+(+)mitochondria individually less vulnerable to poison, suck poison out of nearby non-mitochondria/non-lipid tiles, store up to 50 poison in nearby lipid tiles
+(+)lipids slightly more flammable and no longer have increased poison spread on death
 (t)thu feb 17 22
 (u)aloe
 (*)Genetics computers now require genetics access to operate.
