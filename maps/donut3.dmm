@@ -47480,7 +47480,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/solar/east,
+/obj/machinery/power/solar/west,
 /turf/simulated/floor/airless{
 	icon_state = "solarbase";
 	name = "solar paneling"
@@ -49462,7 +49462,7 @@
 /area/station/hallway/primary/west)
 "ooV" = (
 /obj/cable,
-/obj/machinery/power/solar/east,
+/obj/machinery/power/solar/west,
 /turf/simulated/floor/airless{
 	icon_state = "solarbase";
 	name = "solar paneling"
