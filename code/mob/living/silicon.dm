@@ -674,8 +674,8 @@ var/global/list/module_editors = list()
 
 			if (isAI(src)) // Rogue AIs get special laws.
 				var/mob/living/silicon/ai/A
-				if (istype(src, /mob/dead/aieye))
-					var/mob/dead/aieye/E = src
+				if (isAIeye(src))
+					var/mob/living/intangible/aieye/E = src
 					A = E.mainframe
 				else
 					A = src
@@ -708,7 +708,7 @@ var/global/list/module_editors = list()
 						S.show_text("<b>Your laws have been changed!</b>", "red")
 						S.show_laws()
 						S << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-					var/mob/dead/aieye/E = C.mob
+					var/mob/living/intangible/aieye/E = C.mob
 					if (istype(E))
 						E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 

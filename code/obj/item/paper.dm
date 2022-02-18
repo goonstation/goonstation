@@ -128,7 +128,7 @@
 /obj/item/paper/attack_ai(var/mob/AI as mob)
 	var/mob/living/silicon/ai/user
 	if (isAIeye(AI))
-		var/mob/dead/aieye/E = AI
+		var/mob/living/intangible/aieye/E = AI
 		user = E.mainframe
 	else
 		user = AI

@@ -36,7 +36,7 @@ var/list/datum/contextAction/globalContextActions = null
 	else if (isAI(target))
 		var/mob/living/silicon/ai/A = target
 		if (isAIeye(target))
-			var/mob/dead/aieye/AE = target
+			var/mob/living/intangible/aieye/AE = target
 			A = AE.mainframe
 		A.hud.add_screen(C)
 

@@ -778,7 +778,7 @@
 			return 1
 
 		var/rangecheck = 0
-		if (issilicon(usr))
+		if (isAI(usr) || issilicon(usr))
 			rangecheck = 1
 		if (istype(usr.loc,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = usr.loc
