@@ -462,15 +462,6 @@
 	if(!input)
 		return
 	var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
-/*
-	for (var/obj/machinery/computer/communications/C as anything in machine_registry[MACHINES_COMMSCONSOLES])
-		if(! (C.status & (BROKEN|NOPOWER) ) )
-			var/obj/item/paper/P = new /obj/item/paper( C.loc )
-			P.name = "paper- '[command_name()] Update.'"
-			P.info = input
-			C.messagetitle.Add("[command_name()] Update")
-			C.messagetext.Add(P.info)
-*/
 
 	if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
 		for_by_tcl(C, /obj/machinery/communications_dish)
@@ -572,15 +563,22 @@
 	set name = "Check Vehicle Occupant"
 	set popup_menu = 0
 
-	var/list/all_vehicles = by_type[/obj/machinery/vehicle] + by_type[/obj/vehicle]
+	var/list/piloted_vehicles = list()
 
-	if (!all_vehicles)
-		boutput(usr, "No vehicles found!")
+	for_by_tcl(V, /obj/machinery/vehicle)
+		if (locate(/mob) in V) //also finds vehicles that only have passengers in case you're looking for waldo or something
+			piloted_vehicles += V
+
+	for_by_tcl(V, /obj/vehicle)
+		if (V.rider)
+			piloted_vehicles += V
+
+	if (!piloted_vehicles)
+		boutput(usr, "No piloted vehicles found!")
 		return
 
-	var/obj/V = input("Which vehicle?","Check vehicle occupant") as null|anything in all_vehicles
-	if (!istype(V))
-		boutput(usr, "No vehicle defined!")
+	var/obj/V = tgui_input_list(usr, "Which vehicle?", "Check vehicle occupant", piloted_vehicles)
+	if (!V)
 		return
 
 	boutput(usr, "<b>[V.name]'s Occupants:</b>")
