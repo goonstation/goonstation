@@ -96,7 +96,7 @@
 
 		if(src.reagents.total_volume)
 			if (src.dump_reagents_on_turf)
-				logTheThing("combat", usr, null, "transfers chemicals from [src] [log_reagents(src)] to [get_turf(src)] at [log_loc(usr)].")
+				logTheThing("chemistry", usr, null, "transfers chemicals from [src] [log_reagents(src)] to [get_turf(src)] at [log_loc(usr)].")
 				src.reagents.trans_to(get_turf(src), src.reagents.total_volume)
 			src.reagents.clear_reagents()
 			src.UpdateIcon()

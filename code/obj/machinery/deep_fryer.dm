@@ -41,7 +41,7 @@
 				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 
 			else
-				logTheThing("combat", user, null, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
+				logTheThing("chemistry", user, null, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
 				src.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
 				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)

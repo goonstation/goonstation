@@ -36,7 +36,7 @@
 		if (iscarbon(user) || ismobcritter(user))
 			user.visible_message("[user] swallows [src].",\
 			"<span class='notice'>You swallow [src].</span>")
-			logTheThing(LOG_CHEM_DRINK, user, null, "swallows a [src.name] [log_reagents(src)] at [log_loc(user)].")
+			logTheThing("combat", user, null, "swallows a [src.name] [log_reagents(src)] at [log_loc(user)].")
 			if (reagents.total_volume)
 				reagents.reaction(user, INGEST)
 				sleep(0.1 SECONDS)
@@ -61,7 +61,7 @@
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to swallow [src].</span>",\
 				"<span class='alert'>You attempt to force [M] to swallow [src].</span>")
-				logTheThing(LOG_CHEM_COMBAT, user, M, "tries to force-feed a [src.name] [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
+				logTheThing("combat", user, M, "tries to force-feed a [src.name] [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
 
 				if (!do_mob(user, M))
 					if (user && ismob(user))
@@ -73,7 +73,7 @@
 				user.visible_message("<span class='alert'>[user] forces [M] to swallow [src].</span>",\
 				"<span class='alert'>You force [M] to swallow [src].</span>")
 
-			logTheThing(user == M ? LOG_CHEM_DRINK : LOG_CHEM_COMBAT, user, M, "[user == M ? "swallows" : "makes [constructTarget(M,"combat")] swallow"] a [src.name] [log_reagents(src)] at [log_loc(user)].")
+			logTheThing("combat", user, M, "[user == M ? "swallows" : "makes [constructTarget(M,"combat")] swallow"] a [src.name] [log_reagents(src)] at [log_loc(user)].")
 			if (reagents.total_volume)
 				reagents.reaction(M, INGEST)
 				sleep(0.1 SECONDS)

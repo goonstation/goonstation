@@ -418,7 +418,7 @@
 				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.holder)
 					boutput(PH.parent.linked.handset.holder,"<span class='alert'><B>[usr] blows a cloud of smoke right through the phone! What a total [pick("dork","loser","dweeb","nerd","useless piece of shit","dumbass")]!</B></span>")
 
-			logTheThing("chemistry", usr, null, "vapes a cloud of [log_reagents(src)] at [log_loc(target_loc)].")
+			logTheThing("combat", usr, null, "vapes a cloud of [log_reagents(src)] at [log_loc(target_loc)].")
 			last_used = world.time
 
 /obj/item/reagent_containers/vape/medical //medical cannabis got nothing on this!!

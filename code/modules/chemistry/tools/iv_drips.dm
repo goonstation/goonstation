@@ -110,7 +110,7 @@
 			H.tri_message("<span class='notice'><b>[user]</b> begins inserting [src]'s needle into [H == user ? "[his_or_her(H)]" : "[H]'s"] arm.</span>",\
 			user, "<span class='notice'>You begin inserting [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>",\
 			H, "<span class='notice'>[H == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s needle into your arm.</span>")
-			logTheThing(LOG_CHEM_HEALING, user, H, "tries to hook up an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
+			logTheThing("combat", user, H, "tries to hook up an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
 
 			if (H != user)
 				if (!do_mob(user, H, 50))
@@ -124,7 +124,7 @@
 			H.tri_message("<span class='notice'><b>[user]</b> inserts [src]'s needle into [H == user ? "[his_or_her(H)]" : "[H]'s"] arm.</span>",\
 			user, "<span class='notice'>You insert [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>",\
 			H, "<span class='notice'>[H == user ? "You insert" : "<b>[user]</b> inserts"] [src]'s needle into your arm.</span>")
-			logTheThing(LOG_CHEM_HEALING, user, H, "connects an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
+			logTheThing("combat", user, H, "connects an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
 			src.start_transfusion()
 			return
 

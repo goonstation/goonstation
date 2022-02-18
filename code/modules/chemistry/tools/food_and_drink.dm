@@ -563,7 +563,7 @@
 				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>","<span class='notice'>You take a sip from [src].</span>\n[tasteMessage]", group = "drinkMessages")
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src].</span>")
-				logTheThing(LOG_CHEMISTRY_COMBAT, user, M, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
+				logTheThing("combat", user, M, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
 
 				if (!do_mob(user, M))
 					if (user && ismob(user))
@@ -577,7 +577,7 @@
 				 group = "drinkMessages")
 
 			if (src.reagents.total_volume)
-				logTheThing(user == M ? LOG_CHEM_DRINK : LOG_CHEMISTRY_COMBAT, user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
+				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
 				src.reagents.reaction(M, INGEST, clamp(reagents.total_volume, CHEM_EPSILON, min(gulp_size, (M.reagents?.maximum_volume - M.reagents?.total_volume))))
 				SPAWN(0.5 SECONDS)
 					if (src?.reagents && M?.reagents)
@@ -1380,7 +1380,7 @@
 			glassholder.visible_message("[glassholder.name] starts chugging the [glass.name]!")
 		else
 			glassholder.visible_message("[glassholder.name] starts forcing [target.name] to chug the [glass.name]!")
-		logTheThing(LOG_CHEM_DRINK, glassholder, target, "[glassholder == target ? "starts chugging from" : "makes [constructTarget(target,"combat")] chug from"] [glass] [log_reagents(glass)] at [log_loc(target)].")
+		logTheThing("combat", glassholder, target, "[glassholder == target ? "starts chugging from" : "makes [constructTarget(target,"combat")] chug from"] [glass] [log_reagents(glass)] at [log_loc(target)].")
 		return
 
 	loopStart()

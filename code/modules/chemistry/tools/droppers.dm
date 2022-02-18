@@ -162,7 +162,7 @@
 		if (!src || !istype(src) || !user|| !target)
 			return
 
-		logTheThing(ismob(target ? LOG_CHEMISTRY_COMBAT : "chemistry", user, target, "[delayed == 0 ? "drips" : "tries to drip"] chemicals [log_reagents(src)] from a dropper onto [constructTarget(target,"combat")] at [log_loc(user)].")
+		logTheThing("combat", user, target, "[delayed == 0 ? "drips" : "tries to drip"] chemicals [log_reagents(src)] from a dropper onto [constructTarget(target,"combat")] at [log_loc(user)].")
 		return
 
 #undef TO_SELF
