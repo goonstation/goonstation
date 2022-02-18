@@ -573,7 +573,7 @@
 		if (V.rider)
 			piloted_vehicles += V
 
-	if (!piloted_vehicles)
+	if (!length(piloted_vehicles))
 		boutput(usr, "No piloted vehicles found!")
 		return
 
@@ -587,7 +587,8 @@
 		var/info = ""
 		if(istype(MV))
 			info = M == MV.pilot ? "*Pilot*" : ""
-		boutput(usr, "[M.real_name] ([M.key]) [info]")
+
+		boutput(usr, "[M.real_name] ([M.key || "**No Key**"]) [info]")
 
 /client/proc/cmd_admin_remove_plasma()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
