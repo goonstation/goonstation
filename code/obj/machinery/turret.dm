@@ -435,16 +435,16 @@
 
 	if (href_list["toggleOn"])
 		src.enabled = !src.enabled
-		logTheThing("combat", usr, null, "turned [enabled ? "ON" : "OFF"] turrets from control \[[showCoords(src.x, src.y, src.z)]].")
+		logTheThing("combat", usr, null, "turned [enabled ? "ON" : "OFF"] turrets from control \[[log_loc(src)]].")
 		src.updateTurrets()
 	else if (href_list["toggleLethal"])
 		src.lethal = !src.lethal
 		if(src.lethal)
-			logTheThing("combat", usr, null, "set turrets to LETHAL from control \[[showCoords(src.x, src.y, src.z)]].")
-			message_admins("[key_name(usr)] set turrets to LETHAL from control \[[showCoords(src.x, src.y, src.z)]].")
+			logTheThing("combat", usr, null, "set turrets to LETHAL from control \[[log_loc(src)]].")
+			message_admins("[key_name(usr)] set turrets to LETHAL from control \[[log_loc(src)]].")
 		else
-			logTheThing("combat", usr, null, "set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
-			message_admins("[key_name(usr)] set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
+			logTheThing("combat", usr, null, "set turrets to STUN from control \[[log_loc(src)]].")
+			message_admins("[key_name(usr)] set turrets to STUN from control \[[log_loc(src)]].")
 		src.updateTurrets()
 	src.Attackhand(usr)
 
@@ -458,18 +458,18 @@
 		. = 1
 		src.enabled = !src.enabled
 		boutput(user, "You have <B>[src.enabled ? "en" : "dis"]abled</B> the turrets.")
-		logTheThing("combat", user, null, "turned [enabled ? "ON" : "OFF"] turrets from control \[[showCoords(src.x, src.y, src.z)]].")
+		logTheThing("combat", user, null, "turned [enabled ? "ON" : "OFF"] turrets from control \[[log_loc(src)]].")
 		src.updateTurrets()
 	else if(user.client.check_key(KEY_BOLT))
 		. = 1
 		src.lethal = !src.lethal
 		boutput(user, "You have set the turrets to <B>[src.lethal ? "laser" : "stun"]</B> mode.")
 		if(src.lethal)
-			logTheThing("combat", user, null, "set turrets to LETHAL from control \[[showCoords(src.x, src.y, src.z)]].")
-			message_admins("[key_name(user)] set turrets to LETHAL from control \[[showCoords(src.x, src.y, src.z)]].")
+			logTheThing("combat", user, null, "set turrets to LETHAL from control \[[log_loc(src)]].")
+			message_admins("[key_name(user)] set turrets to LETHAL from control \[[log_loc(src)]].")
 		else
-			logTheThing("combat", user, null, "set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
-			message_admins("[key_name(user)] set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
+			logTheThing("combat", user, null, "set turrets to STUN from control \[[log_loc(src)]].")
+			message_admins("[key_name(user)] set turrets to STUN from control \[[log_loc(src)]].")
 		src.updateTurrets()
 
 
@@ -493,8 +493,8 @@
 	if(!emagged)
 		if(user)
 			user.show_text("You short out the control circuit on [src]!", "blue")
-			logTheThing("combat", user, null, "emagged the turret control in [loc.name] \[[showCoords(src.x, src.y, src.z)]]")
-			logTheThing("admin", user, null, "emagged the turret control in [loc.name] \[[showCoords(src.x, src.y, src.z)]]")
+			logTheThing("combat", user, null, "emagged the turret control in [loc.name] \[[log_loc(src)]]")
+			logTheThing("admin", user, null, "emagged the turret control in [loc.name] \[[log_loc(src)]]")
 		emagged = 1
 		enabled = 0
 		updateTurrets()

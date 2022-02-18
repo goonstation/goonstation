@@ -2261,7 +2261,7 @@ Returns:
 		P.procCooldown = src.procCooldown
 		return
 
-	MouseDrop(over_object,src_location,over_location,src_control,over_control,params)
+	mouse_drop(over_object,src_location,over_location,src_control,over_control,params)
 		var/turf/trgTurf = get_turf(over_object)
 		if(istype(trgTurf))
 			switch(alert("Do you want to create a copy of the trigger on this tile?",,"Yes","No"))
@@ -3014,9 +3014,9 @@ Returns:
 			P.setTarget(target)
 			var/targetThing = isturf(target) ? "" : "[target] in "
 			targetThing += "[get_area(target)]"
-			logTheThing("admin", usr, null, "created a portal at [showCoords(selected.x, selected.y, selected.z)] ([get_area(selected)]) pointing to [showCoords(target.x, target.y, target.z)] ([targetThing])")
+			logTheThing("admin", usr, null, "created a portal at [log_loc(selected)] ([get_area(selected)]) pointing to [log_loc(target)] ([targetThing])")
 			logTheThing("diary", usr, null, "created a portal at [selected.x], [selected.y], [selected.z] ([get_area(selected)]) pointing to [target.x], [target.y], [target.z] ([targetThing])", "admin")
-			message_admins("[key_name(usr)] created a portal at [showCoords(selected.x, selected.y, selected.z)] ([get_area(selected)]) pointing to [showCoords(target.x, target.y, target.z)] ([targetThing])")
+			message_admins("[key_name(usr)] created a portal at [log_loc(selected)] ([get_area(selected)]) pointing to [log_loc(target)] ([targetThing])")
 		else if (alert == "No")
 			var/mob/M = usr
 			if (istype(M))

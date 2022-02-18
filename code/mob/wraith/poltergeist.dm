@@ -68,7 +68,7 @@
 			death()
 			boutput(src, "Your portal and master have been destroyed, you return to the nether.")
 
-		update_well_dist(TRUE, TRUE)
+		update_well_dist(master, marker)
 
 		if (loc == master && src.health < src.max_health)
 			HealDamage("chest", 5, 0)
@@ -139,7 +139,7 @@
 
 	Move(var/turf/NewLoc, direct)
 		..()
-		update_well_dist(TRUE, TRUE)
+		update_well_dist(master, marker)
 
 	click(atom/target)
 		. = ..()

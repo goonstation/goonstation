@@ -82,5 +82,5 @@
 #endif
 
 #if FOOTBALL_MODE && !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
-#include "..\zamujasa\football2.dmm"
+INCLUDE_MAP("../zamujasa/football2.dmm")
 #endif

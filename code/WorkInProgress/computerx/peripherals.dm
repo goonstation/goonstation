@@ -553,6 +553,7 @@
 			if(2)
 				prize = new /obj/item/device/radio/beacon( prize_location )
 				prize.name = "electronic blink toy game"
+				prize.anchored = FALSE
 				prize.desc = "Blink.  Blink.  Blink."
 			if(3)
 				prize = new /obj/item/device/light/zippo( prize_location )

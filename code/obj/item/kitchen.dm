@@ -487,7 +487,7 @@ TRAYS
 				src.update()
 			else return ..()
 
-	MouseDrop(mob/user as mob) // no I ain't even touchin this mess it can keep doin whatever it's doin
+	mouse_drop(mob/user as mob) // no I ain't even touchin this mess it can keep doin whatever it's doin
 		// I finally came back and touched that mess because it was broke - Haine
 		if(user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
 			if(!user.put_in_hand(src))
@@ -693,7 +693,7 @@ TRAYS
 		src.UpdateIcon()
 		boutput(user, "You put [W] on \the [src]")
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		if(over_object == usr && get_dist(src, usr) <=1 && isliving(usr) && !usr.stat && !usr.restrained())
 			var/mob/M = over_object
 			if(ordered_contents.len == 0)

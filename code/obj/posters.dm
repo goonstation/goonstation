@@ -52,8 +52,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	var/print_or_place = alert(usr, "Print out at all printers or place on your tile?", "Selection", "Place", "Print")
 	if (alert(usr, "Confirm poster creation", "Confirmation", "OK", "Cancel") == "OK")
 		if (print_or_place == "Print")
-			for (var/obj/machinery/networked/printer/P in world)
-				LAGCHECK(LAG_LOW)
+			for_by_tcl(P, /obj/machinery/networked/printer)
 				if (P.status & (NOPOWER|BROKEN))
 					continue
 				flick("printer-printing",P)
@@ -156,8 +155,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	var/print_or_place = alert(usr, "Print out at all printers or place on your tile?", "Selection", "Place", "Print")
 	if (alert(usr, "Confirm poster creation", "Confirmation", "OK", "Cancel") == "OK")
 		if (print_or_place == "Print")
-			for (var/obj/machinery/networked/printer/P in world)
-				LAGCHECK(LAG_LOW)
+			for_by_tcl(P, /obj/machinery/networked/printer)
 				if (P.status & (NOPOWER|BROKEN))
 					continue
 				flick("printer-printing",P)

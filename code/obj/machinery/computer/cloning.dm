@@ -495,7 +495,7 @@ proc/find_ghost_by_key(var/find_key)
 		..()
 		eject_occupant(user)
 
-	MouseDrop(mob/user as mob)
+	mouse_drop(mob/user as mob)
 		if (istype(user) && can_operate(user))
 			eject_occupant(user)
 		else

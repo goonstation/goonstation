@@ -819,7 +819,7 @@
 			boutput(user, "The solution seems to contain [reag_list].")
 		return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
 		if(!isliving(usr) || isintangible(usr)) return // ghosts killing plants fix
 		if(get_dist(src, usr) > 1)

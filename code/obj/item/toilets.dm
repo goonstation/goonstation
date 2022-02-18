@@ -39,7 +39,7 @@ TOILET
 
 	return ..()
 
-/obj/item/storage/toilet/MouseDrop(atom/over_object, src_location, over_location)
+/obj/item/storage/toilet/mouse_drop(atom/over_object, src_location, over_location)
 	if (usr && over_object == usr && in_interact_range(src, usr) && iscarbon(usr) && !usr.stat)
 		usr.visible_message("<span class='alert'>[usr] [pick("shoves", "sticks", "stuffs")] [his_or_her(usr)] hand into [src]!</span>")
 		playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)

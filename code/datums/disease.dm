@@ -120,7 +120,10 @@
 	proc/scan_info()
 		var/text = "<span class='alert'><b>"
 		if (istype(src.master,/datum/ailment/disease) || istype(src.master,/datum/ailment/malady))
-			text += "[src.state] "
+			if (src.state == "Active" || src.state == "Acute")
+				text += "[src.state] "
+			else
+				text += "<span class='notice'>[src.state] </span>"
 		text += "[src.scantype ? src.scantype : src.master.scantype]:"
 
 		text += " [src.name ? src.name : src.master.name]</b> <small>(Stage [src.stage]/[src.master.max_stages])<br>"

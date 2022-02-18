@@ -535,7 +535,8 @@ THROWING DARTS
 				source.visible_message("<span class='alert'><b>[source] emits a loud clunk!</b></span>")
 			else
 				source.visible_message("[source] emits a small clicking noise.")
-			logTheThing("bombing", source, null, "triggered a micro-/macrobomb implant on death.")
+			logTheThing("bombing", source, null, "triggered a micro-/macrobomb implant on death at [log_loc(source)].")
+			message_admins("[key_name(source)] triggered a micro-/macrobomb implant on death at [log_loc(source)].")
 			var/turf/T = get_turf(src)
 			src.set_loc(null) //so we don't get deleted prematurely by the blast.
 

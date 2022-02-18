@@ -174,6 +174,10 @@
 			checkloc = checkloc.loc
 
 		if (T && istype(T, /obj/item/storage))
+			if (W in bible_contents)
+				bible_contents.Remove(W)
+				for_by_tcl(bible, /obj/item/storage/bible)
+					bible.hud?.remove_item(W)
 			src.add_contents(W)
 //			T.hud.remove_item(W)
 		else
@@ -211,7 +215,7 @@
 				. = 1
 			break
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		..()
 		var/atom/movable/screen/hud/S = over_object
 		if (istype(S))
@@ -409,7 +413,7 @@
 			return
 		..()
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		if (src.locked)
 			if (usr)
 				boutput(usr, "<span class='alert'>[src] is locked!</span>")

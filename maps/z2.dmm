@@ -71590,6 +71590,9 @@
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/tdome/tdome2)
+"hav" = (
+/turf/unsimulated/floor/caution/corner/sw,
+/area/centcom/offices/azrun)
 "hcG" = (
 /obj/table/wood/auto/desk,
 /obj/item/luggable_computer/personal/adhara_laptop,
@@ -71830,6 +71833,10 @@
 /obj/machinery/vending/standard,
 /turf/unsimulated/floor/void,
 /area/diner/cow)
+"hUt" = (
+/obj/storage/crate/bin,
+/turf/unsimulated/floor/caution/corner/nw,
+/area/centcom/offices/azrun)
 "hVs" = (
 /obj/admin_plaque{
 	name = "Varshie's Office"
@@ -71868,10 +71875,30 @@
 /obj/burning_barrel,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/centcom/offices/marknstein)
+"ikE" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "This computer seems like it is on some kind attract screen.  They keyboard does nothing!";
+	dir = 8;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "reactor_stats";
+	name = "broken computer"
+	},
+/obj/decal/poster{
+	icon = 'icons/obj/decals/posters.dmi';
+	icon_state = "more_laser_power";
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/caution/corner/ne,
+/area/centcom/offices/azrun)
 "imL" = (
 /obj/submachine/slot_machine,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"iqu" = (
+/turf/unsimulated/floor/grass/leafy,
+/area/centcom/offices/azrun)
 "iqR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
@@ -72108,6 +72135,10 @@
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/offices/urs)
+"iZR" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/sand,
+/area/centcom/offices/azrun)
 "jbA" = (
 /obj/storage/secure/closet/civilian/hydro{
 	desc = "The only PDAs you'll find in this locker are Plant Data Analyzers. Heh.";
@@ -72216,6 +72247,12 @@
 	icon_state = "shore-42"
 	},
 /area/titlescreen)
+"jwG" = (
+/obj/stool/chair/wooden{
+	dir = 1
+	},
+/turf/unsimulated/floor/caution/south,
+/area/centcom/offices/azrun)
 "jxX" = (
 /turf/unsimulated/wall/auto/sengoku{
 	icon_state = "1";
@@ -72451,6 +72488,9 @@
 /obj/item/reagent_containers/food/drinks/espressocup,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"kfN" = (
+/turf/unsimulated/floor/caution/south,
+/area/centcom/offices/azrun)
 "khd" = (
 /obj/item/storage/secure/ssafe/icemoon,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -73150,6 +73190,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/diner/cow)
+"mxo" = (
+/obj/admin_plaque{
+	name = "Azrun's Office";
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "mzt" = (
 /obj/stove,
 /obj/item/soup_pot,
@@ -74129,6 +74180,9 @@
 	name = "wood floor"
 	},
 /area/centcom/offices/sord)
+"pfT" = (
+/turf/unsimulated/floor/auto/grass/swamp_grass,
+/area/centcom/offices/azrun)
 "pgd" = (
 /obj/item/reagent_containers/food/snacks/beefood{
 	pixel_x = 7;
@@ -74441,12 +74495,33 @@
 	},
 /turf/unsimulated/floor/red,
 /area/syndicate_station/assault_pod)
+"pOa" = (
+/obj/item/paper/artemis_todo{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/item/paper/terrainify{
+	pixel_x = -5
+	},
+/obj/table/wood/auto/desk/azrun,
+/obj/item/reagent_containers/food/drinks/drinkingglass/cocktail,
+/turf/unsimulated/floor/caution/north,
+/area/centcom/offices/azrun)
 "pPI" = (
 /obj/table/reinforced/auto,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
 /area/shuttle/battle)
+"pPL" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8
+	},
+/turf/simulated/floor/caution/misc{
+	dir = 4
+	},
+/area/centcom/offices/azrun)
 "pPX" = (
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/rodney)
@@ -74713,6 +74788,13 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
+"qII" = (
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 20
+	},
+/turf/unsimulated/floor/caution/north,
+/area/centcom/offices/azrun)
 "qJO" = (
 /obj/machinery/vending/cola/blue,
 /turf/unsimulated/floor{
@@ -75600,6 +75682,9 @@
 /obj/reagent_dispensers/watertank/fountain,
 /turf/unsimulated/floor/white/checker,
 /area/wizard_station)
+"tbY" = (
+/turf/unsimulated/floor/snowcalm,
+/area/centcom/offices/azrun)
 "tck" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/blueprint/destiny,
@@ -152353,9 +152438,9 @@ oWJ
 ewi
 oVK
 wel
-dvW
-dvW
-dCj
+hUt
+hav
+iZR
 wel
 dvW
 dvW
@@ -152655,9 +152740,9 @@ veg
 jtH
 ycX
 wel
-dvW
-dvW
-dvW
+pOa
+jwG
+tbY
 wel
 dvW
 dvW
@@ -152957,9 +153042,9 @@ fll
 szA
 gQD
 wel
-dvX
-dvW
-dvW
+qII
+kfN
+iqu
 wel
 dvX
 dvW
@@ -153259,9 +153344,9 @@ wsk
 gQD
 gQD
 wel
-dvW
-dvW
-dvW
+ikE
+kfN
+pfT
 wel
 dvW
 dvW
@@ -153562,7 +153647,7 @@ xxy
 wel
 wel
 wel
-kKw
+pPL
 wel
 wel
 wel
@@ -153863,7 +153948,7 @@ sKM
 dvy
 dxa
 dvy
-rUQ
+mxo
 dvy
 dvy
 dvy

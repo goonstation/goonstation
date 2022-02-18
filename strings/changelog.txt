@@ -1,9 +1,37 @@
 
+(t)thu feb 17 22
+(u)aloe
+(*)Genetics computers now require genetics access to operate.
+(u)Danger Noodle
+(p)7471
+(e)🗺|mapping
+(*)A new art themed prefab has been added to space maps.
+(u)Flappybat
+(p)7522
+(e)|
+(+)Tracking beacons start anchored. You can unanchor them with a screwdriver.
+(u)TTerc
+(+)Fish now deal 0 damage. Invite your friends for a fish slap fight!
+(u)pali
+(*)Persistent pickle jars now spawn on the station. You can put things into the jar and leave the jar somewhere and next round the jar will be on the same place (if it's the same map) and contain the things you put there but pickled and edible!
+(t)wed feb 16 22
+(u)TTerc
+(e)🆕|feature
+(+)You can now show off your security badge to people by clicking them with it.
+(t)tue feb 15 22
+(u)Kyle
+(+)One Armed Spaceman trait now costs 0 points.
+(u)Conchuckter
+(p)7511
+(e)🐛|bug
+(+)Fixes computer frames always giving 5 sheets instead of their proper amount
 (t)mon feb 14 22
 (u)Flaborized
 (p)7502
 (e)🎨|sprites
 (+)Updated the sprites for shuttle and airbridge floors.
+(u)Kyle
+(*)You can now handcuff people that have only one arm. (If they're cuffed and lose an arm, they'll still be uncuffed like normal)
 (t)sun feb 13 22
 (u)Sovexe
 (p)7486

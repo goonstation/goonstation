@@ -272,7 +272,7 @@
 		else
 			src.icon_state = "heater"
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the Reagent Heater/Cooler's output target.</span>")
 			return
@@ -680,7 +680,7 @@
 			P.overlays += P.color_overlay
 			return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the CheMaster 3000's output target.</span>")
 			return

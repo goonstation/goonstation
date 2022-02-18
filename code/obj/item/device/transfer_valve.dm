@@ -66,8 +66,8 @@
 			if(tank_one && tank_two)
 				var/turf/T = get_turf(src)
 				var/butt = istype(tank_one, /obj/item/clothing/head/butt) || istype(tank_two, /obj/item/clothing/head/butt)
-				logTheThing("bombing", user, null, "made a transfer valve [butt ? "butt" : "bomb"] at [showCoords(T.x, T.y, T.z)].")
-				message_admins("[key_name(user)] made a transfer valve [butt ? "butt" : "bomb"] at [showCoords(T.x, T.y, T.z)].")
+				logTheThing("bombing", user, null, "made a transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
+				message_admins("[key_name(user)] made a transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
 
 			UpdateIcon()
 			attacher = user
@@ -154,11 +154,11 @@
 				if (valve_open)
 					var/turf/bombturf = get_turf(src)
 					logTheThing("bombing", usr, null, "closed the valve on a tank transfer valve at [log_loc(bombturf)].")
-					message_admins("[key_name(usr)] closed the valve on a tank transfer valve at [showCoords(bombturf.x, bombturf.y, bombturf.z)].")
+					message_admins("[key_name(usr)] closed the valve on a tank transfer valve at [log_loc(bombturf)].")
 				else
 					var/turf/bombturf = get_turf(src)
 					logTheThing("bombing", usr, null, "opened the valve on a tank transfer valve at [log_loc(bombturf)].")
-					message_admins("[key_name(usr)] opened the valve on a tank transfer valve at [showCoords(bombturf.x, bombturf.y, bombturf.z)].")
+					message_admins("[key_name(usr)] opened the valve on a tank transfer valve at [log_loc(bombturf)].")
 				toggle_valve()
 			if(href_list["rem_device"])
 				attached_device.set_loc(get_turf(src))
