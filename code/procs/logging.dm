@@ -80,8 +80,7 @@ var/global/logLength = 0
 			if ("whisper") logs["speech"] += ingameLog
 			if ("station") logs["station"] += ingameLog
 			if ("combat")
-				if (!isnull(A))
-					if (A.dont_log_combat)
+				if (A?.dont_log_combat)
 						return
 				logs["combat"] += ingameLog
 			if ("telepathy") logs["telepathy"] += ingameLog
