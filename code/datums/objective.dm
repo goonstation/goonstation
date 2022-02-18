@@ -1229,10 +1229,28 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 #endif
 
 /datum/objective/conspiracy/imposters //sus
-	explanation_text = "Replace as many heads of staff with imposters as possible."
+	explanation_text = "Replace as many members of command with imposters as possible."
 
 /datum/objective/conspiracy/crime
 	explanation_text = "Set yourselves up as vigilantes and arrest people for made up crimes."
+
+/datum/objective/conspiracy/inspectors
+	explanation_text = "Pose as a team of undercover Nanotrasen inspectors and make an example out of anyone you deem incompetent or too competent at their job."
+
+/datum/objective/conspiracy/material
+	explanation_text = "Turn as much of the station as you can into [pick("glass", "water", "gold")]." //more materials?
+
+/datum/objective/conspiracy/organs
+	explanation_text = "Remind the crew of their own mortality by stockpiling as many of their organs as you can."
+
+/datum/objective/conspiracy/replace
+	explanation_text = "Replace the employees of an entire department with conspirators."
+
+/datum/objective/conspiracy/spike_food
+	explanation_text = "Make sure all available food and water is chemically spiked."
+
+/datum/objective/conspiracy/petty
+	explanation_text = "Turn command against each other for petty reasons."
 
 /datum/objective/conspiracy/framemurder
 	var/datum/mind/target
