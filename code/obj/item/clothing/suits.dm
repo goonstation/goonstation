@@ -1317,7 +1317,7 @@
 				var/prot = round(reinf.getProperty("hard") / 13)
 				if(prot < 3)// most metals are very soft, so for balance's sake it'll be (usually) at least that of normal suits
 					setProperty("meleeprot", 3)
-				if(prot < 6 )
+				if(prot > 6 )
 					setProperty("meleeprot", 6) // that having been said, we don't want anything more powerful than security's armor
 				setProperty("meleeprot", prot)
 			else

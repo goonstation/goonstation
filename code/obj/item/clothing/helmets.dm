@@ -136,25 +136,25 @@
 		overlays += fabrImg
 		overlays += visrImg
 
-	proc/setupVisorMat(var/datum/material/V, var/datum/material/C)
-		visr_material = copyMaterial(V)
-		if (V)
-			if (V.hasProperty("thermal"))
-				var/prot = round((100 - V.getProperty("thermal")) / 2)
+	proc/setupVisorMat(var/datum/material/V)
+		visr_material = copyMaterial(V) // in theory this is redundant but just in case
+		if (visr_material)
+			if (visr_material.hasProperty("thermal"))
+				var/prot = round((100 - visr_material.getProperty("thermal")) / 2)
 				setProperty("coldprot", 10+prot)
 				setProperty("heatprot", 1+round(prot/2))
 			else
 				setProperty("coldprot", 10)
 				setProperty("heatprot", 2)
 
-			if (V.hasProperty("permeable"))
-				var/prot = 100 - V.getProperty("permeable")
+			if (visr_material.hasProperty("permeable"))
+				var/prot = 100 - visr_material.getProperty("permeable")
 				setProperty("viralprot", prot)
 			else
 				setProperty("viralprot", 40)
 
-			if (V.hasProperty("density"))
-				var/prot = round(V.getProperty("density") / 20)
+			if (visr_material.hasProperty("density"))
+				var/prot = round(visr_material.getProperty("density") / 20)
 				setProperty("meleeprot_head", 2+prot)
 			else
 				setProperty("meleeprot_head", 2)
