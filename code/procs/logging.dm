@@ -81,7 +81,7 @@ var/global/logLength = 0
 			if ("station") logs["station"] += ingameLog
 			if ("combat")
 				if (A?.dont_log_combat)
-						return
+					return
 				logs["combat"] += ingameLog
 			if ("telepathy") logs["telepathy"] += ingameLog
 			if ("debug") logs["debug"] += ingameLog
@@ -262,7 +262,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 		return
 	var/area/A = get_area(SHOT)
 	if (A?.dont_log_combat)
-			return
+		return
 	var/shooter_data = null
 	var/vehicle
 	if (P.mob_shooter)
