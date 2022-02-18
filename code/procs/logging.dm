@@ -261,8 +261,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	if (!P || !SHOT)
 		return
 	var/area/A = get_area(SHOT)
-	if (!isnull(A))
-		if (A.dont_log_combat)
+	if (A?.dont_log_combat)
 			return
 	var/shooter_data = null
 	var/vehicle
