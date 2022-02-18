@@ -665,7 +665,7 @@
 				if (target:flags & NOSPLASH) return
 			can_mousedrop = 0
 			boutput(user, "<span class='notice'>You [src.splash_all_contents ? "pour all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target].</span>")
-			logTheThing("chemistry", user, target, "pours [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
+			logTheThing("combat", user, target, "pours [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
 			if (reagents)
 				reagents.physical_shock(14)
 
