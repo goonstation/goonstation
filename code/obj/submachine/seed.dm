@@ -752,7 +752,7 @@
 ////// Reagent Extractor
 
 /obj/submachine/chem_extractor/
-	name = "Reagent Extractor"
+	name = "reagent extractor"
 	desc = "A machine which can extract reagents from matter. Has a slot for a beaker and a chute to put things into."
 	density = 1
 	anchored = 1
@@ -763,7 +763,7 @@
 	icon_state = "reex-off"
 	flags = NOSPLASH | TGUI_INTERACTIVE
 	var/mode = "overview"
-	var/autoextract = 0
+	var/autoextract = FALSE
 	var/nextingredientkey = 0
 	var/obj/item/reagent_containers/glass/extract_to = null
 	var/obj/item/reagent_containers/glass/inserted = null
@@ -771,7 +771,6 @@
 	var/obj/item/reagent_containers/glass/storage_tank_2 = null
 	var/list/ingredients = list()
 	var/list/allowed = list(/obj/item/reagent_containers/food/snacks/,/obj/item/plant/,/obj/item/seashell)
-	var/output_target = null
 
 	New()
 		..()
@@ -781,7 +780,8 @@
 		for (var/obj/item/reagent_containers/glass/beaker/extractor_tank/ST in src.contents)
 			ST.name = "Storage Tank [count]"
 			count++
-		output_target = src.loc
+		AddComponent(/datum/component/transfer_input/quickloading, allowed, "tryLoading")
+		AddComponent(/datum/component/transfer_output)
 
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
@@ -858,7 +858,7 @@
 				if (!src.inserted)
 					return
 				if (src.inserted == src.extract_to) src.extract_to = null
-				src.inserted.set_loc(src.output_target)
+				TRANSFER_OR_DROP(src, src.inserted)
 				usr.put_in_hand_or_eject(src.inserted)
 				src.inserted = null
 				. = TRUE
@@ -877,7 +877,7 @@
 				var/obj/item/ingredient = src.ingredients[id]
 				if (istype(ingredient))
 					src.ingredients.Remove(id)
-					ingredient.set_loc(src.output_target)
+					TRANSFER_OR_DROP(src, ingredient)
 					. = TRUE
 			if("autoextract")
 				src.autoextract = !src.autoextract
@@ -918,11 +918,10 @@
 		src.UpdateIcon()
 
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
-		if (isrobot(user))
-			boutput(user, "This machine is not compatible with mechanical users.")
-			return
-
 		if(istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
+			if (isrobot(user))
+				boutput(user, "This machine does not accept containers from robots!")
+				return
 			if(src.inserted)
 				boutput(user, "<span class='alert'>A container is already loaded into the machine.</span>")
 				return
@@ -933,77 +932,8 @@
 			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
 			src.ui_interact(user)
 
-		else if (istype(W,/obj/item/satchel/hydro))
-			var/obj/item/satchel/S = W
-			var/loadcount = 0
-			for (var/obj/item/I in S.contents)
-				if (src.canExtract(I) && (src.tryLoading(I, user)))
-					loadcount++
-			if (!loadcount)
-				boutput(user, "<span class='alert'>No items were loaded from the satchel!</span>")
-			else if (src.autoextract)
-				boutput(user, "<span class='notice'>[loadcount] items were automatically extracted from the satchel!</span>")
-			else
-				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
+		..()
 
-			S.UpdateIcon()
-			src.UpdateIcon()
-			tgui_process.update_uis(src)
-
-		else
-			if (!src.canExtract(W))
-				boutput(user, "<span class='alert'>The extractor cannot accept that!</span>")
-				return
-
-			if (!src.tryLoading(W, user)) return
-			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
-
-			user.u_equip(W)
-			W.dropped()
-
-			src.UpdateIcon()
-			tgui_process.update_uis(src)
-			return
-
-	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (!in_interact_range(src, user)  || !IN_RANGE(user, O, 1))
-			return
-		if (istype(O, /obj/item/reagent_containers/glass/) || istype(O, /obj/item/reagent_containers/food/drinks/) || istype(O, /obj/item/satchel/hydro))
-			return src.Attackby(O, user)
-		if (!src.canExtract(O)) ..()
-		else
-			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O.name] into [src]!</span>")
-			var/staystill = user.loc
-			for (var/obj/item/P in view(1,user))
-				if (user.loc != staystill) break
-				if (P.type == O.type)
-					if (!src.tryLoading(P, user)) break
-					tgui_process.update_uis(src)
-					sleep(0.2 SECONDS)
-				else continue
-			boutput(user, "<span class='notice'>You finish stuffing items into [src]!</span>")
-		src.UpdateIcon()
-
-	mouse_drop(over_object, src_location, over_location)
-		if(!isliving(usr))
-			boutput(usr, "<span class='alert'>Only living mobs are able to set the extractor's output target.</span>")
-			return
-
-		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span class='alert'>The extractor is too far away from the target!</span>")
-			return
-
-		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
-			return
-
-		else if (istype(over_object,/turf/simulated/floor/))
-			src.output_target = over_object
-			boutput(usr, "<span class='notice'>You set the extractor to output to [over_object]!</span>")
-
-		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
-		return
 
 /obj/submachine/chem_extractor/proc/getContainers()
 	. = list(
@@ -1018,38 +948,30 @@
 	else
 		src.icon_state = "reex-off"
 
-/obj/submachine/chem_extractor/proc/doExtract(var/obj/item/I)
+/obj/submachine/chem_extractor/proc/doExtract(atom/movable/AM)
 	// Welp -- we don't want anyone extracting these. They'll probably
 	// feed them to monkeys and then exsanguinate them trying to get at the chemicals.
-	if (istype(I, /obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor))
+	if (istype(AM, /obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor))
 		src.extract_to.reagents.add_reagent("sugar", 50)
 		return
-
-	I.reagents.trans_to(src.extract_to, I.reagents.total_volume)
+	AM.reagents.trans_to(src.extract_to, AM.reagents.total_volume)
+	qdel(AM)
 	src.UpdateIcon()
 
-/obj/submachine/chem_extractor/proc/canExtract(O)
-	. = FALSE
-	for(var/check_path in src.allowed)
-		if(istype(O, check_path))
-			return TRUE
+/obj/submachine/chem_extractor/proc/tryLoading(atom/movable/incoming)
+	var/can_autoextract = src.autoextract && src.extract_to
+	if (can_autoextract && src.extract_to.reagents.total_volume >= src.extract_to.reagents.maximum_volume)
+		playsound(src, "sound/machines/chime.ogg", 10, 1)
+		src.visible_message("<span class='alert'>[src]'s tank over-fill alarm burps!</span>")
+		can_autoextract = FALSE
 
-/obj/submachine/chem_extractor/proc/tryLoading(var/obj/item/O, var/mob/user as mob)
-	// Pre: make sure that the item type can be extracted
-	if (src.autoextract)
-		if (!src.extract_to)
-			boutput(user, "<span class='alert'>You must first select an extraction target if you want items to be automatically extracted.</span>")
-			return FALSE
-		if (src.extract_to.reagents.total_volume >= src.extract_to.reagents.maximum_volume)
-			boutput(user, "<span class='alert'>The auto-extraction target is full.</span>")
-			return FALSE
-		src.doExtract(O)
-		qdel(O)
-		return TRUE
+	if (can_autoextract)
+		doExtract(incoming)
 	else
-		O.set_loc(src)
-		src.ingredients["[nextingredientkey++]"] = O
-		return TRUE
+		src.ingredients["[nextingredientkey++]"] = incoming
+		tgui_process.update_uis(src)
+		src.UpdateIcon()
+
 
 /obj/submachine/seed_vendor
 	name = "Seed Fabricator"
