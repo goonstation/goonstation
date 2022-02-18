@@ -193,7 +193,13 @@ proc/load_intraround_jars()
 	for(var/datum/zlevel/zlevel in global.zlevels)
 		var/zname = zlevel.name
 		var/list/jars_data
-		jar_save["zlevel/[zname]"] >> jars_data
+		try
+			jar_save["zlevel/[zname]"] >> jars_data
+		catch(exception/e)
+			if(!emitted_full_savefile)
+				logTheThing("debug", null, null, "<b>Pickle Jar:</b> full savefile<br>[jar_save.ExportText()]")
+				emitted_full_savefile = TRUE
+			stack_trace("[e.name]\n[e.desc]")
 		for(var/list/jar_data in jars_data)
 			var/x = jar_data[1]
 			var/y = jar_data[2]
