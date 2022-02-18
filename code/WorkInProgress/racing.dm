@@ -462,6 +462,8 @@
 	proc/drive(var/direction, var/speed)
 		set_dir(direction)
 		driving = 1
+		src.glide_size = (32 / speed) * world.tick_lag
+		driver.glide_size = (32 / speed) * world.tick_lag
 		walk(src, dir, speed)
 
 	proc/stop()
