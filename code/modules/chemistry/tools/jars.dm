@@ -195,7 +195,7 @@ proc/load_intraround_jars()
 		var/list/jars_data
 		try
 			jar_save["zlevel/[zname]"] >> jars_data
-		catch(exception/e)
+		catch(var/exception/e)
 			if(!emitted_full_savefile)
 				logTheThing("debug", null, null, "<b>Pickle Jar:</b> full savefile<br>[jar_save.ExportText()]")
 				emitted_full_savefile = TRUE
