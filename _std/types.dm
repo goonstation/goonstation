@@ -380,7 +380,7 @@ proc/find_all_by_type(type, procedure=null, procedure_src=null, arguments=null, 
 	. = list()
 	#define IT_TYPE(T) if(T) {\
 			if(!isnull(procedure) && procedure_src == "instance") {\
-				for(var ## T/DMAPI5_TOPIC_PARAMETER_NEW_INSTANCE_NAME) {\
+				for(var ## T/instance) {\
 					if(lagcheck) LAGCHECK(LAG_LOW); \
 					if(istype(instance, type)) {\
 						.[instance] = call(instance, procedure)(arglist(arguments)); \
