@@ -159,7 +159,7 @@
 		SPAWN(message_delay * stage_delay)
 
 			// Fuck up some categories
-			for (var/datum/ion_category/category in categories)
+			for (var/datum/ion_category/category as anything in categories)
 				category.fuck_up()
 				sleep(message_delay * stage_delay)
 
