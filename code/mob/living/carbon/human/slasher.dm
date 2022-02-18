@@ -21,7 +21,8 @@
 		src.bioHolder.AddEffect("breathless", 0, 0, 0, 1)
 		src.bioHolder.AddEffect("rad_resist", 0, 0, 0, 1)
 		src.bioHolder.AddEffect("detox", 0, 0, 0, 1)
-		src.add_stun_resist_mod("slasher_stun_resistance", 80)
+		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST, "slasher_stun_resistance", 80)
+		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "slasher_stun_resistance", 80)
 		START_TRACKING
 		APPLY_MOB_PROPERTY(src, PROP_NO_SELF_HARM, src)
 		APPLY_MOB_PROPERTY(src, PROP_AI_UNTRACKABLE, src)
