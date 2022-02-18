@@ -817,11 +817,11 @@ datum
 					var/mob/living/L = M
 					. = 0
 
-					if(L.getStatusDuration("slowed")>100)
+					if(L.getStatusDuration("slowed")>10 SECONDS)
 						L.setStatus("staggered", max(M.getStatusDuration("staggered"), 3*volume_passed))
 						if(!ON_COOLDOWN(M, "stuck in glue", 15 SECOND))
 							boutput(M, "<span class='notice'>You get stuck in the glue!</span>")
-					if(L.getStatusDuration("slowed")<100)
+					if(L.getStatusDuration("slowed")< 10 SECONDS)
 						if(volume_passed<25)
 							L.changeStatus("slowed", 4*volume_passed, optional = 4)
 						else
@@ -3334,17 +3334,6 @@ datum
 			fluid_g = 254
 			fluid_b = 254
 			transparency = 50
-
-		//glue
-		//	name = "glue"
-		//	id = "glue"
-		//	description = "Hopefully you weren't the kind of kid to eat this stuff."
-		//	reagent_state = LIQUID
-		//	fluid_r = 250
-		//	fluid_g = 250
-		//	fluid_b = 250
-		//	transparency = 255
-		//	viscosity = 0.7
 
 		magnesium_chloride
 			name = "magnesium chloride"
