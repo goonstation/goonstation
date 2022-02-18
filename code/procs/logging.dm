@@ -88,6 +88,7 @@ var/global/logLength = 0
 			if ("deleted") logs["deleted"] += ingameLog
 			if ("vehicle") logs["vehicle"] += ingameLog
 			if ("computers") logs["computers"] += ingameLog
+			if ("chemistry") logs["chemistry"] += ingameLog
 			if ("diary")
 				switch (diaryType)
 					//These are things we log in the out of game logs (the diary)
