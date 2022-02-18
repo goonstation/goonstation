@@ -2573,7 +2573,7 @@
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
-		if (level == 2 || isobserver(AM))
+		if (level == 2 || isobserver(AM) || isintangible(AM))
 			return
 		if (limiter && (ticker.round_elapsed_ticks < limiter))
 			return
