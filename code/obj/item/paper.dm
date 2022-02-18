@@ -128,7 +128,7 @@
 /obj/item/paper/attack_ai(var/mob/AI as mob)
 	var/mob/living/silicon/ai/user
 	if (isAIeye(AI))
-		var/mob/dead/aieye/E = AI
+		var/mob/living/intangible/aieye/E = AI
 		user = E.mainframe
 	else
 		user = AI
@@ -1153,7 +1153,7 @@ as it may become compromised.
 	src.icon_state = "paper_bin[(src.amount || locate(/obj/item/paper, src)) ? "1" : null]"
 	return
 
-/obj/item/paper_bin/MouseDrop(mob/user as mob)
+/obj/item/paper_bin/mouse_drop(mob/user as mob)
 	if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
 		if (!user.put_in_hand(src))
 			return ..()

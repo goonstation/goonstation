@@ -1168,7 +1168,7 @@ CONTAINS:
 		src.open()
 		src.visible_message("<span class='alert'><b>[user]</b> unzips themselves from [src]!</span>")
 
-	MouseDrop(atom/over_object)
+	mouse_drop(atom/over_object)
 		if (!over_object) return
 		if(isturf(over_object))
 			..() //Lets it do the turf-to-turf slide

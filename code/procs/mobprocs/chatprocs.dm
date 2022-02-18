@@ -13,7 +13,7 @@
 	set hidden = TRUE
 
 	var/mob/living/M = src
-	if(!istype(M) || !isalive(M))
+	if(!istype(M) || !isalive(M) || isAIeye(M))
 		return
 
 	M.speech_bubble.icon_state = "typing"

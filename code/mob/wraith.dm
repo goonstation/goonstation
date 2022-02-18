@@ -118,6 +118,8 @@
 				plane.alpha = 255
 
 	disposing()
+		for (var/mob/wraith/poltergeist/P in src.poltergeists)
+			P.master = null
 		poltergeists = null
 		..()
 

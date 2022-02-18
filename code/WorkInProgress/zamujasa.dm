@@ -983,6 +983,38 @@
 				set_loc(null)
 
 
+
+	health
+		require_var_or_list = 0
+		maptext_prefix = ""
+		maptext_suffix = ""
+
+		validate_monitored()
+			return iscarbon(monitored)
+
+		get_value()
+			. = scan_health_generate_text(monitored)
+
+
+		constantly_overhead
+			appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
+
+			New()
+				..()
+				src.pixel_y += 34
+
+				var/atom/movable/home = src.loc
+				// Put it inside something to make it constantly show its location.
+				if (istype(home))
+					home.vis_contents += src
+				else
+					// if we are not home then we are gone, bye
+					qdel(src)
+					return
+				src.monitored = src.loc
+				set_loc(null)
+
+
 	stats
 		monitored_list = "stats"
 		ding_on_change = 1
@@ -1029,6 +1061,20 @@
 		clones
 			monitored_var = "clones"
 			maptext_prefix = "<span class='c pixel sh'>Clones:\n<span class='vga'>"
+
+
+		last_death
+			require_var_or_list = 0
+			maptext_prefix = "<span class='c pixel sh'>Last Death:<br><span class='vga'>"
+			maptext_suffix = "</span>"
+			ding_sound = "sound/misc/lose.ogg"
+
+			get_value()
+				if (!src.monitored["stats"]["lastdeath"])
+					return "None... yet</span>"
+				return "[src.monitored["stats"]["lastdeath"]["name"]]</span><br>[src.monitored["stats"]["lastdeath"]["whereText"]]"
+
+
 
 	budget
 		New()
@@ -1453,3 +1499,33 @@ Other Goonstation servers:[serverList]</span>"})
 			victim.gib()
 
 		qdel(src)
+
+
+	fast
+		t100		// ~10 sec
+			gib_time = 1000
+		t1000		// ~100 sec
+			gib_time = 1000
+		t3000		// ~300 sec (5 min)
+			gib_time = 1000
+		t6000		// ~600 sec (10 min)
+			gib_time = 1000
+
+		countdown()
+			do
+				sleep(0.1 SECOND)
+				gib_time--
+				switch (gib_time)
+					if (100 to INFINITY)
+						maptext = "<span class='vb c ol ps2p'>[round(gib_time)]</span>"
+					else
+						maptext = "<span class='vb c ol ps2p' style='color: #ff4444;'>[round(gib_time)]</span>"
+
+			while (gib_time > 0 && !src.qdeled && !victim.qdeled)
+
+			if (victim && !victim.qdeled)
+				victim.vis_contents -= src
+				src.maptext = null
+				victim.gib()
+
+			qdel(src)

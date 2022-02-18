@@ -1881,7 +1881,7 @@ Returns:
 		return words
 
 	Click(location,control,params)
-		if(isobserver(usr) || iswraith(usr))
+		if(isobserver(usr) || iswraith(usr) || isAIeye(usr)) //explicitly added AIeye because AIeye is no longer dead and AI's are ghosts trapped in metal boxes.
 			if(isAIeye(usr))
 				boutput(usr, "<span class='notice'>Whoa, you can use this as an AI? Are you actually just a ghost trapped in a metal box??</span>")
 
@@ -2261,7 +2261,7 @@ Returns:
 		P.procCooldown = src.procCooldown
 		return
 
-	MouseDrop(over_object,src_location,over_location,src_control,over_control,params)
+	mouse_drop(over_object,src_location,over_location,src_control,over_control,params)
 		var/turf/trgTurf = get_turf(over_object)
 		if(istype(trgTurf))
 			switch(alert("Do you want to create a copy of the trigger on this tile?",,"Yes","No"))

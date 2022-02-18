@@ -307,7 +307,7 @@
 			return
 
 		if (src.has_storage && src.desk_drawer)
-			src.MouseDrop(user, src.loc, user.loc)
+			src.mouse_drop(user, src.loc, user.loc)
 
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -372,7 +372,7 @@
 			step(I, get_dir(I, src))
 		return
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		if (usr && usr == over_object && src.desk_drawer)
 			return src.desk_drawer.MouseDrop(over_object, src_location, over_location)
 		..()

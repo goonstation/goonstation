@@ -68,7 +68,7 @@ AI MODULES
 			R.show_text("<h3>Law update detected.</h3>", "red")
 			R.show_laws()
 			//ticker.centralized_ai_laws.show_laws(R)
-		for (var/mob/dead/aieye/E in mobs)
+		for (var/mob/living/intangible/aieye/E in mobs)
 			E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 
 

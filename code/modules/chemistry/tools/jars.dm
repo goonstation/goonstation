@@ -5,7 +5,7 @@
 
 #define JARS_FILE "data/jars.sav"
 #define JARS_VERSION 1
-#define DEFAULT_JAR_COUNT 3
+#define DEFAULT_JAR_COUNT 4
 #define MAX_JAR_COUNT 32
 #define JAR_MAX_ITEMS 16
 
@@ -30,6 +30,10 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/toy) || istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
 			return ..()
+
+		if(W.two_handed || W.w_class >= W_CLASS_GIGANTIC)
+			boutput(user, "<span class='alert'>That's too large to fit into the jar.</span>")
+			return
 
 		if (length(src.contents) > JAR_MAX_ITEMS || (locate(/mob/living) in src))
 			boutput(user, "<span class='alert'>There is no way that will fit into this jar.  This VERY FULL jar.</span>")
@@ -136,7 +140,7 @@ proc/save_intraround_jars()
 		for (var/atom/movable/AM in jar)
 			var/obj/item/reagent_containers/food/snacks/pickle_holder/pickled = AM
 			if(!istype(AM, /obj/item/reagent_containers/food/snacks/pickle_holder))
-				pickled = new(jar, AM)
+				pickled = AM.picklify(jar)
 				qdel(AM)
 			if(pickled.material)
 				pickled.removeMaterial()
@@ -156,10 +160,12 @@ proc/save_intraround_jars()
 proc/generate_backup_jars()
 	var/tries_left = 10
 	while(length(by_type[/obj/item/reagent_containers/glass/jar]) < DEFAULT_JAR_COUNT && tries_left > 0)
-		var/areatype = pick(/area/diner/kitchen, /area/station/crew_quarters/kitchen)
+		var/areatype = pick(prob(10); /area/diner/kitchen, /area/station/crew_quarters/kitchen)
 		var/list/turf/turfs = get_area_turfs(areatype, 1)
 		if(length(turfs))
-			new/obj/item/reagent_containers/glass/jar(pick(turfs))
+			var/turf/T = pick(turfs)
+			new/obj/item/reagent_containers/glass/jar(T)
+			logTheThing("debug", null, null, "<b>Pickle Jar:</b> New empty jar created at [log_loc(T)]")
 		else
 			tries_left--
 	tries_left = 50
@@ -167,6 +173,7 @@ proc/generate_backup_jars()
 		var/turf/simulated/floor/T = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION)
 		if(istype(T))
 			new/obj/item/reagent_containers/glass/jar(T)
+			logTheThing("debug", null, null, "<b>Pickle Jar:</b> New empty jar created at [log_loc(T)]")
 		else
 			tries_left--
 
@@ -186,7 +193,13 @@ proc/load_intraround_jars()
 	for(var/datum/zlevel/zlevel in global.zlevels)
 		var/zname = zlevel.name
 		var/list/jars_data
-		jar_save["zlevel/[zname]"] >> jars_data
+		try
+			jar_save["zlevel/[zname]"] >> jars_data
+		catch(var/exception/e)
+			if(!emitted_full_savefile)
+				logTheThing("debug", null, null, "<b>Pickle Jar:</b> full savefile<br>[jar_save.ExportText()]")
+				emitted_full_savefile = TRUE
+			stack_trace("[e.name]\n[e.desc]")
 		for(var/list/jar_data in jars_data)
 			var/x = jar_data[1]
 			var/y = jar_data[2]
@@ -216,6 +229,17 @@ proc/load_intraround_jars()
 				logTheThing("debug", null, null, "<b>Pickle Jar:</b> Jar creation process hit maximum limit of [MAX_JAR_COUNT], further jars are lost to time.")
 				return
 
+	// in case we have less than the required amount generate more
+	generate_backup_jars()
+
+
+
+// the food that represents the pickled object
+
+/atom/movable/proc/picklify(atom/loc)
+	RETURN_TYPE(/obj/item/reagent_containers/food/snacks/pickle_holder)
+	return new/obj/item/reagent_containers/food/snacks/pickle_holder(loc, src)
+
 /obj/item/reagent_containers/food/snacks/pickle_holder
 	name = "ethereal pickle"
 	desc = "You can't see anything, but there is an unmistakable presence of vinegar and spices here. Kosher dill."
@@ -223,13 +247,13 @@ proc/load_intraround_jars()
 	var/pickle_age
 
 	New(newloc, atom/movable/pickled)
-		..(newloc)
+		..()
 		if (istype(pickled))
 			src.icon = getFlatIcon(pickled, no_anim=TRUE)
 			src.paint_pickly_color()
 			src.desc = "A pickled version of \a [pickled], it smells of vinegar."
 			src.real_desc = src.desc
-			src.name = "pickled [pickled]"
+			src.name = "pickled [pickled.name]"
 			src.pickle_age = 0
 
 	proc/paint_pickly_color()
@@ -239,6 +263,80 @@ proc/load_intraround_jars()
 		. = ..()
 		if(src.pickle_age)
 			. += " It has been [src.pickle_age] shift[src.pickle_age > 1 ? "s" : ""] since it was pickled."
+
+
+
+// overrides of pickling for specific objects go here
+
+/obj/item/paper/picklify(atom/loc)
+	return new/obj/item/reagent_containers/food/snacks/pickle_holder/paper(loc, src)
+
+/obj/item/reagent_containers/food/snacks/pickle_holder/paper
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | TGUI_INTERACTIVE
+	var/sizex
+	var/sizey
+	var/info
+	var/list/stamps
+	var/list/form_fields
+	var/field_counter
+
+	New(newloc, obj/item/paper/pickled)
+		..()
+		if (istype(pickled))
+			src.sizex = pickled.sizex
+			src.sizey = pickled.sizey
+			src.info = pickled.info
+			src.stamps = pickled.stamps?.Copy()
+			src.form_fields = pickled.form_fields?.Copy()
+			src.field_counter = pickled.field_counter
+
+	attack_self(mob/user)
+		// show both the text and take a bite! consuming both information and food at the same time!
+		ui_interact(user)
+		. = ..()
+
+	examine(mob/user)
+		. = ..()
+		ui_interact(user)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "PaperSheet")
+			ui.open()
+
+	ui_status(mob/user, datum/ui_state/state)
+		if(!user.literate)
+			boutput(user, "<span class='alert'>You don't know how to read.</span>")
+			return UI_CLOSE
+		. = max(..(), UI_DISABLED)
+		if(IN_RANGE(user, src, 8))
+			. = max(., UI_UPDATE)
+
+	ui_static_data(mob/user)
+		. = list(
+			"name" = src.name,
+			"sizeX" = src.sizex,
+			"sizeY" = src.sizey,
+			"text" = src.info,
+			"max_length" = 5000,
+			"paperColor" = src.color || "white",	// color might not be set
+			"stamps" = src.stamps,
+			"stampable" = FALSE,
+			"sealed" = TRUE,
+		)
+
+	ui_data(mob/user)
+		. = list(
+			"editUsr" = "[user]",
+			"fieldCounter" = field_counter,
+			"formFields" = form_fields,
+			"editMode" = 0,
+			"penFont" = "FAKE",
+			"penColor" = "FAKE",
+			"isCrayon" = FALSE,
+			"stampClass" = "FAKE",
+		)
 
 #undef JARS_FILE
 #undef JARS_VERSION

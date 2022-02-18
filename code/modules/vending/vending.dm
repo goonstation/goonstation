@@ -157,7 +157,7 @@
 	proc/create_products()
 		return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!istype(usr,/mob/living/))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the output target for [src].</span>")
 			return
@@ -1958,7 +1958,7 @@
 				R.product_amount += 1
 				existed = TRUE
 				break
-			else if (istype(target,R.product_type) && R.real_name == target.real_name)
+			else if (istype(target,R.product_type) && (R.real_name || R.product_name) == (target.real_name || target.name))
 				R.contents += target
 				R.product_amount += 1
 				existed = TRUE

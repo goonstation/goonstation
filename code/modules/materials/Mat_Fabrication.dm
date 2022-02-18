@@ -104,7 +104,7 @@
 		user.Browse(buildHtml(), "window=nfab;size=550x650;title=Nano-fabricator;fade_in=0;can_resize=0", 1)
 		return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(over_object == src)
 			boutput(usr, "<span class='notice'>You reset the output location of [src]!</span>")
 			src.output_target = src.loc
