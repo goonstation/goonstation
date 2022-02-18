@@ -48,8 +48,8 @@
 		. = ..()
 		if(length(src.contents))
 			var/list/stuff_inside = list()
-			for(var/obj/item/I in src)
-				stuff_inside += "\a [I]"
+			for(var/atom/movable/AM in src)
+				stuff_inside += "\a [AM]"
 			var/obj/item/last = stuff_inside[length(stuff_inside)]
 			stuff_inside.len--
 			if(length(stuff_inside))
