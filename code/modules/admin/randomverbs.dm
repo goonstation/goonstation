@@ -309,7 +309,7 @@
 		boutput(O, "<h3><span class='notice'>New law uploaded by Centcom: [input]</span></h3>")
 		O << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 		ticker.centralized_ai_laws.show_laws(O)
-	for (var/mob/dead/aieye/E in mobs)
+	for (var/mob/living/intangible/aieye/E in mobs)
 		boutput(E, "<h3><span class='notice'>New law uploaded by Centcom: [input]</span></h3>")
 		E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 		ticker.centralized_ai_laws.show_laws(E)
@@ -362,7 +362,7 @@
 		boutput(O, "<h3><span class='notice'>New laws were uploaded by CentCom:</span></h3>")
 		O << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 		ticker.centralized_ai_laws.show_laws(O)
-	for (var/mob/dead/aieye/E in mobs)
+	for (var/mob/living/intangible/aieye/E in mobs)
 		boutput(E, "<h3><span class='notice'>New laws were uploaded by CentCom:</span></h3>")
 		E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 		ticker.centralized_ai_laws.show_laws(E)
@@ -462,15 +462,6 @@
 	if(!input)
 		return
 	var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
-/*
-	for (var/obj/machinery/computer/communications/C as anything in machine_registry[MACHINES_COMMSCONSOLES])
-		if(! (C.status & (BROKEN|NOPOWER) ) )
-			var/obj/item/paper/P = new /obj/item/paper( C.loc )
-			P.name = "paper- '[command_name()] Update.'"
-			P.info = input
-			C.messagetitle.Add("[command_name()] Update")
-			C.messagetext.Add(P.info)
-*/
 
 	if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
 		for_by_tcl(C, /obj/machinery/communications_dish)
@@ -550,9 +541,9 @@
 		return
 
 	if (alert(src, "Are you sure you want to delete:\n[O]\nat ([O.x], [O.y], [O.z])?", "Confirmation", "Yes", "No") == "Yes")
-		logTheThing("admin", usr, null, "deleted [O] at ([showCoords(O.x, O.y, O.z)])")
-		logTheThing("diary", usr, null, "deleted [O] at ([showCoords(O.x, O.y, O.z)])", "admin")
-		message_admins("[key_name(usr)] deleted [O] at ([showCoords(O.x, O.y, O.z)])")
+		logTheThing("admin", usr, null, "deleted [O] at ([log_loc(O)])")
+		logTheThing("diary", usr, null, "deleted [O] at ([log_loc(O)])", "admin")
+		message_admins("[key_name(usr)] deleted [O] at ([log_loc(O)])")
 		if (flourish)
 			leaving_animation(O)
 		qdel(O)
@@ -572,15 +563,22 @@
 	set name = "Check Vehicle Occupant"
 	set popup_menu = 0
 
-	var/list/all_vehicles = by_type[/obj/machinery/vehicle] + by_type[/obj/vehicle]
+	var/list/piloted_vehicles = list()
 
-	if (!all_vehicles)
-		boutput(usr, "No vehicles found!")
+	for_by_tcl(V, /obj/machinery/vehicle)
+		if (locate(/mob) in V) //also finds vehicles that only have passengers in case you're looking for waldo or something
+			piloted_vehicles += V
+
+	for_by_tcl(V, /obj/vehicle)
+		if (V.rider)
+			piloted_vehicles += V
+
+	if (!length(piloted_vehicles))
+		boutput(usr, "No piloted vehicles found!")
 		return
 
-	var/obj/V = input("Which vehicle?","Check vehicle occupant") as null|anything in all_vehicles
-	if (!istype(V))
-		boutput(usr, "No vehicle defined!")
+	var/obj/V = tgui_input_list(usr, "Which vehicle?", "Check vehicle occupant", piloted_vehicles)
+	if (!V)
 		return
 
 	boutput(usr, "<b>[V.name]'s Occupants:</b>")
@@ -589,7 +587,8 @@
 		var/info = ""
 		if(istype(MV))
 			info = M == MV.pilot ? "*Pilot*" : ""
-		boutput(usr, "[M.real_name] ([M.key]) [info]")
+
+		boutput(usr, "[M.real_name] ([M.key || "**No Key**"]) [info]")
 
 /client/proc/cmd_admin_remove_plasma()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
@@ -1144,6 +1143,18 @@
 		else
 			src.view = "15x15"
 			usr.see_in_dark = initial(usr.see_in_dark)
+
+
+/client/proc/iddt()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "iddt"
+	set popup_menu = 0
+	admin_only
+	usr.client.cmd_admin_advview()
+	if (src.adventure_view)
+		src.mob.bioHolder.AddEffect("xray", magical = 1)
+	else
+		src.mob.bioHolder.RemoveEffect("xray")
 
 
 /client/proc/cmd_admin_advview()
@@ -1757,7 +1768,7 @@
 			S2.show_text("<b>Your laws have been changed!</b>", "red")
 			S2 << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 			S2.show_laws()
-		for (var/mob/dead/aieye/E in mobs)
+		for (var/mob/living/intangible/aieye/E in mobs)
 			E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 
 	switch (former_role)
@@ -2329,9 +2340,9 @@ var/global/night_mode_enabled = 0
 				thing.initialPos = null
 				thing.smash(1)
 
-	logTheThing("admin", src, M, "deshame-cubed [constructTarget(M,"admin")] at [get_area(M)] ([showCoords(M.x, M.y, M.z)])")
-	logTheThing("diary", src, M, "deshame-cubed [constructTarget(M,"diary")] at [get_area(M)] ([showCoords(M.x, M.y, M.z)])", "admin")
-	message_admins("[key_name(src)] deshame-cubed [key_name(M)] at [get_area(M)] ([showCoords(M.x, M.y, M.z)])")
+	logTheThing("admin", src, M, "deshame-cubed [constructTarget(M,"admin")] at [get_area(M)] ([log_loc(M)])")
+	logTheThing("diary", src, M, "deshame-cubed [constructTarget(M,"diary")] at [get_area(M)] ([log_loc(M)])", "admin")
+	message_admins("[key_name(src)] deshame-cubed [key_name(M)] at [get_area(M)] ([log_loc(M)])")
 
 
 
@@ -2376,9 +2387,9 @@ var/global/night_mode_enabled = 0
 		command_alert("[M.name] has been shamecubed in [where]!", "Dumb person detected!")
 
 	out(M, "<span class='bold alert'>You have been shame-cubed by an admin! Take this embarrassing moment to reflect on what you have done.</span>")
-	logTheThing("admin", src, M, "shame-cubed [constructTarget(M,"admin")] at [where] ([showCoords(M.x, M.y, M.z)])")
-	logTheThing("diary", src, M, "shame-cubed [constructTarget(M,"diary")] at [where] ([showCoords(M.x, M.y, M.z)])", "admin")
-	message_admins("[key_name(src)] shame-cubed [key_name(M)] at [where] ([showCoords(M.x, M.y, M.z)])")
+	logTheThing("admin", src, M, "shame-cubed [constructTarget(M,"admin")] at [where] ([log_loc(M)])")
+	logTheThing("diary", src, M, "shame-cubed [constructTarget(M,"diary")] at [where] ([log_loc(M)])", "admin")
+	message_admins("[key_name(src)] shame-cubed [key_name(M)] at [where] ([log_loc(M)])")
 
 	return 1
 
@@ -2409,9 +2420,9 @@ var/global/night_mode_enabled = 0
 	if (M.hasStatus("handcuffed"))
 		M.handcuffs.drop_handcuffs(M)
 
-		logTheThing("admin", src, M, "unhandcuffed [constructTarget(M,"admin")] at [get_area(M)] ([showCoords(M.x, M.y, M.z)])")
-		logTheThing("diary", src, M, "unhandcuffed [constructTarget(M,"diary")] at [get_area(M)] ([showCoords(M.x, M.y, M.z)])", "admin")
-		message_admins("[key_name(src)] unhandcuffed [key_name(M)] at [get_area(M)] ([showCoords(M.x, M.y, M.z)])")
+		logTheThing("admin", src, M, "unhandcuffed [constructTarget(M,"admin")] at [get_area(M)] ([log_loc(M)])")
+		logTheThing("diary", src, M, "unhandcuffed [constructTarget(M,"diary")] at [get_area(M)] ([log_loc(M)])", "admin")
+		message_admins("[key_name(src)] unhandcuffed [key_name(M)] at [get_area(M)] ([log_loc(M)])")
 
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -2829,3 +2840,92 @@ var/global/force_radio_maptext = FALSE
 			return
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
+
+
+/client/proc/idkfa()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "idkfa"
+	set popup_menu = 0
+	admin_only
+	boutput(usr, "<span class='notice'><b>Very Happy Ammo Added</b></span>")
+
+	// yes... ha ha ha... YES!
+	var/obj/item/storage/backpack/syndie/backpack_full_of_ammo = new()
+	backpack_full_of_ammo.name = "backpack full of ammo"
+	backpack_full_of_ammo.desc = "Try not to lose it, idiot."
+	backpack_full_of_ammo.max_wclass = INFINITY
+	backpack_full_of_ammo.slots = 9
+	backpack_full_of_ammo.cant_other_remove = 1
+
+	var/obj/item/saw/syndie/button_1 = new()
+	button_1.name = "chainsaw"
+	button_1.desc = "Find some meat!"
+	button_1.cant_other_remove = 1
+
+	var/obj/item/gun/kinetic/pistol/button_2 = new()
+	button_2.name = "pistol"
+	button_2.desc = "To defeat the spacemans, shoot him until he dies."
+	button_2.max_ammo_capacity = 400
+	button_2.ammo.amount_left = 400
+	button_2.cant_other_remove = 1
+
+	var/obj/item/gun/kinetic/spes/button_3 = new()
+	button_3.name = "shotgun"
+	button_3.desc = "Somehow fits 100 shells."
+	button_3.max_ammo_capacity = 100	// this is a backpack, after all
+	button_3.ammo.amount_left = 100
+	button_3.cant_other_remove = 1
+
+	var/obj/item/gun/kinetic/minigun/button_4 = new()
+	button_4.name = "chaingun"
+	button_4.desc = "Chainguns direct heavy firepower into your opponent, making them do the chaingun cha-cha."
+	button_4.max_ammo_capacity = 400	// boolet
+	button_4.ammo.amount_left = 400
+	button_4.cant_other_remove = 1
+
+	var/obj/item/gun/kinetic/rpg7/loaded/button_5 = new()
+	button_5.name = "rocket launcher"
+	button_5.desc = "Splash damage zone!"
+	button_5.ammo.amount_left = 100
+	button_5.max_ammo_capacity = 100
+	button_5.cant_other_remove = 1
+
+	// were you expecting a plasma gun or something?
+	var/obj/item/breaching_hammer/button_6 = new()
+	button_6.name = "doomhammer"
+	button_6.desc = "If you aren't the one holding this, you should probably be running."
+	button_6.force = 100000
+	button_6.click_delay = 0
+	button_6.cant_other_remove = 1
+
+	var/obj/item/gun/energy/bfg/button_7 = new()
+	// button_7.cell.max_charge = 1500	// 100shot/300max (SS13) vs 40shot/600ammo (D) = 1500 max
+	// button_7.cell.charge = 1500
+	// i have no idea how component cells work and i cannot be bothered
+	button_7.cant_other_remove = 1
+
+	var/obj/item/device/key/iridium/fancy_keys = new()
+
+	backpack_full_of_ammo.add_contents(button_1)
+	backpack_full_of_ammo.add_contents(button_2)
+	backpack_full_of_ammo.add_contents(button_3)
+	backpack_full_of_ammo.add_contents(button_4)
+	backpack_full_of_ammo.add_contents(button_5)
+	backpack_full_of_ammo.add_contents(button_6)
+	backpack_full_of_ammo.add_contents(button_7)
+	backpack_full_of_ammo.add_contents(fancy_keys)
+
+	if (ishuman(src.mob))
+		// If you are using this you are going to Fuck Things Up
+		var/mob/living/carbon/human/doomguy = src.mob
+		doomguy.click_delay = 0
+		doomguy.combat_click_delay = 0
+		if(doomguy.back)
+			var/obj/item/I = doomguy.back
+			doomguy.u_equip(I)
+			I.set_loc(doomguy.loc)
+
+		doomguy.force_equip(backpack_full_of_ammo, doomguy.slot_back)
+
+	else
+		backpack_full_of_ammo.set_loc(get_turf(src.mob))

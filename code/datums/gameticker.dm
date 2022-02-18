@@ -678,7 +678,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			if (isAI(player) || isshell(player))
 				player_body_escaped = 1
 				if (isAIeye(player))
-					var/mob/dead/aieye/E = player
+					var/mob/living/intangible/aieye/E = player
 					player_loses_held_item = isdead(E.mainframe)
 
 			if (!mode.escape_possible)

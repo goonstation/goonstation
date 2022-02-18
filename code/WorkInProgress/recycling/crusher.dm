@@ -156,7 +156,7 @@
 
 
 /obj/machinery/crusher/attack_hand(mob/user)
-	if(!user || user.stat || get_dist(user,src)>1 || istype(user, /mob/dead/aieye)) //No unconscious / dead / distant users
+	if(!user || user.stat || get_dist(user,src)>1 || isintangible(user)) //No unconscious / dead / distant users
 		return
 
 	//Daring text showing how BRAVE THIS PERSON IS!!!

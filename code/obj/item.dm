@@ -630,7 +630,7 @@
 #define src_exists_inside_user_or_user_storage (src.loc == user || (istype(src.loc, /obj/item/storage) && src.loc.loc == user))
 
 
-/obj/item/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+/obj/item/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 	..()
 
 	if (!src.anchored)

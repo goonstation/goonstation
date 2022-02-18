@@ -324,7 +324,7 @@
 
 	M.verbs -= /mob/proc/chaos_dunk
 
-	logTheThing("combat", M, null, "<b>triggers a chaos dunk in [M.loc.loc] ([showCoords(M.x, M.y, M.z)])!</b>")
+	logTheThing("combat", M, null, "<b>triggers a chaos dunk in [M.loc.loc] ([log_loc(M)])!</b>")
 
 	for(var/obj/item/basketball/B in M.contents)
 		B.item_state = "bball2"

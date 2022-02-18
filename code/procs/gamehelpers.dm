@@ -224,9 +224,8 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 	if(length(T?.cameras))
 		for_by_tcl(theAI, /mob/living/silicon/ai)
 			if (theAI.deployed_to_eyecam)
-				var/mob/dead/aieye/AIeye = theAI.eyecam
+				var/mob/living/intangible/aieye/AIeye = theAI.eyecam
 				if(IN_RANGE(center, AIeye, distance))
-					. += AIeye
 					. += theAI
 
 //Kinda sorta like viewers but includes observers. In theory.

@@ -1485,7 +1485,7 @@
 	SS.Clickdrag_ObjectToPod(user,O)
 	return
 
-/obj/machinery/vehicle/MouseDrop(over_object, src_location, over_location)
+/obj/machinery/vehicle/mouse_drop(over_object, src_location, over_location)
 	if (!usr.client || !isliving(usr))
 		return
 	if (is_incapacitated(usr))

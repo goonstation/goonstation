@@ -133,8 +133,8 @@
 		W.set_loc(src.owner)
 		W.abilityHolder.topBarRendered = 0
 
-		message_admins("[key_name(wraith)] possessed the corpse of [owner] as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
-		logTheThing("combat", usr, null, "possessed the corpse of [owner] as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
+		message_admins("[key_name(wraith)] possessed the corpse of [owner] as a revenant at [log_loc(owner)].")
+		logTheThing("combat", usr, null, "possessed the corpse of [owner] as a revenant at [log_loc(owner)].")
 
 
 		if (src.wraith.mind) // theoretically shouldn't happen
@@ -158,9 +158,9 @@
 		if (!src.owner.mind && !src.owner.client)
 			return
 
-		message_admins("Revenant [key_name(owner)] died at [showCoords(owner.x, owner.y, owner.z)].")
+		message_admins("Revenant [key_name(owner)] died at [log_loc(owner)].")
 		playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
-		logTheThing("combat", usr, null, "died as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
+		logTheThing("combat", usr, null, "died as a revenant at [log_loc(owner)].")
 		if (owner.mind)
 			owner.mind.transfer_to(src.wraith)
 		else if (owner.client)

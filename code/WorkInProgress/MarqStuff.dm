@@ -534,7 +534,7 @@
 			return
 		..()
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		..()
 		var/atom/movable/screen/hud/S = over_object
 		if (istype(S))

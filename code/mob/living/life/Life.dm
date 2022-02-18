@@ -63,11 +63,11 @@
 			L = new type(src,arguments)
 		else
 			L = new type(src)
-		lifeprocesses[type] = L
+		lifeprocesses?[type] = L
 		return L
 
 	proc/remove_lifeprocess(type)
-		var/datum/lifeprocess/L = lifeprocesses[type]
+		var/datum/lifeprocess/L = lifeprocesses?[type]
 		lifeprocesses -= type
 		qdel(L)
 
@@ -206,7 +206,7 @@
 		var/datum/lifeprocess/L
 		for (var/thing in src.lifeprocesses)
 			if(src.disposed) return
-			L = src.lifeprocesses[thing]
+			L = src.lifeprocesses?[thing]
 			if(!L)
 				logTheThing("debug", src, null, "had lifeprocess [thing] removed during Life() probably.")
 				continue
@@ -536,25 +536,25 @@
 							O:score++
 
 	proc/update_sight()
-		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/sight]
+		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/sight]
 		if (L)
 			L.Process()
 
 	update_canmove()
-		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/canmove]
+		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/canmove]
 		if (L)
 			L.Process()
 
 	force_laydown_standup() //immediately force a laydown
 		if(!lifeprocesses)
 			return
-		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/stuns_lying]
+		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/stuns_lying]
 		if (L)
 			L.Process()
-		L = lifeprocesses[/datum/lifeprocess/canmove]
+		L = lifeprocesses?[/datum/lifeprocess/canmove]
 		if (L)
 			L.Process()
-		L = lifeprocesses[/datum/lifeprocess/blindness]
+		L = lifeprocesses?[/datum/lifeprocess/blindness]
 		if (L)
 			L.Process()
 

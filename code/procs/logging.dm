@@ -3,7 +3,7 @@ Some procs  exist for replacement within text:
 	[constructTarget(target,type)]
 
 Example in-game log call:
-		logTheThing("admin", src, M, "shot that nerd [constructTarget(src,"diary")] at [showCoords(usr.x, usr.y, usr.z)]")
+		logTheThing("admin", src, M, "shot that nerd [constructTarget(src,"diary")] at [log_loc(usr)]")
 Example out of game log call:
 		logTheThing("diary", src, null, "gibbed everyone ever", "admin")
 */
