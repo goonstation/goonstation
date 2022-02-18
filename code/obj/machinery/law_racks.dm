@@ -7,7 +7,6 @@
 	var/module_icon = 'icons/obj/module.dmi'
 
 
-	var/datum/light/light
 	var/const/MAX_CIRCUITS = 9
 	var/obj/item/aiModule/law_circuits[MAX_CIRCUITS] //asssoc list to ref slot num with law board obj
 
@@ -27,7 +26,7 @@
 			if(law_circuits[i])
 				var/image/circuit_image = image(src.module_icon, "aimod_[i]",,layer = src.layer + 0.005)
 				circuit_image.pixel_x = 0
-				circuit_image.pixel_y = i*6
+				circuit_image.pixel_y = -12 + i*3
 				src.overlays += circuit_image
 
 	attack_hand(mob/user as mob)
@@ -53,6 +52,7 @@
 			lawOut += "[law_counter++]: [X.get_law_text()]"
 
 		boutput(user, jointext(lawOut, "<br>"))
+		return ..()
 
 	special_deconstruct(obj/computerframe/frame as obj)
 		if(src.status & BROKEN)
@@ -65,7 +65,19 @@
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (istype(I, /obj/item/aiModule) && !isghostdrone(user))
 			var/obj/item/aiModule/AIM = I
-			AIM.install(src, user)
+			var/inserted = false
+			var/count = 1
+			while (!inserted && count <= MAX_CIRCUITS)
+				if(!src.law_circuits[count])
+					src.law_circuits[count] = AIM
+					user.visible_message("<span class='alert'><b>[user.name]</b> inserts a module into the rack!</span>")
+					inserted = true
+				count++
+			if(!inserted)
+				boutput(user,"Oh no the rack is full")
+			else
+				UpdateIcon()
+				UpdateLaws()
 		else if (istype(I, /obj/item/clothing/mask/moustache/))
 			for_by_tcl(M, /mob/living/silicon/ai)
 				M.moustache_mode = 1
@@ -74,11 +86,13 @@
 		else
 			return ..()
 
+	attack_ai(mob/user as mob)
+		return src.Attackhand(user)
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
-			ui = new(user, src, "lawrack", src.name)
+			ui = new(user, src, "AIRack", src.name)
 			ui.open()
 
 	ui_static_data(mob/user)
@@ -91,12 +105,44 @@
 			"laws" = src.law_circuits
 		)
 
-	ui_act(action, params)
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
 		if (.)
 			return
-		switch(action)
-			if("toggle-input")
+		boutput(ui.user,action)
+		var/slotNum = text2num(action)
+		if(law_circuits[slotNum])
+			//add circuit to hand
+			ui.user.put_in_hand_or_drop(law_circuits[slotNum])
+			law_circuits[slotNum] = null
+			UpdateIcon()
+			UpdateLaws()
+		else
+
+			var/equipped = ui.user.equipped()
+			if(!equipped)
+				return
+
+			if(!istype(equipped,/obj/item/aiModule))
+				return
+
+			law_circuits[slotNum]=equipped
+			ui.user.u_equip(equipped)
+
+			UpdateIcon()
+			UpdateLaws()
+
+	proc/UpdateLaws()
+		for (var/mob/living/silicon/R in mobs)
+			if (isghostdrone(R))
+				continue
+			R << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+			R.show_text("<h3>Law update detected.</h3>", "red")
+			R.show_laws()
+			//ticker.centralized_ai_laws.show_laws(R)
+		for (var/mob/living/intangible/aieye/E in mobs)
+			E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+
 /*
 
 /obj/machinery/ai_law_rack

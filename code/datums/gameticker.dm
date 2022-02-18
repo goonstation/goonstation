@@ -25,7 +25,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	var/click_delay = 3
 
-	var/datum/ai_laws/centralized_ai_laws
+	var/datum/ai_laws/centralized_ai_laws //TODO: delete
 
 	var/skull_key_assigned = 0
 
