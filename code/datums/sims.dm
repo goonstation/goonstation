@@ -529,7 +529,7 @@
 #endif
 
 	Topic(href, href_list)
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if (href_list["mot"])
 			var/datum/simsMotive/M = locate(href_list["mot"])
 			if (!istype(M) || M != motives[M.type])

@@ -202,7 +202,7 @@ proc/debug_map_apc_count(delim,zlim)
 		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 		set name = "Open Profiler"
 
-		admin_only
+		ADMIN_ONLY
 		world.SetConfig( "APP/admin", src.key, "role=admin" )
 		input( src, "Enter '.debug profile' in the next command box. Blame BYOND.", "BYONDSucks", ".debug profile" )
 		winset( usr, null, "command=.command" )
@@ -1266,7 +1266,7 @@ proc/info_overlay_choices()
 /client/proc/SetInfoOverlay(name in info_overlay_choices())
 	set name = "Debug Overlay"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 	var/list/available_overlays = info_overlay_choices()
 	activeOverlay?.OnDisabled(src)
 	if(!name || name == "REMOVE")

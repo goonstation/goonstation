@@ -9,7 +9,7 @@ var/global/debug_messages = 0
 	set desc = "Toggle debug messages."
 	set name = "HDM" // debug ur haines
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 
 	debug_messages = !(debug_messages)
 	logTheThing("admin", usr, null, "toggled debug messages [debug_messages ? "on" : "off"].")
@@ -19,7 +19,7 @@ var/global/debug_messages = 0
 /client/proc/debug_deletions()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Deletions"
-	admin_only
+	ADMIN_ONLY
 	var/deletedJson = "\[{path:null,count:0}"
 	var/deletionWhat = "Deleted Object Counts:"
 	#ifdef DELETE_QUEUE_DEBUG
@@ -70,13 +70,13 @@ var/global/debug_messages = 0
 /client/proc/debug_image_deletions_clear()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Clear Image Deletion Log"
-	admin_only
+	ADMIN_ONLY
 	deletedImageData = new
 
 /client/proc/debug_image_deletions()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Image Deletions"
-	admin_only
+	ADMIN_ONLY
 	#ifdef IMAGE_DEL_DEBUG
 	var/deletedJson = "\[''"
 	var/deletionWhat = "Deleted Image data:"
@@ -115,7 +115,7 @@ var/global/debug_messages = 0
 /client/proc/debug_pools()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Object Pools"
-	admin_only
+	ADMIN_ONLY
 
 	#ifndef DETAILED_POOL_STATS
 	var/poolsJson = "\[{pool:null,count:0}"
@@ -188,7 +188,7 @@ var/global/debug_messages = 0
 	set name = "Call Proc"
 	set desc = "Calls a proc associated with the targeted atom"
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
-	admin_only
+	ADMIN_ONLY
 	if (!target)
 		return
 	doCallProc(target)
@@ -270,7 +270,7 @@ var/global/debug_messages = 0
 /client/proc/call_proc()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Advanced ProcCall"
-	admin_only
+	ADMIN_ONLY
 	var/target = null
 
 	switch (alert("Proc owned by obj?",,"Yes","No","Cancel"))
@@ -896,7 +896,7 @@ body
 	set name = "Change Admin Level"
 	set desc = "Allows you to change your admin level at will for testing. Does not change your available verbs."
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	var/new_level = input(src, null, "Choose New Rank", "Coder") as anything in null|list("Host", "Coder", "Shit Guy", "Primary Admin", "Admin", "Secondary Admin", "Mod", "Babby")
 	if (!new_level)
@@ -924,7 +924,7 @@ var/global/debug_camera_paths = 0
 /client/proc/show_camera_paths()
 	set name = "Toggle camera connections"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 
 	if (!debug_camera_paths && alert(src, "DO YOU REALLY WANT TO TURN THIS ON? THE SERVER WILL SHIT ITSELF AND DIE DO NOT DO IT ON THE LIVE SERVERS THANKS", "Confirmation", "Yes", "No") == "No")
 		return
@@ -957,7 +957,7 @@ proc/display_camera_paths()
 /client/proc/remove_camera_paths_verb()
 	set name = "Hide camera connections"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 	remove_camera_paths()
 */
 
@@ -970,7 +970,7 @@ proc/display_camera_paths()
 	set name = "Toggle Camnet Reciprocity"
 	set desc = "Toggle AI camera connection behaviour, off to select each node based on the individual camera, on to force cameras to reciprocate the connection"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
-	admin_only
+	ADMIN_ONLY
 
 	camera_network_reciprocity = !camera_network_reciprocity
 	boutput(usr, "<span class='notice'>Toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]</span>")
@@ -999,7 +999,7 @@ proc/display_camera_paths()
 	set desc = "Randomizes how you look (if you are a human)"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
-	admin_only
+	ADMIN_ONLY
 	if (!ishuman(src.mob))
 		return boutput(usr, "<span class='alert'>Error: client mob is invalid type or does not exist</span>")
 	randomize_look(src.mob)
@@ -1011,7 +1011,7 @@ proc/display_camera_paths()
 	set desc = "Randomizes how you write on paper."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
-	admin_only
+	ADMIN_ONLY
 	if (src.mob && src.mob.mind)
 		src.mob.mind.handwriting = pick(handwriting_styles)
 		boutput(usr, "<span class='notice'>Handwriting style is now: [src.mob.mind.handwriting]</span>")
@@ -1023,7 +1023,7 @@ proc/display_camera_paths()
 	set name = "Machine stats"
 	set desc = "Displays the statistics for how machines are processed."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 
 	var/output = ""
 	for(var/T in detailed_machine_timings)
@@ -1076,7 +1076,7 @@ proc/display_camera_paths()
 	set name = "Machine Power stats"
 	set desc = "Displays the statistics for how much power machines are using."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 
 	var/output = ""
 	var/apc_data = ""
@@ -1106,7 +1106,7 @@ proc/display_camera_paths()
 	set name = "Queue stats"
 	set desc = "Displays the statistics for how queue stuff is processed."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 
 	var/output = ""
 	for(var/T in queue_stat_list)
@@ -1160,7 +1160,7 @@ proc/display_camera_paths()
 	set name = "Upload Custom HUD Style"
 	set desc = "Adds a dmi to the global list of available huds, for every player to use."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 
 	var/icon/new_style = input("Please choose a new icon file to upload", "Upload Icon") as null|icon
 	if (!isicon(new_style))
@@ -1180,7 +1180,7 @@ proc/display_camera_paths()
 	set name = "Random Color Matrix Test"
 	set desc = "Animates the client to a randomised color matrix"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 
 	if(!islist(usr.client.color))
 		usr.client.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1)
@@ -1211,7 +1211,7 @@ proc/display_camera_paths()
 	set name = "Test Mass Flock Convert"
 	set desc = "Don't fucking use this EVER"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 
 	if(alert("This will IRREVERSIBLY FUCK UP THE STATION and might be laggy, do not use this live. Are you sure?","Misclick Prevention","Yes","No") == "Yes")
 		logTheThing("admin", usr, null, "started a mass flocktile conversion at [log_loc(usr)]")
@@ -1223,7 +1223,7 @@ var/datum/flock/testflock
 /client/proc/test_flock_panel()
 	set name = "Test Flock Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 
 	if(isnull(testflock))
 		testflock = new()
@@ -1235,7 +1235,7 @@ var/datum/flock/testflock
 	set name = "Clear String Cache"
 	set desc = "Invalidates/clears the string cache to allow for files to be reloaded."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 
 	if(alert("Really clear the string cache?","Invalidate String Cache","OK","Cancel") == "OK")
 		var/length = length(string_cache)
@@ -1248,7 +1248,7 @@ var/datum/flock/testflock
 	set name = "Edit Color Matrix"
 	set desc = "A little more control over the VFX"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 
 	if(!istype(thething))
 		thething = new
@@ -1259,7 +1259,7 @@ var/datum/flock/testflock
 	set name = "Temp. Deadmin Self"
 	set desc = "Deadmin you're own self. Temporarily."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 
 	if(src.holder)
 		var/seconds = input("How many seconds would you like to be deadminned?", "Temporary Deadmin", 60) as num
@@ -1395,7 +1395,7 @@ var/datum/flock/testflock
 	set desc = "Delete all saved profiling data, I hope you know what you're doing."
 	set name = "Delete profiling logs"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 
 	if(input(usr, "Type in: 'delete profiling logs' to confirm:", "Confirmation of prof. logs deletion") != "delete profiling logs")
 		boutput(usr, "Deletion of profiling logs aborted.")
@@ -1410,7 +1410,7 @@ var/datum/flock/testflock
 	set desc = "Loops a times b times over some trivial statement."
 	set name = "cause lag"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 
 	if(alert("Are you sure you want to cause lag?","Why would you do this?","Yes","No") != "Yes")
 		return
@@ -1428,7 +1428,7 @@ var/datum/flock/testflock
 	set desc = "Makes it so lag is at least the set number."
 	set name = "persistent lag"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 
 	if(alert("Are you sure you want to set persistent lag to [cpu_usage]?","Why would you do this?","Yes","No") != "Yes")
 		return

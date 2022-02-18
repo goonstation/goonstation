@@ -4,7 +4,7 @@ var/global/shut_up_about_the_fucking_numbers_station = 1
 	set name = "Toggle Numbers Station Alerts"
 	set desc = "I DON'T CARE WHEN SPACE NUMBERS STATION LINCOLNSHIRE IS BROADCASTING SO SHUT UP ABOUT IT"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
-	admin_only
+	ADMIN_ONLY
 
 	shut_up_about_the_fucking_numbers_station = !(shut_up_about_the_fucking_numbers_station)
 	logTheThing("admin", usr, null, "toggled numbers station alerts [shut_up_about_the_fucking_numbers_station ? "off" : "on"].")

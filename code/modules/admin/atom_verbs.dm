@@ -6,7 +6,7 @@ var/global/atom_emergency_stop = 0
 	set popup_menu = 0
 	set name = "Stop Atom Verbs"
 	set desc = "For when someone's used an atom verb and you've found yourself yelling \"Oh god the server is dying STOP SPINNING THINGS AAAAA STOP PLEASE I BEG YOU\""
-	admin_only
+	ADMIN_ONLY
 
 	if (!atom_emergency_stop)
 		atom_emergency_stop = 1
@@ -27,7 +27,7 @@ var/global/atom_emergency_stop = 0
 	set popup_menu = 0
 	set name = "Transmute Type"
 	set desc = "Transmute all things under the path you specify."
-	admin_only
+	ADMIN_ONLY
 
 	if (alert(src, "Are you sure you want to transmute everything of a type?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -87,7 +87,7 @@ var/global/atom_emergency_stop = 0
 	set popup_menu = 0
 	set name = "Emag All"
 	set desc = "Emags every atom. Every single one."
-	admin_only
+	ADMIN_ONLY
 
 	if (alert(src, "Are you sure you want to emag every fucking atom?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -131,7 +131,7 @@ var/global/atom_emergency_stop = 0
 	set popup_menu = 0
 	set name = "Emag Type"
 	set desc = "Emag all things under the path you specify."
-	admin_only
+	ADMIN_ONLY
 
 	if (alert(src, "Are you sure you want to emag everything of a type?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -182,7 +182,7 @@ var/global/atom_emergency_stop = 0
 	set popup_menu = 0
 	set name = "Emag Target"
 	set desc = "Emag this thing. Not the other thing like this thing. THIS thing."
-	admin_only
+	ADMIN_ONLY
 
 	if (!target)
 		target = input(usr, "Target", "Target") as null|mob|obj|turf in world
@@ -206,7 +206,7 @@ var/global/atom_emergency_stop = 0
 	set popup_menu = 0
 	set name = "Scale All"
 	set desc = "Scales every atom. Every single one."
-	admin_only
+	ADMIN_ONLY
 
 	if (alert(src, "Are you sure you want to scale every fucking atom?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -256,7 +256,7 @@ var/global/atom_emergency_stop = 0
 	set popup_menu = 0
 	set name = "Scale Type"
 	set desc = "Scales all things under the path you specify."
-	admin_only
+	ADMIN_ONLY
 
 	if (alert(src, "Are you sure you want to scale everything of a type?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -313,7 +313,7 @@ var/global/atom_emergency_stop = 0
 	set popup_menu = 0
 	set name = "Scale Target"
 	set desc = "Scales a target."
-	admin_only
+	ADMIN_ONLY
 
 	if (!target)
 		target = input(usr, "Target", "Target") as null|mob|obj|turf in world
@@ -341,7 +341,7 @@ var/global/atom_emergency_stop = 0
 	set popup_menu = 0
 	set name = "Rotate All Atoms"
 	set desc = "Rotates every atom. Every single one."
-	admin_only
+	ADMIN_ONLY
 
 	if (alert(src, "Are you sure you want to rotate every fucking atom?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -388,7 +388,7 @@ var/global/atom_emergency_stop = 0
 	set popup_menu = 0
 	set name = "Rotate Type"
 	set desc = "Rotates all things under the path you specify."
-	admin_only
+	ADMIN_ONLY
 
 	if (alert(src, "Are you sure you want to rotate everything of a type?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -442,7 +442,7 @@ var/global/atom_emergency_stop = 0
 	set popup_menu = 0
 	set name = "Rotate Target"
 	set desc = "Rotates a target."
-	admin_only
+	ADMIN_ONLY
 
 	if (!target)
 		target = input(usr, "Target", "Target") as null|mob|obj|turf in world
@@ -467,7 +467,7 @@ var/global/atom_emergency_stop = 0
 	set popup_menu = 0
 	set name = "Spin All"
 	set desc = "Spins every atom. Every single one."
-	admin_only
+	ADMIN_ONLY
 
 	if (alert(src, "Are you sure you want to spin every fucking atom?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -525,7 +525,7 @@ var/global/atom_emergency_stop = 0
 	set popup_menu = 0
 	set name = "Spin Type"
 	set desc = "Spins all things under the path you specify."
-	admin_only
+	ADMIN_ONLY
 
 	if (alert(src, "Are you sure you want to spin everything of a type?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -591,7 +591,7 @@ var/global/atom_emergency_stop = 0
 	set popup_menu = 0
 	set name = "Spin Target"
 	set desc = "Spins a target."
-	admin_only
+	ADMIN_ONLY
 
 	if (!target)
 		target = input(usr, "Target", "Target") as null|mob|obj|turf in world
@@ -626,7 +626,7 @@ var/global/atom_emergency_stop = 0
 	set popup_menu = 0
 	set name = "Get All"
 	set desc = "Gets every object and mob. Every single one. Oh god no."
-	admin_only
+	ADMIN_ONLY
 
 	if (alert(src, "Are you sure you want to get fucking object and mob and bring it to your tile?", "YOU WILL REGRET THIS", "Yes", "No") == "Yes")
 
@@ -675,7 +675,7 @@ var/global/atom_emergency_stop = 0
 	set popup_menu = 0
 	set name = "Get Type"
 	set desc = "Get all things under the path you specify. Don't give this /turf or /area stuff, it's not going to work."
-	admin_only
+	ADMIN_ONLY
 
 	if (alert(src, "Are you sure you want to teleport everything of a type to your tile?", "Confirmation", "Yes", "No") == "Yes")
 

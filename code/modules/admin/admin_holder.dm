@@ -342,7 +342,7 @@
 /client/proc/change_admin_prefs()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Change Admin Preferences"
-	admin_only
+	ADMIN_ONLY
 
 	src.holder.show_pref_window(src.mob)
 
