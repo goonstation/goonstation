@@ -1234,46 +1234,46 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 /datum/objective/conspiracy/crime
 	explanation_text = "Set yourselves up as vigilantes and arrest people for made up crimes."
 
-// /datum/objective/conspiracy/framemurder
-// 	var/datum/mind/target
-// 	var/targetname
+/datum/objective/conspiracy/framemurder
+	var/datum/mind/target
+	var/targetname
 
-// 	set_up()
-// 		var/list/possible_targets = list()
-// 		for(var/datum/mind/possible_target in ticker.minds)
-// 			if (possible_target && (possible_target != owner) && ishuman(possible_target.current))
-// 				if (possible_target.special_role == ROLE_CONSPIRATOR)
-// 					continue
-// 				if (possible_target.current.mind && possible_target.current.mind.is_target) // Cannot read null.is_target
-// 					continue
-// 				if (!possible_target.current.client)
-// 					continue
-// 				possible_targets += possible_target
+	set_up()
+		var/list/possible_targets = list()
+		for(var/datum/mind/possible_target in ticker.minds)
+			if (possible_target && (possible_target != owner) && ishuman(possible_target.current))
+				if (possible_target.special_role == ROLE_CONSPIRATOR)
+					continue
+				if (possible_target.current.mind && possible_target.current.mind.is_target) // Cannot read null.is_target
+					continue
+				if (!possible_target.current.client)
+					continue
+				possible_targets += possible_target
 
-// 		if(possible_targets.len > 0)
-// 			target = pick(possible_targets)
-// 			target.current.mind.is_target = 1
+		if(possible_targets.len > 0)
+			target = pick(possible_targets)
+			target.current.mind.is_target = 1
 
-// 		create_objective_string(target)
+		create_objective_string(target)
 
-// 		return target
+		return target
 
-// 	proc/find_target_by_role(role)
-// 		for(var/datum/mind/possible_target in ticker.minds)
-// 			if((possible_target != owner) && ishuman(possible_target.current) && (possible_target.assigned_role == role || (possible_target.assigned_role == "MODE" && possible_target.special_role == role)))
-// 				target = possible_target
-// 				break
+	proc/find_target_by_role(role)
+		for(var/datum/mind/possible_target in ticker.minds)
+			if((possible_target != owner) && ishuman(possible_target.current) && (possible_target.assigned_role == role || (possible_target.assigned_role == "MODE" && possible_target.special_role == role)))
+				target = possible_target
+				break
 
-// 		create_objective_string(target)
-// 		return target
+		create_objective_string(target)
+		return target
 
-// 	proc/create_objective_string(datum/mind/target)
-// 		if(!(target?.current))
-// 			explanation_text = "Be dastardly as heck!"
-// 			return
-// 		var/objective_text = "Frame [target.current.real_name], the [target.assigned_role == "MODE" ? target.special_role : target.assigned_role] for murder."
-// 		explanation_text = objective_text
-// 		targetname = target.current.real_name
+	proc/create_objective_string(datum/mind/target)
+		if(!(target?.current))
+			explanation_text = "Be dastardly as heck!"
+			return
+		var/objective_text = "Frame [target.current.real_name], the [target.assigned_role == "MODE" ? target.special_role : target.assigned_role] for murder."
+		explanation_text = objective_text
+		targetname = target.current.real_name
 
 
 /*/datum/objective/conspiracy/escape
