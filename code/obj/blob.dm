@@ -1104,6 +1104,7 @@
 				src.poison += B.poison/2
 				B.poison = 0
 
+		for (var/obj/blob/lipid/B in view(1))
 			if(istype(B, /obj/blob/lipid))
 				if(B.poison < 50)
 					B.poison += src.poison / 2 + 2
