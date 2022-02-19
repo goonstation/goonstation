@@ -275,7 +275,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 	set desc = "Spawn all of the magical wizard rings."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	var/turf/T_LOC = get_turf(src.mob)
 

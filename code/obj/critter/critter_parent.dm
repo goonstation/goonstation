@@ -1113,7 +1113,7 @@
 			return
 
 /obj/critter/proc/revive_critter()
-	usr_admin_only
+	USR_ADMIN_ONLY
 	var/obj/critter/C = src
 	if (!istype(C, /obj/critter))
 		boutput(src, "[C] isn't a critter! How did you even get here?!")
@@ -1133,7 +1133,7 @@
 		return
 
 /obj/critter/proc/kill_critter()
-	usr_admin_only
+	USR_ADMIN_ONLY
 	var/obj/critter/C = src
 	if (!istype(C, /obj/critter))
 		boutput(src, "[C] isn't a critter! How did you even get here?!")

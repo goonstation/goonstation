@@ -166,7 +166,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	set desc = "Enables in-depth logging of all IRC Bot exports and returns"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 
-	admin_only
+	ADMIN_ONLY
 
 	ircbot.toggleDebug(src)
 	return 1

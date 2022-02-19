@@ -2445,7 +2445,7 @@ Returns:
 
 /obj/fireworksbox
 	name = "Box of Fireworks"
-	desc = "The Label simply reads : \"Firwerks fun is having total family. Made in Spacechina\""
+	desc = "The Label simply reads : \"Firwerks fun is having total family.\""
 	density = 0
 	anchored = 0
 	opacity = 0
@@ -3061,7 +3061,7 @@ Returns:
 	set name = "Create Portal"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	var/mob/M = src.mob
 	if (istype(M))

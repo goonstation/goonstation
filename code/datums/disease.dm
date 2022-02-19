@@ -26,7 +26,7 @@
 	var/tickcount = 0
 	//IM SORRY
 
-	proc/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
+	proc/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 		if (!affected_mob || !D)
 			return 1
 		return 0
@@ -113,7 +113,7 @@
 		if (probmult(stage_prob) && stage < master.max_stages)
 			stage++
 
-		master.stage_act(affected_mob,src)
+		master.stage_act(affected_mob, src, mult)
 
 		return 0
 
@@ -225,7 +225,7 @@
 		SPAWN(rand(1,5))
 			// vary it up a bit so the processing doesnt look quite as transparent
 			if (master)
-				master.stage_act(affected_mob,src)
+				master.stage_act(affected_mob, src, mult)
 
 		return 0
 
@@ -273,7 +273,7 @@
 
 
 		if(!stealth_asymptomatic)
-			master.stage_act(affected_mob,src,source)
+			master.stage_act(affected_mob,src,mult,source)
 
 		return
 

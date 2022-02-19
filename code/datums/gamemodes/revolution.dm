@@ -308,7 +308,7 @@
 
 	for(var/mob/living/carbon/human/player in mobs)
 		if(player.mind)
-			if (locate(/obj/item/implant/antirev) in player.implant)
+			if (locate(/obj/item/implant/counterrev) in player.implant)
 				ucs += player.mind
 			else
 				var/role = player.mind.assigned_role
