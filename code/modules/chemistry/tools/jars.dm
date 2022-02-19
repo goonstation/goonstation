@@ -4,7 +4,7 @@
 /* ============================================== */
 
 #define JARS_FILE "data/jars.sav"
-#define JARS_VERSION 1
+#define JARS_VERSION 2
 #define DEFAULT_JAR_COUNT 4
 #define MAX_JAR_COUNT 32
 #define JAR_MAX_ITEMS 16
@@ -187,7 +187,7 @@ proc/load_intraround_jars()
 	var/savefile/jar_save = new(JARS_FILE)
 	var/version
 	jar_save["version"] >> version
-	if(isnull(version))
+	if(version < JARS_VERSION)
 		generate_backup_jars()
 		fdel(JARS_FILE)
 		return
@@ -250,7 +250,7 @@ proc/load_intraround_jars()
 	var/pickle_age
 
 	New(newloc, atom/movable/pickled)
-		..()
+		..(newloc, null) // DO NOT PASS pickled AS THE SECOND VAR BECAUSE IT GETS STORED AS INITIAL REAGENTS AAA
 		if (istype(pickled))
 			src.icon = getFlatIcon(pickled, no_anim=TRUE)
 			src.paint_pickly_color()
