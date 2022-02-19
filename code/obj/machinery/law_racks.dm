@@ -26,10 +26,10 @@
 			circuit_image = null
 			color_overlay = null
 			if(law_circuits[i])
-				circuit_image = image(src.icon, "aimod",,layer = src.layer + 0.005) //law_circuits[i].icon_state
+				circuit_image = image(src.icon, "aimod") //law_circuits[i].icon_state
 				circuit_image.pixel_x = 0
 				circuit_image.pixel_y = -36 + i*4 //I expect this is bad practice, so maybe fix this
-				color_overlay = image(src.icon, "aimod_over",,layer = circuit_image.layer+0.005)
+				color_overlay = image(src.icon, "aimod_over")
 				color_overlay.color = law_circuits[i].highlight_color
 				color_overlay.pixel_x = 0
 				color_overlay.pixel_y = -36 + i*4 //I expect this is bad practice, so maybe fix this

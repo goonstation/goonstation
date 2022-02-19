@@ -5,20 +5,20 @@ import { Window } from '../layouts';
 export const AIRack = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    laws
+    laws,
   } = data;
   return (
     <Window resizable>
       <Window.Content scrollable>
-      <Section>
+        <Section>
           <LabeledList>
-            {laws.map((item,index) => (
-              <LabeledList.Item>
+            {laws.map((item, index) => (
+              <LabeledList.Item key={index}>
                 <Button
                   icon={item ? 'circle' : 'circle-o'}
                   content={item ? item : "Empty"}
                   onClick={() => act(index+1)}
-                  fluid={true}
+                  fluid
                 />
               </LabeledList.Item>
             ))}

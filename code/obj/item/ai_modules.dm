@@ -32,7 +32,7 @@ AI MODULES
 
 	update_icon()
 		. = ..()
-		var/image/coloroverlay = image(src.icon, "aimod_1-over",,layer = src.layer+0.005)
+		var/image/coloroverlay = image(src.icon, "aimod_1-over")
 		coloroverlay.color = src.highlight_color
 		src.UpdateOverlays(coloroverlay,"color_mask")
 
