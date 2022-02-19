@@ -55279,7 +55279,6 @@
 /obj/machinery/computer/solar_control{
 	id = "owl"
 	},
-/obj/machinery/power/data_terminal,
 /obj/cable,
 /turf/unsimulated/floor/engine,
 /area/owlery/Owlmait)
