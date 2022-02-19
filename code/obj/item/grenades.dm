@@ -968,7 +968,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 /obj/item/firework
 	name = "firework"
-	desc = "A consumer-grade pyrotechnic, often used in celebrations. This one says it was manufactured in Space-China."
+	desc = "A consumer-grade pyrotechnic, often used in celebrations."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "firework"
 	opacity = 0

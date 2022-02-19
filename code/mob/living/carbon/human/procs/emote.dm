@@ -1259,7 +1259,7 @@
 					message = "<B>[src]</B> wriggles around a bit."
 					maptext_out = "<I>wriggles around a bit</I>"
 
-			if ("slap","bitchslap","smack")
+			if ("slap","smack")
 				m_type = 1
 				if (!src.restrained())
 					if (src.emote_check(voluntary))

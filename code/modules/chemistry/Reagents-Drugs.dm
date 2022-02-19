@@ -310,7 +310,7 @@ datum
 									halluc_name = pick("pig", "DAT FUKKEN PIG")
 								if(2)
 									halluc_state = "spider"
-									halluc_name = pick("giant black widow", "queen bitch spider", "OH FUCK A SPIDER")
+									halluc_name = pick("giant black widow", "aw look a spider", "OH FUCK A SPIDER")
 								if(3)
 									halluc_state = "dragon"
 									halluc_name = pick("dragon", "Lord Cinderbottom", "SOME FUKKEN LIZARD THAT BREATHES FIRE")

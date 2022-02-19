@@ -2445,7 +2445,7 @@ Returns:
 
 /obj/fireworksbox
 	name = "Box of Fireworks"
-	desc = "The Label simply reads : \"Firwerks fun is having total family. Made in Spacechina\""
+	desc = "The Label simply reads : \"Firwerks fun is having total family.\""
 	density = 0
 	anchored = 0
 	opacity = 0
