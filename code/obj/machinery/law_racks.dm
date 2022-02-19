@@ -4,8 +4,6 @@
 	icon_state = "airack_empty"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behaivor of connected AIs."
 	circuit_type = /obj/item/circuitboard/aiupload
-	var/module_icon = 'icons/obj/module.dmi'
-
 
 	var/const/MAX_CIRCUITS = 9
 	var/obj/item/aiModule/law_circuits[MAX_CIRCUITS] //asssoc list to ref slot num with law board obj
@@ -22,12 +20,24 @@
 		UpdateIcon()
 
 	update_icon()
+		var/image/circuit_image = null
+		var/image/color_overlay = null
 		for (var/i=1, i <= MAX_CIRCUITS, i++)
+			circuit_image = null
+			color_overlay = null
 			if(law_circuits[i])
-				var/image/circuit_image = image(src.module_icon, "aimod_[i]",,layer = src.layer + 0.005)
+				circuit_image = image(src.icon, "aimod",,layer = src.layer + 0.005) //law_circuits[i].icon_state
 				circuit_image.pixel_x = 0
-				circuit_image.pixel_y = -12 + i*3
-				src.overlays += circuit_image
+				circuit_image.pixel_y = -36 + i*4 //I expect this is bad practice, so maybe fix this
+				color_overlay = image(src.icon, "aimod_over",,layer = circuit_image.layer+0.005)
+				color_overlay.color = law_circuits[i].highlight_color
+				color_overlay.pixel_x = 0
+				color_overlay.pixel_y = -36 + i*4 //I expect this is bad practice, so maybe fix this
+				//circuit_image.overlays += circuit_image
+				//circuit_image.color = law_circuits[i].color
+				//src.overlays += circuit_image
+			src.UpdateOverlays(circuit_image,"module_slot_[i]")
+			src.UpdateOverlays(color_overlay,"module_slot_[i]_overlay")
 
 	attack_hand(mob/user as mob)
 		if (src.status & NOPOWER)
@@ -70,8 +80,9 @@
 			while (!inserted && count <= MAX_CIRCUITS)
 				if(!src.law_circuits[count])
 					src.law_circuits[count] = AIM
-					user.visible_message("<span class='alert'><b>[user.name]</b> inserts a module into the rack!</span>")
+					user.visible_message("<span class='alert'><b>[user.name]</b> inserts a module into the first empty slot on the rack!</span>")
 					inserted = true
+					user.u_equip(AIM)
 				count++
 			if(!inserted)
 				boutput(user,"Oh no the rack is full")
@@ -109,7 +120,7 @@
 		. = ..()
 		if (.)
 			return
-		boutput(ui.user,action)
+
 		var/slotNum = text2num(action)
 		if(law_circuits[slotNum])
 			//add circuit to hand

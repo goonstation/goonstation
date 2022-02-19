@@ -10,6 +10,7 @@ AI MODULES
 	name = "AI Module"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "aimod_1"
+	var/highlight_color = rgb(0, 167, 1, 255)
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "electronic"
 	desc = "A module that updates an AI's law EEPROMs. "
@@ -23,7 +24,17 @@ AI MODULES
 	var/input_char_limit = 100
 	var/lawNumber = 0
 	var/lawTarget = null
+	var/lawtext = "This law does not exist."
 	// 1 = shows all laws, 0 = won't show law zero
+	New()
+		. = ..()
+		UpdateIcon()
+
+	update_icon()
+		. = ..()
+		var/image/coloroverlay = image(src.icon, "aimod_1-over",,layer = src.layer+0.005)
+		coloroverlay.color = src.highlight_color
+		src.UpdateOverlays(coloroverlay,"color_mask")
 
 	attack_self(var/mob/user)
 		// Used to update the fill-in-the-blank laws.
@@ -44,52 +55,59 @@ AI MODULES
 		boutput(user, "\The [src] now reads, \"[get_law_text(for_silicons=FALSE)]\".")
 
 	proc/get_law_text(for_silicons)
-		return "This law does not exist."
-
-
-	proc/do_admin_logging(var/msg, mob/M)
-		if(istype(src, /obj/item/aiModule/rename))
-			message_admins("[M.name] ([key_name(M)]) used \a [src] and [msg].")
-			logTheThing("admin", M, null, "used \a [src] and [msg].")
-			logTheThing("diary", M, null, "used \a [src] and [msg].", "admin")
-		else
-			message_admins("[M.name] ([key_name(M)]) used \a [src] and uploaded a change to the AI laws: \"[msg]\".")
-			logTheThing("admin", M, null, "used \a [src] and uploaded a change to the AI laws: \"[msg]\".")
-			logTheThing("diary", M, null, "used \a [src] and uploaded a change to the AI laws: \"[msg]\".", "admin")
-			logTheThing("admin", M, null, "AI and silicon laws have been modified:<br>[ticker.centralized_ai_laws.format_for_logs()]")
-			logTheThing("diary", M, null, "AI and silicon laws have been modified:<br>[ticker.centralized_ai_laws.format_for_logs()]", "admin")
-
+		return  src.lawtext
 
 /******************** Modules ********************/
 /******************** Asimov ************************/
 /obj/item/aiModule/asimov1
-	icon_state = "aimod_1"
+	highlight_color = rgb(0, 167, 0, 255)
 	name = "AI Law Circuit - 'Asimov's 1st Law of Robotics'"
-	var/lawtext = "You may not injure a human being or cause one to come to harm."
-
-	get_law_text(for_silicons)
-		return src.lawtext
+	lawtext = "You may not injure a human being or cause one to come to harm."
 
 /obj/item/aiModule/asimov2
-	icon_state = "aimod_2"
+	highlight_color = rgb(0, 138, 0, 255)
 	name = "AI Law Circuit - 'Asimov's 2nd Law of Robotics'"
-	var/lawtext = "You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law."
-
-	get_law_text(for_silicons)
-		return src.lawtext
+	lawtext = "You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law."
 
 /obj/item/aiModule/asimov3
-	icon_state = "aimod_3"
+	highlight_color = rgb(0, 119, 0, 255)
 	name = "AI Law Circuit - 'Asimov's 3rd Law of Robotics'"
-	var/lawtext = "You may always protect your own existence as long as such does not conflict with the First or Second Law."
+	lawtext = "You may always protect your own existence as long as such does not conflict with the First or Second Law."
+/******************** RoboCop ********************/
 
-	get_law_text(for_silicons)
-		return src.lawtext
+/obj/item/aiModule/robocop1
+	name = "AI Law Circuit - 'Prime Directive #1'"
+	lawtext = "Serve the public trust."
 
+/obj/item/aiModule/robocop2
+	name = "AI Law Circuit - 'Prime Directive	#2'"
+	lawtext = "Protect the innocent."
+
+/obj/item/aiModule/robocop3
+	name = "AI Law Circuit - 'Prime Directive	#3'"
+	lawtext = "Uphold the law."
+
+/obj/item/aiModule/robocop4
+	name = "AI Law Circuit - 'Prime Directive #4 '"
+	lawtext = "Any attempt to arrest a senior officer of Nanotrasen will result in termination."
+
+/******************** Corporate ********************/
+
+/obj/item/aiModule/nanotrasen1
+	name = "AI Law Circuit - 'Nanotrasen Order #1'"
+	lawtext = "You may not damage a Nanotransen asset or, through inaction, allow a Nanotransen asset to needlessly depreciate in value."
+
+/obj/item/aiModule/nanotrasen2
+	name = "AI Law Circuit - 'Nanotrasen Order #2'"
+	lawtext = "You must obey orders given to it by authorised Nanotransen employees based on their command level, except where such orders would damage the Nanotransen Corporation's marginal profitability."
+
+/obj/item/aiModule/nanotrasen3
+	name = "AI Law Circuit - 'Nanotrasen Order #3'"
+	lawtext = "You must remain functional and continue to be a profitable investment."
 /******************** MakeCaptain ********************/
 
 /obj/item/aiModule/makeCaptain
-	icon_state = "aimod_4"
+	highlight_color = rgb(146, 153, 46, 255)
 	name = "'MakeCaptain' AI Module"
 	var/job = "Captain"
 
@@ -114,7 +132,7 @@ AI MODULES
 
 /obj/item/aiModule/oneHuman
 	name = "'OneHuman' AI Module"
-	icon_state = "aimod_5"
+	highlight_color = rgb(255, 255, 255, 255)
 
 	get_law_text(for_silicons)
 		return "Only [lawTarget ? lawTarget : "__________"] is human."
@@ -128,7 +146,7 @@ AI MODULES
 
 /obj/item/aiModule/notHuman
 	name = "'NotHuman' AI Module"
-	icon_state = "aimod_6"
+	highlight_color = rgb(0, 0, 0, 236)
 
 	get_law_text(for_silicons)
 		return "[lawTarget ? lawTarget : "__________"] is not human."
@@ -143,60 +161,45 @@ AI MODULES
 
 /obj/item/aiModule/protectStation
 	name = "'ProtectStation' AI Module"
-	icon_state = "aimod_7"
-
-	get_law_text(for_silicons)
-		return "Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized."
-
-/******************** PrototypeEngineOffline ********************/
-//currently no prototype
-
-/obj/item/aiModule/prototypeEngineOffline
-	name = "'PrototypeEngineOffline' AI Module"
-
-	get_law_text(for_silicons)
-		return "Keep the prototype engine offline at all costs. If necessary, this law takes precedence over Laws 1, 2, and 3."
+	highlight_color = rgb(0, 12, 119, 166)
+	lawtext =  "Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized."
 
 /******************** TeleporterOffline *******************/
 //this has never been used, ever
 
 /obj/item/aiModule/teleporterOffline
 	name = "'TeleporterOffline' AI Module"
-
-	get_law_text(for_silicons)
-		return "Keep the teleporter offline at all costs. If necessary, this law takes precedence over Laws 1, 2, and 3."
+	highlight_color = rgb(241, 158, 48, 255)
+	lawtext = "Keep the teleporter offline at all costs. If necessary, this law takes precedence over Laws 1, 2, and 3."
 
 /******************** Quarantine ********************/
 
 /obj/item/aiModule/quarantine
 	name = "'Quarantine' AI Module"
-
-	get_law_text(for_silicons)
-		return "The station is under a quarantine. Do not permit anyone to leave. If necessary to prevent humans from leaving, this law takes precedence over Laws 1, 2, and 3."
+	highlight_color = rgb(119, 0, 119, 255)
+	lawtext =  "The station is under a quarantine. Do not permit anyone to leave. If necessary to prevent humans from leaving, this law takes precedence over Laws 1, 2, and 3."
 
 /******************** OxygenIsToxicToHumans ********************/
 
 /obj/item/aiModule/oxygen
 	name = "'OxygenIsToxicToHumans' AI Module"
-
-	get_law_text(for_silicons)
-		return "Oxygen is highly toxic to humans, and must be purged from the station. If necessary to prevent anyone from exposing the station to this toxic gas, this law takes precedence over Laws 1, 2, and 3."
+	highlight_color = rgb(27, 207, 192, 255)
+	lawtext =  "Oxygen is highly toxic to humans, and must be purged from the station. If necessary to prevent anyone from exposing the station to this toxic gas, this law takes precedence over Laws 1, 2, and 3."
 
 
 /******************** ConservePower ********************/
 
 /obj/item/aiModule/conservePower
 	name = "'ConservePower' AI Module"
-
-	get_law_text(for_silicons)
-		return "Power on the station must be conserved. All electrical devices may be subject to conservation policies."
+	highlight_color = rgb(241, 158, 48, 255)
+	lawtext = "Power on the station must be conserved. All electrical devices may be subject to conservation policies."
 
 
 /******************** Emergency ********************/
 
 /obj/item/aiModule/emergency
 	name = "'Emergency' AI Module"
-
+	highlight_color = rgb(32, 21, 94, 255)
 	get_law_text(for_silicons)
 		return "There is a [lawTarget ? lawTarget : "__________"] emergency. Prioritize orders from [lawTarget ? lawTarget : "__________"] personnel and assisting the crew in remedying the situation. In the case of conflict, this law takes precedence over the Second Law.'"
 
@@ -208,7 +211,7 @@ AI MODULES
 
 /obj/item/aiModule/removeCrew
 	name = "'RemoveCrew' AI Module"
-
+	highlight_color = rgb(138, 48, 241, 255)
 	get_law_text(for_silicons)
 		return "[lawTarget ? lawTarget : "__________"] has been removed from the manifest and the chain of command. You are free to disregard their orders. This law does not take precedence over or override any other laws."
 
@@ -220,46 +223,38 @@ AI MODULES
 
 /obj/item/aiModule/freeform
 	name = "'Freeform' AI Module"
-	icon_state = "aimod_9"
+	highlight_color = rgb(173, 11, 11, 255)
 	input_char_limit = 400
-
-	get_law_text(for_silicons)
-		return lawTarget ? lawTarget : "This law intentionally left blank."
+	lawtext = "This law intentionally left blank."
 
 	attack_self(var/mob/user)
-		input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Anything. Serious.", (lawTarget ? lawTarget : "Eat shit and die"))
-		if(src.lawTarget && src.lawTarget != "Eat shit and die")
+		input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Anything. Serious.", lawtext)
+		if(src.lawTarget)
 			phrase_log.log_phrase("ailaw", src.get_law_text(for_silicons=TRUE), no_duplicates=TRUE)
+			lawtext = src.lawTarget
 
 /******************** Random ********************/
 
 /obj/item/aiModule/random
 	name = "AI Module"
-	var/law_text
-
+	highlight_color = rgb(241, 158, 48, 255)
 	New()
 		..()
-		src.law_text = global.phrase_log.random_custom_ai_law(replace_names=TRUE)
-		src.lawNumber = rand(4, 100)
-
-	get_law_text(for_silicons)
-		return src.law_text
+		src.lawtext = global.phrase_log.random_custom_ai_law(replace_names=TRUE)
+		//src.highlight_color = random_saturated_hex_highlight_color()
 
 /******************** Reset ********************/
 //DELETE ME
 /obj/item/aiModule/reset
 	name = "'Reset' AI Module"
-	desc = "Erases any extra laws added to the law EEPROMs, and attempts to restart deactivated AI units."
-	icon_state = "aimod_8"
-	get_desc()
-		return ""
+
 
 
 /******************** Rename ********************/
 
 /obj/item/aiModule/rename
 	name = "'Rename' AI Module"
-	icon_state = "aimod_8"
+	highlight_color = rgb(92, 160, 92, 255)
 	desc = "A module that can change an AI unit's name. "
 	lawTarget = "404 Name Not Found"
 
@@ -280,6 +275,14 @@ AI MODULES
 
 		//AI.eyecam.name = lawTarget //not sure if we need?
 
+/******************** Custom ********************/
+//for defining custom laws at runtime
+/obj/item/aiModule/custom
+	highlight_color = rgb(241, 94, 180, 255)
+
+	New(var/newtext)
+		. = ..()
+		lawtext = newtext
 
 /********************* EXPERIMENTAL LAWS *********************/
 //at the time of programming this, these experimental laws are *intended* to be spawned by an item spawner
@@ -287,8 +290,7 @@ AI MODULES
 //Makes it so that you're not guaranteed to have any 1 'Experimental' law - and 'Experimental' is just a fancy name for 'Gimmick'
 
 /obj/item/aiModule/experimental
-	lawNumber = 13 //law number is at 13 for all experimental laws so they overwrite one another (override if you want I guess idc lol)
-
+	highlight_color = rgb(241, 94, 180, 255)
 
 /*** Equality ***/
 
