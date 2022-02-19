@@ -413,7 +413,6 @@
 			return
 
 		var/sgen = SOLARGENRATE * sunfrac
-		sgen *= PROCESSING_TIER_MULTI(src)
 		add_avail(sgen)
 		if(powernet && control)
 			if(control.get_direct_powernet() == powernet) //this line right here...
