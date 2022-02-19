@@ -475,6 +475,13 @@
 		if(mainframe)
 			mainframe.view_messageLog()
 
+	verb/open_map()
+		set name = "Open map"
+		set desc = "Hopefully opens the map"
+		set category = "AI Commands"
+		var/datum/tgui/map = new(usr, src, "AIMap")
+		map.open()
+
 //---TURF---//
 /turf/var/image/aiImage
 /turf/var/list/cameras = null
