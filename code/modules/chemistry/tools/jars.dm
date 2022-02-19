@@ -35,6 +35,10 @@
 			boutput(user, "<span class='alert'>That's too large to fit into the jar.</span>")
 			return
 
+		if(W.cant_drop)
+			boutput(user, "<span class='alert'>You can't put that in the jar.</span>")
+			return
+
 		if (length(src.contents) > JAR_MAX_ITEMS || (locate(/mob/living) in src))
 			boutput(user, "<span class='alert'>There is no way that will fit into this jar.  This VERY FULL jar.</span>")
 			return
