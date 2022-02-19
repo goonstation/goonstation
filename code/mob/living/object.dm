@@ -70,13 +70,11 @@
 
 		src.owner = controller
 		if (src.owner)
+			if (!src.owner.mind) //what the fuck
+				death(1)
+				qdel(src)
+				return
 			src.owner.set_loc(src)
-			if (!src.owner.mind)
-				src.owner.mind = new /datum/mind(  )
-				src.owner.mind.ckey = ckey
-				src.owner.mind.key = src.owner.key
-				src.owner.mind.current = src.owner
-				ticker.minds += src.owner.mind
 			src.owner.mind.transfer_to(src)
 
 		src.visible_message("<span class='alert'><b>[src.possessed_thing] comes to life!</b></span>") // was [src] but: "the living space thing comes alive!"
