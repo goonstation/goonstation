@@ -34,8 +34,8 @@
 		if (!spell.holder)
 			return
 
-		if(params["shift"] && params["ctrl"])
-			if(owner.waiting_for_hotkey)
+		if (params["shift"] && params["ctrl"])
+			if (owner.waiting_for_hotkey)
 				holder.cancel_action_binding()
 				return
 			else

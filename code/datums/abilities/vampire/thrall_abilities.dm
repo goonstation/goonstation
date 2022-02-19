@@ -49,11 +49,11 @@
 
 	animate(hudarrow, alpha=127, time=1 SECOND)
 	while(tracker_active)
-		if(!tracker_active || !src.master)
+		if (!tracker_active || !src.master)
 			break
 		var/turf/ST = get_turf(M)
 		var/turf/T = get_turf(src.master.owner)
-		if(!ST || !T || ST.z != T.z)
+		if (!ST || !T || ST.z != T.z)
 			boutput(M, "<span class='alert'>Your master is too far away to track!</span>")
 			break
 		var/ang = get_angle(get_turf(M), get_turf(src.master.owner))
@@ -63,7 +63,7 @@
 		var/hudarrow_scale = 0.6 + 0.4 / (1 + 3 ** (3 - dist / 10))
 		MX = MX.Scale(hudarrow_scale, hudarrow_scale)
 		MX = MX.Turn(ang)
-		if(dist == 0)
+		if (dist == 0)
 			hudarrow_dist += 9
 			MX.Turn(180) // point at yourself :)
 		MX = MX.Translate(hudarrow_dist * sin(ang), hudarrow_dist * cos(ang))
@@ -115,10 +115,10 @@
 		var/mob/living/M = holder.owner
 		var/datum/abilityHolder/vampiric_thrall/T = H
 		T.tracker_active = 0
-		if(!hasvar(M, "hud"))
+		if (!hasvar(M, "hud"))
 			return
 		var/datum/hud/hud = M:hud
-		if(isnull(T.hudarrow))
+		if (isnull(T.hudarrow))
 			T.hudarrow = hud.create_screen("", "", 'icons/obj/items/pinpointers.dmi', "hudarrow", "CENTER, CENTER")
 			T.hudarrow.mouse_opacity = 0
 			T.hudarrow.appearance_flags = 0

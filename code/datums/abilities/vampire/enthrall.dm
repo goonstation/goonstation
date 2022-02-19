@@ -164,17 +164,17 @@
 		. = 1
 
 	cast(mob/target)
-		if(!holder)
+		if (!holder)
 			return 1
 
 		var/mob/living/M = holder.owner
 		var/datum/abilityHolder/vampire/H = holder
 
-		if(!M || !length(H.thralls))
+		if (!M || !length(H.thralls))
 			return 1
 
 		var/area/A = get_area(M)
-		for(var/mob/thrall in H.thralls)
+		for (var/mob/thrall in H.thralls)
 			boutput(thrall, "<b><span class='alert'>Master requests aid at [A ? A.name : "nowhere"]!</span></b>")
 			thrall.playsound_local(thrall.loc, 'sound/effects/ghost2.ogg', 50, 1)
 

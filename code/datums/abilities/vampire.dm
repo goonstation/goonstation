@@ -12,7 +12,7 @@
 		if (ishuman(src))
 			var/datum/abilityHolder/vampire/V = src.add_ability_holder(/datum/abilityHolder/vampire)
 
-			if(shitty) // Infernal vampire.
+			if (shitty) // Infernal vampire.
 				V.addAbility(/datum/targetable/vampire/blood_tracking)
 			else
 				V.addAbility(/datum/targetable/vampire/vampire_bite)
@@ -33,7 +33,7 @@
 				if (!A2 || !istype(A2, /datum/abilityHolder/))
 					return
 
-			if(shitty) // Infernal vampire.
+			if (shitty) // Infernal vampire.
 				C.abilityHolder.addAbility(/datum/targetable/vampire/blood_tracking)
 			else
 				C.abilityHolder.addAbility(/datum/targetable/vampire/cancel_stuns)
@@ -46,12 +46,12 @@
 				C.abilityHolder.addAbility(/datum/targetable/vampire/enthrall)
 
 		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
-			if(shitty)
+			if (shitty)
 				boutput(src, "<span class='notice'>Oh shit, your fangs just broke off! Looks like you'll have to get blood the HARD way.</span>")
 
 			SHOW_VAMPIRE_TIPS(src)
 
-		if(shitty || nonantag)
+		if (shitty || nonantag)
 			boutput(src, "<span class='alert'><h2>You've been turned into a vampire!</h2> Your vampireness was achieved by in-game means, you are <i>not</i> an antagonist unless you already were one.</span>")
 
 	else return
@@ -99,9 +99,9 @@
 				AH.points = max(AH.points + change, 0)
 	else
 		var/datum/abilityHolder/vampiric_thrall/AHZ = src.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
-		if(AHZ && istype(AHZ) && !total_blood)
+		if (AHZ && istype(AHZ) && !total_blood)
 			var/mob/living/carbon/human/M = AHZ.owner
-			if(istype(M) && istype(M.mutantrace, /datum/mutantrace/vampiric_thrall))
+			if (istype(M) && istype(M.mutantrace, /datum/mutantrace/vampiric_thrall))
 				var/datum/mutantrace/vampiric_thrall/V = M.mutantrace
 				if (V.blood_points < 0)
 					V.blood_points = 0
@@ -159,8 +159,8 @@
 		if (!spell.holder)
 			return
 
-		if(params["shift"] && params["ctrl"])
-			if(owner.waiting_for_hotkey)
+		if (params["shift"] && params["ctrl"])
+			if (owner.waiting_for_hotkey)
 				holder.cancel_action_binding()
 				return
 			else
@@ -242,23 +242,23 @@
 			else
 				changeling_super_heal_step(healed = owner, mult = mult*2, changer = 0)
 		// alerts thralls when dead and not in coffin
-		else if(isdead(owner) && !death_triggered)
+		else if (isdead(owner) && !death_triggered)
 			death_triggered = 1
 			warn_thralls()
-		if(!isdead(owner) && death_triggered)
+		if (!isdead(owner) && death_triggered)
 			death_triggered = 0
 		// alert thralls when in crit
-		if(owner.health < 0 && !crit_triggered)
+		if (owner.health < 0 && !crit_triggered)
 			crit_triggered = 1
 			var/area/A = get_area(owner)
-			for(var/mob/thrall in thralls)
+			for (var/mob/thrall in thralls)
 				boutput(thrall, "<b><span class='alert'>You feel your master's life fading in [A ? A.name : "nowhere"]!</span></b>")
 				thrall.playsound_local(thrall.loc, 'sound/effects/ghost2.ogg', 50, 1)
 				var/datum/abilityHolder/vampiric_thrall/H = thrall.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
-				if(!H.tracker_active)
+				if (!H.tracker_active)
 					H.tracker_active = 1
 					H.do_tracking()
-		if(owner.health >= 0 && crit_triggered)
+		if (owner.health >= 0 && crit_triggered)
 			crit_triggered = 0
 
 	set_loc_callback(newloc)
@@ -385,7 +385,7 @@
 				if (M.ghost && M.ghost.client && !(M.ghost.mind && M.ghost.mind.dnr))
 					var/mob/dead/ghost = M.ghost
 					ghost.show_text("<span class='red'>You feel yourself torn away from the afterlife and back into your body!</span>")
-					if(ghost.mind)
+					if (ghost.mind)
 						ghost.mind.transfer_to(M)
 					else if (ghost.client)
 						M.client = ghost.client
@@ -395,7 +395,7 @@
 				else if (M.last_client) //if all fails, lets try this
 					for (var/client/C in clients)
 						if (C == M.last_client && C.mob && isobserver(C.mob))
-							if(C.mob && C.mob.mind)
+							if (C.mob && C.mob.mind)
 								C.mob.mind.transfer_to(M)
 							else
 								M.client = C
@@ -437,7 +437,7 @@
 			logTheThing("combat", owner, M, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")
 
 	proc/warn_thralls()
-		for(var/mob/thrall in src.thralls)
+		for (var/mob/thrall in src.thralls)
 			boutput(thrall, __red("<b>Your master has been slain! The power sustaining your life begins to drain away...</b>"))
 
 
