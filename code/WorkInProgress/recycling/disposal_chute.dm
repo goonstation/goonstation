@@ -38,7 +38,7 @@
 	New()
 		..()
 		src.AddComponent(/datum/component/obj_projectile_damage)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src)
 				trunk = locate() in src.loc
 				if(!trunk)
@@ -186,13 +186,13 @@
 				else	//Aaaa the tension!
 					src.visible_message("<span class='alert'>\The [I] teeters on the edge of \the [src]!</span>")
 					var/delay = rand(5, 15)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						var/in_x = I.pixel_x
 						for(var/d = 0; d < delay; d++)
 							if(I) I.pixel_x = in_x + rand(-1, 1)
 							sleep(0.1 SECONDS)
 						if(I) I.pixel_x = in_x
-					SPAWN_DBG(delay)
+					SPAWN(delay)
 						if(I && I.loc == src.loc)
 							if(prob(40)) //It goes in!
 								src.visible_message("<span class='alert'>\The [I] slips into \the [src]!</span>")
@@ -363,7 +363,7 @@
 		..()
 
 		if(flush && MIXTURE_PRESSURE(air_contents) >= 2*ONE_ATMOSPHERE)	// flush can happen even without power
-			SPAWN_DBG(0) //Quit holding up the process you fucker
+			SPAWN(0) //Quit holding up the process you fucker
 				flush()
 
 		if(status & NOPOWER)			// won't charge if no power
@@ -472,7 +472,7 @@
 		if (user) //ZeWaka: Fix for null.loc
 			make_cleanable( /obj/decal/cleanable/blood,user.loc)
 			health_update_queue |= user
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1

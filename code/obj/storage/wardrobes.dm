@@ -22,6 +22,7 @@
 
 /obj/storage/closet/wardrobe/pride
 	name = "pride wardrobe"
+	desc = "A label on it reads: In order to improve workplace efficiency, employees are encouraged to spend no more than 5 minutes in the closet at a time."
 	icon_state = "gay"
 	icon_closed = "gay"
 	spawn_contents = list(/obj/item/clothing/under/pride = 2,
@@ -33,6 +34,7 @@
 	/obj/item/clothing/under/pride/poly = 2,
 	/obj/item/clothing/under/pride/nb = 2,
 	/obj/item/clothing/under/pride/lesb = 2,
+	/obj/item/clothing/under/pride/gaymasc = 2,
 	/obj/item/clothing/under/pride/trans = 2)
 
 /obj/storage/closet/wardrobe/black
@@ -147,6 +149,8 @@
 	/obj/item/clothing/head/formal_turban,
 	/obj/item/clothing/head/turban,
 	/obj/item/clothing/shoes/black,
+	/obj/item/clothing/under/misc/chaplain/nun,
+	/obj/item/clothing/head/nunhood,
 	/obj/item/clothing/shoes/sandal)
 
 /obj/storage/closet/wardrobe/black/formalwear

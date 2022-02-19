@@ -318,8 +318,13 @@ proc/cloud_put_bulk(json)
 #ifdef LIVE_SERVER
 	var/sanitized_json = json_encode(sanitized)
 	// Via rust-g HTTP
-	var/datum/http_request/request = new() //If it fails, oh well...
-	request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput_bulk&api_key=[config.spacebee_api_key]&value=[url_encode(sanitized_json)]", "","")
+	var/datum/http_request/request = new()
+	var/list/headers = list(
+		"Authorization" = "[config.spacebee_api_key]",
+		"Content-Type" = "application/json",
+		"Command" = "dataput_bulk"
+	)
+	request.prepare(RUSTG_HTTP_METHOD_POST, "[config.spacebee_api_url]/api/cloudsave", sanitized_json, headers)
 	request.begin_async()
 #else
 // temp disabled

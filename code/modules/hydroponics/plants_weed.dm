@@ -143,7 +143,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 			B.anchored = 1
 			B.set_density(0)
 			B.layer = 5 // TODO What layer should this be on?
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				qdel(B)
 				B=null
 			var/radstrength = 5
@@ -205,7 +205,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 			POT.visible_message("<span class='alert'><b>[POT]</b> begins to bubble and expand!</span>")
 			playsound(POT, "sound/effects/bubbles.ogg", 50, 1)
 
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				POT.visible_message("<span class='alert'><b>[POT]</b> bursts, sending toxic goop everywhere!</span>")
 				playsound(POT, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 

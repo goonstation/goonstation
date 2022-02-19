@@ -112,8 +112,8 @@
 	return 1
 
 
-/mob/proc/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0)
-	.= 0
+/mob/proc/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, throw_type=THROW_SLIP, list/params=null)
+	. = null
 
 	if (!src.can_slip())
 		return
@@ -140,13 +140,25 @@
 		else
 			playsound(src.loc, "sound/misc/slip_big.ogg", 50, 1, -3)
 		src.remove_pulling()
+		var/turf/T = get_ranged_target_turf(src, src.move_dir, throw_range)
+		var/throw_speed = 2
+		if(throw_type == THROW_PEEL_SLIP)
+			params += list("peel_stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS))
+			throw_speed = 0.5
+			var/list/datum/thrown_thing/existing_throws = global.throwing_controller.throws_of_atom(src)
+			if(length(existing_throws))
+				for(var/datum/thrown_thing/thr as anything in existing_throws)
+					if(thr.throw_type & THROW_PEEL_SLIP)
+						thr.target_x = null
+						thr.target_y = null
+						thr.range = max(thr.range, thr.dist_travelled + throw_range)
+						return 1
+		else
+			params += list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS))
+		. = src.throw_at(T, intensity, throw_speed, params, src.loc, throw_type = throw_type)
 
-		var/turf/T = get_ranged_target_turf(src, src.last_move_dir, throw_range)
-		src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)
-		.= 1
-
-/mob/living/carbon/human/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0)
-	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay)
+/mob/living/carbon/human/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, throw_type=THROW_SLIP, list/params=null)
+	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay, throw_type, params)
 
 
 /mob/living/carbon/human/proc/skeletonize()
@@ -546,7 +558,7 @@
 	if (!old || !newbody || !ishuman(old) || !ishuman(newbody))
 		return
 
-	SPAWN_DBG(2 SECONDS) // OrganHolders etc need time to initialize. Transferring inventory doesn't.
+	SPAWN(2 SECONDS) // OrganHolders etc need time to initialize. Transferring inventory doesn't.
 		if (copy_organs && old && newbody && old.organHolder && newbody.organHolder)
 			if (old.organHolder.skull && (old.organHolder.skull.type != newbody.organHolder.skull.type))
 				var/obj/item/organ/NO = new old.organHolder.skull.type(newbody)
@@ -704,7 +716,7 @@
 			old.u_equip(CI15)
 			newbody.equip_if_possible(CI15, slot_r_hand)
 
-	SPAWN_DBG(2 SECONDS) // Necessary.
+	SPAWN(2 SECONDS) // Necessary.
 		if (newbody)
 			newbody.set_face_icon_dirty()
 			newbody.set_body_icon_dirty()
@@ -1042,7 +1054,7 @@
 
 		if (S == "door" && istype(target, /obj/machinery/door))
 			var/obj/machinery/door/door = target
-			SPAWN_DBG(0)
+			SPAWN(0)
 				door.tear_apart(src)
 			return 1
 

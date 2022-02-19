@@ -69,7 +69,7 @@
 				user.put_in_hand(src)
 			boutput(user, "<span class='notice'>You add the material to the stack. It now has [src.amount] pieces.</span>")
 
-	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object
+	mouse_drop(over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
 			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
 			return

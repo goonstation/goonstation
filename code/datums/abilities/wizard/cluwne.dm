@@ -91,9 +91,11 @@
 			boutput(T, "<span class='alert'><B>You HONK painfully!</B></span>")
 			T.take_brain_damage(50)
 			T.stuttering = 120
-			T.job = "Cluwne"
 			T.contract_disease(/datum/ailment/disability/clumsy/cluwne,null,null,1)
 			T.contract_disease(/datum/ailment/disease/cluwneing_around/cluwne,null,null,1)
+			T.job = "Cluwne"
+			T.real_name = "cluwne"
+			T.UpdateName()
 			playsound(T, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, clamp(1.0 + (30 - T.bioHolder.age)/50, 0.7, 1.4))
 			T.change_misstep_chance(60)
 
@@ -107,8 +109,7 @@
 			T.equip_if_possible(new /obj/item/clothing/shoes/cursedclown_shoes(T), T.slot_shoes)
 			T.equip_if_possible(new /obj/item/clothing/mask/cursedclown_hat(T), T.slot_wear_mask)
 			T.equip_if_possible(new /obj/item/clothing/gloves/cursedclown_gloves(T), T.slot_gloves)
-			T.real_name = "cluwne"
-			SPAWN_DBG(2.5 SECONDS) // Don't remove.
+			SPAWN(2.5 SECONDS) // Don't remove.
 				if (T) T.assign_gimmick_skull() // The mask IS your new face, my friend (Convair880).
 		else
 			boutput(T, "<span class='alert'><b>You don't feel very funny.</b></span>")

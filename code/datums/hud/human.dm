@@ -176,7 +176,7 @@
 			CRASH("human HUD created with no master")
 		master = M
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(master?.disposed)
 				qdel(src)
 				return
@@ -723,7 +723,7 @@
 	MouseDrop_T(atom/movable/screen/hud/H, atom/movable/O as obj, mob/user as mob)
 		if (!H) return
 		var/obj/item/W = null
-		#define mdrop_slot(slot) W = master.get_slot(master.slot); if (W) { W.MouseDrop_T(O,user); }
+		#define mdrop_slot(slot) W = master.get_slot(master.slot); if (W) { W._MouseDrop_T(O,user); }
 		switch(H.id)
 			if("belt")
 				mdrop_slot(slot_belt)

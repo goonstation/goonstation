@@ -77,10 +77,10 @@
 			if (!src.spam_flag_message)
 				src.spam_flag_message = 1
 				user.visible_message("<span style='color:#888888;font-size:80%'>[user] clicks [src].</span>")
-				SPAWN_DBG((src.spam_timer * 5))
+				SPAWN((src.spam_timer * 5))
 					if (src)
 						src.spam_flag_message = 0
-			SPAWN_DBG(src.spam_timer)
+			SPAWN(src.spam_timer)
 				if (src)
 					src.spam_flag_sound = 0
 
@@ -147,7 +147,7 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] gently pushes the end of [src] into [his_or_her(user)] nose, then leans forward until [he_or_she(user)] falls to the floor face first!</b></span>")
 		user.TakeDamage("head", 175, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		qdel(src)
@@ -157,6 +157,7 @@
 	name = "fancy pen"
 	desc = "A pretty swag pen."
 	icon_state = "pen_fancy"
+	item_state = "pen_fancy"
 	font_color = "blue"
 	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"
@@ -373,7 +374,7 @@
 		New()
 			..()
 			if (!ticker) // trying to avoid pre-game-start runtime bullshit
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					src.font_color = random_saturated_hex_color(1)
 					src.color_name = hex2color_name(src.font_color)
 			else
@@ -394,12 +395,12 @@
 		if (!src.user_can_suicide(user))
 			return 0
 		user.visible_message("<span class='alert'><b>[user] jams [src] up [his_or_her(user)] nose!</b></span>")
-		SPAWN_DBG(0.5 SECONDS) // so we get a moment to think before we die
+		SPAWN(0.5 SECONDS) // so we get a moment to think before we die
 			user.take_brain_damage(120)
 		user.u_equip(src)
 		src.set_loc(user) // SHOULD be redundant but you never know.
 		health_update_queue |= user
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -615,11 +616,11 @@
 
 	suicide(var/mob/user as mob)
 		user.visible_message("<span class='alert'><b>[user] crushes \the [src] into a powder and then [he_or_she(user)] snorts it all! That can't be good for [his_or_her(user)] lungs!</b></span>")
-		SPAWN_DBG(5 DECI SECONDS) // so we get a moment to think before we die
+		SPAWN(5 DECI SECONDS) // so we get a moment to think before we die
 			user.take_oxygen_deprivation(175)
 		user.u_equip(src)
 		src.set_loc(user) //yes i did this dont ask why i cant literally think of anything better to do
-		SPAWN_DBG(10 SECONDS)
+		SPAWN(10 SECONDS)
 			if (user)
 				user.suiciding = 0
 		qdel(src)
@@ -787,7 +788,7 @@
 		Label(user,user,1)
 
 		user.TakeDamage("chest", 300, 0) //they have to die fast or it'd make even less sense
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -926,7 +927,7 @@
 				return
 		src.update()
 		user.update_inhands()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			attack_self(user)
 			return
 		return

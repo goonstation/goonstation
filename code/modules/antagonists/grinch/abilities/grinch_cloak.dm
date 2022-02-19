@@ -31,7 +31,7 @@
 			M.UpdateOverlays(image('icons/mob/mob.dmi', "icon_state" = "shield"), "shield")
 			boutput(M, __blue("<b>Your cloak will remain active for the next [src.cloak_duration / 60] minutes.</b>"))
 
-			SPAWN_DBG (src.cloak_duration * 10)
+			SPAWN(src.cloak_duration * 10)
 				if (M && ismobcritter(M))
 					REMOVE_MOB_PROPERTY(M, PROP_INVISIBILITY, src)
 					M.UpdateOverlays(null, "shield")

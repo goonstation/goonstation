@@ -19,7 +19,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 		fxlist = hospital_fx_sounds
 		if (ambientSound)
 
-			SPAWN_DBG(6 SECONDS)
+			SPAWN(6 SECONDS)
 				var/sound/S = new/sound()
 				S.file = ambientSound
 				S.repeat = 0
@@ -71,7 +71,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 					ambientSound.volume = 60
 					H << ambientSound
 					if(S)
-						SPAWN_DBG(sound_delay)
+						SPAWN(sound_delay)
 							H << S
 
 
@@ -118,7 +118,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 				playsound(T, pick('sound/effects/elec_bigzap.ogg', 'sound/effects/elec_bzzz.ogg', 'sound/effects/electric_shock.ogg'), 50, 0)
 				var/obj/somesparks = new /obj/effects/sparks
 				somesparks.set_loc(T)
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					if (somesparks) qdel(somesparks)
 
 				Obj.throw_at(get_edge_target_turf(T, NORTH), 200, 1)
@@ -173,8 +173,8 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 				if(AM:client)
 					if(prob(75))
 						maniac_active |= 2
-						SPAWN_DBG(1 MINUTE) maniac_active &= ~2
-						SPAWN_DBG(rand(10,30))
+						SPAWN(1 MINUTE) maniac_active &= ~2
+						SPAWN(rand(10,30))
 							var/obj/chaser/hospital/C = new /obj/chaser/hospital(src.loc)
 							C.target = AM
 
@@ -192,7 +192,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			process()
 
 	proximity_act()
@@ -230,7 +230,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 		if(!targeting)
 			targeting = 1
 			//target<< 'sound/misc/chefsong_start.ogg'
-			SPAWN_DBG(8 SECONDS)
+			SPAWN(8 SECONDS)
 				aaah.repeat = 1
 				target << aaah
 				sleep(rand(100,400))
@@ -483,7 +483,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 #ifndef SAMOSTREL_LIVE
 		del(src)
 #endif
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (src.botcard)
 				src.botcard.access += FREQ_AINLEY_BUDDY
 
@@ -550,7 +550,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 			var/edge = get_edge_target_turf(src, pick(alldirs))
 			O.throw_at(edge, 100, 4)
 
-		SPAWN_DBG(0) //Delete the overlay when finished with it.
+		SPAWN(0) //Delete the overlay when finished with it.
 			src.on = 0
 			sleep(1.5 SECONDS)
 			qdel(Ov)
@@ -662,7 +662,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 		new_destination = "__nearest__"
 		master.post_find_beacon("patrol")
 		awaiting_beacon = 5
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(!master || !master.on || master.stunned || master.idle)
 				return
 			if(master.task != src)

@@ -3,6 +3,7 @@
 	name = "Generic Ammobox"
 	desc = "A generic ammobox for getting some ammunition."
 	icon_state = "lmg_ammo-0-old"
+	/*
 	ammo_type = null
 	caliber = null
 	var/list/valid_calibers = list() //supports lists and single, set to "All" for any gun
@@ -21,6 +22,7 @@
 				qdel(src)
 		else
 			..()
+	*///We'll deal with you later
 
 /obj/item/ammo/ammobox/nukeop
 	name = "Syndicate Ammo Bag"
@@ -43,7 +45,7 @@
 			user.visible_message("[user] begins unfolding a [src].", "You begin unfolding \the [src].")
 			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/item/ammo/ammobox/nukeop/proc/deploy_ammobag, user, src.icon, src.icon_state,"[user] finishes deploying a [src].", null)
 
-	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		if(!(over_object == usr))
 			return
 		if(usr.equipped()) //empty hand required

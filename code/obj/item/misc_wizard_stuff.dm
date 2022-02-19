@@ -203,7 +203,7 @@
 		..()
 		return
 
-	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		if (iswizard(usr) || check_target_immunity(usr))
 			. = ..()
 		else if(isliving(usr))

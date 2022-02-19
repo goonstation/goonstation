@@ -172,7 +172,7 @@
 				user.show_text("All that won't fit on [src]!", "red")
 				pen.in_use = 0
 				return
-			logTheThing("station", user, null, "writes on [src] with [pen] at [showCoords(src.x, src.y, src.z)]: [t]")
+			logTheThing("station", user, null, "writes on [src] with [pen] at [log_loc(src)]: [t]")
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 			if (src.icon_state == initial(src.icon_state))
 				var/search_t = lowertext(t)
@@ -427,7 +427,7 @@
 				src.radio = new src.radio_path (src)
 			else
 				src.radio = new /obj/item/device/radio/spy (src)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				src.radio.broadcasting = 0
 				//src.radio.listening = 0
 

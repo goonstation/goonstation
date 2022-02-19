@@ -287,7 +287,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
 			var/datum/pathogen/P = new /datum/pathogen
 			if(FM)
@@ -458,7 +458,7 @@
 					boutput(V, "<span class='alert'><b>[user] is trying to inject [M] with the [src.name]!</b></span>")
 				var/ML = M.loc
 				var/UL = user.loc
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if (used)
 						return
 					if (user.equipped() == src && M.loc == ML && user.loc == UL)

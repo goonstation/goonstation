@@ -233,7 +233,7 @@
 		light.enable()
 		user.TakeDamage("head", 0, 175)
 		SubscribeToProcess()
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1

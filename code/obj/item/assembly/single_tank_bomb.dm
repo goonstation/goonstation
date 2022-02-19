@@ -54,7 +54,7 @@
 
 /obj/item/assembly/proximity_bomb/dropped()
 
-	SPAWN_DBG( 0 )
+	SPAWN( 0 )
 		src.part1.sense()
 		return
 	return
@@ -149,7 +149,7 @@
 	return
 
 /obj/item/assembly/proximity_bomb/bump(atom/O)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		//boutput(world, "miptank bumped into [O]")
 		if(src.part1.armed)
 			//boutput(world, "sending signal")
@@ -167,7 +167,7 @@
 			src.part1.sense()
 			break
 
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		prox_check()
 
 /////////////////////////////////////////////////// Single tank bomb (timer) ////////////////////////////////////

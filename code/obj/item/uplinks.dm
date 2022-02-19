@@ -33,10 +33,12 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/can_selfdestruct = 0
 	var/datum/syndicate_buylist/reading_about = null
 
+	var/owner_ckey = null
+
 	// Spawned uplinks for which setup() wasn't called manually only get the standard (generic) items.
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (src && istype(src) && (!length(src.items_general) && !length(src.items_job) && !length(src.items_objective) && !length(src.items_telecrystal)))
 				src.setup()
 
@@ -50,6 +52,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	proc/setup(var/datum/mind/ownermind, var/obj/item/device/master)
 		if (!src || !istype(src))
 			return
+
+		src.owner_ckey = ownermind?.ckey
 
 		if (!islist(src.items_general))
 			src.items_general = list()
@@ -419,7 +423,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		else if (href_list["selfdestruct"] && src.can_selfdestruct == 1)
 			src.selfdestruct = 1
-			SPAWN_DBG(10 SECONDS)
+			SPAWN(10 SECONDS)
 				if (src)
 					src.explode()
 
@@ -697,7 +701,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			else //The gamemode is NOT spy, but we've got one on our hands! Set this badboy up.
 				if (!ticker.mode.spy_market)
 					ticker.mode.spy_market = new /datum/game_mode/spy_theft
-					SPAWN_DBG(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
+					SPAWN(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
 						ticker.mode.spy_market.build_bounty_list()
 						ticker.mode.spy_market.update_bounty_readouts()
 				game = ticker.mode.spy_market
@@ -977,7 +981,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				continue
 			num_players++
 		points = max(2, round(num_players / PLAYERS_PER_UPLINK_POINT))
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (src && istype(src) && (!length(src.commander_buylist)))
 				src.setup()
 
@@ -1060,7 +1064,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 							if(B.item3)
 								new B.item3(get_turf(src))
 							B.run_on_spawn(A, usr)
-							logTheThing("combat", usr, src, "bought a [initial(B.item.name)] from a [src] at [showCoords(usr.x, usr.y, usr.z)].")
+							logTheThing("combat", usr, src, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
 							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B)]-Purchased")
 							if(isnull(loadnum))
 								loadnum = 0
@@ -1476,7 +1480,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		else if (href_list["selfdestruct2"])
 			src.selfdestruct = 1
-			SPAWN_DBG(10 SECONDS)
+			SPAWN(10 SECONDS)
 				explode()
 				return
 		else

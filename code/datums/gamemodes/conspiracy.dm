@@ -70,7 +70,7 @@
 		boutput(conspirator.current, conspiratorList)
 		boutput(conspirator.current, meetingPoint)
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/conspiracy/proc/random_radio_frequency()

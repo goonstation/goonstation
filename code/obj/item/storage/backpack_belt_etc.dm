@@ -463,7 +463,7 @@
 
 
 
-	MouseDrop(obj/over_object as obj, src_location, over_location)
+	mouse_drop(obj/over_object as obj, src_location, over_location)
 		var/mob/M = usr
 		if (istype(over_object,/obj/item) || istype(over_object,/mob/)) // covers pretty much all the situations we're trying to prevent; namely transferring storage and opening while on ground
 			if(!can_use())
@@ -623,6 +623,7 @@
 
 /obj/item/storage/belt/medical
 	name = "medical belt"
+	desc = "A specialized belt for treating patients outside medbay in the field. A unique attachment point lets you carry defibrillators."
 	icon_state = "injectorbelt"
 	item_state = "medical"
 	can_hold = list(

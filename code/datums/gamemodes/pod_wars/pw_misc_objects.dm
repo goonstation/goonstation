@@ -132,7 +132,7 @@
 
 			mode.announce_critical_system_damage(team_num, src)
 			suppress_damage_message = 1
-			SPAWN_DBG(2 MINUTES)
+			SPAWN(2 MINUTES)
 				suppress_damage_message = 0
 
 
@@ -208,7 +208,7 @@
 				mind.current?.traitHolder.removeTrait("puritan")
 				var/success = growclone(mind.current, mind.current.real_name, mind, mind.current?.bioHolder, traits=mind.current?.traitHolder.copy())
 				if (success && team)
-					SPAWN_DBG(1)
+					SPAWN(1)
 						team.equip_player(src.occupant, FALSE)
 				break
 
@@ -877,7 +877,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 
 		name = "[team_name_str] secure crate tier [tier_flavor]"
-		SPAWN_DBG(1 SECONDS)
+		SPAWN(1 SECONDS)
 			spawn_items()
 
 	//Selects the items that this crate spawns with based on its possible contents.
@@ -913,8 +913,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 //Kinda cheesey here with the map defs, but I'm too lazy to care. makes a temp var for the mode, if it's not the right type (which idk why it wouldn't be)
 //then it is null so that the ?. will fail. So it still works regardless of mode, not that it would have the populated rewards lists if the mdoe was wrong...
 		var/datum/game_mode/pod_wars/mode = ticker.mode
-		if (!istype(mode))
-			mode = null
+		ENSURE_TYPE(mode)
 		var/failsafe_counter = 0		//I'm paranoid okay... what if some admin accidentally fucks with the list, could hang the server.
 		var/points = 0
 		while (points < max_points)

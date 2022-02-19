@@ -12,7 +12,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.update_dir()
 			for (var/obj/machinery/mining_magnet/MM in range(1,src))
 				linked_magnet = MM
@@ -279,8 +279,7 @@
 				magnet = target:linked_magnet
 			else
 				magnet = target
-			if (!istype(magnet))
-				magnet = null
+			ENSURE_TYPE(magnet)
 			else
 				if (!loaded)
 					boutput(user, "<span class='alert'>The magnetizer needs to be loaded with a plasmastone chunk first.</span>")
@@ -389,7 +388,7 @@
 					last_delay = world.time + auto_delay
 					return
 				else
-					SPAWN_DBG(0)
+					SPAWN(0)
 						pull_new_source()
 
 		proc/get_encounter(var/rarity_mod)
@@ -477,7 +476,7 @@
 		damage_overlays += image(src.icon, "damage-2")
 		damage_overlays += image(src.icon, "damage-3")
 		damage_overlays += image(src.icon, "damage-4")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/obj/machinery/magnet_chassis/MC in range(1,src))
 				linked_chassis = MC
 				MC.linked_magnet = src
@@ -496,7 +495,7 @@
 				last_delay = world.time + auto_delay
 				return
 			else
-				SPAWN_DBG(0) //Did you know that if you sleep directly in process() you are the old lady at the mall who only pays in quarters.
+				SPAWN(0) //Did you know that if you sleep directly in process() you are the old lady at the mall who only pays in quarters.
 					//Do not be quarter lady.
 					pull_new_source()
 
@@ -779,7 +778,7 @@
 			return 1
 
 		var/rangecheck = 0
-		if (issilicon(usr))
+		if (isAI(usr) || issilicon(usr))
 			rangecheck = 1
 		if (istype(usr.loc,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = usr.loc
@@ -826,7 +825,7 @@
 			if (src.check_for_unacceptable_content())
 				src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 			else
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if (src) src.pull_new_source(href_list["activate_selectable"])
 
 		else if (href_list["activate_magnet"])
@@ -837,7 +836,7 @@
 			if (src.check_for_unacceptable_content())
 				src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 			else
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if (src) src.pull_new_source()
 
 		else if (href_list["override_cooldown"])
@@ -879,7 +878,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.connection_scan()
 
 	attack_hand(var/mob/user as mob)
@@ -1488,7 +1487,7 @@
 		if (fullbright)
 			src.overlays += /image/fullbright //Fixes perma-darkness
 		#endif
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (istype(src)) //Wire note: just roll with this ok
 				for (var/turf/simulated/wall/asteroid/A in orange(src,1))
 					src.apply_edge_overlay(get_dir(src, A))
@@ -1821,7 +1820,7 @@ obj/item/clothing/gloves/concussive
 					else
 						boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 					logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						concussive_blast()
 						qdel (src)
 						return
@@ -1841,7 +1840,7 @@ obj/item/clothing/gloves/concussive
 						var/t = (isturf(target) ? target : target.loc)
 						step_towards(src, t)
 
-						SPAWN_DBG( src.det_time )
+						SPAWN( src.det_time )
 							concussive_blast()
 							if(target)
 								if(istype(target,/obj/machinery))
@@ -2108,7 +2107,7 @@ obj/item/clothing/gloves/concussive
 	if(!user || !T || !decalicon) return
 	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,AREA_LAYER+1)
 	user << O
-	SPAWN_DBG(2 MINUTES)
+	SPAWN(2 MINUTES)
 		if (user?.client)
 			user.client.images -= O
 			user.client.screen -= O

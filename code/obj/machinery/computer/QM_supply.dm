@@ -1077,7 +1077,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 /obj/machinery/computer/supplycomp/proc/print_requisition(var/datum/req_contract/contract)
 	src.printing = 1
 	playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
-	SPAWN_DBG(2 SECONDS)
+	SPAWN(2 SECONDS)
 		var/obj/item/paper/thermal/P = new(src.loc)
 		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"
 		P.info += "FOR SUPPLIER REFERENCE ONLY<br><br>"

@@ -441,7 +441,7 @@
 		global.ai_mobs |= src
 
 	if(!src.last_ckey)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/area/AR = get_area(src)
 			AR?.wake_critters(src)
 
@@ -489,20 +489,20 @@
 				logTheThing("admin", src, M, "has same computer ID as [constructTarget(M,"admin")]")
 				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")]", "access")
 				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B><font class='internal'> as [key_name(M)]</span>")
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if(M.lastKnownIP == src.client.address)
 						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 			else if (M && M.computer_id && M.computer_id == src.client.computer_id && M.ckey != src.ckey && M.key)
 				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", null, "access")
 				logTheThing("admin", M, null, "is no longer logged in.")
 				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B></span><span class='internal'> as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if(M.lastKnownIP == src.client.address)
 						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 /*  don't get me wrong this was awesome but it's leading to false positives now and we stopped caring about that guy
 	var/evaderCheck = copytext(lastKnownIP,1, findtext(lastKnownIP, ".", 5))
 	if (evaderCheck in list("174.50", "69.245", "71.228", "69.247", "71.203", "98.211", "68.53"))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/joinstring = "???"
 			var/list/response = world.Export("http://www.byond.com/members/[src.ckey]?format=text")
 			if (response && response["CONTENT"])
@@ -706,7 +706,7 @@
 							break
 						M.throw_at(source, 20, 3)
 						LAGCHECK(LAG_MED)
-					SPAWN_DBG(5 SECONDS)
+					SPAWN(5 SECONDS)
 						src.now_pushing = 0
 						if (tmob) //Wire: Fix for: Cannot modify null.now_pushing
 							tmob.now_pushing = 0
@@ -759,11 +759,13 @@
 			var/mob/victim = AM
 			deliver_move_trigger("bump")
 			victim.deliver_move_trigger("bump")
+			var/was_in_space = istype(victim.loc, /turf/space)
+			var/was_in_fire = locate(/obj/hotspot) in victim.loc
 			if (victim.buckled && !victim.buckled.anchored)
 				step(victim.buckled, t)
-			if (istype(victim.loc, /turf/space))
+			if (!was_in_space && istype(victim.loc, /turf/space))
 				logTheThing("combat", src, victim, "pushes [constructTarget(victim,"combat")] into space.")
-			else if (locate(/obj/hotspot) in victim.loc)
+			else if (!was_in_fire && (locate(/obj/hotspot) in victim.loc))
 				logTheThing("combat", src, victim, "pushes [constructTarget(victim,"combat")] into a fire.")
 
 		step(src,t)
@@ -908,7 +910,7 @@
 
 	var/key = src.key
 	var/displayed_key = src.mind.displayed_key
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/result = world.SetMedal(title, key, config.medal_hub, config.medal_password)
 
 		if (result == 1)
@@ -958,7 +960,7 @@
 
 	boutput(src, "Retrieving your medal information...")
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/list/output = list()
 		var/medals = world.GetMedal("", src.key, config.medal_hub, config.medal_password)
 
@@ -1843,13 +1845,27 @@
 	src.icon = null
 	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
-
+	var/col_r = 0.4
+	var/col_g = 0.8
+	var/col_b = 1.0
+	var/brightness = 0.7
+	var/height = 1
+	var/datum/light/light
+	var/light_type = /datum/light/point
 
 	if (ishuman(src))
 		animation = new(src.loc)
 		animation.master = src
 		flick("elecgibbed", animation)
-
+		if(ispath(light_type))
+			light = new light_type
+			light.set_brightness(brightness)
+			light.set_color(col_r, col_g, col_b)
+			light.set_height(height)
+			light.attach(animation)
+			light.enable()
+			SPAWN(1 SECOND)
+				qdel(light)
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
@@ -2062,7 +2078,7 @@
 
 /mob/proc/cluwnegib(var/duration = 30, var/anticheat = 0)
 	if(isobserver(src)) return
-	SPAWN_DBG(0) //multicluwne
+	SPAWN(0) //multicluwne
 		duration = clamp(duration, 10, 100)
 
 	#ifdef DATALOGGER
@@ -2364,7 +2380,7 @@
 	dizziness = min(500, dizziness + amount)	// store what will be new value
 													// clamped to max 500
 	if (dizziness > 100 && !is_dizzy)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			dizzy_process()
 
 
@@ -2395,7 +2411,7 @@
 	jitteriness = min(500, jitteriness + amount)	// store what will be new value
 													// clamped to max 500
 	if (jitteriness > 100 && !is_jittery)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			jittery_process()
 
 
@@ -2427,9 +2443,19 @@
 	SEND_SIGNAL(src, COMSIG_MOB_THROW_ITEM, target, params)
 
 /mob/throw_impact(atom/hit, datum/thrown_thing/thr)
+	if (thr.throw_type & THROW_PEEL_SLIP)
+		var/stun_duration = ("peel_stun" in thr.params) ? thr.params["peel_stun"] : 3 SECONDS
+		if(("slip_obj" in thr.params) && istype(thr.params["slip_obj"], /obj/item/device/pda2/clown))
+			animate_peel_slip(src, stun_duration=stun_duration, T = 0.85 SECONDS, n_flips = 2, height = 24)
+		else
+			animate_peel_slip(src, stun_duration=stun_duration)
+		if(!isturf(hit) || hit.density)
+			random_brute_damage(src, min((6 + (thr?.get_throw_travelled() / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
+		return ..()
+
 	if(!isturf(hit) || hit.density)
 		if (thr?.get_throw_travelled() <= 410)
-			if (!((src.throwing & THROW_CHAIRFLIP) && ismob(hit)))
+			if (!((thr.throw_type & THROW_CHAIRFLIP) && ismob(hit)))
 				random_brute_damage(src, min((6 + (thr?.get_throw_travelled() / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
 				if (!src.hasStatus("weakened"))
 					src.changeStatus("weakened", 2 SECONDS)
@@ -2553,7 +2579,7 @@
 					eyeblind = 5
 					src.change_eye_blurry(5)
 					src.bioHolder.AddEffect("bad_eyesight")
-					SPAWN_DBG(10 SECONDS)
+					SPAWN(10 SECONDS)
 						src.bioHolder.RemoveEffect("bad_eyesight")
 
 			if (25 to INFINITY)
@@ -2952,7 +2978,7 @@
 	animation.master = src
 	animation.icon_state = "ungibbed"
 	src = null //Detach this, what if we get deleted before the animation ends??
-	SPAWN_DBG(0.7 SECONDS) //Length of animation.
+	SPAWN(0.7 SECONDS) //Length of animation.
 		newbody.set_loc(animation.loc)
 		qdel(animation)
 		newbody.anchored = 1 // Stop running into the lava every half second jeez!
@@ -2966,7 +2992,7 @@
 	src.nodamage = 1
 	var/duration = 30
 
-	SPAWN_DBG(0) //multisatan
+	SPAWN(0) //multisatan
 		logTheThing("combat", src, null, "is damned to hell from [log_loc(src)].")
 		src.transforming = 1
 		src.canmove = 0

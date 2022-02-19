@@ -65,7 +65,7 @@
 		if (ispulsingtool(W) && (src.open == 1) && (!src.locked) && (!src.l_hacking))
 			user.show_message(text("<span class='alert'>Now attempting to reset internal memory, please hold.</span>"), 1)
 			src.l_hacking = 1
-			SPAWN_DBG(10 SECONDS)
+			SPAWN(10 SECONDS)
 				if (prob(40))
 					src.l_setshort = 1
 					configure_mode = 1
@@ -89,7 +89,7 @@
 		return
 	return ..()
 
-/obj/item/storage/secure/MouseDrop(atom/over_object, src_location, over_location)
+/obj/item/storage/secure/mouse_drop(atom/over_object, src_location, over_location)
 	if ((usr.is_in_hands(src) || over_object == usr) && src.locked == 1)
 		boutput(usr, "<span class='alert'>[src] is locked and cannot be opened!</span>")
 		return

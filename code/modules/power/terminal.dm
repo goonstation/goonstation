@@ -154,7 +154,7 @@
 		var/turf/T = get_turf(src)
 		if(!src.netnum && !length(T.connections) )
 			//Re-attempt connection to power nets due to delayed disjoint connections
-			SPAWN_DBG(0.2 SECONDS)
+			SPAWN(0.2 SECONDS)
 				src.netnum = 0
 				if(makingpowernets)
 					return

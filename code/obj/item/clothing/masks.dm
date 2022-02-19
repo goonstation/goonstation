@@ -74,7 +74,7 @@
 			src.stapled = 0
 		. = 1
 		allow_staple = 0
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			allow_staple = 1
 
 /obj/item/clothing/mask/handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
@@ -299,7 +299,7 @@
 
 /obj/item/clothing/mask/clown_hat
 	name = "clown wig and mask"
-	desc = "Clowns are dumb and so are you for even considering wearing this."
+	desc = "A mask depicting the grinning facial expression of a prototypical clown. There's a place to tuck the attached wig in if you don't want it interfering with your own hair."
 	icon_state = "clown"
 	item_state = "clown_hat"
 	see_face = 0.0
@@ -318,7 +318,7 @@
 			src.add_fingerprint(user)
 			user?.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
 			playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
-			SPAWN_DBG(src.spam_timer)
+			SPAWN(src.spam_timer)
 				spam_flag = 0
 			return 1
 		return 0

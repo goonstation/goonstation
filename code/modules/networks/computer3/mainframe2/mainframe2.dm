@@ -62,7 +62,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 
 			src.net_id = generate_net_id(src)
 
@@ -253,7 +253,7 @@
 			return
 		use_power(500)
 		if(prob(3))
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				playsound(src.loc, pick(ambience_computer), 50, 1)
 
 		for (var/progIndex = 1, progIndex <= src.processing.len, progIndex++)
@@ -310,7 +310,7 @@
 		//Otherwise, if they aren't addressing us, ignore them
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id)
 
 			return
@@ -329,7 +329,7 @@
 					//qdel(conn)
 					if (conn)
 						conn.dispose()
-					SPAWN_DBG(0.3 SECONDS)
+					SPAWN(0.3 SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 
@@ -376,7 +376,7 @@
 
 			if("term_ping")
 				if(!(target in src.terminals))
-					SPAWN_DBG(0.3 SECONDS) //Go away!!
+					SPAWN(0.3 SECONDS) //Go away!!
 						src.post_status(target, "command","term_disconnect")
 					return
 				if(target in src.timeout_list)
@@ -414,7 +414,7 @@
 			status &= ~NOPOWER
 			src.post_system() //Will simply return if POSTed already.
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				icon_state = initial(src.icon_state)
 				src.icon_state += "0"
 				status |= NOPOWER
@@ -710,7 +710,7 @@
 		src.stage = 1
 		src.ping_wait = 4
 		src.current = null
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.master.post_status("ping","data","NETBOOT","net","[src.master.net_number]")
 		return
 
@@ -767,7 +767,7 @@
 			return
 
 		if( !(senderid in master.terminals) && (sendertype == "PNET_DATA_BANK" || sendertype == "HUI_TERMINAL"))
-			SPAWN_DBG(rand(1,4))
+			SPAWN(rand(1,4))
 				src.master.post_status(senderid,"command","term_connect","device",master.device_tag)
 		return
 
@@ -939,7 +939,7 @@
 				conn.dispose()
 
 				var/tempx = x
-				SPAWN_DBG(rand(1,4))
+				SPAWN(rand(1,4))
 					src.master.post_status(tempx, "command", "term_disconnect")
 
 

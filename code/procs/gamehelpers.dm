@@ -113,7 +113,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 				if (isrestrictedz(Z) || isrestrictedz(user:z))
 					boutput(user, "<span class='alert'>Your telekinetic powers don't seem to work here.</span>")
 					return 0
-				SPAWN_DBG(0)
+				SPAWN(0)
 					//I really shouldnt put this here but i dont have a better idea
 					var/obj/overlay/O = new /obj/overlay ( locate(X,Y,Z) )
 					O.name = "sparkles"
@@ -224,9 +224,8 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 	if(length(T?.cameras))
 		for_by_tcl(theAI, /mob/living/silicon/ai)
 			if (theAI.deployed_to_eyecam)
-				var/mob/dead/aieye/AIeye = theAI.eyecam
+				var/mob/living/intangible/aieye/AIeye = theAI.eyecam
 				if(IN_RANGE(center, AIeye, distance))
-					. += AIeye
 					. += theAI
 
 //Kinda sorta like viewers but includes observers. In theory.

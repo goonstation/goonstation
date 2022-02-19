@@ -191,7 +191,7 @@
 		objective_set_path = pick(typesof(/datum/objective_set/spy_theft))
 
 		new objective_set_path(spy)
-		SPAWN_DBG(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs (can't find PDA)
+		SPAWN(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs (can't find PDA)
 			equip_spy_theft(spy.current)
 
 		var/obj_count = 1
@@ -201,10 +201,10 @@
 
 		//spy_name_list += spy.current.real_name
 
-	SPAWN_DBG(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
+	SPAWN(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
 		build_bounty_list()
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/spy_theft/process()
