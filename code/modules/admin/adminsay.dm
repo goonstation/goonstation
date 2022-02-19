@@ -24,7 +24,7 @@
 	ircmsg["key"] = src.key
 	ircmsg["name"] = stripTextMacros(src.mob.real_name)
 	ircmsg["msg"] = html_decode(msg)
-	ircbot.export("asay", ircmsg)
+	ircbot.export_async("asay", ircmsg)
 
 /client/proc/cmd_admin_forceallsay(msg as text)
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)

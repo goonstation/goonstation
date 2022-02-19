@@ -429,7 +429,7 @@
 				message_admins("[user] ([user?.ckey]) has made a suggestion in [src]:<br>[P.name]<br><br>[copytext(P.info,1,MAX_MESSAGE_LEN)]")
 				var/ircmsg[] = new()
 				ircmsg["msg"] = "[user] ([user?.ckey]) has made a suggestion in [src]:\n**[P.name]**\n[strip_html_tags(P.info)]"
-				ircbot.export("admin", ircmsg)
+				ircbot.export_async("admin", ircmsg)
 				taken_suggestion = 1
 			user.u_equip(P)
 			qdel(P)
