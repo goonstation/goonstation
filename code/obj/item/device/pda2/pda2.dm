@@ -262,6 +262,11 @@
 		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS)
 
+	technical_assistant
+		icon_state = "pda-e" //tech ass is too broad to have a set cartridge but should get alerts
+		mailgroups = list(MGD_STATIONREPAIR,MGD_PARTY)
+		alertgroups = list(MGA_MAIL,MGA_RADIO)
+
 	mining
 		icon_state = "pda-e"
 		mailgroups = list(MGD_MINING,MGD_PARTY)
