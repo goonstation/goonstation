@@ -380,6 +380,9 @@
 			if (R.next_char == "u")
 				new_string = "oo"
 				used = 2
+			else if (R.next_char == "n" && (R.next_next_char == "t" || (R.next_next_char == "'" && R.next_next_next_char == "t")))
+				new_string = "een"
+				used = 2
 			else if (R.next_char == "n")
 				new_string = "un"
 				used = 2
