@@ -58,7 +58,7 @@
 			if (user)
 				user.show_text("You use the card to change the internal radiation setting to \"IONIZING\"", "blue")
 			src.emagged = TRUE
-			return 1
+			return TRUE
 		else
 			if (user)
 				user.show_text("The [src] has already been tampered with", "red")
