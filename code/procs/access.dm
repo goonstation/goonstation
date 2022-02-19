@@ -86,7 +86,7 @@
 		else if (issilicon(M) || isAIeye(M))
 			var/mob/living/silicon/S
 			if (isAIeye(M))
-				var/mob/dead/aieye/E = M
+				var/mob/living/intangible/aieye/E = M
 				S = E.mainframe
 			else
 				S = M

@@ -984,7 +984,7 @@
 			boutput(user, "<span class='notice'>You finish stuffing items into [src]!</span>")
 		src.UpdateIcon()
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the extractor's output target.</span>")
 			return
@@ -1178,11 +1178,11 @@
 				S.generic_seed_setup(I)
 				vend--
 				src.seedcount++
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for(var/obj/item/seed/S in src.contents) S.set_loc(src.loc)
 			if(src.seedcount >= src.maxseed)
 				src.can_vend = 0
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					src.can_vend = 1
 					src.seedcount = 0
 			src.updateUsrDialog()

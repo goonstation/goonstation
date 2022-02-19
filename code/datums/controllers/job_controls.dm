@@ -180,7 +180,7 @@ var/datum/job_controller/job_controls
 
 	Topic(href, href_list[])
 		// JOB CONFIG COMMANDS
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(href_list["AlterCap"])
 			var/list/alljobs = src.staple_jobs | src.special_jobs
 			var/datum/job/JOB = locate(href_list["AlterCap"]) in alljobs

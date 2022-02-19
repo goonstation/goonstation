@@ -62,7 +62,7 @@
 				B.set_loc(src)
 		else
 			roboworking = user
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				robot_disposal_check()
 
 		if(src.beaker || roboworking)
@@ -225,7 +225,7 @@
 
 		src.updateUsrDialog()
 
-		SPAWN_DBG(1 SECOND) active()
+		SPAWN(1 SECOND) active()
 
 	proc/robot_disposal_check()
 		// Without this, the heater might occasionally show that a beaker is still inserted
@@ -247,7 +247,7 @@
 			beaker = null
 			set_inactive()
 		else
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				robot_disposal_check()
 
 	proc/set_inactive()
@@ -272,7 +272,7 @@
 		else
 			src.icon_state = "heater"
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the Reagent Heater/Cooler's output target.</span>")
 			return
@@ -680,7 +680,7 @@
 			P.overlays += P.color_overlay
 			return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the CheMaster 3000's output target.</span>")
 			return
@@ -780,7 +780,7 @@ datum/chemicompiler_core/stationaryCore
 				light.set_brightness(0.4)
 				light.enable()
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				icon_state = initial(icon_state)
 				status |= NOPOWER
 				light.disable()

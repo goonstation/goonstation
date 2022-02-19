@@ -78,7 +78,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			return
 		if (!abil.holder)
 			return
-		SPAWN_DBG(0)
+		SPAWN(0)
 			abil.handleCast()
 
 #ifdef HALLOWEEN
@@ -417,7 +417,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			return 1
 
 		boutput(holder.owner, "<span class='alert'>You exert some force to levitate [target]!</span>")
-		SPAWN_DBG(rand(30,50))
+		SPAWN(rand(30,50))
 			if (!holder)
 				return
 			//levitates the target chair, as well as any mobs mobs buckled in. Since buckled mobs are placed into the chair/bed's contents

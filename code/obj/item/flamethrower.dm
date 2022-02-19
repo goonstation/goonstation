@@ -246,7 +246,7 @@ A Flamethrower in various states of assembly
 			boutput(usr, "<span class='notice'>The fuelpack's integrated jetpack is now off</span>")
 		return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
 		if(!isliving(usr))
 			return
@@ -561,7 +561,7 @@ A Flamethrower in various states of assembly
 	src.icon_state = "flamethrower[src.gastank ? "_oxy" : "_no_oxy"][src.fueltank ? "_fuel" : "_no_fuel"]"
 
 	src.updateSelfDialog()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		playsound(src, "sound/effects/valve_creak.ogg", 40, 1)
 	return TRUE
 
@@ -656,7 +656,7 @@ A Flamethrower in various states of assembly
 		var/remove_sound = "sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg"
 		if(A?.pickup_sfx)
 			remove_sound = A.pickup_sfx
-		SPAWN_DBG(0.2 SECONDS)
+		SPAWN(0.2 SECONDS)
 			if(src)
 				playsound(src, remove_sound, 30, 1)
 
@@ -681,7 +681,7 @@ A Flamethrower in various states of assembly
 		if(A?.pickup_sfx)
 			remove_sound = A.pickup_sfx
 		playsound(src, remove_sound, 30, 1)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if(src)
 				playsound(src, "sound/effects/valve_creak.ogg", 15, 1)
 

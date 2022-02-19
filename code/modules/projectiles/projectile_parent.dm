@@ -83,7 +83,7 @@
 		if(proj_data)
 			proj_data.post_setup(src)
 		if (!QDELETED(src))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (!is_processing)
 					process()
 
@@ -738,7 +738,7 @@ datum/projectile/snowball
 		return null
 	var/obj/projectile/Q = shoot_projectile_relay(S, DATA, T, remote_sound_source, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			for (var/i = 2, i < DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
 				shoot_projectile_relay(S, DATA, T, remote_sound_source, alter_proj = alter_proj)
@@ -751,7 +751,7 @@ datum/projectile/snowball
 		return null
 	var/obj/projectile/Q = shoot_projectile_relay_pixel(S, DATA, T, pox, poy, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
 				shoot_projectile_relay_pixel(S, DATA, T, pox, poy, alter_proj = alter_proj)
@@ -764,7 +764,7 @@ datum/projectile/snowball
 		return null
 	var/obj/projectile/Q = shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
 				shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle, alter_proj = alter_proj)
@@ -817,7 +817,7 @@ datum/projectile/snowball
 		return
 	var/obj/projectile/Q = shoot_projectile_XY_relay(S, DATA, xo, yo, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
 				shoot_projectile_XY_relay(S, DATA, xo, yo, alter_proj = alter_proj)

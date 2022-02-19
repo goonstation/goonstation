@@ -329,7 +329,7 @@
 			src.set_contained_items()
 			src.inventory_counter.update_number(src.item_amount)
 		else
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				if (QDELETED(src)) return
 				if (!ispath(src.contained_item))
 					logTheThing("debug", src, null, "has a non-path contained_item, \"[src.contained_item]\", and is being disposed of to prevent errors")
@@ -382,7 +382,7 @@
 		else
 			return ..()
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		..()
 		if (usr?.is_in_hands(src))
 			if (!src.open)

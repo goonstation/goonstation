@@ -704,7 +704,7 @@
 
 	return
 
-/obj/item/device/pda2/MouseDrop(atom/over_object, src_location, over_location)
+/obj/item/device/pda2/mouse_drop(atom/over_object, src_location, over_location)
 	..()
 	if (over_object == usr && src.loc == usr && isliving(usr) && !usr.stat)
 		src.attack_self(usr)
@@ -1145,7 +1145,7 @@
 		if (S.mainframe && S.mainframe == loc)
 			return 1
 	if (isAIeye(user))
-		var/mob/dead/aieye/E = user
+		var/mob/living/intangible/aieye/E = user
 		if (E.mainframe)
 			return 1
 	return ..(user)

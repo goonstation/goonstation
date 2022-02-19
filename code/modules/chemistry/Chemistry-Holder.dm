@@ -470,6 +470,8 @@ datum
 							// Ideally, we'd like to know the contents of chemical smoke and foam (Convair880).
 							if (C.special_log_handling)
 								logTheThing("combat", usr, null, "[C.name] chemical reaction [log_reagents(my_atom)] at [T ? "[log_loc(T)]" : "null"].")
+								if(istype(src.my_atom, /obj/item/reagent_containers) && !locate(/obj/machinery/chem_dispenser) in get_turf(src.my_atom))
+									message_admins("[key_name(usr)] caused a [C.name] reaction [log_reagents(my_atom)] at [T ? "[log_loc(T)]" : "null"].")
 							else
 								logTheThing("combat", usr, null, "[C.name] chemical reaction at [T ? "[log_loc(T)]" : "null"].")
 
@@ -725,18 +727,18 @@ datum
 						var/turf_reaction_success = 0
 						if(current_reagent && current_reagent.volume > minimum_react)
 							if(ismob(A) && !isobserver(A))
-								//SPAWN_DBG(0)
+								//SPAWN(0)
 									//if (current_reagent) //This is in a spawn. Between our first check and the execution, this may be bad.
 								if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction))
 									.+= current_id
 							if(isturf(A))
-								//SPAWN_DBG(0)
+								//SPAWN(0)
 									//if (current_reagent)
 								if (!current_reagent.reaction_turf(A, current_reagent.volume*volume_fraction))
 									turf_reaction_success = 1
 									.+= current_id
 							if(isobj(A))
-								//SPAWN_DBG(0)
+								//SPAWN(0)
 									//if (current_reagent)
 								if (!current_reagent.reaction_obj(A, current_reagent.volume*volume_fraction))
 									.+= current_id
@@ -1109,8 +1111,12 @@ datum
 			//DEBUG_MESSAGE("Heat-triggered smoke powder reaction: our user is [our_user ? "[our_user]" : "*null*"].[our_fingerprints ? " Fingerprints: [our_fingerprints]" : ""]")
 			if (our_user && ismob(our_user))
 				logTheThing("combat", our_user, null, "Smoke reaction ([my_atom ? log_reagents(my_atom) : log_reagents(src)]) at [T ? "[log_loc(T)]" : "null"].")
+				if(istype(src.my_atom, /obj/item/reagent_containers) && !locate(/obj/machinery/chem_dispenser) in get_turf(src.my_atom))
+					message_admins("[key_name(our_user)] caused a smoke reaction [my_atom ? log_reagents(my_atom) : log_reagents(src)] at [T ? "[log_loc(T)]" : "null"].")
 			else
 				logTheThing("combat", our_user, null, "Smoke reaction ([my_atom ? log_reagents(my_atom) : log_reagents(src)]) at [T ? "[log_loc(T)]" : "null"].[our_fingerprints ? " Container last touched by: [our_fingerprints]." : ""]")
+				if(our_fingerprints && istype(src.my_atom, /obj/item/reagent_containers) && !locate(/obj/machinery/chem_dispenser) in get_turf(src.my_atom))
+					message_admins("Smoke reaction [my_atom ? log_reagents(my_atom) : log_reagents(src)] at [T ? "[log_loc(T)]" : "null"]. Container last touched by: [key_name(our_fingerprints)].")
 
 			if (classic)
 				classic_smoke_reaction(src, min(round(volume / 5), 4), location = my_atom ? get_turf(my_atom) : 0)

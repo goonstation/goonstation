@@ -36,7 +36,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -333,7 +333,7 @@
 			REMOVE_MOB_PROPERTY(usr, PROP_NEVER_DENSE, "floorswitching")
 			usr.set_density(initial(usr.density))
 			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				if(usr)
 					usr.plane = PLANE_DEFAULT
 					usr.layer = 4
@@ -344,7 +344,7 @@
 		else
 			APPLY_MOB_PROPERTY(usr, PROP_CANTMOVE, "floorswitching")
 			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				if(usr)
 					REMOVE_MOB_PROPERTY(usr, PROP_CANTMOVE, "floorswitching")
 					APPLY_MOB_PROPERTY(usr, PROP_NO_MOVEMENT_PUFFS, "floorswitching")

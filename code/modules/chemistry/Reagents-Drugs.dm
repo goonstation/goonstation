@@ -47,7 +47,7 @@ datum
 						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/tramp
 						H.set_face_icon_dirty()
 						boutput(M, "<span class='alert'><b>You feel gruff!</b></span>")
-						SPAWN_DBG(0.3 SECONDS)
+						SPAWN(0.3 SECONDS)
 							M.visible_message("<span class='alert'><b>[M.name]</b> has a wild look in their eyes!</span>")
 					if(check < 60)
 						if(H.getStatusDuration("paralysis")) H.delStatus("paralysis")
@@ -702,7 +702,7 @@ datum
 							boutput(M, "<B>The Emergency Shuttle has docked with the station! You have 3 minutes to board the Emergency Shuttle.</B>")
 						if(2)
 							boutput(M, "<span class='alert'><b>Restarting world!</b> </span><span class='notice'>Initiated by Administrator!</span>")
-							SPAWN_DBG(2 SECONDS) M.playsound_local(M.loc, pick('sound/misc/NewRound.ogg', 'sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg', 'sound/misc/TimeForANewRound.ogg'), 50, 1)
+							SPAWN(2 SECONDS) M.playsound_local(M.loc, pick('sound/misc/NewRound.ogg', 'sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg', 'sound/misc/TimeForANewRound.ogg'), 50, 1)
 						if(3)
 							switch (rand(1,4))
 								if(1)
@@ -862,7 +862,8 @@ datum
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "triplemeth")
-					M.remove_stun_resist_mod("triplemeth")
+					REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "triplemeth")
+					REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "triplemeth")
 
 				if(hascall(holder.my_atom,"removeOverlayComposition"))
 					holder.my_atom:removeOverlayComposition(/datum/overlayComposition/triplemeth)
@@ -873,7 +874,8 @@ datum
 				if(!M) M = holder.my_atom
 
 				if(holder.has_reagent("methamphetamine")) return ..() //Since is created by a meth overdose, dont react while meth is in their system.
-				M.add_stun_resist_mod("triplemeth", 98)
+				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "triplemeth", 98)
+				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "triplemeth", 98)
 				APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "triplemeth", 1000)
 
 				if(hascall(holder.my_atom,"addOverlayComposition"))
@@ -953,7 +955,8 @@ datum
 					var/mob/M = holder.my_atom
 					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/energydrink, src.type)
 					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "triplemeth")
-					M.remove_stun_resist_mod("triplemeth")
+					REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "triplemeth")
+					REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "triplemeth")
 
 				..()
 

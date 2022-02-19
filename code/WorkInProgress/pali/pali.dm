@@ -191,7 +191,7 @@
 	..()
 	src.transform = matrix() * 0
 	animate(src, transform = matrix(), time = 1 SECOND, easing = SINE_EASING)
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		new /obj/effects/void_break(src.loc)
 		sleep(0.5 SECONDS)
 		critter_spam()
@@ -304,7 +304,7 @@
 			var/obj/item/I = pick(src.contents)
 			if(istype(I))
 				src.last_item_bump = I
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.weapon_attack(AM, I, 1)
 
 	death(gibbed)
@@ -323,7 +323,7 @@
 			AM.set_density(0)
 			AM.throw_at(pick(targets), rand(1, 10), rand(1, 15), allow_anchored=TRUE)
 		. = ..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for(var/atom/movable/AM in to_densify)
 				AM.set_density(TRUE)
 			src.transforming = 1
@@ -400,7 +400,7 @@
 	unequipped(var/mob/user)
 		..()
 		animate(user.get_filter("muscly"), size=0, time=1 SECOND, easing=SINE_EASING)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			user.remove_filter("muscly")
 
 

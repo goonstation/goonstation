@@ -331,7 +331,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			return 0
 
 		if (src.catnip)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/x = rand(2,4)
 				while (x-- > 0)
 					src.pixel_x = rand(-6,6)
@@ -347,7 +347,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	death(var/gibbed)
 		if (!gibbed && prob(5))
-			SPAWN_DBG(3 SECONDS)
+			SPAWN(3 SECONDS)
 				if (src && isdead(src))
 					src.visible_message("<b>[src]</b> comes back to life, good thing [he_or_she(src)] has 9 lives!")
 					src.full_heal()
@@ -512,7 +512,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			src.setStatus("weakened", 10 SECONDS)
 			src.visible_message("<span class='notice'>[src] flops on [his_or_her(src)] back! Scratch that belly!</span>",\
 			"<span class='notice'>You flop on your back!</span>")
-			SPAWN_DBG(3 SECONDS)
+			SPAWN(3 SECONDS)
 				if (src && !isdead(src))
 					src.delStatus("paralysis")
 					src.changeStatus("stunned", 10 SECONDS)
@@ -550,13 +550,14 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			return ..()
 		message = reverse_text(message)
 		..(message)*/
-	visible_message(var/msg, var/self, var/blind, var/group)
-		msg = "<span style='-ms-transform: rotate(180deg)'>[msg]</span>"
-		if(self)
-			self = "<span style='-ms-transform: rotate(180deg)'>[self]</span>"
-		if(blind)
-			blind = "<span style='-ms-transform: rotate(180deg)'>[blind]</span>"
-		return ..(msg,self,blind,group)
+
+	visible_message(var/message, var/self_message, var/blind_message, var/group)
+		message = "<span style='-ms-transform: rotate(180deg)'>[message]</span>"
+		if(self_message)
+			self_message = "<span style='-ms-transform: rotate(180deg)'>[self_message]</span>"
+		if(blind_message)
+			blind_message = "<span style='-ms-transform: rotate(180deg)'>[blind_message]</span>"
+		return ..(message,self_message,blind_message,group)
 
 	audible_message(var/msg)
 		msg = "<span style='-ms-transform: rotate(180deg)'>[msg]</span>"
@@ -786,11 +787,11 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 				if (src.emote_check(voluntary, 30))
 					if (src.icon_state_poof)
 						src.icon_state = src.icon_state_poof
-						SPAWN_DBG(3 SECONDS)
+						SPAWN(3 SECONDS)
 							if (src && !isdead(src))
 								src.icon_state = src.species
 					if (prob(3))
-						SPAWN_DBG(0)
+						SPAWN(0)
 							src.create_feather()
 					return "<span class='emote'><b>[src]</b> [pick("poofs", "fluffs")] up!</span>"
 			if ("snap","click")
@@ -805,16 +806,16 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 					if (prob(20))
 						src.icon_state = "[src.species]-flap"
 						if (prob(3))
-							SPAWN_DBG(0)
+							SPAWN(0)
 								src.create_feather()
-						SPAWN_DBG(3.8 SECONDS)
+						SPAWN(3.8 SECONDS)
 							if (src && !isdead(src))
 								src.icon_state = src.species
 						return "<span class='emote'><b>[src]</b> dances!</span>"
 					else
 						flick("[src.species]-flaploop", src)
 						if (prob(3))
-							SPAWN_DBG(0)
+							SPAWN(0)
 								src.create_feather()
 						return "<span class='emote'><b>[src]</b> flaps and bobs happily!</span>"
 			if ("hiss")
@@ -826,7 +827,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 					var/holding_thing = src.equipped()
 					if (holding_thing)
 						if (prob(3))
-							SPAWN_DBG(0)
+							SPAWN(0)
 								src.create_feather()
 						return "<span class='emote'><b>[src]</b> [pick("fusses with", "picks at", "pecks at", "throws around", "waves around", "nibbles on", "chews on", "tries to pry open")] [holding_thing].</span>"
 
@@ -967,7 +968,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	species = null
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (!src.species && src.client && islist(parrot_species) && islist(special_parrot_species))
 				var/new_species = input(src, "Select Species", "Select Species") as anything in (parrot_species + special_parrot_species)
 				if (new_species)
@@ -1028,7 +1029,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			M.drop_item()
 			W.set_loc(src)
 
-			SPAWN_DBG(1 MINUTE)
+			SPAWN(1 MINUTE)
 				src.visible_message("<span class='alert'><B>The [src] suddenly regurgitates something!</B></span>")
 				playsound(src, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 				make_cleanable( /obj/decal/cleanable/greenpuke,src.loc)
@@ -1063,7 +1064,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			M.drop_item()
 			W.set_loc(src)
 
-			SPAWN_DBG(1 MINUTE)
+			SPAWN(1 MINUTE)
 				src.visible_message("<span class='alert'><B>The [src] suddenly regurgitates something!</B></span>")
 				playsound(src, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 				make_cleanable( /obj/decal/cleanable/greenpuke,src.loc)
@@ -1129,7 +1130,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				set_gender = MALE
 			else
 				set_gender = FEMALE
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.gender = set_gender // stop changing!!  stay how I set you!!!!
 
 /* -------------------- Turkey Hen -------------------- */
@@ -1609,7 +1610,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return 0
 
 		if (src.freakout)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/x = rand(2,4)
 				while (x-- > 0)
 					src.pixel_x = rand(-6,6)
@@ -2076,7 +2077,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("dance")
 				if (src.emote_check(voluntary, 50) && !src.shrunk)
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						animate_bumble(src)
 					return "<span class='emote'><b>[src]</b> bumbles menacingly!</span>"
 			if ("scream","buzz")
@@ -2273,7 +2274,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					return "<span class='emote'><b>[src]</b> cheeps.</span>"
 			if ("flutter","dance")
 				if (src.emote_check(voluntary, 50)) //copied from moonwalk code
-					SPAWN_DBG(0)
+					SPAWN(0)
 						for (var/i in 1 to 4)
 							src.pixel_x += 2
 							sleep(0.2 SECONDS)
@@ -2475,7 +2476,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream","chitter")
 				if (src.emote_check(voluntary, 50))
 					src.icon_state = "lobsterman-screech"
-					SPAWN_DBG(1.5 SECONDS)
+					SPAWN(1.5 SECONDS)
 						if (src && !isdead(src))
 							src.icon_state = start_icon
 					playsound(src, "sound/voice/animal/bugchitter.ogg", 80, 1,0,0,0.8, channel=VOLUME_CHANNEL_EMOTE)
@@ -2484,7 +2485,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("dance","flap")
 				if (src.emote_check(voluntary, 50))
 					src.icon_state = "lobsterman-clack"
-					SPAWN_DBG(3 SECONDS)
+					SPAWN(3 SECONDS)
 						if (src && !isdead(src))
 							src.icon_state = start_icon
 					return "<span class='emote'><b>[src]</b> clacks their claws!</span>"
@@ -2531,7 +2532,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
 					src.icon_state = pick("boogie-d1","boogie-d2","boogie-d3")
-					SPAWN_DBG(3 SECONDS)
+					SPAWN(3 SECONDS)
 						if (src && !isdead(src))
 							src.icon_state = initial(icon_state)
 					var/msg = pick("beeps and boops","does a little dance","gets down tonight","is feeling funky","is out of control","gets up to get down","busts a groove","begins clicking and whirring","emits an excited bloop","can't contain itself","can dance if it wants to")
@@ -2855,7 +2856,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					playsound(src, 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
 					var/obj/item/storage/bible/B = locate(/obj/item/storage/bible) in get_turf(src)
 					if(B)
-						SPAWN_DBG(0.1 SECONDS) // so that this message happens second
+						SPAWN(0.1 SECONDS) // so that this message happens second
 							playsound(src, 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4, channel=VOLUME_CHANNEL_EMOTE)
 							B.visible_message("<span class='notice'>[B] toots back [pick("grumpily","complaintively","indignantly","sadly","annoyedly","gruffly","quietly","crossly")].</span>")
 					return "<span class='emote'><b>[src]</b> toots helpfully!</span>"
@@ -3023,7 +3024,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.remove_stam_mod_max("small_animal")
 		src.add_stam_mod_max("trilobite", -(STAMINA_MAX-10))
 		abilityHolder.addAbility(/datum/targetable/critter/bury_hide)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			animate_bumble(src)
 
 	setup_hands()
@@ -3172,7 +3173,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.remove_stam_mod_max("small_animal")
 		src.add_stam_mod_max("pikaia", -(STAMINA_MAX-140))
 		abilityHolder.addAbility(/datum/targetable/critter/bury_hide)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			animate_bumble(src)
 
 	is_hulk()

@@ -41,7 +41,7 @@ var/global/list/hydro_controller_queue = list(
 		for (var/A in concrete_typesof(/datum/plant))
 			src.plant_species += new A(src)
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/datum/plant/P in src.plant_species)
 				for (var/X in P.mutations)
 					if (ispath(X))

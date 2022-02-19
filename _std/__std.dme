@@ -108,6 +108,7 @@
 #include "macros\spawn.dm"
 #include "macros\strings.dm"
 #include "macros\time.dm"
+#include "macros\transfers.dm"
 #include "macros\turf.dm"
 #include "macros\twitch_sbill.dm"
 #include "macros\vehicles.dm"
@@ -130,5 +131,6 @@
 #include "tgui.dm"
 #include "types.dm"
 #include "vox.dm"
+#include "zlevel.dm"
 
 #include "packets.dm" // requires types.dm

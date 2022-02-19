@@ -87,7 +87,7 @@
 						continue
 				else
 					boutput(user, "<span class='alert'><b>WARNING: XP unlocks failed to update. Some traits may not be available. Please try again in a moment.</b></span>")
-					SPAWN_DBG(0) user.client.updateXpRewards()
+					SPAWN(0) user.client.updateXpRewards()
 					skipUnlocks = 1
 					continue
 
@@ -257,7 +257,7 @@
 	category = list("body")
 
 	onAdd(var/mob/owner)
-		SPAWN_DBG(4 SECONDS) //Fuck this. Fuck the way limbs are added with a delay. FUCK IT
+		SPAWN(4 SECONDS) //Fuck this. Fuck the way limbs are added with a delay. FUCK IT
 			if(ishuman(owner))
 				var/mob/living/carbon/human/H = owner
 				if(H.limbs != null)
@@ -277,7 +277,7 @@
 	category = list("body")
 
 	onAdd(var/mob/owner)
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			if(ishuman(owner))
 				var/mob/living/carbon/human/H = owner
 				if(H.limbs != null)
@@ -566,12 +566,12 @@
 	category = list("trinkets", "nopug")
 
 /obj/trait/one_armed
-	name = "One Armed Spaceman (-2)"	//it's so expensive cause right now, one arm is a benefit in that you can't be handcuffed...
+	name = "One Armed Spaceman (0)"	//it's so expensive cause right now, one arm is a benefit in that you can't be handcuffed...
 	cleanName = "One Armed Spaceman"
 	desc = "You only have one arm. But which one? It's a mystery... or is it a thriller?"
 	id = "onearmed"
 	icon_state = "placeholder"
-	points = -2
+	points = 0
 
 // Skill - White Border
 
@@ -808,7 +808,7 @@ ABSTRACT_TYPE(/obj/trait/job)
 
 	onAdd(var/mob/owner)
 		if(isliving(owner))
-			SPAWN_DBG(rand(4 MINUTES, 8 MINUTES))
+			SPAWN(rand(4 MINUTES, 8 MINUTES))
 				addAddiction(owner)
 				do_addiction = TRUE
 

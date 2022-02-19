@@ -266,7 +266,7 @@ TRAYS
 	suicide(var/mob/user as mob)
 		user.visible_message("<span class='alert'><b>[user] tries to slash  \his own throat with [src]!</b></span>")
 		src.break_utensil(user)
-		SPAWN_DBG(10 SECONDS)
+		SPAWN(10 SECONDS)
 			if(user)
 				user.suiciding = 0
 		return 1
@@ -463,7 +463,7 @@ TRAYS
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(!ispath(src.contained_food))
 				logTheThing("debug", src, null, "has a non-path contained_food, \"[src.contained_food]\", and is being disposed of to prevent errors")
 				qdel(src)
@@ -487,7 +487,7 @@ TRAYS
 				src.update()
 			else return ..()
 
-	MouseDrop(mob/user as mob) // no I ain't even touchin this mess it can keep doin whatever it's doin
+	mouse_drop(mob/user as mob) // no I ain't even touchin this mess it can keep doin whatever it's doin
 		// I finally came back and touched that mess because it was broke - Haine
 		if(user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
 			if(!user.put_in_hand(src))
@@ -693,7 +693,7 @@ TRAYS
 		src.UpdateIcon()
 		boutput(user, "You put [W] on \the [src]")
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		if(over_object == usr && get_dist(src, usr) <=1 && isliving(usr) && !usr.stat && !usr.restrained())
 			var/mob/M = over_object
 			if(ordered_contents.len == 0)
@@ -1084,7 +1084,7 @@ TRAYS
 /obj/item/fish/random // used by the Wholetuna Cordata plant
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/fish = pick(/obj/item/fish/salmon,/obj/item/fish/carp,/obj/item/fish/bass)
 			new fish(get_turf(src))
 			qdel(src)
@@ -1186,7 +1186,7 @@ TRAYS
 			if(src.platenum >= platemax)
 				boutput(user,"<span class='alert'><b>The plates are piled too high!</b></span>")
 				return
-			SPAWN_DBG(0.2 SECONDS)
+			SPAWN(0.2 SECONDS)
 				var/message = 1
 				for (var/obj/item/plate/p in range(1, user))
 					if(p == src)
@@ -1214,7 +1214,7 @@ TRAYS
 		if(src.platenum >= platemax)
 			boutput(user,"<span class='alert'><b>The plates are piled too high!</b></span>")
 			return
-		SPAWN_DBG(0.2 SECONDS)
+		SPAWN(0.2 SECONDS)
 			var/message = 1
 			var/first = 1
 			for (var/obj/item/plate/p in range(1, user))

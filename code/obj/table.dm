@@ -37,10 +37,10 @@
 			xmasify()
 		#endif
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.auto && ispath(src.auto_type) && src.icon_state == "0") // if someone's set up a special icon state don't mess with it
 				src.set_up()
-				SPAWN_DBG(0)
+				SPAWN(0)
 					for (var/obj/table/T in orange(1,src))
 						if (T.auto)
 							T.set_up()
@@ -164,7 +164,7 @@
 		var/hisher = his_or_her(user)
 		user.visible_message("<span class='alert'><b>[user] contorts [him_or_her(user)]self so that [hisher] head is underneath one of [src]'s legs and [hisher] heels are resting on top of it, then raises [hisher] feet and slams them back down over and over again!</b></span>")
 		user.TakeDamage("head", 175, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -307,7 +307,7 @@
 			return
 
 		if (src.has_storage && src.desk_drawer)
-			src.MouseDrop(user, src.loc, user.loc)
+			src.mouse_drop(user, src.loc, user.loc)
 
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -372,7 +372,7 @@
 			step(I, get_dir(I, src))
 		return
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		if (usr && usr == over_object && src.desk_drawer)
 			return src.desk_drawer.MouseDrop(over_object, src_location, over_location)
 		..()
@@ -725,7 +725,7 @@
 		src.glass_broken = GLASS_BROKEN
 		src.set_density(0)
 		src.set_up()
-		SPAWN_DBG(rand(2 SECONDS, 3 SECONDS))
+		SPAWN(rand(2 SECONDS, 3 SECONDS))
 			if(src.glass_broken == GLASS_BROKEN)
 				src.glass_broken = GLASS_REFORMING
 				src.set_up()
@@ -866,7 +866,7 @@
 		else if (istype(W, /obj/item/reagent_containers/food/drinks/bottle) && user.a_intent == "harm")
 			var/obj/item/reagent_containers/food/drinks/bottle/B = W
 			B.smash_on_thing(user, src)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (B)
 					smashprob += 15
 				else

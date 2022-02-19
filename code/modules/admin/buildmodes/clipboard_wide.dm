@@ -74,7 +74,7 @@ Right Mouse Button                     = Select area to copy with two clicks<br>
 			var/minx = min(A.x, B.x)
 			var/miny = min(A.y, B.y)
 			var/workgroup = 0
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for (var/turf/Q in block(A,B))
 					var/datum/clipboardTurf/CBT = new()
 					CBT.rel_x = Q.x - minx

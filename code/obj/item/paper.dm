@@ -74,7 +74,7 @@
 	..()
 	src.create_reagents(10)
 	reagents.add_reagent("paper", 10)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if (src.info && src.icon_state == "paper_blank")
 			icon_state = "paper"
 	if (!src.rand_pos)
@@ -128,7 +128,7 @@
 /obj/item/paper/attack_ai(var/mob/AI as mob)
 	var/mob/living/silicon/ai/user
 	if (isAIeye(AI))
-		var/mob/dead/aieye/E = AI
+		var/mob/living/intangible/aieye/E = AI
 		user = E.mainframe
 	else
 		user = AI
@@ -1153,7 +1153,7 @@ as it may become compromised.
 	src.icon_state = "paper_bin[(src.amount || locate(/obj/item/paper, src)) ? "1" : null]"
 	return
 
-/obj/item/paper_bin/MouseDrop(mob/user as mob)
+/obj/item/paper_bin/mouse_drop(mob/user as mob)
 	if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
 		if (!user.put_in_hand(src))
 			return ..()
@@ -1686,7 +1686,7 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 	New()
 		. = ..()
 		if(!length(syndi_buylist_cache))
-			SPAWN_DBG(30 SECONDS) //This spawns empty on-map otherwise, 30s is a safe bet
+			SPAWN(30 SECONDS) //This spawns empty on-map otherwise, 30s is a safe bet
 				build_paper()
 		else
 			build_paper()

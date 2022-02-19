@@ -261,7 +261,7 @@
 				else
 					randomname = pick_string_autokey("names/wizard_male.txt")
 
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/newname = input(traitor.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname)
 					if(newname && newname != randomname)
 						phrase_log.log_phrase("name-wizard", randomname, no_duplicates=TRUE)
@@ -293,7 +293,7 @@
 
 			if (ROLE_BLOB)
 				objective_set_path = /datum/objective_set/blob
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/newname = input(traitor.current, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
 
 					if (newname)
@@ -305,7 +305,7 @@
 
 			if (ROLE_SPY_THIEF)
 				objective_set_path = /datum/objective_set/spy_theft
-				SPAWN_DBG(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs
+				SPAWN(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs
 					equip_spy_theft(traitor.current)
 
 				if (!src.spy_market)
@@ -333,7 +333,7 @@
 			boutput(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/mixed/send_intercept()

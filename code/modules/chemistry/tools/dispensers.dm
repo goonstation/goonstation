@@ -63,7 +63,7 @@
 			for (var/i = 0, i < 9, i++) // ugly hack
 				reagents.temperature_reagents(exposed_temperature, exposed_volume)
 
-	MouseDrop(atom/over_object as obj)
+	mouse_drop(atom/over_object as obj)
 		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/machinery/hydro_mister) && !istype(over_object, /obj/item/tank/jetpack/backtank))
 			return ..()
 
@@ -99,7 +99,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		..(W, user)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (src?.reagents)
 				if (src.reagents.total_volume <= 1)
 					qdel(src)
@@ -130,7 +130,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		..(W, user)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (src?.reagents)
 				if (src.reagents.total_volume <= 1)
 					qdel(src)
@@ -344,7 +344,7 @@
 		if (isliving(user))
 			var/mob/living/L = user
 			L.changeStatus("burning", 10 SECONDS)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1

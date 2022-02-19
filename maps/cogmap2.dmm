@@ -19197,6 +19197,7 @@
 	pixel_x = -3;
 	pixel_y = 12
 	},
+/obj/item/storage/toolbox/artistic,
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/quartersA)
 "aSc" = (

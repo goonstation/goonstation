@@ -23,7 +23,7 @@
 			W.addAbility(/datum/targetable/werewolf/werewolf_transform)
 			boutput(src, "<span class='alert'>You are a full werewolf, you can transform immediately!</span>")
 		else
-			SPAWN_DBG(W.awaken_time)
+			SPAWN(W.awaken_time)
 				handle_natural_werewolf(W)
 
 		src.resistances += /datum/ailment/disease/lycanthropy
@@ -40,7 +40,7 @@
 	if (!src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
 		boutput(src, "<span class='alert'><b>You suddenly feel very weak.</b></span>")
 		src.emote("collapse")
-	SPAWN_DBG(8 SECONDS)
+	SPAWN(8 SECONDS)
 		if (!src.getStatusDuration("weakened"))
 			src.emote("collapse")
 		boutput(src, "<span class='alert'><b>Your body feels as if it's on fire! You think it's... IT'S CHANGING! You should probably get somewhere private!</b></span>")
@@ -90,7 +90,7 @@
 			M.set_mutantrace(/datum/mutantrace/werewolf)
 
 			playsound(M.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, -1)
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				if (M?.mutantrace && istype(M.mutantrace, /datum/mutantrace/werewolf))
 					M.emote("howl")
 
@@ -302,7 +302,7 @@
 	switch (type)
 		if ("disarm")
 			playsound(src.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				if (src) playsound(src.loc, "swing_hit", 50, 1)
 
 		if ("swipe")
@@ -311,7 +311,7 @@
 			else
 				playsound(src.loc, pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
 
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				if (src) playsound(src.loc, "sound/impact_sounds/Flesh_Tear_3.ogg", 40, 1, -1)
 
 		if ("feast")
@@ -325,7 +325,7 @@
 			if (prob(30))
 				playsound(src.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
 
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				if (src && ishuman(src) && prob(10))
 					src.emote("burp")
 
@@ -353,7 +353,7 @@
 			usr.targeting_ability = owner
 			usr.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 

@@ -179,12 +179,12 @@
 	boutput(world, "<span class='alert'>Lockdown cancelled by [usr.name]!</span>")
 
 	for(var/obj/machinery/firealarm/FA as anything in machine_registry[MACHINES_FIREALARMS]) //deactivate firealarms
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(FA.lockdownbyai == 1)
 				FA.lockdownbyai = 0
 				FA.reset()
 	for_by_tcl(AL, /obj/machinery/door/airlock) //open airlocks
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(AL.canAIControl() && AL.lockdownbyai == 1)
 				AL.open()
 				AL.lockdownbyai = 0
@@ -373,6 +373,9 @@
 		call_reason = copytext(html_decode(trim(strip_html(html_decode(call_reason)))), 1, 140)
 	if(!call_reason || length(call_reason) < 1)
 		call_reason = "No reason given."
+
+	message_admins("<span class='internal'>[key_name(user)] called the Emergency Shuttle to the station</span>")
+	logTheThing("station", null, null, "[key_name(user)] called the Emergency Shuttle to the station")
 
 	emergency_shuttle.incall()
 	command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")

@@ -84,7 +84,7 @@
 						attack_amt = 1
 						var/list/affected = DrawLine(target, src, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 						for(var/obj/OB in affected)
-							SPAWN_DBG(0.6 SECONDS)
+							SPAWN(0.6 SECONDS)
 								qdel(OB)
 						for (var/mob/living/M in get_turf(target))
 							if (damage < 500)
@@ -98,7 +98,7 @@
 							attack_amt = 1
 							var/list/affected = DrawLine(M, src, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 							for(var/obj/OB in affected)
-								SPAWN_DBG(0.6 SECONDS)
+								SPAWN(0.6 SECONDS)
 									qdel(OB)
 							if (damage < 500)
 								M.TakeDamage("chest", 0, damage, 0, DAMAGE_BURN)

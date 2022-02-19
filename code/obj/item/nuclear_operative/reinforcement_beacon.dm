@@ -50,7 +50,7 @@
 			synd.mind.store_memory("The bomb must be armed in <B>[nuke_mode.target_location_name]</B>.", 0, 0)
 			nuke_mode.syndicates += synd.mind
 		SHOW_NUKEOP_GUNBOT_TIPS(synd.mind.current)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			launch_with_missile(synd, src.loc, null, "arrival_missile_synd")
 		sleep(3 SECONDS)
 		if(src.uses <= 0)

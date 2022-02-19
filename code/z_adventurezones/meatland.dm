@@ -48,7 +48,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		fxlist = meatland_fx_sounds
 		if (ambientSound)
 
-			SPAWN_DBG(6 SECONDS)
+			SPAWN(6 SECONDS)
 				var/sound/S = new/sound()
 				S.file = ambientSound
 				S.repeat = 0
@@ -100,7 +100,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 					ambientSound.volume = 60
 					H << ambientSound
 					if(S)
-						SPAWN_DBG(sound_delay)
+						SPAWN(sound_delay)
 							H << S
 
 /area/meat_derelict/entry
@@ -265,7 +265,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			src.visible_message("<span class='alert'><B>[src]</B> chomps down on [M]!</span>")
 			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
 			random_brute_damage(M, rand(10,35), 1)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				src.attacking = 0
 
 	ai_think()
@@ -396,7 +396,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		src.frustration = 0
 		src.task = "thinking"
 
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			src.attacking = 0
 
 	update_meat_head_dialog(var/message)
@@ -447,7 +447,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			animate(O, pixel_x = 11 + (16 * (src.x - O.x)), pixel_y = (32 * (1 + src.y - O.y)), time = 2, loop = 1, easing = SINE_EASING)
 			animate(pixel_x = 11 + (32 * (src.x - O.x)), pixel_y = (32 * (src.y - O.y)) + 45, time = 3, loop = 1, easing = SINE_EASING)
 
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				if (O)
 					O.set_loc( src )
 					O.pixel_x = 11
@@ -459,7 +459,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 				animate(src.hat, pixel_x = 13, pixel_y = 27, transform = matrix(180, MATRIX_ROTATE), time = 2, loop = 1, easing = SINE_EASING)
 				animate(pixel_x = 0, pixel_y = 0, transform = null, time = 30, loop = 3, easing = SINE_EASING)
 				var/obj/item/clothing/head/old_hat = src.hat
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					if (old_hat)
 						old_hat.layer = initial(old_hat.layer)
 
@@ -1278,7 +1278,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 				src.inserted_key = C
 				boutput(usr, "<span class='notice'>You insert the key and turn it.</span>")
 				playsound(host.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					if(src.inserted_key)
 						host.visible_message("<span class='alert'>[host] emits a satisfied boop and a little green light comes on.</span>")
 						playsound(host.loc, 'sound/machines/cheget_goodbloop.ogg', 30, 1)
@@ -1297,7 +1297,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 30, 1)
 				src.inserted_key.set_loc(get_turf(src.loc))
 				src.inserted_key = null
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					if(!src.inserted_key)
 						host.visible_message("<span class='alert'>[host] emits a dour boop and a small red light flickers on.</span>")
 						playsound(host.loc, 'sound/machines/cheget_sadbloop.ogg', 30, 1)
@@ -1423,14 +1423,14 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		if (timer)
 			if (timer > 3)
 				src.icon_state = "ganglion_blink_slow"
-				SPAWN_DBG ((timer - 3) * 10)
+				SPAWN((timer - 3) * 10)
 					src.icon_state = "ganglion_blink_fast"
 					sleep(3 SECONDS)
 					src.deactivate()
 
 			else
 				src.icon_state = "ganglion_blink_fast"
-				SPAWN_DBG (timer * 10)
+				SPAWN(timer * 10)
 					src.deactivate()
 
 		if (id)
@@ -1501,7 +1501,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		set_density(0)
 		opacity = 0
 		src.name = "unsealed door"
-		SPAWN_DBG(1.3 SECONDS)
+		SPAWN(1.3 SECONDS)
 			changing_state = 0
 		return
 
@@ -1532,7 +1532,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 				L.gib()
 
 		src.icon_state = "fangdoor1"
-		SPAWN_DBG(1.3 SECONDS)
+		SPAWN(1.3 SECONDS)
 			changing_state = 0
 		return
 
@@ -1649,7 +1649,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			var/turf/T = get_turf(src)
 			var/obj/item/reagent_containers/food/snacks/ingredient/meatpaste/theGib = new /obj/item/reagent_containers/food/snacks/ingredient/meatpaste {throwforce = 8;name="ambiguous organ";desc = "Some kind of human organ, probably.";icon = 'icons/misc/meatland.dmi'} (T)
 			theGib.icon_state = "meatproj[rand(1,3)]"
-			SPAWN_DBG(1.5 SECONDS)
+			SPAWN(1.5 SECONDS)
 				if (theGib)
 					theGib.throwforce = 1
 

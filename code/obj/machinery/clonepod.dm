@@ -184,7 +184,7 @@
 
 		//Get the clone body ready. They start out with a bunch of damage right off.
 		// changing this to takedamage which should hopefully apply it right away
-		// SPAWN_DBG(0.5 SECONDS) //Organs may not exist yet if we call this right away.
+		// SPAWN(0.5 SECONDS) //Organs may not exist yet if we call this right away.
 		// 	random_brute_damage(src.occupant, 90, 1)
 		src.occupant.TakeDamage("chest", 90, 0, 0, DAMAGE_BLUNT)
 
@@ -644,7 +644,7 @@
 		src.connected.currentStatusMessage["text"] = message
 		src.connected.currentStatusMessage["status"] = status
 		tgui_process.update_uis(src)
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			if(src.connected.currentStatusMessage == message)
 				src.connected.currentStatusMessage["text"] = ""
 				src.connected.currentStatusMessage["status"] = ""
@@ -733,7 +733,7 @@
 			src.failed_tick_counter = 0
 			src.UpdateIcon()
 			src.occupant.ghostize()
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				qdel(src.occupant)
 		return
 
@@ -826,7 +826,7 @@
 		UnsubscribeProcess()
 		src.create_reagents(100)
 		src.UpdateIcon(1)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.find_pods()
 
 	disposing()
@@ -1131,7 +1131,7 @@
 
 		src.start_cycle()
 
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user)) // how????????? ?
 				user.suiciding = 0 // just in case I guess
 		return 1

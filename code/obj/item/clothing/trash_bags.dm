@@ -124,7 +124,7 @@
 				src.loc.visible_message("\An [A] falls out of [src]!")
 			A.set_loc(get_turf(src))
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		..()
 		if (!usr || usr.stat || usr.restrained() || get_dist(src, usr) > 1 || get_dist(usr, over_object) > 1)
 			return

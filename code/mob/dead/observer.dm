@@ -208,7 +208,7 @@
 			if (M.client && isliving(M) && !M.unobservable)
 				candidates += M
 		if (candidates.len)
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				src.insert_observer(pick(candidates))
 #endif
 
@@ -249,7 +249,7 @@
 	if (render_special)
 		render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src.mind && istype(src.mind.purchased_bank_item, /datum/bank_purchaseable/golden_ghost))
 			src.setMaterial(getMaterial("gold"))
 //#ifdef HALLOWEEN
@@ -498,7 +498,7 @@
 		src.x--
 	OnMove()
 
-/mob/dead/observer/MouseDrop(atom/A)
+/mob/dead/observer/mouse_drop(atom/A)
 	if (usr != src || isnull(A)) return
 	if (ismob(A))
 		var/mob/M = A

@@ -181,7 +181,7 @@
 		building = 1
 		icon_state = "builder1"
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 
 			for(var/datum/tileinfo/T in currentBp.roominfo)
 				var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)
@@ -428,7 +428,7 @@
 	"/obj/machinery/portable_atmospherics/canister")
 	var/list/permittedTileTypes = list("/turf/simulated")
 
-	var/savefile/save = new/savefile("data/blueprints.dat")
+	var/static/savefile/save = new/savefile("data/blueprints.dat")
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
 		if(get_dist(src,target) > 2) return

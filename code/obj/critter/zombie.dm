@@ -97,7 +97,7 @@
 			C.health -= 4
 			if(C.health <= 0)
 				C.CritterDeath()
-			SPAWN_DBG(2.5 SECONDS)
+			SPAWN(2.5 SECONDS)
 				src.attacking = 0
 			return
 
@@ -115,12 +115,12 @@
 		//		if(prob(4) && eats_brains) //Give the gift of being a zombie (unless we eat them too fast)
 		//			M.contract_disease(/datum/ailment/disease/necrotic_degeneration, null, null, 1) // path, name, strain, bypass resist
 			if(src.hulk) //TANK!
-				SPAWN_DBG(0)
+				SPAWN(0)
 					M:changeStatus("paralysis", 2 SECONDS)
 					step_away(M,src,15)
 					sleep(0.3 SECONDS)
 					step_away(M,src,15)
-			SPAWN_DBG(2.5 SECONDS)
+			SPAWN(2.5 SECONDS)
 				src.attacking = 0
 		else
 			if(ishuman(M) && src.eats_brains) //These only make human zombies anyway!
@@ -130,10 +130,10 @@
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
 				random_brute_damage(src.target, rand(punch_damage_min,punch_damage_max),1)
 				after_attack_special(src.target)
-				SPAWN_DBG(2.5 SECONDS)
+				SPAWN(2.5 SECONDS)
 					src.attacking = 0
 				return
-			SPAWN_DBG(6 SECONDS)
+			SPAWN(6 SECONDS)
 				if (get_dist(src, M) <= 1 && ((M:loc == target_lastloc)) && M.lying)
 					if(iscarbon(M))
 						logTheThing("combat", M, null, "was zombified by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
@@ -226,7 +226,7 @@
 						qdel(M)
 						qdel(animation)
 						sleeping = 2
-						SPAWN_DBG(2 SECONDS) playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
+						SPAWN(2 SECONDS) playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
 				else
 					src.visible_message("<span class='alert'><B>[src]</B> gnashes its teeth in fustration!</span>")
 				src.attacking = 0

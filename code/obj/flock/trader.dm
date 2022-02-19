@@ -229,7 +229,7 @@
 		"\"[gradientText(grad_col_1, grad_col_2, "We will not agree to any other price. Take it or leave it.")]\"")
 
 	// set up environmental things
-	SPAWN_DBG(10 SECONDS)
+	SPAWN(10 SECONDS)
 		for(var/obj/flock_screen/F in orange(5, src))
 			screen = F
 		screen?.trader = src
@@ -256,7 +256,7 @@
 		boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
 	src.desc = "Looks absolutely furious, as far as you can read the expressions of holographic alien heads."
 	src.icon_state = "totem-angry"
-	SPAWN_DBG(rand(1000,3000))
+	SPAWN(rand(1000,3000))
 		src.icon_state = "totem"
 		src.visible_message("<b>[src.name] calms down.</b>")
 		src.desc = "[src] looks a bit annoyed."
@@ -277,7 +277,7 @@
 	is_greeting = 1
 	if(trader in approved_traders)
 		if(screen)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				screen.show_icon("yes")
 			screen.say(pick_string("flockmind.txt", "flocktrader_friendly_greeting"))
 		sleep(1 SECOND)
@@ -285,7 +285,7 @@
 			door.open()
 	else
 		if(screen)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				screen.show_icon("no")
 			screen.say(pick_string("flockmind.txt", "flocktrader_cautious_greeting"))
 	is_greeting = 0
@@ -303,14 +303,14 @@
 		var/existing_trader = (donator in approved_traders)
 		approved_traders |= donator
 		approved_at *= increase_rate
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(screen)
 				if(existing_trader)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						screen.show_icon("present")
 					screen.say(pick_string("flockmind.txt", "flocktrader_target_met_existing_trader"))
 				else
-					SPAWN_DBG(0)
+					SPAWN(0)
 						screen.show_icon("yes")
 					screen.say(pick_string("flockmind.txt", "flocktrader_target_met_new_trader"))
 			sleep(1 SECOND)

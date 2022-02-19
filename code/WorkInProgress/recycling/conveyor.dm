@@ -306,7 +306,7 @@
 		if(SOUTHWEST)
 			divert_to = SOUTH
 			divert_from = WEST
-	SPAWN_DBG(0.2 SECONDS)
+	SPAWN(0.2 SECONDS)
 		// wait for map load then find the conveyor in this turf
 		conv = locate() in src.loc
 		if(conv)	// divert_from dir must match possible conveyor movement
@@ -408,7 +408,7 @@
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
 		conveyors = list()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			link_conveyors()
 			for (var/obj/machinery/conveyor/C as anything in conveyors)
 				if (C.id == src.id)
