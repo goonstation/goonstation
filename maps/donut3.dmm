@@ -42660,12 +42660,6 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/plating/jen,
 /area/shuttle/escape/station)
-"mnY" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/rust/jen,
-/obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating/jen,
-/area/station/crewquarters/fuq3)
 "mod" = (
 /obj/cable{
 	d1 = 2;
@@ -82713,11 +82707,6 @@
 	dir = 8
 	},
 /area/station/security/quarters)
-"xOj" = (
-/obj/random_item_spawner/junk/one_or_zero,
-/obj/decal/cleanable/dirt/jen,
-/turf/simulated/floor/plating/jen,
-/area/station/crewquarters/fuq3)
 "xOk" = (
 /obj/cable{
 	d1 = 1;
@@ -138013,9 +138002,9 @@ vpz
 vpz
 btN
 own
-xOj
-mnY
-mnY
+dvR
+lTE
+lTE
 svU
 svU
 svU
