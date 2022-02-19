@@ -58,6 +58,10 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 		text_args(list/arguments)
 			return src.apikey_scrub(list2params(arguments))
 
+		export_async(iface, args)
+			set waitfor = FALSE
+			export(iface, args)
+
 		//Send a message to an irc bot! Yay!
 		export(iface, args)
 			if (src.debugging)
