@@ -142,9 +142,8 @@ proc/save_intraround_jars()
 
 		var/list/jar_contents = list()
 		for (var/atom/movable/AM in jar)
-			var/obj/item/reagent_containers/food/snacks/pickle_holder/pickled = AM
-			if(!istype(AM, /obj/item/reagent_containers/food/snacks/pickle_holder))
-				pickled = AM.picklify(jar)
+			var/obj/item/reagent_containers/food/snacks/pickle_holder/pickled = AM.picklify(jar)
+			if(pickled != AM)
 				qdel(AM)
 			if(pickled.material)
 				pickled.removeMaterial()
@@ -267,6 +266,10 @@ proc/load_intraround_jars()
 		. = ..()
 		if(src.pickle_age)
 			. += " It has been [src.pickle_age] shift[src.pickle_age > 1 ? "s" : ""] since it was pickled."
+
+	picklify(atom/loc)
+		src.set_loc(loc)
+		return src
 
 
 
