@@ -168,7 +168,7 @@
 	proc/wake_from_hibernation()
 		if(task != "hibernating") return
 
-		//DEBUG_MESSAGE("[src] woke from hibernation at [showCoords(src.x, src.y, src.z)] in [registered_area ? registered_area.name : "nowhere"] due to [usr ? usr : "some mysterious fucking reason"]")
+		//DEBUG_MESSAGE("[src] woke from hibernation at [log_loc(src)] in [registered_area ? registered_area.name : "nowhere"] due to [usr ? usr : "some mysterious fucking reason"]")
 		//Ok, now we look to see if we should get murdlin'
 		task = "sleeping"
 		hibernate_check = 20 //20 sleep_checks
@@ -189,7 +189,7 @@
 			task = "hibernating"
 			registered_area.registered_critters |= src
 			anchored = 1
-			//DEBUG_MESSAGE("[src] started hibernating at [showCoords(src.x, src.y, src.z)] in [registered_area ? registered_area.name : "nowhere"].")
+			//DEBUG_MESSAGE("[src] started hibernating at [log_loc(src)] in [registered_area ? registered_area.name : "nowhere"].")
 			//critters -= src //Stop processing this critter
 
 
@@ -1113,7 +1113,7 @@
 			return
 
 /obj/critter/proc/revive_critter()
-	usr_admin_only
+	USR_ADMIN_ONLY
 	var/obj/critter/C = src
 	if (!istype(C, /obj/critter))
 		boutput(src, "[C] isn't a critter! How did you even get here?!")
@@ -1133,7 +1133,7 @@
 		return
 
 /obj/critter/proc/kill_critter()
-	usr_admin_only
+	USR_ADMIN_ONLY
 	var/obj/critter/C = src
 	if (!istype(C, /obj/critter))
 		boutput(src, "[C] isn't a critter! How did you even get here?!")

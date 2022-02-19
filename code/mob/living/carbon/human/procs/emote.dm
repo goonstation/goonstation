@@ -537,7 +537,7 @@
 					src.show_text("You are already breathing!")
 					return
 
-				var/datum/lifeprocess/breath/B = lifeprocesses[/datum/lifeprocess/breath]
+				var/datum/lifeprocess/breath/B = lifeprocesses?[/datum/lifeprocess/breath]
 				if (B)
 					if (B.breathstate)
 						src.show_text("You just breathed in, try breathing out next dummy!")
@@ -552,7 +552,7 @@
 					src.show_text("You are already breathing!")
 					return
 
-				var/datum/lifeprocess/breath/B = lifeprocesses[/datum/lifeprocess/breath]
+				var/datum/lifeprocess/breath/B = lifeprocesses?[/datum/lifeprocess/breath]
 				if (B)
 					if (!B.breathstate)
 						src.show_text("You just breathed out, try breathing in next silly!")
@@ -566,7 +566,7 @@
 					src.show_text("Why would you want to do that?")
 					return
 
-				var/datum/lifeprocess/statusupdate/S = lifeprocesses[/datum/lifeprocess/statusupdate]
+				var/datum/lifeprocess/statusupdate/S = lifeprocesses?[/datum/lifeprocess/statusupdate]
 				if (S)
 					if (S.blinkstate)
 						src.show_text("You just closed your eyes, try opening them now dumbo!")
@@ -581,7 +581,7 @@
 					src.show_text("Your eyes are already open!")
 					return
 
-				var/datum/lifeprocess/statusupdate/S = lifeprocesses[/datum/lifeprocess/statusupdate]
+				var/datum/lifeprocess/statusupdate/S = lifeprocesses?[/datum/lifeprocess/statusupdate]
 				if (S)
 					if (!S.blinkstate)
 						src.show_text("Your eyes are already open, try closing them next moron!")

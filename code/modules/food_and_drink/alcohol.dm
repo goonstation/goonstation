@@ -131,7 +131,7 @@
 			if (isnull(new_name) || !length(new_name) || new_name == " ")
 				return
 			phrase_log.log_phrase("vehicle", new_name, no_duplicates=TRUE)
-			logTheThing("station", user, null, "renamed [O] to [new_name] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
+			logTheThing("station", user, null, "renamed [O] to [new_name] in [get_area(user)] ([log_loc(user)])")
 			new_name = copytext(strip_html(new_name), 1, 32)
 			O.name = new_name
 			return

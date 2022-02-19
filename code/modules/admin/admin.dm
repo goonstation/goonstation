@@ -4623,7 +4623,7 @@ var/global/noir = 0
 			var/typeinfo/atom/typeinfo = get_type_typeinfo(path)
 			if(!typeinfo.admin_spawnable)
 				continue
-		if(findtext("[path]", object))
+		if(findtext("[path]$", object))
 			matches += path
 
 	. = matches
@@ -4670,7 +4670,7 @@ var/global/noir = 0
 					A = new chosen(get_turf(usr))
 				if (client.flourish)
 					spawn_animation1(A)
-			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
+			logTheThing("admin", usr, null, "spawned [chosen] at ([log_loc(usr)])")
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
 
 	else
@@ -4697,7 +4697,7 @@ var/global/noir = 0
 				A = new /obj/item/toy/figure(get_turf(usr), new chosen)
 			if (client.flourish)
 				spawn_animation1(A)
-			logTheThing("admin", usr, null, "spawned figurine [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
+			logTheThing("admin", usr, null, "spawned figurine [chosen] at ([log_loc(usr)])")
 			logTheThing("diary", usr, null, "spawned figurine [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
 
 	else
@@ -4718,7 +4718,7 @@ var/global/noir = 0
 			var/turf/T = get_turf(usr)
 			A.set_loc(T)
 			heavenly_spawn(A)
-			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
+			logTheThing("admin", usr, null, "spawned [chosen] at ([log_loc(T)])")
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
 	else
@@ -4738,7 +4738,7 @@ var/global/noir = 0
 		if (chosen)
 			var/turf/T = get_turf(usr)
 			new/obj/effect/supplymarker/safe(T, preDropTime, chosen)
-			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
+			logTheThing("admin", usr, null, "spawned [chosen] at ([log_loc(T)])")
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
 	else
@@ -4759,7 +4759,7 @@ var/global/noir = 0
 			var/turf/T = get_turf(usr)
 			A.set_loc(T)
 			demonic_spawn(A)
-			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
+			logTheThing("admin", usr, null, "spawned [chosen] at ([log_loc(T)])")
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
 	else
@@ -4820,7 +4820,7 @@ var/global/noir = 0
 	set name = "Manage Bioeffects"
 	set desc = "Select a mob to manage its bioeffects."
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	var/list/dat = list()
 	dat += {"
@@ -4930,7 +4930,7 @@ var/global/noir = 0
 	set name = "Manage Abilities"
 	set desc = "Select a mob to manage its abilities."
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	var/list/dat = list()
 	dat += {"

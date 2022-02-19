@@ -432,49 +432,49 @@
 
 /client/Topic(href, href_list, hsrc)
 	if (href_list["Pause"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		src.refresh_varedit_onchange = !src.refresh_varedit_onchange
 		return
 	if (href_list["Refresh"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		src.debug_variables(locate(href_list["Refresh"]))
 		return
 	if (href_list["Refresh-Global-Var"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		src.debug_global_variable(href_list["Refresh-Global-Var"])
 		// src.debug_variable(S, V, V, 0)
 		return
 	if (href_list["JumpToThing"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		var/atom/A = locate(href_list["JumpToThing"])
 		if (istype(A))
 			src.jumptoturf(get_turf(A))
 		return
 	if (href_list["GetThing"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		var/atom/A = locate(href_list["GetThing"])
 		if (ismob(A) || isobj(A))
 			src.cmd_admin_get_mobject(A)
 		return
 	if (href_list["DebugOverlays"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		var/atom/A = locate(href_list["DebugOverlays"])
 		debug_overlays(A, src)
 		return
 	if (href_list["GetThing_Insert"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		var/atom/A = locate(href_list["GetThing_Insert"])
 		if (ismob(A) || isobj(A))
 			src.cmd_admin_get_mobject_loc(A)
 		return
 	if (href_list["PlayerOptions"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		var/mob/M = locate(href_list["PlayerOptions"])
 		if (istype(M))
 			src.holder.playeropt(M)
 		return
 	if (href_list["SetDirection"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		var/atom/A = locate(href_list["SetDirection"])
 		if (istype(A))
 			var/new_dir = href_list["DirectionToSet"]
@@ -498,7 +498,7 @@
 					boutput(src, "Set [A]'s direction to [new_dir]")
 		return
 	if (href_list["CallProc"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_ADMIN)
 			var/target = href_list["CallProc"] == "global" ? null : locate(href_list["CallProc"])
 			if("proc_ref" in href_list)
@@ -509,7 +509,7 @@
 			audit(AUDIT_ACCESS_DENIED, "tried to call a proc on something all rude-like.")
 		return
 	if (href_list["ListProcs"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_ADMIN)
 			var/target = href_list["CallProc"] == "global" ? null : locate(href_list["ListProcs"])
 			src.show_proc_list(target)
@@ -517,7 +517,7 @@
 			audit(AUDIT_ACCESS_DENIED, "tried to call a proc on something all rude-like.")
 		return
 	if (href_list["DMDump"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_ADMIN)
 			var/target = locate(href_list["DMDump"])
 			var/dump = dm_dump(target)
@@ -529,21 +529,21 @@
 			audit(AUDIT_ACCESS_DENIED, "tried to DM dump something all rude-like.")
 		return
 	if (href_list["AddComponent"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
 			debugAddComponent(locate(href_list["AddComponent"]))
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to add a component to something all rude-like.")
 		return
 	if (href_list["RemoveComponent"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
 			debugRemoveComponent(locate(href_list["RemoveComponent"]))
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to remove a component from something all rude-like.")
 		return
 	if (href_list["Particool"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/datum/D = locate(href_list["Particool"])
 			src.holder.particool = new /datum/particle_editor(D)
@@ -552,7 +552,7 @@
 			audit(AUDIT_ACCESS_DENIED, "tried to open particool on something all rude-like.")
 		return
 	if (href_list["Delete"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/datum/D = locate(href_list["Delete"])
 			if(alert(src, "Are you sure you want to delete [D] of type [D.type]?",,"Yes","No") == "Yes")
@@ -561,7 +561,7 @@
 			audit(AUDIT_ACCESS_DENIED, "tried to delete something all rude-like.")
 		return
 	if (href_list["HardDelete"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/datum/D = locate(href_list["HardDelete"])
 			if(alert(src, "Are you sure you want to delete [D] of type [D.type]?",,"Yes","No") == "Yes")
@@ -570,7 +570,7 @@
 			audit(AUDIT_ACCESS_DENIED, "tried to delete something all rude-like.")
 		return
 	if (href_list["Display"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/fname = "varview_preview_[href_list["Display"]]_[world.timeofday].png"
 			src << browse_rsc(getFlatIcon(locate(href_list["Display"])), fname)
@@ -580,7 +580,7 @@
 			audit(AUDIT_ACCESS_DENIED, "tried to display a flat icon of something all rude-like.")
 		return
 	if (href_list["ReplaceExplosive"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/obj/O = locate(href_list["ReplaceExplosive"])
 			if(alert("Bad old explosive or fancy new explosive?", "Explosive Object", "Old", "New") == "Old")
@@ -598,7 +598,7 @@
 			audit(AUDIT_ACCESS_DENIED, "tried to replace explosive replica all rude-like.")
 		return
 	if (href_list["ViewReferences"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_CODER)
 			var/datum/D = locate(href_list["ViewReferences"])
 			usr.client.view_references(D, href_list["window_name"])
@@ -606,7 +606,7 @@
 			audit(AUDIT_ACCESS_DENIED, "tried to view references.")
 		return
 	if (href_list["AddPathogen"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/obj/O = locate(href_list["AddPathogen"])
 			O.addpathogens()
@@ -614,7 +614,7 @@
 			audit(AUDIT_ACCESS_DENIED, "tried to add random pathogens all rude-like.")
 		return
 	if (href_list["KillCritter"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/obj/critter/O = locate(href_list["KillCritter"])
 			O.kill_critter()
@@ -622,7 +622,7 @@
 			audit(AUDIT_ACCESS_DENIED, "tried to kill critter all rude-like.")
 		return
 	if (href_list["ReviveCritter"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/obj/critter/O = locate(href_list["ReviveCritter"])
 			O.revive_critter()
@@ -630,7 +630,7 @@
 			audit(AUDIT_ACCESS_DENIED, "tried to revive critter all rude-like.")
 		return
 	if (href_list["GiveProperty"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/obj/item/I = locate(href_list["GiveProperty"])
 			I.dbg_objectprop()
@@ -638,7 +638,7 @@
 			audit(AUDIT_ACCESS_DENIED, "tried to give property all rude-like.")
 		return
 	if (href_list["GiveSpecial"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/obj/item/I = locate(href_list["GiveSpecial"])
 			I.dbg_itemspecial()
@@ -646,7 +646,7 @@
 			audit(AUDIT_ACCESS_DENIED, "tried to give special all rude-like.")
 		return
 	if (href_list["CheckReactions"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/atom/A = locate(href_list["CheckReactions"])
 			A.debug_check_possible_reactions()
@@ -654,7 +654,7 @@
 			audit(AUDIT_ACCESS_DENIED, "tried to check reactions all rude-like.")
 		return
 	if (href_list["CreatePoster"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/atom/A = locate(href_list["CreatePoster"])
 			src.generate_poster(A)
@@ -662,7 +662,7 @@
 			audit(AUDIT_ACCESS_DENIED, "tried to create poster all rude-like.")
 		return
 	if (href_list["AdminInteract"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_SA)
 			var/atom/A = locate(href_list["AdminInteract"])
 			src.mob.admin_interact(A, list())
@@ -670,7 +670,7 @@
 			audit(AUDIT_ACCESS_DENIED, "tried to admin-interact all rude-like.")
 		return
 	if (href_list["Possess"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/obj/O = locate(href_list["Possess"])
 			possess(O)
@@ -678,7 +678,7 @@
 			audit(AUDIT_ACCESS_DENIED, "tried to Possess all rude-like.")
 		return
 	if (href_list["Vars"])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if (href_list["varToEdit"])
 			modify_variable(locate(href_list["Vars"]), href_list["varToEdit"])
 		else if (href_list["varToEditAll"])
@@ -711,9 +711,8 @@
 		for(var/client/c)
 			c:vars[variable] = var_value
 	else
-		for(var/x in world)
-			if(!istype(x, D.type)) continue
-			x:vars[variable] = var_value
+		for(var/datum/x as anything in find_all_by_type(D.type))
+			x.vars[variable] = var_value
 			LAGCHECK(LAG_LOW)
 
 /client/proc/modify_variable(datum/D, variable, set_global = 0)
@@ -847,9 +846,8 @@
 	switch(class)
 		if("null")
 			if(set_global)
-				for(var/x in world)
-					if(!istype(x, D.type)) continue
-					x:vars[variable] = null
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = null
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -869,9 +867,8 @@
 					boutput(src, "<span class='alert'>Bad ref or couldn't find that thing. Drats.</span>")
 					return
 				if(set_global)
-					for(var/x in world)
-						if(!istype(x, D.type)) continue
-						x:vars[variable] = thing
+					for(var/datum/x as anything in find_all_by_type(D.type))
+						x.vars[variable] = thing
 						LAGCHECK(LAG_LOW)
 				else
 					if(D == "GLOB")
@@ -892,9 +889,8 @@
 				val = json_decode(val)
 				if(!isnull(val))
 					if(set_global)
-						for(var/x in world)
-							if(!istype(x, D.type)) continue
-							x:vars[variable] = val
+						for(var/datum/x as anything in find_all_by_type(D.type))
+							x.vars[variable] = val
 							LAGCHECK(LAG_LOW)
 					else
 						if(D == "GLOB")
@@ -904,9 +900,8 @@
 
 		if("restore to default")
 			if(set_global)
-				for(var/x in world)
-					if(!istype(x, D.type)) continue
-					x:vars[variable] = initial(x:vars[variable])
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = initial(x.vars[variable])
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -922,9 +917,8 @@
 
 		if("create new list")
 			if(set_global)
-				for(var/x in world)
-					if(!istype(x, D.type)) continue
-					x:vars[variable] = list()
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = list()
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -938,12 +932,11 @@
 			if(set_global)
 				if(isclient(D))
 					for(var/client/x)
-						x:vars[variable] = theInput
+						x.vars[variable] = theInput
 						LAGCHECK(LAG_LOW)
 				else
-					for(var/x in world)
-						if(!istype(x, D.type)) continue
-						x:vars[variable] = theInput
+					for(var/datum/x as anything in find_all_by_type(D.type))
+						x.vars[variable] = theInput
 						LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -955,9 +948,8 @@
 			var/theInput = input("Enter new number:","[variable]", D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|num
 			if(theInput == null) return
 			if(set_global)
-				for(var/x in world)
-					if(!istype(x, D.type)) continue
-					x:vars[variable] = theInput
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = theInput
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -970,9 +962,8 @@
 			var/val = input("Enter value to adjust by:","[variable]", D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|num
 			if(!isnull(val))
 				if(set_global)
-					for(var/x in world)
-						if(!istype(x, D.type)) continue
-						x:vars[variable] += val
+					for(var/datum/x as anything in find_all_by_type(D.type))
+						x.vars[variable] += val
 						LAGCHECK(LAG_LOW)
 				else
 					if(D == "GLOB")
@@ -987,9 +978,8 @@
 				var/match = get_one_match(typename, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 				if (match)
 					if (set_global)
-						for (var/datum/x in world)
+						for(var/datum/x as anything in find_all_by_type(D.type))
 							LAGCHECK(LAG_LOW)
-							if (!istype(x, D.type)) continue
 							x.vars[variable] = match
 					else
 						if(D == "GLOB")
@@ -1001,9 +991,8 @@
 			var/theInput = input("Select reference:","[variable]", D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|mob|obj|turf|area in world
 			if(theInput == null) return
 			if(set_global)
-				for(var/x in world)
-					if(!istype(x, D.type)) continue
-					x:vars[variable] = theInput
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = theInput
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -1015,9 +1004,8 @@
 			var/theInput = input("Select reference:","[variable]", D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|mob in world
 			if(theInput == null) return
 			if(set_global)
-				for(var/x in world)
-					if(!istype(x, D.type)) continue
-					x:vars[variable] = theInput
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = theInput
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -1029,9 +1017,8 @@
 			var/theInput = input("Pick file:","[variable]",D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|file
 			if(theInput == null) return
 			if(set_global)
-				for(var/x in world)
-					if(!istype(x, D.type)) continue
-					x:vars[variable] = theInput
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = theInput
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -1043,9 +1030,8 @@
 			var/theInput = input("Pick icon:","[variable]",D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|icon
 			if(theInput == null) return
 			if(set_global)
-				for(var/x in world)
-					if(!istype(x, D.type)) continue
-					x:vars[variable] = theInput
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = theInput
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -1059,12 +1045,11 @@
 			if(set_global)
 				if(isclient(D))
 					for(var/client/x)
-						x:vars[variable] = theInput
+						x.vars[variable] = theInput
 						LAGCHECK(LAG_LOW)
 				else
-					for(var/x in world)
-						if(!istype(x, D.type)) continue
-						x:vars[variable] = theInput
+					for(var/datum/x as anything in find_all_by_type(D.type))
+						x.vars[variable] = theInput
 						LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -1099,9 +1084,8 @@
 				return
 
 			if(set_global)
-				for(var/x in world)
-					if(!istype(x, D.type)) continue
-					x:vars[variable] = M
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = M
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -1117,9 +1101,8 @@
 			var/turf/T = locate(x, y, z)
 			if (istype(T))
 				if (set_global)
-					for (var/datum/q in world)
+					for(var/datum/q as anything in find_all_by_type(D.type))
 						LAGCHECK(LAG_LOW)
-						if (!istype(q, D.type)) continue
 						q.vars[variable] = T
 				else
 					if(D == "GLOB")
@@ -1155,9 +1138,8 @@
 				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 				if (match)
 					if (set_global)
-						for (var/datum/x in world)
+						for(var/datum/x as anything in find_all_by_type(D.type))
 							LAGCHECK(LAG_LOW)
-							if (!istype(x, D.type)) continue
 							x.vars[variable] = new match(x)
 					else
 						if(D == "GLOB")
@@ -1189,7 +1171,7 @@
 	set category = "Debug"
 	switch (alert("Are you sure you wish to delete \the [A.name] at ([A.x],[A.y],[A.z]) ?", "Admin Delete Object","Yes","No"))
 		if("Yes")
-			logTheThing("admin", usr, null, "deleted [A.name] at ([showCoords(A.x, A.y, A.z)])")
+			logTheThing("admin", usr, null, "deleted [A.name] at ([log_loc(A)])")
 			logTheThing("diary", usr, null, "deleted [A.name] at ([showCoords(A.x, A.y, A.z, 1)])", "admin")
 
 /proc/debug_overlays(target_thing, client/user, indent="")

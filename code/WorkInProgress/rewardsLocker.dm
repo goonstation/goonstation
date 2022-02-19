@@ -1199,7 +1199,7 @@
 		if (isAI(activator))
 			var/mob/living/silicon/ai/A = activator
 			if (isAIeye(activator))
-				var/mob/dead/aieye/AE = activator
+				var/mob/living/intangible/aieye/AE = activator
 				A = AE.mainframe
 			A.custom_emotions = ai_emotions | list("ROGUE(reward)" = "ai-red")
 			A.faceEmotion = "ai-red"
@@ -1218,7 +1218,7 @@
 		if (isAI(activator))
 			var/mob/living/silicon/ai/A = activator
 			if (isAIeye(activator))
-				var/mob/dead/aieye/AE = activator
+				var/mob/living/intangible/aieye/AE = activator
 				A = AE.mainframe
 			A.custom_emotions = ai_emotions | list("Tetris (reward)" = "ai-tetris")
 			A.faceEmotion = "ai-tetris"
@@ -1237,7 +1237,7 @@ datum/achievementReward/ai_dwaine
 		if (isAI(activator))
 			var/mob/living/silicon/ai/A = activator
 			if (isAIeye(activator))
-				var/mob/dead/aieye/AE = activator
+				var/mob/living/intangible/aieye/AE = activator
 				A = AE.mainframe
 			A.coreSkin = "dwaine"
 			A.update_appearance()

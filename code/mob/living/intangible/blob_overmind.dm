@@ -255,7 +255,7 @@
 			if (plane)
 				plane.alpha = 255
 
-	MouseDrop()
+	mouse_drop()
 		return
 
 	MouseDrop_T()
@@ -567,8 +567,7 @@
 				lipids -= Q
 		return bio_points + lipids.len * 4 >= amt
 
-	projCanHit(datum/projectile/P)
-		return 0
+
 
 	proc/setHat( var/obj/item/clothing/head/hat )
 		hat.pixel_y = 10

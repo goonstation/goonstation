@@ -12,16 +12,17 @@
 //Colosseum putts /obj/machinery/colosseum_putt  X
 //Cyborgs /mob/living/silicon/robot  X
 
-/mob/dead/aieye
+/mob/living/intangible/aieye
 	name = "AI Eye"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "a-eye"
-	see_invisible = INVIS_AI_EYE
 	density = 0
 	layer = 101
 	see_in_dark = SEE_DARK_FULL
 	stat = 0
 	mob_flags = SEE_THRU_CAMERAS | USR_DIALOG_UPDATES_RANGE
+
+	can_lie = 0 //can't lie down, you're a floating ghostly eyeball
 
 	var/mob/living/silicon/ai/mainframe = null
 	var/last_loc = 0
@@ -39,9 +40,11 @@
 		src.cancel_camera()
 		last_loc = src.loc
 		..()
+		see_invisible = INVIS_AI_EYE
 		sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_AI_EYE)
 		APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
+		APPLY_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS, src)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 	Login()
@@ -93,7 +96,13 @@
 		if (C.tg_controls)
 			C.apply_keybind("robot_tg")
 
-	Move(NewLoc, direct)//Ewww!
+	process_move(keys)
+		if(keys && src.move_dir && !src.use_movement_controller && !istype(src.loc, /turf)) //when a movement key is pressed, move out of tracked mob
+			var/mob/living/intangible/aieye/O = src
+			O.set_loc(get_turf(src))
+		. = ..()
+
+	Move(var/turf/NewLoc, direct)//Ewww!
 		last_loc = src.loc
 
 		src.closeContextActions()
@@ -270,6 +279,8 @@
 	hearing_check(var/consciousness_check = 0) //can't hear SHIT - everything is passed from the AI mob through send_message and whatever
 		return 0
 
+	resist()
+		return 0 //can't actually resist anything because there's nothing to resist, but maybe the hot key could be used for something?
 
 	proc/mainframe_check()
 		if (mainframe)
@@ -482,7 +493,7 @@
 /*
 /turf/MouseEntered()
 	.=..()
-	if(istype(usr,/mob/dead/aieye))//todo, make this a var for cheapernesseress?
+	if(istype(usr,/mob/living/intangible/aieye))//todo, make this a var for cheapernesseress?
 		if(aiImage)
 			usr.client.show_popup_menus = (length(cameras))
 */
@@ -580,7 +591,7 @@ world/proc/updateCameraVisibility(generateAiImages=FALSE)
 		LAZYLISTADDUNIQUE(camerasToRebuild, cam)
 	world.updateCameraVisibility()
 
-/mob/dead/aieye/proc/check_eye_z(source)
+/mob/living/intangible/aieye/proc/check_eye_z(source)
 	var/atom/movable/temp = source
 	while(!istype(temp.loc, /turf))
 		temp = temp.loc

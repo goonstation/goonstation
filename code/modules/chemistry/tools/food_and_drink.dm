@@ -479,7 +479,7 @@
 			src.reagents.reaction(get_turf(user), TOUCH)
 			src.reagents.clear_reagents()
 
-	MouseDrop(atom/over_object)
+	mouse_drop(atom/over_object)
 		..()
 		if(!(usr == over_object)) return
 		if(!istype(usr, /mob/living/carbon)) return

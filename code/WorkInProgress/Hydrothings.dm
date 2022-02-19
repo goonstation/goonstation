@@ -446,17 +446,17 @@ obj/item/gnomechompski/elf
 	max_stages = 3
 	associated_reagent = "hootonium" // associated reagent, duh
 
-/datum/ailment/disease/hootonium/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/disease/hootonium/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 
 	if (..())
 		return
 	switch(D.stage)
 		if(1)
-			if (prob(25))
+			if (probmult(25))
 				boutput(affected_mob, "<B>[pick("It feels wrong, I feel wrong.", "Am I okay?", "I can feel it, its under my skin.", "I need help, I WANT HELP!")]<B/>")
-			if (prob(50))
+			if (probmult(50))
 				affected_mob.make_jittery(25)
-			if (prob(15))
+			if (probmult(15))
 				affected_mob.vomit()
 				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
 				for(var/mob/O in viewers(affected_mob, null))
@@ -464,7 +464,7 @@ obj/item/gnomechompski/elf
 
 		if(2)
 			playsound(affected_mob, "sound/effects/Heart Beat.ogg", 70, 1)
-			if (prob(50))
+			if (probmult(50))
 				for(var/mob/O in viewers(affected_mob, null))
 					playsound(O, "sound/voice/animal/hoot.ogg", 70, 1)
 					O.show_message(text("<span class='alert'><B>[]</B> hoots uncontrollably!</span>", affected_mob), 1)
@@ -475,19 +475,19 @@ obj/item/gnomechompski/elf
 				affected_mob.hand = !affected_mob.hand
 				affected_mob.drop_item()
 				affected_mob.hand = !affected_mob.hand
-			if  (prob(35))
+			if  (probmult(35))
 				boutput(affected_mob, "<B>[pick("Oh g-HOOT", "Whats happe-ho-ing to me?", "It hurts!")]</B>")
-			if (prob(15))
+			if (probmult(15))
 				affected_mob.vomit()
 				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
 				for(var/mob/O in viewers(affected_mob, null))
 					boutput(O, "<span class='alert'><b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>")
 
 		if(3)
-			if(prob(25))
+			if(probmult(25))
 				boutput(affected_mob, "<span class='alert'>You feel your skin getting rougher!</span>")
 				boutput(affected_mob, "<span class='alert'>Your body convulses painfully!</span>")
-			if(prob(25))
+			if(probmult(25))
 				affected_mob.drop_item()
 				affected_mob.hand = !affected_mob.hand
 				affected_mob.drop_item()
@@ -500,14 +500,14 @@ obj/item/gnomechompski/elf
 				for(var/mob/O in viewers(affected_mob, null))
 					playsound(O, "sound/voice/animal/hoot.ogg", 70, 1)
 					O.show_message(text("<span class='alert'><B>[]</B> hoots uncontrollably!</span>", affected_mob), 1)
-			if(prob(25))
+			if(probmult(25))
 				boutput(affected_mob, "<B>[pick("Who-WHO", "HOoooT", "neST!")]</B>")
-			if (prob(15))
+			if (probmult(15))
 				affected_mob.vomit()
 				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
 				for(var/mob/O in viewers(affected_mob, null))
 					boutput(O, "<span class='alert'><b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>")
-			if(prob(10))
+			if(probmult(10))
 				var/obj/critter/hootening/P = new/obj/critter/hootening(affected_mob.loc)
 				P.name = affected_mob.real_name
 				affected_mob.gib()
@@ -1398,7 +1398,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 
 	M.verbs -= /proc/owl_slam
 
-	logTheThing("combat", M, null, "<b>triggers a owl slam in [M.loc.loc] ([showCoords(M.x, M.y, M.z)])!</b>")
+	logTheThing("combat", M, null, "<b>triggers a owl slam in [M.loc.loc] ([log_loc(M)])!</b>")
 
 	M.visible_message("<span class='alert'>[M] flies through the ceiling!</span>")
 	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)

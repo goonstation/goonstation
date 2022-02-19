@@ -984,7 +984,7 @@
 			boutput(user, "<span class='notice'>You finish stuffing items into [src]!</span>")
 		src.UpdateIcon()
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the extractor's output target.</span>")
 			return

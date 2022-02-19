@@ -215,7 +215,7 @@
 				. = 1
 			break
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		..()
 		var/atom/movable/screen/hud/S = over_object
 		if (istype(S))
@@ -413,7 +413,7 @@
 			return
 		..()
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		if (src.locked)
 			if (usr)
 				boutput(usr, "<span class='alert'>[src] is locked!</span>")

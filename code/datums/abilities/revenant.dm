@@ -89,14 +89,16 @@
 		owner.set_body_icon_dirty()
 		animate_levitate(owner)
 
-		owner.add_stun_resist_mod("revenant", 1000)
+		APPLY_MOB_PROPERTY(owner, PROP_STUN_RESIST, "revenant", 1000)
+		APPLY_MOB_PROPERTY(owner, PROP_STUN_RESIST_MAX, "revenant", 1000)
 		APPLY_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/revenant, src.type)
 
 		..()
 
 	OnRemove()
 		if (owner)
-			owner.remove_stun_resist_mod("revenant")
+			REMOVE_MOB_PROPERTY(owner, PROP_STUN_RESIST, "revenant")
+			REMOVE_MOB_PROPERTY(owner, PROP_STUN_RESIST_MAX, "revenant")
 			REMOVE_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/revenant, src.type)
 		..()
 
@@ -133,8 +135,8 @@
 		W.set_loc(src.owner)
 		W.abilityHolder.topBarRendered = 0
 
-		message_admins("[key_name(wraith)] possessed the corpse of [owner] as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
-		logTheThing("combat", usr, null, "possessed the corpse of [owner] as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
+		message_admins("[key_name(wraith)] possessed the corpse of [owner] as a revenant at [log_loc(owner)].")
+		logTheThing("combat", usr, null, "possessed the corpse of [owner] as a revenant at [log_loc(owner)].")
 
 
 		if (src.wraith.mind) // theoretically shouldn't happen
@@ -158,9 +160,9 @@
 		if (!src.owner.mind && !src.owner.client)
 			return
 
-		message_admins("Revenant [key_name(owner)] died at [showCoords(owner.x, owner.y, owner.z)].")
+		message_admins("Revenant [key_name(owner)] died at [log_loc(owner)].")
 		playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
-		logTheThing("combat", usr, null, "died as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
+		logTheThing("combat", usr, null, "died as a revenant at [log_loc(owner)].")
 		if (owner.mind)
 			owner.mind.transfer_to(src.wraith)
 		else if (owner.client)

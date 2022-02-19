@@ -1,4 +1,24 @@
 
+(t)fri feb 18 22
+(u)tarmunora
+(+)blob poisoning change:
+(+)mitochondria individually less vulnerable to poison, suck poison out of nearby non-mitochondria/non-lipid tiles, store up to 50 poison in adjacent lipid tiles
+(+)lipids slightly more flammable and no longer have increased poison spread on death
+(t)thu feb 17 22
+(u)aloe
+(*)Genetics computers now require genetics access to operate.
+(u)Danger Noodle
+(p)7471
+(e)🗺|mapping
+(*)A new art themed prefab has been added to space maps.
+(u)Flappybat
+(p)7522
+(e)|
+(+)Tracking beacons start anchored. You can unanchor them with a screwdriver.
+(u)TTerc
+(+)Fish now deal 0 damage. Invite your friends for a fish slap fight!
+(u)pali
+(*)Persistent pickle jars now spawn on the station. You can put things into the jar and leave the jar somewhere and next round the jar will be on the same place (if it's the same map) and contain the things you put there but pickled and edible!
 (t)wed feb 16 22
 (u)TTerc
 (e)🆕|feature
