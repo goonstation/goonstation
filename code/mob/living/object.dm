@@ -14,12 +14,11 @@
 	density = 0
 	canmove = 1
 	use_stamina = FALSE
+	flags = FPRINT | NO_MOUSEDROP_QOL
 
 	blinded = FALSE
 	anchored = FALSE
 	a_intent = "disarm"
-	health = 50
-	max_health = 50
 	var/name_prefix = "living "
 
 	New(var/atom/loc, var/obj/possessed, var/mob/controller)
@@ -29,27 +28,31 @@
 			src.possessed_item = possessed
 		src.possessed_thing = possessed
 
-
 		if (istype(src.possessed_thing, /obj/machinery/the_singularity))
 			event_handler_flags |= IMMUNE_SINGULARITY
 
-		hud = new(src)
+		src.hud = new(src)
 		src.attach_hud(hud)
 		src.zone_sel = new(src)
 		src.attach_hud(zone_sel)
 
 		message_admins("[key_name(controller)] possessed [possessed_thing] at [log_loc(loc)].")
-		if (possessed_item)
-			possessed_item.cant_drop = TRUE
+		if (src.possessed_item)
+			src.possessed_item.cant_drop = TRUE
+			src.max_health = 25 * src.possessed_item.w_class
+			src.health = 25 * src.possessed_item.w_class
 		else
 			if (isobj(possessed_thing))
-				dummy = new /obj/item/attackdummy(src)
-				dummy.name = possessed_thing.name
-				dummy.cant_drop = TRUE
+				src.dummy = new /obj/item/attackdummy(src)
+				src.dummy.name = possessed_thing.name
+				src.dummy.cant_drop = TRUE
+				src.max_health = 100
+				src.health = 100
 			else
 				stack_trace("Tried to create a possessed object from invalid atom [src.possessed_thing] of type [src.possessed_thing.type]!")
 				boutput(controller, "<h3 class='alert'>Uh oh, you tried to possess something illegal! Here's a toolbox instead!</h3>")
 				src.possessed_thing = new /obj/item/storage/toolbox/artistic
+
 
 		set_loc(get_turf(src.possessed_thing))
 		possessed_thing.set_loc(src)
@@ -61,17 +64,17 @@
 		src.pixel_y = possessed_thing.pixel_y
 		src.set_density(possessed_thing.density)
 		src.RL_SetOpacity(possessed_thing.opacity)
-
+		src.create_submerged_images()
 
 		//Relay these signals
 		RegisterSignal(src.possessed_thing, COMSIG_ATOM_POST_UPDATE_ICON, /atom/proc/UpdateIcon)
-		RegisterSignal(src.possessed_thing, COMSIG_ATOM_MOUSEDROP, /proc/MouseDrop)
-		RegisterSignal(src.possessed_thing, COMSIG_ATOM_MOUSEDROP_T, /proc/MouseDrop_T)
+		src.possessed_thing.RegisterSignal(src, COMSIG_ATOM_MOUSEDROP_T, /atom/proc/_MouseDrop_T)
+		RegisterSignal(src.possessed_thing, COMSIG_ATOM_MOUSEDROP, .proc/stupid_fucking_wrapper_proc)
 
 		src.owner = controller
 		if (src.owner)
 			if (!src.owner.mind) //what the fuck
-				death(1)
+				src.death(TRUE)
 				qdel(src)
 				return
 			src.owner.set_loc(src)
@@ -79,8 +82,11 @@
 
 		src.visible_message("<span class='alert'><b>[src.possessed_thing] comes to life!</b></span>") // was [src] but: "the living space thing comes alive!"
 		animate_levitate(src, -1, 20, 1)
-		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST, "living_object", 1000)
-		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "living_object", 1000)
+		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST, "living_object", 100)
+		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "living_object", 100)
+
+	proc/stupid_fucking_wrapper_proc(atom/over_object, src_location, over_location, over_control, params)
+		src.MouseDrop(over_object, src_location, over_location, over_control, params)
 
 	disposing()
 		REMOVE_MOB_PROPERTY(src, PROP_STUN_RESIST, "living_object")
@@ -89,7 +95,7 @@
 
 	Exited(var/atom/movable/AM, var/atom/newloc)
 		if (AM == src.possessed_thing && newloc != src)
-			src.death(0) //uh oh
+			src.death(FALSE) //uh oh
 			boutput(src, "<span class='alert'>You feel yourself being ripped away from this object!</h1>") //no destroying spacetime
 
 	equipped()
@@ -101,7 +107,7 @@
 	get_desc()
 		. = ..()
 		. += "<span class='alert'>It seems to be alive.</span><br>"
-		if (health < 25)
+		if (src.health < src.max_health * 0.5)
 			. += "<span class='notice'>The ethereal grip on this object appears to be weakening.</span>"
 
 	meteorhit(var/obj/O as obj)
@@ -161,10 +167,6 @@
 			user.visible_message("<span class='alert'>[user] pets [src]!</span>")
 		else
 			..()
-
-	MouseDrop(var/atom/other_thing) //remove this if it leads to excessive fuckery
-		..()
-		return src.possessed_thing.MouseDrop(other_thing)
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		health -= burn
