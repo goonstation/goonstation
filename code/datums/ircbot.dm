@@ -44,6 +44,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 
 		//Shortcut proc for event-type exports
 		event(type, data)
+			set waitfor = FALSE // events async by default because who cares about the result really, we are just notifying the bot about something
 			if (!type) return 0
 			var/list/eventArgs = list("type" = type)
 			if (data) eventArgs |= data
