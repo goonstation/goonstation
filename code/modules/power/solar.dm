@@ -419,7 +419,6 @@
 				control.gen += sgen
 
 		if(adir != ndir)
-			SPAWN(10+rand(0,15))
-				adir = (360+adir+clamp(ndir-adir,-10,10))%360
-				UpdateIcon()
-				update_solar_exposure()
+			adir = (360+adir+clamp(ndir-adir,-10,10))%360
+			UpdateIcon()
+			update_solar_exposure()
