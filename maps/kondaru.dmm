@@ -39103,16 +39103,14 @@
 /area/shuttle/merchant_shuttle/right_station/cogmap)
 "cqS" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/maid,
-/obj/decal/poster/wallsign/poster_rand{
-	pixel_x = 8;
-	pixel_y = 28
-	},
-/obj/item/clothing/head/maid,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/item/clothing/glasses/monocle,
+/obj/item/clothing/head/longtophat,
+/obj/item/clothing/shoes/dress_shoes,
+/obj/item/clothing/under/misc/fancy_vest,
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/crew_quarters/quarters_south)
 "cre" = (
@@ -41704,24 +41702,12 @@
 /area/station/security/brig)
 "eJX" = (
 /obj/table/wood/auto,
-/obj/item/plate{
-	pixel_y = 7
+/obj/item/reagent_containers/food/snacks/crumpet{
+	pixel_x = -6;
+	pixel_y = 4
 	},
-/obj/item/spraybottle/cleaner,
-/obj/item/sticker/heart{
-	rand_pos = 1
-	},
-/obj/item/sticker/heart{
-	rand_pos = 1
-	},
-/obj/item/sticker/heart{
-	rand_pos = 1
-	},
-/obj/item/sticker/heart{
-	rand_pos = 1
-	},
-/obj/item/sticker/heart{
-	rand_pos = 1
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = 5
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/crew_quarters/quarters_south)
@@ -59765,13 +59751,6 @@
 /turf/simulated/floor/grey,
 /area/station/quartermaster/cargobay)
 "xcb" = (
-/obj/decal/poster/wallsign/poster_rand{
-	pixel_y = 28
-	},
-/obj/decal/poster/wallsign/poster_rand{
-	pixel_x = -7;
-	pixel_y = 36
-	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/crew_quarters/quarters_south)
 "xcm" = (
@@ -59897,14 +59876,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "xgt" = (
-/obj/decal/poster/wallsign/poster_rand{
-	pixel_x = -10;
-	pixel_y = 38
-	},
-/obj/decal/poster/wallsign/poster_rand{
-	pixel_x = 9;
-	pixel_y = 31
-	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/crew_quarters/quarters_south)
 "xgv" = (
