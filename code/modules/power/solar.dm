@@ -172,7 +172,7 @@
 	if(adir != ndir)
 		var/old_adir = adir
 		var/max_move = rand(8, 12)
-		adir = (360 + adir + clamp((180 - (540 - ndir + adir) % 360 ), -max_move, max_move)) % 360
+		adir = (360 + adir + clamp((180 - (540 - ndir + adir) % 360), -max_move, max_move)) % 360
 		if(adir != old_adir)
 			use_power(power_usage)
 			UpdateIcon()
@@ -423,7 +423,7 @@
 			SPAWN(10+rand(0,15))
 				var/old_adir = adir
 				var/max_move = rand(8, 12)
-				adir = (360 + adir + clamp((180 - (540 - ndir + adir) % 360 ), -max_move, max_move)) % 360
+				adir = (360 + adir + clamp((180 - (540 - ndir + adir) % 360), -max_move, max_move)) % 360
 				if(adir != old_adir)
 					use_power(power_usage)
 					UpdateIcon()
