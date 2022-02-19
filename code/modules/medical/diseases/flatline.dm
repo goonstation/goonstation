@@ -9,7 +9,7 @@
 	"epinephrine" = list(1,10)) // epi is recommended though
 	var/robo_restart = 0
 
-/datum/ailment/disease/flatline/stage_act(var/mob/living/affected_mob,var/datum/ailment/D)
+/datum/ailment/disease/flatline/stage_act(var/mob/living/affected_mob, var/datum/ailment/D, mult)
 	if (..())
 		return
 	if (ishuman(affected_mob))

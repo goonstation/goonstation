@@ -23,7 +23,7 @@
 		REMOVE_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "heartdisease")
 		C.remove_stam_mod_max("heartdisease")
 
-/datum/ailment/disease/heartdisease/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/disease/heartdisease/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
 	// chest pains, heartburn, shortness of breath (losebreath)
