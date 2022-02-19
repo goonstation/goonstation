@@ -47,7 +47,7 @@
 			if (probmult(8)) H.emote(pick("pale", "groan"))
 			if (probmult(5))
 				boutput(H, "<span class='alert'>Your back aches terribly!</span>")
-			if (prprobmultob(3))
+			if (probmult(3))
 				boutput(H, "<span class='alert'>You feel excruciating pain in your upper-right adbomen!</span>")
 				// H.organHolder.takeliver
 
