@@ -711,7 +711,7 @@
 					return
 
 			if (href_list["ejectmanudrive"])
-				src.eject_manudrive(usr) // I have to use usr here alas.
+				src.eject_manudrive(usr)
 
 			if (href_list["ejectbeaker"])
 				if (src.beaker)
