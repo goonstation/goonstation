@@ -12353,6 +12353,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/storage/closet/office,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "aDg" = (
@@ -43949,7 +43950,8 @@
 /area/station/ranch)
 "cjI" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4
+	dir = 4;
+	req_access = null
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/rancher,

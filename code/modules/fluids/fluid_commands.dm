@@ -5,14 +5,14 @@ client/proc/enable_waterflow(var/enabled as num)
 	set name = "Set Fluid Flow Enabled"
 	set desc = "0 to disable, 1 to enable"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 	waterflow_enabled = !!enabled
 
 client/proc/delete_fluids()
 	set name = "Delete All Fluids"
 	set desc = "Probably safe to run. Probably."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 
 	var/exenabled = waterflow_enabled
 	enable_waterflow(0)
@@ -44,7 +44,7 @@ client/proc/special_fullbright()
 	set desc = "Helps when server load is heavy. Doesn't affect trench."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 
 	message_admins("[key_name(src)] is making all Z1 Sea Lights static...")
 	SPAWN(0)
@@ -58,7 +58,7 @@ client/proc/replace_space()
 	set name = "Replace All Space Tiles With Ocean"
 	set desc = "uh oh."
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
-	admin_only
+	ADMIN_ONLY
 
 	var/list/L = list()
 	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
@@ -101,7 +101,7 @@ client/proc/replace_space_exclusive()
 	set name = "Oceanify"
 	set desc = "This is the safer one."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	admin_only
+	ADMIN_ONLY
 
 	var/list/L = list()
 	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
@@ -172,7 +172,7 @@ client/proc/replace_space_exclusive()
 
 
 client/proc/update_ocean_lighting()
-	admin_only
+	ADMIN_ONLY
 	SPAWN(0)
 		for(var/turf/space/fluid/S in world)
 			S.update_light()
@@ -184,7 +184,7 @@ client/proc/dereplace_space()
 	set name = "Unoceanify"
 	set desc = "uh oh."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	admin_only
+	ADMIN_ONLY
 
 	var/answer = alert("Replace Z1 only?",,"Yes","No")
 

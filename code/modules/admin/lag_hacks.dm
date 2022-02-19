@@ -4,7 +4,7 @@ client/proc/show_admin_lag_hacks()
 	set name = "Lag Reduction"
 	set desc = "A few janky commands that can smooth the game during an Emergency."
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
-	admin_only
+	ADMIN_ONLY
 	src.holder.show_laghacks(src.mob)
 
 /datum/admins/proc/show_laghacks(mob/user)
@@ -34,7 +34,7 @@ client/proc/lightweight_doors()
 	set desc = "Helps when server load is heavy. Creates really ugly dark spots, try not to use this often."
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 
 	message_admins("[key_name(src)] is removing light/camera interactions from doors...")
 	SPAWN(0)
@@ -49,7 +49,7 @@ client/proc/lightweight_mobs()
 	set desc = "Reduces (or increases if you're feeling spicy) load of Life(). Extremely safe - Life() compensates for the change automatically :)"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 
 	if (processScheduler.hasProcess("Mob"))
 		var/datum/controller/process/mobs/M = processScheduler.nameToProcessMap["Mob"]
@@ -68,7 +68,7 @@ client/proc/slow_fluids()
 	set desc = "Higher schedulde interval."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 
 	if (processScheduler.hasProcess("Fluid_Groups"))
 		var/datum/controller/process/fluid_group/P = processScheduler.nameToProcessMap["Fluid_Groups"]
@@ -85,7 +85,7 @@ client/proc/slow_atmos()
 	set desc = "Higher schedulde interval. May fuck the TEG."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 
 	if (processScheduler.hasProcess("Atmos"))
 		var/datum/controller/process/P = processScheduler.nameToProcessMap["Atmos"]
@@ -102,7 +102,7 @@ client/proc/slow_ticklag()
 	set desc = "Change max/min ticklag bounds for smoother experience during super-highpop or especially bad rounds. Lower = smooth, Higher = For lag"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 
 	//var/prev = world.tick_lag
 	//world.tick_lag = OVERLOADED_WORLD_TICKLAG
@@ -117,7 +117,7 @@ client/proc/disable_deletions()
 	set desc = "Disable delete queue (only GC'd items will truly be gone when deleted)"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 
 	if (processScheduler.hasProcess("DeleteQueue"))
 		var/datum/controller/process/P = processScheduler.nameToProcessMap["DeleteQueue"]
@@ -131,7 +131,7 @@ client/proc/disable_ingame_logs()
 	set desc = "Reduce the shitty logthething() lag! Make the admins angry! (You can still access logs fine using the web version etc)"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 
 	if (disable_log_lists)
 		disable_log_lists = 0

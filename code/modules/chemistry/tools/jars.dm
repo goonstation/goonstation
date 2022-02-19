@@ -4,7 +4,7 @@
 /* ============================================== */
 
 #define JARS_FILE "data/jars.sav"
-#define JARS_VERSION 1
+#define JARS_VERSION 2
 #define DEFAULT_JAR_COUNT 4
 #define MAX_JAR_COUNT 32
 #define JAR_MAX_ITEMS 16
@@ -35,6 +35,10 @@
 			boutput(user, "<span class='alert'>That's too large to fit into the jar.</span>")
 			return
 
+		if(W.cant_drop)
+			boutput(user, "<span class='alert'>You can't put that in the jar.</span>")
+			return
+
 		if (length(src.contents) > JAR_MAX_ITEMS || (locate(/mob/living) in src))
 			boutput(user, "<span class='alert'>There is no way that will fit into this jar.  This VERY FULL jar.</span>")
 			return
@@ -48,8 +52,8 @@
 		. = ..()
 		if(length(src.contents))
 			var/list/stuff_inside = list()
-			for(var/obj/item/I in src)
-				stuff_inside += "\a [I]"
+			for(var/atom/movable/AM in src)
+				stuff_inside += "\a [AM]"
 			var/obj/item/last = stuff_inside[length(stuff_inside)]
 			stuff_inside.len--
 			if(length(stuff_inside))
@@ -138,9 +142,8 @@ proc/save_intraround_jars()
 
 		var/list/jar_contents = list()
 		for (var/atom/movable/AM in jar)
-			var/obj/item/reagent_containers/food/snacks/pickle_holder/pickled = AM
-			if(!istype(AM, /obj/item/reagent_containers/food/snacks/pickle_holder))
-				pickled = AM.picklify(jar)
+			var/obj/item/reagent_containers/food/snacks/pickle_holder/pickled = AM.picklify(jar)
+			if(pickled != AM)
 				qdel(AM)
 			if(pickled.material)
 				pickled.removeMaterial()
@@ -184,7 +187,7 @@ proc/load_intraround_jars()
 	var/savefile/jar_save = new(JARS_FILE)
 	var/version
 	jar_save["version"] >> version
-	if(isnull(version))
+	if(version < JARS_VERSION)
 		generate_backup_jars()
 		fdel(JARS_FILE)
 		return
@@ -247,7 +250,7 @@ proc/load_intraround_jars()
 	var/pickle_age
 
 	New(newloc, atom/movable/pickled)
-		..()
+		..(newloc, null) // DO NOT PASS pickled AS THE SECOND VAR BECAUSE IT GETS STORED AS INITIAL REAGENTS AAA
 		if (istype(pickled))
 			src.icon = getFlatIcon(pickled, no_anim=TRUE)
 			src.paint_pickly_color()
@@ -263,6 +266,10 @@ proc/load_intraround_jars()
 		. = ..()
 		if(src.pickle_age)
 			. += " It has been [src.pickle_age] shift[src.pickle_age > 1 ? "s" : ""] since it was pickled."
+
+	picklify(atom/loc)
+		src.set_loc(loc)
+		return src
 
 
 
@@ -289,6 +296,11 @@ proc/load_intraround_jars()
 			src.stamps = pickled.stamps?.Copy()
 			src.form_fields = pickled.form_fields?.Copy()
 			src.field_counter = pickled.field_counter
+
+			for(var/i in 1 to 3)
+				if(prob(60))
+					var/list/stain_info = list(list("stamp-stain-[i].png", rand(0, sizex || 400), rand(0, sizey || 500), rand(360)))
+					LAZYLISTADD(src.stamps, stain_info)
 
 	attack_self(mob/user)
 		// show both the text and take a bite! consuming both information and food at the same time!

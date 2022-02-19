@@ -1741,7 +1741,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 		return copytext(typetext, last)
 
 	Topic(href, href_list)
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if (href_list["name"])
 			template.name = getText("name", template.name)
 		else if (href_list["desc"])

@@ -396,7 +396,7 @@ td {
 		usr.Browse(output, "window=module_editor;size=400x600")
 
 	Topic(href, href_list)
-		usr_admin_only
+		USR_ADMIN_ONLY
 		var/obj/item/robot_module/D = locate(href_list["mod"])
 		if (!D)
 			boutput(usr, "<span class='alert'>Missing module reference!</span>")
@@ -455,7 +455,7 @@ var/global/list/module_editors = list()
 	set desc = "Module editor! Woo!"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if (!istype(M))
 		boutput(src, "<span class='alert'>That thing has no module!</span>")
