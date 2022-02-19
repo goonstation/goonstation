@@ -54,6 +54,7 @@
 		set_loc(get_turf(src.possessed_thing))
 		possessed_thing.set_loc(src)
 
+		//Appearance Stuff
 		src.update_icon()
 		src.desc = possessed_thing.desc
 		src.pixel_x = possessed_thing.pixel_x
@@ -61,7 +62,11 @@
 		src.set_density(possessed_thing.density)
 		src.RL_SetOpacity(possessed_thing.opacity)
 
+
+		//Relay these signals
 		RegisterSignal(src.possessed_thing, COMSIG_ATOM_POST_UPDATE_ICON, /atom/proc/UpdateIcon)
+		RegisterSignal(src.possessed_thing, COMSIG_ATOM_MOUSEDROP, /proc/MouseDrop)
+		RegisterSignal(src.possessed_thing, COMSIG_ATOM_MOUSEDROP_T, /proc/MouseDrop_T)
 
 		src.owner = controller
 		if (src.owner)
@@ -162,10 +167,6 @@
 	MouseDrop(var/atom/other_thing) //remove this if it leads to excessive fuckery
 		..()
 		return src.possessed_thing.MouseDrop(other_thing)
-
-	MouseDrop_T(var/atom/movable/other_thing, var/mob/user) //ditto
-		..()
-		return src.possessed_thing.MouseDrop_T(other_thing, user)
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		health -= burn
