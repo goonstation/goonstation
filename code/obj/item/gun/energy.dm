@@ -1445,7 +1445,6 @@
 		boutput(user, "<span class='alert'>Anyone can use this gun now. Be careful! (use it in-hand to register your fingerprints)</span>")
 		owner_prints = null
 		return TRUE
-	return FALSE
 
 //stolen from firebreath in powers.dm
 /obj/item/gun/energy/lawbringer/proc/shoot_fire_hotspots(var/target,var/start,var/mob/user)

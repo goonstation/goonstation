@@ -58,11 +58,10 @@
 			if (user)
 				user.show_text("You use the card to change the internal radiation setting to \"IONIZING\"", "blue")
 			src.emagged = TRUE
-			return 1
+			return TRUE
 		else
 			if (user)
 				user.show_text("The [src] has already been tampered with", "red")
-			return 0
 
 	demag(var/mob/user)
 		if (!src.emagged)
@@ -70,7 +69,7 @@
 		if (user)
 			user.show_text("You reset the radiation levels to a more food-safe setting.", "blue")
 		src.emagged = FALSE
-		return 1
+		return TRUE
 
 /// After making the recipe in datums\recipes.dm, add it in here!
 /obj/machinery/microwave/New()
