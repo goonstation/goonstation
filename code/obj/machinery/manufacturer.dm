@@ -711,10 +711,7 @@
 					return
 
 			if (href_list["ejectmanudrive"])
-				src.drive_recipes = null
-				if (src.manudrive)
-					usr.put_in_hand_or_drop(manudrive)
-				src.manudrive = null
+				src.eject_manudrive(usr) // I have to use usr here alas.
 
 			if (href_list["ejectbeaker"])
 				if (src.beaker)
@@ -1042,10 +1039,7 @@
 		else if (istype(W,/obj/item/disk/data/floppy))
 			if (src.manudrive)
 				boutput(user, "<span class='alert'>You swap out the manudrive in the manufacturer with a different one.</span>")
-				src.drive_recipes = null // redundancies sake
-				if (src.manudrive)
-					usr.put_in_hand_or_drop(manudrive)
-				src.manudrive = null // Probably not needed but seems nice to have.
+				src.eject_manudrive(user)
 				src.manudrive = W
 				if (user && W)
 					user.u_equip(W)
@@ -1853,6 +1847,11 @@
 			queue_num++
 
 		return dat.Join()
+
+	proc/eject_manudrive(var/mob/living/user)
+		src.drive_recipes = null
+		user.put_in_hand_or_drop(manudrive)
+		src.manudrive = null
 
 	proc/load_item(var/obj/item/O,var/mob/living/user)
 		if (!O)

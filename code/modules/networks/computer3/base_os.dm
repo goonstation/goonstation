@@ -244,7 +244,7 @@
 						src.print_error_text("<b>Error:</b> File not found.")
 						return
 
-					if(target.dont_copy == 1)
+					if(target.dont_copy)
 						src.print_error_text("<b>Error:</b> File unable to be copied.")
 						return
 					src.clipboard = target
