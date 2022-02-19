@@ -7380,8 +7380,8 @@
 "asr" = (
 /obj/storage/closet/law,
 /obj/item/reagent_containers/patch/nicotine,
-/obj/item/implantcase/antirev,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
 /obj/item/implanter,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/random,
@@ -12467,7 +12467,7 @@
 "aEv" = (
 /obj/disposalpipe/segment/brig,
 /obj/storage/secure/closet/security/equipment,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -12512,7 +12512,7 @@
 "aEC" = (
 /obj/disposalpipe/segment/brig,
 /obj/storage/secure/closet/security/equipment,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -24684,7 +24684,7 @@
 "bex" = (
 /obj/disposalpipe/segment/brig,
 /obj/storage/secure/closet/security/equipment,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -27142,8 +27142,8 @@
 	},
 /obj/storage/secure/closet/security/forensics,
 /obj/item/device/radio/intercom/security,
-/obj/item/implantcase/antirev,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "bjt" = (
@@ -28381,10 +28381,10 @@
 	icon_state = "1-4"
 	},
 /obj/storage/secure/closet/security/armory,
-/obj/item/implantcase/antirev,
-/obj/item/implantcase/antirev,
-/obj/item/implantcase/antirev,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -30395,7 +30395,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
 /obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/red/side{
 	dir = 8
@@ -37207,7 +37207,7 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /obj/storage/secure/closet/security/equipment,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -42568,7 +42568,7 @@
 	},
 /obj/machinery/light,
 /obj/storage/secure/closet/security/equipment,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bQv" = (
