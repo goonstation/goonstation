@@ -588,7 +588,7 @@ var/list/headset_channel_lookup
 	if ((src.listening && src.wires & WIRE_RECEIVE))
 		if (istype(src, /obj/item/device/radio/intercom))
 			UpdateOverlays(bubbleOverride, "speech_bubble")
-			SPAWN_DBG(1.5 SECONDS)
+			SPAWN(1.5 SECONDS)
 				UpdateOverlays(null, "speech_bubble")
 
 /obj/item/device/radio/examine(mob/user)
@@ -658,6 +658,27 @@ var/list/headset_channel_lookup
 	item_state = "signaler"
 	desc = "A small beacon that is tracked by the Teleporter Computer, allowing things to be sent to its general location."
 	burn_possible = 0
+	anchored = 1
+
+	attackby(obj/item/I as obj, mob/user as mob)
+		if (isscrewingtool(I))
+			if (src.anchored)
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				user.visible_message("[user] unscrews [src] from the floor.", "You unscrew [src] from the floor.", "You hear a screwdriver.")
+				src.anchored = 0
+				return
+			else
+				if (isturf(src.loc))
+					var/turf/T = get_turf(src)
+					if (istype(T, /turf/space))
+						user.show_text("What exactly are you gonna secure [src] to?", "red")
+						return
+					else
+						playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+						user.visible_message("[user] screws [src] to the floor, anchoring it in place.", "You screw [src] to the floor, anchoring it in place.", "You hear a screwdriver.")
+						src.anchored = 1
+						return
+		..()
 
 /obj/item/device/radio/beacon/New()
 	..()
@@ -945,7 +966,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 			logTheThing("bombing", usr, null, "signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
 			message_admins("[key_name(usr)] signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
 			SEND_SIGNAL(src.master, COMSIG_BOMB_SIGNAL_START)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.master.receive_signal(signal)
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)

@@ -255,7 +255,7 @@
 		else
 			var/blast_key = rand()
 			blast_armed = blast_key
-			SPAWN_DBG(blast_delay)
+			SPAWN(blast_delay)
 				if(src.blast_armed == blast_key && src.is_air_safe())
 					blast_release()
 
@@ -276,7 +276,7 @@
 						air_contents.oxygen+air_contents.toxins/TOTAL_MOLES(air_contents)*255)
 		poof.alpha = clamp(MIXTURE_PRESSURE(src.air_contents)/src.maximum_pressure*180, 90, 220)
 		flick("pressurizer-poof", poof)
-		SPAWN_DBG(0.8 SECONDS)
+		SPAWN(0.8 SECONDS)
 			if(poof) qdel(poof)
 
 	proc/blast_release()

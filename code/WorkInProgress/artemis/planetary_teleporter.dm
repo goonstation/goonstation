@@ -6,7 +6,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for(var/obj/artemis/A in world)
 				if(A.stars_id == src.ship_id)
 					src.my_ship = A
@@ -58,10 +58,10 @@
 				for(var/atom/movable/M in src.loc)
 					if(M.anchored) continue
 					animate_teleport(M)
-					SPAWN_DBG(0.6 SECONDS)
+					SPAWN(0.6 SECONDS)
 						M.set_loc(target)
 				var/obj/decal/teleport_swirl/S = new/obj/decal/teleport_swirl(target)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					busy = 0
 					qdel(S)
 
@@ -76,9 +76,9 @@
 				for(var/atom/movable/M in target)
 					if(M.anchored) continue
 					animate_teleport(M)
-					SPAWN_DBG(0.6 SECONDS) M.set_loc(src.loc)
+					SPAWN(0.6 SECONDS) M.set_loc(src.loc)
 				var/obj/decal/teleport_swirl/S = new/obj/decal/teleport_swirl(target)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					busy = 0
 					qdel(S)
 
@@ -97,7 +97,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for(var/obj/machinery/lrteleporter/planetary_teleporter/P in world)
 				if(P.ship_id == src.ship_id)
 					src.my_teleporter = P
@@ -152,8 +152,8 @@
 					if(ismob(M))
 						var/mob/O = M
 						O.changeStatus("stunned",20) // 2 seconds
-					SPAWN_DBG(0.6 SECONDS) M.set_loc(my_teleporter.loc)
+					SPAWN(0.6 SECONDS) M.set_loc(my_teleporter.loc)
 				var/obj/decal/teleport_swirl/S = new/obj/decal/teleport_swirl(target)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					busy = 0
 					qdel(S)

@@ -225,15 +225,15 @@
 	json += "}"
 	windowCall("setUIState", json)
 
-/datum/chemicompiler_core/proc/parseCBF(var/string, var/button)
+/datum/chemicompiler_core/proc/parseCBF(string, button)
 	var/list/tokens = list(">", "<", "+", "-", ".",",", "\[", "]", "{", "}", "(", ")", "^", "'", "$", "@","#")
 	var/l = length(string)
 	var/list/inst = new
 	var/token
 
-	for(var/i = 1, i <= l, i++)
+	for(var/i in 1 to l)
 		token = copytext(string, i, i+1)
-		if(tokens.Find(token))
+		if(token in tokens)
 			inst.Add(token)
 
 		// ~ means don't allow reading the source code
@@ -274,7 +274,7 @@
 	if(running)
 		var/loopUsed
 		for (loopUsed = 0, loopUsed < 30, loopUsed++)
-			if(ip > currentProg.len)
+			if(ip > length(currentProg))
 				running = 0
 				break
 			//LAGCHECK(LAG_MED)
@@ -306,7 +306,7 @@
 				if("\[") //start loop
 					if(data[dp + 1] == 0)
 						count = 1
-						while(ip <= currentProg.len && count > 0)
+						while(ip <= length(currentProg) && count > 0)
 							if(currentProg[ip] == "\[")
 								count++
 							if(currentProg[ip] == "]")
@@ -365,7 +365,7 @@
 					isolateReagent(sx, tx, ax, data[dp+1])
 				else
 
-			if(data.len < dp + 1)
+			if(length(data) < dp + 1)
 				data.len = dp + 1
 			if(length(textBuffer) > 80)
 				output += "[textBuffer]<br>"
@@ -373,7 +373,7 @@
 				updatePanel()
 
 			/*if(exec % 100 == 0) //NO RECURSION. NO.
-				SPAWN_DBG(0)
+				SPAWN(0)
 					resumeCBF()
 				break
 			*/
@@ -751,7 +751,7 @@
 	if(!reservoirCheck(source) && index > 0)
 		return
 	var/obj/item/reagent_containers/holder = reservoirs[source]
-	if(index < 0 || holder.reagents.reagent_list.len < index)
+	if(index < 0 || length(holder.reagents.reagent_list) < index)
 		return
 	return 1
 

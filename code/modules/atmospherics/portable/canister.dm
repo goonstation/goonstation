@@ -219,8 +219,8 @@
 		if (src.det.part_fs.timing) //If it's counting down
 			if (src.det.part_fs.time > 9)
 				src.add_simple_light("canister", list(0.94 * 255, 0.94 * 255, 0.3 * 255, 0.6 * 255))
-				if (prob(15))
-					switch(rand(1,10))
+				if (prob(8)) //originally 5ish
+					switch(rand(1,6))
 						if (1)
 							playsound(src.loc, "sparks", 75, 1, -1)
 							elecflash(src)
@@ -276,7 +276,7 @@
 		src.det = null
 	if (!destroyed)
 		rupturing = 1
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.visible_message("<span class='alert'>[src] hisses ominously!</span>")
 			playsound(src.loc, "sound/machines/hiss.ogg", 55, 1)
 			sleep(5 SECONDS)
@@ -540,7 +540,7 @@
 						playsound(src.loc, "sound/machines/whistlealert.ogg", 50, 1)
 						playsound(src.loc, "sound/machines/whistlealert.ogg", 50, 1)
 						src.visible_message("<B><font color=#B7410E>The failsafe timer beeps three times before going quiet forever.</font></B>")
-						SPAWN_DBG(0)
+						SPAWN(0)
 							src.det.detonate()
 					if("defuse")
 						playsound(src.loc, "sound/machines/ping.ogg", 50, 1)
@@ -606,7 +606,7 @@
 								src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes loudly and sets itself to 7 seconds.</font></B>")
 							else
 								src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes refusingly before going quiet forever.</font></B>")
-								SPAWN_DBG(0)
+								SPAWN(0)
 									src.det.detonate()
 						else
 							src.det.failsafe_engage()
@@ -637,7 +637,7 @@
 						src.visible_message("<B><font color=#B7410E>The bomb buzzes oddly, emitting electric sparks. It would be a bad idea to touch any wires for the next [losttime] seconds.</font></B>")
 						playsound(src.loc, "sparks", 75, 1, -1)
 						elecflash(src,power = 2)
-						SPAWN_DBG(10 * losttime)
+						SPAWN(10 * losttime)
 							src.det.shocked = 0
 							src.visible_message("<B><font color=#B7410E>The buzzing stops, and the countdown continues.</font></B>")
 					if ("mobility")
@@ -687,7 +687,7 @@
 	else if(P.proj_data.damage_type == D_ENERGY)
 		src.health -= damage
 	log_shot(P,src)
-	SPAWN_DBG( 0 )
+	SPAWN( 0 )
 		healthcheck()
 		return
 	return

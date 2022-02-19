@@ -35,7 +35,7 @@
 		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
 			if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(9001))
 				playsound(IX,'sound/machines/alarm_a.ogg',50,0,5,1.5)
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if(IX) playsound(IX,'sound/machines/alarm_a.ogg',50,0,5,1.5)
 				IX.visible_message("<span class='alert'><b>[IX] emits a gravitational anomaly warning!</b></span>")
 				feedings_required = rand(12,24)
@@ -66,7 +66,7 @@
 		else
 			src.visible_message("<span class='alert'><b>[src]</b> dissipates quietly into nothing.</span>")
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			qdel(src)
 		return
 

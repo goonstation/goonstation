@@ -13232,6 +13232,7 @@
 	icon_state = "2-4"
 	},
 /obj/storage/crate/clown,
+/obj/item/storage/toolbox/artistic,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown)
 "azZ" = (

@@ -113,7 +113,7 @@ client
 		var/atom/movable/screen/plane_parent/P = new /atom/movable/screen/plane_parent(PLANE_HIDDENGAME, name = "hidden_game_plane")
 		add_plane(P)
 
-		SPAWN_DBG(5 SECONDS) //Because everything needs to wait!
+		SPAWN(5 SECONDS) //Because everything needs to wait!
 			apply_depth_filter()
 		..()
 

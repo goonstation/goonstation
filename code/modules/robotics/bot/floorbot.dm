@@ -71,7 +71,7 @@
 
 /obj/machinery/bot/floorbot/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src)
 			src.UpdateIcon()
 	return

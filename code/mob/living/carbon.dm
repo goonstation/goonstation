@@ -86,7 +86,7 @@
 	. = ..(give_medal, include_ejectables)
 
 /mob/living/carbon/proc/urinate()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/obj/item/reagent_containers/pee_target = src.equipped()
 		if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container())
 			src.visible_message("<span class='alert'><B>[src] pees in [pee_target]!</B></span>")
@@ -132,7 +132,7 @@
 
 /mob/living/carbon/lastgasp()
 	// making this spawn a new proc since lastgasps seem to be related to the mob loop hangs. this way the loop can keep rolling in the event of a problem here. -drsingh
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if (!src || !src.client) return														// break if it's an npc or a disconnected player
 		var/enteredtext = winget(src, "mainwindow.input", "text")							// grab the text from the input bar
 		if ((copytext(enteredtext,1,6) == "say \"") && length(enteredtext) > 5)				// check if the player is trying to say something

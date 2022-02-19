@@ -87,7 +87,7 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0, tim
 		text.loc = target
 	animate(text, alpha = alpha, maptext_y = 34, time = 4, flags = ANIMATION_END_NOW)
 	var/text_id = text.unique_id
-	SPAWN_DBG(time)
+	SPAWN(time)
 		if(text_id == text.unique_id)
 			text.bump_up(invis=1)
 			sleep(0.5 SECONDS)

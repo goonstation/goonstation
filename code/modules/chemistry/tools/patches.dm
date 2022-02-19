@@ -449,7 +449,7 @@
 				P.attack(H, user, user.zone_sel && user.zone_sel.selecting ? user.zone_sel.selecting : null)
 
 				update_overlay()
-				SPAWN_DBG(6 SECONDS)
+				SPAWN(6 SECONDS)
 					update_overlay()
 
 

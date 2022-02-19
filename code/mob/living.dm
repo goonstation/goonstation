@@ -141,7 +141,7 @@
 		//stamina bar gets added to the hud in subtypes human and critter... im sorry.
 		//eventual hud merger pls
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		src.get_static_image()
 		sleep_bubble.appearance_flags = RESET_TRANSFORM
 		if(!ishuman(src))
@@ -171,7 +171,7 @@
 	stomach_process = null
 	skin_process = null
 
-	for(var/mob/dead/aieye/E in src.contents)
+	for(var/mob/living/intangible/aieye/E in src.contents)
 		E.cancel_camera()
 
 	if (src.static_image)
@@ -926,7 +926,7 @@
 
 	UpdateOverlays(speech_bubble, "speech_bubble")
 	var/speech_bubble_time = src.last_typing
-	SPAWN_DBG(1.5 SECONDS)
+	SPAWN(1.5 SECONDS)
 		if(speech_bubble_time == src.last_typing)
 			UpdateOverlays(null, "speech_bubble")
 
@@ -1263,7 +1263,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	set src in view(1)
 	set category = "Local"
 
-	SPAWN_DBG(0.7 SECONDS) //secret spawn delay, so you can't spam this during combat for a free "stun"
+	SPAWN(0.7 SECONDS) //secret spawn delay, so you can't spam this during combat for a free "stun"
 		if (usr && isliving(usr) && !issilicon(usr) && get_dist(src,usr) <= 1)
 			var/mob/living/L = usr
 			L.give_to(src)
@@ -1908,7 +1908,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				var/orig_val = GET_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS)
 				APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "projectile", -5)
 				if(GET_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS) != orig_val)
-					SPAWN_DBG(30 SECONDS)
+					SPAWN(30 SECONDS)
 						REMOVE_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "projectile")
 				if(rangedprot > 1)
 					armor_msg = ", but your armor softens the hit!"
@@ -1944,7 +1944,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/oldbloss = get_brute_damage()
 	var/oldfloss = get_burn_damage()
 	..()
-	SPAWN_DBG(0.1 SECONDS) //fix race condition
+	SPAWN(0.1 SECONDS) //fix race condition
 		var/newbloss = get_brute_damage()
 		var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
 		if (reagents)
@@ -2031,7 +2031,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				if (H?.shoes)
 					H.drop_from_slot(H.shoes)
 				make_cleanable(/obj/decal/cleanable/ash,src.loc)
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					src.elecgib()
 			else
 				boutput(src, "<span class='alert'><b>[origin] blasts you with an arc flash!</b></span>")

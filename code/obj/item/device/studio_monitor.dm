@@ -44,7 +44,7 @@
 
 	speech_bubble()
 		UpdateOverlays(speech_bubble, "speech_bubble")
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			UpdateOverlays(null, "speech_bubble")
 
 	disposing()
@@ -130,7 +130,7 @@
 			effect.play_notes()
 			for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
 				S.play_song()
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				stop_notes()
 		else
 			strums = ( strums + 1 % 2000 )
@@ -398,7 +398,7 @@
 	onDelete()
 		..()
 		if(istype(song, /obj/ability_button/nukie_rocker/epic_climax))
-			SPAWN_DBG(30 SECONDS)
+			SPAWN(30 SECONDS)
 				instrument.overheat(FALSE)
 
 	onEnd()
@@ -591,7 +591,8 @@
 			var/mob/M = owner
 			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims", 100)
 			M.add_stam_mod_max("stims", 100)
-			M.add_stun_resist_mod("stims", 100)
+			APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "stims", 100)
+			APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "stims", 100)
 
 	onRemove()
 		. = ..()
@@ -600,7 +601,8 @@
 			M.jitteriness = 110
 			REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims")
 			M.remove_stam_mod_max("stims")
-			M.remove_stun_resist_mod("stims")
+			REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "stims")
+			REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "stims")
 
 	onUpdate(timePassed)
 		. = ..()

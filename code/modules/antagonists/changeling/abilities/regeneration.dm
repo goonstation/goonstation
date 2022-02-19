@@ -41,7 +41,7 @@
 
 			C.emote("deathgasp")
 
-			SPAWN_DBG(cooldown)
+			SPAWN(cooldown)
 				changeling_super_heal_step(C, 100, 100) //get those limbs back i didn't lay here for 45 seconds to be hopping around on one leg dang it
 				if (C && !isdead(C))
 					C.HealDamage("All", 1000, 1000)

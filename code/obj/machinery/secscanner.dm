@@ -29,7 +29,7 @@
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 	Crossed( atom/movable/O )
-		if(isliving(O))
+		if(isliving(O) && !isintangible(O))
 			do_scan(O)
 		if (istype(O,/obj/item) && (!emagged))
 			do_scan_item(O)
@@ -72,7 +72,7 @@
 				last_perp = I.name
 				last_contraband = contraband
 
-			SPAWN_DBG(timeBetweenUses)
+			SPAWN(timeBetweenUses)
 				icon_state = "scanner_on"
 
 
@@ -125,7 +125,7 @@
 				playsound(src.loc, success_sound, 10, 1)
 				icon_state = "scanner_green"
 
-			SPAWN_DBG(timeBetweenUses)
+			SPAWN(timeBetweenUses)
 				icon_state = "scanner_on"
 
 			return //no, we're a vibe checker not a security device. our work is done
@@ -159,7 +159,7 @@
 			playsound(src.loc, success_sound, 10, 1)
 			icon_state = "scanner_green"
 
-		SPAWN_DBG(timeBetweenUses)
+		SPAWN(timeBetweenUses)
 			icon_state = "scanner_on"
 
 	//lol, sort of copied from secbot.dm

@@ -156,12 +156,12 @@
 		src.reagents.trans_to_direct(R, min(src.reagents.total_volume, (distance * reagents_per_dist)))
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
-		logTheThing("combat", user, T, "sprays [src] at [constructTarget(T,"combat")], [log_reagents(src)] at [showCoords(user.x, user.y, user.z)] ([get_area(user)])")
+		logTheThing("combat", user, T, "sprays [src] at [constructTarget(T,"combat")], [log_reagents(src)] at [log_loc(user)] ([get_area(user)])")
 
 		user.lastattacked = target
 
 		for (var/a = 0, a < reagents_per_dist, a++)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (disposed)
 					return
 				if (!src.reagents)
@@ -178,7 +178,7 @@
 			step(user, user.inertia_dir)
 		else if( user.buckled && !user.buckled.anchored )
 			var/wooshdir = get_dir( target, user )
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for( var/i = 1, (user?.buckled && !user.buckled.anchored && i <= rand(3,5)), i++ )
 					step( user.buckled, wooshdir )
 					sleep( rand(1,3) )

@@ -39,7 +39,7 @@
 			return 1
 		playsound(holder.owner, "sound/voice/animal/wendigo_roar.ogg", 80, 1)
 		disabled = 1
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/frenz = rand(10, 20)
 			holder.owner.canmove = 0
 			while (frenz > 0 && MT && !MT.disposed)
@@ -108,7 +108,7 @@
 			return 1
 		playsound(holder.owner, "sound/items/Scissor.ogg", 100, 1, 0, 3)
 		disabled = 1
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/frenz = rand(10, 20)
 			holder.owner.canmove = 0
 			while (frenz > 0 && MT && !MT.disposed)

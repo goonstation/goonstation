@@ -6,7 +6,7 @@
 
 		//the master vore loop
 		if (owner.stomach_contents && length(owner.stomach_contents))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for (var/mob/M in owner.stomach_contents)
 					if (M.loc != owner)
 						owner.stomach_contents.Remove(M)

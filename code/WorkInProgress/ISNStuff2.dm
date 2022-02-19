@@ -6,7 +6,7 @@
 
 	src.fakeloss += amount
 
-	SPAWN_DBG(seconds * 10)
+	SPAWN(seconds * 10)
 		src.fakeloss -= amount
 
 /mob/proc/false_death(var/seconds)
@@ -17,7 +17,7 @@
 	boutput(src, "<B>[src]</B> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...")
 	src.changeStatus("weakened", 5 SECONDS)
 
-	SPAWN_DBG(seconds * 10)
+	SPAWN(seconds * 10)
 		src.fakedead = 0
 		src.delStatus("weakened")
 

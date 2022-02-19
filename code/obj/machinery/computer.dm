@@ -175,7 +175,7 @@
 			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
 			src.UpdateOverlays(screen_image, "screen_image")
 	else
-		SPAWN_DBG(rand(0, 15))
+		SPAWN(rand(0, 15))
 			//src.icon_state = "c_unpowered"
 			icon_state = initial(icon_state)
 			src.icon_state += "0"

@@ -42,7 +42,7 @@
 
 	range = max(world.maxx,world.maxy)
 
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		var/turf/origin = get_rear_turf()
 		if(!origin) return //just in case
 		dir_loop:
@@ -495,7 +495,7 @@
 	light.set_height(0.5)
 	light.enable()
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		alpha = clamp(((log(10, max(src.power,1)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 		if(active)
 			if(istype(src.loc, /turf) && power > 5e7)

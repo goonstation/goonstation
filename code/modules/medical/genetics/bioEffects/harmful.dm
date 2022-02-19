@@ -281,7 +281,7 @@
 			return
 		if ((probmult(5) && !owner.getStatusDuration("paralysis")))
 			owner:drop_item()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				owner:emote("cough")
 				return
 		return
@@ -692,7 +692,7 @@
 
 	OnLife(var/mult)
 		..()
-		if (prob(percentmult(50, mult)))
+		if (probmult(50))
 			var/turf/T
 			//don't really need this but to make it more harmful to the user.
 			if (prob(5))
@@ -705,7 +705,7 @@
 			pulse.icon_state = "emppulse"
 			pulse.name = "emp pulse"
 			pulse.anchored = 1
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				if (pulse) qdel(pulse)
 
 			//maybe have this only emp some things on the tile.

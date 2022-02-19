@@ -376,12 +376,12 @@
 
 		if (src.reagents && src.reagents.total_volume)
 			src.reagents.reaction(M, INGEST)
-			SPAWN_DBG(0.5 SECONDS) // Necessary.
+			SPAWN(0.5 SECONDS) // Necessary.
 				src.reagents.trans_to(M, src.reagents.total_volume/src.amount)
 
 		playsound(M.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
 		eat_twitch(M)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (!src || !M || !user)
 				return
 			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
@@ -410,12 +410,12 @@
 
 		if (src.reagents && src.reagents.total_volume)
 			src.reagents.reaction(M, INGEST)
-			SPAWN_DBG(0.5 SECONDS) // Necessary.
+			SPAWN(0.5 SECONDS) // Necessary.
 				src.reagents.trans_to(M, src.reagents.total_volume)
 
 		playsound(M.loc, "sound/items/eatfood.ogg", rand(10, 50), 1)
 		eat_twitch(M)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (!src || !M || !user)
 				return
 			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
@@ -497,11 +497,11 @@
 				var/obj/chem_smoke/C = new/obj/chem_smoke(location, reagents, max_vol)
 				C.overlays += I
 				if (rname) C.name = "[rname] smoke"
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/my_dir = the_dir
 					var/my_time = rand(80,110)
 					var/my_range = 3
-					SPAWN_DBG(my_time) qdel(C)
+					SPAWN(my_time) qdel(C)
 					for(var/b=0, b<my_range, b++)
 						sleep(1.5 SECONDS)
 						if (!C) break
@@ -630,7 +630,7 @@
 #define src_exists_inside_user_or_user_storage (src.loc == user || (istype(src.loc, /obj/item/storage) && src.loc.loc == user))
 
 
-/obj/item/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+/obj/item/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 	..()
 
 	if (!src.anchored)
@@ -734,7 +734,7 @@
 		src.pick_up_by(user)
 		var/succ = user.is_in_hands(src)
 		if (succ)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				if (user.is_in_hands(src))
 					storage.Attackby(src, user)
 			return
@@ -747,7 +747,7 @@
 			src.pick_up_by(user)
 			var/succ = user.is_in_hands(src)
 			if (succ)
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					if (user.is_in_hands(src))
 						S.sendclick(params, user)
 
@@ -1024,7 +1024,7 @@
 			if (istype(HH.limb,/datum/limb/small_critter))
 				if (M.equipped())
 					M.drop_item()
-					SPAWN_DBG(1 DECI SECOND)
+					SPAWN(1 DECI SECOND)
 						HH.limb.attack_hand(src,M,1)
 				else
 					HH.limb.attack_hand(src,M,1)
@@ -1037,7 +1037,7 @@
 			arm = H.hand ? H.limbs.l_arm : H.limbs.r_arm // I'm so sorry I couldent kill all this shitcode at once
 		if (H.equipped())
 			H.drop_item()
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				if (arm)
 					arm.limb_data.attack_hand(src, H, can_reach(H, src))
 		else if (arm)
@@ -1047,7 +1047,7 @@
 		//the verb is PICK-UP, not 'smack this object with that object'
 		if (M.equipped())
 			M.drop_item()
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				src.Attackhand(M)
 		else
 			src.Attackhand(M)
@@ -1177,14 +1177,14 @@
 		return
 
 	if(hasProperty("frenzy"))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/frenzy = getProperty("frenzy")
 			click_delay -= frenzy
 			sleep(3 SECONDS)
 			click_delay += frenzy
 /*
 	if(hasProperty("Momentum"))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/momentum = getProperty("momemtum")
 			force += 5
 */
@@ -1406,7 +1406,7 @@
 
 	//qdel(src)
 
-	SPAWN_DBG(rand(150,200))
+	SPAWN(rand(150,200))
 		if (new_arm.remove_stage == 2) new_arm.remove()
 
 	return
@@ -1535,7 +1535,7 @@
 	logTheThing("bombing", M, null, "[msg]")
 
 /obj/item/proc/dropped(mob/user)
-	SPAWN_DBG(0) //need to spawn to know if we've been dropped or thrown instead
+	SPAWN(0) //need to spawn to know if we've been dropped or thrown instead
 		if ((firesource == FIRESOURCE_OPEN_FLAME) && throwing)
 			RegisterSignal(src, COMSIG_MOVABLE_THROW_END, .proc/log_firesource)
 		else if (firesource == FIRESOURCE_OPEN_FLAME)

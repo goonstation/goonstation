@@ -34,7 +34,7 @@
 		src.visible_message("<b>[src]</b> stops moving!")
 		animate_float(src, 1, 5)
 		playsound(src.loc, "sound/effects/suck.ogg", 40, 1, -1, 0.6)
-		SPAWN_DBG(10 SECONDS) //Give time for people to butcher it if they want.
+		SPAWN(10 SECONDS) //Give time for people to butcher it if they want.
 			if (!src.disposed && src.loc && original_object)
 				original_object.set_loc(src.loc)
 				original_object = null
@@ -215,7 +215,7 @@
 		src.attacking = 1
 		src.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
 		random_brute_damage(src.target, rand(2,4))
-		SPAWN_DBG(2.5 SECONDS)
+		SPAWN(2.5 SECONDS)
 			src.attacking = 0
 */
 /obj/critter/wraithskeleton
@@ -628,7 +628,7 @@
 			playsound(src.loc, "punch", 30, 1, -2)
 			random_brute_damage(M, rand(10,15),1)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 	CritterDeath(mob/M)
@@ -636,7 +636,7 @@
 		..()
 		if (rand(100) <= revivalChance)
 			src.revivalChance -= revivalDecrement
-			SPAWN_DBG(rand(400,800))
+			SPAWN(rand(400,800))
 				src.alive = 1
 				src.set_density(1)
 				src.health = initial(src.health)
@@ -678,7 +678,7 @@
 
 		src.create_reagents(1000)
 
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			if(reagents && !reagents.total_volume)
 				if (all_functional_reagent_ids.len > 0)
 					src.reagent_id = pick(all_functional_reagent_ids)
@@ -751,7 +751,7 @@
 		src.visible_message("<span class='combat'><b>[src]</b> bursts into a puff of smoke!</span>")
 		src.reagents.smoke_start(12)
 		invisibility = INVIS_ALWAYS_ISH
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			qdel(src)
 
 /obj/critter/townguard
@@ -842,7 +842,7 @@
 			C.health -= 6
 			if(C.health <= 0)
 				C.CritterDeath()
-			SPAWN_DBG(2.5 SECONDS)
+			SPAWN(2.5 SECONDS)
 				src.attacking = 0
 			return
 
@@ -856,13 +856,13 @@
 				if(to_deal > (((sword_damage_max-sword_damage_min)/2)+sword_damage_min) && prob(50))
 					src.visible_message("<span class='combat'><B>[src] knocks down [M]!</B></span>")
 					M:changeStatus("weakened", 8 SECONDS)
-			SPAWN_DBG(2.5 SECONDS)
+			SPAWN(2.5 SECONDS)
 				src.attacking = 0
 		else
 			src.visible_message("<span class='combat'><B>[src]</B> kicks [src.target]!</span>")
 			playsound(src.loc, "swing_hit", 50, 1, -1)
 			random_brute_damage(src.target, rand(4,8),1)
-			SPAWN_DBG(2.5 SECONDS)
+			SPAWN(2.5 SECONDS)
 				src.attacking = 0
 		if (isliving(M))
 			var/mob/living/H = M
@@ -954,7 +954,7 @@
 			else
 				boutput(M, "<span class='combat'>You feel uncomfortable.</span>")
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			attacking = 0
 
 
@@ -1040,7 +1040,7 @@
 		src.visible_message("<span class='combat'><B>The [src.name]</B> starts to envelop [M]!</span>")
 
 		var/lastloc = M.loc
-		SPAWN_DBG(6 SECONDS)
+		SPAWN(6 SECONDS)
 			if (get_dist(src, M) <= 1 && ((M.loc == lastloc)))
 				if(isliving(M))
 					logTheThing("combat", M, null, "was enveloped by [src] (obj) at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
@@ -1144,7 +1144,7 @@
 	CritterDeath()
 		..()
 		flick("ancientrobot-disappear",src)
-		SPAWN_DBG(16) //maybe let the animation actually play
+		SPAWN(16) //maybe let the animation actually play
 			qdel(src)
 
 	seek_target()
@@ -1195,7 +1195,7 @@
 			doomedMob.gib()
 			src.target = null
 
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			src.attacking = 0
 
 	proc/appear()
@@ -1204,7 +1204,7 @@
 		src.name = pick("something","weird thing","odd thing","whatchamacallit","thing","something weird","old thing")
 		src.icon_state = "ancientrobot-appear"
 		src.invisibility = INVIS_NONE
-		SPAWN_DBG(1.2 SECONDS)
+		SPAWN(1.2 SECONDS)
 			src.icon_state = "ancientrobot"
 		return
 
@@ -1246,7 +1246,7 @@
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
-		SPAWN_DBG(6 SECONDS)
+		SPAWN(6 SECONDS)
 			src.attacking = 0
 
 	ai_think()
@@ -1262,7 +1262,7 @@
 	CritterDeath()
 		..()
 		speak( pick("There...is...nothing...","It's dark.  Oh god, oh god, it's dark.","Thank you.","Oh wow. Oh wow. Oh wow.") )
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			qdel(src)
 
 	seek_target()
@@ -1374,7 +1374,7 @@
 	proc/start_expiration(var/time)
 		var/this_expiration_id = rand(1, 100000)
 		src.expiration_id = this_expiration_id
-		SPAWN_DBG(time)
+		SPAWN(time)
 			if(src?.alive && src.expiration_id == this_expiration_id)
 				src.health = 0
 				src.CritterDeath()
@@ -1478,7 +1478,7 @@
 		M.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
 		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
 		random_brute_damage(M, rand(src.attack_damage, src.attack_damage + 5))
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 	CritterDeath()

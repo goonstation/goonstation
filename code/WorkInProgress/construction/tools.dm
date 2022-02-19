@@ -7,7 +7,7 @@
 	anchored = 1
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			var/obj/term = new /obj/machinery/power/terminal(get_step(get_turf(src), dir))
 			term.set_dir(get_dir(get_turf(term), src))
 			new /obj/machinery/power/smes(get_turf(src))
@@ -214,7 +214,7 @@
 			return
 		using = 1
 		boutput(user, "<span class='notice'>Designating room.</span>")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (designated.check_completion(target))
 				boutput(user, "<span class='notice'>Designation successful, room matches required parameters.</span>")
 				//new /obj/machinery/power/apc(get_turf(target))

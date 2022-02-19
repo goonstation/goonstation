@@ -114,7 +114,7 @@
 			logTheThing("combat", user, M, "tries to blind [constructTarget(M,"combat")] with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				if (src) qdel(src)
 			return
 		if (src.cell)
@@ -131,7 +131,7 @@
 
 	// Play animations.
 	if (isrobot(user))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/atom/movable/overlay/animation = new(user.loc)
 			animation.layer = user.layer + 1
 			animation.icon_state = "blank"
@@ -230,7 +230,7 @@
 			logTheThing("combat", user, null, "tries to area-flash with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				if (src) qdel(src)
 			return
 
@@ -240,7 +240,7 @@
 	src.l_time = world.time
 
 	if (isrobot(user))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/atom/movable/overlay/animation = new(user.loc)
 			animation.layer = user.layer + 1
 			animation.icon_state = "blank"
@@ -385,7 +385,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(!src.cell)
 				src.cell = new /obj/item/cell(src)
 				src.cell.maxcharge = max_flash_power

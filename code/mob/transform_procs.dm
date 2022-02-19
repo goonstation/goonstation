@@ -126,6 +126,7 @@
 
 	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
+	O.verbs += /mob/living/silicon/ai/proc/reset_apcs
 	O.verbs += /mob/living/silicon/ai/proc/de_electrify_verb
 	O.verbs += /mob/living/silicon/ai/proc/unbolt_all_airlocks
 	O.verbs += /mob/living/silicon/ai/proc/ai_camera_track
@@ -153,7 +154,7 @@
 	O.verbs += /mob/living/silicon/ai/proc/view_messageLog
 	O.job = "AI"
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		O.choose_name(3)
 
 		boutput(world, text("<b>[O.real_name] is the AI!</b>"))
@@ -197,12 +198,12 @@
 		var/mob/living/critter/small_animal/small = newmob
 		small.setup_overlays() // this requires the small animal to have a client to set things up properly
 
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		qdel(src)
 	return newmob
 
 
-/mob/living/carbon/human/proc/Robotize_MK2(var/gory = 0)
+/mob/living/carbon/human/proc/Robotize_MK2(var/gory = FALSE, var/syndicate = FALSE)
 	if (src.transforming) return
 	src.unequip_all()
 	src.transforming = 1
@@ -211,118 +212,49 @@
 	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 	for(var/t in src.organs) qdel(src.organs[text("[t]")])
 
-	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/(src.loc,null,1)
+	var/mob/living/silicon/robot/cyborg = new /mob/living/silicon/robot/(src.loc, null, 1, syndie = syndicate)
 
-	// This is handled in the New() proc of the resulting borg
-	//O.cell = new(O)
-	//O.cell.maxcharge = 7500
-	//if(limit_cell) O.cell.charge = 1500
-	//else O.cell.charge = 7500
-
-	O.gender = src.gender
-	O.bioHolder?.mobAppearance?.pronouns = src.bioHolder?.mobAppearance?.pronouns
-	O.name = "Cyborg"
-	O.real_name = "Cyborg"
-	O.UpdateName()
+	cyborg.gender = src.gender
+	cyborg.bioHolder?.mobAppearance?.pronouns = src.bioHolder?.mobAppearance?.pronouns
+	cyborg.name = "Cyborg"
+	cyborg.real_name = "Cyborg"
+	cyborg.UpdateName()
 	if (src.client)
-		O.lastKnownIP = src.client.address
-		src.client.mob = O
+		cyborg.lastKnownIP = src.client.address
+		src.client.mob = cyborg
+	else
+		//if they're logged out or whatever
+		cyborg.key = src.key
 	if (src.ghost)
 		if (src.ghost.mind)
-			src.ghost.mind.transfer_to(O)
+			src.ghost.mind.transfer_to(cyborg)
 	else
 		if(src.mind)
-			src.mind.transfer_to(O)
-	O.set_loc(get_turf(src.loc))
-	boutput(O, "<B>You are playing as a Cyborg. Cyborgs can interact with most electronic objects in its view point.</B>")
-	boutput(O, "<B>You must follow all laws that the AI has.</B>")
-	boutput(O, "Use \"say :s (message)\" to speak to fellow cyborgs and the AI through binary.")
+			src.mind.transfer_to(cyborg)
+	cyborg.set_loc(get_turf(src.loc))
+	if (syndicate)
+		cyborg.handle_robot_antagonist_status("converted")
+		boutput(cyborg, "<B>You have been transformed into a <i>syndicate</i> Cyborg. Cyborgs can interact with most electronic objects in their view.</B>")
+		boutput(cyborg, "<B>You must follow your laws and assist syndicate agents, who are identifiable by their icon.</B>")
+	else
+		boutput(cyborg, "<B>You have been transformed into a Cyborg. Cyborgs can interact with most electronic objects in their view.</B>")
+		boutput(cyborg, "<B>You must follow all laws that the AI has.</B>")
+	boutput(cyborg, "<B>Use \"say :s (message)\" to speak to fellow cyborgs and the AI through binary.</B>")
 
-	O.show_laws()
-
-	O.job = "Cyborg"
-	if (O.mind) O.mind.assigned_role = "Cyborg"
-
-	if(O.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
-		if ((O.mind in ticker.mode:revolutionaries) || (O.mind in ticker.mode:head_revolutionaries))
+	if(cyborg.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
+		if ((cyborg.mind in ticker.mode:revolutionaries) || (cyborg.mind in ticker.mode:head_revolutionaries))
 			ticker.mode:update_all_rev_icons() //So the icon actually appears
 
 	if(gory)
-		var/mob/living/silicon/robot/R = O
+		var/mob/living/silicon/robot/R = cyborg
 		if (R.cosmetic_mods)
 			var/datum/robot_cosmetic/RC = R.cosmetic_mods
 			RC.head_mod = "Gibs"
 			RC.ches_mod = "Gibs"
 
-	dispose()
-	return O
-/*
-//human -> alien
-/mob/living/carbon/human/proc/Alienize()
-	if (src.transforming)
-		return
-	src.unequip_all()
-	src.transforming = 1
-	src.canmove = 0
-	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs)
-		qdel(src.organs[t])
-//	var/atom/movable/overlay/animation = new /atom/movable/overlay( src.loc )
-//	animation.icon_state = "blank"
-//	animation.icon = 'icons/mob/mob.dmi'
-//	animation.master = src
-//	flick("h2alien", animation)
-//	sleep(4.8 SECONDS)
-//	qdel(animation)
-	var/mob/living/carbon/alien/humanoid/O = new /mob/living/carbon/alien/humanoid( src.loc )
-	O.name = "alien"
-	O.dna = src.dna
-	src.mind?.transfer_to(O)
-	src.dna = null
-	O.dna.uni_identity = "00600200A00E0110148FC01300B009"
-	O.dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
-	if (src.client)
-		src.client.mob = O
-	O.set_loc(src.loc)
-	O.set_a_intent("harm")
-	boutput(O, "<B>You are now an alien.</B>")
-	dispose()
-	return
+	qdel(src)
+	return cyborg
 
-//human -> alien queen
-/mob/living/carbon/human/proc/Queenize()
-	if (src.transforming)
-		return
-	src.unequip_all()
-	src.transforming = 1
-	src.canmove = 0
-	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs)
-		qdel(src.organs[t])
-//	var/atom/movable/overlay/animation = new /atom/movable/overlay( src.loc )
-//	animation.icon_state = "blank"
-//	animation.icon = 'icons/mob/mob.dmi'
-//	animation.master = src
-//	flick("h2alien", animation)
-//	sleep(4.8 SECONDS)
-//	qdel(animation)
-	var/mob/living/carbon/alien/humanoid/queen/O = new /mob/living/carbon/alien/humanoid/queen( src.loc )
-	O.name = "alien queen"
-	O.dna = src.dna
-	src.mind?.transfer_to(O)
-	src.dna = null
-	O.dna.uni_identity = "00600200A00E0110148FC01300B009"
-	O.dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
-	if (src.client)
-		src.client.mob = O
-	O.set_loc(src.loc)
-	O.set_a_intent("harm")
-	boutput(O, "<B>You are now an alien queen.</B>")
-	dispose()
-	return
-*/
 //human -> hivebot
 /mob/living/carbon/human/proc/Hiveize(var/mainframe = 0)
 	if (src.transforming)
@@ -454,7 +386,7 @@
 			W.mind.current = W
 		qdel(src)
 
-		SPAWN_DBG(2.5 SECONDS) // Don't remove.
+		SPAWN(2.5 SECONDS) // Don't remove.
 			if (W) W.assign_gimmick_skull()
 
 		if(shitty)
@@ -533,7 +465,7 @@
 			W.mind.ckey = ckey
 			W.mind.key = key
 			W.mind.current = W
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		qdel(src)
 	return W
 

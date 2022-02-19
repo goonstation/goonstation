@@ -201,7 +201,7 @@
 				src.lastattacked = null
 
 	bump(atom/movable/AM as mob|obj)
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			if (src.now_pushing)
 				return
 			..()

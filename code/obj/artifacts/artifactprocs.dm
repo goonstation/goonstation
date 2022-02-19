@@ -39,7 +39,7 @@
 		return 0
 	// if the artifact var isn't set at all, it's probably not an artifact so don't bother continuing
 	if (!istype(src.artifact,/datum/artifact/))
-		logTheThing("debug", null, null, "<b>I Said No/Artifact:</b> Invalid artifact variable in [src.type] at [showCoords(src.x, src.y, src.z)]")
+		logTheThing("debug", null, null, "<b>I Said No/Artifact:</b> Invalid artifact variable in [src.type] at [log_loc(src)]")
 		qdel(src) // wipes itself out since if it's processing it'd be calling procs it can't use again and again
 		return 0 // uh oh, we've got a poorly set up artifact and now we need to stop the proc that called it!
 	else

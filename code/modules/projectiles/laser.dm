@@ -484,7 +484,7 @@ toxic - poisons
 		power = 5
 		dissipation_rate = 5
 		sname = "saw teeth"
-		shot_sound = 'sound/machines/chainsaw_green.ogg'
+		shot_sound = 'sound/machines/chainsaw.ogg'
 		hit_human_sound = "sound/impact_sounds/Flesh_Tear_1.ogg"
 		damtype = DAMAGE_CUT
 
