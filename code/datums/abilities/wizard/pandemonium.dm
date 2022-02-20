@@ -46,64 +46,48 @@
 			if("fireburst")
 				W.visible_message("<span class='alert'><B>[W]</B> radiates a wave of burning heat!</span>")
 				playsound(W, "sound/effects/bamf.ogg", 80, 1)
-				for (var/mob/living/carbon/human/M in range(6, W))
-					if (M == W && protectuser)
+				for (var/mob/living/carbon/human/H in range(6, W))
+					if ((H == W) && protectuser)
 						continue
-					if (iswizard(M))
+					if (targetSpellImmunity(H, FALSE, 0))
 						continue
-					if(check_target_immunity( M ))
-						continue
-					boutput(M, "<span class='alert'>You suddenly burst into flames!</span>")
-					M.update_burning(30)
+					boutput(H, "<span class='alert'>You suddenly burst into flames!</span>")
+					H.update_burning(30)
 			if("babel")
 				W.visible_message("<span class='alert'><B>[W]</B> emits a faint smell of cheese!</span>")
 				playsound(W, "sound/voice/farts/superfart.ogg", 80, 1)
-				for (var/mob/living/carbon/human/M in mobs)
-					if (M == W && protectuser)
+				for (var/mob/living/carbon/human/H in mobs)
+					if ((H == W) && protectuser)
 						continue
-					if (ishuman(M))
-						if (M.traitHolder.hasTrait("training_chaplain"))
-							continue
-					if (iswizard(M))
+					if (targetSpellImmunity(H, FALSE, 0))
 						continue
-					if(check_target_immunity( M ))
-						continue
-					M.bioHolder.AddEffect("accent_swedish", timeleft = 15)
-					M.bioHolder.AddEffect("accent_comic", timeleft = 15)
-					M.bioHolder.AddEffect("accent_elvis", timeleft = 15)
-					M.bioHolder.AddEffect("accent_chav", timeleft = 15)
+					H.bioHolder.AddEffect("accent_swedish", timeleft = 15)
+					H.bioHolder.AddEffect("accent_comic", timeleft = 15)
+					H.bioHolder.AddEffect("accent_elvis", timeleft = 15)
+					H.bioHolder.AddEffect("accent_chav", timeleft = 15)
 			if("tripballs")
 				W.visible_message("<span class='alert'><B>[W]</B> radiates a confusing aura!</span>")
 				playsound(W, "sound/effects/bionic_sound.ogg", 80, 1)
-				for (var/mob/living/carbon/human/M in range(25, W))
-					if (M == W && protectuser)
+				for (var/mob/living/carbon/human/H in range(25, W))
+					if ((H == W) && protectuser)
 						continue
-					if (ishuman(M))
-						if (M.traitHolder.hasTrait("training_chaplain"))
-							continue
-					if (iswizard(M))
+					if (targetSpellImmunity(H, FALSE, 0))
 						continue
-					if(check_target_immunity( M ))
-						continue
-					boutput(M, "<span class='alert'>You feel extremely strange!</span>")
-					M.reagents.add_reagent("LSD", 20)
-					M.reagents.add_reagent("THC", 20)
-					M.reagents.add_reagent("psilocybin", 20)
+					boutput(H, "<span class='alert'>You feel extremely strange!</span>")
+					H.reagents.add_reagent("LSD", 20)
+					H.reagents.add_reagent("THC", 20)
+					H.reagents.add_reagent("psilocybin", 20)
 			if("flashbang")
 				W.visible_message("<span class='alert'><B>[W]</B> explodes into a brilliant flash of light!</span>")
 				playsound(W.loc, "sound/weapons/flashbang.ogg", 50, 1)
-				for(var/mob/N in AIviewers(W, null))
-					if(get_dist(N, W) <= 6)
-						if(N != W)
-							if (ishuman(N))
-								if (N.traitHolder && N.traitHolder.hasTrait("training_chaplain"))
-									continue
-							if (iswizard(N))
+				for(var/mob/M in AIviewers(W, null))
+					if(get_dist(M, W) <= 6)
+						if(M != W)
+							if (targetSpellImmunity(M, FALSE, 0))
 								continue
-							if(check_target_immunity( N ))
-								continue
-							N.apply_flash(30, 5)
-							if(N.client) shake_camera(N, 6, 16)
+							M.apply_flash(30, 5)
+							if(M.client)
+								shake_camera(M, 6, 16)
 			if("meteors")
 				W.visible_message("<span class='alert'><B>[W]</B> summons meteors!</span>")
 				for(var/turf/T in orange(1, W))
@@ -114,21 +98,15 @@
 			if("screech")
 				W.audible_message("<span class='alert'><B>[W]</B> emits a horrible shriek!</span>")
 				playsound(W.loc, "sound/effects/screech.ogg", 50, 1, -1)
-				for (var/mob/living/H in hearers(W, null))
-					if (H == W && protectuser)
+				for (var/mob/living/M in hearers(W, null))
+					if ((M == W) && protectuser)
 						continue
-					if (ishuman(H) && H.traitHolder && (H.traitHolder.hasTrait("training_chaplain")))
-						H.show_text("You are immune to [W]'s screech!", "blue")
-						JOB_XP(H, "Chaplain", 2)
+					if (targetSpellImmunity(M, FALSE, 2))
 						continue
-					if (iswizard(H))
+					if (isvampire(M) && M.check_vampire_power(3) == 1)
+						M.show_text("You are immune to [W]'s screech!", "blue")
 						continue
-					if (isvampire(H) && H.check_vampire_power(3) == 1)
-						H.show_text("You are immune to [W]'s screech!", "blue")
-						continue
-					if(check_target_immunity( H ))
-						continue
-					H.apply_sonic_stun(0, 3, 0, 0, 0, 8)
+					M.apply_sonic_stun(0, 3, 0, 0, 0, 8)
 				sonic_attack_environmental_effect(W, 7, list("light", "window", "r_window"))
 			if("boost")
 				W.audible_message("<span class='alert'><B>[W]</B> glows with magical power!</span>")
@@ -137,27 +115,22 @@
 			if("roar")
 				W.audible_message("<span class='alert'><B>[W]</B> emits a horrific reverberating roar!</span>")
 				playsound_global(world, "sound/effects/mag_pandroar.ogg", 50)
-				for (var/mob/living/carbon/human/M in mobs)
-					if (M == W && protectuser)
+				for (var/mob/living/carbon/human/H in mobs)
+					if ((H == W) && protectuser)
 						continue
-					if (ishuman(M))
-						if (M.traitHolder.hasTrait("training_chaplain"))
-							continue
-					if (iswizard(M))
+					if (targetSpellImmunity(H, FALSE, 0))
 						continue
-					if(check_target_immunity( M ))
-						continue
-					boutput(M, "<span class='alert'>A horrifying noise stuns you in sheer terror!</span>")
-					M.changeStatus("stunned", 3 SECONDS)
-					M.stuttering += 10
+					boutput(H, "<span class='alert'>A horrifying noise stuns you in sheer terror!</span>")
+					H.changeStatus("stunned", 3 SECONDS)
+					H.stuttering += 10
 			if("signaljam")
 				W.visible_message("<span class='alert'><B>[W]</B> emits a wave of electrical interference!</span>")
 				playsound(W.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
 				for (var/client/C)
 					if (!ishuman(C.mob))
 						continue
-					var/mob/living/carbon/human/M = C.mob
-					if (M.ears) boutput(M, "<span class='alert'>Your headset speaker suddenly bursts into weird static!</span>")
+					var/mob/living/carbon/human/H = C.mob
+					if (H.ears) boutput(H, "<span class='alert'>Your headset speaker suddenly bursts into weird static!</span>")
 				signal_loss += 100
 				SPAWN(10 SECONDS)
 					signal_loss -= 100

@@ -22,7 +22,7 @@
 
 		var/mob/living/carbon/human/H = target
 
-		if (checkSpellTargetImmunity(H))
+		if (targetSpellImmunity(H, TRUE, 2))
 			return 1
 
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [H]!</b></span>")
