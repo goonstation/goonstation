@@ -17,6 +17,7 @@
 			holder.owner.say("ARSE NATH!")
 		..()
 
+		logTheThing("combat", holder.owner, null, "casts a Rathen's Secret spell at [log_loc(holder.owner)].")
 		playsound(holder.owner, "sound/voice/farts/superfart.ogg", 25, 1)
 
 		for (var/mob/*living/carbon/human*//H in oview(holder.owner))

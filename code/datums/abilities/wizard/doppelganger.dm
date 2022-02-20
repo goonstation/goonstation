@@ -38,6 +38,7 @@
 			holder.owner.say("GIN EMUS") // ^-- No speech bubble.
 		..()
 
+		logTheThing("combat", holder.owner, null, "casts a Doppelganger spell at [log_loc(holder.owner)].")
 		var/turf/curr_turf = get_turf(holder.owner)
 
 		P.set_dir(the_dir)

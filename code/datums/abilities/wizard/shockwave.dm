@@ -17,6 +17,7 @@
 			holder.owner.say("ERATH QUUK")
 		..()
 
+		logTheThing("combat", holder.owner, null, "casts a Shockwave spell at [log_loc(holder.owner)].")
 		playsound(holder.owner.loc, "sound/effects/exlow.ogg", 25, 1, -1)
 
 		new/obj/effects/shockwave(holder.owner.loc)

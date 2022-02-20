@@ -28,6 +28,8 @@
 			holder.owner.say("NYTH ERRIN")
 		..()
 
+		logTheThing("combat", holder.owner, null, "casts an Iceburst spell at [log_loc(holder.owner)].")
+
 		if(!holder.owner.wizard_spellpower(src))
 			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
 

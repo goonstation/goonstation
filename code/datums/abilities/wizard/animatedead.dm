@@ -26,6 +26,7 @@
 		var/obj/critter/magiczombie/UMMACTUALLYITSASKELETONNOWFUCKZOMBIESFOREVER = new /obj/critter/magiczombie(get_turf(target)) // what the fuck
 		UMMACTUALLYITSASKELETONNOWFUCKZOMBIESFOREVER.CustomizeMagZom(target.real_name, ismonkey(target))
 
+		logTheThing("combat", holder.owner, target, "casts the Animate Dead spell on the corpse of [constructTarget(target,"combat")] at [log_loc(target)].")
 		boutput(holder.owner, "<span class='notice'>You saturate [target] with dark magic!</span>")
 		holder.owner.visible_message("<span class='alert'>[holder.owner] rips the skeleton from [target]'s corpse!</span>")
 

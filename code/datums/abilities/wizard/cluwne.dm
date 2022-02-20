@@ -87,6 +87,7 @@
 			T.visible_message("<span class='alert'>[T] seems to be warded from the effects!</span>")
 			return 1
 
+		logTheThing("combat", M, target, "casts a Cluwne spell on [constructTarget(target,"combat")] at [log_loc(target)].")
 		if (T.job != "Cluwne")
 			boutput(T, "<span class='alert'><B>You HONK painfully!</B></span>")
 			T.take_brain_damage(50)

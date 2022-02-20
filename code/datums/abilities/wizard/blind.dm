@@ -43,6 +43,7 @@
 			target.canmove = 1
 		boutput(target, "<span class='notice'>Your eyes cry out in pain!</span>")
 		target.visible_message("<span class='alert'>Sparks fly out of [target]'s eyes!</span>")
+		logTheThing("combat", holder.owner, target, "casts a Blind spell on [constructTarget(target,"combat")] at [log_loc(target)].")
 
 		//Wire: People wearing cure-blindness glasses should get a LITTLE protection from the blind spell
 		var/blindProtected = 0

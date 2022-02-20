@@ -29,6 +29,7 @@
 			sleep(0.1 SECONDS)
 
 		playsound(holder.owner.loc, "sound/voice/animal/bull.ogg", 25, 1, -1)
+		logTheThing("combat", holder.owner, null, "casts the Bull's Charge spell at [log_loc(holder.owner)].")
 
 		var/list/affected = list()
 		var/obj/effects/bullshead/B = new/obj/effects/bullshead(first)

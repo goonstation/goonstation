@@ -55,6 +55,7 @@
 
 // holy shit someone clean this up and just move it into the main spell proc, this is ridiclous
 /mob/living/proc/PAND_Fireburst(var/protectuser = 1)
+	logTheThing("combat", src, null, "casts a Pandemonium spell causing a fireburst at [log_loc(src)].")
 	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> radiates a wave of burning heat!</span>", src), 1)
 	playsound(src, "sound/effects/bamf.ogg", 80, 1)
 	for (var/mob/living/carbon/human/M in range(6, src))
@@ -65,6 +66,7 @@
 		M.update_burning(30)
 
 /mob/living/proc/PAND_Babel(var/protectuser = 1)
+	logTheThing("combat", src, null, "casts a Pandemonium spell causing temporary accents at [log_loc(src)].")
 	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> emits a faint smell of cheese!</span>", src), 1)
 	playsound(src, "sound/voice/farts/superfart.ogg", 80, 1)
 	for (var/mob/living/carbon/human/M in mobs)
@@ -79,6 +81,7 @@
 		M.bioHolder.AddEffect("accent_chav", timeleft = 15)
 
 /mob/living/proc/PAND_Tripballs(var/protectuser = 1)
+	logTheThing("combat", src, null, "casts a Pandemonium spell causing a hallucinogenic aura at [log_loc(src)].")
 	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> radiates a confusing aura!</span>", src), 1)
 	playsound(src, "sound/effects/bionic_sound.ogg", 80, 1)
 	for (var/mob/living/carbon/human/M in range(25, src))
@@ -93,6 +96,7 @@
 		M.reagents.add_reagent("psilocybin", 20)
 
 /mob/living/proc/PAND_Flashbang(var/protectuser = 1)
+	logTheThing("combat", src, null, "casts a Pandemonium spell causing a flashbang at [log_loc(src)].")
 	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> explodes into a brilliant flash of light!</span>", src), 1)
 	playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
 	for(var/mob/N in AIviewers(src, null))
@@ -108,6 +112,7 @@
 		if(N.client) shake_camera(N, 6, 16)
 
 /mob/living/proc/PAND_Meteors(var/protectuser = 1)
+	logTheThing("combat", src, null, "casts a Pandemonium spell causing meteors at [log_loc(src)].")
 	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> summons meteors!</span>", src), 1)
 	for(var/turf/T in orange(1, src))
 		if(!T.density)
@@ -116,6 +121,7 @@
 			new /obj/newmeteor/small(my_spawn = T, trg = U)
 
 /mob/living/proc/PAND_Screech(var/protectuser = 1)
+	logTheThing("combat", src, null, "casts a Pandemonium spell causing a screech at [log_loc(src)].")
 	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> emits a horrible shriek!</span>", src), 1)
 	playsound(src.loc, "sound/effects/screech.ogg", 50, 1, -1)
 
@@ -138,11 +144,13 @@
 	return
 
 /mob/living/proc/PAND_Boost(var/protectuser = 1)
+	logTheThing("combat", src, null, "casts a Pandemonium spell causing an arcane boost at [log_loc(src)].")
 	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> glows with magical power!</span>", src), 1)
 	playsound(src.loc, "sound/mksounds/boost.ogg", 25, 1, -1)
 	src.bioHolder.AddEffect("arcane_power", timeleft = 60)
 
 /mob/living/proc/PAND_Roar(var/protectuser = 1)
+	logTheThing("combat", src, null, "casts a Pandemonium spell causing a roar at [log_loc(src)].")
 	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> emits a horrific reverberating roar!</span>", src), 1)
 	playsound_global(world, "sound/effects/mag_pandroar.ogg", 50)
 	for (var/mob/living/carbon/human/M in mobs)
@@ -156,6 +164,7 @@
 		M.stuttering += 10
 
 /mob/living/proc/PAND_Signaljam(var/protectuser = 1)//wtf.
+	logTheThing("combat", src, null, "casts a Pandemonium spell causing signal loss at [log_loc(src)].")
 	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> emits a wave of electrical interference!</span>", src), 1)
 	playsound(src.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
 	for (var/client/C)
@@ -168,6 +177,7 @@
 	signal_loss -= 100
 
 /mob/living/proc/PAND_Grilles(var/protectuser = 1)
+	logTheThing("combat", src, null, "casts a Pandemonium spell causing grilles at [log_loc(src)].")
 	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> reshapes the metal around \him!</span>", src), 1)
 	playsound(src.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 25, 1, -1)
 	for(var/turf/simulated/floor/T in view(src,7))

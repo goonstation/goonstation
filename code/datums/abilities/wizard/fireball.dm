@@ -45,6 +45,7 @@
 			holder.owner.say("MHOL HOTTOV")
 		..()
 
+		logTheThing("combat", holder.owner, target, "casts a Fireball spell at [log_loc(holder.owner)] targetting [constructTarget(target,"combat")] [log_loc(target)].")
 		var/obj/projectile/P = initialize_projectile_ST( holder.owner, fb_proj, target )
 		if (P)
 			P.mob_shooter = holder.owner
