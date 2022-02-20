@@ -747,10 +747,10 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "dennismccreary"
 		ckey = "lordvoxelrot"
 
-	Stinko
+	stinko
 		name = "\improper Stinko"
 		icon_state = "stinko"
-		ckey = "data_err0r"
+		ckey = "dataerr0r"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

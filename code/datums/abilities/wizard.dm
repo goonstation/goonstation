@@ -285,6 +285,27 @@
 		H.locked = 0
 		return val
 
+	proc/targetSpellImmunity(mob/living/carbon/human/H, var/messages, var/chaplain_xp)
+		if (H.traitHolder.hasTrait("training_chaplain"))
+			if (messages)
+				boutput(holder.owner, "<span class='alert'>[H] has divine protection from magic.</span>")
+				H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
+			if (chaplain_xp)
+				JOB_XP(H, "Chaplain", chaplain_xp)
+			return 1
+
+		if (iswizard(H))
+			if (messages)
+				H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
+			return 1
+
+		if (check_target_immunity(H))
+			if (messages)
+				H.visible_message("<span class='alert'>[H] seems to be warded from the effects!</span>")
+			return 1
+
+		return 0
+
 	updateObject()
 		if (!holder || !holder.owner)
 			qdel(src)

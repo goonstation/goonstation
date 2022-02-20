@@ -186,7 +186,7 @@ var/global
 				ircmsg["key"] = owner.key
 				ircmsg["name"] = stripTextMacros(owner.mob.name)
 				ircmsg["msg"] = "just attempted to crash the server using at least 5 '\['s in a row."
-				ircbot.export("admin", ircmsg)
+				ircbot.export_async("admin", ircmsg)
 			return
 
 		var/list/connData = json_decode(cookie)
@@ -214,7 +214,7 @@ var/global
 					ircmsg["key"] = owner.key
 					ircmsg["name"] = stripTextMacros(owner.mob.name)
 					ircmsg["msg"] = "has a cookie from banned account [found["ckey"]](IP: [found["ip"]], CompID: [found["compID"]])"
-					ircbot.export("admin", ircmsg)
+					ircbot.export_async("admin", ircmsg)
 
 				var/banData[] = new()
 				banData["ckey"] = src.owner.ckey
