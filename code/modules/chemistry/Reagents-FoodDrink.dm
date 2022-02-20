@@ -4212,3 +4212,75 @@ datum
 			description = "A cocktail from the prohibition era, named after a popular expression."
 			reagent_state = LIQUID
 			taste = "honeyed"
+
+		fooddrink/alcoholic/lean //Pretty much a porer mans krokodil without the whole skin eating part
+			name = "Lean"
+			id = "lean"
+			description = "A cheap party drug made by mixing cough medicine and soda."
+			reagent_state = LIQUID
+			fluid_r = 110
+			fluid_g = 20
+			fluid_b = 130
+			alch_strength = 0.2
+			transparency = 200
+			bladder_value = -0.2
+			thirst_value = 1
+			addiction_prob = 10//50
+			addiction_min = 30
+			taste = "sugary and bitter"
+			overdose = 50
+
+			on_mob_life(var/mob/living/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				M.jitteriness -= 20
+				M.druggy = max(M.druggy, 15)
+				if(probmult(15)) M.emote(pick("smile", "grin", "yawn", "laugh", "giggle"))
+				for(var/datum/ailment_data/disease/virus in M.ailments)
+					if(probmult(10) && istype(virus.master,/datum/ailment/disease/cold))
+						M.cure_disease(virus)
+					if(probmult(10) && istype(virus.master,/datum/ailment/disease/flu))
+						M.cure_disease(virus)
+					if(probmult(10) && istype(virus.master,/datum/ailment/disease/food_poisoning))
+						M.cure_disease(virus)
+				..()
+				return
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				var/effect = ..(severity, M)
+				M.stuttering += rand(0,2)
+				if(severity == 1)
+					if(effect <= 4)
+						M.emote(pick("drool", "shiver", "shudder", "blink"))
+						M.visible_message("<span class='alert'><b>[M.name] calapses!</b> ")
+						boutput(M, "<span class='alert'><b>You feel your heart beat slow!</b></span>")
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 10 SECONDS))
+						M.take_toxin_damage(2 * mult)
+					else if(effect <= 10)
+						M.emote("yawn")
+						M.visible_message("<span class='alert'><b>[M.name] starts to fall asleep!</b> ")
+						M.setStatus("drowsy", max(M.getStatusDuration("drowsy"), 15 SECONDS))
+						M.take_toxin_damage(2 * mult)
+				else if(severity == 2)
+					if(effect <= 5)
+						M.emote("faint")
+						M.visible_message("<span class='alert'><b>[M.name] faints!</b> ")
+						M.setStatus("drowsy", max(M.getStatusDuration("drowsy"), 10 SECONDS))
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 10 SECONDS))
+						M.take_toxin_damage(4 * mult)
+					else if(effect <= 10)
+						M.emote(pick("gasp"))
+						boutput(M, "<span class='alert'><b>You can't breathe!</b></span>")
+						M.lose_breath(1 * mult)
+						M.take_toxin_damage(4 * mult)
+					else if(effect <= 20)
+						M.emote(pick("drool", "shiver", "shudder", "blink", "gasp"))
+						M.take_toxin_damage(4 * mult)
+
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if(method == INGEST)
+					M.visible_message("<span class='alert'><b>[M.name]</b> looks relaxed!</span>")
+					boutput(M, "<span class='notice'><b>All your worries wash away!</b></span>")
+					M.emote(pick("laugh"))
+				return

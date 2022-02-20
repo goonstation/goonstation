@@ -756,6 +756,8 @@ datum
 					holder.remove_reagent("ephedrine", 5 * mult)
 				if(holder.has_reagent("synaptizine"))
 					holder.remove_reagent("synaptizine", 5 * mult)
+				if(holder.has_reagent("lean"))
+					holder.remove_reagent("lean", 5 * mult)
 				if(M.hasStatus("stimulants"))
 					M.changeStatus("stimulants", -15 SECONDS * mult)
 				if(probmult(5))

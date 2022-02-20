@@ -1867,6 +1867,19 @@ datum
 			id = "cold_medicine2"
 			required_reagents = list("antihistamine" = 1, "oil" = 1, "salicylic_acid" = 1, "menthol" = 1)
 
+		lean
+			name = "Lean"
+			id = "lean"
+			result = "lean"
+			required_reagents = list("cold_medicine" = 1, "ethanol" = 1, "cola" = 1)
+			result_amount = 3
+			mix_phrase = "The ingredients mix together into a deep purple."
+
+		lean/lean2
+			id = "lean2"
+			required_reagents = list("cold_medicine" = 1, "ethanol" = 1, "lemonade" = 1)
+
+
 		cyanide
 			name = "Cyanide"
 			id = "cyanide"
