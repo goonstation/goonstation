@@ -131,13 +131,15 @@
 
 	New()
 		..()
-		fabrImg = image(icon, "spacemat")
+		/*fabrImg = image(icon, "spacemat")
 		visrImg = image(icon, "spacemat-vis")
 		overlays += fabrImg
-		overlays += visrImg
+		overlays += visrImg*/
+		visrImg = SafeGetOverlayImage("visor", src.icon, "spacemat-vis")
+		fabrImg = SafeGetOverlayImage("helmet", src.icon, "spacemat")
 
-	proc/setupVisorMat(var/datum/material/V)
-		visr_material = copyMaterial(V) // in theory this is redundant but just in case
+	proc/setupVisorMat(var/datum/material/V) // this does everything that the updatematerial() proc doesn't
+		visr_material = copyMaterial(V) // in 99% of all calls this is redundant but just in case
 		if (visr_material)
 			if (visr_material.hasProperty("thermal"))
 				var/prot = round((100 - visr_material.getProperty("thermal")) / 2)
@@ -159,27 +161,38 @@
 			else
 				setProperty("meleeprot_head", 2)
 
-	proc/setVisrMaterial(var/datum/material/M)
+		// overlay stuff
+		visrImg.color = visr_material.color
+		UpdateOverlays(visrImg, "visor")
+
+		fabrImg.color = src.material
+		UpdateOverlays(fabrImg, "helmet")
+
+
+
+	/*proc/setVisrMaterial(var/datum/material/M)
 		visr_material = copyMaterial(M)
-		overlays -= visrImg
-		if (M)
+
+		overlays -= visrImg// old overlay code incase I need to go back to it
 			visrImg.color = M.color
 			visrImg.alpha = M.alpha
 		else
 			visrImg.color = null
 			visrImg.alpha = 255
-		overlays += visrImg
+		overlays += visrImg*/
+
+
 
 
 	onMaterialChanged()// since color already initalized in setup visor mat, only take alpha
 
-		overlays -= fabrImg
+	/*	overlays -= fabrImg
 		if (src.material)
 			fabrImg.alpha = src.material.alpha
 		else
 			fabrImg.color = null
 			fabrImg.alpha = 255
-		overlays += fabrImg
+		overlays += fabrImg*/
 
 
 	UpdateName()
