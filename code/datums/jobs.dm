@@ -1249,7 +1249,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = list(/obj/item/clothing/under/scrub,/obj/item/clothing/under/scrub/teal,/obj/item/clothing/under/scrub/blue,/obj/item/clothing/under/scrub/purple,/obj/item/clothing/under/scrub/orange,/obj/item/clothing/under/scrub/pink)
 	slot_foot = list(/obj/item/clothing/shoes/white)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
-	slot_belt = list(/obj/item/device/pda2/medical) //a special PDA since medical gets a lot of overwhelming alerts
+	slot_belt = list(/obj/item/device/pda2/medical) 
 
 	New()
 		..()
