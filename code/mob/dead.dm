@@ -147,7 +147,7 @@
 				message = "<B>[src]</B> does \an [pick("spooky", "eerie", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")] flip!"
 				animate(src) // stop the animation
 				animate_spin(src, prob(50) ? "R" : "L", 1, 0)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					animate_bumble(src)
 #ifdef HALLOWEEN
 				if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))

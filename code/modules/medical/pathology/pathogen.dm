@@ -127,7 +127,7 @@ datum/controller/pathogen
 			return replacetext(CDC.patient_zero_kname, "%holder%", "\ref[topic_holder]")
 
 	Topic(href, href_list)
-		usr_admin_only
+		USR_ADMIN_ONLY
 		var/key = usr.ckey
 		var/th = locate(href_list["topic_holder"])
 		switch(href_list["action"])

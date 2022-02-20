@@ -73,7 +73,7 @@
 			if (!isnull(M.mind))
 				M.mind.miranda = "You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you."
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (receives_implant && ispath(receives_implant))
 				var/mob/living/carbon/human/H = M
 				var/obj/item/implant/I = new receives_implant(M)
@@ -988,6 +988,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	map_can_autooverride = 0
 	slot_jump = list(/obj/item/clothing/under/rank)
 	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
 
 	New()
 		..()

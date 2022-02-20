@@ -8,7 +8,7 @@
 	name = "genetics console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "scanner"
-	req_access = list(access_heads) //Only used for record deletion right now.
+	req_access = list(access_medlab)
 	object_flags = CAN_REPROGRAM_ACCESS
 	can_reconnect = TRUE
 	circuit_type = /obj/item/circuitboard/genetics
@@ -42,7 +42,7 @@
 /obj/machinery/computer/genetics/New()
 	..()
 	START_TRACKING
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		connection_scan()
 
 /obj/machinery/computer/genetics/connection_scan()
@@ -78,7 +78,13 @@
 			return
 
 		..()
-	return
+
+/obj/machinery/computer/genetics/attack_hand(mob/user)
+	if(!src.allowed(user))
+		boutput(user, "<span class='alert'>Access Denied.</span>")
+		return
+	. = ..()
+
 
 /obj/machinery/computer/genetics/proc/activated_bonus(mob/user as mob)
 	if (genResearch.time_discount < 0.75)
@@ -244,6 +250,8 @@
 	logTheThing("diary", who, null, "[action] but failed validation.", "debug")
 
 /obj/machinery/computer/genetics/ui_status(mob/user)
+	if (!src.allowed(user))
+		return UI_CLOSE
 	if (user in src.scanner)
 		return UI_UPDATE
 	return ..()
@@ -253,7 +261,7 @@
 	playsound(src.loc, 'sound/machines/keypress.ogg', minor ? 25 : 50, 1, -15)
 
 /obj/machinery/computer/genetics/proc/play_emitter_sound()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for (var/i = 0, i < 15 && (i < 3 || prob(genResearch.emitter_radiation)), i++)
 			switch (genResearch.emitter_radiation)
 				if(1 to 15)

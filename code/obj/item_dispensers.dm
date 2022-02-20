@@ -61,7 +61,7 @@
 
 			//This is pretty lame, but it's simpler than putting these in a process loop when they are rarely used. - kyle
 			if (dispense_rate > 0 && (last_dispense_time + dispense_rate > TIME))
-				SPAWN_DBG(dispense_rate)
+				SPAWN(dispense_rate)
 					UpdateIcon()
 		else
 			boutput(user, "<span class='alert'>There's nothing in \the [src] to take!</span>")

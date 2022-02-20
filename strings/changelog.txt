@@ -1,4 +1,65 @@
 
+(t)sun feb 20 22
+(u)Yellow/Myco
+(p)7545
+(e)⚖|balance
+(+)Staff Assistants now spawn with a Civilian Headset, giving them access to the civilian channel
+(u)FlameArrow57
+(p)7413
+(e)🆕|feature
+(*)Security computers now provide a SecHUD flag that can be set for someone. If a person has an active arrest status, the flag will appear in their examine report for anyone wearing SecHUDs.
+(t)sat feb 19 22
+(u)Flappybat
+(p)7373
+(e)🗺|mapping
+(+)Renamed Loyalty implants to Counter-Revolutionary implants to make their purpose clearer.
+(t)fri feb 18 22
+(u)tarmunora
+(+)blob poisoning change:
+(+)mitochondria individually less vulnerable to poison, suck poison out of nearby non-mitochondria/non-lipid tiles, store up to 50 poison in adjacent lipid tiles
+(+)lipids slightly more flammable and no longer have increased poison spread on death
+(t)thu feb 17 22
+(u)aloe
+(*)Genetics computers now require genetics access to operate.
+(u)Danger Noodle
+(p)7471
+(e)🗺|mapping
+(*)A new art themed prefab has been added to space maps.
+(u)Flappybat
+(p)7522
+(e)|
+(+)Tracking beacons start anchored. You can unanchor them with a screwdriver.
+(u)TTerc
+(+)Fish now deal 0 damage. Invite your friends for a fish slap fight!
+(u)pali
+(*)Persistent pickle jars now spawn on the station. You can put things into the jar and leave the jar somewhere and next round the jar will be on the same place (if it's the same map) and contain the things you put there but pickled and edible!
+(t)wed feb 16 22
+(u)TTerc
+(e)🆕|feature
+(+)You can now show off your security badge to people by clicking them with it.
+(t)tue feb 15 22
+(u)Kyle
+(+)One Armed Spaceman trait now costs 0 points.
+(u)Conchuckter
+(p)7511
+(e)🐛|bug
+(+)Fixes computer frames always giving 5 sheets instead of their proper amount
+(t)mon feb 14 22
+(u)Flaborized
+(p)7502
+(e)🎨|sprites
+(+)Updated the sprites for shuttle and airbridge floors.
+(u)Kyle
+(*)You can now handcuff people that have only one arm. (If they're cuffed and lose an arm, they'll still be uncuffed like normal)
+(t)sun feb 13 22
+(u)Sovexe
+(p)7486
+(e)🐛🆕🎨|bug, feature, sprites
+(+)Added stink lines for smelly RP players
+(u)Vantatrauma
+(p)7442
+(e)🆕🎨|feature, sprites
+(+)Added a genetics-themed winter coat to the game, findable in geneticists equipment boxes!
 (t)sat feb 12 22
 (u)aloe
 (*)The cyborg converter (syndicate item) has had its price increased to 8 Baddie Bux. It now makes <b>Syndicate Cyborgs</b>. It also works faster, comes with a wrench, is a little less noisy, and you stuff other people in it by agressively grabbing them and clicking it.

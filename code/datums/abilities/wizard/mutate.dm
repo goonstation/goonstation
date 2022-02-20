@@ -29,7 +29,7 @@
 			SPtime = 300
 		else
 			boutput(holder.owner, "<span class='alert'>Your spell doesn't last as long without a staff to focus it!</span>")
-		SPAWN_DBG (SPtime)
+		SPAWN(SPtime)
 			if (!QDELETED(holder.owner))
 				if (holder.owner.bioHolder.HasEffect("hulk"))
 					holder.owner.bioHolder.RemoveEffect("hulk")

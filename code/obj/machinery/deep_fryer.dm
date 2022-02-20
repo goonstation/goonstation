@@ -175,7 +175,7 @@
 			user.reagents.del_reagent("dabs")
 			user.reagents.add_reagent("deepfrieddabs",amt)
 		SubscribeToProcess()
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1

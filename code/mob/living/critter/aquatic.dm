@@ -200,7 +200,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	src.ai = new /datum/aiHolder/aquatic/fish(src)
 	animate_bumble(src)
 
-	/*SPAWN_DBG(0)
+	/*SPAWN(0)
 		if(src.client)
 			src.is_npc = 0
 		else // i mean, i can't imagine many scenarios where a player controlled fish also needs AI that doesn't even run
@@ -249,12 +249,12 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	switch (act)
 		if ("flip")
 			if (src.emote_check(voluntary, 50) && !src.aquabreath_process.water_need)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					animate_bumble(src)
 				return null
 		if ("dance")
 			if (src.emote_check(voluntary, 100))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					for (var/i = 0, i < 4, i++)
 						src.pixel_x+= 2
 						src.set_dir(turn(src.dir, 90))
@@ -424,7 +424,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 /mob/living/critter/aquatic/king_crab/New()
 	..()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if(src.client)
 			src.is_npc = 0
 		else
@@ -484,7 +484,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 					src.pixel_x-= 2
 					src.set_dir(turn(src.dir, 90))
 					sleep(0.2 SECONDS)
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 				for (var/mob/living/M in oview(src, 7))
 					M.reagents.add_reagent(pick("cyanide","neurotoxin","venom","histamine","jenkem","lsd"), 5)
 				return "<span class='alert'><b>[src]</b> does a sinister dance.</span>"
@@ -498,7 +498,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 			if (src.emote_check(voluntary, 300))
 				src.health_brute_vuln = 0.1
 				src.health_burn_vuln = 0.5
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					if (src)
 						src.health_brute_vuln = 0.5
 						src.health_burn_vuln = 3

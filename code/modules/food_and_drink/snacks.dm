@@ -88,7 +88,7 @@
 		..()
 		src.setMaterial(getMaterial("pizza"), appearance = 0, setname = 0)
 		if (prob(1))
-			SPAWN_DBG( rand(300, 900) )
+			SPAWN( rand(300, 900) )
 				src.visible_message("<b>[src]</b> <i>says, \"I'm pizza.\"</i>")
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -886,7 +886,7 @@
 
 	proc/cooltime()
 		if (src.warm)
-			SPAWN_DBG( 420 SECONDS )
+			SPAWN( 420 SECONDS )
 				src.warm = DONK_COLD
 				src.name = "donk-pocket"
 		return
@@ -924,7 +924,7 @@
 
 	cooltime()
 		if (src.warm)
-			SPAWN_DBG( 420 SECONDS )
+			SPAWN( 420 SECONDS )
 				src.warm = DONK_COLD
 				src.name = "honk-pocket"
 		return
@@ -1032,7 +1032,7 @@
 					M.emote("scream")
 					M.emote("sneeze")
 					M.changeStatus("weakened", 4 SECONDS)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						while(prob(75))
 							sleep(rand(50,75))
 							boutput(M, "<span class='alert'>Some of the horrible juice in your nose drips into the back of your throat!!</span>")
@@ -1170,7 +1170,7 @@
 					src.visible_message("<span class='alert'><b>[H] hits the [src] with [W]!<b></span>")
 					src.visible_message("<span class='alert'>The [src] barks at [H]!</span>")
 					playsound(src, "sound/voice/animal/dogbark.ogg", 40, 1)
-					SPAWN_DBG(0.75 SECONDS)
+					SPAWN(0.75 SECONDS)
 						if (src && H)
 							src.visible_message("<span class='alert'>The [src] takes a bite out of [H]!</span>")
 							random_brute_damage(H, 10)
@@ -1464,7 +1464,7 @@
 		user.u_equip(src)
 		user.visible_message("<span class='alert'><b>[user] accidentally inhales part of a [src], blocking their windpipe!</b></span>")
 		user.take_oxygen_deprivation(123)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -2133,7 +2133,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (isturf(src.loc))
 				for (var/x = 1, x <= 4, x++)
 					new /obj/item/reagent_containers/food/snacks/tortilla_chip(src.loc)
@@ -2169,7 +2169,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (isturf(src.loc))
 				for (var/x = 1, x <= 4, x++)
 					new /obj/item/reagent_containers/food/snacks/wonton_wrapper(src.loc)

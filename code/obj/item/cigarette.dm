@@ -238,24 +238,25 @@
 
 		if (target)
 			var/message_append = ""
-			switch(rand(1, 13))
-				if (1) message_append = " Ouch!"
-				if (2) message_append = " Are they just going to take that?"
-				if (3) message_append = " Whoa!"
-				if (4) message_append = " What a jerk!"
-				if (5) message_append = " That's bad-ass."
-				if (6) message_append = " That looks pretty cool!"
-				if (7) message_append = " That's cold."
-				if (8) message_append = " How rude."
-				if (9) message_append = " Wow!"
+			if (prob(60))
+				switch(rand(1, 9))
+					if (1) message_append = " Ouch!"
+					if (2) message_append = " Are they just going to take that?"
+					if (3) message_append = " Whoa!"
+					if (4) message_append = " What a jerk!"
+					if (5) message_append = " That's bad-ass."
+					if (6) message_append = " That looks pretty cool!"
+					if (7) message_append = " That's cold."
+					if (8) message_append = " How rude."
+					if (9) message_append = " Wow!"
 			user.visible_message("<span class='alert'><B>[user]</B> blows smoke right into <B>[target]</B>'s face![message_append]</span>", group = "[user]_blow_smoke_at_[target]")
 
 			var/mob/living/carbon/human/human_target = target
 			if (human_target && rand(1,5) == 1)
-				SPAWN_DBG(0) target.emote("cough")
+				SPAWN(0) target.emote("cough")
 		else
 			var/message
-			switch(rand(1, 8))
+			switch(rand(1, 10))
 				if (1) message = "<B>[user]</B> takes a drag and blows a cloud of smoke!"
 				if (2) message = "<B>[user]</B> puffs out a smoke cloud!"
 				if (3) message = "<B>[user]</B> exhales a huge cloud of smoke!"
@@ -309,7 +310,7 @@
 			if (src.exploding)
 				src.on = 0 //Let's not keep looping while we're busy blowing up, ok?
 				processing_items.Remove(src)
-				SPAWN_DBG((20)+(rand(1,10)))
+				SPAWN((20)+(rand(1,10)))
 					trick_explode()
 				return
 			else
@@ -924,7 +925,7 @@
 			user.visible_message("<span class='alert'><b>[user]</b> calmly drops and treads on the lit [src.name], putting it out instantly.</span>")
 			src.put_out(user)
 			return
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.loc != user)
 				light.attach(src)
 
@@ -1286,7 +1287,7 @@
 		user.take_oxygen_deprivation(75)
 		user.TakeDamage("chest", 0, 100)
 		user.emote("scream")
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		qdel(src)

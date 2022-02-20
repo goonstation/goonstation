@@ -95,7 +95,7 @@
 		src.work_display = image('icons/obj/manufacturer.dmi', "")
 		src.activity_display = image('icons/obj/manufacturer.dmi', "")
 		src.panel_sprite = image('icons/obj/manufacturer.dmi', "")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.build_icon()
 
 	disposing()
@@ -171,7 +171,7 @@
 			use_power(src.powconsumption)
 			if (src.timeleft < 1)
 				src.output_loop(src.queue[1])
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if (src.queue.len < 1)
 						src.manual_stop = 0
 						playsound(src.loc, src.sound_happy, 50, 1)
@@ -240,7 +240,7 @@
 				status &= ~NOPOWER
 				src.build_icon()
 			else
-				SPAWN_DBG(rand(0, 15))
+				SPAWN(rand(0, 15))
 					status |= NOPOWER
 					src.build_icon()
 
@@ -1087,7 +1087,7 @@
 				src.scan = null
 		return 0
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the manufacturer's output target.</span>")
 			return
@@ -2622,7 +2622,7 @@
 		..()
 		MA.action_bar = null
 		if (src.completed && length(MA.queue))
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				MA.begin_work(1)
 
 

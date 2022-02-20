@@ -14,7 +14,7 @@ var/list/popup_verbs_to_toggle = list(\
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Popup Verbs"
 	set desc = "Toggle verbs that appear on right-click"
-	admin_only
+	ADMIN_ONLY
 
 	var/list/final_verblist
 
@@ -88,7 +88,7 @@ var/list/server_toggles_tab_verbs = list(\
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Server Toggles Tab"
 	set desc = "Toggle all the crap in the Toggles (Server) tab so it should go away/show up.  in thoery."
-	admin_only
+	ADMIN_ONLY
 
 	var/list/final_verblist
 
@@ -119,7 +119,7 @@ var/list/server_toggles_tab_verbs = list(\
 /client/proc/toggle_extra_verbs()//Going to put some things in here that we dont need to see every single second when trying to play though atm only the add_r is in it
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Extra Verbs"
-	admin_only
+	ADMIN_ONLY
 	if (!src.holder.extratoggle)
 		src.verbs -= /client/proc/addreagents
 
@@ -154,7 +154,7 @@ var/global/IP_alerts = 1
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle IP Alerts"
 	set desc = "Toggles the same-IP alerts"
-	admin_only
+	ADMIN_ONLY
 
 	IP_alerts = !IP_alerts
 	logTheThing("admin", usr, null, "has toggled same-IP alerts [(IP_alerts ? "On" : "Off")]")
@@ -165,7 +165,7 @@ var/global/IP_alerts = 1
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Hearing All LOOC"
 	set desc = "Toggles the ability to hear all LOOC messages regardless of where you are"
-	admin_only
+	ADMIN_ONLY
 
 	src.only_local_looc = !src.only_local_looc
 	boutput(usr, "<span class='notice'>Toggled seeing all LOOC messages [src.only_local_looc ?"off":"on"]!</span>")
@@ -174,7 +174,7 @@ var/global/IP_alerts = 1
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Attack Alerts"
 	set desc = "Toggles the after-join attack messages"
-	admin_only
+	ADMIN_ONLY
 
 	src.holder.attacktoggle = !src.holder.attacktoggle
 	boutput(usr, "<span class='notice'>Toggled attack log messages [src.holder.attacktoggle ?"on":"off"]!</span>")
@@ -183,7 +183,7 @@ client/proc/toggle_ghost_respawns()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Ghost Respawn offers"
 	set desc = "Toggles receiving offers to respawn as a ghost"
-	admin_only
+	ADMIN_ONLY
 
 	src.holder.ghost_respawns = !src.holder.ghost_respawns
 	boutput(usr, "<span class='notice'>Toggled ghost respawn offers [src.holder.ghost_respawns ?"on":"off"]!</span>")
@@ -192,7 +192,7 @@ client/proc/toggle_ghost_respawns()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Who/Adminwho alerts"
 	set desc = "Toggles the alerts for players using Who/Adminwho"
-	admin_only
+	ADMIN_ONLY
 
 	src.holder.adminwho_alerts = !src.holder.adminwho_alerts
 	boutput(usr, "<span class='notice'>Toggled who/adminwho alerts [src.holder.adminwho_alerts ?"on":"off"]!</span>")
@@ -201,7 +201,7 @@ client/proc/toggle_ghost_respawns()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle \"Low RP\" Word Alerts"
 	set desc = "Toggles notifications for players saying \"fail-rp\" words (sussy, poggers, etc)"
-	admin_only
+	ADMIN_ONLY
 	src.holder.rp_word_filtering = !src.holder.rp_word_filtering
 	if(src.holder.rp_word_filtering)
 		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_SUSSY_PHRASE, .proc/message_one_admin)
@@ -213,7 +213,7 @@ client/proc/toggle_ghost_respawns()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Hearing Prayers"
 	set desc = "Toggles if you can hear prayers or not"
-	admin_only
+	ADMIN_ONLY
 
 	src.holder.hear_prayers = !src.holder.hear_prayers
 	boutput(usr, "<span class='notice'>Toggled prayers [src.holder.hear_prayers ?"on":"off"]!</span>")
@@ -222,7 +222,7 @@ client/proc/toggle_ghost_respawns()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle ATags"
 	set desc = "Toggle local atags on or off"
-	admin_only
+	ADMIN_ONLY
 
 	src.holder.see_atags = !src.holder.see_atags
 	boutput(usr, "<span class='notice'>Toggled ATags [src.holder.see_atags ?"on":"off"]!</span>")
@@ -231,7 +231,7 @@ client/proc/toggle_ghost_respawns()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Buildmode View"
 	set desc = "Toggles if buildmode changes your view"
-	admin_only
+	ADMIN_ONLY
 
 	src.holder.buildmode_view = !src.holder.buildmode_view
 	boutput(usr, "<span class='notice'>Toggled buildmode changing view [src.holder.buildmode_view ?"off":"on"]!</span>")
@@ -240,7 +240,7 @@ client/proc/toggle_ghost_respawns()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Spawn in Loc"
 	set desc = "Toggles if buildmode changes your view"
-	admin_only
+	ADMIN_ONLY
 
 	src.holder.spawn_in_loc = !src.holder.spawn_in_loc
 	boutput(usr, "<span class='notice'>Toggled spawn verb spawning in your loc [src.holder.spawn_in_loc ?"off":"on"]!</span>")
@@ -250,7 +250,7 @@ client/proc/toggle_ghost_respawns()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set desc = "Disables most admin messages."
 
-	admin_only
+	ADMIN_ONLY
 
 	if (player_mode)
 		player_mode = 0
@@ -327,7 +327,7 @@ client/proc/toggle_ghost_respawns()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Toggle Mob Godmode"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if (!isliving(M))
 		return
@@ -342,7 +342,7 @@ client/proc/toggle_ghost_respawns()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Your Godmode"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if (!isliving(usr))
 		return
@@ -357,7 +357,7 @@ client/proc/toggle_ghost_respawns()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "iddqd"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 	usr.client.cmd_admin_godmode_self()
 	boutput(usr, "<span class='notice'><b>Degreelessness mode [usr.nodamage ? "On" : "Off"]</b></span>")
 
@@ -374,14 +374,15 @@ client/proc/toggle_ghost_respawns()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "idclip"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 	usr.client.noclip()
+
 
 /client/proc/cmd_admin_omnipresence()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Your Mob's Omnipresence"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	var/omnipresent
 	if(!length(by_cat[TR_CAT_OMNIPRESENT_MOBS]) || !(src.mob in by_cat[TR_CAT_OMNIPRESENT_MOBS]))
@@ -401,7 +402,7 @@ client/proc/toggle_ghost_respawns()
 /client/proc/toggle_atom_verbs() // I hate calling them "atom verbs" but wtf else should they be called, fuck
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Atom Verbs"
-	admin_only
+	ADMIN_ONLY
 	if(!src.holder.animtoggle)
 		src.holder.animtoggle = 1
 		boutput(src, "Atom interaction options toggled on.")
@@ -471,7 +472,7 @@ client/proc/toggle_ghost_respawns()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle Banlog Alerts"
 	set desc = "Toggles the announcement of failed logins ON/OFF"
-	admin_only
+	ADMIN_ONLY
 	if (announce_banlogin == 1) announce_banlogin = 0
 	else announce_banlogin = 1
 	logTheThing("admin", usr, null, "toggled Banned User Alerts to [announce_banlogin].")
@@ -883,7 +884,7 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle Widescreen Station"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "SS13, future edition. Toggle widescreen for all clients."
-	admin_only
+	ADMIN_ONLY
 	NOT_IF_TOGGLES_ARE_OFF
 
 	if( view == "21x15" )
@@ -900,7 +901,7 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle next_click"
 	set desc = "Removes most click delay. Don't know what this is? Probably shouldn't touch it."
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
-	admin_only
+	ADMIN_ONLY
 
 	disable_next_click = !(disable_next_click)
 	logTheThing("admin", usr, null, "toggled next_click [disable_next_click ? "off" : "on"].")
@@ -911,7 +912,7 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle Narrator Mode"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle narrator mode on or off."
-	admin_only
+	ADMIN_ONLY
 
 	narrator_mode = !(narrator_mode)
 
@@ -923,7 +924,7 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle Station Name Changing"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle station name changing on or off."
-	admin_only
+	ADMIN_ONLY
 
 	station_name_changing = !(station_name_changing)
 
@@ -937,7 +938,7 @@ client/proc/toggle_ghost_respawns()
 	set desc = "Toggle whether map votes are allowed"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	var/bustedMapSwitcher = isMapSwitcherBusted()
 	if (bustedMapSwitcher)
@@ -953,7 +954,7 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle Waddle Walking"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle waddle walking on or off."
-	admin_only
+	ADMIN_ONLY
 
 	waddle_walking = !(waddle_walking)
 
@@ -966,7 +967,7 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle Respawn Arena"
 	set desc = "Lets ghosts go to the respawn arena to compete for a new life"
 
-	admin_only
+	ADMIN_ONLY
 	respawn_arena_enabled = 1 - respawn_arena_enabled
 	logTheThing("admin", usr, null, "toggled the respawn arena [respawn_arena_enabled ? "on" : "off"].")
 	logTheThing("diary", usr, null, "toggled the respawn arena [respawn_arena_enabled ? "on" : "off"].", "admin")
@@ -980,7 +981,7 @@ client/proc/toggle_ghost_respawns()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle VPN Blacklist"
 	set desc = "Toggle the ability for new players to connect through a VPN or proxy server"
-	admin_only
+	ADMIN_ONLY
 	if(rank_to_level(src.holder.rank) >= LEVEL_PA)
 #ifdef DO_VPN_CHECKS
 		vpn_blacklist_enabled = !vpn_blacklist_enabled
@@ -998,7 +999,7 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle Spooky Light Mode"
 	set desc = "toggle thresholded lighting plane"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
-	admin_only
+	ADMIN_ONLY
 
 	var/inp = input(usr, "What lighting threshold to set? 0 - 255", "What lighting threshold to set? 0 - 255. Cancel to disable.", 255 - 24) as num|null
 	if(!isnull(inp))

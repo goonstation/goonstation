@@ -77,7 +77,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		. = "<br><span class='notice'>[reagents.get_description(user,rc_flags)]</span>"
 		return
 
-	MouseDrop(atom/over_object as obj)
+	mouse_drop(atom/over_object as obj)
 		if (!can_mousedrop)
 			boutput(usr, "<span class='alert'>Nope.</span>")
 			return
@@ -170,7 +170,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 					src.reagents.reaction(target,TOUCH)
 				else
 					src.reagents.reaction(target, TOUCH, min(src.amount_per_transfer_from_this,src.reagents.total_volume))
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					if (src.splash_all_contents) src.reagents.clear_reagents()
 					else src.reagents.remove_any(src.amount_per_transfer_from_this)
 					can_mousedrop = 1
@@ -265,7 +265,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 			if (src.splash_all_contents) src.reagents.reaction(target,TOUCH)
 			else src.reagents.reaction(target, TOUCH, min(src.amount_per_transfer_from_this,src.reagents.total_volume))
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				if (src.splash_all_contents) src.reagents.clear_reagents()
 				else src.reagents.remove_any(src.amount_per_transfer_from_this)
 				can_mousedrop = 1

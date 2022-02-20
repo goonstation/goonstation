@@ -14,7 +14,7 @@
 		src.create_reagents(10)
 		reagents.add_reagent("cleaner", 5)
 		reagents.add_reagent("water", 5)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src.float_anim)
 				for (var/atom/movable/A in src.loc)
 					if (!A.anchored)
@@ -186,7 +186,7 @@
 		var/original_y = pixel_y
 		var/wiggle = 6
 
-		SPAWN_DBG(0) //need spawn, why would we sleep in attack_hand that's disgusting
+		SPAWN(0) //need spawn, why would we sleep in attack_hand that's disgusting
 			while (wiggle > 0)
 				wiggle--
 				animate(src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 2, easing = EASE_IN)
@@ -542,7 +542,7 @@
 		..()
 		if (!src.name || (src.name in list("N blind switch", "E blind switch", "S blind switch", "W blind switch")))//== "N light switch" || name == "E light switch" || name == "S light switch" || name == "W light switch")
 			src.name = "blind switch"
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.locate_blinds()
 	ex_act(var/severity)
 		switch(severity)

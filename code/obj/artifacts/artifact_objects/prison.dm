@@ -32,7 +32,7 @@
 			user.set_loc(O)
 			O.ArtifactFaultUsed(user)
 			prisoner = user
-			SPAWN_DBG(imprison_time)
+			SPAWN(imprison_time)
 				if (!O.disposed) //ZeWaka: Fix for null.contents
 					O.ArtifactDeactivated()
 

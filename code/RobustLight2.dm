@@ -672,7 +672,7 @@ turf
 
 		var/old_lights = src.RL_Lights
 		var/old_opacity = src.opacity
-		SPAWN_DBG(0) // ugghhh fuuck
+		SPAWN(0) // ugghhh fuuck
 			if (old_lights)
 				if (!RL_Lights)
 					RL_Lights = old_lights

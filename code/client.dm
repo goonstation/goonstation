@@ -192,12 +192,12 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		src.loadResources()
 
 /*
-	SPAWN_DBG(rand(4,18))
+	SPAWN(rand(4,18))
 		if(proxy_check(src.address))
 			logTheThing("diary", null, src, "Failed Login: [constructTarget(src,"diary")] - Using a Tor Proxy Exit Node", "access")
 			if (announce_banlogin) message_admins("<span class='internal'>Failed Login: [src] - Using a Tor Proxy Exit Node (IP: [src.address], ID: [src.computer_id])</span>")
 			boutput(src, "You may not connect through TOR.")
-			SPAWN_DBG(0) del(src)
+			SPAWN(0) del(src)
 			return
 */
 
@@ -378,7 +378,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
 							logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]", "admin")
 							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked! VPN info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]], fraud score: [data["fraud_score"]]")
-							ircbot.export("admin", list(key="VPN Blocker", name="[src.key]", msg="[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]], fraud score: [data["fraud_score"]]"))
+							ircbot.export_async("admin", list(key="VPN Blocker", name="[src.key]", msg="[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]], fraud score: [data["fraud_score"]]"))
 							if(do_compid_analysis)
 								do_computerid_test(src) //Will ban yonder fucker in case they are prix
 								check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations
@@ -419,7 +419,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	clients += src
 
-	SPAWN_DBG(0) // to not lock up spawning process
+	SPAWN(0) // to not lock up spawning process
 		if (IsGuestKey(src.key))
 			src.has_contestwinner_medal = 0
 		else if (!config || !config.medal_hub || !config.medal_password)
@@ -442,7 +442,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - ok mostly done")
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		updateXpRewards()
 
 	//tg controls stuff
@@ -450,7 +450,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	tg_controls = winget( src, "menu.tg_controls", "is-checked" ) == "true"
 	tg_layout = winget( src, "menu.tg_layout", "is-checked" ) == "true"
 
-	SPAWN_DBG(3 SECONDS)
+	SPAWN(3 SECONDS)
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 		var/is_newbie = 0
 #endif
@@ -642,7 +642,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		src.control_freak = 0
 
 	if (browse_item_initial_done)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			sendItemIcons(src)
 
 	// fixing locked ability holders
@@ -693,7 +693,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	if (!length(params))
 		return
 	if ((params["screenW"]/params["screenH"]) <= (4/3))
-		SPAWN_DBG(6 SECONDS)
+		SPAWN(6 SECONDS)
 			if(alert(src, "You appear to be using a 4:3 aspect ratio! The Horizontal Split option is reccomended for your display. Activate Horizontal Split?",,"Yes","No") == "Yes")
 				set_splitter_orientation(0)
 				winset( src, "menu", "horiz_split.is-checked=true" )
@@ -865,7 +865,7 @@ var/global/curr_day = null
 		var/addr = address
 		var/ck = ckey
 		var/cid = computer_id
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (geoip_check(addr))
 				var/addData[] = new()
 				addData["ckey"] = ck
@@ -994,7 +994,7 @@ var/global/curr_day = null
 			ircmsg["key2"] = target
 			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
-			ircbot.export("pm", ircmsg)
+			ircbot.export_async("pm", ircmsg)
 
 			//we don't use message_admins here because the sender/receiver might get it too
 			for (var/client/C)
@@ -1028,7 +1028,7 @@ var/global/curr_day = null
 			ircmsg["key2"] = target
 			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
-			ircbot.export("mentorpm", ircmsg)
+			ircbot.export_async("mentorpm", ircmsg)
 
 			//we don't use message_admins here because the sender/receiver might get it too
 			var/mentormsg = "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>"
@@ -1081,7 +1081,7 @@ var/global/curr_day = null
 				ircmsg["key2"] = (M != null && M.client != null && M.client.key != null) ? M.client.key : ""
 				ircmsg["name2"] = (M != null && M.real_name != null) ? stripTextMacros(M.real_name) : ""
 				ircmsg["msg"] = html_decode(t)
-				ircbot.export("mentorpm", ircmsg)
+				ircbot.export_async("mentorpm", ircmsg)
 
 				var/mentormsg = "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>"
 				for (var/client/C)
@@ -1302,7 +1302,7 @@ var/global/curr_day = null
 /client/verb/set_tg_controls()
 	set hidden = 1
 	set name = "set-tg-controls"
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		set_controls(!tg_controls)
 
 
@@ -1339,7 +1339,7 @@ var/global/curr_day = null
 /client/verb/set_tg_layout()
 	set hidden = 1
 	set name = "set-tg-layout"
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		set_layout(!tg_layout)
 
 /client/verb/set_fps()

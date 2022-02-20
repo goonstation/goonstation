@@ -238,7 +238,7 @@ proc/vox_play(var/input, var/user, var/pitch = 1)
 	for (var/client/C in clients)
 		if (C.ignore_sound_flags & (SOUND_VOX | SOUND_ALL))
 			continue
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/datum/VOXsound/vxx in soundQueue)
 				vxx.play(C)
 				sleep(0.1 SECONDS)
@@ -2582,7 +2582,7 @@ proc/init_vox()
 "zulu" = new/datum/VOXsound("zulu", "sound/vox/zulu.ogg", LETTER | NOUN)
 )
 
-	SPAWN_DBG(0.1 SECONDS)
+	SPAWN(0.1 SECONDS)
 		for(var/id in voxsounds)
 			var/datum/VOXsound/vox = voxsounds[id]
 			vox.ogg = file(vox.ogg)

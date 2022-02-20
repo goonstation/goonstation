@@ -46,7 +46,7 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] wraps neon lining around \his neck and tightens it.</b></span>")
 		user.take_oxygen_deprivation(160)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1

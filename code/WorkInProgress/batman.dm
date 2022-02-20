@@ -4,7 +4,7 @@
 /mob/living/carbon/human/batman
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(src.bioHolder)
 				src.bioHolder.age = 120
 				src.bioHolder.AddEffect("nightvision", 0, 0, 0)
@@ -81,7 +81,7 @@
 	var/pow_type = pick(/obj/decal/batman_pow, /obj/decal/batman_pow/wham)
 	var/obj/decal/batman_pow/pow = new pow_type(target_location)
 	animate_portal_appear(pow)
-	SPAWN_DBG(1 SECOND) qdel(pow)
+	SPAWN(1 SECOND) qdel(pow)
 
 /mob/proc/batsmoke()
 	set category = "Batman"
@@ -196,7 +196,7 @@
 	if(usr.stat)
 		boutput(usr, "<span class='alert'>Not when you're incapped!</span>")
 		return
-	SPAWN_DBG(0)
+	SPAWN(0)
 		T.setStatus("stunned", 10 SECONDS)
 		usr.visible_message("<span class='alert'><B>[usr] leaps into the air, shocking [T]!</B></span>", "<span class='alert'><B>You leap into the air, shocking [T]!</B></span>")
 		for(var/i = 0, i < 5, i++)
@@ -265,7 +265,7 @@
 	set name = "Bat Spin \[Finisher]"
 	set desc = "Grab someone and spin them around until they explode"
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		usr.visible_message("<span class='alert'><B>[usr] grabs [T] tightly!</B></span>", "<span class='alert'><B>You grab [T] tightly!</B></span>")
 		T.u_equip(l_hand)
 		T.u_equip(r_hand)

@@ -59,7 +59,7 @@
 			icon_state = "factory_arm"
 			status &= ~NOPOWER
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				src.name = "inactive [initial(src.name)]"
 				icon_state = "factory_arm_sleep"
 				status |= NOPOWER
