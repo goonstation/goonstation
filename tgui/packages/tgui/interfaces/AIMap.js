@@ -2,21 +2,21 @@ import { useBackend, useLocalState } from '../backend';
 import { Button, ByondUi } from '../components';
 import { Window } from '../layouts';
 
-export const AIMap = (props, context) => {
+export const AIMap = (params, context) => {
   return (
-    <Window>
+    <Window
+      width={600}
+      height={600}
+    >
       <Window.Content>
         <ByondUi
           params={{
-            type: 'button',
-            text: 'Hello world',
-          }} />
-        <ByondUi
-          params={{
             type: 'map',
-            id: "mapwindow.map",
-            zoom: '2',
-            pos: "144,84",
+            id: "ai_map",
+          }}
+          style={{
+            width: "600px",
+            height: "600px",
           }} />
       </Window.Content>
     </Window>

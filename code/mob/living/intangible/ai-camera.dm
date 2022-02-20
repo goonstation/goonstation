@@ -37,6 +37,9 @@
 
 	var/outer_eye_atom = null
 
+	var/datum/tgui/map_ui
+	var/static/obj/station_map/map
+
 	New()
 		src.cancel_camera()
 		last_loc = src.loc
@@ -479,8 +482,32 @@
 		set name = "Open map"
 		set desc = "Hopefully opens the map"
 		set category = "AI Commands"
-		var/datum/tgui/map = new(usr, src, "AIMap")
-		map.open()
+		map_ui = tgui_process.try_update_ui(usr, src, map_ui)
+		if (!map_ui)
+			boutput(usr, "Loading ui_map")
+			map_ui = new(usr, src, "AIMap")
+			winset(src.client, "ai_map", list2params(list(
+				// "parent" = map_ui.window.id,
+				"type" = "map",
+				"zoom" = "2",
+				"size" = "300,300",
+			)))
+			var/atom/movable/screen/handler = new
+			handler.plane = 0
+			handler.mouse_opacity = 0
+			handler.screen_loc = "ai_map:1,1"
+			src.client.screen += handler
+
+			if (!map)
+				map = new
+				map.screen_loc = "ai_map;1,1"
+				map.pixel_y += 20 //magic numbers because ByondUI mis-aligns by a few pixels
+				map.pixel_x += 8
+				handler.vis_contents += map
+				src.client.screen += map
+
+			map_ui.open()
+
 
 //---TURF---//
 /turf/var/image/aiImage
