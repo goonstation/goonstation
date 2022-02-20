@@ -1,4 +1,9 @@
 
+(t)sun feb 20 22
+(u)FlameArrow57
+(p)7413
+(e)🆕|feature
+(*)Security computers now provide a SecHUD flag that can be set for someone. If a person has an active arrest status, the flag will appear in their examine report for anyone wearing SecHUDs.
 (t)sat feb 19 22
 (u)Flappybat
 (p)7373

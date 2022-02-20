@@ -50,30 +50,17 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 		if (!holder)
 			return 1
 
-		var/mob/living/carbon/human/H = target
-		if (!istype(H))
+		if (!ishuman(target))
 			boutput(holder.owner, "Your target must be human!")
 			return 1
 
-		var/datum/abilityHolder/A = src.holder
-		if (H.traitHolder.hasTrait("training_chaplain"))
-			boutput(A, "<span class='alert'>[H] has divine protection from magic.</span>")
-			H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
-			JOB_XP(H, "Chaplain", 2)
+		var/mob/living/carbon/human/H = target
+
+		if (targetSpellImmunity(H, TRUE, 2))
 			return 1
 
-		if (iswizard(H))
-			H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
-
-		if(!IN_RANGE(target, holder.owner, max_range))
-			return 1
-
-		if (check_target_immunity( H ))
-			H.visible_message("<span class='alert'>[H] seems to be warded from the effects!</span>")
-			return 1
-
-		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [target]!</b></span>")
-		actions.start(new/datum/action/bar/polymorph(target, src), holder.owner)
+		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [H]!</b></span>")
+		actions.start(new/datum/action/bar/polymorph(usr, target, src), holder.owner)
 
 /datum/action/bar/polymorph
 	duration = 2 SECONDS
@@ -82,30 +69,41 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 
 	var/datum/targetable/spell/animal/spell
 	var/mob/living/carbon/human/target
-	var/mob/living/carbon/human/M
+	var/datum/abilityHolder/A
+	var/mob/living/M
 
-	New(Target, Spell)
+	New(Source, Target, Spell)
 		target = Target
 		spell = Spell
-		M = spell.holder.owner
+		A = spell.holder
+		M = Source
 		..()
 
 	onStart()
 		..()
-		if (!spell.holder || get_dist(M, target) > spell.max_range || !target || !M || !ishuman(target) || !M.wizard_castcheck(spell))
+
+		if (isnull(A) || get_dist(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onUpdate()
 		..()
 
-		if (!spell.holder || get_dist(M, target) > spell.max_range || !target || !M || !ishuman(target) || !M.wizard_castcheck(spell))
+		if (isnull(A) || get_dist(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
 		..()
 
-		if(!istype(get_area(spell.holder), /area/sim/gunsim))
+		if(!istype(get_area(M), /area/sim/gunsim))
 			M.say("YORAF UHRY") // AN EMAL? PAL EMORF? TURAN SPHORM?
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))
+					playsound(H.loc, spell.voice_grim, 50, 0, -1)
+				else if(spell.voice_fem && H.gender == "female")
+					playsound(H.loc, spell.voice_fem, 50, 0, -1)
+				else if (spell.voice_other)
+					playsound(H.loc, spell.voice_other, 50, 0, -1)
 
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 		smoke.set_up(5, 0, target.loc)
