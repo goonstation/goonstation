@@ -424,7 +424,6 @@
 				var/max_move = rand(8, 12)
 				adir = (360 + adir + clamp((180 - (540 - ndir + adir) % 360), -max_move, max_move)) % 360
 				if(adir != old_adir)
-					use_power(power_usage)
 					UpdateIcon()
 
 				update_solar_exposure()
