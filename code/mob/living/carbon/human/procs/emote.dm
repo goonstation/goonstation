@@ -2201,6 +2201,9 @@
 			if (speechpopups && src.chat_text)
 				chat_text = make_chat_maptext(src, maptext_out, "color: #C2BEBE;" + src.speechpopupstyle, alpha = 140)
 				if(chat_text)
+					if(m_type & 1)
+						chat_text.plane = PLANE_NOSHADOW_ABOVE
+						chat_text.layer = 420
 					chat_text.measure(src.client)
 					for(var/image/chat_maptext/I in src.chat_text.lines)
 						if(I != chat_text)
