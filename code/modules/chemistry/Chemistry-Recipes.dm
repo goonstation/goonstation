@@ -1874,6 +1874,7 @@ datum
 			required_reagents = list("cold_medicine" = 1, "ethanol" = 1, "cola" = 1)
 			result_amount = 3
 			mix_phrase = "The ingredients mix together into a deep purple."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
 
 		lean/lean2
 			id = "lean2"
