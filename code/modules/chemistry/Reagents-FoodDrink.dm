@@ -4251,7 +4251,7 @@ datum
 				if(severity == 1)
 					if(effect <= 4)
 						M.emote(pick("drool", "shiver", "shudder", "blink"))
-						M.visible_message("<span class='alert'><b>[M.name] calapses!</b> ")
+						M.visible_message("<span class='alert'><b>[M.name] callapses!</b> ")
 						boutput(M, "<span class='alert'><b>You feel your heart beat slow!</b></span>")
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 10 SECONDS))
 						M.take_toxin_damage(2 * mult)
