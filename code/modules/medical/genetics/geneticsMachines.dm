@@ -250,6 +250,8 @@
 	logTheThing("diary", who, null, "[action] but failed validation.", "debug")
 
 /obj/machinery/computer/genetics/ui_status(mob/user)
+	if (!src.allowed(user))
+		return UI_CLOSE
 	if (user in src.scanner)
 		return UI_UPDATE
 	return ..()

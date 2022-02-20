@@ -1053,7 +1053,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	power = 0
 	cost = 1
 	damage_type = D_SPECIAL
-	shot_delay = 1 DECI SECOND
+	shot_delay = 0.1 SECONDS
 	dissipation_rate = 0
 	dissipation_delay = 0
 	ks_ratio = 0

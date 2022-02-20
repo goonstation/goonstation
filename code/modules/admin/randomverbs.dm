@@ -26,7 +26,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	set name = "Drop Everything"
-	admin_only
+	ADMIN_ONLY
 
 	M.unequip_all()
 
@@ -38,7 +38,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	set name = "Prison"
-	admin_only
+	ADMIN_ONLY
 
 	if (M && ismob(M))
 		var/area/A = get_area(M)
@@ -162,7 +162,7 @@
 	set name = "Admin PM"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	do_admin_pm(M.ckey, src.mob) //Changed to work off of ckeys instead of mobs.
 
@@ -173,7 +173,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set name = "Admin Alert"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	var/client/Mclient = M.client
 
@@ -242,7 +242,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	set name = "Mute Permanently"
-	admin_only
+	ADMIN_ONLY
 	if (M.client && M.client.holder && (M.client.holder.level >= src.holder.level))
 		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 		return
@@ -265,7 +265,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	set name = "Mute Temporarily"
-	admin_only
+	ADMIN_ONLY
 	if (M.client && M.client.holder && (M.client.holder.level >= src.holder.level))
 		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 		return
@@ -288,7 +288,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "AI: Add Law"
 
-	admin_only
+	ADMIN_ONLY
 
 	var/input = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text
 	if (!input)
@@ -309,7 +309,7 @@
 		boutput(O, "<h3><span class='notice'>New law uploaded by Centcom: [input]</span></h3>")
 		O << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 		ticker.centralized_ai_laws.show_laws(O)
-	for (var/mob/dead/aieye/E in mobs)
+	for (var/mob/living/intangible/aieye/E in mobs)
 		boutput(E, "<h3><span class='notice'>New law uploaded by Centcom: [input]</span></h3>")
 		E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 		ticker.centralized_ai_laws.show_laws(E)
@@ -324,7 +324,7 @@
 /client/proc/cmd_admin_bulk_law_change()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "AI: Bulk Law Change"
-	admin_only
+	ADMIN_ONLY
 	var/list/built = list()
 	if (ticker.centralized_ai_laws.zeroth)
 		built += "0:[ticker.centralized_ai_laws.zeroth]"
@@ -362,7 +362,7 @@
 		boutput(O, "<h3><span class='notice'>New laws were uploaded by CentCom:</span></h3>")
 		O << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 		ticker.centralized_ai_laws.show_laws(O)
-	for (var/mob/dead/aieye/E in mobs)
+	for (var/mob/living/intangible/aieye/E in mobs)
 		boutput(E, "<h3><span class='notice'>New laws were uploaded by CentCom:</span></h3>")
 		E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 		ticker.centralized_ai_laws.show_laws(E)
@@ -396,7 +396,7 @@
 /client/proc/cmd_admin_reset_ai()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "AI: Law Reset"
-	admin_only
+	ADMIN_ONLY
 
 	if (alert(src, "Are you sure you want to reset the AI's laws?", "Confirmation", "Yes", "No") == "Yes")
 		ticker.centralized_ai_laws.set_zeroth_law("")
@@ -417,7 +417,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Heal"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 	if(!src.mob)
 		return
 	if(isobserver(M))
@@ -436,7 +436,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Heal All"
 
-	admin_only
+	ADMIN_ONLY
 	if (alert(src, "Are you sure?", "Confirmation", "Yes", "No") == "Yes")
 		var/heal_dead = alert(src, "Heal and revive the dead?", "Confirmation", "Yes", "No")
 		var/healed = 0
@@ -457,7 +457,7 @@
 /client/proc/cmd_admin_create_centcom_report()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Create Command Report"
-	admin_only
+	ADMIN_ONLY
 	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as null|message
 	if(!input)
 		return
@@ -478,7 +478,7 @@
 /client/proc/cmd_admin_create_advanced_centcom_report()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Adv. Command Report"
-	admin_only
+	ADMIN_ONLY
 
 	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as null|message
 	if (!input)
@@ -495,7 +495,7 @@
 /client/proc/cmd_admin_advanced_centcom_report_help()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Adv. Command Report - Help"
-	admin_only
+	ADMIN_ONLY
 
 	var/T = {"<TT><h1>Advanced Command Report</h1><hr>
 	This report works exactly like the normal report, except it sends a tailored message
@@ -594,7 +594,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Stabilize Atmos."
 	set desc = "Resets the air contents of every turf in view to normal."
-	admin_only
+	ADMIN_ONLY
 	SPAWN(0)
 		for(var/turf/simulated/T in view())
 			if(!T.air)
@@ -682,7 +682,7 @@
 	set name = "View Player Notes"
 	set desc = "View the notes for a current player's key."
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
-	admin_only
+	ADMIN_ONLY
 
 	src.holder.viewPlayerNotes(ckey(target))
 
@@ -690,7 +690,7 @@
 	set name = "Set Player LoginNotice"
 	set desc = "Change a player's login notice."
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
-	admin_only
+	ADMIN_ONLY
 
 	src.holder.setLoginNotice(ckey(target))
 
@@ -750,7 +750,7 @@
 		..()
 
 	Topic(href, href_list) // Assumption here, that we've always been the thing we're TFing into
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(href_list["close"])
 			qdel(src)
 			return
@@ -1124,7 +1124,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Aview"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 	if (!src.holder)
 		boutput(src, "Only administrators may use this command.")
 		return
@@ -1149,7 +1149,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "iddt"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 	usr.client.cmd_admin_advview()
 	if (src.adventure_view)
 		src.mob.bioHolder.AddEffect("xray", magical = 1)
@@ -1217,7 +1217,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set desc = "Lookup a player by string (can search: mob names, byond keys and job titles)"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	target = trim(lowertext(target))
 	if (!target) return 0
@@ -1241,7 +1241,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set desc = "Lookup everyone who's dead"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	var/msg = "<span class='notice'>"
 	var/list/whodead = whodead()
@@ -1262,7 +1262,7 @@
 	set desc = "For testing rewards on local servers."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	SPAWN(0)
 		boutput(usr, "<span class='alert'>Generating reward list.</span>")
@@ -1301,7 +1301,7 @@
 	set popup_menu = 0
 	set name = "Check Health"
 	set desc = "Checks the health of someone."
-	admin_only
+	ADMIN_ONLY
 
 	if (!target)
 		return
@@ -1315,7 +1315,7 @@
 	set popup_menu = 0
 	set name = "Check Reagents"
 	set desc = "Checks the reagents of something."
-	admin_only
+	ADMIN_ONLY
 
 	src.check_reagents_internal(target,)
 
@@ -1452,7 +1452,7 @@
 	set desc = "Open the player options panel for a key."
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	src.POK(ckey)
 
@@ -1461,7 +1461,7 @@
 	set desc = "Open the player options panel for a key."
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	var/mob/target
 	if (!ckey)
@@ -1481,7 +1481,7 @@
 	set desc = "Open the player options panel for a selected mob."
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if (!M)
 		M = input("Please, select a player!", "Player Options (Mob)", null, null) as null|anything in mob
@@ -1492,7 +1492,7 @@
 		src.holder.playeropt(M)
 
 /obj/proc/addpathogens()
-	usr_admin_only
+	USR_ADMIN_ONLY
 	var/obj/A = src
 	if(!A.reagents) A.create_reagents(100)
 	var/amount = input(usr,"Amount:","Amount",50) as num
@@ -1512,7 +1512,7 @@
 	set name = "Add Reagent"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	if(!A.reagents) A.create_reagents(100)
 
@@ -1554,7 +1554,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Cat County"
 	set desc = "We can't stop here!"
-	admin_only
+	ADMIN_ONLY
 
 	var/catcounter = 0
 	for(var/obj/vehicle/segway/S in by_type[/obj/vehicle])
@@ -1575,7 +1575,7 @@
 /client/proc/revive_all_bees()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Revive All Bees"
-	admin_only
+	ADMIN_ONLY
 
 	var/revived = 0
 	for (var/obj/critter/domestic_bee/Bee in world)
@@ -1605,7 +1605,7 @@
 /client/proc/revive_all_cats()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Revive All Cats"
-	admin_only
+	ADMIN_ONLY
 
 	var/revived = 0
 	for (var/obj/critter/cat/Cat in world)
@@ -1624,7 +1624,7 @@
 /client/proc/revive_all_parrots()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Revive All Parrots"
-	admin_only
+	ADMIN_ONLY
 
 	var/revived = 0
 	for (var/obj/critter/parrot/Bird in world)
@@ -1654,7 +1654,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set desc = "Transfer a client to the selected mob."
 	set popup_menu = 0 //Imagine if we could have subcategories in the popup menus. Wouldn't that be nice?
-	admin_only
+	ADMIN_ONLY
 
 	if (M.ckey)
 		var/con = alert("[M] currently has a ckey. Continue?",, "Yes", "No")
@@ -1682,7 +1682,7 @@
 	set desc = "Swaps yours and the other person's bodies around."
 	set popup_menu = 0 //Imagine if we could have subcategories in the popup menus. Wouldn't that be nice?
 
-	admin_only
+	ADMIN_ONLY
 	if(!M || M == usr ) return
 
 	if(usr.mind)
@@ -1768,7 +1768,7 @@
 			S2.show_text("<b>Your laws have been changed!</b>", "red")
 			S2 << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 			S2.show_laws()
-		for (var/mob/dead/aieye/E in mobs)
+		for (var/mob/living/intangible/aieye/E in mobs)
 			E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 
 	switch (former_role)
@@ -1820,7 +1820,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set desc = "Creates a foam reaction."
 	set popup_menu = 1
-	admin_only
+	ADMIN_ONLY
 
 	if (!A)
 		return
@@ -1841,7 +1841,7 @@
 //	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 //	set desc = "Creates a smoke reaction."
 //	set popup_menu = 1
-//	admin_only
+//	ADMIN_ONLY
 
 //	if (!A)
 //		return
@@ -1858,7 +1858,7 @@
 	set name = "Create smoke"
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	var/list/L = list()
 	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
@@ -1901,7 +1901,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set desc = "Attempt a fluid reaction on a turf."
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if (!T)
 		return
@@ -1940,7 +1940,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set desc = "Attempt an airborne fluid reaction on a turf."
 	set popup_menu = 1
-	admin_only
+	ADMIN_ONLY
 
 	if (!T)
 		return
@@ -1991,7 +1991,7 @@
 	set popup_menu = 0
 	set name = "Follow Thing"
 	set desc = "It's like observing, but without that part where you see everything as the person you're observing. Move to cancel if an observer, or use any jump command to leave if alive."
-	admin_only
+	ADMIN_ONLY
 
 	usr:set_loc(target)
 	logTheThing("admin", usr, target, "began following [target].")
@@ -2001,7 +2001,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set name = "Observe Random Player"
 	set desc = "Observe a random living logged-in player."
-	admin_only
+	ADMIN_ONLY
 
 	if (!isobserver(src.mob))
 		boutput(src, "<span class='alert'>Error: you must be an observer to use this command.</span>")
@@ -2031,7 +2031,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "ORP"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	src.admin_observe_random_player()
 
@@ -2039,7 +2039,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set name = "Pick Random Player"
 	set desc = "Picks a random logged-in player and brings up their player panel."
-	admin_only
+	ADMIN_ONLY
 
 	var/what_group = input(src, "What group would you like to pick from?", "Selection", "Everyone") as null|anything in list("Everyone", "Traitors Only", "Non-Traitors Only")
 	if (!what_group)
@@ -2076,7 +2076,7 @@ var/global/night_mode_enabled = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle Night Mode"
 	set desc = "Switch the station into night mode so the crew can rest and relax off-work."
-	admin_only
+	ADMIN_ONLY
 
 	night_mode_enabled = !night_mode_enabled
 	message_admins("[key_name(src)] toggled Night Mode [night_mode_enabled ? "on" : "off"]")
@@ -2093,7 +2093,7 @@ var/global/night_mode_enabled = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle AI VOX"
 	set desc = "Grant or revoke AI access to VOX"
-	admin_only
+	ADMIN_ONLY
 
 	var/answer = alert("Set AI VOX access.", "Fun stuff.", "Grant Access", "Revoke Access", "Cancel")
 	switch(answer)
@@ -2133,7 +2133,7 @@ var/global/night_mode_enabled = 0
 	set name = "Modify Organs"
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if (!istype(H))
 		boutput(usr, "<span class='alert'>This can only be used on humans!</span>")
@@ -2248,7 +2248,7 @@ var/global/night_mode_enabled = 0
 	set name = "Display Bomb Monitor"
 	set desc = "Get a list of every canister- and tank-transfer bomb on station."
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
-	admin_only
+	ADMIN_ONLY
 	if(!bomb_monitor) bomb_monitor = new
 	bomb_monitor.display_ui(src.mob, 1)
 
@@ -2257,7 +2257,7 @@ var/global/night_mode_enabled = 0
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 	if (alert(usr, "Wanted poster or custom poster?", "Select Poster Style", "Wanted", "Custom") == "Wanted")
 		gen_wp(target)
 	else
@@ -2269,7 +2269,7 @@ var/global/night_mode_enabled = 0
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	if (src.holder.level >= LEVEL_MOD)
 		if (ismob(M))
@@ -2287,7 +2287,7 @@ var/global/night_mode_enabled = 0
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	if (!msg)
 		msg = input("Enter message", "Message", "[src.key] earned the Banned medal.") as null|text
@@ -2318,7 +2318,7 @@ var/global/night_mode_enabled = 0
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	if (!M || !src.mob || !M.client || !M.client.player || !M.client.player.shamecubed)
 		return 0
@@ -2352,7 +2352,7 @@ var/global/night_mode_enabled = 0
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	if (!M || !src.mob || !M.client || !M.client.player || M.client.player.shamecubed)
 		return 0
@@ -2397,7 +2397,7 @@ var/global/night_mode_enabled = 0
 	set name = "Make Shitty Weapon"
 	set desc = "make some stupid junk, laugh"
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	admin_only
+	ADMIN_ONLY
 
 	if (src.holder.level >= LEVEL_PA)
 		var/obj/O = makeshittyweapon()
@@ -2411,7 +2411,7 @@ var/global/night_mode_enabled = 0
 	set desc = "take someone's handcuffs off!"
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if (!istype(M))
 		usr.show_text("You can only remove handcuffs from mobs.", "red")
@@ -2436,7 +2436,7 @@ var/global/night_mode_enabled = 0
 	set name = "Toggle Lighting"
 	set desc = "Turns the scary darkness off"
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
-	admin_only
+	ADMIN_ONLY
 
 	if (!src.holder)
 		boutput(src, "Only administrators may use this command.")
@@ -2456,7 +2456,7 @@ var/global/night_mode_enabled = 0
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	if(!telesci_modifiers_set)
 		boutput(src, "No telesci modifiers! Perhaps they haven't been set up yet.")
@@ -2476,7 +2476,7 @@ var/global/night_mode_enabled = 0
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	if (!target_key)
 		target_key = input("Enter target key", "Target account key", null) as null|text
@@ -2502,7 +2502,7 @@ var/global/night_mode_enabled = 0
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	if (!config || !config.medal_hub || !config.medal_password)
 		return
@@ -2532,7 +2532,7 @@ var/global/night_mode_enabled = 0
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	if (!config || !config.medal_hub || !config.medal_password)
 		return
@@ -2565,7 +2565,7 @@ var/global/night_mode_enabled = 0
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	if(alert("Disable admin powers? Lasts until you log in or you cancel the effect.", "Disable admin powers?", "Yes", "No") == "Yes")
 		message_admins("[key_name(src)] has shut off their admin powers.")
@@ -2590,7 +2590,7 @@ var/global/night_mode_enabled = 0
 	set name = "Toggle Text Mode"
 	set desc = "Makes a client see the game in ASCII vision."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	admin_only
+	ADMIN_ONLY
 
 	var/is_text = winget(C,  "mapwindow.map", "text-mode") == "true"
 	logTheThing("admin", usr, C.mob, "has toggled [constructTarget(C.mob,"admin")]'s text mode to [!is_text]")
@@ -2604,7 +2604,7 @@ var/global/night_mode_enabled = 0
 	set desc = "Retreat to my office at centcom."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	//it's a mess, sue me
 	var/list/areas = get_areas(/area/centcom/offices)
@@ -2637,7 +2637,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	set desc = "Expand your domain across dimensional planes."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	var/turf/src_turf = get_turf(src.mob)
 	if (!src_turf) return
@@ -2789,7 +2789,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Special Shuttle"
 	set desc = "Spawn in a special escape shuttle"
-	admin_only
+	ADMIN_ONLY
 	if(src.holder.level >= LEVEL_ADMIN)
 		var/list/shuttles = get_prefab_shuttles()
 		var/datum/prefab_shuttle/shuttle = shuttles[tgui_input_list(src, "Select a shuttle", "Special Shuttle", shuttles)]
@@ -2804,7 +2804,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Ship to Cargo"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if (AM.anchored)
 		boutput(src, "Target is anchored and you probably shouldn't be shipping it!")
@@ -2820,7 +2820,7 @@ var/global/force_radio_maptext = FALSE
 /client/proc/toggle_radio_maptext()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Toggle Forced Radio maptext"
-	admin_only
+	ADMIN_ONLY
 
 	if(holder && src.holder.level >= LEVEL_ADMIN)
 		if(!force_radio_maptext)
@@ -2846,7 +2846,7 @@ var/global/force_radio_maptext = FALSE
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "idkfa"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 	boutput(usr, "<span class='notice'><b>Very Happy Ammo Added</b></span>")
 
 	// yes... ha ha ha... YES!

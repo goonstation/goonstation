@@ -132,7 +132,7 @@ var/datum/artifact_controller/artifact_controls
 		usr.Browse(dat,"window=artifacts;size=400x600")
 
 	Topic(href, href_list[])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if (href_list["Activate"])
 			var/obj/O = locate(href_list["Activate"]) in src.artifacts
 			if (!istype(O,/obj/))

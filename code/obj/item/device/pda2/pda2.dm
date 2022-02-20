@@ -1145,7 +1145,7 @@
 		if (S.mainframe && S.mainframe == loc)
 			return 1
 	if (isAIeye(user))
-		var/mob/dead/aieye/E = user
+		var/mob/living/intangible/aieye/E = user
 		if (E.mainframe)
 			return 1
 	return ..(user)

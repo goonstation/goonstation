@@ -1906,14 +1906,16 @@ datum
 				if (ismob(holder.my_atom))
 					var/mob/M = holder.my_atom
 					if (ismartian(M))
-						M.add_stun_resist_mod("reagent_martian_flesh", 15)
+						APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "reagent_martian_flesh", 15)
+						APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "reagent_martian_flesh", 15)
 				..()
 
 			on_remove()
 				if (ismob(holder.my_atom))
 					var/mob/M = holder.my_atom
 					if (ismartian(M))
-						M.remove_stun_resist_mod("reagent_martian_flesh")
+						REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "reagent_martian_flesh")
+						REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "reagent_martian_flesh")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)

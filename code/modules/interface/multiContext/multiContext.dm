@@ -73,7 +73,7 @@
 		else if (isAI(src))
 			var/mob/living/silicon/ai/A = src
 			if (isAIeye(src))
-				var/mob/dead/aieye/AE = src
+				var/mob/living/intangible/aieye/AE = src
 				A = AE.mainframe
 			A.hud.remove_screen(C)
 

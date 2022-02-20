@@ -693,7 +693,7 @@ proc/get_angle(atom/a, atom/b)
 	for_by_tcl(M, /mob/living/silicon/ai)
 		. += M
 		LAGCHECK(LAG_REALTIME)
-	for(var/mob/dead/aieye/M in mobs)
+	for(var/mob/living/intangible/aieye/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/living/silicon/robot/M in mobs)

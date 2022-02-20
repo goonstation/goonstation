@@ -99,7 +99,7 @@ proc/check_compid_list(var/client/C)
 					logTheThing("diary", C, null, "[key_name(C)][msg]", "admin")
 
 				ircmsg["msg"] = "(IP: [C.address]) [msg]"
-				ircbot.export("admin", ircmsg)
+				ircbot.export_async("admin", ircmsg)
 
 
 		//Done with the analysis
@@ -128,7 +128,7 @@ proc/do_computerid_test(var/client/C)
 	ircmsg["key"] =  C.key
 	ircmsg["name"] = stripTextMacros(C.mob.real_name)
 	ircmsg["msg"] = " [msg]"
-	ircbot.export("admin", ircmsg)
+	ircbot.export_async("admin", ircmsg)
 	message_admins("[key_name(C)][msg]")
 	logTheThing("admin", C, null, msg)
 	logTheThing("diary", C, null, msg, "admin")

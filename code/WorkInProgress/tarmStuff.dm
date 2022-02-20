@@ -146,7 +146,7 @@
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	shot_number = 3
-	shot_delay = 0.4
+	shot_delay = 0.04 SECONDS
 	shot_sound = 'sound/weapons/gunshot.ogg'
 	shot_volume = 66
 	dissipation_delay = 10
@@ -429,7 +429,7 @@
 				message_admins("[user] ([user?.ckey]) has made a suggestion in [src]:<br>[P.name]<br><br>[copytext(P.info,1,MAX_MESSAGE_LEN)]")
 				var/ircmsg[] = new()
 				ircmsg["msg"] = "[user] ([user?.ckey]) has made a suggestion in [src]:\n**[P.name]**\n[strip_html_tags(P.info)]"
-				ircbot.export("admin", ircmsg)
+				ircbot.export_async("admin", ircmsg)
 				taken_suggestion = 1
 			user.u_equip(P)
 			qdel(P)

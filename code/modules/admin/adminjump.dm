@@ -4,7 +4,7 @@
 	set name = "Jump"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	if(config.allow_admin_jump)
 		if(flourish)
@@ -31,7 +31,7 @@
 	set name = "Jump To Turf"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 	if(config.allow_admin_jump)
 		//Wire note: attempted fix for: Cannot read null.x (I guess the target turf...disappeared?)
 		if (!T) return
@@ -51,14 +51,14 @@
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "JTT"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 	src.jumptoturf(T)
 
 /client/proc/jumptomob(var/mob/M in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Jump to Mob"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if(config.allow_admin_jump)
 		logTheThing("admin", usr, M, "jumped to [constructTarget(M,"admin")] ([log_loc(M)])")
@@ -74,7 +74,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "JTM"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 	src.jumptomob(M)
 
 /client/proc/jumptokey(var/client/ckey in clients)
@@ -82,7 +82,7 @@
 	set name = "Jump to Key"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	if(config.allow_admin_jump)
 		var/mob/target
@@ -106,7 +106,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "JTK"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 	src.jumptokey(ckey)
 
 /client/proc/jumptocoord(var/x = 1 as num, var/y = 1 as num, var/z = 1 as num)
@@ -114,7 +114,7 @@
 	set name = "Jump to Coord"
 	set desc = "Jump to a coordinate in world (x, y, z)"
 
-	admin_only
+	ADMIN_ONLY
 
 	if(config.allow_admin_jump)
 		if (x > world.maxx || x < 1 || y > world.maxy || y < 1 || z > world.maxz || z < 1)
@@ -134,7 +134,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "JTC"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 	src.jumptocoord(x, y, z)
 
 /client/proc/Getmob(var/mob/M in world)
@@ -142,7 +142,7 @@
 	set name = "Get Mob"
 	set desc = "Mob to teleport"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 	if(config.allow_admin_jump)
 		logTheThing("admin", usr, M, "teleported [constructTarget(M,"admin")] ([log_loc(usr)])")
 		logTheThing("diary", usr, M, "teleported [constructTarget(M,"diary")] ([log_loc(usr)])", "admin")
@@ -155,7 +155,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Send Mob"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 	if(config.allow_admin_jump)
 		var/list/turfs = get_area_turfs(A, 1)
 		if (!length(turfs))
@@ -179,7 +179,7 @@
 	set name = "Send all Human Mobs"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 	if(config.allow_admin_jump)
 		for(var/mob/living/carbon/human/H in mobs)
 			H.set_loc(pick(get_area_turfs(A)))
@@ -195,7 +195,7 @@
 	set name = "Send all Mobs"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 	if(config.allow_admin_jump)
 		for(var/mob/living/M in mobs)
 			M.set_loc(pick(get_area_turfs(A)))
@@ -211,7 +211,7 @@
 	set name = "Get all Human Mobs"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
 			if("Yes")
@@ -231,7 +231,7 @@
 	set name = "Get all Mobs"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
 			if("Yes")
@@ -252,7 +252,7 @@
 	set desc = "Teleports any mob with a client to you."
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
 			if("Yes")
@@ -274,7 +274,7 @@
 	set name = "Get all Traitors"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
 			if("Yes")
@@ -295,7 +295,7 @@
 	set name = "Get all Non-Traitors"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
 			if("Yes")
@@ -317,7 +317,7 @@
 	set popup_menu = 0
 	set name = "Get Thing"
 	set desc = "Gets either a mob or an object, bringing it right to you! Wow!"
-	admin_only
+	ADMIN_ONLY
 
 	if (config.allow_admin_jump)
 		logTheThing("admin", usr, null, "teleported [target] to their turf ([log_loc(usr)] from [log_loc(target)])")
@@ -334,7 +334,7 @@
 	set popup_menu = 0
 	set name = "Get Thing (Location)"
 	set desc = "Gets either a mob or an object, bringing it right to your loc! Wow!"
-	admin_only
+	ADMIN_ONLY
 
 	if (config.allow_admin_jump)
 		logTheThing("admin", usr, null, "teleported [target] to their loc ([log_loc(usr)] from [log_loc(target)])")
