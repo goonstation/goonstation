@@ -1,5 +1,9 @@
 
 (t)sun feb 20 22
+(u)AmazingDragons
+(p)7437
+(e)🆕|feature
+(*)Added a new morale-boosting problem to the mainframe for control of your favorite guardbuddies!
 (u)Yellow/Myco
 (p)7545
 (e)⚖|balance
