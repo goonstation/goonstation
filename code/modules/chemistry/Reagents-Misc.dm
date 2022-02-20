@@ -808,7 +808,6 @@ datum
 			transparency = 180
 			viscosity = 0.8
 			block_slippy = 1
-			pierces_outerwear = 1
 			var/counter
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
