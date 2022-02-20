@@ -150,7 +150,7 @@ toxic - poisons
 	power = 8
 	cost = 10
 	shot_number = 10
-	shot_delay = 0.7
+	shot_delay = 0.07 SECONDS
 	dissipation_delay = 7
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
@@ -273,7 +273,7 @@ toxic - poisons
 	power = 15
 	cost = 8
 	shot_number = 8
-	shot_delay = 1
+	shot_delay = 0.1 SECONDS
 	dissipation_delay = 12
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
@@ -300,7 +300,7 @@ toxic - poisons
 	power = 1
 	cost = 2
 	shot_number = 16
-	shot_delay = 0.7
+	shot_delay = 0.07 SECONDS
 	dissipation_delay = 8
 	silentshot = 1
 	slow = 0
