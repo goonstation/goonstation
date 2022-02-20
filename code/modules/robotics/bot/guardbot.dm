@@ -3582,7 +3582,6 @@
 				if (ckey(check_name) == ckey(src.protected_name))
 					src.protected = C
 					buddy_is_dork = 1
-					//src.desired_emotion = GUARDING_EMOTION
 					master.speak("Level 9F [pick("unhappy person","person in need of cheering-up","coolest person on the station","genius","friend","joke-defiency")] detected!")
 					master.point(C)
 					return
