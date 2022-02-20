@@ -131,14 +131,11 @@
 
 	New()
 		..()
-		/*fabrImg = image(icon, "spacemat")
-		visrImg = image(icon, "spacemat-vis")
-		overlays += fabrImg
-		overlays += visrImg*/
+
 		visrImg = SafeGetOverlayImage("visor", src.icon, "spacemat-vis")
 		fabrImg = SafeGetOverlayImage("helmet", src.icon, "spacemat")
 
-	proc/setupVisorMat(var/datum/material/V) // this does everything that the updatematerial() proc doesn't
+	proc/setupVisorMat(var/datum/material/V)
 		visr_material = copyMaterial(V) // in 99% of all calls this is redundant but just in case
 		if (visr_material)
 			if (visr_material.hasProperty("thermal"))
@@ -167,32 +164,6 @@
 
 		fabrImg.color = src.material
 		UpdateOverlays(fabrImg, "helmet")
-
-
-
-	/*proc/setVisrMaterial(var/datum/material/M)
-		visr_material = copyMaterial(M)
-
-		overlays -= visrImg// old overlay code incase I need to go back to it
-			visrImg.color = M.color
-			visrImg.alpha = M.alpha
-		else
-			visrImg.color = null
-			visrImg.alpha = 255
-		overlays += visrImg*/
-
-
-
-
-	onMaterialChanged()// since color already initalized in setup visor mat, only take alpha
-
-	/*	overlays -= fabrImg
-		if (src.material)
-			fabrImg.alpha = src.material.alpha
-		else
-			fabrImg.color = null
-			fabrImg.alpha = 255
-		overlays += fabrImg*/
 
 
 	UpdateName()
