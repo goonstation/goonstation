@@ -1,5 +1,9 @@
 
 (t)sun feb 20 22
+(u)Yellow/Myco
+(p)7545
+(e)⚖|balance
+(+)Staff Assistants now spawn with a Civilian Headset, giving them access to the civilian channel
 (u)FlameArrow57
 (p)7413
 (e)🆕|feature
