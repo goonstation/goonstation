@@ -282,6 +282,13 @@
 	resist()
 		return 0 //can't actually resist anything because there's nothing to resist, but maybe the hot key could be used for something?
 
+	//death stuff that should be passed to mainframe
+	gib(give_medal, include_ejectables) //this should be admin only, I would hope
+		message_admins("something gibbed the AI - if this wasn't an admin action, something has gone badly wrong")
+		return mainframe.gib(give_medal, include_ejectables)
+
+
+
 	proc/mainframe_check()
 		if (mainframe)
 			if (isdead(mainframe))
