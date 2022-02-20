@@ -820,7 +820,7 @@ datum
 						L.setStatus("staggered", max(M.getStatusDuration("staggered"), 3*volume_passed))
 						if(!ON_COOLDOWN(M, "stuck in glue", 15 SECOND))
 							boutput(M, "<span class='notice'>You get stuck in the glue!</span>")
-					if(L.getStatusDuration("slowed")< 10 SECONDS)
+					else
 						if(volume_passed<25)
 							L.changeStatus("slowed", 4*volume_passed, optional = 4)
 						else
