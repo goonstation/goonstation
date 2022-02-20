@@ -126,7 +126,7 @@
 			if(sec_record)
 				var/sechud_flag = sec_record["sec_flag"]
 				if (lowertext(sechud_flag) != "none")
-					. += "<br><span class='notice'>[src.name] has a Security HUD flag set for them: [sechud_flag]</span>"
+					. += "<br><span class='notice'>[src.name] has a Security HUD flag set:</span> <span class='alert'>[sechud_flag]</span>"
 
 	if (src.is_jittery)
 		switch(src.jitteriness)
