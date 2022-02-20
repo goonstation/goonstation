@@ -2018,8 +2018,8 @@ datum
 
 		glue
 			name = "Space Glue"
-			id = "glue"
-			result = "glue"
+			id = "spaceglue"
+			result = "spaceglue"
 			required_reagents = list("plasma" = 1, "phenol" = 1, "oxygen" = 1, "hydrogen" = 1, "formaldehyde" = 1)
 			result_amount = 5
 			mix_phrase = "The substance turns a dull yellow and becomes thick and sticky."

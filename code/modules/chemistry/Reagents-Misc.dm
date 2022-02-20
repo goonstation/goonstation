@@ -817,15 +817,12 @@ datum
 					var/mob/living/L = M
 					. = 0
 
-					if(L.getStatusDuration("slowed")>10 SECONDS)
-						L.setStatus("staggered", max(M.getStatusDuration("staggered"), 3*volume_passed))
+					if(L.getStatusDuration("slowed")>=10 SECONDS)
+						L.setStatus("staggered", max(M.getStatusDuration("staggered"), (0.3 SECONDS)*volume_passed))
 						if(!ON_COOLDOWN(M, "stuck in glue", 15 SECOND))
 							boutput(M, "<span class='notice'>You get stuck in the glue!</span>")
-					if(L.getStatusDuration("slowed")< 10 SECONDS)
-						if(volume_passed<25)
-							L.changeStatus("slowed", 4*volume_passed, optional = 4)
-						else
-							L.changeStatus("slowed", 10 SECONDS, optional = 4)
+					else
+						L.changeStatus("slowed", min((0.4 SECONDS)*volume_passed, 10 SECONDS))
 				return
 
 			reaction_turf(var/turf/target, var/volume)
