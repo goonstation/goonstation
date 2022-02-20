@@ -3,13 +3,15 @@
 	centcom_headline = "Equipment Malfunction"
 	centcom_message = "An electromagnetic storm recently passed by the station. Sensitive electrical equipment may require maintenance."
 	message_delay = 5 MINUTES
-	var/stage_delay // the fraction of message_time taken up by each stage of the ion storm
+	/// The fraction of message_time taken up by each stage of the ion storm
+	var/stage_delay
 	var/list/new_laws = list()
 	var/list/datum/ion_category/categories
 
 	New()
 		..()
 		build_categories()
+		//including an extra + 1 stage for the initial AI law changes
 		stage_delay = 1 / (length(categories) + 1)
 		new_laws = list(
 #ifndef RP_MODE
