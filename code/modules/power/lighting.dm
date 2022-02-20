@@ -56,6 +56,7 @@
 	name = "Area Lighting"
 	event_handler_flags = IMMUNE_SINGULARITY | USE_FLUID_ENTER
 	invisibility = INVIS_ALWAYS_ISH
+	anchored = 2
 	var/area/my_area = null
 	var/list/lights = list()
 	var/brightness_placeholder = 1	//hey, maybe later use this in a way that is more optimized than iterating through each individual light
