@@ -159,8 +159,8 @@
 					var/mob/living/carbon/human/M = C.mob
 					if (M.ears) boutput(M, "<span class='alert'>Your headset speaker suddenly bursts into weird static!</span>")
 				signal_loss += 100
-				sleep(10 SECONDS)
-				signal_loss -= 100
+				SPAWN(10 SECONDS)
+					signal_loss -= 100
 			if("grilles")
 				W.visible_message("<span class='alert'><B>[W]</B> reshapes the metal around \him!</span>")
 				playsound(W.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 25, 1, -1)
