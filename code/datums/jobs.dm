@@ -1230,8 +1230,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 2
 	wages = PAY_UNTRAINED
 	low_priority_job = 1
-	slot_jump = list(/obj/item/clothing/under/color/lightpurple)
-	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_jump = list(/obj/item/clothing/under/color/white)
+	slot_foot = list(/obj/item/clothing/shoes/white)
 	slot_belt = list(/obj/item/device/pda2/toxins)
 	slot_ears = list(/obj/item/device/radio/headset/research)
 
@@ -1246,10 +1246,10 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 2
 	wages = PAY_UNTRAINED
 	low_priority_job = 1
-	slot_jump = list(/obj/item/clothing/under/scrub,/obj/item/clothing/under/scrub/teal,/obj/item/clothing/under/scrub/blue,/obj/item/clothing/under/scrub/purple,/obj/item/clothing/under/scrub/orange,/obj/item/clothing/under/scrub/pink)
-	slot_foot = list(/obj/item/clothing/shoes/white)
+	slot_jump = list(/obj/item/clothing/under/scrub = 30,/obj/item/clothing/under/scrub/teal = 14,/obj/item/clothing/under/scrub/blue = 14,/obj/item/clothing/under/scrub/purple = 14,/obj/item/clothing/under/scrub/orange = 14,/obj/item/clothing/under/scrub/pink = 14)
+	slot_foot = list(/obj/item/clothing/shoes/red)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
-	slot_belt = list(/obj/item/device/pda2/medical) 
+	slot_belt = list(/obj/item/device/pda2/medical)
 
 	New()
 		..()
