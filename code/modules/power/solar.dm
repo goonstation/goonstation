@@ -416,7 +416,7 @@
 		sgen *= PROCESSING_TIER_MULTI(src)
 		add_avail(sgen)
 		if(powernet && control)
-			if(control.get_direct_powernet() == powernet) //this line right here...
+			if(control.get_direct_powernet() == powernet) // this line right here...
 				control.gen += sgen
 
 		if(adir != ndir)
