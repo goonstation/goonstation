@@ -579,7 +579,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		var/action_taken = input("What do you want to do?","AI Unit") in actions
 		switch (action_taken)
 			if ("Remove CPU Unit")
-				src.eject_brain()
+				src.eject_brain(user)
 
 			if ("Restart AI")
 				src.try_rebooting_it(user)

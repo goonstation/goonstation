@@ -241,4 +241,4 @@ var/global/deathConfettiActive = 0
 	var/ircmsg[] = new()
 	ircmsg["key"] = src.key
 	ircmsg["msg"] = logMessage
-	ircbot.export("admin", ircmsg)
+	ircbot.export_async("admin", ircmsg)
