@@ -4280,7 +4280,7 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if(method == INGEST)
-					M.visible_message("<span class='alert'><b>[M.name]</b> looks relaxed!</span>")
+					M.visible_message("<span class='notice'><b>[M.name]</b> looks relaxed!</span>")
 					boutput(M, "<span class='notice'><b>All your worries wash away!</b></span>")
 					M.emote(pick("laugh"))
 				return
