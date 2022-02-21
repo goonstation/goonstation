@@ -21,7 +21,7 @@
 	var/antisight = 0
 	var/centerlight = null
 	var/centerlight_color = "#ffffff"
-	var/see_invisible = 2
+	var/see_invisible = INVIS_CLOAK
 	var/scanning = 0
 	var/atom/tracking_target = null
 	var/const/SENSOR_REFRESH_RATE = 10
@@ -43,7 +43,7 @@
 		M.sight &= ~SEE_MOBS
 		M.sight &= ~SEE_OBJS
 		M.see_in_dark = initial(M.see_in_dark)
-		M.see_invisible = 0
+		M.see_invisible = INVIS_NONE
 		end_tracking()
 		scanning = 0
 
@@ -209,7 +209,7 @@
 		if (src.tracking_target && get_dist(src,src.tracking_target) <= seekrange)
 			scanning = 0		//remove this if we want to force the user to manually stop tracking before trying to track something else
 			boutput(usr, "<span class='notice'>Tracking target: [src.tracking_target.name]</span>")
-			SPAWN_DBG(0)		//Doing this to redraw the scanner window after the topic call that uses this fires.
+			SPAWN(0)		//Doing this to redraw the scanner window after the topic call that uses this fires.
 				begin_tracking(0)
 		else
 			boutput(usr, "<span class='notice'>Unable to locate target.</span>")
@@ -222,7 +222,7 @@
 			return
 		src.tracking_target = O
 		boutput(usr, "<span class='notice'>Tracking target: [src.tracking_target.name]</span>")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			begin_tracking(0)
 		for(var/mob/M in ship)
 			if (M.using_dialog_of(src))
@@ -235,9 +235,9 @@
 		scanning = 1
 		if (href_list["dest_cords"])
 			tracking_target = null
-			var/x = text2num(href_list["x"])
-			var/y = text2num(href_list["y"])
-			var/z = text2num(href_list["z"])
+			var/x = text2num_safe(href_list["x"])
+			var/y = text2num_safe(href_list["y"])
+			var/z = text2num_safe(href_list["z"])
 			if (!x || !y/* || !z*/)
 				boutput(usr, "<span class='alert'>'0' is an invalid gps coordinate. Try again.</span>")
 				return
@@ -256,7 +256,7 @@
 				src.tracking_target = T
 				boutput(usr, "<span class='notice'>Now tracking: <b>X</b>: [T.x], <b>Y</b>: [T.y]</span>")
 				scanning = 0		//remove this if we want to force the user to manually stop tracking before trying to track something else
-				SPAWN_DBG(0)		//Doing this to redraw the scanner window after the topic call that uses this fires.
+				SPAWN(0)		//Doing this to redraw the scanner window after the topic call that uses this fires.
 					begin_tracking(1)
 		sleep(1 SECOND)
 		scanning = 0
@@ -309,7 +309,7 @@
 			if (!isturf(M.loc))	// || ship.Find(M)
 				continue
 			if ((ship.z == M.z) && get_dist(ship.loc, M) <= src.seekrange)
-				if(!isdead(M))
+				if(!isdead(M) && !isintangible(M))
 #ifdef UNDERWATER_MAP
 					if (istype(M,/mob/living/critter/aquatic/fish)) continue
 #endif
@@ -415,7 +415,7 @@ proc/build_html_gps_form(var/atom/A, var/show_Z=0, var/atom/target)
 /obj/item/shipcomponent/sensor/ecto
 	name = "Ecto-Sensor 900"
 	desc = "The number one choice for reasearchers of the supernatural."
-	see_invisible = 15
+	see_invisible = INVIS_GHOST
 	power_used = 40
 	icon_state = "sensor-g"
 

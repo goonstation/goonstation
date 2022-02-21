@@ -3,7 +3,7 @@
 	name = "trash bag"
 	desc = "A flimsy bag for filling with things that are no longer wanted."
 	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
 	icon_state = "trashbag-f"
 	uses_multiple_icon_states = 1
@@ -46,6 +46,9 @@
 			return
 		if (W.cant_self_remove)
 			boutput(user, "<span class='alert'>You can't get [W] to come off of you!</span>")
+			return
+		if (istype(W, /obj/item/clothing/under/trash_bag))
+			boutput(user, "<span class='alert'>You can't put a [W] into another trash bag?! Are you crazy?!</span>")
 			return
 		else if ((src.current_stuff + W.w_class) > src.max_stuff) // we too full
 			boutput(user, "<span class='alert'>\The [src] is too full for [W] to fit!</span>")
@@ -121,7 +124,7 @@
 				src.loc.visible_message("\An [A] falls out of [src]!")
 			A.set_loc(get_turf(src))
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		..()
 		if (!usr || usr.stat || usr.restrained() || get_dist(src, usr) > 1 || get_dist(usr, over_object) > 1)
 			return

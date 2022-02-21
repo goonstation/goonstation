@@ -22,6 +22,7 @@
 	/datum/commodity/trader/generic/telecrystal,
 	/datum/commodity/trader/generic/glowstick,
 	/datum/commodity/trader/generic/gasmask,
+	/datum/commodity/trader/generic/monkey,
 	/datum/commodity/trader/ringtone_dogs)
 	/*
 	/datum/commodity/trader/synthmodule/bacteria,
@@ -60,8 +61,8 @@
 
 /datum/commodity/trader/generic/fabric
 	comname = "Cloth Fabric"
-	comtype = /obj/item/raw_material/fabric
-	price_boundary = list(5,7)
+	comtype = /obj/item/material_piece/cloth/cottonfabric
+	price_boundary = list(60,70)
 	possible_names = list("We have lots of cloth for sale. Good for making clothes with.",
 	"We have a great deal of cloth we need to shift soon, so please buy it!")
 
@@ -88,6 +89,14 @@
 	price_boundary = list(200, 500)
 	possible_names = list("We have a surplus of gas masks. Need any?",
 	"We seem to have ordered too many gas masks, so we're putting the extras up for sale.")
+
+/datum/commodity/trader/generic/monkey
+	comname = "Monkeys"
+	comtype = /mob/living/carbon/human/npc/monkey
+	amount = 4
+	price_boundary = list(250, 1000)
+	possible_names = list("We found a few stowaway monkeys on our ship. Feel free to take them off our hands.",
+	"We seem to have a simian situation, and are selling them for a cheap price.")
 
 /datum/commodity/trader/synthmodule
 	comname = "Synth-O-Matic module"
@@ -207,7 +216,7 @@
 /datum/commodity/trader/generic/jumpsuits
 	comname = "Jumpsuits"
 	comtype = /obj/item/clothing/under/
-	price_boundary = list(75,150)
+	price_boundary = list(135,210)
 	possible_names = list("We're drafting in some new staff soon, and need new jumpsuits.",
 	"We need any jumpsuits you can spare. Don't ask.")
 

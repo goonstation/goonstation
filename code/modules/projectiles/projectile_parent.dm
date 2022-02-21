@@ -5,8 +5,9 @@
 
 /obj/projectile
 	name = "projectile"
-	flags = TABLEPASS
+	flags = TABLEPASS | UNCRUSHABLE
 	layer = EFFECTS_LAYER_BASE
+	anchored = 1
 
 	var/xo
 	var/yo
@@ -82,7 +83,7 @@
 		if(proj_data)
 			proj_data.post_setup(src)
 		if (!QDELETED(src))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (!is_processing)
 					process()
 
@@ -170,10 +171,7 @@
 				if (proj_data.hit_mob_sound)
 					playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
 			SEND_SIGNAL(A, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
-			for (var/obj/item/device/disguiser/D in A.contents)
-				if (D.on)
-					D.disrupt(A)
-					src.visible_message("<span class='notice'><b>[A]'s disguiser is disrupted!</b></span>")
+			SEND_SIGNAL(A, COMSIG_DISGUISER_DEACTIVATE)
 			if (ishuman(A))
 				var/mob/living/carbon/human/H = A
 				H.stamina_stun()
@@ -184,7 +182,7 @@
 			if(sigreturn & PROJ_ATOM_PASSTHROUGH || (pierces_left != 0 && first && !(sigreturn & PROJ_ATOM_CANNOT_PASS))) //try to hit other targets on the tile
 				for (var/mob/X in T.contents)
 					if(!(X in src.hitlist))
-						if (!X.CanPass(src, get_step(src, X.dir), 1, 0))
+						if (!X.Cross(src))
 							src.collide(X, first = 0)
 					if(QDELETED(src))
 						return
@@ -206,7 +204,7 @@
 			if(first && (sigreturn & PROJ_OBJ_HIT_OTHER_OBJS))
 				for (var/obj/X in T.contents)
 					if(!(X in src.hitlist))
-						if (!X.CanPass(src, get_step(src, X.dir), 1, 0))
+						if (!X.Cross(src))
 							src.collide(X, first = 0)
 					if(QDELETED(src))
 						return
@@ -318,13 +316,14 @@
 		curr_t = 0
 		src.was_setup = 1
 
-	Bump(var/atom/A)
+	bump(var/atom/A)
 		src.collide(A)
 
 	Crossed(var/atom/movable/A)
+		..()
 		if (!istype(A))
 			return // can't happen will happen
-		if (!A.CanPass(src, get_step(src, A.dir), 1, 0))
+		if (!A.Cross(src))
 			src.collide(A)
 
 		if (collide_with_other_projectiles && A.type == src.type)
@@ -337,7 +336,7 @@
 		for(var/thing as mob|obj|turf|area in T)
 			var/atom/A = thing
 			if (A == src) continue
-			if (!A.CanPass(src, get_step(src, A.dir), 1, 0))
+			if (!A.Cross(src))
 				src.collide(A)
 
 			if (collide_with_other_projectiles && A.type == src.type)
@@ -488,7 +487,7 @@ datum/projectile
 		shot_sound_extrarange = 0 //should the sound have extra range?
 		shot_volume = 100		 // How loud the sound plays (thank you mining drills for making this a needed thing)
 		shot_number = 0          // How many projectiles should be fired, each will cost the full cost
-		shot_delay = 1          // Time between shots in a burst.
+		shot_delay = 0.1 SECONDS          // Time between shots in a burst.
 		damage_type = D_KINETIC  // What is our damage type
 		hit_type = null          // For blood system damage - DAMAGE_BLUNT, DAMAGE_CUT and DAMAGE_STAB
 		hit_ground_chance = 0    // With what % do we hit mobs laying down
@@ -498,7 +497,6 @@ datum/projectile
 		implanted                // Path of "bullet" left behind in the mob on successful hit
 		disruption = 0           // planned thing to deal with pod electronics / etc
 		zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
-		caliber = null
 
 		datum/material/material = null
 
@@ -550,15 +548,15 @@ datum/projectile
 			switch (type)
 				if ("K")
 					if (iscarbon(hit))
-						E = unpool(/obj/itemspecialeffect/impact/blood)
+						E = new /obj/itemspecialeffect/impact/blood
 					else if (issilicon(hit))
-						E = unpool(/obj/itemspecialeffect/impact/silicon)
+						E = new /obj/itemspecialeffect/impact/silicon
 				if ("E")
 					if (iscarbon(hit))
-						E = unpool(/obj/itemspecialeffect/impact/energy)
+						E = new /obj/itemspecialeffect/impact/energy
 				if ("T")
 					if (iscarbon(hit))
-						E = unpool(/obj/itemspecialeffect/impact/taser)
+						E = new /obj/itemspecialeffect/impact/taser
 
 			if (E)
 				E.setup(hit.loc)
@@ -607,7 +605,7 @@ datum/projectile/laser
 	impact_range = 16
 	ie_type = "E"
 
-datum/projectile/laser/pred
+datum/projectile/laser/plasma
 	impact_range = 2
 
 datum/projectile/laser/light
@@ -740,7 +738,7 @@ datum/projectile/snowball
 		return null
 	var/obj/projectile/Q = shoot_projectile_relay(S, DATA, T, remote_sound_source, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			for (var/i = 2, i < DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
 				shoot_projectile_relay(S, DATA, T, remote_sound_source, alter_proj = alter_proj)
@@ -753,7 +751,7 @@ datum/projectile/snowball
 		return null
 	var/obj/projectile/Q = shoot_projectile_relay_pixel(S, DATA, T, pox, poy, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
 				shoot_projectile_relay_pixel(S, DATA, T, pox, poy, alter_proj = alter_proj)
@@ -766,7 +764,7 @@ datum/projectile/snowball
 		return null
 	var/obj/projectile/Q = shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
 				shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle, alter_proj = alter_proj)
@@ -819,7 +817,7 @@ datum/projectile/snowball
 		return
 	var/obj/projectile/Q = shoot_projectile_XY_relay(S, DATA, xo, yo, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
 				shoot_projectile_XY_relay(S, DATA, xo, yo, alter_proj = alter_proj)

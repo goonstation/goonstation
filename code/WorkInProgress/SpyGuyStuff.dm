@@ -47,7 +47,7 @@ Fibre wire
 
 		if(ticker?.mode) //Yes, I'm sure my runtimes will matter if the goddamn TICKER is gone.
 			for(var/datum/mind/M in (ticker.mode.Agimmicks | ticker.mode.traitors)) //We want an EVIL ghost
-				if(!M.dnr && M.current && isobserver(M.current) && M.current.client && M.special_role != "vampthrall" && M.special_role != "mindslave")
+				if(!M.dnr && M.current && isobserver(M.current) && M.current.client && M.special_role != ROLE_VAMPTHRALL && M.special_role != ROLE_MINDSLAVE)
 					priority_targets.Add(M.current)
 
 		if(!priority_targets.len) //Okay, fine. Any ghost. *sigh
@@ -67,12 +67,12 @@ Fibre wire
 		src.set_loc(H.loc)
 		src.layer = EFFECTS_LAYER_4
 		playsound(src.loc, 'sound/ambience/spooky/Void_Calls.ogg', 40, 1)
-		SPAWN_DBG(0) animate_levitate(src, -1)
+		SPAWN(0) animate_levitate(src, -1)
 		H.emote("scream")
 
 		H.changeStatus("weakened", 10 SECONDS)
 
-		SPAWN_DBG(7 SECONDS)
+		SPAWN(7 SECONDS)
 			if(!H)
 				being_mean = 0
 				return
@@ -108,7 +108,7 @@ proc/Create_Tommyname()
 /mob/proc/tommyize()
 	src.transforming = 1
 	src.canmove = 0
-	src.invisibility = 101
+	src.invisibility = INVIS_ALWAYS
 	for(var/obj/item/clothing/O in src)
 		src.u_equip(O)
 		if (O)
@@ -122,7 +122,7 @@ proc/Create_Tommyname()
 	else
 		T.key = src.key
 
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		qdel(src)
 
 /mob/living/carbon/human/proc/tommyize_reshape()
@@ -214,16 +214,13 @@ proc/Create_Tommyname()
 	m_amt = 4000
 	rechargeable = 1
 	force = 0.0
+	cell_type = /obj/item/ammo/power_cell/high_power
 	desc = "It smells of cheap cologne and..."
 
 	New()
-		cell = new/obj/item/ammo/power_cell/high_power
 		set_current_projectile(new/datum/projectile/tommy)
 		projectiles = list(new/datum/projectile/tommy)
 		..()
-
-	update_icon()
-		return
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		for(var/mob/O in AIviewers(user, null))
@@ -232,8 +229,8 @@ proc/Create_Tommyname()
 		return ..(target, start, user)
 
 	update_icon()
-		if(cell)
-			src.icon_state = "tommygun[src.cell.charge <= 0 ? "-empty" : ""]"
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE)
+			src.icon_state = "tommygun[(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE) ? "" : "-empty"]"
 			return
 
 ///////////////////////////////////////Analysis datum for the spectrometer
@@ -309,10 +306,9 @@ proc/Create_Tommyname()
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x2"
 	anchored = 1
-	invisibility = 101
-	event_handler_flags = USE_HASENTERED
+	invisibility = INVIS_ALWAYS
 
-	HasEntered(atom/movable/AM)
+	Crossed(atom/movable/AM)
 		..()
 		on_trigger(AM)
 
@@ -326,7 +322,7 @@ proc/Create_Tommyname()
 	on_trigger(atom/movable/triggerer)
 		if(isliving(triggerer) || locate(/mob) in triggerer)
 			if(!assigned_area) assigned_area = get_area(src)
-			assigned_area.wake_critters()
+			assigned_area.wake_critters(isliving(triggerer) ? triggerer : locate(/mob/living) in triggerer)
 
 /obj/trigger/throw
 	name = "throw trigger"
@@ -406,8 +402,8 @@ proc/Create_Tommyname()
 	desc = "You can tell this gun has been fired!"
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "trumpet"
+	cell_type = /obj/item/ammo/power_cell/high_power
 	New()
-		cell = new/obj/item/ammo/power_cell/high_power
 		set_current_projectile(new/datum/projectile/energy_bolt_v/trumpet)
 		projectiles = list(new/datum/projectile/energy_bolt_v/trumpet)
 		..()
@@ -557,7 +553,7 @@ proc/Create_Tommyname()
 /obj/solar_control
 	name = "solar panel servo"
 	desc = "This machine contains a neatly-folded solar panel, for use when the ship is at little risk of external impacts and low on power."
-	//invisibility = 100
+	//invisibility = INVIS_ALWAYS_ISH
 	icon = 'icons/obj/machines/nuclear.dmi'
 	icon_state = "engineoff"
 	var/extension_dir = WEST
@@ -594,7 +590,7 @@ proc/Create_Tommyname()
 	var/paneldir2 = turn(extension_dir, -90)
 	var/list/turf/panelturfs = list()
 	var/turf/walker = get_turf(src)
-	DEBUG_MESSAGE("Extending panel at [showCoords(src.x, src.y, src.z)]. extension_dir: [extension_dir] ([dir2text(extension_dir)]), paneldir1: [paneldir1] ([dir2text(paneldir1)]), paneldir2: [paneldir2] ([dir2text(paneldir2)])")
+	DEBUG_MESSAGE("Extending panel at [log_loc(src)]. extension_dir: [extension_dir] ([dir2text(extension_dir)]), paneldir1: [paneldir1] ([dir2text(paneldir1)]), paneldir2: [paneldir2] ([dir2text(paneldir2)])")
 	var/total_len = station_padding + controller_padding + (panel_space * (num_panels -1)) + num_panels * panel_width
 	DEBUG_MESSAGE("Determined total length of panel to be [total_len] tiles.")
 
@@ -606,7 +602,7 @@ proc/Create_Tommyname()
 		walker = get_step(walker,extension_dir)
 		/*
 		if(i == 0)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir1, paneldir2 | extension_dir)
 			move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir2, paneldir1 | turn(extension_dir, 180))
 		*/
@@ -628,11 +624,11 @@ proc/Create_Tommyname()
 	DEBUG_MESSAGE("Creating solar panels")
 	var/list/solar_list = list(/turf/simulated/floor/airless/solar, /obj/machinery/power/solar)
 	for(var/turf/T in panelturfs)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/turf/w1 = T
 			var/turf/w2 = T
 			for(var/i = 0; i < panel_length; i++)
-				SPAWN_DBG(-1)
+				SPAWN(-1)
 					move_create_obj(solar_list, w1, paneldir1, paneldir1)
 				w1 = get_step(w1, paneldir1)
 				move_create_obj(solar_list, w2, paneldir2, paneldir2)
@@ -641,7 +637,7 @@ proc/Create_Tommyname()
 	DEBUG_MESSAGE("Creating solar controller")
 	move_create_obj(list(/turf/simulated/floor/plating/airless, /obj/machinery/power/tracker), walker, extension_dir)
 	walker = get_step(walker,extension_dir)
-	SPAWN_DBG(0) move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir1, paneldir2)
+	SPAWN(0) move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir1, paneldir2)
 	move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir2, paneldir1)
 
 	status = STAT_EXTENDED
@@ -656,7 +652,7 @@ proc/Create_Tommyname()
 	for(var/i = panels.len; i > 0; i--)
 		var/list/atom/L = panels[i]
 		for(var/atom/A in L)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				move_and_delete_object(A)
 		sleep(DEFAULT_ANIMATION_TIME)
 
@@ -694,7 +690,7 @@ proc/Create_Tommyname()
 //calculate new px / py
 	if(istype(O, /turf))
 		var/turf/T = O
-		var/obj/movedummy/MD = unpool(/obj/movedummy)
+		var/obj/movedummy/MD = new /obj/movedummy
 		MD.mimic_turf(T.type, 0)
 		MD.set_loc(T)
 		T.ReplaceWithSpace()
@@ -717,7 +713,7 @@ proc/Create_Tommyname()
 	animate_slide(O, npx, npy, animtime)
 	sleep(animtime)
 	if(istype(O, /obj/movedummy))
-		pool(O)
+		qdel(O)
 	else
 		qdel(O)
 
@@ -746,7 +742,7 @@ proc/Create_Tommyname()
 		if(ispath(t_type, /turf))
 			turf_type = t_type
 			break
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for(var/t_type in to_create)
 			var/obj/O
 			is_turf = ispath(t_type, /turf) //If it's a turf we need some special handling.
@@ -757,7 +753,7 @@ proc/Create_Tommyname()
 				if(!is_turf)
 					O = new t_type(null)
 				else
-					var/obj/movedummy/MD = unpool(/obj/movedummy)
+					var/obj/movedummy/MD = new /obj/movedummy
 					MD.mimic_turf(t_type, animtime)
 					O = MD
 
@@ -775,7 +771,7 @@ proc/Create_Tommyname()
 	playsound(T, "sound/effects/airbridge_dpl.ogg", 50, 1)
 	sleep(animtime)
 	if(turf_type)
-		DEBUG_MESSAGE("Creating [turf_type] at [showCoords(T.x, T.y, T.z)]")
+		DEBUG_MESSAGE("Creating [turf_type] at [log_loc(T)]")
 		var/turf/NT = new turf_type(T)
 		if(setdir) NT.set_dir(setdir)
 		created_atoms += NT
@@ -795,17 +791,13 @@ proc/Create_Tommyname()
 	else if ( extension_dir & (EAST|WEST) )
 		.= abs(A.y - src.y)
 
-	DEBUG_MESSAGE("get_dist from [showCoords(A.x, A.y, A.z)] returned: [.]")
+	DEBUG_MESSAGE("get_dist from [log_loc(A)] returned: [.]")
 
 
 //The dummy object that imitates a turf
 /obj/movedummy
 	name = "Dummy object."
-	invisibility = 101
-
-/obj/movedummy/pooled()
-	..()
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 
 /obj/movedummy/proc/mimic_turf(var/turf_type, var/TTL)
 	ASSERT(ispath(turf_type, /turf))
@@ -818,10 +810,10 @@ proc/Create_Tommyname()
 	src.opacity = initial(T.opacity)
 	src.set_dir(initial(T.dir))
 	src.layer = initial(T.layer)
-	src.invisibility = 0
+	src.invisibility = INVIS_NONE
 	if(TTL)
-		SPAWN_DBG(TTL)
-			pool(src)
+		SPAWN(TTL)
+			qdel(src)
 
 #undef STAT_STANDBY
 #undef STAT_MOVING
@@ -855,6 +847,7 @@ proc/Create_Tommyname()
 	desc = "A sturdy wire between two handles. Could be used with both hands to really ruin someone's day."
 	w_class = W_CLASS_TINY
 	c_flags = EQUIPPED_WHILE_HELD
+	object_flags = NO_ARM_ATTACH
 
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "garrote0"
@@ -878,6 +871,7 @@ proc/Create_Tommyname()
 	wire_readied = new_readiness
 	// Try to stretch the wire
 	if(!src.setTwoHanded(new_readiness))
+		usr.show_text("You need two free hands in order to activate the [src.name].", "red")
 		wire_readied = 0
 		return
 
@@ -1060,7 +1054,7 @@ proc/Create_Tommyname()
 // Special grab obj that doesn't care if it's in someone's hands
 /obj/item/grab/garrote_grab
 	// No breaking out under own power
-	break_prob = 0
+	prob_mod = 0
 	var/extra_deadly = 0
 	check()
 		if(!assailant || !affecting)
@@ -1098,7 +1092,7 @@ proc/Create_Tommyname()
 			ircmsg["key"] =  M.key
 			ircmsg["name"] = stripTextMacros(M.real_name)
 			ircmsg["msg"] = "[message] and got themselves got by the anti-cheat cluwne."
-			ircbot.export("admin", ircmsg)
+			ircbot.export_async("admin", ircmsg)
 
 		M.cluwnegib(15, 1)
 

@@ -22,7 +22,7 @@
 			message_admins("Setup of previous Antagonist Spawn hasn't finished yet, aborting.")
 			return
 
-		var/type = input(usr, "Select antagonist type.", "Antagonists", "Blob") as null|anything in list("Blob", "Blob (AI)", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Headspider")
+		var/type = input(usr, "Select antagonist type.", "Antagonists", "Blob") as null|anything in list("Blob", "Blob (AI)", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Headspider", "Arcfiend")
 		if (!type)
 			return
 		else
@@ -74,7 +74,7 @@
 				return
 
 		// Don't lock up the event controller.
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src) src.do_event(source)
 
 		return
@@ -168,9 +168,8 @@
 
 		var/role = null
 		var/objective_path = null
-		var/send_to = 1 // 1: arrival shuttle | 2: wizard shuttle
+		var/send_to = 1 // 1: arrival shuttle/latejoin missile | 2: wizard shuttle | 3: safe start for incorporeal antags
 		var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
-		var/WSLoc = job_start_locations["wizard"] ? pick(job_start_locations["wizard"]) : null
 		var/failed = 0
 
 		switch (src.antagonist_type)
@@ -178,10 +177,11 @@
 				var/mob/living/intangible/blob_overmind/B = M3.make_blob()
 				if (B && istype(B))
 					M3 = B
-					role = "blob"
+					role = ROLE_BLOB
 					objective_path = /datum/objective_set/blob
+					send_to = 3
 
-					SPAWN_DBG(0)
+					SPAWN(0)
 						var/newname = input(B, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
 						if (B && newname)
 							phrase_log.log_phrase("name-blob", newname, no_duplicates=TRUE)
@@ -197,8 +197,9 @@
 				var/mob/living/intangible/flock/flockmind/F = M3.make_flockmind()
 				if (F && istype(F))
 					M3 = F
-					role = "flockmind"
+					role = ROLE_FLOCKMIND
 					//objective_path = /datum/objective_set/blob
+					send_to = 3
 				else
 					failed = 1
 
@@ -206,8 +207,9 @@
 				var/mob/wraith/W = M3.make_wraith()
 				if (W && istype(W))
 					M3 = W
-					role = "wraith"
+					role = ROLE_WRAITH
 					generate_wraith_objectives(lucky_dude)
+					send_to = 3
 				else
 					failed = 1
 
@@ -216,12 +218,12 @@
 				if (R && istype(R))
 					M3 = R
 					R.unequip_all(1)
-					equip_wizard(R)
+					equip_wizard(R, 1)
 					send_to = 2
-					role = "wizard"
+					role = ROLE_WIZARD
 					objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 
-					SPAWN_DBG(0)
+					SPAWN(0)
 						if (R.gender && R.gender == "female")
 							R.real_name = pick_string_autokey("names/wizard_female.txt")
 						else
@@ -236,7 +238,7 @@
 				if (R2 && istype(R2))
 					M3 = R2
 					R2.make_werewolf(1)
-					role = "werewolf"
+					role = ROLE_WEREWOLF
 					objective_path = /datum/objective_set/werewolf
 				else
 					failed = 1
@@ -246,7 +248,7 @@
 				if (R3 && istype(R3))
 					M3 = R3
 					R3.make_hunter()
-					role = "hunter"
+					role = ROLE_HUNTER
 					objective_path = /datum/objective_set/hunter
 				else
 					failed = 1
@@ -256,11 +258,11 @@
 				if (R2 && istype(R2))
 					M3 = R2
 					R2.make_wrestler(1)
-					role = "wrestler"
+					role = ROLE_WRESTLER
 					objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 
 					var/antag_type = src.antagonist_type
-					SPAWN_DBG(0)
+					SPAWN(0)
 						R2.choose_name(3, antag_type, R2.real_name + " the " + antag_type)
 				else
 					failed = 1
@@ -270,11 +272,11 @@
 				if (C && istype(C))
 					M3 = C
 					C.make_wrestler(1)
-					role = "wrestler"
+					role = ROLE_WRESTLER
 					objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 
 					var/antag_type = src.antagonist_type
-					SPAWN_DBG(0)
+					SPAWN(0)
 						C.choose_name(3, antag_type, C.real_name + " the " + antag_type)
 				else
 					failed = 1
@@ -284,7 +286,7 @@
 				if (R2 && istype(R2))
 					M3 = R2
 					R2.make_vampire()
-					role = "vampire"
+					role = ROLE_VAMPIRE
 					objective_path = /datum/objective_set/vampire
 				else
 					failed = 1
@@ -294,7 +296,7 @@
 				if (R2 && istype(R2))
 					M3 = R2
 					R2.make_changeling()
-					role = "changeling"
+					role = ROLE_CHANGELING
 					objective_path = /datum/objective_set/changeling
 				else
 					failed = 1
@@ -304,16 +306,28 @@
 				if (C && istype(C))
 					M3 = C
 					C.make_changeling()
-					role = "changeling"
+					role = ROLE_CHANGELING
 					objective_path = /datum/objective_set/changeling
 					C.remove_ability_holder(/datum/abilityHolder/changeling/)
 				else
 					failed = 1
 
+			if ("Arcfiend")
+				var/mob/living/L = M3.humanize()
+				if (istype(L))
+					L.make_arcfiend()
+					role = ROLE_ARCFIEND
+#ifdef RP_MODE
+					objective_path = /datum/objective_set/traitor/rp_friendly
+#else
+					objective_path = /datum/objective_set/traitor
+#endif
+				else
+					failed = 1
 			else
 				failed = 1
 
-		if (!ASLoc && !WSLoc)
+		if (!ASLoc)
 			failed = 1
 
 		if (failed != 0)
@@ -345,17 +359,22 @@
 
 		switch (send_to)
 			if (1)
-				M3.set_loc(ASLoc)
+				if (map_settings?.arrivals_type == MAP_SPAWN_MISSILE)
+					latejoin_missile_spawn(M3)
+				else
+					M3.set_loc(ASLoc)
 			if (2)
-				if (!WSLoc)
+				if (!job_start_locations["wizard"])
+					boutput(M3, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 					M3.set_loc(ASLoc)
 				else
-					M3.set_loc(WSLoc)
-
+					M3.set_loc(pick(job_start_locations["wizard"]))
+			if (3)
+				M3.set_loc(ASLoc)
 		//nah
 		/*
 		if (src.centcom_headline && src.centcom_message && random_events.announce_events)
-			SPAWN_DBG (src.message_delay)
+			SPAWN(src.message_delay)
 				command_alert("[src.centcom_message]", "[src.centcom_headline]")
 		*/
 

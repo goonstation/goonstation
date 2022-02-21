@@ -18,6 +18,7 @@
 		src.change_mode(omni_mode)
 
 	attack_self(var/mob/user as mob)
+		..()
 		// cycle between modes
 		var/new_mode = null
 		switch (src.omni_mode)

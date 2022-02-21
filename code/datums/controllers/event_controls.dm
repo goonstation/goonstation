@@ -2,22 +2,26 @@ var/datum/event_controller/random_events
 
 /datum/event_controller
 	var/list/events = list()
-	var/major_events_begin = 18000 // 30m
-	var/time_between_events_lower = 6600  // 11m
-	var/time_between_events_upper = 12000 // 20m
+	var/major_events_begin = 30 MINUTES // 30m
+	var/time_between_events_lower = 11 MINUTES  // 11m
+	var/time_between_events_upper = 20 MINUTES // 20m
 	var/events_enabled = 1
 	var/announce_events = 1
 	var/event_cycle_count = 0
 
 	var/list/minor_events = list()
-	var/minor_events_begin = 6000 // 10m
-	var/time_between_minor_events_lower = 4000 // roughly 8m
-	var/time_between_minor_events_upper = 8000 // roughly 14m
+	var/minor_events_begin = 10 MINUTES // 10m
+	var/time_between_minor_events_lower = 400 SECONDS // roughly 8m
+	var/time_between_minor_events_upper = 800 SECONDS // roughly 14m
 	var/minor_events_enabled = 1
 	var/minor_event_cycle_count = 0
 
 	var/list/antag_spawn_events = list()
-	var/alive_antags_threshold = 0.06
+#ifdef RP_MODE
+	var/alive_antags_threshold = 0.04
+#else
+	var/alive_antags_threshold = 0.1
+#endif
 	var/list/player_spawn_events = list()
 	var/dead_players_threshold = 0.3
 	var/spawn_events_begin = 23 MINUTES
@@ -61,27 +65,29 @@ var/datum/event_controller/random_events
 		if (emergency_shuttle.location > SHUTTLE_LOC_STATION || current_state == GAME_STATE_FINISHED)
 			return
 
-		if (TIME >= major_events_begin)
-			if (TIME >= next_major_event)
+		if (ticker.round_elapsed_ticks >= major_events_begin)
+			if (ticker.round_elapsed_ticks >= next_major_event)
 				event_cycle()
 
-		if (TIME >= spawn_events_begin)
-			if (TIME >= next_spawn_event)
+		if (ticker.round_elapsed_ticks >= spawn_events_begin)
+			if (ticker.round_elapsed_ticks >= next_spawn_event)
 				spawn_event()
 
-		if (TIME >= minor_events_begin)
-			if (TIME >= next_minor_event)
+		if (ticker.round_elapsed_ticks >= minor_events_begin)
+			if (ticker.round_elapsed_ticks >= next_minor_event)
 				minor_event_cycle()
 
 	proc/event_cycle()
 		event_cycle_count++
-		if (events_enabled && (total_clients() >= minimum_population))
-			do_random_event(events)
-		else
+		if (total_clients() <= minimum_population)
+			message_admins("<span class='internal'>A random event would have happened now, but there aren't enough players!</span>")
+		else if (!events_enabled)
 			message_admins("<span class='internal'>A random event would have happened now, but they are disabled!</span>")
+		else
+			do_random_event(events)
 
 		major_event_timer = rand(time_between_events_lower,time_between_events_upper)
-		next_major_event = TIME + major_event_timer
+		next_major_event = ticker.round_elapsed_ticks + major_event_timer
 		message_admins("<span class='internal'>Next event will occur at [round(next_major_event / 600)] minutes into the round.</span>")
 
 	proc/minor_event_cycle()
@@ -90,7 +96,7 @@ var/datum/event_controller/random_events
 			do_random_event(minor_events)
 
 		minor_event_timer = rand(time_between_minor_events_lower,time_between_minor_events_upper)
-		next_minor_event = TIME + minor_event_timer
+		next_minor_event = ticker.round_elapsed_ticks + minor_event_timer
 
 	proc/spawn_event(var/type = "player")
 		var/do_event = 1
@@ -113,7 +119,7 @@ var/datum/event_controller/random_events
 			else
 				message_admins("<span class='internal'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount or game mode!<br>[100 * aap]% of the alive crew were antags and [100 * dcp]% of the entire crew were dead.</span>")
 
-		next_spawn_event = TIME + time_between_spawn_events
+		next_spawn_event = ticker.round_elapsed_ticks + time_between_spawn_events
 
 	proc/do_random_event(var/list/event_bank, var/source = null)
 		if (!event_bank || event_bank.len < 1)

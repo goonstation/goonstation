@@ -45,6 +45,8 @@
 		. = list("stock" = list())
 
 		for (var/datum/materiel/M as anything in materiel_stock)
+			if(!M.vr_allowed && istype(get_area(src), /area/sim))
+				continue
 			.["stock"] += list(list(
 				"ref" = "\ref[M]",
 				"name" = M.name,
@@ -82,6 +84,8 @@
 		else
 			..()
 
+
+
 	proc/accepted_token(var/token, var/mob/user)
 		src.ui_interact(user)
 		playsound(src.loc, sound_token, 80, 1)
@@ -91,6 +95,8 @@
 
 
 	proc/vended(var/atom/A)
+		if(A.layer <= src.layer)
+			A.layer = src.layer + 0.1
 		if(log_purchase)
 			logTheThing("debug", usr, null, "bought [A] from [src] at [log_loc(get_turf(src))]")
 		.= 0
@@ -101,6 +107,7 @@
 	icon_state = "weapon-sec"
 	desc = "An automated quartermaster service for supplying your security team with weapons and gear."
 	token_accepted = /obj/item/requisition_token/security
+	log_purchase = TRUE
 	New()
 		..()
 		materiel_stock += new/datum/materiel/loadout/standard
@@ -113,16 +120,15 @@
 		materiel_stock += new/datum/materiel/utility/crowdgrenades
 		materiel_stock += new/datum/materiel/utility/detscanner
 		materiel_stock += new/datum/materiel/utility/medcappowercell
-		materiel_stock += new/datum/materiel/utility/firstaidsec
 		materiel_stock += new/datum/materiel/utility/nightvisiongoggles
-		materiel_stock += new/datum/materiel/utility/riotrounds
+		materiel_stock += new/datum/materiel/utility/markerrounds
 		materiel_stock += new/datum/materiel/utility/prisonerscanner
 		materiel_stock += new/datum/materiel/assistant/basic
 
 	vended(var/atom/A)
 		..()
 		if (istype(A,/obj/item/storage/belt/security))
-			SPAWN_DBG(2 DECI SECONDS) //ugh belts do this on spawn and we need to wait
+			SPAWN(2 DECI SECONDS) //ugh belts do this on spawn and we need to wait
 				var/list/tracklist = list()
 				for(var/atom/C in A.contents)
 					if (istype(C,/obj/item/gun) || istype(C,/obj/item/baton))
@@ -149,6 +155,9 @@
 	token_accepted = /obj/item/requisition_token/syndicate
 	log_purchase = TRUE
 
+	ex_act()
+		return
+
 	New()
 		..()
 		// List of avaliable objects for purchase
@@ -166,6 +175,7 @@
 		materiel_stock += new/datum/materiel/loadout/engineer
 		materiel_stock += new/datum/materiel/loadout/marksman
 		materiel_stock += new/datum/materiel/loadout/knight
+		materiel_stock += new/datum/materiel/loadout/bard
 		materiel_stock += new/datum/materiel/loadout/custom
 /*
 		materiel_stock += new/datum/materiel/storage/rucksack
@@ -179,6 +189,7 @@
 		materiel_stock += new/datum/materiel/utility/sarin_grenade
 		materiel_stock += new/datum/materiel/utility/noslip_boots
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
+		materiel_stock += new/datum/materiel/utility/comtac
 
 	accepted_token()
 		src.credits[WEAPON_VENDOR_CATEGORY_SIDEARM]++
@@ -194,6 +205,7 @@
 	var/category = null
 	var/path = null
 	var/description = "If you see me, gannets is an idiot."
+	var/vr_allowed = TRUE
 
 /datum/materiel/sidearm
 	category = WEAPON_VENDOR_CATEGORY_SIDEARM
@@ -260,9 +272,9 @@
 	description = "Four Morphine Autoinjectors, capable of ensuring you move at the best possible speed while injured without slowdowns...or used as a makeshift tranquilizer if overdosed."
 
 /datum/materiel/utility/donuts
-	name = "Robust Donuts"
-	path = /obj/item/storage/box/robustdonuts
-	description = "Two Robust Donuts, which are loaded with helpful chemicals which heals you and helps you resist stuns!"
+	name = "Robust(ed) Donuts"
+	path = /obj/item/storage/lunchbox/robustdonuts
+	description = "Two Robust Donuts and two Robusted Donuts, which are loaded with helpful chemicals that help you resist stuns and heal you!"
 
 /datum/materiel/utility/crowdgrenades
 	name = "Crowd Dispersal Grenades"
@@ -274,11 +286,6 @@
 	path = /obj/item/device/detective_scanner
 	description = "A scanner capable of reading fingerprints on objects and looking up the records in real time. A favorite of investigators."
 
-/datum/materiel/utility/firstaidsec
-	name = "First Aid Kit"
-	path = /obj/item/storage/firstaid/regular/doctor_spawn
-	description = "An advanced first aid kit, typically used in first responder scenarios before doctors arrive."
-
 /datum/materiel/utility/medcappowercell
 	name = "Spare Power Cell"
 	path = /obj/item/ammo/power_cell/self_charging/disruptor
@@ -289,10 +296,10 @@
 	path = /obj/item/clothing/glasses/nightvision
 	description = "A pair of Night Vision Goggles. Helps you see in the dark, but doesn't give you any protection from flashes or a SecHud."
 
-/datum/materiel/utility/riotrounds
-	name = "40mm Riot Rounds"
-	path = /obj/item/ammo/bullets/pbr
-	description = "One case of 40mm Riot Rounds, totalling 2 shots, for the Riot Launcher."
+/datum/materiel/utility/markerrounds
+	name = "40mm Paint Marker Rounds"
+	path = /obj/item/ammo/bullets/marker
+	description = "One case of 40mm Paint Marker Rounds, totalling 5 rounds, for the Riot Launcher."
 
 /datum/materiel/utility/prisonerscanner
 	name = "RecordTrak Scannner"
@@ -367,9 +374,14 @@
 	description = "High-powered sniper rifle that can fire through two solid walls, optical thermal scanner and a pouch of smoke grenades"
 
 /datum/materiel/loadout/knight
-	name = "Knight (Prototype)"
+	name = "Knight"
 	path = /obj/storage/crate/classcrate/melee
-	description = "A prototype melee focused class. Equipped with massive, heavy armour and a versatile sword that can switch special attack modes."
+	description = "A powerful melee focused class. Equipped with massive, heavy armour and a versatile sword that can switch special attack modes."
+
+/datum/materiel/loadout/bard
+	name = "Bard (Prototype)"
+	path = /obj/storage/crate/classcrate/bard
+	description = "An experimental musician class that supports their team with area of effect buffs centered around amp stacks and hitting things with a cool guitar."
 
 /datum/materiel/loadout/custom
 	name = "Custom Class Uplink"
@@ -429,6 +441,11 @@
 	path = /obj/bomb_decoy
 	description = "A realistic inflatable nuclear bomb decoy, it'll fool anyone not looking closely but won't take much punishment before it pops."
 
+/datum/materiel/utility/comtac
+	name = "Military Headset"
+	path = /obj/item/device/radio/headset/syndicate/comtac
+	description = "A two-way radio headset designed to protect against any incoming hazardous noise, including flashbangs."
+	vr_allowed = FALSE
 // Requisition tokens
 
 /obj/item/requisition_token

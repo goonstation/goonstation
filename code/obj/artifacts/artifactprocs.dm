@@ -39,7 +39,7 @@
 		return 0
 	// if the artifact var isn't set at all, it's probably not an artifact so don't bother continuing
 	if (!istype(src.artifact,/datum/artifact/))
-		logTheThing("debug", null, null, "<b>I Said No/Artifact:</b> Invalid artifact variable in [src.type] at [showCoords(src.x, src.y, src.z)]")
+		logTheThing("debug", null, null, "<b>I Said No/Artifact:</b> Invalid artifact variable in [src.type] at [log_loc(src)]")
 		qdel(src) // wipes itself out since if it's processing it'd be calling procs it can't use again and again
 		return 0 // uh oh, we've got a poorly set up artifact and now we need to stop the proc that called it!
 	else
@@ -280,7 +280,7 @@
 
 	if(istype(W,/obj/item/baton))
 		var/obj/item/baton/BAT = W
-		if (BAT.can_stun(1, 1, user) == 1)
+		if (BAT.can_stun(1, user) == 1)
 			src.ArtifactStimulus("force", BAT.force)
 			src.ArtifactStimulus("elec", 1500)
 			playsound(src.loc, "sound/impact_sounds/Energy_Hit_3.ogg", 100, 1)
@@ -327,7 +327,7 @@
 			if (get_dist(src.loc, M.loc) > 1)
 				return
 			src.visible_message("<strong class='combat'>[A] shoves [M] against \the [src]!</strong>")
-			logTheThing("combat", A, M, "forces [constructTarget(M,"combat")] to touch \an ([A.type]) artifact at [log_loc(src)].")
+			logTheThing("combat", A, M, "forces [constructTarget(M,"combat")] to touch \an ([src.type]) artifact at [log_loc(src)].")
 			src.ArtifactTouched(M)
 			return 0
 
@@ -392,7 +392,7 @@
 	var/turf/T = get_turf(src)
 
 	var/datum/artifact/A = src.artifact
-	if(!istype(A))
+	if(!istype(A) || !A.artitype)
 		return
 
 	// Possible stimuli = force, elec, radiate, heat
@@ -447,6 +447,8 @@
 					src.ArtifactActivated()
 
 /obj/proc/ArtifactTouched(mob/user as mob)
+	if (!in_interact_range(get_turf(src), user))
+		return
 	if (isAI(user))
 		return
 	if (isobserver(user))
@@ -487,11 +489,23 @@
 	var/datum/artifact/A = src.artifact
 
 	A.health -= dmg_amount
-	A.health = max(0,min(A.health,100))
+	A.health = clamp(A.health, 0, 100)
 
 	if (A.health <= 0)
 		src.ArtifactDestroyed()
 	return
+
+/// Removes all artifact forms attached to this and makes them fall to the floor
+/// Because artifacts often like to disappear in mysterious ways
+/obj/proc/remove_artifact_forms()
+	var/removed = 0
+	for(var/obj/item/sticker/postit/artifact_paper/AP in src.vis_contents)
+		AP.remove_from_attached()
+		removed++
+	if(removed == 1)
+		src.visible_message("The artifact form that was attached falls to the ground.")
+	else if(removed > 1)
+		src.visible_message("All the artifact forms that were attached fall to the ground.")
 
 /obj/proc/ArtifactDestroyed()
 	// Call this rather than straight disposing() on an artifact if you want to destroy it. This way, artifacts can have their own
@@ -514,6 +528,8 @@
 				T.visible_message("<span class='alert'><B>[src] warps in on itself and vanishes!</B></span>")
 			if("precursor")
 				T.visible_message("<span class='alert'><B>[src] implodes, crushing itself into dust!</B></span>")
+
+	src.remove_artifact_forms()
 
 	src.ArtifactDeactivated()
 
@@ -539,7 +555,7 @@
 
 	if (A.artitype.name == "eldritch")
 		faultprob *= 2 // eldritch artifacts fucking hate you and are twice as likely to go faulty
-	faultprob = max(0,min(faultprob,100))
+	faultprob = clamp(faultprob, 0, 100)
 
 	if (prob(faultprob) && length(A.fault_types))
 		var/new_fault = weighted_pick(A.fault_types)
@@ -561,6 +577,6 @@
 		logTheThing(type_of_action == "detonated" ? "bombing" : "station", user, target, "an artifact ([A.type]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]" : ""]")
 
 	if (trigger_alert)
-		message_admins("An artifact ([A.type]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]")
+		message_admins("An artifact ([A.type]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.fingerprintslast)]")
 
 	return

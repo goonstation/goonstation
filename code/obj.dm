@@ -23,6 +23,39 @@
 	var/_health = 100
 	var/_max_health = 100
 
+	New()
+		. = ..()
+		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
+			var/turf/T = get_turf(src)
+			T?.UpdateDirBlocks()
+		src.update_access_from_txt()
+
+	Move(NewLoc, direct)
+		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
+			var/turf/old_loc = get_turf(src)
+			. = ..()
+			var/turf/T = get_turf(NewLoc)
+			T?.UpdateDirBlocks()
+			old_loc?.UpdateDirBlocks()
+		else
+			. = ..()
+
+	set_loc(newloc)
+		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
+			var/turf/old_loc = get_turf(src)
+			. = ..()
+			var/turf/T = get_turf(newloc)
+			T?.UpdateDirBlocks()
+			old_loc?.UpdateDirBlocks()
+		else
+			. = ..()
+
+	set_dir(new_dir)
+		. = ..()
+		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
+			var/turf/T = get_turf(src)
+			T?.UpdateDirBlocks()
+
 	proc/setHealth(var/value)
 		var/prevHealth = _health
 		_health = min(value, _max_health)
@@ -58,6 +91,9 @@
 		if (!x || isarea(x))
 			return 0
 		return 1
+
+	proc/move_callback(var/mob/M, var/turf/source, var/turf/target)
+		return
 
 	proc/onDestroy()
 		qdel(src)
@@ -99,7 +135,8 @@
 		tag = null
 		mats = null
 		if (artifact && !isnum(artifact))
-			artifact:holder = null
+			qdel(artifact)
+			artifact = null
 		remove_dialogs()
 		..()
 
@@ -295,7 +332,7 @@
 
 
 /obj/lattice
-	desc = "A lightweight support lattice."
+	desc = "Intersecting metal rods, used as a structural skeleton for space stations and to facilitate movement in a vacuum."
 	name = "lattice"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "lattice"
@@ -443,7 +480,7 @@
 	New(newloc, deleteTimer)
 		..()
 		if (deleteTimer)
-			SPAWN_DBG(deleteTimer)
+			SPAWN(deleteTimer)
 				qdel(src)
 
 /obj/projection
@@ -468,8 +505,8 @@
 /obj/proc/replace_with_explosive()
 	var/obj/O = src
 	if (alert("Are you sure? This will irreversibly replace this object with a copy that gibs the first person trying to touch it!", "Replace with explosive", "Yes", "No") == "Yes")
-		message_admins("[key_name(usr)] replaced [O] ([showCoords(O.x, O.y, O.z)]) with an explosive replica.")
-		logTheThing("admin", usr, null, "replaced [O] ([showCoords(O.x, O.y, O.z)]) with an explosive replica.")
+		message_admins("[key_name(usr)] replaced [O] ([log_loc(O)]) with an explosive replica.")
+		logTheThing("admin", usr, null, "replaced [O] ([log_loc(O)]) with an explosive replica.")
 		var/obj/replica = new /obj/item/card/id/captains_spare/explosive(O.loc)
 		replica.icon = O.icon
 		replica.icon_state = O.icon_state

@@ -51,15 +51,17 @@
 	density = 0
 	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_1
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS
 
-/obj/plasticflaps/CanPass(atom/A, turf/T)
+/obj/plasticflaps/Cross(atom/A)
 	if (isliving(A)) // You Shall Not Pass!
 		var/mob/living/M = A
 		if (isghostdrone(M)) // except for drones
 			return 1
 		else if (istype(A,/mob/living/critter/changeling/handspider) || istype(A,/mob/living/critter/changeling/eyespider))
+			return 1
+		else if (!M.can_lie && isdead(M))
 			return 1
 		else if(!M.lying) // or you're lying down
 			return 0
@@ -80,6 +82,6 @@
 	icon_state = "X"
 	icon = 'icons/misc/mark.dmi'
 	name = "X"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	opacity = 0

@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "gloves"
 	w_class = W_CLASS_SMALL
 	icon = 'icons/obj/clothing/item_gloves.dmi'
-	wear_image_icon = 'icons/mob/hands.dmi'
+	wear_image_icon = 'icons/mob/clothing/hands.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 	protective_temperature = 400
 	wear_layer = MOB_HAND_LAYER2
@@ -42,7 +42,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	New()
 		..() // your parents miss you
 		flags |= HAS_EQUIP_CLICK
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			src.glove_ID = src.CreateID()
 			if (glove_IDs) // fix for Cannot execute null.Add(), maybe??
 				glove_IDs.Add(src.glove_ID)
@@ -105,14 +105,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				return
 			boutput(user, "<span class='notice'>You attach the wires to the [src.name].</span>")
 			src.stunready = 1
-			src.setSpecialOverride(/datum/item_special/spark, src, 0)
+			src.setSpecialOverride(/datum/item_special/spark/gloves, src, 0)
 			src.material_prints += ", electrically charged"
 			return
 
 		if (istype(W, /obj/item/cell)) // Moved from cell.dm (Convair880).
 			var/obj/item/cell/C = W
 
-			if (C.charge < 1500)
+			if (C.charge < 1000)
 				user.show_text("[C] needs more charge before you can do that.", "red")
 				return
 			if (!src.stunready)
@@ -127,11 +127,11 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				if (src.uses < 0)
 					src.uses = 0
 				src.uses = min(src.uses + 1, src.max_uses)
-				C.use(1500)
+				C.use(1000)
 				src.icon_state = "stun"
 				src.item_state = "stun"
 				src.overridespecial = 1
-				C.updateicon()
+				C.UpdateIcon()
 				user.update_clothing() // Required to update the worn sprite (Convair880).
 				user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] stun gloves.</span>", "<span class='notice'>The stun gloves now hold [src.uses]/[src.max_uses] charges!</span>")
 			else
@@ -174,6 +174,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			if(isnull(type))
 				src.specialoverride?.onRemove()
 				src.specialoverride = null
+				src.overridespecial = FALSE
 			return null
 
 		src.specialoverride?.onRemove()
@@ -200,9 +201,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 /obj/item/clothing/gloves/long // adhara stuff
 	desc = "These long gloves protect your sleeves and skin from whatever dirty job you may be doing."
 	name = "cleaning gloves"
-	icon = 'icons/obj/clothing/item_gloves.dmi'
-	wear_image_icon = 'icons/mob/hands.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 	icon_state = "long_gloves"
 	item_state = "long_gloves"
 	protective_temperature = 550
@@ -230,6 +228,19 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	setupProperties()
 		..()
 		setProperty("heatprot", 7)
+
+	slasher
+		name = "Padded Gloves"
+		desc = "These gloves are padded and lined with insulating material."
+		cant_self_remove = 1
+		cant_other_remove = 1
+		material_prints = "black insulative fibers"
+
+		setupProperties()
+			..()
+			setProperty("heatprot", 15)
+			setProperty("conductivity", 0)
+			setProperty("exploprot", 10)
 
 /obj/item/clothing/gloves/black/attackby(obj/item/W, mob/user)
 	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
@@ -307,14 +318,20 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		onMaterialChanged()
 			..()
 			if(istype(src.material))
-				if(src.material.hasProperty("density"))//linear function, 10 points of disarm-block for every 25 density, starting from density==10
-					src.setProperty("deflection", round(max(src.material.getProperty("density")**0.5+0.2*(src.material.getProperty("density")-20),0)))
-				else
-					src.setProperty("deflection", 0)
-				if(src.material.hasProperty("hard"))//Curve hits 0.5 at 30 (fibrilith), 1 at 60 (carbon fibre), 1.2 at 85 (starstone, aka maximum)
-					src.setProperty("rangedprot", round(max(0,-0.5034652-(-0.04859378/0.02534389)*(1-eulers**(-0.02534398*src.material.getProperty("hard")))),0.1)) //holy best-fit curve batman!
-				else
-					src.setProperty("rangedprot", 0)
+				var/types = list()
+				if(src.material.getProperty("density") > 10 || src.material.getProperty("hard") > 10)
+					types["blunt"] = 0.5 * ceil((max(src.material.getProperty("density"), src.material.getProperty("hard")) - 10)**0.5)
+				if(src.material.getProperty("density") > 10)
+					types["cut"] = 0.5 * ceil((src.material.getProperty("density") - 10)**0.5)
+				if(src.material.getProperty("hard") > 10)
+					types["stab"] = 0.5 * ceil((src.material.getProperty("density") - 10)**0.5)
+				if(src.material.hasProperty("thermal"))
+					var/thermal = 100 - src.material.getProperty("thermal")
+					if(thermal > 10)
+						types["burn"] = 0.5 * ceil((thermal - 10)**0.5)
+
+				AddComponent(/datum/component/wearertargeting/unarmedblock/unarmed_bonus_block, list(SLOT_GLOVES), types)
+
 			return
 
 /obj/item/clothing/gloves/swat
@@ -324,11 +341,20 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	item_state = "swat_syndie"
 	protective_temperature = 1100
 	material_prints = "high-quality synthetic fibers"
+
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
 	setupProperties()
 		..()
 		setProperty("heatprot", 10)
-		setProperty("conductivity", 0.3)
+		setProperty("conductivity", 0.25)
 		setProperty("deflection", 20)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 /obj/item/clothing/gloves/swat/knight
 	name = "combat gauntlets"
@@ -336,7 +362,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 	setupProperties()
 		..()
-		setProperty("deflection", 25)
+		setProperty("deflection", 40)
 
 /obj/item/clothing/gloves/swat/NT
 	desc = "A pair of Nanotrasen tactical gloves that are quite fire and electrically-resistant. They also help you block attacks. They do not specifically help you block against blocking though. Just regular attacks."
@@ -358,7 +384,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("conductivity", 0)
 	New()
 		..()
-		setSpecialOverride(/datum/item_special/spark, src)
+		setSpecialOverride(/datum/item_special/spark/gloves, src)
 
 
 /obj/item/clothing/gloves/yellow
@@ -369,7 +395,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	material_prints = "insulative fibers"
 	can_be_charged = 1
 	max_uses = 4
-	permeability_coefficient = 0.5
 
 	setupProperties()
 		..()
@@ -486,7 +511,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				return
 
 			spam_flag = 1
-			SPAWN_DBG(4 SECONDS) spam_flag = 0
+			SPAWN(4 SECONDS) spam_flag = 0
 
 			use_power(50000)
 
@@ -510,13 +535,13 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 				for(var/obj/O in affected)
-					SPAWN_DBG(0.6 SECONDS) pool(O)
+					SPAWN(0.6 SECONDS) qdel(O)
 
 				if(istype(target_r, /obj/machinery/power/generatorTemp))
 					var/obj/machinery/power/generatorTemp/gen = target_r
 					gen.efficiency_controller += 5
 					gen.grump += 5
-					SPAWN_DBG(45 SECONDS)
+					SPAWN(45 SECONDS)
 						gen.efficiency_controller -= 5
 
 				else if(isliving(target_r)) //Probably unsafe.
@@ -526,7 +551,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 							src.electrocute(target_r, 100, netnum)
 							break
 						if("disarm")
-							target_r:weakened += 3
+							target.changeStatus("weakened", 3 SECONDS)
 							break
 
 				var/list/next = new/list()

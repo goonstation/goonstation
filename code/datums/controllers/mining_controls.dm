@@ -82,7 +82,7 @@ var/list/asteroid_blocked_turfs = list()
 			magnet_shields += S
 
 	proc/spawn_mining_z_asteroids(var/amt, var/zlev)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/the_mining_z = zlev ? zlev : src.mining_z
 			var/turf/T
 			var/spawn_amount = amt ? amt : src.mining_z_asteroids_max
@@ -169,7 +169,8 @@ var/list/asteroid_blocked_turfs = list()
 
 	proc/check_for_unacceptable_content()
 		for (var/mob/living/L in src.contents)
-			return 1
+			if(!isintangible(L)) //neither blob overmind or AI eye should block this
+				return 1
 		for (var/obj/machinery/vehicle in src.contents)
 			return 1
 		return 0
@@ -183,7 +184,7 @@ var/list/asteroid_blocked_turfs = list()
 	alpha = 175
 	opacity = 0
 	density = 0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 
 /// *** MISC *** ///

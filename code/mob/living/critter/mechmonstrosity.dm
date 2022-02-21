@@ -20,8 +20,8 @@
 	speechverb_ask = "queries"
 
 	setup_healths()
-		add_hh_robot(-100, 100, 1)
-		add_hh_robot_burn(-100, 100, 1)
+		add_hh_robot(100, 1)
+		add_hh_robot_burn(100, 1)
 		add_health_holder(/datum/healthHolder/toxin)
 		add_health_holder(/datum/healthHolder/suffocation)
 		var/datum/healthHolder/Brain = add_health_holder(/datum/healthHolder/brain)
@@ -38,13 +38,13 @@
 
 	death(var/gibbed)
 		if (!gibbed)
-			playsound(src.loc, "sound/effects/splat.ogg", 100, 1)
+			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 			gibs(src.loc)
 			ghostize()
 			qdel(src)
 		else
-			playsound(src.loc, "sound/effects/splat.ogg", 100, 1)
+			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 			..()
 
@@ -118,7 +118,7 @@
 		HH.can_hold_items = 0
 		HH.can_attack = 1
 
-	Bump(atom/movable/AM)
+	bump(atom/movable/AM)
 		if(smashes_shit)
 			if(isobj(AM))
 				if (istype(AM, /obj/critter) || istype(AM, /obj/machinery/vehicle))
@@ -141,8 +141,8 @@
 		..()
 
 	setup_healths()
-		add_hh_robot(-500, 500, 1)
-		add_hh_robot_burn(-500, 500, 1)
+		add_hh_robot(500, 1)
+		add_hh_robot_burn(500, 1)
 
 	death(var/gibbed)
 		src.visible_message("<b>[src]</b> collapses into broken components...")
@@ -513,7 +513,7 @@
 			playsound(src.loc, "punch", 30, 1, -2)
 			random_brute_damage(M, rand(10,15),1)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 	CritterDeath(mob/M)
@@ -521,7 +521,7 @@
 		..()
 		if (rand(100) <= revivalChance)
 			src.revivalChance -= revivalDecrement
-			SPAWN_DBG(rand(400,800))
+			SPAWN(rand(400,800))
 				src.alive = 1
 				src.set_density(1)
 				src.health = initial(src.health)
@@ -565,7 +565,7 @@
 		changeIcon()
 		..()
 
-	Bump(atom/O)
+	bump(atom/O)
 		. = ..()
 		changeIcon(0)
 		return .

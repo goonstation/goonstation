@@ -3,7 +3,7 @@
 	desc = "Is that a space heater? That doesn't look safe at all!"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "shittygrill_off"
-	anchored = 1
+	anchored = 0
 	density = 1
 	flags = NOSPLASH
 	mats = 20
@@ -13,6 +13,7 @@
 	var/grilltemp = 35 + T0C
 	var/max_wclass = 3
 	var/on = 0
+	var/movable = 1
 	var/datum/light/light
 	var/datum/particleSystem/barrelSmoke/smoke_part
 
@@ -30,6 +31,11 @@
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if(movable && istool(W, TOOL_SCREWING | TOOL_WRENCHING))
+			user.visible_message("<b>[user]</b> [anchored ? "unbolts the [src] from" : "secures the [src] to"] the floor.")
+			playsound(src.loc, "sound/items/Screwdriver.ogg", 80, 1)
+			src.anchored = !src.anchored
+			return
 		if (isghostdrone(user) || isAI(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a bus driver!</span>")
 			return
@@ -227,7 +233,7 @@
 		light.enable()
 		user.TakeDamage("head", 0, 175)
 		SubscribeToProcess()
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1

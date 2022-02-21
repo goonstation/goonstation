@@ -9,7 +9,7 @@ HAND_TELE
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "locator"
 	var/temp = null
-	var/frequency = 1451
+	var/frequency = FREQ_TRACKING_IMPLANT
 	var/broadcasting = null
 	var/listening = 1.0
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -192,11 +192,23 @@ Frequency:
 					if (0) // It's busted, Jim.
 						continue
 					if (1)
-						L["Tele at [get_area(Control)]: Locked in ([ismob(Control.locked.loc) ? "[Control.locked.loc.name]" : "[get_area(Control.locked)]"])"] += Control
+						var/index = "Tele at [get_area(Control)]: Locked in ([ismob(Control.locked.loc) ? "[Control.locked.loc.name]" : "[get_area(Control.locked)]"])"
+						if (L[index])
+							L[dedupe_index(L, index)] = Control
+						else
+							L[index] = Control
 					if (2)
-						L["Tele at [get_area(Control)]: *NOPOWER*"] += Control
+						var/index = "Tele at [get_area(Control)]: *NOPOWER*"
+						if (L[index])
+							L[dedupe_index(L, index)] = Control
+						else
+							L[index] = Control
 					if (3)
-						L["Tele at [get_area(Control)]: Inactive"] += Control
+						var/index = "Tele at [get_area(Control)]: Inactive"
+						if (L[index])
+							L[dedupe_index(L, index)] = Control
+						else
+							L[index] = Control
 			else
 				continue
 
@@ -258,7 +270,7 @@ Frequency:
 			user.show_text("The [src.name] does not seem to work here!", "red")
 			return
 
-		var/obj/portal/P = unpool(/obj/portal)
+		var/obj/portal/P = new /obj/portal
 		P.set_loc(our_loc)
 		portals += P
 		if (!src.our_target)
@@ -269,9 +281,18 @@ Frequency:
 		user.visible_message("<span class='notice'>Portal opened.</span>")
 		logTheThing("station", user, null, "creates a hand tele portal (<b>Destination:</b> [src.our_target ? "[log_loc(src.our_target)]" : "*random coordinates*"]) at [log_loc(user)].")
 
-		SPAWN_DBG(30 SECONDS)
+		SPAWN(30 SECONDS)
 			if (P)
 				portals -= P
-				pool(P)
+				qdel(P)
 
 		return
+
+	proc/dedupe_index(list/L, index)
+		var/index_base = index
+		var/i = 2
+		while(L[index])
+			index = index_base
+			index += " [i]"
+			i++
+		return index

@@ -29,9 +29,10 @@
 	}\
 } while(false)
 
-#define MAX_SOUND_RANGE 33
 #define MAX_SPACED_RANGE 6 //diff range for when youre in a vaccuum
 #define CLIENT_IGNORES_SOUND(C) (C?.ignore_sound_flags && ((ignore_flag && C.ignore_sound_flags & ignore_flag) || C.ignore_sound_flags & SOUND_ALL))
+
+#define SOUNDIN_ID (istype(soundin, /sound) ? soundin:file : (islist(soundin) ? ref(soundin) : soundin))
 
 /// returns 0 to 1 based on air pressure in turf
 /proc/attenuate_for_location(var/atom/loc)
@@ -46,10 +47,10 @@
 			//if (istype(T, /turf/space))
 			//	return 0 // in space nobody can hear you fart
 		if (T.turf_flags & IS_TYPE_SIMULATED) //danger :)
-			var/turf/simulated/sim_T = T
-			if (sim_T.air)
-				attenuate *= MIXTURE_PRESSURE(sim_T.air) / ONE_ATMOSPHERE
-				attenuate = min(1, max(0, attenuate))
+			var/datum/gas_mixture/air = T.return_air()
+			if (air)
+				attenuate *= MIXTURE_PRESSURE(air) / ONE_ATMOSPHERE
+				attenuate = clamp(attenuate, 0, 1)
 
 	return attenuate
 
@@ -97,6 +98,9 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 /// Sets and applies the volume for a channel (0-1)
 /client/proc/setVolume(channel, volume)
+	var/original_volume = volumes[channel + 1]
+	if(original_volume == 0)
+		original_volume = 1 // let's be safe and try to avoid division by zero
 	volume = clamp(volume, 0, 1)
 	volumes[channel + 1] = volume
 
@@ -107,14 +111,14 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 		for( var/sound/s in playing )
 			s.status |= SOUND_UPDATE
 			var/list/vol = sound_playing[ s.channel ]
-			s.volume = vol[1] * volume * volumes[ vol[2] ] * 100
+			s.volume = vol[1] / original_volume * volume * volumes[ vol[2] ] * 100
 			src << s
 		src.chatOutput.adjustVolumeRaw( volume * getRealVolume(VOLUME_CHANNEL_ADMIN) )
 	else
 		for( var/sound/s in playing )
 			if( sound_playing[s.channel][2] == channel )
 				s.status |= SOUND_UPDATE
-				s.volume = sound_playing[s.channel][1] * volume * volumes[1] * 100
+				s.volume = sound_playing[s.channel][1] / original_volume * volume * volumes[1] * 100
 				src << s
 
 	if( channel == VOLUME_CHANNEL_ADMIN )
@@ -122,13 +126,15 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 /proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 	// don't play if over the per-tick sound limit
-	if (!limiter || !limiter.canISpawn(/sound))
-		return
 
 	var/turf/source_turf = get_turf(source)
 
 	// don't play if the sound is happening nowhere
 	if (isnull(source_turf))
+		return
+
+	var/play_id = "[(source_turf.x / SOUND_LIMITER_GRID_SIZE)] [round(source_turf.y / SOUND_LIMITER_GRID_SIZE)] [source_turf.z] [SOUNDIN_ID]"
+	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
 
 	EARLY_RETURN_IF_QUIET(vol)
@@ -154,7 +160,9 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	var/scaled_dist
 	var/storedVolume
 
-	for (var/mob/M in GET_NEARBY(source_turf, MAX_SOUND_RANGE + extrarange))
+	// at this multiple of the max range the sound will be below TOO_QUIET level, derived from falloff equation lower in the code
+	var/rangemult = 0.18/(-(TOO_QUIET + 0.0542  * vol)/(TOO_QUIET - vol))**(10/17)
+	for (var/mob/M in GET_NEARBY(source_turf, rangemult * (MAX_SOUND_RANGE + extrarange)))
 		var/client/C = M.client
 		if (!C)
 			continue
@@ -241,10 +249,6 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	if(!src.client)
 		return
 
-	// don't play if over the per-tick sound limit
-	if (!limiter || !limiter.canISpawn(/sound))
-		return
-
 	var/turf/source_turf = get_turf(source)
 
 	// don't play if the sound is happening nowhere
@@ -256,6 +260,10 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 		return
 
 	if (CLIENT_IGNORES_SOUND(src.client))
+		return
+
+	var/play_id = "\ref[src] [SOUNDIN_ID]"
+	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
 
 	vol *= client.getVolume(channel) / 100
@@ -287,6 +295,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	LISTENER_ATTEN(atten_temp)
 
 	var/sound/S = generate_sound(source, soundin, ourvolume, vary, extrarange, pitch)
+	if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source].")
 	client.sound_playing[ S.channel ][1] = ourvolume
 	client.sound_playing[ S.channel ][2] = channel
 
@@ -297,7 +306,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 		if (istype(source_turf))
 			var/dx = source_turf.x - src.x
-			S.pan = max(-100, min(100, dx/8.0 * 100))
+			S.pan = clamp(dx/8.0 * 100, -100, 100)
 
 		src << S
 
@@ -312,11 +321,15 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 /**
 	Plays a sound to some clients without caring about its source location and stuff.
-	`target` can be either a list of clients or a list of mobs or `world` or an area.
+	`target` can be either a list of clients or a list of mobs or `world` or an area or a z-level number.
 */
 /proc/playsound_global(target, soundin, vol as num, vary, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
 	// don't play if over the per-tick sound limit
 	if (!limiter || !limiter.canISpawn(/sound))
+		return
+
+	var/play_id = "global [SOUNDIN_ID]"
+	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
 
 	EARLY_RETURN_IF_QUIET(vol)
@@ -336,6 +349,12 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 			CRASH("Incorrect object in target list `[target[1]]` in playsound_global.")
 	else if(target == world)
 		clients = global.clients
+	else if(isnum(target))
+		clients = list()
+		for(var/client/client as anything in global.clients)
+			var/turf/T = get_turf(client?.mob)
+			if(T?.z == target)
+				clients += client
 	else if(isarea(target))
 		clients = list()
 		for(var/mob/M in target)
@@ -521,11 +540,11 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	switch (type) //After play actions, let the area know
 		if (AMBIENCE_FX_1)
 			A.played_fx_1 = 1
-			SPAWN_DBG(40 SECONDS) //40s
+			SPAWN(40 SECONDS) //40s
 				A.played_fx_1 = 0
 		if (AMBIENCE_FX_2)
 			A.played_fx_2 = 1
-			SPAWN_DBG(20 SECONDS) //20s
+			SPAWN(20 SECONDS) //20s
 				A.played_fx_2 = 0
 
 
@@ -609,6 +628,8 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
  		"skelly" = sound('sound/misc/talk/skelly.ogg'),	"skelly!" = sound('sound/misc/talk/skelly_exclaim.ogg'),"skelly?" = sound('sound/misc/talk/skelly_ask.ogg'), \
 		"blub" = sound('sound/misc/talk/blub.ogg'),	"blub!" = sound('sound/misc/talk/blub_exclaim.ogg'),"blub?" = sound('sound/misc/talk/blub_ask.ogg'), \
 		"cow" = sound('sound/misc/talk/cow.ogg'),	"cow!" = sound('sound/misc/talk/cow_exclaim.ogg'),"cow?" = sound('sound/misc/talk/cow_ask.ogg'), \
+		"pug" = sound('sound/misc/talk/pug.ogg'),	"pug!" = sound('sound/misc/talk/pug_exclaim.ogg'),"pug?" = sound('sound/misc/talk/pug_ask.ogg'), \
+		"pugg" = sound('sound/misc/talk/pugg.ogg'),	"pugg!" = sound('sound/misc/talk/pugg_exclaim.ogg'),"pugg?" = sound('sound/misc/talk/pugg_ask.ogg'), \
 		"roach" = sound('sound/misc/talk/roach.ogg'),	"roach!" = sound('sound/misc/talk/roach_exclaim.ogg'),"roach?" = sound('sound/misc/talk/roach_ask.ogg'), \
  		"radio" = sound('sound/misc/talk/radio.ogg')\
  		)
@@ -633,7 +654,7 @@ sound
 	disposing()
 		// Haha you cant delete me you fuck
 		if(!qdeled)
-			pool(src)
+			qdel(src)
 		else
 			//Yes I can
 			..()
@@ -656,3 +677,5 @@ sound
 		environment = initial(environment)
 		echo = initial(echo)
 */
+
+#undef SOUNDIN_ID

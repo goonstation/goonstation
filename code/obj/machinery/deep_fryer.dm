@@ -6,6 +6,7 @@
 	anchored = 1
 	density = 1
 	flags = NOSPLASH
+	status = REQ_PHYSICAL_ACCESS
 	mats = 20
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 	var/obj/item/fryitem = null
@@ -90,7 +91,7 @@
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
-			return src.attackby(W, user)
+			return src.Attackby(W, user)
 		return ..()
 
 	onVarChanged(variable, oldval, newval)
@@ -174,7 +175,7 @@
 			user.reagents.del_reagent("dabs")
 			user.reagents.add_reagent("deepfrieddabs",amt)
 		SubscribeToProcess()
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1

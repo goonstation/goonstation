@@ -21,10 +21,9 @@
 	w_class = W_CLASS_SMALL
 	m_amt = 30
 	g_amt = 30
-	stamina_damage = 30
+	stamina_damage = 10
 	stamina_cost = 18
-	stamina_crit_chance = 5
-	module_research = list("tools" = 4, "metals" = 1, "fuels" = 5)
+	stamina_crit_chance = 0
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	var/capacity = 20
@@ -49,7 +48,7 @@
 		if (!ismob(M))
 			return
 		src.add_fingerprint(user)
-		if (ishuman(M))
+		if (ishuman(M) && (user.a_intent != INTENT_HARM))
 			var/mob/living/carbon/human/H = M
 			if (H.bleeding || (H.butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
 				if (!src.cautery_surgery(H, user, 15, src.welding))
@@ -108,6 +107,7 @@
 								return
 						else return ..()
 			else return ..()
+		else return ..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isscrewingtool(W))
@@ -122,12 +122,11 @@
 			if (src.loc != user)
 				boutput(user, "<span class='alert'>You need to be holding [src] to work on it!</span>")
 				return
+			boutput(user, "<span class='notice'>You attach the rod to the welding tool.</span>")
 			var/obj/item/rods/R = new /obj/item/rods
 			R.amount = 1
 			var/obj/item/rods/S = W
-			S.amount = S.amount - 1
-			if (S.amount == 0)
-				qdel(S)
+			S.change_stack_amount(-1)
 			var/obj/item/assembly/weld_rod/F = new /obj/item/assembly/weld_rod( user )
 			src.set_loc(F)
 			F.welder = src
@@ -141,17 +140,20 @@
 			F.rod = R
 			src.add_fingerprint(user)
 
+
 	afterattack(obj/O as obj, mob/user as mob)
 		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && get_dist(src,O) <= 1)
-			if (O.reagents.total_volume)
-				O.reagents.trans_to(src, capacity)
+			if  (!O.reagents.total_volume)
+				boutput(user, "<span class='alert'>The [O.name] is empty!</span>")
+				return
+			if ("fuel" in O.reagents.reagent_list)
+				O.reagents.trans_to(src, capacity, 1, 1, O.reagents.reagent_list.Find("fuel"))
 				src.inventory_counter.update_number(get_fuel())
 				boutput(user, "<span class='notice'>Welder refueled</span>")
 				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
-			else
-				boutput(user, "<span class='alert'>The [O.name] is empty!</span>")
-		else if (src.welding)
-			use_fuel(0.2)
+				return
+		if (src.welding)
+			use_fuel((ismob(O) || istype(O, /obj/blob) || istype(O, /obj/critter)) ? 2 : 0.2)
 			if (get_fuel() <= 0)
 				boutput(user, "<span class='notice'>Need more fuel!</span>")
 				src.welding = 0
@@ -165,13 +167,14 @@
 				location.hotspot_expose(700, 50, 1)
 			if (O && !ismob(O) && O.reagents)
 				boutput(user, "<span class='notice'>You heat \the [O.name]</span>")
-				O.reagents.temperature_reagents(2500,10)
+				O.reagents.temperature_reagents(4000,50, 100, 100, 1)
 		return
 
 	attack_self(mob/user as mob)
 		if (status > 1) return
 		src.welding = !(src.welding)
 		src.firesource = !(src.firesource)
+		tooltip_rebuild = 1
 		if (src.welding)
 			if (get_fuel() <= 0)
 				boutput(user, "<span class='notice'>Need more fuel!</span>")

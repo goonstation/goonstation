@@ -28,8 +28,8 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 
 		if (POT.growth > (P.harvtime + DNA.harvtime) && prob(20))
 			POT.visible_message("<span class='alert'><b>[POT.name]</b> vomits profusely!</span>")
-			playsound(POT.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
-			if(!locate(/obj/decal/cleanable/vomit) in POT.loc) make_cleanable( /obj/decal/cleanable/vomit,POT.loc)
+			playsound(POT, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			if(!locate(/obj/decal/cleanable/vomit) in get_turf(POT)) make_cleanable( /obj/decal/cleanable/vomit,get_turf(POT))
 
 /datum/plant/artifact/peeker
 	name = "Peeker"
@@ -145,6 +145,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	cropsize = 3
 	harvests = 6
 	endurance = 0
+	mutations = list(/datum/plantmutation/dripper/leaker)
 	assoc_reagents = list("plasma")
 
 /datum/plant/artifact/rocks
@@ -159,7 +160,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	harvests = 8
 	endurance = 40
 	force_seed_on_harvest = 1
-	mutations = list(/datum/plantmutation/rocks/syreline,/datum/plantmutation/rocks/bohrum,/datum/plantmutation/rocks/mauxite,/datum/plantmutation/rocks/erebite)
+	mutations = list(/datum/plantmutation/rocks/syreline,/datum/plantmutation/rocks/bohrum,/datum/plantmutation/rocks/mauxite,/datum/plantmutation/rocks/uqill)
 
 /datum/plant/artifact/litelotus
 	name = "Light Lotus"
@@ -167,12 +168,31 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	crop = /obj/item/reagent_containers/food/snacks/plant/glowfruit
 	unique_seed = /obj/item/seed/alien/litelotus
 	starthealth = 30
-	growtime = 280
-	harvtime = 300
-	cropsize = 2
-	harvests = 2
+	growtime = 300
+	harvtime = 400
+	cropsize = 1
+	harvests = 1
 	endurance = 20
-	assoc_reagents = list("omnizine")
+	assoc_reagents = list("luminol")
+	special_proc = 1
+
+	HYPspecial_proc(obj/machinery/plantpot/POT)
+		. = ..()
+		if (.)
+			return
+		var/datum/plant/P = POT.current
+		var/datum/plantgenes/DNA = POT.plantgenes
+		if (POT.growth < (P.harvtime + DNA.harvtime))
+			return
+
+		for (var/obj/machinery/plantpot/otherPot in oview(1, POT))
+			if(!otherPot.current || otherPot.dead)
+				continue
+			otherPot.growth += 2
+			if(istype(otherPot.plantgenes,/datum/plantgenes/))
+				var/datum/plantgenes/otherDNA = otherPot.plantgenes
+				if(HYPCheckCommut(otherDNA,/datum/plant_gene_strain/photosynthesis))
+					otherPot.growth += 4
 
 /datum/plant/artifact/plasma
 	name = "Plasma"
@@ -222,7 +242,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 			POT.visible_message("<span class='alert'><b>[POT.name]</b> meows!</span>")
 
 		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
-			var/obj/critter/cat/synth/C = new(POT.loc)
+			var/obj/critter/cat/synth/C = new(get_turf(POT))
 			C.health = POT.health
 			POT.visible_message("<span class='notice'>The synthcat climbs out of the tray!</span>")
 			POT.HYPdestroyplant()
@@ -265,7 +285,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 			var/MEspeech = pick("Feed me!", "I'm hungryyyy...", "Give me blood!", "I'm starving!", "What's for dinner?")
 			for(var/mob/M in hearers(POT, null)) M.show_message("<B>Man-Eating Plant</B> gurgles, \"[MEspeech]\"")
 		if (POT.growth > (P.harvtime + DNA.harvtime))
-			var/obj/critter/maneater/ME = new(POT.loc)
+			var/obj/critter/maneater/ME = new(get_turf(POT))
 			ME.health = POT.health * 3
 			ME.friends = ME.friends | POT.contributors
 			POT.visible_message("<span class='notice'>The man-eating plant climbs out of the tray!</span>")

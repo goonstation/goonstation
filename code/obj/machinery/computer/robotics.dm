@@ -6,8 +6,8 @@
 	object_flags = CAN_REPROGRAM_ACCESS
 	desc = "A computer that allows an authorized user to have an overview of the cyborgs on the station."
 	power_usage = 500
-
-	var/id = 0.0
+	circuit_type = /obj/item/circuitboard/robotics
+	id = 0
 	var/perma = 0
 
 	light_r =0.85
@@ -16,47 +16,14 @@
 
 
 /obj/machinery/computer/robotics/attackby(obj/item/I as obj, user as mob)
-	if (isscrewingtool(I))
-		if (perma)
-			boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
-			return
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 2 SECONDS))
-			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/robotics/M = new /obj/item/circuitboard/robotics( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				M.id = src.id
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/robotics/M = new /obj/item/circuitboard/robotics( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				M.id = src.id
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-
-	else
-		src.attack_hand(user)
+	if (perma && isscrewingtool(I))
+		boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
+		return
+	..()
 	return
 
-/obj/machinery/computer/robotics/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
+/obj/machinery/computer/robotics/special_deconstruct(obj/computerframe/frame as obj)
+	frame.circuit.id = src.id
 
 /obj/machinery/computer/robotics/process()
 	..()
@@ -135,12 +102,24 @@
 					dat += "<A href='?src=\ref[src];gib=2;bot=\ref[R]'>Cancel</A><BR>"
 			dat += "*----------*<BR>"
 
+	var/found_drones = FALSE
+	for_by_tcl(drone, /mob/living/silicon/ghostdrone)
+		if(!drone.last_ckey || isdead(drone))
+			continue
+		if(!found_drones)
+			dat += "*----------*<BR><BR>"
+			dat += "Ghostdrones:<BR>"
+			found_drones = TRUE
+		dat += "[drone] <A href='?src=\ref[src];gib=drone;bot=\ref[drone]'>Kill Switch *Swipe ID*</A><BR>"
+
 	user.Browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
 	return
 
 /obj/machinery/computer/robotics/Topic(href, href_list)
 	if(..())
+		return
+	if(isghostdrone(usr))
 		return
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
@@ -150,6 +129,19 @@
 
 	if (href_list["gib"])
 		switch(href_list["gib"])
+			if("drone")
+				var/obj/item/card/id/I = usr.equipped()
+				var/mob/living/silicon/ghostdrone/drone = locate(href_list["bot"])
+				if (istype(drone))
+					if(src.check_access(I))
+						message_admins("<span class='alert'>[key_name(usr)] killswitched drone [key_name(drone)].</span>")
+						logTheThing("combat", usr, drone, "killswitched drone [constructTarget(drone,"combat")]")
+						if(drone.client)
+							boutput(drone, "<span class='alert'><b>Killswitch activated.</b></span>")
+						drone.gib()
+					else
+						boutput(usr, "<span class='alert'>Access Denied.</span>")
+
 			if("1")
 				var/obj/item/card/id/I = usr.equipped()
 				if (istype(I))

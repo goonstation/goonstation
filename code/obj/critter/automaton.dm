@@ -32,7 +32,7 @@ var/global/the_automaton = null
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (!the_automaton)
 				the_automaton = src
 
@@ -174,7 +174,7 @@ var/global/the_automaton = null
 				user.anchored = 1
 				user.set_loc(src.loc)
 				K.burn_possible = 1
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					src.visible_message("<span class='alert'><B>[src] forces [user] inside one of the keyholes!</B>.</span>")
 					user.implode()
 					K.combust()
@@ -209,7 +209,7 @@ var/global/the_automaton = null
 				else
 					src.visible_message("<span class='alert'><B>[src]</B> makes a loud ratcheting noise and crumples up \the [W]!</span>")
 					playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
-					var/obj/item/raw_material/scrap_metal/scrapmetal = unpool(/obj/item/raw_material/scrap_metal)
+					var/obj/item/raw_material/scrap_metal/scrapmetal = new /obj/item/raw_material/scrap_metal
 					scrapmetal.set_loc(src.loc)
 					qdel(W)
 				return
@@ -370,10 +370,10 @@ var/global/the_automaton = null
 				playsound(src.loc, 'sound/vox/ghost.ogg', 60, 1)
 			else
 				playsound(src.loc, 'sound/effects/ghost.ogg', 60, 1)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/i = rand(4,8)
 				while (i-- > 0)
-					var/obj/item/paper/tornpaper = unpool(/obj/item/paper)
+					var/obj/item/paper/tornpaper = new /obj/item/paper
 					tornpaper.set_loc(src.loc)
 
 					tornpaper.name = "torn page"
@@ -381,7 +381,7 @@ var/global/the_automaton = null
 					sleep(0.3 SECONDS)
 					tornpaper.combust()
 				keycount = INFINITY
-				world << sound('sound/musical_instruments/Gong_Rumbling.ogg')
+				playsound_global(world, "sound/musical_instruments/Gong_Rumbling.ogg", 70)
 				//var/obj/overlay/the_sun = locate("the_sun")
 				//if (istype(the_sun))
 				if (the_sun)
@@ -405,13 +405,13 @@ var/global/the_automaton = null
 
 		saw_moon_bee = 2
 		var/turf/target_turf = locate(src.x - 1, src.y, src.z)
-		var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
+		var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 		swirl.set_loc(target_turf)
 		swirl.pixel_y = 10
 		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			swirl.pixel_y = 0
-			pool(swirl)
+			qdel(swirl)
 
 		src.visible_message("<span class='alert'>[src.name] seems to tense up and freeze.</span>")
 		playsound(src.loc, "sound/machines/glitch1.ogg", 50, 1)
@@ -443,26 +443,26 @@ var/global/the_automaton = null
 			var/T_dist = get_dist(T, src)
 			var/T_effect_prob = 100 * (1 - (max(T_dist-1,1) / range))
 			if (prob(8) && limiter.canISpawn(/obj/effects/sparks))
-				var/obj/sparks = unpool(/obj/effects/sparks)
+				var/obj/sparks = new /obj/effects/sparks
 				sparks.set_loc(T)
-				SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+				SPAWN(2 SECONDS) if (sparks) qdel(sparks)
 
 			for (var/obj/item/I in T)
 				if ( prob(T_effect_prob) )
 					animate_float(I, 5, 10)
 			if (prob(T_effect_prob))
-				SPAWN_DBG(rand(30, 50))
+				SPAWN(rand(30, 50))
 					if (T)
 						playsound(T, pick('sound/effects/elec_bigzap.ogg', 'sound/effects/elec_bzzz.ogg', 'sound/effects/electric_shock.ogg'), 40, 0)
-						var/obj/somesparks = unpool(/obj/effects/sparks)
+						var/obj/somesparks = new /obj/effects/sparks
 						somesparks.set_loc(T)
-						SPAWN_DBG(2 SECONDS) if (somesparks) pool(somesparks)
+						SPAWN(2 SECONDS) if (somesparks) qdel(somesparks)
 						var/list/tempEffect
 						if (temp_effect_limiter-- > 0)
 							tempEffect = DrawLine(src, somesparks, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 						sleep(0.6 SECONDS)
 						for (var/obj/O in tempEffect)
-							pool(O)
+							qdel(O)
 		world << sound('sound/misc/automaton_scratch.ogg')
 		sleep (10)
 		world << sound('sound/ambience/spooky/Void_Screaming.ogg')
@@ -476,10 +476,10 @@ var/global/the_automaton = null
 
 		for(var/mob/living/carbon/human/H in mobs)
 			animate_float(H, 5, 10)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				H.flash(3 SECONDS)
 				shake_camera(H, 210, 2)
-			SPAWN_DBG(rand(10,70))
+			SPAWN(rand(10,70))
 				H.emote("scream")
 		var/turf/T = get_turf(src)
 		sleep(0.1 SECONDS)

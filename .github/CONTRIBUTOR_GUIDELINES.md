@@ -21,3 +21,25 @@ Aside from the actual changes to the repo that you make, opening a PR has some r
 * The most important thing to remember when making changelog entries is that you keep text **descriptive and concise**. Keep related changelog entries to one line when possible. Unless your PR is touches lots of different systems and is very large or makes lots of balance changes, you'll likely never need more than 3 lines or sentences. Think of what information will be relevant to a player.
 * Your suggested changelog can be changed by devs prior to being merged if the merging developer is dissatisfied with it. This will be done by editing the initial comment on the PR made by the contributor so our bot can parse that text and add it to the viewable in-game changelog.
 * If you use sprites from another user, do your best to credit them in a changelog bullet entry.
+
+## License
+
+### What if I change my mind about my contributions being published?
+
+The license Goonstation is licensed under, [CC-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/3.0/), is irrevocable. The specific legalese is:
+
+> Once something has been published under a CC license, licensees may continue using it according to the license terms for the duration of applicable copyright and similar rights. As a licensor, you may stop distributing under the CC license at any time, but anyone who has access to a copy of the material may continue to redistribute it under the CC license terms.
+
+To simplify it a bit, this means: If your code/sprites/maps/assets are released (e.g. publish it on GitHub in a repo or make a PR) that version of the code is **forever licensed** if someone obtains a copy of it. <u>You cannot ask us nor anyone else to stop using your contributions.</u> This should be considered before publishing your work on GitHub if you're concerned about your legal rights.
+
+### What if I don't like the way someone uses my published contributions?
+
+As long as others abide by the license, you cannot control how the assets are used. However, our license does provide several mechanisms that allow you to choose not to be associated with their version or to uses of their version with which you disagree.
+
+1. First, it is prohibited to use the attribution requirement to suggest that you [endorse or support a particular use](https://creativecommons.org/faq/#do-i-need-to-be-aware-of-anything-else-when-providing-attribution) of your assets.
+
+1. Second, you may waive the attribution requirement, choosing not to be identified as the creator if you wish.
+
+1. Third, if you don't like how your assets were modified or used, it is required that the other person [remove the attribution information upon request](https://wiki.creativecommons.org/wiki/License_Versions#Licensors_may_request_removal_of_attribution).
+
+1. Finally, anyone modifying your assets must [indicate that the original has been modified](https://wiki.creativecommons.org/wiki/License_Versions#Modifications_and_adaptations_must_be_indicated). This ensures that changes made to the original assets–whether or not you approve of them–are not attributed back to you.

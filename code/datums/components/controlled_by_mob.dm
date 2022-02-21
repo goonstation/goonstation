@@ -13,6 +13,11 @@
 	handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 		return new/datum/gas_mixture{oxygen = 2; temperature = T20C}()
 
+TYPEINFO(/datum/component/controlled_by_mob)
+	initialization_args = list(
+		ARG_INFO("controlling_mob", "mob reference", "Mob to control the component")
+	)
+
 /datum/component/controlled_by_mob
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	var/obj/movement_controller_dummy

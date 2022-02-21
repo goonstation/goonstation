@@ -91,6 +91,7 @@
 	desc = "Subject's cellular structure is degenerating due to sub-lethal necrosis."
 	id = "zombie"
 	effectType = EFFECT_TYPE_MUTANTRACE
+	effect_group = "mutantrace"
 	isBad = 1
 	can_copy = 0
 	msgGain = "You begin to rot."
@@ -117,6 +118,7 @@
 	desc = "Genetic abnormalities possibly resulting from incomplete development in a cloning pod."
 	id = "premature_clone"
 	effectType = EFFECT_TYPE_MUTANTRACE
+	effect_group = "mutantrace"
 	isBad = 1
 	can_copy = 0
 	msgGain = "You don't feel quite right."
@@ -182,13 +184,16 @@
 	can_copy = 0
 	curable_by_mutadone = 0
 	occur_in_genepools = 0
-	var/personalized_stink = "Wow, it stinks in here!"
+	var/personalized_stink = null
 
 	New()
 		..()
-		src.personalized_stink = stinkString()
 		if (prob(5))
-			src.variant = 2
+			src.personalized_stink = stinkString()
+
+	OnAdd()
+		. = ..()
+		holder.owner?.UpdateParticles(new/particles/stink_lines, "stink_lines", list(KEEP_APART, RESET_TRANSFORM))
 
 	OnLife(var/mult)
 		if(..()) return
@@ -196,10 +201,15 @@
 			for(var/mob/living/carbon/C in view(6,get_turf(owner)))
 				if (C == owner)
 					continue
-				if (src.variant == 2)
+				if (ispug(C))
+					boutput(C, "<span class='alert'>Wow, [owner] sure [pick("stinks", "smells", "reeks")]!")
+				else if (src.personalized_stink)
 					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
 				else
 					boutput(C, "<span class='alert'>[stinkString()]</span>")
+	OnRemove()
+		holder.owner?.ClearSpecificParticles("stink_lines")
+		. = ..()
 
 // Magnetic Random Event
 
@@ -234,7 +244,7 @@
 
 	proc/deactivate(var/time)
 		active = 0
-		SPAWN_DBG(time)
+		SPAWN(time)
 			active = 1
 
 /datum/bioEffect/hidden/magnetic/positive

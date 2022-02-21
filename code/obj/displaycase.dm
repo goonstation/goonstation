@@ -22,7 +22,7 @@
 /obj/displaycase/ex_act(severity)
 	switch(severity)
 		if (1)
-			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 			G.set_loc(src.loc)
 
 			qdel(src)
@@ -71,7 +71,7 @@
 		if (!( src.destroyed ))
 			src.set_density(0)
 			src.destroyed = 1
-			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 			G.set_loc(src.loc)
 			if (displayed)
 				displayed.set_loc(src.loc)
@@ -80,12 +80,12 @@
 				overlays.Cut()
 			desc = "A display case for antique possessions. It has been destroyed."
 			playsound(src, "shatter", 70, 1)
-			update_icon()
+			UpdateIcon()
 	else
 		playsound(src.loc, "sound/impact_sounds/Glass_Hit_1.ogg", 75, 1)
 	return
 
-/obj/displaycase/proc/update_icon()
+/obj/displaycase/update_icon()
 	if(src.destroyed)
 		src.icon_state = "glassboxb0"
 	else
@@ -125,7 +125,7 @@
 			src.set_density(1)
 			src.destroyed = 0
 			src.health = 30
-			update_icon()
+			UpdateIcon()
 			desc = "A display case for antique possessions."
 		return
 	else if (displayed == null && !(destroyed)) // To put items inside when not broken
@@ -253,9 +253,7 @@
 				if (!isnull(src.our_projectile2))
 					src.our_projectiles = list(new src.our_projectile, new src.our_projectile2)
 					L.projectiles = src.our_projectiles
-				src.our_cell.set_loc(L)
-				L.cell = src.our_cell
-
+				AddComponent(/datum/component/cell_holder, our_cell)
 				// The man with the golden gun.
 				if (src.quality_counter >= src.q_threshold2)
 					L.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)

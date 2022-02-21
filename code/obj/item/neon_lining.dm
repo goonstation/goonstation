@@ -46,7 +46,7 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] wraps neon lining around \his neck and tightens it.</b></span>")
 		user.take_oxygen_deprivation(160)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -60,14 +60,14 @@
 		else
 			amount -= used
 			tooltip_rebuild = 1
-			src.updateicon()
+			src.UpdateIcon()
 			return 1
 
 	proc/take(var/amt, var/newloc)
 		if (amt > amount)
 			amt = amount
 			tooltip_rebuild = 1
-			src.updateicon()
+			src.UpdateIcon()
 		if (amt == amount)
 			if (ismob(loc))
 				var/mob/owner = loc
@@ -79,7 +79,7 @@
 		C.amount = amt
 		return
 
-	proc/updateicon()
+	update_icon()
 		set_icon_state("item_[lining_item_color]")
 		inventory_counter?.update_number(amount)
 		return
@@ -108,7 +108,7 @@
 		lining_item_color = "blue"
 	tooltip_rebuild = 1
 	boutput(user, "You change the [base_name]'s color to [lining_item_color].")
-	updateicon()
+	UpdateIcon()
 	return
 
 /obj/item/neon_lining/get_desc()
@@ -120,7 +120,7 @@
 		tooltip_rebuild = 1
 		take(1, user.loc)
 		boutput(user, "You cut a piece off the [base_name].")
-		src.updateicon()
+		src.UpdateIcon()
 		return
 
 	else if (istype(W, /obj/item/neon_lining))
@@ -134,7 +134,7 @@
 			C.amount += src.amount
 			boutput(user, "You join the lining coils together.")
 			C.tooltip_rebuild = 1
-			C.updateicon()
+			C.UpdateIcon()
 			if(istype(src.loc, /obj/item/storage))
 				var/obj/item/storage/storage = src.loc
 				storage.hud.remove_object(src)
@@ -148,17 +148,17 @@
 		else
 			boutput(user, "You transfer [MAXLINING - src.amount] length\s of lining from one coil to the other.")
 			src.amount -= (MAXLINING-C.amount)
-			src.updateicon()
+			src.UpdateIcon()
 			tooltip_rebuild = 1
 			C.amount = MAXLINING
-			C.updateicon()
+			C.UpdateIcon()
 			C.tooltip_rebuild = 1
 			return
 
 /obj/item/neon_lining/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 	..(O, user)
 	for (var/obj/item/neon_lining/C in view(1, user))
-		C.updateicon()
+		C.UpdateIcon()
 
 /obj/item/neon_lining/afterattack(turf/F, mob/user)
 	if (!isturf(user.loc))
@@ -172,25 +172,20 @@
 		return
 
 	else
-		var/dirn
-
-		if (user.loc == F)
-			dirn = user.dir			//If laying on the tile we're on, lay in the direction we're facing.
-		else
-			dirn = get_dir(F, user)
+		var/dirn = user.dir
 
 		var/obj/neon_lining/C = new /obj/neon_lining(F, src)
-		if (dirn == 2)
-			C.lining_rotation = 1
-		else if (dirn == 4)
-			C.lining_rotation = 2
-		else if (dirn == 8)
-			C.lining_rotation = 3
-		else
+		if (dirn == SOUTH)
 			C.lining_rotation = 0
+		else if (dirn == EAST)
+			C.lining_rotation = 3
+		else if (dirn == WEST)
+			C.lining_rotation = 1
+		else //NORTH
+			C.lining_rotation = 2
 		boutput(user, "You set some neon lining on the floor.")
 		C.lining_color = lining_item_color
 		C.add_fingerprint(user)
-		C.lining_update_icon()
+		C.lining_UpdateIcon()
 		use(1)
 	return

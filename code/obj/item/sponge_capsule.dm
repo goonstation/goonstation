@@ -48,11 +48,20 @@
 	else
 		return
 
-/obj/item/toy/sponge_capsule/attack()
-	return
+/obj/item/toy/sponge_capsule/attack(mob/M as mob, mob/user as mob)
+	if (iscarbon(M) && M == user)
+		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
+		playsound(M,"sound/misc/gulp.ogg", 30, 1)
+		eat_twitch(M)
+		user.u_equip(src)
+		qdel(src)
+	else
+		return
 
 /obj/item/toy/sponge_capsule/proc/add_water()
 	playsound(src.loc, 'sound/effects/cheridan_pop.ogg', 100, 1)
+	if(isnull(animal_to_spawn)) // can probably happen if spawned directly in water
+		animal_to_spawn = pick(animals)
 	var/obj/critter/C = new animal_to_spawn(get_turf(src))
 	var/turf/T = get_turf(src)
 	T.visible_message("<span class='notice'>What was once [src] has become [C.name]!</span>")
@@ -75,9 +84,6 @@
 		boutput(user, "<span class='alert'>You awkwardly [pick("cram", "stuff", "jam", "pack")] [src] into [target], but it won't stay!</span>")
 		return
 	return ..()
-
-/obj/item/toy/sponge_capsule/attack()
-	return
 
 /obj/item/spongecaps
 	name = "\improper BioToys Sponge Capsules"
@@ -103,7 +109,7 @@
 
 /obj/item/spongecaps/New()
 	..()
-	update_icon()
+	UpdateIcon()
 
 /obj/item/spongecaps/get_desc()
 	if(caps_amt >= 1)
@@ -111,7 +117,7 @@
 	else
 		. += "<br>It's empty."
 
-/obj/item/spongecaps/proc/update_icon()
+/obj/item/spongecaps/update_icon()
 	overlays = null
 	if(caps_amt <= 0)
 		icon_state = initial(icon_state)
@@ -129,6 +135,6 @@
 			if(caps_amt != -1)
 				caps_amt--
 				tooltip_rebuild = 1
-		update_icon()
+		UpdateIcon()
 	else
 		return ..()

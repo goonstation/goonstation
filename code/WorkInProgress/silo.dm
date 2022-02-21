@@ -36,17 +36,18 @@
 	name = "rusty catwalk"
 	desc = "This one looks even less safe than usual."
 	var/collapsing = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		health = rand(5, 10)
 		..()
-		update_icon()
+		UpdateIcon()
 
-	HasEntered(atom/movable/A)
+	Crossed(atom/movable/A)
+		..()
 		if (ismob(A))
 			src.collapsing++
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				collapse_timer()
 				if (src.collapsing)
 					playsound(src.loc, 'sound/effects/creaking_metal1.ogg', 25, 1)
@@ -66,5 +67,5 @@
 			qdel(src)
 
 		if (src.collapsing)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				src.collapse_timer()

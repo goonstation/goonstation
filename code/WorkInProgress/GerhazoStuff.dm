@@ -108,7 +108,7 @@
 				return
 			else
 				owner.waiting_for_hotkey = 1
-				src.updateIcon()
+				src.UpdateIcon()
 				boutput(usr, "<span class='hint'>Please press a number to bind this ability to...</span>")
 				return
 
@@ -125,7 +125,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -666,26 +666,24 @@
 /datum/mutation_orb_mutdata
 	// AddEffect arguments
 	var/id
-	var/variant
 	var/time  // how long they have the mutation, 0 means forever
 	var/stabilized  // doesn't affect genetic stability
 	var/magical  // can't be removed and costs no genetic stability
 
 	// additional settings
-	var/powerboosted = 0
+	var/power = 1
 	var/energyboosted = 0
 	var/synchronized = 0
 	var/reinforced = 0
 	var/hardoverride = 0 // AddEffect won't add a power if the subject already has it. If this is 1, it will remove and overwrite any pre-existing mutations of the same type.
 
-	New(id, variant = 0, time = 0, stabilized = 0, magical = 0, powerboosted = 0, energyboosted = 0, synchronized = 0, reinforced = 0, hardoverride = 0)
+	New(id, time = 0, stabilized = 0, magical = 0, power = 1, energyboosted = 0, synchronized = 0, reinforced = 0, hardoverride = 0)
 		. = ..()
 		src.id = id
-		src.variant = variant
 		src.time = time
 		src.stabilized = stabilized
 		src.magical = magical
-		src.powerboosted = powerboosted
+		src.power = power
 		src.energyboosted = energyboosted
 		src.synchronized = synchronized
 		src.reinforced = reinforced
@@ -720,14 +718,14 @@
 				if (mut.hardoverride) // if overwriting, remove pre-existing mutation if one exists
 					user.bioHolder.RemoveEffect(mut.id)
 
-				var/datum/bioEffect/added_effect = user.bioHolder.AddEffect(mut.id, mut.variant, mut.time, mut.stabilized, mut.magical)
+				var/datum/bioEffect/added_effect = user.bioHolder.AddEffect(mut.id, mut.power, mut.time, mut.stabilized, mut.magical)
 
 				if (!mut.magical && mut.reinforced)
 					added_effect.curable_by_mutadone = mut.reinforced
 
+
 				if (istype(added_effect, /datum/bioEffect/power/)) // apply chromosomes if provided and the mutation is a power
 					var/datum/bioEffect/power/added_power = added_effect
-					added_power.power = mut.powerboosted
 					added_power.safety = mut.synchronized
 					if (mut.energyboosted)
 						if (added_effect.cooldown != 0)
@@ -790,12 +788,12 @@
 		if (did_something)
 			var/turf/T = get_turf(target)
 			T.visible_message("<span class='notice'>As [user] brings \the [src] near [target], \the [src] spontaneously bursts into flames and [target]'s wounds appear to fade away!</span>")
-			var/obj/heavenly_light/lightbeam = new /obj/heavenly_light
+			var/obj/effects/heavenly_light/lightbeam = new /obj/effects/heavenly_light
 			lightbeam.set_loc(T)
 			lightbeam.alpha = 0
 			playsound(T, "sound/voice/heavenly.ogg", 100, 1, 0)
 			animate(lightbeam, alpha=255, time=3.5 SECONDS)
-			SPAWN_DBG(30)
+			SPAWN(30)
 				animate(lightbeam,alpha = 0, time=3.5 SECONDS)
 				sleep(3.5 SECONDS)
 				qdel(lightbeam)

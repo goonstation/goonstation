@@ -17,19 +17,15 @@
 	var/obj/item/parts/arm = null
 	var/obj/item/clothing/head/butt/butt = null
 	var/obj/item/gimmickbomb/butt/buttbomb = null
+	var/mob/armer = null
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 5
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	armed
 		icon_state = "mousetraparmed"
 		armed = 1
-
-		triggered(mob/target as mob, var/type = "feet")
-			..(target, type)
-			src.armed = 1
-			return
 
 		cleaner
 			name = "cleantrap"
@@ -49,6 +45,7 @@
 		if (!src.armed)
 			icon_state = "mousetraparmed"
 			user.show_text("You arm the mousetrap.", "blue")
+			set_armer(user)
 		else
 			icon_state = "mousetrap"
 			if ((user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(50))
@@ -61,10 +58,23 @@
 				"<span class='alert'><B>You accidentally trigger the mousetrap!</B></span>")
 				return
 			user.show_text("You disarm the mousetrap.", "blue")
+			clear_armer()
 
 		src.armed = !src.armed
 		playsound(user.loc, "sound/weapons/handcuffs.ogg", 30, 1, -3)
 		return
+
+	proc/clear_armer()
+		UnregisterSignal(armer, COMSIG_PARENT_PRE_DISPOSING)
+		armer = null
+
+	proc/set_armer(mob/user)
+		RegisterSignal(user, COMSIG_PARENT_PRE_DISPOSING, .proc/clear_armer)
+		armer = user
+
+	disposing()
+		clear_armer()
+		. = ..()
 
 	attack_hand(mob/user as mob)
 		if (src.armed)
@@ -239,7 +249,7 @@
 			..()
 		return
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if ((ishuman(AM)) && (src.armed))
 			var/mob/living/carbon/H = AM
 			if (H.m_intent == "run")
@@ -258,6 +268,7 @@
 			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
 			icon_state = "mousetrap"
 			src.armed = 0
+			clear_armer()
 			src.visible_message("<span class='alert'><b>[M] is caught in the trap!</b></span>")
 			M.CritterDeath()
 		..()
@@ -329,7 +340,7 @@
 			src.pie.layer = initial(src.pie.layer)
 			src.pie.set_loc(get_turf(target))
 			var/datum/thrown_thing/thr = new
-			thr.user = usr // ew gross
+			thr.user = (armer || usr) // ew gross
 			thr.thing = src.pie
 			src.pie.throw_impact(target, thr)
 			src.pie = null
@@ -347,7 +358,7 @@
 			playsound(src.loc, 'sound/voice/farts/superfart.ogg', 100, 1)
 			src.buttbomb = null
 			qdel(src.buttbomb)
-
+		clear_armer()
 		return
 
 // Added support for old-style grenades and pipe bombs (Convair880).
@@ -443,6 +454,7 @@
 		src.armed = 1
 		if (src.mousetrap)
 			src.mousetrap.armed = 1 // Must be armed or it won't work in mousetrap.triggered().
+			src.mousetrap.set_armer(user)
 		src.set_density(1)
 		user.u_equip(src)
 
@@ -450,22 +462,21 @@
 		src.set_dir(user.dir)
 		walk(src, src.dir, 3)
 
-	Bump(atom/movable/AM as mob|obj)
+	bump(atom/movable/AM as mob|obj)
 		if (src.armed && src.mousetrap)
 			src.visible_message("<span class='alert'>[src] bumps against [AM]!</span>")
 			walk(src, 0)
-			src.mousetrap.triggered(AM && ismob(AM) ? AM : null)
+			SPAWN(0)
+				src.mousetrap.triggered(AM && ismob(AM) ? AM : null)
 
-			if (src.mousetrap)
-				src.mousetrap.set_loc(src.loc)
-				src.mousetrap = null
-			if (src.frame)
-				src.frame.set_loc(src.loc)
-				src.frame = null
+				if (src.mousetrap)
+					src.mousetrap.set_loc(src.loc)
+					src.mousetrap = null
+				if (src.frame)
+					src.frame.set_loc(src.loc)
+					src.frame = null
 
-			qdel(src)
-
-		return
+				qdel(src)
 
 	Move(var/turf/new_loc,direction)
 		if (src.mousetrap.buttbomb && src.armed)

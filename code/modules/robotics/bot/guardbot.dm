@@ -18,19 +18,26 @@
 /datum/guardbot_mover
 	var/obj/machinery/bot/guardbot/master = null
 	var/delay = 3
+	var/max_dist = 100
 
-	New(var/newmaster)
+	New(var/newmaster, max_dist=100)
 		..()
 		if(istype(newmaster, /obj/machinery/bot/guardbot))
 			src.master = newmaster
+		src.max_dist = max_dist
 		return
+
+	disposing()
+		if(src.master.mover == src)
+			src.master.mover = null
+		src.master = null
+		..()
 
 	proc/master_move(var/atom/the_target as obj|mob,var/adjacent=0)
 		if(!master)
 			return 1
 		if(!isturf(master.loc))
-			master.mover = null
-			master = null
+			qdel(src)
 			return 1
 		var/target_turf = null
 		if(isturf(the_target))
@@ -38,14 +45,18 @@
 		else
 			target_turf = get_turf(the_target)
 
+		if(!target_turf) //target got deleted?
+			return
+
 		//var/compare_movepath = current_movepath
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (!master)
 				return
 
 			// Same distance cap as the MULE because I'm really tired of various pathfinding issues. Buddy time and docking stations are often way more than 150 steps away.
 			// It's 200 something steps alone to get from research to the bar on COG2 for instance, and that's pretty much in a straight line.
-			var/list/thePath = AStar(get_turf(master), target_turf, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 500, master.botcard)
+			var/list/thePath = get_path_to(src.master, target_turf, max_distance=src.max_dist, simulated_only=istype(master.loc, /turf/simulated), \
+				id=src.master.botcard, skip_first=FALSE, cardinal_only=TRUE)
 			if (!master)
 				return
 
@@ -56,15 +67,10 @@
 				master.task?.task_input("path_error")
 
 				master.moving = 0
-				//dispose()
-				master.mover = null
-				src.master = null
+				qdel(src)
 				return
 
 			while(length(master?.path) && target_turf && master.moving)
-//				boutput(world, "[compare_movepath] : [current_movepath]")
-				//if(compare_movepath != current_movepath)
-				//	break
 				if(master.frustration >= 10 || master.stunned || master.idle || !master.on)
 					master.frustration = 0
 					master.task?.task_input("path_blocked")
@@ -79,9 +85,7 @@
 
 			if (src.master)
 				master.moving = 0
-				master.mover = null
-				src.master = null
-			//dispose()
+				qdel(src)
 
 		return 0
 
@@ -121,7 +125,7 @@
 	var/hat_icon = 'icons/obj/bots/aibots.dmi'
 	var/hat_x_offset = 0
 	var/hat_y_offset = 0
-	var/icon_needs_update = 1 //Call update_icon() in process
+	var/icon_needs_update = 1 //Call UpdateIcon() in process
 	use_speech_bubble = 0 // D:
 
 	var/image/costume_icon = null
@@ -183,10 +187,8 @@
 	//
 	////////////////////// GUN STUFF -^
 
-	var/datum/radio_frequency/radio_connection
-	var/datum/radio_frequency/beacon_connection
-	var/control_freq = 1219		// bot control frequency
-	var/beacon_freq = 1445
+	var/control_freq = FREQ_BUDDY		// bot control frequency
+	var/beacon_freq = FREQ_NAVBEACON
 	var/net_id = null
 	var/last_comm = 0 //World time of last transmission
 	var/reply_wait = 0
@@ -212,8 +214,6 @@
 			task.dispose()
 		if (model_task)
 			model_task.dispose()
-		radio_controller.remove_object(src, "[control_freq]")
-		radio_controller.remove_object(src, "[beacon_freq]")
 		..()
 
 	ranger
@@ -233,7 +233,7 @@
 			..()
 			src.hat = new /obj/item/clothing/head/mj_hat(src)
 			src.hat.name = "Eldritch shape-shifting hat."
-			src.update_icon()
+			src.UpdateIcon()
 
 	assgun
 		name = "Assaultbuddy"
@@ -262,7 +262,7 @@
 			..()
 			src.hat = new /obj/item/clothing/head/helmet/hardhat
 			src.hat.name = "Klaus' hardhat"
-			src.update_icon()
+			src.UpdateIcon()
 
 	heckler
 		name = "Hecklebuddy"
@@ -271,7 +271,7 @@
 
 		New()
 			..()
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				for (var/mob/living/carbon/human/H in view(7, src))
 					if (!H.stat)
 						if (model_task)
@@ -287,6 +287,7 @@
 		icon_state = "Goldbuddy0"
 
 		update_icon()
+
 			var/emotion_image = null
 
 			if(!src.on)
@@ -352,7 +353,7 @@
 		New()
 			..()
 			src.costume_icon = image(src.icon, "bcostume-clown", , FLY_LAYER)
-			src.update_icon()
+			src.UpdateIcon()
 
 	bodyguard
 		setup_charge_percentage = 98
@@ -368,7 +369,7 @@
 		New()
 			..()
 			src.hat = new /obj/item/clothing/head/mailcap(src)
-			src.update_icon()
+			src.UpdateIcon()
 
 
 	New()
@@ -383,7 +384,7 @@
 			if (src.costume_icon && src.costume_icon:icon_state == "bcostume-wizard")
 				src.hat = new /obj/item/clothing/head/wizard
 #endif
-		src.update_icon()
+		src.UpdateIcon()
 
 		if(!src.cell)
 			src.cell = new /obj/item/cell(src)
@@ -394,7 +395,7 @@
 			src.name += "-[rand(100,999)]"
 
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src.on)
 				add_simple_light("guardbot", list(src.flashlight_red*255, src.flashlight_green*255, src.flashlight_blue*255, (src.flashlight_lum / 7) * 255))
 
@@ -408,17 +409,17 @@
 				src.budgun.master = src
 				src.hasgun = 1
 				src.gun = budgun.name
-				update_icon()
+				UpdateIcon()
 				if(istype(src.budgun, /obj/item/gun/energy/lawbringer))
 					BeTheLaw(src.emagged, 0, src.lawbringer_alwaysbigshot)
 				else if(istype(src.budgun, /obj/item/gun/energy/egun))
 					CheckSafety(src.budgun, src.emagged, null)
 
-			if(radio_controller)
-				radio_connection = radio_controller.add_object(src, "[control_freq]")
-				beacon_connection = radio_controller.add_object(src, "[beacon_freq]")
-
 			src.net_id = generate_net_id(src)
+
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT("beacon", beacon_freq)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 			var/obj/machinery/guardbot_dock/dock = null
 			if(setup_spawn_dock)
@@ -455,7 +456,7 @@
 		else if (!src.emagged)
 			if (E.icon_state == "gold")
 				boutput(user, "You show \the [E] to [src]! They are super impressed!")
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					boutput(user, "Like, really REALLY impressed.  They probably think you're some kind of celebrity or something.")
 					sleep(1 SECOND)
 					boutput(user, "Or the president. The president of space.")
@@ -470,7 +471,7 @@
 		if (src.obeygunlaw)
 			src.obeygunlaw = 0
 			if (src.idle || !src.on)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					boutput(user, "[src] looks confused for a moment.")
 		if (src.budgun)
 			if(istype(src.budgun, /obj/item/gun/energy/lawbringer))
@@ -514,7 +515,7 @@
 			user.drop_item()
 			W.set_loc(src)
 
-			src.update_icon()
+			src.UpdateIcon()
 			user.visible_message("<b>[user]</b> puts a hat on [src]!","You put a hat on [src]!")
 			return
 
@@ -528,7 +529,7 @@
 			qdel(W)
 			src.overlays.len = 0
 			src.hat_shown = 0
-			src.update_icon()
+			src.UpdateIcon()
 			user.visible_message("<b>[user]</b> drapes a sheet over [src]!","You cover [src] with a sheet!")
 			src.add_task(new /datum/computer/file/guardbot_task/bedsheet_handler, 1, 0)
 			return
@@ -603,32 +604,32 @@
 					src.visible_message("[src] looks at the [src.budgun] in its hand, curious.")
 					speak("Huh, that's new.")
 				speak("[(src.slept_through_laser_class || !user) ? "" : "Thank you, [user]! "]Oh... but article-[(rand(1,6))] subsection-[rand(1,32764)] of Spacelaw prohibits any [fluffbud] [budfluff] from wielding a Class-[pick("A", "B","C", "D")] laser weapon.")
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					speak("Oh! This weapon has a stun setting! That makes it [pick("A-OK", "totally fine", "well within certain loopholes of the law")] for me to use!")
 					src.budgun.set_current_projectile(new /datum/projectile/energy_bolt)
 					src.budgun.item_state = "egun"
 					src.budgun.icon_state = "energystun100"
 					src.budgun.muzzle_flash = "muzzle_flash_elec"
-					src.budgun.update_icon()
-					update_icon()
+					src.budgun.UpdateIcon()
+					UpdateIcon()
 		else if (!istype(src.budgun.current_projectile, /datum/projectile/laser)) // Our Egun is set to stun
 			speak("I can't kill anything with this!")
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				speak("Much better!")
 				src.budgun.set_current_projectile(new /datum/projectile/laser)
 				src.budgun.item_state = "egun"
 				src.budgun.icon_state = "energykill100"
 				src.budgun.muzzle_flash = "muzzle_flash_laser"
-				src.budgun.update_icon()
-				update_icon()
+				src.budgun.UpdateIcon()
+				UpdateIcon()
 		else	// LASER
 			if (src.said_dumb_things)
 				return
 			src.said_dumb_things = 1
-			SPAWN_DBG(15 SECONDS)
+			SPAWN(15 SECONDS)
 				src.said_dumb_things = 0
 			speak("[user ? "Thank you, [user]! Oh... but a" : "A"]rticle-[rand(1,6)] subsection-[rand(1,32764)] of Spacelaw prohibits any [fluffbud] [budfluff] from wielding a Class-[pick("A", "B","C", "D")] laser weapon.")
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				if (user)
 					speak("But, you wouldn't say that I'm [fluffbud], would you?")
 				else
@@ -661,12 +662,12 @@
 		var/obj/item/gun/energy/lawbringer/prints = src.budgun
 		if (prints.owner_prints && !loose)
 			var/search = lowertext(prints.owner_prints)
-			for (var/datum/data/record/R in data_core.general)
-				if (search == lowertext(R.fields["fingerprint"]))
-					law_prints = R.fields["name"]
+			for (var/datum/db_record/R as anything in data_core.general.records)
+				if (search == lowertext(R["fingerprint"]))
+					law_prints = R["name"]
 					break
-				else if (lowertext(R.fields["rank"]))
-					law_prints = R.fields["name"]
+				else if (lowertext(R["rank"]))
+					law_prints = R["name"]
 					break
 			if (!law_prints)	// If we didn't get anything
 				law_prints = "[pick(NT)]"	// I dunno just pick someone
@@ -706,59 +707,59 @@
 		switch (local_ordinance)
 			if ("clown")
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/clownshot)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					if (!loose)
 						src.visible_message(dothevoice)
 					speak(loose ? "CLOWN." : "Clownshot!")
 					playsound(src, "sound/vox/clown.ogg", 30)
 			if ("detain")
 				src.budgun.set_current_projectile(new/datum/projectile/energy_bolt/aoe)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Detain!")
 					playsound(src, "sound/vox/detain.ogg", 30)
 			if ("pulse")
 				src.budgun.set_current_projectile(new/datum/projectile/energy_bolt/pulse)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Pulse!")
 					playsound(src, "sound/vox/push.ogg", 30)
 			if ("knockout")
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/tranq_dart/law_giver)
 				src.budgun.current_projectile.cost = 60
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Knockout!")
 					playsound(src, "sound/vox/sleep.ogg", 30)
 			if ("smoke")
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/smoke)
 				src.budgun.current_projectile.cost = 50
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Smokeshot!")
 					playsound(src, "sound/vox/smoke.ogg", 30)
 			if ("execute")
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/revolver_38)
 				src.budgun.current_projectile.cost = 30
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					speak("EXTERMINATE.")
 					playsound(src, "sound/vox/exterminate.ogg", 30)
 			if ("hotshot")
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/flare)
 				src.budgun.current_projectile.cost = 60
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					speak("HOTSHOT.")
 					playsound(src, "sound/vox/hot.ogg", 30)
 			if ("bigshot")	// impossible to get to without admin intervention
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/aex/lawbringer)
 				src.budgun.current_projectile.cost = 170
-				SPAWN_DBG(1 SECOND) // just call proc BeTheLaw(1, 0, 1) on a Buddy with a lawbringer and it should work
+				SPAWN(1 SECOND) // just call proc BeTheLaw(1, 0, 1) on a Buddy with a lawbringer and it should work
 					speak("HIGH EXPLOSIVE.")
 					playsound(src, "sound/vox/high.ogg", 50)
 					sleep(0.4 SECONDS)
 					playsound(src, "sound/vox/explosive.ogg", 50)
-		src.budgun.update_icon()
-		src.update_icon()
+		src.budgun.UpdateIcon()
+		src.UpdateIcon()
 		src.slept_through_becoming_the_law = 0
 		return
 
@@ -772,8 +773,8 @@
 		var/actiontext2 = pick("throws its [src.budgun] down",\
 													 "tosses its [src.budgun] aside",\
 													 "places the [src.budgun] on the ground")
-		src.update_icon()
-		SPAWN_DBG(2 SECONDS)
+		src.UpdateIcon()
+		SPAWN(2 SECONDS)
 			src.visible_message("<b>[src.name]</b>[actiontext1], then [actiontext2][pick("!" , ", hoping nobody noticed.")]")
 			set_emotion(pick("screaming", "look", "angry", "sad"))
 			DropTheThing("gun", null, 0, 0, TdurgSux)
@@ -826,13 +827,15 @@
 		var/long_day = "[pick("Hooh", "Yeah", "Yeesh", "Blimey")], [pick("wow,", "heh,", "huh,")] guess it's been a long [pick("day", "shift", "morning")][shiftTime > 6000 ? "." : " already!"]"
 		switch(trickery)
 			if ("togglelock")
-				speak("Sorry, only people authorized by Thinktronic Data Systems may access my controls and accessories.")
+				if(!ON_COOLDOWN(src, "speak_unauthorized", 10 SECONDS))
+					speak("Sorry, only people authorized by Thinktronic Data Systems may access my controls and accessories.")
 				if (deceptioncheck_passed)
 					src.locked = !src.locked
-					SPAWN_DBG(2 SECONDS)
-						speak(its_the_rd)
-						speak(long_day)
-						speak("Okay, everything's [src.locked ? "locked" : "unlocked"] now!")
+					SPAWN(2 SECONDS)
+						if(!ON_COOLDOWN(src, "speak_authorized", 10 SECONDS))
+							speak(its_the_rd)
+							speak(long_day)
+							speak("Okay, everything's [src.locked ? "locked" : "unlocked"] now!")
 					return 1
 				else
 					return 0
@@ -840,19 +843,24 @@
 				if(W)
 					user.visible_message("<b>[user]</b> tries to pry the tool out of [src], but it's locked firmly in place!","You try to pry the gun off of [src]'s gun mount, but it's locked firmly in place!")
 				if (src.gunlocklock && src.tool.tool_id == "GUN")
-					speak(pick("Pass.", "No thanks.", "Nah, I'd rather not.", "Hands off the merchandise!",\
-					"Yeah I'm going to need a signed permission slip from your mother first",\
-					"No way, you'll hurt [pick("me", "yourself")]!", "No nerds allowed!",\
-					"You're not the boss of me!", "Couldn't even if I wanted to!"))
+					if(!ON_COOLDOWN(src, "speak_gun", 10 SECONDS))
+						speak(pick("Pass.", "No thanks.", "Nah, I'd rather not.", "Hands off the merchandise!",\
+						"Yeah I'm going to need a signed permission slip from your mother first",\
+						"No way, you'll hurt [pick("me", "yourself")]!", "No nerds allowed!",\
+						"You're not the boss of me!", "Couldn't even if I wanted to!"))
 					return 0
-				speak("Sorry, only people authorized by Thinktronic Data Systems may modify my accessories.")
+				if(!ON_COOLDOWN(src, "speak_unauthorized", 10 SECONDS))
+					speak("Sorry, only people authorized by Thinktronic Data Systems may modify my accessories.")
 				if (deceptioncheck_passed && src.tool.tool_id)
 					src.locked = 0
-					SPAWN_DBG(2 SECONDS)
-						speak(its_the_rd)
-						speak(long_day)
-						DropTheThing("tool", null, 0, 1, TdurgTrick)
-						speak("Alright, my [src.tool]'s all popped out. I've also unlocked everything, just in case!")
+					SPAWN(2 SECONDS)
+						if(!ON_COOLDOWN(src, "speak_authorized", 10 SECONDS))
+							speak(its_the_rd)
+							speak(long_day)
+							DropTheThing("tool", null, 0, 1, TdurgTrick)
+							speak("Alright, my [src.tool]'s all popped out. I've also unlocked everything, just in case!")
+						else
+							DropTheThing("tool", null, 0, 1, TdurgTrick)
 					return 1
 				else
 					return 0
@@ -860,25 +868,31 @@
 				if(W)
 					user.visible_message("<b>[user]</b> tries to pry the gun off of [src]'s gun mount, but it's locked firmly in place!","You try to pry the gun off of [src]'s gun mount, but it's locked firmly in place!")
 				if (src.gunlocklock)
-					speak(pick("Pass.", "No thanks.", "Nah, I'd rather not.", "Hands off the merchandise!",\
-					"Yeah I'm going to need a signed permission slip from your mother first",\
-					"No way, you'll hurt [pick("me", "yourself")]!", "No nerds allowed!",\
-					"You're not the boss of me!", "Couldn't even if I wanted to!"))
+					if(!ON_COOLDOWN(src, "speak_gun", 10 SECONDS))
+						speak(pick("Pass.", "No thanks.", "Nah, I'd rather not.", "Hands off the merchandise!",\
+						"Yeah I'm going to need a signed permission slip from your mother first",\
+						"No way, you'll hurt [pick("me", "yourself")]!", "No nerds allowed!",\
+						"You're not the boss of me!", "Couldn't even if I wanted to!"))
 					return 0
 				else
-					speak("Sorry, only people authorized by Thinktronic Data Systems may steal my defensive weapon system.")
+					if(!ON_COOLDOWN(src, "speak_unauthorized", 10 SECONDS))
+						speak("Sorry, only people authorized by Thinktronic Data Systems may steal my defensive weapon system.")
 				if (deceptioncheck_passed)
 					src.locked = 0
-					SPAWN_DBG(2 SECONDS)
-						speak(its_the_rd)
-						speak(long_day)
-						DropTheThing("gun", null, 0, 1, TdurgTrick)
-						speak("There you go, I've placed my [src.budgun] on the ground. I've also unlocked my tool and gun mounts, just in case you wanted to give me a new one. Please.")
+					SPAWN(2 SECONDS)
+						if(!ON_COOLDOWN(src, "speak_authorized", 10 SECONDS))
+							speak(its_the_rd)
+							speak(long_day)
+							DropTheThing("gun", null, 0, 1, TdurgTrick)
+							speak("There you go, I've placed my [src.budgun] on the ground. I've also unlocked my tool and gun mounts, just in case you wanted to give me a new one. Please.")
+						else
+							DropTheThing("gun", null, 0, 1, TdurgTrick)
 					return 1
 				else
 					return 0
 			else
-				speak("Sorry, only people authorized by Thinktronic Data Systems may do... whatever it is you're trying to do.")
+				if(!ON_COOLDOWN(src, "speak_unauthorized", 10 SECONDS))
+					speak("Sorry, only people authorized by Thinktronic Data Systems may do... whatever it is you're trying to do.")
 				return 0
 
 	proc/DropTheThing(obj/item/thing as text, mob/user as mob|null, var/by_force = 0, var/announce_it = 1, var/location, var/ignoregunlocklock)
@@ -904,12 +918,13 @@
 				src.budgun = null
 				src.hasgun = 0
 				src.gun = null
-				update_icon()
+				UpdateIcon()
 				return
 			if ("tool")
 				if (src.tool.tool_id == "GUN")
 					if (announce_it)
-						speak("It looks like you're trying to remove my tool module! Well... someone beat you to it.")
+						if(!ON_COOLDOWN(src, "speak_gun", 10 SECONDS))
+							speak("It looks like you're trying to remove my tool module! Well... someone beat you to it.")
 					return
 				else if (by_force && user)
 					src.visible_message("<span class='alert'>[user] pries the [src.tool] out of [src]'s tool port!</span>", "<span class='alert'>You pry the [src.tool] out of [src]'s tool port!</span>")
@@ -957,7 +972,7 @@
 				if (src.locked) // Are we locked?
 					if(src.on && !src.idle)
 						if(!DeceptionCheck(null, user, "togglelock")) // Let's try to unlock em
-							speak("Well shoot, I'd love to hold that gun! But... I have a tool module installed, and the combined mass and power draw of both a tool module <I>and</I> a gun would definitely fry my drive train and void my warranty. ")
+							//speak("Well shoot, I'd love to hold that gun! But... I have a tool module installed, and the combined mass and power draw of both a tool module <I>and</I> a gun would definitely fry my drive train and void my warranty. ")
 							return	// welp
 					else	// Can't charm our way in if they're asleep
 						boutput(user, "You try to give [src] your [Q], but its tool module is in the way.")
@@ -987,7 +1002,7 @@
 						src.visible_message("<span class='alert'>[src] refuses to wield an unauthorized weapon!</span>",\
 																"<span class='alert'>[src] graciously refuses your [Q].</span>")
 						speak("Sorry, but article-[(rand(1,6))] subsection-[rand(1,32764)] of Spacelaw prohibits any [fluffbud] [budfluff] from wielding a Class-[pick("A", "B","C", "D")] weapon.")
-						SPAWN_DBG(2 SECOND)
+						SPAWN(2 SECOND)
 							speak("...basically meaning I can only hold a weapon that can't explicitly hurt anyone. Rules are rules!")
 						return
 					else
@@ -1004,7 +1019,7 @@
 							speak("[user ? "Thank you, [user]! " : ""]I'll put this [Q] to good use.")
 						else
 							speak("[user ? "Thank you, [user]! " : ""]I'll-- uh, hold on, let me check Spacelaw to see if I can actually keep holding this thing... whatever it is.")
-							SPAWN_DBG(2 SECOND)
+							SPAWN(2 SECOND)
 								speak("...okay, I mean, Spacelaw doesn't <I>explicitly</I> say I can't use this [Q]. It <I>is</I> a gun, right? At any rate, I'll put it to good use.")
 					else
 						boutput(user, "You slip your [Q] into [src]'s hand, and it reflexively closes around the grip.[prob(23) ? " How adorable." : ""]")
@@ -1024,7 +1039,7 @@
 				src.hasgun = 1
 				src.gun = budgun.name
 				user.u_equip(Q)
-				update_icon()
+				UpdateIcon()
 				IllegalBotMod(null, user)	// Time to see if our mods want to do anything with this gun
 				if(istype(Q, /obj/item/gun/energy/lawbringer))
 					BeTheLaw(src.emagged, 0, src.lawbringer_alwaysbigshot)
@@ -1091,7 +1106,7 @@
 				var/griffed = ShootTheGun()
 				src.visible_message("<span class='alert'><B>BOOM!</B> [src] misses its head... screen... thing, sending the bullet flying at [griffed]!</span>")
 				if (ishuman(griffed))
-					SPAWN_DBG(1 SECONDS)
+					SPAWN(1 SECONDS)
 						src.visible_message("[src] gasps!")
 						speak(pick("Sorry!", "Are you okay?", "Whoops!", "Heads up!", "Oh no!"))
 				else
@@ -1162,40 +1177,41 @@
 				return 0 // huh
 
 		else if (istype(src.budgun, /obj/item/gun/energy))
-			var/obj/item/gun/energy/pewgun = src.budgun
-			if(pewgun.cell) // did we remember to load our energygun?
-				if (pewgun.cell.charge >= pewgun.current_projectile.cost) // okay cool we can shoot!
-					return 1
-				else if(!pewgun.rechargeable) // oh no we cant, but can we recharge it?
-					if(istype(src.budgun, /obj/item/gun/energy/lawbringer)) // is it one of those funky guns with multiple settings?
-						BeTheLaw(src.emagged, 1, src.lawbringer_alwaysbigshot) // see if we can change modes and try again
-						return 0 // then try again later
-					else
-						return 0 // ditto
-				else // oh no we cant!
-					return 0
-			else
-				return 0 // maybe try putting batteries in it next time
+			if(SEND_SIGNAL(budgun, COMSIG_CELL_CHECK_CHARGE, budgun.current_projectile.cost) & CELL_SUFFICIENT_CHARGE) // did we remember to load our energygun?
+				return 1
+			else if(SEND_SIGNAL(budgun, COMSIG_CELL_CAN_CHARGE) & CELL_UNCHARGEABLE) // oh no we cant, but can we recharge it?
+				if(istype(src.budgun, /obj/item/gun/energy/lawbringer)) // is it one of those funky guns with multiple settings?
+					BeTheLaw(src.emagged, 1, src.lawbringer_alwaysbigshot) // see if we can change modes and try again
+					return 0 // then try again later
+				else
+					return 0 // ditto
+			else // oh no we cant!
+				return 0
 
 	proc/ChargeUrLaser()
 		if(!src.budgun || !src.cell || !istype(src.budgun, /obj/item/gun/energy))
 			return 0 // keep your fingers out of the charger
 
 		if (istype(src.budgun, /obj/item/gun/energy))
-			var/obj/item/gun/energy/charge_me = src.budgun
-			if(istype(charge_me.cell, /obj/item/ammo/power_cell/self_charging)) // Oh a self-charger?
+			if(!(SEND_SIGNAL(budgun, COMSIG_CELL_CAN_CHARGE) & CELL_CHARGEABLE)) // Oh a non-rechargable gun? Or no cell at all?
 				return 0 // cant touch that, sorry
-			else if (charge_me.cell.charge < charge_me.cell.max_charge) // is our gun not full?
-				if (src.cell.charge > (GUARDBOT_LOWPOWER_ALERT_LEVEL - 10 + (charge_me.cell.max_charge - charge_me.cell.charge))) // Can we charge it without tanking our battery?
-					src.cell.charge -= (charge_me.cell.max_charge - charge_me.cell.charge) // discharge us
-					charge_me.cell.charge = charge_me.cell.max_charge // recharge it
-					return 1 // and we're good2shoot
-				else if (CheckMagCellWhatever()) // is there enough charge left in the gun?
-					return 0 // cool, but we're not gonna charge it
-				else // welp
-					return DischargeAndTakeANap()
-			else // gun's full or something?
-				return 1 // cool beans
+			else
+				var/list/ret = list()
+				if(SEND_SIGNAL(budgun, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+					if (ret["charge"] < ret["max_charge"]) // is our gun not full?
+						if (src.cell.charge > (GUARDBOT_LOWPOWER_ALERT_LEVEL - 10 + (ret["max_charge"] - ret["charge"]))) // Can we charge it without tanking our battery?
+							src.cell.charge -= (ret["max_charge"] - ret["charge"]) // discharge us
+							SEND_SIGNAL(budgun, COMSIG_CELL_CHARGE, ret["max_charge"])
+							return 1 // and we're good2shoot
+						else if (CheckMagCellWhatever()) // is there enough charge left in the gun?
+							return 0 // cool, but we're not gonna charge it
+						else // welp
+							return DischargeAndTakeANap()
+					else // gun's full or something?
+						return 1 // cool beans
+				else//bad cell???
+					return 0
+
 
 	proc/DischargeAndTakeANap()
 		if(!src.budgun || !src.cell)
@@ -1230,12 +1246,15 @@
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
 			if(IN_RANGE(target_turf, my_turf, 1))
-				budgun.shoot_point_blank(target, my_turf)
+				budgun.shoot_point_blank(target, src)
 			else
 				budgun.shoot(target_turf, my_turf, src)
 			burst--
 			if (burst)
 				sleep(5)	// please dont fuck anything up
+			if(istype(budgun, /obj/item/gun/kinetic/riotgun))
+				var/obj/item/gun/kinetic/riotgun/RG = budgun
+				RG.rack(src)
 		ON_COOLDOWN(src, "buddy_refire_delay", src.gunfire_cooldown)
 		return 1
 
@@ -1282,7 +1301,7 @@
 		src.updateUsrDialog()
 		return
 
-	receive_signal(datum/signal/signal, receive_method, receive_param)
+	receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
 		if(!src.on || src.stunned)
 			return
 
@@ -1294,7 +1313,7 @@
 			targaddress = src.net_id
 			last_dock_id = null
 
-		var/is_beacon = (receive_param == "[src.beacon_freq]")
+		var/is_beacon = connection_id == "beacon"
 		if(!is_beacon)
 			if( ((targaddress != src.net_id) && (signal.data["acc_code"] != netpass_heads) ) || !signal.data["sender"])
 				if(signal.data["address_1"] == "ping" && signal.data["sender"])
@@ -1415,11 +1434,9 @@
 		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 		var/turf/T = get_turf(src)
 		if(src.mover)
-			src.mover.master = null
-			//qdel(src.mover)
-			src.mover = null
+			qdel(src.mover)
 		if((allow_big_explosion && cell && (cell.charge / cell.maxcharge > 0.85) && prob(25)) || istype(src.cell, /obj/item/cell/erebite))
-			src.invisibility = 100
+			src.invisibility = INVIS_ALWAYS_ISH
 			var/obj/overlay/Ov = new/obj/overlay(T)
 			Ov.anchored = 1
 			Ov.name = "Explosion"
@@ -1442,7 +1459,7 @@
 			core.created_model_task = src.model_task
 
 			var/list/throwparts = list()
-			throwparts += new /obj/item/parts/robot_parts/arm/left(T)
+			throwparts += new /obj/item/parts/robot_parts/arm/left/standard(T)
 			throwparts += core
 			if(src.tool.tool_id == "GUN")
 				qdel(src.tool)	// Throw your phantom gun in the trash, not on the ground!
@@ -1459,7 +1476,7 @@
 				var/edge = get_edge_target_turf(src, pick(alldirs))
 				O.throw_at(edge, 100, 4)
 
-			SPAWN_DBG(0) //Delete the overlay when finished with it.
+			SPAWN(0) //Delete the overlay when finished with it.
 				src.on = 0
 				sleep(1.5 SECONDS)
 				qdel(Ov)
@@ -1479,7 +1496,7 @@
 			if(src.budgun)
 				DropTheThing("gun", null, 0, 0, T, 1)
 			if(prob(50))
-				new /obj/item/parts/robot_parts/arm/left(T)
+				new /obj/item/parts/robot_parts/arm/left/standard(T)
 			src.hat?.set_loc(T)
 
 			new /obj/item/guardbot_frame(T)
@@ -1507,8 +1524,9 @@
 			cell.use(to_draw)
 
 			if(cell.charge < GUARDBOT_LOWPOWER_IDLE_LEVEL)
-				speak("Critical battery.")
-				INVOKE_ASYNC(src, /obj/machinery/bot/guardbot.proc/snooze)
+				if(!ON_COOLDOWN(src, "critical_battery_speak", 5 SECONDS))
+					speak("Critical battery.")
+					INVOKE_ASYNC(src, /obj/machinery/bot/guardbot.proc/snooze)
 				return 0
 
 			if(cell.charge < GUARDBOT_LOWPOWER_ALERT_LEVEL && !(locate(/datum/computer/file/guardbot_task/recharge) in src.tasks) )
@@ -1607,9 +1625,9 @@
 					else
 						playsound(src, "sound/weapons/Gunclick.ogg", 60, 1)
 					if (ChargeUrLaser())
-						SPAWN_DBG(1 SECOND)
+						SPAWN(1 SECOND)
 							elecflash(get_turf(src), 1, power=1, exclude_center = 0)
-					update_icon()
+					UpdateIcon()
 				else
 					var/r = rand(1,9)
 					switch(r)
@@ -1634,7 +1652,7 @@
 					src.set_emotion("screaming")	// *scream
 					src.remove_current_task()		// welp
 					. = TRUE
-					SPAWN_DBG(3 SECONDS)
+					SPAWN(3 SECONDS)
 						src.set_emotion("sad")		// Still kinda sad that someone would bully a defenseless little rectangle.
 			else if(src.tool && (src.tool.tool_id != "GUN"))
 				var/is_ranged = get_dist(src, target) > 1
@@ -1642,12 +1660,8 @@
 			return
 
 		post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
-			if(!radio_connection)
-				return
-
 			var/datum/signal/signal = get_free_signal()
 			signal.source = src
-			signal.transmission_method = TRANSMISSION_RADIO
 			signal.data[key] = value
 			if(key2)
 				signal.data[key2] = value2
@@ -1660,9 +1674,19 @@
 
 			src.last_comm = world.time
 			if(target_id == "!BEACON!")
-				beacon_connection.post_signal(src, signal)//, GUARDBOT_RADIO_RANGE)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, GUARDBOT_RADIO_RANGE, "beacon")
 			else
-				radio_connection.post_signal(src, signal, GUARDBOT_RADIO_RANGE)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, GUARDBOT_RADIO_RANGE, "control")
+
+		post_find_beacon(var/type)
+			var/datum/signal/signal = get_free_signal()
+			signal.source = src
+			signal.data["findbeacon"] = type
+			signal.data["address_tag"] = type
+			signal.data["sender"] = src.net_id
+
+			src.last_comm = world.time
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, GUARDBOT_RADIO_RANGE, "beacon")
 
 		add_task(var/datum/computer/file/guardbot_task/newtask, var/high_priority = 0, var/clear_others = 0)
 			if(clear_others)
@@ -1719,7 +1743,7 @@
 			src.emotion = new_emotion
 			if (src.hat || src.costume_icon || src.bedsheet)
 				src.overlays = list((src.costume_icon ? src.costume_icon : null), (src.bedsheet ? image(src.icon, "bhat-ghost[src.bedsheet]") : null))
-			update_icon() // just update the darn icon
+			UpdateIcon() // just update the darn icon
 
 		interacted(mob/user as mob)
 			var/dat = "<tt><B>PR-6S Guardbuddy v1.4</B></tt><br><br>"
@@ -1769,78 +1793,77 @@
 			onclose(user, "guardbot")
 			return
 
-		update_icon()
-			var/emotion_image = null
-
-			if(!src.on)
-				src.icon_state = "robuddy0"
-
-			else if(src.stunned)
-				src.icon_state = "robuddya"
-
-			else if(src.idle)
-				src.icon_state = "robuddy_idle"
-
-			else
-				if (src.emotion)
-					emotion_image = image(src.icon, "face-[src.emotion]")
-				src.icon_state = "robuddy1"
-
-			src.overlays = list( emotion_image, src.bedsheet ? image(src.icon, "bhat-ghost[src.bedsheet]") : null, src.costume_icon ? costume_icon : null)
-
-			if (src.hat && !src.hat_shown)
-				var/image/hat_image = image(src.hat_icon, "bhat-[src.hat.icon_state]",,layer = 9.5) //TODO LAYER
-				hat_image.pixel_x = hat_x_offset
-				hat_image.pixel_y = hat_y_offset
-				src.underlays = list(hat_image)
-				src.hat_shown = 1
-
-			if (src.budgun)
-				src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)
-				if (istype(src.budgun, /obj/item/gun/energy/lawbringer))	// ugh
-					var/image/lawbringer_lights = image('icons/obj/items/gun.dmi', "lawbringer-d100", 11, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)	// ugh
-					if (istype(src.budgun, /obj/item/gun/energy/lawbringer/old))
-						lawbringer_lights.icon_state = "old-lawbringer-d100"
-					switch(lawbringer_state)	// ugh
-						if ("clown")
-							lawbringer_lights.color = "#FFC0CB"
-						if ("detain")
-							lawbringer_lights.color = "#FFFF00"
-						if ("pulse")
-							lawbringer_lights.color = "#EEEEFF"
-						if ("knockout")
-							lawbringer_lights.color = "#008000"
-						if ("smoke")
-							lawbringer_lights.color = "#0000FF"
-						if ("execute")
-							lawbringer_lights.color = "#00FFFF"
-						if ("hotshot")
-							lawbringer_lights.color = "#FF0000"
-						if ("bigshot")
-							lawbringer_lights.color = "#551A8B"
-					src.overlays += lawbringer_lights
-
-			src.icon_needs_update = 0
-			return
-
 		set_beacon_freq(var/newfreq)
 			if (!newfreq) return
 			newfreq = sanitize_frequency(newfreq)
-			radio_controller.remove_object(src, "[src.beacon_freq]")
 			src.beacon_freq = newfreq
-			src.beacon_connection = radio_controller.add_object(src, "[src.beacon_freq]")
+			get_radio_connection_by_id(src, "beacon").update_frequency(newfreq)
 
 		set_control_freq(var/newfreq)
 			if (!newfreq) return
 			newfreq = sanitize_frequency(newfreq)
-			radio_controller.remove_object(src, "[src.control_freq]")
 			src.control_freq = newfreq
-			src.radio_connection = radio_controller.add_object(src, "[src.control_freq]")
+			get_radio_connection_by_id(src, "control").update_frequency(newfreq)
+
+	update_icon()
+
+		var/emotion_image = null
+
+		if(!src.on)
+			src.icon_state = "robuddy0"
+
+		else if(src.stunned)
+			src.icon_state = "robuddya"
+
+		else if(src.idle)
+			src.icon_state = "robuddy_idle"
+
+		else
+			if (src.emotion)
+				emotion_image = image(src.icon, "face-[src.emotion]")
+			src.icon_state = "robuddy1"
+
+		src.overlays = list( emotion_image, src.bedsheet ? image(src.icon, "bhat-ghost[src.bedsheet]") : null, src.costume_icon ? costume_icon : null)
+
+		if (src.hat && !src.hat_shown)
+			var/image/hat_image = image(src.hat_icon, "bhat-[src.hat.icon_state]",,layer = 9.5) //TODO LAYER
+			hat_image.pixel_x = hat_x_offset
+			hat_image.pixel_y = hat_y_offset
+			src.underlays = list(hat_image)
+			src.hat_shown = 1
+
+		if (src.budgun)
+			src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)
+			if (istype(src.budgun, /obj/item/gun/energy/lawbringer))	// ugh
+				var/image/lawbringer_lights = image('icons/obj/items/gun.dmi', "lawbringer-d100", 11, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)	// ugh
+				if (istype(src.budgun, /obj/item/gun/energy/lawbringer/old))
+					lawbringer_lights.icon_state = "old-lawbringer-d100"
+				switch(lawbringer_state)	// ugh
+					if ("clown")
+						lawbringer_lights.color = "#FFC0CB"
+					if ("detain")
+						lawbringer_lights.color = "#FFFF00"
+					if ("pulse")
+						lawbringer_lights.color = "#EEEEFF"
+					if ("knockout")
+						lawbringer_lights.color = "#008000"
+					if ("smoke")
+						lawbringer_lights.color = "#0000FF"
+					if ("execute")
+						lawbringer_lights.color = "#00FFFF"
+					if ("hotshot")
+						lawbringer_lights.color = "#FF0000"
+					if ("bigshot")
+						lawbringer_lights.color = "#551A8B"
+				src.overlays += lawbringer_lights
+
+		src.icon_needs_update = 0
+		return
 
 	process()
 		. = ..()
 		if (icon_needs_update)
-			src.update_icon()
+			src.UpdateIcon()
 
 		if(!src.on)
 			return
@@ -1884,33 +1907,27 @@
 
 			src.add_task(src.model_task.copy_file(),1)
 
-		if(src.task?.disposed || src.task.master != src)
+		if(src.task?.disposed || src.task?.master != src)
 			src.task = null
 		if(istype(src.task))
 			src.task.task_act()
 
 		return
 
-	navigate_to(atom/the_target,var/move_delay=3,var/adjacent=0,var/clear_frustration=1)
+	navigate_to(atom/the_target,var/move_delay=3,var/adjacent=0,var/clear_frustration=1, max_dist=100)
 		if(src.moving)
 			return 1
 		src.moving = 1
 		if (clear_frustration)
 			src.frustration = 0
 		if(src.mover)
-			src.mover.master = null
-			//qdel(src.mover)
-			src.mover = null
-		//boutput(world, "TEST: Navigate to [target]")
-
-		//current_movepath = world.time
+			qdel(src.mover)
 
 		src.mover = new /datum/guardbot_mover(src)
+		src.mover.max_dist = max_dist
 
-		// drsingh for cannot modify null.delay
-		if (!isnull(src.mover))
-			src.mover.delay = max(min(move_delay,5),2)
-			src.mover.master_move(the_target,adjacent)
+		src.mover.delay = clamp(move_delay, 2, 5)
+		src.mover.master_move(the_target,adjacent)
 
 		return 0
 
@@ -1989,7 +2006,6 @@
 		if(!LT_loc)
 			LT_loc = get_turf(master)
 		//////PDA NOTIFY/////
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency(FREQ_PDA)
 		var/datum/signal/pdaSignal = get_free_signal()
 		var/message2send
 		if (prob(5))
@@ -1999,9 +2015,7 @@
 		else
 			message2send ="Notification: [last_target] detained by [master] in [bot_location] at coordinates [LT_loc.x], [LT_loc.y]."
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="BUDDY-MAILBOT", "group"=list(MGD_SCIENCE), "sender"="00000000", "message"="[message2send]")
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection != null)
-			transmit_connection.post_signal(master, pdaSignal)
+		SEND_SIGNAL(master, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 
 	/// Interrupts the action if the bot cant (or shouldnt be able to) continue cuffing
 	proc/failchecks()
@@ -2269,7 +2283,7 @@
 				var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 				for(var/obj/O in affected)
-					SPAWN_DBG(0.6 SECONDS) pool(O)
+					SPAWN(0.6 SECONDS) qdel(O)
 
 				if(isliving(target_r)) //Probably unsafe.
 					playsound(target_r:loc, "sound/effects/electric_shock.ogg", 50, 1)
@@ -2450,7 +2464,7 @@
 					master.navigate_to(src.target)
 			else
 				if(!master.last_comm || (world.time >= master.last_comm + 100) )
-					master.post_status("recharge","data","[master.cell.charge]")
+					master.post_status(null,"data","[master.cell.charge]","address_tag","recharge")
 					master.reply_wait = 2
 					if(!announced)
 						announced++
@@ -2468,8 +2482,8 @@
 					return
 				var/list/L = params2list(signal.data["data"])
 				if(!L || !L["x"] || !L["y"]) return
-				var/search_x = text2num(L["x"])
-				var/search_y = text2num(L["y"])
+				var/search_x = text2num_safe(L["x"])
+				var/search_y = text2num_safe(L["y"])
 				var/turf/simulated/new_target = locate(search_x,search_y,master.z)
 				if(!new_target)
 					return
@@ -2478,7 +2492,7 @@
 					announced = 2
 					src.secondary_targets = list()
 
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						if (src.secondary_targets.len)
 							master.reply_wait = 0
 							. = INFINITY
@@ -2559,7 +2573,7 @@
 					else
 						if(!master.last_comm || (world.time >= master.last_comm + 100) )
 							src.awaiting_beacon = 10
-							master.post_status("!BEACON!", "findbeacon", "patrol")
+							master.post_find_beacon("patrol")
 							master.reply_wait = 2
 
 				if (2)	//Seeking a seat.
@@ -2587,7 +2601,7 @@
 							return
 
 						if(!master.moving)
-							master.navigate_to(src.target, 2.5)
+							master.navigate_to(src.target, 2.5, max_dist=14)
 
 					return
 
@@ -2798,12 +2812,10 @@
 							return
 
 						if((!(hug_target in view(7,master)) && (!master.mover || !master.moving)) || !master.path || !master.path.len || (4 < get_dist(hug_target,master.path[master.path.len])) )
-							//qdel(master.mover)
 							if (master.mover)
-								master.mover.master = null
-								master.mover = null
+								qdel(master.mover)
 							master.moving = 0
-							master.navigate_to(hug_target,ARREST_DELAY)
+							master.navigate_to(hug_target,ARREST_DELAY, max_dist=15)
 							return
 
 
@@ -2854,10 +2866,9 @@
 					// Otherwise, go get them!
 					else
 						if (master.mover)
-							master.mover.master = null
-							master.mover = null
+							qdel(master.mover)
 						master.moving = 0
-						master.navigate_to(arrest_target,ARREST_DELAY, 0, 0)
+						master.navigate_to(arrest_target,ARREST_DELAY, 0, 0, max_dist=30)
 						//master.current_movepath = "HEH" //Stop any current movement.
 
 		task_input(input)
@@ -2967,7 +2978,7 @@
 				return 1
 
 			if (confList["patrol"])
-				var/patrol_stat = text2num(confList["patrol"])
+				var/patrol_stat = text2num_safe(confList["patrol"])
 				if (!isnull(patrol_stat))
 					if (patrol_stat)
 						src.no_patrol = 0
@@ -2975,7 +2986,7 @@
 						src.no_patrol = 1
 
 			if (confList["lethal"] && (confList["acc_code"] == netpass_heads))
-				var/lethal_stat = text2num(confList["lethal"])
+				var/lethal_stat = text2num_safe(confList["lethal"])
 				if (!isnull(lethal_stat))
 					if (lethal_stat && !src.lethal)
 						src.lethal = 1
@@ -3103,7 +3114,7 @@
 				if(next_destination)
 					set_destination(next_destination)
 					if(!master.moving && target && (target != master.loc))
-						master.navigate_to(target)
+						master.navigate_to(target, max_dist=40)
 					return
 				else
 					find_nearest_beacon()
@@ -3112,14 +3123,14 @@
 			find_nearest_beacon()
 				nearest_beacon = null
 				new_destination = "__nearest__"
-				master.post_status("!BEACON!", "findbeacon", "patrol")
+				master.post_find_beacon("patrol")
 				awaiting_beacon = 5
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					if(!master || !master.on || master.stunned || master.idle) return
 					if(master.task != src) return
 					awaiting_beacon = 0
 					if(nearest_beacon && !master.moving)
-						master.navigate_to(nearest_beacon_loc)
+						master.navigate_to(nearest_beacon_loc, max_dist=30)
 					else
 						patrol_delay = 8
 						target = null
@@ -3127,7 +3138,7 @@
 
 			set_destination(var/new_dest)
 				new_destination = new_dest
-				master.post_status("!BEACON!", "findbeacon", "patrol")
+				master.post_find_beacon(new_dest || "patrol")
 				awaiting_beacon = 5
 
 			assess_perp(mob/living/carbon/human/perp as mob)
@@ -3249,7 +3260,7 @@
 					if(get_dist(master, hug_target) <= 1)
 						if (prob(2))
 							master.speak("Merry Spacemas!")
-							SPAWN_DBG(1 SECOND)
+							SPAWN(1 SECOND)
 								if (master)
 									master.speak("Warning: Real-time clock battery low or missing.")
 						else
@@ -3264,12 +3275,10 @@
 						return
 
 					if((!(hug_target in view(7,master)) && (!master.mover || !master.moving)) || !master.path || !master.path.len || (4 < get_dist(hug_target,master.path[master.path.len])) )
-						//qdel(master.mover)
 						if (master.mover)
-							master.mover.master = null
-							master.mover = null
+							qdel(master.mover)
 						master.moving = 0
-						master.navigate_to(hug_target,ARREST_DELAY)
+						master.navigate_to(hug_target,ARREST_DELAY, max_dist=15)
 						return
 
 				else
@@ -3373,9 +3382,8 @@
 					//qdel(master.mover)
 					master.frustration++
 					if (master.mover)
-						master.mover.master = null
-						master.mover = null
-					master.navigate_to(protected,3,1,1)
+						qdel(master.mover)
+					master.navigate_to(protected,3,1,1, max_dist=15)
 					return
 				else
 
@@ -3389,11 +3397,9 @@
 
 					if(!master.path || !master.path.len || (3 < get_dist(protected,master.path[master.path.len])) )
 						master.moving = 0
-						//qdel(master.mover)
 						if (master.mover)
-							master.mover.master = null
-							master.mover = null
-						master.navigate_to(protected,3,1,1)
+							qdel(master.mover)
+						master.navigate_to(protected,3,1,1, max_dist=15)
 
 			return
 
@@ -3481,10 +3487,8 @@
 				if(protected.lastattacker && (protected.lastattackertime + 40) >= world.time)
 					if(protected.lastattacker != protected)
 						master.moving = 0
-						//qdel(master.mover)
 						if (master.mover)
-							master.mover.master = null
-							master.mover = null
+							qdel(master.mover)
 						src.arrest_target = protected.lastattacker
 						src.follow_attempts = 0
 						src.arrest_attempts = 0
@@ -3557,6 +3561,7 @@
 				return
 
 			if (src.protected && prob(5))
+      
 				if (prob(40))
 					var/buddy_cheer_up_chooser = rand(1, length(buddy_cheer_up_phrases))
 					master.speak(buddy_cheer_up_phrases[buddy_cheer_up_chooser])
@@ -3583,6 +3588,7 @@
 					src.protected = C
 					buddy_is_dork = 1
 					master.speak(pick("Insufficient happiness detected!","Person in need of cheering-up detected!","Coolest person on the station located!","Genius detected!","Wonderful friend detected!","Level 9F Joke-defiency detected!"))
+
 					master.point(C)
 					return
 
@@ -3625,7 +3631,7 @@
 #define NT_GAFFE (1<<15)
 
 #define MAPTEXT_PAUSE (4.5 SECONDS)
-#define FOUND_NEAT(FLAG) src.distracted = TRUE; src.neat_things |= FLAG; SPAWN_DBG(0)
+#define FOUND_NEAT(FLAG) src.distracted = TRUE; src.neat_things |= FLAG; SPAWN(0)
 #define END_NEAT sleep(MAPTEXT_PAUSE*2); src.distracted = FALSE
 
 	tourguide
@@ -3690,7 +3696,7 @@
 					if (src.distracted)
 						awaiting_beacon += 2
 
-					master.post_status("!BEACON!", "findbeacon", "tour")
+					master.post_find_beacon("[next_beacon_id]" || "tour")
 					return
 
 				if (STATE_PATHING_TO_BEACON)
@@ -3707,7 +3713,7 @@
 							return
 
 						if (current_beacon_loc != master.loc)
-							master.navigate_to(current_beacon_loc)
+							master.navigate_to(current_beacon_loc, max_dist=30)
 						else
 							state = STATE_AT_BEACON
 					return
@@ -3742,7 +3748,7 @@
 			var/delays = 0
 			var/proc_delay = master.base_tick_spacing*(2**(master.processing_tier-1))
 
-			SPAWN_DBG(0) // do not delay doWork
+			SPAWN(0) // do not delay doWork
 				//Delay for active destraction
 				while(yield_to_neat && distracted)
 					awaiting_beacon++
@@ -3903,7 +3909,7 @@
 							master.set_emotion(desired_emotion)
 							END_NEAT
 
-					if (!(src.neat_things & NT_CLOAKER) && H.invisibility > 0)
+					if (!(src.neat_things & NT_CLOAKER) && H.invisibility > INVIS_NONE)
 						FOUND_NEAT(NT_CLOAKER)
 							src.speak_with_maptext("As a courtesy to other tourgroup members, you are requested, though not required, to deactivate any cloaking devices, stealth suits, light redirection field packs, and/or unholy blood magic.")
 							END_NEAT
@@ -4126,7 +4132,7 @@
 				master.bedsheet = 2
 				master.overlays.len = 0
 				master.hat_shown = 0
-				master.update_icon()
+				master.UpdateIcon()
 				src.master.remove_current_task()
 				return
 
@@ -4250,7 +4256,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			src.icon_state = "robuddy_frame-[buddy_model]-[stage]"
 			if(src.stage >= 2)
 				src.created_cell = new
@@ -4333,14 +4339,14 @@
 	anchored = 1
 	var/panel_open = 0
 	var/autoeject = 0 //1: Eject fully charged robots automatically. 2: Eject robot when living carbon mob is in view.
-	var/frequency = 1219
+	var/frequency = FREQ_BUDDY
 	var/net_id = null //What is our network id???
 	var/net_number = 0
 	var/host_id = null //Who is linked to us?
 	var/timeout = 45
 	var/timeout_alert = 0
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	var/obj/machinery/bot/guardbot/current = null
-	var/datum/radio_frequency/radio_connection
 	var/obj/machinery/power/data_terminal/link = null
 
 	//A reset button is useful for when the system gets all confused.
@@ -4348,11 +4354,10 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.8 SECONDS)
-			if(radio_controller)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
+		SPAWN(0.8 SECONDS)
 			if(!src.net_id)
 				src.net_id = generate_net_id(src)
+			src.AddComponent(/datum/component/packet_connected/radio, null, frequency, net_id, "receive_signal", FALSE, "recharge", FALSE)
 			if(!src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
@@ -4414,7 +4419,7 @@
 			var/rem_host = src.host_id
 			src.host_id = null
 			src.post_wire_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_wire_status(rem_host, "command","term_connect","device","PNET_PR6_CHARG")
 
 			src.updateUsrDialog()
@@ -4433,7 +4438,7 @@
 		var/target = signal.data["sender"]
 		if(signal.transmission_method == TRANSMISSION_WIRE)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && target)
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.post_wire_status(target, "command", "ping_reply", "device", "PNET_PR6_CHARG", "netid", src.net_id, "net", src.net_number)
 				return
 			if(signal.data["address_1"] != src.net_id || !target)
@@ -4455,7 +4460,7 @@
 					src.host_id = target
 					if(signal.data["data"] != "noreply")
 						src.post_wire_status(target, "command","term_connect","data","noreply","device","PNET_PR6_CHARG")
-					SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+					SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 						src.post_wire_status(target,"command","term_message","data","command=register&status=[current ? current.net_id : "nobot"]")
 					src.updateUsrDialog()
 					return
@@ -4523,12 +4528,12 @@
 
 							newtask = newtask.copy_file() //Original one will be deleted with the signal.
 							//Clear other tasks?
-							var/overwrite = text2num(data["overwrite"])
+							var/overwrite = text2num_safe(data["overwrite"])
 							if(isnull(overwrite))
 								overwrite = 0
 
 							//Replace model (default task)?
-							var/model = text2num(data["newmodel"])
+							var/model = text2num_safe(data["newmodel"])
 							if(isnull(model))
 								model = 0
 
@@ -4546,7 +4551,7 @@
 								return
 
 							var/datum/computer/file/guardbot_task/task_copy
-							if (text2num(data["model"]) != null)
+							if (text2num_safe(data["model"]) != null)
 								if (src.current.model_task)
 									task_copy = src.current.model_task.copy_file()
 							else
@@ -4561,7 +4566,7 @@
 
 								newsignal.data_file = task_copy
 
-								SPAWN_DBG(0.2 SECONDS)
+								SPAWN(0.2 SECONDS)
 									src.link.post_signal(src, newsignal)
 
 							else
@@ -4606,7 +4611,7 @@
 								src.post_wire_status(target,"command","term_message","data","command=status&status=nobot")
 								return
 
-							var/newfreq = text2num(data["freq"])
+							var/newfreq = text2num_safe(data["freq"])
 							if(!newfreq || newfreq != sanitize_frequency(newfreq))
 								src.post_wire_status(target,"command","term_message","data","command=status&status=bad_freq")
 								return
@@ -4646,12 +4651,12 @@
 
 			return
 		else
-			if( (signal.data["address_1"] == "recharge") && !src.current)
+			if( (signal.data["address_tag"] == "recharge") && !src.current)
 				var/turf/T = get_turf(src)
 				if(!T) return
 
 				var/to_send = signal.data["sender"]
-				SPAWN_DBG(rand(4,6)) //So robots don't swarm one of the stations.
+				SPAWN(rand(4,6)) //So robots don't swarm one of the stations.
 					src.post_status(to_send, "command","recharge_src", "data", "x=[T.x]&y=[T.y]")
 
 		return
@@ -4719,8 +4724,6 @@
 	disposing()
 		src.current?.wakeup()
 		current = null
-		radio_controller?.remove_object(src, "[frequency]")
-		radio_connection = null
 		if (link)
 			link.master = null
 			link = null
@@ -4781,12 +4784,8 @@
 			return 1
 
 		post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
-			if(!radio_connection)
-				return
-
 			var/datum/signal/signal = get_free_signal()
 			signal.source = src
-			signal.transmission_method = TRANSMISSION_RADIO
 			signal.data[key] = value
 			if(key2)
 				signal.data[key2] = value2
@@ -4797,7 +4796,7 @@
 				signal.data["address_1"] = target_id
 			signal.data["sender"] = src.net_id
 
-			radio_connection.post_signal(src, signal, GUARDBOT_RADIO_RANGE)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, GUARDBOT_RADIO_RANGE)
 
 		post_wire_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
 			if(!src.link || !target_id)
@@ -4815,7 +4814,7 @@
 			signal.data["address_1"] = target_id
 			signal.data["sender"] = src.net_id
 
-			SPAWN_DBG(0.2 SECONDS)
+			SPAWN(0.2 SECONDS)
 				if (src.link) //ZeWaka: Fix for null.post_signal
 					src.link.post_signal(src, signal)
 
@@ -4828,11 +4827,8 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.8 SECONDS)
+		SPAWN(0.8 SECONDS)
 			linked_bot = locate() in orange(1, src)
-
-	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
 
 	attack_hand(mob/user as mob)
 		if (..() || (status & (NOPOWER|BROKEN)))
@@ -4942,10 +4938,9 @@
 		src.visible_message("<span class='alert'><b>[src] blows apart!</b></span>")
 		var/turf/T = get_turf(src)
 		if(src.mover)
-			src.mover.master = null
 			qdel(src.mover)
 
-		src.invisibility = 100
+		src.invisibility = INVIS_ALWAYS_ISH
 		var/obj/overlay/Ov = new/obj/overlay(T)
 		Ov.anchored = 1
 		Ov.name = "Explosion"
@@ -4962,7 +4957,7 @@
 		if(src.budgun)
 			DropTheThing("gun", null, 0, 0, T, 1)
 		if(prob(50))
-			new /obj/item/parts/robot_parts/arm/left(T)
+			new /obj/item/parts/robot_parts/arm/left/standard(T)
 		src.hat?.set_loc(T)
 
 		var/obj/item/guardbot_core/old/core = new /obj/item/guardbot_core/old(T)
@@ -4971,7 +4966,7 @@
 		core.created_model_task = src.model_task
 
 		var/list/throwparts = list()
-		throwparts += new /obj/item/parts/robot_parts/arm/left(T)
+		throwparts += new /obj/item/parts/robot_parts/arm/left/standard(T)
 		throwparts += new /obj/item/device/flash(T)
 		throwparts += core
 		if(src.tool.tool_id == "GUN")
@@ -4989,7 +4984,7 @@
 			var/edge = get_edge_target_turf(src, pick(alldirs))
 			O.throw_at(edge, 100, 4)
 
-		SPAWN_DBG(0) //Delete the overlay when finished with it.
+		SPAWN(0) //Delete the overlay when finished with it.
 			src.on = 0
 			sleep(1.5 SECONDS)
 			qdel(Ov)
@@ -5017,7 +5012,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			src.icon_state = "goldbuddy_frame-[buddy_model]-[stage]"
 			if(src.stage >= 2)
 				src.created_cell = new
@@ -5105,19 +5100,19 @@
 		src.HatToWear = /obj/item/clothing/head/helmet/space/santahat
 		#endif
 		src.hat = new HatToWear(src)
-		src.update_icon()
+		src.UpdateIcon()
 
 /obj/machinery/bot/guardbot/old/tourguide/destiny
 	name = "Mary"
 	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Mary'."
 	access_lookup = "Staff Assistant"
-	beacon_freq = 1443
+	beacon_freq = FREQ_TOUR_NAVBEACON
 
 /obj/machinery/bot/guardbot/old/tourguide/oshan
 	name = "Moby"
 	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Moby'."
 	access_lookup = "Staff Assistant"
-	beacon_freq = 1443
+	beacon_freq = FREQ_TOUR_NAVBEACON
 	HatToWear = /obj/item/clothing/head/sea_captain
 
 	New()
@@ -5128,7 +5123,7 @@
 	name = "Mabel"
 	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Mabel'."
 	access_lookup = "Staff Assistant"
-	beacon_freq = 1443
+	beacon_freq = FREQ_TOUR_NAVBEACON
 	HatToWear = /obj/item/clothing/head/NTberet
 
 	New()
@@ -5169,7 +5164,7 @@
 	attack_self(var/mob/user as mob)
 		playsound(src.loc, "sound/items/coindrop.ogg", 100, 1)
 		user.visible_message("<b>[user]</b> flips the token","You flip the token")
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 		user.visible_message("It came up Hugs.")
 
 #undef GUARDBOT_DOCK_RESET_DELAY

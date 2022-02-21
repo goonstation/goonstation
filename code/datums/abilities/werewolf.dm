@@ -23,12 +23,12 @@
 			W.addAbility(/datum/targetable/werewolf/werewolf_transform)
 			boutput(src, "<span class='alert'>You are a full werewolf, you can transform immediately!</span>")
 		else
-			SPAWN_DBG(W.awaken_time)
+			SPAWN(W.awaken_time)
 				handle_natural_werewolf(W)
 
 		src.resistances += /datum/ailment/disease/lycanthropy
 
-		if (src.mind && src.mind.special_role != "omnitraitor")
+		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
 			SHOW_WEREWOLF_TIPS(src)
 
 	else return
@@ -40,7 +40,7 @@
 	if (!src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
 		boutput(src, "<span class='alert'><b>You suddenly feel very weak.</b></span>")
 		src.emote("collapse")
-	SPAWN_DBG(8 SECONDS)
+	SPAWN(8 SECONDS)
 		if (!src.getStatusDuration("weakened"))
 			src.emote("collapse")
 		boutput(src, "<span class='alert'><b>Your body feels as if it's on fire! You think it's... IT'S CHANGING! You should probably get somewhere private!</b></span>")
@@ -77,8 +77,7 @@
 			M.delStatus("staggered")
 			M.change_misstep_chance(-INFINITY)
 			M.stuttering = 0
-			M.drowsyness = 0
-			M.add_stun_resist_mod("wolf_stun_resist", 10)
+			M.delStatus("drowsy")
 
 			//wolfing removes all the implants in you
 			for(var/obj/item/implant/I in M)
@@ -91,7 +90,7 @@
 			M.set_mutantrace(/datum/mutantrace/werewolf)
 
 			playsound(M.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, -1)
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				if (M?.mutantrace && istype(M.mutantrace, /datum/mutantrace/werewolf))
 					M.emote("howl")
 
@@ -100,10 +99,6 @@
 				boutput(M, "<span class='alert'><h2>You've been turned into a werewolf!</h2> Your transformation was achieved by in-game means, you are <i>not</i> an antagonist unless you already were one.</span>")
 			else
 				boutput(M, "<span class='notice'><h3>You are now a werewolf. You can remain in this form indefinitely or change back at any time.</span></h3>")
-
-			if (src.bioHolder)
-				src.bioHolder.AddEffect("regenerator_wolf")
-				boutput(src, "<span class='alert'>You will now heal over time!</span>")
 
 			if (M.hasStatus("handcuffed"))
 				if (M.handcuffs.werewolf_cant_rip())
@@ -116,15 +111,6 @@
 
 		// iswolf?
 		else
-			if (M.find_ailment_by_type(/datum/ailment/disease/lycanthropy)) // Wolfdisease? Whoops, you're a wolf forever!
-				boutput(src, "<span class='alert'>Your body refuses to change!</span>")
-				return
-
-			M.remove_stun_resist_mod("wolf_stun_resist")
-			if (src.bioHolder)
-				src.bioHolder.RemoveEffect("regenerator")
-				boutput(src, "<span class='alert'>You will no longer heal over time!</span>")
-
 			boutput(M, "<span class='notice'><h3>You transform back into your original form.</span></h3>")
 
 			M.set_mutantrace(M.coreMR) // return to monke/bove/herpe/etc
@@ -225,6 +211,21 @@
 			HH.add_fingerprint(M) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit.
 			M.werewolf_audio_effects(HH, "feast")
 
+			if (prob(60) && ishuman(target))
+				var/mob/living/carbon/human/H = target
+				//These are the non-essential organs. no brain, skull heart. I guess liver is kinda essential, but idk.
+				var/list/choosable_organs = list("left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
+				var/obj/item/organ/organ = null
+				var/count = 0
+				//Do this search 5 times or until you find an organ.
+				while (!organ && count <= 5)
+					count++
+					var/organ_name = pick(choosable_organs)
+					organ = H.organHolder.get_organ(organ_name)
+
+				if (organ)
+					H.organHolder.drop_and_throw_organ(organ, src.loc, get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5)), rand(1,4), 1, 0)
+
 			HH.changeStatus("weakened", 2 SECONDS)
 			if (prob(33) && !isdead(HH))
 				HH.emote("scream")
@@ -255,6 +256,8 @@
 				if (prob(70) && HH.stat != 2)
 					HH.emote("scream")
 		if ("pounce")
+			if(isobserver(target) || isintangible(target))
+				return
 			wrestler_knockdown(M, target, 1)
 			M.visible_message("<span class='alert'><B>[M] barrels through the air, slashing [target]!</B></span>")
 			damage += rand(2,8)
@@ -296,12 +299,10 @@
 	if (!src || !ismob(src) || !target || !ismob(target))
 		return
 
-	var/sound_playing = 0
-
 	switch (type)
 		if ("disarm")
 			playsound(src.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				if (src) playsound(src.loc, "swing_hit", 50, 1)
 
 		if ("swipe")
@@ -310,37 +311,22 @@
 			else
 				playsound(src.loc, pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
 
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				if (src) playsound(src.loc, "sound/impact_sounds/Flesh_Tear_3.ogg", 40, 1, -1)
 
 		if ("feast")
-			if (sound_playing == 0) // It's a long audio clip.
-				playsound(src.loc, "sound/voice/animal/wendigo_maul.ogg", 80, 1)
-				sound_playing = 1
-				SPAWN_DBG(6 SECONDS)
-					sound_playing = 0
+			if (prob(60))
+				playsound(src.loc, pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
+				playsound(src.loc, "sound/items/eatfood.ogg", 50, 1, -1)
 
-			playsound(src.loc, pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
-			playsound(src.loc, "sound/items/eatfood.ogg", 50, 1, -1)
 			if (prob(40))
 				playsound(target.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
-			if (prob(60) && ishuman(target))
-				var/mob/living/carbon/human/H = target
-				//These are the non-essential organs. no brain, skull heart. I guess liver is kinda essential, but idk.
-				var/list/choosable_organs = list("left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
-				var/obj/item/organ/organ = null
-				var/count = 0
-				//Do this search 5 times or until you find an organ.
-				while (!organ && count <= 5)
-					count++
-					var/organ_name = pick(choosable_organs)
-					organ = H.organHolder.get_organ(organ_name)
 
-				if (organ)
-					H.organHolder.drop_and_throw_organ(organ, src.loc, get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5)), rand(1,4), 1, 0)
+			if (prob(30))
+				playsound(src.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
 
-			SPAWN_DBG(1 SECOND)
-				if (src && ishuman(src) && prob(50))
+			SPAWN(1 SECOND)
+				if (src && ishuman(src) && prob(10))
 					src.emote("burp")
 
 	return
@@ -367,7 +353,7 @@
 			usr.targeting_ability = owner
 			usr.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -388,7 +374,7 @@
 	onAbilityStat() // In the 'Werewolf' tab.
 		..()
 		.= list()
-		if (src.owner && src.owner.mind && src.owner.mind.special_role == "werewolf")
+		if (src.owner && src.owner.mind && src.owner.mind.special_role == ROLE_WEREWOLF)
 			for (var/datum/objective/specialist/werewolf/feed/O in src.owner.mind.objectives)
 				src.feed_objective = O
 

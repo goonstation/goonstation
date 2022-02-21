@@ -18,7 +18,6 @@
 	stamina_crit_chance = 10
 
 	m_amt = 50
-	module_research = list("tools" = 4, "metals" = 2)
 	rand_pos = 1
 	custom_suicide = 1
 

@@ -59,10 +59,10 @@
 		..()
 		// bee mobs should have their actual bee names
 		real_name = name
-		SPAWN_DBG(0)
+		SPAWN(0)
 			ADMIN_BEES_ONLY
 			//statlog_bees(src)
-			src.update_icon()
+			src.UpdateIcon()
 
 			if (!isdead(src))
 				animate_bumble(src)
@@ -71,7 +71,7 @@
 		switch (act)
 			if ("flip")
 				if (src.emote_check(voluntary, 50) && !src.shrunk)
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						// animate_bumble(src)
 						// either stays put or bumbles
 						src.animate_lying(src.lying)
@@ -143,7 +143,7 @@
 		for (var/obj/critter/domestic_bee/fellow_bee in view(7,src)) // once mobcritters have AI we can change this to the mob version of bees, but for now we do this
 			if (fellow_bee?.alive)
 				fellow_bee.aggressive = 1
-				SPAWN_DBG(0.7 SECONDS)
+				SPAWN(0.7 SECONDS)
 					fellow_bee.aggressive = 0
 		..()
 
@@ -180,12 +180,12 @@
 
 	on_sleep()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	on_wake()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
@@ -199,7 +199,7 @@
 				src.shorn = 1
 				src.shorn_time = world.time
 				user.visible_message("<b>[user]</b> shears \the [src]!","You shear \the [src].")
-				var/obj/item/material_piece/cloth/beewool/BW = unpool(/obj/item/material_piece/cloth/beewool)
+				var/obj/item/material_piece/cloth/beewool/BW = new /obj/item/material_piece/cloth/beewool
 				BW.set_loc(src.loc)
 				return
 
@@ -303,7 +303,7 @@
 		// animate_bumble(src)
 		src.is_dancing = 0
 
-	proc/update_icon()
+	update_icon()
 		if (src.has_color_overlay && src.color)
 			src.icon_color = src.color
 			src.color = null
@@ -481,10 +481,6 @@
 			if (MT.reagents.get_reagent_amount(venom1) < 10)
 				MT.reagents.add_reagent(venom1, amt1)
 			MT.reagents.add_reagent(venom2, amt2)
-			var/datum/ailment_data/disease/plague = MT.find_ailment_by_type(/datum/ailment/disease/space_plague)
-			if (istype(plague))
-				//That bee venom plague treatment does not work at all in this manner. However, future.
-				MT.cure_disease(plague)
 		MT.TakeDamage("All", src.brute_damage, 0, 0, DAMAGE_STAB)//armor piercing stingers
 		return 0
 
@@ -551,7 +547,7 @@
 		if (MT.loc != holder.owner)
 			holder.owner.visible_message("<span class='combat'><b>[holder.owner] swallows [MT] whole!</b></span>")
 			MT.set_loc(holder.owner)
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				var/obj/icecube/honeycube = new /obj/icecube(src)
 				MT.set_loc(honeycube)
 				honeycube.name = "block of honey"
@@ -601,7 +597,7 @@
 			playsound(holder.owner, 'sound/voice/animal/buzz.ogg', 100, 1)
 		boutput(MT, "<span class='combat'>You feel a horrible pain in your head!</span>")
 		MT.changeStatus("stunned", 2 SECONDS)
-		SPAWN_DBG(2.5 SECONDS)
+		SPAWN(2.5 SECONDS)
 			if ((get_dist(holder.owner, MT) <= 6) && !isdead(holder.owner))
 				MT.visible_message("<span class='combat'><b>[MT] clutches their temples!</b></span>")
 				MT.emote("scream")
@@ -639,7 +635,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 
-			SPAWN_DBG(rand(10,20))
+			SPAWN(rand(10,20))
 				src.visible_message("<span class='alert'><b>[src] begins to move at unpredicable speeds!</b></span>")
 				animate_bumble(src, floatspeed = 3)
 				sleep(rand(30,50))
@@ -891,7 +887,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			user.visible_message("<b>[user]</b> feeds [W] to [src]!","You feed [W] to [src]. Fuck!")
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				W.icon_state = "key_gold"
 				W.desc += "  It appears to be covered in honey.  Gross."
 				src.visible_message("<b>[src]</b> regurgitates [W]!")
@@ -969,7 +965,7 @@
 		src.icon_state = "bubsbee"
 		src.sleeping = rand(10, 20)
 		src.setStatus("paralysis", 2 SECONDS)
-		src.update_icon()
+		src.UpdateIcon()
 		src.visible_message("<span class='notice'>[src] gets tired from all that work and takes a nap!</span>")
 		src.is_dancing = 0
 
@@ -1056,5 +1052,46 @@
 			for (var/mob/O in hearers(src, null))
 				O.show_message("[src] beeps[prob(50) ? " in a comforted manner, and gives [user] the ASCII" : ""].",2)
 		return
+
+
+obj/effects/bees
+	plane = PLANE_NOSHADOW_ABOVE
+	particles = new/particles/swarm/bees
+
+	New(atom/movable/A)
+		..()
+		if(istype(A))
+			A.vis_contents += src
+
+	disposing()
+		var/atom/movable/A
+		A = src.loc
+		if(istype(A))
+			A.vis_contents -= src
+		. = ..()
+
+
+particles/swarm/bees
+	icon = 'icons/misc/bee.dmi'
+	icon_state = list("mini-bee"=1, "mini-bee2"=1)
+	friction = 0.10
+	count = 10
+	spawning = 0.35
+	fade = 5
+#ifndef SPACEMAN_DMM
+	fadein = 5
+#endif
+	lifespan = generator("num", 50, 80, LINEAR_RAND)
+	width = 64
+	position = generator("box", list(-10,-10,0), list(10,10,50))
+	bound1 = list(-32, -32, -100)
+	bound2 = list(32, 32, 100)
+	gravity = list(0, -0.1)
+	drift = generator("box", list(-0.4, -0.1, 0), list(0.4, 0.15, 0))
+	velocity = generator("box", list(-2, -0.1, 0), list(2, 0.5, 0))
+	height = 64
+
+	start_none
+		count = 0
 
 #undef ADMIN_BEES_ONLY

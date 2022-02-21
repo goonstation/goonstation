@@ -3,7 +3,6 @@
 	icon = 'icons/obj/artifacts/artifactsitem.dmi'
 	desc = "You have no idea what this thing is!"
 	artifact = 1
-	module_research_no_diminish = 1
 	mat_changename = 0
 	can_recycle = 0
 
@@ -13,7 +12,7 @@
 		if (forceartiorigin)
 			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 
 		gulp_size = rand(2, 10) * 5 //How fast will you drink from this? Who knows!
@@ -145,6 +144,7 @@
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
 	update_icon()
+
 		return //Can't be activated, so the icon should never change
 
 	smash()
@@ -188,8 +188,6 @@
 	max_triggers = 0
 	no_activation = TRUE
 	react_xray = list(2,85,12,8,"HOLLOW")
-	module_research = list("medicine" = 5, "science" = 5, "miniaturization" = 15)
-	module_research_insight = 3
 
 
 	New()

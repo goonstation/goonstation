@@ -51,7 +51,6 @@
 								src.TakeDamage("chest", 0, (damage/armor_value_bullet), 0, DAMAGE_BURN)
 								if (src.organHolder)//Damage the organ again for more.
 									src.organHolder.damage_organ(0, (damage/armor_value_bullet)*2, 0, target_organ)
-							//implanted.implanted(src, null, min(20, max(0, round(damage / 10) ) ))
 			if (D_PIERCING)
 				if (armor_value_bullet > 1)
 					if (src.organHolder && prob(50))
@@ -84,7 +83,6 @@
 							src.TakeDamage("chest", 0, (damage/armor_value_bullet), 0, DAMAGE_BURN)
 							if (src.organHolder)//Damage the organ again for more burn.
 								src.organHolder.damage_organ(0, (damage/armor_value_bullet)*2, 0, target_organ)
-						//implanted.implanted(src, null, min(20, max(0, round(damage / 10) ) ))
 
 			if (D_SLASHING)
 				if (armor_value_bullet > 1)
@@ -135,7 +133,7 @@
 	src.flash(3 SECONDS)
 
 	if (isdead(src) && src.client)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.gib(1)
 		return
 
@@ -148,7 +146,7 @@
 		if (src.bioHolder && src.bioHolder.Uid && src.bioHolder.bloodType) //ZeWaka: Fix for null.bioHolder
 			bdna = src.bioHolder.Uid
 			btype = src.bioHolder.bloodType
-		SPAWN_DBG(0)
+		SPAWN(0)
 			gibs(A, virus, null, bdna, btype)
 
 		qdel(src)
@@ -200,7 +198,7 @@
 			boutput(src, "<span class='alert'><b>You are shielded from the blast!</b></span>")
 			return
 		if (6 to INFINITY) //gib
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				src.gib(1)
 			return
 	src.apply_sonic_stun(0, 0, 0, 0, 0, round(power*7), round(power*7), power*40)
@@ -342,8 +340,6 @@
 		burn *= src.mutantrace.firevuln
 		tox *= src.mutantrace.toxvuln
 
-	if (is_heat_resistant())
-		burn = 0
 
 	//if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
 		//tox = 0
@@ -354,8 +350,8 @@
 
 	if (brute + burn + tox <= 0) return
 
-	if (src.is_heat_resistant())
-		burn = 0 //mostly covered by individual procs that cause burn damage, but just in case
+	if (src.bioHolder?.HasEffect("fire_resist") > 1)
+		burn /= 2
 
 	//Bandaid fix for tox damage being mysteriously unhooked in here.
 	if (tox)
@@ -429,6 +425,8 @@
 
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		src.TakeDamage(zone, brute, burn, tox, null, FALSE, TRUE)
+
+	src.take_toxin_damage(-tox)
 
 	if (zone == "All")
 		var/bruteOrganCount = 0.0 		//How many organs have brute damage?
@@ -555,7 +553,7 @@
 					eyeblind = 5
 					src.change_eye_blurry(5)
 					src.bioHolder.AddEffect("bad_eyesight")
-					SPAWN_DBG(10 SECONDS)
+					SPAWN(10 SECONDS)
 						src.bioHolder.RemoveEffect("bad_eyesight")
 
 			if (25 to INFINITY)
@@ -703,4 +701,4 @@
 
 /mob/living/carbon/human/UpdateDamage()
 	..()
-	src.hud.update_health_indicator()
+	src.hud?.update_health_indicator()

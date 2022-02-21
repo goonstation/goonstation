@@ -132,7 +132,7 @@ var/datum/artifact_controller/artifact_controls
 		usr.Browse(dat,"window=artifacts;size=400x600")
 
 	Topic(href, href_list[])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if (href_list["Activate"])
 			var/obj/O = locate(href_list["Activate"]) in src.artifacts
 			if (!istype(O,/obj/))
@@ -321,12 +321,9 @@ var/datum/artifact_controller/artifact_controls
 			if(prob(20))
 				distortion_icon = turn(distortion_icon, rand(360))
 			var/size = rand(4, 6 + 8 * rarityMod) * pick(-1, 1)
-			artifact.filters += filter(
-				type="displace",
-				icon=distortion_icon,
-				size=size)
+			artifact.add_filter("martian distortion", 1, displacement_map_filter(icon=distortion_icon, size=size))
 			if(prob(80 * rarityMod))
-				var/filter = artifact.filters[length(artifact.filters)]
+				var/filter = artifact.get_filter("martian distortion")
 				var/anim_time = pick(rand() * 1 SECOND + 1 SECOND, rand() * 5 SECONDS, rand() * 1 MINUTE)
 				var/new_size = size + rand(-8, 8)
 				if(prob(15) || anim_time > 5 SECONDS && prob(70))
@@ -553,7 +550,7 @@ var/datum/artifact_controller/artifact_controls
 			var/n_balls = rand(1, 4) + round(rarityMod * 3)
 			for(var/i = 1 to n_balls)
 				var/delay = (i - 1) * time / n_balls
-				SPAWN_DBG(delay)
+				SPAWN(delay)
 					var/obj/effect/ball = new
 					ball.icon = 'icons/obj/artifacts/artifactEffects.dmi'
 					ball.icon_state = icon_state

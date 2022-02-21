@@ -55,7 +55,7 @@
 		abilityHolder.addAbility(/datum/targetable/critter/frenzy)
 
 	setup_healths()
-		add_hh_flesh(-100, 100, 0.85)
-		add_hh_flesh_burn(-100, 100, 1.4)
+		add_hh_flesh(100, 0.85)
+		add_hh_flesh_burn(100, 1.4)
 		add_health_holder(/datum/healthHolder/toxin)
 		add_health_holder(/datum/healthHolder/brain)

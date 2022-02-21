@@ -144,7 +144,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(split_type == 0)
 			split(P)
 
-	on_hit(var/atom/A,var/obj/projectile/P)
+	on_hit(var/atom/A,var/dir,var/obj/projectile/P)
 		if(split_type == 1)
 			split(P)
 
@@ -350,7 +350,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	brightness = 2
 	projectile_speed = 32
 	impact_range = 32
-	caliber = 40
 	pierces = -1
 	goes_through_walls = 1
 	color_red = 1
@@ -378,16 +377,16 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/turf/T = get_turf(A)
 		playsound(A, "sound/effects/ExplosionFirey.ogg", 60, 1)
 		if(!src.impacted)
-			world << sound('sound/weapons/energy/howitzer_impact.ogg', volume = 70)
+			playsound_global(world, "sound/weapons/energy/howitzer_impact.ogg", 60)
 			src.impacted = 1
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				for(var/mob/living/M in mobs)
 					shake_camera(M, 2, 1)
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			explosion_new(null, T, 30, 1)
-		if(prob(50))
-			world << sound('sound/effects/creaking_metal1.ogg', volume = 60)
+		if(prob(10))
+			playsound_global(world, "sound/effects/creaking_metal1.ogg", 40)
 
 // A weapon by Sovexe
 /datum/projectile/special/meowitzer //what have I done
@@ -417,7 +416,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			playsound(A, hit_sound, 60, 1)
 
 		if (explosive_hits)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				explosion_new(projectile, T, explosion_power, 1)
 		return
 
@@ -480,7 +479,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	on_hit(atom/hit)
 		if (usr && hit)
-			hit.attack_hand(usr)
+			hit.Attackhand(usr)
 
 //mbc : hey i know homing projectiles exist already as 'seeker', but i like mine better
 /datum/projectile/special/homing
@@ -573,7 +572,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 					setangle = arctan(desired_y,desired_x)
 
 				P.setDirection(xchanged,ychanged, do_turn = rotate_proj, angle_override = setangle)
-				P.internal_speed = ( max(min_speed, min(max_speed, magnitude)) )
+				P.internal_speed = clamp(magnitude, min_speed, max_speed)
 
 		desired_x = 0
 		desired_y = 0
@@ -635,7 +634,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "mysterious mystery mist"
 	icon_state = "vamp_travel"
 	auto_find_targets = 0
-	max_speed = 2
+	max_speed = 6
 	start_speed = 0.1
 
 
@@ -698,7 +697,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	max_speed = 2
 	goes_through_walls = 0 // It'll stop homing when it hits something, then go bouncy
 	var/max_bounce_count = 3 // putting the I in ICEE BEEYEM
-	var/weaken_length = 5 SECONDS
+	var/weaken_length = 4 SECONDS
 	var/slam_text = "The magic missile SLAMS into you!"
 	var/hit_sound = 'sound/effects/mag_magmisimpact_bounce.ogg'
 	var/cat_sound = 'sound/voice/animal/cat.ogg'
@@ -756,7 +755,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	min_speed = 2
 	max_speed = 2
 	max_bounce_count = 2 // putting the Y in ICEE BEEYEM
-	weaken_length = 3 SECONDS
+	weaken_length = 2 SECONDS
 	slam_text = "The magic missile bumps into you!"
 
 /datum/projectile/special/homing/orbiter
@@ -868,7 +867,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spreader/tasershotgunspread //Used in Azungar's taser shotgun.
 	name = "energy bolt"
 	sname = "shotgun spread"
-	cost = 37.5
+	cost = 25
 	power = 45 //a chunky pointblank
 	ks_ratio = 0
 	damage_type = D_SPECIAL
@@ -1012,7 +1011,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	ks_ratio = 1.0
-	caliber = 2
 	icon_turf_hit = "secbot1-wild"
 	implanted = null
 	typetospawn = /obj/machinery/bot/secbot
@@ -1055,7 +1053,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	power = 0
 	cost = 1
 	damage_type = D_SPECIAL
-	shot_delay = 1 DECI SECOND
+	shot_delay = 0.1 SECONDS
 	dissipation_rate = 0
 	dissipation_delay = 0
 	ks_ratio = 0
@@ -1114,7 +1112,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(length(O.special_data))
 			O.internal_speed = src.projectile_speed * O.special_data["speed_mult"]
 			src.color_icon = O.special_data["proj_color"]
-		O.AddComponent(/datum/component/pierce_non_opaque) // Pierce anything that doesn't block LoS - if you can see it you can burn it
+		O.AddComponent(/datum/component/gaseous_projectile) // Pierce anything that doesn't block LoS - if you can see it you can burn it
 
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		var/turf/T = get_turf(hit)

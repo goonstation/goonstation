@@ -1,8 +1,9 @@
 /obj/item/device/flash
 	name = "flash"
-	desc = "A device that emits an extremely bright light when used. Useful for briefly stunning people or starting a dance party."
+	desc = "A device that emits a complicated strobe when used, causing disorientation. Useful for stunning people or starting a dance party."
 	uses_multiple_icon_states = 1
 	icon_state = "flash"
+	force = 1
 	throwforce = 5
 	w_class = W_CLASS_TINY
 	throw_speed = 4
@@ -10,7 +11,6 @@
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	item_state = "electronic"
 	mats = 2
-	module_research = list("energy" = 1, "devices" = 3)
 
 	var/status = 1 // Bulb still functional?
 	var/secure = 1 // Access panel still secured?
@@ -66,7 +66,22 @@
 		src.desc = "A device that emits an extremely bright light when used. Useful for briefly stunning people or starting a dance party."
 		return 1
 
-
+	get_desc()
+		. = ..()
+		if (src.status == 0)
+			. += "\nThe bulb has been burnt out"
+		else
+			switch(src.use)
+				if(0 to 4)
+					. += "\nThe bulb is in perfect condition."
+				if(4 to 6)
+					. += "\nThe bulb is in good condition"
+				if(6 to 8)
+					. += "\nThe bulb is in decent condition"
+				if(8 to 10)
+					. += "\nThe bulb is in bad condition"
+				else
+					. += "\nThe bulb is in terrible condition"
 
 //I split attack and flash_mob into seperate procs so the rev_flash code is cleaner
 /obj/item/device/flash/attack(mob/living/M as mob, mob/user as mob)
@@ -99,7 +114,7 @@
 			logTheThing("combat", user, M, "tries to blind [constructTarget(M,"combat")] with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				if (src) qdel(src)
 			return
 		if (src.cell)
@@ -116,7 +131,7 @@
 
 	// Play animations.
 	if (isrobot(user))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/atom/movable/overlay/animation = new(user.loc)
 			animation.layer = user.layer + 1
 			animation.icon_state = "blank"
@@ -215,7 +230,7 @@
 			logTheThing("combat", user, null, "tries to area-flash with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				if (src) qdel(src)
 			return
 
@@ -225,7 +240,7 @@
 	src.l_time = world.time
 
 	if (isrobot(user))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/atom/movable/overlay/animation = new(user.loc)
 			animation.layer = user.layer + 1
 			animation.icon_state = "blank"
@@ -236,14 +251,22 @@
 			qdel(animation)
 
 	// Flash target mobs.
-	for (var/mob/living/M in oviewers((3 + src.range_mod), get_turf(src)))
-		if (src.turboflash)
-			M.apply_flash(35, 0, 0, 25)
-		else
-			var/dist = get_dist(get_turf(src),M)
-			dist = min(dist,4)
-			dist = max(dist,1)
-			M.apply_flash(20, weak = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)
+	for (var/atom/A in oviewers((3 + src.range_mod), get_turf(src)))
+		var/mob/living/M
+		if (istype(A, /obj/vehicle))
+			var/obj/vehicle/V = A
+			if (V.rider && V.rider_visible)
+				M = V.rider
+		else if (ismob(A))
+			M = A
+		if (M)
+			if (src.turboflash)
+				M.apply_flash(35, 0, 0, 25)
+			else
+				var/dist = get_dist(get_turf(src),M)
+				dist = min(dist,4)
+				dist = max(dist,1)
+				M.apply_flash(20, weak = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)
 
 
 	// Handle bulb wear.
@@ -276,7 +299,7 @@
 				var/list/U = R.get_unconvertables()
 				if (!H.client || !H.mind)
 					user.show_text("[H] is braindead and cannot be converted.", "red")
-				else if (locate(/obj/item/implant/antirev) in H.implant)
+				else if (locate(/obj/item/implant/counterrev) in H.implant)
 					user.show_text("There seems to be something preventing [H] from revolting.", "red")
 					.= 0.5
 					nostun = 1
@@ -296,7 +319,8 @@
 
 
 /obj/item/device/flash/proc/process_burnout(mob/user as mob)
-	if (use > 1 && prob(max(0,(use*1.2) + burn_mod)))
+	tooltip_rebuild = 1
+	if (prob(max(0,((use-5)*10) + burn_mod)))
 		status = 0
 		boutput(user, "<span class='alert'><b>The bulb has burnt out!</b></span>")
 		set_icon_state("flash3")
@@ -322,20 +346,6 @@
 	else if (isscrewingtool(W))
 		boutput(user, "<span class='notice'>You [src.secure ? "unscrew" : "secure"] the access panel.</span>")
 		secure = !secure
-	else if (ispulsingtool(W))
-		if (src.status == 0)
-			boutput(user, "<span class='alert'>The bulb has been burnt out.</span>")
-		else
-			if (src.use <= 0)
-				boutput(user, "<span class='notice'>The bulb is in perfect condition.</span>")
-			else if (src.use>0 && src.use<5)
-				boutput(user, "<span class='notice'>The bulb is in good condition.</span>")
-			else if (src.use>5 && src.use<10)
-				boutput(user, "<span class='notice'>The bulb is in decent condition.</span>")
-			else if (src.use>10 && src.use<15)
-				boutput(user, "<span class='notice'>The bulb is in bad condition.</span>")
-			else
-				boutput(user, "<span class='notice'>The bulb is in terrible condition.</span>")
 	else
 		return ..()
 
@@ -375,7 +385,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(!src.cell)
 				src.cell = new /obj/item/cell(src)
 				src.cell.maxcharge = max_flash_power

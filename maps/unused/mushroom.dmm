@@ -1629,7 +1629,7 @@
 /area/station/maintenance/solar/west)
 "adS" = (
 /obj/cable,
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "westsolar";
 	name = "West Solar Control";
 	track = 2
@@ -2139,7 +2139,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "eastsolar";
 	name = "East Solar Control";
 	track = 2
@@ -6411,7 +6411,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "aoh" = (
@@ -10611,7 +10611,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/station/engine/power)
 "axL" = (
@@ -20274,7 +20274,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "aRU" = (
@@ -25809,7 +25809,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/machinery/light/small,
 /turf/simulated/floor,
 /area/station/security/brig)
@@ -26053,7 +26053,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "beK" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/machinery/camera{
 	c_tag = "Brig - Solitary 1";
 	dir = 4
@@ -26501,7 +26501,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "bfC" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
@@ -29103,7 +29103,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "bll" = (

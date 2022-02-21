@@ -31,10 +31,10 @@
 				return ..()
 			else
 				src.visible_message("<span class='alert'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
-				if (prob(15))
+				if (prob(15) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
 					for (var/mob/O in hearers(src, null))
 						O.show_message("[src] coos[prob(50) ? " happily!" : ""]!",2)
-						playsound(src.loc, "sound/voice/babynoise.ogg", 40, 0)
+						playsound(src.loc, "sound/voice/babynoise.ogg", 30, 0)
 				return
 		else
 			..()
@@ -47,7 +47,7 @@
 
 		flailing = 10
 		playsound(src.loc, "rustle", 50, 0)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while(flailing-- > 0 && src.alive)
 				src.set_loc(M.loc)
 				src.pixel_x = rand(-2,2) * 2
@@ -239,7 +239,7 @@
 						else
 							feeding = 0
 
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				src.attacking = 0
 
 	ChaseAttack(mob/M)
@@ -256,9 +256,11 @@
 		else src.visible_message("<span class='alert'><B>[src]</B> dives at [M], but misses!</span>")
 
 	on_pet(mob/user)
-		..()
-		playsound(src.loc, 'sound/voice/babynoise.ogg', 50, 1)
-		src.visible_message("<span class='alert'><b>[src] coos!</b></span>", 1)
+		if (..())
+			return 1
+		if (prob(15) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
+			playsound(src.loc, 'sound/voice/babynoise.ogg', 30, 1)
+			src.visible_message("<span class='alert'><b>[src] coos!</b></span>", 1)
 
 	proc/spiderflail(mob/M)
 		if (flailing)
@@ -267,7 +269,7 @@
 		flailing = 10
 		if (src.stepsound)
 			playsound(src.loc, src.stepsound, 50, 0)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while(flailing-- > 0 && src.alive)
 				src.set_loc(M.loc)
 				src.pixel_x = rand(-2,2) * 2
@@ -317,7 +319,7 @@
 
 	// don't ask
 	proc/streak(var/list/directions)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
 				if (step_to(src, get_step(src, pick(directions)), 0))

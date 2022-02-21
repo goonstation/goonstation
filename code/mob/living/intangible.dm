@@ -6,14 +6,15 @@
 	canmove = 1
 	blinded = 0
 	anchored = 1
-	event_handler_flags = USE_CANPASS | IMMUNE_MANTA_PUSH
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 
 	New()
 		. = ..()
 		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-		src.see_invisible = 15
+		src.see_invisible = INVIS_GHOST
 		src.see_in_dark = SEE_DARK_FULL
+		src.flags |= UNCRUSHABLE
 
 	can_strip()
 		return 0
@@ -23,11 +24,31 @@
 		return 0
 	say_understands(var/other)
 		return 1
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		return 1
 
 	meteorhit()
 		return
+
+	mouse_drop()
+		return
+
+	MouseDrop_T()
+		return
+
+	projCanHit(datum/projectile/P)
+		return 0
+
+    //can't electrocute intangible things
+	shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)
+		return 0
+
+	//can't be on fire if you're intangible either
+	set_burning(var/new_value)
+		return 0
+
+	update_burning(var/change)
+		return 0
 
 	// No log entries for unaffected mobs (Convair880).
 	ex_act(severity)

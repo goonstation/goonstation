@@ -1,6 +1,9 @@
 #define childrentypesof(x) (typesof(x) - x)
 // consider declaring the base type abstract instead and using concrete_typesof instead of childrentypesof
 
+/// nulls a var if its value doesn't match the var's type
+#define ENSURE_TYPE(VAR) if(!istype(VAR)) VAR = null;
+
 #define ABSTRACT_TYPE(type) /datum/_is_abstract ## type
 #define IS_ABSTRACT(type) text2path("/datum/_is_abstract[type]")
 /*
@@ -109,12 +112,12 @@ proc/filtered_concrete_typesof(type, filter)
 	* Gets the instance of a singleton type (or a non-singleton type if you decide to use it on one).
 	*/
 proc/get_singleton(type)
-	if(!singletons)
-		singletons = list()
+	RETURN_TYPE(type)
 	if(!(type in singletons))
 		singletons[type] = new type
 	return singletons[type]
-var/global/list/singletons
+
+var/global/list/singletons = list()
 
 
 /// Find predecessor of a type
@@ -188,11 +191,247 @@ var/list/list/by_cat = list()
 #define TR_CAT_JOHNBILLS "johnbills"
 #define TR_CAT_OTHERBILLS "otherbills"
 #define TR_CAT_TELEPORT_JAMMERS "teleport_jammers"
+#define TR_CAT_RADIO_JAMMERS "radio_jammers"
 #define TR_CAT_BURNING_MOBS "dudes_on_fire"
 #define TR_CAT_BURNING_ITEMS "items_on_fire"
 #define TR_CAT_OMNIPRESENT_MOBS "omnipresent_mobs"
 #define TR_CAT_CHAPLAINS "chaplains"
 #define TR_CAT_SOUL_TRACKING_ITEMS "soul_tracking_items"
 #define TR_CAT_CLOWN_DISBELIEF_MOBS "clown_disbelief_mobs"
+#define TR_CAT_CANNABIS_OBJ_ITEMS "cannabis_objective"
+#define TR_CAT_HEAD_SURGEON "head_surgeon"
+#define TR_CAT_SPY_STICKERS_REGULAR "spysticker_regular"
+#define TR_CAT_SPY_STICKERS_DET "spysticker_det"
+#define TR_CAT_ARTIFACTS "artifacts"
+#define TR_CAT_NUKE_OP_STYLE "nukie_style_items" //Items that follow the nuke op color scheme and are generally associated with ops. For recoloring!
+#define TR_CAT_HUNTER_GEAR "hunter_gear"
 // powernets? processing_items?
 // mobs? ai-mobs?
+
+
+/// type-level information type
+/typeinfo
+	parent_type = /datum
+
+/typeinfo/datum
+
+/typeinfo/atom
+	parent_type = /typeinfo/datum
+
+/typeinfo/turf
+	parent_type = /typeinfo/atom
+
+/typeinfo/area
+	parent_type = /typeinfo/atom
+
+/typeinfo/atom/movable
+
+/typeinfo/obj
+	parent_type = /typeinfo/atom/movable
+
+/typeinfo/mob
+	parent_type = /typeinfo/atom/movable
+
+/**
+ * Declares typeinfo for some type.
+ *
+ * Example:
+ * ```
+ * TYPEINFO(/atom)
+ * 	var/monkeys_hate = FALSE
+ *
+ * TYPEINFO(/obj/item/clothing/glasses/blindfold)
+ * 	monkeys_hate = TRUE
+ * ```
+ *
+ * Treat this as if you were defining a type. You can add vars and procs, override vars and procs etc.
+ * There might be minor issues if you define TYPEINFO of one type multiple times. Consider using `/typeinfo/THE_TYPE` for subsequent additions
+ * to the object's typeinfo **if you know it has already been declared once using TYPEINFO**.
+*/
+#define TYPEINFO(TYPE) \
+	TYPE/typeinfo_type = /typeinfo ## TYPE; \
+	TYPE/get_typeinfo() { /* maybe unnecessary, possibly replace the proc with a macro */ \
+		RETURN_TYPE(/typeinfo ## TYPE); \
+		return get_singleton(src.typeinfo_type); \
+	} \
+	/typeinfo ## TYPE
+
+
+/// var storing the subtype of /typeinfo relevant for this object
+/datum/var/typeinfo_type = /typeinfo/datum
+
+/**
+ * Retrieves the typeinfo datum for this datum's type.
+ *
+ * Example:
+ * ```
+ * var/obj/item/item_in_hand = src.equipped()
+ * var/typeinfo/atom/typeinfo = item_in_hand.get_typeinfo()
+ * if(typeinfo.monkeys_hate)
+ * 	src.throw(src.equipped(), somewhere)
+ * ```
+*/
+/datum/proc/get_typeinfo()
+	RETURN_TYPE(/typeinfo/datum)
+	return get_singleton(src.typeinfo_type)
+
+/**
+ * Retrieves the typeinfo datum for a given type.
+ *
+ * Example:
+ * ```
+ * for(var/type in types)
+ * 	var/typeinfo/atom/typeinfo = get_type_typeinfo(type)
+ * 	if(!typeinfo.admin_spawnable)
+ * 		continue
+ * 	valid_types += type
+ * ```
+*/
+proc/get_type_typeinfo(type)
+	RETURN_TYPE(/typeinfo/datum) // change to /typeinfo if we ever implement /typeinfo for non-datums for some reason
+	var/datum/type_dummy = type
+	return get_singleton(initial(type_dummy.typeinfo_type))
+
+/**
+ * Returns the parent type of a given type.
+ * Assumes that parent_type was not overriden.
+ */
+/proc/type2parent(child)
+	var/string_type = "[child]"
+	var/last_slash = findlasttext(string_type, "/")
+	if(last_slash == 1)
+		switch(child)
+			if(/datum)
+				return null
+			if(/obj, /mob)
+				return /atom/movable
+			if(/area, /turf)
+				return /atom
+			else
+				return /datum
+	return text2path(copytext(string_type, 1, last_slash))
+
+
+/// Finds some instance of a type in the world. Returns null if none found.
+proc/find_first_by_type(type)
+	RETURN_TYPE(type)
+	var/ancestor = type
+	while(ancestor != null)
+		if(ancestor in global.by_type)
+			if(length(global.by_type[ancestor]))
+				return global.by_type[ancestor][1]
+			else
+				return null
+		ancestor = type2parent(ancestor)
+	. = locate(type)
+
+/**
+ *	Finds all instance of a type in the world.
+ *	Returns a list of the instances if no procedure is given.
+ *	Otherwise, calls the procedure for each instance and returns an assoc list of the form list(instance = procedure(instance, arguments...), ...)
+ *	`procedure_src` is the src for the proc call. If it is null, a global proc is called.
+ *	If it is the string "instance" the output list will be instead list(instance = instance.procedure(arguments...), ...)
+ */
+proc/find_all_by_type(type, procedure=null, procedure_src=null, arguments=null, lagcheck=TRUE)
+	RETURN_TYPE(type)
+	var/ancestor = type
+	while(ancestor != null)
+		if(ancestor in global.by_type)
+			if(length(global.by_type[ancestor]))
+				if(ancestor == type)
+					. = global.by_type[ancestor].Copy()
+				else
+					. = list()
+					for(var/D in global.by_type[ancestor])
+						if(istype(D, type))
+							. += D
+			else
+				return list()
+		ancestor = type2parent(ancestor)
+
+	if(.)
+		if(!isnull(procedure))
+			if(procedure_src == "instance")
+				for(var/instance in .)
+					.[instance] = call(instance, procedure)(arglist(arguments))
+			else if(procedure_src && length(arguments))
+				for(var/instance in .)
+					var/mod_args = list(instance) + arguments
+					.[instance] = call(procedure_src, procedure)(arglist(mod_args))
+			else if(procedure_src)
+				for(var/instance in .)
+					.[instance] = call(procedure_src, procedure)(instance)
+			else if(length(arguments))
+				for(var/instance in .)
+					var/mod_args = list(instance) + arguments
+					.[instance] = call(procedure)(arglist(mod_args))
+			else
+				for(var/instance in .)
+					.[instance] = call(procedure)(instance)
+		return
+
+	var/atom_base = /datum
+	ancestor = type
+	while(ancestor != null)
+		if(ancestor in list(/obj, /mob, /area, /turf, /atom/movable, /atom, /datum))
+			atom_base = ancestor
+		ancestor = type2parent(ancestor)
+
+	. = list()
+	#define IT_TYPE(T) if(T) {\
+			if(!isnull(procedure) && procedure_src == "instance") {\
+				for(var ## T/instance) {\
+					if(lagcheck) LAGCHECK(LAG_LOW); \
+					if(istype(instance, type)) {\
+						.[instance] = call(instance, procedure)(arglist(arguments)); \
+					} \
+				} \
+			} else if(!isnull(procedure) && procedure_src && length(arguments)) {\
+				for(var ## T/instance) {\
+					if(lagcheck) LAGCHECK(LAG_LOW); \
+					if(istype(instance, type)) {\
+						var/mod_args = list(instance) + arguments; \
+						.[instance] = call(procedure_src, procedure)(arglist(mod_args)); \
+					} \
+				} \
+			} else if(!isnull(procedure) && procedure_src) {\
+				for(var ## T/instance) {\
+					if(lagcheck) LAGCHECK(LAG_LOW); \
+					if(istype(instance, type)) {\
+						.[instance] = call(procedure_src, procedure)(instance); \
+					} \
+				} \
+			} else if(!isnull(procedure) && length(arguments)) { \
+				for(var ## T/instance) {\
+					if(lagcheck) LAGCHECK(LAG_LOW); \
+					if(istype(instance, type)) {\
+						var/mod_args = list(instance) + arguments; \
+						.[instance] = call(procedure)(arglist(mod_args)); \
+					} \
+				} \
+			} else if(!isnull(procedure)) { \
+				for(var ## T/instance) {\
+					if(lagcheck) LAGCHECK(LAG_LOW); \
+					if(istype(instance, type)) {\
+						.[instance] = call(procedure)(instance); \
+					} \
+				} \
+			} else { \
+				for(var ## T/instance) {\
+					if(lagcheck) LAGCHECK(LAG_LOW); \
+					if(istype(instance, type)) {\
+						. += instance; \
+					} \
+				} \
+			} \
+		}
+	// the escaped newlines are currently necessary because of https://github.com/SpaceManiac/SpacemanDMM/issues/306
+	switch(atom_base)
+		IT_TYPE(/obj) \
+		IT_TYPE(/mob) \
+		IT_TYPE(/area) \
+		IT_TYPE(/turf) \
+		IT_TYPE(/atom/movable) \
+		IT_TYPE(/atom) \
+		IT_TYPE(/datum)
+	#undef IT_TYPE

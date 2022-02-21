@@ -32,13 +32,22 @@
 	var/dog_bark = 1
 	var/affect_fun = 5
 	var/special_index = 0
-
-	module_research = list("audio" = 7)
+	var/notes = list("c4")
+	var/note = "c4"
+	var/use_new_interface = 0
+	/*At which key the notes start at*/
+	/*1=C,2=C#,3=D,4=D#,5=E,F=6,F#=7,G=8,G#=9,A=10,A#=11,B=12*/
+	var/key_offset = 1
 
 	New()
 		..()
+
+
 		if (!pick_random_note)
-			contextLayout = new /datum/contextLayout/instrumental()
+			if(use_new_interface == 0)
+				contextLayout = new /datum/contextLayout/instrumental()
+			else
+				contextLayout = new /datum/contextLayout/newinstrumental(KeyOffset = key_offset)
 
 			//src.contextActions = childrentypesof(/datum/contextAction/vehicle)
 
@@ -51,6 +60,8 @@
 
 				if (special_index && i >= special_index)
 					newcontext = new /datum/contextAction/instrument/special
+				else if (findtext(sounds_instrument[i], "-"))
+					newcontext = new /datum/contextAction/instrument/black
 				else
 					newcontext = new /datum/contextAction/instrument
 				newcontext.note = i
@@ -68,7 +79,6 @@
 
 		var/turf/T = get_turf(src)
 		playsound(T, sounds_instrument[note], src.volume, randomized_pitch, pitch = pitch_set)
-
 
 
 		if (prob(5) || sounds_instrument.len == 1)
@@ -115,7 +125,7 @@
 	volume = 100
 	note_time = 200
 	affect_fun = 15 // a little higher, why not?
-	module_research = list("audio" = 14) // I don't think this is even relevant without being able to pick up the thing and also the research thing isn't even enabled atm but well. why not?
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 
 	attack_hand(mob/user as mob)
 		src.add_fingerprint(user)
@@ -144,16 +154,17 @@
 	icon_state = "piano"
 	item_state = "piano"
 	sounds_instrument = null
-	special_index = 13
 	note_time = 0.18 SECONDS
 	randomized_pitch = 0
+	use_new_interface = 1
 
 	New()
+		notes = list("c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6","c-6", "d6", "d-6", "e6","f6","f-6","g6", "g-6","a6","a-6","b6","c7")
 		sounds_instrument = list()
-		for (var/i in 1 to 12)
-			sounds_instrument += "sound/musical_instruments/piano/piano_[i].ogg"
+		for (var/i in 1 to length(notes))
+			note = notes[i]
+			sounds_instrument += "sound/musical_instruments/piano/notes/[note].ogg" // [i]
 
-		sounds_instrument += list("sound/musical_instruments/piano/furelise.ogg","sound/musical_instruments/piano/gymno.ogg","sound/musical_instruments/piano/lune.ogg","sound/musical_instruments/piano/nachtmusik1.ogg","sound/musical_instruments/piano/nachtmusik2.ogg")
 		..()
 
 
@@ -203,16 +214,20 @@
 	desc = "NEVER GONNA DANCE AGAIN, GUILTY FEET HAVE GOT NO RHYTHM"
 	icon_state = "sax"
 	item_state = "sax"
-	desc_sound = list("sexy", "sensuous", "libidinous","spicy", "flirtatious", "salacious","sizzling", "carnal", "hedonistic")
-	module_research = list("audio" = 7, "metals" = 3)
+	desc_sound = list("sensuous","spicy","flirtatious","sizzling","carnal","hedonistic")
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
+	use_new_interface = 1
+	//Start at G
+	key_offset = 8
 
 	New()
+		notes = list("g3","g-3","a3","a-3","b3","c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6")
 		sounds_instrument = list()
-		for (var/i in 1 to 12)
-			sounds_instrument += "sound/musical_instruments/sax/sax_[i].ogg"
+		for (var/i in 1 to length(notes))
+			note = notes[i]
+			sounds_instrument += "sound/musical_instruments/sax/notes/[note].ogg"
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -233,8 +248,8 @@
 	icon_state = "bagpipe"
 	item_state = "bagpipe"
 	sounds_instrument = list('sound/musical_instruments/Bagpipes_1.ogg', 'sound/musical_instruments/Bagpipes_2.ogg','sound/musical_instruments/Bagpipes_3.ogg')
+	volume = 60
 	desc_sound = list("patriotic", "rowdy", "wee", "grand", "free", "Glaswegian", "sizzling", "carnal", "hedonistic")
-	module_research = list("audio" = 7, "metals" = 3)
 	pick_random_note = 1
 
 	New()
@@ -281,7 +296,6 @@
 	sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
 	desc_verb = list("honks")
 	note_time = 8
-	module_research = list("audio" = 8)
 	pick_random_note = 1
 
 	show_play_message(mob/user as mob)
@@ -327,18 +341,18 @@
 			if ("process")
 				var/times = rand(1,5)
 				for (var/i = 1, i <= times, i++)
-					SPAWN_DBG(4*i)
+					SPAWN(4*i)
 						playsound(det.attachedTo.loc, sound_to_play, src.volume, src.randomized_pitch)
 			if ("prime")
 				for (var/i = 1, i < 15, i++)
-					SPAWN_DBG(3*i)
+					SPAWN(3*i)
 						playsound(det.attachedTo.loc, sound_to_play, min(src.volume*10, 750), src.randomized_pitch)
 
 /* -------------------- Dramatic Bike Horn -------------------- */
 
 /obj/item/instrument/bikehorn/dramatic
 	name = "dramatic bike horn"
-	desc = "SHIT FUCKING PISS COCK IT'S SO RAW"
+	desc = "SHIT FUCKING PISS IT'S SO RAW"
 	sounds_instrument = list('sound/effects/dramatic.ogg')
 	volume = 100
 	randomized_pitch = 0
@@ -465,11 +479,11 @@
 				if (prob(45))
 					var/times = rand(1,5)
 					for (var/i = 1, i <= times, i++)
-						SPAWN_DBG(4*i)
+						SPAWN(4*i)
 							playsound(det.attachedTo.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
 			if ("prime")
 				for (var/i = 1, i < 15, i++)
-					SPAWN_DBG(4*i)
+					SPAWN(4*i)
 						playsound(det.attachedTo.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 500, 1)
 
 /* -------------------- Trumpet -------------------- */
@@ -481,7 +495,6 @@
 	icon_state = "trumpet"
 	item_state = "trumpet"
 	desc_sound = list("slick", "egotistical", "snazzy", "technical", "impressive")
-	module_research = list("audio" = 7, "metals" = 3)
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
@@ -503,10 +516,12 @@
 	sounds_instrument = list('sound/musical_instruments/Bikehorn_2.ogg')
 	desc_verb = "doots"
 	desc_sound = list("spooky", "scary", "boney", "creepy", "squawking", "squeaky", "low-quality", "compressed")
+	note_time = 5 SECONDS
+	pick_random_note = TRUE
 	affect_fun = 200 //because come on this shit's hilarious
 
 	play(mob/user as mob)
-		if (next_play < TIME)
+		if (next_play > TIME)
 			boutput(user, "<span class='alert'>\The [src] needs time to recharge its spooky strength!</span>")
 			return
 		else
@@ -597,7 +612,7 @@
 			ghost_to_toss.set_loc(soul_stuff)
 
 		soul_stuff.throw_at(T, 10, 1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (soul_stuff && ghost_to_toss)
 				ghost_to_toss.set_loc(soul_stuff.loc)
 

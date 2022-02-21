@@ -23,7 +23,7 @@
 
 	New(loc, datum/organHolder/nholder)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (istype(nholder) && nholder.donor)
 				src.holder = nholder
 				src.donor = nholder.donor
@@ -144,6 +144,9 @@
 			return 0
 
 		if (!surgeryCheck(M, user))
+			return 0
+
+		if (!can_act(user))
 			return 0
 
 		var/mob/living/carbon/human/H = M

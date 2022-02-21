@@ -56,8 +56,6 @@ Broken RCD + Effects
 	stamina_damage = 15
 	stamina_cost = 15
 	stamina_crit_chance = 5
-	module_research = list("tools" = 8, "engineering" = 8, "devices" = 3, "efficiency" = 5)
-	module_research_type = /obj/item/rcd
 	inventory_counter_enabled = 1
 
 	// Borgs/drones can't really use matter units.
@@ -159,7 +157,7 @@ Broken RCD + Effects
 
 	New()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -180,7 +178,7 @@ Broken RCD + Effects
 					R.matter = 0
 					qdel(R)
 				R.tooltip_rebuild = 1
-				src.update_icon()
+				src.UpdateIcon()
 				playsound(src, "sound/machines/click.ogg", 50, 1)
 				boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter-units.")
 				return
@@ -220,7 +218,7 @@ Broken RCD + Effects
 		// Gonna change this so it doesn't shit sparks when mode switched
 		// Just that it does it only after actually doing something
 		//src.shitSparks()
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	afterattack(atom/A, mob/user as mob)
@@ -468,7 +466,7 @@ Broken RCD + Effects
 		else
 			src.matter -= checkamt
 			boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter units.")
-			src.update_icon()
+			src.UpdateIcon()
 
 	proc/do_thing(mob/user as mob, atom/target, var/what, var/ammo, var/delay)
 		if (!ammo_check(user, ammo))
@@ -496,7 +494,7 @@ Broken RCD + Effects
 		return 0
 
 	proc/log_construction(mob/user as mob, var/what)
-		logTheThing("station", user, null, "[what] using \the [src] at [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+		logTheThing("station", user, null, "[what] using \the [src] at [user.loc.loc] ([log_loc(user)])")
 
 	proc/create_door(var/turf/A, mob/user as mob)
 		if(do_thing(user, A, "building an airlock", matter_create_door, time_create_door))
@@ -507,7 +505,7 @@ Broken RCD + Effects
 			//if(map_setting == "COG2") T.set_dir(user.dir)
 			T.autoclose = 1
 
-	proc/update_icon() //we got fancy rcds now
+	update_icon() //we got fancy rcds now
 		if (GetOverlayImage("mode"))
 			src.ClearSpecificOverlays("mode")
 		var/ammo_amt = 0
@@ -616,7 +614,7 @@ Broken RCD + Effects
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 							src.shitSparks()
 							ammo_consume(user, matter_remove_door)
-							logTheThing("station", user, null, "removes a pod door ([B]) using \the [src] in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+							logTheThing("station", user, null, "removes a pod door ([B]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
 							qdel(A)
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 				else
@@ -632,7 +630,7 @@ Broken RCD + Effects
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 							src.shitSparks()
 							ammo_consume(user, matter_remove_door)
-							logTheThing("station", user, null, "removes a Door Control ([A]) using \the [src] in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+							logTheThing("station", user, null, "removes a Door Control ([A]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
 							qdel(A)
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 				else
@@ -663,7 +661,7 @@ Broken RCD + Effects
 						R.pass="[hangar_id]"
 						R.name="Access code: [hangar_id]"
 						ammo_consume(user, matter_create_door)
-						logTheThing("station", user, null, "creates Door Control [hangar_id] using \the [src] in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+						logTheThing("station", user, null, "creates Door Control [hangar_id] using \the [src] in [user.loc.loc] ([log_loc(user)])")
 						boutput(user, "Now creating pod bay blast doors linked to the new door control.")
 
 		else if (mode == RCD_MODE_PODDOOR)
@@ -681,7 +679,7 @@ Broken RCD + Effects
 						B.set_dir(poddir)
 						B.autoclose = 1
 						ammo_consume(user, matter_create_door)
-						logTheThing("station", user, null, "creates Blast Door [hangar_id] using \the [src] in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+						logTheThing("station", user, null, "creates Blast Door [hangar_id] using \the [src] in [user.loc.loc] ([log_loc(user)])")
 
 	create_door(var/turf/A, mob/user as mob)
 		var/turf/L = get_turf(user)
@@ -873,7 +871,7 @@ Broken RCD + Effects
 
 	attackby(obj/item/W, mob/user, params)
 		if(istype(W, /obj/item/rcd))
-			W.attackby(src, user, params)
+			W.Attackby(src, user, params)
 			return
 		. = ..()
 
@@ -996,14 +994,14 @@ Broken RCD + Effects
 
 				boutput(user, "<span class='combat'>\the [src] shorts out!</span>")
 
-				logTheThing("combat", user, null, "manages to vaporize \[[showCoords(A.x, A.y, A.z)]] with a halloween RCD.")
+				logTheThing("combat", user, null, "manages to vaporize \[[log_loc(A)]] with a halloween RCD.")
 
 				new /obj/effects/void_break(A)
 				if (user)
 					user.gib()
 
 /obj/effects/void_break
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	var/lifespan = 4
 	var/rangeout = 0
@@ -1012,7 +1010,7 @@ Broken RCD + Effects
 		..()
 		lifespan = rand(2,4)
 		rangeout = lifespan
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			void_shatter()
 			void_loop()
 
@@ -1044,12 +1042,12 @@ Broken RCD + Effects
 
 		for (var/turf/simulated/T in range(src, (rangeout-lifespan)))
 			if (prob(5 + lifespan) && limiter.canISpawn(/obj/effects/sparks))
-				var/obj/sparks = unpool(/obj/effects/sparks)
+				var/obj/sparks = new /obj/effects/sparks
 				sparks.set_loc(T)
-				SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+				SPAWN(2 SECONDS) if (sparks) qdel(sparks)
 
 			T.ex_act((rangeout-lifespan) < 2 ? 1 : 2)
 
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			void_loop()
 		return

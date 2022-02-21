@@ -136,7 +136,7 @@
 
 ///// SHIP-SCALE WEAPONRY. BEEOO BEEOO HIT THE DECK /////
 
-/obj/machinery/shuttle/weapon/howitzer
+/obj/machinery/shuttle/weapon/howitzer_plasma
 	icon = 'icons/misc/64x32.dmi'
 	icon_state = "howitzer-idle"
 	name = "plasma howitzer"
@@ -158,6 +158,25 @@
 		sleep(1.3 SECONDS)
 		src.visible_message("<span class='alert'><b>[src] fires!</b></span>")
 		shoot_projectile_DIR(src, current_projectile, dir)
+
+
+/obj/machinery/shuttle/weapon/howitzer_152mm
+	name = "BL 6-Inch Howitzer"
+	desc = "A huge cannon firing six inch artillery rounds. It looks extremely dangerous."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "howitzerL"
+	anchored = 1
+	density = 1
+	layer = 20
+	dir = 8
+	var/icon_firing = "howitzerL-firing"
+	var/current_projectile = new/datum/projectile/bullet/howitzer
+
+	proc/fire()
+		flick(src.icon_firing, src)
+		src.visible_message("<span class='alert'><b>[src] fires!</b></span>")
+		sleep(0.25 SECONDS)
+		shoot_projectile_DIR((get_step(get_turf(src), SOUTH)), current_projectile, dir)
 
 /obj/item/material_piece/sphere/plasmaball // heh
 	name = "plasma round"

@@ -68,10 +68,6 @@ ABSTRACT_TYPE(/datum/artifact/)
 	/// An additional message displayed when examining, to hint at the artifact type (mainly used for more dangerous types)
 	var/examine_hint = null
 
-	// These are used for module research
-	var/list/module_research = list()
-	var/module_research_insight = 1 // insight level into the origin of the artifact
-
 	/// The health of the artifact, can be damaged by stimuli, chems, etc
 	/// When it hits 0, the artifact will be destroyed (after triggering ArtifactDestroyed())
 	var/health = 100
@@ -106,6 +102,12 @@ ABSTRACT_TYPE(/datum/artifact/)
 	proc/post_setup()
 		SHOULD_CALL_PARENT(TRUE)
 		src.artitype.post_setup(holder)
+		OTHER_START_TRACKING_CAT(holder, TR_CAT_ARTIFACTS)
+
+	disposing()
+		OTHER_STOP_TRACKING_CAT(holder, TR_CAT_ARTIFACTS)
+		holder = null
+		..()
 
 	/// Whether or not the artifact is allowed to activate, usually just a sanity check, but artifact types can add more conditions (like cooldowns).
 	proc/may_activate(var/obj/O)
@@ -156,7 +158,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 	proc/effect_click_tile(var/obj/O,var/mob/living/user,var/turf/T)
 		if (!O || !user || !T)
 			return 1
-		if (user.client && get_dist(T,user) > (istext(user.client.view) ? 10 : user.client.view)) // shitty hack // we cannot see that far, we're probably being a butt and trying to do something through a camera
+		if (!user.in_real_view_range(T))
 			return 1
 		else if (!user.client && get_dist(T,user) > world.view) // idk, SOMEhow someone would find a way
 			return 1
@@ -248,6 +250,22 @@ ABSTRACT_TYPE(/datum/artifact/art)
 // for use with the wizard spell prismatic_spray
 /datum/projectile/artifact/prismatic_projectile
 	is_magical = 1
+
+	shot_volume = 66
+	projectile_speed = 54
+
+	randomise()
+		. = ..()
+		src.dissipation_rate = 0
+		src.max_range = 13
+		src.power = max(10, src.power)
+		if(prob(90))
+			src.ks_ratio = 1
+
+	on_pre_hit(atom/hit, angle, obj/projectile/O)
+		. = ..()
+		if(ismob(hit) && ON_COOLDOWN(hit, "prismaticed", 1.5 SECONDS))
+			. = TRUE
 
 	New()
 		..()

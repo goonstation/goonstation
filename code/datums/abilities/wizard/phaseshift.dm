@@ -61,7 +61,7 @@
 			boutput(HH, "<span class='notice'>The flames sputter out as you phase shift.</span>")
 			HH.delStatus("burning")
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/mobloc = get_turf(H.loc)
 		var/obj/dummy/spell_invis/holder = new /obj/dummy/spell_invis( mobloc )
 		var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
@@ -74,7 +74,7 @@
 		animation.master = holder
 		flick("liquify",animation)
 		H.set_loc(holder)
-		var/datum/effects/system/steam_spread/steam = unpool(/datum/effects/system/steam_spread)
+		var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 		steam.set_up(10, 0, mobloc)
 		steam.start()
 		sleep(time)
@@ -101,7 +101,7 @@
 	name = "water"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	var/canmove = 1 // can be used to completely stop movement
 	var/movecd = 0 // used in relaymove, so people don't move too quickly
 	density = 0
@@ -132,7 +132,7 @@
 			src.y--
 			src.x--
 	src.movecd = 1
-	SPAWN_DBG(0.2 SECONDS) src.movecd = 0
+	SPAWN(0.2 SECONDS) src.movecd = 0
 
 /obj/dummy/spell_invis/ex_act(blah)
 	return
@@ -196,27 +196,29 @@
 
 	New(loc,ownermob,cloak)
 		..()
-		src.owner = ownermob
-		src.owner.set_loc(src)
+
+		if(ownermob)
+			src.owner = ownermob
+			src.owner.set_loc(src)
+			src.owner.remove_stamina(5)
 
 		use_cloakofdarkness = cloak
 
 		if (isvampire(owner))
 			vampholder = owner.get_ability_holder(/datum/abilityHolder/vampire)
 
-		var/obj/itemspecialeffect/poof/P = unpool(/obj/itemspecialeffect/poof)
+		var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 		P.setup(src.loc)
 		playsound(src.loc,"sound/effects/poff.ogg", 50, 1, pitch = 1)
 
 		//overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 		//overlay_image.color = "#333333"
 
-		owner.remove_stamina(5)
 
 		if (use_cloakofdarkness)
 			processing_items |= src
 
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			var/reduc_count = 0
 			while(src && !src.qdeled && owner && owner.stamina >= STAMINA_SPRINT && owner.client && owner.client.check_key(KEY_RUN))
 				reduc_count++
@@ -259,19 +261,19 @@
 	proc/set_cloaked(var/cloaked = 1)
 		if (use_cloakofdarkness)
 			if (cloaked == 1)
-				src.invisibility = 1
+				src.invisibility = INVIS_INFRA
 				src.alpha = 120
 				//src.UpdateOverlays(overlay_image, "batpoof_cloak")
 			else
-				src.invisibility = 0
+				src.invisibility = INVIS_NONE
 				src.alpha = 250
 				//src.UpdateOverlays(null, "batpoof_cloak")
 
 	proc/dispel(var/forced = 0)
-		if (forced)
+		if (forced && owner)
 			owner.stamina = max(owner.stamina - 40, STAMINA_SPRINT)
 
-		var/obj/itemspecialeffect/poof/P = unpool(/obj/itemspecialeffect/poof)
+		var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 		P.setup(src.loc, forced)
 
 		playsound(src.loc,"sound/effects/poff.ogg", 50, 1, pitch = 1.3)
@@ -311,11 +313,10 @@
 						vampholder.do_bite(atom, mult = 0.25)
 						playsound(src.loc,"sound/impact_sounds/Flesh_Crush_1.ogg", 35, 1, pitch = 1.3)
 						break
-				if (src.loc:checkingcanpass)
-					if (istype(atom,/obj/machinery/door))
-						var/obj/machinery/door/D = atom
-						//D.bumpopen(owner)
-						D.try_force_open(owner)
+				if (istype(atom,/obj/machinery/door))
+					var/obj/machinery/door/D = atom
+					//D.bumpopen(owner)
+					D.try_force_open(owner)
 				i++
 				if (i > 20)
 					break
@@ -334,11 +335,11 @@
 
 	attackby(obj/item/W, mob/M)
 		dispel(1)
-		if(owner) owner.attackby(W,M)
+		if(owner) owner.Attackby(W,M)
 
 	attack_hand(mob/M)
 		dispel(1)
-		if(owner) owner.attackby(M)
+		if(owner) owner.Attackby(M)
 
 
 	firepoof

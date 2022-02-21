@@ -39,7 +39,7 @@
 /obj/machinery/door/feather/break_me_complitely()
 	var/turf/T = get_turf(src)
 	playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
-	var/obj/item/raw_material/shard/S = unpool(/obj/item/raw_material/shard)
+	var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard
 	S.set_loc(T)
 	S.setMaterial(getMaterial("gnesisglass"))
 	make_cleanable( /obj/decal/cleanable/flockdrone_debris, T)
@@ -86,7 +86,7 @@
 	return
 
 /obj/machinery/door/feather/attack_hand(mob/user as mob)
-	return src.attackby(null, user)
+	return src.Attackby(null, user)
 
 /obj/machinery/door/feather/allowed(mob/M)
 	return isflock(M) // haha fuck you everyone else

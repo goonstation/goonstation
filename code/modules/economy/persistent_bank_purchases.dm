@@ -14,6 +14,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/trumpet,\
 	new /datum/bank_purchaseable/human_item/fiddle,\
 	new /datum/bank_purchaseable/human_item/gold_zippo,\
+	new /datum/bank_purchaseable/human_item/drinking_flask,\
 	new /datum/bank_purchaseable/human_item/toy_sword,\
 	new /datum/bank_purchaseable/human_item/sound_synth,\
 	new /datum/bank_purchaseable/human_item/record,\
@@ -39,6 +40,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/missile_arrival,\
 	new /datum/bank_purchaseable/lunchbox,\
 
+	new /datum/bank_purchaseable/bird_respawn,\
 	new /datum/bank_purchaseable/critter_respawn,\
 	new /datum/bank_purchaseable/golden_ghost,\
 
@@ -49,6 +51,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/moustache,\
 	new /datum/bank_purchaseable/gold_that,\
 	new /datum/bank_purchaseable/dancin_shoes,\
+	new /datum/bank_purchaseable/frog,\
 
 	new /datum/bank_purchaseable/alohamaton,\
 	new /datum/bank_purchaseable/ai_hat)
@@ -227,6 +230,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			cost = 500
 			path = /obj/item/device/light/zippo/gold
 
+		drinking_flask
+			name = "Drinking Flask"
+			cost = 400
+			path = /obj/item/reagent_containers/food/drinks/flask
+
 		toy_sword
 			name = "Toy Sword"
 			cost = 900
@@ -328,7 +336,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					if (H.mind.assigned_role == "Clown")
 						var/type = pick("purple","pink","yellow")
 						H.w_uniform.icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
-						H.w_uniform.wear_image_icon = 'icons/mob/jumpsuits/worn_js_gimmick.dmi'
+						H.w_uniform.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 						H.w_uniform.icon_state = "[type]clown"
 						H.w_uniform.item_state = "[type]clown"
 						H.w_uniform.name = "[type] clown suit"
@@ -360,7 +368,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		Create(var/mob/living/M)
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				SPAWN_DBG(6 SECONDS)
+				SPAWN(6 SECONDS)
 					if (H.limbs)
 						if (H.limbs.l_arm)
 							H.limbs.l_arm.delete()
@@ -377,11 +385,12 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	legless
 		name = "No Legs"
 		cost = 5000
+		path = /obj/item/furniture_parts/wheelchair
 
 		Create(var/mob/living/M)
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				SPAWN_DBG(6 SECONDS)
+				SPAWN(6 SECONDS)
 					if (H.limbs)
 						if (H.limbs.l_leg)
 							H.limbs.l_leg.delete()
@@ -428,9 +437,22 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			if (istype(M.loc, /obj/storage)) // also for stowaways; we really should have a system for integrating this stuff
 				S = M.loc
 			else
-				S = new /obj/storage/crate/packing()
+				S = new /obj/storage/crate/wooden()
 				M.set_loc(S)
 			shippingmarket.receive_crate(S)
+			return 1
+
+	frog
+		name = "Adopt a Frog"
+		cost = 6000
+
+		Create(var/mob/living/M)
+			var/obj/critter/frog/froggo = new(M.loc)
+			SPAWN(1 SECOND)
+				froggo.real_name = input(M.client, "Name your frog:", "Name your frog!", "frog")
+				phrase_log.log_phrase("name-frog", froggo.real_name, TRUE)
+				logTheThing("station", M, null, "named their adopted frog [froggo.real_name]")
+				froggo.name = froggo.real_name
 			return 1
 
 	missile_arrival
@@ -445,7 +467,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			var/mob/living/carbon/human/H = M
 			if(istype(H))
 				H.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if(istype(M.loc, /obj/storage))
 					launch_with_missile(M.loc)
 				else
@@ -456,6 +478,14 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		name = "Alt Ghost Critter"
 		cost = 1000
 		var/list/respawn_critter_types = list(/mob/living/critter/small_animal/boogiebot/weak, /mob/living/critter/small_animal/figure/weak)
+
+		Create(var/mob/M)
+			return 1
+
+	bird_respawn
+		name = "Lil Bird Ghost Critter"
+		cost = 1000
+		var/list/respawn_critter_types = list(/mob/living/critter/small_animal/sparrow/weak, /mob/living/critter/small_animal/sparrow/robin/weak)
 
 		Create(var/mob/M)
 			return 1

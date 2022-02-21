@@ -2,7 +2,6 @@
 	name = "artifact melee weapon"
 	artifact = 1
 	associated_datum = /datum/artifact/melee
-	module_research_no_diminish = 1
 	click_delay = COMBAT_CLICK_DELAY
 
 	attack(mob/M as mob, mob/user as mob)
@@ -27,8 +26,6 @@
 	var/stamina_dmg = 0
 	var/sound/hitsound = null
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
-	module_research = list("weapons" = 8, "miniaturization" = 8)
-	module_research_insight = 1
 
 	New()
 		..()

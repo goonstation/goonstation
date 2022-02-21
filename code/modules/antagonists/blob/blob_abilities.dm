@@ -55,7 +55,7 @@
 			//boutput(world, "cooldown initiated, length of [cooldown_time]")
 			last_used = world.time + cooldown_time
 			owner.update_buttons()
-			SPAWN_DBG(cooldown_time + 1)
+			SPAWN(cooldown_time + 1)
 				//boutput(world, "cooldown over, refreshing UI")
 				if (owner)
 					owner.update_buttons()
@@ -105,7 +105,7 @@
 						B = new /obj/blob/firewall(T)
 					else
 						B = new /obj/blob(T)
-
+					owner.total_placed++
 					B.setOvermind(src.owner)
 					currentTurfs++
 
@@ -173,9 +173,10 @@
 			return
 		if (owner.help_mode)
 			owner.help_mode = 0
+			boutput(owner, "<span class='notice'>Help Mode has been deactivated.</span>")
 		else
 			owner.help_mode = 1
-			boutput(owner, "<span class='notice'>Help Mode has been activated  To disable it, click on this button again.</span>")
+			boutput(owner, "<span class='notice'>Help Mode has been activated. To disable it, click on this button again.</span>")
 		src.button.icon_state = "blob-help[owner.help_mode]"
 		owner.update_buttons()
 
@@ -183,9 +184,10 @@
 
 /datum/blob_ability/plant_nucleus
 	name = "Deploy"
-	icon_state = "blob-nucleus"
+	icon_state = "blob-spawn"
 	desc = "This will place the first blob on your current tile. You can only do this once. Once placed, a small amount of blob tiles will spawn around it."
 	targeted = 0
+	cooldown_time = 10
 
 	onUse(var/turf/T)
 		if (..())
@@ -200,6 +202,10 @@
 		if (!isadmin(owner)) //admins can spawn wherever
 			if (!istype(T.loc, /area/station/) && !istype(T.loc, /area/blob/))
 				boutput(owner, __red("You need to start on the [station_or_ship()]!"))
+				return
+
+			if(IS_ARRIVALS(T.loc))
+				boutput(owner, "<spawn class='alert'>You can't start inside arrivals!</span>")
 				return
 
 			if (istype(T,/turf/unsimulated/))
@@ -227,6 +233,7 @@
 		var/turf/startTurf = get_turf(owner)
 		var/obj/blob/nucleus/C = new /obj/blob/nucleus(startTurf)
 		C.layer++
+		owner.total_placed++
 		C.setOvermind(owner)
 		C.Life()
 		owner.started = 1
@@ -250,9 +257,9 @@
 			var/amount = rand(20, 30)
 			src.auto_spread(startTurf, maxRange = 3, maxTurfs = amount)
 		owner.playsound_local(owner.loc, "sound/voice/blob/blobdeploy.ogg", 50, 1)
-		owner.remove_ability(/datum/blob_ability/plant_nucleus)
 		owner.remove_ability(/datum/blob_ability/set_color)
 		owner.remove_ability(/datum/blob_ability/tutorial)
+		owner.remove_ability(/datum/blob_ability/plant_nucleus)
 
 /datum/blob_ability/set_color
 	name = "Set Color"
@@ -275,7 +282,7 @@
 /datum/blob_ability/tutorial
 	name = "Interactive Tutorial"
 	desc = "Check out the interactive blob tutorial to get started with blobs."
-	icon_state = "blob-help0"
+	icon_state = "blob-tutorial"
 	targeted = 0
 
 	onUse()
@@ -340,18 +347,16 @@
 		var/obj/blob/B2 = new /obj/blob(T)
 		B2.setOvermind(owner)
 
-		if (owner.blobs.len < 100)
-			cooldown_time = 15
-		else if (owner.blobs.len < 200)
-			cooldown_time = 20
-		else
-			cooldown_time = 25
+		cooldown_time = 16
 		var/mindist = 127
 		for_by_tcl(nucleus, /obj/blob/nucleus)
 			if(nucleus.overmind == owner)
 				mindist = min(mindist, get_dist(T, get_turf(nucleus)))
 
-		cooldown_time = max(cooldown_time + max(mindist * 0.4 - 1, 0) - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 6)
+		mindist *= max((length(owner.blobs) * 0.005) - 2, 1)
+
+		cooldown_time = max(cooldown_time + max(mindist * 0.5 - 10, 0) - owner.spread_upgrade * 5 - owner.spread_mitigation * 0.5, 6)
+		owner.total_placed++
 
 		var/extra_spreads = round(owner.multi_spread / 100) + (prob(owner.multi_spread % 100) ? 1 : 0)
 		if (extra_spreads)
@@ -367,6 +372,7 @@
 			for (var/i = 1, i <= extra_spreads && spreadability.len, i++)
 				var/turf/R = pick(spreadability)
 				var/obj/blob/B3 = new /obj/blob(R)
+				owner.total_placed++
 				B3.setOvermind(owner)
 				spreadability -= R
 
@@ -442,6 +448,7 @@
 			return
 		owner.playsound_local(owner.loc, "sound/voice/blob/blobconsume[rand(1, 2)].ogg", 80, 1)
 		B.visible_message("<span class='alert'><b>The blob consumes a piece of itself!</b></span>")
+		B.onKilled()
 		qdel(B)
 		src.deduct_bio_points()
 		src.do_cooldown()
@@ -513,7 +520,7 @@
 				return
 
 			B.heal_damage(20)
-			B.update_icon()
+			B.UpdateIcon()
 			owner.playsound_local(owner.loc, "sound/voice/blob/blobheal[rand(1, 3)].ogg", 50, 1)
 			src.deduct_bio_points()
 			src.do_cooldown()
@@ -568,6 +575,7 @@
 
 		B.visible_message("<span class='alert'><b>The blob starts trying to absorb [M.name]!</b></span>")
 		actions.start(new /datum/action/bar/blob_absorb(M, owner), B)
+		M.was_harmed(B)
 
 
 //The owner is the blob tile object...
@@ -648,7 +656,7 @@
 		var/current_target_z = H.pixel_z
 		var/destination_z = current_target_z - 6
 		animate(H, time = 10, alpha = 1, pixel_z = destination_z, easing = LINEAR_EASING)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			sleep(1 SECOND)
 			H.lying = 1
 			H.skeletonize()
@@ -932,7 +940,7 @@
 		src.deduct_bio_points()
 
 		if (do_pool)
-			pool(I)
+			qdel(I)
 		else
 			qdel(I)
 
@@ -1170,9 +1178,9 @@
 /datum/blob_upgrade/quick_spread
 	name = "Passive: Quicker Spread"
 	icon_state = "blob-quickspread"
-	desc = "Reduces the cooldown of your Spread ability by 1 second. Can be repeated. The cooldown of Spread cannot go below 1 second."
+	desc = "Reduces the cooldown of your Spread ability by 0.5 seconds. Can be repeated. The cooldown of Spread cannot go below 0.6 seconds."
 	evo_point_cost = 3
-	scaling_cost_add = 4
+	scaling_cost_add = 3
 	repeatable = -1
 	upgradename = "spread"
 
@@ -1183,7 +1191,7 @@
 
 /datum/blob_upgrade/spread
 	name = "Passive: Spread Upgrade"
-	icon_state = "blob-spread"
+	icon_state = "blob-spread-upgrade"
 	desc = "When spreading, adds a cumulative 20% chance to spread off another, random tile on your screen. Every time your chance hits a multiple of 100%, the spread for that amount of tiles is guaranteed and a new chance is added for an extra tile. For example, at 120%, you have a 100% chance to spread twice; with a 20% chance to spread three times instead."
 	evo_point_cost = 1
 	scaling_cost_add = 1
@@ -1197,7 +1205,7 @@
 
 /datum/blob_upgrade/attack
 	name = "Passive: Attack Upgrade"
-	icon_state = "blob-attack"
+	icon_state = "blob-attack-upgrade"
 	desc = "Increases your attack damage and the chance of mob knockdown. Level 3+ of this upgrade will allow you to punch down girders. Can be repeated."
 	evo_point_cost = 1
 	scaling_cost_add = 1
@@ -1225,7 +1233,7 @@
 
 /datum/blob_upgrade/devour_item
 	name = "Ability: Devour Item"
-	icon_state = "blob-digest"
+	icon_state = "blob-digest-upgrade"
 	desc = "Unlocks the Devour Item ability, which can be used to near-instantly break down any item adjacent to any blob tile. In addition, a reagent deposit is created in the blob if the item contained any reagents. Reagent deposits can be used with various blob elements. Material bearing objects will break down into material deposits, which can be used to reinforce your blob."
 	evo_point_cost = 1
 	upgradename = "digest"
@@ -1240,7 +1248,7 @@
 
 /datum/blob_upgrade/reinforce
 	name = "Ability: Reinforce"
-	icon_state = "blob-reinforce"
+	icon_state = "blob-reinforce-upgrade"
 	desc = "Unlocks the Reinforce ability, which can be used to strengthen a single blob bit. Blob bits with reinforcements may be more durable or more heat resistant, or otherwise may bear special properties depending on the properties of the material. A single blob bit can be repeatedly reinforced to push its properties closer to that of the reinforcing material."
 	evo_point_cost = 1
 	initially_disabled = 1
@@ -1255,7 +1263,7 @@
 /datum/blob_upgrade/reinforce_spread
 	name = "Passive: Reinforced Spread"
 	icon_state = "blob-global-reinforce"
-	desc = "Reinforces the blob with material permanently. All existing blob tiles are reinforced with the average of the used materials, and all future blob bits will be created with the infusion. This upgrade requires 60 material deposits to be on your current tile."
+	desc = "Reinforces the blob with material permanently. All existing blob tiles are reinforced with the average of the used materials, and all future blob bits will be created with the infusion. This upgrade requires 30 material deposits to be on your current tile."
 	evo_point_cost = 1
 	initially_disabled = 1
 	scaling_cost_add = 2
@@ -1304,18 +1312,21 @@
 					total = weights[mid]
 					max_id = mid
 		if (!total)
+			taking = 0
 			return 1
 		if (total < required_deposits)
-			boutput(usr, "<span class='alert'><b>You need more deposits on your screen! (Required: [required_deposits], have (of highest material '[max_id]'): [count])</b></span>")
+			taking = 0
+			boutput(usr, "<span class='alert'><b>You need more deposits on your screen! (Required: [required_deposits], have (of highest material '[max_id]'): [total])</b></span>")
 			return 1
 		if (!mats.len)
+			taking = 0
 			return 1
 		var/datum/material/to_merge = copyMaterial(mats[max_id])
 		owner.my_material = getInterpolatedMaterial(owner.my_material, to_merge, 0.17)
 		for (var/obj/O in deposits)
 			qdel(O)
 		boutput(usr, "<span class='notice'>Applying upgrade to the blob...</span>")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/wg = 0
 			for (var/obj/blob/O in owner.blobs)
 				if (!O.material)
@@ -1334,7 +1345,7 @@
 
 /datum/blob_upgrade/reclaimer
 	name = "Structure: Reclaimer"
-	icon_state = "blob-reclaimer"
+	icon_state = "blob-reclaimer-upgrade"
 	desc = "Unlocks the Reclaimer blob bit, which can be placed on reagent deposits. The reclaimer produces biopoints over time using reagents. Once the deposit depletes, the blob piece is transformed into a lipid."
 	evo_point_cost = 1
 	initially_disabled = 1
@@ -1347,7 +1358,7 @@
 
 /datum/blob_upgrade/replicator
 	name = "Structure: Replicator"
-	icon_state = "blob-replicator"
+	icon_state = "blob-replicator-upgrade"
 	desc = "Unlocks the Replicator blob bit, which can be placed on reagent deposits. The replicator replicates the highest volume reagent in the deposit using reagents from other deposits, at the cost of biopoints."
 	evo_point_cost = 2
 	initially_disabled = 1
@@ -1360,7 +1371,7 @@
 
 /datum/blob_upgrade/bridge
 	name = "Structure: Bridge"
-	icon_state = "blob-bridge"
+	icon_state = "blob-bridge-upgrade"
 	desc = "Unlocks the Bridge blob bit, which can be placed on space tiles. Bridges are floor tiles, you still need to spread onto them, and cannot spread from them."
 	evo_point_cost = 1
 	initially_disabled = 0
@@ -1373,7 +1384,7 @@
 
 /datum/blob_upgrade/launcher
 	name = "Structure: Slime Launcher"
-	icon_state = "blob-cannon"
+	icon_state = "blob-cannon-upgrade"
 	desc = "Unlocks the Slime Launcher blob bit, which fires at nearby mobs at the cost of biopoints. Slime inflicts a short stun and minimal damage."
 	upgradename = "launcher"
 
@@ -1386,7 +1397,7 @@
 
 /datum/blob_upgrade/plasmaphyll
 	name = "Structural: Plasmaphyll"
-	icon_state = "blob-plasmaphyll"
+	icon_state = "blob-plasmaphyll-upgrade"
 	desc = "Unlocks the plasmaphyll blob bit, which passively protects an area from plasma by converting it to biopoints."
 	evo_point_cost = 1
 	upgradename = "plasmaphyll"
@@ -1398,7 +1409,7 @@
 
 /datum/blob_upgrade/ectothermid
 	name = "Structural: Ectothermid"
-	icon_state = "blob-ectothermid"
+	icon_state = "blob-ectothermid-upgrade"
 	desc = "Unlocks the ectothermid blob bit, which passively an protects area from temperature. This protection consumes biopoints."
 	evo_point_cost = 2
 	upgradename = "ectothermid"
@@ -1410,7 +1421,7 @@
 
 /datum/blob_upgrade/reflective
 	name = "Structural: Reflective Membrane"
-	icon_state = "blob-reflective"
+	icon_state = "blob-reflective-upgrade"
 	desc = "Unlocks the reflective membrane, which is immune to energy projectiles."
 	evo_point_cost = 1
 	upgradename = "reflective"

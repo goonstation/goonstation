@@ -110,7 +110,7 @@ var/ZLOG_START_TIME
 #define NON_EUCLIDEAN 1
 
 // Used for /datum/respawn_controller - DOES NOT COVER ALL RESPAWNS YET
-#define DEFAULT_RESPAWN_TIME 15 MINUTES
+#define DEFAULT_RESPAWN_TIME 10 MINUTES
 #define RESPAWNS_ENABLED 0
 
 #if (defined(SERVER_SIDE_PROFILING_PREGAME) || defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_INGAME_ONLY))
@@ -128,7 +128,7 @@ var/ZLOG_START_TIME
 
 //what counts as participation?
 #ifdef RP_MODE
-#define MAX_PARTICIPATE_TIME 80 MINUTES //the maximum shift time before it doesnt count as "participating" in the round
+#define MAX_PARTICIPATE_TIME 60 MINUTES //the maximum shift time before it doesnt count as "participating" in the round
 #else
 #define MAX_PARTICIPATE_TIME 40 MINUTES //ditto above
 #endif

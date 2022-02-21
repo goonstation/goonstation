@@ -30,6 +30,126 @@
 			setMaterial(plate_mat)
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
+			switch(src.icon_state)
+				if("caution_north")
+					new /obj/decal/tile_edge/stripe/xmas{dir=NORTH}(src)
+				if("engine_caution_north")
+					new /obj/decal/tile_edge/stripe/xmas{dir=NORTH}(src)
+				if("caution_south")
+					new /obj/decal/tile_edge/stripe/xmas{dir=SOUTH}(src)
+				if("engine_caution_south")
+					new /obj/decal/tile_edge/stripe/xmas{dir=SOUTH}(src)
+				if("caution_west")
+					new /obj/decal/tile_edge/stripe/xmas{dir=WEST}(src)
+				if("engine_caution_west")
+					new /obj/decal/tile_edge/stripe/xmas{dir=WEST}(src)
+				if("caution_east")
+					new /obj/decal/tile_edge/stripe/xmas{dir=EAST}(src)
+				if("engine_caution_east")
+					new /obj/decal/tile_edge/stripe/xmas{dir=EAST}(src)
+				if("caution_we")
+					new /obj/decal/tile_edge/stripe/xmas{dir=WEST}(src)
+					new /obj/decal/tile_edge/stripe/xmas{dir=EAST}(src)
+				if("engine_caution_we")
+					new /obj/decal/tile_edge/stripe/xmas{dir=WEST}(src)
+					new /obj/decal/tile_edge/stripe/xmas{dir=EAST}(src)
+				if("caution_ns")
+					new /obj/decal/tile_edge/stripe/xmas{dir=NORTH}(src)
+					new /obj/decal/tile_edge/stripe/xmas{dir=SOUTH}(src)
+				if("engine_caution_ns")
+					new /obj/decal/tile_edge/stripe/xmas{dir=NORTH}(src)
+					new /obj/decal/tile_edge/stripe/xmas{dir=SOUTH}(src)
+				if("corner_neast")
+					new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+				if("corner_nwest")
+					new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+				if("corner_east")
+					new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+				if("corner_west")
+					new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+				if("floor_hazard_misc")
+					switch(src.dir)
+						if(SOUTH)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+						if(NORTH)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+						if(EAST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+						if(WEST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+						if(SOUTHEAST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+				if("engine_caution_misc")
+					switch(src.dir)
+						if(SOUTH)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+						if(NORTH)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+						if(EAST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+						if(WEST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+						if(SOUTHEAST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+				if("engine_caution_corners")
+					switch(src.dir)
+						if(SOUTH)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+						if(NORTH)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+						if(EAST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+						if(WEST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+				if("floor_hazard_corners")
+					switch(src.dir)
+						if(SOUTH)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=SOUTH}(src)
+						if(NORTH)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=NORTH}(src)
+						if(EAST)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=EAST}(src)
+						if(WEST)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=WEST}(src)
+						if(SOUTHEAST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=SOUTHEAST}(src)
+						if(SOUTHWEST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=SOUTHWEST}(src)
+						if(NORTHEAST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=NORTHEAST}(src)
+						if(NORTHWEST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=NORTHWEST}(src)
+				if("engine_caution_corners2")
+					switch(src.dir)
+						if(SOUTH)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=SOUTH}(src)
+						if(NORTH)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=NORTH}(src)
+						if(EAST)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=EAST}(src)
+						if(WEST)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=WEST}(src)
+						if(SOUTHEAST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=SOUTHEAST}(src)
+						if(SOUTHWEST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=SOUTHWEST}(src)
+						if(NORTHEAST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=NORTHEAST}(src)
+						if(NORTHWEST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=NORTHWEST}(src)
+		#endif
 		var/obj/plan_marker/floor/P = locate() in src
 		if (P)
 			src.icon = P.icon
@@ -37,7 +157,7 @@
 			src.icon_old = P.icon_state
 			allows_vehicles = P.allows_vehicles
 			var/pdir = P.dir
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.set_dir(pdir)
 			qdel(P)
 
@@ -541,6 +661,45 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "office_carpet2"
 
+DEFINE_FLOORS(carpet/regalcarpet,
+	name = "regal carpet";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "regal_carpet";\
+	step_material = "step_carpet";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(carpet/regalcarpet/border,
+	icon_state = "regal_carpet_border")
+
+DEFINE_FLOORS(carpet/regalcarpet/innercorner,
+	icon_state = "regal_carpet_corner")
+
+DEFINE_FLOORS(carpet/darkcarpet,
+	name = "dark carpet";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "dark_carpet";\
+	step_material = "step_carpet";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(carpet/darkcarpet/border,
+	icon_state = "dark_carpet_border")
+
+DEFINE_FLOORS(carpet/darkcarpet/innercorner,
+	icon_state = "dark_carpet_corner")
+
+DEFINE_FLOORS(carpet/clowncarpet,
+	name = "clown carpet";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "clown_carpet";\
+	step_material = "step_carpet";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(carpet/clowncarpet/border,
+	icon_state = "clown_carpet_border")
+
+DEFINE_FLOORS(carpet/clowncarpet/innercorner,
+	icon_state = "clown_carpet_corner")
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/shiny
@@ -561,6 +720,91 @@
 	icon_state = "freezerfloor3"
 
 ////////////////////////////////////////
+
+DEFINE_FLOORS(twotone,
+	name = "two-tone checker floor";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "twotone_grey";\
+	step_material = "step_plating";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(twotone/red,
+	icon_state = "twotone_red")
+
+DEFINE_FLOORS(twotone/purple,
+	icon_state = "twotone_purple")
+
+DEFINE_FLOORS(twotone/green,
+	icon_state = "twotone_green")
+
+DEFINE_FLOORS(twotone/blue,
+	icon_state = "twotone_blue")
+
+DEFINE_FLOORS(twotone/yellow,
+	icon_state = "twotone_yellow")
+
+/////////////////////////////////////////
+
+DEFINE_FLOORS(terrazzo,
+	name = "terrazzo tiling";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "terrazzo_beige";\
+	step_material = "step_wood";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(terrazzo/black,
+	icon_state = "terrazzo_black")
+
+DEFINE_FLOORS(terrazzo/white,
+	icon_state = "terrazzo_white")
+
+/////////////////////////////////////////
+
+DEFINE_FLOORS(marble,
+	name = "marble tiling";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "marble_white";\
+	step_material = "step_wood";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(marble/black,
+	icon_state = "marble_black")
+
+DEFINE_FLOORS(marble/border_bw,
+	icon_state = "marble_border_bw")
+
+DEFINE_FLOORS(marble/border_wb,
+	icon_state = "marble_border_wb")
+
+/////////////////////////////////////////
+
+DEFINE_FLOORS(glassblock,
+	name = "glass block tiling";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "glass_small";\
+	mat_appearances_to_ignore = list("steel","synthrubber");\
+	step_material = "step_wood";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(glassblock/large,
+	icon_state = "glass_large")
+
+/////////////////////////////////////////
+
+DEFINE_FLOORS(minitiles,
+	name = "mini tiles";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "minitiles_grey";\
+	step_material = "step_plating";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(minitiles/white,
+	icon_state = "minitiles_white")
+
+DEFINE_FLOORS(minitiles/black,
+	icon_state = "minitiles_black")
+
+/////////////////////////////////////////
 
 /turf/simulated/floor/specialroom
 
@@ -940,6 +1184,7 @@
 
 /turf/simulated/floor/snow
 	name = "snow"
+	has_material = FALSE
 	icon_state = "snow1"
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
@@ -956,18 +1201,10 @@
 		src.set_dir(pick(cardinal))
 
 /turf/simulated/floor/snow/snowball
-	var/last_gather_time
 
-	attack_hand(mob/user)
-		if ((last_gather_time + 40) >= world.time)
-			return
-		else
-			user.visible_message("<b>[user]</b> gathers up some snow and rolls it into a snowball!",\
-			"You gather up some snow and roll it into a snowball!")
-			var/obj/item/reagent_containers/food/snacks/snowball/S = new /obj/item/reagent_containers/food/snacks/snowball(user.loc)
-			user.put_in_hand_or_drop(S)
-			src.last_gather_time = world.time
-			return
+	New()
+		..()
+		AddComponent(/datum/component/snowballs)
 
 /turf/simulated/floor/snow/green
 	name = "snow-covered floor"
@@ -976,6 +1213,26 @@
 /turf/simulated/floor/snow/green/corner
 	name = "snow-covered floor"
 	icon_state = "snowgreencorner"
+
+DEFINE_FLOORS(snowcalm,
+	name = "snow";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "snow_calm";\
+	step_material = "step_outdoors";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(snowcalm/border,
+	icon_state = "snow_calm_border")
+
+DEFINE_FLOORS(snowrough,
+	name = "snow";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "snow_rough";\
+	step_material = "step_outdoors";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(snowrough/border,
+	icon_state = "snow_rough_border")
 
 /////////////////////////////////////////
 
@@ -1003,6 +1260,45 @@
 	step_priority = STEP_PRIORITY_MED
 
 /////////////////////////////////////////
+
+/* Animated turf - Walp */
+
+DEFINE_FLOORS(techfloor,
+	name = "data tech flooring";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "techfloor_blue";\
+	step_material = "step_plating";\
+	step_priority = STEP_PRIORITY_MED;\
+	RL_LumR = 0;\
+	RL_LumG = 0;\
+	RL_LumB = 0.3)
+
+DEFINE_FLOORS(techfloor/red,
+	icon_state = "techfloor_red";\
+	RL_LumR = 0.3;\
+	RL_LumG = 0;\
+	RL_LumB = 0)
+
+DEFINE_FLOORS(techfloor/purple,
+	icon_state = "techfloor_purple";\
+	RL_LumR = 0.1;\
+	RL_LumG = 0;\
+	RL_LumB = 0.2)
+
+DEFINE_FLOORS(techfloor/yellow,
+	icon_state = "techfloor_yellow";\
+	RL_LumR = 0.2;\
+	RL_LumG = 0.1;\
+	RL_LumB = 0)
+
+DEFINE_FLOORS(techfloor/green,
+	icon_state = "techfloor_green";\
+	RL_LumR = 0;\
+	RL_LumG = 0.3;\
+	RL_LumB = 0)
+
+/////////////////////////////////////////
+
 /turf/simulated/floor/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
@@ -1014,9 +1310,16 @@
 	step_priority = STEP_PRIORITY_MED
 
 	New()
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
+			if(prob(10))
+				new /obj/item/reagent_containers/food/snacks/snowball/unmelting(src)
+			src.ReplaceWith(/turf/simulated/floor/snow/snowball, keep_old_material=FALSE, handle_air = FALSE)
+			return
+		#endif
+
 		..()
 		setMaterial(getMaterial("synthrubber"))
-
 /turf/proc/grassify()
 	.=0
 
@@ -1068,6 +1371,31 @@
 	mat_changedesc = 0
 
 /////////////////////////////////////////
+
+/* Outdoors tilesets - Walp */
+
+DEFINE_FLOORS(grasslush,
+	name = "lush grass";\
+	desc = "This grass somehow thrives in space.";\
+	icon = 'icons/turf/outdoors.dmi';\
+	icon_state = "grass_lush";\
+	mat_appearances_to_ignore = list("steel","synthrubber");\
+	mat_changename = 0;\
+	mat_changedesc = 0;\
+	step_material = "step_outdoors";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(grasslush/border,
+	icon_state = "grass_lush_border")
+
+DEFINE_FLOORS(grasslush/corner,
+	icon_state = "grass_lush_corner")
+
+DEFINE_FLOORS(grasslush/thinner,
+	icon_state = "grass_lesslush")
+
+DEFINE_FLOORS(grasslush/thin,
+	icon_state = "grass_thin")
 
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-FUCK THAT SHIT MY WRIST HURTS=-=-=-=-=-=-=-=-=*/
@@ -1176,18 +1504,18 @@
 	else
 		boutput(user, "Your attack bounces off the foamed metal floor.")
 
-/turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/simulated/floor/Cross(atom/movable/mover)
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		if (!( locate(/obj/machinery/mass_driver, src) ))
 			return 0
 	return ..()
 
-/turf/simulated/shuttle/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/simulated/shuttle/Cross(atom/movable/mover)
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		return 0
 	return ..()
 
-/turf/unsimulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/unsimulated/floor/Cross(atom/movable/mover)
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		if (!( locate(/obj/machinery/mass_driver, src) ))
 			return 0
@@ -1209,7 +1537,7 @@
 			switch(pick(1,2;75,3))
 				if (1)
 					if(prob(33))
-						var/obj/item/I = unpool(/obj/item/raw_material/scrap_metal)
+						var/obj/item/I = new /obj/item/raw_material/scrap_metal
 						I.set_loc(src)
 						if (src.material)
 							I.setMaterial(src.material)
@@ -1221,7 +1549,7 @@
 					src.ReplaceWithSpace()
 				if(3)
 					if(prob(33))
-						var/obj/item/I = unpool(/obj/item/raw_material/scrap_metal)
+						var/obj/item/I = new /obj/item/raw_material/scrap_metal
 						I.set_loc(src)
 						if (src.material)
 							I.setMaterial(src.material)
@@ -1242,8 +1570,6 @@
 /turf/simulated/floor/blob_act(var/power)
 	return
 
-/turf/simulated/floor/proc/update_icon()
-
 /turf/simulated/attack_hand(mob/user as mob)
 	if (src.density == 1)
 		return
@@ -1255,10 +1581,10 @@
 		return
 	//duplicate user.pulling for RTE fix
 	if (user.pulling && user.pulling.loc == user)
-		user.pulling = null
+		user.remove_pulling()
 		return
 	//if the object being pulled's loc is another object (being in their contents) return
-	if (isobj(user.pulling.loc))
+	if (!isturf(user.pulling.loc))
 		var/obj/container = user.pulling.loc
 		if (user.pulling in container.contents)
 			return
@@ -1267,9 +1593,9 @@
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
 		var/mob/t = M.pulling
-		M.pulling = null
+		M.remove_pulling()
 		step(M, get_dir(fuck_u, src))
-		M.pulling = t
+		M.set_pulling(t)
 	else
 		step(user.pulling, get_dir(fuck_u, src))
 	return
@@ -1346,42 +1672,33 @@
 
 /turf/simulated/floor/var/global/girder_egg = 0
 
-//basically the same as walls.dm sans the
 /turf/simulated/floor/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W, var/instantly)
 	if (!user || !istype(W, /obj/item/light_parts/floor))
 		return
-
-	// the wall is the target turf, the source is the turf where the user is standing
-	var/obj/item/light_parts/parts = W
-	var/turf/target = src
-
 	if(!instantly)
 		playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
 		boutput(user, "You begin to attach the light fixture to [src]...")
+		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /turf/simulated/floor/proc/finish_attaching,\
+			list(W, user), W.icon, W.icon_state, null, null)
+		return
 
+	finish_attaching(W, user)
+	return
 
-		if (!do_after(user, 4 SECONDS))
-			user.show_text("You were interrupted!", "red")
-			return
-
-		if (!parts) //ZeWaka: Fix for null.fixture_type
-			return
-
-		// if they didn't move, put it up
-		boutput(user, "You attach the light fixture to [src].")
-
+/turf/simulated/floor/proc/finish_attaching(obj/item/W, mob/user)
+	// the floor is the target turf
+	var/turf/target = src
+	var/obj/item/light_parts/parts = W
 	var/obj/machinery/light/newlight = new parts.fixture_type(target)
+	boutput(user, "You attach the light fixture to [src].")
 	newlight.icon_state = parts.installed_icon_state
 	newlight.base_state = parts.installed_base_state
 	newlight.fitting = parts.fitting
 	newlight.status = 1 // LIGHT_EMPTY
-
 	newlight.add_fingerprint(user)
 	src.add_fingerprint(user)
-
 	user.u_equip(parts)
 	qdel(parts)
-	return
 
 /turf/simulated/floor/proc/pry_tile(obj/item/C as obj, mob/user as mob, params)
 	if (!intact)
@@ -1470,7 +1787,7 @@
 			if (!P)
 				return
 			// Call ourselves w/ the tool, then continue
-			src.attackby(P, user)
+			src.Attackby(P, user)
 
 		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
 		if (!intact)
@@ -1490,96 +1807,100 @@
 
 
 	if(istype(C, /obj/item/sheet))
-		if (!(C?.material?.material_flags & (MATERIAL_METAL | MATERIAL_CRYSTAL))) return
-		if (!C:amount_check(2,user)) return
+		var/obj/item/sheet/S = C
+		if (!S.amount_check(2,user)) return
+		if (S?.material?.material_flags & MATERIAL_METAL)
+			var/msg = "a girder"
 
-		var/msg = "a girder"
-
-		if(!girder_egg)
-			var/count = 0
-			for(var/obj/structure/girder in src)
-				count++
-			var/static/list/insert_girder = list(
-			"a girder",
-			"another girder",
-			"yet another girder",
-			"oh god it's another girder",
-			"god save the queen its another girder",
-			"sweet christmas its another girder",
-			"the 6th girder",
-			"you're not sure but you think it's a girder",
-			"um... ok. a girder, I guess",
-			"what does girder even mean, anyway",
-			"the strangest girder",
-			"the girder that confuses you",
-			"the metallic support frame",
-			"a very untrustworthy girder",
-			"the \"i'm concerned about the sheer number of girders\" girder",
-			"a broken wall",
-			"the 16th girder",
-			"the 17th girder",
-			"the 18th girder",
-			"the 19th girder",
-			"the 20th century girder",
-			"the 21th girder",
-			"the mfin girder coming right atcha",
-			"the girder you cant believe is a girder",
-			"rozenkrantz \[sic?\] and girderstein",
-			"a.. IS THAT?! no, just a girder",
-			"a gifter",
-			"a shitty girder",
-			"a girder potato",
-			"girded loins",
-			"the platonic ideal of stacked girders",
-			"a complete goddamn mess of girders",
-			"FUCK",
-			"a girder for ants",
-			"a girder of a time",
-			"a girder girder girder girder girder girder girder girder girder girder girder girder.. mushroom MUSHROOM",
-			"an attempted girder",
-			"a failed girder",
-			"a girder most foul",
-			"a girder who just wants to be a wall",
-			"a human child",//40
-			"ett gürdür",
-			"a girdle",
-			"a g--NOT NOW MOM IM ALMOST AT THE 100th GIRDER--irder",
-			"a McGirder",
-			"a Double Cheesegirder",
-			"an egg salad",
-			"the ugliest damn girder you've ever seen in your whole fucking life",
-			"the most magnificent goddamn girder that you've ever seen in your entire fucking life",
-			"the constitution of the old republic, and also a girder",
-			"a waste of space, which is crazy when you consider where you built this",//50
-			"pure girder vibrations",
-			"a poo containment girder",
-			"an extremely solid girder, your parents would be proud",
-			"the girder who informs you to the authorities",
-			"a discount girder",
-			"a counterfeit girder",
-			"a construction",
-			"readster's very own girder",
-			"just a girder",
-			"a gourder",//60
-			"a fuckable girder",
-			"a herd of girders",
-			"an A.D.G.S",
-			"the... thing",
-			"the.. girder?",
-			"a girder. one that girds if you girder it.",
-			"the frog(?)",
-			"the unstable relationship",
-			"nice",
-			"the girder egg")
-			msg = insert_girder[min(count+1, insert_girder.len)]
-			if(count >= 70)
-				girder_egg = 1
-				actions.start(new /datum/action/bar/icon/build(C, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard/passive, 2, null, 1, 'icons/obj/structures.dmi', "girder egg", msg, null), user)
+			if(!girder_egg)
+				var/count = 0
+				for(var/obj/structure/girder in src)
+					count++
+				var/static/list/insert_girder = list(
+				"a girder",
+				"another girder",
+				"yet another girder",
+				"oh god it's another girder",
+				"god save the queen its another girder",
+				"sweet christmas its another girder",
+				"the 6th girder",
+				"you're not sure but you think it's a girder",
+				"um... ok. a girder, I guess",
+				"what does girder even mean, anyway",
+				"the strangest girder",
+				"the girder that confuses you",
+				"the metallic support frame",
+				"a very untrustworthy girder",
+				"the \"i'm concerned about the sheer number of girders\" girder",
+				"a broken wall",
+				"the 16th girder",
+				"the 17th girder",
+				"the 18th girder",
+				"the 19th girder",
+				"the 20th century girder",
+				"the 21th girder",
+				"the mfin girder coming right atcha",
+				"the girder you cant believe is a girder",
+				"rozenkrantz \[sic?\] and girderstein",
+				"a.. IS THAT?! no, just a girder",
+				"a gifter",
+				"a shitty girder",
+				"a girder potato",
+				"girded loins",
+				"the platonic ideal of stacked girders",
+				"a complete goddamn mess of girders",
+				"FUCK",
+				"a girder for ants",
+				"a girder of a time",
+				"a girder girder girder girder girder girder girder girder girder girder girder girder.. mushroom MUSHROOM",
+				"an attempted girder",
+				"a failed girder",
+				"a girder most foul",
+				"a girder who just wants to be a wall",
+				"a human child",//40
+				"ett gürdür",
+				"a girdle",
+				"a g--NOT NOW MOM IM ALMOST AT THE 100th GIRDER--irder",
+				"a McGirder",
+				"a Double Cheesegirder",
+				"an egg salad",
+				"the ugliest damn girder you've ever seen in your whole fucking life",
+				"the most magnificent goddamn girder that you've ever seen in your entire fucking life",
+				"the constitution of the old republic, and also a girder",
+				"a waste of space, which is crazy when you consider where you built this",//50
+				"pure girder vibrations",
+				"a poo containment girder",
+				"an extremely solid girder, your parents would be proud",
+				"the girder who informs you to the authorities",
+				"a discount girder",
+				"a counterfeit girder",
+				"a construction",
+				"readster's very own girder",
+				"just a girder",
+				"a gourder",//60
+				"a fuckable girder",
+				"a herd of girders",
+				"an A.D.G.S",
+				"the... thing",
+				"the.. girder?",
+				"a girder. one that girds if you girder it.",
+				"the frog(?)",
+				"the unstable relationship",
+				"nice",
+				"the girder egg")
+				msg = insert_girder[min(count+1, insert_girder.len)]
+				if(count >= 70)
+					girder_egg = 1
+					actions.start(new /datum/action/bar/icon/build(S, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard/passive, 2, null, 1, 'icons/obj/structures.dmi', "girder egg", msg, null), user)
+				else
+					actions.start(new /datum/action/bar/icon/build(S, /obj/structure/girder, 2, S.material, 1, 'icons/obj/structures.dmi', "girder", msg, null, spot = src), user)
 			else
-				actions.start(new /datum/action/bar/icon/build(C, /obj/structure/girder, 2, C:material, 1, 'icons/obj/structures.dmi', "girder", msg, null, spot = src), user)
-		else
-			actions.start(new /datum/action/bar/icon/build(C, /obj/structure/girder, 2, C:material, 1, 'icons/obj/structures.dmi', "girder", msg, null, spot = src), user)
-
+				actions.start(new /datum/action/bar/icon/build(S, /obj/structure/girder, 2, S.material, 1, 'icons/obj/structures.dmi', "girder", msg, null, spot = src), user)
+		else if (S?.material?.material_flags & MATERIAL_CRYSTAL)
+			if(S.reinforcement)
+				actions.start(new /datum/action/bar/icon/build(S, map_settings ? map_settings.rwindows : /obj/window/reinforced, 2, S.material, 1, 'icons/obj/window.dmi', "window", "a full window", /proc/window_reinforce_full_callback, spot = src), user)
+			else
+				actions.start(new /datum/action/bar/icon/build(S, map_settings ? map_settings.windows : /obj/window, 2, S.material, 1, 'icons/obj/window.dmi', "window", "a full window", /proc/window_reinforce_full_callback, spot = src), user)
 
 	if(istype(C, /obj/item/cable_coil))
 		if(!intact)
@@ -1608,10 +1929,10 @@
 	else if (src.temp_flags & HAS_KUDZU)
 		var/obj/spacevine/K = locate(/obj/spacevine) in src.contents
 		if (K)
-			K.attackby(C, user, params)
+			K.Attackby(C, user, params)
 
 	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1)) // this seemed like the neatest way to make attack_hand still trigger when needed
-		src?.material.triggerOnHit(src, C, user, 1)
+		src?.material?.triggerOnHit(src, C, user, 1)
 	else
 		return attack_hand(user)
 
@@ -1767,7 +2088,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 				else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			random_brute_damage(M, 50)
 			M.changeStatus("paralysis", 7 SECONDS)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				playsound(M.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Flesh_Break_1.ogg'), 75, 1)
 		A.set_loc(T)
 		return

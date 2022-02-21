@@ -62,8 +62,9 @@ def parse_pr_changelog(pr):
 			author = author_match.group(1)
 			new_author = True
 		if (content and not author) or new_author:
-			if not author:
-			  author = pr.user.name
+			if not author or author == "CodeDude":
+				author = pr.user.name
+				print("Author not set, substituting", author)
 			entries.append("(u){}".format(author))
 			entries.append("(p){}".format(pr.number))
 			if emoji:

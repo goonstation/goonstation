@@ -146,7 +146,7 @@ Contents:
 	name = "deep abyss"
 	desc = "You can't see the bottom."
 	icon_state = "void_gray"
-	blocks_air = 1
+	gas_impermeable = 1
 	opacity = 1
 	density = 1
 	fullbright = 0

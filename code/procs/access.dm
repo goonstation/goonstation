@@ -12,9 +12,6 @@
  * To not affect requirements, this should be null.
  */
 /obj/var/req_access_txt = null
-/obj/New()
-	..()
-	src.update_access_from_txt()
 /*
  * Override all access requirements if user is an administrator
  */
@@ -89,7 +86,7 @@
 		else if (issilicon(M) || isAIeye(M))
 			var/mob/living/silicon/S
 			if (isAIeye(M))
-				var/mob/dead/aieye/E = M
+				var/mob/living/intangible/aieye/E = M
 				S = E.mainframe
 			else
 				S = M
@@ -228,7 +225,7 @@
 						access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 						access_crematorium, access_kitchen, access_robotics, access_cargo,
 						access_research, access_dwaine_superuser, access_hydro, access_ranch, access_mail, access_ai_upload,
-						access_engineering, access_teleporter, access_engineering_engine, access_engineering_power,
+						access_engineering, access_teleporter, access_engineering_engine, access_engineering_power, access_engineering_control,
 						access_mining, access_pathology)
 #endif
 		if("Research Director")
@@ -239,7 +236,7 @@
 						, access_pathology
 						#endif
 						)
-		if("Medical Director", "Head Surgeon")
+		if("Medical Director")
 			return list(access_robotics, access_medical, access_morgue,
 						access_maint_tunnels, access_tech_storage, access_medical_lockers,
 						access_medlab, access_heads, access_eva, access_medical_director, access_ai_upload
@@ -264,7 +261,7 @@
 			return list(access_security, access_brig, access_forensics_lockers, access_armory,
 				access_medical, access_medlab, access_morgue, access_securitylockers,
 				access_tox, access_tox_storage, access_chemistry, access_carrypermit, access_contrabandpermit,
-				access_emergency_storage, access_chapel_office, access_kitchen, access_medical_lockers,
+				access_emergency_storage, access_chapel_office, access_kitchen,
 				access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_construction, access_hydro, access_mail,
 				access_engineering, access_maint_tunnels, access_external_airlocks,
 				access_tech_storage, access_engineering_storage, access_engineering_eva,
@@ -273,7 +270,7 @@
 				access_research, access_engineering_atmos, access_hangar, access_ranch, access_pathology)
 #else
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_securitylockers, access_brig, access_maint_tunnels,
-			access_medical, access_morgue, access_crematorium, access_research, access_cargo, access_engineering,
+			access_medical, access_morgue, access_crematorium, access_research, access_cargo, access_engineering, access_engineering_control,
 			access_chemistry, access_bar, access_kitchen, access_hydro, access_pathology)
 #endif
 		if("Vice Officer")
@@ -318,13 +315,13 @@
 
 		//////////////////////////// Engineering
 		if("Mechanic")
-			return list(access_maint_tunnels, access_external_airlocks,
+			return list(access_maint_tunnels, access_external_airlocks, access_engineering_control,
 						access_tech_storage,access_engineering_mechanic,access_engineering_power)
 		if("Atmospheric Technician")
-			return list(access_maint_tunnels, access_external_airlocks, access_construction,
+			return list(access_maint_tunnels, access_external_airlocks, access_construction, access_engineering_control,
 						access_eva, access_engineering, access_engineering_storage, access_engineering_eva, access_engineering_atmos)
 		if("Engineer")
-			return list(access_engineering,access_maint_tunnels,access_external_airlocks,
+			return list(access_engineering,access_maint_tunnels,access_external_airlocks, access_engineering_control,
 						access_engineering_storage,access_engineering_atmos,access_engineering_engine,access_engineering_power)
 		if("Miner")
 			return list(access_maint_tunnels, access_external_airlocks,
@@ -333,7 +330,7 @@
 		if("Quartermaster")
 			return list(access_maint_tunnels, access_cargo, access_supply_console, access_hangar)
 		if("Construction Worker")
-			return list(access_engineering,access_maint_tunnels,access_external_airlocks,
+			return list(access_engineering,access_maint_tunnels,access_external_airlocks, access_engineering_control,
 						access_engineering_storage,access_engineering_atmos,access_engineering_engine,access_engineering_power)
 
 		///////////////////////////// Civilian

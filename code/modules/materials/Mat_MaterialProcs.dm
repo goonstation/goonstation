@@ -60,7 +60,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/ffart_pickup
 	execute(var/mob/M, var/obj/item/I)
-		SPAWN_DBG(2 SECOND) //1 second is a little to harsh to since it slips right out of the nanofab/cruicble
+		SPAWN(2 SECOND) //1 second is a little to harsh to since it slips right out of the nanofab/cruicble
 			M.remove_item(I)
 			I.set_loc(get_turf(I))
 		return
@@ -174,19 +174,19 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	desc = "It makes your hands itch."
 
 	execute(var/mob/M, var/obj/item/I, mult)
-		if(prob(percentmult(20, mult))) M.emote(pick("twitch", "laugh", "sneeze", "cry"))
-		if(prob(percentmult(10, mult)))
+		if(probmult(20)) M.emote(pick("twitch", "laugh", "sneeze", "cry"))
+		if(probmult(10))
 			boutput(M, "<span class='notice'><b>Something tickles!</b></span>")
 			M.emote(pick("laugh", "giggle"))
-		if(prob(percentmult(8, mult)))
+		if(probmult(8))
 			M.visible_message("<span class='alert'><b>[M.name]</b> scratches at an itch.</span>")
 			random_brute_damage(M, 1)
 			M.changeStatus("stunned", 1 SECOND)
 			M.emote("grumble")
-		if(prob(percentmult(8, mult)))
+		if(probmult(8))
 			boutput(M, "<span class='alert'><b>So itchy!</b></span>")
 			random_brute_damage(M, 2)
-		if(prob(percentmult(1, mult)))
+		if(probmult(1))
 			boutput(M, "<span class='alert'><b><font size='[rand(2,5)]'>AHHHHHH!</font></b></span>")
 			random_brute_damage(M,5)
 			M.changeStatus("weakened", 5 SECONDS)
@@ -345,7 +345,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/telecrystal_life
 	execute(var/mob/M, var/obj/item/I, mult)
 		var/turf/T = get_turf(M)
-		if(prob(percentmult(5, mult)) && M && !isrestrictedz(T.z))
+		if(probmult(5) && M && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(M), rand(-8, 8), rand(-8, 8))
 			M.visible_message("<span class='alert'>[M] is warped away!</span>")
 			playsound(M.loc, "warp", 50)
@@ -367,11 +367,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			return
 		for (var/turf/simulated/floor/target in range(1,location))
 			if(ON_COOLDOWN(target, "plasmastone_plasma_generate", 10 SECONDS)) continue
-			if(!target.blocks_air && target.air)
+			if(!target.gas_impermeable && target.air)
 				if(target.parent?.group_processing)
 					target.parent.suspend_group_processing()
 
-				var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
+				var/datum/gas_mixture/payload = new /datum/gas_mixture
 				payload.toxins = 25
 				total_plasma -= payload.toxins
 				payload.temperature = T20C
@@ -384,40 +384,45 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		owner.material.triggerTemp(locate(owner))
 
 /datum/materialProc/molitz_temp
-	var/total_oxygen = 200
-
+	var/unresonant = 1
+	var/iterations = 4 // big issue I had was that with the strat that Im designing this for (teleporting crystals in and out of engine) one crystal could last you for like, 50 minutes, I didnt want to keep on reducing total amount as itd nerf agent b collection hard. So instead I drastically reduced amount and drastically upped output. This would speed up farming agent b to 3 minutes per crystal, which Im fine with
 	execute(var/atom/location, var/temp, var/agent_b=FALSE)
-		if(total_oxygen <= 0) return
 		var/turf/target = get_turf(location)
-		if(ON_COOLDOWN(target, "molitz_oxy_generate", 8 SECONDS)) return
+		if(owner.hasProperty("resonance"))
+			if(unresonant == 1)
+				iterations = max(iterations, 2)
+				unresonant -= 1
+		if(iterations <= 0) return
+		if(ON_COOLDOWN(location, "molitz_gas_generate", 30 SECONDS)) return
 
 		var/datum/gas_mixture/air = target.return_air()
 		if(!air) return
 
-		var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
+		var/datum/gas_mixture/payload = new /datum/gas_mixture
 		payload.temperature = T20C
 		payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 
 		if(agent_b && temp > 500 && air.toxins > MINIMUM_REACT_QUANTITY )
 			var/datum/gas/oxygen_agent_b/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
 			payload.temperature = T0C // Greatly reduce temperature to simulate an endothermic reaction
+			// Itr: .18 Agent B, 20 oxy, 1.3 minutes per iteration, realisticly around 7-8 minutes per crystal.
 
-			// Itr 1: 0.125 Agent B, 10 Oxy
-			// Itr 2: 0.0605 Agent B
-			// 0.1855moles/12cells=0.0155moles per cell
-			// At 0.0155 moles per cell it will take 20 iterations for reaction rate to drop below MINIMUM_REACT_QUANTITY
-			// Providing 1.3 minutes of catalyst assuming 4 sec ATMOS for a 12 cell burn chamber
-			trace_gas.moles += min(total_oxygen/1024,0.125)
-			total_oxygen -= min(trace_gas.moles*1024,total_oxygen)
-			animate_flash_color_fill_inherit(location,"#FF0000",4, 2 SECONDS)
+			animate_flash_color_fill_inherit(location,"#ff0000",4, 2 SECONDS)
+			playsound(location, "sound/effects/leakagentb.ogg", 50, 1, 8)
+			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, location))
+				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(location))
+			trace_gas.moles += 0.18
+			iterations -= 1
+			payload.oxygen = 20
+
+			target.assume_air(payload)
 		else
 			animate_flash_color_fill_inherit(location,"#0000FF",4, 2 SECONDS)
+			playsound(location, "sound/effects/leakoxygen.ogg", 50, 1, 5)
+			payload.oxygen = 80
+			iterations -= 1
 
-		payload.oxygen = min(total_oxygen,10)
-		total_oxygen -= payload.oxygen
-
-		target.assume_air(payload)
-		return
+			target.assume_air(payload)
 
 /datum/materialProc/molitz_temp/agent_b
 	execute(var/atom/location, var/temp)
@@ -425,14 +430,18 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/molitz_exp
+	var/maxexplode = 1
 	execute(var/atom/location, var/sev)
+		if(maxexplode <= 0) return
 		var/turf/target = get_turf(location)
-		if(sev > 0 && sev < 4)
-			var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
-			payload.oxygen = 25
+		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
+			var/datum/gas_mixture/payload = new /datum/gas_mixture
+			payload.oxygen = 50
 			payload.temperature = T20C
-			payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 			target.assume_air(payload)
+			maxexplode -= 1
+			if(owner)
+				owner.setProperty("resonance", 10)
 
 /datum/materialProc/molitz_on_hit
 	execute(var/atom/owner, var/obj/attackobj)
@@ -525,7 +534,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/owner, var/atom/movable/entering)
 		if (isliving(entering) && isturf(owner) && prob(75))
 			var/mob/living/L = entering
-			if(L.slip())
+			if(L.slip(walking_matters = 1))
 				boutput(L, "You slip on the icy floor!")
 				playsound(owner, "sound/misc/slip.ogg", 30, 1)
 		return
@@ -538,7 +547,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/mob/living/carbon/C = M
 			if (C.bodytemperature > 0)
 				C.bodytemperature -= 2
-			if (C.bodytemperature > 100 && prob(percentmult(4, mult)))
+			if (C.bodytemperature > 100 && probmult(4))
 				boutput(C, "Your [I] melts from your body heat!")
 				qdel(I)
 		return
@@ -583,7 +592,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(temp < T0C + 100)
 			return
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(location?.material?.mat_id == "miracle")
 				location.visible_message("<span class='notice'>[location] bends and twists, changing colors rapidly.</span>")
 				var/chosen = pick(prob(100); "mauxite",prob(100); "pharosium",prob(100); "cobryl",prob(100); "bohrum",prob(80); "cerenkite",prob(50); "syreline",prob(20); "slag",prob(3); "spacelag",prob(5); "soulsteel",prob(100); "molitz",prob(50); "claretine",prob(5); "erebite",prob(10); "quartz",prob(5); "uqill",prob(10); "telecrystal",prob(1); "starstone",prob(5); "blob",prob(8); "koshmarite",prob(20); "chitin",prob(4); "pizza",prob(15); "beewool",prob(6); "ectoplasm")
@@ -665,6 +674,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		attacker.visible_message("<span class='alert'>[attacker] cuts [owner] into a sheet.</span>","<span class='notice'>You finish cutting [owner] into a sheet.</span>","The sound of cutting cardboard stops.")
 		var/obj/item/sheet/createdsheet = new /obj/item/sheet(get_turf(owner))
 		createdsheet.setMaterial(owner.material)
+		if (istype(owner, /obj/storage))
+			var/obj/storage/S = owner
+			S.dump_contents(attacker)
 		qdel(owner)
 	else if (istype(owner, /turf))
 		if (istype(owner, /turf/simulated/wall))
@@ -673,7 +685,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				attacker.visible_message("<span class='alert'>[attacker] cuts the reinforcment off [owner].</span>","You cut the reinforcement off [owner].","The sound of cutting cardboard stops.")
 			else
 				attacker.visible_message("<span class='alert'>[attacker] cuts apart the outer cover of [owner]</span>.","<span class='notice'>You cut apart the outer cover of [owner]</span>.","The sound of cutting cardboard stops.")
-				logTheThing("station", attacker, null, "cut apart a cardboard wall ([owner.name]) using \a [attackobj] at [get_area(attacker)] ([showCoords(attacker.x, attacker.y, attacker.z)])")
+				logTheThing("station", attacker, null, "cut apart a cardboard wall ([owner.name]) using \a [attackobj] at [get_area(attacker)] ([log_loc(attacker)])")
 			wall_owner.dismantle_wall(0, 0)
 		else if (istype(owner, /turf/simulated/floor))
 			var/turf/simulated/floor/floor_owner = owner
@@ -696,7 +708,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			if (!floor_owner.intact)
 				var/atom/A = new /obj/item/tile(src)
 				A.setMaterial(owner.material)
-				logTheThing("station", attacker, null, "cut apart a cardboard floor ([owner.name]) using \a [attackobj] at [get_area(attacker)] ([showCoords(attacker.x, attacker.y, attacker.z)])")
+				logTheThing("station", attacker, null, "cut apart a cardboard floor ([owner.name]) using \a [attackobj] at [get_area(attacker)] ([log_loc(attacker)])")
 				attacker.visible_message("<span class='alert'>Cuts apart [owner], revealing space!</span>","<span class='alert'>You finish cutting apart [owner], revealing space.</span>","The sound of cutting cardboard stops.")
 				floor_owner.ReplaceWithSpace()
 				return

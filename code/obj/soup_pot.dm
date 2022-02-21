@@ -20,7 +20,7 @@
 	var/image/fluid_icon
 
 	New(var/datum/custom_soup/S)
-		if(!S)
+		if(!S || !istype(S))
 			qdel(src)
 			return
 		src.name = S.name
@@ -114,13 +114,13 @@
 				return
 
 			else
-				pot.attackby(W,user)
+				pot.Attackby(W,user)
 				if(!pot.my_soup)
 					W.afterattack(pot,user) // ????
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/soup_pot) && in_interact_range(W, user) && in_interact_range(src, user))
-			return src.attackby(W, user)
+			return src.Attackby(W, user)
 		return ..()
 
 	attack_hand(mob/user as mob)
@@ -134,7 +134,7 @@
 			src.pot = null
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	proc/light(var/mob/user, var/message as text)
 		if(pot.my_soup)
@@ -350,6 +350,7 @@
 		. += "."
 
 	on_reagent_change()
+		..()
 		if(my_soup)
 			return
 		if(reagents.total_volume)
@@ -420,10 +421,10 @@
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
-			return src.attackby(W, user)
+			return src.Attackby(W, user)
 		return ..()
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		if (usr.is_in_hands(src))
 			var/turf/T = over_object
 			if (!(usr in range(1, T)))

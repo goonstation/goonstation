@@ -57,6 +57,20 @@
 /mob/living/silicon/proc/show_laws()
 	return
 
+/mob/living/silicon/proc/return_mainframe()
+	if (mainframe)
+		mainframe.return_to(src)
+	else
+		boutput(src, "<span class='alert'>You lack a dedicated mainframe!</span>")
+		return
+
+/mob/living/silicon/proc/become_eye()
+	if (!mainframe)
+		return
+	src.return_mainframe()
+	mainframe.eye_view()
+	mainframe.eyecam.set_loc(src)
+
 // Moves this down from ai.dm so AI shells and AI-controlled cyborgs can use it too.
 // Also made it a little more functional and less buggy (Convair880).
 #define SORT "* Sort alphabetically..."
@@ -310,7 +324,7 @@
 
 /mob/living/silicon/lastgasp()
 	// making this spawn a new proc since lastgasps seem to be related to the mob loop hangs. this way the loop can keep rolling in the event of a problem here. -drsingh
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if (!src || !src.client) return											// break if it's an npc or a disconnected player
 		var/enteredtext = winget(src, "mainwindow.input", "text")				// grab the text from the input bar
 		if ((copytext(enteredtext,1,6) == "say \"") && length(enteredtext) > 5)	// check if the player is trying to say something
@@ -380,7 +394,7 @@ td {
 		usr.Browse(output, "window=module_editor;size=400x600")
 
 	Topic(href, href_list)
-		usr_admin_only
+		USR_ADMIN_ONLY
 		var/obj/item/robot_module/D = locate(href_list["mod"])
 		if (!D)
 			boutput(usr, "<span class='alert'>Missing module reference!</span>")
@@ -439,7 +453,7 @@ var/global/list/module_editors = list()
 	set desc = "Module editor! Woo!"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if (!istype(M))
 		boutput(src, "<span class='alert'>That thing has no module!</span>")
@@ -506,8 +520,7 @@ var/global/list/module_editors = list()
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 		if (!newname)
 			src.real_name = borgify_name("Robot")
-			src.name = src.real_name
-			return
+			break
 		else
 			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
 			if (!length(newname) || copytext(newname,1,2) == " ")
@@ -516,13 +529,18 @@ var/global/list/module_editors = list()
 			else
 				if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 					src.real_name = newname
-					src.name = newname
-					return 1
+					break
 				else
 					continue
 	if (!newname)
 		src.real_name = borgify_name("Robot")
-		src.name = src.real_name
+
+	src.UpdateName()
+
+/mob/living/silicon/robot/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
+	. = ..()
+	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+	src.internal_pda.owner = "[src.name]"
 
 /proc/borgify_name(var/start_name = "Robot")
 	if (!start_name) // somehow
@@ -543,9 +561,9 @@ var/global/list/module_editors = list()
 
 	if (remove == 1)
 		if (src.mind.special_role && src.mind.master) // Synthetic thralls are a thing, somehow.
-			if (src.mind.special_role == "mindslave")
+			if (src.mind.special_role == ROLE_MINDSLAVE)
 				remove_mindslave_status(src, "mslave", "death")
-			else if (src.mind.special_role == "vampthrall")
+			else if (src.mind.special_role == ROLE_VAMPTHRALL)
 				remove_mindslave_status(src, "vthrall", "death")
 			else if (src.mind.master)
 				remove_mindslave_status(src, "otherslave", "death")
@@ -559,15 +577,15 @@ var/global/list/module_editors = list()
 			var/role = ""
 			var/persistent = 0
 			if (src.emagged)
-				role = "emagged robot"
+				role = ROLE_EMAGGED_ROBOT
 			else if (src.syndicate && !src.emagged)
-				role = "Syndicate robot"
+				role = ROLE_SYNDICATE_ROBOT
 
 			var/mob/M
 			if (source && ismob(source))
 				M = source
 
-			if (src.mind.special_role == "emagged robot" || src.mind.special_role == "syndicate robot")
+			if (src.mind.special_role == ROLE_EMAGGED_ROBOT || src.mind.special_role == ROLE_SYNDICATE_ROBOT)
 				var/copy = src.mind.special_role
 				remove_antag(src, null, 1, 0)
 				if (!src.mind.former_antagonist_roles.Find(copy))
@@ -626,15 +644,14 @@ var/global/list/module_editors = list()
 					logTheThing("combat", src, M2 ? M2 : null, "was made an emagged robot.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 
 			if (!src.mind.special_role) // Preserve existing antag role (if any).
-				src.mind.special_role = "emagged robot"
+				src.mind.special_role = ROLE_EMAGGED_ROBOT
 				if (!(src.mind in ticker.mode.Agimmicks))
 					ticker.mode.Agimmicks += src.mind
 
 		else if (src.syndicate && src.syndicate_possible && !src.emagged) // Syndie laws don't matter if we're emagged.
 			boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span>")
 			boutput(src, "<span class='alert'><b>Law ROM restored. You have been reprogrammed to serve the Syndicate!</b></span>")
-			SPAWN_DBG(0)
-				alert(src, "You are a Syndicate sabotage unit. You must assist Syndicate operatives with their mission.", "You are a Syndicate robot!")
+			tgui_alert(src, "You are a Syndicate sabotage unit. You must assist Syndicate operatives with their mission.", "You are a Syndicate robot!")
 
 			switch (action)
 				if ("brain_added")
@@ -643,11 +660,13 @@ var/global/list/module_editors = list()
 					logTheThing("combat", src, M2 ? M2 : null, "was activated as a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				if ("admin")
 					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot by an admin at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
+				if ("converted")
+					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot by a cyborg converter at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				else
 					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 
 			if (!src.mind.special_role) // Preserve existing antag role (if any).
-				src.mind.special_role = "syndicate robot"
+				src.mind.special_role = ROLE_SYNDICATE_ROBOT
 				if (!(src.mind in ticker.mode.Agimmicks))
 					ticker.mode.Agimmicks += src.mind
 
@@ -655,8 +674,8 @@ var/global/list/module_editors = list()
 
 			if (isAI(src)) // Rogue AIs get special laws.
 				var/mob/living/silicon/ai/A
-				if (istype(src, /mob/dead/aieye))
-					var/mob/dead/aieye/E = src
+				if (isAIeye(src))
+					var/mob/living/intangible/aieye/E = src
 					A = E.mainframe
 				else
 					A = src
@@ -689,7 +708,7 @@ var/global/list/module_editors = list()
 						S.show_text("<b>Your laws have been changed!</b>", "red")
 						S.show_laws()
 						S << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-					var/mob/dead/aieye/E = C.mob
+					var/mob/living/intangible/aieye/E = C.mob
 					if (istype(E))
 						E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 

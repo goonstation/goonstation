@@ -27,6 +27,8 @@
 
 	var/lasterr = 0
 
+	var/mutation_sfx = "sound/effects/plant_mutation.ogg"
+
 	proc/HYPharvested_proc_M(var/obj/machinery/plantpot/POT, var/mob/user)
 		lasterr = 0
 		if (!POT || !user) return 301
@@ -69,12 +71,6 @@
 	crop = /obj/critter/killertomato
 	iconmod = "TomatoKiller"
 
-/datum/plantmutation/tomato/tomacco
-	name = "Tomacco"
-	name_suffix = " Tomacco"
-	crop = /obj/item/reagent_containers/food/snacks/plant/tomato/tomacco
-	iconmod = "TomatoTomacco" //ayy potayto potato tomayto tomacco ya dig
-
 // Corn Mutations
 
 /datum/plantmutation/corn/clear
@@ -82,12 +78,26 @@
 	iconmod = "CornClear"
 	assoc_reagents = list("ethanol")
 
+/datum/plantmutation/corn/pepper
+	crop = /obj/item/reagent_containers/food/snacks/plant/corn/pepper
+	iconmod = "peppercorn"
+	name_prefix = "Pepper "
+	assoc_reagents = list("pepper")
+
+// Pea Mutations
+
+/datum/plantmutation/peas/ammonia
+	crop = /obj/item/reagent_containers/food/snacks/plant/peas/ammonia
+	iconmod = "GoldenPeas"
+	assoc_reagents = list("ammonia")
+
 // Grape Mutations
 
 /datum/plantmutation/grapes/green
 	name_prefix = "green "
 	crop = /obj/item/reagent_containers/food/snacks/plant/grape/green
 	iconmod = "GrapeGreen"
+	assoc_reagents = list("insulin")
 
 /datum/plantmutation/grapes/fruit
 	name = "Grapefruit"
@@ -100,6 +110,7 @@
 /datum/plantmutation/orange/blood
 	name = "Blood Orange"
 	name_prefix = "Blood "
+	crop = /obj/item/reagent_containers/food/snacks/plant/orange/blood
 	iconmod = "OrangeBlood"
 	assoc_reagents = list("bloodc") // heh
 
@@ -170,10 +181,10 @@
 		if (.) return
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		var/thud_prob = max(0,min(100, DNA.endurance / 2))
+		var/thud_prob = clamp(DNA.endurance / 2, 0, 100)
 
 		if (prob(thud_prob))
-			playsound(POT.loc, "sound/effects/exlow.ogg", 30, 1)
+			playsound(POT, "sound/effects/exlow.ogg", 30, 1)
 			animate_wiggle_then_reset(POT)
 
 
@@ -185,6 +196,24 @@
 	iconmod = "BeanJelly"
 	assoc_reagents = list("VHFCS")
 	crop = /obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor
+
+// Coffee Mutations
+
+/datum/plantmutation/coffee/mocha
+	name = "Mocha Coffee"
+	name_prefix = "Mocha"
+	iconmod = "CoffeeMocha"
+	crop = /obj/item/reagent_containers/food/snacks/plant/coffeeberry/mocha
+	PTrange = list(20,null)
+	assoc_reagents = list("chocolate")
+
+/datum/plantmutation/coffee/latte
+	name = "Latte Coffee"
+	name_prefix = "Latte"
+	iconmod = "CoffeeLatte"
+	crop = /obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte
+	ENrange = list(10,null)
+	assoc_reagents = list("milk")
 
 // Chili Mutations
 
@@ -227,6 +256,15 @@
 	assoc_reagents = list("iron")
 	crop = /obj/item/plant/wheat/metal
 
+// Oat Mutations
+
+/datum/plantmutation/oat/salt
+	name = "Salted Oats"
+	name_prefix = "salted "
+	iconmod = "OatSalt"
+	assoc_reagents = list("salt")
+	crop = /obj/item/plant/oat/salt
+
 // Synthmeat Mutations
 
 /datum/plantmutation/synthmeat/butt
@@ -235,6 +273,7 @@
 	dont_rename_crop = true
 	crop = /obj/item/clothing/head/butt/synth
 	special_proc_override = 1
+	mutation_sfx = "sound/voice/farts/fart6.ogg"
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
@@ -242,11 +281,11 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		var/fart_prob = max(0,min(100,DNA.potency))
+		var/fart_prob = clamp(100, 0, DNA.potency)
 
 		if (POT.growth > (P.growtime - DNA.growtime) && prob(fart_prob))
 			POT.visible_message("<span class='alert'><b>[POT]</b> farts!</span>")
-			playsound(POT.loc, "sound/voice/farts/poo2.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(POT, "sound/voice/farts/poo2.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 			// coder.Life()
 			// whoops undefined proc
 
@@ -286,6 +325,7 @@
 	dont_rename_crop = true
 	iconmod = "SynthButts"
 	crop = /obj/machinery/bot/buttbot
+	mutation_sfx = "sound/voice/virtual_gassy.ogg"
 
 /datum/plantmutation/synthmeat/lung
 	name = "Synthlung"
@@ -359,6 +399,7 @@
 	iconmod = "ContusineShivering"
 	assoc_reagents = list("histamine")
 	chance = 10
+	mutation_sfx = "sound/impact_sounds/Bush_Hit.ogg"
 
 // Nureous Mutations
 
@@ -376,7 +417,7 @@
 	name_prefix = "Robust "
 	crop = /obj/item/plant/herb/asomna/robust
 	iconmod = "AsomnaRobust"
-	assoc_reagents = list("methamphetamine")
+	assoc_reagents = list("synaptizine")
 	chance = 10
 
 // Commol Mutations
@@ -403,7 +444,7 @@
 	name_prefix = "Invigorating "
 	iconmod = "IpecacuanhaInvigorating"
 	crop = /obj/item/plant/herb/ipecacuanha/invigorating
-	assoc_reagents = list("synaptizine")
+	assoc_reagents = list("methamphetamine")
 	chance = 10
 
 // Venne Mutations
@@ -443,7 +484,7 @@
 			// I know that this seems weird, but consider how many plants clutter botany at any given time. Looping through mobs and checking distance is
 			// less of a pain than looping through potentially hundreds of random seeds and crap in view(1) to see if they're mobs.
 			for (var/mob/living/L in mobs)
-				if (get_dist(L.loc,POT.loc) <= 1)
+				if (get_dist(L.loc,get_turf(POT)) <= 1)
 					nerds += L
 				else
 					continue
@@ -548,14 +589,14 @@
 		var/datum/plantgenes/DNA = POT.plantgenes
 
 		if (POT.growth > (P.harvtime - DNA.harvtime) && prob(10))
-			var/obj/overlay/B = new /obj/overlay( POT.loc )
+			var/obj/overlay/B = new /obj/overlay( get_turf(POT) )
 			B.icon = 'icons/effects/hydroponics.dmi'
 			B.icon_state = "radpulse"
 			B.name = "radioactive pulse"
 			B.anchored = 1
 			B.set_density(0)
 			B.layer = 5 // TODO what layer should this be on?
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				qdel(B)
 				B=null
 			var/radrange = 1
@@ -574,6 +615,7 @@
 	name_prefix = "Smoldering "
 	iconmod = "RadweedRed"
 	assoc_reagents = list("infernite")
+	mutation_sfx = "sound/effects/fireworks1.ogg"
 
 // Slurrypod Mutations
 
@@ -604,10 +646,10 @@
 	crop = /obj/item/raw_material/mauxite
 	chance = 10
 
-/datum/plantmutation/rocks/erebite
-	name_prefix = "Erebite "
+/datum/plantmutation/rocks/uqill
+	name_prefix = "Uqill "
 	dont_rename_crop = true
-	crop = /obj/item/raw_material/erebite
+	crop = /obj/item/raw_material/uqill
 	chance = 5
 
 // trees. :effort:
@@ -634,6 +676,8 @@
 	iconmod = "TreeDogwood"
 	special_proc_override = 1
 	attacked_proc_override = 1
+	mutation_sfx = "sound/voice/animal/dogbark.ogg"
+
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
@@ -690,3 +734,27 @@
 	crop = /obj/item/plant/herb/tobacco/twobacco
 	assoc_reagents = list("nicotine2")
 	chance = 50
+
+//Dripper mutations
+/datum/plantmutation/dripper/leaker
+	name = "Leaker"
+	iconmod = "Leaker"
+	crop = /obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop
+	assoc_reagents = list("oil")
+	chance = 25
+
+//Raspberry Mutations
+
+/datum/plantmutation/raspberry/blackberry
+	name = "Blackberry"
+	iconmod = "Blackberry"
+	dont_rename_crop = true
+	crop = /obj/item/reagent_containers/food/snacks/plant/blackberry
+	assoc_reagents = list("juice_blackberry")
+
+/datum/plantmutation/raspberry/blueraspberry
+	name = "Blue Raspberry"
+	iconmod = "BlueRaspberry"
+	dont_rename_crop = true
+	crop = /obj/item/reagent_containers/food/snacks/plant/blueraspberry
+	assoc_reagents = list("juice_blueraspberry")

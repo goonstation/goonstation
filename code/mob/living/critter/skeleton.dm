@@ -8,9 +8,9 @@
 
 	for (var/i = 1, i <= 4, i++)
 		var/PT = /obj/item/material_piece/bone
-		var/obj/item/material_piece/bone/P = unpool(PT)
+		var/obj/item/material_piece/bone/P = new PT
 		P.set_loc(T)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/k = 1, k <= 3, k++)
 			P.streak_object(dirlist[i])
 		produce += P
@@ -18,7 +18,7 @@
 	var/extra = rand(2,4)
 	for (var/i = 1, i <= extra, i++)
 		var/PT = /obj/item/material_piece/bone
-		var/obj/item/material_piece/bone/P  = unpool(PT)
+		var/obj/item/material_piece/bone/P  = new PT
 		P.set_loc(T)
 		P.streak_object(alldirs)
 		produce += P
@@ -80,5 +80,5 @@
 		HH.icon_state = "handr"
 
 	setup_healths()
-		add_hh_flesh(-50, 50, 1)
-		add_hh_flesh_burn(-50, 50, 0.7)
+		add_hh_flesh(50, 1)
+		add_hh_flesh_burn(50, 0.7)

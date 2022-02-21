@@ -60,6 +60,8 @@
 			if (alert("Are we sure?","Assume lesser form?","Yes","No") != "Yes")
 				return 1
 			last_used_name = H.real_name
+			if (H.hasStatus("handcuffed"))
+				H.handcuffs.drop_handcuffs(H)
 			H.monkeyize()
 			H.abilityHolder.updateButtons()
 			logTheThing("combat", H, null, "enters lesser form as a changeling, [log_loc(H)].")
@@ -101,7 +103,7 @@
 		C.bioHolder.CopyOther(D)
 		C.real_name = target_name
 		C.bioHolder.RemoveEffect("husk")
-		C.organHolder.head.update_icon()
+		C.organHolder.head.UpdateIcon()
 		if (C.bioHolder?.mobAppearance?.mutant_race)
 			C.set_mutantrace(C.bioHolder.mobAppearance.mutant_race.type)
 		else

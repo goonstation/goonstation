@@ -112,7 +112,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 			boutput(user, "<span class='alert'>The artifact shrinks away into nothingness!</span>")
 			user.u_equip(I)
 			I.set_loc(user.loc)
-			I.invisibility = 100
+			I.invisibility = INVIS_ALWAYS_ISH
 
 /datum/artifact_fault/murder
 	// gibs the user
@@ -161,7 +161,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 			return
 		var/turf/T = get_turf(O)
 		T.visible_message("<span class='alert'><b>[user.name]</b> is shocked by a surge of energy from [cosmeticSource.name]!</span>")
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
+		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 		s.set_up(4, 1, user)
 		s.start()
 		elecflash(user,power = 6, exclude_center = 0)
@@ -188,10 +188,13 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 		if (..())
 			return
 		if(src.say_instead)
+			var/msg = "[prob(20)?"":";"][generate_message(O, user)]"
 			if(prob(20))
 				user.say(";[generate_message(O, user)]")
 			else
 				user.say(generate_message(O, user))
+			var/datum/artifact/A = O.artifact
+			logTheThing("say", src, null, "SAY: [html_encode(msg)] [log_loc(user)] (was forced to speak by artifact of type [A.type] due to fault [src.type])")
 			return
 		switch(text_style)
 			if ("small")

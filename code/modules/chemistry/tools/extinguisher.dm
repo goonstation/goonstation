@@ -22,7 +22,6 @@
 	stamina_damage = 25
 	stamina_cost = 20
 	stamina_crit_chance = 35
-	module_research = list("tools" = 5, "science" = 1)
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	move_triggered = 1
@@ -38,7 +37,10 @@
 	var/list/melting_reagents = list("acid",
 	"pacid",
 	"phlogiston",
-	"big_bang")
+	"big_bang",
+	"clacid",
+	"nitric_acid",
+	"firedust")
 
 	virtual
 		icon = 'icons/effects/VR.dmi'
@@ -57,6 +59,10 @@
 	src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 	BLOCK_SETUP(BLOCK_TANK)
 
+/obj/item/extinguisher/on_reagent_change(add)
+	. = ..()
+	src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
+
 /obj/item/extinguisher/get_desc(dist)
 	if (dist > 1)
 		return
@@ -66,10 +72,8 @@
 
 /obj/item/extinguisher/attack(mob/M as mob, mob/user as mob)
 	src.hide_attack = 0
-	if(user.a_intent == "help") //don't smack people with a deadly weapon while you're trying to extinguish them, thanks
+	if(user.a_intent == "help" && !safety) //don't smack people with a deadly weapon while you're trying to extinguish them, thanks
 		src.hide_attack = 1
-		if (safety)
-			src.attack_self(user)
 		return
 	..()
 
@@ -152,17 +156,17 @@
 		src.reagents.trans_to_direct(R, min(src.reagents.total_volume, (distance * reagents_per_dist)))
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
-		logTheThing("combat", user, T, "sprays [src] at [constructTarget(T,"combat")], [log_reagents(src)] at [showCoords(user.x, user.y, user.z)] ([get_area(user)])")
+		logTheThing("combat", user, T, "sprays [src] at [constructTarget(T,"combat")], [log_reagents(src)] at [log_loc(user)] ([get_area(user)])")
 
 		user.lastattacked = target
 
 		for (var/a = 0, a < reagents_per_dist, a++)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (disposed)
 					return
 				if (!src.reagents)
 					return
-				var/obj/effects/water/W = unpool(/obj/effects/water, user)
+				var/obj/effects/water/W = new /obj/effects/water(user)
 				W.owner = user
 				if (!W) return
 				W.set_loc( get_turf(src) )
@@ -174,7 +178,7 @@
 			step(user, user.inertia_dir)
 		else if( user.buckled && !user.buckled.anchored )
 			var/wooshdir = get_dir( target, user )
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for( var/i = 1, (user?.buckled && !user.buckled.anchored && i <= rand(3,5)), i++ )
 					step( user.buckled, wooshdir )
 					sleep( rand(1,3) )
@@ -190,15 +194,16 @@
 		user.update_inhands()
 		src.desc = "The safety is off."
 		boutput(user, "The safety is off.")
-		safety = 0
+		ADD_FLAG(src.flags, OPENCONTAINER)
+		safety = FALSE
 	else
 		src.item_state = "fireextinguisher0"
 		set_icon_state("fire_extinguisher0")
 		user.update_inhands()
 		src.desc = "The safety is on."
 		boutput(user, "The safety is on.")
-		safety = 1
-	return
+		REMOVE_FLAG(src.flags, OPENCONTAINER)
+		safety = TRUE
 
 /obj/item/extinguisher/move_trigger(var/mob/M, kindof)
 	if (..() && reagents)

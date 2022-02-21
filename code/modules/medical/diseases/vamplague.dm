@@ -41,7 +41,7 @@
 	associated_reagent = "vampire_serum"
 	affected_species = list("Human")
 
-	stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
+	stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 		if (..())
 			return
 
@@ -50,15 +50,15 @@
 			return
 
 		if (D.stage < max_stages)
-			if (prob(5))
+			if (probmult(5))
 				affected_mob.emote(pick("shiver", "pale"))
-			if (prob(8))
+			if (probmult(8))
 				boutput(affected_mob, "<span class='alert'>You taste blood.  Gross.</span>")
-			if (prob(5))
+			if (probmult(5))
 				affected_mob.emote(pick("shiver","pale","drool"))
 
 		else
-			if (prob(40))
+			if (probmult(40))
 				boutput(affected_mob, "<span class='alert'>Your heart stops...</span>")
 				affected_mob.playsound_local(affected_mob.loc, "sound/effects/heartbeat.ogg", 50, 1)
 				affected_mob.emote("collapse")

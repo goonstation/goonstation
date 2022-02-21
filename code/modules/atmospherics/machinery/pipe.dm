@@ -256,8 +256,8 @@ obj/machinery/atmospherics/pipe
 
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
-				invisibility = i ? 101 : 0
-			update_icon()
+				invisibility = i ? INVIS_ALWAYS : INVIS_NONE
+			UpdateIcon()
 
 		process()
 			if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
@@ -288,7 +288,7 @@ obj/machinery/atmospherics/pipe
 				var/environment_temperature = 0
 
 				if(istype(loc, /turf/simulated/))
-					if(loc:blocks_air)
+					if(loc:gas_impermeable)
 						environment_temperature = loc:temperature
 					else
 						var/datum/gas_mixture/environment = loc.return_air()
@@ -351,7 +351,7 @@ obj/machinery/atmospherics/pipe
 				parent?.mingle_with_turf(loc, volume)
 				node1?.disconnect(src)
 				node2?.disconnect(src)
-				update_icon()
+				UpdateIcon()
 				return
 			else if ((pressure > (4*fatigue_pressure)) && prob(30)) new_rupture = 3
 			else if ((pressure > (2*fatigue_pressure)) && prob(60)) new_rupture = 2
@@ -393,17 +393,10 @@ obj/machinery/atmospherics/pipe
 
 				boutput(user, "You start to repair the [src.name].")
 
-				if (do_after(user, 2 SECONDS))
-					ruptured --
-				else
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				if(!ruptured)
-					boutput(user, "You have fully repaired the [src.name].")
-					icon_state = initial_icon_state
-					desc = initial(desc)
-				else boutput(user, "You have partially repaired the [src.name].")
-				return
+				var/positions = src.get_welding_positions()
+				actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, \
+						list(user), "<span class='notice'>[user] repairs the [src.name].</span>", positions[1], positions[2]),user)
+
 
 			else if(destroyed && istype(W, /obj/item/rods))
 				var/duration = 15 SECONDS
@@ -413,6 +406,54 @@ obj/machinery/atmospherics/pipe
 				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, duration, /obj/machinery/atmospherics/pipe/simple/proc/reconstruct_pipe,\
 				list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
 				actions.start(action_bar, user)
+
+		proc/get_welding_positions()
+			var/start
+			var/stop
+			var/axis_start_value
+			var/axis_stop_value
+			if(icon_state=="exposed")
+				axis_start_value = 6
+				axis_stop_value = 20
+			else
+				axis_start_value = 12
+				axis_stop_value = -12
+
+			switch(dir)
+				if(SOUTH)
+					start = list(0, axis_start_value)
+					stop = list(0, axis_stop_value)
+				if(NORTH)
+					start = list(0, -axis_start_value)
+					stop = list(0, -axis_stop_value)
+				if(EAST)
+					start = list(-axis_start_value, 0)
+					stop = list(-axis_stop_value, 0)
+				if(WEST)
+					start = list(axis_start_value, 0)
+					stop = list(axis_stop_value, 0)
+				if(SOUTHEAST)
+					start = list(0, -axis_start_value)
+					stop = list(axis_start_value, 0)
+				if(SOUTHWEST)
+					start = list(0, -axis_start_value)
+					stop = list(-axis_start_value, 0)
+				if(NORTHEAST)
+					start = list(0, axis_start_value)
+					stop = list(axis_start_value, 0)
+				if(NORTHWEST)
+					start = list(0, axis_start_value)
+					stop = list(-axis_start_value, 0)
+
+			if(rand(50))
+				. = list(start, stop)
+			else
+				. = list(stop, start)
+
+		proc/repair_pipe()
+			src.ruptured = 0
+			icon_state = initial_icon_state
+			desc = initial(desc)
 
 		proc/reconstruct_pipe(mob/M, obj/item/rods/R)
 			if(istype(R) && istype(M))
@@ -505,7 +546,7 @@ obj/machinery/atmospherics/pipe
 
 			var/turf/T = src.loc			// hide if turf is not intact
 			hide(T.intact)
-			//update_icon()
+			//UpdateIcon()
 
 		disconnect(obj/machinery/atmospherics/reference)
 			if(reference == node1)
@@ -522,7 +563,7 @@ obj/machinery/atmospherics/pipe
 					parent = null
 				node2 = null
 
-			update_icon()
+			UpdateIcon()
 
 			return null
 
@@ -584,6 +625,7 @@ obj/machinery/atmospherics/pipe
 			dir = WEST
 
 		update_icon()
+
 			if(istype(node1, /obj/machinery/atmospherics/pipe/simple/heat_exchanging))
 				dir = get_dir(src, node1)
 
@@ -627,6 +669,7 @@ obj/machinery/atmospherics/pipe
 			dir = NORTHWEST
 
 		update_icon()
+
 			if(node1 && node2)
 				icon_state = "intact"
 
@@ -643,6 +686,7 @@ obj/machinery/atmospherics/pipe
 		volume = 1620 //in liters, 0.9 meters by 0.9 meters by 2 meters
 		dir = SOUTH
 		initialize_directions = SOUTH
+		plane = PLANE_DEFAULT
 		density = 1
 		var/obj/machinery/atmospherics/node1
 
@@ -677,7 +721,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -699,7 +743,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -721,7 +765,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T0C
 
@@ -744,7 +788,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T0C
 
@@ -768,7 +812,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -790,7 +834,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -812,7 +856,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -835,7 +879,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -862,7 +906,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -896,7 +940,7 @@ obj/machinery/atmospherics/pipe
 					node1 = target
 					break
 
-			update_icon()
+			UpdateIcon()
 
 		disconnect(obj/machinery/atmospherics/reference)
 			if(reference == node1)
@@ -906,7 +950,7 @@ obj/machinery/atmospherics/pipe
 					parent = null
 				node1 = null
 
-			update_icon()
+			UpdateIcon()
 
 			return null
 
@@ -964,7 +1008,7 @@ obj/machinery/atmospherics/pipe
 					node1 = target
 					break
 
-			update_icon()
+			UpdateIcon()
 
 		disconnect(obj/machinery/atmospherics/reference)
 			if(reference == node1)
@@ -974,7 +1018,7 @@ obj/machinery/atmospherics/pipe
 					parent = null
 				node1 = null
 
-			update_icon()
+			UpdateIcon()
 
 			return null
 
@@ -984,6 +1028,75 @@ obj/machinery/atmospherics/pipe
 				dir = get_dir(src, node1)
 			else
 				icon_state = "exposed"
+
+	vertical_pipe
+		icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
+		icon_state = "vertical"
+		name = "Vertical Pipe"
+		desc = "a section of piping dropping dropping into the floor"
+		level = 1
+		volume = 250
+		dir = SOUTH
+		initialize_directions = SOUTH
+		var/obj/machinery/atmospherics/node1
+		var/obj/machinery/atmospherics/node2
+
+		north
+			dir = NORTH
+		east
+			dir = EAST
+		south
+			dir = SOUTH
+		west
+			dir = WEST
+
+		New()
+			initialize_directions = dir
+			..()
+
+		process()
+			..()
+
+		disposing()
+			node1?.disconnect(src)
+			node2?.disconnect(src)
+			parent = null
+			..()
+
+		pipeline_expansion()
+			return list(node1, node2)
+
+		initialize()
+			var/turf/T = get_turf(src)
+			var/connect_direction = dir
+
+			for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
+				if(target.initialize_directions & get_dir(target,src))
+					node1 = target
+					break
+
+			// Search disjoint connections for vertical pipe
+			node2 = locate() in T.get_disjoint_objects_by_type(DISJOINT_TURF_CONNECTION_ATMOS_MACHINERY, /obj/machinery/atmospherics/pipe/vertical_pipe)
+			UpdateIcon()
+
+		disconnect(obj/machinery/atmospherics/reference)
+			if(reference == node1)
+				if(istype(node1, /obj/machinery/atmospherics/pipe))
+					if (parent)
+						parent.dispose()
+					parent = null
+				node1 = null
+
+			if(reference == node2)
+				if(istype(node2, /obj/machinery/atmospherics/pipe))
+					if (parent)
+						parent.dispose()
+					parent = null
+				node2 = null
+
+			UpdateIcon()
+			return null
+
 
 	manifold
 		icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
@@ -1034,8 +1147,8 @@ obj/machinery/atmospherics/pipe
 
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
-				invisibility = i ? 101 : 0
-			update_icon()
+				invisibility = i ? INVIS_ALWAYS : INVIS_NONE
+			UpdateIcon()
 
 		pipeline_expansion()
 			return list(node1, node2, node3)
@@ -1081,7 +1194,7 @@ obj/machinery/atmospherics/pipe
 					parent = null
 				node3 = null
 
-			update_icon()
+			UpdateIcon()
 
 			..()
 
@@ -1148,4 +1261,4 @@ obj/machinery/atmospherics/pipe
 
 			var/turf/T = src.loc			// hide if turf is not intact
 			hide(T.intact)
-			//update_icon()
+			//UpdateIcon()

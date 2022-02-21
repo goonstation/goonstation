@@ -8,9 +8,10 @@
 	name = "genetics console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "scanner"
-	req_access = list(access_heads) //Only used for record deletion right now.
+	req_access = list(access_medlab)
 	object_flags = CAN_REPROGRAM_ACCESS
-	can_reconnect = 1
+	can_reconnect = TRUE
+	circuit_type = /obj/item/circuitboard/genetics
 	/// Linked scanner. For scanning.
 	var/obj/machinery/genetics_scanner/scanner = null
 	var/list/equipment = list(
@@ -41,7 +42,7 @@
 /obj/machinery/computer/genetics/New()
 	..()
 	START_TRACKING
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		connection_scan()
 
 /obj/machinery/computer/genetics/connection_scan()
@@ -52,25 +53,7 @@
 	..()
 
 /obj/machinery/computer/genetics/attackby(obj/item/W as obj, mob/user as mob)
-	if (isscrewingtool(W) && ((src.status & BROKEN) || !src.scanner))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if (do_after(user, 2 SECONDS))
-			boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-			var/obj/computerframe/A = new /obj/computerframe( src.loc )
-			if(src.material) A.setMaterial(src.material)
-			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-			G.set_loc(src.loc)
-
-			var/obj/item/circuitboard/genetics/M = new /obj/item/circuitboard/genetics( A )
-			for (var/obj/C in src)
-				C.set_loc(src.loc)
-			A.circuit = M
-			A.state = 3
-			A.icon_state = "3"
-			A.anchored = 1
-			qdel(src)
-
-	else if (istype(W,/obj/item/genetics_injector/dna_activator))
+	if (istype(W,/obj/item/genetics_injector/dna_activator))
 		var/obj/item/genetics_injector/dna_activator/DNA = W
 		if (DNA.expended_properly)
 			user.drop_item()
@@ -82,7 +65,7 @@
 			user.drop_item()
 			qdel(DNA)
 		else
-			src.attack_hand(user)
+			src.Attackhand(user)
 	else
 		var/obj/item/device/pda2/PDA = W
 		if (istype(PDA) && PDA.ID_card)
@@ -91,11 +74,17 @@
 		var/obj/item/card/id/ID = W
 		if (istype(ID))
 			registered_id = ID.registered
-			user.show_text("You swipe the ID on [src]. You will now recieve a cut from gene booth sales.", "blue")
+			user.show_text("You swipe the ID on [src]. You will now receive a cut from gene booth sales.", "blue")
 			return
 
 		..()
-	return
+
+/obj/machinery/computer/genetics/attack_hand(mob/user)
+	if(!src.allowed(user))
+		boutput(user, "<span class='alert'>Access Denied.</span>")
+		return
+	. = ..()
+
 
 /obj/machinery/computer/genetics/proc/activated_bonus(mob/user as mob)
 	if (genResearch.time_discount < 0.75)
@@ -111,9 +100,6 @@
 		var/type_to_make = pick(concrete_typesof(/datum/dna_chromosome))
 		var/datum/dna_chromosome/C = new type_to_make(src)
 		src.saved_chromosomes += C
-
-/obj/machinery/computer/genetics/attack_ai(mob/user as mob)
-	return attack_hand(user)
 
 /obj/machinery/computer/genetics/proc/bioEffect_sanity_check(datum/bioEffect/E, occupant_check = 1)
 	var/mob/living/carbon/human/H = src.get_scan_subject()
@@ -264,6 +250,8 @@
 	logTheThing("diary", who, null, "[action] but failed validation.", "debug")
 
 /obj/machinery/computer/genetics/ui_status(mob/user)
+	if (!src.allowed(user))
+		return UI_CLOSE
 	if (user in src.scanner)
 		return UI_UPDATE
 	return ..()
@@ -273,7 +261,7 @@
 	playsound(src.loc, 'sound/machines/keypress.ogg', minor ? 25 : 50, 1, -15)
 
 /obj/machinery/computer/genetics/proc/play_emitter_sound()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for (var/i = 0, i < 15 && (i < 3 || prob(genResearch.emitter_radiation)), i++)
 			switch (genResearch.emitter_radiation)
 				if(1 to 15)
@@ -409,9 +397,8 @@
 					return
 				if (!(E in selected_record.dna_pool))
 					return
-			else
-				if (bioEffect_sanity_check(E))
-					return
+			else if (bioEffect_sanity_check(E))
+				return
 			genResearch.addResearch(E)
 			on_ui_interacted(ui.user)
 		if("advancepair")
@@ -530,6 +517,10 @@
 			if (!istype(H) || isprematureclone(H))
 				return
 			var/datum/bioEffect/mutantrace/BE = locate(params["ref"])
+			if (H.mutantrace && !H.mutantrace?.genetics_removable)
+				//this should probably be a UI notification but I'm not touching that code with a ten foot pole
+				scanner_alert(ui.user, "Unable to purge corrupt genotype.")
+				return
 			if (isnull(BE))
 				if (!isnull(H.mutantrace))
 					src.log_me(H, "mutantrace removed")
@@ -621,7 +612,7 @@
 			if (!E.can_make_injector)
 				return
 			genResearch.researchMaterial -= price
-			var/booth_effect_cost = text2num(params["price"])
+			var/booth_effect_cost = text2num_safe(params["price"])
 			booth_effect_cost = clamp(booth_effect_cost, 0, 999999)
 			var/booth_effect_desc = params["desc"]
 			booth_effect_desc = strip_html(booth_effect_desc, 280)
@@ -935,8 +926,8 @@
 		"unlock" = null,
 	)
 
-	for(var/datum/data/record/R as anything in data_core.medical)
-		var/datum/computer/file/genetics_scan/S = R.fields["dnasample"]
+	for(var/datum/db_record/R as anything in data_core.medical.records)
+		var/datum/computer/file/genetics_scan/S = R["dnasample"]
 		if (!istype(S))
 			continue
 		.["samples"] += list(list(
@@ -1027,7 +1018,7 @@
 		.["subject"] = null
 
 	for(var/R as anything in genResearch.researchTreeTiered)
-		if (text2num(R) == 0)
+		if (text2num_safe(R) == 0)
 			continue
 		var/list/availTier = list()
 		var/list/finishedTier = list()
@@ -1054,8 +1045,8 @@
 					"ref" = "\ref[C]",
 				))
 
-		.["availableResearch"][text2num(R)] = availTier
-		.["finishedResearch"][text2num(R)] = finishedTier
+		.["availableResearch"][text2num_safe(R)] = availTier
+		.["finishedResearch"][text2num_safe(R)] = finishedTier
 
 	for(var/datum/geneticsResearchEntry/R as anything in genResearch.currentResearch)
 		.["currentResearch"] += list(list(

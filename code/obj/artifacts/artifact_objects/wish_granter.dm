@@ -62,24 +62,24 @@
 						N.flash(3 SECONDS)
 						if(N.client)
 							shake_camera(N, 6, 16)
-					user.become_statue(getMaterial("gold"),"A statue of someone very wealthy")
+					user.become_statue(getMaterial("gold"),"A statue of someone very wealthy", TRUE)
 
 				if("I wish for great power!")
 					O.visible_message("<span class='alert'><b>[O] discharges a massive bolt of electricity!</b></span>")
 					playsound(user, "sound/effects/elec_bigzap.ogg", 40, 1)
 					var/list/affected = DrawLine(O,user,/obj/line_obj/elec,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 					for(var/obj/OB in affected)
-						SPAWN_DBG(0.6 SECONDS)
-							pool(OB)
+						SPAWN(0.6 SECONDS)
+							qdel(OB)
 					user.elecgib()
 		else
 			switch(wish)
 				if("I wish to become rich!")
 					O.visible_message("<span class='alert'>A ton of money falls out of thin air! Woah!</span>")
-					for(var/turf/T in range(user,3))
+					for(var/turf/T in range(user,1))
 						if (T.density)
 							continue
-						var/obj/item/spacecash/million/S = unpool(/obj/item/spacecash/million)
+						var/obj/item/spacecash/million/S = new /obj/item/spacecash/million
 						S.setup(T)
 
 				if("I wish for great power!")

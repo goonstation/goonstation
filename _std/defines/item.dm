@@ -44,9 +44,12 @@
 #define TGUI_INTERACTIVE		 (1<<19)
 /// Has a click delay for attack_self()
 #define ATTACK_SELF_DELAY		 (1<<20)
-/// Is currently scaled by bubsium
-#define IS_BUBSIUM_SCALED		 (1<<21)
-
+/// Counts as dense for purposes of fluids. *scream.
+#define FLUID_DENSE		 (1<<21)
+/// If click delay should be applied even if atom is in user's contents (e.g.: postit notes)
+#define CLICK_DELAY_IN_CONTENTS  (1<<22)
+/// If an item cannot be crushed by the crusher
+#define UNCRUSHABLE              (1<<23)
 
 //Item function flags
 
@@ -58,6 +61,8 @@
 #define SMOKELESS 4
 /// makes items immune to acid
 #define IMMUNE_TO_ACID 8
+/// prevents items from heating anything up while burning
+#define COLD_BURN 16
 
 //tool flags
 #define TOOL_CLAMPING 1
@@ -181,3 +186,9 @@
 #define W_CLASS_HUGE 5
 #define W_CLASS_GIGANTIC 6
 #define W_CLASS_BUBSIAN 10
+
+// for firesource logging
+/// Firesource is capable of starting fires on its own when dropped
+#define FIRESOURCE_OPEN_FLAME 1
+/// Firesource can not cause fires on its own when dropped
+#define FIRESOURCE_IGNITER 2

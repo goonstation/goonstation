@@ -103,3 +103,11 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 		if(!istype(., /obj/item/reagent_containers/food/snacks))
 			var/obj/machinery/deep_fryer/fryer = target
 			. = fryer.fryify(.)
+
+/datum/fishing_spot/fish_portal
+	fishing_atom_type = /obj/machinery/active_fish_portal
+	fish_available = list(/obj/item/fish/salmon = 40,\
+	/obj/item/fish/herring = 30,\
+	/obj/item/fish/carp = 20,\
+	/obj/item/fish/bass = 15,\
+	/obj/item/fish/red_herring = 5)

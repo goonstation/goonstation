@@ -23,7 +23,7 @@
 
 	New(var/is_control = 0)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.holder)
 				var/icon/hud_style = hud_style_selection[get_hud_style(src.holder.owner)]
 				if (isicon(hud_style))
@@ -115,7 +115,7 @@
 		var/prev_value = value
 		var/affection_mod = amt < 0 ? drain_rate : gain_rate //Negative change, use drain modifier, positive, use gain modifier
 
-		value = max(min(value + (amt * affection_mod), 100), 0)
+		value = clamp(value + (amt * affection_mod), 0, 100)
 		if (prev_value < 100 && value >= 100)
 			onFill()
 		else if (prev_value > 0 && value <= 0)
@@ -265,6 +265,8 @@
 			if (value < 15 && prob(33))
 				if (holder.owner.bioHolder && !(holder.owner.bioHolder.HasEffect("sims_stinky")))
 					holder.owner.bioHolder.AddEffect("sims_stinky")
+			else if ((value >= 85 ) && (holder.owner.bioHolder.HasEffect("sims_stinky")))
+				holder.owner.bioHolder.RemoveEffect("sims_stinky")
 			/*
 			if (value < 10 && prob((10 - value) * 1.5))
 				for (var/mob/living/carbon/human/H in viewers(2, holder.owner))
@@ -280,7 +282,7 @@
 			*/
 			#ifdef CREATE_PATHOGENS //PATHOLOGY_REMOVAL
 			if (value < 5 && prob(1) && prob(25))
-				var/datum/pathogen/P = unpool(/datum/pathogen)
+				var/datum/pathogen/P = new /datum/pathogen
 				P.create_weak()
 				P.spread = 0
 				holder.owner.infected(P)
@@ -518,16 +520,16 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND) //Give it some time to finish creating the simsController because fak
+		SPAWN(1 SECOND) //Give it some time to finish creating the simsController because fak
 			for (var/M in childrentypesof(/datum/simsMotive))
 				motives[M] = new M(1)
 #ifdef RP_MODE
-			SPAWN_DBG(0)
+			SPAWN(0)
 				set_multiplier(1)
 #endif
 
 	Topic(href, href_list)
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if (href_list["mot"])
 			var/datum/simsMotive/M = locate(href_list["mot"])
 			if (!istype(M) || M != motives[M.type])
@@ -756,7 +758,7 @@ var/global/datum/simsControl/simsController = new()
 				attach_plum(owner)
 
 			plumbob.color = rgb((1 - color_t) * 255, color_t * 255, 0)
-			plumbob.light.set_color(1 - color_t, color_t, 0)
+			plumbob.add_simple_light("plumbob", list(1 - color_t, color_t, 0, 100))
 
 /obj/effect/plumbob
 	name = "plumbob"
@@ -766,24 +768,20 @@ var/global/datum/simsControl/simsController = new()
 	anchored = 1.0
 	pixel_y = 32
 	var/mob/living/owner
-	var/datum/light/light
 
 	New()
 		..()
 		animate_bumble(src, Y1 = 32, Y2 = 30, slightly_random = 0)
-		light = new /datum/light/point
-		light.attach(src)
-		light.set_brightness(0.5)
-		light.enable()
+		add_simple_light("plumbob", list(255, 255, 255, 100))
 
 	// relay procs
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (owner)
-			owner.attackby(W, user)
+			owner.Attackby(W, user)
 
 	attack_hand(mob/user as mob)
 		if (owner)
-			owner.attack_hand(user)
+			owner.Attackhand(user)
 
 	attack_ai(mob/user as mob)
 		if (owner)

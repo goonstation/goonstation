@@ -519,7 +519,7 @@
 	proc/used()
 		charge = 0
 		has_crystal--
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while (charge < 100)
 				charge++
 				sleep(0.1 SECONDS)
@@ -609,7 +609,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			recheck()
 
 	proc/is_sellable(var/obj/O)
@@ -733,7 +733,7 @@
 						showswirl(get_turf(out_target))
 						out_target.used()
 		else if (href_list["mode"])
-			mode = text2num(href_list["mode"])
+			mode = text2num_safe(href_list["mode"])
 		attack_hand(usr)
 
 	attack_hand(var/mob/user)

@@ -11,6 +11,11 @@
 
 	return ""
 
+/proc/startswith(text, start)
+	if(length(text) < length(start))
+		return FALSE
+	return copytext(text, 1, length(start) + 1) == start
+
 /proc/trim(text)
 	return trim_left(trim_right(text))
 
@@ -25,7 +30,7 @@
   * Returns true if given string is just space characters
   * The explicitly defined entries are various blank unicode characters that don't get included as white space by \s
   */
-var/global/regex/is_blank_string_regex = new(@{"^(\s|[\u00A0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u2028\u205F\u3000])*$"})
+var/global/regex/is_blank_string_regex = new(@{"^(\s|[\u00A0\u00AC\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u200C\u200D\u200E\u200F\u2011\u2028\u2029\u202A\u202B\u202C\u202D\u202E\u202F\u205F\u2060\u2066\u2067\u2068\u2069\u206A\u206B\u206C\u206D\u206E\u206F\u3000])*$"})
 /proc/is_blank_string(var/txt)
 	if (is_blank_string_regex.Find(txt))
 		return 1
@@ -34,6 +39,15 @@ var/global/regex/is_blank_string_regex = new(@{"^(\s|[\u00A0\u2000\u2001\u2002\u
 var/global/regex/discord_emoji_regex = new(@{"(?:<|&lt;)(?:a)?:([-a-zA-Z0-9_]+):(\d{18})(?:>|&gt;)"}, "g")
 /proc/discord_emojify(text)
 	return discord_emoji_regex.Replace(text, {"<img src="https://cdn.discordapp.com/emojis/$2.gif" onerror="if (this.src != 'https://cdn.discordapp.com/emojis/$2.png') this.src = 'https://cdn.discordapp.com/emojis/$2.png';" title="$1" width="32" height="32">"})
+
+/proc/linkify(text)
+	. = text
+	while(full_url_regex.Find(text))
+		var/http_part = full_url_regex.group[1]
+		if(length(http_part) == 0)
+			http_part = "http://"
+		var/full_url = http_part + full_url_regex.group[2]
+		. = replacetext(., full_url_regex.match, "<a target='_blank' href='[full_url]'>[full_url_regex.match]</a>")
 
 /// Generates a random Unicode emoji that will look ok in the chat
 /proc/random_emoji()

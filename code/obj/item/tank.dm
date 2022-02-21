@@ -13,7 +13,7 @@ Contains:
 	name = "tank"
 	icon = 'icons/obj/items/tank.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
@@ -33,7 +33,8 @@ Contains:
 
 	New()
 		..()
-		src.air_contents = unpool(/datum/gas_mixture)
+		src.air_contents = new /datum/gas_mixture
+		src.air_contents.vacuum()
 		src.air_contents.volume = 70 //liters
 		src.air_contents.temperature = T20C
 		processing_items |= src
@@ -43,7 +44,7 @@ Contains:
 
 	disposing()
 		if(air_contents)
-			pool(air_contents)
+			qdel(air_contents)
 			air_contents = null
 		processing_items.Remove(src)
 		..()
@@ -85,7 +86,7 @@ Contains:
 		return 1
 
 	proc/set_release_pressure(var/pressure as num)
-		distribute_pressure = min(max(0, pressure), TANK_MAX_RELEASE_PRESSURE)
+		distribute_pressure = clamp(pressure, 0, TANK_MAX_RELEASE_PRESSURE)
 
 	proc/toggle_valve()
 		if(iscarbon(src.loc))
@@ -129,8 +130,8 @@ Contains:
 		//Allow for reactions
 		if (air_contents) //Wire: Fix for Cannot execute null.react().
 			air_contents.react()
+			src.inventory_counter.update_text("[round(MIXTURE_PRESSURE(air_contents))]\nkPa")
 		check_status()
-		src.inventory_counter.update_text("[round(MIXTURE_PRESSURE(air_contents))]\nkPa")
 
 	proc/check_status()
 		//Handle exploding, leaking, and rupturing of the tank
@@ -156,7 +157,7 @@ Contains:
 				for_by_tcl(B, /obj/item/storage/bible)//world)
 					var/turf/T = get_turf(B.loc)
 					if(T)
-						logTheThing("bombing", src, null, "exploded at [showCoords(T.x, T.y, T.z)], range: [range], last touched by: [src.fingerprintslast]")
+						logTheThing("bombing", src, null, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
 						explosion(src, T, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
 				bible_contents.Remove(src)
 				qdel(src)
@@ -166,7 +167,7 @@ Contains:
 			//boutput(world, "<span class='notice'>Exploding Pressure: [pressure] kPa, intensity: [range]</span>")
 
 
-			logTheThing("bombing", src, null, "exploded at [showCoords(epicenter.x, epicenter.y, epicenter.z)], , range: [range], last touched by: [src.fingerprintslast]")
+			logTheThing("bombing", src, null, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
 			explosion(src, epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
 			qdel(src)
 
@@ -278,7 +279,6 @@ Contains:
 	name = "Gas Tank (Sleeping Agent)"
 	icon_state = "anesthetic"
 	desc = "This tank is labelled that it contains an anaesthetic capable of keeping somebody unconscious while they breathe it."
-	module_research = list("atmospherics" = 3, "metals" = 1, "medicine" = 2)
 	distribute_pressure = 81 // setting these things to start at the minimum pressure needed to breathe - Haine
 
 	New()
@@ -303,7 +303,6 @@ Contains:
 	stamina_damage = 55
 	stamina_cost = 30
 	desc = "A jetpack that can be toggled on, letting the user use the gas inside as a propellant. Can also be hooked up to a compatible mask to allow you to breathe the gas inside. This is labelled to contain oxygen."
-	module_research = list("atmospherics" = 4)
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
 	c_flags = IS_JETPACK
 
@@ -345,6 +344,8 @@ Contains:
 				return 0.5
 			else
 				return 0
+	update_wear_image(mob/living/carbon/human/H, override)
+		src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "back-" : ""]jetpack_mag[on]"))
 
 /obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)
 
@@ -359,7 +360,6 @@ Contains:
 	mats = 16
 	force = 8
 	desc = "A jetpack that can be toggled on, letting the user use the gas inside as a propellant. Can also be hooked up to a compatible mask to allow you to breathe the gas inside. This is labelled to contain oxygen."
-	module_research = list("atmospherics" = 4)
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
 	compatible_with_TTV = 0
 
@@ -398,6 +398,8 @@ Contains:
 				return 0.5
 			else
 				return 0
+	update_wear_image(mob/living/carbon/human/H, override)
+		src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "back-" : ""]jetpack[on]"))
 
 /obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)
 #endif
@@ -408,7 +410,6 @@ Contains:
 	name = "Gas Tank (Oxygen)"
 	icon_state = "oxygen"
 	desc = "This is a tank that can be worn on one's back, as well as hooked up to a compatible receptacle. When a mask is worn and the release valve on the tank is open, the user will breathe the gas inside the tank. This is labelled to contain oxygen."
-	module_research = list("atmospherics" = 2)
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
 
 	New()
@@ -429,8 +430,7 @@ Contains:
 	stamina_damage = 30
 	stamina_cost = 16
 	desc = "A small tank that is labelled to contain oxygen. In emergencies, wear a mask that can be used to transfer air, such as a breath mask, turn on the release valve on the oxygen tank, and put it on your belt."
-	wear_image_icon = 'icons/mob/belt.dmi'
-	module_research = list("atmospherics" = 1)
+	wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
 
 	New()
@@ -448,7 +448,6 @@ Contains:
 	icon_state = "airmix"
 	item_state = "airmix"
 	desc = "This is a tank that can be worn on one's back, as well as hooked up to a compatible recepticle. When a mask is worn and the release valve on the tank is open, the user will breathe the gas inside the tank. This is labelled to contain nitrogen and oxygen."
-	module_research = list("atmospherics" = 2)
 	distribute_pressure = 81 // setting these things to start at the minimum pressure needed to breathe - Haine
 
 	New()
@@ -466,7 +465,6 @@ Contains:
 	icon_state = "plasma"
 	item_state = "plasma"
 	desc = "This is a tank that can be hooked up to a compatible recepticle. When a mask is worn and the release valve on the tank is open, the user will breathe the gas inside the tank. This is labelled to contain deadly plasma."
-	module_research = list("atmospherics" = 2)
 
 	New()
 		..()
@@ -617,7 +615,6 @@ Contains:
 	mats = 16
 	force = 8
 	desc = "An upgraded jetpack that can be toggled on, letting the user use the gas inside as a propellant. Can also be hooked up to a compatible mask to allow you to breathe the gas inside. This is labelled to contain oxygen."
-	module_research = list("atmospherics" = 4)
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
 
 	New()
@@ -659,6 +656,9 @@ Contains:
 			else
 				return 0
 
+	update_wear_image(mob/living/carbon/human/H, override)
+		src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "back-" : ""]jetpack_mk2_[on]"))
+
 /obj/item/tank/jetpack/jetpackmk2/abilities = list(/obj/ability_button/jetpack2_toggle, /obj/ability_button/tank_valve_toggle)
 
 /obj/item/tank/jetpack/syndicate
@@ -680,5 +680,8 @@ Contains:
 		else
 			boutput(usr, "<span class='notice'>The jetpack is now off</span>")
 		return
+
+	update_wear_image(mob/living/carbon/human/H, override)
+		src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "back-" : ""]sjetpack_mag[on]"))
 
 /obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)

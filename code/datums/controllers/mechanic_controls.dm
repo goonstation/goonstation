@@ -15,7 +15,7 @@ var/datum/mechanic_controller/mechanic_controls
 				S.mats = M.Copy()
 				MC = M.Copy()
 			else
-				S.mats = MC
+				MC = M
 			S.item_mats = MC
 			S.create_partslist(MC)
 			S.create_blueprint(MC)

@@ -140,7 +140,7 @@
 				src.icon_state = "2"
 				var/obj/item/cable_coil/A = new /obj/item/cable_coil( src.loc )
 				A.amount = 5
-				A.updateicon()
+				A.UpdateIcon()
 				if(src.hd)
 					src.hd.set_loc(src.loc)
 					src.hd = null
@@ -180,6 +180,7 @@
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				boutput(user, "<span class='notice'>You connect the monitor.</span>")
 				var/obj/machinery/computer3/C= new /obj/machinery/computer3( src.loc )
+				C.set_dir(src.dir)
 				if(src.material) C.setMaterial(src.material)
 				C.setup_drive_size = 0
 				C.icon_state = src.created_icon_state
@@ -207,7 +208,7 @@
 			if(user.equipped(P) && isweldingtool(P))
 				boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
 				var/obj/item/sheet/A = new /obj/item/sheet( src.loc )
-				A.amount = 5
+				A.amount = metal_given
 				if (src.material)
 					A.setMaterial(src.material)
 				else

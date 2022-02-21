@@ -2,7 +2,7 @@
 	name = "black jumpsuit"
 	desc = "A generic jumpsuit with no rank markings."
 	icon = 'icons/obj/clothing/uniforms/item_js.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
 	icon_state = "black"
 	uses_multiple_icon_states = 1
@@ -20,7 +20,7 @@
 	attackby(obj/item/clothing/under/U as obj, mob/user as mob)
 		if(istype(U, /obj/item/clothing/under/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a horrible jumpsuit chain reaction!</span>")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				boutput(user, "<span class='alert'>Nah, just kidding. Doing that still doesn't work though!</span>")
 			return
 
@@ -49,7 +49,7 @@
 			src.name = "psychedelic jumpsuit"
 			src.desc = "Groovy!"
 			icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
-			wear_image_icon = 'icons/mob/jumpsuits/worn_js_gimmick.dmi'
+			wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 			inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
 			wear_image = image(wear_image_icon)
 			inhand_image = image(inhand_image_icon)
@@ -85,7 +85,7 @@
 	var/icon_state = "black"
 	var/item_state = "black"
 	var/sprite_item = 'icons/obj/clothing/uniforms/item_js.dmi'
-	var/sprite_worn = 'icons/mob/jumpsuits/worn_js.dmi'
+	var/sprite_worn = 'icons/mob/clothing/jumpsuits/worn_js.dmi'
 	var/sprite_hand = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
 
 	white
@@ -153,7 +153,7 @@
 		icon_state = "assistant"
 		item_state = "assistant"
 		sprite_item = 'icons/obj/clothing/uniforms/item_js_rank.dmi'
-		sprite_worn = 'icons/mob/jumpsuits/worn_js_rank.dmi'
+		sprite_worn = 'icons/mob/clothing/jumpsuits/worn_js_rank.dmi'
 		sprite_hand = 'icons/mob/inhand/jumpsuit/hand_js_rank.dmi'
 
 	rank/engineer

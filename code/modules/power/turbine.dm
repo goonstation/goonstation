@@ -34,9 +34,10 @@
 	icon_state = "airtunnel0e"
 	anchored = 1
 	density = 1
+	circuit_type = /obj/item/circuitboard/turbine_control
+	id = 0
 	var/obj/machinery/compressor/compressor
 	var/list/obj/machinery/door/poddoor/doors
-	var/id = 0
 	var/door_status = 0
 
 // the inlet stage of the gas turbine electricity generator
@@ -47,7 +48,7 @@
 	gas_contained = new
 	inturf = get_step(src, dir)
 
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		turbine = locate() in get_step(src, get_dir(inturf, src))
 		if(!turbine)
 			status |= BROKEN
@@ -100,7 +101,7 @@
 
 	outturf = get_step(src, dir)
 
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 
 		compressor = locate() in get_step(src, get_dir(outturf, src))
 		if(!compressor)
@@ -198,7 +199,7 @@
 		else if( href_list["str"] )
 			compressor.starter = !compressor.starter
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for(var/mob/M in viewers(1, src))
 				if (M.using_dialog_of(src))
 					src.interacted(M)
@@ -220,7 +221,7 @@
 
 /obj/machinery/computer/turbine_computer/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		for(var/obj/machinery/compressor/C in machine_registry[MACHINES_MISC])
 			if(id == C.comp_id)
 				compressor = C
@@ -228,42 +229,6 @@
 		for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 			if(P.id == id)
 				doors += P
-
-/obj/machinery/computer/turbine_computer/attackby(obj/item/I as obj, user as mob)
-	if (isscrewingtool(I))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 2 SECONDS))
-			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/turbine_control/M = new /obj/item/circuitboard/turbine_control( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				M.id = src.id
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/turbine_control/M = new /obj/item/circuitboard/turbine_control( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				M.id = src.id
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-	else
-		src.attack_hand(user)
-	return
 
 /obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
 	src.add_dialog(user)
@@ -287,7 +252,12 @@
 	onclose(user, "computer")
 	return
 
+/obj/machinery/computer/robotics/special_deconstruct(obj/computerframe/frame as obj)
+	frame.circuit.id = src.id
 
+/obj/machinery/computer/turbine_computer/attack_ai(mob/user as mob)
+	// overridden to prevent AI from accessing
+	return
 
 /obj/machinery/computer/turbine_computer/Topic(href, href_list)
 	if(..())
@@ -302,11 +272,11 @@
 		else if (href_list["doors"])
 			for(var/obj/machinery/door/poddoor/D in src.doors)
 				if (door_status == 0)
-					SPAWN_DBG( 0 )
+					SPAWN( 0 )
 						D.open()
 						door_status = 1
 				else
-					SPAWN_DBG( 0 )
+					SPAWN( 0 )
 						D.close()
 						door_status = 0
 		else if( href_list["close"] )

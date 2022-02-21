@@ -1,11 +1,21 @@
 /obj/item/pen/sleepypen
-	desc = "It's a normal black ink pen with a sharp point."
 	flags = FPRINT | ONBELT | TABLEPASS | NOSPLASH | OPENCONTAINER
 	hide_attack = 1
 	move_triggered = 1
 
 	New()
 		..()
+		if (prob(50))
+			desc = "It's a normal black ink pen with a sharp point."
+		else
+			name = "fancy pen"
+			desc = "A pretty swag pen with a sharp point."
+			icon_state = "pen_fancy"
+			item_state = "pen_fancy"
+			font_color = "blue"
+			font = "'Dancing Script', cursive"
+			webfont = "Dancing Script"
+			uses_handwriting = 1
 		src.create_reagents(100)
 		reagents.add_reagent("ketamine", 100)
 		return
@@ -67,7 +77,8 @@
 				if(src.reagents.total_volume)
 					boutput(user, "<span class='alert'>You poke [M == user ? "yourself" : "[M]"] but the greasy pen leaks quite badly!</span>")
 					logTheThing("combat", user, M, "tries to stab [constructTarget(M,"combat")] with the discount sleepy pen with [log_reagents(src)] but fails at [log_loc(user)].")
-					src.reagents.reaction(get_turf(src))
+					src.reagents.reaction(get_turf(src), TOUCH, min(30, src.reagents.total_volume))
+					src.reagents.remove_any(30)
 					if(user != M)
 						M.show_text("<b>[user] poked you with their leaking pen! Urgh!</b>", "red")
 				else

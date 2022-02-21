@@ -740,14 +740,14 @@
 				O.air_contents.toxins = (O.maximum_pressure*O.filled)*O.air_contents.volume/(R_IDEAL_GAS_EQUATION*O.air_contents.temperature)
 				O.pressure_resistance = FLOAT_HIGH
 				O.temperature_resistance = FLOAT_HIGH
-				O.update_icon()
+				O.UpdateIcon()
 
 			for(var/obj/machinery/portable_atmospherics/canister/oxygen/O in area_contents)
 				O.air_contents.volume = 1000000
 				O.air_contents.oxygen = (O.maximum_pressure*O.filled)*O.air_contents.volume/(R_IDEAL_GAS_EQUATION*O.air_contents.temperature)
 				O.pressure_resistance = FLOAT_HIGH
 				O.temperature_resistance = FLOAT_HIGH
-				O.update_icon()
+				O.UpdateIcon()
 
 			#endif
 
@@ -1643,14 +1643,14 @@
 	onclose(user, "reactorstats")
 
 /obj/machinery/power/reactor_stats/attackby(obj/item/W as obj, mob/user as mob)
-	src.attack_hand(user)
+	src.Attackhand(user)
 
 /obj/machinery/power/reactor_stats/attack_ai(mob/user as mob)
 	return attack_hand(user)
 
 /obj/machinery/power/reactor_stats/Topic(href, href_list)
 	if(href_list["nav_h"])
-		src.curpage = text2num(href_list["nav_h"])
+		src.curpage = text2num_safe(href_list["nav_h"])
 	else if(href_list["avg_reset"])
 		avg_reset()
 	else if(href_list["refresh_toggle"])

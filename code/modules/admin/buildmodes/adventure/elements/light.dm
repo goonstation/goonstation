@@ -5,7 +5,7 @@
 	density = 0
 	opacity = 0
 	anchored = 1
-	invisibility = 20
+	invisibility = INVIS_ADVENTURE
 
 	var/is_on = 0
 

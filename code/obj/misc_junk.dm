@@ -82,7 +82,7 @@
 	attack_self(mob/user as mob)
 		if(last_laugh + 50 < world.time)
 			user.visible_message("<span class='notice'><b>[user]</b> hugs [src]!</span>","<span class='notice'>You hug [src]!</span>")
-			playsound(src.loc,"sound/misc/gnomechuckle.ogg" ,50,1)
+			playsound(src.loc,"sound/misc/gnomegiggle.ogg", 50, 1)
 			last_laugh = world.time
 
 	process()
@@ -107,7 +107,7 @@
 			return
 		container = pick(eligible_containers)
 
-		playsound(src.loc,"sound/misc/gnomechuckle.ogg" ,50,1)
+		playsound(src.loc,"sound/misc/gnomegiggle.ogg", 50, 1)
 		src.set_loc(container)
 /obj/item/c_tube
 	name = "cardboard tube"
@@ -167,7 +167,7 @@
 
 /obj/item/dummy
 	name = "dummy"
-	invisibility = 101.0
+	invisibility = INVIS_ALWAYS
 	anchored = 1.0
 	flags = TABLEPASS
 	burn_possible = 0
@@ -235,7 +235,7 @@
 	name = "E-Meter"
 	desc = "A device for measuring Body Thetan levels."
 	icon = 'icons/obj/items/device.dmi'
-	icon_state = "securotronOld"
+	icon_state = "emeter"
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (ismob(M))
@@ -257,7 +257,6 @@
 	throwforce = 5
 	var/spam_flag = 0
 	var/pitch = 0
-	module_research = list("audio" = 20, "eldritch" = 3)
 
 /obj/item/hell_horn/attack_self(mob/user as mob)
 	if (spam_flag == 0)
@@ -268,7 +267,7 @@
 			if (M != user)
 				M.change_misstep_chance(50)
 
-		SPAWN_DBG(6 SECONDS)
+		SPAWN(6 SECONDS)
 			spam_flag = 0
 
 /obj/item/rubber_hammer
@@ -347,6 +346,7 @@
 
 
 	on_reagent_change(add)
+		..()
 		if (!src.emagged && add)
 			src.check_whitelist()
 
@@ -405,7 +405,7 @@
 			usr.restrain_time = TIME + 40
 			src.smoke.set_up(1, 0, target_loc,null,R.get_average_color())
 			src.smoke.attach(target_loc)
-			SPAWN_DBG(0) //vape is just the best for not annoying crowds I swear
+			SPAWN(0) //vape is just the best for not annoying crowds I swear
 				src.smoke.start()
 				sleep(1 SECOND)
 
@@ -500,7 +500,7 @@
 		boutput(user, "<span class='notice'><b>You are surrounded by a BATTLE BARRIER!</b></span>")
 		user.visible_message("<span class='alert'>[user] is encased in a protective shield.</span>")
 		user.spellshield = 1
-		SPAWN_DBG(10 SECONDS)
+		SPAWN(10 SECONDS)
 			user.spellshield = 0
 			boutput(user, "<span class='notice'><b>Your magical barrier fades away!</b></span>")
 			user.visible_message("<span class='alert'>The shield protecting [user] fades away.</span>")

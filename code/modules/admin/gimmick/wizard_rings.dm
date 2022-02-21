@@ -58,15 +58,11 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 
 		unequipped(var/mob/user)
 			..()
-			var/show_message = 0
-			if (user?.bioHolder.HasEffect("telekinesis"))
-				user.bioHolder.RemoveEffect("telekinesis")
-				show_message = 1
-			if (user?.bioHolder.HasEffect("hulk"))
-				user.bioHolder.RemoveEffect("hulk")
-				show_message = 1
-			if (show_message)
+			if (user?.bioHolder.RemoveEffect("hulk"))
 				boutput(user, "<span class='alert'><b>Removing [src] removes its powers with it!</b></span>")
+			REMOVE_MOB_PROPERTY(user, PROP_PASSIVE_WRESTLE, "empower")
+			REMOVE_MOB_PROPERTY(user, PROP_STAMINA_REGEN_BONUS, "empower")
+
 	staff
 		name = "ring of cthulhu"
 		desc = "Looking at this ring makes your head hurt."
@@ -259,8 +255,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 		new path(src.loc)
 		possible_rings = null
 		//Need the spawn for it to work with the admin spawn menu properly
-		SPAWN_DBG(1 SECOND)
-			del(src)
+		SPAWN(1 SECOND)
+			qdel(src)
 
 	offensive
 		possible_rings = list("fireball", "magic_missile", "blind", "ice_burst", "prismatic_spray", "cluwne", "shocking_touch", "rathens_secret", "pandemonium", "sticks_to_snakes", "staff", "golem", "polymorph")
@@ -279,7 +275,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 	set desc = "Spawn all of the magical wizard rings."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	var/turf/T_LOC = get_turf(src.mob)
 

@@ -25,9 +25,10 @@
 	rc_flags = RC_VISIBLE | RC_SPECTRO
 
 	on_reagent_change()
-		update_icon()
+		..()
+		UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.underlays = null
 		if (src.reagents.total_volume == 0)
 			icon_state = "minivial"
@@ -46,12 +47,12 @@
 	proc/smash(var/turf/T)
 		if (!T)
 			T = src.loc
-		src.reagents.reaction(T)
+		src.reagents?.reaction(T)
 		if (ismob(T)) // we've reacted with whatever we've hit, but if what we hit is a mob, let's not stick glass in their contents
 			T = get_turf(T)
-		T.visible_message("<span class='alert'>[src] shatters!</span>")
+		T?.visible_message("<span class='alert'>[src] shatters!</span>")
 		playsound(T, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
-		var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+		var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 		G.set_loc(src.loc)
 
 		qdel(src)
@@ -71,9 +72,10 @@
 	icon_state = "vendbag"
 
 	on_reagent_change()
-		update_icon()
+		..()
+		UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.underlays = null
 		if (src.reagents.total_volume == 0)
 			icon_state = "vendbag"
@@ -116,7 +118,7 @@
 /obj/item/reagent_containers/vending/bag/random
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.reagents)
 				var/chem = null
 				if (islist(all_functional_reagent_ids) && length(all_functional_reagent_ids))
@@ -128,7 +130,7 @@
 /obj/item/reagent_containers/vending/vial/random
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.reagents)
 				var/chem = null
 				if (islist(all_functional_reagent_ids) && length(all_functional_reagent_ids))

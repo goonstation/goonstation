@@ -33,7 +33,7 @@
 		else if (!istype(src.info))
 			var/datum/figure_info/randomInfo
 
-			var/potential_donator_ckey = usr?.mind.ckey
+			var/potential_donator_ckey = usr?.mind?.ckey
 			var/donator_figtype = null
 			if (potential_donator_ckey) // check if the player has a figurine (therefore a donator)
 				for (var/datum/figure_info/patreon/fig as anything in concrete_typesof(/datum/figure_info/patreon))
@@ -87,7 +87,7 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] shoves [src] down [his_or_her(user)] throat and chokes on it!</b></span>")
 		user.take_oxygen_deprivation(175)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		qdel(src)
@@ -692,8 +692,8 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		ckey = "bunnykimber"
 
 	retrino
-		name = "\improper Neo Xzilon"
-		icon_state = "neoxzilon"
+		name = "\improper Mallow Rhosin"
+		icon_state = "mallowrhosin"
 		ckey = "retrino"
 
 		New()
@@ -712,7 +712,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "vicky"
 		ckey = "mrprogamer96"
 
-	vicky
+	camrynstern
 		name = "\improper Camryn Stern"
 		icon_state = "camrynstern"
 		ckey = "richardgere"
@@ -721,6 +721,36 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Newt Treitor"
 		icon_state = "newttreitor"
 		ckey = "edwardly"
+
+	ook
+		name = "\improper Ook"
+		icon_state = "ook"
+		ckey = "taocat"
+
+	brucemcafee
+		name = "\improper Bruce McAfee"
+		icon_state = "brucemcafee"
+		ckey = "mysticmidgit"
+
+	chefbot
+		name = "\improper ChefBot"
+		icon_state = "chefbot"
+		ckey = "skeletondoot"
+
+	flyntloach
+		name = "\improper Flynt Loach"
+		icon_state = "flyntloach"
+		ckey = "profomii"
+
+	dennismccreary
+		name = "\improper Dennis McCreary"
+		icon_state = "dennismccreary"
+		ckey = "lordvoxelrot"
+
+	stinko
+		name = "\improper Stinko"
+		icon_state = "stinko"
+		ckey = "dataerr0r"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
@@ -740,9 +770,10 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	New()
 		..()
 		src.ccolor = pick("y", "r", "g", "b")
-		src.update_icon()
+		src.UpdateIcon()
 
 	update_icon()
+
 		if (src.icon_state != "cap-[src.ccolor]")
 			src.icon_state = "cap-[src.ccolor]"
 		if (!src.cap_image)
@@ -757,6 +788,14 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 			src.cap_image.icon_state = "cap-cap[src.item_amount ? 1 : 0]"
 			src.UpdateOverlays(src.cap_image, "cap")
 
+	attack_self(mob/user as mob)
+		if (open && item_amount == 0)
+			user.playsound_local(user, "sound/items/can_crush-3.ogg", 50, 1)
+			boutput(user, "<span class='notice'>You crush the empty capsule into an insignificant speck.</span>")
+			qdel(src)
+			return
+		..()
+
 /obj/machinery/vending/capsule
 	name = "capsule machine"
 	desc = "A little figure in every capsule, guaranteed*!"
@@ -768,9 +807,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	var/sound_vend = 'sound/machines/capsulebuy.ogg'
 	var/image/capsule_image = null
 
-	New()
-		..()
-		//Products
+	create_products()
 		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 26, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/satchel/figurines, 2, cost=PAY_UNTRAINED*3)
 		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule/gaming_capsule, rand(4,10), cost=PAY_UNTRAINED/3, hidden=1)
@@ -780,7 +817,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 
 	prevend_effect()
 		playsound(src.loc, sound_vend, 80, 1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			var/datum/data/vending_product/R = src.product_list[1]
 			src.capsule_image.icon_state = "m_caps[R.product_amount]"
 			src.UpdateOverlays(src.capsule_image, "capsules")

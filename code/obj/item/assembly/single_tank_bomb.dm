@@ -11,7 +11,7 @@
 		return
 
 	if (is_dud == 1)
-		message_admins("A [type] single tank bomb would have opened at [log_loc(bomb)] but was forced to dud! Last touched by: [bomb.fingerprintslast ? "[bomb.fingerprintslast]" : "*null*"]")
+		message_admins("A [type] single tank bomb would have opened at [log_loc(bomb)] but was forced to dud! Last touched by: [key_name(bomb.fingerprintslast)]")
 		logTheThing("bombing", null, null, "A [type] single tank bomb would have opened at [log_loc(bomb)] but was forced to dud! Last touched by: [bomb.fingerprintslast ? "[bomb.fingerprintslast]" : "*null*"]")
 		return
 
@@ -54,7 +54,7 @@
 
 /obj/item/assembly/proximity_bomb/dropped()
 
-	SPAWN_DBG( 0 )
+	SPAWN( 0 )
 		src.part1.sense()
 		return
 	return
@@ -148,8 +148,8 @@
 		src.part1.sense()
 	return
 
-/obj/item/assembly/proximity_bomb/Bump(atom/O)
-	SPAWN_DBG(0)
+/obj/item/assembly/proximity_bomb/bump(atom/O)
+	SPAWN(0)
 		//boutput(world, "miptank bumped into [O]")
 		if(src.part1.armed)
 			//boutput(world, "sending signal")
@@ -167,7 +167,7 @@
 			src.part1.sense()
 			break
 
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		prox_check()
 
 /////////////////////////////////////////////////// Single tank bomb (timer) ////////////////////////////////////

@@ -16,6 +16,9 @@
 		else if (numkills > 0)
 			. = "Like the last jerk that pressed it."
 
+	ex_act()
+		return
+
 	attack_hand(mob/user as mob)
 		if (!user.stat)
 			//Yaaaaaaaaaaaaaaaay!!

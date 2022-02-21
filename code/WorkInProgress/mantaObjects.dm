@@ -66,7 +66,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	New()
 		mantaLever = src
-		updateIcon()
+		UpdateIcon()
 		..()
 //This crap is here so nothing can destroy it.
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
@@ -99,15 +99,15 @@ var/obj/manta_speed_lever/mantaLever = null
 			if(on)
 				user.show_text("<span class='notice'><b>You turn off the propellers.</b></span>")
 				on = 0
-				updateIcon()
+				UpdateIcon()
 				command_alert("Attention, NSS Manta is slowing down to a halt. Shutting down propellers.", "NSS Manta Movement Computer")
 				mantaSetMove(on)
 			else
 				user.show_text("<span class='notice'><b>You turn on the propellers.</b></span>")
 				on = 1
-				world << 'sound/effects/mantamoving.ogg'
+				playsound_global(world, "sound/effects/mantamoving.ogg", 90)
 				sleep(7 SECONDS)
-				updateIcon()
+				UpdateIcon()
 				command_alert("Attention, firing up propellers.  NSS Manta will be on the move shortly.", "NSS Manta Movement Computer")
 				mantaSetMove(on)
 			return
@@ -125,7 +125,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			if (src.allowed(user))
 				user.visible_message("[user] [src.locked ? "unlocks" : "locks"] the access panel.","You [src.locked ? "unlock" : "lock"] the access panel.")
 				src.locked = !src.locked
-				updateIcon()
+				UpdateIcon()
 			else
 				boutput(user, "<span class='alert'>Access denied.</span>")
 		else
@@ -133,7 +133,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 		return
 
-	proc/updateIcon()
+	update_icon()
 		if (locked == 1 && on == 1)
 			icon_state = "lever1-locked"
 		if (locked == 1 && on == 0)
@@ -208,58 +208,9 @@ var/obj/manta_speed_lever/mantaLever = null
 		return ..()
 
 	Bumped(atom/AM) //This is stolen straight from the crusher, just making sure that the propellers are actually on.
-		var/tm_amt = 0
-		var/tg_amt = 0
-		var/tw_amt = 0
-		var/bblood = 0
 		if (mantaMoving == 1)
 			if (repairstate == 0)
-
-				if(istype(AM,/obj/item/scrap))
-					return
-
-				if(world.timeofday - AM.last_bumped <= 60)
-					return
-
-				if(ismob(AM))
-					var/mob/M = AM
-					for(var/obj/O in M.contents)
-						if(isobj(O))
-							tm_amt += O.m_amt
-							tg_amt += O.g_amt
-							tw_amt += O.w_amt
-							if(iscarbon(M))
-								tw_amt += 5000
-								bblood = 2
-							else if(issilicon(M))
-								tm_amt += 5000
-								tg_amt += 1000
-						qdel(O)
-					logTheThing("combat", M, null, "is ground up in one of Manta's propellers at[log_loc(src)].")
-					message_admins("[key_name(M)] is ground up in one of Manta's propellers at [log_loc(src)].")
-					M.gib()
-				else if(isobj(AM))
-					var/obj/B = AM
-					tm_amt += B.m_amt
-					tg_amt += B.g_amt
-					tw_amt += B.w_amt
-					for(var/obj/O in AM.contents)
-						if(isobj(O))
-							tm_amt += O.m_amt
-							tg_amt += O.g_amt
-							tw_amt += O.w_amt
-						qdel(O)
-				else
-					return
-				for(var/mob/M in oviewers())
-					if(M.client)
-						boutput(M, "<span class='alert'>You hear a grinding sound!</span>")
-				var/obj/item/scrap/S = new(get_turf(src))
-				S.blood = bblood
-				S.set_components(tm_amt,tg_amt,tw_amt)
-				qdel(AM)
-			//		step(S,2)
-				return
+				actions.start(new /datum/action/bar/crusher(AM), src)
 
 
 //REPAIRING:  wrench > screwdriver > crowbar > wires > welder > wrench > screwdriver > sheet > welder
@@ -319,7 +270,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				return
 
 	proc/change_health(var/change = 0)
-		health = max(min(maxhealth, health+change), 0)
+		health = clamp(health+change, 0, maxhealth)
 		if(health == 0)
 			setOn(0)
 			repairstate = 1
@@ -437,7 +388,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	New()
 		START_TRACKING
 		. = ..()
-		update_icon()
+		UpdateIcon()
 
 	disposing()
 		STOP_TRACKING
@@ -451,11 +402,11 @@ var/obj/manta_speed_lever/mantaLever = null
 			user.shock(src, rand(5000, 15000), "chest", 1)
 		if (!src.open)
 			src.open = 1
-			update_icon()
+			UpdateIcon()
 			user.show_text("<span class='notice'><b>You open junction box's outer door.</b></span>")
 		else
 			src.open = 0
-			update_icon()
+			UpdateIcon()
 			user.show_text("<span class='notice'><b>You close junction box's outer door.</b></span>")
 
 	attackby(var/obj/item/I as obj, var/mob/user as mob)
@@ -497,7 +448,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		src.broken = 0
 		src.repairstate = 0
 
-	proc/update_icon()
+	update_icon()
 		if (src.open == 1)
 			src.icon_state = src.iconopen
 
@@ -507,7 +458,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	process()
 		if(broken == 1)
-			var/obj/sparks = unpool(/obj/effects/sparks/end)
+			var/obj/sparks = new /obj/effects/sparks/end
 			sparks.set_loc(src.loc)
 			playsound(src.loc, "sparks", 100, 1)
 			var/area/TT = get_area(src)
@@ -579,7 +530,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			return
 
 	proc/change_health(var/change = 0)
-		health = max(min(maxhealth, health+change), 0)
+		health = clamp(health+change, 0, maxhealth)
 		if (broken == 1)
 			return
 		if(health == 0)
@@ -649,7 +600,7 @@ var/obj/manta_speed_lever/mantaLever = null
 							actions.start(new /datum/action/bar/icon/magnettether_fix(src, I, 30), user)
 
 	proc/change_health(var/change = 0)
-		health = max(min(maxhealth, health+change), 0)
+		health = clamp(health+change, 0, maxhealth)
 		if (broken == 1)
 			return
 		if(health == 0)
@@ -658,7 +609,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			repairstate = 1
 			MagneticTether = 0
 			src.desc = "You should start by removing the outer screws from the casing. Be sure to wear some insulated gloves!"
-			world << 'sound/effects/manta_alarm.ogg'
+			playsound_global(world, "sound/effects/manta_alarm.ogg", 90)
 			command_alert("The Magnetic tether has suffered critical damage aboard NSS Manta. Jetpacks equipped with magnetic attachments are now offline, please do not venture out into the ocean until the tether has been repaired.", "Magnetic Tether Damaged")
 
 /obj/miningteleporter
@@ -697,7 +648,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		flick("englrt1", src)
 		playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
 		animate_teleport(user)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 		teleport(user)
 		busy = 0
 
@@ -711,7 +662,7 @@ var/obj/manta_speed_lever/mantaLever = null
 					src.recharging = 1
 					user.set_loc(S.loc)
 					showswirl(user.loc)
-					SPAWN_DBG(recharge)
+					SPAWN(recharge)
 						S.recharging = 0
 						src.recharging = 0
 				return
@@ -789,7 +740,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/database_id = null
 	var/random_color = 1
 	var/drop_type = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		..()
@@ -814,7 +765,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return ..()
 
 
-/obj/sea_plant_manta/HasExited(atom/movable/A as mob|obj)
+/obj/sea_plant_manta/Uncrossed(atom/movable/A as mob|obj)
 	..()
 	if (ismob(A))
 		if (A.dir & SOUTH) //If mob exiting south, dont break perspective
@@ -1280,7 +1231,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		..()
 		if (random_events.announce_events)
 			command_alert("Communication tower has been severely damaged aboard NSS Manta. Ships automated communication system will now attempt to re-establish signal through backup channel. We estimate this will take eight to ten minutes.", "Communications Malfunction")
-			world << 'sound/effects/commsdown.ogg'
+			playsound_global(world, "sound/effects/commsdown.ogg", 100)
 			sleep(rand(80,100))
 			signal_loss += 100
 			sleep(rand(4800,6000))

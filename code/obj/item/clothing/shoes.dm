@@ -7,7 +7,7 @@
 	name = "shoes"
 	icon = 'icons/obj/clothing/item_shoes.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
-	wear_image_icon = 'icons/mob/feet.dmi'
+	wear_image_icon = 'icons/mob/clothing/feet.dmi'
 	var/chained = 0
 	var/laces = LACES_NORMAL // Laces for /obj/item/gun/energy/pickpocket harass mode.
 	var/kick_bonus = 0 //some shoes will yield extra kick damage!
@@ -71,7 +71,6 @@
 	var/uses = 6
 	var/emagged = 0
 	burn_possible = 0
-	module_research = list("efficiency" = 10)
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
 
@@ -148,39 +147,36 @@
 	uses_multiple_icon_states = 1
 	desc = "Shoes, now in prisoner orange! Can be made into shackles."
 
+	attack_self(mob/user as mob)
+		if (src.chained)
+			src.chained = null
+			src.cant_self_remove = 0
+			new /obj/item/handcuffs(get_turf(user))
+			src.name = "orange shoes"
+			src.icon_state = "orange"
+			src.desc = "Shoes, now in prisoner orange! Can be made into shackles."
+
+	attackby(H as obj, loc)
+		if (istype(H, /obj/item/handcuffs) && !src.chained)
+			qdel(H)
+			src.chained = 1
+			src.cant_self_remove = 1
+			src.name = "shackles"
+			src.desc = "Used to restrain prisoners."
+			src.icon_state = "orange1"
+		..()
+
 /obj/item/clothing/shoes/pink
 	name = "pink shoes"
 	icon_state = "pink"
-
-/obj/item/clothing/shoes/orange/attack_self(mob/user as mob)
-	if (src.chained)
-		src.chained = null
-		src.cant_self_remove = 0
-		new /obj/item/handcuffs(get_turf(user))
-		src.name = "orange shoes"
-		src.icon_state = "orange"
-		src.desc = "Shoes, now in prisoner orange! Can be made into shackles."
-	return
-
-/obj/item/clothing/shoes/orange/attackby(H as obj, loc)
-	if (istype(H, /obj/item/handcuffs) && !src.chained)
-		qdel(H)
-		src.chained = 1
-		src.cant_self_remove = 1
-		src.name = "shackles"
-		src.desc = "Used to restrain prisoners."
-		src.icon_state = "orange1"
-	return
 
 /obj/item/clothing/shoes/magnetic
 	name = "magnetic shoes"
 	desc = "Keeps the wearer firmly anchored to the ground. Provided the ground is metal, of course."
 	icon_state = "magboots"
 	// c_flags = NOSLIP
-	permeability_coefficient = 0.05
 	mats = 8
 	burn_possible = 0
-	module_research = list("efficiency" = 5, "engineering" = 5)
 	laces = LACES_NONE
 	kick_bonus = 2
 	step_sound = "step_plating"
@@ -205,11 +201,10 @@
 	desc = "Sandals blessed by the all-powerful goddess of victory and footwear."
 	icon_state = "wizard" //TODO: replace with custom sprite, thinking winged sandals
 	c_flags = NOSLIP
-	permeability_coefficient = 0.05
+	permeability_coefficient = 1
 	mats = 0
 	magical = 1
 	burn_possible = 0
-	module_research = list("efficiency" = 5, "engineering" = 5)
 	laces = LACES_NONE
 	step_sound = "step_flipflop"
 	step_priority = STEP_PRIORITY_LOW
@@ -228,10 +223,8 @@
 	name = "mechanised boots"
 	desc = "Industrial-grade boots fitted with mechanised balancers and stabilisers to increase running speed under a heavy workload."
 #endif
-	permeability_coefficient = 0.05
 	mats = 12
 	burn_possible = 0
-	module_research = list("efficiency" = 5, "engineering" = 5, "mining" = 10)
 	laces = LACES_NONE
 	kick_bonus = 2
 
@@ -258,6 +251,11 @@
 	step_priority = STEP_PRIORITY_LOW
 	permeability_coefficient = 0.05
 
+	torn
+		desc = "Rubber boots that would prevent slipping on wet surfaces, were they not all torn up. Like these are. Damn."
+		c_flags = null
+		permeability_coefficient = 1
+
 /obj/item/clothing/shoes/clown_shoes
 	name = "clown shoes"
 	desc = "Damn, thems some big shoes."
@@ -265,7 +263,6 @@
 	item_state = "clown_shoes"
 	step_sound = "clownstep"
 	compatible_species = list("human", "cow")
-	module_research = list("audio" = 5)
 	step_lots = 1
 	step_priority = 999
 	var/list/crayons = list() // stonepillar's crayon project
@@ -483,7 +480,6 @@
 	icon_state = "rocketboots"
 	laces = LACES_NONE
 	burn_possible = 0
-	module_research = list("efficiency" = 20)
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
 	var/on = 1
@@ -575,7 +571,6 @@
 	name = "witchfinder general's boots"
 	desc = "You can almost hear the authority in each step."
 	icon_state = "witchfinder"
-	permeability_coefficient = 0.30
 	kick_bonus = 1
 	step_sound = "step_wood"
 	step_priority = STEP_PRIORITY_LOW
@@ -687,3 +682,48 @@
 	icon_state = "mjwhite"
 	desc = "Dainty and formal. This pair is white."
 	step_sound = "footstep"
+
+/obj/item/clothing/shoes/slasher_shoes
+	name = "Industrial Boots"
+	icon_state = "boots"
+	desc = "Bulky boots with thick soles, protecting your feet."
+	step_sound = "step_plating"
+
+	noslip
+		magnetic = 1
+		c_flags = NOSLIP
+		cant_self_remove = 1
+		cant_other_remove = 1
+		step_sound = "step_lattice"
+
+		setupProperties()
+			..()
+			setProperty("coldprot", 5)
+			setProperty("heatprot", 5)
+			setProperty("exploprot", 15)
+
+/obj/item/clothing/shoes/witchboots
+	name = "Witch Boots"
+	icon_state = "witchboots"
+	desc = "The curved front of these boots is reminiscent of a crescent moon, how magical."
+	step_sound = "footstep"
+
+//Western Boots
+
+/obj/item/clothing/shoes/westboot
+	name = "Real Cowboy Boots"
+	icon_state = "westboot"
+	desc = "Perfect for riding horses, if only you had one!"
+
+/obj/item/clothing/shoes/westboot/black
+	name = "Black Cowboy Boots"
+	icon_state = "westboot_black"
+
+/obj/item/clothing/shoes/westboot/dirty
+	name = "Dirty Cowboy Boots"
+	icon_state = "westboot_dirty"
+
+/obj/item/clothing/shoes/westboot/brown
+	name = "Brown Cowboy Boots"
+	icon_state = "westboot_brown"
+

@@ -37,7 +37,13 @@
 	tranq_pistol_dart
 		name = "tranq pistol dart pouch"
 		icon_state = "ammopouch-double"
-		spawn_contents = list(/obj/item/ammo/bullets/tranq_darts/syndicate/pistol = 5)
+		slots = 4
+		spawn_contents = list(/obj/item/ammo/bullets/tranq_darts/syndicate/pistol = 4)
+
+	poison_dart
+		name = "poison dart pouch"
+		icon_state = "ammopouch-double"
+		spawn_contents = list(/obj/item/ammo/bullets/blow_darts = 2, /obj/item/ammo/bullets/blow_darts/madness = 1, /obj/item/ammo/bullets/blow_darts/ls_bee = 1)
 
 	det_38
 		name = ".38 rounds pouch"
@@ -58,7 +64,6 @@
 	sniper
 		name = "sniper magazine pouch"
 		icon_state = "ammopouch-double"
-		slots = 5
 		spawn_contents = list(/obj/item/ammo/bullets/rifle_762_NATO = 5)
 
 	shotgun
@@ -84,6 +89,11 @@
 		name = "MPRT rocket pouch"
 		slots = 4
 		spawn_contents = list(/obj/item/ammo/bullets/rpg = 2)
+
+	lmg
+		name = "LMG belt pouch"
+		icon_state = "ammopouch-double"
+		spawn_contents = list(/obj/item/ammo/bullets/lmg = 5)
 
 /obj/item/storage/grenade_pouch
 	name = "grenade pouch"
@@ -147,7 +157,7 @@
 	slots = 6
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/handcuffs = 3,\
-	/obj/item/ammo/power_cell/high_power,\
+	/obj/item/ammo/power_cell/med_power,\
 	/obj/item/device/flash,\
 	/obj/item/instrument/whistle)
 
@@ -209,4 +219,4 @@
 	w_class = W_CLASS_SMALL
 	slots = 7 //bonus two slots for the banana grenade kit
 	does_not_open_in_pocket = 0
-	spawn_contents = list(/obj/item/old_grenade/banana = 5)
+	spawn_contents = list(/obj/item/old_grenade/spawner/banana = 5)

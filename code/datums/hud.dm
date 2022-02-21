@@ -46,7 +46,7 @@
 		if (master && (!master.click_check || (usr in master.mobs)))
 			master.scrolled(src.id, dx, dy, usr, parms, src)
 
-	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		if (master && (!master.click_check || (usr in master.mobs)))
 			master.MouseDrop(src, over_object, src_location, over_location, over_control, params)
 
@@ -173,17 +173,17 @@
 		var/atom/movable/screen/S = get_by_id(id)
 		if(S)
 			if(visible)
-				S.invisibility = 0
+				S.invisibility = INVIS_NONE
 			else
-				S.invisibility = 101
+				S.invisibility = INVIS_ALWAYS
 		return
 
 	proc/set_visible(atom/movable/screen/S, visible)
 		if(S)
 			if(visible)
-				S.invisibility = 0
+				S.invisibility = INVIS_NONE
 			else
-				S.invisibility = 101
+				S.invisibility = INVIS_ALWAYS
 		return
 
 	proc/remove_screen(atom/movable/screen/S)
@@ -240,8 +240,11 @@
 * 	the third element is added to the bottom side of the second element, etc.
 **/
 
-/datum/hud/proc/add_hud_zone(var/list/coords, var/alias, var/horizontal_edge = "WEST", var/vertical_edge = "SOUTH")
+/datum/hud/proc/add_hud_zone(var/list/coords, var/alias, var/horizontal_edge = "WEST", var/vertical_edge = "SOUTH", var/ignore_overlap = 0)
 	if (!coords || !alias || !src.hud_zones || !horizontal_edge || !vertical_edge)
+		return
+
+	if (!src.screen_boundary_check(coords) || !src.zone_overlap_check(coords, ignore_overlap))
 		return
 
 	src.hud_zones[alias] = list("coords" = coords, "elements" = list(), "horizontal_edge" = "[horizontal_edge]",\
@@ -396,6 +399,68 @@
 	curr_horizontal++
 	hud_zone["horizontal_offset"] = curr_horizontal
 	hud_zone["vertical_offset"] = curr_vertical
+
+/// returns true if a rectangle defined by coords is within screen dimensions, false if it isnt
+/datum/hud/proc/screen_boundary_check(var/list/coords)
+	if (!coords)
+		return false
+
+	// we only support widescreen right now
+	if (coords["x_low"] < 1 || coords["x_low"] > 21)
+		return false
+	if (coords["y_low"] < 1 || coords["y_low"] > 15)
+		return false
+	if (coords["x_high"] < 1 || coords["x_high"] > 21)
+		return false
+	if (coords["y_high"] < 1 || coords["y_high"] > 15)
+		return false
+
+	return true
+
+/// returns true if a rectangle defined by coords doesnt overlap with any existing hud zone, false if it does
+/datum/hud/proc/zone_overlap_check(var/list/coords, var/ignore_overlap = 0)
+	if (ignore_overlap)
+		return true
+
+	if (!coords)
+		return false
+
+	var/x_low_1 = coords["x_low"]
+	var/y_low_1 = coords["y_low"]
+	var/x_high_1 = coords["x_high"]
+	var/y_high_1 = coords["y_high"]
+
+	for (var/list/zone_alias in src.hud_zones)
+		var/list/other_coords = src.hud_zones[zone_alias][coords]
+		var/x_low_2 = other_coords["x_low"]
+		var/y_low_2 = other_coords["y_low"]
+		var/x_high_2 = other_coords["x_high"]
+		var/y_high_2 = other_coords["y_high"]
+
+		// sov googled this algorithm for me :3
+
+		// is one rectangle to the right of the other?
+		if (x_low_1 >= x_high_2 || x_low_2 >= x_high_1)
+			continue
+
+		// is one above the other??
+		if (y_low_1 >= y_high_2 || y_low_2 >= y_high_1)
+			continue
+
+		// they overlap
+		return false
+
+	// no overlaps ever :]
+	return true
+
+/// returns /atom/movable/screen/hud with in zone_alias with alias elem_alias
+/datum/hud/proc/get_element(var/zone_alias, var/elem_alias)
+	if (!zone_alias || !elem_alias)
+		return null
+
+	var/list/elements = src.hud_zones[zone_alias]["elements"]
+	var/atom/movable/screen/hud/element = elements[elem_alias]
+	return element
 
 /// debug purposes only, call this to print ALL of the information you could ever need
 /datum/hud/proc/debug_print_all()

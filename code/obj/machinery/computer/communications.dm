@@ -6,6 +6,7 @@
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_COMMSCONSOLES
+	circuit_type = /obj/item/circuitboard/communications
 	var/prints_intercept = 1
 	var/authenticated = 0
 	var/list/messagetitle = list()
@@ -23,18 +24,25 @@
 		STATE_DELMESSAGE = 6
 		STATE_STATUSDISPLAY = 7
 
-	var/status_display_freq = "1435"
+	var/status_display_freq = FREQ_STATUS_DISPLAY
 	var/stat_msg1
 	var/stat_msg2
-	desc = "A computer that allows one to call and recall the emergency shuttle, as well as recieve messages from Centcom."
+	desc = "A computer that allows one to call and recall the emergency shuttle, as well as receive messages from Centcom."
 
 	light_r =0.6
 	light_g = 1
 	light_b = 0.1
 
-	disposing()
-		radio_controller.remove_object(src, status_display_freq)
+	New()
 		..()
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, status_display_freq)
+
+/obj/machinery/computer/communications/special_deconstruct(obj/computerframe/frame as obj)
+	if(src.status & BROKEN)
+		logTheThing("station", usr, null, "disassembles [src] (broken) [log_loc(src)]")
+	else
+		logTheThing("station", usr, null, "disassembles [src] [log_loc(src)]")
+
 
 /obj/machinery/computer/communications/process()
 	..()
@@ -92,7 +100,7 @@
 			src.state = STATE_VIEWMESSAGE
 			if (!src.currmsg)
 				if(href_list["message-num"])
-					src.currmsg = text2num(href_list["message-num"])
+					src.currmsg = text2num_safe(href_list["message-num"])
 				else
 					src.state = STATE_MESSAGELIST
 		if("delmessage")
@@ -148,7 +156,7 @@
 			src.aistate = STATE_VIEWMESSAGE
 			if (!src.aicurrmsg)
 				if(href_list["message-num"])
-					src.aicurrmsg = text2num(href_list["message-num"])
+					src.aicurrmsg = text2num_safe(href_list["message-num"])
 				else
 					src.aistate = STATE_MESSAGELIST
 		if("ai-delmessage")
@@ -171,55 +179,15 @@
 	boutput(world, "<span class='alert'>Lockdown cancelled by [usr.name]!</span>")
 
 	for(var/obj/machinery/firealarm/FA as anything in machine_registry[MACHINES_FIREALARMS]) //deactivate firealarms
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(FA.lockdownbyai == 1)
 				FA.lockdownbyai = 0
 				FA.reset()
 	for_by_tcl(AL, /obj/machinery/door/airlock) //open airlocks
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(AL.canAIControl() && AL.lockdownbyai == 1)
 				AL.open()
 				AL.lockdownbyai = 0
-
-/obj/machinery/computer/communications/attackby(var/obj/item/I as obj, user as mob)
-	if (isscrewingtool(I))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 2 SECONDS))
-			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/communications/M = new /obj/item/circuitboard/communications( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				logTheThing("station", user, null, "disassembles [src] (broken) [log_loc(src)]")
-				qdel(src)
-			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/communications/M = new /obj/item/circuitboard/communications( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				logTheThing("station", user, null, "disassembles [src] [log_loc(src)]")
-				qdel(src)
-
-	else
-		src.attack_hand(user)
-	return
-
-/obj/machinery/computer/communications/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
 
 /obj/machinery/computer/communications/attack_hand(var/mob/user as mob)
 	if(..())
@@ -270,14 +238,14 @@
 					dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=delmessage'>Delete \]"
 			else
 				src.state = STATE_MESSAGELIST
-				src.attack_hand(user)
+				src.Attackhand(user)
 				return
 		if(STATE_DELMESSAGE)
 			if (src.currmsg)
 				dat += "Are you sure you want to delete this message? \[ <A HREF='?src=\ref[src];operation=delmessage2'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
 			else
 				src.state = STATE_MESSAGELIST
-				src.attack_hand(user)
+				src.Attackhand(user)
 				return
 		if(STATE_STATUSDISPLAY)
 			dat += "Set Status Displays<BR>"
@@ -318,14 +286,14 @@
 				dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=ai-delmessage'>Delete</A> \]"
 			else
 				src.aistate = STATE_MESSAGELIST
-				src.attack_hand(user)
+				src.Attackhand(user)
 				return null
 		if(STATE_DELMESSAGE)
 			if(src.aicurrmsg)
 				dat += "Are you sure you want to delete this message? \[ <A HREF='?src=\ref[src];operation=ai-delmessage2'>OK</A> | <A HREF='?src=\ref[src];operation=ai-viewmessage'>Cancel</A> \]"
 			else
 				src.aistate = STATE_MESSAGELIST
-				src.attack_hand(user)
+				src.Attackhand(user)
 				return
 
 		if(STATE_STATUSDISPLAY)
@@ -406,6 +374,9 @@
 	if(!call_reason || length(call_reason) < 1)
 		call_reason = "No reason given."
 
+	message_admins("<span class='internal'>[key_name(user)] called the Emergency Shuttle to the station</span>")
+	logTheThing("station", null, null, "[key_name(user)] called the Emergency Shuttle to the station")
+
 	emergency_shuttle.incall()
 	command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
 	return 0
@@ -424,18 +395,13 @@
 
 	boutput(world, "<span class='notice'><B>Alert: The shuttle is going back!</B></span>") //marker4
 
+	logTheThing("station", user, null, "recalled the Emergency Shuttle")
+	message_admins("<span class='internal'>[key_name(user)] recalled the Emergency Shuttle</span>")
 	emergency_shuttle.recall()
 
 	return 0
 
 /obj/machinery/computer/communications/proc/post_status(var/command, var/data1, var/data2)
-
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(status_display_freq)
-
-	if(!frequency) return
-
-
-
 	var/datum/signal/status_signal = get_free_signal()
 	status_signal.source = src
 	status_signal.transmission_method = 1
@@ -448,7 +414,7 @@
 		if("alert")
 			status_signal.data["picture_state"] = data1
 
-	frequency.post_signal(src, status_signal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, status_display_freq)
 
 
 

@@ -180,13 +180,82 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 42
 		prefabSizeY = 40
 
-	candy_shop //Ryn's store from out of time and out of place
+	candy_shop // Ryn's store from out of time and out of place
 		maxNum = 1
 		probability = 25
 		prefabPath = "assets/maps/prefabs/prefab_candy_shop.dmm"
 		prefabSizeX = 20
 		prefabSizeY = 20
 
+	space_casino // Lythine's casino with some dubious gambling machines
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_space_casino.dmm"
+		prefabSizeX = 31
+		prefabSizeY = 23
+
+	ranch // A tiny little ranch in space
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_ranch.dmm"
+		prefabSizeX = 12
+		prefabSizeY = 12
+
+	synd_lab // Zone's Syndicate laboratory for experimenting with telecrystals
+		maxNum = 1
+		probability = 15
+		prefabPath = "assets/maps/prefabs/prefab_synd_lab.dmm"
+		prefabSizeX = 14
+		prefabSizeY = 16
+
+	shooting_range // Nef's shooting range with an experimental ray gun
+		maxNum = 1
+		probability = 15
+		prefabPath = "assets/maps/prefabs/prefab_gunrange.dmm"
+		prefabSizeX = 19
+		prefabSizeY = 22
+
+	lesbeeans // BatElite's bee-shaped farm where the bees are also lesbians
+		maxNum = 1
+		probability = 20
+		prefabPath = "assets/maps/prefabs/prefab_lesbeeans.dmm"
+		prefabSizeX = 24
+		prefabSizeY = 24
+
+	silverglass // Ill-fated entanglement research facility
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_silverglass.dmm"
+		prefabSizeX = 32
+		prefabSizeY = 24
+
+	safehouse // A seemingly abandoned safehouse
+		maxNum = 1
+		probability = 15
+		prefabPath = "assets/maps/prefabs/prefab_safehouse.dmm"
+		prefabSizeX = 33
+		prefabSizeY = 22
+
+	dreamplaza // Walp's abandoned space mall... Well, what remains of it.
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_dreamplaza.dmm"
+		prefabSizeX = 30
+		prefabSizeY = 30
+
+	secbot_academy // Danger Noodle's elite securitron school
+		maxNum = 1
+		probability = 15
+		prefabPath = "assets/maps/prefabs/prefab_securitron_academy.dmm"
+		prefabSizeX = 34
+		prefabSizeY = 37
+
+	art_workshop
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_artist_studio.dmm"
+		prefabSizeX = 25
+		prefabSizeY = 18
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit
@@ -198,7 +267,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 8
 		prefabSizeY = 8
 
-#ifdef SUBMARINE_MAP
+#ifdef UNDERWATER_MAP
 	mantahole
 		required = 1
 		underwater = 1
@@ -418,9 +487,9 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		underwater = 1
 		maxNum = 1
 		required = 1
-		prefabPath = "assets/maps/prefabs/prefab_water_miner_manta.dmm"
-		prefabSizeX = 21
-		prefabSizeY = 15
+		prefabPath = "assets/maps/prefabs/prefab_water_mantamining.dmm"
+		prefabSizeX = 13
+		prefabSizeY = 43
 #endif
 
 	cache_small_loot

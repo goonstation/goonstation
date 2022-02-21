@@ -3,64 +3,40 @@ var/list/special_places = list() //list of location names, which are coincidenta
 
 var/list/magnet_locations = list()
 
-/obj/lrteleporter
+/obj/machinery/lrteleporter
 	name = "Experimental long-range teleporter"
 	desc = "Well this looks somewhat unsafe."
 	icon = 'icons/misc/32x64.dmi'
 	icon_state = "lrport"
 	density = 0
 	anchored = 1
+	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
 	var/busy = 0
 	layer = 2
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
 	New()
 		..()
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", "mechcompsend")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"recieve", "mechcomprecieve")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"receive", "mechcompreceive")
 
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
 
 	attack_hand(mob/user as mob)
-		var/link_html = "<br>"
-
-		if(special_places.len)
-			for(var/A in special_places)
-				link_html += {"[A] <a href='?src=\ref[src];send=[A]'><small>(Send)</small></a> <a href='?src=\ref[src];recieve=[A]'><small>(Recieve)</small></a><br>"}
-		else
-			link_html = "<br>No co-ordinates available.<br>"
-
-		var/html = {"<!doctype html>
-			<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-			<html>
-			<head>
-			<title>Long-range teleporter</title>
-			</head>
-			<body style="overflow:auto;background-color: #eeeeee;">
-			<p>Long-range destinations:</p><br>
-			[link_html]
-			</body>
-			"}
-
-		src.add_dialog(user)
+		ui_interact(user)
 		add_fingerprint(user)
-		user.Browse(html, "window=lrporter;size=250x380;can_resize=0;can_minimize=0;can_close=1;override_setting=1")
-		onclose(user, "lrporter", src)
 
 	proc/mechcompsend(var/datum/mechanicsMessage/input)
 		if(!input)
 			return
-		var/place = special_places[input.signal]
-		if(place)
-			lrtsend(place)
+		lrtsend(input.signal)
 
-	proc/mechcomprecieve(var/datum/mechanicsMessage/input)
+	proc/mechcompreceive(var/datum/mechanicsMessage/input)
 		if(!input)
 			return
-		var/place = special_places[input.signal]
-		if(place)
-			lrtrecieve(place)
+		lrtreceive(input.signal)
 
 	proc/is_good_location(var/place)
 		if(special_places.len)
@@ -92,12 +68,12 @@ var/list/magnet_locations = list()
 				if(ismob(M))
 					var/mob/O = M
 					O.changeStatus("stunned", 2 SECONDS)
-				SPAWN_DBG(6 DECI SECONDS) M.set_loc(target)
-			SPAWN_DBG(1 SECOND) busy = 0
+				SPAWN(6 DECI SECONDS) M.set_loc(target)
+			SPAWN(1 SECOND) busy = 0
 			return 1
 		return 0
 
-	proc/lrtrecieve(var/place)
+	proc/lrtreceive(var/place)
 		if (place && src.is_good_location(place))
 			var/turf/target = null
 			for(var/turf/T in landmarks[LANDMARK_LRT])
@@ -117,25 +93,50 @@ var/list/magnet_locations = list()
 				if(ismob(M))
 					var/mob/O = M
 					O.changeStatus("stunned", 2 SECONDS)
-				SPAWN_DBG(6 DECI SECONDS) M.set_loc(src.loc)
-			SPAWN_DBG(1 SECOND) busy = 0
+				SPAWN(6 DECI SECONDS) M.set_loc(src.loc)
+			SPAWN(1 SECOND) busy = 0
 			return 1
 		return 0
 
-	Topic(href, href_list)
-		if (src.busy)
-			return
+/obj/machinery/lrteleporter/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "LongRangeTeleporter", name)
+		ui.open()
 
-		if (get_dist(usr, src) > 1 || usr.z != src.z)
-			return
+/obj/machinery/lrteleporter/ui_data(mob/user)
+	var/list/destinations = list()
+	for(var/A in special_places)
+		destinations += list(list(
+			"destination" = "[A]",
+			"ref" = null))
 
-		if (href_list["send"])
-			var/place = href_list["send"]
+	. = list(
+		"destinations" = destinations
+	)
+
+/obj/machinery/lrteleporter/ui_static_data(mob/user)
+	. = list(
+		"send_allowed" = TRUE,
+		"receive_allowed" = TRUE,
+		"syndicate" = FALSE
+	)
+
+/obj/machinery/lrteleporter/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	if(busy) return
+	if(!in_interact_range(src, usr) || usr.z != src.z) return
+
+	switch(action)
+		if("send")
+			var/place = params["name"]
 			src.lrtsend(place)
 
-		if (href_list["recieve"])
-			var/place = href_list["recieve"]
-			src.lrtrecieve(place)
+		if("receive")
+			var/place = params["name"]
+			src.lrtreceive(place)
 
 //////////////////////////////////////////////////
 /datum/telescope_manager
@@ -229,7 +230,7 @@ var/list/magnet_locations = list()
 			walk_to(src, src.target,1,4)
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
-			SPAWN_DBG(attack_cooldown)
+			SPAWN(attack_cooldown)
 				attacking = 0
 		return
 
@@ -241,7 +242,7 @@ var/list/magnet_locations = list()
 
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
-			SPAWN_DBG(attack_cooldown)
+			SPAWN(attack_cooldown)
 				attacking = 0
 		return
 
@@ -254,7 +255,7 @@ var/list/magnet_locations = list()
 		if(prob(20) && alive)
 			src.visible_message("<span class='alert'><b>[src]</b> begins to reassemble!</span>")
 			var/turf/T = src.loc
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				new/obj/critter/gunbot/drone/buzzdrone/naniteswarm(T)
 				if(src)
 					qdel(src)

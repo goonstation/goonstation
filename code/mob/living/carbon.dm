@@ -40,14 +40,14 @@
 							src.inertia_dir = 0
 							return
 					if (2) //lube
-						src.pulling = null
+						src.remove_pulling()
 						src.changeStatus("weakened", 3.5 SECONDS)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
 						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
 						var/atom/target = get_edge_target_turf(src, src.dir)
 						src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
 					if (3) // superlube
-						src.pulling = null
+						src.remove_pulling()
 						src.changeStatus("weakened", 6 SECONDS)
 						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
@@ -86,7 +86,7 @@
 	. = ..(give_medal, include_ejectables)
 
 /mob/living/carbon/proc/urinate()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/obj/item/reagent_containers/pee_target = src.equipped()
 		if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container())
 			src.visible_message("<span class='alert'><B>[src] pees in [pee_target]!</B></span>")
@@ -118,19 +118,11 @@
 			var/perpname = src.name
 			if(src:wear_id && src:wear_id:registered)
 				perpname = src:wear_id:registered
-			// find the matching security record
-			for(var/datum/data/record/R in data_core.general)
-				if(R.fields["name"] == perpname)
-					for (var/datum/data/record/S in data_core.security)
-						if (S.fields["id"] == R.fields["id"])
-							// now add to rap sheet
 
-							S.fields["criminal"] = "*Arrest*"
-							S.fields["mi_crim"] = "Public urination."
-
-							break
-
-
+			var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
+			if(sec_record && sec_record["criminal"] != "*Arrest*")
+				sec_record["criminal"] = "*Arrest*"
+				sec_record["mi_crim"] = "Public urination."
 
 /mob/living/carbon/swap_hand()
 	var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)
@@ -140,7 +132,7 @@
 
 /mob/living/carbon/lastgasp()
 	// making this spawn a new proc since lastgasps seem to be related to the mob loop hangs. this way the loop can keep rolling in the event of a problem here. -drsingh
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if (!src || !src.client) return														// break if it's an npc or a disconnected player
 		var/enteredtext = winget(src, "mainwindow.input", "text")							// grab the text from the input bar
 		if ((copytext(enteredtext,1,6) == "say \"") && length(enteredtext) > 5)				// check if the player is trying to say something
@@ -166,7 +158,7 @@
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
-	src.brainloss = max(0,min(src.brainloss + amount,120))
+	src.brainloss = clamp(src.brainloss + amount, 0, 120)
 
 	if (src.brainloss >= 120 && isalive(src))
 		// instant death, we can assume a brain this damaged is no longer able to support life
@@ -180,14 +172,19 @@
 	if (!toxloss && amount < 0)
 		amount = 0
 	if (..())
-		return
+		return 1
 
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
-	if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
-		src.toxloss = 0
-		return 1 //prevent organ damage
+	var/resist_toxic = src.bioHolder?.HasEffect("resist_toxic")
+
+	if(resist_toxic && amount > 0)
+		if(resist_toxic > 1)
+			src.toxloss = 0
+			return 1 //prevent organ damage
+		else
+			amount *= 0.33
 
 	src.toxloss = max(0,src.toxloss + amount)
 	return
@@ -201,6 +198,11 @@
 	if (HAS_MOB_PROPERTY(src, PROP_BREATHLESS))
 		src.oxyloss = 0
 		return
+
+	if (ispug(src))
+		var/mob/living/carbon/human/H = src
+		amount *= 2
+		H.emote(pick("wheeze", "cough", "sputter"))
 
 	src.oxyloss = max(0,src.oxyloss + amount)
 	return

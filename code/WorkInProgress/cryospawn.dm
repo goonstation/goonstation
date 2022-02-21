@@ -1,10 +1,10 @@
-#define CRYOSLEEP_DELAY 15 MINUTES
+#define CRYOSLEEP_DELAY 5 MINUTES
 #define CRYOTRON_MESSAGE_DELAY 3 SECONDS
 
 /obj/cryotron_spawner
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 #ifdef RP_MODE
 			new /obj/cryotron(src.loc)
 #endif
@@ -18,6 +18,7 @@
 	density = 1
 	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "cryotron_up"
+	event_handler_flags = IMMUNE_SINGULARITY
 	bound_width = 96
 	bound_x = -32
 	bound_height = 64
@@ -30,6 +31,7 @@
 	var/list/folks_to_spawn = list()
 	var/list/their_jobs = list()
 	var/list/stored_mobs = list() // people who've bowed out of the round
+	var/list/stored_crew_names = list() // stores real_names and only removes names if you leave cryo, not ghost
 	var/tmp/busy = 0
 
 	New()
@@ -103,7 +105,7 @@
 		src.icon_state = "cryotron_down"
 		flick("cryotron_go_down", src)
 
-		SPAWN_DBG(1.9 SECONDS)
+		SPAWN(1.9 SECONDS)
 			if (!thePerson || thePerson.loc != src)
 				busy = 0
 				return
@@ -145,9 +147,13 @@
 				if (L.client)
 					L.addOverlayComposition(/datum/overlayComposition/blinded)
 					L.updateOverlaysClient(L.client)
+				for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
+					if (!A.status && A.announces_arrivals)
+						A.announce_departure(L)
 				return 1
 
 		stored_mobs += L
+		stored_crew_names += L.real_name
 		if (!voluntary) // someone shoved us in here, mark them as not being in here of their own choice (this can only be done with braindead people who have a ckey, so you can't just grief some guy by shoving them in)
 			stored_mobs[L] = "involuntary"
 		else
@@ -157,16 +163,24 @@
 		if (L.client)
 			L.addOverlayComposition(/datum/overlayComposition/blinded)
 			L.updateOverlaysClient(L.client)
+		for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
+			if (!A.status && A.announces_arrivals)
+				A.announce_departure(L)
 		if (ishuman(L))
 			var/mob/living/carbon/human/H = L
 			if (H.sims)
 				for (var/name in H.sims.motives)
 					H.sims.affectMotive(name, 100)
+
+		var/datum/db_record/crew_record = data_core.general.find_record("id", L.datacore_id)
+		if (!isnull(crew_record))
+			crew_record["p_stat"] = "In Cryogenic Storage"
+
 		return 1
 
 	proc/enter_prompt(var/mob/living/user as mob)
 		if (mob_can_enter_storage(user)) // check before the prompt for dead/incapped/restrained/etc users
-			if (alert(user, "Would you like to enter cryogenic storage? You will be unable to leave it again until 15 minutes have passed.", "Confirmation", "Yes", "No") == "Yes")
+			if (alert(user, "Would you like to enter cryogenic storage? You will be unable to leave it again until 5 minutes have passed.", "Confirmation", "Yes", "No") == "Yes")
 				if (alert(user, "Are you absolutely sure you want to enter cryogenic storage?", "Confirmation", "Yes", "No") == "Yes")
 					if (mob_can_enter_storage(user)) // check again in case they left the prompt up and moved away/died/whatever
 						add_person_to_storage(user)
@@ -236,6 +250,10 @@
 		if (add_person_to_queue(user, null))
 			stored_mobs[user] = null
 			stored_mobs -= user
+			stored_crew_names -= user.real_name
+			var/datum/db_record/crew_record = data_core.general.find_record("id", user.datacore_id)
+			if (!isnull(crew_record))
+				crew_record["p_stat"] = "Active"
 			return 1
 		return 0
 
@@ -248,12 +266,17 @@
 				L.removeOverlayComposition(/datum/overlayComposition/blinded)
 				stored_mobs[L] = null
 				stored_mobs -= L
+				if(!isnull(L.loc)) // loc only goes null when you ghost, probably
+					stored_crew_names -= L.real_name // you shouldn't be removed from the list when you ghost
+					var/datum/db_record/crew_record = data_core.general.find_record("id", L.datacore_id)
+					if (!isnull(crew_record))
+						crew_record["p_stat"] = "Active"
 
 	attack_hand(var/mob/user as mob)
 		if(isgrab(user.l_hand))
-			src.attackby(user.l_hand, user)
+			src.Attackby(user.l_hand, user)
 		else if(isgrab(user.r_hand))
-			src.attackby(user.r_hand, user)
+			src.Attackby(user.r_hand, user)
 		else if (!enter_prompt(user))
 			return ..()
 

@@ -49,11 +49,13 @@
 	var/maxReservoir = 10
 	var/datum/holder
 	var/heading = "don't touch!!!"
+	var/minStored = 1
+	var/maxStored = 6
 
 /datum/chemicompiler_core/New(datum/holder)
 	..()
 	if(!istype(holder))
-		del(src)
+		qdel(src)
 		return
 
 	src.holder = holder
@@ -67,7 +69,7 @@
 			updatePanel()
 
 		if("reservoir")
-			var/resId = text2num(href_list["id"])
+			var/resId = text2num_safe(href_list["id"])
 			if(resId < minReservoir || resId > maxReservoir)
 				return
 
@@ -120,14 +122,14 @@
 /** Callbacks */
 /datum/chemicompiler_core/proc/topicPermissionCheck(action)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(topicPermissionCheckCallback)
 		return call(src.holder, topicPermissionCheckCallback)(action)
 
 /datum/chemicompiler_core/proc/showMessage(message)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	message = "<span class='alert'>[message]</span>"
 	if(messageCallback)
@@ -135,42 +137,42 @@
 
 /datum/chemicompiler_core/proc/throwError(errorCode)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(errorCallback)
 		return call(src.holder, errorCallback)(errorCode)
 
 /datum/chemicompiler_core/proc/reservoirClick(resId)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(reservoirClickCallback)
 		return call(src.holder, reservoirClickCallback)(resId)
 
 /datum/chemicompiler_core/proc/reservoirCheck(resId)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if (reservoirCheckCallback)
 		return call(src.holder, reservoirCheckCallback)(resId)
 
 /datum/chemicompiler_core/proc/transfer(source, target, amount)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if (transferCallback)
 		return call(src.holder, transferCallback)(source, target, amount)
 
 /datum/chemicompiler_core/proc/isolate(source, target, amount, index)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if (isolateCallback)
 		return call(src.holder, isolateCallback)(source, target, amount, index)
 
 /datum/chemicompiler_core/proc/heat(res, temp)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if (heatCallback)
 		var/datum/chemicompiler_executor/E = src.holder
@@ -187,12 +189,12 @@
 
 /datum/chemicompiler_core/proc/statusChange(oldStatus, newStatus)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	return call(src.holder, "statusChange")(oldStatus, newStatus)
 
 /datum/chemicompiler_core/proc/validateButtId(var/id as text)
-	var/buttId = text2num(id)
+	var/buttId = text2num_safe(id)
 	if(buttId < 1 || buttId > 6)
 		return 0
 	return buttId
@@ -223,15 +225,15 @@
 	json += "}"
 	windowCall("setUIState", json)
 
-/datum/chemicompiler_core/proc/parseCBF(var/string, var/button)
+/datum/chemicompiler_core/proc/parseCBF(string, button)
 	var/list/tokens = list(">", "<", "+", "-", ".",",", "\[", "]", "{", "}", "(", ")", "^", "'", "$", "@","#")
 	var/l = length(string)
 	var/list/inst = new
 	var/token
 
-	for(var/i = 1, i <= l, i++)
+	for(var/i in 1 to l)
 		token = copytext(string, i, i+1)
-		if(tokens.Find(token))
+		if(token in tokens)
 			inst.Add(token)
 
 		// ~ means don't allow reading the source code
@@ -256,7 +258,7 @@
 
 /datum/chemicompiler_core/proc/runCBF(var/list/inst)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	resetVM()
 	running = 1
@@ -267,12 +269,12 @@
 	if ( !running || !currentProg )
 		return
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(running)
 		var/loopUsed
 		for (loopUsed = 0, loopUsed < 30, loopUsed++)
-			if(ip > currentProg.len)
+			if(ip > length(currentProg))
 				running = 0
 				break
 			//LAGCHECK(LAG_MED)
@@ -304,7 +306,7 @@
 				if("\[") //start loop
 					if(data[dp + 1] == 0)
 						count = 1
-						while(ip <= currentProg.len && count > 0)
+						while(ip <= length(currentProg) && count > 0)
 							if(currentProg[ip] == "\[")
 								count++
 							if(currentProg[ip] == "]")
@@ -340,7 +342,7 @@
 					var/heatTo = (273 - tx) + ax
 					heatReagents(sx, heatTo)
 				if("@") //transfer
-					loopUsed = 30
+					loopUsed = tx > 10 ? 45 : 30 //output is more expensive
 					transferReagents(sx, tx, ax)
 				/*if("?") //compare *ptr to sx, using operation tx, store result in ax
 					switch(tx)
@@ -359,11 +361,11 @@
 						else
 							ax = 0*/
 				if("#") //move individual reagent from container
-					loopUsed = 30
+					loopUsed = tx > 10 ? 45 : 30 //output is more expensive
 					isolateReagent(sx, tx, ax, data[dp+1])
 				else
 
-			if(data.len < dp + 1)
+			if(length(data) < dp + 1)
 				data.len = dp + 1
 			if(length(textBuffer) > 80)
 				output += "[textBuffer]<br>"
@@ -371,7 +373,7 @@
 				updatePanel()
 
 			/*if(exec % 100 == 0) //NO RECURSION. NO.
-				SPAWN_DBG(0)
+				SPAWN(0)
 					resumeCBF()
 				break
 			*/
@@ -486,7 +488,7 @@
 
 	// lol butts
 	var/datum/tag/button/butt
-	for(i=1,i<=6,i++)
+	for(i=minStored,i<=maxStored,i++)
 		butt = new
 		butt.setText(i)
 		butt.setId("butt-[i]")
@@ -637,7 +639,7 @@
 /datum/chemicompiler_executor/New(datum/holder, corePath = /datum/chemicompiler_core/portableCore)
 	..()
 	if(!istype(holder))
-		del(src)
+		qdel(src)
 		return
 
 	src.holder = holder
@@ -686,7 +688,7 @@
 		return 1
 /datum/chemicompiler_executor/proc/reservoirClick(resId)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(istype(reservoirs[resId], /obj/item/reagent_containers/glass))
 		// Taking a res out
@@ -696,12 +698,15 @@
 			reservoirs[resId] = null
 		else
 			var/obj/item/reagent_containers/glass/B = reservoirs[resId]
-			B.attackby(usr.equipped(), usr)
+			B.Attackby(usr.equipped(), usr)
 
 	else
 		// Putting SOMETHING in
 		var/obj/item/I = usr.equipped()
 		if(istype(I, /obj/item/reagent_containers/glass))
+			if(I.cant_drop)
+				boutput(usr, "<span class='alert'>You cannot place the [I] into the [src.holder]!</span>")
+				return
 			//putting a reagent container in
 			boutput(usr, "<span class='notice'>You place the [I] into the [src.holder].</span>")
 			usr.drop_item()
@@ -710,7 +715,7 @@
 
 /datum/chemicompiler_executor/proc/topicPermissionCheck(action)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	return call(src.holder, "topicPermissionCheck")(action)
 
@@ -734,7 +739,7 @@
 
 /datum/chemicompiler_executor/proc/showMessage(message)
 	if(!istype(holder))
-		del(src)
+		qdel(src)
 		return
 	message = "<span class='alert'>[message]</span>"
 	if(istype(holder:loc, /mob))
@@ -746,7 +751,7 @@
 	if(!reservoirCheck(source) && index > 0)
 		return
 	var/obj/item/reagent_containers/holder = reservoirs[source]
-	if(index < 0 || holder.reagents.reagent_list.len < index)
+	if(index < 0 || length(holder.reagents.reagent_list) < index)
 		return
 	return 1
 
@@ -768,7 +773,7 @@
 
 /datum/chemicompiler_executor/proc/transferReagents(var/source, var/target, var/amount, var/index = 0)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	var/error_code = validate_source_target_index(source, target, index)
 	if(error_code)
@@ -784,25 +789,32 @@
 		RS.trans_to(RT, amount, index = index)
 	if (target == 11)
 		// Generate pill
-		showMessage("[src.holder] makes an alarming grinding noise!")
-		var/obj/item/reagent_containers/pill/P = new(get_turf(src.holder))
-		RS.trans_to(P, amount, index = index)
-		showMessage("[src.holder] ejects a pill.")
+		if(RS.total_volume >= 1)
+			showMessage("[src.holder] makes an alarming grinding noise!")
+			var/obj/item/reagent_containers/pill/P = new(get_turf(src.holder))
+			RS.trans_to(P, amount, index = index)
+			showMessage("[src.holder] ejects a pill.")
+		else
+			showMessage("[src.holder] doesn't have enough reagents to make a pill.")
 	if (target == 12)
 		// Generate vial
-		var/obj/item/reagent_containers/glass/vial/V = new(get_turf(src.holder))
-		RS.trans_to(V, amount, index = index)
-		showMessage("[src.holder] ejects a vial of some unknown substance.")
+		if(RS.total_volume >= 1)
+			var/obj/item/reagent_containers/glass/vial/plastic/V = new(get_turf(src.holder))
+			RS.trans_to(V, amount, index = index)
+			showMessage("[src.holder] ejects a vial of some unknown substance.")
+		else
+			showMessage("[src.holder] doesn't have enough reagents to make a vial.")
 	if (target == 13)
-		RS.trans_to(src.ejection_reservoir, amount, index = index)
-		RS = src.ejection_reservoir.reagents
-		RS.reaction(get_turf(src.holder), TOUCH, min(amount, RS.total_volume))
-		RS.clear_reagents()
-		showMessage("Something drips out the side of [src.holder].")
+		if(RS.total_volume > 0)
+			RS.trans_to(src.ejection_reservoir, amount, index = index)
+			RS = src.ejection_reservoir.reagents
+			RS.reaction(get_turf(src.holder), TOUCH, min(amount, RS.total_volume))
+			RS.clear_reagents()
+			showMessage("Something drips out the side of [src.holder].")
 
 /datum/chemicompiler_executor/proc/heatReagents(var/rid, var/temp)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(rid < 1 || rid > 10)
 		beepCode(1, 1) // Invalid reservoir id
@@ -827,11 +839,12 @@
 
 	var/element_temp = R.total_temperature < temp ? 9000 : 0												//Sidewinder7: Smart heating system. Allows the CC to heat at full power for more of the duration, and prevents reheating of reacted elements.
 	var/max_temp_change = abs(R.total_temperature - temp)
-	var/next_temp_change = min(max((abs(R.total_temperature - element_temp) / h_divisor), 1), h_change_cap)	// Formula used by temperature_reagents() to determine how much to change the temp
+	var/next_temp_change = clamp((abs(R.total_temperature - element_temp) / h_divisor), 1, h_change_cap)	// Formula used by temperature_reagents() to determine how much to change the temp
 	if(next_temp_change >= max_temp_change)																	// Check if this tick will cause the temperature to overshoot if heated/cooled at full power. Use >= to prevent reheating in the case the values line up perfectly
-		var/element_temp_offset = max_temp_change * h_divisor												// Compute the exact exposure temperature to reach the target
-		element_temp = R.total_temperature + element_temp_offset * (temp > R.total_temperature ? 1 : -1)
+		element_temp = (((R.total_temperature - (R.total_temperature-temp)*h_divisor) * (R.total_volume+h_exposed_volume)) - (R.total_temperature*R.total_volume))/h_exposed_volume
 		heating_in_progress = 0
+
+	h_divisor = 35/h_divisor*100 // quick hack because idk wtf is going on here - Emily
 
 	R.temperature_reagents(element_temp, h_exposed_volume, h_divisor, h_change_cap)
 
@@ -839,14 +852,14 @@
 
 /datum/chemicompiler_executor/proc/statusChange(oldStatus, newStatus)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if (core.statusChangeCallback)
 		return call(holder, core.statusChangeCallback)(oldStatus, newStatus)
 
 /datum/chemicompiler_executor/proc/reagent_volume(rid)
 	if(!istype(src.holder))
-		del(src)
+		qdel(src)
 		return
 	if(rid < 1 || rid > 10)
 		beepCode(1, 1) // Invalid reservoir id

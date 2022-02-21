@@ -23,7 +23,7 @@
 			qdel(W)
 		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/) || istype(W, /obj/item/reagent_containers/balloon/) || istype(W, /obj/item/soup_pot))
 			var/fill = W.reagents.maximum_volume
-			if (fill == W.reagents.total_volume)
+			if (W.reagents.total_volume >= fill)
 				user.show_text("[W] is too full already.", "red")
 			else
 				fill -= W.reagents.total_volume
@@ -32,7 +32,7 @@
 				playsound(src.loc, "sound/misc/pourdrink.ogg", 100, 1)
 		else if (istype(W, /obj/item/mop)) // dude whatever
 			var/fill = W.reagents.maximum_volume
-			if (fill == W.reagents.total_volume)
+			if (W.reagents.total_volume >= fill)
 				user.show_text("[W] is too wet already.", "red")
 			else
 				fill -= W.reagents.total_volume
@@ -54,7 +54,7 @@
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
-			return src.attackby(W, user)
+			return src.Attackby(W, user)
 		return ..()
 
 	attack_hand(var/mob/user as mob)
@@ -133,14 +133,14 @@
 							src.beaker.set_loc(src.loc)
 							usr.put_in_hand_or_eject(src.beaker) // try to eject it into the users hand, if we can
 							src.beaker = null
-							src.update_icon()
+							src.UpdateIcon()
 
 					if("cone")
 						if(src.cone)
 							src.cone.set_loc(src.loc)
 							usr.put_in_hand_or_eject(src.cone) // try to eject it into the users hand, if we can
 							src.cone = null
-							src.update_icon()
+							src.UpdateIcon()
 
 			else if(href_list["flavor"])
 				if(doing_a_thing)
@@ -182,7 +182,7 @@
 						boutput(usr, "<span class='alert'>Unknown flavor!</span>")
 
 				doing_a_thing = 0
-				src.update_icon()
+				src.UpdateIcon()
 
 			src.updateUsrDialog()
 		return
@@ -202,7 +202,7 @@
 				src.cone = W
 				boutput(user, "<span class='notice'>You load the cone into [src].</span>")
 
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 
 		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
@@ -215,16 +215,16 @@
 				src.beaker = W
 				boutput(user, "<span class='alert'>You load [W] into [src].</span>")
 
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 		else ..()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if ((istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone) || istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/)) && in_interact_range(W, user) && in_interact_range(src, user))
-			return src.attackby(W, user)
+			return src.Attackby(W, user)
 		return ..()
 
-	proc/update_icon()
+	update_icon()
 		if(src.beaker)
 			src.overlays += image(src.icon, "ice_creamer_beaker")
 		else
@@ -366,6 +366,9 @@ table#cooktime a#start {
 			src.recipes = list()
 
 		if (!src.recipes.len)
+			src.recipes += new /datum/cookingrecipe/pizza_shroom(src)
+			src.recipes += new /datum/cookingrecipe/pizza_pepper(src)
+			src.recipes += new /datum/cookingrecipe/pizza_ball(src)
 			src.recipes += new /datum/cookingrecipe/haggass(src)
 			src.recipes += new /datum/cookingrecipe/haggis(src)
 			src.recipes += new /datum/cookingrecipe/scotch_egg(src)
@@ -378,22 +381,31 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/scarewich_s(src)
 			src.recipes += new /datum/cookingrecipe/scarewich_m(src)
 			src.recipes += new /datum/cookingrecipe/scarewich_c(src)
+			src.recipes += new /datum/cookingrecipe/scarewich_blt(src)
 			src.recipes += new /datum/cookingrecipe/elviswich_m_h(src)
 			src.recipes += new /datum/cookingrecipe/elviswich_m_m(src)
 			src.recipes += new /datum/cookingrecipe/elviswich_m_s(src)
 			src.recipes += new /datum/cookingrecipe/elviswich_c(src)
 			src.recipes += new /datum/cookingrecipe/elviswich_p_h(src)
 			src.recipes += new /datum/cookingrecipe/elviswich_p(src)
+			src.recipes += new /datum/cookingrecipe/elviswich_blt(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_mb(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_mbalt(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_egg(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_bm(src)
-			//src.recipes += new /datum/cookingrecipe/sandwich_m_h(src)
-			//src.recipes += new /datum/cookingrecipe/sandwich_m_m(src)
-			//src.recipes += new /datum/cookingrecipe/sandwich_m_s(src)
-			//src.recipes += new /datum/cookingrecipe/sandwich_c(src)
-			//src.recipes += new /datum/cookingrecipe/sandwich_p_h(src)
-			//src.recipes += new /datum/cookingrecipe/sandwich_p(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_bmalt(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_m_h(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_m_m(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_m_s(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_c(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_p_h(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_p(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_blt(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_custom(src)
+			src.recipes += new /datum/cookingrecipe/coconutcurry(src)
+			src.recipes += new /datum/cookingrecipe/chickenpineapplecurry(src)
+			src.recipes += new /datum/cookingrecipe/tandoorichicken(src)
+			src.recipes += new /datum/cookingrecipe/potatocurry(src)
 			src.recipes += new /datum/cookingrecipe/onionchips(src)
 			src.recipes += new /datum/cookingrecipe/mint_chutney(src)
 			src.recipes += new /datum/cookingrecipe/refried_beans(src)
@@ -402,6 +414,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/butterburger(src)
 			src.recipes += new /datum/cookingrecipe/cheeseburger_m(src)
 			src.recipes += new /datum/cookingrecipe/cheeseburger(src)
+			src.recipes += new /datum/cookingrecipe/wcheeseburger(src)
 			src.recipes += new /datum/cookingrecipe/tikiburger(src)
 			src.recipes += new /datum/cookingrecipe/luauburger(src)
 			src.recipes += new /datum/cookingrecipe/coconutburger(src)
@@ -445,6 +458,9 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/ice_cream_cone(src)
 			src.recipes += new /datum/cookingrecipe/waffles(src)
 			src.recipes += new /datum/cookingrecipe/lasagna(src)
+			src.recipes += new /datum/cookingrecipe/chickenparm(src)
+			src.recipes += new /datum/cookingrecipe/chickenalfredo(src)
+			src.recipes += new /datum/cookingrecipe/alfredo(src)
 			src.recipes += new /datum/cookingrecipe/spaghetti_pg(src)
 			src.recipes += new /datum/cookingrecipe/spaghetti_m(src)
 			src.recipes += new /datum/cookingrecipe/spaghetti_s(src)
@@ -470,15 +486,31 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/b_cupcake(src)
 			src.recipes += new /datum/cookingrecipe/beefood(src)
 
+			src.recipes += new /datum/cookingrecipe/baguette(src)
+			src.recipes += new /datum/cookingrecipe/garlicbread_ch(src)
+			src.recipes += new /datum/cookingrecipe/garlicbread(src)
+			src.recipes += new /datum/cookingrecipe/fairybread(src)
+			src.recipes += new /datum/cookingrecipe/danish_apple(src)
+			src.recipes += new /datum/cookingrecipe/danish_cherry(src)
+			src.recipes += new /datum/cookingrecipe/danish_blueb(src)
+			src.recipes += new /datum/cookingrecipe/danish_weed(src)
+			src.recipes += new /datum/cookingrecipe/painauchocolat(src)
+			src.recipes += new /datum/cookingrecipe/croissant(src)
+
+			src.recipes += new /datum/cookingrecipe/pie_cream(src)
+			src.recipes += new /datum/cookingrecipe/pie_anything(src)
+			src.recipes += new /datum/cookingrecipe/pie_cherry(src)
+			src.recipes += new /datum/cookingrecipe/pie_blueberry(src)
+			src.recipes += new /datum/cookingrecipe/pie_blackberry(src)
+			src.recipes += new /datum/cookingrecipe/pie_raspberry(src)
+			src.recipes += new /datum/cookingrecipe/pie_strawberry(src)
 			src.recipes += new /datum/cookingrecipe/pie_apple(src)
 			src.recipes += new /datum/cookingrecipe/pie_lime(src)
 			src.recipes += new /datum/cookingrecipe/pie_lemon(src)
 			src.recipes += new /datum/cookingrecipe/pie_slurry(src)
 			src.recipes += new /datum/cookingrecipe/pie_pumpkin(src)
 			src.recipes += new /datum/cookingrecipe/pie_custard(src)
-			src.recipes += new /datum/cookingrecipe/pie_cream(src)
 			src.recipes += new /datum/cookingrecipe/pie_strawberry(src)
-			src.recipes += new /datum/cookingrecipe/pie_anything(src)
 			src.recipes += new /datum/cookingrecipe/pie_bacon(src)
 			src.recipes += new /datum/cookingrecipe/pot_pie(src)
 			src.recipes += new /datum/cookingrecipe/pie_chocolate(src)
@@ -496,6 +528,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/cake_fruit(src)
 			#endif
 			src.recipes += new /datum/cookingrecipe/cake_custom(src)
+			src.recipes += new /datum/cookingrecipe/meatloaf(src)
 			src.recipes += new /datum/cookingrecipe/hotdog(src)
 			src.recipes += new /datum/cookingrecipe/stroopwafel(src)
 			src.recipes += new /datum/cookingrecipe/cookie_spooky(src)
@@ -505,6 +538,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/cookie_chocolate_chip(src)
 			src.recipes += new /datum/cookingrecipe/cookie_iron(src)
 			src.recipes += new /datum/cookingrecipe/cookie_butter(src)
+			src.recipes += new /datum/cookingrecipe/cookie_peanut(src)
 			src.recipes += new /datum/cookingrecipe/cookie(src)
 			src.recipes += new /datum/cookingrecipe/moon_pie_spooky(src)
 			src.recipes += new /datum/cookingrecipe/moon_pie_jaffa(src)
@@ -529,6 +563,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/porridge(src)
 			// Put all single-ingredient recipes after this point
 			src.recipes += new /datum/cookingrecipe/pizza(src)
+			src.recipes += new /datum/cookingrecipe/pizza_fresh(src)
 			src.recipes += new /datum/cookingrecipe/cake_custom_item(src)
 			src.recipes += new /datum/cookingrecipe/pancake(src)
 			src.recipes += new /datum/cookingrecipe/bread(src)
@@ -547,7 +582,6 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/steak_m(src)
 			src.recipes += new /datum/cookingrecipe/steak_s(src)
 			src.recipes += new /datum/cookingrecipe/fish_fingers(src)
-			src.recipes += new /datum/cookingrecipe/meatloaf(src)
 			src.recipes += new /datum/cookingrecipe/hardboiled(src)
 			src.recipes += new /datum/cookingrecipe/bakedpotato(src)
 			src.recipes += new /datum/cookingrecipe/rice_ball(src)
@@ -618,6 +652,16 @@ table#cooktime a#start {
 						if (!OVEN_checkitem(R.item4, R.amt4)) continue
 
 					output = R.specialOutput(src)
+
+					//Complete pizza crew objectives if possible
+					if(istype(output,/obj/item/reagent_containers/food/snacks/pizza/))
+						var/obj/item/reagent_containers/food/snacks/pizza/P = output
+						if (usr.mind?.objectives)
+							for (var/datum/objective/crew/chef/pizza/objective in usr.mind.objectives)
+								var/list/matching_toppings = P.topping_types & objective.choices
+								if(length(matching_toppings) >= PIZZA_OBJ_COUNT)
+									objective.completed = TRUE
+
 					if (isnull(output))
 						output = R.output
 
@@ -649,7 +693,7 @@ table#cooktime a#start {
 			src.working = 1
 			src.icon_state = "oven_bake"
 			src.updateUsrDialog()
-			SPAWN_DBG(cook_amt * 10)
+			SPAWN(cook_amt * 10)
 
 				if(recook && bonus !=0)
 					for (var/obj/item/reagent_containers/food/snacks/F in src)
@@ -702,7 +746,7 @@ table#cooktime a#start {
 			if (src.working)
 				boutput(usr, "<span class='alert'>It's already working.</span>")
 				return
-			src.time = clamp(text2num(href_list["time"]), 1, 10)
+			src.time = clamp(text2num_safe(href_list["time"]), 1, 10)
 			src.updateUsrDialog()
 			return
 
@@ -710,7 +754,7 @@ table#cooktime a#start {
 			if (src.working)
 				boutput(usr, "<span class='alert'>The dials are locked! THIS IS HOW OVENS WORK OK</span>")
 				return
-			var/operation = text2num(href_list["heat"])
+			var/operation = text2num_safe(href_list["heat"])
 			if (operation == 1) src.heat = "High"
 			if (operation == 2) src.heat = "Low"
 			src.updateUsrDialog()
@@ -734,7 +778,7 @@ table#cooktime a#start {
 		user.TakeDamage("head", 0, 150)
 		sleep(5 SECONDS)
 		src.icon_state = "oven_off"
-		SPAWN_DBG(55 SECONDS)
+		SPAWN(55 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -773,12 +817,12 @@ table#cooktime a#start {
 		user.visible_message("<span class='notice'>[user] loads [W] into [src].</span>")
 		user.u_equip(W)
 		W.set_loc(src)
-		W.dropped()
+		W.dropped(user)
 		src.updateUsrDialog()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
-			return src.attackby(W, user)
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && W.w_class <= W_CLASS_HUGE && !W.anchored)
+			return src.Attackby(W, user)
 		return ..()
 
 	proc/OVEN_checkitem(var/recipeitem, var/recipecount)
@@ -791,6 +835,7 @@ table#cooktime a#start {
 			return 0
 		return 1
 
+#define MIN_FLUID_INGREDIENT_LEVEL 10
 /obj/submachine/foodprocessor
 	name = "Processor"
 	desc = "Refines various food substances into different forms."
@@ -849,67 +894,76 @@ table#cooktime a#start {
 					qdel( P )
 				if (/obj/item/plant/wheat/metal)
 					new/obj/item/reagent_containers/food/snacks/condiment/ironfilings/(src.loc)
-					pool( P )
+					qdel( P )
 				if (/obj/item/plant/wheat/durum)
 					new/obj/item/reagent_containers/food/snacks/ingredient/flour/semolina(src.loc)
-					pool( P )
+					qdel( P )
 				if (/obj/item/plant/wheat)
 					new/obj/item/reagent_containers/food/snacks/ingredient/flour/(src.loc)
-					pool( P )
+					qdel( P )
 				if (/obj/item/plant/oat)
 					new/obj/item/reagent_containers/food/snacks/ingredient/oatmeal/(src.loc)
-					pool( P )
+					qdel( P )
+				if (/obj/item/plant/oat/salt)
+					new/obj/item/reagent_containers/food/snacks/ingredient/salt/(src.loc)
+					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/rice_sprig)
 					new/obj/item/reagent_containers/food/snacks/ingredient/rice(src.loc)
-					pool( P )
+					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/tomato)
 					new/obj/item/reagent_containers/food/snacks/condiment/ketchup(src.loc)
-					pool( P )
+					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/peanuts)
 					new/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter(src.loc)
-					pool( P )
+					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/egg)
 					new/obj/item/reagent_containers/food/snacks/condiment/mayo(src.loc)
-					pool( P )
+					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet)
 					new/obj/item/reagent_containers/food/snacks/ingredient/spaghetti(src.loc)
-					pool( P )
+					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/chili/chilly)
 					var/datum/plantgenes/DNA = P:plantgenes
 					var/obj/item/reagent_containers/food/snacks/condiment/coldsauce/F = new(src.loc)
 					F.reagents.add_reagent("cryostylane", DNA.potency)
-					pool( P )
+					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili)
 					var/datum/plantgenes/DNA = P:plantgenes
 					var/obj/item/reagent_containers/food/snacks/condiment/hotsauce/ghostchilisauce/F = new(src.loc)
 					F.reagents.add_reagent("ghostchilijuice", 5 + DNA.potency)
-					pool( P )
+					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/chili)
 					var/datum/plantgenes/DNA = P:plantgenes
 					var/obj/item/reagent_containers/food/snacks/condiment/hotsauce/F = new(src.loc)
 					F.reagents.add_reagent("capsaicin", DNA.potency)
-					pool( P )
+					qdel( P )
 				if (/obj/item/plant/sugar)
 					var/obj/item/reagent_containers/food/snacks/ingredient/sugar/F = new(src.loc)
 					F.reagents.add_reagent("sugar", 20)
-					pool( P )
+					qdel( P )
 				if (/obj/item/reagent_containers/food/drinks/milk)
-					new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
-					qdel( P )
+					if (P.reagents.get_reagent_amount("milk") >= MIN_FLUID_INGREDIENT_LEVEL)
+						new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
+						qdel( P )
 				if (/obj/item/reagent_containers/food/drinks/milk/soy)
-					new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
-					qdel( P )
+					//so soy milk is just milk it seems, veganism is a lie
+					if (P.reagents.get_reagent_amount("milk") >= MIN_FLUID_INGREDIENT_LEVEL)
+						new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
+						qdel( P )
 				if (/obj/item/reagent_containers/food/drinks/milk/rancid)
 					new/obj/item/reagent_containers/food/snacks/yoghurt(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/condiment/cream)
 					new/obj/item/reagent_containers/food/snacks/ingredient/butter(src.loc)
 					qdel( P )
-				if (/obj/item/reagent_containers/food/snacks/candy)
+				if (/obj/item/reagent_containers/food/snacks/candy/chocolate)
 					new/obj/item/reagent_containers/food/snacks/condiment/chocchips(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/corn)
 					new/obj/item/reagent_containers/food/snacks/popcorn(src.loc)
+					qdel( P )
+				if (/obj/item/reagent_containers/food/snacks/plant/corn/pepper)
+					new/obj/item/reagent_containers/food/snacks/ingredient/pepper(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/avocado)
 					new/obj/item/reagent_containers/food/snacks/soup/guacamole(src.loc)
@@ -928,6 +982,9 @@ table#cooktime a#start {
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/cherry)
 					new/obj/item/cocktail_stuff/maraschino_cherry(src.loc)
+					qdel( P )
+				if (/obj/item/reagent_containers/food/snacks/plant/turmeric)
+					new/obj/item/reagent_containers/food/snacks/ingredient/currypowder(src.loc)
 					qdel( P )
 		// Wind down
 		for(var/obj/item/S in src.contents)
@@ -953,7 +1010,7 @@ table#cooktime a#start {
 				for (var/obj/item/plant/P in S.contents)
 					P.set_loc(src)
 					amtload++
-				W:satchel_updateicon()
+				W:UpdateIcon()
 				boutput(user, "<span class='notice'>[amtload] items loaded from satchel!</span>")
 				S.desc = "A leather bag. It holds [S.contents.len]/[S.maxitems] [S.itemstring]."
 			return
@@ -972,7 +1029,7 @@ table#cooktime a#start {
 			W.dropped()
 			return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
 		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
@@ -1057,7 +1114,7 @@ var/list/mixer_recipes = list()
 			src.recipes += new /datum/cookingrecipe/wonton_wrapper(src)
 			src.recipes += new /datum/cookingrecipe/butters(src)
 
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1104,7 +1161,7 @@ var/list/mixer_recipes = list()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
-			return src.attackby(W, user)
+			return src.Attackby(W, user)
 		return ..()
 
 	Topic(href, href_list)
@@ -1142,7 +1199,7 @@ var/list/mixer_recipes = list()
 			boutput(usr, "<span class='alert'>There's nothing in the mixer.</span>")
 			return
 		working = 1
-		src.update_icon()
+		src.UpdateIcon()
 		src.updateUsrDialog()
 		playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
 		var/output = null // /obj/item/reagent_containers/food/snacks/yuck
@@ -1163,7 +1220,7 @@ var/list/mixer_recipes = list()
 			if (R.useshumanmeat)
 				derivename = 1
 			break
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 
 			if (!isnull(output))
 				var/obj/item/reagent_containers/food/snacks/F
@@ -1195,11 +1252,11 @@ var/list/mixer_recipes = list()
 				I.throw_at(edge, 25, 4)
 
 			working = 0
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 
-	proc/update_icon()
+	update_icon()
 		if (!src || !istype(src))
 			return
 

@@ -24,13 +24,13 @@
 	icon_state = "wall1"
 	opacity = 1
 	density = 1
-	blocks_air = 1
+	gas_impermeable = 1
 
 	var/health = 40
 
 	proc/checkhealth()
 		if(src.health <= 0)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				gib(src.loc)
 				ReplaceWithSpace()
 

@@ -70,7 +70,7 @@
 			return_if_overlay_or_effect(O)
 
 			if (O.throwing && !isliving(O))
-				SPAWN_DBG(0.8 SECONDS)
+				SPAWN(0.8 SECONDS)
 					if (O && O.loc == src)
 						melt_away(O)
 				return
@@ -115,7 +115,7 @@
 		return_if_overlay_or_effect(M)
 
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(M.loc == src)
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
@@ -828,7 +828,7 @@
 		src.visible_message("<span class='combat'><B>[src]</B> bites and claws at [src.target]!</span>")
 		random_brute_damage(src.target, rand(3,5))
 		random_burn_damage(src.target, rand(2,3))
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 
@@ -849,7 +849,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			bioHolder.mobAppearance.underwear = "briefs"
 			JobEquipSpawned("DO NOT USE THIS JOB")
 			update_clothing()
@@ -915,7 +915,7 @@
 		light.set_brightness(0.7)
 		light.enable()
 
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			animate(src, alpha=130, color="#DDDDDD", time=7, loop=-1)
 			animate(alpha=180, color="#FFFFFF", time=1)
 			animate(src, pixel_y=10, time=15, flags=ANIMATION_PARALLEL, easing=SINE_EASING, loop=-1)
@@ -927,7 +927,7 @@
 
 	disposing()
 		if(holoparticles)
-			holoparticles.invisibility = 101
+			holoparticles.invisibility = INVIS_ALWAYS
 			qdel(holoparticles)
 		..()
 
@@ -1022,7 +1022,7 @@
 	get_desc()
 		return last_result_text ? "<br>The ball is currently on [last_result_text]." : ""
 
-	proc/update_icon()
+	update_icon()
 		if (running == 0)
 			src.icon_state = "roulette_w0"
 		else if (running == 1)
@@ -1039,7 +1039,7 @@
 		else
 			src.visible_message("[src] starts spinning!")
 		src.running = 1
-		update_icon()
+		UpdateIcon()
 		var/real_run_time = rand(src.run_time - 10, src.run_time + 10)
 		sleep(real_run_time - 10)
 		playsound(src.loc, "sound/items/coindrop.ogg", 30, 1)
@@ -1061,12 +1061,12 @@
 		last_result_text = "<span style='padding: 0 0.5em; color: white; background-color: [background_color];'>[src.last_result]</span> [result_color]"
 		src.visible_message("<span class='success'>[src] lands on [last_result_text]!</span>")
 		src.running = 0
-		update_icon()
+		UpdateIcon()
 		sleep(1 SECONDS)
 		src.maptext_x = -1
 		src.maptext_y = 8
 		src.maptext = "<span class='xfont sh c vm' style='background: [background_color];'> [src.last_result] </span>"
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			src.maptext = ""
 
 
@@ -1134,7 +1134,7 @@
 				user.changeStatus("paralysis", 2 SECONDS)
 				user.force_laydown_standup()
 			else
-				src.attack_hand(usr)
+				src.Attackhand(usr)
 			return
 		else
 			if(ishuman(hit_atom))
@@ -1149,7 +1149,7 @@
 					playsound(H.loc, "swing_hit", 50, 1)
 					usr.say("I AM THE LAW!")
 				prob_clonk = min(prob_clonk + 5, 40)
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					prob_clonk = max(prob_clonk - 5, 0)
 
 		return ..(hit_atom)
@@ -1175,7 +1175,7 @@
 		busy = 1
 		showswirl(user.loc)
 		playsound(src, 'sound/effects/teleport.ogg', 60, 1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 		teleport(user)
 		busy = 0
 
@@ -1189,7 +1189,7 @@
 					src.recharging = 1
 					user.set_loc(S.loc)
 					showswirl(user.loc)
-					SPAWN_DBG(recharge)
+					SPAWN(recharge)
 						S.recharging = 0
 						src.recharging = 0
 				return
@@ -1245,7 +1245,7 @@
 		src.visible_message("<span class='combat'><B>[src]</B> bites and claws at [src.target]!</span>")
 		random_brute_damage(src.target, rand(3,5),1)
 		random_burn_damage(src.target, rand(2,3))
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 	CritterDeath()

@@ -36,12 +36,14 @@
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
-			return 0
+			return FALSE
 		if (src.release_pressure < 5*ONE_ATMOSPHERE || MIXTURE_PRESSURE(src.air_contents) < 5*ONE_ATMOSPHERE)
-			return 0
+			boutput(user, "<span class='alert'>You hold your mouth to the release valve and open it. Nothing happens. You close the valve in shame.<br><i>Maybe if you used more pressure...?</i></span>")
+			return FALSE
 		user.visible_message("<span class='alert'><b>[user] holds [his_or_her(user)] mouth to [src]'s release valve and briefly opens it!</b></span>")
+		src.valve_open = TRUE
 		user.gib()
-		return 1
+		return TRUE
 
 	powered()
 		return 1
@@ -87,7 +89,6 @@
 	bomb_dmi = image('icons/obj/canisterbomb.dmi')
 
 /obj/machinery/portable_atmospherics/canister/update_icon()
-
 	if (src.destroyed)
 		src.icon_state = "[src.casecolor]-1"
 		ClearAllOverlays()
@@ -151,7 +152,7 @@
 		src.destroyed = 1
 		playsound(src.loc, "sound/effects/spray.ogg", 10, 1, -3)
 		src.set_density(0)
-		update_icon()
+		UpdateIcon()
 
 		if (src.holding)
 			src.holding.set_loc(src.loc)
@@ -218,8 +219,8 @@
 		if (src.det.part_fs.timing) //If it's counting down
 			if (src.det.part_fs.time > 9)
 				src.add_simple_light("canister", list(0.94 * 255, 0.94 * 255, 0.3 * 255, 0.6 * 255))
-				if (prob(15))
-					switch(rand(1,10))
+				if (prob(8)) //originally 5ish
+					switch(rand(1,6))
 						if (1)
 							playsound(src.loc, "sparks", 75, 1, -1)
 							elecflash(src)
@@ -232,13 +233,13 @@
 						if (5)
 							for (var/obj/machinery/power/apc/theAPC in get_area(src))
 								theAPC.lighting = 0
-								theAPC.updateicon()
+								theAPC.UpdateIcon()
 								theAPC.update()
 								src.visible_message("<span class='alert'>The lights mysteriously go out!</span>")
 						if (6)
 							for (var/obj/machinery/power/apc/theAPC in get_area(src))
 								theAPC.lighting = 3
-								theAPC.updateicon()
+								theAPC.UpdateIcon()
 								theAPC.update()
 
 			else if (src.det.part_fs.time < 10 && src.det.part_fs.time > 7)  //EXPLOSION IMMINENT
@@ -253,7 +254,7 @@
 			src.remove_simple_light("canister")
 
 	if(dialog_update_enabled) src.updateDialog()
-	src.update_icon()
+	src.UpdateIcon()
 	return
 
 /obj/machinery/portable_atmospherics/canister/return_air()
@@ -271,10 +272,11 @@
 
 /obj/machinery/portable_atmospherics/canister/proc/rupture() // cogwerks- high pressure tank explosions
 	if (src.det)
-		del(src.det) //Otherwise canister bombs detonate after rupture
+		qdel(src.det) //Otherwise canister bombs detonate after rupture
+		src.det = null
 	if (!destroyed)
 		rupturing = 1
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.visible_message("<span class='alert'>[src] hisses ominously!</span>")
 			playsound(src.loc, "sound/machines/hiss.ogg", 55, 1)
 			sleep(5 SECONDS)
@@ -308,10 +310,12 @@
 					D.ex_act(1)
 
 				for(var/obj/item/reagent_containers/glass/G in range(4,T))
-					G.smash()
+					if(G.can_recycle)
+						G.smash()
 
 				for(var/obj/item/reagent_containers/food/drinks/drinkingglass/G in range(4,T))
-					G.smash()
+					if(G.can_recycle)
+						G.smash()
 
 				for(var/atom/movable/A in view(3, T)) // wreck shit
 					if(A.anchored) continue
@@ -350,12 +354,12 @@
 				logTheThing("bombing", user, null, "builds a canister bomb [log_atmos(src)] at [log_loc(src)].")
 				message_admins("[key_name(user)] builds a canister bomb at [log_loc(src)]. See bombing logs for atmos readout.")
 				tgui_process.update_uis(src)
-				src.update_icon()
+				src.UpdateIcon()
 	else if (src.det && istype(W, /obj/item/tank))
 		user.show_message("<span class='alert'>You cannot insert a tank, as the slot is shut closed by the detonator assembly.</span>")
 		return
 	else if (src.det && W && istool(W, TOOL_PULSING | TOOL_SNIPPING))
-		src.attack_hand(user)
+		src.Attackhand(user)
 
 	else if (istype(W, /obj/item/cargotele))
 		W:cargoteleport(src, user)
@@ -379,7 +383,7 @@
 /obj/machinery/portable_atmospherics/canister/attack_ai(var/mob/user as mob)
 	if(!src.connected_port && get_dist(src, user) > 7)
 		return
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -536,7 +540,7 @@
 						playsound(src.loc, "sound/machines/whistlealert.ogg", 50, 1)
 						playsound(src.loc, "sound/machines/whistlealert.ogg", 50, 1)
 						src.visible_message("<B><font color=#B7410E>The failsafe timer beeps three times before going quiet forever.</font></B>")
-						SPAWN_DBG(0)
+						SPAWN(0)
 							src.det.detonate()
 					if("defuse")
 						playsound(src.loc, "sound/machines/ping.ogg", 50, 1)
@@ -602,7 +606,7 @@
 								src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes loudly and sets itself to 7 seconds.</font></B>")
 							else
 								src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes refusingly before going quiet forever.</font></B>")
-								SPAWN_DBG(0)
+								SPAWN(0)
 									src.det.detonate()
 						else
 							src.det.failsafe_engage()
@@ -633,7 +637,7 @@
 						src.visible_message("<B><font color=#B7410E>The bomb buzzes oddly, emitting electric sparks. It would be a bad idea to touch any wires for the next [losttime] seconds.</font></B>")
 						playsound(src.loc, "sparks", 75, 1, -1)
 						elecflash(src,power = 2)
-						SPAWN_DBG(10 * losttime)
+						SPAWN(10 * losttime)
 							src.det.shocked = 0
 							src.visible_message("<B><font color=#B7410E>The buzzing stops, and the countdown continues.</font></B>")
 					if ("mobility")
@@ -683,7 +687,7 @@
 	else if(P.proj_data.damage_type == D_ENERGY)
 		src.health -= damage
 	log_shot(P,src)
-	SPAWN_DBG( 0 )
+	SPAWN( 0 )
 		healthcheck()
 		return
 	return
@@ -694,7 +698,7 @@
 
 	src.air_contents.toxins = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
-	src.update_icon()
+	src.UpdateIcon()
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/oxygen/New()
@@ -703,7 +707,7 @@
 
 	src.air_contents.oxygen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
-	src.update_icon()
+	src.UpdateIcon()
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent/New()
@@ -713,7 +717,7 @@
 	var/datum/gas/sleeping_agent/trace_gas = air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
 	trace_gas.moles = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
-	src.update_icon()
+	src.UpdateIcon()
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/nitrogen/New()
@@ -723,7 +727,7 @@
 	src.air_contents.temperature = 80
 	src.air_contents.nitrogen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
-	src.update_icon()
+	src.UpdateIcon()
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide/New()
@@ -731,7 +735,7 @@
 	..()
 	src.air_contents.carbon_dioxide = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
-	src.update_icon()
+	src.UpdateIcon()
 	return 1
 
 
@@ -741,5 +745,5 @@
 	src.air_contents.oxygen = (O2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 	src.air_contents.nitrogen = (N2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
-	src.update_icon()
+	src.UpdateIcon()
 	return 1

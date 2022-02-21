@@ -57,6 +57,8 @@ datum
 				for(var/datum/ailment_data/disease/virus in M.ailments)
 					if (virus.cure == "Antibiotics")
 						virus.state = "Remissive"
+				if(M.hasStatus("poisoned"))
+					M.changeStatus("poisoned", -10 SECONDS * mult)
 				..()
 				return
 
@@ -74,10 +76,6 @@ datum
 			overdose = 20
 			var/counter = 1 //Data is conserved...so some jerkbag could inject a monkey with this, wait for data to build up, then extract some instant KO juice.  Dumb.
 			value = 5
-
-			pooled()
-				..()
-				counter = 1
 
 			on_add()
 				if(ismob(holder?.my_atom))
@@ -104,10 +102,10 @@ datum
 					if(1 to 15)
 						if(probmult(7)) M.emote("yawn")
 					if(16 to 35)
-						M.drowsyness  = max(M.drowsyness, 20)
+						M.setStatus("drowsy", 40 SECONDS)
 					if(36 to INFINITY)
 						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 3 SECONDS * mult))
-						M.drowsyness  = max(M.drowsyness, 20)
+						M.setStatus("drowsy", 40 SECONDS)
 
 				..()
 				return
@@ -126,10 +124,6 @@ datum
 			overdose = 20
 			var/counter = 1 //Data is conserved...so some jerkbag could inject a monkey with this, wait for data to build up, then extract some instant KO juice.  Dumb.
 			value = 5
-
-			pooled()
-				..()
-				counter = 1
 
 			on_add()
 				if(ismob(holder?.my_atom))
@@ -154,10 +148,10 @@ datum
 					if(1 to 15)
 						if(probmult(7)) M.emote("yawn")
 					if(16 to 35)
-						M.drowsyness  = max(M.drowsyness, 20)
+						M.setStatus("drowsy", 40 SECONDS)
 					if(36 to INFINITY)
 						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 3 SECONDS * mult))
-						M.drowsyness  = max(M.drowsyness, 20)
+						M.setStatus("drowsy", 40 SECONDS)
 
 				..()
 				return
@@ -320,7 +314,7 @@ datum
 				if(M.health > 20)
 					M.take_toxin_damage(5 * mult, 1)	//calomel doesn't damage organs.
 				if(probmult(6))
-					M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>")
+					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>")
 					M.vomit()
 				if(probmult(4))
 					M.emote("piss")
@@ -368,9 +362,9 @@ datum
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(15 * mult))
 				else if(M.bodytemperature > M.base_body_temp)
 					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(15 * mult))
+				var/oxyloss = M.get_oxygen_deprivation()
 				M.take_oxygen_deprivation(-INFINITY)
-				if(prob(20))
-					M.take_brain_damage(1 * mult)
+				M.take_brain_damage(oxyloss * 0.025)
 				..()
 				return
 
@@ -393,6 +387,8 @@ datum
 
 				if(method == TOUCH)
 					. = 0
+					if(issilicon(M)) //Metal flesh isn't repaired by synthflesh
+						return
 					M.HealDamage("All", volume_passed * 1.5, volume_passed * 1.5)
 					if (isliving(M))
 						var/mob/living/H = M
@@ -456,7 +452,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.drowsyness = max(M.drowsyness-5, 0)
+				M.changeStatus("drowsy", -10 SECONDS)
 				if(M.sleeping) M.sleeping = 0
 				if (M.get_brain_damage() <= 90)
 					if (prob(50)) M.take_brain_damage(-1 * mult)
@@ -506,8 +502,6 @@ datum
 					M = holder.my_atom
 				if(M.get_oxygen_deprivation())
 					M.take_oxygen_deprivation(-1 * mult)
-				if(M.get_toxin_damage())
-					M.take_toxin_damage(-1 * mult)
 				if(M.losebreath && prob(50))
 					M.lose_breath(-1 * mult)
 				M.HealDamage("All", 2 * mult, 2 * mult, 1 * mult)
@@ -680,11 +674,15 @@ datum
 					M = holder.my_atom
 
 				if (M.bioHolder)
-					if (probmult(50) && M.bioHolder.HasEffect("bad_eyesight"))
+					var/datum/bioEffect/BE
+					BE = M.bioHolder.GetEffect("bad_eyesight")
+					if (probmult(50) && BE?.curable_by_mutadone)
 						M.bioHolder.RemoveEffect("bad_eyesight")
-					if (probmult(30) && M.bioHolder.HasEffect("blind"))
+					BE = M.bioHolder.GetEffect("blind")
+					if (probmult(30) && BE?.curable_by_mutadone)
 						M.bioHolder.RemoveEffect("blind")
-					if (probmult(30) && (M.get_ear_damage() && M.get_ear_damage() <= M.get_ear_damage_natural_healing_threshold()) && M.bioHolder.HasEffect("deaf") || M.ear_disability)
+					BE = M.bioHolder.GetEffect("deaf")
+					if (probmult(30) && (M.get_ear_damage() && M.get_ear_damage() <= M.get_ear_damage_natural_healing_threshold()) && BE?.curable_by_mutadone)
 						M.bioHolder.RemoveEffect("deaf")
 
 				if (M.get_eye_blurry())
@@ -756,6 +754,8 @@ datum
 					holder.remove_reagent("epinephrine", 5 * mult)
 				if(holder.has_reagent("ephedrine"))
 					holder.remove_reagent("ephedrine", 5 * mult)
+				if(holder.has_reagent("synaptizine"))
+					holder.remove_reagent("synaptizine", 5 * mult)
 				if(M.hasStatus("stimulants"))
 					M.changeStatus("stimulants", -15 SECONDS * mult)
 				if(probmult(5))
@@ -763,7 +763,7 @@ datum
 						if(istype(virus.master,/datum/ailment/disease/space_madness) || istype(virus.master,/datum/ailment/disease/berserker))
 							M.cure_disease(virus)
 				if(prob(20)) M.take_brain_damage(1 * mult)
-				if(probmult(50)) M.drowsyness = max(M.drowsyness, 6)
+				if(probmult(50)) M.changeStatus("drowsy", 10 SECONDS)
 				if(probmult(10)) M.emote("drool")
 				..()
 				return
@@ -803,7 +803,7 @@ datum
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(7 * mult))
 				if(probmult(10))
 					M.make_jittery(4)
-				M.drowsyness = max(M.drowsyness-5, 0)
+				M.changeStatus("drowsy", -10 SECONDS)
 				if(M.sleeping && probmult(5)) M.sleeping = 0
 				if(M.get_brain_damage() && prob(5)) M.take_brain_damage(-1 * mult)
 				if(holder.has_reagent("histamine"))
@@ -813,8 +813,6 @@ datum
 				if(M.get_oxygen_deprivation() > 35)
 					M.take_oxygen_deprivation(-10 * mult)
 				if(M.health < -10 && M.health > -65)
-					if(M.get_toxin_damage())
-						M.take_toxin_damage(-1 * mult)
 					M.HealDamage("All", 1 * mult, 1 * mult, 1 * mult)
 				..()
 				return
@@ -1000,6 +998,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
 				. = ..()
+				if(issilicon(M)) // borgs shouldn't heal from this
+					return
 				if (!volume_passed)
 					return
 				volume_passed = clamp(volume_passed, 0, 10)
@@ -1078,9 +1078,6 @@ datum
 			var/remove_buff = 0
 			stun_resist = 15
 
-			pooled()
-				..()
-
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
@@ -1098,7 +1095,7 @@ datum
 				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
 				M.make_jittery(4)
-				M.drowsyness = max(M.drowsyness-5, 0)
+				M.changeStatus("drowsy", -10 SECONDS)
 				if(M.losebreath > 3)
 					M.losebreath = max(5, M.losebreath-(1 * mult))
 				if(M.get_oxygen_deprivation() > 75)
@@ -1150,9 +1147,8 @@ datum
 					if (reagent_id != id)
 						M.reagents.remove_reagent(reagent_id, 4 * mult)
 				M.changeStatus("radiation", -7 SECONDS, 1)
-				if (M.get_toxin_damage() && prob(75))
-					M.take_toxin_damage(-4 * mult)
-					M.HealDamage("All", 0, 0, 2 * mult)
+				if (prob(75))
+					M.HealDamage("All", 0, 0, 4 * mult)
 				if (prob(33))
 					M.TakeDamage("chest", 1 * mult, 1 * mult, 0, DAMAGE_BLUNT)
 				if (ishuman(M))
@@ -1197,7 +1193,7 @@ datum
 				if(probmult(7)) M.emote("yawn")
 				if(prob(3))
 					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS * mult))
-					M.drowsyness += 1
+					M.changeStatus("drowsy", 12 SECONDS)
 					M.visible_message("<span class='notice'><b>[M.name]<b> looks a bit dazed.</span>")
 				..()
 				return
@@ -1228,6 +1224,8 @@ datum
 				if(!volume_passed)
 					return
 				if(!isliving(M)) // fucking human shitfucks
+					return
+				if(issilicon(M)) // Borgs shouldn't heal from this
 					return
 				volume_passed = clamp(volume_passed, 0, 10)
 				if(method == TOUCH)
@@ -1290,7 +1288,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature < M.base_body_temp - 100)
+				if(M.bodytemperature < M.base_body_temp - 100 && !M.hasStatus("burning"))
 					var/health_before = M.health
 
 					if(M.get_oxygen_deprivation())
@@ -1326,10 +1324,6 @@ datum
 			var/remove_buff = 0
 			var/total_misstep = 0
 			value = 18 // 5 4 5 3 1
-
-			pooled()
-				..()
-				remove_buff = 0
 
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
@@ -1478,8 +1472,7 @@ datum
 				for(var/reagent_id in M.reagents.reagent_list)
 					if(reagent_id != id && prob(50)) // slow this down a bit
 						M.reagents.remove_reagent(reagent_id, 1 * mult)
-				M.take_toxin_damage(-1.5 * mult)
-				M.HealDamage("All", 0, 0, 1 * mult)
+				M.HealDamage("All", 0, 0, 1.5 * mult)
 
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
@@ -1543,7 +1536,7 @@ datum
 				if(M.health > 25)
 					M.take_toxin_damage(1 * mult)
 				if(probmult(25))
-					M.visible_message("<span class='alert'>[M] pukes all over \himself!</span>")
+					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)]!</span>")
 					M.vomit()
 				if(probmult(5))
 					var/mob/living/L = M

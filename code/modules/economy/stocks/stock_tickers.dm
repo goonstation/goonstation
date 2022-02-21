@@ -47,10 +47,10 @@
 		A.ticks = ticker.round_elapsed_ticks
 
 	proc/generateEvents()
-		for (var/datum/stock/event/type in concrete_typesof(/datum/stock/event))
+		for (var/type in concrete_typesof(/datum/stock/event))
 			generateEvent(type)
 
-	proc/generateEvent(datum/stock/event/type)
+	proc/generateEvent(type)
 		var/datum/stock/event/E = new type(src)
 		addEvent(E)
 
@@ -154,7 +154,7 @@
 		available_shares += share_change // temporary
 
 		if (prob(25))
-			average_optimism = max(min(average_optimism + (rand(-3, 3) - current_trend * 0.15) / 100, 1), -1)
+			average_optimism = clamp(average_optimism + (rand(-3, 3) - current_trend * 0.15) / 100, -1, 1)
 
 		var/aspec = abs(speculation)
 		if (prob((aspec - 75) * 2))
@@ -268,11 +268,11 @@
 		borrow_brokers += B
 
 	proc/modifyAccount(whose, by, force=0)
-		var/datum/data/record/B = FindBankAccountByName(whose)
+		var/datum/db_record/B = FindBankAccountByName(whose)
 		if (B)
-			if (by < 0 && B.fields["current_money"] + by < 0 && !force)
+			if (by < 0 && B["current_money"] + by < 0 && !force)
 				return 0
-			B.fields["current_money"] += by
+			B["current_money"] += by
 			stockExchange.balanceLog(whose, by)
 			return 1
 		return 0

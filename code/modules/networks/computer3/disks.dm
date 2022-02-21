@@ -160,7 +160,7 @@
 //It's good to have a more permanent source of programs when somebody deletes everything (until they space all the disks)
 //Remember to actually set them as read only after adding files in New()
 /obj/item/disk/data/floppy/read_only
-	name = "Permafloppy"
+	name = "permafloppy"
 
 	attack_self(mob/user as mob)
 		boutput(user, "<span class='alert'>You can't flip the write-protect tab, it's held in place with glue or something!</span>")
@@ -284,7 +284,7 @@
 
 	New()
 		. = ..()
-		SPAWN_DBG(1 SECOND) //Give time to actually generate network passes I guess.
+		SPAWN(1 SECOND) //Give time to actually generate network passes I guess.
 			if (!root) return
 			var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "GENAUTH";} (src)
 			authrec.fields = list("HEADS"="[netpass_heads]",
@@ -319,3 +319,19 @@
 			newfolder.add_file( new /datum/computer/file/terminal_program/writewizard(src))
 		else
 			newfolder.add_file( new /datum/computer/file/terminal_program/file_transfer(src))
+
+//A computer disk with the hottest software, for nerds
+/obj/item/disk/data/fixed_disk/techcomputer3
+	New()
+		. = ..()
+		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
+		newfolder.name = "logs"
+		src.root.add_file( newfolder )
+		newfolder.add_file( new /datum/computer/file/record/c3help(src))
+		newfolder = new /datum/computer/folder
+		newfolder.name = "bin"
+		src.root.add_file( newfolder )
+		newfolder.add_file( new /datum/computer/file/terminal_program/sigpal(src))
+		newfolder.add_file( new /datum/computer/file/terminal_program/background/signal_catcher(src))
+		newfolder.add_file( new /datum/computer/file/terminal_program/writewizard(src))
+		newfolder.add_file( new /datum/computer/file/terminal_program/file_transfer(src))

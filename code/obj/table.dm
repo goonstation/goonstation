@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 1.0
 	flags = NOSPLASH
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
 	stops_space_move = TRUE
 	mat_changename = 1
@@ -18,6 +18,7 @@
 	var/has_storage = 0
 	var/obj/item/storage/desk_drawer/desk_drawer = null
 	var/slaps = 0
+	var/hulk_immune = FALSE
 
 
 	New(loc, obj/a_drawer)
@@ -31,10 +32,15 @@
 		else if (a_drawer)
 			a_drawer.set_loc(get_turf(src))
 
-		SPAWN_DBG(0)
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
+			xmasify()
+		#endif
+
+		SPAWN(0)
 			if (src.auto && ispath(src.auto_type) && src.icon_state == "0") // if someone's set up a special icon state don't mess with it
 				src.set_up()
-				SPAWN_DBG(0)
+				SPAWN(0)
 					for (var/obj/table/T in orange(1,src))
 						if (T.auto)
 							T.set_up()
@@ -50,6 +56,15 @@
 		var/area/Ar = get_area(src)
 		if (Ar)
 			Ar.sims_score = min(Ar.sims_score + bonus, 100)
+
+	proc/xmasify()
+		var/in_cafeteria = istype(get_area(src), /area/station/crew_quarters/cafeteria)
+		if(in_cafeteria && fixed_random(src.x / world.maxx, src.y / world.maxy) <= 0.2)
+			var/obj/item/reagent_containers/food/drinks/eggnog/nog = new(src.loc)
+			nog.layer += 0.1
+		if(fixed_random(src.x / world.maxx, src.y / world.maxy) >= (in_cafeteria ? 0.6 : 0.9))
+			var/obj/item/a_gift/festive/gift = new(src.loc)
+			gift.layer += 0.1
 
 	proc/set_up()
 		if (!ispath(src.auto_type))
@@ -149,7 +164,7 @@
 		var/hisher = his_or_her(user)
 		user.visible_message("<span class='alert'><b>[user] contorts [him_or_her(user)]self so that [hisher] head is underneath one of [src]'s legs and [hisher] heels are resting on top of it, then raises [hisher] feet and slams them back down over and over again!</b></span>")
 		user.TakeDamage("head", 175, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -209,6 +224,7 @@
 				return
 			G.affecting.set_loc(src.loc)
 			if (user.a_intent == "harm")
+				logTheThing("combat", user, G.affecting, "slams [constructTarget(G.affecting,"combat")] onto a table")
 				if (istype(src, /obj/table/folding))
 					if (!G.affecting.hasStatus("weakened"))
 						G.affecting.changeStatus("weakened", 4 SECONDS)
@@ -273,7 +289,7 @@
 			return
 
 		else if (istype(W, /obj/item/device/key/filing_cabinet) && src.desk_drawer)
-			src.desk_drawer.attackby(W, user)
+			src.desk_drawer.Attackby(W, user)
 			return
 
 		else if (istype(W) && src.place_on(W, user, params))
@@ -282,12 +298,17 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
-		if (user.is_hulk())
+	attack_hand(mob/user)
+		if (user.is_hulk() && !hulk_immune)
 			user.visible_message("<span class='alert'>[user] destroys the table!</span>")
 			if (prob(40))
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 			deconstruct()
+			return
+
+		if (src.has_storage && src.desk_drawer)
+			src.mouse_drop(user, src.loc, user.loc)
+
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer))
@@ -309,9 +330,7 @@
 				actions.start(new /datum/action/bar/icon/railing_jump/table_jump(user, src), user)
 		return
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if(air_group || (height==0)) return 1
-
+	Cross(atom/movable/mover)
 		if (!src.density || (mover.flags & TABLEPASS || istype(mover, /obj/newmeteor)) )
 			return 1
 		else
@@ -329,8 +348,6 @@
 			return
 
 		var/obj/item/I = O
-		if(I.loc == user && I.cant_drop)
-			return
 		if(I.equipped_in_slot && I.cant_self_remove)
 			return
 		if(istype(O.loc, /obj/item/storage))
@@ -346,7 +363,7 @@
 				for (var/obj/item/thing in S.contents)
 					thing.set_loc(src.loc)
 				S.desc = "A leather bag. It holds 0/[S.maxitems] [S.itemstring]."
-				S.satchel_updateicon()
+				S.UpdateIcon()
 				return
 		if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
 			return
@@ -355,7 +372,7 @@
 			step(I, get_dir(I, src))
 		return
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		if (usr && usr == over_object && src.desk_drawer)
 			return src.desk_drawer.MouseDrop(over_object, src_location, over_location)
 		..()
@@ -388,7 +405,7 @@
 			duration += 1 SECOND
 		return target
 
-	do_bunp()
+	do_bump()
 		return FALSE // no bunp
 
 	proc/unset_tablepass_callback(datum/thrown_thing/thr)
@@ -457,6 +474,46 @@
 	auto
 		auto = 1
 
+/obj/table/regal
+	name = "regal table"
+	desc = "Fancy."
+	icon = 'icons/obj/furniture/table_regal.dmi'
+	auto_type = /obj/table/regal/auto
+	parts_type = /obj/item/furniture_parts/table/regal
+
+	auto
+		auto = 1
+
+/obj/table/clothred
+	name = "red event table"
+	desc = "A regular table in disguise."
+	icon = 'icons/obj/furniture/table_clothred.dmi'
+	auto_type = /obj/table/clothred/auto
+	parts_type = /obj/item/furniture_parts/table/clothred
+
+	auto
+		auto = 1
+
+/obj/table/neon
+	name = "neon table"
+	desc = "It's almost painfully bright."
+	icon = 'icons/obj/furniture/table_neon.dmi'
+	auto_type = /obj/table/neon/auto
+	parts_type = /obj/item/furniture_parts/table/neon
+
+	auto
+		auto = 1
+
+/obj/table/scrap
+	name = "scrap table"
+	desc = "It's literally made of garbage."
+	icon = 'icons/obj/furniture/table_scrap.dmi'
+	auto_type = /obj/table/scrap/auto
+	parts_type = /obj/item/furniture_parts/table/scrap
+
+	auto
+		auto = 1
+
 /obj/table/folding
 	name = "folding table"
 	desc = "A table with a faux wood top designed for quick assembly and toolless disassembly."
@@ -484,6 +541,25 @@
 				actions.start(new /datum/action/bar/icon/fold_folding_table(src, null), user)
 		return
 
+/obj/table/syndicate
+	name = "crimson glass table"
+	desc = "An industrial grade table with a crimson glass panel on the top. The glass looks extremely sturdy."
+	icon = 'icons/obj/furniture/table_syndicate.dmi'
+	auto_type = /obj/table/syndicate
+	parts_type = /obj/item/furniture_parts/table/syndicate
+
+	auto
+		auto = TRUE
+
+/obj/table/nanotrasen
+	name = "azure glass table"
+	desc = "An industrial grade table with an azure glass panel on the top. The glass looks extremely sturdy."
+	icon = 'icons/obj/furniture/table_nanotrasen.dmi'
+	auto_type = /obj/table/nanotrasen
+	parts_type = /obj/item/furniture_parts/table/nanotrasen
+
+	auto
+		auto = TRUE
 /* ======================================== */
 /* ---------------------------------------- */
 /* ======================================== */
@@ -632,7 +708,7 @@
 			gnesis_smash()
 		else
 			for (var/i=rand(3,4), i>0, i--)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 				G.set_loc(src.loc)
 				if (src.material)
 					G.setMaterial(src.material)
@@ -649,7 +725,7 @@
 		src.glass_broken = GLASS_BROKEN
 		src.set_density(0)
 		src.set_up()
-		SPAWN_DBG(rand(2 SECONDS, 3 SECONDS))
+		SPAWN(rand(2 SECONDS, 3 SECONDS))
 			if(src.glass_broken == GLASS_BROKEN)
 				src.glass_broken = GLASS_REFORMING
 				src.set_up()
@@ -663,8 +739,8 @@
 				var/duration= round(regrow_duration / loops, 2)
 
 				// Ripple inwards
-				src.filters += filter(type="ripple", x=0, y=0, size=size, repeat=rand()*2.5+3, radius=0, flags=WAVE_BOUNDED)
-				filter = src.filters[src.filters.len]
+				add_filter("gnesis regrowth", 1, ripple_filter(x=0, y=0, size=size, repeat=rand()*2.5+3, radius=0, flags=WAVE_BOUNDED))
+				filter = get_filter("gnesis regrowth")
 				animate(filter, size=0, time=0, loop=loops, radius=12, flags=ANIMATION_PARALLEL)
 				animate(size=size, radius=0, time=duration)
 
@@ -674,7 +750,7 @@
 				sleep(regrow_duration)
 
 				// Remove filter and reset color
-				src.filters -= filter
+				remove_filter("gnesis regrowth")
 				animate(src, loop=0, color=color, time=duration/2)
 				src.visible_message("<span class='alert'>\The [src] fully reforms!</span>")
 				src.glass_broken = GLASS_INTACT
@@ -757,6 +833,7 @@
 				boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 				return
 			if (user.a_intent == "harm")
+				logTheThing("combat", user, G.affecting, "slams [constructTarget(G.affecting,"combat")] onto a glass table")
 				G.affecting.set_loc(src.loc)
 				G.affecting.changeStatus("weakened", 4 SECONDS)
 				src.visible_message("<span class='alert'><b>[G.assailant] slams [G.affecting] onto \the [src]!</b></span>")
@@ -789,7 +866,7 @@
 		else if (istype(W, /obj/item/reagent_containers/food/drinks/bottle) && user.a_intent == "harm")
 			var/obj/item/reagent_containers/food/drinks/bottle/B = W
 			B.smash_on_thing(user, src)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (B)
 					smashprob += 15
 				else
@@ -826,6 +903,7 @@
 		if (ismob(AM))
 			var/mob/M = AM
 			if ((prob(src.reinforced ? 60 : 80)))
+				logTheThing("combat", thr.user, M, "throws [constructTarget(M,"combat")] into a glass table, breaking it")
 				src.visible_message("<span class='alert'>[M] smashes through [src]!</span>")
 				playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				src.smash()

@@ -10,7 +10,7 @@ var/compx_gridx_max = 5
 
 /obj/machinery/computerx
 	name = "computer"
-	desc = "A computer workstation."
+	desc = "A computer that uses a bleeding-edge command line OS."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	density = 1
@@ -40,7 +40,7 @@ var/compx_gridx_max = 5
 		if(!compx_grid_spacer)
 			compx_grid_spacer = new
 
-		SPAWN_DBG(0.4 SECONDS)
+		SPAWN(0.4 SECONDS)
 			if(ispath(src.setup_starting_drive))
 				new src.setup_starting_drive(src)
 
@@ -179,7 +179,7 @@ var/compx_gridx_max = 5
 			icon_state = src.base_icon_state
 			status &= ~NOPOWER
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				icon_state = src.base_icon_state
 				src.icon_state += "0"
 				status |= NOPOWER
@@ -303,7 +303,7 @@ var/compx_gridx_max = 5
 			src.updateUsrDialog()
 			src.host_program = null
 
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				//src.restarting = 0
 				src.post_system()
 

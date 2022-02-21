@@ -14,32 +14,33 @@
 	if (!covered || !length(covered))
 		covered = list(get_turf(holder.my_atom))
 
-	var/howmany = clamp(covered.len / 2.2, 1, 15)
-	for(var/i = 0, i < howmany, i++)
-		var/atom/source = pick(covered)
-		if(ON_COOLDOWN(source, "ldm_reaction_ratelimit", 0.2 SECONDS))
-			continue
-		new/obj/decal/implo(source)
-		playsound(source, 'sound/effects/suck.ogg', 100, 1)
+	if(length(covered))
+		var/howmany = clamp(covered.len / 2.2, 1, 15)
+		for(var/i = 0, i < howmany, i++)
+			var/atom/source = pick(covered)
+			if(ON_COOLDOWN(source, "ldm_reaction_ratelimit", 0.2 SECONDS))
+				continue
+			new/obj/decal/implo(source)
+			playsound(source, 'sound/effects/suck.ogg', 100, 1)
 
-		if (in_container)
-			var/damage = clamp(created_volume * rand(8, 15) / 10, 1, 80)	// 0.8 to 1.5 damage per unit made
-			for (var/mob/living/M in psource)
-				logTheThing("combat", M, null, "takes [damage] damage due to ldmatter implosion while inside [psource].")
-				M.TakeDamage("All", damage, 0)
-				boutput(M, "<span class='alert'>[psource] [created_volume >= 10 ? "crushes you as it implodes!" : "compresses around you tightly for a moment!"]</span>")
+			if (in_container)
+				var/damage = clamp(created_volume * rand(8, 15) / 10, 1, 80)	// 0.8 to 1.5 damage per unit made
+				for (var/mob/living/M in psource)
+					logTheThing("combat", M, null, "takes [damage] damage due to ldmatter implosion while inside [psource].")
+					M.TakeDamage("All", damage, 0)
+					boutput(M, "<span class='alert'>[psource] [created_volume >= 10 ? "crushes you as it implodes!" : "compresses around you tightly for a moment!"]</span>")
 
-			if (created_volume >= 10)
-				for (var/atom/movable/O in psource)
-					O.set_loc(source)
-				psource:visible_message("<span class='alert'>[psource] implodes!</span>")
-				qdel(psource)
-				return
-		SPAWN_DBG(0)
-			for(var/atom/movable/M in view(clamp(2+round(created_volume/15), 0, 4), source))
-				if(M.anchored || M == source || M.throwing) continue
-				M.throw_at(source, 20 + round(created_volume * 2), 1 + round(created_volume / 10))
-				LAGCHECK(LAG_MED)
+				if (created_volume >= 10)
+					for (var/atom/movable/O in psource)
+						O.set_loc(source)
+					psource:visible_message("<span class='alert'>[psource] implodes!</span>")
+					qdel(psource)
+					return
+			SPAWN(0)
+				for(var/atom/movable/M in view(clamp(2+round(created_volume/15), 0, 4), source))
+					if(M.anchored || M == source || M.throwing) continue
+					M.throw_at(source, 20 + round(created_volume * 2), 1 + round(created_volume / 10))
+					LAGCHECK(LAG_MED)
 	if (holder)
 		holder.del_reagent(id)
 
@@ -52,18 +53,19 @@
 	if (!covered || !length(covered))
 		covered = list(get_turf(holder.my_atom))
 
-	var/howmany = clamp(covered.len / 2.2, 1, 15)
-	for(var/i = 0, i < howmany, i++)
-		var/atom/source = pick(covered)
-		if(ON_COOLDOWN(source, "sorium_reaction_ratelimit", 0.2 SECONDS))
-			continue
-		new/obj/decal/shockwave(source)
-		playsound(source, "sound/weapons/flashbang.ogg", 25, 1)
-		SPAWN_DBG(0)
-			for(var/atom/movable/M in view(clamp(2+round(created_volume/15), 0, 4), source))
-				if(M.anchored || M == source || M.throwing) continue
-				M.throw_at(get_edge_cheap(source, get_dir(source, M)),  20 + round(created_volume * 2), 1 + round(created_volume / 10))
-				LAGCHECK(LAG_MED)
+	if(length(covered))
+		var/howmany = clamp(covered.len / 2.2, 1, 15)
+		for(var/i = 0, i < howmany, i++)
+			var/atom/source = pick(covered)
+			if(ON_COOLDOWN(source, "sorium_reaction_ratelimit", 0.2 SECONDS))
+				continue
+			new/obj/decal/shockwave(source)
+			playsound(source, "sound/weapons/flashbang.ogg", 25, 1)
+			SPAWN(0)
+				for(var/atom/movable/M in view(clamp(2+round(created_volume/15), 0, 4), source))
+					if(M.anchored || M == source || M.throwing) continue
+					M.throw_at(get_edge_cheap(source, get_dir(source, M)),  20 + round(created_volume * 2), 1 + round(created_volume / 10))
+					LAGCHECK(LAG_MED)
 
 	if (holder)
 		holder.del_reagent(id)
@@ -99,6 +101,8 @@
 		if (!source)
 			continue
 
+		purge_smoke_blacklist(holder)
+
 		if (do_sfx)
 			if (narrator_mode || vox_smoke)
 				playsound(location, 'sound/vox/smoke.ogg', 50, 1, -3)
@@ -114,6 +118,7 @@
 		if (source.active_airborne_liquid && source.active_airborne_liquid.group)
 			prev_group_exists = 1
 			var/datum/fluid_group/FG = source.active_airborne_liquid.group
+			purge_smoke_blacklist(FG.reagents)
 
 			if (FG.contained_amt > diminishing_returns_thingymabob)
 				react_amount = react_amount / (1 + ((FG.contained_amt - diminishing_returns_thingymabob) * 0.1))//MBC MAGIC NUMBERS :)
@@ -209,3 +214,13 @@
 		var/stam_damage = 26 * min(amount, 5)
 
 		M.apply_flash(anim_dur, stunned, stunned, 0, eye_blurry, eye_damage, stamina_damage = stam_damage)
+
+/// Deletes any reagents that are banned in smoke clouds.
+/proc/purge_smoke_blacklist(datum/reagents/FG)
+	FG.del_reagent("thalmerite")
+	FG.del_reagent("big_bang")
+	FG.del_reagent("big_bang_precursor")
+	FG.del_reagent("poor_concrete")
+	FG.del_reagent("okay_concrete")
+	FG.del_reagent("good_concrete")
+	FG.del_reagent("perfect_concrete")
