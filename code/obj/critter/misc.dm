@@ -581,7 +581,7 @@
 		..()
 		if(!ON_COOLDOWN(src, "snake bite", 10 SECONDS))
 			M.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
-			M.reagents?.add_reagent("viper_venom", 40)
+			M.reagents?.add_reagent("viper_venom", 10)
 			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			M.emote("scream")
 
