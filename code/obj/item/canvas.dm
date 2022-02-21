@@ -62,6 +62,9 @@
 		icon = art
 		pop_open_a_browser_box(user)
 
+	attack_self(mob/user)
+		. = ..()
+		pop_open_a_browser_box(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (!W || !user)
@@ -86,6 +89,11 @@
 			// send the damn icon and gently nudge the page into refreshing it
 			send_the_damn_icon(usr)
 			return
+
+		else if (istype(W, /obj/item/pen))
+			pop_open_a_browser_box(user)
+		else
+			. = ..()
 
 
 	Topic(href, href_list)
