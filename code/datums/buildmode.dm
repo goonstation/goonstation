@@ -396,6 +396,33 @@ ABSTRACT_TYPE(/datum/buildmode)
 		else if ("right" in pa)
 			mode.click_mode_right(pa.Find("ctrl"), pa.Find("alt"), pa.Find("shift"))
 
+	MouseWheel(delta_x, delta_y, location, control, params)
+		. = ..()
+		var/current = 0
+		for(var/datum/buildmode/mode in holder.hotkey_bar)
+			if(mode == holder.mode)
+				current = mode.hotkey_number
+				break
+		if(delta_y > 0)
+			var/datum/buildmode/firstmode = null
+			for(var/datum/buildmode/mode in holder.hotkey_bar)
+				if(isnull(firstmode))
+					firstmode = mode
+				if(mode.hotkey_number > current)
+					holder.select_mode(mode)
+					return
+			holder.select_mode(firstmode)
+		else
+			var/datum/buildmode/lastmode = null
+			for(var/datum/buildmode/mode in holder.hotkey_bar)
+				if(mode.hotkey_number >= current)
+					break
+				lastmode = mode
+			if(isnull(lastmode))
+				for(var/datum/buildmode/mode in holder.hotkey_bar)
+					lastmode = mode
+			holder.select_mode(lastmode)
+
 
 var/image/buildmodeBlink = image('icons/effects/effects.dmi',"empdisable")//guH GUH GURGLE
 /proc/blink(var/turf/T)
