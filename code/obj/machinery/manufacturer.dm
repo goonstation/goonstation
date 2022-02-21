@@ -2031,7 +2031,7 @@
 
 /obj/machinery/manufacturer/general
 	name = "General Manufacturer"
-	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing tools and general purpose items.."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing tools and general purpose items."
 	free_resource_amt = 5
 	free_resources = list(/obj/item/material_piece/steel,
 		/obj/item/material_piece/copper,
