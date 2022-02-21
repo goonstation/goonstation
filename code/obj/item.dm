@@ -1534,7 +1534,7 @@
 		msg += " Turf contains <b>smoke</b> [log_reagents(T.active_airborne_liquid.group)]."
 	if (locate(/obj/item) in T.contents)
 		var/obj/item/W = locate(/obj/item) in T.contents
-		if(istype(W.material, /datum/material/crystal/plasmastone))
+		if (istype(W.material, /datum/material/crystal/plasmastone))
 			msg += " Turf contains <b>plasmastone</b>."
 	logTheThing("bombing", M, null, "[msg]")
 
