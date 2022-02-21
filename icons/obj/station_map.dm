@@ -1,3 +1,4 @@
+///This is exclusively for the AI map right now
 /obj/station_map
 	name = "AI station map"
 	var/static/icon/map_icon
@@ -17,6 +18,8 @@
 			map_icon = icon("icons/obj/station_map.dmi", "blank")
 			render_map()
 			zoom_map()
+			pixel_y += 20 //magic numbers because ByondUI mis-aligns by a few pixels
+			pixel_x += 8
 		icon = map_icon
 
 	Click(location, control, params)
@@ -38,6 +41,9 @@
 				var/turf/turf = locate(x, y, Z_LEVEL_STATION)
 				if (!turf.loc || !(istype(turf.loc, /area/station) || istype(turf.loc, /area/research_outpost)))
 					continue
+				//the Kondaru off station owlry and abandoned research outpost are both considered part of the station but have no AI cams
+				if (map_settings.name == "KONDARU" && (istype(turf.loc, /area/station/garden/owlery) || istype(turf.loc, /area/research_outpost/indigo_rye)))
+					continue
 				//keep track of the outer bounds of the station
 				x_max = max(x_max, x)
 				x_min = min(x_min, x)
@@ -57,8 +63,8 @@
 		var/center_x = (x_max + x_min)/2
 		var/center_y = (y_max + y_min)/2
 		//adjust by distance to real center
-		src.pixel_x = -(center_x - (world.maxx/2))
-		src.pixel_y = -(center_y - (world.maxy/2))
+		src.pixel_x = -(center_x - (world.maxx/2)) * scale_main
+		src.pixel_y = -(center_y - (world.maxy/2)) * scale_main
 
 	proc/turf_color(turf/turf)
 		if (istype(turf.loc, /area/station/hydroponics) || istype(turf.loc, /area/station/ranch))
@@ -67,7 +73,7 @@
 			return "#1ba7e9"
 		else if (istype(turf.loc, /area/station/science) || istype(turf.loc, /area/research_outpost))
 			return "#8e0bc2"
-		else if (istype(turf.loc, /area/station/security) || istype(turf.loc, /area/station/hos))
+		else if (istype(turf.loc, /area/station/security) || istype(turf.loc, /area/station/hos) || istype(turf.loc, /area/station/ai_monitored/armory))
 			return "#b10202"
 		else if (istype(turf.loc, /area/station/engine) || istype(turf.loc, /area/station/quartermaster) || istype(turf.loc, /area/station/mining) || istype(turf.loc, /area/station/construction))
 			return "#e4d835"
@@ -77,5 +83,7 @@
 			return "#1e2861"
 		else if (istype(turf.loc, /area/station/maintenance))
 			return "#474747"
+		else if (istype(turf.loc, /area/station/hallway))
+			return "#ffffff"
 		else
 			return "#808080"

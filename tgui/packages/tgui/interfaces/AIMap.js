@@ -5,8 +5,9 @@ import { Window } from '../layouts';
 export const AIMap = (params, context) => {
   return (
     <Window
-      width={600}
-      height={600}
+      width={610}
+      height={640}
+      title="AI station map"
     >
       <Window.Content>
         <ByondUi

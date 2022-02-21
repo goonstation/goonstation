@@ -506,6 +506,8 @@ var/global
 
 	hardRebootFilePath = "data/hard-reboot"
 
+	obj/station_map/ai_station_map
+
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])
 		addGlobalImage(I, "[key]-renderSourceImage")
