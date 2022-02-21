@@ -117,7 +117,7 @@
 			. += "<span class='notice'>The ethereal grip on this object appears to be weak.</span>"
 
 	meteorhit(var/obj/O as obj)
-		src.death(1)
+		src.death(TRUE)
 		return
 
 	restrained()
@@ -186,7 +186,7 @@
 		health -= brute
 		health = min(max_health, health)
 		if (src.health <= 0)
-			src.death(0)
+			src.death(FALSE)
 
 	HealDamage(zone, brute, burn)
 		TakeDamage(zone, -brute, -burn)
@@ -230,7 +230,7 @@
 				if (isturf(src.item.loc))
 					src.item.set_loc(src)
 				else
-					src.death(0)
+					src.death(FALSE)
 
 		//To reflect updates of the items appearance etc caused by interactions.
 		src.name = "[name_prefix][src.item.name]"

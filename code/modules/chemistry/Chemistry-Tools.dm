@@ -482,7 +482,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		src.set_loc(get_turf(user))
 		step_rand(src)
 		user.visible_message("<span class='alert'><b>[user] kicks the bucket!</b></span>")
-		user.death(0)
+		user.death(FALSE)
 
 	red
 		name = "red bucket"

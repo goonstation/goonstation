@@ -137,7 +137,7 @@
 				if (get_dist(src, M) <= 1 && ((M:loc == target_lastloc)) && M.lying)
 					if(iscarbon(M))
 						logTheThing("combat", M, null, "was zombified by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
-						M.death(1)
+						M.death(TRUE)
 						src.visible_message("<span class='alert'><B>[src]</B> slurps up [M]'s brain!</span>")
 						playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
 						M.canmove = 0

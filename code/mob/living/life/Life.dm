@@ -419,13 +419,13 @@
 		return 1
 
 	if (!src.item)
-		src.death(0)
+		src.death(FALSE)
 
 	if (src.item && src.item.loc != src) //ZeWaka: Fix for null.loc
 		if (isturf(src.item.loc))
 			src.item.set_loc(src)
 		else
-			src.death(0)
+			src.death(FALSE)
 
 	for (var/atom/A as obj|mob in src)
 		if (A != src.item && A != src.dummy && A != src.owner && !istype(A, /atom/movable/screen))
