@@ -1178,6 +1178,8 @@
 		if (!isdead(target))
 			message_admins("[key_name(owner)] forced [key_name(target, 1)] ([target == 2 ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
 		if (grinder.auto_strip && !grinder.emagged)
+			if(target.hasStatus("handcuffed"))
+				target.handcuffs.drop_handcuffs(target) //handcuffs have special handling for zipties and such, remove them properly first
 			target.unequip_all()
 			if (length(target.implant))
 				for (var/obj/item/implant/I in target.implant)
