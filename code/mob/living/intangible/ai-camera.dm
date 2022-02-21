@@ -38,7 +38,6 @@
 	var/outer_eye_atom = null
 
 	var/datum/tgui/map_ui
-	// var/static/obj/station_map/map
 
 	New()
 		src.cancel_camera()
