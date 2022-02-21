@@ -96,31 +96,40 @@ export const SeedFabricator = (props, context) => {
   );
 };
 
+const seedsSorter = (a, b) => a.name.localeCompare(b.name);
+
 const SeedCategory = (props, context) => {
   const { act } = useBackend(context);
   const { category, dispenseAmount } = props;
-  const { name } = category;
-  const seeds = category.seeds;
+  const { name, seeds } = category;
   if (!seeds) return false;
-  seeds.sort((a, b) => a.name.localeCompare(b.name));
+  seeds.sort(seedsSorter);
 
   return (
     <Collapsible
       title={name}>
-      {seeds.map((seed, index) => (
+      {seeds.map(seed => (
         <Box key={seed.name} as="span">
           <Button width="155px" height="32px" px={0} m={0.25}
             onClick={() => act('disp', { path: seed.path, amount: dispenseAmount })}>
-            <Flex direction="row" align="center">
-              <Flex.Item>
-                <img
-                  src={`data:image/png;base64,${seed.img}`}
-                  style={{
-                    'vertical-align': 'middle',
-                    'horizontal-align': 'middle',
-                  }}
-                  height="32px"
-                  width="32px" />
+            <Flex direction="row" align="center" title={seed.name}>
+              <Flex.Item
+                style={{
+                  'vertical-align': 'middle',
+                  'horizontal-align': 'middle',
+                }}
+                height="32px"
+                width="32px">
+                {seed.img ? (
+                  <img
+                    src={`data:image/png;base64,${seed.img}`} />
+                ) : (
+                  <Icon
+                    name="question-circle-o"
+                    pl="8px"
+                    pt="4px"
+                    fontSize="24px" />
+                )}
               </Flex.Item>
               <Flex.Item
                 overflow="hidden"
