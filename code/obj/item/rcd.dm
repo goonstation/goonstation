@@ -776,6 +776,7 @@ Broken RCD + Effects
 	name = "cardboard rapid construction Device"
 	desc = "Also known as a C-RCD, this device is able to rapidly construct cardboard props."
 	mats = list("DEN-3" = 10, "POW-2" = 10, "cardboard" = 30)
+	force = 0
 	matter_create_floor = 0.5
 	time_create_floor = 0 SECONDS
 
