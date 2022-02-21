@@ -1,3 +1,8 @@
+(t)thu feb 17 22
+(u)pali
+(*)When entering a partial typepath in the command bar (e.g. for the spawn command) you can now put a $ at the end to make it search only for types ending with what you entered.<br>Basically when you do 'del-all /atom' it generates list of all /atom subtypes and makes your client freeze up. But you being the responsible admin you are want to delete all atoms so you don't need all of that crap. Therefore you now do 'del-all /atom$' and it will match only the actual /atom!
+(u)aloe
+(+)The Check-Vehicle-Occupant verb now only displays vehicles with occupants, making it actually usable.
 (t)mon feb 08 22
 (u)TTerc
 (*)Added new admin verb to the Self tab, Set Invisible - makes you invisible and sets your mouse opacity to 0. Using it again undoes it.

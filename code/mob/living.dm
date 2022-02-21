@@ -171,7 +171,7 @@
 	stomach_process = null
 	skin_process = null
 
-	for(var/mob/dead/aieye/E in src.contents)
+	for(var/mob/living/intangible/aieye/E in src.contents)
 		E.cancel_camera()
 
 	if (src.static_image)

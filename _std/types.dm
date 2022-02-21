@@ -1,6 +1,9 @@
 #define childrentypesof(x) (typesof(x) - x)
 // consider declaring the base type abstract instead and using concrete_typesof instead of childrentypesof
 
+/// nulls a var if its value doesn't match the var's type
+#define ENSURE_TYPE(VAR) if(!istype(VAR)) VAR = null;
+
 #define ABSTRACT_TYPE(type) /datum/_is_abstract ## type
 #define IS_ABSTRACT(type) text2path("/datum/_is_abstract[type]")
 /*
@@ -307,3 +310,129 @@ proc/get_type_typeinfo(type)
 			else
 				return /datum
 	return text2path(copytext(string_type, 1, last_slash))
+
+
+/// Finds some instance of a type in the world. Returns null if none found.
+proc/find_first_by_type(type)
+	RETURN_TYPE(type)
+	var/ancestor = type
+	while(ancestor != null)
+		if(ancestor in global.by_type)
+			if(length(global.by_type[ancestor]))
+				return global.by_type[ancestor][1]
+			else
+				return null
+		ancestor = type2parent(ancestor)
+	. = locate(type)
+
+/**
+ *	Finds all instance of a type in the world.
+ *	Returns a list of the instances if no procedure is given.
+ *	Otherwise, calls the procedure for each instance and returns an assoc list of the form list(instance = procedure(instance, arguments...), ...)
+ *	`procedure_src` is the src for the proc call. If it is null, a global proc is called.
+ *	If it is the string "instance" the output list will be instead list(instance = instance.procedure(arguments...), ...)
+ */
+proc/find_all_by_type(type, procedure=null, procedure_src=null, arguments=null, lagcheck=TRUE)
+	RETURN_TYPE(type)
+	var/ancestor = type
+	while(ancestor != null)
+		if(ancestor in global.by_type)
+			if(length(global.by_type[ancestor]))
+				if(ancestor == type)
+					. = global.by_type[ancestor].Copy()
+				else
+					. = list()
+					for(var/D in global.by_type[ancestor])
+						if(istype(D, type))
+							. += D
+			else
+				return list()
+		ancestor = type2parent(ancestor)
+
+	if(.)
+		if(!isnull(procedure))
+			if(procedure_src == "instance")
+				for(var/instance in .)
+					.[instance] = call(instance, procedure)(arglist(arguments))
+			else if(procedure_src && length(arguments))
+				for(var/instance in .)
+					var/mod_args = list(instance) + arguments
+					.[instance] = call(procedure_src, procedure)(arglist(mod_args))
+			else if(procedure_src)
+				for(var/instance in .)
+					.[instance] = call(procedure_src, procedure)(instance)
+			else if(length(arguments))
+				for(var/instance in .)
+					var/mod_args = list(instance) + arguments
+					.[instance] = call(procedure)(arglist(mod_args))
+			else
+				for(var/instance in .)
+					.[instance] = call(procedure)(instance)
+		return
+
+	var/atom_base = /datum
+	ancestor = type
+	while(ancestor != null)
+		if(ancestor in list(/obj, /mob, /area, /turf, /atom/movable, /atom, /datum))
+			atom_base = ancestor
+			break
+		ancestor = type2parent(ancestor)
+
+	. = list()
+	#define IT_TYPE(T) if(T) {\
+			if(!isnull(procedure) && procedure_src == "instance") {\
+				for(var ## T/instance) {\
+					if(lagcheck) LAGCHECK(LAG_LOW); \
+					if(istype(instance, type)) {\
+						.[instance] = call(instance, procedure)(arglist(arguments)); \
+					} \
+				} \
+			} else if(!isnull(procedure) && procedure_src && length(arguments)) {\
+				for(var ## T/instance) {\
+					if(lagcheck) LAGCHECK(LAG_LOW); \
+					if(istype(instance, type)) {\
+						var/mod_args = list(instance) + arguments; \
+						.[instance] = call(procedure_src, procedure)(arglist(mod_args)); \
+					} \
+				} \
+			} else if(!isnull(procedure) && procedure_src) {\
+				for(var ## T/instance) {\
+					if(lagcheck) LAGCHECK(LAG_LOW); \
+					if(istype(instance, type)) {\
+						.[instance] = call(procedure_src, procedure)(instance); \
+					} \
+				} \
+			} else if(!isnull(procedure) && length(arguments)) { \
+				for(var ## T/instance) {\
+					if(lagcheck) LAGCHECK(LAG_LOW); \
+					if(istype(instance, type)) {\
+						var/mod_args = list(instance) + arguments; \
+						.[instance] = call(procedure)(arglist(mod_args)); \
+					} \
+				} \
+			} else if(!isnull(procedure)) { \
+				for(var ## T/instance) {\
+					if(lagcheck) LAGCHECK(LAG_LOW); \
+					if(istype(instance, type)) {\
+						.[instance] = call(procedure)(instance); \
+					} \
+				} \
+			} else { \
+				for(var ## T/instance) {\
+					if(lagcheck) LAGCHECK(LAG_LOW); \
+					if(istype(instance, type)) {\
+						. += instance; \
+					} \
+				} \
+			} \
+		}
+	// the escaped newlines are currently necessary because of https://github.com/SpaceManiac/SpacemanDMM/issues/306
+	switch(atom_base)
+		IT_TYPE(/obj) \
+		IT_TYPE(/mob) \
+		IT_TYPE(/area) \
+		IT_TYPE(/turf) \
+		IT_TYPE(/atom/movable) \
+		IT_TYPE(/atom) \
+		IT_TYPE(/datum)
+	#undef IT_TYPE

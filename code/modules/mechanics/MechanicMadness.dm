@@ -203,7 +203,7 @@
 		..()
 		src.contents=null
 		return
-	MouseDrop(atom/target)
+	mouse_drop(atom/target)
 		if(!istype(usr))
 			return
 		if(src.open && target == usr)
@@ -235,7 +235,7 @@
 				src.set_loc(get_turf(src))
 				user.drop_item()
 				return
-			return MouseDrop(user)
+			return mouse_drop(user)
 		New()
 			..()
 			src.light.set_color(0,0.7,1)
@@ -243,8 +243,8 @@
 			src.set_loc(get_turf(user))
 			user.drop_item()
 			return
-		MouseDrop(atom/target)
-		// thanks, whoever hardcoded that pick-up action into obj/item/MouseDrop()!
+		mouse_drop(atom/target)
+		// thanks, whoever hardcoded that pick-up action into obj/item/mouse_drop()!
 			if(istype(target,/atom/movable/screen/hud))
 				return
 			if(target.loc!=get_turf(target) && !isturf(target)) //return if dragged onto an item in another object (i.e backpacks on players)
@@ -482,7 +482,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		return ..()
 
-	MouseDrop(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)
+	mouse_drop(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)
 		if(level == 2 || (istype(O, /obj/item/mechanics) && O.level == 2))
 			boutput(usr, "<span class='alert'>Both components need to be secured into place before they can be connected.</span>")
 			return ..()
@@ -2573,7 +2573,7 @@
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
-		if (level == 2 || isobserver(AM))
+		if (level == 2 || isobserver(AM) || isintangible(AM))
 			return
 		if (limiter && (ticker.round_elapsed_ticks < limiter))
 			return

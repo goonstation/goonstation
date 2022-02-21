@@ -201,7 +201,7 @@ var/global/lastStationNameChange = 0 //timestamp
 			ircmsg["key"] = user.client.key
 			ircmsg["name"] = (user?.real_name) ? stripTextMacros(user.real_name) : "NULL"
 			ircmsg["msg"] = "changed the station name to [name]"
-			ircbot.export("admin", ircmsg)
+			ircbot.export_async("admin", ircmsg)
 
 	else
 		name = generate_random_station_name()

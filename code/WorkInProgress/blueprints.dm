@@ -428,7 +428,7 @@
 	"/obj/machinery/portable_atmospherics/canister")
 	var/list/permittedTileTypes = list("/turf/simulated")
 
-	var/savefile/save = new/savefile("data/blueprints.dat")
+	var/static/savefile/save = new/savefile("data/blueprints.dat")
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
 		if(get_dist(src,target) > 2) return

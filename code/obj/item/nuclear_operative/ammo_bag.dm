@@ -45,7 +45,7 @@
 			user.visible_message("[user] begins unfolding a [src].", "You begin unfolding \the [src].")
 			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/item/ammo/ammobox/nukeop/proc/deploy_ammobag, user, src.icon, src.icon_state,"[user] finishes deploying a [src].", null)
 
-	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		if(!(over_object == usr))
 			return
 		if(usr.equipped()) //empty hand required

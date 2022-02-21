@@ -885,8 +885,14 @@
 			if("flush_reagent")
 				var/obj/item/reagent_containers/glass/target = containers[params["container_id"]]
 				var/id = params["reagent_id"]
-				if (target && target.reagents)
+				if (target?.reagents)
 					target.reagents.remove_reagent(id, 500)
+					. = TRUE
+			if("isolate")
+				var/obj/item/reagent_containers/glass/target = containers[params["container_id"]]
+				var/id = params["reagent_id"]
+				if (target?.reagents)
+					target.reagents.isolate_reagent(id)
 					. = TRUE
 			if("flush")
 				var/obj/item/reagent_containers/glass/target = containers[params["container_id"]]
@@ -912,7 +918,7 @@
 			if("chemtransfer")
 				var/obj/item/reagent_containers/glass/from = containers[params["container_id"]]
 				var/obj/item/reagent_containers/glass/target = src.extract_to
-				if (from && from.reagents.total_volume && target && from != target)
+				if (from?.reagents.total_volume && target && from != target)
 					from.reagents.trans_to(target, clamp(params["amount"], 1, 500))
 					. = TRUE
 		src.UpdateIcon()
@@ -984,7 +990,7 @@
 			boutput(user, "<span class='notice'>You finish stuffing items into [src]!</span>")
 		src.UpdateIcon()
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the extractor's output target.</span>")
 			return

@@ -485,7 +485,7 @@
 				src.stick_to(target, pox, poy)
 		return
 
-	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		if(!istype(usr, /mob/living) || !isturf(src.loc) || \
 				get_dist(get_turf(over_object), get_turf(src)) > 1 || \
 				get_dist(usr, get_turf(over_object)) > 1 ||  \

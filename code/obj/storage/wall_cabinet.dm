@@ -17,7 +17,7 @@
 	mechanics_type_override = /obj/item/storage/wall
 
 	attack_hand(mob/user as mob)
-		return MouseDrop(user)
+		return mouse_drop(user)
 
 /obj/item/storage/wall/emergency
 	name = "emergency supplies"

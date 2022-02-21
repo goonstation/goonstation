@@ -237,6 +237,7 @@ var/list/admin_verbs = list(
 		/client/proc/find_thing,
 		/client/proc/find_one_of,
 		/client/proc/cmd_admin_advview,
+		/client/proc/iddt,
 		/client/proc/cmd_swap_minds,
 		/client/proc/cmd_transfer_client,
 		/client/proc/edit_module,
@@ -280,6 +281,7 @@ var/list/admin_verbs = list(
 		/client/proc/show_admin_lag_hacks,
 		/client/proc/spawn_survival_shit,
 		/client/proc/respawn_cinematic,
+		/client/proc/idkfa,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
@@ -398,7 +400,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_extra_verbs,
 		/client/proc/cmd_randomize_look,
 		/client/proc/toggle_numbers_station_messages,
-		// /client/proc/export_banlist,
+		// /client/proc/export_async_banlist,
 		// /client/proc/import_banlist,
 
 
@@ -693,7 +695,7 @@ var/list/special_pa_observing_verbs = list(
 /client/proc/player_panel()
 	set name = "Player Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
-	admin_only
+	ADMIN_ONLY
 	if (src.holder.tempmin)
 		return
 	if (src.holder.level >= LEVEL_SA)
@@ -729,7 +731,7 @@ var/list/special_pa_observing_verbs = list(
 /client/proc/stealth()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Stealth Mode"
-	admin_only
+	ADMIN_ONLY
 
 	//fuck u
 	src.holder.set_stealth_mode(null, 0)
@@ -776,13 +778,13 @@ var/list/special_pa_observing_verbs = list(
 		ircmsg["key"] = src.owner:key
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "Has enabled stealth mode as ([src.owner:fakekey])"
-		ircbot.export("admin", ircmsg)
+		ircbot.export_async("admin", ircmsg)
 
 /client/proc/alt_key()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Alternate Key"
 	set desc = "Shows your key as something else!"
-	admin_only
+	ADMIN_ONLY
 
 	src.holder.set_alt_key(null, 0)
 
@@ -819,13 +821,13 @@ var/list/special_pa_observing_verbs = list(
 		ircmsg["key"] = src.owner:key
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "Has set their displayed key to ([src.owner:fakekey])"
-		ircbot.export("admin", ircmsg)
+		ircbot.export_async("admin", ircmsg)
 */
 /client/proc/banooc()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "OOC (Un)Ban"
 	set desc = "Ban or unban a player from using OOC"
-	admin_only
+	ADMIN_ONLY
 	var/mob/target
 	var/client/selection = input("Please, select a player!", "OOC Ban") as null|anything in clients
 	if (!selection)
@@ -847,7 +849,7 @@ var/list/special_pa_observing_verbs = list(
 	set popup_menu = 0
 	set name = "Warn"
 	set desc = "Warn a player"
-	admin_only
+	ADMIN_ONLY
 	if(M.client && M.client.holder && (M.client.holder.level >= src.holder.level))
 		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 		return
@@ -930,7 +932,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 	if(!O.fingerprints_full || !length(O.fingerprints_full))
 		alert("There are no fingerprints on this object.", null, null, null, null, null)
 		return
@@ -948,7 +950,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set desc = "Respawn yourself with a special effect"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	var/list/respawn_types = list("Heavenly", "Demonically")
 	var/selection = tgui_input_list(usr, "Select Respawn type.", "Cinematic Respawn", respawn_types)
@@ -969,7 +971,7 @@ var/list/fun_images = list()
 	set desc = "Respawn yourself as the currenly loaded character of a player. Instantly. Right where you stand."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if (!cli)
 		cli = input("Please, select a player!", "Respawn As", null, null) as null|anything in clients
@@ -997,7 +999,7 @@ var/list/fun_images = list()
 	set desc = "Respawn yourself as your currenly loaded character. Instantly. Right where you stand."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	respawn_as_self_internal(new_self=TRUE)
 
@@ -1007,13 +1009,13 @@ var/list/fun_images = list()
 	set desc = "Respawn yourself as your currenly loaded character or the character you removed with remove-self. Instantly. Right where you stand."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	respawn_as_self_internal(new_self=FALSE)
 
 
 /client/proc/respawn_as_self_internal(new_self=FALSE)
-	admin_only
+	ADMIN_ONLY
 
 	if (!src.preferences)
 		boutput(src, "<span class='alert'>No preferences found on your client.</span>")
@@ -1267,7 +1269,7 @@ var/list/fun_images = list()
 	set desc = "View the list of observed computer IDs belonging to a key"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 
-	admin_only
+	ADMIN_ONLY
 
 	view_client_compid_list(usr, C)
 
@@ -1276,7 +1278,7 @@ var/list/fun_images = list()
 	set desc = "Opens a firebug console in the target's chat area"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
-	admin_only
+	ADMIN_ONLY
 
 	if (src != C)
 		var/trigger = (C.holder ? src.key : (src.stealth || src.fakekey ? src.fakekey : src.key))
@@ -1289,7 +1291,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "blobsay"
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 	if (!src.mob || src.player_mode)
 		return
 
@@ -1321,7 +1323,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "hivesay"
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 	if (!src.mob || src.player_mode)
 		return
 
@@ -1359,7 +1361,7 @@ var/list/fun_images = list()
 /client/proc/silisay(msg as text)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "silisay"
-	admin_only
+	ADMIN_ONLY
 	if (!src.mob || src.player_mode)
 		return
 
@@ -1390,7 +1392,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "dronesay"
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 	if (!src.mob || src.player_mode)
 		return
 
@@ -1423,7 +1425,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "marsay"
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 	if (!src.mob || src.player_mode)
 		return
 
@@ -1440,7 +1442,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "flocksay"
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 	if (!src.mob || src.player_mode)
 		return
 
@@ -1496,7 +1498,7 @@ var/list/fun_images = list()
 	set name = "Give Pet"
 	set desc = "Assigns someone a pet!  Woo!"
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	admin_only
+	ADMIN_ONLY
 
 	if (!M)
 		M = input("Choose a target.", "Selection") as null|anything in mobs
@@ -1527,7 +1529,7 @@ var/list/fun_images = list()
 	set name = "Give Pets"
 	set desc = "Assigns everyone a pet! Enter part of the path of the thing you want to give."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	admin_only
+	ADMIN_ONLY
 
 	if(isnull(pet_input))
 		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random", "/obj/critter/cat")) as null|text
@@ -1559,7 +1561,7 @@ var/list/fun_images = list()
 	set name = "Give Player Pets"
 	set desc = "Assigns every living player a pet! Enter part of the path of the thing you want to give."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	admin_only
+	ADMIN_ONLY
 
 	if(isnull(pet_input))
 		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random", "/obj/critter/cat")) as null|text
@@ -1593,7 +1595,7 @@ var/list/fun_images = list()
 	set name = "Custom Grenade"
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set desc = "Create a custom object spewing grenade"
-	admin_only
+	ADMIN_ONLY
 
 	var/new_grenade = alert("Use the new thing throwing grenade?", "Cool new grenade?", "Yes", "No") == "Yes"
 	var/obj_input = input("Enter path of the object you want the grenade to have or enter a part of the path to search", "Enter Path") as null|text
@@ -1622,7 +1624,7 @@ var/list/fun_images = list()
 	set category = "Commands"
 	set name = "Admin Changelog"
 	set desc = "Show or hide the admin changelog"
-	admin_only
+	ADMIN_ONLY
 
 	if (winget(src, "adminchanges", "is-visible") == "true")
 		src.Browse(null, "window=adminchanges")
@@ -1637,7 +1639,7 @@ var/list/fun_images = list()
 	set name = "Remove Self"
 	set desc = "Simply removes you from existence"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if (!src.mob)
 		out(src, "<span class='alert'>You don't even exist!</span>")
@@ -1664,7 +1666,7 @@ var/list/fun_images = list()
 	set name = "Remove Other"
 	set desc = "Remove some other dude from the mortal plain"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if (!M)
 		out(src, "<span class='alert'>You need to select someone to remove!</span>")
@@ -1691,7 +1693,7 @@ var/list/fun_images = list()
 	set desc = "Switch the map for the next round"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	var/bustedMapSwitcher = isMapSwitcherBusted()
 	if (bustedMapSwitcher)
@@ -1733,7 +1735,7 @@ var/list/fun_images = list()
 	set desc = "Start a player vote for the next map"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	var/bustedMapSwitcher = isMapSwitcherBusted()
 	if (bustedMapSwitcher)
@@ -1764,7 +1766,7 @@ var/list/fun_images = list()
 	set desc = "End a player vote for the next map"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	var/bustedMapSwitcher = isMapSwitcherBusted()
 	if (bustedMapSwitcher)
@@ -1789,7 +1791,7 @@ var/list/fun_images = list()
 	set desc = "Cancel a player map vote without doing anything"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	var/bustedMapSwitcher = isMapSwitcherBusted()
 	if (bustedMapSwitcher)
@@ -1817,7 +1819,7 @@ var/list/fun_images = list()
 	set name = "View Antag History"
 	set desc = "View the antag history for a given player"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if (!ckey)
 		return
@@ -1883,7 +1885,7 @@ var/list/fun_images = list()
 	set name = "Alert All Ghosts"
 	set desc = "Send a notice to ghosts that something weird is happening at a person"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if(ghost_notifier)
 		ghost_notifier.send_notification(src, target, /datum/ghost_notification/observe/admin)
@@ -1893,7 +1895,7 @@ var/list/fun_images = list()
 	set name = "Display Pregame HTML"
 	set desc = "Tired of boring map gimmicks on the pregame screen? Try HTML!"
 
-	admin_only
+	ADMIN_ONLY
 	if(pregameHTML)
 		if(alert("There's already some HTML shown. Do you want to remove or replace it?", "HTML clear?", "Remove", "Replace") == "Remove")
 			pregameHTML = null
@@ -1933,7 +1935,7 @@ var/list/fun_images = list()
 	set name = "Implant All"
 	set desc = "Gives everyone a microbomb. You cannot undo this!!"
 
-	admin_only
+	ADMIN_ONLY
 	microbombs_4_everyone()
 
 
@@ -1966,7 +1968,7 @@ var/list/fun_images = list()
 	set name = "Set Nuke-Ops Scoreboard Values"
 	set desc = "Manually assign values to the nuke ops win/loss scoreboard."
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
-	admin_only
+	ADMIN_ONLY
 
 	var/win_value = input("Enter new win value.") as num
 	world.save_intra_round_value("nukie_win", win_value)
@@ -1985,7 +1987,7 @@ var/list/fun_images = list()
 	set name = "Set Pod Wars Scoreboard Values"
 	set desc = "Manually assign values to the Pod Wars Nanotrasen/Syndicate wins scoreboard."
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
-	admin_only
+	ADMIN_ONLY
 
 	var/nt_win_value = input("Enter new Nanotrasen win value.") as num
 	world.save_intra_round_value("nt_win", nt_win_value)
@@ -2004,7 +2006,7 @@ var/list/fun_images = list()
 	set name = "Set Pod Wars Death Scoreboard Values"
 	set desc = "Manually assign values to the Pod Wars Nanotrasen/Syndicate deaths scoreboard."
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
-	admin_only
+	ADMIN_ONLY
 
 	var/nt_death_value = input("Enter new Nanotrasen death value.") as num
 	world.save_intra_round_value("nt_death", nt_death_value)
@@ -2023,7 +2025,7 @@ var/list/fun_images = list()
 	set name = "Wipe Nukie Boss Stats"
 	set desc = "Wipe the intra-round stats of the nukeop commander's uplink purchases"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
-	admin_only
+	ADMIN_ONLY
 
 	var/confirm = input(usr, "Are you SURE you want to clear the stats?") in list("Yes", "No")
 	if(!(confirm == "Yes"))
@@ -2038,7 +2040,7 @@ var/list/fun_images = list()
 /mob/verb/admin_interact_verb()
 	set name = "admin_interact"
 	set hidden = 1
-	usr_admin_only
+	USR_ADMIN_ONLY
 	src.client.admin_intent = 1
 	src.client.show_popup_menus = 0
 	src.update_cursor()
@@ -2047,7 +2049,7 @@ var/list/fun_images = list()
 	src.client.admin_intent = 0
 	src.client.show_popup_menus = 1
 	src.update_cursor()
-	usr_admin_only
+	USR_ADMIN_ONLY
 
 
 	if (parameters["right"])
@@ -2197,7 +2199,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Lights Out"
 	set desc = "Force off all station lighting for a duration"
-	admin_only
+	ADMIN_ONLY
 	if(!isadmin(src))
 		boutput(src, "Only administrators may use this command.")
 		return

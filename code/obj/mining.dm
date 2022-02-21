@@ -279,8 +279,7 @@
 				magnet = target:linked_magnet
 			else
 				magnet = target
-			if (!istype(magnet))
-				magnet = null
+			ENSURE_TYPE(magnet)
 			else
 				if (!loaded)
 					boutput(user, "<span class='alert'>The magnetizer needs to be loaded with a plasmastone chunk first.</span>")
@@ -779,7 +778,7 @@
 			return 1
 
 		var/rangecheck = 0
-		if (issilicon(usr))
+		if (isAI(usr) || issilicon(usr))
 			rangecheck = 1
 		if (istype(usr.loc,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = usr.loc

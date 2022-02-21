@@ -1087,7 +1087,7 @@
 				src.scan = null
 		return 0
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the manufacturer's output target.</span>")
 			return
@@ -2135,6 +2135,7 @@
 	/datum/manufacture/powercellC,
 	/datum/manufacture/crowbar,
 	/datum/manufacture/wrench,
+	/datum/manufacture/screwdriver,
 	/datum/manufacture/scalpel,
 	/datum/manufacture/circular_saw,
 	/datum/manufacture/surgical_scissors,
