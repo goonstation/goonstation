@@ -825,14 +825,21 @@ datum
 				return
 
 			reaction_turf(var/turf/target, var/volume)
+				var/list/covered = holder.covered_turf()
 				var/turf/simulated/T = target
-				if(T.sticky == TRUE) return
+				var/volume_mult = 1
+
+				if (length(covered))
+					if (volume/covered.len < 2) //reduce time based on dilution
+						volume_mult = min(volume / 9, 1)
+
 				if (istype(T))
+					if(T.sticky == TRUE) return
 					var/wet = image('icons/effects/water.dmi',"sticky_floor")
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.sticky = TRUE
 					T.wet = 0
-					SPAWN(80 SECONDS)
+					SPAWN(80 SECONDS * volume_mult)
 						T.UpdateOverlays(null, "wet_overlay")
 						T.sticky = FALSE
 				return
