@@ -13,7 +13,7 @@
 						continue
 					if (iscarbon(M) && !isdead(owner))
 						if (isdead(M))
-							M.death(1)
+							M.death(TRUE)
 							owner.stomach_contents.Remove(M)
 							M.ghostize()
 							qdel(M)

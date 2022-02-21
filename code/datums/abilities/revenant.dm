@@ -211,7 +211,7 @@
 		if (owner.health < -50 || owner.max_health < -50) // Makes revenants have a definite time limit, instead of being able to just spam abilities in deepcrit.
 			boutput(owner, "<span class='alert'><strong>This vessel has grown too weak to maintain your presence.</strong></span>")
 			playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
-			owner.death(0) // todo: add custom death
+			owner.death(FALSE) // todo: add custom death
 			return
 
 		var/e_decomp_stage = 0

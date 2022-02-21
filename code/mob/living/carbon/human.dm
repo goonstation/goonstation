@@ -2631,7 +2631,7 @@
 	game_stats.Increment("violence")
 #endif
 
-	src.death(1)
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
