@@ -107,32 +107,30 @@ const SeedCategory = (props, context) => {
   return (
     <Collapsible
       title={name}>
-      <Box>
-        {seeds.map((seed, index) => (
-          <Box key={seed.name} as="span">
-            <Button width="155px" height="32px" px={0} m={0.25}
-              onClick={() => act('disp', { path: seed.path, amount: dispenseAmount })}>
-              <Flex direction="row" align="center">
-                <Flex.Item>
-                  <img
-                    src={`data:image/png;base64,${seed.img}`}
-                    style={{
-                      'vertical-align': 'middle',
-                      'horizontal-align': 'middle',
-                    }}
-                    height="32px"
-                    width="32px" />
-                </Flex.Item>
-                <Flex.Item
-                  overflow="hidden"
-                  style={{ 'text-overflow': 'ellipsis' }}>
-                  {seed.name}
-                </Flex.Item>
-              </Flex>
-            </Button>
-          </Box>
-        ))}
-      </Box>
+      {seeds.map((seed, index) => (
+        <Box key={seed.name} as="span">
+          <Button width="155px" height="32px" px={0} m={0.25}
+            onClick={() => act('disp', { path: seed.path, amount: dispenseAmount })}>
+            <Flex direction="row" align="center">
+              <Flex.Item>
+                <img
+                  src={`data:image/png;base64,${seed.img}`}
+                  style={{
+                    'vertical-align': 'middle',
+                    'horizontal-align': 'middle',
+                  }}
+                  height="32px"
+                  width="32px" />
+              </Flex.Item>
+              <Flex.Item
+                overflow="hidden"
+                style={{ 'text-overflow': 'ellipsis' }}>
+                {seed.name}
+              </Flex.Item>
+            </Flex>
+          </Button>
+        </Box>
+      ))}
     </Collapsible>
   );
 
