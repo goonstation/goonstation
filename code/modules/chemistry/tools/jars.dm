@@ -142,14 +142,15 @@ proc/save_intraround_jars()
 
 		var/list/jar_contents = list()
 		for (var/atom/movable/AM in jar)
-			var/obj/item/reagent_containers/food/snacks/pickle_holder/pickled = AM.picklify(jar)
+			var/atom/movable/pickled = AM.picklify(jar)
 			if(pickled != AM)
 				qdel(AM)
+			if(isnull(pickled))
+				continue
 			if(pickled.material)
 				pickled.removeMaterial()
-			pickled?.reagents.clear_reagents()
-			if(istype(pickled))
-				pickled.paint_pickly_color()
+			pickled.reagents?.clear_reagents()
+			pickled.color = "#3f6718" // maybe picklify should be able to override this idk!!!
 			jar_contents += pickled
 
 		var/zname = global.zlevels[jar_turf.z].name
@@ -217,11 +218,6 @@ proc/load_intraround_jars()
 				var/obj/item/reagent_containers/food/snacks/pickle_holder/pickled = I
 				if(istype(pickled))
 					pickled.pickle_age++
-				else
-					stack_trace("Unpickled item [I] of type [I.type] found in pickle jar on [x],[y],[z]")
-					if(!emitted_full_savefile)
-						logTheThing("debug", null, null, "<b>Pickle Jar:</b> full savefile<br>[jar_save.ExportText()]")
-						emitted_full_savefile = TRUE
 			jar.reagents.add_reagent("juice_pickle", 75)
 			logTheThing("debug", null, null, "<b>Pickle Jar:</b> Jar created at [log_loc(jar)] containing [json_encode(jar_contents)]")
 			var/area/AR = get_area(jar)
@@ -253,14 +249,10 @@ proc/load_intraround_jars()
 		..(newloc, null) // DO NOT PASS pickled AS THE SECOND VAR BECAUSE IT GETS STORED AS INITIAL REAGENTS AAA
 		if (istype(pickled))
 			src.icon = getFlatIcon(pickled, no_anim=TRUE)
-			src.paint_pickly_color()
 			src.desc = "A pickled version of \a [pickled], it smells of vinegar."
 			src.real_desc = src.desc
 			src.name = "pickled [pickled.name]"
 			src.pickle_age = 0
-
-	proc/paint_pickly_color()
-		src.color = rgb(63,103,24)
 
 	get_desc(dist, mob/user)
 		. = ..()

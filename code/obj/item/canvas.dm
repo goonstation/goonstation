@@ -250,6 +250,13 @@
 
 		user << browse(dat, "window=canvas;size=900x680")
 
+	picklify(atom/loc)
+		if(!startswith(src.name, "pickled"))
+			src.name = "pickled [src.name]"
+		src.desc = "A fairly pickled canvas for wowing the station with your pickled talent. Coming soon: Pickles!"
+		src.edible = TRUE
+		return src
+
 // the intro at the start of this file is a joke:
 // https://www.youtube.com/watch?v=wpNxzJk7xUc#t=42s
 // ...and is not to be taken seriously, or as any definition
