@@ -223,6 +223,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/toggleautoending,
 		/datum/admins/proc/togglelatetraitors,
 		/datum/admins/proc/toggle_pull_slowing,
+		/client/proc/resetbuildmode,
 		/client/proc/togglebuildmode,
 		/client/proc/toggle_buildmode_view,
 		/client/proc/cmd_admin_rejuvenate_all,
@@ -617,8 +618,6 @@ var/list/special_pa_observing_verbs = list(
 
 
 	usr.see_in_dark = initial(usr.see_in_dark)
-	if(buildmode)
-		qdel(buildmode)
 
 	if(src.holder)
 		src.holder.level = 0
