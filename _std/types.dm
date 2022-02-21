@@ -323,7 +323,7 @@ proc/find_first_by_type(type)
 			else
 				return null
 		ancestor = type2parent(ancestor)
-	. = locate(type) in world
+	. = locate(type)
 
 /**
  *	Finds all instance of a type in the world.
@@ -380,14 +380,14 @@ proc/find_all_by_type(type, procedure=null, procedure_src=null, arguments=null, 
 	. = list()
 	#define IT_TYPE(T) if(T) {\
 			if(!isnull(procedure) && procedure_src == "instance") {\
-				for(var ## T/instance in world) {\
+				for(var ## T/instance) {\
 					if(lagcheck) LAGCHECK(LAG_LOW); \
 					if(istype(instance, type)) {\
 						.[instance] = call(instance, procedure)(arglist(arguments)); \
 					} \
 				} \
 			} else if(!isnull(procedure) && procedure_src && length(arguments)) {\
-				for(var ## T/instance in world) {\
+				for(var ## T/instance) {\
 					if(lagcheck) LAGCHECK(LAG_LOW); \
 					if(istype(instance, type)) {\
 						var/mod_args = list(instance) + arguments; \
@@ -395,14 +395,14 @@ proc/find_all_by_type(type, procedure=null, procedure_src=null, arguments=null, 
 					} \
 				} \
 			} else if(!isnull(procedure) && procedure_src) {\
-				for(var ## T/instance in world) {\
+				for(var ## T/instance) {\
 					if(lagcheck) LAGCHECK(LAG_LOW); \
 					if(istype(instance, type)) {\
 						.[instance] = call(procedure_src, procedure)(instance); \
 					} \
 				} \
 			} else if(!isnull(procedure) && length(arguments)) { \
-				for(var ## T/instance in world) {\
+				for(var ## T/instance) {\
 					if(lagcheck) LAGCHECK(LAG_LOW); \
 					if(istype(instance, type)) {\
 						var/mod_args = list(instance) + arguments; \
@@ -410,14 +410,14 @@ proc/find_all_by_type(type, procedure=null, procedure_src=null, arguments=null, 
 					} \
 				} \
 			} else if(!isnull(procedure)) { \
-				for(var ## T/instance in world) {\
+				for(var ## T/instance) {\
 					if(lagcheck) LAGCHECK(LAG_LOW); \
 					if(istype(instance, type)) {\
 						.[instance] = call(procedure)(instance); \
 					} \
 				} \
 			} else { \
-				for(var ## T/instance in world) {\
+				for(var ## T/instance) {\
 					if(lagcheck) LAGCHECK(LAG_LOW); \
 					if(istype(instance, type)) {\
 						. += instance; \
