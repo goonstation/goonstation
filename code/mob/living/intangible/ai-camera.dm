@@ -284,8 +284,9 @@
 
 	//death stuff that should be passed to mainframe
 	gib(give_medal, include_ejectables) //this should be admin only, I would hope
-		message_admins("something gibbed the AI - if this wasn't an admin action, something has gone badly wrong")
-		return mainframe.gib(give_medal, include_ejectables)
+		message_admins("something tried to gib the AI Eye - if this wasn't an admin action, something has gone badly wrong")
+		return 0
+		//return mainframe.gib(give_medal, include_ejectables) //re-enable this when you are SUPREMELY CONFIDENT that all calls to gib() have intangible checks
 
 
 
