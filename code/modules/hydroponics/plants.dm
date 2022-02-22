@@ -84,9 +84,9 @@ ABSTRACT_TYPE(/datum/plant)
 
 			if(result_icon)
 				. = icon2base64(result_icon)
-				src.base64_preview_cache[path] = .
 			else
-				src.base64_preview_cache[path] = "" // Empty but not null
+				. = "" // Empty but not null
+			src.base64_preview_cache[path] = .
 
 
 	// fixed some runtime errors here - singh
