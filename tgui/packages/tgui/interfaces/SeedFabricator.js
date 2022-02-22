@@ -116,7 +116,7 @@ const SeedCategory = (props, context) => {
         <Box key={seed.name} as="span">
           <Button width="155px" height="32px" px={0} m={0.25}
             onClick={() => act('disp', { path: seed.path, amount: dispenseAmount })}>
-            <Flex direction="row" align="center" title={seed.name}>
+            <Flex direction="row" align="center">
               <Flex.Item>
                 {seed.img ? (
                   <img
@@ -143,7 +143,8 @@ const SeedCategory = (props, context) => {
               </Flex.Item>
               <Flex.Item
                 overflow="hidden"
-                style={{ 'text-overflow': 'ellipsis' }}>
+                style={{ 'text-overflow': 'ellipsis' }}
+                title={seed.name}>
                 {seed.name}
               </Flex.Item>
             </Flex>
