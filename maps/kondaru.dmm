@@ -46587,6 +46587,16 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
+"jLA" = (
+/obj/disposalpipe/segment/transport,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 5
+	},
+/turf/simulated/floor,
+/area/station/security/secwing)
 "jNl" = (
 /obj/table/reinforced/auto,
 /obj/item/hand_labeler{
@@ -54816,6 +54826,14 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
+"sey" = (
+/obj/disposalpipe/segment/transport,
+/obj/machinery/atmospherics/unary/outlet_injector{
+	icon_state = "on";
+	on = 1
+	},
+/turf/simulated/floor,
+/area/station/security/secwing)
 "seW" = (
 /obj/submachine/chem_extractor,
 /turf/simulated/floor/green/side{
@@ -60906,10 +60924,8 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/security/secwing)
@@ -114902,8 +114918,8 @@ esM
 bQq
 bRF
 irq
-irq
-bRF
+sey
+jLA
 wUs
 mTQ
 uaU
