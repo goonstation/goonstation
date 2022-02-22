@@ -223,6 +223,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/toggleautoending,
 		/datum/admins/proc/togglelatetraitors,
 		/datum/admins/proc/toggle_pull_slowing,
+		/client/proc/resetbuildmode,
 		/client/proc/togglebuildmode,
 		/client/proc/toggle_buildmode_view,
 		/client/proc/cmd_admin_rejuvenate_all,
@@ -400,7 +401,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_extra_verbs,
 		/client/proc/cmd_randomize_look,
 		/client/proc/toggle_numbers_station_messages,
-		// /client/proc/export_banlist,
+		// /client/proc/export_async_banlist,
 		// /client/proc/import_banlist,
 
 
@@ -617,8 +618,6 @@ var/list/special_pa_observing_verbs = list(
 
 
 	usr.see_in_dark = initial(usr.see_in_dark)
-	if(buildmode)
-		qdel(buildmode)
 
 	if(src.holder)
 		src.holder.level = 0
@@ -778,7 +777,7 @@ var/list/special_pa_observing_verbs = list(
 		ircmsg["key"] = src.owner:key
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "Has enabled stealth mode as ([src.owner:fakekey])"
-		ircbot.export("admin", ircmsg)
+		ircbot.export_async("admin", ircmsg)
 
 /client/proc/alt_key()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
@@ -821,7 +820,7 @@ var/list/special_pa_observing_verbs = list(
 		ircmsg["key"] = src.owner:key
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "Has set their displayed key to ([src.owner:fakekey])"
-		ircbot.export("admin", ircmsg)
+		ircbot.export_async("admin", ircmsg)
 */
 /client/proc/banooc()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)

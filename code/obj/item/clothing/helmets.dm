@@ -822,7 +822,7 @@
 		src.set_loc(get_turf(user))
 		step_rand(src)
 		user.visible_message("<span class='alert'><b>[user] kicks the bucket!</b></span>")
-		user.death(0)
+		user.death(FALSE)
 
 
 /obj/item/clothing/head/helmet/bucket/hat
@@ -848,7 +848,7 @@
 		user.u_equip(src)
 		src.set_loc(get_turf(user))
 		user.visible_message("<span class='alert'><b>[user] kicks the bucket!</b></span>")
-		user.death(0)
+		user.death(FALSE)
 
 	red
 		name = "red bucket hat"

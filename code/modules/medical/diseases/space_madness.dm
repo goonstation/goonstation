@@ -13,7 +13,7 @@
 		return
 	if(affected_mob.job == "Clown")
 		if(probmult(6))
-			var/icp = pick("Fuckin' magnets!", "Fuckin' rainbows!", "Magic everywhere in this bitch...", "Pure motherfuckin' miracles!", "Magic all around you and you don't even know it!")
+			var/icp = pick("Fuckin' magnets!", "Fuckin' rainbows!", "Magic everywhere...", "Pure motherfuckin' miracles!", "Magic all around you and you don't even know it!")
 			affected_mob.say("[icp]")
 			return
 	switch(D.stage)
@@ -48,7 +48,7 @@
 								halluc_name = pick("pig", "DAT FUKKEN PIG")
 							if(2)
 								halluc_state = "spider"
-								halluc_name = pick("giant black widow", "queen bitch spider", "OH FUCK A SPIDER")
+								halluc_name = pick("giant black widow", "aw look a spider", "OH FUCK A SPIDER")
 							if(3)
 								halluc_state = "dragon"
 								halluc_name = pick("dragon", "Lord Cinderbottom", "SOME FUKKEN LIZARD THAT BREATHES FIRE")
@@ -87,7 +87,7 @@
 								halluc_name = pick("pig", "DAT FUKKEN PIG")
 							if(2)
 								halluc_state = "spider"
-								halluc_name = pick("giant black widow", "queen bitch spider", "OH FUCK A SPIDER")
+								halluc_name = pick("giant black widow", "aw look a spider", "OH FUCK A SPIDER")
 							if(3)
 								halluc_state = "dragon"
 								halluc_name = pick("dragon", "Lord Cinderbottom", "SOME FUKKEN LIZARD THAT BREATHES FIRE")

@@ -42,7 +42,7 @@
 
 		// Won't delete the VR character otherwise, which can be confusing (detective's goggles sending you to the existing body in the bomb VR etc).
 		setdead(user)
-		user.death(0)
+		user.death(FALSE)
 
 		Station_VNet.Leave_Vspace(user)
 		return
