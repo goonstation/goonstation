@@ -1,6 +1,10 @@
 
 (t)mon feb 21 22
 (u)CodeJester
+(p)7438
+(e)📄|tgui
+(*)The seed fabricator has a new UI, allowing you to find and dispense cannabis seeds easier.
+(u)CodeJester
 (p)7523
 (e)🆕📄|feature, tgui
 (+)Added Isolate button for reagents in the Reagent Extractor.
