@@ -12,12 +12,16 @@ const DefaultSort = {
   Other: 6,
 };
 
+const categorySorter = (a, b) => (
+  (DefaultSort[a.name] || DefaultSort.Other) - (DefaultSort[b.name] || DefaultSort.Other)
+);
+
 export const SeedFabricator = (props, context) => {
   const { data } = useBackend(context);
   const { canVend, isWorking, maxSeed, name, seedCount } = data;
   const categories = data.seedCategories || [];
 
-  categories.sort((a, b) => ((DefaultSort[a.name] || DefaultSort.Other) - (DefaultSort[b.name] || DefaultSort.Other)));
+  categories.sort(categorySorter);
 
   const [dispenseAmount, setDispenseAmount] = useLocalState(context, 'dispenseAmount', 1);
 
