@@ -301,7 +301,7 @@
 					if (src.tutorial)
 						if (!tutorial.PerformAction("clickmove", T))
 							return
-					src.set_loc(T)
+					src.Move(T)
 					return
 
 				if (T && isghostrestrictedz(T.z) && !restricted_z_allowed(src, T) && !(src.client && src.client.holder))
