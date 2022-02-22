@@ -113,18 +113,24 @@ const SeedCategory = (props, context) => {
           <Button width="155px" height="32px" px={0} m={0.25}
             onClick={() => act('disp', { path: seed.path, amount: dispenseAmount })}>
             <Flex direction="row" align="center" title={seed.name}>
-              <Flex.Item
-                style={{
-                  'vertical-align': 'middle',
-                  'horizontal-align': 'middle',
-                }}
-                height="32px"
-                width="32px">
+              <Flex.Item>
                 {seed.img ? (
                   <img
+                    style={{
+                      'vertical-align': 'middle',
+                      'horizontal-align': 'middle',
+                    }}
+                    height="32px"
+                    width="32px"
                     src={`data:image/png;base64,${seed.img}`} />
                 ) : (
                   <Icon
+                    style={{
+                      'vertical-align': 'middle',
+                      'horizontal-align': 'middle',
+                    }}
+                    height="32px"
+                    width="32px"
                     name="question-circle-o"
                     pl="8px"
                     pt="4px"
