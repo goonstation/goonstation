@@ -1159,6 +1159,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\sound\sound.dm"
 #include "code\modules\sound\soundCache.dm"
 #include "code\modules\speech\floating_chat.dm"
+#include "code\modules\station_map\station_map.dm"
 #include "code\modules\status_system\statusEffects.dm"
 #include "code\modules\status_system\statusFoodBad.dm"
 #include "code\modules\status_system\statusFoodBuffs.dm"
@@ -1871,7 +1872,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\z_dmm_suite\map_placeholders.dm"
 #include "code\z_dmm_suite\reader.dm"
 #include "code\z_dmm_suite\writer.dm"
-#include "icons\obj\station_map.dm"
 #include "interface\skin.dmf"
 #include "maps\config\map.dm"
 // END_INCLUDE

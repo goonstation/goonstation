@@ -36,7 +36,7 @@
 
 	//generates the map from the current station layout
 	proc/render_map()
-		for (var/y = world.maxy, y > 0, y--)
+		for (var/y in world.maxy to 1 step -1)
 			for (var/x in 1 to world.maxx)
 				var/turf/turf = locate(x, y, Z_LEVEL_STATION)
 				if (!turf.loc || !(istype(turf.loc, /area/station) || istype(turf.loc, /area/research_outpost)))
