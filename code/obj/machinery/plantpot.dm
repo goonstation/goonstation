@@ -969,15 +969,7 @@
 			else
 				UpdateOverlays(null, "health_display")
 
-		var/planticon = null
-		if(MUT?.iconmod)
-			planticon = "[MUT.iconmod]-G[src.grow_level]"
-		else if(growing.sprite)
-			planticon = "[growing.sprite]-G[src.grow_level]"
-		else if(growing.override_icon_state)
-			planticon = "[growing.override_icon_state]-G[src.grow_level]"
-		else
-			planticon = "[growing.name]-G[src.grow_level]"
+		var/planticon = growing.getIconState(src.grow_level, MUT)
 
 		src.plant_sprite.icon = iconname
 		src.plant_sprite.icon_state = planticon

@@ -54,7 +54,38 @@ ABSTRACT_TYPE(/datum/plant)
 	var/seedcolor = "#000000" // color on the seed packet, if applicable
 	var/hybrid = 0 // used for seed manipulator stuff
 
+	var/static/base64_preview_cache = list() // Base64 preview images for plant types, for use in ui interfaces.
+
 	var/lasterr = 0
+
+	proc/getIconState(grow_level, datum/plantmutation/MUT)
+		if(MUT?.iconmod)
+			return "[MUT.iconmod]-G[grow_level]"
+		else if(src.sprite)
+			return "[src.sprite]-G[grow_level]"
+		else if(src.override_icon_state)
+			return "[src.override_icon_state]-G[grow_level]"
+		else
+			return "[src.name]-G[grow_level]"
+
+
+	proc/getBase64Img()
+		var/path = src.type
+		. = src.base64_preview_cache[path]
+		if(isnull(.))
+			var/icon/result_icon
+			if(src.crop)
+				var/atom/crop = src.crop
+				result_icon = icon(initial(crop.icon), initial(crop.icon_state), frame=1)
+			else if(src.plant_icon)
+				result_icon = icon(src.plant_icon, src.getIconState(4), frame=1)
+
+			if(result_icon)
+				. = icon2base64(result_icon)
+				src.base64_preview_cache[path] = .
+			else
+				src.base64_preview_cache[path] = "" // Empty but not null
+
 
 	// fixed some runtime errors here - singh
 	// hyp procs now return 0 for success and continue, any other number for error codes

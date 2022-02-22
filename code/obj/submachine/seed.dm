@@ -1076,7 +1076,6 @@
 	var/seedcount = 0
 	var/maxseed = 25
 	var/list/available = list()
-	var/static/list/plant_base64_cache = list()
 	var/const
 		WIRE_EXTEND = 1
 		WIRE_MALF = 2
@@ -1089,29 +1088,6 @@
 
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
-
-	proc/getPlantImg(var/datum/plant/plant)
-		if(!istype(plant))
-			return
-		var/path = plant.type
-		var/img = plant_base64_cache[path]
-		if(!img)
-			var/icon/result_icon
-			if(plant.crop)
-				var/atom/crop = plant.crop
-				result_icon = icon(initial(crop.icon), initial(crop.icon_state), frame=1)
-			else if(plant.plant_icon)
-				if(plant.sprite)
-					result_icon = icon(plant.plant_icon, "[plant.sprite]-G4", frame=1)
-				else if(plant.override_icon_state)
-					result_icon = icon(plant.plant_icon, "[plant.override_icon_state]-G4", frame=1)
-				else
-					result_icon = icon(plant.plant_icon, "[plant.name]-G4", frame=1)
-
-			if(result_icon)
-				img = icon2base64(result_icon)
-				plant_base64_cache[path] = img
-		return img
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -1140,7 +1116,7 @@
 				categories[A.category] += list(list(
 					name = A.name,
 					path = A.type,
-					img = getPlantImg(A)
+					img = A.getBase64Img()
 				))
 		// Convert to non-associative list holding each category
 		var/list/categoriesArray = list()
