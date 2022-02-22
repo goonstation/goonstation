@@ -4,9 +4,9 @@
 	var/static/icon/map_icon
 
 	var/x_max = 1
-	var/x_min
+	var/x_min = null
 	var/y_max = 1
-	var/y_min
+	var/y_min = null
 
 	var/border_width = 20
 
