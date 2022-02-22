@@ -28,6 +28,7 @@ export const GeneTek = (props, context) => {
     record,
     scannerAlert,
     scannerError,
+    allowed,
   } = data;
 
   const {
@@ -44,7 +45,7 @@ export const GeneTek = (props, context) => {
 
   return (
     <Window
-      theme="genetek"
+      theme={allowed ? "genetek" : "genetek-disabled"}
       width={730}
       height={415}>
       <Flex height="100%">
@@ -55,6 +56,14 @@ export const GeneTek = (props, context) => {
           <Flex
             direction="column"
             height="100%">
+            {!allowed && (
+              <>
+                <div style={{ "color": "#ff3333", "text-align": "center" }}>
+                  Insufficient access to interact.
+                </div>
+                <Divider />
+              </>
+            )}
             <Flex>
               <ProgressBar
                 value={materialCur}
