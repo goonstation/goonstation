@@ -39107,10 +39107,10 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/item/clothing/glasses/monocle,
-/obj/item/clothing/head/longtophat,
-/obj/item/clothing/shoes/dress_shoes,
-/obj/item/clothing/under/misc/fancy_vest,
+/obj/item/clothing/head/maid,
+/obj/item/clothing/under/gimmick/maid,
+/obj/item/mop,
+/obj/item/spraybottle,
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/crew_quarters/quarters_south)
 "cre" = (
@@ -41702,12 +41702,28 @@
 /area/station/security/brig)
 "eJX" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/crumpet{
-	pixel_x = -6;
-	pixel_y = 4
-	},
 /obj/item/reagent_containers/food/drinks/tea{
-	pixel_x = 5
+	pixel_x = 7
+	},
+/obj/item/plate{
+	pixel_x = -3;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/snacks/burger/heartburger{
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/item/sticker/smile{
+	pixel_x = -9;
+	pixel_y = -5
+	},
+/obj/item/sticker/heart{
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/obj/item/sticker/heart{
+	pixel_x = -3;
+	pixel_y = -3
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/crew_quarters/quarters_south)
@@ -54395,6 +54411,10 @@
 	icon_state = "bedsheet-blue"
 	},
 /obj/machinery/light/small,
+/obj/item/toy/plush/small/possum{
+	pixel_x = 4;
+	pixel_y = -1
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/station/crew_quarters/quarters_south)
 "rMN" = (
@@ -59751,6 +59771,9 @@
 /turf/simulated/floor/grey,
 /area/station/quartermaster/cargobay)
 "xcb" = (
+/obj/decal/poster/wallsign/poster_octocluwne{
+	pixel_y = 28
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/crew_quarters/quarters_south)
 "xcm" = (
@@ -59876,6 +59899,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "xgt" = (
+/obj/decal/poster/wallsign/poster_borg{
+	pixel_y = 28
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/crew_quarters/quarters_south)
 "xgv" = (
