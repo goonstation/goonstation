@@ -1840,7 +1840,7 @@ datum
 			fluid_r = 20
 			fluid_g = 168
 			fluid_b = 254
-			alch_strength = 0.7
+			alch_strength = 4
 			description = "Illegal in some jurisdictions."
 			reagent_state = LIQUID
 			taste ="medicinal"
