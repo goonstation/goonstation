@@ -78,7 +78,9 @@ ABSTRACT_TYPE(/datum/plant)
 				var/atom/crop = src.crop
 				result_icon = icon(initial(crop.icon), initial(crop.icon_state), frame=1)
 			else if(src.plant_icon)
-				result_icon = icon(src.plant_icon, src.getIconState(4), frame=1)
+				var/icon_state = src.getIconState(4)
+				if(icon_state in icon_states(src.plant_icon)) // Only if icon state is valid
+					result_icon = icon(src.plant_icon, icon_state, frame=1)
 
 			if(result_icon)
 				. = icon2base64(result_icon)
