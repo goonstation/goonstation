@@ -114,15 +114,9 @@
 		..()
 
 	set_loc(atom/newloc)
-		if (newloc && isghostrestrictedz(newloc.z) && !restricted_z_allowed(src, newloc) && !(src.client && src.client.holder))
-			var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-			if (OS)
-				src.set_loc(OS)
-			else
-				src.z = 1
+		if (isturf(newloc) && newloc.z != 1)
 			return
 		..()
-
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
@@ -313,7 +307,6 @@
 						if (!tutorial.PerformAction("clickmove", T))
 							return
 					src.Move(T)
-					return
 
 	say_understands() return 1
 	can_use_hands()	return 0
