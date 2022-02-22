@@ -1528,6 +1528,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/medical, 5, cost=PAY_DOCTORATE/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/toxins, 5, cost=PAY_DOCTORATE/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/quartermaster, 5, cost=PAY_TRADESMAN/3)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/investigative, 6, cost=PAY_DOCTORATE/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone, 5, cost=PAY_TRADESMAN/6)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone_basic, 5, cost=PAY_TRADESMAN/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone_chimes, 5, cost=PAY_TRADESMAN/3)
