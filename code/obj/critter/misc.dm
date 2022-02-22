@@ -492,7 +492,7 @@
 	attackby(obj/item/W as obj, mob/M as mob)
 		if(istype(W, /obj/item/reagent_containers/food/snacks) && !(M in src.friends))
 			if(prob(20))
-				src.visible_message("<span class='notice'>[src] chitters happily at the [W], it will no longer attack [M]!</span>")
+				src.visible_message("<span class='notice'>[src] chitters happily at the [W], and seems a little friendlier with [M]!</span>")
 				friends += M
 				playsound(src.loc, "sound/misc/bugchitter.ogg", 50, 0)
 				src.task = "thinking"
