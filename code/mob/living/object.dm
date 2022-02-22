@@ -68,14 +68,12 @@
 
 		//Relay these signals
 		RegisterSignal(src.possessed_thing, COMSIG_ATOM_POST_UPDATE_ICON, /atom/proc/UpdateIcon)
-		src.possessed_thing.RegisterSignal(src, COMSIG_ATOM_MOUSEDROP_T, /atom/proc/_MouseDrop_T)
 		RegisterSignal(src.possessed_thing, COMSIG_ATOM_MOUSEDROP, .proc/stupid_fucking_wrapper_proc)
 
 		src.owner = controller
 		if (src.owner)
 			if (!src.owner.mind) //what the fuck
 				src.death(TRUE)
-				qdel(src)
 				return
 			src.owner.set_loc(src)
 			src.owner.mind.transfer_to(src)
@@ -85,8 +83,12 @@
 		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST, "living_object", 100)
 		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "living_object", 100)
 
-	proc/stupid_fucking_wrapper_proc(atom/over_object, src_location, over_location, over_control, params)
+	//ugly procs to relay signals correctly
+	proc/stupid_fucking_wrapper_proc(over_object, src_location, over_location, over_control, params)
 		src.MouseDrop(over_object, src_location, over_location, over_control, params)
+
+	MouseDrop_T(atom/dropped, mob/user)
+		return src.possessed_thing._MouseDrop_T(dropped, user)
 
 	disposing()
 		REMOVE_MOB_PROPERTY(src, PROP_STUN_RESIST, "living_object")
@@ -275,7 +277,7 @@
 	can_strip()
 		return FALSE
 
-	Cross(atom/movable/mover) //CLOSETS MADE ME DO IT OK
+	Cross(atom/movable/mover) //CLOSETS MADE ME DO IT OK (also makes radioactive possessed items work as you'd expect)
 		return src.possessed_thing.Cross(mover)
 
 	update_icon()
