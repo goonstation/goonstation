@@ -443,7 +443,7 @@
 
 /obj/critter/spacescorpion
 	name = "space scorpion"
-	desc = "A scorpion in space, it might be less angry if you offer it something..."
+	desc = "A scorpion in space. It seems a little hungry."
 	icon_state = "spacescorpion"
 	critter_family = BUG
 	density = 1
