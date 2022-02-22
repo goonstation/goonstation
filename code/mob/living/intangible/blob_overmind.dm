@@ -111,6 +111,12 @@
 		if (isturf(NewLoc))
 			if (istype(NewLoc, /turf/unsimulated/wall))
 				return 0
+		if (NewLoc && isghostrestrictedz(NewLoc.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
+					var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
+					if (OS)
+						src.set_loc(OS)
+					else
+						src.z = 1
 		..()
 
 	Life(datum/controller/process/mobs/parent)
@@ -303,13 +309,6 @@
 							return
 					src.Move(T)
 					return
-
-				if (T && isghostrestrictedz(T.z) && !restricted_z_allowed(src, T) && !(src.client && src.client.holder))
-					var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-					if (OS)
-						src.set_loc(OS)
-					else
-						src.z = 1
 
 	say_understands() return 1
 	can_use_hands()	return 0
