@@ -1240,12 +1240,26 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 /datum/objective/conspiracy/material
 	set_up()
 		var/list/materials = list()
-		for_by_tcl(material, /datum/commodity/ore)
-			materials += material.comname
-			boutput(world, material.comname)
-		materials += list("glass", "water")
-
-		explanation_text = "Turn as much of the station as you can into [pick(materials)], including anyone who gets in your way." //more materials?
+		if (rand(0,1)) //50/50 whether it's an ore material or something else
+			for (var/mtype in childrentypesof(/datum/commodity/ore))
+				var/datum/commodity/ore/material = new mtype
+				if (material.comname == "Gold Nugget")
+					materials += "Gold"
+					continue
+				materials += material.comname
+		else
+			materials += list("Glass", "Water", "Rubber", "Rock", "Flesh")
+#ifdef UNDERWATER_MAP
+		//but if we're underwater there's always a decent chance it's coral
+		materials += list("Coral", "Coral", "Coral")
+#endif
+		for (var/material in materials)
+			boutput(world, "[material]")
+		var/material1 = pick(materials)
+		var/material2 = pick(materials)
+		while (material1 == material2)
+			material2 = pick(materials)
+		explanation_text = "Turn as much of the station as you can into [material1] and [material2], including anyone who gets in your way."
 
 /datum/objective/conspiracy/organs
 	explanation_text = "Remind the crew of their own mortality by stockpiling as many of their organs as you can."
