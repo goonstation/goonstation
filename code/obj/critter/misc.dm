@@ -520,7 +520,7 @@
 				M.emote("scream")
 			else
 				random_brute_damage(M, rand(5,10),1)
-				M.visible_message("<span class='combat'><B>[src]</B> tries to grab [src.target] with its pincers!</span>")
+				M.visible_message("<span class='combat'><B>[src]</B> tackles [src.target] with its pincers!</span>")
 				playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
 				M.changeStatus("weakened", 4 SECONDS)
 				M.force_laydown_standup()
