@@ -14086,6 +14086,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
+/obj/machinery/navbeacon/mule/crewA_north,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -21087,6 +21088,7 @@
 	},
 /area/station/hangar/engine)
 "blt" = (
+/obj/machinery/navbeacon/mule/engineering_north/east,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -21135,6 +21137,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/reagent_dispensers/still,
 /turf/simulated/floor/orange/side{
 	dir = 8
 	},
@@ -21478,12 +21481,12 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/reagent_dispensers/still,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/navbeacon/mule/catering_north,
 /turf/simulated/floor/orange/side{
 	dir = 6
 	},
@@ -27496,10 +27499,8 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bGV" = (
-/obj/stool/chair{
-	dir = 4
-	},
 /obj/disposalpipe/segment/horizontal,
+/obj/machinery/navbeacon/mule/courtroom_north/west,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
 "bGX" = (
@@ -29899,6 +29900,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/machinery/navbeacon/mule/QM1_north/south,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -32113,10 +32115,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/cafeteria)
 "bUl" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/navbeacon/mule/security_north,
 /turf/simulated/floor/red/corner{
 	dir = 4
 	},
@@ -41146,6 +41145,15 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"egq" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/machinery/navbeacon/mule/cafeteria_north/south,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "egr" = (
 /turf/simulated/floor/white/grime,
 /area/station/hangar/science)
@@ -41901,6 +41909,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"eTr" = (
+/obj/machinery/navbeacon/mule/podbay_north/west,
+/turf/simulated/floor,
+/area/station/hangar/main)
 "eTY" = (
 /obj/storage/closet/biohazard,
 /turf/simulated/floor/black,
@@ -43134,6 +43146,10 @@
 /obj/machinery/cargo_router/kd_cater_exoflap,
 /turf/simulated/floor/caution/westeast,
 /area/station/routing/depot)
+"gdY" = (
+/obj/machinery/navbeacon/mule/hallway_arrivals_north/west,
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/quarters_east)
 "gec" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -44512,6 +44528,10 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge)
+"hoh" = (
+/obj/machinery/navbeacon/mule/bridge_north,
+/turf/simulated/floor/grey,
+/area/station/bridge)
 "hqe" = (
 /obj/wingrille_spawn/auto,
 /obj/health_scanner/wall{
@@ -44864,6 +44884,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/machinery/navbeacon/mule/crewB_north/west,
 /turf/simulated/floor/neutral/corner{
 	dir = 1
 	},
@@ -49810,6 +49831,10 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
+"neM" = (
+/obj/machinery/navbeacon/mule/hydroponics_north/west,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "neS" = (
 /turf/simulated/floor/stairs/wide/other,
 /area/station/chapel/sanctuary)
@@ -50395,6 +50420,10 @@
 	dir = 8
 	},
 /area/station/hallway/primary/south)
+"nKR" = (
+/obj/machinery/navbeacon/mule/hallway_escape_north/east,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "nLn" = (
 /obj/lattice{
 	dir = 6;
@@ -54717,9 +54746,6 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "sbP" = (
-/obj/stool/chair{
-	dir = 4
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -57960,6 +57986,12 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
+"vjD" = (
+/obj/machinery/navbeacon/mule/research_north,
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/science/lobby)
 "vkt" = (
 /obj/stool/chair/comfy/red{
 	dir = 4
@@ -58110,6 +58142,12 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
+"vtN" = (
+/obj/machinery/navbeacon/mule/chapel_north/east,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 1
+	},
+/area/station/chapel/sanctuary)
 "vui" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -58212,6 +58250,11 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"vzE" = (
+/obj/disposalpipe/segment/vertical,
+/obj/machinery/navbeacon/mule/medbay_north/east,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "vzG" = (
 /obj/table/auto,
 /obj/shrub/dead{
@@ -60480,7 +60523,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold{
-	dir = 8
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/security/secwing)
@@ -60862,6 +60905,11 @@
 	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/unary/outlet_injector{
+	dir = 4;
+	icon_state = "on";
+	on = 1
 	},
 /turf/simulated/floor,
 /area/station/security/secwing)
@@ -96420,7 +96468,7 @@ bzU
 bAU
 bBW
 bDb
-bDb
+vjD
 bFb
 bGi
 iRY
@@ -98218,7 +98266,7 @@ biA
 bjP
 rLG
 rLG
-rLG
+vzE
 uxI
 boW
 boW
@@ -102384,7 +102432,7 @@ aaa
 aaa
 ack
 acz
-acQ
+eTr
 adl
 acj
 aeb
@@ -116951,7 +116999,7 @@ pJk
 pJk
 pJk
 pJk
-pJk
+neM
 rOU
 boq
 tvw
@@ -119038,7 +119086,7 @@ aLQ
 bqO
 btB
 aUD
-bxg
+gdY
 gnU
 aVF
 aWV
@@ -119308,7 +119356,7 @@ amH
 agh
 aqr
 alQ
-agX
+vtN
 adK
 mAy
 aqY
@@ -121162,7 +121210,7 @@ bae
 gda
 czr
 gda
-beD
+egq
 gda
 boz
 hHf
@@ -125108,7 +125156,7 @@ sQa
 lMa
 sTl
 suM
-suM
+hoh
 oaz
 vGW
 tXB
@@ -132647,7 +132695,7 @@ oBx
 fFt
 stu
 hnB
-bri
+nKR
 aNu
 abZ
 acO
