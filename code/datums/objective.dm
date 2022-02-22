@@ -1238,7 +1238,14 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 	explanation_text = "Pose as a team of undercover Nanotrasen inspectors and make an example out of anyone you deem incompetent or too competent at their job."
 
 /datum/objective/conspiracy/material
-	explanation_text = "Turn as much of the station as you can into [pick("glass", "water", "gold")]." //more materials?
+	set_up()
+		var/list/materials = list()
+		for_by_tcl(material, /datum/commodity/ore)
+			materials += material.comname
+			boutput(world, material.comname)
+		materials += list("glass", "water")
+
+		explanation_text = "Turn as much of the station as you can into [pick(materials)], including anyone who gets in your way." //more materials?
 
 /datum/objective/conspiracy/organs
 	explanation_text = "Remind the crew of their own mortality by stockpiling as many of their organs as you can."

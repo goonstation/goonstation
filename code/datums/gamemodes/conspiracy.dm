@@ -56,7 +56,7 @@
 	for (var/datum/mind/conspirator in traitors)
 		conspiratorList = conspiratorList + "<b>" + conspirator.current.name + "</b>, "
 
-	var/pickedObjective = pick(typesof(/datum/objective/conspiracy))
+	var/pickedObjective = /datum/objective/conspiracy/material//pick(typesof(/datum/objective/conspiracy))
 	for(var/datum/mind/conspirator in traitors)
 		ticker.mode.bestow_objective(conspirator, pickedObjective)
 
