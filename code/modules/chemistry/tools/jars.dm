@@ -117,6 +117,7 @@
 		if(length(src.contents) > 0)
 			boutput(user, "<span class='alert'>You need to empty \the [src] first!</span>")
 			return 0
+		user.TakeDamage("chest", 100, 0)
 		user.visible_message("<span class='alert'><b>[user] somehow climbs into \the [src]! How is that even possible?!</b></span>")
 		user.u_equip(src)
 		src.set_loc(user.loc)
