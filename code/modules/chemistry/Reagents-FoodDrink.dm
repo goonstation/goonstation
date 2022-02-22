@@ -98,6 +98,19 @@ datum
 			thirst_value = 0.75
 			value = 3 // 1 2
 
+		fooddrink/milk/blue_milk
+			name = "blue milk"
+			id = "blue_milk"
+			fluid_r = 196
+			fluid_g = 196
+			fluid_b = 248
+			transparency = 255
+			taste = "oily and sweet."
+			description = "Smells like blueberries and tastes worse."
+			reagent_state = LIQUID
+			thirst_value = 0.75
+			value = 3 // 1 2
+
 		fooddrink/milk/milk_punch
 			name = "milk punch"
 			id = "milk_punch"
@@ -1820,6 +1833,17 @@ datum
 			description = "Contains no tea, and also no radioactive particles."
 			reagent_state = LIQUID
 			taste = "overwhelming"
+
+		fooddrink/alcoholic/romulale
+			name = "Romulale"
+			id = "romulale"
+			fluid_r = 20
+			fluid_g = 168
+			fluid_b = 254
+			alch_strength = 0.7
+			description = "Illegal in some jurisdictions."
+			reagent_state = LIQUID
+			taste ="medicinal"
 
 		fooddrink/sodawater
 			name = "soda water"
@@ -3709,6 +3733,20 @@ datum
 			bladder_value = -2
 			viscosity = 0.1
 			taste = "refreshing"
+
+		fooddrink/laurapalmer
+			name = "laura palmer"
+			id = "laurapalmer"
+			fluid_r = 132
+			fluid_g = 110
+			fluid_b = 41
+			transparency = 200
+			taste = "bittersweet."
+			description = "A mixture of half lemonade and half coffee."
+			reagent_state = LIQUID
+			thirst_value = 0.75
+			value = 3 // 1 2
+
 
 		fooddrink/temp_bioeffect
 			var/bioeffect_id = null

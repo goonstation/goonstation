@@ -500,6 +500,16 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
+		blue_milk
+			name = "Blue Milk"
+			id = "blue milk"
+			result = "blue_milk"
+			required_reagents = list("milk" = 1, "juice_blueberry" = 1)
+			result_amount = 2
+			mix_phrase = "The mixture turns a pale blue color."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
 		milk_punch
 			name = "Milk Punch"
 			id = "milk_punch"
@@ -611,6 +621,21 @@ datum
 		halfandhalf/halfandhalf3
 			id = "halfandhalf3"
 			required_reagents = list("lemonade" = 1, "sweet_tea" = 1)
+			result_amount = 2
+
+		laurapalmer
+			name = "Laura Palmer"
+			id = "laurapalmer"
+			result = "laurapalmer"
+			required_reagents = list("lemonade" = 1, "coffee" = 1)
+			result_amount = 2
+			mix_phrase = "The coffee and lemonade mix together. Damn fine."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		laurapalmer/laurapalmer2
+			id = "laurapalmer2"
+			required_reagents = list("lemonade" = 1, "coffee_fresh" = 1)
 			result_amount = 2
 
 		eggnog
@@ -1650,6 +1675,16 @@ datum
 			required_reagents = list("rum" = 1, "capsaicin" = 1)
 			result_amount = 2
 			mix_phrase = "You feel like you might have misunderstood the recipe."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		romulale
+			name = "Romulale"
+			id = "romulale"
+			result = "romulale"
+			required_reagents =list("juice_blueberry" = 1, "juice_blueraspberry" = 1, "vodka" = 2)
+			result_amount = 4
+			mix_phrase = "A strong smell comes from the solution."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
