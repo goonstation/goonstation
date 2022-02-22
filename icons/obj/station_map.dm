@@ -29,7 +29,7 @@
 		if ("left" in param_list)
 			var/x = text2num(param_list["icon-x"])
 			var/y = text2num(param_list["icon-y"])
-			var/turf/clicked = locate(x, y, Z_LEVEL_STATION) //station z level macro
+			var/turf/clicked = locate(x, y, Z_LEVEL_STATION)
 			usr.loc = clicked
 		if ("right" in param_list)
 			return TRUE
