@@ -660,6 +660,12 @@ var/list/headset_channel_lookup
 	burn_possible = 0
 	anchored = 1
 
+	attack_hand(mob/user)
+		if (src.anchored)
+			boutput(user, "You need to unscrew the [src.name] from the floor first!")
+			return
+		..()
+
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (isscrewingtool(I))
 			if (src.anchored)

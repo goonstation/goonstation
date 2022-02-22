@@ -648,6 +648,7 @@ that cannot be itched
 			src.active2["criminal"] = "Released"
 		else
 			src.active2["criminal"] = "None"
+		src.active2["sec_flag"] = "None"
 		src.active2["mi_crim"] = "None"
 		src.active2["mi_crim_d"] = "No minor crime convictions."
 		src.active2["ma_crim"] = "None"

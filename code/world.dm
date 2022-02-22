@@ -701,6 +701,8 @@ var/f_color_selector_handler/F_Color_Selector
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
 	global.phrase_log.save()
+	for_by_tcl(P, /datum/player)
+		P.on_round_end()
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED

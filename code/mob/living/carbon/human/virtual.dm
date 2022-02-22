@@ -129,7 +129,7 @@
 		// Won't delete the VR character otherwise, which can be confusing (detective's goggles sending you to the existing body in the bomb VR etc).
 		var/mob/M = holder.owner
 		setdead(M)
-		M.death(0)
+		M.death(FALSE)
 
 		Station_VNet.Leave_Vspace(M)
 

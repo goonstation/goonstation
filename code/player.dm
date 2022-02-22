@@ -36,6 +36,8 @@
 	var/list/cloudsaves = null
 	/// saved data from the cloud (spacebux, volume settings, ...)
 	var/list/clouddata = null
+	/// buildmode holder of our client so it doesn't need to get rebuilt every time we reconnect
+	var/datum/buildmode_holder/buildmode = null
 
 	/// sets up vars, caches player stats, adds by_type list entry for this datum
 	New(key)
@@ -257,6 +259,37 @@
 			// we need to return a list with a list in the cdata index or it causes a deadlock where we can't save
 			return list(cdata = list())
 #endif
+
+	proc/get_buildmode()
+		RETURN_TYPE(/datum/buildmode_holder)
+		if(src.buildmode)
+			return src.buildmode
+		var/saved_buildmode = src.cloud_get("buildmode")
+		if(!saved_buildmode)
+			src.buildmode = new /datum/buildmode_holder(src.client)
+		else
+			var/savefile/save = new
+			save.ImportText("/", saved_buildmode)
+			save.eof = 0
+			try
+				save["buildmode"] >> src.buildmode
+			catch(var/exception/e)
+				stack_trace("loading buildmode error\n[e.name]\n[e.desc]")
+				boutput(src.client, "<span class='internal'>Loading your buildmode failed. Check runtime log for details.</span>")
+				qdel(src.buildmode)
+				src.buildmode = new /datum/buildmode_holder(src.client)
+			if(isnull(src.buildmode))
+				boutput(src.client, "<span class='internal'>Loading your buildmode failed. No clue why.</span>")
+				src.buildmode = new /datum/buildmode_holder(src.client)
+			if(isnull(src.buildmode.owner))
+				src.buildmode.set_client(src.client)
+		return src.buildmode
+
+	proc/on_round_end()
+		if(src.buildmode)
+			var/savefile/S = new
+			S["buildmode"] << buildmode
+			src.cloud_put("buildmode", S.ExportText())
 
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)

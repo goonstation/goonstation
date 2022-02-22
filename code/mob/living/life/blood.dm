@@ -140,10 +140,10 @@
 			return ..()
 
 		//special case
-		if (current_blood_amt >= 1500)
-			if (prob(10))
+		if (current_blood_amt >= 1000)
+			if (prob(clamp((current_blood_amt - 1000)/10, 0, 100))) //0% at 1000, 100% at 2000, linear scaling
 				owner.visible_message("<span class='alert'><b>[owner] bursts like a bloody balloon! Holy fucking shit!!</b></span>")
-				owner.gib(1) // :v
+				owner.gib(TRUE) // :v
 				return ..()
 
 		if (isdead(owner))

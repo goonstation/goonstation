@@ -485,7 +485,7 @@
 
 /client/proc/modify_variables(var/atom/O)
 	var/list/locked = list("vars", "key", "ckey", "client", "holder")
-	admin_only
+	ADMIN_ONLY
 
 	var/list/names = list()
 	for (var/V in O.vars)

@@ -79,14 +79,14 @@
 			message_admins("[user ? user : "Someone"] sent a message to Central Command:<br>[title]<br><br>[message]")
 			var/ircmsg[] = new()
 			ircmsg["msg"] = "[user ? user : "Unknown"] sent a message to Central Command:\n**[title]**\n[message]"
-			ircbot.export("admin", ircmsg)
+			ircbot.export_async("admin", ircmsg)
 
 		transmit_to_partner_station(var/title, var/message, var/user)
 			var/sound_to_play = "sound/misc/announcement_1.ogg"
 			command_alert(message, title, sound_to_play, override_big_title="Transmission to Partner Station")
 			var/ircmsg[] = new()
 			ircmsg["msg"] = "[user ? user : "Unknown"] sent a message to __[game_servers.get_buddy().name]__:\n**[title]**\n[message]"
-			ircbot.export("admin", ircmsg)
+			ircbot.export_async("admin", ircmsg)
 			return game_servers.send_to_buddy("announce", title, message)
 
 		add_cargo_logs(var/atom/A)

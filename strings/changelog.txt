@@ -1,4 +1,47 @@
 
+(t)tue feb 22 22
+(u)Amylizzle
+(p)7583
+(e)|
+(*)Enzymatic Reclaimers no longer destroy item arms, the item will now drop.
+(t)mon feb 21 22
+(u)Flappybat
+(p)7574
+(e)|
+(+)Cluwnes have been trained to make a less ear blasting horn sound.
+(u)CodeJester
+(p)7438
+(e)📄|tgui
+(*)The seed fabricator has a new UI, allowing you to find and dispense cannabis seeds easier.
+(u)CodeJester
+(p)7523
+(e)🆕📄|feature, tgui
+(+)Added Isolate button for reagents in the Reagent Extractor.
+(t)sun feb 20 22
+(u)aloe
+(+)you digest 3x as hard
+(u)AmazingDragons
+(p)7437
+(e)🆕|feature
+(*)Added a new morale-boosting problem to the mainframe for control of your favorite guardbuddies!
+(u)Yellow/Myco
+(p)7545
+(e)⚖|balance
+(+)Staff Assistants now spawn with a Civilian Headset, giving them access to the civilian channel
+(u)FlameArrow57
+(p)7413
+(e)🆕|feature
+(*)Security computers now provide a SecHUD flag that can be set for someone. If a person has an active arrest status, the flag will appear in their examine report for anyone wearing SecHUDs.
+(t)sat feb 19 22
+(u)Flappybat
+(p)7373
+(e)🗺|mapping
+(+)Renamed Loyalty implants to Counter-Revolutionary implants to make their purpose clearer.
+(t)fri feb 18 22
+(u)tarmunora
+(+)blob poisoning change:
+(+)mitochondria individually less vulnerable to poison, suck poison out of nearby non-mitochondria/non-lipid tiles, store up to 50 poison in adjacent lipid tiles
+(+)lipids slightly more flammable and no longer have increased poison spread on death
 (t)thu feb 17 22
 (u)aloe
 (*)Genetics computers now require genetics access to operate.
