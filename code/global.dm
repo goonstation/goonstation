@@ -506,7 +506,7 @@ var/global
 
 	hardRebootFilePath = "data/hard-reboot"
 
-	//the map object used to display the AI station map
+	/// The map object used to display the AI station map
 	obj/station_map/ai_station_map
 
 /proc/addGlobalRenderSource(var/image/I, var/key)

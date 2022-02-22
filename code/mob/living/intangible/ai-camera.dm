@@ -36,7 +36,7 @@
 
 	var/outer_eye_atom = null
 
-	//the UI used for the "Open station map" verb
+	/// The UI used for the "Open station map" verb
 	var/datum/tgui/map_ui
 
 	New()
