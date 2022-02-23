@@ -653,9 +653,9 @@
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
 				var/datum/mind/M = src.mind
 				sleep(20 SECONDS)
-				if(!M || M.disposed)
+				if(!M || M.disposed || M.current != src)
 					return
-				if (M.current == src)
+				if (M.current)
 					M.current.show_text("<b>We released a headspider, using up some of our DNA reserves.</b>", "blue")
 				src.visible_message("<span class='alert'><B>[src]</B> head detaches, sprouts legs and wanders off looking for food!</span>")
 				//make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards
