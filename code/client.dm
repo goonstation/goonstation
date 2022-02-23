@@ -658,14 +658,64 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
 		src.color = "#AAAAAA"
 
+	if (!src.chatOutput.loaded)
+		//Load custom chat
+		src.chatOutput.start()
+
+	src.setup_special_screens()
+
+	logTheThing("diary", null, src.mob, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
+
+	if (config.log_access)
+		src.ip_cid_conflict_check()
+
+	if(src.holder)
+		// when an admin logs in check all clients again per Mordent's request
+		for(var/client/C)
+			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE)
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
 	login_success = 1
-/*
-/client/proc/write_gauntlet_matches()
-	return
-*/
+
+/client/proc/ip_cid_conflict_check(log_it=TRUE, alert_them=TRUE)
+	for (var/client/C)
+		var/mob/M = C.mob
+		if (!M || C == src || isnull(M.client))
+			continue
+
+		if (C.address == src.address)
+			if(!src.holder && !C.holder)
+				if(log_it)
+					logTheThing("admin", src.mob, M, "has same IP address as [constructTarget(M,"admin")]")
+					logTheThing("diary", src.mob, M, "has same IP address as [constructTarget(M,"diary")]", "access")
+				if (global.IP_alerts)
+					message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src.mob)] has the same IP address as [key_name(M)]</span>")
+		else if (M.lastKnownIP == src.address)
+			if(!src.holder && !C.holder)
+				if(log_it)
+					logTheThing("diary", src.mob, M, "has same IP address as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", "access")
+				if (global.IP_alerts)
+					message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src.mob)] has the same IP address as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
+
+		if (C.computer_id == src.computer_id)
+			if(log_it)
+				logTheThing("admin", src.mob, M, "has same computer ID as [constructTarget(M,"admin")]")
+				logTheThing("diary", src.mob, M, "has same computer ID as [constructTarget(M,"diary")]", "access")
+			message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src.mob)] has the same </span><span class='alert'><B>computer ID</B><font class='internal'> as [key_name(M)]</span>")
+			if(alert_them)
+				SPAWN(0)
+					if(M.lastKnownIP == src.address)
+						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
+		else if (M.computer_id == src.computer_id)
+			if(log_it)
+				logTheThing("diary", src.mob, M, "has same computer ID as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", null, "access")
+				logTheThing("admin", M, null, "is no longer logged in.")
+			message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src.mob)] has the same </span><span class='alert'><B>computer ID</B></span><span class='internal'> as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
+			if(alert_them)
+				SPAWN(0)
+					if(M.lastKnownIP == src.address)
+						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 
 /client/proc/init_admin()
 	if(!address || (world.address == src.address))
