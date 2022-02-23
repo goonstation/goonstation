@@ -679,43 +679,42 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	login_success = 1
 
 /client/proc/ip_cid_conflict_check(log_it=TRUE, alert_them=TRUE)
-	for (var/client/C)
-		var/mob/M = C.mob
-		if (!M || C == src || isnull(M.client))
-			continue
+	var/static/list/list/ip_to_ckeys = list()
+	var/static/list/list/cid_to_ckeys = list()
 
-		if (C.address == src.address)
-			if(!src.holder && !C.holder)
-				if(log_it)
-					logTheThing("admin", src.mob, M, "has same IP address as [constructTarget(M,"admin")]")
-					logTheThing("diary", src.mob, M, "has same IP address as [constructTarget(M,"diary")]", "access")
-				if (global.IP_alerts)
-					message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src.mob)] has the same IP address as [key_name(M)]</span>")
-		else if (M.lastKnownIP == src.address)
-			if(!src.holder && !C.holder)
-				if(log_it)
-					logTheThing("diary", src.mob, M, "has same IP address as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", "access")
-				if (global.IP_alerts)
-					message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src.mob)] has the same IP address as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
+	for(var/what in list("IP", "CID"))
+		var/list/list_to_check = list("IP"=ip_to_ckeys, "CID"=cid_to_ckeys)[what]
+		var/our_value = what == "IP" ? src.address : src.computer_id
+		if(!(our_value in list_to_check))
+			list_to_check[our_value] = list(src.ckey)
+		else
+			list_to_check[our_value] |= list(src.ckey)
+		if(length(list_to_check[our_value]) > 1)
+			var/list/offenders_log = list()
+			var/list/offenders_message = list()
+			for(var/found_ckey in list_to_check[our_value])
+				var/datum/player/player = find_player(found_ckey)
+				if(player?.client?.mob)
+					offenders_log += constructTarget(player.client.mob, "admin")
+					offenders_message += key_name(player.client.mob)
+				else
+					offenders_log += found_ckey
+					offenders_message += found_ckey
+			if(log_it)
+				logTheThing("admin", src.mob, null, "The following have the same [what]: [jointext(offenders_log, ", ")]")
+				logTheThing("diary", src.mob, null, "The following have the same [what]: [jointext(offenders_log, ", ")]", "access")
+			if(global.IP_alerts)
+				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>The following have the same [what]: [jointext(offenders_message, ", ")]</span>")
 
-		if (C.computer_id == src.computer_id)
-			if(log_it)
-				logTheThing("admin", src.mob, M, "has same computer ID as [constructTarget(M,"admin")]")
-				logTheThing("diary", src.mob, M, "has same computer ID as [constructTarget(M,"diary")]", "access")
-			message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src.mob)] has the same </span><span class='alert'><B>computer ID</B><font class='internal'> as [key_name(M)]</span>")
-			if(alert_them)
-				SPAWN(0)
-					if(M.lastKnownIP == src.address)
-						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
-		else if (M.computer_id == src.computer_id)
-			if(log_it)
-				logTheThing("diary", src.mob, M, "has same computer ID as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", null, "access")
-				logTheThing("admin", M, null, "is no longer logged in.")
-			message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src.mob)] has the same </span><span class='alert'><B>computer ID</B></span><span class='internal'> as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
-			if(alert_them)
-				SPAWN(0)
-					if(M.lastKnownIP == src.address)
-						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
+	if(alert_them)
+		var/list/both_collide = ip_to_ckeys[src.address] & cid_to_ckeys[src.computer_id]
+		if(length(both_collide) > 1)
+			for(var/found_ckey in both_collide)
+				var/datum/player/player = find_player(found_ckey)
+				if(player?.client?.mob)
+					SPAWN(0)
+						alert(player.client.mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
+
 
 /client/proc/init_admin()
 	if(!address || (world.address == src.address))
