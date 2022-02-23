@@ -493,7 +493,6 @@
 		set category = "AI Commands"
 		map_ui = tgui_process.try_update_ui(usr, src, map_ui)
 		if (!map_ui)
-			map_ui = new(usr, src, "AIMap")
 			if (!winexists(usr, "ai_map"))
 				winset(src.client, "ai_map", list2params(list(
 					"type" = "map",
@@ -508,6 +507,7 @@
 				ai_station_map.screen_loc = "ai_map;1,1"
 				handler.vis_contents += ai_station_map
 				src.client.screen += ai_station_map
+			map_ui = new(usr, src, "AIMap")
 			map_ui.open()
 
 
