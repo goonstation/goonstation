@@ -598,7 +598,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	if(src.holder)
 		// when an admin logs in check all clients again per Mordent's request
 		for(var/client/C)
-			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE)
+			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE, only_of_first=TRUE)
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
@@ -680,7 +680,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	// Set view tint
 	view_tint = winget( src, "menu.set_tint", "is-checked" ) == "true"
 
-/client/proc/ip_cid_conflict_check(log_it=TRUE, alert_them=TRUE)
+/client/proc/ip_cid_conflict_check(log_it=TRUE, alert_them=TRUE, only_if_first=FALSE)
 	var/static/list/list/ip_to_ckeys = list()
 	var/static/list/list/cid_to_ckeys = list()
 
@@ -695,7 +695,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			list_to_check[our_value] = list(src.ckey)
 		else
 			list_to_check[our_value] |= list(src.ckey)
-		if(length(list_to_check[our_value]) > 1)
+		if(length(list_to_check[our_value]) > 1 && (!only_if_first || list_to_check[our_value][1] == src.ckey))
 			var/list/offenders_log = list()
 			var/list/offenders_message = list()
 			for(var/found_ckey in list_to_check[our_value])
