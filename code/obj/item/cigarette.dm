@@ -26,7 +26,7 @@
 	var/buttname = "cigarette butt"
 	var/puffrate = 1
 	var/cycle = 4
-	var/numpuffs = 40 //number of times the cig can dispense reagents
+	var/numpuffs = 20 //number of times the cig can dispense reagents
 	rand_pos = 1
 	use_bloodoverlay = 0
 
