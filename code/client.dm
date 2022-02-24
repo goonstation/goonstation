@@ -684,6 +684,10 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	var/static/list/list/ip_to_ckeys = list()
 	var/static/list/list/cid_to_ckeys = list()
 
+	if(isnull(src.ckey))
+		// logged out / autokicked due to reasons
+		return
+
 	for(var/what in list("IP", "CID"))
 		var/list/list_to_check = list("IP"=ip_to_ckeys, "CID"=cid_to_ckeys)[what]
 		var/our_value = what == "IP" ? src.address : src.computer_id
