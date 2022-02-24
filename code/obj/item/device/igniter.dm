@@ -124,7 +124,7 @@
 /obj/item/device/igniter/attack_self(mob/user as mob)
 
 	src.add_fingerprint(user)
-	SPAWN_DBG( 5 )
+	SPAWN( 5 )
 		ignite()
 		return
 	return

@@ -122,13 +122,15 @@
 
 		if (isliving(hit_atom))
 			var/mob/living/M = hit_atom
-
-			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 			SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+			if (check_target_immunity(M, source = src))
+				src.visible_message("<b><span class='alert'>[src] bounces off [M] harmlessly!</span></b>")
+				return
+			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 			if (prob(25))
 				M.emote("scream")
 
-			logTheThing("combat", src, M, "[src] chairflips into [constructTarget(M,"combat")], [showCoords(M.x, M.y, M.z)].")
+			logTheThing("combat", src, M, "[src] chairflips into [constructTarget(M,"combat")], [log_loc(M)].")
 			M.lastattacker = src
 			M.lastattackertime = world.time
 

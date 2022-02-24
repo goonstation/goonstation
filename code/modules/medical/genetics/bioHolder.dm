@@ -143,7 +143,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/datum/pronouns/pronouns
 	var/screamsound = "male"
 	var/fartsound = "default"
-	var/voicetype = 0
+	var/voicetype = "1"
 	var/flavor_text = null
 
 	var/list/fartsounds = list("default" = 'sound/voice/farts/poo2.ogg', \
@@ -368,7 +368,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		mobAppearance.owner = owner
 		mobAppearance.parentHolder = src
 
-		SPAWN_DBG(2 SECONDS) // fuck this shit
+		SPAWN(2 SECONDS) // fuck this shit
 			if(owner)
 				ownerName = owner.real_name
 				bioUids[Uid] = owner?.real_name ? owner.real_name : owner?.name

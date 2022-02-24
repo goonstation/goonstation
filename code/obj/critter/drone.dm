@@ -202,7 +202,7 @@
 				src.task = "thinking"
 				walk_to(src,0)
 
-			SPAWN_DBG(attack_cooldown)
+			SPAWN(attack_cooldown)
 				src.attacking = 0
 		return
 
@@ -223,7 +223,7 @@
 				src.task = "thinking"
 				walk_to(src,0)
 
-			SPAWN_DBG(attack_cooldown)
+			SPAWN(attack_cooldown)
 				src.attacking = 0
 		return
 
@@ -235,7 +235,7 @@
 		applyDeathState()
 		dying = 1 // this was dying = 0. ha ha.
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_DRONE_DEATH, src)
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			if (get_area(src) != colosseum_controller.colosseum || must_drop_loot)
 				if (prob(25))
 					new /obj/item/device/prox_sensor(src.loc)
@@ -384,7 +384,7 @@
 						if(prob(20)) walk_rand(src,4) // juke around and dodge shots
 						/*else if(smashes_shit && !smashed_recently && prob(20) && target in ohearers(src,src.seekrange) ) //RAM THE FUCKER! Or not. This sucks. Bad idea.
 							smashed_recently = 1
-							SPAWN_DBG(smash_cooldown)
+							SPAWN(smash_cooldown)
 								smashed_recently = 0
 
 							walk_towards(src, src.target, 1, 4)*/
@@ -588,7 +588,7 @@
 			if(target == start)
 				return
 			playsound(src, "sound/effects/mag_warp.ogg", 50, 1)
-			SPAWN_DBG(rand(1,3)) // so it might miss, sometimes, maybe
+			SPAWN(rand(1,3)) // so it might miss, sometimes, maybe
 				var/obj/target_r
 
 				if(istype(target, /obj/machinery/cruiser))
@@ -624,7 +624,7 @@
 		//			var/turf/T = O.loc
 		//			for(var/atom/A in T.contents)
 		//				boutput(src, "There is a [A.name] at this location.")
-					SPAWN_DBG(0.3 SECONDS) qdel(O)
+					SPAWN(0.3 SECONDS) qdel(O)
 
 				if(istype(target_r, /obj/railgun_trg_dummy)) qdel(target_r)
 			return
@@ -655,7 +655,7 @@
 				walk_to(src, src.target,1,4)
 				var/tturf = get_turf(M)
 				Shoot(tturf, src.loc, src)
-				SPAWN_DBG(attack_cooldown)
+				SPAWN(attack_cooldown)
 					attacking = 0
 			return
 
@@ -667,7 +667,7 @@
 
 				var/tturf = get_turf(M)
 				Shoot(tturf, src.loc, src)
-				SPAWN_DBG(attack_cooldown)
+				SPAWN(attack_cooldown)
 					attacking = 0
 			return
 
@@ -878,9 +878,9 @@
 					P2.die()
 					return
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				P1.launch() // FIRE!
-			SPAWN_DBG(0)
+			SPAWN(0)
 				P2.launch()
 
 		New()
@@ -943,7 +943,7 @@
 		A.yo = target:y - start:y
 		A.xo = target:x - start:x
 		src.set_dir(get_dir(src, target))
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			A.process()
 		return */
 
@@ -1018,9 +1018,9 @@
 				P2.die()
 				return
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			P1.launch()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			P2.launch()
 
 	proc/elec_zap()
@@ -1057,7 +1057,7 @@
 			playsound(C.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
 			C.ex_act(3)
 
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			for (var/obj/O in lineObjs)
 				qdel(O)
 
@@ -1139,7 +1139,7 @@
 				sphere.set_loc(locate(src.x+1,src.y, src.z))
 				sphere.orig_turf = sphere.loc
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			sphere.launch()
 
 		if (bounds_dist(src, target) >= 2*32) // dont murder ourself with explosives
@@ -1150,9 +1150,9 @@
 			P1.orig_turf = P1.loc
 			P2.orig_turf = P2.loc
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				P1.launch()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				P2.launch()
 
 
@@ -1179,7 +1179,7 @@
 			playsound(poorPod.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
 			poorPod.ex_act(3)
 
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			for (var/obj/O in lineObjs)
 				qdel(O)*/
 
@@ -1310,13 +1310,13 @@
 		playsound(src, 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
 		src.visible_message("[src] emits a very small clicking noise.")
 		icon_state = dead_state
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			explosion(src, get_turf(src), -1, -1, 2, 3)
 		..()
 
 	Shoot(var/target, var/start, var/user, var/bullet = 0)
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			task = "sleeping"
 			src.health = 0
 			src.CritterDeath()

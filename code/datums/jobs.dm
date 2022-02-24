@@ -73,7 +73,7 @@
 			if (!isnull(M.mind))
 				M.mind.miranda = "You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you."
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (receives_implant && ispath(receives_implant))
 				var/mob/living/carbon/human/H = M
 				var/obj/item/implant/I = new receives_implant(M)
@@ -760,8 +760,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	#ifdef UNDERWATER_MAP
 	slot_suit = list(/obj/item/clothing/suit/space/diving/engineering)
 	slot_head = list(/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
-	items_in_backpack = list(/obj/item/crowbar,
-							/obj/item/paper/book/from_file/pocketguide/mining,
+	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/mining,
 							/obj/item/clothing/shoes/flippers,
 							/obj/item/item_box/glow_sticker)
 	#else
@@ -786,7 +785,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 
 /datum/job/engineering/mechanic
 	name = "Mechanic"
-	limit = 3
+	limit = 4
 	wages = PAY_DOCTORATE
 
 	slot_back = list(/obj/item/storage/backpack/engineering)
@@ -942,12 +941,14 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/civilian/janitor
 	name = "Janitor"
-	limit = 2
+	limit = 3
 	wages = PAY_TRADESMAN
 	slot_belt = list(/obj/item/device/pda2/janitor)
 	slot_jump = list(/obj/item/clothing/under/rank/janitor)
 	slot_foot = list(/obj/item/clothing/shoes/galoshes)
+	slot_glov = list(/obj/item/clothing/gloves/long)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	items_in_backpack = list(/obj/item/handheld_vacuum)
 
 	New()
 		..()
@@ -987,6 +988,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	map_can_autooverride = 0
 	slot_jump = list(/obj/item/clothing/under/rank)
 	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
 
 	New()
 		..()
@@ -1102,34 +1104,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		src.access = get_access("Construction Worker")
 		return
-
-
-/datum/job/special/head_surgeon
-	name = "Head Surgeon"
-	linkcolor = "#00CC00"
-	limit = 1
-	wages = PAY_IMPORTANT
-	cant_spawn_as_rev = 1
-	slot_card = /obj/item/card/id/command
-	slot_belt = list(/obj/item/device/pda2/medical_director)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_back = list(/obj/item/storage/backpack/medic)
-	slot_jump = list(/obj/item/clothing/under/scrub/maroon)
-	slot_suit = list(/obj/item/clothing/suit/apron/surgeon)
-	slot_head = list(/obj/item/clothing/head/bouffant)
-	slot_ears = list(/obj/item/device/radio/headset/command/md)
-	slot_rhan = list(/obj/item/storage/firstaid/docbag)
-
-	New()
-		..()
-		src.access = get_access("Medical Director") - access_medical_director
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		M.traitHolder.addTrait("training_medical")
-		M.traitHolder.addTrait("training_partysurgeon")
 
 /datum/job/special/lawyer
 	name = "Lawyer"
@@ -1429,6 +1403,33 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		if (src.alt_names.len)
 			name = pick(src.alt_names)
 
+/datum/job/special/random/medical_specialist
+	name = "Medical Specialist"
+	linkcolor = "#9900FF"
+	wages = PAY_IMPORTANT
+	slot_card = /obj/item/card/id/command
+	slot_belt = list(/obj/item/device/pda2/medical_director)
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_back = list(/obj/item/storage/backpack/medic)
+	slot_jump = list(/obj/item/clothing/under/scrub/maroon)
+	slot_suit = list(/obj/item/clothing/suit/apron/surgeon)
+	slot_head = list(/obj/item/clothing/head/bouffant)
+	slot_ears = list(/obj/item/device/radio/headset/medical)
+	slot_rhan = list(/obj/item/storage/firstaid/docbag)
+	alt_names = list("Neurological Specialist", "Ophthalmic Specialist", "Thoracic Specialist", "Orthopaedic Specialist", "Maxillofacial Specialist",
+	  "Vascular Specialist", "Anaesthesiologist", "Acupuncturist", "Medical Director's Assistant")
+
+	New()
+		..()
+		src.access = get_access("Medical Specialist")
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_medical")
+		M.traitHolder.addTrait("training_partysurgeon")
+
 /datum/job/special/random/vip
 	name = "VIP"
 	wages = PAY_EXECUTIVE
@@ -1637,6 +1638,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_suit = list(/obj/item/clothing/suit/bio_suit/beekeeper)
 	slot_head = list(/obj/item/clothing/head/bio_hood/beekeeper)
 	slot_poc1 = list(/obj/item/reagent_containers/food/snacks/beefood)
+	slot_poc2 = list(/obj/item/paper/book/from_file/bee_book)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_belt = list(/obj/item/device/pda2/botanist)
 	slot_foot = list(/obj/item/clothing/shoes/brown)

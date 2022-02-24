@@ -71,6 +71,8 @@
 		while(length(src.req_contracts) < src.max_req_contracts)
 			src.add_req_contract()
 
+		update_shipping_data()
+
 		time_between_shifts = 6000 // 10 minutes
 		time_until_shift = time_between_shifts + rand(-900,1200)
 
@@ -217,7 +219,7 @@
 		while(length(src.req_contracts) < src.max_req_contracts)
 			src.add_req_contract()
 
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			// 20% chance to shuffle out generic traders for a new one
 			// Do this after a short delay so QMs can finish any last-second deals
 			var/removed_count = 0
@@ -229,6 +231,8 @@
 			while(removed_count > 0)
 				removed_count--
 				src.active_traders += new /datum/trader/generic(src)
+
+			update_shipping_data()
 
 	proc/sell_artifact(obj/sell_art, var/datum/artifact/sell_art_datum)
 		var/price = 0
@@ -253,7 +257,7 @@
 		// send artifact resupply
 		if(src.artifact_resupply_amount > 1 && !src.artifacts_on_the_way)
 			src.artifacts_on_the_way = TRUE
-			SPAWN_DBG(rand(1,5) MINUTES)
+			SPAWN(rand(1,5) MINUTES)
 				// handle the artifact amount
 				var/art_amount = round(artifact_resupply_amount)
 				artifact_resupply_amount -= art_amount
@@ -345,7 +349,7 @@
 
 	proc/handle_returns(obj/storage/crate/sold_crate)
 		sold_crate.name = "Returned Requisitions Crate"
-		SPAWN_DBG(rand(18,24) SECONDS)
+		SPAWN(rand(18,24) SECONDS)
 			shippingmarket.receive_crate(sold_crate)
 
 	proc/sell_crate(obj/storage/crate/sell_crate, var/list/commodities_list)
@@ -472,10 +476,10 @@
 		for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 			if (P.id == "qm_dock")
 				playsound(P.loc, "sound/machines/bellalert.ogg", 50, 0)
-				SPAWN_DBG(SUPPLY_OPEN_TIME)
+				SPAWN(SUPPLY_OPEN_TIME)
 					if (P?.density)
 						P.open()
-				SPAWN_DBG(SUPPLY_CLOSE_TIME)
+				SPAWN(SUPPLY_CLOSE_TIME)
 					if (P && !P.density)
 						P.close()
 
@@ -514,6 +518,11 @@
 			max_y = max(max_y, boundry.y)
 
 		. = block(locate(min_x, min_y, Z_LEVEL_STATION), locate(max_x, max_y, Z_LEVEL_STATION))
+
+	//needs to be called whenever active_traders or req_contracts changes
+	proc/update_shipping_data()
+		for_by_tcl(computer, /obj/machinery/computer/barcode)
+			computer.update_static_data()
 
 
 // Debugging and admin verbs (mostly coder)

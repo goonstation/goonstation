@@ -220,17 +220,27 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/clown
 		event_handler_flags = USE_FLUID_ENTER
 
+		proc/on_mob_throw_end(mob/M)
+			UnregisterSignal(M, COMSIG_MOVABLE_THROW_END)
+			LAZYLISTREMOVE(M.attached_objs, src)
+			src.glide_size = initial(src.glide_size)
+
 		Crossed(atom/movable/AM)
 			..()
 			if (istype(src.loc, /turf/space))
 				return
 			if (iscarbon(AM))
 				var/mob/M = AM
-				if (M.slip(ignore_actual_delay = 1))
+				LAZYLISTADDUNIQUE(M.attached_objs, src)
+				src.glide_size = M.glide_size
+				RegisterSignal(M, COMSIG_MOVABLE_THROW_END, .proc/on_mob_throw_end)
+				if (M.slip(ignore_actual_delay = 1, throw_type=THROW_PEEL_SLIP, params=list("slip_obj"=src)))
 					boutput(M, "<span class='notice'>You slipped on the PDA!</span>")
 					if (M.bioHolder.HasEffect("clumsy"))
 						M.changeStatus("weakened", 5 SECONDS)
 						JOB_XP(M, "Clown", 1)
+				else
+					src.on_mob_throw_end(M)
 
 	janitor
 		icon_state = "pda-j"
@@ -694,7 +704,7 @@
 
 	return
 
-/obj/item/device/pda2/MouseDrop(atom/over_object, src_location, over_location)
+/obj/item/device/pda2/mouse_drop(atom/over_object, src_location, over_location)
 	..()
 	if (over_object == usr && src.loc == usr && isliving(usr) && !usr.stat)
 		src.attack_self(usr)
@@ -1135,7 +1145,7 @@
 		if (S.mainframe && S.mainframe == loc)
 			return 1
 	if (isAIeye(user))
-		var/mob/dead/aieye/E = user
+		var/mob/living/intangible/aieye/E = user
 		if (E.mainframe)
 			return 1
 	return ..(user)

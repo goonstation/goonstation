@@ -118,6 +118,8 @@
 				plane.alpha = 255
 
 	disposing()
+		for (var/mob/wraith/poltergeist/P in src.poltergeists)
+			P.master = null
 		poltergeists = null
 		..()
 
@@ -148,7 +150,7 @@
 		src.abilityHolder.updateText()
 
 		if (src.health < 1)
-			src.death(0)
+			src.death(FALSE)
 			return
 		else if (src.health < src.max_health)
 			HealDamage("chest", 1 * (life_time_passed / life_tick_spacing), 0)
@@ -186,7 +188,7 @@
 			logTheThing("combat", src, null, "lost a life as a wraith at [log_loc(src.loc)].")
 			src.justdied = 1
 			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
-			SPAWN_DBG(15 SECONDS) //15 seconds
+			SPAWN(15 SECONDS) //15 seconds
 				src.justdied = 0
 		else
 			boutput(src, "<span class='alert'><b>Your connection with the mortal realm is severed. You have been permanently banished.</b></span>")
@@ -276,7 +278,7 @@
 		health -= brute * 3
 		health = min(max_health, health)
 		if (src.health <= 0)
-			src.death(0)
+			src.death(FALSE)
 		health_update_queue |= src
 
 	HealDamage(zone, brute, burn)
@@ -312,7 +314,7 @@
 			var/mydir = get_dir(src, NewLoc)
 			var/salted = 0
 			if (mydir == NORTH || mydir == EAST || mydir == WEST || mydir == SOUTH)
-				if (src.density && !NewLoc.Enter(src))
+				if (src.density && !NewLoc.canpass())
 					return
 
 			else
@@ -333,20 +335,20 @@
 				var/horiz = 0
 				var/vert = 0
 
-				if (!src.density || vertical.Enter(src))
+				if (!src.density || vertical.canpass())
 					vert = 1
 					src.set_loc(vertical)
-					if (!src.density || NewLoc.Enter(src))
+					if (!src.density || NewLoc.canpass())
 						blocked = 0
 						for(var/obj/decal/cleanable/saltpile/A in vertical)
 							if (istype(A)) salted = 1
 							if (salted) break
 					src.set_loc(oldloc)
 
-				if (!src.density || horizontal.Enter(src))
+				if (!src.density || horizontal.canpass())
 					horiz = 1
 					src.set_loc(horizontal)
-					if (!src.density || NewLoc.Enter(src))
+					if (!src.density || NewLoc.canpass())
 						blocked = 0
 						for(var/obj/decal/cleanable/saltpile/A in horizontal)
 							if (istype(A)) salted = 1
@@ -374,7 +376,7 @@
 			if (salted && !src.density && !src.justdied)
 				src.makeCorporeal()
 				boutput(src, "<span class='alert'>You have passed over salt! You now interact with the mortal realm...</span>")
-				SPAWN_DBG(1 MINUTE) //one minute
+				SPAWN(1 MINUTE) //one minute
 					src.makeIncorporeal()
 
 		//if ((marker && get_dist(src, marker) > 15) && (master && get_dist(P,src) > 12 ))
@@ -543,7 +545,7 @@
 			src.haunting = 1
 			src.flags &= !UNCRUSHABLE
 
-			SPAWN_DBG (haunt_duration)
+			SPAWN(haunt_duration)
 				src.makeIncorporeal()
 				src.haunting = 0
 				src.flags |= UNCRUSHABLE

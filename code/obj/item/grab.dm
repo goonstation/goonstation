@@ -147,6 +147,7 @@
 			H.stamina_stun(mult)
 			if(H.stamina <= -75)
 				H.losebreath += (3 * mult)
+				H.setStatus("paralysis", max(getStatusDuration("paralysis"), STAMINA_NEG_CAP_STUN_TIME * mult)) //not ideal
 			else if(H.stamina <= -50)
 				H.losebreath += (1.5 * mult)
 			else if(H.stamina <= -33)
@@ -313,7 +314,7 @@
 			src.affecting:was_harmed(src.assailant)
 
 	proc/stunned_targets_can_break()
-		. = TRUE // Allow stunned players to break all grabs
+		.= (src.state == GRAB_PIN)
 
 	proc/check()
 		if(!assailant || !affecting)

@@ -127,7 +127,7 @@
 		if(O?.client)
 			valid_ghosts |= O
 	if(valid_ghosts.len <= 0)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			boutput(src, "<span class='alert'>Unable to partition, please try again later.</span>")
 		return
 	// pick a random ghost

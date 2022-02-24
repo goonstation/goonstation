@@ -51,7 +51,7 @@
 				return 0 // It's not a Port-a-Sci, okay.
 
 		var/turf/our_loc = get_turf(src.master)
-		if(istype(test_mob, /mob/dead/aieye))
+		if(isAIeye(test_mob))
 			our_loc = get_turf(test_mob)
 		if (our_loc.loc:teleport_blocked == 2) return 0
 

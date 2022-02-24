@@ -68,7 +68,7 @@
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
 		src.desc = "[src] looks angry."
-		SPAWN_DBG(rand(1000,3000))
+		SPAWN(rand(1000,3000))
 			src.visible_message("<b>[src.name] calms down.</b>")
 			src.desc = "[src] looks a bit annoyed."
 			src.temp = "[src.name] has calmed down.<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
@@ -540,7 +540,7 @@
 			if (O:locked)
 				user.show_text("[src] stares at the locked [O], unamused. Maybe you should make sure the thing's open, first.", "red")
 				return
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				user.visible_message("<span class='notice'>[src] rummages through [user]'s [O].</span>")
 				playsound(src.loc, "rustle", 60, 1)
 				var/cratevalue = null
@@ -814,6 +814,7 @@
 					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
 					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
 				src.goods_illegal += new /datum/commodity/contraband/birdbomb(src)
+				src.goods_illegal += new /datum/commodity/contraband/syndicate_headset(src)
 				src.goods_sell += new /datum/commodity/contraband/swatmask(src)
 				src.goods_sell += new /datum/commodity/contraband/spy_sticker_kit(src)
 				src.goods_sell += new /datum/commodity/contraband/flare(src)

@@ -60,12 +60,10 @@
 /atom/movable/bump(atom/O)
 	if(src.throwing)
 		var/found_any = FALSE
-		// can be optimized later by storing list on the atom itself if this ever becomes a problem (it won't)
-		for(var/datum/thrown_thing/thr as anything in global.throwing_controller.thrown)
-			if(thr.thing == src)
-				src.throw_impact(O, thr)
-				found_any = TRUE
-				break // I'd like this to process all relevant datums but something is duplicating throws so it actually sometimes causes a ton of lag
+		for(var/datum/thrown_thing/thr as anything in global.throwing_controller.throws_of_atom(src))
+			src.throw_impact(O, thr)
+			found_any = TRUE
+			break // I'd like this to process all relevant datums but something is duplicating throws so it actually sometimes causes a ton of lag
 		if(!found_any)
 			src.throw_impact(O)
 		src.throwing = 0
@@ -97,7 +95,7 @@
 	src.throwforce += bonus_throwforce
 
 	var/matrix/transform_original = src.transform
-	if (src.throw_spin == 1 && !(throwing & THROW_SLIP))
+	if (src.throw_spin == 1 && !(throwing & THROW_SLIP) && !(throwing & THROW_PEEL_SLIP))
 		animate(src, transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
@@ -135,8 +133,13 @@
 		thrown_by = thrown_by,
 		return_target = usr, // gross
 		bonus_throwforce = bonus_throwforce,
-		end_throw_callback = end_throw_callback
+		end_throw_callback = end_throw_callback,
+		throw_type = throw_type
 	)
+
+	if(isliving(src) && (throwing & THROW_PEEL_SLIP))
+		var/mob/living/L = src
+		APPLY_MOB_PROPERTY(L, PROP_CANTMOVE, "peel_slip_\ref[thr]")
 
 	LAZYLISTADD(throwing_controller.thrown, thr)
 	throwing_controller.start()

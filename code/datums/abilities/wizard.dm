@@ -18,7 +18,7 @@
 		// vr wizards only get magic missile
 		H.addAbility(/datum/targetable/spell/magicmissile)
 
-	SPAWN_DBG(2.5 SECONDS) // Don't remove.
+	SPAWN(2.5 SECONDS) // Don't remove.
 		if (wizard_mob) wizard_mob.assign_gimmick_skull() // For variety and hunters (Convair880).
 
 	wizard_mob.bioHolder.mobAppearance.customization_first_color = "#FFFFFF"
@@ -191,7 +191,7 @@
 			usr.targeting_ability = owner
 			usr.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 
 /datum/abilityHolder/wizard
@@ -233,7 +233,7 @@
 
 	doCooldown()
 		src.last_cast = world.time + calculate_cooldown()
-		SPAWN_DBG(calculate_cooldown() + 5)
+		SPAWN(calculate_cooldown() + 5)
 			holder.updateButtons()
 
 	//mbc : i don't see why the wizard needs a specialized tryCast() proc. someone fix it later for me!
@@ -284,6 +284,27 @@
 		var/val = cast(target)
 		H.locked = 0
 		return val
+
+	proc/targetSpellImmunity(mob/living/carbon/human/H, var/messages, var/chaplain_xp)
+		if (H.traitHolder.hasTrait("training_chaplain"))
+			if (messages)
+				boutput(holder.owner, "<span class='alert'>[H] has divine protection from magic.</span>")
+				H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
+			if (chaplain_xp)
+				JOB_XP(H, "Chaplain", chaplain_xp)
+			return 1
+
+		if (iswizard(H))
+			if (messages)
+				H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
+			return 1
+
+		if (check_target_immunity(H))
+			if (messages)
+				H.visible_message("<span class='alert'>[H] seems to be warded from the effects!</span>")
+			return 1
+
+		return 0
 
 	updateObject()
 		if (!holder || !holder.owner)

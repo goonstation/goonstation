@@ -68,7 +68,7 @@
 						P.HYPmutateplant()
 						total = INFINITY
 				if(total)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						var/lineColor = rgb(r/total, g/total, b/total)
 						var/datum/lineResult/R = drawLine(get_turf(O), P, "smooth", "smoothCap", getCrossed = 0)
 						var/globalImageKey = "plant_helper_line[TIME]_\ref[R]_[rand(1, 1e9)]"

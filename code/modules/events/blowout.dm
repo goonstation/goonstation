@@ -18,7 +18,7 @@
 		world << siren
 		command_alert("Extreme levels of radiation detected approaching the [station_or_ship()]. All personnel have [timetoreach].[timetoreachsec] seconds to enter a maintenance tunnel or radiation safezone. Maintenance doors have temporarily had their access requirements removed. This is not a test.", "Anomaly Alert")
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for_by_tcl(A, /obj/machinery/door/airlock)
 				LAGCHECK(LAG_LOW)
 				if (A.z != Z_LEVEL_STATION)
@@ -72,7 +72,7 @@
 			boutput(world, "<span class='alert'><B>WARNING</B>: Mass radiation has struck [station_name(1)]. Do not leave safety until all radiation alerts have been cleared.</span>")
 
 			for (var/mob/M in mobs)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					shake_camera(M, 400, 16)
 
 			sleep(rand(1.5 MINUTES,2 MINUTES)) // drsingh lowered these by popular request.

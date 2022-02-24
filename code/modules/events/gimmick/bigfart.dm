@@ -23,7 +23,7 @@
 		if (fart_attack == 1)
 			return
 		fart_attack = 1
-		SPAWN_DBG(12 SECONDS)
+		SPAWN(12 SECONDS)
 			fart_attack = 0
 		if (random_events.announce_events)
 			var/sensortext = pick("sensors", "technicians", "probes", "satellites", "monitors", 20; "neckbeards")
@@ -36,7 +36,7 @@
 		for (var/i=0, i<loops, i++)
 			if (prob(4) || freebie)
 				freebie = 0
-				SPAWN_DBG(50+rand(0,550))
+				SPAWN(50+rand(0,550))
 					playsound_global(world, "sound/voice/farts/superfart.ogg", 60)
 					for (var/mob/M in mobs)
 						if (M.client)
@@ -59,7 +59,7 @@
 											blocked = 1
 											break
 									if (!(!isturf(M.loc) || T1.density) && !(T2.density || blocked == 1))
-										SPAWN_DBG(0)
+										SPAWN(0)
 											M.set_loc(T2)
 
 						if (prob(50))

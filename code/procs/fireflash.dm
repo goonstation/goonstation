@@ -25,10 +25,10 @@
 /*// experimental thing to let temporary hotspots affect atmos
 		h.perform_exposure()
 */
-		//SPAWN_DBG(1.5 SECONDS) T.hotspot_expose(2000, 400)
+		//SPAWN(1.5 SECONDS) T.hotspot_expose(2000, 400)
 
 		if(istype(T, /turf/simulated/floor)) T:burn_tile()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for(var/mob/living/L in T)
 				L.set_burning(33-radius)
 				L.bodytemperature = max(temp/3, L.bodytemperature)
@@ -37,7 +37,7 @@
 				if(istype(C, /obj/critter/zombie)) C.health -= 15
 				C.health -= (30 * C.firevuln)
 				C.check_health()
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					if(C)
 						C.health -= (2 * C.firevuln)
 						C.check_health()
@@ -63,7 +63,7 @@
 						C.check_health()
 				LAGCHECK(LAG_REALTIME)
 
-	SPAWN_DBG(3 SECONDS)
+	SPAWN(3 SECONDS)
 		for (var/obj/hotspot/A as anything in hotspots)
 			if (!A.disposed)
 				qdel(A)
@@ -128,7 +128,7 @@
 		for (var/mob/living/L in T)
 			L.update_burning(clamp(expose_temp - 100 / 550, 0, 55))
 			L.bodytemperature = (2 * L.bodytemperature + temp) / 3
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/obj/critter/C in T)
 				if(C.z != T.z)
 					continue
@@ -160,11 +160,11 @@
 
 		LAGCHECK(LAG_REALTIME)
 
-	SPAWN_DBG(1 DECI SECOND) // dumb lighting hotfix
+	SPAWN(1 DECI SECOND) // dumb lighting hotfix
 		for(var/obj/hotspot/A in hotspots)
 			A.set_real_color() // enable light
 
-	SPAWN_DBG(3 SECONDS)
+	SPAWN(3 SECONDS)
 		for(var/obj/hotspot/A in hotspots)
 			if (!A.disposed)
 				qdel(A)

@@ -40,7 +40,7 @@ var opts = {
 
     //Ping display
     'pingCounter': 0, //seconds counter
-    'pingLimit': 30, //seconds limit
+    'pingLimit': 10, //seconds limit
     'pingTime': 0, //Timestamp of when ping sent
     'pongTime': 0, //Timestamp of when ping received
     'noResponse': false, //Tracks the state of the previous ping request
@@ -457,6 +457,11 @@ function ehjaxCallback(data) {
             var adminCode = data.loadAdminCode;
             $('body').append(adminCode);
             opts.adminLoaded = true;
+        } else if (data.loadPerfMon) {
+            if (opts.perfMonLoaded) {return;}
+            var perfMon = data.loadPerfMon;
+            $('body').append(perfMon);
+            opts.perfMonLoaded = true;
         } else if (data.modeChange) {
             changeMode(data.modeChange);
         } else if (data.firebug) {
@@ -484,7 +489,7 @@ function ehjaxCallback(data) {
 
                     $playMusic.attr('src', data.playMusic);
                     var music = $playMusic.get(0);
-                    music.volume = data.volume * 0.3; /*   Added the multiplier here because youtube is consistently   */
+                    music.volume = data.volume * 0.5; /*   Added the multiplier here because youtube is consistently   */
                     if (music.paused) {                /* louder than admin music, which makes people lower the volume. */
                         music.play();
                     }
@@ -558,10 +563,11 @@ $(function() {
     //Hey look it's a controller loop!
     setInterval(function() {
         if (opts.pingCounter >= opts.pingLimit && !opts.restarting) { //Every pingLimit seconds
+            let pingDuration = (opts.pongTime - opts.pingTime) / 2;
             opts.pingCounter = 0; //reset
             opts.pongTime = 0; //reset
             opts.pingTime = Date.now();
-            runByond('?action=ehjax&window=browseroutput&type=datum&datum=chatOutput&proc=ping');
+            runByond('?action=ehjax&window=browseroutput&type=datum&datum=chatOutput&proc=ping&param[last_ping]=' + pingDuration);
             setTimeout(function() {
                 if (!opts.pongTime) { //If no response within 10 seconds of ping request
                     if (!opts.noResponse) { //Only actually append a message if the previous ping didn't also fail (to prevent spam)
@@ -570,7 +576,6 @@ $(function() {
                         output('<div class="connectionClosed internal" data-count="'+opts.noResponseCount+'">You are either experiencing lag or the connection has closed.</div>');
                     }
                 } else {
-                    opts.pongTime = 0; //reset
                     if (opts.noResponse) { //Previous ping attempt failed ohno
                         $('.connectionClosed[data-count="'+opts.noResponseCount+'"]:not(.restored)').addClass('restored').text('Your connection has been restored (probably)!');
                         opts.noResponse = false;

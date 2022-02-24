@@ -4,6 +4,8 @@
 /// Arguments given here are packaged in a list and given to _SendSignal
 #define SEND_SIGNAL(target, sigtype, arguments...) ( !target?.comp_lookup || !target.comp_lookup[sigtype] ? 0 : target._SendSignal(sigtype, list(target, ##arguments)) )
 
+#define SEND_COMPLEX_SIGNAL(target, sigtype, arguments...) SEND_SIGNAL(target, sigtype[2], ##arguments)
+
 #define GLOBAL_SIGNAL preMapLoad // guaranteed to exist and that's all that matters
 
 /**
@@ -19,6 +21,9 @@
 
 /// A wrapper for _LoadComponent that allows us to pretend we're using normal named arguments
 #define LoadComponent(arguments...) _LoadComponent(list(##arguments))
+
+/// Checks if a signal is "complex", i.e. it is handled by adding a special component and registering may have side effects and overhead
+#define IS_COMPLEX_SIGNAL(x) (length(x) == 2 && ispath(x[1], /datum/component/complexsignal))
 
 /**
 	* Return this from `/datum/component/Initialize` or `datum/component/OnTransfer` to have the component be deleted if it's applied to an incorrect type.
@@ -84,6 +89,11 @@
 #define COMSIG_ATOM_POST_UPDATE_ICON "atom_after_update_icon"
 /// When reagents change
 #define COMSIG_ATOM_REAGENT_CHANGE "atm_reag"
+/// When an atom is dragged onto something (usr, over_object, src_location, over_location, over_control, params)
+#define COMSIG_ATOM_MOUSEDROP "atom_mousedrop"
+/// When something is dragged onto an atom (object, usr)
+#define COMSIG_ATOM_MOUSEDROP_T "atom_mousedrop_t"
+
 // ---- atom/movable signals ----
 
 /// when an AM moves (thing, previous_loc, direction)
@@ -96,6 +106,10 @@
 #define COMSIG_MOVABLE_RECEIVE_PACKET "mov_receive_packet"
 /// send this signal to send a radio packet (datum/signal/signal, receive_param / range, frequency), if frequency is null all registered frequencies are used
 #define COMSIG_MOVABLE_POST_RADIO_PACKET "mov_post_radio_packet"
+/// when the outermost movable in the .loc chain changes (thing, old_outermost_movable, new_outermost_movable)
+#define XSIG_OUTERMOST_MOVABLE_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_outermost_changed")
+/// when the z-level of a movable changes (works in nested contents) (thing, old_z_level, new_z_level)
+#define XSIG_MOVABLE_Z_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_z-level_changed")
 
 // ---- item signals ----
 
@@ -316,4 +330,23 @@
 /// area's active var set to false (when all clients leave)
 #define COMSIG_AREA_DEACTIVATED "area_deactivated"
 
+// /datum/mind signals
+/// when a mind attaches to a mob (mind, mob)
+#define COMSIG_MIND_ATTACH_TO_MOB "mind_attach_to_mob"
+/// when a mind detaches from a mob (mind, mob)
+#define COMSIG_MIND_DETACH_FROM_MOB "mind_detach_from_mob"
+
+
 #define COMSIG_SUSSY_PHRASE "sussy"
+
+// ---- Transfer system ----
+/// When a movable is requested to be transfered to the output target (/atom/movable/)
+#define COMSIG_TRANSFER_INCOMING "incoming_tx"
+/// When the target wants to send a movable to an output (/atom/movable/)
+#define COMSIG_TRANSFER_OUTGOING "outgoing_tx"
+/// Return whether the target should allow receiving items from the given atom (/atom)
+#define COMSIG_TRANSFER_CAN_LINK "permit_tx"
+
+// ---- ability signals ----
+/// Send item to a mob
+#define COMSIG_SEND_TO_MOB "send_to_mob"

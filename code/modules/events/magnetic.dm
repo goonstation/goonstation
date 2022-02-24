@@ -36,7 +36,7 @@
 			negative_mobs += H
 			eligible_mobs -= H
 
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			var/duration = rand(2 MINUTES, 3 MINUTES)
 			for (var/mob/living/carbon/human/H in positive_mobs)
 				H.changeStatus("magnetized", duration, "magnets_pos")

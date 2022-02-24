@@ -23,7 +23,7 @@
 /proc/start_hallucinating(var/mob/M)
 	for(var/turf/T in world)
 		if(prob(4) && istype(T))
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				explosion(src, T, 3, 1)
 */
 

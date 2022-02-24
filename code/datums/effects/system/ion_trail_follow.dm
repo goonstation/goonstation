@@ -28,7 +28,7 @@
 					I.pixel_x = xoffset
 					I.pixel_y = yoffset
 					I.set_dir(direction)
-					SPAWN_DBG(2 SECONDS)
+					SPAWN(2 SECONDS)
 						if (I && !I.disposed)
 							var/turf/vis_loc = I.vis_locs[1]
 							vis_loc.vis_contents -= I
