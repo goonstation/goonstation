@@ -1307,28 +1307,28 @@
 			else
 				setProperty("viralprot", 40)
 
-			if(src.material.hasProperty("density")) // for RANGED
-				var/prot = round(src.material.getProperty("density") / 13)
+			if(src.material.hasProperty("density"))
+				var/prot = round(src.material.getProperty("density") / 13)// for RANGED
 				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
-			else
-				setProperty("rangedprot", 0.4)
 
-			if(reinf.hasProperty("hard")) // for MELEE
-				var/prot = round(reinf.getProperty("hard") / 13)
-				if(prot < 3)// most metals are very soft, so for balance's sake it'll be (usually) at least that of normal suits
+				var/prot = round(reinf.getProperty("dense") / 13)// for MELEE
+				if(prot < 3)
 					setProperty("meleeprot", 3)
 				if(prot > 6 )
-					setProperty("meleeprot", 6) // that having been said, we don't want anything more powerful than security's armor
+					setProperty("meleeprot", 6)
 				setProperty("meleeprot", prot)
-			else
-				setProperty("meleeprot", 2)
 
-			if(reinf.hasProperty("density"))
-				var/clunk = reinf.getProperty("density")
+				var/clunk = reinf.getProperty("density") // for MOVEMENT SPEED
 				if (clunk <= 15) // lighter metals = faster
-					setProperty("space_movespeed", 0.4) // since movespeed is already initalized, no need to have an else
+					setProperty("space_movespeed", 0.4) // since movespeed is already initalized, no need to have final conditional
 				else if (clunk >= 40)
 					setProperty("space_movespeed", 0.7) // .1 above normal spacesuits
+
+
+			else
+				setProperty("meleeprot", 2)
+				setProperty("rangedprot", 0.4)
+
 
 	UpdateName()
 		if (src.material && reinf)
