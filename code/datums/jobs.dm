@@ -1105,35 +1105,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Construction Worker")
 		return
 
-
-/datum/job/special/medical_specialist
-	name = "Medical Specialist"
-	linkcolor = "#9900FF"
-	limit = 1
-	wages = PAY_IMPORTANT
-	slot_card = /obj/item/card/id/command
-	slot_belt = list(/obj/item/device/pda2/medical_director)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_back = list(/obj/item/storage/backpack/medic)
-	slot_jump = list(/obj/item/clothing/under/scrub/maroon)
-	slot_suit = list(/obj/item/clothing/suit/apron/surgeon)
-	slot_head = list(/obj/item/clothing/head/bouffant)
-	slot_ears = list(/obj/item/device/radio/headset/medical)
-	slot_rhan = list(/obj/item/storage/firstaid/docbag)
-	alt_names = list("Neurological Specialist", "Ophthalmic Specialist", "Thoracic Specialist", "Orthopaedic Specialist", "Maxillofacial Specialist",
-	  "Vascular Specialist", "Anaesthesiologist", "Acupuncturist", "Medical Director's Assistant")
-
-	New()
-		..()
-		src.access = get_access("Medical Specialist")
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		M.traitHolder.addTrait("training_medical")
-		M.traitHolder.addTrait("training_partysurgeon")
-
 /datum/job/special/lawyer
 	name = "Lawyer"
 	linkcolor = "#FF0000"
@@ -1431,6 +1402,34 @@ ABSTRACT_TYPE(/datum/job/civilian)
 			limit = 1
 		if (src.alt_names.len)
 			name = pick(src.alt_names)
+
+/datum/job/special/random/medical_specialist
+	name = "Medical Specialist"
+	linkcolor = "#9900FF"
+	limit = 1
+	wages = PAY_IMPORTANT
+	slot_card = /obj/item/card/id/command
+	slot_belt = list(/obj/item/device/pda2/medical_director)
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_back = list(/obj/item/storage/backpack/medic)
+	slot_jump = list(/obj/item/clothing/under/scrub/maroon)
+	slot_suit = list(/obj/item/clothing/suit/apron/surgeon)
+	slot_head = list(/obj/item/clothing/head/bouffant)
+	slot_ears = list(/obj/item/device/radio/headset/medical)
+	slot_rhan = list(/obj/item/storage/firstaid/docbag)
+	alt_names = list("Neurological Specialist", "Ophthalmic Specialist", "Thoracic Specialist", "Orthopaedic Specialist", "Maxillofacial Specialist",
+	  "Vascular Specialist", "Anaesthesiologist", "Acupuncturist", "Medical Director's Assistant")
+
+	New()
+		..()
+		src.access = get_access("Medical Specialist")
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_medical")
+		M.traitHolder.addTrait("training_partysurgeon")
 
 /datum/job/special/random/vip
 	name = "VIP"
