@@ -83,6 +83,10 @@
 	name = "emergency auto-injector (epinephrine)"
 	initial_reagents = "epinephrine"
 
+/obj/item/reagent_containers/emergency_injector/ephedrine
+	name = "emergency auto-injector (ephedrine)"
+	initial_reagents = "ephedrine"
+
 /obj/item/reagent_containers/emergency_injector/atropine
 	name = "emergency auto-injector (atropine)"
 	initial_reagents = "atropine"
@@ -147,6 +151,11 @@
 	name = "emergency auto-injector (mannitol)"
 	initial_reagents = "mannitol"
 	label = "red"
+
+/obj/item/reagent_containers/emergency_injector/menthol
+	name = "emergency auto-injector (menthol)"
+	initial_reagents = "menthol"
+	label = "green"
 
 /obj/item/reagent_containers/emergency_injector/mutadone
 	name = "emergency auto-injector (mutadone)"
