@@ -156,6 +156,7 @@ proc/save_intraround_jars()
 
 		var/zname = global.zlevels[jar_turf.z].name
 		jar_data_by_z[zname] += list(list(jar_turf.x, jar_turf.y, jar_contents))
+		logTheThing("debug", null, null, "<b>Pickle Jar:</b> Jar saved at [log_loc(jar)] ([zname]) containing [json_encode(jar_contents)]")
 
 	for(var/zname in jar_data_by_z)
 		var/list/jars_here = jar_data_by_z[zname]
@@ -220,7 +221,7 @@ proc/load_intraround_jars()
 				if(istype(pickled))
 					pickled.pickle_age++
 			jar.reagents.add_reagent("juice_pickle", 75)
-			logTheThing("debug", null, null, "<b>Pickle Jar:</b> Jar created at [log_loc(jar)] containing [json_encode(jar_contents)]")
+			logTheThing("debug", null, null, "<b>Pickle Jar:</b> Jar created at [log_loc(jar)] ([zname]) containing [json_encode(jar_contents)]")
 			var/area/AR = get_area(jar)
 			if(in_centcom(jar) || !istype(AR, /area/station) && !istype(AR, /area/diner) && prob(10))
 				SPAWN(randfloat(5 MINUTES, 30 MINUTES))
