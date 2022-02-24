@@ -115,7 +115,7 @@
 				var/mob/M = src.loc
 				M.set_clothing_icon_dirty()
 			if(src?.reagents)
-				puffrate = src.reagents.total_volume / numpuffs //40 active cycles (200 total, about 10 minutes)
+				puffrate = src.reagents.total_volume / numpuffs //default 20 active cycles (100 total, about 5 minutes)
 			processing_items |= src
 
 			hit_type = DAMAGE_BURN
