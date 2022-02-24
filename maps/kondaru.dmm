@@ -39965,6 +39965,7 @@
 /area/station/crew_quarters/md)
 "dfb" = (
 /obj/landmark/gps_waypoint,
+/obj/machinery/navbeacon/mule/ranch_north/east,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "dfl" = (
@@ -51818,7 +51819,8 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/turf/simulated/floor/blue/checker,
+/obj/machinery/navbeacon/mule/pool_north/south,
+/turf/simulated/floor/bot/white,
 /area/station/crew_quarters/pool)
 "pfT" = (
 /obj/machinery/chem_dispenser/chef{
@@ -54998,7 +55000,7 @@
 /area/station/routing/security)
 "ssd" = (
 /obj/machinery/light_switch/east,
-/turf/simulated/floor/blue/checker,
+/turf/simulated/floor/delivery/white,
 /area/station/crew_quarters/pool)
 "ssQ" = (
 /obj/cable{
@@ -60489,6 +60491,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"xGt" = (
+/obj/machinery/navbeacon/mule/news_office/west,
+/turf/simulated/floor/carpet/red/standard/edge/south,
+/area/station/crew_quarters/radio/news_office)
 "xGH" = (
 /obj/table/auto,
 /obj/item/storage/belt/utility,
@@ -99430,7 +99436,7 @@ aDM
 aqx
 aru
 asA
-atO
+xGt
 auG
 avD
 awM
