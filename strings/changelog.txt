@@ -1,6 +1,8 @@
 
 (t)wed feb 23 22
 (u)aloe
+(*)The Head Surgeon got too fucked up and is, once again, fired. They've been replaced with a medical specialist- NT doesn't really understand what they do, but it sure sounds important. (Realistically they're just the HS but without command radio/access. Also they can get revved.)
+(u)aloe
 (+)You no longer need to remove all of a cyborg's limbs to take off their chest or head. Do note that they'll fall apart if you remove either of these.
 (t)tue feb 22 22
 (u)Amylizzle
