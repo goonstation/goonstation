@@ -78,6 +78,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		return
 
 	mouse_drop(atom/over_object as obj)
+		if (isintangible(usr))
+			return
 		if (!can_mousedrop)
 			boutput(usr, "<span class='alert'>Nope.</span>")
 			return

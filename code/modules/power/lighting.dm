@@ -789,6 +789,8 @@
 		if (prot > 0 || user.is_heat_resistant())
 			boutput(user, "You remove the light [fitting].")
 		else
+			if(ON_COOLDOWN(src, "burn_hands", 1 SECOND))
+				return
 			boutput(user, "You try to remove the light [fitting], but you burn your hand on it!")
 			H.UpdateDamageIcon()
 			H.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 5)

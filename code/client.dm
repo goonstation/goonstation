@@ -658,14 +658,63 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
 		src.color = "#AAAAAA"
 
+	if (!src.chatOutput.loaded)
+		//Load custom chat
+		src.chatOutput.start()
+
+	src.setup_special_screens()
+
+	logTheThing("diary", null, src.mob, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
+
+	if (config.log_access)
+		src.ip_cid_conflict_check()
+
+	if(src.holder)
+		// when an admin logs in check all clients again per Mordent's request
+		for(var/client/C)
+			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE)
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
 	login_success = 1
-/*
-/client/proc/write_gauntlet_matches()
-	return
-*/
+
+/client/proc/ip_cid_conflict_check(log_it=TRUE, alert_them=TRUE)
+	var/static/list/list/ip_to_ckeys = list()
+	var/static/list/list/cid_to_ckeys = list()
+
+	for(var/what in list("IP", "CID"))
+		var/list/list_to_check = list("IP"=ip_to_ckeys, "CID"=cid_to_ckeys)[what]
+		var/our_value = what == "IP" ? src.address : src.computer_id
+		if(!(our_value in list_to_check))
+			list_to_check[our_value] = list(src.ckey)
+		else
+			list_to_check[our_value] |= list(src.ckey)
+		if(length(list_to_check[our_value]) > 1)
+			var/list/offenders_log = list()
+			var/list/offenders_message = list()
+			for(var/found_ckey in list_to_check[our_value])
+				var/datum/player/player = find_player(found_ckey)
+				if(player?.client?.mob)
+					offenders_log += constructTarget(player.client.mob, "admin")
+					offenders_message += key_name(player.client.mob)
+				else
+					offenders_log += found_ckey
+					offenders_message += found_ckey
+			if(log_it)
+				logTheThing("admin", src.mob, null, "The following have the same [what]: [jointext(offenders_log, ", ")]")
+				logTheThing("diary", src.mob, null, "The following have the same [what]: [jointext(offenders_log, ", ")]", "access")
+			if(global.IP_alerts)
+				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>The following have the same [what]: [jointext(offenders_message, ", ")]</span>")
+
+	if(alert_them)
+		var/list/both_collide = ip_to_ckeys[src.address] & cid_to_ckeys[src.computer_id]
+		if(length(both_collide) > 1)
+			for(var/found_ckey in both_collide)
+				var/datum/player/player = find_player(found_ckey)
+				if(player?.client?.mob)
+					SPAWN(0)
+						alert(player.client.mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
+
 
 /client/proc/init_admin()
 	if(!address || (world.address == src.address))
