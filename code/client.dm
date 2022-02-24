@@ -598,7 +598,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	if(src.holder)
 		// when an admin logs in check all clients again per Mordent's request
 		for(var/client/C)
-			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE, only_of_first=TRUE, message_who=src)
+			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE, only_if_first=TRUE, message_who=src)
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
