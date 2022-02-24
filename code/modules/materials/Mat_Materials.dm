@@ -272,7 +272,7 @@
 	quality = 5
 
 	New()
-		setProperty("electrical", 80)
+		setProperty("electrical", 85)
 		setProperty("density", 35)
 		setProperty("hard", 5)
 		return ..()
@@ -387,7 +387,7 @@
 		setProperty("density", 45)
 		setProperty("hard", 2)
 		setProperty("reflective", 55)
-		setProperty("electrical", 60)
+		setProperty("electrical", 68)
 
 		addTrigger(triggersOnAdd, new /datum/materialProc/gold_add())
 		return ..()
@@ -502,9 +502,7 @@
 	New()
 		setProperty("density", 40)
 		setProperty("hard", 40)
-		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
-		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
-		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
+	
 		return ..()
 
 
@@ -517,9 +515,6 @@
 	New()
 		setProperty("density", 40)
 		setProperty("hard", 40)
-		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
-		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
-		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
 		return ..()
 
 /datum/material/crystal/molitz
