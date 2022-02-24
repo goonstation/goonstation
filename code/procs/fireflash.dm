@@ -228,7 +228,7 @@ this should mean that now itll update the fireflashes when someone opens a door,
 		origin.active_hotspot = origin_hotspot
 		origin.hotspot_expose(origin_hotspot.temperature, origin_hotspot.volume)
 
-		SPAWN_DBG(3 SECONDS) // remove after 3 second delay
+		SPAWN(3 SECONDS) // remove after 3 second delay
 			qdel(origin_hotspot)
 
 		for (var/atom/A in origin)
@@ -298,7 +298,7 @@ this should mean that now itll update the fireflashes when someone opens a door,
 							candidate_tile.hotspot_expose(new_hotspot.temperature, new_hotspot.volume)
 							found_neighbors.Add(candidate_tile) // add it to the found neighbors list
 
-							SPAWN_DBG(3 SECONDS) // remove after 3 second delay
+							SPAWN(3 SECONDS) // remove after 3 second delay
 								qdel(new_hotspot)
 
 							for (var/atom/affected in candidate_tile)
