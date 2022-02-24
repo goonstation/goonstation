@@ -1076,13 +1076,12 @@
 			hardness = 10
 /turf/simulated/wall/auto/asteroid // perspective asteroids made from sprites found in the files. i put this here to try to get it working more easily
 	icon = 'icons/turf/walls_asteroid.dmi'
-	icon_state = "asteroid-0"
 	mod = "asteroid-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 0
 	connect_diagonal = 1
-	connects_to = list(/turf/simulated/wall/auto/asteroid, /turf/simulated/wall/false_wall)
+	connects_to = list(/turf/simulated/wall/auto/asteroid, /turf/simulated/wall/false_wall, /obj/structure/woodwall)
 #ifdef UNDERWATER_MAP
 	name = "cavern wall"
 	desc = "A cavern wall, possibly flowing with mineral deposits."

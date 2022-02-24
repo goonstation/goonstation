@@ -24063,6 +24063,16 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
+"gTS" = (
+/obj/structure/woodwall{
+	color = "#CCCCCC";
+	dir = 1;
+	icon = 'icons/turf/fake_woodwall.dmi';
+	name = "odd asteroid wall";
+	plane = -105
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "hme" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -102121,7 +102131,7 @@ abg
 abg
 abg
 abg
-aYw
+gTS
 abg
 abg
 abg
