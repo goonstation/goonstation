@@ -519,7 +519,6 @@
 		..()
 		src.reagents.maximum_volume = 600
 		src.reagents.clear_reagents()
-		numpuffs = 20
 
 	is_open_container()
 		return 1
