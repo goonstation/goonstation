@@ -138,8 +138,8 @@
 	proc/update_statics()	//update seperate from move(). Mostly same code.
 		return
 
-	set_loc(var/newloc as turf|mob|obj in world)
-		if (isturf(newloc) && newloc:z != 1) // Sorry!
+	set_loc(atom/newloc)
+		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION) // Sorry!
 			src.return_mainframe()
 		else
 			last_loc = src.loc

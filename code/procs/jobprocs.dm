@@ -499,7 +499,7 @@
 		if (src.traitHolder && src.traitHolder.hasTrait("sleepy"))
 			var/list/valid_beds = list()
 			for_by_tcl(bed, /obj/stool/bed)
-				if (bed.z == Z_LEVEL_STATION && istype(get_area(bed, /area/station)) //believe it or not there are station areas on nonstation z levels
+				if (bed.z == Z_LEVEL_STATION && istype(get_area(bed, /area/station))) //believe it or not there are station areas on nonstation z levels
 					if (!locate(/mob/living/carbon/human) in get_turf(bed)) //this is slow but it's Probably worth it
 						valid_beds += bed
 

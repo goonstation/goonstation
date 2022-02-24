@@ -114,7 +114,7 @@
 		..()
 
 	set_loc(atom/newloc)
-		if (isturf(newloc) && newloc.z != 1 && !tutorial)
+		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION && !tutorial)
 			return
 		..()
 
