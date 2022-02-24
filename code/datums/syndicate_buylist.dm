@@ -511,7 +511,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/bible/mini
 	cost = 1
 	desc = "We understand it can be difficult to carry out some of our missions. Here is some spiritual counsel in a small package."
-	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant", "Chaplain", "Clown")
+	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant", "Chaplain", "Clown","Tourist")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 	vr_allowed = 0
 
@@ -520,7 +520,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/briefcase/satan
 	cost = 8
 	desc = "Comes complete with three soul binding contracts, three extra-pointy pens, and one suit provided by Lucifer himself."
-	job = list("Chaplain")
+	job = list("Chaplain","Lawyer")
 	not_in_crates = 1
 	vr_allowed = 0
 	blockedmode = list(/datum/game_mode/spy_theft, /datum/game_mode/revolution)
@@ -554,7 +554,7 @@ This is basically useless for anyone but miners.
 	cost = 4
 	desc = "Syndikudzu. Interesting. Plant on the floor to grow."
 	vr_allowed = 0
-	job = list("Botanist", "Staff Assistant")
+	job = list("Botanist", "Staff Assistant","Tourist")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/maneater
@@ -682,7 +682,7 @@ This is basically useless for anyone but miners.
 	cost = 3
 	vr_allowed = 0
 	desc = "A stealthy claw gun capable of stealing and planting items, and severely messing with people."
-	job = list("Engineer", "Chief Engineer", "Mechanic", "Clown", "Staff Assistant")
+	job = list("Engineer", "Chief Engineer", "Mechanic", "Clown", "Staff Assistant","Tourist")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/poisonbottle
@@ -816,7 +816,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/gun/energy/vuvuzela_gun
 	cost = 3
 	desc = "<b>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</b>"
-	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant", "Clown")
+	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant", "Clown","Tourist")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/moustache_grenade
@@ -824,7 +824,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/old_grenade/moustache
 	cost = 1
 	desc = "A disturbingly hairy grenade."
-	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant", "Clown")
+	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant", "Clown","Tourist")
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/hotdog_bomb
@@ -865,7 +865,7 @@ This is basically useless for anyone but miners.
 	cost = 3
 	vr_allowed = 0
 	desc = "A modified cargo transporter which teleports containers to a random spot in space and welds them shut."
-	job = list("Quartermaster","Miner","Engineer")
+	job = list("Quartermaster","Miner","Engineer","Mailman")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/telegun
@@ -1161,7 +1161,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/box/lawndart_kit
 	cost = 0 // 20 brute damage, 10 bleed throwing weapon. Embed is nice but rad poison bow is stealthier and more effective
 	desc = "Three deadly throwing darts that embed themselves into your target."
-	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant","Bartender","Clown")
+	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant","Bartender","Clown","Tourist")
 	blockedmode = list(/datum/game_mode/revolution)
 
 // round specific
