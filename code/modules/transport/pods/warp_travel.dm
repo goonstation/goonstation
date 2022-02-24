@@ -135,7 +135,7 @@
 		return
 	if (M.anchored && (!istype(M,/obj/machinery/vehicle)))
 		return
-	if (istype(M, /mob/dead/aieye))
+	if (isAIeye(M))
 		return
 	if (!( src.target ))
 		animate(src, time=0.2 SECONDS, transform=matrix(1.25, 0, 0, 0, 1.25, 0), alpha=100, easing=SINE_EASING)

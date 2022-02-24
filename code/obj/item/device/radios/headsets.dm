@@ -222,19 +222,6 @@
 	icon_override = "md"
 	icon_tooltip = "Medical Director"
 
-/obj/item/device/radio/headset/command/hs
-	name = "Head Surgeon's Headset"
-	secure_frequencies = list(
-		"h" = R_FREQ_COMMAND,
-		"m" = R_FREQ_MEDICAL,
-	)
-	secure_classes = list(
-		"h" = RADIOCL_COMMAND,
-		"m" = RADIOCL_MEDICAL,
-	)
-	icon_override = "hs"
-	icon_tooltip = "Head Surgeon"
-
 /obj/item/device/radio/headset/command/ce
 	name = "Chief Engineer's Headset"
 	secure_frequencies = list(

@@ -104,13 +104,18 @@
 					update_cooldown_costs()
 				sleep(1 SECOND)
 
-	Move(NewLoc)
+	Move(atom/NewLoc)
 		if (tutorial)
 			if (!tutorial.PerformAction("move", NewLoc))
 				return 0
 		if (isturf(NewLoc))
 			if (istype(NewLoc, /turf/unsimulated/wall))
 				return 0
+		..()
+
+	set_loc(atom/newloc)
+		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION && !tutorial)
+			return
 		..()
 
 	Life(datum/controller/process/mobs/parent)
@@ -255,7 +260,7 @@
 			if (plane)
 				plane.alpha = 255
 
-	MouseDrop()
+	mouse_drop()
 		return
 
 	MouseDrop_T()
@@ -301,15 +306,7 @@
 					if (src.tutorial)
 						if (!tutorial.PerformAction("clickmove", T))
 							return
-					src.set_loc(T)
-					return
-
-				if (T && isghostrestrictedz(T.z) && !restricted_z_allowed(src, T) && !(src.client && src.client.holder))
-					var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-					if (OS)
-						src.set_loc(OS)
-					else
-						src.z = 1
+					src.Move(T)
 
 	say_understands() return 1
 	can_use_hands()	return 0
@@ -567,8 +564,7 @@
 				lipids -= Q
 		return bio_points + lipids.len * 4 >= amt
 
-	projCanHit(datum/projectile/P)
-		return 0
+
 
 	proc/setHat( var/obj/item/clothing/head/hat )
 		hat.pixel_y = 10

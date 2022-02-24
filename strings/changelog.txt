@@ -1,5 +1,74 @@
 
+(t)wed feb 23 22
+(u)aloe
+(*)The Head Surgeon got too fucked up and is, once again, fired. They've been replaced with a medical specialist- NT doesn't really understand what they do, but it sure sounds important. (Realistically they're just the HS but without command radio/access. Also they can get revved.)
+(u)aloe
+(+)You no longer need to remove all of a cyborg's limbs to take off their chest or head. Do note that they'll fall apart if you remove either of these.
+(t)tue feb 22 22
+(u)Amylizzle
+(p)7583
+(e)|
+(*)Enzymatic Reclaimers no longer destroy item arms, the item will now drop.
+(t)mon feb 21 22
+(u)Flappybat
+(p)7574
+(e)|
+(+)Cluwnes have been trained to make a less ear blasting horn sound.
+(u)CodeJester
+(p)7438
+(e)📄|tgui
+(*)The seed fabricator has a new UI, allowing you to find and dispense cannabis seeds easier.
+(u)CodeJester
+(p)7523
+(e)🆕📄|feature, tgui
+(+)Added Isolate button for reagents in the Reagent Extractor.
+(t)sun feb 20 22
+(u)aloe
+(+)you digest 3x as hard
+(u)AmazingDragons
+(p)7437
+(e)🆕|feature
+(*)Added a new morale-boosting problem to the mainframe for control of your favorite guardbuddies!
+(u)Yellow/Myco
+(p)7545
+(e)⚖|balance
+(+)Staff Assistants now spawn with a Civilian Headset, giving them access to the civilian channel
+(u)FlameArrow57
+(p)7413
+(e)🆕|feature
+(*)Security computers now provide a SecHUD flag that can be set for someone. If a person has an active arrest status, the flag will appear in their examine report for anyone wearing SecHUDs.
+(t)sat feb 19 22
+(u)Flappybat
+(p)7373
+(e)🗺|mapping
+(+)Renamed Loyalty implants to Counter-Revolutionary implants to make their purpose clearer.
+(t)fri feb 18 22
+(u)tarmunora
+(+)blob poisoning change:
+(+)mitochondria individually less vulnerable to poison, suck poison out of nearby non-mitochondria/non-lipid tiles, store up to 50 poison in adjacent lipid tiles
+(+)lipids slightly more flammable and no longer have increased poison spread on death
+(t)thu feb 17 22
+(u)aloe
+(*)Genetics computers now require genetics access to operate.
+(u)Danger Noodle
+(p)7471
+(e)🗺|mapping
+(*)A new art themed prefab has been added to space maps.
+(u)Flappybat
+(p)7522
+(e)|
+(+)Tracking beacons start anchored. You can unanchor them with a screwdriver.
+(u)TTerc
+(+)Fish now deal 0 damage. Invite your friends for a fish slap fight!
+(u)pali
+(*)Persistent pickle jars now spawn on the station. You can put things into the jar and leave the jar somewhere and next round the jar will be on the same place (if it's the same map) and contain the things you put there but pickled and edible!
+(t)wed feb 16 22
+(u)TTerc
+(e)🆕|feature
+(+)You can now show off your security badge to people by clicking them with it.
 (t)tue feb 15 22
+(u)Kyle
+(+)One Armed Spaceman trait now costs 0 points.
 (u)Conchuckter
 (p)7511
 (e)🐛|bug

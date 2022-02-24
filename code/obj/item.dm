@@ -630,7 +630,7 @@
 #define src_exists_inside_user_or_user_storage (src.loc == user || (istype(src.loc, /obj/item/storage) && src.loc.loc == user))
 
 
-/obj/item/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+/obj/item/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 	..()
 
 	if (!src.anchored)
@@ -1532,6 +1532,10 @@
 		msg += " Turf contains <b>fluid</b> [log_reagents(T.active_liquid.group)]."
 	if (T.active_airborne_liquid?.group)
 		msg += " Turf contains <b>smoke</b> [log_reagents(T.active_airborne_liquid.group)]."
+	if (locate(/obj/item) in T.contents)
+		var/obj/item/W = locate(/obj/item) in T.contents
+		if (istype(W.material, /datum/material/crystal/plasmastone))
+			msg += " Turf contains <b>plasmastone</b>."
 	logTheThing("bombing", M, null, "[msg]")
 
 /obj/item/proc/dropped(mob/user)

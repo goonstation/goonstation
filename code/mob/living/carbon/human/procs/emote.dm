@@ -537,7 +537,7 @@
 					src.show_text("You are already breathing!")
 					return
 
-				var/datum/lifeprocess/breath/B = lifeprocesses[/datum/lifeprocess/breath]
+				var/datum/lifeprocess/breath/B = lifeprocesses?[/datum/lifeprocess/breath]
 				if (B)
 					if (B.breathstate)
 						src.show_text("You just breathed in, try breathing out next dummy!")
@@ -552,7 +552,7 @@
 					src.show_text("You are already breathing!")
 					return
 
-				var/datum/lifeprocess/breath/B = lifeprocesses[/datum/lifeprocess/breath]
+				var/datum/lifeprocess/breath/B = lifeprocesses?[/datum/lifeprocess/breath]
 				if (B)
 					if (!B.breathstate)
 						src.show_text("You just breathed out, try breathing in next silly!")
@@ -566,7 +566,7 @@
 					src.show_text("Why would you want to do that?")
 					return
 
-				var/datum/lifeprocess/statusupdate/S = lifeprocesses[/datum/lifeprocess/statusupdate]
+				var/datum/lifeprocess/statusupdate/S = lifeprocesses?[/datum/lifeprocess/statusupdate]
 				if (S)
 					if (S.blinkstate)
 						src.show_text("You just closed your eyes, try opening them now dumbo!")
@@ -581,7 +581,7 @@
 					src.show_text("Your eyes are already open!")
 					return
 
-				var/datum/lifeprocess/statusupdate/S = lifeprocesses[/datum/lifeprocess/statusupdate]
+				var/datum/lifeprocess/statusupdate/S = lifeprocesses?[/datum/lifeprocess/statusupdate]
 				if (S)
 					if (!S.blinkstate)
 						src.show_text("Your eyes are already open, try closing them next moron!")
@@ -1259,7 +1259,7 @@
 					message = "<B>[src]</B> wriggles around a bit."
 					maptext_out = "<I>wriggles around a bit</I>"
 
-			if ("slap","bitchslap","smack")
+			if ("slap","smack")
 				m_type = 1
 				if (!src.restrained())
 					if (src.emote_check(voluntary))
@@ -2201,6 +2201,9 @@
 			if (speechpopups && src.chat_text)
 				chat_text = make_chat_maptext(src, maptext_out, "color: #C2BEBE;" + src.speechpopupstyle, alpha = 140)
 				if(chat_text)
+					if(m_type & 1)
+						chat_text.plane = PLANE_NOSHADOW_ABOVE
+						chat_text.layer = 420
 					chat_text.measure(src.client)
 					for(var/image/chat_maptext/I in src.chat_text.lines)
 						if(I != chat_text)

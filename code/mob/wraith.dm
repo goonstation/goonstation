@@ -118,6 +118,8 @@
 				plane.alpha = 255
 
 	disposing()
+		for (var/mob/wraith/poltergeist/P in src.poltergeists)
+			P.master = null
 		poltergeists = null
 		..()
 
@@ -148,7 +150,7 @@
 		src.abilityHolder.updateText()
 
 		if (src.health < 1)
-			src.death(0)
+			src.death(FALSE)
 			return
 		else if (src.health < src.max_health)
 			HealDamage("chest", 1 * (life_time_passed / life_tick_spacing), 0)
@@ -276,7 +278,7 @@
 		health -= brute * 3
 		health = min(max_health, health)
 		if (src.health <= 0)
-			src.death(0)
+			src.death(FALSE)
 		health_update_queue |= src
 
 	HealDamage(zone, brute, burn)

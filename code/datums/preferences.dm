@@ -234,7 +234,7 @@ datum/preferences
 					sound_file = sound(src.AH.screamsounds[src.AH.screamsound])
 
 				if (params["chatsound"])
-					sound_file = sounds_speak[AH.voicetype]
+					sound_file = sounds_speak["[AH.voicetype]"]
 
 				if (sound_file)
 					preview_sound(sound_file)

@@ -21,7 +21,7 @@
 /obj/item/bell/attack_self(mob/user as mob)
 	src.attack_hand(user)
 
-/obj/item/bell/MouseDrop(mob/user as mob) // copy paste
+/obj/item/bell/mouse_drop(mob/user as mob) // copy paste
 	if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
 		if (!user.put_in_hand(src))
 			return ..()

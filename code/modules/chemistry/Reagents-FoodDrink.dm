@@ -972,15 +972,15 @@ datum
 			taste = "fruity"
 
 		fooddrink/alcoholic/beach
-			name = "Sex on the Beach"
+			name = "Bliss on the Beach"
 			id = "beach"
 			fluid_r = 227
 			fluid_g = 121
 			fluid_b = 98
 			alch_strength = 0.1
-			description = "Fun fact: the name of this cocktail was deemed a war crime in 2025."
+			description = "Fun fact: the previous name of this cocktail was deemed a war crime in 2025."
 			reagent_state = LIQUID
-			taste = "sexy"
+			taste = "blissfully"
 
 		fooddrink/alcoholic/gtonic
 			name = "Gin and Tonic"

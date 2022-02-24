@@ -495,7 +495,7 @@ proc/find_ghost_by_key(var/find_key)
 		..()
 		eject_occupant(user)
 
-	MouseDrop(mob/user as mob)
+	mouse_drop(mob/user as mob)
 		if (istype(user) && can_operate(user))
 			eject_occupant(user)
 		else
@@ -618,7 +618,7 @@ proc/find_ghost_by_key(var/find_key)
 	proc/do_mince()
 		if (process_timer-- < 1)
 			active_process = PROCESS_IDLE
-			src.occupant.death(1)
+			src.occupant.death(TRUE)
 			src.occupant.ghostize()
 			qdel(src.occupant)
 			DEBUG_MESSAGE("[src].reagents.total_volume on completion of cycle: [src.reagents.total_volume]")

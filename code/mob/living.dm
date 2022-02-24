@@ -171,7 +171,7 @@
 	stomach_process = null
 	skin_process = null
 
-	for(var/mob/dead/aieye/E in src.contents)
+	for(var/mob/living/intangible/aieye/E in src.contents)
 		E.cancel_camera()
 
 	if (src.static_image)
@@ -665,7 +665,7 @@
 /mob/living/silicon/ai/capitalize_speech()
 	if (!client)
 		if (src?.eyecam?.client?.preferences)
-			return src.eyecam.client.preferences
+			return src.eyecam.client.preferences.auto_capitalization
 	. = ..()
 
 /mob/living/say(var/message, ignore_stamina_winded)

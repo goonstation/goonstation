@@ -64,6 +64,16 @@
 			air_contents = null
 		..()
 
+	was_deconstructed_to_frame(mob/user)
+		if (trunk)
+			trunk.linked = null
+		else
+			trunk = locate() in src.loc //idk maybe this can happens
+			if (trunk)
+				trunk.linked = null
+		trunk = null
+		return ..()
+
 	onDestroy()
 		if (src.powered())
 			elecflash(src, power = 2)

@@ -1881,7 +1881,7 @@ Returns:
 		return words
 
 	Click(location,control,params)
-		if(isobserver(usr) || iswraith(usr))
+		if(isobserver(usr) || iswraith(usr) || isAIeye(usr)) //explicitly added AIeye because AIeye is no longer dead and AI's are ghosts trapped in metal boxes.
 			if(isAIeye(usr))
 				boutput(usr, "<span class='notice'>Whoa, you can use this as an AI? Are you actually just a ghost trapped in a metal box??</span>")
 
@@ -2261,7 +2261,7 @@ Returns:
 		P.procCooldown = src.procCooldown
 		return
 
-	MouseDrop(over_object,src_location,over_location,src_control,over_control,params)
+	mouse_drop(over_object,src_location,over_location,src_control,over_control,params)
 		var/turf/trgTurf = get_turf(over_object)
 		if(istype(trgTurf))
 			switch(alert("Do you want to create a copy of the trigger on this tile?",,"Yes","No"))
@@ -2445,7 +2445,7 @@ Returns:
 
 /obj/fireworksbox
 	name = "Box of Fireworks"
-	desc = "The Label simply reads : \"Firwerks fun is having total family. Made in Spacechina\""
+	desc = "The Label simply reads : \"Firwerks fun is having total family.\""
 	density = 0
 	anchored = 0
 	opacity = 0
@@ -3014,9 +3014,9 @@ Returns:
 			P.setTarget(target)
 			var/targetThing = isturf(target) ? "" : "[target] in "
 			targetThing += "[get_area(target)]"
-			logTheThing("admin", usr, null, "created a portal at [showCoords(selected.x, selected.y, selected.z)] ([get_area(selected)]) pointing to [showCoords(target.x, target.y, target.z)] ([targetThing])")
+			logTheThing("admin", usr, null, "created a portal at [log_loc(selected)] ([get_area(selected)]) pointing to [log_loc(target)] ([targetThing])")
 			logTheThing("diary", usr, null, "created a portal at [selected.x], [selected.y], [selected.z] ([get_area(selected)]) pointing to [target.x], [target.y], [target.z] ([targetThing])", "admin")
-			message_admins("[key_name(usr)] created a portal at [showCoords(selected.x, selected.y, selected.z)] ([get_area(selected)]) pointing to [showCoords(target.x, target.y, target.z)] ([targetThing])")
+			message_admins("[key_name(usr)] created a portal at [log_loc(selected)] ([get_area(selected)]) pointing to [log_loc(target)] ([targetThing])")
 		else if (alert == "No")
 			var/mob/M = usr
 			if (istype(M))
@@ -3061,7 +3061,7 @@ Returns:
 	set name = "Create Portal"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	var/mob/M = src.mob
 	if (istype(M))

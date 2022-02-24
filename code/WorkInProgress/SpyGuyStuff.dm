@@ -590,7 +590,7 @@ proc/Create_Tommyname()
 	var/paneldir2 = turn(extension_dir, -90)
 	var/list/turf/panelturfs = list()
 	var/turf/walker = get_turf(src)
-	DEBUG_MESSAGE("Extending panel at [showCoords(src.x, src.y, src.z)]. extension_dir: [extension_dir] ([dir2text(extension_dir)]), paneldir1: [paneldir1] ([dir2text(paneldir1)]), paneldir2: [paneldir2] ([dir2text(paneldir2)])")
+	DEBUG_MESSAGE("Extending panel at [log_loc(src)]. extension_dir: [extension_dir] ([dir2text(extension_dir)]), paneldir1: [paneldir1] ([dir2text(paneldir1)]), paneldir2: [paneldir2] ([dir2text(paneldir2)])")
 	var/total_len = station_padding + controller_padding + (panel_space * (num_panels -1)) + num_panels * panel_width
 	DEBUG_MESSAGE("Determined total length of panel to be [total_len] tiles.")
 
@@ -771,7 +771,7 @@ proc/Create_Tommyname()
 	playsound(T, "sound/effects/airbridge_dpl.ogg", 50, 1)
 	sleep(animtime)
 	if(turf_type)
-		DEBUG_MESSAGE("Creating [turf_type] at [showCoords(T.x, T.y, T.z)]")
+		DEBUG_MESSAGE("Creating [turf_type] at [log_loc(T)]")
 		var/turf/NT = new turf_type(T)
 		if(setdir) NT.set_dir(setdir)
 		created_atoms += NT
@@ -791,7 +791,7 @@ proc/Create_Tommyname()
 	else if ( extension_dir & (EAST|WEST) )
 		.= abs(A.y - src.y)
 
-	DEBUG_MESSAGE("get_dist from [showCoords(A.x, A.y, A.z)] returned: [.]")
+	DEBUG_MESSAGE("get_dist from [log_loc(A)] returned: [.]")
 
 
 //The dummy object that imitates a turf
@@ -1092,7 +1092,7 @@ proc/Create_Tommyname()
 			ircmsg["key"] =  M.key
 			ircmsg["name"] = stripTextMacros(M.real_name)
 			ircmsg["msg"] = "[message] and got themselves got by the anti-cheat cluwne."
-			ircbot.export("admin", ircmsg)
+			ircbot.export_async("admin", ircmsg)
 
 		M.cluwnegib(15, 1)
 

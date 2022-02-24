@@ -1180,7 +1180,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 					else
 						src.visible_message("<span class='alert'><B>[src] devours [H] whole!</B></span>")
 						playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
-						H.death(1)
+						H.death(TRUE)
 						H.ghostize()
 						qdel(H)
 						qdel(G)

@@ -382,7 +382,7 @@
 		else
 			return ..()
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		..()
 		if (usr?.is_in_hands(src))
 			if (!src.open)

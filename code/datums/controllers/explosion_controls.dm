@@ -172,7 +172,7 @@ var/datum/explosion_controller/explosions
 				var/mob/M = null
 				if(ismob(user))
 					M = user
-				if(power > 10 && (source?.fingerprintslast || M?.client))
+				if(power > 10 && (source?.fingerprintslast || M?.last_ckey) && !istype(A, /area/mining/magnet) && !istype(source, /obj/machinery/vehicle/escape_pod))
 					message_admins(logmsg)
 				if (source?.fingerprintslast)
 					logTheThing("bombing", source.fingerprintslast, null, logmsg)

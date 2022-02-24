@@ -3543,7 +3543,58 @@
 					master.scratchpad["targetname"] = ckey(src.protected_name)
 					src.master.add_task(/datum/computer/file/guardbot_task/security/seek, 1, 0)
 
-			return
+
+		check_buddy()
+			return 0
+
+
+	bodyguard/cheer_up
+		name = "cheer_up"
+		task_id = "CHEER_UP"
+		var/global/list/buddy_cheer_up_phrases = list("A magician was walking down the street, then he turned into a grocery store.","Three guys walked into a bar, you’d think at least one of them would have seen it.","You’re having a heart attack, the dispatcher says that help is going to arrive in a heartbeat.","The past, present and future walked into a bar, things got tense.","I asked my French friend if they like videogames, they said Wii.","RIP boiled water, you will be mist.","A guy’s left side was cut off, don’t worry, he’s all right now.")
+		var/global/list/buddy_cheer_up_starters = list("What did the sea say to another sea?","You shouldn’t wear glasses while playing football. Why?","Why shouldn’t you get close to trees?","Why are there gates in graveyards?","What do you call an illegally parked frog?","Two silk worms compete in a race, who won?","Whaddya call a cow with no legs?","How does a tree get into his account?","I can't help set the speakers at concerts anymore.","What’re caterpillars scared of?","What has four wheels and is green?","What did one lobster say to the other?",)
+		var/global/list/buddy_cheer_up_answers = list("Nothing, they just waved.","Because it’s a contact sport.","Because they’re pretty shady.","Because everyone is dying to get there.","A toad.","None of them, it ended in a tie.","Ground Beef!","It logs in!","Nobody liked my feedback.","Dog-appilers!","Grass! I lied about the wheels.","Nothing, since they can't talk. If they could, though, probably something about shellfish.")
+		var/tmp/initial_seek_complete = 0
+
+		task_act()
+			if (..())
+				return
+
+			if (src.protected && prob(10))
+				if (prob(40))
+					var/buddy_cheer_up_chooser = rand(1, length(buddy_cheer_up_phrases))
+					master.speak(buddy_cheer_up_phrases[buddy_cheer_up_chooser])
+					master.point(src.protected, 1)
+				else
+					var/buddy_cheer_up_chooser = rand(1, length(buddy_cheer_up_starters))
+					master.speak(buddy_cheer_up_starters[buddy_cheer_up_chooser])
+					master.point(src.protected, 1)
+					master.speak(buddy_cheer_up_answers[buddy_cheer_up_chooser])
+
+
+
+		look_for_protected() //Search for a mob in view with the name we are programmed to guard.
+			if(src.protected) return //We have someone to protect!
+			for (var/mob/living/C in view(7,master))
+				if (isdead(C)) //We were too late!
+					continue
+
+				var/check_name = C.name
+				if(ishuman(C) && C:wear_id)
+					check_name = C:wear_id:registered
+
+				if (ckey(check_name) == ckey(src.protected_name))
+					src.protected = C
+					buddy_is_dork = 1
+					master.speak("Level 9F [pick("unhappy person","person in need of cheering-up","coolest person on the station","genius","friend","joke-defiency")] detected!")
+					master.point(C)
+					return
+
+				if (!initial_seek_complete)
+					initial_seek_complete = 1
+					master.scratchpad["targetname"] = ckey(src.protected_name)
+					src.master.add_task(/datum/computer/file/guardbot_task/security/seek, 1, 0)
+
 
 		check_buddy()
 			return 0

@@ -1194,7 +1194,8 @@ TYPEINFO(/datum/mutantrace)
 		if(ruff_tuff_and_ultrabuff && ishuman(M))
 			M.add_stam_mod_max("abomination", 1000)
 			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "abomination", 1000)
-			M.add_stun_resist_mod("abomination", 1000)
+			APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "abomination", 1000)
+			APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "abomination", 1000)
 			APPLY_MOB_PROPERTY(M, PROP_CANTSPRINT, src)
 		last_drain = world.time
 		return ..(M)
@@ -1203,7 +1204,8 @@ TYPEINFO(/datum/mutantrace)
 		if(mob)
 			mob.remove_stam_mod_max("abomination")
 			REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "abomination")
-			mob.remove_stun_resist_mod("abomination")
+			REMOVE_MOB_PROPERTY(mob, PROP_STUN_RESIST, "abomination")
+			REMOVE_MOB_PROPERTY(mob, PROP_STUN_RESIST_MAX, "abomination")
 			REMOVE_MOB_PROPERTY(mob, PROP_CANTSPRINT, src)
 		return ..()
 
@@ -1296,7 +1298,8 @@ TYPEINFO(/datum/mutantrace)
 			mob.mob_flags |= SHOULD_HAVE_A_TAIL
 			mob.add_stam_mod_max("werewolf", 40) // Gave them a significant stamina boost, as they're melee-orientated (Convair880).
 			APPLY_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "werewolf", 9) //mbc : these increase as they feast now. reduced!
-			mob.add_stun_resist_mod("werewolf", 40)
+			APPLY_MOB_PROPERTY(mob, PROP_STUN_RESIST, "werewolf", 40)
+			APPLY_MOB_PROPERTY(mob, PROP_STUN_RESIST_MAX, "werewolf", 40)
 			mob.max_health += 50
 			health_update_queue |= mob
 			src.original_name = mob.real_name
@@ -1315,7 +1318,8 @@ TYPEINFO(/datum/mutantrace)
 			D?.RemoveComponent(/datum/component/consume/can_eat_inedible_organs)
 			mob.remove_stam_mod_max("werewolf")
 			REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "werewolf")
-			mob.remove_stun_resist_mod("werewolf")
+			REMOVE_MOB_PROPERTY(mob, PROP_STUN_RESIST, "werewolf")
+			REMOVE_MOB_PROPERTY(mob, PROP_STUN_RESIST_MAX, "werewolf")
 			mob.max_health -= 50
 			health_update_queue |= mob
 			mob.bioHolder.RemoveEffect("protanopia")

@@ -261,6 +261,9 @@ var/f_color_selector_handler/F_Color_Selector
 			Z_LOG_DEBUG("Preload", "Loading local browserassets...")
 			recursiveFileLoader("browserassets/")
 
+		Z_LOG_DEBUG("Preload", "Z-level datums...")
+		init_zlevel_datums()
+
 		Z_LOG_DEBUG("Preload", "Adding overlays...")
 		var/overlayList = childrentypesof(/datum/overlayComposition)
 		for(var/over in overlayList)
@@ -695,6 +698,8 @@ var/f_color_selector_handler/F_Color_Selector
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
 	global.phrase_log.save()
+	for_by_tcl(P, /datum/player)
+		P.on_round_end()
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
@@ -1776,6 +1781,7 @@ var/f_color_selector_handler/F_Color_Selector
 	return src.maxz
 
 /world/proc/setupZLevel(new_zlevel)
+	global.zlevels += new/datum/zlevel("dyn[new_zlevel]", length(global.zlevels) + 1)
 	init_spatial_map(new_zlevel)
 
 /// EXPERIMENTAL STUFF

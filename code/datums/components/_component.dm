@@ -192,11 +192,13 @@ TYPEINFO(/datum/component)
   *
   * Arguments:
   * * datum/target The target to listen for signals from
-  * * sig_type_or_types Either a string signal name, or a list of signal names (strings)
+  * * sig_type_or_types Either a string signal name, or a list of signal names (strings).
+	* 		Complex signals (of the form list(component_type, string) can also be used.)
   * * proctype The proc to call back when the signal is emitted
   * * override If a previous registration exists you must explicitly set this
+	* * other arguments get passed to complexsignal/register in the case of a complex signal
   */
-/datum/proc/RegisterSignal(datum/target, sig_type_or_types, proctype, override = FALSE)
+/datum/proc/RegisterSignal(datum/target, sig_type_or_types, proctype, override = FALSE, ...)
 	if(QDELETED(src) || QDELETED(target))
 		return
 
@@ -209,8 +211,17 @@ TYPEINFO(/datum/component)
 	if(!lookup)
 		target.comp_lookup = lookup = list()
 
-	var/list/sig_types = islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)
+	var/list/sig_types = (islist(sig_type_or_types) && !IS_COMPLEX_SIGNAL(sig_type_or_types)) ? sig_type_or_types : list(sig_type_or_types)
 	for(var/sig_type in sig_types)
+		if(IS_COMPLEX_SIGNAL(sig_type))
+			var/complexsignal_component_type = sig_type[1]
+			var/datum/component/complexsignal/comp = target.LoadComponent(complexsignal_component_type)
+			var/list/register_args = args.Copy()
+			register_args[2] = sig_type[2] // replacing sig_type_or_types
+			register_args[1] = src // comp.register's first argument is the LISTENER not the target
+			comp.register(arglist(register_args))
+			continue
+
 		if(!override && procs[target][sig_type])
 			stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
 
@@ -245,9 +256,16 @@ TYPEINFO(/datum/component)
 	var/list/lookup = target.comp_lookup
 	if(!signal_procs || !signal_procs[target] || !lookup)
 		return
-	if(!islist(sig_type_or_types))
+	if(!islist(sig_type_or_types) || IS_COMPLEX_SIGNAL(sig_type_or_types))
 		sig_type_or_types = list(sig_type_or_types)
 	for(var/sig in sig_type_or_types)
+		if(IS_COMPLEX_SIGNAL(sig))
+			var/complexsignal_component_type = sig[1]
+			var/datum/component/complexsignal/comp = target.GetComponent(complexsignal_component_type)
+			if(isnull(comp))
+				CRASH("Unregistering a complex signal [json_encode(sig)] without its component existing.")
+			comp.unregister(src, sig[2])
+			continue
 		if(!signal_procs[target][sig])
 			if(!istext(sig))
 				stack_trace("We're unregistering with something that isn't a valid signal \[[sig]\], you fucked up")

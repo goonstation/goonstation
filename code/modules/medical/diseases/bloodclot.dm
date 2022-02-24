@@ -23,7 +23,7 @@
 		REMOVE_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "bloodclot")
 		C.remove_stam_mod_max("bloodclot")
 
-/datum/ailment/disease/bloodclot/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/disease/bloodclot/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (D?.state == "Asymptomatic")
 		if (prob(1) && (prob(1) || affected_mob.find_ailment_by_type(/datum/ailment/disease/heartdisease) || affected_mob.reagents && affected_mob.reagents.has_reagent("proconvertin"))) // very low prob to become...
 			D.state = "Active"

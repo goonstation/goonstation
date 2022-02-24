@@ -310,7 +310,7 @@ datum
 									halluc_name = pick("pig", "DAT FUKKEN PIG")
 								if(2)
 									halluc_state = "spider"
-									halluc_name = pick("giant black widow", "queen bitch spider", "OH FUCK A SPIDER")
+									halluc_name = pick("giant black widow", "aw look a spider", "OH FUCK A SPIDER")
 								if(3)
 									halluc_state = "dragon"
 									halluc_name = pick("dragon", "Lord Cinderbottom", "SOME FUKKEN LIZARD THAT BREATHES FIRE")
@@ -862,7 +862,8 @@ datum
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "triplemeth")
-					M.remove_stun_resist_mod("triplemeth")
+					REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "triplemeth")
+					REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "triplemeth")
 
 				if(hascall(holder.my_atom,"removeOverlayComposition"))
 					holder.my_atom:removeOverlayComposition(/datum/overlayComposition/triplemeth)
@@ -873,7 +874,8 @@ datum
 				if(!M) M = holder.my_atom
 
 				if(holder.has_reagent("methamphetamine")) return ..() //Since is created by a meth overdose, dont react while meth is in their system.
-				M.add_stun_resist_mod("triplemeth", 98)
+				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "triplemeth", 98)
+				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "triplemeth", 98)
 				APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "triplemeth", 1000)
 
 				if(hascall(holder.my_atom,"addOverlayComposition"))
@@ -953,7 +955,8 @@ datum
 					var/mob/M = holder.my_atom
 					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/energydrink, src.type)
 					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "triplemeth")
-					M.remove_stun_resist_mod("triplemeth")
+					REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "triplemeth")
+					REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "triplemeth")
 
 				..()
 

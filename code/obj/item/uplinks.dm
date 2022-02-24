@@ -1064,7 +1064,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 							if(B.item3)
 								new B.item3(get_turf(src))
 							B.run_on_spawn(A, usr)
-							logTheThing("combat", usr, src, "bought a [initial(B.item.name)] from a [src] at [showCoords(usr.x, usr.y, usr.z)].")
+							logTheThing("combat", usr, src, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
 							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B)]-Purchased")
 							if(isnull(loadnum))
 								loadnum = 0

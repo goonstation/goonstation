@@ -241,11 +241,13 @@
 		var/turf/simulated/wall/auto/asteroid/AST = new /turf/simulated/wall/auto/asteroid(T)
 		processing += T
 		var/datum/ore/ORE = null
-		switch (rand(1,3))
+		switch (rand(1, 5))
 			if (1 to 2)
 				ORE = major_ore
 			if (3)
 				ORE = pick(minor_ores)
+			else
+				// default
 		if (ORE)
 			AST.ore = ORE
 			AST.hardness += ORE.hardness_mod

@@ -3475,6 +3475,15 @@
 /area/station/wreckage{
 	name = "Restricted Area"
 	})
+"aKw" = (
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/item/implantcase/counterrev{
+	pixel_y = 6
+	},
+/turf/simulated/floor/carpet/red/fancy,
+/area/station/security/hos)
 "aKU" = (
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -21803,13 +21812,6 @@
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
-"gdc" = (
-/obj/machinery/rkit,
-/obj/machinery/light/incandescent/warm{
-	dir = 1
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/engine/elect)
 "gde" = (
 /obj/disposaloutlet/south,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
@@ -29888,6 +29890,13 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"ivU" = (
+/obj/machinery/rkit,
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/engine/elect)
 "ivX" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 6;
@@ -31054,6 +31063,9 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
+"iOW" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost)
 "iOX" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen/side{
@@ -34395,36 +34407,6 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/storage)
-"jPk" = (
-/obj/table/auto,
-/obj/item/circular_saw{
-	pixel_y = -5
-	},
-/obj/item/scalpel{
-	pixel_x = -1;
-	pixel_y = 4
-	},
-/obj/item/suture{
-	pixel_y = 8
-	},
-/obj/item/hemostat{
-	pixel_x = -1;
-	pixel_y = 3
-	},
-/obj/disposalpipe/segment/morgue{
-	name = "kitchen freezer pipe"
-	},
-/obj/item/scissors/surgical_scissors{
-	pixel_x = -14;
-	pixel_y = 5
-	},
-/obj/item/storage/box/body_bag,
-/obj/item/reagent_containers/glass/bottle/formaldehyde{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/turf/simulated/floor/specialroom/freezer,
-/area/station/medical/morgue)
 "jPm" = (
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce)
@@ -42678,12 +42660,6 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/plating/jen,
 /area/shuttle/escape/station)
-"mnY" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/rust/jen,
-/obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating/jen,
-/area/station/crewquarters/fuq3)
 "mod" = (
 /obj/cable{
 	d1 = 2;
@@ -45447,6 +45423,36 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
+"ngj" = (
+/obj/table/auto,
+/obj/item/circular_saw{
+	pixel_y = -5
+	},
+/obj/item/scalpel{
+	pixel_x = -1;
+	pixel_y = 4
+	},
+/obj/item/suture{
+	pixel_y = 8
+	},
+/obj/item/hemostat{
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/obj/disposalpipe/segment/morgue{
+	name = "kitchen freezer pipe"
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = -14;
+	pixel_y = 5
+	},
+/obj/item/storage/box/body_bag,
+/obj/item/reagent_containers/glass/bottle/formaldehyde{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/medical/morgue)
 "ngs" = (
 /obj/cable{
 	d1 = 4;
@@ -60499,15 +60505,6 @@
 "rra" = (
 /turf/simulated/wall/auto/shuttle,
 /area/shuttle/asylum/medbay)
-"rrz" = (
-/obj/table/reinforced/bar/auto{
-	name = "table"
-	},
-/obj/item/implantcase/antirev{
-	pixel_y = 6
-	},
-/turf/simulated/floor/carpet/red/fancy,
-/area/station/security/hos)
 "rrD" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -81215,9 +81212,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/ranch)
-"xsC" = (
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/listeningpost)
 "xsX" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet/grime,
@@ -82713,11 +82707,6 @@
 	dir = 8
 	},
 /area/station/security/quarters)
-"xOj" = (
-/obj/random_item_spawner/junk/one_or_zero,
-/obj/decal/cleanable/dirt/jen,
-/turf/simulated/floor/plating/jen,
-/area/station/crewquarters/fuq3)
 "xOk" = (
 /obj/cable{
 	d1 = 1;
@@ -106039,7 +106028,7 @@ sIK
 jhw
 bPU
 wqg
-rrz
+aKw
 vSE
 loz
 ouw
@@ -129934,7 +129923,7 @@ rdj
 rdj
 rdj
 fSe
-jPk
+ngj
 aIa
 aIa
 aIa
@@ -138013,9 +138002,9 @@ vpz
 vpz
 btN
 own
-xOj
-mnY
-mnY
+dvR
+lTE
+lTE
 svU
 svU
 svU
@@ -142882,7 +142871,7 @@ dGg
 eHC
 rJi
 tat
-gdc
+ivU
 aBi
 xaj
 naX
@@ -162322,10 +162311,10 @@ csA
 csA
 csA
 csA
-xsC
-xsC
-xsC
-xsC
+iOW
+iOW
+iOW
+iOW
 csA
 csA
 csA
@@ -162622,13 +162611,13 @@ csA
 csA
 csA
 csA
-xsC
-xsC
-xsC
+iOW
+iOW
+iOW
 ekR
 egM
-xsC
-xsC
+iOW
+iOW
 csA
 csA
 csA
@@ -162923,15 +162912,15 @@ csA
 csA
 csA
 csA
-xsC
-xsC
+iOW
+iOW
 fUN
 iyR
 bGV
 bOs
 ifA
-xsC
-xsC
+iOW
+iOW
 csA
 csA
 csA
@@ -163225,7 +163214,7 @@ csA
 csA
 csA
 csA
-xsC
+iOW
 hzO
 qCC
 dRn
@@ -163233,7 +163222,7 @@ pSb
 lJF
 kjJ
 ifA
-xsC
+iOW
 csA
 csA
 csA
@@ -163527,7 +163516,7 @@ csA
 csA
 csA
 csA
-xsC
+iOW
 mDk
 oRf
 sGi
@@ -163535,7 +163524,7 @@ pSb
 kvx
 oXA
 ifA
-xsC
+iOW
 csA
 csA
 csA
@@ -163828,17 +163817,17 @@ csA
 csA
 csA
 csA
-xsC
-xsC
-xsC
-xsC
+iOW
+iOW
+iOW
+iOW
 spW
 gZE
-xsC
-xsC
-xsC
-xsC
-xsC
+iOW
+iOW
+iOW
+iOW
+iOW
 csA
 csA
 csA
@@ -164126,11 +164115,11 @@ csA
 csA
 fJu
 xzQ
-xsC
-xsC
-xsC
-xsC
-xsC
+iOW
+iOW
+iOW
+iOW
+iOW
 hLU
 xti
 nQI
@@ -164140,8 +164129,8 @@ qdi
 pnk
 fHK
 vgl
-xsC
-xsC
+iOW
+iOW
 csA
 csA
 csA
@@ -164443,8 +164432,8 @@ uuX
 uuX
 uuX
 wTA
-xsC
-xsC
+iOW
+iOW
 csA
 csA
 csA
@@ -164730,9 +164719,9 @@ csA
 csA
 xzQ
 eML
-xsC
-xsC
-xsC
+iOW
+iOW
+iOW
 iHQ
 utC
 utC
@@ -164746,7 +164735,7 @@ uuX
 uuX
 uuX
 wQY
-xsC
+iOW
 csA
 csA
 csA
@@ -165029,11 +165018,11 @@ csA
 csA
 csA
 csA
-xsC
-xsC
-xsC
-xsC
-xsC
+iOW
+iOW
+iOW
+iOW
+iOW
 bHz
 utC
 utC
@@ -165048,7 +165037,7 @@ cdU
 cdU
 cdU
 iwJ
-xsC
+iOW
 csA
 csA
 csA
@@ -165330,11 +165319,11 @@ rdj
 csA
 csA
 csA
-xsC
-xsC
+iOW
+iOW
 smM
 jSL
-xsC
+iOW
 uRp
 dfX
 utC
@@ -165350,7 +165339,7 @@ spW
 sxd
 sxd
 xiC
-xsC
+iOW
 csA
 csA
 csA
@@ -165632,11 +165621,11 @@ rdj
 csA
 csA
 csA
-xsC
+iOW
 jSL
 cjI
 cjI
-xsC
+iOW
 gGE
 utC
 utC
@@ -165652,10 +165641,10 @@ spW
 sxd
 sxd
 yeT
-xsC
-xsC
-xsC
-xsC
+iOW
+iOW
+iOW
+iOW
 csA
 csA
 csA
@@ -165934,11 +165923,11 @@ rdj
 csA
 csA
 csA
-xsC
+iOW
 wSw
 cjI
 cjI
-xsC
+iOW
 vum
 utC
 sYL
@@ -165954,10 +165943,10 @@ spW
 vGb
 sxd
 sxd
-xsC
+iOW
 iTA
 nUn
-xsC
+iOW
 csA
 csA
 csA
@@ -166236,7 +166225,7 @@ rdj
 csA
 csA
 csA
-xsC
+iOW
 uFJ
 cjI
 cjI
@@ -166259,7 +166248,7 @@ sxd
 bhE
 ojt
 bvN
-xsC
+iOW
 csA
 csA
 csA
@@ -166538,11 +166527,11 @@ rdj
 csA
 csA
 csA
-xsC
+iOW
 jSL
 cjI
 cjI
-xsC
+iOW
 huq
 ahB
 utC
@@ -166558,10 +166547,10 @@ spW
 kRy
 sxd
 sxd
-xsC
+iOW
 xlB
 bnM
-xsC
+iOW
 csA
 csA
 csA
@@ -166840,12 +166829,12 @@ rdj
 csA
 csA
 csA
-xsC
-xsC
+iOW
+iOW
 bKW
 jSL
-xsC
-xsC
+iOW
+iOW
 wUX
 ahB
 utC
@@ -166860,10 +166849,10 @@ dlF
 kDi
 kDi
 qul
-xsC
-xsC
-xsC
-xsC
+iOW
+iOW
+iOW
+iOW
 csA
 csA
 csA
@@ -167143,12 +167132,12 @@ csA
 csA
 csA
 csA
-xsC
-xsC
-xsC
-xsC
-xsC
-xsC
+iOW
+iOW
+iOW
+iOW
+iOW
+iOW
 scI
 ahB
 utC
@@ -167162,7 +167151,7 @@ uuX
 uuX
 uuX
 rNi
-xsC
+iOW
 csA
 csA
 csA
@@ -167450,8 +167439,8 @@ csA
 csA
 csA
 csA
-xsC
-xsC
+iOW
+iOW
 iit
 ahB
 utC
@@ -167463,8 +167452,8 @@ uuX
 uuX
 uuX
 uuX
-xsC
-xsC
+iOW
+iOW
 csA
 csA
 csA
@@ -167753,8 +167742,8 @@ csA
 csA
 csA
 csA
-xsC
-xsC
+iOW
+iOW
 iEN
 uJk
 gMe
@@ -167764,8 +167753,8 @@ uuX
 uuX
 uuX
 aAP
-xsC
-xsC
+iOW
+iOW
 csA
 csA
 csA
@@ -168056,17 +168045,17 @@ csA
 csA
 csA
 csA
-xsC
-xsC
-xsC
-xsC
-xsC
-xsC
-xsC
+iOW
+iOW
+iOW
+iOW
+iOW
+iOW
+iOW
 spW
 poy
 spW
-xsC
+iOW
 csA
 csA
 csA
@@ -168364,11 +168353,11 @@ csA
 csA
 csA
 csA
-xsC
+iOW
 phT
 phT
 mbT
-xsC
+iOW
 csA
 csA
 csA
@@ -168666,11 +168655,11 @@ csA
 csA
 csA
 csA
-xsC
+iOW
 phT
 aEf
 phT
-xsC
+iOW
 csA
 csA
 csA
@@ -168968,11 +168957,11 @@ csA
 csA
 csA
 csA
-xsC
+iOW
 qal
 phT
 phT
-xsC
+iOW
 csA
 csA
 csA
@@ -169270,11 +169259,11 @@ csA
 csA
 csA
 csA
-xsC
-xsC
-xsC
-xsC
-xsC
+iOW
+iOW
+iOW
+iOW
+iOW
 csA
 csA
 csA

@@ -20819,8 +20819,8 @@
 "aVn" = (
 /obj/storage/closet/law,
 /obj/item/reagent_containers/patch/nicotine,
-/obj/item/implantcase/antirev,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
 /obj/item/implanter,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tools)
@@ -47938,7 +47938,7 @@
 "cca" = (
 /obj/disposalpipe/segment/brig,
 /obj/storage/secure/closet/security/equipment,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -49190,7 +49190,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -50738,7 +50738,7 @@
 "cih" = (
 /obj/disposalpipe/segment/brig,
 /obj/storage/secure/closet/security/equipment,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -52061,7 +52061,7 @@
 "ckY" = (
 /obj/disposalpipe/segment/bent/north,
 /obj/storage/secure/closet/security/equipment,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "ckZ" = (

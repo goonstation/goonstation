@@ -138,7 +138,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/bruteloss = 0
 	var/fireloss = 0
 
-	var/mob/dead/aieye/eyecam = null
+	var/mob/living/intangible/aieye/eyecam = null
 
 	var/deployed_to_eyecam = 0
 	var/datum/ai_hologram_data/holoHolder = new
@@ -228,7 +228,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.UpdateOverlays(get_image("ai_blank"), "backscreen")
 	update_appearance()
 
-	src.eyecam = new /mob/dead/aieye(src.loc)
+	src.eyecam = new /mob/living/intangible/aieye(src.loc)
 
 	hud = new(src)
 	src.attach_hud(hud)
@@ -579,7 +579,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		var/action_taken = input("What do you want to do?","AI Unit") in actions
 		switch (action_taken)
 			if ("Remove CPU Unit")
-				src.eject_brain()
+				src.eject_brain(user)
 
 			if ("Restart AI")
 				src.try_rebooting_it(user)
