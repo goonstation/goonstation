@@ -14,7 +14,8 @@
 
 	cast(mob/target)
 		if(!holder)
-			return
+			return 1
+			
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
 			holder.owner.say("GHEIT AUT")
@@ -30,7 +31,7 @@
 		if (iswizard(target))
 			target.visible_message("<span class='alert'>The spell fails to work on [target]!</span>")
 			playsound(target.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
-			return
+			return 1
 
 		var/telerange = 10
 		if (holder.owner.wizard_spellpower(src))
@@ -41,7 +42,7 @@
 
 		if (isrestrictedz(holder.owner.z))
 			boutput(holder.owner, "<span class='notice'>You feel guilty for trying to use that spell here.</span>")
-			return
+			return 1
 
 
 		elecflash(target)
