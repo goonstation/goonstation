@@ -29898,6 +29898,7 @@
 	pixel_x = 10
 	},
 /obj/machinery/navbeacon/mule/QM1_north/south,
+/obj/machinery/bot/mulebot/QM1,
 /turf/simulated/floor/bot,
 /area/station/quartermaster/office)
 "bNg" = (
@@ -42586,10 +42587,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
-"fzU" = (
-/obj/machinery/navbeacon/mule/market_north,
-/turf/simulated/floor/bot,
-/area/station/crew_quarters/market)
 "fAl" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
@@ -46471,6 +46468,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
+"jBh" = (
+/obj/machinery/navbeacon/mule/market_north,
+/turf/simulated/floor/bot,
+/area/station/crew_quarters/market)
 "jCn" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -48274,6 +48275,9 @@
 	},
 /turf/simulated/floor/escape,
 /area/station/hallway/primary/east)
+"luF" = (
+/turf/simulated/floor/delivery,
+/area/station/crew_quarters/market)
 "lvb" = (
 /obj/grille/steel,
 /obj/disposalpipe/segment/transport,
@@ -50650,14 +50654,14 @@
 	dir = 5
 	},
 /area/station/bridge)
+"nVn" = (
+/turf/simulated/floor/delivery,
+/area/station/science/lobby)
 "nVE" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/escape)
-"nWf" = (
-/turf/simulated/floor/delivery,
-/area/station/crew_quarters/market)
 "nWr" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -54026,9 +54030,6 @@
 /obj/machinery/microwave,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quarters_east)
-"rhV" = (
-/turf/simulated/floor/delivery,
-/area/station/science/lobby)
 "riw" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -96465,7 +96466,7 @@ byP
 bzU
 bAU
 bBW
-rhV
+nVn
 vjD
 bFb
 bGi
@@ -101015,8 +101016,8 @@ bHz
 bXV
 bYL
 bZL
-nWf
-fzU
+luF
+jBh
 cay
 cdi
 ceb
