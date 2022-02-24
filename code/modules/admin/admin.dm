@@ -20,9 +20,10 @@ var/global/noir = 0
 		if (!asay && rank_to_level(C.holder.rank) < LEVEL_MOD) // No confidential info for goat farts (Convair880).
 			continue
 		if (C.player_mode)
-			continue
-		else
-			boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
+			if (!asay || (asay && !C.player_mode_asay))
+				continue
+		boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
+
 
 /proc/message_coders(var/text) //Shamelessly adapted from message_admins
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span></span>"
