@@ -15,7 +15,11 @@
 	cast(mob/target)
 		if(!holder)
 			return 1
-			
+
+		if(!istype(target))
+			target = locate(/mob) in get_turf(target)
+		if(!istype(target))
+			return 1
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
 			holder.owner.say("GHEIT AUT")
