@@ -1311,7 +1311,7 @@
 				var/prot = round(src.material.getProperty("density") / 13)// for RANGED
 				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
 
-				var/prot = round(reinf.getProperty("dense") / 13)// for MELEE
+				prot = round(reinf.getProperty("dense") / 13)// for MELEE
 				if(prot < 3)
 					setProperty("meleeprot", 3)
 				if(prot > 6 )
