@@ -559,7 +559,53 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		do_computerid_test(src) //Will ban yonder fucker in case they are prix
 		check_compid_list(src) 	//Will analyze their computer ID usage patterns for aberrations
 
+	src.initialize_interface()
 
+	src.reputations = new(src)
+
+	if(src.holder && src.holder.level >= LEVEL_CODER)
+		src.control_freak = 0
+
+	if (browse_item_initial_done)
+		SPAWN(0)
+			sendItemIcons(src)
+
+	// fixing locked ability holders
+	var/datum/abilityHolder/ability_holder = src.mob.abilityHolder
+	ability_holder?.locked = FALSE
+	var/datum/abilityHolder/composite/composite = ability_holder
+	if(istype(composite))
+		for(var/datum/abilityHolder/inner_holder in composite.holders)
+			inner_holder.locked = FALSE
+
+	if(spooky_light_mode)
+		var/atom/plane_parent = src.get_plane(PLANE_LIGHTING)
+		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
+		src.color = "#AAAAAA"
+
+	if (!src.chatOutput.loaded)
+		//Load custom chat
+		SPAWN(-1)
+			src.chatOutput.start()
+
+	src.setup_special_screens()
+
+	logTheThing("diary", null, src.mob, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
+
+	if (config.log_access)
+		src.ip_cid_conflict_check()
+
+	if(src.holder)
+		// when an admin logs in check all clients again per Mordent's request
+		for(var/client/C)
+			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE)
+
+	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
+
+	login_success = 1
+
+/client/proc/initialize_interface()
+	set waitfor = FALSE
 	//WIDESCREEN STUFF
 	var/splitter_value = text2num(winget( src, "mainwindow.mainvsplit", "splitter" ))
 
@@ -586,6 +632,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	//End widescreen stuff
 
+	src.sync_dark_mode()
+
 	//blendmode stuff
 
 	var/distort_checked = winget( src, "menu.zoom_distort", "is-checked" ) == "true"
@@ -593,10 +641,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	winset( src, "mapwindow.map", "zoom-mode=[distort_checked ? "distort" : "normal"]" )
 
 	//blendmode end
-
-	// cursed darkmode stuff
-
-	src.sync_dark_mode()
 
 	if(winget(src, "menu.fullscreen", "is-checked") == "true")
 		winset(src, null, "mainwindow.titlebar=false;mainwindow.is-maximized=true")
@@ -633,50 +677,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	if (winget( src, "menu.vox_sounds", "is-checked" ) == "true")
 		ignore_sound_flags |= SOUND_VOX
 
-	src.reputations = new(src)
-
 	// Set view tint
 	view_tint = winget( src, "menu.set_tint", "is-checked" ) == "true"
-
-	if(src.holder && src.holder.level >= LEVEL_CODER)
-		src.control_freak = 0
-
-	if (browse_item_initial_done)
-		SPAWN(0)
-			sendItemIcons(src)
-
-	// fixing locked ability holders
-	var/datum/abilityHolder/ability_holder = src.mob.abilityHolder
-	ability_holder?.locked = FALSE
-	var/datum/abilityHolder/composite/composite = ability_holder
-	if(istype(composite))
-		for(var/datum/abilityHolder/inner_holder in composite.holders)
-			inner_holder.locked = FALSE
-
-	if(spooky_light_mode)
-		var/atom/plane_parent = src.get_plane(PLANE_LIGHTING)
-		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
-		src.color = "#AAAAAA"
-
-	if (!src.chatOutput.loaded)
-		//Load custom chat
-		src.chatOutput.start()
-
-	src.setup_special_screens()
-
-	logTheThing("diary", null, src.mob, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
-
-	if (config.log_access)
-		src.ip_cid_conflict_check()
-
-	if(src.holder)
-		// when an admin logs in check all clients again per Mordent's request
-		for(var/client/C)
-			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE)
-
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
-
-	login_success = 1
 
 /client/proc/ip_cid_conflict_check(log_it=TRUE, alert_them=TRUE)
 	var/static/list/list/ip_to_ckeys = list()
