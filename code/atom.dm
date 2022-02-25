@@ -419,6 +419,9 @@
 	src.attached_objs?.Cut()
 	src.attached_objs = null
 
+	for(var/atom/movable/AM as anything in src.vis_locs)
+		AM.vis_contents -= src
+
 	last_turf = src.loc // instead rely on set_loc to clear last_turf
 	set_loc(null)
 	..()

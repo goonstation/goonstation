@@ -29,8 +29,6 @@
 		src.vis_contents += inner
 
 	disposing()
-		for(var/atom/movable/AM in src.vis_locs)
-			AM.vis_contents -= src
 		dispose(inner)
 		dispose(hover_image)
 		src.vis_contents -= inner

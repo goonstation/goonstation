@@ -318,7 +318,6 @@
 /mob/disposing()
 	STOP_TRACKING
 
-	src.vis_contents -= src.name_tag
 	qdel(src.name_tag)
 	src.name_tag = null
 
