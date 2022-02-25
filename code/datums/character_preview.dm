@@ -49,6 +49,7 @@ datum/character_preview
 		var/mob/living/carbon/human/H = new(global.get_centcom_mob_cloner_spawn_loc())
 		mobs -= H
 		src.preview_mob = H
+		H.name_tag = null
 		H.screen_loc = "[src.preview_id];1,1"
 		src.handler.vis_contents += H
 		src.viewer?.screen += H
