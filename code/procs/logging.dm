@@ -189,6 +189,20 @@ var/global/logLength = 0
 				name = mobRef.name
 			if (length(mobRef.name_suffixes))
 				name = mobRef.real_name
+
+		if(isnull(mobRef.client) && isAIeye(mobRef))
+			var/mob/living/intangible/aieye/aieye = mobRef
+			if(aieye.mainframe?.client)
+				mobRef = aieye.mainframe
+				name = "[mobRef.name] (AIeye/mainframe)"
+		else if(isnull(mobRef.client) && istype(mobRef, /mob/living/silicon/ai))
+			var/mob/living/silicon/ai/ai = mobRef
+			if(ai.eyecam?.client)
+				mobRef = ai.eyecam
+				name = "[mobRef.name] (mainframe/AIeye)"
+			else if(ai.deployed_shell?.client)
+				mobRef = ai.deployed_shell
+				name = "[mobRef.name] (mainframe/shell)"
 		if (mobRef.key)
 			key = mobRef.key
 		if (mobRef.ckey)
