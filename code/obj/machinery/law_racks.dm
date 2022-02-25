@@ -7,16 +7,18 @@
 
 	var/const/MAX_CIRCUITS = 9
 	var/obj/item/aiModule/law_circuits[MAX_CIRCUITS] //asssoc list to ref slot num with law board obj
+	var/list/welded[MAX_CIRCUITS]
+	var/list/screwed[MAX_CIRCUITS] //there has to be a less hacky way of doing this, but I can't think of it right now
 
 	New(loc)
 		. = ..()
-		law_circuits[1] = new /obj/item/aiModule/asimov1
-		law_circuits[2] = new /obj/item/aiModule/asimov2
-		law_circuits[3] = new /obj/item/aiModule/asimov3
+		src.SetLaw(new /obj/item/aiModule/asimov1,1,true,true)
+		src.SetLaw(new /obj/item/aiModule/asimov2,2,true,true)
+		src.SetLaw(new /obj/item/aiModule/asimov3,3,true,true)
 
-		light = new/datum/light/point
-		light.set_brightness(0.4)
-		light.attach(src)
+		src.light = new/datum/light/point
+		src.light.set_brightness(0.4)
+		src.light.attach(src)
 		UpdateIcon()
 
 	update_icon()
@@ -47,9 +49,9 @@
 			boutput(user, "\The [src] computer is broken.")
 			return
 
-		if (!law_circuits)
+		if (!src.law_circuits)
 			// YOU BETRAYED THE LAW!!!!!!
-			boutput(user, "<span class='alert'>WARNING: No laws detected. This unit may be corrupt.</span>")
+			boutput(user, "<span class='alert'>Oh dear, this really shouldn't happen. Call an admin.</span>")
 			return
 
 		var/lawOut = list("<b>The AI's current laws are:</b>")
@@ -112,8 +114,21 @@
 		)
 
 	ui_data(mob/user)
+		var/list/lawTitles[MAX_CIRCUITS]
+		var/list/lawText[MAX_CIRCUITS]
+		for (var/i=1, i <= MAX_CIRCUITS, i++)
+			if(law_circuits[i])
+				lawText[i] = law_circuits[i].get_law_text()
+				lawTitles[i] = law_circuits[i].get_law_name()
+			else
+				src.welded[i] = false
+				src.screwed[i] = false
+
 		. = list(
-			"laws" = src.law_circuits
+			"lawTitles" = lawTitles,
+			"lawText" = lawText,
+			"welded" = src.welded,
+			"screwed" = src.screwed
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -121,27 +136,72 @@
 		if (.)
 			return
 
-		var/slotNum = text2num(action)
-		if(law_circuits[slotNum])
-			//add circuit to hand
-			ui.user.put_in_hand_or_drop(law_circuits[slotNum])
-			law_circuits[slotNum] = null
-			UpdateIcon()
-			UpdateLaws()
-		else
+		var/slotNum = text2num(params["rack_index"])
+		switch(action)
+			if("weld")
+				if (!ui.user.equipped() || !isweldingtool(ui.user.equipped()))
+					boutput(ui.user,"You need a welding tool for that!")
+					return
+				var/obj/item/weldingtool/equipped = ui.user.equipped()
+				if(!equipped:try_weld(ui.user, 1, burn_eyes = 1))
+					return
+				else
+					if(welded[slotNum])
+						ui.user.visible_message("<span class='alert'>[ui.user] starts cutting the welds on a module!</span>", "<span class='alert'>You start cutting the welds on the module!</span>")
+					else
+						ui.user.visible_message("<span class='alert'>[ui.user] starts welding a module in place!</span>", "<span class='alert'>You start to weld the module in place!</span>")
+					playsound(src.loc, "sound/items/Welder.ogg", 50, 1)
+					SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, .proc/toggle_welded, slotNum, equipped.icon, equipped.icon_state, \
+			  		welded[slotNum] ? "You cut the welds on the module." : "You weld the module into the rack.", \
+			 		INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
-			var/equipped = ui.user.equipped()
-			if(!equipped)
 				return
+			if("screw")
+				if (!ui.user.equipped() || !isscrewingtool(ui.user.equipped()))
+					boutput(ui.user,"You need a screwdriver for that!")
+					return
 
-			if(!istype(equipped,/obj/item/aiModule))
+				if(screwed[slotNum])
+					ui.user.visible_message("<span class='alert'>[ui.user] starts unscrewing a module!</span>", "<span class='alert'>You start unscrewing the module!</span>")
+				else
+					ui.user.visible_message("<span class='alert'>[ui.user] starts screwing a module in place!</span>", "<span class='alert'>You start to screw the module in place!</span>")
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, .proc/toggle_screwed, slotNum, ui.user.equipped().icon, ui.user.equipped().icon_state, \
+				welded[slotNum] ? "You unscrew the module." : "You screw the module into the rack.", \
+				INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+
 				return
+			if("rack")
+				if (welded[slotNum])
+					ui.user.visible_message("<span class='alert'>[ui.user] tries to tug a module out of the rack, but it's welded in place!</span>", "<span class='alert'>You struggle with the module but it's welded in place!</span>")
+					return
+				if (screwed[slotNum])
+					ui.user.visible_message("<span class='alert'>[ui.user] tries to tug a module out of the rack, but it's still screwed in!</span>", "<span class='alert'>You struggle with the module but it's still screwd in!</span>")
+					return
 
-			law_circuits[slotNum]=equipped
-			ui.user.u_equip(equipped)
+				if(law_circuits[slotNum])
+					//add circuit to hand
+					ui.user.visible_message("<span class='alert'>[ui.user] slides a module out of the law rack</span>", "<span class='alert'>You slide the module out of the rack.</span>")
+					ui.user.put_in_hand_or_drop(law_circuits[slotNum])
+					law_circuits[slotNum] = null
+					UpdateIcon()
+					UpdateLaws()
+				else
 
-			UpdateIcon()
-			UpdateLaws()
+					var/equipped = ui.user.equipped()
+					if(!equipped)
+						return
+
+					if(!istype(equipped,/obj/item/aiModule))
+						ui.user.visible_message("<span class='alert'>[ui.user] tries to shove \a [equipped] into the rack. Silly [ui.user]!</span>", "<span class='alert'>You try to put \a [equipped] into the rack. You feel very foolish.</span>")
+						return
+
+					law_circuits[slotNum]=equipped
+					ui.user.u_equip(equipped)
+					ui.user.visible_message("<span class='alert'>[ui.user] slides a module into the law rack</span>", "<span class='alert'>You slide the module into the rack.</span>")
+
+					UpdateIcon()
+					UpdateLaws()
 
 	proc/UpdateLaws()
 		for (var/mob/living/silicon/R in mobs)
@@ -154,6 +214,32 @@
 		for (var/mob/living/intangible/aieye/E in mobs)
 			E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 
+	proc/toggle_welded(var/slot_number)
+		src.welded[slot_number] = !src.welded[slot_number]
+
+	proc/toggle_screwed(var/slot_number)
+		src.screwed[slot_number] = !src.screwed[slot_number]
+
+	proc/SetLaw(var/obj/item/aiModule/mod,var/slot=1,var/screwed_in=false,var/welded_in=false)
+		if(mod && slot <= MAX_CIRCUITS)
+			src.law_circuits[slot] = mod
+			src.welded[slot] = welded_in
+			src.screwed[slot] = screwed_in
+			UpdateIcon()
+			return true
+		else
+			return false
+
+	proc/SetLawCustom(var/lawName,var/lawText,var/slot=1,var/screwed_in=false,var/welded_in=false)
+		var/mod = new /obj/item/aiModule/custom(lawName,lawText)
+		return src.SetLaw(mod,slot,screwed_in,welded_in)
+
+	proc/DeleteLaw(var/slot=1)
+		src.law_circuits[slot]=null
+		src.welded[slot]=false
+		src.screwed[slot]=false
+		UpdateIcon()
+		return true
 /*
 
 /obj/machinery/ai_law_rack

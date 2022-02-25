@@ -57,6 +57,9 @@ AI MODULES
 	proc/get_law_text(for_silicons)
 		return  src.lawtext
 
+	proc/get_law_name(for_silicons)
+		return  src.name
+
 /******************** Modules ********************/
 /******************** Asimov ************************/
 /obj/item/aiModule/asimov1
@@ -280,9 +283,10 @@ AI MODULES
 /obj/item/aiModule/custom
 	highlight_color = rgb(241, 94, 180, 255)
 
-	New(var/newtext)
+	New(var/newname,var/newtext)
 		. = ..()
-		lawtext = newtext
+		src.name = newname
+		src.lawtext = newtext
 
 /********************* EXPERIMENTAL LAWS *********************/
 //at the time of programming this, these experimental laws are *intended* to be spawned by an item spawner
