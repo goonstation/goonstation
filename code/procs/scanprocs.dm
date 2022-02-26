@@ -4,7 +4,7 @@
 	if (!M)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
 
-	if (isghostdrone(M))
+	if (issilicon(M))
 		return "<span class='alert'>ERROR: INVALID DATA FROM SUBJECT</span>"
 
 	if(visible)
