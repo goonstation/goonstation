@@ -375,7 +375,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 			boutput(self, "<span class='alert'>You feel your heart jolt back into life!</span>")
 		else
 			boutput(self, "<span class='alert'>You feel a powerful jolt course through you!</span>")
-		playsound(self, "sound/effects/elec_bigzap.ogg", 30, 1)
+		playsound(self, 'sound/effects/elec_bigzap.ogg', 30, 1)
 		self.cure_disease_by_path(/datum/ailment/malady/flatline)
 		self.TakeDamage("chest", 0, 30, 0, DAMAGE_BURN)
 		self.take_oxygen_deprivation(-100)
