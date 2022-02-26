@@ -41702,12 +41702,13 @@
 /area/station/security/brig)
 "eJX" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/tea{
-	pixel_x = 7
-	},
 /obj/item/plate{
 	pixel_x = -3;
 	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = 7;
+	pixel_y = 5
 	},
 /obj/item/reagent_containers/food/snacks/burger/heartburger{
 	pixel_x = -3;
