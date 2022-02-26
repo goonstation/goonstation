@@ -25,7 +25,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	var/click_delay = 3
 
-	var/datum/ai_laws/centralized_ai_laws //TODO: delete
+	var/datum/ai_rack_manager/ai_law_rack_manager
 
 	var/skull_key_assigned = 0
 
@@ -138,8 +138,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	else
 		src.mode.announce()
 
-	// uhh is this where this goes??
-	src.centralized_ai_laws = new /datum/ai_laws/asimov()
+	//AI law racks try to claim default when they're instantiated, so if there's one on the map at start, it should be default
+	//if the default is destroyed, this goes null until a new one is registered
+	//if there's more than one on the map, the first to be registered will be the default - this is janky and bad
+	//either way, the default rack gets asimov - the rest are empty.
+	ai_law_rack_manager = new /datum/ai_rack_manager()
 
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = src.mode.pre_setup()
@@ -587,7 +590,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	boutput(world, score_tracker.escapee_facts())
 	boutput(world, score_tracker.heisenhat_stats())
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] ai law display")
-	boutput(world, "<b>AIs and Cyborgs had the following laws at the end of the game:</b><br>[ticker.centralized_ai_laws.format_for_logs()]")
+	boutput(world, "<b>AIs and Cyborgs had the following laws at the end of the game:</b><br>[ticker.ai_law_rack_manager.format_for_logs()]")
 
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] resetting gauntlet (why? who cares! the game is over!)")

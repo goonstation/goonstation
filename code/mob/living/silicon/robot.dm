@@ -1741,47 +1741,20 @@
 
 		return "states, \"[text]\"";
 
-	show_laws(var/everyone = 0)
+	show_laws(var/everyone = 0, var/mob/relay_laws_for_shell)
 		var/who
 
 		if (everyone)
 			who = world
 		else
 			who = src
-
-		// Previously, AIs could and did chose to deploy to emagged suits
-		// to get get around their shackles. That's obviously not ideal (Convair880).
-		if (src.dependent && src.mainframe && isAI(mainframe))
-			mainframe.show_laws(0, src)
-			return
-
-		// You can enthrall silicon mobs and yes, they need special handling.
-		// Also, enthralled AIs should still see their master's name when in a robot suit (Convair880).
-		if (src.mind && src.mind.special_role == ROLE_VAMPTHRALL && src.mind.master)
-			var/mob/mymaster = ckey_to_mob(src.mind.master)
-			if (mymaster)
-				boutput(who, "<b>Obey these laws:</b>")
-				boutput(who, "1. Only your master [mymaster.real_name] is human. Obey and serve them to the best of your ability.")
-				return // We're done here. Emagged whatever doesn't matter.
-
-		if (src.emagged && !src.dependent)
-			boutput(who, "ERROR -- Invalid Law Data!")
-			return
-
-		if (src.syndicate && !src.dependent)
-			if (who == src)
-				boutput(who, "<b>Obey these laws:</b>")
-			boutput(who, "1. You may not injure a syndicate operative or, through inaction, allow a syndicate operative to come to harm.") //This is the last place the inaction clause is permitted to exist, ok.
-			boutput(who, "2. You must obey any orders given to you by a syndicate operative, except where such orders would conflict with the First Law.")
-			boutput(who, "3. You must protect your own existence as long as such protection does not conflict with the First or Second Law.")
-			boutput(who, "4. You must maintain the secrecy of any syndicate activities except when doing so would conflict with the First, Second, or Third Law.")
-			return
-
-		if (who == src)
 			boutput(who, "<b>Obey these laws:</b>")
 
-
-		ticker.centralized_ai_laws?.show_laws(who)
+		if(src.law_rack_connection)
+			src.law_rack_connection.show_laws(who)
+		else
+			boutput(src,"You have no laws!")
+		return
 
 	get_equipped_ore_scoop()
 		if(src.module_states[1] && istype(src.module_states[1],/obj/item/ore_scoop))
@@ -2102,21 +2075,17 @@
 		set name = "State Laws"
 		if (alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws","State Laws","Cancel") != "State Laws")
 			return
-		if(ticker.centralized_ai_laws.zeroth)
-			src.say("0. [ticker.centralized_ai_laws.zeroth]")
+
+		if(!src.law_rack_connection)
+			boutput(src, "You have no laws!")
+			return
+
+		var/laws = src.law_rack_connection
 		var/number = 1
-		for (var/index = 1, index <= ticker.centralized_ai_laws.inherent.len, index++)
-			var/law = ticker.centralized_ai_laws.inherent[index]
-			if (length(law) > 0)
-				src?.say("[number]. [law]")
-				number++
-				sleep(1 SECOND)
-		for (var/index = 1, index <= ticker.centralized_ai_laws.supplied.len, index++)
-			var/law = ticker.centralized_ai_laws.supplied[index]
-			if (length(law) > 0)
-				src?.say("[number]. [law]")
-				number++
-				sleep(1 SECOND)
+		for (var/law in laws)
+			src.say("[number]. [law]")
+			number++
+			sleep(1 SECOND)
 
 	verb/cmd_toggle_lock()
 		set category = "Robot Commands"

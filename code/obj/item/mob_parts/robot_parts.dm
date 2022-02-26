@@ -1235,6 +1235,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		AI.verbs -= whatever the vox verb is i guess
 */
 
+/* Is this even used?
 /obj/item/roboupgrade/ai/law_override
 	name = "AI Law Override Module"
 	desc = "A module that overrides the AI's inherent law set with a customised one."
@@ -1290,3 +1291,4 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			else
 				break
 			law_counter++
+*/

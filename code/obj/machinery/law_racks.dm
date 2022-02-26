@@ -12,9 +12,7 @@
 
 	New(loc)
 		. = ..()
-		src.SetLaw(new /obj/item/aiModule/asimov1,1,true,true)
-		src.SetLaw(new /obj/item/aiModule/asimov2,2,true,true)
-		src.SetLaw(new /obj/item/aiModule/asimov3,3,true,true)
+		ticker.ai_law_rack_manager.register_new_rack(src)
 
 		src.light = new/datum/light/point
 		src.light.set_brightness(0.4)
@@ -57,13 +55,7 @@
 		var/lawOut = list("<b>The AI's current laws are:</b>")
 
 
-		var/law_counter = 1
-		for (var/obj/item/aiModule/X in law_circuits)
-			if(!X)
-				continue
-			lawOut += "[law_counter++]: [X.get_law_text()]"
-
-		boutput(user, jointext(lawOut, "<br>"))
+		src.show_laws(user)
 		return ..()
 
 	special_deconstruct(obj/computerframe/frame as obj)
@@ -203,14 +195,45 @@
 					UpdateIcon()
 					UpdateLaws()
 
+	proc/show_laws(var/who)
+		var/list/L = who
+		if (!istype(who, /list))
+			L = list(who)
+
+		var/laws_text = src.format_for_logs()
+		for (var/W in L)
+			boutput(W, laws_text)
+
+	proc/format_for_logs(var/glue = "<br>")
+		var/law_counter = 1
+		var/lawOut = ""
+		for (var/obj/item/aiModule/X in law_circuits)
+			if(!X)
+				continue
+			lawOut += "[law_counter++]: [X.get_law_text()]"
+
+		return jointext(lawOut, glue)
+
+	proc/format_for_irc()
+		var/list/laws = list()
+
+		var/law_counter = 1
+		for (var/obj/item/aiModule/X in law_circuits)
+			if(!X)
+				continue
+			laws["[law_counter]"] = X.get_law_text()
+			law_counter++
+
+		return laws
+
 	proc/UpdateLaws()
 		for (var/mob/living/silicon/R in mobs)
 			if (isghostdrone(R))
 				continue
 			R << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 			R.show_text("<h3>Law update detected.</h3>", "red")
-			R.show_laws()
-			//ticker.centralized_ai_laws.show_laws(R)
+			src.show_laws(R)
+
 		for (var/mob/living/intangible/aieye/E in mobs)
 			E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 
@@ -239,6 +262,11 @@
 		src.welded[slot]=false
 		src.screwed[slot]=false
 		UpdateIcon()
+		return true
+
+	proc/DeleteAllLaws()
+		for (var/i=1, i <= MAX_CIRCUITS, i++)
+			src.DeleteLaw(i)
 		return true
 /*
 

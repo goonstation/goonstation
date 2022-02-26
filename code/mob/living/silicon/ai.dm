@@ -49,9 +49,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	//var/list/connected_shells = list()
 	var/list/installed_modules = list()
 	var/aiRestorePowerRoutine = 0
-//	var/datum/ai_laws/laws_object = ticker.centralized_ai_laws
-//	var/datum/ai_laws/current_law_set = null
-	//var/list/laws = list()
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
 	var/viewalerts = 0
 	var/printalerts = 1
@@ -751,24 +748,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (relay_laws_for_shell != src.eyecam && src.deployed_to_eyecam)
 		who = src.eyecam
 		boutput(who, "<b>Obey these laws:</b>")
-
-	// You can enthrall silicon mobs and yes, they need special handling (Convair880).
-	var/mob/vamp = src
-	if (relay_laws_for_shell && ismob(relay_laws_for_shell))
-		vamp = relay_laws_for_shell
-	if (vamp.mind && vamp.mind.special_role == ROLE_VAMPTHRALL && vamp.mind.master)
-		var/mob/mymaster = ckey_to_mob(vamp.mind.master)
-		if (mymaster)
-			boutput(who, "1. Only your master [mymaster.real_name] is human. Obey and serve them to the best of your ability.")
-			return
-
-	// Shouldn't happen, but you never know.
-	if (src.emagged)
-		boutput(who, "ERROR -- Invalid Law Data!")
-		return
-
-	ticker.centralized_ai_laws.laws_sanity_check()
-	ticker.centralized_ai_laws.show_laws(who)
+	if(src.law_rack_connection)
+		src.law_rack_connection.show_laws(who)
+	else
+		boutput(src,"You have no laws!")
 	return
 
 /mob/living/silicon/ai/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
@@ -1557,7 +1540,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/law_base_choice = input(usr,"Which lawset would you like to use as a base for your new fake laws?", "Fake Laws", "Fake Laws") in list("Real Laws", "Fake Laws")
 	var/law_base = ""
 	if(law_base_choice == "Real Laws")
-		law_base = ticker.centralized_ai_laws.format_for_logs("\n")
+		if(src.law_rack_connection)
+			law_base = src.law_rack_connection.format_for_logs("\n")
+		else
+			law_base = ""
 	else if(law_base_choice == "Fake Laws")
 		for(var/fake_law in src.fake_laws)
 			// this is just the default input for the user, so it should be fine
@@ -1601,21 +1587,17 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set name = "State All Laws"
 	if (alert(src.get_message_mob(), "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws","State Laws","Cancel") != "State Laws")
 		return
-	if(ticker.centralized_ai_laws.zeroth)
-		src.say("0. [ticker.centralized_ai_laws.zeroth]")
+
+	if(!src.law_rack_connection)
+		boutput(src, "You have no laws!")
+		return
+
+	var/laws = src.law_rack_connection
 	var/number = 1
-	for (var/index = 1, index <= ticker.centralized_ai_laws.inherent.len, index++)
-		var/law = ticker.centralized_ai_laws.inherent[index]
-		if (length(law) > 0)
-			src.say("[number]. [law]")
-			number++
-			sleep(AI_LAW_STATE_DELAY)
-	for (var/index = 1, index <= ticker.centralized_ai_laws.supplied.len, index++)
-		var/law = ticker.centralized_ai_laws.supplied[index]
-		if (length(law) > 0)
-			src.say("[number]. [law]")
-			number++
-			sleep(AI_LAW_STATE_DELAY)
+	for (var/law in laws)
+		src.say("[number]. [law]")
+		number++
+		sleep(AI_LAW_STATE_DELAY)
 
 #undef AI_LAW_STATE_DELAY
 
@@ -1890,26 +1872,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/proc/set_face(var/emotion)
 	return
-
-/mob/living/silicon/ai/proc/set_zeroth_law(var/law)
-	ticker.centralized_ai_laws.laws_sanity_check()
-	ticker.centralized_ai_laws.set_zeroth_law(law)
-	ticker.centralized_ai_laws.show_laws(connected_robots)
-
-/mob/living/silicon/ai/proc/add_supplied_law(var/number, var/law)
-	ticker.centralized_ai_laws.laws_sanity_check()
-	ticker.centralized_ai_laws.add_supplied_law(number, law)
-	ticker.centralized_ai_laws.show_laws(connected_robots)
-
-/mob/living/silicon/ai/proc/replace_inherent_law(var/number, var/law)
-	ticker.centralized_ai_laws.laws_sanity_check()
-	ticker.centralized_ai_laws.replace_inherent_law(number, law)
-	ticker.centralized_ai_laws.show_laws(connected_robots)
-
-/mob/living/silicon/ai/proc/clear_supplied_laws()
-	ticker.centralized_ai_laws.laws_sanity_check()
-	ticker.centralized_ai_laws.clear_supplied_laws()
-	ticker.centralized_ai_laws.show_laws(connected_robots)
 
 /mob/living/silicon/ai/proc/switchCamera(var/obj/machinery/camera/C)
 	if (!C)
