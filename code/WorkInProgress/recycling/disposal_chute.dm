@@ -27,7 +27,6 @@
 	var/light_style = "disposal" // for the lights and stuff
 	var/image/handle_image = null
 	var/destination_tag = null
-	var/list/empty_blacklist = list(/obj/item/storage/mechanics/housing_handheld)
 	mats = 20			// whats the point of letting people build trunk pipes if they cant build new disposals?
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER
 	power_usage = 100
