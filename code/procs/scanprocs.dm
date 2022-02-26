@@ -740,7 +740,7 @@
 
 		else if (simple_output == 1) // For the log_atmos() proc.
 			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature - T0C)]&deg;C</i>\
-			, <b>Contents:</b> <i>[CONCENTRATION_REPORT(check_me, ", ")]</i>"
+			, <b>Contents:</b> <i>[LOGGING_CONCENTRATION_REPORT(check_me, ", ")]</i>"
 
 		else
 			data = "--------------------------------<br>\
