@@ -449,7 +449,7 @@
 /obj/item/ammo/bullets/lmg
 	sname = "7.62×51mm NATO"
 	name = "LMG belt"
-	desc = "A belt of 7.62 LMG rounds. They have less gunpowder in them to prevent overheating and cookoffs."
+	desc = "A belt of 7.62 LMG rounds. They have much less gunpowder in them to prevent overheating and cookoffs."
 	ammo_type = new/datum/projectile/bullet/lmg
 	icon_state = "lmg_ammo"
 	icon_empty = "lmg_ammo-0"
@@ -1033,7 +1033,7 @@
 /obj/item/ammo/bullets/meowitzer
 	sname = "meowitzer"
 	name = "meowitzer"
-	desc = "A box containg a single meowitzer. It's shaking violently and feels warm to the touch. You probably don't want to be anywhere near this when it goes off. Wait is that a cat?"
+	desc = "A box containg a single meowitzer. It's shaking violently and feels warm to the touch. You probably don't want to be anywhere near this when it goes off. Wait, is that a cat?"
 	icon_state = "meow_ammo"
 	icon_empty = "meow_ammo-0"
 	amount_left = 1
@@ -1041,6 +1041,13 @@
 	ammo_type = new/datum/projectile/special/meowitzer
 	ammo_cat = AMMO_HOWITZER
 	w_class = W_CLASS_NORMAL
+
+/obj/item/ammo/bullets/meowitzer/inert
+	sname = "inert meowitzer"
+	name = "inert meowitzer"
+	desc = "A box containg a single meowitzer. It's softly purring and feels cool to the touch. Wait, is that a cat?"
+	ammo_type = new/datum/projectile/special/meowitzer/inert
+
 
 //////////////////////////////////// Power cells for eguns //////////////////////////
 
@@ -1266,11 +1273,6 @@
 	charge = 2500.0
 	max_charge = 2500.0
 
-/obj/item/ammo/bullets/meowitzer/inert
-	sname = "inert meowitzer"
-	name = "inert meowitzer"
-	desc = "A box containg a single inert meowitzer. It appears to be softly purring. Wait is that a cat?"
-	ammo_type = new/datum/projectile/special/meowitzer/inert
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND
