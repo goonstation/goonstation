@@ -77,6 +77,14 @@
 	///Special changes for deconstruction can be added by overriding this
 	proc/special_deconstruct(var/obj/computerframe/frame as obj)
 
+	proc/update_screen_image()
+		src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
+		src.screen_image.plane = PLANE_LIGHTING
+		src.screen_image.blend_mode = BLEND_ADD
+		src.screen_image.layer = LIGHTING_LAYER_BASE
+		src.screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+		src.UpdateOverlays(screen_image, "screen_image")
+
 /*
 /obj/machinery/computer/airtunnel
 	name = "Air Tunnel Control"
