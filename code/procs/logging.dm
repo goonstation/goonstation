@@ -364,6 +364,8 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 /proc/log_atmos(var/atom/A as turf|obj|mob)
 	return scan_atmospheric(A, 0, 1)
 
+/proc/alert_atmos(var/atom/A as turf|obj|mob)
+	return scan_atmospheric(A, 0, 0, 0, 1)
 
 /proc/get_log_data_html(logType as text, searchString as text, var/datum/admins/requesting_admin)
 	if (!searchString)

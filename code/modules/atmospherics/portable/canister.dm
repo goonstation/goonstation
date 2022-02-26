@@ -140,7 +140,7 @@
 	if (src.health <= 10)
 		tgui_process.close_uis(src)
 		if(src.air_contents.check_if_dangerous())
-			message_admins("[src] [log_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
+			message_admins("[src] [alert_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
 		logTheThing("station", null, null, "[src] [log_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
 
 		var/atom/location = src.loc
@@ -354,7 +354,7 @@
 				src.det.builtBy = user
 				logTheThing("bombing", user, null, "builds a canister bomb [log_atmos(src)] at [log_loc(src)].")
 				if(src.air_contents.check_if_dangerous())
-					message_admins("[key_name(user)] builds a canister bomb [log_atmos(src)] at [log_loc(src)].")
+					message_admins("[key_name(user)] builds a canister bomb [alert_atmos(src)] at [log_loc(src)].")
 				tgui_process.update_uis(src)
 				src.UpdateIcon()
 	else if (src.det && istype(W, /obj/item/tank))
@@ -510,7 +510,7 @@
 		if (src.valve_open)
 			playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
 			if(src.air_contents.check_if_dangerous())
-				message_admins("[key_name(usr)] opened [src] into the air [log_atmos(src)] at [log_loc(src)]")
+				message_admins("[key_name(usr)] opened [src] into the air [alert_atmos(src)] at [log_loc(src)]")
 			if (src.det)
 				src.det.leaking()
 	return TRUE

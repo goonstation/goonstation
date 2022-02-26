@@ -149,7 +149,7 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 			if (src.direction_out)
 				if (src.on)
 					if(src.air_contents.check_if_dangerous())
-						message_admins("[key_name(usr)] turns on [src] [log_atmos(src)], pumping its contents into the air at [log_loc(src)].")
+						message_admins("[key_name(usr)] turns on [src] [alert_atmos(src)], pumping its contents into the air at [log_loc(src)].")
 					logTheThing("station", usr, null, "turns on [src] [log_atmos(src)], pumping its contents into the air at [log_loc(src)].")
 				else
 					logTheThing("station", usr, null, "turns off [src] [log_atmos(src)], stopping it from pumping its contents into the air at [log_loc(src)].")
@@ -164,7 +164,7 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 				holding = null
 			if (src.on && src.direction_out)
 				if(src.air_contents.check_if_dangerous())
-					message_admins("[key_name(usr)] removed a tank from [src] [log_atmos(src)], pumping its contents into the air at [log_loc(src)].")
+					message_admins("[key_name(usr)] removed a tank from [src] [alert_atmos(src)], pumping its contents into the air at [log_loc(src)].")
 				logTheThing("station", usr, null, "removed a tank from [src] [log_atmos(src)], pumping its contents into the air at [log_loc(src)].")
 
 		if (href_list["pressure_adj"])

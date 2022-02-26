@@ -675,7 +675,7 @@
 	return data
 
 // Made this a global proc instead of 10 or so instances of duplicate code spread across the codebase (Convair880).
-/proc/scan_atmospheric(var/atom/A as turf|obj, var/pda_readout = 0, var/simple_output = 0, var/visible = 0)
+/proc/scan_atmospheric(var/atom/A as turf|obj, var/pda_readout = 0, var/simple_output = 0, var/visible = 0, var/alert_output = 0)
 	if (istype(A, /obj/ability_button))
 		return
 	if (!A)
@@ -738,7 +738,11 @@
 			[CONCENTRATION_REPORT(check_me, "<br>")]\
 			Temperature: [round(check_me.temperature - T0C)]&deg;C<br>"
 
-		else if (simple_output == 1) // For the log_atmos() proc.
+		else if (simple_output) // For the log_atmos() proc.
+			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature - T0C)]&deg;C</i>\
+			, <b>Contents:</b> <i>[CONCENTRATION_REPORT(check_me, ", ")]</i>"
+
+		else if (alert_output) // For the alert_atmos() proc.
 			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature - T0C)]&deg;C</i>\
 			, <b>Contents:</b> <i>[LOGGING_CONCENTRATION_REPORT(check_me, ", ")]</i>"
 
