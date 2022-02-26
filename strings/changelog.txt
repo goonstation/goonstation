@@ -1,5 +1,7 @@
 
 (t)sat feb 26 22
+(u)TTerc
+(+)Arc plater now automatically ejects the item when it finishes working. You can now also eject the material you inserted into it manually by clicking the plater with empty hand.
 (u)NightmareChamillian
 (p)7580
 (e)🎨|sprites
