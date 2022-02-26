@@ -380,6 +380,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		self.TakeDamage("chest", 0, 30, 0, DAMAGE_BURN)
 		self.take_oxygen_deprivation(-100)
 		self.changeStatus("paralysis", 5 SECONDS)
+		self.force_laydown_standup()
 
 /datum/action/bar/private/icon/jolt
 	duration = 18 SECONDS
