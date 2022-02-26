@@ -2080,11 +2080,10 @@
 			boutput(src, "You have no laws!")
 			return
 
-		var/laws = src.law_rack_connection
-		var/number = 1
-		for (var/law in laws)
-			src.say("[number]. [law]")
-			number++
+		var/laws = src.law_rack_connection.format_for_irc()
+
+		for (var/number in laws)
+			src.say("[number]. [laws[number]]")
 			sleep(1 SECOND)
 
 	verb/cmd_toggle_lock()

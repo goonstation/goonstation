@@ -1593,10 +1593,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	var/laws = src.law_rack_connection
-	var/number = 1
-	for (var/law in laws)
-		src.say("[number]. [law]")
-		number++
+	for (var/number in laws)
+		src.say("[number]. [laws[number]]")
 		sleep(AI_LAW_STATE_DELAY)
 
 #undef AI_LAW_STATE_DELAY

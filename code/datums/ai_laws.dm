@@ -7,7 +7,18 @@
 
 	var/first_registered = FALSE
 	var/obj/machinery/computer/aiupload/default_ai_rack = null
-	var/list/obj/machinery/computer/aiupload/registered_racks
+	var/list/obj/machinery/computer/aiupload/registered_racks = new()
+
+	New() //got to do it this way because ticker is init after map
+		. = ..()
+		boutput(world,"<B>Law rack manager init</B>")
+		for_by_tcl(R, /obj/machinery/computer/aiupload)
+			src.register_new_rack(R)
+			boutput(world,"<B>registered!</B>")
+		for_by_tcl(S, /mob/living/silicon)
+			S.law_rack_connection = src.default_ai_rack
+			boutput(world,"<B>connected</B>")
+
 
 	proc/register_new_rack(var/obj/machinery/computer/aiupload/new_rack)
 		if(isnull(src.default_ai_rack))
@@ -33,6 +44,5 @@
 	proc/format_for_logs(var/glue = "<br>")
 		var/list/laws = list()
 		for(var/obj/machinery/computer/aiupload/R in src.registered_racks)
-			laws += "Laws for [R] at [R.loc]:<br>"
-			laws += R.format_for_logs(glue)
-		return laws
+			laws += "Laws for [R] at [R.loc]:<br>" + R.format_for_logs(glue) +"<br>--------------<br>"
+		return jointext(laws, glue)

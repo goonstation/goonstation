@@ -38,7 +38,7 @@
 /mob/living/silicon/New()
 	..()
 	src.botcard = new /obj/item/card/id(src)
-	src.law_rack_connection = ticker.ai_law_rack_manager.default_ai_rack
+	src.law_rack_connection = ticker?.ai_law_rack_manager.default_ai_rack
 
 /mob/living/silicon/disposing()
 	req_access = null

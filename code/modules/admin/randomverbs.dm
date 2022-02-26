@@ -321,7 +321,7 @@
 	var/list/split = splittext(input, "\n")
 	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
 	for(var/i = 1, i <= 9, i++)
-		if(split[i])
+		if(i < split.len)
 			ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module",split[i],i,true,true)
 	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 	logTheThing("admin", usr, null, "has set the AI laws to [input]")

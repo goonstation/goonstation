@@ -11,13 +11,20 @@
 	var/list/screwed[MAX_CIRCUITS] //there has to be a less hacky way of doing this, but I can't think of it right now
 
 	New(loc)
+		START_TRACKING
 		. = ..()
-		ticker.ai_law_rack_manager.register_new_rack(src)
+		//if the ticker isn't initialised yet, it'll grab this rack when it is (see )
+		ticker?.ai_law_rack_manager.register_new_rack(src)
 
 		src.light = new/datum/light/point
 		src.light.set_brightness(0.4)
 		src.light.attach(src)
 		UpdateIcon()
+
+	disposing()
+		STOP_TRACKING
+		//should almost certainly do some bullshit here about cleaning up ticker and stuff
+		. = ..()
 
 	update_icon()
 		var/image/circuit_image = null
@@ -52,9 +59,7 @@
 			boutput(user, "<span class='alert'>Oh dear, this really shouldn't happen. Call an admin.</span>")
 			return
 
-		var/lawOut = list("<b>The AI's current laws are:</b>")
-
-
+		boutput(user,"<b>This rack's laws are:</b>")
 		src.show_laws(user)
 		return ..()
 
@@ -206,7 +211,7 @@
 
 	proc/format_for_logs(var/glue = "<br>")
 		var/law_counter = 1
-		var/lawOut = ""
+		var/lawOut = list()
 		for (var/obj/item/aiModule/X in law_circuits)
 			if(!X)
 				continue
