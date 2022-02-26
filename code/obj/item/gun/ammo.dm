@@ -482,7 +482,8 @@
 
 	smg
 		name = "9mm SMG magazine"
-		desc = "An extended 9mm magazine."
+		desc = "An extended 9mm magazine for a sub machine gun."
+		icon_state = "smg_magazine"
 		amount_left = 30.0
 		max_amount = 30.0
 		ammo_cat = AMMO_SMG_9MM
