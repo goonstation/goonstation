@@ -141,7 +141,7 @@
 		tgui_process.close_uis(src)
 		if(src.air_contents.check_if_dangerous())
 			message_admins("[src] [log_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
-		logTheThing("station", null, null, "[src] [log_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ","] emptying contents at [log_loc(src)].")
+		logTheThing("station", null, null, "[src] [log_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
 
 		var/atom/location = src.loc
 		location.assume_air(air_contents)
