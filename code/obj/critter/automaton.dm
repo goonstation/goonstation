@@ -280,7 +280,7 @@ var/global/the_automaton = null
 				playsound(src.loc, "sound/musical_instruments/Gong_Rumbling.ogg", 60, 1)
 				qdel (W)
 				sleep(0.5 SECONDS)
-				inserted_key()
+				inserted_key(user)
 
 				playsound(src.loc, "sound/misc/automaton_scratch.ogg", 60, 1)
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/pie/lime) && keycount < AUTOMATON_MAX_KEYS)
