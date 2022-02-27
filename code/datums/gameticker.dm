@@ -25,7 +25,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	var/click_delay = 3
 
-	var/datum/ai_rack_manager/ai_law_rack_manager
+	var/datum/ai_rack_manager/ai_law_rack_manager = new /datum/ai_rack_manager()
 
 	var/skull_key_assigned = 0
 
@@ -137,12 +137,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		#endif
 	else
 		src.mode.announce()
-
-	//AI law racks try to claim default when they're instantiated, so if there's one on the map at start, it should be default
-	//if the default is destroyed, this goes null until a new one is registered
-	//if there's more than one on the map, the first to be registered will be the default - this is janky and bad
-	//either way, the default rack gets asimov - the rest are empty.
-	ai_law_rack_manager = new /datum/ai_rack_manager()
 
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = src.mode.pre_setup()
