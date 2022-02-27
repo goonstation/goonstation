@@ -1,5 +1,9 @@
 
 (t)sun feb 27 22
+(u)Jimmyl
+(p)6907
+(e)🆕|feature
+(*)Added 3 new artifacts -- Emote Forcer Field,Warper and Heat Surge
 (u)Conchuckter
 (p)7496
 (e)🆕⚖|feature, balance
