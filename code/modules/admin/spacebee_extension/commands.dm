@@ -599,6 +599,7 @@
 	name = "renamestation"
 	help_message = "Rename the station."
 	argument_types = list(/datum/command_argument/the_rest="new_name")
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
 	var/new_name = null
 
 	prepare(user, new_name)
