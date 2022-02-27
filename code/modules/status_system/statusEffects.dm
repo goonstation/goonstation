@@ -271,6 +271,9 @@
 				C.dropped(M)
 				M.u_equip(C)
 			owner.visible_message("<span class='alert'>\the [owner][message]</span>")
+			if (ismob(owner))
+				var/mob/fucko = owner
+				fucko.ghostize()
 			qdel(owner)
 
 	simplehot/stimulants
@@ -292,7 +295,8 @@
 				var/mob/M = owner
 				APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims", 500)
 				M.add_stam_mod_max("stims", 500)
-				M.add_stun_resist_mod("stims", 1000)
+				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "stims", 1000)
+				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "stims", 1000)
 				var/datum/statusEffect/simpledot/stimulant_withdrawl/SW = owner.hasStatus("stimulant_withdrawl")
 				if(istype(SW))
 					tickspassed += SW.tickspassed
@@ -305,7 +309,8 @@
 				var/mob/M = owner
 				REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims")
 				M.remove_stam_mod_max("stims")
-				M.remove_stun_resist_mod("stims")
+				REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "stims")
+				REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "stims")
 
 			owner.changeStatus("stimulant_withdrawl", tickspassed/(3), optional = tickspassed)
 
@@ -1292,7 +1297,8 @@
 			if(ismob(owner))
 				owner.delStatus("janktank_withdrawl")
 				var/mob/M = owner
-				M.add_stun_resist_mod("janktank", 40)
+				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "janktank", 40)
+				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "janktank", 40)
 			else
 				owner.delStatus("janktank")
 
@@ -1300,7 +1306,8 @@
 			. = ..()
 			if(ismob(owner))
 				var/mob/M = owner
-				M.remove_stun_resist_mod("janktank")
+				REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "janktank")
+				REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "janktank")
 				owner.changeStatus("janktank_withdrawl", 10 MINUTES)
 
 		onUpdate(timePassed)
@@ -1757,7 +1764,7 @@
 		if (!ismob(owner)) return
 		var/mob/M = owner
 		if (!M.bioHolder || M.bioHolder.HasEffect("resist_electric") || M.traitHolder.hasTrait("unionized"))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				M.delStatus("magnetized")
 			return
 		if (optional)

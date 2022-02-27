@@ -263,7 +263,7 @@
 				H.remove_stamina(cost)
 
 		if(moveDelayDuration && moveDelay)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				person.movement_delay_modifier += moveDelay
 				person.apply_movement_delay_until = world.time + moveDelayDuration //handle move() started mid-delay
 				sleep(moveDelayDuration)
@@ -1050,7 +1050,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 						user.unlock_medal("High Five!", 1)
 					break
 			if (!hit)
-				SPAWN_DBG(secondhit_delay)
+				SPAWN(secondhit_delay)
 					step(spark, direction, 2)
 					for(var/atom/movable/A in spark.loc)
 						if(A in attacked) continue
@@ -1143,7 +1143,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			if (!hit)
 				playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0, 0.1, 1.4)
 
-			SPAWN_DBG(secondhitdelay)
+			SPAWN(secondhitdelay)
 
 				turf = get_step(master, direction)
 				var/obj/itemspecialeffect/simple2/SS = new /obj/itemspecialeffect/simple2
@@ -1521,7 +1521,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				flick(K.end.icon_state, K.end)
 
 			//Reset the effects after they're drawn and put back into master for re-use later
-			SPAWN_DBG(0.8 SECONDS)
+			SPAWN(0.8 SECONDS)
 				K.start.loc = master
 				K.mid1.loc = master
 				K.mid2.loc = master
@@ -1722,7 +1722,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				if(A in attacked) continue
 				if(isTarget(A))
 					A.Attackby(master, user, params, 1)
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						A.Attackby(master, user, params, 1)
 					attacked += A
 					hit = 1
@@ -1813,7 +1813,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			flick(icon_state,src)
 		create_time = world.time //mbc : kind of janky lightweight way of making us not clash with ourselves. compare spawn time.
 		if (del_self)
-			SPAWN_DBG(del_time)
+			SPAWN(del_time)
 				qdel(src)
 
 	attackby()
@@ -1982,7 +1982,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		setup(atom/location, forced = 0)
 			loc = location
 			if (del_self)
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					qdel(src)
 
 		was_clashed(var/playsound = 1)

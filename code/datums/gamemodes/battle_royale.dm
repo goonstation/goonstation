@@ -124,10 +124,17 @@ var/global/list/datum/mind/battle_pass_holders = list()
 		// Stuff them on the shuttle
 	player.current.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
 	equip_battler(player.current)
-	SPAWN_DBG(MAX_TIME_ON_SHUTTLE)
+	if (ishuman(player.current))
+		var/mob/living/carbon/human/H = player.current
+		H.AddComponent(/datum/component/battleroyale_death)
+	SPAWN(MAX_TIME_ON_SHUTTLE)
 		if(istype(get_area(player.current),/area/shuttle/battle) || istype(get_area(player.current),/area/shuttle_transit_space/west) )
 			boutput(player.current,"<span class='alert'>You are thrown out of the shuttle for taking too long!</span>")
-			player.current.set_loc(pick(get_area_turfs(current_battle_spawn,1)))
+			var/list/found_areas = get_area_turfs(current_battle_spawn,1)
+			if (isnull(found_areas))
+				player.current.set_loc(pick(get_area_turfs(/area/station/maintenance/,1)))
+			else
+				player.current.set_loc(pick(found_areas))
 			player.current.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 			player.current.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
 	SHOW_BATTLE_ROYALE_TIPS(player.current)
@@ -136,7 +143,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 /datum/game_mode/battle_royale/check_finished()
 	var/someone_died = 0
 	for(var/datum/mind/M in living_battlers)
-		if(isdead(M.current) || issilicon(M.current) || isobserver(M.current) || inafterlife(M.current) || isVRghost(M.current))
+		if(isdead(M.current) || !ishuman(M.current) || inafterlife(M.current) || isVRghost(M.current))
 			living_battlers.Remove(M)
 			DEBUG_MESSAGE("[M.current.name] died. There are [living_battlers.len] left!")
 			recently_deceased.Add(M)
@@ -146,8 +153,8 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	else if(someone_died && living_battlers.len % 10 == 0)
 		command_alert("[living_battlers.len] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
 	if(living_battlers.len <= 1)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /datum/game_mode/battle_royale/declare_completion()
@@ -197,7 +204,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	if(src.next_storm < world.time)
 		src.next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
 		storm.event_effect()
-		SPAWN_DBG(85 SECONDS)
+		SPAWN(85 SECONDS)
 			var/you_died_good_work = recently_deceased.len > 0 ? "The following players recently died: " : ""
 			for(var/datum/mind/M in recently_deceased)
 				you_died_good_work += " [M.current.name],"
@@ -207,7 +214,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	// Is it time for a supply drop?
 	if(src.next_drop < world.time)
 		next_drop = world.time + rand(MIN_TIME_BETWEEN_SUPPLY_DROPS,MAX_TIME_BETWEEN_SUPPLY_DROPS)
-		SPAWN_DBG(0) dropper.event_effect("Gamemode", drop_locations[pick(drop_locations)])
+		SPAWN(0) dropper.event_effect("Gamemode", drop_locations[pick(drop_locations)])
 
 
 // Does what it says on the tin

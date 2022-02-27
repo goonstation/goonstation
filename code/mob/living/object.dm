@@ -35,7 +35,7 @@
 		src.zone_sel = new(src)
 		src.attach_hud(zone_sel)
 
-		message_admins("[key_name(controller)] possessed [loc] at [showCoords(loc.x, loc.y, loc.z)].")
+		message_admins("[key_name(controller)] possessed [loc] at [log_loc(loc)].")
 		var/obj/item/possessed
 		if (!isitem(loc))
 			if (isobj(loc))
@@ -96,10 +96,12 @@
 
 		src.visible_message("<span class='alert'><b>[possessed] comes to life!</b></span>") // was [src] but: "the living space thing comes alive!"
 		animate_levitate(src, -1, 20, 1)
-		src.add_stun_resist_mod("living_object", 1000)
+		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST, "living_object", 1000)
+		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "living_object", 1000)
 
 	disposing()
-		src.remove_stun_resist_mod("living_object")
+		REMOVE_MOB_PROPERTY(src, PROP_STUN_RESIST, "living_object")
+		REMOVE_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "living_object")
 		..()
 
 	equipped()
@@ -115,7 +117,7 @@
 			. += "<span class='notice'>The ethereal grip on this object appears to be weak.</span>"
 
 	meteorhit(var/obj/O as obj)
-		src.death(1)
+		src.death(TRUE)
 		return
 
 	restrained()
@@ -184,7 +186,7 @@
 		health -= brute
 		health = min(max_health, health)
 		if (src.health <= 0)
-			src.death(0)
+			src.death(FALSE)
 
 	HealDamage(zone, brute, burn)
 		TakeDamage(zone, -brute, -burn)
@@ -228,7 +230,7 @@
 				if (isturf(src.item.loc))
 					src.item.set_loc(src)
 				else
-					src.death(0)
+					src.death(FALSE)
 
 		//To reflect updates of the items appearance etc caused by interactions.
 		src.name = "[name_prefix][src.item.name]"

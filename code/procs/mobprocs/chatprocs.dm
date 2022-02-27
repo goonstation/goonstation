@@ -13,7 +13,7 @@
 	set hidden = TRUE
 
 	var/mob/living/M = src
-	if(!istype(M) || !isalive(M))
+	if(!istype(M) || !isalive(M) || isAIeye(M))
 		return
 
 	M.speech_bubble.icon_state = "typing"
@@ -21,7 +21,7 @@
 	var/start_time = TIME
 	M.last_typing = start_time
 
-	SPAWN_DBG(15 SECONDS)
+	SPAWN(15 SECONDS)
 		if(M.last_typing == start_time && src.GetOverlayImage("speech_bubble")?.icon_state == "typing")
 			src.UpdateOverlays(null, "speech_bubble")
 
@@ -522,7 +522,7 @@
 				src.emote_allowed = 0
 				src.last_emote_time = world.time
 				src.last_emote_wait = time
-				SPAWN_DBG(time)
+				SPAWN(time)
 					src.emote_allowed = 1
 			return 1
 		else

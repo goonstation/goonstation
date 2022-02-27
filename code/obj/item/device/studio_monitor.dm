@@ -3,7 +3,6 @@
 	desc = "An incredibly high quality studio monitor with an uncomfortable number of high voltage stickers. Manufactured by Funk-Tek"
 	icon = 'icons/obj/loudspeakers.dmi'
 	icon_state = "amp_stack"
-	//inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi' // Gannets to make sweet inhand
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 
 	anchored = 0
@@ -45,7 +44,7 @@
 
 	speech_bubble()
 		UpdateOverlays(speech_bubble, "speech_bubble")
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			UpdateOverlays(null, "speech_bubble")
 
 	disposing()
@@ -131,7 +130,7 @@
 			effect.play_notes()
 			for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
 				S.play_song()
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				stop_notes()
 		else
 			strums = ( strums + 1 % 2000 )
@@ -215,7 +214,7 @@
 
 	shred
 		name = "Shred"
-		desc = "Lightbreaker Effect"
+		desc = "Sound so shrill it shatters lights."
 		icon_state = "shred"
 		cooldown = 2 MINUTES
 
@@ -239,7 +238,7 @@
 
 	infrasound
 		name = "Infrasound"
-		desc = "Play something so deep it hurts."
+		desc = "Play something so deep it hurts.  Causes headaches for those nearby and nausea to those that can hear it."
 		icon_state = "infrasound"
 		cooldown = 45 SECONDS
 
@@ -261,7 +260,7 @@
 
 	ultrasound
 		name = "Ultrasound"
-		desc = "Play something so high it hurts."
+		desc = "Play something so high it hurts. Penetrate organs and stuns!"
 		icon_state = "ultrasound"
 		cooldown = 45 SECONDS
 
@@ -306,7 +305,7 @@
 
 	heal
 		name = "Chill Beats to Murder To"
-		desc = "Gentle healing effect that allows you to do more."
+		desc = "Gentle healing effect that improves your stamina."
 		icon_state = "chill_murder"
 		status_effect_ids = list("music_energized_big", "chill_murder")
 		sound_clip = "sound/musical_instruments/bard/lead2.ogg"
@@ -320,14 +319,14 @@
 
 	perseverance
 		name = "Perseverance"
-		desc = "Health Boost and Minor Stamina Regeneration"
+		desc = "Boosts health and improves stamina regeneration"
 		icon_state = "perseverance"
 		status_effect_ids = list("music_hp_up", "music_refreshed")
 		sound_clip = "sound/musical_instruments/bard/lead1.ogg"
 
 	epic_climax
 		name = "EPIC CLIMAX"
-		desc = "Play a sound that drives the time into a murder rage! Taxing physically and emotionally."
+		desc = "Play a sound that drives the team into a murder rage! Taxing physically and emotionally."
 		icon_state = "epic_climax"
 		status_effect_ids = list("music_hp_up_big", "epic_climax")
 		song_duration = 69 SECONDS
@@ -399,7 +398,7 @@
 	onDelete()
 		..()
 		if(istype(song, /obj/ability_button/nukie_rocker/epic_climax))
-			SPAWN_DBG(30 SECONDS)
+			SPAWN(30 SECONDS)
 				instrument.overheat(FALSE)
 
 	onEnd()
@@ -592,7 +591,8 @@
 			var/mob/M = owner
 			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims", 100)
 			M.add_stam_mod_max("stims", 100)
-			M.add_stun_resist_mod("stims", 100)
+			APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "stims", 100)
+			APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "stims", 100)
 
 	onRemove()
 		. = ..()
@@ -601,7 +601,8 @@
 			M.jitteriness = 110
 			REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims")
 			M.remove_stam_mod_max("stims")
-			M.remove_stun_resist_mod("stims")
+			REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "stims")
+			REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "stims")
 
 	onUpdate(timePassed)
 		. = ..()

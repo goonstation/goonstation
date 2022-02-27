@@ -324,7 +324,7 @@
 
 /mob/living/silicon/lastgasp()
 	// making this spawn a new proc since lastgasps seem to be related to the mob loop hangs. this way the loop can keep rolling in the event of a problem here. -drsingh
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if (!src || !src.client) return											// break if it's an npc or a disconnected player
 		var/enteredtext = winget(src, "mainwindow.input", "text")				// grab the text from the input bar
 		if ((copytext(enteredtext,1,6) == "say \"") && length(enteredtext) > 5)	// check if the player is trying to say something
@@ -394,7 +394,7 @@ td {
 		usr.Browse(output, "window=module_editor;size=400x600")
 
 	Topic(href, href_list)
-		usr_admin_only
+		USR_ADMIN_ONLY
 		var/obj/item/robot_module/D = locate(href_list["mod"])
 		if (!D)
 			boutput(usr, "<span class='alert'>Missing module reference!</span>")
@@ -453,7 +453,7 @@ var/global/list/module_editors = list()
 	set desc = "Module editor! Woo!"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if (!istype(M))
 		boutput(src, "<span class='alert'>That thing has no module!</span>")
@@ -651,8 +651,7 @@ var/global/list/module_editors = list()
 		else if (src.syndicate && src.syndicate_possible && !src.emagged) // Syndie laws don't matter if we're emagged.
 			boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span>")
 			boutput(src, "<span class='alert'><b>Law ROM restored. You have been reprogrammed to serve the Syndicate!</b></span>")
-			SPAWN_DBG(0)
-				alert(src, "You are a Syndicate sabotage unit. You must assist Syndicate operatives with their mission.", "You are a Syndicate robot!")
+			tgui_alert(src, "You are a Syndicate sabotage unit. You must assist Syndicate operatives with their mission.", "You are a Syndicate robot!")
 
 			switch (action)
 				if ("brain_added")
@@ -661,6 +660,8 @@ var/global/list/module_editors = list()
 					logTheThing("combat", src, M2 ? M2 : null, "was activated as a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				if ("admin")
 					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot by an admin at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
+				if ("converted")
+					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot by a cyborg converter at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				else
 					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 
@@ -673,8 +674,8 @@ var/global/list/module_editors = list()
 
 			if (isAI(src)) // Rogue AIs get special laws.
 				var/mob/living/silicon/ai/A
-				if (istype(src, /mob/dead/aieye))
-					var/mob/dead/aieye/E = src
+				if (isAIeye(src))
+					var/mob/living/intangible/aieye/E = src
 					A = E.mainframe
 				else
 					A = src
@@ -707,7 +708,7 @@ var/global/list/module_editors = list()
 						S.show_text("<b>Your laws have been changed!</b>", "red")
 						S.show_laws()
 						S << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-					var/mob/dead/aieye/E = C.mob
+					var/mob/living/intangible/aieye/E = C.mob
 					if (istype(E))
 						E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 

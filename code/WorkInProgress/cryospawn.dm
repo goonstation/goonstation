@@ -4,7 +4,7 @@
 /obj/cryotron_spawner
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 #ifdef RP_MODE
 			new /obj/cryotron(src.loc)
 #endif
@@ -105,7 +105,7 @@
 		src.icon_state = "cryotron_down"
 		flick("cryotron_go_down", src)
 
-		SPAWN_DBG(1.9 SECONDS)
+		SPAWN(1.9 SECONDS)
 			if (!thePerson || thePerson.loc != src)
 				busy = 0
 				return

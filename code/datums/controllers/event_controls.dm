@@ -79,10 +79,12 @@ var/datum/event_controller/random_events
 
 	proc/event_cycle()
 		event_cycle_count++
-		if (events_enabled && (total_clients() >= minimum_population))
-			do_random_event(events)
-		else
+		if (total_clients() <= minimum_population)
+			message_admins("<span class='internal'>A random event would have happened now, but there aren't enough players!</span>")
+		else if (!events_enabled)
 			message_admins("<span class='internal'>A random event would have happened now, but they are disabled!</span>")
+		else
+			do_random_event(events)
 
 		major_event_timer = rand(time_between_events_lower,time_between_events_upper)
 		next_major_event = ticker.round_elapsed_ticks + major_event_timer

@@ -209,10 +209,10 @@
 	//loop through range(30) three times. sure. whatever.
 	//FIX LATER, putting it in a spawn and lagchecking for now.
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for (var/obj/machinery/door/window/brigdoor/M in range(30, src))
 			if (M.id == src.id)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if (M) M.close()
 			LAGCHECK(LAG_HIGH)
 
@@ -259,6 +259,15 @@
 			. += list(
 				"flasher" = TRUE,
 				"recharging" = F.last_flash && world.time < F.last_flash + 150
+			)
+			break
+
+	for (var/obj/machinery/floorflusher/FF in range(30, src))
+		if (FF.id == src.id)
+			. += list(
+				"flusher" = TRUE,
+				"flusheropen" = FF.open,
+				"opening" = FF.opening
 			)
 			break
 
@@ -310,6 +319,20 @@
 					logTheThing("station", usr, null, "sets off flashers from a door timer: [src] [log_loc(src)].")
 					return TRUE
 
+		if ("toggle-flusher")
+			for (var/obj/machinery/floorflusher/FF in range(30, src))
+				if (FF.id == src.id)
+					src.add_fingerprint(usr)
+					if (FF.flush == TRUE || FF.opening == TRUE)
+						return
+					if (FF.open != 1)
+						FF.openup()
+						logTheThing("station", usr, null, "opens a floor flusher from a door timer: [src] [log_loc(src)].")
+					else
+						FF.closeup()
+						logTheThing("station", usr, null, "closes a floor flusher from a door timer: [src] [log_loc(src)].")
+					return TRUE
+
 /obj/machinery/door_timer/attack_ai(mob/user)
 	return src.Attackhand(user)
 
@@ -329,6 +352,6 @@
 		else if (src.time > 0)
 			icon_state = "doortimer0"
 		else
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				icon_state = "doortimer0"
 			icon_state = "doortimer2"

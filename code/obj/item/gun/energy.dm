@@ -597,11 +597,23 @@
 					if (0) // It's busted, Jim.
 						continue
 					if (1)
-						L["Tele at [get_area(Control)]: Locked in ([ismob(Control.locked.loc) ? "[Control.locked.loc.name]" : "[get_area(Control.locked)]"])"] += Control
+						var/index = "Tele at [get_area(Control)]: Locked in ([ismob(Control.locked.loc) ? "[Control.locked.loc.name]" : "[get_area(Control.locked)]"])"
+						if (L[index])
+							L[dedupe_index(L, index)] = Control
+						else
+							L[index] = Control
 					if (2)
-						L["Tele at [get_area(Control)]: *NOPOWER*"] += Control
+						var/index = "Tele at [get_area(Control)]: *NOPOWER*"
+						if (L[index])
+							L[dedupe_index(L, index)] = Control
+						else
+							L[index] = Control
 					if (3)
-						L["Tele at [get_area(Control)]: Inactive"] += Control
+						var/index = "Tele at [get_area(Control)]: Inactive"
+						if (L[index])
+							L[dedupe_index(L, index)] = Control
+						else
+							L[index] = Control
 			else
 				continue
 
@@ -665,6 +677,15 @@
 		var/datum/projectile/tele_bolt/TB = current_projectile
 		TB.target = our_target
 		return ..(target, start, user)
+
+	proc/dedupe_index(list/L, index)
+		var/index_base = index
+		var/i = 2
+		while(L[index])
+			index = index_base
+			index += " [i]"
+			i++
+		return index
 
 ///////////////////////////////////////Ghost Gun
 /obj/item/gun/energy/ghost
@@ -962,6 +983,27 @@
 		set_current_projectile(new/datum/projectile/shrink_beam/grow)
 		projectiles = list(current_projectile)
 
+// stinky ray
+/obj/item/gun/energy/stinkray
+	name = "stink ray"
+	item_state = "gun"
+	force = 5.0
+	icon_state = "ghost"
+	cell_type = /obj/item/ammo/power_cell/med_power
+	uses_multiple_icon_states = 1
+
+	New()
+		set_current_projectile(new/datum/projectile/bioeffect_beam/stinky)
+		projectiles = list(current_projectile)
+		..()
+
+	update_icon()
+		..()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			ratio = round(ratio, 0.25) * 100
+			src.icon_state = "ghost[ratio]"
 
 ///////////////////////////////////////Glitch Gun
 /obj/item/gun/energy/glitch_gun
@@ -1027,12 +1069,22 @@
 	icon_state = "hunter"
 	item_state = "hunter"
 	base_item_state = "hunter"
+	var/hunter_key = "" // The owner of this rifle.
+	mats = null
 
 	New()
 		..()
 		if(istype(src.loc, /mob/living))
 			var/mob/M = src.loc
 			src.AddComponent(/datum/component/self_destruct, M)
+			src.AddComponent(/datum/component/send_to_target_mob, src)
+			src.hunter_key = M.mind.key
+			START_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
+			flick("[src.base_item_state]-tele", src)
+
+	disposing()
+		. = ..()
+		STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
 
 /////////////////////////////////////// Pickpocket Grapple, Grayshift's grif gun
 /obj/item/gun/energy/pickpocket
@@ -1125,7 +1177,7 @@
 		var/turf/tgt = get_turf(target)
 		if(isrestrictedz(us.z) || isrestrictedz(tgt.z))
 			boutput(user, "\The [src.name] jams!")
-			message_admins("[key_name(user)] is a nerd and tried to fire a pickpocket gun in a restricted z-level at [showCoords(us.x, us.y, us.z)].")
+			message_admins("[key_name(user)] is a nerd and tried to fire a pickpocket gun in a restricted z-level at [log_loc(us)].")
 			return
 
 
@@ -1291,7 +1343,7 @@
 					current_projectile.cost = 170
 					item_state = "lawg-bigshot"
 					playsound(M, "sound/vox/high.ogg", 50)
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						playsound(M, "sound/vox/explosive.ogg", 50)
 				if ("clownshot","clown")
 					set_current_projectile(projectiles["clownshot"])
@@ -1327,7 +1379,7 @@
 					playsound(src.loc, "sound/weapons/armbomb.ogg", 75, 1, -3)
 					logTheThing("combat", src, null, "Is not the law. Caused explosion with Lawbringer.")
 
-					SPAWN_DBG(2 SECONDS)
+					SPAWN(2 SECONDS)
 						src.blowthefuckup(15)
 					return 0
 				else

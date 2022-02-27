@@ -131,7 +131,7 @@
 		moblist.len = 0
 		moblist_names = ""
 		for (var/obj/machinery/door/poddoor/buff/staging/S in staging)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				S.close()
 		var/mobcount = 0
 		for (var/mob/living/M in staging)
@@ -182,15 +182,15 @@
 			D.used = 0
 		current_match_id++
 		var/spawned_match_id = current_match_id
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/obj/machinery/door/poddoor/buff/gauntlet/S in gauntlet)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					S.open()
 			for (var/obj/machinery/door/poddoor/buff/gauntlet/S in staging)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					S.open()
 		allow_processing = 1
-		SPAWN_DBG(2 MINUTES)
+		SPAWN(2 MINUTES)
 			if (state == 1 && current_match_id == spawned_match_id)
 				announceAll("Game did not start after 2 minutes. Resetting arena.")
 				resetArena()
@@ -199,12 +199,12 @@
 		if (state == 2)
 			return
 		state = 2
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/obj/machinery/door/poddoor/buff/gauntlet/S in gauntlet)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					S.close()
 			for (var/obj/machinery/door/poddoor/buff/gauntlet/S in staging)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					S.close()
 			for (var/mob/living/M in gauntlet)
 				if (M in moblist)
@@ -287,7 +287,7 @@
 			command_alert(command_report, "Critter Gauntlet match finished")
 		statlog_gauntlet(moblist_names, score, current_level)
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/obj/item/I in staging)
 				qdel(I)
 			for (var/obj/item/I in gauntlet)
@@ -307,13 +307,13 @@
 					qdel(D)
 
 			for (var/obj/machinery/door/poddoor/buff/staging/S in staging)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					S.open()
 			for (var/obj/machinery/door/poddoor/buff/gauntlet/S in gauntlet)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					S.close()
 			for (var/obj/machinery/door/poddoor/buff/gauntlet/S in staging)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					S.close()
 
 		if (current_event)
@@ -338,7 +338,7 @@
 		new /obj/item/extinguisher/virtual(target)
 		new /obj/item/card/id/gauntlet(target, forwhom)
 		var/obj/item/artifact/activator_key/A = new /obj/item/artifact/activator_key(target)
-		SPAWN_DBG(2.5 SECONDS)
+		SPAWN(2.5 SECONDS)
 			A.name = "Artifact Activator Key"
 
 	proc/spawnMeds(var/turf/target)
@@ -362,7 +362,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			viewing = locate() in world
 			staging = locate() in world
 			for (var/area/G in world)
@@ -606,7 +606,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			var/T = pick(gauntlet_controller.spawnturfs)
 			var/obj/O = new ST(T)
 			showswirl(T)
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				O.ArtifactActivated()
 
 		forcewall
@@ -988,7 +988,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 					var/turf/target = pick(gauntlet_controller.spawnturfs)
 					target.overlays += marker
 
-					SPAWN_DBG(2 SECONDS)
+					SPAWN(2 SECONDS)
 						if (!D2)
 							return
 						D2.set_loc(target)

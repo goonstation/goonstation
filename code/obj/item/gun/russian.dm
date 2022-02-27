@@ -45,10 +45,10 @@
 		else if(src.shotsLeft == 1)
 			src.shotsLeft = 0
 			playsound(user, "sound/weapons/Gunshot.ogg", 100, 1)
-			for(var/mob/O in AIviewers(user, null))
-				if (O.client)	O.show_message("<span class='alert'><B>BOOM!</B> [user]'s head explodes.</span>", 1, "<span class='alert'>You hear someone's head explode.</span>", 2)
-				user.TakeDamage("head", 300, 0)
-				take_bleeding_damage(user, null, 500, DAMAGE_STAB)
+			user.tri_message("<span class='alert'><B>BOOM!</B></span>", "<span class='alert'><B>BOOM!</B> [user]'s head explodes.</span>", "<span class='alert'>You hear someone's head explode.</span>", 2)
+			user.TakeDamage("head", 300, 0)
+			take_bleeding_damage(user, null, 500, DAMAGE_STAB)
+			logTheThing("combat", user, null, "shoots themselves with [src] at [log_loc(user)].")
 			inventory_counter.update_number(0)
 			return 1
 		else

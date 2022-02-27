@@ -5,7 +5,7 @@
 	icon = 'icons/obj/zoldorf.dmi'
 	icon_state = "zolsoulgrey"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	density = 0
 	canmove = 0
 	blinded = 0
@@ -397,7 +397,7 @@
 		if((i in range(1,usr.loc)) && (Tb in range(1,Ta)))
 			if(!pz.GetOverlayImage("fortunetelling"))
 				pz.UpdateOverlays(image('icons/obj/zoldorf.dmi',"fortunetelling"),"fortunetelling")
-				SPAWN_DBG(0.6 SECONDS)
+				SPAWN(0.6 SECONDS)
 					if(pz)
 						pz.ClearSpecificOverlays("fortunetelling")
 			if((istype(i,/obj/item/paper/thermal/playerfortune)) && (Ta == get_turf(usr.loc)))

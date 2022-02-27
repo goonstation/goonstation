@@ -30,7 +30,7 @@
 			R.speed = R.base_speed - R.turbo
 			R.drive(R.dir, R.speed)
 			R.overlays += image('icons/mob/robots.dmi', "up-speed")
-			SPAWN_DBG(1.5 SECONDS)
+			SPAWN(1.5 SECONDS)
 				R.speed = R.base_speed
 				if (R.driving) R.drive(R.dir, 2)
 				R.overlays -= image('icons/mob/robots.dmi', "up-speed")
@@ -79,7 +79,7 @@
 		src.set_loc(spawnloc)
 		src.set_dir(spawndir)
 		source_car = sourcecar
-		SPAWN_DBG(7.5 SECONDS)
+		SPAWN(7.5 SECONDS)
 			playsound(src, "sound/mksounds/itemdestroy.ogg",45, 0)
 			qdel(src)
 		move_process()
@@ -95,7 +95,7 @@
 		if (src.qdeled || src.disposed)
 			return
 		step(src,dir)
-		SPAWN_DBG(1 DECI SECOND) move_process()
+		SPAWN(1 DECI SECOND) move_process()
 
 /obj/super_racing_butt/
 	name = "superbutt"
@@ -111,7 +111,7 @@
 		src.set_loc(spawnloc)
 		src.set_dir(spawndir)
 		source_car = sourcecar
-		SPAWN_DBG(7.5 SECONDS)
+		SPAWN(7.5 SECONDS)
 			playsound(src, "sound/mksounds/itemdestroy.ogg",45, 0)
 			qdel(src)
 		move_process()
@@ -136,10 +136,10 @@
 
 		if(target)
 			step_towards(src,target)
-			SPAWN_DBG(1 DECI SECOND) move_process()
+			SPAWN(1 DECI SECOND) move_process()
 		else
 			step(src, src.dir)
-			SPAWN_DBG(1 DECI SECOND) move_process()
+			SPAWN(1 DECI SECOND) move_process()
 
 /obj/racing_trap_banana/
 	name = "banana peel"
@@ -429,13 +429,13 @@
 
 		playsound(src, "sound/mksounds/cpuspin.ogg",33, 0)
 
-		SPAWN_DBG(magnitude+1)
+		SPAWN(magnitude+1)
 			cant_control = 0
 			dir_original = 0
 			set_density(1)
 			src.overlays -= out_of_control
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for(var/i=0, i<magnitude, i++)
 				src.set_dir(turn(src.dir, 90))
 				sleep(0.1 SECONDS)
@@ -447,14 +447,14 @@
 
 //		if(istype(src,/obj/racing_clowncar)) //what the fuck? src is a power up, why would it be a clown car
 		icon_state = "clowncar_boost"
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			speed = base_speed
 			if (driving) drive(dir, speed)
 			icon_state = "clowncar"
 
 //		else
 //			R.overlays += image('icons/mob/robots.dmi', "up-speed")
-//			SPAWN_DBG(5 SECONDS)
+//			SPAWN(5 SECONDS)
 //				R.speed = R.base_speed
 //				if (R.driving) R.drive(R.dir, 2)
 //				R.overlays -= image('icons/mob/robots.dmi', "up-speed")

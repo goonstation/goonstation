@@ -34,7 +34,7 @@
 
 		onclose(user, "telescope", src)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			callJsFunc(user, "setRef", list("\ref[src]")) //This is shit but without it, it calls the JS before the window is open and doesn't work.
 			loadContent("Starmap", "#contentInner")
 

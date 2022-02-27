@@ -81,7 +81,7 @@
 			src.UpdateIcon()
 		return 1
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
 		if(!isliving(usr))
 			return

@@ -89,7 +89,7 @@
 		icon_state = "goosebot-wild"
 		src.visible_message("<span class='combat'><b>[src] fires an egg at [target.name]!</b></span>")
 		playsound(src.loc, "sound/effects/pump.ogg", 50, 1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			E.throwforce = 1
 			sleep(4 SECONDS)
 			icon_state = "goosebot"

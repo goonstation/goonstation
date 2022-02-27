@@ -16,13 +16,13 @@
 	var/list/supply_access_list = list(access_hangar, access_cargo, access_supply_console, access_mining, access_mining_shuttle, access_mining_outpost)
 	var/list/research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_medical_lockers, access_research, access_robotics, access_chemistry, access_pathology)
 	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_securitylockers, access_carrypermit, access_contrabandpermit)
-	var/list/command_access_list = list(access_research_director, access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_ghostdrone)
+	var/list/command_access_list = list(access_research_director, access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_dwaine_superuser)
 	var/list/allowed_access_list
 	req_access = list(access_change_ids)
 	desc = "A computer that allows an authorized user to change the identification of other ID cards."
 
 	deconstruct_flags = DECON_MULTITOOL
-	light_r =0.7
+	light_r = 0.7
 	light_g = 1
 	light_b = 0.1
 
@@ -396,9 +396,11 @@
 			var/access_type = text2num_safe(href_list["access"])
 			var/access_allowed = text2num_safe(href_list["allowed"])
 			if(access_type in get_all_accesses())
-				src.modify.access -= access_type
-				if(access_allowed == 1)
+				if(!access_allowed)
+					src.modify.access -= access_type
+				else
 					src.modify.access += access_type
+				logTheThing("station", usr, null, "[access_allowed ? "adds" : "removes"] [get_access_desc(access_type)] access to the ID card (<b>[src.modify.registered]</b>).")
 
 	if (href_list["pronouns"])
 		if (src.authenticated && src.modify)
@@ -419,11 +421,14 @@
 
 			if (t1 == "Custom Assignment")
 				t1 = input(usr, "Enter a custom job assignment.", "Assignment")
+				if(!src.modify || !src.authenticated)
+					return
 				t1 = strip_html(t1, 100, 1)
-				logTheThing("station", usr, null, "changes the assignment on the ID card from [src.modify.assignment] to [t1]")
+				logTheThing("station", usr, null, "changes the assignment on the ID card (<b>[src.modify.registered]</b>) from <b>[src.modify.assignment]</b> to <b>[t1]</b>.")
 				playsound(src.loc, "keyboard", 50, 1, -15)
 			else
 				src.modify.access = get_access(t1)
+				logTheThing("station", usr, null, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to <b>[t1]</b>.")
 
 			//Wire: This possibly happens after the input() above, so we re-do the initial checks
 			if (src.authenticated && src.modify)
@@ -438,7 +443,7 @@
 			t1 = strip_html(t1, 100, 1)
 
 			if ((src.authenticated && src.modify == t2 && (in_interact_range(src, usr) || (issilicon(usr) || isAI(usr))) && istype(src.loc, /turf)))
-				logTheThing("station", usr, null, "changes the registered name on the ID card from [src.modify.registered] to [t1]")
+				logTheThing("station", usr, null, "changes the registered name on the ID card from <b>[src.modify.registered]</b> to <b>[t1]</b>.")
 				src.modify.registered = t1
 
 			playsound(src.loc, "keyboard", 50, 1, -15)
@@ -456,6 +461,7 @@
 					src.modify.pin = 9999
 				else
 					src.modify.pin = round(newpin)
+				logTheThing("station", usr, null, "changes the pin on the ID card (<b>[src.modify.registered]</b>) to [src.modify.pin].")
 				playsound(src.loc, "keyboard", 50, 1, -15)
 
 	if (href_list["mode"])
@@ -505,11 +511,13 @@
 			src.custom_names[slot] = src.modify.assignment
 		src.custom_access_list[slot] = src.modify.access.Copy()
 		src.custom_access_list[slot] &= allowed_access_list //prevent saving non-allowed accesses
+		logTheThing("station", usr, null, "saves custom assignment <b>[src.custom_names[slot]]</b>.")
 	if (href_list["apply"])
 		var/slot = text2num_safe(href_list["apply"])
 		src.modify.assignment = src.custom_names[slot]
 		var/list/selected_access_list = src.custom_access_list[slot]
 		src.modify.access = selected_access_list.Copy()
+		logTheThing("station", usr, null, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to custom assignment <b>[src.modify.assignment]</b>.")
 	if (src.modify)
 		src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
 	if (src.eject)

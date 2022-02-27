@@ -56,7 +56,7 @@
 								continue
 							overlayed_turfs += T
 							T.overlays += valid_overlay_area
-					SPAWN_DBG(5 SECONDS)
+					SPAWN(5 SECONDS)
 						for(var/turf/T in overlayed_turfs)
 							T.overlays -= valid_overlay_area
 					var/confirmation = input(user, "Are you sure you would like to deploy? [length(chosen_mobs) <= 1 ? (is_the_nuke_there ? "You're currently alone!" : "You don't have the nuke nearby, in addition to you being alone!") : (is_the_nuke_there ? "You have [length(chosen_mobs)] who will deploy with you." : "The nuke isn't close enough to come with you!")]") in list("Yes", "No")
@@ -94,7 +94,7 @@
 
 	proc/send_to_pod(mob/user)
 		for(var/mob/living/carbon/M in range(4, user.loc))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/L = pick_landmark(LANDMARK_SYNDICATE_ASSAULT_POD_TELE)
 				if(!L) //fuck
 					return
@@ -105,12 +105,12 @@
 				M.set_loc(L)
 				var/obj/decal/residual_energy/R = new/obj/decal/residual_energy(L)
 				playsound(L, "sound/effects/teleport.ogg", 30, 1)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					qdel(S)
 					qdel(R)
 			sent_mobs += M
 		for(var/obj/machinery/nuclearbomb/the_nuke in range(4, user.loc))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/landmark_teleport = pick_landmark(LANDMARK_SYNDICATE_ASSAULT_POD_TELE)
 				if(!landmark_teleport)
 					return
@@ -119,7 +119,7 @@
 				the_nuke.set_loc(landmark_teleport)
 				var/obj/decal/residual_energy/tele_energy = new/obj/decal/residual_energy(landmark_teleport)
 				playsound(landmark_teleport, "sound/effects/teleport.ogg", 30, 1)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					qdel(tele_swirl)
 					qdel(tele_energy)
 			nuclear_bombs += the_nuke
@@ -147,12 +147,12 @@
 			possible_turfs += T
 		for(var/obj/machinery/nuclearbomb/the_nuke in nuclear_bombs)
 			var/turf/picked_turf = pick(possible_turfs)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				launch_with_missile(the_nuke, picked_turf, null, "arrival_missile_synd")
 			possible_turfs -= picked_turf
 		for(var/mob/living/carbon/C in sent_mobs)
 			var/turf/picked_turf = pick(possible_turfs)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				launch_with_missile(C, picked_turf, null, "arrival_missile_synd")
 			possible_turfs -= picked_turf
 			if(!length(possible_turfs))

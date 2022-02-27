@@ -82,7 +82,7 @@
 		icon_state_base = copytext(icon_state, 1, -1)
 		src.add_simple_light("bot", list(255, 255, 255, 255 * 0.4))
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src)
 				src.clear_invalid_targets = TIME
 

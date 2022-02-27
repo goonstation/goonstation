@@ -90,7 +90,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src && !src.part_vest)
 				src.part_vest = new /obj/item/clothing/suit/armor/vest(src)
 			if (src && !src.part_igniter)

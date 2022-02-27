@@ -1,7 +1,26 @@
-(t)tue jan 15 21
+(t)wed feb 23 22
+(u)aloe
+(+)Godmode now makes you immune to all status effects. Lemme know if this causes anything Strange to happen.
+(t)tue feb 22 22
+(u)pali
+(*)The buildmode hotbar now gets saved and persists across rounds, even chosen values for particular modes should be saved. If you put a mode in the 1st slot that's the one you will have pre-selected. If something goes horribly wrong use the new Reset-Build-Mode verb to wipe all settings and start anew.<br>Oh, you say you don't recall the buildmode having a hotbar? Well, that's disappointing but here's a quick refresher:<br>Middleclick on current mode to put it into the hotbar.<br>Middleclick on a mode in hotbar to remove it.<br>Shift+Number to put the current mode into the hotbar.<br>Pressing a number key on your keyboard switches to the mode in that hotbar slot.<br>Also if hovering over the hotbar buttons your mousewheel should be able to scroll between them.
+(t)thu feb 17 22
+(u)pali
+(*)When entering a partial typepath in the command bar (e.g. for the spawn command) you can now put a $ at the end to make it search only for types ending with what you entered.<br>Basically when you do 'del-all /atom' it generates list of all /atom subtypes and makes your client freeze up. But you being the responsible admin you are want to delete all atoms so you don't need all of that crap. Therefore you now do 'del-all /atom$' and it will match only the actual /atom!
+(u)aloe
+(+)The Check-Vehicle-Occupant verb now only displays vehicles with occupants, making it actually usable.
+(t)mon feb 08 22
+(u)TTerc
+(*)Added new admin verb to the Self tab, Set Invisible - makes you invisible and sets your mouse opacity to 0. Using it again undoes it.
+(t)thu feb 03 22
+(u)pali
+(*)Player Options and Player Panel now show people's ping.
+(u)aloe
+(*)You can now preload sounds in the dj panel to avoid freezing the server with your 10 MB nukie music. Tested locally with an hour long album which played pretty seamlessly; feel free to try it on live
+(t)tue jan 15 22
 (u)BatElite
 (*)Added the light switches debug overlay, which shows how many switches are physically present in an area and where to find them.
-(t)tue jan 4 21
+(t)tue jan 4 22
 (u)aloe
 (*) Object spawning build modes now default to the currently selected path when changing the path, rather than always defaulting to '/obj/closet'. Yell at me if you don't like this.
 (t)sun dec 26 21

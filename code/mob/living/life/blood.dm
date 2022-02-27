@@ -50,7 +50,7 @@
 			if (owner.get_surgery_status())
 				decrease_chance -= 1
 
-			if (prob(percentmult(decrease_chance, mult)))
+			if (probmult(decrease_chance))
 				owner.bleeding -= 1 * mult
 				boutput(owner, "<span class='notice'>Your wounds feel [pick("better", "like they're healing a bit", "a little better", "itchy", "less tender", "less painful", "like they're closing", "like they're closing up a bit", "like they're closing up a little")].</span>")
 
@@ -140,10 +140,10 @@
 			return ..()
 
 		//special case
-		if (current_blood_amt >= 1500)
-			if (prob(10))
+		if (current_blood_amt >= 1000)
+			if (prob(clamp((current_blood_amt - 1000)/10, 0, 100))) //0% at 1000, 100% at 2000, linear scaling
 				owner.visible_message("<span class='alert'><b>[owner] bursts like a bloody balloon! Holy fucking shit!!</b></span>")
-				owner.gib(1) // :v
+				owner.gib(TRUE) // :v
 				return ..()
 
 		if (isdead(owner))

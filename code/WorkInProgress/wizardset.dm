@@ -195,7 +195,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		src.RL_SetOpacity(1)
 		src.set_density(1)
 		flick("wizard_false_wall_closing", src)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.icon_state = "wizard_false_wall"
 			src.opening = 0
 
@@ -207,7 +207,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		src.opening = 1
 		flick("wizard_false_wall_opening", src)
 		src.icon_state = "wizard_floor"
-		SPAWN_DBG(1.2 SECONDS)
+		SPAWN(1.2 SECONDS)
 			src.set_density(0)
 			src.opening = 0
 			src.RL_SetOpacity(0)
