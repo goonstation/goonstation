@@ -75,7 +75,7 @@ var/global
 		logDiary("Failed to load config file '[filename]': [e]\n")
 		#ifdef LIVE_SERVER
 		if(!secrets)
-		stack_trace("Failed to load config file '[filename]': [e]")
+			stack_trace("Failed to load config file '[filename]': [e]")
 		#endif
 
 	return result
