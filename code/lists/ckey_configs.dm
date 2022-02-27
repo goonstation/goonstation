@@ -82,6 +82,9 @@ var/global
 
 /proc/load_admins()
 	var/text = file2text("config/admins.txt")
+	#ifdef SECRETS_ENABLED
+	text += "\n" + file2text("[CONFIG_PATH_PREFIX]config/admins.txt")
+	#endif
 	if (!text)
 		logDiary("Failed to load config/admins.txt\n")
 	else
