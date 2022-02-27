@@ -624,7 +624,7 @@
 			programvariables[key][2] = input //Set the value of the "Variable/Argument" to the input
 
 		else if (href_list["button"])
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
 

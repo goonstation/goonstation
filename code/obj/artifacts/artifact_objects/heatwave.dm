@@ -38,5 +38,5 @@
 		playsound(O.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
 		T.visible_message("<span class='alert'><b>[O]</b> erupts into a huge column of flames! Holy shit!</span>")
 		fireflash_sm(T, fire_range, temperature, (temperature / fire_range))
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			O.ArtifactDeactivated()
