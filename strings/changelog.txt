@@ -1,4 +1,10 @@
 
+(t)sun feb 27 22
+(u)Walpvrgis
+(p)7641
+(e)🆕🎨|feature, sprites
+(*)Added 11 new hairstyles accessible in the character creation screen; check minor changes for a list of their names, or the PR for names + preview images!
+(+)You can find the new hair options under the names; Flick, Ignite, Mysterious, Ripley, Violet, Willow, Bun Undercut, Glam Ponytail, Rock Ponytail, Spiky Ponytail, Messy ponytail
 (t)sat feb 26 22
 (u)TTerc
 (+)Arc plater now automatically ejects the item when it finishes working. You can now also eject the material you inserted into it manually by clicking the plater with empty hand.
