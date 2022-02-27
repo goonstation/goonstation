@@ -1,5 +1,9 @@
 
 (t)sun feb 27 22
+(u)Conchuckter
+(p)7496
+(e)🆕⚖|feature, balance
+(+)Added MechComp functionality to ChemiCompilers
 (u)CodeJester
 (p)7615
 (e)🆕|feature
