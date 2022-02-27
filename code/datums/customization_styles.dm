@@ -617,7 +617,7 @@ proc/select_custom_style(list/datum/customization_style/customization_types, mob
 	for (var/datum/customization_style/styletype as anything in customization_types)
 		var/datum/customization_style/CS = new styletype
 		options[CS.name] = CS
-	var/new_style = input(user, "Please select style", "Style")  as null|anything in options
+	var/new_style = tgui_input_list(user, "Please select style", "Style", options)
 	return options[new_style]
 
 proc/find_style_by_name(var/target_name)
