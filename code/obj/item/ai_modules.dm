@@ -253,8 +253,8 @@ AI MODULES
 		return lawTarget ? lawTarget : "This law intentionally left blank."
 
 	attack_self(var/mob/user)
-		input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Anything. Serious.", (lawTarget ? lawTarget : "Eat shit and die"))
-		if(src.lawTarget && src.lawTarget != "Eat shit and die")
+		input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Anything. Serious.", (lawTarget ? lawTarget : "Make a funny beeping noise every few minutes"))
+		if(src.lawTarget && src.lawTarget != "Make a funny beeping noise every few minutes")
 			phrase_log.log_phrase("ailaw", src.get_law_text(for_silicons=TRUE), no_duplicates=TRUE)
 
 /******************** Random ********************/
