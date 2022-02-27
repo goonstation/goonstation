@@ -8,14 +8,15 @@
 
 /obj/proc/user_can_suicide(var/mob/user as mob)
 	if (!istype(user) || get_dist(user, src) > src.suicide_distance || user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned"))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
-/obj/item/var/suicide_in_hand = 1 // does it have to be held to be used for suicide?
+/obj/item/var/suicide_in_hand = TRUE // does it have to be held to be used for suicide?
 /obj/item/user_can_suicide(var/mob/user as mob)
+
 	if (!istype(user) || (src.suicide_in_hand && !user.find_in_hand(src)) || get_dist(user, src) > src.suicide_distance || user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned"))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/verb/suicide()
 
@@ -54,21 +55,21 @@
 			return
 
 	logTheThing("combat", src, null, "commits suicide")
-	src.suiciding = 1
+	src.suiciding = TRUE
 	if (src.do_suicide()) //                           <------ put mob unique behaviour here in an override!!!!
 		src.unlock_medal("Damned", 1) //You don't get the medal if you tried to wuss out!
 		if (src.suiciding)
 			if (src.suicide_alert)
 				message_attack("[key_name(src)] commits suicide shortly after joining.")
-				src.suicide_alert = 0
+				src.suicide_alert = FALSE
 	else //they didn't do it!!!
-		src.suiciding = 0
+		src.suiciding = FALSE
 
 
 
 // !!!! OVERRIDE THIS PROC FOR YOUR NEW SUICIDE BEHAVIOUR FOR YOUR NEW FLYING CHAIR MOB OR WHATEVER !!!!
 /mob/proc/do_suicide()
-	.= 0
+	.= FALSE
 
 /mob/living/do_suicide()
 	// default behaviour: just die, i guess
@@ -107,7 +108,7 @@
 	if (isnull(selection))
 		return FALSE
 
-	if (selection == "hold your breath") //special case, non-associative
+	if (selection == "hold your breath") //breath suicide - special case, non-associative
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
 		src.visible_message("<span class='alert'><b>[src] is holding [his_or_her(src)] breath. It looks like [hes_or_shes(src)] trying to commit suicide.</b></span>")
 		src.take_oxygen_deprivation(175)
@@ -118,7 +119,7 @@
 
 	selection = suicides[selection] //grab the actual object
 
-	if (selection == src.on_chair)
+	if (selection == src.on_chair) //chair suicide
 		if (!src.on_chair)
 			return FALSE //can't suicide on a chair when you aren't on a chair
 		src.visible_message("<span class='alert'><b>[src] jumps off of the chair straight onto [his_or_her(src)] head!</b></span>")
