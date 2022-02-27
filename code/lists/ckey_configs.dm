@@ -46,7 +46,7 @@ var/global
 		// This way you can still have local additions to it.
 		// This can probably be improved, since you can't *remove* entries,
 		// just add new ones...
-		result += load_config_list("[CONFIG_PATH_PREFIX]filename", as_ckey, 1)
+		result += load_config_list("[CONFIG_PATH_PREFIX][filename]", as_ckey, 1)
 #endif
 
 	try
