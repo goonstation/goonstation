@@ -94,7 +94,7 @@
 	if (!src.restrained() && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
 		for (var/obj/O in orange(1,src))
 			LAGCHECK(LAG_HIGH)
-			if (O.custom_suicide)
+			if (O.custom_suicide && can_reach(src, O))
 				if (isitem(O))
 					var/obj/item/I = O
 					if (I.suicide_in_hand)
