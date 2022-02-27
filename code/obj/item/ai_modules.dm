@@ -65,7 +65,10 @@ AI MODULES
 		return src.lawText
 
 	proc/get_law_name(for_silicons)
-		return  src.name
+		if(src.glitched)
+			return src.name+"\\x00\\x00\\x00\\xDE\\xAD\\xBE\\xEF"
+		else
+			return src.name
 
 	proc/make_glitchy(var/lawtext_replace,var/total_replace=true)
 		if(src.glitched) //Don't wanna double glitch the same module
