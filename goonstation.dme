@@ -1273,7 +1273,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\artifacts\artifact_items\teleport_wand.dm"
 #include "code\obj\artifacts\artifact_items\wall_wand.dm"
 #include "code\obj\artifacts\artifact_items\watering_can.dm"
-#include "code\obj\artifacts\artifact_machines\brownnote.dm"
+#include "code\obj\artifacts\artifact_machines\emoter.dm"
 #include "code\obj\artifacts\artifact_machines\gas_radiator.dm"
 #include "code\obj\artifacts\artifact_machines\grav_well.dm"
 #include "code\obj\artifacts\artifact_machines\heal_field.dm"
