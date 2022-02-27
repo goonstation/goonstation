@@ -306,12 +306,12 @@
 	proc/shock_icon()
 		var/fake_overlay = new /obj/shock_overlay(src.loc)
 		src.vis_contents += fake_overlay
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.vis_contents -= fake_overlay
 			qdel(fake_overlay)
 			O2.icon_state = "defib-off"
 			add_overlays()
-		SPAWN_DBG(src.defib.charge_time)
+		SPAWN(src.defib.charge_time)
 			O2.icon_state = "defib-on"
 			add_overlays()
 
