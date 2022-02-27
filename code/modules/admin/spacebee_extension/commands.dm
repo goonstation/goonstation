@@ -603,8 +603,8 @@
 	var/new_name = null
 
 	prepare(user, new_name)
-		. = ..()
 		src.new_name = new_name
+		return "You are about to rename the station to `[new_name]`."
 
 	do_it(user)
 		if(isnull(src.new_name))
