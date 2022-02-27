@@ -88,7 +88,7 @@
 	if (src.on_chair)
 		suicides[src.on_chair.name] = src.on_chair
 
-	for (var/obj/item/equipped in src.get_equipped_items())
+	for (var/obj/item/equipped in (src.get_equipped_items() + src.l_hand + src.r_hand))
 		if (equipped.custom_suicide)
 			suicides[equipped.name] = equipped
 
