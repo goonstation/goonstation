@@ -665,7 +665,7 @@
 /mob/living/silicon/ai/capitalize_speech()
 	if (!client)
 		if (src?.eyecam?.client?.preferences)
-			return src.eyecam.client.preferences
+			return src.eyecam.client.preferences.auto_capitalization
 	. = ..()
 
 /mob/living/say(var/message, ignore_stamina_winded)

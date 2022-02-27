@@ -189,7 +189,7 @@
 			if (H && H.stat && holder.owner.loc == H.loc)
 				holder.owner.visible_message("<span class='combat'><b>[src] drains [H] dry!</b></span>",\
 				"<span class='combat'><b>You drain [H] dry!</b></span>")
-				H.death(0)
+				H.death(FALSE)
 				H.real_name = "Unknown"
 				if (H.bioHolder)
 					H.bioHolder.AddEffect("husk")

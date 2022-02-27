@@ -375,6 +375,7 @@ proc/find_all_by_type(type, procedure=null, procedure_src=null, arguments=null, 
 	while(ancestor != null)
 		if(ancestor in list(/obj, /mob, /area, /turf, /atom/movable, /atom, /datum))
 			atom_base = ancestor
+			break
 		ancestor = type2parent(ancestor)
 
 	. = list()

@@ -810,15 +810,15 @@ Frequency:
 
 /mob/living/silicon/hivebot/say_understands(var/other)
 	if (isAI(other))
-		return 1
+		return TRUE
 	if (ishuman(other))
 		var/mob/living/carbon/human/H = other
 		if (!H.mutantrace || !H.mutantrace.exclusive_language)
-			return 1
+			return TRUE
 		else
-			return 0
+			return ..()
 	if (isrobot(other) || isshell(other))
-		return 1
+		return TRUE
 	return ..()
 
 /mob/living/silicon/hivebot/say_quote(var/text)
