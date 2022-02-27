@@ -172,19 +172,22 @@ var/global/lastStationNameChange = 0 //timestamp
 	return valid ? trim(formattedName) : valid
 
 
-/proc/set_station_name(mob/user = null, var/manual = 0)
+/proc/set_station_name(mob/user = null, manual = null, admin_override=null)
+	if(isnull(admin_override) && ismob(user))
+		admin_override = isadmin(user)
+
 	var/name
 
 	if (manual)
 		if (!station_name_changing)
 			return 0
 
-		name = verify_station_name(manual, isadmin(user))
+		name = verify_station_name(manual, admin_override)
 
 		if (!name)
 			return 0
 
-		phrase_log.log_phrase("stationname-[isadmin(user)?"admin":"player"]", name, no_duplicates=TRUE)
+		phrase_log.log_phrase("stationname-[admin_override?"admin":"player"]", name, no_duplicates=TRUE)
 
 		#if defined(REVERSED_MAP)
 		name = reverse_text(name)
@@ -198,8 +201,8 @@ var/global/lastStationNameChange = 0 //timestamp
 			message_admins("[key_name(user)] changed the station name to: [name]")
 
 			var/ircmsg[] = new()
-			ircmsg["key"] = user.client.key
-			ircmsg["name"] = (user?.real_name) ? stripTextMacros(user.real_name) : "NULL"
+			ircmsg["key"] = ismob(user) ? user.client.key : user
+			ircmsg["name"] = ismob(user) ? ((user?.real_name) ? stripTextMacros(user.real_name) : "NULL") : null
 			ircmsg["msg"] = "changed the station name to [name]"
 			ircbot.export_async("admin", ircmsg)
 
