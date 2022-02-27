@@ -55,6 +55,9 @@ var/global
 		// if secrets are enabled.
 		var/list/lines = dd_file2list(filename)
 
+		if(!length(lines))
+			throw EXCEPTION("No lines in config file")
+
 		// Turn the list of lines into a different list of *valid* lines
 		for(var/line in lines)
 			if (!line)
