@@ -79,12 +79,6 @@
 
 		..()
 
-/obj/machinery/computer/genetics/attack_hand(mob/user)
-	if(!src.allowed(user))
-		boutput(user, "<span class='alert'>Access Denied.</span>")
-		return
-	. = ..()
-
 
 /obj/machinery/computer/genetics/proc/activated_bonus(mob/user as mob)
 	if (genResearch.time_discount < 0.75)
@@ -250,11 +244,11 @@
 	logTheThing("diary", who, null, "[action] but failed validation.", "debug")
 
 /obj/machinery/computer/genetics/ui_status(mob/user)
-	if (!src.allowed(user))
-		return UI_CLOSE
 	if (user in src.scanner)
 		return UI_UPDATE
-	return ..()
+	. = ..()
+	if (!src.allowed(user))
+		. = min(., UI_UPDATE)
 
 /obj/machinery/computer/genetics/proc/on_ui_interacted(mob/user, minor = FALSE)
 	src.add_fingerprint(user)
@@ -924,6 +918,7 @@
 		"savedChromosomes" = list(),
 		"combining" = list(),
 		"unlock" = null,
+		"allowed" = src.allowed(user),
 	)
 
 	for(var/datum/db_record/R as anything in data_core.medical.records)

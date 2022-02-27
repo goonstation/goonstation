@@ -119,7 +119,7 @@
 					W.afterattack(pot,user) // ????
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/soup_pot) && in_interact_range(W, user) && in_interact_range(src, user))
+		if (istype(W, /obj/item/soup_pot) && in_interact_range(W, user) && in_interact_range(src, user) && !isintangible(user))
 			return src.Attackby(W, user)
 		return ..()
 
@@ -134,7 +134,8 @@
 			src.pot = null
 
 	attack_ai(mob/user as mob)
-		return src.Attackhand(user)
+		if (!isintangible(user) && in_interact_range(src, user)) //stop AIs teleporting soup
+			return src.Attackhand(user)
 
 	proc/light(var/mob/user, var/message as text)
 		if(pot.my_soup)

@@ -148,9 +148,11 @@ AI MODULES
 	var/job = "Captain"
 
 	emag_act(mob/user, obj/item/card/emag/E)
+		if (src.job == "Clown")
+			return FALSE
 		src.job = "Clown"
 		boutput(user, "<span class='notice'>You short circuit the captain-detection module, it emits a quiet sad honk.</span>")
-		. = ..()
+		return TRUE
 
 	demag(mob/user)
 		. = ..()
@@ -288,6 +290,7 @@ AI MODULES
 		if(lawTarget)
 			src.update_law_text(lawTarget)
 		return
+
 
 /******************** Random ********************/
 

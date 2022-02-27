@@ -73,7 +73,7 @@
 	var/ignore_organs = 0 // set to 1 to basically skip the handle_organs() proc
 	var/last_eyes_blinded = 0 // used in handle_blindness_overlays() to determine if a change is needed!
 
-	var/obj/on_chair = 0
+	var/obj/on_chair = null
 	var/simple_examine = 0
 
 	var/last_cluwne_noise = 0 // used in /proc/process_accents() to keep cluwnes from making constant fucking noise
@@ -651,11 +651,11 @@
 				emote("deathgasp")
 				src.visible_message("<span class='alert'><B>[src]</B> head starts to shift around!</span>")
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
-				sleep(20 SECONDS)
 				var/datum/mind/M = src.mind
-				if(!M || M.disposed)
+				sleep(20 SECONDS)
+				if(!M || M.disposed || M.current != src)
 					return
-				if (M?.current)
+				if (M.current)
 					M.current.show_text("<b>We released a headspider, using up some of our DNA reserves.</b>", "blue")
 				src.visible_message("<span class='alert'><B>[src]</B> head detaches, sprouts legs and wanders off looking for food!</span>")
 				//make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards

@@ -12962,7 +12962,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/table/auto,
+/obj/table/reinforced/auto,
 /obj/item/wrench,
 /obj/item/wrench,
 /obj/item/bandage,
@@ -60079,7 +60079,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "vrN" = (
-/obj/table/auto,
+/obj/table/reinforced/auto,
 /obj/item/scalpel,
 /obj/item/circular_saw,
 /obj/item/reagent_containers/syringe,

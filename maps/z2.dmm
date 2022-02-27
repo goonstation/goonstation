@@ -48596,13 +48596,13 @@
 	dir = 1;
 	pixel_y = 24
 	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 16
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/unsimulated/floor/engine,
 /area/owlery/Owlmait)
@@ -49634,9 +49634,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light/small/iomoon{
 	dir = 8;
 	name = "maintenance light";
@@ -50114,12 +50111,6 @@
 	dir = 10
 	},
 /area/owlery/owleryhall)
-"cNd" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/unsimulated/floor/engine,
-/area/owlery/Owlmait)
 "cNe" = (
 /obj/disposalpipe/segment,
 /turf/unsimulated/floor/greenwhite/corner,
@@ -55288,7 +55279,6 @@
 /obj/machinery/computer/solar_control{
 	id = "owl"
 	},
-/obj/machinery/power/data_terminal,
 /obj/cable,
 /turf/unsimulated/floor/engine,
 /area/owlery/Owlmait)
@@ -55456,6 +55446,11 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/unsimulated/floor/stairs/dark,
 /area/owlery/Owlmait)
@@ -88919,8 +88914,8 @@ cBb
 cDh
 cAq
 cJh
-cYA
-cNd
+cYv
+cYv
 cUL
 cYJ
 cGG

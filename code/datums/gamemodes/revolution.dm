@@ -75,10 +75,8 @@
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		for(var/datum/mind/head_mind in heads)
-			var/datum/objective/regular/assassinate/rev_obj = new
-			rev_obj.owner = rev_mind
+			var/datum/objective/regular/assassinate/rev_obj = new(null, rev_mind)
 			rev_obj.find_target_by_role(head_mind.assigned_role)
-			rev_mind.objectives += rev_obj
 
 		equip_revolutionary(rev_mind.current)
 		SHOW_REVHEAD_TIPS(rev_mind.current)
@@ -312,7 +310,7 @@
 				ucs += player.mind
 			else
 				var/role = player.mind.assigned_role
-				if(role in list("Captain", "Head of Security", "Security Assistant", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Head Surgeon", "Head of Mining", "Security Officer", "Security Assistant", "Vice Officer", "Part-time Vice Officer", "Detective", "AI", "Cyborg", "Nanotrasen Special Operative", "Nanotrasen Security Operative","Communications Officer"))
+				if(role in list("Captain", "Head of Security", "Security Assistant", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Head of Mining", "Security Officer", "Security Assistant", "Vice Officer", "Part-time Vice Officer", "Detective", "AI", "Cyborg", "Nanotrasen Special Operative", "Nanotrasen Security Operative","Communications Officer"))
 					ucs += player.mind
 	//for(var/mob/living/carbon/human/player in mobs)
 

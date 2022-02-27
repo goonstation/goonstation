@@ -302,6 +302,10 @@
 			return list(access_maint_tunnels, access_tech_storage, access_medical, access_morgue)
 		if("Psychiatrist")
 			return list(access_medical, access_maint_tunnels)
+		if("Medical Specialist")
+			return list(access_robotics, access_medical, access_morgue,
+						access_maint_tunnels, access_tech_storage, access_medical_lockers,
+						access_medlab) //Mdir minus head stuff
 
 		///////////////////////////// Science
 		if("Scientist")

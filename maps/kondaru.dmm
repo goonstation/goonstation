@@ -21006,7 +21006,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bla" = (
-/obj/table/auto,
+/obj/table/reinforced/auto,
 /obj/item/paper/cryo,
 /obj/item/reagent_containers/glass/beaker/cryoxadone,
 /obj/item/reagent_containers/glass/beaker/cryoxadone,

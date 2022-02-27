@@ -218,21 +218,21 @@ datum
 			transparency = 215
 			value = 41 // 17 18 6
 			viscosity = 0.4
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "aranesp", 15)
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
-					holder.my_atom:add_stam_mod_max("aranesp", 25)
-				return
+					M.add_stam_mod_max("aranesp", 25)
+				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "aranesp")
 					M.remove_stam_mod_max("aranesp")
-				return
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -278,15 +278,16 @@ datum
 			value = 66 // vOv
 			//addiction_prob = 25
 			stun_resist = 1000
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "omegazine", 500)
 					M.add_stam_mod_max("omegazine", 500)
 				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "omegazine")
@@ -1900,18 +1901,18 @@ datum
 			transparency = 230
 			value = 5
 			hunger_value = 0.8
+			threshold = THRESHOLD_INIT
 
-
-			on_add()
-				if (ismob(holder.my_atom))
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					if (ismartian(M))
 						APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "reagent_martian_flesh", 15)
 						APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "reagent_martian_flesh", 15)
 				..()
 
-			on_remove()
-				if (ismob(holder.my_atom))
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					if (ismartian(M))
 						REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "reagent_martian_flesh")
@@ -2139,6 +2140,19 @@ datum
 			var/anim_lock = 0
 			var/speed = 3
 			stun_resist = 9
+			threshold = THRESHOLD_INIT
+
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_flip", 2)
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_flip")
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
@@ -2196,16 +2210,8 @@ datum
 					animate_spin(O, dir_temp, speed_temp)
 					DEBUG_MESSAGE("<span class='notice'><b>Spun [O]: [dir_temp], [speed_temp]</b></span>")
 */
-			on_add()
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_flip", 2)
-				..()
 
 			on_remove()
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_flip")
 				if (istype(holder) && istype(holder.my_atom))
 					animate(holder.my_atom)
 				..()
@@ -2254,6 +2260,20 @@ datum
 			depletion_rate = 0.1
 			viscosity = 0.15
 			stun_resist = 60
+			threshold = THRESHOLD_INIT
+
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_glowing_flip", 4)
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_glowing_flip")
+				..()
+
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
@@ -2327,19 +2347,6 @@ datum
 				var/speed_temp = text2num("[rand(0,10)].[rand(0,9)]")
 				animate_spin(O, dir_temp, speed_temp)
 
-			on_add()
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_glowing_flip", 4)
-				..()
-
-			on_remove()
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_glowing_flip")
-				if (istype(holder) && istype(holder.my_atom))
-					animate(holder.my_atom)
-				..()
 
 		diluted_fliptonium
 			name = "diluted fliptonium"
@@ -2672,16 +2679,19 @@ datum
 			depletion_rate = 0.8
 			value = 3
 			viscosity = 0.4
+			threshold = THRESHOLD_INIT
 
-			on_add()
-				if (holder && ismob(holder.my_atom))
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					APPLY_MOB_PROPERTY(M, PROP_GHOSTVISION, src)
+				..()
 
-			on_remove()
-				if (ismob(holder.my_atom))
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					REMOVE_MOB_PROPERTY(M, PROP_GHOSTVISION, src)
+				..()
 
 		voltagen
 			name = "voltagen"
@@ -3665,18 +3675,17 @@ datum
 			fluid_b = 0
 			transparency = 255
 			value = 4
+			threshold = 2
 
-			on_add()
-				if(!holder || !holder.my_atom || istype(holder.my_atom, /turf))
-					return
-				holder.my_atom.SafeScale(4,1.5)
+			cross_threshold_over()
+				if(holder?.my_atom && !istype(holder.my_atom, /turf))
+					holder.my_atom.SafeScale(4,1.5)
+				..()
 
-
-			on_remove()
-				if(!holder || !holder.my_atom  || istype(holder.my_atom, /turf))
-					return
-				holder.my_atom.SafeScale(1/4,1/1.5)
-
+			cross_threshold_under()
+				if(holder?.my_atom && !istype(holder.my_atom, /turf))
+					holder.my_atom.SafeScale(1/4,1/1.5)
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)

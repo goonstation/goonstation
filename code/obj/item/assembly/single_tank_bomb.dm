@@ -35,7 +35,7 @@
 
 	logTheThing("bombing", user, null, "[welded_or_unwelded == 0 ? "welded" : "unwelded"] a [type] single tank bomb [log_atmos(T)] at [log_loc(user)].")
 	if (welded_or_unwelded == 0)
-		message_admins("[key_name(user)] welded a [type] single tank bomb at [log_loc(user)]. See bombing logs or bomb monitor for complete atmos readout.")
+		message_admins("[key_name(user)] welded a [type] single tank bomb [alert_atmos(T)] at [log_loc(user)].")
 
 	return
 
