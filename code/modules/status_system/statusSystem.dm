@@ -8,10 +8,11 @@ var/global/list/statusGroupLimits = list("Food"=4)
 
 /proc/testStatus()
 	var/inp = input(usr,"Which status?","Test status","airrit") as text
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for(var/datum/statusEffect/status as anything in usr.statusEffects)
 			usr.delStatus(status)
 		usr.changeStatus(inp, 15 MINUTES)
+
 
 /atom/movable/screen/statusEffect
 	name = "Status effect"
@@ -236,6 +237,14 @@ var/global/list/statusGroupLimits = list("Food"=4)
 				. = status.duration
 				break
 
+/**
+ 	* Returns prototype of status effect from the globalStatusPrototypes list with given {statusId}, or null if not found
+	*/
+/atom/proc/getStatusPrototype(statusId)
+	for(var/datum/statusEffect/status as anything in globalStatusPrototypes)
+		var/datum/statusEffect/statuseffect = status
+		if(statuseffect.id == statusId)
+			return statuseffect
 /**
 	* Returns first status with given {statusId} or null if not found.
 	*

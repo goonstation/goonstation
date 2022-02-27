@@ -11,7 +11,7 @@ var decoder = decodeURIComponent || unescape;
 
 //Globals
 window.status = 'Output';
-var $messages, $subOptions, $contextMenu, $filterMessages, $playMusic;
+var $messages, $subOptions, $contextMenu, $filterMessages, $playMusic, $lastEntry;
 var opts = {
     //General
     'messageCount': 0, //A count...of messages...
@@ -26,6 +26,7 @@ var opts = {
     'volume': 0.5,
     'lastMessage': '', //the last message sent to chat
     'maxStreakGrowth': 20, //at what streak point should we stop growing the last entry?
+	'messageClasses': ['admin','combat','radio','say','ooc','internal'],
 
     //Options menu
     'subOptionsLoop': null, //Contains the interval loop for closing the options menu
@@ -39,7 +40,7 @@ var opts = {
 
     //Ping display
     'pingCounter': 0, //seconds counter
-    'pingLimit': 30, //seconds limit
+    'pingLimit': 10, //seconds limit
     'pingTime': 0, //Timestamp of when ping sent
     'pongTime': 0, //Timestamp of when ping received
     'noResponse': false, //Tracks the state of the previous ping request
@@ -173,7 +174,7 @@ function parseEmojis(message) {
 }
 
 //Send a message to the client
-function output(message, group) {
+function output(message, group, skipNonEssential, forceScroll) {
     if (typeof message === 'undefined') {
         return;
     }
@@ -182,69 +183,15 @@ function output(message, group) {
     }
 
 
-    //The behemoth of filter-code (for Admin message filters)
-    //Note: This is proooobably hella inefficient
-    var filteredOut = false;
-    if (opts.hasOwnProperty('showMessagesFilters') && !opts.showMessagesFilters['All'].show) {
-        //Get this filter type (defined by class on message)
-        var messageHtml = $.parseHTML(message),
-            messageClasses;
-        if (opts.hasOwnProperty('filterHideAll') && opts.filterHideAll) {
-            var internal = false;
-            messageClasses = (!!$(messageHtml).attr('class') ? $(messageHtml).attr('class').split(/\s+/) : false);
-            if (messageClasses) {
-                for (var i = 0; i < messageClasses.length; i++) { //Every class
-                    if (messageClasses[i] == 'internal') {
-                        internal = true;
-                        break;
-                    }
-                }
-            }
-            if (!internal) {
-                filteredOut = 'All';
-            }
-        } else {
-            //If the element or it's child have any classes
-            if (!!$(messageHtml).attr('class') || !!$(messageHtml).children().attr('class')) {
-                messageClasses = $(messageHtml).attr('class').split(/\s+/);
-                if (!!$(messageHtml).children().attr('class')) {
-                    messageClasses = messageClasses.concat($(messageHtml).children().attr('class').split(/\s+/));
-                }
-                var tempCount = 0;
-                for (var i = 0; i < messageClasses.length; i++) { //Every class
-                    var thisClass = messageClasses[i];
-                    $.each(opts.showMessagesFilters, function(key, val) { //Every filter
-                        if (key !== 'All' && val.show === false && typeof val.match != 'undefined') {
-                            for (var i = 0; i < val.match.length; i++) {
-                                var matchClass = val.match[i];
-                                if (matchClass == thisClass) {
-                                    filteredOut = key;
-                                    break;
-                                }
-                            }
-                        }
-                        if (filteredOut) return false;
-                    });
-                    if (filteredOut) break;
-                    tempCount++;
-                }
-            } else {
-                if (!opts.showMessagesFilters['Misc'].show) {
-                    filteredOut = 'Misc';
-                }
-            }
-        }
-    }
-
     //Stuff we do along with appending a message
     var atBottom = false;
-    if (!filteredOut) {
+    if (!skipNonEssential) {
         var bodyHeight = $('body').height();
         var messagesHeight = $messages.outerHeight();
-        var scrollPos = $('body,html').scrollTop();
+        var scrollPos = document.documentElement.scrollTop;
 
         //Should we snap the output to the bottom?
-        if (bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance) {
+        if (bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance || forceScroll) {
             atBottom = true;
             if ($('#newMessages').length) {
                 $('#newMessages').remove();
@@ -275,12 +222,10 @@ function output(message, group) {
     opts.messageCount++;
 
     //Pop the top message off if history limit reached
-    if (opts.messageCount >= opts.messageLimit && opts.messageLimitEnabled) {
+    if (opts.messageCount >= opts.messageLimit && opts.messageLimitEnabled && !skipNonEssential) {
         $messages.children('div.entry:nth-child(-n+' + opts.messageLimit / 2 + ')').remove();
         opts.messageCount -= opts.messageLimit / 2; //I guess the count should only ever equal the limit
     }
-
-    var $lastEntry = $messages.children('.entry').last();
 
     //message is identical to the last message, do the streak counter stuff
     if (message === opts.lastMessage) {
@@ -318,18 +263,27 @@ function output(message, group) {
             entry = document.createElement('div');
             entry.className = 'entry';
 
-            if (filteredOut) {
-                entry.className += ' hidden';
-                entry.setAttribute('data-filter', filteredOut);
-            }
-
             if (group) {
                 entry.className += ' hasGroup';
                 entry.setAttribute('data-group', group);
-            }
+			}
+
+			//get classes from messages, compare if its in messageclasses, and if so, add to entry
+			let addedClass = false;
+			let $message = $('<span>'+message+'</span>');
+			$.each(opts.messageClasses, function (key, value) {
+				if ($message.find("." + value).length !== 0 || $message.hasClass(value)) {
+					entry.className += ' ' + value;
+					addedClass = true;
+				}
+			});
+			// fallback, if no class found in the classlist
+			if (!addedClass) {
+				entry.className += ' misc';
+			}
 
             entry.innerHTML = message;
-            $messages[0].appendChild(entry);
+            $lastEntry = $($messages[0].appendChild(entry));
             opts.lastMessage = message;
         }
 
@@ -340,16 +294,21 @@ function output(message, group) {
     }
 
     //Actually do the snap
-    if (!filteredOut && atBottom) {
-        $('body,html').scrollTop($messages.outerHeight());
+    if (atBottom && !skipNonEssential) {
+        window.scrollTo(0, document.body.scrollHeight);
     }
 }
 
 //Receive a large number of messages all at once to cut down on round trips.
 function outputBatch(messages) {
     var list = JSON.parse(messages);
+    var bodyHeight = $('body').height();
+    var messagesHeight = $messages.outerHeight();
+    var scrollPos = document.documentElement.scrollTop;
+    var shouldScroll = bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance;
+
     for (var i = 0; i < list.length; i++) {
-        output(list[i].message, list[i].group);
+        output(list[i].message, list[i].group, i < list.length - 1, shouldScroll);
     }
 }
 
@@ -498,6 +457,11 @@ function ehjaxCallback(data) {
             var adminCode = data.loadAdminCode;
             $('body').append(adminCode);
             opts.adminLoaded = true;
+        } else if (data.loadPerfMon) {
+            if (opts.perfMonLoaded) {return;}
+            var perfMon = data.loadPerfMon;
+            $('body').append(perfMon);
+            opts.perfMonLoaded = true;
         } else if (data.modeChange) {
             changeMode(data.modeChange);
         } else if (data.firebug) {
@@ -525,7 +489,7 @@ function ehjaxCallback(data) {
 
                     $playMusic.attr('src', data.playMusic);
                     var music = $playMusic.get(0);
-                    music.volume = data.volume * 0.3; /*   Added the multiplier here because youtube is consistently   */
+                    music.volume = data.volume * 0.5; /*   Added the multiplier here because youtube is consistently   */
                     if (music.paused) {                /* louder than admin music, which makes people lower the volume. */
                         music.play();
                     }
@@ -599,10 +563,11 @@ $(function() {
     //Hey look it's a controller loop!
     setInterval(function() {
         if (opts.pingCounter >= opts.pingLimit && !opts.restarting) { //Every pingLimit seconds
+            let pingDuration = (opts.pongTime - opts.pingTime) / 2;
             opts.pingCounter = 0; //reset
             opts.pongTime = 0; //reset
             opts.pingTime = Date.now();
-            runByond('?action=ehjax&window=browseroutput&type=datum&datum=chatOutput&proc=ping');
+            runByond('?action=ehjax&window=browseroutput&type=datum&datum=chatOutput&proc=ping&param[last_ping]=' + pingDuration);
             setTimeout(function() {
                 if (!opts.pongTime) { //If no response within 10 seconds of ping request
                     if (!opts.noResponse) { //Only actually append a message if the previous ping didn't also fail (to prevent spam)
@@ -611,7 +576,6 @@ $(function() {
                         output('<div class="connectionClosed internal" data-count="'+opts.noResponseCount+'">You are either experiencing lag or the connection has closed.</div>');
                     }
                 } else {
-                    opts.pongTime = 0; //reset
                     if (opts.noResponse) { //Previous ping attempt failed ohno
                         $('.connectionClosed[data-count="'+opts.noResponseCount+'"]:not(.restored)').addClass('restored').text('Your connection has been restored (probably)!');
                         opts.noResponse = false;
@@ -943,7 +907,7 @@ $(function() {
         } else {
             xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
         }
-        xmlHttp.open('GET', 'http://cdn.goonhub.com/css/browserOutput.css', false);
+        xmlHttp.open('GET', 'https://cdn.goonhub.com/css/browserOutput.css', false);
         xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xmlHttp.send();
         saved += '<style>'+xmlHttp.responseText+'</style>';

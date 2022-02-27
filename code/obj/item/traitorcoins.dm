@@ -17,7 +17,7 @@
 	attack_hand(mob/user as mob)
 		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many [src] do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			if (splitnum >= amount || splitnum < 1)
+			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
 			if (!src.loc || get_dist(src, user) > 1)

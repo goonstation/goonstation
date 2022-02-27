@@ -86,7 +86,7 @@
 	attack_hand(mob/user as mob)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
 			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
-			if (amt && src.loc == user && !user.equipped())
+			if (isnum_safe(amt) && src.loc == user && !user.equipped())
 				if (amt > src.amount || amt < 1)
 					boutput(user, "<span class='alert'>You wish!</span>")
 					return
@@ -182,7 +182,7 @@
 	attack_hand(mob/user as mob)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
 			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
-			if (amt)
+			if (isnum_safe(amt))
 				if (amt > src.amount || amt < 1)
 					boutput(user, "<span class='alert'>You wish!</span>")
 					return
@@ -327,7 +327,7 @@
 	attack_hand(mob/user as mob)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
 			var/amt = round(input("How much spacebux do you want to split from the token?") as null|num)
-			if (amt && src.loc == user && !user.equipped())
+			if (isnum_safe(amt) && src.loc == user && !user.equipped())
 				if (amt > src.amount || amt < 1)
 					boutput(user, "<span class='alert'>You wish!</span>")
 					return

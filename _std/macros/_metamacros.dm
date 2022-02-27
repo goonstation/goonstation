@@ -35,6 +35,9 @@ Example:
 #define TUPLE_GET_9(x) x(_GETTER_9)
 #define TUPLE_GET_10(x) x(_GETTER_10)
 
+/// Useful for when you need to include in a macro, can't use #include directly due to # being interpreted as stringification
+#define INCLUDE #include
+
 /// Given x, evaluates to x.
 #define IDENTITY(x) x
 /// Evaluates to nothing.

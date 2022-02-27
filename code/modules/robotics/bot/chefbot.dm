@@ -22,7 +22,7 @@
 	if(prob(60) && src.on == 1)
 		src.navigate_to(get_step_rand(src))
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(prob(src.emagged * 20))
 				drama()
 			if(prob(30 + src.emagged * 30))
@@ -75,7 +75,7 @@
 							dork = M
 			if (thechef)
 				point(shitfood)
-				src.navigate_to(shitfood, CHEFBOT_MOVE_SPEED / (1+src.emagged), 1, 60) // Shit food can't hide!
+				src.navigate_to(shitfood, CHEFBOT_MOVE_SPEED / (1+src.emagged), 1, 15) // Shit food can't hide!
 				if (prob(50))
 					speak(pick("ALRIGHT, EVERYBODY STOP!" , "THAT'S ENOUGH!"))
 				sleep(1 SECOND)

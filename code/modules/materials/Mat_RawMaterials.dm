@@ -53,7 +53,7 @@
 	attack_hand(mob/user as mob)
 		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many material pieces do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			if (splitnum >= amount || splitnum < 1)
+			if (!isnum_safe(splitnum) || splitnum >= amount || splitnum < 1)
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
 			var/obj/item/material_piece/new_stack = split_stack(splitnum)
@@ -69,9 +69,12 @@
 				user.put_in_hand(src)
 			boutput(user, "<span class='notice'>You add the material to the stack. It now has [src.amount] pieces.</span>")
 
-	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object
+	mouse_drop(over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
 			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
+			return
+		if(isintangible(usr))
+			boutput(usr,"<span class='alert'>You need hands to do that. Do you have hands? No? Then stop it.</span>")
 			return
 
 		if(!istype(over_object, /atom/movable/screen/hud))
@@ -148,6 +151,13 @@
 		icon_state = "wad"
 		name = "clump"
 		desc = "A clump of some kind of material."
+
+		blob
+			name = "chunk of blob"
+
+			setup_material()
+				src.setMaterial(getMaterial("blob"), setname = 0)
+				..()
 
 	sphere
 		// energy

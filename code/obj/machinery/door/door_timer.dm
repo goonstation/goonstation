@@ -179,14 +179,14 @@
 			src.time = 0
 			src.timing = FALSE
 			last_tick = 0
-		src.update_icon()
+		src.UpdateIcon()
 		last_tick = TIME
 	else
 		last_tick = 0
 	return
 
 /obj/machinery/door_timer/power_change()
-	update_icon()
+	UpdateIcon()
 
 
 // Why range 30? COG2 places linked fixtures much further away from the timer than originally envisioned.
@@ -209,10 +209,10 @@
 	//loop through range(30) three times. sure. whatever.
 	//FIX LATER, putting it in a spawn and lagchecking for now.
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for (var/obj/machinery/door/window/brigdoor/M in range(30, src))
 			if (M.id == src.id)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if (M) M.close()
 			LAGCHECK(LAG_HIGH)
 
@@ -230,12 +230,12 @@
 			if (B.id == src.id && B.our_timer == src)
 				if (B.locked)
 					B.locked = 0
-					B.update_icon()
+					B.UpdateIcon()
 					B.visible_message("<span class='notice'>[B.name] unlocks automatically.</span>")
 			LAGCHECK(LAG_HIGH)
 
 	src.updateUsrDialog()
-	src.update_icon()
+	src.UpdateIcon()
 	return
 
 /obj/machinery/door_timer/ui_interact(mob/user, datum/tgui/ui)
@@ -262,6 +262,15 @@
 			)
 			break
 
+	for (var/obj/machinery/floorflusher/FF in range(30, src))
+		if (FF.id == src.id)
+			. += list(
+				"flusher" = TRUE,
+				"flusheropen" = FF.open,
+				"opening" = FF.opening
+			)
+			break
+
 /obj/machinery/door_timer/ui_status(mob/user, datum/ui_state/state)
 	return min(
 		..(),
@@ -277,7 +286,7 @@
 		if ("set-time")
 			src.add_fingerprint(usr)
 			var/previous_time = src.time
-			src.time = min(max(round(params["time"]), 0), src.max_time)
+			src.time = clamp(0, round(params["time"]), src.max_time)
 			if (params["finish"])
 				logTheThing("station", usr, null, "set timer to [src.time]sec (previously: [previous_time]sec) on a door timer: [src] [log_loc(src)].")
 
@@ -299,7 +308,7 @@
 			logTheThing("station", usr, null, "[src.timing ? "starts" : "stops"] a door timer: [src] [log_loc(src)].")
 
 			src.add_fingerprint(usr)
-			src.update_icon()
+			src.UpdateIcon()
 			return TRUE
 
 		if ("activate-flasher")
@@ -310,13 +319,27 @@
 					logTheThing("station", usr, null, "sets off flashers from a door timer: [src] [log_loc(src)].")
 					return TRUE
 
+		if ("toggle-flusher")
+			for (var/obj/machinery/floorflusher/FF in range(30, src))
+				if (FF.id == src.id)
+					src.add_fingerprint(usr)
+					if (FF.flush == TRUE || FF.opening == TRUE)
+						return
+					if (FF.open != 1)
+						FF.openup()
+						logTheThing("station", usr, null, "opens a floor flusher from a door timer: [src] [log_loc(src)].")
+					else
+						FF.closeup()
+						logTheThing("station", usr, null, "closes a floor flusher from a door timer: [src] [log_loc(src)].")
+					return TRUE
+
 /obj/machinery/door_timer/attack_ai(mob/user)
 	return src.Attackhand(user)
 
 /obj/machinery/door_timer/attack_hand(mob/user)
 	return src.ui_interact(user)
 
-/obj/machinery/door_timer/proc/update_icon()
+/obj/machinery/door_timer/update_icon()
 	if (status & (NOPOWER))
 		icon_state = "doortimer-p"
 		return
@@ -329,6 +352,6 @@
 		else if (src.time > 0)
 			icon_state = "doortimer0"
 		else
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				icon_state = "doortimer0"
 			icon_state = "doortimer2"

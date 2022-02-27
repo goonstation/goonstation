@@ -238,7 +238,7 @@ Filter types:
 				node_in = target
 				break
 
-		update_icon()
+		UpdateIcon()
 
 	build_network()
 		if(!network_out1 && node_out1)

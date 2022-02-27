@@ -2,7 +2,8 @@
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Terrainify"
 	set desc = "Turns space into a terrain type"
-	admin_only
+	ADMIN_ONLY
+	var/static/client/terrainifier
 
 	var/options = list(
 		"Ice Moon Station"=/client/proc/cmd_ice_moon_station,
@@ -13,9 +14,20 @@
 		"Winter Station"=/client/proc/cmd_winterify_station,
 		)
 
+	if(terrainifier)
+		if(src == terrainifier)
+			boutput(src, "You are already attempting to Terrainify!")
+		else
+			boutput(src, "[terrainifier.key] is already attempting to Terrainify!")
+		return
+	else
+		terrainifier = src
+
 	var/param = tgui_input_list(src,"Transform space around the station...","Terraform Space",options)
 	if(param)
 		call(src, options[param])()
+
+	terrainifier = null
 
 var/datum/station_zlevel_repair/station_repair = new
 /datum/station_zlevel_repair
@@ -29,7 +41,7 @@ var/datum/station_zlevel_repair/station_repair = new
 		if(src.station_generator)
 			src.station_generator.generate_terrain(turfs,reuse_seed=TRUE)
 
-		SPAWN_DBG(overlay_delay)
+		SPAWN(overlay_delay)
 			for(var/turf/T as anything in turfs)
 				if(src.ambient_light)
 					T.UpdateOverlays(src.ambient_light, "ambient")
@@ -43,7 +55,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Void Station"
 	set desc = "Turns space into the THE VOID..."
-	admin_only
+	ADMIN_ONLY
 #ifdef UNDERWATER_MAP
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
 	boutput(src, "You cannot use this command on underwater maps. Sorry!")
@@ -79,7 +91,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Ice Station"
 	set desc = "Turns space into the Outpost Theta..."
-	admin_only
+	ADMIN_ONLY
 #ifdef UNDERWATER_MAP
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
 	boutput(src, "You cannot use this command on underwater maps. Sorry!")
@@ -139,7 +151,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Swampify"
 	set desc = "Turns space into a swamp"
-	admin_only
+	ADMIN_ONLY
 	var/const/ambient_light = "#222222"
 #ifdef UNDERWATER_MAP
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
@@ -192,7 +204,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Marsify"
 	set desc = "Turns space into a Mars"
-	admin_only
+	ADMIN_ONLY
 #ifdef UNDERWATER_MAP
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
 	boutput(src, "You cannot use this command on underwater maps. Sorry!")
@@ -250,7 +262,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Trenchify"
 	set desc = "Generates trench caves on the station Z"
-	admin_only
+	ADMIN_ONLY
 	if(src.holder.level >= LEVEL_ADMIN)
 		switch(alert("Generate a trench on the station Z level? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
 			if("Yes")
@@ -324,7 +336,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Winterify"
 	set desc = "Turns space into a colder snowy place"
-	admin_only
+	ADMIN_ONLY
 	var/const/ambient_light = "#222"
 #ifdef UNDERWATER_MAP
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
@@ -339,12 +351,21 @@ var/datum/station_zlevel_repair/station_repair = new
 				station_repair.ambient_light = new /image/ambient
 				station_repair.ambient_light.color = ambient_light
 
+				var/snow = alert("Should it be snowing?",, "Yes", "No", "Light")
+				snow = (snow == "No") ? null : snow
+				if(snow == "Light")
+					station_repair.weather_effect = /obj/effects/snow/grey/tile/light
+				else if(snow == "Yes")
+					station_repair.weather_effect = /obj/effects/snow/grey/tile
+
 				var/list/space = list()
 				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 					space += S
 				station_repair.station_generator.generate_terrain(space)
 				for (var/turf/S as anything in space)
 					S.UpdateOverlays(station_repair.ambient_light, "ambient")
+					if(snow)
+						new station_repair.weather_effect(S)
 
 				shippingmarket.clear_path_to_market()
 

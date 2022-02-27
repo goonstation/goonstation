@@ -16,6 +16,8 @@ module.exports = function (grunt) {
   // Automatically load required grunt tasks
   require('jit-grunt')(grunt);
 
+	var os = require('os');
+
   // Configurable paths
   var config = {
     app: '.',
@@ -24,7 +26,9 @@ module.exports = function (grunt) {
 
   var rev = grunt.file.read('revision') || '1';
   rev = rev.replace(/(\r\n|\n|\r)/gm, '');
-  var cdn = 'http://cdn.goonhub.com';
+	var serverType = grunt.option('servertype') || '';
+	if (serverType === 'main') serverType = '';
+  var cdn = 'https://cdn'+serverType+'.goonhub.com';
 
   // Define the configuration for all the tasks
   grunt.initConfig({
@@ -92,6 +96,9 @@ module.exports = function (grunt) {
     // The following *-min tasks produce minified files in the dist folder
     imagemin: {
       dist: {
+        options: {
+          concurrency: Math.max(1, Math.round(os.cpus().length / 2))
+        },
         files: [{
           expand: true,
           cwd: '<%= config.app %>/images',

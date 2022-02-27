@@ -86,7 +86,7 @@
 		else if (issilicon(M) || isAIeye(M))
 			var/mob/living/silicon/S
 			if (isAIeye(M))
-				var/mob/dead/aieye/E = M
+				var/mob/living/intangible/aieye/E = M
 				S = E.mainframe
 			else
 				S = M
@@ -236,7 +236,7 @@
 						, access_pathology
 						#endif
 						)
-		if("Medical Director", "Head Surgeon")
+		if("Medical Director")
 			return list(access_robotics, access_medical, access_morgue,
 						access_maint_tunnels, access_tech_storage, access_medical_lockers,
 						access_medlab, access_heads, access_eva, access_medical_director, access_ai_upload
@@ -302,6 +302,10 @@
 			return list(access_maint_tunnels, access_tech_storage, access_medical, access_morgue)
 		if("Psychiatrist")
 			return list(access_medical, access_maint_tunnels)
+		if("Medical Specialist")
+			return list(access_robotics, access_medical, access_morgue,
+						access_maint_tunnels, access_tech_storage, access_medical_lockers,
+						access_medlab) //Mdir minus head stuff
 
 		///////////////////////////// Science
 		if("Scientist")

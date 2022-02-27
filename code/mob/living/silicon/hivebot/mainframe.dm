@@ -85,7 +85,7 @@
 /mob/living/silicon/hive_mainframe/proc/return_to(var/mob/user)
 	if(user.mind)
 		user.mind.transfer_to(src)
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			if (user)
 				user:shell = 1
 				user:real_name = "Robot [pick(rand(1, 999))]"
@@ -119,7 +119,7 @@
 		return
 
 	else if(src.mind)
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			target_shell:mainframe = src
 			target_shell:dependent = 1
 			target_shell:real_name = src.name
@@ -150,4 +150,4 @@
 			newname = copytext(newname, 1, 26)
 		newname = strip_html(newname)
 		src.real_name = newname
-		src.name = newname
+		src.UpdateName()

@@ -86937,7 +86937,7 @@
 /area/evilreaver/medical)
 "dzJ" = (
 /obj/rack,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /turf/simulated/floor/grime,
 /area/evilreaver/storage/fire)
 "dzK" = (
@@ -87132,7 +87132,7 @@
 /area/evilreaver/medical)
 "dAf" = (
 /obj/rack,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor/grime,
 /area/evilreaver/storage/fire)
@@ -87181,7 +87181,7 @@
 "dAn" = (
 /obj/rack,
 /obj/decal/cleanable/cobweb,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor/grime,
 /area/evilreaver/storage/emergency)
@@ -87564,7 +87564,7 @@
 /area/evilreaver/storage/emergency)
 "dBl" = (
 /obj/decal/cleanable/blood,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /turf/simulated/floor/grime,
 /area/evilreaver/storage/emergency)
 "dBm" = (
@@ -89312,7 +89312,7 @@
 /obj/rack,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/glasses/meson,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /turf/simulated/floor/grime,
 /area/evilreaver)
 "dFg" = (

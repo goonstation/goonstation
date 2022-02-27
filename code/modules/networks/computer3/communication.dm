@@ -70,6 +70,8 @@
 	input_text(text)
 		if(..())
 			return
+		if(isghostdrone(usr))
+			return
 
 		var/list/command_list = parse_string(text)
 		var/command = command_list[1]
@@ -320,15 +322,9 @@
 
 					if("shutl_e_sen")
 						src.print_text("<b>Alert:</b> The Emergency Shuttle has been called.")
-						if(usr)
-							message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
-							logTheThing("station", null, null, "[key_name(usr)] called the Emergency Shuttle to the station")
 
 					if("shutl_e_ret")
 						src.print_text("<b>Alert:</b> The Emergency Shuttle has been recalled.")
-						if(usr)
-							message_admins("<span class='internal'>[key_name(usr)] recalled the Emergency Shuttle</span>")
-							logTheThing("station", null, null, "[key_name(usr)] recalled the Emergency Shuttle")
 
 					if("transmit_e_success")
 						src.print_text("Message transmitted successfuly.")

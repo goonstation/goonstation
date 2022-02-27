@@ -3,7 +3,7 @@ Some procs  exist for replacement within text:
 	[constructTarget(target,type)]
 
 Example in-game log call:
-		logTheThing("admin", src, M, "shot that nerd [constructTarget(src,"diary")] at [showCoords(usr.x, usr.y, usr.z)]")
+		logTheThing("admin", src, M, "shot that nerd [constructTarget(src,"diary")] at [log_loc(usr)]")
 Example out of game log call:
 		logTheThing("diary", src, null, "gibbed everyone ever", "admin")
 */
@@ -23,8 +23,11 @@ var/global/logLength = 0
 
 /proc/logTheThing(type, source, target, text, diaryType)
 	var/diaryLogging
+	var/forceNonDiaryLoggingToo = FALSE
+	var/area/A
 
 	if (source)
+		A = get_area(source)
 		source = constructName(source, type)
 	else
 		if (type != "diary") source = "<span class='blank'>(blank)</span>"
@@ -68,6 +71,7 @@ var/global/logLength = 0
 				logs["audit"] += ingameLog
 				diaryLogging = 1
 				diaryType = "audit"
+				forceNonDiaryLoggingToo = TRUE
 			if ("admin") logs["admin"] += ingameLog
 			if ("admin_help") logs["admin_help"] += ingameLog
 			if ("mentor_help") logs["mentor_help"] += ingameLog
@@ -75,7 +79,10 @@ var/global/logLength = 0
 			if ("ooc") logs["ooc"] += ingameLog
 			if ("whisper") logs["speech"] += ingameLog
 			if ("station") logs["station"] += ingameLog
-			if ("combat") logs["combat"] += ingameLog
+			if ("combat")
+				if (A?.dont_log_combat)
+					return
+				logs["combat"] += ingameLog
 			if ("telepathy") logs["telepathy"] += ingameLog
 			if ("debug") logs["debug"] += ingameLog
 			if ("pdamsg") logs["pdamsg"] += ingameLog
@@ -108,7 +115,7 @@ var/global/logLength = 0
 			WRITE_LOG(diary_name, "[diaryType]: [source ? "[source] ": ""][text]")
 
 		//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
-		if (!diaryLogging && config.allowRotatingFullLogs)
+		if ((!diaryLogging || forceNonDiaryLoggingToo) && config.allowRotatingFullLogs)
 			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
 			logLength++
 	return
@@ -142,7 +149,7 @@ var/global/logLength = 0
 		src_object = window.locked_by.src_object
 	// Insert src_object info
 	if(src_object)
-		entry += "<br>Using: [src_object.type] [\ref(src_object)]" // |GOONSTATION-CHANGE| (\n->br, REF->\ref)
+		entry += "<br>Using: [src_object.type] \ref[src_object]" // |GOONSTATION-CHANGE| (\n->br, REF->\ref)
 	// Insert message
 	if(message)
 		entry += "<br>[message]" // |GOONSTATION-CHANGE| (\n->br)
@@ -165,14 +172,37 @@ var/global/logLength = 0
 	var/traitor
 	var/online
 	var/dead = 1
-	var/mobType
+	var/mobType = null
 
 	var/mob/mobRef
 	if (ismob(ref))
 		mobRef = ref
 		traitor = checktraitor(mobRef)
-		if (mobRef.real_name)
-			name = mobRef.real_name
+		if (mobRef.name)
+			if (ishuman(mobRef))
+				var/mob/living/carbon/human/humanRef = mobRef
+				if (mobRef.name != mobRef.real_name && (mobRef.name == "Unknown" || mobRef.name == humanRef.wear_id?:registered))
+					name = "[mobRef.real_name] (disguised as [mobRef.name])"
+				else
+					name = mobRef.name
+			else
+				name = mobRef.name
+			if (length(mobRef.name_suffixes))
+				name = mobRef.real_name
+
+		if(isnull(mobRef.client) && isAIeye(mobRef))
+			var/mob/living/intangible/aieye/aieye = mobRef
+			if(aieye.mainframe?.client)
+				mobRef = aieye.mainframe
+				mobType = "(AIeye/mainframe)"
+		else if(isnull(mobRef.client) && istype(mobRef, /mob/living/silicon/ai))
+			var/mob/living/silicon/ai/ai = mobRef
+			if(ai.eyecam?.client)
+				mobRef = ai.eyecam
+				mobType = "(mainframe/AIeye)"
+			else if(ai.deployed_shell?.client)
+				mobRef = ai.deployed_shell
+				mobType = "(mainframe/shell)"
 		if (mobRef.key)
 			key = mobRef.key
 		if (mobRef.ckey)
@@ -187,8 +217,17 @@ var/global/logLength = 0
 		if (clientRef.mob)
 			mobRef = clientRef.mob
 			traitor = checktraitor(mobRef)
-			if (mobRef.real_name)
-				name = clientRef.mob.real_name
+			if (mobRef.name)
+				if (ishuman(clientRef.mob))
+					var/mob/living/carbon/human/humanRef = clientRef.mob
+					if (clientRef.mob.name != clientRef.mob.real_name && (clientRef.mob.name == "Unknown" || clientRef.mob.name == humanRef.wear_id?:registered))
+						name = "[clientRef.mob.real_name] (disguised as [clientRef.mob.name])"
+					else
+						name = clientRef.mob.name
+				else
+					name = clientRef.mob.name
+				if (length(clientRef.mob.name_suffixes))
+					name = clientRef.mob.real_name
 			if (!isdead(mobRef))
 				dead = 0
 		if (clientRef.key)
@@ -198,12 +237,12 @@ var/global/logLength = 0
 	else
 		return ref
 
-	if (mobRef)
+	if (mobRef && isnull(mobRef))
 		if (ismonkey(mobRef)) mobType = "Monkey"
 		else if (isrobot(mobRef)) mobType = "Robot"
 		else if (isshell(mobRef)) mobType = "AI Shell"
 		else if (isAI(mobRef)) mobType = "AI"
-		else if (!ckey) mobType = "NPC"
+		else if (!ckey && !mobRef.last_ckey) mobType = "NPC"
 
 	var/list/data = list()
 	if (name)
@@ -218,6 +257,11 @@ var/global/logLength = 0
 			data += "[name ? " (" : ""][key][name ? ")" : ""]"
 		else
 			data += "[name ? " (" : ""]<a href='?src=%admin_ref%;action=adminplayeropts;targetckey=[ckey]' title='Player Options'>[key]</a>[name ? ")" : ""]"
+	else if(mobRef.last_ckey)
+		if (type == "diary")
+			data += "[name ? " (" : ""]last: [ckey][name ? ")" : ""]"
+		else
+			data += "[name ? " (" : ""]last: <a href='?src=%admin_ref%;action=adminplayeropts;targetckey=[ckey]' title='Player Options'>[ckey]</a>[name ? ")" : ""]"
 	if (traitor)
 		if (type == "diary")
 			data += " \[TRAITOR\]"
@@ -234,6 +278,9 @@ var/global/logLength = 0
 
 proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	if (!P || !SHOT)
+		return
+	var/area/A = get_area(SHOT)
+	if (A?.dont_log_combat)
 		return
 	var/shooter_data = null
 	var/vehicle
@@ -317,6 +364,8 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 /proc/log_atmos(var/atom/A as turf|obj|mob)
 	return scan_atmospheric(A, 0, 1)
 
+/proc/alert_atmos(var/atom/A as turf|obj|mob)
+	return scan_atmospheric(A, 0, 0, 0, 1)
 
 /proc/get_log_data_html(logType as text, searchString as text, var/datum/admins/requesting_admin)
 	if (!searchString)

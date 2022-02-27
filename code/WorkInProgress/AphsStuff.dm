@@ -63,7 +63,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for(var/obj/machinery/derelict_aiboss/ai/A in get_area(src))
 				src.ai = A
 				break
@@ -107,7 +107,7 @@
 			src.icon_state = "oldai_mem-1"
 			sleep(1 SECOND)
 			src.icon_state = "oldai_mem-2"
-			SPAWN_DBG(5 SECONDS) src.icon_state = "oldai_mem-1"
+			SPAWN(5 SECONDS) src.icon_state = "oldai_mem-1"
 			if(ai) ai.load_tape(tape_no)
 		else
 			src.visible_message("[user] prods the databank's tape slot with [W]. Nothing happens.",1)
@@ -266,10 +266,11 @@
 	proc/change_face(state)
 		src.overlays = null
 		var/image/sheen = image('icons/effects/96x96.dmi', "oldai_light")
-		sheen.plane = PLANE_SELFILLUM + 2
+		sheen.plane = PLANE_ABOVE_LIGHTING
+		sheen.layer = 100
 		if(findtext(state,"face_"))
 			var/image/face_over = image('icons/effects/96x96.dmi', "oldai-faceoverlay")
-			face_over.plane = PLANE_SELFILLUM + 1
+			face_over.plane = PLANE_ABOVE_LIGHTING
 			src.overlays += face_over
 
 		src.face = image('icons/effects/96x96.dmi', "oldai-[state]")

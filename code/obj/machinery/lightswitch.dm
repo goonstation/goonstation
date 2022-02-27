@@ -22,7 +22,7 @@
 	..()
 	UnsubscribeProcess()
 	light = new /datum/light/point
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		src.area = src.loc.loc
 
 		if(otherarea)
@@ -32,7 +32,7 @@
 			name = "light switch"
 
 		src.on = src.area.lightswitch
-		updateicon()
+		UpdateIcon()
 
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
@@ -46,11 +46,10 @@
 		light.enable()
 
 /obj/machinery/light_switch/proc/trigger(var/datum/mechanicsMessage/inp)
-	attack_hand(usr) //bit of a hack but hey.
-	return
+	if(!ON_COOLDOWN(src, "mechcomp_toggle", 1 SECOND))
+		toggle(null)
 
-
-/obj/machinery/light_switch/proc/updateicon()
+/obj/machinery/light_switch/update_icon()
 	if(status & NOPOWER)
 		icon_state = "light-p"
 		light.disable()
@@ -73,31 +72,36 @@
 	if(user && !user.stat)
 		return "A light switch. It is [on? "on" : "off"]."
 
-/obj/machinery/light_switch/attack_hand(mob/user)
-
+/obj/machinery/light_switch/proc/toggle(mob/user=null)
 	on = !on
 
 	area.lightswitch = on
 
 	area.power_change()
 
-	interact_particle(user,src)
+	if(user)
+		interact_particle(user,src)
 
 	for(var/obj/machinery/light_switch/L in area.machines)
 		L.on = on
-		L.updateicon()
+		L.UpdateIcon()
 
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[on ? "lightOn":"lightOff"]")
 
-	logTheThing("station", user, null, "turns [on ? "on" : "off"] a lightswitch at [log_loc(user)]")
+	if(user)
+		src.add_fingerprint(user)
+		logTheThing("station", user, null, "turns [on ? "on" : "off"] a lightswitch at [log_loc(user)]")
 
 	playsound(src, "sound/misc/lightswitch.ogg", 50, 1)
 
-	if(on)
+	if(on && !ON_COOLDOWN(src, "turtlesplode", 10 SECONDS))
 		for_by_tcl(S, /obj/critter/turtle)
 			if(get_area(S) == src.area && S.rigged)
 				S.explode()
 
+/obj/machinery/light_switch/attack_hand(mob/user)
+	if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
+		toggle(null)
 
 /obj/machinery/light_switch/power_change()
 
@@ -107,7 +111,7 @@
 		else
 			status |= NOPOWER
 
-		updateicon()
+		UpdateIcon()
 
 /obj/machinery/light_switch/north
 	name = "N light switch"
@@ -130,7 +134,7 @@
 
 	New()
 		var/turf/T = null
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			for (var/dir in cardinal)
 				T = get_step(src,dir)
 				if (istype(T,/turf/simulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))

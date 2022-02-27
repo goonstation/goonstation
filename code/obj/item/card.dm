@@ -10,7 +10,7 @@ GAUNTLET CARDS
 	name = "card"
 	icon = 'icons/obj/items/card.dmi'
 	icon_state = "id"
-	wear_image_icon = 'icons/mob/mob.dmi'
+	wear_image_icon = 'icons/mob/clothing/card.dmi'
 	w_class = W_CLASS_TINY
 	burn_type = 1
 	stamina_damage = 0
@@ -48,7 +48,7 @@ GAUNTLET CARDS
 	attack_hand(mob/user as mob)
 		boutput(user, "<span class='combat'>Turns out that card was actually a kind of [pick("deadly chameleon","spiny anteater","Discount Dan's latest product prototype","Syndicate Top Trumps Card","bag of neckbeard shavings")] in disguise! It stabs you!</span>")
 		user.changeStatus("paralysis", 10 SECONDS)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			var/obj/storage/closet/C = new/obj/storage/closet(get_turf(user))
 			user.set_loc(C)
 			C.layer = OBJ_LAYER
@@ -154,9 +154,16 @@ GAUNTLET CARDS
 	registered = "Captain"
 	assignment = "Captain"
 	keep_icon = TRUE
+	var/touched = FALSE
 	New()
 		access = get_access("Captain")
 		..()
+
+	pickup(mob/user)
+		. = ..()
+		if(!touched && user.job != "Captain")
+			touched = TRUE
+			logTheThing("station", user, null, "is the first non-Captain to pick up [src] at [log_loc(src)]")
 
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
@@ -241,7 +248,7 @@ GAUNTLET CARDS
 		O.pixel_y = -96
 		O.icon = 'icons/effects/214x246.dmi'
 		O.icon_state = "explosion"
-		SPAWN_DBG(3.5 SECONDS) qdel(O)
+		SPAWN(3.5 SECONDS) qdel(O)
 		user.gib()
 
 /obj/item/card/id/attack_self(mob/user as mob)
@@ -345,7 +352,7 @@ GAUNTLET CARDS
 
 /obj/item/card/id/temporary/New()
 	..()
-	SPAWN_DBG(0) //to give time for duration and starting access to be set
+	SPAWN(0) //to give time for duration and starting access to be set
 		starting_access = access
 		end_time = ticker.round_elapsed_ticks + duration*10
 		sleep(duration * 10)
@@ -365,21 +372,22 @@ GAUNTLET CARDS
 		if (!user)
 			registered = "???"
 			assignment = "unknown phantom entity (no.. mob? this is awkward)"
-		if (istype(user, /mob/living/carbon/human/virtual))
-			var/mob/living/LI = user:body
-			if (LI)
-				registered = LI.real_name
+		else
+			if (istype(user, /mob/living/carbon/human/virtual))
+				var/mob/living/LI = user:body
+				if (LI)
+					registered = LI.real_name
+				else
+					registered = user.real_name
 			else
 				registered = user.real_name
-		else
-			registered = user.real_name
 
-		if (!user.client)
-			assignment = "literal meat shield (no client)"
-		else
-			assignment = "loading arena matches..."
-			tag = "gauntlet-id-[user.client.key]"
-			queryGauntletMatches(1, user.client.key)
+			if (!user.client)
+				assignment = "literal meat shield (no client)"
+			else
+				assignment = "loading arena matches..."
+				tag = "gauntlet-id-[user.client.key]"
+				queryGauntletMatches(1, user.client.key)
 		name = "[registered]'s ID Card ([assignment])"
 
 	proc/SetMatchCount(var/matches)

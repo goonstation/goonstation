@@ -219,7 +219,7 @@
 
 			else
 				if(!src.setup_freq_locked)
-					var/new_freq = round(text2num(command))
+					var/new_freq = round(text2num_safe(command))
 					if(new_freq && (new_freq >= 1000 && new_freq <= 1500))
 						get_radio_connection_by_id(src, "wireless").update_frequency(new_freq)
 						src.frequency = new_freq
@@ -252,7 +252,7 @@
 					var/broadcast_range = src.range
 					if(src.setup_netmode_norange)
 						broadcast_range = 0
-					SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+					SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, broadcast_range)
 
 				return
@@ -286,7 +286,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(src.host && !src.link) //Wait for the map to load and hook up if installed() hasn't done it.
 				src.check_connection()
 			//Let's blindy attempt to generate a unique network ID!
@@ -352,7 +352,7 @@
 			newsignal.data["address_1"] = "ping"
 			newsignal.data["sender"] = src.net_id
 			if (length(command) > 4)
-				var/new_net_number = text2num( copytext(command, 5) )
+				var/new_net_number = text2num_safe( copytext(command, 5) )
 				if (new_net_number != null && new_net_number >= 0 && new_net_number <= 16)
 					newsignal.data["net"] = "[new_net_number]"
 				else if (src.net_number)
@@ -367,7 +367,7 @@
 
 		else if (dd_hasprefix(command, "subnet"))
 			if (length(command) > 6)
-				var/new_net_number = text2num( copytext(command, 7) )
+				var/new_net_number = text2num_safe( copytext(command, 7) )
 				if (new_net_number != null && new_net_number >= 0 && new_net_number <= 16)
 					src.net_number = new_net_number
 			else
@@ -403,7 +403,7 @@
 				pingsignal.data["command"] = "ping_reply"
 				pingsignal.transmission_method = TRANSMISSION_WIRE
 				pingsignal.source = src
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.link.post_signal(src, pingsignal)
 
 			return //Just toss out the rest of the signal then I guess
@@ -500,7 +500,7 @@
 				if(!print_data)
 					src.printing = 0
 					return 1
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					var/obj/item/paper/thermal/P = new /obj/item/paper/thermal
 					P.set_loc(src.host.loc)
 
@@ -525,7 +525,7 @@
 					newsignal.data["sender"] = src.net_id
 
 					if (length(command) > 4)
-						var/new_net_number = text2num( copytext(command, 5) )
+						var/new_net_number = text2num_safe( copytext(command, 5) )
 						if (new_net_number != null && new_net_number >= 0 && new_net_number <= 16)
 							newsignal.data["net"] = "[new_net_number]"
 						else if (src.net_number)
@@ -539,7 +539,7 @@
 
 				else if (dd_hasprefix(command, "subnet"))
 					if (length(command) > 6)
-						var/new_net_number = text2num( copytext(command, 7) )
+						var/new_net_number = text2num_safe( copytext(command, 7) )
 						if (new_net_number != null && new_net_number >= 0 && new_net_number <= 16)
 							src.net_number = new_net_number
 					else
@@ -563,7 +563,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(src.host && !src.wired_link) //Wait for the map to load and hook up if installed() hasn't done it.
 				src.check_wired_connection()
 			//Let's blindy attempt to generate a unique network ID!
@@ -639,7 +639,7 @@
 				if(!print_data)
 					src.printing = 0
 					return 1
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					var/obj/item/paper/thermal/P = new /obj/item/paper/thermal
 					P.set_loc(src.host.loc)
 
@@ -693,7 +693,7 @@
 					return 1
 
 				else if (copytext(command, 1, 7) == "subnet")
-					. = text2num( copytext(command, 7) )
+					. = text2num_safe( copytext(command, 7) )
 					if (. != null && . >= 0 && . <= 16)
 						src.subnet = .
 					else
@@ -702,9 +702,9 @@
 					return 0
 
 				else if (mode < 2)
-					. = text2num(command)
+					. = text2num_safe(command)
 					if (isnum(.))
-						. = round( max(1000, min(., 1500)) )
+						. = round( clamp(., 1000, 1500) )
 						get_radio_connection_by_id(src, "wireless").update_frequency(.)
 						src.frequency = .
 						return 0
@@ -730,7 +730,7 @@
 				pingsignal.data["command"] = "ping_reply"
 				pingsignal.transmission_method = src.mode == 2 ? TRANSMISSION_WIRE : TRANSMISSION_RADIO
 				pingsignal.source = src
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					if (src.mode == 2 && src.wired_link)
 						src.wired_link.post_signal(src, pingsignal)
 					else
@@ -824,7 +824,7 @@
 			if(!print_data)
 				src.printing = 0
 				return
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				var/obj/item/paper/thermal/P = new /obj/item/paper/thermal
 				P.set_loc(src.host.loc)
 
@@ -902,6 +902,7 @@
 				prize = new /obj/item/device/radio/beacon( prize_location )
 				prize.name = "electronic blink toy game"
 				prize.desc = "Blink.  Blink.  Blink."
+				prize.anchored = FALSE
 			if(3)
 				prize = new /obj/item/device/light/zippo( prize_location )
 				prize.name = "Burno Lighter"
@@ -1014,7 +1015,7 @@
 				newsignal.data["access"] = jointext(src.authid.access, ";")
 				newsignal.data["balance"] = src.authid.money
 
-				SPAWN_DBG(0.4 SECONDS)
+				SPAWN(0.4 SECONDS)
 					send_command("card_authed", newsignal)
 
 				return newsignal
@@ -1024,7 +1025,7 @@
 					return "nocard"
 				var/new_access = 0
 				if(signal)
-					new_access = text2num(signal.data["access"])
+					new_access = text2num_safe(signal.data["access"])
 
 				if(!new_access || (new_access in src.authid.access))
 					var/datum/signal/newsignal = get_free_signal()
@@ -1032,7 +1033,7 @@
 					newsignal.data["assignment"] = src.authid.assignment
 					newsignal.data["balance"] = src.authid.money
 
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						send_command("card_authed", newsignal)
 
 					return newsignal
@@ -1042,14 +1043,14 @@
 					return "nocard"
 /*
 				//We need correct PIN numbers you jerks.
-				if(text2num(signal.data["pin"]) != src.authid.pin)
-					SPAWN_DBG(0.4 SECONDS)
+				if(text2num_safe(signal.data["pin"]) != src.authid.pin)
+					SPAWN(0.4 SECONDS)
 						send_command("card_bad_pin")
 					return
 */
-				var/charge_amount = text2num(signal.data["data"])
+				var/charge_amount = text2num_safe(signal.data["data"])
 				if(!charge_amount || (charge_amount <= 0) || charge_amount > src.authid.money)
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						send_command("card_bad_charge")
 					return 1
 
@@ -1061,7 +1062,7 @@
 				if(!src.authid || !src.can_manage_access || !signal)
 					return "nocard"
 
-				var/new_access = text2num(signal.data["access"])
+				var/new_access = text2num_safe(signal.data["access"])
 				if(!new_access || (new_access <= 0))
 					return
 
@@ -1072,7 +1073,7 @@
 					var/datum/signal/newsignal = get_free_signal()
 					newsignal.data["access"] = new_access
 
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						send_command("card_add")
 
 					return 0
@@ -1081,7 +1082,7 @@
 				if(!src.authid || !src.can_manage_access || !signal)
 					return "nocard"
 
-				var/rem_access = text2num(signal.data["access"])
+				var/rem_access = text2num_safe(signal.data["access"])
 				if(!rem_access || (rem_access <= 0))
 					return 1
 
@@ -1092,7 +1093,7 @@
 					var/datum/signal/newsignal = get_free_signal()
 					newsignal.data["access"] = rem_access
 
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						send_command("card_remove")
 
 					return 0
@@ -1368,7 +1369,7 @@
 		if(..())
 			return 1
 
-		SPAWN_DBG(rand(50,100))
+		SPAWN(rand(50,100))
 			if(host)
 				for(var/mob/M in hearers(host, null))
 					if(M.client)

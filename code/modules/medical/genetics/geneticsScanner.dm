@@ -69,11 +69,11 @@ var/list/genetek_hair_styles = list()
 			move_mob_inside(target)
 		else if (can_operate(user,target))
 			var/previous_user_intent = user.a_intent
-			user.a_intent = INTENT_GRAB
+			user.set_a_intent(INTENT_GRAB)
 			user.drop_item()
 			target.Attackhand(user)
-			user.a_intent = previous_user_intent
-			SPAWN_DBG(user.combat_click_delay + 2)
+			user.set_a_intent(previous_user_intent)
+			SPAWN(user.combat_click_delay + 2)
 				if (can_operate(user,target))
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)
@@ -121,13 +121,12 @@ var/list/genetek_hair_styles = list()
 		set category = "Local"
 
 		move_mob_inside(usr)
-		return
 
 	attack_hand(mob/user as mob)
 		..()
 		eject_occupant(user)
 
-	MouseDrop(mob/user as mob)
+	mouse_drop(mob/user as mob)
 		if (can_operate(user))
 			eject_occupant(user)
 		else
@@ -139,7 +138,6 @@ var/list/genetek_hair_styles = list()
 		set category = "Local"
 
 		eject_occupant(usr)
-		return
 
 
 	verb/eject_occupant(var/mob/user)
@@ -153,10 +151,7 @@ var/list/genetek_hair_styles = list()
 		add_fingerprint(user)
 
 	attackby(var/obj/item/grab/G as obj, user as mob)
-		if ((!( istype(G, /obj/item/grab) ) || !( ismob(G.affecting) )))
-			return
-		if (!isliving(user))
-			boutput(user, "<span class='alert'>You're dead! Quit that!</span>")
+		if (!istype(G))
 			return
 
 		if (src.occupant)
@@ -183,7 +178,6 @@ var/list/genetek_hair_styles = list()
 
 		src.add_fingerprint(user)
 		qdel(G)
-		return
 
 	verb/lock()
 		set name = "Scanner Lock"
@@ -257,10 +251,6 @@ var/list/genetek_hair_styles = list()
 		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
 		return
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if (air_group || (height==0))
-			return 1
-		..()
 
 	proc/update_occupant()
 		var/mob/living/carbon/human/H = src.occupant

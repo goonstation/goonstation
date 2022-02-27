@@ -5,7 +5,7 @@
 	icon_state = "ghost"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_ABOVE
-	event_handler_flags = USE_CANPASS | IMMUNE_MANTA_PUSH | USE_FLUID_ENTER //maybe?
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER //maybe?
 	density = 0
 	canmove = 1
 	blinded = 0
@@ -144,7 +144,7 @@
 
 
 //#ifdef HALLOWEEN
-/mob/dead/observer/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/dead/observer/Cross(atom/movable/mover)
 	if (src.icon_state != "doubleghost" && istype(mover, /obj/projectile))
 		var/obj/projectile/proj = mover
 		if (proj.proj_data?.hits_ghosts)
@@ -208,7 +208,7 @@
 			if (M.client && isliving(M) && !M.unobservable)
 				candidates += M
 		if (candidates.len)
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				src.insert_observer(pick(candidates))
 #endif
 
@@ -249,7 +249,7 @@
 	if (render_special)
 		render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src.mind && istype(src.mind.purchased_bank_item, /datum/bank_purchaseable/golden_ghost))
 			src.setMaterial(getMaterial("gold"))
 //#ifdef HALLOWEEN
@@ -288,6 +288,9 @@
 			return null
 		var/mob/dead/observer/O = new/mob/dead/observer(src)
 		O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
+		if(!src.mouse_opacity)
+			O.mouse_opacity = 0
+			O.alpha = 0
 		if (isghostrestrictedz(O.z) && !restricted_z_allowed(O, get_turf(O)) && !(src.client && src.client.holder))
 			O.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 
@@ -330,6 +333,17 @@
 /mob/dead/observer/build_keybind_styles(client/C)
 	..()
 	C.apply_keybind("human")
+
+	if (!C.preferences.use_wasd)
+		C.apply_keybind("human_arrow")
+
+	if (C.preferences.use_azerty)
+		C.apply_keybind("human_azerty")
+
+	if (C.tg_controls)
+		C.apply_keybind("human_tg")
+		if (C.preferences.use_azerty)
+			C.apply_keybind("human_tg_azerty")
 
 /mob/dead/observer/is_spacefaring()
 	return 1
@@ -451,7 +465,7 @@
 		// but that's way too much effort to fix and i do not feel like debugging
 		// 2000 different "use after free" issues.
 		// so. your ghost doesnt go away. it just, uh. it takes a break for a while.
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_ALWAYS)
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "clientless", INVIS_ALWAYS)
 	return
 
 /mob/dead/observer/Move(NewLoc, direct)
@@ -484,7 +498,7 @@
 		src.x--
 	OnMove()
 
-/mob/dead/observer/MouseDrop(atom/A)
+/mob/dead/observer/mouse_drop(atom/A)
 	if (usr != src || isnull(A)) return
 	if (ismob(A))
 		var/mob/M = A
@@ -523,8 +537,8 @@
 		boutput(usr, "Not when you're not dead!")
 		return
 	var/A
-
-	A = input("Area to jump to", "BOOYEA", A) as null|anything in get_teleareas()
+	var/list/tele_areas = get_teleareas()
+	A = tgui_input_list(src, "Area to jump to", "Jump", tele_areas)
 	if (!A)
 		// aaaaaaaaaaaaaaaaaaaagggggggggggg
 		return
@@ -598,10 +612,6 @@
 	var/list/namecounts = list()
 	var/list/creatures = list()
 
-	//prefix list with option for alphabetic sorting
-	var/const/SORT = "* Sort alphabetically..."
-	creatures.Add(SORT)
-
 	for (var/client/C in clients)
 		LAGCHECK(LAG_LOW)
 		// not sure how this could happen, but be safe about it
@@ -629,17 +639,8 @@
 		creatures[name] = M
 
 	var/eye_name = null
-
-	eye_name = input("Please, select a target!", "Observe", null, null) as null|anything in creatures
-
-	//sort alphabetically if user so chooses
-	if (eye_name == SORT)
-		creatures.Remove(SORT)
-
-		creatures = sortList(creatures)
-
-		//redisplay sorted list
-		eye_name = input("Please, select a target!", "Observe (Sorted)", null, null) as null|anything in creatures
+	creatures = sortList(creatures)
+	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
 
 	if (!eye_name)
 		return
@@ -654,10 +655,6 @@
 	var/list/names = list()
 	var/list/namecounts = list()
 	var/list/creatures = list()
-
-	//prefix list with option for alphabetic sorting
-	var/const/SORT = "* Sort alphabetically..."
-	creatures.Add(SORT)
 
 	// Same thing you could do with the old auth disk. The bomb is equally important
 	// and should appear at the top of any unsorted list  (Convair880).
@@ -753,7 +750,6 @@
 			namecounts[name] = 1
 		creatures[name] = B
 
-	var/eye_name = null
 
 	for(var/name in creatures)
 		var/obj/O = creatures[name]
@@ -768,19 +764,9 @@
 				if(!T || isghostrestrictedz(T.z))
 					creatures -= name
 
-	eye_name = input("Please, select a target!", "Observe", null, null) as null|anything in creatures
-
-	//sort alphabetically if user so chooses
-	if (eye_name == SORT)
-		creatures.Remove(SORT)
-
-		for(var/i = 1; i <= creatures.len; i++)
-			for(var/j = i+1; j <= creatures.len; j++)
-				if(sorttext(creatures[i], creatures[j]) == -1)
-					creatures.Swap(i, j)
-
-		//redisplay sorted list
-		eye_name = input("Please, select a target!", "Observe (Sorted)", null, null) as null|anything in creatures
+	var/eye_name = null
+	creatures = sortList(creatures)
+	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
 
 	if (!eye_name)
 		return
@@ -789,6 +775,7 @@
 
 mob/dead/observer/proc/insert_observer(var/atom/target)
 	var/mob/dead/target_observer/newobs = new /mob/dead/target_observer
+	set_loc(newobs)
 	newobs.attach_hud(hud)
 	newobs.set_observe_target(target)
 	newobs.name = src.name
@@ -805,7 +792,6 @@ mob/dead/observer/proc/insert_observer(var/atom/target)
 		mind.transfer_to(newobs)
 	else if (src.client) //Wire: Fix for Cannot modify null.mob.
 		src.client.mob = newobs
-	set_loc(newobs)
 	if (isghostrestrictedz(newobs.z) && !restricted_z_allowed(newobs, get_turf(newobs)) && !(src.client && src.client.holder))
 		newobs.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 

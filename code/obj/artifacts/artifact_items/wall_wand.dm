@@ -65,7 +65,7 @@
 		icon_state = wallsprite
 		source = S
 		if (duration > 0)
-			SPAWN_DBG(duration * 10)
+			SPAWN(duration * 10)
 				qdel(src)
 
 	Bumped(AM)

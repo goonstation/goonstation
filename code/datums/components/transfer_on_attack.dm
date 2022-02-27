@@ -1,6 +1,10 @@
 /datum/component/transfer_on_attack
 	var/trans_amt = 5
 
+TYPEINFO(/datum/component/transfer_on_attack)
+	initialization_args = list(
+		ARG_INFO("trans_amt", "num", "amount of reagent to try to transfer", 5)
+	)
 /datum/component/transfer_on_attack/Initialize(var/trans_amt)
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE

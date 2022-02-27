@@ -112,8 +112,8 @@
 	return 1
 
 
-/mob/proc/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0)
-	.= 0
+/mob/proc/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, throw_type=THROW_SLIP, list/params=null)
+	. = null
 
 	if (!src.can_slip())
 		return
@@ -123,7 +123,7 @@
 	if (walking_matters)
 		slip_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
 	var/movement_delay_real = max(src.movement_delay(get_step(src,src.move_dir), running),world.tick_lag)
-	var/movedelay = max(movement_delay_real, min(world.time - src.next_move,world.time - src.last_pulled_time))
+	var/movedelay = clamp(world.time - src.next_move, movement_delay_real, world.time - src.last_pulled_time)
 	if (ignore_actual_delay)
 		movedelay = movement_delay_real
 
@@ -140,13 +140,25 @@
 		else
 			playsound(src.loc, "sound/misc/slip_big.ogg", 50, 1, -3)
 		src.remove_pulling()
+		var/turf/T = get_ranged_target_turf(src, src.move_dir, throw_range)
+		var/throw_speed = 2
+		if(throw_type == THROW_PEEL_SLIP)
+			params += list("peel_stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS))
+			throw_speed = 0.5
+			var/list/datum/thrown_thing/existing_throws = global.throwing_controller.throws_of_atom(src)
+			if(length(existing_throws))
+				for(var/datum/thrown_thing/thr as anything in existing_throws)
+					if(thr.throw_type & THROW_PEEL_SLIP)
+						thr.target_x = null
+						thr.target_y = null
+						thr.range = max(thr.range, thr.dist_travelled + throw_range)
+						return 1
+		else
+			params += list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS))
+		. = src.throw_at(T, intensity, throw_speed, params, src.loc, throw_type = throw_type)
 
-		var/turf/T = get_ranged_target_turf(src, src.last_move_dir, throw_range)
-		src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)
-		.= 1
-
-/mob/living/carbon/human/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0)
-	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay)
+/mob/living/carbon/human/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, throw_type=THROW_SLIP, list/params=null)
+	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay, throw_type, params)
 
 
 /mob/living/carbon/human/proc/skeletonize()
@@ -308,7 +320,7 @@
 		src.update_burning(burn)
 		src.TakeDamage("head", 0, 5)
 
-	if (prob(max(0, min(uncloak_prob, 100))))
+	if (prob(clamp(uncloak_prob, 0, 100)))
 		SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 		SEND_SIGNAL(src, COMSIG_DISGUISER_DEACTIVATE)
 
@@ -316,10 +328,10 @@
 		return 0
 	return 1
 
-/mob/proc/hearing_check(var/consciousness_check = 0, var/ear_disability_check = 1)
+/mob/proc/hearing_check(var/consciousness_check = 0)
 	return 1
 
-/mob/living/carbon/human/hearing_check(var/consciousness_check = 0, var/ear_disability_check = 1)
+/mob/living/carbon/human/hearing_check(var/consciousness_check = 0)
 	if (consciousness_check && (src.stat || src.getStatusDuration("paralysis") || src.sleeping))
 		// you may be physically capable of hearing it, but you're sure as hell not mentally able when you're out cold
 		.= 0
@@ -332,24 +344,24 @@
 			else if (src.ears.block_hearing_when_worn <= HEARING_ANTIDEAF)
 				return 1
 
-		if (ear_disability_check && (src.ear_disability || src.get_ear_damage(1)))
+		if (src.ear_disability || src.get_ear_damage(1))
 			.= 0
 
-/mob/living/silicon/hearing_check(var/consciousness_check = 0, var/ear_disability_check = 1)
+/mob/living/silicon/hearing_check(var/consciousness_check = 0)
 	if (consciousness_check && (src.getStatusDuration("paralysis") || src.sleeping || src.stat))
 		return 0
 
-	if (ear_disability_check && src.ear_disability)
+	if (src.ear_disability)
 		return 0
 
 	return 1
 
 // Bit redundant at the moment, but we might get ear transplants at some point, who knows? Just put 'em here (Convair880).
-/mob/proc/ears_protected_from_sound(var/ear_disability_check = 1)
+/mob/proc/ears_protected_from_sound()
 	return 0
 
-/mob/living/carbon/human/ears_protected_from_sound(var/ear_disability_check = 1)
-	if (!src.hearing_check(1, ear_disability_check))
+/mob/living/carbon/human/ears_protected_from_sound()
+	if (!src.hearing_check(1))
 		return 1
 	return 0
 
@@ -364,9 +376,6 @@
 	if (DO_NOTHING)
 		return
 
-	// If the target is deaf but is still affected, set this to true
-	var/is_deaf = FALSE
-
 	// Target checks.
 	var/mod_weak = 0 // Note: these aren't multipliers.
 	var/mod_stun = 0
@@ -376,17 +385,8 @@
 	var/mod_eardamage = 0
 	var/mod_eartempdeaf = 0
 
-	if (src.ears_protected_from_sound(0))
+	if (src.ears_protected_from_sound())
 		return
-
-	if (!src.hearing_check())
-		// If the target's ears aren't protected from sound
-		// but the target fails the hearing check then we mark
-		// them as deaf and won't damage their ears more.
-		// However, we will still apply this as a concussion.
-		mod_eardamage = -INFINITY
-		mod_eartempdeaf = -INFINITY
-		is_deaf = TRUE
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -409,10 +409,7 @@
 	//DEBUG_MESSAGE("Apply_sonic_stun() called for [src] at [log_loc(src)]. W: [weak], S: [stun], MS: [misstep], SL: [slow], DI: [drop_item], ED: [ears_damage], EF: [ear_tempdeaf]")
 
 	// Stun target mob.
-	if (is_deaf)
-		boutput(src, "<span class='alert'><b>You feel a wave of concussive force rattle your head!</b></span>")
-	else
-		boutput(src, "<span class='alert'><b>You hear an extremely loud noise!</b></span>")
+	boutput(src, "<span class='alert'><b>You hear an extremely loud noise!</b></span>")
 
 
 #ifdef USE_STAMINA_DISORIENT
@@ -434,11 +431,8 @@
 		if (ear_tempdeaf > 0)
 			src.take_ear_damage(ear_tempdeaf, 1)
 
-		if (weak == 0 && stun == 0 && prob(max(0, min(drop_item, 100))))
-			if (is_deaf)
-				src.show_message(__red("<B>You drop what you were holding to clutch at your head!</B>"))
-			else
-				src.show_message(__red("<B>You drop what you were holding to clutch at your ears!</B>"))
+		if (weak == 0 && stun == 0 && prob(clamp(drop_item, 0, 100)))
+			src.show_message(__red("<B>You drop what you were holding to clutch at your ears!</B>"))
 			src.drop_item()
 
 	return
@@ -564,7 +558,7 @@
 	if (!old || !newbody || !ishuman(old) || !ishuman(newbody))
 		return
 
-	SPAWN_DBG(2 SECONDS) // OrganHolders etc need time to initialize. Transferring inventory doesn't.
+	SPAWN(2 SECONDS) // OrganHolders etc need time to initialize. Transferring inventory doesn't.
 		if (copy_organs && old && newbody && old.organHolder && newbody.organHolder)
 			if (old.organHolder.skull && (old.organHolder.skull.type != newbody.organHolder.skull.type))
 				var/obj/item/organ/NO = new old.organHolder.skull.type(newbody)
@@ -722,7 +716,7 @@
 			old.u_equip(CI15)
 			newbody.equip_if_possible(CI15, slot_r_hand)
 
-	SPAWN_DBG(2 SECONDS) // Necessary.
+	SPAWN(2 SECONDS) // Necessary.
 		if (newbody)
 			newbody.set_face_icon_dirty()
 			newbody.set_body_icon_dirty()
@@ -785,7 +779,7 @@
 				see_traitors = 1
 				see_nukeops = 1
 				see_revs = 1
-		if (isnukeop(src))
+		if (isnukeop(src) || isnukeopgunbot(src))
 			see_nukeops = 1
 		if (iswizard(src))
 			see_wizards = 1
@@ -1060,7 +1054,8 @@
 
 		if (S == "door" && istype(target, /obj/machinery/door))
 			var/obj/machinery/door/door = target
-			door.tear_apart(src)
+			SPAWN(0)
+				door.tear_apart(src)
 			return 1
 
 		if (S == "table" && istype(target, /obj/table))

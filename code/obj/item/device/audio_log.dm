@@ -7,7 +7,7 @@
 	mats = 3
 
 	var/log_line = 1 //Which line of the log it's on.
-	var/max_lines = 60
+	var/max_lines = 100
 	var/list/messages = list()
 	var/list/speakers = list()
 
@@ -219,7 +219,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (!src.tape)
 				src.tape = new /obj/item/audio_tape(src)
 			if (src.audiolog_messages && length(src.audiolog_messages))
@@ -308,7 +308,7 @@
 			processing_items.Remove(src)
 			src.updateSelfDialog()
 			if(src.self_destruct)
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					src.explode()
 			return
 
@@ -318,7 +318,7 @@
 			processing_items.Remove(src)
 			src.updateSelfDialog()
 			if(src.self_destruct)
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					src.explode()
 			return
 		var/separator = findtext(speak_message,"|")
@@ -327,7 +327,7 @@
 			processing_items.Remove(src)
 			src.updateSelfDialog()
 			if(src.self_destruct)
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					src.explode()
 			return
 

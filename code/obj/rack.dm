@@ -6,7 +6,7 @@
 	flags = FPRINT | NOSPLASH
 	anchored = 1.0
 	desc = "A metal frame used to hold objects. Can be wrenched and made portable."
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
 	proc/rackbreak()
 		icon_state += "-broken"
 		src.set_density(0)
@@ -49,9 +49,7 @@
 		rackbreak()
 		return
 
-/obj/rack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
-
+/obj/rack/Cross(atom/movable/mover)
 	if (mover.flags & TABLEPASS)
 		return 1
 	else
@@ -70,7 +68,7 @@
 			for (var/obj/item/thing in S.contents)
 				thing.set_loc(src.loc)
 			S.desc = "A leather bag. It holds 0/[S.maxitems] [S.itemstring]."
-			S.satchel_updateicon()
+			S.UpdateIcon()
 			return
 	if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
 		return

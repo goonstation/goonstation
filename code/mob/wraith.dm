@@ -17,7 +17,7 @@
 	blinded = 0
 	anchored = 1
 	alpha = 180
-	event_handler_flags = USE_CANPASS | IMMUNE_MANTA_PUSH
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	plane = PLANE_NOSHADOW_ABOVE
 
 	var/deaths = 0
@@ -77,7 +77,7 @@
 		//src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.sight |= SEE_SELF // let's not make it see through walls
 		src.see_invisible = INVIS_SPOOKY
-		src.a_intent = "disarm"
+		src.set_a_intent("disarm")
 		src.see_in_dark = SEE_DARK_FULL
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
 		src.abilityHolder.points = 50
@@ -118,6 +118,8 @@
 				plane.alpha = 255
 
 	disposing()
+		for (var/mob/wraith/poltergeist/P in src.poltergeists)
+			P.master = null
 		poltergeists = null
 		..()
 
@@ -148,7 +150,7 @@
 		src.abilityHolder.updateText()
 
 		if (src.health < 1)
-			src.death(0)
+			src.death(FALSE)
 			return
 		else if (src.health < src.max_health)
 			HealDamage("chest", 1 * (life_time_passed / life_tick_spacing), 0)
@@ -186,7 +188,7 @@
 			logTheThing("combat", src, null, "lost a life as a wraith at [log_loc(src.loc)].")
 			src.justdied = 1
 			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
-			SPAWN_DBG(15 SECONDS) //15 seconds
+			SPAWN(15 SECONDS) //15 seconds
 				src.justdied = 0
 		else
 			boutput(src, "<span class='alert'><b>Your connection with the mortal realm is severed. You have been permanently banished.</b></span>")
@@ -235,7 +237,7 @@
 			for (var/datum/objective/specialist/wraith/WO in src.mind.objectives)
 				WO.onAbsorb(M)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
 			var/obj/projectile/proj = mover
 			if (proj.proj_data.hits_wraiths)
@@ -276,7 +278,7 @@
 		health -= brute * 3
 		health = min(max_health, health)
 		if (src.health <= 0)
-			src.death(0)
+			src.death(FALSE)
 		health_update_queue |= src
 
 	HealDamage(zone, brute, burn)
@@ -312,7 +314,7 @@
 			var/mydir = get_dir(src, NewLoc)
 			var/salted = 0
 			if (mydir == NORTH || mydir == EAST || mydir == WEST || mydir == SOUTH)
-				if (src.density && !NewLoc.Enter(src))
+				if (src.density && !NewLoc.canpass())
 					return
 
 			else
@@ -333,20 +335,20 @@
 				var/horiz = 0
 				var/vert = 0
 
-				if (!src.density || vertical.Enter(src))
+				if (!src.density || vertical.canpass())
 					vert = 1
 					src.set_loc(vertical)
-					if (!src.density || NewLoc.Enter(src))
+					if (!src.density || NewLoc.canpass())
 						blocked = 0
 						for(var/obj/decal/cleanable/saltpile/A in vertical)
 							if (istype(A)) salted = 1
 							if (salted) break
 					src.set_loc(oldloc)
 
-				if (!src.density || horizontal.Enter(src))
+				if (!src.density || horizontal.canpass())
 					horiz = 1
 					src.set_loc(horizontal)
-					if (!src.density || NewLoc.Enter(src))
+					if (!src.density || NewLoc.canpass())
 						blocked = 0
 						for(var/obj/decal/cleanable/saltpile/A in horizontal)
 							if (istype(A)) salted = 1
@@ -374,7 +376,7 @@
 			if (salted && !src.density && !src.justdied)
 				src.makeCorporeal()
 				boutput(src, "<span class='alert'>You have passed over salt! You now interact with the mortal realm...</span>")
-				SPAWN_DBG(1 MINUTE) //one minute
+				SPAWN(1 MINUTE) //one minute
 					src.makeIncorporeal()
 
 		//if ((marker && get_dist(src, marker) > 15) && (master && get_dist(P,src) > 12 ))
@@ -543,7 +545,7 @@
 			src.haunting = 1
 			src.flags &= !UNCRUSHABLE
 
-			SPAWN_DBG (haunt_duration)
+			SPAWN(haunt_duration)
 				src.makeIncorporeal()
 				src.haunting = 0
 				src.flags |= UNCRUSHABLE
@@ -686,49 +688,18 @@
 /proc/generate_wraith_objectives(var/datum/mind/traitor)
 	switch (rand(1,3))
 		if (1)
-			var/datum/objective/specialist/wraith/murder/M1 = new
-			M1.owner = traitor
-			M1.set_up()
-			traitor.objectives += M1
-			var/datum/objective/specialist/wraith/murder/M2 = new
-			M2.owner = traitor
-			M2.set_up()
-			traitor.objectives += M2
-			var/datum/objective/specialist/wraith/murder/M3 = new
-			M3.owner = traitor
-			M3.set_up()
-			traitor.objectives += M3
+			for(var/i in 1 to 3)
+				new/datum/objective/specialist/wraith/murder(null, traitor)
 		if (2)
-			var/datum/objective/specialist/wraith/absorb/A1 = new
-			A1.owner = traitor
-			A1.set_up()
-			traitor.objectives += A1
-			var/datum/objective/specialist/wraith/prevent/P2 = new
-			P2.owner = traitor
-			P2.set_up()
-			traitor.objectives += P2
+			new/datum/objective/specialist/wraith/absorb(null, traitor)
+			new/datum/objective/specialist/wraith/prevent(null, traitor)
 		if (3)
-			var/datum/objective/specialist/wraith/absorb/A1 = new
-			A1.owner = traitor
-			A1.set_up()
-			traitor.objectives += A1
-			var/datum/objective/specialist/wraith/murder/absorb/M2 = new
-			M2.owner = traitor
-			M2.set_up()
-			traitor.objectives += M2
+			new/datum/objective/specialist/wraith/absorb(null, traitor)
+			new/datum/objective/specialist/wraith/murder/absorb(null, traitor)
 	switch (rand(1,3))
-		if (1)
-			var/datum/objective/specialist/wraith/travel/T = new
-			T.owner = traitor
-			T.set_up()
-			traitor.objectives += T
-		if (2)
-			var/datum/objective/specialist/wraith/survive/T = new
-			T.owner = traitor
-			T.set_up()
-			traitor.objectives += T
-		if (3)
-			var/datum/objective/specialist/wraith/flawless/T = new
-			T.owner = traitor
-			T.set_up()
-			traitor.objectives += T
+		if(1)
+			new/datum/objective/specialist/wraith/travel(null, traitor)
+		if(2)
+			new/datum/objective/specialist/wraith/survive(null, traitor)
+		if(3)
+			new/datum/objective/specialist/wraith/flawless(null, traitor)

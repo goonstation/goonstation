@@ -47,7 +47,7 @@
 				boutput(user, "<span class='notice'>You put [src] in [W].</span>")
 				src.desc = "A leather bag. It holds [oreamt]/[W:maxitems] [W:itemstring]."
 				if (oreamt == W:maxitems) boutput(user, "<span class='notice'>[W] is now full!</span>")
-				W:satchel_updateicon()
+				W:UpdateIcon()
 			else
 				boutput(user, "<span class='alert'>[W] is full!</span>")
 		else ..()
@@ -55,7 +55,7 @@
 	attack_hand(mob/user as mob)
 		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many ores do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			if (splitnum >= amount || splitnum < 1)
+			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
 			var/obj/item/raw_material/new_stack = split_stack(splitnum)
@@ -73,7 +73,7 @@
 			var/obj/item/ore_scoop/S = H.get_equipped_ore_scoop()
 			if (S?.satchel && length(S.satchel.contents) < S.satchel.maxitems && src.scoopable)
 				src.set_loc(S.satchel)
-				S.satchel.satchel_updateicon()
+				S.satchel.UpdateIcon()
 				if (S.satchel.contents.len >= S.satchel.maxitems)
 					boutput(H, "<span class='alert'>Your ore scoop's satchel is full!</span>")
 					playsound(H, "sound/machines/chime.ogg", 20, 1)
@@ -91,7 +91,7 @@
 		else
 			return
 
-	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object
+	mouse_drop(over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
 			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
 			return
@@ -322,8 +322,8 @@
 			var/turf/bombturf = get_turf(src)
 			if (bombturf)
 				var/bombarea = bombturf.loc.name
-				logTheThing("combat", null, null, "Erebite detonated by an explosion in [bombarea] ([showCoords(bombturf.x, bombturf.y, bombturf.z)]). Last touched by: [src.fingerprintslast]")
-				message_admins("Erebite detonated by an explosion in [bombarea] ([showCoords(bombturf.x, bombturf.y, bombturf.z)]). Last touched by: [key_name(src.fingerprintslast)]")
+				logTheThing("combat", null, null, "Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [src.fingerprintslast]")
+				message_admins("Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [key_name(src.fingerprintslast)]")
 
 		qdel(src)
 
@@ -554,6 +554,11 @@
 		..()
 		icon_state += "[rand(1,5)]"
 
+/obj/item/raw_material/scrap_metal/steel
+	New()
+		..()
+		src.setMaterial(getMaterial("steel"))
+
 /obj/item/raw_material/shard
 	// same deal here
 	name = "shard"
@@ -612,7 +617,7 @@
 		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -634,7 +639,7 @@
 	H.changeStatus("weakened", 3 SECONDS)
 	H.force_laydown_standup()
 	var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
-	affecting.take_damage(force, 0)
+	affecting?.take_damage(force, 0)
 	H.UpdateDamageIcon()
 
 
@@ -746,7 +751,7 @@
 
 /obj/machinery/portable_reclaimer
 	name = "portable reclaimer"
-	desc = "A sophisticated piece of machinery that quickly processes minerals into bars."
+	desc = "A sophisticated piece of machinery can process raw materials, scrap, and material sheets into bars."
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "reclaimer"
 	anchored = 0
@@ -902,7 +907,7 @@
 					if (istype(S))
 						S.hud.remove_object(O)
 			if (istype(B) && .)
-				B.satchel_updateicon()
+				B.UpdateIcon()
 			//Users loading individual items would make an annoying amount of messages
 			//But loading a container is more noticable and there should be less
 			if (.)
@@ -916,7 +921,7 @@
 		else
 			. = ..()
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Get your filthy dead fingers off that!</span>")
 			return

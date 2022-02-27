@@ -241,7 +241,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/casual)
 
 /datum/clothingbooth_item/casual/dirtyvest
 	name = "Dirty Tank Top Vest"
-	path = /obj/item/clothing/under/misc/head_of_security
+	path = /obj/item/clothing/under/misc/dirty_vest
 
 /datum/clothingbooth_item/casual/bandshirt
 	name = "Band Shirt"
@@ -1098,7 +1098,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 
 /datum/clothingbooth_item/costume/mobilesuit
 	name = "Mobile Robot Suit"
-	path = /obj/item/clothing/under/gimmick/mobile_suit
+	path = /obj/item/clothing/suit/gimmick/mobile_suit
 	cost = PAY_EXECUTIVE
 
 /datum/clothingbooth_item/costume/mobilesuithelmet

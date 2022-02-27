@@ -25,7 +25,7 @@
 
 	onUpdate()
 		if (bar)
-			var/complete = max(min((sCurr / sMax), 1), 0)
+			var/complete = clamp((sCurr / sMax), 0, 1)
 			var/matrix/newMtx = matrix(complete, 1, MATRIX_SCALE)
 			animate( bar, transform = newMtx, pixel_x = -nround( ((30 - (30 * complete)) / 2) ), time = 3 )
 		//..()
@@ -57,7 +57,7 @@
 		animate(src, transform = matrix(), alpha = 255, time = 5)
 		animate(time = 5, alpha = 253)
 		animate(pixel_y = 64, alpha = 0, time = 5)
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			qdel(src)
 
 
@@ -81,7 +81,7 @@
 
 /obj/vehicle/skateboard/proc/adjustSickness(var/mod)
 	var/oldSick = sickness
-	sickness = min(100, max(0, sickness + mod))
+	sickness = clamp(sickness + mod, 0, 100)
 	var/howSick = round(sickness / 5)
 	if(howSick > round(oldSick / 5))
 		trickPopup(howSick)
@@ -134,7 +134,7 @@
 			continue
 		C.show_message(textother, 1, group = "[src]_Skateboard")
 
-/obj/vehicle/skateboard/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/skateboard/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 
@@ -192,7 +192,7 @@
 			playsound(src, pick(sb_tricks), 65, 1)
 
 			input_lockout += 1
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				input_lockout -= 1
 
 	else if(isobj(AM))
@@ -209,7 +209,7 @@
 		walk(src, newdir, speed_delay)
 		playsound(src, pick(sb_tricks), 65, 1)
 		input_lockout += 1
-		SPAWN_DBG(0.4 SECONDS)
+		SPAWN(0.4 SECONDS)
 			input_lockout -= 1
 
 	if(runningAction)

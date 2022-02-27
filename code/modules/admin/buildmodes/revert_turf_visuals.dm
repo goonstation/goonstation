@@ -6,7 +6,7 @@ Right Mouse Button on mob/obj/turf = Revert block (with 2 clicks)<br>
 Ctrl + RMB on buildmode button     = Reset selection<br>
 ***********************************************************"}
 	icon_state = "revertturf"
-	var/turf/A
+	var/tmp/turf/A
 
 	deselected()
 		..()
@@ -30,7 +30,7 @@ Ctrl + RMB on buildmode button     = Reset selection<br>
 			if (A.z != B.z)
 				boutput(usr, "<span class='alert'>Corners must be on the same Z-level!</span>")
 				return
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for (var/turf/Q in block(A,B))
 					revert(Q)
 				A = null
@@ -55,5 +55,5 @@ Ctrl + RMB on buildmode button     = Reset selection<br>
 			object.icon = initial(object.icon)
 			if (istype(object, /turf/simulated/wall/auto))
 				var/turf/simulated/wall/auto/W = object
-				W.update_icon()
+				W.UpdateIcon()
 				W.update_neighbors()

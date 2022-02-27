@@ -21,7 +21,7 @@
 			click_drops = min(click_drops + rand(30, 80), 100)
 
 			spiking = 1
-			SPAWN_DBG(duration)
+			SPAWN(duration)
 				move_drops = initial(move_drops)
 				click_drops = initial(click_drops)
 				spiking = 0

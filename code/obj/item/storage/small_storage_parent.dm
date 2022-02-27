@@ -36,7 +36,7 @@
 	New()
 		hud = new(src)
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.make_my_stuff()
 
 	Entered(Obj, OldLoc)
@@ -70,9 +70,6 @@
 					I.emp_act()
 		return
 
-	proc/update_icon()
-		return
-
 	proc/make_my_stuff() // use this rather than overriding the container's New()
 		if (!islist(src.spawn_contents) || !length(src.spawn_contents))
 			return 0
@@ -100,7 +97,7 @@
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O in src.contents)
 			user.drop_item()
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				O.Attackhand(user)
 		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored)
 			user.swap_hand()
@@ -145,6 +142,12 @@
 		var/canhold = src.check_can_hold(W,user)
 		if (canhold <= 0)
 			if(istype(W, /obj/item/storage) && (canhold == 0 || canhold == -1))
+				//is the storage locked?
+				if (istype(W, /obj/item/storage/secure))
+					var/obj/item/storage/secure/S = W
+					if (S.locked)
+						boutput(user, "<span class='alert'>[S] is locked and cannot be opened!</span>")
+						return
 				var/obj/item/storage/S = W
 				for (var/obj/item/I in S.get_contents())
 					if(src.check_can_hold(I) > 0)
@@ -171,13 +174,17 @@
 			checkloc = checkloc.loc
 
 		if (T && istype(T, /obj/item/storage))
+			if (W in bible_contents)
+				bible_contents.Remove(W)
+				for_by_tcl(bible, /obj/item/storage/bible)
+					bible.hud?.remove_item(W)
 			src.add_contents(W)
 //			T.hud.remove_item(W)
 		else
 			user.u_equip(W)
 			src.add_contents(W)
 //		hud.add_item(W, user)
-		update_icon()
+		UpdateIcon()
 		add_fingerprint(user)
 		animate_storage_rustle(src)
 		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
@@ -208,7 +215,7 @@
 				. = 1
 			break
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		..()
 		var/atom/movable/screen/hud/S = over_object
 		if (istype(S))
@@ -217,12 +224,12 @@
 				if (S.id == "rhand")
 					if (!usr.r_hand)
 						usr.u_equip(src)
-						usr.put_in_hand(src, 0)
+						usr.put_in_hand_or_drop(src, 0)
 				else
 					if (S.id == "lhand")
 						if (!usr.l_hand)
 							usr.u_equip(src)
-							usr.put_in_hand(src, 1)
+							usr.put_in_hand_or_drop(src, 1)
 				return
 		if (over_object == usr && in_interact_range(src, usr) && isliving(usr) && !usr.stat)
 			if (usr.s_active)
@@ -406,7 +413,7 @@
 			return
 		..()
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		if (src.locked)
 			if (usr)
 				boutput(usr, "<span class='alert'>[src] is locked!</span>")

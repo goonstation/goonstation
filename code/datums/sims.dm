@@ -23,7 +23,7 @@
 
 	New(var/is_control = 0)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.holder)
 				var/icon/hud_style = hud_style_selection[get_hud_style(src.holder.owner)]
 				if (isicon(hud_style))
@@ -115,7 +115,7 @@
 		var/prev_value = value
 		var/affection_mod = amt < 0 ? drain_rate : gain_rate //Negative change, use drain modifier, positive, use gain modifier
 
-		value = max(min(value + (amt * affection_mod), 100), 0)
+		value = clamp(value + (amt * affection_mod), 0, 100)
 		if (prev_value < 100 && value >= 100)
 			onFill()
 		else if (prev_value > 0 && value <= 0)
@@ -265,6 +265,8 @@
 			if (value < 15 && prob(33))
 				if (holder.owner.bioHolder && !(holder.owner.bioHolder.HasEffect("sims_stinky")))
 					holder.owner.bioHolder.AddEffect("sims_stinky")
+			else if ((value >= 85 ) && (holder.owner.bioHolder.HasEffect("sims_stinky")))
+				holder.owner.bioHolder.RemoveEffect("sims_stinky")
 			/*
 			if (value < 10 && prob((10 - value) * 1.5))
 				for (var/mob/living/carbon/human/H in viewers(2, holder.owner))
@@ -397,8 +399,7 @@
 				showOwner("<span class='alert'><b>You can't take being so bored anymore!</b></span>")
 				if (ishuman(holder.owner))
 					var/mob/living/carbon/human/H = holder.owner
-					H.force_suicide()
-					modifyValue(50)
+					H.gib()
 
 		onLife()
 			if (value < 10)
@@ -518,16 +519,16 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND) //Give it some time to finish creating the simsController because fak
+		SPAWN(1 SECOND) //Give it some time to finish creating the simsController because fak
 			for (var/M in childrentypesof(/datum/simsMotive))
 				motives[M] = new M(1)
 #ifdef RP_MODE
-			SPAWN_DBG(0)
+			SPAWN(0)
 				set_multiplier(1)
 #endif
 
 	Topic(href, href_list)
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if (href_list["mot"])
 			var/datum/simsMotive/M = locate(href_list["mot"])
 			if (!istype(M) || M != motives[M.type])

@@ -80,12 +80,12 @@
 				overlays.Cut()
 			desc = "A display case for antique possessions. It has been destroyed."
 			playsound(src, "shatter", 70, 1)
-			update_icon()
+			UpdateIcon()
 	else
 		playsound(src.loc, "sound/impact_sounds/Glass_Hit_1.ogg", 75, 1)
 	return
 
-/obj/displaycase/proc/update_icon()
+/obj/displaycase/update_icon()
 	if(src.destroyed)
 		src.icon_state = "glassboxb0"
 	else
@@ -125,7 +125,7 @@
 			src.set_density(1)
 			src.destroyed = 0
 			src.health = 30
-			update_icon()
+			UpdateIcon()
 			desc = "A display case for antique possessions."
 		return
 	else if (displayed == null && !(destroyed)) // To put items inside when not broken

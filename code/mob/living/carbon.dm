@@ -86,7 +86,7 @@
 	. = ..(give_medal, include_ejectables)
 
 /mob/living/carbon/proc/urinate()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/obj/item/reagent_containers/pee_target = src.equipped()
 		if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container())
 			src.visible_message("<span class='alert'><B>[src] pees in [pee_target]!</B></span>")
@@ -132,7 +132,7 @@
 
 /mob/living/carbon/lastgasp()
 	// making this spawn a new proc since lastgasps seem to be related to the mob loop hangs. this way the loop can keep rolling in the event of a problem here. -drsingh
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if (!src || !src.client) return														// break if it's an npc or a disconnected player
 		var/enteredtext = winget(src, "mainwindow.input", "text")							// grab the text from the input bar
 		if ((copytext(enteredtext,1,6) == "say \"") && length(enteredtext) > 5)				// check if the player is trying to say something
@@ -158,7 +158,7 @@
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
-	src.brainloss = max(0,min(src.brainloss + amount,120))
+	src.brainloss = clamp(src.brainloss + amount, 0, 120)
 
 	if (src.brainloss >= 120 && isalive(src))
 		// instant death, we can assume a brain this damaged is no longer able to support life
@@ -172,14 +172,14 @@
 	if (!toxloss && amount < 0)
 		amount = 0
 	if (..())
-		return
+		return 1
 
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
 	var/resist_toxic = src.bioHolder?.HasEffect("resist_toxic")
 
-	if(resist_toxic)
+	if(resist_toxic && amount > 0)
 		if(resist_toxic > 1)
 			src.toxloss = 0
 			return 1 //prevent organ damage
@@ -198,6 +198,11 @@
 	if (HAS_MOB_PROPERTY(src, PROP_BREATHLESS))
 		src.oxyloss = 0
 		return
+
+	if (ispug(src))
+		var/mob/living/carbon/human/H = src
+		amount *= 2
+		H.emote(pick("wheeze", "cough", "sputter"))
 
 	src.oxyloss = max(0,src.oxyloss + amount)
 	return

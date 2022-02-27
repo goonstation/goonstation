@@ -1,10 +1,9 @@
 /obj/item/device/radio/nukie_studio_monitor
 	name = "Studio Monitor"
-	desc = "An incredibly high quality studio monitor with an uncomfortable number of high voltage stickers."
+	desc = "An incredibly high quality studio monitor with an uncomfortable number of high voltage stickers. Manufactured by Funk-Tek"
 	icon = 'icons/obj/loudspeakers.dmi'
-	icon_state = "nukie_speaker" // Gannets to make awesome amp stack!
-	//inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi' // Gannets to make sweet inhand
-	wear_image_icon = 'icons/mob/back.dmi' // Gannets to make sweet wearable?
+	icon_state = "amp_stack"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 
 	anchored = 0
 	speaker_range = 7
@@ -21,6 +20,7 @@
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		pixel_y = 0
 		effect = new
 		src.vis_contents += effect
@@ -28,7 +28,7 @@
 		headset_channel_lookup["[R_FREQ_LOUDSPEAKERS]"] = "Loudspeakers"
 
 	send_hear()
-		flick("nukie_speaker_actv", src)
+		flick("amp_stack_actv", src)
 
 		last_transmission = world.time
 		var/list/hear = hearers(src.speaker_range, get_turf(src))
@@ -44,11 +44,15 @@
 
 	speech_bubble()
 		UpdateOverlays(speech_bubble, "speech_bubble")
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			UpdateOverlays(null, "speech_bubble")
 
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 	proc/play_song(notes=TRUE)
-		icon_state = "nukie_speaker_actv"
+		icon_state = "amp_stack_actv"
 		if(notes)
 			effect.play_notes()
 		if(ismob(src.loc))
@@ -56,22 +60,19 @@
 			M.update_clothing()
 
 	proc/stop_song()
-		icon_state = "nukie_speaker"
+		icon_state = "amp_stack"
 		effect.stop_notes()
 		if(ismob(src.loc))
 			var/mob/M = src.loc
 			M.update_clothing()
 
-	attack_hand(mob/user)
-		. = ..()
-
 
 /obj/item/breaching_hammer/rock_sledge
-	name = "rock sledgehammer"
-	desc = "A HEAVY METAL hammer designed break down doors with the power of music."
-	icon = 'icons/obj/items/weapons.dmi'
-	icon_state = "rock_sledge"
-	item_state = "breaching_sledgehammer"
+	name = "Orpheus electric guitar"
+	desc = "A bolt-on neck flying V electric guitar, finished in blood red. Manufactured by Funk-Tek."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "guitar"
+	item_state = "guitar"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	is_syndicate = 1
 	click_delay = 30 / 2 // TODO
@@ -94,6 +95,7 @@
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		effect = new
 		speakers |= new /obj/item/device/radio/nukie_studio_monitor(src.loc)
 		speakers |= new /obj/item/device/radio/nukie_studio_monitor(src.loc)
@@ -118,13 +120,17 @@
 			else
 				playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
 
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 	proc/play_notes()
 		if(!actions.hasAction(usr,"rocking_out"))
 			if(effect.is_playing()) return
 			effect.play_notes()
 			for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
 				S.play_song()
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				stop_notes()
 		else
 			strums = ( strums + 1 % 2000 )
@@ -166,6 +172,7 @@
 	var/list/status_effect_ids
 	var/static/image/frame_img
 	var/static/image/rocked_out_img
+	var/sound_clip
 
 	New()
 		..()
@@ -198,9 +205,16 @@
 			boutput(src.the_mob, "<span class='alert'>You are already playing something...</span>")
 			. = FALSE
 
+	proc/is_rock_immune(mob/living/target)
+		if(isvirtual(target))
+			var/mob/living/carbon/human/virtual/V = target
+			. = istype(V.ears, /obj/item/device/radio/headset/syndicate) || istype(V.head, /obj/item/clothing/head/helmet/space/syndicate)
+		else
+			. = istype(target.ears, /obj/item/device/radio/headset/syndicate)
+
 	shred
 		name = "Shred"
-		desc = "Lightbreaker Effect"
+		desc = "Sound so shrill it shatters lights."
 		icon_state = "shred"
 		cooldown = 2 MINUTES
 
@@ -208,14 +222,14 @@
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
 
 			for(var/obj/item/device/radio/nukie_studio_monitor/S in I.speakers)
-				playsound(src, "sound/effects/light_breaker.ogg", 45, 1, 5)
+				playsound(src, "sound/musical_instruments/bard/tapping1.ogg", 60, 1, 5)
 				for (var/obj/machinery/light/L in view(7, get_turf(S)))
 					if (L.status == 2 || L.status == 1)
 						continue
 					L.broken(1)
 
 			for(var/mob/living/HH in I.get_speaker_targets())
-				if(istype(HH.ears, /obj/item/device/radio/headset/syndicate))
+				if(is_rock_immune(HH))
 					continue
 
 				HH.apply_sonic_stun(0, 0, 30, 0, 5, 4, 6)
@@ -224,7 +238,7 @@
 
 	infrasound
 		name = "Infrasound"
-		desc = "Play something so deep it hurts."
+		desc = "Play something so deep it hurts.  Causes headaches for those nearby and nausea to those that can hear it."
 		icon_state = "infrasound"
 		cooldown = 45 SECONDS
 
@@ -232,7 +246,7 @@
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
 
 			for(var/mob/living/HH in I.get_speaker_targets(2))
-				if(istype(HH.ears, /obj/item/device/radio/headset/syndicate))
+				if(is_rock_immune(HH))
 					continue
 
 				HH.take_brain_damage(15)
@@ -241,21 +255,23 @@
 					continue
 
 				HH.setStatus("infrasound_nausea", 10 SECONDS)
+			playsound(src, "sound/musical_instruments/bard/riff.ogg", 60, 1, 5)
 			. = ..()
 
 	ultrasound
 		name = "Ultrasound"
-		desc = "Play something so high it hurts."
+		desc = "Play something so high it hurts. Penetrate organs and stuns!"
 		icon_state = "ultrasound"
 		cooldown = 45 SECONDS
 
 		execute_ability()
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
 			for(var/mob/living/HH in I.get_speaker_targets(-2))
-				if(istype(HH.ears, /obj/item/device/radio/headset/syndicate))
+				if(is_rock_immune(HH))
 					continue
 				HH.apply_sonic_stun(0, 0, 0, 0, 2, 8, 5)
 				HH.organHolder.damage_organs(brute=10, organs=list("liver", "heart", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas", "tail"), probability=90)
+			playsound(src, "sound/musical_instruments/bard/tapping2.ogg", 60, 1, 5)
 			. = ..()
 
 	focus
@@ -263,11 +279,12 @@
 		desc = "Clear Stuns and improves resistance"
 		icon_state = "focus"
 		status_effect_ids = list("music_focus")
+		sound_clip = "sound/musical_instruments/bard/tapping1.ogg"
 
 		execute_ability()
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
 			for(var/mob/living/HH in I.get_speaker_targets())
-				if(istype(HH.ears, /obj/item/device/radio/headset/syndicate))
+				if(is_rock_immune(HH))
 					HH.delStatus("stunned")
 					HH.delStatus("weakened")
 					HH.delStatus("paralysis")
@@ -284,31 +301,37 @@
 			logTheThing("combat", src.the_mob, null, "uses cancel stuns at [log_loc(src.the_mob)].")
 			..()
 
+	// Songs
+
 	heal
 		name = "Chill Beats to Murder To"
-		desc = "Gentle healing effect that allows you to do more."
+		desc = "Gentle healing effect that improves your stamina."
 		icon_state = "chill_murder"
 		status_effect_ids = list("music_energized_big", "chill_murder")
+		sound_clip = "sound/musical_instruments/bard/lead2.ogg"
 
 	death_march
 		name = "Death March"
 		desc = "Move Faster, Longer, and Silently"
 		icon_state = "death_march"
 		status_effect_ids = list("music_refreshed_big")
+		sound_clip = "sound/musical_instruments/bard/riff.ogg"
 
 	perseverance
 		name = "Perseverance"
-		desc = "Health Boost and Minor Stamina Regeneration"
+		desc = "Boosts health and improves stamina regeneration"
 		icon_state = "perseverance"
 		status_effect_ids = list("music_hp_up", "music_refreshed")
+		sound_clip = "sound/musical_instruments/bard/lead1.ogg"
 
 	epic_climax
 		name = "EPIC CLIMAX"
-		desc = "Play a sound that drives the time into a murder rage! Taxing physically and emotionally."
+		desc = "Play a sound that drives the team into a murder rage! Taxing physically and emotionally."
 		icon_state = "epic_climax"
 		status_effect_ids = list("music_hp_up_big", "epic_climax")
 		song_duration = 69 SECONDS
 		cooldown = 5 MINUTES
+		sound_clip = "sound/musical_instruments/bard/tapping2.ogg"
 
 		execute_ability()
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
@@ -359,10 +382,14 @@
 		if(get_dist(owner, instrument) > 1 || instrument == null || owner == null) //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		var/mob/M = owner
+		playsound(M, song.sound_clip, 60, 1, 5)
 		instrument.play_notes()
 
 	onRestart()
 		..()
+		var/mob/M = owner
+		playsound(M, song.sound_clip, 60, 1, 5)
 		last_strum = instrument.strums
 		blast_to_speakers()
 		icon_image.alpha = 200
@@ -371,7 +398,7 @@
 	onDelete()
 		..()
 		if(istype(song, /obj/ability_button/nukie_rocker/epic_climax))
-			SPAWN_DBG(30 SECONDS)
+			SPAWN(30 SECONDS)
 				instrument.overheat(FALSE)
 
 	onEnd()
@@ -387,7 +414,7 @@
 	proc/blast_to_speakers()
 		for(var/mob/living/HH in instrument.get_speaker_targets())
 			// Beneficial Effects
-			if(istype(HH.ears, /obj/item/device/radio/headset/syndicate))
+			if(song.is_rock_immune(HH))
 				for(var/E in src.song.status_effect_ids)
 					HH.setStatus(E, 10 SECONDS)
 			//else
@@ -419,7 +446,7 @@
 		if(prob(10))
 			L.emote("shudder")
 		else if(prob(5))
-			L.visible_message("<span class='alert'>[L] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 			if(prob(5))
 				L.do_disorient(25, disorient=1 SECOND)
 			L.vomit()
@@ -443,6 +470,10 @@
 		desc = "Refreshed and Hastened!"
 		change = 4
 		movement_modifier = /datum/movement_modifier/death_march
+
+		getTooltip()
+			. = ..()
+			. += " You are moving faster."
 
 	getTooltip()
 		. = "Your stamina regen is increased by [change]."
@@ -531,7 +562,7 @@
 /datum/statusEffect/simplehot/chill_murder // totally not mild stimulants...
 		id = "chill_murder"
 		name = "Murder Beats"
-		desc = "You feel on top of the world!"
+		desc = "Mending tunes to keep on killing to!"
 		exclusiveGroup = "Music"
 		unique = 1
 		tickSpacing = 4 SECONDS
@@ -560,7 +591,8 @@
 			var/mob/M = owner
 			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims", 100)
 			M.add_stam_mod_max("stims", 100)
-			M.add_stun_resist_mod("stims", 100)
+			APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "stims", 100)
+			APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "stims", 100)
 
 	onRemove()
 		. = ..()
@@ -569,7 +601,8 @@
 			M.jitteriness = 110
 			REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims")
 			M.remove_stam_mod_max("stims")
-			M.remove_stun_resist_mod("stims")
+			REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "stims")
+			REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "stims")
 
 	onUpdate(timePassed)
 		. = ..()
@@ -616,14 +649,14 @@ obj/effects/music
 	New()
 		..()
 		add_filter("outline", 1, outline_filter(size=0.5, color="#444"))
-		src.particles.lifespan = 0
+		src.particles.spawning = 0
 
 	proc/is_playing()
-		. = src.particles.lifespan == 2 SECONDS
+		. = src.particles.spawning == 0.1
 
 	proc/play_notes()
-		src.particles.lifespan = 2 SECONDS
+		src.particles.spawning = 0.1
 
 	proc/stop_notes()
-		src.particles.lifespan = 0
+		src.particles.spawning = 0
 

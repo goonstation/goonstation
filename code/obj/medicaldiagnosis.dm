@@ -8,6 +8,10 @@
 /obj/item/medical/medicaldiagnosis/stethoscope
 	name = "stethoscope"
 	desc = "a disc-shaped resonator attached to two earpieces for figuring out if someone has consumption or is simply suffering from the vapors."
+	icon = 'icons/obj/medicaldiagnosis.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
+	item_state = "stethoscope"
+	icon_state = "stethoscope"
 	attack(mob/M as mob, mob/user as mob)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -51,40 +55,40 @@
 										boutput(user, "<span style=\"color:red\">You hear the faint whirr of an airpump on the right of [(user != H) ? "[H]'s" : "your"] lungs.</span>")
 								if(H.find_ailment_by_type(/datum/ailment/disease/respiratory_failure))
 									boutput(user, "<span style=\"color:red\">You hear fluid sloughing around inside [(user != H) ? "[H]'s" : "your"] lungs, interspersed with crackling noises.</span>")
-									playsound(user, "sound/effects/cracklesstethoscope.ogg", 40, 0, -6)
+									user.playsound_local(user, "sound/effects/cracklesstethoscope.ogg", 40, 0, -6)
 								else if(H.reagents.has_reagent("sarin") || H.reagents.has_reagent("strychnine") ||  H.reagents.has_reagent("coniine"))
 									boutput(user, "<span style=\"color:red\">You hear what sounds like a distorted, high-pitched wheeze inside [(user != H) ? "[H]'s" : "your"] lungs.</span>")
-									playsound(user, "sound/effects/hyperventstethoscope.ogg", 40, 0, -6)
+									user.playsound_local(user, "sound/effects/hyperventstethoscope.ogg", 40, 0, -6)
 								else if(H.get_oxygen_deprivation() > 80)
 									boutput(user, "<span style=\"color:red\">You hear what sounds like twitchy, labored breathing interspersed with short gasps inside [(user != H) ? "[H]'s" : "your"] lungs.</span>") // OH BOY THIS IS BAD
-									playsound(user, "sound/effects/distortedfasthyperstethoscope.ogg", 40, 0, -6)
+									user.playsound_local(user, "sound/effects/distortedfasthyperstethoscope.ogg", 40, 0, -6)
 								else if(H.organHolder && ((H.organHolder.left_lung && H.organHolder.left_lung.get_damage() > 50) || (H.organHolder.right_lung && H.organHolder.right_lung.get_damage() > 50)))
 									boutput(user, "<span style=\"color:red\">You hear coarse crackling noises inside [(user != H) ? "[H]'s" : "your"] lungs.</span>")
-									playsound(user, "sound/effects/cracklesstethoscope.ogg", 40, 0, -6)
+									user.playsound_local(user, "sound/effects/cracklesstethoscope.ogg", 40, 0, -6)
 								else if(H.reagents.has_reagent("histamine"))
 									boutput(user, "<span style=\"color:red\">You hear what sounds like low-pitched wheezing inside [(user != H) ? "[H]'s" : "your"] lungs.</span>")
-									playsound(user, "sound/effects/stridorstethoscope.ogg", 40, 0, -6)
+									user.playsound_local(user, "sound/effects/stridorstethoscope.ogg", 40, 0, -6)
 								else if(H.reagents.has_reagent("krokodil") || H.reagents.has_reagent("morphine") || H.reagents.has_reagent("haloperidol") || H.reagents.has_reagent("ether") || (H.reagents.has_reagent("ethanol") && H.reagents.get_reagent_amount("ethanol") > 25))
 									boutput(user, "<span style=\"color:blue\">You hear very slow, shallow breathing inside [(user != H) ? "[H]'s" : "your"] lungs.</span>")
-									playsound(user, "sound/effects/sleepstethoscope.ogg", 40, 0, -6) // reusing because the sounds are similar
+									user.playsound_local(user, "sound/effects/sleepstethoscope.ogg", 40, 0, -6) // reusing because the sounds are similar
 								else if(H.reagents.has_reagent("cannabidiol") || H.reagents.has_reagent("antihistamine") || (H.reagents.has_reagent("ethanol") && H.reagents.get_reagent_amount("ethanol") < 25))
 									boutput(user, "<span style=\"color:blue\">You hear slightly slow breathing inside [(user != H) ? "[H]'s" : "your"] lungs.</span>")
-									playsound(user, "sound/effects/sleepstethoscope.ogg", 40, 0, -6) // reusing because the sounds are similar
+									user.playsound_local(user, "sound/effects/sleepstethoscope.ogg", 40, 0, -6) // reusing because the sounds are similar
 								else if(H.reagents.has_reagent("epinephrine") || H.reagents.has_reagent("methamphetamine") || H.reagents.has_reagent("crank") || H.hasStatus("stimulants") || H.reagents.has_reagent("energydrink") )
 									boutput(user, "<span style=\"color:blue\">You hear fast breathing inside [(user != H) ? "[H]'s" : "your"] lungs.</span>")
-									playsound(user, "sound/effects/hyperventstethoscope.ogg", 40, 0, -6) // reusing because the sounds are similar
+									user.playsound_local(user, "sound/effects/hyperventstethoscope.ogg", 40, 0, -6) // reusing because the sounds are similar
 								else if((20 < H.get_oxygen_deprivation()) && (H.get_oxygen_deprivation() < 80))
 									boutput(user, "<span style=\"color:blue\">You hear what sounds like hyperventilation [H.get_oxygen_deprivation() > 60 ? "with an irregular pattern" : ""] inside [(user != H) ? "[H]'s" : "your"] lungs.</span>") // oxygen low but they can still recover
 									if(H.get_oxygen_deprivation() < 60)
-										playsound(user, "sound/effects/hyperventstethoscope.ogg", 40, 0, -6)
+										user.playsound_local(user, "sound/effects/hyperventstethoscope.ogg", 40, 0, -6)
 									else
-										playsound(user, "sound/effects/hyperventstethoscope2.ogg", 40, 0, -6)
+										user.playsound_local(user, "sound/effects/hyperventstethoscope2.ogg", 40, 0, -6)
 								else if(H.get_oxygen_deprivation() < 20)
 									boutput(user, "<span style=\"color:blue\">You hear normal breathing inside [(user != H) ? "[H]'s" : "your"] lungs.</span>")
-									playsound(user, "sound/effects/normstethoscope.ogg", 40, 0, -6)
+									user.playsound_local(user, "sound/effects/normstethoscope.ogg", 40, 0, -6)
 								else if(H.sleeping == 1)
 									boutput(user, "<span style=\"color:blue\">You hear extremely slow breathing interspersed with what sounds like light snoring inside [(user != H) ? "[H]'s" : "your (Please report this on github asap)"] lungs.</span>")
-									playsound(user, "sound/effects/sleepstethoscope.ogg", 40, 0, -6)
+									user.playsound_local(user, "sound/effects/sleepstethoscope.ogg", 40, 0, -6)
 								else
 									boutput(user, "Something has gone wrong, don't worry, it's not your fault! Report this on github and please include what you were doing when the bug occurred and if possible the health analyzer scan for [H]")
 					user.visible_message("<span style=\"color:blue\"><b>[user]</b> stops listening to [(user != H) ? "[H]'s" : "their"] chest.</span>", "<span style=\"color:blue\">You stop listening to [(user != H) ? "[H]'s" : "your"] chest.</span>")

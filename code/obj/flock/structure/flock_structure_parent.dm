@@ -205,7 +205,7 @@
 	takeDamage("mixed", damage)
 	src.visible_message("<span class='alert'>[src] is hit by the blob!/span>")
 
-/obj/flock_structure/CanPass(atom/movable/mover, turf/target)
+/obj/flock_structure/Cross(atom/movable/mover)
 	. = ..()
 	var/mob/living/critter/flock/drone/drone = mover
 	if(src.passthrough && istype(drone) && !drone.floorrunning)

@@ -158,7 +158,7 @@
 			I = image('icons/misc/featherzone.dmi', T, "frontier")
 			I.blend_mode = BLEND_ADD
 			I.alpha = 180
-			I.plane = PLANE_SELFILLUM + 1.1
+			I.plane = PLANE_ABOVE_LIGHTING
 			// add to subscribers for annotations
 			images_to_add |= I
 			src.annotations[T] = I
@@ -172,7 +172,7 @@
 			I = image('icons/misc/featherzone.dmi', T, "frontier")
 			I.blend_mode = BLEND_ADD
 			I.alpha = 80
-			I.plane = PLANE_SELFILLUM + 1.1
+			I.plane = PLANE_ABOVE_LIGHTING
 			// add to subscribers for annotations
 			images_to_add |= I
 			src.annotations[T] = I
@@ -186,7 +186,7 @@
 			I = image('icons/misc/featherzone.dmi', B, "hazard")
 			I.blend_mode = BLEND_ADD
 			I.pixel_y = 16
-			I.plane = PLANE_SELFILLUM + 1.1
+			I.plane = PLANE_ABOVE_LIGHTING
 			I.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			// add to subscribers for annotations
 			images_to_add |= I

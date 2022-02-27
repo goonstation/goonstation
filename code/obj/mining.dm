@@ -12,7 +12,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.update_dir()
 			for (var/obj/machinery/mining_magnet/MM in range(1,src))
 				linked_magnet = MM
@@ -279,8 +279,7 @@
 				magnet = target:linked_magnet
 			else
 				magnet = target
-			if (!istype(magnet))
-				magnet = null
+			ENSURE_TYPE(magnet)
 			else
 				if (!loaded)
 					boutput(user, "<span class='alert'>The magnetizer needs to be loaded with a plasmastone chunk first.</span>")
@@ -389,7 +388,7 @@
 					last_delay = world.time + auto_delay
 					return
 				else
-					SPAWN_DBG(0)
+					SPAWN(0)
 						pull_new_source()
 
 		proc/get_encounter(var/rarity_mod)
@@ -477,7 +476,7 @@
 		damage_overlays += image(src.icon, "damage-2")
 		damage_overlays += image(src.icon, "damage-3")
 		damage_overlays += image(src.icon, "damage-4")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/obj/machinery/magnet_chassis/MC in range(1,src))
 				linked_chassis = MC
 				MC.linked_magnet = src
@@ -496,7 +495,7 @@
 				last_delay = world.time + auto_delay
 				return
 			else
-				SPAWN_DBG(0) //Did you know that if you sleep directly in process() you are the old lady at the mall who only pays in quarters.
+				SPAWN(0) //Did you know that if you sleep directly in process() you are the old lady at the mall who only pays in quarters.
 					//Do not be quarter lady.
 					pull_new_source()
 
@@ -605,7 +604,7 @@
 			return
 
 		src.health -= amount
-		src.health = max(0,min(src.health,100))
+		src.health = clamp(src.health, 0, 100)
 
 		if (src.health < 1 && !src.active)
 			qdel(src)
@@ -779,7 +778,7 @@
 			return 1
 
 		var/rangecheck = 0
-		if (issilicon(usr))
+		if (isAI(usr) || issilicon(usr))
 			rangecheck = 1
 		if (istype(usr.loc,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = usr.loc
@@ -826,7 +825,7 @@
 			if (src.check_for_unacceptable_content())
 				src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 			else
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if (src) src.pull_new_source(href_list["activate_selectable"])
 
 		else if (href_list["activate_magnet"])
@@ -837,7 +836,7 @@
 			if (src.check_for_unacceptable_content())
 				src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 			else
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if (src) src.pull_new_source()
 
 		else if (href_list["override_cooldown"])
@@ -879,7 +878,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.connection_scan()
 
 	attack_hand(var/mob/user as mob)
@@ -1162,7 +1161,7 @@
 				H = L
 			var/obj/item/held = L.equipped()
 			if(istype(held, /obj/item/mining_tool) || istype(held, /obj/item/mining_tools) || (isnull(held) && H && (H.is_hulk() || istype(H.gloves, /obj/item/clothing/gloves/concussive))))
-				L.click(src, list(), null, null)
+				UNLINT(L.click(src, list(), null, null))
 			return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1365,7 +1364,7 @@
 		src.levelupdate()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/A in range(src,1))
-			A.update_icon()
+			A.UpdateIcon()
 #ifdef UNDERWATER_MAP
 		if (current_state == GAME_STATE_PLAYING)
 			hotspot_controller.disturb_turf(src)
@@ -1437,6 +1436,7 @@
 
 	noborders
 		update_icon()
+
 			return
 		apply_edge_overlay()
 			return
@@ -1450,7 +1450,7 @@
 		icon_state = "astfloor" + "[sprite_variation]"
 		coloration_overlay = image(src.icon,"color_overlay")
 		coloration_overlay.blend_mode = 4
-		update_icon()
+		UpdateIcon()
 		worldgenCandidates += src
 
 	generate_worldgen()
@@ -1474,6 +1474,7 @@
 			src.ReplaceWithSpace()
 
 	update_icon()
+
 		src.overlays = list()
 		/*
 		if (!coloration_overlay)
@@ -1486,7 +1487,7 @@
 		if (fullbright)
 			src.overlays += /image/fullbright //Fixes perma-darkness
 		#endif
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (istype(src)) //Wire note: just roll with this ok
 				for (var/turf/simulated/wall/asteroid/A in orange(src,1))
 					src.apply_edge_overlay(get_dir(src, A))
@@ -1593,10 +1594,6 @@
 		if (powered_overlay)
 			src.overlays = null
 			signal_event("icon_updated")
-		return
-
-
-	proc/update_icon()
 		return
 
 obj/item/clothing/gloves/concussive
@@ -1823,7 +1820,7 @@ obj/item/clothing/gloves/concussive
 					else
 						boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 					logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						concussive_blast()
 						qdel (src)
 						return
@@ -1843,7 +1840,7 @@ obj/item/clothing/gloves/concussive
 						var/t = (isturf(target) ? target : target.loc)
 						step_towards(src, t)
 
-						SPAWN_DBG( src.det_time )
+						SPAWN( src.det_time )
 							concussive_blast()
 							if(target)
 								if(istype(target,/obj/machinery))
@@ -2014,14 +2011,15 @@ obj/item/clothing/gloves/concussive
 /obj/item/cargotele/traitor
 	cost = 15
 	cell_type = /obj/item/ammo/power_cell/med_power
-	var/list/possible_targets = list()
+	var/static/list/possible_targets = list()
 
 	New()
 		..()
-		for(var/turf/T in world) //hate to do this but it's only once per spawn vOv
-			LAGCHECK(LAG_LOW)
-			if(istype(T,/turf/space) && T.z != 1 && !isrestrictedz(T.z))
-				possible_targets += T
+		if (!length(possible_targets))
+			for(var/turf/T in world) //hate to do this but it's only once vOv
+				LAGCHECK(LAG_LOW)
+				if(istype(T,/turf/space) && T.z != 1 && T.z != 6 && !isrestrictedz(T.z)) //do not foot ball, do not collect 200
+					possible_targets += T
 
 	attack_self() // Fixed --melon
 		return
@@ -2109,7 +2107,7 @@ obj/item/clothing/gloves/concussive
 	if(!user || !T || !decalicon) return
 	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,AREA_LAYER+1)
 	user << O
-	SPAWN_DBG(2 MINUTES)
+	SPAWN(2 MINUTES)
 		if (user?.client)
 			user.client.images -= O
 			user.client.screen -= O
@@ -2157,7 +2155,7 @@ obj/item/clothing/gloves/concussive
 				user.put_in_hand_or_drop(PCEL)
 				boutput(user, "You remove [cell].")
 				if (PCEL) //ZeWaka: fix for null.updateicon
-					PCEL.updateicon()
+					PCEL.UpdateIcon()
 
 				src.cell = null
 			else if (action == "Change the destination")
@@ -2403,7 +2401,7 @@ var/global/list/cargopads = list()
 			user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")
 			for (var/obj/item/I in satchel.contents)
 				I.set_loc(target)
-			satchel.satchel_updateicon()
+			satchel.UpdateIcon()
 			return
 		if (istype(target, /obj/item/satchel/mining))
 			user.swap_hand() //Needed so you don't drop the scoop instead of the satchel

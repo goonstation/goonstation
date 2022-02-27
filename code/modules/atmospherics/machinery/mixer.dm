@@ -278,7 +278,7 @@ obj/machinery/atmospherics/mixer
 			if ("set_ratio")
 				var/number = text2num(signal.data["parameter"])
 				if (number && isnum(number))
-					number = min(max(number, 0), 100)
+					number = clamp(number, 0, 100)
 					node1_concentration = number/100
 					node2_concentration = (100-number)/100
 
@@ -290,10 +290,10 @@ obj/machinery/atmospherics/mixer
 					target_pressure = 0
 
 		if (signal.data["tag"])
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				if (src) src.report_status()
 
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 // Housekeeping and pipe network stuff below
@@ -338,7 +338,7 @@ obj/machinery/atmospherics/mixer
 				node_out = target
 				break
 
-		update_icon()
+		UpdateIcon()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	build_network()

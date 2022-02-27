@@ -63,7 +63,7 @@
 			for (var/i = 0, i < 9, i++) // ugly hack
 				reagents.temperature_reagents(exposed_temperature, exposed_volume)
 
-	MouseDrop(atom/over_object as obj)
+	mouse_drop(atom/over_object as obj)
 		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/machinery/hydro_mister) && !istype(over_object, /obj/item/tank/jetpack/backtank))
 			return ..()
 
@@ -99,7 +99,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		..(W, user)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (src?.reagents)
 				if (src.reagents.total_volume <= 1)
 					qdel(src)
@@ -130,7 +130,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		..(W, user)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (src?.reagents)
 				if (src.reagents.total_volume <= 1)
 					qdel(src)
@@ -138,7 +138,7 @@
 
 /obj/reagent_dispensers/foamtank
 	name = "foamtank"
-	desc = "A foamtank"
+	desc = "A massive tank full of firefighting foam, for refilling extinguishers."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "foamtank"
 	amount_per_transfer_from_this = 25
@@ -212,12 +212,12 @@
 
 		src.cup_amount = src.cup_max
 
-		src.update_icon()
+		src.UpdateIcon()
 
 	//on_reagent_change()
-	//	src.update_icon()
+	//	src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if (src.has_tank)
 			if (src.reagents.total_volume)
 				var/datum/color/average = reagents.get_average_color()
@@ -246,7 +246,7 @@
 				src.reagents.trans_to(P, reagents.total_volume)
 				src.reagents.clear_reagents()
 				src.has_tank = 0
-				src.update_icon()
+				src.UpdateIcon()
 				return
 		else if (istype(W, /obj/item/reagent_containers/food/drinks/coolerbottle))
 			user.show_text("You connect the bottle to [src].", "blue")
@@ -254,7 +254,7 @@
 			user.u_equip(W)
 			qdel(W)
 			src.has_tank = 1
-			src.update_icon()
+			src.UpdateIcon()
 			return
 
 		if (isscrewingtool(W))
@@ -291,7 +291,7 @@
 			user.put_in_hand_or_drop(P)
 			if (src.cup_amount <= 0)
 				user.show_text("That was the last cup!", "red")
-				src.update_icon()
+				src.UpdateIcon()
 
 	piss
 		New()
@@ -299,7 +299,7 @@
 			src.create_reagents(4000)
 			reagents.add_reagent("urine",400)
 			reagents.add_reagent("water",600)
-			src.update_icon()
+			src.UpdateIcon()
 		name = "discolored water fountain"
 		desc = "It's called a fountain, but it's not very decorative or interesting. You can get a drink from it, though seeing the color you feel you shouldn't"
 		color = "#ffffcc"
@@ -313,7 +313,7 @@
 			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
 			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
 			reagents.add_reagent("water",600)
-			src.update_icon()
+			src.UpdateIcon()
 		name = "discolored water fountain"
 		desc = "It's called a fountain, but it's not very decorative or interesting. You can get a drink from it, though seeing the color you feel you shouldn't"
 		color = "#ccffcc"
@@ -322,7 +322,7 @@
 
 /obj/reagent_dispensers/fueltank
 	name = "fueltank"
-	desc = "A fueltank"
+	desc = "A high-pressure tank full of welding fuel. Keep away from open flames and sparks."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
 	amount_per_transfer_from_this = 25
@@ -344,7 +344,7 @@
 		if (isliving(user))
 			var/mob/living/L = user
 			L.changeStatus("burning", 10 SECONDS)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -375,7 +375,7 @@
 
 /obj/reagent_dispensers/beerkeg
 	name = "beer keg"
-	desc = "A beer keg"
+	desc = "Full of delicious alcohol, hopefully."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "beertankTEMP"
 	amount_per_transfer_from_this = 25
@@ -585,9 +585,10 @@
 		fluid_image = image(src.icon, "fluid-[src.icon_state]")
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.underlays = null
 		if (reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))

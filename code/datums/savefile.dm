@@ -21,7 +21,7 @@
 		if (IsGuestKey(user.key))
 			return 0
 
-		profileNum = max(1, min(profileNum, SAVEFILE_PROFILES_MAX))
+		profileNum = clamp(profileNum, 1, SAVEFILE_PROFILES_MAX)
 
 		var/savefile/F
 		if (returnSavefile)
@@ -71,6 +71,7 @@
 			F["[profileNum]_facial_color"] << AH.customization_second_color
 			F["[profileNum]_detail_color"] << AH.customization_third_color
 			F["[profileNum]_skin_tone"] << AH.s_tone
+			F["[profileNum]_special_style"] << AH.special_style
 			F["[profileNum]_hair_style_name"] << AH.customization_first
 			F["[profileNum]_facial_style_name"] << AH.customization_second
 			F["[profileNum]_detail_style_name"] << AH.customization_third
@@ -153,7 +154,7 @@
 			path = savefile_path(user)
 			if (!fexists(path))
 				return 0
-			profileNum = max(1, min(profileNum, SAVEFILE_PROFILES_MAX))
+			profileNum = clamp(profileNum, 1, SAVEFILE_PROFILES_MAX)
 			F = new /savefile(path, -1)
 
 		var/version = null
@@ -240,6 +241,7 @@
 			F["[profileNum]_detail_color"] >> AH.customization_third_color_original
 			F["[profileNum]_skin_tone"] >> AH.s_tone
 			F["[profileNum]_skin_tone"] >> AH.s_tone_original
+			F["[profileNum]_special_style"] >> AH.special_style
 			F["[profileNum]_hair_style_name"] >> AH.customization_first
 			F["[profileNum]_hair_style_name"] >> AH.customization_first_original
 			F["[profileNum]_facial_style_name"] >> AH.customization_second
@@ -387,7 +389,7 @@
 		if (!fexists(path))
 			return 0
 
-		profileNum = max(1, min(profileNum, SAVEFILE_PROFILES_MAX))
+		profileNum = clamp(profileNum, 1, SAVEFILE_PROFILES_MAX)
 
 		var/savefile/F = new /savefile(path, -1)
 
@@ -413,7 +415,7 @@
 
 		// Fetch via HTTP from goonhub
 		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "https://spacebee.goonhub.com/api/cloudsave?get&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.spacebee_api_key]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?get&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.spacebee_api_key]", "", "")
 		request.begin_async()
 		UNTIL(request.is_complete())
 		var/datum/http_response/response = request.into_response()
@@ -441,7 +443,7 @@
 
 		// Fetch via HTTP from goonhub
 		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "https://spacebee.goonhub.com/api/cloudsave?put&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.spacebee_api_key]&data=[url_encode(exported)]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?put&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.spacebee_api_key]&data=[url_encode(exported)]", "", "")
 		request.begin_async()
 		UNTIL(request.is_complete())
 		var/datum/http_response/response = request.into_response()
@@ -460,7 +462,7 @@
 
 		// Request deletion via HTTP from goonhub
 		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "https://spacebee.goonhub.com/api/cloudsave?delete&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.spacebee_api_key]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?delete&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.spacebee_api_key]", "", "")
 		request.begin_async()
 		UNTIL(request.is_complete())
 		var/datum/http_response/response = request.into_response()

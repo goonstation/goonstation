@@ -54,7 +54,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 			qdel(src)
 			return
 
-	proc/modify_output(var/obj/machinery/manufacturer/M, var/atom/A,var/list/materials)
+	proc/modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		// use this if you want the outputted item to be customised in any way by the manufacturer
 		if (M.malfunction && M.text_bad_output_adjective.len > 0 && prob(66))
 			A.name = "[pick(M.text_bad_output_adjective)] [A.name]"
@@ -70,21 +70,27 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_outputs = list(/obj/item/electronics/frame)
 	var/frame_path = null
 
-	modify_output(var/obj/machinery/manufacturer/M, var/atom/A)
+	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		if (!(..()))
 			return
 
 		if (istype(A,/obj/item/electronics/frame/))
 			var/obj/item/electronics/frame/F = A
 			if (ispath(src.frame_path))
+				if(src.apply_material && materials.len > 0)
+					F.removeMaterial()
+					var/atom/thing = new frame_path(F)
+					thing.setMaterial(getMaterial(materials[materials[1]]))
+					F.deconstructed_thing = thing
+				else
+					F.store_type = src.frame_path
 				F.name = "[src.name] frame"
-				F.store_type = src.frame_path
 				F.viewstat = 2
 				F.secured = 2
 				F.icon_state = "dbox"
 			else
 				qdel(F)
-				return
+				return 1
 
 /******************** Cloner *******************/
 
@@ -691,6 +697,24 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/civilian_headset
+	name = "Civilian Headset"
+	item_paths = list("MET-1", "CON-1")
+	item_amounts = list(2, 1)
+	item_outputs = list(/obj/item/device/radio/headset)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/jumpsuit_assistant
+	name = "Staff Assistant Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/rank)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/jumpsuit
 	name = "Grey Jumpsuit"
 	item_paths = list("FAB-1")
@@ -1043,6 +1067,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 30 SECONDS
 	create = 1
 	category = "Resource"
+
+/datum/manufacture/stress_ball
+	name = "Stress Ball"
+	item_paths = list("FAB-1")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/toy/plush/small/stress_ball)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
 
 /******************** Robotics **************************/
 
@@ -2187,6 +2220,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/pride/lesb)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/pride_gay
+	name = "Gay Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/gaymasc)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"

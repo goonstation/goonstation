@@ -207,7 +207,7 @@ var/fartcount = 0
 						else
 							target.Attackhand(src)
 			else if(ai_aggressive)
-				a_intent = INTENT_HARM
+				set_a_intent(INTENT_HARM)
 				for(var/mob/M in oview(5, src))
 					if(M == src)
 						continue
@@ -223,7 +223,7 @@ var/fartcount = 0
 			if(prob(20) && src.canmove && isturf(src.loc))
 				step(src, pick(NORTH, SOUTH, EAST, WEST))
 			if(prob(2))
-				SPAWN_DBG(0) emote(JOHN_PICK("emotes"))
+				SPAWN(0) emote(JOHN_PICK("emotes"))
 			if(prob(15))
 				snacktime()
 			var/area/A = get_area(src)
@@ -244,7 +244,7 @@ var/fartcount = 0
 			snacc.Eat(src,src,1)
 
 	proc/pacify()
-		src.a_intent = INTENT_HELP
+		src.set_a_intent(INTENT_HELP)
 		src.target = null
 		src.ai_state = 0
 		src.ai_target = null
@@ -252,7 +252,7 @@ var/fartcount = 0
 	proc/speak()
 		if(nude)
 			return // nude john is for looking at, not listening to.
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/list/grills = list()
 
 			var/obj/machinery/bot/guardbot/old/tourguide/murray = pick(by_type[/obj/machinery/bot/guardbot/old/tourguide])
@@ -277,7 +277,7 @@ var/fartcount = 0
 					grills.Add(G)
 
 			if (A.john_talk && prob(90))
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					var/area/john_area = get_area(src)
 					say(pick(john_area.john_talk))
 					john_area.john_talk = null
@@ -311,7 +311,7 @@ var/fartcount = 0
 				if (murray && !greeted_murray)
 					greeted_murray = 1
 					say("[JOHN_PICK("greetings")] Murray! How's it [JOHN_PICK("verbs")]?")
-					SPAWN_DBG(rand(20,40))
+					SPAWN(rand(20,40))
 						if (murray?.on && !murray.idle)
 							murray.speak("Hi, John! It's [JOHN_PICK("murraycompliment")] to see you here, of all places.")
 
@@ -358,7 +358,7 @@ var/fartcount = 0
 							say("I think my [JOHN_PICK("friends")] [JOHN_PICK("friendsactions")].")
 
 					if (prob(25) && length(by_cat[TR_CAT_SHITTYBILLS]))
-						SPAWN_DBG(3.5 SECONDS)
+						SPAWN(3.5 SECONDS)
 							var/mob/living/carbon/human/biker/MB = pick(by_cat[TR_CAT_SHITTYBILLS])
 							switch (speech_type)
 								if (4)
@@ -386,14 +386,14 @@ var/fartcount = 0
 		if (istype(W, /obj/item/paper/tug/invoice))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
 			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				say("One of them [JOHN_PICK("people")] folks from the station helped us raise the cash. Lil bro been dreamin bout it fer years.")
 			return
 		#ifdef SECRETS_ENABLED
 		if (istype(W, /obj/item/paper/grillnasium/fartnasium_recruitment))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
 			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				say("Well hot dog! [JOHN_PICK("insults")], you wouldn't believe it but I use to work there!")
 				johnbill_shuttle_fartnasium_active = 1
 				sleep(2 SECONDS)
@@ -410,7 +410,7 @@ var/fartcount = 0
 			src.drop_item()
 			src.put_in_hand_or_drop(W)
 
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				say("Oh? [W] eh?")
 				say(pick("No kiddin' fer me?","I guess I could go fer a quick one yeah!","Oh dang dang dang! Haven't had one of these babies in a while!","Well I never get tired of those!","You're offering this to me? Don't mind if i do, [JOHN_PICK("people")]"))
 				pacify()
@@ -467,7 +467,7 @@ var/fartcount = 0
 			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
-			src.a_intent = INTENT_HARM
+			src.set_a_intent(INTENT_HARM)
 			src.ai_set_active(1)
 
 		for (var/mob/SB in by_cat[TR_CAT_SHITTYBILLS])
@@ -478,7 +478,7 @@ var/fartcount = 0
 					M.add_karma(-1)
 				S.target = M
 				S.ai_set_active(1)
-				S.a_intent = INTENT_HARM
+				S.set_a_intent(INTENT_HARM)
 
 
 
@@ -608,7 +608,7 @@ Urs' Hauntdog critter
 		H.food_effects = list("food_all","food_brute")
 		if (H.reagents)
 			H.reagents.add_reagent("ectoplasm", 10)
-		H.update_icon()
+		H.UpdateIcon()
 
 		qdel(src)
 

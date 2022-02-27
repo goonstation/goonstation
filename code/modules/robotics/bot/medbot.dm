@@ -100,6 +100,11 @@
 		STOP_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
 		. = ..()
 
+/obj/machinery/bot/medbot/hippocrates
+	name = "Hippocrates The Cleric"
+	desc = "A mage practicing in the art of healing magic. He's not very good but he's enthusiastic."
+	skin = "wizard"
+
 /obj/machinery/bot/medbot/head_surgeon/no_camera
 	no_camera = 1
 
@@ -126,6 +131,12 @@
 	treatment_virus = "chickensoup"
 	no_camera = 1
 
+/obj/machinery/bot/medbot/medass
+	name = "MedicalAssistant"
+	desc = "A little medical robot. This one looks very busy."
+	skin = "medicalassistant"
+	no_camera = 1
+
 /obj/item/firstaid_arm_assembly
 	name = "first aid/robot arm assembly"
 	desc = "A first aid kit with a robot arm permanently grafted to it."
@@ -140,12 +151,12 @@
 
 /obj/item/firstaid_arm_assembly/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src.skin)
 			src.overlays += "medskin-[src.skin]"
 			src.overlays += "medibot-arm"
 
-/obj/machinery/bot/medbot/proc/update_icon(var/stun = 0, var/heal = 0)
+/obj/machinery/bot/medbot/update_icon(var/stun = 0, var/heal = 0)
 	UpdateOverlays(null, "medbot_overlays")
 	medbot_overlays.overlays.len = 0
 
@@ -181,9 +192,9 @@
 /obj/machinery/bot/medbot/New()
 	..()
 	add_simple_light("medbot", list(220, 220, 255, 0.5*255))
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src)
-			src.update_icon()
+			src.UpdateIcon()
 	return
 
 /obj/machinery/bot/medbot/attack_ai(mob/user as mob)
@@ -239,7 +250,7 @@
 		src.toggle_power()
 
 	else if ((href_list["adj_threshold"]) && (!src.locked))
-		var/adjust_num = text2num(href_list["adj_threshold"])
+		var/adjust_num = text2num_safe(href_list["adj_threshold"])
 		src.heal_threshold += adjust_num
 		if (src.heal_threshold < 5)
 			src.heal_threshold = 5
@@ -247,7 +258,7 @@
 			src.heal_threshold = 75
 
 	else if ((href_list["adj_inject"]) && (!src.locked))
-		var/adjust_num = text2num(href_list["adj_inject"])
+		var/adjust_num = text2num_safe(href_list["adj_inject"])
 		src.injection_amount += adjust_num
 		if (src.injection_amount < 5)
 			src.injection_amount = 5
@@ -276,7 +287,7 @@
 		ON_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[ckey(user?.name)]", src.last_patient_cooldown * 10) // basically ignore the emagger for a long while. Till someone hits it!
 		src.emagged = 1
 		src.on = 1
-		src.update_icon()
+		src.UpdateIcon()
 		src.pick_poison()
 		logTheThing("station", user, null, "emagged a [src] at [log_loc(src)].")
 		return 1
@@ -290,7 +301,7 @@
 		user.show_text("You repair [src]'s reagent synthesis circuits.", "blue")
 	src.emagged = 0
 	src.KillPathAndGiveUp(1)
-	src.update_icon()
+	src.UpdateIcon()
 	return 1
 
 /obj/machinery/bot/medbot/attackby(obj/item/W as obj, mob/user as mob)
@@ -361,14 +372,14 @@
 		return
 
 	if (src.stunned)
-		src.update_icon(stun = 1)
+		src.UpdateIcon(/*stun*/ 1)
 		src.stunned--
 
 		src.KillPathAndGiveUp(1)
 
 		if(src.stunned <= 0)
 			src.stunned = 0
-			src.update_icon()
+			src.UpdateIcon()
 		return
 
 	if (src.frustration > 8)
@@ -464,7 +475,7 @@
 	else
 		remove_simple_light("medbot")
 	src.KillPathAndGiveUp(1)
-	src.update_icon()
+	src.UpdateIcon()
 	src.updateUsrDialog()
 	return
 
@@ -644,7 +655,7 @@
 					'sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
 					playsound(master.loc, glitchsound, 50, 1)
 					// let's grustle a bit
-					SPAWN_DBG(1 DECI SECOND)
+					SPAWN(1 DECI SECOND)
 						master.pixel_x += rand(-2,2)
 						master.pixel_y += rand(-2,2)
 						sleep(0.1 SECONDS)
@@ -667,13 +678,13 @@
 
 		attack_twitch(master)
 		master.currently_healing = 1
-		master.update_icon(stun = 0, heal = 1)
+		master.UpdateIcon(/*stun*/ 0, /*heal*/ 1)
 		master.visible_message("<span class='alert'><B>[master] is trying to inject [master.patient]!</B></span>")
 
 	onInterrupt()
 		. = ..()
 		master.KillPathAndGiveUp()
-		master.update_icon()
+		master.UpdateIcon()
 
 	onEnd()
 		..()
@@ -699,7 +710,7 @@
 		playsound(master, 'sound/items/hypo.ogg', 80, 0)
 
 		master.KillPathAndGiveUp() // Don't discard the patient just yet, maybe they need more healing!
-		master.update_icon()
+		master.UpdateIcon()
 
 	proc/fail_check()
 		if(!master.on)
@@ -822,6 +833,7 @@
 			return
 		if ((S.w_class >= W_CLASS_SMALL || istype(S, /obj/item/storage)))
 			if (!istype(S,/obj/item/storage/pill_bottle))
+				boutput(user, "<span class='alert'>[S] won't fit into [src]!</span>")
 				return
 		..()
 		return

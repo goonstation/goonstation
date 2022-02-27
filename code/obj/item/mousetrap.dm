@@ -462,22 +462,21 @@
 		src.set_dir(user.dir)
 		walk(src, src.dir, 3)
 
-	Bump(atom/movable/AM as mob|obj)
+	bump(atom/movable/AM as mob|obj)
 		if (src.armed && src.mousetrap)
 			src.visible_message("<span class='alert'>[src] bumps against [AM]!</span>")
 			walk(src, 0)
-			src.mousetrap.triggered(AM && ismob(AM) ? AM : null)
+			SPAWN(0)
+				src.mousetrap.triggered(AM && ismob(AM) ? AM : null)
 
-			if (src.mousetrap)
-				src.mousetrap.set_loc(src.loc)
-				src.mousetrap = null
-			if (src.frame)
-				src.frame.set_loc(src.loc)
-				src.frame = null
+				if (src.mousetrap)
+					src.mousetrap.set_loc(src.loc)
+					src.mousetrap = null
+				if (src.frame)
+					src.frame.set_loc(src.loc)
+					src.frame = null
 
-			qdel(src)
-
-		return
+				qdel(src)
 
 	Move(var/turf/new_loc,direction)
 		if (src.mousetrap.buttbomb && src.armed)

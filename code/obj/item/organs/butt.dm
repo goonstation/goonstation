@@ -41,20 +41,19 @@
 
 	New(loc, datum/organHolder/nholder)
 		..()
-		SPAWN_DBG(0)
-			src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
-			if (istype(nholder) && nholder.donor)
-				src.holder = nholder
-				src.donor = nholder.donor
-			if (src.donor)
-				src.donor_name = src.donor.real_name
-				src.name = "[src.donor_name]'s [initial(src.name)]"
-				src.real_name = "[src.donor_name]'s [initial(src.name)]" // Gotta do this somewhere!
-				src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
-				if (src.toned && src.donor.bioHolder) //NO RACIALLY INSENSITIVE ASSHATS ALLOWED
-					src.s_tone = src.donor.bioHolder.mobAppearance.s_tone
-					if (src.s_tone)
-						src.color = src.s_tone
+		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
+		if (istype(nholder) && nholder.donor)
+			src.holder = nholder
+			src.donor = nholder.donor
+		if (src.donor)
+			src.donor_name = src.donor.real_name
+			src.name = "[src.donor_name]'s [initial(src.name)]"
+			src.real_name = "[src.donor_name]'s [initial(src.name)]" // Gotta do this somewhere!
+			src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
+			if (src.toned && src.donor.bioHolder) //NO RACIALLY INSENSITIVE ASSHATS ALLOWED
+				src.s_tone = src.donor.bioHolder.mobAppearance.s_tone
+				if (src.s_tone)
+					src.color = src.s_tone
 
 	attack(var/mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (!ismob(M))
@@ -131,7 +130,7 @@
 				src.stapled = 0
 			. = 1
 			allow_staple = 0
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				allow_staple = 1
 
 	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)

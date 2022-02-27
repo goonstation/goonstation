@@ -57,8 +57,8 @@
 							break
 				if(matchfound == 0)
 					src.piecelist.Add(list(list("position"=href_list["position"],"color"=href_list["color"])))
-				var offsetx = text2num(href_list["offsetx"])
-				var offsety = text2num(href_list["offsety"])
+				var offsetx = text2num_safe(href_list["offsetx"])
+				var offsety = text2num_safe(href_list["offsety"])
 				var color = href_list["color"]
 
 				if(!(src.GetOverlayImage("[href_list["position"]]")))
@@ -102,7 +102,7 @@
 					usr << browse(null, "window=go")
 					return
 
-	MouseDrop(mob/user as mob)
+	mouse_drop(mob/user as mob)
 		if((istype(user,/mob/living/carbon/human))&&(!user.stat)&&!(src in user.contents))
 			user.put_in_hand_or_drop(src)
 
@@ -147,7 +147,7 @@
 			boutput(user, "<span style=\"color:red\">This piece doesn't go in that bowl, silly!</span>")
 			return
 
-	MouseDrop(mob/user as mob)
+	mouse_drop(mob/user as mob)
 		if((istype(user,/mob/living/carbon/human))&&(!user.stat)&&!(src in user.contents))
 			user.put_in_hand_or_drop(src)
 

@@ -39,7 +39,7 @@ datum/pipeline
 			else if (length(edges))
 				member = edges[0]
 			*/
-			//logTheThing("debug", null, null, "null air in pipeline([member ? "([showCoords(member.x, member.y, member.z)])" : "detached" ])")
+			//logTheThing("debug", null, null, "null air in pipeline([member ? "([log_loc(member)])" : "detached" ])")
 			dispose() // kill this network, something is bad
 			return
 		if(!air.volume)
@@ -209,7 +209,7 @@ datum/pipeline
 			var/turf/simulated/modeled_location = target
 
 			// Turf with walls or without air
-			if(modeled_location.blocks_air || !modeled_location.air)
+			if(modeled_location.gas_impermeable || !modeled_location.air)
 				if((modeled_location.heat_capacity>0) && (partial_heat_capacity>0))
 					delta_temperature = src.air.temperature - modeled_location.temperature
 

@@ -6,10 +6,16 @@ ABSTRACT_TYPE(/datum/objective)
 	var/medal_name = null // Called by ticker.mode.declare_completion().
 	var/medal_announce = 1
 
-	New(text)
+	New(text, datum/mind/owner)
 		..()
 		if(text)
 			src.explanation_text = text
+		if(istype(owner))
+			src.owner = owner
+			owner.objectives += src
+		else
+			stack_trace("objective/New got called without a mind")
+		src.set_up()
 
 	proc/check_completion()
 		return 1
@@ -341,7 +347,6 @@ proc/create_fluff(datum/mind/target)
 		"Sneak into a department of your choice every once in awhile and mess with all the things inside.",
 		"Try to deprive the station of medical items and objects.",
 		"Try to deprive the station of tools and useful items.",
-		"Try to deprive the station of clothing.",
 		"Try to deprive the station of their ID cards.",
 		"Make the station as ugly and visually unpleasant as you can.",
 		"Become a literal arms dealer. Harvest as many body parts as possible from the crew.",
@@ -683,7 +688,7 @@ proc/create_fluff(datum/mind/target)
 
 	set_up()
 #ifdef RP_MODE
-		absorb_count = max(1, min(6, round((ticker.minds.len - 1) * 0.75)))
+		absorb_count = clamp(round((ticker.minds.len - 1) * 0.75), 1, 6)
 #else
 		absorb_count = min(10, (ticker.minds.len - 1))
 #endif
@@ -832,7 +837,7 @@ proc/create_fluff(datum/mind/target)
 		stat("Currently absorbed:", "[absorbs] souls")
 
 	set_up()
-		absorb_target = max(1, min(7, round((ticker.minds.len - 5) / 2)))
+		absorb_target = clamp(round((ticker.minds.len - 5) / 2), 1, 7)
 		explanation_text = "Absorb and retain the life essence of at least [absorb_target] mortal(s) that inhabit this material structure."
 
 	check_completion()
@@ -913,7 +918,7 @@ proc/create_fluff(datum/mind/target)
 	var/max_escapees
 
 	set_up()
-		max_escapees = max(min(5, round(ticker.minds.len / 10)), 1)
+		max_escapees = clamp(round(ticker.minds.len / 10), 1, 5)
 		explanation_text = "Force the mortals to remain stranded on this structure. No more than [max_escapees] may escape!"
 
 	check_completion()
@@ -1349,7 +1354,7 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 			if (ispath(escape_path))
 				ticker.mode.bestow_objective(enemy,escape_path)
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			qdel(src)
 		return 0
 

@@ -112,6 +112,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //////////// Unit Test Framework
 
 //#define UNIT_TESTS
+//#define UNIT_TESTS_RUN_TILL_COMPLETION // Bypass 10 Second Limit
 
 //////////// HOLIDAYS AND OTHER SUCH TOGGLES
 

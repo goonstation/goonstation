@@ -10,7 +10,7 @@
 	flags = ONBACK | FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_BULKY
 	max_wclass = 3
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/storage/box/starter)
 
@@ -239,6 +239,14 @@
 	item_state = "Syndiesatchel"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 /obj/item/storage/backpack/satchel/NT
 	name = "\improper NT Satchel"
 	desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder."
@@ -421,6 +429,14 @@
 	item_state = "syndie"
 	slots = 7
 
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 /* -------------------- Belts -------------------- */
 
 /obj/item/storage/belt
@@ -447,7 +463,7 @@
 
 
 
-	MouseDrop(obj/over_object as obj, src_location, over_location)
+	mouse_drop(obj/over_object as obj, src_location, over_location)
 		var/mob/M = usr
 		if (istype(over_object,/obj/item) || istype(over_object,/mob/)) // covers pretty much all the situations we're trying to prevent; namely transferring storage and opening while on ground
 			if(!can_use())
@@ -607,8 +623,9 @@
 
 /obj/item/storage/belt/medical
 	name = "medical belt"
+	desc = "A specialized belt for treating patients outside medbay in the field. A unique attachment point lets you carry defibrillators."
 	icon_state = "injectorbelt"
-	item_state = "injector"
+	item_state = "medical"
 	can_hold = list(
 		/obj/item/robodefibrillator
 	)
@@ -618,7 +635,7 @@
 	name = "miner's belt"
 	desc = "Can hold various mining tools."
 	icon_state = "minerbelt"
-	item_state = "utility"
+	item_state = "mining"
 	can_hold = list(
 		/obj/item/mining_tool,
 		/obj/item/mining_tools
@@ -637,8 +654,8 @@
 /obj/item/storage/belt/hunter
 	name = "trophy belt"
 	desc = "Holds normal-sized items, such as skulls."
-	icon_state = "minerbelt"
-	item_state = "utility"
+	icon_state = "hunterbelt"
+	item_state = "hunter"
 	max_wclass = 3
 	item_function_flags = IMMUNE_TO_ACID
 
@@ -722,11 +739,11 @@
 	desc = "A stylish leather belt for holstering a revolver and it's ammo."
 	icon_state = "revolver_belt"
 	item_state = "revolver_belt"
-	slots = 3
+	slots = 4
 	in_list_or_max = 0
 	can_hold = list(/obj/item/gun/kinetic/revolver, /obj/item/ammo/bullets/a357)
-	spawn_contents = list(/obj/item/gun/kinetic/revolver, /obj/item/ammo/bullets/a357 = 2)
 
+	spawn_contents = list(/obj/item/gun/kinetic/revolver, /obj/item/ammo/bullets/a357 = 2, /obj/item/ammo/bullets/a357/AP)
 /obj/item/storage/belt/pistol
 	name = "pistol belt"
 	desc = "A rugged belt fitted with a pistol holster and some magazine pouches."
@@ -744,8 +761,8 @@
 	item_state = "smartgun_belt"
 	slots = 5
 	in_list_or_max = 0
-	can_hold = list(/obj/item/gun/kinetic/pistol/smart/mkII, /obj/item/ammo/bullets/bullet_9mm/smartgun)
-	spawn_contents = list(/obj/item/gun/kinetic/pistol/smart/mkII, /obj/item/ammo/bullets/bullet_9mm/smartgun = 4)
+	can_hold = list(/obj/item/gun/kinetic/pistol/smart/mkII, /obj/item/ammo/bullets/bullet_22/smartgun)
+	spawn_contents = list(/obj/item/gun/kinetic/pistol/smart/mkII, /obj/item/ammo/bullets/bullet_22/smartgun = 4)
 
 
 // fancy shoulder sling for grenades

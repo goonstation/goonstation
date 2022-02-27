@@ -32,7 +32,7 @@ var/global/the_automaton = null
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (!the_automaton)
 				the_automaton = src
 
@@ -174,7 +174,7 @@ var/global/the_automaton = null
 				user.anchored = 1
 				user.set_loc(src.loc)
 				K.burn_possible = 1
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					src.visible_message("<span class='alert'><B>[src] forces [user] inside one of the keyholes!</B>.</span>")
 					user.implode()
 					K.combust()
@@ -370,7 +370,7 @@ var/global/the_automaton = null
 				playsound(src.loc, 'sound/vox/ghost.ogg', 60, 1)
 			else
 				playsound(src.loc, 'sound/effects/ghost.ogg', 60, 1)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/i = rand(4,8)
 				while (i-- > 0)
 					var/obj/item/paper/tornpaper = new /obj/item/paper
@@ -409,7 +409,7 @@ var/global/the_automaton = null
 		swirl.set_loc(target_turf)
 		swirl.pixel_y = 10
 		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			swirl.pixel_y = 0
 			qdel(swirl)
 
@@ -445,18 +445,18 @@ var/global/the_automaton = null
 			if (prob(8) && limiter.canISpawn(/obj/effects/sparks))
 				var/obj/sparks = new /obj/effects/sparks
 				sparks.set_loc(T)
-				SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
+				SPAWN(2 SECONDS) if (sparks) qdel(sparks)
 
 			for (var/obj/item/I in T)
 				if ( prob(T_effect_prob) )
 					animate_float(I, 5, 10)
 			if (prob(T_effect_prob))
-				SPAWN_DBG(rand(30, 50))
+				SPAWN(rand(30, 50))
 					if (T)
 						playsound(T, pick('sound/effects/elec_bigzap.ogg', 'sound/effects/elec_bzzz.ogg', 'sound/effects/electric_shock.ogg'), 40, 0)
 						var/obj/somesparks = new /obj/effects/sparks
 						somesparks.set_loc(T)
-						SPAWN_DBG(2 SECONDS) if (somesparks) qdel(somesparks)
+						SPAWN(2 SECONDS) if (somesparks) qdel(somesparks)
 						var/list/tempEffect
 						if (temp_effect_limiter-- > 0)
 							tempEffect = DrawLine(src, somesparks, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
@@ -476,10 +476,10 @@ var/global/the_automaton = null
 
 		for(var/mob/living/carbon/human/H in mobs)
 			animate_float(H, 5, 10)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				H.flash(3 SECONDS)
 				shake_camera(H, 210, 2)
-			SPAWN_DBG(rand(10,70))
+			SPAWN(rand(10,70))
 				H.emote("scream")
 		var/turf/T = get_turf(src)
 		sleep(0.1 SECONDS)

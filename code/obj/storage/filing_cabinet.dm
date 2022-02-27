@@ -15,7 +15,7 @@
 				boutput(user, "You file the folder.")
 			user.drop_item()
 			W.set_loc(src)
-			SPAWN_DBG(5 DECI SECONDS)
+			SPAWN(5 DECI SECONDS)
 				icon_state = "filecabinet"
 
 	attack_hand(var/mob/user as mob)
@@ -29,7 +29,7 @@
 		..()
 
 		if(href_list["action"] == "retrieve")
-			usr.put_in_hand_or_drop(src.contents[text2num(href_list["id"])], usr)
+			usr.put_in_hand_or_drop(src.contents[text2num_safe(href_list["id"])], usr)
 			visible_message("[usr] takes something out of the cabinet.")
 			icon_state = "filecabinet"
 		else if(href_list["action"] == "close")

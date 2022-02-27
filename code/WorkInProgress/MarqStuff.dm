@@ -487,7 +487,7 @@
 	name = "quiver"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "quiver-0"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	item_state = "quiver"
 	flags = FPRINT | TABLEPASS | ONBACK | ONBELT
 	move_triggered = 1
@@ -534,7 +534,7 @@
 			return
 		..()
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		..()
 		var/atom/movable/screen/hud/S = over_object
 		if (istype(S))

@@ -85,7 +85,7 @@
 		else
 			..()
 
-	MouseDrop(var/atom/target as obj|mob) //r o t a t e
+	mouse_drop(var/atom/target as obj|mob) //r o t a t e
 		if(!istype(target,/obj/item/card_group))
 			tap_or_reverse(usr)
 		else
@@ -340,7 +340,7 @@
 		name = "[pick(prefix1)] [pick(prefix2)] [pick(names)]"
 		update_stored_info()
 
-	MouseDrop(var/atom/target as obj|mob)
+	mouse_drop(var/atom/target as obj|mob)
 		..()
 		if(tapped)
 			var/mob/user = usr
@@ -437,7 +437,7 @@
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob) //handles piling cards into a deck or hand
 		if(istype(O,/obj/item/playing_card))
 			user.visible_message("[user.name] starts scooping cards into the [src.name]...")
-			SPAWN_DBG(0.2 SECONDS)
+			SPAWN(0.2 SECONDS)
 				for(var/obj/item/playing_card/card in range(1, user))
 					if(card.card_style != card_style)
 						continue
@@ -585,7 +585,7 @@
 		if(is_hand)
 			return
 		var/card_number = round(input(user, "How many cards would you like to draw?", "[name]")  as null|num)
-		if(!card_number)
+		if(!card_number || !isnum_safe(card_number))
 			return
 		if(card_number == 1)
 			draw(user)

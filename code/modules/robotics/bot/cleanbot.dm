@@ -82,7 +82,7 @@
 		icon_state_base = copytext(icon_state, 1, -1)
 		src.add_simple_light("bot", list(255, 255, 255, 255 * 0.4))
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src)
 				src.clear_invalid_targets = TIME
 
@@ -236,11 +236,15 @@
 			// are we there yet
 			if (IN_RANGE(src, src.target, 1))
 				do_the_thing()
+				// stop the bot mover so it doesn't interrupt us if we're already in range
+				src.frustration = 0
+				src.path = null
+				qdel(src.bot_mover)
 				return
 
 			// we are not there. how do we get there
 			if (!src.path || !length(src.path))
-				src.navigate_to(get_turf(src.target), CLEANBOT_MOVE_SPEED, max_dist = 120)
+				src.navigate_to(get_turf(src.target), CLEANBOT_MOVE_SPEED, max_dist = 20)
 				if (!src.path || !length(src.path))
 					// answer: we don't. try to find something else then.
 					src.KillPathAndGiveUp(1)
@@ -394,8 +398,7 @@
 			return
 
 	onInterrupt(flag)
-		master.cleanbottargets -= master.turf2coordinates(get_turf(master.target))
-		master.KillPathAndGiveUp(1)
+		master.KillPathAndGiveUp(0)
 		. = ..()
 
 	onEnd()

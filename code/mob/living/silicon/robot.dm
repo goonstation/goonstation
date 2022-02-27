@@ -131,7 +131,7 @@
 
 
 			if (!src.custom)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.choose_name(3)
 
 		else if (src.part_head && src.part_chest) // some wee child of ours sent us some parts, how nice c:
@@ -173,7 +173,7 @@
 
 		src.cosmetic_mods = new /datum/robot_cosmetic(src)
 
-		. = ..()
+		. = ..(loc, null, null, FALSE)
 
 		hud = new(src)
 		src.attach_hud(hud)
@@ -190,12 +190,11 @@
 			if (!src.ai_interface)
 				src.ai_interface = new(src)
 
-		SPAWN_DBG(0.1 SECONDS)
-			if (!src.dependent && !src.shell)
-				boutput(src, "<span class='notice'>Your icons have been generated!</span>")
-				src.syndicate = syndie
-				src.emagged = frame_emagged
-		SPAWN_DBG(0.4 SECONDS)
+		if (!src.dependent && !src.shell)
+			boutput(src, "<span class='notice'>Your icons have been generated!</span>")
+			src.syndicate = syndie
+			src.emagged = frame_emagged
+		SPAWN(0.4 SECONDS)
 			if (!src.connected_ai && !syndicate && !(src.dependent || src.shell))
 				for_by_tcl(A, /mob/living/silicon/ai)
 					src.connected_ai = A
@@ -214,7 +213,7 @@
 			src.camera.c_tag = src.real_name
 			src.camera.network = "Robots"
 
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			if (!src.brain && src.key && !(src.dependent || src.shell || src.ai_interface))
 				var/obj/item/organ/brain/B = new /obj/item/organ/brain(src)
 				B.owner = src.mind
@@ -272,7 +271,7 @@
 				break
 		if (!( cancel ))
 			boutput(world, "<B>Everyone is dead! Resetting in 30 seconds!</B>")
-			SPAWN_DBG( 300 )
+			SPAWN( 300 )
 				logTheThing("diary", null, null, "Rebooting because of no live players", "game")
 				Reboot_server()
 				return
@@ -457,7 +456,7 @@
 			if ("twitch")
 				message = "<B>[src]</B> twitches."
 				m_type = 1
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/old_x = src.pixel_x
 					var/old_y = src.pixel_y
 					src.pixel_x += rand(-2,2)
@@ -469,7 +468,7 @@
 			if ("twitch_v","twitch_s")
 				message = "<B>[src]</B> twitches violently."
 				m_type = 1
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/old_x = src.pixel_x
 					var/old_y = src.pixel_y
 					src.pixel_x += rand(-3,3)
@@ -615,7 +614,7 @@
 	#ifdef DATALOGGER
 					game_stats.Increment("farts")
 	#endif
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						src.emote_allowed = 1
 			else
 				src.show_text("Invalid Emote: [act]")
@@ -624,7 +623,7 @@
 			return
 		if (maptext_out)
 			var/image/chat_maptext/chat_text = null
-			SPAWN_DBG(0) //blind stab at a life() hang - REMOVE LATER
+			SPAWN(0) //blind stab at a life() hang - REMOVE LATER
 				if (speechpopups && src.chat_text)
 					chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
 					if(chat_text)
@@ -658,8 +657,6 @@
 
 	examine()
 		. = list()
-		if(src.hiddenFrom?.Find(usr.client)) //invislist
-			return
 
 		if (isghostdrone(usr))
 			return
@@ -706,10 +703,7 @@
 					phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 			if (!newname)
 				src.real_name = borgify_name("Cyborg")
-				src.name = src.real_name
-				src.internal_pda.name = "[src]'s Internal PDA Unit"
-				src.internal_pda.owner = "[src]"
-				return
+				break
 			else
 				newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
 				if (!length(newname))
@@ -721,17 +715,15 @@
 				else
 					if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 						src.real_name = newname
-						src.name = newname
-						src.internal_pda.name = "[src]'s Internal PDA Unit"
-						src.internal_pda.owner = "[src]"
-						return 1
+						break
 					else
 						continue
 		if (!newname)
 			src.real_name = borgify_name("Cyborg")
-			src.name = src.real_name
-			src.internal_pda.name = "[src.name]'s Internal PDA Unit"
-			src.internal_pda.owner = "[src]"
+
+		src.UpdateName()
+		src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+		src.internal_pda.owner = "[src.name]"
 
 	Login()
 		..()
@@ -741,7 +733,7 @@
 
 		if (src.real_name == "Cyborg")
 			src.real_name = borgify_name(src.real_name)
-			src.name = src.real_name
+			src.UpdateName()
 			src.internal_pda.name = "[src.name]'s Internal PDA Unit"
 			src.internal_pda.owner = "[src]"
 		if (!src.syndicate && !src.connected_ai)
@@ -752,7 +744,7 @@
 
 		if (src.shell && src.mainframe)
 			src.real_name = "SHELL/[src.mainframe]"
-			src.name = src.real_name
+			src.UpdateName()
 
 		update_clothing()
 		update_appearance()
@@ -819,13 +811,13 @@
 		var/damage = 0
 		switch(severity)
 			if(1.0)
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					src.gib(1)
 				return
 			if(2.0) damage = 40
 			if(3.0) damage = 20
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/obj/item/parts/robot_parts/RP in src.contents)
 				if (RP.ropart_take_damage(damage,damage) == 1)
 					src.compborg_lose_limb(RP)
@@ -833,7 +825,7 @@
 		if (istype(cell,/obj/item/cell/erebite) && fire_protect != 1)
 			src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
 			explosion(cell, src.loc, 1, 2, 4, 6, 1)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				qdel (src.cell)
 				src.cell = null
 
@@ -857,10 +849,9 @@
 				dmgmult = 0.2
 			if(D_TOXIC)
 				dmgmult = 0
+			if(D_SPECIAL)
+				dmgmult = 0
 
-		if(P.proj_data.ks_ratio == 0)
-			src.do_disorient(clamp(P.power*4, P.proj_data.power*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
-			src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 
 		log_shot(P, src)
 		src.visible_message("<span class='alert'><b>[src]</b> is struck by [P]!</span>")
@@ -868,6 +859,9 @@
 		if (damage < 1)
 			return
 
+		if(P.proj_data.ks_ratio == 0)
+			src.do_disorient(clamp(P.power*4, P.proj_data.power*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
+			src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 		for (var/obj/item/roboupgrade/R in src.contents)
 			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated && dmgtype == 0)
 				var/obj/item/roboupgrade/physshield/S = R
@@ -936,13 +930,6 @@
 		boutput(src, "<span class='alert'><B>*BZZZT*</B></span>")
 		for (var/obj/item/parts/robot_parts/RP in src.contents)
 			if (RP.ropart_take_damage(0,10) == 1) src.compborg_lose_limb(RP)
-		/* Bit of a problem when EMPs that are supposed to be strong against cyborgs might just turn them into antagonists ...
-		if (prob(25))
-			src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
-			src.emagged = 1
-			src.handle_robot_antagonist_status("emagged", 0, usr)
-		*/
-		return
 
 	meteorhit(obj/O as obj)
 		src.visible_message("<font color=red><b>[src]</b> is struck by [O]!</font>")
@@ -976,7 +963,7 @@
 				if (istype(cell, /obj/item/cell/erebite))
 					src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
 					explosion(cell, src.loc, 1, 2, 4, 6, 1)
-					SPAWN_DBG(1 DECI SECOND)
+					SPAWN(1 DECI SECOND)
 						qdel(src.cell)
 						src.cell = null
 			src.update_bodypart()
@@ -998,28 +985,21 @@
 			if (istype(cell,/obj/item/cell/erebite))
 				src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
 				explosion(cell, src.loc, 1, 2, 4, 6, 1)
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					qdel (src.cell)
 					src.cell = null
 
-	Bump(atom/movable/AM as mob|obj, yes)
-		SPAWN_DBG( 0 )
-			if ((!( yes ) || src.now_pushing))
-				return
-			//..()
-			if(AM)
-				AM.last_bumped = world.timeofday
-				AM.Bumped(src)
-			if (!istype(AM, /atom/movable))
-				return
-			if (!src.now_pushing)
-				src.now_pushing = 1
-				if (!AM.anchored)
-					var/t = get_dir(src, AM)
-					step(AM, t)
-				src.now_pushing = null
+	bump(atom/movable/AM as mob|obj)
+		if ( src.now_pushing)
 			return
-		return
+		if (!istype(AM, /atom/movable))
+			return
+		if (!src.now_pushing)
+			src.now_pushing = 1
+			if (!AM.anchored)
+				var/t = get_dir(src, AM)
+				step(AM, t)
+			src.now_pushing = null
 
 	triggerAlarm(var/class, area/A, var/O, var/alarmsource)
 		if (isdead(src))
@@ -1126,7 +1106,7 @@
 				W.set_loc(src)
 				src.upgrades.Add(W)
 				boutput(user, "You insert [W].")
-				boutput(src, "<span class='notice'>You recieved [W]! It can be activated from your panel.</span>")
+				boutput(src, "<span class='notice'>You received [W]! It can be activated from your panel.</span>")
 				hud.update_upgrades()
 				src.update_appearance()
 
@@ -1245,11 +1225,10 @@
 				actions.Add("Remove Right Leg")
 			if (src.part_leg_l)
 				actions.Add("Remove Left Leg")
-			if (!src.part_arm_r && !src.part_arm_l && !src.part_leg_r && !src.part_leg_l)
-				if (src.part_head)
-					actions.Add("Remove Head")
-				if (src.part_chest)
-					actions.Add("Remove Chest")
+			if (src.part_head)
+				actions.Add("Remove Head")
+			if (src.part_chest)
+				actions.Add("Remove Chest")
 
 			if (!actions.len)
 				boutput(user, "<span class='alert'>You can't think of anything to use the wrench on.</span>")
@@ -1507,7 +1486,7 @@
 					src.show_text("Your power cell was removed!", "red")
 					logTheThing("combat", user, src, "removes [constructTarget(src,"combat")]'s power cell at [log_loc(src)].") // Renders them mute and helpless (Convair880).
 					cell.add_fingerprint(user)
-					cell.updateicon()
+					cell.UpdateIcon()
 					src.cell = null
 
 			update_appearance()
@@ -1521,7 +1500,7 @@
 						playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
 						user.visible_message("<span class='notice'>[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
 					if(INTENT_DISARM) //Shove
-						SPAWN_DBG(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
+						SPAWN(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
 						user.visible_message("<span class='alert'><B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B></span>")
 					if(INTENT_GRAB) //Shake
 						playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 30, 1, -2)
@@ -1701,10 +1680,10 @@
 	hotkey(name)
 		switch (name)
 			if ("help")
-				src.a_intent = INTENT_HELP
+				src.set_a_intent(INTENT_HELP)
 				hud.update_intent()
 			if ("harm")
-				src.a_intent = INTENT_HARM
+				src.set_a_intent(INTENT_HARM)
 				hud.update_intent()
 			if ("unequip")
 				src.uneq_active()
@@ -1819,7 +1798,6 @@
 
 	proc/uneq_slot(var/i)
 		if (module_states[i])
-			src.contents -= module_states[i]
 			if (src.module)
 				var/obj/I = module_states[i]
 				if (isitem(I))
@@ -2157,7 +2135,7 @@
 		else if (!src.locked && !src.opened && !src.wiresexposed && !src.brainexposed && !src.locking)
 			src.locking = 1
 			boutput(src, "<span class='alert'>Locking interface...</span>")
-			SPAWN_DBG(12 SECONDS)
+			SPAWN(12 SECONDS)
 				if (!src.locking)
 					boutput(src, "<span class='alert'>The lock was interrupted before it could finish!</span>")
 				else
@@ -2333,7 +2311,7 @@
 
 	clamp_values()
 		..()
-		sleeping = max(min(sleeping, 5), 0)
+		sleeping = clamp(sleeping, 0, 5)
 		if (src.get_eye_blurry()) src.change_eye_blurry(-INFINITY)
 		if (src.get_eye_damage()) src.take_eye_damage(-INFINITY)
 		if (src.get_eye_damage(1)) src.take_eye_damage(-INFINITY, 1)
@@ -2432,7 +2410,8 @@
 
 	proc/add_oil(var/amt)
 		if (oil <= 0)
-			src.add_stun_resist_mod("robot_oil", 25)
+			APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST, "robot_oil", 25)
+			APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "robot_oil", 25)
 			APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_oil, "oil")
 		src.oil += amt
 
@@ -2992,13 +2971,9 @@
 	set name = "Recall to Mainframe"
 	return_mainframe()
 
-/mob/living/silicon/robot/proc/return_mainframe()
-	if (mainframe)
-		mainframe.return_to(src)
-		src.update_appearance()
-	else
-		boutput(src, "<span class='alert'>You lack a dedicated mainframe!</span>")
-		return
+/mob/living/silicon/robot/return_mainframe()
+	..()
+	src.update_appearance()
 
 /mob/living/silicon/robot/ghostize()
 	if (src.mainframe)

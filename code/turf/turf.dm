@@ -32,7 +32,6 @@
 	//Properties for both
 	var/temperature = T20C
 
-	var/blocks_air = 0
 	var/icon_old = null
 	var/name_old = null
 	var/tmp/pathweight = 1
@@ -40,7 +39,6 @@
 	var/can_write_on = 0
 	var/tmp/messy = 0 //value corresponds to how many cleanables exist on this turf. Exists for the purpose of making fluid spreads do less checks.
 	var/tmp/checkingexit = 0 //value corresponds to how many objs on this turf implement checkexit(). lets us skip a costly loop later!
-	var/tmp/checkingcanpass = 0 // "" how many implement canpass()
 	var/tmp/checkinghasproximity = 0
 	var/tmp/neighcheckinghasproximity = 0
 	/// directions of this turf being blocked by directional blocking objects. So we don't need to loop through the entire contents
@@ -60,7 +58,7 @@
 
 	disposing() // DOES NOT GET CALLED ON TURFS!!!
 		SHOULD_NOT_OVERRIDE(TRUE)
-		..()
+		SHOULD_CALL_PARENT(FALSE)
 
 	onMaterialChanged()
 		..()
@@ -68,7 +66,7 @@
 			if(initial(src.opacity))
 				src.RL_SetOpacity(src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
 
-		blocks_air = material.hasProperty("permeable") ? material.getProperty("permeable") >= 33 : blocks_air
+		gas_impermeable = material.hasProperty("permeable") ? material.getProperty("permeable") >= 33 : gas_impermeable
 		return
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
@@ -195,6 +193,11 @@
 		name = "cavern"
 		fullbright = 0
 
+	safe
+		temperature = T20C
+		oxygen = MOLES_O2STANDARD
+		nitrogen = MOLES_N2STANDARD
+
 /turf/space/no_replace
 
 /turf/space/New()
@@ -311,18 +314,18 @@ proc/generate_space_color()
 	if(!RL_Started)
 		RL_Init()
 
+
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if (!mover)
-		return 1
+		return TRUE
 
 	var/turf/cturf = get_turf(mover)
 	if (cturf == src)
-		return 1
+		return TRUE
 
 	//First, check objects to block exit
 	if (cturf?.checkingexit > 0) //dont bother checking unless the turf actually contains a checkable :)
-		for(var/thing in cturf)
-			var/obj/obstacle = thing
+		for(var/obj/obstacle in cturf)
 			if(obstacle == mover)
 				continue
 			if((mover != obstacle) && (forget != obstacle))
@@ -333,53 +336,22 @@ proc/generate_space_color()
 					  && obstacle.dir == mover.dir)) //Allow objects that block the same dirs to be pushed past each other
 						if(!obstacle.CheckExit(mover, src))
 							mover.Bump(obstacle, 1)
-							return 0
-
-	//Then, check the turf itself
-	if (!src.CanPass(mover, src))
-		mover.Bump(src, 1)
-		return 0
-
-	//Finally, check objects/mobs to block entry
-	if (src.checkingcanpass > 0)  //dont bother checking unless the turf actually contains a checkable :)
-		for(var/thing in src)
-			var/atom/movable/obstacle = thing
-			if(obstacle == mover) continue
-			if(!mover)	return 0
-			if ((forget != obstacle))
-				if(obstacle.event_handler_flags & USE_CANPASS)
-					if(!obstacle.CanPass(mover, cturf, 1, 0))
-
-						mover.Bump(obstacle, 1)
-						return 0
-				else //cheaper, skip proc call lol lol
-					if (obstacle.density)
-
-						mover.Bump(obstacle,1)
-						return 0
+							return FALSE
 
 	if (mirrored_physical_zone_created) //checking visual mirrors for blockers if set
 		if (length(src.vis_contents))
 			var/turf/T = locate(/turf) in src.vis_contents
 			if (T)
 				for(var/thing in T)
-
 					var/atom/movable/obstacle = thing
 					if(obstacle == mover) continue
-					if(!mover)	return 0
+					if(!mover)	return FALSE
 					if ((forget != obstacle))
-						if(obstacle.event_handler_flags & USE_CANPASS)
-							if(!obstacle.CanPass(mover, cturf, 1, 0))
+						if(!obstacle.Cross(mover))
+							mover.Bump(obstacle)
+							return FALSE
 
-								mover.Bump(obstacle, 1)
-								return 0
-						else //cheaper, skip proc call lol lol
-							if (obstacle.density)
-
-								mover.Bump(obstacle,1)
-								return 0
-
-	return 1 //Nothing found to block so return success!
+	return ..() //Nothing found to block so return success!
 
 /turf/Exited(atom/movable/Obj, atom/newloc)
 	//MBC : nothing in the game even uses PrxoimityLeave meaningfully. I'm disabling the proc call here.
@@ -427,16 +399,20 @@ proc/generate_space_color()
 #ifdef NON_EUCLIDEAN
 	if(warptarget)
 		if(OldLoc)
-			switch (warptarget_modifier)
-				if(LANDMARK_VM_WARP_NON_ADMINS) //warp away nonadmin
-					if (ismob(M))
-						var/mob/mob = M
-						if (!mob.client?.holder && mob.last_client)
-							M.set_loc(warptarget)
-						if (rank_to_level(mob.client.holder.rank) < LEVEL_SA)
-							M.set_loc(warptarget)
-				else
+			if(warptarget_modifier == LANDMARK_VM_WARP_NON_ADMINS) //warp away nonadmin
+				if (ismob(M))
+					var/mob/mob = M
+					if (!mob.client?.holder && mob.last_client)
+						M.set_loc(warptarget)
+					if (rank_to_level(mob.client.holder.rank) < LEVEL_SA)
+						M.set_loc(warptarget)
+			else if ((abs(OldLoc.x - warptarget.x) > 1) || (abs(OldLoc.y - warptarget.y) > 1))
+				// double set_loc is a fix for the warptarget gliding bug
+				M.set_loc(get_step(warptarget, get_dir(src, OldLoc)))
+				SPAWN(0.001) // rounds to the nearest tick, about as smooth as it's gonna get
 					M.set_loc(warptarget)
+			else
+				M.set_loc(warptarget)
 #endif
 
 // Ported from unstable r355
@@ -546,7 +522,6 @@ proc/generate_space_color()
 	var/old_opacity = src.opacity
 
 	var/old_checkingexit = src.checkingexit
-	var/old_checkingcanpass = src.checkingcanpass
 	var/old_blocked_dirs = src.blocked_dirs
 	var/old_checkinghasproximity = src.checkinghasproximity
 	var/old_neighcheckinghasproximity = src.neighcheckinghasproximity
@@ -620,7 +595,6 @@ proc/generate_space_color()
 
 
 	new_turf.checkingexit = old_checkingexit
-	new_turf.checkingcanpass = old_checkingcanpass
 	new_turf.blocked_dirs = old_blocked_dirs
 	new_turf.checkinghasproximity = old_checkinghasproximity
 	new_turf.neighcheckinghasproximity = old_neighcheckinghasproximity
@@ -689,10 +663,10 @@ proc/generate_space_color()
 	if (map_settings)
 		if (map_settings.auto_walls)
 			for (var/turf/simulated/wall/auto/W in orange(1))
-				W.update_icon()
+				W.UpdateIcon()
 		if (map_settings.auto_windows)
 			for (var/obj/window/auto/W in orange(1))
-				W.update_icon()
+				W.UpdateIcon()
 	return floor
 
 /turf/proc/ReplaceWithMetalFoam(var/mtype)
@@ -706,7 +680,7 @@ proc/generate_space_color()
 		qdel(L)
 
 	floor.metal = mtype
-	floor.update_icon()
+	floor.UpdateIcon()
 
 	return floor
 
@@ -772,10 +746,10 @@ proc/generate_space_color()
 	if (map_settings)
 		if (map_settings.auto_walls)
 			for (var/turf/simulated/wall/auto/W in orange(1))
-				W.update_icon()
+				W.UpdateIcon()
 		if (map_settings.auto_windows)
 			for (var/obj/window/auto/W in orange(1))
-				W.update_icon()
+				W.UpdateIcon()
 	return wall
 
 /turf/proc/ReplaceWithRWall()
@@ -783,10 +757,10 @@ proc/generate_space_color()
 	if (map_settings)
 		if (map_settings.auto_walls)
 			for (var/turf/simulated/wall/auto/W in orange(1))
-				W.update_icon()
+				W.UpdateIcon()
 		if (map_settings.auto_windows)
 			for (var/obj/window/auto/W in orange(1))
-				W.update_icon()
+				W.UpdateIcon()
 	return wall
 
 /turf/proc/is_sanctuary()
@@ -923,7 +897,7 @@ proc/generate_space_color()
 	desc = "A solid... nothing? Is that even a thing?"
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "white"
-	plane = PLANE_LIGHTING + 1
+	plane = PLANE_ABOVE_LIGHTING
 	mouse_opacity = 0
 	fullbright = 1
 
@@ -1055,14 +1029,11 @@ proc/generate_space_color()
 			for_by_tcl(C, /obj/machinery/communications_dish)
 				C.add_cargo_logs(A)
 
-	A.z = zlevel
-	if (newx)
-		A.x = newx
-	if (newy)
-		A.y = newy
-	SPAWN_DBG(0)
-		if ((A?.loc))
-			A.loc.Entered(A)
+	var/target_x = newx || A.x
+	var/target_y = newy || A.y
+	var/turf/target_turf = locate(target_x, target_y, zlevel)
+	if(target_turf)
+		A.set_loc(target_turf)
 #endif
 //Vr turf is a jerk and pretends to be broken.
 /turf/unsimulated/bombvr/ex_act(severity)
@@ -1179,13 +1150,15 @@ proc/generate_space_color()
 						if (grave.special)
 							new grave.special (src)
 						else
-							switch (rand(1,5))
+							switch (rand(1, 5))
 								if (1)
 									new /obj/item/skull {desc = "A skull.  That was robbed.  From a grave.";} ( src )
 								if (2)
 									new /obj/item/plank {name = "rotted coffin wood"; desc = "Just your normal, everyday rotten wood.  That was robbed.  From a grave.";} ( src )
 								if (3)
 									new /obj/item/clothing/under/suit/pinstripe {name = "old pinstripe suit"; desc  = "A pinstripe suit.  That was stolen.  Off of a buried corpse.";} ( src )
+								else
+									// default
 						break
 
 		else
@@ -1242,6 +1215,7 @@ proc/generate_space_color()
 	icon = 'icons/obj/delivery.dmi'
 	icon_state = "floorflush_o"
 
-	Enter(atom/movable/mover, atom/forget)
+	Entered(atom/movable/mover, atom/forget)
 		. = ..()
-		mover.set_loc(null)
+		if(!mover.anchored)
+			mover.set_loc(null)

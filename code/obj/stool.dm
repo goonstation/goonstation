@@ -85,7 +85,8 @@
 		.= 0
 
 	proc/buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0) //Handles the actual buckling in
-		if (!can_buckle(to_buckle,user)) return
+		if (!can_buckle(to_buckle,user))
+			return FALSE
 
 		if (to_buckle == user)
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
@@ -93,7 +94,7 @@
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
 
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
-		return
+		return TRUE
 
 	proc/unbuckle() //Ditto but for unbuckling
 		if (src.buckled_guy)
@@ -179,7 +180,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.auto && ispath(src.auto_path))
 				src.set_up(1)
 
@@ -295,6 +296,10 @@
 		parts_type = /obj/item/furniture_parts/bed/roller
 		scoot_sounds = list( 'sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg' )
 
+	New()
+		..()
+		START_TRACKING
+
 	Move()
 		if(src.buckled_guy?.loc != src.loc)
 			src.unbuckle()
@@ -367,9 +372,9 @@
 
 	buckle_in(mob/living/to_buckle, mob/living/user)
 		if(src.buckled_guy && src.buckled_guy.buckled == src)
-			return
+			return FALSE
 		if (!can_buckle(to_buckle,user))
-			return
+			return FALSE
 
 		if (to_buckle == user)
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> lies down on [src], fastening the buckles!</span>", "<span class='notice'>You lie down and buckle yourself in.</span>")
@@ -386,6 +391,7 @@
 		to_buckle.set_clothing_icon_dirty()
 		playsound(src, "sound/misc/belt_click.ogg", 50, 1)
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
+		return TRUE
 
 	unbuckle()
 		..()
@@ -426,11 +432,9 @@
 				user, "<span class='notice'>You tuck [somebody == user ? "yourself" : "[somebody]"] into bed.</span>",\
 				somebody, "<span class='notice'>[somebody == user ? "You tuck yourself" : "<b>[user]</b> tucks you"] into bed.</span>")
 				newSheet.layer = EFFECTS_LAYER_BASE-1
-				return
 			else
 				user.visible_message("<span class='notice'><b>[user]</b> tucks [newSheet] into [src].</span>",\
 				"<span class='notice'>You tuck [newSheet] into [src].</span>")
-				return
 
 	proc/untuck_sheet(var/mob/user as mob)
 		if (!src.Sheet) // vOv
@@ -457,7 +461,6 @@
 			oldSheet.Bed = null
 		mutual_detach(src, oldSheet)
 		src.Sheet = null
-		return
 
 	MouseDrop_T(atom/A as mob|obj, mob/user as mob)
 		if (get_dist(src, user) > 1 || A.loc != src.loc || user.restrained() || !isalive(user))
@@ -491,8 +494,8 @@
 		if (src.Sheet && src.Sheet.Bed == src)
 			src.Sheet.Bed = null
 			src.Sheet = null
+		STOP_TRACKING
 		..()
-		return
 
 	proc/sleep_in(var/mob/M)
 		if (!ishuman(M))
@@ -513,7 +516,6 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.hud.update_resting()
-		return
 
 /* ================================================ */
 /* -------------------- Chairs -------------------- */
@@ -619,7 +621,7 @@
 
 			if (ishuman(M))
 				chair_chump = M
-			if (!chair_chump || !chair_chump.on_chair)// == 1)
+			if (!chair_chump || !chair_chump.on_chair)
 				chair_chump = null
 			if (chair_chump)// == 1)
 				if (chair_chump == L)
@@ -647,14 +649,18 @@
 			user.visible_message("<b>[user.name] folds [src].</b>")
 			if ((chair_chump) && (chair_chump != user))
 				chair_chump.visible_message("<span class='alert'><b>[chair_chump.name] falls off of [src]!</b></span>")
-				chair_chump.on_chair = 0
+				chair_chump.on_chair = null
 				chair_chump.pixel_y = 0
 				chair_chump.changeStatus("weakened", 1 SECOND)
 				chair_chump.changeStatus("stunned", 2 SECONDS)
 				random_brute_damage(chair_chump, 15)
 				playsound(chair_chump.loc, "swing_hit", 50, 1)
 
-			var/obj/item/chair/folded/C = new/obj/item/chair/folded(src.loc)
+			var/obj/item/chair/folded/C = null
+			if(istype(src, /obj/stool/chair/syndicate))
+				C = new/obj/item/chair/folded/syndicate(src.loc)
+			else
+				C = new/obj/item/chair/folded(src.loc)
 			if (src.material)
 				C.setMaterial(src.material)
 			if (src.icon_state)
@@ -686,7 +692,7 @@
 					user.unlock_medal("Leave no man behind!", 1)
 		return
 
-	MouseDrop(atom/over_object as mob|obj)
+	mouse_drop(atom/over_object as mob|obj)
 		if(get_dist(src,usr) <= 1)
 			src.rotate(get_dir(get_turf(src),get_turf(over_object)))
 		..()
@@ -707,13 +713,13 @@
 
 	buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0)
 		if(!istype(to_buckle))
-			return
+			return FALSE
 		if(user.hasStatus("weakened"))
-			return
-		if(src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy) return
-
+			return FALSE
+		if(src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy)
+			return FALSE
 		if (!can_buckle(to_buckle,user))
-			return
+			return FALSE
 
 		if(stand && ishuman(to_buckle))
 			if(ON_COOLDOWN(to_buckle, "chair_stand", 1 SECOND))
@@ -748,6 +754,7 @@
 			playsound(src, (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
 		else
 			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+		return TRUE
 
 
 	unbuckle()
@@ -759,22 +766,22 @@
 
 		M.end_chair_flip_targeting()
 
-		if (istype(H) && H.on_chair)// == 1)
+		if (istype(H) && H.on_chair)
 			M.pixel_y = 0
 			reset_anchored(M)
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
-			src.buckled_guy = null
-			SPAWN_DBG(0.5 SECONDS)
-				H.on_chair = 0
+			SPAWN(0.5 SECONDS)
+				H.on_chair = null
 				src.buckledIn = 0
 		else if ((M.buckled))
 			reset_anchored(M)
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
-			src.buckled_guy = null
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.buckledIn = 0
+
+		src.buckled_guy = null
 
 		playsound(src, "sound/misc/belt_click.ogg", 50, 1)
 
@@ -866,9 +873,9 @@
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
 	HasProximity(atom/movable/AM as mob|obj)
-		if (isliving(AM) && prob(40))
+		if (isliving(AM) && !isintangible(AM) && prob(40) && !AM.hasStatus("weakened"))
 			src.visible_message("<span class='alert'>[src] trips [AM]!</span>", "<span class='alert'>You hear someone fall.</span>")
-			AM:changeStatus("weakened", 2 SECONDS)
+			AM.changeStatus("weakened", 2 SECONDS)
 		return
 
 /* ======================================================= */
@@ -895,22 +902,28 @@
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_LARGE)
 
+	syndicate
+		desc = "That chair is giving off some bad vibes."
+
 /obj/item/chair/folded/attack_self(mob/user as mob)
 	if(cant_drop == 1)
 		boutput(user, "You can't unfold the [src] when its attached to your arm!")
 		return
+	var/obj/stool/chair/C = null
+	if(istype(src, /obj/item/chair/folded/syndicate))
+		C = new/obj/stool/chair/syndicate(user.loc)
 	else
-		var/obj/stool/chair/C = new/obj/stool/chair(user.loc)
-		if (src.material)
-			C.setMaterial(src.material)
-		if (src.c_color)
-			C.icon_state = src.c_color
-		C.set_dir(user.dir)
-		ON_COOLDOWN(user, "chair_stand", 1 SECOND)
-		boutput(user, "You unfold [C].")
-		user.drop_item()
-		qdel(src)
-		return
+		C = new/obj/stool/chair(user.loc)
+	if (src.material)
+		C.setMaterial(src.material)
+	if (src.c_color)
+		C.icon_state = src.c_color
+	C.set_dir(user.dir)
+	ON_COOLDOWN(user, "chair_stand", 1 SECOND)
+	boutput(user, "You unfold [C].")
+	user.drop_item()
+	qdel(src)
+	return
 
 /obj/item/chair/folded/attack(atom/target, mob/user as mob)
 	var/oldcrit = src.stamina_crit_chance
@@ -939,7 +952,7 @@
 
 	New()
 		..()
-		update_icon()
+		UpdateIcon()
 /* what in the unholy mother of god was this about
 		src.overl = new /atom/movable/overlay( src.loc )
 		src.overl.icon = 'icons/obj/objects.dmi'
@@ -955,14 +968,15 @@
 
 		src.set_dir(turn(src.dir, 90))
 //		src.overl.set_dir(src.dir)
-		src.update_icon()
+		src.UpdateIcon()
 		if (buckled_guy)
 			var/mob/living/carbon/C = src.buckled_guy
 			C.set_dir(dir)
 		return
 
 
-	proc/update_icon()
+	update_icon()
+
 		if (src.dir == NORTH)
 			src.layer = FLY_LAYER+1
 		else
@@ -1065,6 +1079,7 @@
 			src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
 
 	update_icon()
+
 		ENSURE_IMAGE(src.arm_image, src.icon, src.arm_icon_state)
 		src.arm_image.layer = FLY_LAYER+1
 		src.UpdateOverlays(src.arm_image, "arm")
@@ -1105,10 +1120,11 @@
 
 	buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0)
 		if (src.lying)
-			return
-		..()
-		if (src.buckled_guy == to_buckle)
+			return FALSE
+		. = ..()
+		if (.)
 			APPLY_MOVEMENT_MODIFIER(to_buckle, /datum/movement_modifier/wheelchair, src.type)
+			return TRUE
 
 	unbuckle()
 		if(src.buckled_guy)
@@ -1139,6 +1155,13 @@
 		comfort_value = 7
 		parts_type = /obj/item/furniture_parts/wood_chair/regal
 
+	scrap
+		name = "scrap chair"
+		desc = "Hopefully you didn't pay actual money for this."
+		icon_state = "scrapchair"
+		comfort_value = 7
+		parts_type = /obj/item/furniture_parts/wood_chair/scrap
+
 /* ============================================== */
 /* -------------------- Pews -------------------- */
 /* ============================================== */
@@ -1160,9 +1183,9 @@
 	New()
 		..()
 		if (arm_icon_state)
-			src.update_icon()
+			src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if (src.dir == NORTH)
 			src.layer = FLY_LAYER+1
 		else
@@ -1366,12 +1389,12 @@
 
 	New()
 		..()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			if (src)
 				if (!(src.part1 && istype(src.part1)))
 					src.part1 = new /obj/item/assembly/shock_kit(src)
 					src.part1.master = src
-				src.update_icon()
+				src.UpdateIcon()
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1434,15 +1457,15 @@
 
 	proc/toggle_active()
 		src.on = !(src.on)
-		src.update_icon()
+		src.UpdateIcon()
 		return src.on
 
 	proc/toggle_lethal()
 		src.lethal = !(src.lethal)
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
-	proc/update_icon()
+	update_icon()
 		src.icon_state = "e_chair[src.on]"
 		if (!src.image_belt)
 			src.image_belt = image(src.icon, "e_chairo[src.on][src.lethal]", layer = FLY_LAYER + 1)
@@ -1488,7 +1511,7 @@
 		if (!A.powered(EQUIP))
 			return
 		A.use_power(EQUIP, 5000)
-		A.updateicon()
+		A.UpdateIcon()
 
 		for (var/mob/M in AIviewers(src, null))
 			M.show_message("<span class='alert'>The electric chair went off!</span>", 3)
@@ -1516,5 +1539,5 @@
 				if ((L.mind in ticker.mode:revolutionaries) && !(L.mind in ticker.mode:head_revolutionaries) && prob(66))
 					ticker.mode:remove_revolutionary(L.mind)
 
-		A.updateicon()
+		A.UpdateIcon()
 		return

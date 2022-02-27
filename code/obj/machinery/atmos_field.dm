@@ -4,7 +4,8 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "atmos_field"
 	layer = OBJ_LAYER+0.5
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
+	gas_impermeable = TRUE
 
 	New()
 		..()
@@ -13,11 +14,6 @@
 	disposing()
 		..()
 		update_nearby_tiles()
-
-	CanPass(atom/movable/mover, turf/target)
-		if (!mover)
-			return 0 // completely opaque to air
-		return 1
 
 	Crossed(atom/movable/A)
 		..()
@@ -46,7 +42,7 @@
 
 	New()
 		..()
-		src.updateicon()
+		src.UpdateIcon()
 
 	process()
 		if (!src.other)
@@ -58,8 +54,8 @@
 					src.other = other
 					src.other.other = src
 					src.create_field()
-					src.updateicon()
-					other.updateicon()
+					src.UpdateIcon()
+					other.UpdateIcon()
 					return
 				T = get_step(T, src.dir)
 				checked++
@@ -95,12 +91,12 @@
 			for (var/obj/field in src.fields)
 				qdel(field)
 			src.fields.len = 0
-			src.updateicon()
+			src.UpdateIcon()
 
-		updateicon()
-			if (status & (NOPOWER|BROKEN))
-				icon_state = "atmos_field_gen_off"
-			else if (src.other)
-				icon_state = "atmos_field_gen_on"
-			else
-				icon_state = "atmos_field_gen_fail"
+	update_icon()
+		if (status & (NOPOWER|BROKEN))
+			icon_state = "atmos_field_gen_off"
+		else if (src.other)
+			icon_state = "atmos_field_gen_on"
+		else
+			icon_state = "atmos_field_gen_fail"

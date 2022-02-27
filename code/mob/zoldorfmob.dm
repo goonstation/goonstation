@@ -5,14 +5,13 @@
 	icon = 'icons/obj/zoldorf.dmi'
 	icon_state = "zolsoulgrey"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	density = 0
 	canmove = 0
 	blinded = 0
 	anchored = 1
 	alpha = 180
 	stat = 0
-	suicide_can_succumb = 0
 	var/autofree = 0
 	var/firstfortune = 1
 	var/free = 0
@@ -151,7 +150,7 @@
 		else
 			src.examine_verb(target)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		return 1
 
 	say_understands(var/other)
@@ -397,7 +396,7 @@
 		if((i in range(1,usr.loc)) && (Tb in range(1,Ta)))
 			if(!pz.GetOverlayImage("fortunetelling"))
 				pz.UpdateOverlays(image('icons/obj/zoldorf.dmi',"fortunetelling"),"fortunetelling")
-				SPAWN_DBG(0.6 SECONDS)
+				SPAWN(0.6 SECONDS)
 					if(pz)
 						pz.ClearSpecificOverlays("fortunetelling")
 			if((istype(i,/obj/item/paper/thermal/playerfortune)) && (Ta == get_turf(usr.loc)))
