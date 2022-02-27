@@ -1,5 +1,4 @@
 /mob/var/suiciding = 0
-/mob/var/suicide_can_succumb = 0
 
 /obj/var/custom_suicide = 0
 /obj/var/suicide_distance = 1

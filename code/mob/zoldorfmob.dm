@@ -12,7 +12,6 @@
 	anchored = 1
 	alpha = 180
 	stat = 0
-	suicide_can_succumb = 0
 	var/autofree = 0
 	var/firstfortune = 1
 	var/free = 0
