@@ -14,27 +14,27 @@
 
 	cast(mob/target)
 		if (!holder)
-			return 1
+			return TRUE
 
 		var/mob/living/M = holder.owner
 		//var/datum/abilityHolder/vampire/H = holder
 
 		if (!M || !target || !ismob(target))
-			return 1
+			return TRUE
 
 		if (M == target)
 			boutput(M, __red("Why would you want to enslave yourself?"))
-			return 1
+			return TRUE
 
 		if (get_dist(M, target) > src.max_range)
 			boutput(M, __red("[target] is too far away."))
-			return 1
+			return TRUE
 
 		if (!ishuman(target))
-			return 1
+			return TRUE
 
 		actions.start(new/datum/action/bar/private/icon/vampire_enthrall_thrall(target, src), M)
-		return 1 //not 0, we dont awnna deduct points until cast finishes
+		return TRUE //not 0, we dont awnna deduct points until cast finishes
 
 /datum/targetable/vampire/speak_thrall
 	name = "Speak to Thralls"
@@ -52,12 +52,12 @@
 
 	cast(mob/target)
 		if (!holder)
-			return 1
+			return TRUE
 
 		var/mob/living/M = holder.owner
 		var/datum/abilityHolder/vampire/H = holder
 		if (!M)
-			return 1
+			return TRUE
 
 		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
 		if (!message)
@@ -66,7 +66,7 @@
 
 		.= H.transmit_thrall_msg(message, M)
 
-		return 0
+		return FALSE
 
 
 /datum/action/bar/private/icon/vampire_enthrall_thrall
@@ -99,6 +99,11 @@
 
 		if (!isdead(target) && !istype(target.mutantrace, /datum/mutantrace/vampiric_thrall))
 			boutput(M, __red("[target] needs to be dead first."))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if (target?.ghost?.mind?.dnr)
+			boutput(M, __red("[target] refuses to return to serve you."))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
