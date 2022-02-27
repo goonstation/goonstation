@@ -1,5 +1,9 @@
 
 (t)sun feb 27 22
+(u)CodeJester
+(p)7615
+(e)🆕|feature
+(+)You can now dump the contents of a hypospray back into a beaker or other reagent container.
 (u)TTerc
 (*)Clicking a vehicle that has a pilot as a ghost now makes you observe the pilot. Works for all kinds of vehicles: pods, segways, clown cars, minisubs.
 (u)Conchuckter
