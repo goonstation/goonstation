@@ -297,6 +297,17 @@ datum
 				return AD
 			return
 
+		proc/tgui_format(list/add_props)
+			. = list(
+				colorR = src.fluid_r,
+				colorG = src.fluid_g,
+				colorB = src.fluid_b,
+				state = src.reagent_state,
+				volume = src.volume
+			)
+
+			. += add_props
+
 		// reagent state helper procs
 
 		proc/is_solid()
