@@ -17,20 +17,18 @@
 		return 0
 	return 1
 
-// cirr here, the amount of code duplication for suicides a) made me sad and b) ought to have been in a parent proc to allow this functionality for everyone anyway
-// the suiciding var is already at the mob level for fuck's sakes
 /mob/verb/suicide()
 
 	if ((!isliving(src) || isdead(src)) && !isAIeye(src) && !istype(src, /mob/zoldorf))
 		boutput(src, "You're already dead!")
 		return
 
-	if(src.suicide_can_succumb)
-		if(alert(src, "You're suiciding. Are you sure you wish to succumb?", "Clippy's Very Best Suicide Helper", "Yes", "No") == "Yes")
-			if(src.suicide_can_succumb)
+	if(src.suiciding)
+		if(tgui_alert(src, "You're suiciding. Are you sure you wish to succumb?", "Clippy's Very Best Suicide Helper", list("Yes", "No"), 15 SECONDS) == "Yes")
+			if(src.suiciding)
 				src.death()
 			else
-				boutput(src, "Sneaky sneaky little guy rrnt ya")
+				boutput(src, "<span class='alert'>Too late! You've decided to live on.</span>")
 			return
 
 	if(src.mind && src.mind.damned)
@@ -55,29 +53,17 @@
 			boutput(H, "Your cannot bring yourself to commit suicide!")
 			return
 
-
-
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
-
-	if(confirm == "Yes")
-		src.suiciding = 1
-		if (src.client) // fix for "Cannot modify null.suicide"
-			src.client.suicide = 1
-		src.suicide_can_succumb = 1
-		SPAWN(15 SECONDS)
-			src.suicide_can_succumb = 0
-		logTheThing("combat", src, null, "commits suicide")
-		do_suicide() //                           <------ put mob unique behaviour here in an override!!!!
+	logTheThing("combat", src, null, "commits suicide")
+	src.suiciding = 1
+	if (src.do_suicide()) //                           <------ put mob unique behaviour here in an override!!!!
+		src.unlock_medal("Damned", 1) //You don't get the medal if you tried to wuss out!
 		if (src.suiciding)
 			if (src.suicide_alert)
 				message_attack("[key_name(src)] commits suicide shortly after joining.")
 				src.suicide_alert = 0
-			SPAWN(20 SECONDS)
-				src.suiciding = 0
-		else
-			src.suicide_can_succumb = 0
-	else
+	else //they didn't do it!!!
 		src.suiciding = 0
+
 
 
 // !!!! OVERRIDE THIS PROC FOR YOUR NEW SUICIDE BEHAVIOUR FOR YOUR NEW FLYING CHAIR MOB OR WHATEVER !!!!
@@ -86,35 +72,26 @@
 
 /mob/living/do_suicide()
 	// default behaviour: just die, i guess
-	src.unlock_medal("Damned", 1)
-	src.death()
+	var/confirm = tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"), 15 SECONDS)
+
+	if(confirm == "Yes")
+		src.unlock_medal("Damned", 1)
+		src.death()
+
+	return TRUE
 
 /mob/living/carbon/human/do_suicide()
-	force_suicide() // something else in the codebase calls this without going through the suicide checks, so shrug
-
-/mob/living/carbon/human/proc/force_suicide()
 	src.unkillable = 0 //Get owned, nerd!
 
 	var/list/suicides = list("hold your breath")
 	if (src.on_chair)
-		suicides += src.on_chair
+		suicides[src.on_chair.name] = src.on_chair
 
-	if (src.wear_mask && src.wear_mask.custom_suicide && !istype(src.wear_mask,/obj/item/clothing/mask/cursedclown_hat)) //can't stare into the cluwne mask's eyes while wearing it...
-		suicides += src.wear_mask
-
-	if (src.head && src.head.custom_suicide)
-		suicides += src.head
-
-	if (src.w_uniform && src.w_uniform.custom_suicide)
-		suicides += src.w_uniform
+	for (var/obj/item/equipped in src.get_equipped_items())
+		if (equipped.custom_suicide)
+			suicides[equipped.name] = equipped
 
 	if (!src.restrained() && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
-		if (src.l_hand && src.l_hand.custom_suicide)
-			suicides += src.l_hand
-
-		if (src.r_hand && src.r_hand.custom_suicide)
-			suicides += src.r_hand
-
 		for (var/obj/O in orange(1,src))
 			LAGCHECK(LAG_HIGH)
 			if (O.custom_suicide)
@@ -122,41 +99,43 @@
 					var/obj/item/I = O
 					if (I.suicide_in_hand)
 						continue
-				suicides += O
+				suicides[O.name] = O
 
-	var/obj/selection
-	selection = input(src, "Choose your death:", "Selection") as null|anything in suicides
+	var/obj/selection //name of the thing we're suiciding on
+	selection = tgui_input_list(src, "Choose your death:", "Selection", suicides, 10 SECONDS) //grab the name
+
 	if (isnull(selection))
-		if (src)
-			src.suiciding = 0
-		return
+		return FALSE
 
-	src.unlock_medal("Damned", 1) //You don't get the medal if you tried to wuss out!
-
-	if (!isnull(src.on_chair) && selection == src.on_chair)
-		src.visible_message("<span class='alert'><b>[src] jumps off of the chair straight onto [his_or_her(src)] head!</b></span>")
-		src.TakeDamage("head", 200, 0)
-		SPAWN(50 SECONDS)
-			if (src && !isdead(src))
-				src.suiciding = 0
-		src.pixel_y = 0
-		reset_anchored(src)
-		src.on_chair = 0
-		src.buckled = null
-		return
-	else if (istype(selection))
-		selection.suicide(src)
-		SPAWN(50 SECONDS)
-			if (src && !isdead(src))
-				src.suiciding = 0
-	else
+	if (selection == "hold your breath") //special case, non-associative
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
 		src.visible_message("<span class='alert'><b>[src] is holding [his_or_her(src)] breath. It looks like [hes_or_shes(src)] trying to commit suicide.</b></span>")
 		src.take_oxygen_deprivation(175)
-		SPAWN(20 SECONDS) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
+		SPAWN(20 SECONDS) //dunno why this one is only 20 seconds but I guess I'll preserve that
 			if (src && !isdead(src))
 				src.suiciding = 0
-		return
+		return TRUE
+
+	selection = suicides[selection] //grab the actual object
+
+	if (selection == src.on_chair)
+		if (!src.on_chair)
+			return FALSE //can't suicide on a chair when you aren't on a chair
+		src.visible_message("<span class='alert'><b>[src] jumps off of the chair straight onto [his_or_her(src)] head!</b></span>")
+		src.TakeDamage("head", 200, 0)
+		src.pixel_y = 0
+		reset_anchored(src)
+		src.on_chair = null
+		src.buckled = null
+
+	else if (!selection.suicide(src))
+		return FALSE //didn't work out, abort
+
+	SPAWN(45 SECONDS)
+		if (src && !isdead(src)) //if they're still alive they got saved, probably
+			src.suiciding = 0
+
+	return TRUE // we suicided somewhere up there
 
 /mob/living/intangible/aieye/do_suicide()
 	src.return_mainframe()
@@ -201,3 +180,5 @@
 	if(C)
 		C.suicide()
 		C.unlock_medal("Damned", 1)
+
+	return TRUE
