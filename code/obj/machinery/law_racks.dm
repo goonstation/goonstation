@@ -296,7 +296,7 @@
 		return true
 
 	proc/DeleteAllLaws()
-		for (var/i=1, i <= MAX_CIRCUITS, i++)
+		for (var/i in 1 to MAX_CIRCUITS)
 			src.DeleteLaw(i)
 		return true
 
