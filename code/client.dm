@@ -587,8 +587,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		SPAWN(-1)
 			src.chatOutput.start()
 
-	src.setup_special_screens()
-
 	logTheThing("diary", null, src.mob, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
 
 	if (config.log_access)
