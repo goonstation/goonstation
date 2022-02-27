@@ -1,4 +1,14 @@
 
+(t)sat feb 26 22
+(u)TTerc
+(+)Arc plater now automatically ejects the item when it finishes working. You can now also eject the material you inserted into it manually by clicking the plater with empty hand.
+(u)NightmareChamillian
+(p)7580
+(e)🎨|sprites
+(+)Resprited the gas extractor and disposal pipe dispenser
+(t)thu feb 24 22
+(u)tamunora
+(+)microdosing ( <1 depletion) stam boosting/etc chems doesn't work anymore
 (t)wed feb 23 22
 (u)aloe
 (*)The Head Surgeon got too fucked up and is, once again, fired. They've been replaced with a medical specialist- NT doesn't really understand what they do, but it sure sounds important. (Realistically they're just the HS but without command radio/access. Also they can get revved.)

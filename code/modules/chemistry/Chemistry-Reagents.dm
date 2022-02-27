@@ -51,6 +51,8 @@ datum
 		var/random_chem_blacklisted = 0 // will not appear in random chem sources oddcigs/artifacts/etc
 		var/boiling_point = T0C + 100
 		var/can_crack = 0 // used by organic chems
+		var/threshold_volume = null //defaults to not using threshold
+		var/threshold = null
 
 		New()
 			..()
@@ -63,20 +65,34 @@ datum
 			..()
 
 		proc/on_add()
-			if (stun_resist > 0)
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "reagent_[src.id]", stun_resist)
-					APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "reagent_[src.id]", stun_resist)
 			return
 
 		proc/on_remove()
-			if (stun_resist > 0)
-				if (ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "reagent_[src.id]")
-					REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "reagent_[src.id]")
 			return
+
+		proc/check_threshold()
+			SHOULD_NOT_OVERRIDE(TRUE)
+
+			if (src.threshold == THRESHOLD_UNDER && src.volume >= (src.threshold_volume || src.depletion_rate))
+				src.cross_threshold_over()
+			else if (src.threshold == THRESHOLD_OVER && src.volume < (src.threshold_volume || src.depletion_rate))
+				src.cross_threshold_under()
+
+		proc/cross_threshold_over()
+			SHOULD_CALL_PARENT(TRUE)
+			threshold = THRESHOLD_OVER
+			if (stun_resist > 0 && ismob(holder?.my_atom))
+				var/mob/M = holder.my_atom
+				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "reagent_[src.id]", stun_resist)
+				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "reagent_[src.id]", stun_resist)
+
+		proc/cross_threshold_under()
+			SHOULD_CALL_PARENT(TRUE)
+			threshold = THRESHOLD_UNDER
+			if (stun_resist > 0 && ismob(holder?.my_atom))
+				var/mob/M = holder.my_atom
+				REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "reagent_[src.id]")
+				REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "reagent_[src.id]")
 
 		proc/on_copy(var/datum/reagent/new_reagent)
 			//To support deep copying of a reagent holder

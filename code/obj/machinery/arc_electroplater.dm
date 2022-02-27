@@ -78,7 +78,7 @@
 			boutput(user, "<span class='alert'>There is already something in [src]!</span>")
 			return
 		if (W.material)
-			boutput(user, "<span class='alert'>You can't plate something that already has a material!.</span>")
+			boutput(user, "<span class='alert'>You can't plate something that already has a material!</span>")
 			return
 
 		if (istype(W, /obj/item/grab))
@@ -118,15 +118,16 @@
 		if (isghostdrone(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you!</span>")
 			return
-		if (!src.target_item)
+
+		if (!src.my_bar)
 			boutput(user, "<span class='alert'>There is nothing in the plater to remove.</span>")
 			return
 
-		if (src.cooktime < 5)
+		if (src.cooktime < 5 && src.target_item)
 			boutput(user, "<span class='alert'>Plating things takes time! Be patient!</span>")
 			return
 
-		user.visible_message("<span class='notice'>[user] removes [src.target_item] from [src]!</span>", "<span class='notice'>You remove [src.target_item] from [src].</span>")
+		user.visible_message("<span class='notice'>[user] removes [src.my_bar] from [src]!</span>", "<span class='notice'>You remove [src.my_bar] from [src].</span>")
 		src.eject_item()
 		return
 
@@ -144,10 +145,15 @@
 		if (src.cooktime == 5)
 			playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
 			src.visible_message("<span class='notice'>[src] dings!</span>")
+			eject_item()
 
 		return
 
 	proc/eject_item()
+		if(src.my_bar && !src.target_item)
+			my_bar.set_loc(src.loc)
+			my_bar = null
+
 		if (!src.target_item)
 			src.icon_state = "plater0"
 			UnsubscribeProcess()

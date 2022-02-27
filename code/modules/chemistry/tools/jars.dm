@@ -35,6 +35,11 @@
 			boutput(user, "<span class='alert'>That's too large to fit into the jar.</span>")
 			return
 
+		if(isgrab(W))
+			var/obj/item/grab/grab = W
+			boutput(user, "<span class='alert'>You can't seem to fit [grab.affecting] into \the [src].</span>")
+			return
+
 		if(W.cant_drop)
 			boutput(user, "<span class='alert'>You can't put that in the jar.</span>")
 			return

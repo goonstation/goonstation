@@ -2031,7 +2031,7 @@
 
 /obj/machinery/manufacturer/general
 	name = "General Manufacturer"
-	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing tools and general purpose items.."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing tools and general purpose items."
 	free_resource_amt = 5
 	free_resources = list(/obj/item/material_piece/steel,
 		/obj/item/material_piece/copper,
@@ -2416,9 +2416,9 @@
 
 /obj/machinery/manufacturer/gas
 	name = "Gas Extractor"
-	desc = "A manufacturing unit that can produce gas canisters from certain ores."
-	icon_state = "fab-mining"
-	icon_base = "mining"
+	desc = "A 3D printer-like machine that can produce gas canisters from certain ores."
+	icon_state = "fab-atmos"
+	icon_base = "atmos"
 	accept_blueprints = 0
 	available = list(
 	/datum/manufacture/atmos_can,

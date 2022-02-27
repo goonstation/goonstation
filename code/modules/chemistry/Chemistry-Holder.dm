@@ -568,6 +568,7 @@ datum
 
 			if (current_reagent)
 				current_reagent.volume = 0 //mbc : I put these checks here to try to prevent an infloop
+				current_reagent.check_threshold()
 				if (current_reagent.disposed) //Caused some sort of infinite loop? gotta be safe.
 					reagent_list.Remove(reagent)
 					return 0
@@ -796,6 +797,8 @@ datum
 			if(added_new)
 				current_reagent.on_add()
 
+			current_reagent.check_threshold()
+
 			if (!donotupdate)
 				update_total()
 
@@ -819,6 +822,7 @@ datum
 
 			if(current_reagent)
 				current_reagent.volume -= amount
+				current_reagent.check_threshold()
 				if(current_reagent.volume <= 0 && (reagents_change || update_total))
 					del_reagent(reagent)
 
