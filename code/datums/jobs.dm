@@ -117,10 +117,8 @@
 				H.set_mutantrace(src.starting_mutantrace)
 
 			if (src.objective)
-				var/datum/objective/newObjective = spawn_miscreant ? new /datum/objective/miscreant : new /datum/objective/crew
-				newObjective.explanation_text = src.objective
-				newObjective.owner = M.mind
-				M.mind.objectives += newObjective
+				var/objType = spawn_miscreant ? /datum/objective/miscreant : /datum/objective/crew
+				var/datum/objective/newObjective = new objType(src.objective, M.mind)
 				if (spawn_miscreant)
 					boutput(M, "<B>You are a miscreant!</B>")
 					boutput(M, "You should try to complete your objectives, but don't commit any traitorous acts.")
