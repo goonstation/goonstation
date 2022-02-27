@@ -256,6 +256,15 @@
 	assoc_reagents = list("iron")
 	crop = /obj/item/plant/wheat/metal
 
+// Rice Mutations
+
+/datum/plantmutation/rice/ricein
+	name = "ricein"
+	name_prefix = "Ricin "
+	iconmod = "Rice"
+	assoc_reagents = list("ricin")
+	crop = /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig
+
 // Oat Mutations
 
 /datum/plantmutation/oat/salt
