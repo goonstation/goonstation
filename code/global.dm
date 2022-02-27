@@ -344,10 +344,6 @@ var/global
 	)
 	savefile/compid_file 	//The file holding computer ID information
 	do_compid_analysis = 1	//Should we be analysing the comp IDs of new clients?
-	list/admins = list(  )
-	list/onlineAdmins = list(  )
-	list/whitelistCkeys = list(  )
-	list/bypassCapCkeys = list(  )
 	list/warned_keys = list()	// tracking warnings per round, i guess
 
 	datum/dj_panel/dj_panel = new()
