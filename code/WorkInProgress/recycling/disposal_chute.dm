@@ -110,7 +110,11 @@
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
 		if (istype(I,/obj/item/storage/) && I.contents.len)
-			var/action = input(user, "What do you want to do with [I]?") as null|anything in list("Place it in the Chute","Empty it into the chute","Never Mind")
+			var/action
+			if (istype(I, /obj/item/storage/mechanics/housing_handheld))
+				action = input(user, "What do you want to do with [I]?") as null|anything in list("Place it in the Chute","Never Mind")
+			else
+				action = input(user, "What do you want to do with [I]?") as null|anything in list("Place it in the Chute","Empty it into the chute","Never Mind")
 			if (!action || action == "Never Mind")
 				return
 			if (!in_interact_range(src, user))
