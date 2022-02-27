@@ -73,7 +73,10 @@ var/global
 		// this might not ever happen depending on what dd_file2list does
 		// in the event of missing files. oh well
 		logDiary("Failed to load config file '[filename]': [e]\n")
+		#ifdef LIVE_SERVER
+		if(!secrets)
 		stack_trace("Failed to load config file '[filename]': [e]")
+		#endif
 
 	return result
 
