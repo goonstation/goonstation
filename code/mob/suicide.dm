@@ -29,7 +29,7 @@
 				src.death()
 			else
 				boutput(src, "<span class='alert'>Too late! You've decided to live on.</span>")
-			return
+		return
 
 	if(src.mind && src.mind.damned)
 		boutput(src,"<span class='alert'>You can't suicide. You're already in hell!</span>")
@@ -101,7 +101,7 @@
 						continue
 				suicides[O.name] = O
 
-	var/obj/selection //name of the thing we're suiciding on
+	var/obj/selection //the thing we're suiciding on
 	selection = tgui_input_list(src, "Choose your death:", "Selection", suicides, 10 SECONDS) //grab the name
 
 	if (isnull(selection))
