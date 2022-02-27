@@ -10,8 +10,8 @@
 	var/on = 0
 	var/datum/light/light
 	var/ARCHIVED(temperature)
-	var/obj/overlay/O1 = null
-	var/obj/overlay/O2 = null
+	var/image/bottom_image = null
+	var/image/defib_image = null
 	var/mob/occupant = null
 	var/obj/item/beaker = null
 	var/show_beaker_contents = 0
@@ -301,7 +301,8 @@
 
 
 	proc/add_overlays()
-		src.overlays = list(O1, O2)
+		src.UpdateOverlays(bottom_image, "bottom")
+		src.UpdateOverlays(defib_image, "defib")
 
 	proc/shock_icon()
 		var/fake_overlay = new /obj/shock_overlay(src.loc)
@@ -309,10 +310,18 @@
 		SPAWN(1 SECOND)
 			src.vis_contents -= fake_overlay
 			qdel(fake_overlay)
-			O2.icon_state = "defib-off"
+			if(!src.defib)
+				defib_image = null
+				add_overlays()
+				return
+			defib_image = image('icons/obj/Cryogenic2.dmi', "defib-off", layer = 2, pixel_y=-32)
 			add_overlays()
 		SPAWN(src.defib.charge_time)
-			O2.icon_state = "defib-on"
+			if(!src.defib)
+				defib_image = null
+				add_overlays()
+				return
+			defib_image = image('icons/obj/Cryogenic2.dmi', "defib-on", layer = 2, pixel_y = -32)
 			add_overlays()
 
 	proc/build_icon()
@@ -325,21 +334,16 @@
 		else
 			light.disable()
 			icon_state = "celltop-p"
-		O1 = new /obj/overlay(  )
-		O1.icon = 'icons/obj/Cryogenic2.dmi'
 		if(src.node)
-			O1.icon_state = "cryo_bottom_[src.on]"
+			bottom_image = image('icons/obj/Cryogenic2.dmi', "cryo_bottom_[src.on]", layer = 1, pixel_y = -32)
 		else
-			O1.icon_state = "cryo_bottom"
-		O1.pixel_y = -32.0
+			bottom_image = image('icons/obj/Cryogenic2.dmi', "cryo_bottom", layer = 1, pixel_y = -32)
 		src.pixel_y = 32
-		O2 = new /obj/overlay( )
-		O2.icon = 'icons/obj/Cryogenic2.dmi'
 		if(src.defib)
-			O2.icon_state = "defib-on"
-			O2.pixel_y = -32.0
+			if(!GetOverlayImage("defib"))
+				defib_image = image('icons/obj/Cryogenic2.dmi', "defib-on", layer = 2, pixel_y = -32)
 		else
-			O2.icon_state = null
+			defib_image = null
 		add_overlays()
 
 	proc/process_occupant()
@@ -446,4 +450,5 @@
 
 /obj/shock_overlay
 	icon = 'icons/obj/Cryogenic2.dmi'
+	layer = 3
 	icon_state = "defib-shock"
