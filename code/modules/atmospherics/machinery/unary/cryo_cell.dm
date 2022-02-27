@@ -10,6 +10,7 @@
 	var/datum/light/light
 	var/ARCHIVED(temperature)
 	var/obj/overlay/O1 = null
+	var/obj/overlay/O2 = null
 	var/mob/occupant = null
 	var/obj/item/beaker = null
 	var/show_beaker_contents = 0
@@ -256,12 +257,14 @@
 				playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
 				user.u_equip(G)
 				G.set_loc(src)
+				build_icon()
 		else if (istype(G, /obj/item/wrench))
 			if (!src.defib)
 				boutput(user, "<span class='alert'>[src] does not have a Defibrillator installed.</span>")
 			else
 				src.defib.set_loc(src.loc)
 				src.defib = null
+				build_icon()
 				src.visible_message("<span class='alert'>[user] removes the Defibrillator from [src].</span>")
 				playsound(src.loc ,"sound/items/Ratchet.ogg", 50, 1)
 		else if (istype(G, /obj/item/device/analyzer/healthanalyzer))
@@ -297,7 +300,19 @@
 
 
 	proc/add_overlays()
-		src.overlays = list(O1)
+		src.overlays = list(O1, O2)
+
+	proc/shock_icon()
+		var/fake_overlay = new /obj/shock_overlay(src.loc)
+		src.vis_contents += fake_overlay
+		SPAWN_DBG(1 SECOND)
+			src.vis_contents -= fake_overlay
+			qdel(fake_overlay)
+			O2.icon_state = "defib-off"
+			add_overlays()
+		SPAWN_DBG(src.defib.charge_time)
+			O2.icon_state = "defib-on"
+			add_overlays()
 
 	proc/build_icon()
 		if(on)
@@ -317,6 +332,13 @@
 			O1.icon_state = "cryo_bottom"
 		O1.pixel_y = -32.0
 		src.pixel_y = 32
+		O2 = new /obj/overlay( )
+		O2.icon = 'icons/obj/Cryogenic2.dmi'
+		if(src.defib)
+			O2.icon_state = "defib-on"
+			O2.pixel_y = -32.0
+		else
+			O2.icon_state = null
 		add_overlays()
 
 	proc/process_occupant()
@@ -368,7 +390,7 @@
 		if(!( src.occupant ))
 			return
 		for (var/obj/O in src)
-			if (O == src.beaker)
+			if (!ishuman(O))
 				continue
 			O.set_loc(get_turf(src))
 		if (src.occupant.loc == src)
@@ -420,3 +442,7 @@
 
 /datum/data/function/proc/display()
 	return
+
+/obj/shock_overlay
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "defib-shock"
