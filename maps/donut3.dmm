@@ -58278,7 +58278,7 @@
 	},
 /area/station/science/lobby)
 "qLV" = (
-/obj/table/auto,
+/obj/table/reinforced/auto,
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = -8;
 	pixel_y = 12
