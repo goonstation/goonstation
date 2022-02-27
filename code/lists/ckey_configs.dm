@@ -82,7 +82,7 @@ var/global
 
 /proc/load_admins()
 	var/text = file2text("config/admins.txt")
-	#ifdef SECRETS_ENABLED
+	#if defined(SECRETS_ENABLED) && !defined(LIVE_SERVER)
 	text += "\n" + file2text("[CONFIG_PATH_PREFIX]config/admins.txt")
 	#endif
 	if (!text)
