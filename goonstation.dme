@@ -1399,6 +1399,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\keys.dm"
 #include "code\obj\item\kitchen.dm"
 #include "code\obj\item\magtractor.dm"
+#include "code\obj\item\manudrive.dm"
 #include "code\obj\item\material.dm"
 #include "code\obj\item\mine.dm"
 #include "code\obj\item\misc_weapons.dm"
