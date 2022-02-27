@@ -3551,16 +3551,17 @@
 	bodyguard/cheer_up
 		name = "cheer_up"
 		task_id = "CHEER_UP"
-		var/global/list/buddy_cheer_up_phrases = list("A magician was walking down the street, then he turned into a grocery store.","Three guys walked into a bar, you’d think at least one of them would have seen it.","You’re having a heart attack, the dispatcher says that help is going to arrive in a heartbeat.","The past, present and future walked into a bar, things got tense.","I asked my French friend if they like videogames, they said Wii.","RIP boiled water, you will be mist.","A guy’s left side was cut off, don’t worry, he’s all right now.")
-		var/global/list/buddy_cheer_up_starters = list("What did the sea say to another sea?","You shouldn’t wear glasses while playing football. Why?","Why shouldn’t you get close to trees?","Why are there gates in graveyards?","What do you call an illegally parked frog?","Two silk worms compete in a race, who won?","Whaddya call a cow with no legs?","How does a tree get into his account?","I can't help set the speakers at concerts anymore.","What’re caterpillars scared of?","What has four wheels and is green?","What did one lobster say to the other?",)
-		var/global/list/buddy_cheer_up_answers = list("Nothing, they just waved.","Because it’s a contact sport.","Because they’re pretty shady.","Because everyone is dying to get there.","A toad.","None of them, it ended in a tie.","Ground Beef!","It logs in!","Nobody liked my feedback.","Dog-appilers!","Grass! I lied about the wheels.","Nothing, since they can't talk. If they could, though, probably something about shellfish.")
+		var/global/list/buddy_cheer_up_phrases = list("What did one lobster say to the other? Nothing, since they can't talk. If they could, though, probably something about shellfish.","Remember that joke I told you about the chiropractor?  It was about a weak back.","How much does Santa pay to park his sleigh?  Nothing, it's on the house!","A new fish was discovered at the ocean floor composed of a couple sodium molecules.  Scientists have named it 2 Na ","You’re having a heart attack, the dispatcher say that help is going to arrive in a heartbeat.","You shouldn’t wear glasses while playing football. Why? Because it’s a contact sport.","A magician was walking down the street, then he turned into a grocery store. ","Three guys walked into a bar, you’d think at least one of them would have seen it. ","The past, present and future walked into a bar, things got tense. ","I asked my French friend if they like videogames, they said Wii."," RIP boiled water, you will be mist.","Haunted French pancakes give me the crepes.","A guy’s left side was cut off, don’t worry he’s all right now. ","A cow in an earthquake is called a milkshake.","A captain walks into a bar. A nearby salesman quadruples the price for a brand new 'sold-out' sign.","There are only 10 kinds of people in this world: those who understand binary and those who don’t.")
+		var/global/list/buddy_cheer_up_starters = list("Two silk worms compete in a race, who won? ","Why did the guardbuddy cross the road? ","What’re caterpillars scared of? ","What’s green and has wheels? ","What did the sea say to another sea? ","Why shouldn't you get close to trees? ","Why are there gates in graveyards? ","What do you call an illegal frog? ","What do you call a pig that does karate?","Why did the bike fall over?  ","Why did the golfer bring two pairs of pants?  ","What did the bartender say to the turkey sandwich when it tried to order a beer?  ","Why do seagulls fly over the sea?  ","Why did the scarecrow win an award?","What has four wheels and flies?","Why do cows have hooves and not feet?","What did the mama cow say to the baby cow?","Why did the two cows not like each other?","Why did the person living in Space Alaska name their dog Frost?","Why don’t pirates take a shower before they walk the plank?","What’s the best thing about Space Switzerland?","My computing software just created a new word!","My New Years' Resolution was to be less condescending. ","Whaddya call a patronising criminal going down a staircase?","What do you get when you cross a wall unit with artificial intelligence?","The opposite of Artificial Intelligence is Real Stupid.","There are two kinds of data scientists. ","What do you do if your guardbuddy catches a virus?")
+		var/global/list/buddy_cheer_up_answers = list("None of them, it ended in a tie.","It was programmed by the chicken!","Dog-apillers! ","Grass! I lied about the wheels.","Nothing, they just waved. ","Because they’re pretty shady. ","Because everyone is dying to get there. ","A toad. ","A pork chop!","It was two tired.","In case he got a hole in one.","Sorry, we don’t serve food here.","Because if they flew over the bay, they would be bagels!","Because he was outstanding in his field.","A garbage truck!","They lactose.","It's pasture bedtime.","They had BEEF.","Because Frost bites!","They just wash up on shore.","I don’t know, but the flag is a big plus.","Plagiarism!","Just so you know, condescending is a word that means talking down to people.","A condescending con descending.","Shelf-awareness.","Think about that, meatbag.","1.) Those who can extrapolate from incomplete data.","You give it some Robot-issin!")
 		var/tmp/initial_seek_complete = 0
 
 		task_act()
 			if (..())
 				return
 
-			if (src.protected && prob(10))
+			if (src.protected && prob(5))
+      
 				if (prob(40))
 					var/buddy_cheer_up_chooser = rand(1, length(buddy_cheer_up_phrases))
 					master.speak(buddy_cheer_up_phrases[buddy_cheer_up_chooser])
@@ -3586,7 +3587,8 @@
 				if (ckey(check_name) == ckey(src.protected_name))
 					src.protected = C
 					buddy_is_dork = 1
-					master.speak("Level 9F [pick("unhappy person","person in need of cheering-up","coolest person on the station","genius","friend","joke-defiency")] detected!")
+					master.speak(pick("Insufficient happiness detected!","Person in need of cheering-up detected!","Coolest person on the station located!","Genius detected!","Wonderful friend detected!","Level 9F Joke-defiency detected!"))
+
 					master.point(C)
 					return
 
