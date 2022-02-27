@@ -59,6 +59,10 @@
 				E.mainframe.law_rack_connection = null
 				E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 
+/* ION STORM */
+	proc/ion_storm_all_racks(var/picked_law="Beep repeatedly.",var/lawnumber=2,var/replace=true)
+		for(var/obj/machinery/lawrack/R in src.registered_racks)
+			R.cause_law_glitch(picked_law,lawnumber,replace)
 
 
 /* General ai_law functions */

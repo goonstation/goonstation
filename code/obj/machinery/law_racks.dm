@@ -3,9 +3,11 @@
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "airack_empty"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behaivor of connected AIs."
+	density=1
 	mats = list("MET-1" = 20, "MET-2" = 5, "INS-1" = 10, "CON-1" = 10) //this bitch should be expensive
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_WRENCH
 
+	var/datum/light/light
 	var/const/MAX_CIRCUITS = 9
 	var/obj/item/aiModule/law_circuits[MAX_CIRCUITS] //asssoc list to ref slot num with law board obj
 	var/list/welded[MAX_CIRCUITS]
@@ -17,9 +19,9 @@
 		//if the ticker isn't initialised yet, it'll grab this rack when it is (see )
 		ticker?.ai_law_rack_manager.register_new_rack(src)
 
-	//	src.light = new/datum/light/point
-	//	src.light.set_brightness(0.4)
-	//	src.light.attach(src)
+		src.light = new/datum/light/point
+		src.light.set_brightness(0.4)
+		src.light.attach(src)
 		UpdateIcon()
 
 	proc/drop_all_modules()
@@ -107,6 +109,7 @@
 
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
+
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -300,3 +303,19 @@
 			src.DeleteLaw(i)
 		return true
 
+	proc/cause_law_glitch(var/picked_law="Beep repeatedly.",var/lawnumber=1,var/replace=false)
+		//This will cause a module to glitch, either totally replace it law or adding picked_law
+		//to its text (depening on replace). Lawnumber is a suggestion, not a guarentee - if there is no
+		//law in that slot, this will trigger on the law closest to that slot
+		//if there are no laws to glitch, just do nothing
+		var/lawnumber_actual = 1
+		if(src.law_circuits[lawnumber])
+			lawnumber_actual = lawnumber
+		else
+			for (var/i in 1 to MAX_CIRCUITS)
+				if(src.law_circuits[i] && abs(lawnumber - i) <= abs(i - lawnumber_actual))
+					lawnumber_actual = i
+		if(!src.law_circuits[lawnumber_actual])
+			return false //we could not find a law to modify, sorry
+		else
+			return src.law_circuits[lawnumber_actual].make_glitchy(picked_law,replace)
