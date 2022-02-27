@@ -1464,6 +1464,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\clothing\under\gimmick\hakama.dm"
 #include "code\obj\item\device\accessgun.dm"
 #include "code\obj\item\device\audio_log.dm"
+#include "code\obj\item\device\borg_linker.dm"
 #include "code\obj\item\device\brainjar.dm"
 #include "code\obj\item\device\camera_viewer.dm"
 #include "code\obj\item\device\chameleon.dm"

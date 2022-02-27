@@ -1044,6 +1044,20 @@
 		return !cleared
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
+			var/obj/item/device/borg_linker/linker = W
+			if(!opened)
+				boutput(user, "You need to open [src.name]'s cover before you can change their law rack link.")
+			if(!src.law_rack_connection)
+				src.law_rack_connection = linker.linked_rack
+				boutput(user, "You connect [src.name] to the stored law rack.")
+				src.playsound_local(src, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+				src.show_text("<h3>You have been connected to a law rack</h3>", "red")
+				src.show_laws()
+			else
+				boutput(user, "[src.name] is already connected to a law rack.")
+			return
+
 		if (isweldingtool(W))
 			if(W:try_weld(user, 1))
 				src.add_fingerprint(user)

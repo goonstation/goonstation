@@ -82,7 +82,13 @@
 
 
 	attackby(obj/item/I as obj, mob/user as mob)
-		if (istype(I, /obj/item/aiModule) && !isghostdrone(user))
+		if (istype(I,/obj/item/device/borg_linker) && !isghostdrone(user))
+			var/obj/item/device/borg_linker/linker = I
+			linker.linked_rack = src
+			var/area/A = get_area(src.loc)
+			boutput("Linker: Linked to law rack at "+ A.name)
+			return
+		else if (istype(I, /obj/item/aiModule) && !isghostdrone(user))
 			var/obj/item/aiModule/AIM = I
 			var/inserted = false
 			var/count = 1
