@@ -918,6 +918,7 @@
 					boutput(user, "You emag [src]'s interface.")
 				src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
 				src.emagged = 1
+				src.law_rack_connection = null //emagging removes the connection for laws, essentially nulling the laws and allowing the emagger to connect this borg to a different rack
 				src.handle_robot_antagonist_status("emagged", 0, user)
 				if(src.syndicate)
 					src.antagonist_overlay_refresh(1, 1)

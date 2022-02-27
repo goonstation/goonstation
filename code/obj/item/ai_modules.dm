@@ -13,14 +13,14 @@ AI MODULES
 	var/highlight_color = rgb(0, 167, 1, 255)
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "electronic"
-	desc = "A module that updates an AI's law EEPROMs. "
+	desc = "A module containing an AI law that can be slotted into an AI law rack. "
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 5.0
 	w_class = W_CLASS_SMALL
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 15
-	mats = 8
+	mats = 10
 	var/input_char_limit = 100
 	var/lawNumber = 0
 	var/lawTarget = null
@@ -52,7 +52,6 @@ AI MODULES
 		var/answer = input(user, text, title, default) as null|text
 		lawTarget = copytext(adminscrub(answer), 1, input_char_limit)
 		tooltip_rebuild = 1
-		boutput(user, "\The [src] now reads, \"[get_law_text(for_silicons=FALSE)]\".")
 
 	proc/get_law_text(for_silicons)
 		return  src.lawtext
@@ -228,7 +227,7 @@ AI MODULES
 	name = "'Freeform' AI Module"
 	highlight_color = rgb(173, 11, 11, 255)
 	input_char_limit = 400
-	lawtext = "This law intentionally left blank."
+	lawtext = "Make a funny beeping noise every few minutes."
 
 	attack_self(var/mob/user)
 		input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Anything. Serious.", lawtext)
