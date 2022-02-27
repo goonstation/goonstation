@@ -1,9 +1,8 @@
-/obj/machinery/computer/aiupload
+/obj/machinery/lawrack
 	name = "AI Law Mount Rack"
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "airack_empty"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behaivor of connected AIs."
-	circuit_type = /obj/item/circuitboard/aiupload
 
 	var/const/MAX_CIRCUITS = 9
 	var/obj/item/aiModule/law_circuits[MAX_CIRCUITS] //asssoc list to ref slot num with law board obj
@@ -16,9 +15,9 @@
 		//if the ticker isn't initialised yet, it'll grab this rack when it is (see )
 		ticker?.ai_law_rack_manager.register_new_rack(src)
 
-		src.light = new/datum/light/point
-		src.light.set_brightness(0.4)
-		src.light.attach(src)
+	//	src.light = new/datum/light/point
+	//	src.light.set_brightness(0.4)
+	//	src.light.attach(src)
 		UpdateIcon()
 
 	disposing()
@@ -62,13 +61,6 @@
 		boutput(user,"<b>This rack's laws are:</b>")
 		src.show_laws(user)
 		return ..()
-
-	special_deconstruct(obj/computerframe/frame as obj)
-		if(src.status & BROKEN)
-			logTheThing("station", usr, null, "disassembles [src] (broken) [log_loc(src)]")
-		else
-			logTheThing("station", usr, null, "disassembles [src] [log_loc(src)]")
-			//TODO: make law circuits fall out
 
 
 	attackby(obj/item/I as obj, mob/user as mob)
@@ -139,6 +131,11 @@
 				if (!ui.user.equipped() || !isweldingtool(ui.user.equipped()))
 					boutput(ui.user,"You need a welding tool for that!")
 					return
+
+				if(!law_circuits[slotNum])
+					boutput(ui.user,"There's nothing to weld!")
+					return
+
 				var/obj/item/weldingtool/equipped = ui.user.equipped()
 				if(!equipped:try_weld(ui.user, 1, burn_eyes = 1))
 					return
@@ -158,6 +155,10 @@
 					boutput(ui.user,"You need a screwdriver for that!")
 					return
 
+				if(!law_circuits[slotNum])
+					boutput(ui.user,"There's nothing to screw in!")
+					return
+
 				if(screwed[slotNum])
 					ui.user.visible_message("<span class='alert'>[ui.user] starts unscrewing a module!</span>", "<span class='alert'>You start unscrewing the module!</span>")
 				else
@@ -173,7 +174,7 @@
 					ui.user.visible_message("<span class='alert'>[ui.user] tries to tug a module out of the rack, but it's welded in place!</span>", "<span class='alert'>You struggle with the module but it's welded in place!</span>")
 					return
 				if (screwed[slotNum])
-					ui.user.visible_message("<span class='alert'>[ui.user] tries to tug a module out of the rack, but it's still screwed in!</span>", "<span class='alert'>You struggle with the module but it's still screwd in!</span>")
+					ui.user.visible_message("<span class='alert'>[ui.user] tries to tug a module out of the rack, but it's still screwed in!</span>", "<span class='alert'>You struggle with the module but it's still screwed in!</span>")
 					return
 
 				if(law_circuits[slotNum])
@@ -231,16 +232,18 @@
 
 		return laws
 
-	proc/UpdateLaws()
+	proc/UpdateLaws(var/notification_text="<h3>Law update detected</h3>")
 		for (var/mob/living/silicon/R in mobs)
 			if (isghostdrone(R))
 				continue
-			R << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-			R.show_text("<h3>Law update detected.</h3>", "red")
+			if(R.law_rack_connection == src)
+				R << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+				R.show_text(notification_text, "red")
 			src.show_laws(R)
 
 		for (var/mob/living/intangible/aieye/E in mobs)
-			E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+			if(E.mainframe?.law_rack_connection == src)
+				E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 
 	proc/toggle_welded(var/slot_number)
 		src.welded[slot_number] = !src.welded[slot_number]

@@ -27760,7 +27760,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "hNL" = (
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -49177,9 +49177,6 @@
 	pixel_x = 1
 	},
 /obj/item/aiModule/reset{
-	pixel_y = 7
-	},
-/obj/item/circuitboard/aiupload{
 	pixel_y = 7
 	},
 /turf/simulated/floor/black,

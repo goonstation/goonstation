@@ -26302,7 +26302,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -44040,7 +44040,6 @@
 /area/station/medical/medbay)
 "pRC" = (
 /obj/table/auto,
-/obj/item/circuitboard/aiupload,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload{
 	name = "AI Module Storage"

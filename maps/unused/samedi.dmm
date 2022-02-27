@@ -14589,7 +14589,7 @@
 "aGa" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -26590,7 +26590,6 @@
 /obj/table/auto,
 /obj/item/storage/box/PDAbox,
 /obj/item/aiModule/reset,
-/obj/item/circuitboard/aiupload,
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge)
@@ -39893,7 +39892,7 @@
 /area/station/turret_protected/ai_upload)
 "bKx" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/aiupload{
+/obj/machinery/lawrack{
 	dir = 8
 	},
 /obj/cable{
@@ -42544,7 +42543,7 @@
 	pixel_y = 1
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -43086,7 +43085,7 @@
 	pixel_y = 21
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/storage/crate/furnacefuel,
 /turf/simulated/floor/plating,
@@ -44852,7 +44851,7 @@
 /area/research_outpost/hangar)
 "bUk" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/shuttlebay,
 /area/research_outpost/hangar)
@@ -44904,7 +44903,7 @@
 /area/research_outpost)
 "bUp" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -45095,7 +45094,6 @@
 /area/station/turret_protected/Zeta)
 "bUM" = (
 /obj/table/auto,
-/obj/item/circuitboard/aiupload,
 /obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/green/side,
@@ -46247,7 +46245,7 @@
 /obj/table/auto,
 /obj/random_item_spawner/tools,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)

@@ -19,7 +19,7 @@
 	var/dependent = 0 // if we're host to a mainframe's mind
 	var/shell = 0 // are we available for use as a shell for an AI
 
-	var/obj/machinery/computer/aiupload/law_rack_connection = null // which rack we're getting our laws from
+	var/obj/machinery/lawrack/law_rack_connection = null // which rack we're getting our laws from
 
 	var/obj/item/cell/cell = null
 

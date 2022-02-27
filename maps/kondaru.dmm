@@ -17553,7 +17553,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "aYB" = (
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
@@ -40091,7 +40091,6 @@
 	icon_state = "2-8"
 	},
 /obj/item/device/radio/intercom/medical,
-/obj/item/circuitboard/aiupload,
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/circuit,
 /area/station/bridge)
@@ -52547,7 +52546,6 @@
 /area/station/turret_protected/Zeta)
 "pQX" = (
 /obj/table/auto,
-/obj/item/circuitboard/aiupload,
 /obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/greenblack,

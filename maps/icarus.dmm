@@ -2856,7 +2856,6 @@
 /obj/table/auto,
 /obj/item/storage/box/PDAbox,
 /obj/item/aiModule/reset,
-/obj/item/circuitboard/aiupload,
 /obj/item/disk/data/floppy/read_only/communications,
 /obj/machinery/light/small{
 	dir = 4;
@@ -8588,7 +8587,7 @@
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai)
 "asV" = (
-/obj/machinery/computer/aiupload{
+/obj/machinery/lawrack{
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
@@ -19635,7 +19634,6 @@
 /area/station/turret_protected/Zeta)
 "aQt" = (
 /obj/table/auto,
-/obj/item/circuitboard/aiupload,
 /obj/item/aiModule/reset,
 /obj/item/circuitboard/robotics,
 /obj/item/disk/data/floppy/read_only/communications,

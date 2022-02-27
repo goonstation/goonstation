@@ -3651,7 +3651,6 @@
 /area/listeningpost/syndicateassaultvessel)
 "amk" = (
 /obj/table/reinforced/auto,
-/obj/item/circuitboard/aiupload,
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/starboard)
@@ -35176,7 +35175,7 @@
 /area/station/hallway/portupperhallway)
 "gdN" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-4"

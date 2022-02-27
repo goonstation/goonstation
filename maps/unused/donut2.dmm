@@ -18035,7 +18035,6 @@
 /obj/rack,
 /obj/item/circuitboard/robot_module_rewriter,
 /obj/item/circuitboard/cloning,
-/obj/item/circuitboard/aiupload,
 /obj/item/circuitboard/card,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -31741,7 +31740,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /obj/machinery/light{
 	dir = 1
 	},

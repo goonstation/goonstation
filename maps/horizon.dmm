@@ -21864,7 +21864,7 @@
 	})
 "bcQ" = (
 /obj/machinery/light_switch/west,
-/obj/machinery/computer/aiupload{
+/obj/machinery/lawrack{
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,

@@ -10446,7 +10446,7 @@
 	},
 /area/station/turret_protected/ai_upload)
 "ayR" = (
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 1
@@ -33863,7 +33863,7 @@
 	})
 "bxE" = (
 /obj/machinery/light_switch/west,
-/obj/machinery/computer/aiupload{
+/obj/machinery/lawrack{
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,

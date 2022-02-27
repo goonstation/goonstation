@@ -6665,7 +6665,6 @@
 /area/station/crew_quarters/market)
 "aop" = (
 /obj/rack,
-/obj/item/circuitboard/aiupload,
 /obj/item/circuitboard/teleporter,
 /obj/item/circuitboard/card,
 /obj/item/circuitboard/robot_module_rewriter,
@@ -8040,7 +8039,7 @@
 /area/station/turret_protected/ai_upload)
 "arr" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /turf/simulated/floor/purple,
 /area/station/turret_protected/ai_upload)
 "ars" = (

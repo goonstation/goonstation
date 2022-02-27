@@ -6483,7 +6483,7 @@
 	},
 /area/station/hallway/primary/north)
 "ql" = (
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /obj/machinery/light{
 	dir = 1;
 	light_type = /obj/item/light/tube/blueish;

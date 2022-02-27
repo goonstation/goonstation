@@ -2276,7 +2276,7 @@
 "aeF" = (
 /obj/rack,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/market)
@@ -2624,7 +2624,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint)
@@ -3486,7 +3486,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/janitor)
@@ -3530,7 +3530,7 @@
 /area/maintenance/fsmaint)
 "agU" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
@@ -4160,7 +4160,7 @@
 /obj/item/storage/mousetraps,
 /obj/item/storage/mousetraps,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/grime,
 /area/janitor)
@@ -5887,7 +5887,7 @@
 /area/quartermaster/storage)
 "alp" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -7799,7 +7799,6 @@
 /area/storage/tech)
 "aoO" = (
 /obj/rack,
-/obj/item/circuitboard/aiupload,
 /obj/item/circuitboard/teleporter,
 /obj/item/circuitboard/card,
 /obj/item/circuitboard/robot_module_rewriter,
@@ -8649,7 +8648,7 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -9083,7 +9082,7 @@
 /area/turret_protected/ai_upload)
 "arE" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /turf/simulated/floor/purple,
 /area/turret_protected/ai_upload)
 "arF" = (
@@ -10816,7 +10815,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/maintenance/east)

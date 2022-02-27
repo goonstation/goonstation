@@ -8729,7 +8729,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aua" = (
-/obj/machinery/computer/aiupload{
+/obj/machinery/lawrack{
 	dir = 8
 	},
 /obj/cable{
@@ -32388,7 +32388,6 @@
 /area/station/bridge)
 "bxa" = (
 /obj/table/reinforced/auto,
-/obj/item/circuitboard/aiupload,
 /obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/network_progs,
 /turf/simulated/floor/circuit,

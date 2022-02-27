@@ -30335,7 +30335,6 @@
 /obj/machinery/light,
 /obj/table/reinforced/auto,
 /obj/item/aiModule/reset,
-/obj/item/circuitboard/aiupload,
 /obj/item/disk/data/floppy/read_only/communications,
 /obj/decal/tile_edge/line/green{
 	dir = 9;
@@ -45114,7 +45113,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "fdK" = (
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blueblack{
 	dir = 1

@@ -8029,7 +8029,6 @@
 /area/station/turret_protected/Zeta)
 "arF" = (
 /obj/table/reinforced,
-/obj/item/circuitboard/aiupload,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "arG" = (
@@ -33613,7 +33612,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "bAR" = (
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "bAS" = (

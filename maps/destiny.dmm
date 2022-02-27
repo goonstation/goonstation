@@ -14215,7 +14215,7 @@
 	dir = 8;
 	pixel_x = -28
 	},
-/obj/machinery/computer/aiupload{
+/obj/machinery/lawrack{
 	dir = 4
 	},
 /turf/simulated/floor/circuit,
@@ -18266,7 +18266,6 @@
 "crL" = (
 /obj/table/reinforced/auto,
 /obj/item/aiModule/reset,
-/obj/item/circuitboard/aiupload,
 /obj/item/disk/data/floppy/read_only/communications,
 /obj/machinery/light/incandescent{
 	dir = 8;

@@ -2506,7 +2506,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "afs" = (
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
@@ -43155,7 +43155,6 @@
 /area/station/bridge)
 "bPW" = (
 /obj/table/auto,
-/obj/item/circuitboard/aiupload,
 /obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/communications,
 /obj/item/disk/data/tape/master/readonly,

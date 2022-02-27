@@ -27851,7 +27851,7 @@
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "hPe" = (
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /obj/cable{
 	icon_state = "0-2"
 	},

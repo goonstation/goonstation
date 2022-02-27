@@ -10219,7 +10219,7 @@
 /area/crew_quarters/quarters)
 "atq" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/crate,
 /turf/simulated/floor{
@@ -13463,7 +13463,6 @@
 /obj/rack,
 /obj/item/circuitboard/robot_module_rewriter,
 /obj/item/circuitboard/cloning,
-/obj/item/circuitboard/aiupload,
 /obj/item/circuitboard/card,
 /turf/simulated/floor/plating,
 /area/storage/tech)
@@ -23268,7 +23267,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -29273,7 +29272,7 @@
 /area/crew_quarters/juryroom)
 "bcy" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor{
 	icon_state = "snow"
@@ -29577,7 +29576,7 @@
 "bdb" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -33064,7 +33063,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;

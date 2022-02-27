@@ -3369,7 +3369,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
 "iW" = (
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /obj/machinery/light{
 	dir = 1
 	},

@@ -6141,7 +6141,7 @@
 	name = "Seating Area"
 	})
 "cAU" = (
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -42486,7 +42486,6 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/item/circuitboard/aiupload,
 /obj/item/circuitboard/robotics,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)

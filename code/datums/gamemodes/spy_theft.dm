@@ -489,7 +489,7 @@
 	big_station_bounties[/obj/machinery/computer/card] = 2
 	big_station_bounties[/obj/machinery/computer/genetics] = 2
 	big_station_bounties[/obj/machinery/computer/robotics] = 2
-	big_station_bounties[/obj/machinery/computer/aiupload] = 3
+	big_station_bounties[/obj/machinery/lawrack] = 3
 
 	big_station_bounties[/obj/machinery/vending/medical] = 1
 	big_station_bounties[/obj/machinery/vending/port_a_nanomed] = 1

@@ -6,13 +6,13 @@
 /datum/ai_rack_manager
 
 	var/first_registered = FALSE
-	var/obj/machinery/computer/aiupload/default_ai_rack = null
-	var/list/obj/machinery/computer/aiupload/registered_racks = new()
+	var/obj/machinery/lawrack/default_ai_rack = null
+	var/list/obj/machinery/lawrack/registered_racks = new()
 
 	New() //got to do it this way because ticker is init after map
 		. = ..()
 		boutput(world,"<B>Law rack manager init</B>")
-		for_by_tcl(R, /obj/machinery/computer/aiupload)
+		for_by_tcl(R, /obj/machinery/lawrack)
 			src.register_new_rack(R)
 			boutput(world,"<B>registered!</B>")
 		for_by_tcl(S, /mob/living/silicon)
@@ -20,7 +20,7 @@
 			boutput(world,"<B>connected</B>")
 
 
-	proc/register_new_rack(var/obj/machinery/computer/aiupload/new_rack)
+	proc/register_new_rack(var/obj/machinery/lawrack/new_rack)
 		if(isnull(src.default_ai_rack))
 			src.default_ai_rack = new_rack
 		if(!src.first_registered)
@@ -36,13 +36,16 @@
 /* General ai_law functions */
 	proc/format_for_irc()
 		var/list/laws = list()
-		for(var/obj/machinery/computer/aiupload/R in src.registered_racks)
+		for(var/obj/machinery/lawrack/R in src.registered_racks)
 			laws += R.format_for_irc()
 		return laws
 
 
 	proc/format_for_logs(var/glue = "<br>")
 		var/list/laws = list()
-		for(var/obj/machinery/computer/aiupload/R in src.registered_racks)
-			laws += "Laws for [R] at [R.loc]:<br>" + R.format_for_logs(glue) +"<br>--------------<br>"
+		var/area/A
+		for(var/obj/machinery/lawrack/R in src.registered_racks)
+			A = get_area(R.loc)
+
+			laws += "Laws for [R] at [A ? A.name : "...er somewhere?"]:<br>" + R.format_for_logs(glue) +"<br>--------------<br>"
 		return jointext(laws, glue)

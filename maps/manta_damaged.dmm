@@ -4666,7 +4666,6 @@
 /area/listeningpost/syndicateassaultvessel)
 "amk" = (
 /obj/table/reinforced/auto,
-/obj/item/circuitboard/aiupload,
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/starboard)
@@ -19180,7 +19179,7 @@
 /area/station/teleporter)
 "aQQ" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /obj/cable,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)

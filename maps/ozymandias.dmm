@@ -33822,9 +33822,6 @@
 "jzn" = (
 /obj/table/reinforced/auto,
 /obj/item/aiModule/reset,
-/obj/item/circuitboard/aiupload{
-	pixel_y = 14
-	},
 /obj/item/device/radio/intercom/security{
 	dir = 4
 	},
@@ -36920,7 +36917,7 @@
 /turf/simulated/floor/yellow/checker,
 /area/station/routing/engine)
 "kqK" = (
-/obj/machinery/computer/aiupload{
+/obj/machinery/lawrack{
 	dir = 4
 	},
 /obj/cable{
@@ -64903,7 +64900,6 @@
 /area/station/crew_quarters/kitchen)
 "rWx" = (
 /obj/table/auto,
-/obj/item/circuitboard/aiupload,
 /obj/item/aiModule/reset,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)

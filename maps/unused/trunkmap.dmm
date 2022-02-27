@@ -9314,13 +9314,6 @@
 /obj/item/device/audio_log,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"aDw" = (
-/obj/rack{
-	dir = 4
-	},
-/obj/item/circuitboard/aiupload,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
 "aDx" = (
 /obj/rack{
 	dir = 4
@@ -9949,7 +9942,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aFE" = (
@@ -59789,7 +59782,7 @@ aaa
 ayd
 ayZ
 aAO
-aDw
+aHE
 aFv
 aHE
 aHY

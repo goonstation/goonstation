@@ -9816,7 +9816,7 @@
 /area/station/crew_quarters/quarters)
 "atm" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/crate,
 /obj/item/clothing/under/gimmick/princess,
@@ -13040,7 +13040,6 @@
 /obj/rack,
 /obj/item/circuitboard/robot_module_rewriter,
 /obj/item/circuitboard/cloning,
-/obj/item/circuitboard/aiupload,
 /obj/item/circuitboard/card,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -21836,7 +21835,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -27413,7 +27412,7 @@
 /area/station/crew_quarters/juryroom)
 "bcc" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/juryroom)
@@ -27749,7 +27748,7 @@
 "bcM" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -31210,7 +31209,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;

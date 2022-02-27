@@ -26190,7 +26190,7 @@
 	},
 /area/station/turret_protected/ai_upload)
 "aZz" = (
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"

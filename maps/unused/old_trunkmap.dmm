@@ -7359,13 +7359,6 @@
 /obj/item/device/audio_log,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"aqk" = (
-/obj/rack{
-	dir = 4
-	},
-/obj/item/circuitboard/aiupload,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
 "aql" = (
 /obj/rack{
 	dir = 4
@@ -7777,7 +7770,7 @@
 	d1 = 1;
 	d2 = 2
 	},
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "arq" = (
@@ -41568,7 +41561,7 @@ aaa
 anL
 aom
 aoZ
-aqk
+asg
 arh
 asg
 asp

@@ -42466,10 +42466,6 @@
 	pixel_x = 2;
 	pixel_y = 8
 	},
-/obj/item/circuitboard/aiupload{
-	pixel_x = -2;
-	pixel_y = -2
-	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "bCI" = (
@@ -50315,7 +50311,7 @@
 /area/listeningpost)
 "bRw" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/aiupload{
+/obj/machinery/lawrack{
 	dir = 4
 	},
 /obj/cable{

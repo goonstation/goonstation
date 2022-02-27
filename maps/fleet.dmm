@@ -13899,7 +13899,7 @@
 	name = "Meridian Command"
 	})
 "By" = (
-/obj/machinery/computer/aiupload{
+/obj/machinery/lawrack{
 	dir = 4
 	},
 /obj/cable{
