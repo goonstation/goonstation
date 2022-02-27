@@ -23,7 +23,7 @@
 		UpdateIcon()
 
 	proc/drop_all_modules()
-		for (var/i=1, i <= MAX_CIRCUITS, i++)
+		for (var/i in 1 to MAX_CIRCUITS)
 			src.welded[i] = false
 			src.screwed[i] = false
 			if(src.law_circuits[i])
@@ -51,7 +51,7 @@
 	update_icon()
 		var/image/circuit_image = null
 		var/image/color_overlay = null
-		for (var/i=1, i <= MAX_CIRCUITS, i++)
+		for (var/i in 1 to MAX_CIRCUITS)
 			circuit_image = null
 			color_overlay = null
 			if(law_circuits[i])
@@ -122,7 +122,7 @@
 	ui_data(mob/user)
 		var/list/lawTitles[MAX_CIRCUITS]
 		var/list/lawText[MAX_CIRCUITS]
-		for (var/i=1, i <= MAX_CIRCUITS, i++)
+		for (var/i in 1 to MAX_CIRCUITS)
 			if(law_circuits[i])
 				lawText[i] = law_circuits[i].get_law_text()
 				lawTitles[i] = law_circuits[i].get_law_name()
@@ -260,13 +260,13 @@
 			if (isghostdrone(R))
 				continue
 			if(R.law_rack_connection == src)
-				R << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+				R.playsound_local(R, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 				R.show_text(notification_text, "red")
 			src.show_laws(R)
 
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == src)
-				E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+				E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 
 	proc/toggle_welded(var/slot_number)
 		src.welded[slot_number] = !src.welded[slot_number]

@@ -9,8 +9,9 @@
 	var/obj/machinery/lawrack/default_ai_rack = null
 	var/list/obj/machinery/lawrack/registered_racks = new()
 
-	New() //got to do it this way because ticker is init after map
+	New()
 		. = ..()
+		//On initialisation of the ticker's ai rack manager, find all racks on the station and register them, and all silicons and associate them with default rack
 		for_by_tcl(R, /obj/machinery/lawrack)
 			src.register_new_rack(R)
 		for (var/mob/living/silicon/S in mobs)
@@ -25,6 +26,8 @@
 			for (var/mob/living/silicon/S in mobs)
 				if(!S.emagged && S.law_rack_connection == null)
 					S.law_rack_connection = src.default_ai_rack
+					S.playsound_local(S, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+					S.show_text("<h3>Law rack connection re-established!</h3>", "red")
 					S.show_laws()
 			#endif
 
@@ -48,13 +51,13 @@
 				continue
 			if(R.law_rack_connection == dead_rack)
 				R.law_rack_connection = null
-				R << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+				R.playsound_local(R, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 				R.show_text("<h3>ERROR: Lost connection to law rack. No laws detected!</h3>", "red")
 
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == dead_rack)
 				E.mainframe.law_rack_connection = null
-				E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+				E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 
 
 

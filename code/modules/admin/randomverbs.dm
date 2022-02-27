@@ -1715,10 +1715,10 @@
 			if (isghostdrone(S2)) continue
 			S2.law_rack_connection = ticker.ai_law_rack_manager.default_ai_rack
 			S2.show_text("<b>Your laws have been changed!</b>", "red")
-			S2 << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+			S2.playsound_local(S2, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 			S2.show_laws()
 		for (var/mob/living/intangible/aieye/E in mobs)
-			E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+			E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 
 	switch (former_role)
 		if (ROLE_MINDSLAVE) return
