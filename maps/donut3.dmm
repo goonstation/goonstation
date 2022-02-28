@@ -8676,7 +8676,6 @@
 	pixel_x = -7;
 	pixel_y = 3
 	},
-/obj/machinery/door/window/southleft,
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor,
