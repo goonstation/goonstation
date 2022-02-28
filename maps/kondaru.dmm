@@ -44776,13 +44776,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
 /obj/cable{
 	d1 = 2;
 	d2 = 8;
@@ -57142,6 +57135,13 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_west,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
 "uqd" = (
