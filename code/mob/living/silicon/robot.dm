@@ -910,6 +910,9 @@
 			src.compborg_lose_limb(PART)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		if(isshell(src) || src.ai_interface)
+			return 0 //emags don't do anything to AI shells
+
 		if (!src.emagged)	// trying to unlock with an emag card
 			if (src.opened && user) boutput(user, "You must close the cover to swipe an ID card.")
 			else if (src.wiresexposed && user) boutput(user, "<span class='alert'>You need to get the wires out of the way.</span>")
@@ -918,6 +921,7 @@
 					boutput(user, "You emag [src]'s interface.")
 				src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
 				src.emagged = 1
+				logTheThing("station", src, src.law_rack_connection, "[src.name] is emagged by [user] and loses connection to rack.")
 				src.law_rack_connection = null //emagging removes the connection for laws, essentially nulling the laws and allowing the emagger to connect this borg to a different rack
 				src.handle_robot_antagonist_status("emagged", 0, user)
 				if(src.syndicate)
@@ -1053,11 +1057,15 @@
 				boutput(user,"You need to use this on the AI core directly!")
 				return
 			if(!src.law_rack_connection)
-				src.law_rack_connection = linker.linked_rack
-				boutput(user, "You connect [src.name] to the stored law rack.")
-				src.playsound_local(src, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
-				src.show_text("<h3>You have been connected to a law rack</h3>", "red")
-				src.show_laws()
+				if(linker.linked_rack in ticker.ai_law_rack_manager.registered_racks)
+					src.law_rack_connection = linker.linked_rack
+					logTheThing("station", src, src.law_rack_connection, "[src.name] is connected to the rack at [log_loc(src.law_rack_connection)] with a linker by [user]")
+					boutput(user, "You connect [src.name] to the stored law rack.")
+					src.playsound_local(src, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+					src.show_text("<h3>You have been connected to a law rack</h3>", "red")
+					src.show_laws()
+				else
+					boutput(user,"Linker lost connection to the stored law rack!")
 			else
 				boutput(user, "[src.name] is already connected to a law rack.")
 			return

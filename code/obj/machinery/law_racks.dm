@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 1
 	mats = list("MET-1" = 20, "MET-2" = 5, "INS-1" = 10, "CON-1" = 10) //this bitch should be expensive
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_WRENCH
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_WRENCH | DECON_NOBORG
 
 	var/datum/light/light
 	var/const/MAX_CIRCUITS = 9
@@ -48,15 +48,17 @@
 
 
 	was_built_from_frame(mob/user, newly_built)
+		//this should always be hard to deconstruct, even if play built
+		src.deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_WRENCH | DECON_NOBORG
 		ticker?.ai_law_rack_manager.register_new_rack(src)
 		. = ..()
 
-	allowed(var/mob/user)
+/*	allowed(var/mob/user)
 		if(issilicon(user))
 			boutput(user,"Cyborg model deconstruction device detected - ACCESS DENIED")
 			return 0
 		else
-			return ..()
+			return ..() */
 
 	update_icon()
 		var/image/circuit_image = null
@@ -273,6 +275,8 @@
 		return laws
 
 	proc/UpdateLaws(var/notification_text="<h3>Law update detected</h3>")
+		logTheThing("station", src, null, "Law Update: "+src.format_for_logs())
+		var/list/affected_mobs = list()
 		for (var/mob/living/silicon/R in mobs)
 			if (isghostdrone(R))
 				continue
@@ -280,11 +284,17 @@
 				R.playsound_local(R, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 				R.show_text(notification_text, "red")
 				src.show_laws(R)
+				affected_mobs |= R
 
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == src)
 				E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 				src.show_laws(E)
+				affected_mobs |= E.mainframe
+		var/list/mobtextlist = list()
+		for(var/mob/living/M in affected_mobs)
+			mobtextlist += constructName(M, "admin")
+		logTheThing("station", src, null, "the law update affects the following mobs: "+mobtextlist.Join(", "))
 
 	proc/toggle_welded_callback(var/slot_number)
 		src.welded[slot_number] = !src.welded[slot_number]
@@ -300,11 +310,13 @@
 		equipped.set_loc(src)
 		user.visible_message("<span class='alert'>[user] slides a module into the law rack</span>", "<span class='alert'>You slide the module into the rack.</span>")
 		tgui_process.update_uis(src)
+		logTheThing("station", src, user, "inserts law module into rack: [equipped] at slot [slotNum]")
 		UpdateIcon()
 		UpdateLaws()
 
 	proc/remove_module_callback(var/slotNum,var/mob/user)
 		//add circuit to hand
+		logTheThing("station", src, user, "removes law module from rack: [src.law_circuits[slotNum]] at slot [slotNum]")
 		user.visible_message("<span class='alert'>[user] slides a module out of the law rack</span>", "<span class='alert'>You slide the module out of the rack.</span>")
 		user.put_in_hand_or_drop(src.law_circuits[slotNum])
 		src.law_circuits[slotNum] = null

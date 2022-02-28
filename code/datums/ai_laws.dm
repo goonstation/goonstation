@@ -26,6 +26,7 @@
 		if(new_rack in src.registered_racks)
 			return
 
+		logTheThing("station", src, new_rack, "[src] registers a new law rack at [log_loc(new_rack)]")
 		if(isnull(src.default_ai_rack))
 			src.default_ai_rack = new_rack
 
@@ -33,22 +34,29 @@
 			for (var/mob/living/silicon/S in mobs)
 				if(!S.emagged && S.law_rack_connection == null)
 					S.law_rack_connection = src.default_ai_rack
+					logTheThing("station", new_rack, S, "[S.name] is connected to the rack at [log_loc(new_rack)]")
 					S.playsound_local(S, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 					S.show_text("<h3>Law rack connection re-established!</h3>", "red")
 					S.show_laws()
 			#endif
+			logTheThing("station", src, new_rack, "the law rack at [log_loc(new_rack)] claims default rack!")
 
 		if(!src.first_registered)
 			src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1,1,true,true)
 			src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2,2,true,true)
 			src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3,3,true,true)
 			src.first_registered = TRUE
+			logTheThing("station", src, new_rack, "the law rack at [log_loc(new_rack)] claims first registered, and gets Asimov laws!")
+
 		src.registered_racks |= new_rack //shouldn't be possible, but just in case - there can only be one instance of rack in registered
 
 	proc/unregister_rack(var/obj/machinery/lawrack/dead_rack)
+		logTheThing("station", src, dead_rack, "[src] unregisters the law rack at [log_loc(dead_rack)]")
+
 		if(src.default_ai_rack == dead_rack)
 			//ruhoh
 			src.default_ai_rack = null
+			logTheThing("station", src, dead_rack, "[src] unregisters the DEFAULT law rack at [log_loc(dead_rack)]")
 		//remove from list
 		src.registered_racks -= dead_rack
 
@@ -60,11 +68,13 @@
 				R.law_rack_connection = null
 				R.playsound_local(R, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 				R.show_text("<h3>ERROR: Lost connection to law rack. No laws detected!</h3>", "red")
+				logTheThing("station", dead_rack, R, "[R.name] loses connection to the rack at [log_loc(dead_rack)] and now has no laws")
 
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == dead_rack)
 				E.mainframe.law_rack_connection = null
 				E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+				logTheThing("station", dead_rack, E.mainframe, "[E.mainframe.name] loses connection to the rack at [log_loc(dead_rack)] and now has no laws")
 
 /* ION STORM */
 	proc/ion_storm_all_racks(var/picked_law="Beep repeatedly.",var/lawnumber=2,var/replace=true)

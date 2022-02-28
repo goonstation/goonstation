@@ -19,4 +19,9 @@
 			boutput(user,"Stored law rack at: "+A.name)
 		else
 			boutput(user, "No law rack connected.")
+
+		if(src.linked_rack)
+			var/raw = alert(user,"Do you want to clear the linked rack?", "Linker", "No", "Yes")
+			if (raw == "Yes")
+				src.linked_rack = null
 		return
