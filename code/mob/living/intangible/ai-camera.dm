@@ -36,6 +36,9 @@
 
 	var/outer_eye_atom = null
 
+	/// The UI used for the "Open station map" verb
+	var/datum/tgui/map_ui
+
 	New()
 		src.cancel_camera()
 		last_loc = src.loc
@@ -483,6 +486,30 @@
 		set category = "AI Commands"
 		if(mainframe)
 			mainframe.view_messageLog()
+
+	verb/open_map()
+		set name = "Open station map"
+		set desc = "Click on the map to teleport"
+		set category = "AI Commands"
+		map_ui = tgui_process.try_update_ui(usr, src, map_ui)
+		if (!map_ui)
+			if (!winexists(usr, "ai_map"))
+				winset(src.client, "ai_map", list2params(list(
+					"type" = "map",
+					"size" = "300,300",
+				)))
+				var/atom/movable/screen/handler = new
+				handler.plane = 0
+				handler.mouse_opacity = 0
+				handler.screen_loc = "ai_map:1,1"
+				src.client.screen += handler
+
+				ai_station_map.screen_loc = "ai_map;1,1"
+				handler.vis_contents += ai_station_map
+				src.client.screen += ai_station_map
+			map_ui = new(usr, src, "AIMap")
+			map_ui.open()
+
 
 //---TURF---//
 /turf/var/image/aiImage

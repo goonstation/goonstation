@@ -17,6 +17,9 @@
 	var/finished = 0
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
+	var/const/min_revheads = 3
+	var/const/max_revheads = 5
+	var/const/pop_divisor = 20
 	var/win_check_freq = 30 SECONDS //frequency of checks on the win conditions
 	var/round_limit = 40 MINUTES //see post_setup
 	var/endthisshit = 0
@@ -33,15 +36,24 @@
 	boutput(world, "<B>Some crewmembers are attempting to start a revolution!<BR><br>Revolutionaries - Kill the heads of staff. Convert other crewmembers (excluding synthetics and security) to your cause by flashing them. Protect your leaders.<BR><br>Personnel - Protect the heads of staff. Kill the leaders of the revolution, and brainwash the other revolutionaries (by using an electropack, electric chair or beating them in the head).</B>")
 
 /datum/game_mode/revolution/pre_setup()
+
 	var/list/revs_possible = get_possible_enemies(ROLE_HEAD_REV, 1)
+	var/num_players = 0
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
+		if(player.ready)
+			num_players++
 
 	if (!revs_possible.len)
 		return 0
 
 	var/rev_number = 0
+	var/ideal_rev_number = clamp(round(num_players / pop_divisor), min_revheads, max_revheads)
 
-	if(revs_possible.len >= 3)
-		rev_number = 3
+	if(revs_possible.len >= ideal_rev_number)
+		rev_number = ideal_rev_number
 	else
 		rev_number = length(revs_possible)
 

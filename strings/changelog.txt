@@ -1,4 +1,13 @@
 
+(t)mon feb 28 22
+(u)Ikea
+(p)7600
+(e)|
+(*)The syndicates have noticed an overstocking of nanotrasen stations and has decided to increase the max amount of revolutionary heads it will send to a station to 5.
+(u)LeahTheTech
+(p)7577
+(e)🆕🎨📄|feature, sprites, tgui
+(*)Added a map for the AI to move around with. Open with the "Open station map" verb and click to teleport.
 (t)sun feb 27 22
 (u)Jimmyl
 (p)6973
