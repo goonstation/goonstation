@@ -26,6 +26,7 @@
 			if(S == null) continue
 			if (S.duration < 0)
 				stack_trace("statusEffect [S.type] with owner [S.owner] updating with negative duration [S.duration]. actual = [actual]")
+				globalStatusInstances -= src //hope it GCs I guess
 			if(S.owner)
 				S.onUpdate(actual)
 				if(!isnull(S.duration))
