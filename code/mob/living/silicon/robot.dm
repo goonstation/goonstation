@@ -1048,6 +1048,10 @@
 			var/obj/item/device/borg_linker/linker = W
 			if(!opened)
 				boutput(user, "You need to open [src.name]'s cover before you can change their law rack link.")
+				return
+			if(isshell(src) || src.ai_interface)
+				boutput(user,"You need to use this on the AI core directly!")
+				return
 			if(!src.law_rack_connection)
 				src.law_rack_connection = linker.linked_rack
 				boutput(user, "You connect [src.name] to the stored law rack.")

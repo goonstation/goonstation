@@ -141,6 +141,3 @@ var/ZLOG_START_TIME
 
 //do we want to check incoming clients to see if theyre using a vpn?
 #define DO_VPN_CHECKS 1
-
-//For the AI Law Rack configuration. Easy mode makes it so that creating a new default rack will reconnect all non-emagged borgs
-#define LAW_RACK_EASY_MODE 1

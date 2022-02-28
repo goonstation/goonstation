@@ -315,6 +315,22 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 
 /mob/living/silicon/ai/attackby(obj/item/W as obj, mob/user as mob)
+	if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
+		var/obj/item/device/borg_linker/linker = W
+		if(!src.dismantle_stage<2)
+			boutput(user, "You need to open [src.name]'s cover before you can change their law rack link.")
+			return
+
+		if(!src.law_rack_connection)
+			src.law_rack_connection = linker.linked_rack
+			boutput(user, "You connect [src.name] to the stored law rack.")
+			src.playsound_local(src, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+			src.show_text("<h3>You have been connected to a law rack</h3>", "red")
+			src.show_laws()
+		else
+			boutput(user, "[src.name] is already connected to a law rack.")
+		return
+
 	if (isscrewingtool(W))
 		src.anchored = !src.anchored
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
@@ -748,6 +764,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (relay_laws_for_shell != src.eyecam && src.deployed_to_eyecam)
 		who = src.eyecam
 		boutput(who, "<b>Obey these laws:</b>")
+
 	if(src.law_rack_connection)
 		src.law_rack_connection.show_laws(who)
 	else
@@ -1592,7 +1609,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		boutput(src, "You have no laws!")
 		return
 
-	var/laws = src.law_rack_connection
+	var/laws = src.law_rack_connection.format_for_irc()
 	for (var/number in laws)
 		src.say("[number]. [laws[number]]")
 		sleep(AI_LAW_STATE_DELAY)

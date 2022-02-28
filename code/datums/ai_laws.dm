@@ -3,6 +3,10 @@
 //if you want to get laws and details about all racks - this is where you'd look
 //this also keeps track of the default rack
 
+//For the AI Law Rack configuration. Easy mode makes it so that creating a new default rack will reconnect all non-emagged borgs
+#define LAW_RACK_EASY_MODE 1
+
+
 /datum/ai_rack_manager
 
 	var/first_registered = FALSE
@@ -19,6 +23,9 @@
 
 
 	proc/register_new_rack(var/obj/machinery/lawrack/new_rack)
+		if(new_rack in src.registered_racks)
+			return
+
 		if(isnull(src.default_ai_rack))
 			src.default_ai_rack = new_rack
 
@@ -36,7 +43,7 @@
 			src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2,2,true,true)
 			src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3,3,true,true)
 			src.first_registered = TRUE
-		src.registered_racks += new_rack
+		src.registered_racks |= new_rack //shouldn't be possible, but just in case - there can only be one instance of rack in registered
 
 	proc/unregister_rack(var/obj/machinery/lawrack/dead_rack)
 		if(src.default_ai_rack == dead_rack)

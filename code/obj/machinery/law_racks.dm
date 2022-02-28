@@ -3,7 +3,8 @@
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "airack_empty"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behaivor of connected AIs."
-	density=1
+	density = 1
+	anchored = 1
 	mats = list("MET-1" = 20, "MET-2" = 5, "INS-1" = 10, "CON-1" = 10) //this bitch should be expensive
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_WRENCH
 
@@ -50,6 +51,13 @@
 		ticker?.ai_law_rack_manager.register_new_rack(src)
 		. = ..()
 
+	allowed(var/mob/user)
+		if(issilicon(user))
+			boutput(user,"Cyborg model deconstruction device detected - ACCESS DENIED")
+			return 0
+		else
+			return ..()
+
 	update_icon()
 		var/image/circuit_image = null
 		var/image/color_overlay = null
@@ -94,16 +102,14 @@
 			var/count = 1
 			while (!inserted && count <= MAX_CIRCUITS)
 				if(!src.law_circuits[count])
-					src.law_circuits[count] = AIM
-					user.visible_message("<span class='alert'><b>[user.name]</b> inserts a module into the first empty slot on the rack!</span>")
 					inserted = true
-					user.u_equip(AIM)
-				count++
+				else
+					count++
 			if(!inserted)
 				boutput(user,"Oh no the rack is full")
 			else
-				UpdateIcon()
-				UpdateLaws()
+				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/insert_module_callback, list(count,user,AIM), user.equipped().icon, user.equipped().icon_state, \
+					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 		else if (istype(I, /obj/item/clothing/mask/moustache/))
 			for_by_tcl(M, /mob/living/silicon/ai)
 				if(M.law_rack_connection == src)
@@ -157,6 +163,9 @@
 		var/slotNum = text2num(params["rack_index"])
 		switch(action)
 			if("weld")
+				if(!in_interact_range(src, ui.user))
+					return
+
 				if (!ui.user.equipped() || !isweldingtool(ui.user.equipped()))
 					boutput(ui.user,"You need a welding tool for that!")
 					return
@@ -174,12 +183,14 @@
 					else
 						ui.user.visible_message("<span class='alert'>[ui.user] starts welding a module in place!</span>", "<span class='alert'>You start to weld the module in place!</span>")
 					playsound(src.loc, "sound/items/Welder.ogg", 50, 1)
-					SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, .proc/toggle_welded, slotNum, equipped.icon, equipped.icon_state, \
+					SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, .proc/toggle_welded_callback, slotNum, equipped.icon, equipped.icon_state, \
 			  		welded[slotNum] ? "You cut the welds on the module." : "You weld the module into the rack.", \
 			 		INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 				return
 			if("screw")
+				if(!in_interact_range(src, ui.user))
+					return
 				if (!ui.user.equipped() || !isscrewingtool(ui.user.equipped()))
 					boutput(ui.user,"You need a screwdriver for that!")
 					return
@@ -193,12 +204,14 @@
 				else
 					ui.user.visible_message("<span class='alert'>[ui.user] starts screwing a module in place!</span>", "<span class='alert'>You start to screw the module in place!</span>")
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, .proc/toggle_screwed, slotNum, ui.user.equipped().icon, ui.user.equipped().icon_state, \
+				SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, .proc/toggle_screwed_callback, slotNum, ui.user.equipped().icon, ui.user.equipped().icon_state, \
 				welded[slotNum] ? "You unscrew the module." : "You screw the module into the rack.", \
 				INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 				return
 			if("rack")
+				if(!in_interact_range(src, ui.user))
+					return
 				if (welded[slotNum])
 					ui.user.visible_message("<span class='alert'>[ui.user] tries to tug a module out of the rack, but it's welded in place!</span>", "<span class='alert'>You struggle with the module but it's welded in place!</span>")
 					return
@@ -210,14 +223,10 @@
 					if(issilicon(ui.user))
 						boutput(ui.user,"Your clunky robot hands can't grip the module!")
 						return
-					//add circuit to hand
-					ui.user.visible_message("<span class='alert'>[ui.user] slides a module out of the law rack</span>", "<span class='alert'>You slide the module out of the rack.</span>")
-					ui.user.put_in_hand_or_drop(law_circuits[slotNum])
-					law_circuits[slotNum] = null
-					UpdateIcon()
-					UpdateLaws()
+					ui.user.visible_message("<span class='alert'>[ui.user] starts removing a module!</span>", "<span class='alert'>You start removing the module!</span>")
+					SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, .proc/remove_module_callback, list(slotNum,ui.user), law_circuits[slotNum].icon, law_circuits[slotNum].icon_state, \
+					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 				else
-
 					var/equipped = ui.user.equipped()
 					if(!equipped)
 						return
@@ -226,12 +235,11 @@
 						ui.user.visible_message("<span class='alert'>[ui.user] tries to shove \a [equipped] into the rack. Silly [ui.user]!</span>", "<span class='alert'>You try to put \a [equipped] into the rack. You feel very foolish.</span>")
 						return
 
-					law_circuits[slotNum]=equipped
-					ui.user.u_equip(equipped)
-					ui.user.visible_message("<span class='alert'>[ui.user] slides a module into the law rack</span>", "<span class='alert'>You slide the module into the rack.</span>")
+					ui.user.visible_message("<span class='alert'>[ui.user] starts inserting a module!</span>", "<span class='alert'>You start inserting the module!</span>")
+					SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, .proc/insert_module_callback, list(slotNum,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
+					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
-					UpdateIcon()
-					UpdateLaws()
+
 
 	proc/show_laws(var/who)
 		var/list/L = who
@@ -271,23 +279,45 @@
 			if(R.law_rack_connection == src)
 				R.playsound_local(R, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 				R.show_text(notification_text, "red")
-			src.show_laws(R)
+				src.show_laws(R)
 
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == src)
 				E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+				src.show_laws(E)
 
-	proc/toggle_welded(var/slot_number)
+	proc/toggle_welded_callback(var/slot_number)
 		src.welded[slot_number] = !src.welded[slot_number]
+		tgui_process.update_uis(src)
 
-	proc/toggle_screwed(var/slot_number)
+	proc/toggle_screwed_callback(var/slot_number)
 		src.screwed[slot_number] = !src.screwed[slot_number]
+		tgui_process.update_uis(src)
+
+	proc/insert_module_callback(var/slotNum,var/mob/user,var/obj/item/aiModule/equipped)
+		src.law_circuits[slotNum]=equipped
+		user.u_equip(equipped)
+		equipped.set_loc(src)
+		user.visible_message("<span class='alert'>[user] slides a module into the law rack</span>", "<span class='alert'>You slide the module into the rack.</span>")
+		tgui_process.update_uis(src)
+		UpdateIcon()
+		UpdateLaws()
+
+	proc/remove_module_callback(var/slotNum,var/mob/user)
+		//add circuit to hand
+		user.visible_message("<span class='alert'>[user] slides a module out of the law rack</span>", "<span class='alert'>You slide the module out of the rack.</span>")
+		user.put_in_hand_or_drop(src.law_circuits[slotNum])
+		src.law_circuits[slotNum] = null
+		tgui_process.update_uis(src)
+		UpdateIcon()
+		UpdateLaws()
 
 	proc/SetLaw(var/obj/item/aiModule/mod,var/slot=1,var/screwed_in=false,var/welded_in=false)
 		if(mod && slot <= MAX_CIRCUITS)
 			src.law_circuits[slot] = mod
 			src.welded[slot] = welded_in
 			src.screwed[slot] = screwed_in
+			tgui_process.update_uis(src)
 			UpdateIcon()
 			return true
 		else
@@ -301,6 +331,7 @@
 		src.law_circuits[slot]=null
 		src.welded[slot]=false
 		src.screwed[slot]=false
+		tgui_process.update_uis(src)
 		UpdateIcon()
 		return true
 
@@ -325,4 +356,7 @@
 		if(!src.law_circuits[lawnumber_actual])
 			return false //we could not find a law to modify, sorry
 		else
-			return src.law_circuits[lawnumber_actual].make_glitchy(picked_law,replace)
+			src.law_circuits[lawnumber_actual].make_glitchy(picked_law,replace)
+			tgui_process.update_uis(src)
+			return
+

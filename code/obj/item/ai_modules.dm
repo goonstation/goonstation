@@ -29,6 +29,7 @@ AI MODULES
 
 	New()
 		. = ..()
+		update_law_text()
 		UpdateIcon()
 
 	update_icon()
@@ -295,7 +296,7 @@ AI MODULES
 /******************** Random ********************/
 
 /obj/item/aiModule/random
-	name = "AI Module"
+	name = "AI Law Module - 'Unknown'"
 	highlight_color = rgb(241, 158, 48, 255)
 	New()
 		..()
@@ -305,7 +306,7 @@ AI MODULES
 /******************** Reset ********************/
 //DELETE ME
 /obj/item/aiModule/reset
-	name = "'Unfinished' AI Module"
+	name = "AI Law Module 'Unfinished'"
 
 
 
@@ -313,7 +314,7 @@ AI MODULES
 
 //DELETE ME TOO
 /obj/item/aiModule/rename
-	name = "'Unfinished' AI Module"
+	name = "AI Law Module - 'Unfinished'"
 
 
 /******************** Custom ********************/
@@ -323,7 +324,7 @@ AI MODULES
 
 	New(var/newname,var/newtext)
 		. = ..()
-		src.name = newname
+		src.name = "AI Law Module - '"+newname+"'"
 		src.lawText = newtext
 
 /********************* EXPERIMENTAL LAWS *********************/
@@ -363,6 +364,7 @@ AI MODULES
 			src.update_law_text(lawTarget)
 		return
 
+//are these implemented?
 /obj/item/aiModule/hologram_expansion
 	name = "Hologram Expansion Module"
 	desc = "A module that updates an AI's hologram images."
