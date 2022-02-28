@@ -499,7 +499,7 @@
 		if (src.traitHolder && src.traitHolder.hasTrait("sleepy"))
 			var/list/valid_beds = list()
 			for_by_tcl(bed, /obj/stool/bed)
-				if (bed.z == Z_LEVEL_STATION && !istype(get_area(bed), /area/listeningpost) && !istype(get_turf(bed), /turf/space))
+				if (bed.z == Z_LEVEL_STATION && istype(get_area(bed), /area/station)) //believe it or not there are station areas on nonstation z levels
 					if (!locate(/mob/living/carbon/human) in get_turf(bed)) //this is slow but it's Probably worth it
 						valid_beds += bed
 
@@ -774,13 +774,9 @@ proc/antagify(mob/H, var/traitor_role, var/agimmick)
 	if (!agimmick)
 		var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
 		var/num_objectives = rand(1,3)
-		var/datum/objective/new_objective = null
 		for(var/i = 0, i < num_objectives, i++)
 			var/select_objective = pick(eligible_objectives)
-			new_objective = new select_objective
-			new_objective.owner = H.mind
-			new_objective.set_up()
-			H.mind.objectives += new_objective
+			new select_objective(null, H.mind)
 			H << browse(grabResource("html/traitorTips/traitorhardTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
 			ticker.mode.traitors |= H.mind
 	else

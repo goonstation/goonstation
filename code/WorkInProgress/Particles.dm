@@ -25,8 +25,6 @@
 
 	disposing()
 		particleMaster.active_particles -= src
-		for(var/turf/T in src.vis_locs)
-			T.vis_contents -= src
 		..()
 
 // --------------------------------------------------------------------------------------------------------------------------------------

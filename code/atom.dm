@@ -419,6 +419,8 @@
 	src.attached_objs?.Cut()
 	src.attached_objs = null
 
+	src.vis_locs = null // cleans up vis_contents of visual holders of this too
+
 	last_turf = src.loc // instead rely on set_loc to clear last_turf
 	set_loc(null)
 	..()
@@ -543,6 +545,10 @@
 
 	if (!isliving(usr))
 		return
+
+	if (isintangible(usr)) //can't pull shit if you can't touch shit
+		return
+
 	// no pulling other mobs for ghostdrones (but they can pull other ghostdrones)
 	else if (isghostdrone(usr) && ismob(src) && !isghostdrone(src))
 		return
@@ -617,7 +623,7 @@
 		var/mob/living/silicon/ai/mainframe
 		var/mob/living/carbon/human/person = src
 		if (isAIeye(user))
-			var/mob/dead/aieye/ai = user
+			var/mob/living/intangible/aieye/ai = user
 			mainframe = ai.mainframe
 		else
 			mainframe = user
@@ -777,7 +783,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!isatom(over_object))
 		return
-	if (isalive(usr) && isghostdrone(usr) && ismob(src) && src != usr)
+	if (isalive(usr) && !isintangible(usr) && isghostdrone(usr) && ismob(src) && src != usr)
 		return // Stops ghost drones from MouseDropping mobs
 	over_object._MouseDrop_T(src, usr)
 	if (SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP, usr, over_object, src_location, over_location, over_control, params))

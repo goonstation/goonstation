@@ -223,7 +223,7 @@
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
-	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if (get_dist(user, src) > 1 || get_dist(user, O) > 1 || is_incapacitated(user) || isAI(user))
 			return
 
@@ -241,8 +241,9 @@
 			else boutput(user, "<span class='alert'>No material loaded!</span>")
 			return
 
+		if (!istype(O, /obj/item))
+			return
 		var/obj/item/W = O
-
 		if(W in user && !W.cant_drop)
 			user.u_equip(W)
 			W.set_loc(src.loc)
@@ -264,7 +265,9 @@
 		if (!user || !O || !istype(O))
 			return
 		user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
+		user.u_equip(O)
 		O.set_loc(src)
+		O.dropped()
 		var/staystill = user.loc
 		for(var/obj/item/M in view(1,user))
 			if (!M || M.loc == user)

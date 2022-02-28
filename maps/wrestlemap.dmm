@@ -49665,7 +49665,7 @@
 /turf/simulated/floor/plating/airless/random,
 /area/station/mining/staff_room)
 "vlz" = (
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
 /obj/item/device/camera_viewer,
 /obj/machinery/camera{
 	c_tag = "autotag";

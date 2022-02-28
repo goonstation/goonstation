@@ -8,7 +8,7 @@
 	name = "genetics console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "scanner"
-	req_access = list(access_heads) //Only used for record deletion right now.
+	req_access = list(access_medlab)
 	object_flags = CAN_REPROGRAM_ACCESS
 	can_reconnect = TRUE
 	circuit_type = /obj/item/circuitboard/genetics
@@ -78,7 +78,7 @@
 			return
 
 		..()
-	return
+
 
 /obj/machinery/computer/genetics/proc/activated_bonus(mob/user as mob)
 	if (genResearch.time_discount < 0.75)
@@ -246,7 +246,9 @@
 /obj/machinery/computer/genetics/ui_status(mob/user)
 	if (user in src.scanner)
 		return UI_UPDATE
-	return ..()
+	. = ..()
+	if (!src.allowed(user))
+		. = min(., UI_UPDATE)
 
 /obj/machinery/computer/genetics/proc/on_ui_interacted(mob/user, minor = FALSE)
 	src.add_fingerprint(user)
@@ -916,6 +918,7 @@
 		"savedChromosomes" = list(),
 		"combining" = list(),
 		"unlock" = null,
+		"allowed" = src.allowed(user),
 	)
 
 	for(var/datum/db_record/R as anything in data_core.medical.records)

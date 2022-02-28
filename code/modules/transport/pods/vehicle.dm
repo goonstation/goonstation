@@ -96,6 +96,14 @@
 		else
 			return null
 
+	Click(location,control,params)
+		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
+			var/mob/dead/observer/O = usr
+			if(src.pilot)
+				O.insert_observer(src.pilot)
+		else
+			. = ..()
+
 	/////////////////////////////////////////////////////////
 	///////Attack Code									////
 	////////////////////////////////////////////////////////

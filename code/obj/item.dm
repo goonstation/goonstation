@@ -1424,7 +1424,6 @@
 	disposing_abilities()
 	setItemSpecial(null)
 	if (src.inventory_counter)
-		src.inventory_counter.vis_locs = null
 		qdel(src.inventory_counter)
 		src.inventory_counter = null
 
@@ -1532,6 +1531,10 @@
 		msg += " Turf contains <b>fluid</b> [log_reagents(T.active_liquid.group)]."
 	if (T.active_airborne_liquid?.group)
 		msg += " Turf contains <b>smoke</b> [log_reagents(T.active_airborne_liquid.group)]."
+	if (locate(/obj/item) in T.contents)
+		var/obj/item/W = locate(/obj/item) in T.contents
+		if (istype(W.material, /datum/material/crystal/plasmastone))
+			msg += " Turf contains <b>plasmastone</b>."
 	logTheThing("bombing", M, null, "[msg]")
 
 /obj/item/proc/dropped(mob/user)

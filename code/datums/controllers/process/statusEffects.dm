@@ -24,9 +24,11 @@
 
 		for (var/datum/statusEffect/S as anything in globalStatusInstances)
 			if(S == null) continue
+			if (S.duration < 0)
+				stack_trace("statusEffect [S.type] with owner [S.owner] updating with negative duration [S.duration]. actual = [actual]")
 			if(S.owner)
 				S.onUpdate(actual)
-				if(S.duration)
+				if(!isnull(S.duration))
 					S.duration -= actual
 					if(S.duration <= 0)
 						if(S.owner)

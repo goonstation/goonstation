@@ -103,6 +103,14 @@ ABSTRACT_TYPE(/obj/vehicle)
 		if(thing == src.rider)
 			src.eject_rider(0, 1, 0)
 
+	Click(location,control,params)
+		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
+			var/mob/dead/observer/O = usr
+			if(src.rider)
+				O.insert_observer(src.rider)
+		else
+			. = ..()
+
 	proc/eject_other_stuff() // override if there's some stuff integral to the vehicle that should not be ejected
 		for(var/atom/movable/AM in src)
 			AM.set_loc(src.loc)

@@ -8,7 +8,7 @@
 	heal_amt = 1
 	labeled = 1
 	initial_volume = 50
-	initial_reagents = list("methamphetamine"=3,"VHFCS"=10,"cola"=17)
+	initial_reagents = list("methamphetamine"=5,"VHFCS"=10,"cola"=15)
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/blue
 	name = "Grife-O"

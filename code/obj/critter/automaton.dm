@@ -142,7 +142,7 @@ var/global/the_automaton = null
 			src.visible_message("<span class='alert'><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
 		src.set_dir(pick(alldirs))
 
-	proc/inserted_key()
+	proc/inserted_key(mob/user)
 		switch (keycount)
 			if (2)
 				for (var/mob/M in range(5))
@@ -156,6 +156,11 @@ var/global/the_automaton = null
 				for (var/mob/M in range(5))
 					M.flash(3 SECONDS)
 				random_events.force_event("Solar Flare","Solarium Event (6 keys)")
+				var/ircmsg[] = new()
+				ircmsg["key"] = user.key
+				ircmsg["name"] = (user?.real_name) ? stripTextMacros(user.real_name) : "NULL"
+				ircmsg["msg"] = "inserted the 6th key into the Automaton and began the Solar Flare event at [round(ticker.round_elapsed_ticks / 600)] minutes into the round."
+				ircbot.export("admin", ircmsg)
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (!alive)
@@ -275,7 +280,7 @@ var/global/the_automaton = null
 				playsound(src.loc, "sound/musical_instruments/Gong_Rumbling.ogg", 60, 1)
 				qdel (W)
 				sleep(0.5 SECONDS)
-				inserted_key()
+				inserted_key(user)
 
 				playsound(src.loc, "sound/misc/automaton_scratch.ogg", 60, 1)
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/pie/lime) && keycount < AUTOMATON_MAX_KEYS)
@@ -283,7 +288,7 @@ var/global/the_automaton = null
 
 			if (keycount < (AUTOMATON_MAX_KEYS-1) && !pied)
 				keycount++
-				inserted_key()
+				inserted_key(user)
 				pied = 1
 
 			src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a moment, before secreting it away into a pie-shaped hole in its chest. How did you not notice that before?</span>")
@@ -321,7 +326,7 @@ var/global/the_automaton = null
 				W.desc = "The key seems to be gone from the photo."
 				if (keycount < (AUTOMATON_MAX_KEYS-1))
 					keycount++
-					inserted_key()
+					inserted_key(user)
 					playsound(src.loc, "sound/musical_instruments/Gong_Rumbling.ogg", 60, 1)
 			else
 				boutput(user, "<span class='alert'>[src] no longer seems interested in [W].</span>")
