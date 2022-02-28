@@ -94,7 +94,7 @@
 			var/obj/item/device/borg_linker/linker = I
 			linker.linked_rack = src
 			var/area/A = get_area(src.loc)
-			boutput("Linker: Linked to law rack at "+ A.name)
+			boutput(user,"Linker: Linked to law rack at "+ A.name)
 			return
 		else if (istype(I, /obj/item/aiModule) && !isghostdrone(user))
 			var/obj/item/aiModule/AIM = I

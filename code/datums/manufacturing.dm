@@ -1326,6 +1326,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/borg_linker
+	name = "AI Linker"
+	item_paths = list("MET-1","CRY-1","CON-1")
+	item_amounts = list(2,1,2)
+	item_outputs = list(/obj/item/device/borg_linker)
+	time = 15 SECONDS
+	create = 1
+	category = "Tool"
+
 /datum/manufacture/asimov_laws
 	name = "Standard Asimov Law Module Set"
 	item_paths = list("MET-2")

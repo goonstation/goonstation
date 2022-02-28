@@ -2251,7 +2251,8 @@
 	/datum/manufacture/rods2,
 	/datum/manufacture/metal,
 	/datum/manufacture/glass,
-	/datum/manufacture/asimov_laws)
+	/datum/manufacture/asimov_laws,
+	/datum/manufacture/borg_linker)
 
 	hidden = list(/datum/manufacture/flash,
 	/datum/manufacture/cybereye_thermal,
