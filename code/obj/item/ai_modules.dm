@@ -93,6 +93,7 @@ AI MODULES
 			else
 				boutput(user, "The law module seems unaffected.")
 
+
 /******************** Modules ********************/
 /******************** Asimov ************************/
 /obj/item/aiModule/asimov1

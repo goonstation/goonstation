@@ -1,5 +1,13 @@
 
 (t)mon feb 28 22
+(u)LeahTheTech
+(p)7602
+(e)🆕⚖|feature, balance
+(+)Arcfiend's Jolt ability will now cure cardiac arrest in people with SMES human and can now be self cast.
+(u)Sovexe
+(p)7658
+(e)🆕|feature
+(+)Produce satchels may now hold feathers.
 (u)Ikea
 (p)7600
 (e)|
