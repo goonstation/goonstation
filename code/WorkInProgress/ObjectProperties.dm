@@ -591,7 +591,7 @@ to say if there's demand for that.
 	id = "vault_speed"
 	desc = "Reduces the time needed to vault over a railing."
 	tooltipImg = "movement.png"
-	defaultValue = FALSE
+	defaultValue = 1
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "+[propVal]x"
 	ASSOCIATE_MOB_PROPERTY(PROP_VAULT_SPEED)
