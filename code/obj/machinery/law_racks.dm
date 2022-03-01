@@ -244,9 +244,8 @@
 
 
 	proc/show_laws(var/who)
-		var/list/L = who
-		if (!istype(who, /list))
-			L = list(who)
+		var/list/L =list()
+		L += who
 
 		var/laws_text = src.format_for_logs()
 		for (var/W in L)
@@ -370,5 +369,5 @@
 		else
 			src.law_circuits[lawnumber_actual].make_glitchy(picked_law,replace)
 			tgui_process.update_uis(src)
-			return
+			return true
 
