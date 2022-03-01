@@ -2,7 +2,7 @@
 	card_style = "mono"
 	total_cards = 108
 	card_name = "mono"
-	/list/numToSpecial = list("10"="Block", "11"="Reverse", "12"="Draw 2")
+	var/numToSpecial = list("10"="Block", "11"="Reverse", "12"="Draw 2")
 
 	New()
 		..()
@@ -47,7 +47,7 @@
 			if(3)
 				suit_name = "Yellow"
 			if(4)
-				suit_name = "Red"
+				suit_name = "Green"
 			if(5)
 				plain_suit = FALSE
 		if(plain_suit){
