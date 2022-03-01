@@ -1,4 +1,9 @@
 
+(t)tue mar 01 22
+(u)Sovexe
+(p)7663
+(e)🆕|feature
+(+)Ranchers now start with a pair of rancher boots. Rancher boots grant their wearer the ability to vault railings more quickly.
 (t)mon feb 28 22
 (u)LeahTheTech
 (p)7602
