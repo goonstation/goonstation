@@ -1839,8 +1839,8 @@ datum
 			id = "romulale"
 			fluid_r = 20
 			fluid_g = 168
-			fluid_b = 254
-			alch_strength = 4
+			fluid_b = 240
+			alch_strength = 0.8
 			description = "Illegal in some jurisdictions."
 			reagent_state = LIQUID
 			taste ="medicinal"
@@ -3745,7 +3745,72 @@ datum
 			description = "A mixture of half lemonade and half coffee."
 			reagent_state = LIQUID
 			thirst_value = 0.75
-			value = 3 // 1 2
+
+		fooddrink/pine_ginger
+			name = "pine-ginger"
+			id = "pine_ginger"
+			fluid_r = 230
+			fluid_g = 210
+			fluid_b = 90
+			transparency = 220
+			taste = "sweet and fruity"
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/vermont_breeze
+			name = "vermont breeze"
+			id = "vermont_breeze"
+			fluid_r = 220
+			fluid_g = 200
+			fluid_b = 80
+			transparency = 195
+			taste = "sweet and sour"
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/sail_boat
+			name = "sail boat"
+			id = "sail_boat"
+			fluid_r = 160
+			fluid_g = 220
+			fluid_b = 90
+			transparency = 160
+			taste = "sour and fizzy"
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/catamount
+			name = "catamount"
+			id = "catamount"
+			fluid_r = 230
+			fluid_g = 100
+			fluid_b = 60
+			transparency = 200
+			taste = "sweet and fruity"
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/tea/sun_tea
+			name = "sun tea"
+			id = "sun_tea"
+			fluid_r = 139
+			fluid_g = 110
+			fluid_b = 54
+			transparency = 220
+			taste = "aromatic and citrusy"
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/cafe_gele
+			name = "cafe gele"
+			id = "cafe_gele"
+			fluid_r = 140
+			fluid_g = 110
+			fluid_b = 30
+			transparency = 220
+			taste = "bittersweet"
+			reagent_state = LIQUID
+			thirst_value = 0.8
 
 
 		fooddrink/temp_bioeffect
