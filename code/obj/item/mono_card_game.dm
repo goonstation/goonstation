@@ -1,7 +1,7 @@
 /obj/item/card_group/mono
 	card_style = "mono"
 	total_cards = 108
-	card_name = "mono"
+	card_name = "MONO"
 	var/numToSpecial = list("10"="Block", "11"="Reverse", "12"="Draw 2")
 
 	New()
@@ -47,7 +47,7 @@
 			if(3)
 				suit_name = "Yellow"
 			if(4)
-				suit_name = "Green"
+				suit_name = "Red"
 			if(5)
 				plain_suit = FALSE
 		if(plain_suit){
@@ -69,3 +69,14 @@
 		update_card_information(target)
 		target.update_stored_info()
 
+/obj/item/paper/from_file/MonoRules
+	file_path = "strings/MONORules.txt"
+
+
+/obj/item/card_box/Mono
+	box_style = "red"
+	name = "Box of MONO"
+
+	New()
+		..()
+		stored_deck = new obj/item/card_group/mono
