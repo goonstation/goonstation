@@ -28478,7 +28478,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
 "boq" = (
-/obj/grille/steel,
+/obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -28489,11 +28489,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
 	},
-/obj/window/auto/crystal/reinforced,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
 "bor" = (
-/obj/grille/steel,
+/obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -28501,7 +28500,6 @@
 	name = "Combustion Chamber Heat Shield";
 	opacity = 0
 	},
-/obj/window/auto/crystal/reinforced,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -28510,7 +28508,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
 "bos" = (
-/obj/grille/steel,
+/obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -28518,7 +28516,6 @@
 	name = "Combustion Chamber Heat Shield";
 	opacity = 0
 	},
-/obj/window/auto/crystal/reinforced,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
 "bot" = (
@@ -38960,11 +38957,10 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "bJb" = (
-/obj/grille/steel,
+/obj/wingrille_spawn/auto/crystal,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/window/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "bJc" = (
@@ -40459,11 +40455,10 @@
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/west)
 "bLy" = (
-/obj/grille/steel,
+/obj/wingrille_spawn/auto/crystal,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/window/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "bLz" = (
@@ -41300,7 +41295,7 @@
 	},
 /area/station/bridge)
 "bMV" = (
-/obj/grille/steel,
+/obj/wingrille_spawn/auto/crystal,
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
@@ -41311,7 +41306,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/window/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "bMW" = (
@@ -41970,7 +41964,7 @@
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bOb" = (
-/obj/grille/steel,
+/obj/wingrille_spawn/auto/crystal,
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
@@ -41981,7 +41975,6 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/window/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "bOc" = (
@@ -57402,11 +57395,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/grille/steel,
+/obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
-/obj/window/auto/crystal/reinforced,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 4;
@@ -58196,8 +58188,7 @@
 	name = "Test Chamber Shield";
 	opacity = 0
 	},
-/obj/grille/steel,
-/obj/window/auto/crystal/reinforced,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -58705,14 +58696,12 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
-/obj/grille/steel,
-/obj/window/auto/crystal/reinforced,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "cAf" = (
 /obj/machinery/door/firedoor/pyro,
-/obj/grille/steel,
-/obj/window/auto/crystal/reinforced,
+/obj/wingrille_spawn/auto/crystal,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 4
@@ -62379,8 +62368,7 @@
 	level = 2
 	},
 /obj/machinery/door/firedoor/pyro,
-/obj/grille/steel,
-/obj/window/auto/crystal/reinforced,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "cIN" = (
@@ -62388,8 +62376,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor/pyro,
-/obj/grille/steel,
-/obj/window/auto/crystal/reinforced,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "cIO" = (
@@ -63726,11 +63713,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/grille/steel,
+/obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
-/obj/window/auto/crystal/reinforced,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -67756,7 +67742,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/staff_room)
 "cUI" = (
-/obj/grille/steel,
+/obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 10;
@@ -67765,11 +67751,10 @@
 	name = "Mining Blast Shutters";
 	opacity = 0
 	},
-/obj/window/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "cUL" = (
-/obj/grille/steel,
+/obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -67777,11 +67762,10 @@
 	name = "Mining Blast Shutters";
 	opacity = 0
 	},
-/obj/window/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "cUM" = (
-/obj/grille/steel,
+/obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 6;
@@ -67790,7 +67774,6 @@
 	name = "Mining Blast Shutters";
 	opacity = 0
 	},
-/obj/window/auto/crystal/reinforced,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "cUN" = (
@@ -68316,7 +68299,7 @@
 /turf/unsimulated/floor/red/side,
 /area/station/security/checkpoint/podbay)
 "cVU" = (
-/obj/grille/steel,
+/obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 4;
@@ -68325,7 +68308,6 @@
 	name = "Mining Blast Shutters";
 	opacity = 0
 	},
-/obj/window/auto/crystal/reinforced,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "cVV" = (
@@ -78322,8 +78304,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/security/checkpoint/podbay)
 "jYf" = (
-/obj/grille/steel,
-/obj/window/auto/crystal/reinforced,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "kaE" = (
@@ -78761,8 +78742,7 @@
 	},
 /area/station/security/checkpoint/podbay)
 "mBa" = (
-/obj/grille/steel,
-/obj/window/auto/crystal/reinforced,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor,
 /area/station/maintenance/southeast)
 "mBW" = (
