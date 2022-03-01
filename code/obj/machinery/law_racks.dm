@@ -310,13 +310,13 @@
 		equipped.set_loc(src)
 		user.visible_message("<span class='alert'>[user] slides a module into the law rack</span>", "<span class='alert'>You slide the module into the rack.</span>")
 		tgui_process.update_uis(src)
-		logTheThing("station", src, user, "inserts law module into rack: [equipped] at slot [slotNum]")
+		logTheThing("station", user, src, "[user.name] inserts law module into rack([log_loc(src)]): [equipped] at slot [slotNum]")
 		UpdateIcon()
 		UpdateLaws()
 
 	proc/remove_module_callback(var/slotNum,var/mob/user)
 		//add circuit to hand
-		logTheThing("station", src, user, "removes law module from rack: [src.law_circuits[slotNum]] at slot [slotNum]")
+		logTheThing("station", user, src, "[user.name] removes law module from rack([log_loc(src)]): [src.law_circuits[slotNum]] at slot [slotNum]")
 		user.visible_message("<span class='alert'>[user] slides a module out of the law rack</span>", "<span class='alert'>You slide the module out of the rack.</span>")
 		user.put_in_hand_or_drop(src.law_circuits[slotNum])
 		src.law_circuits[slotNum] = null
