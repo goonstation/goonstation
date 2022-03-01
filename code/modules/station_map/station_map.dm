@@ -15,7 +15,7 @@
 		x_min = world.maxx
 		y_min = world.maxy
 		if (!map_icon)
-			map_icon = icon("icons/obj/station_map.dmi", "blank")
+			map_icon = icon('icons/obj/station_map.dmi', "blank")
 			render_map()
 			zoom_map()
 			pixel_y += 20 //magic numbers because ByondUI mis-aligns by a few pixels
