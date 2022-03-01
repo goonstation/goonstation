@@ -98,7 +98,7 @@
 			var/area/A = get_area(src.loc)
 			boutput(user,"Linker: Linked to law rack at "+ A.name)
 			return
-		else if (istype(I, /obj/item/aiModule) && !isghostdrone(user))
+		else if (istype(I, /obj/item/aiModule) && !issilicon(user))
 			var/obj/item/aiModule/AIM = I
 			var/inserted = false
 			var/count = 1
