@@ -912,6 +912,19 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		else
 			. += "<span class='alert'><B>[src.name] looks severely burnt!</B></span>"
 
+	if(issilicon(user) || isAI(user))
+		var/lr = null
+		if(isAIeye(user))
+			var/mob/living/intangible/aieye/E = user
+			lr =  E.mainframe?.law_rack_connection
+		else
+			var/mob/living/silicon/S = user
+			lr =  S.law_rack_connection
+		if(src.law_rack_connection != lr)
+			. += "<span class='alert'>[src.name] is not connected to your law rack!</span><br>"
+		else
+			. += "[src.name] follows the same laws you do.<br>"
+
 /mob/living/silicon/ai/emote(var/act, var/voluntary = 0)
 	var/param = null
 	if (findtext(act, " ", 1, null))

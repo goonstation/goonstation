@@ -655,10 +655,10 @@
 						O.show_message("<span class='emote'>[message]</span>", m_type)
 		return
 
-	examine()
+	examine(mob/user)
 		. = list()
 
-		if (isghostdrone(usr))
+		if (isghostdrone(user))
 			return
 		. += "<span class='notice'>*---------*</span><br>"
 		. += "<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span><br>"
@@ -687,6 +687,19 @@
 			. += "[src.name] has a [src.module.name] installed.<br>"
 		else
 			. += "[src.name] does not appear to have a module installed.<br>"
+
+		if(issilicon(user) || isAI(user))
+			var/lr = null
+			if(isAIeye(user))
+				var/mob/living/intangible/aieye/E = user
+				lr =  E.mainframe?.law_rack_connection
+			else
+				var/mob/living/silicon/S = user
+				lr =  S.law_rack_connection
+			if(src.law_rack_connection != lr)
+				. += "<span class='alert'>[src.name] is not connected to your law rack!</span><br>"
+			else
+				. += "[src.name] follows the same laws you do.<br>"
 
 		. += "<span class='notice'>*---------*</span>"
 
