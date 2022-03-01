@@ -71,6 +71,7 @@
 
 /obj/item/paper/from_file/MonoRules
 	file_path = "strings/MONORules.txt"
+	icon_state = "book0"
 
 
 /obj/item/card_box/Mono
@@ -79,4 +80,4 @@
 
 	New()
 		..()
-		stored_deck = new obj/item/card_group/mono
+		stored_deck = new /obj/item/card_group/mono(src)
