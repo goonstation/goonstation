@@ -91,11 +91,24 @@
 		return laws
 
 
-	proc/format_for_logs(var/glue = "<br>")
+	proc/format_for_logs(var/glue = "<br>",var/round_end=false)
 		var/list/laws = list()
-		var/area/A
 		for(var/obj/machinery/lawrack/R in src.registered_racks)
-			A = get_area(R.loc)
+			var/list/affected_mobs = list()
+			for (var/mob/living/silicon/S in mobs)
+				if (isghostdrone(S) || isshell(S))
+					continue
+				if(S.law_rack_connection == R)
+					affected_mobs |= S
 
-			laws += "Laws for [R] at [A ? A.name : "...er somewhere?"]:<br>" + R.format_for_logs(glue) +"<br>--------------<br>"
+			for (var/mob/living/intangible/aieye/E in mobs)
+				if(E.mainframe?.law_rack_connection == R)
+					affected_mobs |= E.mainframe
+
+			if(affected_mobs.len > 0 || !round_end) //no point displaying law racks with nothing connected to 'em
+				var/list/mobtextlist = list()
+				for(var/mob/living/M in affected_mobs)
+					mobtextlist += M.real_name ? M.real_name : M.name//constructName(M, "admin")
+
+				laws += "Laws for [R] at [log_loc(R)]:<br>" + R.format_for_logs(glue) +"<br>The law rack is connected to the following silicons: "+mobtextlist.Join(", ") +"<br>--------------<br>"
 		return jointext(laws, glue)

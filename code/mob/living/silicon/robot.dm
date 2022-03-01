@@ -1057,6 +1057,9 @@
 				boutput(user,"You need to use this on the AI core directly!")
 				return
 			if(!src.law_rack_connection)
+				if(!linker.linked_rack)
+					boutput(user,"No stored law rack link to connect to!")
+					return
 				if(linker.linked_rack in ticker.ai_law_rack_manager.registered_racks)
 					src.law_rack_connection = linker.linked_rack
 					logTheThing("station", src, src.law_rack_connection, "[src.name] is connected to the rack at [log_loc(src.law_rack_connection)] with a linker by [user]")
@@ -1067,7 +1070,8 @@
 				else
 					boutput(user,"Linker lost connection to the stored law rack!")
 			else
-				boutput(user, "[src.name] is already connected to a law rack.")
+				var/area/A = get_area(src.law_rack_connection)
+				boutput(user, "[src.name] is connected to a law rack at [A.name].")
 			return
 
 		if (isweldingtool(W))
