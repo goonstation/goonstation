@@ -1421,6 +1421,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\plank.dm"
 #include "code\obj\item\plants.dm"
 #include "code\obj\item\playing_cards.dm"
+#include "code\obj\item\mono_card_game.dm"
 #include "code\obj\item\power_stones.dm"
 #include "code\obj\item\range_target.dm"
 #include "code\obj\item\rcd.dm"
