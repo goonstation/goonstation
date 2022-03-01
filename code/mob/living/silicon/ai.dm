@@ -317,7 +317,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 		var/obj/item/device/borg_linker/linker = W
-		if(src.dismantle_stage==2)
+		if(src.dismantle_stage<2)
 			boutput(user, "You need to open [src.name]'s cover before you can change their law rack link.")
 			return
 
