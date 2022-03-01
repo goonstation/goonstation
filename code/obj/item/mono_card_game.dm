@@ -71,7 +71,7 @@
 
 /obj/item/paper/from_file/MonoRules
 	file_path = "strings/MONORules.txt"
-	icon_state = "book0"
+	icon_state = "paper"
 
 
 /obj/item/card_box/Mono
