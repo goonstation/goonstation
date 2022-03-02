@@ -1,5 +1,13 @@
 import { Box, ColorBox, Flex, Icon, NoticeBox, Section, Tooltip } from '../../components';
 
+export const NoContainer = {
+  name: "No Beaker Inserted",
+  id: "inserted",
+  maxVolume: 100,
+  totalVolume: 0,
+  fake: true,
+};
+
 export const ReagentGraph = props => {
   const {
     container,

@@ -2,20 +2,12 @@ import { useBackend, useSharedState, useLocalState } from "../backend";
 import { Button, Dimmer, Divider, Flex, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { Fragment } from 'inferno';
-import { ReagentGraph, ReagentList } from './common/ReagentInfo.js';
+import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo.js';
 
 // Feel free to adjust this for performance
 const extractablesPerPage = 25;
 
 const clamp = (value, min, max) => Math.min(Math.max(min, value), max);
-
-const noContainer = {
-  name: "No Beaker Inserted",
-  id: "inserted",
-  maxVolume: 100,
-  totalVolume: 0,
-  fake: true,
-};
 
 export const ReagentExtractor = (props, context) => {
   const { data } = useBackend(context);
@@ -64,7 +56,7 @@ export const ReagentExtractor = (props, context) => {
 const ReagentDisplay = (props, context) => {
   const { act } = useBackend(context);
   const { insertable } = props;
-  const container = props.container || noContainer;
+  const container = props.container || NoContainer;
   const [transferAmount, setTransferAmount] = useSharedState(context, `transferAmount_${container.id}`, 10);
 
   return (
