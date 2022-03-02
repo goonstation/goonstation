@@ -331,8 +331,6 @@
 			tgui_process.update_uis(src)
 			UpdateIcon()
 			return true
-		else
-			return false
 
 	proc/SetLawCustom(var/lawName,var/lawText,var/slot=1,var/screwed_in=false,var/welded_in=false)
 		var/mod = new /obj/item/aiModule/custom(lawName,lawText)
@@ -344,12 +342,10 @@
 		src.screwed[slot]=false
 		tgui_process.update_uis(src)
 		UpdateIcon()
-		return true
 
 	proc/DeleteAllLaws()
 		for (var/i in 1 to MAX_CIRCUITS)
 			src.DeleteLaw(i)
-		return true
 
 	proc/cause_law_glitch(var/picked_law="Beep repeatedly.",var/lawnumber=1,var/replace=false)
 		//This will cause a module to glitch, either totally replace it law or adding picked_law
