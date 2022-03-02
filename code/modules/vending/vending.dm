@@ -841,7 +841,7 @@
 
 	if(length(item_name_to_throw))
 		for(var/datum/data/vending_product/R in src.product_list)
-			if(item_name_to_throw == R.product_name_cache[R.product_path])
+			if(lowertext(item_name_to_throw) == lowertext(strip_html(R.product_name_cache[R.product_path], no_fucking_autoparse = TRUE)))
 				if(R.product_amount > 0)
 					throw_item_act(R, target)
 					return R
