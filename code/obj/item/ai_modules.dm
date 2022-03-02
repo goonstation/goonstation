@@ -54,6 +54,13 @@ AI MODULES
 		if (comp.status & BROKEN)
 			boutput(user, "\The [comp] computer is broken!")
 			return
+		if (issilicon(user))
+			boutput(user, "\The [comp] computer has a captcha. You don't succeed.")
+			return
+		if (istype(user, /mob/living/object))
+			boutput(user, "Try as you might, you just can't seem to upload yourself.")
+			return
+
 		if(ON_COOLDOWN(global, "ai_law_change", 10 SECONDS))
 			boutput(user, "Centralized AI law database is still processing the last request. Wait [ON_COOLDOWN(global, "ai_law_change", 0)/10] seconds.")
 			return

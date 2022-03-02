@@ -1834,6 +1834,7 @@ var/datum/action_controller/actions
 		onEnd()
 			..()
 			if (can_reach(owner,over_object) && ismob(owner) && owner:equipped() == target)
+				usr = owner
 				over_object.Attackby(target, owner, params)
 
 /// general purpose action to anchor or unanchor stuff

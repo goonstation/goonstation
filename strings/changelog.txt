@@ -1,4 +1,26 @@
 
+(t)tue mar 01 22
+(u)Sovexe
+(p)7663
+(e)🆕|feature
+(+)Ranchers now start with a pair of rancher boots. Rancher boots grant their wearer the ability to vault railings more quickly.
+(t)mon feb 28 22
+(u)LeahTheTech
+(p)7602
+(e)🆕⚖|feature, balance
+(+)Arcfiend's Jolt ability will now cure cardiac arrest in people with SMES human and can now be self cast.
+(u)Sovexe
+(p)7658
+(e)🆕|feature
+(+)Produce satchels may now hold feathers.
+(u)Ikea
+(p)7600
+(e)|
+(*)The syndicates have noticed an overstocking of nanotrasen stations and has decided to increase the max amount of revolutionary heads it will send to a station to 5.
+(u)LeahTheTech
+(p)7577
+(e)🆕🎨📄|feature, sprites, tgui
+(*)Added a map for the AI to move around with. Open with the "Open station map" verb and click to teleport.
 (t)sun feb 27 22
 (u)Jimmyl
 (p)6973
