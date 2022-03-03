@@ -787,6 +787,7 @@ THROWING DARTS
 
 	bullet_45
 		name = ".45 round"
+		icon_state = "bulletround"
 		desc = "An outdated army-issue bullet. Mainly used by war reenactors and space cowboys."
 
 	bullet_38AP
@@ -797,9 +798,15 @@ THROWING DARTS
 		name = "9mm NATO round"
 		desc = "A reliable bullet, used ubiquitously in law enforcement and armed forces a century ago."
 
+	9mmplastic
+		name = "plastic fragments"
+		icon_state = "bulletplastic"
+		desc = "Little bits of shattered plastic and rubber, from a sub-lethal round."
+
 	bullet_308
 		name = ".308 round"
-		desc = "An old but very powerful rifle bullet."
+		icon_state = "bulletbig"
+		desc = "A large bullet for a rifle"
 
 	bullet_22
 		name = ".22 round"
@@ -807,6 +814,7 @@ THROWING DARTS
 
 	bullet_22HP
 		name = ".22 hollow point round"
+		icon_state = "bulletexpanded"
 		desc = "A small calibre hollow point bullet for use against unarmored targets. Wait, aren't these a war crime?"
 
 	bullet_41
@@ -815,6 +823,7 @@ THROWING DARTS
 
 	bullet_12ga
 		name = "buckshot"
+		icon_state = "bulletround"
 		desc = "A commonly-used load for shotguns."
 
 	staple
@@ -845,6 +854,7 @@ THROWING DARTS
 
 	bullet_50
 		name = ".50AE round"
+		icon_state = "bulletbig"
 		desc = "Ouch."
 
 	rakshasa
