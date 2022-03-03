@@ -8670,21 +8670,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
-"clC" = (
-/obj/table/reinforced/auto,
-/obj/machinery/cashreg{
-	pixel_x = -7;
-	pixel_y = 3
-	},
-/obj/machinery/door/window/southleft,
-/obj/access_spawn/security,
-/obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/access_spawn/security,
-/turf/simulated/floor/redblack{
-	dir = 1
-	},
-/area/station/security/checkpoint/west)
 "cma" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/light/small/sticky{
@@ -15743,6 +15728,20 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
+"epU" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cashreg{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/obj/access_spawn/security,
+/obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/access_spawn/security,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/checkpoint/west)
 "eqa" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -27759,14 +27758,6 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
-"hNL" = (
-/obj/machinery/lawrack,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/item/device/radio/intercom/AI,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "hNU" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/railing/orange{
@@ -41930,6 +41921,20 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
+"mbI" = (
+/obj/table/wood/round/auto,
+/obj/item/storage/box/trackimp_kit2{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/device/radio/intercom/security{
+	pixel_x = 1
+	},
+/obj/item/aiModule/reset{
+	pixel_y = 7
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
 "mbM" = (
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary{
@@ -49167,20 +49172,6 @@
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
-"olz" = (
-/obj/table/wood/round/auto,
-/obj/item/storage/box/trackimp_kit2{
-	pixel_x = -5;
-	pixel_y = 1
-	},
-/obj/item/device/radio/intercom/security{
-	pixel_x = 1
-	},
-/obj/item/aiModule/reset{
-	pixel_y = 7
-	},
-/turf/simulated/floor/black,
-/area/station/bridge)
 "olB" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 5;
@@ -82141,6 +82132,14 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/south)
+"xFm" = (
+/obj/machinery/lawrack,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/item/device/radio/intercom/AI,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "xFr" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/yellowblack/corner{
@@ -112382,7 +112381,7 @@ vJT
 tcH
 jlS
 uFF
-clC
+epU
 ovT
 ovT
 iHj
@@ -116273,7 +116272,7 @@ bJQ
 mHL
 rdj
 hAh
-hNL
+xFm
 geN
 geN
 geN
@@ -118428,7 +118427,7 @@ ouo
 apH
 gbW
 hBw
-olz
+mbI
 biw
 sVZ
 wto
