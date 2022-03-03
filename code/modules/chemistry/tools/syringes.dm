@@ -45,7 +45,7 @@
 			src.UpdateOverlays(null, "inj_dr")
 		if (!src.fluid_image)
 			src.fluid_image = image('icons/obj/syringe.dmi')
-		src.fluid_image.icon_state = "f[rounded_vol]"
+		src.fluid_image.icon_state = "[icon_prefix]_f[rounded_vol]"
 		if(reagents) // fix for Cannot execute null.get average color().
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
