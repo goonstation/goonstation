@@ -1443,6 +1443,12 @@
 			return 1
 		return 0
 
+	proc/make_antique()
+		name = "antique Lawbringer"
+		icon_state = "old-lawbringer0"
+		old = 1
+		UpdateIcon()
+
 	shoot(var/target,var/start,var/mob/user)
 		if (canshoot())
 			//removing this for now so anyone can shoot it. I PROBABLY will want it back, doing this for some light appeasement to see how it goes.
