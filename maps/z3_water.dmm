@@ -2139,6 +2139,10 @@
 /obj/machinery/handscanner{
 	pixel_y = 32
 	},
+/mob/living/critter/gunbot/syndicate{
+	desc = "Painted in red and black, all indentifying marks have been scraped off. Darn.";
+	name = "Unmarked robot"
+	},
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "fH" = (
