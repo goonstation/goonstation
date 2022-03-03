@@ -77,7 +77,7 @@
 		smoke.set_up(5, 0, target.loc)
 		smoke.attach(target)
 		smoke.start()
-
+		logTheThing("combat", M, target, "casts a Cluwne spell on [constructTarget(target,"combat")] at [log_loc(target)].")
 		if (target.job != "Cluwne")
 			boutput(target, "<span class='alert'><B>You HONK painfully!</B></span>")
 			target.take_brain_damage(50)

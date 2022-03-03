@@ -8676,7 +8676,6 @@
 	pixel_x = -7;
 	pixel_y = 3
 	},
-/obj/machinery/door/window/southleft,
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -58278,7 +58277,7 @@
 	},
 /area/station/science/lobby)
 "qLV" = (
-/obj/table/auto,
+/obj/table/reinforced/auto,
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = -8;
 	pixel_y = 12

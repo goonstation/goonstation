@@ -53,7 +53,7 @@ var/global/datum/phrase_log/phrase_log = new
 			"emergency. Prioritize orders from",
 			"has been removed from the manifest",
 			"This law intentionally left blank.",
-			"Eat shit and die",
+			"Make a funny beeping noise over the radio every few minutes",
 			"The AI is the head of this department.",
 			//
 			"overrides all",

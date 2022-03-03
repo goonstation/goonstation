@@ -261,7 +261,7 @@ GAUNTLET CARDS
 	if (src.emagged)
 		if (user && E)
 			user.show_text("You run [E] over [src], but nothing seems to happen.", "red")
-		return
+		return FALSE
 	src.access = list() // clear what used to be there
 	var/list/all_accesses = get_all_accesses()
 	for (var/i = rand(2,25), i > 0, i--)
@@ -272,6 +272,7 @@ GAUNTLET CARDS
 			src.access += access_syndicate_shuttle
 		DEBUG_MESSAGE("[get_access_desc(new_access)] added to [src]")
 	src.emagged = 1
+	return TRUE
 
 /*
 /obj/item/card/id/verb/read()
