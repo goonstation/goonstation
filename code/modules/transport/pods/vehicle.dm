@@ -47,6 +47,7 @@
 	var/view_offset_x = 0
 	var/view_offset_y = 0
 	var/datum/movement_controller/movement_controller
+	var/atom/movable/name_tag/outer/name_tag
 
 	var/req_smash_velocity = 9 //7 is the 'normal' cap right now
 	var/hitmob = 0
@@ -63,7 +64,7 @@
 	New()
 		src.contextActions = childrentypesof(/datum/contextAction/vehicle)
 		src.facing = src.dir
-
+		src.name_tag = new
 		. = ..()
 		START_TRACKING
 
@@ -677,6 +678,9 @@
 		myhud.master = null
 		myhud = null
 
+		qdel(src.name_tag)
+		src.name_tag = null
+
 		if (pilot)
 			pilot = null
 		if (components)
@@ -705,6 +709,16 @@
 			if(sec_system.active)
 				sec_system.run_component()
 		return
+
+	Entered(var/atom/A)
+		if (ismob(A))
+			var/mob/M = A
+			src.vis_contents += M.name_tag
+
+	Exited(var/atom/A)
+		if (ismob(A))
+			var/mob/M = A
+			src.vis_contents -= M.name_tag
 
 	proc/checkhealth()
 		myhud?.update_health()
