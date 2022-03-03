@@ -151,4 +151,4 @@
 				for(var/turf/simulated/floor/T in view(W,7))
 					if (prob(33))
 						new /obj/grille/steel(T)
-		logTheThing("combat", src, null, "casts a Pandemonium spell causing [spell_result] at [log_loc(src)].")
+		logTheThing("combat", W, null, "'s Pandemonium caused a [spell_result] effect at [log_loc(W)].")
