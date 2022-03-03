@@ -105,7 +105,7 @@
 		if(powered() && authed)
 			src.ClearSpecificOverlays("screen_image")
 			src.icon_state = "drawbr-alert"
-			update_screen_image()
+			src.UpdateIcon()
 
 	proc/authorize()
 		if(src.authed)
@@ -116,7 +116,7 @@
 		authed = 1
 		src.ClearSpecificOverlays("screen_image")
 		src.icon_state = "drawbr-alert"
-		update_screen_image()
+		src.UpdateIcon()
 
 		src.authorized = null
 		src.authorized_registered = null
@@ -143,7 +143,7 @@
 			authed = 0
 			src.ClearSpecificOverlays("screen_image")
 			icon_state = "drawbr"
-			update_screen_image()
+			src.UpdateIcon()
 
 			for (var/obj/machinery/door/airlock/D in armory_area)
 				if (D.has_access(access_security))
