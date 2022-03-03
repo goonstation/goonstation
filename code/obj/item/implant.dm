@@ -799,9 +799,9 @@ THROWING DARTS
 		desc = "A reliable bullet, used ubiquitously in law enforcement and armed forces a century ago."
 
 	ninemmplastic
-		name = "Plastic fragments"
+		name = "9mm Plastic round"
 		icon_state = "bulletplastic"
-		desc = "Little bits of shattered plastic and rubber, from a sub-lethal round."
+		desc = "A small, sublethal plastic projectile."
 
 	bullet_308
 		name = ".308 round"
