@@ -24,7 +24,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "_std\__std.dme"
 
 // Secret Code Handling
-#ifndef FASTDMM
+#if !defined(FASTDMM) && !defined(DISABLE_SECRETS)
 #include "+secret\__secret.dme"
 #endif
 #include "code\__secret_public.dme"
