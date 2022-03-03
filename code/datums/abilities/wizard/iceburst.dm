@@ -28,7 +28,6 @@
 			holder.owner.say("NYTH ERRIN")
 		..()
 
-
 		if(!holder.owner.wizard_spellpower(src))
 			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
 

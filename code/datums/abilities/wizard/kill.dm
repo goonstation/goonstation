@@ -21,6 +21,7 @@
 			if(!istype(get_area(holder.owner), /area/sim/gunsim))
 				holder.owner.say("EI NATH")
 			..()
+
 			if (ishuman(target))
 				if (target.traitHolder.hasTrait("training_chaplain"))
 					boutput(holder.owner, "<span class='alert'>[target] has divine protection from magic.</span>")
