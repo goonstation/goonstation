@@ -270,7 +270,7 @@
 		return
 
 	var/message_a = src.say_quote(message)
-	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[message_a]</span></span></i>"
+	var/rendered = "<i><span class='game roboticsay'>Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[message_a]</span></span></i>"
 	for (var/mob/living/S in mobs)
 		if(!S.stat)
 			if(S.robot_talk_understand)

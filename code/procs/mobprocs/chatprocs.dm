@@ -314,10 +314,8 @@
 		return
 
 	if (isvampire(src))
-		name = src.real_name
 		alt_name = " (VAMPIRE)"
 	else if (isvampiricthrall(src))
-		name = src.real_name
 		alt_name = " (THRALL)"
 
 #ifdef DATALOGGER
@@ -327,7 +325,7 @@
 	message = src.say_quote(message)
 	//logTheThing("say", src, null, "SAY: [message]")
 
-	var/rendered = "<span class='game ghoulsay'><span class='prefix'>GHOULSPEAK:</span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
+	var/rendered = "<span class='game thrallsay'><span class='prefix'>Thrall speak:</span> <span class='name [isvampire(src) ? "vamp" : ""]' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 
 	//show to ghouls
 	for (var/client/C in clients)
