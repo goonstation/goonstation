@@ -1,4 +1,9 @@
 
+(t)wed mar 02 22
+(u)Jimmyl
+(p)7657
+(e)🐛|bug
+(+)Fixed the bug of the PDA Packet senders Delete button not working
 (t)tue mar 01 22
 (u)Sovexe
 (p)7663
