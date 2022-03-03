@@ -3675,7 +3675,8 @@ datum
 			fluid_b = 0
 			transparency = 255
 			value = 4
-			threshold = 2
+			threshold = THRESHOLD_INIT
+			threshold_volume = 2
 
 			cross_threshold_over()
 				if(holder?.my_atom && !istype(holder.my_atom, /turf))

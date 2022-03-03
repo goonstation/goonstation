@@ -93,7 +93,7 @@
 
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.on_chair = 0
+			H.on_chair = null
 
 		playsound(M.loc, "sound/effects/flip.ogg", 50, 1)
 		M.throw_at(target, 10, 1, throw_type = THROW_CHAIRFLIP)

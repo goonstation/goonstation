@@ -749,6 +749,7 @@
 		..()
 
 		src.visible_message("<span class='combat'><b>[src]</b> bursts into a puff of smoke!</span>")
+		logTheThing("combat", src, null, "died, causing [src.reagents.get_master_reagent_name()] smoke at [log_loc(src)].")
 		src.reagents.smoke_start(12)
 		invisibility = INVIS_ALWAYS_ISH
 		SPAWN(5 SECONDS)

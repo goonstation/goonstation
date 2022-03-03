@@ -564,6 +564,8 @@ datum
 		/// the first argument is the reagent id
 		/// the second whether or not the total volume of the container should update, which may be undesirable in the update_total proc
 		proc/del_reagent(var/reagent, var/update_total = TRUE)
+			if(src.disposed)
+				CRASH("Attempting to delete [reagent] from disposed /datum/reagents.")
 			var/datum/reagent/current_reagent = reagent_list[reagent]
 
 			if (current_reagent)

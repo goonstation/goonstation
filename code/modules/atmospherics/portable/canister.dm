@@ -133,14 +133,15 @@
 		health -= 5
 		healthcheck()
 
-/obj/machinery/portable_atmospherics/canister/proc/healthcheck()
+/obj/machinery/portable_atmospherics/canister/proc/healthcheck(mob/user)
 	if(destroyed)
 		return 1
 
 	if (src.health <= 10)
 		tgui_process.close_uis(src)
-		message_admins("[src] was destructively opened, emptying contents at [log_loc(src)]. See station logs for atmos readout.")
-		logTheThing("station", null, null, "[src] [log_atmos(src)] was destructively opened, emptying contents at [log_loc(src)].")
+		if(src.air_contents.check_if_dangerous())
+			message_admins("[src] [alert_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
+		logTheThing("station", null, null, "[src] [log_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
 
 		var/atom/location = src.loc
 		location.assume_air(air_contents)
@@ -352,7 +353,8 @@
 				src.det.attachedTo = src
 				src.det.builtBy = user
 				logTheThing("bombing", user, null, "builds a canister bomb [log_atmos(src)] at [log_loc(src)].")
-				message_admins("[key_name(user)] builds a canister bomb at [log_loc(src)]. See bombing logs for atmos readout.")
+				if(src.air_contents.check_if_dangerous())
+					message_admins("[key_name(user)] builds a canister bomb [alert_atmos(src)] at [log_loc(src)].")
 				tgui_process.update_uis(src)
 				src.UpdateIcon()
 	else if (src.det && istype(W, /obj/item/tank))
@@ -377,7 +379,7 @@
 		src.visible_message("<span class='alert'>[user] hits the [src] with a [W]!</span>")
 		logTheThing("combat", user, null, "attacked [src] [log_atmos(src)] with [W] at [log_loc(src)].")
 		src.health -= W.force
-		healthcheck()
+		healthcheck(user)
 	..()
 
 /obj/machinery/portable_atmospherics/canister/attack_ai(var/mob/user as mob)
@@ -507,7 +509,8 @@
 		playsound(src.loc, "sound/effects/valve_creak.ogg", 50, 1)
 		if (src.valve_open)
 			playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
-			message_admins("[key_name(usr)] opened [src] into the air at [log_loc(src)]. See station logs for atmos readout.")
+			if(src.air_contents.check_if_dangerous())
+				message_admins("[key_name(usr)] opened [src] into the air [alert_atmos(src)] at [log_loc(src)]")
 			if (src.det)
 				src.det.leaking()
 	return TRUE

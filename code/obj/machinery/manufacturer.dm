@@ -32,12 +32,14 @@
 	// 0 is =>, 1 is ==
 	var/base_material_class = /obj/item/material_piece/ // please only material pieces
 	var/obj/item/reagent_containers/glass/beaker = null
+	var/obj/item/disk/data/floppy/manudrive = null
 	var/list/resource_amounts = list()
 	var/area_name = null
 	var/output_target = null
 	var/list/materials_in_use = list()
 	var/list/available = list()
 	var/list/download = list()
+	var/list/drive_recipes = list()
 	var/list/hidden = list()
 	var/list/queue = list()
 	var/last_queue_op = 0
@@ -106,8 +108,10 @@
 		src.panel_sprite = null
 		src.output_target = null
 		src.beaker = null
+		src.manudrive = null
 		src.available.len = 0
 		src.available = null
+		src.drive_recipes = null
 		src.download.len = 0
 		src.download = null
 		src.hidden.len = 0
@@ -440,7 +444,7 @@
 		// 	dat += " <small>(Filter: \"[html_encode(src.category)]\")</small>"
 
 		// Get the list of stuff we can print ...
-		var/list/products = src.available + src.download
+		var/list/products = src.available + src.drive_recipes + src.download
 		if (src.hacked)
 			products += src.hidden
 
@@ -540,6 +544,9 @@
 			return TRUE
 
 		if(src.download && (M in src.download))
+			return TRUE
+
+		if(src.drive_recipes && (M in src.drive_recipes))
 			return TRUE
 
 		if(src.hacked && src.hidden && (M in src.hidden))
@@ -702,6 +709,9 @@
 					src.begin_work(1)
 					src.updateUsrDialog()
 					return
+
+			if (href_list["ejectmanudrive"])
+				src.eject_manudrive(usr)
 
 			if (href_list["ejectbeaker"])
 				if (src.beaker)
@@ -1025,6 +1035,27 @@
 				if (user && W)
 					user.u_equip(W)
 					W.dropped()
+
+		else if (istype(W,/obj/item/disk/data/floppy))
+			if (src.manudrive)
+				boutput(user, "<span class='alert'>You swap out the manudrive in the manufacturer with a different one.</span>")
+				src.eject_manudrive(user)
+				src.manudrive = W
+				if (user && W)
+					user.u_equip(W)
+					W.dropped()
+				for (var/datum/computer/file/manudrive/MD in src.manudrive.root.contents)
+					src.drive_recipes = MD.drivestored
+			else
+				boutput(user, "<span class='notice'>You insert [W].</span>")
+				W.set_loc(src)
+				src.manudrive = W
+				if (user && W)
+					user.u_equip(W)
+					W.dropped()
+				for (var/datum/computer/file/manudrive/MD in src.manudrive.root.contents)
+					src.drive_recipes = MD.drivestored
+
 
 		else if (istype(W,/obj/item/sheet/) || (istype(W,/obj/item/cable_coil/ || (istype(W,/obj/item/raw_material/ )))))
 			boutput(user, "<span class='alert'>The fabricator rejects the [W]. You'll need to refine them in a reclaimer first.</span>")
@@ -1431,7 +1462,7 @@
 
 		var/datum/manufacture/M = src.queue[1]
 		//Wire: Fix for href exploit creating arbitrary items
-		if (!(M in src.available + src.hidden + src.download))
+		if (!(M in src.available + src.hidden + src.drive_recipes + src.download))
 			src.mode = "halt"
 			src.error = "Corrupted entry purged from production queue."
 			src.queue -= src.queue[1]
@@ -1472,6 +1503,19 @@
 				src.timeleft += rand(2,6)
 				src.timeleft *= 1.5
 			src.timeleft /= src.speed
+
+		if(src.manudrive)
+			if(src.queue[1] in src.drive_recipes)
+				var/obj/item/disk/data/floppy/ManuD = src.manudrive
+				for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
+					if(MD.fablimit == 0)
+						src.mode = "halt"
+						src.error = "The inserted ManuDrive is unable to operate further."
+						src.queue = list()
+						return
+					else
+						MD.fablimit -= 1
+
 		playsound(src.loc, src.sound_beginwork, 50, 1, 0, 3)
 		src.mode = "working"
 		src.build_icon()
@@ -1660,6 +1704,24 @@
 		</tr>
 			"}
 
+		if (src.manudrive)
+			dat += {"
+		<tr><th colspan='2'>Manufacturer drive</th></tr>
+			"}
+
+			dat += {"
+		<tr><td colspan='2'><a href='?src=\ref[src];ejectmanudrive=\ref[src]' class='buttonlink'>&#9167;</a> [src.manudrive.name]</td></tr>
+			"}
+
+			var/obj/item/disk/data/floppy/ManuD = src.manudrive
+			for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
+				if(MD.fablimit >= 0)
+					dat += {"
+				<tr>
+					<td>ManuDrive Usages</td>
+					<td class='r'>[MD.fablimit]</td>
+				</tr>
+					"}
 
 		if (src.reagents.total_volume > 0)
 			dat += {"
@@ -1698,7 +1760,7 @@
 
 			if (src.beaker.reagents.total_volume > 0)
 				dat += {"
-				<a href='?src=\ref[src];transfrom=\ref[src.beaker]'>Transfer<br>Container &rarr; Machine</a>"
+				<a href='?src=\ref[src];transfrom=\ref[src.beaker]'>Transfer<br>Container &rarr; Machine</a>
 				"}
 
 			dat += {"
@@ -1785,6 +1847,11 @@
 			queue_num++
 
 		return dat.Join()
+
+	proc/eject_manudrive(var/mob/living/user)
+		src.drive_recipes = null
+		user.put_in_hand_or_drop(manudrive)
+		src.manudrive = null
 
 	proc/load_item(var/obj/item/O,var/mob/living/user)
 		if (!O)
@@ -2031,7 +2098,7 @@
 
 /obj/machinery/manufacturer/general
 	name = "General Manufacturer"
-	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing tools and general purpose items.."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing tools and general purpose items."
 	free_resource_amt = 5
 	free_resources = list(/obj/item/material_piece/steel,
 		/obj/item/material_piece/copper,
@@ -2416,9 +2483,9 @@
 
 /obj/machinery/manufacturer/gas
 	name = "Gas Extractor"
-	desc = "A manufacturing unit that can produce gas canisters from certain ores."
-	icon_state = "fab-mining"
-	icon_base = "mining"
+	desc = "A 3D printer-like machine that can produce gas canisters from certain ores."
+	icon_state = "fab-atmos"
+	icon_base = "atmos"
 	accept_blueprints = 0
 	available = list(
 	/datum/manufacture/atmos_can,

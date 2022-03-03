@@ -117,6 +117,7 @@
 		else
 			src.icon_state = "mason_jar"
 
+	suicide_in_hand = FALSE
 	custom_suicide = TRUE
 	suicide(mob/user)
 		if(length(src.contents) > 0)

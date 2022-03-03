@@ -668,7 +668,13 @@ TRAYS
 			return
 		if(!W.edible)
 			if(istype(W, /obj/item/kitchen/utensil/fork) || istype(W, /obj/item/kitchen/utensil/spoon))
-				var/obj/item/reagent_containers/food/sel_food = input(user, "Which food do you want to eat?", "[src] Contents") as null|anything in ordered_contents
+				var/obj/item/reagent_containers/food/sel_food = null
+				if(length(ordered_contents) > 1)
+					sel_food = input(user, "Which food do you want to eat?", "[src] Contents") as null|anything in ordered_contents
+				else if(length(ordered_contents) == 1)
+					sel_food = ordered_contents[1]
+				else
+					user.visible_message("<b>[user]</b> stares glumly at the empty plate.","You stare glumly at the empty plate.")
 				if(!sel_food)
 					return
 				sel_food.Eat(user,user)
@@ -699,7 +705,11 @@ TRAYS
 			if(ordered_contents.len == 0)
 				boutput(M, "There's no food to take off of \the [src]!")
 				return
-			var/food_sel = input(M, "Which food do you want to take off of \the [src]?", "[src]'s contents") as null|anything in ordered_contents
+			var/obj/item/food_sel = null
+			if(length(ordered_contents) == 1)
+				food_sel = ordered_contents[1]
+			else
+				food_sel = input(M, "Which food do you want to take off of \the [src]?", "[src]'s contents") as null|anything in ordered_contents
 			if(!food_sel)
 				return
 
@@ -714,7 +724,11 @@ TRAYS
 		if(ordered_contents.len == 0)
 			boutput(user, "There's no food to take off of \the [src]!")
 			return
-		var/food_sel = input(user, "Which food do you want to take off of \the [src]?", "[src]'s contents") as null|anything in ordered_contents
+		var/obj/item/food_sel = null
+		if(length(ordered_contents) == 1)
+			food_sel = ordered_contents[1]
+		else
+			food_sel = input(user, "Which food do you want to take off of \the [src]?", "[src]'s contents") as null|anything in ordered_contents
 		if(!food_sel)
 			return
 		user.put_in_hand_or_drop(food_sel)

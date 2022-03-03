@@ -488,6 +488,7 @@ datum
 
 							boutput(M, "<span class='alert'>Oh god, this stuff is far too manly to keep down...!</span>")
 							SPAWN(pick(30,50,70))
+								if(QDELETED(M) || QDELETED(M.reagents)) return
 								M.visible_message("<span class='alert'>[M] pukes everywhere and passes out!</span>")
 								M.vomit()
 								M.reagents.del_reagent("bojack")

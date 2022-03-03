@@ -73,7 +73,7 @@
 	var/ignore_organs = 0 // set to 1 to basically skip the handle_organs() proc
 	var/last_eyes_blinded = 0 // used in handle_blindness_overlays() to determine if a change is needed!
 
-	var/obj/on_chair = 0
+	var/obj/on_chair = null
 	var/simple_examine = 0
 
 	var/last_cluwne_noise = 0 // used in /proc/process_accents() to keep cluwnes from making constant fucking noise
@@ -653,7 +653,7 @@
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
 				var/datum/mind/M = src.mind
 				sleep(20 SECONDS)
-				if(!M || M.disposed || M.current != src)
+				if(!M || M.disposed || M.current != src || isalive(src))
 					return
 				if (M.current)
 					M.current.show_text("<b>We released a headspider, using up some of our DNA reserves.</b>", "blue")
