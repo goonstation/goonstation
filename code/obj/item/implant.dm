@@ -815,10 +815,11 @@ THROWING DARTS
 	bullet_22HP
 		name = ".22 hollow point round"
 		icon_state = "bulletexpanded"
-		desc = "A small calibre hollow point bullet for use against unarmored targets. Wait, aren't these a war crime?"
+		desc = "A small calibre hollow point bullet for use against unarmored targets. Hang on, aren't these a war crime?"
 
 	bullet_41
 		name = ".41 round"
+		icon_state = "bulletexpanded"
 		desc = ".41? What the heck? Who even uses these anymore?"
 
 	bullet_12ga
@@ -859,7 +860,8 @@ THROWING DARTS
 
 	rakshasa
 		name = "\improper Rakshasa round"
-		desc = "..."
+		desc = "A weird flechette-like projectile."
+		icon_state = "blowdart"
 
 /obj/item/implant/projectile/implanted(mob/living/carbon/C, var/mob/I, var/bleed_time = 60)
 	SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, C)
