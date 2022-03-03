@@ -155,7 +155,7 @@
 				L += T3
 
 	var/turf/destination = pick(L)
-	logTheThing("combat", src, null, "casts a Teleport spell and teleports from [log_loc(src)] to [log_loc(destination)].")
+	logTheThing("combat", src, null, "teleported from [log_loc(src)] to [log_loc(destination)].")
 	if (effect)
 		if (perform_check == 3)
 			src.set_loc(destination)

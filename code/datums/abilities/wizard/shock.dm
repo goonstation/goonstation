@@ -28,7 +28,6 @@
 			holder.owner.say("EI NATH")
 		..()
 
-		logTheThing("combat", holder.owner, target, "casts a Shocking Touch spell on [constructTarget(target,"combat")] at [log_loc(holder.owner)].")
 		playsound(holder.owner.loc, "sound/effects/elec_bigzap.ogg", 25, 1, -1)
 
 		if (ishuman(target))

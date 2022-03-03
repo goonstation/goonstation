@@ -17,7 +17,6 @@
 			holder.owner.say("BIRUZ BENNAR")
 		..()
 
-		logTheThing("combat", holder.owner, null, "casts an Empower spell at [log_loc(holder.owner)].")
 		boutput(holder.owner, "<span class='notice'>Your muscles are magically empowered and you feel very athletic!</span>")
 		holder.owner.visible_message("<span class='alert'>[holder.owner] glows with a POWERFUL aura!</span>")
 

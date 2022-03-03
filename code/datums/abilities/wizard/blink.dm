@@ -64,5 +64,4 @@
 			boutput(holder.owner, "<span class='alert'>It's too dangerous to blink there!</span>")
 			return
 		animate_blink(holder.owner)
-		logTheThing("combat", holder.owner, null, "casts the Blink spell and blinks from [log_loc(holder.owner)] to [log_loc(picked)].")
 		holder.owner.set_loc(picked)

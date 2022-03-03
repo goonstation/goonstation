@@ -26,7 +26,6 @@
 			SPtime = 50
 		else
 			boutput(holder.owner, "<span class='alert'>Your spell doesn't last as long without a staff to focus it!</span>")
-		logTheThing("combat", holder.owner, null, "casts a Phase Shift spell at [log_loc(holder.owner)].")
 		playsound(holder.owner.loc, "sound/effects/mag_phase.ogg", 25, 1, -1)
 		spell_invisibility(holder.owner, SPtime, 0, 1)
 

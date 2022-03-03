@@ -34,7 +34,6 @@
 					boutput(holder.owner, "<span class='alert'>[target] seems to be warded from the effects!</span>")
 					return 1
 
-			logTheThing("combat", holder.owner, target, "casts a Shocking Grasp spell on [constructTarget(target,"combat")] at [log_loc(target)].")
 			if (holder.owner.wizard_spellpower(src))
 				elecflash(holder.owner,power = 3)
 			else

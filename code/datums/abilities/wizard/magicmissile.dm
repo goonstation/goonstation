@@ -35,7 +35,6 @@
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
 			holder.owner.say("ICEE BEEYEM") // EHM-EYEARRVEE
 		..()
-		logTheThing("combat", holder.owner, null, "casts a Magic Missile spell at [log_loc(holder.owner)].")
 		var/num_shots = src.base_shots
 		if(!holder.owner.wizard_spellpower(src))
 			boutput(holder.owner, "<span class='alert'>Without a staff, your spell has trouble manifesting its full potential, leaving its effect withered and weak!</span>")

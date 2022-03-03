@@ -18,7 +18,6 @@
 		if(!holder.owner.wizard_spellpower(src))
 			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
 
-		logTheThing("combat", holder.owner, null, "casts a Forcewall spell at [log_loc(holder.owner)].")
 		playsound(holder.owner.loc, "sound/effects/mag_forcewall.ogg", 25, 1, -1)
 		var/forcefield1
 		var/forcefield2

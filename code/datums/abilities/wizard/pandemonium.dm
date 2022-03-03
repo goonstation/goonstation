@@ -41,10 +41,11 @@
 			string_of_effects += "[X] "
 
 		var/mob/living/carbon/human/W = holder.owner
+		var/spell_result = ""
 
 		switch(pick(available_effects))
 			if("fireburst")
-				logTheThing("combat", src, null, "casts a Pandemonium spell causing a fireburst at [log_loc(src)].")
+				spell_result = "fireburst"
 				W.visible_message("<span class='alert'><B>[W]</B> radiates a wave of burning heat!</span>")
 				playsound(W, "sound/effects/bamf.ogg", 80, 1)
 				for (var/mob/living/carbon/human/H in range(6, W))
@@ -55,7 +56,7 @@
 					boutput(H, "<span class='alert'>You suddenly burst into flames!</span>")
 					H.update_burning(30)
 			if("babel")
-				logTheThing("combat", src, null, "casts a Pandemonium spell causing temporary accents at [log_loc(src)].")
+				spell_result = "babel accents"
 				W.visible_message("<span class='alert'><B>[W]</B> emits a faint smell of cheese!</span>")
 				playsound(W, "sound/voice/farts/superfart.ogg", 80, 1)
 				for (var/mob/living/carbon/human/H in mobs)
@@ -68,7 +69,7 @@
 					H.bioHolder.AddEffect("accent_elvis", timeleft = 15)
 					H.bioHolder.AddEffect("accent_chav", timeleft = 15)
 			if("tripballs")
-				logTheThing("combat", src, null, "casts a Pandemonium spell causing a hallucinogenic aura at [log_loc(src)].")
+				spell_result = "hallucinogenic aura"
 				W.visible_message("<span class='alert'><B>[W]</B> radiates a confusing aura!</span>")
 				playsound(W, "sound/effects/bionic_sound.ogg", 80, 1)
 				for (var/mob/living/carbon/human/H in range(25, W))
@@ -81,7 +82,7 @@
 					H.reagents.add_reagent("THC", 20)
 					H.reagents.add_reagent("psilocybin", 20)
 			if("flashbang")
-				logTheThing("combat", src, null, "casts a Pandemonium spell causing a flashbang at [log_loc(src)].")
+				spell_result = "flashbang"
 				W.visible_message("<span class='alert'><B>[W]</B> explodes into a brilliant flash of light!</span>")
 				playsound(W.loc, "sound/weapons/flashbang.ogg", 50, 1)
 				for(var/mob/M in AIviewers(W, null))
@@ -93,7 +94,7 @@
 							if(M.client)
 								shake_camera(M, 6, 16)
 			if("meteors")
-				logTheThing("combat", src, null, "casts a Pandemonium spell causing meteors at [log_loc(src)].")
+				spell_result = "meteors"
 				W.visible_message("<span class='alert'><B>[W]</B> summons meteors!</span>")
 				for(var/turf/T in orange(1, W))
 					if(!T.density)
@@ -101,7 +102,7 @@
 						var/turf/U = get_edge_target_turf(W, target_dir)
 						new /obj/newmeteor/small(my_spawn = T, trg = U)
 			if("screech")
-				logTheThing("combat", src, null, "casts a Pandemonium spell causing a screech at [log_loc(src)].")
+				spell_result = "screech"
 				W.audible_message("<span class='alert'><B>[W]</B> emits a horrible shriek!</span>")
 				playsound(W.loc, "sound/effects/screech.ogg", 50, 1, -1)
 				for (var/mob/living/M in hearers(W, null))
@@ -115,12 +116,12 @@
 					M.apply_sonic_stun(0, 3, 0, 0, 0, 8)
 				sonic_attack_environmental_effect(W, 7, list("light", "window", "r_window"))
 			if("boost")
-				logTheThing("combat", src, null, "casts a Pandemonium spell causing an arcane boost at [log_loc(src)].")
+				spell_result = "arcane boost"
 				W.audible_message("<span class='alert'><B>[W]</B> glows with magical power!</span>")
 				playsound(W.loc, "sound/mksounds/boost.ogg", 25, 1, -1)
 				W.bioHolder.AddEffect("arcane_power", timeleft = 60)
 			if("roar")
-				logTheThing("combat", src, null, "casts a Pandemonium spell causing a roar at [log_loc(src)].")
+				spell_result = "roar"
 				W.audible_message("<span class='alert'><B>[W]</B> emits a horrific reverberating roar!</span>")
 				playsound_global(world, "sound/effects/mag_pandroar.ogg", 50)
 				for (var/mob/living/carbon/human/H in mobs)
@@ -132,7 +133,7 @@
 					H.changeStatus("stunned", 3 SECONDS)
 					H.stuttering += 10
 			if("signaljam")
-				logTheThing("combat", src, null, "casts a Pandemonium spell causing signal loss at [log_loc(src)].")
+				spell_result = "signal loss"
 				W.visible_message("<span class='alert'><B>[W]</B> emits a wave of electrical interference!</span>")
 				playsound(W.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
 				for (var/client/C)
@@ -144,9 +145,10 @@
 				SPAWN(10 SECONDS)
 					signal_loss -= 100
 			if("grilles")
-				logTheThing("combat", src, null, "casts a Pandemonium spell causing grilles at [log_loc(src)].")
+				spell_result = "metal grilles"
 				W.visible_message("<span class='alert'><B>[W]</B> reshapes the metal around \him!</span>")
 				playsound(W.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 25, 1, -1)
 				for(var/turf/simulated/floor/T in view(W,7))
 					if (prob(33))
 						new /obj/grille/steel(T)
+		logTheThing("combat", src, null, "casts a Pandemonium spell causing [spell_result] at [log_loc(src)].")

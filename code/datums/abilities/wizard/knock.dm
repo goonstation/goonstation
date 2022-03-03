@@ -22,7 +22,6 @@
 			SPrange = 5
 		else
 			boutput(holder.owner, "<span class='alert'>Your spell only works at point blank without a staff to focus it!</span>")
-		logTheThing("combat", holder.owner, null, "casts a Knock spell at [log_loc(holder.owner)].")
 		for(var/obj/machinery/door/G in oview(SPrange, holder.owner))
 			SPAWN(1 DECI SECOND)
 				G.open()

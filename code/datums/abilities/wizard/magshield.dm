@@ -20,7 +20,6 @@
 			holder.owner.say("XYZZYX")
 		..()
 
-		logTheThing("combat", holder.owner, null, "casts a Spell Shield spell at [log_loc(holder.owner)].")
 		var/image/shield_overlay = null
 
 		holder.owner.spellshield = 1

@@ -54,5 +54,5 @@
 		target.visible_message("<span class='alert'>[target] is warped away!</span>")
 		playsound(target.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
 		var/turf/destination = pick(randomturfs)
-		logTheThing("combat", holder.owner, target, "casts a Warp spell on [constructTarget(target,"combat")] and warps them from [log_loc(target)] to [log_loc(destination)].")
+		logTheThing("combat", holder.owner, target, "warped [constructTarget(target,"combat")] from [log_loc(target)] to [log_loc(destination)].")
 		target.set_loc(destination)
