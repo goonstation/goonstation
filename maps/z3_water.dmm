@@ -1518,7 +1518,17 @@
 /obj/storage/crate/classcrate{
 	name = "secure crate"
 	},
-/obj/item/paper/manufacturer_blueprint/alastor,
+/obj/item/gun/energy/alastor{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/gun/energy/alastor{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/gun/energy/alastor{
+	pixel_y = 6
+	},
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "eb" = (
