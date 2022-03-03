@@ -804,9 +804,9 @@ THROWING DARTS
 		desc = "A small, sublethal plastic projectile."
 
 	bullet_308
-		name = ".308 round"
+		name = "Rifle Round" // this is used by basically every rifle in the game, ignore the "308" path
 		icon_state = "bulletbig"
-		desc = "A large bullet for a rifle"
+		desc = "A large bullet from a rifle cartridge."
 
 	bullet_22
 		name = ".22 round"
