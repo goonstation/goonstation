@@ -315,7 +315,7 @@
 	attackby(obj/item/clothing/head/U as obj, mob/user as mob)
 		if(istype(U, /obj/item/clothing/head/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a cataclysmic hat infinite loop!</span>")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				boutput(user, "<span class='alert'>Nah, just yankin' your chain. Doing that still doesn't work though!</span>")
 			return
 
@@ -357,7 +357,7 @@
 		set category = "Local"
 		set src in usr
 
-		var/datum/chameleon_hat_pattern/which = input("Change the hat to which pattern?", "Chameleon Hat") as null|anything in clothing_choices
+		var/datum/chameleon_hat_pattern/which = tgui_input_list(usr, "Change the hat to which pattern?", "Chameleon Hat", clothing_choices)
 
 		if(!which)
 			return
@@ -397,7 +397,7 @@
 	HoS_beret
 		name = "HoS Beret"
 		icon_state = "hosberet"
-		item_state = "hoberet"
+		item_state = "hosberet"
 		desc = "Actually, this hat is from a fast-food restaurant, that's why it folds like it was made of paper."
 		seal_hair = 0
 
@@ -547,7 +547,7 @@
 	attackby(obj/item/clothing/suit/U as obj, mob/user as mob)
 		if(istype(U, /obj/item/clothing/suit/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a horrible outer suit meltdown death loop!</span>")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				boutput(user, "<span class='alert'>Nah, just making fun. Doing that still doesn't work though!</span>")
 			return
 
@@ -848,7 +848,7 @@
 	attackby(obj/item/clothing/glasses/U as obj, mob/user as mob)
 		if(istype(U, /obj/item/clothing/glasses/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a horrible idea! You'll cause a horrible eyewear cascade!</span>")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				boutput(user, "<span class='alert'>Nah, just pulling your leg. Doing that still doesn't work though!</span>")
 			return
 
@@ -974,7 +974,7 @@
 	attackby(obj/item/clothing/shoes/U as obj, mob/user as mob)
 		if(istype(U, /obj/item/clothing/shoes/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a bad shoe feedback cycle!</span>")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				boutput(user, "<span class='alert'>Nah, just joking. Doing that still doesn't work though!</span>")
 			return
 
@@ -1154,7 +1154,7 @@
 	attackby(obj/item/clothing/gloves/U as obj, mob/user as mob)
 		if(istype(U, /obj/item/clothing/gloves/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause an awful glove fractal!</span>")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				boutput(user, "<span class='alert'>Nah, just having a laugh. Doing that still doesn't work though!</span>")
 			return
 
@@ -1306,7 +1306,7 @@
 		..()
 		if(istype(U, /obj/item/storage/belt/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a putrid belt spiral!</span>")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				boutput(user, "<span class='alert'>Nah, just jesting. Doing that still doesn't work though!</span>")
 			return
 
@@ -1417,34 +1417,32 @@
 	New()
 		..()
 		var/obj/item/remote/chameleon/remote = new /obj/item/remote/chameleon(src.loc)
-		SPAWN_DBG(0)
-			remote.connected_backpack = src
+		remote.connected_backpack = src
 
 		var/obj/item/clothing/under/chameleon/jumpsuit = new /obj/item/clothing/under/chameleon(src)
-			remote.connected_jumpsuit = jumpsuit
+		remote.connected_jumpsuit = jumpsuit
 
 		var/obj/item/clothing/head/chameleon/hat = new /obj/item/clothing/head/chameleon(src)
-			remote.connected_hat = hat
+		remote.connected_hat = hat
 
 		var/obj/item/clothing/suit/chameleon/suit = new /obj/item/clothing/suit/chameleon(src)
-			remote.connected_suit = suit
+		remote.connected_suit = suit
 
 		var/obj/item/clothing/glasses/chameleon/glasses = new /obj/item/clothing/glasses/chameleon(src)
-			remote.connected_glasses = glasses
+		remote.connected_glasses = glasses
 
 		var/obj/item/clothing/shoes/chameleon/shoes = new /obj/item/clothing/shoes/chameleon(src)
-			remote.connected_shoes = shoes
+		remote.connected_shoes = shoes
 
 		var/obj/item/storage/belt/chameleon/belt = new /obj/item/storage/belt/chameleon(src)
-			remote.connected_belt = belt
+		remote.connected_belt = belt
 
 		var/obj/item/clothing/gloves/chameleon/gloves = new /obj/item/clothing/gloves/chameleon(src)
-			remote.connected_gloves = gloves
+		remote.connected_gloves = gloves
 
 		for(var/U in (typesof(/datum/chameleon_backpack_pattern)))
 			var/datum/chameleon_backpack_pattern/P = new U
 			src.clothing_choices += P
-		return
 
 	attackby(obj/item/storage/backpack/U as obj, mob/user as mob)
 		..()
@@ -1633,9 +1631,8 @@
 			src.outfit_choices += P
 		return
 
-	attack_self()
-		if (isliving(usr))
-			set src in usr
+	attack_self(mob/user)
+		if (isliving(user))
 			var/datum/chameleon_outfit_choices/which = input(usr, "Change the chameleon outfit to which set?", "Chameleon Outfit Remote") as null|anything in outfit_choices
 
 			if(!which)
