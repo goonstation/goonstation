@@ -183,11 +183,6 @@
 	flags = ALWAYS_SOLID_FLUID
 	turf_flags = CAN_BE_SPACE_SAMPLE
 	event_handler_flags = IMMUNE_SINGULARITY
-
-	New()
-		. = ..()
-		update_starlight()
-
 	dense
 		icon_state = "dplaceholder"
 		density = 1
@@ -224,8 +219,7 @@
 		src.desc = "There appears to be a spatial disturbance in this area of space."
 		new/obj/item/device/key/random(src)
 
-	if(!isnull(space_color) && !istype(src, /turf/space/fluid))
-		src.color = space_color
+	UpdateIcon()
 
 proc/repaint_space(regenerate=TRUE, starlight_alpha)
 	for(var/turf/space/T)
@@ -234,7 +228,7 @@ proc/repaint_space(regenerate=TRUE, starlight_alpha)
 			regenerate = FALSE
 		if(istype(T, /turf/space/fluid))
 			continue
-		T.update_starlight(starlight_alpha)
+		T.UpdateIcon(starlight_alpha)
 
 proc/generate_space_color()
 #ifndef HALLOWEEN
@@ -281,8 +275,11 @@ proc/generate_space_color()
 	)
 #endif
 
-/turf/space/proc/update_starlight(starlight_alpha=255)
-	color = space_color
+/turf/space/update_icon(starlight_alpha=255)
+	..()
+	if(!isnull(space_color) && !istype(src, /turf/space/fluid))
+		src.color = space_color
+
 	if(fullbright)
 		if(!starlight)
 			starlight = image('icons/effects/overlays/simplelight.dmi', "3x3", pixel_x=-32, pixel_y=-32)
@@ -291,10 +288,12 @@ proc/generate_space_color()
 			starlight.plane = PLANE_LIGHTING
 			starlight.blend_mode = BLEND_ADD
 
-		starlight.color = space_color
+		starlight.color = src.color
 		if(!isnull(starlight_alpha))
 			starlight.alpha = starlight_alpha
-		UpdateOverlays(starlight, "spacelight")
+		UpdateOverlays(starlight, "starlight")
+	else
+		UpdateOverlays(null, "starlight")
 
 // override for space turfs, since they should never hide anything
 /turf/space/levelupdate()
