@@ -10,8 +10,6 @@
 	var/on = 0
 	var/datum/light/light
 	var/ARCHIVED(temperature)
-	var/image/bottom_image = null
-	var/image/defib_image = null
 	var/mob/occupant = null
 	var/obj/item/beaker = null
 	var/show_beaker_contents = 0
@@ -50,6 +48,7 @@
 			if(target.initialize_directions & get_dir(target,src))
 				node = target
 				break
+		build_icon()
 
 	disposing()
 		for (var/mob/M in src)
@@ -299,11 +298,6 @@
 		build_icon()
 		qdel(G)
 
-
-	proc/add_overlays()
-		src.UpdateOverlays(bottom_image, "bottom")
-		src.UpdateOverlays(defib_image, "defib")
-
 	proc/shock_icon()
 		var/fake_overlay = new /obj/shock_overlay(src.loc)
 		src.vis_contents += fake_overlay
@@ -311,18 +305,14 @@
 			src.vis_contents -= fake_overlay
 			qdel(fake_overlay)
 			if(!src.defib)
-				defib_image = null
-				add_overlays()
+				src.UpdateOverlays(null, "defib")
 				return
-			defib_image = image('icons/obj/Cryogenic2.dmi', "defib-off", layer = 2, pixel_y=-32)
-			add_overlays()
+			src.UpdateOverlays(src.SafeGetOverlayImage("defib", 'icons/obj/Cryogenic2.dmi', "defib-off", 2, pixel_y=-32), "defib")
 		SPAWN(src.defib.charge_time)
 			if(!src.defib)
-				defib_image = null
-				add_overlays()
+				src.UpdateOverlays(null, "defib")
 				return
-			defib_image = image('icons/obj/Cryogenic2.dmi', "defib-on", layer = 2, pixel_y = -32)
-			add_overlays()
+			src.UpdateOverlays(src.SafeGetOverlayImage("defib", 'icons/obj/Cryogenic2.dmi', "defib-on", 2, pixel_y=-32), "defib")
 
 	proc/build_icon()
 		if(on)
@@ -335,16 +325,14 @@
 			light.disable()
 			icon_state = "celltop-p"
 		if(src.node)
-			bottom_image = image('icons/obj/Cryogenic2.dmi', "cryo_bottom_[src.on]", layer = 1, pixel_y = -32)
+			src.UpdateOverlays(src.SafeGetOverlayImage("bottom", 'icons/obj/Cryogenic2.dmi', "cryo_bottom_[src.on]", 1, pixel_y=-32), "bottom")
 		else
-			bottom_image = image('icons/obj/Cryogenic2.dmi', "cryo_bottom", layer = 1, pixel_y = -32)
+			src.UpdateOverlays(src.SafeGetOverlayImage("bottom", 'icons/obj/Cryogenic2.dmi', "cryo_bottom", 1, pixel_y=-32), "bottom")
 		src.pixel_y = 32
 		if(src.defib)
-			if(!GetOverlayImage("defib"))
-				defib_image = image('icons/obj/Cryogenic2.dmi', "defib-on", layer = 2, pixel_y = -32)
+			src.UpdateOverlays(src.SafeGetOverlayImage("defib", 'icons/obj/Cryogenic2.dmi', "defib-on", 2, pixel_y=-32), "defib")
 		else
-			defib_image = null
-		add_overlays()
+			src.UpdateOverlays(null, "defib")
 
 	proc/process_occupant()
 		if(TOTAL_MOLES(air_contents) < 10)
