@@ -281,7 +281,7 @@
 	var/datum/db_record/account = null
 	account = FindBankAccountByName(card.registered)
 	if (account)
-		var/enterpin = usr.enter_pin("Enter PIN")
+		var/enterpin = user.enter_pin("Enter PIN")
 		if (enterpin == card.pin)
 			boutput(user, "<span class='notice'>Card authorized.</span>")
 			src.scan = card
@@ -2736,7 +2736,7 @@
 	attack_hand(mob/user as mob)
 		if (status & (BROKEN|NOPOWER))
 			return
-		if (usr.stat || usr.restrained())
+		if (user.stat || user.restrained())
 			return
 
 		src.add_dialog(user)

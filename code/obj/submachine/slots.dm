@@ -132,23 +132,23 @@
 		else
 			var/obj/item/card/id/idcard = I
 			boutput(user, "<span class='notice'>You insert your ID card.</span>")
-			usr.drop_item()
+			user.drop_item()
 			I.set_loc(src)
 			if(!idcard.registered)
-				boutput(usr, "<span class='alert'>No account data found!</span>")
-				usr.put_in_hand_or_eject(I)
+				boutput(user, "<span class='alert'>No account data found!</span>")
+				user.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
 			var/enterpin = user.enter_pin("Enter PIN")
 			if (enterpin != idcard.pin)
 				boutput(user, "<span class='alert'>Pin number incorrect.</span>")
-				usr.put_in_hand_or_eject(I)
+				user.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
 			src.accessed_record = FindBankAccountByName(idcard.registered)
 			if(isnull(src.accessed_record))
 				boutput(user, "<span class='alert'>That card has no bank account associated.</span>")
-				usr.put_in_hand_or_eject(I)
+				user.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
 			boutput(user, "<span class='notice'>Card authorized.</span>")
