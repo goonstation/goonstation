@@ -15,11 +15,18 @@
 	uses_multiple_icon_states = 1
 	initial_volume = 15
 	amount_per_transfer_from_this = 5
+	/// The amount each visual stage of the icon increments by. Defaults to amount_per_transfer_from_this
+	var/amount_per_stage = -1
 	var/mode = S_DRAW
 	var/image/fluid_image
 	var/image/image_inj_dr
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	hide_attack = 2
+
+	New()
+		..()
+		if (amount_per_stage < 0)
+			amount_per_stage = amount_per_transfer_from_this
 
 	on_reagent_change()
 		..()
@@ -30,9 +37,9 @@
 		src.UpdateIcon()
 
 	update_icon()
-		var/scaled_vol = ((reagents ? reagents.total_volume : 0) / initial_volume) * 15
+		var/scaled_vol = ((reagents ? reagents.total_volume : 0) / initial_volume) * initial_volume
 		// drsingh for cannot read null.total_volume
-		var/rounded_vol = round(scaled_vol, 5)
+		var/rounded_vol = round(scaled_vol, amount_per_stage)
 		icon_state = "[icon_prefix]_[rounded_vol]"
 		item_state = "syringe_[rounded_vol]"
 		src.underlays = null
@@ -45,7 +52,7 @@
 			src.UpdateOverlays(null, "inj_dr")
 		if (!src.fluid_image)
 			src.fluid_image = image('icons/obj/syringe.dmi')
-		src.fluid_image.icon_state = "[icon_prefix]_f[rounded_vol]"
+		src.fluid_image.icon_state = "[icon_prefix]_f"
 		if(reagents) // fix for Cannot execute null.get average color().
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
@@ -300,7 +307,7 @@
 	icon_prefix = "baster"
 	icon_state = "baster_0"
 	initial_volume = 100
-	amount_per_transfer_from_this = 50
+	amount_per_transfer_from_this = 25
 
 	afterattack(var/atom/target, mob/user, flag)
 		switch (mode)
