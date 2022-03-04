@@ -63,7 +63,7 @@
 		set category = "Local"
 		set src in usr
 
-		var/datum/chameleon_jumpsuit_pattern/which = input("Change the jumpsuit to which pattern?", "Chameleon Jumpsuit") as null|anything in clothing_choices
+		var/datum/chameleon_jumpsuit_pattern/which = tgui_input_list(usr, "Change the jumpsuit to which pattern?", "Chameleon Jumpsuit", clothing_choices)
 
 		if(!which)
 			return
@@ -295,7 +295,7 @@
 	name = "hat"
 	desc = "A knit cap in red."
 	icon_state = "red"
-	item_state = "swat_gl"
+	item_state = "rgloves"
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	icon = 'icons/obj/clothing/item_hats.dmi'
@@ -381,7 +381,7 @@
 	var/name = "hat"
 	var/desc = "A knit cap in red."
 	var/icon_state = "red"
-	var/item_state = "red"
+	var/item_state = "rgloves"
 	var/sprite_item = 'icons/obj/clothing/item_hats.dmi'
 	var/sprite_worn = 'icons/mob/clothing/head.dmi'
 	var/sprite_hand = 'icons/mob/inhand/hand_headgear.dmi'
@@ -535,6 +535,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 	uses_multiple_icon_states = 1
+	over_hair = FALSE
 	var/list/clothing_choices = list()
 
 	New()
@@ -565,6 +566,7 @@
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
+			P.over_hair = U.over_hair
 			src.clothing_choices += P
 
 			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
@@ -589,7 +591,8 @@
 		set category = "Local"
 		set src in usr
 
-		var/datum/chameleon_suit_pattern/which = input("Change the suit to which pattern?", "Chameleon Suit") as null|anything in clothing_choices
+
+		var/datum/chameleon_suit_pattern/which = tgui_input_list(usr, "Change the suit to which pattern?", "Chameleon Suit", clothing_choices)
 
 		if(!which)
 			return
@@ -602,6 +605,7 @@
 		src.icon_state = T.icon_state
 		src.item_state = T.item_state
 		src.icon = T.sprite_item
+		src.over_hair = T.over_hair
 		src.wear_image_icon = T.sprite_worn
 		src.inhand_image_icon = T.sprite_hand
 		src.wear_image = image(wear_image_icon)
@@ -616,6 +620,7 @@
 	var/sprite_item = 'icons/obj/clothing/overcoats/item_suit.dmi'
 	var/sprite_worn = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 	var/sprite_hand = 'icons/mob/inhand/overcoat/hand_suit.dmi'
+	var/over_hair = FALSE
 
 	labcoat
 		name = "labcoat"
@@ -820,6 +825,7 @@
 		sprite_item = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+		over_hair = FALSE
 
 	chef_coat
 		name = "chef's coat"
@@ -888,7 +894,7 @@
 		set category = "Local"
 		set src in usr
 
-		var/datum/chameleon_glasses_pattern/which = input("Change the glasses to which pattern?", "Chameleon Glasses") as null|anything in clothing_choices
+		var/datum/chameleon_glasses_pattern/which = tgui_input_list(usr, "Change the glasses to which pattern?", "Chameleon Glasses", clothing_choices)
 
 		if(!which)
 			return
@@ -1018,7 +1024,7 @@
 		set category = "Local"
 		set src in usr
 
-		var/datum/chameleon_shoes_pattern/which = input("Change the shoes to which pattern?", "Chameleon Shoes") as null|anything in clothing_choices
+		var/datum/chameleon_shoes_pattern/which = tgui_input_list(usr, "Change the shoes to which pattern?", "Chameleon Shoes", clothing_choices)
 
 		if(!which)
 			return
@@ -1199,7 +1205,7 @@
 		set category = "Local"
 		set src in usr
 
-		var/datum/chameleon_shoes_pattern/which = input("Change the gloves to which pattern?", "Chameleon Gloves") as null|anything in clothing_choices
+		var/datum/chameleon_shoes_pattern/which = tgui_input_list(usr, "Change the shoes to which pattern?", "Chameleon Shoes", clothing_choices)
 
 		if(!which)
 			return
@@ -1346,7 +1352,7 @@
 		set category = "Local"
 		set src in usr
 
-		var/datum/chameleon_belt_pattern/which = input("Change the belt to which pattern?", "Chameleon Belt") as null|anything in clothing_choices
+		var/datum/chameleon_belt_pattern/which = tgui_input_list(usr, "Change the belt to which pattern?", "Chameleon Belt", clothing_choices)
 
 		if(!which)
 			return
@@ -1488,7 +1494,7 @@
 		set category = "Local"
 		set src in usr
 
-		var/datum/chameleon_backpack_pattern/which = input("Change the backpack to which pattern?", "Chameleon Backpack") as null|anything in clothing_choices
+		var/datum/chameleon_backpack_pattern/which = tgui_input_list(usr, "Change the backpack to which pattern?", "Chameleon Backpack", clothing_choices)
 
 		if(!which)
 			return
@@ -1633,7 +1639,7 @@
 
 	attack_self(mob/user)
 		if (isliving(user))
-			var/datum/chameleon_outfit_choices/which = input(usr, "Change the chameleon outfit to which set?", "Chameleon Outfit Remote") as null|anything in outfit_choices
+			var/datum/chameleon_outfit_choices/which = tgui_input_list(usr, "Change the chameleon outfit to which set?", "Chameleon Outfit Remote", outfit_choices)
 
 			if(!which)
 				return
