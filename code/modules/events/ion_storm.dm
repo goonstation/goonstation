@@ -173,7 +173,7 @@
 ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category
 	var/amount
-	var/list/atom/cache = list()
+	var/list/atom/targets = list()
 
 	proc/valid_instance(var/atom/found)
 		var/turf/T = null
@@ -184,15 +184,15 @@ ABSTRACT_TYPE(/datum/ion_category)
 			return FALSE
 		return TRUE
 
-	proc/build_cache()
+	proc/build_targets()
 
 	proc/action(var/atom/object)
 
 	proc/fuck_up()
-		if (!length(cache))
-			build_cache()
+		if (!length(targets))
+			build_targets()
 		for (var/i in 1 to amount)
-			var/object = pick(cache)
+			var/object = pick(targets)
 			//we don't try again if it is null, because it's possible there just are none
 			if (!isnull(object))
 				action(object)
@@ -200,10 +200,10 @@ ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category/APCs
 	amount = 20
 
-	build_cache()
+	build_targets()
 		for (var/obj/machinery/power/apc/apc in machine_registry[MACHINES_POWER])
 			if (valid_instance(apc))
-				cache += apc
+				targets += apc
 
 	action(var/obj/machinery/power/apc/apc)
 		var/apc_diceroll = rand(1,4)
@@ -230,10 +230,10 @@ ABSTRACT_TYPE(/datum/ion_category)
 	valid_instance(var/obj/machinery/door/door)
 		return ..() && !door.cant_emag
 
-	build_cache()
+	build_targets()
 		for_by_tcl(door, /obj/machinery/door)
 			if (valid_instance(door))
-				cache += door
+				targets += door
 
 	action(var/obj/machinery/door/door)
 		var/door_diceroll = rand(1,3)
@@ -256,10 +256,10 @@ ABSTRACT_TYPE(/datum/ion_category)
 	valid_instance(var/obj/machinery/light/light)
 		return ..() && light.removable_bulb
 
-	build_cache()
+	build_targets()
 		for (var/light as anything in stationLights)
 			if (valid_instance(light))
-				cache += light
+				targets += light
 
 	action(var/obj/machinery/light/light)
 		var/light_diceroll = rand(1,3)
@@ -277,10 +277,10 @@ ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category/manufacturers
 	amount = 5
 
-	build_cache()
+	build_targets()
 		for_by_tcl(man, /obj/machinery/manufacturer)
 			if (valid_instance(man))
-				cache += man
+				targets += man
 
 	action(var/obj/machinery/manufacturer/manufacturer)
 		manufacturer.pulse(pick(list(1,2,3,4)))
@@ -289,10 +289,10 @@ ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category/venders
 	amount = 5
 
-	build_cache()
+	build_targets()
 		for_by_tcl(vender, /obj/machinery/vending)
 			if (valid_instance(vender))
-				cache += vender
+				targets += vender
 
 	action(var/obj/machinery/vending/vender)
 		vender.pulse(pick(list(1,2,3,4)))
@@ -301,10 +301,10 @@ ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category/fire_alarms
 	amount = 3
 
-	build_cache()
+	build_targets()
 		for(var/obj/machinery/firealarm/alarm as anything in machine_registry[MACHINES_FIREALARMS])
 			if (valid_instance(alarm))
-				cache += alarm
+				targets += alarm
 
 	action(var/obj/machinery/firealarm/alarm)
 		alarm.alarm()
