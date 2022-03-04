@@ -1448,7 +1448,7 @@
 		..()
 		if(istype(U, /obj/item/storage/backpack/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a stinky backpack self-cloning freak accident!</span>")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				boutput(user, "<span class='alert'>Nah, just kidding. Doing that still doesn't work though!</span>")
 			return
 
