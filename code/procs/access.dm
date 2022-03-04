@@ -315,7 +315,7 @@
 		if("Toxins Researcher")
 			return list(access_research, access_tox, access_tox_storage)
 		if("Research Assistant")
-			return list(access_maint_tunnels, access_tech_storage, access_research)
+			return list(access_maint_tunnels, access_tech_storage, access_research, access_chemistry, access_tox) //notably not tox_storage, which is also the sci locker access for some fucking reason
 
 		//////////////////////////// Engineering
 		if("Mechanic")
