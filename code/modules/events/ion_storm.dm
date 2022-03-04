@@ -3,7 +3,7 @@
 	centcom_headline = "Equipment Malfunction"
 	centcom_message = "An electromagnetic storm recently passed by the station. Sensitive electrical equipment may require maintenance."
 	message_delay = 5 MINUTES
-	/// The fraction of message_time taken up by each stage of the ion storm
+	/// The fraction of message_delay taken up by each stage of the ion storm
 	var/stage_delay
 	var/list/new_laws = list()
 	var/list/datum/ion_category/categories
