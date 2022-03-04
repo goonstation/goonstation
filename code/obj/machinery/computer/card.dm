@@ -429,7 +429,7 @@
 			else
 				// preserve accesses which are otherwise unobtainable
 				var/bonus_access = list()
-				for (access in src.modify.access)
+				for (var/access in src.modify.access)
 					if (!(access in get_all_accesses())) //fuck this proc name
 						bonus_access += list(access)
 				src.modify.access = get_access(t1) + bonus_access
