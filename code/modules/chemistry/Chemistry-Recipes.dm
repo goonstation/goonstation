@@ -852,7 +852,7 @@ datum
 			drinkrecipe = 1
 
 		cocktail_beach
-			name = "Sex on the Beach"
+			name = "Bliss on the Beach"
 			id = "beach"
 			result = "beach"
 			required_reagents = list("vodka" = 1, "juice_cran" = 1, "juice_orange" = 1)
@@ -2683,7 +2683,6 @@ datum
 			required_reagents = list("potassium" = 1, "sugar" = 1, "phosphorus" = 1)
 			inhibitors = list("stabiliser")
 			instant = 1
-			special_log_handling = 1
 			consume_all = 1
 			result_amount = 3
 			mix_phrase = "The mixture quickly turns into a pall of smoke!"

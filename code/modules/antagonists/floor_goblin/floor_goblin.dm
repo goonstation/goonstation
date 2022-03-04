@@ -107,7 +107,7 @@
 			M.set_density(initial(M.density))
 			if (floorturf.intact)
 				animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				if(M)
 					M.layer = MOB_LAYER
 					M.plane = PLANE_DEFAULT
@@ -119,7 +119,7 @@
 			APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, "floorswitching")
 			if (floorturf.intact)
 				animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				if(M)
 					REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, "floorswitching")
 					APPLY_MOB_PROPERTY(M, PROP_NO_MOVEMENT_PUFFS, "floorswitching")
@@ -168,7 +168,7 @@
 		if(holder.owner.layer == BETWEEN_FLOORS_LAYER)
 			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
 			APPLY_MOB_PROPERTY(holder.owner, PROP_CANTMOVE, "floorbiting")
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				if(holder.owner && target_human && IN_RANGE(holder.owner, target, 1))
 					playsound(floorturf, "sound/impact_sounds/Flesh_Tear_3.ogg", 50, 1, pitch = 1.3)
 					target_human.changeStatus("weakened", 2 SECONDS)
@@ -229,7 +229,7 @@
 			var/slide_amount = 22 // around 20-25 is just wide enough to show most of the person hiding underneath
 
 			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				actions.start(new/datum/action/bar/icon/steal_shoes(usr, target_human, floorturf) , usr)
 		else
 			actions.start(new/datum/action/bar/icon/steal_shoes(usr, target_human, floorturf) , usr)
@@ -301,7 +301,7 @@
 					abilityHolder.addPoints(1)
 			else
 				boutput(source, "<span class='alert'>You fail to remove [shoes] from [target].</span>")
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				if(floorturf)
 					animate_slide(floorturf, 0, 0, 4)
 

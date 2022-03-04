@@ -183,7 +183,7 @@ var/list/clothingbooth_items = list()
 		if(src.yeeting == 0)
 			src.yeeting = 1
 			user.visible_message("<span class='alert'>Uh oh...It looks like [user.name] is thinking about charging into the clothing booth...</span>","<span class='alert'>You are working up the nerve to pull the occupant out...</span>")
-			SPAWN_DBG(4 SECONDS)
+			SPAWN(4 SECONDS)
 				if((user in range(1, src)) && (locate(/mob) in src))
 					if (prob(45))
 						user.visible_message("<span class='success'>phew...[user.name] decided not to enter the booth.</span>","<span class='success'>Maybe not...they could be changing...</span>")

@@ -373,7 +373,7 @@
 				updatePanel()
 
 			/*if(exec % 100 == 0) //NO RECURSION. NO.
-				SPAWN_DBG(0)
+				SPAWN(0)
 					resumeCBF()
 				break
 			*/

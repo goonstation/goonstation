@@ -29,7 +29,7 @@
 			if(HOLOGRAM_TEXT)
 				src.text_holograms = max(src.text_holograms - H.hologram_value, 0)
 
-	proc/check(holotype_string, mob/dead/aieye/E)
+	proc/check(holotype_string, mob/living/intangible/aieye/E)
 		. = TRUE
 		if(!istype(E))
 			. = FALSE
@@ -215,13 +215,13 @@
 		// 	if ("sad_face")
 		// 	if ("angry_face")
 
-		SPAWN_DBG(duration)
+		SPAWN(duration)
 			qdel(src)
 		..()
 
 	attack_ai(mob/user as mob)
 		..()
-		var/mob/dead/aieye/eye = user
+		var/mob/living/intangible/aieye/eye = user
 		if (owner == user || (istype(eye) && eye.mainframe == owner))
 			boutput(src, "<span class='notice'>You stop projecting [src].</span>")
 			qdel(src)
@@ -273,7 +273,7 @@
 		maptext = {"<a href="#"><span class='vm c ps2p sh' style='color:white;text-shadow: silver;'>[message]</span></a>"}
 
 		// Add displacement filter for scanline/glitch
-		SPAWN_DBG(1 DECI SECOND) //delayed to resolve issue where color didn't settle yet
+		SPAWN(1 DECI SECOND) //delayed to resolve issue where color didn't settle yet
 			E = new
 			if(length(msg) > 11)
 				E.icon_state = "d_fast"

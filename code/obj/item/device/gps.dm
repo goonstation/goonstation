@@ -275,7 +275,7 @@
 		else
 			icon_state = "gps"
 
-		SPAWN_DBG(0.5 SECONDS) .()
+		SPAWN(0.5 SECONDS) .()
 
 	disposing()
 		STOP_TRACKING

@@ -409,7 +409,7 @@ proc/generate_space_color()
 			else if ((abs(OldLoc.x - warptarget.x) > 1) || (abs(OldLoc.y - warptarget.y) > 1))
 				// double set_loc is a fix for the warptarget gliding bug
 				M.set_loc(get_step(warptarget, get_dir(src, OldLoc)))
-				SPAWN_DBG(0.001) // rounds to the nearest tick, about as smooth as it's gonna get
+				SPAWN(0.001) // rounds to the nearest tick, about as smooth as it's gonna get
 					M.set_loc(warptarget)
 			else
 				M.set_loc(warptarget)
@@ -1150,13 +1150,15 @@ proc/generate_space_color()
 						if (grave.special)
 							new grave.special (src)
 						else
-							switch (rand(1,5))
+							switch (rand(1, 5))
 								if (1)
 									new /obj/item/skull {desc = "A skull.  That was robbed.  From a grave.";} ( src )
 								if (2)
 									new /obj/item/plank {name = "rotted coffin wood"; desc = "Just your normal, everyday rotten wood.  That was robbed.  From a grave.";} ( src )
 								if (3)
 									new /obj/item/clothing/under/suit/pinstripe {name = "old pinstripe suit"; desc  = "A pinstripe suit.  That was stolen.  Off of a buried corpse.";} ( src )
+								else
+									// default
 						break
 
 		else

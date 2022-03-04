@@ -69,9 +69,12 @@
 				user.put_in_hand(src)
 			boutput(user, "<span class='notice'>You add the material to the stack. It now has [src.amount] pieces.</span>")
 
-	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object
+	mouse_drop(over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
 			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
+			return
+		if(isintangible(usr))
+			boutput(usr,"<span class='alert'>You need hands to do that. Do you have hands? No? Then stop it.</span>")
 			return
 
 		if(!istype(over_object, /atom/movable/screen/hud))

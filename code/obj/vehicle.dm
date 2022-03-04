@@ -103,6 +103,14 @@ ABSTRACT_TYPE(/obj/vehicle)
 		if(thing == src.rider)
 			src.eject_rider(0, 1, 0)
 
+	Click(location,control,params)
+		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
+			var/mob/dead/observer/O = usr
+			if(src.rider)
+				O.insert_observer(src.rider)
+		else
+			. = ..()
+
 	proc/eject_other_stuff() // override if there's some stuff integral to the vehicle that should not be ejected
 		for(var/atom/movable/AM in src)
 			AM.set_loc(src.loc)
@@ -256,7 +264,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		return
 
 	weeoo_in_progress = 10
-	SPAWN_DBG(0)
+	SPAWN(0)
 		playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
 		light.enable()
 		src.icon_state = "[src.icon_base][src.icon_weeoo_state]"
@@ -685,7 +693,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	if(. && rider)
 		pixel_x = rand(-1, 1)
 		pixel_y = rand(-1, 1)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			pixel_x = rand(-1, 1)
 			pixel_y = rand(-1, 1)
 		if (!src.sprayer_active)
@@ -705,7 +713,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 				else
 					T.active_liquid.removed(1)
 			return
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.reagents.total_volume < 1)
 				return
 
@@ -1289,7 +1297,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			eject_rider(1)
 		pixel_x = rand(-6, 6)
 		pixel_y = rand(-2, 2)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			pixel_x = rand(-6, 6)
 			pixel_y = rand(-2, 2)
 		return TRUE
@@ -1587,7 +1595,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			playsound(my_mob.loc, src.mysound, src.myvolume, 1)
 		playsound(the_turf, src.mysound, src.myvolume, 1)
 
-		SPAWN_DBG(src.mydelay)
+		SPAWN(src.mydelay)
 			active = 0
 
 /obj/ability_button/loudhorn/clowncar
@@ -1617,7 +1625,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		var/obj/vehicle/v = my_mob.loc
 		v.stop()
 
-		SPAWN_DBG(src.mydelay)
+		SPAWN(src.mydelay)
 			active = 0
 
 	clowncar

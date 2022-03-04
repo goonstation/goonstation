@@ -104,7 +104,7 @@
 
 //	charge = charge * maxcharge/100.0		// map obj has charge as percentage, convert to real value here
 
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		UpdateIcon()
 
 	if (genrate)
@@ -184,7 +184,6 @@
 				boutput(user, "<span class='alert'>The plasma reacts with the erebite and explodes violently!</span>")
 				src.explode()
 			else
-				message_admins("[key_name(user)] rigged [src] to explode at [log_loc(user)].")
 				logTheThing("combat", user, null, "rigged [src] to explode at [log_loc(user)].")
 				rigged = 1
 				rigger = user
@@ -219,7 +218,7 @@
 
 	explosion(src, T, 0, 1, 2, 2)
 
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		qdel(src)
 
 
@@ -255,7 +254,7 @@
 				det.attachedTo.visible_message("<span class='bold' style='color: #B7410E;'>The timer flashes ominously.</span>")
 		if ("cut")
 			src.visible_message("<span class='bold' style='color: #B7410E;'>The failsafe timer buzzes refusingly before going quiet forever.</span>")
-			SPAWN_DBG(0)
+			SPAWN(0)
 				det.detonate()
 
 //kubius potato battery: main def

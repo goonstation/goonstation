@@ -171,7 +171,7 @@ proc/is_weak_rollable_contract(type)
 	else
 		return
 
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		qdel(src)
 
 
@@ -272,7 +272,7 @@ proc/is_weak_rollable_contract(type)
 
 	make_my_stuff()
 		..()
-		SPAWN_DBG(0.5 SECONDS) //to give the buylist enough time to assign a merchant var to the briefcase
+		SPAWN(0.5 SECONDS) //to give the buylist enough time to assign a merchant var to the briefcase
 
 			var/tempcontract = null
 			tempcontract = pick(strongcontracts)
@@ -337,7 +337,7 @@ obj/item/contract/replace_this_with_the_name_of_your_contract
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
 			return 0
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			HERE'S WHERE YOU ACTUALLY DO MOST OF YOUR COOL EFFECTS AND STUFF
 			user is the victim, the one you wanna be doing the cool things TO
 			badguy is the person who owns the contract or who forced the victim to sign
@@ -415,7 +415,7 @@ END GUIDE
 		if (src.limiteduse == 1)
 			src.used++
 			tooltip_rebuild = 1
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (src.used >= src.contractlines)
 					src.vanish(user, badguy)
 	proc/vanish(var/mob/user as mob, var/mob/badguy as mob)
@@ -424,7 +424,7 @@ END GUIDE
 		playsound(src.loc, pick('sound/voice/creepywhisper_1.ogg', 'sound/voice/creepywhisper_2.ogg', 'sound/voice/creepywhisper_3.ogg'), 50, 1)
 		if(badguy)
 			spawncontract(badguy, (prob(20) ? 1 : 0), 0) //20 percent chance of rolling a strong contract
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			qdel(src)
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
@@ -450,7 +450,7 @@ END GUIDE
 				M.visible_message("<span class='alert'>[user] forces [M] to sign [src]!</span>")
 				logTheThing("combat", user, M, "forces [M] to sign a [src] at [log_loc(user)].")
 				MagicEffect(M, user)
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					src.inuse = 0
 					soulcheck(user)
 					updateuses(M, user)
@@ -471,7 +471,7 @@ END GUIDE
 				return
 			else if (istype(W, /obj/item/pen/fancy/satan))
 				MagicEffect(user, src.merchant)
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					soulcheck(src.merchant)
 					updateuses(user, src.merchant)
 			else
@@ -489,7 +489,7 @@ obj/item/contract/satan
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
 			return 0
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			user.unequip_all()
 			user.satanclownize()
 			//boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
@@ -506,7 +506,7 @@ obj/item/contract/macho
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
 			return 0
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			user.unequip_all()
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			user.machoize(1)
@@ -522,7 +522,7 @@ obj/item/contract/wrestle
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
 			return 0
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			user.mind.special_role = "Faustian Wrestler"
 			sleep(0.1 SECONDS)
 			user.make_wrestler(1)
@@ -548,7 +548,7 @@ obj/item/contract/yeti
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
 			return 0
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			user.unequip_all()
 			user.makesuperyeti()
 			// UNNEEDED UNTIL YETI CRITTER MOB IMPLEMENTED boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
@@ -563,16 +563,16 @@ obj/item/contract/genetic
 		if(!..())
 			return 0
 		boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			user.bioHolder.AddEffect("activator", 0, 0, 1)
 			user.bioHolder.AddEffect("mutagenic_field", 0, 0, 1)
 			boutput(user, "<span class='success'>You have finally achieved your full potential! Mom would so proud!</span>")
 			if ((prob(5)) || (src.limiteduse == 1))
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					boutput(user, "<span class='success'>You feel an upwelling of additional power!</span>")
 					user:unkillable = 1
 					user.bioHolder.AddEffect("mutagenic_field_prenerf", 0, 0, 1)
-					SPAWN_DBG(0.2 SECONDS)
+					SPAWN(0.2 SECONDS)
 						boutput(user, "<span class='success'>You have ascended beyond mere humanity!</span>")
 						user.mind.special_role = "Genetic Demigod"
 						ticker.mode.Agimmicks.Add(user)
@@ -597,7 +597,7 @@ obj/item/contract/horse
 			if (total_souls_value >= HORSE_COST) //HORSE_COST (currently 15) souls needed to start the end-times. Sufficiently difficult?
 				boutput(user, "<span class='alert'><font size=6><B>NEIGH!</b></font></span>")
 				src.endtimes()
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					soulcheck(user)
 				return
 			else
@@ -607,14 +607,14 @@ obj/item/contract/horse
 
 	proc/endtimes()
 		souladjust(-HORSE_COST)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/turf/spawn_turf = get_turf(src)
 			new /obj/effects/ydrone_summon/horseman(spawn_turf)
 
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
 			return 0
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			user.horse()
 			user.traitHolder.addTrait("soggy")
 			boutput(user, "<span class='alert'><font size=6><B>NEIGH</b></font></span>")
@@ -629,7 +629,7 @@ obj/item/contract/mummy
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
 			return 0
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			var/list/limbs = list("l_arm","r_arm","l_leg","r_leg","head","chest")
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
@@ -658,7 +658,7 @@ obj/item/contract/vampire
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
 			return 0
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			user.mind.special_role = ROLE_VAMPIRE
 			user.make_vampire(1)
 			ticker.mode.Agimmicks.Add(user)
@@ -672,7 +672,7 @@ obj/item/contract/juggle
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
 			return 0
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			user.bioHolder.AddEffect("juggler", 0, 0, 1)
 
 		return 1
@@ -685,7 +685,7 @@ obj/item/contract/fart
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
 			return 0
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			user.bioHolder.AddEffect("linkedfart", 0, 0, 1)
 
 		return 1
@@ -696,7 +696,7 @@ obj/item/contract/bee
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
 			return 0
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			user.bioHolder.AddEffect("drunk_bee", 0, 0, 1)
 
 		return 1
@@ -707,7 +707,7 @@ obj/item/contract/rested
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
 			return 0
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			user.bioHolder.AddEffect("drunk_pentetic", 0, 0, 1)
 			user.bioHolder.AddEffect("regenerator_super", 0, 0, 1)
 			user.bioHolder.AddEffect("narcolepsy_super", 0, 0, 1) //basically, the signer's very vulnerable but exceptionally difficult to actually kill.
@@ -723,7 +723,7 @@ obj/item/contract/reversal
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
 			return 0
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			user.bioHolder.AddEffect("breathless_contract", 0, 0, 1)
 			user.traitHolder.addTrait("reversal")
 			boutput(user, "<span class='notice'>You feel like you could take a shotgun blast to the face without getting a scratch on you!</span>")
@@ -739,7 +739,7 @@ obj/item/contract/krampus
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
 			return 0
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			boutput(user, "<span class='notice'>YOU CRUNCHIFY! OH GOD! </span>")
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one. (try click dragging some distant items)</b></span>")
 			user.make_cube(/mob/living/carbon/cube/meat/krampus/telekinetic, INFINITY, get_turf(user))
@@ -751,7 +751,7 @@ obj/item/contract/chemical
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
 			return 0
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			user.bioHolder.AddEffect("drunk_random", 0, 0, 1)
 
 		return 1
@@ -763,7 +763,7 @@ obj/item/contract/hair
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
 			return 0
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			user.traitHolder.addTrait("contract_hair")
 
 		return 1
@@ -775,7 +775,7 @@ obj/item/contract/limbs
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
 			return 0
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			user.traitHolder.addTrait("contract_limbs")
 
 		return 1
@@ -787,13 +787,13 @@ obj/item/contract/greed
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
 			return 0
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			for(var/i in 1 to number_of_cash_piles)
 				var/obj/item/spacecash/random/tourist/S = new /obj/item/spacecash/random/tourist
 				S.setup(user.loc)
 			boutput(user, "<span class='notice'>Some money appears at your feet. What, did you expect some sort of catch or trick?</span>")
 			if (prob(90)) //used to be 50/50, now it's only a 10% chance to get midased
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					boutput(user, "<span class='notice'>What, not enough for you? Fine.</span>")
 					var/turf/T = get_turf(user)
 					if (T)
@@ -805,7 +805,7 @@ obj/item/contract/greed
 							else
 								new /obj/item/coin(T)
 			else
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					boutput(user, "<span class='notice'>Well, you were right.</span>")
 					var/mob/living/carbon/human/H = user
 					H.become_statue(getMaterial("gold"))

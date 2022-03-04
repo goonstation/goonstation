@@ -19,7 +19,7 @@
 		src.power_usage = 5
 
 	get_desc(dist, mob/user)
-		. = ..()
+		..()
 		var/charge_percentage = 0
 		if (PCEL?.charge > 0 && PCEL.maxcharge > 0)
 			charge_percentage = round((PCEL.charge/PCEL.maxcharge)*100)

@@ -69,7 +69,7 @@ TYPEINFO(/datum/component/fragile_item)
 		return
 	else
 		if(prob(probability_of_breaking))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if(!type_to_break_into)
 					thrown_item.visible_message("<span class='alert'>As [thrown_item] stops, a shattering sound echoes, leaving nothing but dust!</span>")
 				else

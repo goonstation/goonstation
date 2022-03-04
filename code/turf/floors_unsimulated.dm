@@ -942,7 +942,7 @@
 	New()
 		. = ..()
 		src.layer += src.edge_priority_level / 1000
-		SPAWN_DBG(0.5 SECONDS) //give neighbors a chance to spawn in
+		SPAWN(0.5 SECONDS) //give neighbors a chance to spawn in
 			edge_overlays()
 
 	proc/edge_overlays()

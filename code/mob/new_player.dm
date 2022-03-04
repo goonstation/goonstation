@@ -121,7 +121,7 @@ mob/new_player
 		// explanation for isnull(src.key) from the reference: In the case of a player switching to another mob, by the time Logout() is called, the original mob's key will be null,
 		if (isnull(src.key) && pregameHTML && isclient(src.last_client))
 			// Removed dupe "if (src.last_client)" check since it was still runtiming anyway
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if(isclient(src.last_client))
 					winshow(src.last_client, "pregameBrowser", 0)
 					src.last_client << browse("", "window=pregameBrowser")
@@ -247,7 +247,7 @@ mob/new_player
 						latejoin.activated = 1
 						latejoin.owner = src.mind
 						src.mind.transfer_to(S)
-						SPAWN_DBG(1 DECI SECOND)
+						SPAWN(1 DECI SECOND)
 							S.choose_name()
 							qdel(src)
 					else
@@ -344,7 +344,7 @@ mob/new_player
 			else if (character.traitHolder && character.traitHolder.hasTrait("pilot"))
 				boutput(character.mind.current,"<h3 class='notice'>You've become lost on your way to the station! Good luck!</h3>")
 			else if (character.traitHolder && character.traitHolder.hasTrait("sleepy"))
-				SPAWN_DBG(10 SECONDS) //ugly hardcoding- matches the duration you're asleep for
+				SPAWN(10 SECONDS) //ugly hardcoding- matches the duration you're asleep for
 					boutput(character?.mind?.current,"<h3 class='notice'>Hey, you! You're finally awake!</h3>")
 				//As with the Stowaway trait, location setting is handled elsewhere.
 			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner) || istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/mail_order))
@@ -401,7 +401,7 @@ mob/new_player
 				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
 				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
 					participationRecorder.record(character.mind.ckey)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				qdel(src)
 
 		else

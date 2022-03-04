@@ -195,7 +195,7 @@ var/datum/action_controller/actions
 		if (place_to_put_bar)
 			place_to_put_bar.vis_contents -= target_bar
 			place_to_put_bar.vis_contents -= target_border
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (bar)
 				bar.set_loc(null)
 				qdel(bar)
@@ -1490,14 +1490,14 @@ var/datum/action_controller/actions
 		if(owner && target)
 			if (ishuman(target))
 				var/mob/living/carbon/human/H = target
-				var/obj/item/implant/antirev/found_imp = (locate(/obj/item/implant/antirev) in H.implant)
+				var/obj/item/implant/counterrev/found_imp = (locate(/obj/item/implant/counterrev) in H.implant)
 				if (found_imp)
 					found_imp.on_remove(target)
 					H.implant.Remove(found_imp)
 					qdel(found_imp)
 
 					playsound(target.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.9)
-					target.visible_message("<span class='notice'>The loyalty implant inside [target] shatters into one million pieces!</span>")
+					target.visible_message("<span class='notice'>The counter-revolutionary implant inside [target] shatters into one million pieces!</span>")
 
 				flash.flash_mob(target, owner)
 
@@ -1834,6 +1834,7 @@ var/datum/action_controller/actions
 		onEnd()
 			..()
 			if (can_reach(owner,over_object) && ismob(owner) && owner:equipped() == target)
+				usr = owner
 				over_object.Attackby(target, owner, params)
 
 /// general purpose action to anchor or unanchor stuff

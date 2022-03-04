@@ -104,7 +104,7 @@ Contents:
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			process()
 
 	proc/process()
@@ -127,7 +127,7 @@ Contents:
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			JobEquipSpawned("Samurai")
 			return
 

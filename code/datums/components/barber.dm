@@ -100,7 +100,7 @@ TYPEINFO(/datum/component/barber)
 		else
 			return 0
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/list/region = list(
 			"Top Detail ([M.bioHolder.mobAppearance.customization_third.name])" = TOP_DETAIL,
 			"Middle Detail ([M.bioHolder.mobAppearance.customization_second.name])" = MIDDLE_DETAIL,
@@ -175,7 +175,7 @@ TYPEINFO(/datum/component/barber)
 		else
 			return 0
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 
 		var/list/region = list(
 			"Top Detail ([M.bioHolder.mobAppearance.customization_third.name])" = TOP_DETAIL,

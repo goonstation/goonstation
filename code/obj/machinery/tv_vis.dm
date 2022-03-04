@@ -26,7 +26,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			video_screen = new(src.loc, owner = src)
 			video_screen.fov = fov
 

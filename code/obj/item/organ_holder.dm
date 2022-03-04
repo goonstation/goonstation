@@ -262,7 +262,7 @@
 			organ_list["skull"] = skull
 
 			// For variety and hunters (Convair880).
-			SPAWN_DBG(2.5 SECONDS) // Don't remove.
+			SPAWN(2.5 SECONDS) // Don't remove.
 				if (src.donor && src.donor.organHolder && src.donor.organHolder.skull)
 					src.donor.assign_gimmick_skull()
 
@@ -275,7 +275,7 @@
 				src.brain = new /obj/item/organ/brain(src.donor, src)
 			src.brain.setOwner(src.donor.mind)
 			organ_list["brain"] = brain
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				if (src.brain && src.donor)
 					src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
 					if (src.donor.mind)
@@ -1252,7 +1252,7 @@
 					src.brain = new /obj/item/organ/brain(src.donor, src)
 			src.brain.setOwner(src.donor.mind)
 			organ_list["brain"] = brain
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				if (src.brain && src.donor)
 					//src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
 					if (src.donor.mind)
@@ -1295,7 +1295,7 @@
 		if(!src.heart)
 			src.heart = new /obj/item/organ/heart/flock(src.donor, src)
 			organ_list["heart"] = heart
-			SPAWN_DBG(2 SECONDS) // god damn i wish i didn't need to have these spawns here, it's gross, i'm sorry, i'm really sorry
+			SPAWN(2 SECONDS) // god damn i wish i didn't need to have these spawns here, it's gross, i'm sorry, i'm really sorry
 				if (src.heart && src.donor)
 					src.heart.name = initial(src.heart.name)
 
@@ -1327,7 +1327,7 @@
 			usr.targeting_ability = owner
 			usr.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 
 /datum/targetable/organAbility
@@ -1496,7 +1496,7 @@
 		boutput(holder.owner, "<span class='notice'>You overclock your cyberkidney[islist(linked_organ) ? "s" : ""] to rapidly purge chemicals from your body.</span>")
 		APPLY_MOB_PROPERTY(holder.owner, PROP_CHEM_PURGE, src, power)
 		holder.owner.urine += power // -.-
-		SPAWN_DBG(15 SECONDS)
+		SPAWN(15 SECONDS)
 			if(holder?.owner)
 				REMOVE_MOB_PROPERTY(holder.owner, PROP_CHEM_PURGE, src)
 
@@ -1570,7 +1570,7 @@
 			var/mob/living/L = holder.owner
 			if (L.stomach_process && length(L.stomach_process))
 				L.visible_message("<span class='alert'>[L] convulses and vomits right at [target]!</span>", "<span class='alert'>You upchuck some of your cyberstomach contents at [target]!</span>")
-				SPAWN_DBG(0)
+				SPAWN(0)
 					for (var/i in 1 to 3)
 						var/obj/item/O = L.vomit()
 						O.throw_at(target, 8, 3, bonus_throwforce=5)

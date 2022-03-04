@@ -109,7 +109,7 @@ WET FLOOR SIGN
 		M = M.Scale(0,0)
 		src.transform = M
 		animate(src, transform=matrix(), time = 25, easing = ELASTIC_EASING)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			go(direction)
 
 	proc/go(var/direction)
@@ -135,7 +135,7 @@ WET FLOOR SIGN
 
 	proc/vanish()
 		animate(src, alpha = 0, time = 5)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.invisibility = INVIS_ALWAYS
 			src.set_loc(null)
 			qdel(src)
@@ -225,7 +225,7 @@ WET FLOOR SIGN
 	src.reagents.trans_to(D, 5)
 	var/log_reagents = log_reagents(src)
 	var/travel_distance = clamp(get_dist(get_turf(src), A), 1, 3)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for (var/i=0, i<travel_distance, i++)
 			step_towards(D,A)
 			var/turf/theTurf = get_turf(D)
@@ -342,7 +342,7 @@ WET FLOOR SIGN
 		user.show_text("You have mopped up [A]!", "blue", group = "mop")
 
 	if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src?.reagents)
 				src.reagents.clear_reagents()
 				mopcount = 0
@@ -403,13 +403,13 @@ WET FLOOR SIGN
 				var/wetoverlay = image('icons/effects/water.dmi',"wet_floor")
 				T.overlays += wetoverlay
 				T.wet = 1
-				SPAWN_DBG(30 SECONDS)
+				SPAWN(30 SECONDS)
 					if (istype(T))
 						T.wet = 0
 						T.overlays -= wetoverlay
 
 		if (mopcount >= 5) //Okay this stuff is an ugly hack and i feel bad about it.
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				if (src?.reagents)
 					src.reagents.clear_reagents()
 					mopcount = 0
@@ -426,7 +426,7 @@ WET FLOOR SIGN
 			mopcount++
 
 		if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				if (src?.reagents)
 					src.reagents.clear_reagents()
 					mopcount = 0
@@ -489,9 +489,9 @@ WET FLOOR SIGN
 		src.reagents.reaction(location, TOUCH, src.reagents.total_volume)
 	//somepotato note: wtf is the thing below this
 	//mbc note : yeah that's dumb! I moved spam_flag up top to prevent reagent duplication
-	SPAWN_DBG(1 DECI SECOND) // to make sure the reagents actually react before they're cleared
+	SPAWN(1 DECI SECOND) // to make sure the reagents actually react before they're cleared
 	src.reagents.clear_reagents()
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 	spam_flag = 0
 
 /obj/item/sponge/attackby(obj/item/W as obj, mob/user as mob)
@@ -513,11 +513,11 @@ WET FLOOR SIGN
 			playsound(DUDE.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 			if(DUDE.wear_mask || (DUDE.head && DUDE.head.c_flags & COVERSEYES))
 				boutput(DUDE, "<span class='alert'>Your headgear protects you! PHEW!!!</span>")
-				SPAWN_DBG(1 DECI SECOND) src.reagents.clear_reagents()
+				SPAWN(1 DECI SECOND) src.reagents.clear_reagents()
 				return
 			src.reagents.reaction(DUDE, TOUCH)
 			src.reagents.trans_to(DUDE, reagents.total_volume)
-			SPAWN_DBG(1 DECI SECOND) src.reagents.clear_reagents()
+			SPAWN(1 DECI SECOND) src.reagents.clear_reagents()
 	..()
 
 
@@ -804,7 +804,7 @@ WET FLOOR SIGN
 		light.set_brightness(0.7)
 		light.enable()
 
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			animate(src, alpha=180, color="#DDDDDD", time=7, loop=-1)
 			animate(alpha=230, color="#FFFFFF", time=1)
 			animate(src, pixel_y=10, time=15, flags=ANIMATION_PARALLEL, easing=SINE_EASING, loop=-1)
@@ -999,7 +999,7 @@ WET FLOOR SIGN
 				for(var/obj/item/I as anything in items_to_suck)
 					I.set_loc(get_turf(user))
 				success = TRUE
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					for(var/obj/item/I as anything in items_to_suck) // yes, this can go over capacity of the bag, that's intended
 						I.set_loc(src.trashbag)
 					src.trashbag.calc_w_class(null)
@@ -1149,5 +1149,5 @@ WET FLOOR SIGN
 		src.alpha = 0
 		animate(src, alpha=255, time=0.21 SECONDS, easing=SINE_EASING)
 		animate(alpha=0, time=0.21 SECONDS, easing=SINE_EASING)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			qdel(src)

@@ -44,7 +44,7 @@
 	New()
 		..()
 		src.hidden_categories = list()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			if (src.owner)
 				var/client/C = src.owner
 				C.chatOutput.getContextFlag()
@@ -342,7 +342,7 @@
 /client/proc/change_admin_prefs()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Change Admin Preferences"
-	admin_only
+	ADMIN_ONLY
 
 	src.holder.show_pref_window(src.mob)
 

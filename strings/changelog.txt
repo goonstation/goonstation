@@ -1,4 +1,159 @@
 
+(t)thu mar 03 22
+(u)glowbold
+(p)7666
+(e)🆕|feature
+(*)As a changeling victim, your pleas for help/mercy/death/JOIN US are now audible when your master goes into horror form!
+(t)wed mar 02 22
+(u)Jimmyl
+(p)7657
+(e)🐛|bug
+(+)Fixed the bug of the PDA Packet senders Delete button not working
+(t)tue mar 01 22
+(u)Sovexe
+(p)7663
+(e)🆕|feature
+(+)Ranchers now start with a pair of rancher boots. Rancher boots grant their wearer the ability to vault railings more quickly.
+(t)mon feb 28 22
+(u)LeahTheTech
+(p)7602
+(e)🆕⚖|feature, balance
+(+)Arcfiend's Jolt ability will now cure cardiac arrest in people with SMES human and can now be self cast.
+(u)Sovexe
+(p)7658
+(e)🆕|feature
+(+)Produce satchels may now hold feathers.
+(u)Ikea
+(p)7600
+(e)|
+(*)The syndicates have noticed an overstocking of nanotrasen stations and has decided to increase the max amount of revolutionary heads it will send to a station to 5.
+(u)LeahTheTech
+(p)7577
+(e)🆕🎨📄|feature, sprites, tgui
+(*)Added a map for the AI to move around with. Open with the "Open station map" verb and click to teleport.
+(t)sun feb 27 22
+(u)Jimmyl
+(p)6973
+(e)🆕|feature
+(+)The Packet Sender PDA program can now make (simple) programs with the packets
+(u)LeahTheTech
+(p)7468
+(e)🐛|bug
+(+)Microwaves are now able to be emagged again.
+(u)Jimmyl
+(p)6907
+(e)🆕|feature
+(*)Added 3 new artifacts -- Emote Forcer Field,Warper and Heat Surge
+(u)Conchuckter
+(p)7496
+(e)🆕⚖|feature, balance
+(+)Added MechComp functionality to ChemiCompilers
+(u)CodeJester
+(p)7615
+(e)🆕|feature
+(+)You can now dump the contents of a hypospray back into a beaker or other reagent container.
+(u)TTerc
+(*)Clicking a vehicle that has a pilot as a ghost now makes you observe the pilot. Works for all kinds of vehicles: pods, segways, clown cars, minisubs.
+(u)Conchuckter
+(p)7626
+(e)|
+(+)Fixes being able to dump handheld MechComp cabinets into chutes
+(u)Walpvrgis
+(p)7641
+(e)🆕🎨|feature, sprites
+(*)Added 11 new hairstyles accessible in the character creation screen; check minor changes for a list of their names, or the PR for names + preview images!
+(+)You can find the new hair options under the names; Flick, Ignite, Mysterious, Ripley, Violet, Willow, Bun Undercut, Glam Ponytail, Rock Ponytail, Spiky Ponytail, Messy ponytail
+(t)sat feb 26 22
+(u)TTerc
+(+)Arc plater now automatically ejects the item when it finishes working. You can now also eject the material you inserted into it manually by clicking the plater with empty hand.
+(u)NightmareChamillian
+(p)7580
+(e)🎨|sprites
+(+)Resprited the gas extractor and disposal pipe dispenser
+(t)thu feb 24 22
+(u)tamunora
+(+)microdosing ( <1 depletion) stam boosting/etc chems doesn't work anymore
+(t)wed feb 23 22
+(u)aloe
+(*)The Head Surgeon got too fucked up and is, once again, fired. They've been replaced with a medical specialist- NT doesn't really understand what they do, but it sure sounds important. (Realistically they're just the HS but without command radio/access. Also they can get revved.)
+(u)aloe
+(+)You no longer need to remove all of a cyborg's limbs to take off their chest or head. Do note that they'll fall apart if you remove either of these.
+(t)tue feb 22 22
+(u)Amylizzle
+(p)7583
+(e)|
+(*)Enzymatic Reclaimers no longer destroy item arms, the item will now drop.
+(t)mon feb 21 22
+(u)Flappybat
+(p)7574
+(e)|
+(+)Cluwnes have been trained to make a less ear blasting horn sound.
+(u)CodeJester
+(p)7438
+(e)📄|tgui
+(*)The seed fabricator has a new UI, allowing you to find and dispense cannabis seeds easier.
+(u)CodeJester
+(p)7523
+(e)🆕📄|feature, tgui
+(+)Added Isolate button for reagents in the Reagent Extractor.
+(t)sun feb 20 22
+(u)aloe
+(+)you digest 3x as hard
+(u)AmazingDragons
+(p)7437
+(e)🆕|feature
+(*)Added a new morale-boosting problem to the mainframe for control of your favorite guardbuddies!
+(u)Yellow/Myco
+(p)7545
+(e)⚖|balance
+(+)Staff Assistants now spawn with a Civilian Headset, giving them access to the civilian channel
+(u)FlameArrow57
+(p)7413
+(e)🆕|feature
+(*)Security computers now provide a SecHUD flag that can be set for someone. If a person has an active arrest status, the flag will appear in their examine report for anyone wearing SecHUDs.
+(t)sat feb 19 22
+(u)Flappybat
+(p)7373
+(e)🗺|mapping
+(+)Renamed Loyalty implants to Counter-Revolutionary implants to make their purpose clearer.
+(t)fri feb 18 22
+(u)tarmunora
+(+)blob poisoning change:
+(+)mitochondria individually less vulnerable to poison, suck poison out of nearby non-mitochondria/non-lipid tiles, store up to 50 poison in adjacent lipid tiles
+(+)lipids slightly more flammable and no longer have increased poison spread on death
+(t)thu feb 17 22
+(u)aloe
+(*)Genetics computers now require genetics access to operate.
+(u)Danger Noodle
+(p)7471
+(e)🗺|mapping
+(*)A new art themed prefab has been added to space maps.
+(u)Flappybat
+(p)7522
+(e)|
+(+)Tracking beacons start anchored. You can unanchor them with a screwdriver.
+(u)TTerc
+(+)Fish now deal 0 damage. Invite your friends for a fish slap fight!
+(u)pali
+(*)Persistent pickle jars now spawn on the station. You can put things into the jar and leave the jar somewhere and next round the jar will be on the same place (if it's the same map) and contain the things you put there but pickled and edible!
+(t)wed feb 16 22
+(u)TTerc
+(e)🆕|feature
+(+)You can now show off your security badge to people by clicking them with it.
+(t)tue feb 15 22
+(u)Kyle
+(+)One Armed Spaceman trait now costs 0 points.
+(u)Conchuckter
+(p)7511
+(e)🐛|bug
+(+)Fixes computer frames always giving 5 sheets instead of their proper amount
+(t)mon feb 14 22
+(u)Flaborized
+(p)7502
+(e)🎨|sprites
+(+)Updated the sprites for shuttle and airbridge floors.
+(u)Kyle
+(*)You can now handcuff people that have only one arm. (If they're cuffed and lose an arm, they'll still be uncuffed like normal)
 (t)sun feb 13 22
 (u)Sovexe
 (p)7486

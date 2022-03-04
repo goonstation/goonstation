@@ -145,7 +145,7 @@
 				gib_counter = 0
 				if (do_stun)
 					C.changeStatus("stunned", 2 SECONDS)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					for (var/i = 0, i <= round(gib_delay / 10), i++)
 						if ((get_dist(src, C) <= max_gib_distance) && src.alive)
 							if (gib_counter == gib_delay)
@@ -196,7 +196,7 @@
 	ChaseAttack(mob/M)
 		..()
 		if (prob(33)) M.changeStatus("weakened", 3 SECONDS)
-		SPAWN_DBG(2.5 SECONDS)
+		SPAWN(2.5 SECONDS)
 			if (get_dist(src, M) <= 1)
 				src.visible_message("<span class='alert'><B>[src]</B> starts strangling [M]!</span>")
 
@@ -214,7 +214,7 @@
 			src.visible_message("<span class='alert'><B>[src]'s</B> grip slips!</span>")
 			M.delStatus("stunned")
 			sleeping = 1
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				for(var/mob/O in hearers(src, null))
 					O.show_message("<span class='alert'><b>[src]</b> screeches, 'KBWKB WVYPGD!!'</span>", 1)
 			src.task = "thinking"

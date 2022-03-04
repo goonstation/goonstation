@@ -6,10 +6,16 @@ ABSTRACT_TYPE(/datum/objective)
 	var/medal_name = null // Called by ticker.mode.declare_completion().
 	var/medal_announce = 1
 
-	New(text)
+	New(text, datum/mind/owner)
 		..()
 		if(text)
 			src.explanation_text = text
+		if(istype(owner))
+			src.owner = owner
+			owner.objectives += src
+		else
+			stack_trace("objective/New got called without a mind")
+		src.set_up()
 
 	proc/check_completion()
 		return 1
@@ -1348,7 +1354,7 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 			if (ispath(escape_path))
 				ticker.mode.bestow_objective(enemy,escape_path)
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			qdel(src)
 		return 0
 

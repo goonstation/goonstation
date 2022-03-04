@@ -18,11 +18,12 @@
 #define FIELDNUM_PRINT 6
 #define FIELDNUM_PHOTO 7
 #define FIELDNUM_CRIMSTAT 8
-#define FIELDNUM_MINCRIM 9
-#define FIELDNUM_MINDET 10
-#define FIELDNUM_MAJCRIM 11
-#define FIELDNUM_MAJDET 12
-#define FIELDNUM_NOTES 13
+#define FIELDNUM_SECFLAG 9
+#define FIELDNUM_MINCRIM 10
+#define FIELDNUM_MINDET 11
+#define FIELDNUM_MAJCRIM 12
+#define FIELDNUM_MAJDET 13
+#define FIELDNUM_NOTES 14
 
 #define FIELDNUM_DELETE "d"
 #define FIELDNUM_NEWREC "new"
@@ -296,6 +297,7 @@
 						R["full_name"] = src.active_general["full_name"]
 						R["id"] = src.active_general["id"]
 						R["criminal"] = "None"
+						R["sec_flag"] = "None"
 						R["mi_crim"] = "None"
 						R["mi_crim_d"] = "No minor crime convictions."
 						R["ma_crim"] = "None"
@@ -333,6 +335,11 @@
 
 					if (FIELDNUM_CRIMSTAT)
 						src.print_text("Please select: (1) Arrest (2) None (3) Incarcerated<br>(4) Parolled (5) Released (0) Back")
+						src.menu = MENU_FIELD_INPUT
+						return
+
+					if (FIELDNUM_SECFLAG)
+						src.print_text("Please enter new value (10 characters max), or \"None.\"")
 						src.menu = MENU_FIELD_INPUT
 						return
 
@@ -430,6 +437,7 @@
 								src.active_secure["criminal"] = "*Arrest*"
 							if (2)
 								src.active_secure["criminal"] = "None"
+								src.active_secure["sec_flag"] = "None"
 							if (3)
 								src.active_secure["criminal"] = "Incarcerated"
 							if (4)
@@ -441,6 +449,17 @@
 								return
 							else
 								return
+
+					if (FIELDNUM_SECFLAG)
+						if (!src.active_secure)
+							src.print_text("No security record loaded!")
+							src.menu = MENU_IN_RECORD
+							return
+
+						if (ckey(inputText))
+							src.active_secure["sec_flag"] = copytext(inputText, 1, 11) // 10 characters at most
+						else
+							return
 
 					if (FIELDNUM_MINCRIM)
 						if (!src.active_secure)
@@ -691,11 +710,12 @@
 				view_string +={"
 				<br><center><b>Security Data</b></center>
 				<br>\[08]<b>Criminal Status:</b> [src.active_secure["criminal"]]
-				<br>\[09]<b>Minor Crimes:</b> [src.active_secure["mi_crim"]]
-				<br>\[10]<b>Details:</b> [src.active_secure["mi_crim_d"]]
-				<br>\[11]<b><br>Major Crimes:</b> [src.active_secure["ma_crim"]]
-				<br>\[12]<b>Details:</b> [src.active_secure["ma_crim_d"]]
-				<br>\[13]<b>Important Notes:</b> [src.active_secure["notes"]]"}
+				<br>\[09]<b>SecHUD Flag:</b> [src.active_secure["sec_flag"]]
+				<br>\[10]<b>Minor Crimes:</b> [src.active_secure["mi_crim"]]
+				<br>\[11]<b>Details:</b> [src.active_secure["mi_crim_d"]]
+				<br>\[12]<b><br>Major Crimes:</b> [src.active_secure["ma_crim"]]
+				<br>\[13]<b>Details:</b> [src.active_secure["ma_crim_d"]]
+				<br>\[14]<b>Important Notes:</b> [src.active_secure["notes"]]"}
 			else
 				view_string += "<br><br><b>Security Record Lost!</b>"
 				view_string += "<br>\[[FIELDNUM_NEWREC]] Create New Security Record.<br>"
@@ -984,6 +1004,7 @@
 #undef FIELDNUM_RANK
 #undef FIELDNUM_PRINT
 #undef FIELDNUM_CRIMSTAT
+#undef FIELDNUM_SECFLAG
 #undef FIELDNUM_MINCRIM
 #undef FIELDNUM_MINDET
 #undef FIELDNUM_MAJCRIM

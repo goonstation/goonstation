@@ -180,7 +180,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.auto && ispath(src.auto_path))
 				src.set_up(1)
 
@@ -649,7 +649,7 @@
 			user.visible_message("<b>[user.name] folds [src].</b>")
 			if ((chair_chump) && (chair_chump != user))
 				chair_chump.visible_message("<span class='alert'><b>[chair_chump.name] falls off of [src]!</b></span>")
-				chair_chump.on_chair = 0
+				chair_chump.on_chair = null
 				chair_chump.pixel_y = 0
 				chair_chump.changeStatus("weakened", 1 SECOND)
 				chair_chump.changeStatus("stunned", 2 SECONDS)
@@ -692,7 +692,7 @@
 					user.unlock_medal("Leave no man behind!", 1)
 		return
 
-	MouseDrop(atom/over_object as mob|obj)
+	mouse_drop(atom/over_object as mob|obj)
 		if(get_dist(src,usr) <= 1)
 			src.rotate(get_dir(get_turf(src),get_turf(over_object)))
 		..()
@@ -766,19 +766,19 @@
 
 		M.end_chair_flip_targeting()
 
-		if (istype(H) && H.on_chair)// == 1)
+		if (istype(H) && H.on_chair)
 			M.pixel_y = 0
 			reset_anchored(M)
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
-			SPAWN_DBG(0.5 SECONDS)
-				H.on_chair = 0
+			SPAWN(0.5 SECONDS)
+				H.on_chair = null
 				src.buckledIn = 0
 		else if ((M.buckled))
 			reset_anchored(M)
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.buckledIn = 0
 
 		src.buckled_guy = null
@@ -873,9 +873,9 @@
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
 	HasProximity(atom/movable/AM as mob|obj)
-		if (isliving(AM) && prob(40))
+		if (isliving(AM) && !isintangible(AM) && prob(40) && !AM.hasStatus("weakened"))
 			src.visible_message("<span class='alert'>[src] trips [AM]!</span>", "<span class='alert'>You hear someone fall.</span>")
-			AM:changeStatus("weakened", 2 SECONDS)
+			AM.changeStatus("weakened", 2 SECONDS)
 		return
 
 /* ======================================================= */
@@ -1389,7 +1389,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			if (src)
 				if (!(src.part1 && istype(src.part1)))
 					src.part1 = new /obj/item/assembly/shock_kit(src)

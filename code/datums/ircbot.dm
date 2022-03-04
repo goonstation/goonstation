@@ -15,7 +15,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	New()
 		..()
 		if (!src.load())
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				if (!src.loaded)
 					src.load()
 
@@ -44,6 +44,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 
 		//Shortcut proc for event-type exports
 		event(type, data)
+			set waitfor = FALSE // events async by default because who cares about the result really, we are just notifying the bot about something
 			if (!type) return 0
 			var/list/eventArgs = list("type" = type)
 			if (data) eventArgs |= data
@@ -58,6 +59,10 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 		text_args(list/arguments)
 			return src.apikey_scrub(list2params(arguments))
 
+		export_async(iface, args)
+			set waitfor = FALSE
+			export(iface, args)
+
 		//Send a message to an irc bot! Yay!
 		export(iface, args)
 			if (src.debugging)
@@ -69,7 +74,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 				if (src.debugging)
 					src.logDebug("Export, message queued due to unloaded config")
 
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					if (!src.loaded)
 						src.load()
 				return "queued"
@@ -166,7 +171,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	set desc = "Enables in-depth logging of all IRC Bot exports and returns"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 
-	admin_only
+	ADMIN_ONLY
 
 	ircbot.toggleDebug(src)
 	return 1

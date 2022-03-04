@@ -348,7 +348,7 @@
 	icon = 'icons/mob/mob.dmi'
 
 /atom/movable/overlay/gibs/proc/delaydispose()
-	SPAWN_DBG(3 SECONDS)
+	SPAWN(3 SECONDS)
 		if (src)
 			dispose(src)
 
@@ -418,6 +418,8 @@
 
 	src.attached_objs?.Cut()
 	src.attached_objs = null
+
+	src.vis_locs = null // cleans up vis_contents of visual holders of this too
 
 	last_turf = src.loc // instead rely on set_loc to clear last_turf
 	set_loc(null)
@@ -543,6 +545,10 @@
 
 	if (!isliving(usr))
 		return
+
+	if (isintangible(usr)) //can't pull shit if you can't touch shit
+		return
+
 	// no pulling other mobs for ghostdrones (but they can pull other ghostdrones)
 	else if (isghostdrone(usr) && ismob(src) && !isghostdrone(src))
 		return
@@ -617,7 +623,7 @@
 		var/mob/living/silicon/ai/mainframe
 		var/mob/living/carbon/human/person = src
 		if (isAIeye(user))
-			var/mob/dead/aieye/ai = user
+			var/mob/living/intangible/aieye/ai = user
 			mainframe = ai.mainframe
 		else
 			mainframe = user
@@ -642,7 +648,16 @@
 		if (!hasPDA)
 			. += "<br>*No PDA detected!*"
 
-/atom/proc/MouseDrop_T()
+/// Override MouseDrop_T instead of this. Call this instead of MouseDrop_T, but you probably shouldn't!
+/atom/proc/_MouseDrop_T(dropped, user)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	SPAWN(0) // Yes, things break if this isn't a spawn.
+		if(SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP_T, dropped, user))
+			return
+		src.MouseDrop_T(dropped, user)
+
+/atom/proc/MouseDrop_T(dropped, user)
+	PROTECTED_PROC(TRUE)
 	return
 
 /atom/proc/Attackhand(mob/user as mob)
@@ -763,30 +778,20 @@
 
 	return null
 
-/atom/MouseDrop(atom/over_object as mob|obj|turf)
-	SPAWN_DBG( 0 )
-		if (istype(over_object, /atom))
-			if (isalive(usr))
-				//To stop ghostdrones dragging people anywhere
-				if (isghostdrone(usr) && ismob(src) && src != usr)
-					return
-
-				/* This was SUPPOSED to make the innerItem of items act on the mousedrop instead but it doesnt work for no reason
-				if (isitem(src))
-					var/obj/item/W = src
-					if (W.useInnerItem && W.contents.len > 0)
-						target = pick(W.contents)
-				//world.log << "calling mousedrop_t on [over_object] with params: [src], [usr]"
-				*/
-
-				over_object.MouseDrop_T(src, usr)
-			else
-				if (istype(over_object, /obj/machinery)) // For cyborg docking stations (Convair880).
-					var/obj/machinery/M = over_object
-					if (M.allow_stunned_dragndrop == 1)
-						M.MouseDrop_T(src, usr)
+/// Override mouse_drop instead of this. Call this instead of mouse_drop, but you probably shouldn't!
+/atom/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(!isatom(over_object))
 		return
-	..()
+	if (isalive(usr) && !isintangible(usr) && isghostdrone(usr) && ismob(src) && src != usr)
+		return // Stops ghost drones from MouseDropping mobs
+	over_object._MouseDrop_T(src, usr)
+	if (SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP, usr, over_object, src_location, over_location, over_control, params))
+		return
+	src.mouse_drop(over_object, src_location, over_location, over_control, params)
+
+/atom/proc/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+	PROTECTED_PROC(TRUE)
 	return
 
 /atom/proc/relaymove(mob/user, direction, delay, running)

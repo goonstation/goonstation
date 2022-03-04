@@ -24,9 +24,12 @@
 		..()
 
 /obj/submachine/slot_machine/emag_act(mob/user, obj/item/card/emag/E)
-	. = ..()
+	if (src.emagged)
+		user?.show_message("<span class='alert'>The [src] has already had been tampered with.</span>")
+		return
 	boutput(user, "<span class='notice'>You short out the random number generator on [src]")
 	src.emagged = 1
+	return TRUE
 
 /* INTERFACE */
 
@@ -80,7 +83,7 @@
 			playsound(src, "sound/machines/ding.ogg", 50, 1)
 			. = TRUE
 			ui_interact(usr, ui)
-			SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
+			SPAWN(2.5 SECONDS) // why was this at ten seconds, christ
 				money_roll(wager)
 				src.working = 0
 				src.icon_state = "[icon_base]-off"
@@ -248,7 +251,7 @@
 				var/roll = rand(1,101)
 
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-				SPAWN_DBG(2.5 SECONDS)
+				SPAWN(2.5 SECONDS)
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'JACKPOT! [usr.name] has won their freedom!'</span>", src), 1)
@@ -346,7 +349,7 @@
 				var/roll = rand(1,1350)
 
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-				SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
+				SPAWN(2.5 SECONDS) // why was this at ten seconds, christ
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'JACKPOT! You have won a MILLION CREDITS!'</span>", src), 1)
