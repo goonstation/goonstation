@@ -343,7 +343,7 @@ img.emoji {
 .hivesay {color: #663500;}
 .thrallsay {color: white; background-color: #580283;}
 .thrallsay .vamp.name {color: #ff0000;}
-.kudzusay {color: #005c0e;}
+.kudzusay {color: white; background-color: #566B44;}
 .astralsay {color: #2AABA4;}
 .martiansay {color: #E89235;} /* #BD33D9 is the telepathy colour, possibly more suitable? */
 .martianimperial {color: #C7376C; font-size: 14px;}
@@ -483,7 +483,7 @@ body.theme-dark .bugsay {color: #EA5D17;}
 body.theme-dark .deadsay {color: #b27eff;}
 body.theme-dark .hivesay {color: #e2a059;}
 body.theme-dark .thrallsay {color: white; background-color: #6f00a7;}
-body.theme-dark .kudzusay {color: #4bc75e;}
+body.theme-dark .kudzusay {color: #111; background-color: #7B8F68;}
 body.theme-dark .astralsay {color: #60d4cf;}
 body.theme-dark .martiansay {color: #E89235;} /* #BD33D9 is the telepathy colour, possibly more suitable? */
 body.theme-dark .martianimperial {color: #e26794;}

@@ -353,7 +353,7 @@
 	message = src.say_quote(message)
 	//logTheThing("say", src, null, "SAY: [message]")
 
-	var/rendered = "<span class='game kudzusay'><span class='prefix'><small>KUDZUSPEAK:</small></span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
+	var/rendered = "<span class='game kudzusay'><span class='prefix'><small>Kudzu speak:</small></span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 
 
 	//show message to admins (Follow rules of their deadchat toggle)
