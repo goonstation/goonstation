@@ -82,12 +82,12 @@
 
 	if (!D) //Wire: Fix for runtime error: Cannot read null.type (datum having been deleted)
 		return
-
+/*
 	if(istype(D, /datum/configuration) || istype(D, /datum/admins))
 		boutput(src, "<span class='alert'>YEAH... no....</span>")
 		src.audit(AUDIT_ACCESS_DENIED, "tried to View-Variables a forbidden type([D.type])")
 		return
-
+*/
 	if(D != "GLOB")
 		src.audit(AUDIT_VIEW_VARIABLES, "is viewing variables on [D]: [D.type] [istype(D, /atom) ? "at [D:x], [D:y], [D:z]" : ""]")
 	else
