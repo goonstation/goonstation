@@ -39,7 +39,7 @@ var/global/list/playersSeen = list()
 //A return 0 is a "this guy is ok let him in"
 //Anything that returns as true is a "bad dude kill his connection"
 //(this doesn't use the 'step' var thing because we need the response here and now)
-//"record" tells the goonhub api to make a note of these details
+//"record" tells the opengoon api to make a note of these details
 /proc/checkBan(ckey, compID, ip, record = 0)
 	set background = 1
 	if (!ckey && !compID && !ip)
@@ -82,7 +82,7 @@ var/global/list/playersSeen = list()
 
 	//Are any of the details...different? This is to catch out ban evading jerks who change their ckey but forget to mask their IP or whatever
 	var/timeAdded = 0
-	if (!expired && (row["ckey"] != ckey || row["ip"] != ip || row["compID"] != compID)) //Insert a new ban for this JERK
+	if (!expired && row["server"] != "MIRROR" && (row["ckey"] != ckey || row["ip"] != ip || row["compID"] != compID)) //Insert a new ban for this JERK
 		var/newChain = 0
 		if (text2num(row["previous"]) > 0) //if we matched a previous auto-added ban
 			if (text2num(row["chain"]) > 0)
@@ -173,7 +173,7 @@ var/global/list/playersSeen = list()
 		if (targetC)
 			targetC.mob.unlock_medal("Banned", 1)
 			boutput(targetC, "<span class='alert'><BIG><B>You have been banned by [row["akey"]].<br>Reason: [row["reason"]]</B></BIG></span>")
-			boutput(targetC, "<span class='alert'>To try to resolve this matter head to https://forum.ss13.co</span>")
+			boutput(targetC, "<span class='alert'>To try to resolve this matter head to [config.forums_url]</span>")
 		else
 			replacement_text = "[row["ckey"]] (IP: [row["ip"]], CompID: [row["compID"]])"
 
@@ -203,12 +203,10 @@ var/global/list/playersSeen = list()
 		if (row["ckey"] && row["ckey"] != "N/A")
 			addPlayerNote(row["ckey"], row["akey"], "Banned [serverLogSnippet] by [row["akey"]], reason: [row["reason"]], duration: [(expiry == 0 ? "Permanent": "[expiry]")]")
 
-		var/ircmsg[] = new()
-		ircmsg["key"] = row["akey"]
-		ircmsg["key2"] = "[row["ckey"]] (IP: [row["ip"]], CompID: [row["compID"]])"
-		ircmsg["msg"] = row["reason"]
-		ircmsg["time"] = expiry
-		ircbot.export("ban", ircmsg)
+		var/key = row["akey"]
+		var/key2 = "[row["ckey"]] (IP: [row["ip"]], CompID: [row["compID"]])"
+		var/msg = row["reason"]
+		discord_send("Ban applied by [key] against [key2] for reason [msg] with expiry [expiry]", -1)
 
 		if (targetC)
 			if (targetC.mob)
@@ -264,21 +262,8 @@ var/global/list/playersSeen = list()
 
 		if (!mobRef)
 			data["ckey"] = input(usr, "Ckey (lowercase, only alphanumeric, no spaces, leave blank to skip)", "Ban") as null|text
-			var/auto = alert("Attempt to autofill IP and compID with most recent?","Autofill?","Yes","No")
-			if (auto == "No")
-				data["compID"] = input(usr, "Computer ID", "Ban") as null|text
-				data["ip"] = input(usr, "IP Address", "Ban") as null|text
-			else if (data["ckey"])
-				var/list/response
-				try
-					response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]), forceResponse = 1)
-				catch ()
-					boutput(usr, "<span class='alert'>Failed to query API, try again later.</span>")
-					return
-				if (text2num(response["seen"]) < 1)
-					boutput(usr, "<span class='alert'>No data found for target, IP and/or compID will be left blank.</span>")
-				data["ip"] = response["last_ip"]
-				data["compID"] = response["last_compID"]
+			data["compID"] = input(usr, "Computer ID (leave blank to skip)", "Ban") as null|text
+			data["ip"] = input(usr, "IP Address (leave blank to skip)", "Ban") as null|text
 		else
 			data["ckey"] = M.ckey
 			data["compID"] = M.computer_id
@@ -392,11 +377,10 @@ var/global/list/playersSeen = list()
 		logTheThing("diary", adminC, target, "edited [constructTarget(target,"diary")]'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]", "admin")
 		message_admins("<span class='internal'>[key_name(adminC)] edited [target]'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]</span>")
 
-		var/ircmsg[] = new()
-		ircmsg["key"] = (isclient(adminC) && adminC.key ? adminC.key : adminC)
-		ircmsg["name"] = (isclient(adminC) && adminC.mob && adminC.mob.name ? stripTextMacros(adminC.mob.name) : "N/A")
-		ircmsg["msg"] = "edited [target]'s ban. Reason: [row["reason"]]. Duration: [(expiry == 0 ? "Permanent": "[expiry]")]. [serverLogSnippet]."
-		ircbot.export("admin", ircmsg)
+		var/key = (isclient(adminC) && adminC.key ? adminC.key : adminC)
+		var/name = (isclient(adminC) && adminC.mob && adminC.mob.name ? stripTextMacros(adminC.mob.name) : "N/A")
+		var/msg = "edited [target]'s ban. Reason: [row["reason"]]. Duration: [(expiry == 0 ? "Permanent": "[expiry]")]. [serverLogSnippet]."
+		discord_send("[name] ([key]) [msg]")
 
 		return 0
 
@@ -525,11 +509,10 @@ var/global/list/playersSeen = list()
 			logTheThing("diary", adminC, null, "unbanned [row["ckey"]]", "admin")
 			message_admins("<span class='internal'>[key_name(adminC)] unbanned [target]</span>")
 
-		var/ircmsg[] = new()
-		ircmsg["key"] = (isclient(adminC) && adminC.key ? adminC.key : adminC)
-		ircmsg["name"] = (expired ? "\[Expired\]" : "[isclient(adminC) && adminC.mob && adminC.mob.name ? stripTextMacros(adminC.mob.name) : "N/A"]")
-		ircmsg["msg"] = (expired ? "[row["ckey"]]'s ban removed." : "deleted [row["ckey"]]'s ban.")
-		ircbot.export("admin", ircmsg)
+		var/key = (isclient(adminC) && adminC.key ? adminC.key : adminC)
+		var/name = (expired ? "\[Expired\]" : "[isclient(adminC) && adminC.mob && adminC.mob.name ? stripTextMacros(adminC.mob.name) : "N/A"]")
+		var/msg = (expired ? "[row["ckey"]]'s ban removed." : "deleted [row["ckey"]]'s ban.")
+		discord_send("[name] ([key]) [msg]", -1)
 
 		return 0
 
@@ -620,21 +603,36 @@ var/global/list/playersSeen = list()
 		alert("You need to be at least a Secondary Administrator to add ban exceptions.")
 */
 
+
+
 /////////////////////////
 // BAN PANEL PROCS (called via ejhax)
 /////////////////////////
 
 
 /datum/admins/proc/banPanel()
+	// Get the JWT token
+	var/list/response
+	try
+		response = apiHandler.queryAPI("jwt/new", list("ckey" = usr.ckey), forceResponse = 1)
+	catch ()
+		boutput(usr, "<span class='alert'>Failed to get a token from the API.</span>")
+		return
+
+	if(!response["token"])
+		boutput(usr, "<span class='alert'>API response had no token for us.</span>")
+		return
+
 	var/CMinutes = (world.realtime / 10) / 60
 	var/bansHtml = grabResource("html/admin/banPanel.html")
 	var/windowName = "banPanel"
 	bansHtml = replacetext(bansHtml, "null /* window_name */", "'[windowName]'")
 	bansHtml = replacetext(bansHtml, "null /* ref_src */", "'\ref[src]'")
 	bansHtml = replacetext(bansHtml, "null /* cminutes */", "[CMinutes]")
-	bansHtml = replacetext(bansHtml, "null /* api_data_params */", "'data_server=[serverKey]&data_id=[config.server_id]&data_version=[config.goonhub_api_version]'")
+	bansHtml = replacetext(bansHtml, "null /* api_data_params */", "'data_server=[serverKey]&data_id=[config.server_id]&data_version=[config.opengoon_api_version]'")
+	bansHtml = replacetext(bansHtml, "null /* api endpoint */", "'[config.opengoon_api_secure_endpoint]'")
 	if (centralConn)
-		bansHtml = replacetext(bansHtml, "null /* api_key */", "'[md5(config.goonhub_api_web_token)]'")
+		bansHtml = replacetext(bansHtml, "null /* api_key */", "'[response["token"]]'")
 	usr << browse(bansHtml,"window=[windowName];size=1080x500")
 
 
@@ -881,4 +879,3 @@ var/global/list/playersSeen = list()
 		centralConn = 1
 		centralConnTries = 0
 		return "Set centralConn ON"
-

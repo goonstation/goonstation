@@ -42,10 +42,11 @@
 	var/list/play_antag_rates = list()  // % of rounds players should get to play as X antag
 	var/allow_ai = 1					// allow ai job
 	var/respawn = 1
+	var/require_job_exp = 0
 
-	// Goonhub Parser
-	var/goonhub_parser_url = "localhost"
-	var/goonhub_parser_key = "foo"
+	// opengoon Parser
+	var/opengoon_parser_url = "localhost"
+	var/opengoon_parser_key = "foo"
 
 	// MySQL
 	var/sql_enabled = 0
@@ -54,10 +55,6 @@
 	var/sql_username = null
 	var/sql_password = null
 	var/sql_database = null
-
-	// Player notes
-	var/player_notes_baseurl = "http://playernotes.goonhub.com"
-	var/player_notes_auth = null
 
 	// Server list for cross-bans and other stuff
 	var/list/servers = list()
@@ -69,18 +66,39 @@
 	var/ircbot_api = null
 	var/ircbot_ip = null
 
+	// Comms stuff
+	var/comms_key = null
+	var/comms_name = null
+
 	//External server configuration (for central bans etc)
-	var/goonhub_api_version = 0
-	var/goonhub_api_endpoint = null
-	var/goonhub_api_ip = null
-	var/goonhub_api_token = null
-	var/goonhub_api_web_token = null
+	var/opengoon_api_version = 0
+	var/opengoon_api_endpoint = null
+	var/opengoon_api_secure_endpoint = null
+	var/opengoon_api_ip = null
+	var/opengoon_api_token = null
 
-	//Goonhub2 server
-	var/goonhub2_hostname = null
+	var/youtube_enabled = 0
 
-	//youtube audio converter
-	var/youtube_audio_key = null
+	var/weblog_viewer_url = null
+	var/tutorial_url = null
+
+	var/gitreports = null
+	var/github_repo_url = null
+	var/wiki_url = null
+	var/rules_url = null
+	var/forums_url = null
+	var/map_webview_url = null
+
+	var/enable_serverhop = null
+	var/list/serverhop_servers = list()
+
+	//banning panel routes.
+	var/banpanel_base = null
+	var/banpanel_get = null
+	var/banpanel_prev = null
+
+	//opengoon2 server
+	var/opengoon2_hostname = null
 
 	//Environment
 	var/env = "dev"
@@ -100,7 +118,13 @@
 
 	//Are we limiting connected players to certain ckeys?
 	var/whitelistEnabled = 0
-	var/whitelist_path = "strings/whitelist.txt"
+	var/whitelist_path = "config/whitelist.txt"
+
+	var/enable_chat_filter = 0
+	var/static/regex/filter_regex_ooc
+	var/static/regex/filter_regex_ic
+
+	var/midround_ooc = 0
 
 /datum/configuration/New()
 	..()
@@ -214,6 +238,9 @@
 			if ("norespawn")
 				config.respawn = 0
 
+			if ("require_job_exp")
+				config.require_job_exp = 1
+
 			if ("serverkey")
 				config.server_key = text2num(value)
 
@@ -301,30 +328,31 @@
 			if ("ircbot_ip")
 				config.ircbot_ip = trim(value)
 
-			if ("goonhub_parser_url")
-				config.goonhub_parser_url = trim(value)
-			if ("goonhub_parser_key")
-				config.goonhub_parser_key = trim(value)
-
 			if ("ticklag")
 				world.tick_lag = text2num(value)
 
-			if ("goonhub_api_version")
-				config.goonhub_api_version = text2num(value)
-			if ("goonhub_api_endpoint")
-				config.goonhub_api_endpoint = trim(value)
-			if ("goonhub_api_ip")
-				config.goonhub_api_ip = trim(value)
-			if ("goonhub_api_token")
-				config.goonhub_api_token = trim(value)
-			if ("goonhub_api_web_token")
-				config.goonhub_api_web_token = trim(value)
+			if ("opengoon_api_version")
+				config.opengoon_api_version = text2num(value)
+			if ("opengoon_api_endpoint")
+				config.opengoon_api_endpoint = trim(value)
+			if ("opengoon_api_secure_endpoint")
+				config.opengoon_api_secure_endpoint = trim(value)
+			if ("opengoon_api_ip")
+				config.opengoon_api_ip = trim(value)
+			if ("opengoon_api_token")
+				config.opengoon_api_token = trim(value)
 
-			if ("goonhub2_hostname")
-				config.goonhub2_hostname = trim(value)
+			if ("comms_key")
+				config.comms_key = trim(value)
+			if ("comms_name")
+				config.comms_name = trim(value)
 
-			if ("youtube_audio_key")
-				config.youtube_audio_key = trim(value)
+			if ("youtube_enabled")
+				config.youtube_enabled = 1
+
+			if ("opengoon2_hostname")
+				config.opengoon2_hostname = trim(value)
+
 			if ("update_check_enabled")
 				config.update_check_enabled = 1
 			if ("dmb_filename")
@@ -355,14 +383,60 @@
 			if ("whitelist_enabled")
 				config.whitelistEnabled = 1
 
-			if ("player_notes_baseurl")
-				config.player_notes_baseurl = trim(value)
+			if("weblog_viewer_url")
+				config.weblog_viewer_url = trim(value)
+			if("tutorial_url")
+				config.tutorial_url = trim(value)
 
-			if ("player_notes_auth")
-				config.player_notes_auth = trim(value)
+			if("gitreports")
+				config.gitreports = trim(value)
+			if("github_repo_url")
+				config.github_repo_url = trim(value)
+			if("wiki_url")
+				config.wiki_url = trim(value)
+			if("rules_url")
+				config.rules_url = trim(value)
+			if("forums_url")
+				config.forums_url = trim(value)
+			if("map_webview_url")
+				config.map_webview_url = trim(value)
+
+			if("enable_serverhop")
+				if(!fexists("config/alt_servers.txt"))
+					logDiary("No 'config/alt_servers.txt' file found")
+					continue
+				config.enable_serverhop = 1
+				var/file = file2text("config/alt_servers.txt")
+				var/list/content = splittext(file, "\n")
+
+				for (var/line in content)
+					if (!line)
+						continue
+					line = trim(line)
+					if (length(line) == 0)
+						continue
+					else if (copytext(line, 1, 2) == "#")
+						continue
+					var/list/entry = splittext(line, "=")
+					serverhop_servers[entry[1]] = entry[2]
+
+			if("enable_chat_filter")
+				enable_chat_filter = 1
+				load_filters()
+
+			if("banpanel_base")
+				banpanel_base = trim(value)
+			if("banpanel_get")
+				banpanel_get = trim(value)
+			if("banpanel_prev")
+				banpanel_prev = trim(value)
+
 
 			if ("whitelist_path")
 				config.whitelist_path = trim(value)
+
+			if ("midround_ooc")
+				config.midround_ooc = 1
 
 			else
 				logDiary("Unknown setting in configuration: '[name]'")
@@ -370,6 +444,30 @@
 	if (config.env == "dev")
 		config.cdn = ""
 		config.disableResourceCache = 1
+
+/datum/configuration/proc/load_filters()
+	var/list/filter_ooc = list()
+	var/list/filter_ic = list()
+
+	if(!fexists("config/chat_filter_ooc.txt")) //The IC filter is populated with OOC's words too, so it's fine if it doesn't exist
+		logDiary("chat_filter_ooc.txt doesn't exist")
+		return
+
+	for(var/line in splittext(trim(rustg_file_read("config/chat_filter_ooc.txt")), "\n"))
+		if(!line || findtextEx(line,"#",1,2))
+			continue
+		filter_ooc += REGEX_QUOTE(line)
+		filter_ic += REGEX_QUOTE(line)
+
+	filter_regex_ooc = filter_ooc.len ? regex("\\b([jointext(filter_ooc, "|")])\\b", "i") : null
+
+	if(fexists("config/chat_filter_ic.txt"))
+		for(var/line in splittext(trim(rustg_file_read("config/chat_filter_ic.txt")), "\n"))
+			if(!line || findtextEx(line,"#",1,2))
+				continue
+			filter_ic += REGEX_QUOTE(line)
+
+	filter_regex_ic = filter_ic.len ? regex("\\b([jointext(filter_ic, "|")])\\b", "i") : null
 
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up

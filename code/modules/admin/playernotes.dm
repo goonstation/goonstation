@@ -9,19 +9,19 @@
 		alert("You need to be an actual admin to view player notes.")
 		return
 
-	if (!config.player_notes_baseurl || !config.player_notes_auth)
+	if (!config.opengoon_api_endpoint || !config.opengoon_api_token)
 		alert("Missing configuration for player notes")
 		return
 
 	var/list/data = list(
-		"auth" = config.player_notes_auth,
+		"auth" = md5(config.opengoon_api_token),
 		"action" = "get",
 		"ckey" = player
 	)
 
 	// Fetch notes via HTTP
 	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_GET, "[config.player_notes_baseurl]/?[list2params(data)]", "", "")
+	request.prepare(RUSTG_HTTP_METHOD_GET, "[config.opengoon_api_endpoint]/notes/?[list2params(data)]", "", "")
 	request.begin_async()
 	UNTIL(request.is_complete())
 	var/datum/http_response/response = request.into_response()
@@ -37,15 +37,7 @@
 	var/regex/R = new("!!ID(\\d+)", "g")
 	content = R.Replace(content, "[deletelinkpre]$1[deletelinkpost]")
 
-	var/datum/player/pdatum = make_player(player)
-	pdatum.cloud_fetch()
-	var/noticelink = ""
-	if (pdatum.cloud_available() && pdatum.cloud_get("login_notice"))
-		noticelink = {" style="color: red; font-weight: bold;">Login Notice Set"}
-	else
-		noticelink = {">Add Login Notice"}
-
-	var/dat = "<h1>Player Notes for <b>[player]</b></h1><HR><br><a href='?src=\ref[src];action=notes2;target=[player];type=add'>Add Note</A> - <a href='?src=\ref[src];action=loginnotice;target=[player]'[noticelink]</a><hr>"
+	var/dat = "<h1>Player Notes for <b>[player]</b></h1><HR><br><A href='?src=\ref[src];action=notes2;target=[player];type=add'>Add Note</A><br><HR>"
 	dat += replacetext(content, "\n", "<br>")
 	usr.Browse(dat, "window=notesp;size=875x400;title=Notes for [player]")
 
@@ -55,12 +47,12 @@
 	if (!player || !admin || !note)
 		return
 
-	if (!config.player_notes_baseurl || !config.player_notes_auth)
+	if (!config.opengoon_api_endpoint || !config.opengoon_api_token)
 		alert("Missing configuration for player notes")
 		return
 
 	var/list/data = list(
-		"auth" = config.player_notes_auth,
+		"auth" = md5(config.opengoon_api_token),
 		"action" = "add",
 		"server" = serverKey,
 		"server_id" = config.server_id,
@@ -71,7 +63,7 @@
 
 	// Send data
 	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_GET, "[config.player_notes_baseurl]/?[list2params(data)]", "", "")
+	request.prepare(RUSTG_HTTP_METHOD_GET, "[config.opengoon_api_endpoint]/notes/?[list2params(data)]", "", "")
 	request.begin_async()
 
 
@@ -80,17 +72,17 @@
 	if (!id)
 		return
 
-	if (!config.player_notes_baseurl || !config.player_notes_auth)
+	if (!config.opengoon_api_endpoint || !config.opengoon_api_token)
 		alert("Missing configuration for player notes")
 		return
 
 	var/list/data = list(
-		"auth" = config.player_notes_auth,
+		"auth" = md5(config.opengoon_api_token),
 		"action" = "delete",
 		"id" = id
 	)
 
 	// Send data
 	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_GET, "[config.player_notes_baseurl]/?[list2params(data)]", "", "")
+	request.prepare(RUSTG_HTTP_METHOD_GET, "[config.opengoon_api_endpoint]/notes/?[list2params(data)]", "", "")
 	request.begin_async()

@@ -71,11 +71,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 
 			music_sound.volume = client_vol
 			C << music_sound
-			if (src && !(src.stealth && !src.fakekey))
-				// Stealthed admins won't show the "now playing music" message,
-				// for added ability to be spooky.
-				boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
-
+			boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [music_sound.channel] with volume [music_sound.volume]")
 		dj_panel.move_admin_sound_channel()
 	logTheThing("admin", src, null, "started loading music [S]")
@@ -142,10 +138,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 				continue
 
 			C.chatOutput.playMusic(data["file"], vol)
-			if (adminC && !(adminC.stealth && !adminC.fakekey))
-				// Stealthed admins won't show the "now playing music" message,
-				// for added ability to be spooky.
-				boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
+			boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
 
 
 	if (adminC)
@@ -162,8 +155,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	var/channel_id = audio_channel_name_to_id[channel_name]
 	if(isnull(channel_id))
 		alert(usr, "Invalid channel.")
-	var/vol = input("Goes from 0-100. Default is [getDefaultVolume(channel_id) * 100]\n[src.getVolumeChannelDescription(channel_id)]", \
-	 "[capitalize(channel_name)] Volume", src.getRealVolume(channel_id) * 100) as num
+	var/vol = input("Goes from 0-100. Default is [getDefaultVolume(channel_id) * 100]", "[channel_name] Volume", src.getRealVolume(channel_id) * 100) as num
 	vol = max(0,min(vol,100))
 	src.setVolume(channel_id, vol/100 )
 	boutput(usr, "<span class='notice'>You have changed [channel_name] Volume to [vol].</span>")
@@ -233,17 +225,17 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 		src.verbs += /client/verb/stop_all_sounds
 
 /client/proc/play_youtube_audio()
-	if (!config.youtube_audio_key)
-		alert("You don't have access to the youtube audio converter")
+	if(!config.youtube_enabled)
+		alert("Youtube audio is disabled in the config.")
 		return 0
 
 	var/video = input("Input the Youtube video information\nEither the full URL e.g. https://www.youtube.com/watch?v=145RCdUwAxM\nOr just the video ID e.g. 145RCdUwAxM", "Play Youtube Audio") as null|text
 	if (!video)
 		return
 
-	// Fetch via HTTP from goonhub
+	// Fetch via HTTP from opengoon
 	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_GET, "http://yt.goonhub.com/index.php?server=[config.server_id]&key=[src.key]&video=[video]&auth=[config.youtube_audio_key]", "", "")
+	request.prepare(RUSTG_HTTP_METHOD_GET, "[config.opengoon_api_endpoint]/youtube/get/?server=[config.server_key]&key=[src.key]&video=[video]&auth=[md5(config.opengoon_api_token)]", "", "")
 	request.begin_async()
 	UNTIL(request.is_complete())
 	var/datum/http_response/response = request.into_response()

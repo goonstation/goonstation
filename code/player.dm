@@ -16,6 +16,8 @@
 	var/rounds_participated = null
 	/// how many rounds theyve joined to at least the lobby in, null to differentiate between not set and not seen
 	var/rounds_seen = null
+	/// whether or not they can skip playtime requirements
+	var/bypass_playtime_reqs = FALSE
 	/// a list of cooldowns that has to persist between connections
 	var/list/cooldowns = null
 	/// position of client in in global.clients
@@ -66,6 +68,7 @@
 			return 0
 		src.rounds_participated = text2num(response["participated"])
 		src.rounds_seen = text2num(response["seen"])
+		src.bypass_playtime_reqs = text2num(response["bypass_playtime_reqs"])
 		return 1
 
 	/// returns an assoc list of cached player stats (please update this proc when adding more player stat vars)
@@ -116,21 +119,10 @@
 		clouddata[key] = "[value]"
 
 		// Via rust-g HTTP
+		if(!config.opengoon_api_endpoint)
+			logTheThing( "debug", src, null, "<b>CloudData/Francinum:</b> no cloudsave url set" )
 		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.irclog_url]/cloudsave?dataput&api_key=[config.ircbot_api]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]", "", "")
-		request.begin_async()
-		return TRUE // I guess
-
-	/// Sets a cloud key value pair and sends it to goonhub for a target ckey
-	proc/cloud_put_target(target, key, value)
-		var/list/data = cloud_fetch_target_data_only(target)
-		if(!data)
-			return FALSE
-		data[key] = "[value]"
-
-		// Via rust-g HTTP
-		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.irclog_url]/cloudsave?dataput&api_key=[config.ircbot_api]&ckey=[target]&key=[url_encode(key)]&value=[url_encode(data[key])]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.opengoon_api_endpoint]/cloudsave/?dataput&api_key=[md5(config.opengoon_api_token)]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]", "", "")
 		request.begin_async()
 		return TRUE // I guess
 
@@ -138,57 +130,32 @@
 	proc/cloud_get( var/key )
 		return clouddata ? clouddata[key] : null
 
-	/// Returns some cloud data on the provided target ckey
-	proc/cloud_get_target(target, key)
-		var/list/data = cloud_fetch_target_data_only(target)
-		return data ? data[key] : null
-
 	/// Returns 1 if you can set or retrieve cloud data on the client
 	proc/cloud_available()
 		return !!clouddata
 
 	/// Downloads cloud data from goonhub
 	proc/cloud_fetch()
-		var/list/data = cloud_fetch_target_ckey(src.ckey)
-		if (data)
-			cloudsaves = data["saves"]
-			clouddata = data["cdata"]
-			return TRUE
-
-	/// returns the clouddata of a target ckey in list form
-	proc/cloud_fetch_target_data_only(target)
-		var/list/data = cloud_fetch_target_ckey(target)
-		if (data)
-			return data["cdata"]
-
-	/// returns the cloudsaves of a target ckey in list form
-	proc/cloud_fetch_target_saves_only(target)
-		var/list/data = cloud_fetch_target_ckey(target)
-		if (data)
-			return data["saves"]
-
-	/// Returns cloud data and saves from goonhub for the target ckey in list form
-	proc/cloud_fetch_target_ckey(target)
-		if(!cdn) return
-		target = ckey(target)
-		if (!target) return
-
+		if(!cdn)
+			return
 		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.irclog_url]/cloudsave?list&ckey=[target]&api_key=[config.ircbot_api]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.opengoon_api_endpoint]/cloudsave/?list&ckey=[ckey]&api_key=[md5(config.opengoon_api_token)]", "", "")
 		request.begin_async()
 		UNTIL(request.is_complete())
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)
-			logTheThing("debug", target, null, "failed to have their cloud data loaded: Couldn't reach Goonhub")
-			return
+			logTheThing("debug", src.key, null, "failed to have their cloud data loaded: Couldn't reach Goonhub")
+			return FALSE
 
 		var/list/ret = json_decode(response.body)
 		if(ret["status"] == "error")
-			logTheThing( "debug", target, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
-			return
+			logTheThing( "debug", src.key, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
+			return FALSE
 		else
-			return ret
+			cloudsaves = ret["saves"]
+			clouddata = ret["cdata"]
+			return TRUE
 
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)

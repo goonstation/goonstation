@@ -284,7 +284,7 @@
 			if("virtual")
 				boutput(user, "You prepare to modify M.bioHolder.mobAppearance.customization_[barbery_type == "haircut" ? "first" : "second"].")
 				return 1
-			if("blank" || "humanoid")
+			if("blank" , "humanoid")
 				boutput(user, "You somehow correctly guess which end of [M] is forward.")
 				return 1
 			if("grey")

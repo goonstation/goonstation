@@ -76,7 +76,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\commodity.dm"
 #include "code\datums\communications.dm"
 #include "code\datums\computerfiles.dm"
-#include "code\datums\configuration.dm"
+
 #include "code\datums\cookingrecipes.dm"
 #include "code\datums\crew_objective.dm"
 #include "code\datums\critter_objective.dm"

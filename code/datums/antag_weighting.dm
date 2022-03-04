@@ -27,7 +27,7 @@ var/global/datum/antagWeighter/antagWeighter
 
 
 	/**
-	 * Queries the goonhub API for hisorical antag rounds for a single target
+	 * Queries the opengoon API for hisorical antag rounds for a single target
 	 * NOTE: Currently unused
 	 *
 	 * @param string role Name of the antag role we're looking up (e.g. traitor, spy_thief)
@@ -58,8 +58,8 @@ var/global/datum/antagWeighter/antagWeighter
 	proc/completeHistory(ckey = "")
 		if (!ckey)
 			throw EXCEPTION("No ckey given")
-		if (!config.goonhub_api_token)
-			throw EXCEPTION("You must have the goonhub API token to use this command!")
+		if (!config.opengoon_api_token)
+			throw EXCEPTION("You must have the opengoon API token to use this command!")
 
 		var/list/response
 		try
@@ -100,10 +100,10 @@ var/global/datum/antagWeighter/antagWeighter
 
 
 	/**
-	 * Queries the goonhub API for hisorical antag rounds for the pool of minds given
+	 * Queries the opengoon API for hisorical antag rounds for the pool of minds given
 	 *
 	 * @param string role Name of the antag role we're picking for (e.g. traitor, spy_thief)
-	 * @param list history List of historical antag data returned by the goonhub API
+	 * @param list history List of historical antag data returned by the opengoon API
 	 * @return list List ckeys sorted by weight (highest weight first)
 	 */
 	proc/calculateWeightings(role = "", list/history = list())
@@ -165,7 +165,7 @@ var/global/datum/antagWeighter/antagWeighter
 
 
 	/**
-	 * Queries the goonhub API for hisorical antag rounds for the pool of minds given
+	 * Queries the opengoon API for hisorical antag rounds for the pool of minds given
 	 * Returns a list of minds that haevn't played up to the percentage of antag rounds defined in config
 	 *
 	 * @param list pool List of minds under consideration for antag picking
@@ -204,7 +204,7 @@ var/global/datum/antagWeighter/antagWeighter
 			src.debugLog("Sending payload: [json_encode(apiPayload)]")
 
 		var/list/response
-		if (config.goonhub_api_token && apiHandler.enabled)
+		if (config.opengoon_api_token && apiHandler.enabled)
 			//YO API WADDUP
 			try
 				response = apiHandler.queryAPI("antags/history", apiPayload, 1)

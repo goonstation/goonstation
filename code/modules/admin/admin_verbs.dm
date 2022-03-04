@@ -548,7 +548,7 @@ var/list/special_pa_observing_verbs = list(
 		if ("Inactive")
 			src.holder.dispose()
 			src.holder = null
-			boutput(src, "<span style='color:red;font-size:150%'><b>You are set to Inactive admin status! Please join the Goonstation Discord if you would like to become active again!</b></span>")
+			boutput(src, "<span style='color:red;font-size:150%'><b>You are set to Inactive admin status! Please join the ITALIAN Discord if you would like to become active again!</b></span>")
 			return
 
 		if ("Banned")

@@ -127,6 +127,9 @@ o+`        `-` ``..-:yooos-..----------..`
 var/global/vcs_revision = "1"
 var/global/vcs_author = "bob"
 
+var/global/ci_dm_version_major = "1"
+var/global/ci_dm_version_minor = "100"
+
 // The following describe when the server was compiled
 #define BUILD_TIME_TIMEZONE_ALPHA "EST" // Server is EST
 #define BUILD_TIME_TIMEZONE_OFFSET -0500

@@ -122,3 +122,4 @@
 #include "tgui.dm"
 #include "types.dm"
 #include "vox.dm"
+#include "chat.dm"

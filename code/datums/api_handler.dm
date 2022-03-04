@@ -1,5 +1,5 @@
 /*
-* Handles queries to the goonhub universal API
+* Handles queries to the OpenGoon universal API
 */
 
 var/global/datum/apiHandler/apiHandler
@@ -12,10 +12,10 @@ var/global/datum/apiHandler/apiHandler
 
 	New()
 		..()
-		if (!config.goonhub_api_endpoint)
+		if (!config.opengoon_api_endpoint)
 			src.enabled = 0
-			logTheThing("debug", null, null, "Goonhub endpoint doesn't exist, disabled api handler")
-			logTheThing("diary", null, null, "Goonhub endpoint doesn't exist, disabled api handler", "debug")
+			logTheThing("debug", null, null, "OpenGoon endpoint doesn't exist, disabled api handler")
+			logTheThing("diary", null, null, "OpenGoon endpoint doesn't exist, disabled api handler", "debug")
 
 
 	// Suppress errors on local environments, as it's spammy and local devs probably won't have the config for API connectivity to work
@@ -35,12 +35,12 @@ var/global/datum/apiHandler/apiHandler
 		//the sleep delay grows as attempts increases
 		sleep(apiRetryDelay * attempt)
 		//arglist() doesnt recognise named params lol
-		givenArgs[givenArgs.len] = attempt + 1
+		givenArgs[4] = attempt + 1 // Terra: Actually edit the right parameter.
 		return src.queryAPI(arglist(givenArgs))
 
 
 	/**
-	 * Constructs a query to send to the goonhub web API
+	 * Constructs a query to send to the opengoon web API
 	 *
 	 * @route (string) requested route e.g. bans/check
 	 * @query (list) query arguments to be passed along to route
@@ -54,14 +54,14 @@ var/global/datum/apiHandler/apiHandler
 			src.apiError("API Error: Cancelled query due to [!enabled ? "disabled apiHandler" : "missing route parameter"]", forceErrorException)
 			return
 
-		var/req = "[config.goonhub_api_endpoint]/[route]/?[query ? "[list2params(query)]&" : ""]" //Necessary
+		var/req = "[config.opengoon_api_endpoint]/[route]/?[query ? "[list2params(query)]&" : ""]" //Necessary
 		req += "[forceResponse ? "bypass=1&" : ""]" //Force a response RIGHT NOW y/n
 		req += "data_server=[serverKey]&data_id=[config.server_id]&" //Append server number and ID
-		req += "data_version=[config.goonhub_api_version]&" //Append API version
+		req += "data_version=[config.opengoon_api_version]&" //Append API version
 		var/safeReq = req //for outputting errors without the auth code
-		req += "auth=[md5(config.goonhub_api_token)]" //Append auth code
+		req += "auth=[md5(config.opengoon_api_token)]" //Append auth code
 
-		// Fetch via HTTP from goonhub
+		// Fetch via HTTP from opengoon
 		var/datum/http_request/request = new()
 		request.prepare(RUSTG_HTTP_METHOD_GET, req, "", "")
 		request.begin_async()
