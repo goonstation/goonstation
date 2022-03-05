@@ -924,18 +924,18 @@
 			for (var/datum/mind/M in HR)
 				if (M.current)
 					if (!see_everything && isobserver(M.current)) continue
-					var/I = image(antag_revhead, loc = M.current, icon_state = null, layer = 11) //secHuds are on layer 10.
+					var/I = image(antag_revhead, loc = M.current, icon_state = null, layer = EFFECTS_LAYER_UNDER_3) //secHuds are on EFFECTS_LAYER_UNDER_4
 					can_see.Add(I)
 			for (var/datum/mind/M in RR)
 				if (M.current)
 					if (!see_everything && isobserver(M.current)) continue
-					var/I = image(antag_revhead, loc = M.current, icon_state = null, layer = 11)
+					var/I = image(antag_revhead, loc = M.current, icon_state = null, layer = EFFECTS_LAYER_UNDER_3)
 					can_see.Add(I)
 
 		if (see_heads || see_everything)
 			for (var/datum/mind/M in heads)
 				if (M.current)
-					var/I = image(antag_revhead, loc = M.current, icon_state = null, layer = 11)
+					var/I = image(antag_revhead, loc = M.current, icon_state = null, layer = EFFECTS_LAYER_UNDER_3)
 					can_see.Add(I)
 
 	else if (istype(ticker.mode, /datum/game_mode/nuclear))
