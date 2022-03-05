@@ -1444,7 +1444,6 @@
 		return 0
 
 	proc/make_antique()
-		name = "antique Lawbringer"
 		icon_state = "old-lawbringer0"
 		old = 1
 		UpdateIcon()
