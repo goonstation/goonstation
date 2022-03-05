@@ -427,7 +427,12 @@
 				logTheThing("station", usr, null, "changes the assignment on the ID card (<b>[src.modify.registered]</b>) from <b>[src.modify.assignment]</b> to <b>[t1]</b>.")
 				playsound(src.loc, "keyboard", 50, 1, -15)
 			else
-				src.modify.access = get_access(t1)
+				// preserve accesses which are otherwise unobtainable
+				var/bonus_access = list()
+				for (var/access in src.modify.access)
+					if (!(access in get_all_accesses())) //fuck this proc name
+						bonus_access += list(access)
+				src.modify.access = get_access(t1) + bonus_access
 				logTheThing("station", usr, null, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to <b>[t1]</b>.")
 
 			//Wire: This possibly happens after the input() above, so we re-do the initial checks

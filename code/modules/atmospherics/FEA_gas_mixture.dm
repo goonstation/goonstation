@@ -827,6 +827,12 @@ What are the archived variables for?
 					return 0
 	return 1
 
+/datum/gas_mixture/proc/check_if_dangerous()
+	if(temperature > T100C || temperature < T0C || trace_gases || toxins || farts || carbon_dioxide || (nitrogen && !oxygen))
+		return TRUE
+	else
+		return FALSE
+
 // Dead prototypes (or never implemented?)
 // /datum/gas_mixture/proc/check_me_then_share(datum/gas_mixture/sharer)
 	//Similar to share(...) but first checks to see if amount of air moved is small enough

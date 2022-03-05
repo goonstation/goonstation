@@ -70582,7 +70582,7 @@
 	can_rupture = 0;
 	dir = 5
 	},
-/obj/table/auto,
+/obj/table/reinforced/auto,
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = 4;
 	pixel_y = 5
@@ -70627,7 +70627,7 @@
 	can_rupture = 0;
 	dir = 9
 	},
-/obj/table/auto,
+/obj/table/reinforced/auto,
 /obj/item/wrench,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/remote/porter/port_a_medbay,

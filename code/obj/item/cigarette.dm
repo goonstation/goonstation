@@ -26,7 +26,7 @@
 	var/buttname = "cigarette butt"
 	var/puffrate = 1
 	var/cycle = 4
-	var/numpuffs = 40 //number of times the cig can dispense reagents
+	var/numpuffs = 20 //number of times the cig can dispense reagents
 	rand_pos = 1
 	use_bloodoverlay = 0
 
@@ -115,7 +115,7 @@
 				var/mob/M = src.loc
 				M.set_clothing_icon_dirty()
 			if(src?.reagents)
-				puffrate = src.reagents.total_volume / numpuffs //40 active cycles (200 total, about 10 minutes)
+				puffrate = src.reagents.total_volume / numpuffs //default 20 active cycles (100 total, about 5 minutes)
 			processing_items |= src
 
 			hit_type = DAMAGE_BURN
@@ -519,7 +519,6 @@
 		..()
 		src.reagents.maximum_volume = 600
 		src.reagents.clear_reagents()
-		numpuffs = 20
 
 	is_open_container()
 		return 1

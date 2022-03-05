@@ -9617,7 +9617,7 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "awE" = (
-/obj/table/auto,
+/obj/table/reinforced/auto,
 /obj/item/wrench,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/remote/porter/port_a_medbay,

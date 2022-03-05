@@ -1358,7 +1358,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 				var/obj/item/O = target
 				var/can_pickup = 1
 
-				if (issmallanimal(usr))
+				if (issmallanimal(user))
 					var/mob/living/critter/small_animal/C = user
 					if (C.ghost_spawned && ghostcritter_blocked[O.type])
 						can_pickup = 0
@@ -1424,7 +1424,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 		..()
 
 	disarm(mob/target, var/mob/living/user)
-		if (issmallanimal(usr) && iscarbon(target))
+		if (issmallanimal(user) && iscarbon(target))
 			user.lastattacked = target
 			var/mob/living/critter/small_animal/C = user
 			if (C.ghost_spawned)

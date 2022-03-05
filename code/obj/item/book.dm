@@ -428,6 +428,20 @@ Custom Books
 	icon_state = "syndiebook"
 	file_path = "strings/books/syndies_guide.txt"
 
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
+	stolen //crew obtainable version
+
+		New()
+			..()
+			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE) //ugly but oh well
+
 /obj/item/paper/book/from_file/zoo_diary
 	name = "grimy diary"
 	desc = "It looks bedraggled."

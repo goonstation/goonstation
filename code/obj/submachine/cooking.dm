@@ -375,6 +375,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/omelette_bee(src)
 			src.recipes += new /datum/cookingrecipe/omelette(src)
 			src.recipes += new /datum/cookingrecipe/monster(src)
+			src.recipes += new /datum/cookingrecipe/c_butty(src)
 			src.recipes += new /datum/cookingrecipe/scarewich_h(src)
 			src.recipes += new /datum/cookingrecipe/scarewich_p_h(src)
 			src.recipes += new /datum/cookingrecipe/scarewich_p(src)

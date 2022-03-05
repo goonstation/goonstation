@@ -89,8 +89,8 @@
 		owner.set_body_icon_dirty()
 		animate_levitate(owner)
 
-		APPLY_MOB_PROPERTY(owner, PROP_STUN_RESIST, "revenant", 1000)
-		APPLY_MOB_PROPERTY(owner, PROP_STUN_RESIST_MAX, "revenant", 1000)
+		APPLY_MOB_PROPERTY(owner, PROP_STUN_RESIST, "revenant", 100)
+		APPLY_MOB_PROPERTY(owner, PROP_STUN_RESIST_MAX, "revenant", 100)
 		APPLY_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/revenant, src.type)
 
 		..()

@@ -847,6 +847,7 @@
 	var/mode_toggle = 0
 	var/set_anchor = 1
 
+	var/emagged = FALSE
 
 	New()
 		..()
@@ -858,11 +859,15 @@
 		return //nah
 
 	emag_act(mob/user, obj/item/card/emag/E)
+		if (src.emagged)
+			user?.show_message("<span class='alert'>[src] has already had its safety restrictions disabled.</span>")
+			return
+		src.emagged = TRUE
 		power_up_realtime = 10
 		set_anchor = 0
 		for (var/mob/O in hearers(src, null))
 			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Safety restrictions disabled.\"</span></span>", 2)
-		..()
+		return TRUE
 
 	update_icon()
 		icon_state = "stomper[on]"

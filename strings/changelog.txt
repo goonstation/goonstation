@@ -1,4 +1,96 @@
 
+(t)sat mar 05 22
+(u)Fwll
+(p)7688
+(e)🎨|sprites
+(+)Added Chip Butties and Innitium
+(u)Nemiko
+(p)7588
+(e)|
+(+)Added nine new drink recipes, a mostly non-alcoholic.
+(u)Sovexe
+(p)7689
+(e)🆕🗺|feature, mapping
+(*)The Donut3 Ranch now has space to grow your crops and a kitchen freezer chute.
+(t)fri mar 04 22
+(u)LeahTheTech
+(p)7685
+(e)|
+(+)The merchant shuttle will now announce its arrival shortly BEFORE instantly gibbing anything in its way.
+(t)thu mar 03 22
+(u)glowbold
+(p)7666
+(e)🆕|feature
+(*)As a changeling victim, your pleas for help/mercy/death/JOIN US are now audible when your master goes into horror form!
+(t)wed mar 02 22
+(u)Jimmyl
+(p)7657
+(e)🐛|bug
+(+)Fixed the bug of the PDA Packet senders Delete button not working
+(t)tue mar 01 22
+(u)Sovexe
+(p)7663
+(e)🆕|feature
+(+)Ranchers now start with a pair of rancher boots. Rancher boots grant their wearer the ability to vault railings more quickly.
+(t)mon feb 28 22
+(u)LeahTheTech
+(p)7602
+(e)🆕⚖|feature, balance
+(+)Arcfiend's Jolt ability will now cure cardiac arrest in people with SMES human and can now be self cast.
+(u)Sovexe
+(p)7658
+(e)🆕|feature
+(+)Produce satchels may now hold feathers.
+(u)Ikea
+(p)7600
+(e)|
+(*)The syndicates have noticed an overstocking of nanotrasen stations and has decided to increase the max amount of revolutionary heads it will send to a station to 5.
+(u)LeahTheTech
+(p)7577
+(e)🆕🎨📄|feature, sprites, tgui
+(*)Added a map for the AI to move around with. Open with the "Open station map" verb and click to teleport.
+(t)sun feb 27 22
+(u)Jimmyl
+(p)6973
+(e)🆕|feature
+(+)The Packet Sender PDA program can now make (simple) programs with the packets
+(u)LeahTheTech
+(p)7468
+(e)🐛|bug
+(+)Microwaves are now able to be emagged again.
+(u)Jimmyl
+(p)6907
+(e)🆕|feature
+(*)Added 3 new artifacts -- Emote Forcer Field,Warper and Heat Surge
+(u)Conchuckter
+(p)7496
+(e)🆕⚖|feature, balance
+(+)Added MechComp functionality to ChemiCompilers
+(u)CodeJester
+(p)7615
+(e)🆕|feature
+(+)You can now dump the contents of a hypospray back into a beaker or other reagent container.
+(u)TTerc
+(*)Clicking a vehicle that has a pilot as a ghost now makes you observe the pilot. Works for all kinds of vehicles: pods, segways, clown cars, minisubs.
+(u)Conchuckter
+(p)7626
+(e)|
+(+)Fixes being able to dump handheld MechComp cabinets into chutes
+(u)Walpvrgis
+(p)7641
+(e)🆕🎨|feature, sprites
+(*)Added 11 new hairstyles accessible in the character creation screen; check minor changes for a list of their names, or the PR for names + preview images!
+(+)You can find the new hair options under the names; Flick, Ignite, Mysterious, Ripley, Violet, Willow, Bun Undercut, Glam Ponytail, Rock Ponytail, Spiky Ponytail, Messy ponytail
+(t)sat feb 26 22
+(u)TTerc
+(+)Arc plater now automatically ejects the item when it finishes working. You can now also eject the material you inserted into it manually by clicking the plater with empty hand.
+(u)NightmareChamillian
+(p)7580
+(e)🎨|sprites
+(+)Resprited the gas extractor and disposal pipe dispenser
+(t)thu feb 24 22
+(u)tamunora
+(+)microdosing ( <1 depletion) stam boosting/etc chems doesn't work anymore
 (t)wed feb 23 22
 (u)aloe
 (*)The Head Surgeon got too fucked up and is, once again, fired. They've been replaced with a medical specialist- NT doesn't really understand what they do, but it sure sounds important. (Realistically they're just the HS but without command radio/access. Also they can get revved.)

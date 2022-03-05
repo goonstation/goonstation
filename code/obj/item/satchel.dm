@@ -188,7 +188,8 @@
 		/obj/item/clothing/head/butt,
 		/obj/item/parts/human_parts/arm,
 		/obj/item/parts/human_parts/leg,
-		/obj/item/raw_material/cotton)
+		/obj/item/raw_material/cotton,
+		/obj/item/feather)
 		itemstring = "items of produce"
 
 		large

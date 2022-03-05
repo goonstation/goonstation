@@ -413,17 +413,17 @@
 			return
 
 		var/sgen = SOLARGENRATE * sunfrac
+		sgen *= PROCESSING_TIER_MULTI(src)
 		add_avail(sgen)
 		if(powernet && control)
-			if(control.get_direct_powernet() == powernet) //this line right here...
+			if(control.get_direct_powernet() == powernet) // this line right here...
 				control.gen += sgen
 
 		if(adir != ndir)
-			SPAWN(10+rand(0,15))
-				var/old_adir = adir
-				var/max_move = rand(8, 12)
-				adir = (360 + adir + clamp((180 - (540 - ndir + adir) % 360), -max_move, max_move)) % 360
-				if(adir != old_adir)
-					UpdateIcon()
+			var/old_adir = adir
+			var/max_move = rand(8, 12)
+			adir = (360 + adir + clamp((180 - (540 - ndir + adir) % 360), -max_move, max_move)) % 360
+			if(adir != old_adir)
+				UpdateIcon()
 
-				update_solar_exposure()
+			update_solar_exposure()

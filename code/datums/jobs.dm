@@ -117,10 +117,8 @@
 				H.set_mutantrace(src.starting_mutantrace)
 
 			if (src.objective)
-				var/datum/objective/newObjective = spawn_miscreant ? new /datum/objective/miscreant : new /datum/objective/crew
-				newObjective.explanation_text = src.objective
-				newObjective.owner = M.mind
-				M.mind.objectives += newObjective
+				var/objType = spawn_miscreant ? /datum/objective/miscreant : /datum/objective/crew
+				var/datum/objective/newObjective = new objType(src.objective, M.mind)
 				if (spawn_miscreant)
 					boutput(M, "<B>You are a miscreant!</B>")
 					boutput(M, "You should try to complete your objectives, but don't commit any traitorous acts.")
@@ -928,7 +926,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_belt = list(/obj/item/device/pda2/botanist)
 	slot_jump = list(/obj/item/clothing/under/rank/rancher)
 	slot_head = list(/obj/item/clothing/head/cowboy)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_foot = list(/obj/item/clothing/shoes/westboot/brown/rancher)
 	slot_glov = list(/obj/item/clothing/gloves/black)
 	slot_poc1 = list(/obj/item/paper/ranch_guide)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)

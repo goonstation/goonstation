@@ -19,7 +19,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	var/flourish = 0
 	var/pray_l = 0
 	var/fakekey = null
-	var/suicide = 0
 	var/observing = 0
 	var/warned = 0
 	var/player_mode = 0
@@ -587,8 +586,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		//Load custom chat
 		SPAWN(-1)
 			src.chatOutput.start()
-
-	src.setup_special_screens()
 
 	logTheThing("diary", null, src.mob, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
 

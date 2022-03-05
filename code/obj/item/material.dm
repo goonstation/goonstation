@@ -450,6 +450,7 @@
 		src.color = "#00f"
 		name = "Blue Telecrystal"
 		desc = "[desc] It's all shiny and blue now."
+		return TRUE
 
 
 /obj/item/raw_material/miracle

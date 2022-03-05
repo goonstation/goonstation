@@ -115,7 +115,7 @@
 	afterattack(atom/target, mob/user, reach, params)
 		. = ..()
 		if(ismob(target) || iscritter(target))
-			if(actions.hasAction(usr,"rocking_out"))
+			if(actions.hasAction(user,"rocking_out"))
 				play_notes()
 			else
 				playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)

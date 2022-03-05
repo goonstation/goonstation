@@ -2087,7 +2087,7 @@ obj/item/clothing/gloves/concussive
 			boutput(user, "<span class='alert'>You need to set a target first!</span>")
 			return
 		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
-			boutput(usr, "<span class='alert'>The transporter is out of charge.</span>")
+			boutput(user, "<span class='alert'>The transporter is out of charge.</span>")
 			return
 		if (isrobot(user))
 			var/mob/living/silicon/robot/R = user
@@ -2159,7 +2159,7 @@ obj/item/clothing/gloves/concussive
 			boutput(user, "<span class='alert'>No target found!</span>")
 			return
 		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
-			boutput(usr, "<span class='alert'>The transporter is out of charge.</span>")
+			boutput(user, "<span class='alert'>The transporter is out of charge.</span>")
 			return
 		boutput(user, "<span class='notice'>Teleporting [T]...</span>")
 		playsound(user.loc, "sound/machines/click.ogg", 50, 1)
@@ -2492,7 +2492,7 @@ var/global/list/cargopads = list()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/satchel/mining/))
-			if (!issilicon(usr))
+			if (!issilicon(user))
 				var/obj/item/satchel/mining/S = W
 				user.drop_item()
 				if (satchel)
