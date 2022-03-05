@@ -3754,6 +3754,16 @@ datum
 			transparency = 20
 			bioeffect_id = "accent_swedish"
 
+		fooddrink/temp_bioeffect/innitium
+			name = "innitium"
+			id = "innitium"
+			description = "A real bri'ish substance, innit bruv?"
+			fluid_r = 0
+			fluid_g = 35
+			fluid_b = 121
+			transparency = 60
+			bioeffect_id = "accent_chav"
+
 		fooddrink/temp_bioeffect/caledonium
 			name = "caledonium"
 			id = "caledonium"
