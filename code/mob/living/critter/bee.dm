@@ -1087,4 +1087,41 @@ particles/swarm/bees
 	start_none
 		count = 0
 
+/mob/living/critter/small_animal/bee/firefly
+	icon_state = "firefly"
+	var/light_color = "#ADFF2F"
+	var/image/bulb
+	var/image/bulb_light
+
+	New()
+		..()
+		bulb = image(src.icon, "firefly-bulb")
+		bulb.appearance_flags = RESET_COLOR
+		bulb.color = light_color
+		UpdateOverlays(bulb, "bulb")
+
+		bulb_light = image(src.icon, "firefly-light")
+		bulb_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART
+		bulb_light.layer = LIGHTING_LAYER_BASE
+		bulb_light.plane = PLANE_LIGHTING
+		bulb_light.blend_mode = BLEND_ADD
+		bulb_light.color = light_color
+		UpdateOverlays(bulb_light, "bulb-light")
+
+		icon_state = "firefly"
+
+	ai_controlled
+		is_npc = 1
+		New()
+			..()
+			src.ai = new /datum/aiHolder/wanderer(src)
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
+
+		death(var/gibbed)
+			qdel(src.ai)
+			src.ai = null
+			reduce_lifeprocess_on_death()
+			..()
+
 #undef ADMIN_BEES_ONLY
