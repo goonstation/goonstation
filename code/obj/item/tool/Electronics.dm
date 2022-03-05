@@ -935,12 +935,12 @@
 			playsound(user, 'sound/machines/chainsaw.ogg')
 
 
-		if(user?.bioHolder.HasEffect("clumsy") && prob(40)) // ESPECIALLY if you're a stupid clown
-			user.visible_message("<span class='alert'><b>[user]</b> fucks up really badly and maims [himself_or_herself(user)] with the [src]! </span>")
+		else if(user?.bioHolder.HasEffect("clumsy") && prob(40)) // ESPECIALLY if you're a stupid clown
+			playsound(user, 'sound/machines/chainsaw.ogg')
+			user.visible_message("<span class='alert'><b>[user] fucks up really badly and maims [himself_or_herself(user)] with the [src]! </b> </span>")
 			random_brute_damage(user, 16)
 			take_bleeding_damage(user, null, 8, DAMAGE_CUT, 1)
 			user.emote("scream")
-			playsound(user, 'sound/machines/chainsaw.ogg')
 			JOB_XP(user, "Clown", 3)
 
 
