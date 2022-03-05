@@ -687,8 +687,7 @@
 		if (phrase_log.is_sussy(message))
 			// var/turf/T = get_turf(src)
 			// var/turf/M = locate(T.x, max(world.maxy, T.y + 8), T.z)
-			arcFlash(src, src, forced_desussification * 10)
-			forced_desussification *= 3
+			arcFlash(src, src, 5000)
 
 	if (reverse_mode) message = reverse_text(message)
 
