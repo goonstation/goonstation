@@ -371,7 +371,7 @@
 			if (owner && ismob(owner) && change > 0)
 				var/mob/M = owner
 				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, get_stage(duration + change))
-				var/percent_protection = GET_MOB_PROPERTY(M, PROP_RADPROT)
+				var/percent_protection = clamp(GET_MOB_PROPERTY(M, PROP_RADPROT), 0, 100)
 				percent_protection = 1 - (percent_protection/100) //scale from 0 to 1
 				. *= percent_protection
 
@@ -485,7 +485,7 @@
 			if (owner && ismob(owner) && change > 0)
 				var/mob/M = owner
 				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, get_stage(duration + change))
-				var/percent_protection = GET_MOB_PROPERTY(M, PROP_RADPROT)
+				var/percent_protection = clamp(GET_MOB_PROPERTY(M, PROP_RADPROT), 0, 100)
 				percent_protection = 1 - (percent_protection/100) //scale from 0 to 1
 				. *= percent_protection
 
@@ -716,7 +716,7 @@
 
 			if (owner && ismob(owner) && change > 0)
 				var/mob/M = owner
-				var/percent_protection = M.get_stun_resist_mod()
+				var/percent_protection = clamp(M.get_stun_resist_mod(), 0, 100)
 				percent_protection = 1 - (percent_protection/100) //scale from 0 to 1
 				. *= percent_protection
 
