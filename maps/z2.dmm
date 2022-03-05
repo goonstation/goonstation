@@ -15996,7 +15996,7 @@
 	dir = 6;
 	icon_state = "lattice-dir"
 	},
-/obj/critter/wendigo{
+/obj/critter/brullbar{
 	wanderer = 0
 	},
 /turf/unsimulated/floor/arctic/snow,
@@ -17774,7 +17774,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/lower_arctic/pod1)
 "bbT" = (
-/obj/critter/wendigo,
+/obj/critter/brullbar,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "bbU" = (
@@ -18067,7 +18067,7 @@
 /area/upper_arctic/exterior/surface)
 "bcE" = (
 /obj/decal/icefloor,
-/obj/critter/wendigo,
+/obj/critter/brullbar,
 /turf/unsimulated/floor/arctic/snow/lake,
 /area/lower_arctic/lower)
 "bcF" = (
@@ -18781,7 +18781,7 @@
 /area/marsoutpost)
 "bee" = (
 /obj/decal/icefloor,
-/obj/critter/wendigo/king,
+/obj/critter/brullbar/king,
 /turf/unsimulated/floor/arctic/snow/lake,
 /area/lower_arctic/lower)
 "bef" = (
@@ -18864,7 +18864,7 @@
 	},
 /area/marsoutpost)
 "bet" = (
-/obj/critter/wendigo,
+/obj/critter/brullbar,
 /obj/lattice{
 	dir = 9;
 	icon_state = "lattice-dir"
@@ -19548,7 +19548,7 @@
 /area/lower_arctic/lower)
 "bgl" = (
 /obj/decal/cleanable/blood,
-/obj/critter/wendigo,
+/obj/critter/brullbar,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "bgm" = (
@@ -20159,7 +20159,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "bhY" = (
-/obj/critter/wendigo,
+/obj/critter/brullbar,
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
@@ -20229,7 +20229,7 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bii" = (
-/obj/critter/wendigo{
+/obj/critter/brullbar{
 	wanderer = 0
 	},
 /turf/unsimulated/floor/arctic/snow,

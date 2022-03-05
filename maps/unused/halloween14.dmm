@@ -11614,7 +11614,7 @@
 /area/station/crew_quarters/quarters)
 "axr" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/crate,
 /obj/item/clothing/under/gimmick/princess,
@@ -26030,7 +26030,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -34575,7 +34575,7 @@
 /area/station/crew_quarters/juryroom)
 "brd" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/juryroom)
@@ -35050,7 +35050,7 @@
 "brZ" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -38855,7 +38855,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
@@ -46181,7 +46181,7 @@
 	icon_state = "lattice-dir";
 	dir = 6
 	},
-/obj/critter/wendigo{
+/obj/critter/brullbar{
 	wanderer = 0
 	},
 /turf/unsimulated/floor/arctic/snow,
@@ -48344,7 +48344,7 @@
 /turf/unsimulated/wall/setpieces/leadwall,
 /area/lower_arctic/pod1)
 "bVI" = (
-/obj/critter/wendigo,
+/obj/critter/brullbar,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "bVJ" = (
@@ -48692,7 +48692,7 @@
 /area/lower_arctic/pod1)
 "bWt" = (
 /obj/decal/icefloor,
-/obj/critter/wendigo,
+/obj/critter/brullbar,
 /turf/unsimulated/floor/arctic/snow/lake,
 /area/lower_arctic/lower)
 "bWu" = (
@@ -49523,7 +49523,7 @@
 /area/marsoutpost)
 "bXS" = (
 /obj/decal/icefloor,
-/obj/critter/wendigo/king,
+/obj/critter/brullbar/king,
 /turf/unsimulated/floor/arctic/snow/lake,
 /area/lower_arctic/lower)
 "bXT" = (
@@ -49625,7 +49625,7 @@
 	},
 /area/marsoutpost)
 "bYh" = (
-/obj/critter/wendigo,
+/obj/critter/brullbar,
 /obj/lattice{
 	tag = "icon-lattice-dir (NORTHWEST)";
 	icon_state = "lattice-dir";
@@ -50354,7 +50354,7 @@
 /area/lower_arctic/lower)
 "bZU" = (
 /obj/decal/cleanable/blood,
-/obj/critter/wendigo,
+/obj/critter/brullbar,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "bZV" = (
@@ -51037,7 +51037,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "cbG" = (
-/obj/critter/wendigo,
+/obj/critter/brullbar,
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
@@ -51116,7 +51116,7 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "cbQ" = (
-/obj/critter/wendigo{
+/obj/critter/brullbar{
 	wanderer = 0
 	},
 /turf/unsimulated/floor/arctic/snow,

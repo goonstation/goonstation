@@ -103,7 +103,7 @@
 					holder.owner.alpha = 64
 					animate(holder.owner, alpha=255, time=5)
 
-	wendigo
-		fade_in_icon_state = "wendigo_appear"
-		fade_out_icon_state = "wendigo_melt"
+	brullbar
+		fade_in_icon_state = "brullbar_appear"
+		fade_out_icon_state = "brullbar_melt"
 		fade_anim_length = 12

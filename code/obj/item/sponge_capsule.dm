@@ -28,7 +28,7 @@
 	animals = list(/obj/critter/microman,
 					/obj/critter/bear,
 					/obj/critter/spider/aggressive,
-					/obj/critter/wendigo,
+					/obj/critter/brullbar,
 					/obj/critter/bat/buff,
 					/obj/critter/spider/ice,
 					/obj/critter/townguard/passive,
