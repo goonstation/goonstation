@@ -787,6 +787,7 @@ THROWING DARTS
 
 	bullet_45
 		name = ".45 round"
+		icon_state = "bulletround"
 		desc = "An outdated army-issue bullet. Mainly used by war reenactors and space cowboys."
 
 	bullet_38AP
@@ -797,9 +798,15 @@ THROWING DARTS
 		name = "9mm NATO round"
 		desc = "A reliable bullet, used ubiquitously in law enforcement and armed forces a century ago."
 
+	ninemmplastic
+		name = "9mm Plastic round"
+		icon_state = "bulletplastic"
+		desc = "A small, sublethal plastic projectile."
+
 	bullet_308
-		name = ".308 round"
-		desc = "An old but very powerful rifle bullet."
+		name = "Rifle Round" // this is used by basically every rifle in the game, ignore the "308" path
+		icon_state = "bulletbig"
+		desc = "A large bullet from a rifle cartridge."
 
 	bullet_22
 		name = ".22 round"
@@ -807,14 +814,17 @@ THROWING DARTS
 
 	bullet_22HP
 		name = ".22 hollow point round"
-		desc = "A small calibre hollow point bullet for use against unarmored targets. Wait, aren't these a war crime?"
+		icon_state = "bulletexpanded"
+		desc = "A small calibre hollow point bullet for use against unarmored targets. Hang on, aren't these a war crime?"
 
 	bullet_41
 		name = ".41 round"
+		icon_state = "bulletexpanded"
 		desc = ".41? What the heck? Who even uses these anymore?"
 
 	bullet_12ga
 		name = "buckshot"
+		icon_state = "bulletround"
 		desc = "A commonly-used load for shotguns."
 
 	staple
@@ -845,11 +855,13 @@ THROWING DARTS
 
 	bullet_50
 		name = ".50AE round"
+		icon_state = "bulletbig"
 		desc = "Ouch."
 
 	rakshasa
 		name = "\improper Rakshasa round"
-		desc = "..."
+		desc = "A weird flechette-like projectile."
+		icon_state = "blowdart"
 
 /obj/item/implant/projectile/implanted(mob/living/carbon/C, var/mob/I, var/bleed_time = 60)
 	SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, C)
