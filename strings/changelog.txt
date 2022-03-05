@@ -1,5 +1,9 @@
 
 (t)sat mar 05 22
+(u)Hans
+(p)7527
+(e)🆕🎨|feature, sprites
+(*)Added space glue to the game.
 (u)NightmareChamillian
 (p)7631
 (e)🎨|sprites
