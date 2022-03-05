@@ -1,3 +1,7 @@
+// electronics.dmm_suite
+//contains  the misc robot parts dropped by drones and frames and most things related to mechanics work
+
+
 
 /obj/item/electronics/
 	name = "electronic thing"
@@ -755,7 +759,7 @@
 /obj/machinery/rkit/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 	var/dat
-	var/hide_allowed = src.allowed(user)
+	var/hide_allowed = src.allowed(usr)
 	dat = "<b>Ruckingenur Kit</b><HR>"
 
 	dat += "<b>Scanned Items:</b><br>"
@@ -848,9 +852,10 @@
 	hitsound = 'sound/machines/chainsaw.ogg'
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_SAWING
+	flags = ONBELT | FPRINT | TABLEPASS
 	w_class = W_CLASS_NORMAL
 
-	proc/finish_decon(atom/target,mob/user)
+	proc/finish_decon(atom/target,mob/user) // deconstructing work
 		if (!isobj(target))
 			return
 		var/obj/O = target
@@ -916,6 +921,28 @@
 			user.showContextActions(O.decon_contexts, O)
 			boutput(user, "<span class='alert'>You need to use some tools on [target] before it can be deconstructed.</span>")
 			return
+
+ // for surgeries below
+	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+
+		if(!saw_surgery(M,user)) // if it ain't surgery I don't care
+			return ..()
+
+		if(prob(20))// doing surgery with a buzzsaw isn't a good idea
+			user.visible_message("<span class='alert'><b>[user]</b> messes up and injures [himself_or_herself(user)] with the [src]! </span>")
+			random_brute_damage(user, 7)
+			take_bleeding_damage(user, null, 3, DAMAGE_CUT, 0)
+			playsound(user, 'sound/machines/chainsaw.ogg')
+
+
+		if(user?.bioHolder.HasEffect("clumsy") && prob(40)) // ESPECIALLY if you're a stupid clown
+			user.visible_message("<span class='alert'><b>[user]</b> fucks up really badly and maims [himself_or_herself(user)] with the [src]! </span>")
+			random_brute_damage(user, 16)
+			take_bleeding_damage(user, null, 8, DAMAGE_CUT, 1)
+			user.emote("scream")
+			playsound(user, 'sound/machines/chainsaw.ogg')
+			JOB_XP(user, "Clown", 3)
+
 
 /obj/var/list/decon_contexts = null
 
