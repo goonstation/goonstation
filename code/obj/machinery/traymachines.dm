@@ -188,7 +188,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine/locking)
 
 /obj/machinery/traymachine/locking/attack_hand(mob/user as mob)
 	if (locked)
-		boutput(usr, "<span class='alert'>It's locked.</span>")
+		boutput(user, "<span class='alert'>It's locked.</span>")
 		src.add_fingerprint(user) //because we're not reaching the parent call
 		return
 	..()

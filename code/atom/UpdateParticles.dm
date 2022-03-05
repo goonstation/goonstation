@@ -16,8 +16,7 @@
 	holder.particles = P
 	holder.vis_locs |= src
 	particle_refs[key] = holder
-	for (var/flag in effect_appearance_flags)
-		ADD_FLAG(holder.appearance_flags, flag)
+	holder.appearance_flags |= effect_appearance_flags
 
 /atom/proc/ClearSpecificParticles(key)
 	if(!key)

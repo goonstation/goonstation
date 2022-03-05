@@ -674,6 +674,21 @@
 	if (!message)
 		return
 
+	// Zam note: this is horrible
+	if (forced_desussification)
+		// "Surely this goes somewhere else, right, Zam?"
+		// maybe? i guess?
+		// i mean, i don't care. i'm stoned and i have commit rights
+		// and this is 100% a joke. it'll probably get refactored into
+		// something reasonable later if people like it.
+		//
+		// when you think about it, github is like amogus
+		// if it finds dead code, it calls an emergeny meeting!
+		if (phrase_log.is_sussy(message))
+			// var/turf/T = get_turf(src)
+			// var/turf/M = locate(T.x, max(world.maxy, T.y + 8), T.z)
+			arcFlash(src, src, 5000)
+
 	if (reverse_mode) message = reverse_text(message)
 
 	logTheThing("diary", src, null, ": [message]", "say")

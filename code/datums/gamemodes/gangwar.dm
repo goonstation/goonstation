@@ -939,7 +939,7 @@
 		if(!user)
 			return 0
 		if (user.mind && user.mind.gang != src.gang)
-			boutput(usr, "<span class='alert'>You are not a member of this gang, you cannot add items to it.</span>")
+			boutput(user, "<span class='alert'>You are not a member of this gang, you cannot add items to it.</span>")
 			return 0
 
 		//cash score

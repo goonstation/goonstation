@@ -300,8 +300,12 @@
 		if (C.mob in hivemind)
 			continue
 		try_render_chat_to_admin(C, rendered)
-	for (var/mob/member in hivemind)
-		boutput(member, rendered)
+	if (isabomination(hivemind_owner.owner))
+		var/abomination_rendered = "<span class='game'><span class='prefix'></span> <span class='name' data-ctx='\ref[src.mind]'>Congealed [name]</span> <span class='message'>[message]</span></span>"
+		src.audible_message(abomination_rendered)
+	else
+		for (var/mob/member in hivemind)
+			boutput(member, rendered)
 
 //vampire thrall say
 /mob/proc/say_thrall(var/message, var/datum/abilityHolder/vampire/owner)

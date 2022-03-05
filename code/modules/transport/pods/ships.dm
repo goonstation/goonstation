@@ -191,12 +191,16 @@ obj/machinery/vehicle/miniputt/pilot
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
 		src.components += src.lock
 		myhud.update_systems()
 		myhud.update_states()
-		return
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 //syndiput spawner
 /obj/syndi_putt_spawner
@@ -963,18 +967,18 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		myhud.update_systems()
 		myhud.update_states()
-		return
-
-	New()
-		..()
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
 		src.components += src.lock
 		myhud.update_systems()
 		myhud.update_states()
 
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 /obj/machinery/vehicle/pod_smooth/black
 	name = "Pod X-"
 	desc = "????"
