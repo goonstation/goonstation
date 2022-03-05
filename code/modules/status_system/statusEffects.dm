@@ -295,8 +295,8 @@
 				var/mob/M = owner
 				APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims", 500)
 				M.add_stam_mod_max("stims", 500)
-				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "stims", 1000)
-				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "stims", 1000)
+				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "stims", 100)
+				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "stims", 100)
 				var/datum/statusEffect/simpledot/stimulant_withdrawl/SW = owner.hasStatus("stimulant_withdrawl")
 				if(istype(SW))
 					tickspassed += SW.tickspassed

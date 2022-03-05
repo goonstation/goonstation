@@ -277,7 +277,7 @@ datum
 			transparency = 200
 			value = 66 // vOv
 			//addiction_prob = 25
-			stun_resist = 1000
+			stun_resist = 100
 			threshold = THRESHOLD_INIT
 
 			cross_threshold_over()
