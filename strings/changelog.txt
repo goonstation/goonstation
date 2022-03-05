@@ -1,5 +1,9 @@
 
 (t)sat mar 05 22
+(u)NightmareChamillian
+(p)7631
+(e)🎨|sprites
+(+)Resprites the SMG magazine
 (u)Fwll
 (p)7688
 (e)🎨|sprites
