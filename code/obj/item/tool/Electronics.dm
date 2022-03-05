@@ -1,8 +1,11 @@
 // electronics.dmm_suite
-//contains  the misc robot parts dropped by drones and frames and most things related to mechanics work
+
+/*contains the misc robot parts dropped by drones
+ also most things related to mechanics work
+ */
 
 
-
+//<(-[>--{|}={I}={|}--<=(-Electronics parts-)=>--{|}={I}={|}--<[-)>
 /obj/item/electronics/
 	name = "electronic thing"
 	icon = 'icons/obj/electronics.dmi'
@@ -372,7 +375,7 @@
 			return 0
 	return 1
 
-////////////////////////////////////////////////////////////////?
+//<(-[>--{|}={I}={|}--<=(-Other stuff-)=>--{|}={I}={|}--<[-)>
 /obj/item/electronics/soldering
 	name = "soldering iron"
 	icon = 'icons/obj/electronics.dmi'
@@ -922,7 +925,7 @@
 			boutput(user, "<span class='alert'>You need to use some tools on [target] before it can be deconstructed.</span>")
 			return
 
- // for surgeries below
+ // here be surgeries
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
 		if(!saw_surgery(M,user)) // if it ain't surgery I don't care
