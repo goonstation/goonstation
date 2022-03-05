@@ -920,6 +920,23 @@ client/proc/toggle_ghost_respawns()
 	logTheThing("diary", usr, null, "toggled narrator mode [narrator_mode ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled narrator mode [narrator_mode ? "on" : "off"]")
 
+
+/client/proc/force_desussification()
+	set name = "Force De-Sussification"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set desc = "Toggle behavior correction."
+	ADMIN_ONLY
+
+	// Zam note: this is horrible.
+	// I could probably get away with !(forced_desussification), but
+	// in this case the value is "above 1" or "zero", so it works fine
+	forced_desussification = ( forced_desussification ? 0 : 1 )
+
+	logTheThing("admin", usr, null, "toggled de-sussification [forced_desussification ? "on" : "off"].")
+	logTheThing("diary", usr, null, "toggled de-sussification [forced_desussification ? "on" : "off"].", "admin")
+	message_admins("[key_name(usr)] toggled de-sussification [forced_desussification ? "on" : "off"]")
+
+
 /client/proc/toggle_station_name_changing()
 	set name = "Toggle Station Name Changing"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
