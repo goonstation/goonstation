@@ -671,6 +671,7 @@
 	/obj/item/gun/energy/egun,
 	/obj/item/gun/energy/lawbringer,
 	/obj/item/gun/energy/lawbringer/old,
+	/obj/item/gun/energy/lawbringer/western,
 	/obj/item/gun/energy/wavegun,
 	/obj/item/gun/kinetic/revolver,
 	/obj/item/gun/kinetic/zipgun,
