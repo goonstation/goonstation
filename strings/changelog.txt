@@ -1,7 +1,6 @@
 
 (t)sun mar 06 22
 (u)Tarmunora
-(p)7602
 (e)⚖|balance
 (*)Highly experimental cryoxadone rework - now has varying efficacy for different damage types based on the temperature, instead of being a boolean on/off. Highly subject to change/reversion.
 (u)Hans
