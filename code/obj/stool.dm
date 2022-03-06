@@ -649,7 +649,7 @@
 			user.visible_message("<b>[user.name] folds [src].</b>")
 			if ((chair_chump) && (chair_chump != user))
 				chair_chump.visible_message("<span class='alert'><b>[chair_chump.name] falls off of [src]!</b></span>")
-				chair_chump.on_chair = 0
+				chair_chump.on_chair = null
 				chair_chump.pixel_y = 0
 				chair_chump.changeStatus("weakened", 1 SECOND)
 				chair_chump.changeStatus("stunned", 2 SECONDS)
@@ -766,13 +766,13 @@
 
 		M.end_chair_flip_targeting()
 
-		if (istype(H) && H.on_chair)// == 1)
+		if (istype(H) && H.on_chair)
 			M.pixel_y = 0
 			reset_anchored(M)
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
 			SPAWN(0.5 SECONDS)
-				H.on_chair = 0
+				H.on_chair = null
 				src.buckledIn = 0
 		else if ((M.buckled))
 			reset_anchored(M)

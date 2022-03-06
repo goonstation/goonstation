@@ -14,7 +14,7 @@ change the direction of created objects.<br>
 	icon_state = "buildmode2"
 	var/objpath = null
 	var/cinematic = "Blink"
-	var/matrix/mtx = matrix()
+	var/tmp/matrix/mtx = matrix()
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if(ctrl)
 			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "Supplydrop", "Supplydrop (no lootbox)", "Lethal Supplydrop", "Lethal Supplydrop (no lootbox)", "Spawn Heavenly", "Spawn Demonically", "Missile", "None")) || cinematic

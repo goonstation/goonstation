@@ -94,7 +94,7 @@
 					user.visible_message("<span class='alert'>[user] stuffs [M] into the furnace!</span>")
 					logTheThing("combat", user, M, "forced [constructTarget(M,"combat")] into a furnace at [log_loc(src)].")
 					message_admins("[key_name(user)] forced [key_name(M)] into a furnace at [log_loc(src)].")
-					M.death(1)
+					M.death(TRUE)
 					if (M.mind)
 						M.ghostize()
 					src.stoked += round(M.reagents?.get_reagent_amount("THC") / 5)
@@ -227,7 +227,7 @@
 		if (!src.user_can_suicide(user))
 			return 0
 		user.visible_message("<span class='alert'><b>[user] climbs into the furnace!</b></span>")
-		user.death(1)
+		user.death(TRUE)
 		if (user.mind)
 			user.ghostize()
 			qdel(user)
@@ -276,7 +276,7 @@
 			for(var/atom/movable/fried_content in W)
 				if(ismob(fried_content))
 					var/mob/M = fried_content
-					M.death(1)
+					M.death(TRUE)
 					if (M.mind)
 						M.ghostize()
 					fuel += 400

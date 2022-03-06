@@ -26,11 +26,8 @@
 		while (assignCount && length(objectiveTypes))
 			assignCount--
 			var/selectedType = pick(objectiveTypes)
-			var/datum/objective/miscreant/newObjective = new selectedType
+			var/datum/objective/miscreant/newObjective = new selectedType(null, crewMind)
 			objectiveTypes -= newObjective.type
-
-			newObjective.owner = crewMind
-			crewMind.objectives += newObjective
 
 			if (obj_count <= 1)
 				boutput(crewMind.current, "<B>You are a miscreant!</B>")

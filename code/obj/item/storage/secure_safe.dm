@@ -85,7 +85,7 @@
 
 /obj/item/storage/secure/attack_hand(mob/user as mob)
 	if (src.loc == user && src.locked == 1)
-		boutput(usr, "<span class='alert'>[src] is locked and cannot be opened!</span>")
+		boutput(user, "<span class='alert'>[src] is locked and cannot be opened!</span>")
 		return
 	return ..()
 

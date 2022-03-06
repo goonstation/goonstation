@@ -235,7 +235,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 /obj/item/cable_coil/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W) && src.amount > 1)
 		src.amount--
-		take(1, usr.loc)
+		take(1, user.loc)
 		boutput(user, "You cut a piece off the [base_name].")
 		src.UpdateIcon()
 		return

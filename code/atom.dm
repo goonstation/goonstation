@@ -419,6 +419,8 @@
 	src.attached_objs?.Cut()
 	src.attached_objs = null
 
+	src.vis_locs = null // cleans up vis_contents of visual holders of this too
+
 	last_turf = src.loc // instead rely on set_loc to clear last_turf
 	set_loc(null)
 	..()

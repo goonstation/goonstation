@@ -13,7 +13,7 @@
 	clicked(params)
 		..()
 		if (owner)
-			owner.death(0)
+			owner.death(FALSE)
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)

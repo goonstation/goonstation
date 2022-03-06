@@ -107,6 +107,7 @@
 	anchored = 1
 	pixel_x = -64
 	pixel_y = -64
+	event_handler_flags = IMMUNE_SINGULARITY
 	var/move_prob = 12
 	var/time_to_die = 0
 
@@ -142,7 +143,7 @@
 			return
 
 		for (var/atom/X in range(7,src))
-			if (X == src || (X.event_handler_flags & IMMUNE_SINGULARITY))
+			if (X.event_handler_flags & IMMUNE_SINGULARITY)
 				continue
 			var/area/A = get_area(X)
 			if(A?.sanctuary) continue

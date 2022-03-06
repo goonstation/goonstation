@@ -752,7 +752,7 @@
 ////// Reagent Extractor
 
 /obj/submachine/chem_extractor/
-	name = "Reagent Extractor"
+	name = "reagent extractor"
 	desc = "A machine which can extract reagents from matter. Has a slot for a beaker and a chute to put things into."
 	density = 1
 	anchored = 1
@@ -763,7 +763,7 @@
 	icon_state = "reex-off"
 	flags = NOSPLASH | TGUI_INTERACTIVE
 	var/mode = "overview"
-	var/autoextract = 0
+	var/autoextract = FALSE
 	var/nextingredientkey = 0
 	var/obj/item/reagent_containers/glass/extract_to = null
 	var/obj/item/reagent_containers/glass/inserted = null
@@ -771,7 +771,6 @@
 	var/obj/item/reagent_containers/glass/storage_tank_2 = null
 	var/list/ingredients = list()
 	var/list/allowed = list(/obj/item/reagent_containers/food/snacks/,/obj/item/plant/,/obj/item/seashell)
-	var/output_target = null
 
 	New()
 		..()
@@ -781,7 +780,8 @@
 		for (var/obj/item/reagent_containers/glass/beaker/extractor_tank/ST in src.contents)
 			ST.name = "Storage Tank [count]"
 			count++
-		output_target = src.loc
+		AddComponent(/datum/component/transfer_input/quickloading, allowed, "tryLoading")
+		AddComponent(/datum/component/transfer_output)
 
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
@@ -858,7 +858,7 @@
 				if (!src.inserted)
 					return
 				if (src.inserted == src.extract_to) src.extract_to = null
-				src.inserted.set_loc(src.output_target)
+				TRANSFER_OR_DROP(src, src.inserted)
 				usr.put_in_hand_or_eject(src.inserted)
 				src.inserted = null
 				. = TRUE
@@ -877,7 +877,7 @@
 				var/obj/item/ingredient = src.ingredients[id]
 				if (istype(ingredient))
 					src.ingredients.Remove(id)
-					ingredient.set_loc(src.output_target)
+					TRANSFER_OR_DROP(src, ingredient)
 					. = TRUE
 			if("autoextract")
 				src.autoextract = !src.autoextract
@@ -885,8 +885,14 @@
 			if("flush_reagent")
 				var/obj/item/reagent_containers/glass/target = containers[params["container_id"]]
 				var/id = params["reagent_id"]
-				if (target && target.reagents)
+				if (target?.reagents)
 					target.reagents.remove_reagent(id, 500)
+					. = TRUE
+			if("isolate")
+				var/obj/item/reagent_containers/glass/target = containers[params["container_id"]]
+				var/id = params["reagent_id"]
+				if (target?.reagents)
+					target.reagents.isolate_reagent(id)
 					. = TRUE
 			if("flush")
 				var/obj/item/reagent_containers/glass/target = containers[params["container_id"]]
@@ -912,17 +918,16 @@
 			if("chemtransfer")
 				var/obj/item/reagent_containers/glass/from = containers[params["container_id"]]
 				var/obj/item/reagent_containers/glass/target = src.extract_to
-				if (from && from.reagents.total_volume && target && from != target)
+				if (from?.reagents.total_volume && target && from != target)
 					from.reagents.trans_to(target, clamp(params["amount"], 1, 500))
 					. = TRUE
 		src.UpdateIcon()
 
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
-		if (isrobot(user))
-			boutput(user, "This machine is not compatible with mechanical users.")
-			return
-
 		if(istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
+			if (isrobot(user))
+				boutput(user, "This machine does not accept containers from robots!")
+				return
 			if(src.inserted)
 				boutput(user, "<span class='alert'>A container is already loaded into the machine.</span>")
 				return
@@ -933,77 +938,8 @@
 			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
 			src.ui_interact(user)
 
-		else if (istype(W,/obj/item/satchel/hydro))
-			var/obj/item/satchel/S = W
-			var/loadcount = 0
-			for (var/obj/item/I in S.contents)
-				if (src.canExtract(I) && (src.tryLoading(I, user)))
-					loadcount++
-			if (!loadcount)
-				boutput(user, "<span class='alert'>No items were loaded from the satchel!</span>")
-			else if (src.autoextract)
-				boutput(user, "<span class='notice'>[loadcount] items were automatically extracted from the satchel!</span>")
-			else
-				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
+		..()
 
-			S.UpdateIcon()
-			src.UpdateIcon()
-			tgui_process.update_uis(src)
-
-		else
-			if (!src.canExtract(W))
-				boutput(user, "<span class='alert'>The extractor cannot accept that!</span>")
-				return
-
-			if (!src.tryLoading(W, user)) return
-			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
-
-			user.u_equip(W)
-			W.dropped()
-
-			src.UpdateIcon()
-			tgui_process.update_uis(src)
-			return
-
-	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (!in_interact_range(src, user)  || !IN_RANGE(user, O, 1))
-			return
-		if (istype(O, /obj/item/reagent_containers/glass/) || istype(O, /obj/item/reagent_containers/food/drinks/) || istype(O, /obj/item/satchel/hydro))
-			return src.Attackby(O, user)
-		if (!src.canExtract(O)) ..()
-		else
-			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O.name] into [src]!</span>")
-			var/staystill = user.loc
-			for (var/obj/item/P in view(1,user))
-				if (user.loc != staystill) break
-				if (P.type == O.type)
-					if (!src.tryLoading(P, user)) break
-					tgui_process.update_uis(src)
-					sleep(0.2 SECONDS)
-				else continue
-			boutput(user, "<span class='notice'>You finish stuffing items into [src]!</span>")
-		src.UpdateIcon()
-
-	mouse_drop(over_object, src_location, over_location)
-		if(!isliving(usr))
-			boutput(usr, "<span class='alert'>Only living mobs are able to set the extractor's output target.</span>")
-			return
-
-		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span class='alert'>The extractor is too far away from the target!</span>")
-			return
-
-		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
-			return
-
-		else if (istype(over_object,/turf/simulated/floor/))
-			src.output_target = over_object
-			boutput(usr, "<span class='notice'>You set the extractor to output to [over_object]!</span>")
-
-		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
-		return
 
 /obj/submachine/chem_extractor/proc/getContainers()
 	. = list(
@@ -1018,38 +954,30 @@
 	else
 		src.icon_state = "reex-off"
 
-/obj/submachine/chem_extractor/proc/doExtract(var/obj/item/I)
+/obj/submachine/chem_extractor/proc/doExtract(atom/movable/AM)
 	// Welp -- we don't want anyone extracting these. They'll probably
 	// feed them to monkeys and then exsanguinate them trying to get at the chemicals.
-	if (istype(I, /obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor))
+	if (istype(AM, /obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor))
 		src.extract_to.reagents.add_reagent("sugar", 50)
 		return
-
-	I.reagents.trans_to(src.extract_to, I.reagents.total_volume)
+	AM.reagents.trans_to(src.extract_to, AM.reagents.total_volume)
+	qdel(AM)
 	src.UpdateIcon()
 
-/obj/submachine/chem_extractor/proc/canExtract(O)
-	. = FALSE
-	for(var/check_path in src.allowed)
-		if(istype(O, check_path))
-			return TRUE
+/obj/submachine/chem_extractor/proc/tryLoading(atom/movable/incoming)
+	var/can_autoextract = src.autoextract && src.extract_to
+	if (can_autoextract && src.extract_to.reagents.total_volume >= src.extract_to.reagents.maximum_volume)
+		playsound(src, "sound/machines/chime.ogg", 10, 1)
+		src.visible_message("<span class='alert'>[src]'s tank over-fill alarm burps!</span>")
+		can_autoextract = FALSE
 
-/obj/submachine/chem_extractor/proc/tryLoading(var/obj/item/O, var/mob/user as mob)
-	// Pre: make sure that the item type can be extracted
-	if (src.autoextract)
-		if (!src.extract_to)
-			boutput(user, "<span class='alert'>You must first select an extraction target if you want items to be automatically extracted.</span>")
-			return FALSE
-		if (src.extract_to.reagents.total_volume >= src.extract_to.reagents.maximum_volume)
-			boutput(user, "<span class='alert'>The auto-extraction target is full.</span>")
-			return FALSE
-		src.doExtract(O)
-		qdel(O)
-		return TRUE
+	if (can_autoextract)
+		doExtract(incoming)
 	else
-		O.set_loc(src)
-		src.ingredients["[nextingredientkey++]"] = O
-		return TRUE
+		src.ingredients["[nextingredientkey++]"] = incoming
+		tgui_process.update_uis(src)
+		src.UpdateIcon()
+
 
 /obj/submachine/seed_vendor
 	name = "Seed Fabricator"
@@ -1060,7 +988,7 @@
 	anchored = 1
 	mats = 6
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
-	var/vendamt = 1
+	flags = TGUI_INTERACTIVE
 	var/hacked = 0
 	var/panelopen = 0
 	var/malfunction = 0
@@ -1069,7 +997,6 @@
 	var/can_vend = 1
 	var/seedcount = 0
 	var/maxseed = 25
-	var/category = null
 	var/list/available = list()
 	var/const
 		WIRE_EXTEND = 1
@@ -1084,26 +1011,87 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attack_hand(var/mob/user as mob)
-		src.add_dialog(user)
-		var/dat = "<B>[src.name]</B><BR><HR>"
-		dat += "<b>Amount to Vend</b>: <A href='?src=\ref[src];amount=1'>[src.vendamt]</A><br>"
-		if (src.category)
-			dat += "<b>Filter</b>: [src.category] <A href='?src=\ref[src];category=1'>(Clear)</A><br>"
-		else
-			dat += "<b>Filter</b>: <A href='?src=\ref[src];category=1'>(Set)</A><br>"
-		if (!src.can_vend)
-			dat+= "<u>Unit currently out of charge. Please wait.</u><br>"
-		dat += "<br>"
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "SeedFabricator", src.name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = list()
+		.["seedCount"] = src.seedcount
+		.["canVend"] = src.can_vend
+		.["isWorking"] = src.working
+
+	ui_static_data(mob/user)
+		. = list()
+
+		.["maxSeed"] = src.maxseed
+		.["name"] = src.name
+
+		// Start with associative list, where each key is a seed category
+		var/list/categories = list()
 		for(var/datum/plant/A in hydro_controls.vendable_plants)
 			if (A.vending == 1 || src.hacked)
-				if (!src.category || (src.category == A.category))
-					dat += "<b>[A.name]</b>: <A href='?src=\ref[src];disp=\ref[A]'>(VEND)</A><br>"
+				if (!categories[A.category])
+					categories[A.category] = list()
+				categories[A.category] += list(list(
+					name = A.name,
+					path = A.type,
+					img = A.getBase64Img()
+				))
+		// Convert to non-associative list holding each category
+		var/list/categoriesArray = list()
+		for(var/category_name in categories)
+			var/category = categories[category_name]
+			categoriesArray += list(list(
+				name = category_name,
+				seeds = category
+			))
+		.["seedCategories"] = categoriesArray
 
-		user.Browse(dat, "window=seedfab;size=400x500")
-		onclose(user, "seedfab")
+
+	ui_act(action, params)
+		. = ..()
+		if(. || action != "disp" || !src.can_vend || !src.working)
+			return
+		var/datum/plant/I = locate(text2path(params["path"])) in src.available
+
+		if (!istype(I))
+			return
+
+		if(!I.vending)
+			trigger_anti_cheat(usr, "tried to href exploit vend forbidden seed [I] on [src]")
+			return
+
+		var/vend = clamp(params["amount"], 1, 10)
+
+		while(vend > 0)
+			var/obj/item/seed/S
+			if (I.unique_seed)
+				S = new I.unique_seed
+				S.set_loc(src.loc)
+			else
+				S = new /obj/item/seed
+				S.set_loc(src.loc)
+				S.removecolor()
+			S.generic_seed_setup(I)
+			vend--
+			src.seedcount++
+
+		if(src.seedcount >= src.maxseed)
+			src.can_vend = 0
+			SPAWN(10 SECONDS)
+				src.can_vend = 1
+				src.seedcount = 0
+		. = TRUE
+
+
+	attack_hand(var/mob/user as mob)
+		. = ..()
 
 		if (src.panelopen || isAI(user))
+			src.add_dialog(user)
 			var/list/fabwires = list(
 			"Puce" = 1,
 			"Mauve" = 2,
@@ -1133,67 +1121,14 @@
 		if(get_dist(usr,src) > 1 && !issilicon(usr) && !isAI(usr))
 			boutput(usr, "<span class='alert'>You need to be closer to the vendor to do that!</span>")
 			return
-		if(href_list["amount"])
-			var/amount = input(usr, "How many seeds do you want?", "[src.name]", 0) as null|num
-			if(!amount) return
-			if(amount < 0) return
-			if(amount > 10) amount = 10
-			src.vendamt = amount
-			src.updateUsrDialog()
-
-		if(href_list["category"])
-			if (src.category) src.category = null
-			else
-				var/filter = input(usr, "Filter by which category?", "[src.name]", 0) in list("Fruit","Vegetable","Herb","Flower","Miscellaneous")
-				if(!filter) return
-				src.category = filter
-			src.updateUsrDialog()
-
-		if(href_list["disp"])
-			if (src.can_vend == 0)
-				boutput(usr, "<span class='alert'>It's charging.</span>")
-				return
-			//var/getseed = null
-			var/datum/plant/I = locate(href_list["disp"])
-
-			if (!src.working || !istype(I))
-				boutput(usr, "<span class='alert'>[src.name] fails to dispense anything.</span>")
-				return
-
-			if(!I.vending)
-				trigger_anti_cheat(usr, "tried to href exploit vend forbidden seed [I] on [src]")
-				return
-
-			var/vend = src.vendamt
-			while(vend > 0)
-				//new getseed(src.loc)
-				var/obj/item/seed/S
-				if (I.unique_seed)
-					S = new I.unique_seed
-					S.set_loc(src.loc)
-				else
-					S = new /obj/item/seed
-					S.set_loc(src.loc)
-					S.removecolor()
-				S.generic_seed_setup(I)
-				vend--
-				src.seedcount++
-			SPAWN(0)
-				for(var/obj/item/seed/S in src.contents) S.set_loc(src.loc)
-			if(src.seedcount >= src.maxseed)
-				src.can_vend = 0
-				SPAWN(10 SECONDS)
-					src.can_vend = 1
-					src.seedcount = 0
-			src.updateUsrDialog()
 
 		if ((href_list["cutwire"]) && (src.panelopen || isAI(usr)))
 			var/twire = text2num_safe(href_list["cutwire"])
 			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
 				boutput(usr, "You need a snipping tool!")
 				return
-			else if (src.isWireColorCut(twire)) src.mend(twire)
-			else src.cut(twire)
+			else if (src.isWireColorCut(twire)) src.mend(twire, usr)
+			else src.cut(twire, usr)
 			src.updateUsrDialog()
 
 		if ((href_list["pulsewire"]) && (src.panelopen || isAI(usr)))
@@ -1204,7 +1139,7 @@
 			else if (src.isWireColorCut(twire))
 				boutput(usr, "You can't pulse a cut wire.")
 				return
-			else src.pulse(twire)
+			else src.pulse(twire, usr)
 			src.updateUsrDialog()
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -1213,6 +1148,7 @@
 				boutput(user, "<span class='notice'>You disable the [src]'s product locks!</span>")
 			src.hacked = 1
 			src.name = "Feed Sabricator"
+			update_static_data(user)
 			src.updateUsrDialog()
 			return 1
 		else
@@ -1242,7 +1178,7 @@
 		var/wireFlag = APCIndexToFlag[wireIndex]
 		return ((src.wires & wireFlag) == 0)
 
-	proc/cut(var/wireColor)
+	proc/cut(var/wireColor, var/mob/user as mob)
 		var/wireFlag = APCWireColorToFlag[wireColor]
 		var/wireIndex = APCWireColorToIndex[wireColor]
 		src.wires &= ~wireFlag
@@ -1250,17 +1186,18 @@
 			if(WIRE_EXTEND)
 				src.hacked = 0
 				src.name = "Seed Fabricator"
+				update_static_data(user)
 			if(WIRE_MALF) src.malfunction = 1
 			if(WIRE_POWER) src.working = 0
 
-	proc/mend(var/wireColor)
+	proc/mend(var/wireColor, var/mob/user as mob)
 		var/wireFlag = APCWireColorToFlag[wireColor]
 		var/wireIndex = APCWireColorToIndex[wireColor]
 		src.wires |= wireFlag
 		switch(wireIndex)
 			if(WIRE_MALF) src.malfunction = 0
 
-	proc/pulse(var/wireColor)
+	proc/pulse(var/wireColor, var/mob/user as mob)
 		var/wireIndex = APCWireColorToIndex[wireColor]
 		switch(wireIndex)
 			if(WIRE_EXTEND)
@@ -1270,6 +1207,7 @@
 				else
 					src.hacked = 1
 					src.name = "Feed Sabricator"
+				update_static_data(user)
 			if (WIRE_MALF)
 				if (src.malfunction) src.malfunction = 0
 				else src.malfunction = 1

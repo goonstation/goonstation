@@ -19,7 +19,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	var/flourish = 0
 	var/pray_l = 0
 	var/fakekey = null
-	var/suicide = 0
 	var/observing = 0
 	var/warned = 0
 	var/player_mode = 0
@@ -559,7 +558,51 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		do_computerid_test(src) //Will ban yonder fucker in case they are prix
 		check_compid_list(src) 	//Will analyze their computer ID usage patterns for aberrations
 
+	src.initialize_interface()
 
+	src.reputations = new(src)
+
+	if(src.holder && src.holder.level >= LEVEL_CODER)
+		src.control_freak = 0
+
+	if (browse_item_initial_done)
+		SPAWN(0)
+			sendItemIcons(src)
+
+	// fixing locked ability holders
+	var/datum/abilityHolder/ability_holder = src.mob.abilityHolder
+	ability_holder?.locked = FALSE
+	var/datum/abilityHolder/composite/composite = ability_holder
+	if(istype(composite))
+		for(var/datum/abilityHolder/inner_holder in composite.holders)
+			inner_holder.locked = FALSE
+
+	if(spooky_light_mode)
+		var/atom/plane_parent = src.get_plane(PLANE_LIGHTING)
+		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
+		src.color = "#AAAAAA"
+
+	if (!src.chatOutput.loaded)
+		//Load custom chat
+		SPAWN(-1)
+			src.chatOutput.start()
+
+	logTheThing("diary", null, src.mob, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
+
+	if (config.log_access)
+		src.ip_cid_conflict_check()
+
+	if(src.holder)
+		// when an admin logs in check all clients again per Mordent's request
+		for(var/client/C)
+			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE, only_if_first=TRUE, message_who=src)
+
+	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
+
+	login_success = 1
+
+/client/proc/initialize_interface()
+	set waitfor = FALSE
 	//WIDESCREEN STUFF
 	var/splitter_value = text2num(winget( src, "mainwindow.mainvsplit", "splitter" ))
 
@@ -586,6 +629,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	//End widescreen stuff
 
+	src.sync_dark_mode()
+
 	//blendmode stuff
 
 	var/distort_checked = winget( src, "menu.zoom_distort", "is-checked" ) == "true"
@@ -593,10 +638,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	winset( src, "mapwindow.map", "zoom-mode=[distort_checked ? "distort" : "normal"]" )
 
 	//blendmode end
-
-	// cursed darkmode stuff
-
-	src.sync_dark_mode()
 
 	if(winget(src, "menu.fullscreen", "is-checked") == "true")
 		winset(src, null, "mainwindow.titlebar=false;mainwindow.is-maximized=true")
@@ -633,39 +674,53 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	if (winget( src, "menu.vox_sounds", "is-checked" ) == "true")
 		ignore_sound_flags |= SOUND_VOX
 
-	src.reputations = new(src)
-
 	// Set view tint
 	view_tint = winget( src, "menu.set_tint", "is-checked" ) == "true"
 
-	if(src.holder && src.holder.level >= LEVEL_CODER)
-		src.control_freak = 0
+/client/proc/ip_cid_conflict_check(log_it=TRUE, alert_them=TRUE, only_if_first=FALSE, message_who=null)
+	var/static/list/list/ip_to_ckeys = list()
+	var/static/list/list/cid_to_ckeys = list()
 
-	if (browse_item_initial_done)
-		SPAWN(0)
-			sendItemIcons(src)
+	if(isnull(src.ckey))
+		// logged out / autokicked due to reasons
+		return
 
-	// fixing locked ability holders
-	var/datum/abilityHolder/ability_holder = src.mob.abilityHolder
-	ability_holder?.locked = FALSE
-	var/datum/abilityHolder/composite/composite = ability_holder
-	if(istype(composite))
-		for(var/datum/abilityHolder/inner_holder in composite.holders)
-			inner_holder.locked = FALSE
+	for(var/what in list("IP", "CID"))
+		var/list/list_to_check = list("IP"=ip_to_ckeys, "CID"=cid_to_ckeys)[what]
+		var/our_value = what == "IP" ? src.address : src.computer_id
+		if(!(our_value in list_to_check))
+			list_to_check[our_value] = list(src.ckey)
+		else
+			list_to_check[our_value] |= list(src.ckey)
+		if(length(list_to_check[our_value]) > 1 && (!only_if_first || list_to_check[our_value][1] == src.ckey))
+			var/list/offenders_log = list()
+			var/list/offenders_message = list()
+			for(var/found_ckey in list_to_check[our_value])
+				var/datum/player/player = find_player(found_ckey)
+				if(player?.client?.mob)
+					offenders_log += constructTarget(player.client.mob, "admin")
+					offenders_message += key_name(player.client.mob)
+				else
+					offenders_log += found_ckey
+					offenders_message += found_ckey
+			if(log_it)
+				logTheThing("admin", src.mob, null, "The following have the same [what]: [jointext(offenders_log, ", ")]")
+				logTheThing("diary", src.mob, null, "The following have the same [what]: [jointext(offenders_log, ", ")]", "access")
+			if(global.IP_alerts)
+				var/message = "<span class='alert'><B>Notice: </B></span><span class='internal'>The following have the same [what]: [jointext(offenders_message, ", ")]</span>"
+				if(isnull(message_who))
+					message_admins(message)
+				else
+					boutput(message_who, message)
+	if(alert_them)
+		var/list/both_collide = ip_to_ckeys[src.address] & cid_to_ckeys[src.computer_id]
+		if(length(both_collide) > 1)
+			for(var/found_ckey in both_collide)
+				var/datum/player/player = find_player(found_ckey)
+				if(player?.client?.mob)
+					SPAWN(0)
+						alert(player.client.mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 
-	if(spooky_light_mode)
-		var/atom/plane_parent = src.get_plane(PLANE_LIGHTING)
-		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
-		src.color = "#AAAAAA"
-
-
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
-
-	login_success = 1
-/*
-/client/proc/write_gauntlet_matches()
-	return
-*/
 
 /client/proc/init_admin()
 	if(!address || (world.address == src.address))

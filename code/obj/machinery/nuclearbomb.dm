@@ -163,7 +163,7 @@
 				src.UpdateOverlays(src.image_light, "light")
 			src.det_time = TIME + src.timer_default
 			src.add_simple_light("nuke", list(255, 127, 127, 127))
-			command_alert("\A [src] has been armed in [get_area(src)]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [get_area(src)] to disarm the bomb immediately.", "Nuclear Weapon Detected")
+			command_alert("\A [src] has been armed in [isturf(src.loc) ? get_area(src) : src.loc]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [get_area(src)] to disarm the bomb immediately.", "Nuclear Weapon Detected")
 			playsound_global(world, "sound/machines/bomb_planted.ogg", 90)
 			logTheThing("bombing", user, null, "armed [src] at [log_loc(src)].")
 			gamemode?.shuttle_available = FALSE
@@ -244,7 +244,7 @@
 				//	return
 
 		if (istype(W, /obj/item/wrench/battle) && src._health <= src._max_health)
-			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[usr] repairs the [src]!", null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[user] repairs the [src]!", null)
 			return
 
 		if (W && !(istool(W, TOOL_SCREWING | TOOL_SNIPPING) || istype(W, /obj/item/disk/data/floppy/read_only/authentication)))

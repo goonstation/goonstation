@@ -98,6 +98,7 @@ client
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_HUD, appearance_flags = NO_CLIENT_COLOR, name = "hud_plane", is_screen = 1))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SCREEN_OVERLAYS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "screen_overlays_plane", is_screen = 1))
 
+
 #ifdef COOL_PLANE_STUFF
 		game_display = new
 		src.screen += game_display
@@ -113,7 +114,9 @@ client
 		var/atom/movable/screen/plane_parent/P = new /atom/movable/screen/plane_parent(PLANE_HIDDENGAME, name = "hidden_game_plane")
 		add_plane(P)
 
-		SPAWN(5 SECONDS) //Because everything needs to wait!
+		src.setup_special_screens()
+
+		SPAWN(5 SECONDS)
 			apply_depth_filter()
 		..()
 

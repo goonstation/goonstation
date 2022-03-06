@@ -333,5 +333,5 @@
 			else if (src.voice_other)
 				playsound(O.loc, src.voice_other, 50, 0, -1)
 
-		if (offensive)
-			logTheThing("combat", holder.owner, target, "casts [src.name] from [log_loc(holder.owner)], at [target].")
+		var/log_target = constructTarget(target,"combat")
+		logTheThing("combat", holder.owner, target, "casts [src.name] from [log_loc(holder.owner)][targeted ? ", at [log_target]" : ""].")

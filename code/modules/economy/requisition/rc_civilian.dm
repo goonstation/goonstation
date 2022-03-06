@@ -300,23 +300,25 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		src.flavor_desc = "A birthday [pick(desc_event)] is being held for [firstnom] [lastnom]. [pick(desc_partyzone)]."
 		src.payout += rand(0,50) * 10
 
-		if(prob(70)) //pizza party
+		if (prob(70)) //pizza party
 			src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pizza,rand(2,3)*6)
 			src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/cola,rand(4,8)*10)
 
-		switch(rand(1,50)) //Special Outcomes Zone
-			if(1)
+		switch (rand(1, 50)) //Special Outcomes Zone
+			if (1)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/item/chaps,rand(3,6))
-			if(11 to 15)
+			if (2 to 6)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/item/grapes,rand(3,6))
-			if(16 to 20)
+			if (7 to 11)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/item/banana,rand(4,8))
-			if(21 to 25)
+			if (12 to 16)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/item/cannabis,rand(4,8))
-			if(26 to 30)
+			if (17 to 21)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/glitter,rand(4,8)*5)
-			if(30 to 40)
+			if (22 to 31)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/item/paperhat,rand(6,12))
+			else
+				// nothing
 
 		if(!length(src.rc_entries)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/paperhat,rand(6,12)) //fallback
 

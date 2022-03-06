@@ -1108,6 +1108,7 @@
 			var/obj/sparks = new /obj/effects/sparks
 			sparks.set_loc(get_turf(src))
 			SPAWN(2 SECONDS) if (sparks) qdel(sparks)
+		return TRUE
 
 	ex_act(severity)
 		if (src.nodamage) return
