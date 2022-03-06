@@ -50,6 +50,10 @@ TYPEINFO(/datum/component/glue_ready)
 			if(user)
 				boutput(user, "<span class='alert'>[thing_glued] is too large to be glued to the smaller [glued_to].</span>")
 			return FALSE
+	if(istype(glued_to, /obj/window))
+		if(user)
+			boutput(user, "<span class='alert'>[thing_glued] slids off the smooth window without adhering to it.</span>")
+		return FALSE
 	return TRUE
 
 /datum/component/glue_ready/proc/glue_things(atom/movable/glued_to, atom/movable/thing_glued, mob/user=null)
