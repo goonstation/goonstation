@@ -33,7 +33,7 @@ TYPEINFO(/datum/component/glued)
 		var/obj/item/item_parent = parent
 		parent_holder.u_equip(parent)
 		item_parent.dropped(parent_holder)
-	parent.set_loc(glued_to.loc)
+	parent.set_loc(isturf(glued_to) ? glued_to : glued_to.loc)
 	src.original_animate_movement = parent.animate_movement
 	src.original_anchored = parent.anchored
 	parent.animate_movement = SYNC_STEPS
