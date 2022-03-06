@@ -481,3 +481,93 @@
 		on = 1
 		set_icon_state(src.icon_on)
 		src.light.enable()
+
+/obj/item/device/light/flare // Absolutely only for use in military situations and station emergencies
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "flare"
+	var/base_state = "flare"
+	var/off_state = "flare_out"
+	var/on_state = "flare_on"
+	name = "flare"
+	desc = "A hand-held military-grade flare designed for use in varied emergencies. Not safe for human consumption."
+	w_class = W_CLASS_SMALL
+	flags = ONBELT | TABLEPASS
+	var/heated = 0
+	col_r = 0.9
+	col_g = 0.1
+	col_b = 0
+	brightness = 1
+	height = 0.75
+	var/const/expiry_time = 2700
+	var/color_name = "Red"
+	light_type = null
+	var/datum/component/loctargeting/sm_light/light_c
+
+	New()
+		..()
+		light_c = src.AddComponent(/datum/component/loctargeting/sm_light, col_r*255, col_g*200, col_b*200, 255 * brightness)
+		light_c.update(0)
+
+	proc/burst()
+		var/turf/T = get_turf(src.loc)
+		make_cleanable( /obj/decal/cleanable/generic,T)
+		make_cleanable( /obj/decal/cleanable/flare_off,T)
+		make_cleanable( /obj/decal/cleanable/redglow,T)
+		qdel(src)
+
+	proc/turnon()
+		on = 1
+		icon_state = "[on_state]"
+		light_c.update(1)
+
+	proc/expire(mob/user as mob)
+		on = 0
+		icon_state = "[base_state]"
+		light_c.update(1)
+
+		burst()
+
+
+
+	// Heating a hand flare is probably a bad idea...
+	attackby(obj/item/W as obj, mob/user as mob)
+		if ((isweldingtool(W) && W:try_weld(user,0,-1,0,0)) || istype(W, /obj/item/device/igniter) || ((istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle) || istype(W, /obj/item/clothing/mask/cigarette)) && W:on) || W.burning)
+			user.visible_message("<span class='alert'><b>[user]</b> heats [src] with [W].</span>")
+			src.heated += 1
+			if (src.heated >= 3 || prob(5 + (heated * 20)))
+				user.visible_message("<span class='alert'>[src] bursts open, spraying a white crystalline powder all over <b>[user]</b>! What a [pick("moron", "dummy", "chump", "doofus", "punk", "jerk", "bad idea")]!</span>")
+				if (user.reagents)
+					user.reagents.add_reagent("saltpetre", 8, null, T0C + heated * 200)
+				burst()
+		else
+			return ..()
+
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		..()
+		if (heated > 0 && on && prob(30 + (heated * 20)))
+			if(iscarbon(A))
+				if (A.reagents)
+					A.reagents.add_reagent("saltpetre", 5, null, T0C + heated * 200)
+			A.visible_message("<span class='alert'>[src] bursts open, spreading a white crystalline powder all over [A]!</span>")
+			burst()
+
+	attack_self(mob/user as mob)
+		if (!on)
+			boutput(user, "<span class='notice'>You crack [src].</span>")
+			playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+			src.turnon()
+			sleep(expiry_time)
+			src.expire()
+
+		else
+			if (prob(10) || (heated > 0 && prob(20 + heated * 20)))
+				user.visible_message("<span class='notice'><b>[user]</b> breaks [src]! What [pick("a clutz", "a putz", "a chump", "a doofus", "an oaf", "a jerk")]!</span>")
+				playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+				if (user.reagents)
+					if (heated > 0)
+						user.reagents.add_reagent("saltpetre", 10, null, T0C + heated * 200)
+					else
+						user.reagents.add_reagent("saltpetre", 10)
+				burst()
+			else
+				user.visible_message("<span class='notice'><b>[user]</b> [pick("fiddles", "faffs around", "goofs around", "fusses", "messes")] with [src].</span>")

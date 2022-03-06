@@ -1163,6 +1163,13 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shards"
 
+/obj/decal/cleanable/flare_off
+	name = "empty flare"
+	desc = "Used up military flare. Still not safe for human consumption."
+	layer = TURF_LAYER
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "flare_out"
+
 /obj/decal/cleanable/dirt
 	name = "dirt"
 	desc = "Someone should clean that up."
@@ -1406,6 +1413,34 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon_state = "greenglow"
 	can_dry = 1
 	dry_time = 1200
+	var/datum/light/light
+
+	New()
+		..()
+		light = new /datum/light/point
+		light.set_brightness(0.4)
+		light.set_height(0.5)
+		light.set_color(0.2, 1, 0.2)
+		light.attach(src)
+		light.enable()
+
+	disposing()
+		if(light)
+			qdel(light)
+			light = null
+		..()
+
+	setup()
+		..()
+
+
+/obj/decal/cleanable/redglow
+	name = "red glow"
+	desc = "Threatening"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "redglow"
+	can_dry = 1
+	dry_time = 1600
 	var/datum/light/light
 
 	New()
