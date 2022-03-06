@@ -1190,16 +1190,18 @@
 			S.move_trigger(src, ev)
 
 
-/mob/living/carbon/human/UpdateName()
-	var/see_face = 1
+/mob/living/carbon/human/proc/face_visible()
+	. = TRUE
 	if (istype(src.wear_mask) && !src.wear_mask.see_face)
-		see_face = 0
+		. = FALSE
 	else if (istype(src.head) && !src.head.see_face)
-		see_face = 0
+		. = FALSE
 	else if (istype(src.wear_suit) && !src.wear_suit.see_face)
-		see_face = 0
+		. = FALSE
+
+/mob/living/carbon/human/UpdateName()
 	var/id_name = src.wear_id?:registered
-	if (!see_face)
+	if (!face_visible())
 		if (id_name)
 			src.name = "[src.name_prefix(null, 1)][id_name][src.name_suffix(null, 1)]"
 			src.update_name_tag(id_name)
