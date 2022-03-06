@@ -68,7 +68,7 @@
 		src.ears = src.radio
 
 		//Attach shit to tools
-		src.tools = list(
+		src.tools = list( // for part two: add 25 floor sheets, and a loofah(?)
 			new /obj/item/magtractor(src),
 			new /obj/item/tool/omnitool/silicon(src),
 			new /obj/item/rcd/material/cardboard(src),
@@ -206,6 +206,7 @@
 	examine()
 		. = ..()
 
+		. += "*A cute little maintenance drone.*"
 		. += "*---------*"
 
 		if (isdead(src))
@@ -278,7 +279,7 @@
 		return 1
 
 	proc/setFaceDialog()
-		var/newFace = input(usr, "Select your faceplate", "Drone", src.faceType) as null|anything in list("Happy", "Sad", "Mad")
+		var/newFace = input(usr, "Select your faceplate", "Drone", src.faceType) as null|anything in list("Happy", "Sad", "Mad", "Heart", "Sleepy", "Exclaim", "Question", "Lopsy", "Kitty", "Eye")
 		if (!newFace) return 0
 		var/newColor = input(usr, "Select your faceplate color", "Drone", src.faceColor) as null|color
 		if (!newFace && !newColor) return 0
@@ -420,7 +421,7 @@
 		W.set_loc(src)
 		var/image/hatImage = image(icon = W.icon, icon_state = W.icon_state, layer = src.layer+0.1)
 		hatImage.pixel_y = 5
-		hatImage.transform *= 0.85
+		hatImage.transform *= 0.90
 		UpdateOverlays(hatImage, "hat")
 		return 1
 
@@ -632,7 +633,7 @@
 
 		src.hud.update_charge()
 
-	emote(var/act, var/voluntary = 1)
+	emote(var/act, var/voluntary = 1) // add nods and shakes emotes so ghostdrones can answer yes/no wuestions
 		var/param = null
 		if (findtext(act, " ", 1, null))
 			var/t1 = findtext(act, " ", 1, null)
@@ -1102,7 +1103,7 @@
 		return 0
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		setFace(pick("happy", "sad", "mad"), random_color())
+		setFace(pick("happy", "sad", "mad", "heart", "sleepy", "exclaim", "question", "lopsy", "kitty", "eye"), random_color())
 
 		if (limiter.canISpawn(/obj/effects/sparks))
 			var/obj/sparks = new /obj/effects/sparks
