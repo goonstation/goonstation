@@ -38,7 +38,7 @@ TYPEINFO(/datum/component/glue_ready)
 /datum/component/glue_ready/proc/gluability_check(atom/movable/glued_to, obj/item/thing_glued, mob/user)
 	if(isitem(glued_to))
 		var/obj/item/item_glued_to = glued_to
-		if(glued_to.w_class < thing_glued.w_class)
+		if(item_glued_to.w_class < thing_glued.w_class)
 			boutput(user, "<span class='alert'>[thing_glued] is too large to be glued to the smaller [glued_to].</span>")
 			return FALSE
 	return TRUE
