@@ -20,7 +20,7 @@ TYPEINFO(/datum/component/glued)
 	src.dries_up_timestamp = glue_duration ? TIME + glue_duration : null
 	src.glue_removal_time = glue_removal_time
 	var/atom/movable/parent = src.parent
-	parent.add_filter("glued_outline", 0, outline_filter(size=1, color="#e6e63c44"))
+	parent.add_filter("glued_outline", 0, outline_filter(size=1, color="#e6e63c7f"))
 	if(glue_duration != null)
 		SPAWN(glue_duration)
 			dry_up()
