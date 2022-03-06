@@ -1,5 +1,16 @@
 
 (t)sun mar 06 22
+(u)aloe
+(+) The syndicate cargo trasporter now welds crates and lockers at the start of the teleport rather than the end.
+(+) Also I reworked how cargo pads and transporters work. Nothing should be noticeable (other than QoL stuff), but report any bugs you find thanks
+(u)AmazingDragons
+(p)7579
+(e)🆕|feature
+(+)Nanotrasen has updated your favorite guardbuddies to include more insults for pranking your co-workers!
+(u)Juggernaut2442
+(p)7692
+(e)🐛|bug
+(*)Fixes some antique lawbringer bug and cleans up how iconstates are called.
 (u)Tarmunora
 (e)⚖|balance
 (*)Highly experimental cryoxadone rework - now has varying efficacy for different damage types based on the temperature, instead of being a boolean on/off. Highly subject to change/reversion.

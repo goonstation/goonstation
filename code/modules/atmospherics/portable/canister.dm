@@ -363,9 +363,6 @@
 	else if (src.det && W && istool(W, TOOL_PULSING | TOOL_SNIPPING))
 		src.Attackhand(user)
 
-	else if (istype(W, /obj/item/cargotele))
-		W:cargoteleport(src, user)
-		return
 	else if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
 		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
