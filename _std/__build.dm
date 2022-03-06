@@ -34,6 +34,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the map Atlas, no other zlevels. Boots way faster
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
+//#define NO_SET_AREA 1 // Removes all references to set_area so it doesn't generate a gazillion errors on startup
 
 
 //////////// PROFILING OPTIONS
