@@ -28,6 +28,9 @@ TYPEINFO(/datum/component/glued)
 		var/atom/movable/glued_to = src.glued_to
 		LAZYLISTADDUNIQUE(glued_to.attached_objs, parent)
 		glued_to.vis_contents += parent
+	if(ismob(parent))
+		var/mob/parent_mob = parent
+		APPLY_MOB_PROPERTY(parent_mob, PROP_CANTMOVE, "glued")
 	if(isitem(parent) && ismob(parent.loc))
 		var/mob/parent_holder = parent.loc
 		var/obj/item/item_parent = parent
@@ -79,6 +82,9 @@ TYPEINFO(/datum/component/glued)
 		var/atom/movable/glued_to = src.glued_to
 		glued_to.attached_objs -= parent
 		glued_to.vis_contents -= parent
+	if(ismob(parent))
+		var/mob/parent_mob = parent
+		REMOVE_MOB_PROPERTY(parent_mob, PROP_CANTMOVE, "glued")
 	parent.set_loc(get_turf(parent))
 	src.glued_to = null
 	. = ..()
