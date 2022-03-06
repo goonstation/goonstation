@@ -857,6 +857,7 @@ datum
 
 				..()
 				return
+
 			reaction_obj(obj/O, volume)
 				if(volume < 5)
 					return
