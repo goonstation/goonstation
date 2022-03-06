@@ -545,7 +545,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			M.sprint_particle.loc = null
 
 /proc/attack_twitch(var/atom/A)
-	if (!istype(A) || istype(A, /mob/living/object))
+	if (!istype(A) || islivingobject(A))
 		return		//^ possessed objects use an animate loop that is important for readability. let's not interrupt that with this dumb animation
 	var/which = A.dir
 
@@ -587,7 +587,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 
 /proc/hit_twitch(var/atom/A)
-	if (!A || istype(A, /mob/living/object) || ON_COOLDOWN(A, "hit_twitch", 0.1 SECONDS))
+	if (!A || islivingobject(A)|| ON_COOLDOWN(A, "hit_twitch", 0.1 SECONDS))
 		return
 	var/which = 0
 	if (usr)

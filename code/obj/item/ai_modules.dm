@@ -57,7 +57,7 @@ AI MODULES
 		if (issilicon(user))
 			boutput(user, "\The [comp] computer has a captcha. You don't succeed.")
 			return
-		if (istype(user, /mob/living/object))
+		if (IS_LIVING_OBJECT_USING_SELF(user))
 			boutput(user, "Try as you might, you just can't seem to upload yourself.")
 			return
 

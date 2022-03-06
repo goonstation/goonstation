@@ -98,7 +98,7 @@
 						var/obj/fluid/airborne/F = T.active_airborne_liquid
 						F.just_do_the_apply_thing(owner, mult, hasmask = 1)
 
-		else if (istype(owner.loc, /mob/living/object))
+		else if (islivingobject(owner.loc))
 			return // no breathing inside possessed objects
 		else if (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			return

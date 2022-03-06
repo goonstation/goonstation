@@ -1,3 +1,12 @@
+// These are so niche that I'm just putting them here
+
+/// Is a possessed object
+#define islivingobject(x) (istype(x, /mob/living/object))
+
+/// This is for objects which have some sort of prerequisite for people to use them. Allows you to bypass those checks if
+/// the user is the possessed version of the object being interacted with
+#define IS_LIVING_OBJECT_USING_SELF(x) (islivingobject(x) && x:possessed_thing == src)
+
 /obj/item/attackdummy
 	name = "attack dummy"
 	hit_type = DAMAGE_BLUNT
@@ -82,8 +91,8 @@
 		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST, "living_object", 100)
 		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "living_object", 100)
 
-	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
-		src.possessed_thing.mouse_drop(over_object, src_location, over_location, over_control, params)
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+		src.possessed_thing.MouseDrop(over_object, src_location, over_location, over_control, params)
 
 	MouseDrop_T(atom/dropped, mob/user)
 		return src.possessed_thing._MouseDrop_T(dropped, user)

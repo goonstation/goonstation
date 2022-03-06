@@ -30,6 +30,5 @@ obj/hud/New(var/type = 0)
 		src.hivebot_hud()
 		return
 
-	if (istype(mymob, /mob/living/object))
+	if (islivingobject(mymob))
 		src.object_hud()
-		return
