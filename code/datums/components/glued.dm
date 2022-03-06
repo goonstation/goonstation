@@ -1,3 +1,5 @@
+#define MAGIC_GLUE_ANCHORED 12345
+
 TYPEINFO(/datum/component/glued)
 	initialization_args = list(
 		ARG_INFO("target", "ref", "What is this glued to", null),
@@ -40,7 +42,7 @@ TYPEINFO(/datum/component/glued)
 	src.original_animate_movement = parent.animate_movement
 	src.original_anchored = parent.anchored
 	parent.animate_movement = SYNC_STEPS
-	parent.anchored = TRUE
+	parent.anchored = MAGIC_GLUE_ANCHORED // replace with atom_properties once we move mob_properties to /atom
 	parent.layer = OBJ_LAYER
 	if(isturf(glued_to))
 		parent.plane = PLANE_NOSHADOW_BELOW
@@ -74,7 +76,8 @@ TYPEINFO(/datum/component/glued)
 	var/atom/movable/parent = src.parent
 	parent.remove_filter("glued_outline")
 	parent.animate_movement = src.original_animate_movement
-	parent.anchored = src.original_anchored
+	if(parent.anchored == MAGIC_GLUE_ANCHORED)
+		parent.anchored = src.original_anchored
 	parent.layer = initial(parent.layer)
 	parent.plane = initial(parent.plane)
 	parent.vis_flags &= ~(VIS_INHERIT_PLANE | VIS_INHERIT_LAYER)
@@ -88,3 +91,5 @@ TYPEINFO(/datum/component/glued)
 	parent.set_loc(get_turf(parent))
 	src.glued_to = null
 	. = ..()
+
+#undef MAGIC_GLUE_ANCHORED
