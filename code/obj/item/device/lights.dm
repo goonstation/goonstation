@@ -553,7 +553,7 @@
 
 	attack_self(mob/user as mob)
 		if (!on)
-			boutput(user, "<span class='notice'>You crack [src].</span>")
+			boutput(user, "<span class='notice'>You pull the cap off of [src] and strike it against the igniter strip.</span>")
 			playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
 			src.turnon()
 			sleep(expiry_time)
