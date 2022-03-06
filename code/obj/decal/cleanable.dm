@@ -1165,7 +1165,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 /obj/decal/cleanable/flare_off
 	name = "empty flare"
-	desc = "Used up military flare. Still not safe for human consumption."
+	desc = "Used up emergency flare. Still not safe for human consumption."
 	layer = TURF_LAYER
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flare_out"

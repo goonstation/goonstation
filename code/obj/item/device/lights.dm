@@ -482,14 +482,14 @@
 		set_icon_state(src.icon_on)
 		src.light.enable()
 
-/obj/item/device/light/flare // Absolutely only for use in military situations and station emergencies
+/obj/item/device/light/flare // Absolutely only for use in station emergencies
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flare"
 	var/base_state = "flare"
 	var/off_state = "flare_out"
 	var/on_state = "flare_on"
 	name = "flare"
-	desc = "A hand-held military-grade flare designed for use in varied emergencies. Not safe for human consumption."
+	desc = "A hand-held emergency flare designed for use in varied emergencies. Not safe for human consumption."
 	w_class = W_CLASS_SMALL
 	flags = ONBELT | TABLEPASS
 	var/heated = 0
@@ -571,3 +571,14 @@
 				burst()
 			else
 				user.visible_message("<span class='notice'><b>[user]</b> [pick("fiddles", "faffs around", "goofs around", "fusses", "messes")] with [src].</span>")
+
+	process()
+		if (src.on)
+			var/turf/location = src.loc
+			if (ismob(location))
+				var/mob/M = location
+				if (M.find_in_hand(src))
+					location = M.loc
+			var/turf/T = get_turf(src.loc)
+			if (T)
+				T.hotspot_expose(700,5)
