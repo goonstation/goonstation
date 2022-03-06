@@ -1,5 +1,9 @@
 
 (t)sun mar 06 22
+(u)AmazingDragons
+(p)7579
+(e)🆕|feature
+(+)Nanotrasen has updated your favorite guardbuddies to include more insults for pranking your co-workers!
 (u)Juggernaut2442
 (p)7692
 (e)🐛|bug
