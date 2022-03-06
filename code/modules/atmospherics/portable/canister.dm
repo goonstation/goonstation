@@ -343,7 +343,7 @@
 			var/obj/item/assembly/detonator/Det = W
 			if (Det.det_state != 4)
 				user.show_message("<span class='alert'>The assembly is incomplete.</span>")
-			else
+			elsegg
 				Det.set_loc(src)
 				Det.master = src
 				Det.layer = initial(W.layer)
@@ -363,9 +363,6 @@
 	else if (src.det && W && istool(W, TOOL_PULSING | TOOL_SNIPPING))
 		src.Attackhand(user)
 
-	else if (istype(W, /obj/item/cargotele))
-		W:cargoteleport(src, user)
-		return
 	else if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
 		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
