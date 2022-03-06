@@ -162,17 +162,15 @@
 	logTheThing("combat", src, null, "teleported from [log_loc(src)] to [log_loc(destination)].")
 	if (effect)
 		animate_teleport_wiz(src)
-		sleep(4 SECONDS) // Animation.
+		sleep(2 SECONDS) // Animation.
 		playsound(src.loc, "sound/effects/mag_teleport.ogg", 25, 1, -1)
+		sleep(2 SECONDS) // Animation.
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 		smoke.set_up(5, 0, src.loc)
 		smoke.attach(src)
 
-		if (perform_check == 3)
-			src.set_loc(destination)
-			smoke.start()
-		else
-			smoke.start()
-			src.set_loc(destination)
+		playsound(destination, "sound/effects/mag_teleport.ogg", 25, 1, -1)
+		src.set_loc(destination)
+		smoke.start()
 
 	return 1
