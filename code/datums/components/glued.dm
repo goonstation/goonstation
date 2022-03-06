@@ -1,3 +1,5 @@
+#define MAGIC_GLUE_ANCHORED 12345
+
 TYPEINFO(/datum/component/glued)
 	initialization_args = list(
 		ARG_INFO("target", "ref", "What is this glued to", null),
@@ -20,7 +22,7 @@ TYPEINFO(/datum/component/glued)
 	src.dries_up_timestamp = glue_duration ? TIME + glue_duration : null
 	src.glue_removal_time = glue_removal_time
 	var/atom/movable/parent = src.parent
-	parent.add_filter("glued_outline", 0, outline_filter(size=1, color="#e6e63c44"))
+	parent.add_filter("glued_outline", 0, outline_filter(size=1, color="#e6e63c7f"))
 	if(glue_duration != null)
 		SPAWN(glue_duration)
 			dry_up()
@@ -28,18 +30,24 @@ TYPEINFO(/datum/component/glued)
 		var/atom/movable/glued_to = src.glued_to
 		LAZYLISTADDUNIQUE(glued_to.attached_objs, parent)
 		glued_to.vis_contents += parent
+	if(ismob(parent))
+		var/mob/parent_mob = parent
+		APPLY_MOB_PROPERTY(parent_mob, PROP_CANTMOVE, "glued")
 	if(isitem(parent) && ismob(parent.loc))
 		var/mob/parent_holder = parent.loc
 		var/obj/item/item_parent = parent
 		parent_holder.u_equip(parent)
 		item_parent.dropped(parent_holder)
-	parent.set_loc(glued_to.loc)
+	parent.set_loc(isturf(glued_to) ? glued_to : glued_to.loc)
 	src.original_animate_movement = parent.animate_movement
 	src.original_anchored = parent.anchored
 	parent.animate_movement = SYNC_STEPS
-	parent.anchored = TRUE
+	parent.anchored = MAGIC_GLUE_ANCHORED // replace with atom_properties once we move mob_properties to /atom
 	parent.layer = OBJ_LAYER
-	parent.plane = PLANE_UNDERFLOOR
+	if(isturf(glued_to))
+		parent.plane = PLANE_NOSHADOW_BELOW
+	else
+		parent.plane = PLANE_UNDERFLOOR
 	parent.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 	RegisterSignal(parent, COMSIG_ATTACKHAND, .proc/start_ungluing)
 
@@ -68,14 +76,20 @@ TYPEINFO(/datum/component/glued)
 	var/atom/movable/parent = src.parent
 	parent.remove_filter("glued_outline")
 	parent.animate_movement = src.original_animate_movement
-	parent.anchored = src.original_anchored
+	if(parent.anchored == MAGIC_GLUE_ANCHORED)
+		parent.anchored = src.original_anchored
 	parent.layer = initial(parent.layer)
 	parent.plane = initial(parent.plane)
 	parent.vis_flags &= ~(VIS_INHERIT_PLANE | VIS_INHERIT_LAYER)
-	src.glued_to = null
 	if(ismovable(glued_to))
 		var/atom/movable/glued_to = src.glued_to
 		glued_to.attached_objs -= parent
 		glued_to.vis_contents -= parent
+	if(ismob(parent))
+		var/mob/parent_mob = parent
+		REMOVE_MOB_PROPERTY(parent_mob, PROP_CANTMOVE, "glued")
 	parent.set_loc(get_turf(parent))
+	src.glued_to = null
 	. = ..()
+
+#undef MAGIC_GLUE_ANCHORED

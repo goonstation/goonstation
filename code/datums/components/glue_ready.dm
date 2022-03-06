@@ -21,7 +21,9 @@ TYPEINFO(/datum/component/glue_ready)
 		SPAWN(glue_duration)
 			dry_up()
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/glue_thing_to_parent)
-	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/glue_parent_to_thing) // won't do anything if not an item but it doesn't hurt
+	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/glue_parent_to_thing_afterattack) // won't do anything if not an item but it doesn't hurt
+	RegisterSignal(parent, COMSIG_ATOM_HITBY_THROWN, .proc/glue_thing_to_parent)
+	RegisterSignal(parent, COMSIG_MOVABLE_HIT_THROWN, .proc/glue_parent_to_thing_hit_thrown)
 
 /datum/component/glue_ready/proc/dry_up()
 	if(src.disposed || !src.parent || src.parent.disposed)
@@ -35,35 +37,63 @@ TYPEINFO(/datum/component/glue_ready)
 	parent.remove_filter("glue_ready_outline")
 	. = ..()
 
-/datum/component/glue_ready/proc/gluability_check(atom/movable/glued_to, obj/item/thing_glued, mob/user)
+/datum/component/glue_ready/proc/gluability_check(atom/movable/glued_to, atom/movable/thing_glued, mob/user)
+	if(isnull(glued_to) || isnull(thing_glued))
+		return FALSE
+	var/obj/item/item_glued = thing_glued
+	ENSURE_TYPE(item_glued)
+	if(thing_glued.anchored || item_glued?.cant_drop)
+		if(user)
+			boutput(user, "<span class='alert'>You can't glue [thing_glued] to stuff.</span>")
+		return FALSE
+	if(istype(thing_glued, /obj/storage))
+		return FALSE
 	if(isitem(glued_to))
 		var/obj/item/item_glued_to = glued_to
-		if(item_glued_to.w_class < thing_glued.w_class)
-			boutput(user, "<span class='alert'>[thing_glued] is too large to be glued to the smaller [glued_to].</span>")
+		if(!isitem(thing_glued) || item_glued_to.w_class < item_glued.w_class)
+			if(user)
+				boutput(user, "<span class='alert'>[thing_glued] is too large to be glued to the smaller [glued_to].</span>")
 			return FALSE
+	if(istype(glued_to, /obj/window))
+		if(user)
+			boutput(user, "<span class='alert'>[thing_glued] slids off the smooth window without adhering to it.</span>")
+		return FALSE
 	return TRUE
 
-/datum/component/glue_ready/proc/glue_thing_to_parent(atom/movable/parent, obj/item/item, mob/user)
-	if(!gluability_check(parent, item, user))
+/datum/component/glue_ready/proc/glue_things(atom/movable/glued_to, atom/movable/thing_glued, mob/user=null)
+	if(!gluability_check(glued_to, thing_glued, user))
 		return
-	item.AddComponent(/datum/component/glued, parent, src.dries_up_timestamp - TIME, src.glue_removal_time)
-	var/turf/T = get_turf(parent)
-	T.visible_message("<span class='notice'>[user] glues [item] to [parent].</span>")
+	thing_glued.AddComponent(/datum/component/glued, glued_to, src.dries_up_timestamp - TIME, src.glue_removal_time)
+	var/turf/T = get_turf(glued_to)
+	if(user)
+		T.visible_message("<span class='notice'>[user] glues [thing_glued] to [glued_to].</span>")
+	else
+		T.visible_message("<span class='notice'>[thing_glued] sticks to [glued_to].</span>")
 	qdel(src)
 
-/datum/component/glue_ready/proc/glue_parent_to_thing(obj/item/parent, atom/target, mob/user, reach, params)
+/datum/component/glue_ready/proc/glue_thing_to_parent(atom/movable/parent, obj/item/item, mob/user)
+	ENSURE_TYPE(user)
+	glue_things(parent, item, user)
+	return TRUE
+
+/datum/component/glue_ready/proc/glue_parent_to_thing_afterattack(obj/item/parent, atom/target, mob/user, reach, params)
 	if(isnull(target))
 		return
 	if(!can_reach(user, target))
 		return
 	if(istype(target, /obj/fluid) || istype(target, /obj/effect))
 		target = get_turf(target)
-	if(!gluability_check(target, parent, user))
-		return
-	parent.AddComponent(/datum/component/glued, target, src.dries_up_timestamp - TIME, src.glue_removal_time)
+	glue_things(target, parent, user)
 	if("icon-x" in params)
 		parent.pixel_x = text2num(params["icon-x"]) - world.icon_size / 2
 		parent.pixel_y = text2num(params["icon-y"]) - world.icon_size / 2
-	var/turf/T = get_turf(target)
-	T.visible_message("<span class='notice'>[user] glues [parent] to [target].</span>")
-	qdel(src)
+
+/datum/component/glue_ready/proc/glue_parent_to_thing_hit_thrown(obj/item/parent, atom/target)
+	if(isnull(target))
+		return
+	if(isfloor(target))
+		return
+	if(istype(target, /obj/fluid) || istype(target, /obj/effect))
+		target = get_turf(target)
+	glue_things(target, parent, null)
+	return TRUE
