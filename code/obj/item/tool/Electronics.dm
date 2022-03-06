@@ -934,17 +934,29 @@
 		if(prob(20))// doing surgery with a buzzsaw isn't a good idea
 			user.visible_message("<span class='alert'><b>[user]</b> messes up and injures [himself_or_herself(user)] with the [src]! </span>")
 			random_brute_damage(user, 7)
-			take_bleeding_damage(user, null, 3, DAMAGE_CUT, 0)
-			playsound(user, 'sound/machines/chainsaw.ogg')
+			take_bleeding_damage(user, null, 7, DAMAGE_CUT, 1)
+			playsound(user, 'sound/machines/chainsaw.ogg', 70)
 
 
 		else if(user?.bioHolder.HasEffect("clumsy") && prob(40)) // ESPECIALLY if you're a stupid clown
-			playsound(user, 'sound/machines/chainsaw.ogg')
+			playsound(user, 'sound/machines/chainsaw.ogg', 70)
 			user.visible_message("<span class='alert'><b>[user] fucks up really badly and maims [himself_or_herself(user)] with the [src]! </b> </span>")
-			random_brute_damage(user, 16)
-			take_bleeding_damage(user, null, 8, DAMAGE_CUT, 1)
+			random_brute_damage(user, 15)
+			take_bleeding_damage(user, null, 15, DAMAGE_CUT, 1)
 			user.emote("scream")
 			JOB_XP(user, "Clown", 3)
+
+/obj/item/deconstructor/borg
+	name = "deconstruction device"
+	desc = "A device meant to facilitate the deconstruction of scannable machines. This one has been modified for safe use by borgs."
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "deconstruction"
+	force = 0
+	throwforce = 0
+	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+	hit_type = DAMAGE_BLUNT
+	tool_flags = 0
+	w_class = W_CLASS_NORMAL
 
 
 /obj/var/list/decon_contexts = null
@@ -1041,14 +1053,3 @@
 			boutput(owner, "<span class='alert'>Deconstruction of [O] interrupted!</span>")
 		..()
 
-/obj/item/deconstructor/borg
-	name = "deconstruction device"
-	desc = "A device meant to facilitate the deconstruction of scannable machines. This one has been modified for safe use by borgs."
-	icon = 'icons/obj/items/device.dmi'
-	icon_state = "deconstruction"
-	force = 0
-	throwforce = 0
-	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
-	hit_type = DAMAGE_BLUNT
-	tool_flags = 0
-	w_class = W_CLASS_NORMAL
