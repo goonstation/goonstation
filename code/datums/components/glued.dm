@@ -72,10 +72,10 @@ TYPEINFO(/datum/component/glued)
 	parent.layer = initial(parent.layer)
 	parent.plane = initial(parent.plane)
 	parent.vis_flags &= ~(VIS_INHERIT_PLANE | VIS_INHERIT_LAYER)
-	src.glued_to = null
 	if(ismovable(glued_to))
 		var/atom/movable/glued_to = src.glued_to
 		glued_to.attached_objs -= parent
 		glued_to.vis_contents -= parent
 	parent.set_loc(get_turf(parent))
+	src.glued_to = null
 	. = ..()
