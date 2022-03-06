@@ -38,6 +38,8 @@ TYPEINFO(/datum/component/glue_ready)
 	. = ..()
 
 /datum/component/glue_ready/proc/gluability_check(atom/movable/glued_to, atom/movable/thing_glued, mob/user)
+	if(isnull(glued_to) || isnull(thing_glued))
+		return FALSE
 	var/obj/item/item_glued = thing_glued
 	ENSURE_TYPE(item_glued)
 	if(thing_glued.anchored || item_glued?.cant_drop)
