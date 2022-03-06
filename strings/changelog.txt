@@ -1,5 +1,33 @@
 
+(t)sun mar 06 22
+(u)AmazingDragons
+(p)7579
+(e)🆕|feature
+(+)Nanotrasen has updated your favorite guardbuddies to include more insults for pranking your co-workers!
+(u)Juggernaut2442
+(p)7692
+(e)🐛|bug
+(*)Fixes some antique lawbringer bug and cleans up how iconstates are called.
+(u)Tarmunora
+(e)⚖|balance
+(*)Highly experimental cryoxadone rework - now has varying efficacy for different damage types based on the temperature, instead of being a boolean on/off. Highly subject to change/reversion.
 (t)sat mar 05 22
+(u)Hans
+(p)7527
+(e)🆕🎨|feature, sprites
+(*)Added space glue to the game.
+(u)NightmareChamillian
+(p)7631
+(e)🎨|sprites
+(+)Resprites the SMG magazine
+(u)Fwll
+(p)7688
+(e)🎨|sprites
+(+)Added Chip Butties and Innitium
+(u)Nemiko
+(p)7588
+(e)|
+(+)Added nine new drink recipes, a mostly non-alcoholic.
 (u)Sovexe
 (p)7689
 (e)🆕🗺|feature, mapping
