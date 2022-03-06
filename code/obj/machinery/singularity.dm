@@ -602,6 +602,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		return
 	if(P.proj_data.damage_type == D_ENERGY)
 		src.power += P.power
+		flick("Field_Gen_Flash", src)
 
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
