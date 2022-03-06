@@ -68,7 +68,6 @@
 
 		//Relay these signals
 		RegisterSignal(src.possessed_thing, COMSIG_ATOM_POST_UPDATE_ICON, /atom/proc/UpdateIcon)
-		RegisterSignal(src.possessed_thing, COMSIG_ATOM_MOUSEDROP, .proc/stupid_fucking_wrapper_proc)
 
 		src.owner = controller
 		if (src.owner)
@@ -83,9 +82,8 @@
 		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST, "living_object", 100)
 		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "living_object", 100)
 
-	//ugly procs to relay signals correctly
-	proc/stupid_fucking_wrapper_proc(over_object, src_location, over_location, over_control, params)
-		src.MouseDrop(over_object, src_location, over_location, over_control, params)
+	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+		src.possessed_thing.mouse_drop(over_object, src_location, over_location, over_control, params)
 
 	MouseDrop_T(atom/dropped, mob/user)
 		return src.possessed_thing._MouseDrop_T(dropped, user)
