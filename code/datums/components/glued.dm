@@ -50,6 +50,7 @@ TYPEINFO(/datum/component/glued)
 		parent.plane = PLANE_UNDERFLOOR
 	parent.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 	RegisterSignal(parent, COMSIG_ATTACKHAND, .proc/start_ungluing)
+	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/pass_on_attackby)
 
 /datum/component/glued/proc/delete_self()
 	qdel(src)
@@ -71,6 +72,9 @@ TYPEINFO(/datum/component/glued)
 	actions.start(
 		new /datum/action/bar/icon/callback(user, parent, src.glue_removal_time, .proc/delete_self, null, parent.icon, parent.icon_state,\
 		"<span class='notice'>[user] manages to unglue [parent] from [src.glued_to].</span>", 0, src), user)
+
+/datum/component/glued/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, list/params, is_special)
+	src.glued_to.Attackby(item, user, params, is_special)
 
 /datum/component/glued/UnregisterFromParent()
 	var/atom/movable/parent = src.parent
