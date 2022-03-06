@@ -22,7 +22,7 @@
 			setMonoCard(card, i, 0)
 
 		//Do rest of the numbers
-		for(var/i in to 4)
+		for(var/i in 1 to 4)
 			for(var/j = 1, j<13, j++)
 
 				var/obj/item/playing_card/card = new /obj/item/playing_card(src)
@@ -53,11 +53,11 @@
 		if(plain_suit)
 			if(num < 10)
 				target.name = "[suit_name] [capitalize(num2text(num))]"
-			  else
+			else
 				target.name = "[suit_name] [numToSpecial["[num]"]]"
 
 
-		  else
+		else
 			if(num == 0)
 				target.name = "Wild Card"
 			else  //If I fuck up generation this will get people complaining
