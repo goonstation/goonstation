@@ -1,5 +1,7 @@
 
 (t)sun mar 06 22
+(u)pali
+(*)The glue reagent can now coat items in glue which lets you stick them to other stuff.<br><sup>This is highly experimental, likely unavoidably buggy despite my best attempts and subject to change or very likely to a revert.</sup>
 (u)aloe
 (+) The syndicate cargo trasporter now welds crates and lockers at the start of the teleport rather than the end.
 (+) Also I reworked how cargo pads and transporters work. Nothing should be noticeable (other than QoL stuff), but report any bugs you find thanks
