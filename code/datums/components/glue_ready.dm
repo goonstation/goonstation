@@ -87,6 +87,8 @@ TYPEINFO(/datum/component/glue_ready)
 /datum/component/glue_ready/proc/glue_parent_to_thing_hit_thrown(obj/item/parent, atom/target)
 	if(isnull(target))
 		return
+	if(isfloor(target))
+		return
 	if(istype(target, /obj/fluid) || istype(target, /obj/effect))
 		target = get_turf(target)
 	glue_things(target, parent, null)
