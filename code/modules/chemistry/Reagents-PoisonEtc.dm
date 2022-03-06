@@ -353,10 +353,10 @@ datum
 					holder.remove_reagent("penteticacid", flushing * mult)
 
 				switch(counter += (1 * mult))
-					if (75 to 150)
+					if (75 to 125)
 						if (probmult(4))
 							M.emote(pick("sneeze","cough","moan","groan"))
-					if (150 to 225)
+					if (125 to 175)
 						flushing = 1.5 //it gets a tad harder to cure here
 
 						if (probmult(8))
@@ -369,7 +369,7 @@ datum
 							var/mob/living/carbon/human/H = M
 							if (H.organHolder)
 								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 20)
-					if (225 to INFINITY)
+					if (175 to INFINITY)
 						flushing = 3 // time to ramp up that flusher flushing
 
 						if (probmult(10))
@@ -380,11 +380,11 @@ datum
 						if (probmult(8))
 							M.visible_message("<span class='alert'>[M] vomits a lot of blood!</span>")
 							playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
-							bleed(M, rand(8,10) * mult, 5 * mult)
+							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
 						else if (probmult(5))
 							boutput(M, "<span class='alert'>You feel a sudden pain in your chest.</span>")
-							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
-							M.take_toxin_damage(1 * mult)
+							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 6 SECONDS))
+							M.take_toxin_damage(3)
 						M.change_eye_blurry(5, 5)
 						if (ishuman(M))
 							var/mob/living/carbon/human/H = M
