@@ -225,7 +225,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 			return 1
 
 		if(prob(1) && !src.stat)
-			SPAWN(0) src.say(pick( "DRINK!", "FECK!", "ARSE!","That would be an ecumenical matter."))
+			SPAWN(0) src.say(pick( "DRINK!", "FECK!", "ARSE!", "That would be an ecumenical matter."))
 
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/postcard/owlery))
