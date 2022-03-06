@@ -46,6 +46,8 @@ TYPEINFO(/datum/component/glue_ready)
 		if(user)
 			boutput(user, "<span class='alert'>You can't glue [thing_glued] to stuff.</span>")
 		return FALSE
+	if(istype(thing_glued, /obj/storage))
+		return FALSE
 	if(isitem(glued_to))
 		var/obj/item/item_glued_to = glued_to
 		if(!isitem(thing_glued) || item_glued_to.w_class < item_glued.w_class)
