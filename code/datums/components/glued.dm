@@ -40,7 +40,7 @@ TYPEINFO(/datum/component/glued)
 	parent.anchored = TRUE
 	parent.layer = OBJ_LAYER
 	if(isturf(glued_to))
-		parent.plane = PLANE_DEFAULT
+		parent.plane = PLANE_FLOOR
 	else
 		parent.plane = PLANE_UNDERFLOOR
 	parent.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
