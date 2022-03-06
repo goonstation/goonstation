@@ -79,7 +79,7 @@
 #define COMSIG_ATOM_DIR_CHANGED "atom_dir_changed"
 /// when an atom is collided by a projectile (/obj/projectile)
 #define COMSIG_ATOM_HITBY_PROJ "atom_hitby_proj"
-/// when an atom is hit by a thrown thing (thrown_atom, /datum/thrown_thing)
+/// when an atom is hit by a thrown thing (hit_target, thrown_atom, /datum/thrown_thing)
 #define COMSIG_ATOM_HITBY_THROWN "atom_hitby_thrown"
 /// when an atom is examined (/mob/examiner, /list/lines), append to lines for more description
 #define COMSIG_ATOM_EXAMINE "atom_examine"
@@ -114,6 +114,8 @@
 #define XSIG_OUTERMOST_MOVABLE_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_outermost_changed")
 /// when the z-level of a movable changes (works in nested contents) (thing, old_z_level, new_z_level)
 #define XSIG_MOVABLE_Z_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_z-level_changed")
+/// when an atom hits something when being thrown (thrown_atom, hit_target, /datum/thrown_thing)
+#define COMSIG_MOVABLE_HIT_THROWN "mov_hit_thrown"
 
 // ---- item signals ----
 
