@@ -24,7 +24,7 @@
 		if (!length(targets))
 			return
 		targets = sortNames(targets)
-		var/input = input(holder.owner, "Select target", "Clairvoyance") as null|anything in targets
+		var/input = tgui_input_list(holder.owner, "Select target", "Clairvoyance", targets)
 		var/mob/M = targets[input]
 		if (!M || !holder?.owner)
 			return
