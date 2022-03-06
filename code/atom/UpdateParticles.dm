@@ -23,10 +23,10 @@
 		CRASH("ClearSpecificParticles called without a key.")
 	if (!particle_refs)
 		return
-	var/obj/effects/holder
-	holder = particle_refs[key]
+	var/obj/effects/holder = particle_refs[key]
 	holder?.vis_locs = null
 	qdel(holder)
+	particle_refs -= key
 
 /atom/proc/ClearAllParticles()
 	if (!particle_refs)
