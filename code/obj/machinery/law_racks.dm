@@ -53,12 +53,138 @@
 		ticker?.ai_law_rack_manager.register_new_rack(src)
 		. = ..()
 
-/*	allowed(var/mob/user)
-		if(issilicon(user))
-			boutput(user,"Cyborg model deconstruction device detected - ACCESS DENIED")
-			return 0
+	updateHealth(var/prevHealth)
+		if(_health <= 0)
+			src.visible_message("<span class='alert'><b>The [src] collapses completely!</b></span>")
+			playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+			for(var/turf/T in range(src,0))
+				make_cleanable(/obj/decal/cleanable/machine_debris, T)
+			qdel(src)
+			return
+		var/law_update_needed = FALSE
+
+		if(_health <= 75 && prevHealth > 75)
+			//partially damaged - make a module glitch
+			if(prob(50))
+				src.cause_law_glitch(phrase_log.random_custom_ai_law(),rand(1,9),FALSE)
+				playsound(src, "sound/effects/sparks6.ogg", 50)
+				law_update_needed = TRUE
+		if(_health <= 50 && prevHealth > 50)
+			//more than half damaged, spit out a module or cause a severe glitch
+			if(prob(50))
+				src.cause_law_glitch(phrase_log.random_custom_ai_law(),rand(1,9),TRUE)
+				playsound(src, "sound/effects/sparks4.ogg", 50)
+				law_update_needed = TRUE
+			else
+				var/list/mod_index_list = list()
+				for (var/i in 1 to MAX_CIRCUITS)
+					if(src.law_circuits[i])
+						mod_index_list += i
+				if(mod_index_list.len > 0)
+					var/i = pick(mod_index_list)
+					src.welded[i] = false
+					src.screwed[i] = false
+					src.law_circuits[i].set_loc(get_turf(src))
+					src.law_circuits[i] = null
+					src.visible_message("<span class='alert'><b>A module tumbles out of the [src]!</b></span>")
+					playsound(src.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 50, 1)
+					law_update_needed = TRUE
+		if(_health <= 25 && prevHealth > 25)
+			//severely damaged - we're basically falling apart here
+			//break all the welds and screws, eject half of remaining modules
+			for (var/i in 1 to MAX_CIRCUITS)
+				src.welded[i] = false
+				src.screwed[i] = false
+				if(src.law_circuits[i] && prob(50))
+					src.law_circuits[i].set_loc(get_turf(src))
+					src.law_circuits[i] = null
+					law_update_needed = TRUE
+			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+			src.visible_message("<span class='alert'><b>Some of the [src]'s shelves collapse!</b></span>")
+
+		if(law_update_needed)
+			UpdateIcon()
+			UpdateLaws()
+
+		//handle particles
+		if(_health <= 75)
+			if(!src.GetParticles("rack_spark"))
+				playsound(src, "sound/effects/electric_shock_short.ogg", 50)
+				src.UpdateParticles(new/particles/rack_spark,"rack_spark")
+				src.visible_message("<span class='alert'><b>The [src] starts sparking!</b></span>")
+		else if(prevHealth <= 75)
+			src.visible_message("<span class='alert'><b>The [src] stops sparking.</b></span>")
+			src.ClearSpecificParticles("rack_spark")
+
+		if(_health <= 50)
+			if(!src.GetParticles("rack_smoke"))
+				src.UpdateParticles(new/particles/rack_smoke,"rack_smoke")
+				src.visible_message("<span class='alert'><b>The [src] begins to smoke!</b></span>")
+		else if(prevHealth <= 50)
+			src.visible_message("<span class='alert'><b>The [src] stops smoking.</b></span>")
+			src.ClearSpecificParticles("rack_smoke")
+
+	examine()
+		. = ..()
+		if(src._health == src._max_health)
+			. += "It is operating normally."
+		else if (src._health > src._max_health*0.9)
+			. += "It looks a little dinged."
+		else if (src._health > src._max_health*0.75)
+			. += "It looks a bit battered."
+		else if (src._health > src._max_health*0.5)
+			. += "It's sparking oddly. It looks badly damaged."
+		else if (src._health > src._max_health*0.25)
+			. += "It's very badly damaged. Is it on fire?!"
+		else if (src._health > src._max_health*0.1)
+			. += "It's almost falling apart!"
 		else
-			return ..() */
+			. += "It's about to collapse!"
+
+
+
+	ex_act(severity)
+		src.material?.triggerExp(src, severity)
+		switch(severity)
+			if(1.0)
+				changeHealth(rand(-105,-90))
+				return
+			if(2.0)
+				changeHealth(rand(-80,-50))
+				return
+			if(3.0)
+				changeHealth(rand(-30,-10))
+				return
+
+	bullet_act(obj/projectile/P)
+		var/damage = 0
+
+		damage = round((0.15*P.power*P.proj_data.ks_ratio), 1.0)
+		//boutput(world,"Took [damage] before DT")
+		damage = damage - min(damage,3) //bullet resist
+		//boutput(world,"Took [damage] after DT")
+		if (damage < 1)
+			if(!P.proj_data.silentshot)
+				src.visible_message("<span class='alert'>[src] is hit by the [P] but it deflects harmlessly.</span>")
+			return
+
+		if (src.material)
+			src.material.triggerOnBullet(src, src, P)
+
+		switch (P.proj_data.damage_type)
+			if (D_KINETIC)
+				changeHealth(-damage)
+			if (D_PIERCING)
+				changeHealth(-damage*1.25)
+			if (D_SLASHING)
+				changeHealth(-damage*0.75)
+			if (D_BURNING)
+				changeHealth(-damage*0.5)
+			if (D_ENERGY)
+				changeHealth(-damage*0.75)
+
+		if(!P.proj_data.silentshot)
+			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
 
 	update_icon()
 		var/image/circuit_image = null
@@ -92,7 +218,15 @@
 
 
 	attackby(obj/item/I as obj, mob/user as mob)
-		if (istype(I,/obj/item/device/borg_linker) && !issilicon(user))
+		if(isweldingtool(I))
+			if(I:try_weld(user,1))
+				if(src._health < src._max_health)
+					src.changeHealth(10)
+					boutput(user,"You repair some of the damage to the rack.")
+				else
+					boutput(user,"There's no damage to repair!")
+			return
+		else if (istype(I,/obj/item/device/borg_linker) && !issilicon(user))
 			var/obj/item/device/borg_linker/linker = I
 			linker.linked_rack = src
 			var/area/A = get_area(src.loc)
@@ -365,5 +499,39 @@
 		else
 			src.law_circuits[lawnumber_actual].make_glitchy(picked_law,replace)
 			tgui_process.update_uis(src)
+			if(replace)
+				src.visible_message("<span class='alert'><b>The [src] sparks violently!</b></span>")
+			else
+				src.visible_message("<span class='alert'><b>The [src] makes a brief fizzing noise!</b></span>")
 			return true
 
+/particles/rack_smoke
+	icon = 'icons/effects/effects.dmi'
+	icon_state = list("smoke")
+	color = "#777777"
+	width = 150
+	height = 200
+	count = 200
+	lifespan = generator("num", 20, 35, UNIFORM_RAND)
+	fade = generator("num", 50, 100, UNIFORM_RAND)
+	position = generator("box", list(-4,0,0), list(4,15,0), UNIFORM_RAND)
+	velocity = generator("box", list(-1,0.5,0), list(1,2,0), NORMAL_RAND)
+	gravity = list(0.07, 0.02, 0)
+	grow = list(0.02, 0)
+	fadein = 10
+
+/particles/rack_spark
+	icon = 'icons/effects/lines.dmi'
+	icon_state = list("lght")
+	color = "#ffffff"
+	spawning = 0.1
+	count = 20
+	lifespan = generator("num", 1, 3, UNIFORM_RAND)
+	fade = 0
+	position = generator("box", list(-10,-20,0), list(10,20,0), UNIFORM_RAND)
+	velocity = list(0, 0, 0)
+	gravity = list(0, 0, 0)
+	scale = generator("box", list(0.1,0.1,1), list(0.3,0.3,1), UNIFORM_RAND)
+	rotation = generator("num", 0, 360, UNIFORM_RAND)
+	grow = list(0.01, 0)
+	fadein = 0

@@ -79,7 +79,7 @@ AI MODULES
 		if(total_replace)
 			src.lawText = lawtext_replace
 		else
-			src.lawText = src.lawText + "<br>\n#.5: " + lawtext_replace
+			src.lawText = src.lawText + "\n#.5: " + lawtext_replace
 		src.update_law_text()
 
 	attackby(obj/item/W, mob/user)
