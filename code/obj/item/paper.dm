@@ -50,12 +50,6 @@
 	var/font_css_crap = null
 	var/list/fonts = list()
 
-	var/see_face = 1
-	var/body_parts_covered = HEAD
-	var/protective_temperature = T0C + 10
-	var/heat_transfer_coefficient = 0.99
-	var/permeability_coefficient = 0.99
-	var/siemens_coefficient = 0.80
 	var/stampNum = 0
 	var/sizex = 0
 	var/sizey = 0

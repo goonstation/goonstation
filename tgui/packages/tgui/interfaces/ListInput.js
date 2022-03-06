@@ -197,6 +197,12 @@ export const ListInput = (props, context) => {
                   tooltip="Search Bar"
                   tooltipPosition="left"
                   onClick={() => {
+                    if (!showSearchBar) {
+                      nextTick(() => document.getElementById("search_bar").getElementsByTagName('input')[0].focus());
+                    }
+                    else {
+                      document.getElementById(selectedButton)?.focus();
+                    }
                     setShowSearchBar(!showSearchBar);
                     setDisplayedArray(buttons);
                   }}

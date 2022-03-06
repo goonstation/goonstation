@@ -49808,7 +49808,7 @@
 	dir = 4
 	},
 /obj/machinery/light,
-/obj/table/auto,
+/obj/table/reinforced/auto,
 /obj/item/weldingtool{
 	pixel_x = 2;
 	pixel_y = 7
@@ -52129,7 +52129,7 @@
 	layer = 3.5;
 	pixel_y = -24
 	},
-/obj/table/auto,
+/obj/table/reinforced/auto,
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = -6;
 	pixel_y = 11

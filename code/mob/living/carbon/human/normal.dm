@@ -141,6 +141,16 @@
 		..()
 		JobEquipSpawned("Scientist")
 
+/mob/living/carbon/human/normal/ntso
+	New()
+		..()
+		JobEquipSpawned("Nanotrasen Security Operative")
+
+/mob/living/carbon/human/normal/inspector
+	New()
+		..()
+		JobEquipSpawned("Inspector")
+
 /mob/living/carbon/human/normal/wizard
 	New()
 		..()
@@ -175,7 +185,7 @@
 
 		update_clothing()
 
-/mob/living/carbon/human/normal/ntso
+/mob/living/carbon/human/normal/ntso_old
 	New()
 		..()
 		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, slot_shoes)

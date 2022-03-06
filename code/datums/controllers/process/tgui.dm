@@ -22,7 +22,12 @@ var/global/datum/controller/process/tgui/tgui_process
 	setup()
 		name = "tgui"
 		schedule_interval = 0.9 SECONDS
-		basehtml = grabResource("tgui/tgui.html") // |GOONSTATION-ADD|
+		try
+			basehtml = grabResource("tgui/tgui.html") // |GOONSTATION-ADD|
+		catch(var/exception/e)
+			stack_trace("Unable to load tgui.html, retrying in 10 seconds.\n[e]")
+			SPAWN(10 SECONDS)
+				basehtml = grabResource("tgui/tgui.html")
 		tgui_process = src
 
 	copyStateFrom(datum/controller/process/target)

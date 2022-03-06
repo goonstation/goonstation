@@ -46,6 +46,7 @@
 	/// this turf is allowing unrestricted hotbox reactions
 	var/tmp/allow_unrestricted_hotbox = 0
 	var/wet = 0
+	var/sticky = FALSE
 	throw_unlimited = 0 //throws cannot stop on this tile if true (also makes space drift)
 
 	var/step_material = 0
@@ -178,11 +179,11 @@
 	special_volume_override = 0
 	text = ""
 	var/static/list/space_color = generate_space_color()
+	var/static/image/starlight
 
 	flags = ALWAYS_SOLID_FLUID
 	turf_flags = CAN_BE_SPACE_SAMPLE
 	event_handler_flags = IMMUNE_SINGULARITY
-
 	dense
 		icon_state = "dplaceholder"
 		density = 1
@@ -219,17 +220,16 @@
 		src.desc = "There appears to be a spatial disturbance in this area of space."
 		new/obj/item/device/key/random(src)
 
-	if(!isnull(space_color) && !istype(src, /turf/space/fluid))
-		src.color = space_color
+	UpdateIcon()
 
-proc/repaint_space(regenerate=TRUE)
+proc/repaint_space(regenerate=TRUE, starlight_alpha)
 	for(var/turf/space/T)
 		if(regenerate)
 			T.space_color = generate_space_color()
 			regenerate = FALSE
 		if(istype(T, /turf/space/fluid))
 			continue
-		T.color = T.space_color
+		T.UpdateIcon(starlight_alpha)
 
 proc/generate_space_color()
 #ifndef HALLOWEEN
@@ -275,6 +275,26 @@ proc/generate_space_color()
 		list(bg, main_star, misc_star_1, misc_star_2)
 	)
 #endif
+
+/turf/space/update_icon(starlight_alpha=255)
+	..()
+	if(!isnull(space_color) && !istype(src, /turf/space/fluid))
+		src.color = space_color
+
+	if(fullbright)
+		if(!starlight)
+			starlight = image('icons/effects/overlays/simplelight.dmi', "3x3", pixel_x=-32, pixel_y=-32)
+			starlight.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART
+			starlight.layer = LIGHTING_LAYER_BASE
+			starlight.plane = PLANE_LIGHTING
+			starlight.blend_mode = BLEND_ADD
+
+		starlight.color = src.color
+		if(!isnull(starlight_alpha))
+			starlight.alpha = starlight_alpha
+		UpdateOverlays(starlight, "starlight")
+	else
+		UpdateOverlays(null, "starlight")
 
 // override for space turfs, since they should never hide anything
 /turf/space/levelupdate()

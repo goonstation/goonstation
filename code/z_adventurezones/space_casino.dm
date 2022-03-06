@@ -120,6 +120,7 @@
 		if (src.scan)
 			src.scan.set_loc(src.loc)
 		qdel(src)
+		return TRUE
 
 // Misc props
 

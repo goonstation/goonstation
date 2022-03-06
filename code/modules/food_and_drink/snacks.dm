@@ -46,6 +46,8 @@
 			M.ghostize()
 			for (var/obj/item/I in M)
 				I.dispose()
+			if (!isturf(src.loc))
+				qdel(M)
 		..()
 
 /obj/item/reagent_containers/food/snacks/shell/deepfry

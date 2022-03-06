@@ -1,7 +1,8 @@
 /obj/machinery/computer/riotgear
 	name = "Armory Authorization"
-	icon_state = "drawbr0"
+	icon_state = "drawbr"
 	density = 0
+	glow_in_dark_screen = TRUE
 	var/auth_need = 3.0
 	var/list/authorized
 	var/list/authorized_registered = null
@@ -99,6 +100,12 @@
 				return //COMMAND NOT RECOGNIZED
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, returnsignal, radiorange)
 
+	power_change()
+		..()
+		if(powered() && authed)
+			src.ClearSpecificOverlays("screen_image")
+			src.icon_state = "drawbr-alert"
+			src.UpdateIcon()
 
 	proc/authorize()
 		if(src.authed)
@@ -107,7 +114,9 @@
 		logTheThing("station", usr, null, "authorized armory access")
 		command_announcement("<br><b><span class='alert'>Armory weapons access has been authorized for all security personnel.</span></b>", "Security Level Increased", "sound/misc/announcement_1.ogg")
 		authed = 1
-		icon_state = "drawbr-alert"
+		src.ClearSpecificOverlays("screen_image")
+		src.icon_state = "drawbr-alert"
+		src.UpdateIcon()
 
 		src.authorized = null
 		src.authorized_registered = null
@@ -132,7 +141,9 @@
 
 			logTheThing("station", usr, null, "unauthorized armory access")
 			authed = 0
-			icon_state = "drawbr0"
+			src.ClearSpecificOverlays("screen_image")
+			icon_state = "drawbr"
+			src.UpdateIcon()
 
 			for (var/obj/machinery/door/airlock/D in armory_area)
 				if (D.has_access(access_security))
@@ -166,15 +177,15 @@
 /obj/machinery/computer/riotgear/attackby(var/obj/item/W as obj, var/mob/user as mob)
 	interact_particle(user,src)
 	if(status & (BROKEN|NOPOWER))
-		return ..()
+		return
 	if (!user)
-		return ..()
+		return
 
 	if (istype(W, /obj/item/device/pda2) && W:ID_card)
 		W = W:ID_card
 	if (!istype(W, /obj/item/card/id))
 		boutput(user, "No ID given.")
-		return ..()
+		return
 
 	if (!W:access) //no access
 		src.add_fingerprint(user)

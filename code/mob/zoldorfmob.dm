@@ -5,14 +5,13 @@
 	icon = 'icons/obj/zoldorf.dmi'
 	icon_state = "zolsoulgrey"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	density = 0
 	canmove = 0
 	blinded = 0
 	anchored = 1
 	alpha = 180
 	stat = 0
-	suicide_can_succumb = 0
 	var/autofree = 0
 	var/firstfortune = 1
 	var/free = 0

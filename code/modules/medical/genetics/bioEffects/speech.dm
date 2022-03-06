@@ -253,6 +253,51 @@
 		return message
 		// just let this one handle itself for now
 
+	goodmin
+		name = "Frontal Gyrus Alteration Type-Goodmin"
+		desc = "Wow!"
+		id = "accent_goodmin"
+		msgGain = "You now speak with white, glowing text."
+		msgLose = "Back to normal text."
+
+		OnAdd()
+			var/mob/living/L = owner
+			if (istype(L))
+				L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: white !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px black;"
+
+	rainbow
+		name = "Frontal Gyrus Alteration Type-Radmin"
+		desc = "Colors!"
+		id = "accent_radmin"
+		msgGain = "You now speak with color-cycling text."
+		msgLose = "Back to normal text."
+
+		OnAdd()
+			var/mob/living/L = owner
+			if (istype(L))
+				L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: white !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px black;"
+				animate_rainbow_glow(L.chat_text)
+
+		OnRemove()
+			var/mob/living/L = owner
+			if (istype(L))
+				L.speechpopupstyle = ""
+				L.chat_text.color = null
+				animate(L.chat_text)
+
+		rainglow
+			name = "Frontal Gyrus Alteration Type-Fabmin"
+			desc = "Glowy colors!"
+			id = "accent_fabmin"
+			msgGain = "You now speak with glowing, color-cycling text."
+			msgLose = "Back to normal text."
+
+			OnAdd()
+				var/mob/living/L = owner
+				if (istype(L))
+					L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: black !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px white;"
+					animate_rainbow_glow(L.chat_text)
+
 /datum/bioEffect/speech/slurring
 	name = "Frontal Gyrus Alteration Type-D"
 	desc = "Causes the subject to have impaired control over their oral muscles, resulting in malformed speech."
@@ -609,7 +654,7 @@
 	desc = "Reconstructs the language center of the subject's brain to create less threatening speech patterns."
 	id = "accent_uwu"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = 0 // heh
 	msgGain = "Oh nyo. uwu"
 	msgLose = "Nyo more funny talking."
 	occur_in_genepools = 0

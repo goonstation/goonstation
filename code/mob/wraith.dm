@@ -17,7 +17,7 @@
 	blinded = 0
 	anchored = 1
 	alpha = 180
-	event_handler_flags =  IMMUNE_MANTA_PUSH
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	plane = PLANE_NOSHADOW_ABOVE
 
 	var/deaths = 0
@@ -688,49 +688,18 @@
 /proc/generate_wraith_objectives(var/datum/mind/traitor)
 	switch (rand(1,3))
 		if (1)
-			var/datum/objective/specialist/wraith/murder/M1 = new
-			M1.owner = traitor
-			M1.set_up()
-			traitor.objectives += M1
-			var/datum/objective/specialist/wraith/murder/M2 = new
-			M2.owner = traitor
-			M2.set_up()
-			traitor.objectives += M2
-			var/datum/objective/specialist/wraith/murder/M3 = new
-			M3.owner = traitor
-			M3.set_up()
-			traitor.objectives += M3
+			for(var/i in 1 to 3)
+				new/datum/objective/specialist/wraith/murder(null, traitor)
 		if (2)
-			var/datum/objective/specialist/wraith/absorb/A1 = new
-			A1.owner = traitor
-			A1.set_up()
-			traitor.objectives += A1
-			var/datum/objective/specialist/wraith/prevent/P2 = new
-			P2.owner = traitor
-			P2.set_up()
-			traitor.objectives += P2
+			new/datum/objective/specialist/wraith/absorb(null, traitor)
+			new/datum/objective/specialist/wraith/prevent(null, traitor)
 		if (3)
-			var/datum/objective/specialist/wraith/absorb/A1 = new
-			A1.owner = traitor
-			A1.set_up()
-			traitor.objectives += A1
-			var/datum/objective/specialist/wraith/murder/absorb/M2 = new
-			M2.owner = traitor
-			M2.set_up()
-			traitor.objectives += M2
+			new/datum/objective/specialist/wraith/absorb(null, traitor)
+			new/datum/objective/specialist/wraith/murder/absorb(null, traitor)
 	switch (rand(1,3))
-		if (1)
-			var/datum/objective/specialist/wraith/travel/T = new
-			T.owner = traitor
-			T.set_up()
-			traitor.objectives += T
-		if (2)
-			var/datum/objective/specialist/wraith/survive/T = new
-			T.owner = traitor
-			T.set_up()
-			traitor.objectives += T
-		if (3)
-			var/datum/objective/specialist/wraith/flawless/T = new
-			T.owner = traitor
-			T.set_up()
-			traitor.objectives += T
+		if(1)
+			new/datum/objective/specialist/wraith/travel(null, traitor)
+		if(2)
+			new/datum/objective/specialist/wraith/survive(null, traitor)
+		if(3)
+			new/datum/objective/specialist/wraith/flawless(null, traitor)

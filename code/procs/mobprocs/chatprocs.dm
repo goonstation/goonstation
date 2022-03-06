@@ -297,10 +297,14 @@
 	//show to hivemind
 	for (var/client/C in clients)
 		try_render_chat_to_admin(C, rendered)
-	for (var/mob/M in (hivemind_owner.hivemind + hivemind_owner.owner))
-		if (M.client?.holder && M.client.deadchat && !M.client.player_mode) continue
-		if (isdead(M) || istype(M,/mob/living/critter/changeling) || (M == hivemind_owner.owner))
-			boutput(M, rendered)
+	if (isabomination(hivemind_owner.owner))
+		var/abomination_rendered = "<span class='game'><span class='prefix'></span> <span class='name' data-ctx='\ref[src.mind]'>Congealed [name]</span> <span class='message'>[message]</span></span>"
+		src.audible_message(abomination_rendered)
+	else
+		for (var/mob/M in (hivemind_owner.hivemind + hivemind_owner.owner))
+			if (M.client?.holder && M.client.deadchat && !M.client.player_mode) continue
+			if (isdead(M) || istype(M,/mob/living/critter/changeling) || (M == hivemind_owner.owner))
+				boutput(M, rendered)
 
 //vampire thrall say
 /mob/proc/say_thrall(var/message, var/datum/abilityHolder/vampire/owner)

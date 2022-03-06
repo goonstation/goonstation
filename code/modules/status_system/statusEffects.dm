@@ -295,8 +295,8 @@
 				var/mob/M = owner
 				APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims", 500)
 				M.add_stam_mod_max("stims", 500)
-				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "stims", 1000)
-				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "stims", 1000)
+				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "stims", 100)
+				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "stims", 100)
 				var/datum/statusEffect/simpledot/stimulant_withdrawl/SW = owner.hasStatus("stimulant_withdrawl")
 				if(istype(SW))
 					tickspassed += SW.tickspassed
@@ -371,7 +371,7 @@
 			if (owner && ismob(owner) && change > 0)
 				var/mob/M = owner
 				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, get_stage(duration + change))
-				var/percent_protection = GET_MOB_PROPERTY(M, PROP_RADPROT)
+				var/percent_protection = clamp(GET_MOB_PROPERTY(M, PROP_RADPROT), 0, 100)
 				percent_protection = 1 - (percent_protection/100) //scale from 0 to 1
 				. *= percent_protection
 
@@ -485,7 +485,7 @@
 			if (owner && ismob(owner) && change > 0)
 				var/mob/M = owner
 				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, get_stage(duration + change))
-				var/percent_protection = GET_MOB_PROPERTY(M, PROP_RADPROT)
+				var/percent_protection = clamp(GET_MOB_PROPERTY(M, PROP_RADPROT), 0, 100)
 				percent_protection = 1 - (percent_protection/100) //scale from 0 to 1
 				. *= percent_protection
 
@@ -716,7 +716,7 @@
 
 			if (owner && ismob(owner) && change > 0)
 				var/mob/M = owner
-				var/percent_protection = M.get_stun_resist_mod()
+				var/percent_protection = clamp(M.get_stun_resist_mod(), 0, 100)
 				percent_protection = 1 - (percent_protection/100) //scale from 0 to 1
 				. *= percent_protection
 

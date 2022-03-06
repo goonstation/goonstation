@@ -51,6 +51,8 @@
 		return
 
 	reagents?.physical_shock(20)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_HIT_THROWN, hit_atom, thr))
+		return
 	if(SEND_SIGNAL(hit_atom, COMSIG_ATOM_HITBY_THROWN, src, thr))
 		return
 	var/impact_sfx = hit_atom.hitby(src, thr)
