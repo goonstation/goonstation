@@ -948,7 +948,7 @@
 
 /obj/item/proc/AfterAttack(atom/target, mob/user, reach, params)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, user, target, reach, params)
+	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, reach, params)
 	. = src.afterattack(target, user, reach, params)
 
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
