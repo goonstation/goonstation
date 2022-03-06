@@ -343,7 +343,7 @@
 			var/obj/item/assembly/detonator/Det = W
 			if (Det.det_state != 4)
 				user.show_message("<span class='alert'>The assembly is incomplete.</span>")
-			elsegg
+			else
 				Det.set_loc(src)
 				Det.master = src
 				Det.layer = initial(W.layer)
