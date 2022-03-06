@@ -39,7 +39,10 @@ TYPEINFO(/datum/component/glued)
 	parent.animate_movement = SYNC_STEPS
 	parent.anchored = TRUE
 	parent.layer = OBJ_LAYER
-	parent.plane = PLANE_UNDERFLOOR
+	if(isturf(glued_to))
+		parent.plane = PLANE_DEFAULT
+	else
+		parent.plane = PLANE_UNDERFLOOR
 	parent.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 	RegisterSignal(parent, COMSIG_ATTACKHAND, .proc/start_ungluing)
 
