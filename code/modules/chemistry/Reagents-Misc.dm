@@ -818,11 +818,11 @@ datum
 					. = 0
 
 					if(L.getStatusDuration("slowed")>=10 SECONDS)
-						L.setStatus("staggered", max(M.getStatusDuration("staggered"), (0.3 SECONDS)*volume_passed))
 						if(!ON_COOLDOWN(M, "stuck in glue", 15 SECOND))
+							L.setStatus("stunned", min(7 SECONDS, (0.4 SECONDS)*volume_passed))
 							boutput(M, "<span class='notice'>You get stuck in the glue!</span>")
 					else
-						L.changeStatus("slowed", min((0.4 SECONDS)*volume_passed, 10 SECONDS))
+						L.changeStatus("slowed", min((0.4 SECONDS)*volume_passed, 20 SECONDS))
 				return
 
 			reaction_turf(var/turf/target, var/volume)
