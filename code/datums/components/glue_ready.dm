@@ -42,7 +42,7 @@ TYPEINFO(/datum/component/glue_ready)
 		return FALSE
 	if(!isnull(user) && thing_glued.loc != user) // if attackby inserted an organ into a person or stacked sheets etc.
 		return FALSE
-	if(istype(glued_to)) // ended up on a nonactive sticker in the sticker loc chain, still need to prevent implanting
+	if(istype(glued_to, /obj/item/sticker)) // ended up on a nonactive sticker in the sticker loc chain, still need to prevent implanting
 		if(user)
 			boutput(user, "<span class='alert'>You can't glue things to a sticker.</span>")
 		return FALSE
