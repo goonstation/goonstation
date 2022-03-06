@@ -857,6 +857,14 @@ datum
 
 				..()
 				return
+			reaction_obj(obj/O, volume)
+				if(volume < 5)
+					return
+				if(O.GetComponent(/datum/component/glued) || O.GetComponent(/datum/component/glue_ready))
+					return
+				O.AddComponent(/datum/component/glue_ready, volume * 5 SECONDS, 5 SECONDS)
+				var/turf/T = get_turf(O)
+				T.visible_message("<span class='notice'>\The [O] is coated in a layer of glue!</span>")
 
 // metal foaming agent
 // this is lithium hydride. Add other recipies (e.g. MiH + H2O -> MiOH + H2) eventually
