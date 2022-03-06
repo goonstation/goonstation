@@ -382,6 +382,9 @@ var/global
 
 	narrator_mode = 0
 
+	// Zam note: this is horrible
+	forced_desussification = 0
+
 	disable_next_click = 0
 
 	//airlockWireColorToIndex takes a number representing the wire color, e.g. the orange wire is always 1, the dark red wire is always 2, etc. It returns the index for whatever that wire does.

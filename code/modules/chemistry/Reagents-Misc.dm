@@ -277,7 +277,7 @@ datum
 			transparency = 200
 			value = 66 // vOv
 			//addiction_prob = 25
-			stun_resist = 1000
+			stun_resist = 100
 			threshold = THRESHOLD_INIT
 
 			cross_threshold_over()
@@ -796,6 +796,67 @@ datum
 				name = "invisible organic superlubricant"
 				id = "invislube"
 				visible = 0
+
+		glue
+			name = "space glue"
+			id = "spaceglue"
+			description = "Industrial superglue that is sure to stick to everything."
+			reagent_state = LIQUID
+			depletion_rate = 0.6
+			fluid_r = 230
+			fluid_b = 60
+			fluid_g = 230
+			transparency = 180
+			viscosity = 0.8
+			block_slippy = 1
+			var/counter
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
+				if(method == TOUCH)
+					var/mob/living/L = M
+					. = 0
+
+					if(L.getStatusDuration("slowed")>=10 SECONDS)
+						L.setStatus("staggered", max(M.getStatusDuration("staggered"), (0.3 SECONDS)*volume_passed))
+						if(!ON_COOLDOWN(M, "stuck in glue", 15 SECOND))
+							boutput(M, "<span class='notice'>You get stuck in the glue!</span>")
+					else
+						L.changeStatus("slowed", min((0.4 SECONDS)*volume_passed, 10 SECONDS))
+				return
+
+			reaction_turf(var/turf/target, var/volume)
+				var/list/covered = holder.covered_turf()
+				var/turf/simulated/T = target
+				var/volume_mult = 1
+
+				if (length(covered))
+					if (volume/covered.len < 2) //reduce time based on dilution
+						volume_mult = min(volume / 9, 1)
+
+				if (istype(T))
+					if(T.sticky == TRUE) return
+					var/wet = image('icons/effects/water.dmi',"sticky_floor")
+					T.UpdateOverlays(wet, "wet_overlay")
+					T.sticky = TRUE
+					T.wet = 0
+					SPAWN(80 SECONDS * volume_mult)
+						T.UpdateOverlays(null, "wet_overlay")
+						T.sticky = FALSE
+				return
+
+			on_mob_life(var/mob/M, var/mult = 1, var/method, var/volume_passed)
+				if (!M) M = holder.my_atom
+				if (!counter) counter = 1
+				switch(counter += (1 * mult))
+					if(20 to INFINITY)
+						M.druggy = max(M.druggy, 15)
+						if (M.canmove && prob(20))
+							M.change_misstep_chance(5 * mult)
+						if(probmult(5)) M.emote(pick("twitch","drool","moan"))
+
+				..()
+				return
 
 // metal foaming agent
 // this is lithium hydride. Add other recipies (e.g. MiH + H2O -> MiOH + H2) eventually
@@ -3288,17 +3349,6 @@ datum
 			fluid_g = 254
 			fluid_b = 254
 			transparency = 50
-
-		glue
-			name = "glue"
-			id = "glue"
-			description = "Hopefully you weren't the kind of kid to eat this stuff."
-			reagent_state = LIQUID
-			fluid_r = 250
-			fluid_g = 250
-			fluid_b = 250
-			transparency = 255
-			viscosity = 0.7
 
 		magnesium_chloride
 			name = "magnesium chloride"

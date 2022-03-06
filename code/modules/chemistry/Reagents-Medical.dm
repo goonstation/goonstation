@@ -789,7 +789,6 @@ datum
 			value = 17 // 5c + 5c + 4c + 1c + 1c + 1c
 			stun_resist = 10
 			threshold = THRESHOLD_INIT
-			threshold = THRESHOLD_INIT
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
