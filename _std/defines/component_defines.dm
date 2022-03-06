@@ -6,7 +6,7 @@
 
 #define SEND_COMPLEX_SIGNAL(target, sigtype, arguments...) SEND_SIGNAL(target, sigtype[2], ##arguments)
 
-#define GLOBAL_SIGNAL preMapLoad // guaranteed to exist and that's all that matters
+#define GLOBAL_SIGNAL global_signal_holder // dummy datum that exclusively exists to hold onto global signals
 
 /**
 	* `target` to use for signals that are global and not tied to a single datum.
@@ -14,7 +14,7 @@
 	* Note that this does NOT work with SEND_SIGNAL because of preprocessor weirdness.
 	* Use SEND_GLOBAL_SIGNAL instead.
 	*/
-#define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( !preMapLoad.comp_lookup || !preMapLoad.comp_lookup[sigtype] ? 0 : preMapLoad._SendSignal(sigtype, list(preMapLoad, ##arguments)) )
+#define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( !global_signal_holder.comp_lookup || !global_signal_holder.comp_lookup[sigtype] ? 0 : global_signal_holder._SendSignal(sigtype, list(global_signal_holder, ##arguments)) )
 
 /// A wrapper for _AddComponent that allows us to pretend we're using normal named arguments
 #define AddComponent(arguments...) _AddComponent(list(##arguments))

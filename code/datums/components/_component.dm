@@ -63,6 +63,9 @@ TYPEINFO(/datum/component)
 	  */
 	var/can_transfer = FALSE
 
+/// Dummy datum used for holding onto global signals, initialized in preMapLoad
+var/datum/global_signal_holder
+
 /**
   * Create a new component.
   *
