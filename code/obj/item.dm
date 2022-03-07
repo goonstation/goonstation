@@ -877,7 +877,7 @@
 
 /// Call this proc inplace of attack_self(...)
 /obj/item/proc/AttackSelf(mob/user as mob)
-	SHOULD_NOT_OVERRIDE(1)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user))
 		return
 	src.attack_self(user)
