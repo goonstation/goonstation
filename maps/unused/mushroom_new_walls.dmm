@@ -7386,12 +7386,11 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "aDx" = (
-/obj/machinery/driver_button{
-	id = "chapelgun";
-	name = "Chapel Mass Driver Button";
-	pixel_y = 24;
-	req_access_txt = "22";
-	text = "chapel"
+/obj/machinery/activation_button/ignition_switch{
+	desc = "There's a note taped over it that says Fire!";
+	id = chapelgun;
+	name = "Chapel Mass Driver Launch Button";
+	pixel_y = 23
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
@@ -7718,10 +7717,6 @@
 /area/station/quartermaster/office)
 "aET" = (
 /obj/storage/closet/coffin,
-/turf/simulated/floor/black,
-/area/station/chapel/office)
-"aEU" = (
-/obj/crematorium,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "aEV" = (
@@ -8287,7 +8282,7 @@
 	},
 /area/station/quartermaster/office)
 "aHw" = (
-/obj/morgue,
+/obj,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "aHx" = (
@@ -10386,12 +10381,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aPx" = (
-/obj/machinery/disposal/morgue{
-	desc = "A pneumatic chute used to transport corpses.";
-	name = "mortician's chute"
-	},
-/obj/disposalpipe/trunk/morgue{
-	dir = 4
+/obj/machinery/traymachine/locking/crematorium{
+	id = "crematorium"
 	},
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
@@ -10399,19 +10390,6 @@
 /obj/machinery/light{
 	dir = 1;
 	tag = "icon-tube1 (NORTH)"
-	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/turf/simulated/floor/black,
-/area/station/medical/morgue)
-"aPz" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/morgue{
-	dir = 2;
-	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
@@ -10644,7 +10622,13 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "aQt" = (
-/obj/morgue,
+/obj/disposalpipe/trunk/morgue{
+	dir = 4
+	},
+/obj/machinery/disposal/morgue{
+	desc = "A pneumatic chute used to transport corpses.";
+	name = "mortician's chute"
+	},
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "aQu" = (
@@ -10654,7 +10638,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "aQx" = (
@@ -10813,7 +10796,6 @@
 	dir = 4;
 	layer = 3
 	},
-/obj/morgue,
 /obj/machinery/camera{
 	c_tag = "Morgue";
 	dir = 4
@@ -10913,7 +10895,6 @@
 /area/station/medical/morgue)
 "aRC" = (
 /obj/cable,
-/obj/disposalpipe/segment/morgue,
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
@@ -11215,7 +11196,10 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/disposalpipe/segment/morgue,
+/obj/disposalpipe/segment/morgue{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "aSL" = (
@@ -16175,7 +16159,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "biJ" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/black,
 /area/station/medical/research)
 "biK" = (
@@ -26029,11 +26013,11 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/turret_protected/Zeta)
 "jUG" = (
-/obj/machinery/driver_button{
-	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be a very loud siren or something.  Maybe you want it away from you so the crew don't bash down your door to remove it for you.";
-	id = "artlabgun";
-	name = "Emergency Ejection Button";
-	pixel_y = 24
+/obj/machinery/activation_button/ignition_switch{
+	desc = "There is a big red button here with many big red arrows pointing to it";
+	id = getitout;
+	name = "Emergancy Ejector Button";
+	pixel_y = 23
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -26060,14 +26044,14 @@
 	desc = "A device that launches objects, like ANCIENT SIRENS, for example, on it at great velocity when activated.";
 	dir = 4;
 	drive_range = 100;
-	id = "artlabgun"
+	id = "getitout"
 	},
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "jXE" = (
 /obj/machinery/door/poddoor/pyro/podbay_autoclose{
 	dir = 4;
-	id = "artlabgun"
+	id = "gititout"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -26226,6 +26210,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"kfh" = (
+/obj/machinery/crema_switch{
+	id = "crematorium";
+	pixel_x = -22
+	},
+/turf/simulated/floor/black,
+/area/station/medical/morgue)
 "khp" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -28445,6 +28436,12 @@
 	},
 /turf/simulated/floor/white,
 /area/station/turret_protected/AIsat)
+"njb" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/medical/morgue)
 "nje" = (
 /obj/machinery/light{
 	dir = 8
@@ -29723,9 +29720,10 @@
 	},
 /area/station/science/artifact)
 "oHa" = (
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
+	dir = 4;
 	id = "combustion_ignition";
-	pixel_x = -24
+	pixel_x = -22
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
@@ -32295,7 +32293,7 @@
 /obj/machinery/atmospherics/valve{
 	dir = 4
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery{
 	id = "mixingroom";
 	pixel_x = 24;
 	pixel_y = 10
@@ -81987,7 +81985,7 @@ aLI
 aNa
 aOf
 aPx
-aQt
+kfh
 aRi
 aQt
 aOf
@@ -82279,7 +82277,7 @@ axJ
 aCo
 aCV
 aDW
-aEU
+aHw
 aGs
 aHx
 aDW
@@ -82291,7 +82289,7 @@ aOf
 aPy
 aQu
 aRB
-aQu
+njb
 aOf
 aPu
 aPu
@@ -82590,7 +82588,7 @@ aKO
 aLN
 aNc
 aOg
-aPz
+aQv
 aQv
 aRC
 aSK

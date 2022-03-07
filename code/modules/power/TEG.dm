@@ -49,7 +49,7 @@
 
 /obj/machinery/atmospherics/binary/circulatorTemp
 	name = "hot gas circulator"
-	desc = "It's the gas circulator of a thermoeletric generator."
+	desc = "The gas circulator of a thermoeletric generator. This one is designed to handle hot air."
 	icon = 'icons/obj/atmospherics/pipes.dmi'
 	icon_state = "circ1-off"
 	var/obj/machinery/power/generatorTemp/generator = null
@@ -205,7 +205,7 @@
 					var/surplus
 					if(istype(A, /area/station/))
 						var/obj/machinery/power/apc/P = A.area_apc
-						if(P)
+						if(P?.cell)
 							apc_charge = P.terminal.powernet?.perapc
 							cell_wattage = P.cell.charge/CELLRATE
 							surplus = P.surplus()
@@ -412,6 +412,7 @@
 /obj/machinery/atmospherics/binary/circulatorTemp/right
 	icon_state = "circ2-off"
 	name = "cold gas circulator"
+	desc = "The gas circulator of a thermoeletric generator. This one is designed to handle cold air."
 
 
 /datum/action/bar/icon/teg_circulator_repair
@@ -653,7 +654,7 @@ datum/pump_ui/circulator_ui
 		light = new /datum/light/point
 		light.attach(src)
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.circ1 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,WEST)
 			src.circ2 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,EAST)
 			if(!src.circ1 || !src.circ2)
@@ -847,7 +848,7 @@ datum/pump_ui/circulator_ui
 			else if (genlev && !running)
 				playsound(src.loc, sound_tractorrev, 55, 0)
 				running = 1
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				spam_limiter = 0
 		else if(warnings > WARNING_5MIN && !(src.status & (BROKEN | NOPOWER)))
 			// Allow for klaxon to trigger when off cooldown if UpdateIcon() not called
@@ -1072,7 +1073,7 @@ datum/pump_ui/circulator_ui
 			var/list/affected = DrawLine(last, target, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			for(var/obj/O in affected)
-				SPAWN_DBG(0.6 SECONDS) qdel(O)
+				SPAWN(0.6 SECONDS) qdel(O)
 
 			//var/turf/currTurf = get_turf(target)
 			//currTurf.hotspot_expose(2000, 400)

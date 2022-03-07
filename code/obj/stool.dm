@@ -85,7 +85,8 @@
 		.= 0
 
 	proc/buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0) //Handles the actual buckling in
-		if (!can_buckle(to_buckle,user)) return
+		if (!can_buckle(to_buckle,user))
+			return FALSE
 
 		if (to_buckle == user)
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
@@ -93,7 +94,7 @@
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
 
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
-		return
+		return TRUE
 
 	proc/unbuckle() //Ditto but for unbuckling
 		if (src.buckled_guy)
@@ -179,7 +180,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.auto && ispath(src.auto_path))
 				src.set_up(1)
 
@@ -295,6 +296,10 @@
 		parts_type = /obj/item/furniture_parts/bed/roller
 		scoot_sounds = list( 'sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg' )
 
+	New()
+		..()
+		START_TRACKING
+
 	Move()
 		if(src.buckled_guy?.loc != src.loc)
 			src.unbuckle()
@@ -367,9 +372,9 @@
 
 	buckle_in(mob/living/to_buckle, mob/living/user)
 		if(src.buckled_guy && src.buckled_guy.buckled == src)
-			return
+			return FALSE
 		if (!can_buckle(to_buckle,user))
-			return
+			return FALSE
 
 		if (to_buckle == user)
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> lies down on [src], fastening the buckles!</span>", "<span class='notice'>You lie down and buckle yourself in.</span>")
@@ -386,6 +391,7 @@
 		to_buckle.set_clothing_icon_dirty()
 		playsound(src, "sound/misc/belt_click.ogg", 50, 1)
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
+		return TRUE
 
 	unbuckle()
 		..()
@@ -426,11 +432,9 @@
 				user, "<span class='notice'>You tuck [somebody == user ? "yourself" : "[somebody]"] into bed.</span>",\
 				somebody, "<span class='notice'>[somebody == user ? "You tuck yourself" : "<b>[user]</b> tucks you"] into bed.</span>")
 				newSheet.layer = EFFECTS_LAYER_BASE-1
-				return
 			else
 				user.visible_message("<span class='notice'><b>[user]</b> tucks [newSheet] into [src].</span>",\
 				"<span class='notice'>You tuck [newSheet] into [src].</span>")
-				return
 
 	proc/untuck_sheet(var/mob/user as mob)
 		if (!src.Sheet) // vOv
@@ -457,7 +461,6 @@
 			oldSheet.Bed = null
 		mutual_detach(src, oldSheet)
 		src.Sheet = null
-		return
 
 	MouseDrop_T(atom/A as mob|obj, mob/user as mob)
 		if (get_dist(src, user) > 1 || A.loc != src.loc || user.restrained() || !isalive(user))
@@ -491,8 +494,8 @@
 		if (src.Sheet && src.Sheet.Bed == src)
 			src.Sheet.Bed = null
 			src.Sheet = null
+		STOP_TRACKING
 		..()
-		return
 
 	proc/sleep_in(var/mob/M)
 		if (!ishuman(M))
@@ -513,7 +516,6 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.hud.update_resting()
-		return
 
 /* ================================================ */
 /* -------------------- Chairs -------------------- */
@@ -647,7 +649,7 @@
 			user.visible_message("<b>[user.name] folds [src].</b>")
 			if ((chair_chump) && (chair_chump != user))
 				chair_chump.visible_message("<span class='alert'><b>[chair_chump.name] falls off of [src]!</b></span>")
-				chair_chump.on_chair = 0
+				chair_chump.on_chair = null
 				chair_chump.pixel_y = 0
 				chair_chump.changeStatus("weakened", 1 SECOND)
 				chair_chump.changeStatus("stunned", 2 SECONDS)
@@ -690,7 +692,7 @@
 					user.unlock_medal("Leave no man behind!", 1)
 		return
 
-	MouseDrop(atom/over_object as mob|obj)
+	mouse_drop(atom/over_object as mob|obj)
 		if(get_dist(src,usr) <= 1)
 			src.rotate(get_dir(get_turf(src),get_turf(over_object)))
 		..()
@@ -711,13 +713,13 @@
 
 	buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0)
 		if(!istype(to_buckle))
-			return
+			return FALSE
 		if(user.hasStatus("weakened"))
-			return
-		if(src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy) return
-
+			return FALSE
+		if(src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy)
+			return FALSE
 		if (!can_buckle(to_buckle,user))
-			return
+			return FALSE
 
 		if(stand && ishuman(to_buckle))
 			if(ON_COOLDOWN(to_buckle, "chair_stand", 1 SECOND))
@@ -752,6 +754,7 @@
 			playsound(src, (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
 		else
 			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+		return TRUE
 
 
 	unbuckle()
@@ -763,19 +766,19 @@
 
 		M.end_chair_flip_targeting()
 
-		if (istype(H) && H.on_chair)// == 1)
+		if (istype(H) && H.on_chair)
 			M.pixel_y = 0
 			reset_anchored(M)
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
-			SPAWN_DBG(0.5 SECONDS)
-				H.on_chair = 0
+			SPAWN(0.5 SECONDS)
+				H.on_chair = null
 				src.buckledIn = 0
 		else if ((M.buckled))
 			reset_anchored(M)
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.buckledIn = 0
 
 		src.buckled_guy = null
@@ -870,9 +873,9 @@
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
 	HasProximity(atom/movable/AM as mob|obj)
-		if (isliving(AM) && prob(40))
+		if (isliving(AM) && !isintangible(AM) && prob(40) && !AM.hasStatus("weakened"))
 			src.visible_message("<span class='alert'>[src] trips [AM]!</span>", "<span class='alert'>You hear someone fall.</span>")
-			AM:changeStatus("weakened", 2 SECONDS)
+			AM.changeStatus("weakened", 2 SECONDS)
 		return
 
 /* ======================================================= */
@@ -1117,10 +1120,11 @@
 
 	buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0)
 		if (src.lying)
-			return
-		..()
-		if (src.buckled_guy == to_buckle)
+			return FALSE
+		. = ..()
+		if (.)
 			APPLY_MOVEMENT_MODIFIER(to_buckle, /datum/movement_modifier/wheelchair, src.type)
+			return TRUE
 
 	unbuckle()
 		if(src.buckled_guy)
@@ -1385,7 +1389,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			if (src)
 				if (!(src.part1 && istype(src.part1)))
 					src.part1 = new /obj/item/assembly/shock_kit(src)

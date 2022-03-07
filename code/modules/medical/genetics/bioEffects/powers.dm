@@ -72,7 +72,7 @@
 		var/obj/decal/icefloor/B
 		for (var/turf/TF in range(linked_power.power - 1,T))
 			B = new /obj/decal/icefloor(TF)
-			SPAWN_DBG(80 SECONDS)
+			SPAWN(80 SECONDS)
 				B.dispose()
 
 		for (var/mob/living/L in T.contents)
@@ -160,6 +160,10 @@
 		var/obj/the_item = input("Which item do you want to eat?","Matter Eater") as null|obj in items
 		if (!the_item || (!istype(the_item, /obj/the_server_ingame_whoa) && the_item.anchored))
 			using = 0
+			return 1
+
+		if (!(the_item in get_filtered_atoms_in_touch_range(owner, base_path)))
+			owner.show_text("<span class='alert'>Man, that thing is long gone, far away, just let it go.</span>")
 			return 1
 
 		var/area/cur_area = get_area(owner)
@@ -299,7 +303,7 @@
 			var/prevLayer = owner.layer
 			owner.layer = EFFECTS_LAYER_BASE
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for(var/i=0, i < jump_tiles, i++)
 					step(owner, owner.dir)
 					if(i < jump_tiles / 2)
@@ -319,7 +323,7 @@
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[owner.loc]</b> emits a loud thump and rattles a bit.</span>")
 			playsound(owner.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/wiggle = 6
 				while(wiggle > 0)
 					wiggle--
@@ -355,7 +359,7 @@
 			owner.changeStatus("weakened", 10 SECONDS)
 			owner.changeStatus("stunned", 5 SECONDS)
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for(var/i=0, i < jump_tiles, i++)
 					if(i < jump_tiles / 2)
 						owner.pixel_y += pixel_move
@@ -374,7 +378,7 @@
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[owner.loc]</b> emits a loud thump and rattles a bit.</span>")
 			playsound(owner.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/wiggle = 6
 				while(wiggle > 0)
 					wiggle--
@@ -439,7 +443,7 @@
 		playsound(owner.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
 		owner.visible_message("<span class='alert'><b>[owner]</b> touches [target], then begins to shifts and contort!</span>")
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(H && owner)
 				playsound(owner.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 				owner.bioHolder.CopyOther(H.bioHolder, copyAppearance = 1, copyPool = 0, copyEffectBlocks = 0, copyActiveEffects = 0)
@@ -1386,7 +1390,7 @@
 
 			owner.visible_message("<span class='alert'><b>[owner] appears in a burst of blue light!</b></span>")
 			playsound(owner.loc, "sound/effects/ghost2.ogg", 50, 0)
-			SPAWN_DBG(0.7 SECONDS)
+			SPAWN(0.7 SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
 				active = 0
@@ -1430,7 +1434,7 @@
 			playsound(owner.loc, "sound/effects/ghost2.ogg", 50, 0)
 			animate(owner, color = "#0000FF", time = 5, easing = LINEAR_EASING)
 			animate(alpha = 0, time = 5, easing = LINEAR_EASING)
-			SPAWN_DBG(0.7 SECONDS)
+			SPAWN(0.7 SECONDS)
 				owner.canmove = 1
 				owner.restrain_time = 0
 				var/obj/dummy/spell_invis/invis_object = new /obj/dummy/spell_invis(get_turf(owner))
@@ -1452,7 +1456,7 @@
 
 			owner.visible_message("<span class='alert'><b>[owner] appears in a burst of blue light!</b></span>")
 			playsound(owner.loc, "sound/effects/ghost2.ogg", 50, 0)
-			SPAWN_DBG(0.7 SECONDS)
+			SPAWN(0.7 SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
 				P.active = 0
@@ -1522,7 +1526,7 @@
 		light.enable()
 
 		if (isnum(time))
-			SPAWN_DBG(time)
+			SPAWN(time)
 				qdel(src)
 
 	disposing()
@@ -1754,7 +1758,7 @@
 					current_prob *= modifier // very steep. probably grabs 3 or 4 objects per cast -- much less effective than revenant command
 					thrown += O
 					animate_float(O)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(T, 32, 2)
 
@@ -1775,7 +1779,7 @@
 					current_prob *= modifier // very steep. probably grabs 3 or 4 objects per cast -- much less effective than revenant command
 					thrown += O
 					animate_float(O)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(owner, 32, 2)
 
@@ -1979,7 +1983,8 @@
 			return 1
 
 		var/turf/T = get_turf(target)
-		var/list/affected_turfs = getline(owner, T)
+		var/list/line_turfs = getline(owner, T)
+		var/list/affected_turfs = list()
 		var/datum/bioEffect/power/bigpuke/BP = linked_power
 		var/range = BP.range
 		range *= BP.power
@@ -1989,7 +1994,7 @@
 		owner.reagents.add_reagent("vomit",20)
 		var/turf/currentturf
 		var/turf/previousturf
-		for(var/turf/F in affected_turfs)
+		for(var/turf/F in line_turfs)
 			previousturf = currentturf
 			currentturf = F
 			if(currentturf.density || istype(currentturf, /turf/space))
@@ -2000,11 +2005,13 @@
 				continue
 			if (get_dist(owner,F) > range)
 				continue
-			owner.reagents.reaction(F,TOUCH)
+			affected_turfs += F
+		for(var/turf/F in affected_turfs)
+			owner.reagents.reaction(F,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 			for(var/mob/living/L in F.contents)
-				owner.reagents.reaction(L,TOUCH)
+				owner.reagents.reaction(L,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 			for(var/obj/O in F.contents)
-				owner.reagents.reaction(O,TOUCH)
+				owner.reagents.reaction(O,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 		owner.reagents.clear_reagents()
 		SEND_SIGNAL(owner, COMSIG_MOB_VOMIT, 10)
 		return 0
@@ -2027,7 +2034,8 @@
 			return 1
 
 		var/turf/T = get_turf(target)
-		var/list/affected_turfs = getline(owner, T)
+		var/list/line_turfs = getline(owner, T)
+		var/list/affected_turfs = list()
 		var/range = 3
 		owner.visible_message("<span class='alert'><b>[owner] horfs up a huge stream of acidic puke!</b></span>")
 		logTheThing("combat", owner, target, "power-pukes [log_reagents(owner)] at [log_loc(owner)].")
@@ -2037,7 +2045,7 @@
 		owner.reagents.add_reagent("radium",5)
 		var/turf/currentturf
 		var/turf/previousturf
-		for(var/turf/F in affected_turfs)
+		for(var/turf/F in line_turfs)
 			previousturf = currentturf
 			currentturf = F
 			if(currentturf.density || istype(currentturf, /turf/space))
@@ -2048,11 +2056,13 @@
 				continue
 			if (get_dist(owner,F) > range)
 				continue
-			owner.reagents.reaction(F,TOUCH)
+			affected_turfs += F
+		for(var/turf/F in affected_turfs)
+			owner.reagents.reaction(F,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 			for(var/mob/living/L in F.contents)
-				owner.reagents.reaction(L,TOUCH)
+				owner.reagents.reaction(L,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 			for(var/obj/O in F.contents)
-				owner.reagents.reaction(O,TOUCH)
+				owner.reagents.reaction(O,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 		owner.reagents.clear_reagents()
 		return 0
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2185,7 +2195,7 @@
 				thrown_limb = H.limbs.r_arm.remove(0)
 			else
 				return 1
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				if (istype(thrown_limb))
 					//double power if the ability is empowered (doesn't really do anything, but w/e)
 					var/tmp_force = thrown_limb.throwforce
@@ -2207,7 +2217,7 @@
 
 					owner.visible_message("<span class='alert'><b>[thrown_limb][linked_power.power > 1 ? " violently " : " "]bursts off of its socket and flies towards [target]!</b></span>")
 					logTheThing("combat", owner, target, "shoot_limb [!linked_power.safety ? "Accidently" : ""] at [ismob(target)].")
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						if (thrown_limb)
 							thrown_limb.throwforce = tmp_force
 

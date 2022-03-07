@@ -72,7 +72,7 @@
 		boutput(user, "<span class='alert'>This item is not suitable for the gibber!</span>")
 		return
 	if (!isdead(G.affecting))
-		boutput(user, "<span class='alert'>[G.affecting] needs to be dead first!</span>")
+		boutput(user, "<span class='alert'>[G.affecting.name] needs to be dead first!</span>")
 		return
 	user.visible_message("<span class='alert'>[user] starts to put [G.affecting] onto the gibber!</span>")
 	src.add_fingerprint(user)
@@ -160,7 +160,7 @@
 			logTheThing("combat", user, src.occupant, "grinds [constructTarget(src.occupant,"combat")] in a gibber at [log_loc(src)].")
 			if(src.occupant.last_ckey)
 				message_admins("[key_name(src.occupant, 1)] is ground up in a gibber by [key_name(user)] at [log_loc(src)].")
-		src.occupant.death(1)
+		src.occupant.death(TRUE)
 
 		if (src.occupant.mind)
 			src.occupant.ghostize()

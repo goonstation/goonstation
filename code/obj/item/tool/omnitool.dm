@@ -18,6 +18,7 @@
 		src.change_mode(omni_mode)
 
 	attack_self(var/mob/user as mob)
+		..()
 		// cycle between modes
 		var/new_mode = null
 		switch (src.omni_mode)
@@ -274,8 +275,13 @@
 
 	New()
 		. = ..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.create_reagents(20)
 		reagents.add_reagent("fuel", 20)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 
 

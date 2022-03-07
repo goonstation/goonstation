@@ -143,7 +143,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/datum/pronouns/pronouns
 	var/screamsound = "male"
 	var/fartsound = "default"
-	var/voicetype = 0
+	var/voicetype = "1"
 	var/flavor_text = null
 
 	var/list/fartsounds = list("default" = 'sound/voice/farts/poo2.ogg', \
@@ -368,7 +368,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		mobAppearance.owner = owner
 		mobAppearance.parentHolder = src
 
-		SPAWN_DBG(2 SECONDS) // fuck this shit
+		SPAWN(2 SECONDS) // fuck this shit
 			if(owner)
 				ownerName = owner.real_name
 				bioUids[Uid] = owner?.real_name ? owner.real_name : owner?.name
@@ -735,17 +735,20 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/RemoveEffect(var/id)
 		//Removes an effect from this holder. Returns 1 on success else 0.
-		if(!HasEffect(id)) return 0
+		if (src.disposed)
+			return 0
+		if (!HasEffect(id))
+			return 0
 
 		var/datum/bioEffect/D = effects[id]
-		if(D)
+		if (D)
 			D.OnRemove()
 			if (!D.activated_from_pool)
 				src.genetic_stability += D.stability_loss
 				src.genetic_stability = max(0,src.genetic_stability)
 			D.activated_from_pool = 0 //Fix for bug causing infinitely exploitable stability gain / loss
 
-			if(owner && length(D.msgLose) > 0)
+			if (owner && length(D.msgLose) > 0)
 				if (D.isBad)
 					boutput(owner, "<span class='notice'>[D.msgLose]</span>")
 				else

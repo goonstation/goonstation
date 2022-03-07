@@ -150,10 +150,18 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 				name = "Flat Top"
 				id = "flattop"
 				gender = MASCULINE
+			flick
+				name = "Flick"
+				id = "flick"
+				gender = FEMININE
 			floof
 				name = "Floof"
 				id = "floof"
 				gender = FEMININE
+			ignite
+				name = "Ignite"
+				id = "ignite"
+				gender = MASCULINE
 			streak
 				name = "Hair Streak"
 				id = "streak"
@@ -170,6 +178,10 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			mohawkS
 				name = "Mohawk: Stripes"
 				id = "mohawkS"
+			mysterious
+				name = "Mysterious"
+				id = "mysterious"
+				gender = FEMININE
 			long
 				name = "Mullet"
 				id = "long"
@@ -302,6 +314,10 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 				name = "Pulled Back"
 				id = "pulledb"
 				gender = FEMININE
+			ripley
+				name = "Ripley"
+				id = "ripley"
+				gender = FEMININE
 			sage
 				name = "Sage"
 				id = "sage"
@@ -348,11 +364,23 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 				name = "Very Long"
 				id = "vlong"
 				gender = FEMININE
+			violet
+				name = "Violet"
+				id = "violet"
+				gender = FEMININE
+			willow
+				name = "Willow"
+				id = "willow"
+				gender = MASCULINE | FEMININE
 		hairup
 			bun
 				name = "Bun"
 				id = "bun"
 				gender = FEMININE
+			bundercut
+				name = "Bun Undercut"
+				id = "bundercut"
+				gender = MASCULINE
 			sakura
 				name = "Captor"
 				id = "sakura"
@@ -388,6 +416,21 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 				name = "Long Mini Tail"
 				id = "longtailed"
 				gender = FEMININE
+			glamponytail
+				name = "Glam Ponytail"
+				id = "glamponytail"
+			rockponytail
+				name = "Rock Ponytail"
+				id = "rockponytail"
+				gender = FEMININE
+			spikyponytail
+				name = "Spiky Ponytail"
+				id = "spikyponytail"
+				gender = MASCULINE | FEMININE
+			messyponytail
+				name = "Messy Ponytail"
+				id = "messyponytail"
+				gender = MASCULINE | FEMININE
 			lowpig
 				name = "Low Pigtails"
 				id = "lowpig"
@@ -574,7 +617,7 @@ proc/select_custom_style(list/datum/customization_style/customization_types, mob
 	for (var/datum/customization_style/styletype as anything in customization_types)
 		var/datum/customization_style/CS = new styletype
 		options[CS.name] = CS
-	var/new_style = input(user, "Please select style", "Style")  as null|anything in options
+	var/new_style = tgui_input_list(user, "Please select style", "Style", options)
 	return options[new_style]
 
 proc/find_style_by_name(var/target_name)

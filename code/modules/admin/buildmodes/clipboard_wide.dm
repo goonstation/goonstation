@@ -15,9 +15,9 @@ Left Mouse Button                      = Paste selected area. Selected tile will
 Right Mouse Button                     = Select area to copy with two clicks<br>
 ***********************************************************"}
 	icon_state = "buildmode11"
-	var/turf/A
-	var/list/clipboard = list()
-	var/copying = 0
+	var/tmp/turf/A
+	var/tmp/list/clipboard = list()
+	var/tmp/copying = 0
 
 	deselected()
 		..()
@@ -74,7 +74,7 @@ Right Mouse Button                     = Select area to copy with two clicks<br>
 			var/minx = min(A.x, B.x)
 			var/miny = min(A.y, B.y)
 			var/workgroup = 0
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for (var/turf/Q in block(A,B))
 					var/datum/clipboardTurf/CBT = new()
 					CBT.rel_x = Q.x - minx

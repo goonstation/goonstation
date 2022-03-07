@@ -180,5 +180,5 @@
 				external_pressure_bound = number
 
 		if(signal.data["tag"])
-			SPAWN_DBG(0.5 SECONDS) broadcast_status()
+			SPAWN(0.5 SECONDS) broadcast_status()
 		UpdateIcon()

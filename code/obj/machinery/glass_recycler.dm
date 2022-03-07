@@ -64,6 +64,10 @@
 		if(W.cant_drop)
 			boutput(user, "<span class='alert'>You cannot put [W] into [src]!</span>")
 			return
+		if(istype(W, /obj/item/reagent_containers/glass/jar) && length(W.contents))
+			boutput(user, "<span class='alert'>You need to empty [W] first!</span>")
+			return
+
 
 		var/success = FALSE //did we successfully recycle a thing?
 		if(istype(W, /obj/item/reagent_containers/glass))
@@ -135,6 +139,7 @@
 		product_list += new /datum/glass_product("rectangularbottle", /obj/item/reagent_containers/food/drinks/bottle/empty/rectangular, 2)
 		product_list += new /datum/glass_product("squarebottle", /obj/item/reagent_containers/food/drinks/bottle/empty/square, 2)
 		product_list += new /datum/glass_product("masculinebottle", /obj/item/reagent_containers/food/drinks/bottle/empty/masculine, 2)
+		product_list += new /datum/glass_product("mug", /obj/item/reagent_containers/food/drinks/mug/random_color, 1)
 		product_list += new /datum/glass_product("plate", /obj/item/plate, PLATE_COST)
 		product_list += new /datum/glass_product("bowl", /obj/item/reagent_containers/food/drinks/bowl, 1)
 		product_list += new /datum/glass_product("drinking", /obj/item/reagent_containers/food/drinks/drinkingglass, 1)

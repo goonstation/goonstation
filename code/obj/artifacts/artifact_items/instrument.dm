@@ -14,7 +14,7 @@
 
 	New(var/loc, var/forceartiorigin)
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			var/datum/artifact/A = src.artifact
 			if(A?.artitype)
 				sounds_instrument = A.artitype.instrument_sounds
@@ -28,7 +28,7 @@
 			src.add_fingerprint(user)
 			show_play_message(user)
 			playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
-			SPAWN_DBG(src.spam_timer)
+			SPAWN(src.spam_timer)
 				spam_flag = 0
 		return
 

@@ -44,7 +44,7 @@
 	reagents.reaction(M, INGEST)
 	expended = TRUE
 	icon_state = "amp-broken"
-	playsound(user.loc, "sound/effects/snap.ogg", 50, 1)
+	playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
 	return
 
 //ampoule types

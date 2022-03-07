@@ -1,5 +1,5 @@
 var/datum/explosion_controller/explosions
-
+#define RSS_SCALE 2
 /datum/explosion_controller
 	var/list/queued_explosions = list()
 	var/list/turf/queued_turfs = list()
@@ -45,7 +45,7 @@ var/datum/explosion_controller/explosions
 		var/last_touched
 
 		for (var/turf/T as anything in queued_turfs)
-			queued_turfs[T]=sqrt(queued_turfs[T])*2
+			queued_turfs[T] = 2 * (queued_turfs[T])**(1 / (2 * RSS_SCALE))
 			p = queued_turfs[T]
 			last_touched = queued_turfs_blame[T]
 			//boutput(world, "P1 [p]")
@@ -169,7 +169,10 @@ var/datum/explosion_controller/explosions
 			if(!A.dont_log_combat)
 				// Cannot read null.name
 				var/logmsg = "[turf_safe ? "Turf-safe e" : "E"]xplosion with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(source?.fingerprintslast)] (usr: [ismob(user) ? key_name(user) : user])"
-				if(power > 10)
+				var/mob/M = null
+				if(ismob(user))
+					M = user
+				if(power > 10 && (source?.fingerprintslast || M?.last_ckey) && !istype(A, /area/mining/magnet) && !istype(source, /obj/machinery/vehicle/escape_pod))
 					message_admins(logmsg)
 				if (source?.fingerprintslast)
 					logTheThing("bombing", source.fingerprintslast, null, logmsg)
@@ -243,7 +246,7 @@ var/datum/explosion_controller/explosions
 		radius += 1 // avoid a division by zero
 		for (var/turf/T as anything in nodes) // inverse square law (IMPORTANT) and pre-stun
 			var/p = power / ((radius-nodes[T])**2)
-			nodes[T] = p
+			nodes[T] = p**RSS_SCALE
 			blame[T] = last_touched
 			p = min(p, 10)
 			if(prob(1))
@@ -258,3 +261,5 @@ var/datum/explosion_controller/explosions
 
 		explosions.queue_damage(nodes)
 		explosions.queued_turfs_blame += blame
+
+#undef RSS_SCALE

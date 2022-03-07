@@ -33,6 +33,11 @@
 		..()
 		if (icon_state == "tplaceholder") icon_state = "near_blank"
 
+/turf/space/shuttle_transit/safe
+	temperature = T20C
+	oxygen = MOLES_O2STANDARD
+	nitrogen = MOLES_N2STANDARD
+
 /turf/simulated/floor/shuttle
 	name = "shuttle floor"
 	icon_state = "floor"
@@ -191,7 +196,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(6 SECONDS) // patch up some ugly corners in derelict mode
+		SPAWN(6 SECONDS) // patch up some ugly corners in derelict mode
 			if (derelict_mode)
 				if (src.icon_state == "[src.icon_style]_space")
 					src.icon_state = "[src.icon_style]_void"

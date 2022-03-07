@@ -267,7 +267,7 @@ TYPEINFO(/datum/mutantrace)
 
 
 
-			SPAWN_DBG(2.5 SECONDS) // Don't remove.
+			SPAWN(2.5 SECONDS) // Don't remove.
 				if (M?.organHolder?.skull)
 					M.assign_gimmick_skull() // For hunters (Convair880).
 			if (movement_modifier) // down here cus it causes runtimes
@@ -310,7 +310,7 @@ TYPEINFO(/datum/mutantrace)
 				H.set_body_icon_dirty()
 				H.update_colorful_parts()
 
-				SPAWN_DBG(2.5 SECONDS) // Don't remove.
+				SPAWN(2.5 SECONDS) // Don't remove.
 					if (H?.organHolder?.skull) // check for H.organHolder as well so we don't get null.skull runtimes
 						H.assign_gimmick_skull() // We might have to update the skull (Convair880).
 
@@ -790,7 +790,7 @@ TYPEINFO(/datum/mutantrace)
 				mob.emote_allowed = 0
 				message = "<B>[mob]</B> screams with \his mind! Guh, that's creepy!"
 				playsound(mob, "sound/voice/screams/Psychic_Scream_1.ogg", 80, 0, 0, clamp(1.0 + (30 - mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					mob.emote_allowed = 1
 			return message
 		else
@@ -917,7 +917,7 @@ TYPEINFO(/datum/mutantrace)
 			if (!istype(M.limbs.l_arm, /obj/item/parts/human_parts/arm/left/zombie))
 				M.limbs.replace_with("l_arm", /obj/item/parts/human_parts/arm/left/zombie, M, 0)
 
-			SPAWN_DBG(rand(4, 30))
+			SPAWN(rand(4, 30))
 				M.emote("scream")
 			SHOW_ZOMBIE_TIPS(M)
 
@@ -970,7 +970,7 @@ TYPEINFO(/datum/mutantrace)
 				mob.emote_allowed = 0
 				message = "<B>[mob]</B> moans!"
 				playsound(mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					mob.emote_allowed = 1
 			return message
 		else
@@ -980,7 +980,7 @@ TYPEINFO(/datum/mutantrace)
 		if(gibbed)
 			return
 		mob.show_message("<span class='notice'>You can feel your flesh re-assembling. You will rise once more. (This will take about one minute.)</span>")
-		SPAWN_DBG(45 SECONDS)
+		SPAWN(45 SECONDS)
 			if (mob)
 				if (!mob.organHolder.brain || !mob.organHolder.skull || !mob.organHolder.head)
 					mob.show_message("<span class='notice'>You fail to rise, your brain has been destroyed.</span>")
@@ -1112,7 +1112,7 @@ TYPEINFO(/datum/mutantrace)
 				mob.emote_allowed = 0
 				message = "<B>[mob]</B> moans!"
 				playsound(mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					mob.emote_allowed = 1
 			return message
 		else
@@ -1133,8 +1133,7 @@ TYPEINFO(/datum/mutantrace)
 	mutant_folder = 'icons/mob/skeleton.dmi'
 	icon_state = "skeleton"
 	voice_override = "skelly"
-	mutant_organs = list("tail" = /obj/item/organ/tail/bone,
-	"left_eye" = /obj/item/organ/eye/skeleton,
+	mutant_organs = list("left_eye" = /obj/item/organ/eye/skeleton,
 	"right_eye" = /obj/item/organ/eye/skeleton)
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/right
@@ -1151,12 +1150,10 @@ TYPEINFO(/datum/mutantrace)
 		if(ishuman(M))
 			M.mob_flags |= IS_BONER
 			M.blood_id = "calcium"
-			M.mob_flags |= SHOULD_HAVE_A_TAIL
 
 	disposing()
 		if (ishuman(mob))
 			mob.mob_flags &= ~IS_BONER
-			mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		. = ..()
 
 
@@ -1197,7 +1194,8 @@ TYPEINFO(/datum/mutantrace)
 		if(ruff_tuff_and_ultrabuff && ishuman(M))
 			M.add_stam_mod_max("abomination", 1000)
 			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "abomination", 1000)
-			M.add_stun_resist_mod("abomination", 1000)
+			APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "abomination", 100)
+			APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "abomination", 100)
 			APPLY_MOB_PROPERTY(M, PROP_CANTSPRINT, src)
 		last_drain = world.time
 		return ..(M)
@@ -1206,7 +1204,8 @@ TYPEINFO(/datum/mutantrace)
 		if(mob)
 			mob.remove_stam_mod_max("abomination")
 			REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "abomination")
-			mob.remove_stun_resist_mod("abomination")
+			REMOVE_MOB_PROPERTY(mob, PROP_STUN_RESIST, "abomination")
+			REMOVE_MOB_PROPERTY(mob, PROP_STUN_RESIST_MAX, "abomination")
 			REMOVE_MOB_PROPERTY(mob, PROP_CANTSPRINT, src)
 		return ..()
 
@@ -1256,7 +1255,7 @@ TYPEINFO(/datum/mutantrace)
 					mob.emote_allowed = 0
 					message = "<span class='alert'><B>[mob] screeches!</B></span>"
 					playsound(mob, "sound/voice/creepyshriek.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
-					SPAWN_DBG(3 SECONDS)
+					SPAWN(3 SECONDS)
 						if (mob) mob.emote_allowed = 1
 		return message
 
@@ -1299,7 +1298,8 @@ TYPEINFO(/datum/mutantrace)
 			mob.mob_flags |= SHOULD_HAVE_A_TAIL
 			mob.add_stam_mod_max("werewolf", 40) // Gave them a significant stamina boost, as they're melee-orientated (Convair880).
 			APPLY_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "werewolf", 9) //mbc : these increase as they feast now. reduced!
-			mob.add_stun_resist_mod("werewolf", 40)
+			APPLY_MOB_PROPERTY(mob, PROP_STUN_RESIST, "werewolf", 40)
+			APPLY_MOB_PROPERTY(mob, PROP_STUN_RESIST_MAX, "werewolf", 40)
 			mob.max_health += 50
 			health_update_queue |= mob
 			src.original_name = mob.real_name
@@ -1318,7 +1318,8 @@ TYPEINFO(/datum/mutantrace)
 			D?.RemoveComponent(/datum/component/consume/can_eat_inedible_organs)
 			mob.remove_stam_mod_max("werewolf")
 			REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "werewolf")
-			mob.remove_stun_resist_mod("werewolf")
+			REMOVE_MOB_PROPERTY(mob, PROP_STUN_RESIST, "werewolf")
+			REMOVE_MOB_PROPERTY(mob, PROP_STUN_RESIST_MAX, "werewolf")
 			mob.max_health -= 50
 			health_update_queue |= mob
 			mob.bioHolder.RemoveEffect("protanopia")
@@ -1365,14 +1366,14 @@ TYPEINFO(/datum/mutantrace)
 					mob.emote_allowed = 0
 					message = "<span class='alert'><B>[mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B></span>"
 					playsound(mob, "sound/voice/animal/werewolf_howl.ogg", 65, 0, 0, clamp(1.0 + (30 - mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
-					SPAWN_DBG(3 SECONDS)
+					SPAWN(3 SECONDS)
 						mob.emote_allowed = 1
 			if("burp")
 				if(mob.emote_allowed)
 					mob.emote_allowed = 0
 					message = "<B>[mob]</B> belches."
 					playsound(mob, "sound/voice/burp_alien.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						mob.emote_allowed = 1
 		return message
 
@@ -1550,7 +1551,7 @@ TYPEINFO(/datum/mutantrace)
 						return
 					var/fart_on_other = 0
 					for(var/mob/living/M in mob.loc)
-						if(M == src || !M.lying)
+						if(M == src.mob || !M.lying)
 							continue
 						. = "<span class='alert'><B>[mob]</B> farts in [M]'s face!</span>"
 						fart_on_other = 1
@@ -1667,7 +1668,7 @@ TYPEINFO(/datum/mutantrace)
 	onDeath(gibbed)
 		if(gibbed)
 			return
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			if (ishuman(mob))
 				mob.visible_message("<span class='alert'><B>[mob]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
 				mob.changeStatus("weakened", 15 SECONDS)
@@ -1837,7 +1838,7 @@ TYPEINFO(/datum/mutantrace)
 					mob.emote_allowed = 0
 					message = "<span class='alert'><B>[mob] makes an awful noise!</B></span>"
 					playsound(mob, pick("sound/voice/screams/frogscream1.ogg","sound/voice/screams/frogscream3.ogg","sound/voice/screams/frogscream4.ogg"), 60, 1, channel=VOLUME_CHANNEL_EMOTE)
-					SPAWN_DBG(3 SECONDS)
+					SPAWN(3 SECONDS)
 						if (mob) mob.emote_allowed = 1
 					return message
 
@@ -1846,7 +1847,7 @@ TYPEINFO(/datum/mutantrace)
 					mob.emote_allowed = 0
 					message = "<B>[mob]</B> croaks."
 					playsound(mob, "sound/voice/farts/frogfart.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						if (mob) mob.emote_allowed = 1
 					return message
 			else ..()
@@ -1932,7 +1933,7 @@ TYPEINFO(/datum/mutantrace)
 
 	New(var/mob/living/carbon/human/H)
 		..(H)
-		SPAWN_DBG(0)	//ugh
+		SPAWN(0)	//ugh
 			if(ishuman(mob))
 				H.setStatus("maxhealth-", null, -50)
 				H.add_stam_mod_max("kudzu", -100)
@@ -2147,7 +2148,7 @@ TYPEINFO(/datum/mutantrace/pug)
 		..()
 		if (ishuman(mob))
 			mob.mob_flags |= SHOULD_HAVE_A_TAIL
-			SPAWN_DBG(0)
+			SPAWN(0)
 				APPLY_MOB_PROPERTY(mob, PROP_FAILED_SPRINT_FLOP, src)
 		if (prob(50))
 			voice_override = "pugg"
@@ -2240,7 +2241,7 @@ TYPEINFO(/datum/mutantrace/pug)
 		playsound(mob, "sound/voice/snore.ogg", rand(5,10) * 10, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 		. = list("<B>[mob]</B> snores.", "<I>snores</I>")
 		mob.UpdateOverlays(snore_bubble, "snore_bubble")
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			mob.UpdateOverlays(null, "snore_bubble")
 
 	proc/throw_response(target, item, thrower)

@@ -226,7 +226,7 @@
 		status &= ~NOPOWER
 	else
 		status |= NOPOWER
-	SPAWN_DBG(rand(1,15))	//so all the filters don't come on at once
+	SPAWN(rand(1,15))	//so all the filters don't come on at once
 		UpdateIcon()
 
 /obj/machinery/pipefilter/UpdateIcon()

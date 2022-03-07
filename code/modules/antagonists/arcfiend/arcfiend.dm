@@ -55,10 +55,15 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	last_cast = 0
 	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/arcfiend
+	/// whether or not this ability can be cast from inside of things (locker, voltron, etc.)
+	var/container_safety_bypass = FALSE
 
-	castcheck()
+	castcheck(atom/target)
 		var/mob/living/M = holder.owner
-		if (!can_act(M))
+		if (!container_safety_bypass && !isturf(M.loc))
+			boutput(holder.owner, __red("Interference from [M.loc] is preventing use of this ability!"))
+			return 0
+		if (!can_act(M) && target != holder.owner) // we can self cast while incapacitated
 			boutput(holder.owner, __red("Not while incapacitated."))
 			return 0
 		return 1
@@ -181,7 +186,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 					smes.charge -= SMES_DRAIN_RATE
 					points_gained = SAP_LIMIT_APC
 			else
-				if (!target_apc.cell || target_apc.cell.charge <= ((target_apc.cell.maxcharge / POWER_CELL_CHARGE_PERCENT_MINIMUM) + POWER_CELL_DRAIN_RATE)) //not enough power
+				if (!target_apc?.cell || target_apc.cell.charge <= ((target_apc.cell.maxcharge / POWER_CELL_CHARGE_PERCENT_MINIMUM) + POWER_CELL_DRAIN_RATE)) //not enough power
 					boutput(holder.owner, "<span class='alert'>[target] doesn't have enough energy for you to absorb!")
 					interrupt(INTERRUPT_ALWAYS)
 					return
@@ -252,6 +257,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	cooldown = 2 MINUTES
 	var/duration = 30 SECONDS
 	pointCost = 150
+	container_safety_bypass = TRUE
 
 	cast(atom/target)
 		. = ..()
@@ -290,6 +296,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	icon_state = "flash"
 	cooldown = 10 SECONDS
 	pointCost = 25
+	container_safety_bypass = TRUE
 
 	cast(atom/target)
 		. = ..()
@@ -344,7 +351,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
  */
 /datum/targetable/arcfiend/jolt
 	name = "Jolt"
-	desc = "Charge up and release a series of powerful jolts into your target, eventually stopping their heart"
+	desc = "Release a series of powerful jolts into your target, eventually stopping their heart. When used on those resistant to electricity it can restart their heart instead."
 	icon_state = "jolt"
 	cooldown = 2 MINUTES
 	pointCost = 500
@@ -354,12 +361,26 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 	cast(atom/target)
 		. = ..()
-		if (target == holder.owner) return TRUE
 		if (!IN_RANGE(holder.owner, target, 1)) return TRUE
 		if (ishuman(target))
+			if (target == holder.owner)
+				self_cast(target)
+				return
 			actions.start(new/datum/action/bar/private/icon/jolt(holder.owner, target, holder, wattage), holder.owner)
 			logTheThing("combat", holder.owner, target, "[key_name(holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(holder.owner)].")
 		else return TRUE
+
+	proc/self_cast(mob/living/carbon/human/self)
+		if (self.find_ailment_by_type(/datum/ailment/malady/flatline))
+			boutput(self, "<span class='alert'>You feel your heart jolt back into life!</span>")
+		else
+			boutput(self, "<span class='alert'>You feel a powerful jolt course through you!</span>")
+		playsound(self, 'sound/effects/elec_bigzap.ogg', 30, 1)
+		self.cure_disease_by_path(/datum/ailment/malady/flatline)
+		self.TakeDamage("chest", 0, 30, 0, DAMAGE_BURN)
+		self.take_oxygen_deprivation(-100)
+		self.changeStatus("paralysis", 5 SECONDS)
+		self.force_laydown_standup()
 
 /datum/action/bar/private/icon/jolt
 	duration = 18 SECONDS
@@ -390,6 +411,8 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		if (!ON_COOLDOWN(owner, "jolt", 1 SECOND))
 			playsound(holder.owner, "sound/effects/elec_bzzz.ogg", 25, 1)
 			target.shock(user, wattage, ignore_gloves = TRUE)
+			if (target.bioHolder?.HasEffect("resist_electric") && prob(20))
+				cure_arrest()
 			var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 			s.set_up(5, FALSE, target)
 			s.start()
@@ -411,7 +434,15 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		target.add_fingerprint(user)
 		if (!target.bioHolder?.HasEffect("resist_electric"))
 			target.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
+		else
+			cure_arrest()
 		..()
+
+	proc/cure_arrest()
+		if (target.find_ailment_by_type(/datum/ailment/malady/flatline))
+			boutput(target, "<span class='alert'>You feel your heart jolt back into life!</span>")
+		target.cure_disease_by_path(/datum/ailment/malady/flatline)
+		target.cure_disease_by_path(/datum/ailment/malady/heartfailure)
 
 /datum/targetable/arcfiend/voltron
 	name = "Ride The Lightning"
@@ -424,6 +455,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	var/list/cable_images = null
 	var/obj/dummy/voltron/D = null
 	var/step_cost = 3
+	container_safety_bypass = TRUE
 
 	New(datum/abilityHolder/holder)
 		. = ..()
@@ -561,6 +593,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	pointCost = 50
 	var/range = 4
 	var/duration = 20 SECONDS
+	container_safety_bypass = TRUE
 
 	cast(atom/target)
 		. = ..()

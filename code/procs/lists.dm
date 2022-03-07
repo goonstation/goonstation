@@ -120,6 +120,19 @@
 /proc/compareName(atom/a, atom/b)
 	return a.name < b.name
 
+/proc/assoc_list_to_list(var/list/l)
+	var/list/keys = list()
+	var/list/vals = list()
+	for(var/key in l)
+		keys += key
+		vals += l[key]
+	return list(keys,vals)
+
+/proc/list_to_assoc_list(var/list/first,var/list/second)
+	. = list()
+	for(var/i = 1,i <= length(first),i++)
+		.[first[i]] = second[i]
+
 /proc/compareArtifactTypes(var/datum/artifact/A1, var/datum/artifact/A2)
 	if(A1.type_size == A2.type_size)
 		return A1.type_name < A2.type_name

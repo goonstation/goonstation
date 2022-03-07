@@ -20,7 +20,7 @@
 		if (forceartiorigin)
 			A.validtypes = list("[forceartiorigin]")
 		src.artifact = A
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 			A.react_elec[2] = src.max_charge
 

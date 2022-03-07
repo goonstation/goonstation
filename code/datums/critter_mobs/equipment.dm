@@ -139,3 +139,11 @@
 				// it's a built in radio, they can't take it off.
 				O.cant_self_remove = TRUE
 				O.cant_other_remove = TRUE
+
+			syndicate
+				after_setup(var/datum/hud/hud)
+					var/obj/item/device/radio/intercom/syndicate/S = new(holder)
+					equip(S)
+					// it's a built in radio, they can't take it off.
+					S.cant_self_remove = TRUE
+					S.cant_other_remove = TRUE

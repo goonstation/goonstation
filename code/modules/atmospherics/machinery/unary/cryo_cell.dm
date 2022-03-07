@@ -1,5 +1,6 @@
 /obj/machinery/atmospherics/unary/cryo_cell
 	name = "cryogenic healing pod"
+	desc = "A glass tube full of a strange fluid that uses supercooled oxygen and cryoxadone to rapidly heal patients."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "celltop-P"
 	density = 1
@@ -104,7 +105,7 @@
 			user.drop_item()
 			target.Attackhand(user)
 			user.set_a_intent(previous_user_intent)
-			SPAWN_DBG(user.combat_click_delay + 2)
+			SPAWN(user.combat_click_delay + 2)
 				if (can_operate(user,target))
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)

@@ -62,7 +62,7 @@
 		logTheThing("combat", C, null, "morphs a [new_limb], [log_loc(C)].")
 		playsound(C, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, 0.2, 1)
 
-		SPAWN_DBG(cooldown)
+		SPAWN(cooldown)
 			if (target_limb == "r_arm")
 				if (C.limbs.r_arm && istype(C.limbs.r_arm,text2path(new_limb)))
 					C.limbs.replace_with(target_limb, /obj/item/parts/human_parts/arm/right, C, 0)

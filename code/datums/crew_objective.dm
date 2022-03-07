@@ -38,12 +38,8 @@
 		while (assignCount && length(objectiveTypes))
 			assignCount--
 			var/selectedType = pick(objectiveTypes)
-			var/datum/objective/crew/newObjective = new selectedType
-			objectiveTypes -= newObjective.type
-
-			newObjective.owner = crewMind
-			crewMind.objectives += newObjective
-			newObjective.setup()
+			var/datum/objective/crew/newObjective = new selectedType(null, crewMind)
+			objectiveTypes -= selectedType
 
 			if (obj_count <= 1)
 				boutput(crewMind.current, "<B>Your OPTIONAL Crew Objectives are as follows:</b>")
@@ -76,7 +72,6 @@
 
 ABSTRACT_TYPE(/datum/objective/crew)
 /datum/objective/crew
-	proc/setup()
 
 ABSTRACT_TYPE(/datum/objective/crew/captain)
 /datum/objective/crew/captain/hat
@@ -427,7 +422,8 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 		/datum/reagent/fooddrink/alcoholic/wine/white
 	)
 	var/static/list/cocktails = concrete_typesof(/datum/reagent/fooddrink/alcoholic)-blacklist
-	New()
+
+	set_up()
 		..()
 		var/list/names[DRINK_OBJ_COUNT]
 		for(var/i in 1 to DRINK_OBJ_COUNT)
@@ -469,7 +465,8 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 /datum/objective/crew/chef/cake
 	var/choices[CAKE_OBJ_COUNT]
 	var/completed = FALSE
-	New()
+
+	set_up()
 		..()
 		var/list/names[CAKE_OBJ_COUNT]
 		for(var/i in 1 to CAKE_OBJ_COUNT)
@@ -487,13 +484,15 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 			else
 				explanation_text += "and [ingredient] "
 		explanation_text += "infused cake in any order."
+
 	check_completion()
 		return completed
 
 /datum/objective/crew/chef/pizza
 	var/choices[PIZZA_OBJ_COUNT]
 	var/completed = FALSE
-	New()
+
+	set_up()
 		..()
 		var/list/names[PIZZA_OBJ_COUNT]
 		for(var/i = 1, i <= PIZZA_OBJ_COUNT, i++)

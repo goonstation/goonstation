@@ -310,7 +310,7 @@
 				var/mob/living/H = M
 				H.was_harmed(src)
 
-		SPAWN_DBG(attack_delay)
+		SPAWN(attack_delay)
 			src.attacking = 0
 
 	proc/appear()
@@ -319,7 +319,7 @@
 		src.icon_state = "wendigo_appear"
 		src.invisibility = INVIS_NONE
 		set_density(1)
-		SPAWN_DBG(1.2 SECONDS)
+		SPAWN(1.2 SECONDS)
 			if(king)
 				src.icon_state = "wendigoking"
 			else
@@ -334,7 +334,7 @@
 
 		src.icon_state = "wendigo_melt"
 		set_density(0)
-		SPAWN_DBG(1.2 SECONDS)
+		SPAWN(1.2 SECONDS)
 			src.invisibility = INVIS_SPOOKY
 			if(king)
 				src.icon_state = "wendigoking"
@@ -347,7 +347,7 @@
 			return
 
 		flailing = 25
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while(flailing-- > 0)
 				src.pixel_x = rand(-2,2) * 2
 				src.pixel_y = rand(-2,2) * 2
@@ -364,7 +364,7 @@
 		if (src.frenzied)
 			return
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.visible_message("<span class='alert'><b>[src] goes [pick("into a frenzy", "into a bloodlust", "berserk", "hog wild", "crazy")]!</b></span>")
 			playsound(src.loc, "sound/voice/animal/wendigo_maul.ogg", 80, 1)
 			if(king)

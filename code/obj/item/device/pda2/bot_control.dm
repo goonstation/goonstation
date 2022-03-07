@@ -181,7 +181,7 @@
 						if (!botlist.len)
 							PDA.updateSelfDialog()
 							return
-						SPAWN_DBG(0)
+						SPAWN(0)
 							// yeah its cheating, but holy heck is it laggy to send a zillion signals via PDA
 							var/list/bots = list()
 							for(var/obj/machinery/bot/secbot/bot in src.botlist)
@@ -201,7 +201,7 @@
 			if("summon")
 				post_status("bot_control", "command", "summon", "active", active, "target", summon_turf )
 				post_status("bot_control", "command", "bot_status", "active", active)
-				self_text("[active] summoned to [summon_turf]")
+				self_text("[active] summoned to [summon_turf.loc].")
 
 			if("proc")
 				post_status("bot_control", "command", "proc", "active", active)
@@ -212,7 +212,7 @@
 				if (!botlist.len)
 					PDA.updateSelfDialog()
 					return
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/list/bots = list()
 					// again, yeah, cheating, but let's just pretend it isnt
 					for(var/obj/machinery/bot/secbot/bot in src.botlist)
@@ -223,7 +223,7 @@
 							self_text("Summon failed.")
 							break
 					if(length(bots) >= 1)
-						self_text("[english_list(bots)] summoned to [summon_turf].")
+						self_text("[english_list(bots)] summoned to [summon_turf.loc].")
 		src.lockdown = 0
 		src.all_guard = 0
 		PDA.updateSelfDialog()

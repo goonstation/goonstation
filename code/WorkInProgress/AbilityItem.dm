@@ -34,11 +34,11 @@
 				qdel(E)
 				return
 
-		the_mob.visible_message("<span class='alert'>[the_mob] prepares to spray the contents of the extinguisher all around \himself!</span>")
+		the_mob.visible_message("<span class='alert'>[the_mob] prepares to spray the contents of the extinguisher all around [himself_or_herself(the_mob)]!</span>")
 
 		E.special = 1
 		the_mob.transforming = 1
-		SPAWN_DBG(3 SECONDS) if (the_mob) the_mob.transforming = 0
+		SPAWN(3 SECONDS) if (the_mob) the_mob.transforming = 0
 		sleep(3 SECONDS)
 
 		var/theturf
@@ -52,7 +52,7 @@
 		for(var/i=0, i<9, i++)
 			if (!E.reagents || E.reagents.total_volume <= 0) break
 			var/obj/effects/spray/S = new/obj/effects/spray(theturf)
-			SPAWN_DBG(15 SECONDS) qdel(S)
+			SPAWN(15 SECONDS) qdel(S)
 			S.set_dir(direction)
 			S.original_dir = direction
 			direction = turn(direction,45)
@@ -66,7 +66,7 @@
 			spraybits += S
 
 			/* // What the heck? This ran 8 times. Also the spraybits loop does the same exact thing below. commenting this out to prevent fluid duplication
-			SPAWN_DBG(0)
+			SPAWN(0)
 				S.reagents.reaction(theturf, TOUCH)
 				for(var/atom/A in theturf)
 					if (istype(A,/obj/fluid)) continue
@@ -79,7 +79,7 @@
 		sleep(0.5 SECONDS)
 		E.special = 0
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			//Center tile
 			var/obj/effects/spray/S = spraybits[1]
 			S.reagents.reaction(S.loc, TOUCH)
@@ -115,31 +115,8 @@
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/welding/W = the_item
-		if(W.up)
-			W.up = !W.up
-			W.icon_state = "welding"
-			boutput(the_mob, "You flip the mask down. The mask is now protecting you from eye damage.")
-			if (!W.nodarken) //Used for The Slasher
-				W.see_face = !W.see_face
-				W.color_r = 0.3 // darken
-				W.color_g = 0.3
-				W.color_b = 0.3
-			the_mob.set_clothing_icon_dirty()
-			icon_state = "weldup"
-
-			W.flip_down()
-		else
-			W.up = !W.up
-			W.see_face = !W.see_face
-			W.icon_state = "welding-up"
-			boutput(the_mob, "You flip the mask up. The mask is now providing greater armor to your head.")
-			W.color_r = 1 // default
-			W.color_g = 1
-			W.color_b = 1
-			the_mob.set_clothing_icon_dirty()
-			icon_state = "welddown"
-
-			W.flip_up()
+		W.up ? W.flip_down(the_mob) : W.flip_up(the_mob)
+		icon_state = "[W.up ? "welddown" : "weldup"]"
 		..()
 
 
@@ -153,6 +130,15 @@
 			W.unbutton()
 		else
 			W.button()
+		..()
+
+/obj/ability_button/hood_toggle
+	name = "Toggle Hood"
+	icon_state = "hood_up"
+
+	execute_ability()
+		var/obj/item/clothing/suit/W = the_item
+		W.attack_self(the_mob)
 		..()
 
 /obj/ability_button/magboot_toggle
@@ -221,7 +207,7 @@
 			qdel(src)
 			return
 		if( the_mob.buckled )
-			SPAWN_DBG(0)
+			SPAWN(0)
 				the_mob.emote("scream")
 				the_mob:canmove = 0
 				for(var/i=0, i<30, i++)
@@ -246,7 +232,7 @@
 				the_mob.gib()
 
 			return
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/turf/curr = get_turf(the_mob)
 
 			for(var/i=0, i<15, i++)
@@ -254,13 +240,13 @@
 
 			the_mob.throw_unlimited = 1
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for(var/i=0, i<15, i++)
 					if(isnull(the_mob))
 						break
 					var/obj/effect/smoketemp/A = new /obj/effect/smoketemp
 					A.set_loc(the_mob.loc)
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						src = null // Detatch this from the parent proc so we get to stay alive if the shoes blow up.
 						if(A)
 							qdel(A)
@@ -284,12 +270,12 @@
 
 		playsound(the_mob, "sound/effects/bamf.ogg", 100, 1)
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for(var/i=0, i<R.soniclength, i++)
 				if(!the_mob) break
 				var/obj/effect/smoketemp/A = new /obj/effect/smoketemp
 				A.set_loc(the_mob.loc)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					src = null
 					if(A)
 						qdel(A)
@@ -339,6 +325,39 @@
 	execute_ability()
 		var/obj/item/saw/S = the_item
 		S.attack_self(usr)
+		..()
+
+////////////////////////////////////////////////////////////
+
+/obj/ability_button/saw_replace_arm
+	name = "Replace arm"
+	icon_state = "saw"
+
+	execute_ability()
+		if (!ishuman(usr))
+			boutput(usr, "<span class='alert'>Only a human can do that.</span>")
+			return
+		var/mob/living/carbon/human/H = usr
+		if (the_item.temp_flags & IS_LIMB_ITEM)
+			boutput(usr, "<span class='alert'>The saw is already attached as an arm.</span>")
+			return
+		switch (alert(usr, "Which arm would you like to replace with [the_item]?",,"Left","Right","Cancel"))
+			if ("Cancel")
+				return
+			if ("Right")
+				if (!H.limbs.r_arm)
+					var/obj/item/saw/syndie/S = the_item
+					S.end_replace_arm("r_arm", H)
+					return
+				boutput(H, "<span class='alert'>You need to hold still...</span>")
+				SETUP_GENERIC_ACTIONBAR(H, the_item, 3 SECONDS, /obj/item/saw/syndie/proc/end_replace_arm, list("r_arm", H), the_item.icon, the_item.icon_state,"", INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION)
+			if ("Left")
+				if (!H.limbs.l_arm)
+					var/obj/item/saw/syndie/S = the_item
+					S.end_replace_arm("l_arm", H)
+					return
+				boutput(H, "<span class='alert'>You need to hold still...</span>")
+				SETUP_GENERIC_ACTIONBAR(H, the_item, 3 SECONDS, /obj/item/saw/syndie/proc/end_replace_arm, list("l_arm", H), the_item.icon, the_item.icon_state,"", INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -705,7 +724,7 @@
 				B.the_item = src
 				B.name = B.name + " ([src.name])"
 //		if(ability_buttons.len > 0)
-//			SPAWN_DBG(0) check_abilities()
+//			SPAWN(0) check_abilities()
 		..()
 
 	proc/disposing_abilities()
@@ -747,7 +766,7 @@
 			heh += src
 			boutput(world, "heh len = [heh.len]")
 		if(!the_mob)
-			SPAWN_DBG(3 SECONDS) check_abilities()
+			SPAWN(3 SECONDS) check_abilities()
 			return
 
 		if(!(src in the_mob.get_equipped_items()))
@@ -757,7 +776,7 @@
 				clear_buttons()
 			show_buttons()
 
-		SPAWN_DBG(1 SECOND) check_abilities()
+		SPAWN(1 SECOND) check_abilities()
 */
 
 	proc/clear_buttons()

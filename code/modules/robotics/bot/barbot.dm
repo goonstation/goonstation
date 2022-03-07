@@ -165,7 +165,8 @@
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (user)
 			user.show_text("You show [src] your [E]. They smile so hard that they begin sparking!", "red")
-		emagged = 1
+		emagged = TRUE
+		return TRUE
 
 	demag(var/mob/user)
 		emagged = 0

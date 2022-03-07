@@ -344,10 +344,6 @@ var/global
 	)
 	savefile/compid_file 	//The file holding computer ID information
 	do_compid_analysis = 1	//Should we be analysing the comp IDs of new clients?
-	list/admins = list(  )
-	list/onlineAdmins = list(  )
-	list/whitelistCkeys = list(  )
-	list/bypassCapCkeys = list(  )
 	list/warned_keys = list()	// tracking warnings per round, i guess
 
 	datum/dj_panel/dj_panel = new()
@@ -385,6 +381,9 @@ var/global
 #endif
 
 	narrator_mode = 0
+
+	// Zam note: this is horrible
+	forced_desussification = 0
 
 	disable_next_click = 0
 
@@ -498,11 +497,16 @@ var/global
 	list/valid_modes = list("secret","action","intrigue","random","traitor","meteor","extended","monkey",
 		"nuclear","blob","restructuring","wizard","revolution", "revolution_extended","malfunction",
 		"spy","gang","disaster","changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft",
-		"battle_royale", "vampire","assday", "football", "flock", "arcfiend"
+		"battle_royale", "vampire","everyone-is-a-traitor", "football", "flock", "arcfiend"
 #if defined(MAP_OVERRIDE_POD_WARS)
 		,"pod_wars"
 #endif
 	)
+
+	hardRebootFilePath = "data/hard-reboot"
+
+	/// The map object used to display the AI station map
+	obj/station_map/ai_station_map
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])

@@ -42,30 +42,33 @@
 				return
 		if (isscrewingtool(W) && src.circuit_type)
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if (do_after(user, 2 SECONDS))
-				var/obj/computerframe/A = new /obj/computerframe(src.loc)
-				if (src.status & BROKEN)
-					user.show_text("The broken glass falls out.", "blue")
-					var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
-					G.set_loc(src.loc)
-					A.state = 3
-					A.icon_state = "3"
-				else
-					user.show_text("You disconnect the monitor.", "blue")
-					A.state = 4
-					A.icon_state = "4"
-				var/obj/item/circuitboard/M = new src.circuit_type(A)
-				if (src.material)
-					A.setMaterial(src.material)
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.set_dir(src.dir)
-				A.circuit = M
-				A.anchored = 1
-				src.special_deconstruct(A)
-				qdel(src)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer/proc/unscrew_monitor,\
+			list(W, user), W.icon, W.icon_state, null, null)
 		else
 			src.Attackhand(user)
+
+	proc/unscrew_monitor(obj/item/W as obj, mob/user as mob)
+		var/obj/computerframe/A = new /obj/computerframe(src.loc)
+		if (src.status & BROKEN)
+			user.show_text("The broken glass falls out.", "blue")
+			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
+			G.set_loc(src.loc)
+			A.state = 3
+			A.icon_state = "3"
+		else
+			user.show_text("You disconnect the monitor.", "blue")
+			A.state = 4
+			A.icon_state = "4"
+		var/obj/item/circuitboard/M = new src.circuit_type(A)
+		if (src.material)
+			A.setMaterial(src.material)
+		for (var/obj/C in src)
+			C.set_loc(src.loc)
+		A.set_dir(src.dir)
+		A.circuit = M
+		A.anchored = 1
+		src.special_deconstruct(A)
+		qdel(src)
 
 	///Put the code for finding the stuff your computer needs in this proc
 	proc/connection_scan()
@@ -73,6 +76,7 @@
 
 	///Special changes for deconstruction can be added by overriding this
 	proc/special_deconstruct(var/obj/computerframe/frame as obj)
+
 
 /*
 /obj/machinery/computer/airtunnel
@@ -172,7 +176,7 @@
 			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
 			src.UpdateOverlays(screen_image, "screen_image")
 	else
-		SPAWN_DBG(rand(0, 15))
+		SPAWN(rand(0, 15))
 			//src.icon_state = "c_unpowered"
 			icon_state = initial(icon_state)
 			src.icon_state += "0"
@@ -188,6 +192,16 @@
 	if(status & NOPOWER)
 		return
 	use_power(power_usage)
+
+/obj/machinery/computer/update_icon()
+	if(src.glow_in_dark_screen)
+		src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
+		src.screen_image.plane = PLANE_LIGHTING
+		src.screen_image.blend_mode = BLEND_ADD
+		src.screen_image.layer = LIGHTING_LAYER_BASE
+		src.screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+		src.UpdateOverlays(screen_image, "screen_image")
+	..()
 
 /obj/machinery/computer/proc/set_broken()
 	if (status & BROKEN) return
