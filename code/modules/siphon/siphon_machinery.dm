@@ -67,7 +67,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			reply.data["REFRESH_UI"] = TRUE
 		var/readouts = src.build_readouts(reply)
 		if(readouts) reply.data["devdat"] = readouts //see associated proc
-		SPAWN_DBG(0.3 SECONDS)
+		SPAWN(0.3 SECONDS)
 			src.post_signal(reply)
 		return
 
@@ -276,7 +276,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				src.toggling = TRUE
 				src.changemode("low")
 				if(src.paired_lever != null) paired_lever.vis_setpanel(0)
-				SPAWN_DBG(0.5 SECONDS) //retoggle delay
+				SPAWN(0.5 SECONDS) //retoggle delay
 					if(src.mode != "high") src.toggling = FALSE
 		src.update_fx()
 		src.update_storage_bar()
@@ -306,7 +306,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	attack_ai(mob/user)
 		return attack_hand(user,TRUE)
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the siphon's output target.</span>")
 			return
@@ -405,13 +405,13 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			src.changemode("active")
 			if(src.paired_lever != null && !remote_activation) paired_lever.vis_setpanel(1)
 			src.toggling = TRUE //retoggle delay
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				if(src.mode != "high") src.toggling = FALSE
 		else
 			src.changemode("low")
 			if(src.paired_lever != null && !remote_activation) paired_lever.vis_setpanel(0)
 			src.toggling = TRUE //retoggle delay
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				if(src.mode != "high") src.toggling = FALSE
 
 	proc/engage_drill()
@@ -420,7 +420,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		playsound(src, "sound/machines/click.ogg", 40, 1)
 		src.icon_state = "drill-low"
 		flick("drilldrop",src)
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			for (var/obj/machinery/siphon/resonator/res in orange(4,src))
 				if (res.status & BROKEN) continue
 				var/xadj = res.x - src.x
@@ -430,7 +430,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				res.paired_core = src
 				res.reso_init(xadj,yadj)
 				res.engage_lock()
-			SPAWN_DBG(5 DECI SECONDS)
+			SPAWN(5 DECI SECONDS)
 				src.build_net_update(null,SIGBUILD_REGULAR) //resonance calibration happening in here via build readouts
 				src.changemode("low")
 				src.toggling = FALSE
@@ -448,10 +448,10 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			res.disengage_lock(stagger)
 		src.resonators.Cut()
 		src.clear_siphon_console()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.icon_state = "drill-high"
 			flick("drillraise",src)
-			SPAWN_DBG(3 SECONDS)
+			SPAWN(3 SECONDS)
 				src.toggling = FALSE
 
 	///iterates over all currently connected resonators to get their cumulative effect on drilling
@@ -670,7 +670,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			src.visible_message("<span class='alert'>[src] explodes!</span>")
 			new /obj/effects/explosion(src.loc)
 			playsound(src, "sound/effects/Explosion1.ogg", 50, 1)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				explosion_new(src, get_turf(src), 3)
 				qdel(src)
 		else
@@ -680,7 +680,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			if(limiter.canISpawn(/obj/effects/sparks))
 				var/obj/sparks = new /obj/effects/sparks
 				sparks.set_loc(get_turf(src))
-				SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
+				SPAWN(2 SECONDS) if (sparks) qdel(sparks)
 			src.UpdateIcon()
 
 	update_icon()
@@ -706,7 +706,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		var/vertical_identifier = yadj + 4
 		src.formatted_coords = "[horizontal_identifier][vertical_identifier]"
 		src.torque_init(xadj,yadj)
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			src.build_net_update(null,SIGBUILD_SETUP)
 
 	//initializes torque and shear values after prompted, determining what effect the resonator has on siphoning
@@ -724,7 +724,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	proc/disengage_lock(var/delayer)
 		if(delayer)
-			SPAWN_DBG(delayer)
+			SPAWN(delayer)
 				src.maglocked = 0
 				if(!wrenched)
 					src.anchored = 0
@@ -762,7 +762,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			scalex = clamp(scalex,0,src.max_intensity)
 			src.intensity = scalex
 			src.update_fx()
-			SPAWN_DBG(0.2 SECONDS)
+			SPAWN(0.2 SECONDS)
 				paired_core.build_net_update(null,SIGBUILD_REGULAR)
 		else if(sigvalue == SIGBUILD_REGULAR)
 			paired_core.build_net_update(null,SIGBUILD_REGULAR)

@@ -37,7 +37,7 @@
 		light = new /datum/light/point
 		light.attach(src)
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.anode_unit = locate(/obj/machinery/catalytic_rod_unit) in get_step(src,WEST)
 			src.cathode_unit = locate(/obj/machinery/catalytic_rod_unit) in get_step(src,EAST)
 			if(!src.anode_unit || !src.cathode_unit)
@@ -342,7 +342,7 @@
 			src.ovr_clamp.icon_state = "clamp-high"
 			flick("clamp-raise-[src.dir]",src.ovr_clamp)
 
-			SPAWN_DBG(1.6 SECONDS)
+			SPAWN(1.6 SECONDS)
 				src.toggling = FALSE
 
 		else if(src.mode == UNIT_INACTIVE && src.oldmode == UNIT_OPEN)
@@ -354,13 +354,13 @@
 			src.ovr_clamp.icon_state = "nonvis"
 			flick("clamp-lower-[src.dir]",src.ovr_clamp)
 
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 
 				src.ovr_door.icon_state = "door-shut"
 				flick("door-close",src.ovr_door)
 				playsound(src, "sound/machines/sleeper_close.ogg", 40, 1)
 
-				SPAWN_DBG(0.6 SECONDS)
+				SPAWN(0.6 SECONDS)
 
 					src.toggling = FALSE
 					src.indicator_update()

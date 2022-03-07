@@ -79,7 +79,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		use_power(ARRAY_TELECOST)
 		playsound(src.loc, "sound/effects/mag_forcewall.ogg", 50, 0)
 		flick("beam",src.telebeam)
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			src.is_transceiving = FALSE
 		return TRUE
 
@@ -201,7 +201,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 				reply.data["data"] = name_of_place
 				reply.data["padid"] = src.pad_id
 				reply.data["opstat"] = src.check_transceive()
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					src.post_signal(reply)
 			else
 				if(signal.data["address_1"] != src.net_id) //this is dumb redundant
@@ -266,9 +266,9 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 	proc/send_a_thing(var/netnumber)
 		src.is_transceiving = TRUE
 		playsound(src.loc, "sound/effects/ship_alert_minor.ogg", 50, 0) //incoming cargo warning (stand clear)
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			flick("neopad_activate",src)
-			SPAWN_DBG(0.3 SECONDS)
+			SPAWN(0.3 SECONDS)
 				var/atom/movable/thing2send
 				var/list/oofed_nerds = list()
 				for(var/atom/movable/O as obj|mob in src.loc)
@@ -285,7 +285,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 					telefrag(nerd) //did I mention NO MOBS
 				if(thing2send && transception_array.transceive(netnumber))
 					thing2send.loc = src
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						shippingmarket.sell_crate(thing2send)
 
 				showswirl(src.loc)
@@ -299,9 +299,9 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		if(thing2get in shippingmarket.pending_crates)
 			shippingmarket.pending_crates.Remove(thing2get)
 		playsound(src.loc, "sound/effects/ship_alert_minor.ogg", 50, 0) //incoming cargo warning (stand clear)
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			flick("neopad_activate",src)
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				for(var/atom/movable/O as mob in src.loc)
 					if(istype(O,/mob/living/carbon/human) && prob(25))
 						telefrag(O) //get out the way
@@ -415,7 +415,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 				yell.data["data"] = cargo_index
 			else
 				yell.data["command"] = "send"
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_signal(yell)
 		return
 

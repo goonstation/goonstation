@@ -16,7 +16,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.7 SECONDS)
+		SPAWN(0.7 SECONDS)
 			src.pair_siphon()
 
 	proc/pair_siphon()
@@ -153,7 +153,7 @@
 			yell.data["address_1"] = com_target
 			yell.data["command"] = "calibrate"
 			yell.data += command_list
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_signal(yell)
 		return
 
