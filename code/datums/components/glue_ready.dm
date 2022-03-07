@@ -17,13 +17,17 @@ TYPEINFO(/datum/component/glue_ready)
 	src.glue_removal_time = glue_removal_time
 	var/atom/movable/parent = src.parent
 	parent.add_filter("glue_ready_outline", 0, outline_filter(size=1, color="#e6e63c44"))
-	if(glue_duration != null)
-		SPAWN(glue_duration)
-			dry_up()
+	delayed_dry_up(glue_duration)
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/glue_thing_to_parent)
 	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/glue_parent_to_thing_afterattack) // won't do anything if not an item but it doesn't hurt
 	RegisterSignal(parent, COMSIG_ATOM_HITBY_THROWN, .proc/glue_thing_to_parent)
 	RegisterSignal(parent, COMSIG_MOVABLE_HIT_THROWN, .proc/glue_parent_to_thing_hit_thrown)
+
+/datum/component/glue_ready/proc/delayed_dry_up(glue_duration)
+	set waitfor = FALSE
+	if(glue_duration != null)
+		sleep(glue_duration)
+		dry_up()
 
 /datum/component/glue_ready/proc/dry_up()
 	if(src.disposed || !src.parent || src.parent.disposed)
