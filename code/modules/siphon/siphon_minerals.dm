@@ -274,6 +274,14 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	sens_window = 0
 	product = /obj/item/reagent_containers/food/snacks/pizza
 
+/datum/siphon_mineral/weed
+	indexed = FALSE
+	name = "Cannabis Synthesis"
+	tick_req = 303
+	shear = 420
+	sens_window = 0
+	product = /obj/item/plant/herb/cannabis/mega/spawnable
+
 /datum/siphon_mineral/forbidden //the end comes
 	indexed = FALSE
 	name = "DATA EXPUNGED"
