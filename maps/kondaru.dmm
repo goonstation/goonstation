@@ -41172,10 +41172,6 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"egq" = (
-/obj/machinery/navbeacon/mule/hallway_escape_north,
-/turf/simulated/floor/bot,
-/area/station/hallway/secondary/exit)
 "egr" = (
 /turf/simulated/floor/white/grime,
 /area/station/hangar/science)
@@ -41939,19 +41935,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
-"eTr" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "eTY" = (
 /obj/storage/closet/biohazard,
 /turf/simulated/floor/black,
@@ -43185,18 +43168,6 @@
 /obj/machinery/cargo_router/kd_cater_exoflap,
 /turf/simulated/floor/caution/westeast,
 /area/station/routing/depot)
-"gdY" = (
-/obj/machinery/door/airlock/pyro{
-	dir = 4
-	},
-/obj/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/green/side{
-	dir = 4
-	},
-/area/station/garden/aviary)
 "gec" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -44779,10 +44750,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
 	},
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
@@ -44927,8 +44900,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/navbeacon/mule/crewA_north/west,
-/turf/simulated/floor/bot,
+/turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
 "hJY" = (
 /obj/wingrille_spawn/auto,
@@ -48155,7 +48127,7 @@
 	name = "autoname - SS13";
 	pixel_y = 20
 	},
-/turf/simulated/floor/delivery,
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "lpn" = (
 /obj/shrub{
@@ -57142,13 +57114,6 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_west,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
 "uqd" = (
@@ -58479,7 +58444,9 @@
 	pixel_x = -32;
 	pixel_y = 0
 	},
-/turf/simulated/floor/delivery,
+/turf/simulated/floor/neutral/side{
+	dir = 8
+	},
 /area/station/crew_quarters/quarters_south)
 "vFA" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -127658,7 +127625,7 @@ kGp
 mQo
 bnq
 wGt
-eTr
+rGF
 rGF
 rGF
 rGF
@@ -127960,7 +127927,7 @@ eeb
 mQo
 bre
 bre
-gdY
+bre
 bre
 bre
 bzL
@@ -132485,7 +132452,7 @@ qMt
 bri
 aNu
 loG
-egq
+bri
 oca
 hVu
 aNu
