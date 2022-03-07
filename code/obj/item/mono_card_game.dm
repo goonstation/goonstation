@@ -2,40 +2,29 @@
 	card_style = "mono"
 	total_cards = 108
 	card_name = "MONO"
-	var/static/numToSpecial = list("10"="Block", "11"="Reverse", "12"="Draw 2")
 
 	New()
 		..()
 		//Add special cards
 		for(var/i in 1 to 4)
-			var/obj/item/playing_card/wild = new /obj/item/playing_card(src)
-			var/obj/item/playing_card/fuckYou = new /obj/item/playing_card(src)
-			stored_cards += wild
-			stored_cards += fuckYou
-			setMonoCard(wild, 5, 0)
-			setMonoCard(fuckYou, 5, 1)
+			stored_cards += new /obj/item/playing_card/Mono(src, 5, 0)
+			stored_cards += new /obj/item/playing_card/Mono(src, 5, 1)
 
 		//Add one set of zeroes
 		for(var/i in 1 to 4)
-			var/obj/item/playing_card/card = new /obj/item/playing_card(src)
-			stored_cards += card
-			setMonoCard(card, i, 0)
+			stored_cards += new /obj/item/playing_card/Mono(src,i,0)
 
 		//Do rest of the numbers
 		for(var/i in 1 to 4)
-			for(var/j = 1, j<13, j++)
+			for(var/j in 1 to 12)
+				stored_cards += new /obj/item/playing_card/Mono(src, i, j)
+				stored_cards += new /obj/item/playing_card/Mono(src, i, j)
 
-				var/obj/item/playing_card/card = new /obj/item/playing_card(src)
-				stored_cards += card
-				setMonoCard(card, i, j)
-
-				var/obj/item/playing_card/card2 = new /obj/item/playing_card(src)
-				stored_cards += card2
-				setMonoCard(card2, i, j)
 
 
 		update_group_sprite()
 
+	/*
 	proc/setMonoCard(var/obj/item/playing_card/target , var/suit, var/num)
 		var/plain_suit = TRUE
 		var/suit_name = ""
@@ -68,6 +57,7 @@
 		target.icon_state = "[card_style]-[suit]-[num]"
 		update_card_information(target)
 		target.update_stored_info()
+		*/
 
 /obj/item/paper/from_file/MonoRules
 	file_path = "strings/MONORules.txt"
@@ -81,3 +71,36 @@
 	New()
 		..()
 		stored_deck = new /obj/item/card_group/mono(src)
+
+/obj/item/playing_card/Mono
+	var/static/numToSpecial = list("10"="Block", "11"="Reverse", "12"="Draw 2")
+
+	New(atom/loc, var/suit, var/num)
+		..()
+		var/plain_suit = TRUE
+		var/suit_name = ""
+		switch(suit)
+			if(1)
+				suit_name = "Green"
+			if(2)
+				suit_name = "Blue"
+			if(3)
+				suit_name = "Yellow"
+			if(4)
+				suit_name = "Red"
+			if(5)
+				plain_suit = FALSE
+		if(plain_suit)
+			if(num < 10)
+				name = "[suit_name] [capitalize(num2text(num))]"
+			else
+				name = "[suit_name] [numToSpecial["[num]"]]"
+
+
+		else
+			if(num == 0)
+				name = "Wild Card"
+			else  //If I fuck up generation this will get people complaining
+				name = "Wild Draw 4"
+				num = 1
+
