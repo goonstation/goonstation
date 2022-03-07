@@ -40,11 +40,19 @@ TYPEINFO(/datum/component/glue_ready)
 /datum/component/glue_ready/proc/gluability_check(atom/movable/glued_to, atom/movable/thing_glued, mob/user)
 	if(isnull(glued_to) || isnull(thing_glued))
 		return FALSE
+	if(!isnull(user) && thing_glued.loc != user) // if attackby inserted an organ into a person or stacked sheets etc.
+		return FALSE
+	if(istype(glued_to, /obj/item/sticker)) // ended up on a nonactive sticker in the sticker loc chain, still need to prevent implanting
+		if(user)
+			boutput(user, "<span class='alert'>You can't glue things to a sticker.</span>")
+		return FALSE
 	var/obj/item/item_glued = thing_glued
 	ENSURE_TYPE(item_glued)
 	if(thing_glued.anchored || item_glued?.cant_drop)
 		if(user)
 			boutput(user, "<span class='alert'>You can't glue [thing_glued] to stuff.</span>")
+		return FALSE
+	if(istype(thing_glued, /obj/storage) || isgrab(thing_glued) || isgrab(glued_to))
 		return FALSE
 	if(isitem(glued_to))
 		var/obj/item/item_glued_to = glued_to
@@ -59,6 +67,10 @@ TYPEINFO(/datum/component/glue_ready)
 	return TRUE
 
 /datum/component/glue_ready/proc/glue_things(atom/movable/glued_to, atom/movable/thing_glued, mob/user=null)
+	var/obj/item/sticker/maybe_sticker = glued_to
+	while(istype(maybe_sticker) && maybe_sticker.active) // prevent implanting items via gluing onto stickers attached to a thing
+		glued_to = maybe_sticker.loc
+		maybe_sticker = glued_to
 	if(!gluability_check(glued_to, thing_glued, user))
 		return
 	thing_glued.AddComponent(/datum/component/glued, glued_to, src.dries_up_timestamp - TIME, src.glue_removal_time)

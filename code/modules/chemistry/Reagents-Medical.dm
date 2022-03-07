@@ -1283,7 +1283,7 @@ datum
 #define PEAK_COEFF 1.25
 #define SUBPEAK_COEFF 1
 #define PEAK_OFFSET 0.25
-#define SUBPEAK_OFFSET 0.66
+#define SUBPEAK_OFFSET 0.6666
 
 		medical/cryoxadone // COGWERKS CHEM REVISION PROJECT. magic drug, but isn't working right correctly
 			name = "cryoxadone"

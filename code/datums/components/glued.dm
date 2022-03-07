@@ -1,3 +1,5 @@
+#define MAGIC_GLUE_ANCHORED 12345
+
 TYPEINFO(/datum/component/glued)
 	initialization_args = list(
 		ARG_INFO("target", "ref", "What is this glued to", null),
@@ -40,14 +42,15 @@ TYPEINFO(/datum/component/glued)
 	src.original_animate_movement = parent.animate_movement
 	src.original_anchored = parent.anchored
 	parent.animate_movement = SYNC_STEPS
-	parent.anchored = TRUE
+	parent.anchored = MAGIC_GLUE_ANCHORED // replace with atom_properties once we move mob_properties to /atom
 	parent.layer = OBJ_LAYER
 	if(isturf(glued_to))
-		parent.plane = PLANE_FLOOR
+		parent.plane = PLANE_NOSHADOW_BELOW
 	else
 		parent.plane = PLANE_UNDERFLOOR
 	parent.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 	RegisterSignal(parent, COMSIG_ATTACKHAND, .proc/start_ungluing)
+	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/pass_on_attackby)
 
 /datum/component/glued/proc/delete_self()
 	qdel(src)
@@ -70,11 +73,15 @@ TYPEINFO(/datum/component/glued)
 		new /datum/action/bar/icon/callback(user, parent, src.glue_removal_time, .proc/delete_self, null, parent.icon, parent.icon_state,\
 		"<span class='notice'>[user] manages to unglue [parent] from [src.glued_to].</span>", 0, src), user)
 
+/datum/component/glued/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, list/params, is_special)
+	src.glued_to.Attackby(item, user, params, is_special)
+
 /datum/component/glued/UnregisterFromParent()
 	var/atom/movable/parent = src.parent
 	parent.remove_filter("glued_outline")
 	parent.animate_movement = src.original_animate_movement
-	parent.anchored = src.original_anchored
+	if(parent.anchored == MAGIC_GLUE_ANCHORED)
+		parent.anchored = src.original_anchored
 	parent.layer = initial(parent.layer)
 	parent.plane = initial(parent.plane)
 	parent.vis_flags &= ~(VIS_INHERIT_PLANE | VIS_INHERIT_LAYER)
@@ -88,3 +95,5 @@ TYPEINFO(/datum/component/glued)
 	parent.set_loc(get_turf(parent))
 	src.glued_to = null
 	. = ..()
+
+#undef MAGIC_GLUE_ANCHORED

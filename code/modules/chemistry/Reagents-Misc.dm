@@ -861,6 +861,8 @@ datum
 			reaction_obj(obj/O, volume)
 				if(volume < 5)
 					return
+				if(isgrab(O))
+					return
 				if(O.GetComponent(/datum/component/glued) || O.GetComponent(/datum/component/glue_ready))
 					return
 				O.AddComponent(/datum/component/glue_ready, volume * 5 SECONDS, 5 SECONDS)
