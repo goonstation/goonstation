@@ -29,7 +29,7 @@ TYPEINFO(/datum/component/glue_ready)
 	if(src.disposed || !src.parent || src.parent.disposed)
 		return
 	var/turf/T = get_turf(parent)
-	T.visible_message("<span class='notice'>The glue on [parent] dries up.</span>")
+	T?.visible_message("<span class='notice'>The glue on [parent] dries up.</span>")
 	qdel(src)
 
 /datum/component/glue_ready/UnregisterFromParent()
