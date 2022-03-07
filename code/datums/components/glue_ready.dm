@@ -84,7 +84,9 @@ TYPEINFO(/datum/component/glue_ready)
 		maybe_glued_component = maybe_glued_component.glued_to.GetComponent(/datum/component/glued)
 	return TRUE
 
-/datum/component/glue_ready/proc/glue_things(atom/movable/glued_to, atom/movable/thing_glued, mob/user=null)
+/datum/component/glue_ready/proc/glue_things(atom/movable/glued_to, atom/movable/thing_glued, mob/user=null, mob/log_user=null)
+	if(isnull(log_user))
+		log_user = user || usr
 	var/obj/item/sticker/maybe_sticker = glued_to
 	while(istype(maybe_sticker) && maybe_sticker.active) // prevent implanting items via gluing onto stickers attached to a thing
 		glued_to = maybe_sticker.loc
@@ -97,11 +99,15 @@ TYPEINFO(/datum/component/glue_ready)
 		T.visible_message("<span class='notice'>[user] glues [thing_glued] to [glued_to].</span>")
 	else
 		T.visible_message("<span class='notice'>[thing_glued] sticks to [glued_to].</span>")
+	logTheThing(log_user, null, "combat", "glued [ismob(thing_glued) ? constructTarget(thing_glued, "combat") : thing_glued] to [ismob(glued_to) ? constructTarget(glued_to, "combat") : glued_to] at [log_loc(glued_to)]")
 	qdel(src)
 
-/datum/component/glue_ready/proc/glue_thing_to_parent(atom/movable/parent, obj/item/item, mob/user)
+/datum/component/glue_ready/proc/glue_thing_to_parent(atom/movable/parent, obj/item/item, user_or_datum_thrownthing)
+	var/datum/thrown_thing/thrown_thing = user_or_datum_thrownthing
+	ENSURE_TYPE(thrown_thing)
+	var/mob/user = user_or_datum_thrownthing
 	ENSURE_TYPE(user)
-	glue_things(parent, item, user)
+	glue_things(parent, item, user, user || thrown_thing.user)
 	return TRUE
 
 /datum/component/glue_ready/proc/glue_parent_to_thing_afterattack(obj/item/parent, atom/target, mob/user, reach, params)
@@ -111,17 +117,17 @@ TYPEINFO(/datum/component/glue_ready)
 		return
 	if(istype(target, /obj/fluid) || istype(target, /obj/effect))
 		target = get_turf(target)
-	glue_things(target, parent, user)
+	glue_things(target, parent, user, user)
 	if("icon-x" in params)
 		parent.pixel_x = text2num(params["icon-x"]) - world.icon_size / 2
 		parent.pixel_y = text2num(params["icon-y"]) - world.icon_size / 2
 
-/datum/component/glue_ready/proc/glue_parent_to_thing_hit_thrown(obj/item/parent, atom/target)
+/datum/component/glue_ready/proc/glue_parent_to_thing_hit_thrown(obj/item/parent, atom/target, datum/thrown_thing/thrown_thing)
 	if(isnull(target))
 		return
 	if(isfloor(target))
 		return
 	if(istype(target, /obj/fluid) || istype(target, /obj/effect))
 		target = get_turf(target)
-	glue_things(target, parent, null)
+	glue_things(target, parent, null, thrown_thing.user)
 	return TRUE
