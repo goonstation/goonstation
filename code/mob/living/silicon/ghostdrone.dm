@@ -368,7 +368,7 @@
 
 		var/obj/item/item = target
 		if (istype(item) && item == src.equipped())
-			item.attack_self(src)
+			item.AttackSelf(src)
 			return
 
 		if (src.client && src.client.check_key(KEY_PULL))

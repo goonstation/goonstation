@@ -953,7 +953,7 @@
 							target.zone_sel.selecting = old_zone_sel
 
 						if (prob(20))
-							I.attack_self(target)
+							I.AttackSelf(target)
 
 
 				if ("shoved_down" in src.disarm_RNG_result)

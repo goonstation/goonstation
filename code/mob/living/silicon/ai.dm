@@ -1864,7 +1864,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if (istype(src.internal_pda,/obj/item/device/pda2/))
-		src.internal_pda.attack_self(message_mob)
+		src.internal_pda.AttackSelf(message_mob)
 	else
 		boutput(usr, "<span class='alert'><b>Internal PDA not found!</span>")
 
@@ -1882,7 +1882,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if (istype(which,/obj/item/device/radio/))
-		which.attack_self(message_mob)
+		which.AttackSelf(message_mob)
 	else
 		boutput(usr, "<span class='alert'><b>Radio not found!</b></span>")
 
