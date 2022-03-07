@@ -27239,10 +27239,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/engine,
 /area/station/science/chemistry)
-"orM" = (
-/obj/shrub,
-/turf/simulated/floor/grass,
-/area/station/hydroponics/bay)
 "orS" = (
 /obj/table/reinforced/auto,
 /obj/item/shaker/salt{
@@ -79983,7 +79979,7 @@ ewv
 jdV
 jdV
 jdV
-orM
+jdV
 ewv
 gbZ
 iHN
@@ -81191,7 +81187,7 @@ ewv
 nrw
 jdV
 jdV
-orM
+jdV
 ewv
 ejD
 iHN
