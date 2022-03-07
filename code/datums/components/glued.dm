@@ -52,6 +52,7 @@ TYPEINFO(/datum/component/glued)
 	RegisterSignal(parent, COMSIG_ATTACKHAND, .proc/start_ungluing)
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/pass_on_attackby)
 	RegisterSignal(parent, COMSIG_MOVABLE_BLOCK_MOVE, .proc/move_blocked_check)
+	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, .proc/on_set_loc)
 
 /datum/component/glued/proc/delete_self()
 	qdel(src)
@@ -79,6 +80,12 @@ TYPEINFO(/datum/component/glued)
 
 /datum/component/glued/proc/move_blocked_check(atom/movable/parent, atom/new_loc, direct)
 	return new_loc != glued_to.loc
+
+/datum/component/glued/proc/on_set_loc(atom/movable/parent, atom/old_loc)
+	if(parent.loc != glued_to.loc)
+		var/turf/T = get_turf(parent)
+		T.visible_message("<span class='notice'>\The [parent] is ripped off from [glued_to].</span>")
+		qdel(src)
 
 /datum/component/glued/UnregisterFromParent()
 	var/atom/movable/parent = src.parent
