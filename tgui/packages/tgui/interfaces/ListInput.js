@@ -179,7 +179,7 @@ export const ListInput = (props, context) => {
       height={325}>
       {timeout !== undefined && <Loader value={timeout} />}
       <Window.Content
-        onKeyDown={handleKeyDown}>
+        onkeydown={handleKeyDown}>
         <Stack fill vertical>
           <Stack.Item grow>
             <Section
