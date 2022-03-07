@@ -66,6 +66,10 @@ TYPEINFO(/datum/component/glue_ready)
 		return FALSE
 	if(istype(glued_to, /obj/machinery/door) || istype(glued_to, /obj/grille))
 		return FALSE
+	if(isturf(glued_to))
+		var/turf/glued_turf = glued_to
+		if(glued_turf.density)
+			return FALSE
 	return TRUE
 
 /datum/component/glue_ready/proc/glue_things(atom/movable/glued_to, atom/movable/thing_glued, mob/user=null)
