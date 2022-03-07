@@ -716,7 +716,7 @@
 	limb_type = /datum/limb/brullbar
 	handlistPart = "l_hand_brullbar"
 	show_on_examine = 1
-	/// Wendigeese are pretty unnatural, and most people'd miss em if they suddenly turned into a lizard arm
+	/// Brullbar are pretty unnatural, and most people'd miss em if they suddenly turned into a lizard arm
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_BRULLBAR)
 
