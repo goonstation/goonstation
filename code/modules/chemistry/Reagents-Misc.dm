@@ -949,7 +949,7 @@ datum
 				var/atom/Aloc = isturf(A) ? A : A.loc
 				for(var/atom/movable/AM in Aloc)
 					var/datum/component/glued/glued_comp = AM.GetComponent(/datum/component/glued)
-					if(glued_comp.glued_to == A)
+					if(glued_comp?.glued_to == A)
 						qdel(glued_comp)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
