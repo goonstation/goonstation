@@ -51,6 +51,7 @@ TYPEINFO(/datum/component/glued)
 	parent.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 	RegisterSignal(parent, COMSIG_ATTACKHAND, .proc/start_ungluing)
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/pass_on_attackby)
+	RegisterSignal(parent, COMSIG_MOVABLE_BLOCK_MOVE, .proc/move_blocked_check)
 
 /datum/component/glued/proc/delete_self()
 	qdel(src)
@@ -75,6 +76,9 @@ TYPEINFO(/datum/component/glued)
 
 /datum/component/glued/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, list/params, is_special)
 	src.glued_to.Attackby(item, user, params, is_special)
+
+/datum/component/glued/proc/move_blocked_check(atom/movable/parent, atom/new_loc, direct)
+	return new_loc != glued_to.loc
 
 /datum/component/glued/UnregisterFromParent()
 	var/atom/movable/parent = src.parent
