@@ -460,6 +460,10 @@
 			var/obj/item/seed/seed1 = src.splicing1
 			var/obj/item/seed/seed2 = src.splicing2
 
+			// How the fuck
+			if (!seed1 || !seed2)
+				return
+
 			// Now work out whether we fail to splice or not based on species compatability
 			// And the health of the two seeds you're using
 			var/splice_chance = 100
