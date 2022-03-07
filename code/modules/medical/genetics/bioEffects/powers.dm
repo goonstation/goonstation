@@ -1250,8 +1250,8 @@
 			else
 				owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to gold!</span>")
 				the_object.setMaterial(getMaterial("gold"))
-			linked_power.using = 0
-			return
+		linked_power.using = 0
+		return
 
 	cast_misfire()
 		if (..())
