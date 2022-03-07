@@ -41,7 +41,7 @@ var/datum/artifact_controller/artifact_controls
 		SortList(artifact_types, /proc/compareArtifactTypes)
 
 		for (var/datum/artifact/AI in artifact_types)
-			artifact_type_names += AI.type_name
+			artifact_type_names += list(list(AI.type_name, AI.type_size))
 
 		// fault list
 		for (var/X in concrete_typesof(/datum/artifact_fault))

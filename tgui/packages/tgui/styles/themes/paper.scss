@@ -15,7 +15,7 @@
 @use '../base.scss' with (
   $color-fg: #000000,
   $color-bg: #eeeeee,
-  $color-bg-section: #ffffff,
+  $color-bg-section: #d13f3f,
   $color-bg-grad-spread: 0%,
 );
 
@@ -168,5 +168,18 @@ $font-size: 24px;
       line-height: 17px;
       overflow: visible;
     }
+  }
+
+  .artifactType3
+  {
+    background-color: #c9acac;
+  }
+  .artifactType2
+  {
+    background-color: #ccc6b0;
+  }
+  .artifactType1
+  {
+    background-color: #adc2d3;
   }
 }
