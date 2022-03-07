@@ -2014,7 +2014,7 @@ obj/item/clothing/gloves/concussive
 
 		// And logs for good measure (Convair880).
 		var/obj/storage/S = cargo
-		ENSURE_TYPE(cargo)
+		ENSURE_TYPE(S)
 
 		for (var/mob/M in cargo.contents)
 			if (M)
