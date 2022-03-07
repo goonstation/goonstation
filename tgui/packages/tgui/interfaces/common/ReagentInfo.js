@@ -100,9 +100,11 @@ export const ReagentList = props => {
               />
               {`( ${reagent.volume}u ) ${reagent.name}`}
             </Flex.Item>
-            <Flex.Item nowrap>
-              {renderButtons(reagent)}
-            </Flex.Item>
+            {renderButtons && (
+              <Flex.Item nowrap>
+                {renderButtons(reagent)}
+              </Flex.Item>
+            )}
           </Flex>
         )) : (
           <Box color="label">
