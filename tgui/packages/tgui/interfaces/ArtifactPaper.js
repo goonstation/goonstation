@@ -29,7 +29,7 @@ export const ArtifactPaper = (props, context) => {
       title="Nanotrasen Alien Artifact Analysis Form"
       theme="paper"
       width={800}
-      height={825}
+      height={835}
     >
       <Window.Content>
         <Section>
