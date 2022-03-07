@@ -20,6 +20,12 @@
 	return trim_left(trim_right(text))
 
 /proc/capitalize(var/t as text)
+	var/code = text2ascii(t,1)
+
+	// Check if it isn't between a-z before uppertexting it
+	if (code < 97 || code > 122)
+		return t
+
 	return uppertext(copytext(t, 1, 2)) + copytext(t, 2)
 
 /// Returns true if the given string has a vowel
