@@ -33,7 +33,7 @@
 		..()
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat
-	name = "Human meat"
+	name = "human meat"
 	desc = "A slab of meat from a human."
 	var/subjectname = "Human"
 	var/subjectjob = "Human Being"
