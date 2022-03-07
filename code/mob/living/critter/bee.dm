@@ -1087,11 +1087,12 @@ particles/swarm/bees
 	start_none
 		count = 0
 
-/mob/living/critter/small_animal/bee/firefly
+/mob/living/critter/small_animal/firefly
 	name = "firefly"
 	desc = "A perfectly normal bioluminescent insect."
+	icon = 'icons/misc/bee.dmi'
 	icon_state = "firefly-wings"
-	icon_body = "firefly"
+	//icon_body = "firefly"
 	var/light_color = "#ADFF2F"
 	var/image/bulb
 	var/image/bulb_light
@@ -1112,21 +1113,27 @@ particles/swarm/bees
 		UpdateOverlays(bulb_light, "bulb-light")
 
 		SPAWN(rand(0.5 SECOND, 2 SECONDS))
-			//animate(src, time=5 SECONDS, pixel_y=16, flags=ANIMATION_PARALLEL | ANIMATION_RELATIVE)
-			//animate(time=5 SECONDS, pixel_y=-16, flags=ANIMATION_RELATIVE)
-			// animate(src, time=7 SECONDS, loop = -1, pixel_y=16, flags=ANIMATION_PARALLEL)
-			// animate(time=7 SECONDS, pixel_y=-16)
 
+			//modified bumble
+			var/floatspeed = rand(1 SECOND,1.4 SECONDS)
+			animate(src, pixel_y = 3, time = floatspeed, loop = -1, easing = LINEAR_EASING, , flags=ANIMATION_PARALLEL)
+			animate(pixel_y = -3, time = floatspeed, easing = LINEAR_EASING)
+
+			animate(src, pixel_y = 4, time = floatspeed*4.7, loop = -1, easing = LINEAR_EASING, , flags=ANIMATION_PARALLEL)
+			animate(pixel_y = -4, time = floatspeed*4.7, easing = LINEAR_EASING)
+
+			// I spent fucking hours trying to get DIR to animate... it does not like being parallelized FUCK
 			// var/swap = 1
 			// if(prob(50))
 			// 	swap = -1
 
 			// var/duration = rand(7 SECONDS, 10 SECONDS)
+
+			// animate(src, time=5 SECOND, loop = -1, dir=EAST)
+			// animate(time=5 SECOND, dir=WEST)
+
 			// animate(src, time=duration, loop = -1, pixel_x=6*swap, easing=CIRCULAR_EASING, flags=ANIMATION_PARALLEL)
 			// animate(time=duration, pixel_x=-6*swap, easing=CIRCULAR_EASING)
-
-			animate(src, time=5 SECOND, loop = -1, dir=EAST, flags=ANIMATION_PARALLEL)
-			animate(time=5 SECOND, dir=WEST)
 
 			// swap = 1
 			// if(prob(50))
@@ -1162,7 +1169,7 @@ particles/swarm/bees
 TYPEINFO(/datum/component/firefly_glow)
 	initialization_args = list()
 
-/datum/component/firefly_glow/Initialize(atom/A, mob/living/critter/small_animal/bee/firefly/F, mob/living/carbon/human/user)
+/datum/component/firefly_glow/Initialize(atom/A, mob/living/critter/small_animal/firefly/F, mob/living/carbon/human/user)
 	if(add_firefly(A, F, user))
 		RegisterSignal(parent, list(COMSIG_ITEM_PICKUP), .proc/pickup)
 		RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), .proc/dropped)
@@ -1173,16 +1180,16 @@ TYPEINFO(/datum/component/firefly_glow)
 	else
 		qdel(src) //Capturing the crash is not desired
 
-/datum/component/firefly_glow/InheritComponent(datum/component/firefly_glow/C, i_am_original, atom/A, mob/living/critter/small_animal/bee/firefly/F, mob/living/carbon/human/user)
+/datum/component/firefly_glow/InheritComponent(datum/component/firefly_glow/C, i_am_original, atom/A, mob/living/critter/small_animal/firefly/F, mob/living/carbon/human/user)
 	add_firefly(A, F, user)
 
-/datum/component/firefly_glow/proc/add_firefly(atom/A, mob/living/critter/small_animal/bee/firefly/F, mob/living/carbon/human/user)
+/datum/component/firefly_glow/proc/add_firefly(atom/A, mob/living/critter/small_animal/firefly/F, mob/living/carbon/human/user)
 	if(istype(F))
 		if(F.client)
 			boutput(user, "<span class='alert'>[F] seems just to squirley to capture!  Need a more lazy one.</span>")
 			return FALSE
 	for(var/atom/C in A.contents)
-		if(!istype(C, /mob/living/critter/small_animal/bee/firefly))
+		if(!istype(C, /mob/living/critter/small_animal/firefly))
 			boutput(user, "<span class='alert'>[F] doesn't seem like it belongs with anything else.</span>")
 			return FALSE
 	if(A != user && A.reagents?.total_volume)
@@ -1197,7 +1204,7 @@ TYPEINFO(/datum/component/firefly_glow)
 	var/atom/A = parent
 	var/mob/user = A?.loc
 	if(istype(A))
-		for(var/mob/living/critter/small_animal/bee/firefly/F in A)
+		for(var/mob/living/critter/small_animal/firefly/F in A)
 			F.set_loc(get_turf(A))
 		if(istype(user))
 			boutput(user, "<span class='alert'>The fireflies take this moment to escape from [A].</span>")
@@ -1210,7 +1217,7 @@ TYPEINFO(/datum/component/firefly_glow)
 /datum/component/firefly_glow/proc/update_glow(atom/A, mob/user)
 	light_color = list(0, 0, 0)
 	firefly_count = 0
-	for(var/mob/living/critter/small_animal/bee/firefly/F in A)
+	for(var/mob/living/critter/small_animal/firefly/F in A)
 		var/firefly_color = hex_to_rgb_list(F.light_color)
 		light_color[1] += firefly_color[1]
 		light_color[2] += firefly_color[2]
