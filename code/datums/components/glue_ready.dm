@@ -70,6 +70,14 @@ TYPEINFO(/datum/component/glue_ready)
 		var/turf/glued_turf = glued_to
 		if(glued_turf.density)
 			return FALSE
+
+	var/datum/component/glued/maybe_glued_component = glued_to.GetComponent(/datum/component/glued)
+	while(istype(maybe_glued_component))
+		if(maybe_glued_component.glued_to == thing_glued)
+			if(user)
+				boutput(user, "<span class='alert'>You can't glue [thing_glued] to [glued_to] because [glued_to] is already glued to [thing_glued].</span>")
+			return FALSE
+		maybe_glued_component = maybe_glued_component.glued_to.GetComponent(/datum/component/glued)
 	return TRUE
 
 /datum/component/glue_ready/proc/glue_things(atom/movable/glued_to, atom/movable/thing_glued, mob/user=null)
