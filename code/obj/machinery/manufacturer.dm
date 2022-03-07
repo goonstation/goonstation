@@ -394,7 +394,7 @@
 
 
 		var/list/dat = list()
-		var/delete_allowed = src.allowed(usr)
+		var/delete_allowed = src.allowed(user)
 
 		if (src.panelopen || isAI(user))
 			var/list/manuwires = list(
@@ -469,13 +469,13 @@
 			var/icon_text = "<img class='icon'>"
 			// @todo probably refactor this since it's copy pasted twice now.
 			if (A.item_outputs)
-				var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
+				var/icon_rsc = getItemIcon(A.item_outputs[1], C = user.client)
 				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
 				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
 			if (istype(A, /datum/manufacture/mechanics))
 				var/datum/manufacture/mechanics/F = A
-				var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
+				var/icon_rsc = getItemIcon(F.frame_path, C = user.client)
 				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
 				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
@@ -865,7 +865,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (src.electrified)
-			if (src.manuf_zap(usr, 33))
+			if (src.manuf_zap(user, 33))
 				return
 
 		if (istype(W, /obj/item/ore_scoop))
@@ -1821,13 +1821,13 @@
 
 			var/icon_text = "<img class='icon'>"
 			if (A.item_outputs)
-				var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
-				// usr << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+				var/icon_rsc = getItemIcon(A.item_outputs[1], C = user.client)
+				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
 				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
 			if (istype(A, /datum/manufacture/mechanics))
 				var/datum/manufacture/mechanics/F = A
-				var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
+				var/icon_rsc = getItemIcon(F.frame_path, C = user.client)
 				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
 				icon_text = "<img class='icon' src='[icon_rsc]'>"
 

@@ -162,6 +162,7 @@ var/f_color_selector_handler/F_Color_Selector
 		world.log << ""
 #endif
 
+		Z_LOG_DEBUG("Preload", "  radio")
 		radio_controller = new /datum/controller/radio()
 
 		Z_LOG_DEBUG("Preload", "Loading config...")
@@ -215,8 +216,10 @@ var/f_color_selector_handler/F_Color_Selector
 		Z_LOG_DEBUG("Preload", "Building material cache...")
 		buildMaterialCache()			//^^
 
+		// no log because this is functionally instant
+		global_signal_holder = new
+
 		Z_LOG_DEBUG("Preload", "Starting controllers")
-		Z_LOG_DEBUG("Preload", "  radio")
 
 		Z_LOG_DEBUG("Preload", "  data_core")
 		data_core = new /datum/datacore()
@@ -253,6 +256,8 @@ var/f_color_selector_handler/F_Color_Selector
 		ghost_notifier = new /datum/ghost_notification_controller()
 		Z_LOG_DEBUG("Preload", "  respawn_controller")
 		respawn_controller = new /datum/respawn_controls()
+		Z_LOG_DEBUG("Preload", " cargo_pad_manager")
+		cargo_pad_manager = new /datum/cargo_pad_manager()
 
 		Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 		hydro_controls.set_up()

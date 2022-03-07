@@ -12849,6 +12849,12 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
+"aJG" = (
+/obj/decal/poster/wallsign/poster_borg{
+	pixel_y = 28
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area/station/crew_quarters/quarters_south)
 "aJI" = (
 /obj/cable{
 	d1 = 2;
@@ -17548,12 +17554,6 @@
 /obj/machinery/computer/robotics{
 	perma = 1
 	},
-/obj/cable,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/black,
-/area/station/turret_protected/ai_upload)
-"aYB" = (
-/obj/machinery/lawrack,
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
@@ -39101,20 +39101,6 @@
 "cqM" = (
 /turf/space,
 /area/shuttle/merchant_shuttle/right_station/cogmap)
-"cqS" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/maid,
-/obj/decal/poster/wallsign/poster_rand{
-	pixel_x = 8;
-	pixel_y = 28
-	},
-/obj/item/clothing/head/maid,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge/nw,
-/area/station/crew_quarters/quarters_south)
 "cre" = (
 /obj/disposalpipe/switch_junction/right/north{
 	mail_tag = "genetics";
@@ -40080,20 +40066,6 @@
 	dir = 6
 	},
 /area/station/science/lab)
-"dkK" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/electrical,
-/obj/item/device/gps,
-/obj/item/aiModule/reset,
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/item/device/radio/intercom/medical,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/circuit,
-/area/station/bridge)
 "dkL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -41701,29 +41673,6 @@
 /obj/disposalpipe/junction/right/north,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
-"eJX" = (
-/obj/table/wood/auto,
-/obj/item/plate{
-	pixel_y = 7
-	},
-/obj/item/spraybottle/cleaner,
-/obj/item/sticker/heart{
-	rand_pos = 1
-	},
-/obj/item/sticker/heart{
-	rand_pos = 1
-	},
-/obj/item/sticker/heart{
-	rand_pos = 1
-	},
-/obj/item/sticker/heart{
-	rand_pos = 1
-	},
-/obj/item/sticker/heart{
-	rand_pos = 1
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge/sw,
-/area/station/crew_quarters/quarters_south)
 "eLc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -41816,6 +41765,19 @@
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/security/brig)
+"eOv" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "blue";
+	icon_state = "bedsheet-blue"
+	},
+/obj/machinery/light/small,
+/obj/item/toy/plush/small/possum{
+	pixel_x = 4;
+	pixel_y = -1
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/se,
+/area/station/crew_quarters/quarters_south)
 "ePl" = (
 /obj/cable{
 	d1 = 1;
@@ -43227,6 +43189,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
+"ggB" = (
+/obj/decal/poster/wallsign/poster_octocluwne{
+	pixel_y = 28
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/ne,
+/area/station/crew_quarters/quarters_south)
 "ggG" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -46457,6 +46425,34 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
+"jBl" = (
+/obj/table/wood/auto,
+/obj/item/plate{
+	pixel_x = -3;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/snacks/burger/heartburger{
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/item/sticker/smile{
+	pixel_x = -9;
+	pixel_y = -5
+	},
+/obj/item/sticker/heart{
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/obj/item/sticker/heart{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/sw,
+/area/station/crew_quarters/quarters_south)
 "jCn" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -52544,12 +52540,6 @@
 	dir = 1
 	},
 /area/station/turret_protected/Zeta)
-"pQX" = (
-/obj/table/auto,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/greenblack,
-/area/station/turret_protected/Zeta)
 "pRr" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -54400,15 +54390,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"rMk" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "blue";
-	icon_state = "bedsheet-blue"
-	},
-/obj/machinery/light/small,
-/turf/simulated/floor/carpet/blue/fancy/edge/se,
-/area/station/crew_quarters/quarters_south)
 "rMN" = (
 /obj/machinery/door/airlock/pyro/command{
 	name = "Network Chamber"
@@ -56004,6 +55985,18 @@
 /obj/machinery/light_switch/east,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"tom" = (
+/obj/storage/closet/dresser,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/item/clothing/head/maid,
+/obj/item/clothing/under/gimmick/maid,
+/obj/item/mop,
+/obj/item/spraybottle,
+/turf/simulated/floor/carpet/blue/fancy/edge/nw,
+/area/station/crew_quarters/quarters_south)
 "tov" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -56708,6 +56701,20 @@
 	icon_state = "3"
 	},
 /area/station/quartermaster/office)
+"tYw" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/electrical,
+/obj/item/device/gps,
+/obj/item/aiModule/reset,
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/item/device/radio/intercom/medical,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/circuit,
+/area/station/bridge)
 "tYC" = (
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/grime,
@@ -58780,6 +58787,12 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
+"wcs" = (
+/obj/table/auto,
+/obj/item/aiModule/reset,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/greenblack,
+/area/station/turret_protected/Zeta)
 "wcy" = (
 /obj/stool/chair/red{
 	dir = 1
@@ -59341,6 +59354,12 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
+"wEL" = (
+/obj/machinery/lawrack,
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
 "wEU" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -59762,16 +59781,6 @@
 /obj/disposalpipe/trunk/west,
 /turf/simulated/floor/grey,
 /area/station/quartermaster/cargobay)
-"xcb" = (
-/obj/decal/poster/wallsign/poster_rand{
-	pixel_y = 28
-	},
-/obj/decal/poster/wallsign/poster_rand{
-	pixel_x = -7;
-	pixel_y = 36
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/crew_quarters/quarters_south)
 "xcm" = (
 /obj/item/clothing/mask/wrestling,
 /obj/item/clothing/mask/wrestling/black,
@@ -59894,17 +59903,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"xgt" = (
-/obj/decal/poster/wallsign/poster_rand{
-	pixel_x = -10;
-	pixel_y = 38
-	},
-/obj/decal/poster/wallsign/poster_rand{
-	pixel_x = 9;
-	pixel_y = 31
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/crew_quarters/quarters_south)
 "xgv" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -102733,7 +102731,7 @@ ggy
 aVk
 aWC
 aXJ
-aYB
+wEL
 aSO
 baQ
 bbU
@@ -124794,7 +124792,7 @@ bmc
 wiB
 lMe
 wDf
-dkK
+tYw
 vRE
 msQ
 eZN
@@ -126597,8 +126595,8 @@ cfr
 vrp
 pbG
 mmz
-cqS
-eJX
+tom
+jBl
 aZa
 cZe
 oVx
@@ -126628,7 +126626,7 @@ bHl
 bNX
 fbA
 lSk
-pQX
+wcs
 bHl
 bUJ
 bfO
@@ -126899,7 +126897,7 @@ bic
 oSO
 bkP
 mmz
-xgt
+aJG
 mhG
 aZa
 gut
@@ -127201,8 +127199,8 @@ bid
 rTf
 pWP
 mmz
-xcb
-rMk
+ggB
+eOv
 aZa
 aZa
 aZa

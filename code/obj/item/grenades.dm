@@ -831,8 +831,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				M << S
 
 	attack_self(mob/user as mob)
-		if (usr.equipped() == src && !armed)
-			src.arm(usr)
+		if (user.equipped() == src && !armed)
+			src.arm(user)
 			logGrenade(user)
 			armed = 1
 

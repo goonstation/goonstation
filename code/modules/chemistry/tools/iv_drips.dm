@@ -272,7 +272,7 @@
 			return
 		else if (src.IV)
 			//src.IV.Attackby(W, user)
-			W.afterattack(src.IV, user)
+			W.AfterAttack(src.IV, user)
 			return
 		else
 			return ..()

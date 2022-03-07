@@ -1,4 +1,57 @@
-
+(t)mon mar 07 22
+(u)zamujasa
+(+)Fixed a bug involving the mineral magnet not clearing itself out properly on destruction that prevented the mineral magnet from being repaired if the magnet itself reached critical damage.
+(+)Fabricate replacement magnet parts and click the empty chassis with them to install a new magnet. Or just don't break it in the first place.
+(t)sun mar 06 22
+(u)pali
+(+)Character flavour text no longer appears in the examine text if their face is hidden.
+(u)pali
+(*)The glue reagent can now coat items in glue which lets you stick them to other stuff.<br><sup>This is highly experimental, likely unavoidably buggy despite my best attempts and subject to change or very likely to a revert.</sup>
+(u)aloe
+(+) The syndicate cargo trasporter now welds crates and lockers at the start of the teleport rather than the end.
+(+) Also I reworked how cargo pads and transporters work. Nothing should be noticeable (other than QoL stuff), but report any bugs you find thanks
+(u)AmazingDragons
+(p)7579
+(e)🆕|feature
+(+)Nanotrasen has updated your favorite guardbuddies to include more insults for pranking your co-workers!
+(u)Juggernaut2442
+(p)7692
+(e)🐛|bug
+(*)Fixes some antique lawbringer bug and cleans up how iconstates are called.
+(u)Tarmunora
+(e)⚖|balance
+(*)Highly experimental cryoxadone rework - now has varying efficacy for different damage types based on the temperature, instead of being a boolean on/off. Highly subject to change/reversion.
+(t)sat mar 05 22
+(u)Hans
+(p)7527
+(e)🆕🎨|feature, sprites
+(*)Added space glue to the game.
+(u)NightmareChamillian
+(p)7631
+(e)🎨|sprites
+(+)Resprites the SMG magazine
+(u)Fwll
+(p)7688
+(e)🎨|sprites
+(+)Added Chip Butties and Innitium
+(u)Nemiko
+(p)7588
+(e)|
+(+)Added nine new drink recipes, a mostly non-alcoholic.
+(u)Sovexe
+(p)7689
+(e)🆕🗺|feature, mapping
+(*)The Donut3 Ranch now has space to grow your crops and a kitchen freezer chute.
+(t)fri mar 04 22
+(u)LeahTheTech
+(p)7685
+(e)|
+(+)The merchant shuttle will now announce its arrival shortly BEFORE instantly gibbing anything in its way.
+(t)thu mar 03 22
+(u)glowbold
+(p)7666
+(e)🆕|feature
+(*)As a changeling victim, your pleas for help/mercy/death/JOIN US are now audible when your master goes into horror form!
 (t)wed mar 02 22
 (u)Jimmyl
 (p)7657

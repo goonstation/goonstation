@@ -946,7 +946,13 @@
 		equipment_proxy.additive_slowdown -= spacemove
 		equipment_proxy.space_movement -= spacemove
 
+/obj/item/proc/AfterAttack(atom/target, mob/user, reach, params)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, reach, params)
+	. = src.afterattack(target, user, reach, params)
+
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
+	PROTECTED_PROC(TRUE)
 	return
 
 /obj/item/dummy/ex_act()

@@ -98,19 +98,19 @@
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
-			boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
+			boutput(user, "<span class='notice'>You swipe the ID card in the card reader.</span>")
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(I:registered)
 			if(account)
-				var/enterpin = usr.enter_pin("Card Reader")
+				var/enterpin = user.enter_pin("Card Reader")
 				if (enterpin == I:pin)
-					boutput(usr, "<span class='notice'>Card authorized.</span>")
+					boutput(user, "<span class='notice'>Card authorized.</span>")
 					src.scan = I
 				else
-					boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
+					boutput(user, "<span class='alert'>Pin number incorrect.</span>")
 					src.scan = null
 			else
-				boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
+				boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 				src.scan = null
 
 	attack_hand(var/mob/user as mob)

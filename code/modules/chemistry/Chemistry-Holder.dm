@@ -410,6 +410,8 @@ datum
 			active_reactions = list()
 			reaction_loop:
 				for(var/datum/chemical_reaction/C in src.possible_reactions)
+					if(src.disposed)
+						return
 					if (!islist(C.required_reagents)) //This shouldn't happen but when practice meets theory...they beat the shit out of one another I guess
 						continue
 

@@ -17,11 +17,6 @@
 	var/amount_per_transfer_from_this = 10
 	var/capacity
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/cargotele))
-			W:cargoteleport(src, user)
-		return
-
 	New()
 		..()
 		src.create_reagents(4000)

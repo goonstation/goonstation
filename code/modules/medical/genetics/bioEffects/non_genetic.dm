@@ -193,7 +193,7 @@
 
 	OnAdd()
 		. = ..()
-		holder.owner?.UpdateParticles(new/particles/stink_lines, "stink_lines", list(KEEP_APART, RESET_TRANSFORM))
+		holder.owner?.UpdateParticles(new/particles/stink_lines, "stink_lines", KEEP_APART | RESET_TRANSFORM)
 
 	OnLife(var/mult)
 		if(..()) return

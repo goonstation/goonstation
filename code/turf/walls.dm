@@ -299,12 +299,12 @@
 				playsound(user.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				if (src.material)
 					src.material.triggerOnAttacked(src, user, user, src)
-				for (var/mob/N in AIviewers(usr, null))
+				for (var/mob/N in AIviewers(user, null))
 					if (N.client)
 						shake_camera(N, 4, 8, 0.5)
 			if (prob(40))
 				boutput(user, text("<span class='notice'>You smash through the [src.name].</span>"))
-				logTheThing("combat", usr, null, "uses hulk to smash a wall at [log_loc(src)].")
+				logTheThing("combat", user, null, "uses hulk to smash a wall at [log_loc(src)].")
 				dismantle_wall(1)
 				return
 			else

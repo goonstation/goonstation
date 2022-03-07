@@ -16,18 +16,17 @@
 	holder.particles = P
 	holder.vis_locs |= src
 	particle_refs[key] = holder
-	for (var/flag in effect_appearance_flags)
-		ADD_FLAG(holder.appearance_flags, flag)
+	holder.appearance_flags |= effect_appearance_flags
 
 /atom/proc/ClearSpecificParticles(key)
 	if(!key)
 		CRASH("ClearSpecificParticles called without a key.")
 	if (!particle_refs)
 		return
-	var/obj/effects/holder
-	holder = particle_refs[key]
+	var/obj/effects/holder = particle_refs[key]
 	holder?.vis_locs = null
 	qdel(holder)
+	particle_refs -= key
 
 /atom/proc/ClearAllParticles()
 	if (!particle_refs)

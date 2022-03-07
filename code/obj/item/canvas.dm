@@ -80,14 +80,14 @@
 
 			// tracks how many things someone's drawn on it.
 			// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
-			artists[ckey(usr.ckey)]++
+			artists[ckey(user.ckey)]++
 
 			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 40, 1)
 			user.visible_message("[user] paints over \the [src] with \the [W].", "You paint over \the [src] with \the [W].")
 			logTheThing("station", user, null, "coated [src] in paint: [log_loc(src)]: canvas{\ref[src], -1, -1, [P.paint_color]}")
 
 			// send the damn icon and gently nudge the page into refreshing it
-			send_the_damn_icon(usr)
+			send_the_damn_icon(user)
 			return
 
 		else if (istype(W, /obj/item/pen))

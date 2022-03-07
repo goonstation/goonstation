@@ -302,7 +302,7 @@
 		RETURN_TYPE(/list)
 		. = src.contents.Copy()
 		for(var/atom/A as anything in .)
-			if(!istype(A, /obj/item) || istype(A, /obj/item/grab))
+			if(!istype(A, /obj/item) || istype(A, /obj/item/grab) || A.GetComponent(/datum/component/glued))
 				. -= A
 
 	proc/add_contents(obj/item/I)

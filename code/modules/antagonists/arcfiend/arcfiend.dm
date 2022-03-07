@@ -186,7 +186,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 					smes.charge -= SMES_DRAIN_RATE
 					points_gained = SAP_LIMIT_APC
 			else
-				if (!target_apc.cell || target_apc.cell.charge <= ((target_apc.cell.maxcharge / POWER_CELL_CHARGE_PERCENT_MINIMUM) + POWER_CELL_DRAIN_RATE)) //not enough power
+				if (!target_apc?.cell || target_apc.cell.charge <= ((target_apc.cell.maxcharge / POWER_CELL_CHARGE_PERCENT_MINIMUM) + POWER_CELL_DRAIN_RATE)) //not enough power
 					boutput(holder.owner, "<span class='alert'>[target] doesn't have enough energy for you to absorb!")
 					interrupt(INTERRUPT_ALWAYS)
 					return

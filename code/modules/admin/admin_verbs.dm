@@ -101,6 +101,7 @@ var/list/admin_verbs = list(
 		/client/proc/revive_all_parrots,
 		/datum/admins/proc/toggle_blood_system,
 		/client/proc/narrator_mode,
+		/client/proc/force_desussification,
 		/client/proc/admin_observe_random_player,
 		/client/proc/orp,
 		/client/proc/admin_pick_random_player,
