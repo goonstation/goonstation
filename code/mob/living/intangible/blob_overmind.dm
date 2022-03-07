@@ -114,7 +114,7 @@
 		..()
 
 	set_loc(atom/newloc)
-		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION && !tutorial)
+		if (isturf(newloc) && (newloc.z != Z_LEVEL_STATION && newloc.z != Z_LEVEL_ADVENTURE) && !tutorial) //needs z2 to be able to ride the shuttle
 			return
 		..()
 
