@@ -2066,6 +2066,9 @@ datum
 						// we ate them all, time to die
 						if(holder?.my_atom?.material?.mat_id == "gnesis") // gnesis material prevents coag. gnesis from evaporating
 							return
+
+						if (ishuman(holder?.my_atom)) //humans are full of reagents, just not in the reagent holder
+							return
 						holder.remove_reagent(id, conversion_rate)
 
 			// let's put more teeth into this.
