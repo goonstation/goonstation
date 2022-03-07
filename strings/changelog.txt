@@ -1,4 +1,7 @@
-
+(t)mon mar 07 22
+(u)zamujasa
+(+)Fixed a bug involving the mineral magnet not clearing itself out properly on destruction that prevented the mineral magnet from being repaired if the magnet itself reached critical damage.
+(+)Fabricate replacement magnet parts and click the empty chassis with them to install a new magnet. Or just don't break it in the first place.
 (t)sun mar 06 22
 (u)pali
 (+)Character flavour text no longer appears in the examine text if their face is hidden.
