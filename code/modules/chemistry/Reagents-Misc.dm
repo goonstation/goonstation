@@ -865,9 +865,19 @@ datum
 					return
 				if(O.GetComponent(/datum/component/glued) || O.GetComponent(/datum/component/glue_ready))
 					return
+				if(O.invisibility >= INVIS_ALWAYS_ISH)
+					return
+				var/silent = FALSE
+				var/list/covered = holder.covered_turf()
+				if (length(covered) > 5)
+					silent = TRUE
+				volume /= max(length(covered) / 5, 1)
 				O.AddComponent(/datum/component/glue_ready, volume * 5 SECONDS, 5 SECONDS)
 				var/turf/T = get_turf(O)
-				T.visible_message("<span class='notice'>\The [O] is coated in a layer of glue!</span>")
+				if(!silent)
+					T.visible_message("<span class='notice'>\The [O] is coated in a layer of glue!</span>")
+				if(istype(holder, /datum/reagents/fluid_group))
+					holder.remove_reagent(src.id, min(volume, src.volume - 4))
 
 // metal foaming agent
 // this is lithium hydride. Add other recipies (e.g. MiH + H2O -> MiOH + H2) eventually
