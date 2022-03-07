@@ -4,10 +4,11 @@
 	density = 1
 	anchored = 1
 	mats = 10
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "geneman-on"
-	flags = NOSPLASH
+	flags = NOSPLASH | FPRINT
+	event_handler_flags = NO_MOUSEDROP_QOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/mode = "overview"
 	var/list/seeds = list()
 	var/seedfilter = null
