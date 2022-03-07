@@ -56,4 +56,3 @@
 						L.emote(picked_emote)
 				else
 					L.emote(picked_emote)
-				boutput(L, "A nearby object forces you to [picked_emote].")

@@ -505,6 +505,7 @@
 		playsound(src.loc, src.sound_destroyed, 50, 2)
 		overlays = list()
 		damage_overlays = list()
+		linked_chassis?.linked_magnet = null
 		linked_chassis = null
 		active_overlay = null
 		sound_activate = null

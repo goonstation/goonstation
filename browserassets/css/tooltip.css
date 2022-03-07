@@ -180,6 +180,6 @@ p {
 
 /* for item description colors */
 .success {color: green;}
-.hint {color: #0000ff;}
-.notice {color: #0000ff;}
+.hint {color: ##9999FF;}
+.notice {color: ##9999FF;}
 .alert {color: #ff0000;}
