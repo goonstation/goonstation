@@ -249,6 +249,13 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabPath = "assets/maps/prefabs/prefab_securitron_academy.dmm"
 		prefabSizeX = 34
 		prefabSizeY = 37
+
+	art_workshop
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_artist_studio.dmm"
+		prefabSizeX = 25
+		prefabSizeY = 18
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit
@@ -260,7 +267,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 8
 		prefabSizeY = 8
 
-#ifdef SUBMARINE_MAP
+#ifdef UNDERWATER_MAP
 	mantahole
 		required = 1
 		underwater = 1

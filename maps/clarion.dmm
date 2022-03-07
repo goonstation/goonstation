@@ -13232,6 +13232,7 @@
 	icon_state = "2-4"
 	},
 /obj/storage/crate/clown,
+/obj/item/storage/toolbox/artistic,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown)
 "azZ" = (
@@ -30865,6 +30866,10 @@
 /area/station/science/artifact)
 "bnT" = (
 /obj/table/reinforced/auto,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 5;
+	pixel_y = 6
+	},
 /obj/item/hand_labeler,
 /obj/item/device/audio_log,
 /obj/item/audio_tape{
@@ -41953,9 +41958,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "bJV" = (
 /turf/simulated/wall/asteroid{
@@ -41979,9 +41982,7 @@
 	},
 /area/listeningpost/solars)
 "bJY" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "bJZ" = (
 /obj/cable{
@@ -41989,9 +41990,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "bKa" = (
 /turf/simulated/wall/asteroid{
@@ -42114,9 +42113,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "bKo" = (
 /obj/cable{
@@ -42124,9 +42121,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "bKp" = (
 /obj/cable,
@@ -42234,9 +42229,7 @@
 /area/space)
 "bKA" = (
 /obj/securearea,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "bKB" = (
 /obj/cable{
@@ -42308,9 +42301,7 @@
 	},
 /area/listeningpost)
 "bKK" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "bKL" = (
 /turf/space,
@@ -42598,9 +42589,7 @@
 /area/listeningpost)
 "bLv" = (
 /obj/submachine/ATM,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "bLw" = (
 /obj/machinery/vending/snack,
@@ -42623,9 +42612,7 @@
 	},
 /area/listeningpost)
 "bLz" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/syndicate_teleporter)
 "bLA" = (
 /obj/cable{
@@ -43003,7 +42990,10 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/bookshelf/persistent,
+/obj/bookshelf/persistent{
+	density = 0;
+	pixel_y = 19
+	},
 /turf/simulated/floor/black/side{
 	dir = 1
 	},

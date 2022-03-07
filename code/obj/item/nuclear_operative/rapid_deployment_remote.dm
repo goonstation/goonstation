@@ -4,8 +4,6 @@
 	desc = "A remote used to signal a place for a set of rapid-troop-deployment personnel missile pods to land."
 	icon_state = "satcom"
 	item_state = "electronic"
-	density = 0
-	anchored = 0.0
 	w_class = W_CLASS_SMALL
 	var/area/landing_area = null
 	var/list/mob/sent_mobs = list()
@@ -52,56 +50,24 @@
 					for(var/obj/machinery/nuclearbomb/the_nuke in range(4, user.loc))
 						is_the_nuke_there = TRUE
 						break
-					for(var/turf/T in range(4, user.loc))
-						if(length(overlayed_turfs))
-							break
-						if(!isfloor(T))
-							continue
-						overlayed_turfs += T
-						T.overlays += valid_overlay_area
-					SPAWN_DBG(5 SECONDS)
+					if(!length(overlayed_turfs))
+						for(var/turf/T in range(4, user.loc))
+							if(!isfloor(T))
+								continue
+							overlayed_turfs += T
+							T.overlays += valid_overlay_area
+					SPAWN(5 SECONDS)
 						for(var/turf/T in overlayed_turfs)
 							T.overlays -= valid_overlay_area
-					if((length(chosen_mobs) <= 1) && !is_the_nuke_there)
-						var/confirmation = input(user, "Are you sure you would like to deploy? You don't have the nuke nearby, in addition to you being alone!") in list("Yes", "No")
-						if(confirmation == "Yes")
-							var/confirmation2 = input(user, "Are you EXTREMELY sure? There's no coming back!") in list("Yes", "No")
-							if(confirmation2 == "Yes")
-								send_to_pod(user)
-							else
-								return
-						else
-							return
-					else if(length(chosen_mobs) <= 1)
-						var/confirmation = input(user, "Are you sure you would like to deploy? You're currently alone!") in list("Yes", "No")
-						if(confirmation == "Yes")
-							var/confirmation2 = input(user, "Are you EXTREMELY sure? There's no coming back!") in list("Yes", "No")
-							if(confirmation2 == "Yes")
-								send_to_pod(user)
-							else
-								return
-						else
-							return
-					else if(!is_the_nuke_there)
-						var/confirmation = input(user, "Are you sure you would like to deploy? The nuke isn't close enough to come with you!") in list("Yes", "No")
-						if(confirmation == "Yes")
-							var/confirmation2 = input(user, "Are you EXTREMELY sure? There's no coming back!") in list("Yes", "No")
-							if(confirmation2 == "Yes")
-								send_to_pod(user)
-							else
-								return
+					var/confirmation = input(user, "Are you sure you would like to deploy? [length(chosen_mobs) <= 1 ? (is_the_nuke_there ? "You're currently alone!" : "You don't have the nuke nearby, in addition to you being alone!") : (is_the_nuke_there ? "You have [length(chosen_mobs)] who will deploy with you." : "The nuke isn't close enough to come with you!")]") in list("Yes", "No")
+					if(confirmation == "Yes")
+						var/confirmation2 = input(user, "Are you EXTREMELY sure? There's no coming back!") in list("Yes", "No")
+						if(confirmation2 == "Yes")
+							send_to_pod(user)
 						else
 							return
 					else
-						var/confirmation = input(user, "Are you sure you would like to deploy? You have [length(chosen_mobs)] who will deploy with you.") in list("Yes", "No")
-						if(confirmation == "Yes")
-							var/confirmation2 = input(user, "Are you EXTREMELY sure? There's no coming back!") in list("Yes", "No")
-							if(confirmation2 == "Yes")
-								send_to_pod(user)
-							else
-								return
-						else
-							return
+						return
 				if("Cancel")
 					return
 
@@ -128,7 +94,7 @@
 
 	proc/send_to_pod(mob/user)
 		for(var/mob/living/carbon/M in range(4, user.loc))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/L = pick_landmark(LANDMARK_SYNDICATE_ASSAULT_POD_TELE)
 				if(!L) //fuck
 					return
@@ -139,12 +105,12 @@
 				M.set_loc(L)
 				var/obj/decal/residual_energy/R = new/obj/decal/residual_energy(L)
 				playsound(L, "sound/effects/teleport.ogg", 30, 1)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					qdel(S)
 					qdel(R)
 			sent_mobs += M
 		for(var/obj/machinery/nuclearbomb/the_nuke in range(4, user.loc))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/landmark_teleport = pick_landmark(LANDMARK_SYNDICATE_ASSAULT_POD_TELE)
 				if(!landmark_teleport)
 					return
@@ -153,7 +119,7 @@
 				the_nuke.set_loc(landmark_teleport)
 				var/obj/decal/residual_energy/tele_energy = new/obj/decal/residual_energy(landmark_teleport)
 				playsound(landmark_teleport, "sound/effects/teleport.ogg", 30, 1)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					qdel(tele_swirl)
 					qdel(tele_energy)
 			nuclear_bombs += the_nuke
@@ -171,7 +137,7 @@
 					L.changeStatus("weakened", 2 SECONDS)
 			command_alert("A Syndicate Assault pod is heading towards [station_name], be on high alert.", "Central Command Alert", "sound/misc/announcement_1.ogg")
 			sleep(rand_time / 2)
-			command_alert("Our sensors have determined the Syndicate Assault pod is headed towards [src.landing_area], a response would be advised.", "Central Command Alert", "sound/misc/announcement_1.ogg")
+			command_alert("Our sensors have determined the Syndicate Assault pod is headed towards the [src.landing_area], a response would be advised.", "Central Command Alert", "sound/misc/announcement_1.ogg")
 			sleep(rand_time / 2)
 			send_pods()
 
@@ -181,18 +147,18 @@
 			possible_turfs += T
 		for(var/obj/machinery/nuclearbomb/the_nuke in nuclear_bombs)
 			var/turf/picked_turf = pick(possible_turfs)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				launch_with_missile(the_nuke, picked_turf, null, "arrival_missile_synd")
 			possible_turfs -= picked_turf
 		for(var/mob/living/carbon/C in sent_mobs)
 			var/turf/picked_turf = pick(possible_turfs)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				launch_with_missile(C, picked_turf, null, "arrival_missile_synd")
 			possible_turfs -= picked_turf
 			if(!length(possible_turfs))
 				src.visible_message("<span class='alert'>The [src] makes a grumpy beep, it seems not everyone could be sent!</span>")
 				break
-		command_alert("A group of [length(sent_mobs)] personnel missiles have been spotted launching from a Syndicate Assault pod towards [src.landing_area], be prepared for heavy contact.","Central Command Alert", "sound/misc/announcement_1.ogg")
+		command_alert("A [length(sent_mobs) > 1 ? "group of [length(sent_mobs)] personnel missiles have" : "single personnel missile has"] been spotted launching from a Syndicate Assault pod towards the [src.landing_area], be prepared for heavy contact.","Central Command Alert", "sound/misc/announcement_1.ogg")
 		qdel(src)
 
 /obj/machinery/computer/security/pod_timer

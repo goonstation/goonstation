@@ -40,7 +40,7 @@
 		world << siren
 		command_alert("A BATTLE STORM is approaching the [station_or_ship()]! Impact in 60 seconds. You will take large amounts of damage unless you are standing in [get_battle_area_names(safe_area_names)]!", "BATTLE STORM INCOMING")
 
-		SPAWN_DBG(60 SECONDS)
+		SPAWN(60 SECONDS)
 
 			siren.repeat = FALSE
 			siren.channel = 5
@@ -82,7 +82,7 @@
 			boutput(world, "<span class='alert'><B>WARNING</B>: A BATTLE STORM has struck [station_name(1)]. You will take damage unless you are in [get_battle_area_names(safe_area_names)]!</span>")
 
 			for (var/mob/M in mobs)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if (!inafterlife(M) && !isVRghost(M))
 						shake_camera(M, 100, 16) // wire note: lowered strength from 840 to 400, by popular request
 

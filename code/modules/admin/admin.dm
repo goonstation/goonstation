@@ -20,12 +20,10 @@ var/global/noir = 0
 		if (!asay && rank_to_level(C.holder.rank) < LEVEL_MOD) // No confidential info for goat farts (Convair880).
 			continue
 		if (C.player_mode)
-			if (asay && C.player_mode_asay)
-				boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
-			else
+			if (!asay || (asay && !C.player_mode_asay))
 				continue
-		else
-			boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
+		boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
+
 
 /proc/message_coders(var/text) //Shamelessly adapted from message_admins
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span></span>"
@@ -44,7 +42,7 @@ var/global/noir = 0
 /proc/message_attack(var/text) //Sends a message to folks when an attack goes down
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK LOG:</span> <span class=\"message\">[text]</span></span>"
 	for (var/client/C)
-		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_MOD && C.holder.attacktoggle && !C.player_mode)
+		if (C.mob && C.holder && C.holder.attacktoggle && !C.player_mode && rank_to_level(C.holder.rank) >= LEVEL_MOD)
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/rank_to_level(var/rank)
@@ -393,7 +391,7 @@ var/global/noir = 0
 				ircmsg["key"] = src.owner:key
 				ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 				ircmsg["msg"] = "Has [emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle"
-				ircbot.export("admin", ircmsg)
+				ircbot.export_async("admin", ircmsg)
 			else
 				alert("You need to be at least a Primary Administrator to enable/disable shuttle calling.")
 
@@ -445,7 +443,7 @@ var/global/noir = 0
 							ircmsg["key"] = src.owner:key
 							ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 							ircmsg["msg"] = "Deleted note [noteId] belonging to [player]"
-							ircbot.export("admin", ircmsg)
+							ircbot.export_async("admin", ircmsg)
 
 				if("add")
 					if(src.level < LEVEL_SA)
@@ -457,7 +455,7 @@ var/global/noir = 0
 						return
 
 					addPlayerNote(player, usr.ckey, the_note)
-					SPAWN_DBG(2 SECONDS) src.viewPlayerNotes(player)
+					SPAWN(2 SECONDS) src.viewPlayerNotes(player)
 
 					logTheThing("admin", usr, null, "added a note for [player]: [the_note]")
 					logTheThing("diary", usr, null, "added a note for [player]: [the_note]", "admin")
@@ -467,7 +465,7 @@ var/global/noir = 0
 					ircmsg["key"] = src.owner:key
 					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "Added a note for [player]: [the_note]"
-					ircbot.export("admin", ircmsg)
+					ircbot.export_async("admin", ircmsg)
 
 		if("loginnotice")
 			var/player = null
@@ -1777,10 +1775,7 @@ var/global/noir = 0
 						do
 							WO = input("What objective?", "Objective", null) as null|anything in childrentypesof(/datum/objective/specialist/wraith)
 							if (WO)
-								var/datum/objective/specialist/wraith/WObj = new WO()
-								WObj.owner = mind
-								WObj.set_up()
-								mind.objectives += WObj
+								new WO(null, mind)
 						while (WO != null)
 					if ("Random")
 						generate_wraith_objectives(mind)
@@ -1826,7 +1821,7 @@ var/global/noir = 0
 						ticker.mode.Agimmicks += B.mind
 						B.antagonist_overlay_refresh(1, 0)
 
-						SPAWN_DBG(0)
+						SPAWN(0)
 							var/newname = input(B, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
 
 							if (newname)
@@ -2060,7 +2055,7 @@ var/global/noir = 0
 							else
 								evilize(M, selection)
 						/*	else
-								SPAWN_DBG(0) alert("An error occurred, please try again.")*/
+								SPAWN(0) alert("An error occurred, please try again.")*/
 					else
 						var/list/traitor_types = list(ROLE_TRAITOR, ROLE_WIZARD, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WEREWOLF, ROLE_HUNTER, ROLE_WRESTLER, ROLE_GRINCH, ROLE_OMNITRAITOR, ROLE_SPY_THIEF, ROLE_ARCFIEND)
 						if(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang))
@@ -2075,7 +2070,7 @@ var/global/noir = 0
 							else
 								evilize(M, selection)
 							/*else
-								SPAWN_DBG(0) alert("An error occurred, please try again.")*/
+								SPAWN(0) alert("An error occurred, please try again.")*/
 			//they're a ghost/hivebotthing/etc
 			else
 				alert("Cannot make this mob a traitor")
@@ -2154,7 +2149,7 @@ var/global/noir = 0
 					ircmsg["key"] = usr.client.key
 					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "has removed [C]'s adminship"
-					ircbot.export("admin", ircmsg)
+					ircbot.export_async("admin", ircmsg)
 
 					admins.Remove(C.ckey)
 					onlineAdmins.Remove(C)
@@ -2169,7 +2164,7 @@ var/global/noir = 0
 					ircmsg["key"] = usr.client.key
 					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "has made [C] a [rank]"
-					ircbot.export("admin", ircmsg)
+					ircbot.export_async("admin", ircmsg)
 
 					admins[C.ckey] = rank
 					onlineAdmins.Add(C)
@@ -2544,7 +2539,7 @@ var/global/noir = 0
 									if(AffectedArea.name != "Space" && AffectedArea.name != "Ocean" && AffectedArea.name != "Engine Walls" && AffectedArea.name != "Chemical Lab Test Chamber" && AffectedArea.name != "Escape Shuttle" && AffectedArea.name != "Arrival Area" && AffectedArea.name != "Arrival Shuttle" && AffectedArea.name != "start area" && AffectedArea.name != "Engine Combustion Chamber")
 										AffectedArea.power_light = 0
 										AffectedArea.power_change()
-										SPAWN_DBG(rand(55,185))
+										SPAWN(rand(55,185))
 											AffectedArea.power_light = 1
 											AffectedArea.power_change()
 										var/Message = rand(1,4)
@@ -2763,7 +2758,7 @@ var/global/noir = 0
 									else
 										string_version = "\"[pick]\""
 
-								SPAWN_DBG(0)
+								SPAWN(0)
 									for(var/mob/living/carbon/X in mobs)
 										for(pick in picklist)
 											if (adding)
@@ -2827,7 +2822,7 @@ var/global/noir = 0
 									else
 										string_version = "[amt] \"[pick]\""
 
-								SPAWN_DBG(0)
+								SPAWN(0)
 									for(var/mob/living/carbon/X in mobs)
 										for(pick in picklist)
 											var/amt = picklist[pick]
@@ -3117,7 +3112,7 @@ var/global/noir = 0
 							logTheThing("diary", src, null, "created a shake effect (intensity [intensity], length [time])", "admin")
 							message_admins("[key_name(usr)] has created a shake effect (intensity [intensity], length [time]).")
 							for (var/mob/M in mobs)
-								SPAWN_DBG(0)
+								SPAWN(0)
 									shake_camera(M, time * 10, intensity)
 								if (intensity >= 64)
 									M.changeStatus("weakened", 2 SECONDS)
@@ -3313,6 +3308,7 @@ var/global/noir = 0
 				switch(href_list["type"])
 					if("check_antagonist")
 						if (ticker?.mode && current_state >= GAME_STATE_PLAYING)
+							#define isdeadplayer(M) (isdead(M) || (isVRghost(M) || isghostcritter(M) || inafterlife(M) || isghostdrone(M)))
 							var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1><A href='?src=\ref[src];action=secretsadmin;type=check_antagonist'>Refresh</A><br><br>"
 							dat += "Current Game Mode: <B>[ticker.mode.name]</B><BR>"
 							dat += "Round Duration: <B>[round(world.time / 36000)]:[add_zero(world.time / 600 % 60, 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B><BR>"
@@ -3323,7 +3319,7 @@ var/global/noir = 0
 								for(var/datum/mind/N in NN.syndicates)
 									var/mob/M = N.current
 									if(!M) continue
-									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td></tr>"
 
 								// This basic bit of info was missing, even though you could look up the
@@ -3352,18 +3348,18 @@ var/global/noir = 0
 								for(var/datum/mind/N in ticker.mode:head_revolutionaries)
 									var/mob/M = N.current
 									if(!M) continue
-									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a> <b>(Leader)</b>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a> <b>(Leader)</b>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td></tr>"
 								for(var/datum/mind/N in ticker.mode:revolutionaries)
 									var/mob/M = N.current
 									if(!M) continue
-									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td></tr>"
 								dat += "</table><table cellspacing=5><tr><td><B>Target(s)</B></td><td></td><td><B>Location</B></td></tr>"
 								for(var/datum/mind/N in ticker.mode:get_living_heads())
 									var/mob/M = N.current
 									if(!M) continue
-									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
 									var/turf/mob_loc = get_turf(M)
 									dat += "<td>[mob_loc.loc]</td></tr>"
@@ -3376,7 +3372,7 @@ var/global/noir = 0
 									for(var/datum/mind/leader in spymode.leaders)
 										var/mob/M = leader.current
 										if(!M) continue
-										dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[key_name(M)]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+										dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[key_name(M)]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 										dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
 										dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>Show Objective</A></td></tr>"
 
@@ -3389,7 +3385,7 @@ var/global/noir = 0
 									for(var/datum/mind/spy in spymode.spies)
 										var/mob/M = spy.current
 										if(!M) continue
-										dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+										dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 										dat += "<td>Obeys: "
 										var/datum/mind/obeycheck = spymode.spies[spy]
 										if (istype(obeycheck) && obeycheck.current)
@@ -3409,12 +3405,12 @@ var/global/noir = 0
 										var/mob/M = leader.current
 										var/datum/gang/gang = leader.gang
 										dat += "<br><table cellspacing=5><tr><td>([format_frequency(gang.gang_frequency)]) <B>[gang.gang_name]:</B></td><td></td><tr>"
-										dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[key_name(M)]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+										dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[key_name(M)]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 										dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
 										dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>Show Objective</A></td></tr>"
 										for(var/datum/mind/member in gang.members)
 											if(member.current != null)
-												dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[key_name(member.current)]</a>[member.current.client ? "" : " <i>(logged out)</i>"][isdead(member.current) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+												dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[key_name(member.current)]</a>[member.current.client ? "" : " <i>(logged out)</i>"][isdeadplayer(member.current) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 												dat += "<td><a href='?action=priv_msg&target=[member.ckey]'>PM</A></td>"
 												dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[member.current]'>Show Objective</A></td></tr>"
 									dat += "</table>"
@@ -3426,7 +3422,7 @@ var/global/noir = 0
 								for (var/datum/mind/traitor in ticker.mode.traitors)
 									var/mob/M = traitor.current
 									if (!M) continue
-									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
 									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>([M?.mind?.special_role])</A></td></tr>"
 								dat += "</table>"
@@ -3436,7 +3432,7 @@ var/global/noir = 0
 								for(var/datum/mind/gimmick in ticker.mode.Agimmicks)
 									var/mob/M = gimmick.current
 									if(!M) continue
-									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
 									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>([M?.mind?.special_role])</A></td></tr>"
 								dat += "</table>"
@@ -3446,7 +3442,7 @@ var/global/noir = 0
 								for(var/datum/mind/miscreant in miscreants)
 									var/mob/M = miscreant.current
 									if(!M) continue
-									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
 									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>Show Objective</A></td></tr>"
 								dat += "</table>"
@@ -3470,6 +3466,7 @@ var/global/noir = 0
 
 							dat += "</body></html>"
 							usr.Browse(dat, "window=roundstatus;size=400x500")
+							#undef isdeadplayer
 						else
 							alert("The game hasn't started yet!")
 					if("shuttle_panel")
@@ -4219,9 +4216,9 @@ var/global/noir = 0
 		ircmsg["key"] = usr.client.key
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "manually restarted the server."
-		ircbot.export("admin", ircmsg)
+		ircbot.export_async("admin", ircmsg)
 
-		round_end_data(2) //Wire: Export round end packet (manual restart)
+		round_end_data(2) //Wire: export_async round end packet (manual restart)
 
 		sleep(3 SECONDS)
 		Reboot_server()
@@ -4299,7 +4296,7 @@ var/global/noir = 0
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "has delayed the server restart."
-		ircbot.export("admin", ircmsg)
+		ircbot.export_async("admin", ircmsg)
 
 	else if (game_end_delayed == 1)
 		game_end_delayed = 0
@@ -4312,7 +4309,7 @@ var/global/noir = 0
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "has removed the server restart delay."
-		ircbot.export("admin", ircmsg)
+		ircbot.export_async("admin", ircmsg)
 
 /mob/proc/revive()
 	if(ishuman(src))
@@ -4382,14 +4379,10 @@ var/global/noir = 0
 	special = lowertext(special)
 
 	if(mass_traitor_obj)
-		var/datum/objective/custom_objective = new /datum/objective(mass_traitor_obj)
-		custom_objective.owner = M.mind
-		M.mind.objectives += custom_objective
+		new /datum/objective(mass_traitor_obj, M.mind)
 
 		if(mass_traitor_esc)
-			var/datum/objective/escape/escape_objective = new mass_traitor_esc
-			escape_objective.owner = M.mind
-			M.mind.objectives += escape_objective
+			new mass_traitor_esc(null, M.mind)
 	else
 		var/list/eligible_objectives = list()
 		if (ishuman(M) || ismobcritter(M))
@@ -4413,13 +4406,10 @@ var/global/noir = 0
 			if (ROLE_GRINCH)
 				eligible_objectives += /datum/objective/specialist/ruin_xmas
 			if (ROLE_GANG_LEADER)
-				var/datum/objective/gangObjective = new /datum/objective/specialist/gang(  )
-				gangObjective.owner = M.mind
+				new /datum/objective/specialist/gang(null, M.mind)
 				M.mind.special_role = ROLE_GANG_LEADER
-				M.mind.objectives += gangObjective
 		var/done = 0
 		var/select_objective = null
-		var/datum/objective/new_objective = null
 		var/custom_text = "Go hog wild!"
 		while (done != 1)
 			select_objective = input(usr, "Add a new objective. Hit cancel when finished adding.", "Traitor Objectives") as null|anything in eligible_objectives
@@ -4429,17 +4419,11 @@ var/global/noir = 0
 			if (select_objective == /datum/objective/regular)
 				custom_text = input(usr,"Enter custom objective text.","Traitor Objectives","Go hog wild!") as null|text
 				if (custom_text)
-					new_objective = new select_objective(custom_text)
-					new_objective.owner = M.mind
-					new_objective.set_up()
-					M.mind.objectives += new_objective
+					new select_objective(custom_text, M.mind)
 				else
 					boutput(usr, "<span class='alert'>No text was entered. Objective not given.</span>")
 			else
-				new_objective = new select_objective
-				new_objective.owner = M.mind
-				new_objective.set_up()
-				M.mind.objectives += new_objective
+				new select_objective(null, M.mind)
 
 		if (M.mind.objectives.len < 1)
 			boutput(usr, "<span class='alert'>Not enough objectives specified.</span>")
@@ -4624,7 +4608,7 @@ var/global/noir = 0
 			var/typeinfo/atom/typeinfo = get_type_typeinfo(path)
 			if(!typeinfo.admin_spawnable)
 				continue
-		if(findtext("[path]", object))
+		if(findtext("[path]$", object))
 			matches += path
 
 	. = matches
@@ -4671,7 +4655,7 @@ var/global/noir = 0
 					A = new chosen(get_turf(usr))
 				if (client.flourish)
 					spawn_animation1(A)
-			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
+			logTheThing("admin", usr, null, "spawned [chosen] at ([log_loc(usr)])")
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
 
 	else
@@ -4698,7 +4682,7 @@ var/global/noir = 0
 				A = new /obj/item/toy/figure(get_turf(usr), new chosen)
 			if (client.flourish)
 				spawn_animation1(A)
-			logTheThing("admin", usr, null, "spawned figurine [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
+			logTheThing("admin", usr, null, "spawned figurine [chosen] at ([log_loc(usr)])")
 			logTheThing("diary", usr, null, "spawned figurine [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
 
 	else
@@ -4719,7 +4703,7 @@ var/global/noir = 0
 			var/turf/T = get_turf(usr)
 			A.set_loc(T)
 			heavenly_spawn(A)
-			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
+			logTheThing("admin", usr, null, "spawned [chosen] at ([log_loc(T)])")
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
 	else
@@ -4739,7 +4723,7 @@ var/global/noir = 0
 		if (chosen)
 			var/turf/T = get_turf(usr)
 			new/obj/effect/supplymarker/safe(T, preDropTime, chosen)
-			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
+			logTheThing("admin", usr, null, "spawned [chosen] at ([log_loc(T)])")
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
 	else
@@ -4760,7 +4744,7 @@ var/global/noir = 0
 			var/turf/T = get_turf(usr)
 			A.set_loc(T)
 			demonic_spawn(A)
-			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
+			logTheThing("admin", usr, null, "spawned [chosen] at ([log_loc(T)])")
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
 	else
@@ -4821,7 +4805,7 @@ var/global/noir = 0
 	set name = "Manage Bioeffects"
 	set desc = "Select a mob to manage its bioeffects."
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	var/list/dat = list()
 	dat += {"
@@ -4931,7 +4915,7 @@ var/global/noir = 0
 	set name = "Manage Abilities"
 	set desc = "Select a mob to manage its abilities."
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	var/list/dat = list()
 	dat += {"

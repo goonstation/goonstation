@@ -117,6 +117,7 @@ ABSTRACT_TYPE(/mob/living/critter/bot)
 				src.abilityHolder.addAbility(/datum/targetable/critter/bot/fill_with_chem/lube)
 				src.abilityHolder.addAbility(/datum/targetable/critter/bot/fill_with_chem/phlogiston_dust)
 				src.emagged = TRUE
+				return TRUE
 
 		emagged
 			brute_hp = 50
@@ -266,6 +267,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			src.abilityHolder.addAbility(/datum/targetable/critter/bot/spray_fire)
 			src.abilityHolder.addAbility(/datum/targetable/critter/bot/spray_foam/throw_humans)
 			src.emagged = TRUE
+			return TRUE
 
 	emagged
 		brute_hp = 50

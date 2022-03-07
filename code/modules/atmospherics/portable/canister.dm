@@ -133,14 +133,15 @@
 		health -= 5
 		healthcheck()
 
-/obj/machinery/portable_atmospherics/canister/proc/healthcheck()
+/obj/machinery/portable_atmospherics/canister/proc/healthcheck(mob/user)
 	if(destroyed)
 		return 1
 
 	if (src.health <= 10)
 		tgui_process.close_uis(src)
-		message_admins("[src] was destructively opened, emptying contents at [log_loc(src)]. See station logs for atmos readout.")
-		logTheThing("station", null, null, "[src] [log_atmos(src)] was destructively opened, emptying contents at [log_loc(src)].")
+		if(src.air_contents.check_if_dangerous())
+			message_admins("[src] [alert_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
+		logTheThing("station", null, null, "[src] [log_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
 
 		var/atom/location = src.loc
 		location.assume_air(air_contents)
@@ -219,8 +220,8 @@
 		if (src.det.part_fs.timing) //If it's counting down
 			if (src.det.part_fs.time > 9)
 				src.add_simple_light("canister", list(0.94 * 255, 0.94 * 255, 0.3 * 255, 0.6 * 255))
-				if (prob(15))
-					switch(rand(1,10))
+				if (prob(8)) //originally 5ish
+					switch(rand(1,6))
 						if (1)
 							playsound(src.loc, "sparks", 75, 1, -1)
 							elecflash(src)
@@ -276,7 +277,7 @@
 		src.det = null
 	if (!destroyed)
 		rupturing = 1
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.visible_message("<span class='alert'>[src] hisses ominously!</span>")
 			playsound(src.loc, "sound/machines/hiss.ogg", 55, 1)
 			sleep(5 SECONDS)
@@ -352,7 +353,8 @@
 				src.det.attachedTo = src
 				src.det.builtBy = user
 				logTheThing("bombing", user, null, "builds a canister bomb [log_atmos(src)] at [log_loc(src)].")
-				message_admins("[key_name(user)] builds a canister bomb at [log_loc(src)]. See bombing logs for atmos readout.")
+				if(src.air_contents.check_if_dangerous())
+					message_admins("[key_name(user)] builds a canister bomb [alert_atmos(src)] at [log_loc(src)].")
 				tgui_process.update_uis(src)
 				src.UpdateIcon()
 	else if (src.det && istype(W, /obj/item/tank))
@@ -361,9 +363,6 @@
 	else if (src.det && W && istool(W, TOOL_PULSING | TOOL_SNIPPING))
 		src.Attackhand(user)
 
-	else if (istype(W, /obj/item/cargotele))
-		W:cargoteleport(src, user)
-		return
 	else if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
 		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
@@ -377,7 +376,7 @@
 		src.visible_message("<span class='alert'>[user] hits the [src] with a [W]!</span>")
 		logTheThing("combat", user, null, "attacked [src] [log_atmos(src)] with [W] at [log_loc(src)].")
 		src.health -= W.force
-		healthcheck()
+		healthcheck(user)
 	..()
 
 /obj/machinery/portable_atmospherics/canister/attack_ai(var/mob/user as mob)
@@ -507,7 +506,8 @@
 		playsound(src.loc, "sound/effects/valve_creak.ogg", 50, 1)
 		if (src.valve_open)
 			playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
-			message_admins("[key_name(usr)] opened [src] into the air at [log_loc(src)]. See station logs for atmos readout.")
+			if(src.air_contents.check_if_dangerous())
+				message_admins("[key_name(usr)] opened [src] into the air [alert_atmos(src)] at [log_loc(src)]")
 			if (src.det)
 				src.det.leaking()
 	return TRUE
@@ -540,7 +540,7 @@
 						playsound(src.loc, "sound/machines/whistlealert.ogg", 50, 1)
 						playsound(src.loc, "sound/machines/whistlealert.ogg", 50, 1)
 						src.visible_message("<B><font color=#B7410E>The failsafe timer beeps three times before going quiet forever.</font></B>")
-						SPAWN_DBG(0)
+						SPAWN(0)
 							src.det.detonate()
 					if("defuse")
 						playsound(src.loc, "sound/machines/ping.ogg", 50, 1)
@@ -606,7 +606,7 @@
 								src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes loudly and sets itself to 7 seconds.</font></B>")
 							else
 								src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes refusingly before going quiet forever.</font></B>")
-								SPAWN_DBG(0)
+								SPAWN(0)
 									src.det.detonate()
 						else
 							src.det.failsafe_engage()
@@ -637,7 +637,7 @@
 						src.visible_message("<B><font color=#B7410E>The bomb buzzes oddly, emitting electric sparks. It would be a bad idea to touch any wires for the next [losttime] seconds.</font></B>")
 						playsound(src.loc, "sparks", 75, 1, -1)
 						elecflash(src,power = 2)
-						SPAWN_DBG(10 * losttime)
+						SPAWN(10 * losttime)
 							src.det.shocked = 0
 							src.visible_message("<B><font color=#B7410E>The buzzing stops, and the countdown continues.</font></B>")
 					if ("mobility")
@@ -687,7 +687,7 @@
 	else if(P.proj_data.damage_type == D_ENERGY)
 		src.health -= damage
 	log_shot(P,src)
-	SPAWN_DBG( 0 )
+	SPAWN( 0 )
 		healthcheck()
 		return
 	return

@@ -9,7 +9,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.setup()
 			sleep(1 SECOND)
 			qdel(src)
@@ -55,7 +55,7 @@
 
 /obj/machinery/door/firedoor/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		var/list/zones = list()
 		for (var/d in list(0) + cardinal)
 			var/turf/T = get_step(src,d)
@@ -129,7 +129,7 @@
 
 	if (!src.blocked && !src.operating)
 		if(src.density)
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				src.operating = 1
 
 				play_animation("opening")
@@ -144,7 +144,7 @@
 				src.operating = 0
 				return
 		else //close it up again
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				src.operating = 1
 
 				play_animation("closing")
@@ -241,9 +241,9 @@
 /obj/machinery/door/firedoor/custom_suicide = 1
 /obj/machinery/door/firedoor/suicide(var/mob/living/carbon/human/user as mob)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
-		return 0
-	if (!src.allowed(user) || src.density)
-		return 0
+		return FALSE
+	if (src.density)
+		return FALSE
 	user.visible_message("<span class='alert'><b>[user] sticks [his_or_her(user)] head into [src] and closes it!</b></span>")
 	src.close()
 	var/obj/head = user.organHolder.drop_organ("head")
@@ -251,4 +251,4 @@
 	make_cleanable( /obj/decal/cleanable/blood/gibs,src.loc)
 	playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 
-	return 1
+	return TRUE

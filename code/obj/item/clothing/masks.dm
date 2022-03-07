@@ -74,7 +74,7 @@
 			src.stapled = 0
 		. = 1
 		allow_staple = 0
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			allow_staple = 1
 
 /obj/item/clothing/mask/handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
@@ -212,6 +212,14 @@
 		name = "syndicate field protective mask"
 		item_function_flags = IMMUNE_TO_ACID
 
+		New()
+			..()
+			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+		disposing()
+			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+			..()
+
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"
 	desc = "A close-fitting mask that can filter some environmental toxins or be connected to an air supply."
@@ -241,6 +249,7 @@
 	mats = 12	// 2x voice changer cost. It's complicated ok
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH	// NOT usable for internals.
+	compatible_species = list("human", "cow", "werewolf", "martian")
 	var/new_language = "english"	// idk maybe you can varedit one so that humans speak monkey instead. who knows
 
 /obj/item/clothing/mask/breath
@@ -298,7 +307,7 @@
 
 /obj/item/clothing/mask/clown_hat
 	name = "clown wig and mask"
-	desc = "Clowns are dumb and so are you for even considering wearing this."
+	desc = "A mask depicting the grinning facial expression of a prototypical clown. There's a place to tuck the attached wig in if you don't want it interfering with your own hair."
 	icon_state = "clown"
 	item_state = "clown_hat"
 	see_face = 0.0
@@ -317,7 +326,7 @@
 			src.add_fingerprint(user)
 			user?.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
 			playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
-			SPAWN_DBG(src.spam_timer)
+			SPAWN(src.spam_timer)
 				spam_flag = 0
 			return 1
 		return 0

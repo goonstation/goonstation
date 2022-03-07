@@ -108,7 +108,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #endif
 
 
-	SPAWN_DBG(0) setup()
+	SPAWN(0) setup()
 
 /datum/controller/gameticker/proc/setup()
 	set background = 1
@@ -150,7 +150,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		current_state = GAME_STATE_PREGAME
 		boutput(world, "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby.")
 
-		SPAWN_DBG(0) pregame()
+		SPAWN(0) pregame()
 
 		return 0
 
@@ -221,7 +221,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	current_state = GAME_STATE_PLAYING
 	round_time_check = world.timeofday
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		ircbot.event("roundstart")
 		mode.post_setup()
 
@@ -252,14 +252,14 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		participationRecorder.releaseHold()
 
 #ifdef MAP_OVERRIDE_NADIR
-	SPAWN_DBG (15000) // 25 minutes in; about the time catalytic generators' power peters out
+	SPAWN(15000) // 25 minutes in; about the time catalytic generators' power peters out
 		for(var/obj/machinery/power/catalytic_generator/CG in machine_registry[MACHINES_POWER])
 			LAGCHECK(LAG_LOW)
 			if(CG?.gen_rate < 55000)
 				command_alert("Reports indicate that one or more catalytic generators on [station_name()] may require replacement rods for continued operation. If catalytic rods are not replaced, this may result in sitewide power failures.", "Power Grid Warning")
 			break
 #else
-	SPAWN_DBG (6000) // 10 minutes in
+	SPAWN(6000) // 10 minutes in
 		for(var/obj/machinery/computer/power_monitor/smes/E in machine_registry[MACHINES_POWER])
 			LAGCHECK(LAG_LOW)
 			var/datum/powernet/PN = E.get_direct_powernet()
@@ -284,7 +284,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 /datum/controller/gameticker/proc/handle_mapvote()
 	var/bustedMapSwitcher = isMapSwitcherBusted()
 	if (!bustedMapSwitcher)
-		SPAWN_DBG (mapSwitcher.autoVoteDelay)
+		SPAWN(mapSwitcher.autoVoteDelay)
 			//Trigger the automatic map vote
 			try
 				mapSwitcher.startMapVote(duration = mapSwitcher.autoVoteDuration)
@@ -369,7 +369,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				var/mob/living/carbon/human/H = pick(HL)
 				if(istype(H))
 					skull_key_assigned = 1
-					SPAWN_DBG(5 SECONDS)
+					SPAWN(5 SECONDS)
 						if(H.organHolder && H.organHolder.skull)
 							H.organHolder.skull.key = new /obj/item/device/key/skull (H.organHolder.skull)
 							logTheThing("debug", H, null, "has the dubious pleasure of having a key embedded in their skull.")
@@ -382,7 +382,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		for(var/mob/living/carbon/human/player in mobs)
 			if(player.mind && player.mind.assigned_role)
 				if(player.mind.assigned_role != "MODE")
-					SPAWN_DBG(0)
+					SPAWN(0)
 						player.Equip_Rank(player.mind.assigned_role)
 
 	proc/process()
@@ -447,7 +447,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			// Official go-ahead to be an end-of-round asshole
 			boutput(world, "<h3>The round has ended!</h3><strong style='color: #393;'>Further actions will have no impact on round results. Go hog wild!</strong>")
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				change_ghost_invisibility(INVIS_NONE)
 
 			// i feel like this should probably be a proc call somewhere instead but w/e
@@ -455,7 +455,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				ooc_allowed = 1
 				boutput(world, "<B>OOC is now enabled.</B>")
 
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] game-ending spawn happening")
 
 				boutput(world, "<span class='bold notice'>A new round will begin soon.</span>")
@@ -479,7 +479,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					game_end_delayed = 2
 					var/ircmsg[] = new()
 					ircmsg["msg"] = "Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]."
-					ircbot.export("admin", ircmsg)
+					ircbot.export_async("admin", ircmsg)
 				else
 					ircbot.event("roundend")
 					//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] REBOOTING THE SERVER!!!!!!!!!!!!!!!!!")
@@ -632,6 +632,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	logTheThing("debug", null, null, "Revving up the spacebux loop...")
 
+	/// list of ckeys and keypairs to bulk commit
+	var/list/bulk_commit = list()
 	for(var/mob/player in mobs)
 		if (player?.client && player.mind && !player.mind.joined_observer && !istype(player,/mob/new_player))
 			logTheThing("debug", null, null, "Iterating on [player.client]")
@@ -685,7 +687,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			if (isAI(player) || isshell(player))
 				player_body_escaped = 1
 				if (isAIeye(player))
-					var/mob/dead/aieye/E = player
+					var/mob/living/intangible/aieye/E = player
 					player_loses_held_item = isdead(E.mainframe)
 
 			if (!mode.escape_possible)
@@ -708,7 +710,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			else if (istype(player.loc, /obj/cryotron) || player.mind && (player.mind in all_the_baddies)) // Cryo'd or was a baddie at any point? Keep your shit, but you don't get the extra bux
 				player_loses_held_item = 0
 			//some might not actually have a wage
-			if (!isvirtual(player) && (isnukeop(player) ||  (isblob(player) && (player.mind && player.mind.special_role == ROLE_BLOB)) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == ROLE_WIZARD)) ))
+			if (!isvirtual(player) && ((isnukeop(player) || isnukeopgunbot(player)) ||  (isblob(player) && (player.mind && player.mind.special_role == ROLE_BLOB)) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == ROLE_WIZARD)) ))
 				bank_earnings.wage_base = 0 //only effects the end of round display
 				earnings = 800
 
@@ -742,24 +744,32 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			earnings = round(earnings)
 			//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] spacebux calc finish: [player.mind.ckey]")
 
-			SPAWN_DBG(0)
-				if(player.client)
-					player.client.add_to_bank(earnings)
-					// Fix for persistent_bank-is-NaN bug
-					if (player.client.persistent_bank != player.client.persistent_bank)
-						player.client.set_persistent_bank(50000)
-					if (player_loses_held_item)
-						logTheThing("debug", null, null, "[player.ckey] lost held item")
-						player.client.set_last_purchase(0)
+			if(player.client)
+				if (player_loses_held_item)
+					logTheThing("debug", null, null, "[player.ckey] lost held item")
+					player.client.persistent_bank_item = "none"
 
+				bulk_commit[player.ckey] = list(
+					"persistent_bank" = list(
+						"command" = "add",
+						"value" = earnings
+					),
+					"persistent_bank_item" = list(
+						"command" = "replace",
+						"value" = player.client.persistent_bank_item
+					)
+				)
+				SPAWN(0)
 					bank_earnings.pilot_bonus = pilot_bonus
 					bank_earnings.final_payout = earnings
 					bank_earnings.held_item = player.client.persistent_bank_item
-					bank_earnings.new_balance = player.client.persistent_bank
+					bank_earnings.new_balance = player.client.persistent_bank + earnings
 					bank_earnings.Subscribe( player.client )
 
-
-	logTheThing("debug", null, null, "Done with spacebux")
+	//do bulk commit
+	SPAWN(0)
+		cloud_put_bulk(json_encode(bulk_commit))
+		logTheThing("debug", null, null, "Done with spacebux")
 
 	for_by_tcl(P, /obj/bookshelf/persistent) //make the bookshelf save its contents
 		P.build_curr_contents()
@@ -777,7 +787,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	logTheThing("debug", null, null, "Spawned XP")
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] creds/new")
 		var/chui/window/crew_credits/creds = new
 		//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] displaying tickets and scores")
@@ -792,7 +802,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] sending crew credits to [E.ckey]")
 					creds.Subscribe(E.client)
 					//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] done crew credits to [E.ckey]")
-				SPAWN_DBG(0) show_xp_summary(E.key, E)
+				SPAWN(0) show_xp_summary(E.key, E)
 
 		//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] done showing tickets/scores")
 

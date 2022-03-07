@@ -369,7 +369,7 @@
 			vx = -0.7071
 			vy = 0.7071
 
-	var/turf/T = get_steps(src, src.dir, 5)
+	var/turf/T = get_steps(src, direct, 5)
 	if (!src || !T)
 		return
 	var/turf/TT = getlineopaqueblocked(src,T)

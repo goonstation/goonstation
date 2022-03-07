@@ -83,13 +83,13 @@ Contains:
 		var/image/main_display = image(null)
 		for(var/turf/T in range(src.scan_range, our_mob))
 			if(T.interesting && find_interesting)
-				playsound(T, "sound/machines/ping.ogg", 55, 1)
+				our_mob.playsound_local(T, "sound/machines/ping.ogg", 55, 1)
 
 			var/image/display = new
 
 			for(var/atom/A in T)
 				if(A.interesting && find_interesting)
-					playsound(A, "sound/machines/ping.ogg", 55, 1)
+					our_mob.playsound_local(A, "sound/machines/ping.ogg", 55, 1)
 				if(ismob(A))
 					var/mob/M = A
 					if(M?.invisibility != INVIS_CLOAK || !IN_RANGE(src, M, 1))
@@ -227,7 +227,7 @@ that cannot be itched
 				icon_state = "fs_pinmedium"
 			if(16 to INFINITY)
 				icon_state = "fs_pinfar"
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			.(T)
 
 /obj/item/device/detective_scanner/detective
@@ -501,7 +501,7 @@ that cannot be itched
 				det.attachments.Remove(src)
 			if ("leak")
 				det.attachedTo.visible_message("<style class='combat bold'>\The [src] picks up the rapid atmospheric change of the canister, and signals the detonator.</style>")
-				SPAWN_DBG(0)
+				SPAWN(0)
 					det.detonate()
 		return
 
@@ -648,6 +648,7 @@ that cannot be itched
 			src.active2["criminal"] = "Released"
 		else
 			src.active2["criminal"] = "None"
+		src.active2["sec_flag"] = "None"
 		src.active2["mi_crim"] = "None"
 		src.active2["mi_crim_d"] = "No minor crime convictions."
 		src.active2["ma_crim"] = "None"
@@ -730,7 +731,7 @@ that cannot be itched
 
 		logTheThing("admin", user, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
 		playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			var/obj/item/paper/p = new /obj/item/paper
 			p.set_loc(get_turf(src))
 			p.name = "Official Caution - [ticket_target]"

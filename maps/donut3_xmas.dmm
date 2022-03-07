@@ -60186,7 +60186,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/implantcase/antirev{
+/obj/item/implantcase/counterrev{
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/red/fancy,

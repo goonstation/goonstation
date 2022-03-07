@@ -35,7 +35,7 @@
       E.marked_target = M
 
       // TODO: NOT THIS, THERE MUST BE A BETTER WAY
-      SPAWN_DBG(1 MINUTE) // 60 second timeout for marks
+      SPAWN(1 MINUTE) // 60 second timeout for marks
         if(E.marked_target && E.marked_target == M)
           boutput(E, "<span class='alert'>Our mark on [E.marked_target] has faded.</span>")
           E.marked_target = null

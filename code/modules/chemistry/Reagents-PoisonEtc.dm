@@ -385,18 +385,17 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				if (!M.nutrition)
-					switch(rand(1,3))
+				if (!M.nutrition && prob(60))
+					switch(rand(1,2))
 						if (1)
 							boutput(M, "<span class='alert'>You feel hungry...</span>")
 						if (2)
 							M.take_toxin_damage(1 * mult)
 							boutput(M, "<span class='alert'>Your stomach grumbles painfully!</span>")
 
-				else
-					if (prob(60))
-						var/fat_to_burn = max(round(M.nutrition/100,1) * mult, 5)
-						M.nutrition = max(M.nutrition-fat_to_burn,0)
+				else if (prob(60))
+					var/fat_to_burn = max(round(M.nutrition/100,1) * mult, 5)
+					M.nutrition = max(M.nutrition-fat_to_burn,0)
 				..()
 				return
 
@@ -413,18 +412,19 @@ datum
 			fluid_g = 16
 			fluid_b = 192
 			transparency = 255
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_initropidril", 33)
-				return
+				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_initropidril")
-				return
+				..()
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
 
@@ -677,18 +677,19 @@ datum
 			fluid_g = 250
 			fluid_b = 200
 			transparency = 255
-			var/remove_buff = 0
+			threshold = THRESHOLD_INIT
 
-			on_add()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
-					remove_buff = holder.my_atom:add_stam_mod_max("r_cholesterol", -10)
-				return
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stam_mod_max("r_cholesterol", -10)
+				..()
 
-			on_remove()
-				if (remove_buff)
-					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
-						holder.my_atom:remove_stam_mod_max("r_cholesterol")
-				return
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stam_mod_max("r_cholesterol")
+				..()
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
 
@@ -887,18 +888,19 @@ datum
 			transparency = 50
 			depletion_rate = 0.2
 			var/counter = 1
-			var/remove_buff = 0
+			threshold = THRESHOLD_INIT
 
-			on_add()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
-					remove_buff = holder.my_atom:add_stam_mod_max("r_pancuronium", -30)
-				return
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stam_mod_max("r_pancuronium", -30)
+					..()
 
-			on_remove()
-				if (remove_buff)
-					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
-						holder.my_atom:remove_stam_mod_max("r_pancuronium")
-				return
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stam_mod_max("r_pancuronium")
+					..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -960,18 +962,19 @@ datum
 			transparency = 20
 			depletion_rate = 0.7
 			var/counter = 1
-			var/remove_buff = 0
+			threshold = THRESHOLD_INIT
 
-			on_add()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
-					remove_buff = holder.my_atom:add_stam_mod_max("r_sodium_thiopental", -30)
-				return
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stam_mod_max("r_sodium_thiopental", -30)
+					..()
 
-			on_remove()
-				if (remove_buff)
-					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
-						holder.my_atom:remove_stam_mod_max("r_sodium_thiopental")
-				return
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stam_mod_max("r_sodium_thiopental")
+					..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -1010,18 +1013,19 @@ datum
 			depletion_rate = 0.8
 			penetrates_skin = 1
 			var/counter = 1
-			var/remove_buff = 0
+			threshold = THRESHOLD_INIT
 
-			on_add()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
-					remove_buff = holder.my_atom:add_stam_mod_max("r_ketamine", -20)
-				return
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stam_mod_max("r_ketamine", -20)
+					..()
 
-			on_remove()
-				if (remove_buff)
-					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
-						holder.my_atom:remove_stam_mod_max("r_ketamine")
-				return
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stam_mod_max("r_ketamine")
+					..()
 
 			on_mob_life(var/mob/M, var/mult = 1) // sped this up a bit due to mob loop changes
 				if (!M) M = holder.my_atom
@@ -1054,17 +1058,19 @@ datum
 			var/counter = 1
 			var/remove_buff = 0
 			blob_damage = 2
+			threshold = THRESHOLD_INIT
 
-			on_add()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
-					remove_buff = holder.my_atom:add_stam_mod_max("r_sulfonal", -10)
-				return
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stam_mod_max("r_sulfonal", -10)
+					..()
 
-			on_remove()
-				if (remove_buff)
-					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
-						holder.my_atom:remove_stam_mod_max("r_sulfonal")
-				return
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stam_mod_max("r_sulfonal")
+					..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -1131,7 +1137,7 @@ datum
 					random_brute_damage(M, 1 * mult)
 				else if (our_amt < 40)
 					if (probmult(8))
-						M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+						M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 						M.vomit()
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
@@ -1140,7 +1146,7 @@ datum
 					M.visible_message("<span class='alert'><B>[M]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
 					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 15 SECONDS * mult))
 					M.make_jittery(1000)
-					SPAWN_DBG(rand(20, 100))
+					SPAWN(rand(20, 100))
 						if (M) //ZeWaka: Fix for null.gib
 							M.gib()
 					return
@@ -1497,7 +1503,7 @@ datum
 						M.take_brain_damage(1 * mult)
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
 				if (probmult(8))
-					M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 					M.vomit()
 				M.take_toxin_damage(1 * mult)
 				M.take_brain_damage(1 * mult)
@@ -1852,7 +1858,7 @@ datum
 						H.emote(pick_string("chemistry_reagent_messages.txt", "strychnine_deadly_emotes"))
 
 					if(probmult(10))
-						H.visible_message("<span class='alert'>[H] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+						H.visible_message("<span class='alert'>[H] pukes all over [himself_or_herself(H)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 						H.vomit()
 					else if (prob(5))
 						var/damage = rand(1,10)

@@ -62509,7 +62509,7 @@
 	pixel_y = 21
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/item/implantcase/antirev{
+/obj/item/implantcase/counterrev{
 	pixel_x = -8;
 	pixel_y = 7
 	},

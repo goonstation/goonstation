@@ -126,9 +126,7 @@
 			var/obj/item/rods/R = new /obj/item/rods
 			R.amount = 1
 			var/obj/item/rods/S = W
-			S.amount = S.amount - 1
-			if (S.amount == 0)
-				qdel(S)
+			S.change_stack_amount(-1)
 			var/obj/item/assembly/weld_rod/F = new /obj/item/assembly/weld_rod( user )
 			src.set_loc(F)
 			F.welder = src

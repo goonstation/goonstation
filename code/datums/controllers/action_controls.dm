@@ -195,7 +195,7 @@ var/datum/action_controller/actions
 		if (place_to_put_bar)
 			place_to_put_bar.vis_contents -= target_bar
 			place_to_put_bar.vis_contents -= target_border
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (bar)
 				bar.set_loc(null)
 				qdel(bar)
@@ -745,6 +745,11 @@ var/datum/action_controller/actions
 			border.icon = null
 			M.client?.images += bar.img
 			M.client?.images += border.img
+			if(place_to_put_bar)
+				target_bar.icon = null
+				target_border.icon = null
+				M.client?.images += target_bar.img
+				M.client?.images += target_border.img
 
 	onDelete()
 		bar.icon = 'icons/ui/actions.dmi'
@@ -755,6 +760,11 @@ var/datum/action_controller/actions
 			M.client?.images -= border.img
 			qdel(bar.img)
 			qdel(border.img)
+			if(place_to_put_bar)
+				M.client?.images -= target_bar.img
+				M.client?.images -= target_border.img
+				qdel(target_bar.img)
+				qdel(target_border.img)
 		..()
 
 /datum/action/bar/private/icon //Only visible to the owner and has a little icon on the bar.
@@ -786,11 +796,97 @@ var/datum/action_controller/actions
 		..()
 
 //ACTIONS
-/datum/action/bar/icon/genericProc //Calls a specific proc with the given arguments when the action succeeds. TBI
-	id = "genproc"
+/**
+* Calls a specified proc if it finishes without interruptions. Only displayed to the user.
+* Heavily copy pasted from /datum/action/bar/icon/callback.
+*
+* check [_std/macros/actions.dm] for documentation on a macro that uses this.
+*/
+/datum/action/bar/private/icon/callback
+	/// set to a string version of the callback proc path
+	id = null
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "grabbed"
+	/// set to the path of the proc that will be called if the action bar finishes
+	var/proc_path = null
+	/// set to datum to perform callback on if seperate from owner or target
+	var/call_proc_on = null
+	/// what the target of the action is, if any
+	var/target = null
+	/// what string is broadcast once the action bar finishes
+	var/end_message = ""
+	/// what is the maximum range target and owner can be apart? need to modify before starting the action.
+	var/maximum_range = 1
+	/// a list of args for the proc thats called once the action bar finishes, if needed.
+	var/list/proc_args = null
+
+	New(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message, interrupt_flags, call_proc_on)
+		..()
+		if (owner)
+			src.owner = owner
+		else //no owner means we have nothing to do things with
+			CRASH("action bars need an owner object to be tied to")
+		if (target) //not having a target is okay, sometimes were just doing things to ourselves
+			src.target = target
+		if (duration)
+			src.duration = duration
+		else //no duration dont do the thing
+			CRASH("action bars need a duration to run for, there's no default duration")
+		if (proc_path)
+			src.proc_path = proc_path
+		else //no proc, dont do the thing
+			CRASH("no proc was specified to be called once the action bar ends")
+		if(call_proc_on)
+			src.call_proc_on = call_proc_on
+		if (proc_args)
+			src.proc_args = proc_args
+		if (icon) //optional, dont always want an icon
+			src.icon = icon
+			if (icon_state) //optional, dont always want an icon state
+				src.icon_state = icon_state
+		else if (icon_state)
+			CRASH("icon state set for action bar, but no icon was set")
+		if (end_message)
+			src.end_message = end_message
+		if (interrupt_flags)
+			src.interrupt_flags = interrupt_flags
+		//generate a id
+		if (src.proc_path)
+			src.id = "[src.proc_path]"
+
+		src.proc_args = proc_args
+
+	onStart()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onUpdate()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onEnd()
+		..()
+		if (!src.proc_path)
+			CRASH("action bar had no proc to call upon completion")
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+
+		if (end_message)
+			src.owner.visible_message("[src.end_message]")
+		if (src.call_proc_on)
+			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+		else if (src.target)
+			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
+		else
+			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
 
 /datum/action/bar/icon/otherItem//Putting items on or removing items from others.
 	id = "otheritem"
@@ -1205,6 +1301,83 @@ var/datum/action_controller/actions
 				H.show_text("You successfully remove the shackles.", "blue")
 
 
+/datum/action/bar/private/welding
+	duration = 2 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "welding"
+	var/obj/effects/welding/E
+	var/list/start_offset
+	var/list/end_offset
+
+	id = null
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	/// set to the path of the proc that will be called if the action bar finishes
+	var/proc_path = null
+	/// what the target of the action is, if any
+	var/target = null
+	/// what string is broadcast once the action bar finishes
+	var/end_message = ""
+	/// what is the maximum range target and owner can be apart? need to modify before starting the action.
+	var/maximum_range = 1
+	/// a list of args for the proc thats called once the action bar finishes, if needed.
+	var/list/proc_args = null
+	bar_on_owner = FALSE
+
+	New(owner, target, duration, proc_path, proc_args, end_message, start, stop)
+		..()
+		src.owner = owner
+		src.target = target
+		place_to_put_bar = target
+
+		if(duration)
+			src.duration = duration
+		src.proc_path = proc_path
+		src.proc_args = proc_args
+		src.end_message = end_message
+		src.start_offset = start
+		src.end_offset = stop
+
+	onStart()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+		if(!E && ismovable(src.target))
+			var/atom/movable/M = src.target
+			E = new(M)
+			M.vis_contents += E
+			E.pixel_x = start_offset[1]
+			E.pixel_y = start_offset[2]
+			animate(E, time=src.duration, pixel_x=end_offset[1], pixel_y=end_offset[2])
+
+	onDelete(var/flag)
+		if(E && ismovable(src.target))
+			var/atom/movable/M = src.target
+			M.vis_contents -= E
+			qdel(E)
+		..()
+
+	onEnd()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+
+		if (end_message)
+			src.owner.visible_message("[src.end_message]")
+
+		if (src.target)
+			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
+		else
+			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
+
+		if(E && ismovable(src.target))
+			var/atom/movable/M = src.target
+			M.vis_contents -= E
+			qdel(E)
+
 //CLASSES & OBJS
 
 /obj/actions //These objects are mostly used for the attached_objs var on mobs to attach progressbars to mobs.
@@ -1403,14 +1576,14 @@ var/datum/action_controller/actions
 		if(owner && target)
 			if (ishuman(target))
 				var/mob/living/carbon/human/H = target
-				var/obj/item/implant/antirev/found_imp = (locate(/obj/item/implant/antirev) in H.implant)
+				var/obj/item/implant/counterrev/found_imp = (locate(/obj/item/implant/counterrev) in H.implant)
 				if (found_imp)
 					found_imp.on_remove(target)
 					H.implant.Remove(found_imp)
 					qdel(found_imp)
 
 					playsound(target.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.9)
-					target.visible_message("<span class='notice'>The loyalty implant inside [target] shatters into one million pieces!</span>")
+					target.visible_message("<span class='notice'>The counter-revolutionary implant inside [target] shatters into one million pieces!</span>")
 
 				flash.flash_mob(target, owner)
 
@@ -1453,7 +1626,7 @@ var/datum/action_controller/actions
 	duration = 4 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	icon = 'icons/ui/actions.dmi'
-	icon_state = "cpr" //placeholder
+	icon_state = "cpr"
 	var/mob/living/target
 
 	New(target)
@@ -1747,6 +1920,7 @@ var/datum/action_controller/actions
 		onEnd()
 			..()
 			if (can_reach(owner,over_object) && ismob(owner) && owner:equipped() == target)
+				usr = owner
 				over_object.Attackby(target, owner, params)
 
 /// general purpose action to anchor or unanchor stuff

@@ -84,7 +84,7 @@
 /*
 /obj/item/clothing/fire_burn(obj/fire/raging_fire, datum/air_group/environment)
 	if(raging_fire.internal_temperature > src.s_fire)
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			var/t = src.icon_state
 			src.icon_state = ""
 			src.icon = 'b_items.dmi'

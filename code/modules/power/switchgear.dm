@@ -150,6 +150,6 @@
 				icon_state = initial(icon_state)
 				status &= ~NOPOWER
 			else
-				SPAWN_DBG(rand(0, 15))
+				SPAWN(rand(0, 15))
 				src.icon_state = "c_unpowered"
 				status |= NOPOWER

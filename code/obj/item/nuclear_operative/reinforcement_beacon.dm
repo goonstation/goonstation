@@ -43,10 +43,14 @@
 		var/mob/living/critter/gunbot/syndicate/synd = new/mob/living/critter/gunbot/syndicate
 		chosen.transfer_to(synd)
 		//user.mind.transfer_to(synd) //comment out ghost messages & uncomment this to make *you* the reinforcement for testing purposes
-		synd.mind.special_role = ROLE_NUKEOP
+		synd.mind.special_role = ROLE_NUKEOP_GUNBOT
 		synd.mind.current.antagonist_overlay_refresh(1, 0)
-		SHOW_NUKEOP_TIPS(synd.mind.current)
-		SPAWN_DBG(0)
+		if(istype(ticker.mode, /datum/game_mode/nuclear))
+			var/datum/game_mode/nuclear/nuke_mode = ticker.mode
+			synd.mind.store_memory("The bomb must be armed in <B>[nuke_mode.target_location_name]</B>.", 0, 0)
+			nuke_mode.syndicates += synd.mind
+		SHOW_NUKEOP_GUNBOT_TIPS(synd.mind.current)
+		SPAWN(0)
 			launch_with_missile(synd, src.loc, null, "arrival_missile_synd")
 		sleep(3 SECONDS)
 		if(src.uses <= 0)

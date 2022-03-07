@@ -112,7 +112,7 @@
 	desc = "An odd plastic casing, entirely hollow and slightly melted."
 	New()
 		..()
-		SPAWN_DBG(rand(1, 3))
+		SPAWN(rand(1, 3))
 			playsound(src.loc, "sound/weapons/casings/casing-shell-0[rand(1,7)].ogg", 15, 0.1, 0, 0.7)
 
 obj/item/ammo/bullets/flechette_mag
@@ -122,7 +122,7 @@ obj/item/ammo/bullets/flechette_mag
 	icon_state = "flech_mag"
 	amount_left = 24.0
 	max_amount = 24.0
-	caliber = 0.065 // the actual diameter of the flechette once free of the sabot
+	ammo_cat = AMMO_FLECHETTE // the actual diameter of the flechette once free of the sabot
 	sound_load = 'sound/weapons/gunload_hitek.ogg'
 
 /datum/projectile/bullet/flechette
@@ -136,8 +136,7 @@ obj/item/ammo/bullets/flechette_mag
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
 	shot_number = 2
-	shot_delay = 0.7
-	caliber = 0.065
+	shot_delay = 0.07 SECONDS
 	dissipation_delay = 10
 	dissipation_rate = 3
 	projectile_speed = 56
@@ -155,7 +154,7 @@ obj/item/ammo/bullets/flechette_mag
 	uses_multiple_icon_states = 1
 	force = MELEE_DMG_RIFLE
 	contraband = 8
-	caliber = 0.065 // this is the flechette diameter, which is telescoped in a polymer case.
+	ammo_cats = list(AMMO_FLECHETTE)
 	max_ammo_capacity = 24
 	can_dual_wield = 0
 	two_handed = 1
@@ -168,3 +167,17 @@ obj/item/ammo/bullets/flechette_mag
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/flechette)
 		..()
+
+// Office
+/obj/item/reagent_containers/food/drinks/flask/taskumatti
+	name = "taskumatti"
+	desc = "Korpikuusen kyynel...? "
+	icon = 'icons/obj/foodNdrink/bottle.dmi'
+	icon_state = "taskumatti"
+	item_state = "taskumatti"
+	initial_reagents = list("omnizine"=10,"energydrink"=10,"methamphetamine"=10,"irishcoffee"=10)
+
+/obj/item/decoration/virvase
+	name = "pretty purple hibiscus"
+	desc = "A lovely flower from a dear friend."
+	icon_state = "virvase"

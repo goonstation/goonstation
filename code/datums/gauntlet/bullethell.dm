@@ -191,7 +191,7 @@
 				overlay_status = 0
 
 	proc/test()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while (!broken)
 				process()
 				sleep(test_sleep_time)

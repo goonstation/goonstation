@@ -2,6 +2,9 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/obj/legs
 
+TYPEINFO(/datum/component/legs)
+	initialization_args = list()
+
 /datum/component/legs/Initialize()
 	if(!istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE

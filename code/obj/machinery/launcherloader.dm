@@ -24,7 +24,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			door_delay = door_delay SECONDS
 			var/list/drivers = new/list()
 			for(var/obj/machinery/mass_driver/D in range(1,src))
@@ -46,7 +46,7 @@
 		operating = 1
 		flick("launcher_loader_1",src)
 		playsound(src, "sound/effects/pump.ogg",50, 1)
-		SPAWN_DBG(0.3 SECONDS)
+		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM in src.loc)
 				if(AM.anchored || AM == src || isobserver(AM) || isintangible(AM)) continue
 				if(trash && AM.delivery_destination != "Disposals")
@@ -59,19 +59,19 @@
 		if(driver && !driver_operating)
 			driver_operating = 1
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/obj/machinery/door/poddoor/door = null
 				for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 					if (P.id == driver.id)
 						door = P
-						SPAWN_DBG(0)
+						SPAWN(0)
 							if (door)
 								door.open()
-						SPAWN_DBG(door_delay)
+						SPAWN(door_delay)
 							if (door)
 								door.close()
 
-				SPAWN_DBG(door ? door_delay : 2 SECONDS) driver_operating = FALSE
+				SPAWN(door ? door_delay : 2 SECONDS) driver_operating = FALSE
 
 				sleep(door ? 20 : 10)
 				if (driver)
@@ -151,7 +151,7 @@
 		flick("amdl_1",src)
 		playsound(src, "sound/effects/pump.ogg",50, 1)
 
-		SPAWN_DBG(0.3 SECONDS)
+		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM2 in src.loc)
 				if(AM2.anchored || AM2 == src || isobserver(AM2) || isintangible(AM2)) continue
 				step(AM2,src.dir)
@@ -165,7 +165,7 @@
 		if(driver && !driver_operating)
 			driver_operating = 1
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				sleep(1 SECOND)
 				if (driver)
 					driver.drive()
@@ -317,10 +317,10 @@
 
 	icon = 'icons/obj/delivery.dmi'
 	icon_state = "barcode_comp"
+	flags = TGUI_INTERACTIVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 
-	var/printing = 0
-	var/print_amount = 1
+	var/printing = FALSE
 
 	// log account information for QM sales
 	var/obj/item/card/id/scan = null
@@ -329,22 +329,63 @@
 
 	var/list/destinations = list("Airbridge", "Cafeteria", "EVA", "Engine", "Disposals", "QM", "Catering", "MedSci", "Security") //These have to match the ones on the cargo routers for the routers to work.
 
-	attack_hand(var/mob/user as mob)
-		if (..(user))
+	proc/print(var/destination, var/amount)
+		if (printing)
 			return
+		printing = TRUE
+		playsound(src.loc, "sound/machines/printer_cargo.ogg", 75, 0)
+		sleep(1.75 SECONDS)
+		for (var/i in 1 to amount)
+			var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
+			B.name = "Barcode Sticker ([destination])"
+			B.destination = destination
+			B.scan = src.scan
+			B.account = src.account
+		printing = FALSE
 
-		var/dat = ""
-		dat += "<b>Available Destinations:</b><BR>"
-		for(var/I in destinations)
-			dat += "<b><A href='?src=\ref[src];print=[I]'>[I]</A></b><BR>"
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "BarcodeComputer")
+			ui.open()
 
-		dat += "<BR><b><A href='?src=\ref[src];add=1'>Add Tag</A></b>"
+	ui_static_data(mob/user)
+		var/list/destination_list = new()
+		for (var/destination in destinations)
+			destination_list += list(list("crate_tag" = destination)) //goddamn byond += overloading making me do listlist
+		. = list()
+		.["sections"] = list(list("title" = "Station", "destinations" = destination_list))
 
-		src.add_dialog(user)
-		user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x480")
-		onclose(user, "bc_computer_[src]")
-		return
 
+	ui_data(mob/user)
+		. = list()
+		if (scan)
+			//we have to do this mess because bicon returns the full img tag which tgui won't render
+			var/bicon_split = splittext(bicon(scan), "\"")
+			var/icon_src = bicon_split[length(bicon_split) - 1]
+
+			.["card"] = list(
+				"name" = scan.registered,
+				"role" = scan.assignment,
+				"icon" = icon_src,
+				"balance" = account?.get_field("current_money"),
+			)
+		else
+			.["card"] = null
+
+	ui_act(action, list/params)
+		. = ..()
+		if (.)
+			return
+		else if (action == "print")
+			var/destination = strip_html(params["crate_tag"], 64)
+			var/amount = clamp(round(params["amount"]), 1, 5)
+			print(destination, amount)
+		else if (action == "reset_id")
+			scan = null
+			account = null
+			. = TRUE
+			src.updateUsrDialog()
 
 	attackby(var/obj/item/I as obj, mob/user as mob)
 		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
@@ -356,6 +397,7 @@
 				if (enterpin == I:pin)
 					boutput(user, "<span class='notice'>Card authorized.</span>")
 					src.scan = I
+					src.updateUsrDialog()
 				else
 					boutput(user, "<span class='alert'>Pin number incorrect.</span>")
 					src.scan = null
@@ -365,44 +407,6 @@
 		else src.Attackhand(user)
 		return
 
-
-	Topic(href, href_list)
-		if (..(href, href_list))
-			return
-
-		if (href_list["amount"] && !printing)
-			var/amount = input(usr, "How many labels to print?", "[src.name]", 0) as null|num
-			if (!amount || amount < 0 || !isnum_safe(amount)) return
-			if (amount > 5) amount = 5
-			src.print_amount = amount
-			src.updateUsrDialog()
-
-		if (href_list["print"] && !printing)
-			printing = 1
-			playsound(src.loc, "sound/machines/printer_cargo.ogg", 75, 0)
-			sleep(1.75 SECONDS)
-			for (var/i = 0; i < src.print_amount; i++)
-				var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
-				var/dest = strip_html(href_list["print"], 64)
-				B.name = "Barcode Sticker ([dest])"
-				B.destination = dest
-				B.scan = src.scan
-				B.account = src.account
-			printing = 0
-		// cogwerks - uncomment this stuff if/when custom locations are ready
-		/*else if (href_list["remove"])
-			if(destinations.Find(href_list["remove"]))
-				destinations.Remove(href_list["remove"])
-
-		else if (href_list["add"])
-			var/input = input(usr,"Enter new tag:","Tag","") as text
-			if(length(input) && !destinations.Find(input))
-				destinations.Add(input)*/
-
-			usr.Browse(null, "window=bc_computer")
-			src.updateUsrDialog()
-			return
-
 /obj/machinery/computer/barcode/qm //has trader tags if there is one
 	name = "QM Barcode Computer"
 	desc = "Used to print barcode stickers for the cargo routing system, and to mark crates for sale to traders."
@@ -411,37 +415,19 @@
 	New()
 		..()
 
-	attack_hand(var/mob/user as mob)
-		if (..(user))
-			return
-
-		var/dat = ""
-
-		dat += "<b>Print Amount:</b> <a href='?src=\ref[src];amount=1'>[src.print_amount]</a><BR>"
-
-		dat += "<BR><b>Available Destinations:</b><BR>"
-		for(var/I in destinations)
-			dat += "<b><A href='?src=\ref[src];print=[I]'>[I]</A></b><BR>"
-
-		dat += "<BR><b>Available Traders:</b><BR>"
-		for(var/datum/trader/T in shippingmarket.active_traders)
-			if (!T.hidden)
-				dat += "<b><A href='?src=\ref[src];print=[T.crate_tag]'>Sell to [T.name]</A></b><BR>"
-
-		dat += "<BR><b>Requisition Fulfillment:</b><BR>"
-		dat += "<b><A href='?src=\ref[src];print=["REQ-THIRDPARTY"]'>REQ-THIRDPARTY</A></b><BR>"
-		for(var/datum/req_contract/RC in shippingmarket.req_contracts)
-			dat += "<b><A href='?src=\ref[src];print=[RC.req_code]'>[RC.req_code]</A></b><BR>"
-
-		//dat += "<BR><b><A href='?src=\ref[src];add=1'>Add Tag</A></b>"
-
-		src.add_dialog(user)
-		// Attempting to diagnose an infinite window refresh I can't duplicate, reverting the display style back to plain HTML to see what results that gets me.
-		// Hooray for having a playerbase to test shit on
-		//user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x480")
-		user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x480")
-		onclose(user, "bc_computer_[src]")
-		return
+	ui_static_data(mob/user)
+		. = ..()
+		var/list/traders = new()
+		for (var/datum/trader/T in shippingmarket.active_traders)
+			if (T.hidden)
+				continue
+			traders += list(list("crate_tag" = T.crate_tag, "name" = T.name))
+		.["sections"] += list(list("title" = "Traders", "destinations" = traders))
+		var/list/req_codes = new()
+		req_codes += list(list("crate_tag" = "REQ-THIRDPARTY", "name" = "Third party"))
+		for (var/datum/req_contract/RC in shippingmarket.req_contracts)
+			req_codes += list(list("crate_tag" = RC.req_code, "name" = RC.name))
+		.["sections"] += list(list("title" = "Requisition contracts", "destinations" = req_codes))
 
 /obj/machinery/computer/barcode/oshan
 	name = "Barcode Computer"
@@ -499,7 +485,7 @@
 				src.stick_to(target, pox, poy)
 		return
 
-	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		if(!istype(usr, /mob/living) || !isturf(src.loc) || \
 				get_dist(get_turf(over_object), get_turf(src)) > 1 || \
 				get_dist(usr, get_turf(over_object)) > 1 ||  \

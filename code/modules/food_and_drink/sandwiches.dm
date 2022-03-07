@@ -62,6 +62,13 @@
 		initial_reagents = list("bread"=10,"juice_tomato"=2,"cholesterol"=3,"porktonium"=3)
 		food_effects = list("food_refreshed", "food_energized_big")
 
+	c_butty
+		name = "chip butty"
+		desc = "French fries and ketchup between two slices of bread."
+		icon_state = "c_butty"
+		initial_reagents = list("innitium"=25,"ketchup"=20)
+		food_effects = list("food_sweaty", "food_energized_big")
+
 	elvis_meat_h
 		name = "elvismanwich"
 		desc = "Human meat between two slices of elvis bread."
@@ -394,7 +401,7 @@
 /obj/item/reagent_containers/food/snacks/burger/mysteryburger
 	name = "dubious burger"
 	desc = "A burger of indeterminate meat type."
-	icon_state = "brainburger"
+	icon_state = "mysteryburger"
 	amount = 5
 	heal_amt = 1
 	food_effects = list("food_bad_breath", "food_hp_up_big")
@@ -443,7 +450,7 @@
 /obj/item/reagent_containers/food/snacks/burger/cheeseburger_m
 	name = "monkey cheese burger"
 	desc = "How very dadaist."
-	icon_state = "cburger"
+	icon_state = "cburger-monkey"
 	amount = 6
 	heal_amt = 2
 	initial_volume = 50

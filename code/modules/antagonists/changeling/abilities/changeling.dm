@@ -39,7 +39,7 @@
 	if (src.mind)
 		src.mind.is_changeling = C
 
-	SPAWN_DBG(2.5 SECONDS) // Don't remove.
+	SPAWN(2.5 SECONDS) // Don't remove.
 		if (src) src.assign_gimmick_skull()
 
 	return
@@ -77,7 +77,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 

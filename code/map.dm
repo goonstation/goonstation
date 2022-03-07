@@ -144,7 +144,7 @@ var/global/list/mapNames = list(
 			if(J.type in src.job_limits_override)
 				J.limit = src.job_limits_override[J.type]
 
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			src.load_shuttle()
 
 	proc/load_shuttle(path=null, transit_path=null, load_loc_override=null, cleanup_grass_and_stuff=FALSE)

@@ -124,7 +124,7 @@
 	src.charge -= 5e5
 	if (src.charge < 0)
 		src.charge = 0
-	SPAWN_DBG(10 SECONDS)
+	SPAWN(10 SECONDS)
 		src.output = initial(src.output)
 		src.charging = initial(src.charging)
 		src.online = 1
@@ -141,7 +141,7 @@
 
 
 /obj/machinery/power/sword_engine/proc/terminal_setup()
-	SPAWN_DBG(1)
+	SPAWN(1)
 		terminal = new /obj/machinery/power/terminal
 		terminal.set_loc(get_turf(src))
 		terminal.dir = src.dir
@@ -224,7 +224,7 @@
 
 	if (online)
 		if (prob(5))
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				playsound(src.loc, pick(ambience_power), 60, 1)
 
 		lastout = min(charge, output)	//Limits the output to what is stored.

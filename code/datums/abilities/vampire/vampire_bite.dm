@@ -147,7 +147,7 @@
 			if (istype(H)) H.blood_tracking_output()
 
 	if (!can_take_blood_from(HH) && (mult >= 1) && (isunconscious(HH) || HH.health <= 90))
-		HH.death(0)
+		HH.death(FALSE)
 
 	if (istype(H))
 		H.check_for_unlocks()
@@ -303,7 +303,7 @@
 							HH.stuttering = min(HH.stuttering + 3, 10)
 
 	if (!can_take_blood_from(HH) && (mult >= 1) && (isunconscious(HH) || HH.health <= 90))
-		HH.death(0)
+		HH.death(FALSE)
 
 	eat_twitch(src.owner)
 	playsound(src.owner.loc,"sound/items/drink.ogg", rand(10,50), 1, pitch = 1.4)

@@ -33,7 +33,7 @@
 		ID.set_loc(src)
 
 		switch(ID.icon_state)
-			if ("id" || "id_civ")
+			if ("id", "id_civ")
 				icon_state = "accessgun-civ"
 			if ("id_sec")
 				icon_state = "accessgun-sec"

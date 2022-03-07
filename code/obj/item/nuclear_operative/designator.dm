@@ -7,8 +7,6 @@
 	desc = "A handheld monocular device with a laser built into it, used for calling in fire support."
 	icon_state = "laser_designator"
 	item_state = "electronic"
-	density = FALSE
-	anchored = FALSE
 	w_class = W_CLASS_SMALL
 	/// How many times can this be used?
 	var/uses = 1
@@ -203,14 +201,14 @@
 		playsound(sound_turf, "sound/weapons/energy/howitzer_firing.ogg", 50, 1)
 		sleep(2.5 SECONDS)
 		var/area/designated_area = get_area(target_turf)
-		command_alert("Heavy ordinace has been detected launching from the Cairngorm towards the [initial(designated_area.name)], ETA 10 seconds.","Central Command Alert", "sound/machines/alarm_a.ogg")
+		command_alert("Heavy ordinace has been detected launching from the Cairngorm towards the [initial(designated_area.name)], ETA 10 seconds.","Central Command Alert")
 		flick("152mm_firing", src)
 		firing_turf = get_step(firing_turf, WEST)
 		firing_turf = get_step(firing_turf, WEST)
 		var/atom/movable/overlay/animation = new /atom/movable/overlay(firing_turf)
 		animation.icon = 'icons/obj/large/96x32.dmi'
 		animation.icon_state = "nothing"
-		SPAWN_DBG(0)
+		SPAWN(0)
 			flick("152mm-flash", animation)
 			sleep(1.2 SECONDS)
 			qdel(animation)
@@ -219,10 +217,20 @@
 		if(!isnull(src.target_overlay))
 			target_turf.overlays -= src.target_overlay
 		explosion_new(user, target_turf, 75)
+		sound_turf = get_turf(src)
+		sound_offset_length = initial(sound_offset_length)
 		return TRUE
 
 
 	syndicate
 		firingfrom = "Cairngorm"
+
+		New()
+			..()
+			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+		disposing()
+			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+			..()
 
 #undef DESIGNATOR_MAX_RANGE

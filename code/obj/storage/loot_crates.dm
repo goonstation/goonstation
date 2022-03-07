@@ -180,7 +180,7 @@
 					picker = rand(1,10)
 					switch(picker)
 						if(1)
-							items += pick(/obj/item/gun/energy/laser_gun/pred)
+							items += pick(/obj/item/gun/energy/plasma_gun)
 							item_amounts += 1
 						if(2 to 6)
 							items += /obj/item/gun/energy/phaser_gun
@@ -348,7 +348,7 @@
 				new X(src)
 			list_counter++
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			UpdateIcon()
 
 		return

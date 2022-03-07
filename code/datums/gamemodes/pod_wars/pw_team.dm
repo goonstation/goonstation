@@ -157,7 +157,7 @@
 
 		//This second bit is for the in-round player equipping (when cloned)
 		else if (istype(H))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				H.JobEquipSpawned(H.mind.assigned_role)
 
 		if (!ishuman(H))

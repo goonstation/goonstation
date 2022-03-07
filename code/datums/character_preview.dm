@@ -49,6 +49,8 @@ datum/character_preview
 		var/mob/living/carbon/human/H = new(global.get_centcom_mob_cloner_spawn_loc())
 		mobs -= H
 		src.preview_mob = H
+		qdel(H.name_tag)
+		H.name_tag = null
 		H.screen_loc = "[src.preview_id];1,1"
 		src.handler.vis_contents += H
 		src.viewer?.screen += H
@@ -73,7 +75,7 @@ datum/character_preview
 
 	disposing()
 		STOP_TRACKING
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.viewer)
 				winset(src.viewer, "[src.window_id].[src.preview_id]", "parent=")
 		if (src.handler)
@@ -123,7 +125,7 @@ datum/character_preview/window
 
 	disposing()
 		. = ..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.viewer)
 				winset(src.viewer, "[src.window_id]", "parent=")
 

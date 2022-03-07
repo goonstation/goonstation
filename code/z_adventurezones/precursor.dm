@@ -120,7 +120,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			process()
 
 	proc/process()
@@ -239,7 +239,7 @@
 						M.activate()
 
 		src.add_fingerprint(user)
-		SPAWN_DBG(6 SECONDS)
+		SPAWN(6 SECONDS)
 			spam_flag = 0
 	return
 
@@ -331,7 +331,7 @@
 		if (!istype(other))
 			return
 
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.ready = 0 // disable momentarily to prevent spamming
 			user.visible_message("<span class='alert'><b>[user] is warped away by [src]! Holy shit!</b></span>")
 			var/otherside = get_turf(other)
@@ -399,7 +399,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.default_state = src.opened
 			active = 0
 			pitch = rand(0,12)
@@ -458,7 +458,7 @@
 			src.icon_state = "bluedoor_0"
 			set_density(0)
 			opacity = 0
-			SPAWN_DBG(1.3 SECONDS)
+			SPAWN(1.3 SECONDS)
 				changing_state = 0
 			return
 
@@ -477,7 +477,7 @@
 			src.visible_message("<b>[src] slides shut.</b>")
 			flick("bluedoor_closing",src)
 			src.icon_state = "bluedoor_1"
-			SPAWN_DBG(1.3 SECONDS)
+			SPAWN(1.3 SECONDS)
 				changing_state = 0
 			return
 
@@ -542,7 +542,7 @@
 			src.activate()
 
 		if(function == "electrical")
-			SPAWN_DBG(4 SECONDS)
+			SPAWN(4 SECONDS)
 				linked_object = locate("sphere_[id]")
 
 		return
@@ -587,7 +587,7 @@
 						if (isdead(poorSoul) && prob(15))
 							poorSoul.gib()
 
-					SPAWN_DBG(0.6 SECONDS)
+					SPAWN(0.6 SECONDS)
 						for (var/obj/O in lineObjs)
 							qdel(O)
 						light.disable()
@@ -634,7 +634,7 @@
 		..()
 		src.name = "[pick("ominous","tall","bulky","chilly","pointy","spinny","metallic","smooth","oblong","dapper")] [pick("device","doodad","gizmo","machine","column","thing","thingmabob")]"
 		//boutput(world, "[src] is checking for controller")
-		SPAWN_DBG(1 SECOND) // wait for the game to get started, then set up linkages with the controller object
+		SPAWN(1 SECOND) // wait for the game to get started, then set up linkages with the controller object
 			linked_controller = locate("controller_[id]")
 			if(linked_controller)
 				if(src.linked_controller) // just in case
@@ -775,7 +775,7 @@
 					target_blue++
 
 
-		SPAWN_DBG(1 SECOND) // set up linkages to the shields
+		SPAWN(1 SECOND) // set up linkages to the shields
 			for(var/obj/precursor_puzzle/shield/S in range(src,7))
 				if(S.id == src.id)
 					src.linked_shields += S
@@ -786,7 +786,7 @@
 		update()
 			if(active) return
 			src.active = 1
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.active = 0
 
 			var/setting_red = src.effector_NE.setting_red + src.effector_SE.setting_red + src.effector_SW.setting_red + src.effector_NW.setting_red
@@ -862,7 +862,7 @@
 				src.visible_message("<span class='notice'><b>[src] powers up!</b></span>")
 				light.enable()
 
-				SPAWN_DBG(0.4 SECONDS)
+				SPAWN(0.4 SECONDS)
 					changing_state = 0
 			return
 
@@ -878,7 +878,7 @@
 				changing_state = 1
 				light.disable()
 
-				SPAWN_DBG(0.4 SECONDS)
+				SPAWN(0.4 SECONDS)
 					changing_state = 0
 			return
 
@@ -994,7 +994,7 @@
 			new /obj/decal/woodclutter(src.loc)
 			new /obj/item/storage/secure/ssafe/martian(src.loc)
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 			qdel(src)
 			return
 		else
@@ -1044,7 +1044,7 @@
 			boutput(M, "<span class='alert'><b>It burns!</b></span>")
 			M.TakeDamage("chest", 0, rand(5,15))
 
-		SPAWN_DBG(6 SECONDS)
+		SPAWN(6 SECONDS)
 			src.attacking = 0
 
 	ai_think()
@@ -1065,7 +1065,7 @@
 		..()
 		speak( pick("��r...�a ina ��r-kug z�h-bi!", "�d, �d, �u...bar...", "n�-nam-nu-kal...", "lugal-me taru, lugal-me galam!", "me-li-e-a...") )
 		// sing the sacred song to the bitter end // go out, exit, release // nothing is precious // our king will return, our king will ascend // woe is me
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			qdel(src)
 
 	seek_target()
@@ -1140,7 +1140,7 @@
 			animating = 1
 			animate(src, alpha = 64, time = 10, easing = SINE_EASING)
 			animate(alpha = 192, time = 10, easing = SINE_EASING)
-			SPAWN_DBG(2.5 SECONDS)
+			SPAWN(2.5 SECONDS)
 				animating = 0
 
 	CritterDeath()
@@ -1180,7 +1180,7 @@
 		..()
 
 		range += rand(-1,2)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			summon()
 
 
@@ -1197,13 +1197,13 @@
 			if (prob(8) && limiter.canISpawn(/obj/effects/sparks))
 				var/obj/sparks = new /obj/effects/sparks
 				sparks.set_loc(T)
-				SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
+				SPAWN(2 SECONDS) if (sparks) qdel(sparks)
 
 			for (var/obj/item/I in T)
 				if ( prob(T_effect_prob) )
 					animate_float(I, 5, 10)
 /*
-					SPAWN_DBG (rand(0,30))
+					SPAWN(rand(0,30))
 
 						var/n = 1
 						var/n2 = 0
@@ -1227,12 +1227,12 @@
 							sleep(0.2 SECONDS)
 */
 			if (prob(T_effect_prob))
-				SPAWN_DBG(rand(80, 100))
+				SPAWN(rand(80, 100))
 					if (T)
 						playsound(T, pick('sound/effects/elec_bigzap.ogg', 'sound/effects/elec_bzzz.ogg', 'sound/effects/electric_shock.ogg'), 50, 0)
 						var/obj/somesparks = new /obj/effects/sparks
 						somesparks.set_loc(T)
-						SPAWN_DBG(2 SECONDS) if (somesparks) qdel(somesparks)
+						SPAWN(2 SECONDS) if (somesparks) qdel(somesparks)
 						var/list/tempEffect
 						if (temp_effect_limiter-- > 0)
 							tempEffect = DrawLine(src, somesparks, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
@@ -1300,7 +1300,7 @@
 		homing += rand(0,3)
 
 	process()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			..()
 		sleep(homing)
 		elec_zap()
@@ -1329,7 +1329,7 @@
 			poorPod.bullet_act(src)
 
 
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			for (var/obj/O in lineObjs)
 				qdel(O)
 
@@ -1354,7 +1354,7 @@
 			if(AM:client)
 				if(prob(75))
 					active = 1
-					SPAWN_DBG(1 MINUTE) active = 0
+					SPAWN(1 MINUTE) active = 0
 					playsound(AM, pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg'), 75, 0)
 
 // cogwerks- variant for glaciers
@@ -1374,7 +1374,7 @@
 			if(AM:client)
 				if(prob(75))
 					active = 1
-					SPAWN_DBG(1 MINUTE) active = 0
+					SPAWN(1 MINUTE) active = 0
 					if(prob(10))
 						playsound(AM, pick('sound/voice/animal/wendigo_scream.ogg', 'sound/voice/animal/wendigo_cry.ogg'),25, 1) // play these quietly so as to spook
 					else

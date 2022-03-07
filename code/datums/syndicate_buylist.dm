@@ -217,7 +217,7 @@ proc/build_syndi_buylist_cache()
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 	run_on_spawn(obj/item/sword/stabby, mob/living/owner, in_surplus_crate=FALSE) //Nukies get red ones
-		if (isnukeop(owner))
+		if (isnukeop(owner) || isnukeopgunbot(owner))
 			stabby.light_c.set_color(255, 0, 0)
 			stabby.bladecolor = "R"
 		return
@@ -618,8 +618,8 @@ This is basically useless for anyone but miners.
 	job = list("Janitor")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
-	run_on_spawn(var/obj/storage/cart/trash/syndicate/cart,var/mob/living/owner, in_surplus_crate)
-		if (istype(cart) && owner)
+	run_on_spawn(var/obj/storage/cart/trash/syndicate/cart,var/mob/living/owner)
+		if (owner)
 			cart.owner_ckey = owner.ckey
 
 /datum/syndicate_buylist/traitor/slip_and_sign
@@ -723,12 +723,16 @@ This is basically useless for anyone but miners.
 /datum/syndicate_buylist/traitor/conversion_chamber
 	name = "Conversion Chamber"
 	item = /obj/machinery/recharge_station/syndicate
-	cost = 6
+	cost = 8
 	vr_allowed = 0
 	desc = "A modified standard-issue cyborg recharging station that will automatically convert any human placed inside into a cyborg. Be aware that cyborgs will follow the active lawset in place on-station."
 	job = list("Roboticist")
 	not_in_crates = 1
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
+
+	run_on_spawn(var/obj/item)
+		new /obj/item/wrench(item.loc) // clarify that we need to wrench it down before use
+
 
 /datum/syndicate_buylist/traitor/safari
 	name = "Safari Kit"
@@ -776,6 +780,20 @@ This is basically useless for anyone but miners.
 	not_in_crates = 1
 	job = list("Chef")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
+
+/datum/syndicate_buylist/traitor/hotdog_cart
+	name = "Syndicate Hot Dog Cart"
+	item = /obj/storage/cart/hotdog/syndicate
+	cost = 4
+	desc = "A sinister hotdog cart which traps people inside and squishes them into, you guessed it, hot dogs."
+	not_in_crates = TRUE
+	vr_allowed = FALSE //i don't know why this is here but it's on the trash compactor cart so w/e
+	job = list("Chef", "Sous-Chef", "Waiter")
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
+
+	run_on_spawn(var/obj/storage/cart/hotdog/syndicate/cart, var/mob/living/owner)
+		if (owner)
+			cart.owner_ckey = owner.ckey
 
 /datum/syndicate_buylist/traitor/moonshine
 	name = "Jug of Moonshine"
@@ -907,7 +925,7 @@ This is basically useless for anyone but miners.
 	name = "Wiretap Radio Upgrade"
 	item = /obj/item/device/radio_upgrade
 	cost = 3
-	desc = "A small device that may be installed in a headset to grant access to all station channels."
+	desc = "A small device that may be installed in a headset to grant access to all station channels, along with one reserved for Syndicate operatives."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 	vr_allowed = 0
 
@@ -934,7 +952,7 @@ This is basically useless for anyone but miners.
 
 /datum/syndicate_buylist/surplus/advanced_laser
 	name = "Laser Rifle"
-	item = /obj/item/gun/energy/laser_gun/pred
+	item = /obj/item/gun/energy/plasma_gun
 	cost = 6
 	desc = "An experimental laser design with a self-charging cerenkite battery."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
@@ -1038,6 +1056,8 @@ This is basically useless for anyone but miners.
 	name = "You shouldn't see me!"
 	cost = 0
 	desc = "You shouldn't see me!"
+	exclusivemode = list(/datum/game_mode/nuclear) // Fun story here, I made the shit mistake of assuming that surplus crates and spy bounties couldn't roll this, leading to this shit https://imgur.com/a/uMaM0oV
+	not_in_crates = TRUE
 
 /datum/syndicate_buylist/commander/reinforcement
 	name = "Reinforcements"
@@ -1150,7 +1170,7 @@ This is basically useless for anyone but miners.
 	name = "Revolutionary Flash"
 	item = /obj/item/device/flash/revolution
 	cost = 5
-	desc = "This flash never runs out and will convert susceptible crew when a rev head uses it. It will also allow the rev head to break loyalty implants."
+	desc = "This flash never runs out and will convert susceptible crew when a rev head uses it. It will also allow the rev head to break counter-revolutionary implants."
 	vr_allowed = 0
 	exclusivemode = list(/datum/game_mode/revolution)
 	not_in_crates = 1

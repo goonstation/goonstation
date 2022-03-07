@@ -50,12 +50,6 @@
 	var/font_css_crap = null
 	var/list/fonts = list()
 
-	var/see_face = 1
-	var/body_parts_covered = HEAD
-	var/protective_temperature = T0C + 10
-	var/heat_transfer_coefficient = 0.99
-	var/permeability_coefficient = 0.99
-	var/siemens_coefficient = 0.80
 	var/stampNum = 0
 	var/sizex = 0
 	var/sizey = 0
@@ -74,7 +68,7 @@
 	..()
 	src.create_reagents(10)
 	reagents.add_reagent("paper", 10)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if (src.info && src.icon_state == "paper_blank")
 			icon_state = "paper"
 	if (!src.rand_pos)
@@ -128,7 +122,7 @@
 /obj/item/paper/attack_ai(var/mob/AI as mob)
 	var/mob/living/silicon/ai/user
 	if (isAIeye(AI))
-		var/mob/dead/aieye/E = AI
+		var/mob/living/intangible/aieye/E = AI
 		user = E.mainframe
 	else
 		user = AI
@@ -1153,7 +1147,7 @@ as it may become compromised.
 	src.icon_state = "paper_bin[(src.amount || locate(/obj/item/paper, src)) ? "1" : null]"
 	return
 
-/obj/item/paper_bin/MouseDrop(mob/user as mob)
+/obj/item/paper_bin/mouse_drop(mob/user as mob)
 	if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
 		if (!user.put_in_hand(src))
 			return ..()
@@ -1678,3 +1672,25 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 	name = "Deployment Remote Note"
 	icon_state = "paper"
 	info = {"<b>Congratulations for purchasing the Syndicate Rapid-Deployment Remote (SRDR)!</b><br><br>To use it, first of all, you need to either be onboard the Cairngorm or at the Listening Post. <br>Once you're there, activate the SRDR in-hand to choose a location, then once more to teleport everyone (along with any nuclear devices you possess) within 4 tiles of you to the forward assault pod, at which point it will begin head to the station, taking about one minute. During this time, Space Station 13's sensors will indicate the quickly-arriving pod, and will likely warn the crew.<br> Once the minute ends, everyone will be deployed to the specified area through personnel missiles."}
+
+/obj/item/paper/nukeop_uplink_purchases
+	name = "Shipping Manifest"
+	icon_state = "paper"
+
+	New()
+		. = ..()
+		if(!length(syndi_buylist_cache))
+			SPAWN(30 SECONDS) //This spawns empty on-map otherwise, 30s is a safe bet
+				build_paper()
+		else
+			build_paper()
+
+	proc/build_paper()
+		var/placeholder_info
+		placeholder_info += "<b>Syndicate Shipping Manifest</b><br>"
+		for(var/datum/syndicate_buylist/commander/commander_item in syndi_buylist_cache)
+			var/item_info = world.load_intra_round_value("NuclearCommander-[commander_item]-Purchased")
+			if(isnull(item_info))
+				item_info = 0
+			placeholder_info += "<br><br><b>[commander_item.name]</b>: [item_info]"
+		info = placeholder_info
