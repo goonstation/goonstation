@@ -157,7 +157,7 @@ var/list/ban_from_airborne_fluid = list()
 					t.active_airborne_liquid.icon_state = "airborne"
 				continue
 
-			if(! t.density )
+			if( t.gas_cross(src) )
 				var/suc = 1
 				var/push_thing = 0
 				for(var/obj/thing in t.contents) //HEY maybe do item pushing here since you're looping thru turf contents anyway??

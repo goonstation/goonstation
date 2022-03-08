@@ -469,7 +469,7 @@
 			src.det.failsafe_engage()
 			. = TRUE
 		if("trigger")
-			src.det.trigger.attack_self(usr)
+			src.det.trigger.AttackSelf(usr)
 			. = TRUE
 		if("timer")
 			if(!src.det.part_fs.timing)

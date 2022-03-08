@@ -1,4 +1,6 @@
 (t)mon mar 07 22
+(u)aloe
+(+)Did you know grilles are immune to bullets? now they aren't
 (u)zamujasa
 (+)Fixed a bug involving the mineral magnet not clearing itself out properly on destruction that prevented the mineral magnet from being repaired if the magnet itself reached critical damage.
 (+)Fabricate replacement magnet parts and click the empty chassis with them to install a new magnet. Or just don't break it in the first place.

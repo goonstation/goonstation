@@ -1304,8 +1304,9 @@ datum
 				var/efficacy_brute = CRYOMATH(effective_temp, BRUTE_PEAK, PEAK_COEFF, PEAK_OFFSET) + CRYOMATH(effective_temp, BRUTE_SUBPEAK, SUBPEAK_COEFF, SUBPEAK_OFFSET)
 				var/efficacy_burn = CRYOMATH(effective_temp, BURN_PEAK, PEAK_COEFF, PEAK_OFFSET) + CRYOMATH(effective_temp, BURN_SUBPEAK, SUBPEAK_COEFF, SUBPEAK_OFFSET)
 				var/efficacy_tox = CRYOMATH(effective_temp, TOX_PEAK, PEAK_COEFF, PEAK_OFFSET)
-				var/efficacy_oxy = (efficacy_burn + efficacy_tox) / 2
-				var/efficacy_brain = (efficacy_brute + efficacy_tox) / 2
+				var/efficacy_oxy = (efficacy_burn + efficacy_tox) * 0.6657 //magic number, sue me
+				var/efficacy_brain = (efficacy_brute + efficacy_tox) * 0.6657
+
 
 				if((efficacy_brute > 0 || efficacy_burn > 0) && !M.hasStatus("burning"))
 

@@ -12,6 +12,7 @@
 			if (!src.throwing)
 				break
 			if(A == src) continue
+			if(A.GetComponent(/datum/component/glued)) continue
 			if(isliving(A))
 				var/mob/living/L = A
 				if (!L.throws_can_hit_me) continue

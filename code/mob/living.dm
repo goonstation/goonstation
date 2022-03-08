@@ -499,7 +499,7 @@
 				grace_penalty = time_left
 
 		if (target == equipped)
-			equipped.attack_self(src, params, location, control)
+			equipped.AttackSelf(src)
 			if(equipped.flags & ATTACK_SELF_DELAY)
 				src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 		else if (params["ctrl"])
