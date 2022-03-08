@@ -1307,7 +1307,6 @@ datum
 				var/efficacy_oxy = (efficacy_burn + efficacy_tox) * 0.6657 //magic number, sue me
 				var/efficacy_brain = (efficacy_brute + efficacy_tox) * 0.6657
 
-				boutput(world, "etemp: [round(effective_temp, 0.01)], br: [round(efficacy_brute, 0.01)], bu: [round(efficacy_burn, 0.01)], tx: [round(efficacy_tox, 0.01)], ox: [round(efficacy_oxy, 0.01)], bn: [round(efficacy_brain, 0.01)]")
 
 				if((efficacy_brute > 0 || efficacy_burn > 0) && !M.hasStatus("burning"))
 
