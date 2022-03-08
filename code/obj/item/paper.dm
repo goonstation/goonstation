@@ -321,6 +321,17 @@
 		user.put_in_hand_or_drop(M)
 		user.u_equip(src)
 		qdel(src)
+	else if (istype(P, /obj/item/paper))
+		var/obj/item/staple_gun/S = user.find_type_in_hand(/obj/item/staple_gun)
+		if (S?.ammo)
+			var/obj/item/paper_booklet/booklet = new(src.loc)
+			user.drop_item()
+			booklet.pages += src
+			src.set_loc(booklet)
+			booklet.attackby(P, user, params)
+			return
+		else
+			boutput(user, "<span class='alert'>You need a loaded stapler in hand to staple the sheets into a booklet.</span>")
 	else
 		// cut paper?  the sky is the limit!
 		ui_interact(user)	// The other ui will be created with just read mode outside of this
