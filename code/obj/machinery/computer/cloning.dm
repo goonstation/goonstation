@@ -487,7 +487,7 @@ proc/find_ghost_by_key(var/find_key)
 			O.set_loc(src.loc)
 
 		src.add_fingerprint(usr)
-		src?.connected.updateUsrDialog()
+		src.connected?.updateUsrDialog()
 
 		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
 
@@ -618,7 +618,7 @@ proc/find_ghost_by_key(var/find_key)
 	proc/do_mince()
 		if (process_timer-- < 1)
 			active_process = PROCESS_IDLE
-			src.occupant.death(1)
+			src.occupant.death(TRUE)
 			src.occupant.ghostize()
 			qdel(src.occupant)
 			DEBUG_MESSAGE("[src].reagents.total_volume on completion of cycle: [src.reagents.total_volume]")

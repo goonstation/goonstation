@@ -106,8 +106,8 @@
 	logTheThing("diary", src.mob, Mclient.mob, "Subtle Messaged [constructTarget(Mclient.mob,"diary")]: [msg]", "admin")
 
 	var/subtle_href = null
-	if(src.holder && M.client)
-		subtle_href = "?src=\ref[src.holder];action=subtlemsg&targetckey=[M.client.ckey]"
+	if(M.client)
+		subtle_href = "?src=%admin_ref%;action=subtlemsg&targetckey=[M.client.ckey]"
 	message_admins("<span class='internal'><b>SubtleMessage: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob, custom_href=subtle_href)] : [msg]</b></span>")
 
 /client/proc/cmd_admin_plain_message(mob/M as mob in world)

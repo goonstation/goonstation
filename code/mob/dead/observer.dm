@@ -5,7 +5,7 @@
 	icon_state = "ghost"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_ABOVE
-	event_handler_flags =  IMMUNE_MANTA_PUSH | USE_FLUID_ENTER //maybe?
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER //maybe?
 	density = 0
 	canmove = 1
 	blinded = 0
@@ -537,8 +537,8 @@
 		boutput(usr, "Not when you're not dead!")
 		return
 	var/A
-
-	A = input("Area to jump to", "BOOYEA", A) as null|anything in get_teleareas()
+	var/list/tele_areas = get_teleareas()
+	A = tgui_input_list(src, "Area to jump to", "Jump", tele_areas)
 	if (!A)
 		// aaaaaaaaaaaaaaaaaaaagggggggggggg
 		return
@@ -612,10 +612,6 @@
 	var/list/namecounts = list()
 	var/list/creatures = list()
 
-	//prefix list with option for alphabetic sorting
-	var/const/SORT = "* Sort alphabetically..."
-	creatures.Add(SORT)
-
 	for (var/client/C in clients)
 		LAGCHECK(LAG_LOW)
 		// not sure how this could happen, but be safe about it
@@ -643,17 +639,8 @@
 		creatures[name] = M
 
 	var/eye_name = null
-
-	eye_name = input("Please, select a target!", "Observe", null, null) as null|anything in creatures
-
-	//sort alphabetically if user so chooses
-	if (eye_name == SORT)
-		creatures.Remove(SORT)
-
-		creatures = sortList(creatures)
-
-		//redisplay sorted list
-		eye_name = input("Please, select a target!", "Observe (Sorted)", null, null) as null|anything in creatures
+	creatures = sortList(creatures)
+	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
 
 	if (!eye_name)
 		return
@@ -668,10 +655,6 @@
 	var/list/names = list()
 	var/list/namecounts = list()
 	var/list/creatures = list()
-
-	//prefix list with option for alphabetic sorting
-	var/const/SORT = "* Sort alphabetically..."
-	creatures.Add(SORT)
 
 	// Same thing you could do with the old auth disk. The bomb is equally important
 	// and should appear at the top of any unsorted list  (Convair880).
@@ -767,7 +750,6 @@
 			namecounts[name] = 1
 		creatures[name] = B
 
-	var/eye_name = null
 
 	for(var/name in creatures)
 		var/obj/O = creatures[name]
@@ -782,19 +764,9 @@
 				if(!T || isghostrestrictedz(T.z))
 					creatures -= name
 
-	eye_name = input("Please, select a target!", "Observe", null, null) as null|anything in creatures
-
-	//sort alphabetically if user so chooses
-	if (eye_name == SORT)
-		creatures.Remove(SORT)
-
-		for(var/i = 1; i <= creatures.len; i++)
-			for(var/j = i+1; j <= creatures.len; j++)
-				if(sorttext(creatures[i], creatures[j]) == -1)
-					creatures.Swap(i, j)
-
-		//redisplay sorted list
-		eye_name = input("Please, select a target!", "Observe (Sorted)", null, null) as null|anything in creatures
+	var/eye_name = null
+	creatures = sortList(creatures)
+	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
 
 	if (!eye_name)
 		return

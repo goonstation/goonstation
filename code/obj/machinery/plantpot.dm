@@ -596,7 +596,7 @@
 
 		else if(isweldingtool(W) || istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/device/igniter))
 			// These are for burning down plants with.
-			if(isweldingtool(W) && !W:try_weld(usr, 3, noisy = 0, burn_eyes = 1))
+			if(isweldingtool(W) && !W:try_weld(user, 3, noisy = 0, burn_eyes = 1))
 				return
 			else if(istype(W, /obj/item/device/light/zippo) && !W:on)
 				boutput(user, "<span class='alert'>It would help if you lit it first, dumbass!</span>")
@@ -969,15 +969,7 @@
 			else
 				UpdateOverlays(null, "health_display")
 
-		var/planticon = null
-		if(MUT?.iconmod)
-			planticon = "[MUT.iconmod]-G[src.grow_level]"
-		else if(growing.sprite)
-			planticon = "[growing.sprite]-G[src.grow_level]"
-		else if(growing.override_icon_state)
-			planticon = "[growing.override_icon_state]-G[src.grow_level]"
-		else
-			planticon = "[growing.name]-G[src.grow_level]"
+		var/planticon = growing.getIconState(src.grow_level, MUT)
 
 		src.plant_sprite.icon = iconname
 		src.plant_sprite.icon_state = planticon

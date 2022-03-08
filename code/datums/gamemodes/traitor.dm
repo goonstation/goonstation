@@ -39,7 +39,7 @@
 		num_traitors = clamp(round((num_players + randomizer) / pop_divisor), 1, traitors_possible) // adjust the randomizer as needed
 
 	if(num_traitors > 2 && prob(10))
-		num_traitors -= 2
+		num_traitors -= 1
 		num_wraiths = 1
 
 

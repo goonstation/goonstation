@@ -372,7 +372,10 @@
 /obj/item/clothing/mask/cursedclown_hat/custom_suicide = 1
 /obj/item/clothing/mask/cursedclown_hat/suicide_in_hand = 0
 /obj/item/clothing/mask/cursedclown_hat/suicide(var/mob/user, var/slot)
-	if (!user || user.wear_mask == src || get_dist(user, src) > 0)
+	if (user.wear_mask == src)
+		boutput(user, "<span class='alert'>You can't get the mask off to look into its eyes!</span>")
+
+	if (!user || get_dist(user, src) > 0)
 		return 0
 	user.visible_message("<span class='alert'><b>[user] gazes into the eyes of the [src.name]. The [src.name] gazes back!</b></span>") //And when you gaze long into an abyss, the abyss also gazes into you.
 	SPAWN(1 SECOND)

@@ -67,7 +67,7 @@
 
 #define DEFAULT_TRANSFER_FILTER list(/obj/item/)
 
-/datum/component/transfer_input/Initialize(list/filter=null, transfer=null, filter_proc=null, filter_link_proc=null)
+/datum/component/transfer_input/Initialize(list/filter=null, transfer_proc=null, filter_proc=null, filter_link_proc=null)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.filter = filter || DEFAULT_TRANSFER_FILTER
@@ -127,10 +127,13 @@
 		if (M.holding)
 			incoming = M.holding
 
-	if ((istype(incoming, /obj/item/storage) || istype(incoming, /obj/item/satchel) || istype(incoming, /obj/item/ore_scoop)) && length(incoming.contents))
+	if (istype(incoming, /obj/item/storage) || istype(incoming, /obj/item/satchel) || istype(incoming, /obj/item/ore_scoop))
 		var/action
 		if(is_permitted(incoming))
-			action = tgui_input_list(attacker, "What do you want to do with [incoming]?", "[parent]", list(CONTAINER_CHOICE_PLACE, CONTAINER_CHOICE_DUMP))
+			if(length(incoming.contents))
+				action = tgui_input_list(attacker, "What do you want to do with [incoming]?", "[parent]", list(CONTAINER_CHOICE_PLACE, CONTAINER_CHOICE_DUMP))
+			else
+				action = CONTAINER_CHOICE_PLACE
 		else
 			action = CONTAINER_CHOICE_DUMP
 
@@ -142,13 +145,21 @@
 			return
 
 		if (action == CONTAINER_CHOICE_DUMP)
+			if (!length(incoming.contents)) // We check here too in case it changed between asking and them responding
+				boutput(attacker, "<span class='alert'>There is nothing in [incoming]!</span>")
+				return
 			if (istype(incoming, /obj/item/ore_scoop))
 				var/obj/item/ore_scoop/scoop = incoming
 				incoming = scoop.satchel
+			var/transfers = 0
 			for(var/obj/item/I in incoming)
 				SEND_SIGNAL(parent, COMSIG_TRANSFER_INCOMING, I)
+				transfers++
 			incoming.UpdateIcon()
-			attacker.visible_message("<span class='notice'>[attacker] dumps out [incoming] into [parent].</span>")
+			if (transfers)
+				attacker.visible_message("<span class='notice'>[attacker] dumps [transfers] items out of [incoming] into [parent].</span>")
+			else
+				boutput(attacker, "<span class='alert'>[parent] didn't find anything it wants in [incoming]!</span>")
 			return TRUE
 
 	if (SEND_SIGNAL(parent, COMSIG_TRANSFER_INCOMING, incoming))

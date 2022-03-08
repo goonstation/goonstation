@@ -74,12 +74,13 @@ var/list/headset_channel_lookup
 
 /obj/item/device/radio/proc/set_secure_frequencies()
 	if(istype(src.secure_frequencies))
+		if (!istype(src.secure_connections))
+			src.secure_connections = list()
 		for (var/sayToken in src.secure_frequencies)
 			var/frequency_id = src.secure_frequencies["[sayToken]"]
 			if (frequency_id)
-				if (!istype(src.secure_connections))
-					src.secure_connections = list()
-				src.secure_connections["[sayToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[frequency_id]", frequency_id)
+				if (!src.secure_connections["[sayToken]"])
+					src.secure_connections["[sayToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[frequency_id]", frequency_id)
 			else
 				src.secure_frequencies -= "[sayToken]"
 
@@ -659,6 +660,12 @@ var/list/headset_channel_lookup
 	desc = "A small beacon that is tracked by the Teleporter Computer, allowing things to be sent to its general location."
 	burn_possible = 0
 	anchored = 1
+
+	attack_hand(mob/user)
+		if (src.anchored)
+			boutput(user, "You need to unscrew the [src.name] from the floor first!")
+			return
+		..()
 
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (isscrewingtool(I))

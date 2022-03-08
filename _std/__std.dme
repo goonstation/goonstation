@@ -131,6 +131,7 @@
 #include "tgui.dm"
 #include "types.dm"
 #include "vox.dm"
+#include "weakref.dm"
 #include "zlevel.dm"
 
 #include "packets.dm" // requires types.dm

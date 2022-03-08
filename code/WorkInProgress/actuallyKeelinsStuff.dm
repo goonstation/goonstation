@@ -2445,7 +2445,7 @@ Returns:
 
 /obj/fireworksbox
 	name = "Box of Fireworks"
-	desc = "The Label simply reads : \"Firwerks fun is having total family. Made in Spacechina\""
+	desc = "The Label simply reads : \"Firwerks fun is having total family.\""
 	density = 0
 	anchored = 0
 	opacity = 0
@@ -3738,7 +3738,7 @@ var/list/lag_list = new/list()
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(ckey_lock && usr.ckey != ckey_lock)
+		if(ckey_lock && user.ckey != ckey_lock)
 			boutput(user, "<span class='alert'>You are not authorized to use this item.</span>")
 			return
 		if(get_dist(target,user) > 1)
@@ -3756,7 +3756,7 @@ var/list/lag_list = new/list()
 		return
 
 	attack_self(mob/user as mob)
-		if(ckey_lock && usr.ckey != ckey_lock)
+		if(ckey_lock && user.ckey != ckey_lock)
 			boutput(user, "<span class='alert'>You are not authorized to use this item.</span>")
 			return
 		var/dat = "Engie-box modes:<BR><BR>"

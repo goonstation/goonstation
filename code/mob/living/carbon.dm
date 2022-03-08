@@ -55,6 +55,13 @@
 						src.throw_at(target, 30, 1, throw_type = THROW_SLIP)
 						random_brute_damage(src, 10)
 
+		var/turf/T = NewLoc
+		if(T.sticky)
+			if(src.getStatusDuration("slowed")<1)
+				boutput(src, "<span class='notice'>You get slowed down by the sticky floor!</span>")
+			if(src.getStatusDuration("slowed")< 30 SECONDS)
+				src.changeStatus("slowed", 2 SECONDS, optional = 2)
+
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))

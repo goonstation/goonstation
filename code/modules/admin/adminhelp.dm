@@ -62,7 +62,7 @@
 		ircmsg["name"] = "First Adminhelp Notice"
 		// ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
 		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html"
-		ircbot.export("help", ircmsg)
+		ircbot.export_async("help", ircmsg)
 
 	var/dead = isdead(client.mob) ? "Dead " : ""
 	var/ircmsg[] = new()
@@ -70,7 +70,7 @@
 	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.mind?.special_role] [client.mob.job]]" : (istype(client.mob, /mob/new_player) ? "<not ingame>" : "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.mind?.special_role]]")
 	ircmsg["msg"] = html_decode(msg)
 	ircmsg["log_link"] = "https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html#l[logLine]"
-	ircbot.export("help", ircmsg)
+	ircbot.export_async("help", ircmsg)
 
 /mob/verb/mentorhelp()
 	set category = "Commands"
@@ -148,7 +148,7 @@
 	ircmsg["key"] = client.key
 	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead] [client.mob.job]]" : (dead ? "[stripTextMacros(client.mob.real_name)] \[[dead]\]" : stripTextMacros(client.mob.real_name))
 	ircmsg["msg"] = html_decode(msg)
-	ircbot.export("mentorhelp", ircmsg)
+	ircbot.export_async("mentorhelp", ircmsg)
 
 /mob/verb/pray(msg as text)
 	set category = "Commands"
@@ -289,7 +289,7 @@
 		ircmsg["key2"] = (M != null && M.client != null && M.client.key != null) ? M.client.key : ""
 		ircmsg["name2"] = (M != null && M.real_name != null) ? stripTextMacros(M.real_name) : ""
 		ircmsg["msg"] = html_decode(t)
-		ircbot.export("pm", ircmsg)
+		ircbot.export_async("pm", ircmsg)
 
 		//we don't use message_admins here because the sender/receiver might get it too
 		for (var/client/CC)

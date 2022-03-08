@@ -56,6 +56,7 @@
 	name = "Area Lighting"
 	event_handler_flags = IMMUNE_SINGULARITY | USE_FLUID_ENTER
 	invisibility = INVIS_ALWAYS_ISH
+	anchored = 2
 	var/area/my_area = null
 	var/list/lights = list()
 	var/brightness_placeholder = 1	//hey, maybe later use this in a way that is more optimized than iterating through each individual light
@@ -788,6 +789,8 @@
 		if (prot > 0 || user.is_heat_resistant())
 			boutput(user, "You remove the light [fitting].")
 		else
+			if(ON_COOLDOWN(src, "burn_hands", 1 SECOND))
+				return
 			boutput(user, "You try to remove the light [fitting], but you burn your hand on it!")
 			H.UpdateDamageIcon()
 			H.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 5)

@@ -135,7 +135,7 @@
 		processing_fluid_spreads -= src
 		processing_fluid_drains -= src
 
-		members = 0
+		members.Cut()
 
 		reagents.my_group = null
 		reagents = null

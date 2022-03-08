@@ -419,13 +419,16 @@
 	src.attached_objs?.Cut()
 	src.attached_objs = null
 
+	src.vis_locs = null // cleans up vis_contents of visual holders of this too
+
 	last_turf = src.loc // instead rely on set_loc to clear last_turf
 	set_loc(null)
 	..()
 
 
 /atom/movable/Move(NewLoc, direct)
-
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_BLOCK_MOVE, NewLoc, direct))
+		return
 
 	//mbc disabled for now, i dont think this does too much for visuals i cant hit 40fps anyway argh i cant even tell
 	//tile glide smoothing:
@@ -676,7 +679,7 @@
 ///wrapper proc for /atom/proc/attackby so that signals are always sent. Call this, but do not override it.
 /atom/proc/Attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
 	SHOULD_NOT_OVERRIDE(1)
-	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user))
+	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user, params, is_special))
 		return
 	src.attackby(W, user, params, is_special)
 

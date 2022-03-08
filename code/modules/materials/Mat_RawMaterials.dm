@@ -73,6 +73,9 @@
 		if (isobserver(usr))
 			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
 			return
+		if(isintangible(usr))
+			boutput(usr,"<span class='alert'>You need hands to do that. Do you have hands? No? Then stop it.</span>")
+			return
 
 		if(!istype(over_object, /atom/movable/screen/hud))
 			if (get_dist(usr,src) > 1)

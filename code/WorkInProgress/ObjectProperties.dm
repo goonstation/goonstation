@@ -586,5 +586,14 @@ to say if there's demand for that.
 	ASSOCIATE_MOB_PROPERTY(PROP_DISORIENT_RESIST_EAR)
 	ASSOCIATE_MOB_PROPERTY(PROP_DISORIENT_RESIST_EAR_MAX)
 
+/datum/objectProperty/equipment/vault_speed
+	name = "Vault Speed"
+	id = "vault_speed"
+	desc = "Reduces the time needed to vault over a railing."
+	tooltipImg = "movement.png"
+	defaultValue = 1
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "+[propVal]x"
+	ASSOCIATE_MOB_PROPERTY(PROP_VAULT_SPEED)
 
 #undef ASSOCIATE_MOB_PROPERTY

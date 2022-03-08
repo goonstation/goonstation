@@ -93,6 +93,12 @@
 		src.name = ocean_name
 		#endif
 
+		if(ocean_color)
+			var/fluid_color = hex_to_rgb_list(ocean_color)
+			light_r = fluid_color[1] / 255
+			light_g = fluid_color[2] / 255
+			light_b = fluid_color[3] / 255
+
 		//let's replicate old behaivor
 		if (generateLight)
 			generateLight = 0

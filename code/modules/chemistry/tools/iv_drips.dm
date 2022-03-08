@@ -272,7 +272,7 @@
 			return
 		else if (src.IV)
 			//src.IV.Attackby(W, user)
-			W.afterattack(src.IV, user)
+			W.AfterAttack(src.IV, user)
 			return
 		else
 			return ..()
@@ -297,7 +297,7 @@
 				src.IV.attack(over_object, usr)
 				return
 			else if (src.IV && over_object == src)
-				src.IV.attack_self(usr)
+				src.IV.AttackSelf(usr)
 				return
 			else if (istype(over_object, /obj/stool/bed) || istype(over_object, /obj/stool/chair) || istype(over_object, /obj/machinery/optable))
 				if (A == src.paired_obj && src.detach_from())

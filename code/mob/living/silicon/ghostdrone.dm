@@ -368,7 +368,7 @@
 
 		var/obj/item/item = target
 		if (istype(item) && item == src.equipped())
-			item.attack_self(src)
+			item.AttackSelf(src)
 			return
 
 		if (src.client && src.client.check_key(KEY_PULL))
@@ -1108,6 +1108,7 @@
 			var/obj/sparks = new /obj/effects/sparks
 			sparks.set_loc(get_turf(src))
 			SPAWN(2 SECONDS) if (sparks) qdel(sparks)
+		return TRUE
 
 	ex_act(severity)
 		if (src.nodamage) return

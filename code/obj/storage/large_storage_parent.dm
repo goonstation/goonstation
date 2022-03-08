@@ -179,12 +179,7 @@
 			return src.Attackby(null, user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/cargotele))
-			var/obj/item/cargotele/CT = W
-			CT.cargoteleport(src, user)
-			return
-
-		else if (istype(W, /obj/item/satchel/))
+		if (istype(W, /obj/item/satchel/))
 			if(secure && locked)
 				user.show_text("Access Denied", "red")
 				return
@@ -235,13 +230,13 @@
 				return
 
 		else if (!src.open && isweldingtool(W))
-			if(!W:try_weld(user, 1, burn_eyes = 1))
+			if(!W:try_weld(user, 1, burn_eyes = TRUE))
 				return
 			if (!src.welded)
-				src.weld(1, W, user)
+				src.weld(1, user)
 				src.visible_message("<span class='alert'>[user] welds [src] closed with [W].</span>")
 			else
-				src.weld(0, W, user)
+				src.weld(0, user)
 				src.visible_message("<span class='alert'>[user] unwelds [src] with [W].</span>")
 			return
 
@@ -658,7 +653,7 @@
 				make_cleanable( /obj/decal/cleanable/machine_debris,newloc)
 				qdel(src)
 
-	proc/weld(var/shut = 0, var/obj/item/weldingtool/W as obj, var/mob/weldman as mob)
+	proc/weld(var/shut = 0, var/mob/weldman as mob)
 		if (shut)
 			weldman.visible_message("<span class='alert'>[weldman] welds [src] shut.</span>")
 			src.welded = 1
@@ -668,7 +663,6 @@
 		src.UpdateIcon()
 		for (var/mob/M in src.contents)
 			src.log_me(weldman, M, src.welded ? "welds" : "unwelds")
-		return
 
 	proc/crunch(var/mob/M as mob)
 		if (!M || istype(M, /mob/living/carbon/wall))

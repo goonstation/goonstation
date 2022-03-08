@@ -50,12 +50,6 @@
 	var/font_css_crap = null
 	var/list/fonts = list()
 
-	var/see_face = 1
-	var/body_parts_covered = HEAD
-	var/protective_temperature = T0C + 10
-	var/heat_transfer_coefficient = 0.99
-	var/permeability_coefficient = 0.99
-	var/siemens_coefficient = 0.80
 	var/stampNum = 0
 	var/sizex = 0
 	var/sizey = 0
@@ -455,7 +449,7 @@ ASC: Aux. Solar Control<BR>
 	<li>Secure a filled canister of O2 or another suitable air mixture to the attached connector using a wrench.</li>
 	<li>Add a 50-unit supply of cryoxadone to each of the two cryogenics chambers. There should be two nearby beakers for this purpose; if they are missing or empty, it is recommended
 	that a request be sent to the Research Department to synthesize an additional supply.</li>
-	<li>Set the freezer to the lowest possible temperature setting (73.15 K, the default) if necessary.</li>
+	<li>Set the freezer to an appropriate calibration temperature (-85C, -100C, and -115C work well for brute, toxin, and burn damage respectively, though there are other useful calibrations).</li>
 	<li>Turn on the power on the freezer and leave it on.</li>
 	<li>One can add a defibrillator to attempt to revive subjects as well.</li>
 	</ol>
@@ -466,7 +460,7 @@ ASC: Aux. Solar Control<BR>
 	<li>Stabilize the patient's health using CPR or cardiac stimulants.</li>
 	<li>Remove any exosuit, headgear, and any other insulative materials being worn by the patient. Failure to remove these will deter the effects of the cryoxadone and halt the
 	healing process.</li>
-	<li>Check to ensure that the gas temperature is at optimal levels and there is no contamination in the system.</li>
+	<li>Check to ensure that the gas temperature is correctly calibrated (see above) and there is no contamination in the system.</li>
 	<li>Put the patient in the cryogenics chamber and turn it on.</li>
 	</ol>
 	The cryogenics chamber will automatically eject patients once their health is back to normal, but post-cryo evaluation is recommended nevertheless.

@@ -10,6 +10,7 @@
 	level = 1		// underfloor
 	layer = 2.5 // TODO layer whatever
 	anchored = 1
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/open = 0		// true if cover is open
 	var/locked = 1		// true if controls are locked
