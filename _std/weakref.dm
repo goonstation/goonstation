@@ -1,5 +1,5 @@
 
-/datum/VAR_PRIVATE/datum/weakref/weakref = null
+/datum/var/datum/weakref/weakref = null
 
 /**
  * Gets a weak reference to the given datum.
