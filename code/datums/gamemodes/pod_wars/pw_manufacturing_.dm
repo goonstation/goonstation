@@ -64,7 +64,7 @@
 /obj/machinery/manufacturer/pod_wars/nanotrasen
 	name = "NanoTrasen Ship Component Fabricator"
 	team_num = TEAM_NANOTRASEN
-		available = list(
+	available = list(
 		/datum/manufacture/pod_wars/lock,
 		/datum/manufacture/putt/engine,
 		/datum/manufacture/putt/boards,
@@ -99,7 +99,7 @@
 /obj/machinery/manufacturer/pod_wars/syndicate
 	name = "Syndicate Ship Component Fabricator"
 	team_num = TEAM_SYNDICATE
-		available = list(
+	available = list(
 		/datum/manufacture/pod_wars/lock,
 		/datum/manufacture/putt/engine,
 		/datum/manufacture/putt/boards,
