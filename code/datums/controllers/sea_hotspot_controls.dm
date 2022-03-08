@@ -357,10 +357,7 @@
 		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
 			if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(400))
 				interdicted = TRUE
-				icon = 'icons/effects/effects.dmi'
-				icon_state = "sparks_attack"
 				playsound(phenomena_point, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
-				density = 0
 				return
 
 		var/found = 0
