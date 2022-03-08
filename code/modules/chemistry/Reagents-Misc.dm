@@ -2063,7 +2063,7 @@ datum
 						if(H.blood_volume >= conversion_rate)
 							otherReagents += "blood_placeholder"
 
-					if(otherReagents.len > 0)
+					if(length(otherReagents) > 0)
 						var/targetReagent = pick(otherReagents) //pick one reagent and convert it
 						if(targetReagent != "blood_placeholder") //blood is handled in on_mob_life
 							holder.remove_reagent(targetReagent, conversion_rate)
