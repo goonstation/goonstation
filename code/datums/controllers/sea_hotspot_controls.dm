@@ -330,6 +330,7 @@
 		var/turf/phenomena_point = locate(C.x + rand(-radius,radius) * 0.5,C.y + rand(-radius,radius) * 0.5, 1)
 		var/heat = recursion_heat ? recursion_heat : hotspot_controller.probe_turf(phenomena_point)
 		var/phenomena_flags = 0
+		var/interdicted = FALSE
 
 		//lazy ugly mbc code incoming
 		if (heat > 200)
@@ -352,6 +353,16 @@
 				phenomena_flags |= PH_EX
 				phenomena_flags |= PH_FIRE
 
+		// interdictors aren't cures, just stopgaps, you still have to pin spots
+		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+			if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(400))
+				interdicted = TRUE
+				icon = 'icons/effects/effects.dmi'
+				icon_state = "sparks_attack"
+				playsound(phenomena_point, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
+				density = 0
+				return
+
 		var/found = 0
 		for (var/mob/living/M in range(6, C))
 			found = 1
@@ -365,19 +376,26 @@
 				M.changeStatus("weakened", 1 SECOND)
 				M.show_text("<span class='alert'><b>The ground quakes and rumbles violently!</b></span>")
 
+		if ((phenomena_flags & PH_EX) || (phenomena_flags & PH_FIRE_WEAK) || (phenomena_flags & PH_FIRE))
+			playsound(phenomena_point, 'sound/misc/ground_rumble_big.ogg', 65, 1, 0.1, 0.7)
+		else if (found)
+			playsound(phenomena_point, 'sound/misc/ground_rumble.ogg', 70, 1, 0.1, 1)
+
+		// interdiction should only impact world effects, not sound/text cues
+		if (interdicted)
+			phenomena_flags = phenomena_flags / 2  // lower severity by one (1)
+
 		if (phenomena_flags & PH_FIRE_WEAK)
 			fireflash(phenomena_point,0)
 
 		if (phenomena_flags & PH_FIRE)
 			fireflash(phenomena_point,1)
 
-		if (phenomena_flags & PH_EX)
-			explosion(src, phenomena_point, -1, -1, 2, 3)
+		if (phenomena_flags & PH_EX_WEAK)
+			explosion(src, phenomena_point, -1, -1, 0, 2)
 
-		if ((phenomena_flags & PH_EX) || (phenomena_flags & PH_FIRE_WEAK) || (phenomena_flags & PH_FIRE))
-			playsound(phenomena_point, 'sound/misc/ground_rumble_big.ogg', 65, 1, 0.1, 0.7)
-		else if (found)
-			playsound(phenomena_point, 'sound/misc/ground_rumble.ogg', 70, 1, 0.1, 1)
+		if (phenomena_flags & PH_EX && heat < 8000)
+			explosion(src, phenomena_point, -1, -1, 2, 3)
 
 		//hey recurse at this arbitrary heat value, thanks
 		if (heat > 8000 + (8000 * recursion))
