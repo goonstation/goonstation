@@ -9075,7 +9075,7 @@
 	pixel_x = 23;
 	pixel_y = 8
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition1";
 	pixel_x = 23
 	},
@@ -18376,7 +18376,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "fkW" = (
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	desc = "A remote control switch for a Mass Driver. It's labeled DO NOT PUSH (except in case of emergency).";
 	id = "backup_plan";
 	name = "DO NOT PUSH";
@@ -22057,7 +22057,7 @@
 /obj/machinery/conveyor{
 	id = "qmsend"
 	},
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "manualshipping";
 	name = "Export Driver Override";
 	pixel_x = 24;
@@ -23493,7 +23493,7 @@
 	dir = 4;
 	name = "Chamber Inlet"
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition1";
 	pixel_x = -24;
 	pixel_y = -8
@@ -44088,7 +44088,7 @@
 	pixel_x = -23;
 	pixel_y = 8
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition2";
 	pixel_x = -24;
 	pixel_y = -8
@@ -49617,7 +49617,7 @@
 	pixel_x = 23;
 	pixel_y = 8
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition2";
 	pixel_x = 23
 	},
@@ -55532,7 +55532,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "eng_ignition";
 	name = "Burn Chamber Ignition";
 	pixel_x = 7;
@@ -60309,7 +60309,7 @@
 	name = "Import Hatch Override";
 	pixel_x = 24
 	},
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "endp_qm_out";
 	name = "Cargo Driver Override";
 	pixel_x = 24;
@@ -65581,7 +65581,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "funerary_driver";
 	name = "Funerary Driver Activation";
 	pixel_x = -24
