@@ -76,6 +76,11 @@ TYPEINFO(/datum/component/glue_ready)
 		if(user)
 			boutput(user, "<span class='alert'>Your hand with [thing_glued] passes straight through \the [glued_to].</span>")
 		return FALSE
+	if(istype(thing_glued, /obj/machinery/nuclearbomb))
+		if(user)
+			boutput(user, "<span class='alert'>\The [glued_to]'s radiation dissolves the glue.</span>")
+		qdel(src)
+		return FALSE
 	if(isturf(glued_to))
 		var/turf/glued_turf = glued_to
 		if(glued_turf.density)
