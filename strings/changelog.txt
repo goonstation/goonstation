@@ -1,3 +1,7 @@
+(t)tue mar 08 22
+(u)Sovexe
+(e)🐛|bug
+(+)Fixed bugs that made Ixworth and Shieldmaidhen chickens unobtainable.
 (t)mon mar 07 22
 (u)aloe
 (+)Did you know grilles are immune to bullets? now they aren't
