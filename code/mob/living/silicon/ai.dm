@@ -192,6 +192,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/can_strip()
 	return 0
 
+/mob/living/silicon/ai/full_heal()
+	..()
+	src.try_rebooting_it()
+
 /mob/living/silicon/ai/disposing()
 	STOP_TRACKING
 	if (light)
