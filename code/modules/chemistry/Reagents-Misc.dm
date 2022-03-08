@@ -871,7 +871,7 @@ datum
 				var/list/covered = holder.covered_turf()
 				if (length(covered) > 5)
 					silent = TRUE
-				volume /= max(length(covered) / 5, 1)
+				volume /= max(length(covered), 1)
 				O.AddComponent(/datum/component/glue_ready, volume * 5 SECONDS, 5 SECONDS)
 				var/turf/T = get_turf(O)
 				if(!silent)
