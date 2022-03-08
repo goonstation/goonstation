@@ -925,10 +925,10 @@
 			boutput(user, "<span class='alert'>You need to use some tools on [target] before it can be deconstructed.</span>")
 			return
 
- // here be surgeries
+ // here be extra surgery penalties
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
-		if(!saw_surgery(M,user)) // if it ain't surgery I don't care
+		if(!surgeryCheck(M, user)) // if it ain't surgery compatible, do whatever!
 			return ..()
 
 		if(prob(20))// doing surgery with a buzzsaw isn't a good idea
@@ -945,6 +945,11 @@
 			take_bleeding_damage(user, null, 15, DAMAGE_CUT, 1)
 			user.emote("scream")
 			JOB_XP(user, "Clown", 3)
+
+
+		else // congrats buddy!!!!! you managed to pass all the checks!!!!! you get to do surgery!!!!
+			saw_surgery(M,user)
+
 
 /obj/item/deconstructor/borg
 	name = "deconstruction device"
