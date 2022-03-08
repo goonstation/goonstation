@@ -124,6 +124,7 @@
 #include "math.dm"
 #include "pathfinding.dm"
 #include "plane.dm"
+#include "promises.dm"
 #include "rust_g.dm"
 #include "record_db.dm"
 #include "text.dm"
