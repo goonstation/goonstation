@@ -795,7 +795,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "butterfly-knife"
 	uses_multiple_icon_states = 1
-	var/active = 0 // 0 = closed, 1 = open
+	var/active = FALSE /// FALSE = closed, TRUE = open
 	hit_type = DAMAGE_BLUNT
 	flags = ATTACK_SELF_DELAY | CONDUCT | TABLEPASS
 	w_class = W_CLASS_SMALL
@@ -820,7 +820,6 @@
 
 /obj/item/knife/butterfly/attack_self(mob/user as mob)
 	if (src.active)
-		src.active = !( src.active )
 		src.icon_state = "butterfly-knife"
 		playsound(loc, 'sound/weapons/butterfly-knife_close.ogg', 50, 0)
 		flick("butterfly-knife_close", src)
@@ -831,7 +830,6 @@
 		src.force = 4
 		user.update_inhands()
 	else
-		src.active = !( src.active )
 		src.icon_state = "butterfly-knife1"
 		playsound(loc, 'sound/weapons/butterfly-knife_open.ogg', 50, 0)
 		flick("butterfly-knife_open", src)
@@ -842,6 +840,7 @@
 		src.force = 12 //decently stabby
 		src.add_fingerprint(user)
 		user.update_inhands()
+	src.active = !src.active
 
 
 /obj/item/knife/switchblade
@@ -852,7 +851,7 @@
 	icon_state = "switchblade"
 	item_state = "butterfly-knife"
 	uses_multiple_icon_states = 1
-	var/active = 0 // 0 = closed, 1 = open
+	var/active = FALSE /// FALSE = closed, TRUE = open
 	hit_type = DAMAGE_BLUNT
 	flags = ATTACK_SELF_DELAY | CONDUCT | TABLEPASS
 	w_class = W_CLASS_SMALL
@@ -865,7 +864,6 @@
 
 /obj/item/knife/switchblade/attack_self(mob/user as mob)
 	if (src.active)
-		src.active = !( src.active )
 		src.icon_state = "switchblade"
 		src.item_state = "butterfly-knife"
 		playsound(loc, 'sound/weapons/butterfly-knife_close.ogg', 50, 0)
@@ -877,7 +875,6 @@
 		src.force = 4
 		user.update_inhands()
 	else
-		src.active = !( src.active )
 		src.icon_state = "switchblade1"
 		src.item_state = "butterfly-knife1"
 		playsound(loc, 'sound/weapons/switchblade_open.ogg', 50, 0)
@@ -889,6 +886,7 @@
 		src.force = 12
 		src.add_fingerprint(user)
 		user.update_inhands()
+	src.active = !src.active
 /////////////////////////////////////////////////// Axe ////////////////////////////////////////////
 
 /obj/item/axe
