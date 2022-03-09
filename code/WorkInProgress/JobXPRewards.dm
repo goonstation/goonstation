@@ -297,49 +297,45 @@ mob/verb/checkrewards()
 			if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 				charge = ret["charge"]
 				max_charge = ret["max_charge"]
-			C.mob.remove_item(E)
-			found = 1
-			qdel(E)
+				if(prob(1))
+					name = "The Antique Lawbringer"
+					desc = "Gain access to a voice activated weapon of the past-future-past by sacrificing your gun of the future-past. I.E. The Lawbringer."
+						activate(var/client/C)
+							var/obj/item/gun/energy/lawbringer/I = C.mob.find_type_in_hand(/obj/item/gun/energy/lawbringer)
 
-		if (!found)
-			boutput(C.mob, "You need to be holding a [sacrifice_name] in order to claim this reward.")
-			//Remove used from list of claimed. I'll make this more elegant once I understand it all. No time for it now. -Kyle
-			src.claimedNumbers[usr.key] --
-			return
+								if (I)
+									I.make_antique()
+										boutput(C.mob, "Your Lawbringer becomes a little more antique!")
+								else
+									boutput(C.mob, "You need to be holding your Lawbringer in order to claim this reward.")
+									src.claimedNumbers[usr.key] --
 
-		var/obj/item/gun/energy/lawbringer/LG = new reward_path()
-		var/obj/item/paper/lawbringer_pamphlet/LGP = new/obj/item/paper/lawbringer_pamphlet()
-		if (!istype(LG))
-			boutput(C.mob, "Something terribly went wrong. The reward path got screwed up somehow. call 1-800-CODER. But you're an HoS! You don't need no stinkin' guns anyway!")
-			src.claimedNumbers[usr.key] --
-			return
-		//Don't let em get get a charged power cell for a spent one. Spend the difference
-		SEND_SIGNAL(LG, COMSIG_CELL_USE, max_charge - charge)
+									C.mob.remove_item(E)
+									found = 1
+									qdel(E)
 
-		LG.set_loc(get_turf(C.mob))
-		C.mob.put_in_hand(LG)
-		boutput(C.mob, "Your E-Gun vanishes and is replaced with [LG]!")
-		C.mob.put_in_hand_or_drop(LGP)
-		boutput(C.mob, "<span class='emote'>A pamphlet flutters out.</span>")
-		return
+								if (!found)
+									boutput(C.mob, "You need to be holding a [sacrifice_name] in order to claim this reward.")
+									//Remove used from list of claimed. I'll make this more elegant once I understand it all. No time for it now. -Kyle
+									src.claimedNumbers[usr.key] --
+									return
 
-/datum/jobXpReward/head_of_security_LG_old
-	name = "The Antique Lawbringer"
-	desc = "Gain access to a voice activated weapon of the past-future-past by sacrificing your gun of the future-past. I.E. The Lawbringer."
-	required_levels = list("Head of Security"=0)
-	claimable = 1
-	claimPerRound = 1
+							var/obj/item/gun/energy/lawbringer/LG = new reward_path()
+							var/obj/item/paper/lawbringer_pamphlet/LGP = new/obj/item/paper/lawbringer_pamphlet()
+							if (!istype(LG))
+								boutput(C.mob, "Something terribly went wrong. The reward path got screwed up somehow. call 1-800-CODER. But you're an HoS! You don't need no stinkin' guns anyway!")
+								src.claimedNumbers[usr.key] --
+								return
+							//Don't let em get get a charged power cell for a spent one. Spend the difference
+							SEND_SIGNAL(LG, COMSIG_CELL_USE, max_charge - charge)
 
-	activate(var/client/C)
-		var/obj/item/gun/energy/lawbringer/I = C.mob.find_type_in_hand(/obj/item/gun/energy/lawbringer)
-
-		if (I)
-			I.make_antique()
-			boutput(C.mob, "Your Lawbringer becomes a little more antique!")
-		else
-			boutput(C.mob, "You need to be holding your Lawbringer in order to claim this reward.")
-			src.claimedNumbers[usr.key] --
-
+							LG.set_loc(get_turf(C.mob))
+							C.mob.put_in_hand(LG)
+							boutput(C.mob, "Your E-Gun vanishes and is replaced with [LG]!")
+							C.mob.put_in_hand_or_drop(LGP)
+							boutput(C.mob, "<span class='emote'>A pamphlet flutters out.</span>")
+							return
+		
 //Captain
 
 /datum/jobXpReward/captainsword
