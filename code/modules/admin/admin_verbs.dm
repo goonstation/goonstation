@@ -167,6 +167,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_show_player_compids,
 		/client/proc/give_mass_medals,
 		/client/proc/copy_medals,
+		/client/proc/copy_cloud_saves,
 
 		/client/proc/cmd_dispatch_observe_to_ghosts,
 		/client/proc/waddle_walking,
