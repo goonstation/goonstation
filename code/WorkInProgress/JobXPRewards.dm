@@ -257,7 +257,7 @@ mob/verb/checkrewards()
 /datum/jobXpReward/HeadofSecurity/mug
 	name = "Alternate Blue Mug"
 	desc = "It's your favourite coffee mug, but now its text is blue. Wow."
-	required_levels = list("Head of Security"=1)
+	required_levels = list("Head of Security"=0)
 	claimable = 1
 	var/path_to_spawn = /obj/item/reagent_containers/food/drinks/mug/HoS/blue
 
@@ -326,7 +326,7 @@ mob/verb/checkrewards()
 /datum/jobXpReward/head_of_security_LG_old
 	name = "The Antique Lawbringer"
 	desc = "Gain access to a voice activated weapon of the past-future-past by sacrificing your gun of the future-past. I.E. The Lawbringer."
-	required_levels = list("Head of Security"=5)
+	required_levels = list("Head of Security"=0)
 	claimable = 1
 	claimPerRound = 1
 
