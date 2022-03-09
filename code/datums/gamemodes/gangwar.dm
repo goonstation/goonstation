@@ -778,6 +778,8 @@
 		default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
 		src.UpdateOverlays(default_screen_overlay, "screen")
 		buyable_items = list(
+			new/datum/gang_item/street/switchblade,
+			new/datum/gang_item/street/butterfly_knife,
 			new/datum/gang_item/misc/ratstick,
 			new/datum/gang_item/ninja/throwing_knife,
 			new/datum/gang_item/ninja/shuriken,
@@ -1486,10 +1488,16 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	// item_path = /obj/item/bat/chain
 /datum/gang_item/street/switchblade
 	name = "Switchblade"
-	desc = "A stylish knife with a button to release the blade."
+	desc = "A stylish, concealable knife with a button to release the blade."
 	price = 500
 	class2 = "weapon"
-	// item_path = /obj/item/switchblade
+	item_path = /obj/item/knife/switchblade
+/datum/gang_item/street/butterfly_knife
+	name = "Butterfly"
+	desc = "A stylish, foldable knife."
+	price = 550
+	class2 = "weapon"
+	item_path = /obj/item/knife/butterfly
 /datum/gang_item/street/Shiv	//Maybe have this damage an organ severely at the cost of little damage.
 	name = "Shiv"
 	desc = "A concealable stabbing implement for quick and deadly strikes."

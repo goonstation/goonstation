@@ -144,6 +144,8 @@
 /// When items process ticks on an item
 #define COMSIG_ITEM_PROCESS "itm_process"
 
+#define COMSIG_ITEM_TWIRLED "item_twirled"
+
 // ---- cloaking device signal ----
 /// Make cloaking devices turn off
 #define COMSIG_CLOAKING_DEVICE_DEACTIVATE "cloak_deactivate"

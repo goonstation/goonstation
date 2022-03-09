@@ -788,6 +788,100 @@
 		. = ..()
 		STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
 
+/obj/item/knife/butterfly
+	name = "Butterfly Knife"
+	desc = "A small, compact butterfly knife. Concealable when folded."
+	icon = 'icons/obj/items/weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	icon_state = "butterfly-knife"
+	uses_multiple_icon_states = 1
+	var/active = 0 // 0 = closed, 1 = open
+	hit_type = DAMAGE_BLUNT
+	flags = ATTACK_SELF_DELAY | CONDUCT | TABLEPASS
+	w_class = W_CLASS_SMALL
+	force = 4
+	throwforce = 10
+	throw_speed = 4
+	throw_range = 8
+	click_delay = 0.7 SECONDS
+
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_TWIRLED, .proc/sicktricks)
+
+/obj/item/knife/butterfly/proc/sicktricks()
+	if (src.active)
+		flick("butterfly-knife_trick", src)
+	else
+		flick("butterfly-knife_trickclosed", src)
+
+
+
+
+/obj/item/knife/butterfly/attack_self(mob/user as mob)
+	if (src.active)
+		src.active = !( src.active )
+		src.icon_state = "butterfly-knife"
+		playsound(loc, 'sound/weapons/butterfly-knife_close.ogg', 50, 0)
+		flick("butterfly-knife_close", src)
+		boutput(user, "<span class='notice'>You flick the [src] closed. It can now be concealed.</span>")
+		src.hit_type = DAMAGE_BLUNT
+		src.w_class = W_CLASS_SMALL //can be put back in pocket
+		src.force = 4
+		user.update_inhands()
+	else
+		src.active = !( src.active )
+		src.icon_state = "butterfly-knife1"
+		playsound(loc, 'sound/weapons/butterfly-knife_open.ogg', 50, 0)
+		flick("butterfly-knife_open", src)
+		boutput(user, "<span class='notice'>You cleanly flick open the [src].</span>")
+		src.hit_type = DAMAGE_STAB
+		src.w_class = W_CLASS_BULKY //can't be put in pocket
+		src.force = 12 //decently stabby
+		src.add_fingerprint(user)
+		user.update_inhands()
+
+
+/obj/item/knife/switchblade
+	name = "Switchblade"
+	desc = "A small, compact switchblade. Concealable when folded."
+	icon = 'icons/obj/items/weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	icon_state = "switchblade"
+	uses_multiple_icon_states = 1
+	var/active = 0 // 0 = closed, 1 = open
+	hit_type = DAMAGE_BLUNT
+	flags = ATTACK_SELF_DELAY | CONDUCT | TABLEPASS
+	w_class = W_CLASS_SMALL
+	force = 4
+	throwforce = 10
+	throw_speed = 4
+	throw_range = 8
+	click_delay = 0.7 SECONDS
+
+
+/obj/item/knife/switchblade/attack_self(mob/user as mob)
+	if (src.active)
+		src.active = !( src.active )
+		src.icon_state = "switchblade"
+		playsound(loc, 'sound/weapons/butterfly-knife_close.ogg', 50, 0)
+		flick("switchblade_close", src)
+		boutput(user, "<span class='notice'>You close the [src]. It can now be concealed.</span>")
+		src.hit_type = DAMAGE_BLUNT
+		src.w_class = W_CLASS_SMALL //can be put back in pocket
+		src.force = 4
+		user.update_inhands()
+	else
+		src.active = !( src.active )
+		src.icon_state = "switchblade1"
+		playsound(loc, 'sound/weapons/switchblade_open.ogg', 50, 0)
+		flick("switchblade_open", src)
+		boutput(user, "<span class='notice'>The [src] springs open. Click.</span>")
+		src.hit_type = DAMAGE_STAB
+		src.w_class = W_CLASS_BULKY //can't be put in pocket
+		src.force = 12
+		src.add_fingerprint(user)
+		user.update_inhands()
 /////////////////////////////////////////////////// Axe ////////////////////////////////////////////
 
 /obj/item/axe

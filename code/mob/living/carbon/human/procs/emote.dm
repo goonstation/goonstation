@@ -653,13 +653,19 @@
 								thing = src.l_hand
 							else if (src.r_hand)
 								thing = src.r_hand
+
 						if (thing)
-							message = thing.on_spin_emote(src)
 							maptext_out = "<I>twirls [thing]</I>"
-							var/trans = thing.transform
-							animate(thing, transform = turn(trans, 120), time = 0.7, loop = 3, flags = ANIMATION_PARALLEL)
-							animate(transform = turn(trans, 240), time = 0.7, flags = ANIMATION_PARALLEL)
-							animate(transform = trans, time = 0.7, flags = ANIMATION_PARALLEL)
+							if (istype (thing, /obj/item/knife/butterfly))
+								SEND_SIGNAL(thing, COMSIG_ITEM_TWIRLED)
+								src.visible_message("<span class='notice'>[src] spins the [thing] around their thumb like a badass.</span>")
+							else
+								var/trans = thing.transform
+								message = thing.on_spin_emote(src)
+								animate(thing, transform = turn(trans, 120), time = 0.7, loop = 3, flags = ANIMATION_PARALLEL)
+								animate(transform = turn(trans, 240), time = 0.7, flags = ANIMATION_PARALLEL)
+								animate(transform = trans, time = 0.7, flags = ANIMATION_PARALLEL)
+
 						else
 							message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
 							maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
