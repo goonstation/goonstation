@@ -167,7 +167,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_jump = list(/obj/item/clothing/under/rank/captain)
 	slot_suit = list(/obj/item/clothing/suit/armor/captain)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
-	slot_head = list(/obj/item/clothing/head/caphat)
+	slot_  = list(/obj/item/clothing/head/caphat)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_ears = list(/obj/item/device/radio/headset/command/captain)
 	slot_poc1 = list(/obj/item/disk/data/floppy/read_only/authentication)
@@ -289,7 +289,6 @@ ABSTRACT_TYPE(/datum/job/command)
 			return
 		M.traitHolder.addTrait("training_drinker")
 		M.traitHolder.addTrait("training_security")
-		JOB_XP(M, "Head of Security", 1)
 
 	derelict
 		name = null//"NT-SO Special Operative"
