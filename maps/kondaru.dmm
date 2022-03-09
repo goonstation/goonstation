@@ -7810,7 +7810,7 @@
 /area/station/chapel/sanctuary)
 "awf" = (
 /obj/machinery/light,
-/turf/simulated/floor/delivery,
+/turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
 "awg" = (
 /obj/storage/closet/coffin/wood,
@@ -9290,6 +9290,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/navbeacon/mule/chapel_north/east,
 /turf/simulated/floor/wood/two,
 /area/station/chapel/sanctuary)
 "aAg" = (
@@ -58220,10 +58221,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
-"vtN" = (
-/obj/machinery/navbeacon/mule/chapel_north/east,
-/turf/simulated/floor/bot,
-/area/station/chapel/sanctuary)
 "vui" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -119423,7 +119420,7 @@ amH
 agh
 aqr
 alQ
-vtN
+agX
 adK
 mAy
 aqY
