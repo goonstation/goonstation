@@ -152,7 +152,7 @@
 		var/list/data = cloud_fetch_target_data_only(target)
 		if(!data)
 			return FALSE
-		data[key] = "[value]"
+		data[key] = "[json_encode(value)]"
 
 #ifdef LIVE_SERVER
 		// Via rust-g HTTP
