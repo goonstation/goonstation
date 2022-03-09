@@ -92,11 +92,11 @@
 			return FALSE
 		if (get_dist(src, user) > 1 || to_buckle.loc != src.loc || user.restrained() || is_incapacitated(user) || !isalive(user))
 			return FALSE
-		if(user.hasStatus("weakened"))
-        	return FALSE
-		if(src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy)
+		if (user.hasStatus("weakened"))
+			return FALSE
+		if (src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy)
 			user.show_text("There's already someone buckled in [src]!", "red")
-        	return FALSE
+			return FALSE
 		return TRUE
 
 	proc/buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0) //Handles the actual buckling in
