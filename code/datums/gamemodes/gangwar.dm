@@ -1493,8 +1493,8 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	item_path = /obj/item/knife/switchblade
 /datum/gang_item/street/butterfly_knife
 	name = "Butterfly"
-	desc = "A stylish, foldable knife."
-	price = 550
+	desc = "A foldable knife with the blade hidden in the handle."
+	price = 500
 	class2 = "weapon"
 	item_path = /obj/item/knife/butterfly
 /datum/gang_item/street/Shiv	//Maybe have this damage an organ severely at the cost of little damage.
