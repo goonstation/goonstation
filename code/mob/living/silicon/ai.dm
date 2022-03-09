@@ -1200,7 +1200,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				SPAWN(1 SECOND)
 					src.emote_allowed = 1
 		else
-			src.show_text("Invalid Emote: [act]")
+			if (voluntary) src.show_text("Invalid Emote: [act]")
 			return
 
 	if ((message && isalive(src)))

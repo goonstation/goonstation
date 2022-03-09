@@ -617,7 +617,7 @@
 					SPAWN(1 SECOND)
 						src.emote_allowed = 1
 			else
-				src.show_text("Invalid Emote: [act]")
+				if (voluntary) src.show_text("Invalid Emote: [act]")
 				return
 		if (!isalive(src))
 			return
