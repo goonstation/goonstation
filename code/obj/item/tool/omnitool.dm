@@ -70,7 +70,7 @@
 			if ("prying")
 				src.omni_mode = "prying"
 				// based on /obj/item/crowbar
-				set_icon_state(("[prefix]-prying"))
+				set_icon_state("[prefix]-prying")
 				src.tool_flags = TOOL_PRYING
 				src.force = 5.0
 				src.throwforce = 7.0
