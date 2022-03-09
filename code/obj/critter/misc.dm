@@ -1063,7 +1063,6 @@
 						W.layer = initial(W.layer)
 
 			qdel(M)
-		src.attacking = 0
 
 
 	blob_act(power)
