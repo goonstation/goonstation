@@ -860,6 +860,7 @@ Broken RCD + Effects
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "ammo"
 	item_state = "rcdammo"
+	w_class = W_CLASS_NORMAL
 	opacity = 0
 	density = 0
 	anchored = 0.0
