@@ -22856,7 +22856,7 @@
 	dir = 4
 	},
 /obj/machinery/vending/capsule,
-/turf/simulated/floor/darkblue,
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "bra" = (
 /obj/disposalpipe/segment/brig{
@@ -22880,7 +22880,7 @@
 	pixel_x = 10
 	},
 /obj/reagent_dispensers/watertank/fountain,
-/turf/simulated/floor/darkblue,
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "bre" = (
 /turf/simulated/wall/auto/supernorn,
@@ -52213,7 +52213,7 @@
 	pixel_y = 16
 	},
 /obj/machinery/sleeper/compact{
-	dir = 1
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "0-2"
