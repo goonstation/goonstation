@@ -77,8 +77,9 @@
 	if(confirm == "Yes")
 		src.unlock_medal("Damned", 1)
 		src.death()
+		return TRUE
 
-	return TRUE
+	return FALSE
 
 /mob/living/carbon/human/do_suicide()
 	src.unkillable = 0 //Get owned, nerd!
@@ -142,34 +143,42 @@
 	src.mainframe.do_suicide()
 
 /mob/living/silicon/ai/do_suicide()
-	src.visible_message("<span class='alert'><b>[src] is powering down. It looks like \he's trying to commit suicide.</b></span>")
-	src.unlock_medal("Damned", 1)
-	SPAWN(3 SECONDS)
-		src.death()
+	var/confirm = tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"), 15 SECONDS)
+	if (confirm == "Yes")
+		src.visible_message("<span class='alert'><b>[src] is powering down. It looks like \he's trying to commit suicide.</b></span>")
+		src.unlock_medal("Damned", 1)
+		SPAWN(3 SECONDS)
+			src.death()
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/robot/do_suicide()
-	var/mob/living/silicon/robot/R = src
-	src.visible_message("<span class='alert'><b>[src] is clutching its head strangely!</b></span>")
-	SPAWN(2 SECONDS)
-		R.emote("scream")
-	SPAWN(3 SECONDS)
-		R.unlock_medal("Damned", 1)
-		R.eject_brain()
-		R.borg_death_alert(ROBOT_DEATH_MOD_SUICIDE)
+	var/confirm = tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"), 15 SECONDS)
+	if (confirm == "Yes")
+		var/mob/living/silicon/robot/R = src
+		src.visible_message("<span class='alert'><b>[src] is clutching its head strangely!</b></span>")
+		SPAWN(2 SECONDS)
+			R.emote("scream")
+		SPAWN(3 SECONDS)
+			R.unlock_medal("Damned", 1)
+			R.eject_brain()
+			R.borg_death_alert(ROBOT_DEATH_MOD_SUICIDE)
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/ghostdrone/do_suicide()
-	src.visible_message("<span class='alert'><b>[src] forcefully rips it's own soul from its body!</b></span>")
-	src.unlock_medal("Damned", 1)
-	src.death()
+	. = ..()
+	if (.)
+		src.visible_message("<span class='alert'><b>[src] forcefully rips it's own soul from its body!</b></span>")
 
 /mob/living/carbon/cube/do_suicide()
 	src.unlock_medal("Damned", 1)
 	pop()
 
 /mob/living/critter/do_suicide() // :effort:
-	src.visible_message("<span class='alert'><b>[src] suddenly dies for no adequately explained reason!</b></span>")
-	src.unlock_medal("Damned", 1)
-	src.death()
+	. = ..()
+	if (.)
+		src.visible_message("<span class='alert'><b>[src] suddenly dies for no adequately explained reason!</b></span>")
 
 // instead of dying, flockdrone suicide should hand control back to the mobcritter AI
 /mob/living/critter/flock/drone/do_suicide()

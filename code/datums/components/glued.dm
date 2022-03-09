@@ -23,9 +23,7 @@ TYPEINFO(/datum/component/glued)
 	src.glue_removal_time = glue_removal_time
 	var/atom/movable/parent = src.parent
 	parent.add_filter("glued_outline", 0, outline_filter(size=1, color="#e6e63c7f"))
-	if(glue_duration != null)
-		SPAWN(glue_duration)
-			dry_up()
+	delayed_dry_up(glue_duration)
 	if(ismovable(glued_to))
 		var/atom/movable/glued_to = src.glued_to
 		LAZYLISTADDUNIQUE(glued_to.attached_objs, parent)
@@ -51,6 +49,14 @@ TYPEINFO(/datum/component/glued)
 	parent.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 	RegisterSignal(parent, COMSIG_ATTACKHAND, .proc/start_ungluing)
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/pass_on_attackby)
+	RegisterSignal(parent, COMSIG_MOVABLE_BLOCK_MOVE, .proc/move_blocked_check)
+	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, .proc/on_set_loc)
+
+/datum/component/glued/proc/delayed_dry_up(glue_duration)
+	set waitfor = FALSE
+	if(glue_duration != null)
+		sleep(glue_duration)
+		dry_up()
 
 /datum/component/glued/proc/delete_self()
 	qdel(src)
@@ -75,6 +81,15 @@ TYPEINFO(/datum/component/glued)
 
 /datum/component/glued/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, list/params, is_special)
 	src.glued_to.Attackby(item, user, params, is_special)
+
+/datum/component/glued/proc/move_blocked_check(atom/movable/parent, atom/new_loc, direct)
+	return new_loc != glued_to.loc
+
+/datum/component/glued/proc/on_set_loc(atom/movable/parent, atom/old_loc)
+	if(parent.loc != glued_to.loc)
+		var/turf/T = get_turf(parent)
+		T.visible_message("<span class='notice'>\The [parent] is ripped off from [glued_to].</span>")
+		qdel(src)
 
 /datum/component/glued/UnregisterFromParent()
 	var/atom/movable/parent = src.parent

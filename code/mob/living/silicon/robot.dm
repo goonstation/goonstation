@@ -617,7 +617,7 @@
 					SPAWN(1 SECOND)
 						src.emote_allowed = 1
 			else
-				src.show_text("Invalid Emote: [act]")
+				if (voluntary) src.show_text("Invalid Emote: [act]")
 				return
 		if (!isalive(src))
 			return
@@ -1570,7 +1570,7 @@
 			var/obj/item/O = locate(href_list["mod"])
 			if (!O || (O.loc != src && O.loc != src.module))
 				return
-			O.attack_self(src)
+			O.AttackSelf(src)
 
 		if (href_list["act"])
 			if(!src.module) return
@@ -1929,7 +1929,7 @@
 		return
 	*/
 		if(istype(src.radio))
-			src.radio.attack_self(src)
+			src.radio.AttackSelf(src)
 
 	proc/toggle_module_pack()
 		if(weapon_lock)
@@ -2169,7 +2169,7 @@
 		set desc = "Access your internal PDA device."
 
 		if (src.internal_pda && istype(src.internal_pda, /obj/item/device/pda2/))
-			src.internal_pda.attack_self(src)
+			src.internal_pda.AttackSelf(src)
 		else
 			boutput(usr, "<span class='alert'><b>Internal PDA not found!</span>")
 

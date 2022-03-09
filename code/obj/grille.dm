@@ -237,8 +237,6 @@
 
 		src.damage_blunt(5)
 
-		return
-
 	blob_act(var/power)
 		src.damage_blunt(3 * power / 20)
 
@@ -255,7 +253,28 @@
 			if(3.0)
 				src.damage_blunt(7)
 				src.damage_heat(7)
-		return
+
+	bullet_act(obj/projectile/P)
+		..()
+		var/damage_unscaled = P.power * P.proj_data.ks_ratio //stam component does nothing- can't tase a grille
+		switch(P.proj_data.damage_type)
+			if (D_PIERCING)
+				src.damage_blunt(damage_unscaled)
+				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
+			if (D_BURNING)
+				src.damage_heat(damage_unscaled / 2)
+			if (D_KINETIC)
+				src.damage_blunt(damage_unscaled / 2)
+				if (damage_unscaled > 10)
+					var/datum/effects/system/spark_spread/sparks = new /datum/effects/system/spark_spread
+					sparks.set_up(2, null, src) //sparks fly!
+					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 40, 1)
+			if (D_ENERGY)
+				src.damage_heat(damage_unscaled / 4)
+			if (D_SPECIAL) //random guessing
+				src.damage_blunt(damage_unscaled / 4)
+				src.damage_heat(damage_unscaled / 8)
+			//nothing for radioactive (useless) or slashing (unimplemented)
 
 	reagent_act(var/reagent_id,var/volume)
 		if (..())
@@ -379,7 +398,9 @@
 			else
 				..()
 				return
-
+		else if (istype(W, /obj/item/gun))
+			var/obj/item/gun/G = W
+			G.shoot_point_blank(src, user)
 		// electrocution check
 
 		var/OSHA_is_crying = 1
@@ -535,12 +556,15 @@
 
 	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
+			var/obj/projectile/P = mover
 			if (density)
-				return prob(50)
-			return 1
+				if(P.proj_data.damage_type & D_RADIOACTIVE) // this shit isn't lead-lined
+					return TRUE
+				return prob(max(25, 1 - P.power))//big bullet = more chance to hit grille. 25% minimum
+			return TRUE
 
 		if (density && istype(mover, /obj/window))
-			return 1
+			return TRUE
 
 		return ..()
 

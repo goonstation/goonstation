@@ -14849,6 +14849,7 @@
 	pixel_x = 9;
 	pixel_y = -1
 	},
+/obj/item/device/detective_scanner,
 /obj/item/pen{
 	pixel_x = -7;
 	pixel_y = -2
@@ -24541,6 +24542,7 @@
 /obj/item/audio_tape,
 /obj/item/audio_tape,
 /obj/item/hand_labeler,
+/obj/item/device/detective_scanner,
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "gRk" = (
@@ -45623,6 +45625,10 @@
 	pixel_y = 5
 	},
 /obj/item/storage/box/body_bag,
+/obj/item/device/detective_scanner{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /obj/item/reagent_containers/glass/bottle/formaldehyde{
 	pixel_x = 7;
 	pixel_y = 7

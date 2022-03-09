@@ -192,6 +192,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/can_strip()
 	return 0
 
+/mob/living/silicon/ai/full_heal()
+	..()
+	src.try_rebooting_it()
+
 /mob/living/silicon/ai/disposing()
 	STOP_TRACKING
 	if (light)
@@ -544,10 +548,12 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if (src.turn_it_back_on())
-		user.visible_message("<span class='alert'><b>[user.name]</b> pokes the restart button on [src.name]! [src.name] beeps and starts to come online!</span>")
-		return 1
+		user.visible_message("<span class='alert'><b>[user.name]</b> pokes the restart button on [src.name]! [src.name] beeps and starts to come online!</span>") //revived, transferred client to
+		return TRUE
+	else if(!isobserver(src.brain.owner?.current))
+		user.visible_message("<span class='alert'><b>[user.name]</b> pokes the restart button on [src.name]! [src.name] comes online, but remains in hiberation mode.</span>") //revived, didn't transfer client to
 	else
-		user.visible_message("<span class='alert'><b>[user.name]</b> pokes the restart button on [src.name], but [src.name] beeps and shuts down, too damaged to power on.</span>")
+		user.visible_message("<span class='alert'><b>[user.name]</b> pokes the restart button on [src.name], but [src.name] beeps and shuts down, too damaged to power on.</span>") //didn't revive
 
 
 /mob/living/silicon/ai/proc/turn_it_back_on()
@@ -555,14 +561,14 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		setalive(src)
 		if (src.brain.owner && src.brain.owner.current)
 			if (!isobserver(src.brain.owner.current))
-				return
+				return FALSE
 			var/mob/ghost = src.brain.owner.current
 			ghost.show_text("<span class='alert'><B>You feel your self being pulled back from the afterlife!</B></span>")
 			ghost.mind.transfer_to(src)
 			qdel(ghost)
 			update_appearance()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /mob/living/silicon/ai/attack_hand(mob/user)
@@ -1194,7 +1200,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				SPAWN(1 SECOND)
 					src.emote_allowed = 1
 		else
-			src.show_text("Invalid Emote: [act]")
+			if (voluntary) src.show_text("Invalid Emote: [act]")
 			return
 
 	if ((message && isalive(src)))
@@ -1864,7 +1870,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if (istype(src.internal_pda,/obj/item/device/pda2/))
-		src.internal_pda.attack_self(message_mob)
+		src.internal_pda.AttackSelf(message_mob)
 	else
 		boutput(usr, "<span class='alert'><b>Internal PDA not found!</span>")
 
@@ -1882,7 +1888,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if (istype(which,/obj/item/device/radio/))
-		which.attack_self(message_mob)
+		which.AttackSelf(message_mob)
 	else
 		boutput(usr, "<span class='alert'><b>Radio not found!</b></span>")
 

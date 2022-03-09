@@ -266,7 +266,7 @@
 		if (damage < 1)
 			return
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		..()
 
 		switch(P.proj_data.damage_type)
 			if(D_KINETIC)
@@ -275,7 +275,6 @@
 				damage_piercing(damage*2)
 			if(D_ENERGY)
 				damage_heat(damage / 5)
-		return
 
 	reagent_act(var/reagent_id,var/volume)
 		if (..())

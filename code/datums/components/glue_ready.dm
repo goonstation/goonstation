@@ -17,19 +17,23 @@ TYPEINFO(/datum/component/glue_ready)
 	src.glue_removal_time = glue_removal_time
 	var/atom/movable/parent = src.parent
 	parent.add_filter("glue_ready_outline", 0, outline_filter(size=1, color="#e6e63c44"))
-	if(glue_duration != null)
-		SPAWN(glue_duration)
-			dry_up()
+	delayed_dry_up(glue_duration)
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/glue_thing_to_parent)
 	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/glue_parent_to_thing_afterattack) // won't do anything if not an item but it doesn't hurt
 	RegisterSignal(parent, COMSIG_ATOM_HITBY_THROWN, .proc/glue_thing_to_parent)
 	RegisterSignal(parent, COMSIG_MOVABLE_HIT_THROWN, .proc/glue_parent_to_thing_hit_thrown)
 
+/datum/component/glue_ready/proc/delayed_dry_up(glue_duration)
+	set waitfor = FALSE
+	if(glue_duration != null)
+		sleep(glue_duration)
+		dry_up()
+
 /datum/component/glue_ready/proc/dry_up()
 	if(src.disposed || !src.parent || src.parent.disposed)
 		return
 	var/turf/T = get_turf(parent)
-	T.visible_message("<span class='notice'>The glue on [parent] dries up.</span>")
+	T?.visible_message("<span class='notice'>The glue on [parent] dries up.</span>")
 	qdel(src)
 
 /datum/component/glue_ready/UnregisterFromParent()
@@ -42,6 +46,8 @@ TYPEINFO(/datum/component/glue_ready)
 		return FALSE
 	if(!isnull(user) && thing_glued.loc != user) // if attackby inserted an organ into a person or stacked sheets etc.
 		return FALSE
+	if(glued_to.invisibility >= INVIS_ALWAYS_ISH || thing_glued.invisibility >= INVIS_ALWAYS_ISH)
+		return FALSE
 	if(istype(glued_to, /obj/item/sticker)) // ended up on a nonactive sticker in the sticker loc chain, still need to prevent implanting
 		if(user)
 			boutput(user, "<span class='alert'>You can't glue things to a sticker.</span>")
@@ -52,7 +58,7 @@ TYPEINFO(/datum/component/glue_ready)
 		if(user)
 			boutput(user, "<span class='alert'>You can't glue [thing_glued] to stuff.</span>")
 		return FALSE
-	if(istype(thing_glued, /obj/storage) || isgrab(thing_glued) || isgrab(glued_to))
+	if(istype(thing_glued, /obj/storage) || isgrab(thing_glued) || isgrab(glued_to) || istype(thing_glued, /obj/item/dummy) | istype(glued_to, /obj/item/dummy))
 		return FALSE
 	if(isitem(glued_to))
 		var/obj/item/item_glued_to = glued_to
@@ -64,9 +70,34 @@ TYPEINFO(/datum/component/glue_ready)
 		if(user)
 			boutput(user, "<span class='alert'>[thing_glued] slids off the smooth window without adhering to it.</span>")
 		return FALSE
+	if(istype(glued_to, /obj/machinery/door) || istype(glued_to, /obj/grille))
+		return FALSE
+	if(istype(glued_to, /mob/dead) || istype(glued_to, /mob/living/intangible) || istype(glued_to, /mob/living/seanceghost))
+		if(user)
+			boutput(user, "<span class='alert'>Your hand with [thing_glued] passes straight through \the [glued_to].</span>")
+		return FALSE
+	if(istype(thing_glued, /obj/machinery/nuclearbomb))
+		if(user)
+			boutput(user, "<span class='alert'>\The [glued_to]'s radiation dissolves the glue.</span>")
+		qdel(src)
+		return FALSE
+	if(isturf(glued_to))
+		var/turf/glued_turf = glued_to
+		if(glued_turf.density)
+			return FALSE
+
+	var/datum/component/glued/maybe_glued_component = glued_to.GetComponent(/datum/component/glued)
+	while(istype(maybe_glued_component))
+		if(maybe_glued_component.glued_to == thing_glued)
+			if(user)
+				boutput(user, "<span class='alert'>You can't glue [thing_glued] to [glued_to] because [glued_to] is already glued to [thing_glued].</span>")
+			return FALSE
+		maybe_glued_component = maybe_glued_component.glued_to.GetComponent(/datum/component/glued)
 	return TRUE
 
-/datum/component/glue_ready/proc/glue_things(atom/movable/glued_to, atom/movable/thing_glued, mob/user=null)
+/datum/component/glue_ready/proc/glue_things(atom/movable/glued_to, atom/movable/thing_glued, mob/user=null, mob/log_user=null)
+	if(isnull(log_user))
+		log_user = user || usr
 	var/obj/item/sticker/maybe_sticker = glued_to
 	while(istype(maybe_sticker) && maybe_sticker.active) // prevent implanting items via gluing onto stickers attached to a thing
 		glued_to = maybe_sticker.loc
@@ -79,11 +110,15 @@ TYPEINFO(/datum/component/glue_ready)
 		T.visible_message("<span class='notice'>[user] glues [thing_glued] to [glued_to].</span>")
 	else
 		T.visible_message("<span class='notice'>[thing_glued] sticks to [glued_to].</span>")
+	logTheThing(log_user, null, "combat", "glued [ismob(thing_glued) ? constructTarget(thing_glued, "combat") : thing_glued] to [ismob(glued_to) ? constructTarget(glued_to, "combat") : glued_to] at [log_loc(glued_to)]")
 	qdel(src)
 
-/datum/component/glue_ready/proc/glue_thing_to_parent(atom/movable/parent, obj/item/item, mob/user)
+/datum/component/glue_ready/proc/glue_thing_to_parent(atom/movable/parent, obj/item/item, user_or_datum_thrownthing)
+	var/datum/thrown_thing/thrown_thing = user_or_datum_thrownthing
+	ENSURE_TYPE(thrown_thing)
+	var/mob/user = user_or_datum_thrownthing
 	ENSURE_TYPE(user)
-	glue_things(parent, item, user)
+	glue_things(parent, item, user, user || thrown_thing.user)
 	return TRUE
 
 /datum/component/glue_ready/proc/glue_parent_to_thing_afterattack(obj/item/parent, atom/target, mob/user, reach, params)
@@ -93,17 +128,17 @@ TYPEINFO(/datum/component/glue_ready)
 		return
 	if(istype(target, /obj/fluid) || istype(target, /obj/effect))
 		target = get_turf(target)
-	glue_things(target, parent, user)
+	glue_things(target, parent, user, user)
 	if("icon-x" in params)
 		parent.pixel_x = text2num(params["icon-x"]) - world.icon_size / 2
 		parent.pixel_y = text2num(params["icon-y"]) - world.icon_size / 2
 
-/datum/component/glue_ready/proc/glue_parent_to_thing_hit_thrown(obj/item/parent, atom/target)
+/datum/component/glue_ready/proc/glue_parent_to_thing_hit_thrown(obj/item/parent, atom/target, datum/thrown_thing/thrown_thing)
 	if(isnull(target))
 		return
 	if(isfloor(target))
 		return
 	if(istype(target, /obj/fluid) || istype(target, /obj/effect))
 		target = get_turf(target)
-	glue_things(target, parent, null)
+	glue_things(target, parent, null, thrown_thing.user)
 	return TRUE

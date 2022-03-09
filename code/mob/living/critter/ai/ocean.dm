@@ -334,7 +334,7 @@
 							owncritter.drop_item()
 
 						if (G.state <= GRAB_PASSIVE)
-							G.attack_self(owncritter)
+							G.AttackSelf(owncritter)
 						else
 							owncritter.emote("flip")
 							holder.move_away(holder.target,1)

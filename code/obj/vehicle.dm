@@ -699,7 +699,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		if (!src.sprayer_active)
 			var/turf/T = get_turf(src)
 			if (istype(T) && T.active_liquid)
-				if (T.active_liquid.group && T.active_liquid.group.members.len > 20) //Drain() is faster. use this if the group is large.
+				if (T.active_liquid.group && length(T.active_liquid.group.members) > 20) //Drain() is faster. use this if the group is large.
 					if (prob(20))
 						playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 

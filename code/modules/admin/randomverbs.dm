@@ -2559,6 +2559,43 @@ var/global/night_mode_enabled = 0
 			boutput(src, "Failed to set medal; error communicating with BYOND hub!")
 			break
 
+/client/proc/copy_cloud_saves(old_key as null|text)
+	set name  = "Copy Cloud Saves"
+	set desc = "Copy cloud saves from one account to another. This WILL overwrite all saves on the target account."
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set popup_menu = 0
+
+	ADMIN_ONLY
+
+	if (!old_key)
+		old_key = input("Enter old account key", "Old account key", null) as null|text
+	if (!old_key)
+		boutput(usr, "<span class='alert'>Transfer aborted.</span>")
+		return
+
+	var/new_key = input("Enter new account key", "New account key", null) as null|text
+	if (!new_key)
+		boutput(usr, "<span class='alert'>Transfer aborted.</span>")
+		return
+
+	//this works on any player datum so we just make a new one
+	var/datum/player/dummy = new
+	dummy.clouddata = list()
+	var/list/saves = dummy.cloud_fetch_target_saves_only(old_key)
+
+	if (!saves)
+		boutput(usr, "<span class='alert'>Couldn't find cloud data for that key.</span>")
+		return
+	if (!length(saves))
+		boutput(usr, "<span class='alert'>Couldn't find any cloud saves for that key.</span>")
+		return
+	if (tgui_alert(usr, "You're about to transfer [length(saves)] saves from [old_key] to [new_key]. This will overwrite all the existing saves on the target account. Do it?", "Cloud Save Transfer", list("Yes", "No")) == "No")
+		boutput(usr, "<span class='alert'>Transfer aborted.</span>")
+		return
+
+	dummy.cloud_put_target(new_key, "saves", saves)
+	boutput(usr, "<span class='success'>Cloud saves transferred.</span>")
+
 /client/proc/cmd_admin_disable()
 	set name = "Disable Admin Powers"
 	set desc = "Disables all admin features for yourself until returned or you log in again."
