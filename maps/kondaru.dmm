@@ -14092,7 +14092,9 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/neutral/side{
+	dir = 4
+	},
 /area/station/crew_quarters/quarters_north)
 "aOq" = (
 /obj/machinery/power/apc/autoname_north,
@@ -19214,7 +19216,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_east,
-/turf/simulated/floor,
+/turf/simulated/floor/neutral/side{
+	dir = 4
+	},
 /area/station/crew_quarters/quarters_north)
 "beK" = (
 /obj/machinery/door/airlock/pyro{
@@ -44900,7 +44904,9 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/neutral/corner{
+	dir = 1
+	},
 /area/station/crew_quarters/quarters_south)
 "hJY" = (
 /obj/wingrille_spawn/auto,
@@ -58445,7 +58451,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/neutral/side{
-	dir = 8
+	dir = 9
 	},
 /area/station/crew_quarters/quarters_south)
 "vFA" = (
