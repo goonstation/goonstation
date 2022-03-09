@@ -149,7 +149,7 @@
 
 	/// Sets a cloud key value pair and sends it to goonhub for a target ckey
 	proc/cloud_put_target(target, key, value)
-		var/list/data = cloud_fetch_target_data_only(target)
+		var/list/data = cloud_fetch_target_ckey(target)
 		if(!data)
 			return FALSE
 		data[key] = "[json_encode(value)]"
