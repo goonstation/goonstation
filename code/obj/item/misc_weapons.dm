@@ -728,7 +728,7 @@
 		else
 			if (src.makemeat)
 				logTheThing("combat", user, C, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
-				for (var/i=0, i<3, i++)
+				for (var/i in 0 to 2)
 					new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C),C)
 				if (C.mind)
 					C.ghostize()
