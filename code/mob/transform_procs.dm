@@ -92,7 +92,6 @@
 	return ..()
 
 /mob/proc/AIize(var/mobile=0, var/do_not_move = 0)
-	src.client.screen.len = null
 	var/mob/living/silicon/ai/O
 	if (mobile)
 		O = new /mob/living/silicon/ai/mobile( src.loc )

@@ -83,7 +83,7 @@
 		boutput(user, text("<span class='alert'>Can't un-electrify the airlock - The electrification wire is cut.<br><br></span>"))
 	else if (src.secondsElectrified!=0)
 		src.secondsElectrified = 0
-		logTheThing("combat", usr, null, "de-electrified airlock ([src]) at [log_loc(src)].")
+		logTheThing("combat", user, null, "de-electrified airlock ([src]) at [log_loc(src)].")
 		message_admins("[key_name(user)] de-electrified airlock ([src]) at [log_loc(src)].")
 
 
@@ -1454,10 +1454,10 @@ About the new airlock wires panel:
 	src.add_fingerprint(user)
 	if (istype(C, /obj/item/device/t_scanner) || (istype(C, /obj/item/device/pda2) && istype(C:module, /obj/item/device/pda_module/tray)))
 		if(src.isElectrified())
-			boutput(usr, "<span class='alert'>[bicon(C)] <b>WARNING</b>: Abnormal electrical response received from access panel.</span>")
+			boutput(user, "<span class='alert'>[bicon(C)] <b>WARNING</b>: Abnormal electrical response received from access panel.</span>")
 		else
 			if(status & NOPOWER)
-				boutput(usr, "<span class='alert'>[bicon(C)] No electrical response received from access panel.</span>")
+				boutput(user, "<span class='alert'>[bicon(C)] No electrical response received from access panel.</span>")
 			else
 				boutput(user, "<span class='notice'>[bicon(C)] Regular electrical response received from access panel.</span>")
 		return

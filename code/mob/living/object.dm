@@ -96,8 +96,8 @@
 
 		src.visible_message("<span class='alert'><b>[possessed] comes to life!</b></span>") // was [src] but: "the living space thing comes alive!"
 		animate_levitate(src, -1, 20, 1)
-		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST, "living_object", 1000)
-		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "living_object", 1000)
+		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST, "living_object", 100)
+		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "living_object", 100)
 
 	disposing()
 		REMOVE_MOB_PROPERTY(src, PROP_STUN_RESIST, "living_object")
@@ -212,7 +212,7 @@
 	click(atom/target, params)
 		if (target == src)
 			if (canattack)
-				src.item.attack_self(src)
+				src.item.AttackSelf(src)
 			else
 				if(!isitem(src.item))
 					src.item.Attackhand(src)

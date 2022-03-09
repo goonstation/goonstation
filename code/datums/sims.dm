@@ -399,8 +399,7 @@
 				showOwner("<span class='alert'><b>You can't take being so bored anymore!</b></span>")
 				if (ishuman(holder.owner))
 					var/mob/living/carbon/human/H = holder.owner
-					H.force_suicide()
-					modifyValue(50)
+					H.gib()
 
 		onLife()
 			if (value < 10)

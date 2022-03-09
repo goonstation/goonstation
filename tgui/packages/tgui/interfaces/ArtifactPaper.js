@@ -31,7 +31,7 @@ export const ArtifactPaper = (props, context) => {
       width={800}
       height={825}
     >
-      <body overflow={"scroll"}>
+      <Window.Content>
         <Section>
           <h3>Artifact Name</h3>
           <h4>{ artifactName === "" ? "unknown" : artifactName }</h4>
@@ -85,7 +85,7 @@ export const ArtifactPaper = (props, context) => {
             height={10}
             onChange={(_, x) => act("detail", { newDetail: x, hasPen: hasPen })} />
         </Section>
-      </body>
+      </Window.Content>
     </Window>
   );
 };

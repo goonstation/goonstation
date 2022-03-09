@@ -274,7 +274,7 @@
 								holder.ownhuman.drop_item()
 
 							if (G.state <= GRAB_PASSIVE)
-								G.attack_self(holder.ownhuman)
+								G.AttackSelf(holder.ownhuman)
 							else
 								holder.ownhuman.emote("flip")
 								holder.move_away(holder.target,1)

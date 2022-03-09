@@ -468,7 +468,7 @@ Contents:
 			K = pick(src.contents)
 			if(istype(K))
 				K.set_real_color()
-			usr.put_in_hand_or_eject(K)
+			user.put_in_hand_or_eject(K)
 
 	process(mult)
 		for(var/obj/O in contents)

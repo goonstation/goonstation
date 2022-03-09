@@ -931,6 +931,14 @@ obj/decoration/ceilingfan
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "syndiepc1"
 
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 	syndiepc2
 		icon_state = "syndiepc2"
 

@@ -505,6 +505,7 @@
 		playsound(src.loc, src.sound_destroyed, 50, 2)
 		overlays = list()
 		damage_overlays = list()
+		linked_chassis?.linked_magnet = null
 		linked_chassis = null
 		active_overlay = null
 		sound_activate = null
@@ -1906,111 +1907,135 @@ obj/item/clothing/gloves/concussive
 				C.TakeDamage("All",rand(15,25)*(1-C.get_explosion_resistance()),0)
 				boutput(C, "<span class='alert'>You are battered by the concussive shockwave!</span>")
 
+/// Multiplier for power usage if the user is a silicon and the charge is coming from their internal cell
+#define SILICON_POWER_COST_MOD 10
+
 /obj/item/cargotele
 	name = "cargo transporter"
 	desc = "A device for teleporting crated goods."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "cargotele"
+	/// Power cost per teleport
 	var/cost = 25
-	var/target = null
+	/// Target pad we send cargo to. Make sure you're sending to the pad's loc and not the pad itself
+	var/obj/submachine/cargopad/target = null
+	/// Type of cell used in this
 	var/cell_type = /obj/item/ammo/power_cell/med_power
+	/// List of types that cargo teles are allowed to send. Built in New, shared across all teles
+	var/static/list/allowed_types = list()
 	w_class = W_CLASS_SMALL
-	flags = ONBELT
+	flags = ONBELT | FPRINT | TABLEPASS | SUPPRESSATTACK
 	mats = 4
 
 	New()
 		. = ..()
+		var/list/allowed_supertypes = list(/obj/machinery/portable_atmospherics/canister, /obj/reagent_dispensers, /obj/storage)
+		for (var/supertype in allowed_supertypes)
+			for (var/subtype in typesof(supertype))
+				allowed_types[subtype] = 1
+
 		var/cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, swappable = FALSE)
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, .proc/maybe_reset_target) //make sure cargo pads can GC
+
+	proc/maybe_reset_target(datum/dummy, var/obj/submachine/cargopad/pad)
+		if (target == pad)
+			target = null
 
 	examine(mob/user)
 		. = ..()
 		if (isrobot(user))
-			return // Drains battery instead.
-		var/list/ret = list()
-		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST))
-			. += "<span class='alert'>No power cell installed.</span>"
+			. += "Each use of the cargo teleporter will consume [cost * SILICON_POWER_COST_MOD]PU."
 		else
-			. += "There are [ret["charge"]]/[ret["max_charge"]] PUs left! Each use will consume [cost]PU."
+			var/list/ret = list()
+			if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST))
+				. += "<span class='alert'>No power cell installed.</span>"
+			else
+				. += "There are [ret["charge"]]/[ret["max_charge"]] PUs left! Each use will consume [cost]PU."
 
-	attack_self() // Fixed --melon
+	attack_self(mob/user) // Fixed --melon
 		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
 			boutput(usr, "<span class='alert'>The transporter is out of charge.</span>")
 			return
-		if (!cargopads.len) boutput(usr, "<span class='alert'>No receivers available.</span>")
+		if (!length(global.cargo_pad_manager.pads))
+			boutput(usr, "<span class='alert'>No receivers available.</span>")
 		else
-			var/holder = src.loc
-			//here i set up an empty var that can take any object, and tell it to look for absolutely anything in the list
-			var/selection = input("Select Cargo Pad Location:", "Cargo Pads", null, null) as null|anything in cargopads
+			var/mob/holder = src.loc
+			var/selection = tgui_input_list(user, "Select Cargo Pad Location:", "Cargo Pads", global.cargo_pad_manager.pads, 15 SECONDS)
 			if (src.loc != holder || !selection)
 				return
-			var/turf/T = get_turf(selection)
-			//get the turf of the pad itself
-			if (!T)
-				boutput(usr, "<span class='alert'>Target not set!</span>")
-				return
-			boutput(usr, "Target set to [T.loc].")
+			boutput(user, "Target set to [get_area(selection)].")
 			//blammo! works!
-			src.target = T
+			src.target = selection
 
-	proc/cargoteleport(var/obj/T, var/mob/user)
+	afterattack(var/obj/O, mob/user)
+		if (!istype(O))
+			return ..()
+		if (O.artifact || src.allowed_types[O.type])
+			src.try_teleport(O, user)
+
+	proc/can_teleport(var/obj/cargo, var/mob/user)
 		if (!src.target)
 			boutput(user, "<span class='alert'>You need to set a target first!</span>")
-			return
+			return FALSE
 		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
-			boutput(usr, "<span class='alert'>The transporter is out of charge.</span>")
-			return
+			boutput(user, "<span class='alert'>The transporter is out of charge.</span>")
+			return FALSE
 		if (isrobot(user))
 			var/mob/living/silicon/robot/R = user
-			if (R.cell.charge < src.cost * 10)
+			if (R.cell.charge < src.cost * SILICON_POWER_COST_MOD)
 				boutput(user, "<span class='alert'>There is not enough charge left in your cell to use this.</span>")
-				return
+				return FALSE
 
+		return TRUE
+
+	proc/try_teleport(var/obj/cargo, var/mob/user)
 		// Why didn't you implement checks for these in the first place, sigh (Convair880).
-		if (ismob(T.loc) && T.loc == user && issilicon(user))
-			user.show_text("The [T.name] is securely bolted to your chassis.", "red")
-			return
+		if (cargo.loc == user && issilicon(user))
+			user.show_text("The [cargo.name] is securely bolted to your chassis.", "red")
+			return FALSE
 
-		boutput(user, "<span class='notice'>Teleporting [T]...</span>")
+		if (!src.can_teleport(cargo, user))
+			return FALSE
+
+		boutput(user, "<span class='notice'>Teleporting [cargo]...</span>")
 		playsound(user.loc, "sound/machines/click.ogg", 50, 1)
+		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, .proc/finish_teleport, list(cargo, user), null, null, null, null)
+		return TRUE
 
-		if(do_after(user, 5 SECONDS))
-			// And these too (Convair880).
-			if (ismob(T.loc) && T.loc == user)
-				user.u_equip(T)
-			if (istype(T.loc, /obj/item/storage))
-				var/obj/item/storage/S_temp = T.loc
-				var/datum/hud/storage/H_temp = S_temp.hud
-				H_temp.remove_object(T)
 
-			// And logs for good measure (Convair880).
-			var/is_locked = 0
-			var/is_welded = 0
-			if (istype(T, /obj/storage)) // Other containers (e.g. prison artifacts) can hold mobs too.
-				var/obj/storage/S = T
-				if (S.locked) is_locked = 1
-				if (S.welded) is_welded = 1
+	proc/finish_teleport(var/obj/cargo, var/mob/user)
+		if (ismob(cargo.loc) && cargo.loc == user)
+			user.u_equip(cargo)
+		if (istype(cargo.loc, /obj/item/storage))
+			var/obj/item/storage/S_temp = cargo.loc
+			var/datum/hud/storage/H_temp = S_temp.hud
+			H_temp.remove_object(cargo)
 
-			for (var/mob/M in T.contents)
-				if (M)
-					logTheThing("station", user, M, "uses a cargo transporter to send [T.name][is_locked ? " (locked)" : ""][is_welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
+		// And logs for good measure (Convair880).
+		var/obj/storage/S = cargo
+		ENSURE_TYPE(S)
 
-			T.set_loc(src.target)
-			elecflash(src)
-			if (isrobot(user))
-				var/mob/living/silicon/robot/R = user
-				R.cell.charge -= cost * 10
+		for (var/mob/M in cargo.contents)
+			if (M)
+				logTheThing("station", user, M, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
+
+		cargo.set_loc(get_turf(src.target))
+		elecflash(src)
+		if (isrobot(user))
+			var/mob/living/silicon/robot/R = user
+			R.cell.charge -= cost * SILICON_POWER_COST_MOD
+		else
+			var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
+			if (ret & CELL_INSUFFICIENT_CHARGE)
+				boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
 			else
-				var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
-				if (ret & CELL_INSUFFICIENT_CHARGE)
-					boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
-				else
-					boutput(user, "<span class='notice'>Transfer successful.</span>")
-		return
+				boutput(user, "<span class='notice'>Transfer successful.</span>")
+
+#undef SILICON_POWER_COST_MOD
 
 /obj/item/cargotele/traitor
 	cost = 15
-	cell_type = /obj/item/ammo/power_cell/med_power
 	var/static/list/possible_targets = list()
 
 	New()
@@ -2024,33 +2049,35 @@ obj/item/clothing/gloves/concussive
 	attack_self() // Fixed --melon
 		return
 
-	cargoteleport(var/obj/T, var/mob/user)
-		src.target = pick(src.possible_targets)
-		if (!src.target)
-			boutput(user, "<span class='alert'>No target found!</span>")
-			return
+	can_teleport(obj/cargo, mob/user)
 		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
-			boutput(usr, "<span class='alert'>The transporter is out of charge.</span>")
-			return
-		boutput(user, "<span class='notice'>Teleporting [T]...</span>")
+			boutput(user, "<span class='alert'>The transporter is out of charge.</span>")
+			return FALSE
+		return TRUE
+
+	try_teleport(obj/cargo, mob/user)
+		if(..() && istype(cargo, /obj/storage))
+			var/obj/storage/store = cargo
+			store.weld(TRUE, user)
+
+	finish_teleport(var/obj/cargo, var/mob/user)
+		if (!length(src.possible_targets))
+			CRASH("Tried to syndi-teleport [cargo] but the list of possible turf targets was empty.")
+		src.target = pick(src.possible_targets)
+		boutput(user, "<span class='notice'>Teleporting [cargo]...</span>")
 		playsound(user.loc, "sound/machines/click.ogg", 50, 1)
 
-		if(do_after(user, 5 SECONDS))
+		// Logs for good measure (Convair880).
+		for (var/mob/M in cargo.contents)
+			logTheThing("station", user, M, "uses a Syndicate cargo transporter to send [cargo.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
 
-			// Logs for good measure (Convair880).
-			for (var/mob/M in T.contents)
-				if (M)
-					logTheThing("station", user, M, "uses a Syndicate cargo transporter to send [T.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
-
-			T.set_loc(src.target)
-			if(hasvar(T, "welded")) T:welded = 1
-			elecflash(src)
-			var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
-			if (ret & CELL_INSUFFICIENT_CHARGE)
-				boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
-			else
-				boutput(user, "<span class='notice'>Transfer successful.</span>")
-		return
+		cargo.set_loc(src.target)
+		elecflash(src)
+		var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
+		if (ret & CELL_INSUFFICIENT_CHARGE)
+			boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
+		else
+			boutput(user, "<span class='notice'>Transfer successful.</span>")
 
 /obj/item/oreprospector
 	name = "geological scanner"
@@ -2238,17 +2265,17 @@ obj/item/clothing/gloves/concussive
 				moved++
 
 	proc/change_dest(mob/user as mob)
-		if (!cargopads.len)
+		if (!length(cargo_pad_manager.pads))
 			boutput(user, "<span class='alert'>No receivers available.</span>")
 		else
 			var/list/L
 			if (src.group)
 				L = list()
-				for (var/obj/submachine/cargopad/C in cargopads)
+				for (var/obj/submachine/cargopad/C in global.cargo_pad_manager.pads)
 					if (C.group == src.group)
 						L += C
 			else
-				L = cargopads
+				L = global.cargo_pad_manager.pads
 			var/selection = tgui_input_list(user, "Select target output:", "Cargo Pads", L)
 			if(!selection)
 				return
@@ -2259,18 +2286,42 @@ obj/item/clothing/gloves/concussive
 			boutput(user, "Target set to [selection] at [T.loc].")
 			src.target = T
 
-var/global/list/cargopads = list()
+/// Basically a list wrapper that removes and adds cargo pads to a global list when it recieves the respective signals
+/datum/cargo_pad_manager
+	var/list/pads = list()
+
+	New()
+		..()
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_ENABLED, .proc/add_pad)
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, .proc/remove_pad)
+
+	/// Add a pad to the global pads list. Do nothing if the pad is already in the pads list.
+	proc/add_pad(datum/holder, obj/submachine/cargopad/pad)
+		if (!istype(pad)) //wuh?
+			return
+		if (pad in pads)
+			return
+		src.pads += pad
+
+	/// Remove a pad from the global pads list. Do nothing if the pad is already in the pads list.
+	proc/remove_pad(datum/holder, obj/submachine/cargopad/pad)
+		if (!istype(pad)) //wuh!
+			return
+		src.pads -= pad
+
+
+var/global/datum/cargo_pad_manager/cargo_pad_manager
 
 /obj/submachine/cargopad
 	name = "Cargo Pad"
 	desc = "Used to receive objects transported by a cargo transporter."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "cargopad"
-	anchored = 1
+	anchored = TRUE
 	plane = PLANE_FLOOR
 	mats = 10 //I don't see the harm in re-adding this. -ZeWaka
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
-	var/active = 1
+	var/active = TRUE
 	var/group
 
 	podbay
@@ -2298,42 +2349,36 @@ var/global/list/cargopads = list()
 
 	New()
 		..()
-		src.overlays += image('icons/obj/objects.dmi', "cpad-rec")
 		if (src.name == "Cargo Pad")
 			src.name += " ([rand(100,999)])"
-		if (src.active && !cargopads.Find(src))
-			cargopads.Add(src)
+
+		if (src.active) //in case of map edits etc
+			UpdateOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_ENABLED, src)
 
 	disposing()
-		if (cargopads.Find(src))
-			cargopads.Remove(src)
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_DISABLED, src)
 		..()
 
-
 	was_deconstructed_to_frame(mob/user)
-		if (cargopads.Find(src))
-			cargopads.Remove(src)
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_DISABLED, src)
 		..()
 
 	was_built_from_frame(mob/user, newly_built)
-		if (!cargopads.Find(src))
-			cargopads.Add(src)
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_ENABLED, src)
 		..()
-
 
 	attack_hand(var/mob/user as mob)
 		if (src.active == 1)
-			boutput(user, "You switch the receiver off.")
-			src.overlays = null
-			src.active = 0
-			if (cargopads.Find(src))
-				cargopads.Remove(src)
+			boutput(user, "<span class='notice'>You switch the receiver off.</span>")
+			UpdateOverlays(null, "lights")
+			src.active = FALSE
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_DISABLED, src)
 		else
-			boutput(user, "You switch the receiver on.")
-			src.overlays += image('icons/obj/objects.dmi', "cpad-rec")
-			src.active = 1
-			if (!cargopads.Find(src))
-				cargopads.Add(src)
+			boutput(user, "<span class='notice'>You switch the receiver on.</span>")
+			UpdateOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
+			src.active = TRUE
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_ENABLED, src)
 
 // satchels -> obj/item/satchel.dm
 
@@ -2363,7 +2408,7 @@ var/global/list/cargopads = list()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/satchel/mining/))
-			if (!issilicon(usr))
+			if (!issilicon(user))
 				var/obj/item/satchel/mining/S = W
 				user.drop_item()
 				if (satchel)

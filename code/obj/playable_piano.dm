@@ -152,7 +152,7 @@
 		else //just in case
 			return
 
-	mouse_drop(obj/player_piano/O, null)//, var/src_location, var/control_orig, var/control_new, var/params)
+	mouse_drop(obj/player_piano/piano, null)//, var/src_location, var/control_orig, var/control_new, var/params)
 		if (!istype(usr, /mob/living))
 			return
 		if (usr.stat)
@@ -160,12 +160,15 @@
 		if (!allowChange(usr))
 			boutput(usr, "<span class='alert'>You can't link pianos without a multitool!</span>")
 			return
-		if (O.is_busy || is_busy)
+		ENSURE_TYPE(piano)
+		if (!piano)
+			return
+		if (piano.is_busy || src.is_busy)
 			boutput(usr, "<span class='alert'>You can't link a busy piano!</span>")
-		if (O.panel_exposed && panel_exposed)
+		if (piano.panel_exposed && panel_exposed)
 			usr.visible_message("[usr] links the pianos.", "You link the pianos!")
-			add_piano(O)
-			O.add_piano(src)
+			src.add_piano(piano)
+			piano.add_piano(src)
 
 	disposing() //just to clear up ANY funkiness
 		reset_piano(1)

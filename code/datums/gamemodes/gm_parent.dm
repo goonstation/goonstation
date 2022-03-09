@@ -311,10 +311,7 @@
 	if (!istype(traitor) || !ispath(objective_path))
 		return null
 
-	var/datum/objective/O = new objective_path
-	O.owner = traitor
-	O.set_up()
-	traitor.objectives += O
+	var/datum/objective/O = new objective_path(null, traitor)
 
 	return O
 
@@ -338,9 +335,6 @@
 		if(4)
 			objective_path = /datum/objective/escape/hijack
 
-	var/datum/objective/O = new objective_path
-	O.owner = traitor
-	O.set_up()
-	traitor.objectives += O
+	var/datum/objective/O = new objective_path(null, traitor)
 
 	return O

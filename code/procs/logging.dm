@@ -172,7 +172,7 @@ var/global/logLength = 0
 	var/traitor
 	var/online
 	var/dead = 1
-	var/mobType
+	var/mobType = null
 
 	var/mob/mobRef
 	if (ismob(ref))
@@ -189,6 +189,20 @@ var/global/logLength = 0
 				name = mobRef.name
 			if (length(mobRef.name_suffixes))
 				name = mobRef.real_name
+
+		if(isnull(mobRef.client) && isAIeye(mobRef))
+			var/mob/living/intangible/aieye/aieye = mobRef
+			if(aieye.mainframe?.client)
+				mobRef = aieye.mainframe
+				mobType = "(AIeye/mainframe)"
+		else if(isnull(mobRef.client) && istype(mobRef, /mob/living/silicon/ai))
+			var/mob/living/silicon/ai/ai = mobRef
+			if(ai.eyecam?.client)
+				mobRef = ai.eyecam
+				mobType = "(mainframe/AIeye)"
+			else if(ai.deployed_shell?.client)
+				mobRef = ai.deployed_shell
+				mobType = "(mainframe/shell)"
 		if (mobRef.key)
 			key = mobRef.key
 		if (mobRef.ckey)
@@ -223,12 +237,12 @@ var/global/logLength = 0
 	else
 		return ref
 
-	if (mobRef)
+	if (mobRef && isnull(mobRef))
 		if (ismonkey(mobRef)) mobType = "Monkey"
 		else if (isrobot(mobRef)) mobType = "Robot"
 		else if (isshell(mobRef)) mobType = "AI Shell"
 		else if (isAI(mobRef)) mobType = "AI"
-		else if (!ckey) mobType = "NPC"
+		else if (!ckey && !mobRef.last_ckey) mobType = "NPC"
 
 	var/list/data = list()
 	if (name)
@@ -243,6 +257,11 @@ var/global/logLength = 0
 			data += "[name ? " (" : ""][key][name ? ")" : ""]"
 		else
 			data += "[name ? " (" : ""]<a href='?src=%admin_ref%;action=adminplayeropts;targetckey=[ckey]' title='Player Options'>[key]</a>[name ? ")" : ""]"
+	else if(mobRef.last_ckey)
+		if (type == "diary")
+			data += "[name ? " (" : ""]last: [ckey][name ? ")" : ""]"
+		else
+			data += "[name ? " (" : ""]last: <a href='?src=%admin_ref%;action=adminplayeropts;targetckey=[ckey]' title='Player Options'>[ckey]</a>[name ? ")" : ""]"
 	if (traitor)
 		if (type == "diary")
 			data += " \[TRAITOR\]"
@@ -345,6 +364,8 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 /proc/log_atmos(var/atom/A as turf|obj|mob)
 	return scan_atmospheric(A, 0, 1)
 
+/proc/alert_atmos(var/atom/A as turf|obj|mob)
+	return scan_atmospheric(A, 0, 0, 0, 1)
 
 /proc/get_log_data_html(logType as text, searchString as text, var/datum/admins/requesting_admin)
 	if (!searchString)

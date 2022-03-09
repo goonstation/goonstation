@@ -104,13 +104,20 @@
 					update_cooldown_costs()
 				sleep(1 SECOND)
 
-	Move(NewLoc)
+	Move(atom/NewLoc)
 		if (tutorial)
 			if (!tutorial.PerformAction("move", NewLoc))
 				return 0
 		if (isturf(NewLoc))
 			if (istype(NewLoc, /turf/unsimulated/wall))
 				return 0
+		..()
+
+	set_loc(atom/newloc)
+		// Blobs can only move to turfs. Blobs shouldn't be moving off station Z UNLESS they're riding the escape shuttle or the game has ended (so they can spread to centcom)
+		// Letting them move off station Z causes Issues when blobs take the mining shuttle, sea elevator, etc
+		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION && !tutorial && !istype(get_area(newloc), /area/shuttle/escape/transit) && global.current_state < GAME_STATE_FINISHED)
+			return
 		..()
 
 	Life(datum/controller/process/mobs/parent)
@@ -301,15 +308,7 @@
 					if (src.tutorial)
 						if (!tutorial.PerformAction("clickmove", T))
 							return
-					src.set_loc(T)
-					return
-
-				if (T && isghostrestrictedz(T.z) && !restricted_z_allowed(src, T) && !(src.client && src.client.holder))
-					var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-					if (OS)
-						src.set_loc(OS)
-					else
-						src.z = 1
+					src.Move(T)
 
 	say_understands() return 1
 	can_use_hands()	return 0

@@ -464,6 +464,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 		..()
 		if (isobserver(O))
 			return
+		if (isintangible(O) || iswraith(O))
+			O.set_loc(pick_landmark(LANDMARK_LATEJOIN))
+			return
 		if (ismob(O))
 			var/mob/jerk = O
 			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_MOB_PROPERTY(jerk, PROP_NOCLIP)))

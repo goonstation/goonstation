@@ -367,9 +367,9 @@
 		if (pixelable)
 			if (!W.pixelaction(target, params, src, reach))
 				if (W)
-					W.afterattack(target, src, reach, params)
+					W.AfterAttack(target, src, reach, params)
 		else if (!pixelable && W)
-			W.afterattack(target, src, reach, params)
+			W.AfterAttack(target, src, reach, params)
 
 /mob/living/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
 	if (!src.restrained() && !is_incapacitated(src))
@@ -499,7 +499,7 @@
 				grace_penalty = time_left
 
 		if (target == equipped)
-			equipped.attack_self(src, params, location, control)
+			equipped.AttackSelf(src)
 			if(equipped.flags & ATTACK_SELF_DELAY)
 				src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 		else if (params["ctrl"])
@@ -665,7 +665,7 @@
 /mob/living/silicon/ai/capitalize_speech()
 	if (!client)
 		if (src?.eyecam?.client?.preferences)
-			return src.eyecam.client.preferences
+			return src.eyecam.client.preferences.auto_capitalization
 	. = ..()
 
 /mob/living/say(var/message, ignore_stamina_winded)
@@ -673,6 +673,21 @@
 
 	if (!message)
 		return
+
+	// Zam note: this is horrible
+	if (forced_desussification)
+		// "Surely this goes somewhere else, right, Zam?"
+		// maybe? i guess?
+		// i mean, i don't care. i'm stoned and i have commit rights
+		// and this is 100% a joke. it'll probably get refactored into
+		// something reasonable later if people like it.
+		//
+		// when you think about it, github is like amogus
+		// if it finds dead code, it calls an emergeny meeting!
+		if (phrase_log.is_sussy(message))
+			// var/turf/T = get_turf(src)
+			// var/turf/M = locate(T.x, max(world.maxy, T.y + 8), T.z)
+			arcFlash(src, src, 5000)
 
 	if (reverse_mode) message = reverse_text(message)
 

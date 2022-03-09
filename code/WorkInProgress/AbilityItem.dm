@@ -138,7 +138,7 @@
 
 	execute_ability()
 		var/obj/item/clothing/suit/W = the_item
-		W.attack_self(the_mob)
+		W.AttackSelf(the_mob)
 		..()
 
 /obj/ability_button/magboot_toggle
@@ -324,7 +324,7 @@
 
 	execute_ability()
 		var/obj/item/saw/S = the_item
-		S.attack_self(usr)
+		S.AttackSelf(usr)
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -368,7 +368,7 @@
 
 	execute_ability()
 		var/obj/item/cable_coil/C = the_item
-		C.attack_self(usr)
+		C.AttackSelf(usr)
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -406,7 +406,7 @@
 
 	execute_ability()
 		var/obj/item/device/t_scanner/J = the_item
-		J.attack_self(the_mob)
+		J.AttackSelf(the_mob)
 		if(J.on) icon_state = "off"
 		else  icon_state = "on"
 		..()
@@ -419,7 +419,7 @@
 
 	execute_ability()
 		var/obj/item/clothing/glasses/meson/J = the_item
-		J.attack_self(the_mob)
+		J.AttackSelf(the_mob)
 		if(J.on) icon_state = "meson1"
 		else  icon_state = "meson0"
 		..()
@@ -432,7 +432,7 @@
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/space/syndicate/specialist/engineer/J = the_item
-		J.attack_self(the_mob)
+		J.AttackSelf(the_mob)
 		if(J.on) icon_state = "meson1"
 		else  icon_state = "meson0"
 		..()

@@ -199,9 +199,8 @@
 			boutput(L, "<b>You have to be alive to enter cryogenic storage!</b>")
 			boutput(user, "<b>You can't put someone in cryogenic storage if they aren't alive!</b>")
 			return 0
-		if (L.stat || L.restrained() || L.getStatusDuration("paralysis") || L.sleeping)
+		if (!user && (L.stat || L.restrained() || L.getStatusDuration("paralysis") || L.sleeping))
 			boutput(L, "<b>You can't enter cryogenic storage while incapacitated!</b>")
-			boutput(user, "<b>You can't put someone in cryogenic storage while they're incapacitated or restrained!</b>")
 			return 0
 		if (user && (user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping))
 			boutput(user, "<b>You can't put someone in cryogenic storage while you're incapacitated or restrained!</b>")
@@ -296,15 +295,15 @@
 	proc/insert_prompt(mob/target, mob/user)
 		if (target.client || !target.ckey)
 			boutput(user, "<span class='alert'>You can't force someone into cryosleep if they're still logged in or are an NPC!</span>")
-			return 0
+			return FALSE
 		else if (alert(user, "Would you like to put [target] into cryogenic storage? They will be able to leave it immediately if they log back in.", "Confirmation", "Yes", "No") == "Yes")
 			if (!src.mob_can_enter_storage(target, user))
-				return 0
+				return FALSE
 			else
-				src.add_person_to_storage(target, 0)
+				src.add_person_to_storage(target, FALSE)
 				src.visible_message("<span class='alert'><b>[user] forces [target] into [src]!</b></span>")
-				return 1
-		return 0
+				return TRUE
+		return FALSE
 
 	relaymove(var/mob/user as mob, dir)
 		if ((user.last_cryotron_message + CRYOTRON_MESSAGE_DELAY) > ticker.round_elapsed_ticks)

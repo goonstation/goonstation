@@ -120,6 +120,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 			var/mob/living/critter/C = target.make_critter(pick(animal_spell_critter_paths))
 			C.real_name = "[target.real_name] the [C.real_name]"
 			C.name = C.real_name
+			logTheThing("combat", M, target, "casts the Polymorph spell on [constructTarget(target,"combat")] turning them into [constructTarget(C,"combat")] at [log_loc(C)].")
 			C.butcherable = 1 // we would like the brain to be recoverable, please
 			if (istype(C, /mob/living/critter/small_animal/bee))
 				var/mob/living/critter/small_animal/bee/B = C

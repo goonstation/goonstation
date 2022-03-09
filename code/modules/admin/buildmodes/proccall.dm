@@ -12,22 +12,22 @@ Hold down CTRL, ALT or SHIFT to modify, call or view proc bound to those keys.<b
 	// no modifier key held down
 	var/procname_n = null
 	var/targeted_n = 1
-	var/list/listargs_n = null
+	var/tmp/list/listargs_n = null
 
 	// ctrl held down
 	var/procname_c = null
 	var/targeted_c = 1
-	var/list/listargs_c = null
+	var/tmp/list/listargs_c = null
 
 	// alt held down
 	var/procname_a = null
 	var/targeted_a = 1
-	var/list/listargs_a = null
+	var/tmp/list/listargs_a = null
 
 	// shift held down
 	var/procname_s = null
 	var/targeted_s = 1
-	var/list/listargs_s = null
+	var/tmp/list/listargs_s = null
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		var/istargeted = 1

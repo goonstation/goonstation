@@ -11,23 +11,23 @@ Hold down CTRL, ALT or SHIFT to modify, call or reset variable bound to those ke
 
 	// no modifier key held down
 	var/varname_n = null
-	var/varvalue_n = null
-	var/newinst_n = 0
+	var/tmp/varvalue_n = null
+	var/tmp/newinst_n = 0
 
 	// ctrl held down
 	var/varname_c = null
-	var/varvalue_c = null
-	var/newinst_c = 0
+	var/tmp/varvalue_c = null
+	var/tmp/newinst_c = 0
 
 	// alt held down
 	var/varname_a = null
-	var/varvalue_a = null
-	var/newinst_a = 0
+	var/tmp/varvalue_a = null
+	var/tmp/newinst_a = 0
 
 	// shift held down
 	var/varname_s = null
-	var/varvalue_s = null
-	var/newinst_s = 0
+	var/tmp/varvalue_s = null
+	var/tmp/newinst_s = 0
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		var/newvn = input("Enter variable name[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]:", "Variable Name[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]", ctrl ? varname_c : alt ? varname_a : shift ? varname_s : varname_n) as text|null

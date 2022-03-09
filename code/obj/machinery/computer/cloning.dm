@@ -487,7 +487,7 @@ proc/find_ghost_by_key(var/find_key)
 			O.set_loc(src.loc)
 
 		src.add_fingerprint(usr)
-		src?.connected.updateUsrDialog()
+		src.connected?.updateUsrDialog()
 
 		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
 
