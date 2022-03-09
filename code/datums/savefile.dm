@@ -135,12 +135,12 @@
 
 
 
-	// loads the savefile corresponding to the mob's ckey
+	// loads the savefile corresponding to the client's ckey
 	// if silent=true, report incompatible savefiles
 	// returns 1 if loaded (or file was incompatible)
 	// returns 0 if savefile did not exist
 	savefile_load(client/user, var/profileNum = 1, var/savefile/loadFrom = null)
-		if (ismob(user))
+		if (!isclient(user))
 			CRASH("[user] isnt a client. please give me a client. please. i beg you.")
 
 		if (IsGuestKey(user.key))
