@@ -1,4 +1,7 @@
 (t)tue mar 08 22
+(u)Flourish
+(e)🆕|feature
+(*)Cloning consoles now update every minute or so and display a distinct animation when there is someone in the records who can be cloned. Let me know what you think.
 (u)Sovexe
 (e)🐛|bug
 (+)Fixed bugs that made Ixworth and Shieldmaidhen chickens unobtainable.
