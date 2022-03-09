@@ -139,8 +139,8 @@
 			decoded_json = json_decode(json)
 		else
 			decoded_json = list()
-		// need to wrap the clouddata within index named cdata
-		decoded_json["[ckey(ckey)]"] = list(cdata = clouddata)
+
+		decoded_json["[ckey(ckey)]"] = clouddata
 		//t2f appends, but need to to replace
 		fdel("data/simulated_cloud.json")
 		text2file(json_encode(decoded_json),"data/simulated_cloud.json")
@@ -167,8 +167,7 @@
 			decoded_json = json_decode(json)
 		else
 			decoded_json = list()
-		// need to wrap the clouddata within index named cdata
-		decoded_json["[ckey(target)]"] = list(cdata = data)
+		decoded_json["[ckey(target)]"] = data
 		//t2f appends, but need to to replace
 		fdel("data/simulated_cloud.json")
 		text2file(json_encode(decoded_json),"data/simulated_cloud.json")
