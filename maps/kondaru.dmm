@@ -39103,16 +39103,14 @@
 /area/shuttle/merchant_shuttle/right_station/cogmap)
 "cqS" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/maid,
-/obj/decal/poster/wallsign/poster_rand{
-	pixel_x = 8;
-	pixel_y = 28
-	},
-/obj/item/clothing/head/maid,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/item/clothing/head/maid,
+/obj/item/clothing/under/gimmick/maid,
+/obj/item/mop,
+/obj/item/spraybottle,
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/crew_quarters/quarters_south)
 "cre" = (
@@ -41705,23 +41703,28 @@
 "eJX" = (
 /obj/table/wood/auto,
 /obj/item/plate{
-	pixel_y = 7
+	pixel_x = -3;
+	pixel_y = 9
 	},
-/obj/item/spraybottle/cleaner,
-/obj/item/sticker/heart{
-	rand_pos = 1
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/snacks/burger/heartburger{
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/item/sticker/smile{
+	pixel_x = -9;
+	pixel_y = -5
 	},
 /obj/item/sticker/heart{
-	rand_pos = 1
+	pixel_x = -3;
+	pixel_y = -4
 	},
 /obj/item/sticker/heart{
-	rand_pos = 1
-	},
-/obj/item/sticker/heart{
-	rand_pos = 1
-	},
-/obj/item/sticker/heart{
-	rand_pos = 1
+	pixel_x = -3;
+	pixel_y = -3
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/crew_quarters/quarters_south)
@@ -54409,6 +54412,10 @@
 	icon_state = "bedsheet-blue"
 	},
 /obj/machinery/light/small,
+/obj/item/toy/plush/small/possum{
+	pixel_x = 4;
+	pixel_y = -1
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/station/crew_quarters/quarters_south)
 "rMN" = (
@@ -59765,12 +59772,8 @@
 /turf/simulated/floor/grey,
 /area/station/quartermaster/cargobay)
 "xcb" = (
-/obj/decal/poster/wallsign/poster_rand{
+/obj/decal/poster/wallsign/poster_octocluwne{
 	pixel_y = 28
-	},
-/obj/decal/poster/wallsign/poster_rand{
-	pixel_x = -7;
-	pixel_y = 36
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/crew_quarters/quarters_south)
@@ -59897,13 +59900,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "xgt" = (
-/obj/decal/poster/wallsign/poster_rand{
-	pixel_x = -10;
-	pixel_y = 38
-	},
-/obj/decal/poster/wallsign/poster_rand{
-	pixel_x = 9;
-	pixel_y = 31
+/obj/decal/poster/wallsign/poster_borg{
+	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/crew_quarters/quarters_south)

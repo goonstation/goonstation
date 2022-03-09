@@ -212,7 +212,7 @@
 	click(atom/target, params)
 		if (target == src)
 			if (canattack)
-				src.item.attack_self(src)
+				src.item.AttackSelf(src)
 			else
 				if(!isitem(src.item))
 					src.item.Attackhand(src)

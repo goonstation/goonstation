@@ -6,7 +6,7 @@
 
 #define SEND_COMPLEX_SIGNAL(target, sigtype, arguments...) SEND_SIGNAL(target, sigtype[2], ##arguments)
 
-#define GLOBAL_SIGNAL preMapLoad // guaranteed to exist and that's all that matters
+#define GLOBAL_SIGNAL global_signal_holder // dummy datum that exclusively exists to hold onto global signals
 
 /**
 	* `target` to use for signals that are global and not tied to a single datum.
@@ -14,7 +14,7 @@
 	* Note that this does NOT work with SEND_SIGNAL because of preprocessor weirdness.
 	* Use SEND_GLOBAL_SIGNAL instead.
 	*/
-#define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( !preMapLoad.comp_lookup || !preMapLoad.comp_lookup[sigtype] ? 0 : preMapLoad._SendSignal(sigtype, list(preMapLoad, ##arguments)) )
+#define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( !global_signal_holder.comp_lookup || !global_signal_holder.comp_lookup[sigtype] ? 0 : global_signal_holder._SendSignal(sigtype, list(global_signal_holder, ##arguments)) )
 
 /// A wrapper for _AddComponent that allows us to pretend we're using normal named arguments
 #define AddComponent(arguments...) _AddComponent(list(##arguments))
@@ -57,8 +57,12 @@
 
 // ---- global signals ----
 #define COMSIG_GLOBAL_REBOOT "global_reboot"
-//When a drone dies. Y'know, the critter ones.
+/// When a drone dies. Y'know, the critter ones.
 #define COMSIG_GLOBAL_DRONE_DEATH "global_drone_death"
+/// When a cargo pad is destroyed, deconstructed, or turned off
+#define COMSIG_GLOBAL_CARGO_PAD_DISABLED "global_cargo_pad_destroyed"
+/// When a cargo pad is built or turned on
+#define COMSIG_GLOBAL_CARGO_PAD_ENABLED "global_cargo_pad_enabled"
 
 //  ---- datum signals ----
 
@@ -75,7 +79,7 @@
 #define COMSIG_ATOM_DIR_CHANGED "atom_dir_changed"
 /// when an atom is collided by a projectile (/obj/projectile)
 #define COMSIG_ATOM_HITBY_PROJ "atom_hitby_proj"
-/// when an atom is hit by a thrown thing (thrown_atom, /datum/thrown_thing)
+/// when an atom is hit by a thrown thing (hit_target, thrown_atom, /datum/thrown_thing)
 #define COMSIG_ATOM_HITBY_THROWN "atom_hitby_thrown"
 /// when an atom is examined (/mob/examiner, /list/lines), append to lines for more description
 #define COMSIG_ATOM_EXAMINE "atom_examine"
@@ -98,6 +102,8 @@
 
 /// when an AM moves (thing, previous_loc, direction)
 #define COMSIG_MOVABLE_MOVED "mov_moved"
+/// when a movable is about to move, return true to prevent (thing, new_loc, direction)
+#define COMSIG_MOVABLE_BLOCK_MOVE "mov_moved"
 /// when an AM moves (thing, previous_loc)
 #define COMSIG_MOVABLE_SET_LOC "mov_set_loc"
 /// when an AM ends throw (thing, /datum/thrown_thing)
@@ -110,6 +116,8 @@
 #define XSIG_OUTERMOST_MOVABLE_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_outermost_changed")
 /// when the z-level of a movable changes (works in nested contents) (thing, old_z_level, new_z_level)
 #define XSIG_MOVABLE_Z_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_z-level_changed")
+/// when an atom hits something when being thrown (thrown_atom, hit_target, /datum/thrown_thing)
+#define COMSIG_MOVABLE_HIT_THROWN "mov_hit_thrown"
 
 // ---- item signals ----
 
@@ -143,6 +151,8 @@
 #define COMSIG_ITEM_SPECIAL_POST "itm_special_post"
 /// When items process ticks on an item
 #define COMSIG_ITEM_PROCESS "itm_process"
+/// After attacking any atom (not just mob) with this item (item, atom/target, mob/user, reach, params)
+#define COMSIG_ITEM_AFTERATTACK "itm_afterattack"
 
 // ---- cloaking device signal ----
 /// Make cloaking devices turn off
@@ -233,7 +243,7 @@
 
 // ---- attack_X signals ----
 
-/// Attacking with an item in-hand (item, attacker)
+/// Attacking with an item in-hand (item, attacker, params, is_special)
 #define COMSIG_ATTACKBY "attackby"
 /// Attacking without an item in-hand (attacker)
 #define COMSIG_ATTACKHAND "attackhand"

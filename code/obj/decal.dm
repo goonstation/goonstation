@@ -1,5 +1,6 @@
 /obj/decal
 	text = ""
+	plane = PLANE_NOSHADOW_BELOW
 	var/list/random_icon_states = list()
 	var/random_dir = 0
 
@@ -61,6 +62,7 @@
 	pixel_x = 0
 	mouse_opacity = 0
 	blend_mode = 2
+	plane = PLANE_NOSHADOW_ABOVE
 
 	New()
 		add_filter("motion blur", 1, motion_blur_filter(x=0, y=3))
@@ -74,6 +76,7 @@
 	anchored = 1
 	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "skeleton_l"
+	plane = PLANE_DEFAULT
 
 	decomposed_corpse
 		name = "decomposed corpse"
@@ -118,6 +121,7 @@
 	pixel_y = -16
 	pixel_x = -16
 	mouse_opacity = 0
+	plane = PLANE_NOSHADOW_ABOVE
 	New(var/atom/location)
 		src.set_loc(location)
 		SPAWN(2 SECONDS) qdel(src)
@@ -133,6 +137,7 @@
 	pixel_y = -16
 	pixel_x = -16
 	mouse_opacity = 0
+	plane = PLANE_NOSHADOW_ABOVE
 	New(var/atom/location)
 		src.set_loc(location)
 		SPAWN(2 SECONDS) qdel(src)
@@ -180,6 +185,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	density = 0
 	desc = "Barber poles historically were signage used to convey that the barber would perform services such as blood letting and other medical procedures, with the red representing blood, and the white representing the bandaging. In America, long after the time when blood-letting was offered, a third colour was added to bring it in line with the colours of their national flag. This one is in space."
 	layer = OBJ_LAYER
+	plane = PLANE_DEFAULT
 
 /obj/decal/oven
 	name = "Oven"
@@ -189,6 +195,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	anchored = 1
 	density = 1
 	layer = OBJ_LAYER
+	plane = PLANE_DEFAULT
 
 /obj/decal/sink
 	name = "Sink"
@@ -198,9 +205,11 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	anchored = 1
 	density = 1
 	layer = OBJ_LAYER
+	plane = PLANE_DEFAULT
 
 obj/decal/fakeobjects
 	layer = OBJ_LAYER
+	plane = PLANE_DEFAULT
 	var/true_name = "fuck you erik"	//How else will players banish it or place curses on it?? honestly people
 
 	New()
@@ -406,6 +415,7 @@ obj/decal/fakeobjects/teleport_pad
 	anchored = 1
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
+	plane = PLANE_DEFAULT
 	layer = OBJ_LAYER
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 
@@ -489,6 +499,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "alienflower"
 	random_dir = 8
+	plane = PLANE_DEFAULT
 
 	New()
 		..()
@@ -501,6 +512,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "avine_l1"
 	random_icon_states = list("avine_l1", "avine_l2", "avine_l3")
+	plane = PLANE_DEFAULT
 	New()
 		..()
 		src.set_dir(pick(cardinal))
@@ -616,6 +628,7 @@ obj/decal/fakeobjects/teleport_pad
 	density = 0
 	opacity = 0
 	anchored = 1
+	plane = PLANE_DEFAULT
 
 
 

@@ -367,9 +367,9 @@
 		if (pixelable)
 			if (!W.pixelaction(target, params, src, reach))
 				if (W)
-					W.afterattack(target, src, reach, params)
+					W.AfterAttack(target, src, reach, params)
 		else if (!pixelable && W)
-			W.afterattack(target, src, reach, params)
+			W.AfterAttack(target, src, reach, params)
 
 /mob/living/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
 	if (!src.restrained() && !is_incapacitated(src))
@@ -499,7 +499,7 @@
 				grace_penalty = time_left
 
 		if (target == equipped)
-			equipped.attack_self(src, params, location, control)
+			equipped.AttackSelf(src)
 			if(equipped.flags & ATTACK_SELF_DELAY)
 				src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 		else if (params["ctrl"])

@@ -559,11 +559,11 @@
 				if(istype(src.equipped(), /obj/item/device/light/zippo))
 					var/obj/item/device/light/zippo/zippo = src.equipped()
 					if(!zippo.on)
-						zippo.attack_self(src)
+						zippo.AttackSelf(src)
 				if(istype(src.equipped(), /obj/item/weldingtool))
 					var/obj/item/weldingtool/welder = src.equipped()
 					if(!welder.welding)
-						welder.attack_self(src)
+						welder.AttackSelf(src)
 				src.ai_attack_target(cigarette, src.equipped())
 				throw_equipped = 1
 
@@ -598,7 +598,7 @@
 
 	// use
 	if(src.equipped() && prob(ai_state == AI_PASSIVE ? 2 : 7) && ai_useitems)
-		src.equipped().attack_self(src)
+		src.equipped().AttackSelf(src)
 
 	// throw
 	if(throw_equipped)

@@ -194,7 +194,7 @@
 
 			target.Attackby(equipped, src)
 			if (equipped)
-				equipped.afterattack(target, src, reach)
+				equipped.AfterAttack(target, src, reach)
 
 			if (src.lastattacked == target && use_delay) //If lastattacked was set, this must be a combat action!! Use combat click delay.
 				src.next_click = world.time + (equipped ? max(equipped.click_delay,src.combat_click_delay) : src.combat_click_delay)

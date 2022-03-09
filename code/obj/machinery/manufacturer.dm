@@ -225,7 +225,7 @@
 	bullet_act(var/obj/projectile/P)
 		// swiped from guardbot.dm
 		var/damage = 0
-		damage = round(((P.power/6)*P.proj_data.ks_ratio), 1.0)
+		damage = round(((P.power/3)*P.proj_data.ks_ratio), 1.0)
 
 		if(src.material) src.material.triggerOnBullet(src, src, P)
 

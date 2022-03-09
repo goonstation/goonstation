@@ -881,7 +881,7 @@
 	MouseDrop_T(atom/target, mob/user)
 		if (!isobj(target))
 			return
-		src.afterattack(target,user)
+		src.AfterAttack(target,user)
 		..()
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)

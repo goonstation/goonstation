@@ -114,7 +114,9 @@
 		..()
 
 	set_loc(atom/newloc)
-		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION && !tutorial)
+		// Blobs can only move to turfs. Blobs shouldn't be moving off station Z UNLESS they're riding the escape shuttle or the game has ended (so they can spread to centcom)
+		// Letting them move off station Z causes Issues when blobs take the mining shuttle, sea elevator, etc
+		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION && !tutorial && !istype(get_area(newloc), /area/shuttle/escape/transit) && global.current_state < GAME_STATE_FINISHED)
 			return
 		..()
 

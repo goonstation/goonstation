@@ -555,7 +555,7 @@
 		var/turf/T = get_turf(src)
 		if (T)
 			T.Attackby(W, user)
-			W.afterattack(T, user)
+			W.AfterAttack(T, user)
 
 /obj/plan_marker/glass_shaper
 	name = "\improper Window Plan Marker"
