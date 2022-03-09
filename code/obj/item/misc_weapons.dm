@@ -826,6 +826,7 @@
 		flick("butterfly-knife_close", src)
 		boutput(user, "<span class='notice'>You flick the [src] closed. It can now be concealed.</span>")
 		src.hit_type = DAMAGE_BLUNT
+		src.tool_flags = 0
 		src.w_class = W_CLASS_SMALL //can be put back in pocket
 		src.force = 4
 		user.update_inhands()
@@ -836,6 +837,7 @@
 		flick("butterfly-knife_open", src)
 		boutput(user, "<span class='notice'>You cleanly flick open the [src].</span>")
 		src.hit_type = DAMAGE_STAB
+		src.tool_flags = TOOL_CUTTING
 		src.w_class = W_CLASS_BULKY //can't be put in pocket
 		src.force = 12 //decently stabby
 		src.add_fingerprint(user)
@@ -870,6 +872,7 @@
 		flick("switchblade_close", src)
 		boutput(user, "<span class='notice'>You close the [src]. It can now be concealed.</span>")
 		src.hit_type = DAMAGE_BLUNT
+		src.tool_flags = 0
 		src.w_class = W_CLASS_SMALL //can be put back in pocket
 		src.force = 4
 		user.update_inhands()
@@ -881,6 +884,7 @@
 		flick("switchblade_open", src)
 		boutput(user, "<span class='notice'>The [src] springs open. Click.</span>")
 		src.hit_type = DAMAGE_STAB
+		src.tool_flags = TOOL_CUTTING
 		src.w_class = W_CLASS_BULKY //can't be put in pocket
 		src.force = 12
 		src.add_fingerprint(user)
