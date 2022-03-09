@@ -45,9 +45,9 @@
 			return
 		src.subjectname = meatsource.real_name
 		src.subjectjob = "Stowaway"
-		if (meatsource.mind && meatsource.mind.assigned_role)
+		if (meatsource?.mind?.assigned_role)
 			src.subjectjob = meatsource.mind.assigned_role
-		else if (meatsource.ghost && meatsource.ghost.mind && meatsource.ghost.mind.assigned_role)
+		else if (meatsource?.ghost?.mind?.assigned_role)
 			src.subjectjob = meatsource.ghost.mind.assigned_role
 
 		src.name = src.subjectname+" meat"
