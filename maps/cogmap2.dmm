@@ -46830,6 +46830,7 @@
 "bYz" = (
 /obj/table/auto,
 /obj/random_item_spawner/med_kit,
+/obj/item/knife/butterfly,
 /turf/simulated/floor/delivery,
 /area/station/security/main)
 "bYA" = (
@@ -87847,7 +87848,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+mcg
 aaa
 aaa
 aaa

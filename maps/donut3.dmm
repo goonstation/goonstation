@@ -53404,6 +53404,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/item/knife/switchblade,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
 "ptN" = (
