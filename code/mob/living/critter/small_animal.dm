@@ -2775,6 +2775,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.setup_overlays()*/
 		src.real_name = "[pick_string("mentor_mice_prefixes.txt", "mentor_mouse_prefix")] [src.name]"
 		src.name = src.real_name
+		abilityHolder.addAbility(/datum/targetable/critter/mentordisappear)
 
 	setup_overlays()
 		if(!src.colorkey_overlays)
@@ -2876,6 +2877,23 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if(src.client && src.client && !src.client.is_mentor())
 			src.make_critter(/mob/living/critter/small_animal/mouse/weak)
 			return
+
+/datum/targetable/critter/mentordisappear
+	name = "Vanish"
+	desc = "Leave your body and return to the etherial realm."
+	icon_state = "mentordisappear"
+
+
+	cast(mob/target)
+
+		var/mob/living/M = holder.owner
+		if (!holder)
+			return 1
+		M.visible_message("<span class='alert'><B>[M] does a funny little jiggle with their body and then disappears into thin air!</B></span>") // MY ASCENCION BEGINS
+		M.ghostize()
+		qdel(M)
+
+
 
 /mob/living/critter/small_animal/mouse/weak/mentor/admin
 	name = "admin mouse"
