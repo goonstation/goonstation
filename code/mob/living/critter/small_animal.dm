@@ -2892,6 +2892,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		M.visible_message("<span class='alert'><B>[M] does a funny little jiggle with their body and then vanishes into thin air!</B></span>") // MY ASCENCION BEGINS
 		M.ghostize()
 		qdel(M)
+		logTheThing("admin", src, null, "turned from a mentor mouse to a ghost") // I can remove this but it seems like a good thing to have
 
 
 
