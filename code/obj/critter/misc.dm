@@ -1042,7 +1042,7 @@
 
 		src.visible_message("<span class='combat'><B>The [src.name]</B> starts to envelop [M]!</span>")
 		SETUP_GENERIC_ACTIONBAR(src, src, 6 SECONDS, .proc/finish_envelope, list(M), 'icons/mob/critter_ui.dmi', "devour_over", \
-					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+					"", INTERRUPT_ACTION | INTERRUPT_STUNNED | INTERRUPT_ACT)
 		ON_COOLDOWN(src, "envelope_attack",7 SECONDS)
 
 	proc/finish_envelope(var/mob/M)
