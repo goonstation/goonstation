@@ -906,7 +906,7 @@
 					game_stats.Increment("farts")
 #endif
 			else
-				src.show_text("Invalid Emote: [act]")
+				if (voluntary) src.show_text("Invalid Emote: [act]")
 				return
 
 		if (message && isalive(src))
