@@ -50,7 +50,7 @@
 		else if (meatsource?.ghost?.mind?.assigned_role)
 			src.subjectjob = meatsource.ghost.mind.assigned_role
 
-		src.name = src.subjectname+" meat"
+		src.name = src.subjectname + " meat"
 
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat
