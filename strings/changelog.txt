@@ -24,9 +24,6 @@
 (p)7692
 (e)🐛|bug
 (+)Fixes some antique lawbringer bug and cleans up how iconstates are called.
-(u)Tarmunora
-(e)⚖|balance
-(*)Highly experimental cryoxadone rework - now has varying efficacy for different damage types based on the temperature, instead of being a boolean on/off. Highly subject to change/reversion.
 (t)sat mar 05 22
 (u)Hans
 (p)7527
