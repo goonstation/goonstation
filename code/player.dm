@@ -157,7 +157,7 @@
 #ifdef LIVE_SERVER
 		// Via rust-g HTTP
 		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[target]&key=[url_encode(key)]&value=[url_encode(data[key])]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[ckey(target)]&key=[url_encode(key)]&value=[url_encode(data[key])]", "", "")
 		request.begin_async()
 #else
 		var/json = null
