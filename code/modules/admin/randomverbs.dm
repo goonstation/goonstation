@@ -2572,28 +2572,38 @@ var/global/night_mode_enabled = 0
 	if (!old_key)
 		boutput(usr, "<span class='alert'>Transfer aborted.</span>")
 		return
+	old_key = ckey(old_key)
 
-	var/new_key = input("Enter new account key", "New account key", null) as null|text
+	var/new_key = ckey(input("Enter new account key", "New account key", null) as null|text)
 	if (!new_key)
 		boutput(usr, "<span class='alert'>Transfer aborted.</span>")
 		return
 
-	//this works on any player datum so we just make a new one
-	var/datum/player/dummy = new
-	dummy.clouddata = list()
-	var/list/saves = dummy.cloud_fetch_target_saves_only(old_key)
+	//criminal activity
+	var/datum/player/dummy_player = new
+	dummy_player.clouddata = list() // trick it into thinking we have cloud data I guess. only gets nullchecked
+	dummy_player.cloudsaves = list() // ditto
+	var/datum/preferences/dummy_preferences = new
+	var/list/save_names = dummy_player.cloud_fetch_target_saves_only(old_key) // technically a map from names to nums
 
-	if (!saves)
+	if (!save_names)
 		boutput(usr, "<span class='alert'>Couldn't find cloud data for that key.</span>")
 		return
-	if (!length(saves))
+	if (!length(save_names))
 		boutput(usr, "<span class='alert'>Couldn't find any cloud saves for that key.</span>")
 		return
-	if (tgui_alert(usr, "You're about to transfer [length(saves)] saves from [old_key] to [new_key]. This will overwrite all the existing saves on the target account. Do it?", "Cloud Save Transfer", list("Yes", "No")) == "No")
+	if (tgui_alert(usr, "You're about to transfer [length(save_names)] saves from [old_key] to [new_key]. This will overwrite all the existing saves on the target account. Do it?", "Cloud Save Transfer", list("Yes", "No")) == "No")
 		boutput(usr, "<span class='alert'>Transfer aborted.</span>")
 		return
 
-	dummy.cloud_put_target(new_key, "saves", saves)
+	for (var/name in save_names)
+		dummy_preferences.cloudsave_load(null, name, old_key)
+		var/ret = dummy_preferences.cloudsave_save(null, name, new_key)
+		if (ret != 1) //yes this is intentional
+			boutput(usr, "<span class='alert'>Something went wrong while saving to the cloud. Return value was: ([ret]). Transfer aborted.</span>")
+			return
+
+	dummy_player.cloud_put_target(new_key, "saves", save_names)
 	boutput(usr, "<span class='success'>Cloud saves transferred.</span>")
 
 /client/proc/cmd_admin_disable()
