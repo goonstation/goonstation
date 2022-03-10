@@ -872,6 +872,10 @@ datum
 				if (length(covered) > 5)
 					silent = TRUE
 				volume /= max(length(covered), 1)
+				if(istype(holder, /datum/reagents/fluid_group))
+					volume = min(volume, src.volume / (2 + 3 / length(covered)))
+				if(volume < 5)
+					return
 				O.AddComponent(/datum/component/glue_ready, volume * 5 SECONDS, 5 SECONDS)
 				var/turf/T = get_turf(O)
 				if(!silent)
