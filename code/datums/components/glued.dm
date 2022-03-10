@@ -13,6 +13,7 @@ TYPEINFO(/datum/component/glued)
 	var/original_animate_movement
 	var/original_anchored
 	var/atom/glued_to
+	var/set_loc_rippoff_in_progress = FALSE
 
 /datum/component/glued/Initialize(atom/target, glue_duration=null, glue_removal_time=null)
 	if(!istype(src.parent, /atom/movable))
@@ -86,10 +87,15 @@ TYPEINFO(/datum/component/glued)
 	return new_loc != glued_to.loc
 
 /datum/component/glued/proc/on_set_loc(atom/movable/parent, atom/old_loc)
-	if(parent.loc != glued_to.loc)
-		var/turf/T = get_turf(parent)
-		T.visible_message("<span class='notice'>\The [parent] is ripped off from [glued_to].</span>")
-		qdel(src)
+	if(old_loc == parent.loc) // this will generally happen when our glued_to moves in with us, yay 😊
+		src.set_loc_rippoff_in_progress = FALSE
+	if(parent.loc != glued_to.loc) // we moved to a place where our glued_to isn't better rip ourselves off
+		src.set_loc_rippoff_in_progress = TRUE
+		SPAWN(1) // but first wait if the glued_to doesn't move in with us 🥺
+			if(src.set_loc_rippoff_in_progress && !QDELETED(src))
+				var/turf/T = get_turf(parent)
+				T?.visible_message("<span class='notice'>\The [parent] is ripped off from [glued_to].</span>")
+				qdel(src)
 
 /datum/component/glued/UnregisterFromParent()
 	var/atom/movable/parent = src.parent
