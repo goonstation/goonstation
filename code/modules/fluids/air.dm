@@ -57,7 +57,7 @@ var/list/ban_from_airborne_fluid = list()
 		for(var/atom/A in src.loc)
 			if (A.event_handler_flags & USE_FLUID_ENTER)
 				A.EnteredAirborneFluid(src, src.loc)
-		src.loc.EnteredAirborneFluid(src, src.loc)
+		src.loc?.EnteredAirborneFluid(src, src.loc)
 
 	turf_remove_cleanup(turf/the_turf)
 		the_turf.active_airborne_liquid = null
