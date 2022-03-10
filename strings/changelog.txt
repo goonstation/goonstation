@@ -1,5 +1,9 @@
 
 (t)wed mar 09 22
+(u)Amylizzle
+(p)7718
+(e)🐛|bug
+(+)Missile Arrival and other Spacebux purchases are now available and working as Cyborg and AI!
 (u)Spell Tech
 (p)7697
 (e)|
