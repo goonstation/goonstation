@@ -464,6 +464,7 @@
 			return
 
 		var/list/ret = json_decode(response.body)
+		boutput(usr, "HERE'S YOUR GODDAMN RESPONSE: [json_decode(response.body)]")
 		if( ret["status"] == "error" )
 			return ret["error"]["error"]
 		user.player.cloudsaves[ name ] = length( exported )
