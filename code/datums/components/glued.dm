@@ -98,9 +98,9 @@ TYPEINFO(/datum/component/glued)
 				T?.visible_message("<span class='notice'>\The [parent] is ripped off from [glued_to].</span>")
 				qdel(src)
 
-/datum/component/glued/proc/on_explode(atom/movable/parent, list/sigreturn)
+/datum/component/glued/proc/on_explode(atom/movable/parent, list/explode_args)
 	// explode_args format: list(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE)
-	sigreturn["power_coeff"] = 1/6 // reduce explosion size by a factor of 6
+	explode_args[3] /= 6 // reduce explosion size by a factor of 6
 	qdel(src)
 
 /datum/component/glued/UnregisterFromParent()
