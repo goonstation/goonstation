@@ -448,8 +448,10 @@
 				return "Failed to retrieve cloud data, try rejoining."
 			if (IsGuestKey( user.key ))
 				return 0
+			if (save_to)
+				CRASH("Tried to save a cloud save with a client and a key to save to specified- need one or the")
 
-		var/savefile/save = src.savefile_save( user.ckey, 1, 1 )
+		var/savefile/save = src.savefile_save(ckey(save_to) || user.ckey, 1, 1)
 		var/exported = save.ExportText()
 
 		// Fetch via HTTP from goonhub
@@ -460,14 +462,14 @@
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)
-			logTheThing("debug", null, null, "<b>cloudsave_load:</b> Failed to contact goonhub. u: [user.ckey]")
+			logTheThing("debug", null, null, "<b>cloudsave_load:</b> Failed to contact goonhub. u: [save_to || user.ckey]")
 			return
 
 		var/list/ret = json_decode(response.body)
 		boutput(usr, "HERE'S YOUR GODDAMN RESPONSE: [json_decode(response.body)]")
 		if( ret["status"] == "error" )
 			return ret["error"]["error"]
-		user.player.cloudsaves[ name ] = length( exported )
+		user?.player.cloudsaves[ name ] = length( exported )
 		return 1
 
 	cloudsave_delete( client/user, var/name )
