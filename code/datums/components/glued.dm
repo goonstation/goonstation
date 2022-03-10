@@ -86,6 +86,7 @@ TYPEINFO(/datum/component/glued)
 	return new_loc != glued_to.loc
 
 /datum/component/glued/proc/on_set_loc(atom/movable/parent, atom/old_loc)
+	sleep(0)
 	if(parent.loc != glued_to.loc)
 		var/turf/T = get_turf(parent)
 		T.visible_message("<span class='notice'>\The [parent] is ripped off from [glued_to].</span>")
