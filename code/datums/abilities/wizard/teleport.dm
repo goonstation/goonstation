@@ -61,6 +61,9 @@
 		A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas)
 
 	if(!thearea)
+		if (isnull(A))
+			boutput(src, "<span class='alert'>Invalid area selected.</span>")
+			return 1
 		thearea = get_telearea(A)
 
 	if (!thearea || !istype(thearea))
