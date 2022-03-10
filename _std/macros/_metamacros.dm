@@ -1,7 +1,7 @@
 
 // zero overhead tuple macros
 // useful when you want to store multiple values in one macro
-// Note that you can use other macros inside a tuple definition, see mob_properties.dm for an example
+// Note that you can use other macros inside a tuple definition, see atom_properties.dm for an example
 /*
 Example:
 #define RADIO_MEDICAL(x) x(1356, "#461B7E", "medical")

@@ -30,7 +30,7 @@ TYPEINFO(/datum/component/glued)
 		glued_to.vis_contents += parent
 	if(ismob(parent))
 		var/mob/parent_mob = parent
-		APPLY_MOB_PROPERTY(parent_mob, PROP_CANTMOVE, "glued")
+		APPLY_ATOM_PROPERTY(parent_mob, PROP_CANTMOVE, "glued")
 	if(isitem(parent) && ismob(parent.loc))
 		var/mob/parent_holder = parent.loc
 		var/obj/item/item_parent = parent
@@ -40,7 +40,7 @@ TYPEINFO(/datum/component/glued)
 	src.original_animate_movement = parent.animate_movement
 	src.original_anchored = parent.anchored
 	parent.animate_movement = SYNC_STEPS
-	parent.anchored = MAGIC_GLUE_ANCHORED // replace with atom_properties once we move mob_properties to /atom
+	parent.anchored = MAGIC_GLUE_ANCHORED // replace with atom_properties once we move atom_properties to /atom
 	parent.layer = OBJ_LAYER
 	if(isturf(glued_to))
 		parent.plane = PLANE_NOSHADOW_BELOW
@@ -106,7 +106,7 @@ TYPEINFO(/datum/component/glued)
 		glued_to.vis_contents -= parent
 	if(ismob(parent))
 		var/mob/parent_mob = parent
-		REMOVE_MOB_PROPERTY(parent_mob, PROP_CANTMOVE, "glued")
+		REMOVE_ATOM_PROPERTY(parent_mob, PROP_CANTMOVE, "glued")
 	parent.set_loc(get_turf(parent))
 	src.glued_to = null
 	. = ..()

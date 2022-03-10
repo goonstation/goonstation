@@ -136,7 +136,7 @@ proc/is_weak_rollable_contract(type)
 /mob/proc/satanclownize()
 	src.transforming = 1
 	src.canmove = 0
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 	for(var/obj/item/clothing/Q in src)
 		src.u_equip(Q)
 		if (Q)

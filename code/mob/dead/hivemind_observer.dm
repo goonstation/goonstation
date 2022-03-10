@@ -5,7 +5,7 @@
 
 	New()
 		. = ..()
-		REMOVE_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
+		REMOVE_ATOM_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
 
 	say_understands(var/other)
 		return 1

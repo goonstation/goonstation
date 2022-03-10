@@ -142,7 +142,7 @@
 						playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
 						M.canmove = 0
 						M.icon = null
-						APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+						APPLY_ATOM_PROPERTY(M, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 						M:death()
 						var/obj/critter/zombie/P = new(M.loc)
 						///this little bit of code prevents multiple zombies from the same victim

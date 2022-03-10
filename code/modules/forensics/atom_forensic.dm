@@ -287,7 +287,7 @@
 /mob/living/track_blood()
 	if (!islist(src.tracked_blood))
 		return
-	if (HAS_MOB_PROPERTY(src, PROP_BLOOD_TRACKING_ALWAYS) && (tracked_blood["count"] > 0))
+	if (HAS_ATOM_PROPERTY(src, PROP_BLOOD_TRACKING_ALWAYS) && (tracked_blood["count"] > 0))
 		return
 	var/turf/T = get_turf(src)
 	var/obj/decal/cleanable/blood/dynamic/tracks/B = null

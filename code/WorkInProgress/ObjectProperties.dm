@@ -1,11 +1,11 @@
-#define ASSOCIATE_MOB_PROPERTY(PROP) \
+#define ASSOCIATE_ATOM_PROPERTY(PROP) \
 	updateMob(obj/item/owner, mob/user, value, oldValue=null) { \
 		. = ..(); \
-		APPLY_MOB_PROPERTY(user, PROP, owner, value); \
+		APPLY_ATOM_PROPERTY(user, PROP, owner, value); \
 	} \
 	removeFromMob(obj/item/owner, mob/user, value) { \
 		. = ..(); \
-		REMOVE_MOB_PROPERTY(user, PROP, owner); \
+		REMOVE_ATOM_PROPERTY(user, PROP, owner); \
 	}
 
 /obj/item/proc/dbg_objectprop()
@@ -414,22 +414,22 @@ to say if there's demand for that.
 
 	body
 		id = "meleeprot"
-		ASSOCIATE_MOB_PROPERTY(PROP_MELEEPROT_BODY)
+		ASSOCIATE_ATOM_PROPERTY(PROP_MELEEPROT_BODY)
 
 	head //ugly hack im sorry, this is used for head, mask, glasses and ear clothing
 		id = "meleeprot_head"
-		ASSOCIATE_MOB_PROPERTY(PROP_MELEEPROT_HEAD)
+		ASSOCIATE_ATOM_PROPERTY(PROP_MELEEPROT_HEAD)
 
 	all //ugly hack but I'm not sorry, this is used for barriers
 		id = "meleeprot_all"
 		updateMob(obj/item/owner, mob/user, value, oldValue=null)
 			. = ..()
-			APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, owner, value)
-			APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, owner, value)
+			APPLY_ATOM_PROPERTY(user, PROP_MELEEPROT_BODY, owner, value)
+			APPLY_ATOM_PROPERTY(user, PROP_MELEEPROT_HEAD, owner, value)
 		removeFromMob(obj/item/owner, mob/user, value)
 			. = ..()
-			REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, owner)
-			REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, owner)
+			REMOVE_ATOM_PROPERTY(user, PROP_MELEEPROT_BODY, owner)
+			REMOVE_ATOM_PROPERTY(user, PROP_MELEEPROT_HEAD, owner)
 
 /datum/objectProperty/equipment/rangedprot
 	name = "Resistance (Ranged)"
@@ -440,7 +440,7 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal] prot."
 
-	ASSOCIATE_MOB_PROPERTY(PROP_RANGEDPROT)
+	ASSOCIATE_ATOM_PROPERTY(PROP_RANGEDPROT)
 
 /datum/objectProperty/equipment/radiationprot
 	name = "Resistance (Radiation)"
@@ -451,7 +451,7 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal]%"
 
-	ASSOCIATE_MOB_PROPERTY(PROP_RADPROT)
+	ASSOCIATE_ATOM_PROPERTY(PROP_RADPROT)
 
 /datum/objectProperty/equipment/coldprot
 	name = "Resistance (Cold)"
@@ -462,7 +462,7 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal]%"
 
-	ASSOCIATE_MOB_PROPERTY(PROP_COLDPROT)
+	ASSOCIATE_ATOM_PROPERTY(PROP_COLDPROT)
 
 /datum/objectProperty/equipment/heatprot
 	name = "Resistance (Heat)"
@@ -473,7 +473,7 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal]%"
 
-	ASSOCIATE_MOB_PROPERTY(PROP_HEATPROT)
+	ASSOCIATE_ATOM_PROPERTY(PROP_HEATPROT)
 
 /datum/objectProperty/equipment/exploprot
 	name = "Resistance (Explosion)"
@@ -484,7 +484,7 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal]%"
 
-	ASSOCIATE_MOB_PROPERTY(PROP_EXPLOPROT)
+	ASSOCIATE_ATOM_PROPERTY(PROP_EXPLOPROT)
 
 
 
@@ -497,13 +497,13 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "Reflecting projectiles"
 
-	// no ASSOCIATE_MOB_PROPERTY because this one is simple, valueless
+	// no ASSOCIATE_ATOM_PROPERTY because this one is simple, valueless
 	updateMob(obj/item/owner, mob/user, value, oldValue=null)
 		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_REFLECTPROT, owner)
+		APPLY_ATOM_PROPERTY(user, PROP_REFLECTPROT, owner)
 	removeFromMob(obj/item/owner, mob/user, value)
 		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_REFLECTPROT, owner)
+		REMOVE_ATOM_PROPERTY(user, PROP_REFLECTPROT, owner)
 
 /datum/objectProperty/equipment/enchantarmor
 	hidden = 1
@@ -513,7 +513,7 @@ to say if there's demand for that.
 	tooltipImg = "block.png"
 	defaultValue = 1
 
-	ASSOCIATE_MOB_PROPERTY(PROP_ENCHANT_ARMOR)
+	ASSOCIATE_ATOM_PROPERTY(PROP_ENCHANT_ARMOR)
 
 /datum/objectProperty/equipment/stamregen
 	name = "Stamina regen."
@@ -525,7 +525,7 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal] stamina regen."
 
-	ASSOCIATE_MOB_PROPERTY(PROP_STAMINA_REGEN_BONUS)
+	ASSOCIATE_ATOM_PROPERTY(PROP_STAMINA_REGEN_BONUS)
 
 /datum/objectProperty/equipment/deflection
 	name = "Deflection"
@@ -537,7 +537,7 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "+[propVal]% additional chance to deflect disarm attempts"
 
-	ASSOCIATE_MOB_PROPERTY(PROP_DISARM_RESIST)
+	ASSOCIATE_ATOM_PROPERTY(PROP_DISARM_RESIST)
 
 /datum/objectProperty/equipment/disorient_resist
 	name = "Body Insulation (Disorient Resist)"
@@ -548,8 +548,8 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal]%"
 
-	ASSOCIATE_MOB_PROPERTY(PROP_DISORIENT_RESIST_BODY)
-	ASSOCIATE_MOB_PROPERTY(PROP_DISORIENT_RESIST_BODY_MAX)
+	ASSOCIATE_ATOM_PROPERTY(PROP_DISORIENT_RESIST_BODY)
+	ASSOCIATE_ATOM_PROPERTY(PROP_DISORIENT_RESIST_BODY_MAX)
 
 	inline
 		inline = 1
@@ -571,8 +571,8 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal]%"
 
-	ASSOCIATE_MOB_PROPERTY(PROP_DISORIENT_RESIST_EYE)
-	ASSOCIATE_MOB_PROPERTY(PROP_DISORIENT_RESIST_EYE_MAX)
+	ASSOCIATE_ATOM_PROPERTY(PROP_DISORIENT_RESIST_EYE)
+	ASSOCIATE_ATOM_PROPERTY(PROP_DISORIENT_RESIST_EYE_MAX)
 
 /datum/objectProperty/equipment/disorient_resist_ear
 	name = "Ear Insulation (Disorient Resist)"
@@ -583,8 +583,8 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal]%"
 
-	ASSOCIATE_MOB_PROPERTY(PROP_DISORIENT_RESIST_EAR)
-	ASSOCIATE_MOB_PROPERTY(PROP_DISORIENT_RESIST_EAR_MAX)
+	ASSOCIATE_ATOM_PROPERTY(PROP_DISORIENT_RESIST_EAR)
+	ASSOCIATE_ATOM_PROPERTY(PROP_DISORIENT_RESIST_EAR_MAX)
 
 /datum/objectProperty/equipment/vault_speed
 	name = "Vault Speed"
@@ -594,6 +594,6 @@ to say if there's demand for that.
 	defaultValue = 1
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "+[propVal]x"
-	ASSOCIATE_MOB_PROPERTY(PROP_VAULT_SPEED)
+	ASSOCIATE_ATOM_PROPERTY(PROP_VAULT_SPEED)
 
-#undef ASSOCIATE_MOB_PROPERTY
+#undef ASSOCIATE_ATOM_PROPERTY
