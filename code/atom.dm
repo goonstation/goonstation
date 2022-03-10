@@ -856,6 +856,7 @@
 /atom/movable/proc/set_loc(atom/newloc)
 	SHOULD_CALL_PARENT(TRUE)
 	if (loc == newloc)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, loc)
 		return src
 
 	if (ismob(src)) // fuck haxploits

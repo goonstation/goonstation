@@ -97,6 +97,8 @@
 #define COMSIG_ATOM_MOUSEDROP "atom_mousedrop"
 /// When something is dragged onto an atom (object, usr)
 #define COMSIG_ATOM_MOUSEDROP_T "atom_mousedrop_t"
+/// When the atom is a source of an explosion (object, args_to_explode_at)
+#define COMSIG_ATOM_EXPLODE "atom_explode"
 
 // ---- atom/movable signals ----
 

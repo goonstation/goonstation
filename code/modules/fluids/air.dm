@@ -57,7 +57,7 @@ var/list/ban_from_airborne_fluid = list()
 		for(var/atom/A in src.loc)
 			if (A.event_handler_flags & USE_FLUID_ENTER)
 				A.EnteredAirborneFluid(src, src.loc)
-		src.loc.EnteredAirborneFluid(src, src.loc)
+		src.loc?.EnteredAirborneFluid(src, src.loc)
 
 	turf_remove_cleanup(turf/the_turf)
 		the_turf.active_airborne_liquid = null
@@ -75,7 +75,7 @@ var/list/ban_from_airborne_fluid = list()
 	//ALTERNATIVE to force ingest in life
 	proc/just_do_the_apply_thing(var/mob/M, var/mult = 1, var/hasmask = 0)
 		if (!M) return
-		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list || src.group.waitforit) return
+		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list) return
 
 		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)
 		react_volume = min(react_volume,20) * mult
@@ -97,7 +97,7 @@ var/list/ban_from_airborne_fluid = list()
 
 	force_mob_to_ingest(var/mob/M, var/mult = 1)//called when mob is drowning/standing in the smoke
 		if (!M) return
-		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list || src.group.waitforit) return
+		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list) return
 
 		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)
 		react_volume = min(react_volume,20) * mult
