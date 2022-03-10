@@ -12,7 +12,6 @@ var/datum/explosion_controller/explosions
 		SEND_SIGNAL(source, COMSIG_ATOM_EXPLODE, args)
 		for(var/atom/movable/loc_ancestor in obj_loc_chain(source))
 			SEND_SIGNAL(loc_ancestor, COMSIG_ATOM_EXPLODE_INSIDE, args)
-		SEND_SIGNAL(source, COMSIG_ATOM_EXPLODE, args)
 		var/atom/A = epicenter
 		if(istype(A))
 			var/severity = power >= 6 ? 1 : power > 3 ? 2 : 3
