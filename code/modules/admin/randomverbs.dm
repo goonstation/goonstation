@@ -2600,7 +2600,7 @@ var/global/night_mode_enabled = 0
 		dummy_preferences.cloudsave_load(null, name, old_key)
 		var/ret = dummy_preferences.cloudsave_save(null, name, new_key)
 		if (ret != 1) //yes this is intentional
-			boutput(usr, "<span class='alert'>Something went wrong while saving to the cloud. Transfer aborted.</span>")
+			boutput(usr, "<span class='alert'>Something went wrong while saving to the cloud. Return value was: \[[ret]\]. Transfer aborted.</span>")
 			return
 
 	dummy_player.cloud_put_target(new_key, "saves", save_names)
