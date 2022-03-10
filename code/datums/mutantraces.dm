@@ -243,7 +243,7 @@ TYPEINFO(/datum/mutantrace)
 			if (movement_modifier)
 				APPLY_MOVEMENT_MODIFIER(M, movement_modifier, src.type)
 			if (!needs_oxy)
-				APPLY_MOB_PROPERTY(M, PROP_BREATHLESS, src.type)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_BREATHLESS, src.type)
 			src.AH = M.bioHolder?.mobAppearance // i mean its called appearance holder for a reason
 			if(!(src.mutant_appearance_flags & NOT_DIMORPHIC))
 				MakeMutantDimorphic(M)
@@ -285,7 +285,7 @@ TYPEINFO(/datum/mutantrace)
 			if (movement_modifier)
 				REMOVE_MOVEMENT_MODIFIER(mob, movement_modifier, src.type)
 			if (needs_oxy)
-				REMOVE_MOB_PROPERTY(mob, PROP_BREATHLESS, src.type)
+				REMOVE_ATOM_PROPERTY(mob, PROP_MOB_BREATHLESS, src.type)
 
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 			for (var/obj/item/clothing/W in restricted)
@@ -907,7 +907,7 @@ TYPEINFO(/datum/mutantrace)
 					make_spitter(M)
 
 			M.add_stam_mod_max("zombie", 100)
-			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "zombie", -5)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "zombie", -5)
 			M.full_heal()
 			M.real_name = "Zombie [M.real_name]"
 
@@ -949,7 +949,7 @@ TYPEINFO(/datum/mutantrace)
 	disposing()
 		if (ishuman(mob))
 			mob.remove_stam_mod_max("zombie")
-			REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "zombie")
+			REMOVE_ATOM_PROPERTY(mob, PROP_MOB_STAMINA_REGEN_BONUS, "zombie")
 		..()
 
 	proc/add_ability(var/mob/living/carbon/human/H)
@@ -1077,12 +1077,12 @@ TYPEINFO(/datum/mutantrace)
 		if(ishuman(mob))
 			src.add_ability(mob)
 			M.add_stam_mod_max("vampiric_thrall", 100)
-			//APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "vampiric_thrall", 15)
+			//APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall", 15)
 
 	disposing()
 		if (ishuman(mob))
 			mob.remove_stam_mod_max("vampiric_thrall")
-			//REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "vampiric_thrall")
+			//REMOVE_ATOM_PROPERTY(mob, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall")
 		..()
 
 	proc/add_ability(var/mob/living/carbon/human/H)
@@ -1193,20 +1193,20 @@ TYPEINFO(/datum/mutantrace)
 	New(var/mob/living/carbon/human/M)
 		if(ruff_tuff_and_ultrabuff && ishuman(M))
 			M.add_stam_mod_max("abomination", 1000)
-			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "abomination", 1000)
-			APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "abomination", 100)
-			APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "abomination", 100)
-			APPLY_MOB_PROPERTY(M, PROP_CANTSPRINT, src)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "abomination", 1000)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "abomination", 100)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "abomination", 100)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTSPRINT, src)
 		last_drain = world.time
 		return ..(M)
 
 	disposing()
 		if(mob)
 			mob.remove_stam_mod_max("abomination")
-			REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "abomination")
-			REMOVE_MOB_PROPERTY(mob, PROP_STUN_RESIST, "abomination")
-			REMOVE_MOB_PROPERTY(mob, PROP_STUN_RESIST_MAX, "abomination")
-			REMOVE_MOB_PROPERTY(mob, PROP_CANTSPRINT, src)
+			REMOVE_ATOM_PROPERTY(mob, PROP_MOB_STAMINA_REGEN_BONUS, "abomination")
+			REMOVE_ATOM_PROPERTY(mob, PROP_MOB_STUN_RESIST, "abomination")
+			REMOVE_ATOM_PROPERTY(mob, PROP_MOB_STUN_RESIST_MAX, "abomination")
+			REMOVE_ATOM_PROPERTY(mob, PROP_MOB_CANTSPRINT, src)
 		return ..()
 
 
@@ -1297,9 +1297,9 @@ TYPEINFO(/datum/mutantrace)
 			mob.AddComponent(/datum/component/consume/can_eat_inedible_organs, 1) // can also eat heads
 			mob.mob_flags |= SHOULD_HAVE_A_TAIL
 			mob.add_stam_mod_max("werewolf", 40) // Gave them a significant stamina boost, as they're melee-orientated (Convair880).
-			APPLY_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "werewolf", 9) //mbc : these increase as they feast now. reduced!
-			APPLY_MOB_PROPERTY(mob, PROP_STUN_RESIST, "werewolf", 40)
-			APPLY_MOB_PROPERTY(mob, PROP_STUN_RESIST_MAX, "werewolf", 40)
+			APPLY_ATOM_PROPERTY(mob, PROP_MOB_STAMINA_REGEN_BONUS, "werewolf", 9) //mbc : these increase as they feast now. reduced!
+			APPLY_ATOM_PROPERTY(mob, PROP_MOB_STUN_RESIST, "werewolf", 40)
+			APPLY_ATOM_PROPERTY(mob, PROP_MOB_STUN_RESIST_MAX, "werewolf", 40)
 			mob.max_health += 50
 			health_update_queue |= mob
 			src.original_name = mob.real_name
@@ -1317,9 +1317,9 @@ TYPEINFO(/datum/mutantrace)
 			var/datum/component/D = mob.GetComponent(/datum/component/consume/can_eat_inedible_organs)
 			D?.RemoveComponent(/datum/component/consume/can_eat_inedible_organs)
 			mob.remove_stam_mod_max("werewolf")
-			REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "werewolf")
-			REMOVE_MOB_PROPERTY(mob, PROP_STUN_RESIST, "werewolf")
-			REMOVE_MOB_PROPERTY(mob, PROP_STUN_RESIST_MAX, "werewolf")
+			REMOVE_ATOM_PROPERTY(mob, PROP_MOB_STAMINA_REGEN_BONUS, "werewolf")
+			REMOVE_ATOM_PROPERTY(mob, PROP_MOB_STUN_RESIST, "werewolf")
+			REMOVE_ATOM_PROPERTY(mob, PROP_MOB_STUN_RESIST_MAX, "werewolf")
 			mob.max_health -= 50
 			health_update_queue |= mob
 			mob.bioHolder.RemoveEffect("protanopia")
@@ -1398,12 +1398,12 @@ TYPEINFO(/datum/mutantrace)
 		. = ..()
 		if(ishuman(M))
 			M.add_stam_mod_max("hunter", 50)
-			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "hunter", 10)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "hunter", 10)
 
 	disposing()
 		if(ishuman(mob))
 			mob.remove_stam_mod_max("hunter")
-			REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "hunter")
+			REMOVE_ATOM_PROPERTY(mob, PROP_MOB_STAMINA_REGEN_BONUS, "hunter")
 		return ..()
 
 	sight_modifier()
@@ -1725,7 +1725,7 @@ TYPEINFO(/datum/mutantrace)
 		. = ..()
 		if(ishuman(M))
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
-		APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, 100)
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT, src, 100)
 
 	say_verb()
 		return "clicks"
@@ -1738,7 +1738,7 @@ TYPEINFO(/datum/mutantrace)
 		if(ishuman(mob))
 			mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		if(mob)
-			REMOVE_MOB_PROPERTY(mob, PROP_RADPROT, src)
+			REMOVE_ATOM_PROPERTY(mob, PROP_MOB_RADPROT, src)
 		. = ..()
 
 /datum/mutantrace/cat // we have the sprites so ~why not add them~? (I fully expect to get shit for this)
@@ -1937,7 +1937,7 @@ TYPEINFO(/datum/mutantrace)
 			if(ishuman(mob))
 				H.setStatus("maxhealth-", null, -50)
 				H.add_stam_mod_max("kudzu", -100)
-				APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "kudzu", -5)
+				APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu", -5)
 				H.bioHolder.AddEffect("xray", power = 2, magical=1)
 				H.abilityHolder = new /datum/abilityHolder/kudzu(H)
 				H.abilityHolder.owner = H
@@ -1962,7 +1962,7 @@ TYPEINFO(/datum/mutantrace)
 				H.abilityHolder.removeAbility(/datum/targetable/kudzu/kudzusay)
 				H.abilityHolder.removeAbility(/datum/targetable/kudzu/vine_appendage)
 			H.remove_stam_mod_max("kudzu")
-			REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "kudzu")
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu")
 		return ..()
 /* Commented out as this bypasses restricted Z checks. We will just lazily give them xray genes instead
 	// vision modifier (see_mobs, etc i guess)
@@ -2149,7 +2149,7 @@ TYPEINFO(/datum/mutantrace/pug)
 		if (ishuman(mob))
 			mob.mob_flags |= SHOULD_HAVE_A_TAIL
 			SPAWN(0)
-				APPLY_MOB_PROPERTY(mob, PROP_FAILED_SPRINT_FLOP, src)
+				APPLY_ATOM_PROPERTY(mob, PROP_MOB_FAILED_SPRINT_FLOP, src)
 		if (prob(50))
 			voice_override = "pugg"
 		RegisterSignal(mob, COMSIG_MOB_THROW_ITEM_NEARBY, .proc/throw_response)
@@ -2158,7 +2158,7 @@ TYPEINFO(/datum/mutantrace/pug)
 		if (ishuman(mob))
 			if (mob.mob_flags & SHOULD_HAVE_A_TAIL)
 				mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
-			REMOVE_MOB_PROPERTY(mob, PROP_FAILED_SPRINT_FLOP, src)
+			REMOVE_ATOM_PROPERTY(mob, PROP_MOB_FAILED_SPRINT_FLOP, src)
 		UnregisterSignal(mob, COMSIG_MOB_THROW_ITEM_NEARBY)
 		..()
 

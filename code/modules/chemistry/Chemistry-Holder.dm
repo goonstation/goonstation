@@ -917,7 +917,7 @@ datum
 
 			// check to see if user wearing the spectoscopic glasses (or similar)
 			// if so give exact readout on what reagents are present
-			if (HAS_MOB_PROPERTY(user, PROP_SPECTRO))
+			if (HAS_ATOM_PROPERTY(user, PROP_MOB_SPECTRO))
 				if("cloak_juice" in reagent_list)
 					var/datum/reagent/cloaker = reagent_list["cloak_juice"]
 					if(cloaker.volume >= 5)
