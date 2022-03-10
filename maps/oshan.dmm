@@ -6704,6 +6704,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/navbeacon/mule/medbay_north,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "apI" = (
@@ -23283,6 +23284,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/machinery/navbeacon/mule/cafeteria_north/west,
 /turf/simulated/floor/darkblue{
 	dir = 10
 	},
@@ -27352,6 +27354,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/navbeacon/mule/podbay_north,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "bsg" = (
@@ -37623,6 +37626,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/navbeacon/mule/security_north,
 /turf/simulated/floor,
 /area/station/security/processing)
 "bRD" = (
@@ -44908,6 +44912,12 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"dkU" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/navbeacon/mule/QM1_north/east,
+/obj/machinery/bot/mulebot/QM1,
+/turf/simulated/floor/bot,
+/area/station/quartermaster/office)
 "dlH" = (
 /obj/submachine/chef_oven{
 	dir = 4
@@ -45110,6 +45120,13 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
 /area/station/ranch)
+"ezm" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/navbeacon/mule/crewA_north/east,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/quartersA)
 "ezU" = (
 /turf/simulated/wall/false_wall,
 /area/station/crew_quarters/barber_shop)
@@ -47019,6 +47036,10 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"qxx" = (
+/obj/machinery/navbeacon/mule/QM2_north/west,
+/turf/simulated/floor/bot,
+/area/station/quartermaster/office)
 "qBd" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	id = "secure_dock"
@@ -47046,6 +47067,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/navbeacon/mule/catering_north/south,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "qLJ" = (
@@ -47068,6 +47090,10 @@
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
+"qOy" = (
+/obj/machinery/navbeacon/mule/research_north,
+/turf/simulated/floor/wood,
+/area/station/science/lobby)
 "qPg" = (
 /turf/simulated/floor,
 /area/station/hangar/sec)
@@ -47226,6 +47252,12 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"rLm" = (
+/obj/machinery/navbeacon/mule/chapel_north/south,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/station/chapel/sanctuary)
 "rNm" = (
 /obj/storage/cart/forensic,
 /obj/item/storage/box/evidence,
@@ -47393,6 +47425,13 @@
 	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
+"tDJ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/navbeacon/mule/engineering_north/east,
+/turf/simulated/floor,
+/area/station/engine/engineering)
 "tDZ" = (
 /obj/cable{
 	d1 = 4;
@@ -47544,6 +47583,10 @@
 /obj/machinery/drainage/big,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
+"uwd" = (
+/obj/machinery/navbeacon/mule/hallway_escape_north,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "uyg" = (
 /obj/machinery/firealarm{
 	pixel_x = 1;
@@ -47621,6 +47664,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"vcx" = (
+/obj/machinery/navbeacon/mule/bridge_north/east,
+/turf/simulated/floor/black,
+/area/station/bridge)
 "vcK" = (
 /obj/item/furniture_parts/office_chair,
 /obj/item/furniture_parts/office_chair/green,
@@ -79045,7 +79092,7 @@ bQi
 bKj
 bKj
 bPh
-bQi
+dkU
 bJA
 bSn
 bTm
@@ -79347,7 +79394,7 @@ bLL
 bMS
 bKj
 bMS
-bKj
+bMR
 bJA
 bSo
 cfT
@@ -79649,7 +79696,7 @@ bLM
 bMS
 bKj
 bMS
-bPh
+qxx
 bJA
 aNT
 bTo
@@ -80174,7 +80221,7 @@ amD
 amD
 aot
 apn
-amC
+ezm
 eSt
 atf
 auv
@@ -85613,7 +85660,7 @@ amR
 aqN
 asa
 amX
-anO
+rLm
 aoB
 ahY
 ayd
@@ -95039,7 +95086,7 @@ bzH
 bBb
 bCp
 bDE
-bts
+vcx
 bFE
 buV
 bHs
@@ -104962,7 +105009,7 @@ ayO
 aJc
 abo
 abp
-aJG
+qOy
 aKO
 ayO
 azp
@@ -106791,7 +106838,7 @@ bgM
 biK
 bjw
 aer
-bjw
+tDJ
 cgA
 afk
 blI
@@ -109538,7 +109585,7 @@ byY
 byY
 byZ
 byY
-byY
+uwd
 bIy
 bJv
 bKe
