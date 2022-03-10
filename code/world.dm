@@ -1283,6 +1283,7 @@ var/f_color_selector_handler/F_Color_Selector
 					M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
 					logTheThing("admin_help", null, M, "Discord: [nick] PM'd [constructTarget(M,"admin_help")]: [msg]")
 					logTheThing("diary", null, M, "Discord: [nick] PM'd [constructTarget(M,"diary")]: [msg]", "ahelp")
+					M.client.make_sure_chat_is_open()
 					for (var/client/C)
 						if (C.holder && C.key != M.key)
 							if (C.player_mode && !C.player_mode_ahelp)
