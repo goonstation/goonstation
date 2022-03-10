@@ -26,7 +26,6 @@
 	var/gen_rate = 0
 	var/defer_updateicon = FALSE
 	var/output_tier = 0
-	var/running = 0
 	var/datum/light/light
 
 	var/sound_grump = 'sound/machines/buzz-two.ogg'
@@ -150,7 +149,7 @@
 			add_avail(gen_rate WATTS)
 
 		desc = "Current Output: [engineering_notation(gen_rate)]W"
-		if(gen_rate < 110000)
+		if(gen_rate < 110000 WATTS)
 			output_tier = clamp(round(gen_rate/10000), 0, 10)
 		else
 			switch(gen_rate)
@@ -280,11 +279,11 @@
 		if(!can_act(user))
 			return
 
-		if (get_dist(src,user) > 1)
+		if (!in_interact_range(src,user))
 			boutput(user, "<span class='alert'>You are too far away to do that.</span>")
 			return
 
-		if (get_dist(src,O) > 1)
+		if (!in_interact_range(src,O))
 			boutput(user, "<span class='alert'>[O] is too far away to do that.</span>")
 			return
 

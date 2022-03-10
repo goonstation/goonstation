@@ -305,7 +305,7 @@
 		if ("calibrate")
 			var/manifest_identifier = locate(href_list["subaction"]) in src.known_devices
 			var/list/manifest = known_devices[manifest_identifier]
-			if(manifest["Identifier"])
+			if(manifest && manifest["Identifier"])
 				var/intensicap = manifest["Maximum Intensity"]
 				var/scalex = input(usr,"Accepts values 0 through [intensicap]","Adjust Intensity","1") as num
 				scalex = clamp(scalex,0,intensicap)

@@ -252,14 +252,14 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		participationRecorder.releaseHold()
 
 #ifdef MAP_OVERRIDE_NADIR
-	SPAWN(15000) // 25 minutes in; about the time catalytic generators' power peters out
+	SPAWN(25 MINUTES) // special catalytic engine warning; about the time catalytic generators' power peters out
 		for(var/obj/machinery/power/catalytic_generator/CG in machine_registry[MACHINES_POWER])
 			LAGCHECK(LAG_LOW)
-			if(CG?.gen_rate < 55000)
+			if(CG?.gen_rate < 55000 WATTS)
 				command_alert("Reports indicate that one or more catalytic generators on [station_name()] may require replacement rods for continued operation. If catalytic rods are not replaced, this may result in sitewide power failures.", "Power Grid Warning")
 			break
 #else
-	SPAWN(6000) // 10 minutes in
+	SPAWN(10 MINUTES) // standard engine warning
 		for(var/obj/machinery/computer/power_monitor/smes/E in machine_registry[MACHINES_POWER])
 			LAGCHECK(LAG_LOW)
 			var/datum/powernet/PN = E.get_direct_powernet()

@@ -214,11 +214,11 @@
 				new /obj/overlay/tile_effect/cracks/spawner/pikaia(src)
 
 		if(spawningFlags & SPAWN_HOSTILE) //nothing good comes from acid-washed depths...
-			if (src.z == 5 && prob(1) && prob(4))
+			if (src.z == Z_LEVEL_MINING && prob(0.04))
 				new /obj/critter/gunbot/drone/buzzdrone(src)
-			else if (src.z == 5 && prob(1) && prob(2))
+			else if (src.z == Z_LEVEL_MINING && prob(0.02))
 				new /obj/critter/gunbot/drone/cutterdrone(src)
-			else if (src.z == 5 && prob(1) && prob(1) && prob(25))
+			else if (src.z == Z_LEVEL_MINING && prob(0.005))
 				new /obj/critter/ancient_thing(src)
 
 		if (spawningFlags & SPAWN_LOOT)

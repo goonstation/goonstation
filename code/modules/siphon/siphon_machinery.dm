@@ -311,11 +311,11 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the siphon's output target.</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(!in_interact_range(over_object,src))
 			boutput(usr, "<span class='alert'>The siphon is too far away from the target.</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(!in_interact_range(over_object,usr))
 			boutput(usr, "<span class='alert'>You are too far away from the target.</span>")
 			return
 
