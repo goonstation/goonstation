@@ -1,5 +1,9 @@
 
 (t)wed mar 09 22
+(u)Fwll
+(p)7708
+(e)🆕|feature
+(+)Mocha Coffee and Latte Coffee beans can now be processed in the food processor
 (u)Amylizzle
 (p)7718
 (e)🐛|bug
