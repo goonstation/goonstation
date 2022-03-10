@@ -398,9 +398,9 @@ to say if there's demand for that.
 		if(istype(owner.loc, /mob) && !isnull(owner.equipped_in_slot))
 			src.removeFromMob(owner, owner.loc, value)
 
-// at the moment the mob property stuff only makes sense for human mobs!!
-// Also currently the "source" of the mob property is the owner of the property (the item).
-// If you are adding other properties granting some mob property make sure to use something like "\ref[owner]-something"
+// at the moment the atom property stuff only makes sense for human mobs!!
+// Also currently the "source" of the atom property is the owner of the property (the item).
+// If you are adding other properties granting some atom property make sure to use something like "\ref[owner]-something"
 // as the source. This might be useful for blocking properties for example.
 
 /datum/objectProperty/equipment/meleeprot

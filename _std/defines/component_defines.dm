@@ -239,9 +239,9 @@
 // ---- mob/living signals ----
 /// When a Life tick occurs
 #define COMSIG_LIVING_LIFE_TICK "human_life_tick"
-// ---- mob property signals ----
+// ---- atom property signals ----
 /// When invisibility of a mob gets updated (old_value)
-#define COMSIG_MOB_PROP_INVISIBILITY "mob_prop_invis"
+#define COMSIG_ATOM_PROP_INVISIBILITY "atom_prop_invis"
 
 // ---- attack_X signals ----
 

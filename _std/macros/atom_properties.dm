@@ -1,4 +1,4 @@
-/* MOB PROPERTIES */
+/* ATOM PROPERTIES */
 
 /*
 
@@ -158,7 +158,7 @@ To remove:
 
 #define PROP_UPDATE_INVISIBILITY(target, prop, old_val) do { \
 	target.invisibility = GET_ATOM_PROPERTY_RAW(target, prop); \
-	SEND_SIGNAL(target, COMSIG_MOB_PROP_INVISIBILITY, old_val); \
+	SEND_SIGNAL(target, COMSIG_ATOM_PROP_INVISIBILITY, old_val); \
 	} while(0)
 
 #define PROP_UPDATE_SIGHT(target, prop, old_val) do {\
