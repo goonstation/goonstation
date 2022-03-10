@@ -539,11 +539,12 @@
 							A.announce_arrival(src)
 
 		//Equip_Bank_Purchase AFTER special_setup() call, because they might no longer be a human after that
-		if (possible_new_mob)
-			var/mob/living/newmob = possible_new_mob
-			newmob.Equip_Bank_Purchase(newmob.mind.purchased_bank_item)
-		else
-			src.Equip_Bank_Purchase(src.mind?.purchased_bank_item)
+	//this was previously indented in the ishuman() block, but I don't think it needs to be - Amylizzle
+	if (possible_new_mob)
+		var/mob/living/newmob = possible_new_mob
+		newmob.Equip_Bank_Purchase(newmob.mind.purchased_bank_item)
+	else
+		src.Equip_Bank_Purchase(src.mind?.purchased_bank_item)
 
 	return
 
