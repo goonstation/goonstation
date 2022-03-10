@@ -9,7 +9,10 @@ var/datum/explosion_controller/explosions
 	var/next_turf_safe = FALSE
 
 	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE)
-		SEND_SIGNAL(source, COMSIG_ATOM_EXPLODE, args)
+		var/list/sigreturn = list()
+		SEND_SIGNAL(source, COMSIG_ATOM_EXPLODE, sigreturn)
+		if(sigreturn["power_coeff"])
+			power *= sigreturn["power_coeff"]
 		var/atom/A = epicenter
 		if(istype(A))
 			var/severity = power >= 6 ? 1 : power > 3 ? 2 : 3

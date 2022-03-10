@@ -31,7 +31,7 @@ TYPEINFO(/datum/component/glued)
 		glued_to.vis_contents += parent
 	if(ismob(parent))
 		var/mob/parent_mob = parent
-		APPLY_ATOM_PROPERTY(parent_mob, PROP_CANTMOVE, "glued")
+		APPLY_ATOM_PROPERTY(parent_mob, PROP_MOB_CANTMOVE, "glued")
 	if(isitem(parent) && ismob(parent.loc))
 		var/mob/parent_holder = parent.loc
 		var/obj/item/item_parent = parent
@@ -98,9 +98,9 @@ TYPEINFO(/datum/component/glued)
 				T?.visible_message("<span class='notice'>\The [parent] is ripped off from [glued_to].</span>")
 				qdel(src)
 
-/datum/component/glued/proc/on_explode(atom/movable/parent, list/explode_args)
+/datum/component/glued/proc/on_explode(atom/movable/parent, list/sigreturn)
 	// explode_args format: list(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE)
-	explode_args[3] /= 6 // reduce explosion size by a factor of 6
+	sigreturn["power_coeff"] = 1/6 // reduce explosion size by a factor of 6
 	qdel(src)
 
 /datum/component/glued/UnregisterFromParent()
@@ -118,7 +118,7 @@ TYPEINFO(/datum/component/glued)
 		glued_to.vis_contents -= parent
 	if(ismob(parent))
 		var/mob/parent_mob = parent
-		REMOVE_ATOM_PROPERTY(parent_mob, PROP_CANTMOVE, "glued")
+		REMOVE_ATOM_PROPERTY(parent_mob, PROP_MOB_CANTMOVE, "glued")
 	parent.set_loc(get_turf(parent))
 	src.glued_to = null
 	. = ..()

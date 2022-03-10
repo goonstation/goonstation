@@ -235,7 +235,7 @@
 				if (H.traitHolder.hasTrait("athletic"))
 					modifier++
 					is_athletic_jump = 1
-				modifier += GET_ATOM_PROPERTY(H, PROP_VAULT_SPEED)
+				modifier += GET_ATOM_PROPERTY(H, PROP_MOB_VAULT_SPEED)
 				duration = round(duration / modifier)
 		if (The_Railing)
 			the_railing = The_Railing
