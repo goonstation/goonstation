@@ -130,7 +130,6 @@ toxic - poisons
 	casing = /obj/item/casing/rifle
 
 	armor_piercing
-		implanted = /obj/item/implant/projectile/bullet_308AP
 		damage_type = D_PIERCING
 		hit_type = DAMAGE_STAB
 
@@ -182,7 +181,7 @@ toxic - poisons
 	power = 85
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
-	implanted = /obj/item/implant/projectile/bullet_308AP
+	implanted = /obj/item/implant/projectile/bullet_308
 	shot_sound = 'sound/weapons/railgun.ogg'
 	dissipation_delay = 10
 	casing = /obj/item/casing/rifle_loud
@@ -209,7 +208,7 @@ toxic - poisons
 	icon_state = "sniper_bullet"
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
-	implanted = /obj/item/implant/projectile/bullet_308AP
+	implanted = /obj/item/implant/projectile/bullet_308
 	shot_sound = 'sound/weapons/railgun.ogg'
 	dissipation_delay = 10
 	dissipation_rate = 0 //70 damage AP at all-ranges is fine, come to think of it
@@ -335,7 +334,7 @@ toxic - poisons
 	projectile_speed = 48
 	icon_turf_hit = "bhole-small"
 	hit_type = DAMAGE_BLUNT
-	implanted = /obj/item/implant/projectile/bullet_nine_mm_NATO
+	implanted = /obj/item/implant/projectile/ninemmplastic
 	casing = /obj/item/casing/small
 
 	on_hit(atom/hit)
