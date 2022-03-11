@@ -3,9 +3,8 @@
 	name = "firefly"
 	desc = "A perfectly normal bioluminescent insect."
 	hand_count = 2
-	icon = 'icons/misc/bee.dmi'
-	icon_state = "firefly-wings"
-	//icon_body = "firefly"
+	icon = 'icons/mob/insect.dmi'
+	icon_state = "firefly"
 	var/light_color = "#ADFF2F"
 	var/image/bulb
 	var/image/bulb_light
@@ -21,8 +20,6 @@
 	fits_under_table = 1
 	base_move_delay = 1.5
 	base_walk_delay = 2.5
-	health_brute = 8
-	health_burn = 8
 	isFlying = 1
 
 	New()
@@ -60,7 +57,7 @@
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if(istype(W, /obj/item/reagent_containers/glass/jar))
-			W.AddComponent(/datum/component/firefly_glow, W, src, user)
+			W.AddComponent(/datum/component/bug_capture, W, src, user)
 		else
 			..()
 
@@ -84,6 +81,11 @@
 		bulb_light.color = light_color
 		UpdateOverlays(bulb_light, "bulb-light")
 
+	death(var/gibbed)
+		..()
+		animate(src,flags=ANIMATION_END_NOW)
+		ClearAllOverlays()
+
 	ai_controlled
 		is_npc = 1
 		New()
@@ -98,62 +100,195 @@
 			reduce_lifeprocess_on_death()
 			..()
 
+/mob/living/critter/small_animal/firefly/lightning
+	var/obj/effects/firefly_lightning/lightning
 
+	New()
+		. = ..()
+		lightning = new(src)
 
+	disposing()
+		qdel(lightning)
+		lightning = null
+		..()
 
-/datum/component/firefly_glow
+	death(var/gibbed)
+		..()
+		qdel(lightning)
+
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		..()
+		if(isalive(src))
+			zap(M)
+
+	proc/zap(mob/target)
+		if(isturf(src.loc) && istype(target) && !ON_COOLDOWN(src,"zap", 20 SECONDS))
+			arcFlash(src, target, 5000, 0.5)
+			lightning.recharge(20 SECONDS)
+
+/obj/effects/firefly_lightning
+	name = "firefly_lightning"
+	desc = ""
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "energyorb"
+	vis_flags = VIS_INHERIT_ID
+	mouse_opacity = 0
+	var/list/color_on = list(1.0, 0.0, 0.0, -0.5, \
+					 0.0, 1.0, 0.0, -0.5, \
+					 0.0, 0.0, 1.0,  1.0, \
+					 0.0, 0.0, 0.0,  0.0, \
+					 0.0, 0.0, 0.0,  0.0 )
+
+	var/list/color_off = list(1.0, 0.0, 0.0, -0.5, \
+					 0.0, 1.0, 0.0, -0.5, \
+					 0.0, 0.0, 1.0,  0.0, \
+					 0.0, 0.0, 0.0,  0.0, \
+					 0.0, 0.0, 0.0,  0.0 )
+
+	New(newLoc)
+		..()
+		color = color_on
+		if(ismovable(newLoc))
+			var/atom/movable/A = newLoc
+			A.vis_contents += src
+
+		var/image/lightning = image('icons/effects/effects.dmi', "energyorb")
+		lightning.appearance_flags = RESET_COLOR | RESET_TRANSFORM | NO_CLIENT_COLOR | KEEP_APART | PIXEL_SCALE
+		lightning.layer = LIGHTING_LAYER_BASE
+		lightning.plane = PLANE_LIGHTING
+		lightning.blend_mode = BLEND_ADD
+		lightning.transform *= 1.5
+		UpdateOverlays(lightning, "lightning-l")
+
+	disposing()
+		src.vis_locs = null
+		..()
+
+	proc/recharge(duration)
+		animate(src, color=color_off, time=1 SECOND)
+		animate(color=color_on, time=max(duration-1 SECOND, 0))
+
+/mob/living/critter/small_animal/dragonfly
+	name = "dragonfly"
+	desc = "A big ol' flappy winged insect."
+	hand_count = 2
+	icon = 'icons/mob/insect.dmi'
+	icon_state = "dragonfly"
+
+	speechverb_say = "bzzs"
+	speechverb_exclaim = "bzzts"
+	speechverb_ask = "hums"
+
+	health_brute = 10
+	health_burn = 10
+
+	flags = TABLEPASS
+	fits_under_table = 1
+	base_move_delay = 1.3
+	base_walk_delay = 2.0
+	health_brute = 10
+	health_burn = 10
+	isFlying = 1
+
+	ai_controlled
+		is_npc = 1
+		New()
+			..()
+			src.ai = new /datum/aiHolder/wanderer(src)
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
+
+		death(var/gibbed)
+			qdel(src.ai)
+			src.ai = null
+			reduce_lifeprocess_on_death()
+			..()
+
+	Move(NewLoc, direct)
+		. = ..()
+		animate(src, time=5 SECONDS, pixel_x=rand(-4,4), pixel_y=rand(-8,8))
+
+	attackby(obj/item/W as obj, mob/living/user as mob)
+		if(istype(W, /obj/item/reagent_containers/glass/jar))
+			W.AddComponent(/datum/component/bug_capture, W, src, user)
+		else
+			..()
+
+/datum/component/bug_capture
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/light_color
 	var/firefly_count
-TYPEINFO(/datum/component/firefly_glow)
+	var/static/list/whitelist_bugs = list(/mob/living/critter/small_animal/dragonfly=1, /mob/living/critter/small_animal/firefly=10)
+TYPEINFO(/datum/component/bug_capture)
 	initialization_args = list()
 
-/datum/component/firefly_glow/Initialize(atom/A, mob/living/critter/small_animal/firefly/F, mob/living/carbon/human/user)
-	if(add_firefly(A, F, user))
+/datum/component/bug_capture/Initialize(atom/A, mob/living/critter/B, mob/living/carbon/human/user)
+	if(add_bug(A, B, user))
 		RegisterSignal(parent, list(COMSIG_ITEM_PICKUP), .proc/pickup)
 		RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), .proc/dropped)
 		RegisterSignal(parent, list(COMSIG_ATOM_POST_UPDATE_ICON), .proc/update_icon)
-		RegisterSignal(parent, list(COMSIG_ATOM_REAGENT_CHANGE, COMSIG_ITEM_ATTACK_SELF), .proc/bye_fireflies)
+		RegisterSignal(parent, list(COMSIG_ATOM_REAGENT_CHANGE, COMSIG_ITEM_ATTACK_SELF), .proc/bye_bugs)
 
-		update_glow(A,user)
+		update_jar(A,user)
 	else
 		qdel(src) //Capturing the crash is not desired
 
-/datum/component/firefly_glow/InheritComponent(datum/component/firefly_glow/C, i_am_original, atom/A, mob/living/critter/small_animal/firefly/F, mob/living/carbon/human/user)
-	add_firefly(A, F, user)
+/datum/component/bug_capture/InheritComponent(datum/component/bug_capture/C, i_am_original, atom/A, mob/living/critter/B, mob/living/carbon/human/user)
+	add_bug(A, B, user)
 
-/datum/component/firefly_glow/proc/add_firefly(atom/A, mob/living/critter/small_animal/firefly/F, mob/living/carbon/human/user)
-	if(istype(F))
-		if(F.client)
-			boutput(user, "<span class='alert'>[F] seems just to squirley to capture!  Need a more lazy one.</span>")
+/datum/component/bug_capture/proc/add_bug(atom/A, mob/living/critter/B, mob/living/carbon/human/user)
+	var/allowed_bug_count = can_jar(B)
+	if(allowed_bug_count)
+		if(B.client)
+			boutput(user, "<span class='alert'>[B] seems just to squirley to capture!  Need a more lazy one.</span>")
 			return FALSE
+	else
+		return FALSE
+	var/bug_count = 0
 	for(var/atom/C in A.contents)
-		if(!istype(C, /mob/living/critter/small_animal/firefly))
-			boutput(user, "<span class='alert'>[F] doesn't seem like it belongs with anything else.</span>")
+		// if(!can_jar(C))
+		// 	boutput(user, "<span class='alert'>[B] doesn't seem like it belongs with anything else.</span>")
+		// 	return FALSE
+		if(!istype(C, B.type) && !istype(B, C.type))
+			boutput(user, "<span class='alert'>[B] doesn't seem like it belongs with anything else.</span>")
 			return FALSE
+		else
+			bug_count++
+
+	if(bug_count >= allowed_bug_count)
+		boutput(user, "<span class='alert'>[B] won't first with everything else inside of [A].</span>")
+		return FALSE
+
 	if(A != user && A.reagents?.total_volume)
 		boutput(user, "<span class='alert'>You should probably pour out [A] first.</span>")
 		return FALSE
 
-	F.set_loc(A)
-	update_glow(A,user)
+	B.set_loc(A)
+	update_jar(A,user)
 	return TRUE
 
-/datum/component/firefly_glow/proc/bye_fireflies()
+/datum/component/bug_capture/proc/can_jar(atom/A)
+	. = FALSE
+	for(var/type in whitelist_bugs)
+		if(istype(A, type))
+			return whitelist_bugs[type]
+
+/datum/component/bug_capture/proc/bye_bugs()
 	var/atom/A = parent
 	var/mob/user = A?.loc
 	if(istype(A))
-		for(var/mob/living/critter/small_animal/firefly/F in A)
-			F.set_loc(get_turf(A))
+		for(var/atom/movable/B in A)
+			if(can_jar(B))
+				B.set_loc(get_turf(A))
 		if(istype(user))
-			boutput(user, "<span class='alert'>The fireflies take this moment to escape from [A].</span>")
+			boutput(user, "<span class='alert'>The contents of the [A] take this moment to escape!</span>")
 		firefly_count = 0
 	qdel(src)
 
-/datum/component/firefly_glow/proc/pickup(atom/A, mob/user)
-	update_glow(A, user)
+/datum/component/bug_capture/proc/pickup(atom/A, mob/user)
+	update_jar(A, user)
 
-/datum/component/firefly_glow/proc/update_glow(atom/A, mob/user)
+/datum/component/bug_capture/proc/update_jar(atom/A, mob/user)
 	light_color = list(0, 0, 0)
 	firefly_count = 0
 	for(var/mob/living/critter/small_animal/firefly/F in A)
@@ -166,19 +301,22 @@ TYPEINFO(/datum/component/firefly_glow)
 		light_color[1] /= firefly_count
 		light_color[2] /= firefly_count
 		light_color[3] /= firefly_count
-		user?.add_sm_light("firefly_\ref[A]", list(light_color[1], light_color[2], light_color[3], clamp(firefly_count*40,0,255)))
+		user?.add_sm_light("firefly_\ref[A]", list(light_color[1], light_color[2], light_color[3], clamp(firefly_count*20,40,300)))
 	else
 		user?.remove_sm_light("firefly_\ref[A]")
+
 	A.UpdateIcon()
 
-/datum/component/firefly_glow/proc/dropped(atom/A, mob/user)
+/datum/component/bug_capture/proc/dropped(atom/A, mob/user)
 	user.remove_sm_light("firefly_\ref[A]")
 
-/datum/component/firefly_glow/proc/update_icon(atom/A)
-	if(firefly_count && light_color)
-		if(istype(A, /obj/item/reagent_containers/glass/jar))
-			A.icon_state = "mason_jar"
+/datum/component/bug_capture/proc/update_icon(atom/A)
+	var/has_bugs = FALSE
+	if(istype(A, /obj/item/reagent_containers/glass/jar))
+		A.icon_state = "mason_jar"
 
+	if(firefly_count && light_color)
+		has_bugs = TRUE
 		var/firefly_image_count
 		switch(firefly_count)
 			if(1 to 2)
@@ -188,12 +326,12 @@ TYPEINFO(/datum/component/firefly_glow)
 			else
 				firefly_image_count = 3
 
-		var/image/bulb = image('icons/misc/bee.dmi', "jar_fly_[firefly_image_count]")
+		var/image/bulb = image('icons/mob/insect.dmi', "jar_fire_[firefly_image_count]")
 		bulb.appearance_flags = RESET_COLOR
 		bulb.color = rgb(light_color[1], light_color[2], light_color[3])
 		A.underlays = list(bulb)
 
-		var/image/bulb_light = image('icons/misc/bee.dmi', "jar_glow")
+		var/image/bulb_light = image('icons/mob/insect.dmi', "jar_glow")
 		bulb_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART
 		bulb_light.layer = LIGHTING_LAYER_BASE
 		bulb_light.plane = PLANE_LIGHTING
@@ -201,17 +339,26 @@ TYPEINFO(/datum/component/firefly_glow)
 		bulb_light.color = bulb.color
 		A.UpdateOverlays(bulb_light, "bulb-light")
 
-		A.add_sm_light("firefly", list(light_color[1], light_color[2], light_color[3], clamp(firefly_count*10, 40, 180)))
+		A.add_sm_light("firefly", list(light_color[1], light_color[2], light_color[3], clamp(firefly_count*10, 40, 200)))
 	else
 		A.underlays = null
 		A.UpdateOverlays(null, "bulb-light")
 		A.remove_sm_light("firefly")
 
-/datum/component/firefly_glow/UnregisterFromParent()
+	if(locate(/mob/living/critter/small_animal/dragonfly) in A)
+		has_bugs = TRUE
+		var/image/dfly = image('icons/mob/insect.dmi', "jar_dragon")
+		A.underlays = list(dfly)
+
+	if(!has_bugs)
+		A.underlays = null
+
+
+/datum/component/bug_capture/UnregisterFromParent()
 	var/atom/A = parent
 	var/mob/user = A?.loc
 
-	update_glow(A, user)
+	update_jar(A, user)
 	UnregisterSignal(parent, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED, COMSIG_ATOM_POST_UPDATE_ICON, COMSIG_ATOM_REAGENT_CHANGE, COMSIG_ITEM_ATTACK_SELF))
 	. = ..()
 
