@@ -1132,7 +1132,8 @@ datum
 				maxVolume = src.maximum_volume,
 				totalVolume = src.total_volume,
 				contents = list(),
-				finalColor = "#000000"
+				finalColor = "#000000",
+				temperature = src.total_temperature
 			)
 
 			var/list/contents = .["contents"]

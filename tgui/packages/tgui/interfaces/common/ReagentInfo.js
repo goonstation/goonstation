@@ -5,6 +5,8 @@ export const NoContainer = {
   id: "inserted",
   maxVolume: 100,
   totalVolume: 0,
+  finalColor: "#000000",
+  temperature: 273.15,
   fake: true,
 };
 
