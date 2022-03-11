@@ -6704,7 +6704,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/navbeacon/mule/medbay_north,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "apI" = (
@@ -7125,9 +7124,7 @@
 	pixel_x = 26;
 	pixel_y = 1
 	},
-/turf/simulated/floor/greenblack{
-	dir = 4
-	},
+/turf/simulated/floor/delivery,
 /area/station/crew_quarters/quartersA)
 "aqF" = (
 /obj/machinery/light/incandescent/warm,
@@ -7870,9 +7867,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/bluewhite/corner{
-	dir = 4
-	},
+/turf/simulated/floor/delivery/white,
 /area/station/medical/medbay)
 "ast" = (
 /obj/disposalpipe/segment/mail,
@@ -8404,9 +8399,8 @@
 	pixel_x = -23;
 	pixel_y = 8
 	},
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
+/obj/machinery/navbeacon/mule/medbay_north,
+/turf/simulated/floor/bot/white,
 /area/station/medical/medbay)
 "atJ" = (
 /obj/disposalpipe/segment/mail,
@@ -14893,6 +14887,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/navbeacon/mule/research_north/west,
 /turf/simulated/floor/stairs/wood2/wide{
 	dir = 9
 	},
@@ -23272,9 +23267,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/darkblue{
-	dir = 10
-	},
+/turf/simulated/floor/delivery,
 /area/station/crew_quarters/bar)
 "bhK" = (
 /obj/disposalpipe/segment/mail{
@@ -23285,9 +23278,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/navbeacon/mule/cafeteria_north/west,
-/turf/simulated/floor/darkblue{
-	dir = 10
-	},
+/turf/simulated/floor/bot,
 /area/station/crew_quarters/bar)
 "bhM" = (
 /obj/machinery/vending/fortune,
@@ -23884,11 +23875,9 @@
 	},
 /area/station/hallway/primary/east)
 "bjw" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/engine/engineering)
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/delivery,
+/area/station/chapel/sanctuary)
 "bjx" = (
 /obj/decal/poster/wallsign/teaparty{
 	desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta!  ... Hold on just a minute, aren't you already there?";
@@ -27058,7 +27047,7 @@
 	icon_state = "2-8"
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor/delivery,
 /area/station/hangar/main)
 "bru" = (
 /obj/machinery/disposal,
@@ -27355,7 +27344,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/navbeacon/mule/podbay_north,
-/turf/simulated/floor,
+/turf/simulated/floor/bot,
 /area/station/hangar/main)
 "bsg" = (
 /turf/simulated/wall/auto/supernorn,
@@ -27641,7 +27630,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/delivery,
 /area/station/engine/storage)
 "bsX" = (
 /obj/item/raw_material/uqill,
@@ -27949,7 +27938,8 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor,
+/obj/machinery/navbeacon/mule/engineering_north,
+/turf/simulated/floor/bot,
 /area/station/engine/storage)
 "btF" = (
 /turf/simulated/floor,
@@ -37157,7 +37147,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/delivery,
 /area/station/security/processing)
 "bQz" = (
 /obj/table/wood,
@@ -37627,7 +37617,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/navbeacon/mule/security_north,
-/turf/simulated/floor,
+/turf/simulated/floor/bot,
 /area/station/security/processing)
 "bRD" = (
 /obj/disposalpipe/segment{
@@ -45125,7 +45115,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/navbeacon/mule/crewA_north/east,
-/turf/simulated/floor/black,
+/turf/simulated/floor/bot,
 /area/station/crew_quarters/quartersA)
 "ezU" = (
 /turf/simulated/wall/false_wall,
@@ -45248,6 +45238,15 @@
 	dir = 5
 	},
 /area/station/medical/medbay/cloner)
+"fev" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/navbeacon/mule/catering_north/east,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/baroffice)
 "fhb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -46617,6 +46616,9 @@
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"nKn" = (
+/turf/simulated/floor/delivery,
+/area/station/bridge)
 "nMJ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -46997,6 +46999,9 @@
 /obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
+"qpP" = (
+/turf/simulated/floor/delivery,
+/area/station/hallway/secondary/exit)
 "qqR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -47067,7 +47072,6 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/navbeacon/mule/catering_north/south,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "qLJ" = (
@@ -47090,10 +47094,6 @@
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
-"qOy" = (
-/obj/machinery/navbeacon/mule/research_north,
-/turf/simulated/floor/wood,
-/area/station/science/lobby)
 "qPg" = (
 /turf/simulated/floor,
 /area/station/hangar/sec)
@@ -47254,9 +47254,7 @@
 /area/station/janitor/office)
 "rLm" = (
 /obj/machinery/navbeacon/mule/chapel_north/south,
-/turf/simulated/floor/specialroom/chapel{
-	dir = 8
-	},
+/turf/simulated/floor/bot,
 /area/station/chapel/sanctuary)
 "rNm" = (
 /obj/storage/cart/forensic,
@@ -47429,7 +47427,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/navbeacon/mule/engineering_north/east,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "tDZ" = (
@@ -47585,7 +47582,7 @@
 /area/station/maintenance/inner/central)
 "uwd" = (
 /obj/machinery/navbeacon/mule/hallway_escape_north,
-/turf/simulated/floor,
+/turf/simulated/floor/bot,
 /area/station/hallway/secondary/exit)
 "uyg" = (
 /obj/machinery/firealarm{
@@ -47665,8 +47662,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "vcx" = (
-/obj/machinery/navbeacon/mule/bridge_north/east,
-/turf/simulated/floor/black,
+/obj/machinery/navbeacon/mule/bridge_north/south,
+/turf/simulated/floor/bot,
 /area/station/bridge)
 "vcK" = (
 /obj/item/furniture_parts/office_chair,
@@ -76026,7 +76023,7 @@ aOS
 aOS
 aPZ
 aPU
-aQC
+fev
 bfC
 bgg
 bha
@@ -85661,7 +85658,7 @@ aqN
 asa
 amX
 rLm
-aoB
+bjw
 ahY
 ayd
 azt
@@ -95087,7 +95084,7 @@ bBb
 bCp
 bDE
 vcx
-bFE
+nKn
 buV
 bHs
 bHU
@@ -105009,7 +105006,7 @@ ayO
 aJc
 abo
 abp
-qOy
+aJG
 aKO
 ayO
 azp
@@ -106836,7 +106833,7 @@ avZ
 aSL
 bgM
 biK
-bjw
+tDJ
 aer
 tDJ
 cgA
@@ -109584,7 +109581,7 @@ byY
 byY
 byY
 byZ
-byY
+qpP
 uwd
 bIy
 bJv
