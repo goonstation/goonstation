@@ -460,7 +460,7 @@
 	icon_state = "science"
 	icon_closed = "science"
 	icon_opened = "secure_white-open"
-	req_access = list(access_tox_storage)
+	req_access = list(access_research)
 
 /obj/storage/secure/closet/research/uniform
 	name = "science uniform locker"

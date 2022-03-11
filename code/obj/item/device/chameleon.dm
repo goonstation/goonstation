@@ -133,8 +133,7 @@
 			cham.real_name = target.name
 			cham.desc = target.desc
 			cham.real_desc = target.desc
-			cham.icon = target.icon
-			cham.icon_state = target.icon_state
+			cham.icon = getFlatIcon(target)
 			cham.set_dir(target.dir)
 			can_use = 1
 			tooltip_rebuild = 1

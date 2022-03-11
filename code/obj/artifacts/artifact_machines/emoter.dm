@@ -53,7 +53,6 @@
 				if(count++ > 15) break
 				if(picked_emote == "fart")
 					if(!(locate(/obj/item/storage/bible) in get_turf(L))) //bible fart bad
-						L.emote(picked_emote)
+						L.emote(picked_emote, FALSE)
 				else
-					L.emote(picked_emote)
-				boutput(L, "A nearby object forces you to [picked_emote].")
+					L.emote(picked_emote, FALSE)

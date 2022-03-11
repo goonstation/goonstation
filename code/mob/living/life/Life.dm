@@ -573,7 +573,7 @@
 		//Modify stamina.
 		var/stam_time_passed = max(tick_spacing, TIME - last_stam_change)
 
-		var/final_mod = (src.stamina_regen + GET_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS)) * (stam_time_passed / tick_spacing)
+		var/final_mod = (src.stamina_regen + GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS)) * (stam_time_passed / tick_spacing)
 		if (final_mod > 0)
 			src.add_stamina(abs(final_mod))
 		else if (final_mod < 0)
@@ -621,7 +621,7 @@
 		var/thermal_protection = 10 // base value
 
 		// Resistance from Clothing
-		thermal_protection += GET_MOB_PROPERTY(src, PROP_COLDPROT)
+		thermal_protection += GET_ATOM_PROPERTY(src, PROP_MOB_COLDPROT)
 
 /*
 		for (var/obj/item/C as anything in src.get_equipped_items())
@@ -685,7 +685,7 @@
 		// calculate 0-100% insulation from rads
 		if (!src)
 			return 0
-		return clamp(GET_MOB_PROPERTY(src, PROP_RADPROT), 0, 100)
+		return clamp(GET_ATOM_PROPERTY(src, PROP_MOB_RADPROT), 0, 100)
 
 	get_ranged_protection()
 		if (!src)
@@ -694,8 +694,8 @@
 		var/protection = 1
 
 		// Resistance from Clothing
-		protection += GET_MOB_PROPERTY(src, PROP_RANGEDPROT)
-		protection += GET_MOB_PROPERTY(src, PROP_ENCHANT_ARMOR)/10 //enchanted clothing isn't that bulletproof at all
+		protection += GET_ATOM_PROPERTY(src, PROP_MOB_RANGEDPROT)
+		protection += GET_ATOM_PROPERTY(src, PROP_MOB_ENCHANT_ARMOR)/10 //enchanted clothing isn't that bulletproof at all
 		return protection
 
 	get_melee_protection(zone, damage_type)
@@ -707,25 +707,25 @@
 			a_zone = "chest"
 			//protection from clothing
 		if(a_zone == "All")
-			protection = (5 * GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY) + GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD))/6
+			protection = (5 * GET_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_BODY) + GET_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_HEAD))/6
 		if (a_zone == "chest")
-			protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY)
+			protection = GET_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_BODY)
 		else //can only be head
-			protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD)
-		protection += GET_MOB_PROPERTY(src, PROP_ENCHANT_ARMOR)/2
+			protection = GET_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_HEAD)
+		protection += GET_ATOM_PROPERTY(src, PROP_MOB_ENCHANT_ARMOR)/2
 		//protection from blocks
 		var/obj/item/grab/block/G = src.check_block()
 		if (G && damage_type)
 			protection += G.can_block(damage_type)
 
-		if (isnull(protection)) //due to GET_MOB_PROPERTY returning null if it doesnt exist
+		if (isnull(protection)) //due to GET_ATOM_PROPERTY returning null if it doesnt exist
 			protection = 0
 		return protection
 
 	get_deflection()
 		if (!src)
 			return 0
-		return min(GET_MOB_PROPERTY(src, PROP_DISARM_RESIST), 90)
+		return min(GET_ATOM_PROPERTY(src, PROP_MOB_DISARM_RESIST), 90)
 
 
 	get_heat_protection()
@@ -741,7 +741,7 @@
 				thermal_protection += 10
 
 		// Resistance from Clothing
-		thermal_protection += GET_MOB_PROPERTY(src, PROP_HEATPROT)
+		thermal_protection += GET_ATOM_PROPERTY(src, PROP_MOB_HEATPROT)
 
 		/*
 		// Resistance from covered body parts

@@ -195,13 +195,13 @@
 		sims = new /datum/simsHolder/human(src)
 #endif
 
-	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",10)
+	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_mon)
 
-	health_implant = image('icons/effects/healthgoggles.dmi',src,"100",10)
+	health_implant = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_implant)
 
-	arrestIcon = image('icons/effects/sechud.dmi',src,null,10)
+	arrestIcon = image('icons/effects/sechud.dmi',src,null,EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_image(arrestIcon)
 
 	src.organHolder = new(src)
@@ -878,7 +878,7 @@
 	else
 		src.unkillable = 0
 		src.spell_soulguard = 0
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 		SPAWN(2.2 SECONDS) // Has to at least match the organ/limb replacement stuff (Convair880).
 			if (src) qdel(src)
 
@@ -1006,7 +1006,7 @@
 	..()
 	var/turf/thrown_from = get_turf(src)
 	src.throw_mode_off()
-	if (HAS_MOB_PROPERTY(src, PROP_CANTTHROW))
+	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTTHROW))
 		return
 	if (src.stat)
 		return
@@ -1190,16 +1190,18 @@
 			S.move_trigger(src, ev)
 
 
-/mob/living/carbon/human/UpdateName()
-	var/see_face = 1
+/mob/living/carbon/human/proc/face_visible()
+	. = TRUE
 	if (istype(src.wear_mask) && !src.wear_mask.see_face)
-		see_face = 0
+		. = FALSE
 	else if (istype(src.head) && !src.head.see_face)
-		see_face = 0
+		. = FALSE
 	else if (istype(src.wear_suit) && !src.wear_suit.see_face)
-		see_face = 0
+		. = FALSE
+
+/mob/living/carbon/human/UpdateName()
 	var/id_name = src.wear_id?:registered
-	if (!see_face)
+	if (!face_visible())
 		if (id_name)
 			src.name = "[src.name_prefix(null, 1)][id_name][src.name_suffix(null, 1)]"
 			src.update_name_tag(id_name)
@@ -2636,7 +2638,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (ishuman(src))
 		animation = new(src.loc)
@@ -2932,7 +2934,7 @@
 /mob/living/carbon/human/attack_hand(mob/M)
 	if(ishuman(M) && M == src && M.a_intent == "harm")
 		var/mob/living/carbon/human/H = M
-		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+		if(HAS_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM))
 			boutput(H, "You can't bring yourself to attack yourself!")
 			return
 	..()
@@ -2945,7 +2947,7 @@
 		return
 	if(ishuman(M) && M == src && (W.force > 0))
 		var/mob/living/carbon/human/H = M
-		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+		if(HAS_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM))
 			boutput(H, "You can't bring yourself to attack yourself!")
 			return
 	..()
@@ -3114,7 +3116,7 @@
 	if (M && M.zone_sel && M.zone_sel.selecting == "chest" && src.chest_item != null && (src.chest_item in src.contents))
 		logTheThing("combat", M, src, "activates [src.chest_item] embedded in [src]'s chest cavity at [log_loc(src)]")
 		SPAWN(0) //might sleep/input/etc, and we don't want to hold anything up
-			src.chest_item.attack_self(src)
+			src.chest_item.AttackSelf(src)
 	return
 
 /mob/living/carbon/human/proc/chest_item_dump_reagents_on_flip()
@@ -3185,10 +3187,10 @@
 		// Make copy of item on ground
 		var/obj/item/outChestItem = src.chest_item
 		outChestItem.set_loc(get_turf(src))
-		src.chest_item.attack_self(src)
+		src.chest_item.AttackSelf(src)
 		src.chest_item = null
 		return
-	src.chest_item.attack_self(src)
+	src.chest_item.AttackSelf(src)
 
 /mob/living/carbon/human/attackby(obj/item/W, mob/M)
 	if (src.parry_or_dodge(M))

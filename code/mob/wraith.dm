@@ -72,8 +72,8 @@
 	New(var/mob/M)
 		. = ..()
 		src.poltergeists = list()
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_SPOOKY)
-		APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		//src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.sight |= SEE_SELF // let's not make it see through walls
 		src.see_invisible = INVIS_SPOOKY
@@ -201,7 +201,7 @@
 			src.transforming = 1
 			src.canmove = 0
 			src.icon = null
-			APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 			if (client) client.color = null
 
@@ -523,7 +523,7 @@
 		makeCorporeal()
 			if (!src.density)
 				src.set_density(1)
-				REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
+				REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 				src.alpha = 255
 				src.see_invisible = INVIS_NONE
 				src.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
@@ -532,7 +532,7 @@
 			if (src.density)
 				src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The wraith dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
 				src.set_density(0)
-				APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_SPOOKY)
+				APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
 				src.alpha = 160
 				src.see_invisible = INVIS_SPOOKY
 

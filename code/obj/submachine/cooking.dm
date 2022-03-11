@@ -375,6 +375,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/omelette_bee(src)
 			src.recipes += new /datum/cookingrecipe/omelette(src)
 			src.recipes += new /datum/cookingrecipe/monster(src)
+			src.recipes += new /datum/cookingrecipe/c_butty(src)
 			src.recipes += new /datum/cookingrecipe/scarewich_h(src)
 			src.recipes += new /datum/cookingrecipe/scarewich_p_h(src)
 			src.recipes += new /datum/cookingrecipe/scarewich_p(src)
@@ -936,6 +937,16 @@ table#cooktime a#start {
 					var/datum/plantgenes/DNA = P:plantgenes
 					var/obj/item/reagent_containers/food/snacks/condiment/hotsauce/F = new(src.loc)
 					F.reagents.add_reagent("capsaicin", DNA.potency)
+					qdel( P )
+				if (/obj/item/reagent_containers/food/snacks/plant/coffeeberry/mocha)
+					var/datum/plantgenes/DNA = P:plantgenes
+					var/obj/item/reagent_containers/food/snacks/candy/chocolate/F = new(src.loc)
+					F.reagents.add_reagent("chocolate", DNA.potency)
+					qdel( P )
+				if (/obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte)
+					var/datum/plantgenes/DNA = P:plantgenes
+					var/obj/item/reagent_containers/food/snacks/condiment/cream/F = new(src.loc)
+					F.reagents.add_reagent("milk", DNA.potency)
 					qdel( P )
 				if (/obj/item/plant/sugar)
 					var/obj/item/reagent_containers/food/snacks/ingredient/sugar/F = new(src.loc)

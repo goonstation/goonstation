@@ -58,7 +58,7 @@
 
 	if ((num_enemies >= 4 && prob(20)) || debug_mixed_forced_wraith || debug_mixed_forced_blob)
 		if (prob(50) || debug_mixed_forced_wraith)
-			num_enemies = max(num_enemies - 4, 1)
+			num_enemies = max(num_enemies - 2, 1)
 			num_wraiths = 1
 		else if (has_blobs)
 			num_enemies = max(num_enemies - 4, 1)

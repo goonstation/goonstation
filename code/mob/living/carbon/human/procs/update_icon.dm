@@ -598,9 +598,9 @@
 
 	// TODO: move to cloaker activation / deactivation
 	if (shielded == 2)
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "cloak", INVIS_CLOAK)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "cloak", INVIS_CLOAK)
 	else
-		REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, "cloak")
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "cloak")
 
 	if (shielded)
 		UpdateOverlays(shield_image, "shield")

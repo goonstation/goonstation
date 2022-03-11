@@ -41,6 +41,8 @@
 	/// If atmos should be blocked by this - special behaviours handled in gas_cross() overrides
 	var/gas_impermeable = FALSE
 
+	var/list/atom_properties
+
 /* -------------------- name stuff -------------------- */
 	/*
 	to change names: either add or remove something with the appropriate proc(s) and then call atom.UpdateName()
@@ -164,6 +166,7 @@
 				src.delStatus(effect)
 			src.statusEffects = null
 		ClearAllParticles()
+		atom_properties = null
 		..()
 
 	proc/Turn(var/rot)
@@ -427,7 +430,8 @@
 
 
 /atom/movable/Move(NewLoc, direct)
-
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_BLOCK_MOVE, NewLoc, direct))
+		return
 
 	//mbc disabled for now, i dont think this does too much for visuals i cant hit 40fps anyway argh i cant even tell
 	//tile glide smoothing:
@@ -678,7 +682,7 @@
 ///wrapper proc for /atom/proc/attackby so that signals are always sent. Call this, but do not override it.
 /atom/proc/Attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
 	SHOULD_NOT_OVERRIDE(1)
-	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user))
+	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user, params, is_special))
 		return
 	src.attackby(W, user, params, is_special)
 
@@ -852,6 +856,7 @@
 /atom/movable/proc/set_loc(atom/newloc)
 	SHOULD_CALL_PARENT(TRUE)
 	if (loc == newloc)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, loc)
 		return src
 
 	if (ismob(src)) // fuck haxploits

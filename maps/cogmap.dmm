@@ -38123,7 +38123,17 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail,
-/turf/simulated/wall/auto/supernorn,
+/obj/machinery/door/airlock/pyro/engineering{
+	name = "Mechanics Lab";
+	req_access = null;
+	req_access_txt = null
+	},
+/obj/access_spawn/engineering_mechanic,
+/obj/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
 /area/station/engine/elect)
 "bTi" = (
 /obj/cable{
@@ -38696,9 +38706,8 @@
 /area/station/hallway/primary/south)
 "bUI" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -56119,6 +56128,16 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"jmy" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "jmS" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -57510,8 +57529,13 @@
 /turf/simulated/floor/carpet,
 /area/station/security/main)
 "lYJ" = (
-/obj/disposalpipe/trunk/mail,
-/obj/machinery/disposal/mail/small/autoname/mechanics/south,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "lZk" = (
@@ -57528,8 +57552,9 @@
 /obj/machinery/light/emergency{
 	dir = 8
 	},
-/obj/cable{
-	icon_state = "1-2"
+/obj/noticeboard/persistent{
+	name = "Mechanics Workshop persistent notice board";
+	persistent_id = "mechanics"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -57681,9 +57706,8 @@
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/exit)
 "mpF" = (
-/obj/noticeboard/persistent{
-	name = "Mechanics Workshop persistent notice board";
-	persistent_id = "mechanics"
+/obj/machinery/light/incandescent{
+	dir = 1
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -59237,6 +59261,13 @@
 	icon_state = "swampgrass_edge"
 	},
 /area/station/hydroponics/bay)
+"pkH" = (
+/obj/machinery/disposal/mail/small/autoname/mechanics/south,
+/obj/disposalpipe/trunk/mail{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/engine/elect)
 "pkK" = (
 /obj/machinery/light,
 /turf/simulated/floor/grass{
@@ -62708,23 +62739,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
-"uQR" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "Mechanics Lab";
-	req_access = null;
-	req_access_txt = null
-	},
-/obj/access_spawn/engineering_mechanic,
-/obj/firedoor_spawn,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/engine/elect)
 "uTe" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -110830,11 +110844,11 @@ bLM
 bLU
 clf
 sKw
-gZR
-neb
-uQR
+bNn
+pkH
+bTf
 lZE
-bCb
+bKp
 bWU
 bYw
 cCN
@@ -111132,11 +111146,11 @@ qMI
 bLV
 clf
 vdE
-wtl
+gZR
 lYJ
 bTg
 bUI
-bWK
+jmy
 bXa
 bYx
 vrm

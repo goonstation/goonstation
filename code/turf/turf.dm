@@ -46,6 +46,7 @@
 	/// this turf is allowing unrestricted hotbox reactions
 	var/tmp/allow_unrestricted_hotbox = 0
 	var/wet = 0
+	var/sticky = FALSE
 	throw_unlimited = 0 //throws cannot stop on this tile if true (also makes space drift)
 
 	var/step_material = 0
@@ -453,7 +454,7 @@ proc/generate_space_color()
 	if (src.throw_unlimited)//ignore inertia if we're in the ocean (faster but kind of dumb check)
 		if ((ismob(A) && src.x > 2 && src.x < (world.maxx - 1))) //fuck?
 			var/mob/M = A
-			if((M.client && M.client.flying) || (ismob(M) && HAS_MOB_PROPERTY(M, PROP_NOCLIP)))
+			if((M.client && M.client.flying) || (ismob(M) && HAS_ATOM_PROPERTY(M, PROP_MOB_NOCLIP)))
 				return//aaaaa
 			BeginSpacePush(M)
 
