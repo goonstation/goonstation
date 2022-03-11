@@ -76,6 +76,10 @@ TYPEINFO(/datum/component/glue_ready)
 		if(user)
 			boutput(user, "<span class='alert'>Your hand with [thing_glued] passes straight through \the [glued_to].</span>")
 		return FALSE
+	if(istype(thing_glued, /obj/artifact) || istype(thing_glued, /obj/machinery/artifact))
+		if(user)
+			boutput(user, "<span class='alert'>The alien energies of [thing_glued] evaporate the glue.</span>")
+		return FALSE
 	if(istype(thing_glued, /obj/machinery/nuclearbomb))
 		if(user)
 			boutput(user, "<span class='alert'>\The [glued_to]'s radiation dissolves the glue.</span>")
