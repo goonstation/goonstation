@@ -64,8 +64,8 @@
 				var/mob/loopmob = null
 				var/list/hit = list()
 				var/mob/mobtohit = null
-				for(loopmob in mobs)
-					if(IN_RANGE(loopmob, src, 5) && !isflock(loopmob) && src.flock?.isEnemy(loopmob) && isturf(loopmob.loc))
+				for(loopmob in range(5,src.loc))
+					if(!isflock(loopmob) && src.flock?.isEnemy(loopmob) && isturf(loopmob.loc) && isalive(loopmob) && !isintangible(loopmob))
 						mobtohit = loopmob
 						break//found target
 				if(!mobtohit) return//if no target stop
@@ -73,13 +73,13 @@
 				hit += mobtohit
 				for(var/i in 1 to rand(5,6))//this facilitates chaining. legally distinct from the loop above
 					for(var/mob/nearbymob in range(2, mobtohit))//todo: optimize(?) this.
-						if(nearbymob != mobtohit && !isflock(nearbymob) && !(nearbymob in hit) && isturf(nearbymob.loc) && src.flock?.isEnemy(nearbymob))
+						if(nearbymob != mobtohit && !isflock(nearbymob) && !(nearbymob in hit) && isturf(nearbymob.loc) && src.flock?.isEnemy(nearbymob) && isalive(loopmob) && !isintangible(loopmob))
 							arcFlash(mobtohit, nearbymob, 10000)
 							hit += nearbymob
 							mobtohit = nearbymob
 				hit.len = 0//clean up
 				charge = 1
-				var/filter = src.get_filter("flock_sentinel_rays")
+				var/filter = src.rays.get_filter("flock_sentinel_rays")
 				animate(filter, size=((-(cos(180*(3/100))-1)/2)*32), time=1 SECONDS, flags = ANIMATION_PARALLEL)
 				charge_status = CHARGING
 				return
