@@ -10154,7 +10154,8 @@
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
 	},
-/turf/simulated/floor/purpleblack,
+/obj/machinery/navbeacon/mule/research_north/west,
+/turf/simulated/floor/bot,
 /area/station/science/lobby)
 "axN" = (
 /obj/disposalpipe/segment/mail,
@@ -14887,7 +14888,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/navbeacon/mule/research_north/west,
 /turf/simulated/floor/stairs/wood2/wide{
 	dir = 9
 	},
@@ -32922,6 +32922,7 @@
 	pixel_x = -16;
 	pixel_y = 16
 	},
+/obj/machinery/navbeacon/mule/bridge_north/east,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
@@ -37018,7 +37019,7 @@
 /area/station/quartermaster/office)
 "bQh" = (
 /obj/machinery/light/incandescent/harsh,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/delivery/caution,
 /area/station/quartermaster/office)
 "bQi" = (
 /obj/decal/cleanable/dirt,
@@ -44904,8 +44905,8 @@
 	})
 "dkU" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/navbeacon/mule/QM1_north/east,
 /obj/machinery/bot/mulebot/QM1,
+/obj/machinery/navbeacon/mule/QM1_north/west,
 /turf/simulated/floor/bot,
 /area/station/quartermaster/office)
 "dlH" = (
@@ -47662,9 +47663,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "vcx" = (
-/obj/machinery/navbeacon/mule/bridge_north/south,
-/turf/simulated/floor/bot,
-/area/station/bridge)
+/obj/decal/tile_edge/line/purple{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/delivery,
+/area/station/science/lobby)
 "vcK" = (
 /obj/item/furniture_parts/office_chair,
 /obj/item/furniture_parts/office_chair/green,
@@ -95083,7 +95086,7 @@ bzH
 bBb
 bCp
 bDE
-vcx
+bts
 nKn
 buV
 bHs
@@ -105893,7 +105896,7 @@ asS
 aua
 acu
 awH
-axK
+vcx
 ayO
 azX
 aBb
