@@ -593,6 +593,24 @@ datum
 
 			return 1
 
+		/// takes one reagent list and subtracts it from our reagent list
+		/// eg. src.reagents.subtract_reagents(reagentlist)
+		/// will take whatever is in reagentlist and remove amounts of reagent from src.reagents based off of how much is in reagentlist
+		proc/subtract_reagents(var/list/reagents_to_subtract, var/update_total = TRUE)
+			if(src.disposed)
+				CRASH("Attempting to subtract reagents from disposed /datum/reagents.")
+			for (var/current_id in reagents_to_subtract)
+				var/datum/reagent/current_reagent = reagent_list[current_id]
+				if (!current_reagent || !src.has_reagent(current_reagent.id))
+					return
+
+				src.remove_reagent(current_reagent.id, current_reagent.volume)
+
+			if (update_total)
+				update_total()
+
+			reagents_changed()
+
 		proc/update_total()
 			total_volume = 0
 

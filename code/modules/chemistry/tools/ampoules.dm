@@ -47,6 +47,49 @@
 	playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
 	return
 
+// based off of plants.dm
+/obj/item/reagent_containers/ampoule/attackby(obj/item/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/spacecash) || istype(W, /obj/item/paper))
+		var/obj/item/clothing/mask/cigarette/custom/ampoule/C = new(user.loc)
+
+		boutput(user, "<span class='alert'>You wrap the [src] in the [W].</span>")
+		src.reagents.copy_to(C.ampoulereagents)
+		src.reagents.trans_to(C, src.reagents.total_volume)
+		C.name = src.build_name(W)
+		C.ampoulename = src.name
+		C.reagents.maximum_volume = src.reagents.total_volume
+		C.ampoulecolor = src.color_id
+
+		W.force_drop(user)
+		src.force_drop(user)
+		qdel(W)
+		qdel(src)
+		user.put_in_hand_or_drop(C)
+
+	else if (istype(W, /obj/item/bluntwrap))
+		var/obj/item/bluntwrap/B = W
+		var/obj/item/clothing/mask/cigarette/cigarillo/ampoule/doink = new(user.loc)
+
+		boutput(user, "<span class='alert'>You roll the [src] in the [W] and make a fat doink.</span>")
+		doink.reagents.clear_reagents()
+		if(B.flavor)
+			doink.flavor = B.flavor
+		src.reagents.copy_to(doink.ampoulereagents)
+		src.reagents.trans_to(doink, src.reagents.total_volume)
+		W.reagents.trans_to(doink, W.reagents.total_volume)
+		doink.ampoulename = src.name
+		doink.reagents.maximum_volume = (src.reagents.total_volume + 50)
+		doink.name = "[reagent_id_to_name(doink.flavor)]-flavored [pick("doink","'Rillo","cigarillo","brumbpo")]"
+		doink.ampoulecolor = src.color_id
+
+		W.force_drop(user)
+		src.force_drop(user)
+		qdel(W)
+		qdel(src)
+		user.put_in_hand_or_drop(doink)
+
+/obj/item/reagent_containers/ampoule/proc/build_name(obj/item/W)
+	return "[istype(W, /obj/item/spacecash) ? "[W.amount]-credit " : ""][pick("joint","doobie","spliff","roach","blunt","roll","fatty","reefer")]"
 //ampoule types
 
 /obj/item/reagent_containers/ampoule/smelling_salts
