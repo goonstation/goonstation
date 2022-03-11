@@ -404,8 +404,8 @@
 	HTML += "extraction of their listed resource; you are<br>"
 	HTML += "not required to use these parameters.<br>"
 	HTML += "They are given for reference and ease of initial use.<br><br>"
-	HTML += "Please see end of list for a<br>"
-	HTML += "glossary of pertinent terms.<br><br>"
+	HTML += "<strong>Please see end of list for a</strong><br>"
+	HTML += "<strong>glossary of pertinent terms.</strong><br><br>"
 
 	src.build_mineral_list()
 	if (src.mineral_list)
