@@ -181,9 +181,11 @@
 		owner.visible_message("<span class='alert'>[owner] eats [the_object].</span>")
 		playsound(owner.loc, "sound/items/eatfood.ogg", 50, 0)
 
-		qdel(the_object)
-
 		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (isitem(the_object))
+				var/obj/item/the_item = the_object
+				H.sims.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
 			for(var/A in owner.organs)
 				var/obj/item/affecting = null
 				if (!owner.organs[A])    continue
@@ -192,6 +194,10 @@
 					continue
 				affecting.heal_damage(4, 0)
 			owner.UpdateDamageIcon()
+
+		qdel(the_object)
+
+		if (ishuman(owner))
 
 		using = 0
 		return
