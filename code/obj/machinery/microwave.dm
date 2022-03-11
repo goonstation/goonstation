@@ -54,15 +54,14 @@
 	var/emagged = FALSE
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		if (src.emagged)
+		if (!src.emagged)
 			if (user)
 				user.show_text("You use the card to change the internal radiation setting to \"IONIZING\"", "blue")
 			src.emagged = TRUE
-			return 1
+			return TRUE
 		else
 			if (user)
 				user.show_text("The [src] has already been tampered with", "red")
-				return 0
 
 	demag(var/mob/user)
 		if (!src.emagged)
@@ -70,7 +69,7 @@
 		if (user)
 			user.show_text("You reset the radiation levels to a more food-safe setting.", "blue")
 		src.emagged = FALSE
-		return 1
+		return TRUE
 
 /// After making the recipe in datums\recipes.dm, add it in here!
 /obj/machinery/microwave/New()
@@ -123,6 +122,8 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 	else if (isghostdrone(user))
 		boutput(user, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+		return
+	else if(istype(O, /obj/item/card/emag))
 		return
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/ingredient/egg)) // If an egg is used, add it
 		if(src.egg_amount < 5)

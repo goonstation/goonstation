@@ -59,12 +59,12 @@
 					src.visible_message("<span class='combat'><B>[src]</B> ravenously wolfs down [M]!</span>")
 					logTheThing("combat", M, null, "was devoured by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
 					playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
-					M.death(1)
+					M.death(TRUE)
 					var/atom/movable/overlay/animation = null
 					M.transforming = 1
 					M.canmove = 0
 					M.icon = null
-					APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 					if(ishuman(M))
 						animation = new(src.loc)
 						animation.icon_state = "blank"

@@ -179,22 +179,14 @@
 			var/mob/living/carbon/C = target
 			if (isdead(C))
 				logTheThing("combat", user, C, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
-				var/sourcename = C.real_name
-				var/sourcejob = "Stowaway"
-				if (C.mind && C.mind.assigned_role)
-					sourcejob = C.mind.assigned_role
-				else if (C.ghost && C.ghost.mind && C.ghost.mind.assigned_role)
-					sourcejob = C.ghost.mind.assigned_role
 				for (var/i=0, i<3, i++)
-					var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C))
-					meat.name = sourcename + meat.name
-					meat.subjectname = sourcename
-					meat.subjectjob = sourcejob
+					new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C),C)
 				if (C.mind)
 					C.ghostize()
 					qdel(C)
 				else
 					qdel(C)
+				return
 			else
 				C.changeStatus("weakened", 3 SECONDS)
 
@@ -418,7 +410,7 @@
 	attack_self(var/mob/user as mob)
 		playsound(src.loc, "sound/machines/click.ogg", 100, 1)
 		var/holder = src.loc
-		var/datum/plant/pick = tgui_input_list(usr, "Which seed do you want?", "Portable Seed Fabricator", hydro_controls.vendable_plants)
+		var/datum/plant/pick = tgui_input_list(user, "Which seed do you want?", "Portable Seed Fabricator", hydro_controls.vendable_plants)
 		if (src.loc != holder)
 			return
 		src.selected = pick

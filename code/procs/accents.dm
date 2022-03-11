@@ -380,7 +380,7 @@
 			if (R.next_char == "u")
 				new_string = "oo"
 				used = 2
-			else if (R.next_char == "n" && (R.next_next_char == "t" || (R.next_next_char == "'" && R.next_next_next_char == "t")))
+			else if ((R.next_char == "n" && R.prev_char == "c") || (R.next_char == "n" && (R.next_next_char == "t" || (R.next_next_char == "'" && R.next_next_next_char == "t"))))
 				new_string = "een"
 				used = 2
 			else if (R.next_char == "n")
@@ -392,6 +392,9 @@
 		if("A")
 			if (R.next_char == "U")
 				new_string = "OO"
+				used = 2
+			else if ((R.next_char == "N" && R.prev_char == "C") || (R.next_char == "N" && (R.next_next_char == "T" || (R.next_next_char == "'" && R.next_next_next_char == "T"))))
+				new_string = "EEN"
 				used = 2
 			else if (R.next_char == "N")
 				new_string = "UN"
@@ -1189,6 +1192,9 @@
 		if("a")
 			if (lowertext(R.next_char) == "u")
 				new_string = "oo"
+				used = 2
+			else if ((lowertext(R.next_char) == "n" && lowertext(R.prev_char) == "c") || (lowertext(R.next_char) == "n" && (lowertext(R.next_next_char) == "t" || (lowertext(R.next_next_char) == "'" && lowertext(R.next_next_next_char) == "t"))))
+				new_string = "een"
 				used = 2
 			else if (lowertext(R.next_char) == "n")
 				new_string = "un"

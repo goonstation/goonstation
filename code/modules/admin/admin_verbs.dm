@@ -101,6 +101,7 @@ var/list/admin_verbs = list(
 		/client/proc/revive_all_parrots,
 		/datum/admins/proc/toggle_blood_system,
 		/client/proc/narrator_mode,
+		/client/proc/force_desussification,
 		/client/proc/admin_observe_random_player,
 		/client/proc/orp,
 		/client/proc/admin_pick_random_player,
@@ -166,6 +167,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_show_player_compids,
 		/client/proc/give_mass_medals,
 		/client/proc/copy_medals,
+		/client/proc/copy_cloud_saves,
 
 		/client/proc/cmd_dispatch_observe_to_ghosts,
 		/client/proc/waddle_walking,
@@ -223,6 +225,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/toggleautoending,
 		/datum/admins/proc/togglelatetraitors,
 		/datum/admins/proc/toggle_pull_slowing,
+		/client/proc/resetbuildmode,
 		/client/proc/togglebuildmode,
 		/client/proc/toggle_buildmode_view,
 		/client/proc/cmd_admin_rejuvenate_all,
@@ -617,8 +620,6 @@ var/list/special_pa_observing_verbs = list(
 
 
 	usr.see_in_dark = initial(usr.see_in_dark)
-	if(buildmode)
-		qdel(buildmode)
 
 	if(src.holder)
 		src.holder.level = 0

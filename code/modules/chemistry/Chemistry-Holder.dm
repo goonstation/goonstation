@@ -410,6 +410,8 @@ datum
 			active_reactions = list()
 			reaction_loop:
 				for(var/datum/chemical_reaction/C in src.possible_reactions)
+					if(src.disposed)
+						return
 					if (!islist(C.required_reagents)) //This shouldn't happen but when practice meets theory...they beat the shit out of one another I guess
 						continue
 
@@ -564,10 +566,13 @@ datum
 		/// the first argument is the reagent id
 		/// the second whether or not the total volume of the container should update, which may be undesirable in the update_total proc
 		proc/del_reagent(var/reagent, var/update_total = TRUE)
+			if(src.disposed)
+				CRASH("Attempting to delete [reagent] from disposed /datum/reagents.")
 			var/datum/reagent/current_reagent = reagent_list[reagent]
 
 			if (current_reagent)
 				current_reagent.volume = 0 //mbc : I put these checks here to try to prevent an infloop
+				current_reagent.check_threshold()
 				if (current_reagent.disposed) //Caused some sort of infinite loop? gotta be safe.
 					reagent_list.Remove(reagent)
 					return 0
@@ -796,6 +801,8 @@ datum
 			if(added_new)
 				current_reagent.on_add()
 
+			current_reagent.check_threshold()
+
 			if (!donotupdate)
 				update_total()
 
@@ -819,6 +826,7 @@ datum
 
 			if(current_reagent)
 				current_reagent.volume -= amount
+				current_reagent.check_threshold()
 				if(current_reagent.volume <= 0 && (reagents_change || update_total))
 					del_reagent(reagent)
 
@@ -909,7 +917,7 @@ datum
 
 			// check to see if user wearing the spectoscopic glasses (or similar)
 			// if so give exact readout on what reagents are present
-			if (HAS_MOB_PROPERTY(user, PROP_SPECTRO))
+			if (HAS_ATOM_PROPERTY(user, PROP_MOB_SPECTRO))
 				if("cloak_juice" in reagent_list)
 					var/datum/reagent/cloaker = reagent_list["cloak_juice"]
 					if(cloaker.volume >= 5)

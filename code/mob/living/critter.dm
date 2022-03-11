@@ -359,7 +359,7 @@
 
 	throw_item(atom/target, list/params)
 		..()
-		if (HAS_MOB_PROPERTY(src, PROP_CANTTHROW))
+		if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTTHROW))
 			return
 		if (!can_throw)
 			return

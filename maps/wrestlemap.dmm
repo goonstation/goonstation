@@ -18488,7 +18488,8 @@
 "hKP" = (
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4;
-	name = "Head of Security's Room"
+	name = "Head of Security's Room";
+	req_access = null
 	},
 /obj/access_spawn/hos,
 /obj/firedoor_spawn,
@@ -27344,7 +27345,8 @@
 /area/research_outpost/protest)
 "lAZ" = (
 /obj/machinery/door/airlock/pyro/glass/command{
-	name = "Head of Security's Office"
+	name = "Head of Security's Office";
+	req_access = null
 	},
 /obj/access_spawn/hos,
 /obj/firedoor_spawn,
@@ -30510,7 +30512,8 @@
 /area/station/maintenance/inner/the_cage)
 "mXE" = (
 /obj/machinery/door/airlock/pyro/security{
-	name = "Armory"
+	name = "Armory";
+	req_access = null
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/hos,

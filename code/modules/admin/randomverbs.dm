@@ -106,8 +106,8 @@
 	logTheThing("diary", src.mob, Mclient.mob, "Subtle Messaged [constructTarget(Mclient.mob,"diary")]: [msg]", "admin")
 
 	var/subtle_href = null
-	if(src.holder && M.client)
-		subtle_href = "?src=\ref[src.holder];action=subtlemsg&targetckey=[M.client.ckey]"
+	if(M.client)
+		subtle_href = "?src=%admin_ref%;action=subtlemsg&targetckey=[M.client.ckey]"
 	message_admins("<span class='internal'><b>SubtleMessage: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob, custom_href=subtle_href)] : [msg]</b></span>")
 
 /client/proc/cmd_admin_plain_message(mob/M as mob in world)
@@ -2558,6 +2558,53 @@ var/global/night_mode_enabled = 0
 		if (isnull(result))
 			boutput(src, "Failed to set medal; error communicating with BYOND hub!")
 			break
+
+/client/proc/copy_cloud_saves(old_key as null|text)
+	set name  = "Copy Cloud Saves"
+	set desc = "Copy cloud saves from one account to another. This WILL overwrite all saves on the target account."
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set popup_menu = 0
+
+	ADMIN_ONLY
+
+	if (!old_key)
+		old_key = input("Enter old account key", "Old account key", null) as null|text
+	if (!old_key)
+		boutput(usr, "<span class='alert'>Transfer aborted.</span>")
+		return
+	old_key = ckey(old_key)
+
+	var/new_key = ckey(input("Enter new account key", "New account key", null) as null|text)
+	if (!new_key)
+		boutput(usr, "<span class='alert'>Transfer aborted.</span>")
+		return
+
+	//criminal activity
+	var/datum/player/dummy_player = new
+	dummy_player.clouddata = list() // trick it into thinking we have cloud data I guess. only gets nullchecked
+	dummy_player.cloudsaves = list() // ditto
+	var/datum/preferences/dummy_preferences = new
+	var/list/save_names = dummy_player.cloud_fetch_target_saves_only(old_key) // technically a map from names to nums
+
+	if (!save_names)
+		boutput(usr, "<span class='alert'>Couldn't find cloud data for that key.</span>")
+		return
+	if (!length(save_names))
+		boutput(usr, "<span class='alert'>Couldn't find any cloud saves for that key.</span>")
+		return
+	if (tgui_alert(usr, "You're about to transfer [length(save_names)] saves from [old_key] to [new_key]. This will overwrite all the existing saves on the target account. Do it?", "Cloud Save Transfer", list("Yes", "No")) == "No")
+		boutput(usr, "<span class='alert'>Transfer aborted.</span>")
+		return
+
+	for (var/name in save_names)
+		dummy_preferences.cloudsave_load(null, name, old_key)
+		var/ret = dummy_preferences.cloudsave_save(null, name, new_key)
+		if (ret != 1) //yes this is intentional
+			boutput(usr, "<span class='alert'>Something went wrong while saving to the cloud. Return value was: ([ret]). Transfer aborted.</span>")
+			return
+
+	dummy_player.cloud_put_target(new_key, "saves", save_names)
+	boutput(usr, "<span class='success'>Cloud saves transferred.</span>")
 
 /client/proc/cmd_admin_disable()
 	set name = "Disable Admin Powers"

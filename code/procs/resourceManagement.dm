@@ -41,7 +41,7 @@
 			UNTIL(request.is_complete())
 			var/datum/http_response/response = request.into_response()
 
-			if (response.errored || !response.body)
+			if (response.errored || !response.body || response.status_code != 200)
 				Z_LOG_ERROR("Resource/Grab", "[path] - failed to get from CDN")
 				CRASH("CDN DEBUG: No file found for path: [path]")
 

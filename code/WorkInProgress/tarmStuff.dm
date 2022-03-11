@@ -146,7 +146,7 @@
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	shot_number = 3
-	shot_delay = 0.4
+	shot_delay = 0.04 SECONDS
 	shot_sound = 'sound/weapons/gunshot.ogg'
 	shot_volume = 66
 	dissipation_delay = 10

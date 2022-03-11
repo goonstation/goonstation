@@ -593,3 +593,25 @@
 		logTheThing("diary", "[user] (Discord)", null, logMessage, "admin")
 		message_admins("[user] (Discord) [logMessage]")
 		system.reply(logMessage)
+
+
+/datum/spacebee_extension_command/state_based/confirmation/renamestation
+	name = "renamestation"
+	help_message = "Rename the station."
+	argument_types = list(/datum/command_argument/the_rest="new_name")
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	var/new_name = null
+
+	prepare(user, new_name)
+		src.new_name = new_name
+		return "You are about to rename the station to `[new_name]`."
+
+	do_it(user)
+		if(isnull(src.new_name))
+			return
+		set_station_name(user, new_name, admin_override=TRUE)
+		message_admins("<span class='alert'>Admin [user] (Discord) renamed station to [src.new_name]!</span>")
+		logTheThing("admin", "[user] (Discord)", null, "renamed station to [src.new_name]!")
+		logTheThing("diary", "[user] (Discord)", null, "renamed station to [src.new_name]!", "admin")
+		var/success_msg = "Station renamed to [src.new_name]."
+		system.reply(success_msg)

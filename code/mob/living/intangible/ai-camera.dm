@@ -36,15 +36,18 @@
 
 	var/outer_eye_atom = null
 
+	/// The UI used for the "Open station map" verb
+	var/datum/tgui/map_ui
+
 	New()
 		src.cancel_camera()
 		last_loc = src.loc
 		..()
 		see_invisible = INVIS_AI_EYE
 		sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_AI_EYE)
-		APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
-		APPLY_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_AI_EYE)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 	Login()
@@ -138,8 +141,8 @@
 	proc/update_statics()	//update seperate from move(). Mostly same code.
 		return
 
-	set_loc(var/newloc as turf|mob|obj in world)
-		if (isturf(newloc) && newloc:z != 1) // Sorry!
+	set_loc(atom/newloc)
+		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION) // Sorry!
 			src.return_mainframe()
 		else
 			last_loc = src.loc
@@ -281,6 +284,14 @@
 
 	resist()
 		return 0 //can't actually resist anything because there's nothing to resist, but maybe the hot key could be used for something?
+
+	//death stuff that should be passed to mainframe
+	gib(give_medal, include_ejectables) //this should be admin only, I would hope
+		message_admins("something tried to gib the AI Eye - if this wasn't an admin action, something has gone badly wrong")
+		return 0
+		//return mainframe.gib(give_medal, include_ejectables) //re-enable this when you are SUPREMELY CONFIDENT that all calls to gib() have intangible checks
+
+
 
 	proc/mainframe_check()
 		if (mainframe)
@@ -475,6 +486,30 @@
 		set category = "AI Commands"
 		if(mainframe)
 			mainframe.view_messageLog()
+
+	verb/open_map()
+		set name = "Open station map"
+		set desc = "Click on the map to teleport"
+		set category = "AI Commands"
+		map_ui = tgui_process.try_update_ui(usr, src, map_ui)
+		if (!map_ui)
+			if (!winexists(usr, "ai_map"))
+				winset(src.client, "ai_map", list2params(list(
+					"type" = "map",
+					"size" = "300,300",
+				)))
+				var/atom/movable/screen/handler = new
+				handler.plane = 0
+				handler.mouse_opacity = 0
+				handler.screen_loc = "ai_map:1,1"
+				src.client.screen += handler
+
+				ai_station_map.screen_loc = "ai_map;1,1"
+				handler.vis_contents += ai_station_map
+				src.client.screen += ai_station_map
+			map_ui = new(usr, src, "AIMap")
+			map_ui.open()
+
 
 //---TURF---//
 /turf/var/image/aiImage

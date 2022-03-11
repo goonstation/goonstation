@@ -241,9 +241,9 @@
 /obj/machinery/door/firedoor/custom_suicide = 1
 /obj/machinery/door/firedoor/suicide(var/mob/living/carbon/human/user as mob)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
-		return 0
-	if (!src.allowed(user) || src.density)
-		return 0
+		return FALSE
+	if (src.density)
+		return FALSE
 	user.visible_message("<span class='alert'><b>[user] sticks [his_or_her(user)] head into [src] and closes it!</b></span>")
 	src.close()
 	var/obj/head = user.organHolder.drop_organ("head")
@@ -251,4 +251,4 @@
 	make_cleanable( /obj/decal/cleanable/blood/gibs,src.loc)
 	playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 
-	return 1
+	return TRUE

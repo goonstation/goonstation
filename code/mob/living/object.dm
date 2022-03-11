@@ -96,12 +96,12 @@
 
 		src.visible_message("<span class='alert'><b>[possessed] comes to life!</b></span>") // was [src] but: "the living space thing comes alive!"
 		animate_levitate(src, -1, 20, 1)
-		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST, "living_object", 1000)
-		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "living_object", 1000)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "living_object", 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "living_object", 100)
 
 	disposing()
-		REMOVE_MOB_PROPERTY(src, PROP_STUN_RESIST, "living_object")
-		REMOVE_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "living_object")
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "living_object")
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "living_object")
 		..()
 
 	equipped()
@@ -117,7 +117,7 @@
 			. += "<span class='notice'>The ethereal grip on this object appears to be weak.</span>"
 
 	meteorhit(var/obj/O as obj)
-		src.death(1)
+		src.death(TRUE)
 		return
 
 	restrained()
@@ -186,7 +186,7 @@
 		health -= brute
 		health = min(max_health, health)
 		if (src.health <= 0)
-			src.death(0)
+			src.death(FALSE)
 
 	HealDamage(zone, brute, burn)
 		TakeDamage(zone, -brute, -burn)
@@ -212,7 +212,7 @@
 	click(atom/target, params)
 		if (target == src)
 			if (canattack)
-				src.item.attack_self(src)
+				src.item.AttackSelf(src)
 			else
 				if(!isitem(src.item))
 					src.item.Attackhand(src)
@@ -230,7 +230,7 @@
 				if (isturf(src.item.loc))
 					src.item.set_loc(src)
 				else
-					src.death(0)
+					src.death(FALSE)
 
 		//To reflect updates of the items appearance etc caused by interactions.
 		src.name = "[name_prefix][src.item.name]"

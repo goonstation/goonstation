@@ -2201,6 +2201,9 @@
 			if (speechpopups && src.chat_text)
 				chat_text = make_chat_maptext(src, maptext_out, "color: #C2BEBE;" + src.speechpopupstyle, alpha = 140)
 				if(chat_text)
+					if(m_type & 1)
+						chat_text.plane = PLANE_NOSHADOW_ABOVE
+						chat_text.layer = 420
 					chat_text.measure(src.client)
 					for(var/image/chat_maptext/I in src.chat_text.lines)
 						if(I != chat_text)
@@ -2283,7 +2286,7 @@
 	torso.render_source = src.render_target
 	torso.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "torso"))
 	torso.appearance_flags = KEEP_APART
-	APPLY_MOB_PROPERTY(src, PROP_CANTMOVE, "dabbify")
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "dabbify")
 	src.update_canmove()
 	src.set_dir(SOUTH)
 	src.dir_locked = TRUE
@@ -2306,7 +2309,7 @@
 		qdel(torso)
 		qdel(right_arm)
 		qdel(left_arm)
-		REMOVE_MOB_PROPERTY(src, PROP_CANTMOVE, "dabbify")
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "dabbify")
 		src.update_canmove()
 		src.dir_locked = FALSE
 		src.render_target = "\ref[src]"

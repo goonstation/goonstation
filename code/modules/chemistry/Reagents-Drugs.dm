@@ -24,17 +24,20 @@ datum
 			hunger_value = -0.1
 			bladder_value = -0.1
 			thirst_value = -0.05
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_under()
+				..()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_bathsalts", 3)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_bathsalts", 3)
 				return
 
-			on_remove()
+			cross_threshold_under()
+				..()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_bathsalts")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_bathsalts")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1) // commence bad times
@@ -216,6 +219,7 @@ datum
 			hunger_value = -0.05
 			thirst_value = -0.05
 			stun_resist = 60
+			threshold = THRESHOLD_INIT
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -515,17 +519,18 @@ datum
 			value = 3
 			thirst_value = -0.07
 			stun_resist = 8
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_nicotine", 1)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_nicotine", 1)
 				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_nicotine")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_nicotine")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -584,17 +589,18 @@ datum
 			addiction_prob = 100
 			overdose = 70
 			stun_resist = 11
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_nicotine2", 3)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_nicotine2", 3)
 				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_nicotine2")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_nicotine2")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -861,9 +867,9 @@ datum
 			on_remove()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "triplemeth")
-					REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "triplemeth")
-					REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "triplemeth")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "triplemeth")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "triplemeth")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "triplemeth")
 
 				if(hascall(holder.my_atom,"removeOverlayComposition"))
 					holder.my_atom:removeOverlayComposition(/datum/overlayComposition/triplemeth)
@@ -874,9 +880,9 @@ datum
 				if(!M) M = holder.my_atom
 
 				if(holder.has_reagent("methamphetamine")) return ..() //Since is created by a meth overdose, dont react while meth is in their system.
-				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "triplemeth", 98)
-				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "triplemeth", 98)
-				APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "triplemeth", 1000)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "triplemeth", 98)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "triplemeth", 98)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "triplemeth", 1000)
 
 				if(hascall(holder.my_atom,"addOverlayComposition"))
 					holder.my_atom:addOverlayComposition(/datum/overlayComposition/triplemeth)
@@ -945,29 +951,34 @@ datum
 			hunger_value = -0.09
 			thirst_value = -0.09
 			stun_resist = 50
+			threshold = THRESHOLD_INIT
 			var/purge_brain = TRUE
 
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_methamphetamine", 3)
-				if (ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/energydrink, src.type)
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "triplemeth")
-					REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "triplemeth")
-					REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "triplemeth")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "triplemeth")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "triplemeth")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "triplemeth")
 
 				..()
 
 			on_remove()
 				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_methamphetamine")
-				if(holder && ismob(holder.my_atom))
 					holder.del_reagent("triplemeth")
-				if (ismob(holder?.my_atom))
+				..()
+
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_methamphetamine", 3)
+					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/energydrink, src.type)
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_methamphetamine")
 					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/energydrink, src.type)
 				..()
 

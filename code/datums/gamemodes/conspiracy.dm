@@ -54,7 +54,12 @@
 
 	var/conspiratorList = "The conspiracy consists of: "
 	for (var/datum/mind/conspirator in traitors)
-		conspiratorList = conspiratorList + "<b>" + conspirator.current.name + "</b>, "
+		var/conspirator_name
+		if (conspirator.assigned_role == "Clown")
+			conspirator_name = "a Clown"
+		else
+			conspirator_name = conspirator.current.real_name
+		conspiratorList += "<b>[conspirator_name]</b>, "
 
 	var/pickedObjective = pick(typesof(/datum/objective/conspiracy))
 	for(var/datum/mind/conspirator in traitors)

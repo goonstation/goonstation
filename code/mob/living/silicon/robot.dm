@@ -107,7 +107,7 @@
 
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 
-		APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		src.internal_pda = new /obj/item/device/pda2/cyborg(src)
 		src.internal_pda.name = "[src]'s Internal PDA Unit"
 		src.internal_pda.owner = "[src]"
@@ -617,7 +617,7 @@
 					SPAWN(1 SECOND)
 						src.emote_allowed = 1
 			else
-				src.show_text("Invalid Emote: [act]")
+				if (voluntary) src.show_text("Invalid Emote: [act]")
 				return
 		if (!isalive(src))
 			return
@@ -1225,11 +1225,10 @@
 				actions.Add("Remove Right Leg")
 			if (src.part_leg_l)
 				actions.Add("Remove Left Leg")
-			if (!src.part_arm_r && !src.part_arm_l && !src.part_leg_r && !src.part_leg_l)
-				if (src.part_head)
-					actions.Add("Remove Head")
-				if (src.part_chest)
-					actions.Add("Remove Chest")
+			if (src.part_head)
+				actions.Add("Remove Head")
+			if (src.part_chest)
+				actions.Add("Remove Chest")
 
 			if (!actions.len)
 				boutput(user, "<span class='alert'>You can't think of anything to use the wrench on.</span>")
@@ -1571,7 +1570,7 @@
 			var/obj/item/O = locate(href_list["mod"])
 			if (!O || (O.loc != src && O.loc != src.module))
 				return
-			O.attack_self(src)
+			O.AttackSelf(src)
 
 		if (href_list["act"])
 			if(!src.module) return
@@ -1930,7 +1929,7 @@
 		return
 	*/
 		if(istype(src.radio))
-			src.radio.attack_self(src)
+			src.radio.AttackSelf(src)
 
 	proc/toggle_module_pack()
 		if(weapon_lock)
@@ -2170,7 +2169,7 @@
 		set desc = "Access your internal PDA device."
 
 		if (src.internal_pda && istype(src.internal_pda, /obj/item/device/pda2/))
-			src.internal_pda.attack_self(src)
+			src.internal_pda.AttackSelf(src)
 		else
 			boutput(usr, "<span class='alert'><b>Internal PDA not found!</span>")
 
@@ -2411,8 +2410,8 @@
 
 	proc/add_oil(var/amt)
 		if (oil <= 0)
-			APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST, "robot_oil", 25)
-			APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "robot_oil", 25)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "robot_oil", 25)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "robot_oil", 25)
 			APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_oil, "oil")
 		src.oil += amt
 
