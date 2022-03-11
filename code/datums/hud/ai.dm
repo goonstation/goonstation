@@ -15,7 +15,7 @@
 		hologram
 		killswitch
 		map
-		recall
+		core
 
 	var/list/spinner = list("/", "-", "\\", "|")
 	var/spinner_num = 1
@@ -71,8 +71,8 @@
 		map = create_screen("map", "Show Map", 'icons/mob/hud_ai.dmi', "map", "WEST, NORTH-3.5", HUD_LAYER)
 		map.underlays += "button"
 
-		recall = create_screen("recall", "Recall to Mainframe", 'icons/mob/hud_ai.dmi', "recall", "WEST, NORTH-4", HUD_LAYER)
-		recall.underlays += "button"
+		core = create_screen("core", "Return to Core", 'icons/mob/hud_ai.dmi', "core", "WEST, NORTH-4", HUD_LAYER)
+		core.underlays += "button"
 
 		tracking = create_screen("tracking", "Tracking", 'icons/mob/hud_ai.dmi', "track", "WEST, SOUTH", HUD_LAYER)
 		tracking.underlays += "button"
@@ -186,5 +186,5 @@
 					boutput(master, "Deploy to an AI Eye first to create a hologram.")
 			if ("map")
 				master.open_map()
-			if ("recall")
+			if ("core")
 				master.return_to(user)
