@@ -56,7 +56,7 @@
 			// animate(time=duration*(2+rand()), loop = -1, pixel_x=-4*swap)
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
-		if(istype(W, /obj/item/reagent_containers/glass/jar))
+		if(istype(W, /obj/item/reagent_containers/glass/jar) || istype(W, /obj/item/reagent_containers/glass/beaker/large))
 			W.AddComponent(/datum/component/bug_capture, W, src, user)
 		else
 			..()
@@ -209,7 +209,7 @@
 		animate(src, time=5 SECONDS, pixel_x=rand(-4,4), pixel_y=rand(-8,8))
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
-		if(istype(W, /obj/item/reagent_containers/glass/jar))
+		if(istype(W, /obj/item/reagent_containers/glass/jar) || istype(W, /obj/item/reagent_containers/glass/beaker/large))
 			W.AddComponent(/datum/component/bug_capture, W, src, user)
 		else
 			..()
@@ -311,9 +311,13 @@ TYPEINFO(/datum/component/bug_capture)
 	user.remove_sm_light("firefly_\ref[A]")
 
 /datum/component/bug_capture/proc/update_icon(atom/A)
+	var/pixel_y_offset = 0
 	var/has_bugs = FALSE
+
 	if(istype(A, /obj/item/reagent_containers/glass/jar))
 		A.icon_state = "mason_jar"
+	else if(istype(A,/obj/item/reagent_containers/glass/beaker/large))
+		pixel_y_offset = 4
 
 	if(firefly_count && light_color)
 		has_bugs = TRUE
@@ -326,12 +330,12 @@ TYPEINFO(/datum/component/bug_capture)
 			else
 				firefly_image_count = 3
 
-		var/image/bulb = image('icons/mob/insect.dmi', "jar_fire_[firefly_image_count]")
+		var/image/bulb = image('icons/mob/insect.dmi', "jar_fire_[firefly_image_count]", pixel_y=pixel_y_offset)
 		bulb.appearance_flags = RESET_COLOR
 		bulb.color = rgb(light_color[1], light_color[2], light_color[3])
 		A.underlays = list(bulb)
 
-		var/image/bulb_light = image('icons/mob/insect.dmi', "jar_glow")
+		var/image/bulb_light = image('icons/mob/insect.dmi', "jar_glow", pixel_y=pixel_y_offset)
 		bulb_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART
 		bulb_light.layer = LIGHTING_LAYER_BASE
 		bulb_light.plane = PLANE_LIGHTING
@@ -347,7 +351,7 @@ TYPEINFO(/datum/component/bug_capture)
 
 	if(locate(/mob/living/critter/small_animal/dragonfly) in A)
 		has_bugs = TRUE
-		var/image/dfly = image('icons/mob/insect.dmi', "jar_dragon")
+		var/image/dfly = image('icons/mob/insect.dmi', "jar_dragon", pixel_y=pixel_y_offset)
 		A.underlays = list(dfly)
 
 	if(!has_bugs)
