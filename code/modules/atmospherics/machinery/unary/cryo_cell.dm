@@ -94,7 +94,7 @@
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
+		if (!can_reach(user, target) || !can_reach(target, src) || !can_reach(user, src))
 			return
 
 		if (target == user)
