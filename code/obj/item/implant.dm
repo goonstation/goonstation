@@ -775,23 +775,27 @@ THROWING DARTS
 
 	bullet_357
 		name = ".357 round"
+		icon_state = "bullet_greytip"
 		desc = "A powerful revolver bullet, likely of criminal origin."
 
 	bullet_357AP
 		name = ".357 AP round"
+		icon_state = "bullet_ap"
 		desc = "A highly illegal armor-piercing variant of the common .357 round."
 
 	bullet_38
 		name = ".38 round"
+		icon_state = "bullet_greytip"
 		desc = "An outdated police-issue bullet. Some anachronistic detectives still like to use these, for style."
 
 	bullet_45
 		name = ".45 round"
-		icon_state = "bulletround"
+		icon_state = "bullet_greytip"
 		desc = "An outdated army-issue bullet. Mainly used by war reenactors and space cowboys."
 
 	bullet_38AP
 		name = ".38 AP round"
+		icon_state = "bullet_ap"
 		desc = "A more powerful armor-piercing .38 round. Huh. Aren't these illegal?"
 
 	bullet_nine_mm_NATO
@@ -805,8 +809,13 @@ THROWING DARTS
 
 	bullet_308
 		name = "Rifle Round" // this is used by basically every rifle in the game, ignore the "308" path
-		icon_state = "bulletbig"
+		icon_state = "bullet_rifle"
 		desc = "A large bullet from a rifle cartridge."
+
+	bullet_308AP
+		name = "AP Rifle Round"
+		icon_state = "bullet_rifle_ap"
+		desc = "A powerful, armor-piercing rifle bullet. Not to be underestimated."
 
 	bullet_22
 		name = ".22 round"
@@ -814,22 +823,33 @@ THROWING DARTS
 
 	bullet_22HP
 		name = ".22 hollow point round"
-		icon_state = "bulletexpanded"
+		icon_state = "bullet_hp"
 		desc = "A small calibre hollow point bullet for use against unarmored targets. Hang on, aren't these a war crime?"
 
 	bullet_41
 		name = ".41 round"
-		icon_state = "bulletexpanded"
+		icon_state = "bullet_ap"
 		desc = ".41? What the heck? Who even uses these anymore?"
 
 	bullet_12ga
 		name = "buckshot"
-		icon_state = "bulletround"
-		desc = "A commonly-used load for shotguns."
+		icon_state = "buckshot"
+		desc = "A collection of buckshot rounds, a very commonly used load for shotguns."
 
 	staple
 		name = "staple"
+		icon_state = "staple"
 		desc = "Well that's not very nice."
+
+	stinger_ball
+		name = "rubber ball"
+		icon_state = "rubberball"
+		desc = "A rubber ball from a stinger grenade. Ouch."
+
+	grenade_fragment
+		name = "grenade fragment"
+		icon_state = "grenadefragment"
+		desc = "A sharp and twisted grenade fragment. Comes from your typical frag grenade."
 
 	shrapnel
 		name = "shrapnel"
