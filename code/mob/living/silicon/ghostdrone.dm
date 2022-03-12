@@ -206,7 +206,7 @@
 	examine()
 		. = ..()
 
-		. += "*A cute little maintenance drone.*"
+		. += "\n It's a cute little maintenance drone. There seems to be a glowing source inside it." // I hereby that declare the ghost part of ghostdrone is what makes them glow
 		. += "*---------*"
 
 		if (isdead(src))
@@ -721,6 +721,16 @@
 			if ("clap")
 				if (!src.restrained())
 					message = "<B>[src]</B> claps."
+					m_type = 2
+
+			if ("dance")
+				if (!src.restrained())
+					message = "<B>[src]</B> nods it's head."
+					m_type = 2
+
+			if ("snap")
+				if (!src.restrained())
+					message = "<B>[src]</B> shakes it's head."
 					m_type = 2
 
 			if ("flap")
