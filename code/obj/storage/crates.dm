@@ -273,10 +273,6 @@
 	var/static/list/possible_items = list()
 	grab_stuff_on_spawn = FALSE
 
-	New(loc, owner, owner_uplink)
-		..()
-		spawn_items()
-
 	proc/spawn_items(mob/owner, obj/item/uplink/owner_uplink)
 		#define NESTED_SCALING_FACTOR 0.8
 		if (istype(src.loc, /obj/storage/crate/syndicate_surplus)) //if someone got lucky and rolled a surplus inside a surplus, scale the inner one (and its contents) down
@@ -304,6 +300,12 @@
 						owner.mind.traitor_crate_items += item_datum
 				telecrystals += item_datum.cost
 		#undef NESTED_SCALING_FACTOR
+
+/obj/storage/crate/syndicate_surplus/spawnable
+
+	New()
+		..()
+		spawn_items() //null owner/uplink, so pulls from all possible items
 
 /obj/storage/crate/pizza
 	name = "pizza box"
