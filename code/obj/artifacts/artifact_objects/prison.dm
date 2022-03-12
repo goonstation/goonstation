@@ -14,11 +14,14 @@
 	react_xray = list(15,90,90,11,"HOLLOW")
 	touch_descriptors = list("You seem to have a little difficulty taking your hand off its surface.")
 	var/mob/living/prisoner = null
+	var/living = FALSE
 	var/imprison_time = 0
 
 	New()
 		..()
 		imprison_time = rand(5 SECONDS, 2 MINUTES)
+		if (prob(10))
+			living = TRUE
 
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
@@ -29,16 +32,22 @@
 			return
 		if (isliving(user))
 			O.visible_message("<span class='alert'><b>[O]</b> suddenly pulls [user.name] inside and slams shut!</span>")
-			user.set_loc(O)
-			O.ArtifactFaultUsed(user)
-			prisoner = user
-			SPAWN(imprison_time)
-				if (!O.disposed) //ZeWaka: Fix for null.contents
-					O.ArtifactDeactivated()
+			if (src.living)
+				new /mob/living/object(O, user)
+			else
+				user.set_loc(O)
+				O.ArtifactFaultUsed(user)
+				prisoner = user
+				SPAWN(imprison_time)
+					if (!O.disposed) //ZeWaka: Fix for null.contents
+						O.ArtifactDeactivated()
 
 	effect_deactivate(obj/O)
 		if (..())
 			return
+		if (living && istype(O.loc, /mob/living/object))
+			var/mob/living/object/mob = O.loc
+			mob.death(FALSE)
 		if (prisoner?.loc == O)
 			prisoner.set_loc(get_turf(O))
 			O.visible_message("<span class='alert'><b>[O]</b> releases [prisoner.name] and shuts down!</span>")
