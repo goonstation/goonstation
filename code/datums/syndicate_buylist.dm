@@ -768,7 +768,7 @@ This is basically useless for anyone but miners.
 	not_in_crates = TRUE
 	vr_allowed = FALSE //i don't know why this is here but it's on the trash compactor cart so w/e
 	job = list("Chef", "Sous-Chef", "Waiter")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
+	can_buy = UPLINK_TRAITOR
 
 	run_on_spawn(var/obj/storage/cart/hotdog/syndicate/cart, var/mob/living/owner)
 		if (owner)
@@ -1156,7 +1156,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic/head_rev)
 	cost = 5
 	desc = "This flash never runs out and will convert susceptible crew when a rev head uses it. It will also allow the rev head to break counter-revolutionary implants."
 	vr_allowed = 0
-	exclusivemode = list(/datum/game_mode/revolution)
 	not_in_crates = 1
 
 /datum/syndicate_buylist/generic/head_rev/revflashbang
