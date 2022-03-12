@@ -2560,7 +2560,7 @@ var/global/night_mode_enabled = 0
 			break
 
 /client/proc/copy_cloud_saves(old_key as null|text)
-	set name  = "Copy Cloud Saves"
+	set name  = "Copy Cloud Data"
 	set desc = "Copy cloud saves from one account to another. This WILL overwrite all saves on the target account."
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
