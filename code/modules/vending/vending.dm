@@ -1429,6 +1429,9 @@
 	if(!istype(W,/obj/item/mechanics))
 		..()
 		return
+	if (target.cant_drop)
+		boutput(user, "<span class='alert'>You can't put [target] into a vending machine while it's attached to you!</span>")
+		return
 	for(var/datum/data/vending_product/product in product_list)
 		if(W.type == product.product_path)
 			boutput(user, "<span class='notice'>You return the [W] to the vending machine.</span>")
