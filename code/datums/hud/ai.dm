@@ -16,6 +16,7 @@
 		killswitch
 		map
 		core
+		coreatk
 
 	var/list/spinner = list("/", "-", "\\", "|")
 	var/spinner_num = 1
@@ -74,6 +75,10 @@
 		core = create_screen("core", "Return to Core", 'icons/mob/hud_ai.dmi', "core", "WEST, NORTH-4", HUD_LAYER)
 		core.underlays += "button"
 
+		coreatk = create_screen("coreatk", "Core Damaged!", 'icons/mob/hud_ai.dmi', "core", "WEST, NORTH-4", HUD_LAYER)
+		coreatk.underlays += "killswitchu"
+		coreatk.invisibility = INVIS_ALWAYS
+
 		tracking = create_screen("tracking", "Tracking", 'icons/mob/hud_ai.dmi', "track", "WEST, SOUTH", HUD_LAYER)
 		tracking.underlays += "button"
 		tracking.maptext_width = 32*15
@@ -105,6 +110,12 @@
 
 			var/pct = round(100 * master.health/master.max_health, 1)
 			health.maptext = "<span class='ol vga r' style='color: [rgb(255 * clamp((100 - pct) / 50, 0, 1), 255 * clamp(pct / 50, 1, 0), 0)];'>[add_lspace(pct, 3)]%</span>"
+			if (pct > 25)
+				core.invisibility = INVIS_NONE
+				coreatk.invisibility = INVIS_ALWAYS
+			else
+				core.invisibility = INVIS_ALWAYS
+				coreatk.invisibility = INVIS_NONE
 
 		update_charge()
 			if (master.cell)
@@ -186,5 +197,5 @@
 					boutput(master, "Deploy to an AI Eye first to create a hologram.")
 			if ("map")
 				master.open_map()
-			if ("core")
+			if ("core" || "coreatk")
 				master.return_to(user)
