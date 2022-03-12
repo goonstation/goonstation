@@ -149,3 +149,6 @@
 				playsound(K, 'sound/weapons/gunload_light.ogg', 50, 1)
 			else
 				playsound(K, reload_sound, 50, 1)
+
+	ex_act(severity)
+		return
