@@ -257,10 +257,10 @@ proc/hide_weapons_everywhere()
 	/datum/syndicate_buylist/traitor/mindslave_module,
 	/datum/syndicate_buylist/traitor/deluxe_mindslave_module,
 	/datum/syndicate_buylist/surplus/cybereye_kit_sechud,
-	/datum/syndicate_buylist/generic/revflash,
-	/datum/syndicate_buylist/generic/revflashbang,
-	/datum/syndicate_buylist/generic/revsign,
-	/datum/syndicate_buylist/generic/rev_normal_flash,
+	/datum/syndicate_buylist/generic/head_rev/revflash,
+	/datum/syndicate_buylist/generic/head_rev/revflashbang,
+	/datum/syndicate_buylist/generic/head_rev/revsign,
+	/datum/syndicate_buylist/generic/head_rev/rev_normal_flash,
 	/datum/syndicate_buylist/traitor/kudzuseed,
 	/datum/syndicate_buylist/traitor/moonshine)
 
