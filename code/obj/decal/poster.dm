@@ -1074,7 +1074,7 @@
 			else C.setMaterial(getMaterial("cotton")) // In case the material is null
 			qdel(src)
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		..()
 		if (usr.stat || usr.restrained() || !can_reach(usr, src))
 			return

@@ -735,17 +735,20 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/RemoveEffect(var/id)
 		//Removes an effect from this holder. Returns 1 on success else 0.
-		if(!HasEffect(id)) return 0
+		if (src.disposed)
+			return 0
+		if (!HasEffect(id))
+			return 0
 
 		var/datum/bioEffect/D = effects[id]
-		if(D)
+		if (D)
 			D.OnRemove()
 			if (!D.activated_from_pool)
 				src.genetic_stability += D.stability_loss
 				src.genetic_stability = max(0,src.genetic_stability)
 			D.activated_from_pool = 0 //Fix for bug causing infinitely exploitable stability gain / loss
 
-			if(owner && length(D.msgLose) > 0)
+			if (owner && length(D.msgLose) > 0)
 				if (D.isBad)
 					boutput(owner, "<span class='notice'>[D.msgLose]</span>")
 				else

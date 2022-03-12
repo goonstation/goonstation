@@ -60,8 +60,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 			..()
 			if (user?.bioHolder.RemoveEffect("hulk"))
 				boutput(user, "<span class='alert'><b>Removing [src] removes its powers with it!</b></span>")
-			REMOVE_MOB_PROPERTY(user, PROP_PASSIVE_WRESTLE, "empower")
-			REMOVE_MOB_PROPERTY(user, PROP_STAMINA_REGEN_BONUS, "empower")
+			REMOVE_ATOM_PROPERTY(user, PROP_MOB_PASSIVE_WRESTLE, "empower")
+			REMOVE_ATOM_PROPERTY(user, PROP_MOB_STAMINA_REGEN_BONUS, "empower")
 
 	staff
 		name = "ring of cthulhu"
@@ -275,7 +275,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 	set desc = "Spawn all of the magical wizard rings."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	var/turf/T_LOC = get_turf(src.mob)
 

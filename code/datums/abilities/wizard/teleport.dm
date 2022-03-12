@@ -154,13 +154,15 @@
 			if (clear)
 				L += T3
 
+	var/turf/destination = pick(L)
+	logTheThing("combat", src, null, "teleported from [log_loc(src)] to [log_loc(destination)].")
 	if (effect)
 		if (perform_check == 3)
-			src.set_loc(pick(L))
+			src.set_loc(destination)
 			elecflash(src) // Effect second because we had sound effects etc at the old loc.
 		else
 			elecflash(src)
-			src.set_loc(pick(L))
+			src.set_loc(destination)
 
 	else
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -168,10 +170,10 @@
 		smoke.attach(src)
 
 		if (perform_check == 3)
-			src.set_loc(pick(L))
+			src.set_loc(destination)
 			smoke.start()
 		else
 			smoke.start()
-			src.set_loc(pick(L))
+			src.set_loc(destination)
 
 	return 1

@@ -214,7 +214,7 @@
 	desc = "NEVER GONNA DANCE AGAIN, GUILTY FEET HAVE GOT NO RHYTHM"
 	icon_state = "sax"
 	item_state = "sax"
-	desc_sound = list("sexy", "sensuous", "libidinous","spicy", "flirtatious", "salacious","sizzling", "carnal", "hedonistic")
+	desc_sound = list("sensuous","spicy","flirtatious","sizzling","carnal","hedonistic")
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
@@ -352,7 +352,7 @@
 
 /obj/item/instrument/bikehorn/dramatic
 	name = "dramatic bike horn"
-	desc = "SHIT FUCKING PISS COCK IT'S SO RAW"
+	desc = "SHIT FUCKING PISS IT'S SO RAW"
 	sounds_instrument = list('sound/effects/dramatic.ogg')
 	volume = 100
 	randomized_pitch = 0

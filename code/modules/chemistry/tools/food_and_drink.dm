@@ -430,7 +430,7 @@
 				src.reagents.reaction(owner, INGEST, src.reagents.total_volume)
 				src.did_react = 1
 
-			src.reagents.trans_to(owner, process_rate, HAS_MOB_PROPERTY(owner, PROP_DIGESTION_EFFICIENCY) ? GET_MOB_PROPERTY(owner, PROP_DIGESTION_EFFICIENCY) : 1)
+			src.reagents.trans_to(owner, process_rate, HAS_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) ? GET_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) : 1)
 
 			if (src.reagents.total_volume <= 0)
 				owner.stomach_process -= src
@@ -479,7 +479,7 @@
 			src.reagents.reaction(get_turf(user), TOUCH)
 			src.reagents.clear_reagents()
 
-	MouseDrop(atom/over_object)
+	mouse_drop(atom/over_object)
 		..()
 		if(!(usr == over_object)) return
 		if(!istype(usr, /mob/living/carbon)) return

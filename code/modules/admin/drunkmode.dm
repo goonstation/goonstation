@@ -85,7 +85,7 @@ var/list/dangerousVerbs = list(\
 	set desc = "Are you drunk and slightly responsible still? Turn this on!"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	if (alert("Enable drunk mode for yourself?", "Confirmation", "Yes", "No") == "Yes")
 		var/not_drunk_but_high = (alert("Are you boozin' or weedin'", "drugs", "Drunk", "High") == "High")
@@ -102,7 +102,7 @@ var/list/dangerousVerbs = list(\
 	set desc = "Done being drunk? We'll see."
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	//Puzzle goes here
 	var/message = "Hello! You are drunk! Think you're not? Solve this simple puzzle then.\n\n"
@@ -136,7 +136,7 @@ var/list/dangerousVerbs = list(\
 
 	if (!C) return
 
-	admin_only
+	ADMIN_ONLY
 
 	//Apparently if the onlineAdmins list contains only one entry, it just picks it by default without giving any input
 	if (src == C)
@@ -149,7 +149,7 @@ var/list/dangerousVerbs = list(\
 /client/proc/toggleDrunkMode(var/client/C, var/is_actually_high = 0)
 	if (!C) return
 
-	admin_only
+	ADMIN_ONLY
 
 	var/forced = 0
 	if (C != src)

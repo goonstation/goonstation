@@ -416,7 +416,7 @@
 						destroy_level = 1
 						set_loc(ST)
 						attack.onUse(ST)
-						logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Attacking tile at [showCoords(ST.x, ST.y, ST.z)].")
+						logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Attacking tile at [log_loc(ST)].")
 						var/new_score = evaluate_no_add(ST)
 						if (new_score != 1)
 							switch (new_score)
@@ -451,7 +451,7 @@
 						destroy_level = 2
 						set_loc(ST)
 						attack.onUse(ST)
-						logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Attacking tile at [showCoords(ST.x, ST.y, ST.z)].")
+						logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Attacking tile at [log_loc(ST)].")
 						var/new_score = evaluate_no_add(ST)
 						if (new_score != 2)
 							switch (new_score)
@@ -490,7 +490,7 @@
 				var/obj/blob/ribosome/L = locate() in T
 				if (L)
 					ribosome_count++
-				logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Creating ribosome at [showCoords(T.x, T.y, T.z)].")
+				logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Creating ribosome at [log_loc(T)].")
 				state = STATE_EXPANDING
 			if (STATE_FORTIFYING)
 				if (!fortifying)
@@ -580,10 +580,10 @@
 						if (has_adjacent_blob(FU.loc))
 							attack_used++
 							attack_now(FU.loc, attack_used)
-							logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Attacking fuel tank at [showCoords(FU.x, FU.y, FU.z)] in response to attack force.")
+							logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Attacking fuel tank at [log_loc(FU)] in response to attack force.")
 					if (has_adjacent_blob(AT))
 						attack_now(AT, attack_used)
-						logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Hitting [attacker] at [showCoords(attacker.loc.x, attacker.loc.y, attacker.loc.z)] [attacks - attack_used] times.")
+						logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Hitting [attacker] at [log_loc(attacker.loc)] [attacks - attack_used] times.")
 					var/obj/blob/B = get_nearby_convertable_blob(attacker.loc)
 					if (B)
 						create_wall_if_possible(get_turf(B))
@@ -591,7 +591,7 @@
 						for (var/turf/T in range(2, attacker))
 							if (T.can_blob_spread_here())
 								spread_to(T, 0)
-								logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Spreading near [attacker] to [showCoords(T.x, T.y, T.z)] in response to attack force.")
+								logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Spreading near [attacker] to [log_loc(T)] in response to attack force.")
 								break
 				else if (!attacker)
 					var/obj/blob/F = null
@@ -617,7 +617,7 @@
 					for (var/turf/T in range(5, nearest))
 						if (T.can_blob_spread_here())
 							spread_to(T, 0)
-							logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Spreading near nearest [nearest] to [showCoords(T.x, T.y, T.z)] in response to attack force.")
+							logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Spreading near nearest [nearest] to [log_loc(T)] in response to attack force.")
 							break
 
 	proc/place_extra_nucleus()
@@ -658,7 +658,7 @@
 			open -= ST
 			if (is_calm)
 				last_spread = ST
-			logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Spreading to [showCoords(ST.x, ST.y, ST.z)].")
+			logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Spreading to [log_loc(ST)].")
 		else
 			return
 		update_lists(ST)
@@ -678,7 +678,7 @@
 		if (bio_points >= mito.bio_point_cost && mito.last_used <= world.time)
 			set_loc(T)
 			mito.onUse(T)
-			logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Creating mitochondria at [showCoords(T.x, T.y, T.z)].")
+			logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Creating mitochondria at [log_loc(T)].")
 			return 1
 		return 0
 
@@ -686,7 +686,7 @@
 		if (bio_points >= wall.bio_point_cost && wall.last_used <= world.time)
 			set_loc(T)
 			wall.onUse(T)
-			logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Creating wall at [showCoords(T.x, T.y, T.z)].")
+			logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Creating wall at [log_loc(T)].")
 			return 1
 		return 0
 

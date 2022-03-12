@@ -1,4 +1,5 @@
-#This file only functions for local development. This file does not change values on production.
+# This is a sample server configuration file.
+# Make a copy as "config.txt" and edit that instead of this one.
 
 SERVER_SPECIFIC_CONFIGS
 

@@ -77,7 +77,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		. = "<br><span class='notice'>[reagents.get_description(user,rc_flags)]</span>"
 		return
 
-	MouseDrop(atom/over_object as obj)
+	mouse_drop(atom/over_object as obj)
+		if (isintangible(usr))
+			return
 		if (!can_mousedrop)
 			boutput(usr, "<span class='alert'>Nope.</span>")
 			return
@@ -482,7 +484,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		src.set_loc(get_turf(user))
 		step_rand(src)
 		user.visible_message("<span class='alert'><b>[user] kicks the bucket!</b></span>")
-		user.death(0)
+		user.death(FALSE)
 
 	red
 		name = "red bucket"

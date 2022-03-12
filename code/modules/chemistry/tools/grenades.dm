@@ -371,13 +371,13 @@
 							else
 								can_convert = 1
 
-							for (var/obj/item/implant/antirev/found_imp in H.implant)
+							for (var/obj/item/implant/counterrev/found_imp in H.implant)
 								found_imp.on_remove(H)
 								H.implant.Remove(found_imp)
 								qdel(found_imp)
 
 								playsound(H.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.9)
-								H.visible_message("<span class='notice'>The loyalty implant inside [H] shatters into one million pieces!</span>")
+								H.visible_message("<span class='notice'>The counter-revolutionary implant inside [H] shatters into one million pieces!</span>")
 
 							if (can_convert && !(H.mind in R.revolutionaries))
 								R.add_revolutionary(H.mind)

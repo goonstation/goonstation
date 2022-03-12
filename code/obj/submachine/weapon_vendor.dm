@@ -160,6 +160,7 @@
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		// List of avaliable objects for purchase
 		materiel_stock += new/datum/materiel/sidearm/smartgun
 		materiel_stock += new/datum/materiel/sidearm/pistol
@@ -195,6 +196,10 @@
 		src.credits[WEAPON_VENDOR_CATEGORY_SIDEARM]++
 		src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
 		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
 // Materiel avaliable for purchase:

@@ -31,7 +31,7 @@
 				return
 
 			if(!isghost && src.body)
-				if(!istype(src.body, /mob/dead/aieye) && isdead(src.body) || !src.body:network_device)
+				if(!isAIeye(src) && isdead(src.body) || !src.body:network_device)
 					src.gib()
 					return
 		return
@@ -129,7 +129,7 @@
 		// Won't delete the VR character otherwise, which can be confusing (detective's goggles sending you to the existing body in the bomb VR etc).
 		var/mob/M = holder.owner
 		setdead(M)
-		M.death(0)
+		M.death(FALSE)
 
 		Station_VNet.Leave_Vspace(M)
 

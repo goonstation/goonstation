@@ -93,7 +93,7 @@
 
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.on_chair = 0
+			H.on_chair = null
 
 		playsound(M.loc, "sound/effects/flip.ogg", 50, 1)
 		M.throw_at(target, 10, 1, throw_type = THROW_CHAIRFLIP)
@@ -130,7 +130,7 @@
 			if (prob(25))
 				M.emote("scream")
 
-			logTheThing("combat", src, M, "[src] chairflips into [constructTarget(M,"combat")], [showCoords(M.x, M.y, M.z)].")
+			logTheThing("combat", src, M, "[src] chairflips into [constructTarget(M,"combat")], [log_loc(M)].")
 			M.lastattacker = src
 			M.lastattackertime = world.time
 

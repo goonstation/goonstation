@@ -128,15 +128,15 @@
 	name = "Matter Eater"
 	desc = "Eat just about anything!"
 	icon_state = "mattereater"
-	targeted = 0
-	var/using = 0
+	targeted = FALSE
+	var/using = FALSE
 
 	cast()
 		if (..())
-			return 1
+			return TRUE
 		if (using)
-			return 1
-		using = 1
+			return TRUE
+		using = TRUE
 
 		var/datum/bioEffect/power/mattereater/ME = linked_power
 		var/base_path = text2path("[ME.target_path]")
@@ -152,38 +152,40 @@
 			items += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
 			//So people can still get the meat ending
 
-		if (!items.len)
-			boutput(usr, "/red You can't find anything nearby to eat.")
-			using = 0
+		if (!length(items))
+			boutput(usr, "<span class='alert'>You can't find anything nearby to eat.</span>")
+			using = FALSE
 			return
 
-		var/obj/the_item = input("Which item do you want to eat?","Matter Eater") as null|obj in items
-		if (!the_item || (!istype(the_item, /obj/the_server_ingame_whoa) && the_item.anchored))
-			using = 0
-			return 1
+		var/obj/the_object = input("Which item do you want to eat?","Matter Eater") as null|obj in items
+		if (!the_object || (!istype(the_object, /obj/the_server_ingame_whoa) && the_object.anchored))
+			using = FALSE
+			return TRUE
 
-		if (!(the_item in get_filtered_atoms_in_touch_range(owner, base_path)))
+		if (!(the_object in get_filtered_atoms_in_touch_range(owner, base_path)))
 			owner.show_text("<span class='alert'>Man, that thing is long gone, far away, just let it go.</span>")
-			return 1
+			return TRUE
 
 		var/area/cur_area = get_area(owner)
 		var/turf/cur_turf = get_turf(owner)
 		if (isrestrictedz(cur_turf.z) && !cur_area.may_eat_here_in_restricted_z && (!owner.client || !owner.client.holder))
 			owner.show_text("<span class='alert'>Man, this place really did a number on your appetite. You can't bring yourself to eat anything here.</span>")
-			using = 0
-			return 1
+			using = FALSE
+			return TRUE
 
-		if (istype(the_item, /obj/the_server_ingame_whoa))
-			var/obj/the_server_ingame_whoa/the_server = the_item
+		if (istype(the_object, /obj/the_server_ingame_whoa))
+			var/obj/the_server_ingame_whoa/the_server = the_object
 			the_server.eaten(owner)
-			using = 0
+			using = FALSE
 			return
-		owner.visible_message("<span class='alert'>[owner] eats [the_item].</span>")
-		playsound(owner.loc, "sound/items/eatfood.ogg", 50, 0)
-
-		qdel(the_item)
+		owner.visible_message("<span class='alert'>[owner] eats [the_object].</span>")
+		playsound(owner.loc, "sound/items/eatfood.ogg", 50, FALSE)
 
 		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (isitem(the_object))
+				var/obj/item/the_item = the_object
+				H.sims?.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
 			for(var/A in owner.organs)
 				var/obj/item/affecting = null
 				if (!owner.organs[A])    continue
@@ -193,8 +195,9 @@
 				affecting.heal_damage(4, 0)
 			owner.UpdateDamageIcon()
 
-		using = 0
-		return
+		qdel(the_object)
+
+		using = FALSE
 
 
 
@@ -224,8 +227,8 @@
 			using = 0
 			return
 
-		var/obj/the_item = input("Which item do you want to eat?","Matter Eater") as null|obj in items
-		if (!the_item)
+		var/obj/the_object = input("Which item do you want to eat?","Matter Eater") as null|obj in items
+		if (!the_object)
 			using = 0
 			return 1
 
@@ -236,12 +239,12 @@
 			using = 0
 			return 1
 
-		if (istype(the_item, /obj/the_server_ingame_whoa))
-			var/obj/the_server_ingame_whoa/the_server = the_item
+		if (istype(the_object, /obj/the_server_ingame_whoa))
+			var/obj/the_server_ingame_whoa/the_server = the_object
 			the_server.eaten(owner)
 			using = 0
 			return
-		owner.visible_message("<span class='alert'>[owner] tries to swallow [the_item] whole and nearly chokes on it.</span>")
+		owner.visible_message("<span class='alert'>[owner] tries to swallow [the_object] whole and nearly chokes on it.</span>")
 		playsound(owner.loc, "sound/items/eatfood.ogg", 50, 0)
 		playsound(owner.loc, "sound/misc/meat_plop.ogg", 50, 0)
 		using = 0
@@ -1227,22 +1230,29 @@
 			return 1
 
 		linked_power.using = 1
-		var/obj/the_item = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
-		if (!the_item)
+		var/obj/the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
+		if (!the_object)
 			last_cast = 0
 			linked_power.using = 0
 			return 1
 
+		if(isitem(the_object))
+			var/obj/item/the_item = the_object
+			if(the_item.amount > 1)
+				var/obj/item/split_item = the_item.split_stack(1)
+				split_item.set_loc(get_turf(the_item))
+				the_object = split_item
+
 		if (!linked_power)
-			owner.visible_message("[owner] touches [the_item].")
+			owner.visible_message("[owner] touches [the_object].")
 		else
 			if (istype(linked_power,/datum/bioEffect/power/midas))
 				var/datum/bioEffect/power/midas/linked = linked_power
-				owner.visible_message("<span class='alert'>[owner] touches [the_item], turning it to [linked.transmute_material]!</span>")
-				the_item.setMaterial(getMaterial(linked.transmute_material))
+				owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to [linked.transmute_material]!</span>")
+				the_object.setMaterial(getMaterial(linked.transmute_material))
 			else
-				owner.visible_message("<span class='alert'>[owner] touches [the_item], turning it to gold!</span>")
-				the_item.setMaterial(getMaterial("gold"))
+				owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to gold!</span>")
+				the_object.setMaterial(getMaterial("gold"))
 		linked_power.using = 0
 		return
 
@@ -1262,17 +1272,24 @@
 			return 1
 
 		linked_power.using = 1
-		var/obj/the_item = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
-		if (!the_item)
+		var/obj/the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
+		if (!the_object)
 			last_cast = 0
 			linked_power.using = 0
 			return 1
 
+		if(isitem(the_object))
+			var/obj/item/the_item = the_object
+			if(the_item.amount > 1)
+				var/obj/item/split_item = the_item.split_stack(1)
+				split_item.set_loc(get_turf(the_item))
+				the_object = split_item
+
 		if (!linked_power)
-			owner.visible_message("[owner] touches [the_item].")
+			owner.visible_message("[owner] touches [the_object].")
 		else
-			owner.visible_message("<span class='alert'>[owner] touches [the_item], turning it to flesh!</span>")
-			the_item.setMaterial(getMaterial("flesh"))
+			owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to flesh!</span>")
+			the_object.setMaterial(getMaterial("flesh"))
 		linked_power.using = 0
 		return
 
@@ -1816,10 +1833,10 @@
 
 		var/mob/living/L = owner
 		if (which_way == 1)
-			APPLY_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src, INVIS_INFRA)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_INFRA)
 			L.UpdateOverlays(overlay_image, id)
 		else
-			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
 			L.UpdateOverlays(null, id)
 
 	OnAdd()
@@ -1911,7 +1928,7 @@
 		if (isliving(owner))
 			var/mob/living/L = owner
 			L.UpdateOverlays(null, id)
-			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
 		if (src.active)
 			src.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
 		return
@@ -1923,14 +1940,14 @@
 			var/mob/living/L = owner
 			if (TIME - last_moved >= 3 SECONDS && can_act(owner))
 				L.UpdateOverlays(overlay_image, id)
-				APPLY_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src, INVIS_INFRA)
+				APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_INFRA)
 
 	proc/decloak()
 		if(isliving(owner))
 			var/mob/living/L = owner
 			last_moved = TIME
 			L.UpdateOverlays(null, id)
-			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
 
 /datum/targetable/geneticsAbility/chameleon
 	name = "Chameleon"
@@ -2102,17 +2119,17 @@
 			boutput(usr, "/red You can't find anything nearby to spray ink on.")
 			return 1
 
-		var/obj/the_item = input("Which item do you want to color?","Ink Glands") as null|obj in items
-		if (!the_item)
+		var/obj/the_object = input("Which item do you want to color?","Ink Glands") as null|obj in items
+		if (!the_object)
 			last_cast = 0
 			return 1
 
 		var/datum/bioEffect/power/ink/I = linked_power
 		if (!linked_power)
-			owner.visible_message("[owner] spits on [the_item]. Gross.")
+			owner.visible_message("[owner] spits on [the_object]. Gross.")
 		else
-			owner.visible_message("<span class='alert'>[owner] sprays ink onto [the_item]!</span>")
-			the_item.color = I.color
+			owner.visible_message("<span class='alert'>[owner] sprays ink onto [the_object]!</span>")
+			the_object.color = I.color
 		return 0
 
 /datum/bioEffect/power/shoot_limb

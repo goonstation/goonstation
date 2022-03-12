@@ -34,7 +34,7 @@
 	name = "Memorial Plaque"
 
 	examine(mob/user)
-		boutput(usr, "Here lies [user.real_name]. Loved by all. R.I.P.")
+		boutput(user, "Here lies [user.real_name]. Loved by all. R.I.P.")
 
 /*
  *	Spooky TOMBSTONE.  It is a tombstone.

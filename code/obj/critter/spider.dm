@@ -203,7 +203,7 @@
 						sleep(5 SECONDS)
 						if(src.target && T.stat && src.loc == T.loc) // check to see if the target is still passed out and under the spider
 							src.visible_message("<span class='alert'><B>[src]</B> drains [T] dry!</span>")
-							T.death(0)
+							T.death(FALSE)
 							T.real_name = "Unknown"
 							T.bioHolder.AddEffect("husk")
 							sleep(0.2 SECONDS)

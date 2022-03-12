@@ -1154,7 +1154,10 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic/head_rev)
 	name = "Revolutionary Flash"
 	item = /obj/item/device/flash/revolution
 	cost = 5
-	desc = "This flash never runs out and will convert susceptible crew when a rev head uses it. It will also allow the rev head to break loyalty implants."
+	desc = "This flash never runs out and will convert susceptible crew when a rev head uses it. It will also allow the rev head to break counter-revolutionary implants."
+	vr_allowed = 0
+	exclusivemode = list(/datum/game_mode/revolution)
+	not_in_crates = 1
 
 /datum/syndicate_buylist/generic/head_rev/revflashbang
 	name = "Revolutionary Flashbang"

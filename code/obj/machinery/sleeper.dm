@@ -58,9 +58,7 @@
 		src.add_fingerprint(user)
 		if (!src.our_sleeper)
 			return 0
-		switch (src.our_sleeper.emag_act(user, E))
-			if (0) return 0
-			if (1) return 1
+		return src.our_sleeper.emag_act(user, E)
 
 	proc/wake_occupant()
 		if (!src || !src.our_sleeper)
@@ -599,7 +597,7 @@
 		..()
 		eject_occupant(user)
 
-	MouseDrop(mob/user as mob)
+	mouse_drop(mob/user as mob)
 		if (can_operate(user))
 			eject_occupant(user)
 		else
@@ -709,7 +707,7 @@
 		. += "Home turf: [get_area(src.homeloc)]."
 
 	// Could be useful (Convair880).
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if (src.occupant)
 			..()
 			return

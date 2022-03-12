@@ -475,10 +475,9 @@
 	global
 		handleCast(var/atom/selected)
 			boutput(usr, "<span class='notice'>Set [target]/var/[varname] to [selected] on all entities of the same type.</span>")
-			for (var/datum/V in world)
+			for (var/datum/V as anything in find_all_by_type(target.type))
 				LAGCHECK(LAG_LOW)
-				if (istype(V, target.type))
-					V.vars[varname] = selected
+				V.vars[varname] = selected
 			logTheThing("admin", src, null, "modified [target]'s [varname] to [target.vars[varname]] on all entities of the same type")
 			logTheThing("diary", src, null, "modified [target]'s [varname] to [target.vars[varname]] on all entities of the same type", "admin")
 			message_admins("[key_name(src)] modified [target]'s [varname] to [target.vars[varname]] on all entities of the same type")
@@ -486,7 +485,7 @@
 
 /client/proc/modify_variables(var/atom/O)
 	var/list/locked = list("vars", "key", "ckey", "client", "holder")
-	admin_only
+	ADMIN_ONLY
 
 	var/list/names = list()
 	for (var/V in O.vars)

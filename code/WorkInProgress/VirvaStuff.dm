@@ -32,10 +32,10 @@
 
 	equipped(mob/user)
 		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
 
 	unequipped(mob/user)
-		REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
 		. = ..()
 
 /mob/living/carbon/human/repo
@@ -136,7 +136,7 @@ obj/item/ammo/bullets/flechette_mag
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
 	shot_number = 2
-	shot_delay = 0.7
+	shot_delay = 0.07 SECONDS
 	dissipation_delay = 10
 	dissipation_rate = 3
 	projectile_speed = 56

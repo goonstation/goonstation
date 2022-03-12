@@ -126,7 +126,7 @@ var/list/genetek_hair_styles = list()
 		..()
 		eject_occupant(user)
 
-	MouseDrop(mob/user as mob)
+	mouse_drop(mob/user as mob)
 		if (can_operate(user))
 			eject_occupant(user)
 		else

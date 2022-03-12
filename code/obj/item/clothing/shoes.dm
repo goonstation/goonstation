@@ -727,3 +727,10 @@
 	name = "Brown Cowboy Boots"
 	icon_state = "westboot_brown"
 
+/obj/item/clothing/shoes/westboot/brown/rancher
+	name = "Rancher Boots"
+	var/vault_speed_bonus = 1
+
+	setupProperties()
+		..()
+		setProperty("vault_speed", vault_speed_bonus)

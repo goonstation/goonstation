@@ -23,10 +23,11 @@
 		if (!ignore_checks && (get_dist(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))
 			return "[jointext(., "")]<br><span class='alert'><B>[src.name]</B> is too far away to see clearly.</span>"
 
-	try
-		. = "<br>[src.bioHolder.mobAppearance.flavor_text]"
-	catch
-		//nop
+	if(src.face_visible() && src.bioHolder.mobAppearance.flavor_text)
+		try
+			. = "<br>[src.bioHolder.mobAppearance.flavor_text]"
+		catch
+			//nop
 
 	. +=  "<br><span class='notice'>*---------*</span>"
 
@@ -52,9 +53,6 @@
 	// thanks, byondbama.
 	if (src.w_uniform)
 		. += "<br><span class='[src.w_uniform.blood_DNA ? "alert" : "notice"]'>[src.name] is wearing [bicon(src.w_uniform)] \an [src.w_uniform.name].</span>"
-
-	if (src.hasStatus("handcuffed"))
-		. +=  "<br><span class='notice'>[src.name] is [bicon(src.handcuffs)] handcuffed!</span>"
 
 	if (src.wear_suit)
 		. += "<br><span class='[src.wear_suit.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.wear_suit)] \an [src.wear_suit.name] on.</span>"
@@ -117,6 +115,19 @@
 				. += "<br><span class='alert'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it yet doesn't seem to be that person!!!</span>"
 			else
 				. += "<br><span class='notice'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it.</span>"
+
+	if (src.hasStatus("handcuffed"))
+		. +=  "<br><span class='notice'>[src.name] is [bicon(src.handcuffs)] handcuffed!</span>"
+
+	if (src.arrestIcon?.icon_state && ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+
+		if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+			var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
+			if(sec_record)
+				var/sechud_flag = sec_record["sec_flag"]
+				if (lowertext(sechud_flag) != "none")
+					. += "<br><span class='notice'>[src.name] has a Security HUD flag set:</span> <span class='alert'>[sechud_flag]</span>"
 
 	if (src.is_jittery)
 		switch(src.jitteriness)

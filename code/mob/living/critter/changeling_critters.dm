@@ -142,16 +142,16 @@
 		..()
 
 	proc/stop_sprint()
-		APPLY_MOB_PROPERTY(src, PROP_CANTSPRINT, src.type)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT, src.type)
 
 	proc/enable_sprint()
-		REMOVE_MOB_PROPERTY(src, PROP_CANTSPRINT, src.type)
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT, src.type)
 
 	special_movedelay_mod(delay,space_movement,aquatic_movement)
 		.= delay
 		if (src.lying)
 			. += 14
-		if (HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
+		if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
 			. += 7
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)

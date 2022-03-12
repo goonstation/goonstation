@@ -246,7 +246,7 @@ A Flamethrower in various states of assembly
 			boutput(usr, "<span class='notice'>The fuelpack's integrated jetpack is now off</span>")
 		return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
 		if(!isliving(usr))
 			return

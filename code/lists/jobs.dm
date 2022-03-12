@@ -85,9 +85,9 @@ var/list/engineering_jobs = list("Chief Engineer", "Engineer", "Mechanic", "Mine
 var/list/medsci_jobs = list("Research Director", "Medical Director", "Medical Doctor", "Scientist", "Roboticist", "Geneticist")
 var/list/service_jobs = list("Head of Personnel", "Bartender", "Chef", "Botanist", "Rancher", "Clown", "Chaplain", "Janitor")
 
-var/list/command_gimmicks = list("Head Surgeon", "Head of Mining", "Nanotrasen Security Operative" /* NTSO isn't a gimmick role, but for the sake of sorting, it practically is*/)
+var/list/command_gimmicks = list("Head of Mining", "Nanotrasen Security Operative" /* NTSO isn't a gimmick role, but for the sake of sorting, it practically is*/)
 var/list/security_gimmicks = list("Vice Officer", "Part-time Vice Officer", "Forensic Technician")
 var/list/engineering_gimmicks = list("Head of Mining", "Station Builder", "Atmospherish Technician", "Technical Assistant")
-var/list/medsci_gimmicks = list("Head Surgeon", "Toxins Researcher", "Chemist", "Research Assistant", "Medical Assistant", "Test Subject", "Pharmacist", "Psychiatrist", "Psychologist", "Psychotherapist", "Therapist", "Counselor")
+var/list/medsci_gimmicks = list("Medical Specialist", "Toxins Researcher", "Chemist", "Research Assistant", "Medical Assistant", "Test Subject", "Pharmacist", "Psychiatrist", "Psychologist", "Psychotherapist", "Therapist", "Counselor")
 var/list/service_gimmicks = list("Lawyer", "Barber", "Mailman", "Mime", "Musician", "Apiculturist", "Apiarist", "Sous-Chef", "Waiter", "Life Coach")
 

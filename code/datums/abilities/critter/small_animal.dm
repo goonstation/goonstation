@@ -255,9 +255,9 @@
 		MT.TakeDamageAccountArmor("All", 0, 0, rand(5,15), DAMAGE_STAB)
 		MT.changeStatus("weakened", 6 SECONDS)
 		MT.force_laydown_standup()
-		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, "pincergrab")
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "pincergrab")
 		SPAWN(6 SECONDS)
-			REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, "pincergrab")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "pincergrab")
 		return 0
 
 /datum/targetable/critter/hootat

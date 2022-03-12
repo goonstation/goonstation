@@ -314,10 +314,10 @@
 					if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)) //handling of the rest is done in life.dm
 						if (src.on)
 							H.vision.set_scan(1)
-							APPLY_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
+							APPLY_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
 						else
 							H.vision.set_scan(0)
-							REMOVE_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
+							REMOVE_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
 
 			equipped(var/mob/living/user, var/slot)
 				..()
@@ -325,14 +325,14 @@
 					return
 				if (slot == SLOT_HEAD && on)
 					user.vision.set_scan(1)
-					APPLY_MOB_PROPERTY(user, PROP_MESONVISION, src)
+					APPLY_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
 
 			unequipped(var/mob/living/user)
 				..()
 				if(!isliving(user))
 					return
 				user.vision.set_scan(0)
-				REMOVE_MOB_PROPERTY(user, PROP_MESONVISION, src)
+				REMOVE_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
 
 		medic
 			name = "specialist health monitor"
@@ -822,7 +822,7 @@
 		src.set_loc(get_turf(user))
 		step_rand(src)
 		user.visible_message("<span class='alert'><b>[user] kicks the bucket!</b></span>")
-		user.death(0)
+		user.death(FALSE)
 
 
 /obj/item/clothing/head/helmet/bucket/hat
@@ -848,7 +848,7 @@
 		user.u_equip(src)
 		src.set_loc(get_turf(user))
 		user.visible_message("<span class='alert'><b>[user] kicks the bucket!</b></span>")
-		user.death(0)
+		user.death(FALSE)
 
 	red
 		name = "red bucket hat"

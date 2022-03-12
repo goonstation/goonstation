@@ -14792,30 +14792,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
-"aNQ" = (
-/obj/table/reinforced/auto,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/machinery/power/apc/autoname_north,
-/obj/item/implantcase/antirev{
-	pixel_x = 8;
-	pixel_y = 7
-	},
-/obj/item/device/prisoner_scanner{
-	pixel_x = -9;
-	pixel_y = 9
-	},
-/obj/item/stamp/hos{
-	pixel_x = 5;
-	pixel_y = -3
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/hos)
 "aNR" = (
 /obj/storage/secure/closet/command/hos,
 /obj/machinery/light{
@@ -38147,7 +38123,17 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail,
-/turf/simulated/wall/auto/supernorn,
+/obj/machinery/door/airlock/pyro/engineering{
+	name = "Mechanics Lab";
+	req_access = null;
+	req_access_txt = null
+	},
+/obj/access_spawn/engineering_mechanic,
+/obj/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
 /area/station/engine/elect)
 "bTi" = (
 /obj/cable{
@@ -38720,9 +38706,8 @@
 /area/station/hallway/primary/south)
 "bUI" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -49832,7 +49817,7 @@
 	dir = 4
 	},
 /obj/machinery/light,
-/obj/table/auto,
+/obj/table/reinforced/auto,
 /obj/item/weldingtool{
 	pixel_x = 2;
 	pixel_y = 7
@@ -50860,15 +50845,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
-"cze" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/listeningpost)
-"czh" = (
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/listeningpost)
 "czk" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -50972,10 +50948,6 @@
 /area/listeningpost)
 "czz" = (
 /turf/simulated/floor/plating/airless,
-/area/listeningpost)
-"czA" = (
-/obj/securearea,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "czB" = (
 /obj/cable{
@@ -51229,9 +51201,6 @@
 	dir = 8
 	},
 /area/listeningpost)
-"cAw" = (
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/abandonedship)
 "cAx" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
@@ -51268,23 +51237,6 @@
 	dir = 4
 	},
 /turf/space,
-/area/abandonedship)
-"cAC" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 8
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/abandonedship)
-"cAD" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "cAE" = (
 /obj/lattice{
@@ -51417,17 +51369,6 @@
 	},
 /turf/space,
 /area/abandonedship)
-"cAV" = (
-/obj/lattice,
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 8
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/abandonedship)
-"cAW" = (
-/obj/decal/cleanable/oil,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/abandonedship)
 "cAX" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -51558,10 +51499,6 @@
 	},
 /turf/space,
 /area/space)
-"cBn" = (
-/obj/decal/fakeobjects/airmonitor_broken,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/abandonedship)
 "cBo" = (
 /obj/table/wood/auto,
 /obj/machinery/microwave,
@@ -51593,16 +51530,6 @@
 	icon_state = "floor4"
 	},
 /area/listeningpost)
-"cBs" = (
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 8
-	},
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/abandonedship)
 "cBt" = (
 /obj/decal/poster/wallsign/stencil/right/m{
 	pixel_x = 15
@@ -51641,23 +51568,6 @@
 /obj/decal/cleanable/machine_debris,
 /turf/space,
 /area/space)
-"cBy" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 8
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/abandonedship)
-"cBz" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/abandonedship)
 "cBA" = (
 /obj/structure/girder/displaced,
 /turf/simulated/floor/airless/plating/scorched,
@@ -52228,7 +52138,7 @@
 	layer = 3.5;
 	pixel_y = -24
 	},
-/obj/table/auto,
+/obj/table/reinforced/auto,
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = -6;
 	pixel_y = 11
@@ -53869,6 +53779,16 @@
 	dir = 6
 	},
 /area/station/medical/medbay)
+"fgR" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/abandonedship)
 "fhr" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
@@ -54544,6 +54464,10 @@
 	},
 /turf/simulated/shuttle/wall/corner,
 /area/shuttle/arrival/station)
+"gci" = (
+/obj/decal/fakeobjects/airmonitor_broken,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/abandonedship)
 "gck" = (
 /obj/machinery/light{
 	dir = 8
@@ -54750,6 +54674,12 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/routing/airbridge)
+"gve" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost)
 "gvB" = (
 /obj/grille/steel,
 /obj/disposalpipe/segment/mail,
@@ -56198,6 +56128,16 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"jmy" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "jmS" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -56816,6 +56756,16 @@
 	},
 /turf/simulated/floor,
 /area/station/routing/engine)
+"kic" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8
+	},
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/abandonedship)
 "kiV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -57523,6 +57473,30 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/main)
+"lWG" = (
+/obj/table/reinforced/auto,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/item/implantcase/counterrev{
+	pixel_x = 8;
+	pixel_y = 7
+	},
+/obj/item/device/prisoner_scanner{
+	pixel_x = -9;
+	pixel_y = 9
+	},
+/obj/item/stamp/hos{
+	pixel_x = 5;
+	pixel_y = -3
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/hos)
 "lXN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -57555,8 +57529,13 @@
 /turf/simulated/floor/carpet,
 /area/station/security/main)
 "lYJ" = (
-/obj/disposalpipe/trunk/mail,
-/obj/machinery/disposal/mail/small/autoname/mechanics/south,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "lZk" = (
@@ -57573,8 +57552,9 @@
 /obj/machinery/light/emergency{
 	dir = 8
 	},
-/obj/cable{
-	icon_state = "1-2"
+/obj/noticeboard/persistent{
+	name = "Mechanics Workshop persistent notice board";
+	persistent_id = "mechanics"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -57726,9 +57706,8 @@
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/exit)
 "mpF" = (
-/obj/noticeboard/persistent{
-	name = "Mechanics Workshop persistent notice board";
-	persistent_id = "mechanics"
+/obj/machinery/light/incandescent{
+	dir = 1
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -58666,6 +58645,9 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/ptl)
+"oct" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/abandonedship)
 "odJ" = (
 /obj/storage/secure/closet/research/chemical,
 /obj/item/device/radio/intercom/medical,
@@ -59279,6 +59261,13 @@
 	icon_state = "swampgrass_edge"
 	},
 /area/station/hydroponics/bay)
+"pkH" = (
+/obj/machinery/disposal/mail/small/autoname/mechanics/south,
+/obj/disposalpipe/trunk/mail{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/engine/elect)
 "pkK" = (
 /obj/machinery/light,
 /turf/simulated/floor/grass{
@@ -60328,6 +60317,13 @@
 	dir = 8
 	},
 /area/station/engine/elect)
+"qXN" = (
+/obj/lattice,
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/abandonedship)
 "qYj" = (
 /obj/machinery/power/smes{
 	charge = 1e+006;
@@ -60634,6 +60630,10 @@
 	},
 /turf/simulated/floor/green/corner,
 /area/station/hydroponics/bay)
+"rFM" = (
+/obj/securearea,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost)
 "rGo" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/firedoor_spawn,
@@ -61038,6 +61038,16 @@
 /obj/decal/cleanable/generic,
 /turf/simulated/floor/delivery,
 /area/station/routing/sortingRoom)
+"slE" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/abandonedship)
 "snq" = (
 /obj/decal/cleanable/dirt,
 /obj/item/tile/steel,
@@ -61189,6 +61199,9 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/science/teleporter)
+"sAI" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost)
 "sBr" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -61231,6 +61244,13 @@
 	icon_state = "catwalk_cross"
 	},
 /area/space)
+"sFE" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/abandonedship)
 "sFO" = (
 /obj/disposalpipe/trunk/mail{
 	dir = 1
@@ -62057,6 +62077,13 @@
 	dir = 1
 	},
 /area/station/engine/engineering)
+"tSC" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/abandonedship)
 "tTc" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -62545,6 +62572,10 @@
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
+"uwL" = (
+/obj/decal/cleanable/oil,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/abandonedship)
 "uxY" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -62708,23 +62739,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
-"uQR" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "Mechanics Lab";
-	req_access = null;
-	req_access_txt = null
-	},
-/obj/access_spawn/engineering_mechanic,
-/obj/firedoor_spawn,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/engine/elect)
 "uTe" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -72268,11 +72282,11 @@ adC
 adC
 adC
 adC
-cAC
-cAV
+slE
+qXN
 adC
-cBs
-cBy
+kic
+fgR
 cBQ
 cBQ
 cBQ
@@ -72569,13 +72583,13 @@ adC
 adC
 adC
 adC
-cAw
-cAD
-cAW
-cAw
-cAw
-cBz
-cAw
+oct
+sFE
+uwL
+oct
+oct
+tSC
+oct
 cBQ
 cBQ
 cBQ
@@ -72871,14 +72885,14 @@ adC
 adC
 adC
 adC
-cAw
+oct
 cAE
 bIV
 cBi
-cAw
-cAw
-cAw
-cAw
+oct
+oct
+oct
+oct
 adC
 adC
 adC
@@ -73173,14 +73187,14 @@ adC
 adC
 adC
 adC
-cAw
+oct
 cAF
 cAY
 cBi
 bJm
 cBA
 cBI
-cAw
+oct
 adC
 adC
 adC
@@ -73475,14 +73489,14 @@ adC
 adC
 adC
 adC
-cAw
+oct
 cAG
 cAZ
 cBj
-cAW
+uwL
 cBB
 cBJ
-cAW
+uwL
 adC
 cBx
 adC
@@ -73777,14 +73791,14 @@ aae
 adC
 adC
 adC
-cAw
+oct
 cAH
 cBa
 cBk
-cAw
+oct
 cBC
 cBK
-cAw
+oct
 adC
 adC
 adC
@@ -74079,14 +74093,14 @@ adC
 adC
 adC
 adC
-cAw
+oct
 cAI
 cBb
 cBl
-cAw
-cAw
+oct
+oct
 cBL
-cAw
+oct
 adC
 adC
 adC
@@ -74381,14 +74395,14 @@ adC
 adC
 adC
 adC
-cAw
+oct
 cAJ
 cBc
 cAE
-cAw
+oct
 cBD
 cBM
-cAw
+oct
 adC
 adC
 adC
@@ -74683,14 +74697,14 @@ adC
 adC
 adC
 adC
-cAw
+oct
 cAK
 cBd
 cAE
-cAw
+oct
 cBE
 aap
-cAw
+oct
 adC
 adC
 adC
@@ -74985,14 +74999,14 @@ adC
 adC
 adC
 adC
-cAw
+oct
 xIf
 xIf
 cBm
-cAW
+uwL
 cBF
 cBN
-cAw
+oct
 adC
 adC
 adC
@@ -75287,14 +75301,14 @@ adC
 adC
 adC
 adC
-cAw
-cAw
-cAw
-cAw
-cAw
+oct
+oct
+oct
+oct
+oct
 cBG
-cAw
-cAw
+oct
+oct
 adC
 adC
 adC
@@ -75589,14 +75603,14 @@ adC
 adC
 adC
 adC
-cAw
+oct
 adC
 cBe
-cAw
+oct
 cBu
 aap
 cBO
-cAw
+oct
 adC
 adC
 adC
@@ -75894,10 +75908,10 @@ adC
 cAx
 adC
 aap
-cAw
+oct
 cBv
-cAW
-cAw
+uwL
+oct
 cBR
 adC
 adC
@@ -76196,9 +76210,9 @@ adC
 adC
 adC
 adC
-cBn
+gci
 cBw
-cAw
+oct
 bJQ
 adC
 adC
@@ -76498,7 +76512,7 @@ adC
 adC
 adC
 adC
-cAw
+oct
 acW
 aah
 aap
@@ -93255,7 +93269,7 @@ aHB
 aHB
 aLq
 aME
-aNQ
+lWG
 aOR
 aPV
 aQW
@@ -110830,11 +110844,11 @@ bLM
 bLU
 clf
 sKw
-gZR
-neb
-uQR
+bNn
+pkH
+bTf
 lZE
-bCb
+bKp
 bWU
 bYw
 cCN
@@ -111132,11 +111146,11 @@ qMI
 bLV
 clf
 vdE
-wtl
+gZR
 lYJ
 bTg
 bUI
-bWK
+jmy
 bXa
 bYx
 vrm
@@ -143536,10 +143550,10 @@ czz
 czz
 czz
 cBQ
-czh
-czh
-czh
-czh
+sAI
+sAI
+sAI
+sAI
 cBQ
 adC
 adC
@@ -143838,10 +143852,10 @@ czz
 czz
 czN
 czV
-czh
+sAI
 cAj
 cAr
-czh
+sAI
 cBQ
 cBQ
 adC
@@ -144136,14 +144150,14 @@ cBQ
 cBQ
 cBQ
 cBQ
-czA
+rFM
 czG
-czA
-czh
-czh
+rFM
+sAI
+sAI
 cAk
 cAs
-czh
+sAI
 cBQ
 cBQ
 cBQ
@@ -144435,19 +144449,19 @@ aaw
 aaw
 cBQ
 cBQ
-czh
-czh
-czh
-czh
+sAI
+sAI
+sAI
+sAI
 czH
-czh
+sAI
 czW
-czh
-czh
+sAI
+sAI
 cAt
-czh
-czh
-czh
+sAI
+sAI
+sAI
 cBQ
 cBQ
 aae
@@ -144737,19 +144751,19 @@ cyZ
 cyZ
 cBQ
 cBQ
-czh
+sAI
 czk
 czr
-czh
+sAI
 czG
-czh
+sAI
 czX
 cAb
 cAl
 cAu
 cAu
 cAM
-czh
+sAI
 cBQ
 cBQ
 adC
@@ -145037,12 +145051,12 @@ adC
 cyZ
 cza
 czb
-cze
-cze
-cze
+gve
+gve
+gve
 czl
 czs
-czh
+sAI
 czI
 czO
 czY
@@ -145051,7 +145065,7 @@ czY
 czY
 czY
 cAN
-czh
+sAI
 cBQ
 cBQ
 adC
@@ -145341,7 +145355,7 @@ cyZ
 cyZ
 cBQ
 cBQ
-czh
+sAI
 czm
 czt
 czB
@@ -145353,7 +145367,7 @@ cAm
 cAv
 czP
 czP
-czh
+sAI
 cBQ
 cBQ
 cBQ
@@ -145643,21 +145657,21 @@ aaq
 aaq
 cBQ
 cBQ
-czh
+sAI
 czn
 czu
-czh
-czh
-czh
-czh
+sAI
+sAI
+sAI
+sAI
 cAe
-czh
-czh
-czh
+sAI
+sAI
+sAI
 czH
-czh
-czh
-czh
+sAI
+sAI
+sAI
 cBQ
 cBQ
 adC
@@ -145945,21 +145959,21 @@ adC
 adC
 cBQ
 cBQ
-czh
+sAI
 czo
 czv
 czC
-czh
+sAI
 czQ
 czZ
 cAf
 cAn
-czh
+sAI
 cAy
 cAO
 cAO
 cBo
-czh
+sAI
 cBQ
 cBQ
 adC
@@ -146247,21 +146261,21 @@ adC
 adC
 cBQ
 cBQ
-czh
+sAI
 czp
 czw
 czD
-czh
+sAI
 xZz
 czZ
 cAg
 cDx
-czh
+sAI
 cAz
 cAP
 cAP
 cBp
-czh
+sAI
 cBQ
 cBQ
 adC
@@ -146549,21 +146563,21 @@ adC
 adC
 adC
 cBQ
-czh
-czh
-czh
-czh
-czh
+sAI
+sAI
+sAI
+sAI
+sAI
 czS
 czZ
 cAg
 cAp
-czh
+sAI
 cAA
 cAQ
 cBf
 cBq
-czh
+sAI
 cBQ
 cBQ
 adC
@@ -146855,17 +146869,17 @@ cBQ
 cBQ
 cBQ
 cBQ
-czh
+sAI
 czT
 oCb
 lmh
 cAq
-czh
-czh
-czh
+sAI
+sAI
+sAI
 cBg
-czh
-czh
+sAI
+sAI
 cBQ
 cBQ
 aae
@@ -147157,17 +147171,17 @@ adC
 cBQ
 cBQ
 cBQ
-czh
-czh
-czh
-czh
-czh
-czh
-czh
+sAI
+sAI
+sAI
+sAI
+sAI
+sAI
+sAI
 cAR
 cAR
 cAR
-czh
+sAI
 cBQ
 cBQ
 adC
@@ -147465,11 +147479,11 @@ cBQ
 cBQ
 cBQ
 cBQ
-czh
+sAI
 cAS
 cBh
 cBr
-czh
+sAI
 cBQ
 adC
 adC
@@ -147767,11 +147781,11 @@ cBQ
 cBQ
 cBQ
 cBQ
-czh
+sAI
 cAT
 cAR
 cAR
-czh
+sAI
 cBQ
 cBQ
 adC
@@ -148069,11 +148083,11 @@ adC
 cBQ
 cBQ
 cBQ
-czh
-czh
-czh
-czh
-czh
+sAI
+sAI
+sAI
+sAI
+sAI
 cBQ
 cBQ
 adC

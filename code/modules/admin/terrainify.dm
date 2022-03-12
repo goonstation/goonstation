@@ -2,7 +2,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Terrainify"
 	set desc = "Turns space into a terrain type"
-	admin_only
+	ADMIN_ONLY
 	var/static/client/terrainifier
 
 	var/options = list(
@@ -55,7 +55,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Void Station"
 	set desc = "Turns space into the THE VOID..."
-	admin_only
+	ADMIN_ONLY
 #ifdef UNDERWATER_MAP
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
 	boutput(src, "You cannot use this command on underwater maps. Sorry!")
@@ -91,7 +91,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Ice Station"
 	set desc = "Turns space into the Outpost Theta..."
-	admin_only
+	ADMIN_ONLY
 #ifdef UNDERWATER_MAP
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
 	boutput(src, "You cannot use this command on underwater maps. Sorry!")
@@ -151,7 +151,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Swampify"
 	set desc = "Turns space into a swamp"
-	admin_only
+	ADMIN_ONLY
 	var/const/ambient_light = "#222222"
 #ifdef UNDERWATER_MAP
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
@@ -204,7 +204,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Marsify"
 	set desc = "Turns space into a Mars"
-	admin_only
+	ADMIN_ONLY
 #ifdef UNDERWATER_MAP
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
 	boutput(src, "You cannot use this command on underwater maps. Sorry!")
@@ -262,7 +262,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Trenchify"
 	set desc = "Generates trench caves on the station Z"
-	admin_only
+	ADMIN_ONLY
 	if(src.holder.level >= LEVEL_ADMIN)
 		switch(alert("Generate a trench on the station Z level? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
 			if("Yes")
@@ -336,7 +336,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Winterify"
 	set desc = "Turns space into a colder snowy place"
-	admin_only
+	ADMIN_ONLY
 	var/const/ambient_light = "#222"
 #ifdef UNDERWATER_MAP
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
