@@ -286,7 +286,7 @@
 
 		if (islist(syndi_buylist_cache) && !length(possible_items))
 			for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
-				if((!(S.can_buy & owner_uplink.purchase_flags)) && !isnull(owner_uplink)) //You can get anything (not usually excluded from surplus crates) from any gamemode if you spawn this without an uplink
+				if(!isnull(owner_uplink) && !(S.can_buy & owner_uplink.purchase_flags)) //You can get anything (not usually excluded from surplus crates) from any gamemode if you spawn this without an uplink
 					continue
 
 				if (!S.not_in_crates)
