@@ -76491,6 +76491,11 @@
 	},
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
+"wiy" = (
+/obj/table/auto,
+/obj/item/ammo/ammobox/shootingrange,
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/firing_range)
 "wky" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -107639,7 +107644,7 @@ cIe
 cIe
 cIe
 dep
-dex
+wiy
 deG
 btf
 btf
