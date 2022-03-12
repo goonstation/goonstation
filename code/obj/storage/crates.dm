@@ -273,7 +273,7 @@
 	var/static/list/possible_items = list()
 	grab_stuff_on_spawn = FALSE
 
-	New()
+	New(loc, owner, owner_uplink)
 		..()
 		spawn_items()
 
