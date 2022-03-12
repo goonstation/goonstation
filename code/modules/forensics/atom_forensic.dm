@@ -238,6 +238,10 @@
 			M.tracked_blood = null
 			M.set_clothing_icon_dirty()
 
+			// Noir effect alters M.color, so reapply
+			if (M.bioHolder.HasEffect("noir"))
+				animate_fade_grayscale(M, 0)
+
 		else
 
 			var/mob/living/L = src // Punching cyborgs does leave fingerprints for instance.
