@@ -1916,6 +1916,9 @@
 			UpdateOverlays(null, "screen", 0, 1)
 
 	proc/addProduct(obj/item/target, mob/user)
+		if (target.cant_drop)
+			boutput(user, "<span class='alert'>You can't put [target] into a vending machine while it's attached to you!</span>")
+			return
 		var/obj/item/storage/targetContainer = target
 		if (!istype(targetContainer))
 			productListUpdater(target, user)
