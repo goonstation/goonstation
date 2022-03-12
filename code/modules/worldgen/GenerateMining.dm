@@ -282,7 +282,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 	var/num_to_place = AST_NUMPREFABS + rand(0,AST_NUMPREFABSEXTRA)
 	for (var/n = 1, n <= num_to_place, n++)
 		game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
-		var/datum/generatorPrefab/M = pickPrefab()
+		var/datum/mapPrefab/mining/M = pickPrefab()
 		if (M)
 			var/maxX = (world.maxx - M.prefabSizeX - AST_MAPBORDER)
 			var/maxY = (world.maxy - M.prefabSizeY - AST_MAPBORDER)
@@ -327,39 +327,38 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 	hotspot_controller.generate_map()
 
 /proc/pickPrefab()
+	RETURN_TYPE(/datum/mapPrefab/mining)
 	var/list/eligible = list()
 	var/list/required = list()
 
-	for(var/datum/generatorPrefab/M in miningModifiers)
-		if(M.underwater != map_currently_underwater) continue
-		if(M.type in miningModifiersUsed)
-			if(M.required) continue
-			if(M.maxNum != -1)
-				if(miningModifiersUsed[M.type] >= M.maxNum)
+	for(var/datum/mapPrefab/mining/Mtype as anything in concrete_typesof(/datum/mapPrefab/mining))
+		if(initial(Mtype.underwater) != map_currently_underwater) continue
+		if(Mtype in miningModifiersUsed)
+			if(initial(Mtype.required)) continue
+			if(initial(Mtype.maxNum) != -1)
+				if(miningModifiersUsed[Mtype] >= initial(Mtype.maxNum))
 					continue
 				else
-					eligible.Add(M)
-					eligible[M] = M.probability
+					eligible[Mtype] = initial(Mtype.probability)
 			else
-				eligible.Add(M)
-				eligible[M] = M.probability
+				eligible[Mtype] = initial(Mtype.probability)
 		else
-			eligible.Add(M)
-			eligible[M] = M.probability
-			if(M.required) required.Add(M)
+			eligible[Mtype] = initial(Mtype.probability)
+			if(initial(Mtype.required)) required.Add(Mtype)
 
 	if(required.len)
-		var/datum/generatorPrefab/P = required[1]
+		var/Ptype = required[1]
+		var/datum/mapPrefab/P = new Ptype
 		miningModifiersUsed.Add(P.type)
 		miningModifiersUsed[P.type] = 1
 		return P
 	else
 		if(eligible.len)
-			var/datum/generatorPrefab/P = weighted_pick(eligible)
+			var/datum/mapPrefab/Ptype = weighted_pick(eligible)
+			var/datum/mapPrefab/P = new Ptype
 			if(P.type in miningModifiersUsed)
 				miningModifiersUsed[P.type] = (miningModifiersUsed[P.type] + 1)
 			else
-				miningModifiersUsed.Add(P.type)
 				miningModifiersUsed[P.type] = 1
 			return P
 		else return null

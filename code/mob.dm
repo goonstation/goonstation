@@ -3079,7 +3079,7 @@
 		A.pull()
 
 
-/mob/verb/examine_verb(atom/A as mob|obj|turf in view(,get_turf(usr)))
+/mob/verb/examine_verb(atom/A as mob|obj|turf in view(,usr))
 	set name = "Examine"
 	set category = "Local"
 	var/list/result = A.examine(src)
