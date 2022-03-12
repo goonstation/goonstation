@@ -1243,7 +1243,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	lightbeam.alpha = 0
 	if (ismob(A))
 		var/mob/M = A
-		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
 	playsound(A.loc,"sound/voice/heavenly3.ogg",50,0)
 	animate(lightbeam, alpha=255, time=45)
 	animate(A,alpha=255,time=45)
@@ -1257,7 +1257,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	qdel(lightbeam)
 	if (ismob(A))
 		var/mob/M = A
-		REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
+		REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
 
 /obj/effects/heavenly_light
 	icon = 'icons/obj/large/32x192.dmi'
@@ -1280,7 +1280,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	A.density = FALSE
 	if (ismob(A))
 		var/mob/M = A
-		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
 	if (play_sound)
 		playsound(center,"sound/effects/darkspawn.ogg",50,0)
 	SPAWN(5 SECONDS)
@@ -1304,7 +1304,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		A.density = original_density
 		if (ismob(A))
 			var/mob/M = A
-			REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
 		for (var/turf/T in block(TA, TB))
 			animate(T, transform = null, pixel_x = 0, pixel_y = 0, 7.5 SECONDS, easing = SINE_EASING)
 		sleep(7.5 SECONDS)
@@ -1536,7 +1536,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_stomp(atom/A, stomp_height=8, stomps=3, stomp_duration=0.7 SECONDS)
 	var/mob/M = A
 	if(ismob(A))
-		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, "hatstomp")
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "hatstomp")
 		M.update_canmove()
 	var/one_anim_duration = stomp_duration / 2 / stomps
 	for(var/i = 0 to stomps - 1)
@@ -1547,7 +1547,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		animate(time=one_anim_duration, pixel_y=0, easing=SINE_EASING | EASE_IN)
 	if(ismob(A))
 		SPAWN(stomp_duration)
-			REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, "hatstomp")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "hatstomp")
 			M.update_canmove()
 
 

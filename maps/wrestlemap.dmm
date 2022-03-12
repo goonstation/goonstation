@@ -6022,6 +6022,16 @@
 	},
 /turf/space,
 /area/space)
+"cyV" = (
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 4;
+	name = "Head of Security's Room";
+	req_access = null
+	},
+/obj/access_spawn/hos,
+/obj/firedoor_spawn,
+/turf/simulated/floor/wood/six,
+/area/station/crew_quarters/hos)
 "czg" = (
 /obj/disposalpipe/segment/mail/bent/east,
 /obj/cable{
@@ -6140,16 +6150,6 @@
 /area/station/crew_quarters/market{
 	name = "Seating Area"
 	})
-"cAU" = (
-/obj/machinery/lawrack,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/decal/tile_edge/stripe,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "cBd" = (
 /obj/access_spawn/engineering_chief,
 /obj/machinery/door/airlock/pyro/glass/engineering{
@@ -10764,6 +10764,16 @@
 "eqA" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/refinery)
+"eqH" = (
+/obj/machinery/lawrack,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/decal/tile_edge/stripe,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "eqV" = (
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/pharmacy)
@@ -18485,15 +18495,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade)
-"hKP" = (
-/obj/machinery/door/airlock/pyro/glass/command{
-	dir = 4;
-	name = "Head of Security's Room"
-	},
-/obj/access_spawn/hos,
-/obj/firedoor_spawn,
-/turf/simulated/floor/wood/six,
-/area/station/crew_quarters/hos)
 "hKX" = (
 /obj/machinery/light/emergency{
 	dir = 1
@@ -27342,19 +27343,6 @@
 /obj/stool/chair/moveable,
 /turf/simulated/floor,
 /area/research_outpost/protest)
-"lAZ" = (
-/obj/machinery/door/airlock/pyro/glass/command{
-	name = "Head of Security's Office"
-	},
-/obj/access_spawn/hos,
-/obj/firedoor_spawn,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/red,
-/area/station/security/hos)
 "lBt" = (
 /obj/blind_switch/area/east,
 /turf/simulated/floor/carpet/grime,
@@ -30508,21 +30496,6 @@
 "mXr" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/inner/the_cage)
-"mXE" = (
-/obj/machinery/door/airlock/pyro/security{
-	name = "Armory"
-	},
-/obj/firedoor_spawn,
-/obj/access_spawn/hos,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "delivery2"
-	},
-/turf/simulated/floor/black,
-/area/station/security/armory)
 "mXZ" = (
 /obj/pool/perspective{
 	dir = 1;
@@ -42474,21 +42447,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
-"scs" = (
-/obj/table/glass/auto,
-/obj/item/storage/toolbox/electrical,
-/obj/item/device/gps,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/item/circuitboard/robotics,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "scv" = (
 /obj/machinery/atmospherics/portables_connector{
 	name = "Mixing Port"
@@ -47826,6 +47784,22 @@
 	dir = 4
 	},
 /area/station/maintenance/east)
+"uxH" = (
+/obj/machinery/door/airlock/pyro/security{
+	name = "Armory";
+	req_access = null
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/hos,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/turf/simulated/floor/black,
+/area/station/security/armory)
 "uxL" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/light/emergency,
@@ -51447,6 +51421,21 @@
 /area/station/hallway/primary/north{
 	name = "The Ring Entrance"
 	})
+"vZS" = (
+/obj/table/glass/auto,
+/obj/item/storage/toolbox/electrical,
+/obj/item/device/gps,
+/obj/item/aiModule/reset,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/item/circuitboard/robotics,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "vZX" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Security Front Desk"
@@ -52836,6 +52825,20 @@
 	dir = 8
 	},
 /area/station/engine/engineering)
+"wEd" = (
+/obj/machinery/door/airlock/pyro/glass/command{
+	name = "Head of Security's Office";
+	req_access = null
+	},
+/obj/access_spawn/hos,
+/obj/firedoor_spawn,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red,
+/area/station/security/hos)
 "wEk" = (
 /obj/stool/chair,
 /obj/cable{
@@ -92308,7 +92311,7 @@ vnX
 vnX
 bNs
 klA
-cAU
+eqH
 oqn
 edN
 rAb
@@ -99859,7 +99862,7 @@ jGj
 xiN
 mqR
 gPj
-mXE
+uxH
 nlY
 drb
 wOl
@@ -101073,7 +101076,7 @@ nPA
 byC
 gMC
 dQU
-hKP
+cyV
 vHc
 vHc
 vHc
@@ -101672,7 +101675,7 @@ qxk
 nVn
 xcp
 ibu
-lAZ
+wEd
 vjh
 dzE
 bFo
@@ -113141,7 +113144,7 @@ nZc
 buQ
 pyM
 dak
-scs
+vZS
 sVN
 sai
 fWM

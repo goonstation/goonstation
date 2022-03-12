@@ -6880,6 +6880,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"bZR" = (
+/obj/machinery/lawrack{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/darkblue,
+/area/station/turret_protected/ai_upload)
 "bZS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -8689,6 +8702,15 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
+"cAk" = (
+/obj/machinery/activation_button/driver_button{
+	desc = "A remote control switch for a Mass Driver. It's labeled DO NOT PUSH (except in case of emergency).";
+	id = "backup_plan";
+	name = "DO NOT PUSH";
+	pixel_x = 24
+	},
+/turf/simulated/floor/grime,
+/area/station/maintenance/disposal)
 "cAn" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -9053,36 +9075,6 @@
 /obj/machinery/atmospherics/pipe/simple/southeast,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"cFS" = (
-/obj/table/auto,
-/obj/item/device/audio_log,
-/obj/item/storage/firstaid/fire{
-	pixel_x = -7
-	},
-/obj/item/storage/firstaid/toxin{
-	pixel_x = 7
-	},
-/obj/item/screwdriver,
-/obj/machinery/door_control{
-	id = "tox_vent1";
-	name = "Chamber One Exhaust";
-	pixel_x = 23;
-	pixel_y = -8
-	},
-/obj/machinery/door_control{
-	id = "tox_heat1";
-	name = "Chamber One Heat Shield";
-	pixel_x = 23;
-	pixel_y = 8
-	},
-/obj/machinery/ignition_switch{
-	id = "tox_ignition1";
-	pixel_x = 23
-	},
-/turf/simulated/floor/purpleblack{
-	dir = 8
-	},
-/area/station/science/lab)
 "cGk" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
@@ -11243,6 +11235,24 @@
 	},
 /turf/simulated/floor/grey/side,
 /area/station/maintenance/solar/west)
+"dkd" = (
+/obj/machinery/atmospherics/valve{
+	dir = 4;
+	name = "Chamber Outlet"
+	},
+/obj/machinery/door_control{
+	id = "tox_vent2";
+	name = "Chamber Two Exhaust";
+	pixel_x = -23;
+	pixel_y = 8
+	},
+/obj/machinery/activation_button/ignition_switch{
+	id = "tox_ignition2";
+	pixel_x = -24;
+	pixel_y = -8
+	},
+/turf/simulated/floor/red,
+/area/station/science/lab)
 "dkj" = (
 /obj/storage/closet/welding_supply,
 /obj/machinery/light{
@@ -14797,6 +14807,20 @@
 /obj/machinery/chem_dispenser/alcohol,
 /turf/simulated/floor/wood/two,
 /area/station/medical/breakroom)
+"eiM" = (
+/obj/machinery/door_control{
+	id = "qm_dock";
+	name = "Import Hatch Override";
+	pixel_x = 24
+	},
+/obj/machinery/activation_button/driver_button{
+	id = "endp_qm_out";
+	name = "Cargo Driver Override";
+	pixel_x = 24;
+	pixel_y = 10
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/quartermaster/cargobay)
 "eiO" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
@@ -18375,15 +18399,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
-"fkW" = (
-/obj/machinery/driver_button{
-	desc = "A remote control switch for a Mass Driver. It's labeled DO NOT PUSH (except in case of emergency).";
-	id = "backup_plan";
-	name = "DO NOT PUSH";
-	pixel_x = 24
-	},
-/turf/simulated/floor/grime,
-/area/station/maintenance/disposal)
 "fla" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -18846,6 +18861,24 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
+"frz" = (
+/obj/machinery/door_control{
+	id = "tox_heat1";
+	name = "Chamber One Heat Shield";
+	pixel_x = -23;
+	pixel_y = 8
+	},
+/obj/machinery/atmospherics/valve{
+	dir = 4;
+	name = "Chamber Inlet"
+	},
+/obj/machinery/activation_button/ignition_switch{
+	id = "tox_ignition1";
+	pixel_x = -24;
+	pixel_y = -8
+	},
+/turf/simulated/floor/blue,
+/area/station/science/lab)
 "frD" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -20249,6 +20282,36 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
+"fMy" = (
+/obj/table/auto,
+/obj/item/device/audio_log,
+/obj/item/storage/firstaid/fire{
+	pixel_x = -7
+	},
+/obj/item/storage/firstaid/toxin{
+	pixel_x = 7
+	},
+/obj/item/screwdriver,
+/obj/machinery/door_control{
+	id = "tox_vent1";
+	name = "Chamber One Exhaust";
+	pixel_x = 23;
+	pixel_y = -8
+	},
+/obj/machinery/door_control{
+	id = "tox_heat1";
+	name = "Chamber One Heat Shield";
+	pixel_x = 23;
+	pixel_y = 8
+	},
+/obj/machinery/activation_button/ignition_switch{
+	id = "tox_ignition1";
+	pixel_x = 23
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
+/area/station/science/lab)
 "fMG" = (
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
@@ -22053,18 +22116,6 @@
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/orangeblack/side,
 /area/station/quartermaster/office)
-"glJ" = (
-/obj/machinery/conveyor{
-	id = "qmsend"
-	},
-/obj/machinery/driver_button{
-	id = "manualshipping";
-	name = "Export Driver Override";
-	pixel_x = 24;
-	pixel_y = 10
-	},
-/turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/cargobay)
 "glK" = (
 /obj/cable{
 	icon_state = "4-9"
@@ -23482,24 +23533,6 @@
 	},
 /turf/space,
 /area/space)
-"gDS" = (
-/obj/machinery/door_control{
-	id = "tox_heat1";
-	name = "Chamber One Heat Shield";
-	pixel_x = -23;
-	pixel_y = 8
-	},
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "Chamber Inlet"
-	},
-/obj/machinery/ignition_switch{
-	id = "tox_ignition1";
-	pixel_x = -24;
-	pixel_y = -8
-	},
-/turf/simulated/floor/blue,
-/area/station/science/lab)
 "gDW" = (
 /obj/machinery/computer3/terminal/zeta{
 	dir = 4;
@@ -32367,6 +32400,18 @@
 /obj/machinery/light,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
+"jgg" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/machinery/activation_button/driver_button{
+	id = "funerary_driver";
+	name = "Funerary Driver Activation";
+	pixel_x = -24
+	},
+/obj/item/device/radio/intercom,
+/turf/simulated/floor/black,
+/area/station/chapel/sanctuary)
 "jgm" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -33819,14 +33864,6 @@
 	dir = 4
 	},
 /area/station/engine/hotloop)
-"jzn" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/reset,
-/obj/item/device/radio/intercom/security{
-	dir = 4
-	},
-/turf/simulated/floor/circuit,
-/area/station/communications/centre)
 "jzz" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
@@ -36916,19 +36953,6 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/yellow/checker,
 /area/station/routing/engine)
-"kqK" = (
-/obj/machinery/lawrack{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/darkblue,
-/area/station/turret_protected/ai_upload)
 "kqL" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/machinery/atmospherics/pipe/simple,
@@ -44074,24 +44098,6 @@
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
-"mlC" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "Chamber Outlet"
-	},
-/obj/machinery/door_control{
-	id = "tox_vent2";
-	name = "Chamber Two Exhaust";
-	pixel_x = -23;
-	pixel_y = 8
-	},
-/obj/machinery/ignition_switch{
-	id = "tox_ignition2";
-	pixel_x = -24;
-	pixel_y = -8
-	},
-/turf/simulated/floor/red,
-/area/station/science/lab)
 "mlF" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -49600,29 +49606,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"nOE" = (
-/obj/machinery/disposal,
-/obj/machinery/door_control{
-	id = "tox_heat2";
-	name = "Chamber Two Heat Shield";
-	pixel_x = 23;
-	pixel_y = -8
-	},
-/obj/machinery/door_control{
-	id = "tox_vent2";
-	name = "Chamber Two Exhaust";
-	pixel_x = 23;
-	pixel_y = 8
-	},
-/obj/machinery/ignition_switch{
-	id = "tox_ignition2";
-	pixel_x = 23
-	},
-/obj/disposalpipe/trunk/west,
-/turf/simulated/floor/purpleblack{
-	dir = 8
-	},
-/area/station/science/lab)
 "nOG" = (
 /obj/table/reinforced,
 /obj/item/storage/firstaid/regular,
@@ -50093,6 +50076,11 @@
 /area/station/crew_quarters/toilets{
 	name = "Dockside Restroom"
 	})
+"nTS" = (
+/obj/table/auto,
+/obj/item/aiModule/reset,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "nTX" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor/south,
 /obj/machinery/meter,
@@ -51816,6 +51804,29 @@
 	dir = 8
 	},
 /area/station/engine/engineering)
+"osT" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/machinery/activation_button/ignition_switch{
+	id = "eng_ignition";
+	name = "Burn Chamber Ignition";
+	pixel_x = 7;
+	pixel_y = 24
+	},
+/obj/machinery/door_control{
+	id = "combustion";
+	name = "Chamber Exhaust";
+	pixel_x = -7;
+	pixel_y = 24
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "osY" = (
 /obj/machinery/computer/atmosphere/pumpcontrol{
 	dir = 4;
@@ -55523,29 +55534,6 @@
 	dir = 8
 	},
 /area/station/engine/engineering)
-"ptV" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/machinery/ignition_switch{
-	id = "eng_ignition";
-	name = "Burn Chamber Ignition";
-	pixel_x = 7;
-	pixel_y = 24
-	},
-/obj/machinery/door_control{
-	id = "combustion";
-	name = "Chamber Exhaust";
-	pixel_x = -7;
-	pixel_y = 24
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "pub" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -60300,20 +60288,6 @@
 	dir = 1
 	},
 /area/station/medical/medbay/treatment)
-"qNz" = (
-/obj/machinery/door_control{
-	id = "qm_dock";
-	name = "Import Hatch Override";
-	pixel_x = 24
-	},
-/obj/machinery/driver_button{
-	id = "endp_qm_out";
-	name = "Cargo Driver Override";
-	pixel_x = 24;
-	pixel_y = 10
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/quartermaster/cargobay)
 "qNE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -62441,6 +62415,29 @@
 "rqo" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig/north_side)
+"rqr" = (
+/obj/machinery/disposal,
+/obj/machinery/door_control{
+	id = "tox_heat2";
+	name = "Chamber Two Heat Shield";
+	pixel_x = 23;
+	pixel_y = -8
+	},
+/obj/machinery/door_control{
+	id = "tox_vent2";
+	name = "Chamber Two Exhaust";
+	pixel_x = 23;
+	pixel_y = 8
+	},
+/obj/machinery/activation_button/ignition_switch{
+	id = "tox_ignition2";
+	pixel_x = 23
+	},
+/obj/disposalpipe/trunk/west,
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
+/area/station/science/lab)
 "rqt" = (
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/plating/random,
@@ -64898,11 +64895,6 @@
 /obj/machinery/vending/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"rWx" = (
-/obj/table/auto,
-/obj/item/aiModule/reset,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "rWA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -65573,18 +65565,6 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
-"sgt" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/obj/machinery/driver_button{
-	id = "funerary_driver";
-	name = "Funerary Driver Activation";
-	pixel_x = -24
-	},
-/obj/item/device/radio/intercom,
-/turf/simulated/floor/black,
-/area/station/chapel/sanctuary)
 "sgA" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -68203,6 +68183,14 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"sPf" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/reset,
+/obj/item/device/radio/intercom/security{
+	dir = 4
+	},
+/turf/simulated/floor/circuit,
+/area/station/communications/centre)
 "sPj" = (
 /obj/machinery/light{
 	dir = 1;
@@ -75937,6 +75925,18 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"uMp" = (
+/obj/machinery/conveyor{
+	id = "qmsend"
+	},
+/obj/machinery/activation_button/driver_button{
+	id = "manualshipping";
+	name = "Export Driver Override";
+	pixel_x = 24;
+	pixel_y = 10
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/quartermaster/cargobay)
 "uMz" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/bluewhite{
@@ -119385,7 +119385,7 @@ ath
 mFJ
 lhp
 lLK
-mlC
+dkd
 mQg
 nqL
 nLi
@@ -119395,7 +119395,7 @@ ifg
 rnD
 ffc
 rIJ
-gDS
+frz
 mQg
 tua
 lLK
@@ -121345,7 +121345,7 @@ gnS
 vZQ
 wfZ
 sQE
-fkW
+cAk
 ucM
 wfZ
 dlK
@@ -121502,10 +121502,10 @@ lPB
 mqS
 mTG
 mFJ
-nOE
+rqr
 otJ
 pnj
-cFS
+fMy
 mFJ
 kiY
 krl
@@ -124583,7 +124583,7 @@ pIs
 rcT
 rcT
 cWo
-rWx
+nTS
 xoI
 mgF
 lSX
@@ -130391,7 +130391,7 @@ acs
 xdf
 vdQ
 tIK
-sgt
+jgg
 tmh
 tmh
 fPS
@@ -134210,7 +134210,7 @@ sDv
 upu
 dCp
 xUw
-kqK
+bZR
 xUw
 rqB
 upu
@@ -140863,7 +140863,7 @@ aiE
 xLF
 swn
 kvR
-jzn
+sPf
 uEF
 oKW
 ggH
@@ -151786,7 +151786,7 @@ huA
 huA
 sKr
 jwv
-glJ
+uMp
 rtZ
 nDZ
 xuE
@@ -152395,7 +152395,7 @@ aVk
 ger
 kJD
 wEv
-qNz
+eiM
 wuh
 wuh
 uXW
@@ -156520,7 +156520,7 @@ fjf
 fVl
 xFt
 sru
-ptV
+osT
 ghB
 kXx
 ipD

@@ -2013,9 +2013,8 @@ obj/item/clothing/gloves/concussive
 			H_temp.remove_object(cargo)
 
 		// And logs for good measure (Convair880).
-		var/obj/storage/S
-		if (istype(cargo, /obj/storage)) // Other containers (e.g. prison artifacts) can hold mobs too.
-			S = cargo
+		var/obj/storage/S = cargo
+		ENSURE_TYPE(S)
 
 		for (var/mob/M in cargo.contents)
 			if (M)

@@ -81,8 +81,23 @@
 		else
 			return ..()
 
-	proc/can_buckle(var/mob/M, var/mob/user)
-		.= 0
+	proc/can_buckle(var/mob/living/to_buckle, var/mob/user)
+		if (!istype(to_buckle) || isintangible(to_buckle)) //no buckling AI-eyes
+			return FALSE
+		if (!ticker)
+			boutput(user, "You can't buckle anyone in before the game starts.")
+			return FALSE
+		if (to_buckle.buckled)
+			boutput(user, "They're already buckled into something!", "red")
+			return FALSE
+		if (get_dist(src, user) > 1 || to_buckle.loc != src.loc || user.restrained() || is_incapacitated(user) || !isalive(user))
+			return FALSE
+		if (user.hasStatus("weakened"))
+			return FALSE
+		if (src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy)
+			user.show_text("There's already someone buckled in [src]!", "red")
+			return FALSE
+		return TRUE
 
 	proc/buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0) //Handles the actual buckling in
 		if (!can_buckle(to_buckle,user))
@@ -329,33 +344,12 @@
 		return
 
 	can_buckle(var/mob/living/C, var/mob/user)
-		if (!C || (C.loc != src.loc))
-			return 0// yeesh
-
-		if (get_dist(src, user) > 1)
-			user.show_text("[src] is too far away!", "red")
-			return 0
-
-		if(src.buckled_guy && src.buckled_guy.buckled == src)
-			user.show_text("There's already someone buckled in [src]!", "red")
-			return 0
-
-		if (!ticker)
-			user.show_text("You can't buckle anyone in before the game starts.", "red")
-			return 0
-		if (C.buckled)
-			boutput(user, "They're already buckled into something!", "red")
-			return 0
+		if (!..())
+			return FALSE
 		if (src.security)
 			user.show_text("There's nothing you can buckle them to!", "red")
-			return 0
-		if (get_dist(src, user) > 1)
-			user.show_text("[src] is too far away!", "red")
-			return 0
-		if ((!(isliving(C)) || C.loc != src.loc || user.restrained() || is_incapacitated(user) ))
-			return 0
-
-		return 1
+			return FALSE
+		return TRUE
 
 	proc/unbuckle_mob(var/mob/M as mob, var/mob/user as mob)
 		if (M.buckled && !user.restrained())
@@ -697,27 +691,7 @@
 			src.rotate(get_dir(get_turf(src),get_turf(over_object)))
 		..()
 
-	can_buckle(var/mob/M, var/mob/user)
-		if (!ticker)
-			boutput(user, "You can't buckle anyone in before the game starts.")
-			return 0
-		if (M.buckled)
-			boutput(user, "They're already buckled into something!", "red")
-			return 0
-		if (!( isliving(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || !isalive(user))
-			return 0
-		if(src.buckled_guy && src.buckled_guy.buckled == src && src.buckled_guy != M)
-			user.show_text("There's already someone buckled in [src]!", "red")
-			return 0
-		return 1
-
 	buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0)
-		if(!istype(to_buckle))
-			return FALSE
-		if(user.hasStatus("weakened"))
-			return FALSE
-		if(src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy)
-			return FALSE
 		if (!can_buckle(to_buckle,user))
 			return FALSE
 

@@ -202,7 +202,7 @@
 	if (..())
 		return
 
-	if (HAS_MOB_PROPERTY(src, PROP_BREATHLESS))
+	if (HAS_ATOM_PROPERTY(src, PROP_MOB_BREATHLESS))
 		src.oxyloss = 0
 		return
 

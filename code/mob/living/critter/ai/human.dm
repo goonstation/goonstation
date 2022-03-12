@@ -52,7 +52,7 @@
 		return null
 
 	on_tick()
-		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+		if (HAS_ATOM_PROPERTY(holder.ownhuman, PROP_MOB_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
 		if(!holder.target)
@@ -90,7 +90,7 @@
 			. = 1
 
 	on_tick()
-		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+		if (HAS_ATOM_PROPERTY(holder.ownhuman, PROP_MOB_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
 		if(!holder.target)
@@ -144,7 +144,7 @@
 			. = 1
 
 	on_tick()
-		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+		if (HAS_ATOM_PROPERTY(holder.ownhuman, PROP_MOB_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
 		if(!holder.target)
@@ -180,7 +180,7 @@
 	var/last_seek = 0
 
 	on_tick()
-		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+		if (HAS_ATOM_PROPERTY(holder.ownhuman, PROP_MOB_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
 		if(!holder.target)
@@ -231,7 +231,7 @@
 
 	on_tick()
 
-		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+		if (HAS_ATOM_PROPERTY(holder.ownhuman, PROP_MOB_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
 		if(!holder.target)
@@ -274,7 +274,7 @@
 								holder.ownhuman.drop_item()
 
 							if (G.state <= GRAB_PASSIVE)
-								G.attack_self(holder.ownhuman)
+								G.AttackSelf(holder.ownhuman)
 							else
 								holder.ownhuman.emote("flip")
 								holder.move_away(holder.target,1)
@@ -294,7 +294,7 @@
 	var/last_seek = 0
 
 	on_tick()
-		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+		if (HAS_ATOM_PROPERTY(holder.ownhuman, PROP_MOB_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
 		if(!holder.target)
