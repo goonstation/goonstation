@@ -197,5 +197,7 @@
 					boutput(master, "Deploy to an AI Eye first to create a hologram.")
 			if ("map")
 				master.open_map()
-			if ("core" || "coreatk")
+			if ("core")
+				master.return_to(user)
+			if ("coreatk")
 				master.return_to(user)
