@@ -118,6 +118,7 @@
 #include "color.dm"
 #include "copy.dm"
 #include "datum.dm"
+#include "filesystem.dm"
 #include "filters.dm"
 #include "heap.dm"
 #include "machinery.dm"
