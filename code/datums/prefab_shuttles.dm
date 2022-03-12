@@ -1,5 +1,3 @@
-var/list/prefab_shuttles = list()
-
 /datum/prefab_shuttle
 	var/prefab_path = null
 	var/name = null
