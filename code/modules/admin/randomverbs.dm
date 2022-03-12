@@ -2838,8 +2838,8 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	set desc = "Spawn in a special escape shuttle"
 	ADMIN_ONLY
 	if(src.holder.level >= LEVEL_ADMIN)
-		var/list/shuttles = get_prefab_shuttles()
-		var/datum/prefab_shuttle/shuttle = shuttles[tgui_input_list(src, "Select a shuttle", "Special Shuttle", shuttles)]
+		var/list/shuttles = get_map_prefabs(/datum/mapPrefab/shuttle)
+		var/datum/mapPrefab/shuttle/shuttle = shuttles[tgui_input_list(src, "Select a shuttle", "Special Shuttle", shuttles)]
 		if(shuttle.load())
 			logTheThing("admin", src, null, "replaced the shuttle with [shuttle.name].")
 			logTheThing("diary", src, null, "replaced the shuttle with [shuttle.name].", "admin")

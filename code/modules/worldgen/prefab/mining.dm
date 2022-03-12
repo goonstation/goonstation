@@ -1,42 +1,30 @@
 
-ABSTRACT_TYPE(/datum/generatorPrefab)
-/datum/generatorPrefab
-	var/probability = 0
-	var/maxNum = 0
-	var/prefabPath = ""
-	var/prefabSizeX = 5
-	var/prefabSizeY = 5
-	var/underwater = 0 //prefab will only be used if this matches map_currently_underwater. I.e. if this is 1 and map_currently_underwater is 1 then the prefab may be used.
-	var/required = 0   //If 1 we will try to always place thing thing no matter what. Required prefabs will only ever be placed once.
+ABSTRACT_TYPE(/datum/mapPrefab/mining)
+/datum/mapPrefab/mining
+	var/underwater = 0 //! prefab will only be used if this matches map_currently_underwater. I.e. if this is 1 and map_currently_underwater is 1 then the prefab may be used.
+	var/required = 0 //! If 1 we will try to always place thing thing no matter what. Required prefabs will only ever be placed once.
 
-	proc/applyTo(var/turf/target)
+	adjust_position(turf/target)
+		RETURN_TYPE(/turf)
 		var/adjustX = target.x
 		var/adjustY = target.y
 
-		 //Move prefabs backwards if they would end up outside the map.
-		if((adjustX + prefabSizeX) > (world.maxx - AST_MAPBORDER))
+		//Move prefabs backwards if they would end up outside the map.
+		if(!isnull(prefabSizeX) && (adjustX + prefabSizeX) > (world.maxx - AST_MAPBORDER))
 			adjustX -= ((adjustX + prefabSizeX) - (world.maxx - AST_MAPBORDER))
 
-		if((adjustY + prefabSizeY) > (world.maxy - AST_MAPBORDER))
+		if(!isnull(prefabSizeY) && (adjustY + prefabSizeY) > (world.maxy - AST_MAPBORDER))
 			adjustY -= ((adjustY + prefabSizeY) - (world.maxy - AST_MAPBORDER))
 
-		var/turf/T = locate(adjustX, adjustY, target.z)
+		return locate(adjustX, adjustY, target.z)
 
+	verify_position(turf/target)
 		for(var/x=0, x<prefabSizeX; x++)
 			for(var/y=0, y<prefabSizeY; y++)
-				var/turf/L = locate(T.x+x, T.y+y, T.z)
-				if(L?.loc && ((L.loc.type != /area/space) && !istype(L.loc , /area/allowGenerate))) // istype(L.loc, /area/noGenerate)
-					return 0
-
-		var/loaded = file2text(prefabPath)
-
-		if(T && loaded)
-			var/dmm_suite/D = new/dmm_suite()
-			var/datum/loadedProperties/props = D.read_map(loaded,T.x,T.y,T.z,prefabPath)
-			if(prefabSizeX != props.maxX - props.sourceX + 1 || prefabSizeY != props.maxY - props.sourceY + 1)
-				CRASH("size of prefab [prefabPath] is incorrect ([prefabSizeX]x[prefabSizeY] != [props.maxX - props.sourceX + 1]x[props.maxY - props.sourceY + 1])")
-			return 1
-		else return 0
+				var/turf/L = locate(target.x+x, target.y+y, target.z)
+				if(L?.loc && ((L.loc.type != /area/space) && !istype(L.loc , /area/allowGenerate)))
+					return FALSE
+		return TRUE
 
 	clown
 		maxNum = 1
