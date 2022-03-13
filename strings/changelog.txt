@@ -1,5 +1,9 @@
 
 (t)sun mar 13 22
+(u)Amylizzle
+(p)7701
+(e)|
+(+)It is no longer possible to accidentally say a slur due to speech mutations.
 (u)LeahTheTech
 (p)7693
 (e)🆕|feature
