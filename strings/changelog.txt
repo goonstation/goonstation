@@ -1,5 +1,9 @@
 
 (t)sun mar 13 22
+(u)Wisemonster
+(p)7593
+(e)🗺|mapping
+(*)NanoTrasen has added the proper systems to Kondaru to allow mule bots to work! (mule bot included!)
 (u)Flappybat
 (p)7774
 (e)🆕🗺|feature, mapping
