@@ -379,8 +379,7 @@
 /area/shuttle/escape/centcom)
 "oM" = (
 /obj/machinery/door/airlock/pyro/glass/command{
-	dir = 4;
-	req_access = 0
+	dir = 4
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -388,7 +387,6 @@
 /area/shuttle/escape/centcom)
 "pj" = (
 /obj/machinery/door/airlock/pyro/security{
-	density = 0;
 	dir = 4;
 	name = "Secure Transport"
 	},
@@ -1027,7 +1025,6 @@
 /area/centcom/outside)
 "NZ" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
-	density = 0;
 	dir = 8
 	},
 /turf/unsimulated/floor/shuttle{

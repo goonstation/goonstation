@@ -2,7 +2,7 @@
 	name = "bowling suit"
 	desc = "Who's up for some bowling?"
 	icon = 'icons/obj/clothing/uniforms/item_js_athletic.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_athletic.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_athletic.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_athletic.dmi'
 	icon_state = "bowling"
 	item_state = "bowling"
@@ -59,7 +59,7 @@
 			if (ismob(hit_atom))
 				var/mob/hitMob = hit_atom
 				if (ishuman(hitMob))
-					SPAWN_DBG( 0 )
+					SPAWN( 0 )
 						if (istype(user))
 							if (user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
 								src.hitHard(hitMob, user)

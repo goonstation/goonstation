@@ -103,7 +103,7 @@
 	var/auto_water = TRUE
 
 	New()
-		SPAWN_DBG(0) // delay for prefab attribute assignment
+		SPAWN(0) // delay for prefab attribute assignment
 			var/datum/plant/P
 			//Adjust processing tier to slow down server burden unless necessary
 			if(spawn_plant)
@@ -308,6 +308,7 @@
 		return current_water_level
 
 	on_reagent_change()
+		..()
 		src.do_update_water_icon = 1
 		src.update_water_level()
 
@@ -537,7 +538,7 @@
 								qdel(C)
 							playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
 							src.reagents.add_reagent("blood", 120)
-							SPAWN_DBG(2.5 SECONDS)
+							SPAWN(2.5 SECONDS)
 								if(src)
 									playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
 							return
@@ -595,7 +596,7 @@
 
 		else if(isweldingtool(W) || istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/device/igniter))
 			// These are for burning down plants with.
-			if(isweldingtool(W) && !W:try_weld(usr, 3, noisy = 0, burn_eyes = 1))
+			if(isweldingtool(W) && !W:try_weld(user, 3, noisy = 0, burn_eyes = 1))
 				return
 			else if(istype(W, /obj/item/device/light/zippo) && !W:on)
 				boutput(user, "<span class='alert'>It would help if you lit it first, dumbass!</span>")
@@ -818,9 +819,9 @@
 			boutput(user, "The solution seems to contain [reag_list].")
 		return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
-		if(!isliving(usr)) return // ghosts killing plants fix
+		if(!isliving(usr) || isintangible(usr)) return // ghosts killing plants fix
 		if(get_dist(src, usr) > 1)
 			boutput(usr, "<span class='alert'>You need to be closer to empty the tray out!</span>")
 			return
@@ -908,7 +909,7 @@
 			pingsignal.data["address_1"] = signal.data["sender"]
 			pingsignal.data["command"] = "ping_reply"
 
-			SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+			SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal)
 
 		return //Just toss out the rest of the signal then I guess
@@ -968,15 +969,7 @@
 			else
 				UpdateOverlays(null, "health_display")
 
-		var/planticon = null
-		if(MUT?.iconmod)
-			planticon = "[MUT.iconmod]-G[src.grow_level]"
-		else if(growing.sprite)
-			planticon = "[growing.sprite]-G[src.grow_level]"
-		else if(growing.override_icon_state)
-			planticon = "[growing.override_icon_state]-G[src.grow_level]"
-		else
-			planticon = "[growing.name]-G[src.grow_level]"
+		var/planticon = growing.getIconState(src.grow_level, MUT)
 
 		src.plant_sprite.icon = iconname
 		src.plant_sprite.icon_state = planticon
@@ -1056,7 +1049,7 @@
 		if(hydro_controls)
 			src.recently_harvested = 1
 			src.harvest_warning = 0
-			SPAWN_DBG(hydro_controls.delay_between_harvests)
+			SPAWN(hydro_controls.delay_between_harvests)
 				src.recently_harvested = 0
 		else
 			logTheThing("debug", null, null, "<b>Hydro Controls</b>: Could not access Hydroponics Controller to get Delay cap.")

@@ -14,6 +14,7 @@
 	var/is_template = 0
 	var/alive = 1
 	var/health = 10
+	var/maxhealth = 100
 
 	// "sleeping" is a special state that sleeps for 10 cycles, wakes up, sleeps again unless someone is found
 	// "hibernating" is another special state where it does nothing unless explicitly woken up
@@ -168,7 +169,7 @@
 	proc/wake_from_hibernation()
 		if(task != "hibernating") return
 
-		//DEBUG_MESSAGE("[src] woke from hibernation at [showCoords(src.x, src.y, src.z)] in [registered_area ? registered_area.name : "nowhere"] due to [usr ? usr : "some mysterious fucking reason"]")
+		//DEBUG_MESSAGE("[src] woke from hibernation at [log_loc(src)] in [registered_area ? registered_area.name : "nowhere"] due to [usr ? usr : "some mysterious fucking reason"]")
 		//Ok, now we look to see if we should get murdlin'
 		task = "sleeping"
 		hibernate_check = 20 //20 sleep_checks
@@ -189,7 +190,7 @@
 			task = "hibernating"
 			registered_area.registered_critters |= src
 			anchored = 1
-			//DEBUG_MESSAGE("[src] started hibernating at [showCoords(src.x, src.y, src.z)] in [registered_area ? registered_area.name : "nowhere"].")
+			//DEBUG_MESSAGE("[src] started hibernating at [log_loc(src)] in [registered_area ? registered_area.name : "nowhere"].")
 			//critters -= src //Stop processing this critter
 
 
@@ -255,7 +256,7 @@
 			if (src.feed_text)
 				src.visible_message("<span class='notice'>[src] [src.feed_text]</span>")
 			eat_twitch(src)
-			src.health += src.health_gain_from_food
+			src.health = min(src.maxhealth, src.health + health_gain_from_food)
 			user.drop_item()
 			qdel(W)
 			return
@@ -294,7 +295,7 @@
 			attack_force = rand(attack_force, round(attack_force * W.getProperty("unstable")))
 
 		if(W.hasProperty("frenzy"))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/frenzy = W.getProperty("frenzy")
 				W.click_delay -= frenzy
 				sleep(3 SECONDS)
@@ -607,7 +608,7 @@
 
 		if(task == "following path")
 			follow_path()
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				follow_path()
 		else if(task == "sleeping")
 			do_wake_check()
@@ -706,11 +707,11 @@
 							food_target.reagents.trans_to(src, 5)
 					if (src.food_target != null && src.food_target.amount <= 0)
 						src.food_target.set_loc(null)
-						SPAWN_DBG(1 SECOND)
+						SPAWN(1 SECOND)
 							qdel(src.food_target)
 						src.task = "thinking"
 						src.food_target = null
-						src.health += src.health_gain_from_food
+						src.health = min(src.maxhealth, src.health + health_gain_from_food)
 
 			if ("chasing corpse")
 
@@ -921,7 +922,7 @@
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
-		SPAWN_DBG(src.atk_delay)
+		SPAWN(src.atk_delay)
 			src.attacking = 0
 		if (iscarbon(M) && src.atk_diseases && prob(src.atk_disease_prob))
 			var/mob/living/carbon/C = M
@@ -1070,7 +1071,7 @@
 					user.u_equip(src)
 				src.set_loc(get_turf(src))
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (shouldThrow && T)
 					src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
 					playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
@@ -1113,7 +1114,7 @@
 			return
 
 /obj/critter/proc/revive_critter()
-	usr_admin_only
+	USR_ADMIN_ONLY
 	var/obj/critter/C = src
 	if (!istype(C, /obj/critter))
 		boutput(src, "[C] isn't a critter! How did you even get here?!")
@@ -1133,7 +1134,7 @@
 		return
 
 /obj/critter/proc/kill_critter()
-	usr_admin_only
+	USR_ADMIN_ONLY
 	var/obj/critter/C = src
 	if (!istype(C, /obj/critter))
 		boutput(src, "[C] isn't a critter! How did you even get here?!")

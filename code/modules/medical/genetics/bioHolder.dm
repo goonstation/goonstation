@@ -143,7 +143,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/datum/pronouns/pronouns
 	var/screamsound = "male"
 	var/fartsound = "default"
-	var/voicetype = 0
+	var/voicetype = "1"
 	var/flavor_text = null
 
 	var/list/fartsounds = list("default" = 'sound/voice/farts/poo2.ogg', \
@@ -368,7 +368,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		mobAppearance.owner = owner
 		mobAppearance.parentHolder = src
 
-		SPAWN_DBG(2 SECONDS) // fuck this shit
+		SPAWN(2 SECONDS) // fuck this shit
 			if(owner)
 				ownerName = owner.real_name
 				bioUids[Uid] = owner?.real_name ? owner.real_name : owner?.name
@@ -675,11 +675,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 			if(owner)
 				newEffect.OnAdd()
 			if (do_stability)
+				src.genetic_stability -= newEffect.stability_loss
+				src.genetic_stability = max(0,src.genetic_stability)
 				if(newEffect.degrade_to && !prob(lerp(clamp(src.genetic_stability, 0, 100), 100, 0.5)))
 					newEffect.timeLeft = rand(20, 60)
 					newEffect.degrade_after = TRUE
-				src.genetic_stability -= newEffect.stability_loss
-				src.genetic_stability = max(0,src.genetic_stability)
 			if(owner && length(newEffect.msgGain) > 0)
 				if (newEffect.isBad)
 					boutput(owner, "<span class='alert'>[newEffect.msgGain]</span>")
@@ -703,13 +703,27 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/AddEffectInstanceNoDelay(var/datum/bioEffect/BE,var/do_stability = 1)
 		if (!istype(BE) || !owner || HasEffect(BE.id))
 			return null
+
+		if(BE.effect_group)
+			for(var/datum/bioEffect/curr_id as anything in effects)
+				var/datum/bioEffect/curr = effects[curr_id]
+				if(curr.effect_group == BE.effect_group)
+					RemoveEffect(curr.id)
+					break
+
 		effects[BE.id] = BE
 		BE.owner = owner
 		BE.holder = src
 		BE.OnAdd()
+
 		if (do_stability)
 			src.genetic_stability -= BE.stability_loss
 			src.genetic_stability = max(0,src.genetic_stability)
+
+			if(BE.degrade_to && !prob(lerp(clamp(src.genetic_stability, 0, 100), 100, 0.5)))
+				BE.timeLeft = rand(20, 60)
+				BE.degrade_after = TRUE
+
 		if(length(BE.msgGain) > 0)
 			if (BE.isBad)
 				boutput(owner, "<span class='alert'>[BE.msgGain]</span>")
@@ -721,17 +735,20 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/RemoveEffect(var/id)
 		//Removes an effect from this holder. Returns 1 on success else 0.
-		if(!HasEffect(id)) return 0
+		if (src.disposed)
+			return 0
+		if (!HasEffect(id))
+			return 0
 
 		var/datum/bioEffect/D = effects[id]
-		if(D)
+		if (D)
 			D.OnRemove()
 			if (!D.activated_from_pool)
 				src.genetic_stability += D.stability_loss
 				src.genetic_stability = max(0,src.genetic_stability)
 			D.activated_from_pool = 0 //Fix for bug causing infinitely exploitable stability gain / loss
 
-			if(owner && length(D.msgLose) > 0)
+			if (owner && length(D.msgLose) > 0)
 				if (D.isBad)
 					boutput(owner, "<span class='notice'>[D.msgLose]</span>")
 				else

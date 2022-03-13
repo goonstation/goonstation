@@ -37,14 +37,14 @@
 	on_transplant(var/mob/M as mob)
 		..()
 		if (src.robotic)
-			APPLY_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, icon_state, 2)
+			APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, icon_state, 2)
 			src.donor.add_stam_mod_max(icon_state, 10)
 		return
 
 	on_removal()
 		if (donor)
 			if (src.robotic)
-				REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, icon_state)
+				REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, icon_state)
 				src.donor.remove_stam_mod_max(icon_state)
 		..()
 		return
@@ -100,7 +100,7 @@
 				donor.take_oxygen_deprivation(1.8 * mult/LUNG_COUNT) // Lets hurt em a little, let them know we mean business
 				if (world.time - donor.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 					donor.take_oxygen_deprivation(7 * mult/LUNG_COUNT)
-			if (prob(percentmult(20, mult))) // Lets give them some chance to know somethings not right though I guess.
+			if (probmult(20)) // Lets give them some chance to know somethings not right though I guess.
 				update.emotes |= "cough"
 		else
 			donor.co2overloadtime = 0
@@ -119,7 +119,7 @@
 					if (SA_pp > SA_sleep_min) // Enough to make us sleep as well
 						donor.sleeping = max(donor.sleeping, 2)
 				else if (SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-					if (prob(percentmult(20, mult)))
+					if (probmult(20))
 						update.emotes |= pick("giggle", "laugh")
 
 		if (prob(15) && (FARD_pp > fart_smell_min))
@@ -288,7 +288,7 @@
 
 	disposing()
 		if(donor)
-			REMOVE_MOB_PROPERTY(donor, PROP_REBREATHING, "cyberlungs")
+			REMOVE_ATOM_PROPERTY(donor, PROP_MOB_REBREATHING, "cyberlungs")
 		..()
 
 	emag_act(mob/user, obj/item/card/emag/E)
@@ -336,6 +336,66 @@
 	desc = "Inflating robotic airsack that passes breathed oxygen into a person's blood and expels carbon dioxide back out. This is a right lung, since it has two lobes and a cardiac notch, where the heart would be. Hopefully whoever used to have this one doesn't need it anymore."
 	organ_holder_name = "right_lung"
 	icon_state = "cyber-lung-R"
+	body_side = R_ORGAN
+	failure_disease = /datum/ailment/disease/respiratory_failure/right
+
+/obj/item/organ/lung/plasmatoid
+	unusual = TRUE
+	breaths_oxygen = FALSE
+	safe_toxins_max = INFINITY
+
+	breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
+		. = ..()
+		var/safe_oxygen_max = 0.4
+
+		var/breath_moles = TOTAL_MOLES(breath)
+		var/breath_pressure = (breath_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/breath.volume
+		if(breath_moles == 0)
+			breath_moles = ATMOS_EPSILON
+		var/Toxins_pp = (breath.toxins/breath_moles)*breath_pressure
+		var/O2_pp = (breath.oxygen/breath_moles)*breath_pressure
+		var/gas_used
+
+		if (Toxins_pp < safe_oxygen_min) 			// Too little plasma
+			if (prob(20))
+				if (underwater)
+					update.emotes |= "gurgle"
+				else
+					update.emotes |= "gasp"
+			if (Toxins_pp > 0)
+				var/ratio = round(safe_oxygen_min/(Toxins_pp + 0.1))
+				donor.take_oxygen_deprivation(min(5*ratio, 5)/LUNG_COUNT) // Don't fuck them up too fast (space only does 7 after all!)
+				gas_used = min(breath.toxins*ratio/6, breath.oxygen)
+			else
+				donor.take_oxygen_deprivation(3 * mult/LUNG_COUNT)
+			update.show_oxy_indicator = TRUE
+		else 									// We're in safe limits
+			donor.take_oxygen_deprivation(-6 * mult/LUNG_COUNT)
+			gas_used = breath.toxins/6
+
+		breath.toxins -= gas_used
+		breath.carbon_dioxide += gas_used
+
+		if (O2_pp > safe_oxygen_max) // Too much toxins
+			var/ratio = breath.oxygen/safe_oxygen_max
+			donor.take_toxin_damage(min(ratio * 125,20) * mult/LUNG_COUNT)
+			update.show_tox_indicator = TRUE
+
+/obj/item/organ/lung/plasmatoid/left
+	name = "left lung"
+	desc = "Inflating airsack presumably that passes breathed in gas into a person's blood and hopefully expels carbon dioxide back out. This is a left lung, since it has three lobes. Whoever used to have this probably didn't want it anymore."
+	organ_holder_name = "left_lung"
+	organ_name = "plasma_lung_L"
+	icon_state = "plasma_lung_L"
+	body_side = L_ORGAN
+	failure_disease = /datum/ailment/disease/respiratory_failure/left
+
+/obj/item/organ/lung/plasmatoid/right
+	name = "right lung"
+	desc = "Inflating airsack presumably that passes breathed in gas into a person's blood and hopefully expels carbon dioxide back out. This is a right lung, since it has two lobes and a cardiac notch, where the heart would be. Whoever used to have this probably didn't want it anymore."
+	organ_name = "plasma_lung_R"
+	organ_holder_name = "right_lung"
+	icon_state = "plasma_lung_R"
 	body_side = R_ORGAN
 	failure_disease = /datum/ailment/disease/respiratory_failure/right
 

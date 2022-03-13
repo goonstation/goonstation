@@ -1,4 +1,4 @@
-#define HERB_SMOKE_TRANSFER_HARDCAP 15
+#define HERB_SMOKE_TRANSFER_HARDCAP 20
 #define HERB_HOTBOX_MULTIPLIER 1.2
 /// Inedible Produce
 /obj/item/plant/

@@ -232,7 +232,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			var/mob/M = A
 			if (M?.client)
 				if (sound_loop || sound_group)
-					SPAWN_DBG(1 DECI SECOND)
+					SPAWN(1 DECI SECOND)
 						var/area/mobarea = get_area(M)
 						// If the area we are exiting has a sound loop but the new area doesn't
 						// we should stop the ambience or it will play FOREVER causing player insanity
@@ -464,9 +464,12 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 		..()
 		if (isobserver(O))
 			return
+		if (isintangible(O) || iswraith(O))
+			O.set_loc(pick_landmark(LANDMARK_LATEJOIN))
+			return
 		if (ismob(O))
 			var/mob/jerk = O
-			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_MOB_PROPERTY(jerk, PROP_NOCLIP)))
+			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_ATOM_PROPERTY(jerk, PROP_MOB_NOCLIP)))
 				return
 			setdead(jerk)
 			jerk.remove()
@@ -518,7 +521,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			return
 		if (ismob(O))
 			var/mob/jerk = O
-			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_MOB_PROPERTY(jerk, PROP_NOCLIP)))
+			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_ATOM_PROPERTY(jerk, PROP_MOB_NOCLIP)))
 				return
 			setdead(jerk)
 			jerk.remove()
@@ -535,18 +538,17 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	teleport_blocked = 1
 
 	Entered(atom/movable/O)
-		var/dest = null
 		..()
 		if (isobserver(O))
 			return
 		if (ismob(O))
 			var/mob/jerk = O
-			dest = pick(get_area_turfs(current_battle_spawn,1))
-			if(!dest)
-				dest= pick(get_area_turfs(/area/station/maintenance/,1))
+			var/list/found_areas = get_area_turfs(current_battle_spawn,1)
+			if (isnull(found_areas))
+				jerk.set_loc(pick(get_area_turfs(/area/station/maintenance/,1)))
 				boutput(jerk, "You somehow land in maintenance! Weird!")
-			jerk.set_loc(dest)
-			jerk.nodamage = 0
+			else
+				jerk.set_loc(pick(found_areas))
 			jerk.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 			jerk.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
 		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect))
@@ -587,8 +589,10 @@ ABSTRACT_TYPE(/area/shuttle)
 	expandable = 0
 
 /area/shuttle/battle
+	name = "Battle Shuttle"
 	icon_state = "shuttle_escape-battle-shuttle"
 	var/warp_dir = EAST
+	sanctuary = 1
 
 	Entered(atom/movable/Obj,atom/OldLoc)
 		..()
@@ -980,7 +984,7 @@ ABSTRACT_TYPE(/area/adventure)
 	New()
 		..()
 
-		SPAWN_DBG(6 SECONDS)
+		SPAWN(6 SECONDS)
 			if (!helldrone_awake_sound)
 				helldrone_awake_sound = new/sound()
 				helldrone_awake_sound.file = 'sound/machines/giantdrone_loop.ogg'
@@ -1011,7 +1015,7 @@ ABSTRACT_TYPE(/area/adventure)
 			..()
 			if (isliving(O) && !helldrone_awake)
 				helldrone_awake = 1
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					helldrone_wakeup()
 					src.process()
 
@@ -1048,7 +1052,7 @@ ABSTRACT_TYPE(/area/adventure)
 					helldrone_awake_sound.volume = 60
 					H << helldrone_awake_sound
 					if(S)
-						SPAWN_DBG(sound_delay)
+						SPAWN(sound_delay)
 							H << S
 
 /area/helldrone/core
@@ -1312,6 +1316,10 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/secbot_academy
 	name = "Securitron Academy"
 	icon_state = "red"
+
+/area/prefab/art_workshop
+	name = "The Pastel Space Workshop"
+	icon_state = "purple"
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
@@ -1974,6 +1982,10 @@ ABSTRACT_TYPE(/area/station/hallway/secondary)
 
 /area/station/hallway/secondary/shuttle
 	name = "Shuttle Bay"
+	icon_state = "shuttle3"
+
+/area/station/hallway/secondary/researchshuttle
+	name = "Research Transport Dock"
 	icon_state = "shuttle3"
 
 /area/station/mailroom
@@ -2704,6 +2716,8 @@ ABSTRACT_TYPE(/area/station/security)
 		name = "East Hallway Security Checkpoint"
 /area/station/security/checkpoint/medical
 		name = "Medical Security Checkpoint"
+/area/station/security/checkpoint/research
+		name = "Research Security Checkpoint"
 
 /area/station/security/armory //what the fuck this is not the real armory???
 	name = "Armory" //ai_monitored/armory is, shitty ass code
@@ -3179,6 +3193,9 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/station/routing/airbridge
 		name = "Airbridge Router"
 
+/area/station/routing/sortingRoom
+		name = "Mail Sorting Room"
+
 /// Off-station research outpost. Used for Cog2.
 /area/research_outpost
 	name = "Research Outpost"
@@ -3254,6 +3271,10 @@ ABSTRACT_TYPE(/area/station/catwalk)
 		name = "firing range"
 		icon_state = "blue"
 
+/area/syndicate_station/assault_pod
+		name = "forward assault pod"
+		icon_state = "red"
+
 /area/syndicate_station/medbay
 		name = "medical bay"
 		icon_state = "purple"
@@ -3286,7 +3307,7 @@ ABSTRACT_TYPE(/area/station/ai_monitored)
 /area/station/ai_monitored/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
+	SPAWN(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return
@@ -3344,7 +3365,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 /area/station/turret_protected/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
+	SPAWN(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return
@@ -3648,7 +3669,7 @@ ABSTRACT_TYPE(/area/mining)
 		luminosity = 0
 	global.area_list_is_up_to_date = 0
 
-	SPAWN_DBG(1.5 SECONDS)
+	SPAWN(1.5 SECONDS)
 		src.power_change()		// all machines set to current power level, also updates lighting icon
 
 /**
@@ -3713,7 +3734,9 @@ ABSTRACT_TYPE(/area/mining)
   * Updates the icon of the area. Mainly used for flashing it red or blue. See: old party lights
   */
 /area/update_icon()
-	if ((fire || eject) && power_environ)
+	if(irradiated) //From a radiation blowout event
+		icon_state = "blowout"
+	else if ((fire || eject) && power_environ)
 		if(fire && !eject)
 			icon_state = null
 		else if(!fire && eject)
@@ -5176,7 +5199,7 @@ area/station/security/visitation
 /area/station2/ai_monitored/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
+	SPAWN(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return
@@ -5224,7 +5247,7 @@ area/station/security/visitation
 /area/station2/turret_protected/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
+	SPAWN(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return

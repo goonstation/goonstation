@@ -1,5 +1,5 @@
 /obj/grille
-	desc = "A sturdy metal mesh. Blocks large objects, but lets small items, gas, or energy beams through."
+	desc = "A metal mesh often built underneath windows to reinforce them. The holes let fluids, gasses, and energy beams through."
 	name = "grille"
 	icon = 'icons/obj/SL_windows_grilles.dmi'
 	icon_state = "grille0-0"
@@ -26,7 +26,7 @@
 	New()
 		..()
 		if(src.auto)
-			SPAWN_DBG(0) //fix for sometimes not joining on map load
+			SPAWN(0) //fix for sometimes not joining on map load
 				if (map_setting && ticker)
 					src.update_neighbors()
 
@@ -139,7 +139,7 @@
 			cut_resist = material.hasProperty("hard") ? material.getProperty("hard") : cut_resist
 			blunt_resist = material.hasProperty("density") ? material.getProperty("density") : blunt_resist
 			corrode_resist = material.hasProperty("corrosion") ? material.getProperty("corrosion") : corrode_resist
-			//temp_resist = material.hasProperty(PROP_MELTING) ? material.getProperty(PROP_MELTING) : temp_resist
+			//temp_resist = material.hasProperty(PROP_MOB_MELTING) ? material.getProperty(PROP_MOB_MELTING) : temp_resist
 			if (blunt_resist != 0) blunt_resist /= 2
 
 	damage_blunt(var/amount)
@@ -237,8 +237,6 @@
 
 		src.damage_blunt(5)
 
-		return
-
 	blob_act(var/power)
 		src.damage_blunt(3 * power / 20)
 
@@ -255,7 +253,28 @@
 			if(3.0)
 				src.damage_blunt(7)
 				src.damage_heat(7)
-		return
+
+	bullet_act(obj/projectile/P)
+		..()
+		var/damage_unscaled = P.power * P.proj_data.ks_ratio //stam component does nothing- can't tase a grille
+		switch(P.proj_data.damage_type)
+			if (D_PIERCING)
+				src.damage_blunt(damage_unscaled)
+				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
+			if (D_BURNING)
+				src.damage_heat(damage_unscaled / 2)
+			if (D_KINETIC)
+				src.damage_blunt(damage_unscaled / 2)
+				if (damage_unscaled > 10)
+					var/datum/effects/system/spark_spread/sparks = new /datum/effects/system/spark_spread
+					sparks.set_up(2, null, src) //sparks fly!
+					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 40, 1)
+			if (D_ENERGY)
+				src.damage_heat(damage_unscaled / 4)
+			if (D_SPECIAL) //random guessing
+				src.damage_blunt(damage_unscaled / 4)
+				src.damage_heat(damage_unscaled / 8)
+			//nothing for radioactive (useless) or slashing (unimplemented)
 
 	reagent_act(var/reagent_id,var/volume)
 		if (..())
@@ -277,6 +296,10 @@
 		src.visible_message("<span class='alert'><B>[src] was hit by [AM].</B></span>")
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 		if (ismob(AM))
+			if(src?.material.hasProperty("electrical"))
+				shock(AM, 100 - (60 - src.material.getProperty("electrical")))  // sure loved people being able to throw corpses into these without any consequences.
+			else
+				shock(AM, 100) // no electrical stat means that it returns -1, default value is 60
 			damage_blunt(5)
 		else if (isobj(AM))
 			var/obj/O = AM
@@ -365,7 +388,7 @@
 					if(win_thin)
 						WI.set_dir(win_dir)
 						WI.ini_dir = win_dir
-					logTheThing("station", usr, null, "builds a [WI.name] (<b>Material:</b> [WI.material && WI.material.mat_id ? "[WI.material.mat_id]" : "*UNKNOWN*"]) at ([showCoords(usr.x, usr.y, usr.z)] in [usr.loc.loc])")
+					logTheThing("station", usr, null, "builds a [WI.name] (<b>Material:</b> [WI.material && WI.material.mat_id ? "[WI.material.mat_id]" : "*UNKNOWN*"]) at ([log_loc(usr)] in [usr.loc.loc])")
 				else
 					user.show_text("<b>Error:</b> Couldn't spawn window. Try again and please inform a coder if the problem persists.", "red")
 					return
@@ -375,7 +398,9 @@
 			else
 				..()
 				return
-
+		else if (istype(W, /obj/item/gun))
+			var/obj/item/gun/G = W
+			G.shoot_point_blank(src, user)
 		// electrocution check
 
 		var/OSHA_is_crying = 1
@@ -518,14 +543,28 @@
 
 		return src.electrocute(user, prb, net, ignore_gloves)
 
+	proc/lightningrod(lpower)
+		if (!anchored)
+			return FALSE
+		var/net = get_connection()
+		if (!powernets[net])
+			return FALSE
+		if (src?.material.hasProperty("electrical")) // if the material being checked does not have the stat set, it will return -1 which is bad
+			powernets[net].newavail += lpower / 100 * (100 - src.material.getProperty("electrical"))
+		else
+			powernets[net].newavail += lpower / 100 * (100 - 60) // electrical default value is 60 according to Mat_Properties.dm
+
 	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
+			var/obj/projectile/P = mover
 			if (density)
-				return prob(50)
-			return 1
+				if(P.proj_data.damage_type & D_RADIOACTIVE) // this shit isn't lead-lined
+					return TRUE
+				return prob(max(25, 1 - P.power))//big bullet = more chance to hit grille. 25% minimum
+			return TRUE
 
 		if (density && istype(mover, /obj/window))
-			return 1
+			return TRUE
 
 		return ..()
 
@@ -536,7 +575,7 @@
 				if (!isliving(AM) || isintangible(AM)) // I assume this was left out by accident (Convair880).
 					return
 				var/mob/M = AM
-				if (M.client && M.client.flying || (ismob(M) && HAS_MOB_PROPERTY(M, PROP_NOCLIP))) // noclip
+				if (M.client && M.client.flying || (ismob(M) && HAS_ATOM_PROPERTY(M, PROP_MOB_NOCLIP))) // noclip
 					return
 				var/s_chance = 10
 				if (M.m_intent != "walk") // move carefully

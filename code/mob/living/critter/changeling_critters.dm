@@ -142,16 +142,16 @@
 		..()
 
 	proc/stop_sprint()
-		APPLY_MOB_PROPERTY(src, PROP_CANTSPRINT, src.type)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT, src.type)
 
 	proc/enable_sprint()
-		REMOVE_MOB_PROPERTY(src, PROP_CANTSPRINT, src.type)
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT, src.type)
 
 	special_movedelay_mod(delay,space_movement,aquatic_movement)
 		.= delay
 		if (src.lying)
 			. += 14
-		if (HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
+		if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
 			. += 7
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -178,7 +178,7 @@
 
 						src.icon_state = "[icon_prefix]handspider-flip"
 						animate_handspider_flipoff(src, prob(50) ? "L" : "R", 1, 0)
-						SPAWN_DBG(0.7 SECONDS)
+						SPAWN(0.7 SECONDS)
 							//Adding check for icon_state in case they die mid-flipoff (heck)
 							if(!isdead(src)) src.icon_state = "[icon_prefix]handspider"
 						//Flipoff

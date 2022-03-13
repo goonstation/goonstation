@@ -2,11 +2,14 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/old_invis = null
 
+TYPEINFO(/datum/component/loc_invisibility)
+	initialization_args = list()
+
 /datum/component/loc_invisibility/Initialize()
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, .proc/on_set_loc)
-	RegisterSignal(parent, COMSIG_MOB_PROP_INVISIBILITY, .proc/on_invis_change)
+	RegisterSignal(parent, COMSIG_ATOM_PROP_MOB_INVISIBILITY, .proc/on_invis_change)
 
 /datum/component/loc_invisibility/RegisterWithParent()
 	. = ..()
@@ -28,5 +31,5 @@
 		M.loc.invisibility = M.invisibility
 
 /datum/component/loc_invisibility/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOB_PROP_INVISIBILITY))
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_SET_LOC, COMSIG_ATOM_PROP_MOB_INVISIBILITY))
 	. = ..()

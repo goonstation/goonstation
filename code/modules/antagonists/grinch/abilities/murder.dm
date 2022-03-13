@@ -1,6 +1,7 @@
 /datum/targetable/grinch/instakill
 	name = "Murder"
 	desc = "Induces instant cardiac arrest in a target."
+	icon_state = "grinchmurder"
 	targeted = 1
 	target_anything = 0
 	target_nodamage_check = 1

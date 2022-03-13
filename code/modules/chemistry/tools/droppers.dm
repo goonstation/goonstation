@@ -21,6 +21,7 @@
 	var/transfer_mode = TO_SELF
 
 	on_reagent_change()
+		..()
 		src.underlays = null
 		if (src.reagents.total_volume)
 			if (!src.fluid_image)
@@ -93,7 +94,7 @@
 					src.reagents.reaction(target, TOUCH, t) // Modify it so that the reaction only happens with the actual transferred amount.
 
 				src.log_me(user, target)
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					if (src?.reagents && target?.reagents)
 						src.reagents.trans_to(target, t)
 

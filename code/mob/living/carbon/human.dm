@@ -73,7 +73,7 @@
 	var/ignore_organs = 0 // set to 1 to basically skip the handle_organs() proc
 	var/last_eyes_blinded = 0 // used in handle_blindness_overlays() to determine if a change is needed!
 
-	var/obj/on_chair = 0
+	var/obj/on_chair = null
 	var/simple_examine = 0
 
 	var/last_cluwne_noise = 0 // used in /proc/process_accents() to keep cluwnes from making constant fucking noise
@@ -195,13 +195,13 @@
 		sims = new /datum/simsHolder/human(src)
 #endif
 
-	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",10)
+	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_mon)
 
-	health_implant = image('icons/effects/healthgoggles.dmi',src,"100",10)
+	health_implant = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_implant)
 
-	arrestIcon = image('icons/effects/sechud.dmi',src,null,10)
+	arrestIcon = image('icons/effects/sechud.dmi',src,null,EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_image(arrestIcon)
 
 	src.organHolder = new(src)
@@ -284,16 +284,6 @@
 		if (!r_arm) r_arm = new /obj/item/parts/human_parts/arm/right(holder, AHolLimb)
 		if (!l_leg) l_leg = new /obj/item/parts/human_parts/leg/left(holder, AHolLimb)
 		if (!r_leg) r_leg = new /obj/item/parts/human_parts/leg/right(holder, AHolLimb)
-		SPAWN_DBG(5 SECONDS)
-			if (holder && (!l_arm || !r_arm || !l_leg || !r_leg))
-				logTheThing("debug", holder, null, "<B>SpyGuy/Limbs:</B> [src] is missing limbs after creation for some reason - recreating.")
-				create(AHolLimb)
-				if (holder)
-					// fix for "Cannot execute null.update body()".when mob is deleted too quickly after creation
-					holder.update_body()
-					if (holder.client)
-						holder.next_move = world.time + 7
-						//Fix for not being able to move after you got new limbs.
 
 	proc/mend(var/howmany = 4)
 		if (!holder)
@@ -657,15 +647,15 @@
 
 		else
 		//Changelings' heads pop off and crawl away - but only if they're not gibbed and have some spare DNA points. Oy vey!
-			SPAWN_DBG(0)
+			SPAWN(0)
 				emote("deathgasp")
 				src.visible_message("<span class='alert'><B>[src]</B> head starts to shift around!</span>")
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
-				sleep(20 SECONDS)
 				var/datum/mind/M = src.mind
-				if(!M || M.disposed)
+				sleep(20 SECONDS)
+				if(!M || M.disposed || M.current != src || isalive(src))
 					return
-				if (M?.current)
+				if (M.current)
 					M.current.show_text("<b>We released a headspider, using up some of our DNA reserves.</b>", "blue")
 				src.visible_message("<span class='alert'><B>[src]</B> head detaches, sprouts legs and wanders off looking for food!</span>")
 				//make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards
@@ -743,7 +733,9 @@
 		else if (src.mind.master)
 			remove_mindslave_status(src, "otherslave", "death")
 #ifdef DATALOGGER
-		game_stats.Increment("playerdeaths")
+		if (src.mind.ckey)
+			// game_stats.Increment("playerdeaths")
+			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
 #endif
 
 	logTheThing("combat", src, null, "dies [log_health(src)] at [log_loc(src)].")
@@ -783,7 +775,7 @@
 			break
 
 	if (!cancel && !abandon_allowed)
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			cancel = 0
 			for (var/client/C)
 				if (!C.mob) continue
@@ -794,7 +786,7 @@
 			if (!cancel && !abandon_allowed)
 				boutput(world, "<B>Everyone is dead! Resetting in 30 seconds!</B>")
 
-				SPAWN_DBG(30 SECONDS)
+				SPAWN(30 SECONDS)
 					logTheThing("diary", null, null, "Rebooting because of no live players", "game")
 					Reboot_server()
 #endif
@@ -880,14 +872,14 @@
 		src.unkillable = 0 //Don't want this lying around to repeatedly die or whatever.
 		src.spell_soulguard = 0 // clear this as well
 		src = null //Detach this, what if we get deleted before the animation ends??
-		SPAWN_DBG(0.7 SECONDS) //Length of animation.
+		SPAWN(0.7 SECONDS) //Length of animation.
 			newbody.set_loc(animation.loc)
 			qdel(animation)
 	else
 		src.unkillable = 0
 		src.spell_soulguard = 0
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
-		SPAWN_DBG(2.2 SECONDS) // Has to at least match the organ/limb replacement stuff (Convair880).
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
+		SPAWN(2.2 SECONDS) // Has to at least match the organ/limb replacement stuff (Convair880).
 			if (src) qdel(src)
 
 	return
@@ -1014,7 +1006,7 @@
 	..()
 	var/turf/thrown_from = get_turf(src)
 	src.throw_mode_off()
-	if (HAS_MOB_PROPERTY(src, PROP_CANTTHROW))
+	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTTHROW))
 		return
 	if (src.stat)
 		return
@@ -1198,16 +1190,18 @@
 			S.move_trigger(src, ev)
 
 
-/mob/living/carbon/human/UpdateName()
-	var/see_face = 1
+/mob/living/carbon/human/proc/face_visible()
+	. = TRUE
 	if (istype(src.wear_mask) && !src.wear_mask.see_face)
-		see_face = 0
+		. = FALSE
 	else if (istype(src.head) && !src.head.see_face)
-		see_face = 0
+		. = FALSE
 	else if (istype(src.wear_suit) && !src.wear_suit.see_face)
-		see_face = 0
+		. = FALSE
+
+/mob/living/carbon/human/UpdateName()
 	var/id_name = src.wear_id?:registered
-	if (!see_face)
+	if (!face_visible())
 		if (id_name)
 			src.name = "[src.name_prefix(null, 1)][id_name][src.name_suffix(null, 1)]"
 			src.update_name_tag(id_name)
@@ -1354,7 +1348,7 @@
 	return
 	//	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
 
-/mob/living/carbon/human/MouseDrop(mob/M as mob)
+/mob/living/carbon/human/mouse_drop(mob/M as mob)
 	..()
 	if (M != usr) return
 	if (usr == src) return
@@ -1408,7 +1402,7 @@
 
 	/*
 	if (src.ckey == "wonkmin") //If you mention this i will shank you.
-		SPAWN_DBG(15 SECONDS)
+		SPAWN(15 SECONDS)
 			src.make_critter(/mob/living/critter/small_animal/bird/owl/large/hooter)
 	*/
 	return
@@ -1727,7 +1721,7 @@
 	speech_bubble.icon_state = "speech"
 	UpdateOverlays(speech_bubble, "speech_bubble")
 	var/speech_bubble_time = src.last_typing
-	SPAWN_DBG(1.5 SECONDS)
+	SPAWN(1.5 SECONDS)
 		if(speech_bubble_time == src.last_typing)
 			UpdateOverlays(null, "speech_bubble")
 
@@ -1755,7 +1749,7 @@
 	if (!W)
 		return
 
-	hud.remove_item(W) // eh
+	hud?.remove_item(W) // eh
 
 	if (isitem(W))
 		if (W.two_handed) //This runtime is caused by grabbing a human.
@@ -1973,11 +1967,12 @@
 		I.add_fingerprint(src)
 		I.set_loc(src)
 		src.update_inhands()
-		hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["twohand"])
-		hud.set_visible(hud.lhand, 0)
-		hud.set_visible(hud.rhand, 0)
-		hud.set_visible(hud.twohandl, 1)
-		hud.set_visible(hud.twohandr, 1)
+		if (hud)
+			hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["twohand"])
+			hud.set_visible(hud.lhand, 0)
+			hud.set_visible(hud.rhand, 0)
+			hud.set_visible(hud.twohandl, 1)
+			hud.set_visible(hud.twohandr, 1)
 
 		var/icon/IC = new/icon(I.icon)
 		var/width = IC.Width()
@@ -2005,7 +2000,7 @@
 					I.add_fingerprint(src)
 					I.set_loc(src)
 					src.update_inhands()
-					hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["lhand"])
+					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["lhand"])
 					return 1
 				else
 					return 0
@@ -2020,7 +2015,7 @@
 					I.add_fingerprint(src)
 					I.set_loc(src)
 					src.update_inhands()
-					hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["rhand"])
+					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["rhand"])
 					return 1
 				else
 					return 0
@@ -2351,7 +2346,7 @@
 
 		var/loc = usr.loc
 
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			if (usr.loc != loc || H.loc != loc)
 				boutput(usr, "<span class='alert'>Your consumption of [H] was interrupted!</span>")
 				return
@@ -2360,7 +2355,7 @@
 
 			if (prob(10) && !H.mutantrace)
 				usr.reagents.add_reagent("prions", 10)
-				SPAWN_DBG(rand(20,50)) boutput(usr, "<span class='alert'>You don't feel so good.</span>")
+				SPAWN(rand(20,50)) boutput(usr, "<span class='alert'>You don't feel so good.</span>")
 
 			H.TakeDamageAccountArmor("chest", rand(30,50), 0, 0, DAMAGE_STAB)
 			if (!isdead(H) && prob(50))
@@ -2638,12 +2633,12 @@
 	game_stats.Increment("violence")
 #endif
 
-	src.death(1)
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (ishuman(src))
 		animation = new(src.loc)
@@ -2653,7 +2648,7 @@
 		flick("spidergib", animation)
 		src.visible_message("<span class='alert'><font size=4><B>A swarm of spiders erupts from [src]'s mouth and devours them! OH GOD!</B></font></span>", "<span class='alert'><font size=4><B>A swarm of spiders erupts from your mouth! OH GOD!</B></font></span>", "<span class='alert'>You hear a vile chittering sound.</span>")
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 100, 1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			make_cleanable(/obj/decal/cleanable/vomit/spiders,src.loc)
 			for (var/i in 1 to 4)
 				new /obj/critter/spider/baby(src.loc)
@@ -2664,7 +2659,7 @@
 	if (animation)
 		animation.delaydispose()
 
-	SPAWN_DBG(1.5 SECONDS)
+	SPAWN(1.5 SECONDS)
 		qdel(src)
 
 /mob/living/carbon/human/get_equipped_items()
@@ -2939,7 +2934,7 @@
 /mob/living/carbon/human/attack_hand(mob/M)
 	if(ishuman(M) && M == src && M.a_intent == "harm")
 		var/mob/living/carbon/human/H = M
-		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+		if(HAS_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM))
 			boutput(H, "You can't bring yourself to attack yourself!")
 			return
 	..()
@@ -2952,7 +2947,7 @@
 		return
 	if(ishuman(M) && M == src && (W.force > 0))
 		var/mob/living/carbon/human/H = M
-		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+		if(HAS_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM))
 			boutput(H, "You can't bring yourself to attack yourself!")
 			return
 	..()
@@ -2967,6 +2962,10 @@
 			. = 1
 		else if (langname in mutantrace.understood_languages)
 			. = 1
+		else if (istype(src.wear_mask, /obj/item/clothing/mask/monkey_translator))
+			var/obj/item/clothing/mask/monkey_translator/translator = src.wear_mask
+			if (langname == translator.new_language)
+				. = 1
 		else
 			. = 0
 	else
@@ -3116,8 +3115,8 @@
 	// If attacker is targeting the chest and a chest item exists, activate it.
 	if (M && M.zone_sel && M.zone_sel.selecting == "chest" && src.chest_item != null && (src.chest_item in src.contents))
 		logTheThing("combat", M, src, "activates [src.chest_item] embedded in [src]'s chest cavity at [log_loc(src)]")
-		SPAWN_DBG(0) //might sleep/input/etc, and we don't want to hold anything up
-			src.chest_item.attack_self(src)
+		SPAWN(0) //might sleep/input/etc, and we don't want to hold anything up
+			src.chest_item.AttackSelf(src)
 	return
 
 /mob/living/carbon/human/proc/chest_item_dump_reagents_on_flip()
@@ -3188,10 +3187,10 @@
 		// Make copy of item on ground
 		var/obj/item/outChestItem = src.chest_item
 		outChestItem.set_loc(get_turf(src))
-		src.chest_item.attack_self(src)
+		src.chest_item.AttackSelf(src)
 		src.chest_item = null
 		return
-	src.chest_item.attack_self(src)
+	src.chest_item.AttackSelf(src)
 
 /mob/living/carbon/human/attackby(obj/item/W, mob/M)
 	if (src.parry_or_dodge(M))

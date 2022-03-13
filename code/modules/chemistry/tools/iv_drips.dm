@@ -27,6 +27,7 @@
 	var/slashed = 0
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 		if (src.stand)
 			src.stand.UpdateIcon()
@@ -64,7 +65,7 @@
 
 	dropped(mob/user)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.UpdateIcon()
 
 	attack_self(mob/user as mob)
@@ -271,7 +272,7 @@
 			return
 		else if (src.IV)
 			//src.IV.Attackby(W, user)
-			W.afterattack(src.IV, user)
+			W.AfterAttack(src.IV, user)
 			return
 		else
 			return ..()
@@ -289,14 +290,14 @@
 		else
 			return ..()
 
-	MouseDrop(atom/over_object as mob|obj)
+	mouse_drop(atom/over_object as mob|obj)
 		var/atom/movable/A = over_object
 		if (usr && !usr.restrained() && !usr.stat && in_interact_range(src, usr) && in_interact_range(over_object, usr) && istype(A))
 			if (src.IV && ishuman(over_object))
 				src.IV.attack(over_object, usr)
 				return
 			else if (src.IV && over_object == src)
-				src.IV.attack_self(usr)
+				src.IV.AttackSelf(usr)
 				return
 			else if (istype(over_object, /obj/stool/bed) || istype(over_object, /obj/stool/chair) || istype(over_object, /obj/machinery/optable))
 				if (A == src.paired_obj && src.detach_from())

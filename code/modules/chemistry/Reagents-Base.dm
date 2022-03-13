@@ -189,7 +189,7 @@ datum
 							if(prob(4))
 								H.change_misstep_chance(20 * mult)
 							if(probmult(6))
-								H.visible_message("<span class='alert'>[H] pukes all over \himself.</span>")
+								H.visible_message("<span class='alert'>[H] pukes all over [himself_or_herself(H)].</span>")
 								H.vomit()
 							if(prob(15))
 								H.make_dizzy(5 * mult)
@@ -423,7 +423,7 @@ datum
 					if(holder)
 						var/list/covered = holder.covered_turf()
 						for(var/turf/t in covered)
-							SPAWN_DBG(1 DECI SECOND) fireflash(t, clamp(((volume/covered.len)/15), 0, 6))
+							SPAWN(1 DECI SECOND) fireflash(t, clamp(((volume/covered.len)/15), 0, 6))
 				if(holder)
 					holder.del_reagent(id)
 
@@ -545,17 +545,18 @@ datum
 			pathogen_nutrition = list("sugar")
 			taste = "sweet"
 			stun_resist = 6
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_sugar", 2)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_sugar", 2)
 				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_sugar")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_sugar")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)

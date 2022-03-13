@@ -154,7 +154,7 @@
 	dropped(mob/user as mob) //volatility 100
 		..()
 
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			if(src.loc != user)
 				if(src.inuse)
 					src.inuse = 0
@@ -163,7 +163,7 @@
 	relaymove(var/mob/user, direction)
 		if(can_move&&(!istype(src.loc,/obj)&&(!istype(src.loc,/mob))))
 			can_move = 0
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				can_move = 1
 			step(src,direction)
 		return
@@ -280,7 +280,7 @@
 				redraw = 0
 				reference = src
 			if("Traitor")
-				var/list/buylist = typesof(/datum/syndicate_buylist)
+				var/list/buylist = concrete_typesof(/datum/syndicate_buylist)
 				var/datum/syndicate_buylist/thing = pick(buylist)
 				var/datum/syndicate_buylist/thing2 = new thing
 				if(thing2.item != null)

@@ -30,7 +30,7 @@
 
 	proc/checkhealth()
 		if(src.health <= 0)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				gib(src.loc)
 				ReplaceWithSpace()
 

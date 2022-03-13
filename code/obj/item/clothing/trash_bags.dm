@@ -3,7 +3,7 @@
 	name = "trash bag"
 	desc = "A flimsy bag for filling with things that are no longer wanted."
 	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
 	icon_state = "trashbag-f"
 	uses_multiple_icon_states = 1
@@ -124,7 +124,7 @@
 				src.loc.visible_message("\An [A] falls out of [src]!")
 			A.set_loc(get_turf(src))
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		..()
 		if (!usr || usr.stat || usr.restrained() || get_dist(src, usr) > 1 || get_dist(usr, over_object) > 1)
 			return

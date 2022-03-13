@@ -138,6 +138,12 @@ var/mutable_appearance/fluid_ma
 				src.HasEntered(O,O.loc)
 		*/
 
+	proc/trigger_fluid_enter()
+		for(var/atom/A in src.loc)
+			if (A.event_handler_flags & USE_FLUID_ENTER)
+				A.EnteredFluid(src, src.loc)
+		src.loc?.EnteredFluid(src, src.loc)
+
 	proc/turf_remove_cleanup(turf/the_turf)
 		the_turf.active_liquid = null
 
@@ -198,7 +204,7 @@ var/mutable_appearance/fluid_ma
 		if (istype(W,/obj/item/rcd) || istype(W,/obj/item/tile) || istype(W,/obj/item/sheet) || ispryingtool(W) || istype(W,/obj/item/pen))
 			var/turf/T = get_turf(src)
 			T.Attackby(W,user)
-			W.afterattack(T,user)
+			W.AfterAttack(T,user)
 			return
 
 		.= ..()
@@ -409,10 +415,7 @@ var/mutable_appearance/fluid_ma
 						else
 							step_away(push_thing,src)
 
-					for(var/atom/A in F.loc)
-						if (A.event_handler_flags & USE_FLUID_ENTER)
-							A.EnteredFluid(F, F.loc)
-					F.loc.EnteredFluid(F, F.loc)
+					F.trigger_fluid_enter()
 
 		if (spawned_any && prob(40))
 			playsound( src.loc, 'sound/misc/waterflow.ogg', 30,0.7,7)
@@ -811,6 +814,9 @@ var/mutable_appearance/fluid_ma
 
 
 	var/do_reagent_reaction = 1
+
+	if(F.my_depth_level == 1 && src.shoes?.permeability_coefficient < 1) //sandals do not help
+		do_reagent_reaction = 0
 
 	if (F.my_depth_level == 2 || F.my_depth_level == 3)
 		if (src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01)

@@ -254,16 +254,15 @@ datum
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/datum/reagents/myholder = holder
-				if(!holder?.my_atom?.is_open_container() && !istype(holder, /datum/reagents/fluid_group))
-					if(holder.my_atom)
-						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
+				var/vol = volume
+				myholder.del_reagent(id)
+				if(!myholder?.my_atom?.is_open_container() && !istype(myholder, /datum/reagents/fluid_group))
+					if(myholder.my_atom)
+						for(var/mob/M in AIviewers(5, get_turf(myholder.my_atom)))
 							boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
 				else if(!ignited)
 					ignited = 1
-					var/vol = volume
-					SPAWN_DBG(1 DECI SECOND)
-						myholder.smoke_start(vol) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
-				myholder.del_reagent(id)
+					myholder.smoke_start(vol) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 
 		combustible/propellant
 			name = "aerosol propellant"
@@ -286,7 +285,7 @@ datum
 				else if(!ignited)
 					ignited = TRUE
 					var/vol = volume
-					SPAWN_DBG(1 DECI SECOND)
+					SPAWN(1 DECI SECOND)
 						myholder.smoke_start(vol,classic = 1) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 				myholder.del_reagent(id)
 
@@ -480,7 +479,7 @@ datum
 				//T.reagents.add_reagent("infernite", 5, null)
 				tfireflash(T, clamp(volume/10, 0, 8), 7000)
 				if(!istype(T, /turf/space))
-					SPAWN_DBG(max(10, rand(20))) // let's burn right the fuck through the floor
+					SPAWN(max(10, rand(20))) // let's burn right the fuck through the floor
 						switch(volume)
 							if(0 to 15)
 								if(prob(15))
@@ -557,8 +556,10 @@ datum
 				if(exposed_temperature < T0C)
 					if(holder)
 						var/list/covered = holder.covered_turf()
-						for(var/turf/t in covered)
-							explosion(t, t, 2, 3, 4, 1)
+						var/density = clamp(src.volume / length(covered), 0, 10)
+						for (var/turf/T in covered)//may need to further limit this
+							explosion_new(holder.my_atom, T, 62 * (density/10)**1.5, 1)
+
 						holder.del_reagent(id)
 
 			reaction_obj(var/obj/O, var/volume)
@@ -685,7 +686,8 @@ datum
 								if(holder.my_atom)
 									holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
 									// Added log entries (Convair880).
-									message_admins("Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
+									if(holder.my_atom.fingerprintslast || usr?.last_ckey)
+										message_admins("Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
 									logTheThing("bombing", holder.my_atom.fingerprintslast, null, "Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
 								else
 									turf.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
@@ -717,7 +719,7 @@ datum
 				if((M.health > 20) && (prob(33)))
 					M.take_toxin_damage(1 * mult)
 				if(probmult(1))
-					M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 					M.vomit()
 				..()
 
@@ -755,7 +757,7 @@ datum
 							continue
 
 					elecflash(location)
-					SPAWN_DBG(rand(5,15))
+					SPAWN(rand(5,15))
 						if(!holder || !holder.my_atom) return // runtime error fix
 						switch(our_amt)
 							if(0 to 20)
@@ -851,7 +853,7 @@ datum
 					explosion(holder.my_atom, holder.my_atom.loc, max_dev, max_heavy, max_light, max_flash)
 
 					var/datum/reagents/H = holder
-					SPAWN_DBG(0)
+					SPAWN(0)
 						H.del_reagent("nitrotri_wet")
 						H.del_reagent("nitrotri_dry")
 						H.del_reagent("nitrotri_parent")
@@ -882,7 +884,7 @@ datum
 
 			New()
 				..()
-				SPAWN_DBG(200 + rand(10, 600) * rand(1, 4)) //Random time until it becomes HIGHLY VOLATILE
+				SPAWN(200 + rand(10, 600) * rand(1, 4)) //Random time until it becomes HIGHLY VOLATILE
 					dry()
 
 		combustible/nitrogentriiodide/dry
@@ -896,7 +898,7 @@ datum
 
 			New()
 				..()
-				SPAWN_DBG(10 * rand(11,600)) //At least 11 seconds, at most 10 minutes
+				SPAWN(10 * rand(11,600)) //At least 11 seconds, at most 10 minutes
 					bang()
 
 			reaction_turf(var/turf/T, var/volume)

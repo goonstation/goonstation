@@ -83,7 +83,7 @@
 		if(proj_data)
 			proj_data.post_setup(src)
 		if (!QDELETED(src))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (!is_processing)
 					process()
 
@@ -487,7 +487,7 @@ datum/projectile
 		shot_sound_extrarange = 0 //should the sound have extra range?
 		shot_volume = 100		 // How loud the sound plays (thank you mining drills for making this a needed thing)
 		shot_number = 0          // How many projectiles should be fired, each will cost the full cost
-		shot_delay = 1          // Time between shots in a burst.
+		shot_delay = 0.1 SECONDS          // Time between shots in a burst.
 		damage_type = D_KINETIC  // What is our damage type
 		hit_type = null          // For blood system damage - DAMAGE_BLUNT, DAMAGE_CUT and DAMAGE_STAB
 		hit_ground_chance = 0    // With what % do we hit mobs laying down
@@ -497,7 +497,6 @@ datum/projectile
 		implanted                // Path of "bullet" left behind in the mob on successful hit
 		disruption = 0           // planned thing to deal with pod electronics / etc
 		zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
-		caliber = null
 
 		datum/material/material = null
 
@@ -606,7 +605,7 @@ datum/projectile/laser
 	impact_range = 16
 	ie_type = "E"
 
-datum/projectile/laser/pred
+datum/projectile/laser/plasma
 	impact_range = 2
 
 datum/projectile/laser/light
@@ -739,7 +738,7 @@ datum/projectile/snowball
 		return null
 	var/obj/projectile/Q = shoot_projectile_relay(S, DATA, T, remote_sound_source, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			for (var/i = 2, i < DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
 				shoot_projectile_relay(S, DATA, T, remote_sound_source, alter_proj = alter_proj)
@@ -752,7 +751,7 @@ datum/projectile/snowball
 		return null
 	var/obj/projectile/Q = shoot_projectile_relay_pixel(S, DATA, T, pox, poy, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
 				shoot_projectile_relay_pixel(S, DATA, T, pox, poy, alter_proj = alter_proj)
@@ -765,7 +764,7 @@ datum/projectile/snowball
 		return null
 	var/obj/projectile/Q = shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
 				shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle, alter_proj = alter_proj)
@@ -818,7 +817,7 @@ datum/projectile/snowball
 		return
 	var/obj/projectile/Q = shoot_projectile_XY_relay(S, DATA, xo, yo, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
 				shoot_projectile_XY_relay(S, DATA, xo, yo, alter_proj = alter_proj)

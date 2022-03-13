@@ -73,7 +73,7 @@
 		else if (isAI(src))
 			var/mob/living/silicon/ai/A = src
 			if (isAIeye(src))
-				var/mob/dead/aieye/AE = src
+				var/mob/living/intangible/aieye/AE = src
 				A = AE.mainframe
 			A.hud.remove_screen(C)
 
@@ -180,7 +180,7 @@
 
 	clicked(list/params)
 		if(action.checkRequirements(target, user)) // Let's just check again, just in case.
-			SPAWN_DBG(0)
+			SPAWN(0)
 				action.execute(target, user)
 			if (action.flick_on_click)
 				flick(action.flick_on_click, src)

@@ -33,7 +33,7 @@
 	for(i=0, i<src.number, i++)
 		if(src.total_smoke > 20)
 			return
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(holder)
 				src.location = get_turf(holder)
 			var/obj/effects/harmless_smoke/smoke = new /obj/effects/harmless_smoke

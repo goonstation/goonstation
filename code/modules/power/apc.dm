@@ -19,6 +19,7 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc
 	name = "area power controller"
+	desc = "The smaller, more numerous sibling of the SMES. Controls the power of entire rooms, and if the generator goes offline, can supply electricity from an internal cell."
 	icon_state = "apc0"
 	anchored = 1
 	plane = PLANE_NOSHADOW_ABOVE
@@ -182,7 +183,7 @@ var/zapLimiter = 0
 	terminal.set_dir(tdir)
 	terminal.master = src
 
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		src.update()
 
 /obj/machinery/power/apc/disposing()
@@ -303,7 +304,7 @@ var/zapLimiter = 0
 	src.lighting = 0
 	src.equipment = 0
 	src.environ = 0
-	SPAWN_DBG(1 MINUTE)
+	SPAWN(1 MINUTE)
 		src.equipment = 3
 		src.environ = 3
 	return
@@ -489,11 +490,18 @@ var/zapLimiter = 0
 				donor_cell = src.cell
 				recipient_cell = S.cell
 
+			if (isnull(donor_cell))
+				boutput(user, "<span class='alert'>You have no cell installed!</span>")
+				return
+			else if (isnull(recipient_cell))
+				boutput(user, "<span class='alert'>[jumper.positive? "[src] has" : "you have"] no cell installed!</span>")
+				return
+
 			var/overspill = 250 - recipient_cell.charge
-			if (!donor_cell) boutput(user, "<span class='alert'>You have no cell installed!</span>")
-			else if (!recipient_cell) boutput(user, "<span class='alert'>[jumper.positive? "[src] has" : "you have"] no cell installed!</span>")
-			else if (recipient_cell.charge >= recipient_cell.maxcharge) boutput(user, "<span class='notice'>[jumper.positive ? "[src]" : "Your"] cell is already fully charged.</span>")
-			else if (donor_cell.charge <= 250) boutput(user, "<span class='alert'>You do not have enough charge left to do this!</span>")
+			if (recipient_cell.charge >= recipient_cell.maxcharge)
+				boutput(user, "<span class='notice'>[jumper.positive ? "[src]" : "Your"] cell is already fully charged.</span>")
+			else if (donor_cell.charge <= 250)
+				boutput(user, "<span class='alert'>You do not have enough charge left to do this!</span>")
 			else if (overspill >= 250)
 				donor_cell.charge -= overspill
 				recipient_cell.charge += overspill
@@ -526,7 +534,7 @@ var/zapLimiter = 0
 		else if (setup_networkapc > 1)
 			boutput(user, "This APC doesn't have a local interface.")
 		else
-			if(src.allowed(usr))
+			if(src.allowed(user))
 				locked = !locked
 				boutput(user, "You [ locked ? "lock" : "unlock"] the APC interface.")
 				UpdateIcon()
@@ -935,20 +943,20 @@ var/zapLimiter = 0
 	switch(wireIndex)
 		if(APC_WIRE_IDSCAN)			//unlocks the APC for 30 seconds, if you have a better way to hack an APC I'm all ears
 			src.locked = 0
-			SPAWN_DBG(30 SECONDS)
+			SPAWN(30 SECONDS)
 				src.locked = 1
 				src.updateDialog()
 		if (APC_WIRE_MAIN_POWER1)
 			if(shorted == 0)
 				shorted = 1
-			SPAWN_DBG(2 MINUTES)
+			SPAWN(2 MINUTES)
 				if(shorted == 1)
 					shorted = 0
 				src.updateDialog()
 		if (APC_WIRE_MAIN_POWER2)
 			if(shorted == 0)
 				shorted = 1
-			SPAWN_DBG(2 MINUTES)
+			SPAWN(2 MINUTES)
 				if(shorted == 1)
 					shorted = 0
 				src.updateDialog()
@@ -956,7 +964,7 @@ var/zapLimiter = 0
 			if (src.aidisabled == 0)
 				src.aidisabled = 1
 			src.updateDialog()
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				if (src.aidisabled == 1)
 					src.aidisabled = 0
 				src.updateDialog()
@@ -1197,7 +1205,7 @@ var/zapLimiter = 0
 		perapc = terminal.powernet.perapc
 
 	if(zapLimiter < APC_ZAP_LIMIT_PER_5 && prob(6) && !shorted && avail() > 3000000)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(zapStuff())
 				zapLimiter += 1
 				sleep(5 SECONDS)
@@ -1342,7 +1350,7 @@ var/zapLimiter = 0
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
 		explosion(src, src.loc, 1, 2, 4, 6, 1)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			qdel(src)
 	else set_broken()
 	return
@@ -1351,7 +1359,7 @@ var/zapLimiter = 0
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
 		explosion(src, src.loc, 1, 2, 4, 6, 1)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			qdel(src)
 	else
 		switch(severity)
@@ -1372,7 +1380,7 @@ var/zapLimiter = 0
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
 		explosion(src, src.loc, 1, 2, 4, 6, 1)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			qdel (src)
 
 /obj/machinery/power/apc/blob_act(var/power)
@@ -1395,7 +1403,7 @@ var/zapLimiter = 0
 		return
 	if( cell?.charge>=20)
 		cell.charge-=20;
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for(var/obj/machinery/light/L in area)
 				if (L.type == /obj/machinery/light/emergency && omit_emergency_lights)
 					continue
@@ -1435,7 +1443,7 @@ var/zapLimiter = 0
 
 	if(signal.data["address_1"] != src.net_id)
 		if((signal.data["address_1"] == "ping") && signal.data["sender"])
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(target, "command", "ping_reply", "device", "PNET_PWR_CNTRL", "netid", src.net_id)
 
 		return
@@ -1450,7 +1458,7 @@ var/zapLimiter = 0
 
 				src.host_id = null
 				src.updateUsrDialog()
-				SPAWN_DBG(0.3 SECONDS)
+				SPAWN(0.3 SECONDS)
 					src.post_status(target, "command","term_disconnect")
 				return
 
@@ -1463,7 +1471,7 @@ var/zapLimiter = 0
 			if(signal.data["data"] != "noreply")
 				src.post_status(target, "command","term_connect","data","noreply","device","PNET_PWR_CNTRL")
 			//src.updateUsrDialog()
-			SPAWN_DBG(0.2 SECONDS)
+			SPAWN(0.2 SECONDS)
 				src.post_status(target,"command","term_message","data","command=register&data=[ckey("[src.area]")]")
 			return
 
@@ -1548,3 +1556,24 @@ var/zapLimiter = 0
 /obj/machinery/power/apc/powered()
 	//Always powered
 	return 1
+
+/obj/machinery/power/apc/proc/is_not_default()
+	var/vars_to_check = list("operating", "chargemode", "shorted", "equipment", "lighting", "environ", "coverlocked")
+
+	for (var/v in vars_to_check)
+		if (src.vars[v] != initial(src.vars[v]))
+			return TRUE
+
+	return FALSE
+
+/obj/machinery/power/apc/proc/set_default()
+	operating = TRUE
+	chargemode = TRUE
+	if (!shorted)
+		equipment = 3
+		lighting = 3
+		environ = 3
+	coverlocked = TRUE
+
+	update()
+	UpdateIcon()

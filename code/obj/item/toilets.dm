@@ -39,7 +39,7 @@ TOILET
 
 	return ..()
 
-/obj/item/storage/toilet/MouseDrop(atom/over_object, src_location, over_location)
+/obj/item/storage/toilet/mouse_drop(atom/over_object, src_location, over_location)
 	if (usr && over_object == usr && in_interact_range(src, usr) && iscarbon(usr) && !usr.stat)
 		usr.visible_message("<span class='alert'>[usr] [pick("shoves", "sticks", "stuffs")] [his_or_her(usr)] hand into [src]!</span>")
 		playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
@@ -130,7 +130,7 @@ TOILET
 		src.visible_message("<span class='notice'>[head] floats up out of the clogged [src.name]!</span>")
 		for (var/mob/living/carbon/human/O in AIviewers(head, null))
 			if (prob(33))
-				O.visible_message("<span class='alert'>[O] pukes all over [him_or_her(O)]self. Thanks, [user].</span>",\
+				O.visible_message("<span class='alert'>[O] pukes all over [himself_or_herself(O)]. Thanks, [user].</span>",\
 				"<span class='alert'>You feel ill from watching that. Thanks, [user].</span>")
 				O.vomit()
 	else
@@ -145,13 +145,13 @@ TOILET
 			head.visible_message("<span class='notice'>[head] emerges from [picked]!</span>")
 		for (var/mob/living/carbon/human/O in AIviewers(head, null))
 			if (prob(33))
-				O.visible_message("<span class='alert'>[O] pukes all over [him_or_her(O)]self. Thanks, [user].</span>",\
+				O.visible_message("<span class='alert'>[O] pukes all over [himself_or_herself(O)]. Thanks, [user].</span>",\
 				"<span class='alert'>You feel ill from watching that. Thanks, [user].</span>")
 				O.vomit()
 
 	playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 	health_update_queue |= user
-	SPAWN_DBG(10 SECONDS)
+	SPAWN(10 SECONDS)
 		if (user)
 			user.suiciding = 0
 	return 1

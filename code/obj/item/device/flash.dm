@@ -1,6 +1,6 @@
 /obj/item/device/flash
 	name = "flash"
-	desc = "A device that emits an extremely bright light when used. Useful for briefly stunning people or starting a dance party."
+	desc = "A device that emits a complicated strobe when used, causing disorientation. Useful for stunning people or starting a dance party."
 	uses_multiple_icon_states = 1
 	icon_state = "flash"
 	force = 1
@@ -114,7 +114,7 @@
 			logTheThing("combat", user, M, "tries to blind [constructTarget(M,"combat")] with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				if (src) qdel(src)
 			return
 		if (src.cell)
@@ -131,7 +131,7 @@
 
 	// Play animations.
 	if (isrobot(user))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/atom/movable/overlay/animation = new(user.loc)
 			animation.layer = user.layer + 1
 			animation.icon_state = "blank"
@@ -230,7 +230,7 @@
 			logTheThing("combat", user, null, "tries to area-flash with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				if (src) qdel(src)
 			return
 
@@ -240,7 +240,7 @@
 	src.l_time = world.time
 
 	if (isrobot(user))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/atom/movable/overlay/animation = new(user.loc)
 			animation.layer = user.layer + 1
 			animation.icon_state = "blank"
@@ -299,7 +299,7 @@
 				var/list/U = R.get_unconvertables()
 				if (!H.client || !H.mind)
 					user.show_text("[H] is braindead and cannot be converted.", "red")
-				else if (locate(/obj/item/implant/antirev) in H.implant)
+				else if (locate(/obj/item/implant/counterrev) in H.implant)
 					user.show_text("There seems to be something preventing [H] from revolting.", "red")
 					.= 0.5
 					nostun = 1
@@ -385,7 +385,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(!src.cell)
 				src.cell = new /obj/item/cell(src)
 				src.cell.maxcharge = max_flash_power

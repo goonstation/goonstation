@@ -7573,7 +7573,7 @@
 	name = "Dockside Restroom"
 	})
 "ciU" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "It's all covered in a sticky mess, and there are chunks of uniform fused to the bone.";
 	name = "sticky skeleton"
 	},
@@ -9075,7 +9075,7 @@
 	pixel_x = 23;
 	pixel_y = 8
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition1";
 	pixel_x = 23
 	},
@@ -10825,6 +10825,10 @@
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
+	},
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
 	},
 /turf/simulated/floor/engine,
 /area/station/security/armory)
@@ -15300,7 +15304,7 @@
 /turf/simulated/floor/grey,
 /area/station/bridge)
 "eqc" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -18372,7 +18376,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "fkW" = (
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	desc = "A remote control switch for a Mass Driver. It's labeled DO NOT PUSH (except in case of emergency).";
 	id = "backup_plan";
 	name = "DO NOT PUSH";
@@ -22053,7 +22057,7 @@
 /obj/machinery/conveyor{
 	id = "qmsend"
 	},
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "manualshipping";
 	name = "Export Driver Override";
 	pixel_x = 24;
@@ -23489,7 +23493,7 @@
 	dir = 4;
 	name = "Chamber Inlet"
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition1";
 	pixel_x = -24;
 	pixel_y = -8
@@ -25611,7 +25615,7 @@
 /turf/simulated/floor/carpet/blue/fancy/innercorner/ne_sw,
 /area/station/chapel/sanctuary)
 "hhw" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -35133,6 +35137,10 @@
 /area/station/mining/refinery)
 "jTq" = (
 /obj/table/reinforced/auto,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 3;
+	pixel_y = 5
+	},
 /obj/item/storage/firstaid/regular,
 /turf/simulated/floor/purple/side,
 /area/station/science/artifact)
@@ -36764,7 +36772,7 @@
 /turf/simulated/floor,
 /area/station/mining/refinery)
 "kog" = (
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "kok" = (
@@ -38742,7 +38750,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "kSm" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /turf/simulated/floor/sanitary/white,
@@ -43201,7 +43209,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "lYT" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -44080,7 +44088,7 @@
 	pixel_x = -23;
 	pixel_y = 8
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition2";
 	pixel_x = -24;
 	pixel_y = -8
@@ -49609,7 +49617,7 @@
 	pixel_x = 23;
 	pixel_y = 8
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition2";
 	pixel_x = 23
 	},
@@ -53961,7 +53969,7 @@
 /turf/simulated/floor/stairs,
 /area/station/engine/engineering/ce)
 "oWM" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /turf/simulated/floor/sanitary/white,
@@ -55524,7 +55532,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "eng_ignition";
 	name = "Burn Chamber Ignition";
 	pixel_x = 7;
@@ -60301,7 +60309,7 @@
 	name = "Import Hatch Override";
 	pixel_x = 24
 	},
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "endp_qm_out";
 	name = "Cargo Driver Override";
 	pixel_x = 24;
@@ -65573,7 +65581,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "funerary_driver";
 	name = "Funerary Driver Activation";
 	pixel_x = -24
@@ -66064,7 +66072,7 @@
 	icon_state = "hvent";
 	name = "air vent"
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of a human. There seem to be a few bits missing."
 	},
 /obj/item/clothing/mask/breath,
@@ -68032,7 +68040,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "sMM" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/maintenance{
 	name = "Medical Booth Morgue"
@@ -76989,7 +76997,7 @@
 /turf/simulated/floor/grey,
 /area/station/storage/tools)
 "uZI" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "uZO" = (
@@ -78441,11 +78449,18 @@
 /area/station/engine/elect)
 "vrW" = (
 /obj/table/auto,
-/obj/item/storage/box/tapebox,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
 	name = "autoname - SS13"
+	},
+/obj/artifact_paper_dispenser{
+	pixel_x = 8;
+	pixel_y = 3
+	},
+/obj/item/device/matanalyzer{
+	pixel_x = -4;
+	pixel_y = 5
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/science/artifact)
@@ -79477,7 +79492,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "vFc" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "vFe" = (
@@ -81860,8 +81875,12 @@
 	})
 "wmg" = (
 /obj/table/auto,
-/obj/item/clipboard,
-/obj/item/pen,
+/obj/item/clipboard{
+	pixel_x = -4
+	},
+/obj/artifact_paper_dispenser{
+	pixel_x = 13
+	},
 /turf/simulated/floor/engine/caution/west,
 /area/station/science/artifact)
 "wmn" = (
@@ -88540,7 +88559,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "xQl" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12

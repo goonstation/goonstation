@@ -22,7 +22,7 @@ var/global/datum/ui_state/tgui_physical_state/tgui_physical_state = new /datum/u
 /mob/living/silicon/ai/physical_can_use_topic(src_object)
 	return UI_UPDATE // AIs are not physical.
 
-/mob/dead/aieye/physical_can_use_topic(src_object)
+/mob/living/intangible/aieye/physical_can_use_topic(src_object)
 	return UI_UPDATE // AIs are not physical.
 
 /**

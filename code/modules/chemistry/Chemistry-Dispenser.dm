@@ -1,5 +1,6 @@
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
+	desc = "A complicated, soda fountain-like machine that allows the user to dispense basic chemicals for use in recipies."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
@@ -122,11 +123,11 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.take_damage(400)
 				return
 			if(2.0)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.take_damage(150)
 				return
 
@@ -175,7 +176,7 @@
 		else
 			src.icon_state = "[src.icon_base][rand(1,5)]"
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the dispenser's output target.</span>")
 			return
@@ -340,13 +341,18 @@
 				for (var/reagent in reagentlist)
 					if (lowertext(reagent) in src.dispensable_reagents)
 						G.reagents += lowertext(reagent)
-						//Special amounts!
-						if (istext(reagentlist[reagent])) //Set a dispense amount
-							var/num = text2num_safe(reagentlist[reagent])
-							if(!num) num = 10
-							G.reagents[lowertext(reagent)] = clamp(round(num), 1, 100)
-						else //Default to 10 if no specific amount given
-							G.reagents[lowertext(reagent)] = 10
+						var/reagentAmmount = reagentlist[reagent]
+
+						if (istext(reagentAmmount))
+							var/ammount = text2num_safe(reagentAmmount)
+							G.reagents[lowertext(reagent)] = clamp(round(ammount), 1, 100)
+						// If the input is more than 1 of the same reagent we have a list instead of just text
+						else
+							var/reagentValue = 0
+							for (var/num in reagentAmmount)
+								reagentValue += text2num_safe(num)
+							G.reagents[lowertext(reagent)] = clamp(round(reagentValue), 1, 100)
+
 				if(G.reagents == 0)
 					return
 				G.name = name

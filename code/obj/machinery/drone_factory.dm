@@ -40,7 +40,7 @@
 			return ..()
 
 		. = ..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (alert(G, "Add yourself to the ghostdrone queue?", "Confirmation", "Yes", "No") == "No")
 				return
 
@@ -53,7 +53,7 @@
 		if (available_ghostdrones.len && length(ghostdrone_candidates))
 			src.icon_state = "ghostcatcher1"
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/datum/mind/M = dequeue_next_ghostdrone_candidate()
 				if(istype(M))
 					var/mob/dead/D = M.current
@@ -140,7 +140,7 @@ var/global/list/ghostdrone_candidates = list()
 	New()
 		..()
 		src.icon_state = "factory[src.factory_section][src.working]"
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.update_conveyors()
 			src.update_rechargers()
 
@@ -198,7 +198,7 @@ var/global/list/ghostdrone_candidates = list()
 				return
 
 			if (prob(40))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.shake(rand(4,6))
 				playsound(src, pick("sound/impact_sounds/Wood_Hit_1.ogg", "sound/impact_sounds/Metal_Hit_Heavy_1.ogg"), 30, 1, -3)
 			if (prob(40))
@@ -334,7 +334,7 @@ var/global/list/ghostdrone_candidates = list()
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.update_conveyors()
 			src.update_rechargers()
 

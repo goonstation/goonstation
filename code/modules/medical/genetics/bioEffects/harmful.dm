@@ -134,7 +134,7 @@
 	msgLose = "You feel more in control."
 	reclaim_fail = 15
 	var/talk_prob = 10
-	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","TITS","ARGH","WOOF","CRAP","BALLS")
+	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","ARGH","WOOF","CRAP","HECK","FRICK","JESUS")
 	icon_state  = "bad"
 
 	OnLife(var/mult)
@@ -281,7 +281,7 @@
 			return
 		if ((probmult(5) && !owner.getStatusDuration("paralysis")))
 			owner:drop_item()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				owner:emote("cough")
 				return
 		return
@@ -662,7 +662,16 @@
 		if (!istype(L) || (L.stat == 2))
 			return
 		if (probmult(prob_sting))
-			boutput(src, "<span class='alert'>A bee in your cloud stung you! How rude!</span>")
+			if (ishuman(L))
+				var/mob/living/carbon/human/H = L
+				if (prob(50))
+					if (istype(H.wear_suit, /obj/item/clothing/suit/bio_suit/beekeeper))
+						boutput(owner, "<span class='subtle'>A bee in your cloud tries to sting you, but your suit protects you.</span>")
+						return
+				else if (istype(H.head, /obj/item/clothing/head/bio_hood/beekeeper))
+					boutput(owner, "<span class='subtle'>A bee in your cloud tries to sting you, but your hood protects you.</span>")
+					return
+			boutput(owner, "<span class='alert'>A bee in your cloud stung you! How rude!</span>")
 			L.reagents.add_reagent("histamine", 2)
 
 /datum/bioEffect/emp_field
@@ -683,7 +692,7 @@
 
 	OnLife(var/mult)
 		..()
-		if (prob(percentmult(50, mult)))
+		if (probmult(50))
 			var/turf/T
 			//don't really need this but to make it more harmful to the user.
 			if (prob(5))
@@ -696,7 +705,7 @@
 			pulse.icon_state = "emppulse"
 			pulse.name = "emp pulse"
 			pulse.anchored = 1
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				if (pulse) qdel(pulse)
 
 			//maybe have this only emp some things on the tile.
@@ -725,11 +734,11 @@
 	effect_group = "fit"
 
 	OnAdd()
-		APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-debuff", -2)
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_STAMINA_REGEN_BONUS, "g-fitness-debuff", -2)
 		src.owner.add_stam_mod_max("g-fitness-debuff", -30)
 
 	OnRemove()
-		REMOVE_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-debuff")
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_STAMINA_REGEN_BONUS, "g-fitness-debuff")
 		src.owner.remove_stam_mod_max("g-fitness-debuff")
 
 /datum/bioEffect/tinnitus

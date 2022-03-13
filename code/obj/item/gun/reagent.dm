@@ -35,6 +35,7 @@
 			src.reagents.trans_to(P, P.proj_data.cost)
 
 	on_reagent_change(add)
+		..()
 		if(!add || !src.ammo_reagents)
 			src.UpdateIcon()
 			return
@@ -80,7 +81,7 @@
 			src.UpdateIcon()
 		return 1
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
 		if(!isliving(usr))
 			return

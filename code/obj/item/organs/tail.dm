@@ -78,14 +78,9 @@
 
 			var/fluff = pick("slap", "shove", "place", "press", "jam")
 
-			if(istype(src, /obj/item/organ/tail/bone))
-				H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "press" ? "es" : "s"] the coccygeal coruna of [src] onto the apex of [H == user ? "[his_or_her(H)]" : "[H]'s"] sacrum![prob(1) ? " The tailbone wiggles happily." : ""]</span>",\
-				user, "<span class='alert'>You [fluff] the coccygeal coruna of [src] onto the apex of [H == user ? "your" : "[H]'s"] sacrum![prob(1) ? " The tailbone wiggles happily." : ""]</span>",\
-				H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][H == user && fluff == "press" ? "es" : "s"] the coccygeal coruna of [src] onto the apex of your sacrum![prob(1) ? " Your tailbone wiggles happily." : ""]</span>")
-			else	// Any other tail
-				H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "press" ? "es" : "s"] [src] onto the apex of [H == user ? "[his_or_her(H)]" : "[H]'s"] sacrum!</span>",\
-				user, "<span class='alert'>You [fluff] [src] onto the apex of [H == user ? "your" : "[H]'s"] sacrum!</span>",\
-				H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][H == user && fluff == "press" ? "es" : "s"] [src] onto the apex of your sacrum!</span>")
+			H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "press" ? "es" : "s"] [src] onto the apex of [H == user ? "[his_or_her(H)]" : "[H]'s"] sacrum!</span>",\
+			user, "<span class='alert'>You [fluff] [src] onto the apex of [H == user ? "your" : "[H]'s"] sacrum!</span>",\
+			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][H == user && fluff == "press" ? "es" : "s"] [src] onto the apex of your sacrum!</span>")
 
 		else if (!H.organHolder.tail && H.organHolder.chest.op_stage >= 11.0 && src.can_attach_organ(H, user))
 			attachment_successful = 1
@@ -240,19 +235,6 @@
 	organ_image_under_suit_1 = "wolf_under_suit"
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "wolf_over_suit"
-
-/obj/item/organ/tail/bone
-	name = "tailbone"
-	desc = "A short piece of bone."
-	icon_state = "tail-bone"
-	organ_image_icon = 'icons/mob/human.dmi'
-	created_decal = null	// just a piece of bone
-	tail_num = TAIL_SKELETON
-	edible = 0
-	made_from = "bone"
-	organ_image_under_suit_1 = null
-	organ_image_under_suit_2 = null
-	organ_image_over_suit = null
 
 /obj/item/organ/tail/monkey/seamonkey
 	name = "seamonkey tail"

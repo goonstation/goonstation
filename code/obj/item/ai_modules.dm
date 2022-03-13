@@ -47,13 +47,20 @@ AI MODULES
 		return "This law does not exist."
 
 
-	proc/install(obj/machinery/computer/aiupload/comp, user)
+	proc/install(obj/machinery/computer/aiupload/comp, mob/user)
 		if (comp.status & NOPOWER)
 			boutput(user, "\The [comp] has no power!")
 			return
 		if (comp.status & BROKEN)
 			boutput(user, "\The [comp] computer is broken!")
 			return
+		if (issilicon(user))
+			boutput(user, "\The [comp] computer has a captcha. You don't succeed.")
+			return
+		if (istype(user, /mob/living/object))
+			boutput(user, "Try as you might, you just can't seem to upload yourself.")
+			return
+
 		if(ON_COOLDOWN(global, "ai_law_change", 10 SECONDS))
 			boutput(user, "Centralized AI law database is still processing the last request. Wait [ON_COOLDOWN(global, "ai_law_change", 0)/10] seconds.")
 			return
@@ -68,7 +75,7 @@ AI MODULES
 			R.show_text("<h3>Law update detected.</h3>", "red")
 			R.show_laws()
 			//ticker.centralized_ai_laws.show_laws(R)
-		for (var/mob/dead/aieye/E in mobs)
+		for (var/mob/living/intangible/aieye/E in mobs)
 			E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 
 
@@ -91,11 +98,16 @@ AI MODULES
 			R.show_text(message, "blue")
 
 	proc/do_admin_logging(var/msg, mob/M)
-		message_admins("[M.name] ([key_name(M)]) used \a [src] and uploaded a change to the AI laws: \"[msg]\".")
-		logTheThing("admin", M, null, "used \a [src] and uploaded a change to the AI laws: \"[msg]\".")
-		logTheThing("diary", M, null, "used \a [src] and uploaded a change to the AI laws: \"[msg]\".", "admin")
-		logTheThing("admin", M, null, "AI and silicon laws have been modified:<br>[ticker.centralized_ai_laws.format_for_logs()]")
-		logTheThing("diary", M, null, "AI and silicon laws have been modified:<br>[ticker.centralized_ai_laws.format_for_logs()]", "admin")
+		if(istype(src, /obj/item/aiModule/rename))
+			message_admins("[M.name] ([key_name(M)]) used \a [src] and [msg].")
+			logTheThing("admin", M, null, "used \a [src] and [msg].")
+			logTheThing("diary", M, null, "used \a [src] and [msg].", "admin")
+		else
+			message_admins("[M.name] ([key_name(M)]) used \a [src] and uploaded a change to the AI laws: \"[msg]\".")
+			logTheThing("admin", M, null, "used \a [src] and uploaded a change to the AI laws: \"[msg]\".")
+			logTheThing("diary", M, null, "used \a [src] and uploaded a change to the AI laws: \"[msg]\".", "admin")
+			logTheThing("admin", M, null, "AI and silicon laws have been modified:<br>[ticker.centralized_ai_laws.format_for_logs()]")
+			logTheThing("diary", M, null, "AI and silicon laws have been modified:<br>[ticker.centralized_ai_laws.format_for_logs()]", "admin")
 
 
 /******************** Modules ********************/
@@ -108,9 +120,11 @@ AI MODULES
 	var/job = "Captain"
 
 	emag_act(mob/user, obj/item/card/emag/E)
+		if (src.job == "Clown")
+			return FALSE
 		src.job = "Clown"
 		boutput(user, "<span class='notice'>You short circuit the captain-detection module, it emits a quiet sad honk.</span>")
-		. = ..()
+		return TRUE
 
 	demag(mob/user)
 		. = ..()
@@ -248,8 +262,8 @@ AI MODULES
 		return lawTarget ? lawTarget : "This law intentionally left blank."
 
 	attack_self(var/mob/user)
-		input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Anything. Serious.", (lawTarget ? lawTarget : "Eat shit and die"))
-		if(src.lawTarget && src.lawTarget != "Eat shit and die")
+		input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Anything. Serious.", (lawTarget ? lawTarget : "Make a funny beeping noise every few minutes"))
+		if(src.lawTarget && src.lawTarget != "Make a funny beeping noise every few minutes")
 			phrase_log.log_phrase("ailaw", src.get_law_text(for_silicons=TRUE), no_duplicates=TRUE)
 
 /******************** Random ********************/
@@ -316,17 +330,17 @@ AI MODULES
 		lawTarget = replacetext(copytext(html_encode(lawTarget),1, 128), "http:","")
 		phrase_log.log_phrase("name-ai", lawTarget, no_duplicates=TRUE)
 
-	install(obj/machinery/computer/aiupload/comp)
+	install(obj/machinery/computer/aiupload/comp, mob/user)
 		if (comp.status & NOPOWER)
-			boutput(usr, "\The [comp] has no power!")
+			boutput(user, "\The [comp] has no power!")
 			return
 		if (comp.status & BROKEN)
-			boutput(usr, "\The [comp] computer is broken!")
+			boutput(user, "\The [comp] computer is broken!")
 			return
 
-		src.transmitInstructions(usr)
+		src.transmitInstructions(user, comp)
 
-	transmitInstructions(var/mob/sender, var/law)
+	transmitInstructions(mob/sender, obj/machinery/computer/aiupload/comp)
 		// what if we let them pick what AI to rename..?
 		// the future is now
 		// this is mostly stolen from observer.dm's observe list
@@ -346,21 +360,17 @@ AI MODULES
 			ais[name] = AI
 
 		var/mob/living/silicon/AI = null
-		if (ais.len == 1)
+		if (length(ais) == 1)
 			AI = ais[names[1]]
-		else if (ais.len > 1)
+		else if (length(ais))
 			var/res = input("Which AI are you renaming?", "Rename", null, null) as null|anything in ais
 			AI = ais[res]
-		else if (ais.len == 0)
+		else
 			boutput(sender, "There aren't any AIs available to rename...")
 		if (!AI)
 			return
 
-		// This doesn't check the comp's distance, and I'm too lazy to give a shit,
-		// so until this gets fixed you can start a rename and then finish it anywhere
-		// as long as you still have the rename module.
-		// its a feature ok
-		if (get_dist(sender.loc, src.loc) > 2)
+		if (!in_interact_range(comp, sender))
 			boutput(sender, "You aren't next to an AI upload computer any more.")
 			return
 
@@ -411,7 +421,68 @@ AI MODULES
 		. = ..()
 		page_departments["Silicon"] = MGO_SILICON
 
+/obj/item/aiModule/hologram_expansion
+	name = "Hologram Expansion Module"
+	desc = "A module that updates an AI's hologram images."
+	var/expansion
 
+	install(obj/machinery/computer/aiupload/comp, mob/user)
+		if (comp.status & NOPOWER)
+			boutput(user, "\The [comp] has no power!")
+			return
+		if (comp.status & BROKEN)
+			boutput(user, "\The [comp] computer is broken!")
+			return
+
+		src.transmitInstructions(user, comp)
+
+	transmitInstructions(mob/sender, obj/machinery/computer/aiupload/comp)
+		// what if we let them pick what AI to update?
+		// the future is now
+		// this is mostly stolen from observer.dm's observe list
+		var/list/names = list()
+		var/list/namecounts = list()
+		var/list/ais = list()
+		for_by_tcl(AI, /mob/living/silicon/ai)
+			LAGCHECK(LAG_LOW)
+			var/name = AI.name
+			if (name in names)
+				namecounts[name]++
+				name = "[name] ([namecounts[name]])"
+			else
+				names.Add(name)
+				namecounts[name] = 1
+
+			ais[name] = AI
+
+		var/mob/living/silicon/ai/AI = null
+		if (length(ais) == 1)
+			AI = ais[names[1]]
+		else if (length(ais))
+			var/res = input("Which AI are you modifying?", "Hologram update", null, null) as null|anything in ais
+			AI = ais[res]
+		else
+			boutput(sender, "There aren't any AIs available to update...")
+		if (!AI)
+			return
+
+		if (!in_interact_range(comp, sender))
+			boutput(sender, "You aren't next to an AI upload computer any more.")
+			return
+
+		do_admin_logging("changed AI [AI.name]'s hologram module changed to to \"[src.expansion]\"", sender)
+		boutput(sender, "AI \"[AI.name]\" hologram module updated to \"[src.expansion]\".")
+		AI.holoHolder.expansion(src.expansion)
+
+/obj/item/aiModule/hologram_expansion/clown
+	name = "Clown Hologram Expansion Module"
+	icon_state = "holo_mod_c"
+	expansion = "clown"
+
+/obj/item/aiModule/hologram_expansion/syndicate
+	name = "Syndicate Hologram Expansion Module"
+	icon_state = "holo_mod_s"
+	expansion = "rogue"
 
 /obj/machinery/computer/aiupload
 	circuit_type = /obj/item/circuitboard/aiupload

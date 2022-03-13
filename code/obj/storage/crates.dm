@@ -1,6 +1,6 @@
 /obj/storage/crate
 	name = "crate"
-	desc = "A small, cuboid object with a hinged top and empty interior."
+	desc = "A big metal box that you can put things into. Who knows, it might even have things already in it."
 	is_short = 1
 	#ifdef XMAS
 	icon_state = "xmascrate"
@@ -78,7 +78,7 @@
 
 /obj/storage/crate/medical
 	name = "medical crate"
-	desc = "A medical crate."
+	desc = "A medical crate. For holding medical things."
 	icon_state = "medicalcrate"
 	icon_opened = "medicalcrateopen"
 	icon_closed = "medicalcrate"
@@ -127,7 +127,7 @@
 
 /obj/storage/crate/bloody
 	name = "dented crate"
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it."
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it."
 	icon_state = "bloodycrate"
 	icon_opened = "bloodycrateopen"
 	icon_closed = "bloodycrate"
@@ -184,7 +184,6 @@
 	/obj/item/camera = 2,
 	/obj/item/device/light/flashlight = 2,
 	/obj/item/paper/book/from_file/critter_compendium,
-	/obj/item/pinpointer/category/artifacts/safe,
 	/obj/item/reagent_containers/food/drinks/milk,
 	/obj/item/reagent_containers/food/snacks/sandwich/pb,
 	/obj/item/paper/note_from_mom)
@@ -224,7 +223,7 @@
 	/obj/item/cable_coil = 2)
 
 /obj/storage/crate/clown
-	desc = "A small, cuboid object with a hinged top and empty interior. It looks a little funny."
+	desc = "A big metal box that you can put things into. It looks a little funny."
 	spawn_contents = list(/obj/item/clothing/under/misc/clown/fancy,
 	/obj/item/clothing/under/misc/clown/dress,
 	/obj/item/clothing/under/misc/clown,
@@ -278,7 +277,7 @@
 		..()
 		spawn_items()
 
-	proc/spawn_items(var/mob/owner)
+	proc/spawn_items(mob/owner, obj/item/uplink/owner_uplink)
 		#define NESTED_SCALING_FACTOR 0.8
 		if (istype(src.loc, /obj/storage/crate/syndicate_surplus)) //if someone got lucky and rolled a surplus inside a surplus, scale the inner one (and its contents) down
 			src.nest_amt++
@@ -287,14 +286,10 @@
 
 		if (islist(syndi_buylist_cache) && !length(possible_items))
 			for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
-				var/blocked = 0
-				if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && length(S.blockedmode))
-					for (var/V in S.blockedmode)
-						if (ispath(V) && istype(ticker.mode, V))
-							blocked = 1
-							break
+				if(!isnull(owner_uplink) && !(S.can_buy & owner_uplink.purchase_flags)) //You can get anything (not usually excluded from surplus crates) from any gamemode if you spawn this without an uplink
+					continue
 
-				if (blocked == 0 && !S.not_in_crates)
+				if (!S.not_in_crates)
 					possible_items += S
 
 		if (islist(possible_items) && length(possible_items))
@@ -304,7 +299,7 @@
 				var/obj/item/I = new item_datum.item(src)
 				I.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the contents if we're nested
 				if (owner)
-					item_datum.run_on_spawn(I, owner, TRUE)
+					item_datum.run_on_spawn(I, owner, TRUE, owner_uplink)
 					if (owner.mind)
 						owner.mind.traitor_crate_items += item_datum
 				telecrystals += item_datum.cost
@@ -424,12 +419,12 @@
 
 /obj/storage/crate/loot_crate
 	name = "Loot Crate"
-	desc = "A small, cuboid object with a hinged top and loot filled interior."
+	desc = "A big metal box that probably has goodies inside."
 	spawn_contents = list(/obj/random_item_spawner/loot_crate/surplus)
 
 /obj/storage/crate/chest
 	name = "treasure chest"
-	desc = "Glittering gold, trinkets and baubles, paid for in blood."
+	desc = "Glittering gold, trinkets and baubles. Paid for in blood."
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "chest"
 	icon_opened = "chest-open"
@@ -772,7 +767,7 @@
 
 	cargonia
 		spawn_contents = list(/obj/item/radio_tape/advertisement/cargonia,
-		/obj/item/clothing/under/rank/cargo,/obj/decal/skeleton)
+		/obj/item/clothing/under/rank/cargo,/obj/decal/fakeobjects/skeleton)
 
 	escape
 		spawn_contents = list(/obj/item/sea_ladder,

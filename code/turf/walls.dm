@@ -88,7 +88,7 @@
 		if(fixed_random(src.x / world.maxx, src.y / world.maxy) <= 0.01)
 			new /obj/decal/wreath(src)
 		if(istype(get_area(src), /area/station/crew_quarters/cafeteria) && fixed_random(src.x / world.maxx + 0.001, src.y / world.maxy - 0.00001) <= 0.4)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				var/turf/T = get_step(src, SOUTH)
 				if(!T.density && !(locate(/obj/window) in T) && !(locate(/obj/machinery/door) in T))
 					var/obj/stocking/stocking = new(T)
@@ -105,7 +105,6 @@
 		return
 
 	// the wall is the target turf, the source is the turf where the user is standing
-	var/obj/item/light_parts/parts = W
 	var/turf/target = src
 	var/turf/source = get_turf(user)
 
@@ -122,33 +121,29 @@
 	if (!dir)
 		return //..(parts, user)
 
-	if(!instantly)
+	if(!instantly && W && !W.disposed)
 		playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
 		boutput(user, "You begin to attach the light fixture to [src]...")
-
-		if (!do_after(user, 4 SECONDS))
-			user.show_text("You were interrupted!", "red")
-			return
-
-	if (!parts || parts.disposed) //ZeWaka: Fix for null.fixture_type
+		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /turf/simulated/wall/proc/finish_attaching,\
+			list(W, user, dir), W.icon, W.icon_state, null, null)
 		return
 
-	// if they didn't move, put it up
-	boutput(user, "You attach the light fixture to [src].")
+	finish_attaching(W, user, dir)
+	return
 
-	var/obj/machinery/light/newlight = new parts.fixture_type(source)
-	newlight.set_dir(dir)
+/turf/simulated/wall/proc/finish_attaching(obj/item/W, mob/user, var/light_dir)
+	boutput(user, "You attach the light fixture to [src].")
+	var/obj/item/light_parts/parts = W
+	var/obj/machinery/light/newlight = new parts.fixture_type(get_turf(user))
+	newlight.set_dir(light_dir)
 	newlight.icon_state = parts.installed_icon_state
 	newlight.base_state = parts.installed_base_state
 	newlight.fitting = parts.fitting
 	newlight.status = 1 // LIGHT_EMPTY
-
 	newlight.add_fingerprint(user)
 	src.add_fingerprint(user)
-
 	user.u_equip(parts)
 	qdel(parts)
-	return
 
 /turf/simulated/wall/proc/take_hit(var/obj/item/I)
 	if(src.material)
@@ -304,12 +299,12 @@
 				playsound(user.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				if (src.material)
 					src.material.triggerOnAttacked(src, user, user, src)
-				for (var/mob/N in AIviewers(usr, null))
+				for (var/mob/N in AIviewers(user, null))
 					if (N.client)
 						shake_camera(N, 4, 8, 0.5)
 			if (prob(40))
 				boutput(user, text("<span class='notice'>You smash through the [src.name].</span>"))
-				logTheThing("combat", usr, null, "uses hulk to smash a wall at [log_loc(src)].")
+				logTheThing("combat", user, null, "uses hulk to smash a wall at [log_loc(src)].")
 				dismantle_wall(1)
 				return
 			else
@@ -393,7 +388,7 @@
 		//return attack_hand(user)
 
 /turf/simulated/wall/proc/weld_action(obj/item/W, mob/user)
-	logTheThing("station", user, null, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
+	logTheThing("station", user, null, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([log_loc(user)])")
 	dismantle_wall()
 
 /turf/simulated/wall/r_wall

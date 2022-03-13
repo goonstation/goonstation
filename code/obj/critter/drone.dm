@@ -5,7 +5,7 @@
 	icon_state = "drone"
 	density = 1
 	health = 65
-	var/maxhealth = 65 // for damage description
+	maxhealth = 65 // for damage description
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
@@ -19,7 +19,7 @@
 	luminosity = 5
 	seekrange = 15
 	flying = 1
-	mats = 24
+	mats = list("POW-1" = 5, "MET-2" = 12, "CON-2" = 12, "DEN-1" = 6)
 	var/score = 10
 	var/must_drop_loot = 0
 	dead_state = "drone-dead"
@@ -202,7 +202,7 @@
 				src.task = "thinking"
 				walk_to(src,0)
 
-			SPAWN_DBG(attack_cooldown)
+			SPAWN(attack_cooldown)
 				src.attacking = 0
 		return
 
@@ -223,7 +223,7 @@
 				src.task = "thinking"
 				walk_to(src,0)
 
-			SPAWN_DBG(attack_cooldown)
+			SPAWN(attack_cooldown)
 				src.attacking = 0
 		return
 
@@ -235,7 +235,7 @@
 		applyDeathState()
 		dying = 1 // this was dying = 0. ha ha.
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_DRONE_DEATH, src)
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			if (get_area(src) != colosseum_controller.colosseum || must_drop_loot)
 				if (prob(25))
 					new /obj/item/device/prox_sensor(src.loc)
@@ -384,7 +384,7 @@
 						if(prob(20)) walk_rand(src,4) // juke around and dodge shots
 						/*else if(smashes_shit && !smashed_recently && prob(20) && target in ohearers(src,src.seekrange) ) //RAM THE FUCKER! Or not. This sucks. Bad idea.
 							smashed_recently = 1
-							SPAWN_DBG(smash_cooldown)
+							SPAWN(smash_cooldown)
 								smashed_recently = 0
 
 							walk_towards(src, src.target, 1, 4)*/
@@ -443,7 +443,7 @@
 		droploot = /obj/bomberman
 		projectile_type = /datum/projectile/bullet/glitch
 		current_projectile = new/datum/projectile/bullet/glitch
-
+		mats = null
 		New()
 			..()
 			name = "Dr~n³ *§#-[rand(1,999)]"
@@ -461,6 +461,7 @@
 		projectile_type = /datum/projectile/disruptor/high
 		current_projectile = new/datum/projectile/disruptor/high
 		attack_cooldown = 40
+		mats = list("POW-2" = 10, "MET-3" = 12, "CON-2" = 12, "DEN-2" =9)
 		New()
 			..()
 			name = "Drone HK-[rand(1,999)]"
@@ -544,6 +545,7 @@
 		projectile_type = /datum/projectile/bullet/aex
 		current_projectile = new/datum/projectile/bullet/aex
 		attack_cooldown = 50
+		mats = list("POW-3" = 15, "MET-3" = 17, "CON-2" = 13, "DEN-3" =17, "erebite" =16)
 		New()
 			..()
 			name = "Drone AR-[rand(1,999)]"
@@ -563,6 +565,7 @@
 		projectile_type = /datum/projectile/bullet/ak47
 		current_projectile = new/datum/projectile/bullet/ak47
 		attack_cooldown = 20
+		mats = list("POW-3" = 13, "MET-3" = 24, "CON-2" = 20, "DEN-3" =17)
 		New()
 			..()
 			name = "Drone BML-[rand(1,999)]"
@@ -579,13 +582,13 @@
 		droploot = /obj/item/spacecash/buttcoin // replace with railgun if that's ever safe enough to hand out? idk
 		attack_cooldown = 50
 		smashes_shit = 1
-		mats = 96
+		mats = 	list("POW-3" = 19, "MET-3" = 20, "CON-2" = 24, "DEN-2" =16)
 
 		Shoot(var/atom/target, var/start, var/user, var/bullet = 0)
 			if(target == start)
 				return
 			playsound(src, "sound/effects/mag_warp.ogg", 50, 1)
-			SPAWN_DBG(rand(1,3)) // so it might miss, sometimes, maybe
+			SPAWN(rand(1,3)) // so it might miss, sometimes, maybe
 				var/obj/target_r
 
 				if(istype(target, /obj/machinery/cruiser))
@@ -621,7 +624,7 @@
 		//			var/turf/T = O.loc
 		//			for(var/atom/A in T.contents)
 		//				boutput(src, "There is a [A.name] at this location.")
-					SPAWN_DBG(0.3 SECONDS) qdel(O)
+					SPAWN(0.3 SECONDS) qdel(O)
 
 				if(istype(target_r, /obj/railgun_trg_dummy)) qdel(target_r)
 			return
@@ -643,6 +646,7 @@
 		projectile_type = /datum/projectile/laser/drill/cutter
 		current_projectile = new/datum/projectile/laser/drill/cutter
 		smashes_shit = 1
+		mats = 	list("POW-2" = 19, "MET-2" = 12, "CON-2" = 14, "DEN-2" =26)
 
 		ChaseAttack(atom/M)
 			if(target && !attacking)
@@ -651,7 +655,7 @@
 				walk_to(src, src.target,1,4)
 				var/tturf = get_turf(M)
 				Shoot(tturf, src.loc, src)
-				SPAWN_DBG(attack_cooldown)
+				SPAWN(attack_cooldown)
 					attacking = 0
 			return
 
@@ -663,7 +667,7 @@
 
 				var/tturf = get_turf(M)
 				Shoot(tturf, src.loc, src)
-				SPAWN_DBG(attack_cooldown)
+				SPAWN(attack_cooldown)
 					attacking = 0
 			return
 
@@ -686,6 +690,7 @@
 			current_projectile = new/datum/projectile/laser/drill/saw_teeth
 			smashes_shit = 0
 			event_handler_flags = IMMUNE_MANTA_PUSH
+			mats = 24
 			//TODO : TEENSY REDRAW TO ICON TO MAKE IT A LITTLE MORE ROBOTTY
 
 			New()
@@ -734,6 +739,7 @@
 		dead_state = "vrdrone_red"
 		projectile_type = /datum/projectile/laser
 		current_projectile = new/datum/projectile/laser
+		mats = 	list("POW-2" =11, "MET-2" = 14, "CON-2" = 13, "DEN-2" =12)
 
 		New()
 			..()
@@ -749,7 +755,7 @@
 		dead_state = "vrdrone_orange"
 		projectile_type = /datum/projectile/laser/mining
 		current_projectile = new/datum/projectile/laser/mining
-
+		mats = 	list("POW-1" = 9, "MET-3" = 15, "CON-1" = 7, "DEN-3" =20)
 		New()
 			..()
 			name = "Drone PC-[rand(1,999)]"
@@ -764,6 +770,7 @@
 		dead_state = "vrdrone_blue"
 		projectile_type = /datum/projectile/laser/asslaser
 		current_projectile = new/datum/projectile/laser/asslaser
+		mats = 	list("POW-3" = 30, "MET-3" = 14, "CON-2" = 23, "DEN-3" =22, "butt"=10) //heh
 
 		New()
 			..()
@@ -779,7 +786,7 @@
 		dead_state = "vrdrone_green"
 		projectile_type = /datum/projectile/special/acid
 		current_projectile = new/datum/projectile/special/acid
-
+		mats = 	list("POW-1" = 10, "MET-1" = 15, "CON-2" = 15, "DEN-1" =10)
 		New()
 			..()
 			name = "Drone CA-[rand(1,999)]"
@@ -803,7 +810,7 @@
 		current_projectile = new/datum/projectile/bullet/autocannon/plasma_orb
 		attack_cooldown = 70
 		smashes_shit = 1
-
+		mats = null
 		CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 			if(dying) return
 			var/area/A = get_area(src)
@@ -871,9 +878,9 @@
 					P2.die()
 					return
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				P1.launch() // FIRE!
-			SPAWN_DBG(0)
+			SPAWN(0)
 				P2.launch()
 
 		New()
@@ -896,7 +903,7 @@
 	droploot = /obj/item/device/key/iridium
 	alertsound1 = 'sound/machines/engine_alert2.ogg'
 	alertsound2 = 'sound/machines/engine_alert3.ogg'
-	mats = 160
+	mats = null //no
 	projectile_type = /datum/projectile/laser/precursor/sphere
 	current_projectile = new/datum/projectile/laser/precursor/sphere
 	smashes_shit = 1
@@ -936,7 +943,7 @@
 		A.yo = target:y - start:y
 		A.xo = target:x - start:x
 		src.set_dir(get_dir(src, target))
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			A.process()
 		return */
 
@@ -1011,9 +1018,9 @@
 				P2.die()
 				return
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			P1.launch()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			P2.launch()
 
 	proc/elec_zap()
@@ -1050,7 +1057,7 @@
 			playsound(C.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
 			C.ex_act(3)
 
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			for (var/obj/O in lineObjs)
 				qdel(O)
 
@@ -1068,6 +1075,8 @@
 			droploot = /obj/item/device/key/virtual
 		else
 			new/obj/item/material_piece/iridiumalloy(src.loc)
+			new/obj/item/material_piece/iridiumalloy(src.loc)
+			new/obj/item/material_piece/iridiumalloy(src.loc)
 		..()
 
 /obj/critter/gunbot/drone/iridium/whydrone
@@ -1082,7 +1091,6 @@
 	bound_width = 96
 	attack_range = 7
 	score = 1500
-	mats = 160
 	dead_state = "ydrone-dead"
 	droploot = /obj/item/device/key/iridium
 	alertsound1 = 'sound/machines/glitch3.ogg'
@@ -1131,7 +1139,7 @@
 				sphere.set_loc(locate(src.x+1,src.y, src.z))
 				sphere.orig_turf = sphere.loc
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			sphere.launch()
 
 		if (bounds_dist(src, target) >= 2*32) // dont murder ourself with explosives
@@ -1142,9 +1150,9 @@
 			P1.orig_turf = P1.loc
 			P2.orig_turf = P2.loc
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				P1.launch()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				P2.launch()
 
 
@@ -1171,7 +1179,7 @@
 			playsound(poorPod.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
 			poorPod.ex_act(3)
 
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			for (var/obj/O in lineObjs)
 				qdel(O)*/
 
@@ -1281,6 +1289,7 @@
 	projectile_type = /datum/projectile/bullet/revolver_357
 	current_projectile = new/datum/projectile/bullet/revolver_357
 	attack_cooldown = 20
+	mats = 12 //this should be funny
 
 	var/voice_gender = "male"
 
@@ -1301,13 +1310,13 @@
 		playsound(src, 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
 		src.visible_message("[src] emits a very small clicking noise.")
 		icon_state = dead_state
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			explosion(src, get_turf(src), -1, -1, 2, 3)
 		..()
 
 	Shoot(var/target, var/start, var/user, var/bullet = 0)
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			task = "sleeping"
 			src.health = 0
 			src.CritterDeath()

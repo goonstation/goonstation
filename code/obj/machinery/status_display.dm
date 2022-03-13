@@ -95,7 +95,7 @@
 
 					if(repeat_update)
 						var/delay = src.base_tick_spacing * PROCESSING_TIER_MULTI(src)
-						SPAWN_DBG(0.5 SECONDS)
+						SPAWN(0.5 SECONDS)
 							repeat_update = FALSE
 							var/iterations = round(delay/5)
 							for(var/i in 1 to iterations)
@@ -131,7 +131,7 @@
 				if((index1 || index2) && repeat_update)	// if either line is scrolling
 														// and we haven't forced an update yet
 					var/delay = src.base_tick_spacing * PROCESSING_TIER_MULTI(src)
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						repeat_update = FALSE
 						var/iterations = round(delay/5)
 						for(var/i in 1 to iterations)
@@ -353,7 +353,7 @@
 			return
 		var/mob/living/silicon/ai/A = user
 		if (isAIeye(user))
-			var/mob/dead/aieye/AE = user
+			var/mob/living/intangible/aieye/AE = user
 			A = AE.mainframe
 		if (owner == A) //no free updates for you
 			return

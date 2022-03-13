@@ -453,12 +453,8 @@
 /area/station/crew_quarters/kitchen)
 "aY" = (
 /obj/item/cable_coil/cut{
-	color = "#DD0000"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	color = "#DD0000";
+	transform = list(0,1,0,-1,0,0)
 	},
 /turf/simulated/floor/plating/random,
 /area/station/quartermaster/office)
@@ -525,6 +521,18 @@
 /obj/item/clothing/head/emerg,
 /turf/simulated/floor/plating/random,
 /area/station/quartermaster/office)
+"bi" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall3_trans"
+	},
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/turf/space,
+/area/space)
 "bj" = (
 /obj/cable{
 	d1 = 4;
@@ -979,7 +987,6 @@
 	name = "Cargo";
 	req_access_txt = "27"
 	},
-/obj/access_spawn/cargo,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "ct" = (
@@ -1796,7 +1803,7 @@
 /turf/simulated/floor/bot,
 /area/station/mining/staff_room)
 "eC" = (
-/obj/crematorium,
+/obj/machinery/traymachine/locking/crematorium,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -2078,13 +2085,6 @@
 /obj/item/storage/box/ic_cones,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
-"ft" = (
-/obj/rack,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
-/turf/simulated/floor/caution/east,
-/area/station/security/armory)
 "fu" = (
 /obj/machinery/light{
 	dir = 1;
@@ -4665,7 +4665,10 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/bookshelf/persistent,
+/obj/bookshelf/persistent{
+	density = 0;
+	pixel_y = 22
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -13298,7 +13301,7 @@
 	},
 /area/station/janitor/office)
 "GE" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/pink,
 /obj/landmark/start{
 	name = "Janitor"
@@ -13710,7 +13713,7 @@
 	},
 /area/station/medical/medbay)
 "HA" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "HB" = (
@@ -14528,7 +14531,7 @@
 /area/station/science/lab)
 "JH" = (
 /obj/machinery/atmospherics/valve,
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "burn";
 	pixel_x = -10;
 	pixel_y = -20
@@ -14558,7 +14561,7 @@
 /area/station/science/lab)
 "JM" = (
 /obj/machinery/atmospherics/valve,
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "burn_2";
 	pixel_x = -10;
 	pixel_y = -20
@@ -14851,24 +14854,6 @@
 /obj/machinery/light/incandescent/purpleish,
 /turf/simulated/floor/purplewhite,
 /area/station/science/lab)
-"Kx" = (
-/obj/table/auto,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/obj/item/luggable_computer/personal,
-/obj/machinery/cell_charger,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/station/storage/tech)
 "Ky" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor/purplewhite{
@@ -15723,27 +15708,27 @@
 	},
 /area/listeningpost/solars)
 "MP" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "MQ" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
+/turf/space,
 /area/space)
 "MR" = (
 /obj/machinery/door/airlock/pyro/syndicate,
 /turf/simulated/floor/red,
 /area/listeningpost)
 "MS" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "diagonalWall3"
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
 	},
+/turf/space,
+/turf/space,
 /area/space)
 "MT" = (
 /obj/machinery/power/furnace,
@@ -15773,9 +15758,7 @@
 /area/listeningpost/power)
 "MX" = (
 /obj/securearea,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "MY" = (
 /turf/simulated/floor/red,
@@ -15826,9 +15809,7 @@
 /turf/space,
 /area/listeningpost/solars)
 "Ne" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "Nf" = (
 /obj/securearea{
@@ -15837,9 +15818,7 @@
 	layer = 2.5;
 	name = "VACUUM AREA"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "Ng" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -15890,9 +15869,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "Nn" = (
 /obj/storage/closet/emergency,
@@ -15936,9 +15913,7 @@
 	icon_state = "shock";
 	name = "Danger: High Voltage"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "Nt" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -16107,9 +16082,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "NL" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/syndicate_teleporter)
 "NM" = (
 /turf/simulated/floor/airless/stairs/dark,
@@ -16227,9 +16200,7 @@
 	desc = "A warning sign telling of the dangers of HEPT emission fields. They are probably not good for you.";
 	name = "Molecular Integrity Hazard"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/syndicate_teleporter)
 "Ob" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -16512,11 +16483,11 @@
 	},
 /area/syndicate_teleporter)
 "OF" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
-	dir = 10;
-	icon_state = "diagonalWall3"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
 	},
+/turf/space,
+/turf/space,
 /area/space)
 "OG" = (
 /obj/stool/chair/red,
@@ -16654,11 +16625,12 @@
 /turf/simulated/floor/plating/random,
 /area/listeningpost/power)
 "OW" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "wall3"
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
 	},
+/turf/space,
+/turf/space,
 /area/space)
 "OX" = (
 /obj/machinery/power/furnace,
@@ -18896,6 +18868,17 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
+"Va" = (
+/obj/rack,
+/obj/item/breaching_charge,
+/obj/item/breaching_charge,
+/obj/item/breaching_charge,
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/turf/simulated/floor/caution/east,
+/area/station/security/armory)
 "Vb" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -19068,6 +19051,9 @@
 /obj/item/clothing/glasses/vr/arcade,
 /obj/item/clothing/glasses/vr/arcade,
 /obj/item/clothing/glasses/vr/arcade,
+/obj/item/storage/toolbox/artistic{
+	pixel_y = 8
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred2"
@@ -19734,7 +19720,7 @@
 /turf/simulated/floor/black,
 /area/station/storage/tech)
 "Xt" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -20321,6 +20307,27 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
+"YU" = (
+/obj/table/auto,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/obj/item/luggable_computer/personal,
+/obj/machinery/cell_charger,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_y = 9
+	},
+/turf/simulated/floor/black,
+/area/station/storage/tech)
 "YV" = (
 /obj/cable{
 	d1 = 1;
@@ -20358,7 +20365,7 @@
 	on = 1;
 	target_pressure = 1000
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "combust";
 	pixel_x = -25
 	},
@@ -20532,7 +20539,7 @@
 	},
 /area/station/bridge/customs)
 "ZD" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -20632,7 +20639,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/artifact)
 "ZR" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -57056,7 +57063,7 @@ Zb
 vD
 wx
 YR
-Kx
+YU
 Ak
 BH
 Ra
@@ -73040,7 +73047,7 @@ aa
 dK
 eu
 ez
-ft
+Va
 gq
 ez
 ho
@@ -93118,7 +93125,7 @@ aa
 aa
 aa
 aa
-MQ
+bi
 Ng
 Vf
 wh
@@ -93419,7 +93426,7 @@ aa
 aa
 aa
 aa
-MQ
+bi
 Ne
 NO
 Oh

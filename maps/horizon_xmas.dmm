@@ -2174,7 +2174,7 @@
 	name = "NanoTrasen Labor Camp Shuttle"
 	})
 "afb" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "this is not right. this is NOT right.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -2522,7 +2522,7 @@
 	})
 "agd" = (
 /obj/item/clothing/shoes/moon,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "This is very important.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -2622,7 +2622,7 @@
 /turf/simulated/floor/airless/damaged3,
 /area/station/wreckage)
 "agq" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge)
 "agr" = (
@@ -5479,7 +5479,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "not much of a chef";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -6276,7 +6276,7 @@
 	})
 "apI" = (
 /obj/item/clothing/head/emerg,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "still has his... uh... bedsheet?";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -7380,8 +7380,8 @@
 "asr" = (
 /obj/storage/closet/law,
 /obj/item/reagent_containers/patch/nicotine,
-/obj/item/implantcase/antirev,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
 /obj/item/implanter,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/random,
@@ -7880,7 +7880,6 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_east,
-/obj/item/storage/belt/medical,
 /turf/simulated/floor/blue/checker{
 	dir = 8
 	},
@@ -9922,7 +9921,6 @@
 	},
 /obj/storage/closet/wardrobe/white/genetics,
 /obj/item/storage/box/health_upgrade_kit,
-/obj/item/storage/belt/medical,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/treatment2)
 "ayx" = (
@@ -9948,7 +9946,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/item/clothing/suit/bio_suit/paramedic,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -10578,8 +10575,6 @@
 /obj/disposalpipe/segment/bent/south,
 /obj/storage/closet/biohazard,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/storage/belt/medical,
 /obj/item/storage/box/body_bag,
 /obj/item/storage/box/body_bag,
 /obj/item/storage/box/biohazard_bags,
@@ -12472,7 +12467,7 @@
 "aEv" = (
 /obj/disposalpipe/segment/brig,
 /obj/storage/secure/closet/security/equipment,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -12517,7 +12512,7 @@
 "aEC" = (
 /obj/disposalpipe/segment/brig,
 /obj/storage/secure/closet/security/equipment,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -15082,7 +15077,6 @@
 	pixel_y = 21
 	},
 /obj/item/clothing/glasses/spectro,
-/obj/item/storage/belt/medical,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -15490,7 +15484,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/simulated/floor/shuttle,
 /area/station/hallway/secondary/exit)
 "aLn" = (
@@ -15608,7 +15602,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 21
@@ -16169,6 +16163,7 @@
 	pixel_x = -26;
 	pixel_y = -1
 	},
+/obj/machinery/bot/medbot,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "aMN" = (
@@ -16372,7 +16367,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body8";
@@ -17532,7 +17527,7 @@
 /obj/stool/chair/comfy/shuttle/green{
 	dir = 4
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -17624,7 +17619,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
@@ -18849,7 +18844,7 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The partially decomposed corpse of some poor chump.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -18892,7 +18887,7 @@
 /turf/space,
 /area/station/hallway/secondary/exit)
 "aSl" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "She seems to have bled out from her injuries.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -19992,7 +19987,19 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
 "aUF" = (
-/obj/machinery/bot/medbot,
+/obj/rack,
+/obj/item/clothing/suit/bio_suit/paramedic{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/item/clothing/suit/bio_suit/paramedic{
+	pixel_x = 2
+	},
+/obj/item/storage/belt/medical,
+/obj/item/storage/belt/medical{
+	pixel_x = 3;
+	pixel_y = -2
+	},
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
@@ -20533,7 +20540,7 @@
 /area/station/maintenance/northwest)
 "aVU" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of an engineer. not very handsome.";
 	interesting = "Something isn't right here... This guy wasn't alive when he was shot";
 	name = "engineer's skeleton"
@@ -24677,7 +24684,7 @@
 "bex" = (
 /obj/disposalpipe/segment/brig,
 /obj/storage/secure/closet/security/equipment,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -26462,7 +26469,7 @@
 "bhY" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},
@@ -27135,8 +27142,8 @@
 	},
 /obj/storage/secure/closet/security/forensics,
 /obj/item/device/radio/intercom/security,
-/obj/item/implantcase/antirev,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "bjt" = (
@@ -27594,7 +27601,7 @@
 /area/station/mining/magnet)
 "bks" = (
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},
@@ -28262,7 +28269,7 @@
 "blS" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},
@@ -28374,10 +28381,10 @@
 	icon_state = "1-4"
 	},
 /obj/storage/secure/closet/security/armory,
-/obj/item/implantcase/antirev,
-/obj/item/implantcase/antirev,
-/obj/item/implantcase/antirev,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -30388,7 +30395,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
 /obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/red/side{
 	dir = 8
@@ -36059,7 +36066,7 @@
 	dir = 1
 	},
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},
@@ -37200,7 +37207,7 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /obj/storage/secure/closet/security/equipment,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -42561,7 +42568,7 @@
 	},
 /obj/machinery/light,
 /obj/storage/secure/closet/security/equipment,
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bQv" = (
@@ -53070,7 +53077,7 @@
 	pixel_y = 32
 	},
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},
@@ -55195,7 +55202,7 @@
 /turf/simulated/floor/plating/airless/random,
 /area/ghostdrone_factory)
 "csC" = (
-/obj/decal/sink{
+/obj/decal/fakeobjects/sink{
 	name = "Rusty Sink"
 	},
 /turf/simulated/floor/plating/random,
@@ -55869,7 +55876,7 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/listeningpost)
 "cuI" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /turf/simulated/floor/grey/blackgrime,
 /area/listeningpost)
 "cuJ" = (
@@ -56741,7 +56748,7 @@
 	},
 /area/space)
 "cwW" = (
-/obj/decal/sink{
+/obj/decal/fakeobjects/sink{
 	name = "Rusty Sink";
 	pixel_y = 12
 	},
@@ -57005,7 +57012,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "cxD" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Ironic, really";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "burntnerd";

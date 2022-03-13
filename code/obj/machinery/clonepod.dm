@@ -184,7 +184,7 @@
 
 		//Get the clone body ready. They start out with a bunch of damage right off.
 		// changing this to takedamage which should hopefully apply it right away
-		// SPAWN_DBG(0.5 SECONDS) //Organs may not exist yet if we call this right away.
+		// SPAWN(0.5 SECONDS) //Organs may not exist yet if we call this right away.
 		// 	random_brute_damage(src.occupant, 90, 1)
 		src.occupant.TakeDamage("chest", 90, 0, 0, DAMAGE_BLUNT)
 
@@ -198,6 +198,8 @@
 		src.operating = 1
 		src.locked = 1
 		src.gen_bonus = src.healing_multiplier()
+
+		src.use_power(5000)
 
 		return 1
 
@@ -623,6 +625,7 @@
 			..()
 
 	on_reagent_change()
+		..()
 		for(var/reagent_id in src.reagents.reagent_list)
 			if (reagent_id in clonepod_accepted_reagents)
 				var/datum/reagent/theReagent = src.reagents.reagent_list[reagent_id]
@@ -643,7 +646,7 @@
 		src.connected.currentStatusMessage["text"] = message
 		src.connected.currentStatusMessage["status"] = status
 		tgui_process.update_uis(src)
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			if(src.connected.currentStatusMessage == message)
 				src.connected.currentStatusMessage["text"] = ""
 				src.connected.currentStatusMessage["status"] = ""
@@ -732,7 +735,7 @@
 			src.failed_tick_counter = 0
 			src.UpdateIcon()
 			src.occupant.ghostize()
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				qdel(src.occupant)
 		return
 
@@ -825,7 +828,7 @@
 		UnsubscribeProcess()
 		src.create_reagents(100)
 		src.UpdateIcon(1)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.find_pods()
 
 	disposing()
@@ -901,6 +904,7 @@
 		return
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon(0)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -954,7 +958,7 @@
 		var/process_total = 0
 
 		if (istype(src.occupant))
-			src.occupant.death(1)
+			src.occupant.death(TRUE)
 			var/humanOccupant = (ishuman(src.occupant) && !ismonkey(src.occupant))
 			var/decomp = ishuman(src.occupant) ? src.occupant:decomp_stage : 0 // changed from only checking humanOccupant to running ishuman again so monkeys' decomp will be considered
 			if (src.occupant.mind)
@@ -1043,7 +1047,7 @@
 				boutput(user, "<span class='alert'>There is already enough meat in there! You should not exceed the maximum safe meat level!</span>")
 				return
 
-			if (G.contents && G.contents.len > 0)
+			if (G.contents && length(G.contents) > 0 && !istype(G, /obj/item/reagent_containers/food/snacks/shell))
 				for (var/obj/item/W in G.contents)
 					if (istype(W, /obj/item/skull) || istype(W, /obj/item/organ/brain) || istype(W, /obj/item/organ/eye))
 						continue
@@ -1129,7 +1133,7 @@
 
 		src.start_cycle()
 
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user)) // how????????? ?
 				user.suiciding = 0 // just in case I guess
 		return 1
@@ -1176,14 +1180,25 @@
 		if (!isdead(target))
 			message_admins("[key_name(owner)] forced [key_name(target, 1)] ([target == 2 ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
 		if (grinder.auto_strip && !grinder.emagged)
+			if(target.hasStatus("handcuffed"))
+				target.handcuffs.drop_handcuffs(target) //handcuffs have special handling for zipties and such, remove them properly first
 			target.unequip_all()
+			if(istype(target.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
+				var/obj/item/parts/human_parts/arm/right/item/right_arm = target.limbs.r_arm
+				right_arm.remove()
+			if(istype(target.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
+				var/obj/item/parts/human_parts/arm/left/item/left_arm = target.limbs.l_arm
+				left_arm.remove()
 			if (length(target.implant))
 				for (var/obj/item/implant/I in target.implant)
 					if (istype(I,/obj/item/implant/projectile))
 						continue
-					var/obj/item/implantcase/newcase = new /obj/item/implantcase(target.loc, usedimplant = I)
 					I.on_remove(target)
 					target.implant.Remove(I)
+					if (istype(I,/obj/item/implant/cloner))
+						qdel(I)
+						continue
+					var/obj/item/implantcase/newcase = new /obj/item/implantcase(target.loc, usedimplant = I)
 					var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")
 					wadblood.color = target.blood_color
 					newcase.UpdateOverlays(wadblood, "blood")

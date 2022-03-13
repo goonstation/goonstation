@@ -217,7 +217,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				var/change = text2num_safe(href_list["adj_pressure"])
 				pressure_setting = clamp(pressure_setting + change, 0, 50*ONE_ATMOSPHERE)
 
-			SPAWN_DBG(0.7 SECONDS)
+			SPAWN(0.7 SECONDS)
 				attack_hand(usr)
 
 	fuel_injection

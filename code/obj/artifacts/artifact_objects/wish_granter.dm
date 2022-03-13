@@ -5,6 +5,7 @@
 /datum/artifact/wish_granter
 	associated_object = /obj/artifact/wish_granter
 	type_name = "Wishgranter"
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 90
 	validtypes = list("wizard","eldritch")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
@@ -69,7 +70,7 @@
 					playsound(user, "sound/effects/elec_bigzap.ogg", 40, 1)
 					var/list/affected = DrawLine(O,user,/obj/line_obj/elec,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 					for(var/obj/OB in affected)
-						SPAWN_DBG(0.6 SECONDS)
+						SPAWN(0.6 SECONDS)
 							qdel(OB)
 					user.elecgib()
 		else

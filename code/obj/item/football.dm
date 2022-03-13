@@ -2,7 +2,7 @@
 	name = "space-american football pads"
 	desc = "A protective suit designed for players of the ancient sport of space-american football. This armor bears colors of the Spacecow Wobbegongs, who won the 2048 series!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "fb_blue"
 	//same values as captain armor
 	var/in_rush = 0
@@ -34,7 +34,7 @@
 	name = "athletic pants"
 	desc = "These are athletic pants bearing the colors of the Spacecow Wobbegongs. The fabric feels like victory."
 	icon = 'icons/obj/clothing/uniforms/item_js_athletic.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_athletic.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_athletic.dmi'
 	icon_state = "fb_blue"
 	item_function_flags = IMMUNE_TO_ACID
 
@@ -145,7 +145,7 @@
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 				if (istype(O, /obj/machinery/door) && O.density)
 					var/obj/machinery/door/D = O
-					SPAWN_DBG(0)
+					SPAWN(0)
 						D.try_force_open(src)
 					return
 				if (istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
@@ -267,7 +267,7 @@
 			var/mob/hitMob = hit_atom
 			if (ishuman(hitMob))
 				var/mob/living/carbon/human/user = usr
-				SPAWN_DBG( 0 )
+				SPAWN( 0 )
 					if (istype(user))
 						if (check_target_immunity(hitMob))
 							hitMob.visible_message("<span class='alert'>The [src] bounces off of [hit_atom]!</span>")

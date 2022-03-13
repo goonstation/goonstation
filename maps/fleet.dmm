@@ -122,7 +122,7 @@
 	icon_state = "hvent";
 	name = "air vent"
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of a human. There seem to be a few bits missing."
 	},
 /obj/item/clothing/mask/breath,
@@ -8960,7 +8960,7 @@
 	name = "Asclepius Command"
 	})
 "sr" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /turf/simulated/floor/sanitary/white,
@@ -9551,7 +9551,7 @@
 	name = "Asclepius Command"
 	})
 "tu" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -13626,7 +13626,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "AT" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /obj/machinery/crema_switch{
@@ -24097,7 +24097,7 @@
 	dir = 1;
 	level = 2
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "eng_ignition";
 	name = "Burn Chamber Ignition";
 	pixel_x = 7;

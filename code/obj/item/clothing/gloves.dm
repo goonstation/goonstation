@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "gloves"
 	w_class = W_CLASS_SMALL
 	icon = 'icons/obj/clothing/item_gloves.dmi'
-	wear_image_icon = 'icons/mob/hands.dmi'
+	wear_image_icon = 'icons/mob/clothing/hands.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 	protective_temperature = 400
 	wear_layer = MOB_HAND_LAYER2
@@ -42,7 +42,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	New()
 		..() // your parents miss you
 		flags |= HAS_EQUIP_CLICK
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			src.glove_ID = src.CreateID()
 			if (glove_IDs) // fix for Cannot execute null.Add(), maybe??
 				glove_IDs.Add(src.glove_ID)
@@ -105,7 +105,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				return
 			boutput(user, "<span class='notice'>You attach the wires to the [src.name].</span>")
 			src.stunready = 1
-			src.setSpecialOverride(/datum/item_special/spark, src, 0)
+			src.setSpecialOverride(/datum/item_special/spark/gloves, src, 0)
 			src.material_prints += ", electrically charged"
 			return
 
@@ -201,9 +201,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 /obj/item/clothing/gloves/long // adhara stuff
 	desc = "These long gloves protect your sleeves and skin from whatever dirty job you may be doing."
 	name = "cleaning gloves"
-	icon = 'icons/obj/clothing/item_gloves.dmi'
-	wear_image_icon = 'icons/mob/hands.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 	icon_state = "long_gloves"
 	item_state = "long_gloves"
 	protective_temperature = 550
@@ -352,7 +349,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	setupProperties()
 		..()
 		setProperty("heatprot", 10)
-		setProperty("conductivity", 0.3)
+		setProperty("conductivity", 0.25)
 		setProperty("deflection", 20)
 
 	disposing()
@@ -365,7 +362,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 	setupProperties()
 		..()
-		setProperty("deflection", 25)
+		setProperty("deflection", 40)
 
 /obj/item/clothing/gloves/swat/NT
 	desc = "A pair of Nanotrasen tactical gloves that are quite fire and electrically-resistant. They also help you block attacks. They do not specifically help you block against blocking though. Just regular attacks."
@@ -387,7 +384,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("conductivity", 0)
 	New()
 		..()
-		setSpecialOverride(/datum/item_special/spark, src)
+		setSpecialOverride(/datum/item_special/spark/gloves, src)
 
 
 /obj/item/clothing/gloves/yellow
@@ -514,7 +511,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				return
 
 			spam_flag = 1
-			SPAWN_DBG(4 SECONDS) spam_flag = 0
+			SPAWN(4 SECONDS) spam_flag = 0
 
 			use_power(50000)
 
@@ -538,13 +535,13 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 				for(var/obj/O in affected)
-					SPAWN_DBG(0.6 SECONDS) qdel(O)
+					SPAWN(0.6 SECONDS) qdel(O)
 
 				if(istype(target_r, /obj/machinery/power/generatorTemp))
 					var/obj/machinery/power/generatorTemp/gen = target_r
 					gen.efficiency_controller += 5
 					gen.grump += 5
-					SPAWN_DBG(45 SECONDS)
+					SPAWN(45 SECONDS)
 						gen.efficiency_controller -= 5
 
 				else if(isliving(target_r)) //Probably unsafe.

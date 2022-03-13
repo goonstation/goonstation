@@ -190,7 +190,7 @@
 				L.emote("twitch_v")
 			else
 				shoot_projectile_ST(get_turf(src), PJ, get_step(src, NORTH))
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				qdel(src)
 		else
 			qdel(src)
@@ -244,7 +244,7 @@
 					if (target)
 						A.throw_at(target, 10 - get_dist(src, A)*2, 1)		//throw things farther if they are closer to the epicenter.
 
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				qdel(O)
 				qdel(src)
 		else

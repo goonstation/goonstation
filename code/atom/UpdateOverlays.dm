@@ -199,10 +199,10 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 	else
 		. = null
 
-/atom/proc/SafeGetOverlayImage(var/key, var/image_file as file, var/icon_state as text, var/layer as num|null)
+/atom/proc/SafeGetOverlayImage(var/key, var/image_file as file, var/icon_state as text, var/layer as num|null, var/pixel_x as num|null, var/pixel_y as num|null)
 	var/image/I = GetOverlayImage(key)
 	if(!I)
-		I = image(image_file, icon_state, layer)
+		I = image(image_file, icon_state, layer, pixel_x = pixel_x, pixel_y = pixel_y)
 	else
 		//Ok, apparently modifying anything pertaining to the image appearance causes a hubbub, thanks byand
 		if(I.icon != image_file)
@@ -213,6 +213,10 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 
 		if(layer && layer != I.layer)
 			I.layer = layer
+		if(pixel_x && pixel_x != I.pixel_x)
+			I.pixel_x = pixel_x
+		if(pixel_y && pixel_y != I.pixel_y)
+			I.pixel_y = pixel_y
 	return I
 
 

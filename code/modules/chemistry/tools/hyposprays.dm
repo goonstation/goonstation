@@ -11,7 +11,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 
 /obj/item/reagent_containers/hypospray
 	name = "hypospray"
-	desc = "An automated injector that will dump out any harmful chemicals it finds in itself."
+	desc = "An advanced device capable of injecting various medicines into a patient instantaneously. Dumps any harmful chemicals."
 	icon = 'icons/obj/chemical.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	initial_volume = 30
@@ -55,6 +55,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		signal_event("icon_updated")
 
 	on_reagent_change(add)
+		..()
 		if (src.safe && add)
 			check_whitelist(src, src.whitelist)
 		src.UpdateIcon()
@@ -142,3 +143,22 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		playsound(M, src.sound_inject, 80, 0)
 
 		UpdateIcon()
+
+	afterattack(obj/target, mob/user, flag)
+		if (isobj(target) && target.is_open_container() && target.reagents)
+			if (!src.reagents || !src.reagents.total_volume)
+				boutput(user, "<span class='alert'>[src] is already empty.</span>")
+				return
+
+			if (target.reagents.is_full())
+				boutput(user, "<span class='alert'>[target] is full!</span>")
+				return
+
+			logTheThing("combat", user, null, "dumps the contents of [src] [log_reagents(src)] into [target] at [log_loc(user)].")
+			boutput(user, "<span class='notice'>You dump the contents of [src] into [target].</span>")
+			src.reagents.trans_to(target, src.reagents.total_volume)
+
+			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
+			return
+		else
+			return ..()

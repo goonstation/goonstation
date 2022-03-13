@@ -179,7 +179,7 @@
 /obj/item/shinai_bag
 	name = "shinai bag"
 	desc = "\improper 竹刀袋 : A tube-like back for holding two shinai."
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "shinaibag-closed"
 	item_state = "shinaibag-closed"
 	flags = ONBACK | FPRINT | TABLEPASS
@@ -240,6 +240,22 @@
 		else
 			..()
 
+	mouse_drop(atom/over_object, src_location, over_location)
+		..()
+		var/atom/movable/screen/hud/S = over_object
+		if (istype(S))
+			playsound(src.loc, "rustle", 50, 1, -5)
+			if (can_act(usr) && src.loc == usr)
+				if (S.id == "rhand")
+					if (!usr.r_hand)
+						usr.u_equip(src)
+						usr.put_in_hand_or_drop(src, 0)
+				else
+					if (S.id == "lhand")
+						if (!usr.l_hand)
+							usr.u_equip(src)
+							usr.put_in_hand_or_drop(src, 1)
+
 /obj/item/storage/box/kendo_box
 	name = "kendo box"
 	desc = "A box full of kendo gear!"
@@ -247,7 +263,7 @@
 	spawn_contents = list(/obj/item/clothing/head/helmet/men=2,/obj/item/clothing/suit/armor/douandtare=2,/obj/item/clothing/gloves/kote=2,/obj/item/shinai_bag=1)
 
 /obj/item/storage/box/kendo_box/hakama
-	name = "hakama box"
-	desc = "A box full of hakama!"
+	name = "uwagi and hakama box"
+	desc = "A box full of sets of uwagi and hakama!"
 	icon_state = "box"
 	spawn_contents = list(/obj/item/clothing/under/gimmick/hakama/random=7)

@@ -6,6 +6,7 @@ mob/new_player
 	var/keyd
 	var/adminspawned = 0
 	var/is_respawned_player = 0
+	var/pregameBrowserLoaded = FALSE
 
 #ifdef TWITCH_BOT_ALLOWED
 	var/twitch_bill_spawn = 0
@@ -21,7 +22,7 @@ mob/new_player
 
 	New()
 		. = ..()
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_ALWAYS)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_ALWAYS)
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
 		ready = 1
 	#endif
@@ -93,6 +94,8 @@ mob/new_player
 
 			else
 				spawned_in_keys += "[src.ckey]"
+				for (var/sound in global.dj_panel.preloaded_sounds)
+					src.client << load_resource(sound, -1)
 
 #ifdef TWITCH_BOT_ALLOWED
 		if (current_state == GAME_STATE_PLAYING)
@@ -119,7 +122,7 @@ mob/new_player
 		// explanation for isnull(src.key) from the reference: In the case of a player switching to another mob, by the time Logout() is called, the original mob's key will be null,
 		if (isnull(src.key) && pregameHTML && isclient(src.last_client))
 			// Removed dupe "if (src.last_client)" check since it was still runtiming anyway
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if(isclient(src.last_client))
 					winshow(src.last_client, "pregameBrowser", 0)
 					src.last_client << browse("", "window=pregameBrowser")
@@ -152,6 +155,7 @@ mob/new_player
 		if(pregameHTML && client)
 			winshow(client, "pregameBrowser", 1)
 			client << browse(pregameHTML, "window=pregameBrowser")
+			src.pregameBrowserLoaded = TRUE
 		else if(client)
 			winshow(src.last_client, "pregameBrowser", 0)
 			src.last_client << browse("", "window=pregameBrowser")
@@ -235,7 +239,7 @@ mob/new_player
 			if (ticker?.mode)
 				var/mob/living/silicon/S = locate(href_list["SelectedJob"]) in mobs
 				if (S)
-					if(jobban_isbanned(src.mind, "Cyborg"))
+					if(jobban_isbanned(src, "Cyborg"))
 						boutput(usr, "<span class='notice'>Sorry, you are banned from playing silicons.</span>")
 						close_spawn_windows()
 						return
@@ -245,7 +249,7 @@ mob/new_player
 						latejoin.activated = 1
 						latejoin.owner = src.mind
 						src.mind.transfer_to(S)
-						SPAWN_DBG(1 DECI SECOND)
+						SPAWN(1 DECI SECOND)
 							S.choose_name()
 							qdel(src)
 					else
@@ -322,15 +326,34 @@ mob/new_player
 				mode.add_latejoin_to_team(character.mind, JOB)
 			else if (istype(JOB, /datum/job/special/syndicate_operative))
 				character.set_loc(pick_landmark(LANDMARK_SYNDICATE))
+			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
+				var/datum/game_mode/battle_royale/battlemode = ticker.mode
+				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
+					boutput(character.mind.current,"<h3 class='notice'>You've arrived on a station with a battle royale in progress! Feel free to spectate!</h3>")
+					character.ghostize()
+					qdel(character)
+					return
+				character.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
+				equip_battler(character)
+				character.mind.assigned_role = "MODE"
+				character.mind.special_role = ROLE_BATTLER
+				battlemode.living_battlers.Add(character.mind)
+				DEBUG_MESSAGE("Adding a new battler")
+				battlemode.battle_shuttle_spawn(character.mind)
 			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
 			else if (character.traitHolder && character.traitHolder.hasTrait("pilot"))
 				boutput(character.mind.current,"<h3 class='notice'>You've become lost on your way to the station! Good luck!</h3>")
+			else if (character.traitHolder && character.traitHolder.hasTrait("sleepy"))
+				SPAWN(10 SECONDS) //ugly hardcoding- matches the duration you're asleep for
+					boutput(character?.mind?.current,"<h3 class='notice'>Hey, you! You're finally awake!</h3>")
 				//As with the Stowaway trait, location setting is handled elsewhere.
 			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner) || istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/mail_order))
 				// Location is set in bank_purchaseable Create()
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived through an alternative mode of travel! Good luck!</h3>")
+			else if (istype(ticker.mode, /datum/game_mode/assday))
+				character.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
 			else if (map_settings?.arrivals_type == MAP_SPAWN_CRYO)
 				var/obj/cryotron/starting_loc = null
 				if (ishuman(character) && by_type[/obj/cryotron])
@@ -343,18 +366,6 @@ mob/new_player
 					character.set_loc(starting_loc)
 			else if (map_settings?.arrivals_type == MAP_SPAWN_MISSILE)
 				latejoin_missile_spawn(character)
-			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
-				var/datum/game_mode/battle_royale/battlemode = ticker.mode
-				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
-					boutput(character.mind.current,"<h3 class='notice'>You've arrived on a station with a battle royale in progress! Feel free to spectate, but you are not considered one of the contestants!</h3>")
-					return AttemptLateSpawn(new /datum/job/special/tourist)
-				character.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
-				equip_battler(character)
-				character.mind.assigned_role = "MODE"
-				character.mind.special_role = ROLE_BATTLER
-				battlemode.living_battlers.Add(character.mind)
-				DEBUG_MESSAGE("Adding a new battler")
-				battlemode.battle_shuttle_spawn(character.mind)
 			else
 				var/starting_loc = null
 				starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(round(world.maxx / 2), round(world.maxy / 2), 1))
@@ -392,7 +403,7 @@ mob/new_player
 				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
 				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
 					participationRecorder.record(character.mind.ckey)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				qdel(src)
 
 		else
@@ -658,8 +669,19 @@ a.latejoin-card:hover {
 							break
 
 					var/bad_type = null
-					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles))
-						bad_type = pick(ticker.mode.latejoin_antag_roles)
+					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles)){
+
+						//Another one I need input on
+						if(ticker.mode.latejoin_antag_roles[ROLE_TRAITOR] != null)
+						{
+							bad_type = weighted_pick(ticker.mode.latejoin_antag_roles);
+						}
+						else{
+							bad_type = pick(ticker.mode.latejoin_antag_roles)
+						}
+						}
+
+
 					else
 						bad_type = ROLE_TRAITOR
 
