@@ -2840,7 +2840,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	if(src.holder.level >= LEVEL_ADMIN)
 		var/list/shuttles = get_map_prefabs(/datum/mapPrefab/shuttle)
 		var/datum/mapPrefab/shuttle/shuttle = shuttles[tgui_input_list(src, "Select a shuttle", "Special Shuttle", shuttles)]
-		if(shuttle.load())
+		if(shuttle?.load())
 			logTheThing("admin", src, null, "replaced the shuttle with [shuttle.name].")
 			logTheThing("diary", src, null, "replaced the shuttle with [shuttle.name].", "admin")
 			message_admins("[key_name(src)] replaced the shuttle with [shuttle.name].")
