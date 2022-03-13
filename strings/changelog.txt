@@ -1,5 +1,9 @@
 
 (t)sun mar 13 22
+(u)LeahTheTech
+(p)7680
+(e)|
+(+)Robotic talk, thrallspeak, and blob hivemind communication got a facelift and should now be much more noticeable.
 (u)Jan.antilles
 (p)7776
 (e)🎨|sprites
