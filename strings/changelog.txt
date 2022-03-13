@@ -1,5 +1,9 @@
 
 (t)sun mar 13 22
+(u)Flappybat
+(p)7775
+(e)|
+(+)Battle Royale loot amount scales with player counts.
 (u)zjdtmkhzt
 (p)7719
 (e)|
