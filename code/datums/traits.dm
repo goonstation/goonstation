@@ -87,7 +87,7 @@
 						continue
 				else
 					boutput(user, "<span class='alert'><b>WARNING: XP unlocks failed to update. Some traits may not be available. Please try again in a moment.</b></span>")
-					SPAWN_DBG(0) user.client.updateXpRewards()
+					SPAWN(0) user.client.updateXpRewards()
 					skipUnlocks = 1
 					continue
 
