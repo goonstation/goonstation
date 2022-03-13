@@ -1223,6 +1223,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\worldgen\worldgen_parent.dm"
 #include "code\modules\worldgen\prefab\mapPrefab.dm"
 #include "code\modules\worldgen\prefab\mining.dm"
+#include "code\modules\worldgen\prefab\random_rooms.dm"
 #include "code\modules\worldgen\prefab\shuttle.dm"
 #include "code\obj\access_spawn.dm"
 #include "code\obj\airbridge.dm"
