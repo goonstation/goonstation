@@ -3374,16 +3374,6 @@
 	dir = 2
 	},
 /area/station/turret_protected/Zeta)
-"iW" = (
-/obj/machinery/lawrack,
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1"
-	},
-/turf/simulated/floor/circuit{
-	dir = 2
-	},
-/area/station/turret_protected/Zeta)
 "iX" = (
 /obj/submachine/seed_vendor,
 /turf/simulated/floor/green,
@@ -4864,10 +4854,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge/customs)
-"ml" = (
-/obj/decal/sink,
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/bathroom)
 "mm" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/bridge/hos)
@@ -5002,16 +4988,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "mD" = (
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/bathroom)
-"mE" = (
-/obj/decal/sink,
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_y = 21
-	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
 "mF" = (
@@ -12781,13 +12757,6 @@
 	dir = 2
 	},
 /area/station/bridge/customs)
-"Du" = (
-/obj/decal/sink,
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/bathroom)
 "Dv" = (
 /obj/table/auto,
 /obj/bedsheetbin,
@@ -14602,12 +14571,43 @@
 /obj/item/plank,
 /turf/simulated/floor/grime,
 /area/ghostdrone_factory)
+"HK" = (
+/obj/decal/fakeobjects/sink,
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/bathroom)
+"KH" = (
+/obj/machinery/lawrack,
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor/circuit{
+	dir = 2
+	},
+/area/station/turret_protected/Zeta)
+"NB" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/bathroom)
 "Xp" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
+"XQ" = (
+/obj/decal/fakeobjects/sink,
+/obj/machinery/firealarm{
+	pixel_y = 25
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/bathroom)
 "XR" = (
 /obj/item/device/radio/headset/multifreq,
 /obj/item/device/radio/headset/multifreq,
@@ -57950,7 +57950,7 @@ bu
 hH
 mP
 iy
-iW
+KH
 kK
 ye
 yo
@@ -67016,7 +67016,7 @@ yv
 yp
 km
 nH
-Du
+XQ
 mD
 sY
 xF
@@ -67318,7 +67318,7 @@ xl
 yw
 lp
 nH
-mE
+HK
 CW
 lI
 lI
@@ -67620,7 +67620,7 @@ yv
 yp
 DV
 nH
-ml
+NB
 og
 sY
 zA

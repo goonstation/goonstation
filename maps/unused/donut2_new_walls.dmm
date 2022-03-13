@@ -8952,11 +8952,6 @@
 	dir = 1
 	},
 /area/station/quartermaster/office)
-"awA" = (
-/obj/decal/skeleton,
-/obj/decal/cleanable/blood,
-/turf/simulated/floor/plating,
-/area/station/storage/emergency2)
 "awB" = (
 /obj/item/clothing/shoes/moon,
 /turf/simulated/floor/plating,
@@ -26297,19 +26292,6 @@
 /area/station/turret_protected/AIbasecore1{
 	name = "Upload Station"
 	})
-"biB" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/lawrack,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor/delivery,
-/area/station/turret_protected/AIbasecore1{
-	name = "Upload Station"
-	})
 "biC" = (
 /obj/machinery/sim/transmitter{
 	network = "prison"
@@ -39907,6 +39889,19 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"gvn" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/lawrack,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/delivery,
+/area/station/turret_protected/AIbasecore1{
+	name = "Upload Station"
+	})
 "gvK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -42085,6 +42080,12 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
+"lqu" = (
+/obj/table/auto,
+/turf/simulated/floor,
+/area/station/turret_protected/ai_upload{
+	name = "AI Module Storage"
+	})
 "lrL" = (
 /obj/cable{
 	d1 = 4;
@@ -43576,6 +43577,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/ranch)
+"oSK" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/plating,
+/area/station/storage/emergency2)
 "oTE" = (
 /obj/cable{
 	d1 = 1;
@@ -44038,12 +44044,6 @@
 	dir = 2
 	},
 /area/station/medical/medbay)
-"pRC" = (
-/obj/table/auto,
-/turf/simulated/floor,
-/area/station/turret_protected/ai_upload{
-	name = "AI Module Storage"
-	})
 "pSN" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -81322,7 +81322,7 @@ aaa
 aaa
 bhY
 bhY
-biB
+gvn
 blw
 bkr
 fUr
@@ -82172,7 +82172,7 @@ aoN
 asi
 asi
 asm
-awA
+oSK
 aBc
 ayg
 aza
@@ -90952,7 +90952,7 @@ aLx
 aJf
 aIx
 aNB
-pRC
+lqu
 aOV
 aPG
 aQk

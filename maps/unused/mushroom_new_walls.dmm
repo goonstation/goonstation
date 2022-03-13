@@ -12439,16 +12439,6 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/turret_protected/ai_upload)
-"aWM" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/lawrack{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/purple,
-/area/station/turret_protected/ai_upload)
 "aWN" = (
 /obj/machinery/portable_atmospherics/pump,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -20526,6 +20516,16 @@
 	dir = 4
 	},
 /area/station/security/main)
+"cSx" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/lawrack{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/purple,
+/area/station/turret_protected/ai_upload)
 "cTo" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -37100,6 +37100,13 @@
 	dir = 9
 	},
 /area/station/science/lab)
+"wKN" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/clothing/suit/chef,
+/obj/item/clothing/head/chefhat,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/west)
 "wKX" = (
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
@@ -37273,13 +37280,6 @@
 /obj/disposalpipe/junction/left/north,
 /turf/simulated/floor,
 /area/station/security/brig)
-"wVZ" = (
-/obj/decal/skeleton,
-/obj/item/clothing/suit/chef,
-/obj/item/clothing/head/chefhat,
-/obj/decal/cleanable/cobweb,
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/west)
 "wWi" = (
 /obj/stool/chair/wooden{
 	dir = 8
@@ -75704,7 +75704,7 @@ xrU
 xFS
 ogC
 tfa
-wVZ
+wKN
 tfa
 aaB
 abm
@@ -93165,7 +93165,7 @@ aTs
 aTr
 aVa
 aUY
-aWM
+cSx
 aXI
 aYp
 aTr

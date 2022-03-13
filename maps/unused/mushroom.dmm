@@ -6491,22 +6491,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"aop" = (
-/obj/rack,
-/obj/item/circuitboard/teleporter,
-/obj/item/circuitboard/card,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
-/obj/machinery/camera{
-	c_tag = "Technical Storage";
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
 "aoq" = (
 /obj/rack,
 /obj/item/circuitboard/arcade,
@@ -7791,11 +7775,6 @@
 	d1 = 2;
 	d2 = 8
 	},
-/turf/simulated/floor/purple,
-/area/station/turret_protected/ai_upload)
-"arr" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/lawrack,
 /turf/simulated/floor/purple,
 /area/station/turret_protected/ai_upload)
 "ars" = (
@@ -23833,13 +23812,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/kitchen)
-"aZN" = (
-/obj/decal/skeleton,
-/obj/item/clothing/suit/chef,
-/obj/item/clothing/head/chefhat,
-/obj/decal/cleanable/cobweb,
-/turf/simulated/floor/grass/leafy,
-/area/station/hallway/primary/west)
 "aZO" = (
 /obj/decal/cleanable/tomatosplat,
 /obj/creepy_sound_trigger,
@@ -29777,6 +29749,34 @@
 	},
 /turf/space,
 /area/space)
+"dYE" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/lawrack,
+/turf/simulated/floor/purple,
+/area/station/turret_protected/ai_upload)
+"omT" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/clothing/suit/chef,
+/obj/item/clothing/head/chefhat,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/grass/leafy,
+/area/station/hallway/primary/west)
+"rYC" = (
+/obj/rack,
+/obj/item/circuitboard/teleporter,
+/obj/item/circuitboard/card,
+/obj/item/circuitboard/robot_module_rewriter,
+/obj/item/circuitboard/cloning,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
+/obj/machinery/camera{
+	c_tag = "Technical Storage";
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 
 (1,1,1) = {"
 aaa
@@ -48015,7 +48015,7 @@ amp
 amO
 anp
 amO
-aop
+rYC
 aoO
 apr
 app
@@ -48302,7 +48302,7 @@ aYe
 aUb
 aBR
 aOH
-aZN
+omT
 aOH
 aaB
 abm
@@ -61413,7 +61413,7 @@ apl
 apk
 aqj
 aqf
-arr
+dYE
 arT
 ast
 apk

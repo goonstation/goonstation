@@ -26586,13 +26586,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
-"bgo" = (
-/obj/table/auto,
-/obj/item/storage/box/PDAbox,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/carpet/blue,
-/area/station/bridge)
 "bgp" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
@@ -39890,25 +39883,6 @@
 	dir = 8
 	},
 /area/station/turret_protected/ai_upload)
-"bKx" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/lawrack{
-	dir = 8
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/turret_protected/ai_upload)
 "bKy" = (
 /obj/item/clothing/under/jersey/red,
 /obj/item/clothing/under/jersey/purple,
@@ -45092,12 +45066,6 @@
 	dir = 10
 	},
 /area/station/turret_protected/Zeta)
-"bUM" = (
-/obj/table/auto,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/green/side,
-/area/station/turret_protected/Zeta)
 "bUN" = (
 /obj/machinery/light,
 /obj/machinery/computer/robotics{
@@ -47478,12 +47446,6 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
-"bZZ" = (
-/obj/decal/skeleton,
-/turf/simulated/floor/plating/airless/asteroid{
-	name = "asteroid"
-	},
-/area/space)
 "caa" = (
 /obj/decal/cleanable/blood/gibs/core,
 /turf/simulated/floor/plating/airless/asteroid{
@@ -49295,6 +49257,12 @@
 	intact = 0
 	},
 /area/space)
+"diK" = (
+/obj/decal/fakeobjects/skeleton,
+/turf/simulated/floor/plating/airless/asteroid{
+	name = "asteroid"
+	},
+/area/space)
 "enR" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -49336,6 +49304,25 @@
 	dir = 8
 	},
 /area/station/science/teleporter)
+"gwJ" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/lawrack{
+	dir = 8
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/turret_protected/ai_upload)
 "hVq" = (
 /obj/table/auto,
 /obj/item/device/radio/signaler,
@@ -49376,6 +49363,12 @@
 	dir = 10
 	},
 /area/station/science/teleporter)
+"lFd" = (
+/obj/table/auto,
+/obj/item/aiModule/reset,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/green/side,
+/area/station/turret_protected/Zeta)
 "mkh" = (
 /obj/machinery/light{
 	dir = 8;
@@ -49435,6 +49428,13 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
+"ykd" = (
+/obj/table/auto,
+/obj/item/storage/box/PDAbox,
+/obj/item/aiModule/reset,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/carpet/blue,
+/area/station/bridge)
 
 (1,1,1) = {"
 aaa
@@ -88613,7 +88613,7 @@ bRE
 bSw
 bTg
 bSx
-bUM
+lFd
 bPT
 bVO
 bSp
@@ -89760,7 +89760,7 @@ baW
 bct
 bdD
 beV
-bgo
+ykd
 bhG
 bjj
 bkt
@@ -95913,7 +95913,7 @@ bZj
 bYT
 bYU
 bZP
-bZZ
+diK
 cab
 aab
 aab
@@ -96517,7 +96517,7 @@ bYU
 bYT
 bYT
 bZP
-bZZ
+diK
 aab
 aab
 aaa
@@ -115780,7 +115780,7 @@ bHD
 bIo
 bNe
 bJN
-bKx
+gwJ
 bLu
 bMk
 bEF

@@ -7066,15 +7066,6 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/barber_shop)
-"auC" = (
-/obj/disposalpipe/segment/mail,
-/obj/decal/pole{
-	pixel_x = -14
-	},
-/turf/simulated/floor/neutral/side{
-	dir = 8
-	},
-/area/station/crew_quarters/locker)
 "auD" = (
 /obj/machinery/gibber/output_west,
 /turf/simulated/floor/specialroom/freezer,
@@ -38097,6 +38088,24 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
+"bTg" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 4
+	},
+/obj/disposalpipe/segment/mail,
+/obj/machinery/door/airlock/pyro/engineering{
+	name = "Mechanics Lab";
+	req_access = null;
+	req_access_txt = null
+	},
+/obj/access_spawn/engineering_mechanic,
+/obj/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/engine/elect)
 "bTi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -38665,6 +38674,15 @@
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
+/area/station/hallway/primary/south)
+"bUI" = (
+/obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
 /area/station/hallway/primary/south)
 "bUJ" = (
 /obj/shrub,
@@ -50369,14 +50387,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
-"cxU" = (
-/obj/decal/sink,
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/bot/white,
-/area/station/medical/cdc)
 "cxV" = (
 /obj/stool/chair/office{
 	dir = 1
@@ -53939,6 +53949,14 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
+"ftQ" = (
+/obj/decal/fakeobjects/sink,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/bot/white,
+/area/station/medical/cdc)
 "ftU" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
@@ -54152,6 +54170,22 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"fHG" = (
+/obj/machinery/door_control{
+	id = "dwaine_core";
+	name = "DWAINE Core Shield";
+	pixel_x = -25
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/table/auto,
+/obj/item/circuitboard/robotics{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "fIg" = (
 /obj/grille/steel,
 /obj/window/auto,
@@ -54748,14 +54782,6 @@
 	dir = 8
 	},
 /area/station/mining/staff_room)
-"gES" = (
-/obj/machinery/light/incandescent{
-	dir = 1
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/hallway/primary/south)
 "gFa" = (
 /obj/machinery/atmospherics/portables_connector{
 	name = "Mixing West"
@@ -55042,6 +55068,15 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"hkj" = (
+/obj/disposalpipe/segment/mail,
+/obj/decal/fakeobjects/pole{
+	pixel_x = -14
+	},
+/turf/simulated/floor/neutral/side{
+	dir = 8
+	},
+/area/station/crew_quarters/locker)
 "hmN" = (
 /obj/grille/catwalk,
 /obj/landmark/magnet_shield,
@@ -56089,6 +56124,16 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"jmy" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "jmS" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -56247,16 +56292,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/blue,
 /area/station/medical/robotics)
-"jyQ" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/yellow/side,
-/area/station/engine/elect)
 "jzx" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -56291,6 +56326,22 @@
 /obj/access_spawn/medlab,
 /turf/simulated/floor/delivery,
 /area/station/medical/research)
+"jFn" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/lawrack{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/device/radio/intercom/AI{
+	dir = 8
+	},
+/turf/simulated/floor/blue,
+/area/station/turret_protected/ai_upload)
 "jFF" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Interrogation Room";
@@ -57489,6 +57540,16 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/security/main)
+"lYJ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/yellow/side,
+/area/station/engine/elect)
 "lZk" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -57499,6 +57560,18 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
+"lZE" = (
+/obj/machinery/light/emergency{
+	dir = 8
+	},
+/obj/noticeboard/persistent{
+	name = "Mechanics Workshop persistent notice board";
+	persistent_id = "mechanics"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/hallway/primary/south)
 "lZY" = (
 /obj/overlay{
 	icon = 'icons/misc/beach2.dmi';
@@ -57644,6 +57717,14 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/exit)
+"mpF" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/hallway/primary/south)
 "mrx" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -57924,22 +58005,6 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/routing/engine)
-"mTQ" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/lawrack{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/item/device/radio/intercom/AI{
-	dir = 8
-	},
-/turf/simulated/floor/blue,
-/area/station/turret_protected/ai_upload)
 "mVI" = (
 /obj/disposalpipe/segment/mail{
 	dir = 2;
@@ -58126,15 +58191,6 @@
 	dir = 10
 	},
 /area/station/mining/staff_room)
-"nmT" = (
-/obj/disposalpipe/segment/mail,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/hallway/primary/south)
 "npU" = (
 /obj/plasticflaps{
 	layer = 3
@@ -59217,6 +59273,13 @@
 	icon_state = "swampgrass_edge"
 	},
 /area/station/hydroponics/bay)
+"pkH" = (
+/obj/machinery/disposal/mail/small/autoname/mechanics/south,
+/obj/disposalpipe/trunk/mail{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/engine/elect)
 "pkK" = (
 /obj/machinery/light,
 /turf/simulated/floor/grass{
@@ -59280,22 +59343,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
-"psH" = (
-/obj/machinery/door_control{
-	id = "dwaine_core";
-	name = "DWAINE Core Shield";
-	pixel_x = -25
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/table/auto,
-/obj/item/circuitboard/robotics{
-	pixel_x = -2;
-	pixel_y = 8
-	},
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "pui" = (
 /obj/machinery/light_switch{
 	name = "S light switch";
@@ -61545,18 +61592,6 @@
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor,
 /area/station/routing/sortingRoom)
-"sZw" = (
-/obj/machinery/light/emergency{
-	dir = 8
-	},
-/obj/noticeboard/persistent{
-	name = "Mechanics Workshop persistent notice board";
-	persistent_id = "mechanics"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/hallway/primary/south)
 "sZR" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -62018,24 +62053,6 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
-"tQs" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 4
-	},
-/obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "Mechanics Lab";
-	req_access = null;
-	req_access_txt = null
-	},
-/obj/access_spawn/engineering_mechanic,
-/obj/firedoor_spawn,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/engine/elect)
 "tQC" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 4;
@@ -63924,16 +63941,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
-"wWi" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail,
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/south)
 "wWK" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/cable{
@@ -64056,13 +64063,6 @@
 	dir = 6
 	},
 /area/station/hydroponics/bay)
-"xiH" = (
-/obj/machinery/disposal/mail/small/autoname/mechanics/south,
-/obj/disposalpipe/trunk/mail{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/engine/elect)
 "xjC" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -99399,7 +99399,7 @@ ckG
 adC
 aag
 cxe
-cxU
+ftQ
 cxp
 cxp
 cxp
@@ -102914,7 +102914,7 @@ aph
 aph
 aph
 ati
-auC
+hkj
 dRM
 aAe
 aXj
@@ -105699,7 +105699,7 @@ bEc
 bEM
 bFv
 bGs
-psH
+fHG
 bCh
 bCh
 bCh
@@ -106893,7 +106893,7 @@ bsa
 bqK
 bqJ
 bui
-mTQ
+jFn
 bvV
 buc
 mwf
@@ -110841,9 +110841,9 @@ bLU
 clf
 sKw
 bNn
-xiH
+pkH
 bTf
-sZw
+lZE
 bKp
 bWU
 bYw
@@ -111143,10 +111143,10 @@ bLV
 clf
 vdE
 gZR
-jyQ
-tQs
-nmT
-wWi
+lYJ
+bTg
+bUI
+jmy
 bXa
 bYx
 vrm
@@ -111447,7 +111447,7 @@ eyq
 clh
 bRI
 bTf
-gES
+mpF
 bKp
 bWU
 bYy

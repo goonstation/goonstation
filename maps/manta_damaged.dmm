@@ -4664,11 +4664,6 @@
 	icon_state = "floorgrime-w"
 	},
 /area/listeningpost/syndicateassaultvessel)
-"amk" = (
-/obj/table/reinforced/auto,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/longtile/black,
-/area/station/turret_protected/starboard)
 "aml" = (
 /obj/machinery/optable,
 /obj/decal/fakeobjects{
@@ -8771,10 +8766,6 @@
 /obj/item/reagent_containers/food/snacks/pizza,
 /turf/simulated/floor/black,
 /area/station/engine/engineering/breakroom)
-"avh" = (
-/obj/decal/sink,
-/turf/simulated/floor/black,
-/area/listeningpost/syndicateassaultvessel)
 "avi" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering/private)
@@ -19177,12 +19168,6 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
 /area/station/teleporter)
-"aQQ" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/lawrack,
-/obj/cable,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "aQR" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer3/generic/radio,
@@ -49139,6 +49124,10 @@
 /obj/access_spawn/maint,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/seaturtle)
+"cUN" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/black,
+/area/listeningpost/syndicateassaultvessel)
 "cVM" = (
 /obj/storage/crate/bartending,
 /obj/disposalpipe/segment/mail{
@@ -49182,6 +49171,11 @@
 /obj/item/disk/data/tape/master/readonly,
 /obj/item/paper/book/from_file/dwainedummies,
 /obj/item/device/multitool,
+/turf/simulated/floor/longtile/black,
+/area/station/turret_protected/starboard)
+"gZs" = (
+/obj/table/reinforced/auto,
+/obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/starboard)
 "hNO" = (
@@ -49389,6 +49383,12 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/captain)
+"nxl" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/lawrack,
+/obj/cable,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "nSq" = (
 /obj/table/auto,
 /obj/item/paper/book/from_file/torpedo,
@@ -91653,7 +91653,7 @@ aNF
 aiF
 asu
 aQz
-aQQ
+nxl
 ayo
 aCG
 aCI
@@ -92988,7 +92988,7 @@ alY
 atB
 amd
 akH
-avh
+cUN
 avM
 avQ
 avS
@@ -95270,7 +95270,7 @@ aBz
 aru
 akB
 aqS
-amk
+gZs
 aEw
 aPt
 aPG

@@ -24102,27 +24102,6 @@
 /area/station/wreckage{
 	name = "Restricted Area"
 	})
-"bdX" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/decal/skeleton{
-	desc = "The partially decomposed corpse of some poor chump.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	layer = 4;
-	name = "corpse"
-	},
-/obj/disposalpipe/segment/morgue,
-/turf/simulated/floor/airless/grime,
-/area/station/wreckage{
-	name = "Restricted Area"
-	})
 "bdY" = (
 /obj/cable{
 	d1 = 1;
@@ -77207,6 +77186,14 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/research/outpost)
+"dyi" = (
+/obj/table/auto,
+/obj/item/aiModule/reset,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/item/disk/data/tape/master/readonly,
+/obj/item/device/gps,
+/turf/simulated/floor/circuit,
+/area/station/bridge)
 "dzW" = (
 /turf/space,
 /area/shuttle/research/station)
@@ -77459,14 +77446,6 @@
 	dir = 1
 	},
 /area/research_outpost)
-"ffO" = (
-/obj/table/auto,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/item/disk/data/tape/master/readonly,
-/obj/item/device/gps,
-/turf/simulated/floor/circuit,
-/area/station/bridge)
 "fji" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -79321,14 +79300,6 @@
 "qmv" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/arcade/dungeon)
-"qpv" = (
-/obj/machinery/lawrack,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "qwX" = (
 /turf/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -79750,6 +79721,27 @@
 /obj/item/clothing/mask/chicken,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"tbR" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/decal/fakeobjects/skeleton{
+	desc = "The partially decomposed corpse of some poor chump.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body3";
+	layer = 4;
+	name = "corpse"
+	},
+/obj/disposalpipe/segment/morgue,
+/turf/simulated/floor/airless/grime,
+/area/station/wreckage{
+	name = "Restricted Area"
+	})
 "tdV" = (
 /obj/table/wood/auto,
 /obj/item/item_box/gold_star{
@@ -79964,6 +79956,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"tNX" = (
+/obj/machinery/lawrack,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "tQm" = (
 /obj/lattice{
 	dir = 8;
@@ -123973,7 +123973,7 @@ aYo
 aZH
 bcp
 bdk
-bdX
+tbR
 beB
 bff
 bff
@@ -138428,7 +138428,7 @@ acS
 abf
 ppH
 aeC
-qpv
+tNX
 agq
 adW
 ahE
@@ -146952,7 +146952,7 @@ bJy
 bLj
 bHA
 bOv
-ffO
+dyi
 bAc
 bTi
 bUJ

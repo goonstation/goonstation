@@ -11924,11 +11924,6 @@
 "ayc" = (
 /turf/simulated/wall,
 /area/station/storage/emergency2)
-"ayd" = (
-/obj/decal/skeleton,
-/obj/decal/cleanable/blood,
-/turf/simulated/floor/plating,
-/area/station/storage/emergency2)
 "aye" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -18029,13 +18024,6 @@
 	d1 = 1;
 	d2 = 2
 	},
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
-"aKP" = (
-/obj/rack,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/item/circuitboard/card,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "aKQ" = (
@@ -31252,12 +31240,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"bka" = (
-/obj/decal/skeleton{
-	desc = "Um.  Uh.  Oh dear."
-	},
-/turf/simulated/floor/plating/random,
-/area/station/security/brig)
 "bkb" = (
 /turf/simulated/floor/plating/random,
 /area/station/security/brig)
@@ -31732,19 +31714,6 @@
 "ble" = (
 /mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/AIbasecore1{
-	name = "Upload Station"
-	})
-"blf" = (
-/obj/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/machinery/lawrack,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor/delivery,
 /area/station/turret_protected/AIbasecore1{
 	name = "Upload Station"
 	})
@@ -45285,6 +45254,19 @@
 /obj/item/camera,
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/science/teleporter)
+"hHv" = (
+/obj/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/lawrack,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/delivery,
+/area/station/turret_protected/AIbasecore1{
+	name = "Upload Station"
+	})
 "jCn" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -45302,12 +45284,30 @@
 	dir = 2
 	},
 /area/station/security/detectives_office)
+"oRh" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/plating,
+/area/station/storage/emergency2)
+"sLy" = (
+/obj/decal/fakeobjects/skeleton{
+	desc = "Um.  Uh.  Oh dear."
+	},
+/turf/simulated/floor/plating/random,
+/area/station/security/brig)
 "tKX" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
+"tVh" = (
+/obj/rack,
+/obj/item/circuitboard/robot_module_rewriter,
+/obj/item/circuitboard/cloning,
+/obj/item/circuitboard/card,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "wvD" = (
 /obj/table/auto,
 /obj/machinery/light/lamp,
@@ -78752,7 +78752,7 @@ aaa
 aaa
 bjU
 bkA
-blf
+hHv
 bme
 bnb
 boe
@@ -79602,7 +79602,7 @@ apF
 atB
 atB
 axl
-ayd
+oRh
 ayc
 azM
 aAI
@@ -85355,7 +85355,7 @@ aHS
 aIC
 aJv
 aKd
-aKP
+tVh
 aLz
 aIC
 aNq
@@ -85998,7 +85998,7 @@ bhk
 bip
 biQ
 bjo
-bka
+sLy
 bkC
 bln
 bmk

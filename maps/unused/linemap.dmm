@@ -8728,17 +8728,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
-"aua" = (
-/obj/machinery/lawrack{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/cable,
-/turf/simulated/floor/bot,
-/area/station/turret_protected/ai_upload)
 "aub" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16405,10 +16394,6 @@
 /obj/machinery/door/airlock/gannets/security/alt{
 	name = "Interrogation Room"
 	},
-/turf/simulated/floor/plating,
-/area/station/security/main)
-"aMo" = (
-/obj/decal/skeleton,
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "aMp" = (
@@ -24371,24 +24356,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/kitchen)
-"bep" = (
-/obj/decal/sink{
-	tag = "icon-sink (WEST)";
-	icon_state = "sink";
-	dir = 8
-	},
-/obj/item/plate,
-/obj/item/plate,
-/obj/item/plate,
-/obj/item/reagent_containers/food/drinks/bowl,
-/obj/item/reagent_containers/food/drinks/bowl,
-/obj/item/plate,
-/obj/item/plate,
-/obj/decal/poster/wallsign/chsl{
-	pixel_x = 32
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/kitchen)
 "beq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -27829,15 +27796,6 @@
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
-"bmK" = (
-/obj/decal/sink{
-	dir = 4;
-	icon_state = "sink";
-	pixel_x = -2;
-	tag = "icon-sink (EAST)"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/cdc)
 "bmL" = (
 /obj/machinery/door/airlock/gannets/glass/toxins{
 	name = "Pathology Quarantine";
@@ -32386,12 +32344,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
-"bxa" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/network_progs,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
 "bxb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -35104,6 +35056,26 @@
 	},
 /turf/space,
 /area/space)
+"eWt" = (
+/obj/decal/fakeobjects/sink{
+	dir = 4;
+	icon_state = "sink";
+	pixel_x = -2;
+	tag = "icon-sink (EAST)"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
+"fWz" = (
+/obj/machinery/lawrack{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/cable,
+/turf/simulated/floor/bot,
+/area/station/turret_protected/ai_upload)
 "gVa" = (
 /obj/table/wood/auto,
 /obj/item/camera{
@@ -35148,6 +35120,28 @@
 /obj/item/paper/book/from_file/critter_compendium,
 /turf/simulated/floor,
 /area/station/science/teleporter)
+"iGJ" = (
+/obj/decal/fakeobjects/skeleton,
+/turf/simulated/floor/plating,
+/area/station/security/main)
+"lia" = (
+/obj/decal/fakeobjects/sink{
+	tag = "icon-sink (WEST)";
+	icon_state = "sink";
+	dir = 8
+	},
+/obj/item/plate,
+/obj/item/plate,
+/obj/item/plate,
+/obj/item/reagent_containers/food/drinks/bowl,
+/obj/item/reagent_containers/food/drinks/bowl,
+/obj/item/plate,
+/obj/item/plate,
+/obj/decal/poster/wallsign/chsl{
+	pixel_x = 32
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/kitchen)
 "slg" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
@@ -35161,6 +35155,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
+"uiF" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/reset,
+/obj/item/disk/data/floppy/read_only/network_progs,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
 "uVE" = (
 /obj/table/auto,
 /obj/item/camera,
@@ -71311,7 +71311,7 @@ bkr
 bkS
 blw
 blZ
-bmK
+eWt
 bnq
 bod
 boX
@@ -77304,7 +77304,7 @@ aJL
 aKg
 aKQ
 aKS
-aMo
+iGJ
 aMU
 aNI
 awt
@@ -77877,7 +77877,7 @@ ark
 arU
 asI
 atq
-aua
+fWz
 auF
 avl
 avO
@@ -84918,7 +84918,7 @@ btp
 btp
 bvR
 bwt
-bxa
+uiF
 bxC
 bxU
 bvR
@@ -87904,7 +87904,7 @@ baZ
 bda
 bdv
 bdR
-bep
+lia
 beE
 baZ
 bfA

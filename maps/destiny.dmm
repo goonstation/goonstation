@@ -3439,13 +3439,6 @@
 /area/station/crew_quarters/quarters_east{
 	name = "Crew Quarters D"
 	})
-"anA" = (
-/obj/disposalpipe/segment,
-/obj/decal/pole{
-	pixel_x = -14
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/central)
 "anB" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -14210,16 +14203,6 @@
 	dir = 8
 	},
 /area/station/engine/elect)
-"bpT" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -28
-	},
-/obj/machinery/lawrack{
-	dir = 4
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "bpV" = (
 /obj/disposalpipe/switch_junction{
 	dir = 1;
@@ -18263,16 +18246,6 @@
 	},
 /turf/space,
 /area/space)
-"crL" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/machinery/light/incandescent{
-	dir = 8;
-	nostick = 1
-	},
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "crP" = (
 /obj/railing/orange{
 	dir = 4
@@ -22209,6 +22182,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
+"emm" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/reset,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/machinery/light/incandescent{
+	dir = 8;
+	nostick = 1
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "emv" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating/random,
@@ -31175,6 +31158,16 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"iHu" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -28
+	},
+/obj/machinery/lawrack{
+	dir = 4
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "iHJ" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4;
@@ -44445,6 +44438,13 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/gas)
+"pSw" = (
+/obj/disposalpipe/segment,
+/obj/decal/fakeobjects/pole{
+	pixel_x = -14
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/central)
 "pSO" = (
 /obj/landmark/magnet_shield,
 /obj/grille/catwalk/cross{
@@ -105911,7 +105911,7 @@ ajY
 arY
 arY
 jHN
-anA
+pSw
 jer
 amB
 bjB
@@ -107129,7 +107129,7 @@ hvw
 swT
 rGo
 sDE
-bpT
+iHu
 bcI
 mRX
 mGL
@@ -119545,7 +119545,7 @@ ayz
 jLx
 ffW
 oRI
-crL
+emm
 ddu
 aqf
 arD

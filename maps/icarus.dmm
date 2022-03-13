@@ -2852,17 +2852,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/bridge)
-"agN" = (
-/obj/table/auto,
-/obj/item/storage/box/PDAbox,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/black,
-/area/station/bridge)
 "agO" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
@@ -5298,16 +5287,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
-"alX" = (
-/obj/decal/pole{
-	pixel_x = -14
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor/grey,
-/area/station/hallway/primary/central)
 "alY" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -8585,20 +8564,6 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/blue,
-/area/station/turret_protected/ai)
-"asV" = (
-/obj/machinery/lawrack{
-	dir = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/blue/side{
-	dir = 8;
-	icon_state = "blue"
-	},
 /area/station/turret_protected/ai)
 "asW" = (
 /turf/simulated/floor/blue,
@@ -19632,18 +19597,6 @@
 	icon_state = "green"
 	},
 /area/station/turret_protected/Zeta)
-"aQt" = (
-/obj/table/auto,
-/obj/item/aiModule/reset,
-/obj/item/circuitboard/robotics,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_west,
-/turf/simulated/floor/green,
-/area/station/turret_protected/Zeta)
 "aQu" = (
 /turf/simulated/floor/green/side{
 	dir = 8
@@ -26485,6 +26438,16 @@
 	dir = 6
 	},
 /area/station/science/teleporter)
+"eiE" = (
+/obj/decal/fakeobjects/pole{
+	pixel_x = -14
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/grey,
+/area/station/hallway/primary/central)
 "esW" = (
 /obj/item/clothing/glasses/blindfold,
 /turf/simulated/floor/engine/vacuum,
@@ -26591,6 +26554,20 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
+"fJH" = (
+/obj/machinery/lawrack{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/blue/side{
+	dir = 8;
+	icon_state = "blue"
+	},
+/area/station/turret_protected/ai)
 "fUv" = (
 /obj/item/storage/wall/emergency{
 	dir = 4;
@@ -27208,6 +27185,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"niL" = (
+/obj/table/auto,
+/obj/item/aiModule/reset,
+/obj/item/circuitboard/robotics,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_west,
+/turf/simulated/floor/green,
+/area/station/turret_protected/Zeta)
 "njr" = (
 /obj/creepy_sound_trigger,
 /obj/cable{
@@ -27536,6 +27525,17 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/research_outpost/indigo_rye)
+"rri" = (
+/obj/table/auto,
+/obj/item/storage/box/PDAbox,
+/obj/item/aiModule/reset,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
 "rzH" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -62568,7 +62568,7 @@ arw
 arQ
 asi
 asy
-asV
+fJH
 ats
 atH
 auh
@@ -69192,7 +69192,7 @@ ajY
 akP
 ajY
 ajY
-alX
+eiE
 akP
 amH
 aad
@@ -70983,7 +70983,7 @@ afc
 afc
 agd
 agy
-agN
+rri
 agY
 ahk
 agd
@@ -76502,7 +76502,7 @@ aNz
 aOp
 aOp
 aPy
-aQt
+niL
 aRd
 aRU
 aSy

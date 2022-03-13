@@ -3550,15 +3550,6 @@
 /obj/access_spawn/medical,
 /turf/simulated/floor/white,
 /area/station/medical/dome)
-"aip" = (
-/obj/decal/skeleton{
-	desc = "honk";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "clowncorpse";
-	name = "Tooty, but dry and dead"
-	},
-/turf/simulated/floor/airless/black/grime,
-/area/space)
 "aiq" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -4370,10 +4361,6 @@
 	dir = 4
 	},
 /area/station/solar/north)
-"ajT" = (
-/obj/decal/skeleton,
-/turf/simulated/floor,
-/area/station/crew_quarters/lounge)
 "ajU" = (
 /obj/machinery/power/tracker/north,
 /obj/cable,
@@ -6196,19 +6183,6 @@
 "aoz" = (
 /turf/simulated/shuttle/wall/escape,
 /area/shuttle/arrival/station)
-"aoA" = (
-/obj/item/clothing/shoes/moon,
-/obj/decal/skeleton{
-	desc = "This is very important.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "clowncorpse";
-	name = "Bill-Bo's body, barely..."
-	},
-/obj/item/clothing/mask/clown_hat,
-/turf/simulated/floor/plating/airless/random,
-/area/station/security/checkpoint/podbay{
-	name = "NanoTrasen Labor Camp Shuttle"
-	})
 "aoB" = (
 /obj/stool/chair/wooden,
 /obj/landmark/start{
@@ -6505,21 +6479,6 @@
 /turf/simulated/wall/asteroid/lighted,
 /area/station/storage/emergency2{
 	name = "Hilarious Storage B"
-	})
-"apn" = (
-/obj/decal/skeleton{
-	desc = "this is not right. this is NOT right.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "clowncorpse";
-	name = "Eldritch Horror the clowne"
-	},
-/obj/item/razor_blade,
-/obj/decal/cleanable/blood/splatter{
-	icon_state = "floor5"
-	},
-/turf/simulated/floor/shuttle,
-/area/station/security/checkpoint/podbay{
-	name = "NanoTrasen Labor Camp Shuttle"
 	})
 "apo" = (
 /obj/disposalpipe/segment/transport,
@@ -11721,33 +11680,6 @@
 /obj/lattice,
 /turf/space,
 /area/space)
-"aCJ" = (
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/decal/skeleton{
-	desc = "not much of a chef";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "clowncorpse";
-	name = "shredded remains of Flesh Utopia"
-	},
-/obj/item/reagent_containers/food/snacks/cereal_box{
-	contraband = 1;
-	desc = "Couldn't be simpler! Just add water, mix, and bake! DO NOT CONSUME RAW";
-	name = "Instant Cake Batter'"
-	},
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gibarm"
-	},
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gibhead"
-	},
-/obj/decal/cleanable/blood/splatter,
-/turf/simulated/floor/grey/blackgrime,
-/area/station/storage/emergency2{
-	name = "Hilarious Storage B"
-	})
 "aCK" = (
 /obj/decal/cleanable/vomit{
 	desc = "Someone lost their lunch.  A long time ago.";
@@ -12383,24 +12315,6 @@
 /turf/simulated/floor/purple,
 /area/station/science/laser{
 	name = "Testing Asteroid"
-	})
-"aEk" = (
-/obj/item/clothing/head/emerg,
-/obj/decal/skeleton{
-	desc = "still has his... uh... bedsheet?";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "clowncorpse";
-	name = "what used to be Twenty Second Elephant"
-	},
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "captain";
-	desc = "hard to believe...";
-	icon_state = "bedsheet-captain";
-	name = "clown's bedsheet"
-	},
-/turf/simulated/floor/black,
-/area/station/storage/emergency{
-	name = "Hilarious Storage A"
 	})
 "aEl" = (
 /obj/item/reagent_containers/glass/bottle/cleaner{
@@ -23948,20 +23862,6 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
-"bcR" = (
-/obj/machinery/light_switch/west,
-/obj/machinery/lawrack{
-	dir = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
-/area/station/turret_protected/Zeta)
 "bcS" = (
 /obj/item/device/radio/intercom/AI,
 /obj/cable{
@@ -31575,18 +31475,6 @@
 /obj/item/clothing/shoes/thong,
 /turf/simulated/floor/darkblue,
 /area/station/hallway/primary/west)
-"bsW" = (
-/obj/decal/cleanable/dirt,
-/obj/decal/skeleton{
-	desc = "The remains of an engineer. not very handsome.";
-	interesting = "Something isn't right here... This guy wasn't alive when he was shot";
-	name = "engineer's skeleton"
-	},
-/obj/item/casing,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/station/maintenance/northwest)
 "bsX" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 4
@@ -54226,12 +54114,6 @@
 /obj/window/reinforced,
 /turf/simulated/floor/plating/airless/random,
 /area/ghostdrone_factory)
-"cqB" = (
-/obj/decal/sink{
-	name = "Rusty Sink"
-	},
-/turf/simulated/floor/plating/random,
-/area/ghostdrone_factory)
 "cqC" = (
 /turf/simulated/floor/sanitary/white,
 /area/ghostdrone_factory)
@@ -54906,10 +54788,6 @@
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "csF" = (
-/turf/simulated/floor/grey/blackgrime,
-/area/listeningpost)
-"csG" = (
-/obj/decal/sink,
 /turf/simulated/floor/grey/blackgrime,
 /area/listeningpost)
 "csH" = (
@@ -55809,18 +55687,6 @@
 	icon_state = "wall3"
 	},
 /area/space)
-"cuU" = (
-/obj/decal/sink{
-	name = "Rusty Sink";
-	pixel_y = 12
-	},
-/obj/cable{
-	icon_state = "6-8"
-	},
-/obj/item/raw_material/shard/glass,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/airless,
-/area/space)
 "cuV" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -56079,16 +55945,6 @@
 	icon_state = "hvent";
 	name = "air vent"
 	},
-/turf/simulated/floor/airless,
-/area/space)
-"cvB" = (
-/obj/decal/skeleton{
-	desc = "Ironic, really";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "burntnerd";
-	name = "charred icecream vendor"
-	},
-/obj/decal/cleanable/blood/drip,
 /turf/simulated/floor/airless,
 /area/space)
 "cvC" = (
@@ -57526,6 +57382,41 @@
 /obj/item/paper/book/from_file/medical_surgery_guide,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay/surgery)
+"cUf" = (
+/obj/decal/fakeobjects/skeleton,
+/turf/simulated/floor,
+/area/station/crew_quarters/lounge)
+"dig" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/decal/fakeobjects/skeleton{
+	desc = "not much of a chef";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "clowncorpse";
+	name = "shredded remains of Flesh Utopia"
+	},
+/obj/item/reagent_containers/food/snacks/cereal_box{
+	contraband = 1;
+	desc = "Couldn't be simpler! Just add water, mix, and bake! DO NOT CONSUME RAW";
+	name = "Instant Cake Batter'"
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibarm"
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibhead"
+	},
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/grey/blackgrime,
+/area/station/storage/emergency2{
+	name = "Hilarious Storage B"
+	})
+"dvt" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/grey/blackgrime,
+/area/listeningpost)
 "flY" = (
 /obj/decal/cleanable/dirt,
 /obj/item/paper/book/from_file/the_trial,
@@ -57608,6 +57499,66 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south,
 /area/station/bridge/captain)
+"kDR" = (
+/obj/decal/fakeobjects/skeleton{
+	desc = "this is not right. this is NOT right.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "clowncorpse";
+	name = "Eldritch Horror the clowne"
+	},
+/obj/item/razor_blade,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor5"
+	},
+/turf/simulated/floor/shuttle,
+/area/station/security/checkpoint/podbay{
+	name = "NanoTrasen Labor Camp Shuttle"
+	})
+"kIi" = (
+/obj/item/clothing/shoes/moon,
+/obj/decal/fakeobjects/skeleton{
+	desc = "This is very important.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "clowncorpse";
+	name = "Bill-Bo's body, barely..."
+	},
+/obj/item/clothing/mask/clown_hat,
+/turf/simulated/floor/plating/airless/random,
+/area/station/security/checkpoint/podbay{
+	name = "NanoTrasen Labor Camp Shuttle"
+	})
+"kMk" = (
+/obj/machinery/light_switch/west,
+/obj/machinery/lawrack{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/station/turret_protected/Zeta)
+"lca" = (
+/obj/item/clothing/head/emerg,
+/obj/decal/fakeobjects/skeleton{
+	desc = "still has his... uh... bedsheet?";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "clowncorpse";
+	name = "what used to be Twenty Second Elephant"
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "captain";
+	desc = "hard to believe...";
+	icon_state = "bedsheet-captain";
+	name = "clown's bedsheet"
+	},
+/turf/simulated/floor/black,
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 "lga" = (
 /obj/table/wood/auto,
 /obj/item/paper/book/from_file/guardbot_guide,
@@ -57619,6 +57570,16 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/crew_quarters/hor)
+"lgd" = (
+/obj/decal/fakeobjects/skeleton{
+	desc = "Ironic, really";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "burntnerd";
+	name = "charred icecream vendor"
+	},
+/obj/decal/cleanable/blood/drip,
+/turf/simulated/floor/airless,
+/area/space)
 "lgX" = (
 /obj/disposalpipe/segment/bent/south,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -57734,6 +57695,24 @@
 /obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay/surgery)
+"rSI" = (
+/obj/decal/fakeobjects/sink{
+	name = "Rusty Sink";
+	pixel_y = 12
+	},
+/obj/cable{
+	icon_state = "6-8"
+	},
+/obj/item/raw_material/shard/glass,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless,
+/area/space)
+"sDK" = (
+/obj/decal/fakeobjects/sink{
+	name = "Rusty Sink"
+	},
+/turf/simulated/floor/plating/random,
+/area/ghostdrone_factory)
 "sOU" = (
 /obj/item/card_box/plain,
 /obj/item/crowbar,
@@ -57742,6 +57721,18 @@
 	},
 /turf/simulated/floor/plating/airless/random,
 /area/station/engine/substation/pylon)
+"tgw" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects/skeleton{
+	desc = "The remains of an engineer. not very handsome.";
+	interesting = "Something isn't right here... This guy wasn't alive when he was shot";
+	name = "engineer's skeleton"
+	},
+/obj/item/casing,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/station/maintenance/northwest)
 "tjD" = (
 /obj/table/wood/auto,
 /obj/item/device/camera_viewer,
@@ -57756,6 +57747,15 @@
 	icon_state = "grimy"
 	},
 /area/station/security/detectives_office)
+"tjL" = (
+/obj/decal/fakeobjects/skeleton{
+	desc = "honk";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "clowncorpse";
+	name = "Tooty, but dry and dead"
+	},
+/turf/simulated/floor/airless/black/grime,
+/area/space)
 "tkB" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/hand_labeler,
@@ -68751,7 +68751,7 @@ aff
 afF
 abZ
 aak
-aoA
+kIi
 amj
 amj
 apm
@@ -69895,7 +69895,7 @@ aaa
 cuu
 cuN
 cvg
-cvB
+lgd
 cvT
 aaa
 aaa
@@ -69957,7 +69957,7 @@ aco
 ads
 afl
 aol
-apn
+kDR
 amu
 aak
 aaa
@@ -70277,7 +70277,7 @@ aBr
 aBK
 aCf
 aCt
-aCJ
+dig
 asc
 aCx
 aaa
@@ -72007,7 +72007,7 @@ auA
 auA
 ain
 auA
-cuU
+rSI
 cvn
 cvI
 auA
@@ -72698,7 +72698,7 @@ aDf
 aDA
 aDJ
 aDU
-aEk
+lca
 aCy
 aEK
 aaa
@@ -81430,7 +81430,7 @@ aaa
 aaa
 aaa
 auA
-aip
+tjL
 aqm
 avR
 auA
@@ -83058,7 +83058,7 @@ ahO
 aIU
 aQA
 aTp
-bsW
+tgw
 aZe
 beh
 biJ
@@ -95837,7 +95837,7 @@ cqa
 cqs
 cqa
 cqa
-cqB
+sDK
 cqG
 cqN
 cqI
@@ -99972,7 +99972,7 @@ aRc
 aTS
 aWL
 aZZ
-bcR
+kMk
 bfO
 biF
 aOU
@@ -135191,7 +135191,7 @@ avy
 avT
 avU
 anV
-ajT
+cUf
 afN
 aeT
 axM
@@ -136627,7 +136627,7 @@ aaa
 aab
 aab
 csA
-csG
+dvt
 csF
 csF
 ctm

@@ -114,21 +114,6 @@
 	},
 /turf/simulated/floor/airless,
 /area/space)
-"as" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "A vent. Cool air is gently flowing through it.";
-	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "hvent";
-	name = "air vent"
-	},
-/obj/decal/skeleton{
-	desc = "The remains of a human. There seem to be a few bits missing."
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/turf/simulated/floor/airless/damaged4,
-/area/space)
 "at" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -13898,19 +13883,6 @@
 /area/station/bridge/captain{
 	name = "Meridian Command"
 	})
-"By" = (
-/obj/machinery/lawrack{
-	dir = 4
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/turret_protected/ai)
 "Bz" = (
 /obj/stool/chair/office{
 	dir = 8
@@ -22851,6 +22823,21 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"RZ" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "air vent"
+	},
+/obj/decal/fakeobjects/skeleton{
+	desc = "The remains of a human. There seem to be a few bits missing."
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/turf/simulated/floor/airless/damaged4,
+/area/space)
 "Sd" = (
 /obj/machinery/shower{
 	dir = 4;
@@ -22980,6 +22967,19 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Sz" = (
+/obj/machinery/lawrack{
+	dir = 4
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/turret_protected/ai)
 "SA" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -23165,6 +23165,31 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest{
 	name = "Erebus Maintenance Room"
+	})
+"Tb" = (
+/obj/machinery/door_control{
+	id = "tox_vent";
+	name = "Chamber Exhaust";
+	pixel_x = -7;
+	pixel_y = 28
+	},
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	level = 2
+	},
+/obj/machinery/activation_button/ignition_switch{
+	id = "eng_ignition";
+	name = "Burn Chamber Ignition";
+	pixel_x = 7;
+	pixel_y = 28
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "Tc" = (
 /obj/machinery/shuttle/engine/heater{
@@ -24085,31 +24110,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
-	})
-"VQ" = (
-/obj/machinery/door_control{
-	id = "tox_vent";
-	name = "Chamber Exhaust";
-	pixel_x = -7;
-	pixel_y = 28
-	},
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 1;
-	level = 2
-	},
-/obj/machinery/ignition_switch{
-	id = "eng_ignition";
-	name = "Burn Chamber Ignition";
-	pixel_x = 7;
-	pixel_y = 28
-	},
-/obj/decal/tile_edge/line/yellow{
-	dir = 1;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core{
-	name = "Erebus Plasmitics Zone"
 	})
 "VS" = (
 /obj/machinery/atmospherics/pipe/manifold{
@@ -63753,7 +63753,7 @@ Ay
 AI
 AI
 Bg
-By
+Sz
 BR
 Cs
 AI
@@ -76142,7 +76142,7 @@ MM
 Vc
 YR
 Yf
-VQ
+Tb
 Vp
 UZ
 Vn
@@ -92862,7 +92862,7 @@ aa
 aa
 ad
 aj
-as
+RZ
 az
 aD
 aa

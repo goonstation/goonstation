@@ -4283,12 +4283,6 @@
 /obj/machinery/light/incandescent/cool/very,
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/bathroom)
-"bOP" = (
-/obj/decal/sink,
-/turf/simulated/floor/sanitary/white,
-/area/station/crew_quarters/toilets{
-	name = "Engineering Toilets"
-	})
 "bOQ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -6022,16 +6016,6 @@
 	},
 /turf/space,
 /area/space)
-"cyV" = (
-/obj/machinery/door/airlock/pyro/glass/command{
-	dir = 4;
-	name = "Head of Security's Room";
-	req_access = null
-	},
-/obj/access_spawn/hos,
-/obj/firedoor_spawn,
-/turf/simulated/floor/wood/six,
-/area/station/crew_quarters/hos)
 "czg" = (
 /obj/disposalpipe/segment/mail/bent/east,
 /obj/cable{
@@ -10764,16 +10748,6 @@
 "eqA" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/refinery)
-"eqH" = (
-/obj/machinery/lawrack,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/decal/tile_edge/stripe,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "eqV" = (
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/pharmacy)
@@ -16029,6 +16003,13 @@
 /area/station/crew_quarters/market{
 	name = "Seating Area"
 	})
+"gJo" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects/skeleton,
+/turf/simulated/floor/airless/plating,
+/area/abandonedship{
+	name = "Crashed Limo"
+	})
 "gJu" = (
 /obj/airbridge_controller{
 	id = "Patho";
@@ -18495,6 +18476,16 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade)
+"hKP" = (
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 4;
+	name = "Head of Security's Room";
+	req_access = null
+	},
+/obj/access_spawn/hos,
+/obj/firedoor_spawn,
+/turf/simulated/floor/wood/six,
+/area/station/crew_quarters/hos)
 "hKX" = (
 /obj/machinery/light/emergency{
 	dir = 1
@@ -25185,6 +25176,21 @@
 "kEe" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/northwest)
+"kEf" = (
+/obj/table/glass/auto,
+/obj/item/storage/toolbox/electrical,
+/obj/item/device/gps,
+/obj/item/aiModule/reset,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/item/circuitboard/robotics,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "kEk" = (
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -27343,6 +27349,20 @@
 /obj/stool/chair/moveable,
 /turf/simulated/floor,
 /area/research_outpost/protest)
+"lAZ" = (
+/obj/machinery/door/airlock/pyro/glass/command{
+	name = "Head of Security's Office";
+	req_access = null
+	},
+/obj/access_spawn/hos,
+/obj/firedoor_spawn,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red,
+/area/station/security/hos)
 "lBt" = (
 /obj/blind_switch/area/east,
 /turf/simulated/floor/carpet/grime,
@@ -30496,6 +30516,22 @@
 "mXr" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/inner/the_cage)
+"mXE" = (
+/obj/machinery/door/airlock/pyro/security{
+	name = "Armory";
+	req_access = null
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/hos,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/turf/simulated/floor/black,
+/area/station/security/armory)
 "mXZ" = (
 /obj/pool/perspective{
 	dir = 1;
@@ -34066,6 +34102,12 @@
 	dir = 10
 	},
 /area/station/turret_protected/ai_upload)
+"oyu" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/sanitary/white,
+/area/station/crew_quarters/toilets{
+	name = "Engineering Toilets"
+	})
 "oyM" = (
 /obj/machinery/atmospherics/unary/cryo_cell/south,
 /obj/decal/tile_edge/stripe{
@@ -43771,12 +43813,6 @@
 	},
 /turf/simulated/floor/black/corner,
 /area/station/engine/power)
-"sIk" = (
-/obj/decal/sink,
-/turf/simulated/floor/sanitary/white,
-/area/station/crew_quarters/toilets{
-	name = "Central Toilets"
-	})
 "sIE" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -45788,6 +45824,16 @@
 /obj/item/hand_labeler,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/cdc)
+"tCx" = (
+/obj/machinery/lawrack,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/decal/tile_edge/stripe,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "tCK" = (
 /obj/item/pen,
 /obj/item/paper_bin,
@@ -46942,13 +46988,6 @@
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
-"udG" = (
-/obj/decal/cleanable/rust,
-/obj/decal/skeleton/decomposed_corpse,
-/turf/simulated/floor/airless/black,
-/area/abandonedship{
-	name = "Crashed Limo"
-	})
 "udN" = (
 /obj/disposalpipe/junction/right,
 /turf/simulated/floor/white,
@@ -47421,6 +47460,13 @@
 /obj/machinery/atmospherics/valve,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
+"uoL" = (
+/obj/decal/cleanable/rust,
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/turf/simulated/floor/airless/black,
+/area/abandonedship{
+	name = "Crashed Limo"
+	})
 "uoN" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black,
@@ -47784,22 +47830,6 @@
 	dir = 4
 	},
 /area/station/maintenance/east)
-"uxH" = (
-/obj/machinery/door/airlock/pyro/security{
-	name = "Armory";
-	req_access = null
-	},
-/obj/firedoor_spawn,
-/obj/access_spawn/hos,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "delivery2"
-	},
-/turf/simulated/floor/black,
-/area/station/security/armory)
 "uxL" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/light/emergency,
@@ -51019,13 +51049,6 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/sand,
 /area/station/hallway/secondary/exit)
-"vRO" = (
-/obj/decal/cleanable/dirt,
-/obj/decal/skeleton,
-/turf/simulated/floor/airless/plating,
-/area/abandonedship{
-	name = "Crashed Limo"
-	})
 "vRU" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor/neutral/side{
@@ -51421,21 +51444,6 @@
 /area/station/hallway/primary/north{
 	name = "The Ring Entrance"
 	})
-"vZS" = (
-/obj/table/glass/auto,
-/obj/item/storage/toolbox/electrical,
-/obj/item/device/gps,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/item/circuitboard/robotics,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "vZX" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Security Front Desk"
@@ -52825,20 +52833,6 @@
 	dir = 8
 	},
 /area/station/engine/engineering)
-"wEd" = (
-/obj/machinery/door/airlock/pyro/glass/command{
-	name = "Head of Security's Office";
-	req_access = null
-	},
-/obj/access_spawn/hos,
-/obj/firedoor_spawn,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/red,
-/area/station/security/hos)
 "wEk" = (
 /obj/stool/chair,
 /obj/cable{
@@ -53706,6 +53700,12 @@
 	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
+"wUk" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/sanitary/white,
+/area/station/crew_quarters/toilets{
+	name = "Central Toilets"
+	})
 "wUp" = (
 /obj/stool,
 /obj/landmark/start{
@@ -92311,7 +92311,7 @@ vnX
 vnX
 bNs
 klA
-eqH
+tCx
 oqn
 edN
 rAb
@@ -97418,7 +97418,7 @@ xnI
 bDc
 kME
 bdp
-sIk
+wUk
 ljM
 mXr
 abd
@@ -98991,7 +98991,7 @@ kJq
 pNQ
 nnz
 cBY
-bOP
+oyu
 pEB
 cBY
 tLJ
@@ -99862,7 +99862,7 @@ jGj
 xiN
 mqR
 gPj
-uxH
+mXE
 nlY
 drb
 wOl
@@ -101076,7 +101076,7 @@ nPA
 byC
 gMC
 dQU
-cyV
+hKP
 vHc
 vHc
 vHc
@@ -101675,7 +101675,7 @@ qxk
 nVn
 xcp
 ibu
-wEd
+lAZ
 vjh
 dzE
 bFo
@@ -113144,7 +113144,7 @@ nZc
 buQ
 pyM
 dak
-vZS
+kEf
 sVN
 sai
 fWM
@@ -135684,7 +135684,7 @@ xEb
 diX
 dJu
 ldK
-vRO
+gJo
 diX
 rKZ
 gcl
@@ -136293,7 +136293,7 @@ qHy
 gDz
 qbM
 eaW
-udG
+uoL
 otU
 gDz
 hsK

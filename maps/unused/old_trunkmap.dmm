@@ -2425,10 +2425,6 @@
 	},
 /turf/simulated/floor/white,
 /area/russian)
-"aff" = (
-/obj/decal/sink,
-/turf/simulated/floor/white,
-/area/russian)
 "afg" = (
 /obj/item/storage/secure/ssafe/hjam{
 	pixel_x = 27
@@ -7758,19 +7754,6 @@
 	d2 = 2
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
-"arp" = (
-/obj/machinery/camera{
-	network = "SS13";
-	c_tag = "Genetic Research East"
-	},
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/obj/machinery/lawrack,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "arq" = (
@@ -24286,10 +24269,6 @@
 /obj/stool,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
-"beB" = (
-/obj/decal/sink,
-/turf/simulated/floor/white,
-/area/station/science/chemistry)
 "beC" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -34878,6 +34857,23 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"gxL" = (
+/obj/machinery/camera{
+	network = "SS13";
+	c_tag = "Genetic Research East"
+	},
+/obj/cable{
+	icon_state = "1-2";
+	d1 = 1;
+	d2 = 2
+	},
+/obj/machinery/lawrack,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
+"ocN" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/white,
+/area/russian)
 "rEU" = (
 /obj/table/auto,
 /obj/item/storage/photo_album{
@@ -34886,6 +34882,10 @@
 /obj/item/camera,
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
+"uvc" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/white,
+/area/station/science/chemistry)
 "uQc" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
@@ -47237,7 +47237,7 @@ anO
 aot
 ape
 aqq
-arp
+gxL
 ass
 atx
 atx
@@ -64984,7 +64984,7 @@ bbU
 aWT
 bdt
 bdY
-beB
+uvc
 bfi
 bbV
 bfD
@@ -78058,7 +78058,7 @@ aaG
 aaN
 aeV
 aba
-aff
+ocN
 aba
 aba
 aba

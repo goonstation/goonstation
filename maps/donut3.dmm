@@ -3903,20 +3903,6 @@
 /obj/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
-"aSv" = (
-/obj/table/wood/round/auto,
-/obj/item/storage/box/trackimp_kit2{
-	pixel_x = -5;
-	pixel_y = 1
-	},
-/obj/item/device/radio/intercom/security{
-	pixel_x = 1
-	},
-/obj/item/aiModule/reset{
-	pixel_y = 7
-	},
-/turf/simulated/floor/black,
-/area/station/bridge)
 "aSD" = (
 /obj/machinery/light/incandescent/warm,
 /obj/decal/tile_edge/line/yellow{
@@ -4318,19 +4304,6 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/black,
 /area/station/medical/medbay)
-"aXX" = (
-/obj/disposalpipe/broken{
-	dir = 8;
-	pixel_y = -1
-	},
-/obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/rust/jen,
-/obj/decal/skeleton{
-	desc = "The remains of an idea.";
-	name = "\proper Jenny's hopes and dreams"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/ne)
 "aXY" = (
 /obj/decal/poster/wallsign/warning3{
 	desc = "'Unauthorized personnel who pass this point will be fired upon by AI-controlled turrets.'";
@@ -9468,15 +9441,6 @@
 "cxc" = (
 /turf/simulated/wall/auto/jen/yellow,
 /area/station/mining/staff_room)
-"cxe" = (
-/obj/decal/sink{
-	dir = 4
-	},
-/obj/machinery/light/incandescent/harsh,
-/turf/simulated/floor/shuttlebay{
-	name = "test chamber plating"
-	},
-/area/station/science/testchamber)
 "cxi" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -13698,21 +13662,6 @@
 	dir = 6
 	},
 /area/station/crew_quarters/quartersC)
-"dLg" = (
-/obj/table/reinforced/auto,
-/obj/item/paper_bin{
-	pixel_x = 9;
-	pixel_y = -1
-	},
-/obj/item/device/detective_scanner,
-/obj/item/pen{
-	pixel_x = -7;
-	pixel_y = -2
-	},
-/obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/access_spawn/security,
-/turf/simulated/floor/black/grime,
-/area/station/security/interrogation)
 "dLs" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -14872,6 +14821,21 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"ebe" = (
+/obj/table/reinforced/auto,
+/obj/item/paper_bin{
+	pixel_x = 9;
+	pixel_y = -1
+	},
+/obj/item/device/detective_scanner,
+/obj/item/pen{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/access_spawn/security,
+/turf/simulated/floor/black/grime,
+/area/station/security/interrogation)
 "ebh" = (
 /obj/grille/catwalk,
 /obj/cable{
@@ -16878,13 +16842,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
-"eGd" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/decal/pole{
-	layer = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/barber_shop)
 "eGk" = (
 /obj/decal/tile_edge/line/white{
 	color = "#ffccff";
@@ -21707,23 +21664,6 @@
 	dir = 4
 	},
 /area/spacehabitat/pool)
-"fZt" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/storage/cart/forensic,
-/obj/item/storage/box/body_bag,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/spraybottle/detective,
-/obj/item/device/audio_log,
-/obj/item/audio_tape,
-/obj/item/audio_tape,
-/obj/item/hand_labeler,
-/obj/item/device/detective_scanner,
-/turf/simulated/floor/wood/seven,
-/area/station/security/detectives_office)
 "fZK" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/light/small/sticky{
@@ -24559,6 +24499,23 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
+"gRd" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/obj/storage/cart/forensic,
+/obj/item/storage/box/body_bag,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/spraybottle/detective,
+/obj/item/device/audio_log,
+/obj/item/audio_tape,
+/obj/item/audio_tape,
+/obj/item/hand_labeler,
+/obj/item/device/detective_scanner,
+/turf/simulated/floor/wood/seven,
+/area/station/security/detectives_office)
 "gRk" = (
 /obj/cable{
 	d1 = 1;
@@ -28270,6 +28227,13 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"hVJ" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/fakeobjects/pole{
+	layer = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/barber_shop)
 "hVL" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -32338,6 +32302,15 @@
 "jiY" = (
 /turf/simulated/wall/auto/reinforced/jen/green,
 /area/station/science/lobby)
+"jiZ" = (
+/obj/decal/fakeobjects/sink{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/harsh,
+/turf/simulated/floor/shuttlebay{
+	name = "test chamber plating"
+	},
+/area/station/science/testchamber)
 "jjc" = (
 /obj/stool/chair{
 	dir = 4
@@ -45607,6 +45580,40 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
+"ngj" = (
+/obj/table/auto,
+/obj/item/circular_saw{
+	pixel_y = -5
+	},
+/obj/item/scalpel{
+	pixel_x = -1;
+	pixel_y = 4
+	},
+/obj/item/suture{
+	pixel_y = 8
+	},
+/obj/item/hemostat{
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/obj/disposalpipe/segment/morgue{
+	name = "kitchen freezer pipe"
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = -14;
+	pixel_y = 5
+	},
+/obj/item/storage/box/body_bag,
+/obj/item/device/detective_scanner{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/glass/bottle/formaldehyde{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/medical/morgue)
 "ngs" = (
 /obj/cable{
 	d1 = 4;
@@ -46458,14 +46465,6 @@
 	dir = 1
 	},
 /area/station/ranch)
-"nsu" = (
-/obj/machinery/lawrack,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/item/device/radio/intercom/AI,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "nsG" = (
 /obj/storage/closet/radiation,
 /turf/simulated/floor/yellowblack{
@@ -47832,6 +47831,20 @@
 "nPk" = (
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/crew_quarters/arcade/dungeon)
+"nPt" = (
+/obj/table/wood/round/auto,
+/obj/item/storage/box/trackimp_kit2{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/device/radio/intercom/security{
+	pixel_x = 1
+	},
+/obj/item/aiModule/reset{
+	pixel_y = 7
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
 "nPv" = (
 /obj/machinery/light/incandescent/greenish,
 /obj/decal/cleanable/rust/jen,
@@ -66452,6 +66465,19 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
+"tct" = (
+/obj/disposalpipe/broken{
+	dir = 8;
+	pixel_y = -1
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/rust/jen,
+/obj/decal/fakeobjects/skeleton{
+	desc = "The remains of an idea.";
+	name = "\proper Jenny's hopes and dreams"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/ne)
 "tcH" = (
 /obj/stool/chair/office/red{
 	dir = 8
@@ -66740,40 +66766,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
-"ths" = (
-/obj/table/auto,
-/obj/item/circular_saw{
-	pixel_y = -5
-	},
-/obj/item/scalpel{
-	pixel_x = -1;
-	pixel_y = 4
-	},
-/obj/item/suture{
-	pixel_y = 8
-	},
-/obj/item/hemostat{
-	pixel_x = -1;
-	pixel_y = 3
-	},
-/obj/disposalpipe/segment/morgue{
-	name = "kitchen freezer pipe"
-	},
-/obj/item/scissors/surgical_scissors{
-	pixel_x = -14;
-	pixel_y = 5
-	},
-/obj/item/storage/box/body_bag,
-/obj/item/device/detective_scanner{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/glass/bottle/formaldehyde{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/turf/simulated/floor/specialroom/freezer,
-/area/station/medical/morgue)
 "tht" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -74360,6 +74352,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
+"vrx" = (
+/obj/machinery/lawrack,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/item/device/radio/intercom/AI,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "vry" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -106699,7 +106699,7 @@ fJd
 eCL
 nfC
 svj
-dLg
+ebe
 kmU
 lCe
 sok
@@ -116616,7 +116616,7 @@ bJQ
 mHL
 rdj
 hAh
-nsu
+vrx
 geN
 geN
 geN
@@ -118771,7 +118771,7 @@ ouo
 apH
 gbW
 hBw
-aSv
+nPt
 biw
 sVZ
 wto
@@ -120331,7 +120331,7 @@ aZz
 jzw
 nOR
 fyr
-cxe
+jiZ
 aZz
 aZz
 kkA
@@ -130263,7 +130263,7 @@ rdj
 rdj
 rdj
 fSe
-ths
+ngj
 aIa
 aIa
 aIa
@@ -130772,7 +130772,7 @@ rdj
 rdj
 rdj
 aUm
-aXX
+tct
 aRI
 bzZ
 kkV
@@ -133227,7 +133227,7 @@ nco
 mFg
 vPe
 eyZ
-fZt
+gRd
 qWE
 tqN
 buZ
@@ -135033,7 +135033,7 @@ wqJ
 psA
 jmX
 wCY
-eGd
+hVJ
 rni
 wBD
 xTs

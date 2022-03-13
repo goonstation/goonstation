@@ -8518,14 +8518,6 @@
 /obj/machinery/hair_dye_dispenser,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
-"api" = (
-/obj/decal/pole{
-	pixel_x = -14
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
 "apj" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	name = "Maintenance"
@@ -30331,17 +30323,6 @@
 /obj/cable,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
-"bmK" = (
-/obj/machinery/light,
-/obj/table/reinforced/auto,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/decal/tile_edge/line/green{
-	dir = 9;
-	icon_state = "line2"
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
 "bmL" = (
 /obj/shrub{
 	dir = 1
@@ -45112,13 +45093,6 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
-"fdK" = (
-/obj/machinery/lawrack,
-/obj/disposalpipe/segment,
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/turret_protected/ai)
 "fho" = (
 /obj/machinery/light_switch/west{
 	dir = 4
@@ -48937,6 +48911,14 @@
 /obj/access_spawn/cargo,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
+"oZj" = (
+/obj/decal/fakeobjects/pole{
+	pixel_x = -14
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/entry{
+	name = "Entry Hallway"
+	})
 "oZJ" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -50638,6 +50620,17 @@
 	icon_state = "fpurple2"
 	},
 /area/station/science/research_director)
+"tRG" = (
+/obj/machinery/light,
+/obj/table/reinforced/auto,
+/obj/item/aiModule/reset,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/decal/tile_edge/line/green{
+	dir = 9;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
 "tUJ" = (
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn{
@@ -52004,6 +51997,13 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/security/brig)
+"xPV" = (
+/obj/machinery/lawrack,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/turret_protected/ai)
 "xRz" = (
 /obj/machinery/light{
 	dir = 8;
@@ -86699,7 +86699,7 @@ aWQ
 aWQ
 kGL
 ben
-fdK
+xPV
 bgF
 bhE
 biT
@@ -87170,7 +87170,7 @@ amX
 any
 aeG
 aeG
-api
+oZj
 aeG
 aqr
 aCN
@@ -88247,7 +88247,7 @@ bhF
 biZ
 bkk
 blx
-bmK
+tRG
 bnG
 bpe
 bqr

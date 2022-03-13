@@ -2510,7 +2510,7 @@ var/global/night_mode_enabled = 0
 			break
 
 /client/proc/copy_cloud_saves(old_key as null|text)
-	set name  = "Copy Cloud Saves"
+	set name  = "Copy Cloud Data"
 	set desc = "Copy cloud saves from one account to another. This WILL overwrite all saves on the target account."
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
@@ -2788,9 +2788,9 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	set desc = "Spawn in a special escape shuttle"
 	ADMIN_ONLY
 	if(src.holder.level >= LEVEL_ADMIN)
-		var/list/shuttles = get_prefab_shuttles()
-		var/datum/prefab_shuttle/shuttle = shuttles[tgui_input_list(src, "Select a shuttle", "Special Shuttle", shuttles)]
-		if(shuttle.load())
+		var/list/shuttles = get_map_prefabs(/datum/mapPrefab/shuttle)
+		var/datum/mapPrefab/shuttle/shuttle = shuttles[tgui_input_list(src, "Select a shuttle", "Special Shuttle", shuttles)]
+		if(shuttle?.load())
 			logTheThing("admin", src, null, "replaced the shuttle with [shuttle.name].")
 			logTheThing("diary", src, null, "replaced the shuttle with [shuttle.name].", "admin")
 			message_admins("[key_name(src)] replaced the shuttle with [shuttle.name].")

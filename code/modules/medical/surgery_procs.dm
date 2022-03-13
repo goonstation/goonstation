@@ -620,6 +620,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				I.on_remove(patient)
 				patient.implant.Remove(I)
 				I.set_loc(patient.loc)
+				// offset approximately around chest area, based on cutting over operating table
+				I.pixel_x = rand(-2, 5)
+				I.pixel_y = rand(-6, 1)
 				return 1
 
 			for (var/obj/item/implant/I in patient.implant)
@@ -638,6 +641,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out an implant from you with [src]!</span>")
 
 				var/obj/item/implantcase/newcase = new /obj/item/implantcase(patient.loc, usedimplant = I)
+				newcase.pixel_x = rand(-2, 5)
+				newcase.pixel_y = rand(-6, 1)
 				I.on_remove(patient)
 				patient.implant.Remove(I)
 				var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")

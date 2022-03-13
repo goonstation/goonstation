@@ -3573,10 +3573,6 @@
 	},
 /turf/simulated/floor/white,
 /area/russian)
-"akA" = (
-/obj/decal/sink,
-/turf/simulated/floor/white,
-/area/russian)
 "akB" = (
 /obj/item/storage/secure/ssafe/hjam{
 	pixel_x = 27
@@ -9931,18 +9927,6 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
-"aFD" = (
-/obj/machinery/camera{
-	c_tag = "Genetic Research East"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/lawrack,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aFE" = (
@@ -29783,12 +29767,6 @@
 	},
 /turf/simulated/wall,
 /area/station/maintenance/disposal)
-"jos" = (
-/obj/decal/sink,
-/turf/simulated/floor/purple/side{
-	dir = 4
-	},
-/area/station/science/chemistry)
 "jrX" = (
 /obj/cable{
 	d2 = 2;
@@ -31079,6 +31057,12 @@
 	dir = 1
 	},
 /area/station/teleporter)
+"mpp" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
+/area/station/science/chemistry)
 "mqQ" = (
 /obj/pool{
 	dir = 4;
@@ -32378,6 +32362,18 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
+"qCX" = (
+/obj/machinery/camera{
+	c_tag = "Genetic Research East"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/lawrack,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "qEo" = (
 /obj/stool/bed,
 /obj/machinery/light/small{
@@ -33032,6 +33028,10 @@
 	},
 /turf/space,
 /area/station/security/prison)
+"seX" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/white,
+/area/russian)
 "sfI" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -67333,7 +67333,7 @@ ayg
 azg
 aAT
 aDC
-aFD
+qCX
 aIk
 aJL
 aJL
@@ -90930,7 +90930,7 @@ esB
 bBK
 sHS
 nnw
-jos
+mpp
 oVY
 avV
 kzS
@@ -115264,7 +115264,7 @@ aaR
 abh
 akq
 abD
-akA
+seX
 abD
 abD
 abD

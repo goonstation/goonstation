@@ -963,7 +963,7 @@
 #endif
 	icon = 'icons/turf/asteroid.dmi'
 	icon_state = "ast1"
-	plane = PLANE_FLOOR
+	plane = PLANE_WALL
 	var/stone_color = "#CCCCCC"
 
 #ifdef UNDERWATER_MAP
@@ -1237,7 +1237,7 @@
 			var/image/edge_overlay = image('icons/turf/asteroid.dmi', "edge[get_dir(A,src)]")
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.layer = src.layer + 1
-			edge_overlay.plane = PLANE_FLOOR
+			edge_overlay.plane = PLANE_WALL
 			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
 			A.overlays += edge_overlay
@@ -1439,7 +1439,7 @@
 		update_icon()
 
 			return
-		apply_edge_overlay()
+		apply_edge_overlay(thedir, space)
 			return
 		space_overlays()
 			return
@@ -1491,14 +1491,16 @@
 		SPAWN(0)
 			if (istype(src)) //Wire note: just roll with this ok
 				for (var/turf/simulated/wall/asteroid/A in orange(src,1))
-					src.apply_edge_overlay(get_dir(src, A))
+					src.apply_edge_overlay(get_dir(src, A), space=FALSE)
 				for (var/turf/space/A in orange(src,1))
-					src.apply_edge_overlay(get_dir(src, A))
+					src.apply_edge_overlay(get_dir(src, A), space=TRUE)
 
-	proc/apply_edge_overlay(var/thedir) //For overlays ON THE FLOOR TILE
+	proc/apply_edge_overlay(var/thedir, space) //For overlays ON THE FLOOR TILE
 		var/image/dig_overlay = image('icons/turf/asteroid.dmi', "edge[thedir]")
 		dig_overlay.color = src.stone_color
 		dig_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+		if(!space)
+			dig_overlay.plane = PLANE_WALL
 		//dig_overlay.layer = src.layer + 1
 		src.overlays += dig_overlay
 

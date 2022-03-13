@@ -80,7 +80,7 @@
 				logTheThing("combat", src.assailant, src.affecting, "releases their choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles at [log_loc(src.affecting)]")
 			else if (state == GRAB_PIN)
 				logTheThing("combat", src.assailant, src.affecting, "drops their pin on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
-			else
+			else if(!istype(src, /obj/item/grab/block))
 				logTheThing("combat", src.assailant, src.affecting, "drops their grab on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
 			if (affecting.grabbed_by)
 				affecting.grabbed_by -= src

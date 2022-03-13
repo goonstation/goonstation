@@ -6,6 +6,7 @@ mob/new_player
 	var/keyd
 	var/adminspawned = 0
 	var/is_respawned_player = 0
+	var/pregameBrowserLoaded = FALSE
 
 #ifdef TWITCH_BOT_ALLOWED
 	var/twitch_bill_spawn = 0
@@ -154,6 +155,7 @@ mob/new_player
 		if(pregameHTML && client)
 			winshow(client, "pregameBrowser", 1)
 			client << browse(pregameHTML, "window=pregameBrowser")
+			src.pregameBrowserLoaded = TRUE
 		else if(client)
 			winshow(src.last_client, "pregameBrowser", 0)
 			src.last_client << browse("", "window=pregameBrowser")
@@ -667,8 +669,19 @@ a.latejoin-card:hover {
 							break
 
 					var/bad_type = null
-					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles))
-						bad_type = pick(ticker.mode.latejoin_antag_roles)
+					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles)){
+
+						//Another one I need input on
+						if(ticker.mode.latejoin_antag_roles[ROLE_TRAITOR] != null)
+						{
+							bad_type = weighted_pick(ticker.mode.latejoin_antag_roles);
+						}
+						else{
+							bad_type = pick(ticker.mode.latejoin_antag_roles)
+						}
+						}
+
+
 					else
 						bad_type = ROLE_TRAITOR
 

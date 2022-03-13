@@ -6663,22 +6663,6 @@
 /obj/storage/closet/office,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
-"aop" = (
-/obj/rack,
-/obj/item/circuitboard/teleporter,
-/obj/item/circuitboard/card,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
-/obj/machinery/camera{
-	c_tag = "Technical Storage";
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
 "aoq" = (
 /obj/rack,
 /obj/item/circuitboard/arcade,
@@ -8035,11 +8019,6 @@
 	d1 = 2;
 	d2 = 8
 	},
-/turf/simulated/floor/purple,
-/area/station/turret_protected/ai_upload)
-"arr" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/lawrack,
 /turf/simulated/floor/purple,
 /area/station/turret_protected/ai_upload)
 "ars" = (
@@ -25186,13 +25165,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/kitchen)
-"baV" = (
-/obj/decal/skeleton,
-/obj/item/clothing/suit/chef,
-/obj/item/clothing/head/chefhat,
-/obj/decal/cleanable/cobweb,
-/turf/simulated/aprilfools,
-/area/station/hallway/primary/west)
 "baW" = (
 /obj/decal/cleanable/tomatosplat,
 /obj/creepy_sound_trigger,
@@ -34619,11 +34591,34 @@
 /obj/critter/domestic_bee/santa,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
+"cwL" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/clothing/suit/chef,
+/obj/item/clothing/head/chefhat,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/aprilfools,
+/area/station/hallway/primary/west)
 "doZ" = (
 /obj/table/auto,
 /obj/item/camera,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
+"ePo" = (
+/obj/rack,
+/obj/item/circuitboard/teleporter,
+/obj/item/circuitboard/card,
+/obj/item/circuitboard/robot_module_rewriter,
+/obj/item/circuitboard/cloning,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
+/obj/machinery/camera{
+	c_tag = "Technical Storage";
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "fuh" = (
 /obj/table/wood/auto,
 /obj/item/camera{
@@ -34662,6 +34657,11 @@
 	dir = 8
 	},
 /area/station/crew_quarters/cafeteria)
+"hMq" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/lawrack,
+/turf/simulated/floor/purple,
+/area/station/turret_protected/ai_upload)
 "iKq" = (
 /obj/item/device/camera_viewer{
 	network = "Zeta"
@@ -52977,7 +52977,7 @@ amp
 amO
 anp
 amO
-aop
+ePo
 aoO
 aql
 bpS
@@ -53264,7 +53264,7 @@ aYL
 aUe
 aUd
 aOH
-baV
+cwL
 aOH
 aaB
 abm
@@ -66375,7 +66375,7 @@ apl
 apk
 aqj
 aqf
-arr
+hMq
 arT
 ast
 apk

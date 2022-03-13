@@ -9707,15 +9707,6 @@
 "cxc" = (
 /turf/simulated/wall/auto/jen/yellow,
 /area/station/mining/staff_room)
-"cxe" = (
-/obj/decal/sink{
-	dir = 4
-	},
-/obj/machinery/light/incandescent/harsh,
-/turf/simulated/floor/shuttlebay{
-	name = "test chamber plating"
-	},
-/area/station/science/testchamber)
 "cxi" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -10488,6 +10479,19 @@
 	dir = 4
 	},
 /area/station/security/brig/south_side)
+"cKC" = (
+/obj/disposalpipe/broken{
+	dir = 8;
+	pixel_y = -1
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/rust/jen,
+/obj/decal/fakeobjects/skeleton{
+	desc = "The remains of an idea.";
+	name = "\proper Jenny's hopes and dreams"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/ne)
 "cKO" = (
 /obj/machinery/computer/asylum_shuttle,
 /turf/simulated/floor/specialroom/clown,
@@ -13098,6 +13102,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
+"dvC" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/fakeobjects/pole{
+	layer = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/barber_shop)
 "dvP" = (
 /obj/railing/orange{
 	dir = 8
@@ -16949,13 +16960,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
-"eGd" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/decal/pole{
-	layer = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/barber_shop)
 "eGk" = (
 /obj/decal/tile_edge/line/white{
 	color = "#ffccff";
@@ -17315,6 +17319,15 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
+"eKq" = (
+/obj/decal/fakeobjects/sink{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/harsh,
+/turf/simulated/floor/shuttlebay{
+	name = "test chamber plating"
+	},
+/area/station/science/testchamber)
 "eKr" = (
 /obj/machinery/door/unpowered/wood/pyro,
 /turf/simulated/floor/white,
@@ -27850,13 +27863,6 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/bot,
 /area/station/security/main)
-"hPe" = (
-/obj/machinery/lawrack,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "hPr" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/glass{
@@ -38823,19 +38829,6 @@
 	dir = 8
 	},
 /area/station/medical/medbay/pharmacy)
-"lnq" = (
-/obj/disposalpipe/broken{
-	dir = 8;
-	pixel_y = -1
-	},
-/obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/rust/jen,
-/obj/decal/skeleton{
-	desc = "The remains of an idea.";
-	name = "\proper Jenny's hopes and dreams"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/ne)
 "lns" = (
 /obj/decal/tile_edge/line/green{
 	dir = 1;
@@ -52638,6 +52631,13 @@
 	},
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
+"ppH" = (
+/obj/machinery/lawrack,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "ppI" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment/brig{
@@ -115927,7 +115927,7 @@ bJQ
 mHL
 rdj
 hAh
-hPe
+ppH
 geN
 geN
 geN
@@ -119642,7 +119642,7 @@ aZz
 jzw
 nOR
 fyr
-cxe
+eKq
 aZz
 aZz
 kkA
@@ -130395,7 +130395,7 @@ rdj
 rdj
 rdj
 aUm
-lnq
+cKC
 aRI
 bzZ
 kkV
@@ -134042,7 +134042,7 @@ wqJ
 psA
 jmX
 wCY
-eGd
+dvC
 rni
 wBD
 xTs
