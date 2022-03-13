@@ -1,5 +1,9 @@
 
 (t)sun mar 13 22
+(u)LeahTheTech
+(p)7693
+(e)🆕|feature
+(+)Changeling hivemind members can now point, visible only to their master and other members of the hivemind.
 (u)Flappybat
 (p)7775
 (e)|
