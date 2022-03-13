@@ -11,6 +11,7 @@
 	var/started = 0
 	var/last_time // when i say per second I MEAN PER SECOND DAMMIT
 
+
 /mob/living/intangible/flock/flockmind/New()
 	..()
 

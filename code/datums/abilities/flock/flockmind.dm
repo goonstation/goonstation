@@ -299,13 +299,9 @@
 
 /datum/targetable/flockmindAbility/controlPanel/cast(atom/target)
 	if(..())
-		return 1
-	var/client/user = holder.owner.client
+		return TRUE
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
-	var/chui/window/flockpanel/panel = F.flock.panel
-	if(isnull(user) || isnull(F) || isnull(panel))
-		return 1
-	panel.Subscribe(user)
+	F.flock.ui_interact(F, F.flock.flockpanel)
 
 ////////////////////////////////
 

@@ -69,6 +69,7 @@
 			state["task"] = ""
 	else
 		state["task"] = "controlled"
+		state["controller_ref"] = "\ref[controller]"
 	. = state
 
 

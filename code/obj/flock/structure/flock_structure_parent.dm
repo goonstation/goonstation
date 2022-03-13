@@ -34,6 +34,7 @@
 	processing_items |= src
 	if(F)
 		src.flock = F
+		src.flock.structures += src
 	if(usesgroups && istype(get_turf(src), /turf/simulated/floor/feather))
 		var/turf/simulated/floor/feather/f = get_turf(src)
 		grouptile = f
@@ -42,9 +43,23 @@
 
 /obj/flock_structure/disposing()
 	processing_items -= src
+	if (flock)
+		flock.structures -= src
 	flock = null
 	group = null
 	..()
+
+/obj/flock_structure/proc/describe_state()
+	var/list/state = list()
+	state["ref"] = "\ref[src]"
+	state["name"] = src.flock_id
+	state["health"] = src.health
+	var/area/myArea = get_area(src)
+	if(isarea(myArea))
+		state["area"] = myArea.name
+	else
+		state["area"] = "???"
+	return state
 
 /obj/flock_structure/special_desc(dist, mob/user)
 	if(isflock(user))

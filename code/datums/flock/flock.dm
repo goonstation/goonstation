@@ -15,17 +15,73 @@
 	var/list/enemies = list()
 	var/list/annotation_viewers = list()
 	var/list/annotations = list() // key is atom ref, value is image
+	var/list/obj/flock_structure/structures = list()
 	var/mob/living/intangible/flock/flockmind/flockmind
 	var/snoop_clarity = 80 // how easily we can see silicon messages, how easily silicons can see this flock's messages
 	var/snooping = 0 //are both sides of communication currently accessible?
-	var/chui/window/flockpanel/panel
+	var/datum/tgui/flockpanel
 
 /datum/flock/New()
 	..()
 	src.name = "[pick(consonants_lower)][pick(vowels_lower)].[pick(consonants_lower)][pick(vowels_lower)]"
 	flocks[src.name] = src
 	processing_items |= src
-	panel = new(src)
+
+/datum/flock/ui_status(mob/user)
+	// only flockminds and admins allowed
+	return istype(user, /mob/living/intangible/flock/flockmind) || tgui_admin_state.can_use_topic(src, user)
+
+/datum/flock/ui_data(mob/user)
+	return describe_state()
+
+/datum/flock/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "FlockPanel")
+		ui.open()
+
+/datum/flock/ui_act(action, list/params, datum/tgui/ui)
+	var/mob/user = ui.user;
+	if (!istype(user, /mob/living/intangible/flock/flockmind)) //no humans allowed
+		return
+	switch(action)
+		if("jump_to")
+			var/atom/movable/origin = locate(params["origin"])
+			if(origin)
+				var/turf/T = get_turf(origin)
+				if(T.z != Z_LEVEL_STATION)
+					// make sure they're not trying to spoof data and jump into a z-level they ought not to go
+					boutput(user, "<span class='alert'>They seem to be beyond your capacity to reach.</span>")
+				else
+					user.set_loc(T)
+		if("rally")
+			var/mob/living/critter/flock/C = locate(params["origin"])
+			if(C?.flock == src) // no ordering other flocks' drones around
+				C.rally(get_turf(user))
+		if("remove_enemy")
+			var/mob/living/E = locate(params["origin"])
+			if(E)
+				src.removeEnemy(E)
+		if("eject_trace")
+			var/mob/living/intangible/flock/trace/T = locate(params["origin"])
+			if(T)
+				var/mob/living/critter/flock/drone/host = T.loc
+				if(istype(host))
+					// kick them out of the drone
+					boutput(host, "<span class='flocksay'><b>\[SYSTEM: The flockmind has removed you from your previous corporeal shell.\]</b></span>")
+					host.release_control()
+		if("delete_trace")
+			var/mob/living/intangible/flock/trace/T = locate(params["origin"])
+			if(T)
+				if(alert(user, "This will destroy the flocktrace. Are you ABSOLUTELY SURE you want to do this?", "Confirmation", "Yes", "No") == "Yes")
+					// if they're in a drone, kick them out
+					var/mob/living/critter/flock/drone/host = T.loc
+					if(istype(host))
+						host.release_control()
+					// DELETE
+					flock_speak(null, "Partition [T.real_name] has been reintegrated into flock background processes.", src)
+					boutput(T, "<span class='flocksay'><b>\[SYSTEM: Your higher cognition has been forcibly reintegrated into the collective will of the flock.\]</b></span>")
+					T.death()
 
 /datum/flock/proc/describe_state()
 	var/list/state = list()
@@ -34,14 +90,20 @@
 	// DESCRIBE TRACES
 	var/list/tracelist = list()
 	for(var/mob/living/intangible/flock/trace/T in src.traces)
-		tracelist[++tracelist.len] = T.describe_state()
+		tracelist += list(T.describe_state())
 	state["partitions"] = tracelist
 
 	// DESCRIBE DRONES
 	var/list/dronelist = list()
 	for(var/mob/living/critter/flock/drone/F in src.units)
-		dronelist[++dronelist.len] = F.describe_state()
+		dronelist += list(F.describe_state())
 	state["drones"] = dronelist
+
+	// DESCRIBE STRUCTURES
+	var/list/structureList = list()
+	for(var/obj/flock_structure/structure in src.structures)
+		structureList += list(structure.describe_state())
+	state["structures"] = structureList
 
 	// DESCRIBE ENEMIES
 	var/list/enemylist = list()
@@ -53,17 +115,15 @@
 			enemy["name"] = M.name
 			enemy["area"] = enemy_stats["last_seen"]
 			enemy["ref"] = "\ref[M]"
-			enemylist[++enemylist.len] = enemy
+			enemylist += list(enemy)
 		else
 			// enemy no longer exists, let's do something about that
 			src.enemies -= name
 	state["enemies"] = enemylist
 
-	// DESCRIBE VITALS (do this last so we can report list lengths)
+	// DESCRIBE VITALS
 	var/list/vitals = list()
 	vitals["name"] = src.name
-	vitals["drones"] = length(dronelist)
-	vitals["partitions"] = length(tracelist)
 	state["vitals"] = vitals
 
 	return state
@@ -101,24 +161,10 @@
 		return
 	src.traces |= T
 
-	// update the flock control panel
-	var/list/update = T.describe_state()
-	update["update"] = "add"
-	update["key"] = "partitions"
-	// ref is already provided
-	panel.PushUpdate(update)
-
 /datum/flock/proc/removeTrace(var/mob/living/intangible/flock/trace/T)
 	if(!T)
 		return
 	src.traces -= T
-
-	// update the flock control panel
-	var/list/update = list()
-	update["update"] = "remove"
-	update["key"] = "partitions"
-	update["ref"] = "\ref[T]"
-	panel.PushUpdate(update)
 
 // ANNOTATIONS
 
@@ -218,27 +264,9 @@
 	if(isflock(D) || isflockstructure(D))
 		src.units |= D
 
-		if(src.panel && istype(D, /mob/living/critter/flock/drone))
-			var/mob/living/critter/flock/drone/drone = D
-
-			// update the flock control panel
-			var/list/update = drone.describe_state()
-			update["update"] = "add"
-			update["key"] = "drones"
-			// ref is already provided
-			panel.PushUpdate(update)
-
 /datum/flock/proc/removeDrone(var/atom/movable/D)
 	if(isflock(D) || isflockstructure(D))
 		src.units -= D
-
-		if(src.panel && istype(D, /mob/living/critter/flock/drone))
-			// update the flock control panel
-			var/list/update = list()
-			update["update"] = "remove"
-			update["key"] = "drones"
-			update["ref"] = "\ref[D]"
-			panel.PushUpdate(update)
 
 		if(D:real_name && busy_tiles[D:real_name])
 			src.busy_tiles[D:real_name] = null
@@ -263,15 +291,6 @@
 		enemy_deets["mob"] = M
 		enemy_deets["last_seen"] = enemy_area
 		src.enemies[enemy_name] = enemy_deets
-
-		// update the flock control panel
-		var/list/update = list()
-		update["update"] = "add"
-		update["key"] = "enemies"
-		update["ref"] = "\ref[M]"
-		update["name"] = M.name
-		update["area"] = enemy_area
-		panel.PushUpdate(update)
 	else
 		enemy_deets = src.enemies[enemy_name]
 		enemy_deets["last_seen"] = get_area(M)
@@ -284,12 +303,6 @@
 		var/list/enemy_stats = src.enemies[name]
 		if(enemy_stats["mob"] == M)
 			src.enemies -= name
-			// update the flock control panel
-			var/list/update = list()
-			update["update"] = "remove"
-			update["key"] = "enemies"
-			update["ref"] = "\ref[M]"
-			panel.PushUpdate(update)
 	src.updateAnnotations()
 
 /datum/flock/proc/isEnemy(var/mob/living/M)
