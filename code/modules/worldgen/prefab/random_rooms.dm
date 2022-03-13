@@ -1,6 +1,6 @@
 /**
  * Want to add a room that's chosen from a selection of random rooms to your map? This is the place to look for that.
- * Put create a dmm file like assets/maps/WIDTHxHEIGHT/NAME_WEIGHT.dmm (or the appropriate secret folder).
+ * Put create a dmm file like assets/maps/random_rooms/WIDTHxHEIGHT/NAME_WEIGHT.dmm (or the appropriate secret folder).
  * WIDTH, HEIGHT are the dimensions of the room.
  * NAME is just what you choose to name it.
  * WEIGHT is the probability weight of the room, 100 is the default if you choose to omit this.
