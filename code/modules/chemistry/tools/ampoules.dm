@@ -2,7 +2,7 @@
 	name = "ampoule"
 	desc = "A chemical-containing ampoule."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "ampoule"
+	icon_state = "ampoule-0"
 	initial_volume = 5
 	flags = FPRINT | TABLEPASS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
@@ -55,7 +55,11 @@
 		var/datum/color/average = reagents.get_average_color()
 		src.fluid_image.color = average.to_rgba()
 		src.underlays += src.fluid_image
-
+		icon_state = "ampoule-5"
+		item_state = "ampoule-5"
+	else
+		icon_state = "ampoule-0"
+		item_state = "ampoule-0"
 	signal_event("icon_updated")
 
 //ampoule types
