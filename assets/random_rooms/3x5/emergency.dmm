@@ -6,12 +6,12 @@
 	},
 /obj/item/sheet/steel/fullstack,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "e" = (
 /obj/storage/cart,
 /obj/random_item_spawner/tools/few,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "g" = (
 /obj/item/storage/wall/emergency{
 	dir = 1;
@@ -19,20 +19,20 @@
 	},
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "h" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "u" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "y" = (
 /obj/storage/crate,
 /obj/random_item_spawner/tools/one_or_zero,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "B" = (
 /obj/storage/crate,
 /obj/item/device/light/glowstick,
@@ -52,10 +52,10 @@
 /obj/item/device/light/glowstick,
 /obj/random_item_spawner/tools/one_or_zero,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "U" = (
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "W" = (
 /obj/random_item_spawner/tools/one_or_zero,
 /obj/machinery/portable_atmospherics/canister/air,
@@ -64,7 +64,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 g

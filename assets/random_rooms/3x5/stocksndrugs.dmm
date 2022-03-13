@@ -7,35 +7,35 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "i" = (
 /obj/stool/chair/yellow{
 	dir = 8
 	},
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "l" = (
 /obj/item/reagent_containers/pill/cyberpunk,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "m" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/chips,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "u" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "x" = (
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "A" = (
 /obj/table/reinforced/auto,
 /obj/item/spacecash/fifty,
 /obj/item/reagent_containers/food/snacks/cookie/oatmeal,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 m

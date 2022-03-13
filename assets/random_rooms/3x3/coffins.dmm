@@ -4,38 +4,38 @@
 /obj/random_item_spawner/snacks/one_or_zero,
 /obj/random_item_spawner/mask/one_or_zero,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "g" = (
 /obj/storage/closet/coffin,
 /obj/random_item_spawner/shoe/one_or_zero,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "j" = (
 /obj/storage/closet/coffin,
 /obj/random_item_spawner/snacks/one_or_zero,
 /obj/random_item_spawner/mask/one_or_zero,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "t" = (
 /obj/storage/closet/coffin/wood,
 /obj/random_item_spawner/shoe/one_or_zero,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "D" = (
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "M" = (
 /obj/storage/closet/coffin,
 /obj/random_item_spawner/snacks/one_or_zero,
 /obj/random_item_spawner/medicine/one_or_zero,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "U" = (
 /obj/storage/closet/coffin/wood,
 /obj/random_item_spawner/shoe/one_or_zero,
 /obj/random_item_spawner/medicine/one_or_zero,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 U

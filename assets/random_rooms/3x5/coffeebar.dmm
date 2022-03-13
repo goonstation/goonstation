@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "e" = (
 /obj/shrub{
 	dir = 4;
@@ -9,21 +9,21 @@
 	icon_state = "plant"
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "g" = (
 /obj/stool/chair{
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "i" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "x" = (
 /obj/stool/chair,
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "y" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/computer/security/wooden_tv{
@@ -33,11 +33,11 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "C" = (
 /obj/table/reinforced/bar/auto,
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "E" = (
 /obj/table/reinforced/bar/auto,
 /obj/drink_rack/cup{
@@ -47,7 +47,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 E

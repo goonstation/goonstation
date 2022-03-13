@@ -4,7 +4,7 @@
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "g" = (
 /obj/overlay{
 	icon = 'icons/misc/beach2.dmi';
@@ -18,13 +18,13 @@
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "h" = (
 /obj/item/reagent_containers/food/snacks/ingredient/peeled_banana,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "m" = (
 /obj/item/bananapeel,
 /obj/machinery/light/small/floor/netural,
@@ -32,7 +32,7 @@
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "z" = (
 /obj/shrub{
 	dir = 6
@@ -43,24 +43,24 @@
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "L" = (
 /obj/item/clothing/suit/monkey,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "X" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "Z" = (
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 L

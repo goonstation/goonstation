@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/simulated/floor/dojo/sand/vertical,
-/area/space)
+/area/dmm_suite/clear_area)
 "m" = (
 /obj/decal/fakeobjects/moonrock{
 	desc = "A calming slab of rock. Nice to look at.";
@@ -14,7 +14,7 @@
 	pixel_y = 1
 	},
 /turf/simulated/floor/dojo/sand/circle,
-/area/space)
+/area/dmm_suite/clear_area)
 "s" = (
 /obj/stone,
 /obj/lantern{
@@ -23,10 +23,10 @@
 	pixel_y = 1
 	},
 /turf/simulated/floor/dojo/sand/circle,
-/area/space)
+/area/dmm_suite/clear_area)
 "G" = (
 /turf/simulated/floor/dojo/sand/circle,
-/area/space)
+/area/dmm_suite/clear_area)
 "P" = (
 /obj/stone,
 /obj/lantern{
@@ -35,7 +35,7 @@
 	pixel_y = 1
 	},
 /turf/simulated/floor/dojo/sand/circle,
-/area/space)
+/area/dmm_suite/clear_area)
 "S" = (
 /obj/decal/fakeobjects/moonrock{
 	desc = "A calming slab of rock. Nice to look at.";
@@ -48,7 +48,7 @@
 	pixel_y = 1
 	},
 /turf/simulated/floor/dojo/sand/circle,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 m

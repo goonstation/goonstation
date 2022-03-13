@@ -7,23 +7,23 @@
 	pixel_y = 10
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "i" = (
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "q" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "v" = (
 /obj/stool/chair{
 	dir = 8
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "w" = (
 /obj/item/caution{
 	desc = "Caution! Construction Zone!";
@@ -31,7 +31,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "D" = (
 /obj/table/auto,
 /obj/decal/cleanable/dirt,
@@ -47,16 +47,16 @@
 	pixel_y = 9
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "E" = (
 /obj/decal/cleanable/dirt,
 /obj/item/hand_labeler,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "K" = (
 /obj/stool/chair,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "V" = (
 /obj/table/auto,
 /obj/item/decoration/ashtray,
@@ -71,7 +71,7 @@
 	pixel_x = -6
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 i

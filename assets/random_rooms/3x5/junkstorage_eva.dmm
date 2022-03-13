@@ -1,15 +1,15 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "b" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "L" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "S" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -18,11 +18,11 @@
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "Z" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 S

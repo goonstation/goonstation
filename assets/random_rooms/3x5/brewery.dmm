@@ -2,10 +2,10 @@
 "a" = (
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "f" = (
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "i" = (
 /obj/table/auto,
 /obj/machinery/glass_recycler{
@@ -16,24 +16,24 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "D" = (
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "O" = (
 /obj/reagent_dispensers/beerkeg,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "Q" = (
 /obj/item/plant/wheat,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "W" = (
 /obj/item/plant/wheat,
 /obj/item/plant/wheat,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 O

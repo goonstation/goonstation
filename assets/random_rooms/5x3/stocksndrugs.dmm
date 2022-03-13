@@ -2,38 +2,38 @@
 "a" = (
 /obj/item/reagent_containers/pill/cyberpunk,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "j" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/chips,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "t" = (
 /obj/machinery/computer/stockexchange,
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "C" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "E" = (
 /obj/stool/chair/yellow{
 	dir = 1
 	},
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "L" = (
 /obj/table/reinforced/auto,
 /obj/item/spacecash/fifty,
 /obj/item/reagent_containers/food/snacks/cookie/oatmeal,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "R" = (
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 L

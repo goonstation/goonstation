@@ -2,16 +2,16 @@
 "a" = (
 /obj/structure/girder,
 /turf/simulated/floor/plating/scorched,
-/area/space)
+/area/dmm_suite/clear_area)
 "d" = (
 /obj/item/cigbutt,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/scorched,
-/area/space)
+/area/dmm_suite/clear_area)
 "l" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "n" = (
 /obj/table/auto,
 /obj/item/decoration/ashtray{
@@ -19,7 +19,7 @@
 	name = "grubby old ashtray"
 	},
 /turf/simulated/floor/plating/scorched,
-/area/space)
+/area/dmm_suite/clear_area)
 "u" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -30,20 +30,20 @@
 /obj/item/cigbutt,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating/damaged3,
-/area/space)
+/area/dmm_suite/clear_area)
 "w" = (
 /obj/structure/girder,
 /obj/item/storage/pill_bottle/cyberpunk{
 	layer = 2.4
 	},
 /turf/simulated/floor/plating/scorched,
-/area/space)
+/area/dmm_suite/clear_area)
 "C" = (
 /obj/stool/chair{
 	dir = 4
 	},
 /turf/simulated/floor/plating/damaged1,
-/area/space)
+/area/dmm_suite/clear_area)
 "F" = (
 /obj/decal/cleanable/dirt,
 /obj/item/caution{
@@ -51,7 +51,7 @@
 	name = "caution sign"
 	},
 /turf/simulated/floor/plating/damaged3,
-/area/space)
+/area/dmm_suite/clear_area)
 "W" = (
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
@@ -72,7 +72,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 w

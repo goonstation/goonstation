@@ -4,33 +4,33 @@
 	dir = 1
 	},
 /turf/simulated/floor/wood/seven,
-/area/space)
+/area/dmm_suite/clear_area)
 "o" = (
 /obj/table/wood/auto,
 /obj/item/card_group,
 /obj/machinery/light/small/floor/netural,
 /obj/item/decoration/ashtray,
 /turf/simulated/floor/wood/seven,
-/area/space)
+/area/dmm_suite/clear_area)
 "w" = (
 /obj/stool/chair/comfy{
 	dir = 8
 	},
 /turf/simulated/floor/wood/seven,
-/area/space)
+/area/dmm_suite/clear_area)
 "J" = (
 /turf/simulated/floor/wood/seven,
-/area/space)
+/area/dmm_suite/clear_area)
 "M" = (
 /obj/stool/chair/comfy{
 	dir = 4
 	},
 /turf/simulated/floor/wood/seven,
-/area/space)
+/area/dmm_suite/clear_area)
 "O" = (
 /obj/stool/chair/comfy,
 /turf/simulated/floor/wood/seven,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 J

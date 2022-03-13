@@ -2,21 +2,21 @@
 "a" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "o" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "J" = (
 /obj/rack,
 /obj/random_item_spawner/tools/few,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "Y" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 J

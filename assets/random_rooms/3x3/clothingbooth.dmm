@@ -1,11 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "b" = (
 /obj/machinery/clothingbooth,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "g" = (
 /obj/storage/closet/dresser,
 /obj/item/clothing/under/gimmick/maid,
@@ -17,11 +17,11 @@
 /obj/random_item_spawner/dressup/one_or_zero,
 /obj/random_item_spawner/shoe/one_or_zero,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "C" = (
 /obj/stool/bench/auto,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "N" = (
 /obj/storage/closet/dresser,
 /obj/item/clothing/under/gimmick/maid,
@@ -33,7 +33,7 @@
 /obj/random_item_spawner/mask/one_or_zero,
 /obj/random_item_spawner/hat/one_or_zero,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 N

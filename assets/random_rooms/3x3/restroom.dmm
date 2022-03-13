@@ -8,7 +8,7 @@
 	pixel_y = 7
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "l" = (
 /obj/machinery/shower{
 	dir = 4;
@@ -16,25 +16,25 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "v" = (
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 12
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "D" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "G" = (
 /obj/item/storage/toilet/random{
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "R" = (
 /obj/machinery/bathtub{
 	anchored = 1;
@@ -48,7 +48,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 v

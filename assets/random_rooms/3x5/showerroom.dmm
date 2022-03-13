@@ -6,7 +6,7 @@
 	},
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/dmm_suite/clear_area)
 "c" = (
 /obj/machinery/drainage,
 /obj/machinery/shower{
@@ -14,7 +14,7 @@
 	pixel_y = 12
 	},
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/dmm_suite/clear_area)
 "f" = (
 /obj/rack,
 /obj/item/sponge{
@@ -22,24 +22,24 @@
 	},
 /obj/item/clothing/under/gimmick/macho,
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/dmm_suite/clear_area)
 "i" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/dmm_suite/clear_area)
 "k" = (
 /obj/table/auto,
 /obj/towelbin,
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/dmm_suite/clear_area)
 "L" = (
 /obj/machinery/shower,
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/dmm_suite/clear_area)
 "N" = (
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 a

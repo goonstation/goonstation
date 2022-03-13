@@ -4,13 +4,13 @@
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "b" = (
 /obj/item/reagent_containers/food/snacks/plant/banana,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "k" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_normal"
@@ -18,7 +18,7 @@
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "s" = (
 /obj/item/reagent_containers/food/snacks/plant/banana,
 /obj/item/reagent_containers/food/snacks/plant/banana{
@@ -28,7 +28,7 @@
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "C" = (
 /obj/overlay{
 	icon = 'icons/misc/beach2.dmi';
@@ -41,12 +41,12 @@
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "W" = (
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 k

@@ -11,16 +11,16 @@
 	pixel_y = 7
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "e" = (
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "m" = (
 /obj/machinery/plantpot,
 /obj/item/seed/cannabis,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "t" = (
 /obj/storage/crate,
 /obj/item/plant/herb/cannabis/spawnable,
@@ -49,14 +49,14 @@
 /obj/item/plant/herb/cannabis/spawnable,
 /obj/item/plant/herb/cannabis/spawnable,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "L" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "P" = (
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 t

@@ -2,18 +2,18 @@
 "a" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "s" = (
 /obj/decal/fakeobjects/skeleton,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "B" = (
 /obj/item/pen/crayon/random,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "T" = (
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 T

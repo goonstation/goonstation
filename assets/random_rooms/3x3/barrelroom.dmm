@@ -3,7 +3,7 @@
 /obj/decal/cleanable/dirt,
 /obj/landmark/artifact,
 /turf/simulated/floor/plating/scorched,
-/area/space)
+/area/dmm_suite/clear_area)
 "k" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -12,7 +12,7 @@
 	},
 /obj/item/card_group/plain,
 /turf/simulated/floor/plating/damaged3,
-/area/space)
+/area/dmm_suite/clear_area)
 "q" = (
 /obj/stool/chair/comfy/blue{
 	desc = "It's all ripped and grimy. Gross.";
@@ -22,7 +22,7 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/scorched,
 /turf/simulated/floor/plating/damaged2,
-/area/space)
+/area/dmm_suite/clear_area)
 "r" = (
 /obj/storage/crate,
 /obj/decal/cleanable/dirt,
@@ -32,7 +32,7 @@
 /obj/item/clothing/shoes/cowboy,
 /obj/item/clothing/under/misc/tourist/max_payne,
 /turf/simulated/floor/plating/scorched,
-/area/space)
+/area/dmm_suite/clear_area)
 "u" = (
 /obj/decal/cleanable/blood/splatter{
 	name = "probably ketchup"
@@ -43,7 +43,7 @@
 	name = "broken sauce packets"
 	},
 /turf/simulated/floor/plating/damaged1,
-/area/space)
+/area/dmm_suite/clear_area)
 "C" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/woodclutter,
@@ -52,8 +52,13 @@
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
+/obj/decal/cleanable/gangtag{
+	icon_state = "gangtag19";
+	layer = 4;
+	pixel_y = 32
+	},
 /turf/simulated/floor/plating/scorched,
-/area/space)
+/area/dmm_suite/clear_area)
 "G" = (
 /obj/item/cigbutt,
 /obj/item/reagent_containers/food/snacks/condiment/mayo{
@@ -66,26 +71,21 @@
 	name = "stomped-upon condiments"
 	},
 /turf/simulated/floor/plating/damaged3,
-/area/space)
+/area/dmm_suite/clear_area)
 "L" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/cleanable/gangtag{
-	icon_state = "gangtag19";
-	layer = 4;
-	pixel_y = 32
-	},
 /obj/stool/chair/couch{
 	dir = 4;
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "S" = (
 /obj/burning_barrel,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/scorched,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 k

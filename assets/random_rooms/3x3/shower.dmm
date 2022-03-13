@@ -2,21 +2,21 @@
 "a" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/dmm_suite/clear_area)
 "j" = (
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/dmm_suite/clear_area)
 "l" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/dmm_suite/clear_area)
 "r" = (
 /obj/machinery/shower{
 	dir = 1;
 	pixel_y = 16
 	},
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/dmm_suite/clear_area)
 "F" = (
 /obj/machinery/bathtub{
 	anchored = 1;
@@ -26,7 +26,7 @@
 /obj/item/reagent_containers/bath_bomb,
 /obj/item/reagent_containers/bath_bomb,
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/dmm_suite/clear_area)
 "R" = (
 /obj/rack,
 /obj/item/item_box/medical_patches/mini_styptic,
@@ -35,11 +35,11 @@
 	name = "loofah"
 	},
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/dmm_suite/clear_area)
 "Z" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 r

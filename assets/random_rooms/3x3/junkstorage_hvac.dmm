@@ -2,18 +2,18 @@
 "a" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "j" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "z" = (
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "C" = (
 /obj/item/device/light/glowstick/green_on,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "I" = (
 /obj/table/auto,
 /obj/item/extinguisher{
@@ -25,7 +25,7 @@
 	pixel_y = 5
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 I

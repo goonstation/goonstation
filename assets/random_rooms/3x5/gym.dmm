@@ -2,30 +2,30 @@
 "a" = (
 /obj/fitness/speedbag,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "e" = (
 /obj/fitness/speedbag/captain,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "r" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "x" = (
 /obj/fitness/weightlifter,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "H" = (
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "J" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "P" = (
 /obj/fitness/stacklifter,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 P

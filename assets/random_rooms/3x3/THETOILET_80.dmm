@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/simulated/floor/white,
-/area/space)
+/area/dmm_suite/clear_area)
 "f" = (
 /obj/item/storage/toilet/random{
 	name = "THE toilet";
@@ -18,7 +18,7 @@
 	pixel_x = -13
 	},
 /turf/simulated/floor/white,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 a

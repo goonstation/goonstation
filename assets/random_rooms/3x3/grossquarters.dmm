@@ -3,7 +3,7 @@
 /obj/machinery/light/small,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/grime,
-/area/space)
+/area/dmm_suite/clear_area)
 "f" = (
 /obj/stool/bed,
 /obj/item/storage/secure/ssafe{
@@ -16,7 +16,7 @@
 	},
 /obj/item/clothing/suit/bedsheet/random,
 /turf/simulated/floor/carpet/grime,
-/area/space)
+/area/dmm_suite/clear_area)
 "j" = (
 /obj/stool/chair{
 	dir = 4;
@@ -24,11 +24,11 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/grime,
-/area/space)
+/area/dmm_suite/clear_area)
 "D" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/grime,
-/area/space)
+/area/dmm_suite/clear_area)
 "J" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp{
@@ -36,12 +36,12 @@
 	pixel_y = 10
 	},
 /turf/simulated/floor/carpet/grime,
-/area/space)
+/area/dmm_suite/clear_area)
 "P" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/vomit,
 /turf/simulated/floor/carpet/grime,
-/area/space)
+/area/dmm_suite/clear_area)
 "S" = (
 /obj/storage/closet/dresser/random,
 /obj/item/reagent_containers/food/drinks/bottle/beer,
@@ -50,7 +50,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/beer,
 /obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/simulated/floor/carpet/grime,
-/area/space)
+/area/dmm_suite/clear_area)
 "X" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/blood{
@@ -60,7 +60,7 @@
 	icon_state = "drip1a"
 	},
 /turf/simulated/floor/carpet/grime,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 f

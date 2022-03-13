@@ -10,52 +10,52 @@
 	pixel_y = 9
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "c" = (
 /obj/machinery/plantpot,
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "g" = (
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "j" = (
 /obj/item/reagent_containers/glass/wateringcan{
 	pixel_x = -1;
 	pixel_y = 7
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "s" = (
 /obj/submachine/seed_vendor,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "z" = (
 /obj/item/reagent_containers/glass/compostbag{
 	pixel_x = -2;
 	pixel_y = 3
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "D" = (
 /obj/machinery/plantpot,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "P" = (
 /obj/submachine/chef_sink{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "V" = (
 /obj/item/reagent_containers/glass/compostbag{
 	pixel_x = 5;
 	pixel_y = -3
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 D

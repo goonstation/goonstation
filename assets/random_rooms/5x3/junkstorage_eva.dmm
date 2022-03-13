@@ -7,22 +7,22 @@
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "e" = (
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "n" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "o" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "G" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 o

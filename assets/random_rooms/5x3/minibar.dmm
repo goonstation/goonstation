@@ -3,7 +3,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,
 /turf/simulated/floor/specialroom/bar,
-/area/space)
+/area/dmm_suite/clear_area)
 "s" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/glass_recycler{
@@ -14,28 +14,28 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/specialroom/bar,
-/area/space)
+/area/dmm_suite/clear_area)
 "C" = (
 /obj/machinery/chem_dispenser/alcohol,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /turf/simulated/floor/specialroom/bar,
-/area/space)
+/area/dmm_suite/clear_area)
 "Q" = (
 /turf/simulated/floor/specialroom/bar,
-/area/space)
+/area/dmm_suite/clear_area)
 "S" = (
 /obj/machinery/chem_dispenser/soda,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /turf/simulated/floor/specialroom/bar,
-/area/space)
+/area/dmm_suite/clear_area)
 "Y" = (
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/specialroom/bar,
-/area/space)
+/area/dmm_suite/clear_area)
 "Z" = (
 /obj/stool/bar,
 /turf/simulated/floor/specialroom/bar,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 Z

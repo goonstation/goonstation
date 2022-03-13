@@ -2,37 +2,37 @@
 "a" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "f" = (
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "g" = (
 /obj/machinery/atmospherics/portables_connector/west,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "t" = (
 /obj/machinery/atmospherics/portables_connector/east,
 /obj/machinery/light/small/sticky{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "v" = (
 /obj/machinery/atmospherics/valve/vertical{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "M" = (
 /obj/machinery/light/small/sticky{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "Y" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 Y

@@ -4,32 +4,32 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet/grime,
-/area/space)
+/area/dmm_suite/clear_area)
 "h" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/carpet/grime,
-/area/space)
+/area/dmm_suite/clear_area)
 "m" = (
 /obj/stool/chair,
 /turf/simulated/floor/carpet/grime,
-/area/space)
+/area/dmm_suite/clear_area)
 "y" = (
 /obj/item/cigbutt,
 /turf/simulated/floor/carpet/grime,
-/area/space)
+/area/dmm_suite/clear_area)
 "A" = (
 /turf/simulated/floor/carpet/grime,
-/area/space)
+/area/dmm_suite/clear_area)
 "E" = (
 /obj/stool/chair/comfy/blue{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/grime,
-/area/space)
+/area/dmm_suite/clear_area)
 "F" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/carpet/grime,
-/area/space)
+/area/dmm_suite/clear_area)
 "I" = (
 /obj/table/wood/round/auto,
 /obj/item/decoration/ashtray{
@@ -45,18 +45,18 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/grime,
-/area/space)
+/area/dmm_suite/clear_area)
 "L" = (
 /obj/item/cigbutt,
 /obj/machinery/light/small/sticky{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/grime,
-/area/space)
+/area/dmm_suite/clear_area)
 "X" = (
 /obj/stool/chair/comfy/blue,
 /turf/simulated/floor/carpet/grime,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 F

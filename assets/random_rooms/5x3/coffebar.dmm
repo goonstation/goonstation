@@ -2,26 +2,26 @@
 "a" = (
 /obj/table/reinforced/bar/auto,
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "z" = (
 /obj/stool/chair{
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "A" = (
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "E" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "H" = (
 /obj/stool/chair{
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "I" = (
 /obj/table/reinforced/bar/auto,
 /obj/drink_rack/cup{
@@ -31,7 +31,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "J" = (
 /obj/shrub{
 	dir = 4;
@@ -39,7 +39,7 @@
 	icon_state = "plant"
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "W" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/computer/security/wooden_tv{
@@ -49,7 +49,7 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 I

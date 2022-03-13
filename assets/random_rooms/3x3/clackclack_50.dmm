@@ -3,14 +3,14 @@
 /obj/storage/closet,
 /obj/critter/wraithskeleton,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "b" = (
 /obj/machinery/bot/skullbot,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "E" = (
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 a

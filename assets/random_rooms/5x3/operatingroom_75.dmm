@@ -7,7 +7,7 @@
 	},
 /obj/item/handcuffs,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "i" = (
 /obj/decal/cleanable/blood{
 	icon_state = "floor6"
@@ -15,14 +15,14 @@
 /obj/table/auto,
 /obj/machinery/light/lamp/green,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "o" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 8
 	},
 /obj/item/device/light/flashlight,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "v" = (
 /obj/surgery_tray,
 /obj/item/scalpel,
@@ -34,12 +34,12 @@
 /obj/item/scissors/surgical_scissors,
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "x" = (
 /obj/item/tank/anesthetic,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "y" = (
 /obj/storage/crate/freezer,
 /obj/random_item_spawner/organs/bloody/one_to_three,
@@ -48,7 +48,7 @@
 	icon_state = "gib3"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "A" = (
 /obj/table/auto,
 /obj/item/device/analyzer/healthanalyzer,
@@ -56,12 +56,12 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "E" = (
 /obj/iv_stand,
 /obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "Q" = (
 /obj/machinery/optable{
 	id = "treatment"
@@ -71,20 +71,20 @@
 	icon_state = "drip2b"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "R" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "V" = (
 /obj/decal/cleanable/blood,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "Y" = (
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 A

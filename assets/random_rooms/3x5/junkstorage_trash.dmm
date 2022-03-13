@@ -3,44 +3,44 @@
 /obj/random_item_spawner/junk/maybe_few,
 /obj/random_item_spawner/tools/one_or_zero,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "b" = (
 /obj/random_item_spawner/junk/maybe_few,
 /obj/random_item_spawner/shoe/one_or_zero,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "o" = (
 /obj/random_item_spawner/junk/maybe_few,
 /obj/random_item_spawner/tools/one_or_zero,
 /obj/random_item_spawner/med_tool/one_or_zero,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "q" = (
 /obj/random_item_spawner/junk/maybe_few,
 /obj/random_item_spawner/tableware/one_or_zero,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "K" = (
 /obj/random_item_spawner/junk/maybe_few,
 /obj/random_item_spawner/tools/one_or_zero,
 /obj/random_item_spawner/tableware/one_or_zero,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "R" = (
 /obj/random_item_spawner/junk/maybe_few,
 /obj/random_item_spawner/tools_w_igloves/one_or_zero,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "T" = (
 /obj/random_item_spawner/junk/maybe_few,
 /obj/random_item_spawner/medicine/one_or_zero,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "W" = (
 /obj/random_item_spawner/junk/maybe_few,
 /obj/random_item_spawner/snacks/one_or_zero,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 q
