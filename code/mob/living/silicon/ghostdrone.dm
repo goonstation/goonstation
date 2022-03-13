@@ -633,7 +633,7 @@
 
 		src.hud.update_charge()
 
-	emote(var/act, var/voluntary = 1) // add nods and shakes emotes so ghostdrones can answer yes/no wuestions
+	emote(var/act, var/voluntary = 1)
 		var/param = null
 		if (findtext(act, " ", 1, null))
 			var/t1 = findtext(act, " ", 1, null)
@@ -723,14 +723,14 @@
 					message = "<B>[src]</B> claps."
 					m_type = 2
 
-			if ("dance")
+			if ("nod")  // we want it so ghostdrones can answer yes/no wuestions
 				if (!src.restrained())
-					message = "<B>[src]</B> nods it's head."
+					message = "<B>[src]</B> nods its head yes."
 					m_type = 2
 
 			if ("snap")
 				if (!src.restrained())
-					message = "<B>[src]</B> shakes it's head."
+					message = "<B>[src]</B> shakes its head no."
 					m_type = 2
 
 			if ("flap")
@@ -778,7 +778,7 @@
 				message = "<b>[src]</b> [param]"
 				m_type = 1
 
-			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","nod","shrug","think","ponder","contemplate")
+			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink",,"shrug","think","ponder","contemplate")
 				// basic visible single-word emotes
 				message = "<B>[src]</B> [act]s."
 				m_type = 1
