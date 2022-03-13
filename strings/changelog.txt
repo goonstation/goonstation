@@ -1,5 +1,9 @@
 
 (t)sun mar 13 22
+(u)Jan.antilles
+(p)7776
+(e)🎨|sprites
+(*)Added two new hair/beard styles: Shaved Head and Five O'Clock Shadow.
 (u)Amylizzle
 (p)7701
 (e)|
