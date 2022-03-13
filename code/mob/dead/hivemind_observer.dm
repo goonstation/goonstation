@@ -2,10 +2,14 @@
 	var/datum/abilityHolder/changeling/hivemind_owner
 	var/can_exit_hivemind_time = 0
 	var/last_attack = 0
+	/// Hivemind pointing uses an image rather than a decal
+	var/static/point_img = null
 
 	New()
 		. = ..()
-		REMOVE_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
+		if (!point_img)
+			point_img = image('icons/mob/screen1.dmi', icon_state = "arrow")
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 
 	say_understands(var/other)
 		return 1
@@ -40,9 +44,39 @@
 		..()
 
 	click(atom/target, params)
+		if (src.client.check_key(KEY_POINT))
+			point_at(target)
+			return
 		if (try_launch_attack(target))
 			return
 		..()
+
+	update_cursor()
+		..()
+		if (src.client)
+			if (src.client.check_key(KEY_POINT))
+				src.set_cursor('icons/cursors/point.dmi')
+				return
+
+	point_at(atom/target)
+		make_hive_point(target, color="#e2a059")
+
+	/// Like make_point, but the point is an image that is only displayed to hivemind members
+	proc/make_hive_point(atom/movable/target, color="#ffffff", time=2 SECONDS)
+		var/image/point = image(point_img, loc = target, layer = EFFECTS_LAYER_1)
+		point.color = color
+		var/list/client/viewers = new
+		for (var/mob/member in hivemind_owner.get_current_hivemind())
+			if (!member.client)
+				continue
+			boutput(member, "<span class='game hivesay'><span class='prefix'>HIVEMIND: </span><b>[src]</b> points to [target].</span>")
+			member.client.images += point
+			viewers += member.client
+		SPAWN(time)
+			for (var/client/viewer in viewers)
+				viewer.images -= point
+			qdel(point)
+		return point
 
 	proc/try_launch_attack(atom/shoot_target)
 		.= 0

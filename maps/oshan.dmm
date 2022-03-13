@@ -2724,7 +2724,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "afY" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/clothing/suit/labcoat/genetics,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
@@ -19031,7 +19031,7 @@
 /turf/space/fluid,
 /area/space)
 "aTV" = (
-/obj/decal/oven,
+/obj/decal/fakeobjects/oven,
 /turf/space/fluid,
 /area/space)
 "aTW" = (
@@ -19106,7 +19106,7 @@
 /area/space)
 "aUj" = (
 /obj/stool/bed,
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/space/fluid,
 /area/space)
 "aUk" = (
@@ -19854,7 +19854,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
 "aWN" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
@@ -20019,7 +20019,7 @@
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
 "aXn" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor/plating,
 /area/evilreaver/genetics)
@@ -22788,7 +22788,7 @@
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "bgs" = (
-/obj/decal/oven{
+/obj/decal/fakeobjects/oven{
 	name = "broken oven"
 	},
 /turf/simulated/floor/plating/damaged3,
@@ -25747,7 +25747,7 @@
 /area/space)
 "bon" = (
 /obj/item/reagent_containers/food/snacks/hardtack,
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "boo" = (
@@ -25993,7 +25993,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "boS" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/raw_material/pharosium,
 /obj/item/raw_material/bohrum,
 /obj/item/raw_material/bohrum,
@@ -26963,7 +26963,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "brg" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/mining_tool/powerhammer,
 /obj/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -27390,7 +27390,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/storage)
 "bso" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/oreprospector,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -28730,7 +28730,7 @@
 	},
 /area/station/bridge)
 "bvD" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/raw_material/cobryl,
 /obj/item/raw_material/cobryl,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -36779,7 +36779,7 @@
 /turf/simulated/floor/grime,
 /area/space)
 "bPK" = (
-/obj/decal/oven,
+/obj/decal/fakeobjects/oven,
 /turf/simulated/floor/grime,
 /area/space)
 "bPL" = (
@@ -41223,7 +41223,7 @@
 /area/diner/backroom)
 "cbC" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/simulated/floor/plating,
 /area/diner/backroom)
 "cbD" = (
@@ -47607,7 +47607,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/baroffice)
 "uBc" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor/plating,
 /area/diner/backroom)

@@ -60,8 +60,8 @@ var/maniac_previous_victim = "Unknown"
 				var/mob/dead/observer/ghost = new/mob/dead/observer
 				for(var/turf/T in landmarks[LANDMARK_EVIL_CHEF_CORPSE])
 					ghost.set_loc(T)
-					var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(T)
-					meat.name = "[victimname] meat"
+					new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(T,target)
+
 				ghost.ckey = victimkey
 				ghost.name = victimname // should've added this sooner
 				ghost.real_name = victimname

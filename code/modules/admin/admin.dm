@@ -5046,7 +5046,7 @@ var/global/noir = 0
 
 // Handling noclip logic
 /client/Move(NewLoc, direct)
-	if(usr.client.flying || (ismob(usr) && HAS_MOB_PROPERTY(usr, PROP_NOCLIP)))
+	if(usr.client.flying || (ismob(usr) && HAS_ATOM_PROPERTY(usr, PROP_MOB_NOCLIP)))
 		if(isnull(NewLoc))
 			return
 

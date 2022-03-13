@@ -454,7 +454,7 @@ proc/generate_space_color()
 	if (src.throw_unlimited)//ignore inertia if we're in the ocean (faster but kind of dumb check)
 		if ((ismob(A) && src.x > 2 && src.x < (world.maxx - 1))) //fuck?
 			var/mob/M = A
-			if((M.client && M.client.flying) || (ismob(M) && HAS_MOB_PROPERTY(M, PROP_NOCLIP)))
+			if((M.client && M.client.flying) || (ismob(M) && HAS_ATOM_PROPERTY(M, PROP_MOB_NOCLIP)))
 				return//aaaaa
 			BeginSpacePush(M)
 

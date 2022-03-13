@@ -199,6 +199,8 @@
 		src.locked = 1
 		src.gen_bonus = src.healing_multiplier()
 
+		src.use_power(5000)
+
 		return 1
 
 

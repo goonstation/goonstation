@@ -24119,7 +24119,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The partially decomposed corpse of some poor chump.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -77329,10 +77329,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
-"ecJ" = (
-/obj/decal/tile_edge/stripe/big,
-/turf/simulated/floor/white,
-/area/station/medical/medbay/surgery)
 "efy" = (
 /obj/disposalpipe/segment/transport,
 /obj/cable{
@@ -114087,7 +114083,7 @@ cQI
 cSt
 dhs
 cVp
-ecJ
+cVp
 cXM
 cVp
 cZN
