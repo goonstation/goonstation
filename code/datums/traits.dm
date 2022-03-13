@@ -780,6 +780,14 @@ obj/trait/pilot
 	points = 1
 	isPositive = 0
 
+/obj/trait/weakorgans
+	name = "Frail Constitution (+1)"
+	cleanName = "Frail Constitution"
+	desc = "Your internal organs are extremely vulnerable to damage"
+	id = "weakorgans"
+	points = 1
+	isPositive = 0
+
 //Flourish felt like this was bloating the traits so I've disabled it for now.
 ///obj/trait/color_shift
 //	name = "Color Shift (0)"
