@@ -1,18 +1,28 @@
 
 TYPEINFO(/datum/mapPrefab)
+	var/stored_as_subtypes = FALSE
 	var/folder = null
-	proc/prefab_from_path(path)
+	proc/prefab_from_path(full_path, local_path)
 		RETURN_TYPE(/datum/mapPrefab)
-		CRASH("Not implemented")
+		var/list/path_parts = splittext(local_path, "/")
+		var/typepath = text2path(splittext("[src.type]", "/typeinfo")[2])
+		var/datum/mapPrefab/prefab = new typepath
+		prefab.prefabPath = full_path
+		prefab.tags = path_parts.Copy(1, length(path_parts))
+		prefab.name = full_path
+		return prefab
 
 ABSTRACT_TYPE(/datum/mapPrefab)
 /datum/mapPrefab
 	var/name = null
 	var/probability = 100
-	var/maxNum = 0
+	var/required = FALSE //! If 1 we will try to always place thing thing no matter what.
+	var/maxNum = -1 //! If -1 there's no limit.
 	var/prefabPath = null
 	var/prefabSizeX = null
 	var/prefabSizeY = null
+	var/tags = null
+	var/nPlaced = 0
 
 	New()
 		..()
@@ -63,11 +73,15 @@ ABSTRACT_TYPE(/datum/mapPrefab)
 
 		post_cleanup(target, props)
 
+		src.nPlaced++
+
 		return TRUE
 
 
 
-
+/**
+ * Gets all prefabs of a given type.
+ */
 proc/get_map_prefabs(prefab_type)
 	RETURN_TYPE(/list)
 	var/static/list/prefab_cache = null
@@ -77,18 +91,55 @@ proc/get_map_prefabs(prefab_type)
 		return prefab_cache[prefab_type]
 
 	var/typeinfo/datum/mapPrefab/typeinfo = get_type_typeinfo(prefab_type)
-	if(isnull(typeinfo.folder))
-		CRASH("mapPrefab: Prefab type '[prefab_type]' has no folder set")
+	if(isnull(typeinfo.folder) && !typeinfo.stored_as_subtypes)
+		CRASH("mapPrefab: Prefab type '[prefab_type]' has no folder set and its prefabs are not stored as subtypes")
 
 	prefab_cache[prefab_type] = list()
 
-	for(var/base_path in list("assets/maps/[typeinfo.folder]/", "+secret/assets/[typeinfo.folder]/"))
-		for(var/filepath in recursive_flist(base_path, list_folders=FALSE))
-			var/datum/mapPrefab/prefab = typeinfo.prefab_from_path(filepath)
-			if(isnull(prefab))
-				continue
-			if(isnull(prefab.name))
-				prefab.generate_default_name()
+	if(typeinfo.stored_as_subtypes)
+		for(var/datum/mapPrefab/prefabType as anything in concrete_typesof(prefab_type, cache=FALSE))
+			var/datum/mapPrefab/prefab = new prefabType
 			prefab_cache[prefab_type][prefab.name] = prefab
+	else
+		for(var/base_path in list("assets/maps/[typeinfo.folder]/", "+secret/assets/[typeinfo.folder]/"))
+			for(var/filepath in recursive_flist(base_path, list_folders=FALSE))
+				var/datum/mapPrefab/prefab = typeinfo.prefab_from_path(filepath, splittext(filepath, base_path)[2])
+				if(isnull(prefab))
+					continue
+				if(isnull(prefab.name))
+					prefab.generate_default_name()
+				prefab_cache[prefab_type][prefab.name] = prefab
 
 	return prefab_cache[prefab_type]
+
+/**
+ * Picks a random prefab from given prefab type. Filters the prefabs picked based on the given tags.
+ * Choice is performed by a weighted random choice based on the prefab's probability.
+ * Prefabs marked as required are always picked first.
+ *
+ * Prefab max count is respected. However, note that the count of a prefab is only updated in prefab's applyTo() function.
+ */
+proc/pick_map_prefab(prefab_type, list/wanted_tags=null, list/unwanted_tags=null)
+	RETURN_TYPE(/datum/mapPrefab)
+	var/prefab_list = get_map_prefabs(prefab_type)
+	if(!length(prefab_list))
+		return null
+
+	var/list/required = list()
+	var/list/choices = list()
+	for(var/name in prefab_list)
+		var/datum/mapPrefab/prefab = prefab_list[name]
+		if(
+				length(prefab.tags & unwanted_tags) || \
+				length(prefab.tags & wanted_tags) != length(wanted_tags) || \
+				prefab.maxNum > 0 && prefab.nPlaced >= prefab.maxNum
+			)
+			continue
+		choices[prefab] = prefab.probability
+		if(prefab.required)
+			required[prefab] = prefab.probability
+
+	if(length(required))
+		return weighted_pick(required)
+
+	return weighted_pick(choices)
