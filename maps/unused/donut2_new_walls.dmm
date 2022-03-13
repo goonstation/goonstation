@@ -8953,7 +8953,7 @@
 	},
 /area/station/quartermaster/office)
 "awA" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency2)

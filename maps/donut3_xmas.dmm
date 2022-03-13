@@ -9708,7 +9708,7 @@
 /turf/simulated/wall/auto/jen/yellow,
 /area/station/mining/staff_room)
 "cxe" = (
-/obj/decal/sink{
+/obj/decal/fakeobjects/sink{
 	dir = 4
 	},
 /obj/machinery/light/incandescent/harsh,
@@ -16951,7 +16951,7 @@
 /area/station/medical/cdc)
 "eGd" = (
 /obj/wingrille_spawn/auto/tuff,
-/obj/decal/pole{
+/obj/decal/fakeobjects/pole{
 	layer = 4
 	},
 /turf/simulated/floor/plating,
@@ -38830,7 +38830,7 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of an idea.";
 	name = "\proper Jenny's hopes and dreams"
 	},

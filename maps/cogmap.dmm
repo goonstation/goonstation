@@ -7068,7 +7068,7 @@
 /area/station/crew_quarters/barber_shop)
 "auC" = (
 /obj/disposalpipe/segment/mail,
-/obj/decal/pole{
+/obj/decal/fakeobjects/pole{
 	pixel_x = -14
 	},
 /turf/simulated/floor/neutral/side{
@@ -50417,7 +50417,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cxU" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
