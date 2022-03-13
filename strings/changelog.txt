@@ -1,4 +1,9 @@
 
+(t)sat mar 12 22
+(u)Sovexe
+(p)7782
+(e)🐛|bug
+(+)Fixed a bug that prevented players from calming down angered and frightened chickens by hand feeding.
 (t)wed mar 09 22
 (u)Amylizzle
 (p)7736
