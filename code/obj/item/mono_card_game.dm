@@ -24,41 +24,6 @@
 
 		update_group_sprite()
 
-	/*
-	proc/setMonoCard(var/obj/item/playing_card/target , var/suit, var/num)
-		var/plain_suit = TRUE
-		var/suit_name = ""
-		switch(suit)
-			if(1)
-				suit_name = "Green"
-			if(2)
-				suit_name = "Blue"
-			if(3)
-				suit_name = "Yellow"
-			if(4)
-				suit_name = "Red"
-			if(5)
-				plain_suit = FALSE
-		if(plain_suit)
-			if(num < 10)
-				target.name = "[suit_name] [capitalize(num2text(num))]"
-			else
-				target.name = "[suit_name] [numToSpecial["[num]"]]"
-
-
-		else
-			if(num == 0)
-				target.name = "Wild Card"
-			else  //If I fuck up generation this will get people complaining
-				target.name = "Wild Draw 4"
-				num = 1
-
-
-		target.icon_state = "[card_style]-[suit]-[num]"
-		update_card_information(target)
-		target.update_stored_info()
-		*/
-
 /obj/item/paper/from_file/MonoRules
 	file_path = "strings/MONORules.txt"
 	icon_state = "paper"
