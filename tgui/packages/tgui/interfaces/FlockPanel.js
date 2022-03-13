@@ -88,6 +88,11 @@ const iconLookup = {
   "controlled": "wifi",
   "replicating": "egg",
   "rallying": "map-marker",
+  "opening container": "box-open",
+  "butchering": "recycle",
+  "repairing": "tools",
+  "capturing": "bars",
+  "deposit": "puzzle-piece",
 };
 const taskIcon = function (task) {
   let iconString = iconLookup[task];
