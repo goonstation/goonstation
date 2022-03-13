@@ -8098,10 +8098,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"atc" = (
-/obj/decal/poster/wallsign/poster_rand,
-/turf/simulated/wall/auto/supernorn,
-/area/station/janitor/office)
 "atd" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8
@@ -13910,16 +13906,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/radio/bathroom)
-"aHf" = (
-/obj/shrub{
-	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	tag = "icon-plant (NORTH)"
-	},
-/turf/simulated/floor/carpet/arcade/half,
-/area/station/crew_quarters/arcade/dungeon)
 "aHg" = (
 /obj/stool/chair/wooden{
 	dir = 4
@@ -15229,13 +15215,6 @@
 "aKc" = (
 /turf/simulated/floor/sanitary/blue,
 /area/station/science/chemistry)
-"aKf" = (
-/obj/plasticflaps,
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 1
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/central)
 "aKg" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -15663,16 +15642,6 @@
 /obj/item/weldingtool,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
-"aLo" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/central)
 "aLp" = (
 /obj/decal/cleanable/dirt,
 /obj/reagent_dispensers/watertank,
@@ -15899,10 +15868,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/west)
-"aLS" = (
-/obj/machinery/bot/cleanbot,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/central)
 "aLT" = (
 /obj/item/clothing/suit/hi_vis,
 /turf/simulated/floor/plating/random,
@@ -21006,12 +20971,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor,
 /area/research_outpost)
-"bbi" = (
-/obj/item/crowbar,
-/obj/item/wrench,
-/obj/item/weldingtool,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/southwest)
 "bbj" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -43947,8 +43906,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/item/clothing/head/helmet/bucket,
-/turf/simulated/floor/grime,
+/turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "cks" = (
 /obj/lattice,
@@ -44064,13 +44022,6 @@
 /obj/item/paper,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
-"ckQ" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/plating/random,
-/area/station/crew_quarters/arcade/dungeon)
 "ckR" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -44108,20 +44059,6 @@
 "ckX" = (
 /obj/structure/girder,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/central)
-"ckY" = (
-/obj/cable/reinforced{
-	icon_state = "4-8-thick"
-	},
-/obj/storage/crate,
-/turf/simulated/floor/grime,
-/area/station/maintenance/inner/central)
-"ckZ" = (
-/obj/storage/crate,
-/obj/cable/reinforced{
-	icon_state = "4-8-thick"
-	},
-/turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "cla" = (
 /obj/machinery/drainage/big,
@@ -44823,6 +44760,10 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/research_outpost)
+"dSi" = (
+/obj/decal/poster/wallsign/poster_rand,
+/turf/simulated/wall/auto/supernorn,
+/area/station/storage/tools)
 "dVf" = (
 /obj/access_spawn/pathology,
 /turf/simulated/floor,
@@ -45170,6 +45111,24 @@
 	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
+"gaI" = (
+/obj/rack,
+/obj/item/tank/air,
+/obj/item/clothing/suit/fire,
+/obj/item/clothing/head/helmet/firefighter,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/extinguisher{
+	pixel_x = -10
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 10
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 10;
+	pixel_y = -7
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/north)
 "gaJ" = (
 /obj/cable{
 	d1 = 1;
@@ -45335,14 +45294,6 @@
 	},
 /turf/space/fluid,
 /area/station/com_dish/research_outpost)
-"gMW" = (
-/obj/cable/reinforced{
-	icon_state = "4-8-thick"
-	},
-/obj/storage/crate,
-/obj/item/storage/box/mousetraps,
-/turf/simulated/floor/grime,
-/area/station/maintenance/inner/central)
 "gNp" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor,
@@ -45702,6 +45653,10 @@
 /obj/cabinet/pathology,
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
+"jyD" = (
+/obj/storage/crate,
+/turf/simulated/floor/grime,
+/area/station/maintenance/inner/central)
 "jzB" = (
 /obj/machinery/manufacturer/general,
 /turf/simulated/floor,
@@ -45800,6 +45755,11 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space/fluid,
 /area/space)
+"jSU" = (
+/obj/storage/crate,
+/obj/item/storage/box/mousetraps,
+/turf/simulated/floor/grime,
+/area/station/maintenance/inner/central)
 "jUp" = (
 /obj/landmark/random_room/size5x3,
 /turf/simulated/floor/plating/random,
@@ -45870,6 +45830,13 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
+"kpF" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/bot/cleanbot,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "ksg" = (
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -45976,6 +45943,13 @@
 /obj/machinery/centrifuge,
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
+"lEG" = (
+/obj/machinery/conveyor/oshan_carousel{
+	dir = 1
+	},
+/obj/plasticflaps,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "lGL" = (
 /obj/item/clothing/mask/cigarette/random,
 /obj/ladder{
@@ -46426,6 +46400,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/hallway/primary/west)
+"ohj" = (
+/obj/item/clothing/head/helmet/bucket,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "oiZ" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/firedoor_spawn,
@@ -46629,6 +46607,12 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
+"pCA" = (
+/obj/item/wrench,
+/obj/item/crowbar,
+/obj/item/weldingtool,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southwest)
 "pCE" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4
@@ -47120,6 +47104,14 @@
 /obj/machinery/networked/storage/scanner,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
+"sAw" = (
+/obj/machinery/computer/stockexchange{
+	dir = 4
+	},
+/turf/simulated/floor/darkblue{
+	dir = 10
+	},
+/area/station/crew_quarters/info)
 "sBu" = (
 /obj/cable{
 	d1 = 4;
@@ -47161,6 +47153,10 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"sWc" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "tbh" = (
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Catering Storage"
@@ -47447,7 +47443,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "vcS" = (
-/obj/landmark/random_room/size3x3,
+/obj/landmark/random_room/size5x3,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "vex" = (
@@ -47605,10 +47601,6 @@
 /obj/item/clothing/ears/earmuffs,
 /turf/simulated/floor,
 /area/station/storage/eeva)
-"vWm" = (
-/obj/item/tile/steel,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/central)
 "wfi" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -47791,6 +47783,11 @@
 "xFh" = (
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
+"xFB" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/firedoor_spawn,
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/arcade/dungeon)
 "xIn" = (
 /obj/machinery/computer/power_monitor{
 	dir = 8
@@ -47810,6 +47807,10 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
+"xIG" = (
+/obj/item/sheet/steel,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "xNc" = (
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
@@ -77671,7 +77672,7 @@ boW
 btZ
 btX
 buE
-rOw
+btZ
 btZ
 btZ
 btZ
@@ -77973,9 +77974,9 @@ boW
 bua
 btX
 buE
-bbi
 btZ
 btZ
+rOw
 bJw
 bJw
 bJw
@@ -78276,7 +78277,7 @@ cfI
 buH
 buE
 btZ
-btZ
+pCA
 bJw
 bJw
 bzm
@@ -83069,7 +83070,7 @@ aaq
 aBz
 aLp
 brX
-cfK
+kpF
 cfK
 cfK
 cfK
@@ -83367,11 +83368,11 @@ aEN
 aCn
 aCn
 aCn
-aHf
-aBz
-aLS
-abs
+aCn
+xFB
 aDr
+aDr
+abs
 bXl
 aDr
 aDr
@@ -84879,11 +84880,11 @@ aGc
 aCn
 bvZ
 aBz
+aDr
+aDr
+aDr
 chd
-aHC
-aHC
-aHC
-aHC
+chd
 aDr
 chc
 cgn
@@ -85178,16 +85179,16 @@ aBz
 aBz
 aBz
 aBz
-ckQ
+aBz
 aBz
 aBz
 aDr
-atc
-atQ
-ibd
-aHC
+aDr
+aDr
+chd
 cjF
-ckY
+jyD
+chc
 aDr
 ciP
 cjG
@@ -85479,17 +85480,17 @@ aDg
 aEd
 aES
 aFx
-aBG
-aIi
-aDr
-aDr
-aLT
+dSi
+atQ
+ibd
 aHC
-atR
-cjU
-aHC
+chd
+nUt
+chd
+chd
 vKP
-gMW
+jSU
+chc
 aDr
 ciZ
 cjH
@@ -85782,16 +85783,16 @@ aCs
 aET
 aFy
 aBG
-aLo
-aDr
-aDr
-aDr
+atR
+cjU
 aHC
-auq
-aPw
-aHC
+aLT
+aDr
+aDr
+chd
 osc
-ckZ
+jyD
+chc
 aDr
 ciZ
 ciZ
@@ -86084,13 +86085,13 @@ aEe
 aCs
 auK
 aBG
+auq
+aPw
+aHC
 aDr
 aDr
 aDr
-aDr
-aDr
-aDr
-aDr
+abs
 aDr
 aDr
 cjM
@@ -86387,13 +86388,13 @@ aRs
 aFA
 aBG
 aDr
+aDr
+aCE
+aDr
+aDr
+aDr
+aDr
 ckw
-cga
-aKf
-cga
-cga
-cga
-aKf
 cgm
 cgm
 cgm
@@ -86689,13 +86690,13 @@ aBG
 aBG
 aBG
 aDr
-aig
-aCD
-chd
-chd
-chd
-chd
-chd
+ckw
+lEG
+cga
+cga
+cga
+cga
+ckS
 aCD
 aCD
 aCD
@@ -86992,13 +86993,13 @@ aLn
 aDr
 aDr
 aig
-aEV
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+aCD
+aCD
+aCD
+aCD
+aCD
+aCD
+aCD
 aqn
 aqn
 aqn
@@ -99645,7 +99646,7 @@ aqn
 aqn
 afA
 afA
-afq
+gaI
 afq
 afq
 afq
@@ -99947,7 +99948,7 @@ aqn
 aqn
 aqn
 afA
-afq
+awo
 afq
 afq
 afq
@@ -101501,8 +101502,8 @@ ckL
 aDr
 aDr
 aDr
-ckK
-cfS
+aDr
+aDr
 aDr
 aDr
 aks
@@ -101800,11 +101801,11 @@ chB
 brX
 qEN
 aDr
-vWm
+aDr
 ckX
-wFP
-uWe
 cfS
+aDr
+aDr
 ckr
 aks
 aks
@@ -102102,11 +102103,11 @@ chB
 chB
 aLq
 aLW
-chd
-chd
-nUt
-chd
-chd
+cfS
+wFP
+ckK
+aDr
+aDr
 aks
 aks
 bgD
@@ -102404,10 +102405,10 @@ aKn
 aKM
 aLr
 aLW
-chd
+ckK
+ckK
+uWe
 aDr
-aDr
-vcS
 aks
 aks
 arD
@@ -102706,10 +102707,10 @@ aKo
 chB
 aLs
 aLW
-chd
+ckX
+cfS
 aDr
-aDr
-aDr
+xIG
 aks
 aqo
 bfW
@@ -103009,9 +103010,9 @@ chB
 aLt
 aDr
 chd
+sWc
 aDr
-aDr
-aDr
+ohj
 aks
 aqA
 bfW
@@ -103048,7 +103049,7 @@ cfw
 bBq
 bBq
 bBq
-bBq
+sAw
 bGJ
 bHI
 bIm
