@@ -488,8 +488,7 @@
 		set name = "Open station map"
 		set desc = "Click on the map to teleport"
 		set category = "AI Commands"
-		if(mainframe)
-			mainframe.open_map()
+		mainframe?.open_map()
 
 
 //---TURF---//
