@@ -1,7 +1,51 @@
 // base shared flock AI stuff
 // main default "what do we do next" task, run for one tick and then switches to a new task
 /datum/aiHolder/flock
+//task priorities and preconditions at a glance:
+/*
+replicate
+	-weight 6
+	-precondition: can_afford(100)
 
+building
+	-weight 5
+	-precondition: can_afford(20)
+
+building-drone
+	-weight 1
+	-precondition: can_afford(20)
+
+repair
+	-weight 4
+	-precondition: can_afford(10)
+
+deposit
+	-weight 7
+	-procondition: can_afford(10)
+
+open_container
+	-weight 3
+	-precondition: none
+
+rumage
+	-weight 3
+	precondition: none
+
+harvest
+	-weight 2
+	precondition: none
+
+shooting
+	-weight 10
+
+capture
+	-weight 15
+	-precondition: can_afford(15)
+
+butcher
+	-weight 3
+
+*/
 
 /datum/aiTask/prioritizer/flock
 	name = "base thinking (should never see this)"
@@ -127,14 +171,11 @@
 		// if there's a priority tile we can go for, do it
 		var/list/priority_turfs = F.flock.getPriorityTurfs(F)
 		if(length(priority_turfs))
-			for(var/turf/simulated/PT in priority_turfs)
-				// if we can get a valid path to the target, include it for consideration
-				. += PT
+			. += priority_turfs
 
 	// else just go for one nearby
 	for(var/turf/simulated/T in view(max_dist, holder.owner))
-		if(istype(T, /turf/simulated/floor) && !istype(T, /turf/simulated/floor/feather) || \
-			istype(T, /turf/simulated/wall) && !istype(T, /turf/simulated/wall/auto/feather))
+		if(!isfeathertile(T))
 			if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 				continue // this tile's been claimed by someone else
 			// if we can get a valid path to the target, include it for consideration
@@ -175,6 +216,60 @@
 	var/mob/living/critter/flock/F = holder.owner
 	if(F?.flock && !failed() && !succeeded())
 		F.flock.reserveTurf(holder.target, F.real_name)
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// BUILDING GOAL - FLOCKDRONE ONLY
+// targets: priority tiles, fetched from holder.owner.flock (with casting)
+//			or, if they're not available, storage closets, walls and doors
+//			failing that, nearest tiles
+// precondition: 20 resources
+/datum/aiTask/sequence/goalbased/build/drone
+	name = "building"
+	weight = 1
+	max_dist = 4 //max dist is higher so we can find walls in bigger rooms
+
+/datum/aiTask/sequence/goalbased/build/drone/precondition()
+	var/mob/living/critter/flock/F = holder.owner
+	return F?.can_afford(20)
+
+
+/datum/aiTask/sequence/goalbased/build/drone/get_targets()
+	. = list()
+	var/mob/living/critter/flock/F = holder.owner
+
+	if(F?.flock)
+		// if we can go for a tile we already have reserved, go for it
+		var/turf/simulated/reserved = F.flock.busy_tiles[F.real_name]
+		if(istype(reserved) && !isfeathertile(reserved) && get_path_to(holder.owner, reserved, 20, 1))
+			. += reserved
+			return
+		// if there's a priority tile we can go for, do it
+		var/list/priority_turfs = F.flock.getPriorityTurfs(F)
+		if(length(priority_turfs))
+			. += priority_turfs
+
+	//as drone, we want to prioritise converting doors and walls and containers
+	for(var/turf/simulated/T in view(max_dist, holder.owner))
+		if(!isfeathertile(T) && (
+			istype(T, /turf/simulated/wall) || \
+			locate(/obj/machinery/door/airlock) in T || \
+			locate(/obj/storage) in T))
+			if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
+				continue // this tile's been claimed by someone else
+			// if we can get a valid path to the target, include it for consideration
+			. += T
+
+	// if there are absolutely no walls/doors/closets in view, and no reserved tiles, then fine, you can have a floor tile
+	if(length(.) == 0)
+		for(var/turf/simulated/T in view(max_dist, holder.owner))
+			if(!isfeathertile(T))
+				if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
+					continue // this tile's been claimed by someone else
+				// if we can get a valid path to the target, include it for consideration
+				. += T
+	. = get_path_to(holder.owner, ., 60, 1)
+
+////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // REPAIR GOAL
@@ -248,7 +343,7 @@
 // precondition: 10 resources
 /datum/aiTask/sequence/goalbased/deposit
 	name = "depositing"
-	weight = 4
+	weight = 7
 
 /datum/aiTask/sequence/goalbased/deposit/New(parentHolder, transTask)
 	..(parentHolder, transTask)

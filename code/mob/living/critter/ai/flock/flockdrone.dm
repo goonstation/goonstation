@@ -14,7 +14,7 @@
 	..()
 	// populate the list of tasks
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/replicate, list(holder, src))
-	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/build, list(holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/build/drone, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/repair, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/deposit, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/open_container, list(holder, src))
