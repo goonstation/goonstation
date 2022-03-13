@@ -310,6 +310,12 @@ Custom Books
 	icon_state = "bookcc"
 	file_path = "strings/books/DNDrulebook.txt"
 
+/obj/item/paper/book/from_file/MONOrules
+	name = "MONO card game rules"
+	desc = "A pamphlet describing the rules of MONO, the family-friendly and legally distinct card game for all ages!"
+	icon_state = "paper"
+	file_path = "strings/books/MONOrules.txt"
+
 /******************** OTHER BOOKS ********************/
 /obj/item/diary
 	name = "Beepsky's private journal"
