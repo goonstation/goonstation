@@ -328,7 +328,7 @@
 			user.drop_item()
 			booklet.pages += src
 			src.set_loc(booklet)
-			booklet.attackby(P, user, params)
+			booklet.Attackby(P, user, params)
 			return
 		else
 			boutput(user, "<span class='alert'>You need a loaded stapler in hand to staple the sheets into a booklet.</span>")
