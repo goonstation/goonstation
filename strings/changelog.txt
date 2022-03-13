@@ -1,5 +1,9 @@
 
 (t)sun mar 13 22
+(u)Gonzako
+(p)7462
+(e)⚖|balance
+(*)How intrigue chooses game mode has been tweaked, traitors should be slightly more common while aliens should invade the station a bit less frequently.
 (u)Hans
 (p)7499
 (e)🆕|feature
