@@ -2946,8 +2946,6 @@
 						next_destination = signal.data["next_patrol"]
 						target = signal.source.loc
 						destination = recv
-						awaiting_beacon = 0
-						patrol_delay = 5
 						return
 					else
 						return
@@ -2957,8 +2955,6 @@
 					next_destination = signal.data["next_patrol"]
 					target = signal.source.loc
 					destination = recv
-					awaiting_beacon = 0
-					patrol_delay = 5
 			return
 
 		attack_response(mob/attacker as mob)
@@ -3129,6 +3125,7 @@
 					if(!master || !master.on || master.stunned || master.idle) return
 					if(master.task != src) return
 					awaiting_beacon = 0
+					patrol_delay = 5
 					if(nearest_beacon && !master.moving)
 						master.navigate_to(nearest_beacon_loc, max_dist=30)
 					else
@@ -3561,7 +3558,7 @@
 				return
 
 			if (src.protected && prob(5))
-      
+
 				if (prob(40))
 					var/buddy_cheer_up_chooser = rand(1, length(buddy_cheer_up_phrases))
 					master.speak(buddy_cheer_up_phrases[buddy_cheer_up_chooser])
