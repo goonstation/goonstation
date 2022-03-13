@@ -16408,7 +16408,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "aMo" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "aMp" = (
@@ -24372,7 +24372,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/kitchen)
 "bep" = (
-/obj/decal/sink{
+/obj/decal/fakeobjects/sink{
 	tag = "icon-sink (WEST)";
 	icon_state = "sink";
 	dir = 8
@@ -27830,7 +27830,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "bmK" = (
-/obj/decal/sink{
+/obj/decal/fakeobjects/sink{
 	dir = 4;
 	icon_state = "sink";
 	pixel_x = -2;

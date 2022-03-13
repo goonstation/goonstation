@@ -71,7 +71,7 @@
 
 /obj/machinery/bot/floorbot/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src)
 			src.UpdateIcon()
 	return
@@ -280,6 +280,9 @@
 	// checks to see if robot is on / busy already
 	if (!src.on || src.repairing || !isturf(src.loc))
 		return
+
+	if (src.target?.disposed || !isturf(get_turf(src.target)))
+		src.target = null
 
 	// Invalid targets may not be unreachable anymore. Clear list periodically.
 	if (src.clear_invalid_targets && !ON_COOLDOWN(src, FLOORBOT_CLEARTARGET_COOLDOWN, src.clear_invalid_targets_interval))

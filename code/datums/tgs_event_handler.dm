@@ -23,7 +23,7 @@
 		if(TGS_EVENT_WATCHDOG_DETACH)
 			message_admins("TGS restarting...")
 			attached = FALSE
-			SPAWN_DBG(600)
+			SPAWN(600)
 				if(!attached)
 					message_admins("Warning: TGS hasn't notified us of it coming back for a full minute! Is there a problem?")
 		if(TGS_EVENT_WATCHDOG_REATTACH)

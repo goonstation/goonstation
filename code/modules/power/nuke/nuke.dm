@@ -86,7 +86,7 @@
 		nuke_core = src
 		nuke_knobs = src.nuke_knobset
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			debug_messages = 1 /* XXX */
 			//make_fluid_networks()
 			var/obj/fluid_pipe/sink/temp_i = locate(/obj/fluid_pipe/sink) in get_step(src,NORTH)

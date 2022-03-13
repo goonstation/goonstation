@@ -68,7 +68,7 @@
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
 		src.desc = "[src] looks angry."
-		SPAWN_DBG(rand(1000,3000))
+		SPAWN(rand(1000,3000))
 			src.visible_message("<b>[src.name] calms down.</b>")
 			src.desc = "[src] looks a bit annoyed."
 			src.temp = "[src.name] has calmed down.<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
@@ -98,19 +98,19 @@
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
-			boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
+			boutput(user, "<span class='notice'>You swipe the ID card in the card reader.</span>")
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(I:registered)
 			if(account)
-				var/enterpin = usr.enter_pin("Card Reader")
+				var/enterpin = user.enter_pin("Card Reader")
 				if (enterpin == I:pin)
-					boutput(usr, "<span class='notice'>Card authorized.</span>")
+					boutput(user, "<span class='notice'>Card authorized.</span>")
 					src.scan = I
 				else
-					boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
+					boutput(user, "<span class='alert'>Pin number incorrect.</span>")
 					src.scan = null
 			else
-				boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
+				boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 				src.scan = null
 
 	attack_hand(var/mob/user as mob)
@@ -540,7 +540,7 @@
 			if (O:locked)
 				user.show_text("[src] stares at the locked [O], unamused. Maybe you should make sure the thing's open, first.", "red")
 				return
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				user.visible_message("<span class='notice'>[src] rummages through [user]'s [O].</span>")
 				playsound(src.loc, "rustle", 60, 1)
 				var/cratevalue = null
@@ -814,6 +814,7 @@
 					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
 					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
 				src.goods_illegal += new /datum/commodity/contraband/birdbomb(src)
+				src.goods_illegal += new /datum/commodity/contraband/syndicate_headset(src)
 				src.goods_sell += new /datum/commodity/contraband/swatmask(src)
 				src.goods_sell += new /datum/commodity/contraband/spy_sticker_kit(src)
 				src.goods_sell += new /datum/commodity/contraband/flare(src)

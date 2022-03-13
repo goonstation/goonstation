@@ -150,7 +150,7 @@ toxic - poisons
 	power = 8
 	cost = 10
 	shot_number = 10
-	shot_delay = 0.7
+	shot_delay = 0.07 SECONDS
 	dissipation_delay = 7
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
@@ -273,7 +273,7 @@ toxic - poisons
 	power = 15
 	cost = 8
 	shot_number = 8
-	shot_delay = 1
+	shot_delay = 0.1 SECONDS
 	dissipation_delay = 12
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
@@ -300,7 +300,7 @@ toxic - poisons
 	power = 1
 	cost = 2
 	shot_number = 16
-	shot_delay = 0.7
+	shot_delay = 0.07 SECONDS
 	dissipation_delay = 8
 	silentshot = 1
 	slow = 0
@@ -334,7 +334,7 @@ toxic - poisons
 	projectile_speed = 48
 	icon_turf_hit = "bhole-small"
 	hit_type = DAMAGE_BLUNT
-	implanted = /obj/item/implant/projectile/bullet_nine_mm_NATO
+	implanted = /obj/item/implant/projectile/ninemmplastic
 	casing = /obj/item/casing/small
 
 	on_hit(atom/hit)
@@ -521,6 +521,7 @@ toxic - poisons
 //0.72
 /datum/projectile/bullet/a12
 	name = "buckshot"
+	icon_state = "buckshot"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	power = 70
 	ks_ratio = 1.0
@@ -562,6 +563,28 @@ toxic - poisons
 	name = "flak chunk"
 	sname = "flak chunk"
 	icon_state = "trace"
+	shot_sound = null
+	power = 12
+	dissipation_rate = 5
+	dissipation_delay = 8
+	damage_type = D_KINETIC
+
+/datum/projectile/bullet/stinger_ball
+	name = "rubber ball"
+	sname = "rubber ball"
+	icon_state = "rubberball"
+	implanted = /obj/item/implant/projectile/stinger_ball
+	shot_sound = null
+	power = 12
+	dissipation_rate = 5
+	dissipation_delay = 8
+	damage_type = D_KINETIC
+
+/datum/projectile/bullet/grenade_fragment
+	name = "grenade fragment"
+	sname = "grenade fragment"
+	icon_state = "grenadefragment"
+	implanted = /obj/item/implant/projectile/grenade_fragment
 	shot_sound = null
 	power = 12
 	dissipation_rate = 5
@@ -773,7 +796,7 @@ toxic - poisons
 
 		..()
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			//hit.setTexture()
 
 			var/turf/T = get_turf(hit)
@@ -1017,7 +1040,7 @@ datum/projectile/bullet/autocannon
 			if(!(A in centerview)) continue
 			var/obj/smokeDummy/D = new(A)
 			smokeLocs.Add(D)
-			SPAWN_DBG(smokeLength) qdel(D)
+			SPAWN(smokeLength) qdel(D)
 		particleMaster.SpawnSystem(new/datum/particleSystem/areaSmoke("#ffffff", smokeLength, trgloc))
 		return*/
 
@@ -1167,14 +1190,14 @@ datum/projectile/bullet/autocannon
 				var/obj/item/chem_grenade/C = SEMI_DEEP_COPY(CHEM)
 				C.set_loc(T)
 				src.has_det = 1
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					C.explode()
 				return
 			else if (src.OLD != null)
 				var/obj/item/old_grenade/O = SEMI_DEEP_COPY(OLD)
 				O.set_loc(T)
 				src.has_det = 1
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					O.prime()
 				return
 			else //what the hell happened

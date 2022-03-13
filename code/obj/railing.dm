@@ -16,7 +16,7 @@
 	var/is_reinforced = 0
 
 	proc/layerify()
-		SPAWN_DBG(3 DECI SECONDS)
+		SPAWN(3 DECI SECONDS)
 		if (dir == SOUTH)
 			layer = MOB_LAYER + 0.1
 		else
@@ -231,9 +231,12 @@
 			src.use_owner_dir = use_owner_dir
 			if (ishuman(owner))
 				var/mob/living/carbon/human/H = owner
+				var/modifier = 1
 				if (H.traitHolder.hasTrait("athletic"))
-					duration = round(duration / 2)
+					modifier++
 					is_athletic_jump = 1
+				modifier += GET_ATOM_PROPERTY(H, PROP_MOB_VAULT_SPEED)
+				duration = round(duration / modifier)
 		if (The_Railing)
 			the_railing = The_Railing
 			jump_target = getLandingLoc()

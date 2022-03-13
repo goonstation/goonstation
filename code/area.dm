@@ -232,7 +232,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			var/mob/M = A
 			if (M?.client)
 				if (sound_loop || sound_group)
-					SPAWN_DBG(1 DECI SECOND)
+					SPAWN(1 DECI SECOND)
 						var/area/mobarea = get_area(M)
 						// If the area we are exiting has a sound loop but the new area doesn't
 						// we should stop the ambience or it will play FOREVER causing player insanity
@@ -464,9 +464,12 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 		..()
 		if (isobserver(O))
 			return
+		if (isintangible(O) || iswraith(O))
+			O.set_loc(pick_landmark(LANDMARK_LATEJOIN))
+			return
 		if (ismob(O))
 			var/mob/jerk = O
-			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_MOB_PROPERTY(jerk, PROP_NOCLIP)))
+			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_ATOM_PROPERTY(jerk, PROP_MOB_NOCLIP)))
 				return
 			setdead(jerk)
 			jerk.remove()
@@ -518,7 +521,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			return
 		if (ismob(O))
 			var/mob/jerk = O
-			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_MOB_PROPERTY(jerk, PROP_NOCLIP)))
+			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_ATOM_PROPERTY(jerk, PROP_MOB_NOCLIP)))
 				return
 			setdead(jerk)
 			jerk.remove()
@@ -981,7 +984,7 @@ ABSTRACT_TYPE(/area/adventure)
 	New()
 		..()
 
-		SPAWN_DBG(6 SECONDS)
+		SPAWN(6 SECONDS)
 			if (!helldrone_awake_sound)
 				helldrone_awake_sound = new/sound()
 				helldrone_awake_sound.file = 'sound/machines/giantdrone_loop.ogg'
@@ -1012,7 +1015,7 @@ ABSTRACT_TYPE(/area/adventure)
 			..()
 			if (isliving(O) && !helldrone_awake)
 				helldrone_awake = 1
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					helldrone_wakeup()
 					src.process()
 
@@ -1049,7 +1052,7 @@ ABSTRACT_TYPE(/area/adventure)
 					helldrone_awake_sound.volume = 60
 					H << helldrone_awake_sound
 					if(S)
-						SPAWN_DBG(sound_delay)
+						SPAWN(sound_delay)
 							H << S
 
 /area/helldrone/core
@@ -1317,6 +1320,10 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/secbot_academy
 	name = "Securitron Academy"
 	icon_state = "red"
+
+/area/prefab/art_workshop
+	name = "The Pastel Space Workshop"
+	icon_state = "purple"
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
@@ -3304,7 +3311,7 @@ ABSTRACT_TYPE(/area/station/ai_monitored)
 /area/station/ai_monitored/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
+	SPAWN(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return
@@ -3362,7 +3369,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 /area/station/turret_protected/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
+	SPAWN(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return
@@ -3666,7 +3673,7 @@ ABSTRACT_TYPE(/area/mining)
 		luminosity = 0
 	global.area_list_is_up_to_date = 0
 
-	SPAWN_DBG(1.5 SECONDS)
+	SPAWN(1.5 SECONDS)
 		src.power_change()		// all machines set to current power level, also updates lighting icon
 
 /**
@@ -5196,7 +5203,7 @@ area/station/security/visitation
 /area/station2/ai_monitored/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
+	SPAWN(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return
@@ -5244,7 +5251,7 @@ area/station/security/visitation
 /area/station2/turret_protected/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
+	SPAWN(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return

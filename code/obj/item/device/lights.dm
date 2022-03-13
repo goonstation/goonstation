@@ -29,7 +29,7 @@
 	dropped(mob/user)
 		..()
 		if (light)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (src.loc != user)
 					light.attach(src)
 
@@ -383,7 +383,7 @@
 		..()
 		var/spookydegrees = rand(5, 20)
 
-		SPAWN_DBG(rand(1, 10))
+		SPAWN(rand(1, 10))
 			animate(src, pixel_y = 32, transform = matrix(spookydegrees, MATRIX_ROTATE), time = 20, loop = -1, easing = SINE_EASING)
 			animate(pixel_y = 0, transform = matrix(spookydegrees * -1, MATRIX_ROTATE), time = 20, loop = -1, easing = SINE_EASING)
 
@@ -457,6 +457,25 @@
 			src.light.disable()
 
 /obj/item/device/light/lava_lamp/activated
+	New()
+		..()
+		on = 1
+		set_icon_state(src.icon_on)
+		src.light.enable()
+
+/obj/item/device/light/magic_lantern
+	name = "magical lantern"
+	desc = "A magical lantern that burns with no fuel."
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "wizard1"
+	icon_on = "wizard1"
+	icon_off = "wizard0"
+	anchored = 1
+	col_r = 1
+	col_g = 0.9
+	col_b = 0.9
+	brightness = 0.8
+
 	New()
 		..()
 		on = 1

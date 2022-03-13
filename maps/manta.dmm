@@ -7115,7 +7115,7 @@
 	},
 /area/station/engine/engineering/breakroom)
 "avh" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /turf/simulated/floor/black,
 /area/listeningpost/syndicateassaultvessel)
 "avi" = (

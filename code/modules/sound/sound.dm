@@ -312,12 +312,12 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 		if (src.observers.len)
 			for (var/mob/M in src.observers)
-				if (CLIENT_IGNORES_SOUND(M.client))
+				if (!M.client || CLIENT_IGNORES_SOUND(M.client))
 					continue
-					M.client.sound_playing[ S.channel ][1] = ourvolume
-					M.client.sound_playing[ S.channel ][2] = channel
+				M.client.sound_playing[ S.channel ][1] = ourvolume
+				M.client.sound_playing[ S.channel ][2] = channel
 
-					M << S
+				M << S
 
 /**
 	Plays a sound to some clients without caring about its source location and stuff.
@@ -540,11 +540,11 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	switch (type) //After play actions, let the area know
 		if (AMBIENCE_FX_1)
 			A.played_fx_1 = 1
-			SPAWN_DBG(40 SECONDS) //40s
+			SPAWN(40 SECONDS) //40s
 				A.played_fx_1 = 0
 		if (AMBIENCE_FX_2)
 			A.played_fx_2 = 1
-			SPAWN_DBG(20 SECONDS) //20s
+			SPAWN(20 SECONDS) //20s
 				A.played_fx_2 = 0
 
 

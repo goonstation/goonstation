@@ -36,7 +36,7 @@
 	New()
 		hud = new(src)
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.make_my_stuff()
 
 	Entered(Obj, OldLoc)
@@ -97,7 +97,7 @@
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O in src.contents)
 			user.drop_item()
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				O.Attackhand(user)
 		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored)
 			user.swap_hand()
@@ -150,7 +150,7 @@
 						return
 				var/obj/item/storage/S = W
 				for (var/obj/item/I in S.get_contents())
-					if(src.check_can_hold(I) > 0)
+					if(src.check_can_hold(I) > 0 && !I.anchored)
 						src.Attackby(I, user, S)
 				return
 			if(!does_not_open_in_pocket)
@@ -174,6 +174,10 @@
 			checkloc = checkloc.loc
 
 		if (T && istype(T, /obj/item/storage))
+			if (W in bible_contents)
+				bible_contents.Remove(W)
+				for_by_tcl(bible, /obj/item/storage/bible)
+					bible.hud?.remove_item(W)
 			src.add_contents(W)
 //			T.hud.remove_item(W)
 		else
@@ -211,7 +215,7 @@
 				. = 1
 			break
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		..()
 		var/atom/movable/screen/hud/S = over_object
 		if (istype(S))
@@ -298,7 +302,7 @@
 		RETURN_TYPE(/list)
 		. = src.contents.Copy()
 		for(var/atom/A as anything in .)
-			if(!istype(A, /obj/item) || istype(A, /obj/item/grab))
+			if(!istype(A, /obj/item) || istype(A, /obj/item/grab) || A.GetComponent(/datum/component/glued))
 				. -= A
 
 	proc/add_contents(obj/item/I)
@@ -409,7 +413,7 @@
 			return
 		..()
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		if (src.locked)
 			if (usr)
 				boutput(usr, "<span class='alert'>[src] is locked!</span>")

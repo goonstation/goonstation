@@ -82,10 +82,10 @@
 			if (istype(H.glasses, /obj/item/clothing/glasses/meson)) //hamdling of the rest is done in life.dm
 				if (src.on)
 					H.vision.set_scan(1)
-					APPLY_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
+					APPLY_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
 				else
 					H.vision.set_scan(0)
-					REMOVE_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
+					REMOVE_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
 
 	equipped(var/mob/living/user, var/slot)
 		..()
@@ -93,7 +93,7 @@
 			return
 		if (slot == SLOT_GLASSES && on)
 			user.vision.set_scan(1)
-			APPLY_MOB_PROPERTY(user, PROP_MESONVISION, src)
+			APPLY_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
 
 	unequipped(var/mob/living/user)
 		..()
@@ -103,7 +103,7 @@
 
 	unequipped(mob/user)
 		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_MESONVISION, src)
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
 
 /obj/item/clothing/glasses/meson/abilities = list(/obj/ability_button/meson_toggle)
 
@@ -128,11 +128,11 @@
 
 	equipped(mob/user, slot)
 		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_GHOSTVISION, src)
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_GHOSTVISION, src)
 
 	unequipped(mob/user)
 		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_GHOSTVISION, src)
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_GHOSTVISION, src)
 
 /obj/item/clothing/glasses/regular/ecto/goggles
 	name = "ectoplasmoleic imager"
@@ -190,7 +190,7 @@
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 
 	equipped(var/mob/user, var/slot)
@@ -227,16 +227,16 @@
 	equipped(mob/user, slot)
 		. = ..()
 		if(upgraded)
-			APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
+			APPLY_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
 		else
-			APPLY_MOB_PROPERTY(user, PROP_THERMALVISION, src)
+			APPLY_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION, src)
 
 	unequipped(mob/user)
 		. = ..()
 		if(upgraded)
-			REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
+			REMOVE_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
 		else
-			REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION, src)
+			REMOVE_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION, src)
 
 	emp_act()
 		if (ishuman(src.loc))
@@ -247,17 +247,17 @@
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
 				if(upgraded)
-					REMOVE_MOB_PROPERTY(H, PROP_THERMALVISION_MK2, src)
+					REMOVE_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION_MK2, src)
 				else
-					REMOVE_MOB_PROPERTY(H, PROP_THERMALVISION, src)
+					REMOVE_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION, src)
 
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 					if(H.glasses == src)
 						if(upgraded)
-							APPLY_MOB_PROPERTY(H, PROP_THERMALVISION_MK2, src)
+							APPLY_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION_MK2, src)
 						else
-							APPLY_MOB_PROPERTY(H, PROP_THERMALVISION, src)
+							APPLY_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION, src)
 		return
 
 /obj/item/clothing/glasses/thermal/traitor //sees people through walls
@@ -370,7 +370,7 @@
 		setProperty("disorient_resist_eye", 28)
 
 	New()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			if (src)
 				src.name += " - '[src.network]'" // They otherwise all look the same (Convair880).
 		..()
@@ -484,11 +484,11 @@
 
 	equipped(mob/user, slot)
 		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_SPECTRO, src)
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_SPECTRO, src)
 
 	unequipped(mob/user)
 		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_SPECTRO, src)
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_SPECTRO, src)
 
 /obj/item/clothing/glasses/spectro/monocle //used for bartender job reward
 	name = "spectroscopic monocle"
@@ -531,7 +531,7 @@
 		..()
 		if (slot == SLOT_GLASSES)
 			assigned = user.client
-			SPAWN_DBG(-1)
+			SPAWN(-1)
 				//updateIcons()
 				processing_items |= src
 		return
@@ -574,11 +574,11 @@
 
 	equipped(mob/user, slot)
 		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_NIGHTVISION, src)
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_NIGHTVISION, src)
 
 	unequipped(mob/user)
 		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_NIGHTVISION, src)
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_NIGHTVISION, src)
 
 	emp_act()
 		if (ishuman(src.loc))
@@ -588,7 +588,7 @@
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 
 

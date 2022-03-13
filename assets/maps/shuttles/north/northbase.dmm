@@ -36,7 +36,6 @@
 /area/centcom/outside)
 "aq" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
-	density = 0
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)

@@ -102,7 +102,7 @@
 
 	//Are we limiting connected players to certain ckeys?
 	var/whitelistEnabled = 0
-	var/whitelist_path = "strings/whitelist.txt"
+	var/whitelist_path = "config/whitelist.txt"
 
 	//Which server can ghosts join by clicking on an on-screen link
 	var/server_buddy_id = null

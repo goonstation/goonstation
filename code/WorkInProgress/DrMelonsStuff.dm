@@ -24,7 +24,7 @@
 				src.visible_message("<span class='alert'>The <B>[src]</B> splutters to a halt.</span>")
 				playsound(src, 'sound/machines/ding.ogg', 50, 1)
 			else
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					var/datum/chemical_reaction/smoke/S = new
 					S.on_reaction(reagents)
 					reagents.total_volume -= 5
@@ -233,7 +233,7 @@
 				var/moveto = locate(M.x + rand(-1,1),M.y + rand(-1, 1),src.z)
 				//make the mops move
 				if (istype(moveto, /turf/simulated/floor) || istype(moveto, /turf/simulated/floor/shuttle) || istype(moveto, /turf/simulated/aprilfools/floor) || istype(moveto, /turf/unsimulated/floor) || istype(moveto, /turf/unsimulated/aprilfools)) step_towards(M, moveto)
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					src.visible_message("<span class='notice'>Thankfully, [src] settles down.</span>")
 		else
 			for (var/obj/item/mop/M in orange(5,src))

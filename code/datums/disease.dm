@@ -26,7 +26,7 @@
 	var/tickcount = 0
 	//IM SORRY
 
-	proc/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
+	proc/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 		if (!affected_mob || !D)
 			return 1
 		return 0
@@ -110,17 +110,20 @@
 		if (stage > master.max_stages)
 			stage = master.max_stages
 
-		if (prob(percentmult(stage_prob, mult)) && stage < master.max_stages)
+		if (probmult(stage_prob) && stage < master.max_stages)
 			stage++
 
-		master.stage_act(affected_mob,src)
+		master.stage_act(affected_mob, src, mult)
 
 		return 0
 
 	proc/scan_info()
 		var/text = "<span class='alert'><b>"
 		if (istype(src.master,/datum/ailment/disease) || istype(src.master,/datum/ailment/malady))
-			text += "[src.state] "
+			if (src.state == "Active" || src.state == "Acute")
+				text += "[src.state] "
+			else
+				text += "<span class='notice'>[src.state] </span>"
 		text += "[src.scantype ? src.scantype : src.master.scantype]:"
 
 		text += " [src.name ? src.name : src.master.name]</b> <small>(Stage [src.stage]/[src.master.max_stages])<br>"
@@ -170,9 +173,8 @@
 		var/advance_prob = stage_prob
 		if (state == "Acute")
 			advance_prob *= 2
-		advance_prob = clamp(percentmult(advance_prob, mult), 0, 100)
 
-		if (prob(advance_prob))
+		if (probmult(advance_prob))
 			if (state == "Remissive")
 				stage--
 				if (stage < 1)
@@ -183,11 +185,11 @@
 
 		// Common cures
 		if (cure != "Incurable")
-			if (cure == "Sleep" && affected_mob.sleeping && prob(percentmult(33, mult)))
+			if (cure == "Sleep" && affected_mob.sleeping && probmult(33))
 				state = "Remissive"
 				return 1
 
-			else if (cure == "Self-Curing" && prob(percentmult(5, mult)))
+			else if (cure == "Self-Curing" && probmult(5))
 				state = "Remissive"
 				return 1
 
@@ -209,19 +211,9 @@
 						var/we_are_cured = 0
 						var/reagcure_prob = reagentcure[current_id]
 						if (isnum(reagcure_prob))
-							if (prob(max((percentmult(reagcure_prob, mult)), 100)))
+							if (probmult(reagcure_prob))
 								we_are_cured = 1
-						else if (islist(reagcure_prob)) // we want to roll more than one prob() in order to succeed, aka we want a very low chance
-							var/list/cureprobs = reagcure_prob
-							var/success = 1
-							for (var/thing in cureprobs)
-								if (!isnum(thing))
-									continue
-								if (!prob(max(percentmult(thing, mult), 100)))
-									success = 0
-							if (success)
-								we_are_cured = 1
-						else if (prob(max(percentmult(recureprob, mult), 100)))
+						else if (probmult(recureprob))
 							we_are_cured = 1
 						if (we_are_cured)
 							state = "Remissive"
@@ -230,10 +222,10 @@
 		if (state == "Asymptomatic" || state == "Dormant")
 			return 1
 
-		SPAWN_DBG(rand(1,5))
+		SPAWN(rand(1,5))
 			// vary it up a bit so the processing doesnt look quite as transparent
 			if (master)
-				master.stage_act(affected_mob,src)
+				master.stage_act(affected_mob, src, mult)
 
 		return 0
 
@@ -276,12 +268,12 @@
 		if (stage > master.max_stages)
 			stage = master.max_stages
 
-		if (prob(percentmult(stage_prob, mult)) && stage < master.max_stages)
+		if (probmult(stage_prob) && stage < master.max_stages)
 			stage++
 
 
 		if(!stealth_asymptomatic)
-			master.stage_act(affected_mob,src,source)
+			master.stage_act(affected_mob,src,mult,source)
 
 		return
 
@@ -557,10 +549,10 @@
 	var/numMid = round((1 * shockInput) / 10)
 	var/numLow = round((1 * shockInput) / 20)
 	if (src.organHolder.heart && src.organHolder.heart.robotic && src.organHolder.heart.emagged && !src.organHolder.heart.broken)
-		APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "heart_shock", 5)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock", 5)
 		src.add_stam_mod_max("heart_shock", 20)
-		SPAWN_DBG(9000)
-			REMOVE_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "heart_shock")
+		SPAWN(9000)
+			REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock")
 			src.remove_stam_mod_max("heart_shock")
 		if (prob(numHigh))
 			boutput(src, "<span class='alert'>Your cyberheart spasms violently!</span>")
@@ -579,10 +571,10 @@
 			src.organHolder.heart.breakme()
 			src.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
 	else if (src.organHolder.heart && src.organHolder.heart.robotic && !src.organHolder.heart.emagged && !src.organHolder.heart.broken)
-		APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "heart_shock", 1)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock", 1)
 		src.add_stam_mod_max("heart_shock", 10)
-		SPAWN_DBG(9000)
-			REMOVE_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "heart_shock")
+		SPAWN(9000)
+			REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock")
 			src.remove_stam_mod_max("heart_shock")
 		if (prob(numMid))
 			boutput(src, "<span class='alert'>Your cyberheart spasms violently!</span>")

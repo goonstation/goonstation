@@ -37,14 +37,14 @@
 	on_transplant(var/mob/M as mob)
 		..()
 		if (src.robotic)
-			APPLY_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, icon_state, 2)
+			APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, icon_state, 2)
 			src.donor.add_stam_mod_max(icon_state, 10)
 		return
 
 	on_removal()
 		if (donor)
 			if (src.robotic)
-				REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, icon_state)
+				REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, icon_state)
 				src.donor.remove_stam_mod_max(icon_state)
 		..()
 		return
@@ -100,7 +100,7 @@
 				donor.take_oxygen_deprivation(1.8 * mult/LUNG_COUNT) // Lets hurt em a little, let them know we mean business
 				if (world.time - donor.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 					donor.take_oxygen_deprivation(7 * mult/LUNG_COUNT)
-			if (prob(percentmult(20, mult))) // Lets give them some chance to know somethings not right though I guess.
+			if (probmult(20)) // Lets give them some chance to know somethings not right though I guess.
 				update.emotes |= "cough"
 		else
 			donor.co2overloadtime = 0
@@ -119,7 +119,7 @@
 					if (SA_pp > SA_sleep_min) // Enough to make us sleep as well
 						donor.sleeping = max(donor.sleeping, 2)
 				else if (SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-					if (prob(percentmult(20, mult)))
+					if (probmult(20))
 						update.emotes |= pick("giggle", "laugh")
 
 		if (prob(15) && (FARD_pp > fart_smell_min))
@@ -288,7 +288,7 @@
 
 	disposing()
 		if(donor)
-			REMOVE_MOB_PROPERTY(donor, PROP_REBREATHING, "cyberlungs")
+			REMOVE_ATOM_PROPERTY(donor, PROP_MOB_REBREATHING, "cyberlungs")
 		..()
 
 	emag_act(mob/user, obj/item/card/emag/E)

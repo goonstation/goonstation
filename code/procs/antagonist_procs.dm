@@ -7,7 +7,8 @@
 		usr.show_text("You can't use this command right now.", "red")
 		return
 
-	var/obj/item/uplink/syndicate/U = new(usr.loc)
+	var/uplink_path = get_uplink_type(usr, /obj/item/uplink/syndicate)
+	var/obj/item/uplink/syndicate/U = new uplink_path(usr.loc)
 	if (!usr.put_in_hand(U))
 		U.set_loc(get_turf(usr))
 		usr.show_text("<h3>Uplink spawned. You can find it on the floor at your current location.</h3>", "blue")
@@ -141,7 +142,8 @@
 
 		if (istype(R, /obj/item/device/radio))
 			var/obj/item/device/radio/RR = R
-			var/obj/item/uplink/integrated/radio/T = new /obj/item/uplink/integrated/radio(RR)
+			var/uplink_path = get_uplink_type(traitor_mob, /obj/item/uplink/integrated/radio)
+			var/obj/item/uplink/integrated/radio/T = new uplink_path(RR)
 			T.setup(traitor_mob.mind, RR)
 			freq = RR.traitor_frequency
 
@@ -150,7 +152,8 @@
 
 		else if (istype(R, /obj/item/device/pda2))
 			var/obj/item/device/pda2/P = R
-			var/obj/item/uplink/integrated/pda/T = new /obj/item/uplink/integrated/pda(P)
+			var/uplink_path = get_uplink_type(traitor_mob, /obj/item/uplink/integrated/pda)
+			var/obj/item/uplink/integrated/pda/T = new uplink_path(P)
 			T.setup(traitor_mob.mind, P)
 			pda_pass = T.lock_code
 
@@ -158,7 +161,8 @@
 			traitor_mob.mind.store_memory("<B>Set your ring message to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
 
 		else
-			var/obj/item/uplink/syndicate/T = new(get_turf(traitor_mob))
+			var/uplink_path = get_uplink_type(traitor_mob, /obj/item/uplink/syndicate)
+			var/obj/item/uplink/syndicate/T = new uplink_path(get_turf(traitor_mob))
 			T.lock_code_autogenerate = 1
 			T.setup(traitor_mob.mind, null)
 			pda_pass = T.lock_code
@@ -372,3 +376,28 @@ var/list/roles_to_prefs = list(
   */
 /proc/get_preference_for_role(var/role)
 	return roles_to_prefs[role]
+
+
+/**
+  * Returns a path of a (presumably) valid uplink dependent on the user's mind.
+  *
+  * Arguments:
+  * * target - the mob that will own the uplink.
+  *	* uplink - the path of the uplink type that you wish to spawn
+  */
+/proc/get_uplink_type(mob/target, obj/item/uplink/uplink)
+	var/added_text
+	switch(target?.mind?.special_role)
+		if(ROLE_TRAITOR)
+			added_text = "traitor"
+		if(ROLE_SPY_THIEF) //Uses its own proc to create it, but leaving this here in case a refactor of it comes by
+			added_text = "spy_thief"
+		if("spy")
+			added_text = "spy"
+		if(ROLE_HEAD_REV)
+			added_text = "rev"
+		if(ROLE_NUKEOP)
+			added_text = "nukeop"
+		if(ROLE_OMNITRAITOR)
+			added_text = "omni"
+	return text2path("[uplink]/[added_text]")

@@ -47,7 +47,7 @@
 		..()
 		if (ismob(A))
 			src.collapsing++
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				collapse_timer()
 				if (src.collapsing)
 					playsound(src.loc, 'sound/effects/creaking_metal1.ogg', 25, 1)
@@ -67,5 +67,5 @@
 			qdel(src)
 
 		if (src.collapsing)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				src.collapse_timer()

@@ -39,7 +39,7 @@
 		if (T && isturf(T) && target && isturf(target.loc))
 			playsound(M.loc, "swing_hit", 50, 1)
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for (var/i = 0, i < 4, i++)
 					M.set_dir(turn(M.dir, 90))
 

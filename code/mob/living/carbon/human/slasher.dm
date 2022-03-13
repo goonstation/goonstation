@@ -21,10 +21,11 @@
 		src.bioHolder.AddEffect("breathless", 0, 0, 0, 1)
 		src.bioHolder.AddEffect("rad_resist", 0, 0, 0, 1)
 		src.bioHolder.AddEffect("detox", 0, 0, 0, 1)
-		src.add_stun_resist_mod("slasher_stun_resistance", 80)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "slasher_stun_resistance", 80)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "slasher_stun_resistance", 80)
 		START_TRACKING
-		APPLY_MOB_PROPERTY(src, PROP_NO_SELF_HARM, src)
-		APPLY_MOB_PROPERTY(src, PROP_AI_UNTRACKABLE, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_SELF_HARM, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
 
 	Life()
 		..()
@@ -61,18 +62,18 @@
 					return
 				var/obj/overlay/O1 = new /obj/overlay/darkness_field(T, 4 SECONDS, radius = 4, max_alpha = 250)
 				var/obj/overlay/O2 = new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 4 SECONDS, radius = 4, max_alpha = 250)
-				SPAWN_DBG(1.5 SECONDS)
+				SPAWN(1.5 SECONDS)
 					src.setStatus("incorporeal", duration = INFINITE_STATUS)
 					src.set_density(FALSE)
 					src.visible_message("<span class='alert'>[src] disappears!</span>")
-					APPLY_MOB_PROPERTY(src, PROP_NEVER_DENSE, src)
-					APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
-					APPLY_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS, src)
-					APPLY_MOB_PROPERTY(src, PROP_NOCLIP, src)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_NEVER_DENSE, src)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_NOCLIP, src)
 					src.nodamage = TRUE
 					src.alpha = 160
 					src.see_invisible = INVIS_GHOST
-					SPAWN_DBG(3 SECONDS)
+					SPAWN(3 SECONDS)
 						if(O1) //sanity check for it breaking sometime
 							qdel(O1)
 						if(O2)
@@ -84,18 +85,18 @@
 				var/turf/T = get_turf(src)
 				var/obj/overlay/O1 = new /obj/overlay/darkness_field(T, 4 SECONDS, radius = 4, max_alpha = 250)
 				var/obj/overlay/O2 = new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 4 SECONDS, radius = 4, max_alpha = 250)
-				SPAWN_DBG(1.5 SECONDS)
+				SPAWN(1.5 SECONDS)
 					src.delStatus("incorporeal")
 					src.set_density(TRUE)
-					REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
-					REMOVE_MOB_PROPERTY(src, PROP_NEVER_DENSE, src)
-					REMOVE_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS, src)
-					REMOVE_MOB_PROPERTY(src, PROP_NOCLIP, src)
+					REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
+					REMOVE_ATOM_PROPERTY(src, PROP_MOB_NEVER_DENSE, src)
+					REMOVE_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
+					REMOVE_ATOM_PROPERTY(src, PROP_MOB_NOCLIP, src)
 					src.alpha = 254
 					src.see_invisible = INVIS_NONE
 					src.visible_message("<span class='alert'>[src] appears out of the shadows!</span>")
 					src.nodamage = FALSE
-					SPAWN_DBG(3 SECONDS)
+					SPAWN(3 SECONDS)
 						if(O1) //sanity check for it breaking sometime
 							qdel(O1)
 						if(O2)
@@ -194,7 +195,7 @@
 			slasher_key = src.ckey
 			if(!istype(M))
 				return
-			SPAWN_DBG(0)
+			SPAWN(0)
 				src.setStatus("possessing", duration = 38 SECONDS)
 				boutput(M, __red("<span class='notice'>You notice that your legs are feeling a bit stiff.</span>"))
 				M.change_misstep_chance(30)
@@ -240,13 +241,13 @@
 				M.equip_new_if_possible(/obj/item/clothing/gloves/black/slasher, M.slot_gloves)
 				if(!W.hasStatus("incorporeal"))
 					W.incorporealize()
-				SPAWN_DBG(3.5 SECONDS)
+				SPAWN(3.5 SECONDS)
 					if(O1) //sanity check for it breaking sometime
 						qdel(O1)
 					if(O2)
 						qdel(O2)
 
-				APPLY_MOB_PROPERTY(M, PROP_NO_SELF_HARM, src)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_NO_SELF_HARM, src)
 				playsound(M, "sound/effects/ghost.ogg", 45, 0)
 				var/mob/dead/observer/O = M.ghostize()
 				if(!O)
@@ -295,7 +296,7 @@
 					remove_equipment(M)
 					return
 				WG.mind.transfer_to(M)
-				REMOVE_MOB_PROPERTY(M, PROP_NO_SELF_HARM, src)
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_NO_SELF_HARM, src)
 				qdel(WG)
 				remove_equipment(M)
 
@@ -332,7 +333,7 @@
 			if(src.hasStatus("handcuffed"))
 				src.visible_message("<span class='alert'>[src]'s wrists dissolve into the shadows, making the handcuffs vanish!</span>")
 				src.handcuffs.destroy_handcuffs(src)
-			SPAWN_DBG(5 DECI SECONDS)
+			SPAWN(5 DECI SECONDS)
 				src.losebreath = 0
 				src.delStatus("paralysis")
 				src.delStatus("stunned")
@@ -342,7 +343,7 @@
 				src.take_brain_damage(-INFINITY)
 				src.visible_message("<span class='alert'>[src] appears to partially dissolve into the shadows, but then reforms!</span>")
 				repair_bleeding_damage(src, 100, 5)
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if(O1) //sanity check for it breaking sometime
 						qdel(O1)
 					if(O2)
@@ -375,7 +376,7 @@
 			overlay_image.color = "#1a1102"
 			src.UpdateOverlays(overlay_image, "slasher_aura")
 			playsound(src, "sound/effects/ghostlaugh.ogg", 40, 0)
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				src.UpdateOverlays(null, "slasher_aura")
 				for(var/mob/living/M in oview(4, src))
 					if((M != src) && !M?.traitHolder?.hasTrait("training_chaplain"))
@@ -391,9 +392,9 @@
 				src.tracked_blood = list("bDNA" = src.last_bdna, "btype" = src.last_btype, "count" = INFINITY)
 				src.track_blood()
 				trailing_blood = TRUE
-				APPLY_MOB_PROPERTY(src, PROP_BLOOD_TRACKING_ALWAYS, src)
+				APPLY_ATOM_PROPERTY(src, PROP_MOB_BLOOD_TRACKING_ALWAYS, src)
 			else
-				REMOVE_MOB_PROPERTY(src, PROP_BLOOD_TRACKING_ALWAYS, src)
+				REMOVE_ATOM_PROPERTY(src, PROP_MOB_BLOOD_TRACKING_ALWAYS, src)
 				src.tracked_blood = null
 				trailing_blood = FALSE
 

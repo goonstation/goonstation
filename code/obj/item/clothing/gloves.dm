@@ -42,7 +42,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	New()
 		..() // your parents miss you
 		flags |= HAS_EQUIP_CLICK
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			src.glove_ID = src.CreateID()
 			if (glove_IDs) // fix for Cannot execute null.Add(), maybe??
 				glove_IDs.Add(src.glove_ID)
@@ -349,7 +349,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	setupProperties()
 		..()
 		setProperty("heatprot", 10)
-		setProperty("conductivity", 0.3)
+		setProperty("conductivity", 0.25)
 		setProperty("deflection", 20)
 
 	disposing()
@@ -511,7 +511,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				return
 
 			spam_flag = 1
-			SPAWN_DBG(4 SECONDS) spam_flag = 0
+			SPAWN(4 SECONDS) spam_flag = 0
 
 			use_power(50000)
 
@@ -535,13 +535,13 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 				for(var/obj/O in affected)
-					SPAWN_DBG(0.6 SECONDS) qdel(O)
+					SPAWN(0.6 SECONDS) qdel(O)
 
 				if(istype(target_r, /obj/machinery/power/generatorTemp))
 					var/obj/machinery/power/generatorTemp/gen = target_r
 					gen.efficiency_controller += 5
 					gen.grump += 5
-					SPAWN_DBG(45 SECONDS)
+					SPAWN(45 SECONDS)
 						gen.efficiency_controller -= 5
 
 				else if(isliving(target_r)) //Probably unsafe.

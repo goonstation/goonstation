@@ -68,7 +68,7 @@ var/global/meteor_shower_active = 0
 			for (var/obj/machinery/shield_generator/S as anything in machine_registry[MACHINES_SHIELDGENERATORS])
 				S.UpdateIcon()
 
-		SPAWN_DBG(warning_delay)
+		SPAWN(warning_delay)
 			if (random_events.announce_events)
 				command_alert("The [shower_name] has reached the [station_or_ship()]. Brace for impact.", "Meteor Alert")
 				playsound_global(world, 'sound/machines/engine_alert1.ogg', 30)
@@ -205,7 +205,7 @@ var/global/meteor_shower_active = 0
 		//animate_spin(src, dir = "R", T = 1, looping = -1)
 		src.set_loc(my_spawn)
 		target = get_turf(trg)
-		SPAWN_DBG(time_to_die)
+		SPAWN(time_to_die)
 			qdel(src)
 		walk_towards(src, target, speed, pix_speed)
 		process()
@@ -217,7 +217,7 @@ var/global/meteor_shower_active = 0
 		..()
 
 	bump(atom/A)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (A)
 				A.meteorhit(src)
 				if (sound_impact)
@@ -264,7 +264,7 @@ var/global/meteor_shower_active = 0
 		if (src.loc == last_tile)
 			walk_towards(src, target, speed, pix_speed)
 		last_tile = src.loc
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			process()
 
 	proc/check_hits()
@@ -304,7 +304,7 @@ var/global/meteor_shower_active = 0
 	proc/shatter()
 		playsound(src.loc, sound_explode, 50, 1)
 		if (explodes)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				explosion(src, get_turf(src), exp_dev, exp_hvy, exp_lit, exp_fsh)
 		var/atom/source = src
 		qdel(source)
@@ -354,7 +354,7 @@ var/global/meteor_shower_active = 0
 	shatter()
 		playsound(src.loc, sound_explode, 50, 1)
 		if (explodes)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				explosion(src, get_turf(src), exp_dev, exp_hvy, exp_lit, exp_fsh)
 		for(var/A in alldirs)
 			if(prob(15))

@@ -13,7 +13,7 @@ var/list/xp_cache = list()
 	award_xp(usr.key, "Bip", amt, 1)
 	award_xp(usr.key, "Bop", amt, 1)
 	sleep(1 SECOND)
-	SPAWN_DBG(0) show_xp_summary(usr.key, usr)
+	SPAWN(0) show_xp_summary(usr.key, usr)
 	return
 
 /proc/show_xp_summary(var/key, var/mob/M) //ONLY EVER SPAWN THIS
@@ -100,7 +100,7 @@ var/list/xp_cache = list()
 				actual = (XP_ROUND_CAP - xp_earned[key])
 
 		if(actual >= 0)
-			// SPAWN_DBG(0)
+			// SPAWN(0)
 				// add_xp(key, field_name, actual)
 			add_xp_throttle_entry(key, actual)
 			archive_xp(key, field_name, actual)
@@ -116,7 +116,7 @@ var/list/xp_cache = list()
 				actual = (XP_ROUND_CAP - xp_earned[key])
 
 		if(actual >= 0)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				add_xp_throttle_entry(key, actual)
 				archive_xp(key, field_name, actual)
 	return
@@ -134,7 +134,7 @@ var/global/awarded_xp = 0
 	awarded_xp = 1
 
 	for (var/key in xp_archive)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/list/v_list = xp_archive[key]
 			for (var/field in v_list)		//field is the job. Botanist, Clown, etc.
 				var/amt = v_list["[field]"]

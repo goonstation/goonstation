@@ -248,7 +248,7 @@
 		START_TRACKING
 		src.chatspam_cooldown = (1 SECOND) + (length(by_type[/obj/machinery/bot/secbot]) * 2) // big hordes of bots can really jam up the chat
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if(src.hat)
 				bothat = image('icons/obj/bots/aibots.dmi', "hat-[src.hat]")
 				UpdateOverlays(bothat, "secbot_hat")
@@ -546,7 +546,7 @@
 	proc/charge_baton()
 		src.baton_charged = TRUE
 		UpdateOverlays(chargepic, "secbot_charged")
-		SPAWN_DBG(src.baton_charge_duration)
+		SPAWN(src.baton_charge_duration)
 			src.baton_charged = FALSE
 			UpdateOverlays(null, "secbot_charged")
 
@@ -579,7 +579,9 @@
 				if (stuncount > 0)
 					sleep(BATON_DELAY_PER_STUN)
 
-			SPAWN_DBG(0.2 SECONDS)
+			if (isnull(target))
+				return
+			SPAWN(0.2 SECONDS)
 				src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 			if (src.target.getStatusDuration("weakened"))
 				src.anchored = 1
@@ -680,7 +682,7 @@
 			if(src.mode == SECBOT_GUARD_START && !src.guard_start_no_announce && !ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-guardcalc", src.chatspam_cooldown))
 				src.speak("Calculating path to [src.guard_area]...", just_float = 1)
 			if(length(T) >= 1)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					for(var/i in 1 to 10) // Not every turf is accessible to the bot. But some might!
 						T = (pick(T))
 						src.navigate_to(T, src.bot_move_delay)
@@ -770,7 +772,7 @@
 						return
 				/// No? Well, make em good and downed then
 				else
-					SPAWN_DBG(0)
+					SPAWN(0)
 						src.baton_attack(src.target) // has while-sleeps, proc happens as part of process(), stc
 			/// Tango in charging distance?
 			else if(IN_RANGE(src, src.target, 13)) // max perp-seek distance of 13
@@ -871,7 +873,7 @@
 	proc/weeoo()
 		if(weeooing)
 			return
-		SPAWN_DBG(0)
+		SPAWN(0)
 			weeooing = 1
 			var/weeoo = 10
 			playsound(src, "sound/machines/siren_police.ogg", 50, 1)
@@ -1041,7 +1043,7 @@
 		new_destination = "__nearest__"
 		post_signal_multiple("beacon", list("findbeacon" = "patrol", "address_tag" = "patrol"))
 		awaiting_beacon = 1
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			awaiting_beacon = 0
 			if(nearest_beacon)
 				set_destination(nearest_beacon)
@@ -1099,7 +1101,7 @@
 						src.speak("!", just_float = 1)
 						src.proc_available = 0
 						src.process()
-						SPAWN_DBG(3 SECONDS)
+						SPAWN(3 SECONDS)
 							src.proc_available = 1
 					else
 						src.speak("...", just_float = 1)
@@ -1370,7 +1372,7 @@
 			master.baton_attack(master.target, 1)
 		else
 			master.charge_baton()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			master.weeoo()
 
 //Secbot Construction

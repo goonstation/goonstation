@@ -26,7 +26,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 		//fxlist =
 		if (ambientSound)
 
-			SPAWN_DBG(6 SECONDS)
+			SPAWN(6 SECONDS)
 				var/sound/S = new/sound()
 				S.file = ambientSound
 				S.repeat = 0
@@ -80,7 +80,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 					ambientSound.volume = 60
 					H << ambientSound
 					if(S)
-						SPAWN_DBG(sound_delay)
+						SPAWN(sound_delay)
 							H << S
 
 
@@ -185,7 +185,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 			var/edge = get_edge_target_turf(src, pick(alldirs))
 			O.throw_at(edge, 100, 4)
 
-		SPAWN_DBG(0) //Delete the overlay when finished with it.
+		SPAWN(0) //Delete the overlay when finished with it.
 			src.on = 0
 			sleep(1.5 SECONDS)
 			qdel(Ov)
@@ -231,7 +231,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 					src.master.speak("Oh no oh no oh no no no no")
 					src.master.visible_message( "<span class='alert'>[src.master] points repeatedly at [maybe_that_somebody]![prob(50) ? "  With both arms, no less!" : null]</span>")
 					src.master.set_emotion("screaming")
-					SPAWN_DBG(4 SECONDS)
+					SPAWN(4 SECONDS)
 						if (src.master)
 							src.master.set_emotion("sad")
 					return
@@ -250,7 +250,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 				dialogChecklist |= WD_SLEEPER_WARNING
 
 				src.master.speak("Aaa! Please stay away from there! You can't wake him up, okay? It's not safe!")
-				SPAWN_DBG(1.5 SECONDS)
+				SPAWN(1.5 SECONDS)
 					src.master.speak("I mean, for him.  Sleepers slow down aging, but it turns out that DNA or whatever still ages really, really slowly.")
 					sleep(1 SECOND)
 					src.master.speak("And um, it's been so long that when the cell tries to divide it...doesn't work.")
@@ -264,7 +264,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 			dialogChecklist |= WD_SOLARIUM
 
 			src.master.speak( "Oh, this place is familiar!  It looks like a ship, a model...um...")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				src.master.speak("I'm sorry, I don't recognize this ship!  Maybe I can interface with its onboard computer though?")
 				sleep(2 SECONDS)
 				src.master.speak("Okay, it's yelling at me in a language I do not understand!  Weird!")
@@ -279,7 +279,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 				dialogChecklist |= WD_SOVBUDDY
 
 				src.master.speak("Privet, tovarishch! Novyy rassvet zhdet vas.")
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					if (src.master)
 						src.master.speak("Please, um, pay no attention to that.  Just saying hello.")
 
@@ -299,7 +299,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 	dead_man_sleeping
 		New()
 			..()
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				src.occupant = new /mob/living/carbon/human/future (src)
 				src.icon_state = "sleeper"
 				src.UpdateIcon()
@@ -418,7 +418,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 		..()
 		.= rand(5, 20)
 
-		SPAWN_DBG(rand(1,10))
+		SPAWN(rand(1,10))
 			animate(src, pixel_y = 32, transform = matrix(., MATRIX_ROTATE), time = 20, loop = -1, easing = SINE_EASING)
 			animate(pixel_y = 0, transform = matrix(-1 * ., MATRIX_ROTATE), time = 20, loop = -1, easing = SINE_EASING)
 

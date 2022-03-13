@@ -19,7 +19,7 @@
 		. = ..()
 		if(prob(corridor_density))
 			new/obj/map/light/void(gen_turf)
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				void_corridor(get_step(gen_turf,pick(cardinal)), rand(6,10), start=TRUE)
 
 	proc/void_corridor(turf/T, max_size=7, start=FALSE)
