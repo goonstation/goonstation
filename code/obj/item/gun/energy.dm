@@ -1388,7 +1388,11 @@
 	//all gun modes use the same base sprite icon "lawbringer0" depending on the current projectile/current mode, we apply a coloured overlay to it.
 	update_icon()
 		..()
-		src.icon_state = "[old ? "old-" : ""]lawbringer0"
+		var/prefix = ""
+		if(old)
+			prefix = "old-"
+
+		src.icon_state = "[prefix]lawbringer0"
 		src.overlays = null
 
 		var/list/ret = list()
@@ -1398,7 +1402,7 @@
 			//if we're showing zero charge, don't do any overlay, since the main image shows an empty gun anyway
 			if (ratio == 0)
 				return
-			indicator_display.icon_state = "[old ? "old-" : ""]lawbringer-d[ratio]"
+			indicator_display.icon_state = "[prefix]lawbringer-d[ratio]"
 
 			if(current_projectile.type == /datum/projectile/energy_bolt/aoe)			//detain - yellow
 				indicator_display.color = "#FFFF00"
@@ -1442,6 +1446,11 @@
 		if (!owner_prints || (user.bioHolder.uid_hash == owner_prints))
 			return 1
 		return 0
+
+	proc/make_antique()
+		icon_state = "old-lawbringer0"
+		old = 1
+		UpdateIcon()
 
 	shoot(var/target,var/start,var/mob/user)
 		if (canshoot())

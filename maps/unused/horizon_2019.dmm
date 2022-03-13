@@ -3551,7 +3551,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/dome)
 "aip" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "honk";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -4371,7 +4371,7 @@
 	},
 /area/station/solar/north)
 "ajT" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge)
 "ajU" = (
@@ -6198,7 +6198,7 @@
 /area/shuttle/arrival/station)
 "aoA" = (
 /obj/item/clothing/shoes/moon,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "This is very important.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -6507,7 +6507,7 @@
 	name = "Hilarious Storage B"
 	})
 "apn" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "this is not right. this is NOT right.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -11726,7 +11726,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "not much of a chef";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -12386,7 +12386,7 @@
 	})
 "aEk" = (
 /obj/item/clothing/head/emerg,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "still has his... uh... bedsheet?";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -31577,7 +31577,7 @@
 /area/station/hallway/primary/west)
 "bsW" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of an engineer. not very handsome.";
 	interesting = "Something isn't right here... This guy wasn't alive when he was shot";
 	name = "engineer's skeleton"
@@ -54227,7 +54227,7 @@
 /turf/simulated/floor/plating/airless/random,
 /area/ghostdrone_factory)
 "cqB" = (
-/obj/decal/sink{
+/obj/decal/fakeobjects/sink{
 	name = "Rusty Sink"
 	},
 /turf/simulated/floor/plating/random,
@@ -54909,7 +54909,7 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/listeningpost)
 "csG" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /turf/simulated/floor/grey/blackgrime,
 /area/listeningpost)
 "csH" = (
@@ -55810,7 +55810,7 @@
 	},
 /area/space)
 "cuU" = (
-/obj/decal/sink{
+/obj/decal/fakeobjects/sink{
 	name = "Rusty Sink";
 	pixel_y = 12
 	},
@@ -56082,7 +56082,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "cvB" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Ironic, really";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "burntnerd";

@@ -6,6 +6,7 @@
 /datum/artifact/heatwave
 	associated_object = /obj/artifact/heatwave
 	type_name = "Heat Surge"
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 365
 	validtypes = list("ancient","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,/datum/artifact_trigger/heat)

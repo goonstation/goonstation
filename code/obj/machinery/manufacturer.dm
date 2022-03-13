@@ -225,7 +225,7 @@
 	bullet_act(var/obj/projectile/P)
 		// swiped from guardbot.dm
 		var/damage = 0
-		damage = round(((P.power/6)*P.proj_data.ks_ratio), 1.0)
+		damage = round(((P.power/3)*P.proj_data.ks_ratio), 1.0)
 
 		if(src.material) src.material.triggerOnBullet(src, src, P)
 
@@ -394,7 +394,7 @@
 
 
 		var/list/dat = list()
-		var/delete_allowed = src.allowed(usr)
+		var/delete_allowed = src.allowed(user)
 
 		if (src.panelopen || isAI(user))
 			var/list/manuwires = list(
@@ -469,13 +469,13 @@
 			var/icon_text = "<img class='icon'>"
 			// @todo probably refactor this since it's copy pasted twice now.
 			if (A.item_outputs)
-				var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
+				var/icon_rsc = getItemIcon(A.item_outputs[1], C = user.client)
 				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
 				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
 			if (istype(A, /datum/manufacture/mechanics))
 				var/datum/manufacture/mechanics/F = A
-				var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
+				var/icon_rsc = getItemIcon(F.frame_path, C = user.client)
 				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
 				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
@@ -865,7 +865,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (src.electrified)
-			if (src.manuf_zap(usr, 33))
+			if (src.manuf_zap(user, 33))
 				return
 
 		if (istype(W, /obj/item/ore_scoop))
@@ -1287,28 +1287,30 @@
 
 	proc/manuf_zap(mob/user, prb)
 		if(issilicon(user) || isAI(user))
-			return 0
+			return FALSE
 		if(!prob(prb))
-			return 0
+			return FALSE
 		if(src.status & (BROKEN|NOPOWER))
-			return 0
+			return FALSE
 		if(ishuman(user))
 			if (istype(user:gloves, /obj/item/clothing/gloves/yellow))
-				return 0
+				return FALSE
 
-		var/netnum = 0
+		var/netnum = FALSE
 		for(var/turf/T in range(1, user))
 			for(var/obj/cable/C in T.contents)
 				netnum = C.netnum
 				break
 			if (netnum) break
 
-		if (!netnum) return 0
+		if (!netnum) return FALSE
 
+		if (!IN_RANGE(src, user, 2))
+			return FALSE
 		if (src.electrocute(user,prb,netnum))
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 
 	proc/add_schematic(var/schematic_path,var/add_to_list = "available")
 		if (!ispath(schematic_path))
@@ -1821,13 +1823,13 @@
 
 			var/icon_text = "<img class='icon'>"
 			if (A.item_outputs)
-				var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
-				// usr << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+				var/icon_rsc = getItemIcon(A.item_outputs[1], C = user.client)
+				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
 				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
 			if (istype(A, /datum/manufacture/mechanics))
 				var/datum/manufacture/mechanics/F = A
-				var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
+				var/icon_rsc = getItemIcon(F.frame_path, C = user.client)
 				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
 				icon_text = "<img class='icon' src='[icon_rsc]'>"
 

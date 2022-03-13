@@ -81,7 +81,7 @@
 /obj/item/storage/box/clothing/rancher
 	name = "\improper Rancher's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/rancher,\
-	/obj/item/clothing/shoes/brown,\
+	/obj/item/clothing/shoes/westboot/brown/rancher,\
 	/obj/item/device/radio/headset/civilian,\
 	/obj/item/device/pda2/botanist,\
 	/obj/item/clothing/gloves/black)

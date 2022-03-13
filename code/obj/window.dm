@@ -266,7 +266,7 @@
 		if (damage < 1)
 			return
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		..()
 
 		switch(P.proj_data.damage_type)
 			if(D_KINETIC)
@@ -275,7 +275,6 @@
 				damage_piercing(damage*2)
 			if(D_ENERGY)
 				damage_heat(damage / 5)
-		return
 
 	reagent_act(var/reagent_id,var/volume)
 		if (..())
@@ -805,7 +804,7 @@
 
 	attack_hand(mob/user as mob)
 		if(!ON_COOLDOWN(user, "glass_tap", 5 SECONDS))
-			src.visible_message("<span class='alert'><b>[usr]</b> knocks on [src].</span>")
+			src.visible_message("<span class='alert'><b>[user]</b> knocks on [src].</span>")
 			playsound(src.loc, src.hitsound, 100, 1)
 			sleep(0.3 SECONDS)
 			playsound(src.loc, src.hitsound, 100, 1)

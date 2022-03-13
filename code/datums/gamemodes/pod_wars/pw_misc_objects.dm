@@ -379,7 +379,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 			if (isnull(assigned_id))
 				if (istype(I))
-					boutput(usr, "<span class='notice'>[ship]'s locking mechinism recognizes [I] as its key!</span>")
+					boutput(user, "<span class='notice'>[ship]'s locking mechinism recognizes [I] as its key!</span>")
 					playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
 					assigned_id = I
 					team_num = get_team(I)
@@ -389,7 +389,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			if (istype(I))
 				if (I == assigned_id || get_team(I) == team_num)
 					ship.locked = !ship.locked
-					boutput(usr, "<span class='alert'>[ship] is now [ship.locked ? "locked" : "unlocked"]!</span>")
+					boutput(user, "<span class='alert'>[ship] is now [ship.locked ? "locked" : "unlocked"]!</span>")
 
 
 

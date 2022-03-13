@@ -1,3 +1,6 @@
+(t)sun mar 06 22
+(u)aloe
+(*)New glue build mode. The gist: right click thing, left click other thing, glues first thing to other thing. More options and multi-glueing also possible.
 (t)wed feb 23 22
 (u)aloe
 (+)Godmode now makes you immune to all status effects. Lemme know if this causes anything Strange to happen.

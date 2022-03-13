@@ -410,6 +410,10 @@
 			keyval.Remove(codekey)
 			keyval[newkey] = newval
 
+		else if(href_list["delete"]) // i accidentally deleted this woops haha
+			var/codekey = href_list["code"]
+
+			keyval.Remove(codekey)
 
 		else if(href_list["prog_delete"])
 			var/codekey = href_list["code"]

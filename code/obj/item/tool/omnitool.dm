@@ -8,6 +8,7 @@
 	var/has_cutting = 0
 	var/has_welding = 0
 	var/welding = 0
+	var/animated_changes = FALSE
 
 	custom_suicide = 1
 
@@ -81,6 +82,10 @@
 				src.stamina_crit_chance = STAMINA_CRIT_CHANCE * 10/25
 				src.hit_type = DAMAGE_BLUNT
 				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+
+				if(src.animated_changes)
+					flick(("[prefix]-swap-prying"), src)
+
 			if ("pulsing")
 				src.omni_mode = "pulsing"
 				// based on /obj/item/device/multitool
@@ -96,6 +101,10 @@
 				src.stamina_crit_chance = STAMINA_CRIT_CHANCE * 1/25
 				src.hit_type = DAMAGE_BLUNT
 				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+
+				if(src.animated_changes)
+					flick(("[prefix]-swap-pulsing"), src)
+
 			if ("screwing")
 				src.omni_mode = "screwing"
 				// based on /obj/item/screwdriver
@@ -111,6 +120,10 @@
 				src.stamina_crit_chance = min(STAMINA_CRIT_CHANCE * 30/25, 100)
 				src.hit_type = DAMAGE_STAB
 				src.hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+
+				if(src.animated_changes)
+					flick(("[prefix]-swap-screwing"), src)
+
 			if ("snipping")
 				src.omni_mode = "snipping"
 				// based on /obj/item/wirecutters
@@ -126,6 +139,10 @@
 				src.stamina_crit_chance = min(STAMINA_CRIT_CHANCE * 30/25, 100)
 				src.hit_type = DAMAGE_STAB
 				src.hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+
+				if(src.animated_changes)
+					flick(("[prefix]-swap-snipping"), src)
+
 			if ("wrenching")
 				src.omni_mode = "wrenching"
 				// based on /obj/item/wrench
@@ -141,6 +158,10 @@
 				src.stamina_crit_chance = STAMINA_CRIT_CHANCE * 15/25
 				src.hit_type = DAMAGE_BLUNT
 				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+
+				if(src.animated_changes)
+					flick(("[prefix]-swap-wrenching"), src)
+
 			if ("cutting")
 				src.omni_mode = "cutting"
 				//based on /obj/item/kitchen/utensil/knife
@@ -156,6 +177,10 @@
 				src.stamina_crit_chance = min(STAMINA_CRIT_CHANCE * 30/25, 100)
 				src.hit_type = DAMAGE_CUT
 				src.hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
+
+				if(src.animated_changes)
+					flick(("[prefix]-swap-cutting"), src)
+
 			if("welding")
 				src.omni_mode = "welding"
 				// based on /obj/item/weldingtool
@@ -178,6 +203,7 @@
 					src.force = 3
 					hit_type = DAMAGE_BLUNT
 					welding = 0
+
 		if (holder)
 			holder.update_inhands()
 
@@ -275,11 +301,17 @@
 
 	New()
 		. = ..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.create_reagents(20)
 		reagents.add_reagent("fuel", 20)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 
 
 /obj/item/tool/omnitool/silicon
 	prefix = "silicon-omnitool"
 	desc = "A set of tools on telescopic arms. It's the robotic future!"
+	animated_changes = TRUE
