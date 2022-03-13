@@ -742,7 +742,6 @@ ABSTRACT_TYPE(/obj/trait/job)
 	desc = "Your internal organs are extremely vulnerable to damage"
 	id = "weakorgans"
 	points = 1
-	isPositive = 0
 
 /obj/trait/slowmetabolism
 	name = "Slow Metabolism (0)"
