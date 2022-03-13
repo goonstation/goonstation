@@ -1211,7 +1211,8 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 	explanation_text = "Establish and enforce a set of station protocols and policies."
 
 /datum/objective/conspiracy/discountdan
-	explanation_text = "Transfer ownership of the station to Discount Dan. Ensure all the crew are loyal and the station is branded correctly."
+	set_up()
+		explanation_text = "Transfer ownership of the station to [pick("Discount Dan", "the Space Wizards Federation", "Bombini")]. Ensure all the crew are loyal and the station is branded correctly."
 
 /datum/objective/conspiracy/cult
 	set_up()
@@ -1253,8 +1254,6 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 		//but if we're underwater there's always a decent chance it's coral
 		materials += list("Coral", "Coral", "Coral")
 #endif
-		for (var/material in materials)
-			boutput(world, "[material]")
 		var/material1 = pick(materials)
 		var/material2 = pick(materials)
 		while (material1 == material2)
