@@ -345,7 +345,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					if (periodic_check == 1)
 						logTheThing("debug", player, null, "<b>Gameticker fallback:</b> re-added player to ticker.minds.")
 					else
-						logTheThing("debug", player, null, "<b>Gameticker setup:</b> added player to ticker.minds.")
+						logTheThing("debug", player, null, "<b>Gameticker setup:</b> added player to ticker.minds. [player.mind.on_ticker_add_log()]")
 					ticker.minds.Add(player.mind)
 
 	proc/implant_skull_key()

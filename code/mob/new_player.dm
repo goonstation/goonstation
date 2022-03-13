@@ -397,7 +397,7 @@ mob/new_player
 				character.mind.join_time = world.time
 				//ticker.implant_skull_key() // This also checks if a key has been implanted already or not. If not then it'll implant a random sucker with a key.
 				if (!(character.mind in ticker.minds))
-					logTheThing("debug", character, null, "<b>Late join:</b> added player to ticker.minds.")
+					logTheThing("debug", character, null, "<b>Late join:</b> added player to ticker.minds. [character.mind.on_ticker_add_log()]")
 					ticker.minds += character.mind
 				logTheThing("debug", character, null, "<b>Late join:</b> assigned job: [JOB.name]")
 				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
