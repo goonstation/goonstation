@@ -1,5 +1,10 @@
 
 (t)sun mar 13 22
+(u)Hans
+(p)7499
+(e)🆕|feature
+(+)Made scorpions "tamable" with food offerings.
+(+)Slightly nerfed critter scorpions via adding a delay to their special attacks.
 (u)LeahTheTech
 (p)7507
 (e)🔄|rework
