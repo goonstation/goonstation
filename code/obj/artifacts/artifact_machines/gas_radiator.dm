@@ -6,6 +6,7 @@
 /datum/artifact/gas_radiator
 	associated_object = /obj/machinery/artifact/gas_radiator
 	type_name = "Gas radiator"
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 450
 	validtypes = list("ancient","martian","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,

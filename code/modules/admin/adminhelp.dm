@@ -266,9 +266,10 @@
 						<a href=\"byond://?action=priv_msg&target=[user.ckey]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
 					</div>
 				</div>
-				"})
+				"}, forceScroll=TRUE)
 			M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
 			boutput(user, "<span class='ahelp' class=\"bigPM\">Admin PM to-<b>[key_name(M, 0, 0)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[user.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
+			M.client.make_sure_chat_is_open()
 		else
 			// Sender is not admin
 			if (M.client && M.client.holder)

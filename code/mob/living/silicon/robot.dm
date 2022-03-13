@@ -107,7 +107,7 @@
 
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 
-		APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		src.internal_pda = new /obj/item/device/pda2/cyborg(src)
 		src.internal_pda.name = "[src]'s Internal PDA Unit"
 		src.internal_pda.owner = "[src]"
@@ -617,7 +617,7 @@
 					SPAWN(1 SECOND)
 						src.emote_allowed = 1
 			else
-				src.show_text("Invalid Emote: [act]")
+				if (voluntary) src.show_text("Invalid Emote: [act]")
 				return
 		if (!isalive(src))
 			return
@@ -2410,8 +2410,8 @@
 
 	proc/add_oil(var/amt)
 		if (oil <= 0)
-			APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST, "robot_oil", 25)
-			APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "robot_oil", 25)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "robot_oil", 25)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "robot_oil", 25)
 			APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_oil, "oil")
 		src.oil += amt
 

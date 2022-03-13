@@ -1,4 +1,92 @@
+
+(t)sun mar 13 22
+(u)Pali and Sord
+(p)7801
+(e)🗺|mapping
+(+)Added some new randomized rooms to Cogmap1
+(u)Pali and Sord
+(p)7800
+(e)🗺|mapping
+(*)Added some new randomized rooms, coming soon to a station near you!
+(u)Gonzako
+(p)7462
+(e)⚖|balance
+(*)How intrigue chooses game mode has been tweaked, traitors should be slightly more common while aliens should invade the station a bit less frequently.
+(u)Hans
+(p)7499
+(e)🆕|feature
+(+)Made scorpions "tamable" with food offerings.
+(+)Slightly nerfed critter scorpions via adding a delay to their special attacks.
+(u)LeahTheTech
+(p)7507
+(e)🔄|rework
+(+)Ion storms now mess with a small number of vendors, manufacturers and fire alarms.
+(u)Wisemonster
+(p)7593
+(e)🗺|mapping
+(*)NanoTrasen has added the proper systems to Kondaru to allow mule bots to work! (mule bot included!)
+(u)Flappybat
+(p)7774
+(e)🆕🗺|feature, mapping
+(+)Nuclear operatives now have an ammo bag on their shooting range.
+(u)Gonzako, DisturbHerb
+(p)7656
+(e)🎨|sprites
+(+)Created a brand new, completely original card-game. Come play MONO!
+(u)112358sam
+(p)7637
+(e)🎨|sprites
+(+)Cryo pods now show the defibrillator on their sprite if they have one.
+(u)LeahTheTech
+(p)7680
+(e)|
+(+)Robotic talk, thrallspeak, and blob hivemind communication got a facelift and should now be much more noticeable.
+(u)Jan.antilles
+(p)7776
+(e)🎨|sprites
+(*)Added two new hair/beard styles: Shaved Head and Five O'Clock Shadow.
+(u)Amylizzle
+(p)7701
+(e)|
+(+)It is no longer possible to accidentally say a slur due to speech mutations.
+(u)LeahTheTech
+(p)7693
+(e)🆕|feature
+(+)Changeling hivemind members can now point, visible only to their master and other members of the hivemind.
+(u)Flappybat
+(p)7775
+(e)|
+(+)Battle Royale loot amount scales with player counts.
+(u)zjdtmkhzt
+(p)7719
+(e)|
+(+)Artifact analysis forms should look a little bit neater.
+(t)sat mar 12 22
+(u)Sovexe
+(p)7782
+(e)🐛|bug
+(+)Fixed a bug that prevented players from calming down angered and frightened chickens by hand feeding.
+(t)wed mar 09 22
+(u)Amylizzle
+(p)7736
+(e)🐛|bug
+(+)Transposed Particle Field now warns you that it's killing you with a big flashing icon.
+(u)Fwll
+(p)7708
+(e)🆕|feature
+(+)Mocha Coffee and Latte Coffee beans can now be processed in the food processor
+(u)Amylizzle
+(p)7718
+(e)🐛|bug
+(+)Missile Arrival and other Spacebux purchases are now available and working as Cyborg and AI!
+(u)Spell Tech
+(p)7697
+(e)|
+(+)The controls for the Tetris arcade are smoother and less laggy.
 (t)tue mar 08 22
+(u)Flourish
+(e)🆕|feature
+(*)Cloning consoles now update every minute or so and display a distinct animation when there is someone in the records who can be cloned. Let me know what you think.
 (u)Sovexe
 (e)🐛|bug
 (+)Fixed bugs that made Ixworth and Shieldmaidhen chickens unobtainable.

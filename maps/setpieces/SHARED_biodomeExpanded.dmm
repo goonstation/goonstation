@@ -429,12 +429,6 @@
 /obj/map/light/graveyard,
 /turf/unsimulated/floor/auto/dirt,
 /area/crypt/graveyard/swamp)
-"azr" = (
-/obj/decal/oven{
-	name = "broken oven"
-	},
-/turf/unsimulated/floor/white/grime,
-/area/crypt/sigma/kitchen)
 "aAw" = (
 /obj/securearea,
 /obj/map/light/graveyard,
@@ -752,6 +746,17 @@
 	icon_state = "rootfloor_3"
 	},
 /area/crypt/mausoleum)
+"aTl" = (
+/obj/decal/fakeobjects/skeleton{
+	desc = "They've been picked clean by the fish. Yikes..";
+	name = "gnawed clown"
+	},
+/obj/item/clothing/mask/clown_hat/blue{
+	pixel_x = 14;
+	pixel_y = 4
+	},
+/turf/space/fluid,
+/area/swampzone/interiors/bonktek)
 "aTt" = (
 /obj/railing/cyan{
 	dir = 8
@@ -837,6 +842,12 @@
 /obj/machinery/vending/medical,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
+"aXe" = (
+/obj/decal/fakeobjects/oven{
+	name = "broken oven"
+	},
+/turf/unsimulated/floor/white/grime,
+/area/crypt/sigma/kitchen)
 "aXq" = (
 /obj/railing/orange,
 /obj/chainlink_fence{
@@ -909,6 +920,12 @@
 /obj/reagent_dispensers/still,
 /turf/unsimulated/floor/cave,
 /area/swampzone/deeps)
+"bdA" = (
+/obj/decal/fakeobjects/sink{
+	name = "Rusty Sink"
+	},
+/turf/unsimulated/floor/white/grime,
+/area/crypt/sigma/kitchen)
 "bdR" = (
 /obj/item/storage/secure/ssafe/loot{
 	pixel_x = 32
@@ -1299,6 +1316,21 @@
 /obj/machinery/door/airlock/pyro/medical/alt2,
 /turf/unsimulated/floor/sanitary/white,
 /area/swampzone/interiors/outbuildings)
+"bBO" = (
+/obj/item/clothing/glasses/monocle,
+/obj/decal/fakeobjects/skeleton{
+	desc = "They've been picked clean by the fish. Yikes..";
+	name = "gnawed clown"
+	},
+/obj/item/clothing/under/gimmick/safari,
+/obj/spacevine{
+	icon_state = "vine-light3"
+	},
+/obj/item/boomerang,
+/turf/unsimulated/floor/green/side{
+	dir = 1
+	},
+/area/crater/biodome/north)
 "bBT" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
@@ -1308,16 +1340,6 @@
 	dir = 1
 	},
 /area/crater/biodome/crew)
-"bBX" = (
-/obj/storage/closet/coffin,
-/obj/item/alchemy/symbol/incin,
-/obj/decal/skeleton{
-	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
-	icon_state = "skeleton_s";
-	name = "crumbly skeleton"
-	},
-/turf/unsimulated/floor/setpieces/rootfloor,
-/area/catacombs)
 "bCN" = (
 /obj/lattice{
 	dir = 10;
@@ -1464,6 +1486,15 @@
 	icon_state = "floor4"
 	},
 /area/syndicate_station)
+"bNt" = (
+/obj/storage/closet/coffin,
+/obj/decal/fakeobjects/skeleton{
+	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
+	icon_state = "skeleton_s";
+	name = "crumbly skeleton"
+	},
+/turf/unsimulated/floor/auto/dirt,
+/area/catacombs)
 "bNL" = (
 /obj/decal/woodclutter{
 	pixel_x = 7;
@@ -2016,23 +2047,6 @@
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/interiors/bonktek)
-"cvV" = (
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gib2"
-	},
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gib4"
-	},
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gibdown1"
-	},
-/obj/decal/skeleton{
-	desc = "They've been picked clean by the fish. Yikes..";
-	name = "gnawed clown"
-	},
-/obj/item/paper/mission_outline,
-/turf/unsimulated/floor/cave,
-/area/crater/cave)
 "cwT" = (
 /obj/machinery/shower,
 /turf/unsimulated/floor/specialroom/freezer,
@@ -2054,21 +2068,6 @@
 	},
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
-"cyo" = (
-/obj/item/clothing/glasses/monocle,
-/obj/decal/skeleton{
-	desc = "They've been picked clean by the fish. Yikes..";
-	name = "gnawed clown"
-	},
-/obj/item/clothing/under/gimmick/safari,
-/obj/spacevine{
-	icon_state = "vine-light3"
-	},
-/obj/item/boomerang,
-/turf/unsimulated/floor/green/side{
-	dir = 1
-	},
-/area/crater/biodome/north)
 "cyG" = (
 /obj/decal/woodclutter,
 /turf/unsimulated/floor/wood/five,
@@ -2144,18 +2143,6 @@
 	dir = 4
 	},
 /area/swampzone/interiors/outbuildings)
-"cEr" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/green,
-/obj/item/gun/kinetic/riotgun,
-/obj/decal/skeleton/decomposed_corpse{
-	pixel_x = 1;
-	pixel_y = -3
-	},
-/turf/unsimulated/floor/wood/eight{
-	dir = 8
-	},
-/area/swampzone/ground)
 "cEs" = (
 /obj/river{
 	dir = 10
@@ -2441,6 +2428,17 @@
 	dir = 4
 	},
 /area/crypt/sigma)
+"cXc" = (
+/obj/storage/closet/coffin,
+/obj/item/alchemy/symbol/air,
+/obj/decal/fakeobjects/skeleton{
+	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
+	icon_state = "skeleton_s";
+	name = "crumbly skeleton"
+	},
+/obj/item/clothing/under/shorts/black,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/catacombs)
 "cXq" = (
 /turf/unsimulated/floor/engine,
 /area/crater/cave)
@@ -2932,6 +2930,16 @@
 	},
 /turf/space/fluid/cenote,
 /area/swampzone/interiors/quarry)
+"dDF" = (
+/obj/storage/closet/coffin,
+/obj/decal/fakeobjects/skeleton{
+	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
+	icon_state = "skeleton_s";
+	name = "crumbly skeleton"
+	},
+/obj/item/clothing/under/rank/det,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/catacombs)
 "dEj" = (
 /obj/item/instrument/large/jukebox,
 /turf/unsimulated/floor/carpet/arcade,
@@ -3050,6 +3058,19 @@
 	},
 /turf/unsimulated/floor/cave,
 /area/swampzone/deeps)
+"dKy" = (
+/obj/machinery/bathtub{
+	desc = "It has little wheels underneath! How does the plumbing still work? Who the hell knows.";
+	name = "mobile bathtub"
+	},
+/obj/decal/fakeobjects/skeleton{
+	desc = "Eugh, the stench is horrible!";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body6";
+	name = "decomposed corpse"
+	},
+/turf/unsimulated/floor/specialroom/freezer,
+/area/crypt/sigma/crew)
 "dLW" = (
 /obj/railing/cyan{
 	dir = 4
@@ -3206,19 +3227,6 @@
 /obj/storage/closet/emergency,
 /turf/unsimulated/floor,
 /area/syndicate_station)
-"dSA" = (
-/obj/machinery/bathtub{
-	desc = "It has little wheels underneath! How does the plumbing still work? Who the hell knows.";
-	name = "mobile bathtub"
-	},
-/obj/decal/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body6";
-	name = "decomposed corpse"
-	},
-/turf/unsimulated/floor/specialroom/freezer,
-/area/crypt/sigma/crew)
 "dSD" = (
 /obj/decal/poster/wallsign/warning1{
 	desc = "Smaller text warns of dangerous fauna in the deeper caves.";
@@ -4574,10 +4582,6 @@
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/north)
-"fub" = (
-/obj/decal/skeleton/decomposed_corpse,
-/turf/unsimulated/floor/circuit/off,
-/area/swampzone/deeps)
 "fus" = (
 /obj/decal/cleanable/cobweb,
 /turf/unsimulated/floor/cave,
@@ -4827,6 +4831,20 @@
 	},
 /turf/unsimulated/floor/stairs,
 /area/crater/biodome/south)
+"fFS" = (
+/obj/decal/cleanable/dirt,
+/obj/item/whip,
+/obj/decal/fakeobjects/skeleton{
+	desc = "They've been picked clean by the fish. Yikes..";
+	name = "gnawed clown"
+	},
+/obj/item/clothing/head/det_hat,
+/obj/item/coin{
+	desc = "You don't recognize the language on this coin. Huh.";
+	name = "old coin"
+	},
+/turf/unsimulated/floor/cave,
+/area/crater/cave)
 "fGj" = (
 /obj/railing/reinforced{
 	dir = 4
@@ -4909,10 +4927,6 @@
 	dir = 8
 	},
 /area/swampzone/interiors/outbuildings)
-"fLd" = (
-/obj/decal/skeleton/decomposed_corpse,
-/turf/unsimulated/floor/circuit/off,
-/area/crater/cave)
 "fLh" = (
 /obj/decal/stalagtite,
 /turf/unsimulated/floor/cave,
@@ -5379,6 +5393,11 @@
 	},
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
+"gqL" = (
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/item/clothing/under/misc/tourist,
+/turf/unsimulated/floor/wood,
+/area/swampzone/interiors/bonktek/funktek)
 "gqM" = (
 /obj/item_dispenser/medical_mask,
 /turf/unsimulated/floor/redwhite{
@@ -7230,6 +7249,15 @@
 	},
 /turf/unsimulated/floor/specialroom/freezer,
 /area/swampzone/interiors/quarry)
+"iFQ" = (
+/obj/critter/mannequin{
+	icon = 'icons/misc/critter.dmi';
+	icon_state = "brullbar"
+	},
+/turf/unsimulated/floor/black/side{
+	dir = 8
+	},
+/area/swampzone/interiors/bonktek)
 "iGf" = (
 /obj/map/light/graveyard,
 /turf/unsimulated/floor/setpieces/rootfloor{
@@ -7362,6 +7390,18 @@
 	dir = 8
 	},
 /area/crater/biodome/crew)
+"iQU" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/green,
+/obj/item/gun/kinetic/riotgun,
+/obj/decal/fakeobjects/skeleton/decomposed_corpse{
+	pixel_x = 1;
+	pixel_y = -3
+	},
+/turf/unsimulated/floor/wood/eight{
+	dir = 8
+	},
+/area/swampzone/ground)
 "iRq" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -7434,6 +7474,10 @@
 /obj/decal/mushrooms/type3,
 /obj/sneaky_wall_trigger,
 /turf/unsimulated/floor/cave,
+/area/crater/cave)
+"iVa" = (
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/turf/unsimulated/floor/circuit/off,
 /area/crater/cave)
 "iVj" = (
 /obj/neon_lining{
@@ -7746,16 +7790,6 @@
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground/canyon)
-"jnT" = (
-/obj/storage/closet/coffin,
-/obj/decal/skeleton{
-	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
-	icon_state = "skeleton_s";
-	name = "crumbly skeleton"
-	},
-/obj/item/clothing/under/rank/det,
-/turf/unsimulated/floor/setpieces/rootfloor,
-/area/catacombs)
 "jof" = (
 /obj/item/storage/toilet/random{
 	dir = 8
@@ -8262,16 +8296,6 @@
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/innercorner/north,
 /area/swampzone/interiors/bonktek/lounge)
-"jRf" = (
-/obj/storage/closet/coffin,
-/obj/decal/skeleton{
-	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
-	icon_state = "skeleton_s";
-	name = "crumbly skeleton"
-	},
-/obj/item/paper/alchemy/southwest,
-/turf/unsimulated/floor/auto/dirt,
-/area/catacombs)
 "jSh" = (
 /turf/unsimulated/floor/stairs/wood2/wide{
 	dir = 6
@@ -8344,22 +8368,6 @@
 	},
 /turf/unsimulated/floor/auto/swamp,
 /area/swampzone/interiors/bonktek)
-"jWY" = (
-/obj/storage/closet/coffin,
-/obj/decal/skeleton{
-	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
-	icon_state = "skeleton_s";
-	name = "crumbly skeleton"
-	},
-/obj/item/coin{
-	desc = "Through the corrosion, you can  vaguely make out a symbol of a circle with four triangular spokes and four wavy spokes. Huh.";
-	name = "older coin";
-	pixel_x = -5;
-	pixel_y = 9
-	},
-/obj/item/clothing/suit/cultist,
-/turf/unsimulated/floor/auto/dirt,
-/area/catacombs)
 "jXl" = (
 /obj/machinery/light/incandescent/small,
 /turf/unsimulated/outdoors/concrete,
@@ -8432,6 +8440,16 @@
 /obj/machinery/door/airlock/glass,
 /turf/unsimulated/floor/bluegreen,
 /area/swampzone/interiors/outbuildings)
+"kbZ" = (
+/obj/storage/closet/coffin,
+/obj/item/alchemy/symbol/incin,
+/obj/decal/fakeobjects/skeleton{
+	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
+	icon_state = "skeleton_s";
+	name = "crumbly skeleton"
+	},
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/catacombs)
 "kcm" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 1
@@ -8757,6 +8775,22 @@
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
+"kvT" = (
+/obj/storage/closet/coffin,
+/obj/decal/fakeobjects/skeleton{
+	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
+	icon_state = "skeleton_s";
+	name = "crumbly skeleton"
+	},
+/obj/item/coin{
+	desc = "Through the corrosion, you can  vaguely make out a symbol of a circle with four triangular spokes and four wavy spokes. Huh.";
+	name = "older coin";
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/clothing/suit/cultist,
+/turf/unsimulated/floor/auto/dirt,
+/area/catacombs)
 "kwB" = (
 /obj/river{
 	desc = "It's pouring down from somewhere far above.";
@@ -10382,6 +10416,18 @@
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor,
 /area/swampzone/interiors/bonktek/maintenance)
+"msq" = (
+/obj/storage/closet/coffin,
+/obj/decal/fakeobjects/skeleton{
+	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
+	icon_state = "skeleton_s";
+	name = "crumbly skeleton"
+	},
+/obj/item/wrench,
+/obj/item/clothing/under/gimmick/mario/wario,
+/obj/item/clothing/head/mario/wario,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/catacombs)
 "msr" = (
 /obj/river{
 	dir = 4
@@ -10404,20 +10450,6 @@
 "msU" = (
 /turf/cordon,
 /area/space)
-"mtj" = (
-/obj/decal/cleanable/dirt,
-/obj/item/whip,
-/obj/decal/skeleton{
-	desc = "They've been picked clean by the fish. Yikes..";
-	name = "gnawed clown"
-	},
-/obj/item/clothing/head/det_hat,
-/obj/item/coin{
-	desc = "You don't recognize the language on this coin. Huh.";
-	name = "old coin"
-	},
-/turf/unsimulated/floor/cave,
-/area/crater/cave)
 "mtl" = (
 /obj/stool/chair/office/red{
 	dir = 8
@@ -10877,15 +10909,6 @@
 	dir = 5
 	},
 /area/swampzone/interiors/outbuildings)
-"mXI" = (
-/obj/critter/mannequin{
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "brullbar"
-	},
-/turf/unsimulated/floor/black/side{
-	dir = 8
-	},
-/area/swampzone/interiors/bonktek)
 "mYd" = (
 /obj/channel{
 	required_to_pass = 1e+009
@@ -11287,11 +11310,6 @@
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
-"nwd" = (
-/obj/decal/skeleton/decomposed_corpse,
-/obj/item/clothing/under/misc/tourist,
-/turf/unsimulated/floor/wood,
-/area/swampzone/interiors/bonktek/funktek)
 "nwA" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -11712,6 +11730,10 @@
 	dir = 4
 	},
 /area/crater/biodome/south)
+"nSX" = (
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/turf/unsimulated/floor/circuit/off,
+/area/swampzone/deeps)
 "nTU" = (
 /obj/machinery/vending/snack,
 /turf/unsimulated/floor/specialroom/bar,
@@ -11990,15 +12012,6 @@
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/swampzone/interiors/outbuildings)
-"oln" = (
-/obj/storage/closet/coffin,
-/obj/decal/skeleton{
-	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
-	icon_state = "skeleton_s";
-	name = "crumbly skeleton"
-	},
-/turf/unsimulated/floor/auto/dirt,
-/area/catacombs)
 "olx" = (
 /obj/map/light/dimred,
 /turf/unsimulated/floor/cave,
@@ -12120,13 +12133,6 @@
 	dir = 8
 	},
 /area/crater/biodome/research)
-"oqt" = (
-/obj/decal/skeleton/decomposed_corpse{
-	icon = 'icons/obj/decoration.dmi';
-	icon_state = "seccorpse1"
-	},
-/turf/unsimulated/floor/white,
-/area/swampzone/interiors/outbuildings)
 "oqV" = (
 /turf/unsimulated/floor/white,
 /area/swampzone/ground)
@@ -12824,6 +12830,16 @@
 	},
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
+"pmA" = (
+/obj/storage/closet/coffin,
+/obj/decal/fakeobjects/skeleton{
+	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
+	icon_state = "skeleton_s";
+	name = "crumbly skeleton"
+	},
+/obj/item/paper/alchemy/southwest,
+/turf/unsimulated/floor/auto/dirt,
+/area/catacombs)
 "pmV" = (
 /obj/machinery/door/airlock/medical{
 	aiControlDisabled = 1;
@@ -14113,6 +14129,16 @@
 /obj/graveyard/lightning_trigger,
 /turf/unsimulated/floor/auto/dirt,
 /area/crypt/graveyard)
+"qSk" = (
+/obj/tombstone{
+	desc = "The inscription has eroded away.";
+	special = /obj/decal/fakeobjects/skeleton
+	},
+/obj/map/light/graveyard,
+/turf/unsimulated/grasstodirt{
+	dir = 1
+	},
+/area/crypt/graveyard)
 "qSU" = (
 /obj/storage/secure/closet/fridge/opened{
 	name = "cold storage"
@@ -15311,18 +15337,6 @@
 	icon_state = "fred2"
 	},
 /area/crypt/sigma/crew)
-"sso" = (
-/obj/storage/closet/coffin,
-/obj/decal/skeleton{
-	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
-	icon_state = "skeleton_s";
-	name = "crumbly skeleton"
-	},
-/obj/item/wrench,
-/obj/item/clothing/under/gimmick/mario/wario,
-/obj/item/clothing/head/mario/wario,
-/turf/unsimulated/floor/setpieces/rootfloor,
-/area/catacombs)
 "ssE" = (
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -16772,19 +16786,6 @@
 /obj/item/alchemy/symbol/water,
 /turf/unsimulated/floor/auto/dirt,
 /area/catacombs)
-"uaq" = (
-/obj/storage/closet/coffin,
-/obj/decal/skeleton{
-	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
-	icon_state = "skeleton_s";
-	name = "crumbly skeleton"
-	},
-/obj/item/clothing/under/misc/syndicate,
-/obj/item/card/id/syndicate,
-/obj/item/clothing/gloves/fingerless,
-/obj/item/clothing/mask/balaclava,
-/turf/unsimulated/floor/auto/dirt,
-/area/catacombs)
 "uat" = (
 /obj/table/wood/auto/desk,
 /obj/item/device/radio/intercom/loudspeaker,
@@ -17103,17 +17104,6 @@
 /obj/item/instrument/large/piano/grand,
 /turf/unsimulated/floor/carpet/purple/fancy/edge/north,
 /area/swampzone/interiors/bonktek/lounge)
-"uvf" = (
-/obj/storage/closet/coffin,
-/obj/item/alchemy/symbol/air,
-/obj/decal/skeleton{
-	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
-	icon_state = "skeleton_s";
-	name = "crumbly skeleton"
-	},
-/obj/item/clothing/under/shorts/black,
-/turf/unsimulated/floor/setpieces/rootfloor,
-/area/catacombs)
 "uvl" = (
 /turf/unsimulated/floor/stairs/medical/wide/other,
 /area/swampzone/interiors/bonktek/maintenance)
@@ -17887,16 +17877,6 @@
 /obj/item/raw_material/plasmastone,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
-"vjP" = (
-/obj/tombstone{
-	desc = "The inscription has eroded away.";
-	special = /obj/decal/skeleton
-	},
-/obj/map/light/graveyard,
-/turf/unsimulated/grasstodirt{
-	dir = 1
-	},
-/area/crypt/graveyard)
 "vjZ" = (
 /obj/machinery/plantpot,
 /turf/unsimulated/floor/delivery,
@@ -18160,6 +18140,19 @@
 /obj/machinery/light/incandescent/small,
 /turf/unsimulated/floor/sanitary,
 /area/swampzone/interiors/bonktek/genetek)
+"vCF" = (
+/obj/storage/closet/coffin,
+/obj/decal/fakeobjects/skeleton{
+	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
+	icon_state = "skeleton_s";
+	name = "crumbly skeleton"
+	},
+/obj/item/clothing/under/misc/syndicate,
+/obj/item/card/id/syndicate,
+/obj/item/clothing/gloves/fingerless,
+/obj/item/clothing/mask/balaclava,
+/turf/unsimulated/floor/auto/dirt,
+/area/catacombs)
 "vCQ" = (
 /obj/grille/steel,
 /obj/window/crystal/reinforced/south,
@@ -18309,6 +18302,13 @@
 /obj/machinery/light/incandescent/small,
 /turf/unsimulated/floor/sanitary,
 /area/swampzone/interiors/bonktek/maintenance)
+"vKZ" = (
+/obj/decal/fakeobjects/skeleton/decomposed_corpse{
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "seccorpse1"
+	},
+/turf/unsimulated/floor/white,
+/area/swampzone/interiors/outbuildings)
 "vLt" = (
 /obj/chainlink_fence{
 	dir = 10
@@ -19212,17 +19212,23 @@
 /obj/machinery/vending/paint/broken,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
-"wHR" = (
-/obj/decal/skeleton{
+"wIf" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib2"
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib4"
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibdown1"
+	},
+/obj/decal/fakeobjects/skeleton{
 	desc = "They've been picked clean by the fish. Yikes..";
 	name = "gnawed clown"
 	},
-/obj/item/clothing/mask/clown_hat/blue{
-	pixel_x = 14;
-	pixel_y = 4
-	},
-/turf/space/fluid,
-/area/swampzone/interiors/bonktek)
+/obj/item/paper/mission_outline,
+/turf/unsimulated/floor/cave,
+/area/crater/cave)
 "wIG" = (
 /obj/stool/chair/red,
 /turf/unsimulated/floor/black,
@@ -19681,12 +19687,6 @@
 /obj/table/wood/auto/desk,
 /turf/unsimulated/floor/black/side,
 /area/swampzone/interiors/bonktek)
-"xnU" = (
-/obj/decal/sink{
-	name = "Rusty Sink"
-	},
-/turf/unsimulated/floor/white/grime,
-/area/crypt/sigma/kitchen)
 "xoJ" = (
 /obj/rack/lunar,
 /obj/item/ammo/bullets/a38,
@@ -32619,7 +32619,7 @@ rhI
 rhI
 tKL
 wPE
-nwd
+gqL
 vmj
 ahc
 ahc
@@ -41223,7 +41223,7 @@ jxC
 roE
 roE
 mfJ
-cEr
+iQU
 uEW
 uEW
 uEW
@@ -43777,7 +43777,7 @@ hSq
 hSq
 nRR
 mNp
-mXI
+iFQ
 mNp
 fwb
 fwb
@@ -47622,7 +47622,7 @@ rdL
 kIh
 rdL
 mDX
-oqt
+vKZ
 prq
 oBb
 vgA
@@ -78358,7 +78358,7 @@ pVY
 pVY
 xCy
 xCy
-fLd
+iVa
 thO
 thO
 thO
@@ -85052,7 +85052,7 @@ feN
 feN
 gyz
 tMZ
-dSA
+dKy
 pAo
 mlB
 wIQ
@@ -88099,8 +88099,8 @@ qFo
 oUB
 rKT
 ePs
-azr
-xnU
+aXe
+bdA
 kvw
 chP
 lKq
@@ -92882,7 +92882,7 @@ eDN
 dIX
 feN
 dRF
-vjP
+qSk
 hgP
 pPX
 eDC
@@ -129545,7 +129545,7 @@ wSF
 sXo
 tpM
 rPx
-wHR
+aTl
 piw
 dpa
 qWU
@@ -168960,7 +168960,7 @@ ier
 ier
 sgu
 sgu
-fub
+nSX
 lFF
 lFF
 lFF
@@ -185930,7 +185930,7 @@ vBb
 wUZ
 eJe
 oBv
-cyo
+bBO
 hYi
 rpk
 mFi
@@ -188315,21 +188315,21 @@ hrY
 hrY
 uaa
 hrY
-uaq
+vCF
 hrY
-jRf
+pmA
 hrY
 dNy
 hrY
-jWY
+kvT
 hrY
-oln
+bNt
 hrY
 fgn
 vOx
 tMo
 vuK
-jnT
+dDF
 hly
 dIX
 msU
@@ -189833,7 +189833,7 @@ wDR
 hrY
 oHb
 hrY
-bBX
+kbZ
 hrY
 fgn
 wtn
@@ -190141,7 +190141,7 @@ sbw
 vuK
 vuK
 vuK
-sso
+msq
 fgn
 dIX
 msU
@@ -190731,7 +190731,7 @@ hrY
 hrY
 pTu
 hrY
-uvf
+cXc
 hrY
 srz
 hrY
@@ -193510,7 +193510,7 @@ lak
 iej
 iej
 iej
-cvV
+wIf
 olJ
 iej
 auI
@@ -195614,7 +195614,7 @@ auI
 iej
 iej
 iej
-mtj
+fFS
 auI
 iej
 auI

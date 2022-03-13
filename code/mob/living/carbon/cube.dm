@@ -141,7 +141,7 @@
 					if(src.emote_check(voluntary, 10))
 						message = "<B>[src]</B> jiggles like only a meat cube can."
 				else
-					src.show_text("Invalid Emote: [act]")
+					if (voluntary) src.show_text("Invalid Emote: [act]")
 		if (message && isalive(src))
 			logTheThing("say", src, null, "EMOTE: [message]")
 			if (m_type & 1)

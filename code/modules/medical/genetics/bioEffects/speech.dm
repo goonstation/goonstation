@@ -263,7 +263,7 @@
 		OnAdd()
 			var/mob/living/L = owner
 			if (istype(L))
-				L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: white !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px black;"
+				L.speechpopupstyle = "color: white !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px black;"
 
 	rainbow
 		name = "Frontal Gyrus Alteration Type-Radmin"
@@ -275,7 +275,7 @@
 		OnAdd()
 			var/mob/living/L = owner
 			if (istype(L))
-				L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: white !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px black;"
+				L.speechpopupstyle = "color: white !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px black;"
 				animate_rainbow_glow(L.chat_text)
 
 		OnRemove()
@@ -295,7 +295,7 @@
 			OnAdd()
 				var/mob/living/L = owner
 				if (istype(L))
-					L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: black !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px white;"
+					L.speechpopupstyle = "color: black !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px white;"
 					animate_rainbow_glow(L.chat_text)
 
 /datum/bioEffect/speech/slurring

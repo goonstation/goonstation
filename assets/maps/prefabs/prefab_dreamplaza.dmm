@@ -36,7 +36,7 @@
 /obj/decal/cleanable/blood{
 	desc = "It looks like it's been here for months."
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	name = "mall employee skeleton";
 	pixel_y = 12
 	},
@@ -406,7 +406,7 @@
 /obj/storage/crate/packing{
 	name = "merchandise samples"
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Looks like they were trapped here for some time.";
 	name = "employee skeleton"
 	},

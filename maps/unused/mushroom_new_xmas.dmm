@@ -25188,7 +25188,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "baV" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/clothing/suit/chef,
 /obj/item/clothing/head/chefhat,
 /obj/decal/cleanable/cobweb,

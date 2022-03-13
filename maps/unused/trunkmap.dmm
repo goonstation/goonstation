@@ -3574,7 +3574,7 @@
 /turf/simulated/floor/white,
 /area/russian)
 "akA" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /turf/simulated/floor/white,
 /area/russian)
 "akB" = (
@@ -29791,7 +29791,7 @@
 /turf/simulated/wall,
 /area/station/maintenance/disposal)
 "jos" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},

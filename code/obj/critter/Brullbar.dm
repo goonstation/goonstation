@@ -303,7 +303,7 @@
 				src.visible_message("<span class='alert'><b>[src] devours [src.target]! Holy shit!</b></span>")
 				playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
 				M.ghostize()
-				new /obj/decal/skeleton(M.loc)
+				new /obj/decal/fakeobjects/skeleton(M.loc)
 				M.gib()
 				src.target = null
 			else if (isliving(M))

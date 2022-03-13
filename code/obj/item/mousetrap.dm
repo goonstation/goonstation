@@ -100,7 +100,8 @@
 				src.grenade = CG
 				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
 
-				message_admins("[key_name(user)] rigs [src] with [CG] at [log_loc(user)].")
+				if(CG.is_dangerous)
+					message_admins("[key_name(user)] rigs [src] with [CG] at [log_loc(user)].")
 				logTheThing("bombing", user, null, "rigs [src] with [CG] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/old_grenade/) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
@@ -112,7 +113,8 @@
 				src.grenade_old = OG
 				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
 
-				message_admins("[key_name(user)] rigs [src] with [OG] at [log_loc(user)].")
+				if(OG.is_dangerous)
+					message_admins("[key_name(user)] rigs [src] with [OG] at [log_loc(user)].")
 				logTheThing("bombing", user, null, "rigs [src] with [OG] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/pipebomb/bomb) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
