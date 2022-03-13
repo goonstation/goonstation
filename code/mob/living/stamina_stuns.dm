@@ -57,7 +57,7 @@
 
 //Returns the total modifier for stamina max
 /mob/proc/get_stun_resist_mod()
-	return min(GET_MOB_PROPERTY(src, PROP_STUN_RESIST), clamp(GET_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX), 80, 100))
+	return min(GET_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST), clamp(GET_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX), 80, 100)) + 0
 
 //Restores stamina
 /mob/proc/add_stamina(var/x)
@@ -190,13 +190,13 @@
 #define DISORIENT_EAR 4
 
 /mob/proc/get_disorient_protection()
-	return min(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_BODY), clamp(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_BODY_MAX), 90, 100))
+	return min(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY), clamp(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY_MAX), 90, 100)) + 0
 
 /mob/proc/get_disorient_protection_eye()
-	return min(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EYE), clamp(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EYE_MAX), 90, 100))
+	return min(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_EYE), clamp(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_EYE_MAX), 90, 100)) + 0
 
 /mob/proc/get_disorient_protection_ear()
-	return min(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EAR), clamp(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EAR_MAX), 90, 100))
+	return min(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_EAR), clamp(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_EAR_MAX), 90, 100)) + 0
 
 
 /mob/proc/force_laydown_standup() //the real force laydown lives in Life.dm

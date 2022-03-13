@@ -41,6 +41,8 @@
 	/// If atmos should be blocked by this - special behaviours handled in gas_cross() overrides
 	var/gas_impermeable = FALSE
 
+	var/list/atom_properties
+
 /* -------------------- name stuff -------------------- */
 	/*
 	to change names: either add or remove something with the appropriate proc(s) and then call atom.UpdateName()
@@ -164,6 +166,7 @@
 				src.delStatus(effect)
 			src.statusEffects = null
 		ClearAllParticles()
+		atom_properties = null
 		..()
 
 	proc/Turn(var/rot)
@@ -853,6 +856,7 @@
 /atom/movable/proc/set_loc(atom/newloc)
 	SHOULD_CALL_PARENT(TRUE)
 	if (loc == newloc)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, loc)
 		return src
 
 	if (ismob(src)) // fuck haxploits

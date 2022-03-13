@@ -63,6 +63,8 @@
 		if (player.ready && !player.mind.assigned_role)
 			unassigned += player
 
+	logTheThing("debug", null, null, "<b>Aloe</b>: roughly [(length(unassigned)/length(clients)) * 100]% of players were readied up at roundstart (blobs and wraiths don't count).")
+
 	if (unassigned.len == 0)
 		return 0
 

@@ -49,7 +49,7 @@
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+		if(HAS_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM))
 			boutput(H, "Your cannot bring yourself to commit suicide!")
 			return
 
