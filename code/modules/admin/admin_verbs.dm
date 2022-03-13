@@ -1930,6 +1930,8 @@ var/list/fun_images = list()
 				C << browse(pregameHTML, "window=pregameBrowser")
 				if(C)
 					winshow(C, "pregameBrowser", 1)
+					var/mob/new_player/new_player = C.mob
+					new_player.pregameBrowserLoaded = TRUE
 
 /client/proc/implant_all()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)

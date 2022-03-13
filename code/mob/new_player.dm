@@ -6,6 +6,7 @@ mob/new_player
 	var/keyd
 	var/adminspawned = 0
 	var/is_respawned_player = 0
+	var/pregameBrowserLoaded = FALSE
 
 #ifdef TWITCH_BOT_ALLOWED
 	var/twitch_bill_spawn = 0
@@ -154,6 +155,7 @@ mob/new_player
 		if(pregameHTML && client)
 			winshow(client, "pregameBrowser", 1)
 			client << browse(pregameHTML, "window=pregameBrowser")
+			src.pregameBrowserLoaded = TRUE
 		else if(client)
 			winshow(src.last_client, "pregameBrowser", 0)
 			src.last_client << browse("", "window=pregameBrowser")
