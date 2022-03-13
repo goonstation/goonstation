@@ -68,12 +68,13 @@
 
 	update_icon(...)
 		. = ..()
-		bulb = image(src.icon, "firefly-bulb")
+
+		bulb = SafeGetOverlayImage("bulb", src.icon, "firefly-bulb")
 		bulb.appearance_flags = RESET_COLOR
 		bulb.color = light_color
 		UpdateOverlays(bulb, "bulb")
 
-		bulb_light = image(src.icon, "firefly-light")
+		bulb_light = SafeGetOverlayImage("bulb-light", src.icon, "firefly-light")
 		bulb_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART
 		bulb_light.layer = LIGHTING_LAYER_BASE
 		bulb_light.plane = PLANE_LIGHTING
@@ -100,7 +101,85 @@
 			reduce_lifeprocess_on_death()
 			..()
 
+/mob/living/critter/small_animal/firefly/pyre
+	desc = "A bioluminescent insect that appears to be on fire."
+	light_color = "#FF2F2F"
+	var/obj/effects/firefly_pyre/pyre
+
+	New()
+		. = ..()
+		pyre = new(src)
+		pyre.layer = src.layer + 1
+		src.bioHolder.AddEffect("fire_resist")
+
+	disposing()
+		qdel(pyre)
+		pyre = null
+		..()
+
+	death(var/gibbed)
+		..()
+		desc = "A squashed bug."
+		qdel(pyre)
+
+
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		..()
+		if(isalive(src))
+			pop(M)
+
+	proc/pop()
+		src.visible_message("<span class='alert'><b>[src]</b> erupts into a huge column of flames! That was unexpected!</span>")
+		fireflash_sm(get_turf(src), 1, 3000, 1000)
+		death()
+
+	update_icon()
+		..()
+		UpdateOverlays(null, "bulb")
+
+	ai_controlled
+		is_npc = 1
+		New()
+			..()
+			src.ai = new /datum/aiHolder/wanderer(src)
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
+
+		death(var/gibbed)
+			qdel(src.ai)
+			src.ai = null
+			reduce_lifeprocess_on_death()
+			..()
+
+/obj/effects/firefly_pyre
+	name = "firefly_fire"
+	desc = ""
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "fire1"
+	vis_flags = VIS_INHERIT_ID
+	mouse_opacity = 0
+
+	New(newLoc)
+		..()
+		if(ismovable(newLoc))
+			var/atom/movable/A = newLoc
+			A.vis_contents += src
+
+		var/image/fire_light = SafeGetOverlayImage("pyre_light", 'icons/effects/fire.dmi', "1old")
+		fire_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | NO_CLIENT_COLOR | KEEP_APART
+		fire_light.layer = LIGHTING_LAYER_BASE
+		fire_light.plane = PLANE_LIGHTING
+		fire_light.blend_mode = BLEND_ADD
+		fire_light.alpha = 200
+		fire_light.transform *= 2
+		UpdateOverlays(fire_light, "pyre_light" )
+
+	disposing()
+		src.vis_locs = null
+		..()
+
 /mob/living/critter/small_animal/firefly/lightning
+	desc = "A bioluminescent insect that has some suspecious extra glow to it."
 	var/obj/effects/firefly_lightning/lightning
 
 	New()
@@ -125,6 +204,20 @@
 		if(isturf(src.loc) && istype(target) && !ON_COOLDOWN(src,"zap", 20 SECONDS))
 			arcFlash(src, target, 5000, 0.5)
 			lightning.recharge(20 SECONDS)
+
+	ai_controlled
+		is_npc = 1
+		New()
+			..()
+			src.ai = new /datum/aiHolder/wanderer(src)
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
+
+		death(var/gibbed)
+			qdel(src.ai)
+			src.ai = null
+			reduce_lifeprocess_on_death()
+			..()
 
 /obj/effects/firefly_lightning
 	name = "firefly_lightning"
@@ -246,9 +339,6 @@ TYPEINFO(/datum/component/bug_capture)
 		return FALSE
 	var/bug_count = 0
 	for(var/atom/C in A.contents)
-		// if(!can_jar(C))
-		// 	boutput(user, "<span class='alert'>[B] doesn't seem like it belongs with anything else.</span>")
-		// 	return FALSE
 		if(!istype(C, B.type) && !istype(B, C.type))
 			boutput(user, "<span class='alert'>[B] doesn't seem like it belongs with anything else.</span>")
 			return FALSE
@@ -335,7 +425,8 @@ TYPEINFO(/datum/component/bug_capture)
 		bulb.color = rgb(light_color[1], light_color[2], light_color[3])
 		A.underlays = list(bulb)
 
-		var/image/bulb_light = image('icons/mob/insect.dmi', "jar_glow", pixel_y=pixel_y_offset)
+		var/image/bulb_light = A.SafeGetOverlayImage("bulb-light", 'icons/mob/insect.dmi', "jar_glow")
+		bulb_light.pixel_y = pixel_y_offset
 		bulb_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART
 		bulb_light.layer = LIGHTING_LAYER_BASE
 		bulb_light.plane = PLANE_LIGHTING
