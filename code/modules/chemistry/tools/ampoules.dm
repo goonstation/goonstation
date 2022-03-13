@@ -2,7 +2,7 @@
 	name = "ampoule"
 	desc = "A chemical-containing ampoule."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "ampoule-0"
+	icon_state = "ampoule"
 	initial_volume = 5
 	flags = FPRINT | TABLEPASS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
@@ -52,14 +52,9 @@
 		src.fluid_image = image('icons/obj/chemical.dmi')
 	src.fluid_image.icon_state = "ampoule_liquid"
 	if(reagents.total_volume)
-		icon_state = "ampoule-5"
-		item_state = "ampoule-5"
 		var/datum/color/average = reagents.get_average_color()
 		src.fluid_image.color = average.to_rgba()
 		src.underlays += src.fluid_image
-	else
-		icon_state = "ampoule-0"
-		item_state = "ampoule-0"
 
 	signal_event("icon_updated")
 
