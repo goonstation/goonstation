@@ -1,5 +1,9 @@
 
 (t)sun mar 13 22
+(u)112358sam
+(p)7637
+(e)🎨|sprites
+(+)Cryo pods now show the defibrillator on their sprite if they have one.
 (u)LeahTheTech
 (p)7680
 (e)|
