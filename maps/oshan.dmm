@@ -45163,6 +45163,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/machinery/navbeacon/mule/ranch_north/east,
 /turf/simulated/floor/grasstodirt{
 	icon_state = "dirt";
 	name = "not grass"
@@ -47168,6 +47169,10 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/crew_quarters/info)
+"riE" = (
+/obj/machinery/navbeacon/mule/hydroponics_north,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "rqc" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -79948,7 +79953,7 @@ aKE
 ubH
 bgj
 aMf
-aMf
+riE
 aNJ
 aeW
 bhw
