@@ -24097,7 +24097,7 @@
 	dir = 1;
 	level = 2
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "eng_ignition";
 	name = "Burn Chamber Ignition";
 	pixel_x = 7;
