@@ -1,0 +1,76 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/reagent_dispensers/watertank,
+/turf/simulated/floor/plating,
+/area/space)
+"o" = (
+/obj/reagent_dispensers/still,
+/turf/simulated/floor/plating,
+/area/space)
+"u" = (
+/obj/item/plant/wheat,
+/obj/item/plant/wheat,
+/turf/simulated/floor/plating,
+/area/space)
+"v" = (
+/obj/item/plant/wheat,
+/obj/item/plant/wheat,
+/obj/item/plant/wheat,
+/obj/item/plant/wheat,
+/obj/item/plant/wheat,
+/turf/simulated/floor/plating,
+/area/space)
+"B" = (
+/turf/simulated/floor/plating,
+/area/space)
+"C" = (
+/obj/table/auto,
+/obj/machinery/glass_recycler{
+	density = 1;
+	pixel_y = 6
+	},
+/obj/item/storage/box/glassbox{
+	pixel_y = 6
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"S" = (
+/obj/item/plant/wheat,
+/obj/item/plant/wheat,
+/obj/item/plant/wheat,
+/turf/simulated/floor/plating,
+/area/space)
+"U" = (
+/obj/item/plant/wheat,
+/turf/simulated/floor/plating,
+/area/space)
+"V" = (
+/obj/reagent_dispensers/beerkeg,
+/turf/simulated/floor/plating,
+/area/space)
+
+(1,1,1) = {"
+V
+B
+o
+"}
+(2,1,1) = {"
+o
+v
+a
+"}
+(3,1,1) = {"
+V
+u
+U
+"}
+(4,1,1) = {"
+o
+u
+S
+"}
+(5,1,1) = {"
+V
+B
+C
+"}

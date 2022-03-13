@@ -1,0 +1,67 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/mob/living/critter/spider/clown,
+/obj/decal/cleanable/blood{
+	icon_state = "gib2"
+	},
+/obj/decal/fakeobjects/skeleton/decomposed_corpse{
+	icon_state = "clowncorpse"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"n" = (
+/obj/decal/cleanable/blood{
+	icon_state = "bloodhit4"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"s" = (
+/obj/reagent_dispensers/heliumtank,
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"t" = (
+/obj/item/clothing/mask/clown_hat,
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"u" = (
+/obj/decal/cleanable/blood{
+	icon_state = "bloodhit4"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "drip2d"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"F" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor7"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"M" = (
+/obj/item/instrument/bikehorn,
+/obj/decal/cleanable/blood{
+	icon_state = "bloodhit2"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"W" = (
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+
+(1,1,1) = {"
+M
+W
+s
+"}
+(2,1,1) = {"
+a
+F
+W
+"}
+(3,1,1) = {"
+n
+t
+u
+"}

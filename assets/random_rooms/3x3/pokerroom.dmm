@@ -1,0 +1,49 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/stool/chair/comfy{
+	dir = 1
+	},
+/turf/simulated/floor/wood/seven,
+/area/space)
+"o" = (
+/obj/table/wood/auto,
+/obj/item/card_group,
+/obj/machinery/light/small/floor/netural,
+/obj/item/decoration/ashtray,
+/turf/simulated/floor/wood/seven,
+/area/space)
+"w" = (
+/obj/stool/chair/comfy{
+	dir = 8
+	},
+/turf/simulated/floor/wood/seven,
+/area/space)
+"J" = (
+/turf/simulated/floor/wood/seven,
+/area/space)
+"M" = (
+/obj/stool/chair/comfy{
+	dir = 4
+	},
+/turf/simulated/floor/wood/seven,
+/area/space)
+"O" = (
+/obj/stool/chair/comfy,
+/turf/simulated/floor/wood/seven,
+/area/space)
+
+(1,1,1) = {"
+J
+M
+J
+"}
+(2,1,1) = {"
+O
+o
+a
+"}
+(3,1,1) = {"
+J
+w
+J
+"}

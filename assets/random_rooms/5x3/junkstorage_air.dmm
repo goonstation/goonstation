@@ -1,0 +1,62 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/plating,
+/area/space)
+"d" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"u" = (
+/obj/machinery/atmospherics/portables_connector/south,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"y" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor/plating,
+/area/space)
+"I" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/plating,
+/area/space)
+"P" = (
+/obj/machinery/atmospherics/portables_connector/north,
+/turf/simulated/floor/plating,
+/area/space)
+"R" = (
+/obj/machinery/atmospherics/valve/vertical,
+/turf/simulated/floor/plating,
+/area/space)
+
+(1,1,1) = {"
+a
+a
+a
+"}
+(2,1,1) = {"
+d
+y
+a
+"}
+(3,1,1) = {"
+y
+y
+a
+"}
+(4,1,1) = {"
+u
+R
+P
+"}
+(5,1,1) = {"
+I
+a
+I
+"}

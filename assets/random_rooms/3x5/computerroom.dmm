@@ -1,0 +1,123 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/plating,
+/area/space)
+"c" = (
+/obj/computerframe{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"j" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"l" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"p" = (
+/obj/computer3frame/terminal{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"t" = (
+/obj/table/auto,
+/obj/item/storage/box/cablesbox,
+/obj/item/wirecutters,
+/turf/simulated/floor/plating,
+/area/space)
+"u" = (
+/obj/item/cable_coil/cut,
+/turf/simulated/floor/plating,
+/area/space)
+"x" = (
+/obj/item/cable_coil/cut{
+	icon_state = "coil1"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"y" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"z" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"A" = (
+/obj/table/auto,
+/obj/item/disk/data/floppy/read_only/communications{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/obj/item/disk/data/floppy/read_only/terminal_os{
+	pixel_x = -8;
+	pixel_y = 7
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"E" = (
+/obj/table/auto,
+/obj/item/storage/box/diskbox{
+	pixel_y = 4;
+	pixel_x = 6
+	},
+/obj/item/screwdriver{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/disk/data/fixed_disk{
+	pixel_y = -2
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"V" = (
+/obj/table/auto,
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/item/sheet/glass{
+	pixel_x = 5
+	},
+/turf/simulated/floor/plating,
+/area/space)
+
+(1,1,1) = {"
+p
+t
+x
+c
+V
+"}
+(2,1,1) = {"
+l
+z
+u
+j
+a
+"}
+(3,1,1) = {"
+a
+E
+l
+y
+A
+"}

@@ -1,0 +1,54 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/storage/closet/coffin/wood,
+/obj/random_item_spawner/snacks/one_or_zero,
+/obj/random_item_spawner/mask/one_or_zero,
+/turf/simulated/floor/plating/random,
+/area/space)
+"g" = (
+/obj/storage/closet/coffin,
+/obj/random_item_spawner/shoe/one_or_zero,
+/turf/simulated/floor/plating/random,
+/area/space)
+"j" = (
+/obj/storage/closet/coffin,
+/obj/random_item_spawner/snacks/one_or_zero,
+/obj/random_item_spawner/mask/one_or_zero,
+/turf/simulated/floor/plating/random,
+/area/space)
+"t" = (
+/obj/storage/closet/coffin/wood,
+/obj/random_item_spawner/shoe/one_or_zero,
+/turf/simulated/floor/plating/random,
+/area/space)
+"D" = (
+/turf/simulated/floor/plating/random,
+/area/space)
+"M" = (
+/obj/storage/closet/coffin,
+/obj/random_item_spawner/snacks/one_or_zero,
+/obj/random_item_spawner/medicine/one_or_zero,
+/turf/simulated/floor/plating/random,
+/area/space)
+"U" = (
+/obj/storage/closet/coffin/wood,
+/obj/random_item_spawner/shoe/one_or_zero,
+/obj/random_item_spawner/medicine/one_or_zero,
+/turf/simulated/floor/plating/random,
+/area/space)
+
+(1,1,1) = {"
+U
+M
+D
+"}
+(2,1,1) = {"
+a
+g
+D
+"}
+(3,1,1) = {"
+t
+j
+D
+"}
