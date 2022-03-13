@@ -3125,6 +3125,7 @@
 					if(!master || !master.on || master.stunned || master.idle) return
 					if(master.task != src) return
 					awaiting_beacon = 0
+					patrol_delay = 5
 					if(nearest_beacon && !master.moving)
 						master.navigate_to(nearest_beacon_loc, max_dist=30)
 					else
