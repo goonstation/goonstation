@@ -288,10 +288,10 @@
 
 		if(src.material) src.material.triggerOnBullet(src, src, P)
 
-		if (!damage)
+		if (damage <= 0)
 			return
 		if(P.proj_data.damage_type == D_KINETIC || (P.proj_data.damage_type == D_ENERGY && damage))
-			src.take_damage(damage / 1.7)
+			src.take_damage(max(1, damage / 3))
 		else if (P.proj_data.damage_type == D_PIERCING)
 			src.take_damage(damage)
 
