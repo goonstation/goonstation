@@ -1,5 +1,9 @@
 
 (t)sun mar 13 22
+(u)Pali and Sord
+(p)7800
+(e)🗺|mapping
+(*)Added some new randomized rooms, coming soon to a station near you!
 (u)Gonzako
 (p)7462
 (e)⚖|balance
