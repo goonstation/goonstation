@@ -24,7 +24,7 @@
 
 		update_group_sprite()
 
-	/*
+/*
 	proc/setMonoCard(var/obj/item/playing_card/target , var/suit, var/num)
 		var/plain_suit = TRUE
 		var/suit_name = ""
@@ -103,4 +103,10 @@
 			else  //If I fuck up generation this will get people complaining
 				name = "Wild Draw 4"
 				num = 1
-
+		icon_state = "mono-[suit]-[num]"
+		update_stored_info()
+		//Only meant to be used as with the mono card-game generation
+		//Same as calling update_card_information on card holder
+		card_name = "MONO"
+		card_style = "mono"
+		total_cards = 108
