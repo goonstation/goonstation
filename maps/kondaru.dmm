@@ -91,7 +91,7 @@
 	icon_state = "hvent";
 	name = "air vent"
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of a human. There seem to be a few bits missing."
 	},
 /obj/item/clothing/mask/breath,
@@ -46253,7 +46253,7 @@
 	},
 /area/station/hallway/primary/west)
 "jpl" = (
-/obj/decal/pole{
+/obj/decal/fakeobjects/pole{
 	pixel_y = 27
 	},
 /turf/simulated/floor/wood,
@@ -57020,7 +57020,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "uqp" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "It's all covered in a sticky mess, and there are chunks of uniform fused to the bone.";
 	name = "sticky skeleton"
 	},

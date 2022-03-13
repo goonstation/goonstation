@@ -767,7 +767,7 @@
 
 	cargonia
 		spawn_contents = list(/obj/item/radio_tape/advertisement/cargonia,
-		/obj/item/clothing/under/rank/cargo,/obj/decal/skeleton)
+		/obj/item/clothing/under/rank/cargo,/obj/decal/fakeobjects/skeleton)
 
 	escape
 		spawn_contents = list(/obj/item/sea_ladder,

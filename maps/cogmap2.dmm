@@ -24119,7 +24119,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The partially decomposed corpse of some poor chump.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";

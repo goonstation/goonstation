@@ -16438,7 +16438,7 @@
 	},
 /area/station/hallway/primary/south)
 "aBu" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
@@ -18665,7 +18665,7 @@
 /area/station/chapel/sanctuary)
 "aGG" = (
 /obj/disposalpipe/segment/mail,
-/obj/decal/pole{
+/obj/decal/fakeobjects/pole{
 	pixel_x = 14
 	},
 /turf/simulated/floor/neutral/side{

@@ -68,40 +68,6 @@
 		add_filter("motion blur", 1, motion_blur_filter(x=0, y=3))
 		..()
 
-/obj/decal/skeleton
-	name = "skeleton"
-	desc = "The remains of a human."
-	opacity = 0
-	density = 0
-	anchored = 1
-	icon = 'icons/obj/adventurezones/void.dmi'
-	icon_state = "skeleton_l"
-	plane = PLANE_DEFAULT
-
-	decomposed_corpse
-		name = "decomposed corpse"
-		desc = "Eugh, the stench is horrible!"
-		icon = 'icons/misc/hstation.dmi'
-		icon_state = "body1"
-
-	unanchored
-		anchored = 0
-
-		summon
-			New()
-				flick("skeleton_summon", src)
-				..()
-
-
-	cap
-		name = "remains of the captain"
-		desc = "The remains of the captain of this station ..."
-		opacity = 0
-		density = 0
-		anchored = 1
-		icon = 'icons/obj/adventurezones/void.dmi'
-		icon_state = "skeleton_l"
-
 /obj/decal/floatingtiles
 	name = "floating tiles"
 	desc = "These tiles are just floating around in the void."
@@ -177,36 +143,6 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	density = 1
 */
 
-/obj/decal/pole
-	name = "Barber Pole"
-	icon = 'icons/obj/decoration.dmi'
-	icon_state = "pole"
-	anchored = 1
-	density = 0
-	desc = "Barber poles historically were signage used to convey that the barber would perform services such as blood letting and other medical procedures, with the red representing blood, and the white representing the bandaging. In America, long after the time when blood-letting was offered, a third colour was added to bring it in line with the colours of their national flag. This one is in space."
-	layer = OBJ_LAYER
-	plane = PLANE_DEFAULT
-
-/obj/decal/oven
-	name = "Oven"
-	desc = "An old oven."
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "oven_off"
-	anchored = 1
-	density = 1
-	layer = OBJ_LAYER
-	plane = PLANE_DEFAULT
-
-/obj/decal/sink
-	name = "Sink"
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "sink"
-	desc = "The sink doesn't appear to be connected to a waterline."
-	anchored = 1
-	density = 1
-	layer = OBJ_LAYER
-	plane = PLANE_DEFAULT
-
 obj/decal/fakeobjects
 	layer = OBJ_LAYER
 	plane = PLANE_DEFAULT
@@ -218,6 +154,70 @@ obj/decal/fakeobjects
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.true_name][name_suffix(null, 1)]"
+
+/obj/decal/fakeobjects/skeleton
+	name = "skeleton"
+	desc = "The remains of a human."
+	opacity = 0
+	density = 0
+	anchored = 1
+	icon = 'icons/obj/adventurezones/void.dmi'
+	icon_state = "skeleton_l"
+	plane = PLANE_DEFAULT
+
+	decomposed_corpse
+		name = "decomposed corpse"
+		desc = "Eugh, the stench is horrible!"
+		icon = 'icons/misc/hstation.dmi'
+		icon_state = "body1"
+
+	unanchored
+		anchored = 0
+
+		summon
+			New()
+				flick("skeleton_summon", src)
+				..()
+
+
+	cap
+		name = "remains of the captain"
+		desc = "The remains of the captain of this station ..."
+		opacity = 0
+		density = 0
+		anchored = 1
+		icon = 'icons/obj/adventurezones/void.dmi'
+		icon_state = "skeleton_l"
+
+/obj/decal/fakeobjects/pole
+	name = "Barber Pole"
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "pole"
+	anchored = 1
+	density = 0
+	desc = "Barber poles historically were signage used to convey that the barber would perform services such as blood letting and other medical procedures, with the red representing blood, and the white representing the bandaging. In America, long after the time when blood-letting was offered, a third colour was added to bring it in line with the colours of their national flag. This one is in space."
+	layer = OBJ_LAYER
+	plane = PLANE_DEFAULT
+
+/obj/decal/fakeobjects/oven
+	name = "Oven"
+	desc = "An old oven."
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "oven_off"
+	anchored = 1
+	density = 1
+	layer = OBJ_LAYER
+	plane = PLANE_DEFAULT
+
+/obj/decal/fakeobjects/sink
+	name = "Sink"
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "sink"
+	desc = "The sink doesn't appear to be connected to a waterline."
+	anchored = 1
+	density = 1
+	layer = OBJ_LAYER
+	plane = PLANE_DEFAULT
 
 /obj/decal/fakeobjects/console_lever
 	name = "lever console"
