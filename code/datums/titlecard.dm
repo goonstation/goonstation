@@ -59,7 +59,8 @@
 	if (last_pregame_html == pregameHTML)
 		for(var/client/C)
 			if(istype(C.mob, /mob/new_player))
-				C << output(list2params(list(id, text)), "pregameBrowser:set_area")
+				if(winget(C, "pregameBrowser", "is-visible") == "true")
+					C << output(list2params(list(id, text)), "pregameBrowser:set_area")
 
 /client/verb/send_lobby_text()
 	set name = ".send-lobby-text"
@@ -80,8 +81,9 @@
 	if(current_state <= GAME_STATE_PREGAME)
 		return
 #endif
-	for (var/id in maptext_areas)
-		C << output(list2params(list(id, maptext_areas[id])), "pregameBrowser:set_area")
+	if(winget(C, "pregameBrowser", "is-visible") == "true")
+		for (var/id in maptext_areas)
+			C << output(list2params(list(id, maptext_areas[id])), "pregameBrowser:set_area")
 
 ///old title card turf
 /obj/titlecard
