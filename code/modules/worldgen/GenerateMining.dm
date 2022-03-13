@@ -281,7 +281,9 @@ var/list/miningModifiers = list()
 	var/num_to_place = AST_NUMPREFABS + rand(0,AST_NUMPREFABSEXTRA)
 	for (var/n = 1, n <= num_to_place, n++)
 		game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
-		var/datum/mapPrefab/mining/M = pick_map_prefab(/datum/mapPrefab/mining, unwanted_tags = map_currently_underwater ? null : list("underwater"))
+		var/datum/mapPrefab/mining/M = pick_map_prefab(/datum/mapPrefab/mining,
+			wanted_tags = map_currently_underwater ? list("underwater") : null,
+			unwanted_tags = map_currently_underwater ? null : list("underwater"))
 		if (M)
 			var/maxX = (world.maxx - M.prefabSizeX - AST_MAPBORDER)
 			var/maxY = (world.maxy - M.prefabSizeY - AST_MAPBORDER)
