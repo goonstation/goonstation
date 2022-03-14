@@ -1810,9 +1810,10 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			boutput(M, "<span class='alert'><b>Your armor blocks the shrapnel!</b></span>")
 		else
 			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
+			implanted.bleed_time = 25 * sqstrength
 			implanted.owner = M
 			M.implant += implanted
-			implanted.implanted(M, null, 25 * sqstrength)
+			implanted.implanted(M, null)
 			boutput(M, "<span class='alert'><b>You are struck by shrapnel!</b></span>")
 			if (!M.stat)
 				M.emote("scream")
@@ -1864,9 +1865,10 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				boutput(M, "<span class='alert'><b>Your armor blocks the chunks of [src.name]!</b></span>")
 			else
 				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
+				implanted.bleed_time = 25 * sqstrength
 				implanted.owner = M
 				M.implant += implanted
-				implanted.implanted(M, null, 25 * sqstrength)
+				implanted.implanted(M, null)
 				boutput(M, "<span class='alert'><b>You are struck by chunks of [src.name]!</b></span>")
 				if (!M.stat)
 					M.emote("scream")

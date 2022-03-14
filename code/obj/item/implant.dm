@@ -926,10 +926,15 @@ THROWING DARTS
 		icon_state = "blowdart"
 
 /obj/item/implant/projectile/implanted(mob/living/carbon/C, mob/I)
+	SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, C)
+	implanted = 1
+	owner = C
+
 	if (!istype(C) || !isnull(I)) //Don't make non-organics bleed and don't act like a launched bullet if some doofus is just injecting it somehow.
 		return
 
-	..()
+	if (implant_overlay)
+		C.update_clothing()
 
 	if (!src.bleed_time)
 		return
