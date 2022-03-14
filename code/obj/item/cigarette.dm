@@ -553,7 +553,7 @@
 
 	New()
 		..()
-		src.reagents.maximum_volume = 20 // why on earth was this 600?!
+		src.reagents.maximum_volume = 600
 		src.reagents.clear_reagents()
 
 	is_open_container()
