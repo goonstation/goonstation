@@ -96,12 +96,6 @@
 /turf/space,
 /area/noGenerate)
 "fd" = (
-/obj/decal/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body1";
-	name = "decomposed corpse"
-	},
 /obj/decal/cleanable/vomit,
 /turf/simulated/floor/carpet/purple/standard/edge/east,
 /area/prefab/crashed_hop_shuttle)
@@ -402,6 +396,7 @@
 /area/prefab/crashed_hop_shuttle)
 "xg" = (
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot,
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
 /turf/simulated/floor/carpet/purple/fancy/narrow/east,
 /area/prefab/crashed_hop_shuttle)
 "xh" = (
