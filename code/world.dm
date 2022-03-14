@@ -276,11 +276,6 @@ var/f_color_selector_handler/F_Color_Selector
 					do_thing
 		*/
 
-		Z_LOG_DEBUG("Preload", "  /datum/generatorPrefab")
-		for(var/A in childrentypesof(/datum/generatorPrefab))
-			var/datum/generatorPrefab/R = new A()
-			miningModifiers.Add(R)
-
 		Z_LOG_DEBUG("Preload", "  /datum/faction")
 		for(var/A in childrentypesof(/datum/faction))
 			var/datum/faction/R = new A()
@@ -539,6 +534,10 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
 	makeMiningLevel()
 	#endif
+
+	UPDATE_TITLE_STATUS("Building random station rooms")
+	Z_LOG_DEBUG("World/Init", "Setting up random rooms...")
+	buildRandomRooms()
 
 	UPDATE_TITLE_STATUS("Initializing biomes")
 	Z_LOG_DEBUG("World/Init", "Setting up biomes...")

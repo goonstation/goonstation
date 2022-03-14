@@ -8519,7 +8519,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
 "api" = (
-/obj/decal/pole{
+/obj/decal/fakeobjects/pole{
 	pixel_x = -14
 	},
 /turf/simulated/floor/black,

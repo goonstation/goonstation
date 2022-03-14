@@ -1,0 +1,64 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,
+/turf/simulated/floor/specialroom/bar,
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/glass_recycler{
+	density = 1;
+	pixel_y = 6
+	},
+/obj/item/storage/box/glassbox{
+	pixel_y = 6
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/dmm_suite/clear_area)
+"C" = (
+/obj/machinery/chem_dispenser/alcohol,
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/turf/simulated/floor/specialroom/bar,
+/area/dmm_suite/clear_area)
+"Q" = (
+/turf/simulated/floor/specialroom/bar,
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/machinery/chem_dispenser/soda,
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/turf/simulated/floor/specialroom/bar,
+/area/dmm_suite/clear_area)
+"Y" = (
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/specialroom/bar,
+/area/dmm_suite/clear_area)
+"Z" = (
+/obj/stool/bar,
+/turf/simulated/floor/specialroom/bar,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+Z
+Q
+s
+"}
+(2,1,1) = {"
+a
+Y
+Q
+"}
+(3,1,1) = {"
+Z
+Q
+Z
+"}
+(4,1,1) = {"
+S
+Y
+a
+"}
+(5,1,1) = {"
+C
+Q
+Z
+"}

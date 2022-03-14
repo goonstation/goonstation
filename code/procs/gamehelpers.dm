@@ -271,6 +271,9 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 	var/prefixAndMessage = separate_radio_prefix_and_message(message)
 	var/prefix = prefixAndMessage[1]
 	message = prefixAndMessage[2]
+	//Stores a human readable list of effects on the speech for admin logging. Please append to this list if you add more stuff here.
+	var/messageEffects = list()
+	var/wasUncool = phrase_log.is_uncool(message)
 
 	if (!H || !istext(message))
 		return
@@ -281,20 +284,24 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 			S = H.bioHolder.GetEffect(X)
 			if (istype(S,/datum/bioEffect/speech/))
 				message = S.OnSpeak(message)
+				messageEffects += S
 
 	if (H.grabbed_by && length(H.grabbed_by))
 		for (var/obj/item/grab/rag_muffle/RM in H.grabbed_by)
 			if (RM.state > 0)
 				message = mufflespeech(message)
+				messageEffects += "Muffled by [H.grabbed_by]"
 				break
 
 	if (iscluwne(H))
 		message = honk(message)
+		messageEffects += "Cluwne Honk"
 		if (world.time >= (H.last_cluwne_noise + CLUWNE_NOISE_DELAY))
 			playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
 			H.last_cluwne_noise = world.time
 	if (ishorse(H))
 		message = neigh(message)
+		messageEffects += "Horse"
 		if (world.time >= (H.last_cluwne_noise + CLUWNE_NOISE_DELAY))
 			playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
 			H.last_cluwne_noise = world.time
@@ -302,17 +309,21 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 	if ((H.reagents && H.reagents.get_reagent_amount("ethanol") > 30 && !isdead(H)) || H.traitHolder.hasTrait("alcoholic"))
 		if((H.reagents.get_reagent_amount("ethanol") > 125 && prob(20)))
 			message = say_superdrunk(message)
+			messageEffects += "Superdrunk"
 		else
 			message = say_drunk(message)
+			messageEffects += "Drunk"
 
 	var/datum/ailment_data/disease/berserker = H.find_ailment_by_type(/datum/ailment/disease/berserker/)
 	if (istype(berserker,/datum/ailment_data/disease/) && berserker.stage > 1)
 		if (prob(10))
 			message = say_furious(message)
+			messageEffects += "Furious"
 		message = replacetext(message, ".", "!")
 		message = replacetext(message, ",", "!")
 		message = replacetext(message, "?", "!")
 		message = uppertext(message)
+		messageEffects += "Berserk"
 		var/addexc = rand(2,6)
 		while (addexc > 0)
 			message += "!"
@@ -321,9 +332,11 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 	if(H.bioHolder && H.bioHolder.genetic_stability < 50)
 		if (prob(40))
 			message = say_gurgle(message)
+			messageEffects += "Gurgle"
 
 	if(H.mutantrace && !isdead(H))
 		message = H.mutantrace.say_filter(message)
+		messageEffects += "[H.mutantrace] say_filter()"
 
 	if(HasturPresent == 1)
 		message = replacetext(message, "Hastur", "????")
@@ -341,11 +354,17 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 		message = replacetext(message, "H astur", "????")
 		message = replacetext(message, "H a s tur", "????")
 		message = replacetext(message, "H a s t ur", "????")
+		messageEffects += "Hastur"
 
 #ifdef CANADADAY
-	if (prob(30)) message = replacetext(message, "?", " Eh?")
+	if (prob(30))
+		message = replacetext(message, "?", " Eh?")
+		messageEffects += "Canada Day eh?"
 #endif
 
+	if(phrase_log.is_uncool(message) && !wasUncool)
+		logTheThing("admin",H,null,"[H] tried to say [prefixAndMessage[2]] but it was garbled into [message] which is uncool by the following effects: "+jointext(messageEffects,", ")+". We garbled the bad words.")
+		message = replacetext(message,phrase_log.uncool_words,pick("urr","blargh","der","hurr","pllt"))
 	return prefix + message
 
 
