@@ -1,5 +1,9 @@
 
 (t)sun mar 13 22
+(u)glowbold
+(p)7686
+(e)🎨|sprites
+(+)AI players now have a `Map` and `Core` button in their interface for easier station traversal.
 (u)Kubius and Sord
 (p)7803
 (e)🆕🗺|feature, mapping
