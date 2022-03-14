@@ -1,0 +1,64 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/shower{
+	dir = 1;
+	pixel_y = 12
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary,
+/area/dmm_suite/clear_area)
+"c" = (
+/obj/machinery/drainage,
+/obj/machinery/shower{
+	dir = 1;
+	pixel_y = 12
+	},
+/turf/simulated/floor/sanitary,
+/area/dmm_suite/clear_area)
+"f" = (
+/obj/rack,
+/obj/item/sponge{
+	name = "loofah"
+	},
+/obj/item/clothing/under/gimmick/macho,
+/turf/simulated/floor/sanitary,
+/area/dmm_suite/clear_area)
+"i" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/sanitary,
+/area/dmm_suite/clear_area)
+"k" = (
+/obj/table/auto,
+/obj/towelbin,
+/turf/simulated/floor/sanitary,
+/area/dmm_suite/clear_area)
+"L" = (
+/obj/machinery/shower,
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary,
+/area/dmm_suite/clear_area)
+"N" = (
+/turf/simulated/floor/sanitary,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+a
+k
+N
+k
+L
+"}
+(2,1,1) = {"
+N
+i
+N
+i
+N
+"}
+(3,1,1) = {"
+c
+N
+N
+f
+L
+"}
