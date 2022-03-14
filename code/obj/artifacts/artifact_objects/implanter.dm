@@ -18,7 +18,7 @@
 	var/ready = TRUE
 	var/rechargeTime = null
 	var/obj/item/implant/artifact/imp = null
-	var/list/implantedUsers = list()
+	var/list/fingerprintsImp = list()
 
 	New()
 		..()
@@ -36,11 +36,11 @@
 			boutput(H, "<b>[O]</b> shifts slightly but remains inactive.")
 			return
 
-		if (H.key in implantedUsers)
+		if (H.bioHolder.uid_hash in fingerprintsImp)
 			boutput(H, "<b>[O]</b> stays still.")
 			return
 
-		implantedUsers += H.key
+		fingerprintsImp += H.bioHolder.uid_hash
 
 		switch(artitype.name)
 			if ("eldritch")
