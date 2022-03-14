@@ -10581,6 +10581,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "ayV" = (
@@ -11003,6 +11004,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "azU" = (
@@ -17291,10 +17293,6 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail/bent/north,
-/obj/item/storage/wall/emergency{
-	dir = 8;
-	pixel_x = 32
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aOO" = (
@@ -17451,10 +17449,6 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/item/storage/wall/emergency{
-	dir = 8;
-	pixel_x = 32
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aPf" = (
@@ -17932,10 +17926,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/item/storage/wall/emergency{
-	dir = 8;
-	pixel_x = 32
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -18503,10 +18493,6 @@
 	},
 /obj/disposalpipe/segment/morgue{
 	dir = 4
-	},
-/obj/item/storage/wall/emergency{
-	dir = 8;
-	pixel_x = 32
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -21952,10 +21938,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aZI" = (
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
@@ -22909,6 +22891,7 @@
 	name = "malfunctioning airlock";
 	secondsElectrified = -1
 	},
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "bct" = (
@@ -77252,6 +77235,9 @@
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
 	},
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "kwQ" = (
@@ -78423,6 +78409,11 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
+"ryK" = (
+/obj/disposalpipe/segment,
+/obj/storage/closet/emergency,
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "rAw" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -122908,8 +122899,8 @@ aKY
 aGu
 ayU
 azT
-awU
-awU
+ryK
+ryK
 awU
 aPd
 aQg

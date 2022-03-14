@@ -1,0 +1,277 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "6-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "5-8"
+	},
+/obj/cable{
+	icon_state = "5-9"
+	},
+/obj/cable{
+	icon_state = "6-10"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "9-10"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-9"
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/space)
+"l" = (
+/obj/decal/cleanable/cobweb2,
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "5-6"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "9-10"
+	},
+/obj/cable{
+	icon_state = "6-10"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "4-9"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/space)
+"w" = (
+/obj/stool/chair/wooden{
+	desc = "An antique chair.";
+	dir = 8;
+	name = "old wooden chair"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "4-9"
+	},
+/obj/cable{
+	icon_state = "1-10"
+	},
+/turf/simulated/floor/redblack{
+	dir = 6
+	},
+/area/space)
+"H" = (
+/obj/decal/cleanable/cobweb,
+/obj/decal/cleanable/cobweb2,
+/obj/item/kitchen/utensil/knife/cleaver,
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/space)
+"O" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "4-9"
+	},
+/obj/cable{
+	icon_state = "5-9"
+	},
+/obj/cable{
+	icon_state = "6-10"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "4-10"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "5-6"
+	},
+/obj/cable{
+	icon_state = "2-5"
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/space)
+"U" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "5-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "1-6"
+	},
+/obj/stool/chair/wooden{
+	desc = "An antique chair.";
+	dir = 4;
+	name = "old wooden chair"
+	},
+/turf/simulated/floor/redblack{
+	dir = 10
+	},
+/area/space)
+"V" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "1-5"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "1-9"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "8-9"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "8-10"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "4-6"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "4-5"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-6"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-10"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/space)
+"Y" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "9-10"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "5-6"
+	},
+/obj/cable{
+	icon_state = "5-9"
+	},
+/obj/cable,
+/obj/table/wood/round/auto{
+	desc = "This table is also pretty dang old.";
+	name = "old wooden table"
+	},
+/obj/item/device/light/candle/haunted{
+	pixel_y = 14;
+	rand_pos = 0
+	},
+/turf/simulated/floor/redblack,
+/area/space)
+"Z" = (
+/obj/decal/cleanable/cobweb,
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/spider{
+	desc = "Eww."
+	},
+/obj/item/clothing/gloves/black,
+/obj/item/matchbook{
+	desc = "The faded logo looks like a series of geometric lines around a sun design. Some old club or lounge, perhaps?";
+	name = "old matchbook"
+	},
+/obj/item/clothing/shoes/black,
+/obj/item/clothing/under/suit/pinstripe,
+/obj/item/paper{
+	info = ": )"
+	},
+/obj/storage/closet/dresser{
+	anchored = 1;
+	desc = "An ornately-designed antique. How'd anyone even get it down here?";
+	name = "antique armoire"
+	},
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/space)
+
+(1,1,1) = {"
+Z
+O
+U
+"}
+(2,1,1) = {"
+l
+V
+Y
+"}
+(3,1,1) = {"
+H
+a
+w
+"}
