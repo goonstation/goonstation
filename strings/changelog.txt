@@ -1,5 +1,16 @@
 
+(t)mon mar 14 22
+(u)Zamujasa
+(+)The adminhelp and mentorhelp dialog boxes now mention that your requests are sent via Discord.
 (t)sun mar 13 22
+(u)glowbold
+(p)7686
+(e)🎨|sprites
+(+)AI players now have a `Map` and `Core` button in their interface for easier station traversal.
+(u)Kubius and Sord
+(p)7803
+(e)🆕🗺|feature, mapping
+(+)Added randomized rooms to Kondaru.
 (u)Pali and Sord
 (p)7801
 (e)🗺|mapping
