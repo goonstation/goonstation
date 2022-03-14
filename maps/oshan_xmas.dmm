@@ -26150,11 +26150,11 @@
 /area/station/crew_quarters/bar)
 "bjc" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/dart/bardart{
 	pixel_x = -3
 	},
-/obj/item/implant/projectile/bardart,
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/dart/bardart,
+/obj/item/implant/projectile/dart/bardart{
 	pixel_x = 3
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/ne,

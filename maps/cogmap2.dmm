@@ -13657,23 +13657,23 @@
 "aEP" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/bowl,
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/dart/bardart{
 	pixel_x = -5;
 	pixel_y = 7
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/dart/bardart{
 	pixel_x = -5;
 	pixel_y = 4
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/dart/bardart{
 	pixel_x = -1;
 	pixel_y = 7
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/dart/bardart{
 	pixel_x = -1;
 	pixel_y = 7
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/dart/bardart{
 	pixel_x = 2;
 	pixel_y = 5
 	},

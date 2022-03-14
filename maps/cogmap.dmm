@@ -9295,26 +9295,26 @@
 /obj/item/plate{
 	pixel_y = 2
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/dart/bardart{
 	pixel_x = 7;
 	pixel_y = 5
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/dart/bardart{
 	pixel_x = -4;
 	pixel_y = 6
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/dart/bardart{
 	pixel_x = -9;
 	pixel_y = 5
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/dart/bardart{
 	pixel_x = 2;
 	pixel_y = 6
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/dart/bardart{
 	pixel_x = -6
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/dart/bardart{
 	pixel_x = 4
 	},
 /turf/simulated/floor/specialroom/bar/edge{
