@@ -56,6 +56,7 @@
 	name = "Area Lighting"
 	event_handler_flags = IMMUNE_SINGULARITY | USE_FLUID_ENTER
 	invisibility = INVIS_ALWAYS_ISH
+	anchored = 2
 	var/area/my_area = null
 	var/list/lights = list()
 	var/brightness_placeholder = 1	//hey, maybe later use this in a way that is more optimized than iterating through each individual light
@@ -556,8 +557,8 @@
 		if(current_lamp.light_status == LIGHT_OK)
 			if(on && current_lamp.rigged)
 				if (current_lamp.rigger)
-					message_admins("[key_name(current_lamp.rigger)]'s rigged bulb exploded in [src.loc.loc], [showCoords(src.x, src.y, src.z)].")
-					logTheThing("combat", current_lamp.rigger, null, "'s rigged bulb exploded in [current_lamp.rigger.loc.loc] ([showCoords(src.x, src.y, src.z)])")
+					message_admins("[key_name(current_lamp.rigger)]'s rigged bulb exploded in [src.loc.loc], [log_loc(src)].")
+					logTheThing("combat", current_lamp.rigger, null, "'s rigged bulb exploded in [current_lamp.rigger.loc.loc] ([log_loc(src)])")
 				explode()
 			if(on && prob(current_lamp.breakprob))
 				current_lamp.light_status = LIGHT_BURNED
@@ -565,7 +566,7 @@
 				on = 0
 				light.disable()
 				elecflash(src,radius = 1, power = 2, exclude_center = 0)
-				logTheThing("station", null, null, "Light '[name]' burnt out (breakprob: [current_lamp.breakprob]) at ([showCoords(src.x, src.y, src.z)])")
+				logTheThing("station", null, null, "Light '[name]' burnt out (breakprob: [current_lamp.breakprob]) at ([log_loc(src)])")
 
 
 // attempt to set the light's on/off status
@@ -788,6 +789,8 @@
 		if (prot > 0 || user.is_heat_resistant())
 			boutput(user, "You remove the light [fitting].")
 		else
+			if(ON_COOLDOWN(src, "burn_hands", 1 SECOND))
+				return
 			boutput(user, "You try to remove the light [fitting], but you burn your hand on it!")
 			H.UpdateDamageIcon()
 			H.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 5)
@@ -807,7 +810,7 @@
 
 	if(!nospark)
 		if(on)
-			logTheThing("station", null, null, "Light '[name]' was on and has been broken, spewing sparks everywhere ([showCoords(src.x, src.y, src.z)])")
+			logTheThing("station", null, null, "Light '[name]' was on and has been broken, spewing sparks everywhere ([log_loc(src)])")
 			elecflash(src,radius = 1, power = 2, exclude_center = 0)
 	current_lamp.light_status = LIGHT_BROKEN
 	current_lamp.update()
@@ -846,15 +849,15 @@
 		if(rigged)
 			if(prob(1))
 				if (rigger)
-					message_admins("[key_name(rigger)]'s rigged bulb exploded in [src.loc.loc], [showCoords(src.x, src.y, src.z)].")
-					logTheThing("combat", rigger, null, "'s rigged bulb exploded in [rigger.loc.loc] ([showCoords(src.x, src.y, src.z)])")
+					message_admins("[key_name(rigger)]'s rigged bulb exploded in [src.loc.loc], [log_loc(src)].")
+					logTheThing("combat", rigger, null, "'s rigged bulb exploded in [rigger.loc.loc] ([log_loc(src)])")
 				explode()
 				rigged = 0
 				rigger = null
 			else if(prob(2))
 				if (rigger)
-					message_admins("[key_name(rigger)]'s rigged bulb tried to explode but failed in [src.loc.loc], [showCoords(src.x, src.y, src.z)].")
-					logTheThing("combat", rigger, null, "'s rigged bulb tried to explode but failed in [rigger.loc.loc] ([showCoords(src.x, src.y, src.z)])")
+					message_admins("[key_name(rigger)]'s rigged bulb tried to explode but failed in [src.loc.loc], [log_loc(src)].")
+					logTheThing("combat", rigger, null, "'s rigged bulb tried to explode but failed in [rigger.loc.loc] ([log_loc(src)])")
 				rigged = 0
 				rigger = null
 */
@@ -1335,8 +1338,7 @@
 		boutput(user, "You inject the solution into the [src].")
 
 		if(S.reagents.has_reagent("plasma", 1))
-			message_admins("[key_name(user)] rigged [src] to explode in [user.loc.loc], [showCoords(user.x, user.y, user.z)].")
-			logTheThing("combat", user, null, "rigged [src] to explode in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+			logTheThing("combat", user, null, "rigged [src] to explode in [user.loc.loc] ([log_loc(user)])")
 			rigged = 1
 			rigger = user
 

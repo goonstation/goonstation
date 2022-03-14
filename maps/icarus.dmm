@@ -5300,7 +5300,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
 "alX" = (
-/obj/decal/pole{
+/obj/decal/fakeobjects/pole{
 	pixel_x = -14
 	},
 /obj/cable{

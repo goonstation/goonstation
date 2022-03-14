@@ -204,7 +204,7 @@
 			var/show = 1
 
 			if (!lastTooltipContent || !lastTooltipTitle || tooltip_flags & REBUILD_ALWAYS\
-			 || (HAS_MOB_PROPERTY(usr, PROP_SPECTRO) && tooltip_flags & REBUILD_SPECTRO)\
+			 || (HAS_ATOM_PROPERTY(usr, PROP_MOB_SPECTRO) && tooltip_flags & REBUILD_SPECTRO)\
 			 || (usr != lastTooltipUser && tooltip_flags & REBUILD_USER)\
 			 || (get_dist(src, usr) != lastTooltipDist && tooltip_flags & REBUILD_DIST))
 				tooltip_rebuild = 1
@@ -630,7 +630,7 @@
 #define src_exists_inside_user_or_user_storage (src.loc == user || (istype(src.loc, /obj/item/storage) && src.loc.loc == user))
 
 
-/obj/item/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+/obj/item/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 	..()
 
 	if (!src.anchored)
@@ -875,7 +875,20 @@
 		STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 	burning_last_process = src.burning
 
+/// Call this proc inplace of attack_self(...)
+/obj/item/proc/AttackSelf(mob/user as mob)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	. = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user)
+	if(!.)
+		. = src.attack_self(user)
+
+/**
+ * DO NOT CALL THIS PROC - Call AttackSelf(...) Instead!
+ *
+ * Only override this proc!
+ */
 /obj/item/proc/attack_self(mob/user)
+	PROTECTED_PROC(TRUE)
 	if (src.temp_flags & IS_LIMB_ITEM)
 		if (istype(src.loc,/obj/item/parts/human_parts/arm/left/item))
 			var/obj/item/parts/human_parts/arm/left/item/I = src.loc
@@ -885,8 +898,6 @@
 			var/obj/item/parts/human_parts/arm/right/item/I = src.loc
 			I.remove_from_mob()
 			I.set_item(src)
-
-	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user)
 
 	chokehold?.attack_self(user)
 
@@ -946,7 +957,13 @@
 		equipment_proxy.additive_slowdown -= spacemove
 		equipment_proxy.space_movement -= spacemove
 
+/obj/item/proc/AfterAttack(atom/target, mob/user, reach, params)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, reach, params)
+	. = src.afterattack(target, user, reach, params)
+
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
+	PROTECTED_PROC(TRUE)
 	return
 
 /obj/item/dummy/ex_act()
@@ -1424,7 +1441,6 @@
 	disposing_abilities()
 	setItemSpecial(null)
 	if (src.inventory_counter)
-		src.inventory_counter.vis_locs = null
 		qdel(src.inventory_counter)
 		src.inventory_counter = null
 
@@ -1532,6 +1548,10 @@
 		msg += " Turf contains <b>fluid</b> [log_reagents(T.active_liquid.group)]."
 	if (T.active_airborne_liquid?.group)
 		msg += " Turf contains <b>smoke</b> [log_reagents(T.active_airborne_liquid.group)]."
+	if (locate(/obj/item) in T.contents)
+		var/obj/item/W = locate(/obj/item) in T.contents
+		if (istype(W.material, /datum/material/crystal/plasmastone))
+			msg += " Turf contains <b>plasmastone</b>."
 	logTheThing("bombing", M, null, "[msg]")
 
 /obj/item/proc/dropped(mob/user)

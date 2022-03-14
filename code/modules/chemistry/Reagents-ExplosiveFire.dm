@@ -254,16 +254,15 @@ datum
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/datum/reagents/myholder = holder
-				if(!holder?.my_atom?.is_open_container() && !istype(holder, /datum/reagents/fluid_group))
-					if(holder.my_atom)
-						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
+				var/vol = volume
+				myholder.del_reagent(id)
+				if(!myholder?.my_atom?.is_open_container() && !istype(myholder, /datum/reagents/fluid_group))
+					if(myholder.my_atom)
+						for(var/mob/M in AIviewers(5, get_turf(myholder.my_atom)))
 							boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
 				else if(!ignited)
 					ignited = 1
-					var/vol = volume
-					SPAWN(1 DECI SECOND)
-						myholder.smoke_start(vol) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
-				myholder.del_reagent(id)
+					myholder.smoke_start(vol) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 
 		combustible/propellant
 			name = "aerosol propellant"
@@ -559,7 +558,7 @@ datum
 						var/list/covered = holder.covered_turf()
 						var/density = clamp(src.volume / length(covered), 0, 10)
 						for (var/turf/T in covered)//may need to further limit this
-							explosion_new(holder.my_atom, T, 62 * (density/10)**2, 1)
+							explosion_new(holder.my_atom, T, 62 * (density/10)**1.5, 1)
 
 						holder.del_reagent(id)
 
@@ -687,7 +686,8 @@ datum
 								if(holder.my_atom)
 									holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
 									// Added log entries (Convair880).
-									message_admins("Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
+									if(holder.my_atom.fingerprintslast || usr?.last_ckey)
+										message_admins("Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
 									logTheThing("bombing", holder.my_atom.fingerprintslast, null, "Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
 								else
 									turf.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")

@@ -218,7 +218,6 @@
 
 	var/dir_locked = FALSE
 
-	var/list/mob_properties
 
 	var/last_move_dir = null
 
@@ -258,7 +257,6 @@
 
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
-	mob_properties = list()
 	src.chat_text = new
 
 	src.name_tag = new
@@ -318,7 +316,6 @@
 /mob/disposing()
 	STOP_TRACKING
 
-	src.vis_contents -= src.name_tag
 	qdel(src.name_tag)
 	src.name_tag = null
 
@@ -427,7 +424,6 @@
 		src.vars["hud"] = null
 
 	..()
-	src.mob_properties = null
 
 /mob/Login()
 	if(src.skipped_mobs_list)
@@ -447,17 +443,6 @@
 
 	src.last_ckey = src.ckey
 
-	if (!src.client.chatOutput)
-		//At least once, some dude has gotten here without a chatOutput datum. Fuck knows how.
-		src.client.chatOutput = new /datum/chatOutput(src.client)
-
-	if (!src.client.chatOutput.loaded)
-		//Load custom chat
-		src.client.chatOutput.start()
-
-	//src.client.screen = null //ov1 - to make sure we don't keep overlays of our old mob. This is here since logout wont work - when logout is called client is already null
-	src.client.setup_special_screens()
-
 	src.last_client = src.client
 	src.apply_camera(src.client)
 	src.update_cursor()
@@ -466,56 +451,8 @@
 
 	src.client.mouse_pointer_icon = src.cursor
 
-	logTheThing("diary", null, src, "Login: [constructTarget(src,"diary")] from [src.client.address]", "access")
 	src.lastKnownIP = src.client.address
 	src.computer_id = src.client.computer_id
-	if (config.log_access)
-		for (var/client/C)
-			var/mob/M = C.mob
-			if ((!M) || M == src || M.client == null)
-				continue
-			else if (M && M.client && M.client.address == src.client.address)
-				if(!src.client.holder && !M.client.holder)
-					logTheThing("admin", src, M, "has same IP address as [constructTarget(M,"admin")]")
-					logTheThing("diary", src, M, "has same IP address as [constructTarget(M,"diary")]", "access")
-					if (IP_alerts)
-						message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same IP address as [key_name(M)]</span>")
-			else if (M && M.lastKnownIP && M.lastKnownIP == src.client.address && M.ckey != src.ckey && M.key)
-				if(!src.client.holder && !M.client.holder)
-					logTheThing("diary", src, M, "has same IP address as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", "access")
-					if (IP_alerts)
-						message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same IP address as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
-			if (M && M.client && M.client.computer_id == src.client.computer_id)
-				logTheThing("admin", src, M, "has same computer ID as [constructTarget(M,"admin")]")
-				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")]", "access")
-				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B><font class='internal'> as [key_name(M)]</span>")
-				SPAWN(0)
-					if(M.lastKnownIP == src.client.address)
-						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
-			else if (M && M.computer_id && M.computer_id == src.client.computer_id && M.ckey != src.ckey && M.key)
-				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", null, "access")
-				logTheThing("admin", M, null, "is no longer logged in.")
-				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B></span><span class='internal'> as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
-				SPAWN(0)
-					if(M.lastKnownIP == src.client.address)
-						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
-/*  don't get me wrong this was awesome but it's leading to false positives now and we stopped caring about that guy
-	var/evaderCheck = copytext(lastKnownIP,1, findtext(lastKnownIP, ".", 5))
-	if (evaderCheck in list("174.50", "69.245", "71.228", "69.247", "71.203", "98.211", "68.53"))
-		SPAWN(0)
-			var/joinstring = "???"
-			var/list/response = world.Export("http://www.byond.com/members/[src.ckey]?format=text")
-			if (response && response["CONTENT"])
-				var/result = html_encode(file2text(response["CONTENT"]))
-				if (result)
-					var/pos = findtext(result, "joined = ")
-					joinstring = copytext(result, pos+14, pos+24)
-			message_admins("<font color=red>Possible login by That Ban Evader Jerk: [key_name(src)] with IP \"[lastKnownIP]\" and computer ID \[[src.client.computer_id]]. (Regdate: [joinstring])</font>")
-			logTheThing("admin", src, null, "Possible login by Ban Evader Jerk:. IP: [lastKnownIP], Computer ID: \[[src.client.computer_id]], Regdate: [joinstring]")
-			logTheThing("diary", src, null, "Possible login by Ban Evader Jerk:. IP: [lastKnownIP], Computer ID: \[[src.client.computer_id]], Regdate: [joinstring]", "admin")
-			if (!("[src.ckey]" in IRC_alerted_keys))
-				IRC_alerted_keys += "[src.ckey]"
-*/
 
 	world.update_status()
 
@@ -1129,6 +1066,11 @@
 	health += max(0, tox)
 	health = min(max_health, health)
 
+/mob/setStatus(statusId, duration, optional)
+	if (src.nodamage)
+		return
+	. = ..()
+
 /mob/proc/set_pulling(atom/movable/A)
 	if(A == src)
 		return
@@ -1250,6 +1192,9 @@
 		src.suicide_alert = 0
 	if(src.ckey)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
+	//stop piloting pods or whatever
+	src.use_movement_controller = null
+
 
 /mob/proc/restrained()
 	. = src.hasStatus("handcuffed")
@@ -1734,7 +1679,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		src.ghostize()
@@ -1750,12 +1695,12 @@
 	game_stats.Increment("violence")
 #endif
 	logTheThing("combat", src, null, "is gibbed at [log_loc(src)].")
-	src.death(1)
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null // For forensics (Convair880).
 	var/btype = null
@@ -1838,12 +1783,12 @@
 	game_stats.Increment("violence")
 #endif
 	logTheThing("combat", src, null, "is electric-gibbed at [log_loc(src)].")
-	src.death(1)
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/col_r = 0.4
 	var/col_g = 0.8
@@ -1884,12 +1829,12 @@
 	game_stats.Increment("violence")
 #endif
 	logTheThing("combat", src, null, "is fire-gibbed at [log_loc(src)].")
-	src.death(1)
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (ishuman(src))
 		animation = new(src.loc)
@@ -1924,12 +1869,12 @@
 	game_stats.Increment("violence")
 #endif
 	logTheThing("combat", src, null, "is party-gibbed at [log_loc(src)].")
-	src.death(1)
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null // For forensics (Convair880).
 	var/btype = null
@@ -1970,12 +1915,12 @@
 #endif
 	var/transfer_mind_to_owl = prob(control_chance)
 	logTheThing("combat", src, null, "is owl-gibbed at [log_loc(src)].")
-	src.death(1)
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null // For forensics (Convair880).
 	var/btype = null
@@ -2017,12 +1962,12 @@
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
 #endif
-	src.death(1)
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 	logTheThing("combat", src, null, "is vaporized at [log_loc(src)].")
 
 	if (ishuman(src))
@@ -2055,12 +2000,12 @@
 	game_stats.Increment("violence")
 #endif
 	logTheThing("combat", src, null, "imploded at [log_loc(src)].")
-	src.death(1)
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (ishuman(src))
 		animation = new(src.loc)
@@ -2141,7 +2086,7 @@
 		src.plane = PLANE_UNDERFLOOR
 		animate_slide(the_turf, 0, 0, duration)
 		sleep(duration+5)
-		src.death(1)
+		src.death(TRUE)
 		var/mob/dead/observer/newmob = ghostize()
 		newmob?.corpse = null
 
@@ -2157,7 +2102,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null
 	var/btype = null
@@ -2211,7 +2156,7 @@
 		for(var/mob/living/L in range(src_turf, 6))
 			shake_camera(L, 10, 32)
 
-	src.death(1)
+	src.death(TRUE)
 	if (animation)
 		animation.delaydispose()
 	qdel(src)
@@ -3135,7 +3080,7 @@
 		A.pull()
 
 
-/mob/verb/examine_verb(atom/A as mob|obj|turf in view(,get_turf(usr)))
+/mob/verb/examine_verb(atom/A as mob|obj|turf in view(,usr))
 	set name = "Examine"
 	set category = "Local"
 	var/list/result = A.examine(src)
@@ -3169,7 +3114,7 @@
 	return
 
 /mob/set_density(var/newdensity)
-	if(HAS_MOB_PROPERTY(src, PROP_NEVER_DENSE))
+	if(HAS_ATOM_PROPERTY(src, PROP_MOB_NEVER_DENSE))
 		..(0)
 	else
 		..(newdensity)

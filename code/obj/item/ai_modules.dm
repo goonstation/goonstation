@@ -54,6 +54,13 @@ AI MODULES
 		if (comp.status & BROKEN)
 			boutput(user, "\The [comp] computer is broken!")
 			return
+		if (issilicon(user))
+			boutput(user, "\The [comp] computer has a captcha. You don't succeed.")
+			return
+		if (istype(user, /mob/living/object))
+			boutput(user, "Try as you might, you just can't seem to upload yourself.")
+			return
+
 		if(ON_COOLDOWN(global, "ai_law_change", 10 SECONDS))
 			boutput(user, "Centralized AI law database is still processing the last request. Wait [ON_COOLDOWN(global, "ai_law_change", 0)/10] seconds.")
 			return
@@ -68,7 +75,7 @@ AI MODULES
 			R.show_text("<h3>Law update detected.</h3>", "red")
 			R.show_laws()
 			//ticker.centralized_ai_laws.show_laws(R)
-		for (var/mob/dead/aieye/E in mobs)
+		for (var/mob/living/intangible/aieye/E in mobs)
 			E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 
 
@@ -113,9 +120,11 @@ AI MODULES
 	var/job = "Captain"
 
 	emag_act(mob/user, obj/item/card/emag/E)
+		if (src.job == "Clown")
+			return FALSE
 		src.job = "Clown"
 		boutput(user, "<span class='notice'>You short circuit the captain-detection module, it emits a quiet sad honk.</span>")
-		. = ..()
+		return TRUE
 
 	demag(mob/user)
 		. = ..()
@@ -253,8 +262,8 @@ AI MODULES
 		return lawTarget ? lawTarget : "This law intentionally left blank."
 
 	attack_self(var/mob/user)
-		input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Anything. Serious.", (lawTarget ? lawTarget : "Eat shit and die"))
-		if(src.lawTarget && src.lawTarget != "Eat shit and die")
+		input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Anything. Serious.", (lawTarget ? lawTarget : "Make a funny beeping noise every few minutes"))
+		if(src.lawTarget && src.lawTarget != "Make a funny beeping noise every few minutes")
 			phrase_log.log_phrase("ailaw", src.get_law_text(for_silicons=TRUE), no_duplicates=TRUE)
 
 /******************** Random ********************/

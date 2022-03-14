@@ -270,7 +270,7 @@
 		return
 
 	var/message_a = src.say_quote(message)
-	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[message_a]</span></span></i>"
+	var/rendered = "<span class='game roboticsay'>Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[message_a]</span></span>"
 	for (var/mob/living/S in mobs)
 		if(!S.stat)
 			if(S.robot_talk_understand)
@@ -282,7 +282,7 @@
 			else if(istype(S, /mob/living/intangible/flock))
 				var/mob/living/intangible/flock/f = S
 				if(f.flock?.snooping)
-					var/flockrendered = "<i><span class='game say'>[flockBasedGarbleText("Robotic Talk", -20, f.flock)], <span class='name' data-ctx='\ref[src.mind]'>[flockBasedGarbleText(src.name, -15, f.flock)]</span> <span class='message'>[flockBasedGarbleText(message_a, 0, f.flock)]</span></span></i>"
+					var/flockrendered = "<span class='game roboticsay'>[flockBasedGarbleText("Robotic Talk", -20, f.flock)], <span class='name' data-ctx='\ref[src.mind]'>[flockBasedGarbleText(src.name, -15, f.flock)]</span> <span class='message'>[flockBasedGarbleText(message_a, 0, f.flock)]</span></span>"
 					f.show_message(flockrendered, 2)
 
 	var/list/listening = hearers(1, src)
@@ -301,7 +301,7 @@
 		message_b = src.say_quote(message_b)
 		message_b = "<i>[message_b]</i>"
 
-		rendered = "<i><span class='game say'><span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> <span class='message'>[message_b]</span></span></i>"
+		rendered = "<span class='game roboticsay'><span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> <span class='message'>[message_b]</span></span>"
 
 		for (var/mob/M in heard)
 			var/thisR = rendered
@@ -311,7 +311,7 @@
 
 	message = src.say_quote(message)
 
-	rendered = "<i><span class='game say'>Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[message_a]</span></span></i>"
+	rendered = "<span class='game roboticsay'>Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[message_a]</span></span>"
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -394,7 +394,7 @@ td {
 		usr.Browse(output, "window=module_editor;size=400x600")
 
 	Topic(href, href_list)
-		usr_admin_only
+		USR_ADMIN_ONLY
 		var/obj/item/robot_module/D = locate(href_list["mod"])
 		if (!D)
 			boutput(usr, "<span class='alert'>Missing module reference!</span>")
@@ -453,7 +453,7 @@ var/global/list/module_editors = list()
 	set desc = "Module editor! Woo!"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if (!istype(M))
 		boutput(src, "<span class='alert'>That thing has no module!</span>")
@@ -674,8 +674,8 @@ var/global/list/module_editors = list()
 
 			if (isAI(src)) // Rogue AIs get special laws.
 				var/mob/living/silicon/ai/A
-				if (istype(src, /mob/dead/aieye))
-					var/mob/dead/aieye/E = src
+				if (isAIeye(src))
+					var/mob/living/intangible/aieye/E = src
 					A = E.mainframe
 				else
 					A = src
@@ -708,7 +708,7 @@ var/global/list/module_editors = list()
 						S.show_text("<b>Your laws have been changed!</b>", "red")
 						S.show_laws()
 						S << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-					var/mob/dead/aieye/E = C.mob
+					var/mob/living/intangible/aieye/E = C.mob
 					if (istype(E))
 						E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 

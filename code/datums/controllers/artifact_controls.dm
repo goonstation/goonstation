@@ -32,12 +32,16 @@ var/datum/artifact_controller/artifact_controls
 		for (var/A in concrete_typesof(/datum/artifact))
 			var/datum/artifact/AI = new A
 			artifact_types += AI
-			artifact_type_names += AI.type_name
 
 			artifact_rarities["all"][A] = AI.rarity_weight
 			for (var/origin in artifact_rarities)
 				if(origin in AI.validtypes)
 					artifact_rarities[origin][A] = AI.rarity_weight
+
+		SortList(artifact_types, /proc/compareArtifactTypes)
+
+		for (var/datum/artifact/AI in artifact_types)
+			artifact_type_names += list(list(AI.type_name, AI.type_size))
 
 		// fault list
 		for (var/X in concrete_typesof(/datum/artifact_fault))
@@ -132,7 +136,7 @@ var/datum/artifact_controller/artifact_controls
 		usr.Browse(dat,"window=artifacts;size=400x600")
 
 	Topic(href, href_list[])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if (href_list["Activate"])
 			var/obj/O = locate(href_list["Activate"]) in src.artifacts
 			if (!istype(O,/obj/))

@@ -85,11 +85,11 @@
 
 /obj/item/storage/secure/attack_hand(mob/user as mob)
 	if (src.loc == user && src.locked == 1)
-		boutput(usr, "<span class='alert'>[src] is locked and cannot be opened!</span>")
+		boutput(user, "<span class='alert'>[src] is locked and cannot be opened!</span>")
 		return
 	return ..()
 
-/obj/item/storage/secure/MouseDrop(atom/over_object, src_location, over_location)
+/obj/item/storage/secure/mouse_drop(atom/over_object, src_location, over_location)
 	if ((usr.is_in_hands(src) || over_object == usr) && src.locked == 1)
 		boutput(usr, "<span class='alert'>[src] is locked and cannot be opened!</span>")
 		return

@@ -155,7 +155,7 @@
 		status |= BROKEN
 		doupdateicon = 0
 		src.stop_interdicting()
-		message_admins("Interdictor at ([showCoords(src.x, src.y, src.z)]) is missing a power cell. This is not supposed to happen, yell at kubius")
+		message_admins("Interdictor at ([log_loc(src)]) is missing a power cell. This is not supposed to happen, yell at kubius")
 		return
 	if(anchored)
 		if(intcap.charge < intcap.maxcharge && powered())

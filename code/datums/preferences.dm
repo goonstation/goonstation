@@ -234,7 +234,7 @@ datum/preferences
 					sound_file = sound(src.AH.screamsounds[src.AH.screamsound])
 
 				if (params["chatsound"])
-					sound_file = sounds_speak[AH.voicetype]
+					sound_file = sounds_speak["[AH.voicetype]"]
 
 				if (sound_file)
 					preview_sound(sound_file)
@@ -268,7 +268,7 @@ datum/preferences
 					return
 
 				if (!isnull(index) && isnum(index))
-					src.savefile_save(client, index)
+					src.savefile_save(client.key, index)
 					src.profile_number = index
 					boutput(usr, "<span class='notice'><b>Character saved to Slot [index].</b></span>")
 					return TRUE

@@ -179,7 +179,7 @@
 					for(var/datum/galactic_object/G in GALAXY.bodies)
 						if(G.navigable)
 							navigable_bodies += G
-					var/datum/galactic_object/target = input(usr, "Which waypoint would you like to navigate to?", "Target:", null) in navigable_bodies
+					var/datum/galactic_object/target = input(user, "Which waypoint would you like to navigate to?", "Target:", null) in navigable_bodies
 
 					if(target)
 

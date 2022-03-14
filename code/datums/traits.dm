@@ -566,12 +566,12 @@
 	category = list("trinkets", "nopug")
 
 /obj/trait/one_armed
-	name = "One Armed Spaceman (-2)"	//it's so expensive cause right now, one arm is a benefit in that you can't be handcuffed...
+	name = "One Armed Spaceman (0)"	//it's so expensive cause right now, one arm is a benefit in that you can't be handcuffed...
 	cleanName = "One Armed Spaceman"
 	desc = "You only have one arm. But which one? It's a mystery... or is it a thriller?"
 	id = "onearmed"
 	icon_state = "placeholder"
-	points = -2
+	points = 0
 
 // Skill - White Border
 
@@ -687,7 +687,7 @@ ABSTRACT_TYPE(/obj/trait/job)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.add_stam_mod_max("trait", STAMINA_MAX * 0.1)
-			APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "trait", STAMINA_REGEN * 0.1)
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "trait", STAMINA_REGEN * 0.1)
 
 /obj/trait/bigbruiser
 	name = "Big Bruiser (-2) \[Stats\]"

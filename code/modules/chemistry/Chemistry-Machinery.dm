@@ -272,7 +272,7 @@
 		else
 			src.icon_state = "heater"
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the Reagent Heater/Cooler's output target.</span>")
 			return
@@ -680,7 +680,7 @@
 			P.overlays += P.color_overlay
 			return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the CheMaster 3000's output target.</span>")
 			return
@@ -720,10 +720,19 @@ datum/chemicompiler_core/stationaryCore
 
 	New()
 		..()
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Run Script", "runscript")
 		executor = new(src, /datum/chemicompiler_core/stationaryCore)
 		light = new /datum/light/point
 		light.set_brightness(0.4)
 		light.attach(src)
+
+	proc/runscript(var/datum/mechanicsMessage/input)
+		var/buttId = executor.core.validateButtId(input.signal)
+		if(!buttId || executor.core.running)
+			return
+		if(islist(executor.core.cbf[buttId]))
+			executor.core.runCBF(executor.core.cbf[buttId])
 
 	ex_act(severity)
 		switch (severity)
@@ -745,6 +754,7 @@ datum/chemicompiler_core/stationaryCore
 
 	was_deconstructed_to_frame(mob/user)
 		status = NOPOWER // If it works.
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)

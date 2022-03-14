@@ -4284,7 +4284,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/bathroom)
 "bOP" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/toilets{
 	name = "Engineering Toilets"
@@ -18488,7 +18488,8 @@
 "hKP" = (
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4;
-	name = "Head of Security's Room"
+	name = "Head of Security's Room";
+	req_access = null
 	},
 /obj/access_spawn/hos,
 /obj/firedoor_spawn,
@@ -27344,7 +27345,8 @@
 /area/research_outpost/protest)
 "lAZ" = (
 /obj/machinery/door/airlock/pyro/glass/command{
-	name = "Head of Security's Office"
+	name = "Head of Security's Office";
+	req_access = null
 	},
 /obj/access_spawn/hos,
 /obj/firedoor_spawn,
@@ -30510,7 +30512,8 @@
 /area/station/maintenance/inner/the_cage)
 "mXE" = (
 /obj/machinery/door/airlock/pyro/security{
-	name = "Armory"
+	name = "Armory";
+	req_access = null
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/hos,
@@ -43815,7 +43818,7 @@
 /turf/simulated/floor/black/corner,
 /area/station/engine/power)
 "sIk" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/toilets{
 	name = "Central Toilets"
@@ -46987,7 +46990,7 @@
 /area/station/crew_quarters/courtroom)
 "udG" = (
 /obj/decal/cleanable/rust,
-/obj/decal/skeleton/decomposed_corpse,
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
 /turf/simulated/floor/airless/black,
 /area/abandonedship{
 	name = "Crashed Limo"
@@ -49665,7 +49668,7 @@
 /turf/simulated/floor/plating/airless/random,
 /area/station/mining/staff_room)
 "vlz" = (
-/obj/item/implantcase/antirev,
+/obj/item/implantcase/counterrev,
 /obj/item/device/camera_viewer,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -51048,7 +51051,7 @@
 /area/station/hallway/secondary/exit)
 "vRO" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/simulated/floor/airless/plating,
 /area/abandonedship{
 	name = "Crashed Limo"

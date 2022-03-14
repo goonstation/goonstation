@@ -11,14 +11,12 @@ var/list/observers = list()
 
 	New()
 		..()
-		APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
 		observers += src
-		mobs += src
 		//set_observe_target(target)
 
 	disposing()
-		mobs -= src
 		//Remove ourselves from the global observer list
 		observers -= src
 		//If our target is a mob we should also clean ourselves up and leave their observer list without a null in it.

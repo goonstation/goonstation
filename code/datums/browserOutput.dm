@@ -186,7 +186,7 @@ var/global
 				ircmsg["key"] = owner.key
 				ircmsg["name"] = stripTextMacros(owner.mob.name)
 				ircmsg["msg"] = "just attempted to crash the server using at least 5 '\['s in a row."
-				ircbot.export("admin", ircmsg)
+				ircbot.export_async("admin", ircmsg)
 			return
 
 		var/list/connData = json_decode(cookie)
@@ -214,7 +214,7 @@ var/global
 					ircmsg["key"] = owner.key
 					ircmsg["name"] = stripTextMacros(owner.mob.name)
 					ircmsg["msg"] = "has a cookie from banned account [found["ckey"]](IP: [found["ip"]], CompID: [found["compID"]])"
-					ircbot.export("admin", ircmsg)
+					ircbot.export_async("admin", ircmsg)
 
 				var/banData[] = new()
 				banData["ckey"] = src.owner.ckey
@@ -385,17 +385,17 @@ var/global
 
 		return "<img style=\"position: relative; left: -1px; bottom: -3px;\" class=\"icon [obj:icon_state]\" src=\"data:image/png;base64,[baseData]\" />"
 
-/proc/boutput(target = 0, message = "", group = "")
+/proc/boutput(target = 0, message = "", group = "", forceScroll=FALSE)
 	if (target == world)
 		for (var/client/C in clients)
-			boutput(C, message)
+			boutput(C, message, group, forceScroll)
 		return
 
 	//If the target is a list, attempt to send the message to each item in the list
 	//(it's up to the caller to ensure the list contains actual things we can send to)
 	if (islist(target))
 		for (var/T in target)
-			boutput(T, message)
+			boutput(T, message, group, forceScroll)
 		return
 
 	//Otherwise, we're good to throw it at the user
@@ -434,7 +434,7 @@ var/global
 
 				if (C.chatOutput.burstCount > CHAT_BURST_START)
 					C.chatOutput.burstQueue = list(
-						list("message" = message, "group" = group)
+						list("message" = message, "group" = group, "forceScroll" = forceScroll)
 					)
 					SPAWN(CHAT_BURST_TIME)
 						target << output(list2params(list(
@@ -445,7 +445,9 @@ var/global
 
 			target << output(list2params(list(
 				message,
-				group
+				group,
+				0,
+				forceScroll
 			)), "browseroutput:output")
 
 //Aliases for boutput

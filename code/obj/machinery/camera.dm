@@ -265,7 +265,7 @@
 		src.camera_status = !( src.camera_status )
 		if (!( src.camera_status ))
 			user.visible_message("<span class='alert'>[user] has deactivated [src]!</span>", "<span class='alert'>You have deactivated [src].</span>")
-			logTheThing("station", null, null, "[key_name(user)] deactivated a security camera ([showCoords(src.loc.x, src.loc.y, src.loc.z)])")
+			logTheThing("station", null, null, "[key_name(user)] deactivated a security camera ([log_loc(src.loc)])")
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
 			src.icon_state = "camera1"
 			add_fingerprint(user)
@@ -442,7 +442,7 @@
 		count++
 
 		if(!(C.c_north || C.c_east || C.c_south || C.c_west))
-			logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Camera at [showCoords(C.x, C.y, C.z)] failed to receive cardinal directions during initialization.")
+			logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] failed to receive cardinal directions during initialization.")
 
 	logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Done. Connected [count] cameras.")
 
@@ -473,7 +473,7 @@
 		candidate = getCameraMove(C, direction)
 		/*
 		if(!candidate)
-			logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Camera at [showCoords(C.x, C.y, C.z)] didn't get a candidate when heading [dir2text(direction)].")
+			logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] didn't get a candidate when heading [dir2text(direction)].")
 			return
 		*/
 		if(candidate && C.z == candidate.z && C.network == candidate.network) // && (!camera_network_reciprocity || !candidate.vars[rec_var]))
@@ -485,9 +485,9 @@
 				C.addToReferrers(candidate)
 /*
 		else
-			logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Camera at [showCoords(C.x, C.y, C.z)] rejected. cand z = [candidate.z], C z = [C.z]; cand net = [candidate.network], C net = [C.network]; reciprocity = [camera_network_reciprocity], rec_var:[rec_var] ( [isnull(candidate.vars[rec_var]) ? "null" : "not null"] )")
+			logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] rejected. cand z = [candidate.z], C z = [C.z]; cand net = [candidate.network], C net = [C.network]; reciprocity = [camera_network_reciprocity], rec_var:[rec_var] ( [isnull(candidate.vars[rec_var]) ? "null" : "not null"] )")
 	else
-		logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Camera at [showCoords(C.x, C.y, C.z)] rejected because [dir_var] was already set.")
+		logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] rejected because [dir_var] was already set.")
 		*/
 
 

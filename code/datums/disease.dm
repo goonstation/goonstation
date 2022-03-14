@@ -26,7 +26,7 @@
 	var/tickcount = 0
 	//IM SORRY
 
-	proc/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
+	proc/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 		if (!affected_mob || !D)
 			return 1
 		return 0
@@ -113,14 +113,17 @@
 		if (probmult(stage_prob) && stage < master.max_stages)
 			stage++
 
-		master.stage_act(affected_mob,src)
+		master.stage_act(affected_mob, src, mult)
 
 		return 0
 
 	proc/scan_info()
 		var/text = "<span class='alert'><b>"
 		if (istype(src.master,/datum/ailment/disease) || istype(src.master,/datum/ailment/malady))
-			text += "[src.state] "
+			if (src.state == "Active" || src.state == "Acute")
+				text += "[src.state] "
+			else
+				text += "<span class='notice'>[src.state] </span>"
 		text += "[src.scantype ? src.scantype : src.master.scantype]:"
 
 		text += " [src.name ? src.name : src.master.name]</b> <small>(Stage [src.stage]/[src.master.max_stages])<br>"
@@ -222,7 +225,7 @@
 		SPAWN(rand(1,5))
 			// vary it up a bit so the processing doesnt look quite as transparent
 			if (master)
-				master.stage_act(affected_mob,src)
+				master.stage_act(affected_mob, src, mult)
 
 		return 0
 
@@ -270,7 +273,7 @@
 
 
 		if(!stealth_asymptomatic)
-			master.stage_act(affected_mob,src,source)
+			master.stage_act(affected_mob,src,mult,source)
 
 		return
 
@@ -546,10 +549,10 @@
 	var/numMid = round((1 * shockInput) / 10)
 	var/numLow = round((1 * shockInput) / 20)
 	if (src.organHolder.heart && src.organHolder.heart.robotic && src.organHolder.heart.emagged && !src.organHolder.heart.broken)
-		APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "heart_shock", 5)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock", 5)
 		src.add_stam_mod_max("heart_shock", 20)
 		SPAWN(9000)
-			REMOVE_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "heart_shock")
+			REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock")
 			src.remove_stam_mod_max("heart_shock")
 		if (prob(numHigh))
 			boutput(src, "<span class='alert'>Your cyberheart spasms violently!</span>")
@@ -568,10 +571,10 @@
 			src.organHolder.heart.breakme()
 			src.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
 	else if (src.organHolder.heart && src.organHolder.heart.robotic && !src.organHolder.heart.emagged && !src.organHolder.heart.broken)
-		APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "heart_shock", 1)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock", 1)
 		src.add_stam_mod_max("heart_shock", 10)
 		SPAWN(9000)
-			REMOVE_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "heart_shock")
+			REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock")
 			src.remove_stam_mod_max("heart_shock")
 		if (prob(numMid))
 			boutput(src, "<span class='alert'>Your cyberheart spasms violently!</span>")

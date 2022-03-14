@@ -15,9 +15,9 @@ Left Mouse Button                      = Paste selected area. Selected tile will
 Right Mouse Button                     = Select area to copy with two clicks<br>
 ***********************************************************"}
 	icon_state = "buildmode11"
-	var/turf/A
-	var/list/clipboard = list()
-	var/copying = 0
+	var/tmp/turf/A
+	var/tmp/list/clipboard = list()
+	var/tmp/copying = 0
 
 	deselected()
 		..()

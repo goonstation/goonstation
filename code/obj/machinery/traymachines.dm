@@ -188,7 +188,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine/locking)
 
 /obj/machinery/traymachine/locking/attack_hand(mob/user as mob)
 	if (locked)
-		boutput(usr, "<span class='alert'>It's locked.</span>")
+		boutput(user, "<span class='alert'>It's locked.</span>")
 		src.add_fingerprint(user) //because we're not reaching the parent call
 		return
 	..()
@@ -659,14 +659,14 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		if (href_list["toggle"])
 			if (linked && !linked.locked && find_tray_tube() && linked.my_tray.loc == linked)
 				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
-				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([log_loc(usr)])")
 				linked.cremate()
 
 		else if (href_list["timer"])
 			sleep (10 SECONDS)
 			if (linked && !linked.locked && find_tray_tube() && linked.my_tray.loc == linked)
 				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
-				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([log_loc(usr)])")
 				linked.cremate()
 
 		else if (href_list["settime"])

@@ -50,7 +50,7 @@
 		if (href_list["spell_teleport"])
 			if (!can_act(H))
 				return
-			if (src.uses >= 1 && usr.teleportscroll(0, 1, src) == 1)
+			if (src.uses >= 1 && usr.teleportscroll(1, 1, src) == 1)
 				src.uses -= 1
 		if (ismob(src.loc))
 			attack_self(src.loc)
@@ -203,7 +203,7 @@
 		..()
 		return
 
-	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		if (iswizard(usr) || check_target_immunity(usr))
 			. = ..()
 		else if(isliving(usr))

@@ -136,7 +136,7 @@
 			UpdateIcon()
 
 /obj/machinery/firealarm/attack_hand(mob/user as mob)
-	if(user.stat || status & (NOPOWER|BROKEN))
+	if(user.stat || status & (NOPOWER|BROKEN) || ON_COOLDOWN(src, "toggle", 1 SECOND))
 		return
 
 	interact_particle(user,src)

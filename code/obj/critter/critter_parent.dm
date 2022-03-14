@@ -14,6 +14,7 @@
 	var/is_template = 0
 	var/alive = 1
 	var/health = 10
+	var/maxhealth = 100
 
 	// "sleeping" is a special state that sleeps for 10 cycles, wakes up, sleeps again unless someone is found
 	// "hibernating" is another special state where it does nothing unless explicitly woken up
@@ -168,7 +169,7 @@
 	proc/wake_from_hibernation()
 		if(task != "hibernating") return
 
-		//DEBUG_MESSAGE("[src] woke from hibernation at [showCoords(src.x, src.y, src.z)] in [registered_area ? registered_area.name : "nowhere"] due to [usr ? usr : "some mysterious fucking reason"]")
+		//DEBUG_MESSAGE("[src] woke from hibernation at [log_loc(src)] in [registered_area ? registered_area.name : "nowhere"] due to [usr ? usr : "some mysterious fucking reason"]")
 		//Ok, now we look to see if we should get murdlin'
 		task = "sleeping"
 		hibernate_check = 20 //20 sleep_checks
@@ -189,7 +190,7 @@
 			task = "hibernating"
 			registered_area.registered_critters |= src
 			anchored = 1
-			//DEBUG_MESSAGE("[src] started hibernating at [showCoords(src.x, src.y, src.z)] in [registered_area ? registered_area.name : "nowhere"].")
+			//DEBUG_MESSAGE("[src] started hibernating at [log_loc(src)] in [registered_area ? registered_area.name : "nowhere"].")
 			//critters -= src //Stop processing this critter
 
 
@@ -255,7 +256,7 @@
 			if (src.feed_text)
 				src.visible_message("<span class='notice'>[src] [src.feed_text]</span>")
 			eat_twitch(src)
-			src.health += src.health_gain_from_food
+			src.health = min(src.maxhealth, src.health + health_gain_from_food)
 			user.drop_item()
 			qdel(W)
 			return
@@ -710,7 +711,7 @@
 							qdel(src.food_target)
 						src.task = "thinking"
 						src.food_target = null
-						src.health += src.health_gain_from_food
+						src.health = min(src.maxhealth, src.health + health_gain_from_food)
 
 			if ("chasing corpse")
 
@@ -1113,7 +1114,7 @@
 			return
 
 /obj/critter/proc/revive_critter()
-	usr_admin_only
+	USR_ADMIN_ONLY
 	var/obj/critter/C = src
 	if (!istype(C, /obj/critter))
 		boutput(src, "[C] isn't a critter! How did you even get here?!")
@@ -1133,7 +1134,7 @@
 		return
 
 /obj/critter/proc/kill_critter()
-	usr_admin_only
+	USR_ADMIN_ONLY
 	var/obj/critter/C = src
 	if (!istype(C, /obj/critter))
 		boutput(src, "[C] isn't a critter! How did you even get here?!")

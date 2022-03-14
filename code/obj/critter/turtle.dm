@@ -119,8 +119,8 @@
 					if (M.mind && M.mind.assigned_role == "Head of Security")
 						boutput(M, "<span class='alert'>You feel a foreboding feeling about the imminent fate of a certain turtle in [get_area(src)], better act quick.</span>")
 
-				message_admins("[key_name(user)] rigged [src] to explode in [user.loc.loc], [showCoords(user.x, user.y, user.z)].")
-				logTheThing("combat", user, null, "rigged [src] to explode in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+				message_admins("[key_name(user)] rigged [src] to explode in [user.loc.loc], [log_loc(user)].")
+				logTheThing("combat", user, null, "rigged [src] to explode in [user.loc.loc] ([log_loc(user)])")
 				rigged = TRUE
 				rigger = user
 
@@ -397,7 +397,7 @@
 			return 1
 		return 0
 
-	MouseDrop(atom/over_object as mob|obj)
+	mouse_drop(atom/over_object as mob|obj)
 		if (over_object == usr && ishuman(usr))
 			var/mob/living/carbon/human/H = usr
 			if (in_interact_range(src, H))

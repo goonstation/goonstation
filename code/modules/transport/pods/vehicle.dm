@@ -96,6 +96,14 @@
 		else
 			return null
 
+	Click(location,control,params)
+		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
+			var/mob/dead/observer/O = usr
+			if(src.pilot)
+				O.insert_observer(src.pilot)
+		else
+			. = ..()
+
 	/////////////////////////////////////////////////////////
 	///////Attack Code									////
 	////////////////////////////////////////////////////////
@@ -1485,7 +1493,7 @@
 	SS.Clickdrag_ObjectToPod(user,O)
 	return
 
-/obj/machinery/vehicle/MouseDrop(over_object, src_location, over_location)
+/obj/machinery/vehicle/mouse_drop(over_object, src_location, over_location)
 	if (!usr.client || !isliving(usr))
 		return
 	if (is_incapacitated(usr))
@@ -1804,12 +1812,17 @@
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		name = "syndicate minisub"
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
 		src.components += src.lock
 		myhud.update_systems()
 		myhud.update_states()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 /obj/machinery/vehicle/tank/minisub/mining
 	body_type = "minisub"

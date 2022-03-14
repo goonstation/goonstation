@@ -70,7 +70,7 @@
 			return
 
 		var/list/options = list(locked ? "Unlock":"Lock", "Begin Building", "Dump Materials", "Check Materials" ,currentBp ? "Eject Blueprint":null)
-		var/input = input(usr,"Select option:","Option") in options
+		var/input = input(user,"Select option:","Option") in options
 		switch(input)
 			if("Unlock")
 				if(!locked || building) return
@@ -428,7 +428,7 @@
 	"/obj/machinery/portable_atmospherics/canister")
 	var/list/permittedTileTypes = list("/turf/simulated")
 
-	var/savefile/save = new/savefile("data/blueprints.dat")
+	var/static/savefile/save = new/savefile("data/blueprints.dat")
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
 		if(get_dist(src,target) > 2) return
@@ -639,7 +639,7 @@
 
 	attack_self(mob/user as mob)
 		var/list/options = list("Reset", "Set Blueprint Name", "Print Saved Blueprint", "Save Blueprint", "Delete Blueprint" , "Information")
-		var/input = input(usr,"Select option:","Option") in options
+		var/input = input(user,"Select option:","Option") in options
 
 		switch(input)
 			if("Reset")

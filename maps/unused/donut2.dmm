@@ -11925,7 +11925,7 @@
 /turf/simulated/wall,
 /area/station/storage/emergency2)
 "ayd" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency2)
@@ -31254,7 +31254,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "bka" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Um.  Uh.  Oh dear."
 	},
 /turf/simulated/floor/plating/random,

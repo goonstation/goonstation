@@ -19,7 +19,7 @@
 	relay_click(id, mob/user, list/params)
 		if (id == "release")
 			if (master)
-				master.death(0)
+				master.death(FALSE)
 		else if (id == "intent") // copy n pasted but fuck it for now
 			var/icon_x = text2num(params["icon-x"])
 			var/icon_y = text2num(params["icon-y"])

@@ -37,14 +37,14 @@
 	on_transplant(var/mob/M as mob)
 		..()
 		if (src.robotic)
-			APPLY_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, icon_state, 2)
+			APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, icon_state, 2)
 			src.donor.add_stam_mod_max(icon_state, 10)
 		return
 
 	on_removal()
 		if (donor)
 			if (src.robotic)
-				REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, icon_state)
+				REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, icon_state)
 				src.donor.remove_stam_mod_max(icon_state)
 		..()
 		return
@@ -288,7 +288,7 @@
 
 	disposing()
 		if(donor)
-			REMOVE_MOB_PROPERTY(donor, PROP_REBREATHING, "cyberlungs")
+			REMOVE_ATOM_PROPERTY(donor, PROP_MOB_REBREATHING, "cyberlungs")
 		..()
 
 	emag_act(mob/user, obj/item/card/emag/E)
