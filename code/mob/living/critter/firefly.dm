@@ -1,4 +1,10 @@
 
+TYPEINFO(/mob/living/critter)
+	var/captured_per_container = FALSE
+
+TYPEINFO(/mob/living/critter/small_animal/firefly)
+	captured_per_container = 10
+
 /mob/living/critter/small_animal/firefly
 	name = "firefly"
 	desc = "A perfectly normal bioluminescent insect."
@@ -37,6 +43,7 @@
 			animate(pixel_y = -4, time = floatspeed*4.7, easing = LINEAR_EASING)
 
 			// I spent fucking hours trying to get DIR to animate... it does not like being parallelized FUCK
+			// Pending https://www.byond.com/forum/post/2773733 514.1582
 			// var/swap = 1
 			// if(prob(50))
 			// 	swap = -1
@@ -56,6 +63,7 @@
 			// animate(time=duration*(2+rand()), loop = -1, pixel_x=-4*swap)
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
+		// Move to TYPEINFO if more containers are whitelisted, k thx
 		if(istype(W, /obj/item/reagent_containers/glass/jar) || istype(W, /obj/item/reagent_containers/glass/beaker/large))
 			W.AddComponent(/datum/component/bug_capture, W, src, user)
 		else
@@ -261,6 +269,9 @@
 		animate(src, color=color_off, time=1 SECOND)
 		animate(color=color_on, time=max(duration-1 SECOND, 0))
 
+TYPEINFO(/mob/living/critter/small_animal/dragonfly)
+	captured_per_container = 1
+
 /mob/living/critter/small_animal/dragonfly
 	name = "dragonfly"
 	desc = "A big ol' flappy winged insect."
@@ -311,7 +322,7 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/light_color
 	var/firefly_count
-	var/static/list/whitelist_bugs = list(/mob/living/critter/small_animal/dragonfly=1, /mob/living/critter/small_animal/firefly=10)
+
 TYPEINFO(/datum/component/bug_capture)
 	initialization_args = list()
 
@@ -359,9 +370,10 @@ TYPEINFO(/datum/component/bug_capture)
 
 /datum/component/bug_capture/proc/can_jar(atom/A)
 	. = FALSE
-	for(var/type in whitelist_bugs)
-		if(istype(A, type))
-			return whitelist_bugs[type]
+	var/mob/living/critter/C = A
+	if(istype(C))
+		var/typeinfo/mob/living/critter/typeinfo = C.get_typeinfo()
+		return typeinfo.captured_per_container
 
 /datum/component/bug_capture/proc/bye_bugs()
 	var/atom/A = parent
