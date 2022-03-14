@@ -69,7 +69,7 @@
 	},
 /area/shuttle/escape/centcom)
 "ir" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body1";
@@ -118,7 +118,7 @@
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body1";
@@ -334,7 +334,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "HU" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -438,7 +438,7 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body8";
@@ -486,7 +486,7 @@
 /obj/machinery/sleeper/compact{
 	dir = 4
 	},
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},

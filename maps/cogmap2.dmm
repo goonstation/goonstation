@@ -24119,7 +24119,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The partially decomposed corpse of some poor chump.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -64909,15 +64909,6 @@
 /turf/simulated/floor/delivery,
 /area/station/mining/staff_room)
 "cOI" = (
-/obj/decal/poster/wallsign/stencil/left/e{
-	pixel_x = 1
-	},
-/obj/decal/poster/wallsign/stencil/right/s{
-	pixel_x = 14
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hangar/escape)
-"cOJ" = (
 /obj/decal/poster/wallsign/stencil/left/c{
 	pixel_x = -6
 	},
@@ -64929,9 +64920,18 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/escape)
-"cOK" = (
+"cOJ" = (
 /obj/decal/poster/wallsign/stencil/left/e{
 	pixel_x = -1
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/escape)
+"cOK" = (
+/obj/decal/poster/wallsign/stencil/left/e{
+	pixel_x = 1
+	},
+/obj/decal/poster/wallsign/stencil/right/s{
+	pixel_x = 14
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/escape)
@@ -65622,7 +65622,15 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/escape)
 "cQi" = (
-/obj/item/device/radio/intercom/cargo,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/light/emergency/exitsign{
+	dir = 1;
+	pixel_y = 16
+	},
 /turf/simulated/floor/plating,
 /area/station/hangar/escape)
 "cQk" = (
@@ -80251,6 +80259,10 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"vQh" = (
+/obj/item/device/radio/intercom/cargo,
+/turf/simulated/floor/plating,
+/area/station/hangar/escape)
 "vRi" = (
 /obj/tree1{
 	pixel_x = -4
@@ -142467,8 +142479,8 @@ cKv
 cKv
 cKv
 cKv
-cQf
-cRS
+cKv
+cQi
 cKt
 cKv
 cKv
@@ -142770,7 +142782,7 @@ aaa
 aaa
 aaa
 cKv
-cRS
+eBW
 cKt
 cKt
 cKt
@@ -143072,7 +143084,7 @@ aaa
 aaa
 aaa
 cKv
-cRS
+cKt
 cKt
 cKt
 cKt
@@ -143373,8 +143385,8 @@ qaU
 qaU
 qaU
 aaa
-cKv
-eBW
+cOK
+cKt
 cKt
 cKt
 cKt
@@ -144279,8 +144291,8 @@ qaU
 qaU
 qaU
 aaa
-cOK
-cKt
+cKv
+vQh
 cKt
 cNn
 cUQ
@@ -144884,7 +144896,7 @@ qaU
 qaU
 aaa
 cXk
-cQi
+cKt
 cKt
 cNn
 cUR

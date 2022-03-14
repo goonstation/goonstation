@@ -1,4 +1,5 @@
 var/global/list/available_ai_shells = list()
+var/datum/tgui/map_ui
 var/list/ai_emotions = list("Happy" = "ai_happy",\
 	"Very Happy" = "ai_veryhappy",\
 	"Neutral" = "ai_neutral",\
@@ -206,7 +207,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	..(loc)
 	START_TRACKING
 
-	APPLY_ATOM_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)
@@ -1892,6 +1893,34 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	else
 		boutput(usr, "<span class='alert'><b>Radio not found!</b></span>")
 
+/mob/living/silicon/ai/verb/open_map()
+	set name = "Open station map"
+	set desc = "Click on the map to teleport"
+	set category = "AI Commands"
+
+	var/mob/message_mob = src.get_message_mob()
+	if (!src || !message_mob.client || isdead(src))
+		return
+
+	map_ui = tgui_process.try_update_ui(usr, message_mob, map_ui)
+	if (!map_ui)
+		if (!winexists(usr, "ai_map"))
+			winset(message_mob.client, "ai_map", list2params(list(
+				"type" = "map",
+				"size" = "300,300",
+			)))
+			var/atom/movable/screen/handler = new
+			handler.plane = 0
+			handler.mouse_opacity = 0
+			handler.screen_loc = "ai_map:1,1"
+			message_mob.client.screen += handler
+
+			ai_station_map.screen_loc = "ai_map;1,1"
+			handler.vis_contents += ai_station_map
+			message_mob.client.screen += ai_station_map
+		map_ui = new(usr, message_mob, "AIMap")
+		map_ui.open()
+
 // CALCULATIONS
 
 /mob/living/silicon/ai/proc/set_face(var/emotion)
@@ -2192,7 +2221,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 //just use this proc to make click-track checking easier (I would use this in the below proc that builds a list, but i think the proc call overhead is not worth it)
 proc/is_mob_trackable_by_AI(var/mob/M)
-	if (HAS_ATOM_PROPERTY(M, PROP_AI_UNTRACKABLE))
+	if (HAS_ATOM_PROPERTY(M, PROP_MOB_AI_UNTRACKABLE))
 		return 0
 	if (istype(M, /mob/new_player))
 		return 0
@@ -2225,7 +2254,7 @@ proc/get_mobs_trackable_by_AI()
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
 			continue //cameras can't follow people who haven't started yet DUH OR DIDN'T YOU KNOW THAT
-		if (HAS_ATOM_PROPERTY(M, PROP_AI_UNTRACKABLE))
+		if (HAS_ATOM_PROPERTY(M, PROP_MOB_AI_UNTRACKABLE))
 			continue
 		if (ishuman(M) && (istype(M:wear_id, /obj/item/card/id/syndicate) || (istype(M:wear_id, /obj/item/device/pda2) && M:wear_id:ID_card && istype(M:wear_id:ID_card, /obj/item/card/id/syndicate))))
 			continue

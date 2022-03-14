@@ -23,14 +23,19 @@
 		icon = map_icon
 
 	Click(location, control, params)
-		if (!isAIeye(usr)) //no humans teleporting
+		if (!isAI(usr)) //only for AI use
 			return
 		var/list/param_list = params2list(params)
 		if ("left" in param_list)
 			var/x = text2num(param_list["icon-x"])
 			var/y = text2num(param_list["icon-y"])
 			var/turf/clicked = locate(x, y, Z_LEVEL_STATION)
-			usr.loc = clicked
+			if (isAIeye(usr))
+				usr.loc = clicked
+			else
+				var/mob/living/silicon/ai/mainframe = usr
+				mainframe.eye_view() //pop out to eye first
+				mainframe.eyecam.loc = clicked //then tele it, not our core
 		if ("right" in param_list)
 			return TRUE
 
