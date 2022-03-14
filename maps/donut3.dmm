@@ -51778,9 +51778,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/grille/catwalk/jen/side{
-	dir = 10
-	},
+/obj/grille/catwalk/jen/inner,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
@@ -58280,7 +58278,7 @@
 /area/station/maintenance/outer/se)
 "qHs" = (
 /obj/disposalpipe/segment,
-/obj/grille/catwalk/jen,
+/obj/grille/catwalk/jen/side,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
@@ -59467,13 +59465,11 @@
 /turf/simulated/floor/black/grime,
 /area/station/medical/robotics)
 "qXZ" = (
-/obj/grille/catwalk/jen/side,
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/decal/cleanable/dirt/jen,
-/turf/simulated/floor/plating/jen,
+/turf/simulated/wall/auto/jen,
 /area/station/maintenance/outer/sw)
 "qYf" = (
 /obj/railing/orange{
@@ -74633,13 +74629,15 @@
 /turf/simulated/floor/stairs/medical/wide,
 /area/station/medical/cdc)
 "vvF" = (
-/obj/grille/catwalk/jen/twosides{
-	dir = 4
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/grille/catwalk/jen/inner{
+	dir = 4
+	},
 /obj/decal/cleanable/dirt/jen,
+/obj/storage/closet,
+/obj/random_item_spawner/junk/maybe_few,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "vvL" = (
@@ -81561,6 +81559,9 @@
 /obj/machinery/sleeper/compact,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/lobby)
+"xrL" = (
+/turf/simulated/wall/auto/jen,
+/area/station/maintenance/outer/sw)
 "xrP" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating/jen,
@@ -116139,8 +116140,8 @@ umn
 wlr
 vNB
 xPV
-vSX
 xtf
+xrL
 iZp
 pfO
 iZp
