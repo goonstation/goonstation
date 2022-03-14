@@ -7257,7 +7257,6 @@
 	icon_state = "tabledir";
 	dir = 10
 	},
-/obj/item/aiModule/rename,
 /obj/item/aiModule/freeform,
 /turf/simulated/floor/purple,
 /area/turret_protected/AIbasecore1{
@@ -7282,7 +7281,6 @@
 	},
 /obj/item/aiModule/protectStation,
 /obj/item/aiModule/notHuman,
-/obj/item/aiModule/reset,
 /turf/simulated/floor/purple,
 /area/turret_protected/AIbasecore1{
 	name = "Module Storage"
@@ -7316,7 +7314,6 @@
 	icon_state = "tabledir";
 	dir = 4
 	},
-/obj/item/aiModule/reset,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
 /area/storage/tech)

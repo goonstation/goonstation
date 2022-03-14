@@ -17531,7 +17531,6 @@
 /area/station/turret_protected/ai_upload)
 "aYC" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/rename,
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
 "aYJ" = (
@@ -18331,7 +18330,6 @@
 /area/station/medical/medbay/pharmacy)
 "bbS" = (
 /obj/table/auto,
-/obj/item/aiModule/reset,
 /obj/item/device/analyzer/atmospheric,
 /obj/item/storage/toolbox/electrical,
 /obj/item/disk/data/floppy/read_only/communications,
@@ -43494,7 +43492,6 @@
 /area/station/crew_quarters/market)
 "gzd" = (
 /obj/table/auto,
-/obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/greenblack,
 /area/station/turret_protected/Zeta)
@@ -46724,7 +46721,6 @@
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
 /obj/item/device/gps,
-/obj/item/aiModule/reset,
 /obj/cable{
 	d1 = 2;
 	d2 = 8;

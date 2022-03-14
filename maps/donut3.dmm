@@ -47840,9 +47840,6 @@
 /obj/item/device/radio/intercom/security{
 	pixel_x = 1
 	},
-/obj/item/aiModule/reset{
-	pixel_y = 7
-	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "nPv" = (
@@ -76562,12 +76559,6 @@
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
-	},
-/obj/item/aiModule/rename{
-	pixel_y = 7
-	},
-/obj/item/aiModule/reset{
-	pixel_y = -7
 	},
 /turf/simulated/floor/circuit/vintage,
 /area/station/turret_protected/ai_upload)

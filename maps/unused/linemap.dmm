@@ -7563,9 +7563,7 @@
 /obj/machinery/door/window/southleft{
 	req_access_txt = "19"
 	},
-/obj/item/aiModule/rename,
 /obj/item/aiModule/freeform,
-/obj/item/aiModule/reset,
 /obj/item/aiModule/protectStation,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload_foyer)
@@ -9991,7 +9989,6 @@
 /area/space)
 "awQ" = (
 /obj/table/auto,
-/obj/item/aiModule/reset,
 /obj/item/device/audio_log,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -35157,7 +35154,6 @@
 /area/station/bridge/captain)
 "uiF" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/network_progs,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)

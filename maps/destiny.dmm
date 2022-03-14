@@ -12368,7 +12368,6 @@
 "bcI" = (
 /obj/table/reinforced/auto,
 /obj/item/device/infra_sensor,
-/obj/item/aiModule/rename,
 /obj/item/aiModule/emergency,
 /obj/item/aiModule/removeCrew,
 /obj/random_item_spawner/ai_experimental,
@@ -22184,7 +22183,6 @@
 /area/station/hallway/primary/southeast)
 "emm" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/communications,
 /obj/machinery/light/incandescent{
 	dir = 8;

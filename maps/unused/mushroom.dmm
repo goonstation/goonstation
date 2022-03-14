@@ -5997,7 +5997,6 @@
 "anj" = (
 /obj/table/reinforced,
 /obj/item/aiModule/freeform,
-/obj/item/aiModule/rename,
 /turf/simulated/floor/purple,
 /area/station/turret_protected/ai_upload_foyer)
 "ank" = (
@@ -6009,7 +6008,6 @@
 /area/station/turret_protected/ai_upload_foyer)
 "anl" = (
 /obj/table/reinforced,
-/obj/item/aiModule/reset,
 /obj/item/aiModule/notHuman,
 /obj/item/aiModule/protectStation,
 /turf/simulated/floor/purple,
@@ -6032,7 +6030,6 @@
 /area/station/storage/tech)
 "ano" = (
 /obj/table/auto,
-/obj/item/aiModule/reset,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)

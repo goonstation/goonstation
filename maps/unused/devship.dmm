@@ -3318,7 +3318,6 @@
 "iO" = (
 /obj/machinery/light,
 /obj/table/auto,
-/obj/item/aiModule/rename,
 /turf/simulated/floor/circuit{
 	dir = 2
 	},

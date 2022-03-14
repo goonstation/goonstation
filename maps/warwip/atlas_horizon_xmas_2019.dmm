@@ -13119,7 +13119,6 @@
 "aEd" = (
 /obj/machinery/light,
 /obj/table/auto,
-/obj/item/aiModule/rename,
 /turf/simulated/floor/circuit{
 	dir = 2
 	},
@@ -33845,8 +33844,6 @@
 "bxI" = (
 /obj/table/auto,
 /obj/item/aiModule/freeform,
-/obj/item/aiModule/rename,
-/obj/item/aiModule/reset,
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},

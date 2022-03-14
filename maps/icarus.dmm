@@ -3347,7 +3347,6 @@
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
 /obj/item/device/gps,
-/obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/communications,
 /obj/machinery/light/small{
 	dir = 4;
@@ -8908,7 +8907,6 @@
 /area/station/turret_protected/ai)
 "atJ" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/rename,
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1";
@@ -27187,7 +27185,6 @@
 /area/station/hallway/primary/east)
 "niL" = (
 /obj/table/auto,
-/obj/item/aiModule/reset,
 /obj/item/circuitboard/robotics,
 /obj/item/disk/data/floppy/read_only/communications,
 /obj/cable{
@@ -27528,7 +27525,6 @@
 "rri" = (
 /obj/table/auto,
 /obj/item/storage/box/PDAbox,
-/obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/communications,
 /obj/machinery/light/small{
 	dir = 4;

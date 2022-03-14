@@ -2485,13 +2485,11 @@
 "afu" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/glasses/meson,
-/obj/item/aiModule/rename,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/item/aiModule/reset,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "afv" = (
@@ -77188,7 +77186,6 @@
 /area/shuttle/research/outpost)
 "dyi" = (
 /obj/table/auto,
-/obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/communications,
 /obj/item/disk/data/tape/master/readonly,
 /obj/item/device/gps,

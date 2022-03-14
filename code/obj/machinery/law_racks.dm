@@ -10,9 +10,12 @@
 
 	var/datum/light/light
 	var/const/MAX_CIRCUITS = 9
-	var/obj/item/aiModule/law_circuits[MAX_CIRCUITS] //asssoc list to ref slot num with law board obj
+	/** list of aiModules ref'd by slot number. **/
+	var/obj/item/aiModule/law_circuits[MAX_CIRCUITS]
+	/** welded status of law module by slot number **/
 	var/list/welded[MAX_CIRCUITS]
-	var/list/screwed[MAX_CIRCUITS] //there has to be a less hacky way of doing this, but I can't think of it right now
+	/** screwed status of law module by slot number **/
+	var/list/screwed[MAX_CIRCUITS]
 
 	New(loc)
 		START_TRACKING
@@ -25,6 +28,7 @@
 		src.light.attach(src)
 		UpdateIcon()
 
+	/** Causes all law modules to drop to the ground, does not call UpdateLaws() **/
 	proc/drop_all_modules()
 		for (var/i in 1 to MAX_CIRCUITS)
 			src.welded[i] = false
@@ -80,7 +84,7 @@
 				for (var/i in 1 to MAX_CIRCUITS)
 					if(src.law_circuits[i])
 						mod_index_list += i
-				if(mod_index_list.len > 0)
+				if(length(mod_index_list) > 0)
 					var/i = pick(mod_index_list)
 					src.welded[i] = false
 					src.screwed[i] = false
@@ -160,9 +164,7 @@
 		var/damage = 0
 
 		damage = round((0.15*P.power*P.proj_data.ks_ratio), 1.0)
-		//boutput(world,"Took [damage] before DT")
 		damage = damage - min(damage,3) //bullet resist
-		//boutput(world,"Took [damage] after DT")
 		if (damage < 1)
 			if(!P.proj_data.silentshot)
 				src.visible_message("<span class='alert'>[src] is hit by the [P] but it deflects harmlessly.</span>")
@@ -193,16 +195,13 @@
 			circuit_image = null
 			color_overlay = null
 			if(law_circuits[i])
-				circuit_image = image(src.icon, "aimod") //law_circuits[i].icon_state
+				circuit_image = image(src.icon, "aimod")
 				circuit_image.pixel_x = 0
-				circuit_image.pixel_y = -36 + i*4 //I expect this is bad practice, so maybe fix this
+				circuit_image.pixel_y = -36 + i*4
 				color_overlay = image(src.icon, "aimod_over")
 				color_overlay.color = law_circuits[i].highlight_color
 				color_overlay.pixel_x = 0
-				color_overlay.pixel_y = -36 + i*4 //I expect this is bad practice, so maybe fix this
-				//circuit_image.overlays += circuit_image
-				//circuit_image.color = law_circuits[i].color
-				//src.overlays += circuit_image
+				color_overlay.pixel_y = -36 + i*4
 			src.UpdateOverlays(circuit_image,"module_slot_[i]")
 			src.UpdateOverlays(color_overlay,"module_slot_[i]_overlay")
 
@@ -376,7 +375,7 @@
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 
-
+	/** Takes a list or single target to show laws to **/
 	proc/show_laws(var/who)
 		var/list/L =list()
 		L += who
@@ -385,6 +384,12 @@
 		for (var/W in L)
 			boutput(W, laws_text)
 
+	/** Formats current laws for display or logging, argument glue defaults to <br>
+	 * Output is:
+	 * [law number]: [law text]<br>
+	 * [law number]: [law text]
+	 * etc.
+		  **/
 	proc/format_for_logs(var/glue = "<br>")
 		var/law_counter = 1
 		var/lawOut = list()
@@ -395,6 +400,8 @@
 
 		return jointext(lawOut, glue)
 
+	/** Formats current laws as a list in the format:
+	 * {[lawnumber]=lawtext,etc.} **/
 	proc/format_for_irc()
 		var/list/laws = list()
 
@@ -407,6 +414,8 @@
 
 		return laws
 
+	/** Pushes law updates to all connected AIs and Borgs - notification text allows you to customise the header
+		Defaults to <h3>Law update detected</h3> */
 	proc/UpdateLaws(var/notification_text="<h3>Law update detected</h3>")
 		logTheThing("station", src, null, "Law Update: "+src.format_for_logs())
 		var/list/affected_mobs = list()
@@ -457,6 +466,7 @@
 		UpdateIcon()
 		UpdateLaws()
 
+	/** Sets an arbitrary slot to the passed aiModule - will override any module in the slot. Does not call UpdateLaws() */
 	proc/SetLaw(var/obj/item/aiModule/mod,var/slot=1,var/screwed_in=false,var/welded_in=false)
 		if(mod && slot <= MAX_CIRCUITS)
 			src.law_circuits[slot] = mod
@@ -466,10 +476,14 @@
 			UpdateIcon()
 			return true
 
+	/** Sets an arbitrary slot to a custom law specified by lawName and lawText - will override any module in the slot. Does not call UpdateLaws()
+	 * Intended for Admemery
+	*/
 	proc/SetLawCustom(var/lawName,var/lawText,var/slot=1,var/screwed_in=false,var/welded_in=false)
 		var/mod = new /obj/item/aiModule/custom(lawName,lawText)
 		return src.SetLaw(mod,slot,screwed_in,welded_in)
 
+	/** Deletes a law in an abritrary slot. Does not call UpdateLaws() */
 	proc/DeleteLaw(var/slot=1)
 		src.law_circuits[slot]=null
 		src.welded[slot]=false
@@ -477,15 +491,16 @@
 		tgui_process.update_uis(src)
 		UpdateIcon()
 
+	/** Deletes all laws. Does not call UpdateLaws() */
 	proc/DeleteAllLaws()
 		for (var/i in 1 to MAX_CIRCUITS)
 			src.DeleteLaw(i)
 
+	/** This will cause a module to glitch, either totally replace it law or adding picked_law
+		to its text (depening on replace). Lawnumber is a suggestion, not a guarentee - if there is no
+		law in that slot, this will trigger on the law closest to that slot
+		if there are no laws to glitch, just do nothing **/
 	proc/cause_law_glitch(var/picked_law="Beep repeatedly.",var/lawnumber=1,var/replace=false)
-		//This will cause a module to glitch, either totally replace it law or adding picked_law
-		//to its text (depening on replace). Lawnumber is a suggestion, not a guarentee - if there is no
-		//law in that slot, this will trigger on the law closest to that slot
-		//if there are no laws to glitch, just do nothing
 		var/lawnumber_actual = 1
 		if(src.law_circuits[lawnumber])
 			lawnumber_actual = lawnumber

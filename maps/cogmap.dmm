@@ -28894,7 +28894,6 @@
 /area/station/turret_protected/ai_upload)
 "bvV" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/rename,
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
 "bvW" = (
@@ -32803,10 +32802,6 @@
 	tag = ""
 	},
 /obj/table/auto,
-/obj/item/aiModule/reset{
-	pixel_x = 1;
-	pixel_y = -1
-	},
 /obj/item/disk/data/floppy/read_only/network_progs{
 	pixel_x = -7;
 	pixel_y = 10
@@ -57616,10 +57611,6 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/item/aiModule/reset{
-	pixel_x = 11;
-	pixel_y = -1
-	},
 /obj/item/storage/toolbox/electrical{
 	pixel_x = 14;
 	pixel_y = 10

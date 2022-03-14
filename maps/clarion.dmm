@@ -27343,7 +27343,6 @@
 /obj/table/reinforced/auto,
 /obj/item/device/infra_sensor,
 /obj/item/clothing/glasses/meson,
-/obj/item/aiModule/rename,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -50623,7 +50622,6 @@
 "tRG" = (
 /obj/machinery/light,
 /obj/table/reinforced/auto,
-/obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/communications,
 /obj/decal/tile_edge/line/green{
 	dir = 9;

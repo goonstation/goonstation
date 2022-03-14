@@ -3826,7 +3826,6 @@
 /area/station/medical/medbay)
 "bdj" = (
 /obj/table/auto,
-/obj/item/aiModule/reset,
 /obj/item/device/analyzer/atmospheric,
 /obj/item/storage/toolbox/electrical,
 /obj/item/disk/data/floppy/read_only/communications,
@@ -21600,7 +21599,6 @@
 /area/station/security/equipment)
 "ggs" = (
 /obj/table/auto,
-/obj/item/aiModule/reset,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "ggu" = (
@@ -52670,8 +52668,6 @@
 /area/station/crew_quarters/jazz)
 "oDC" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/rename,
-/obj/item/aiModule/reset,
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai_upload)
 "oEh" = (
@@ -81059,7 +81055,6 @@
 /area/listeningpost)
 "wan" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/reset,
 /obj/item/device/radio/intercom/security{
 	dir = 4
 	},

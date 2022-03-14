@@ -4,7 +4,7 @@
 //this also keeps track of the default rack
 
 //For the AI Law Rack configuration. Easy mode makes it so that creating a new default rack will reconnect all non-emagged borgs
-#define LAW_RACK_EASY_MODE 1
+#define LAW_RACK_EASY_MODE TRUE
 
 
 /datum/ai_rack_manager
@@ -105,10 +105,10 @@
 				if(E.mainframe?.law_rack_connection == R)
 					affected_mobs |= E.mainframe
 
-			if(affected_mobs.len > 0 || !round_end) //no point displaying law racks with nothing connected to 'em
+			if(length(affected_mobs) > 0 || !round_end) //no point displaying law racks with nothing connected to 'em
 				var/list/mobtextlist = list()
 				for(var/mob/living/M in affected_mobs)
-					mobtextlist += M.real_name ? M.real_name : M.name//constructName(M, "admin")
+					mobtextlist += M.real_name ? M.real_name : M.name
 
 				laws += "Laws for [R] at [log_loc(R)]:<br>" + R.format_for_logs(glue) +"<br>The law rack is connected to the following silicons: "+mobtextlist.Join(", ") +"<br>--------------<br>"
 		return jointext(laws, glue)

@@ -304,20 +304,6 @@ AI MODULES
 		src.lawText = global.phrase_log.random_custom_ai_law(replace_names=TRUE)
 		//src.highlight_color = random_saturated_hex_highlight_color()
 
-/******************** Reset ********************/
-//DELETE ME
-/obj/item/aiModule/reset
-	name = "AI Law Module 'Unfinished'"
-
-
-
-/******************** Rename ********************/
-
-//DELETE ME TOO
-/obj/item/aiModule/rename
-	name = "AI Law Module - 'Unfinished'"
-
-
 /******************** Custom ********************/
 //for defining custom laws at runtime
 /obj/item/aiModule/custom

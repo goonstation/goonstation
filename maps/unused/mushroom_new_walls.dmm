@@ -10109,7 +10109,6 @@
 "aOx" = (
 /obj/table/reinforced,
 /obj/item/aiModule/freeform,
-/obj/item/aiModule/rename,
 /turf/simulated/floor/purple,
 /area/station/turret_protected/ai_module_storage)
 "aOy" = (
@@ -10121,7 +10120,6 @@
 /area/station/turret_protected/ai_module_storage)
 "aOD" = (
 /obj/table/reinforced,
-/obj/item/aiModule/reset,
 /obj/item/aiModule/notHuman,
 /obj/item/aiModule/removeCrew,
 /turf/simulated/floor/purple,
@@ -30687,10 +30685,6 @@
 /obj/item/circuitboard/robotics{
 	pixel_x = 3;
 	pixel_y = 1
-	},
-/obj/item/aiModule/reset{
-	pixel_x = -6;
-	pixel_y = -2
 	},
 /obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = -8;

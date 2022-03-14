@@ -75922,12 +75922,6 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/item/aiModule/rename{
-	pixel_y = 7
-	},
-/obj/item/aiModule/reset{
-	pixel_y = -7
-	},
 /turf/simulated/floor/circuit/vintage,
 /area/station/turret_protected/ai_upload)
 "vXu" = (

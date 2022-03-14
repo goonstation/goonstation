@@ -16799,7 +16799,6 @@
 /obj/item/aiModule/protectStation,
 /obj/item/aiModule/oneHuman,
 /obj/item/aiModule/freeform,
-/obj/item/aiModule/reset,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "aFS" = (
@@ -19167,7 +19166,6 @@
 /obj/item/aiModule/protectStation,
 /obj/item/aiModule/oneHuman,
 /obj/item/aiModule/freeform,
-/obj/item/aiModule/reset,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "aJZ" = (

@@ -26577,7 +26577,6 @@
 /area/station/turret_protected/ai)
 "bat" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/rename,
 /obj/machinery/light{
 	dir = 8;
 	icon_state = "tube1";
@@ -27021,7 +27020,6 @@
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
 /obj/item/device/gps,
-/obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/circuit,
 /area/station/bridge)

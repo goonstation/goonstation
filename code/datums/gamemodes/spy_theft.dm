@@ -330,7 +330,7 @@
 	station_bounties[/obj/item/disk/data/floppy/read_only/communications] = 2
 	station_bounties[/obj/item/disk/data/floppy/read_only/authentication] = 3
 	station_bounties[/obj/item/aiModule/freeform] = 3
-	station_bounties[/obj/item/aiModule/reset] = 3
+
 
 	station_bounties[/obj/item/cell] = 1
 	station_bounties[/obj/item/device/multitool] = 1

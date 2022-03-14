@@ -2056,7 +2056,6 @@
 /area/station/medical/medbay/treatment2)
 "aeo" = (
 /obj/table/reinforced,
-/obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
@@ -30327,7 +30326,6 @@
 /area/station/bridge)
 "bzI" = (
 /obj/table/wood/round/auto,
-/obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -31373,7 +31371,6 @@
 	})
 "bCa" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/rename,
 /obj/item/device/radio/intercom/AI{
 	dir = 4
 	},

@@ -20,7 +20,6 @@ export const AIRack = (props, context) => {
         <Section>
           <Box>
             {lawTitles.map((item, index) => (
-              // <LabeledList.Item key={index}>
               <Collapsible
                 key={index}
                 title={item ? lawTitles[index] : "Empty"}
@@ -45,7 +44,6 @@ export const AIRack = (props, context) => {
                   color={screwed[index] ? "red" : "green"}
                 />
               </Collapsible>
-              // </LabeledList.Item>
             ))}
           </Box>
         </Section>

@@ -25180,7 +25180,6 @@
 /obj/table/glass/auto,
 /obj/item/storage/toolbox/electrical,
 /obj/item/device/gps,
-/obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/communications,
 /obj/cable{
 	icon_state = "4-8"
@@ -26696,7 +26695,6 @@
 /area/station/medical/research)
 "lmx" = (
 /obj/decal/tile_edge/stripe,
-/obj/item/aiModule/rename,
 /obj/table/glass/reinforced/auto,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)

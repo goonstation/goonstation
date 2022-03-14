@@ -39540,7 +39540,6 @@
 /area/station/turret_protected/ai_upload)
 "bJN" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/rename,
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -46111,7 +46110,6 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/item/aiModule/reset,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -49365,7 +49363,6 @@
 /area/station/science/teleporter)
 "lFd" = (
 /obj/table/auto,
-/obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/green/side,
 /area/station/turret_protected/Zeta)
@@ -49431,7 +49428,6 @@
 "ykd" = (
 /obj/table/auto,
 /obj/item/storage/box/PDAbox,
-/obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge)

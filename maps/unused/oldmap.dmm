@@ -2379,7 +2379,6 @@
 	icon_state = "tabledir";
 	dir = 2
 	},
-/obj/item/aiModule/reset,
 /turf/simulated/floor,
 /area/storage/tech)
 "fn" = (
