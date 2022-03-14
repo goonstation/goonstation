@@ -471,13 +471,13 @@
 /turf/unsimulated/floor/concrete,
 /area/space)
 "bs" = (
-/obj/decal/sink{
+/obj/decal/fakeobjects/sink{
 	name = "Rusty Sink"
 	},
 /turf/unsimulated/floor/concrete,
 /area/space)
 "bt" = (
-/obj/decal/oven{
+/obj/decal/fakeobjects/oven{
 	name = "broken oven"
 	},
 /turf/unsimulated/floor/concrete,

@@ -139,7 +139,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body1";
@@ -614,7 +614,7 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor2"
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body8";
@@ -977,7 +977,7 @@
 /obj/stool/chair/comfy/shuttle/pilot{
 	dir = 1
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of the captain of this, uh, part of station. Not sure if all of the station parts are from the same place.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body7"
@@ -1080,7 +1080,7 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
@@ -1128,7 +1128,7 @@
 	},
 /area/shuttle/escape/centcom)
 "Pe" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -1154,7 +1154,7 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 1
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -1296,7 +1296,7 @@
 	},
 /area/centcom)
 "Tf" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/unsimulated/floor/plating/scorched,
 /area/shuttle/escape/centcom)
 "Tl" = (
@@ -1387,7 +1387,7 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 1
 	},
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/unsimulated/floor/plating/damaged1,
 /area/shuttle/escape/centcom)
 "Xe" = (
@@ -1433,7 +1433,7 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 1
 	},
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "ZQ" = (

@@ -9786,7 +9786,7 @@
 /area/crew_quarters/quarters)
 "atZ" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/crate,
 /obj/item/clothing/under/princess,
@@ -28007,7 +28007,7 @@
 /area/crew_quarters/juryroom)
 "beu" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/juryroom)
@@ -28343,7 +28343,7 @@
 "bfe" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -31514,7 +31514,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
@@ -43848,7 +43848,7 @@
 /turf/simulated/floor/plating,
 /area/derelict/evilreaver/security)
 "bOE" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	density = 0;
 	desc = "Huh, this isn't trash.";
 	icon = 'evilreaverstation.dmi';
@@ -44509,14 +44509,14 @@
 /turf/simulated/floor/grime,
 /area/derelict/evilreaver/security)
 "bQb" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/specialroom/cafeteria{
 	dir = 1
 	},
 /area/derelict/evilreaver/bar)
 "bQc" = (
-/obj/decal/oven,
+/obj/decal/fakeobjects/oven,
 /obj/item/reagent_containers/food/snacks/cake/meat,
 /obj/item/crowbar,
 /turf/simulated/floor/specialroom/cafeteria{
@@ -44855,7 +44855,7 @@
 /area/derelict/evilreaver/security)
 "bQR" = (
 /obj/decal/cleanable/blood,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The head seems to be gone.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body2";
@@ -45499,7 +45499,7 @@
 	},
 /area/derelict/evilreaver)
 "bSq" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	density = 1;
 	desc = "There seems to be a lot of flesh wedged in this airlock.";
 	icon = 'evilreaverstation.dmi';
@@ -47335,7 +47335,7 @@
 /area/derelict/evilreaver/toxins)
 "bWz" = (
 /obj/decal/cleanable/blood,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	name = "scorched remains"
 	},
 /obj/decal/ash,
@@ -49328,7 +49328,7 @@
 /turf/space,
 /area/space)
 "cbg" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body1";
 	name = "corpse";
@@ -59607,7 +59607,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "cvC" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/ore/pharosium,
 /obj/item/ore/bohrum,
 /obj/item/ore/bohrum,
@@ -59924,7 +59924,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "cwj" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/powerhammer,
 /obj/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -60103,7 +60103,7 @@
 /turf/simulated/wall/asteroid,
 /area/space)
 "cwA" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/oreprospector,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -60142,7 +60142,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "cwG" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/ore/cobryl,
 /obj/item/ore/cobryl,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -64381,7 +64381,7 @@
 	dir = 8
 	},
 /obj/window/cubicle,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of a human. The skull has a hole in it.  An extra one, I mean.";
 	layer = 2.5;
 	pixel_y = 8
@@ -65688,7 +65688,7 @@
 /area/crunch)
 "cIl" = (
 /obj/decal/cleanable/blood/splatter,
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/spook,
 /turf/simulated/floor/white,
 /area/crunch)

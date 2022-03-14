@@ -327,6 +327,7 @@
 	icon_state_armed = "flashbang1"
 	stage = 2
 	is_syndicate = 1
+	is_dangerous = FALSE
 	mats = 6
 
 	New()

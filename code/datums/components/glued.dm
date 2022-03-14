@@ -31,7 +31,7 @@ TYPEINFO(/datum/component/glued)
 		glued_to.vis_contents += parent
 	if(ismob(parent))
 		var/mob/parent_mob = parent
-		APPLY_ATOM_PROPERTY(parent_mob, PROP_CANTMOVE, "glued")
+		APPLY_ATOM_PROPERTY(parent_mob, PROP_MOB_CANTMOVE, "glued")
 	if(isitem(parent) && ismob(parent.loc))
 		var/mob/parent_holder = parent.loc
 		var/obj/item/item_parent = parent
@@ -52,7 +52,7 @@ TYPEINFO(/datum/component/glued)
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/pass_on_attackby)
 	RegisterSignal(parent, COMSIG_MOVABLE_BLOCK_MOVE, .proc/move_blocked_check)
 	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, .proc/on_set_loc)
-	RegisterSignal(parent, COMSIG_ATOM_EXPLODE, .proc/on_explode)
+	RegisterSignal(parent, list(COMSIG_ATOM_EXPLODE, COMSIG_ATOM_EXPLODE_INSIDE), .proc/on_explode)
 
 /datum/component/glued/proc/delayed_dry_up(glue_duration)
 	set waitfor = FALSE
@@ -118,7 +118,7 @@ TYPEINFO(/datum/component/glued)
 		glued_to.vis_contents -= parent
 	if(ismob(parent))
 		var/mob/parent_mob = parent
-		REMOVE_ATOM_PROPERTY(parent_mob, PROP_CANTMOVE, "glued")
+		REMOVE_ATOM_PROPERTY(parent_mob, PROP_MOB_CANTMOVE, "glued")
 	parent.set_loc(get_turf(parent))
 	src.glued_to = null
 	. = ..()

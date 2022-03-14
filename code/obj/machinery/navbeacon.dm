@@ -715,6 +715,36 @@ Transponder Codes:<UL>"}
 			codes_txt = "delivery;dir=2"
 		west
 			codes_txt = "delivery;dir=8"
+	ranch_north
+		location = "Ranch"
+		codes_txt = "delivery;dir=1"
+
+		east
+			codes_txt = "delivery;dir=4"
+		south
+			codes_txt = "delivery;dir=2"
+		west
+			codes_txt = "delivery;dir=8"
+	pool_north
+		location = "Pool"
+		codes_txt = "delivery;dir=1"
+
+		east
+			codes_txt = "delivery;dir=4"
+		south
+			codes_txt = "delivery;dir=2"
+		west
+			codes_txt = "delivery;dir=8"
+	news_office
+		location = "News Office"
+		codes_txt = "delivery;dir=1"
+
+		east
+			codes_txt = "delivery;dir=4"
+		south
+			codes_txt = "delivery;dir=2"
+		west
+			codes_txt = "delivery;dir=8"
 
 /obj/machinery/navbeacon/tour
 	name = "tour beacon"

@@ -2286,7 +2286,7 @@
 	torso.render_source = src.render_target
 	torso.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "torso"))
 	torso.appearance_flags = KEEP_APART
-	APPLY_ATOM_PROPERTY(src, PROP_CANTMOVE, "dabbify")
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "dabbify")
 	src.update_canmove()
 	src.set_dir(SOUTH)
 	src.dir_locked = TRUE
@@ -2309,7 +2309,7 @@
 		qdel(torso)
 		qdel(right_arm)
 		qdel(left_arm)
-		REMOVE_ATOM_PROPERTY(src, PROP_CANTMOVE, "dabbify")
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "dabbify")
 		src.update_canmove()
 		src.dir_locked = FALSE
 		src.render_target = "\ref[src]"

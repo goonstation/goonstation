@@ -99,6 +99,8 @@
 #define COMSIG_ATOM_MOUSEDROP_T "atom_mousedrop_t"
 /// When the atom is a source of an explosion (object, args_to_explode_at)
 #define COMSIG_ATOM_EXPLODE "atom_explode"
+/// When the atom somewhere (possibly nested deep) in contents is a source of an explosion (object, args_to_explode_at)
+#define COMSIG_ATOM_EXPLODE_INSIDE "atom_explode_inside"
 
 // ---- atom/movable signals ----
 
@@ -241,7 +243,7 @@
 #define COMSIG_LIVING_LIFE_TICK "human_life_tick"
 // ---- atom property signals ----
 /// When invisibility of a mob gets updated (old_value)
-#define COMSIG_ATOM_PROP_INVISIBILITY "atom_prop_invis"
+#define COMSIG_ATOM_PROP_MOB_INVISIBILITY "atom_prop_invis"
 
 // ---- attack_X signals ----
 
