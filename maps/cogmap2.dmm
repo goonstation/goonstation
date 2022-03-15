@@ -79154,10 +79154,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"ozI" = (
-/obj/effects/background_objects/star_red,
-/turf/space,
-/area/space)
 "oGS" = (
 /obj/window_blinds/cog2{
 	dir = 4
@@ -142878,7 +142874,7 @@ cie
 aaI
 aaa
 aaa
-ozI
+aaa
 aaa
 ckG
 izF
