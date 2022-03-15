@@ -1,4 +1,8 @@
-
+(t)tue mar 15 22
+(u)Cogwerks
+(e)🎨🗺|sprites, mapping
+(+)Made some more background art for a bunch of orbital objects
+(+)Slightly rearranged solar control rooms on Cogmaps 1 & 2 for view of stars 
 (t)mon mar 14 22
 (u)Conchuckter
 (p)7784
