@@ -527,11 +527,6 @@
 	},
 /turf/simulated/floor/longtile,
 /area/station/bridge)
-"aaT" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/removeCrew,
-/turf/simulated/floor/longtile/black,
-/area/station/turret_protected/starboard)
 "aaU" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -8764,6 +8759,10 @@
 /obj/item/reagent_containers/food/snacks/pizza,
 /turf/simulated/floor/black,
 /area/station/engine/engineering/breakroom)
+"avh" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/black,
+/area/listeningpost/syndicateassaultvessel)
 "avi" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering/private)
@@ -11805,22 +11804,6 @@
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
-"aBp" = (
-/obj/item/handcuffs,
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/item/furniture_parts/table/reinforced/bar,
-/turf/simulated/floor/carpet{
-	icon_state = "fblue1";
-	dir = 8
-	},
-/area/station/bridge)
 "aBq" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2";
@@ -22915,20 +22898,6 @@
 	icon_state = "1-2";
 	d1 = 1;
 	d2 = 2
-	},
-/turf/simulated/floor/plating/random,
-/area/station/medical/robotics)
-"aYh" = (
-/obj/item/cable_coil/cut,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/storage/crate{
-	name = "robotics crate"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/medical/robotics)
@@ -49119,10 +49088,6 @@
 /obj/access_spawn/maint,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/seaturtle)
-"cUN" = (
-/obj/decal/fakeobjects/sink,
-/turf/simulated/floor/black,
-/area/listeningpost/syndicateassaultvessel)
 "cVM" = (
 /obj/storage/crate/bartending,
 /obj/disposalpipe/segment/mail{
@@ -49131,6 +49096,20 @@
 /obj/item/paper/book/from_file/pocketguide/bartending,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
+"ekH" = (
+/obj/item/cable_coil/cut,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/obj/storage/crate{
+	name = "robotics crate"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/medical/robotics)
 "elQ" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/captain,
@@ -49166,11 +49145,6 @@
 /obj/item/disk/data/tape/master/readonly,
 /obj/item/paper/book/from_file/dwainedummies,
 /obj/item/device/multitool,
-/turf/simulated/floor/longtile/black,
-/area/station/turret_protected/starboard)
-"gZs" = (
-/obj/table/reinforced/auto,
-/obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/starboard)
 "hNO" = (
@@ -49263,6 +49237,27 @@
 /obj/item/furniture_parts/table/reinforced,
 /turf/simulated/floor/scorched2,
 /area/station/science/restroom)
+"kAP" = (
+/obj/table/reinforced/auto,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/longtile/black,
+/area/station/turret_protected/starboard)
+"kFH" = (
+/obj/item/handcuffs,
+/obj/cable{
+	icon_state = "4-8";
+	d1 = 4;
+	d2 = 8
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/item/furniture_parts/table/reinforced/bar,
+/turf/simulated/floor/carpet{
+	icon_state = "fblue1";
+	dir = 8
+	},
+/area/station/bridge)
 "kKD" = (
 /obj/table/wood/auto,
 /obj/machinery/phone,
@@ -49378,12 +49373,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/captain)
-"nxl" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/lawrack,
-/obj/cable,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "nSq" = (
 /obj/table/auto,
 /obj/item/paper/book/from_file/torpedo,
@@ -49391,6 +49380,11 @@
 	dir = 8
 	},
 /area/listeningpost/syndicateassaultvessel)
+"ohH" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/removeCrew,
+/turf/simulated/floor/longtile/black,
+/area/station/turret_protected/starboard)
 "plU" = (
 /obj/machinery/optable,
 /obj/item/from_file/medical_surgery_guide,
@@ -49466,6 +49460,12 @@
 	},
 /turf/simulated/floor/caution/south,
 /area/station/engine/elect)
+"tfM" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/lawrack,
+/obj/cable,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "vmU" = (
 /obj/disposalpipe/segment/mail,
 /obj/table/reinforced/auto,
@@ -90433,7 +90433,7 @@ aBz
 aBJ
 aBT
 aqS
-aaT
+ohH
 azK
 aCl
 aPO
@@ -91648,7 +91648,7 @@ aNF
 aiF
 asu
 aQz
-nxl
+tfM
 ayo
 aCG
 aCI
@@ -92983,7 +92983,7 @@ alY
 atB
 amd
 akH
-cUN
+avh
 avM
 avQ
 avS
@@ -93449,7 +93449,7 @@ aaR
 abu
 abe
 aoR
-aBp
+kFH
 aBP
 akD
 aBX
@@ -95265,7 +95265,7 @@ aBz
 aru
 akB
 aqS
-gZs
+kAP
 aEw
 aPt
 aPG
@@ -105555,7 +105555,7 @@ aIt
 aBr
 aWd
 aWd
-aYh
+ekH
 aYV
 aZx
 baC

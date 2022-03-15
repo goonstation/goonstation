@@ -2777,20 +2777,6 @@
 /obj/storage/crate/robotics_supplies,
 /turf/simulated/floor/plating/random,
 /area/station/medical/robotics)
-"afO" = (
-/obj/item/cable_coil/cut,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/storage/crate{
-	name = "robotics crate"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/medical/robotics)
 "afP" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights,
@@ -7981,11 +7967,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
-"arB" = (
-/obj/table/reinforced,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "arC" = (
 /obj/cable{
 	d1 = 1;
@@ -20213,6 +20194,10 @@
 /obj/item/reagent_containers/food/snacks/ingredient/flour,
 /turf/space/fluid,
 /area/space)
+"aTV" = (
+/obj/decal/fakeobjects/oven,
+/turf/space/fluid,
+/area/space)
 "aTW" = (
 /obj/item/kitchen/rollingpin,
 /turf/space/fluid,
@@ -20281,6 +20266,11 @@
 /area/space)
 "aUi" = (
 /obj/stool/bed,
+/turf/space/fluid,
+/area/space)
+"aUj" = (
+/obj/stool/bed,
+/obj/decal/fakeobjects/skeleton,
 /turf/space/fluid,
 /area/space)
 "aUk" = (
@@ -21206,6 +21196,11 @@
 /obj/decal/cleanable/molten_item,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
+"aWN" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/genetics)
 "aWO" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 5
@@ -21439,6 +21434,11 @@
 	dir = 9
 	},
 /turf/simulated/floor/white,
+/area/evilreaver/genetics)
+"aXn" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/plating,
 /area/evilreaver/genetics)
 "aXo" = (
 /turf/simulated/floor/plating/damaged1,
@@ -25055,6 +25055,27 @@
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
+"bgs" = (
+/obj/overlay{
+	anchored = 1;
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/overlay{
+	anchored = 1;
+	desc = "Gross.";
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/decal/fakeobjects/oven{
+	name = "broken oven"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/bar)
 "bgt" = (
 /obj/reagent_dispensers/watertank/big,
 /obj/disposalpipe/segment{
@@ -28286,6 +28307,11 @@
 	dir = 9
 	},
 /area/space)
+"bon" = (
+/obj/item/reagent_containers/food/snacks/hardtack,
+/obj/decal/fakeobjects/skeleton,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "boo" = (
 /obj/ladder{
 	desc = "Is this supposed to be here?";
@@ -28531,6 +28557,18 @@
 /obj/item/kitchen/utensil/knife/bread,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"boS" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/raw_material/pharosium,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/claretine,
+/obj/item/raw_material/claretine,
+/obj/item/raw_material/claretine,
+/obj/item/raw_material/uqill,
+/obj/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "boT" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -29575,6 +29613,12 @@
 /obj/machinery/navbeacon/tour/oshan/tour9,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"brg" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/mining_tool/powerhammer,
+/obj/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "brh" = (
 /turf/simulated/floor/neutral/side{
 	dir = 4
@@ -30030,6 +30074,11 @@
 "bsn" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/storage)
+"bso" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/oreprospector,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "bsp" = (
 /obj/access_spawn/engineering,
 /obj/firedoor_spawn,
@@ -31386,6 +31435,12 @@
 	icon_state = "blue2"
 	},
 /area/station/bridge)
+"bvD" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/raw_material/cobryl,
+/obj/item/raw_material/cobryl,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "bvE" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fblue1"
@@ -33045,14 +33100,6 @@
 	icon_state = "blue2"
 	},
 /area/station/bridge)
-"bzI" = (
-/obj/table/wood/round/auto,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "blue2"
-	},
-/area/station/bridge)
 "bzJ" = (
 /obj/machinery/light/incandescent/cool,
 /obj/cable{
@@ -34090,14 +34137,6 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
-"bCa" = (
-/obj/table/reinforced/auto,
-/obj/machinery/light_switch/auto,
-/obj/item/device/radio/intercom/AI{
-	dir = 4
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "bCb" = (
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -39578,6 +39617,10 @@
 /obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/grime,
 /area/space)
+"bPK" = (
+/obj/decal/fakeobjects/oven,
+/turf/simulated/floor/grime,
+/area/space)
 "bPL" = (
 /obj/item/storage/box/cablesbox,
 /obj/cable{
@@ -40748,18 +40791,6 @@
 /turf/simulated/floor/grime{
 	dir = 8
 	},
-/area/station/storage/warehouse)
-"bSn" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/turf/simulated/floor/plating/random,
 /area/station/storage/warehouse)
 "bSo" = (
 /obj/decal/cleanable/dirt,
@@ -44167,6 +44198,11 @@
 /area/diner/hallway)
 "cbA" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
+/area/diner/backroom)
+"cbB" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/plating,
 /area/diner/backroom)
 "cbC" = (
 /obj/decal/cleanable/dirt,
@@ -47866,6 +47902,14 @@
 	dir = 10
 	},
 /area/station/crew_quarters/kitchen)
+"dkR" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light_switch/auto,
+/obj/item/device/radio/intercom/AI{
+	dir = 4
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "dvD" = (
 /obj/disposalpipe/trunk/mail/north,
 /obj/machinery/disposal/mail/small/autoname{
@@ -47881,10 +47925,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
-"dKk" = (
-/obj/table/reinforced,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "dLM" = (
 /obj/table/auto,
 /obj/item/camera,
@@ -47943,27 +47983,6 @@
 /obj/item/pen,
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/info)
-"eDh" = (
-/obj/overlay{
-	anchored = 1;
-	desc = "Gross.";
-	dir = 4;
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "sideWall";
-	name = "organic wall"
-	},
-/obj/overlay{
-	anchored = 1;
-	desc = "Gross.";
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "sideWall";
-	name = "organic wall"
-	},
-/obj/decal/fakeobjects/oven{
-	name = "broken oven"
-	},
-/turf/simulated/floor/plating/damaged3,
-/area/evilreaver/bar)
 "eFX" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -48074,28 +48093,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost)
-"geD" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/decal/cleanable/blood,
-/turf/simulated/floor/plating/damaged3,
-/area/evilreaver/genetics)
-"ghN" = (
-/obj/stool/bed,
-/obj/decal/fakeobjects/skeleton,
-/turf/space/fluid,
-/area/space)
 "ghV" = (
 /obj/cable{
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
-"glM" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/cobryl,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "gph" = (
 /obj/cable{
 	d1 = 4;
@@ -48174,6 +48177,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"hdG" = (
+/obj/machinery/lawrack,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "hke" = (
 /obj/machinery/optable,
 /obj/disposalpipe/segment/mail,
@@ -48187,10 +48194,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
-"hro" = (
-/obj/decal/fakeobjects/oven,
-/turf/space/fluid,
-/area/space)
 "htT" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin{
@@ -48430,21 +48433,11 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
-"kaI" = (
-/obj/item/reagent_containers/food/snacks/hardtack,
-/obj/decal/fakeobjects/skeleton,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "kaN" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/decal/tinsel,
 /turf/simulated/floor/plating/random,
 /area/station/bridge)
-"kcn" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/decal/cleanable/blood/splatter,
-/turf/simulated/floor/plating,
-/area/evilreaver/genetics)
 "kdU" = (
 /obj/decal/cleanable/paper,
 /obj/cable{
@@ -48511,18 +48504,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
-"lry" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/uqill,
-/obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "lwB" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -48676,6 +48657,11 @@
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"nDd" = (
+/obj/table/reinforced,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "nDS" = (
 /obj/table/auto,
 /obj/item/coin{
@@ -48710,6 +48696,20 @@
 	},
 /turf/simulated/floor,
 /area/station/medical/medbay/restroom)
+"nXi" = (
+/obj/item/cable_coil/cut,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/obj/storage/crate{
+	name = "robotics crate"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/medical/robotics)
 "nXA" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -48779,17 +48779,24 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"oWF" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/decal/cleanable/blood/splatter,
-/turf/simulated/floor/plating,
-/area/diner/backroom)
 "pmy" = (
 /obj/submachine/GTM{
 	pixel_y = 32
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"prz" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/turf/simulated/floor/plating/random,
+/area/station/storage/warehouse)
 "pxz" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/decal/wreath,
@@ -48836,6 +48843,10 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
+"qaS" = (
+/obj/table/reinforced,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "qcm" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/decal/wreath,
@@ -48855,11 +48866,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
-"qwL" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/item/oreprospector,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "qBd" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	id = "secure_dock"
@@ -48902,6 +48908,14 @@
 	dir = 1
 	},
 /area/station/ranch)
+"rgV" = (
+/obj/table/wood/round/auto,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "blue2"
+	},
+/area/station/bridge)
 "rBz" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -48926,10 +48940,6 @@
 /obj/decal/wreath,
 /turf/simulated/floor/plating/random,
 /area/station/security/hos)
-"syN" = (
-/obj/decal/fakeobjects/oven,
-/turf/simulated/floor/grime,
-/area/space)
 "sBu" = (
 /obj/cable{
 	d1 = 4;
@@ -49020,10 +49030,6 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
-"uuV" = (
-/obj/machinery/lawrack,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "uwp" = (
 /obj/decal/snowbits,
 /turf/simulated/floor/snow,
@@ -49213,12 +49219,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
-"wBM" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/item/mining_tool/powerhammer,
-/obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "wGx" = (
 /obj/item/device/flyswatter,
 /turf/simulated/floor/specialroom/arcade,
@@ -58899,7 +58899,7 @@ boc
 boc
 boc
 boe
-wBM
+brg
 boe
 boc
 boc
@@ -59195,7 +59195,7 @@ boc
 boc
 boc
 boc
-lry
+boS
 bpr
 boc
 boc
@@ -60718,7 +60718,7 @@ boc
 boc
 boc
 boc
-qwL
+bso
 buW
 buR
 boc
@@ -61323,7 +61323,7 @@ boc
 boc
 bqI
 bsX
-glM
+bvD
 bwf
 boc
 boe
@@ -65970,7 +65970,7 @@ aqn
 aqn
 aTs
 aTs
-hro
+aTV
 aqn
 aTN
 aTO
@@ -71728,7 +71728,7 @@ aqn
 aqn
 aqn
 aqn
-ghN
+aUj
 aqn
 aqn
 cgq
@@ -78842,7 +78842,7 @@ bhC
 bhC
 bhC
 bhB
-kaI
+bon
 boW
 bpy
 bqo
@@ -80386,7 +80386,7 @@ bKj
 bPh
 bQi
 bJA
-bSn
+prz
 bTm
 bUA
 bVz
@@ -90034,7 +90034,7 @@ ckj
 chg
 bzx
 bAP
-bCa
+dkR
 bDp
 aTo
 bzx
@@ -90637,7 +90637,7 @@ cjV
 cki
 aqn
 bzx
-uuV
+hdG
 bCb
 bDq
 bCb
@@ -95691,7 +95691,7 @@ aqn
 cdi
 afq
 agA
-afO
+nXi
 agd
 agA
 acl
@@ -96978,7 +96978,7 @@ bwp
 bwX
 bxU
 byM
-bzI
+rgV
 btK
 buV
 buV
@@ -104163,7 +104163,7 @@ any
 aoj
 apb
 apb
-arB
+nDd
 aek
 atV
 avu
@@ -105371,7 +105371,7 @@ laJ
 aoj
 apb
 apb
-dKk
+qaS
 asO
 atV
 avy
@@ -112558,7 +112558,7 @@ aUZ
 aUZ
 aUZ
 aUZ
-syN
+bPK
 bPD
 bPE
 bPD
@@ -122430,7 +122430,7 @@ cax
 cbh
 cbq
 cax
-oWF
+cbB
 cbL
 cbL
 cbA
@@ -125526,7 +125526,7 @@ aZD
 aYH
 bae
 bau
-eDh
+bgs
 bhF
 bjq
 bky
@@ -130342,7 +130342,7 @@ aUp
 aUG
 aWj
 aWC
-geD
+aWN
 aXa
 aXp
 aXz
@@ -131853,7 +131853,7 @@ aUG
 aWp
 aWM
 aWY
-kcn
+aXn
 aXw
 aXH
 aUG

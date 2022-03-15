@@ -1,6 +1,6 @@
 <body>
-<h1>MONO</h1>
-The family friendly and legally distinct playing card game for all ages! For 2-10 players.
+<center><h1>MONO</h1></center>
+<center>The family friendly and legally distinct playing card game for all ages! For 2-10 players.</center>
 <hr>
 
 <h2>Contents</h2>

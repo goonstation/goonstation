@@ -535,6 +535,10 @@ var/f_color_selector_handler/F_Color_Selector
 	makeMiningLevel()
 	#endif
 
+	UPDATE_TITLE_STATUS("Building random station rooms")
+	Z_LOG_DEBUG("World/Init", "Setting up random rooms...")
+	buildRandomRooms()
+
 	UPDATE_TITLE_STATUS("Initializing biomes")
 	Z_LOG_DEBUG("World/Init", "Setting up biomes...")
 	initialize_biomes()

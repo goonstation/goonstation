@@ -19036,18 +19036,6 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"aMi" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "aMj" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -26189,14 +26177,6 @@
 	dir = 5
 	},
 /area/station/turret_protected/ai_upload)
-"aZz" = (
-/obj/machinery/lawrack,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/blue,
-/area/station/turret_protected/ai_upload)
 "aZA" = (
 /obj/machinery/computer/teleporter,
 /turf/simulated/floor/circuit,
@@ -26575,17 +26555,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"bat" = (
-/obj/table/reinforced/auto,
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1";
-	tag = ""
-	},
-/turf/simulated/floor/blue/side{
-	dir = 8
-	},
-/area/station/turret_protected/ai_upload)
 "bau" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -27008,19 +26977,6 @@
 /obj/item/device/radio,
 /obj/item/device/radio,
 /obj/item/hand_tele,
-/turf/simulated/floor/circuit,
-/area/station/bridge)
-"bbp" = (
-/obj/item/device/radio/intercom{
-	dir = 1;
-	broadcasting = 0;
-	frequency = 1485;
-	name = "Security Intercom"
-	},
-/obj/table/auto,
-/obj/item/storage/toolbox/electrical,
-/obj/item/device/gps,
-/obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/circuit,
 /area/station/bridge)
 "bbq" = (
@@ -34225,6 +34181,18 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"cso" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "ijs" = (
 /obj/item/device/radio/headset/multifreq,
 /obj/item/device/radio/headset/multifreq,
@@ -34250,6 +34218,14 @@
 	dir = 8
 	},
 /area/station/science/teleporter)
+"jjk" = (
+/obj/machinery/lawrack,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/blue,
+/area/station/turret_protected/ai_upload)
 "juS" = (
 /obj/table/auto,
 /obj/item/device/radio/signaler,
@@ -34269,6 +34245,19 @@
 	dir = 8
 	},
 /area/station/science/teleporter)
+"lFt" = (
+/obj/item/device/radio/intercom{
+	dir = 1;
+	broadcasting = 0;
+	frequency = 1485;
+	name = "Security Intercom"
+	},
+/obj/table/auto,
+/obj/item/storage/toolbox/electrical,
+/obj/item/device/gps,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/circuit,
+/area/station/bridge)
 "rAI" = (
 /obj/storage/crate/rcd/CE,
 /obj/machinery/light{
@@ -34304,6 +34293,17 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
+"wzE" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1";
+	tag = ""
+	},
+/turf/simulated/floor/blue/side{
+	dir = 8
+	},
+/area/station/turret_protected/ai_upload)
 
 (1,1,1) = {"
 aaa
@@ -65592,7 +65592,7 @@ aYD
 aXK
 aYD
 aIA
-bat
+wzE
 aJz
 bcg
 bdc
@@ -66497,7 +66497,7 @@ aVE
 aWJ
 biH
 aYL
-aZz
+jjk
 baw
 bbk
 aYL
@@ -68311,7 +68311,7 @@ aXR
 bbD
 aZE
 baB
-bbp
+lFt
 bbD
 bdl
 bpv
@@ -69198,7 +69198,7 @@ aQF
 aFj
 aJY
 aQr
-aMi
+cso
 aNo
 aNV
 aMh

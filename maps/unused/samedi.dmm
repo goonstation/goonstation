@@ -33691,29 +33691,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
-"bwh" = (
-/obj/item/cable_coil/cut,
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	icon_state = "camera";
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/storage/warehouse)
 "bwi" = (
 /obj/storage/closet/welding_supply,
 /turf/simulated/floor/plating,
@@ -39536,12 +39513,6 @@
 	},
 /turf/simulated/floor/blueblack{
 	dir = 8
-	},
-/area/station/turret_protected/ai_upload)
-"bJN" = (
-/obj/table/reinforced/auto,
-/turf/simulated/floor/blueblack{
-	dir = 4
 	},
 /area/station/turret_protected/ai_upload)
 "bJO" = (
@@ -46102,18 +46073,6 @@
 	},
 /turf/space,
 /area/station/solar/south)
-"bXc" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/protectStation,
-/obj/item/aiModule/conservePower,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
-/area/station/turret_protected/ai_upload)
 "bXd" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -47444,6 +47403,12 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
+"bZZ" = (
+/obj/decal/fakeobjects/skeleton,
+/turf/simulated/floor/plating/airless/asteroid{
+	name = "asteroid"
+	},
+/area/space)
 "caa" = (
 /obj/decal/cleanable/blood/gibs/core,
 /turf/simulated/floor/plating/airless/asteroid{
@@ -49255,12 +49220,6 @@
 	intact = 0
 	},
 /area/space)
-"diK" = (
-/obj/decal/fakeobjects/skeleton,
-/turf/simulated/floor/plating/airless/asteroid{
-	name = "asteroid"
-	},
-/area/space)
 "enR" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -49288,6 +49247,18 @@
 /obj/item/spacecash/hundred,
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
+"ffQ" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/protectStation,
+/obj/item/aiModule/conservePower,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/station/turret_protected/ai_upload)
 "fFe" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -49302,7 +49273,7 @@
 	dir = 8
 	},
 /area/station/science/teleporter)
-"gwJ" = (
+"hdA" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/lawrack{
 	dir = 8
@@ -49342,6 +49313,12 @@
 	dir = 1
 	},
 /area/station/science/teleporter)
+"kui" = (
+/obj/table/reinforced/auto,
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/turret_protected/ai_upload)
 "kYK" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -49361,11 +49338,6 @@
 	dir = 10
 	},
 /area/station/science/teleporter)
-"lFd" = (
-/obj/table/auto,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/green/side,
-/area/station/turret_protected/Zeta)
 "mkh" = (
 /obj/machinery/light{
 	dir = 8;
@@ -49425,12 +49397,40 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
-"ykd" = (
+"vuG" = (
+/obj/table/auto,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/green/side,
+/area/station/turret_protected/Zeta)
+"wZC" = (
 /obj/table/auto,
 /obj/item/storage/box/PDAbox,
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge)
+"xkp" = (
+/obj/item/cable_coil/cut,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/warehouse)
 
 (1,1,1) = {"
 aaa
@@ -88609,7 +88609,7 @@ bRE
 bSw
 bTg
 bSx
-lFd
+vuG
 bPT
 bVO
 bSp
@@ -89756,7 +89756,7 @@ baW
 bct
 bdD
 beV
-ykd
+wZC
 bhG
 bjj
 bkt
@@ -95909,7 +95909,7 @@ bZj
 bYT
 bYU
 bZP
-diK
+bZZ
 cab
 aab
 aab
@@ -96513,7 +96513,7 @@ bYU
 bYT
 bYT
 bZP
-diK
+bZZ
 aab
 aab
 aaa
@@ -113326,7 +113326,7 @@ bow
 btx
 bty
 bty
-bwh
+xkp
 bov
 bnk
 byh
@@ -114871,7 +114871,7 @@ bHA
 bJb
 bJM
 bKw
-bXc
+ffQ
 bMi
 bNb
 bIl
@@ -115775,8 +115775,8 @@ bEF
 bHD
 bIo
 bNe
-bJN
-gwJ
+kui
+hdA
 bLu
 bMk
 bEF
