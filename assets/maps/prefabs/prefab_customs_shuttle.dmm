@@ -97,6 +97,7 @@
 /area/noGenerate)
 "fd" = (
 /obj/decal/cleanable/vomit,
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
 /turf/simulated/floor/carpet/purple/standard/edge/east,
 /area/prefab/crashed_hop_shuttle)
 "go" = (
@@ -396,7 +397,6 @@
 /area/prefab/crashed_hop_shuttle)
 "xg" = (
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot,
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
 /turf/simulated/floor/carpet/purple/fancy/narrow/east,
 /area/prefab/crashed_hop_shuttle)
 "xh" = (
