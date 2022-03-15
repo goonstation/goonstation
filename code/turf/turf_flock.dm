@@ -172,8 +172,6 @@
 	else if(length(groups_found) > 1) //if there is more then one, then join the largest (add merging functionality here later)
 		for(var/datum/flock_tile_group/oldgroup in groups_found)
 			if(oldgroup == largestgroup) continue
-			largestgroup.powergen += oldgroup.powergen
-			largestgroup.poweruse += oldgroup.poweruse
 			for(var/turf/simulated/floor/feather/F in oldgroup.members)
 				F.group = largestgroup
 				largestgroup.addtile(F)

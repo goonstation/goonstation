@@ -21,6 +21,7 @@
 	var/snooping = 0 //are both sides of communication currently accessible?
 	var/datum/tgui/flockpanel
 
+
 /datum/flock/New()
 	..()
 	src.name = "[pick(consonants_lower)][pick(vowels_lower)].[pick(consonants_lower)][pick(vowels_lower)]"
@@ -89,19 +90,19 @@
 
 	// DESCRIBE TRACES
 	var/list/tracelist = list()
-	for(var/mob/living/intangible/flock/trace/T in src.traces)
+	for(var/mob/living/intangible/flock/trace/T as anything in src.traces)
 		tracelist += list(T.describe_state())
 	state["partitions"] = tracelist
 
 	// DESCRIBE DRONES
 	var/list/dronelist = list()
-	for(var/mob/living/critter/flock/drone/F in src.units)
+	for(var/mob/living/critter/flock/drone/F as anything in src.units)
 		dronelist += list(F.describe_state())
 	state["drones"] = dronelist
 
 	// DESCRIBE STRUCTURES
 	var/list/structureList = list()
-	for(var/obj/flock_structure/structure in src.structures)
+	for(var/obj/flock_structure/structure as anything in src.structures)
 		structureList += list(structure.describe_state())
 	state["structures"] = structureList
 
@@ -136,7 +137,7 @@
 /datum/flock/proc/total_health_percentage()
 	var/hp = 0
 	var/max_hp = 0
-	for(var/mob/living/critter/flock/F in src.units)
+	for(var/mob/living/critter/flock/F as anything in src.units)
 		F.count_healths()
 		hp += F.health
 		max_hp += F.max_health
@@ -146,10 +147,46 @@
 		return 0
 
 /datum/flock/proc/total_resources()
-	var/res = 0
-	for(var/mob/living/critter/flock/F in src.units)
-		res += F.resources
-	return res
+	. = 0
+	for(var/mob/living/critter/flock/F as anything in src.units)
+		. += F.resources
+
+
+/datum/flock/proc/total_compute()
+	. = 0
+	var/comp_provided = 0
+	for(var/mob/living/critter/flock/F as anything in src.units)
+		comp_provided = F.compute_provided()
+		if(comp_provided>0)
+			. += comp_provided
+
+	for(var/obj/flock_structure/S as anything in src.structures)
+		comp_provided = S.compute_provided()
+		if(comp_provided>0)
+			. += comp_provided
+
+
+/datum/flock/proc/used_compute()
+	. = 0
+	var/comp_provided = 0
+	for(var/mob/living/critter/flock/F as anything in src.units)
+		comp_provided = F.compute_provided()
+		if(comp_provided<0)
+			. += abs(comp_provided)
+
+	for(var/obj/flock_structure/S as anything in src.structures)
+		comp_provided = S.compute_provided()
+		if(comp_provided<0)
+			. += abs(comp_provided)
+
+	//not strictly necessary, but maybe future traces can provide compute in some way or cost more when doing stuff?
+	for(var/mob/living/intangible/flock/trace/T as anything in src.traces)
+		comp_provided = T.compute_provided()
+		if(comp_provided<0)
+			. += abs(comp_provided)
+
+/datum/flock/proc/can_afford_compute(var/cost)
+	return (cost <= src.total_compute() - src.used_compute())
 
 /datum/flock/proc/registerFlockmind(var/mob/living/intangible/flock/flockmind/F)
 	if(!F)
@@ -160,11 +197,15 @@
 	if(!T)
 		return
 	src.traces |= T
+	var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
+	aH.updateCompute()
 
 /datum/flock/proc/removeTrace(var/mob/living/intangible/flock/trace/T)
 	if(!T)
 		return
 	src.traces -= T
+	var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
+	aH.updateCompute()
 
 // ANNOTATIONS
 
@@ -261,15 +302,32 @@
 // UNITS
 
 /datum/flock/proc/registerUnit(var/atom/movable/D)
-	if(isflock(D) || isflockstructure(D))
+	if(isflock(D))
 		src.units |= D
+	var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
+	aH.updateCompute()
 
 /datum/flock/proc/removeDrone(var/atom/movable/D)
-	if(isflock(D) || isflockstructure(D))
+	if(isflock(D))
 		src.units -= D
 
 		if(D:real_name && busy_tiles[D:real_name])
 			src.busy_tiles[D:real_name] = null
+		var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
+		aH.updateCompute()
+// STRUCTURES
+
+/datum/flock/proc/registerStructure(var/atom/movable/S)
+	if(isflockstructure(S))
+		src.structures |= S
+		var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
+		aH.updateCompute()
+
+/datum/flock/proc/removeStructure(var/atom/movable/S)
+	if(isflockstructure(S))
+		src.structures -= S
+		var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
+		aH.updateCompute()
 
 /datum/flock/proc/getComplexDroneCount()
 	var/count = 0

@@ -16,10 +16,10 @@
 	/// very flame-retardant
 	var/fireVuln = 0.2
 	var/datum/flock/flock = null
+	//base compute provided
+	var/compute = 0
 	/// can flockdrones pass through this akin to a grille? need to set USE_CANPASS to make this work however
 	var/passthrough = FALSE
-	/// does this use(/how much) power? (negatives mean it makes power)
-	var/poweruse = 0
 	/// not everything needs a group so dont check for everysingle god damn structure
 	var/usesgroups = FALSE
 	/// what group are we connected to?
@@ -34,7 +34,7 @@
 	processing_items |= src
 	if(F)
 		src.flock = F
-		src.flock.structures += src
+		src.flock.registerStructure(src)
 	if(usesgroups && istype(get_turf(src), /turf/simulated/floor/feather))
 		var/turf/simulated/floor/feather/f = get_turf(src)
 		grouptile = f
@@ -44,7 +44,7 @@
 /obj/flock_structure/disposing()
 	processing_items -= src
 	if (flock)
-		flock.structures -= src
+		flock.removeStructure(src)
 	flock = null
 	group = null
 	..()
@@ -74,6 +74,10 @@
 		return special_desc
 	else
 		return null // give the standard description
+
+//override this if compute is conditional or something
+/obj/flock_structure/proc/compute_provided()
+	return src.compute
 
 /obj/flock_structure/proc/building_specific_info()
 	return ""

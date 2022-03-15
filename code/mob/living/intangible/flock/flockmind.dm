@@ -7,7 +7,6 @@
 	desc = "The collective machine consciousness of a bunch of glass peacock things."
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "flockmind"
-
 	var/started = 0
 	var/last_time // when i say per second I MEAN PER SECOND DAMMIT
 
@@ -33,6 +32,7 @@
     <br><span class='bold'>ID:</span> [src.real_name]
     <br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none, somehow"]
     <br><span class='bold'>Resources:</span> [src.flock.total_resources()]
+	<br><span class='bold'>Total Compute:</span> [src.flock.total_compute()]
     <br><span class='bold'>System Integrity:</span> [round(src.flock.total_health_percentage()*100)]%
     <br><span class='bold'>Cognition:</span> COMPUTATIONAL NEXUS
     <br>###=-</span></span>"}
@@ -57,7 +57,7 @@
 /mob/living/intangible/flock/flockmind/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return 1
-	if (src.started && src.flock && src.flock.units && src.flock.units.len <= 0)
+	if (src.started && src.flock && src.flock.total_compute() <= 0)
 		src.death() // get rekt
 
 /mob/living/intangible/flock/flockmind/proc/spawnEgg()

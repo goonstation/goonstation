@@ -3,8 +3,29 @@
 ///////////////////////
 
 /datum/abilityHolder/flockmind
+	tabName = "Flockmind"
+	usesPoints = 1
+	points = 0 //total compute - used compute
+	var/totalCompute = 0
+	regenRate = 0
 	topBarRendered = 1
 	rendered = 1
+	notEnoughPointsMessage = "<span class='alert'>Insufficient available compute resources.</span>"
+
+/datum/abilityHolder/flockmind/proc/updateCompute()
+	var/mob/living/intangible/flock/flockmind/F = owner
+	if(!F?.flock)
+		return //someone made a flockmind without a flock, or gave this ability holder to something else.
+	src.totalCompute = F.flock.total_compute()
+	var/usedCompute = F.flock.used_compute()
+	src.points = src.totalCompute - usedCompute
+
+/datum/abilityHolder/flockmind/onAbilityStat()
+	..()
+	.= list()
+	.["Compute:"] = "[round(src.points)]/[round(src.totalCompute)]"
+	//.["Total Compute:"] = round(F.flock?.total_compute())
+	return
 
 /atom/movable/screen/ability/topBar/flockmind
 	tens_offset_x = 19
@@ -120,6 +141,9 @@
 
 /datum/targetable/flockmindAbility/partitionMind/cast(atom/target)
 	if(..())
+		return 1
+	if(!holder.pointCheck(100))
+		boutput(holder,"<span class='alert'>You need more compute to partition yourself</span>")
 		return 1
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
 	if(F)

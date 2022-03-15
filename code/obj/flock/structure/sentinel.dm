@@ -21,9 +21,8 @@
 	passthrough = TRUE
 
 	usesgroups = TRUE
-
-	// debug amount scale up if needed.
-	poweruse = 20
+	var/online_compute_cost = 20
+	compute = 0 //targetting consumes compute
 
 	var/obj/effect/flock_sentinelrays/rays = null
 
@@ -46,10 +45,13 @@
 
 	if(!src.group)//if it dont exist it off
 		powered = FALSE
-	else if(src.group.powerbalance >= 0)//if it has atleast 0 or more free power, the poweruse is already calculated in the group
+		src.compute = 0
+	else if(src.flock.can_afford_compute(online_compute_cost))//if it has atleast 0 or more free compute, the poweruse is already calculated in the group
 		powered = TRUE
+		src.compute = -online_compute_cost
 	else//if there isnt enough juice
 		powered = FALSE
+		src.compute = 0
 
 	if(powered == 1)
 		switch(charge_status)

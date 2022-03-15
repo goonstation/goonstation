@@ -3,9 +3,7 @@
 	var/list/members = list() //what tiles are a part of the group
 	var/list/connected = list() //what structures are connected
 	var/size = 0 //how many tiles in there
-	var/powerbalance = 0 //how much power is in the grid, in the form of a net balance
-	var/poweruse = 0 //how much is being used
-	var/powergen = 0 //how much is being produced
+
 	var/datum/flock/flock = null
 	var/debugid = 0 //debuggin id
 
@@ -24,7 +22,7 @@
 	..() //linter machine go ANGRY
 
 /datum/flock_tile_group/proc/process()
-	calcpower()
+	. = 0
 
 /datum/flock_tile_group/proc/addtile(var/turf/simulated/floor/feather/f)
 	members |= f
@@ -40,13 +38,4 @@
 /datum/flock_tile_group/proc/removestructure(var/obj/flock_structure/f)
 	connected -= f
 
-/datum/flock_tile_group/proc/calcpower()
-	src.powergen = 0
-	src.poweruse = 0
-	for(var/obj/flock_structure/f in connected)
-		if(f.poweruse < 0)
-			src.powergen += abs(f.poweruse)
-		else if(f.poweruse > 0)
-			src.poweruse += f.poweruse
 
-	src.powerbalance = src.powergen - src.poweruse

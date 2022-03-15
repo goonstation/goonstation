@@ -19,6 +19,8 @@
 	var/health_brute_vuln = 1.2 // glass
 	var/health_burn = 1
 	var/health_burn_vuln = 0.2 // don't burn very well at all
+	//base compute provided
+	var/compute = 0
 	// if we're extinguishing ourselves don't extinguish ourselves repeatedly
 	var/extinguishing = 0
 	// FLOCK-SPECIFIC STUFF
@@ -65,6 +67,10 @@
 	else
 		state["area"] = "???"
 	return state
+
+//compute - override if behaviour is weird
+/mob/living/critter/flock/proc/compute_provided()
+	return src.compute
 
 // can we afford the resource cost of a thing?
 /mob/living/critter/flock/proc/can_afford(var/resources)

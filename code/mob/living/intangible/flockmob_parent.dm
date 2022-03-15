@@ -13,6 +13,7 @@
 	blinded = 0
 	anchored = 1
 	use_stamina = 0//no puff tomfuckery
+	var/compute = 0
 	var/datum/flock/flock = null
 	var/wear_id = null // to prevent runtimes from AIs tracking down radio signals
 
@@ -196,3 +197,7 @@
 /mob/living/intangible/flock/proc/createstructure(var/T, var/resources = 0)
 	//todo check for flocktile underneath flockmind cheers
 	new /obj/flock_structure/ghost(src.loc, T, src.flock, resources)
+
+//compute - override if behaviour is weird
+/mob/living/intangible/flock/proc/compute_provided()
+	return src.compute

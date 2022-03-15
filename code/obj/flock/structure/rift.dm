@@ -11,6 +11,7 @@
 	flock_id = "Entry Rift"
 	build_time = 10
 	health = 200 // stronk little thing
+	compute = 5
 	var/decal_made = 0 // for splashing stuff on throw
 	var/list/eject = list()
 	var/mainflock = null // for when a flockmind is spawning the little shits(read:drones) get assigned to it
