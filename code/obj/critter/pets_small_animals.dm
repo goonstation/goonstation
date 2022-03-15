@@ -402,7 +402,7 @@
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (istype(W, /obj/item/card/emag))
-			emag_act(usr, W)
+			emag_act(user, W)
 		else
 			..()
 

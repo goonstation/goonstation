@@ -83,13 +83,13 @@ Contains:
 		var/image/main_display = image(null)
 		for(var/turf/T in range(src.scan_range, our_mob))
 			if(T.interesting && find_interesting)
-				playsound(T, "sound/machines/ping.ogg", 55, 1)
+				our_mob.playsound_local(T, "sound/machines/ping.ogg", 55, 1)
 
 			var/image/display = new
 
 			for(var/atom/A in T)
 				if(A.interesting && find_interesting)
-					playsound(A, "sound/machines/ping.ogg", 55, 1)
+					our_mob.playsound_local(A, "sound/machines/ping.ogg", 55, 1)
 				if(ismob(A))
 					var/mob/M = A
 					if(M?.invisibility != INVIS_CLOAK || !IN_RANGE(src, M, 1))

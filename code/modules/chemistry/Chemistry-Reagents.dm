@@ -83,16 +83,16 @@ datum
 			threshold = THRESHOLD_OVER
 			if (stun_resist > 0 && ismob(holder?.my_atom))
 				var/mob/M = holder.my_atom
-				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "reagent_[src.id]", stun_resist)
-				APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "reagent_[src.id]", stun_resist)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "reagent_[src.id]", stun_resist)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "reagent_[src.id]", stun_resist)
 
 		proc/cross_threshold_under()
 			SHOULD_CALL_PARENT(TRUE)
 			threshold = THRESHOLD_UNDER
 			if (stun_resist > 0 && ismob(holder?.my_atom))
 				var/mob/M = holder.my_atom
-				REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "reagent_[src.id]")
-				REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "reagent_[src.id]")
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "reagent_[src.id]")
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "reagent_[src.id]")
 
 		proc/on_copy(var/datum/reagent/new_reagent)
 			//To support deep copying of a reagent holder

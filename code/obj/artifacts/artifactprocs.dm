@@ -225,11 +225,6 @@
 	return
 
 /obj/proc/Artifact_attackby(obj/item/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/cargotele)) // Re-added (Convair880).
-		var/obj/item/cargotele/CT = W
-		CT.cargoteleport(src, user)
-		return
-
 	if (isrobot(user))
 		src.ArtifactStimulus("silitouch", 1)
 

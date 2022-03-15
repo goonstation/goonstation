@@ -47,7 +47,7 @@ PIPE BOMBS + CONSTRUCTION
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(0.5 SECONDS)
-					if (src) prime()
+					if (src) prime(user)
 					return
 			else
 				boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
@@ -55,7 +55,7 @@ PIPE BOMBS + CONSTRUCTION
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(src.det_time)
-					if (src) prime()
+					if (src) prime(user)
 					return
 		return
 // warcrimes: Why the fuck is autothrow a feature why would this ever be a feature WHY. Now it wont do it unless it's primed i think.
@@ -72,7 +72,7 @@ PIPE BOMBS + CONSTRUCTION
 				boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				SPAWN(src.det_time)
-					if (src) prime()
+					if (src) prime(user)
 					return
 			user.drop_item()
 			src.throw_at(get_turf(target), 10, 3)
@@ -92,7 +92,7 @@ PIPE BOMBS + CONSTRUCTION
 			src.add_fingerprint(user)
 		return
 
-	proc/prime() // Most grenades require a turf reference.
+	proc/prime(mob/user) // Most grenades require a turf reference.
 		var/turf/T = get_turf(src)
 		if (!T || !isturf(T))
 			return null
@@ -397,7 +397,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	is_syndicate = 0
 	sound_armed = "sound/weapons/pindrop.ogg"
 	icon_state_armed = "fragnade1"
-	var/custom_projectile_type = null
+	var/custom_projectile_type = /datum/projectile/bullet/stinger_ball
 	var/pellets_to_fire = 20
 
 	prime()
@@ -442,6 +442,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "fragnade-alt"
 	icon_state_armed = "fragnade-alt1"
 	var/datum/effects/system/bad_smoke_spread/smoke
+	custom_projectile_type = /datum/projectile/bullet/grenade_fragment
 
 	New()
 		..()
@@ -831,8 +832,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				M << S
 
 	attack_self(mob/user as mob)
-		if (usr.equipped() == src && !armed)
-			src.arm(usr)
+		if (user.equipped() == src && !armed)
+			src.arm(user)
 			logGrenade(user)
 			armed = 1
 

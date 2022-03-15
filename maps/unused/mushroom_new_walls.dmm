@@ -7388,7 +7388,7 @@
 "aDx" = (
 /obj/machinery/activation_button/ignition_switch{
 	desc = "There's a note taped over it that says Fire!";
-	id = chapelgun;
+	id = "chapelgun";
 	name = "Chapel Mass Driver Launch Button";
 	pixel_y = 23
 	},
@@ -15191,7 +15191,7 @@
 /obj/item/parts/robot_parts/robot_frame,
 /obj/item/parts/robot_parts/leg/left,
 /obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
+/obj/item/parts/robot_parts/chest/light,
 /obj/item/parts/robot_parts/head,
 /obj/item/parts/robot_parts/arm/left,
 /obj/item/parts/robot_parts/arm/right,
@@ -15725,7 +15725,7 @@
 /obj/item/parts/robot_parts/robot_frame,
 /obj/item/parts/robot_parts/leg/left,
 /obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
+/obj/item/parts/robot_parts/chest/light,
 /obj/item/parts/robot_parts/head,
 /obj/item/parts/robot_parts/arm/left,
 /obj/item/parts/robot_parts/arm/right,
@@ -26015,7 +26015,7 @@
 "jUG" = (
 /obj/machinery/activation_button/ignition_switch{
 	desc = "There is a big red button here with many big red arrows pointing to it";
-	id = getitout;
+	id = "getitout";
 	name = "Emergancy Ejector Button";
 	pixel_y = 23
 	},
@@ -32293,10 +32293,10 @@
 /obj/machinery/atmospherics/valve{
 	dir = 4
 	},
-/obj/machinery{
+/obj/machinery/activation_button/ignition_switch{
 	id = "mixingroom";
 	pixel_x = 24;
-	pixel_y = 10
+	pixel_y = -8
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lab)
@@ -37274,7 +37274,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "wVZ" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/clothing/suit/chef,
 /obj/item/clothing/head/chefhat,
 /obj/decal/cleanable/cobweb,

@@ -12,6 +12,8 @@
 	req_access = list(access_heads) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_CLONINGCONSOLES
+	processing_tier = PROCESSING_32TH
+	power_usage = 5000
 	can_reconnect = TRUE
 	circuit_type = /obj/item/circuitboard/cloning
 	records = list()
@@ -87,6 +89,21 @@
 	SPAWN(0.7 SECONDS)
 		connection_scan()
 	return
+
+/obj/machinery/computer/cloning/proc/records_scan()
+	for(var/datum/db_record/R as anything in src.records)
+		var/mob/selected = find_ghost_by_key(R["ckey"])
+		if (!selected || (selected.mind && selected.mind.dnr))
+			continue
+		// else there's someone we can clone
+		icon_state = "dnac"
+		return TRUE
+	icon_state = "dna"
+	return FALSE
+
+/obj/machinery/computer/cloning/process()
+	..()
+	src.records_scan()
 
 /obj/machinery/computer/cloning/connection_scan()
 	if (src.portable)
@@ -361,6 +378,7 @@
 		qdel(C)
 		JOB_XP(usr, "Medical Doctor", 15)
 		src.menu = 1
+		src.records_scan()
 
 /// find a ghost mob (or a ghost respawned as critter in vr/afterlife bar)
 proc/find_ghost_by_key(var/find_key)
@@ -370,8 +388,8 @@ proc/find_ghost_by_key(var/find_key)
 	var/datum/player/player = find_player(find_key)
 	if (player?.client?.mob)
 		var/mob/M = player.client.mob
-		if(iswraith(M))
-			return
+		if(iswraith(M) || istype(M, /mob/dead/target_observer/hivemind_observer))
+			return null
 		if (isdead(M) || isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
 			return M
 	return null
@@ -487,7 +505,7 @@ proc/find_ghost_by_key(var/find_key)
 			O.set_loc(src.loc)
 
 		src.add_fingerprint(usr)
-		src?.connected.updateUsrDialog()
+		src.connected?.updateUsrDialog()
 
 		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
 

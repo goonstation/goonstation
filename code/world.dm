@@ -82,77 +82,8 @@ var/global/mob/twitch_mob = 0
 	join_motd = grabResource("html/motd.html")
 
 /world/proc/load_rules()
-	//rules = file2text("config/rules.html")
-	/*SPAWN(0)
-		rules = world.Export("http://wiki.ss13.co/api.php?action=parse&page=Rules&format=json")
-		if(rules && rules["CONTENT"])
-			rules = json_decode(file2text(rules["CONTENT"]))
-			if(rules && rules["parse"] && rules["parse"]["text"] && rules["parse"]["text"]["*"])
-				rules = rules["parse"]["text"]["*"]
-			else
-				rules = "<html><head><title>Rules</title><body>There are no rules! Go nuts!</body></html>"
-		else*/
 	rules = {"<meta http-equiv="refresh" content="0; url=http://wiki.ss13.co/Rules">"}
-	//if (!rules)
-	//	rules = "<html><head><title>Rules</title><body>There are no rules! Go nuts!</body></html>"
 
-/world/proc/load_admins()
-	set background = 1
-	var/text = file2text("config/admins.txt")
-	if (!text)
-		logDiary("Failed to load config/admins.txt\n")
-	else
-		var/list/lines = splittext(text, "\n")
-		for(var/line in lines)
-			if (!line)
-				continue
-
-			if (copytext(line, 1, 2) == "#")
-				continue
-
-			var/pos = findtext(line, " - ", 1, null)
-			if (pos)
-				var/m_key = ckey(copytext(line, 1, pos))
-				var/a_lev = copytext(line, pos + 3, length(line) + 1)
-				admins[m_key] = a_lev
-				logDiary("ADMIN: [m_key] = [a_lev]")
-
-/world/proc/load_whitelist(fileName = null)
-	set background = 1
-	if(isnull(fileName))
-		fileName = config.whitelist_path
-	var/text = file2text(fileName)
-	if (!text)
-		return
-	else
-		var/list/lines = splittext(text, "\n")
-		for(var/line in lines)
-			if (!line)
-				continue
-
-			if (copytext(line, 1, 2) == "#")
-				continue
-
-			whitelistCkeys += line
-			logDiary("WHITELIST: [line]")
-
-
-/world/proc/load_playercap_bypass()
-	set background = 1
-	var/text = file2text("+secret/strings/allow_thru_cap.txt")
-	if (!text)
-		return
-	else
-		var/list/lines = splittext(text, "\n")
-		for(var/line in lines)
-			if (!line)
-				continue
-
-			if (copytext(line, 1, 2) == "#")
-				continue
-
-			bypassCapCkeys += line
-			logDiary("WHITELIST: [line]")
 
 // dsingh for faster create panel loads
 /world/proc/precache_create_txt()
@@ -231,6 +162,7 @@ var/f_color_selector_handler/F_Color_Selector
 		world.log << ""
 #endif
 
+		Z_LOG_DEBUG("Preload", "  radio")
 		radio_controller = new /datum/controller/radio()
 
 		Z_LOG_DEBUG("Preload", "Loading config...")
@@ -284,8 +216,10 @@ var/f_color_selector_handler/F_Color_Selector
 		Z_LOG_DEBUG("Preload", "Building material cache...")
 		buildMaterialCache()			//^^
 
+		// no log because this is functionally instant
+		global_signal_holder = new
+
 		Z_LOG_DEBUG("Preload", "Starting controllers")
-		Z_LOG_DEBUG("Preload", "  radio")
 
 		Z_LOG_DEBUG("Preload", "  data_core")
 		data_core = new /datum/datacore()
@@ -322,6 +256,8 @@ var/f_color_selector_handler/F_Color_Selector
 		ghost_notifier = new /datum/ghost_notification_controller()
 		Z_LOG_DEBUG("Preload", "  respawn_controller")
 		respawn_controller = new /datum/respawn_controls()
+		Z_LOG_DEBUG("Preload", " cargo_pad_manager")
+		cargo_pad_manager = new /datum/cargo_pad_manager()
 
 		Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 		hydro_controls.set_up()
@@ -339,11 +275,6 @@ var/f_color_selector_handler/F_Color_Selector
 				if initial(foobar.variable) == Arg
 					do_thing
 		*/
-
-		Z_LOG_DEBUG("Preload", "  /datum/generatorPrefab")
-		for(var/A in childrentypesof(/datum/generatorPrefab))
-			var/datum/generatorPrefab/R = new A()
-			miningModifiers.Add(R)
 
 		Z_LOG_DEBUG("Preload", "  /datum/faction")
 		for(var/A in childrentypesof(/datum/faction))
@@ -466,11 +397,11 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Loading MOTD...")
 	src.load_motd()//GUH
 	Z_LOG_DEBUG("World/Init", "Loading admins...")
-	src.load_admins()//UGH
+	load_admins()//UGH
 	Z_LOG_DEBUG("World/Init", "Loading whitelist...")
-	src.load_whitelist() //WHY ARE WE UGH-ING
+	load_whitelist() //WHY ARE WE UGH-ING
 	Z_LOG_DEBUG("World/Init", "Loading playercap bypass keys...")
-	src.load_playercap_bypass()
+	load_playercap_bypass()
 
 	Z_LOG_DEBUG("World/Init", "Starting input loop")
 	start_input_loop()
@@ -604,6 +535,10 @@ var/f_color_selector_handler/F_Color_Selector
 	makeMiningLevel()
 	#endif
 
+	UPDATE_TITLE_STATUS("Building random station rooms")
+	Z_LOG_DEBUG("World/Init", "Setting up random rooms...")
+	buildRandomRooms()
+
 	UPDATE_TITLE_STATUS("Initializing biomes")
 	Z_LOG_DEBUG("World/Init", "Setting up biomes...")
 	initialize_biomes()
@@ -631,6 +566,9 @@ var/f_color_selector_handler/F_Color_Selector
 
 	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
 	map_settings.init()
+
+	Z_LOG_DEBUG("World/Init", "Generating AI station map...")
+	ai_station_map = new
 
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
@@ -1340,10 +1278,11 @@ var/f_color_selector_handler/F_Color_Selector
 								<a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
 							</div>
 						</div>
-						"})
+						"}, forceScroll=TRUE)
 					M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
 					logTheThing("admin_help", null, M, "Discord: [nick] PM'd [constructTarget(M,"admin_help")]: [msg]")
 					logTheThing("diary", null, M, "Discord: [nick] PM'd [constructTarget(M,"diary")]: [msg]", "ahelp")
+					M.client.make_sure_chat_is_open()
 					for (var/client/C)
 						if (C.holder && C.key != M.key)
 							if (C.player_mode && !C.player_mode_ahelp)

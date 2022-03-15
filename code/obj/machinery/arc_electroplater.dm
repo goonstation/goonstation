@@ -51,10 +51,6 @@
 			boutput(user, "<span class='alert'>You need to process \the [W] first before using it in [src]!</span>")
 			return
 
-		if(W.amount > 1)
-			boutput(user, "<span class='alert'>You'll need to split the stack of \the [W] first before using it in [src]!</span>")
-			return
-
 		if(istype(W,/obj/item/material_piece))
 			if(my_bar)
 				boutput(user, "<span class='alert'>There is already a source material loaded in [src]!</span>")

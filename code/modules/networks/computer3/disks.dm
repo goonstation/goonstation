@@ -15,7 +15,7 @@
 
 /obj/item/disk/data
 	name = "data disk"
-	icon = 'icons/obj/cloning.dmi'
+	icon = 'icons/obj/items/disks.dmi'
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	item_state = "card-id"
 	w_class = W_CLASS_TINY
@@ -274,7 +274,6 @@
 /obj/item/disk/data/floppy/read_only/authentication
 	name = "Authentication Disk"
 	desc = "Capable of storing entire kilobytes of information, this disk carries activation codes for various secure things that aren't nuclear bombs."
-	icon = 'icons/obj/items/items.dmi'
 	icon_state = "nucleardisk"
 	item_state = "card-id"
 	w_class = W_CLASS_TINY

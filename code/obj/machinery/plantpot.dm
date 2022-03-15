@@ -596,7 +596,7 @@
 
 		else if(isweldingtool(W) || istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/device/igniter))
 			// These are for burning down plants with.
-			if(isweldingtool(W) && !W:try_weld(usr, 3, noisy = 0, burn_eyes = 1))
+			if(isweldingtool(W) && !W:try_weld(user, 3, noisy = 0, burn_eyes = 1))
 				return
 			else if(istype(W, /obj/item/device/light/zippo) && !W:on)
 				boutput(user, "<span class='alert'>It would help if you lit it first, dumbass!</span>")

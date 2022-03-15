@@ -128,7 +128,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 
 			if(isliving(thing) && (thr.throw_type & THROW_PEEL_SLIP))
 				var/mob/living/L = thing
-				REMOVE_MOB_PROPERTY(L, PROP_CANTMOVE, "peel_slip_\ref[thr]")
+				REMOVE_ATOM_PROPERTY(L, PROP_MOB_CANTMOVE, "peel_slip_\ref[thr]")
 
 			thing.throw_end(thr.params, thrown_from=thr.thrown_from)
 			SEND_SIGNAL(thing, COMSIG_MOVABLE_THROW_END, thr)

@@ -220,7 +220,7 @@
 	uses_multiple_icon_states = 1
 	desc = "Wait, that's not a plastic toy..."
 	muzzle_flash = "muzzle_flash_laser"
-	cell_type = /obj/item/ammo/power_cell/med_power
+	cell_type = null
 
 	New()
 		if (!src.current_projectile)
@@ -1388,7 +1388,11 @@
 	//all gun modes use the same base sprite icon "lawbringer0" depending on the current projectile/current mode, we apply a coloured overlay to it.
 	update_icon()
 		..()
-		src.icon_state = "[old ? "old-" : ""]lawbringer0"
+		var/prefix = ""
+		if(old)
+			prefix = "old-"
+
+		src.icon_state = "[prefix]lawbringer0"
 		src.overlays = null
 
 		var/list/ret = list()
@@ -1398,7 +1402,7 @@
 			//if we're showing zero charge, don't do any overlay, since the main image shows an empty gun anyway
 			if (ratio == 0)
 				return
-			indicator_display.icon_state = "[old ? "old-" : ""]lawbringer-d[ratio]"
+			indicator_display.icon_state = "[prefix]lawbringer-d[ratio]"
 
 			if(current_projectile.type == /datum/projectile/energy_bolt/aoe)			//detain - yellow
 				indicator_display.color = "#FFFF00"
@@ -1443,6 +1447,11 @@
 			return 1
 		return 0
 
+	proc/make_antique()
+		icon_state = "old-lawbringer0"
+		old = 1
+		UpdateIcon()
+
 	shoot(var/target,var/start,var/mob/user)
 		if (canshoot())
 			//removing this for now so anyone can shoot it. I PROBABLY will want it back, doing this for some light appeasement to see how it goes.
@@ -1465,7 +1474,7 @@
 	if (user)
 		boutput(user, "<span class='alert'>Anyone can use this gun now. Be careful! (use it in-hand to register your fingerprints)</span>")
 		owner_prints = null
-	return 0
+		return TRUE
 
 //stolen from firebreath in powers.dm
 /obj/item/gun/energy/lawbringer/proc/shoot_fire_hotspots(var/target,var/start,var/mob/user)

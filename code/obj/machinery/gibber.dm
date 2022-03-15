@@ -140,15 +140,6 @@
 		src.operating = 1
 		src.icon_state = "grinder-on"
 
-		var/sourcename = src.occupant.real_name
-		var/sourcejob
-		if (src.occupant.mind && src.occupant.mind.assigned_role)
-			sourcejob = src.occupant.mind.assigned_role
-		else if (src.occupant.ghost && src.occupant.ghost.mind && src.occupant.ghost.mind.assigned_role)
-			sourcejob = src.occupant.ghost.mind.assigned_role
-		else
-			sourcejob = "Stowaway"
-
 		var/decomp = 0
 		if(ishuman(src.occupant))
 			decomp = src.occupant:decomp_stage
@@ -181,7 +172,7 @@
 			if(src.disposed)
 				return
 			if(i % 3 == 0) // alternate between dispensing meat or gibs
-				var/atom/movable/generated_meat = generate_meat(sourcename, sourcejob, decomp, get_turf(src))
+				var/atom/movable/generated_meat = generate_meat(src.occupant, decomp, get_turf(src))
 				generated_meat.throw_at(dispense_direction, rand(1,4), 3, throw_type = THROW_NORMAL)
 			else
 				var/obj/decal/cleanable/blood/gibs/mess = new /obj/decal/cleanable/blood/gibs(get_turf(src))
@@ -209,14 +200,12 @@
 
 		src.operating = 0
 
-/obj/machinery/gibber/proc/generate_meat(var/meat_origin_name, var/meat_origin_job, var/decomposed_level, var/spawn_location)
+/obj/machinery/gibber/proc/generate_meat(var/mob/meat_source, var/decomposed_level, var/spawn_location)
 	if(decomposed_level < 3) // fresh or fresh enough
-		var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(spawn_location)
-		generated_meat.name = meat_origin_name + generated_meat.name
-		generated_meat.subjectname = meat_origin_name
-		generated_meat.subjectjob = meat_origin_job
+		var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(spawn_location,meat_source)
+
 		return generated_meat
 	else // rotten yucky mess
 		var/obj/item/reagent_containers/food/snacks/yuck/generated_yuck = new /obj/item/reagent_containers/food/snacks/yuck(spawn_location)
-		generated_yuck.name = meat_origin_name + " meat-related substance"
+		generated_yuck.name = meat_source.real_name + " meat-related substance"
 		return generated_yuck

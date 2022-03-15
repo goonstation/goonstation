@@ -1183,9 +1183,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.remove_stam_mod_max("small_animal")
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
-		if(act == "flip" && istype(src.equipped(), /obj/item/grab))
-			if(!ON_COOLDOWN(src, "suplex", 2 SECONDS))
-				return src.do_suplex(src.equipped())
+		if(act == "flip" && istype(src.equipped(), /obj/item/grab) && src.emote_check(voluntary, 50))
+			return src.do_suplex(src.equipped())
 		return null
 
 /* -------------------- Seagull -------------------- */
@@ -2776,6 +2775,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.setup_overlays()*/
 		src.real_name = "[pick_string("mentor_mice_prefixes.txt", "mentor_mouse_prefix")] [src.name]"
 		src.name = src.real_name
+		abilityHolder.addAbility(/datum/targetable/critter/mentordisappear)
 
 	setup_overlays()
 		if(!src.colorkey_overlays)
@@ -2877,6 +2877,24 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if(src.client && src.client && !src.client.is_mentor())
 			src.make_critter(/mob/living/critter/small_animal/mouse/weak)
 			return
+
+/datum/targetable/critter/mentordisappear
+	name = "Vanish"
+	desc = "Leave your body and return to ghost form"
+	icon_state = "mentordisappear"
+
+
+	cast(mob/target)
+
+		var/mob/living/M = holder.owner
+		if (!holder)
+			return 1
+		M.visible_message("<span class='alert'><B>[M] does a funny little jiggle with their body and then vanishes into thin air!</B></span>") // MY ASCENSION BEGINS
+		M.ghostize()
+		qdel(M)
+		logTheThing("admin", src, null, "turned from a mentor mouse to a ghost") // I can remove this but it seems like a good thing to have
+
+
 
 /mob/living/critter/small_animal/mouse/weak/mentor/admin
 	name = "admin mouse"

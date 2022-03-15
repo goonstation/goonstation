@@ -755,7 +755,7 @@
 /obj/machinery/rkit/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 	var/dat
-	var/hide_allowed = src.allowed(usr)
+	var/hide_allowed = src.allowed(user)
 	dat = "<b>Ruckingenur Kit</b><HR>"
 
 	dat += "<b>Scanned Items:</b><br>"
@@ -881,7 +881,7 @@
 	MouseDrop_T(atom/target, mob/user)
 		if (!isobj(target))
 			return
-		src.afterattack(target,user)
+		src.AfterAttack(target,user)
 		..()
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)

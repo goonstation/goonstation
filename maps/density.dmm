@@ -1999,7 +1999,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "eE" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "eF" = (

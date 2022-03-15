@@ -73,7 +73,7 @@
 	// heres a thought: maybe ghostize() could look for your ghost or smth
 	// and put you in it instead of just making a new one.
 	// idk this codebase is an eldritch horror and i dont wanna try rn
-	REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, "clientless")
+	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "clientless")
 
 
 /mob/dead/observer/point_at(var/atom/target)
@@ -222,8 +222,8 @@
 
 /mob/dead/observer/New(mob/corpse)
 	. = ..()
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, ghost_invisibility)
-	APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, ghost_invisibility)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	src.see_invisible = INVIS_SPOOKY
 	src.see_in_dark = SEE_DARK_FULL
@@ -465,7 +465,7 @@
 		// but that's way too much effort to fix and i do not feel like debugging
 		// 2000 different "use after free" issues.
 		// so. your ghost doesnt go away. it just, uh. it takes a break for a while.
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "clientless", INVIS_ALWAYS)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "clientless", INVIS_ALWAYS)
 	return
 
 /mob/dead/observer/Move(NewLoc, direct)
@@ -537,8 +537,8 @@
 		boutput(usr, "Not when you're not dead!")
 		return
 	var/A
-
-	A = input("Area to jump to", "BOOYEA", A) as null|anything in get_teleareas()
+	var/list/tele_areas = get_teleareas()
+	A = tgui_input_list(src, "Area to jump to", "Jump", tele_areas)
 	if (!A)
 		// aaaaaaaaaaaaaaaaaaaagggggggggggg
 		return
@@ -612,10 +612,6 @@
 	var/list/namecounts = list()
 	var/list/creatures = list()
 
-	//prefix list with option for alphabetic sorting
-	var/const/SORT = "* Sort alphabetically..."
-	creatures.Add(SORT)
-
 	for (var/client/C in clients)
 		LAGCHECK(LAG_LOW)
 		// not sure how this could happen, but be safe about it
@@ -643,17 +639,8 @@
 		creatures[name] = M
 
 	var/eye_name = null
-
-	eye_name = input("Please, select a target!", "Observe", null, null) as null|anything in creatures
-
-	//sort alphabetically if user so chooses
-	if (eye_name == SORT)
-		creatures.Remove(SORT)
-
-		creatures = sortList(creatures)
-
-		//redisplay sorted list
-		eye_name = input("Please, select a target!", "Observe (Sorted)", null, null) as null|anything in creatures
+	creatures = sortList(creatures)
+	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
 
 	if (!eye_name)
 		return
@@ -668,10 +655,6 @@
 	var/list/names = list()
 	var/list/namecounts = list()
 	var/list/creatures = list()
-
-	//prefix list with option for alphabetic sorting
-	var/const/SORT = "* Sort alphabetically..."
-	creatures.Add(SORT)
 
 	// Same thing you could do with the old auth disk. The bomb is equally important
 	// and should appear at the top of any unsorted list  (Convair880).
@@ -767,7 +750,6 @@
 			namecounts[name] = 1
 		creatures[name] = B
 
-	var/eye_name = null
 
 	for(var/name in creatures)
 		var/obj/O = creatures[name]
@@ -782,19 +764,9 @@
 				if(!T || isghostrestrictedz(T.z))
 					creatures -= name
 
-	eye_name = input("Please, select a target!", "Observe", null, null) as null|anything in creatures
-
-	//sort alphabetically if user so chooses
-	if (eye_name == SORT)
-		creatures.Remove(SORT)
-
-		for(var/i = 1; i <= creatures.len; i++)
-			for(var/j = i+1; j <= creatures.len; j++)
-				if(sorttext(creatures[i], creatures[j]) == -1)
-					creatures.Swap(i, j)
-
-		//redisplay sorted list
-		eye_name = input("Please, select a target!", "Observe (Sorted)", null, null) as null|anything in creatures
+	var/eye_name = null
+	creatures = sortList(creatures)
+	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
 
 	if (!eye_name)
 		return
