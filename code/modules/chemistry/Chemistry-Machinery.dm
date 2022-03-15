@@ -93,70 +93,6 @@
 		qdel(src)
 		return
 
-	Topic(href, href_list)
-		if(status & (NOPOWER|BROKEN)) return
-		if(usr.stat || usr.restrained()) return
-		if(!in_interact_range(src, usr)) return
-
-		src.add_dialog(usr)
-		if (!beaker)
-			// This should only happen when the UI is out of date - refresh it
-			src.updateUsrDialog()
-			return
-
-		if (href_list["eject"])
-			if (roboworking)
-				if (usr != roboworking)
-					// If a cyborg is using this, other people can't eject the beaker.
-					usr.show_text("You cannot eject the beaker because it is part of [roboworking].", "red")
-					return
-				roboworking = null
-			else
-				beaker.set_loc(output_target)
-				usr.put_in_hand_or_eject(beaker) // try to eject it into the users hand, if we can
-
-			beaker = null
-			src.UpdateIcon()
-			src.updateUsrDialog()
-			return
-		else if (href_list["adjustM"])
-			if (!beaker.reagents.total_volume) return
-			var/change = text2num_safe(href_list["adjustM"])
-			target_temp = clamp(target_temp-change, 0, 1000)
-			src.UpdateIcon()
-			src.updateUsrDialog()
-			return
-		else if (href_list["adjustP"])
-			if (!beaker.reagents.total_volume) return
-			var/change = text2num_safe(href_list["adjustP"])
-			target_temp = clamp(target_temp+change, 0, 1000)
-			src.UpdateIcon()
-			src.updateUsrDialog()
-			return
-		else if (href_list["settemp"])
-			if (!beaker.reagents.total_volume) return
-			var/change = input(usr,"Target Temperature (0-1000):","Enter target temperature",target_temp) as null|num
-			if(!change || !isnum_safe(change)) return
-			target_temp = clamp(change, 0, 1000)
-			src.UpdateIcon()
-			src.updateUsrDialog()
-			return
-		else if (href_list["stop"])
-			set_inactive()
-			return
-		else if (href_list["start"])
-			if (!beaker.reagents.total_volume) return
-			active = 1
-			active()
-			src.UpdateIcon()
-			src.updateUsrDialog()
-			return
-		else
-			usr.Browse(null, "window=chem_heater;title=Chemistry Heater")
-			src.UpdateIcon()
-			src.updateUsrDialog()
-			return
-
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
@@ -215,40 +151,6 @@
 			if("stop")
 				set_inactive()
 		. = TRUE
-
-	attack_hand(mob/user as mob)
-		if(status & (NOPOWER|BROKEN))
-			return
-		src.add_dialog(user)
-		var/list/dat = list()
-
-		if(!beaker)
-			dat += "Please insert beaker.<BR>"
-		else if (!beaker.reagents.total_volume)
-			dat += "Beaker is empty.<BR>"
-			dat += "<A href='?src=\ref[src];eject=1'>Eject beaker</A><BR><BR>"
-		else
-			var/datum/reagents/R = beaker:reagents
-			dat += "<A href='?src=\ref[src];eject=1'>Eject beaker</A><BR><BR>"
-			dat += "<A href='?src=\ref[src];adjustM=10'>(<<)</A><A href='?src=\ref[src];adjustM=1'>(<)</A><A href='?src=\ref[src];settemp=1'> [target_temp] </A><A href='?src=\ref[src];adjustP=1'>(>)</A><A href='?src=\ref[src];adjustP=10'>(>>)</A><BR><BR>"
-
-			if(active)
-				dat += "Status: Active ([(target_temp > R.total_temperature) ? "Heating" : "Cooling"])<BR>"
-				dat += "Current Temperature: [R.total_temperature]<BR>"
-				dat += "<A href='?src=\ref[src];stop=1'>Deactivate</A><BR><BR>"
-			else
-				dat += "Status: Inactive<BR>"
-				dat += "Current Temperature: [R.total_temperature]<BR>"
-				dat += "<A href='?src=\ref[src];start=1'>Activate</A><BR><BR>"
-
-			for(var/reagent_id in R.reagent_list)
-				var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
-				dat += "[current_reagent.name], [current_reagent.volume] Units.<BR>"
-
-		user.Browse("<TITLE>Reagent Heating/Cooling Unit</TITLE>Reagent Heating/Cooling Unit:<BR><BR>[dat.Join()]", "window=chem_heater;title=Chemistry Heater")
-
-		onclose(user, "chem_heater")
-		return
 
 	//MBC : moved to robot_disposal_check
 	/*
