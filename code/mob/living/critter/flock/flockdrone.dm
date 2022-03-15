@@ -40,6 +40,7 @@
 	src.ai = new /datum/aiHolder/flock/drone(src)
 
 	..()
+	abilityHolder = new /datum/abilityHolder/critter/flockdrone(src)
 
 	SPAWN(3 SECONDS) // aaaaaaa
 		src.zone_sel.change_hud_style('icons/mob/flock_ui.dmi')
