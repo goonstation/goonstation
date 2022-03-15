@@ -737,11 +737,11 @@ ABSTRACT_TYPE(/obj/trait/job)
 	category = list("hemophilia")
 
 /obj/trait/weakorgans
-	name = "Frail Constitution (+1)"
+	name = "Frail Constitution (+2)"
 	cleanName = "Frail Constitution"
-	desc = "Your internal organs are extremely vulnerable to damage"
+	desc = "Your internal organs (brain included) are extremely vulnerable to damage"
 	id = "weakorgans"
-	points = 1
+	points = 2
 
 /obj/trait/slowmetabolism
 	name = "Slow Metabolism (0)"
