@@ -1,0 +1,66 @@
+@use '../base.scss';
+@use '../colors.scss';
+
+$neutral: #AAAAAA !default;
+$warm: #f2711c !default;
+$cold: #2185d0 !default;
+
+@keyframes warming {
+  to {
+    box-shadow: 0 0 15px 0 $warm;
+    border-color: $warm;
+  }
+}
+
+@keyframes cooling {
+  to {
+    box-shadow: 0 0 15px 0 $cold;
+    border-color: $cold;
+  }
+}
+
+@keyframes warming_fill {
+  to {
+    color: $warm;
+  }
+}
+
+@keyframes cooling_fill {
+  to {
+    color: $cold;
+  }
+}
+
+.TemperatureNumber {
+  transition: color 500ms ease-out;
+}
+
+.TemperatureArrow {
+  color: $neutral;
+  transition: transform 500ms ease-out;
+
+  &__warming {
+    animation: warming_fill 2s ease infinite alternate;
+  }
+
+  &__cooling {
+    animation: cooling_fill 2s ease infinite alternate;
+  }
+}
+
+.TemperatureBox {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0);
+  border-color: $neutral;
+  border-style: solid;
+  border-radius: 4px;
+  height: 3em;
+  text-align: center;
+
+  &__warming {
+    animation: warming 2s ease infinite alternate;
+  }
+
+  &__cooling {
+    animation: cooling 2s ease infinite alternate;
+  }
+}

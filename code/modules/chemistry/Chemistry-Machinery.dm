@@ -16,7 +16,7 @@
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "heater"
-	flags = NOSPLASH
+	flags = NOSPLASH | TGUI_INTERACTIVE
 	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	power_usage = 50
@@ -67,13 +67,13 @@
 
 		if(src.beaker || roboworking)
 			boutput(user, "You add the beaker to the machine!")
-		src.updateUsrDialog()
+			src.ui_interact(user)
 		src.UpdateIcon()
 
 	handle_event(var/event, var/sender)
 		if (event == "reagent_holder_update")
 			src.UpdateIcon()
-			src.updateUsrDialog()
+			tgui_process.update_uis(src)
 
 	ex_act(severity)
 		switch(severity)
@@ -160,6 +160,62 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ChemHeater", src.name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = list()
+		var/obj/item/reagent_containers/glass/container = src.beaker
+		.["containerData"] = container?.tgui_format()
+		.["targetTemperature"] = src.target_temp
+		.["isActive"] = src.active
+
+	ui_act(action, params)
+		. = ..()
+		if(.)
+			return
+		var/obj/item/reagent_containers/glass/container = src.beaker
+		switch(action)
+			if("eject")
+				if(!container)
+					return
+				if (src.roboworking)
+					if (usr != src.roboworking)
+						// If a cyborg is using this, other people can't eject the beaker.
+						usr.show_text("You cannot eject the beaker because it is part of [roboworking].", "red")
+						return
+					src.roboworking = null
+				else
+					container.set_loc(src.output_target)
+					usr.put_in_hand_or_eject(container) // try to eject it into the users hand, if we can
+
+				src.beaker = null
+				src.UpdateIcon()
+			if("insert")
+				if (container)
+					return
+				var/obj/item/reagent_containers/glass/inserting = usr.equipped()
+				if(istype(inserting))
+					src.beaker = inserting
+					usr.drop_item()
+					inserting.set_loc(src)
+			if("adjustTemp")
+				src.target_temp = clamp(params["temperature"], 0, 1000)
+				src.UpdateIcon()
+			if("start")
+				if (!container?.reagents.total_volume)
+					return
+				src.active = 1
+				active()
+				src.UpdateIcon()
+			if("stop")
+				set_inactive()
+		. = TRUE
+
 	attack_hand(mob/user as mob)
 		if(status & (NOPOWER|BROKEN))
 			return
@@ -223,7 +279,7 @@
 
 		if(abs(R.total_temperature - target_temp) <= 3) active = 0
 
-		src.updateUsrDialog()
+		tgui_process.update_uis(src)
 
 		SPAWN(1 SECOND) active()
 
@@ -254,7 +310,7 @@
 		power_usage = 50
 		active = 0
 		UpdateIcon()
-		updateUsrDialog()
+		tgui_process.update_uis(src)
 
 	update_icon()
 		src.overlays -= src.icon_beaker
