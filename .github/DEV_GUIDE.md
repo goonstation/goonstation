@@ -14,10 +14,10 @@ Visit https://code.visualstudio.com/ to download the appropriate installation fo
 
 You should be greeted with a screen that looks like this:![](https://i.imgur.com/HjDKDqj.png)
 
-If this is your first time, take a minute to familiarize yourself with the layout of VSCode. Here's an example of what it'll look like when you're working on something:
-![](https://imgur.com/a/msGsO97)
+If this is your first time using VSCode, take a minute to familiarize yourself with the layout of the software. Here's an example of what it may look like when you're working on something:
+ ![](https://i.imgur.com/wP6byLS.png)
 1: This is your sidebar. From this, you can search the codebase, browse the files, debug your code, and manage your branches
-2: This bar is an extension of whatever you have selected from the smaller sidebar. Here you see the source control window.
+2: This bar is an extension of whatever you have selected from the smaller sidebar. Here you see the source control window. (Please do note that, unless you have the GitLens and GitGraph extensions, your source control sidebar will probably look different.)
 3: These are the tabs and files you have open. From here, you can see any files you've changed, and any unsaved work
 4: This is the current file you have open.
 5: This is the output terminal. If and when you have any bugs, you'll see them here, and you can track your code compiling from here.
@@ -97,9 +97,9 @@ That's it! Your local codebase is all set up to contribute now.
 
 ## Making Changes :lower_left_fountain_pen: 
 
- First, let's talk about **branches**.
+All changes you make should be done on branches. But first, what is a branch?
 
--A branch is an alternative version of a codebase. Their lifecycle usually consists of being created, being committed, then being re-merged into the main codebase.
+Put simply, a branch is an alternative version of a codebase. Their lifecycle usually consists of being created, being committed, then being re-merged into the main codebase.
 -A commit is an update you make to a branch. Think of it a saved version of said branch, or a batch of changes you make with an associated timestamp. 
 The lovely thing about Github is that each individual merge and commit you make is reversible. so if you make a horrible mistake and are plagued with thousands of errors, you can simply revert the changes. There will be more on that in the Git Graph section.
 
@@ -167,7 +167,7 @@ This compiles the code to a dmb file. Then you can run Dream Daemon, select the 
 
 ![](https://i.imgur.com/MxrZvHp.png)
 
-Be sure to always test not only if your changes work, but also if you didn't actually break something else that might be related.
+Be sure to always test not only if your changes work, but also if you didn't actually break something else that might be related- Dream Maker is a very old and occasionally fickle language, and sometimes it happens that things will just refuse to work.
 
 If you ever hit a brick wall, you can always ask the #imcoder channel in the [Discord](https://discord.gg/zd8t6pY). There's no such thing as a stupid question, and while, depending on activity, you might not always get an answer, it never hurts to ask.
 
@@ -261,14 +261,14 @@ Worry not, friend! Atomization just means to break your PR down into smaller chu
 
 -"Man, this sure is taking a long while!"
 The unforunate truth of Goonstation is that the developers are, just like you and the admins, unpaid volunteers who do this in their spare time, and can take a while before merging your request. Furthermore, depending on how large it is, how many systems are changed, and how controversial it might be, the developers usually give people ample time to bring up any concerns or problems. 
-**With these two factors in mind, it can take anywhere from a day to two weeks for your PR to finally be merged.** In the meantime, ensure that there are no merge conflicts, that all comments are resolved, and everything is polished as possible to signal that it's ready for merging. If you want to know if there's any issues, you can always copy the four digit number (e.g., `#1111`) into the discord to bring up the PR with medibot, and directly ask what might be wrong with it.
+**With these two factors in mind, it can take anywhere from a day to two weeks for your PR to finally be merged.** In the meantime, ensure that there are no merge conflicts, that all comments are resolved, and everything is polished as possible to signal that it's ready for merging. If you want to know if there's any issues, you can always copy the four digit number (e.g., `#1111`) into the imcoder channel of the [Discord](https://discord.gg/zd8t6pY)to bring up the PR with the server's medibot, then ask around for feedback.
 
 -"If I want a picture, how do I add images?"
-Pictures are as easy as taking a screenshot of whatever you're made, then copying and directly pasting it into the text box. For this reason, Windows' snipping tool is excellent at this since it automatically copies whatever you capture.
+Pictures are as easy as taking a screenshot of whatever you're made, then copying and directly pasting it into the text box. For this reason, Windows' snipping tool is excellent at this task, since it automatically copies whatever you capture.
 
-Furthermore, you can also reply to people's comments on your PR to clarify your reasoning / intent behind your changes. Everyone who's commented in a thread will be notified when you update, but if you want to address a fine point, you can use the quote reply feature to do so.
+Remember, you can also reply to people's comments on your PR to clarify your reasoning / intent behind your changes. Everyone who's commented in a thread will be notified when you update, but if you want to address a fine point, you can use the quote reply feature to do so.
 
-Lastly, automated checks are ran on each PR. If one of those fails (for example because your code does not even compile) you should go fix that immediately. Most often than not, it's a simple typo or weird indentation that you somehow missed. However, if it isn't, it could be a:
+Lastly, automated checks are ran on each PR. If one of those fails (for example because your code does not even compile) you should go fix that immediately. Most often than not, it's a simple typo or weird indentation that you somehow missed. However, if it isn't, it could be a...
 
 ### Merge Conflict :negative_squared_cross_mark: 
 
@@ -291,7 +291,7 @@ Changes will be made to the upstream repo and it's a good idea to keep your mast
 
 If you've done everything correctly this should finish without any problems and now your master is in the same state as upstream/master.
 
-You also might want to sync up your feature branch. This is slightly more complicated, but can be done with the following steps:
+Congratulations! Your master branch should now be up to date with all the newest code! You also might want to sync up your feature branch. This is slightly more complicated, but can be done with the following steps:
 
 :::warning
   Resolving icon and map conflicts might be annoying when done manually. You can install an automatic merge driver for these files by running the `tools/hooks/install.bat` file first.
