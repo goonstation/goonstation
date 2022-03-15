@@ -34,6 +34,7 @@
 	var/antigrab_counter = 0
 	var/antigrab_fires_at = 100
 
+	var/glow_color = "#26ffe6a2"
 
 /mob/living/critter/flock/drone/New(var/atom/location, var/datum/flock/F=null)
 	// ai setup
@@ -51,6 +52,7 @@
 	if(src.dormant) // we'be been flagged as dormant in the map editor or something
 		src.dormantize()
 	else
+		src.add_simple_light("drone_light", rgb2num(glow_color))
 		if(src.client)
 			// create a flocktrace for ourselves
 			controller = new/mob/living/intangible/flock/trace(src, src.flock)
@@ -58,6 +60,10 @@
 		else
 			emote("beep")
 			say(pick_string("flockmind.txt", "flockdrone_created"))
+
+/mob/living/critter/flock/drone/disposing()
+	src.remove_simple_light("drone_light")
+	..()
 
 /mob/living/critter/flock/drone/describe_state()
 	var/list/state = ..()
@@ -148,6 +154,7 @@
 	src.is_npc = 0 // technically false, but it turns off the AI
 	src.icon_state = "drone-dormant"
 	src.set_a_intent(INTENT_DISARM ) // stop swapping places
+	src.remove_simple_light("drone_light")
 
 /mob/living/critter/flock/drone/proc/undormantize()
 	src.dormant = 0
@@ -157,6 +164,7 @@
 	src.check_health() // handles updating the icon to something more appropriate
 	src.visible_message("<span class='notice'><b>[src]</b> begins to glow and hover.</span>")
 	src.set_a_intent(INTENT_HELP ) // default
+	src.add_simple_light("drone_light", rgb2num(glow_color))
 	if(src.client)
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
 		src.is_npc = 0
@@ -538,6 +546,7 @@
 	playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
 	src.set_density(0)
 	desc = "[initial(desc)]<br><span class='alert'>\The [src] is a dead, broken heap.</span>"
+	src.remove_simple_light("drone_light")
 
 /mob/living/critter/flock/drone/ghostize()
 	if(src.controller)
