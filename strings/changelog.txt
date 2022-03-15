@@ -1,5 +1,9 @@
 
 (t)mon mar 14 22
+(u)Conchuckter
+(p)7784
+(e)🆕🎨|feature, sprites
+(+)Ampoules now change colour based on what is inside them.
 (u)Zamujasa
 (+)The adminhelp and mentorhelp dialog boxes now mention that your requests are sent via Discord.
 (t)sun mar 13 22
