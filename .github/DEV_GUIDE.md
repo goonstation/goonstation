@@ -16,8 +16,8 @@ You should be greeted with a screen that looks like this:![](https://i.imgur.com
 
 If this is your first time using VSCode, take a minute to familiarize yourself with the layout of the software. Here's an example of what it may look like when you're working on something:
  ![](https://i.imgur.com/wP6byLS.png)
-1: This is your sidebar. From this, you can search the codebase, browse the files, debug your code, and manage your branches
-2: This bar is an extension of whatever you have selected from the smaller sidebar. Here you see the source control window. (Please do note that, unless you have the GitLens and GitGraph extensions, your source control sidebar will probably look different.)
+1: This is your sidebar. From this, you can search the codebase, browse files, debug your code, and manage your branches.
+2: This bar is an extension of whatever you have selected from the smaller sidebar. Here you see the source control window's user interface. (Please do note that, unless you have the GitLens and GitGraph extensions, your source control sidebar will probably look different than what is displayed.)
 3: These are the tabs and files you have open. From here, you can see any files you've changed, and any unsaved work
 4: This is the current file you have open.
 5: This is the output terminal. If and when you have any bugs, you'll see them here, and you can track your code compiling from here.
