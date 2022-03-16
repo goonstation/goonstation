@@ -1265,8 +1265,8 @@
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "minisyndie"
 	density = 1
-	health = 5
-	maxhealth = 5 // for damage description
+	health = 7 // no fire extinguisher 1taps >:(
+	maxhealth = 11
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
@@ -1284,10 +1284,10 @@
 	beeptext = "prepares to finish the fight!"
 	beepsound = 0
 	alertsound1 = 0
-
+	var/bulletcount = 0
 	alertsound2 = 0
-	projectile_type = /datum/projectile/bullet/revolver_357
-	current_projectile = new/datum/projectile/bullet/revolver_357
+	projectile_type = /datum/projectile/bullet/bullet_22
+	current_projectile = new/datum/projectile/bullet/bullet_22
 	attack_cooldown = 20
 	mats = 12 //this should be funny
 
@@ -1297,6 +1297,8 @@
 		..()
 		voice_gender = pick("male","female")
 		name = "miniature Syndicate Operative"
+		bulletcount = rand(4, 8) // don't give them too many bullets!
+
 
 	select_target(var/atom/newtarget)
 		..()
@@ -1310,13 +1312,16 @@
 		playsound(src, 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
 		src.visible_message("[src] emits a very small clicking noise.")
 		icon_state = dead_state
-		SPAWN(0.5 SECONDS)
-			explosion(src, get_turf(src), -1, -1, 2, 3)
+		SPAWN(2 SECONDS)// for the dramatic effect
+			explosion(src, get_turf(src), -1, -1, 2.5, 3)
 		..()
 
 	Shoot(var/target, var/start, var/user, var/bullet = 0)
 		..()
+		bulletcount--
 		SPAWN(0.5 SECONDS)
+		if(bulletcount<=0)// out of ammo? bedtime
+			src.visible_message("[src] runs out of ammo! oh no! someone do something! anyone!")
 			task = "sleeping"
 			src.health = 0
 			src.CritterDeath()
