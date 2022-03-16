@@ -60622,19 +60622,11 @@
 /turf/simulated/floor/greenwhite/other,
 /area/station/crew_quarters/market)
 "rpg" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
 	name = "autoname - SS13";
 	tag = ""
-	},
-/obj/disposalpipe/segment/brig{
-	dir = 4
 	},
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/south)
@@ -117049,8 +117041,8 @@ leP
 wCR
 cPd
 tCO
+tsv
 rpg
-cPd
 hBH
 gwJ
 gwJ
