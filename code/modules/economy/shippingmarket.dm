@@ -235,7 +235,7 @@
 			update_shipping_data()
 
 	proc/calculate_artifact_price(var/modifier, var/correctness)
-		return modifier*modifier * 20000 * correctness
+		return ((modifier**2) * 20000 * correctness)
 
 	proc/sell_artifact(obj/sell_art, var/datum/artifact/sell_art_datum)
 		var/price = 0
