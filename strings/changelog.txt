@@ -1,5 +1,9 @@
 
 (t)wed mar 16 22
+(u)Flappybat
+(p)7785
+(e)⚖|balance
+(+)The nuclear bomb has improved armor plating against energy and kinetic projectiles, taking roughly half the damage of the previous model.
 (u)Carsontheking
 (p)7377
 (e)🗺|mapping
