@@ -83,9 +83,8 @@
 		if(poof_reagents)
 			poof()
 
-
 	proc/poof(atom/movable/AM, obj/machinery/plantpot/POT)
-		poof_reagents.smoke_start()
+		poof_reagents.smoke_start(poof_reagents.total_volume)
 		POT.growth = clamp(POT.growth/2, src.growtime, src.harvtime-10)
 
 /obj/item/seed/alien/spore_poof
