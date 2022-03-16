@@ -140,9 +140,10 @@ var/mutable_appearance/fluid_ma
 
 	proc/trigger_fluid_enter()
 		for(var/atom/A in src.loc)
-			if (A.event_handler_flags & USE_FLUID_ENTER)
+			if (src.group && A.event_handler_flags & USE_FLUID_ENTER)
 				A.EnteredFluid(src, src.loc)
-		src.loc?.EnteredFluid(src, src.loc)
+		if(src.group)
+			src.loc?.EnteredFluid(src, src.loc)
 
 	proc/turf_remove_cleanup(turf/the_turf)
 		the_turf.active_liquid = null
