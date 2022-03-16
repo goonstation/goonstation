@@ -27,7 +27,11 @@
 		if (!src.throwing && !src.lying && isturf(NewLoc))
 			var/turf/T = NewLoc
 			if (T.turf_flags & MOB_SLIP)
-				switch (T.wet)
+				var/wet_adjusted = T.wet
+				if (traitHolder && traitHolder.hasTrait("super_slips") && wet_adjusted == 1)
+					wet_adjusted = 2 //whee
+
+				switch (wet_adjusted)
 					if (1)
 						if (locate(/obj/item/clothing/under/towel) in T)
 							src.inertia_dir = 0
