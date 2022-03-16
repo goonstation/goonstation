@@ -7,6 +7,8 @@
 	desc = "The collective machine consciousness of a bunch of glass peacock things."
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "flockmind"
+	layer = NOLIGHT_EFFECTS_LAYER_BASE
+
 	var/started = 0
 	var/last_time // when i say per second I MEAN PER SECOND DAMMIT
 
