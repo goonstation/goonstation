@@ -35,7 +35,7 @@ const getTemperatureIcon = (temperature) => {
 };
 
 const getTemperatureChange = (temperature, targetTemperature) => {
-  if (temperature < targetTemperature) return "warming";
+  if (temperature < targetTemperature) return "heating";
   if (temperature > targetTemperature) return "cooling";
   return "neutral";
 };

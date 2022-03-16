@@ -2,13 +2,13 @@
 @use '../colors.scss';
 
 $neutral: #AAAAAA !default;
-$warm: #f2711c !default;
+$hot: #f2711c !default;
 $cold: #2185d0 !default;
 
-@keyframes warming {
+@keyframes heating {
   to {
-    box-shadow: 0 0 15px 0 $warm;
-    border-color: $warm;
+    box-shadow: 0 0 15px 0 $hot;
+    border-color: $hot;
   }
 }
 
@@ -19,9 +19,9 @@ $cold: #2185d0 !default;
   }
 }
 
-@keyframes warming_fill {
+@keyframes heating_fill {
   to {
-    color: $warm;
+    color: $hot;
   }
 }
 
@@ -39,8 +39,8 @@ $cold: #2185d0 !default;
   color: $neutral;
   transition: transform 500ms ease-out;
 
-  &__warming {
-    animation: warming_fill 2s ease infinite alternate;
+  &__heating {
+    animation: heating_fill 2s ease infinite alternate;
   }
 
   &__cooling {
@@ -56,8 +56,8 @@ $cold: #2185d0 !default;
   height: 3em;
   text-align: center;
 
-  &__warming {
-    animation: warming 2s ease infinite alternate;
+  &__heating {
+    animation: heating 2s ease infinite alternate;
   }
 
   &__cooling {
