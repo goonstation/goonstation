@@ -348,6 +348,8 @@
 		return 1
 	//todo: replace with FANCY tgui/chui window with WHEELS and ICONS and stuff!
 	var/structurewanted = tgui_input_list(holder.owner, "Select which structure you would like to create", "Tealprint selection", list("Collector", "Sentinel"))
+	if (!structurewanted)
+		return TRUE
 	switch(structurewanted)
 		if("Collector")
 			structurewantedtype = /obj/flock_structure/collector
