@@ -2880,7 +2880,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /datum/targetable/critter/mentordisappear
 	name = "Vanish"
-	desc = "Leave your body and return to ghost form"
+	desc = "Leave your body and return to the etherial realm."
 	icon_state = "mentordisappear"
 
 
@@ -2889,10 +2889,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		var/mob/living/M = holder.owner
 		if (!holder)
 			return 1
-		M.visible_message("<span class='alert'><B>[M] does a funny little jiggle with their body and then vanishes into thin air!</B></span>") // MY ASCENSION BEGINS
+		M.visible_message("<span class='alert'><B>[M] does a funny little jiggle with their body and then disappears into thin air!</B?</span>") // MY ASCENCION BEGINS
 		M.ghostize()
 		qdel(M)
-		logTheThing("admin", src, null, "turned from a mentor mouse to a ghost") // I can remove this but it seems like a good thing to have
 
 
 
