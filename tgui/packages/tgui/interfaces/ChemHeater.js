@@ -65,7 +65,7 @@ export const ChemHeater = (props, context) => {
 
 const ChemDisplay = (props, context) => {
   const { act } = useBackend(context);
-  const { active = true, targetTemperature } = props;
+  const { active = false, targetTemperature = 273.15 } = props;
   const container = props.container || NoContainer;
   const working = active && !container.fake;
   const { temperature, totalVolume } = container;
