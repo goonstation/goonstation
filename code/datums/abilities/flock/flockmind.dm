@@ -160,9 +160,13 @@
 
 /datum/targetable/flockmindAbility/healDrone/cast(mob/living/critter/flock/drone/target)
 	if(..())
-		return 1
+		return TRUE
 	if(!istype(target))
-		return 1
+		return TRUE
+	if (target.get_health_percentage() >= 1)
+		boutput(holder.owner, "<span class='notice'>[target.real_name] has no damage!</span>")
+		return TRUE
+
 	playsound(holder.owner, "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
 	boutput(holder.owner, "<span class='notice'>You focus the flock's efforts on fixing [target.real_name]</span>")
 	sleep(1.5 SECONDS)
