@@ -254,6 +254,9 @@
 #define PH_EX_WEAK 16
 #define PH_EX 32
 
+// Finding individual hotspots in-game:
+// View global variable -> hotspot_controller
+// hotspot_controller -> hotspot_groups
 /datum/sea_hotspot
 	var/static/heat_dropoff_per_dist_unit = 0.1 // possible todo : a quad curve
 	var/static/base_heat = 1000
@@ -355,10 +358,10 @@
 
 		// interdictors aren't cures, just stopgaps, you still have to pin spots
 		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-			if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(400))
+			if (IN_RANGE(IX,C,IX.interdict_range) && IX.expend_interdict(heat+2000)) // even small ones eat power, chomp chomp
+				IX.visible_message("<span class='alert'><b>[IX] warbles as it struggles to mitigate the hotspot!</b></span>")
 				interdicted = TRUE
-				playsound(phenomena_point, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
-				return
+				playsound(IX.loc, 'sound/effects/screech2.ogg', 30, 1)
 
 		var/found = 0
 		for (var/mob/living/M in range(6, C))
@@ -378,7 +381,7 @@
 		else if (found)
 			playsound(phenomena_point, 'sound/misc/ground_rumble.ogg', 70, 1, 0.1, 1)
 
-		// interdiction should only impact world effects, not sound/text cues
+		// interdiction should only heat/pressure effects, not sound/text cues
 		if (interdicted)
 			phenomena_flags = phenomena_flags / 2  // lower severity by one (1)
 
@@ -389,9 +392,9 @@
 			fireflash(phenomena_point,1)
 
 		if (phenomena_flags & PH_EX_WEAK)
-			explosion(src, phenomena_point, -1, -1, 0, 2)
+			explosion(src, phenomena_point, -1, -1, 1, 2)
 
-		if (phenomena_flags & PH_EX && heat < 8000)
+		if (phenomena_flags & PH_EX)
 			explosion(src, phenomena_point, -1, -1, 2, 3)
 
 		//hey recurse at this arbitrary heat value, thanks
