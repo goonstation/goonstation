@@ -1,44 +1,8 @@
 import { useBackend } from "../backend";
 import { AnimatedNumber, Box, Button, Dimmer, Flex, Icon, Knob, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { Color } from 'common/color';
+import { getTemperatureColor, getTemperatureIcon, getTemperatureChange } from './common/temperatureUtils.js';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo.js';
-
-const TemperatureColors = {
-  cold: new Color(66, 194, 255),
-  neutral: new Color(170, 170, 170),
-  hot: new Color(255, 120, 0),
-  veryhot: new Color(255, 0, 0),
-};
-
-const neutralTemperature = 293.15;
-const deviation = 200;
-const highTemperature = neutralTemperature + deviation;
-
-const getTemperatureColor = (temperature) => {
-  const { cold, neutral, hot, veryhot } = TemperatureColors;
-
-  if (temperature < highTemperature) {
-    return Color.lookup((temperature - neutralTemperature) / (deviation * 2) + 0.5, [cold, neutral, hot]);
-  }
-  return Color.lookup((temperature - highTemperature) / (1000 - highTemperature), [hot, veryhot]);
-};
-
-const getTemperatureIcon = (temperature) => {
-  switch (Math.round(temperature/200)) {
-    case (0): return "thermometer-empty";
-    case (1): return "thermometer-quarter";
-    case (2): return "thermometer-half";
-    case (3): return "thermometer-three-quarters";
-    default: return "thermometer-full";
-  }
-};
-
-const getTemperatureChange = (temperature, targetTemperature) => {
-  if (temperature < targetTemperature) return "heating";
-  if (temperature > targetTemperature) return "cooling";
-  return "neutral";
-};
 
 export const ChemHeater = (props, context) => {
   const { act, data } = useBackend(context);
