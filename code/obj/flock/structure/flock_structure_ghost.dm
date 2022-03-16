@@ -28,6 +28,12 @@
 		flock_speak(null, "ERROR: No Structure Tealprint Assigned, Deleting", flock)
 		qdel(src) //no exist if building null
 
+/obj/flock_structure/ghost/Click(location, control, params)
+	if (("alt" in params2list(params)) || !istype(usr, /mob/living/intangible/flock/flockmind))
+		return ..()
+	if (tgui_alert(usr, "Cancel tealprint construction?", "Tealprint", list("Yes", "No")) == "Yes")
+		cancelBuild()
+
 /obj/flock_structure/ghost/process()
 	if(currentmats > goal)
 		var/obj/item/flockcache/c = new(get_turf(src))
@@ -45,4 +51,12 @@
 /obj/flock_structure/ghost/proc/completebuild()
 	if(src.building)
 		new building(get_turf(src), src.flock)
+	qdel(src)
+
+/obj/flock_structure/ghost/proc/cancelBuild()
+	if (currentmats > 0)
+		var/obj/item/flockcache/cache = new(get_turf(src))
+		cache.resources = currentmats
+	flock_speak(null, "Tealprint derealizing", flock)
+	playsound(src, 'sound/misc/flockmind/flockdrone_door_deny.ogg', 50, 1)
 	qdel(src)

@@ -201,9 +201,21 @@ const FlockStructures = (props, context) => {
               {/* buttons */}
               <Stack.Item>
                 <Section height="100%">
-                  <Button onClick={() => act('jump_to', { 'origin': structure.ref })} >
-                    Jump
-                  </Button>
+                  <Stack>
+                    {structure.name === "Construction Tealprint"
+                          && (
+                            <Stack.Item>
+                              <Button onClick={() => act('cancel_tealprint', { 'origin': structure.ref })} >
+                                Cancel
+                              </Button>
+                            </Stack.Item>
+                          )}
+                    <Stack.Item>
+                      <Button onClick={() => act('jump_to', { 'origin': structure.ref })} >
+                        Jump
+                      </Button>
+                    </Stack.Item>
+                  </Stack>
                 </Section>
               </Stack.Item>
 

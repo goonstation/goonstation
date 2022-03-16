@@ -83,6 +83,10 @@
 					flock_speak(null, "Partition [T.real_name] has been reintegrated into flock background processes.", src)
 					boutput(T, "<span class='flocksay'><b>\[SYSTEM: Your higher cognition has been forcibly reintegrated into the collective will of the flock.\]</b></span>")
 					T.death()
+		if ("cancel_tealprint")
+			var/obj/flock_structure/ghost/tealprint = locate(params["origin"])
+			if (tealprint)
+				tealprint.cancelBuild()
 
 /datum/flock/proc/describe_state()
 	var/list/state = list()
