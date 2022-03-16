@@ -1266,8 +1266,8 @@
 	icon_state = "minisyndie"
 	density = 1
 	health = 7 // no fire extinguisher 1taps >:(
-	maxhealth = 11
-	aggressive = 1
+	maxhealth = 8
+	aggressive = 8
 	defensive = 1
 	wanderer = 1
 	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
@@ -1297,7 +1297,7 @@
 		..()
 		voice_gender = pick("male","female")
 		name = "miniature Syndicate Operative"
-		bulletcount = rand(4, 8) // don't give them too many bullets!
+		bulletcount = rand(4, 6) // don't give them too many bullets!
 
 
 	select_target(var/atom/newtarget)
@@ -1310,10 +1310,9 @@
 	CritterDeath()
 		if(dying) return
 		playsound(src, 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
-		src.visible_message("[src] emits a very small clicking noise.")
 		icon_state = dead_state
 		SPAWN(2 SECONDS)// for the dramatic effect
-			explosion(src, get_turf(src), -1, -1, 2.5, 3)
+			explosion(src, get_turf(src), -1, -1, 3, 3)
 		..()
 
 	Shoot(var/target, var/start, var/user, var/bullet = 0)
@@ -1321,7 +1320,7 @@
 		bulletcount--
 		SPAWN(0.5 SECONDS)
 		if(bulletcount<=0)// out of ammo? bedtime
-			src.visible_message("[src] runs out of ammo! oh no! someone do something! anyone!")
+			src.visible_message("[src] runs out of ammo!")
 			task = "sleeping"
 			src.health = 0
 			src.CritterDeath()

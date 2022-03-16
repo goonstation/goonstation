@@ -269,7 +269,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	name = "Syndicates in Pipebomb"
 	item = /obj/item/pipebomb/bomb/miniature_syndicate
 	cost = 3
-	vr_allowed = 0
 	desc = "A rather volatile pipe bomb packed with miniature syndicate troops."
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
