@@ -25,6 +25,7 @@ export const ChemHeater = (props, context) => {
                 value={targetTemperature}
                 minValue={0}
                 maxValue={1000}
+                format={value => value + " K"}
                 onDrag={(e, value) => act('adjustTemp', { temperature: value })}
               />
             </Stack.Item>
