@@ -107,7 +107,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/unsimulated/floor/airless/carpet/regalcarpet/border{
+/turf/simulated/floor/carpet/regalcarpet/border{
 	dir = 8
 	},
 /area/prefab/crashed_hop_shuttle)
@@ -208,7 +208,7 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
-/turf/unsimulated/floor/airless/carpet/regalcarpet/border{
+/turf/simulated/floor/carpet/regalcarpet/border{
 	dir = 6
 	},
 /area/prefab/crashed_hop_shuttle)
@@ -264,7 +264,7 @@
 	},
 /area/prefab/crashed_hop_shuttle)
 "qA" = (
-/turf/unsimulated/floor/airless/carpet/regalcarpet/border,
+/turf/simulated/floor/carpet/regalcarpet/border,
 /area/prefab/crashed_hop_shuttle)
 "rm" = (
 /obj/machinery/door/unpowered/wood/pyro{
@@ -314,7 +314,7 @@
 /area/prefab/crashed_hop_shuttle)
 "sL" = (
 /obj/table/wood/round,
-/turf/unsimulated/floor/airless/carpet/regalcarpet/border,
+/turf/simulated/floor/carpet/regalcarpet/border,
 /area/prefab/crashed_hop_shuttle)
 "tr" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
@@ -391,7 +391,7 @@
 /turf/simulated/floor/carpet/purple/standard/edge/west,
 /area/prefab/crashed_hop_shuttle)
 "wQ" = (
-/turf/unsimulated/floor/airless/carpet/regalcarpet/border{
+/turf/simulated/floor/carpet/regalcarpet/border{
 	dir = 4
 	},
 /area/prefab/crashed_hop_shuttle)
@@ -471,7 +471,7 @@
 	pixel_y = 12
 	},
 /obj/item/matchbook,
-/turf/unsimulated/floor/airless/carpet/regalcarpet/border{
+/turf/simulated/floor/carpet/regalcarpet/border{
 	dir = 9
 	},
 /area/prefab/crashed_hop_shuttle)
@@ -504,7 +504,7 @@
 /area/prefab/crashed_hop_shuttle)
 "Dg" = (
 /obj/decoration/bookcase,
-/turf/unsimulated/floor/airless/carpet/regalcarpet/border{
+/turf/simulated/floor/carpet/regalcarpet/border{
 	dir = 5
 	},
 /area/prefab/crashed_hop_shuttle)
@@ -693,7 +693,7 @@
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "Qs" = (
-/turf/unsimulated/floor/airless/carpet/regalcarpet/border{
+/turf/simulated/floor/carpet/regalcarpet/border{
 	dir = 10
 	},
 /area/prefab/crashed_hop_shuttle)
@@ -759,7 +759,7 @@
 /area/prefab/crashed_hop_shuttle)
 "Vx" = (
 /obj/decoration/bookcase,
-/turf/unsimulated/floor/airless/carpet/regalcarpet/border{
+/turf/simulated/floor/carpet/regalcarpet/border{
 	dir = 1
 	},
 /area/prefab/crashed_hop_shuttle)
