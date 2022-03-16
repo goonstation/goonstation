@@ -139,6 +139,7 @@
 					src.beaker = inserting
 					usr.drop_item()
 					inserting.set_loc(src)
+					src.UpdateIcon()
 			if("adjustTemp")
 				src.target_temp = clamp(params["temperature"], 0, 1000)
 				src.UpdateIcon()
