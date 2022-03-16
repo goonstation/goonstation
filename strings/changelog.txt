@@ -1,3 +1,9 @@
+
+(t)wed mar 16 22
+(u)zjdtmkhzt
+(p)7809
+(e)🆕|feature
+(+)Cargo appraisers can now be used on artifacts. They need to have a form attached, and the analysis will only be correct if you've filled out the form correctly. Due to artifacts being unique items, the price may vary quite a bit from what the appraiser says (mostly upwards).
 (t)tue mar 15 22
 (u)Cogwerks
 (e)🎨🗺|sprites, mapping
