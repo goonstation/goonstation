@@ -51,14 +51,22 @@
 /datum/plant/spore_poof
 	name = "Spore Ball"
 	plant_icon = 'icons/obj/hydroponics/plants_alien.dmi'
+	growthmode = "weed"
 	sprite = "Poof"
 	special_proc = 1
 	attacked_proc = 1
 	harvestable = 0
-	growtime = 2
-	harvtime = 6
 	assoc_reagents = list("cyanide")
-	var/datum/reagents/poof_reagents
+	starthealth = 40
+	growtime = 50
+	harvtime = 90
+	cropsize = 1
+	harvests = 0
+	endurance = 5
+	//vending = 0
+
+
+	var/list/cooldowns
 
 	HYPspecial_proc(var/obj/machinery/plantpot/POT)
 		..()
@@ -66,38 +74,60 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if(!poof_reagents)
-			poof_reagents = new/datum/reagents(max(1,(50 + DNA.cropsize))) // Creating a temporary chem holder
-			poof_reagents.my_atom = POT
-
-		if ((poof_reagents.total_volume < poof_reagents.maximum_volume/2) && POT.growth > (P.harvtime + DNA.harvtime + 10))
-			for (var/plantReagent in assoc_reagents)
-				poof_reagents.add_reagent(plantReagent, 3 * round(max(1,(1 + DNA.potency / (10 * length(assoc_reagents))))))
-
-		if(poof_reagents.total_volume)
+		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
 			for (var/mob/living/X in view(1,POT.loc))
 				poof(X, POT)
 				break
 
-	HYPattacked_proc(var/obj/machinery/plantpot/POT,var/mob/user)
-		if(poof_reagents)
-			poof()
+	HYPattacked_proc(obj/machinery/plantpot/POT, mob/user)
+		var/datum/plant/P = POT.current
+		var/datum/plantgenes/DNA = POT.plantgenes
+
+		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
+			poof(user, POT)
 
 	proc/poof(atom/movable/AM, obj/machinery/plantpot/POT)
-		poof_reagents.smoke_start(poof_reagents.total_volume)
-		POT.growth = clamp(POT.growth/2, src.growtime, src.harvtime-10)
+		if(!ON_COOLDOWN(src,"spore_poof", 2 SECONDS))
+			var/datum/plantgenes/DNA = POT.plantgenes
+			var/datum/reagents/reagents_temp = new/datum/reagents(max(1,(50 + DNA.cropsize))) // Creating a temporary chem holder
+			reagents_temp.my_atom = POT
+
+			for (var/plantReagent in assoc_reagents)
+				reagents_temp.add_reagent(plantReagent, 3 * round(max(1,(1 + DNA.potency / (10 * length(assoc_reagents))))))
+
+			SPAWN(0) // spawning to kick fluid processing out of machine loop
+				reagents_temp.smoke_start()
+				qdel(reagents_temp)
+
+			POT.growth = clamp(POT.growth/2, src.growtime, src.harvtime-10)
+			POT.UpdateIcon()
+
+	getIconState(grow_level, datum/plantmutation/MUT)
+		if(GET_COOLDOWN(src, "spore_poof"))
+			return "Poof-Open"
+		else
+			. = ..()
 
 /obj/item/seed/alien/spore_poof
 	gen_plant_type()
 		..()
 		src.planttype = HY_get_species_from_path(/datum/plant/spore_poof, src)
+
 /datum/plant/seed_spitter
 	name = "Moving Seed Pod"
 	plant_icon = 'icons/obj/hydroponics/plants_alien.dmi'
 	sprite = "Spit"
+	growthmode = "weed"
 	special_proc = 1
 	attacked_proc = 1
 	harvestable = 0
+	starthealth = 40
+	growtime = 80
+	harvtime = 120
+	cropsize = 1
+	harvests = 0
+	endurance = 5
+	//vending = 0
 
 	var/datum/projectile/syringe/seed/projectile
 
@@ -153,8 +183,7 @@
 
 	var/heart_ticker = 10
 	online = TRUE
-	//growtime = 80
-	//harvtime = 120
+
 
 	implanted(mob/M, mob/Implanter)
 		..()
