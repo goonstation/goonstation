@@ -16238,7 +16238,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "aRp" = (
-/obj/effects/background_objects/station/ss10,
+/obj/effects/background_objects/station,
 /turf/space,
 /area/space)
 "aRq" = (
