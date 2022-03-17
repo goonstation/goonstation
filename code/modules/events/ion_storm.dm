@@ -123,8 +123,6 @@
 		if(isnull(pickedLaw))
 			pickedLaw = pick(new_laws)
 
-
-		//TEMPORARY - Ion law creates module on default rack, we'll do it proper in a bit
 		if (prob(50))
 			var/num = rand(1,9)
 			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,false)
