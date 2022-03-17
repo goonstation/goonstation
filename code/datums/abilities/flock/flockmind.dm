@@ -78,10 +78,39 @@
 
 /datum/targetable/flockmindAbility/spawnEgg/cast(atom/target)
 	if(..())
-		return 1
+		return TRUE
+
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
-	if(F)
-		F.spawnEgg()
+
+	var/turf/T = get_turf(F)
+
+	if (istype(T, /turf/space/) || istype(T.loc, /area/station/solar) || istype(T.loc, /area/station/mining/magnet))
+		boutput(F, "<span class='alert'>Space and exposed areas are unsuitable for rift placement!</span>")
+		return TRUE
+
+	if (!isadmin(F))
+		if(IS_ARRIVALS(T.loc))
+			boutput(F, "<spawn class='alert'>Your rift can't be placed inside arrivals!</span>")
+			return TRUE
+
+		if (!istype(T.loc, /area/station/))
+			boutput(F, "<spawn class='alert'>Your rift needs to be placed on the [station_or_ship()]!</span>")
+			return TRUE
+
+		if (istype(T, /turf/unsimulated/))
+			boutput(F, "<span class='alert'>This kind of tile cannot support rift placement.</span>")
+			return TRUE
+
+		if (T.density)
+			boutput(F, "<span class='alert'>Your rift cannot be placed inside a wall!</span>")
+			return TRUE
+
+		for (var/atom/O in T.contents)
+			if (O.density)
+				boutput(F, "<span class='alert'>That tile is blocked by [O].</span>")
+				return TRUE
+
+	F.spawnEgg()
 
 /////////////////////////////////////////
 
