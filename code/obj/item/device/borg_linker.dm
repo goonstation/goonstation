@@ -21,7 +21,7 @@
 			boutput(user, "No law rack connected.")
 
 		if(src.linked_rack)
-			var/raw = alert(user,"Do you want to clear the linked rack?", "Linker", "No", "Yes")
+			var/raw = tgui_alert(user,"Do you want to clear the linked rack?", "Linker", list("Yes", "No"))
 			if (raw == "Yes")
 				src.linked_rack = null
 		return
