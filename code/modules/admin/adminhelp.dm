@@ -19,7 +19,7 @@
 		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
 		return
 
-	var/msg = input("Please enter your help request to admins:") as null|text
+	var/msg = input("Please enter your help request to admins.\nAdminhelps are also sent to admins via Discord.\n\nFor questions on game mechanics, use Mentorhelp (F3).", "Adminhelp") as null|text
 
 	msg = copytext(html_encode(msg), 1, MAX_MESSAGE_LEN)
 
@@ -110,7 +110,7 @@
 		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
 		return
 
-	var/msg = input("Please enter your help request to mentors:") as null|text
+	var/msg = input("Enter your help request to mentors.\nMentorhelps are sent to mentors via Discord.\n\nPlease use Adminhelp (F1) for rules questions.", "mentorhelp") as null|text
 
 	msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN)
 	if (client.can_see_mentor_pms())
@@ -176,7 +176,7 @@
 		return
 
 	if(!msg)
-		msg = input("Please enter your prayer to any gods that may be listening - be careful what you wish for as the gods may be the vengeful sort!") as null|text
+		msg = input("Please enter your prayer to any gods that may be listening - be careful what you wish for, as the gods may be the vengeful sort!") as null|text
 
 	if(msg)
 		phrase_log.log_phrase("prayer", msg)

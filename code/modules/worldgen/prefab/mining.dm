@@ -1,8 +1,15 @@
 
+TYPEINFO(/datum/mapPrefab/mining)
+	stored_as_subtypes = TRUE
+
 ABSTRACT_TYPE(/datum/mapPrefab/mining)
 /datum/mapPrefab/mining
 	var/underwater = 0 //! prefab will only be used if this matches map_currently_underwater. I.e. if this is 1 and map_currently_underwater is 1 then the prefab may be used.
-	var/required = 0 //! If 1 we will try to always place thing thing no matter what. Required prefabs will only ever be placed once.
+
+	New()
+		..()
+		if(underwater)
+			LAZYLISTADD(src.tags, "underwater")
 
 	adjust_position(turf/target)
 		RETURN_TYPE(/turf)
@@ -118,6 +125,13 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabPath = "assets/maps/prefabs/prefab_janitor.dmm"
 		prefabSizeX = 16
 		prefabSizeY = 15
+
+	customs_shuttle // Carsontheking's Crashed Customs shuttle
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_customs_shuttle.dmm"
+		prefabSizeX = 27
+		prefabSizeY = 16
 
 	pie_ship // Urs's ship originally built for the pie eating contest event
 		maxNum = 1
@@ -249,7 +263,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 	pit
 		required = 1
 		underwater = 1
-		maxNum = 3
+		maxNum = 1
 		probability = 100
 		prefabPath = "assets/maps/prefabs/prefab_water_oshanpit.dmm"
 		prefabSizeX = 8

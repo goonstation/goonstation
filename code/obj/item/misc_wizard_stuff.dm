@@ -50,7 +50,7 @@
 		if (href_list["spell_teleport"])
 			if (!can_act(H))
 				return
-			if (src.uses >= 1 && usr.teleportscroll(0, 1, src) == 1)
+			if (src.uses >= 1 && usr.teleportscroll(1, 1, src) == 1)
 				src.uses -= 1
 		if (ismob(src.loc))
 			attack_self(src.loc)
@@ -78,16 +78,11 @@
 	object_flags = NO_ARM_ATTACH
 	var/wizard_key = "" // The owner of this staff.
 	var/eldritch = 0	//was for robe and wizard hat, now nothing.
+	duration_remove = 10 SECONDS
 
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
-
-	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
-		. = ..()
-		if (prob(75))
-			source.show_message(text("<span class='alert'>\The [src] just barely slips out of your grip!</span>"), 1)
-			. = 0
 
 	// Part of the parent for convenience.
 	proc/do_brainmelt(var/mob/affected_mob, var/severity = 2)

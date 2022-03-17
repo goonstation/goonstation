@@ -2276,7 +2276,7 @@
 "aeF" = (
 /obj/rack,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/market)
@@ -2624,7 +2624,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint)
@@ -3486,7 +3486,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/janitor)
@@ -3530,7 +3530,7 @@
 /area/maintenance/fsmaint)
 "agU" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
@@ -4160,7 +4160,7 @@
 /obj/item/storage/mousetraps,
 /obj/item/storage/mousetraps,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/grime,
 /area/janitor)
@@ -5887,7 +5887,7 @@
 /area/quartermaster/storage)
 "alp" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -8649,7 +8649,7 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -10816,7 +10816,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/maintenance/east)
@@ -28206,7 +28206,7 @@
 	},
 /area/crew_quarters/kitchen)
 "bbW" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/clothing/suit/chef,
 /obj/item/clothing/head/chefhat,
 /obj/decal/cleanable/cobweb,
@@ -39663,7 +39663,7 @@
 	dir = 8
 	},
 /obj/window/cubicle,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of a human. The skull has a hole in it.  An extra one, I mean.";
 	layer = 2.5;
 	pixel_y = 8
@@ -43157,7 +43157,7 @@
 /area/crunch)
 "bHt" = (
 /obj/decal/cleanable/blood/splatter,
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/spook,
 /turf/simulated/floor/white,
 /area/crunch)
@@ -48428,7 +48428,7 @@
 	tag = "icon-floor5";
 	icon_state = "floor5"
 	},
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/simulated/floor,
 /area/h7/computer_core)
 "bSm" = (
@@ -49724,7 +49724,7 @@
 	icon_state = "window";
 	dir = 1
 	},
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/clothing/suit/bedsheet,
 /obj/decal/cleanable/blood/splatter{
 	tag = "icon-floor3";
@@ -50995,7 +50995,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/simulated/floor/plating,
 /area/h7/lab)
 "bXD" = (
@@ -63026,7 +63026,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "cuu" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/ore/pharosium,
 /obj/item/ore/bohrum,
 /obj/item/ore/bohrum,
@@ -63343,7 +63343,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "cvb" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/powerhammer,
 /obj/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -63522,7 +63522,7 @@
 /turf/simulated/wall/asteroid,
 /area/space)
 "cvs" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/oreprospector,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -63561,7 +63561,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "cvy" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/ore/cobryl,
 /obj/item/ore/cobryl,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -64316,14 +64316,14 @@
 /turf/simulated/wall/asteroid,
 /area/space)
 "cwT" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/specialroom/cafeteria{
 	dir = 1
 	},
 /area/derelict/evilreaver)
 "cwU" = (
-/obj/decal/oven,
+/obj/decal/fakeobjects/oven,
 /obj/item/reagent_containers/food/snacks/cake/meat,
 /obj/item/crowbar,
 /turf/simulated/floor/specialroom/cafeteria{
@@ -64524,7 +64524,7 @@
 /area/space)
 "cxl" = (
 /obj/decal/cleanable/blood,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The head seems to be gone.";
 	icon = 'hstation.dmi';
 	icon_state = "body2";

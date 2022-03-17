@@ -1387,6 +1387,7 @@
 
 	proc/setregex(var/datum/mechanicsMessage/input)
 		if(level == 2) return
+		expressionpatt = ("[input.signal]/[expressionflag]")
 		expression = input.signal
 		tooltip_rebuild = 1
 	proc/checkstr(var/datum/mechanicsMessage/input)

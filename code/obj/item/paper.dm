@@ -321,6 +321,17 @@
 		user.put_in_hand_or_drop(M)
 		user.u_equip(src)
 		qdel(src)
+	else if (istype(P, /obj/item/paper))
+		var/obj/item/staple_gun/S = user.find_type_in_hand(/obj/item/staple_gun)
+		if (S?.ammo)
+			var/obj/item/paper_booklet/booklet = new(src.loc)
+			user.drop_item()
+			booklet.pages += src
+			src.set_loc(booklet)
+			booklet.Attackby(P, user, params)
+			return
+		else
+			boutput(user, "<span class='alert'>You need a loaded stapler in hand to staple the sheets into a booklet.</span>")
 	else
 		// cut paper?  the sky is the limit!
 		ui_interact(user)	// The other ui will be created with just read mode outside of this
@@ -911,6 +922,18 @@ as it may become compromised.
 	<hr>
 	<i>Ey! Yo! What the hell? You think you can take a day off - relax - and then these hungry n'angry food pirates come along! Damn Thompson McGreasy;
 	unable to close his trash-pod he arrived in. Now we gotta deal with some mutant mice problem!</i>
+	"}
+
+/obj/item/paper/cruiser_bought
+	name = "My very own space cruiser"
+	icon_state = "paper"
+	desc = "The first entry in a collection of never to be finished memoirs."
+	info = {"<center><h2>Finally, my own ship!</h2></center>
+	<hr>
+	<i>This is the begining of my log, I figured since I made it rich after all this time, I ought to recount my thoughts now in a log of sorts.
+	Years of working in a damm cubicle, my only worthwile cash comming from transfering dead crew members credits to my own account.
+	But it has all paid off, I got a beautiful ship, my dog, a whole damm vault, and plenty of room for guests!
+	I even got this bottle of blue label! I was going to save it for my first cruise with others, but I suppose it wont hurt to dip into a bit of it.</i>
 	"}
 
 /obj/item/paper/fortune

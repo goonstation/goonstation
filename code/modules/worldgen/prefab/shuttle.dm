@@ -2,19 +2,18 @@
 TYPEINFO(/datum/mapPrefab/shuttle)
 	folder = "shuttles"
 
-	prefab_from_path(path)
+	prefab_from_path(full_path, local_path)
 		RETURN_TYPE(/datum/mapPrefab/shuttle)
 		var/dir = null
-		var/subpath = splittext(path, "shuttles/")[2]
-		var/path_parts = splittext(subpath, "/")
+		var/list/path_parts = splittext(local_path, "/")
 		for(var/potential_dir in dirnames)
 			if(potential_dir in path_parts)
 				dir = dirnames[potential_dir]
 		if(isnull(dir))
 			return null
-		var/name = subpath
+		var/name = local_path
 		var/is_small = ("small" in path_parts)
-		return new/datum/mapPrefab/shuttle(path, name, dir, is_small)
+		return new/datum/mapPrefab/shuttle(full_path, name, dir, is_small)
 
 
 /datum/mapPrefab/shuttle
@@ -33,6 +32,8 @@ TYPEINFO(/datum/mapPrefab/shuttle)
 			// unknown size
 			prefabSizeX = null
 			prefabSizeY = null
+			LAZYLISTADD(src.tags, "small")
+		LAZYLISTADD(src.tags, dir_to_dirname(dir))
 
 	verify_position(turf/target)
 		return src.dir == map_settings.escape_dir

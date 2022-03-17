@@ -1003,13 +1003,18 @@
 			if (linked_power.power > 1)
 				for (var/turf/T in range(owner,6))
 					animate_shake(T,5,rand(3,8),rand(3,8))
-			if (gib_user)
-				owner.gib()
 
 			// Superfarted on the bible? Off to hell.
 			for (var/obj/item/storage/bible/B in owner.loc)
-				owner.damn()
+				if(gib_user)
+					owner.mind.damned = TRUE
+				else
+					owner.damn()
 				break
+
+			if (gib_user)
+				owner.gib()
+
 		else
 			boutput(owner, "<span class='alert'>You were interrupted and couldn't fart! Rude!</span>")
 			SF.farting = 0

@@ -241,17 +241,6 @@
 	safe_toxins_max = 5		//making it a lot higher than regular, because even doubling the regular value is pitifully low. This is still reasonably low, but it might be noticable
 	rad_immune = TRUE
 
-/obj/item/organ/lung/synth
-	name = "synthlungs"
-	icon_state = "plant"
-	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream."
-	synthetic = 1
-	failure_disease = /datum/ailment/disease/respiratory_failure
-	var/overloading = 0
-	New()
-		..()
-		src.icon_state = pick("plant_lung_t", "plant_lung_t_bloom")
-
 	add_ability(var/datum/abilityHolder/aholder, var/abil)
 		if (!ispath(abil, /datum/targetable/organAbility/rebreather) || !aholder)
 			return ..()
@@ -298,6 +287,17 @@
 	demag(mob/user)
 		..()
 		organ_abilities = initial(organ_abilities)
+
+/obj/item/organ/lung/synth
+	name = "synthlungs"
+	icon_state = "plant"
+	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream."
+	synthetic = 1
+	failure_disease = /datum/ailment/disease/respiratory_failure
+
+	New()
+		..()
+		src.icon_state = pick("plant_lung_t", "plant_lung_t_bloom")
 
 /obj/item/organ/lung/synth/left
 	name = "left lung"
