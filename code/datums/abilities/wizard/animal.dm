@@ -94,7 +94,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 	onEnd()
 		..()
 
-		if(!istype(get_area(M), /area/sim/gunsim)) // Avoid dead chat spam
+		if(!istype(get_area(M), /area/sim/gunsim))
 			M.say("YORAF UHRY") // AN EMAL? PAL EMORF? TURAN SPHORM?
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
