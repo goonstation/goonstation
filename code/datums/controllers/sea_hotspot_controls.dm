@@ -358,7 +358,7 @@
 
 		// interdictors aren't cures, just stopgaps, you still have to pin spots
 		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-			if (IN_RANGE(IX,C,IX.interdict_range) && IX.expend_interdict(heat+2000)) // even small ones eat power, chomp chomp
+			if (IN_RANGE(IX,phenomena_point,IX.interdict_range) && IX.expend_interdict(heat+2000)) // even small ones eat power, chomp chomp
 				IX.visible_message("<span class='alert'><b>[IX] warbles as it struggles to mitigate the hotspot!</b></span>")
 				interdicted = TRUE
 				playsound(IX.loc, 'sound/effects/screech2.ogg', 30, 1)
