@@ -186,7 +186,7 @@
 	var/datum/powernet/PN			// find the powernet
 	if(netnum && powernets && powernets.len >= netnum)
 		PN = powernets[netnum]
-	if (isnull(PN))
+	if (isnull(PN) && netnum)
 		CRASH("Attempted to get powernet number [netnum] but it was null.")
 	return PN
 
