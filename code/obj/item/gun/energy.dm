@@ -1028,7 +1028,7 @@
 
 ///////////////////////////////////////Hunter
 /obj/item/gun/energy/plasma_gun/ // Made use of a spare sprite here (Convair880).
-	name = "Plasma rifle"
+	name = "plasma rifle"
 	desc = "This advanced bullpup rifle contains a self-recharging power cell."
 	icon_state = "bullpup"
 	item_state = "bullpup"
@@ -1054,7 +1054,7 @@
 		..()
 
 /obj/item/gun/energy/plasma_gun/vr
-	name = "Advanced laser gun"
+	name = "advanced laser gun"
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "wavegun"
 	base_item_state = "wavegun"
