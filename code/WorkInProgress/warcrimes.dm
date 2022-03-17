@@ -95,6 +95,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat, 2, cost=PAY_UNTRAINED, hidden=1) // 120
 
+/// This is currently unused as it was intended for use in PR 6684, but it was removed upon request. This might be a temporary removal, so it's staying here.
 /obj/machinery/vending/meat/station
 	// too much meat trivializes the fine art of monkey butchering, gotta have one with less meat
 	name = "FreshFlesh"
