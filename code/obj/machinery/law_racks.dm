@@ -10,11 +10,11 @@
 
 	var/datum/light/light
 	var/const/MAX_CIRCUITS = 9
-	/** list of aiModules ref'd by slot number. **/
+	/// list of aiModules ref'd by slot number.
 	var/obj/item/aiModule/law_circuits[MAX_CIRCUITS]
-	/** welded status of law module by slot number **/
+	/// welded status of law module by slot number
 	var/list/welded[MAX_CIRCUITS]
-	/** screwed status of law module by slot number **/
+	/// screwed status of law module by slot number
 	var/list/screwed[MAX_CIRCUITS]
 
 	New(loc)
@@ -28,7 +28,7 @@
 		src.light.attach(src)
 		UpdateIcon()
 
-	/** Causes all law modules to drop to the ground, does not call UpdateLaws() **/
+	/// Causes all law modules to drop to the ground, does not call UpdateLaws()
 	proc/drop_all_modules()
 		for (var/i in 1 to MAX_CIRCUITS)
 			src.welded[i] = false
@@ -375,7 +375,7 @@
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 
-	/** Takes a list or single target to show laws to **/
+	/// Takes a list or single target to show laws to
 	proc/show_laws(var/who)
 		var/list/L =list()
 		L += who
@@ -389,7 +389,7 @@
 	 * [law number]: [law text]<br>
 	 * [law number]: [law text]
 	 * etc.
-		  **/
+	*/
 	proc/format_for_logs(var/glue = "<br>")
 		var/law_counter = 1
 		var/lawOut = list()
@@ -401,7 +401,8 @@
 		return jointext(lawOut, glue)
 
 	/** Formats current laws as a list in the format:
-	 * {[lawnumber]=lawtext,etc.} **/
+	 * {[lawnumber]=lawtext,etc.}
+	 */
 	proc/format_for_irc()
 		var/list/laws = list()
 
@@ -415,7 +416,8 @@
 		return laws
 
 	/** Pushes law updates to all connected AIs and Borgs - notification text allows you to customise the header
-		Defaults to <h3>Law update detected</h3> */
+	* Defaults to <h3>Law update detected</h3>
+	*/
 	proc/UpdateLaws(var/notification_text="<h3>Law update detected</h3>")
 		logTheThing("station", src, null, "Law Update: "+src.format_for_logs())
 		var/list/affected_mobs = list()
@@ -466,7 +468,7 @@
 		UpdateIcon()
 		UpdateLaws()
 
-	/** Sets an arbitrary slot to the passed aiModule - will override any module in the slot. Does not call UpdateLaws() */
+	/// Sets an arbitrary slot to the passed aiModule - will override any module in the slot. Does not call UpdateLaws()
 	proc/SetLaw(var/obj/item/aiModule/mod,var/slot=1,var/screwed_in=false,var/welded_in=false)
 		if(mod && slot <= MAX_CIRCUITS)
 			src.law_circuits[slot] = mod
@@ -483,7 +485,7 @@
 		var/mod = new /obj/item/aiModule/custom(lawName,lawText)
 		return src.SetLaw(mod,slot,screwed_in,welded_in)
 
-	/** Deletes a law in an abritrary slot. Does not call UpdateLaws() */
+	/// Deletes a law in an abritrary slot. Does not call UpdateLaws()
 	proc/DeleteLaw(var/slot=1)
 		src.law_circuits[slot]=null
 		src.welded[slot]=false
@@ -491,15 +493,16 @@
 		tgui_process.update_uis(src)
 		UpdateIcon()
 
-	/** Deletes all laws. Does not call UpdateLaws() */
+	/// Deletes all laws. Does not call UpdateLaws()
 	proc/DeleteAllLaws()
 		for (var/i in 1 to MAX_CIRCUITS)
 			src.DeleteLaw(i)
 
 	/** This will cause a module to glitch, either totally replace it law or adding picked_law
-		to its text (depening on replace). Lawnumber is a suggestion, not a guarentee - if there is no
-		law in that slot, this will trigger on the law closest to that slot
-		if there are no laws to glitch, just do nothing **/
+	* to its text (depening on replace). Lawnumber is a suggestion, not a guarentee - if there is no
+	* law in that slot, this will trigger on the law closest to that slot
+	* if there are no laws to glitch, just do nothing
+	*/
 	proc/cause_law_glitch(var/picked_law="Beep repeatedly.",var/lawnumber=1,var/replace=false)
 		var/lawnumber_actual = 1
 		if(src.law_circuits[lawnumber])
