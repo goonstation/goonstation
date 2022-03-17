@@ -40,6 +40,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP // Prevents ALL bots from spawning (not cyborgs)
 //#define BAD_MONKEY_NO_BANANA // Prevents landmark monkeys from spawning- monkeys can still be vended etc
 //#define CLONING_IS_A_SIN // Don't prebake clones
+//#define I_KNOW_WHAT_IM_DOING_PROBABLY //surpresses gottagofast warning about only using one z-level.
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
 
@@ -133,11 +134,12 @@ o+`        `-` ``..-:yooos-..----------..`
 
 
 //Don't comment this ty
-#ifdef STOP_DISTACTING_ME
+#ifdef STOP_DISTRACTING_ME
 #define I_AM_ABOVE_THE_LAW
 #define ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
 #define BAD_MONKEY_NO_BANANA
 #define CLONING_IS_A_SIN
+#define I_KNOW_WHAT_IM_DOING_PROBABLY
 #endif
 
 var/global/vcs_revision = "1"
