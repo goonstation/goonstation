@@ -3882,6 +3882,16 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/station/hydroponics/bay)
+"bZg" = (
+/obj/grille/steel,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/ai_monitored/armory)
 "bZk" = (
 /obj/decal/tile_edge/line/red{
 	dir = 5;
@@ -10973,6 +10983,12 @@
 	},
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
+"fYI" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/ai_monitored/armory)
 "fYP" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -18444,6 +18460,12 @@
 /area/station/science/bot_storage)
 "jDb" = (
 /obj/grille/steel,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/ai_monitored/armory)
 "jDU" = (
@@ -24980,6 +25002,16 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/exit)
+"mOd" = (
+/obj/grille/steel,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/ai_monitored/armory)
 "mOw" = (
 /obj/table/reinforced/auto,
 /obj/item/clipboard,
@@ -32701,6 +32733,9 @@
 /obj/stool/chair/red{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "rsk" = (
@@ -38451,6 +38486,12 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/science/research_director)
+"uyG" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/ai_monitored/armory)
 "uyX" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
@@ -40849,6 +40890,14 @@
 /area/iss{
 	name = "Drop Capsule"
 	})
+"vVS" = (
+/obj/grille/steel,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/ai_monitored/armory)
 "vWb" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -41141,6 +41190,16 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/southwest)
+"wiD" = (
+/obj/grille/steel,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/ai_monitored/armory)
 "wiO" = (
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/engine,
@@ -79422,11 +79481,11 @@ fEp
 tYQ
 qLh
 jDb
-jDb
-jDb
-qLh
-rjw
-rjw
+vVS
+vVS
+uyG
+vVS
+vVS
 rjw
 qLh
 qLh
@@ -79723,7 +79782,7 @@ nEE
 nnZ
 gUq
 qLh
-jDb
+mOd
 qLh
 qLh
 qLh
@@ -80025,7 +80084,7 @@ nEE
 wdh
 qIP
 qLh
-qLh
+fYI
 qLh
 hJp
 pZL
@@ -81233,7 +81292,7 @@ nWd
 mwb
 qIP
 qLh
-qLh
+fYI
 qLh
 lBs
 wxF
@@ -81535,7 +81594,7 @@ nWd
 jNJ
 pIK
 qLh
-jDb
+bZg
 qLh
 qLh
 qLh
@@ -81837,12 +81896,12 @@ bZk
 dVe
 jsm
 qLh
-jDb
-jDb
-jDb
-qLh
-rjw
-rjw
+wiD
+vVS
+vVS
+uyG
+vVS
+vVS
 rjw
 qLh
 qLh
