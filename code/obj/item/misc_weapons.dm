@@ -911,7 +911,6 @@
 		..()
 		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 25 * (1 + src.two_handed), pitch=0.7) // magic numbers abound. trial and error
 		playsound(target, 'sound/impact_sounds/Generic_Hit_3.ogg', 18 * (1 + src.two_handed), pitch=0.55)
-		//playsound(target, 'sound/impact_sounds/Flesh_Crush_1.ogg', 20 * (1 + src.two_handed), pitch=0.6)
 
 	New()
 		..()
