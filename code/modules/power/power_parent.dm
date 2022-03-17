@@ -113,14 +113,16 @@ var/makingpowernetssince = 0
 
 	for(var/L = 1 to netcount)
 		var/datum/powernet/PN = new()
-		//PN.tag = "powernet #[L]"
 		powernets += PN
 		PN.number = L
 
 	for_by_tcl(C, /obj/cable)
 		if(!C.netnum) continue
-		var/datum/powernet/PN = powernets[C.netnum]
-		PN.cables += C
+		if (C.netnum <= length(powernets))
+			var/datum/powernet/PN = powernets[C.netnum]
+			PN.cables += C
+		else
+			stack_trace("Tried to add cable [C] \ref[C] to the cables of powernet [C.netnum], but that powernet number was larger than the powernets list length of [length(powernets)]")
 		LAGCHECK(LAG_MED)
 
 	for(var/obj/machinery/power/M as anything in machine_registry[MACHINES_POWER])

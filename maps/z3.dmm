@@ -24218,7 +24218,10 @@
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
 "bPL" = (
-/obj/effects/background_objects/x4,
+/obj/effects/background_objects/station/ss10{
+	pixel_x = -96;
+	pixel_y = -28
+	},
 /turf/space,
 /area/space)
 "cSD" = (
@@ -62950,7 +62953,7 @@ aaa
 aaa
 aaa
 aaa
-bPL
+aaa
 aaa
 aaa
 aaa
@@ -72294,7 +72297,7 @@ aaa
 aaa
 aaa
 aaa
-aad
+aaa
 aaa
 aaa
 aaa
@@ -73503,7 +73506,7 @@ aaa
 aaa
 aaa
 aaa
-aad
+aaa
 aaa
 aaa
 aaa
@@ -74406,7 +74409,7 @@ aaK
 aeZ
 aaa
 aaa
-aad
+aaa
 aaa
 aaa
 aaa
@@ -76777,7 +76780,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bPL
 aaa
 aak
 afv
@@ -103347,7 +103350,7 @@ aaa
 aaa
 aaa
 aaa
-adV
+aaa
 aaa
 aaa
 aaa
@@ -108164,7 +108167,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+adV
 aaa
 aaa
 aaa

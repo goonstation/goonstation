@@ -12324,7 +12324,7 @@
 	},
 /obj/table/auto,
 /obj/machinery/networked/storage/scanner{
-	bank_id = "security";
+	bank_id = "netcafe";
 	pixel_y = 4
 	},
 /turf/simulated/floor/circuit,
@@ -58142,7 +58142,7 @@
 "cyU" = (
 /obj/table/reinforced/auto,
 /obj/machinery/networked/storage/scanner{
-	bank_id = "security";
+	bank_id = "research";
 	pixel_y = 4
 	},
 /obj/cable{
@@ -69811,7 +69811,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/item/device/analyzer/healthanalyzer/borg,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
 /obj/item/clothing/glasses/healthgoggles/upgraded,
 /turf/simulated/floor/carpet{
 	dir = 8;

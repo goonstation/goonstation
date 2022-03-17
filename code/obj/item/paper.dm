@@ -924,6 +924,18 @@ as it may become compromised.
 	unable to close his trash-pod he arrived in. Now we gotta deal with some mutant mice problem!</i>
 	"}
 
+/obj/item/paper/cruiser_bought
+	name = "My very own space cruiser"
+	icon_state = "paper"
+	desc = "The first entry in a collection of never to be finished memoirs."
+	info = {"<center><h2>Finally, my own ship!</h2></center>
+	<hr>
+	<i>This is the begining of my log, I figured since I made it rich after all this time, I ought to recount my thoughts now in a log of sorts.
+	Years of working in a damm cubicle, my only worthwile cash comming from transfering dead crew members credits to my own account.
+	But it has all paid off, I got a beautiful ship, my dog, a whole damm vault, and plenty of room for guests!
+	I even got this bottle of blue label! I was going to save it for my first cruise with others, but I suppose it wont hurt to dip into a bit of it.</i>
+	"}
+
 /obj/item/paper/fortune
 	name = "fortune"
 	info = {"<center>YOUR FORTUNE</center>"}

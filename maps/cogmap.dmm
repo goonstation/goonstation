@@ -16238,7 +16238,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "aRp" = (
-/obj/effects/background_objects/station/ss10,
+/obj/effects/background_objects/station,
 /turf/space,
 /area/space)
 "aRq" = (
@@ -44278,7 +44278,7 @@
 /obj/item/device/radio/headset/deaf,
 /obj/item/robodefibrillator,
 /obj/item/remote/porter/port_a_nanomed,
-/obj/item/device/analyzer/healthanalyzer/borg,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/specialroom/medbay,

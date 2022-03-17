@@ -1,5 +1,16 @@
 
 (t)wed mar 16 22
+(u)tarmunora
+(e)⚖|balance
+(+)wizard gear now takes 4x normal duration to remove, instead of an RNG 25% chance to succeed.
+(u)Flappybat
+(p)7785
+(e)⚖|balance
+(+)The nuclear bomb has improved armor plating against energy and kinetic projectiles, taking roughly half the damage of the previous model.
+(u)Carsontheking
+(p)7377
+(e)🗺|mapping
+(+)Adds a new prefab to explore!
 (u)zjdtmkhzt
 (p)7809
 (e)🆕|feature
