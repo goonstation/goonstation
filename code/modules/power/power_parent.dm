@@ -118,7 +118,7 @@ var/makingpowernetssince = 0
 
 	for_by_tcl(C, /obj/cable)
 		if(!C.netnum) continue
-		if (netnum <= length(powernets))
+		if (C.netnum <= length(powernets))
 			var/datum/powernet/PN = powernets[C.netnum]
 			PN.cables += C
 		else
