@@ -242,6 +242,7 @@
 	if(src.list_is_updated) return
 	var/mainlist = "" //held separately so the siphon can always start the list
 	var/rollingtext = "" //list of entries for not siphon
+	var/intensity_sum = 0 //sum of resonator intensities (used to display effective extraction units per cycle, aka machine tick)
 
 	if(!length(src.known_devices))
 		mainlist = "<h2>NO CONNECTION TO DEVICES</h2><br>"
@@ -278,6 +279,7 @@
 		for(var/field in manifest)
 			if(field == "Intensity")
 				var/maxintens = manifest["Maximum Intensity"]
+				intensity_sum += manifest[field]
 				minitext += "<strong>[field]</strong> &middot; [manifest[field]][maxintens ? " / [maxintens]" : ""] "
 				minitext += "<A href='[topicLink("calibrate","\ref[device_index]")]'>(Calibrate)</A><br>"
 			else if(field != "INT_TARGETID" && field != "Maximum Intensity")
@@ -285,11 +287,11 @@
 				minitext += "<strong>[field]</strong> &middot; [manifest[field]]<br>"
 		if(saveforsiphon)
 			mainlist += minitext
-			mainlist += "<br>"
 		else
 			rollingtext += minitext
 			rollingtext += "<br>"
 
+	mainlist += "<strong>EEU per Cycle</strong> &middot; [intensity_sum]<br><br>"
 	mainlist += rollingtext
 	src.formatted_list = mainlist
 	src.list_is_updated = TRUE

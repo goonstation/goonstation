@@ -323,7 +323,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			boutput(usr, "<span class='alert'>You can't unload the siphon while it's running.</span>")
 			return
 
-		if (istype(over_object,/obj/storage/crate/) || istype(over_object,/obj/storage/cart))
+		if (istype(over_object,/obj/storage/crate/) || istype(over_object,/obj/storage/cart) || istype(over_object,/obj/storage/closet))
 			var/offload_count = 0
 			for (var/obj/item/I in src.contents)
 				I.set_loc(over_object)

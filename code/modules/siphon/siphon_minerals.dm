@@ -240,7 +240,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	product = /obj/item/raw_material/uqill
 //telecrystal and gnesis have unusual formative conditions difficult to induce manually
 //should probably have highly specific parameters, maybe obtained through secrets?
-//idea in particular: the required shear is in the 96-105 range and chooses a different value every 60 or 90 sec
+//idea in particular: the required shear is in the 76-89 range and chooses a different value every 60 or 90 sec
 //and the recipe is learned through a device that shows you when this value changes, so you need a rapidly adjustable resonator setup
 /*
 /datum/siphon_mineral/telecrystal
@@ -255,6 +255,19 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 		..()
 */
 //shear of 65 or higher should probably do Bad Things unless precisely set.
+/datum/siphon_mineral/gold
+	name = "Gold"
+	tick_req = 300
+	y_torque = 0
+	shear = 100
+	sens_window = 0
+	product = /obj/item/raw_material/gold
+
+	New()
+		src.tick_req = rand(25,32) * 10
+		src.shear = rand(45,50) * 2 // 90 to 100, in only even increments
+		..()
+
 /datum/siphon_mineral/starstone
 	name = "Starstone"
 	tick_req = 1616
@@ -264,6 +277,18 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	New()
 		src.tick_req = rand(100,120) * 10
 		src.shear = rand(106,115)
+		..()
+
+/datum/siphon_mineral/blob
+	name = "Biomatter (NOT RECOMMENDED)"
+	tick_req = 150
+	shear = 127
+	sens_window = 0
+	product = /obj/item/material_piece/wad/blob
+
+	New()
+		src.tick_req = rand(12,22) * 10
+		src.shear = (rand(45,50) * 2) + 1 // 123 to 127, in only odd increments
 		..()
 
 /datum/siphon_mineral/pizza
