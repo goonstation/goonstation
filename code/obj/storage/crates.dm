@@ -544,7 +544,7 @@
 		/obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut,
 		/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector,
 		/obj/item/clothing/glasses/healthgoggles/upgraded,
-		/obj/item/device/analyzer/healthanalyzer/borg,
+		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
 		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,
@@ -555,7 +555,7 @@
 		name = "Class Crate - Field Medic"
 		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies."
 		spawn_contents = list(/obj/item/clothing/glasses/healthgoggles/upgraded,
-		/obj/item/device/analyzer/healthanalyzer/borg,
+		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
 		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,

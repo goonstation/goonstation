@@ -6425,7 +6425,7 @@
 	pixel_y = 5;
 	print_id = "MD"
 	},
-/obj/item/device/analyzer/healthanalyzer/borg,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
 /obj/item/clothing/glasses/healthgoggles/upgraded,
 /obj/table/wood/round/auto,
 /obj/machinery/light/incandescent/warm,

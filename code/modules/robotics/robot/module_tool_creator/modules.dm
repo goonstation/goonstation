@@ -77,7 +77,7 @@
 	definitions = list(
 		/obj/item/device/light/flashlight,
 		/obj/item/tool/omnitool/silicon,
-		/obj/item/device/analyzer/healthanalyzer/borg,
+		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/device/reagentscanner,
 		/obj/item/device/analyzer/atmospheric/upgraded,
 		/obj/item/robojumper,
