@@ -1624,7 +1624,7 @@
 		shotcount = 0
 		. = ..()
 
-	shoot_point_blank(mob/M, mob/user, second_shot)
+	shoot_point_blank(atom/target, mob/user, second_shot)
 		shotcount = 0
 		. = ..()
 
