@@ -347,9 +347,16 @@
 	if(!istype(T, /turf/simulated/floor/feather))
 		boutput(holder.owner, "<span class='alert'>You aren't above a flocktile.</span>")//todo maybe make this flock themed?
 		return 1
+	if(locate(/obj/flock_structure/ghost) in T)
+		boutput(holder.owner, "<span class='alert'>A tealprint has already been scheduled here!</span>")
+		return 1
 	if(locate(/obj/flock_structure) in T)
 		boutput(holder.owner, "<span class='alert'>There is already a flock structure on this flocktile!</span>")
 		return 1
+	for (var/atom/O in T.contents)
+		if (O.density && !isflock(O))
+			boutput(holder.owner, "<span class='alert'>That tile has something that blocks tealprint creation!</span>")
+			return 1
 	//todo: replace with FANCY tgui/chui window with WHEELS and ICONS and stuff!
 	var/structurewanted = tgui_input_list(holder.owner, "Select which structure you would like to create", "Tealprint selection", list("Collector", "Sentinel"))
 	if (!structurewanted)
