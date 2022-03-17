@@ -120,6 +120,8 @@ var/list/ban_from_airborne_fluid = list()
 	Crossed(atom/movable/A)
 		..()
 		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid))
+			if(src.group?.disposed)
+				qdel(src)
 			return
 		A.EnteredAirborneFluid(src, A.last_turf)
 
@@ -147,6 +149,12 @@ var/list/ban_from_airborne_fluid = list()
 		if(!waterflow_enabled) return
 		for( var/dir in cardinal )
 			LAGCHECK(LAG_LOW)
+			if (!src.group)
+				src.removed()
+
+				for(var/A in .)
+					qdel(A)
+				return
 			blocked_perspective_objects["[dir]"] = 0
 			t = get_step( src, dir )
 			if (!t) //the fuck? how
@@ -233,7 +241,8 @@ var/list/ban_from_airborne_fluid = list()
 						else
 							step_away(push_thing,src)
 
-					F.trigger_fluid_enter()
+					if(F.group.reagents)
+						F.trigger_fluid_enter()
 
 		if (spawned_any && prob(40))
 			playsound( src.loc, 'sound/effects/smoke_tile_spread.ogg', 30,1,7)
