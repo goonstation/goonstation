@@ -129,10 +129,6 @@
 			owner.take_toxin_damage(-5000)
 			owner.take_oxygen_deprivation(-5000)
 			owner.take_brain_damage(-120)
-			owner.delStatus("radiation")
-			owner.delStatus("paralysis")
-			owner.delStatus("weakened")
-			owner.delStatus("stunned")
 			owner.stuttering = 0
 			owner.take_ear_damage(-INFINITY)
 			owner.take_ear_damage(-INFINITY, 1)

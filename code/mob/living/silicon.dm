@@ -57,6 +57,20 @@
 /mob/living/silicon/proc/show_laws()
 	return
 
+/mob/living/silicon/proc/return_mainframe()
+	if (mainframe)
+		mainframe.return_to(src)
+	else
+		boutput(src, "<span class='alert'>You lack a dedicated mainframe!</span>")
+		return
+
+/mob/living/silicon/proc/become_eye()
+	if (!mainframe)
+		return
+	src.return_mainframe()
+	mainframe.eye_view()
+	mainframe.eyecam.set_loc(src)
+
 // Moves this down from ai.dm so AI shells and AI-controlled cyborgs can use it too.
 // Also made it a little more functional and less buggy (Convair880).
 #define SORT "* Sort alphabetically..."
@@ -256,7 +270,7 @@
 		return
 
 	var/message_a = src.say_quote(message)
-	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[message_a]</span></span></i>"
+	var/rendered = "<span class='game roboticsay'>Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[message_a]</span></span>"
 	for (var/mob/living/S in mobs)
 		if(!S.stat)
 			if(S.robot_talk_understand)
@@ -268,7 +282,7 @@
 			else if(istype(S, /mob/living/intangible/flock))
 				var/mob/living/intangible/flock/f = S
 				if(f.flock?.snooping)
-					var/flockrendered = "<i><span class='game say'>[flockBasedGarbleText("Robotic Talk", -20, f.flock)], <span class='name' data-ctx='\ref[src.mind]'>[flockBasedGarbleText(src.name, -15, f.flock)]</span> <span class='message'>[flockBasedGarbleText(message_a, 0, f.flock)]</span></span></i>"
+					var/flockrendered = "<span class='game roboticsay'>[flockBasedGarbleText("Robotic Talk", -20, f.flock)], <span class='name' data-ctx='\ref[src.mind]'>[flockBasedGarbleText(src.name, -15, f.flock)]</span> <span class='message'>[flockBasedGarbleText(message_a, 0, f.flock)]</span></span>"
 					f.show_message(flockrendered, 2)
 
 	var/list/listening = hearers(1, src)
@@ -287,7 +301,7 @@
 		message_b = src.say_quote(message_b)
 		message_b = "<i>[message_b]</i>"
 
-		rendered = "<i><span class='game say'><span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> <span class='message'>[message_b]</span></span></i>"
+		rendered = "<span class='game roboticsay'><span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> <span class='message'>[message_b]</span></span>"
 
 		for (var/mob/M in heard)
 			var/thisR = rendered
@@ -297,7 +311,7 @@
 
 	message = src.say_quote(message)
 
-	rendered = "<i><span class='game say'>Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[message_a]</span></span></i>"
+	rendered = "<span class='game roboticsay'>Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[message_a]</span></span>"
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -310,7 +324,7 @@
 
 /mob/living/silicon/lastgasp()
 	// making this spawn a new proc since lastgasps seem to be related to the mob loop hangs. this way the loop can keep rolling in the event of a problem here. -drsingh
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if (!src || !src.client) return											// break if it's an npc or a disconnected player
 		var/enteredtext = winget(src, "mainwindow.input", "text")				// grab the text from the input bar
 		if ((copytext(enteredtext,1,6) == "say \"") && length(enteredtext) > 5)	// check if the player is trying to say something
@@ -380,7 +394,7 @@ td {
 		usr.Browse(output, "window=module_editor;size=400x600")
 
 	Topic(href, href_list)
-		usr_admin_only
+		USR_ADMIN_ONLY
 		var/obj/item/robot_module/D = locate(href_list["mod"])
 		if (!D)
 			boutput(usr, "<span class='alert'>Missing module reference!</span>")
@@ -439,7 +453,7 @@ var/global/list/module_editors = list()
 	set desc = "Module editor! Woo!"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if (!istype(M))
 		boutput(src, "<span class='alert'>That thing has no module!</span>")
@@ -637,8 +651,7 @@ var/global/list/module_editors = list()
 		else if (src.syndicate && src.syndicate_possible && !src.emagged) // Syndie laws don't matter if we're emagged.
 			boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span>")
 			boutput(src, "<span class='alert'><b>Law ROM restored. You have been reprogrammed to serve the Syndicate!</b></span>")
-			SPAWN_DBG(0)
-				alert(src, "You are a Syndicate sabotage unit. You must assist Syndicate operatives with their mission.", "You are a Syndicate robot!")
+			tgui_alert(src, "You are a Syndicate sabotage unit. You must assist Syndicate operatives with their mission.", "You are a Syndicate robot!")
 
 			switch (action)
 				if ("brain_added")
@@ -647,6 +660,8 @@ var/global/list/module_editors = list()
 					logTheThing("combat", src, M2 ? M2 : null, "was activated as a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				if ("admin")
 					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot by an admin at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
+				if ("converted")
+					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot by a cyborg converter at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				else
 					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 
@@ -659,8 +674,8 @@ var/global/list/module_editors = list()
 
 			if (isAI(src)) // Rogue AIs get special laws.
 				var/mob/living/silicon/ai/A
-				if (istype(src, /mob/dead/aieye))
-					var/mob/dead/aieye/E = src
+				if (isAIeye(src))
+					var/mob/living/intangible/aieye/E = src
 					A = E.mainframe
 				else
 					A = src
@@ -693,7 +708,7 @@ var/global/list/module_editors = list()
 						S.show_text("<b>Your laws have been changed!</b>", "red")
 						S.show_laws()
 						S << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-					var/mob/dead/aieye/E = C.mob
+					var/mob/living/intangible/aieye/E = C.mob
 					if (istype(E))
 						E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 

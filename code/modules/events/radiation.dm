@@ -16,7 +16,7 @@
 		var/pulse_lifespan = null
 		var/turf/pulseloc = null
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/pulses = pulse_amt, pulses > 0, pulses--)
 				pulseloc = pick(wormholeturfs)
 				pulse_lifespan = rand(min_pulse_lifespan,max_pulse_lifespan)
@@ -50,7 +50,7 @@
 		irradiate_turf(get_turf(src))
 		for (var/turf/T in circular_range(src,pulse_range))
 			irradiate_turf(T)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			qdel(src)
 		return
 
@@ -102,7 +102,7 @@
 		irradiate_turf(get_turf(src))
 		for (var/turf/T in circular_range(src,pulse_range))
 			irradiate_turf(T)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			qdel(src)
 		return
 
@@ -141,7 +141,7 @@
 
 	event_effect(var/source)
 		..()
-		SPAWN_DBG(rand(100, 300))
+		SPAWN(rand(100, 300))
 		for (var/mob/living/carbon/human/H in mobs)
 			if (isdead(H))
 				continue

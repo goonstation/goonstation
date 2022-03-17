@@ -47,10 +47,10 @@
 		A.ticks = ticker.round_elapsed_ticks
 
 	proc/generateEvents()
-		for (var/datum/stock/event/type in concrete_typesof(/datum/stock/event))
+		for (var/type in concrete_typesof(/datum/stock/event))
 			generateEvent(type)
 
-	proc/generateEvent(datum/stock/event/type)
+	proc/generateEvent(type)
 		var/datum/stock/event/E = new type(src)
 		addEvent(E)
 
@@ -224,13 +224,15 @@
 			else if (ticker.round_elapsed_ticks > borrow.lease_expires)
 				if (borrow.borrower in shareholders)
 					var/amt = shareholders[borrow.borrower]
-					if (amt > borrow.share_debt)
+					if (amt >= borrow.share_debt)
 						shareholders[borrow.borrower] -= borrow.share_debt
 						borrows -= borrow
 						if (borrow.borrower in FrozenAccounts)
 							FrozenAccounts[borrow.borrower] -= borrow
 						if (length(FrozenAccounts[borrow.borrower]) == 0)
 							FrozenAccounts -= borrow.borrower
+						//return deposit
+						modifyAccount(borrow.borrower,borrow.deposit)
 						qdel(borrow)
 					else
 						shareholders -= borrow.borrower

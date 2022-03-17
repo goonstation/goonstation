@@ -45,7 +45,7 @@
 		..()
 
 	streak_object(var/list/directions)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 				sleep(0.3 SECONDS)
@@ -83,6 +83,9 @@
 	force = 0
 	plant_reagent = "juice_tomato"
 	validforhat = 1
+	sliceable = TRUE
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/tomatoslice
+	slice_amount = 3
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
@@ -147,7 +150,7 @@
 		src.visible_message("<span class='alert'>[src] pops violently!</span>")
 		playsound(src.loc, "sound/effects/pop.ogg", 50, 1)
 		flick("cornsplode", src)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			new /obj/item/reagent_containers/food/snacks/popcorn(get_turf(src))
 			qdel(src)
 
@@ -563,7 +566,7 @@
 			if (ismob(hit_atom))
 				var/mob/hitMob = hit_atom
 				if (ishuman(hitMob))
-					SPAWN_DBG( 0 )
+					SPAWN( 0 )
 						if (istype(user))
 							if (user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
 								src.hitHard(hitMob, user)
@@ -578,7 +581,7 @@
 				return
 			already_burst = 1
 			src.icon_state = "[base_icon_state]-burst"
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				var/n_slices = rand(1, 5)
 				var/amount_per_slice = 0
 				if(src.reagents)
@@ -905,7 +908,7 @@
 	attack_self(var/mob/user as mob)
 		if (src.icon_state == "banana")
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
-				user.visible_message("<span class='alert'><b>[user]</b> fumbles and pokes \himself in the eye with [src].</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> fumbles and pokes [himself_or_herself(user)] in the eye with [src].</span>")
 				user.change_eye_blurry(5)
 				user.changeStatus("weakened", 3 SECONDS)
 				JOB_XP(user, "Clown", 2)

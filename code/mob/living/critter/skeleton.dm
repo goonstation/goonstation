@@ -10,7 +10,7 @@
 		var/PT = /obj/item/material_piece/bone
 		var/obj/item/material_piece/bone/P = new PT
 		P.set_loc(T)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/k = 1, k <= 3, k++)
 			P.streak_object(dirlist[i])
 		produce += P

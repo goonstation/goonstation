@@ -188,7 +188,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine/locking)
 
 /obj/machinery/traymachine/locking/attack_hand(mob/user as mob)
 	if (locked)
-		boutput(usr, "<span class='alert'>It's locked.</span>")
+		boutput(user, "<span class='alert'>It's locked.</span>")
 		src.add_fingerprint(user) //because we're not reaching the parent call
 		return
 	..()
@@ -323,7 +323,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		if (M == my_tray) continue //no cremating the tray tyvm
 		if (isliving(M))
 			var/mob/living/L = M
-			SPAWN_DBG(0)
+			SPAWN(0)
 				L.changeStatus("stunned", 10 SECONDS)
 
 				var/i
@@ -346,7 +346,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 				ashes += 1
 			qdel(M)
 
-	SPAWN_DBG(10 SECONDS)
+	SPAWN(10 SECONDS)
 		if (src)
 			src.visible_message("<span class='alert'>\The [src.name] finishes and shuts down.</span>")
 			src.locked = FALSE
@@ -495,7 +495,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 					M.remove()
 					make_cleanable( /obj/decal/cleanable/ash,src)
 
-		SPAWN_DBG(src.settime)
+		SPAWN(src.settime)
 			if (src)
 				src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
 				src.locked = FALSE
@@ -643,7 +643,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		dat += "<A href='?src=\ref[src];settime=1'>Increase Time</A><BR>"
 		dat += "<A href='?src=\ref[src];unsettime=1'>Decrease Time</A><BR>"
 
-		if (user.client.tooltipHolder)
+		if (user.client?.tooltipHolder)
 			user.client.tooltipHolder.showClickTip(src, list(
 				"params" = params,
 				"title" = src.name,
@@ -659,14 +659,14 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		if (href_list["toggle"])
 			if (linked && !linked.locked && find_tray_tube() && linked.my_tray.loc == linked)
 				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
-				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([log_loc(usr)])")
 				linked.cremate()
 
 		else if (href_list["timer"])
 			sleep (10 SECONDS)
 			if (linked && !linked.locked && find_tray_tube() && linked.my_tray.loc == linked)
 				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
-				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([log_loc(usr)])")
 				linked.cremate()
 
 		else if (href_list["settime"])

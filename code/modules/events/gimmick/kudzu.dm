@@ -105,6 +105,7 @@
 	var/current_stage = 0
 	var/aggressive = 0
 	var/to_spread = 10				//bascially the radius of child kudzu plants that any given kudzu object can create.
+	var/stunted = FALSE
 
 
 	get_desc()
@@ -257,7 +258,7 @@
 	if (dogrowth == 1)
 		var/obj/V = new src.vinepath(loc=Vspread, to_spread=to_spread-1)
 		V.set_loc(Vspread)
-	if (src.growth < 20)
+	if (src.growth < 20 && !stunted)
 		src.growth++
 		src.update_self()
 	if (!src.aggressive && src.growth >= 20)
@@ -326,6 +327,26 @@
 
 		src.take_damage(power*10, 1, "burn")
 
+/obj/spacevine/proc/herbicide(datum/reagent/R)
+	if(!src.stunted)
+		if((src.current_stage < 2) || prob(33))
+			src.stunted = TRUE
+
+			//Swap green to red to turn brown, desaturate and soften slightly
+			var/new_color = list(0.20,	0.70,  0.10,  0.00,\
+								 0.70,  0.10,  0.10,  0.50,\
+								 0.07,  0.10,  0.50,  0.00,\
+								 0.00,  0.00,  0.00,  0.70,\
+								 0.00,  0.00,  0.00,  0.00)
+			//Add damage texture to create dark banding
+			setTexture()
+			animate(src,time=2 SECONDS,color=new_color)
+			src.growth -= 10
+			src.to_spread = round(log(max(src.to_spread,1))*2)
+			src.update_self()
+		// Delay update to allow fluid controllers to manage
+		R.holder?.remove_reagent(R.id, src.current_stage, update_total=FALSE, reagents_change=FALSE)
+
 /obj/spacevine/living // these ones grow
 	run_life = 1
 
@@ -339,10 +360,13 @@
 	New(turf/loc, var/to_spread = KUDZU_TO_SPREAD_INITIAL)
 		if (..(loc, to_spread))
 			return 1
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (prob(20) && !locate(/obj/spacevine/alien/flower) in get_turf(src))
 				var/obj/spacevine/alien/flower/F = new /obj/spacevine/alien/flower()
 				F.set_loc(src.loc)
+
+	herbicide()
+		return
 
 /obj/spacevine/alien/living
 	run_life = 1
@@ -386,7 +410,7 @@
 	New(loc, mob/M as mob)
 		..()
 		if (ishuman(M))
-			SPAWN_DBG(bulb_time)
+			SPAWN(bulb_time)
 				if (src)
 					name = "huge bulb"
 					desc = "A huge botanical bulb. It looks like there's something inside it..."
@@ -399,7 +423,7 @@
 					M.gib()
 					flick("bulb-open-animation", src)
 					new/obj/decal/opened_kudzu_bulb(get_turf(src))
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						qdel(src)
 
 				else if (!destroyed && ishuman(M))

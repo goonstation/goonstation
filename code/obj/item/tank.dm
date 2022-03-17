@@ -344,6 +344,8 @@ Contains:
 				return 0.5
 			else
 				return 0
+	update_wear_image(mob/living/carbon/human/H, override)
+		src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "back-" : ""]jetpack_mag[on]"))
 
 /obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)
 
@@ -396,6 +398,8 @@ Contains:
 				return 0.5
 			else
 				return 0
+	update_wear_image(mob/living/carbon/human/H, override)
+		src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "back-" : ""]jetpack[on]"))
 
 /obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)
 #endif
@@ -652,6 +656,9 @@ Contains:
 			else
 				return 0
 
+	update_wear_image(mob/living/carbon/human/H, override)
+		src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "back-" : ""]jetpack_mk2_[on]"))
+
 /obj/item/tank/jetpack/jetpackmk2/abilities = list(/obj/ability_button/jetpack2_toggle, /obj/ability_button/tank_valve_toggle)
 
 /obj/item/tank/jetpack/syndicate
@@ -662,8 +669,8 @@ Contains:
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
-		return
 
 	toggle()
 		src.on = !( src.on )
@@ -672,6 +679,12 @@ Contains:
 			boutput(usr, "<span class='notice'>The jetpack is now on</span>")
 		else
 			boutput(usr, "<span class='notice'>The jetpack is now off</span>")
-		return
+
+	update_wear_image(mob/living/carbon/human/H, override)
+		src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "back-" : ""]sjetpack_mag[on]"))
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 /obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)

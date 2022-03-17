@@ -29,9 +29,9 @@ export const ArtifactPaper = (props, context) => {
       title="Nanotrasen Alien Artifact Analysis Form"
       theme="paper"
       width={800}
-      height={825}
+      height={835}
     >
-      <body overflow={"scroll"}>
+      <Window.Content>
         <Section>
           <h3>Artifact Name</h3>
           <h4>{ artifactName === "" ? "unknown" : artifactName }</h4>
@@ -50,12 +50,12 @@ export const ArtifactPaper = (props, context) => {
           <h3>Artifact Type</h3>
           <Flex direction={"column"} wrap={"wrap"} height={25} justify={"space-evenly"}>
             {allArtifactTypes.map(x => (
-              <Flex.Item key={x.id}
-                onClick={(e, value) => act("type", { newType: x, hasPen: hasPen })}>
+              <Flex.Item className={"artifactType" + x[1]} key={x[0].id}
+                onClick={(e, value) => act("type", { newType: x[0], hasPen: hasPen })}>
                 <Button.Checkbox
-                  checked={artifactType === x}
+                  checked={artifactType === x[0]}
                 />
-                <a>{x}</a>
+                <a>{x[0]}</a>
               </Flex.Item>
             ))}
           </Flex>
@@ -85,7 +85,7 @@ export const ArtifactPaper = (props, context) => {
             height={10}
             onChange={(_, x) => act("detail", { newDetail: x, hasPen: hasPen })} />
         </Section>
-      </body>
+      </Window.Content>
     </Window>
   );
 };

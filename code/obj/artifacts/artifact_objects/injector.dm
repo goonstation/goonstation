@@ -5,6 +5,7 @@
 /datum/artifact/injector
 	associated_object = /obj/artifact/injector
 	type_name = "Injector"
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
 	validtypes = list("ancient","martian","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,

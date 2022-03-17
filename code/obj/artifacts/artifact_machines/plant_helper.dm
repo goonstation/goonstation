@@ -5,6 +5,7 @@
 /datum/artifact/plant_helper
 	associated_object = /obj/machinery/artifact/plant_helper
 	type_name = "Plant waterer"
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
 	validtypes = list("martian","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/carbon_touch)
@@ -68,7 +69,7 @@
 						P.HYPmutateplant()
 						total = INFINITY
 				if(total)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						var/lineColor = rgb(r/total, g/total, b/total)
 						var/datum/lineResult/R = drawLine(get_turf(O), P, "smooth", "smoothCap", getCrossed = 0)
 						var/globalImageKey = "plant_helper_line[TIME]_\ref[R]_[rand(1, 1e9)]"

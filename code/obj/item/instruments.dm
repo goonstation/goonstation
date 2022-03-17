@@ -214,7 +214,7 @@
 	desc = "NEVER GONNA DANCE AGAIN, GUILTY FEET HAVE GOT NO RHYTHM"
 	icon_state = "sax"
 	item_state = "sax"
-	desc_sound = list("sexy", "sensuous", "libidinous","spicy", "flirtatious", "salacious","sizzling", "carnal", "hedonistic")
+	desc_sound = list("sensuous","spicy","flirtatious","sizzling","carnal","hedonistic")
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
@@ -248,6 +248,7 @@
 	icon_state = "bagpipe"
 	item_state = "bagpipe"
 	sounds_instrument = list('sound/musical_instruments/Bagpipes_1.ogg', 'sound/musical_instruments/Bagpipes_2.ogg','sound/musical_instruments/Bagpipes_3.ogg')
+	volume = 60
 	desc_sound = list("patriotic", "rowdy", "wee", "grand", "free", "Glaswegian", "sizzling", "carnal", "hedonistic")
 	pick_random_note = 1
 
@@ -340,18 +341,18 @@
 			if ("process")
 				var/times = rand(1,5)
 				for (var/i = 1, i <= times, i++)
-					SPAWN_DBG(4*i)
+					SPAWN(4*i)
 						playsound(det.attachedTo.loc, sound_to_play, src.volume, src.randomized_pitch)
 			if ("prime")
 				for (var/i = 1, i < 15, i++)
-					SPAWN_DBG(3*i)
+					SPAWN(3*i)
 						playsound(det.attachedTo.loc, sound_to_play, min(src.volume*10, 750), src.randomized_pitch)
 
 /* -------------------- Dramatic Bike Horn -------------------- */
 
 /obj/item/instrument/bikehorn/dramatic
 	name = "dramatic bike horn"
-	desc = "SHIT FUCKING PISS COCK IT'S SO RAW"
+	desc = "SHIT FUCKING PISS IT'S SO RAW"
 	sounds_instrument = list('sound/effects/dramatic.ogg')
 	volume = 100
 	randomized_pitch = 0
@@ -478,11 +479,11 @@
 				if (prob(45))
 					var/times = rand(1,5)
 					for (var/i = 1, i <= times, i++)
-						SPAWN_DBG(4*i)
+						SPAWN(4*i)
 							playsound(det.attachedTo.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
 			if ("prime")
 				for (var/i = 1, i < 15, i++)
-					SPAWN_DBG(4*i)
+					SPAWN(4*i)
 						playsound(det.attachedTo.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 500, 1)
 
 /* -------------------- Trumpet -------------------- */
@@ -497,13 +498,18 @@
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
+	use_new_interface = 1
+	//Start at E3
+	key_offset = 5
 
 	New()
-		if (sounds_instrument == null)
-			sounds_instrument = list()
-			for (var/i in 1 to 12)
-				sounds_instrument += "sound/musical_instruments/trumpet/trumpet_[i].ogg"
+		notes = list("e3","f3","f-3","g3","g-3","a3","a-3","b3","c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6")
+		sounds_instrument = list()
+		for (var/i in 1 to length(notes))
+			note = notes[i]
+			sounds_instrument += "sound/musical_instruments/trumpet/notes/[note].ogg"
 		..()
+		BLOCK_SETUP(BLOCK_ROD)
 
 /* -------------------- Spooky Trumpet -------------------- */
 
@@ -611,7 +617,7 @@
 			ghost_to_toss.set_loc(soul_stuff)
 
 		soul_stuff.throw_at(T, 10, 1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (soul_stuff && ghost_to_toss)
 				ghost_to_toss.set_loc(soul_stuff.loc)
 

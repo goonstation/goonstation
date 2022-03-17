@@ -7115,7 +7115,7 @@
 	},
 /area/station/engine/engineering/breakroom)
 "avh" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /turf/simulated/floor/black,
 /area/listeningpost/syndicateassaultvessel)
 "avi" = (
@@ -29001,6 +29001,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/storage/crate/adventure,
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 6
 	},
@@ -31535,6 +31536,10 @@
 /area/shuttle/escape/station)
 "bKj" = (
 /obj/table/reinforced/auto,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 4;
+	pixel_y = 5
+	},
 /obj/item/storage/box/tapebox,
 /obj/disposalpipe/segment/mail{
 	dir = 4

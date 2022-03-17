@@ -8322,7 +8322,7 @@
 /turf/simulated/wall,
 /area/station/storage/emergency2)
 "apU" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency2)
@@ -9816,7 +9816,7 @@
 /area/station/crew_quarters/quarters)
 "atm" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/crate,
 /obj/item/clothing/under/gimmick/princess,
@@ -21375,7 +21375,7 @@
 	},
 /area/station/hallway/primary/east)
 "aPK" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Um.  Uh.  Oh dear."
 	},
 /turf/simulated/floor/plating,
@@ -27413,7 +27413,7 @@
 /area/station/crew_quarters/juryroom)
 "bcc" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/juryroom)
@@ -27749,7 +27749,7 @@
 "bcM" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -31210,7 +31210,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
@@ -42091,7 +42091,7 @@
 /turf/simulated/floor/plating,
 /area/evilreaver/security)
 "bJt" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	density = 0;
 	desc = "Huh, this isn't trash.";
 	icon = 'icons/misc/evilreaverstation.dmi';
@@ -42752,14 +42752,14 @@
 /turf/simulated/floor/grime,
 /area/evilreaver/security)
 "bKQ" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/specialroom/cafeteria{
 	dir = 1
 	},
 /area/evilreaver/bar)
 "bKR" = (
-/obj/decal/oven,
+/obj/decal/fakeobjects/oven,
 /obj/item/reagent_containers/food/snacks/cake/meat,
 /obj/item/crowbar,
 /turf/simulated/floor/specialroom/cafeteria{
@@ -43098,7 +43098,7 @@
 /area/evilreaver/security)
 "bLG" = (
 /obj/decal/cleanable/blood,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The head seems to be gone.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body2";
@@ -43750,7 +43750,7 @@
 	},
 /area/evilreaver)
 "bNh" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	density = 1;
 	desc = "There seems to be a lot of flesh wedged in this airlock.";
 	icon = 'icons/misc/evilreaverstation.dmi';
@@ -45576,7 +45576,7 @@
 /area/evilreaver/toxins)
 "bRq" = (
 /obj/decal/cleanable/blood,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	name = "scorched remains"
 	},
 /obj/decal/cleanable/ash,
@@ -47523,7 +47523,7 @@
 /turf/space,
 /area/space)
 "bVV" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body1";
 	name = "corpse";
@@ -52091,7 +52091,7 @@
 /turf/simulated/wall/asteroid,
 /area/space)
 "cfV" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -52382,12 +52382,12 @@
 	},
 /area/space)
 "cgC" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/oreprospector,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "cgD" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "cgE" = (
@@ -55796,7 +55796,7 @@
 	dir = 8
 	},
 /obj/window/cubicle,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of a human. The skull has a hole in it.  An extra one, I mean.";
 	layer = 2.5;
 	pixel_y = 8
@@ -57103,7 +57103,7 @@
 /area/crunch)
 "cqU" = (
 /obj/decal/cleanable/blood/splatter,
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/spook,
 /turf/simulated/floor/white,
 /area/crunch)

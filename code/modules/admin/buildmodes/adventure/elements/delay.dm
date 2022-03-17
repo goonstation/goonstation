@@ -82,7 +82,7 @@
 					return
 				aborted = 0
 				curr_time = time_delay
-				SPAWN_DBG(0)
+				SPAWN(0)
 					while (1)
 						if (aborted)
 							return

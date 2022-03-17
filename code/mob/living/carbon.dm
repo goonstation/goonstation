@@ -55,6 +55,13 @@
 						src.throw_at(target, 30, 1, throw_type = THROW_SLIP)
 						random_brute_damage(src, 10)
 
+		var/turf/T = NewLoc
+		if(T.sticky)
+			if(src.getStatusDuration("slowed")<1)
+				boutput(src, "<span class='notice'>You get slowed down by the sticky floor!</span>")
+			if(src.getStatusDuration("slowed")< 30 SECONDS)
+				src.changeStatus("slowed", 2 SECONDS, optional = 2)
+
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))
@@ -86,7 +93,7 @@
 	. = ..(give_medal, include_ejectables)
 
 /mob/living/carbon/proc/urinate()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/obj/item/reagent_containers/pee_target = src.equipped()
 		if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container())
 			src.visible_message("<span class='alert'><B>[src] pees in [pee_target]!</B></span>")
@@ -132,7 +139,7 @@
 
 /mob/living/carbon/lastgasp()
 	// making this spawn a new proc since lastgasps seem to be related to the mob loop hangs. this way the loop can keep rolling in the event of a problem here. -drsingh
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if (!src || !src.client) return														// break if it's an npc or a disconnected player
 		var/enteredtext = winget(src, "mainwindow.input", "text")							// grab the text from the input bar
 		if ((copytext(enteredtext,1,6) == "say \"") && length(enteredtext) > 5)				// check if the player is trying to say something
@@ -195,7 +202,7 @@
 	if (..())
 		return
 
-	if (HAS_MOB_PROPERTY(src, PROP_BREATHLESS))
+	if (HAS_ATOM_PROPERTY(src, PROP_MOB_BREATHLESS))
 		src.oxyloss = 0
 		return
 

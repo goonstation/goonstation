@@ -83,13 +83,13 @@ Contains:
 		var/image/main_display = image(null)
 		for(var/turf/T in range(src.scan_range, our_mob))
 			if(T.interesting && find_interesting)
-				playsound(T, "sound/machines/ping.ogg", 55, 1)
+				our_mob.playsound_local(T, "sound/machines/ping.ogg", 55, 1)
 
 			var/image/display = new
 
 			for(var/atom/A in T)
 				if(A.interesting && find_interesting)
-					playsound(A, "sound/machines/ping.ogg", 55, 1)
+					our_mob.playsound_local(A, "sound/machines/ping.ogg", 55, 1)
 				if(ismob(A))
 					var/mob/M = A
 					if(M?.invisibility != INVIS_CLOAK || !IN_RANGE(src, M, 1))
@@ -227,7 +227,7 @@ that cannot be itched
 				icon_state = "fs_pinmedium"
 			if(16 to INFINITY)
 				icon_state = "fs_pinfar"
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			.(T)
 
 /obj/item/device/detective_scanner/detective
@@ -346,7 +346,7 @@ that cannot be itched
 
 
 
-/obj/item/device/analyzer/healthanalyzer/borg
+/obj/item/device/analyzer/healthanalyzer/upgraded
 	icon_state = "health"
 	reagent_upgrade = 1
 	reagent_scan = 1
@@ -501,7 +501,7 @@ that cannot be itched
 				det.attachments.Remove(src)
 			if ("leak")
 				det.attachedTo.visible_message("<style class='combat bold'>\The [src] picks up the rapid atmospheric change of the canister, and signals the detonator.</style>")
-				SPAWN_DBG(0)
+				SPAWN(0)
 					det.detonate()
 		return
 
@@ -648,6 +648,7 @@ that cannot be itched
 			src.active2["criminal"] = "Released"
 		else
 			src.active2["criminal"] = "None"
+		src.active2["sec_flag"] = "None"
 		src.active2["mi_crim"] = "None"
 		src.active2["mi_crim_d"] = "No minor crime convictions."
 		src.active2["ma_crim"] = "None"
@@ -730,7 +731,7 @@ that cannot be itched
 
 		logTheThing("admin", user, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
 		playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			var/obj/item/paper/p = new /obj/item/paper
 			p.set_loc(get_turf(src))
 			p.name = "Official Caution - [ticket_target]"
@@ -766,8 +767,8 @@ that cannot be itched
 			return
 
 		var/datum/artifact/art = null
+		var/obj/O = A
 		if (isobj(A))
-			var/obj/O = A
 			art = O.artifact
 		else
 			// objs only
@@ -776,10 +777,18 @@ that cannot be itched
 		var/sell_value = 0
 		var/out_text = ""
 		if (art)
-			// TODO: Artifact valuation
-			// shippingmarket.sell_artifact(AM, art)
-			boutput(user, "<span class='alert'>Artifact appraisal not yet available. Coming Soon&trade;!</span>")
-			return
+			var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in O.vis_contents
+			if (pap?.artifactType)
+				out_text = "<strong>The following values depend on correct analysis of the artifact<br>Average price for [pap.artifactType] type artifacts</strong><br>"
+				// the unrandomized sell value for an artifact of the type detailed on the form, with perfect analysis
+				sell_value = shippingmarket.calculate_artifact_price(artifact_controls.artifact_types_from_name[pap.artifactType].get_rarity_modifier(), 3)
+				sell_value = round(sell_value, 5)
+			else if (pap)
+				boutput(user, "<span class='alert'>Attached Analysis Form&trade; needs to be filled out!</span>")
+				return
+			else
+				boutput(user, "<span class='alert'>Artifact appraisal is only possible via an attached Analysis Form&trade;!</span>")
+				return
 
 		else if (istype(A, /obj/storage/crate))
 			sell_value = -1
@@ -824,6 +833,8 @@ that cannot be itched
 			var/image/chat_maptext/chat_text = null
 			var/popup_text = "<span class='ol c pixel'[sell_value == 0 ? " style='color: #bbbbbb;'>No value" : ">$[round(sell_value)]"]</span>"
 			chat_text = make_chat_maptext(A, popup_text, alpha = 180, force = 1, time = 1.5 SECONDS)
+			// many of the artifacts are upside down and stuff, it makes text a bit hard to read!
+			chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
 			if (chat_text)
 				// don't bother bumping up other things
 				chat_text.show_to(user.client)

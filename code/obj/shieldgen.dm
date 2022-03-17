@@ -42,7 +42,7 @@ Shield and graivty well generators
 		src.active = 1
 		src.icon_state = malfunction ? "shieldonbr":"shieldon"
 
-		SPAWN_DBG(0) src.process()
+		SPAWN(0) src.process()
 
 	shields_down()
 		if(!active) return 0
@@ -62,7 +62,7 @@ Shield and graivty well generators
 			while(prob(10))
 				qdel(pick(deployed_shields))
 
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			src.process()
 	return
 
@@ -243,6 +243,6 @@ Shield and graivty well generators
 				if (!X:anchored)
 					step_towards(X,src)
 
-		SPAWN_DBG(1.7 SECONDS)
+		SPAWN(1.7 SECONDS)
 			src.Life()
 

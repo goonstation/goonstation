@@ -88,7 +88,7 @@
 			if (ROLE_WRAITH)
 				generate_wraith_objectives(traitor)
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/assday/send_intercept()

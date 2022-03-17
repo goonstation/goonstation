@@ -86,7 +86,7 @@
 		else if (issilicon(M) || isAIeye(M))
 			var/mob/living/silicon/S
 			if (isAIeye(M))
-				var/mob/dead/aieye/E = M
+				var/mob/living/intangible/aieye/E = M
 				S = E.mainframe
 			else
 				S = M
@@ -302,6 +302,10 @@
 			return list(access_maint_tunnels, access_tech_storage, access_medical, access_morgue)
 		if("Psychiatrist")
 			return list(access_medical, access_maint_tunnels)
+		if("Medical Specialist")
+			return list(access_robotics, access_medical, access_morgue,
+						access_maint_tunnels, access_tech_storage, access_medical_lockers,
+						access_medlab) //Mdir minus head stuff
 
 		///////////////////////////// Science
 		if("Scientist")
@@ -311,7 +315,7 @@
 		if("Toxins Researcher")
 			return list(access_research, access_tox, access_tox_storage)
 		if("Research Assistant")
-			return list(access_maint_tunnels, access_tech_storage, access_research)
+			return list(access_maint_tunnels, access_tech_storage, access_research, access_chemistry, access_tox) //notably not tox_storage, which is also the sci locker access for some fucking reason
 
 		//////////////////////////// Engineering
 		if("Mechanic")

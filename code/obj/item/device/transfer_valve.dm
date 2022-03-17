@@ -15,6 +15,12 @@
 	var/toggle = TRUE
 	var/force_dud = FALSE
 	var/signalled = FALSE
+	var/tank_one_icon = null
+	var/tank_two_icon = null
+	var/image/tank1 = null
+	var/image/tank2 = null
+	var/image/tank1_under = null
+	var/image/tank2_under = null
 
 	w_class = W_CLASS_GIGANTIC /// HEH
 	p_class = 3 /// H E H
@@ -60,8 +66,8 @@
 			if(tank_one && tank_two)
 				var/turf/T = get_turf(src)
 				var/butt = istype(tank_one, /obj/item/clothing/head/butt) || istype(tank_two, /obj/item/clothing/head/butt)
-				logTheThing("bombing", user, null, "made a transfer valve [butt ? "butt" : "bomb"] at [showCoords(T.x, T.y, T.z)].")
-				message_admins("[key_name(user)] made a transfer valve [butt ? "butt" : "bomb"] at [showCoords(T.x, T.y, T.z)].")
+				logTheThing("bombing", user, null, "made a transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
+				message_admins("[key_name(user)] made a transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
 
 			UpdateIcon()
 			attacher = user
@@ -148,11 +154,11 @@
 				if (valve_open)
 					var/turf/bombturf = get_turf(src)
 					logTheThing("bombing", usr, null, "closed the valve on a tank transfer valve at [log_loc(bombturf)].")
-					message_admins("[key_name(usr)] closed the valve on a tank transfer valve at [showCoords(bombturf.x, bombturf.y, bombturf.z)].")
+					message_admins("[key_name(usr)] closed the valve on a tank transfer valve at [log_loc(bombturf)].")
 				else
 					var/turf/bombturf = get_turf(src)
 					logTheThing("bombing", usr, null, "opened the valve on a tank transfer valve at [log_loc(bombturf)].")
-					message_admins("[key_name(usr)] opened the valve on a tank transfer valve at [showCoords(bombturf.x, bombturf.y, bombturf.z)].")
+					message_admins("[key_name(usr)] opened the valve on a tank transfer valve at [log_loc(bombturf)].")
 				toggle_valve()
 			if(href_list["rem_device"])
 				attached_device.set_loc(get_turf(src))
@@ -183,7 +189,7 @@
 			if (ishellbanned(usr))
 				force_dud = 1
 			toggle_valve()
-			SPAWN_DBG(5 SECONDS) // To stop a signal being spammed from a proxy sensor constantly going off or whatever
+			SPAWN(5 SECONDS) // To stop a signal being spammed from a proxy sensor constantly going off or whatever
 				toggle = 1
 
 	process()
@@ -207,8 +213,6 @@
 			return
 
 		icon_state = "valve"
-		var/tank_one_icon = ""
-		var/tank_two_icon = ""
 		var/device_icon = ""
 
 		if(tank_one)
@@ -220,8 +224,8 @@
 			//tank_one_overlay.icon_state = tank_one_icon
 			src.overlays += I
 
-			var/image/tank1 = new(src.wear_image_icon, icon_state = "[tank_one_icon]1")
-			var/image/tank1_under = new(src.wear_image_icon, icon_state = "[tank_one_icon]_under")
+			src.tank1 = new(src.wear_image_icon, icon_state = "[tank_one_icon]1")
+			src.tank1_under = new(src.wear_image_icon, icon_state = "[tank_one_icon]_under")
 			src.wear_image.overlays += tank1
 			src.wear_image.underlays += tank1_under
 
@@ -239,8 +243,8 @@
 			//tank_two_overlay.icon = I
 			src.overlays += J
 
-			var/image/tank2 = new(src.wear_image_icon, icon_state = "[tank_two_icon]2")
-			var/image/tank2_under = new(src.wear_image_icon, icon_state = "[tank_two_icon]_under")
+			src.tank2 = new(src.wear_image_icon, icon_state = "[tank_two_icon]2")
+			src.tank2_under = new(src.wear_image_icon, icon_state = "[tank_two_icon]_under")
 			src.wear_image.overlays += tank2
 			src.wear_image.underlays += tank2_under
 
@@ -272,6 +276,14 @@
 			var/image/straps = new(src.icon, icon_state = "wire_straps")
 			src.underlays += straps
 
+	update_wear_image(mob/living/carbon/human/H, override) // Doing above but for mutantraces if they have a special varient.
+		src.tank1 = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]1")
+		src.tank1_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]_under",)
+		src.tank2 = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]2")
+		src.tank2_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]_under")
+		src.wear_image.overlays = list(tank1, tank2)
+		src.wear_image.underlays = list(tank1_under, tank2_under)
+
 		/*
 		Exadv1: I know this isn't how it's going to work, but this was just to check
 		it explodes properly when it gets a signal (and it does).
@@ -279,7 +291,7 @@
 	proc
 		toggle_valve()
 			src.valve_open = !valve_open
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				signalled = FALSE
 			if(valve_open && force_dud)
 				message_admins("A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [key_name(src.fingerprintslast)]")
@@ -330,7 +342,7 @@
 
 				T.air_contents.zero() //I could also make it vent the gas, I guess, but then it'd be off-limits to non-antagonists. Challenge mode: make a safe ttb?
 				qdel(B)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					UpdateIcon()
 				return
 
@@ -351,7 +363,7 @@
 				temp = tank_two.air_contents.remove_ratio(0.5)
 				tank_one.air_contents.merge(temp)
 
-				SPAWN_DBG(2 SECONDS) // In case one tank bursts
+				SPAWN(2 SECONDS) // In case one tank bursts
 					src.UpdateIcon()
 
 		// this doesn't do anything but the timer etc. expects it to be here
@@ -389,7 +401,7 @@
 		user.u_equip(src)
 		src.set_loc(user.loc)
 		toggle_valve()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			if (user)
 				user.suiciding = 0
 				if(isalive(user) && src && get_dist(user,src) <= 7)

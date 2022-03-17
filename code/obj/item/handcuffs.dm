@@ -38,7 +38,7 @@
 	user.visible_message("<span class='alert'><b>[user] jams one end of [src] into one of [his_or_her(user)] eye sockets, closing the loop through the other!")
 	playsound(user, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 	user.emote("scream")
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		user.visible_message("<span class='alert'><b>[user] yanks the other end of [src] as hard as [he_or_she(user)] can, ripping [his_or_her(user)] skull clean out of [his_or_her(user)] head! [pick("Jesus christ!","Holy shit!","What the fuck!?","Oh my god!")]</b></span>")
 		var/obj/skull = user.organHolder.drop_organ("skull")
 		if (skull)
@@ -60,18 +60,18 @@
 */
 		for (var/mob/living/carbon/human/O in AIviewers(user, null))
 			if (O != user && prob(33))
-				O.visible_message("<span class='alert'>[O] pukes all over [him_or_her(O)]self. Thanks, [user].</span>",\
+				O.visible_message("<span class='alert'>[O] pukes all over [himself_or_herself(O)]. Thanks, [user].</span>",\
 				"<span class='alert'>You feel ill from watching that. Thanks, [user].</span>")
 				O.vomit()
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (user && skull)
 				var/obj/brain = user.organHolder.drop_organ("brain")
 				if (brain)
 					brain.set_loc(skull.loc)
 					brain.visible_message("<span class='alert'><b>[brain] falls out of the bottom of [skull].</b></span>")
 
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 				user.canmove = 1
@@ -93,9 +93,12 @@
 			return
 
 		var/handslost = !istype(H.limbs.l_arm,/obj) + !istype(H.limbs.r_arm,/obj)
-		if (handslost)
-			boutput(user, "<span class='alert'>[H.name] [(handslost>1) ? "has no arms" : "only has one arm"], you can't handcuff them!</span>")
-			return
+		switch(handslost)
+			if (1)
+				boutput(user, "<span class='alert'>[H.name] only has one arm, you still try to handcuff [his_or_her(H)]!</span>")
+			if (2)
+				boutput(user, "<span class='alert'>[H.name] has no arms, you can't handcuff them!</span>")
+				return
 
 		if (H.hasStatus("handcuffed"))
 			boutput(user, "<span class='alert'>[H] is already handcuffed</span>")
