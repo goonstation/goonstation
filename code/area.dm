@@ -3361,6 +3361,7 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 ABSTRACT_TYPE(/area/station/turret_protected)
 /area/station/turret_protected
 	name = "Turret Protected Area"
+	expandable = FALSE
 	spy_secure_area = TRUE
 	var/list/obj/machinery/turret/turret_list = list()
 	var/obj/machinery/camera/motion/motioncamera = null
