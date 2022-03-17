@@ -20656,10 +20656,6 @@
 /obj/storage/closet/welding_supply,
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
-"fHp" = (
-/obj/machinery/light,
-/turf/simulated/floor/white,
-/area/spacehabitat/pool)
 "fHw" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/landmark/random_room/size3x3,
@@ -56646,7 +56642,7 @@
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
 	},
-/obj/machinery/light,
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/white,
 /area/spacehabitat/pool)
 "qle" = (
@@ -103563,7 +103559,7 @@ iCP
 fTA
 fTA
 ifv
-fHp
+irM
 ifv
 fTA
 wnK
