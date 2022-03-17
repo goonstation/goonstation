@@ -133,7 +133,9 @@ var/list/ban_from_airborne_fluid = list()
 		.=0
 
 	update() //returns list of created fluid tiles
-		if (!src.group) return
+		if (!src.group || src.group.disposed) //uh oh
+			src.removed()
+			return
 		.= list()
 		last_spread_was_blocked = 1
 		src.touched_channel = 0
@@ -145,9 +147,6 @@ var/list/ban_from_airborne_fluid = list()
 		if(!waterflow_enabled) return
 		for( var/dir in cardinal )
 			LAGCHECK(LAG_LOW)
-			if (!src.group)
-				src.removed()
-				return
 			blocked_perspective_objects["[dir]"] = 0
 			t = get_step( src, dir )
 			if (!t) //the fuck? how
