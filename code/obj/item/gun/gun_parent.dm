@@ -353,9 +353,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			P.launch()
 
 		var/mob/living/L = target
-		if (istype(L) && isalive(L))
-			L.lastgasp()
-		target.set_clothing_icon_dirty()
+		if (istype(L))
+			if (isalive(L))
+				L.lastgasp()
+			L.set_clothing_icon_dirty()
 		src.UpdateIcon()
 		sleep(current_projectile.shot_delay)
 
