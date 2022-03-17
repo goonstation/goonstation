@@ -134,11 +134,12 @@ o+`        `-` ``..-:yooos-..----------..`
 
 
 //Don't comment this ty
-#ifdef STOP_DISTACTING_ME
+#ifdef STOP_DISTRACTING_ME
 #define I_AM_ABOVE_THE_LAW
 #define ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
 #define BAD_MONKEY_NO_BANANA
 #define CLONING_IS_A_SIN
+#define I_KNOW_WHAT_IM_DOING_PROBABLY
 #endif
 
 var/global/vcs_revision = "1"
