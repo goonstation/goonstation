@@ -100,7 +100,7 @@
 
 	// DESCRIBE DRONES
 	var/list/dronelist = list()
-	for(var/mob/living/critter/flock/drone/F as anything in src.units)
+	for(var/mob/living/critter/flock/drone/F in src.units)
 		dronelist += list(F.describe_state())
 	state["drones"] = dronelist
 

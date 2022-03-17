@@ -140,7 +140,7 @@ const FlockDrones = (props, context) => {
                         </Box>
                       </Stack.Item>
                       <Stack.Item>
-                        <b>{drone.area}</b> <br /> {capitalizeString(drone.task)}
+                        <b>{drone.area}</b> <br /> {drone.task && capitalizeString(drone.task)}
                       </Stack.Item>
                     </Stack>
                   </Section>
