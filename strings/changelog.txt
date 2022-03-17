@@ -1,5 +1,32 @@
-
+(t)tue mar 15 22
+(u)Cogwerks
+(e)🎨🗺|sprites, mapping
+(+)Made some more background art for a bunch of orbital objects
+(+)Slightly rearranged solar control rooms on Cogmaps 1 & 2 for view of stars 
+(t)mon mar 14 22
+(u)Conchuckter
+(p)7784
+(e)🆕🎨|feature, sprites
+(+)Ampoules now change colour based on what is inside them.
+(u)Zamujasa
+(+)The adminhelp and mentorhelp dialog boxes now mention that your requests are sent via Discord.
 (t)sun mar 13 22
+(u)glowbold
+(p)7686
+(e)🎨|sprites
+(+)AI players now have a `Map` and `Core` button in their interface for easier station traversal.
+(u)Kubius and Sord
+(p)7803
+(e)🆕🗺|feature, mapping
+(+)Added randomized rooms to Kondaru.
+(u)Pali and Sord
+(p)7801
+(e)🗺|mapping
+(+)Added some new randomized rooms to Cogmap1
+(u)Pali and Sord
+(p)7800
+(e)🗺|mapping
+(*)Added some new randomized rooms, coming soon to a station near you!
 (u)Gonzako
 (p)7462
 (e)⚖|balance

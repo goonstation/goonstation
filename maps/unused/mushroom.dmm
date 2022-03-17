@@ -5994,22 +5994,11 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/turret_protected/ai_upload_foyer)
-"anj" = (
-/obj/table/reinforced,
-/obj/item/aiModule/freeform,
-/turf/simulated/floor/purple,
-/area/station/turret_protected/ai_upload_foyer)
 "ank" = (
 /obj/table/reinforced,
 /obj/item/aiModule/makeCaptain,
 /obj/item/aiModule/oneHuman,
 /obj/item/aiModule/conservePower,
-/turf/simulated/floor/purple,
-/area/station/turret_protected/ai_upload_foyer)
-"anl" = (
-/obj/table/reinforced,
-/obj/item/aiModule/notHuman,
-/obj/item/aiModule/protectStation,
 /turf/simulated/floor/purple,
 /area/station/turret_protected/ai_upload_foyer)
 "anm" = (
@@ -6026,11 +6015,6 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/reinforced,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
-"ano" = (
-/obj/table/auto,
-/obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "anp" = (
@@ -10250,22 +10234,6 @@
 /obj/item/staple_gun,
 /turf/simulated/floor,
 /area/station/medical/robotics)
-"awQ" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/machinery/light{
-	dir = 1;
-	name = "light fixture"
-	},
-/turf/simulated/floor,
-/area/station/medical/robotics)
 "awR" = (
 /turf/simulated/wall,
 /area/station/medical/research)
@@ -10643,18 +10611,6 @@
 	d2 = 2
 	},
 /obj/item/wirecutters,
-/turf/simulated/floor/grime,
-/area/station/storage/warehouse)
-"axR" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "axS" = (
@@ -23809,6 +23765,13 @@
 	dir = 8
 	},
 /area/station/crew_quarters/kitchen)
+"aZN" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/clothing/suit/chef,
+/obj/item/clothing/head/chefhat,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/grass/leafy,
+/area/station/hallway/primary/west)
 "aZO" = (
 /obj/decal/cleanable/tomatosplat,
 /obj/creepy_sound_trigger,
@@ -29746,19 +29709,24 @@
 	},
 /turf/space,
 /area/space)
-"dYE" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/lawrack,
+"bZw" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/turf/simulated/floor/grime,
+/area/station/storage/warehouse)
+"eAo" = (
+/obj/table/reinforced,
+/obj/item/aiModule/freeform,
 /turf/simulated/floor/purple,
-/area/station/turret_protected/ai_upload)
-"omT" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/item/clothing/suit/chef,
-/obj/item/clothing/head/chefhat,
-/obj/decal/cleanable/cobweb,
-/turf/simulated/floor/grass/leafy,
-/area/station/hallway/primary/west)
-"rYC" = (
+/area/station/turret_protected/ai_upload_foyer)
+"lpd" = (
 /obj/rack,
 /obj/item/circuitboard/teleporter,
 /obj/item/circuitboard/card,
@@ -29774,6 +29742,38 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"oqQ" = (
+/obj/table/auto,
+/obj/item/clothing/glasses/meson,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"oBC" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/lawrack,
+/turf/simulated/floor/purple,
+/area/station/turret_protected/ai_upload)
+"tfW" = (
+/obj/table/reinforced,
+/obj/item/aiModule/notHuman,
+/obj/item/aiModule/protectStation,
+/turf/simulated/floor/purple,
+/area/station/turret_protected/ai_upload_foyer)
+"xSB" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/obj/machinery/light{
+	dir = 1;
+	name = "light fixture"
+	},
+/turf/simulated/floor,
+/area/station/medical/robotics)
 
 (1,1,1) = {"
 aaa
@@ -47556,7 +47556,7 @@ alr
 alr
 amo
 amN
-ano
+oqQ
 anQ
 aon
 aoO
@@ -48012,7 +48012,7 @@ amp
 amO
 anp
 amO
-rYC
+lpd
 aoO
 apr
 app
@@ -48299,7 +48299,7 @@ aYe
 aUb
 aBR
 aOH
-omT
+aZN
 aOH
 aaB
 abm
@@ -54840,7 +54840,7 @@ auE
 auE
 auE
 axm
-axR
+bZw
 auE
 auE
 auE
@@ -58451,7 +58451,7 @@ aaa
 aaa
 aaa
 amK
-anj
+eAo
 anN
 aok
 anN
@@ -58905,7 +58905,7 @@ aaa
 aaa
 aaa
 amK
-anl
+tfW
 anN
 aok
 anN
@@ -61410,7 +61410,7 @@ apl
 apk
 aqj
 aqf
-dYE
+oBC
 arT
 ast
 apk
@@ -61648,7 +61648,7 @@ asN
 asM
 avO
 awr
-awQ
+xSB
 axs
 ayf
 ayB

@@ -24,14 +24,11 @@
 
 		update_group_sprite()
 
-/obj/item/paper/from_file/MonoRules
-	file_path = "strings/MONORules.txt"
-	icon_state = "paper"
 
 
 /obj/item/card_box/Mono
 	box_style = "red"
-	name = "Box of MONO"
+	name = "box of MONO cards"
 
 	New()
 		..()
@@ -68,4 +65,10 @@
 			else  //If I fuck up generation this will get people complaining
 				name = "Wild Draw 4"
 				num = 1
-
+		icon_state = "mono-[suit]-[num]"
+		update_stored_info()
+		//Only meant to be used as with the mono card-game generation
+		//Same as calling update_card_information on card holder
+		card_name = "MONO"
+		card_style = "mono"
+		total_cards = 108

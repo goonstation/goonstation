@@ -1,0 +1,44 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/space_heater,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"j" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"z" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"C" = (
+/obj/item/device/light/glowstick/green_on,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"I" = (
+/obj/table/auto,
+/obj/item/extinguisher{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/obj/item/wrench{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+I
+z
+a
+"}
+(2,1,1) = {"
+j
+C
+z
+"}
+(3,1,1) = {"
+z
+a
+j
+"}

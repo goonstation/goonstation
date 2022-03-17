@@ -10,6 +10,7 @@ TYPEINFO(/datum/mapPrefab)
 		prefab.prefabPath = full_path
 		prefab.tags = path_parts.Copy(1, length(path_parts))
 		prefab.name = full_path
+		prefab.post_init()
 		return prefab
 
 ABSTRACT_TYPE(/datum/mapPrefab)
@@ -26,6 +27,10 @@ ABSTRACT_TYPE(/datum/mapPrefab)
 
 	New()
 		..()
+		if(isnull(name) && !isnull(prefabPath))
+			src.generate_default_name()
+
+	proc/post_init()
 		if(isnull(name) && !isnull(prefabPath))
 			src.generate_default_name()
 

@@ -1,0 +1,72 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/storage/closet/coffin,
+/obj/random_item_spawner/shoe/one_or_zero,
+/obj/random_item_spawner/snacks/one_or_zero,
+/obj/random_item_spawner/medicine/one_or_zero,
+/obj/decal/fakeobjects/skeleton/decomposed_corpse{
+	icon_state = "body8"
+	},
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"r" = (
+/obj/storage/closet/coffin,
+/obj/random_item_spawner/shoe/one_or_zero,
+/obj/random_item_spawner/snacks/one_or_zero,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"t" = (
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"y" = (
+/obj/storage/closet/coffin,
+/obj/random_item_spawner/shoe/one_or_zero,
+/obj/random_item_spawner/medicine/one_or_zero,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"B" = (
+/obj/storage/closet/coffin/wood,
+/obj/random_item_spawner/shoe/one_or_zero,
+/obj/random_item_spawner/medicine/one_or_zero,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"E" = (
+/obj/storage/closet/coffin/wood,
+/obj/random_item_spawner/shoe/one_or_zero,
+/obj/random_item_spawner/snacks/one_or_zero,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/storage/closet/coffin/wood,
+/obj/random_item_spawner/shoe/one_or_zero,
+/obj/random_item_spawner/mask/one_or_zero,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"X" = (
+/obj/storage/closet/coffin,
+/obj/random_item_spawner/shoe/one_or_zero,
+/obj/random_item_spawner/mask/one_or_zero,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+r
+X
+t
+a
+y
+"}
+(2,1,1) = {"
+E
+B
+t
+S
+E
+"}
+(3,1,1) = {"
+t
+t
+t
+t
+t
+"}
