@@ -1155,6 +1155,10 @@ ABSTRACT_TYPE(/area/adventure)
 	sound_loop = 'sound/ambience/spooky/Evilreaver_Ambience.ogg'
 	requires_power = FALSE
 
+/area/relayship
+	name = "Cargo Relay"
+	icon_state = "yellow"
+	requires_power = FALSE
 
 ABSTRACT_TYPE(/area/diner)
 /area/diner
