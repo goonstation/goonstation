@@ -1456,10 +1456,8 @@ DEFINE_FLOORS(grasslush/thin,
 		setMaterial(getMaterial("blob"))
 
 	proc/setOvermind(var/mob/living/intangible/blob_overmind/O)
-		if (!material)
-			setMaterial(getMaterial("blob"))
-		material.color = O.color
-		color = O.color
+		setMaterial(copyMaterial(O.my_material))
+		color = material.color
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (isweldingtool(W))

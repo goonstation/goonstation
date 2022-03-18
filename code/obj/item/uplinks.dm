@@ -842,7 +842,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			loops += 1
 
 	proc/spawn_reward(var/datum/bounty_item/B, var/mob/user)
-		B.spawn_reward(user,src)
+		B.spawn_reward(user,src.loc)
 
 		if (uses == 0)//Spawn ID tracker. Last item!
 

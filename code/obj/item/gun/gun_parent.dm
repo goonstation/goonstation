@@ -255,8 +255,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 #endif
 		return
 
-/obj/item/gun/proc/shoot_point_blank(var/mob/M as mob, var/mob/user as mob, var/second_shot = 0)
-	if (!M || !user)
+/obj/item/gun/proc/shoot_point_blank(atom/target, var/mob/user as mob, var/second_shot = 0)
+	if (!target || !user)
 		return FALSE
 
 	if (isghostdrone(user))
@@ -269,19 +269,19 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		//brutal double-pointblank shots
 		if (ishuman(user))
 			if(user.hand && istype(user.r_hand, /obj/item/gun) && user.r_hand:can_dual_wield)
-				var/target_turf = get_turf(M)
+				var/target_turf = get_turf(target)
 				is_dual_wield = 1
 				SPAWN(0.2 SECONDS)
-					if (get_dist(user,M)<=1)
-						user.r_hand:shoot_point_blank(M,user,second_shot = 1)
+					if (get_dist(user,target)<=1)
+						user.r_hand:shoot_point_blank(target,user,second_shot = 1)
 					else
 						user.r_hand:shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5), is_dual_wield)
 			else if(!user.hand && istype(user.l_hand, /obj/item/gun) && user.l_hand:can_dual_wield)
-				var/target_turf = get_turf(M)
+				var/target_turf = get_turf(target)
 				is_dual_wield = 1
 				SPAWN(0.2 SECONDS)
-					if (get_dist(user,M)<=1)
-						user.l_hand:shoot_point_blank(M,user,second_shot = 11)
+					if (get_dist(user,target)<=1)
+						user.l_hand:shoot_point_blank(target,user,second_shot = 11)
 					else
 						user.l_hand:shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5), is_dual_wield)
 
@@ -293,7 +293,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	if (!canshoot())
 		if (!silenced)
-			M.visible_message("<span class='alert'><B>[user] tries to shoot [user == M ? "[him_or_her(user)]self" : M] with [src] point-blank, but it was empty!</B></span>")
+			target.visible_message("<span class='alert'><B>[user] tries to shoot [user == target ? "[him_or_her(user)]self" : target] with [src] point-blank, but it was empty!</B></span>")
 			playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
 		else
 			user.show_text("*click* *click*", "red")
@@ -304,18 +304,18 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		H.gunshot_residue = 1
 
 	if (!src.silenced)
-		for (var/mob/O in AIviewers(M, null))
+		for (var/mob/O in AIviewers(target, null))
 			if (O.client)
-				O.show_message("<span class='alert'><B>[user] shoots [user == M ? "[him_or_her(user)]self" : M] point-blank with [src]!</B></span>")
+				O.show_message("<span class='alert'><B>[user] shoots [user == target ? "[him_or_her(user)]self" : target] point-blank with [src]!</B></span>")
 	else
-		boutput(user, "<span class='alert'>You silently shoot [user == M ? "yourself" : M] point-blank with [src]!</span>")
+		boutput(user, "<span class='alert'>You silently shoot [user == target ? "yourself" : target] point-blank with [src]!</span>")
 
 	if (!process_ammo(user))
 		return FALSE
 
 	if (src.muzzle_flash)
 		if (isturf(user.loc))
-			muzzle_flash_attack_particle(user, user.loc, M, src.muzzle_flash)
+			muzzle_flash_attack_particle(user, user.loc, target, src.muzzle_flash)
 
 
 	if(slowdown && ismob(user))
@@ -338,24 +338,25 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	spread = max(spread, spread_angle)
 
 	for (var/i = 0; i < current_projectile.shot_number; i++)
-		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, M, 0, 0, spread, alter_proj = new/datum/callback(src, .proc/alter_projectile))
+		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, target, 0, 0, spread, alter_proj = new/datum/callback(src, .proc/alter_projectile))
 		if (!P)
 			return FALSE
-		if (user == M)
+		if (user == target)
 			P.shooter = null
 			P.mob_shooter = user
 
 		P.forensic_ID = src.forensic_ID // Was missing (Convair880).
-		if(get_dist(user,M) <= 1)
+		if(get_dist(user,target) <= 1)
 			P.was_pointblank = 1
-			hit_with_existing_projectile(P, M) // Includes log entry.
+			hit_with_existing_projectile(P, target) // Includes log entry.
 		else
 			P.launch()
 
-		var/mob/living/L = M
-		if (M && isalive(M))
-			L.lastgasp()
-		M.set_clothing_icon_dirty()
+		var/mob/living/L = target
+		if (istype(L))
+			if (isalive(L))
+				L.lastgasp()
+			L.set_clothing_icon_dirty()
 		src.UpdateIcon()
 		sleep(current_projectile.shot_delay)
 
