@@ -3315,13 +3315,6 @@
 	},
 /turf/simulated/floor/caution/west,
 /area/station/engine/core)
-"iO" = (
-/obj/machinery/light,
-/obj/table/auto,
-/turf/simulated/floor/circuit{
-	dir = 2
-	},
-/area/station/turret_protected/Zeta)
 "iP" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -4853,6 +4846,10 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge/customs)
+"ml" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/bathroom)
 "mm" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/bridge/hos)
@@ -4987,6 +4984,16 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "mD" = (
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/bathroom)
+"mE" = (
+/obj/decal/fakeobjects/sink,
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
 "mF" = (
@@ -12516,13 +12523,6 @@
 /obj/item/stamp/ce,
 /turf/simulated/floor/yellow,
 /area/station/crew_quarters/heads)
-"CU" = (
-/obj/storage/secure/closet/command/medical_director,
-/obj/item/device/analyzer/healthanalyzer/borg,
-/obj/item/remote/porter/port_a_nanomed,
-/obj/item/stamp/md,
-/turf/simulated/floor/white,
-/area/station/crew_quarters/heads)
 "CV" = (
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/sanitary,
@@ -12756,6 +12756,13 @@
 	dir = 2
 	},
 /area/station/bridge/customs)
+"Du" = (
+/obj/decal/fakeobjects/sink,
+/obj/machinery/firealarm{
+	pixel_y = 25
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/bathroom)
 "Dv" = (
 /obj/table/auto,
 /obj/bedsheetbin,
@@ -14570,17 +14577,14 @@
 /obj/item/plank,
 /turf/simulated/floor/grime,
 /area/ghostdrone_factory)
-"HK" = (
-/obj/decal/fakeobjects/sink,
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/bathroom)
-"KH" = (
+"Is" = (
+/obj/storage/secure/closet/command/medical_director,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/remote/porter/port_a_nanomed,
+/obj/item/stamp/md,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/heads)
+"IM" = (
 /obj/machinery/lawrack,
 /obj/machinery/light{
 	dir = 1;
@@ -14590,23 +14594,19 @@
 	dir = 2
 	},
 /area/station/turret_protected/Zeta)
-"NB" = (
-/obj/decal/fakeobjects/sink,
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/bathroom)
+"KV" = (
+/obj/machinery/light,
+/obj/table/auto,
+/turf/simulated/floor/circuit{
+	dir = 2
+	},
+/area/station/turret_protected/Zeta)
 "Xp" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
-"XQ" = (
-/obj/decal/fakeobjects/sink,
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/bathroom)
 "XR" = (
 /obj/item/device/radio/headset/multifreq,
 /obj/item/device/radio/headset/multifreq,
@@ -56444,7 +56444,7 @@ jy
 CY
 yl
 ll
-iO
+KV
 iy
 uY
 Eh
@@ -57949,7 +57949,7 @@ bu
 hH
 mP
 iy
-KH
+IM
 kK
 ye
 yo
@@ -67015,7 +67015,7 @@ yv
 yp
 km
 nH
-XQ
+Du
 mD
 sY
 xF
@@ -67317,7 +67317,7 @@ xl
 yw
 lp
 nH
-HK
+mE
 CW
 lI
 lI
@@ -67619,7 +67619,7 @@ yv
 yp
 DV
 nH
-NB
+ml
 og
 sY
 zA
@@ -68835,7 +68835,7 @@ yQ
 up
 vm
 Af
-CU
+Is
 pw
 pY
 pz

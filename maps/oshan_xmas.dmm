@@ -2777,6 +2777,20 @@
 /obj/storage/crate/robotics_supplies,
 /turf/simulated/floor/plating/random,
 /area/station/medical/robotics)
+"afO" = (
+/obj/item/cable_coil/cut,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/obj/storage/crate{
+	name = "robotics crate"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/medical/robotics)
 "afP" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights,
@@ -6862,27 +6876,6 @@
 	},
 /turf/simulated/floor/carpet{
 	dir = 9;
-	icon_state = "fblue2"
-	},
-/area/station/medical/head)
-"aoY" = (
-/obj/machinery/networked/printer{
-	name = "Printer - MD";
-	pixel_y = 5;
-	print_id = "MD"
-	},
-/obj/item/device/analyzer/healthanalyzer/borg,
-/obj/item/clothing/glasses/healthgoggles/upgraded,
-/obj/table/wood/round/auto,
-/obj/machinery/light/incandescent/warm,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/blind_switch/area/north,
-/turf/simulated/floor/carpet{
-	dir = 1;
 	icon_state = "fblue2"
 	},
 /area/station/medical/head)
@@ -40792,6 +40785,18 @@
 	dir = 8
 	},
 /area/station/storage/warehouse)
+"bSn" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/turf/simulated/floor/plating/random,
+/area/station/storage/warehouse)
 "bSo" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime{
@@ -47902,14 +47907,6 @@
 	dir = 10
 	},
 /area/station/crew_quarters/kitchen)
-"dkR" = (
-/obj/table/reinforced/auto,
-/obj/machinery/light_switch/auto,
-/obj/item/device/radio/intercom/AI{
-	dir = 4
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "dvD" = (
 /obj/disposalpipe/trunk/mail/north,
 /obj/machinery/disposal/mail/small/autoname{
@@ -48001,6 +47998,10 @@
 /obj/stocking,
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/sanctuary)
+"fjo" = (
+/obj/table/reinforced,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "flD" = (
 /obj/machinery/vending/air_vendor,
 /turf/simulated/floor/plating/random,
@@ -48131,6 +48132,27 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"gzs" = (
+/obj/machinery/networked/printer{
+	name = "Printer - MD";
+	pixel_y = 5;
+	print_id = "MD"
+	},
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/clothing/glasses/healthgoggles/upgraded,
+/obj/table/wood/round/auto,
+/obj/machinery/light/incandescent/warm,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/blind_switch/area/north,
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fblue2"
+	},
+/area/station/medical/head)
 "gGw" = (
 /obj/table/wood/round/auto,
 /obj/item/paper_bin,
@@ -48177,10 +48199,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
-"hdG" = (
-/obj/machinery/lawrack,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "hke" = (
 /obj/machinery/optable,
 /obj/disposalpipe/segment/mail,
@@ -48657,11 +48675,6 @@
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"nDd" = (
-/obj/table/reinforced,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "nDS" = (
 /obj/table/auto,
 /obj/item/coin{
@@ -48696,20 +48709,6 @@
 	},
 /turf/simulated/floor,
 /area/station/medical/medbay/restroom)
-"nXi" = (
-/obj/item/cable_coil/cut,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/storage/crate{
-	name = "robotics crate"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/medical/robotics)
 "nXA" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -48758,6 +48757,11 @@
 "ovU" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
+"oFk" = (
+/obj/table/reinforced,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "oLW" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -48785,18 +48789,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
-"prz" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/turf/simulated/floor/plating/random,
-/area/station/storage/warehouse)
 "pxz" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/decal/wreath,
@@ -48843,10 +48835,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
-"qaS" = (
-/obj/table/reinforced,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "qcm" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/decal/wreath,
@@ -48908,14 +48896,6 @@
 	dir = 1
 	},
 /area/station/ranch)
-"rgV" = (
-/obj/table/wood/round/auto,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "blue2"
-	},
-/area/station/bridge)
 "rBz" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -48935,6 +48915,14 @@
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
+"sbZ" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light_switch/auto,
+/obj/item/device/radio/intercom/AI{
+	dir = 4
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "sjd" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/wreath,
@@ -49042,6 +49030,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"uNU" = (
+/obj/table/wood/round/auto,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "blue2"
+	},
+/area/station/bridge)
 "uRT" = (
 /obj/table/auto,
 /obj/item/instrument/bikehorn/dramatic,
@@ -49362,6 +49358,10 @@
 /obj/item/device/multitool,
 /turf/simulated/floor/caution/south,
 /area/station/hangar/sec)
+"yga" = (
+/obj/machinery/lawrack,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "ygP" = (
 /obj/machinery/light/incandescent/greenish,
 /obj/item/shipcomponent/pod_lights/police_siren,
@@ -80386,7 +80386,7 @@ bKj
 bPh
 bQi
 bJA
-prz
+bSn
 bTm
 bUA
 bVz
@@ -90034,7 +90034,7 @@ ckj
 chg
 bzx
 bAP
-dkR
+sbZ
 bDp
 aTo
 bzx
@@ -90637,7 +90637,7 @@ cjV
 cki
 aqn
 bzx
-hdG
+yga
 bCb
 bDq
 bCb
@@ -95691,7 +95691,7 @@ aqn
 cdi
 afq
 agA
-nXi
+afO
 agd
 agA
 acl
@@ -96978,7 +96978,7 @@ bwp
 bwX
 bxU
 byM
-rgV
+uNU
 btK
 buV
 buV
@@ -99027,7 +99027,7 @@ alB
 akS
 anu
 aog
-aoY
+gzs
 apZ
 arq
 asA
@@ -104163,7 +104163,7 @@ any
 aoj
 apb
 apb
-nDd
+oFk
 aek
 atV
 avu
@@ -105371,7 +105371,7 @@ laJ
 aoj
 apb
 apb
-qaS
+fjo
 asO
 atV
 avy

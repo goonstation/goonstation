@@ -17097,13 +17097,6 @@
 /obj/item/stamp/ce,
 /turf/simulated/floor/yellow,
 /area/station2/crew_quarters/heads)
-"aMG" = (
-/obj/storage/secure/closet/command/medical_director,
-/obj/item/device/analyzer/healthanalyzer/borg,
-/obj/item/remote/porter/port_a_nanomed,
-/obj/item/stamp/md,
-/turf/simulated/floor/white,
-/area/station2/crew_quarters/heads)
 "aMH" = (
 /obj/storage/secure/closet/command/research_director,
 /obj/item/remote/porter/port_a_sci,
@@ -36980,6 +36973,20 @@
 "bDX" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/central)
+"bDY" = (
+/obj/item/cable_coil/cut,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/obj/storage/crate,
+/obj/item/storage/box/cablesbox,
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/carpet/grime,
+/area/station/medical/robotics)
 "bDZ" = (
 /obj/reagent_dispensers/fueltank,
 /obj/item/storage/belt/medical,
@@ -75144,20 +75151,6 @@
 	dir = 4
 	},
 /area/listeningpost/solars)
-"dtU" = (
-/obj/item/cable_coil/cut,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/storage/crate,
-/obj/item/storage/box/cablesbox,
-/obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/carpet/grime,
-/area/station/medical/robotics)
 "eIO" = (
 /obj/table/auto,
 /obj/item/paper/book/from_file/cookbook,
@@ -75210,6 +75203,16 @@
 /area/station/science/artifact{
 	name = "Artifact Lounge"
 	})
+"hJh" = (
+/obj/machinery/lawrack,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 1
+	},
+/turf/simulated/floor/circuit{
+	dir = 2
+	},
+/area/station/turret_protected/ai_upload)
 "ixC" = (
 /obj/storage/crate/rcd/CE,
 /obj/item/clothing/shoes/magnetic,
@@ -75274,13 +75277,6 @@
 /obj/item/card_box/plain,
 /turf/simulated/floor/specialroom/bar,
 /area/station2/crew_quarters/cafeteria)
-"kFg" = (
-/obj/machinery/light,
-/obj/table/auto,
-/turf/simulated/floor/circuit{
-	dir = 2
-	},
-/area/station/turret_protected/ai_upload_foyer)
 "kXx" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -75366,27 +75362,6 @@
 	icon_state = "engine_caution_corners"
 	},
 /area/station2/mining/refinery)
-"njd" = (
-/obj/machinery/light_switch/west,
-/obj/machinery/lawrack{
-	dir = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
-/area/station/turret_protected/Zeta)
-"njz" = (
-/obj/table/auto,
-/obj/item/aiModule/freeform,
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/turret_protected/Zeta)
 "nnN" = (
 /obj/decal/poster/wallsign/framed_award/hos_medal,
 /obj/disposalpipe/segment/transport{
@@ -75434,6 +75409,13 @@
 /obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
+"oAA" = (
+/obj/table/auto,
+/obj/item/aiModule/freeform,
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/turret_protected/Zeta)
 "oPT" = (
 /obj/item/paper/book/from_file/minerals,
 /turf/simulated/floor/plating/airless/random,
@@ -75445,20 +75427,17 @@
 /obj/item/spacecash/hundred,
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/listeningpost/power)
+"pTb" = (
+/obj/machinery/light,
+/obj/table/auto,
+/turf/simulated/floor/circuit{
+	dir = 2
+	},
+/area/station/turret_protected/ai_upload_foyer)
 "qao" = (
 /obj/decal/poster/wallsign/framed_award/hos_medal,
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
 /area/station2/security/armory)
-"qpy" = (
-/obj/machinery/lawrack,
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 1
-	},
-/turf/simulated/floor/circuit{
-	dir = 2
-	},
-/area/station/turret_protected/ai_upload)
 "qTK" = (
 /obj/storage/crate{
 	desc = "null";
@@ -75473,6 +75452,20 @@
 	dir = 4
 	},
 /area/station2/chemistry)
+"qWG" = (
+/obj/machinery/light_switch/west,
+/obj/machinery/lawrack{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/station/turret_protected/Zeta)
 "rfN" = (
 /obj/machinery/optable,
 /obj/item/paper/book/from_file/pharmacopia,
@@ -75498,6 +75491,13 @@
 /area/station/science/artifact{
 	name = "Artifact Lounge"
 	})
+"svW" = (
+/obj/storage/secure/closet/command/medical_director,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/remote/porter/port_a_nanomed,
+/obj/item/stamp/md,
+/turf/simulated/floor/white,
+/area/station2/crew_quarters/heads)
 "sMd" = (
 /obj/cable{
 	d1 = 1;
@@ -117721,7 +117721,7 @@ blF
 bot
 brr
 buL
-njd
+qWG
 bAv
 bDt
 bjg
@@ -118929,7 +118929,7 @@ blJ
 box
 brv
 buP
-njz
+oAA
 bAz
 bDx
 bGo
@@ -123425,7 +123425,7 @@ azM
 aAT
 aBX
 aDg
-kFg
+pTb
 ayO
 bdt
 aGC
@@ -124930,7 +124930,7 @@ ama
 awf
 axb
 axY
-qpy
+hJh
 azQ
 aAX
 aCc
@@ -128897,7 +128897,7 @@ brO
 bvm
 byc
 bBf
-dtU
+bDY
 bGF
 bJA
 bMv
@@ -135816,7 +135816,7 @@ aIR
 bbV
 aKD
 aLz
-aMG
+svW
 aLw
 aPB
 aVZ

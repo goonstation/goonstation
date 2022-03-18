@@ -273,10 +273,6 @@
 	var/static/list/possible_items = list()
 	grab_stuff_on_spawn = FALSE
 
-	New()
-		..()
-		spawn_items()
-
 	proc/spawn_items(mob/owner, obj/item/uplink/owner_uplink)
 		#define NESTED_SCALING_FACTOR 0.8
 		if (istype(src.loc, /obj/storage/crate/syndicate_surplus)) //if someone got lucky and rolled a surplus inside a surplus, scale the inner one (and its contents) down
@@ -304,6 +300,12 @@
 						owner.mind.traitor_crate_items += item_datum
 				telecrystals += item_datum.cost
 		#undef NESTED_SCALING_FACTOR
+
+/obj/storage/crate/syndicate_surplus/spawnable
+
+	New()
+		..()
+		spawn_items() //null owner/uplink, so pulls from all possible items
 
 /obj/storage/crate/pizza
 	name = "pizza box"
@@ -542,7 +544,7 @@
 		/obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut,
 		/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector,
 		/obj/item/clothing/glasses/healthgoggles/upgraded,
-		/obj/item/device/analyzer/healthanalyzer/borg,
+		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
 		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,
@@ -553,7 +555,7 @@
 		name = "Class Crate - Field Medic"
 		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies."
 		spawn_contents = list(/obj/item/clothing/glasses/healthgoggles/upgraded,
-		/obj/item/device/analyzer/healthanalyzer/borg,
+		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
 		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,

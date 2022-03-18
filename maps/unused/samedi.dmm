@@ -32189,31 +32189,6 @@
 	},
 /turf/simulated/floor/sandytile,
 /area/station/hallway/primary/east)
-"bsE" = (
-/obj/table/auto,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/item/clothing/glasses/visor,
-/obj/item/device/radio/headset/deaf,
-/obj/item/robodefibrillator,
-/obj/item/device/analyzer/healthanalyzer/borg,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-4";
-	pixel_y = 0
-	},
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/head)
 "bsF" = (
 /obj/machinery/sleep_console{
 	icon_state = "sleeperconsole";
@@ -33689,6 +33664,29 @@
 "bwg" = (
 /obj/vehicle/forklift,
 /obj/machinery/light/small,
+/turf/simulated/floor/plating,
+/area/station/storage/warehouse)
+"bwh" = (
+/obj/item/cable_coil/cut,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "bwi" = (
@@ -49247,18 +49245,6 @@
 /obj/item/spacecash/hundred,
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
-"ffQ" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/protectStation,
-/obj/item/aiModule/conservePower,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
-/area/station/turret_protected/ai_upload)
 "fFe" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -49273,25 +49259,6 @@
 	dir = 8
 	},
 /area/station/science/teleporter)
-"hdA" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/lawrack{
-	dir = 8
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/turret_protected/ai_upload)
 "hVq" = (
 /obj/table/auto,
 /obj/item/device/radio/signaler,
@@ -49313,12 +49280,36 @@
 	dir = 1
 	},
 /area/station/science/teleporter)
-"kui" = (
-/obj/table/reinforced/auto,
-/turf/simulated/floor/blueblack{
-	dir = 4
+"iTP" = (
+/obj/table/auto,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/green/side,
+/area/station/turret_protected/Zeta)
+"kYE" = (
+/obj/table/auto,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	pixel_y = 24
 	},
-/area/station/turret_protected/ai_upload)
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/item/clothing/glasses/visor,
+/obj/item/device/radio/headset/deaf,
+/obj/item/robodefibrillator,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/clothing/glasses/healthgoggles,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/turf/simulated/floor/specialroom/medbay{
+	dir = 2
+	},
+/area/station/medical/head)
 "kYK" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -49375,6 +49366,49 @@
 	dir = 6
 	},
 /area/station/science/teleporter)
+"ntL" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/lawrack{
+	dir = 8
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/turret_protected/ai_upload)
+"oIY" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/protectStation,
+/obj/item/aiModule/conservePower,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/station/turret_protected/ai_upload)
+"pQB" = (
+/obj/table/reinforced/auto,
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/turret_protected/ai_upload)
+"pZQ" = (
+/obj/table/auto,
+/obj/item/storage/box/PDAbox,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/carpet/blue,
+/area/station/bridge)
 "rTs" = (
 /obj/table/wood/auto,
 /obj/item/device/camera_viewer,
@@ -49397,40 +49431,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
-"vuG" = (
-/obj/table/auto,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/green/side,
-/area/station/turret_protected/Zeta)
-"wZC" = (
-/obj/table/auto,
-/obj/item/storage/box/PDAbox,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/carpet/blue,
-/area/station/bridge)
-"xkp" = (
-/obj/item/cable_coil/cut,
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	icon_state = "camera";
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/storage/warehouse)
 
 (1,1,1) = {"
 aaa
@@ -79490,7 +79490,7 @@ aVm
 beL
 bga
 bhw
-bsE
+kYE
 bkf
 blt
 bhw
@@ -88609,7 +88609,7 @@ bRE
 bSw
 bTg
 bSx
-vuG
+iTP
 bPT
 bVO
 bSp
@@ -89756,7 +89756,7 @@ baW
 bct
 bdD
 beV
-wZC
+pZQ
 bhG
 bjj
 bkt
@@ -113326,7 +113326,7 @@ bow
 btx
 bty
 bty
-xkp
+bwh
 bov
 bnk
 byh
@@ -114871,7 +114871,7 @@ bHA
 bJb
 bJM
 bKw
-ffQ
+oIY
 bMi
 bNb
 bIl
@@ -115775,8 +115775,8 @@ bEF
 bHD
 bIo
 bNe
-kui
-hdA
+pQB
+ntL
 bLu
 bMk
 bEF

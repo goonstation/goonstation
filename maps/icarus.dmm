@@ -3343,17 +3343,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
-"ahT" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/electrical,
-/obj/item/device/gps,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/black,
-/area/station/bridge)
 "ahU" = (
 /obj/machinery/computer/airbr/emergency_shuttle{
 	density = 0;
@@ -5286,6 +5275,16 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
+"alX" = (
+/obj/decal/fakeobjects/pole{
+	pixel_x = -14
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/grey,
+/area/station/hallway/primary/central)
 "alY" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -8904,24 +8903,6 @@
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
-/area/station/turret_protected/ai)
-"atJ" = (
-/obj/table/reinforced/auto,
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	icon_state = "camera";
-	name = "autoname  - SS13";
-	network = "SS13";
-	pixel_x = 10
-	},
-/turf/simulated/floor/blue,
 /area/station/turret_protected/ai)
 "atK" = (
 /obj/table/wood/auto,
@@ -19546,18 +19527,6 @@
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
 /area/station/medical/head)
-"aQn" = (
-/obj/table/auto,
-/obj/item/clothing/glasses/visor,
-/obj/item/device/radio/headset/deaf,
-/obj/item/robodefibrillator,
-/obj/item/remote/porter/port_a_nanomed,
-/obj/item/device/analyzer/healthanalyzer/borg,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/item/reagent_containers/hypospray,
-/obj/blind_switch/area/east,
-/turf/simulated/floor/carpet/purple/fancy/edge/ne,
-/area/station/medical/head)
 "aQo" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
@@ -26436,16 +26405,6 @@
 	dir = 6
 	},
 /area/station/science/teleporter)
-"eiE" = (
-/obj/decal/fakeobjects/pole{
-	pixel_x = -14
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor/grey,
-/area/station/hallway/primary/central)
 "esW" = (
 /obj/item/clothing/glasses/blindfold,
 /turf/simulated/floor/engine/vacuum,
@@ -26552,20 +26511,6 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
-"fJH" = (
-/obj/machinery/lawrack{
-	dir = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/blue/side{
-	dir = 8;
-	icon_state = "blue"
-	},
-/area/station/turret_protected/ai)
 "fUv" = (
 /obj/item/storage/wall/emergency{
 	dir = 4;
@@ -27015,6 +26960,24 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/indigo_rye)
+"lKd" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	icon_state = "camera";
+	name = "autoname  - SS13";
+	network = "SS13";
+	pixel_x = 10
+	},
+/turf/simulated/floor/blue,
+/area/station/turret_protected/ai)
 "lKR" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/item/device/analyzer/healthanalyzer,
@@ -27183,17 +27146,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"niL" = (
-/obj/table/auto,
-/obj/item/circuitboard/robotics,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_west,
-/turf/simulated/floor/green,
-/area/station/turret_protected/Zeta)
 "njr" = (
 /obj/creepy_sound_trigger,
 /obj/cable{
@@ -27280,6 +27232,16 @@
 /obj/item/cigbutt,
 /turf/simulated/floor/white,
 /area/research_outpost/indigo_rye)
+"ocu" = (
+/obj/table/auto,
+/obj/item/storage/box/PDAbox,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
 "ocK" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -27344,6 +27306,17 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/maintenance/southeast)
+"pdU" = (
+/obj/table/auto,
+/obj/item/circuitboard/robotics,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_west,
+/turf/simulated/floor/green,
+/area/station/turret_protected/Zeta)
 "plN" = (
 /obj/stool/bench/yellow/auto,
 /obj/machinery/light/emergency{
@@ -27522,16 +27495,6 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/research_outpost/indigo_rye)
-"rri" = (
-/obj/table/auto,
-/obj/item/storage/box/PDAbox,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/black,
-/area/station/bridge)
 "rzH" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -27583,6 +27546,17 @@
 	},
 /turf/simulated/floor/carpet/purple/standard/edge/west,
 /area/research_outpost/indigo_rye)
+"sQL" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/electrical,
+/obj/item/device/gps,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
 "sZd" = (
 /obj/machinery/shower,
 /obj/machinery/light/small{
@@ -27923,6 +27897,20 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"xiO" = (
+/obj/machinery/lawrack{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/blue/side{
+	dir = 8;
+	icon_state = "blue"
+	},
+/area/station/turret_protected/ai)
 "xjm" = (
 /obj/grille/steel,
 /turf/space,
@@ -27939,6 +27927,18 @@
 /obj/item/device/radio/headset/multifreq,
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
+"xzW" = (
+/obj/table/auto,
+/obj/item/clothing/glasses/visor,
+/obj/item/device/radio/headset/deaf,
+/obj/item/robodefibrillator,
+/obj/item/remote/porter/port_a_nanomed,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/clothing/glasses/healthgoggles,
+/obj/item/reagent_containers/hypospray,
+/obj/blind_switch/area/east,
+/turf/simulated/floor/carpet/purple/fancy/edge/ne,
+/area/station/medical/head)
 "xJC" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
@@ -62564,7 +62564,7 @@ arw
 arQ
 asi
 asy
-fJH
+xiO
 ats
 atH
 auh
@@ -63170,7 +63170,7 @@ ask
 asA
 asW
 atu
-atJ
+lKd
 aqN
 aqN
 aqN
@@ -69188,7 +69188,7 @@ ajY
 akP
 ajY
 ajY
-eiE
+alX
 akP
 amH
 aad
@@ -70979,12 +70979,12 @@ afc
 afc
 agd
 agy
-rri
+ocu
 agY
 ahk
 agd
 ahJ
-ahT
+sQL
 agd
 agd
 aio
@@ -73780,7 +73780,7 @@ aNr
 aOk
 aOK
 aPv
-aQn
+xzW
 aQX
 aRQ
 aPs
@@ -76498,7 +76498,7 @@ aNz
 aOp
 aOp
 aPy
-niL
+pdU
 aRd
 aRU
 aSy

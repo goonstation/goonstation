@@ -1,3 +1,20 @@
+
+(t)wed mar 16 22
+(u)tarmunora
+(e)⚖|balance
+(+)wizard gear now takes 4x normal duration to remove, instead of an RNG 25% chance to succeed.
+(u)Flappybat
+(p)7785
+(e)⚖|balance
+(+)The nuclear bomb has improved armor plating against energy and kinetic projectiles, taking roughly half the damage of the previous model.
+(u)Carsontheking
+(p)7377
+(e)🗺|mapping
+(+)Adds a new prefab to explore!
+(u)zjdtmkhzt
+(p)7809
+(e)🆕|feature
+(+)Cargo appraisers can now be used on artifacts. They need to have a form attached, and the analysis will only be correct if you've filled out the form correctly. Due to artifacts being unique items, the price may vary quite a bit from what the appraiser says (mostly upwards).
 (t)tue mar 15 22
 (u)Cogwerks
 (e)🎨🗺|sprites, mapping

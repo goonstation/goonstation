@@ -17006,30 +17006,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"aIa" = (
-/obj/table/auto,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
-/obj/item/clothing/glasses/visor,
-/obj/item/device/radio/headset/deaf,
-/obj/item/robodefibrillator,
-/obj/item/remote/porter/port_a_nanomed,
-/obj/item/device/analyzer/healthanalyzer/borg,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/head)
 "aIb" = (
 /obj/cable{
 	d1 = 1;
@@ -19034,6 +19010,18 @@
 /area/station/medical/robotics)
 "aMh" = (
 /obj/disposalpipe/segment/morgue,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
+"aMi" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aMj" = (
@@ -34181,18 +34169,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"cso" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "ijs" = (
 /obj/item/device/radio/headset/multifreq,
 /obj/item/device/radio/headset/multifreq,
@@ -34218,14 +34194,6 @@
 	dir = 8
 	},
 /area/station/science/teleporter)
-"jjk" = (
-/obj/machinery/lawrack,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/blue,
-/area/station/turret_protected/ai_upload)
 "juS" = (
 /obj/table/auto,
 /obj/item/device/radio/signaler,
@@ -34245,7 +34213,49 @@
 	dir = 8
 	},
 /area/station/science/teleporter)
-"lFt" = (
+"ldl" = (
+/obj/table/auto,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	pixel_y = 24
+	},
+/obj/item/clothing/glasses/visor,
+/obj/item/device/radio/headset/deaf,
+/obj/item/robodefibrillator,
+/obj/item/remote/porter/port_a_nanomed,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/clothing/glasses/healthgoggles,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/specialroom/medbay{
+	dir = 2
+	},
+/area/station/medical/head)
+"nOn" = (
+/obj/machinery/lawrack,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/blue,
+/area/station/turret_protected/ai_upload)
+"rAI" = (
+/obj/storage/crate/rcd/CE,
+/obj/machinery/light{
+	dir = 1;
+	name = "light fixture"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/station/engine/engineering/ce)
+"teZ" = (
 /obj/item/device/radio/intercom{
 	dir = 1;
 	broadcasting = 0;
@@ -34258,16 +34268,6 @@
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/circuit,
 /area/station/bridge)
-"rAI" = (
-/obj/storage/crate/rcd/CE,
-/obj/machinery/light{
-	dir = 1;
-	name = "light fixture"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 9
-	},
-/area/station/engine/engineering/ce)
 "tPo" = (
 /obj/table/wood/auto,
 /obj/item/storage/secure/sbriefcase,
@@ -34275,6 +34275,17 @@
 /obj/item/camera,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"uey" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1";
+	tag = ""
+	},
+/turf/simulated/floor/blue/side{
+	dir = 8
+	},
+/area/station/turret_protected/ai_upload)
 "vdr" = (
 /obj/table/auto,
 /obj/item/storage/photo_album{
@@ -34293,17 +34304,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
-"wzE" = (
-/obj/table/reinforced/auto,
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1";
-	tag = ""
-	},
-/turf/simulated/floor/blue/side{
-	dir = 8
-	},
-/area/station/turret_protected/ai_upload)
 
 (1,1,1) = {"
 aaa
@@ -63154,7 +63154,7 @@ aaZ
 aHu
 aGC
 aLo
-aIa
+ldl
 aIS
 aJI
 aJI
@@ -65592,7 +65592,7 @@ aYD
 aXK
 aYD
 aIA
-wzE
+uey
 aJz
 bcg
 bdc
@@ -66497,7 +66497,7 @@ aVE
 aWJ
 biH
 aYL
-jjk
+nOn
 baw
 bbk
 aYL
@@ -68311,7 +68311,7 @@ aXR
 bbD
 aZE
 baB
-lFt
+teZ
 bbD
 bdl
 bpv
@@ -69198,7 +69198,7 @@ aQF
 aFj
 aJY
 aQr
-cso
+aMi
 aNo
 aNV
 aMh
