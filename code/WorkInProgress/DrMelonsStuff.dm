@@ -102,6 +102,12 @@
 		..()
 		src.create_reagents(500)
 
+	mob_flip_inside(var/mob/user)
+		user.show_text("<span class='alert'>You splash around enough to shake the tub!</span>")
+		src.visible_message("<span class='notice'>[src.myuser] splish-splashes around!</span>")
+		playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+		animate_storage_thump(src)
+
 	get_desc(dist, mob/user)
 		if (dist > 2)
 			return
@@ -121,7 +127,7 @@
 		if(reagents.total_volume)
 			var/image/new_underlay = src.SafeGetOverlayImage("fluid_underlay", 'icons/obj/stationobjs.dmi', "fluid_bathtub", MOB_LAYER - 0.4)
 			var/datum/color/average = reagents.get_average_color()
-			// average.a = round(reagents.total_volume / reagents.maximum_volume) * 255 // alpha layer based on volume
+			average.a = round( reagents.total_volume / reagents.maximum_volume * 255) // alpha layer based on volume,
 			new_underlay.color = average.to_rgba()
 			src.UpdateOverlays(new_underlay, "fluid_underlay")
 
@@ -224,6 +230,7 @@
     set src in oview(1)
     set category = "Local"
     if (get_dist(usr, src) <= 1 && !usr.stat)
+        playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_2.ogg", 25, 1)
         src.reagents.add_reagent(default_reagent,120)
         usr.visible_message("<span class='notice'>[usr] draws a bath.</span>",\
         "<span class='success'>You draw a nice bath!</span>")
