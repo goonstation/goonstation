@@ -1969,7 +1969,7 @@ datum
 		pollen
 			name = "pollenium"
 			id = "pollen"
-			description = "A pollen-derivative with a number of proteins and other nutrients vital to space bee health. Not palatable for humans, but at least Russian dissidents have never been killed with it."
+			description = "A pollen-derivative with a number of proteins and other nutrients vital to space bee health. Not palatable for humans."
 			reagent_state = SOLID
 			fluid_r = 191
 			fluid_g = 191
