@@ -430,12 +430,14 @@ obj/decal/fakeobjects/teleport_pad
 		else
 			return 1
 
-	Uncross(atom/movable/O as mob|obj)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if (!src.density)
-			return 1
-		if (get_dir(O.loc, O.movement_newloc) & src.dir)
-			return 0
-		return 1
+			. = 1
+		else if (get_dir(O.loc, O.movement_newloc) & src.dir)
+			. = 0
+		else
+			. = 1
+		UNCROSS_BUMP_CHECK(O)
 
 /obj/stool/chair/boxingrope_corner
 	name = "Boxing Ropes"
@@ -477,12 +479,14 @@ obj/decal/fakeobjects/teleport_pad
 		else
 			return 1
 
-	Uncross(atom/movable/O as mob|obj)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if (!src.density)
-			return 1
-		if (get_dir(O.loc, O.movement_newloc) & src.dir)
-			return 0
-		return 1
+			. = 1
+		else if (get_dir(O.loc, O.movement_newloc) & src.dir)
+			. = 0
+		else
+			. = 1
+		UNCROSS_BUMP_CHECK(O)
 
 /obj/decal/boxingropeenter
 	name = "Ring entrance"

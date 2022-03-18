@@ -180,14 +180,16 @@
 		else
 			return 1
 
-	Uncross(atom/movable/O as mob|obj)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if (!src.density)
-			return 1
-		if (istype(O, /obj/projectile))
-			return 1
-		if (get_dir(O.loc, O.movement_newloc) & src.dir)
-			return !density
-		return 1
+			. = 1
+		else if (istype(O, /obj/projectile))
+			. = 1
+		else if (get_dir(O.loc, O.movement_newloc) & src.dir)
+			. = !density
+		else
+			. = 1
+		UNCROSS_BUMP_CHECK(O)
 
 /obj/decal/stage_edge/alt
 	name = "edge"

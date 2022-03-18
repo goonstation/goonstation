@@ -35,9 +35,9 @@
 			return 1
 		return ..()
 
-	Uncross(atom/movable/O as mob|obj)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if(istype(O, /obj/projectile))
-			return 1
+			. = 1
 		return ..()
 
 // Gore delivers new crates - woo!

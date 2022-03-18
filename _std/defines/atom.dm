@@ -60,3 +60,6 @@
 #define DESERIALIZE_OK					(1 << 0)
 #define DESERIALIZE_NEED_POSTPROCESS	(1 << 1)
 #define DESERIALIZE_NOT_IMPLEMENTED		(1 << 2)
+
+/// Uncross should call this after setting `.` to make sure Bump gets called if needed
+#define UNCROSS_BUMP_CHECK(AM) if(!. && do_bump) AM.Bump(src)

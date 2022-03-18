@@ -369,13 +369,15 @@
 	return(direct != turn(divert_from,180))
 
 // don't allow movement through the arm if deployed
-/obj/machinery/diverter/Uncross(atom/movable/O)
+/obj/machinery/diverter/Uncross(atom/movable/O, do_bump=TRUE)
 	var/direct = get_dir(O, O.movement_newloc)
 	if(direct == turn(divert_to,180))	// prevent movement through body of diverter
-		return 0
-	if(!deployed)
-		return 1
-	return(direct != divert_from)
+		. = 0
+	else if(!deployed)
+		. = 1
+	else
+		. = direct != divert_from
+	UNCROSS_BUMP_CHECK(O)
 
 
 

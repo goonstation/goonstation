@@ -324,7 +324,7 @@
 		if (!is_cardinal(dir) || get_dir(loc, target) & dir)
 			. = ..()
 
-	Uncross(atom/movable/O as mob|obj)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if (!src.density)
 			return 1
 		if(istype(O, /obj/projectile))
@@ -334,7 +334,9 @@
 		if (!is_cardinal(dir))
 			return 1 // let people move out of full tile windows
 		if (get_dir(loc, O.movement_newloc) & src.dir)
-			return 0
+			. = 0
+			UNCROSS_BUMP_CHECK(O)
+			return
 		return 1
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)

@@ -293,7 +293,6 @@
 		for(var/obj/obstacle in orig_turf)
 			if(obstacle == thing)
 				continue
-			var/obj/O = thing
 			if(!obstacle.CheckExit(thing, dest_turf))
 				no_go = obstacle
 				break

@@ -101,12 +101,14 @@
 			return !density
 		return 1
 
-	Uncross(atom/movable/O as mob|obj)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced)  || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
-			return 1
-		if (dir & get_dir(O.loc, O.movement_newloc))
-			return 0
-		return 1
+			. = 1
+		else if (dir & get_dir(O.loc, O.movement_newloc))
+			. = 0
+		else
+			. = 1
+		UNCROSS_BUMP_CHECK(O)
 
 	attackby(obj/item/W as obj, mob/user)
 		if (isweldingtool(W))

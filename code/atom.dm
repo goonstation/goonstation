@@ -266,11 +266,24 @@
 /atom/proc/allow_drop()
 	return 1
 
+// not actually overriden because we want to avoid the overhead if possible. This provides documentation
+#ifdef SPACEMAN_DMM
+/**
+ * Override and return FALSE to prevent O from moving out of the tile where src is.
+ * In order to override this properly be sure to have the `do_bump = TRUE` default argument AND
+ * to call UNCROSS_BUMP_CHECK(O) in all branches where the return value can be FALSE (assign this return
+ * value to `.` instead of doing an explicit `return`).
+ */
+/atom/Uncross(atom/movable/O, do_bump = TRUE)
+	. = TRUE
+	UNCROSS_BUMP_CHECK(O)
+#endif
+
 /// Wrapper around Uncross for when you want to call it manually with a target turf
-/atom/proc/CheckExit(atom/movable/mover, turf/target)
+/atom/proc/CheckExit(atom/movable/mover, turf/target, do_bump=FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	mover.movement_newloc = target
-	return src.Uncross(mover)
+	return src.Uncross(mover, do_bump=do_bump)
 
 /atom/Crossed(atom/movable/AM)
 	SHOULD_CALL_PARENT(TRUE)
