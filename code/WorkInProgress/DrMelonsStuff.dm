@@ -157,7 +157,10 @@
 			src.eject_occupant()
 		else
 			boutput(user, "<span class='notice'>You reach into the bath and pull the plug.</span>")
-			reagents.reaction(mob, TOUCH)
+			if (ishuman(user))
+				var/mob/living/carbon/human/H = user
+				if(!H.gloves)
+					reagents.reaction(user, TOUCH)
 			src.reagents.clear_reagents()
 			src.on_reagent_change()
 			var/count = 0
