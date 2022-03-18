@@ -102,7 +102,11 @@
 			return // no breathing inside possessed objects
 		else if (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			return
-
+		else if (istype(owner.loc, /obj/machinery/bathtub) && owner.lying)
+			if (owner.loc.reagents.total_volume > 300)
+				var/obj/fluid/F = new
+				F.reagents = owner.loc.reagents
+				underwater = F
 		//if (istype(loc, /obj/machinery/clonepod)) return
 
 		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING))
