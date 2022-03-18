@@ -157,7 +157,7 @@
 	proc/try_vault(mob/user, use_owner_dir = FALSE)
 		if (railing_is_broken(src))
 			user.show_text("[src] is broken! All you can really do is break it down...", "red")
-		else
+		else if(!actions.hasAction(user, "railing_jump"))
 			actions.start(new /datum/action/bar/icon/railing_jump(user, src, use_owner_dir), user)
 
 	reinforced
