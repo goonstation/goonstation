@@ -1336,12 +1336,12 @@
 	desc = ""
 	icon_state = "comp_regfind"
 	var/replacesignal = 0
-	var/expression = "/\[a-Z\]*/"
-	var/expressionpatt
+	var/expressionTT = "\[a-zA-Z\]*"
+	var/expressionpatt = "\[a-zA-Z\]*"
 	var/expressionflag
 
 	get_desc()
-		. += {"<br><span class='notice'>Current Expression: [sanitize(html_encode(expression))]<br>
+		. += {"<br><span class='notice'>Current Expression: [sanitize(html_encode(expressionTT))]<br>
 		Replace Signal is [replacesignal ? "on.":"off."]</span>"}
 
 	New()
@@ -1359,9 +1359,9 @@
 			return 0
 		if(length(inp))
 			expressionpatt = inp
-			expression =("[expressionpatt]/[expressionflag]")
+			expressionTT =("[expressionpatt]/[expressionflag]")
 			inp = sanitize(html_encode(inp))
-			boutput(user, "Expression Pattern set to [inp], Current Expression: [sanitize(html_encode(expression))]")
+			boutput(user, "Expression Pattern set to [inp], Current Expression: [sanitize(html_encode(expressionTT))]")
 			tooltip_rebuild = 1
 			return 1
 		return 0
@@ -1372,9 +1372,9 @@
 			return 0
 		if(length(inp))
 			expressionflag = inp
-			expression =("[expressionpatt]/[expressionflag]")
+			expressionTT =("[expressionpatt]/[expressionflag]")
 			inp = sanitize(html_encode(inp))
-			boutput(user, "Expression Flags set to [inp], Current Expression: [sanitize(html_encode(expression))]")
+			boutput(user, "Expression Flags set to [inp], Current Expression: [sanitize(html_encode(expressionTT))]")
 			tooltip_rebuild = 1
 			return 1
 		return 0
@@ -1387,11 +1387,11 @@
 
 	proc/setregex(var/datum/mechanicsMessage/input)
 		if(level == 2) return
-		expressionpatt = ("[input.signal]/[expressionflag]")
-		expression = input.signal
+		expressionpatt = input.signal
+		expressionTT = ("[expressionpatt]/[expressionflag]")
 		tooltip_rebuild = 1
 	proc/checkstr(var/datum/mechanicsMessage/input)
-		if(level == 2 || !length(expression)) return
+		if(level == 2 || !length(expressionTT)) return
 		LIGHT_UP_HOUSING
 		var/regex/R = new(expressionpatt, expressionflag)
 
