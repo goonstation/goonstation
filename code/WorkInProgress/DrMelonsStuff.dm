@@ -112,9 +112,10 @@
 
 	mob_flip_inside(var/mob/user)
 		user.show_text("<span class='alert'>You splash around enough to shake the tub!</span>")
-		src.visible_message("<span class='notice'>[src.myuser] splish-splashes around!</span>")
+		src.visible_message("<span class='notice'>[src.occupant] splish-splashes around!</span>")
 		playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
-		animate_storage_thump(src)
+		animate_wiggle_then_reset(src, 1)
+		src.reagents.trans_to(src.last_turf, 5)
 
 	get_desc(dist, mob/user)
 		if (dist > 2)
@@ -136,7 +137,7 @@
 		if(reagents.total_volume)
 			var/image/new_underlay = src.SafeGetOverlayImage("fluid_underlay", 'icons/obj/stationobjs.dmi', "fluid_bathtub", MOB_LAYER - 0.4)
 			var/datum/color/average = reagents.get_average_color()
-			average.a = round( reagents.total_volume / reagents.maximum_volume * 255) // alpha layer based on volume,
+			average.a = min(round(reagents.total_volume / reagents.maximum_volume * 255), average.a) // set alpha based on volume
 			new_underlay.color = average.to_rgba()
 			src.UpdateOverlays(new_underlay, "fluid_underlay")
 
@@ -211,7 +212,6 @@
 			else
 				src.reagents.clear_reagents()
 				on_reagent_change()
-
 		return
 
 	MouseDrop_T(mob/living/carbon/human/target, mob/user)
