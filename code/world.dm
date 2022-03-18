@@ -574,6 +574,11 @@ var/f_color_selector_handler/F_Color_Selector
 	current_state = GAME_STATE_PREGAME
 	Z_LOG_DEBUG("World/Init", "Now in pre-game state.")
 
+	#ifndef LIVE_SERVER
+	for (var/thing in by_cat[TR_CAT_DELETE_ME])
+		qdel(thing)
+	#endif
+
 #ifdef MOVING_SUB_MAP
 	Z_LOG_DEBUG("World/Init", "Making Manta start moving...")
 	mantaSetMove(moving=1, doShake=0)
