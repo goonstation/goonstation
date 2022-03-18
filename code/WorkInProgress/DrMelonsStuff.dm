@@ -95,16 +95,12 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bathtub"
 	flags = OPENCONTAINER
-	var/static/image/fluid_icon
-	var/static/image/fluid_icon_feet = image("icon" = 'icons/obj/stationobjs.dmi', "icon_state" = "fluid_bathtub_feet")
-	var/static/image/bath_edge = image("icon" = 'icons/obj/stationobjs.dmi', "icon_state" = "bath_edge", "layer" = FLOAT_LAYER)
 	var/mob/living/carbon/human/myuser = null
 	var/default_reagent = "water"
 
 	New()
 		..()
 		src.create_reagents(500)
-
 
 	get_desc(dist, mob/user)
 		if (dist > 2)
@@ -114,23 +110,29 @@
 		. += "<br><span class='notice'>[reagents.get_description(user,RC_FULLNESS|RC_VISIBLE|RC_SPECTRO)]</span>"
 		return
 
+	// using overlay levels so it looks like you're in the bath
+	// MOB_LEVEL(-0) =  all other mobs on top of us
+	// MOB_LEVEL-0.1 = Bath edge to trim feet
+	// MOB_LEVEL-0.2 = Water overlay
+	// MOB_LEVEL-0.3 = Mob who is riding
+	// MOB_LEVEL-0.4 = Water underlay
+
 	on_reagent_change()
-		..()
-		src.overlays = null
-
 		if(reagents.total_volume)
-			ENSURE_IMAGE(src.fluid_icon, src.icon_state, "fluid-bathtub")
+			var/image/new_underlay = src.SafeGetOverlayImage("fluid_underlay", 'icons/obj/stationobjs.dmi', "fluid_bathtub", MOB_LAYER - 0.4)
 			var/datum/color/average = reagents.get_average_color()
-			fluid_icon.color = average.to_rgba()
-			src.overlays += fluid_icon
+			// average.a = round(reagents.total_volume / reagents.maximum_volume) * 255 // alpha layer based on volume
+			new_underlay.color = average.to_rgba()
+			src.UpdateOverlays(new_underlay, "fluid_underlay")
 
-		if(src.myuser)
-			src.overlays += src.myuser
-			// Don't really see the purpose of this; re-add if you believe otherwise
-			// if(reagents.total_volume)
-				// src.overlays += fluid_icon_feet
-
-		src.overlays += bath_edge
+			if (src.myuser) // only update the overlay if we have a user
+				var/image/new_overlay = src.SafeGetOverlayImage("fluid_overlay", 'icons/obj/stationobjs.dmi', "fluid_bathtub", MOB_LAYER - 0.2)
+				new_overlay.color = average.to_rgba()
+				src.UpdateOverlays(new_overlay, "fluid_overlay")
+		else
+			src.UpdateOverlays(null, "fluid_underlay")
+			src.UpdateOverlays(null, "fluid_overlay")
+		..()
 
 	attack_hand(mob/user as mob)
 		if (is_incapacitated(user) || isAI(user)) return
@@ -154,6 +156,9 @@
 			src.myuser.pixel_y = 0
 			src.myuser.set_loc(get_turf(src))
 			src.myuser = null
+			src.UpdateOverlays(null, "fluid_overlay")
+			src.UpdateOverlays(null, "bath_edge")
+			src.UpdateOverlays(null, "rider")
 			src.on_reagent_change()
 
 			for (var/obj/O in src)
@@ -170,9 +175,7 @@
 			if(src.myuser.loc != src)
 				src.myuser.pixel_y = 0
 				src.myuser = null
-				src.overlays = null
 				on_reagent_change()
-
 				return
 			if(src.reagents.total_volume > 5)
 				reagents.reaction(src.myuser, TOUCH)
@@ -203,14 +206,14 @@
 		target.set_loc(src)
 		src.myuser = target
 		src.myuser.pixel_y += 5
+		src.UpdateOverlays(src.SafeGetOverlayImage("rider", getFlatIcon(src.myuser.appearance), , MOB_LAYER - 0.3), "rider") // get in nerd
+		src.UpdateOverlays(src.SafeGetOverlayImage("bath_edge", 'icons/obj/stationobjs.dmi', "bath_edge", MOB_LAYER - 0.1), "bath_edge")
 		src.on_reagent_change()
 
 		for (var/mob/C in viewers(src))
 			if(C == user)
 				continue
 			C.show_message(msg, 3)
-
-
 		return
 
 	is_open_container()
