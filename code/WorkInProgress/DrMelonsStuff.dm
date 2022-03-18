@@ -95,12 +95,20 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bathtub"
 	flags = OPENCONTAINER
-	var/mob/living/carbon/human/myuser = null
+	var/mob/living/carbon/human/occupant = null
+	var/original_occupant_layer = null
 	var/default_reagent = "water"
 
 	New()
 		..()
 		src.create_reagents(500)
+
+	disposing()
+		if(src.occupant)
+			src.occupant.set_loc(get_turf(src))
+			src.occupant = null
+			src.original_occupant_layer = null
+		. = ..()
 
 	mob_flip_inside(var/mob/user)
 		user.show_text("<span class='alert'>You splash around enough to shake the tub!</span>")
@@ -117,10 +125,11 @@
 		return
 
 	// using overlay levels so it looks like you're in the bath
+	// we don't use show_submerged_image since we want the head to poke out
 	// MOB_LEVEL(-0) =  all other mobs on top of us
 	// MOB_LEVEL-0.1 = Bath edge to trim feet
 	// MOB_LEVEL-0.2 = Water overlay
-	// MOB_LEVEL-0.3 = Mob who is riding
+	// MOB_LEVEL-0.3 = Occupant
 	// MOB_LEVEL-0.4 = Water underlay
 
 	on_reagent_change()
@@ -131,7 +140,7 @@
 			new_underlay.color = average.to_rgba()
 			src.UpdateOverlays(new_underlay, "fluid_underlay")
 
-			if (src.myuser) // only update the overlay if we have a user
+			if (src.occupant) // only update the overlay if we have an occupant
 				var/image/new_overlay = src.SafeGetOverlayImage("fluid_overlay", 'icons/obj/stationobjs.dmi', "fluid_bathtub", MOB_LAYER - 0.2)
 				new_overlay.color = average.to_rgba()
 				src.UpdateOverlays(new_overlay, "fluid_overlay")
@@ -142,9 +151,9 @@
 
 	attack_hand(mob/user as mob)
 		if (is_incapacitated(user) || isAI(user)) return
-		if (src.myuser)
-			boutput(user, "<span class='alert'>You pull [src.myuser] out of the bath!</span>")
-			src.eject_user()
+		if (src.occupant)
+			boutput(user, "<span class='alert'>You pull [src.occupant] out of the bath!</span>")
+			src.eject_occupant()
 		else
 			boutput(user, "<span class='notice'>You pull the plug.</span>")
 			src.reagents.clear_reagents()
@@ -157,35 +166,48 @@
 				boutput(user, "<span class='alert'>...and flush something down the drain. Damn!</span>")
 		return
 
-	proc/eject_user()
-		if (src.myuser)
-			src.myuser.pixel_y = 0
-			src.myuser.set_loc(get_turf(src))
-			src.myuser = null
-			src.UpdateOverlays(null, "fluid_overlay")
-			src.UpdateOverlays(null, "bath_edge")
-			src.UpdateOverlays(null, "rider")
-			src.on_reagent_change()
+	proc/enter_bathtub(mob/living/carbon/human/target)
+		target.set_loc(src)
+		src.occupant = target
+		src.UpdateOverlays(src.SafeGetOverlayImage("bath_edge", 'icons/obj/stationobjs.dmi', "bath_edge", MOB_LAYER - 0.1), "bath_edge")
+		src.on_reagent_change()
+		src.original_occupant_layer = target.layer
+		target.layer = MOB_LAYER - 0.3
 
-			for (var/obj/O in src)
-				O.set_loc(get_turf(src))
+		src.vis_contents += target
+
+	proc/eject_occupant()
+		if (!src.occupant)
+			return
+		boutput("<span class='notice'>You get out of the bath.</span>")
+		src.occupant.visible_message("<span class='notice'>[src.occupant] gets out of the bath.</span>")
+		src.occupant.pixel_y = 0
+		src.occupant.layer = src.original_occupant_layer
+		src.occupant.set_loc(get_turf(src))
+		src.vis_contents -= src.occupant
+		src.occupant = null
+		src.original_occupant_layer = null
+		src.UpdateOverlays(null, "fluid_overlay")
+		src.UpdateOverlays(null, "bath_edge")
+		src.on_reagent_change()
+
+		for (var/obj/O in src)
+			O.set_loc(get_turf(src))
 		return
 
 	relaymove(mob/user as mob, dir)
-		src.eject_user()
-		boutput(user, "<span class='notice'>You get out of the bath.</span>")
-
+		src.eject_occupant()
 
 	process()
-		if (src.myuser)
-			if(src.myuser.loc != src)
-				src.myuser.pixel_y = 0
-				src.myuser = null
+		if (src.occupant)
+			if(src.occupant.loc != src)
+				src.occupant.pixel_y = 0
+				src.occupant = null
 				on_reagent_change()
 				return
 			if(src.reagents.total_volume > 5)
-				reagents.reaction(src.myuser, TOUCH)
-				src.reagents.trans_to(src.myuser,5,1)
+				reagents.reaction(src.occupant, TOUCH)
+				src.reagents.trans_to(src.occupant,5,1)
 			else
 				src.reagents.clear_reagents()
 				on_reagent_change()
@@ -193,33 +215,26 @@
 		return
 
 	MouseDrop_T(mob/living/carbon/human/target, mob/user)
-		if (src.myuser || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
+		if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
+			return
+		if (src.occupant)
+			boutput(user, "<span class='alert'>Someone's already in the bathtub!</span>")
 			return
 
 		var/msg
 
 		if(target == user && !user.stat)	// if drop self, then climbed in
-			msg = "[user.name] climbs into [src]."
-			boutput(user, "<span class='notice'>You climb into [src].</span>")
-
+			msg = "[user.name] climbs into the [src]."
+			boutput(user, "<span class='notice'>You climb into the [src].</span>")
 		else if(target != user && !user.restrained())
-			msg = "[user.name] push [target.name] into the [src]!"
+			msg = "[user.name] pushes [target.name] into the [src]!"
 			boutput(user, "<span class='notice'>You push [target.name] into the [src]!</span>")
-
 		else
 			return
 
-		target.set_loc(src)
-		src.myuser = target
-		src.myuser.pixel_y += 5
-		src.UpdateOverlays(src.SafeGetOverlayImage("rider", getFlatIcon(src.myuser.appearance), , MOB_LAYER - 0.3), "rider") // get in nerd
-		src.UpdateOverlays(src.SafeGetOverlayImage("bath_edge", 'icons/obj/stationobjs.dmi', "bath_edge", MOB_LAYER - 0.1), "bath_edge")
-		src.on_reagent_change()
-
-		for (var/mob/C in viewers(src))
-			if(C == user)
-				continue
-			C.show_message(msg, 3)
+		src.add_fingerprint(user)
+		enter_bathtub(target)
+		target.visible_message(msg)
 		return
 
 	is_open_container()
