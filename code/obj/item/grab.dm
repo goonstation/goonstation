@@ -831,6 +831,8 @@
 	if (isturf(user.loc) && target)
 		var/turf/T = user.loc
 		var/target_dir = get_dir(user,target)
+		if(!target_dir)
+			target_dir = user.dir
 		if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying) && can_act(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE) && target_dir)
 
 			user.changeStatus("weakened", max(user.movement_delay()*2, 0.5 SECONDS))
@@ -842,7 +844,7 @@
 			var/mob/living/dive_attack_hit = null
 
 			for (var/mob/living/L in target_turf)
-				if (user == L) continue
+				if (user == L || isintangible(L)) continue
 				dive_attack_hit = L
 				break
 
