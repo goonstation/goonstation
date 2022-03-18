@@ -20,7 +20,7 @@
 	New(loc)
 		START_TRACKING
 		. = ..()
-		//if the ticker isn't initialised yet, it'll grab this rack when it is (see )
+		//if the ticker isn't initialised yet, it'll grab this rack when it is (see /datum/ai_rack_manager)
 		ticker?.ai_law_rack_manager.register_new_rack(src)
 
 		src.light = new/datum/light/point
