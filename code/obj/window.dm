@@ -7,7 +7,7 @@
 	stops_space_move = 1
 	dir = 5 //full tile
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
+	event_handler_flags = USE_FLUID_ENTER
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	text = "<font color=#aaf>#"
 	var/health = 30
@@ -311,7 +311,7 @@
 			var/obj/projectile/P = mover
 			if(P.proj_data.window_pass)
 				return 1
-		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST)
+		if (!is_cardinal(dir))
 			return 0 //full tile window, you can't move into it!
 		if(get_dir(loc, mover) & dir)
 
@@ -321,18 +321,22 @@
 
 	gas_cross(turf/target)
 		. = TRUE
-		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || get_dir(loc, target) & dir)
+		if (!is_cardinal(dir) || get_dir(loc, target) & dir)
 			. = ..()
 
-	CheckExit(atom/movable/O as mob|obj, target as turf)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if (!src.density)
 			return 1
 		if(istype(O, /obj/projectile))
 			var/obj/projectile/P = O
 			if(P.proj_data.window_pass)
 				return 1
-		if (get_dir(loc, target) & src.dir)
-			return 0
+		if (!is_cardinal(dir))
+			return 1 // let people move out of full tile windows
+		if (get_dir(loc, O.movement_newloc) & src.dir)
+			. = 0
+			UNCROSS_BUMP_CHECK(O)
+			return
 		return 1
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
