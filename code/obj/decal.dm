@@ -417,7 +417,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon_state = "ringrope"
 	plane = PLANE_DEFAULT
 	layer = OBJ_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
+	event_handler_flags = USE_FLUID_ENTER
 
 	Cross(atom/movable/mover) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
@@ -430,10 +430,10 @@ obj/decal/fakeobjects/teleport_pad
 		else
 			return 1
 
-	CheckExit(atom/movable/O as mob|obj, target as turf)
+	Uncross(atom/movable/O as mob|obj)
 		if (!src.density)
 			return 1
-		if (get_dir(O.loc, target) & src.dir)
+		if (get_dir(O.loc, O.movement_newloc) & src.dir)
 			return 0
 		return 1
 
@@ -445,7 +445,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
+	event_handler_flags = USE_FLUID_ENTER
 
 	rotatable = 0
 	foldable = 0
@@ -477,10 +477,10 @@ obj/decal/fakeobjects/teleport_pad
 		else
 			return 1
 
-	CheckExit(atom/movable/O as mob|obj, target as turf)
+	Uncross(atom/movable/O as mob|obj)
 		if (!src.density)
 			return 1
-		if (get_dir(O.loc, target) & src.dir)
+		if (get_dir(O.loc, O.movement_newloc) & src.dir)
 			return 0
 		return 1
 

@@ -170,7 +170,7 @@
 	density = 1
 	anchored = 1
 	dir = NORTH
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
+	event_handler_flags = USE_FLUID_ENTER
 
 	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
@@ -180,13 +180,13 @@
 		else
 			return 1
 
-	CheckExit(atom/movable/O as mob|obj, target as turf)
+	Uncross(atom/movable/O as mob|obj)
 		if (!src.density)
 			return 1
 		if (istype(O, /obj/projectile))
 			return 1
-		if (get_dir(O.loc, target) & src.dir)
-			return 0
+		if (get_dir(O.loc, O.movement_newloc) & src.dir)
+			return !density
 		return 1
 
 /obj/decal/stage_edge/alt
