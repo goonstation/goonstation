@@ -1265,7 +1265,7 @@
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "minisyndie"
 	density = 1
-	health = 7 // no fire extinguisher 1taps >:(
+	health = 8
 	maxhealth = 8
 	aggressive = 8
 	defensive = 1
@@ -1311,8 +1311,8 @@
 		if(dying) return
 		playsound(src, 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
 		icon_state = dead_state
-		SPAWN(2 SECONDS)// for the dramatic effect
-			explosion(src, get_turf(src), -1, -1, 3, 3)
+		SPAWN(0.5 SECONDS)// for the dramatic effect
+			explosion(src, get_turf(src), -1, -1, 2, 3)
 		..()
 
 	Shoot(var/target, var/start, var/user, var/bullet = 0)
