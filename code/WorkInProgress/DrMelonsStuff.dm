@@ -230,8 +230,8 @@
     set src in oview(1)
     set category = "Local"
     if (get_dist(usr, src) <= 1 && !usr.stat)
-        playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_2.ogg", 25, 1)
-        src.reagents.add_reagent(default_reagent,120)
+        playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_2.ogg", 50, 1)
+        src.reagents.add_reagent(default_reagent,125)
         usr.visible_message("<span class='notice'>[usr] draws a bath.</span>",\
         "<span class='success'>You draw a nice bath!</span>")
 
