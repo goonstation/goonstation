@@ -151,12 +151,13 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if (is_incapacitated(user) || isAI(user)) return
+		if (is_incapacitated(user) || issilicon(user) || isAI(user)) return
 		if (src.occupant)
 			boutput(user, "<span class='alert'>You pull [src.occupant] out of the bath!</span>")
 			src.eject_occupant()
 		else
-			boutput(user, "<span class='notice'>You pull the plug.</span>")
+			boutput(user, "<span class='notice'>You reach into the bath and pull the plug.</span>")
+			reagents.reaction(mob, TOUCH)
 			src.reagents.clear_reagents()
 			src.on_reagent_change()
 			var/count = 0
