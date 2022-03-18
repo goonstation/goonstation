@@ -234,15 +234,16 @@
 
 			update_shipping_data()
 
+	proc/calculate_artifact_price(var/modifier, var/correctness)
+		return ((modifier**2) * 20000 * correctness)
+
 	proc/sell_artifact(obj/sell_art, var/datum/artifact/sell_art_datum)
 		var/price = 0
 		var/modifier = sell_art_datum.get_rarity_modifier()
+		var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
 
 		// calculate price
-		price = modifier*modifier * 20000
-		var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
-		if(pap?.lastAnalysis)
-			price *= pap.lastAnalysis
+		price = calculate_artifact_price(modifier, max(pap?.lastAnalysis, 1))
 		price *= randfloat(0.9, 1.3)
 		price = round(price, 5)
 

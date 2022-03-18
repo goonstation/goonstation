@@ -832,7 +832,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		pulled = 0
 		UpdateIcon()
 
-	shoot_point_blank(var/mob/M as mob, var/mob/user as mob)
+	shoot_point_blank(atom/target, var/mob/user as mob)
 		if(!pulled)
 			boutput(user, "<span class='notice'>You need to pull back the pully tab thingy first!</span>")
 			playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
@@ -1093,7 +1093,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.UpdateIcon()
 			src.casings_to_eject = 0
 
-	shoot_point_blank(user, user)
+	shoot_point_blank(atom/target, mob/user)
 		if(ammo.amount_left > 0 && !racked_slide)
 			boutput(user, "<span class='notice'>You need to rack the slide before you can fire!</span>")
 			return

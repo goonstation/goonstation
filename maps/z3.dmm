@@ -1347,11 +1347,9 @@
 /turf/simulated/floor,
 /area/radiostation/studio)
 "adV" = (
-/obj/lattice{
-	icon_state = "lattice-dir-b"
-	},
+/obj/effects/background_objects/domus_dei,
 /turf/space,
-/area/mining/mainasteroid)
+/area/space)
 "adW" = (
 /obj/table/wood/auto,
 /obj/item/decoration/ashtray,
@@ -1636,9 +1634,9 @@
 /turf/simulated/floor/plating/airless,
 /area/mining/mainasteroid)
 "aeM" = (
-/obj/lattice,
+/obj/effects/background_objects/quadriga,
 /turf/space,
-/area/mining/mainasteroid)
+/area/space)
 "aeN" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
@@ -1823,12 +1821,12 @@
 	},
 /area/mining/mainasteroid)
 "afo" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
+/obj/effects/background_objects/star_blue{
+	pixel_x = -64;
+	pixel_y = -64
 	},
 /turf/space,
-/area/mining/mainasteroid)
+/area/space)
 "afp" = (
 /obj/item/extinguisher,
 /turf/unsimulated/floor/arctic,
@@ -24220,7 +24218,10 @@
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
 "bPL" = (
-/obj/effects/background_objects/x4,
+/obj/effects/background_objects/station/ss10{
+	pixel_x = -96;
+	pixel_y = -28
+	},
 /turf/space,
 /area/space)
 "cSD" = (
@@ -24239,10 +24240,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
-"drB" = (
-/obj/effects/background_objects/star_blue,
-/turf/space,
-/area/space)
 "duy" = (
 /turf/simulated/floor/longtile/black,
 /area/space)
@@ -24353,10 +24350,6 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
-"ieU" = (
-/obj/effects/background_objects/x5,
-/turf/space,
-/area/space)
 "ivG" = (
 /obj/noticeboard{
 	pixel_x = 10;
@@ -46427,7 +46420,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aeM
 aaa
 aaa
 aaa
@@ -62960,7 +62953,7 @@ aaa
 aaa
 aaa
 aaa
-bPL
+aaa
 aaa
 aaa
 aaa
@@ -72304,7 +72297,7 @@ aaa
 aaa
 aaa
 aaa
-aad
+aaa
 aaa
 aaa
 aaa
@@ -73513,7 +73506,7 @@ aaa
 aaa
 aaa
 aaa
-aad
+aaa
 aaa
 aaa
 aaa
@@ -74416,7 +74409,7 @@ aaK
 aeZ
 aaa
 aaa
-aad
+aaa
 aaa
 aaa
 aaa
@@ -74975,8 +74968,8 @@ aaa
 aaa
 aaa
 aaa
-aqj
-aqj
+aaa
+aaa
 aff
 aff
 aff
@@ -75277,8 +75270,8 @@ aaa
 aaa
 aaa
 aaa
-aqj
-aqj
+aaa
+aaa
 aff
 aff
 aff
@@ -75579,9 +75572,9 @@ aaa
 aaa
 aaa
 aaa
-aqj
-adV
-aeM
+aaa
+afs
+aan
 aft
 afu
 afu
@@ -75881,10 +75874,10 @@ aaa
 aad
 aaa
 aaa
-aqj
-aqj
-afo
-afu
+aaa
+aaa
+aak
+afv
 afE
 afx
 agh
@@ -76185,8 +76178,8 @@ aaa
 aaa
 aaa
 aaa
-afo
-aft
+aak
+afv
 afU
 afF
 afF
@@ -76787,7 +76780,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bPL
 aaa
 aak
 afv
@@ -77394,7 +77387,7 @@ aaa
 aaa
 aaa
 aak
-aft
+afv
 ahE
 ahE
 ahE
@@ -77696,7 +77689,7 @@ aaa
 aaa
 aaa
 aak
-afu
+afv
 aha
 afE
 afE
@@ -77997,7 +77990,7 @@ aaa
 aaa
 aaa
 aaa
-afo
+aak
 aft
 afJ
 afu
@@ -78298,8 +78291,8 @@ aaa
 aaa
 aaa
 aaa
-aqj
-afo
+aaa
+aak
 afu
 agd
 afu
@@ -78599,9 +78592,9 @@ aaa
 aaa
 aaa
 aaa
-aqj
-adV
-aeM
+aaa
+afs
+aan
 aft
 afu
 afu
@@ -78901,7 +78894,7 @@ aaa
 aaa
 aaa
 aaa
-aqj
+aaa
 aff
 aff
 aff
@@ -89374,7 +89367,7 @@ aaa
 aaa
 aaa
 aaa
-drB
+aaa
 aaa
 aaa
 aaa
@@ -92676,7 +92669,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+afo
 aaa
 aaa
 vYS
@@ -93035,7 +93028,7 @@ aaa
 aaa
 aaa
 aaa
-ieU
+aaa
 aaa
 aaa
 aaa
@@ -108174,7 +108167,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+adV
 aaa
 aaa
 aaa

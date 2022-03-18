@@ -38,6 +38,7 @@ TYPEINFO(/datum/component/glue_ready)
 
 /datum/component/glue_ready/UnregisterFromParent()
 	var/atom/movable/parent = src.parent
+	UnregisterSignal(parent, list(COMSIG_ATTACKBY, COMSIG_ITEM_AFTERATTACK, COMSIG_ATOM_HITBY_THROWN, COMSIG_MOVABLE_HIT_THROWN))
 	parent.remove_filter("glue_ready_outline")
 	. = ..()
 

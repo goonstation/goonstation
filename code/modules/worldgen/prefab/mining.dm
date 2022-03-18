@@ -126,6 +126,13 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabSizeX = 16
 		prefabSizeY = 15
 
+	customs_shuttle // Carsontheking's Crashed Customs shuttle
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_customs_shuttle.dmm"
+		prefabSizeX = 27
+		prefabSizeY = 16
+
 	pie_ship // Urs's ship originally built for the pie eating contest event
 		maxNum = 1
 		probability = 20

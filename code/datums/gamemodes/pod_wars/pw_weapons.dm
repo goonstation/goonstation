@@ -28,18 +28,18 @@
 			else
 				return ..(target, start, user)
 
-	shoot_point_blank(mob/M, mob/user)
+	shoot_point_blank(atom/target, mob/user)
 		if (canshoot())
 			if (team_num)
 				if (team_num == get_pod_wars_team_num(user))
-					return ..(M, user)
+					return ..(target, user)
 				else
 					boutput(user, "<span class='alert'>You don't have to right DNA to fire this weapon!</span><br>")
 					playsound(get_turf(user), "sound/machines/buzz-sigh.ogg", 20, 1)
 
 					return
 			else
-				return ..(M, user)
+				return ..(target, user)
 
 	disposing()
 		indicator_display = null

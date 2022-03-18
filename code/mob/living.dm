@@ -1091,7 +1091,7 @@
 		for(var/i = 0; i < 5; i++)
 			for(var/mob/living/L in T)
 				if(L != src)
-					for(var/image/chat_maptext/I in L.chat_text.lines)
+					for(var/image/chat_maptext/I in L.chat_text?.lines)
 						I.bump_up()
 			T = get_step(T, EAST)
 
