@@ -3874,9 +3874,9 @@
 /turf/simulated/floor/plating,
 /area/diner/dining)
 "kP" = (
-/obj/effects/background_objects/star_red{
-	pixel_x = -64;
-	pixel_y = -64
+/obj/effects/background_objects/star_blue{
+	pixel_x = -50;
+	pixel_y = -50
 	},
 /turf/space,
 /area/noGenerate)
@@ -5190,9 +5190,9 @@
 /turf/simulated/floor/grime,
 /area/diner/arcade)
 "uF" = (
-/obj/effects/background_objects/star_blue{
-	pixel_x = -50;
-	pixel_y = -50
+/obj/effects/background_objects/star_red{
+	pixel_x = -64;
+	pixel_y = -64
 	},
 /turf/space,
 /area/noGenerate)
@@ -56416,8 +56416,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+ab
+ab
 ab
 ab
 ab
@@ -56717,7 +56717,7 @@ aa
 aa
 aa
 aa
-aa
+ab
 ab
 ab
 ab
@@ -57018,11 +57018,11 @@ aa
 aa
 aa
 aa
-aa
+ab
+ab
 ab
 ab
 kP
-ab
 ab
 ab
 ab
@@ -57320,7 +57320,7 @@ aa
 aa
 aa
 aa
-aa
+ab
 ab
 ab
 ab

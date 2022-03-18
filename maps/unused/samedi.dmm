@@ -32211,7 +32211,7 @@
 /obj/item/clothing/glasses/visor,
 /obj/item/device/radio/headset/deaf,
 /obj/item/robodefibrillator,
-/obj/item/device/analyzer/healthanalyzer/borg,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/cable{
 	d2 = 8;

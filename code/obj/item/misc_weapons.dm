@@ -851,9 +851,10 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "fireaxe"
 	item_state = "fireaxe"
+	hitsound = null
 	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY | ONBELT
 	object_flags = NO_ARM_ATTACH
-	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items to 4 times as much damage to doors.
+	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items do 4 times as much damage to doors.
 	hit_type = DAMAGE_CUT
 	click_delay = 10
 	two_handed = 0
@@ -905,6 +906,11 @@
 		src.two_handed = 0
 		set_values()
 		return ..()
+
+	attack(mob/target, mob/user) // custom hit sounds so we can get nice n meaty
+		..()
+		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 25 * (1 + src.two_handed), pitch=0.7) // magic numbers abound. trial and error
+		playsound(target, 'sound/impact_sounds/Generic_Hit_3.ogg', 18 * (1 + src.two_handed), pitch=0.55)
 
 	New()
 		..()

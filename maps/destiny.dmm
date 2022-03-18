@@ -42457,7 +42457,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/clothing/glasses/healthgoggles/upgraded,
-/obj/item/device/analyzer/healthanalyzer/borg,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
 /obj/item/reagent_containers/hypospray,
 /turf/simulated/floor/blue/checker{
 	dir = 8

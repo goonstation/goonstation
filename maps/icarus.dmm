@@ -19590,7 +19590,7 @@
 /obj/item/device/radio/headset/deaf,
 /obj/item/robodefibrillator,
 /obj/item/remote/porter/port_a_nanomed,
-/obj/item/device/analyzer/healthanalyzer/borg,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/item/reagent_containers/hypospray,
 /obj/blind_switch/area/east,

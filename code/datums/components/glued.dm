@@ -105,6 +105,8 @@ TYPEINFO(/datum/component/glued)
 
 /datum/component/glued/UnregisterFromParent()
 	var/atom/movable/parent = src.parent
+	UnregisterSignal(parent, list(COMSIG_ATTACKHAND, COMSIG_ATTACKBY, COMSIG_MOVABLE_BLOCK_MOVE, COMSIG_MOVABLE_SET_LOC, COMSIG_ATOM_EXPLODE, COMSIG_ATOM_EXPLODE_INSIDE))
+	UnregisterSignal(glued_to, COMSIG_PARENT_PRE_DISPOSING)
 	parent.remove_filter("glued_outline")
 	parent.animate_movement = src.original_animate_movement
 	if(parent.anchored == MAGIC_GLUE_ANCHORED)
