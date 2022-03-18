@@ -141,7 +141,7 @@
 
 /datum/targetable/flockmindAbility/designateEnemy
 	name = "Designate Enemy"
-	desc = "Mark someone as an enemy."
+	desc = "Mark or unmark someone as an enemy."
 	icon_state = "designate_enemy"
 	cooldown = 0
 	//sticky = 1
@@ -158,7 +158,15 @@
 		return TRUE
 
 	var/datum/flock/flock = F.flock
-	flock?.updateEnemy(M)
+
+	if (!flock)
+		return TRUE
+
+	if (flock.isEnemy(M))
+		flock.removeEnemy(M)
+		return
+
+	flock.updateEnemy(M)
 
 /////////////////////////////////////////
 
