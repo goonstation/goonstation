@@ -1,35 +1,19 @@
-///Helper. shouldn't be used anywhere other than these defines
-#define GET input(user, custom_message || message, custom_title || title)
-/// Get raw text from the user in paragraph form
-#define GET_TEXT_LONG(title, messsage) {GET as null|message}
-/// Get raw text from the user in line form
-#define GET_TEXT_SHORT(title, message) {GET as null|text}
-/// Get a number from the user
-#define GET_NUM(title, message) {GET as null|num}
-/// Get a file from the user
-#define GET_FILE(title, message) {GET as null|file}
-/// Get an icon from the user
-#define GET_ICON(title, message) {GET as null|icon}
-/// Get a color via color picker
-#define GET_COLOR(title, message) {GET as null|color}
-/// Get a type (prompts for input in the case of ambiguity)
-#define GET_TYPE(title, message) {get_one_match(GET_TEXT_SHORT(title, message))}
-
-
 /// For inputting data for things like edit-variables, proccall, etc
 /// @param allowed_types The types of input which are allowed, which the user selects from. The selected type is returned as part of the data_input_result
 /// @param user 		 The client using this. Tied to a client rather than a mob so mob swaps don't prevent use.
 /// @param custom_title  If not null, set as the title for the input
 ///	@param custom_text	 If not null, set as the text for the input
 /// @return 			 A data_input_result with the parsed input and the selected input type, or both null if we didn't get any data
-proc/input_data(list/allowed_types, client/user, custom_title = null, custom_text = null, default = null, default_type = null)
-	. = new data_input_result(null, null) //in case anything goes wrong, return this
+proc/input_data(list/allowed_types, client/user, custom_title = null, custom_message = null, default = null, default_type = null)
+	. = new /datum/data_input_result(null, null) //in case anything goes wrong, return this
 
 	if (!isclient(user)) //attempt to recover
 		if (ismob(user))
-			user = user.client
+			var/mob/mob_user = user
+			user = mob_user.client
 		else if (istype(user, /datum/mind))
-			user = user.current?.client
+			var/datum/mind/user_mind
+			user = user_mind.current?.client
 
 	if (!isclient(user)) //rip
 		stack_trace("Tried to input data with non-client thing [user] \ref[user] of type [user.type]")
@@ -40,36 +24,43 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_tex
 		return
 
 	var/input = null 	// The input from the user- usually text, but might be a file or something.
-	var/selected_type = input(user.mob, "Which input type?", "Input Type Selection") as null|text in allowed_types //TODO make this a TGUI list once we can indicate defaults on those
+	var/selected_type = input(user.mob, "Which input type?", "Input Type Selection", default_type) as null|anything in allowed_types //TODO make this a TGUI list once we can indicate defaults on those
 
 	if (!selected_type)
 		return
 
+	if (selected_type != default_type) //clear the default if we aren't using the suggested type
+		default = null
+
 	switch(selected_type)
 		if (DATA_INPUT_NUM)
-			input = GET_NUM("Enter number:", null)
+			input = input("Enter number:", null, default) as null|num
 
 		if (DATA_INPUT_TYPE)
-			input = GET_TYPE("Enter type:", null)
+			var/stub = input("Enter part of type:") as null|text
+			if (!stub)
+				boutput(user, "<span class='alert'>Cancelled.</span>")
+				return
+			input = get_one_match(stub, /datum)
 
 		if (DATA_INPUT_COLOR)
-			input = GET_COLOR("Select color:", null)
+			input = input("Select color:", null, default) as null|color
 
 		if (DATA_INPUT_TEXT)
-			input = GET_TEXT_LONG("Enter text:", null)
+			input = input("Enter text:", null, default) as null|message
 
 		if (DATA_INPUT_ICON)
-			input = GET_ICON("Select icon:", null)
+			input = input("Select icon:", null) as null|icon
 
 		if (DATA_INPUT_LIST)
 			//TODO uhhhhhhhh h
 
 		if (DATA_INPUT_FILE)
-			input = GET_FILE("Select file:", null)
+			input = input("Select file:", null) as null|file
 
 		if (DATA_INPUT_DIR)
-			input = GET_TEXT_SHORT("Enter direction:", "Dir as text (e.g. North), case doesn't matter")
-			input = input.uppertext()
+			input = input("Enter direction:", "Dir as text (e.g. North), case doesn't matter", default) as null|text
+			input = uppertext(input)
 			switch(input)
 				if("NORTH")
 					input = NORTH
@@ -92,11 +83,11 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_tex
 					return
 
 		if (DATA_INPUT_JSON)
-			input = GET_TEXT_SHORT("Enter JSON:", null)
+			input = input("Enter JSON:", null, default) as null|text//I expect that if you're passing in a JSON as a default, you decode it beforehand. YOU BETTER
 			input = json_decode(input)
 
 		if (DATA_INPUT_REF)
-			input = GET_TEXT_SHORT("Enter ref:", "brackets don't matter")
+			input = input("Enter ref:", "brackets don't matter", null) as null|text
 			input = locate(input)
 			if (!input)
 				input = locate("\[[input]\]")
@@ -105,9 +96,9 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_tex
 				return
 
 		if (DATA_INPUT_TURF_BY_COORDS)
-			var/x = GET_NUM("X coordinate", "Set to turf at \[_, ?, ?\]")
-			var/y = GET_NUM("Y coordinate", "Set to turf at \[[x], _, ?\]")
-			var/z = GET_NUM("Z coordinate", "Set to turf at \[[x], [y], _\]")
+			var/x = input("X coordinate", "Set to turf at \[_, ?, ?\]", null) as null|num
+			var/y = input("Y coordinate", "Set to turf at \[[x], _, ?\]", null) as null|num
+			var/z = input("Z coordinate", "Set to turf at \[[x], [y], _\]", null) as null|num
 			input = locate(x, y, z)
 			if (!input)
 				boutput(user, "<span class='alert'>Invalid turf.</span>")
@@ -122,14 +113,14 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_tex
 			input = promise.wait_for_value() //TODO timeout? maybe?
 
 		if (DATA_INPUT_NEW_INSTANCE)
-			var/type = GET_TYPE("Enter type to instantiate:", null)
-			if (!type)
+			var/stub = input("Enter part of type:") as null|text
+			if (!stub)
 				boutput(user, "<span class='alert'>Cancelled.</span>")
 				return
-			input = new type
+			input = get_one_match(stub, /datum)
 
 		if (DATA_INPUT_NUM_ADJUST) // identical to num, but caller will treat it differently after we return
-			input = GET_NUM("Enter amount to adjust by:", null)
+			input = input("Enter amount to adjust by:") as null|num
 
 		if (DATA_INPUT_ATOM_ON_CURRENT_TURF) // this is ugly but it's legacy so WHATEVER
 			var/list/possible = list()
@@ -159,6 +150,7 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_tex
 
 	if (isnull(input) && selected_type != DATA_INPUT_NULL)
 		boutput(user, "<span class='alert'>Cancelled.</span>")
+		return
 
 	// Done with the switch. Now we return whatever we have
 	var/datum/data_input_result/result = new(input, selected_type)
@@ -178,7 +170,7 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_tex
 
 /// Refpicker - click thing, get its ref. Tied to the data_input proc via a promise.
 /datum/targetable/refpicker
-	var/promise/promise = null
+	var/datum/promise/promise = null
 	target_anything = TRUE
 	targeted = TRUE
 	max_range = INFINITY
@@ -190,9 +182,3 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_tex
 
 	handleCast(var/atom/selected)
 		promise.fulfill(selected)
-
-#undef GET
-#undef GET_TEXT_LONG
-#undef GET_TEXT_SHORT
-#undef GET_FILE
-#undef GET_COLOR
