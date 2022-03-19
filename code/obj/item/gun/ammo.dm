@@ -51,6 +51,7 @@
 	var/amount_left = 0.0
 	var/max_amount = 1000
 	var/unusualCell
+	var/refillable = TRUE
 	ammo_type = new/datum/projectile/bullet
 
 	var/ammo_cat = null
