@@ -142,6 +142,9 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 		if (DATA_INPUT_NEW_LIST)
 			input = list()
 
+		if (DATA_INPUT_MOB_REFERENCE)
+			input = input("Select a mob:") as null|mob in world
+
 		if (DATA_INPUT_CANCEL) // don't crash, but don't do anything.
 
 		else

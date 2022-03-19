@@ -17,6 +17,7 @@
 #define DATA_INPUT_NULL "null"
 #define DATA_INPUT_RESTORE "Restore to Default"
 #define DATA_INPUT_NEW_LIST "New List" //TODO some way to build lists for proc calling/args
+#define DATA_INPUTMOB_REFERENCE "Mob Reference"
 #define DATA_INPUT_CANCEL "---CANCEL---"
 
 //TODO figure out associated list shit
