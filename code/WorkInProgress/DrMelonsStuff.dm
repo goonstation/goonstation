@@ -111,11 +111,15 @@
 		. = ..()
 
 	mob_flip_inside(var/mob/user)
-		user.show_text("<span class='alert'>You splash around enough to shake the tub!</span>")
-		src.visible_message("<span class='notice'>[src.occupant] splish-splashes around!</span>")
-		playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
-		animate_wiggle_then_reset(src, 1)
-		src.reagents.trans_to(src.last_turf, 5)
+		if (src.reagents.total_volume)
+			user.show_text("<span class='alert'>You splash around enough to shake the tub!</span>")
+			src.visible_message("<span class='notice'>[src.occupant] splish-splashes around!</span>")
+			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+			animate_wiggle_then_reset(src, 1, 3)
+			src.reagents.trans_to(src.last_turf, 5)
+			return
+		else
+			..()
 
 	get_desc(dist, mob/user)
 		if (dist > 2)
