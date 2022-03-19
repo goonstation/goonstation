@@ -170,7 +170,7 @@ proc/filter_trait_hats(var/type)
 
 	dropped(mob/user)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.loc != user)
 				light.attach(src)
 
@@ -661,17 +661,12 @@ proc/filter_trait_hats(var/type)
 	item_state = "wizard"
 	magical = 1
 	item_function_flags = IMMUNE_TO_ACID
+	duration_remove = 10 SECONDS
 
 	setupProperties()
 		..()
 		setProperty("disorient_resist_eye", 15)
 		setProperty("disorient_resist_ear", 15)
-
-	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
-		. = ..()
-		if (prob(75))
-			source.show_message(text("<span class='alert'>\The [src] writhes in your hands as though it is alive! It just barely wriggles out of your grip!</span>"), 1)
-			. = 0
 
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
@@ -801,7 +796,7 @@ proc/filter_trait_hats(var/type)
 			playsound(src, src.hitsound, 60, 1)
 			M.changeStatus("weakened", 2 SECONDS)
 			M.force_laydown_standup()
-			SPAWN_DBG(0) // show these messages after the "hit by" ones
+			SPAWN(0) // show these messages after the "hit by" ones
 				if (M)
 					if (ishuman(M) && M.health < -10)
 						var/mob/living/carbon/human/H = M
@@ -960,7 +955,7 @@ proc/filter_trait_hats(var/type)
 		light_c.update(1)
 
 		if (prob(10))
-			SPAWN_DBG( rand(300, 900) )
+			SPAWN( rand(300, 900) )
 				src.visible_message("<b>[src]</b> <i>says, \"I'm the boss.\"</i>")
 
 	unequipped(mob/user)
@@ -977,7 +972,7 @@ proc/filter_trait_hats(var/type)
 			src.processing++
 			processing_items |= src
 		boutput(user, "<span class='notice'>You better start running! It's kill or be killed now, buddy!</span>")
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			playsound(src.loc, "sound/vox/time.ogg", 100, 1)
 			sleep(1 SECOND)
 			playsound(src.loc, "sound/vox/for.ogg", 100, 1)
@@ -1004,7 +999,7 @@ proc/filter_trait_hats(var/type)
 				H.unequip_all()
 				H.gib()
 
-				SPAWN_DBG(50 SECONDS)
+				SPAWN(50 SECONDS)
 					if (user && !isdead(user))
 						user.suiciding = 0
 				//qdel(src)
@@ -1035,7 +1030,7 @@ proc/filter_trait_hats(var/type)
 				H.gib()
 				explosion_new(src, T, 50) // like a really mean double macro
 
-				SPAWN_DBG(50 SECONDS)
+				SPAWN(50 SECONDS)
 					if (user && !isdead(user))
 						user.suiciding = 0
 				qdel(src)

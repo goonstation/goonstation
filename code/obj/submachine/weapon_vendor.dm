@@ -95,6 +95,8 @@
 
 
 	proc/vended(var/atom/A)
+		if(A.layer <= src.layer)
+			A.layer = src.layer + 0.1
 		if(log_purchase)
 			logTheThing("debug", usr, null, "bought [A] from [src] at [log_loc(get_turf(src))]")
 		.= 0
@@ -126,7 +128,7 @@
 	vended(var/atom/A)
 		..()
 		if (istype(A,/obj/item/storage/belt/security))
-			SPAWN_DBG(2 DECI SECONDS) //ugh belts do this on spawn and we need to wait
+			SPAWN(2 DECI SECONDS) //ugh belts do this on spawn and we need to wait
 				var/list/tracklist = list()
 				for(var/atom/C in A.contents)
 					if (istype(C,/obj/item/gun) || istype(C,/obj/item/baton))
@@ -158,6 +160,7 @@
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		// List of avaliable objects for purchase
 		materiel_stock += new/datum/materiel/sidearm/smartgun
 		materiel_stock += new/datum/materiel/sidearm/pistol
@@ -193,6 +196,10 @@
 		src.credits[WEAPON_VENDOR_CATEGORY_SIDEARM]++
 		src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
 		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
 // Materiel avaliable for purchase:
@@ -383,8 +390,8 @@
 
 /datum/materiel/loadout/custom
 	name = "Custom Class Uplink"
-	path = /obj/item/uplink/syndicate
-	description = "A standard syndicate uplink loaded with 12 telecrytals, allowing you to pick and choose from an array of syndicate items."
+	path = /obj/item/uplink/syndicate/nukeop
+	description = "A standard syndicate uplink loaded with 12 telecrystals, allowing you to pick and choose from an array of syndicate items."
 /*
 /datum/materiel/storage/rucksack
 	name = "Assault Rucksack"

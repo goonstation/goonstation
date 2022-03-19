@@ -44,7 +44,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		fxlist = lunar_fx_sounds
 		if (ambientSound)
 
-			SPAWN_DBG(6 SECONDS)
+			SPAWN(6 SECONDS)
 				var/sound/S = new/sound()
 				S.file = ambientSound
 				S.repeat = 0
@@ -96,7 +96,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 					ambientSound.volume = 60
 					H << ambientSound
 					if(S)
-						SPAWN_DBG(sound_delay)
+						SPAWN(sound_delay)
 							H << S
 
 /area/shuttle/lunar_elevator/museum/upper
@@ -141,7 +141,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (istype( get_step(src, WEST), src.type))
 				if (istype( get_step(src, NORTH), src.type))
 					//Lower right
@@ -535,7 +535,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	New()
 		..()
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (src.botcard)
 				src.botcard.access += 999
 
@@ -685,7 +685,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 #define NT_RISING_SUN (1<<2)
 
 #define MAPTEXT_PAUSE (5 SECONDS)
-#define FOUND_NEAT(FLAG) src.distracted = TRUE; src.neat_things |= FLAG; SPAWN_DBG(0)
+#define FOUND_NEAT(FLAG) src.distracted = TRUE; src.neat_things |= FLAG; SPAWN(0)
 #define END_NEAT sleep(MAPTEXT_PAUSE*2); src.distracted = FALSE
 
 /datum/computer/file/guardbot_task/tourguide/lunar
@@ -702,7 +702,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 				has_been_underground = TRUE
 				src.distracted = TRUE
 				master.speak("Um, this isn't part of the tour.  The transit station is technically owned by the city, not the museum.")
-				SPAWN_DBG(5 SECOND)
+				SPAWN(5 SECOND)
 					if (master)
 						master.speak("I guess I could narrate?  I um, haven't ever been in the tunnels before.")
 					src.distracted = FALSE
@@ -729,7 +729,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 				neat_things_underground |= NT_RISING_SUN
 
 				master.speak("There is a house on Luna that they call the Rising Sun.")
-				SPAWN_DBG(5 SECOND)
+				SPAWN(5 SECOND)
 					if (master)
 						master.speak("It's been the ruin of many a poor bud and God, I know I'm one.")
 					src.distracted = FALSE
@@ -850,7 +850,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			master.moving = 0
 			src.awaiting_beacon = 10
 
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				src.master.speak("Uh.  That isn't supposed to happen.")
 				src.state = 0	//Yeah, let's find that route.
 
@@ -901,14 +901,14 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			if (tourDoor == callerDoor)
 				continue
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				tourDoor.open(src)
 
 		if(!src.operating) //in case of emag
 			src.operating = 1
 		flick("bdoor[doordir]c0", src)
 		src.icon_state = "bdoor[doordir]0"
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.set_density(0)
 			src.RL_SetOpacity(0)
 			update_nearby_tiles()
@@ -932,7 +932,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			if (tourDoor == callerDoor)
 				continue
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				tourDoor.close(src)
 
 		flick("bdoor[doordir]c1", src)
@@ -953,8 +953,9 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 /obj/machinery/door/lunar_breakdoor
 	name = "External Airlock"
-	icon = 'icons/misc/lunar.dmi'
-	icon_state = "breakairlock0"
+	icon = 'icons/obj/doors/SL_doors.dmi'
+	icon_state = "airlock_closed"
+	icon_base = "airlock"
 	anchored = 1
 	density = 1
 	opacity = 1
@@ -982,7 +983,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		src.operating = -1 // set operating to -1 so A* fails on door check
 
 		playsound(src.loc, 'sound/machines/airlock_break_very_temp.ogg', 50, 1)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			flick("breakairlock1", src)
 			src.icon_state = "breakairlock2"
 			sleep (2)
@@ -1092,7 +1093,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		src.visible_message("<span class='alert'><B>[src]</B> awkwardly bashes [src.target]!</span>")
 		random_brute_damage(src.target, rand(5,15),1)
 		playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 	process()
@@ -1146,14 +1147,14 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		src.attacking = 1
 		src.visible_message("<span class='alert'>The <B>[src.name]</B> [pick("conks", "whacks", "bops")] [src.target] with [pick(non_spy_weapons)]!</span>")
 		random_brute_damage(src.target, rand(2,4),1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 	CritterDeath()
 		if (!src.alive) return
 		..()
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			elecflash(src,power=2,exclude_center = 0)
 			qdel(src)
 
@@ -1200,7 +1201,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		light.set_brightness(0.4)
 		light.enable()
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src.tag)
 				src.id_tag = src.tag
 				src.tag = null
@@ -1641,7 +1642,7 @@ datum/computer/file/embedded_program/maintpanel
 			memory += "display_add[line]"
 			memory["display_add[line]"] = ""
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			updateDisplay()
 
 	disposing()
@@ -2087,7 +2088,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 	New()
 		..()
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (!locate("MNXpanel"))
 				src.tag = "MNXpanel"
 				src.id_tag = src.tag
@@ -2136,7 +2137,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 
 		well_fuck_its_armed = 1
 		user.visible_message("<b>[user]</b> prods [src].", "You prod at [src].  It's a pretty accurate replica, it seems.  Neat.")
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.visible_message("<span class='alert'>[src] gives a grumpy beep! <b><font style='font-size:200%;'>OH FUCK</font></b></span>")
 
 			playsound(src.loc, "sound/weapons/armbomb.ogg", 50)

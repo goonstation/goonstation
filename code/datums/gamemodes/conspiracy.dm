@@ -54,7 +54,12 @@
 
 	var/conspiratorList = "The conspiracy consists of: "
 	for (var/datum/mind/conspirator in traitors)
-		conspiratorList = conspiratorList + "<b>" + conspirator.current.name + "</b>, "
+		var/conspirator_name
+		if (conspirator.assigned_role == "Clown")
+			conspirator_name = "a Clown"
+		else
+			conspirator_name = conspirator.current.real_name
+		conspiratorList += "<b>[conspirator_name]</b>, "
 
 	var/pickedObjective = pick(typesof(/datum/objective/conspiracy))
 	for(var/datum/mind/conspirator in traitors)
@@ -70,7 +75,7 @@
 		boutput(conspirator.current, conspiratorList)
 		boutput(conspirator.current, meetingPoint)
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/conspiracy/proc/random_radio_frequency()

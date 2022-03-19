@@ -148,7 +148,7 @@
 							item_amounts += 1
 							items += /obj/item/clothing/under/rank/cargo
 							item_amounts += 1
-							items += /obj/decal/skeleton
+							items += /obj/decal/fakeobjects/skeleton
 							item_amounts += 1
 						else
 							items += /obj/critter/rockworm
@@ -348,7 +348,7 @@
 				new X(src)
 			list_counter++
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			UpdateIcon()
 
 		return

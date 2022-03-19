@@ -33,7 +33,7 @@ proc/pick_landmark(name, default=null)
 
 /obj/landmark/New()
 	if(current_state > GAME_STATE_MAP_LOAD)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.init()
 		..()
 	else
@@ -181,7 +181,7 @@ var/global/list/job_start_locations = list()
 
 	New()
 		if(current_state >= GAME_STATE_WORLD_INIT && prob(spawnchance) && !src.disposed)
-			SPAWN_DBG(6 SECONDS) // bluh, replace with some `initialize` variant later when someone makes it (needs to work with dmm loader)
+			SPAWN(6 SECONDS) // bluh, replace with some `initialize` variant later when someone makes it (needs to work with dmm loader)
 				if(!src.disposed)
 					initialize()
 		..()
@@ -196,6 +196,13 @@ var/global/list/job_start_locations = list()
 			src.type_to_spawn = name_to_type[src.name]
 		if(isnull(src.type_to_spawn))
 			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
+
+		#ifdef BAD_MONKEY_NO_BANANA
+		if (findtext("[src.type_to_spawn]", "monkey")) //ugly
+			qdel(src)
+			return
+		#endif
+
 		new type_to_spawn(src.loc)
 		qdel(src)
 

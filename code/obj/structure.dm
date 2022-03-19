@@ -222,7 +222,7 @@ obj/structure/ex_act(severity)
 				qdel(the_girder)
 			if (GIRDER_PLATE)
 				verbens = "finishes plating"
-				logTheThing("station", owner, null, "builds a Wall in [owner.loc.loc] ([showCoords(owner.x, owner.y, owner.z)])")
+				logTheThing("station", owner, null, "builds a Wall in [owner.loc.loc] ([log_loc(owner)])")
 				var/turf/Tsrc = get_turf(the_girder)
 				var/turf/simulated/wall/WALL
 				var/obj/item/sheet/S = the_tool
@@ -293,7 +293,7 @@ obj/structure/ex_act(severity)
 		FW.known_by += user
 		S.change_stack_amount(-1)
 		boutput(user, "You finish building the false wall.")
-		logTheThing("station", user, null, "builds a False Wall in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+		logTheThing("station", user, null, "builds a False Wall in [user.loc.loc] ([log_loc(user)])")
 		qdel(src)
 		return
 

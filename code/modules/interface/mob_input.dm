@@ -47,7 +47,7 @@
 					update_cursor()
 				return 100
 			actions.interrupt(src, INTERRUPT_ACTION)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				S.handleCast(target)
 				if(S)
 					if((S.ignore_sticky_cooldown && !S.cooldowncheck()) || (S.sticky && S.cooldowncheck()))
@@ -75,7 +75,7 @@
 		if (istype(target, B))
 			return 100
 		actions.interrupt(src, INTERRUPT_ACTION)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			B.execute_ability(target)
 			src.targeting_ability = null
 			src.update_cursor()

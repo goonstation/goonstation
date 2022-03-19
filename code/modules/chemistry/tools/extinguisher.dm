@@ -8,6 +8,7 @@
 	var/const/min_distance = 1
 	var/const/max_distance = 5
 	var/const/reagents_per_dist = 5
+	var/initial_volume = 100
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | OPENCONTAINER
 	tooltip_flags = REBUILD_DIST
@@ -54,8 +55,8 @@
 
 /obj/item/extinguisher/New()
 	..()
-	src.create_reagents(100)
-	reagents.add_reagent("ff-foam", 100)
+	src.create_reagents(initial_volume)
+	reagents.add_reagent("ff-foam", initial_volume)
 	src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 	BLOCK_SETUP(BLOCK_TANK)
 
@@ -72,10 +73,8 @@
 
 /obj/item/extinguisher/attack(mob/M as mob, mob/user as mob)
 	src.hide_attack = 0
-	if(user.a_intent == "help") //don't smack people with a deadly weapon while you're trying to extinguish them, thanks
+	if(user.a_intent == "help" && !safety) //don't smack people with a deadly weapon while you're trying to extinguish them, thanks
 		src.hide_attack = 1
-		if (safety)
-			src.attack_self(user)
 		return
 	..()
 
@@ -158,12 +157,12 @@
 		src.reagents.trans_to_direct(R, min(src.reagents.total_volume, (distance * reagents_per_dist)))
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
-		logTheThing("combat", user, T, "sprays [src] at [constructTarget(T,"combat")], [log_reagents(src)] at [showCoords(user.x, user.y, user.z)] ([get_area(user)])")
+		logTheThing("combat", user, T, "sprays [src] at [constructTarget(T,"combat")], [log_reagents(src)] at [log_loc(user)] ([get_area(user)])")
 
 		user.lastattacked = target
 
 		for (var/a = 0, a < reagents_per_dist, a++)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (disposed)
 					return
 				if (!src.reagents)
@@ -180,7 +179,7 @@
 			step(user, user.inertia_dir)
 		else if( user.buckled && !user.buckled.anchored )
 			var/wooshdir = get_dir( target, user )
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for( var/i = 1, (user?.buckled && !user.buckled.anchored && i <= rand(3,5)), i++ )
 					step( user.buckled, wooshdir )
 					sleep( rand(1,3) )
@@ -212,3 +211,7 @@
 		reagents.move_trigger(M, kindof)
 
 /obj/item/extinguisher/abilities = list(/obj/ability_button/extinguisher_ab)
+
+/obj/item/extinguisher/large //for borgs. feel free to use elsewhere if applicable
+	name = "fire extinguisher XL"
+	initial_volume = 300

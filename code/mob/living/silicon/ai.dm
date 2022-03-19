@@ -1,4 +1,5 @@
 var/global/list/available_ai_shells = list()
+var/datum/tgui/map_ui
 var/list/ai_emotions = list("Happy" = "ai_happy",\
 	"Very Happy" = "ai_veryhappy",\
 	"Neutral" = "ai_neutral",\
@@ -138,7 +139,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/bruteloss = 0
 	var/fireloss = 0
 
-	var/mob/dead/aieye/eyecam = null
+	var/mob/living/intangible/aieye/eyecam = null
 
 	var/deployed_to_eyecam = 0
 	var/datum/ai_hologram_data/holoHolder = new
@@ -192,6 +193,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/can_strip()
 	return 0
 
+/mob/living/silicon/ai/full_heal()
+	..()
+	src.try_rebooting_it()
+
 /mob/living/silicon/ai/disposing()
 	STOP_TRACKING
 	if (light)
@@ -202,7 +207,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	..(loc)
 	START_TRACKING
 
-	APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)
@@ -228,7 +233,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.UpdateOverlays(get_image("ai_blank"), "backscreen")
 	update_appearance()
 
-	src.eyecam = new /mob/dead/aieye(src.loc)
+	src.eyecam = new /mob/living/intangible/aieye(src.loc)
 
 	hud = new(src)
 	src.attach_hud(hud)
@@ -244,7 +249,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.set_hat(new hat_type)
 
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		src.botcard.access = get_all_accesses()
 		src.cell.charge = src.cell.maxcharge
 		src.radio1.name = "Primary Radio"
@@ -260,7 +265,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			src.brain.name = "neural net processor"
 			src.brain.owner = src.mind
 
-	SPAWN_DBG(0.6 SECONDS)
+	SPAWN(0.6 SECONDS)
 		src.net_id = format_net_id("\ref[src]")
 
 		update_terminal()
@@ -340,7 +345,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 			src.visible_message("<span class='alert'><b>[user.name]</b> begins undoing [src.name]'s CPU bolts.</span>")
 			var/turf/T = user.loc
-			SPAWN_DBG(6 SECONDS)
+			SPAWN(6 SECONDS)
 				if (user.loc != T || !can_act(user))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
@@ -350,7 +355,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 			src.visible_message("<span class='alert'><b>[user.name]</b> begins affixing [src.name]'s CPU bolts.</span>")
 			var/turf/T = user.loc
-			SPAWN_DBG(6 SECONDS)
+			SPAWN(6 SECONDS)
 				if (user.loc != T || !can_act(user))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
@@ -419,6 +424,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				src.show_laws()
 				src.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 				src.verbs += /mob/living/silicon/ai/proc/show_laws_verb
+				src.verbs += /mob/living/silicon/ai/proc/reset_apcs
 				src.verbs += /mob/living/silicon/ai/proc/de_electrify_verb
 				src.verbs += /mob/living/silicon/ai/proc/unbolt_all_airlocks
 				src.verbs += /mob/living/silicon/ai/proc/ai_camera_track
@@ -440,7 +446,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				src.job = "AI"
 				if (src.mind)
 					src.mind.assigned_role = "AI"
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.choose_name(3)
 
 	else if (istype(W, /obj/item/roboupgrade/ai/))
@@ -543,10 +549,12 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if (src.turn_it_back_on())
-		user.visible_message("<span class='alert'><b>[user.name]</b> pokes the restart button on [src.name]! [src.name] beeps and starts to come online!</span>")
-		return 1
+		user.visible_message("<span class='alert'><b>[user.name]</b> pokes the restart button on [src.name]! [src.name] beeps and starts to come online!</span>") //revived, transferred client to
+		return TRUE
+	else if(!isobserver(src.brain.owner?.current))
+		user.visible_message("<span class='alert'><b>[user.name]</b> pokes the restart button on [src.name]! [src.name] comes online, but remains in hiberation mode.</span>") //revived, didn't transfer client to
 	else
-		user.visible_message("<span class='alert'><b>[user.name]</b> pokes the restart button on [src.name], but [src.name] beeps and shuts down, too damaged to power on.</span>")
+		user.visible_message("<span class='alert'><b>[user.name]</b> pokes the restart button on [src.name], but [src.name] beeps and shuts down, too damaged to power on.</span>") //didn't revive
 
 
 /mob/living/silicon/ai/proc/turn_it_back_on()
@@ -554,14 +562,14 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		setalive(src)
 		if (src.brain.owner && src.brain.owner.current)
 			if (!isobserver(src.brain.owner.current))
-				return
+				return FALSE
 			var/mob/ghost = src.brain.owner.current
 			ghost.show_text("<span class='alert'><B>You feel your self being pulled back from the afterlife!</B></span>")
 			ghost.mind.transfer_to(src)
 			qdel(ghost)
 			update_appearance()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /mob/living/silicon/ai/attack_hand(mob/user)
@@ -578,7 +586,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		var/action_taken = input("What do you want to do?","AI Unit") in actions
 		switch (action_taken)
 			if ("Remove CPU Unit")
-				src.eject_brain()
+				src.eject_brain(user)
 
 			if ("Restart AI")
 				src.try_rebooting_it(user)
@@ -851,7 +859,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	for(var/target in src.terminals)
 		src.terminals.Remove(target)
 		src.post_status(target, "command", "term_message", "data", "Alert: Connected AI has been shut down. Disconnecting...")
-		SPAWN_DBG(0.3 SECONDS)
+		SPAWN(0.3 SECONDS)
 			src.post_status(target, "command","term_disconnect")
 	// we do this after we disconnect connected terminal computers since we dont need to alert the ai of each disconnected terminal
 	if(gibbed) // and yeah people *can* reconnect if we aren't gibbed, but this is a way to tell them "we're dead, no need to stay connected"
@@ -872,7 +880,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			break
 	if (!( cancel ))
 		boutput(world, "<B>Everyone is dead! Resetting in 30 seconds!</B>")
-		SPAWN_DBG( 300 )
+		SPAWN( 300 )
 			logTheThing("diary", null, null, "Rebooting because of no live players", "game")
 			Reboot_server()
 			return
@@ -1053,7 +1061,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		if ("twitch")
 			message = "<B>[src]</B> twitches."
 			m_type = 1
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/old_x = src.pixel_x
 				var/old_y = src.pixel_y
 				src.pixel_x += rand(-2,2)
@@ -1065,7 +1073,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		if ("twitch_v","twitch_s")
 			message = "<B>[src]</B> twitches violently."
 			m_type = 1
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/old_x = src.pixel_x
 				var/old_y = src.pixel_y
 				src.pixel_x += rand(-3,3)
@@ -1087,7 +1095,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				//flick("ai-flip", src)
 				if(faceEmotion != "ai-red" && faceEmotion != "ai-tetris")
 					UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', "[faceEmotion]-flip", src.layer+0.2), "actual_face")
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
 
 
@@ -1190,10 +1198,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	#ifdef DATALOGGER
 				game_stats.Increment("farts")
 	#endif
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					src.emote_allowed = 1
 		else
-			src.show_text("Invalid Emote: [act]")
+			if (voluntary) src.show_text("Invalid Emote: [act]")
 			return
 
 	if ((message && isalive(src)))
@@ -1265,7 +1273,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		var/success = 0
 		//src.show_text("<b>System will now attempt to restore local power. Stand by...</b>")
 		// jesus christ shut up
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			var/obj/machinery/power/apc/APC = get_local_apc(src)
 			if (APC)
 				if (istype(APC.cell,/obj/item/cell/))
@@ -1286,7 +1294,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			//	src.show_text("<b>Local APC unit not found. System will re-try shortly.</b>", "red")
 
 			if (!success)
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					src.aiRestorePowerRoutine = 1
 			else
 				src.aiRestorePowerRoutine = 0
@@ -1406,11 +1414,11 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		for(var/target in src.terminals) // otherwise they'll still be sorta connected
 			src.terminals.Remove(target)
 			textToPlayer("--- Connection lost with [target]!")
-			SPAWN_DBG(0.3 SECONDS)
+			SPAWN(0.3 SECONDS)
 				src.post_status(target, "command","term_message", "data", "Alert: Terminal connection disrupted. Disconnecting...")
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				src.post_status(target, "command","term_disconnect")
-		SPAWN_DBG(2 SECONDS) //so our messages send before the data terminal connection closes
+		SPAWN(2 SECONDS) //so our messages send before the data terminal connection closes
 			src.link?.master = null
 			src.link = null
 
@@ -1552,6 +1560,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set category = "AI Commands"
 	set name = "Set Fake Laws"
 
+	#define FAKE_LAW_LIMIT 12
 	var/law_base_choice = input(usr,"Which lawset would you like to use as a base for your new fake laws?", "Fake Laws", "Fake Laws") in list("Real Laws", "Fake Laws")
 	var/law_base = ""
 	if(law_base_choice == "Real Laws")
@@ -1566,6 +1575,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 	// split into lines
 	var/list/raw_law_list = splittext_char(raw_law_text, "\n")
+	// return if we input an excessive amount of laws
+	if (length(raw_law_list) > FAKE_LAW_LIMIT)
+		boutput(usr, "<span class='alert'>You cannot set more than [FAKE_LAW_LIMIT] laws.</span>")
+		return
 	// clear old fake laws
 	src.fake_laws = list()
 	// cleanse the lines and add them as our laws
@@ -1579,6 +1592,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.show_message("<span class='bold'>Your new fake laws are: </span>")
 	for(var/a_law in src.fake_laws)
 		src.show_message(a_law)
+	#undef FAKE_LAW_LIMIT
 
 /mob/living/silicon/ai/proc/ai_state_fake_laws()
 	set category = "AI Commands"
@@ -1701,7 +1715,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.deployed_shell = null
 		src.deployed_to_eyecam = 0
 		src.eyecam.set_loc(src.loc)
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			if (ismob(user)) // bluhh who the fuck knows, this at least checks that user isn't null as well
 				if (isshell(user))
 					var/mob/living/silicon/hivebot/H = user
@@ -1761,6 +1775,28 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		colors[3] = colors[3] / 255
 		light.set_color(colors[1], colors[2], colors[3])
 		update_appearance()
+
+/mob/living/silicon/ai/proc/reset_apcs()
+	set category = "AI Commands"
+	set name = "Reset All APCs"
+	set desc = "Resets all APCs on the station."
+	var/count = 0
+
+	var/mob/message_mob = src.get_message_mob()
+	if (!src || !message_mob.client || isdead(src))
+		return
+
+	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
+		for_by_tcl(P, /obj/machinery/power/apc)
+			if (P.z == Z_LEVEL_STATION && !(P.status & BROKEN) && !P.aidisabled && P.is_not_default())
+				P.set_default()
+				count++
+
+		message_admins("[key_name(message_mob)] globally reset [count] APCs.")
+		boutput(message_mob, "Reset [count] APCs.")
+		src.verbs -= /mob/living/silicon/ai/proc/reset_apcs
+		sleep(10 SECONDS)
+		src.verbs += /mob/living/silicon/ai/proc/reset_apcs
 
 // drsingh new AI de-electrify thing
 
@@ -1835,7 +1871,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if (istype(src.internal_pda,/obj/item/device/pda2/))
-		src.internal_pda.attack_self(message_mob)
+		src.internal_pda.AttackSelf(message_mob)
 	else
 		boutput(usr, "<span class='alert'><b>Internal PDA not found!</span>")
 
@@ -1853,9 +1889,37 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if (istype(which,/obj/item/device/radio/))
-		which.attack_self(message_mob)
+		which.AttackSelf(message_mob)
 	else
 		boutput(usr, "<span class='alert'><b>Radio not found!</b></span>")
+
+/mob/living/silicon/ai/verb/open_map()
+	set name = "Open station map"
+	set desc = "Click on the map to teleport"
+	set category = "AI Commands"
+
+	var/mob/message_mob = src.get_message_mob()
+	if (!src || !message_mob.client || isdead(src))
+		return
+
+	map_ui = tgui_process.try_update_ui(usr, message_mob, map_ui)
+	if (!map_ui)
+		if (!winexists(usr, "ai_map"))
+			winset(message_mob.client, "ai_map", list2params(list(
+				"type" = "map",
+				"size" = "300,300",
+			)))
+			var/atom/movable/screen/handler = new
+			handler.plane = 0
+			handler.mouse_opacity = 0
+			handler.screen_loc = "ai_map:1,1"
+			message_mob.client.screen += handler
+
+			ai_station_map.screen_loc = "ai_map;1,1"
+			handler.vis_contents += ai_station_map
+			message_mob.client.screen += ai_station_map
+		map_ui = new(usr, message_mob, "AIMap")
+		map_ui.open()
 
 // CALCULATIONS
 
@@ -1932,7 +1996,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	//Otherwise, ff they aren't addressing us, ignore them
 	if(signal.data["address_1"] != src.net_id)
 		if((signal.data["address_1"] == "ping") && signal.data["sender"])
-			SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+			SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 				src.post_status(target, "command", "ping_reply", "device", "MAINFRAME_AI", "netid", src.net_id)
 
 		return
@@ -1947,7 +2011,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				//something might be wrong here, disconnect them!
 				src.terminals.Remove(target)
 				textToPlayer("--- Connection closed with [target]!")
-				SPAWN_DBG(0.3 SECONDS)
+				SPAWN(0.3 SECONDS)
 					src.post_status(target, "command","term_disconnect")
 				return
 
@@ -1964,7 +2028,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				if (!termMute)
 					src.soundToPlayer('sound/machines/phones/remote_hangup.ogg', 35, channel = VOLUME_CHANNEL_GAME, flags = SOUND_IGNORE_SPACE)
 				src.textToPlayer("--- [target] has disconnected from your mainframe!")
-				SPAWN_DBG(0.3 SECONDS)
+				SPAWN(0.3 SECONDS)
 					src.post_status(target, "command","term_disconnect")
 				return
 
@@ -2157,7 +2221,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 //just use this proc to make click-track checking easier (I would use this in the below proc that builds a list, but i think the proc call overhead is not worth it)
 proc/is_mob_trackable_by_AI(var/mob/M)
-	if (HAS_MOB_PROPERTY(M, PROP_AI_UNTRACKABLE))
+	if (HAS_ATOM_PROPERTY(M, PROP_MOB_AI_UNTRACKABLE))
 		return 0
 	if (istype(M, /mob/new_player))
 		return 0
@@ -2190,7 +2254,7 @@ proc/get_mobs_trackable_by_AI()
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
 			continue //cameras can't follow people who haven't started yet DUH OR DIDN'T YOU KNOW THAT
-		if (HAS_MOB_PROPERTY(M, PROP_AI_UNTRACKABLE))
+		if (HAS_ATOM_PROPERTY(M, PROP_MOB_AI_UNTRACKABLE))
 			continue
 		if (ishuman(M) && (istype(M:wear_id, /obj/item/card/id/syndicate) || (istype(M:wear_id, /obj/item/device/pda2) && M:wear_id:ID_card && istype(M:wear_id:ID_card, /obj/item/card/id/syndicate))))
 			continue

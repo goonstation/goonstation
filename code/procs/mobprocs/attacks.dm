@@ -33,10 +33,10 @@
 					shielded = 1
 
 	if (!shielded || !(W.flags & NOSHIELD))
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 		// drsingh Cannot read null.force
 #ifdef DATALOGGER
-			if (W?.force)
+			if (W.force)
 				game_stats.Increment("violence")
 #endif
 			if (!isnull(W))
@@ -49,7 +49,7 @@
 						attack_twitch(user)
 
 
-				if (W?.force) //Wire: Fix for Cannot read null.force
+				if (W.force)
 					message_admin_on_attack(user, "uses \a [W.name] on")
 			return
 	return
@@ -67,11 +67,11 @@
 	if(attack_alert || !time) return
 
 	attack_alert = 1
-	SPAWN_DBG(time) attack_alert = 0
+	SPAWN(time) attack_alert = 0
 
 /mob/proc/temporary_suicide_alert(var/time = 600)
 	//Only start the clock if there's time and we're not already alerting about suicides
 	if(suicide_alert || !time) return
 
 	suicide_alert = 1
-	SPAWN_DBG(time) suicide_alert = 0
+	SPAWN(time) suicide_alert = 0

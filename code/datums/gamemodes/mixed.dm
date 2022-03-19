@@ -2,7 +2,7 @@
 	name = "mixed (action)"
 	config_tag = "mixed"
 	latejoin_antag_compatible = 1
-	latejoin_antag_roles = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WRESTLER, ROLE_WEREWOLF, ROLE_ARCFIEND)
+	latejoin_antag_roles = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_WRESTLER = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
 
 	var/const/traitors_possible = 8 // cogwerks - lowered from 10
 	var/const/werewolf_players_req = 15
@@ -11,7 +11,7 @@
 	var/has_werewolves = 1
 	var/has_blobs = 1
 
-	var/list/traitor_types = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_SPY_THIEF, ROLE_WEREWOLF, ROLE_ARCFIEND)
+	var/list/traitor_types = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1 , ROLE_SPY_THIEF = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -33,7 +33,7 @@
 			num_players++
 
 	if (num_players < werewolf_players_req || !has_werewolves)
-		traitor_types -= ROLE_WEREWOLF
+		traitor_types[ROLE_WEREWOLF] = 0;
 
 	var/i = rand(25)
 	var/num_enemies = 1
@@ -52,13 +52,13 @@
 	var/num_werewolves = 0
 	var/num_arcfiends = 0
 #if defined(XMAS) && !defined(RP_MODE)
-	src.traitor_types += ROLE_GRINCH
-	src.latejoin_antag_roles += ROLE_GRINCH
+	src.traitor_types[ROLE_GRINCH] = 1;
+	src.latejoin_antag_roles[ROLE_GRINCH] = 1;
 #endif
 
 	if ((num_enemies >= 4 && prob(20)) || debug_mixed_forced_wraith || debug_mixed_forced_blob)
 		if (prob(50) || debug_mixed_forced_wraith)
-			num_enemies = max(num_enemies - 4, 1)
+			num_enemies = max(num_enemies - 2, 1)
 			num_wraiths = 1
 		else if (has_blobs)
 			num_enemies = max(num_enemies - 4, 1)
@@ -68,7 +68,7 @@
 			num_wizards++
 			// if any combat roles end up in this mode they go here ok
 		else // more stealthy roles
-			switch(pick(src.traitor_types))
+			switch(weighted_pick(src.traitor_types))
 				if(ROLE_TRAITOR) num_traitors++
 				if(ROLE_CHANGELING) num_changelings++
 				if(ROLE_VAMPIRE) num_vampires++
@@ -85,7 +85,7 @@
 	for(var/datum/mind/tplayer in token_players)
 		if (!token_players.len)
 			break
-		switch(pick(traitor_types))
+		switch(weighted_pick(traitor_types))
 			if(ROLE_WIZARD)
 				traitors += tplayer
 				token_players.Remove(tplayer)
@@ -261,7 +261,7 @@
 				else
 					randomname = pick_string_autokey("names/wizard_male.txt")
 
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/newname = input(traitor.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname)
 					if(newname && newname != randomname)
 						phrase_log.log_phrase("name-wizard", randomname, no_duplicates=TRUE)
@@ -293,7 +293,7 @@
 
 			if (ROLE_BLOB)
 				objective_set_path = /datum/objective_set/blob
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/newname = input(traitor.current, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
 
 					if (newname)
@@ -305,7 +305,7 @@
 
 			if (ROLE_SPY_THIEF)
 				objective_set_path = /datum/objective_set/spy_theft
-				SPAWN_DBG(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs
+				SPAWN(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs
 					equip_spy_theft(traitor.current)
 
 				if (!src.spy_market)
@@ -333,7 +333,7 @@
 			boutput(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/mixed/send_intercept()

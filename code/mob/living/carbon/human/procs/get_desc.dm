@@ -23,10 +23,11 @@
 		if (!ignore_checks && (get_dist(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))
 			return "[jointext(., "")]<br><span class='alert'><B>[src.name]</B> is too far away to see clearly.</span>"
 
-	try
-		. = "<br>[src.bioHolder.mobAppearance.flavor_text]"
-	catch
-		//nop
+	if(src.face_visible() && src.bioHolder.mobAppearance.flavor_text)
+		try
+			. = "<br>[src.bioHolder.mobAppearance.flavor_text]"
+		catch
+			//nop
 
 	. +=  "<br><span class='notice'>*---------*</span>"
 
@@ -52,9 +53,6 @@
 	// thanks, byondbama.
 	if (src.w_uniform)
 		. += "<br><span class='[src.w_uniform.blood_DNA ? "alert" : "notice"]'>[src.name] is wearing [bicon(src.w_uniform)] \an [src.w_uniform.name].</span>"
-
-	if (src.hasStatus("handcuffed"))
-		. +=  "<br><span class='notice'>[src.name] is [bicon(src.handcuffs)] handcuffed!</span>"
 
 	if (src.wear_suit)
 		. += "<br><span class='[src.wear_suit.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.wear_suit)] \an [src.wear_suit.name] on.</span>"
@@ -118,6 +116,19 @@
 			else
 				. += "<br><span class='notice'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it.</span>"
 
+	if (src.hasStatus("handcuffed"))
+		. +=  "<br><span class='notice'>[src.name] is [bicon(src.handcuffs)] handcuffed!</span>"
+
+	if (src.arrestIcon?.icon_state && ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+
+		if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+			var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
+			if(sec_record)
+				var/sechud_flag = sec_record["sec_flag"]
+				if (lowertext(sechud_flag) != "none")
+					. += "<br><span class='notice'>[src.name] has a Security HUD flag set:</span> <span class='alert'>[sechud_flag]</span>"
+
 	if (src.is_jittery)
 		switch(src.jitteriness)
 			if (300 to INFINITY)
@@ -139,11 +150,11 @@
 					if (!src.organHolder.left_eye)
 						. += "<br><span class='alert'><B>[src.name]'s left eye is missing!</B></span>"
 					else if (src.organHolder.left_eye.show_on_examine)
-						. += "<br><span class='notice'>[src.name] has [bicon(src.organHolder.left_eye)] \an [src.organHolder.left_eye.organ_name] in their left eye socket.</span>"
+						. += "<br><span class='notice'>[src.name] has [bicon(src.organHolder.left_eye)] \an [src.organHolder.left_eye.organ_name] in [t_his] left eye socket.</span>"
 					if (!src.organHolder.right_eye)
 						. += "<br><span class='alert'><B>[src.name]'s right eye is missing!</B></span>"
 					else if (src.organHolder.right_eye.show_on_examine)
-						. += "<br><span class='notice'>[src.name] has [bicon(src.organHolder.right_eye)] \an [src.organHolder.right_eye.organ_name] in their right eye socket.</span>"
+						. += "<br><span class='notice'>[src.name] has [bicon(src.organHolder.right_eye)] \an [src.organHolder.right_eye.organ_name] in [t_his] right eye socket.</span>"
 
 				if (src.organHolder.head.scalp_op_stage > 0)
 					if (src.organHolder.head.scalp_op_stage >= 5.0)
@@ -165,7 +176,7 @@
 					if (src.organHolder.head.op_stage >= 3.0)
 						. += "<br><span class='alert'><B>[src.name]'s head is barely attached!</B></span>"
 					else
-						. += "<br><span class='alert'><B>[src.name] has a huge incision across their neck!</B></span>"
+						. += "<br><span class='alert'><B>[src.name] has a huge incision across [t_his] neck!</B></span>"
 
 		else
 			. += "<br><span class='alert'><B>[src.name] has been decapitated!</B></span>"
@@ -208,7 +219,7 @@
 						else // has butt
 							. += "<br><span class='alert'><B>[src.name] has a large incision above [t_his] butt!</B></span>"
 				else if (src.mob_flags & SHOULD_HAVE_A_TAIL) // No tail, no ass wound? Supposed to have a tail?
-					. += "<br><span class='alert'><B>[src.name] is missing their tail!</B></span>" // oh no my tails gone!!
+					. += "<br><span class='alert'><B>[src.name] is missing [t_his] tail!</B></span>" // oh no my tails gone!!
 					// Commenting on someone not having a tail when they shouldnt have a tail will be left up to the player
 		else
 			. += "<br><span class='alert'><B>[src.name]'s entire chest is missing!</B></span>"
@@ -249,7 +260,7 @@
 			if (limbtxt)
 				. += "<br><span class='notice'>[src.name] [limbtxt] right leg.</span>"
 	if (src.chest_cavity_open)
-		. += "<br><span class='alert'><B>[src.name] has a large gaping hole down their chest!</B></span>"
+		. += "<br><span class='alert'><B>[src.name] has a large gaping hole down [t_his] chest!</B></span>"
 	if (src.bleeding && !isdead(src))
 		switch (src.bleeding)
 			if (1 to 2)

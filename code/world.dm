@@ -82,77 +82,8 @@ var/global/mob/twitch_mob = 0
 	join_motd = grabResource("html/motd.html")
 
 /world/proc/load_rules()
-	//rules = file2text("config/rules.html")
-	/*SPAWN_DBG(0)
-		rules = world.Export("http://wiki.ss13.co/api.php?action=parse&page=Rules&format=json")
-		if(rules && rules["CONTENT"])
-			rules = json_decode(file2text(rules["CONTENT"]))
-			if(rules && rules["parse"] && rules["parse"]["text"] && rules["parse"]["text"]["*"])
-				rules = rules["parse"]["text"]["*"]
-			else
-				rules = "<html><head><title>Rules</title><body>There are no rules! Go nuts!</body></html>"
-		else*/
 	rules = {"<meta http-equiv="refresh" content="0; url=http://wiki.ss13.co/Rules">"}
-	//if (!rules)
-	//	rules = "<html><head><title>Rules</title><body>There are no rules! Go nuts!</body></html>"
 
-/world/proc/load_admins()
-	set background = 1
-	var/text = file2text("config/admins.txt")
-	if (!text)
-		logDiary("Failed to load config/admins.txt\n")
-	else
-		var/list/lines = splittext(text, "\n")
-		for(var/line in lines)
-			if (!line)
-				continue
-
-			if (copytext(line, 1, 2) == "#")
-				continue
-
-			var/pos = findtext(line, " - ", 1, null)
-			if (pos)
-				var/m_key = ckey(copytext(line, 1, pos))
-				var/a_lev = copytext(line, pos + 3, length(line) + 1)
-				admins[m_key] = a_lev
-				logDiary("ADMIN: [m_key] = [a_lev]")
-
-/world/proc/load_whitelist(fileName = null)
-	set background = 1
-	if(isnull(fileName))
-		fileName = config.whitelist_path
-	var/text = file2text(fileName)
-	if (!text)
-		return
-	else
-		var/list/lines = splittext(text, "\n")
-		for(var/line in lines)
-			if (!line)
-				continue
-
-			if (copytext(line, 1, 2) == "#")
-				continue
-
-			whitelistCkeys += line
-			logDiary("WHITELIST: [line]")
-
-
-/world/proc/load_playercap_bypass()
-	set background = 1
-	var/text = file2text("+secret/strings/allow_thru_cap.txt")
-	if (!text)
-		return
-	else
-		var/list/lines = splittext(text, "\n")
-		for(var/line in lines)
-			if (!line)
-				continue
-
-			if (copytext(line, 1, 2) == "#")
-				continue
-
-			bypassCapCkeys += line
-			logDiary("WHITELIST: [line]")
 
 // dsingh for faster create panel loads
 /world/proc/precache_create_txt()
@@ -231,6 +162,7 @@ var/f_color_selector_handler/F_Color_Selector
 		world.log << ""
 #endif
 
+		Z_LOG_DEBUG("Preload", "  radio")
 		radio_controller = new /datum/controller/radio()
 
 		Z_LOG_DEBUG("Preload", "Loading config...")
@@ -261,6 +193,9 @@ var/f_color_selector_handler/F_Color_Selector
 			Z_LOG_DEBUG("Preload", "Loading local browserassets...")
 			recursiveFileLoader("browserassets/")
 
+		Z_LOG_DEBUG("Preload", "Z-level datums...")
+		init_zlevel_datums()
+
 		Z_LOG_DEBUG("Preload", "Adding overlays...")
 		var/overlayList = childrentypesof(/datum/overlayComposition)
 		for(var/over in overlayList)
@@ -281,8 +216,10 @@ var/f_color_selector_handler/F_Color_Selector
 		Z_LOG_DEBUG("Preload", "Building material cache...")
 		buildMaterialCache()			//^^
 
+		// no log because this is functionally instant
+		global_signal_holder = new
+
 		Z_LOG_DEBUG("Preload", "Starting controllers")
-		Z_LOG_DEBUG("Preload", "  radio")
 
 		Z_LOG_DEBUG("Preload", "  data_core")
 		data_core = new /datum/datacore()
@@ -319,6 +256,8 @@ var/f_color_selector_handler/F_Color_Selector
 		ghost_notifier = new /datum/ghost_notification_controller()
 		Z_LOG_DEBUG("Preload", "  respawn_controller")
 		respawn_controller = new /datum/respawn_controls()
+		Z_LOG_DEBUG("Preload", " cargo_pad_manager")
+		cargo_pad_manager = new /datum/cargo_pad_manager()
 
 		Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 		hydro_controls.set_up()
@@ -336,11 +275,6 @@ var/f_color_selector_handler/F_Color_Selector
 				if initial(foobar.variable) == Arg
 					do_thing
 		*/
-
-		Z_LOG_DEBUG("Preload", "  /datum/generatorPrefab")
-		for(var/A in childrentypesof(/datum/generatorPrefab))
-			var/datum/generatorPrefab/R = new A()
-			miningModifiers.Add(R)
 
 		Z_LOG_DEBUG("Preload", "  /datum/faction")
 		for(var/A in childrentypesof(/datum/faction))
@@ -443,7 +377,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 	Z_LOG_DEBUG("World/New", "New() complete, running world.init()")
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		init()
 
 #ifdef UNIT_TESTS
@@ -463,11 +397,11 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Loading MOTD...")
 	src.load_motd()//GUH
 	Z_LOG_DEBUG("World/Init", "Loading admins...")
-	src.load_admins()//UGH
+	load_admins()//UGH
 	Z_LOG_DEBUG("World/Init", "Loading whitelist...")
-	src.load_whitelist() //WHY ARE WE UGH-ING
+	load_whitelist() //WHY ARE WE UGH-ING
 	Z_LOG_DEBUG("World/Init", "Loading playercap bypass keys...")
-	src.load_playercap_bypass()
+	load_playercap_bypass()
 
 	Z_LOG_DEBUG("World/Init", "Starting input loop")
 	start_input_loop()
@@ -601,6 +535,10 @@ var/f_color_selector_handler/F_Color_Selector
 	makeMiningLevel()
 	#endif
 
+	UPDATE_TITLE_STATUS("Building random station rooms")
+	Z_LOG_DEBUG("World/Init", "Setting up random rooms...")
+	buildRandomRooms()
+
 	UPDATE_TITLE_STATUS("Initializing biomes")
 	Z_LOG_DEBUG("World/Init", "Setting up biomes...")
 	initialize_biomes()
@@ -629,9 +567,17 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
 	map_settings.init()
 
+	Z_LOG_DEBUG("World/Init", "Generating AI station map...")
+	ai_station_map = new
+
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
 	Z_LOG_DEBUG("World/Init", "Now in pre-game state.")
+
+	#ifndef LIVE_SERVER
+	for (var/thing in by_cat[TR_CAT_DELETE_ME])
+		qdel(thing)
+	#endif
 
 #ifdef MOVING_SUB_MAP
 	Z_LOG_DEBUG("World/Init", "Making Manta start moving...")
@@ -660,11 +606,11 @@ var/f_color_selector_handler/F_Color_Selector
 #endif
 #ifdef RUNTIME_CHECKING
 	populate_station()
-	SPAWN_DBG(10 SECONDS)
+	SPAWN(10 SECONDS)
 		Reboot_server()
 #endif
 #if defined(UNIT_TESTS) && !defined(UNIT_TESTS_RUN_TILL_COMPLETION)
-	SPAWN_DBG(10 SECONDS)
+	SPAWN(10 SECONDS)
 		Reboot_server()
 #endif
 
@@ -695,6 +641,8 @@ var/f_color_selector_handler/F_Color_Selector
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
 	global.phrase_log.save()
+	for_by_tcl(P, /datum/player)
+		P.on_round_end()
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
@@ -722,7 +670,7 @@ var/f_color_selector_handler/F_Color_Selector
 	shutdown()
 #endif
 
-	SPAWN_DBG(world.tick_lag)
+	SPAWN(world.tick_lag)
 		for (var/client/C)
 			if (C.mob)
 				if (prob(40))
@@ -731,7 +679,7 @@ var/f_color_selector_handler/F_Color_Selector
 					C.mob << sound('sound/misc/NewRound.ogg')
 
 #ifdef DATALOGGER
-	SPAWN_DBG(world.tick_lag*2)
+	SPAWN(world.tick_lag*2)
 		var/playercount = 0
 		var/admincount = 0
 		for(var/client/C in clients)
@@ -953,7 +901,7 @@ var/f_color_selector_handler/F_Color_Selector
 								if(SOUTHWEST)
 									twitch_mob.keys_changed(KEY_BACKWARD|KEY_LEFT, KEY_BACKWARD|KEY_LEFT)
 
-							SPAWN_DBG(1 DECI SECOND)
+							SPAWN(1 DECI SECOND)
 								twitch_mob.keys_changed(0,0xFFFF)
 
 							return 1
@@ -1335,10 +1283,11 @@ var/f_color_selector_handler/F_Color_Selector
 								<a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
 							</div>
 						</div>
-						"})
+						"}, forceScroll=TRUE)
 					M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
 					logTheThing("admin_help", null, M, "Discord: [nick] PM'd [constructTarget(M,"admin_help")]: [msg]")
 					logTheThing("diary", null, M, "Discord: [nick] PM'd [constructTarget(M,"diary")]: [msg]", "ahelp")
+					M.client.make_sure_chat_is_open()
 					for (var/client/C)
 						if (C.holder && C.key != M.key)
 							if (C.player_mode && !C.player_mode_ahelp)
@@ -1554,6 +1503,17 @@ var/f_color_selector_handler/F_Color_Selector
 				ircmsg["time"] = (world.timeofday - curtime) / 10
 				ircmsg["ticklag"] = world.tick_lag
 				ircmsg["runtimes"] = global.runtime_count
+				if(world.system_type == "UNIX")
+					try
+						var/meminfo_file = "data/meminfo.txt"
+						fcopy("/proc/meminfo", "meminfo_file")
+						var/list/memory_info = splittext(file2text(meminfo_file), "\n")
+						if(length(memory_info) >= 3)
+							memory_info.len = 3
+							ircmsg["meminfo"] = jointext(memory_info, "\n")
+						fdel(meminfo_file)
+					catch(var/exception/e)
+						stack_trace("[e.name]\n[e.desc]")
 				return ircbot.response(ircmsg)
 
 			if ("rev")
@@ -1613,7 +1573,7 @@ var/f_color_selector_handler/F_Color_Selector
 					message_admins("<span class='internal>[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.</span>")
 					ircmsg["msg"] = "Removed the restart delay."
 
-					SPAWN_DBG(1 DECI SECOND)
+					SPAWN(1 DECI SECOND)
 						ircbot.event("roundend")
 						Reboot_server()
 
@@ -1745,7 +1705,7 @@ var/f_color_selector_handler/F_Color_Selector
 					lag_detection_process.manual_profiling_on = TRUE
 				var/output = world.Profile(final_action, type, "json")
 				if(plist["action"] == "refresh" || plist["action"] == "stop")
-					SPAWN_DBG(1)
+					SPAWN(1)
 						var/n_tries = 3
 						var/datum/http_response/response = null
 						while(--n_tries > 0 && (isnull(response) || response.errored))
@@ -1765,12 +1725,13 @@ var/f_color_selector_handler/F_Color_Selector
 	return src.maxz
 
 /world/proc/setupZLevel(new_zlevel)
+	global.zlevels += new/datum/zlevel("dyn[new_zlevel]", length(global.zlevels) + 1)
 	init_spatial_map(new_zlevel)
 
 /// EXPERIMENTAL STUFF
 var/opt_inactive = null
 /world/proc/Optimize()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if(!opt_inactive) opt_inactive  = world.timeofday
 
 		if(world.timeofday - opt_inactive >= 600 || world.timeofday - opt_inactive < 0)

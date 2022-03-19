@@ -453,12 +453,8 @@
 /area/station/crew_quarters/kitchen)
 "aY" = (
 /obj/item/cable_coil/cut{
-	color = "#DD0000"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	color = "#DD0000";
+	transform = list(0,1,0,-1,0,0)
 	},
 /turf/simulated/floor/plating/random,
 /area/station/quartermaster/office)
@@ -525,6 +521,18 @@
 /obj/item/clothing/head/emerg,
 /turf/simulated/floor/plating/random,
 /area/station/quartermaster/office)
+"bi" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall3_trans"
+	},
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/turf/space,
+/area/space)
 "bj" = (
 /obj/cable{
 	d1 = 4;
@@ -979,7 +987,6 @@
 	name = "Cargo";
 	req_access_txt = "27"
 	},
-/obj/access_spawn/cargo,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "ct" = (
@@ -12039,7 +12046,7 @@
 /area/station/bridge/united_command)
 "Dx" = (
 /obj/storage/secure/closet/command/medical_director,
-/obj/item/device/analyzer/healthanalyzer/borg,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
 /obj/item/remote/porter/port_a_nanomed,
 /obj/item/stamp/md,
 /turf/simulated/floor/white,
@@ -15701,27 +15708,27 @@
 	},
 /area/listeningpost/solars)
 "MP" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "MQ" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
+/turf/space,
 /area/space)
 "MR" = (
 /obj/machinery/door/airlock/pyro/syndicate,
 /turf/simulated/floor/red,
 /area/listeningpost)
 "MS" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "diagonalWall3"
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
 	},
+/turf/space,
+/turf/space,
 /area/space)
 "MT" = (
 /obj/machinery/power/furnace,
@@ -15751,9 +15758,7 @@
 /area/listeningpost/power)
 "MX" = (
 /obj/securearea,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "MY" = (
 /turf/simulated/floor/red,
@@ -15804,9 +15809,7 @@
 /turf/space,
 /area/listeningpost/solars)
 "Ne" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "Nf" = (
 /obj/securearea{
@@ -15815,9 +15818,7 @@
 	layer = 2.5;
 	name = "VACUUM AREA"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "Ng" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -15868,9 +15869,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "Nn" = (
 /obj/storage/closet/emergency,
@@ -15914,9 +15913,7 @@
 	icon_state = "shock";
 	name = "Danger: High Voltage"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "Nt" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -16085,9 +16082,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "NL" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/syndicate_teleporter)
 "NM" = (
 /turf/simulated/floor/airless/stairs/dark,
@@ -16205,9 +16200,7 @@
 	desc = "A warning sign telling of the dangers of HEPT emission fields. They are probably not good for you.";
 	name = "Molecular Integrity Hazard"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/syndicate_teleporter)
 "Ob" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -16490,11 +16483,11 @@
 	},
 /area/syndicate_teleporter)
 "OF" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
-	dir = 10;
-	icon_state = "diagonalWall3"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
 	},
+/turf/space,
+/turf/space,
 /area/space)
 "OG" = (
 /obj/stool/chair/red,
@@ -16632,11 +16625,12 @@
 /turf/simulated/floor/plating/random,
 /area/listeningpost/power)
 "OW" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "wall3"
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
 	},
+/turf/space,
+/turf/space,
 /area/space)
 "OX" = (
 /obj/machinery/power/furnace,
@@ -19057,6 +19051,9 @@
 /obj/item/clothing/glasses/vr/arcade,
 /obj/item/clothing/glasses/vr/arcade,
 /obj/item/clothing/glasses/vr/arcade,
+/obj/item/storage/toolbox/artistic{
+	pixel_y = 8
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred2"
@@ -93128,7 +93125,7 @@ aa
 aa
 aa
 aa
-MQ
+bi
 Ng
 Vf
 wh
@@ -93429,7 +93426,7 @@ aa
 aa
 aa
 aa
-MQ
+bi
 Ne
 NO
 Oh

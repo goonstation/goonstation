@@ -458,6 +458,14 @@
 	output = /obj/item/reagent_containers/food/snacks/sandwich/elvis_meat_h
 	useshumanmeat = 1
 
+/datum/cookingrecipe/c_butty
+	item1 = /obj/item/reagent_containers/food/snacks/breadslice
+	amt1 = 2
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
+	item3 = /obj/item/reagent_containers/food/snacks/fries
+	cookbonus = 7
+	output = /obj/item/reagent_containers/food/snacks/sandwich/c_butty
+
 /datum/cookingrecipe/elviswich_m_m
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice/elvis
 	amt1 = 2

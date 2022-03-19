@@ -29,7 +29,7 @@
 	if (!target || !R)
 		qdel(src)
 		return
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/turf/T
 		for(var/b=0, b<5, b++)
 			step_towards(src,target)

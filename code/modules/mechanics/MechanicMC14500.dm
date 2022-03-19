@@ -78,7 +78,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 	process()
 		if (..() || !running || !level)
 			return
-		SPAWN_DBG(0) src.light_up_housing()
+		SPAWN(0) src.light_up_housing()
 		. = length(ROM)
 		if (. < 2 || . % 2) //Too short or an odd length and we're out of here.
 			running = 0
@@ -87,7 +87,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 
 		updateUsrDialog()
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/i = INSTRUCTIONS_PER_PROCESS, i > 0, i--)
 				if (!running || !level || disposed)
 					break

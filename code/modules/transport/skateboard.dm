@@ -57,7 +57,7 @@
 		animate(src, transform = matrix(), alpha = 255, time = 5)
 		animate(time = 5, alpha = 253)
 		animate(pixel_y = 64, alpha = 0, time = 5)
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			qdel(src)
 
 
@@ -75,6 +75,8 @@
 	var/atom/last_bumped_atom = null
 	var/list/bumped_queue = list()
 	density = 0
+	mob_flip_inside(var/mob/user)
+		animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 
 /obj/vehicle/skateboard/New()
 	..()
@@ -192,7 +194,7 @@
 			playsound(src, pick(sb_tricks), 65, 1)
 
 			input_lockout += 1
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				input_lockout -= 1
 
 	else if(isobj(AM))
@@ -209,7 +211,7 @@
 		walk(src, newdir, speed_delay)
 		playsound(src, pick(sb_tricks), 65, 1)
 		input_lockout += 1
-		SPAWN_DBG(0.4 SECONDS)
+		SPAWN(0.4 SECONDS)
 			input_lockout -= 1
 
 	if(runningAction)
