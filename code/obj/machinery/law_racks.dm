@@ -319,7 +319,7 @@
 						ui.user.visible_message("<span class='alert'>[ui.user] starts welding a module in place!</span>", "<span class='alert'>You start to weld the module in place!</span>")
 					playsound(src.loc, "sound/items/Welder.ogg", 50, 1)
 					SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, .proc/toggle_welded_callback, slotNum, equipped.icon, equipped.icon_state, \
-			  		welded[slotNum] ? "You cut the welds on the module." : "You weld the module into the rack.", \
+			  		welded[slotNum] ? "[ui.user] cuts the welds on the module." : "[ui.user] welds the module into the rack.", \
 			 		INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 				return
@@ -340,7 +340,7 @@
 					ui.user.visible_message("<span class='alert'>[ui.user] starts screwing a module in place!</span>", "<span class='alert'>You start to screw the module in place!</span>")
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, .proc/toggle_screwed_callback, slotNum, ui.user.equipped().icon, ui.user.equipped().icon_state, \
-				welded[slotNum] ? "You unscrew the module." : "You screw the module into the rack.", \
+				welded[slotNum] ? "[ui.user] unscrews the module." : "[ui.user] screws the module into the rack.", \
 				INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 				return
