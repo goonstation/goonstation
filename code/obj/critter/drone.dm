@@ -1267,7 +1267,7 @@
 	density = 1
 	health = 8
 	maxhealth = 8
-	aggressive = 8
+	aggressive = 1
 	defensive = 1
 	wanderer = 1
 	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
@@ -1318,8 +1318,8 @@
 	Shoot(var/target, var/start, var/user, var/bullet = 0)
 		..()
 		bulletcount--
-		SPAWN(0.5 SECONDS)
 		if(bulletcount<=0)// out of ammo? bedtime
+			SPAWN(0.5 SECONDS)
 			src.visible_message("[src] runs out of ammo!")
 			task = "sleeping"
 			src.health = 0
