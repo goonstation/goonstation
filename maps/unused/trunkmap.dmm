@@ -3573,10 +3573,6 @@
 	},
 /turf/simulated/floor/white,
 /area/russian)
-"akA" = (
-/obj/decal/fakeobjects/sink,
-/turf/simulated/floor/white,
-/area/russian)
 "akB" = (
 /obj/item/storage/secure/ssafe/hjam{
 	pixel_x = 27
@@ -8200,7 +8196,6 @@
 /area/station/storage/tech)
 "aza" = (
 /obj/table/auto,
-/obj/item/aiModule/reset,
 /obj/item/peripheral/printer,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -9314,13 +9309,6 @@
 /obj/item/device/audio_log,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"aDw" = (
-/obj/rack{
-	dir = 4
-	},
-/obj/item/circuitboard/aiupload,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
 "aDx" = (
 /obj/rack{
 	dir = 4
@@ -9938,18 +9926,6 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
-"aFD" = (
-/obj/machinery/camera{
-	c_tag = "Genetic Research East"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/computer/aiupload,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aFE" = (
@@ -11794,7 +11770,6 @@
 /area/station/maintenance/west)
 "aMn" = (
 /obj/table/auto,
-/obj/item/aiModule/rename,
 /obj/item/aiModule/freeform,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -11810,7 +11785,6 @@
 "aMp" = (
 /obj/table/auto,
 /obj/item/aiModule/oneHuman,
-/obj/item/aiModule/reset,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aMq" = (
@@ -29790,12 +29764,6 @@
 	},
 /turf/simulated/wall,
 /area/station/maintenance/disposal)
-"jos" = (
-/obj/decal/fakeobjects/sink,
-/turf/simulated/floor/purple/side{
-	dir = 4
-	},
-/area/station/science/chemistry)
 "jrX" = (
 /obj/cable{
 	d2 = 2;
@@ -31086,6 +31054,12 @@
 	dir = 1
 	},
 /area/station/teleporter)
+"mpp" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
+/area/station/science/chemistry)
 "mqQ" = (
 /obj/pool{
 	dir = 4;
@@ -32385,6 +32359,18 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
+"qCX" = (
+/obj/machinery/camera{
+	c_tag = "Genetic Research East"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/lawrack,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "qEo" = (
 /obj/stool/bed,
 /obj/machinery/light/small{
@@ -33039,6 +33025,10 @@
 	},
 /turf/space,
 /area/station/security/prison)
+"seX" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/white,
+/area/russian)
 "sfI" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -59789,7 +59779,7 @@ aaa
 ayd
 ayZ
 aAO
-aDw
+aHE
 aFv
 aHE
 aHY
@@ -67340,7 +67330,7 @@ ayg
 azg
 aAT
 aDC
-aFD
+qCX
 aIk
 aJL
 aJL
@@ -90937,7 +90927,7 @@ esB
 bBK
 sHS
 nnw
-jos
+mpp
 oVY
 avV
 kzS
@@ -115271,7 +115261,7 @@ aaR
 abh
 akq
 abD
-akA
+seX
 abD
 abD
 abD

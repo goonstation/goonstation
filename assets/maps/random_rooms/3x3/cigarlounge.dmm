@@ -1,0 +1,70 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/wood/auto,
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = -2;
+	pixel_y = -6
+	},
+/obj/item/decoration/ashtray,
+/turf/simulated/floor/black,
+/area/dmm_suite/clear_area)
+"b" = (
+/obj/table/wood/auto,
+/obj/item/cigarbox,
+/obj/item/device/light/zippo{
+	pixel_x = -7;
+	pixel_y = 11
+	},
+/obj/item/clothing/head/flatcap{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/turf/simulated/floor/black,
+/area/dmm_suite/clear_area)
+"v" = (
+/turf/simulated/floor/black,
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/black,
+/area/dmm_suite/clear_area)
+"C" = (
+/obj/stool/chair/comfy{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/dmm_suite/clear_area)
+"Q" = (
+/obj/item/instrument/large/jukebox,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.2;
+	color_g = 0.45;
+	color_r = 0.5;
+	invisibility = 101;
+	name = "glow - YELLOW"
+	},
+/turf/simulated/floor/black,
+/area/dmm_suite/clear_area)
+"V" = (
+/obj/stool/chair/comfy{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+C
+v
+b
+"}
+(2,1,1) = {"
+a
+A
+v
+"}
+(3,1,1) = {"
+V
+v
+Q
+"}

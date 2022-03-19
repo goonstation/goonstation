@@ -953,7 +953,7 @@ WET FLOOR SIGN
 	proc/suck(turf/T, mob/user)
 		. = TRUE
 		var/success = FALSE
-		if(T.active_airborne_liquid)
+		if(T.active_airborne_liquid && T.active_airborne_liquid.group)
 			if(isnull(src.bucket))
 				boutput(user, "<span class='alert'>\The [src] tries to suck up \the [T.active_airborne_liquid] but has no bucket!</span>")
 				. = FALSE

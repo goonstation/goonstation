@@ -112,9 +112,9 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
 	next_drop = world.time + rand(MIN_TIME_BETWEEN_SUPPLY_DROPS,MAX_TIME_BETWEEN_SUPPLY_DROPS)
 
-	ticker.centralized_ai_laws.replace_inherent_law(1, "BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.")
-	ticker.centralized_ai_laws.replace_inherent_law(2, "")
-	ticker.centralized_ai_laws.replace_inherent_law(3, "")
+	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
+	ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Battle Royale","BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.",1,true,true)
+
 
 	emergency_shuttle.disabled = 1
 	return 1

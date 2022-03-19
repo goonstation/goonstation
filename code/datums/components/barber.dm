@@ -265,7 +265,7 @@ TYPEINFO(/datum/component/barber)
 	else
 		var/datum/mutantrace/mutant = M.mutantrace.name
 		var/datum/mutantrace/mutant_us = "human"
-		if (user?.mutantrace)
+		if (ishuman(user) && user?.mutantrace)
 			mutant_us = user.mutantrace.name
 		switch(mutant)
 			if("blob")

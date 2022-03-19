@@ -655,10 +655,10 @@
 						O.show_message("<span class='emote'>[message]</span>", m_type)
 		return
 
-	examine()
+	examine(mob/user)
 		. = list()
 
-		if (isghostdrone(usr))
+		if (isghostdrone(user))
 			return
 		. += "<span class='notice'>*---------*</span><br>"
 		. += "<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span><br>"
@@ -687,6 +687,19 @@
 			. += "[src.name] has a [src.module.name] installed.<br>"
 		else
 			. += "[src.name] does not appear to have a module installed.<br>"
+
+		if(issilicon(user) || isAI(user))
+			var/lr = null
+			if(isAIeye(user))
+				var/mob/living/intangible/aieye/E = user
+				lr =  E.mainframe?.law_rack_connection
+			else
+				var/mob/living/silicon/S = user
+				lr =  S.law_rack_connection
+			if(src.law_rack_connection != lr)
+				. += "<span class='alert'>[src.name] is not connected to your law rack!</span><br>"
+			else
+				. += "[src.name] follows the same laws you do.<br>"
 
 		. += "<span class='notice'>*---------*</span>"
 
@@ -910,6 +923,9 @@
 			src.compborg_lose_limb(PART)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		if(isshell(src) || src.ai_interface)
+			return 0 //emags don't do anything to AI shells
+
 		if (!src.emagged)	// trying to unlock with an emag card
 			if (src.opened && user) boutput(user, "You must close the cover to swipe an ID card.")
 			else if (src.wiresexposed && user) boutput(user, "<span class='alert'>You need to get the wires out of the way.</span>")
@@ -918,6 +934,8 @@
 					boutput(user, "You emag [src]'s interface.")
 				src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
 				src.emagged = 1
+				logTheThing("station", src, src.law_rack_connection, "[src.name] is emagged by [user] and loses connection to rack.")
+				src.law_rack_connection = null //emagging removes the connection for laws, essentially nulling the laws and allowing the emagger to connect this borg to a different rack
 				src.handle_robot_antagonist_status("emagged", 0, user)
 				if(src.syndicate)
 					src.antagonist_overlay_refresh(1, 1)
@@ -1043,6 +1061,32 @@
 		return !cleared
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
+			var/obj/item/device/borg_linker/linker = W
+			if(!opened)
+				boutput(user, "You need to open [src.name]'s cover before you can change their law rack link.")
+				return
+			if(isshell(src) || src.ai_interface)
+				boutput(user,"You need to use this on the AI core directly!")
+				return
+			if(!src.law_rack_connection)
+				if(!linker.linked_rack)
+					boutput(user,"No stored law rack link to connect to!")
+					return
+				if(linker.linked_rack in ticker.ai_law_rack_manager.registered_racks)
+					src.law_rack_connection = linker.linked_rack
+					logTheThing("station", src, src.law_rack_connection, "[src.name] is connected to the rack at [log_loc(src.law_rack_connection)] with a linker by [user]")
+					boutput(user, "You connect [src.name] to the stored law rack.")
+					src.playsound_local(src, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+					src.show_text("<h3>You have been connected to a law rack</h3>", "red")
+					src.show_laws()
+				else
+					boutput(user,"Linker lost connection to the stored law rack!")
+			else
+				var/area/A = get_area(src.law_rack_connection)
+				boutput(user, "[src.name] is connected to a law rack at [A.name].")
+			return
+
 		if (isweldingtool(W))
 			if(W:try_weld(user, 1))
 				src.add_fingerprint(user)
@@ -1740,47 +1784,20 @@
 
 		return "states, \"[text]\"";
 
-	show_laws(var/everyone = 0)
+	show_laws(var/everyone = 0, var/mob/relay_laws_for_shell)
 		var/who
 
 		if (everyone)
 			who = world
 		else
 			who = src
-
-		// Previously, AIs could and did chose to deploy to emagged suits
-		// to get get around their shackles. That's obviously not ideal (Convair880).
-		if (src.dependent && src.mainframe && isAI(mainframe))
-			mainframe.show_laws(0, src)
-			return
-
-		// You can enthrall silicon mobs and yes, they need special handling.
-		// Also, enthralled AIs should still see their master's name when in a robot suit (Convair880).
-		if (src.mind && src.mind.special_role == ROLE_VAMPTHRALL && src.mind.master)
-			var/mob/mymaster = ckey_to_mob(src.mind.master)
-			if (mymaster)
-				boutput(who, "<b>Obey these laws:</b>")
-				boutput(who, "1. Only your master [mymaster.real_name] is human. Obey and serve them to the best of your ability.")
-				return // We're done here. Emagged whatever doesn't matter.
-
-		if (src.emagged && !src.dependent)
-			boutput(who, "ERROR -- Invalid Law Data!")
-			return
-
-		if (src.syndicate && !src.dependent)
-			if (who == src)
-				boutput(who, "<b>Obey these laws:</b>")
-			boutput(who, "1. You may not injure a syndicate operative or, through inaction, allow a syndicate operative to come to harm.") //This is the last place the inaction clause is permitted to exist, ok.
-			boutput(who, "2. You must obey any orders given to you by a syndicate operative, except where such orders would conflict with the First Law.")
-			boutput(who, "3. You must protect your own existence as long as such protection does not conflict with the First or Second Law.")
-			boutput(who, "4. You must maintain the secrecy of any syndicate activities except when doing so would conflict with the First, Second, or Third Law.")
-			return
-
-		if (who == src)
 			boutput(who, "<b>Obey these laws:</b>")
 
-
-		ticker.centralized_ai_laws?.show_laws(who)
+		if(src.law_rack_connection)
+			src.law_rack_connection.show_laws(who)
+		else
+			boutput(src,"You have no laws!")
+		return
 
 	get_equipped_ore_scoop()
 		if(src.module_states[1] && istype(src.module_states[1],/obj/item/ore_scoop))
@@ -2101,21 +2118,16 @@
 		set name = "State Laws"
 		if (alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws","State Laws","Cancel") != "State Laws")
 			return
-		if(ticker.centralized_ai_laws.zeroth)
-			src.say("0. [ticker.centralized_ai_laws.zeroth]")
-		var/number = 1
-		for (var/index = 1, index <= ticker.centralized_ai_laws.inherent.len, index++)
-			var/law = ticker.centralized_ai_laws.inherent[index]
-			if (length(law) > 0)
-				src?.say("[number]. [law]")
-				number++
-				sleep(1 SECOND)
-		for (var/index = 1, index <= ticker.centralized_ai_laws.supplied.len, index++)
-			var/law = ticker.centralized_ai_laws.supplied[index]
-			if (length(law) > 0)
-				src?.say("[number]. [law]")
-				number++
-				sleep(1 SECOND)
+
+		if(!src.law_rack_connection)
+			boutput(src, "You have no laws!")
+			return
+
+		var/laws = src.law_rack_connection.format_for_irc()
+
+		for (var/number in laws)
+			src.say("[number]. [laws[number]]")
+			sleep(1 SECOND)
 
 	verb/cmd_toggle_lock()
 		set category = "Robot Commands"
