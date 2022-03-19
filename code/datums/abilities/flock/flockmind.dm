@@ -125,8 +125,8 @@
 	if(..())
 		return 1
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
-	var/turf/simulated/T = get_turf(target)
-	if(!istype(T))
+	var/turf/T = get_turf(target)
+	if(!(istype(T, /turf/simulated) || istype(T, /turf/space)))
 		boutput(holder.owner, "<span class='alert'>The flock can't convert this.</span>")
 		return 1
 	if(isfeathertile(T))

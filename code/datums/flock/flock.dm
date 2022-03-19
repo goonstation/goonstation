@@ -416,7 +416,7 @@
 			return 0
 	return 1
 
-/datum/flock/proc/togglePriorityTurf(var/turf/simulated/T)
+/datum/flock/proc/togglePriorityTurf(var/turf/T)
     if(!T)
         return 1 // error!!
     if(T in priority_tiles)
