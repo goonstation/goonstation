@@ -6878,10 +6878,15 @@
 	},
 /area/station/ranch)
 "atU" = (
-/obj/machinery/disposal/mail/small/autoname,
 /obj/disposalpipe/trunk/mail{
 	dir = 8;
 	mail_tag = "ranch"
+	},
+/obj/machinery/disposal/mail/small{
+	mail_tag = "ranch";
+	mailgroup = "botany";
+	message = "1";
+	name = "mail chute-'Ranch'"
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
@@ -9591,6 +9596,10 @@
 	dir = 4
 	},
 /obj/machinery/light,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /turf/simulated/floor/bot,
 /area/station/hydroponics/lobby)
 "aAR" = (
