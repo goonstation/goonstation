@@ -80,7 +80,7 @@ AI MODULES
 			src.lawText = lawtext_replace
 		else
 			src.lawText = src.lawText + "\n#.5: " + lawtext_replace
-		src.update_law_text()
+		tooltip_rebuild = 1
 
 	attackby(obj/item/W, mob/user)
 		if(ispulsingtool(W))
@@ -88,7 +88,7 @@ AI MODULES
 			if(src.glitched)
 				src.glitched = false
 				src.lawText = src.lawTextSafe
-				src.update_law_text()
+				tooltip_rebuild = 1
 				boutput(user, "The law module seems to be functioning better now!")
 			else
 				boutput(user, "The law module seems unaffected.")
