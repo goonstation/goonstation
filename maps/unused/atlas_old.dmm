@@ -3300,12 +3300,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"iO" = (
-/obj/machinery/light,
-/obj/table/auto,
-/obj/item/aiModule/rename,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
 "iP" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -3366,13 +3360,6 @@
 /area/station/turret_protected/Zeta)
 "iV" = (
 /obj/table/auto,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
-"iW" = (
-/obj/machinery/computer/aiupload,
-/obj/machinery/light{
-	dir = 1
-	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
 "iX" = (
@@ -12392,13 +12379,6 @@
 /obj/item/stamp/ce,
 /turf/simulated/floor/yellow,
 /area/station/crew_quarters/heads)
-"CU" = (
-/obj/storage/secure/closet/command/medical_director,
-/obj/item/device/analyzer/healthanalyzer/upgraded,
-/obj/item/remote/porter/port_a_nanomed,
-/obj/item/stamp/md,
-/turf/simulated/floor/white,
-/area/station/crew_quarters/heads)
 "CV" = (
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/sanitary,
@@ -16650,6 +16630,18 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
+"Uv" = (
+/obj/machinery/light,
+/obj/table/auto,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
+"Wg" = (
+/obj/storage/secure/closet/command/medical_director,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/remote/porter/port_a_nanomed,
+/obj/item/stamp/md,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/heads)
 "WQ" = (
 /obj/table/auto,
 /obj/machinery/light{
@@ -16660,6 +16652,13 @@
 /obj/item/card_box/plain,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
+"Xg" = (
+/obj/machinery/lawrack,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
 "YE" = (
 /obj/table/auto,
 /obj/item/paper/book/from_file/hydroponicsguide,
@@ -58473,7 +58472,7 @@ jy
 ll
 sv
 CY
-iO
+Uv
 lg
 uY
 Eh
@@ -59978,7 +59977,7 @@ bG
 hH
 mP
 lg
-iW
+Xg
 kK
 iS
 kM
@@ -70864,7 +70863,7 @@ up
 yd
 vm
 Af
-CU
+Wg
 tI
 pY
 pz

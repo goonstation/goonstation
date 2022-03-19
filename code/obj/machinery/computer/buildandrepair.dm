@@ -31,9 +31,7 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 /obj/item/circuitboard/security
 	name = "Circuit board (Security)"
 	computertype = "/obj/machinery/computer/security"
-/obj/item/circuitboard/aiupload
-	name = "Circuit board (AI Upload)"
-	computertype = "/obj/machinery/computer/aiupload"
+
 //obj/item/circuitboard/med_data
 //	name = "Circuit board (Medical)"
 //	computertype = "/obj/machinery/computer/med_data"

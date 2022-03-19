@@ -1333,6 +1333,13 @@
 "dn" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/surgery)
+"do" = (
+/obj/storage/secure/closet/command/medical_director,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/remote/porter/port_a_nanomed,
+/obj/item/stamp/md,
+/turf/simulated/floor/white,
+/area/station/bridge/united_command)
 "dp" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -1899,12 +1906,6 @@
 	dir = 4
 	},
 /area/station/quartermaster/office)
-"eQ" = (
-/obj/table/auto,
-/obj/random_item_spawner/ai_experimental,
-/obj/item/aiModule/reset,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
 "eR" = (
 /obj/stool/chair/blue{
 	dir = 1
@@ -6482,15 +6483,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
-"ql" = (
-/obj/machinery/computer/aiupload,
-/obj/machinery/light{
-	dir = 1;
-	light_type = /obj/item/light/tube/blueish;
-	pixel_y = 21
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
 "qm" = (
 /obj/table/auto,
 /obj/item/aiModule/notHuman,
@@ -9009,14 +9001,6 @@
 /obj/machinery/manufacturer/uniform,
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/lounge)
-"vG" = (
-/obj/machinery/light{
-	light_type = /obj/item/light/tube/blueish
-	},
-/obj/table/auto,
-/obj/item/aiModule/rename,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
 "vH" = (
 /obj/table/auto,
 /obj/item/aiModule/freeform,
@@ -11152,6 +11136,15 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"Bc" = (
+/obj/machinery/lawrack,
+/obj/machinery/light{
+	dir = 1;
+	light_type = /obj/item/light/tube/blueish;
+	pixel_y = 21
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
 "Bd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southeast)
@@ -12043,13 +12036,6 @@
 	layer = 3
 	},
 /turf/simulated/floor/red,
-/area/station/bridge/united_command)
-"Dx" = (
-/obj/storage/secure/closet/command/medical_director,
-/obj/item/device/analyzer/healthanalyzer/upgraded,
-/obj/item/remote/porter/port_a_nanomed,
-/obj/item/stamp/md,
-/turf/simulated/floor/white,
 /area/station/bridge/united_command)
 "Dz" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -19145,6 +19131,13 @@
 /obj/machinery/light/small/blueish,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
+"VN" = (
+/obj/machinery/light{
+	light_type = /obj/item/light/tube/blueish
+	},
+/obj/table/auto,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
 "VO" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/poddoor/pyro{
@@ -19759,6 +19752,11 @@
 	dir = 1
 	},
 /area/station/hallway/primary/east)
+"Xy" = (
+/obj/table/auto,
+/obj/random_item_spawner/ai_experimental,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
 "Xz" = (
 /obj/table/round/auto,
 /obj/machinery/computer/tour_console,
@@ -62495,7 +62493,7 @@ rg
 sr
 tD
 uL
-vG
+VN
 qD
 TA
 VZ
@@ -63698,7 +63696,7 @@ kl
 Rt
 kl
 qD
-eQ
+Xy
 rk
 sw
 Pa
@@ -64000,7 +63998,7 @@ kl
 UF
 kl
 qD
-ql
+Bc
 rk
 sV
 tI
@@ -77906,7 +77904,7 @@ AY
 WR
 Cq
 Th
-Dx
+do
 zf
 EY
 Rd

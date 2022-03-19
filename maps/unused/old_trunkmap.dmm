@@ -2425,10 +2425,6 @@
 	},
 /turf/simulated/floor/white,
 /area/russian)
-"aff" = (
-/obj/decal/fakeobjects/sink,
-/turf/simulated/floor/white,
-/area/russian)
 "afg" = (
 /obj/item/storage/secure/ssafe/hjam{
 	pixel_x = 27
@@ -6505,7 +6501,6 @@
 /area/station/storage/tech)
 "aon" = (
 /obj/table/auto,
-/obj/item/aiModule/reset,
 /obj/item/peripheral/printer,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -7359,13 +7354,6 @@
 /obj/item/device/audio_log,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"aqk" = (
-/obj/rack{
-	dir = 4
-	},
-/obj/item/circuitboard/aiupload,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
 "aql" = (
 /obj/rack{
 	dir = 4
@@ -7765,19 +7753,6 @@
 	d2 = 2
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
-"arp" = (
-/obj/machinery/camera{
-	network = "SS13";
-	c_tag = "Genetic Research East"
-	},
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/obj/machinery/computer/aiupload,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "arq" = (
@@ -9140,7 +9115,6 @@
 /area/station/maintenance/west)
 "auy" = (
 /obj/table/auto,
-/obj/item/aiModule/rename,
 /obj/item/aiModule/freeform,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -9156,7 +9130,6 @@
 "auA" = (
 /obj/table/auto,
 /obj/item/aiModule/oneHuman,
-/obj/item/aiModule/reset,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "auB" = (
@@ -24293,10 +24266,6 @@
 /obj/stool,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
-"beB" = (
-/obj/decal/fakeobjects/sink,
-/turf/simulated/floor/white,
-/area/station/science/chemistry)
 "beC" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -34885,6 +34854,23 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"gxL" = (
+/obj/machinery/camera{
+	network = "SS13";
+	c_tag = "Genetic Research East"
+	},
+/obj/cable{
+	icon_state = "1-2";
+	d1 = 1;
+	d2 = 2
+	},
+/obj/machinery/lawrack,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
+"ocN" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/white,
+/area/russian)
 "rEU" = (
 /obj/table/auto,
 /obj/item/storage/photo_album{
@@ -34893,6 +34879,10 @@
 /obj/item/camera,
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
+"uvc" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/white,
+/area/station/science/chemistry)
 "uQc" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
@@ -41568,7 +41558,7 @@ aaa
 anL
 aom
 aoZ
-aqk
+asg
 arh
 asg
 asp
@@ -47244,7 +47234,7 @@ anO
 aot
 ape
 aqq
-arp
+gxL
 ass
 atx
 atx
@@ -64991,7 +64981,7 @@ bbU
 aWT
 bdt
 bdY
-beB
+uvc
 bfi
 bbV
 bfD
@@ -78065,7 +78055,7 @@ aaG
 aaN
 aeV
 aba
-aff
+ocN
 aba
 aba
 aba
