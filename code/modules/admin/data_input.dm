@@ -1,10 +1,14 @@
 /// For inputting data for things like edit-variables, proccall, etc
 /// @param allowed_types The types of input which are allowed, which the user selects from. The selected type is returned as part of the data_input_result
-/// @param user 		 The client using this. Tied to a client rather than a mob so mob swaps don't prevent use.
-/// @param custom_title  If not null, set as the title for the input
-///	@param custom_text	 If not null, set as the text for the input
-/// @return 			 A data_input_result with the parsed input and the selected input type, or both null if we didn't get any data
-proc/input_data(list/allowed_types, client/user, custom_title = null, custom_message = null, default = null, default_type = null)
+/// @param user 				The client using this. Tied to a client rather than a mob so mob swaps don't prevent use
+/// @param custom_title 		If not null, set as the title for the input
+///	@param custom_text			If not null, set as the text for the input
+/// @param default				The default value, if default_type is chosen as the input type
+/// @param default_type  		The default input type
+/// @param custom_type_title 	If not null, set as the title for input type selection
+/// @param custom_type_message 	If not null, set as the text for input type selection
+/// @return 			 		A data_input_result with the parsed input and the selected input type, or both null if we didn't get any data
+proc/input_data(list/allowed_types, client/user, custom_title = null, custom_message = null, default = null, custom_type_title = null, custom_type_message = null, default_type = null)
 	. = new /datum/data_input_result(null, null) //in case anything goes wrong, return this
 
 	if (!isclient(user)) //attempt to recover
@@ -24,7 +28,7 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 		return
 
 	var/input = null 	// The input from the user- usually text, but might be a file or something.
-	var/selected_type = input(user.mob, "Which input type?", "Input Type Selection", default_type) as null|anything in allowed_types //TODO make this a TGUI list once we can indicate defaults on those
+	var/selected_type = input(user.mob, custom_type_title || "Which input type?", custom_type_message || "Input Type Selection", default_type) as null|anything in allowed_types //TODO make this a TGUI list once we can indicate defaults on those
 
 	if (!selected_type)
 		return
@@ -41,7 +45,7 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 			if (!stub)
 				boutput(user, "<span class='alert'>Cancelled.</span>")
 				return
-			input = get_one_match(stub, /datum)
+			input = get_one_match(stub, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 
 		if (DATA_INPUT_COLOR)
 			input = input(custom_title || "Select color:", custom_message, default) as null|color
@@ -117,7 +121,7 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 			if (!stub)
 				boutput(user, "<span class='alert'>Cancelled.</span>")
 				return
-			input = get_one_match(stub, /datum)
+			input = get_one_match(stub, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 
 		if (DATA_INPUT_NUM_ADJUST) // identical to num, but caller will treat it differently after we return
 			input = input("Enter amount to adjust by:") as null|num
