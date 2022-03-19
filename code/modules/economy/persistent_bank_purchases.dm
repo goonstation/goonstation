@@ -439,7 +439,18 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			else
 				S = new /obj/storage/crate/wooden()
 				M.set_loc(S)
-			shippingmarket.receive_crate(S)
+			SPAWN(1)
+				for(var/i in 1 to 3)
+					shippingmarket.receive_crate(S)
+					sleep(randfloat(10 SECONDS, 20 SECONDS))
+					if(istype(get_area(S), /area/station))
+						break
+					boutput(M, "<span class='alert'><b>Something went wrong with mail order, retrying!</b></span>")
+				var/list/turf/last_chance_turfs = get_area_turfs(/area/station/quartermaster/office, 1)
+				if(length(last_chance_turfs))
+					S.set_loc(pick(last_chance_turfs))
+				else
+					S.set_loc(get_random_station_turf())
 			return 1
 
 	frog
