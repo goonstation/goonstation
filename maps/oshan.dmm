@@ -45187,7 +45187,10 @@
 	dir = 5
 	},
 /area/station/medical/medbay/cloner)
-<<<<<<< HEAD
+"fdL" = (
+/obj/machinery/lawrack,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "fev" = (
 /obj/cable{
 	d1 = 4;
@@ -45197,12 +45200,6 @@
 /obj/machinery/navbeacon/mule/catering_north/east,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/baroffice)
-=======
-"fdL" = (
-/obj/machinery/lawrack,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
->>>>>>> a5bd5ec27cb7ed4334495f9f424c17a8dd9be04f
 "fhb" = (
 /obj/cable{
 	icon_state = "1-2"
