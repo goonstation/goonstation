@@ -29,7 +29,7 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 		return
 
 	var/input = null 	// The input from the user- usually text, but might be a file or something.
-	var/selected_type = input(user.mob, custom_type_title || "Which input type?", custom_type_message || "Input Type Selection", default_type) as null|anything in allowed_types //TODO make this a TGUI list once we can indicate defaults on those
+	var/selected_type = input(custom_type_title || "Which input type?", custom_type_message || "Input Type Selection", default_type) as null|anything in allowed_types //TODO make this a TGUI list once we can indicate defaults on those
 
 	if (!selected_type)
 		return
@@ -56,6 +56,9 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 
 		if (DATA_INPUT_ICON)
 			input = input(custom_title || "Select icon:", custom_message) as null|icon
+
+		if (DATA_INPUT_BOOLEAN)
+			input = alert(custom_title || "True of False?", custom_message, "True", "False") == "True" ? TRUE : FALSE
 
 		if (DATA_INPUT_LIST)
 			//TODO uhhhhhhhh h
