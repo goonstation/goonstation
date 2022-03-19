@@ -1133,7 +1133,7 @@
 	icon_state = "med"
 	icon_panel = "standard-panel"
 	icon_deny = "med-deny"
-	req_access_txt = "5"
+	req_access_txt = "10"
 	mats = 10
 	acceptcard = 0
 	window_size = "400x675"
