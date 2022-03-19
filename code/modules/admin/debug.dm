@@ -347,79 +347,18 @@ var/global/debug_messages = 0
 	if (!argnum)
 		return listargs
 	for (var/i = 1 , i <= argnum, i++)
-		var/class = input(arginfo ? arginfo[i][ARG_INFO_DESC] + ":" : "Type of Argument #[i]", arginfo ? "Argument #[i]: " + arginfo[i][ARG_INFO_NAME] : "Variable Type", arginfo ? arginfo[i][ARG_INFO_TYPE] : null)\
-		 as null|anything in list("text","num","type","json","ref","reference","mob reference","reference atom at current turf","icon","color","file","the turf of which you are on top of right now")
-		if(!class)
+		var/datum/data_input_result/arg = input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
+										DATA_INPUT_ATOM_ON_CURRENT_TURF, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_FILE), usr.client, \
+										custom_type_title = arginfo ? "Argument #[i]: " + arginfo[i][ARG_INFO_NAME] : "Variable Type", \
+										custom_type_message = arginfo ? arginfo[i][ARG_INFO_DESC] + ":" : "Type of Argument #[i]", \
+										default_type = arginfo?[i][ARG_INFO_TYPE])
+
+		if(isnull(arg.output_type))
 			break
-		switch(class)
-			if ("text")
-				listargs += input("Enter new text:","Text", (arginfo?[i][ARG_INFO_TYPE] == class && length(arginfo[i])>=ARG_INFO_DEFAULT) ? arginfo[i][ARG_INFO_DEFAULT] : null) as null|text
 
-			if ("num")
-				listargs += input("Enter new number:","Num", (arginfo?[i][ARG_INFO_TYPE] == class && length(arginfo[i])>=ARG_INFO_DEFAULT) ? arginfo[i][ARG_INFO_DEFAULT] : 0) as null|num
+		listargs += arg.output
 
-			if ("type")
-				boutput(usr, "<span class='notice'>Type part of the path of the type.</span>")
-				var/typename = input("Part of type path.", "Part of type path.", (arginfo?[i][ARG_INFO_TYPE] == class && length(arginfo[i])>=ARG_INFO_DEFAULT) ? arginfo[i][ARG_INFO_DEFAULT] : "/obj") as null|text
-				if (typename)
-					var/match = get_one_match(typename, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
-					if (match)
-						listargs += match
-
-			if("json")
-				listargs += list(json_decode(input("Enter json:") as null|text))
-
-			if ("ref")
-				var/input = input("Enter ref:") as null|text
-				var/target = locate(input)
-				if (!target) target = locate("\[[input]\]")
-				listargs += target
-
-			if ("reference")
-				listargs += input("Select reference:","Reference", null) as null|mob|obj|turf|area in world
-
-			if ("mob reference")
-				listargs += input("Select reference:","Reference", null) as null|mob in world
-
-			if ("the turf of which you are on top of right now")
-				listargs += get_turf(usr)
-
-			if ("reference atom at current turf")
-				var/list/possible = list()
-				var/turf/T = get_turf(usr)
-				possible += T.loc
-				possible += T
-				for (var/atom/A in T)
-					possible += A
-					for (var/atom/B in A)
-						possible += B
-				listargs += input("Select reference:","Reference", null) as mob|obj|turf|area in possible
-
-			if ("file")
-				listargs += input("Pick file:","File", null) as null|file
-
-			if ("icon")
-				listargs += input("Pick icon:","Icon", null) as null|icon
-
-			if ("color")
-				listargs += input("Pick color:","Color",  (arginfo?[i][ARG_INFO_TYPE] == class && length(arginfo[i])>=ARG_INFO_DEFAULT) ? arginfo[i][ARG_INFO_DEFAULT] : null) as null|color
-
-			if ("turf by coordinates")
-				var/x = input("X coordinate", "Set to turf at \[_, ?, ?\]", 1) as null|num
-				var/y = input("Y coordinate", "Set to turf at \[[x], _, ?\]", 1) as null|num
-				var/z = input("Z coordinate", "Set to turf at \[[x], [y], _\]", 1) as null|num
-				var/turf/T = locate(x, y, z)
-				if (istype(T))
-					listargs += T
-				else
-					boutput(usr, "<span class='alert'>Invalid coordinates!</span>")
-
-			else
-				continue
-
-		if (listargs == null)
-			return list()
-	return listargs
+	return listargs || list()
 
 /client/proc/cmd_admin_mobileAIize(var/mob/M in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
