@@ -76,14 +76,13 @@
 			suit.set_loc(getOutputLocation(owner))
 			helmet.set_loc(getOutputLocation(owner))
 			var/obj/item/fabr = getObjectByPartName("Fabric")
-			var/obj/item/vis = getObjectByPartName("Visor")
+			var/obj/item/visr = getObjectByPartName("Visor")
 			var/obj/item/renf = getObjectByPartName("Reinforcement")
 			suit.setMaterial(fabr.material) // suit stuff
 			suit.setupReinforcement(renf.material)
 			suit.UpdateName()
 			helmet.setMaterial(fabr.material) // helmet stuff
-		//	helmet.setVisrMaterial(vis.material)
-			helmet.setupVisorMat(vis.material)// sets color to match the suit, keeps protectiveness from visor
+			helmet.setupVisorMat(visr.material)// sets color to match the suit, keeps protectiveness from visor
 			helmet.UpdateName()
 		return
 

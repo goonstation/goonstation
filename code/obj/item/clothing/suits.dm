@@ -1287,12 +1287,12 @@
 	inhand_image_icon = "s_suit"
 	item_state = "spacemat"
 	name = "bespoke space suit"
-	desc = "A custom built suit that protects your soft tissues from hard vacuum."
-	var/datum/material/reinf=null
+	desc = "A custom built suit that protects your fragile body from hard vacuum."
+	var/datum/material/renf=null
 
 	proc/setupReinforcement(var/datum/material/R) // passes the reinforcement variable, sets up protection
-		reinf = R
-		if (src.material && reinf)
+		renf = R
+		if (src.material && renf)
 			if (src.material.hasProperty("thermal"))
 				var/prot = 100 - src.material.getProperty("thermal")
 				setProperty("coldprot", prot)
@@ -1311,14 +1311,14 @@
 				var/prot = round(src.material.getProperty("density") / 13)// for RANGED
 				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
 
-				prot = round(reinf.getProperty("dense") / 13)// for MELEE
+				prot = round(renf.getProperty("dense") / 13)// for MELEE
 				if(prot < 3)
 					setProperty("meleeprot", 3)
 				if(prot > 6 )
 					setProperty("meleeprot", 6)
 				setProperty("meleeprot", prot)
 
-				var/clunk = reinf.getProperty("density") // for MOVEMENT SPEED
+				var/clunk = renf.getProperty("density") // for MOVEMENT SPEED
 				if (clunk <= 15) // lighter metals = faster
 					setProperty("space_movespeed", 0.4) // since movespeed is already initalized, no need to have final conditional
 				else if (clunk >= 40)
@@ -1331,8 +1331,8 @@
 
 
 	UpdateName()
-		if (src.material && reinf)
-			name = "[reinf]-reinforced [src.material] bespoke space suit"
+		if (src.material && renf)
+			name = "[renf]-reinforced [src.material] bespoke space suit"
 		else if (src.material)
 			name = " [src.material] bespoke space suit"
 // Sealab suits
