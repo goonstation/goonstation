@@ -23,6 +23,7 @@
 	src.flock = new /datum/flock()
 	src.real_name = "Flockmind [src.flock.name]"
 	src.name = src.real_name
+	src.update_name_tag()
 	src.flock.registerFlockmind(src)
 	src.flock.showAnnotations(src)
 	src.addAbility(/datum/targetable/flockmindAbility/controlPanel)

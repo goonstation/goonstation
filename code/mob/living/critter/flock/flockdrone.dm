@@ -49,6 +49,7 @@
 
 	src.name = "[pick_string("flockmind.txt", "flockdrone_name_adj")] [pick_string("flockmind.txt", "flockdrone_name_noun")]"
 	src.real_name = "[pick(consonants_lower)][pick(vowels_lower)].[pick(consonants_lower)][pick(vowels_lower)].[pick(consonants_lower)][pick(vowels_lower)]"
+	src.update_name_tag()
 
 	if(src.dormant) // we'be been flagged as dormant in the map editor or something
 		src.dormantize()

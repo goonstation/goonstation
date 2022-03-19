@@ -21,6 +21,7 @@
 
 	src.name = "[pick_string("flockmind.txt", "flockbit_name_adj")] [pick_string("flockmind.txt", "flockbit_name_noun")]"
 	src.real_name = "[pick(consonants_upper)].[rand(10,99)].[rand(10,99)]"
+	src.update_name_tag()
 
 /mob/living/critter/flock/bit/special_desc(dist, mob/user)
 	if(isflock(user))

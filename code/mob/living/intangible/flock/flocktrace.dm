@@ -4,7 +4,7 @@
 // Unlike the flockmind, when player drones exit their corporeal body to jump into another one,
 // they're tiny little flickers of thought.
 /mob/living/intangible/flock/trace
-	name = "weird radio ghost bird"
+	name = "Flocktrace"
 	real_name = "Flocktrace"
 	desc = "The representation of a partition of the will of the flockmind."
 	icon = 'icons/misc/featherzone.dmi'
@@ -19,6 +19,8 @@
 	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
 
 	src.real_name = "[pick(consonants_upper)][pick(vowels_lower)].[pick(vowels_lower)]"
+	src.name = src.real_name
+	src.update_name_tag()
 
 	if(istype(F))
 		src.flock = F
