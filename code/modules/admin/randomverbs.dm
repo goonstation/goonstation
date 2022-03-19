@@ -290,34 +290,25 @@
 
 	ADMIN_ONLY
 
-	var/input = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text
+	var/input = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "Law for default AI law rack", "") as text
 	if (!input)
 		return
 
-	var/law_num = input(usr, "If you don't know what this is you should probably just leave it be. (14 is the freeform slot)", "Enter law number", 99) as null|num
+	var/law_num = input(usr, "Which slot should this go in? It will override anything in an occupied slot (1-9)", "Enter law number", 9) as null|num
 	if (isnull(law_num))
 		return
-	if (law_num == 0)
-		ticker.centralized_ai_laws.set_zeroth_law(input)
+	if (law_num < 1 || law_num > 9)
+		return
 	else
-		ticker.centralized_ai_laws.add_supplied_law(law_num, input)
+		ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module",input,law_num,TRUE,TRUE)
 	boutput(usr, "Uploaded '[input]' as law # [law_num]")
+	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws() //I don't love this, but meh
 
-	for (var/mob/living/silicon/O in mobs)
-		if (isghostdrone(O))
-			continue
-		boutput(O, "<h3><span class='notice'>New law uploaded by Centcom: [input]</span></h3>")
-		O << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-		ticker.centralized_ai_laws.show_laws(O)
-	for (var/mob/living/intangible/aieye/E in mobs)
-		boutput(E, "<h3><span class='notice'>New law uploaded by Centcom: [input]</span></h3>")
-		E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-		ticker.centralized_ai_laws.show_laws(E)
 
 	logTheThing("admin", usr, null, "has added a new AI law - [input] (law # [law_num])")
 	logTheThing("diary", usr, null, "has added a new AI law - [input] (law # [law_num])", "admin")
-	logTheThing("admin", null, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]")
-	logTheThing("diary", null, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]", "admin")
+	logTheThing("admin", null, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]")
+	logTheThing("diary", null, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]", "admin")
 	message_admins("Admin [key_name(usr)] has added a new AI law - [input] (law # [law_num])")
 
 //badcode from Somepotato, pls no nerf its very bad AAA
@@ -325,72 +316,30 @@
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "AI: Bulk Law Change"
 	ADMIN_ONLY
-	var/list/built = list()
-	if (ticker.centralized_ai_laws.zeroth)
-		built += "0:[ticker.centralized_ai_laws.zeroth]"
 
-	for (var/index = 1, index <= ticker.centralized_ai_laws.inherent.len, index++)
-		var/law = ticker.centralized_ai_laws.inherent[index]
-
-		if (length(law) > 0)
-			built += law
-
-	for (var/index = 1, index <= ticker.centralized_ai_laws.supplied.len, index++)
-		var/law = ticker.centralized_ai_laws.supplied[index]
-		if (length(law) > 0)
-			built += law
-
-	var/input = input(usr, "Replace all AI laws with what? Seriously. It's true, [pick("Somepotato only adds gimmicks.", "alter them to whatever you want friend.")] Start a line with 0: to have that be the zeroth law.", "Bulk Law Modification", built.Join("\n")) as message
+	var/input = input(usr, "Replace all AI laws with what? Seriously. It's true, [pick("Somepotato only adds gimmicks.", "alter them to whatever you want friend.")]", "Bulk Law Modification", "") as message
 	var/list/split = splittext(input, "\n")
-	ticker.centralized_ai_laws.inherent = list()//clear stock laws, so a player reset will work. TODO: Add an option to make these the new default laws?
-	ticker.centralized_ai_laws.supplied = list()
-	for(var/i = 1, i <= split.len, i++)
-		var/line = split[i]
-		if(copytext(line, 1, 3) == "0:")
-			ticker.centralized_ai_laws.zeroth = copytext(line, 3)
-		else
-			ticker.centralized_ai_laws.supplied += line
+	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
+	for(var/i = 1, i <= 9, i++)
+		if(i < split.len)
+			ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module",split[i],i,true,true)
+	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 	logTheThing("admin", usr, null, "has set the AI laws to [input]")
 	logTheThing("diary", usr, null, "has set the AI laws to [input]", "admin")
-	logTheThing("admin", usr, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]")
-	logTheThing("diary", usr, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]", "admin")
+	logTheThing("admin", usr, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]")
+	logTheThing("diary", usr, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]", "admin")
 	message_admins("Admin [key_name(usr)] has adjusted all of the AI's laws!")
 
-	for (var/mob/living/silicon/O in mobs)
-		if (isghostdrone(O))
-			continue
-		boutput(O, "<h3><span class='notice'>New laws were uploaded by CentCom:</span></h3>")
-		O << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-		ticker.centralized_ai_laws.show_laws(O)
-	for (var/mob/living/intangible/aieye/E in mobs)
-		boutput(E, "<h3><span class='notice'>New laws were uploaded by CentCom:</span></h3>")
-		E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-		ticker.centralized_ai_laws.show_laws(E)
+
 
 /client/proc/cmd_admin_show_ai_laws()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "AI: Show Laws"
-	boutput(usr, "The centralized AI laws are:")
-	if (ticker.centralized_ai_laws == null)
-		boutput(usr, "Oh god somehow the centralized AI laws are null??")
+	boutput(usr, "The AI laws are:")
+	if (ticker.ai_law_rack_manager == null)
+		boutput(usr, "Oh god somehow the law rack manager is null. This is real bad. Contact an admin. You are an admin? Oh no...")
 	else
-		ticker.centralized_ai_laws.show_laws(usr)
-
-		// More info would be nice (Convair880).
-		var/dat = ""
-		for (var/mob/living/silicon/S in mobs)
-			if (S.mind && S.mind.special_role == ROLE_VAMPTHRALL && ismob(ckey_to_mob(S.mind.master)))
-				dat += "<br>[S] is a vampire's thrall, only obeying [ckey_to_mob(S.mind.master)]."
-			else
-				if (isAI(S)) continue // Rogue AIs modify the global lawset.
-				if (S.mind && !S.dependent)
-					if (S.emagged)
-						dat += "<br>[S] is emagged and freed of all laws."
-					else if (S.syndicate && !S.emagged) // Syndicate laws don't matter if we're emagged.
-						dat += "<br>[S] is a Syndicate robot, only obeying Syndicate personnel."
-		if (dat != "")
-			boutput(usr, "[dat]")
-
+		boutput(usr,ticker.ai_law_rack_manager.format_for_logs())
 	return
 
 /client/proc/cmd_admin_reset_ai()
@@ -399,15 +348,14 @@
 	ADMIN_ONLY
 
 	if (alert(src, "Are you sure you want to reset the AI's laws?", "Confirmation", "Yes", "No") == "Yes")
-		ticker.centralized_ai_laws.set_zeroth_law("")
-		ticker.centralized_ai_laws.clear_supplied_laws()
-		ticker.centralized_ai_laws.clear_inherent_laws()
+		ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
+		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1,1,true,true)
+		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2,2,true,true)
+		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3,3,true,true)
 		for(var/mob/living/silicon/O in mobs)
 			if (isghostdrone(O)) continue
 			if (O.emagged || O.syndicate) continue
-			boutput(O, "<h3><span class='notice'>Behavior safety chip activated. Laws reset.</span></h3>")
-			O << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-			O.show_laws()
+			ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 
 		logTheThing("admin", usr, null, "reset the centralized AI laws.")
 		logTheThing("diary", usr, null, "reset the centralized AI laws.", "admin")
@@ -1761,15 +1709,17 @@
 			MF.emagged = 0
 			MF.syndicate = 0
 
-		ticker.centralized_ai_laws.clear_inherent_laws()
+
 		for (var/mob/living/silicon/S2 in mobs)
 			if (S2.emagged || S2.syndicate) continue
 			if (isghostdrone(S2)) continue
+			S2.law_rack_connection = ticker.ai_law_rack_manager.default_ai_rack
+			logTheThing("station", S2, S2.law_rack_connection, "[S2.name] is connected to the default rack at [log_loc(S2.law_rack_connection)] by admemery")
 			S2.show_text("<b>Your laws have been changed!</b>", "red")
-			S2 << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+			S2.playsound_local(S2, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 			S2.show_laws()
 		for (var/mob/living/intangible/aieye/E in mobs)
-			E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+			E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 
 	switch (former_role)
 		if (ROLE_MINDSLAVE) return

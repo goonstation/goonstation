@@ -137,6 +137,8 @@
 	attackby(obj/item/I as obj, mob/user as mob)
 		if(istype(I, /obj/item/gun/kinetic))
 			var/obj/item/gun/kinetic/K = I
+			if(!K.ammo.refillable)
+				boutput(user, "<span class='alert'>The ammobag grumps unhappily. What?</span>")
 			if(K.ammo.amount_left>=K.max_ammo_capacity)
 				user.show_text("[K] is full!", "red")
 				return

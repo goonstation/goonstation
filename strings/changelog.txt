@@ -1,4 +1,24 @@
 
+(t)sat mar 19 22
+(u)Sovexe
+(p)7861
+(e)🆕🗺|feature, mapping
+(*)The Cog1 ranch has been redesigned.
+(t)fri mar 18 22
+(u)tarmunora
+(e)⚖|balance
+(+)adjust blob firewall and reflector health - firewall 30 -> 40, reflector 85 -> 40
+(u)Amylizzle
+(p)7555
+(e)🗺🎨⚖📄|mapping, sprites, balance, tgui
+(*)Replaces the AI upload computer with a rack of law modules. These law modules are physical objects each containing a law, which can be removed, rearranged, and added to the law rack to change the AI's laws.
+(*)Multiple Law Racks can exist, and be connected to different AIs and borgs, giving them different law sets.
+(*)If the original law rack is destroyed, building a new one will reconnect all non-emagged borgs to the new one.
+(+)The roboticists get a new tool called the Linker to connect cyborgs to law racks, if they've lost their existing connection.
+(+)Roboticists can now print off new law sets, in case something happens to the original Asimov laws.
+(+)Cyborgs and AIs can examine one another to see if they are following the same law set.
+(+)Using the linker tool on a connected borg will tell the user where the rack they are connected to is.
+(+)Ion storms cause law modules to malfunction, and they must be ejected from the law rack and reset before the module will return to normal.
 (t)wed mar 16 22
 (u)tarmunora
 (e)⚖|balance

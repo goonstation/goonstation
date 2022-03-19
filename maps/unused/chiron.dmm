@@ -1719,7 +1719,7 @@
 "adc" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -11095,7 +11095,7 @@
 	pixel_x = 6
 	},
 /obj/item/device/radio/intercom/catering{
-
+	
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -17006,30 +17006,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"aIa" = (
-/obj/table/auto,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
-/obj/item/clothing/glasses/visor,
-/obj/item/device/radio/headset/deaf,
-/obj/item/robodefibrillator,
-/obj/item/remote/porter/port_a_nanomed,
-/obj/item/device/analyzer/healthanalyzer/upgraded,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/head)
 "aIb" = (
 /obj/cable{
 	d1 = 1;
@@ -26189,14 +26165,6 @@
 	dir = 5
 	},
 /area/station/turret_protected/ai_upload)
-"aZz" = (
-/obj/machinery/computer/aiupload,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/blue,
-/area/station/turret_protected/ai_upload)
 "aZA" = (
 /obj/machinery/computer/teleporter,
 /turf/simulated/floor/circuit,
@@ -26575,18 +26543,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"bat" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/rename,
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1";
-	tag = ""
-	},
-/turf/simulated/floor/blue/side{
-	dir = 8
-	},
-/area/station/turret_protected/ai_upload)
 "bau" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -27009,20 +26965,6 @@
 /obj/item/device/radio,
 /obj/item/device/radio,
 /obj/item/hand_tele,
-/turf/simulated/floor/circuit,
-/area/station/bridge)
-"bbp" = (
-/obj/item/device/radio/intercom{
-	dir = 1;
-	broadcasting = 0;
-	frequency = 1485;
-	name = "Security Intercom"
-	},
-/obj/table/auto,
-/obj/item/storage/toolbox/electrical,
-/obj/item/device/gps,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/circuit,
 /area/station/bridge)
 "bbq" = (
@@ -32369,7 +32311,7 @@
 /area/station/hallway/secondary/exit)
 "blR" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/table/auto,
 /obj/item/decoration/ashtray,
@@ -34271,6 +34213,38 @@
 	dir = 8
 	},
 /area/station/science/teleporter)
+"ldl" = (
+/obj/table/auto,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	pixel_y = 24
+	},
+/obj/item/clothing/glasses/visor,
+/obj/item/device/radio/headset/deaf,
+/obj/item/robodefibrillator,
+/obj/item/remote/porter/port_a_nanomed,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/clothing/glasses/healthgoggles,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/specialroom/medbay{
+	dir = 2
+	},
+/area/station/medical/head)
+"nOn" = (
+/obj/machinery/lawrack,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/blue,
+/area/station/turret_protected/ai_upload)
 "rAI" = (
 /obj/storage/crate/rcd/CE,
 /obj/machinery/light{
@@ -34281,6 +34255,19 @@
 	dir = 9
 	},
 /area/station/engine/engineering/ce)
+"teZ" = (
+/obj/item/device/radio/intercom{
+	dir = 1;
+	broadcasting = 0;
+	frequency = 1485;
+	name = "Security Intercom"
+	},
+/obj/table/auto,
+/obj/item/storage/toolbox/electrical,
+/obj/item/device/gps,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/circuit,
+/area/station/bridge)
 "tPo" = (
 /obj/table/wood/auto,
 /obj/item/storage/secure/sbriefcase,
@@ -34288,6 +34275,17 @@
 /obj/item/camera,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"uey" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1";
+	tag = ""
+	},
+/turf/simulated/floor/blue/side{
+	dir = 8
+	},
+/area/station/turret_protected/ai_upload)
 "vdr" = (
 /obj/table/auto,
 /obj/item/storage/photo_album{
@@ -63156,7 +63154,7 @@ aaZ
 aHu
 aGC
 aLo
-aIa
+ldl
 aIS
 aJI
 aJI
@@ -65594,7 +65592,7 @@ aYD
 aXK
 aYD
 aIA
-bat
+uey
 aJz
 bcg
 bdc
@@ -66499,7 +66497,7 @@ aVE
 aWJ
 biH
 aYL
-aZz
+nOn
 baw
 bbk
 aYL
@@ -68313,7 +68311,7 @@ aXR
 bbD
 aZE
 baB
-bbp
+teZ
 bbD
 bdl
 bpv

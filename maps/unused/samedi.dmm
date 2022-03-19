@@ -14589,7 +14589,7 @@
 "aGa" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -26586,14 +26586,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
-"bgo" = (
-/obj/table/auto,
-/obj/item/storage/box/PDAbox,
-/obj/item/aiModule/reset,
-/obj/item/circuitboard/aiupload,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/carpet/blue,
-/area/station/bridge)
 "bgp" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
@@ -32197,31 +32189,6 @@
 	},
 /turf/simulated/floor/sandytile,
 /area/station/hallway/primary/east)
-"bsE" = (
-/obj/table/auto,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/item/clothing/glasses/visor,
-/obj/item/device/radio/headset/deaf,
-/obj/item/robodefibrillator,
-/obj/item/device/analyzer/healthanalyzer/upgraded,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-4";
-	pixel_y = 0
-	},
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/head)
 "bsF" = (
 /obj/machinery/sleep_console{
 	icon_state = "sleeperconsole";
@@ -39546,13 +39513,6 @@
 	dir = 8
 	},
 /area/station/turret_protected/ai_upload)
-"bJN" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/rename,
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/turret_protected/ai_upload)
 "bJO" = (
 /obj/machinery/power/solar/east,
 /obj/cable{
@@ -39889,25 +39849,6 @@
 	},
 /turf/simulated/floor/blueblack{
 	dir = 8
-	},
-/area/station/turret_protected/ai_upload)
-"bKx" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/aiupload{
-	dir = 8
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/blueblack{
-	dir = 4
 	},
 /area/station/turret_protected/ai_upload)
 "bKy" = (
@@ -42544,7 +42485,7 @@
 	pixel_y = 1
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -43086,7 +43027,7 @@
 	pixel_y = 21
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/storage/crate/furnacefuel,
 /turf/simulated/floor/plating,
@@ -44852,7 +44793,7 @@
 /area/research_outpost/hangar)
 "bUk" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/shuttlebay,
 /area/research_outpost/hangar)
@@ -44904,7 +44845,7 @@
 /area/research_outpost)
 "bUp" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -45092,13 +45033,6 @@
 /turf/simulated/floor/green/side{
 	dir = 10
 	},
-/area/station/turret_protected/Zeta)
-"bUM" = (
-/obj/table/auto,
-/obj/item/circuitboard/aiupload,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/green/side,
 /area/station/turret_protected/Zeta)
 "bUN" = (
 /obj/machinery/light,
@@ -46137,19 +46071,6 @@
 	},
 /turf/space,
 /area/station/solar/south)
-"bXc" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/protectStation,
-/obj/item/aiModule/conservePower,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/item/aiModule/reset,
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
-/area/station/turret_protected/ai_upload)
 "bXd" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -46247,7 +46168,7 @@
 /obj/table/auto,
 /obj/random_item_spawner/tools,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
@@ -49359,6 +49280,36 @@
 	dir = 1
 	},
 /area/station/science/teleporter)
+"iTP" = (
+/obj/table/auto,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/green/side,
+/area/station/turret_protected/Zeta)
+"kYE" = (
+/obj/table/auto,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	pixel_y = 24
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/item/clothing/glasses/visor,
+/obj/item/device/radio/headset/deaf,
+/obj/item/robodefibrillator,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/clothing/glasses/healthgoggles,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/turf/simulated/floor/specialroom/medbay{
+	dir = 2
+	},
+/area/station/medical/head)
 "kYK" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -49415,6 +49366,49 @@
 	dir = 6
 	},
 /area/station/science/teleporter)
+"ntL" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/lawrack{
+	dir = 8
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/turret_protected/ai_upload)
+"oIY" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/protectStation,
+/obj/item/aiModule/conservePower,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/station/turret_protected/ai_upload)
+"pQB" = (
+/obj/table/reinforced/auto,
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/turret_protected/ai_upload)
+"pZQ" = (
+/obj/table/auto,
+/obj/item/storage/box/PDAbox,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/carpet/blue,
+/area/station/bridge)
 "rTs" = (
 /obj/table/wood/auto,
 /obj/item/device/camera_viewer,
@@ -79496,7 +79490,7 @@ aVm
 beL
 bga
 bhw
-bsE
+kYE
 bkf
 blt
 bhw
@@ -88615,7 +88609,7 @@ bRE
 bSw
 bTg
 bSx
-bUM
+iTP
 bPT
 bVO
 bSp
@@ -89762,7 +89756,7 @@ baW
 bct
 bdD
 beV
-bgo
+pZQ
 bhG
 bjj
 bkt
@@ -114877,7 +114871,7 @@ bHA
 bJb
 bJM
 bKw
-bXc
+oIY
 bMi
 bNb
 bIl
@@ -115781,8 +115775,8 @@ bEF
 bHD
 bIo
 bNe
-bJN
-bKx
+pQB
+ntL
 bLu
 bMk
 bEF

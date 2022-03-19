@@ -3072,6 +3072,10 @@ ABSTRACT_TYPE(/area/station/chapel)
 	name = "Northeast Area"
 	do_not_irradiate = 1;
 
+/area/station/storage/hydroponics
+	name = "Hydroponics Storage"
+	icon_state = "pink"
+
 ABSTRACT_TYPE(/area/station/hangar)
 /area/station/hangar
 	name = "Hangar"
@@ -3124,6 +3128,7 @@ ABSTRACT_TYPE(/area/station/hangar)
 /area/station/ranch
 	name = "Ranch"
 	icon_state = "ranch"
+	workplace = 1
 
 ABSTRACT_TYPE(/area/station/garden)
 /area/station/garden
