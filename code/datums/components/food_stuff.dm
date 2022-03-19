@@ -15,7 +15,7 @@ TYPEINFO(/datum/component/consume)
 
 TYPEINFO(/datum/component/consume/can_eat_inedible_organs)
 	initialization_args = list(
-		ARG_INFO("can_eat_heads", DATA_INPUT_NUM, "If heads are also valid food (bool)", FALSE)
+		ARG_INFO("can_eat_heads", DATA_INPUT_BOOL, "If heads are also valid food", FALSE)
 	)
 /datum/component/consume/can_eat_inedible_organs/Initialize(var/can_eat_heads)
 	..()

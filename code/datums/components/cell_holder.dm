@@ -8,9 +8,9 @@
 TYPEINFO(/datum/component/cell_holder)
 	initialization_args = list(
 		ARG_INFO("new_cell", DATA_INPUT_REF, "ref to cell that will be first used"),
-		ARG_INFO("chargable", DATA_INPUT_NUM, "If it can be placed in a recharger (bool)", TRUE),
+		ARG_INFO("chargable", DATA_INPUT_BOOL, "If it can be placed in a recharger", TRUE),
 		ARG_INFO("max_cell", DATA_INPUT_NUM, "Maximum size of cell that can be held", INFINITY),
-		ARG_INFO("swappable", DATA_INPUT_NUM, "If the cell can be swapped out (bool)", TRUE)
+		ARG_INFO("swappable", DATA_INPUT_BOOL, "If the cell can be swapped out", TRUE)
 	)
 
 /datum/component/cell_holder/Initialize(atom/movable/new_cell, chargable = TRUE, max_cell = INFINITY, swappable = TRUE)

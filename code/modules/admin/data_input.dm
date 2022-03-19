@@ -57,8 +57,9 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 		if (DATA_INPUT_ICON)
 			input = input(custom_title || "Select icon:", custom_message) as null|icon
 
-		if (DATA_INPUT_BOOLEAN)
-			input = alert(custom_title || "True of False?", custom_message, "True", "False") == "True" ? TRUE : FALSE
+		if (DATA_INPUT_BOOL)
+			//lines written by the utterly insane
+			input = alert(custom_title || "True or False?", custom_message + (!isnull(default) ? "(Default: [default ? "True" : "False"])" : null), "True", "False") == "True" ? TRUE : FALSE
 
 		if (DATA_INPUT_LIST)
 			//TODO uhhhhhhhh h
@@ -91,7 +92,7 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 					return
 
 		if (DATA_INPUT_JSON)
-			input = input(custom_title || "Enter JSON:", custom_message, default) as null|text//I expect that if you're passing in a JSON as a default, you decode it beforehand. YOU BETTER
+			input = input(custom_title || "Enter JSON:", custom_message, default) as null|text //I expect that if you're passing in a JSON as a default, you decode it beforehand. YOU FUCKIN BETTER
 			input = json_decode(input)
 
 		if (DATA_INPUT_REF)
