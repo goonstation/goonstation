@@ -53589,14 +53589,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
-"eNe" = (
-/obj/table/auto,
-/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
-/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/hydroponics/bay)
 "eNy" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
@@ -126167,7 +126159,7 @@ qUI
 avj
 xdC
 arn
-eNe
+arn
 avj
 avj
 adC
