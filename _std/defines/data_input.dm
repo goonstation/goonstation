@@ -4,13 +4,11 @@
 #define DATA_INPUT_COLOR "Color"
 #define DATA_INPUT_TEXT "Text"
 #define DATA_INPUT_ICON "Icon"
-#define DATA_INPUT_TYPE "Type"
 #define DATA_INPUT_LIST "List" //fuck you
 #define DATA_INPUT_FILE "File"
 #define DATA_INPUT_DIR "Direction"
 #define DATA_INPUT_JSON "JSON"
 #define DATA_INPUT_REF "Ref"
-#define DATA_INPUT_MOB_REFERENCE "Mob Reference"
 #define DATA_INPUT_TURF_BY_COORDS "Turf By Coordinates"
 #define DATA_INPUT_REFPICKER "Reference Picker"
 #define DATA_INPUT_NEW_INSTANCE "New Instance of a Type"
