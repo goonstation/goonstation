@@ -3087,7 +3087,7 @@
 	boutput(src, result.Join("\n"))
 
 
-/mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1, get_turf(usr)))
+/mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1, usr))
 	set name = "Pick Up / Left Click"
 	set category = "Local"
 
