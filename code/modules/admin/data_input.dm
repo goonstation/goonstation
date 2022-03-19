@@ -16,7 +16,7 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 			user = user_mind.current?.client
 
 	if (!isclient(user)) //rip
-		stack_trace("Tried to input data with non-client thing [user] \ref[user] of type [user.type]")
+		stack_trace("Tried to input data with non-client thing [user] \ref[user] of type [user.type].")
 		return
 
 	if (user.holder)
@@ -34,32 +34,32 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 
 	switch(selected_type)
 		if (DATA_INPUT_NUM)
-			input = input("Enter number:", null, default) as null|num
+			input = input(custom_title || "Enter number:", custom_message, default) as null|num
 
 		if (DATA_INPUT_TYPE)
-			var/stub = input("Enter part of type:") as null|text
+			var/stub = input(custom_title || "Enter part of type:", custom_message) as null|text
 			if (!stub)
 				boutput(user, "<span class='alert'>Cancelled.</span>")
 				return
 			input = get_one_match(stub, /datum)
 
 		if (DATA_INPUT_COLOR)
-			input = input("Select color:", null, default) as null|color
+			input = input(custom_title || "Select color:", custom_message, default) as null|color
 
 		if (DATA_INPUT_TEXT)
-			input = input("Enter text:", null, default) as null|message
+			input = input(custom_title || "Enter text:", custom_message, default) as null|message
 
 		if (DATA_INPUT_ICON)
-			input = input("Select icon:", null) as null|icon
+			input = input(custom_title || "Select icon:", custom_message) as null|icon
 
 		if (DATA_INPUT_LIST)
 			//TODO uhhhhhhhh h
 
 		if (DATA_INPUT_FILE)
-			input = input("Select file:", null) as null|file
+			input = input(custom_title || "Select file:", custom_message) as null|file
 
 		if (DATA_INPUT_DIR)
-			input = input("Enter direction:", "Dir as text (e.g. North), case doesn't matter", default) as null|text
+			input = input(custom_title || "Enter direction:", "Dir as text (e.g. North), case doesn't matter", default) as null|text
 			input = uppertext(input)
 			switch(input)
 				if("NORTH")
@@ -83,11 +83,11 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 					return
 
 		if (DATA_INPUT_JSON)
-			input = input("Enter JSON:", null, default) as null|text//I expect that if you're passing in a JSON as a default, you decode it beforehand. YOU BETTER
+			input = input(custom_title || "Enter JSON:", custom_message, default) as null|text//I expect that if you're passing in a JSON as a default, you decode it beforehand. YOU BETTER
 			input = json_decode(input)
 
 		if (DATA_INPUT_REF)
-			input = input("Enter ref:", "brackets don't matter", null) as null|text
+			input = input(custom_title || "Enter ref:", "brackets don't matter", null) as null|text
 			input = locate(input)
 			if (!input)
 				input = locate("\[[input]\]")
@@ -113,7 +113,7 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 			input = promise.wait_for_value() //TODO timeout? maybe?
 
 		if (DATA_INPUT_NEW_INSTANCE)
-			var/stub = input("Enter part of type:") as null|text
+			var/stub = input(custom_title || "Enter part of type:", custom_message) as null|text
 			if (!stub)
 				boutput(user, "<span class='alert'>Cancelled.</span>")
 				return
@@ -131,7 +131,7 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 				possible += A
 				for (var/atom/B in A)
 					possible += B
-			input = input("Select reference:","Reference") as null|mob|obj|turf|area in possible
+			input = input(custom_title || "Select reference:", custom_message || "Reference") as null|mob|obj|turf|area in possible
 
 		if (DATA_INPUT_NULL) // this is the one case a null output is allowed- we check to ensure the selected input type is this
 			input = null //yes i am aware this is a useless statement. Clarity!!!
@@ -143,7 +143,7 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 			input = list()
 
 		if (DATA_INPUT_MOB_REFERENCE)
-			input = input("Select a mob:") as null|mob in world
+			input = input(custom_title || "Select a mob:") as null|mob in world
 
 		if (DATA_INPUT_CANCEL) // don't crash, but don't do anything.
 
