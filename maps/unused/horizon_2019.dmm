@@ -23948,20 +23948,6 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
-"bcR" = (
-/obj/machinery/light_switch/west,
-/obj/machinery/computer/aiupload{
-	dir = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
-/area/station/turret_protected/Zeta)
 "bcS" = (
 /obj/item/device/radio/intercom/AI,
 /obj/cable{
@@ -23983,15 +23969,6 @@
 /area/station/turret_protected/Zeta)
 "bcU" = (
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
-"bcV" = (
-/obj/table/auto,
-/obj/item/aiModule/freeform,
-/obj/item/aiModule/rename,
-/obj/item/aiModule/reset,
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
 /area/station/turret_protected/Zeta)
 "bcW" = (
 /obj/grille/steel,
@@ -27124,20 +27101,6 @@
 "bjj" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/central)
-"bjk" = (
-/obj/item/cable_coil/cut,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/storage/crate,
-/obj/item/storage/box/cablesbox,
-/obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/carpet/grime,
-/area/station/medical/robotics)
 "bjl" = (
 /obj/reagent_dispensers/fueltank,
 /obj/item/storage/belt/medical,
@@ -57526,6 +57489,20 @@
 /obj/item/paper/book/from_file/medical_surgery_guide,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay/surgery)
+"efL" = (
+/obj/item/cable_coil/cut,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/obj/storage/crate,
+/obj/item/storage/box/cablesbox,
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/carpet/grime,
+/area/station/medical/robotics)
 "flY" = (
 /obj/decal/cleanable/dirt,
 /obj/item/paper/book/from_file/the_trial,
@@ -57686,6 +57663,13 @@
 /obj/item/spacecash/hundred,
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/listeningpost/power)
+"qbs" = (
+/obj/table/auto,
+/obj/item/aiModule/freeform,
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/turret_protected/Zeta)
 "qYq" = (
 /obj/table/reinforced/auto,
 /obj/item/stg_booster,
@@ -57775,6 +57759,20 @@
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/grey/blackgrime,
 /area/tech_outpost)
+"udQ" = (
+/obj/machinery/light_switch/west,
+/obj/machinery/lawrack{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/station/turret_protected/Zeta)
 "uSE" = (
 /obj/table/reinforced/auto,
 /obj/shrub{
@@ -99972,7 +99970,7 @@ aRc
 aTS
 aWL
 aZZ
-bcR
+udQ
 bfO
 biF
 aOU
@@ -101180,7 +101178,7 @@ aRg
 aTW
 aWP
 bad
-bcV
+qbs
 bfS
 bmz
 blv
@@ -111148,7 +111146,7 @@ aXi
 bby
 bbB
 bdr
-bjk
+efL
 bkg
 bpO
 bWk

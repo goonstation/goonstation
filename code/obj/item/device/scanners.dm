@@ -346,7 +346,7 @@ that cannot be itched
 
 
 
-/obj/item/device/analyzer/healthanalyzer/borg
+/obj/item/device/analyzer/healthanalyzer/upgraded
 	icon_state = "health"
 	reagent_upgrade = 1
 	reagent_scan = 1

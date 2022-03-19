@@ -16304,10 +16304,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"aRp" = (
-/obj/effects/background_objects/station/ss10,
-/turf/space,
-/area/space)
 "aRq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -28941,11 +28937,6 @@
 	dir = 4
 	},
 /area/station/turret_protected/ai_upload)
-"bvV" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/rename,
-/turf/simulated/floor/blue,
-/area/station/turret_protected/ai_upload)
 "bvW" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -32830,26 +32821,6 @@
 /obj/machinery/networked/radio,
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
-"bHd" = (
-/obj/machinery/door_control{
-	id = "dwaine_core";
-	name = "DWAINE Core Shield";
-	pixel_x = -25
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/table/auto,
-/obj/item/circuitboard/robotics{
-	pixel_x = -2;
-	pixel_y = 8
-	},
-/obj/item/circuitboard/aiupload{
-	pixel_x = 2;
-	pixel_y = -2
-	},
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "bHe" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -32859,31 +32830,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/computer/robotics,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
-"bHf" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/table/auto,
-/obj/item/aiModule/reset{
-	pixel_x = 1;
-	pixel_y = -1
-	},
-/obj/item/disk/data/floppy/read_only/network_progs{
-	pixel_x = -7;
-	pixel_y = 10
-	},
-/obj/item/disk/data/floppy/read_only/communications{
-	pixel_x = -1;
-	pixel_y = 10
-	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "bHg" = (
@@ -44340,20 +44286,6 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/head)
-"cjv" = (
-/obj/table/auto,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/item/clothing/glasses/visor,
-/obj/item/device/radio/headset/deaf,
-/obj/item/robodefibrillator,
-/obj/item/remote/porter/port_a_nanomed,
-/obj/item/device/analyzer/healthanalyzer/borg,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/head)
 "cjw" = (
 /obj/shrub,
 /obj/machinery/light{
@@ -50675,6 +50607,10 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
+"cyC" = (
+/obj/table/reinforced/auto,
+/turf/simulated/floor/blue,
+/area/station/turret_protected/ai_upload)
 "cyD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -53011,6 +52947,27 @@
 	dir = 8
 	},
 /area/station/crew_quarters/locker)
+"dRQ" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/table/auto,
+/obj/item/disk/data/floppy/read_only/network_progs{
+	pixel_x = -7;
+	pixel_y = 10
+	},
+/obj/item/disk/data/floppy/read_only/communications{
+	pixel_x = -1;
+	pixel_y = 10
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "dSf" = (
 /obj/machinery/light{
 	dir = 4
@@ -56887,6 +56844,24 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
+"kuI" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/obj/table/auto,
+/obj/item/storage/toolbox/electrical{
+	pixel_x = 14;
+	pixel_y = 10
+	},
+/obj/item/disk/data/floppy/read_only/communications{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/device/radio/intercom/security{
+	dir = 1
+	},
+/turf/simulated/floor/circuit,
+/area/station/bridge)
 "kvk" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/wingrille_spawn/auto,
@@ -57665,28 +57640,6 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics/bay)
-"met" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/obj/table/auto,
-/obj/item/aiModule/reset{
-	pixel_x = 11;
-	pixel_y = -1
-	},
-/obj/item/storage/toolbox/electrical{
-	pixel_x = 14;
-	pixel_y = 10
-	},
-/obj/item/disk/data/floppy/read_only/communications{
-	pixel_x = -5;
-	pixel_y = 5
-	},
-/obj/item/device/radio/intercom/security{
-	dir = 1
-	},
-/turf/simulated/floor/circuit,
-/area/station/bridge)
 "meu" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -60419,6 +60372,7 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
+<<<<<<< HEAD
 "qMW" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -60430,6 +60384,22 @@
 	dir = 1
 	},
 /area/station/ranch)
+=======
+"qPt" = (
+/obj/table/auto,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/item/clothing/glasses/visor,
+/obj/item/device/radio/headset/deaf,
+/obj/item/robodefibrillator,
+/obj/item/remote/porter/port_a_nanomed,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/clothing/glasses/healthgoggles,
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/head)
+>>>>>>> a5bd5ec27cb7ed4334495f9f424c17a8dd9be04f
 "qPX" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	name = "Core Access";
@@ -61328,6 +61298,22 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics/bay)
+"srJ" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/lawrack{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/device/radio/intercom/AI{
+	dir = 8
+	},
+/turf/simulated/floor/blue,
+/area/station/turret_protected/ai_upload)
 "ssI" = (
 /obj/machinery/chem_master{
 	dir = 8
@@ -61769,6 +61755,10 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
+"sVW" = (
+/obj/effects/background_objects/station,
+/turf/space,
+/area/space)
 "sWf" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -62957,22 +62947,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
-"uOD" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/aiupload{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/item/device/radio/intercom/AI{
-	dir = 8
-	},
-/turf/simulated/floor/blue,
-/area/station/turret_protected/ai_upload)
 "uQi" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -63653,6 +63627,22 @@
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"vYK" = (
+/obj/machinery/door_control{
+	id = "dwaine_core";
+	name = "DWAINE Core Shield";
+	pixel_x = -25
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/table/auto,
+/obj/item/circuitboard/robotics{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "vZa" = (
 /obj/machinery/door/airlock/pyro/classic{
 	req_access_txt = null
@@ -91463,7 +91453,7 @@ aIE
 aKd
 aLn
 aMA
-met
+kuI
 aNF
 aPQ
 aQQ
@@ -103239,7 +103229,7 @@ bUk
 aap
 acW
 adC
-aRp
+sVW
 adC
 adC
 adC
@@ -103315,7 +103305,7 @@ cey
 cfH
 cha
 cih
-cjv
+qPt
 ckR
 cmm
 tTc
@@ -106011,7 +106001,7 @@ bEc
 bEM
 bFv
 bGs
-bHd
+vYK
 bCh
 bCh
 bCh
@@ -106615,7 +106605,7 @@ bEc
 bEO
 bFx
 bGu
-bHf
+dRQ
 bCh
 bCh
 bCh
@@ -107205,8 +107195,8 @@ bsa
 bqK
 bqJ
 bui
-uOD
-bvV
+srJ
+cyC
 buc
 mwf
 byx

@@ -18679,6 +18679,17 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit/red,
 /area/station/security/hos)
+"ffU" = (
+/obj/table/wood/round/auto,
+/obj/item/storage/box/trackimp_kit2{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/device/radio/intercom/security{
+	pixel_x = 1
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
 "fgt" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
@@ -20656,10 +20667,6 @@
 /obj/storage/closet/welding_supply,
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
-"fHp" = (
-/obj/machinery/light,
-/turf/simulated/floor/white,
-/area/spacehabitat/pool)
 "fHw" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/landmark/random_room/size3x3,
@@ -27901,14 +27908,6 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
-"hNL" = (
-/obj/machinery/computer/aiupload,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/item/device/radio/intercom/AI,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "hNU" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/railing/orange{
@@ -28380,6 +28379,13 @@
 	dir = 5
 	},
 /area/station/security/main)
+"hXY" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 1
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/white,
+/area/spacehabitat/pool)
 "hYb" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -32965,6 +32971,15 @@
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/plating/jen,
 /area/station/storage/tech)
+"jry" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/wood/two,
+/area/station/hallway/primary/south)
 "jrD" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/stairs/wide,
@@ -41685,6 +41700,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/bot_storage)
+"lUl" = (
+/obj/machinery/lawrack,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/item/device/radio/intercom/AI,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "lUm" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
@@ -49417,23 +49440,6 @@
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
-"olz" = (
-/obj/table/wood/round/auto,
-/obj/item/storage/box/trackimp_kit2{
-	pixel_x = -5;
-	pixel_y = 1
-	},
-/obj/item/device/radio/intercom/security{
-	pixel_x = 1
-	},
-/obj/item/aiModule/reset{
-	pixel_y = 7
-	},
-/obj/item/circuitboard/aiupload{
-	pixel_y = 7
-	},
-/turf/simulated/floor/black,
-/area/station/bridge)
 "olB" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 5;
@@ -56642,13 +56648,6 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/sanctuary)
-"qld" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 1
-	},
-/obj/machinery/light,
-/turf/simulated/floor/white,
-/area/spacehabitat/pool)
 "qle" = (
 /obj/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/plating,
@@ -60621,15 +60620,6 @@
 	},
 /turf/simulated/floor/greenwhite/other,
 /area/station/crew_quarters/market)
-"rpg" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/wood/two,
-/area/station/hallway/primary/south)
 "rpj" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 5;
@@ -63205,6 +63195,13 @@
 	name = "test chamber plating"
 	},
 /area/station/science/testchamber)
+"saY" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/turf/simulated/floor/circuit/vintage,
+/area/station/turret_protected/ai_upload)
 "sbh" = (
 /obj/grille/catwalk/jen/side{
 	dir = 4
@@ -76590,19 +76587,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
-"vXc" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8
-	},
-/obj/item/aiModule/rename{
-	pixel_y = 7
-	},
-/obj/item/aiModule/reset{
-	pixel_y = -7
-	},
-/turf/simulated/floor/circuit/vintage,
-/area/station/turret_protected/ai_upload)
 "vXu" = (
 /obj/machinery/vehicle/pod_smooth/light{
 	dir = 4
@@ -102658,7 +102642,7 @@ fTA
 bqn
 sDx
 sDx
-qld
+hXY
 fTA
 lJL
 sDx
@@ -103563,7 +103547,7 @@ iCP
 fTA
 fTA
 ifv
-fHp
+irM
 ifv
 fTA
 wnK
@@ -116659,7 +116643,7 @@ bJQ
 mHL
 rdj
 hAh
-hNL
+lUl
 geN
 geN
 geN
@@ -117042,7 +117026,7 @@ wCR
 cPd
 tCO
 tsv
-rpg
+jry
 hBH
 gwJ
 gwJ
@@ -117264,7 +117248,7 @@ mHL
 cNV
 fVZ
 vsn
-vXc
+saY
 eyn
 idA
 lON
@@ -118814,7 +118798,7 @@ ouo
 apH
 gbW
 hBw
-olz
+ffU
 biw
 sVZ
 wto

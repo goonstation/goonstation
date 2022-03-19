@@ -157,6 +157,11 @@
 			our_baton.dispose()
 			our_baton = null
 		target = null
+
+		#ifdef I_AM_ABOVE_THE_LAW
+		STOP_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
+
 		..()
 
 /obj/machinery/bot/secbot/autopatrol
@@ -256,6 +261,10 @@
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("beacon", beacon_freq)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+
+		#ifdef I_AM_ABOVE_THE_LAW
+		START_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
 
 	speak(var/message, var/sing, var/just_float)
 		if (src.emagged >= 2)

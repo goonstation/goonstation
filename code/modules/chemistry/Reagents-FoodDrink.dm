@@ -2240,17 +2240,18 @@ datum
 			stun_resist = 7
 			taste = "bitter"
 			threshold = THRESHOLD_INIT
+			var/caffeine_rush = 2
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "consumable_good", 2)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush", src.caffeine_rush)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "consumable_good")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2279,23 +2280,10 @@ datum
 			fluid_b = 14
 			thirst_value = 0.25
 			energy_value = 0.8
-			var/caffeine_rush = 3
-			var/caffeine_jitters = 10
+			caffeine_rush = 3
 			stun_resist = 10
 			taste = "rich and fragrant"
 			threshold = THRESHOLD_INIT
-
-			cross_threshold_over()
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine rush", src.caffeine_rush)
-				..()
-
-			cross_threshold_under()
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine rush")
-				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
@@ -2307,6 +2295,7 @@ datum
 			description = "An expresso is a strong black coffee with more stupid."
 			taste = "coffee yum"
 			stun_resist = 25
+			caffeine_rush = 4
 			threshold = THRESHOLD_INIT
 			var/killer = 0
 
@@ -2325,7 +2314,6 @@ datum
 			id = "decafespresso"
 			description = "A decaf espresso contains less caffeine than a regular espresso."
 			caffeine_rush = 2
-			caffeine_jitters = 5
 			addiction_prob = 1
 			addiction_prob2 = 5
 			energy_value = 0
@@ -2349,6 +2337,7 @@ datum
 			stun_resist = 25
 			taste = "supercharged"
 			threshold = THRESHOLD_INIT
+			caffeine_rush = 3
 
 
 			cross_threshold_over()

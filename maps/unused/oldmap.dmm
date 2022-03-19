@@ -2379,7 +2379,6 @@
 	icon_state = "tabledir";
 	dir = 2
 	},
-/obj/item/aiModule/reset,
 /turf/simulated/floor,
 /area/storage/tech)
 "fn" = (
@@ -2713,15 +2712,6 @@
 "fZ" = (
 /obj/item/storage/lightbox,
 /obj/machinery/atmospherics/pipe/simple,
-/turf/simulated/floor,
-/area/storage/tech)
-"ga" = (
-/obj/rack{
-	dir = 8
-	},
-/obj/item/circuitboard/aiupload,
-/obj/item/circuitboard/arcade,
-/obj/item/circuitboard/teleporter,
 /turf/simulated/floor,
 /area/storage/tech)
 "gb" = (
@@ -12881,10 +12871,6 @@
 /obj/stool,
 /turf/simulated/floor/specialroom/bar,
 /area/space_diner)
-"Dy" = (
-/obj/decal/fakeobjects/sink,
-/turf/simulated/floor/specialroom/bar,
-/area/space_diner)
 "Dz" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -12895,10 +12881,6 @@
 	heal_amt = -40;
 	name = "vintage pizza"
 	},
-/turf/simulated/floor/specialroom/bar,
-/area/space_diner)
-"DA" = (
-/obj/decal/fakeobjects/oven,
 /turf/simulated/floor/specialroom/bar,
 /area/space_diner)
 "DB" = (
@@ -21146,6 +21128,22 @@
 	icon_state = "sw1"
 	},
 /area/space)
+"UG" = (
+/obj/decal/fakeobjects/oven,
+/turf/simulated/floor/specialroom/bar,
+/area/space_diner)
+"VF" = (
+/obj/rack{
+	dir = 8
+	},
+/obj/item/circuitboard/arcade,
+/obj/item/circuitboard/teleporter,
+/turf/simulated/floor,
+/area/storage/tech)
+"Wb" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/specialroom/bar,
+/area/space_diner)
 "Wp" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
@@ -31563,7 +31561,7 @@ eN
 eW
 fo
 fF
-ga
+VF
 gs
 gu
 gu
@@ -71000,9 +70998,9 @@ CW
 De
 Dl
 Ds
-Dy
-DA
-DA
+Wb
+UG
+UG
 DB
 Db
 Db

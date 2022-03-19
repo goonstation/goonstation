@@ -266,10 +266,24 @@
 /atom/proc/allow_drop()
 	return 1
 
-//atom.event_handler_flags & USE_CHECKEXIT MUST EVALUATE AS TRUE OR THIS PROC WONT BE CALLED
-/atom/proc/CheckExit(atom/mover, turf/target)
-	//return !(src.flags & ON_BORDER) || src.Cross(mover, target, 1, 0)
-	return 1 // fuck it
+// not actually overriden because we want to avoid the overhead if possible. This provides documentation
+#ifdef SPACEMAN_DMM
+/**
+ * Override and return FALSE to prevent O from moving out of the tile where src is.
+ * In order to override this properly be sure to have the `do_bump = TRUE` default argument AND
+ * to call UNCROSS_BUMP_CHECK(O) in all branches where the return value can be FALSE (assign this return
+ * value to `.` instead of doing an explicit `return`).
+ */
+/atom/Uncross(atom/movable/O, do_bump = TRUE)
+	. = TRUE
+	UNCROSS_BUMP_CHECK(O)
+#endif
+
+/// Wrapper around Uncross for when you want to call it manually with a target turf
+/atom/proc/CheckExit(atom/movable/mover, turf/target, do_bump=FALSE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	mover.movement_newloc = target
+	return src.Uncross(mover, do_bump=do_bump)
 
 /atom/Crossed(atom/movable/AM)
 	SHOULD_CALL_PARENT(TRUE)
@@ -372,6 +386,9 @@
 	var/throw_range = 7
 	var/throwforce = 1
 
+	/// Temporary value to smuggle newloc to Uncross during Move-related procs
+	var/tmp/atom/movement_newloc = null
+
 	var/soundproofing = 5
 	appearance_flags = LONG_GLIDE | PIXEL_SCALE
 	var/l_spd = 0
@@ -393,9 +410,6 @@
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
 	if (isturf(src.loc))
 		var/turf/T = src.loc
-		if (src.event_handler_flags & USE_CHECKEXIT)
-			T.checkingexit++
-
 		if (src.event_handler_flags & USE_PROXIMITY)
 			T.checkinghasproximity++
 			for (var/turf/T2 in range(1, T))
@@ -508,22 +522,17 @@
 	if(last_turf == src.loc)
 		return
 
-	if (src.event_handler_flags & (USE_CHECKEXIT | USE_PROXIMITY))
-		if (isturf(last_turf))
-			if (src.event_handler_flags & USE_CHECKEXIT)
-				last_turf.checkingexit = max(last_turf.checkingexit-1, 0)
-			if (src.event_handler_flags & USE_PROXIMITY)
-				last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
-				for (var/turf/T2 in range(1, last_turf))
-					T2.neighcheckinghasproximity--
-		if(isturf(src.loc))
-			var/turf/T = src.loc
-			if (src.event_handler_flags & USE_CHECKEXIT)
-				T.checkingexit++
-			if (src.event_handler_flags & USE_PROXIMITY)
-				T.checkinghasproximity++
-				for (var/turf/T2 in range(1, T))
-					T2.neighcheckinghasproximity++
+	if (isturf(last_turf))
+		if (src.event_handler_flags & USE_PROXIMITY)
+			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
+			for (var/turf/T2 in range(1, last_turf))
+				T2.neighcheckinghasproximity--
+	if(isturf(src.loc))
+		var/turf/T = src.loc
+		if (src.event_handler_flags & USE_PROXIMITY)
+			T.checkinghasproximity++
+			for (var/turf/T2 in range(1, T))
+				T2.neighcheckinghasproximity++
 
 	last_turf = isturf(src.loc) ? src.loc : null
 
@@ -901,28 +910,19 @@
 		for (var/atom/movable/M in src.attached_objs)
 			M.set_loc(src.loc)
 
+	if (isturf(last_turf) && (src.event_handler_flags & USE_PROXIMITY))
+		last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
+		for (var/turf/T2 in range(1, last_turf))
+			T2.neighcheckinghasproximity--
 
-	// We only need to do any of these checks if one of the flags is set OR density = 1
-	var/do_checks = (src.event_handler_flags & (USE_CHECKEXIT  | USE_PROXIMITY)) || src.density == 1
-
-	if (do_checks && last_turf && isturf(last_turf))
-		if (src.event_handler_flags & USE_CHECKEXIT)
-			last_turf.checkingexit = max(last_turf.checkingexit-1, 0)
-		if (src.event_handler_flags & USE_PROXIMITY)
-			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
-			for (var/turf/T2 in range(1, last_turf))
-				T2.neighcheckinghasproximity--
-
-	if (do_checks && isturf(src.loc))
+	if (isturf(src.loc))
 		last_turf = src.loc
-		if (src.event_handler_flags & USE_CHECKEXIT)
-			last_turf.checkingexit++
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity++
 			for (var/turf/T2 in range(1, last_turf))
 				T2.neighcheckinghasproximity++
 	else
-		last_turf = 0
+		last_turf = null
 
 	if(src.medium_lights)
 		update_medium_light_visibility()
