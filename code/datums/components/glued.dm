@@ -83,6 +83,7 @@ TYPEINFO(/datum/component/glued)
 
 /datum/component/glued/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, list/params, is_special)
 	src.glued_to.Attackby(item, user, params, is_special)
+	user.lastattacked = user
 
 /datum/component/glued/proc/move_blocked_check(atom/movable/parent, atom/new_loc, direct)
 	return new_loc != glued_to.loc
