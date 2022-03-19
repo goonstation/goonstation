@@ -3068,7 +3068,7 @@
 /mob/proc/point_at(var/atom/target) //overriden by living and dead
 	.=0
 
-/mob/verb/pull_verb(atom/movable/A as mob|obj in view(1, usr))
+/mob/verb/pull_verb(atom/movable/A as mob|obj in oview(1, usr))
 	set name = "Pull / Unpull"
 	set category = "Local"
 
@@ -3087,7 +3087,7 @@
 	boutput(src, result.Join("\n"))
 
 
-/mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1, usr))
+/mob/living/verb/interact_verb(atom/A as mob|obj|turf in oview(1, usr))
 	set name = "Pick Up / Left Click"
 	set category = "Local"
 
