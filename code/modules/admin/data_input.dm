@@ -9,7 +9,7 @@
 /// @param custom_type_message 	If not null, set as the text for input type selection
 /// @return 			 		A data_input_result with the parsed input and the selected input type, or both null if we didn't get any data
 proc/input_data(list/allowed_types, client/user, custom_title = null, custom_message = null, default = null, custom_type_title = null, custom_type_message = null, default_type = null)
-	. = new /datum/data_input_result(null, null) //in case anything goes wrong, return this
+	. = new /datum/data_input_result(null, null) //in case anything goes wrong, return this. Thus, to check for cancellation, check for a null output_type.
 
 	if (!isclient(user)) //attempt to recover
 		if (ismob(user))
@@ -23,8 +23,9 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 		stack_trace("Tried to input data with non-client thing [user] \ref[user] of type [user.type].")
 		return
 
-	if (user.holder)
+	if (!user.holder)
 		message_admins("Non-admin client [user.key] somehow tried to input some data. Huh?")
+		logTheThing("debug", user.mob, null, "somehow attempted to input data via the input_data proc.")
 		return
 
 	var/input = null 	// The input from the user- usually text, but might be a file or something.
@@ -167,12 +168,12 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 /// Functionally a named tuple.
 /datum/data_input_result
 	var/output
-	var/input_type
+	var/output_type
 
-	New(var/output, var/input_type)
+	New(var/output, var/output_type)
 		..()
 		src.output = output
-		src.input_type = input_type
+		src.output_type = output_type
 
 
 /// Refpicker - click thing, get its ref. Tied to the data_input proc via a promise.
