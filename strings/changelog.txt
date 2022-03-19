@@ -1,5 +1,8 @@
 
 (t)fri mar 18 22
+(u)tarmunora
+(e)⚖|balance
+(+)adjust blob firewall and reflector health - firewall 30 -> 40, reflector 85 -> 40
 (u)Amylizzle
 (p)7555
 (e)🗺🎨⚖📄|mapping, sprites, balance, tgui
