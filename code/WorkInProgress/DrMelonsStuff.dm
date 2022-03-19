@@ -153,6 +153,23 @@
 				var/image/new_overlay = src.SafeGetOverlayImage("fluid_overlay", 'icons/obj/stationobjs.dmi', "fluid_bathtub", MOB_LAYER - 0.2)
 				new_overlay.color = average.to_rgba()
 				src.UpdateOverlays(new_overlay, "fluid_overlay")
+
+				// I don't want to do this here but no where else feels right
+				// maybe a new chem transfer instead? Could be a new knob to tweak for cyrox too?
+				// #define SUBMERGED 4
+				// it would also make future projects of mine easier, so both this is and i am a hack
+				if(reagents.get_reagent_amount("blood") > 200) // arbitrary
+					// reagents don't track DNA, so it's your own blood vOv
+					src.occupant.shoes?.add_blood(src.occupant)
+					src.occupant.gloves?.add_blood(src.occupant)
+					if (src.occupant.wear_suit)
+						src.occupant.wear_suit.add_blood(src.occupant)
+					else if (src.occupant.w_uniform)
+						src.occupant.w_uniform.add_blood(src.occupant)
+					src.occupant.add_blood(src.occupant)
+					src.occupant.update_clothing()
+					src.occupant.update_body()
+
 		else
 			src.UpdateOverlays(null, "fluid_underlay")
 			src.UpdateOverlays(null, "fluid_overlay")
