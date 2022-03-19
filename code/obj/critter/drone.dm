@@ -5,7 +5,7 @@
 	icon_state = "drone"
 	density = 1
 	health = 65
-	var/maxhealth = 65 // for damage description
+	maxhealth = 65 // for damage description
 	aggressive = 1
 	defensive = 1
 	wanderer = 1

@@ -138,6 +138,13 @@ var/mutable_appearance/fluid_ma
 				src.HasEntered(O,O.loc)
 		*/
 
+	proc/trigger_fluid_enter()
+		for(var/atom/A in src.loc)
+			if (src.group && A.event_handler_flags & USE_FLUID_ENTER)
+				A.EnteredFluid(src, src.loc)
+		if(src.group)
+			src.loc?.EnteredFluid(src, src.loc)
+
 	proc/turf_remove_cleanup(turf/the_turf)
 		the_turf.active_liquid = null
 
@@ -314,7 +321,9 @@ var/mutable_appearance/fluid_ma
 
 	var/spawned_any = 0
 	proc/update() //returns list of created fluid tiles
-		if (!src.group) return
+		if (!src.group || src.group.disposed) //uh oh
+			src.removed()
+			return
 		.= list()
 		last_spread_was_blocked = 1
 		src.touched_channel = 0
@@ -325,9 +334,6 @@ var/mutable_appearance/fluid_ma
 		if(!waterflow_enabled) return
 		for( var/dir in cardinal )
 			LAGCHECK(LAG_MED)
-			if (!src.group)
-				src.removed()
-				return
 			blocked_perspective_objects["[dir]"] = 0
 			t = get_step( src, dir )
 			if (!t) //the fuck? how
@@ -409,10 +415,7 @@ var/mutable_appearance/fluid_ma
 						else
 							step_away(push_thing,src)
 
-					for(var/atom/A in F.loc)
-						if (A.event_handler_flags & USE_FLUID_ENTER)
-							A.EnteredFluid(F, F.loc)
-					F.loc.EnteredFluid(F, F.loc)
+					F.trigger_fluid_enter()
 
 		if (spawned_any && prob(40))
 			playsound( src.loc, 'sound/misc/waterflow.ogg', 30,0.7,7)

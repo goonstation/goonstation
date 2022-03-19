@@ -117,7 +117,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
 		if("action") src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
-		if("intrigue") src.mode = config.pick_mode(pick("mixed_rp", "traitor","changeling","vampire","conspiracy","spy_theft","arcfiend", prob(50); "extended"))
+		if("intrigue") src.mode = config.pick_mode(pick(prob(300);"mixed_rp", prob(200); "traitor", prob(75);"changeling","vampire", prob(50); "conspiracy", "spy_theft","arcfiend", prob(50); "extended"))
 		if("pod_wars") src.mode = config.pick_mode("pod_wars")
 		else src.mode = config.pick_mode(master_mode)
 
@@ -345,7 +345,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					if (periodic_check == 1)
 						logTheThing("debug", player, null, "<b>Gameticker fallback:</b> re-added player to ticker.minds.")
 					else
-						logTheThing("debug", player, null, "<b>Gameticker setup:</b> added player to ticker.minds.")
+						logTheThing("debug", player, null, "<b>Gameticker setup:</b> added player to ticker.minds. [player.mind.on_ticker_add_log()]")
 					ticker.minds.Add(player.mind)
 
 	proc/implant_skull_key()

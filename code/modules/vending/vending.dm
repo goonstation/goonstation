@@ -118,6 +118,7 @@
 	var/window_size = "400x475"
 
 	New()
+		START_TRACKING
 		src.create_products()
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", "vendinput")
@@ -131,6 +132,9 @@
 		src.panel_image = image(src.icon, src.icon_panel)
 	var/lastvend = 0
 
+	disposing()
+		STOP_TRACKING
+		..()
 
 	was_built_from_frame(mob/user, newly_built)
 		. = ..()
@@ -1429,6 +1433,9 @@
 	if(!istype(W,/obj/item/mechanics))
 		..()
 		return
+	if (W.cant_drop)
+		boutput(user, "<span class='alert'>You can't put [W] into a vending machine while it's attached to you!</span>")
+		return
 	for(var/datum/data/vending_product/product in product_list)
 		if(W.type == product.product_path)
 			boutput(user, "<span class='notice'>You return the [W] to the vending machine.</span>")
@@ -1916,6 +1923,9 @@
 			UpdateOverlays(null, "screen", 0, 1)
 
 	proc/addProduct(obj/item/target, mob/user)
+		if (target.cant_drop)
+			boutput(user, "<span class='alert'>You can't put [target] into a vending machine while it's attached to you!</span>")
+			return
 		var/obj/item/storage/targetContainer = target
 		if (!istype(targetContainer))
 			productListUpdater(target, user)
@@ -2568,6 +2578,8 @@
 		product_list += new/datum/data/vending_product(/obj/item/gobowl/w, 1, cost=PAY_TRADESMAN/4)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/clow, 5, cost=PAY_TRADESMAN/2) // (this is an anime joke)
 		product_list += new/datum/data/vending_product(/obj/item/clow_key, 5, cost=PAY_TRADESMAN/2)      //      (please laugh)
+		product_list += new/datum/data/vending_product(/obj/item/card_box/Mono, 5, cost=PAY_UNTRAINED/4)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/MONOrules, 5, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/dice/weighted, rand(1,3), cost=PAY_TRADESMAN/2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/dice/d1, rand(0,1), cost=PAY_TRADESMAN/3, hidden=1)
 

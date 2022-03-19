@@ -199,6 +199,8 @@
 		src.locked = 1
 		src.gen_bonus = src.healing_multiplier()
 
+		src.use_power(5000)
+
 		return 1
 
 
@@ -518,11 +520,14 @@
 				src.UpdateIcon()
 			power_usage = 200
 
+
+			#ifndef CLONING_IS_A_SIN
 			if (!src.operating && src.auto_mode)
 				// Attempt to start a new clone (if possible)
 				src.auto_delay -= mult
 				if (src.auto_delay < 0)
 					src.start_clone()
+			#endif
 
 			return ..()
 

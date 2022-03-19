@@ -220,7 +220,7 @@
 	uses_multiple_icon_states = 1
 	desc = "Wait, that's not a plastic toy..."
 	muzzle_flash = "muzzle_flash_laser"
-	cell_type = /obj/item/ammo/power_cell/med_power
+	cell_type = null
 
 	New()
 		if (!src.current_projectile)
@@ -1028,7 +1028,7 @@
 
 ///////////////////////////////////////Hunter
 /obj/item/gun/energy/plasma_gun/ // Made use of a spare sprite here (Convair880).
-	name = "Plasma rifle"
+	name = "plasma rifle"
 	desc = "This advanced bullpup rifle contains a self-recharging power cell."
 	icon_state = "bullpup"
 	item_state = "bullpup"
@@ -1054,7 +1054,7 @@
 		..()
 
 /obj/item/gun/energy/plasma_gun/vr
-	name = "Advanced laser gun"
+	name = "advanced laser gun"
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "wavegun"
 	base_item_state = "wavegun"
@@ -1624,7 +1624,7 @@
 		shotcount = 0
 		. = ..()
 
-	shoot_point_blank(mob/M, mob/user, second_shot)
+	shoot_point_blank(atom/target, mob/user, second_shot)
 		shotcount = 0
 		. = ..()
 

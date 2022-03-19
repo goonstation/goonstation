@@ -21,7 +21,7 @@
 
 	New()
 		. = ..()
-		APPLY_MOB_PROPERTY(src, PROP_THERMALVISION, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_THERMALVISION, src)
 		var/image/eye_light = image(icon, "[eye_light_icon]")
 		eye_light.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(eye_light, "eye_light")

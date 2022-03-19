@@ -938,6 +938,16 @@ table#cooktime a#start {
 					var/obj/item/reagent_containers/food/snacks/condiment/hotsauce/F = new(src.loc)
 					F.reagents.add_reagent("capsaicin", DNA.potency)
 					qdel( P )
+				if (/obj/item/reagent_containers/food/snacks/plant/coffeeberry/mocha)
+					var/datum/plantgenes/DNA = P:plantgenes
+					var/obj/item/reagent_containers/food/snacks/candy/chocolate/F = new(src.loc)
+					F.reagents.add_reagent("chocolate", DNA.potency)
+					qdel( P )
+				if (/obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte)
+					var/datum/plantgenes/DNA = P:plantgenes
+					var/obj/item/reagent_containers/food/snacks/condiment/cream/F = new(src.loc)
+					F.reagents.add_reagent("milk", DNA.potency)
+					qdel( P )
 				if (/obj/item/plant/sugar)
 					var/obj/item/reagent_containers/food/snacks/ingredient/sugar/F = new(src.loc)
 					F.reagents.add_reagent("sugar", 20)

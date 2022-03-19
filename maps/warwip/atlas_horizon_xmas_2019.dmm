@@ -976,7 +976,7 @@
 /turf/simulated/floor/airless/black/grime,
 /area/space)
 "acv" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "honk";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -1803,7 +1803,7 @@
 /turf/simulated/floor/industrial,
 /area/space)
 "aeE" = (
-/obj/decal/pole{
+/obj/decal/fakeobjects/pole{
 	pixel_x = 12
 	},
 /turf/simulated/wall/auto/reinforced,
@@ -1825,7 +1825,7 @@
 /turf/simulated/floor/airless/damaged3,
 /area/station/wreckage)
 "aeH" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge)
 "aeI" = (
@@ -17117,7 +17117,7 @@
 /area/station2/crew_quarters/heads)
 "aMG" = (
 /obj/storage/secure/closet/command/medical_director,
-/obj/item/device/analyzer/healthanalyzer/borg,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
 /obj/item/remote/porter/port_a_nanomed,
 /obj/item/stamp/md,
 /turf/simulated/floor/white,
@@ -30615,7 +30615,7 @@
 /area/station/maintenance/northwest)
 "bqF" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of an engineer. not very handsome.";
 	interesting = "Something isn't right here... This guy wasn't alive when he was shot";
 	name = "engineer's skeleton"
@@ -37026,7 +37026,7 @@
 /obj/item/parts/robot_parts/robot_frame,
 /obj/item/parts/robot_parts/leg/left,
 /obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
+/obj/item/parts/robot_parts/chest/light,
 /obj/item/parts/robot_parts/head,
 /obj/item/parts/robot_parts/arm/left,
 /obj/item/parts/robot_parts/arm/right,
@@ -60028,7 +60028,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/simulated/floor/shuttle,
 /area/station/hallway/secondary/exit)
 "cCa" = (
@@ -60057,7 +60057,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 21
@@ -60711,7 +60711,7 @@
 /obj/stool/chair/comfy/shuttle/green{
 	dir = 4
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -61165,7 +61165,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body8";
@@ -61200,7 +61200,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
@@ -62104,7 +62104,7 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The partially decomposed corpse of some poor chump.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -62543,7 +62543,7 @@
 /turf/space,
 /area/station/hallway/secondary/exit)
 "cHO" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "She seems to have bled out from her injuries.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -63439,7 +63439,7 @@
 	name = "NanoTrasen Labor Camp Shuttle"
 	})
 "cKd" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "this is not right. this is NOT right.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -64364,7 +64364,7 @@
 	})
 "cMr" = (
 /obj/item/clothing/shoes/moon,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "This is very important.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -68063,7 +68063,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "not much of a chef";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -68375,7 +68375,7 @@
 	})
 "cWr" = (
 /obj/item/clothing/head/emerg,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "still has his... uh... bedsheet?";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -68606,7 +68606,7 @@
 /turf/simulated/floor/plating/airless/random,
 /area/ghostdrone_factory)
 "cXa" = (
-/obj/decal/sink{
+/obj/decal/fakeobjects/sink{
 	name = "Rusty Sink"
 	},
 /turf/simulated/floor/plating/random,
@@ -69295,7 +69295,7 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/listeningpost)
 "cZg" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /turf/simulated/floor/grey/blackgrime,
 /area/listeningpost)
 "cZh" = (
@@ -70187,7 +70187,7 @@
 	},
 /area/space)
 "dbu" = (
-/obj/decal/sink{
+/obj/decal/fakeobjects/sink{
 	name = "Rusty Sink";
 	pixel_y = 12
 	},
@@ -70460,7 +70460,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "dcb" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Ironic, really";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "burntnerd";

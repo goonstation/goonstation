@@ -953,7 +953,7 @@ WET FLOOR SIGN
 	proc/suck(turf/T, mob/user)
 		. = TRUE
 		var/success = FALSE
-		if(T.active_airborne_liquid)
+		if(T.active_airborne_liquid && T.active_airborne_liquid.group)
 			if(isnull(src.bucket))
 				boutput(user, "<span class='alert'>\The [src] tries to suck up \the [T.active_airborne_liquid] but has no bucket!</span>")
 				. = FALSE
@@ -997,11 +997,13 @@ WET FLOOR SIGN
 				. = FALSE
 			else
 				for(var/obj/item/I as anything in items_to_suck)
-					I.set_loc(get_turf(user))
+					if(!I.anchored)
+						I.set_loc(get_turf(user))
 				success = TRUE
 				SPAWN(0.5 SECONDS)
 					for(var/obj/item/I as anything in items_to_suck) // yes, this can go over capacity of the bag, that's intended
-						I.set_loc(src.trashbag)
+						if(!I.anchored)
+							I.set_loc(src.trashbag)
 					src.trashbag.calc_w_class(null)
 					if(src.trashbag.current_stuff >= src.trashbag.max_stuff)
 						boutput(user, "<span class='notice'>[src]'s [src.trashbag] is now full.</span>")
