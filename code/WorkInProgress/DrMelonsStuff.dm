@@ -137,7 +137,11 @@
 		if(reagents.total_volume)
 			var/image/new_underlay = src.SafeGetOverlayImage("fluid_underlay", 'icons/obj/stationobjs.dmi', "fluid_bathtub", MOB_LAYER - 0.4)
 			var/datum/color/average = reagents.get_average_color()
-			average.a = min(round(reagents.total_volume / reagents.maximum_volume * 255), average.a) // set alpha based on volume
+			var/percent_filled = reagents.total_volume / reagents.maximum_volume
+			if (percent_filled < 0.5)
+				average.a = round(average.a * percent_filled * 2)
+			else
+				average.a = average.a + round((255 - average.a) * (percent_filled - 0.5) * 2)
 			new_underlay.color = average.to_rgba()
 			src.UpdateOverlays(new_underlay, "fluid_underlay")
 
@@ -250,7 +254,7 @@
     set category = "Local"
     if (get_dist(usr, src) <= 1 && !usr.stat)
         playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_2.ogg", 50, 1)
-        src.reagents.add_reagent(default_reagent,125)
+        src.reagents.add_reagent(default_reagent, 100)
         usr.visible_message("<span class='notice'>[usr] draws a bath.</span>",\
         "<span class='success'>You draw a nice bath!</span>")
 
