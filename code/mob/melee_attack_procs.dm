@@ -146,6 +146,9 @@
 	if (src == target) // :I
 		boutput(src, "<span class='alert'>You desperately try to think of a way to do CPR on yourself, but it's just not logically possible!</span>")
 		return
+	if(actions.hasAction(src, "cpr"))
+		boutput(src, "<span class='alert'>You're already doing CPR!</span>")
+		return
 
 	src.lastattacked = target
 

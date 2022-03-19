@@ -3824,15 +3824,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
-"bdj" = (
-/obj/table/auto,
-/obj/item/aiModule/reset,
-/obj/item/device/analyzer/atmospheric,
-/obj/item/storage/toolbox/electrical,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/item/device/analyzer/atmosanalyzer_upgrade,
-/turf/simulated/floor/darkblue,
-/area/station/storage/eva)
 "bdk" = (
 /obj/stool/chair/red,
 /obj/machinery/light/small{
@@ -24658,6 +24649,10 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/crew_quarters/jazz)
+"gUt" = (
+/obj/table/auto,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "gUv" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable,
@@ -24919,6 +24914,19 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/chapel/office)
+"gYl" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "gYt" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor/north,
 /obj/machinery/meter,
@@ -26473,6 +26481,19 @@
 /obj/access_spawn/hydro,
 /turf/simulated/floor/yellow/checker,
 /area/station/hydroponics/bay)
+"htl" = (
+/obj/machinery/lawrack{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/darkblue,
+/area/station/turret_protected/ai_upload)
 "htn" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -33819,17 +33840,6 @@
 	dir = 4
 	},
 /area/station/engine/hotloop)
-"jzn" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/reset,
-/obj/item/circuitboard/aiupload{
-	pixel_y = 14
-	},
-/obj/item/device/radio/intercom/security{
-	dir = 4
-	},
-/turf/simulated/floor/circuit,
-/area/station/communications/centre)
 "jzz" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
@@ -36919,19 +36929,6 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/yellow/checker,
 /area/station/routing/engine)
-"kqK" = (
-/obj/machinery/computer/aiupload{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/darkblue,
-/area/station/turret_protected/ai_upload)
 "kqL" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/machinery/atmospherics/pipe/simple,
@@ -44715,18 +44712,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/bot/caution,
 /area/station/maintenance/solar/west)
-"mto" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/turf/simulated/floor/grime,
-/area/station/storage/warehouse)
 "mtq" = (
 /obj/mic_stand,
 /turf/simulated/floor/neutral/side{
@@ -52223,6 +52208,10 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hangar/science)
+"oxS" = (
+/obj/table/reinforced/auto,
+/turf/simulated/floor/darkblue,
+/area/station/turret_protected/ai_upload)
 "oxU" = (
 /obj/machinery/light{
 	dir = 1;
@@ -52674,12 +52663,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/jazz)
-"oDC" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/rename,
-/obj/item/aiModule/reset,
-/turf/simulated/floor/darkblue,
-/area/station/turret_protected/ai_upload)
 "oEh" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
@@ -63522,6 +63505,18 @@
 	},
 /turf/simulated/floor,
 /area/station/security/equipment)
+"rEC" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/turf/simulated/floor/grime,
+/area/station/storage/warehouse)
 "rED" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/electrical,
@@ -64901,12 +64896,6 @@
 /obj/machinery/vending/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"rWx" = (
-/obj/table/auto,
-/obj/item/circuitboard/aiupload,
-/obj/item/aiModule/reset,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "rWA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -72373,6 +72362,13 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/west)
+"tRs" = (
+/obj/table/reinforced/auto,
+/obj/item/device/radio/intercom/security{
+	dir = 4
+	},
+/turf/simulated/floor/circuit,
+/area/station/communications/centre)
 "tRu" = (
 /obj/machinery/light{
 	dir = 8;
@@ -74191,6 +74187,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
+"urd" = (
+/obj/table/auto,
+/obj/item/device/analyzer/atmospheric,
+/obj/item/storage/toolbox/electrical,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/item/device/analyzer/atmosanalyzer_upgrade,
+/turf/simulated/floor/darkblue,
+/area/station/storage/eva)
 "urj" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
@@ -82919,19 +82923,6 @@
 	},
 /turf/simulated/floor/blueblack,
 /area/station/storage/warehouse)
-"wyd" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/machinery/light_switch/north,
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "wyj" = (
 /obj/stool/chair/office/purple{
 	dir = 8
@@ -124587,7 +124578,7 @@ pIs
 rcT
 rcT
 cWo
-rWx
+gUt
 xoI
 mgF
 lSX
@@ -131247,7 +131238,7 @@ kKZ
 eZP
 oZs
 xDc
-bdj
+urd
 pwz
 qOs
 hAb
@@ -134214,7 +134205,7 @@ sDv
 upu
 dCp
 xUw
-kqK
+htl
 xUw
 rqB
 upu
@@ -135723,7 +135714,7 @@ xce
 trl
 upu
 igk
-oDC
+oxS
 iDf
 jVO
 ogy
@@ -136294,7 +136285,7 @@ rUG
 rUG
 hAh
 wYC
-wyd
+gYl
 xeW
 rMb
 xeW
@@ -140867,7 +140858,7 @@ aiE
 xLF
 swn
 kvR
-jzn
+tRs
 uEF
 oKW
 ggH
@@ -147282,7 +147273,7 @@ ePj
 nWY
 eVG
 mhw
-mto
+rEC
 wEI
 fBz
 aRl

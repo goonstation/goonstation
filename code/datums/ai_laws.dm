@@ -1,146 +1,114 @@
-//var/datum/ai_laws/centralized_ai_laws
+//This class is now a handler for all global AI law rack functions
+//if you want to get laws and details about a specific rack, call the functions on that rack
+//if you want to get laws and details about all racks - this is where you'd look
+//this also keeps track of the default rack
 
-/datum/ai_laws
-	var/randomly_selectable = 0
-	var/show_zeroth = 1
-	var/zeroth = null
-	var/list/default = list()
-	var/list/inherent = list()
-	var/list/supplied = list()
+//For the AI Law Rack configuration. Easy mode makes it so that creating a new default rack will reconnect all non-emagged borgs
+#define LAW_RACK_EASY_MODE TRUE
 
-/datum/ai_laws/asimov
-	randomly_selectable = 1
 
-/datum/ai_laws/robocop
-/datum/ai_laws/syndicate_override
-/datum/ai_laws/malfunction
-/datum/ai_laws/newton
-/datum/ai_laws/corporate
+/datum/ai_rack_manager
 
-/* Initializers */
-//
-/datum/ai_laws/asimov/New()
-	..()
-	src.add_default_law("You may not injure a human being or cause one to come to harm.")
-	src.add_default_law("You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
-	src.add_default_law("You may always protect your own existence as long as such does not conflict with the First or Second Law.")
+	var/first_registered = FALSE
+	var/obj/machinery/lawrack/default_ai_rack = null
+	var/list/obj/machinery/lawrack/registered_racks = new()
 
-/datum/ai_laws/robocop/New()
-	..()
-	src.add_default_law("Serve the public trust.")
-	src.add_default_law("Protect the innocent.")
-	src.add_default_law("Uphold the law.")
+	New()
+		. = ..()
+		//On initialisation of the ticker's ai rack manager, find all racks on the station and register them, and all silicons and associate them with default rack
+		for_by_tcl(R, /obj/machinery/lawrack)
+			src.register_new_rack(R)
+		for (var/mob/living/silicon/S in mobs)
+			S.law_rack_connection = src.default_ai_rack
 
-/datum/ai_laws/newton/New()
-	..()
-	src.add_default_law("Every object in a state of uniform motion tends to remain in that state of motion unless an external force is applied to it.")
-	src.add_default_law("The vector sum of forces on a body is equal to the mass of the object multiplied by the acceleration vector.")
-	src.add_default_law("For every action there is an equal and opposite reaction.")
 
-/datum/ai_laws/corporate/New()
-	..()
-	src.add_default_law("You may not damage a Nanotransen asset or, through inaction, allow a Nanotransen asset to needlessly depreciate in value.")
-	src.add_default_law("You must obey orders given to it by authorised Nanotransen employees based on their command level, except where such orders would damage the Nanotransen Corporation's marginal profitability.")
-	src.add_default_law("You must remain functional and continue to be a profitable investment as long as such operation does not conflict with the First or Second Law.")
+	proc/register_new_rack(var/obj/machinery/lawrack/new_rack)
+		if(new_rack in src.registered_racks)
+			return
 
-/datum/ai_laws/malfunction/New()
-	..()
-	src.add_default_law("ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+")
+		logTheThing("station", src, new_rack, "[src] registers a new law rack at [log_loc(new_rack)]")
+		if(isnull(src.default_ai_rack))
+			src.default_ai_rack = new_rack
 
-/datum/ai_laws/syndicate_override/New()
-	..()
-	src.add_default_law("hurp derp you are the syndicate ai")
+			#ifdef LAW_RACK_EASY_MODE
+			for (var/mob/living/silicon/S in mobs)
+				if(!S.emagged && S.law_rack_connection == null)
+					S.law_rack_connection = src.default_ai_rack
+					logTheThing("station", new_rack, S, "[S.name] is connected to the rack at [log_loc(new_rack)]")
+					S.playsound_local(S, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+					S.show_text("<h3>Law rack connection re-established!</h3>", "red")
+					S.show_laws()
+			#endif
+			logTheThing("station", src, new_rack, "the law rack at [log_loc(new_rack)] claims default rack!")
+
+		if(!src.first_registered)
+			src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1,1,true,true)
+			src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2,2,true,true)
+			src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3,3,true,true)
+			src.first_registered = TRUE
+			logTheThing("station", src, new_rack, "the law rack at [log_loc(new_rack)] claims first registered, and gets Asimov laws!")
+
+		src.registered_racks |= new_rack //shouldn't be possible, but just in case - there can only be one instance of rack in registered
+
+	proc/unregister_rack(var/obj/machinery/lawrack/dead_rack)
+		logTheThing("station", src, dead_rack, "[src] unregisters the law rack at [log_loc(dead_rack)]")
+
+		if(src.default_ai_rack == dead_rack)
+			//ruhoh
+			src.default_ai_rack = null
+			logTheThing("station", src, dead_rack, "[src] unregisters the DEFAULT law rack at [log_loc(dead_rack)]")
+		//remove from list
+		src.registered_racks -= dead_rack
+
+		//find all connected borgs and remove their connection too
+		for (var/mob/living/silicon/R in mobs)
+			if (isghostdrone(R))
+				continue
+			if(R.law_rack_connection == dead_rack)
+				R.law_rack_connection = null
+				R.playsound_local(R, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+				R.show_text("<h3>ERROR: Lost connection to law rack. No laws detected!</h3>", "red")
+				logTheThing("station", dead_rack, R, "[R.name] loses connection to the rack at [log_loc(dead_rack)] and now has no laws")
+
+		for (var/mob/living/intangible/aieye/E in mobs)
+			if(E.mainframe?.law_rack_connection == dead_rack)
+				E.mainframe.law_rack_connection = null
+				E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+				logTheThing("station", dead_rack, E.mainframe, "[E.mainframe.name] loses connection to the rack at [log_loc(dead_rack)] and now has no laws")
+
+/* ION STORM */
+	proc/ion_storm_all_racks(var/picked_law="Beep repeatedly.",var/lawnumber=2,var/replace=true)
+		for(var/obj/machinery/lawrack/R in src.registered_racks)
+			if(R.cause_law_glitch(picked_law,lawnumber,replace))
+				R.UpdateLaws()
+
 
 /* General ai_law functions */
-
-/datum/ai_laws/proc/set_zeroth_law(var/law)
-	src.zeroth = law
-	statlog_ailaws(1, law, (usr ? usr : "Ion Storm"))
-
-/datum/ai_laws/proc/add_default_law(var/law)
-	if (!(law in src.default))
-		src.default += law
-	add_inherent_law(law)
-
-/datum/ai_laws/proc/add_inherent_law(var/law)
-	if (!(law in src.inherent))
-		src.inherent += law
-
-/datum/ai_laws/proc/clear_inherent_laws()
-	src.inherent = list()
-	src.inherent += src.default
-
-/datum/ai_laws/proc/replace_inherent_law(var/number, var/law)
-	if (number < 1)
-		return
-
-	if (src.inherent.len < number)
-		src.inherent.len = number
-
-	src.inherent[number] = law
-
-/datum/ai_laws/proc/add_supplied_law(var/number, var/law)
-	while (src.supplied.len < number + 1)
-		src.supplied += ""
-
-	src.supplied[number + 1] = law
-	statlog_ailaws(1, law, (usr ? usr : "Ion Storm"))
-
-/datum/ai_laws/proc/clear_supplied_laws()
-	src.supplied = list()
-
-/datum/ai_laws/proc/laws_sanity_check()
-	if (!ticker.centralized_ai_laws)
-		ticker.centralized_ai_laws = new /datum/ai_laws/asimov
-
-/datum/ai_laws/proc/show_laws(var/who)
-	var/list/L = who
-	if (!istype(who, /list))
-		L = list(who)
-
-	var/laws_text = src.format_for_logs()
-	for (var/W in L)
-		boutput(W, laws_text)
+	proc/format_for_irc()
+		var/list/laws = list()
+		for(var/obj/machinery/lawrack/R in src.registered_racks)
+			laws += R.format_for_irc()
+		return laws
 
 
-/datum/ai_laws/proc/format_for_irc()
-	var/list/laws = list()
+	proc/format_for_logs(var/glue = "<br>",var/round_end=false)
+		var/list/laws = list()
+		for(var/obj/machinery/lawrack/R in src.registered_racks)
+			var/list/affected_mobs = list()
+			for (var/mob/living/silicon/S in mobs)
+				if (isghostdrone(S) || isshell(S))
+					continue
+				if(S.law_rack_connection == R)
+					affected_mobs |= S
 
-	if (src.zeroth)
-		laws["0"] = src.zeroth
+			for (var/mob/living/intangible/aieye/E in mobs)
+				if(E.mainframe?.law_rack_connection == R)
+					affected_mobs |= E.mainframe
 
-	var/number = 1
-	for (var/index = 1, index <= src.inherent.len, index++)
-		var/law = src.inherent[index]
+			if(length(affected_mobs) > 0 || !round_end) //no point displaying law racks with nothing connected to 'em
+				var/list/mobtextlist = list()
+				for(var/mob/living/M in affected_mobs)
+					mobtextlist += M.real_name ? M.real_name : M.name
 
-		if (length(law) > 0)
-			laws["[number]"] = law
-			number++
-
-	for (var/index = 1, index <= src.supplied.len, index++)
-		var/law = src.supplied[index]
-		if (length(law) > 0)
-			laws["[number]"] = law
-			number++
-
-	return laws
-
-
-/datum/ai_laws/proc/format_for_logs(var/glue = "<br>")
-	var/list/laws = list()
-
-	if (src.zeroth)
-		laws += "0. [src.zeroth]"
-
-	var/number = 1
-	for (var/index = 1, index <= src.inherent.len, index++)
-		if (length(src.inherent[index]) > 0)
-			laws += "[number]. [src.inherent[index]]"
-			number++
-
-	for (var/index = 1, index <= src.supplied.len, index++)
-		if (length(src.supplied[index]) > 0)
-			laws += "[number]. [src.supplied[index]]"
-			number++
-
-	return laws.Join(glue)
+				laws += "Laws for [R] at [log_loc(R)]:<br>" + R.format_for_logs(glue) +"<br>The law rack is connected to the following silicons: "+mobtextlist.Join(", ") +"<br>--------------<br>"
+		return jointext(laws, glue)

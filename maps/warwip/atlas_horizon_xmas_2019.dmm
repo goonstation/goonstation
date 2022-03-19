@@ -10445,16 +10445,6 @@
 	dir = 2
 	},
 /area/station/turret_protected/ai_upload)
-"ayR" = (
-/obj/machinery/computer/aiupload,
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 1
-	},
-/turf/simulated/floor/circuit{
-	dir = 2
-	},
-/area/station/turret_protected/ai_upload)
 "ayS" = (
 /obj/table/auto,
 /obj/item/aiModule/notHuman,
@@ -13145,14 +13135,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station2/hallway/primary/south)
-"aEd" = (
-/obj/machinery/light,
-/obj/table/auto,
-/obj/item/aiModule/rename,
-/turf/simulated/floor/circuit{
-	dir = 2
-	},
-/area/station/turret_protected/ai_upload_foyer)
 "aEe" = (
 /obj/table/auto,
 /obj/item/aiModule/freeform,
@@ -17114,13 +17096,6 @@
 /obj/item/deconstructor,
 /obj/item/stamp/ce,
 /turf/simulated/floor/yellow,
-/area/station2/crew_quarters/heads)
-"aMG" = (
-/obj/storage/secure/closet/command/medical_director,
-/obj/item/device/analyzer/healthanalyzer/upgraded,
-/obj/item/remote/porter/port_a_nanomed,
-/obj/item/stamp/md,
-/turf/simulated/floor/white,
 /area/station2/crew_quarters/heads)
 "aMH" = (
 /obj/storage/secure/closet/command/research_director,
@@ -33861,20 +33836,6 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
-"bxE" = (
-/obj/machinery/light_switch/west,
-/obj/machinery/computer/aiupload{
-	dir = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
-/area/station/turret_protected/Zeta)
 "bxF" = (
 /obj/item/device/radio/intercom/AI,
 /obj/cable{
@@ -33896,15 +33857,6 @@
 /area/station/turret_protected/Zeta)
 "bxH" = (
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
-"bxI" = (
-/obj/table/auto,
-/obj/item/aiModule/freeform,
-/obj/item/aiModule/rename,
-/obj/item/aiModule/reset,
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
 /area/station/turret_protected/Zeta)
 "bxJ" = (
 /obj/grille/steel,
@@ -75251,6 +75203,16 @@
 /area/station/science/artifact{
 	name = "Artifact Lounge"
 	})
+"hJh" = (
+/obj/machinery/lawrack,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 1
+	},
+/turf/simulated/floor/circuit{
+	dir = 2
+	},
+/area/station/turret_protected/ai_upload)
 "ixC" = (
 /obj/storage/crate/rcd/CE,
 /obj/item/clothing/shoes/magnetic,
@@ -75447,6 +75409,13 @@
 /obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
+"oAA" = (
+/obj/table/auto,
+/obj/item/aiModule/freeform,
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/turret_protected/Zeta)
 "oPT" = (
 /obj/item/paper/book/from_file/minerals,
 /turf/simulated/floor/plating/airless/random,
@@ -75458,6 +75427,13 @@
 /obj/item/spacecash/hundred,
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/listeningpost/power)
+"pTb" = (
+/obj/machinery/light,
+/obj/table/auto,
+/turf/simulated/floor/circuit{
+	dir = 2
+	},
+/area/station/turret_protected/ai_upload_foyer)
 "qao" = (
 /obj/decal/poster/wallsign/framed_award/hos_medal,
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
@@ -75476,6 +75452,20 @@
 	dir = 4
 	},
 /area/station2/chemistry)
+"qWG" = (
+/obj/machinery/light_switch/west,
+/obj/machinery/lawrack{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/station/turret_protected/Zeta)
 "rfN" = (
 /obj/machinery/optable,
 /obj/item/paper/book/from_file/pharmacopia,
@@ -75501,6 +75491,13 @@
 /area/station/science/artifact{
 	name = "Artifact Lounge"
 	})
+"svW" = (
+/obj/storage/secure/closet/command/medical_director,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/remote/porter/port_a_nanomed,
+/obj/item/stamp/md,
+/turf/simulated/floor/white,
+/area/station2/crew_quarters/heads)
 "sMd" = (
 /obj/cable{
 	d1 = 1;
@@ -117724,7 +117721,7 @@ blF
 bot
 brr
 buL
-bxE
+qWG
 bAv
 bDt
 bjg
@@ -118932,7 +118929,7 @@ blJ
 box
 brv
 buP
-bxI
+oAA
 bAz
 bDx
 bGo
@@ -123428,7 +123425,7 @@ azM
 aAT
 aBX
 aDg
-aEd
+pTb
 ayO
 bdt
 aGC
@@ -124933,7 +124930,7 @@ ama
 awf
 axb
 axY
-ayR
+hJh
 azQ
 aAX
 aCc
@@ -135819,7 +135816,7 @@ aIR
 bbV
 aKD
 aLz
-aMG
+svW
 aLw
 aPB
 aVZ

@@ -305,8 +305,6 @@
 /area/station/bridge)
 "aaT" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/rename,
-/obj/item/aiModule/reset,
 /obj/item/aiModule/removeCrew,
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/starboard)
@@ -3649,12 +3647,6 @@
 	icon_state = "floorgrime-w"
 	},
 /area/listeningpost/syndicateassaultvessel)
-"amk" = (
-/obj/table/reinforced/auto,
-/obj/item/circuitboard/aiupload,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/longtile/black,
-/area/station/turret_protected/starboard)
 "aml" = (
 /obj/machinery/optable,
 /obj/decal/fakeobjects{
@@ -7114,10 +7106,6 @@
 	icon_state = "yellowblackcorner"
 	},
 /area/station/engine/engineering/breakroom)
-"avh" = (
-/obj/decal/fakeobjects/sink,
-/turf/simulated/floor/black,
-/area/listeningpost/syndicateassaultvessel)
 "avi" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering/private)
@@ -9637,9 +9625,6 @@
 	name = "table"
 	},
 /obj/item/handcuffs,
-/obj/item/aiModule/reset{
-	pixel_y = 10
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -21510,6 +21495,15 @@
 	},
 /turf/simulated/floor/green/corner,
 /area/station/hydroponics/bay)
+"bic" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/lawrack,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "bie" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -33608,6 +33602,10 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/starboard)
+"cUA" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/black,
+/area/listeningpost/syndicateassaultvessel)
 "cUH" = (
 /obj/decal/tile_edge/check{
 	dir = 1;
@@ -35174,15 +35172,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
-"gdN" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/aiupload,
-/obj/cable,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "ghs" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crewquarters/cryotron)
@@ -42381,6 +42370,11 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/inner)
+"xRV" = (
+/obj/table/reinforced/auto,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/longtile/black,
+/area/station/turret_protected/starboard)
 "xSi" = (
 /obj/cable,
 /obj/cable{
@@ -84670,7 +84664,7 @@ hSP
 tII
 aQm
 fCv
-gdN
+bic
 aqO
 aCG
 xVU
@@ -86005,7 +85999,7 @@ alY
 atB
 amd
 akH
-avh
+cUA
 avM
 avQ
 avS
@@ -88287,7 +88281,7 @@ aBz
 abd
 akB
 aqS
-amk
+xRV
 aEw
 aPt
 aPG

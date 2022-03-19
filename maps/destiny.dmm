@@ -12372,15 +12372,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
-"bcI" = (
-/obj/table/reinforced/auto,
-/obj/item/device/infra_sensor,
-/obj/item/aiModule/rename,
-/obj/item/aiModule/emergency,
-/obj/item/aiModule/removeCrew,
-/obj/random_item_spawner/ai_experimental,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "bcN" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -14210,16 +14201,6 @@
 	dir = 8
 	},
 /area/station/engine/elect)
-"bpT" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -28
-	},
-/obj/machinery/computer/aiupload{
-	dir = 4
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "bpV" = (
 /obj/disposalpipe/switch_junction{
 	dir = 1;
@@ -18263,17 +18244,6 @@
 	},
 /turf/space,
 /area/space)
-"crL" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/reset,
-/obj/item/circuitboard/aiupload,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/machinery/light/incandescent{
-	dir = 8;
-	nostick = 1
-	},
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "crP" = (
 /obj/railing/orange{
 	dir = 4
@@ -23361,6 +23331,15 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/outer/sw)
+"eIu" = (
+/obj/table/reinforced/auto,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/machinery/light/incandescent{
+	dir = 8;
+	nostick = 1
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "eIO" = (
 /obj/machinery/disposal/mail/small{
 	dir = 1;
@@ -29490,6 +29469,16 @@
 	},
 /turf/simulated/floor,
 /area/station/medical/medbay/lobby)
+"hFY" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -28
+	},
+/obj/machinery/lawrack{
+	dir = 4
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "hGG" = (
 /obj/cable,
 /obj/cable{
@@ -34538,6 +34527,14 @@
 	icon_state = "fpurple5"
 	},
 /area/station/crew_quarters/bar)
+"kCH" = (
+/obj/table/reinforced/auto,
+/obj/item/device/infra_sensor,
+/obj/item/aiModule/emergency,
+/obj/item/aiModule/removeCrew,
+/obj/random_item_spawner/ai_experimental,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "kCM" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -42451,18 +42448,6 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
-"oOb" = (
-/obj/decal/tile_edge/line/red{
-	icon_state = "line1"
-	},
-/obj/table/wood/auto,
-/obj/item/clothing/glasses/healthgoggles/upgraded,
-/obj/item/device/analyzer/healthanalyzer/upgraded,
-/obj/item/reagent_containers/hypospray,
-/turf/simulated/floor/blue/checker{
-	dir = 8
-	},
-/area/station/medical/head)
 "oOi" = (
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
@@ -49003,6 +48988,18 @@
 "sra" = (
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
+"srb" = (
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/obj/table/wood/auto,
+/obj/item/clothing/glasses/healthgoggles/upgraded,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/reagent_containers/hypospray,
+/turf/simulated/floor/blue/checker{
+	dir = 8
+	},
+/area/station/medical/head)
 "sri" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -87848,7 +87845,7 @@ udk
 uLy
 vXK
 wUk
-oOb
+srb
 hHS
 uyP
 tYa
@@ -107130,8 +107127,8 @@ hvw
 swT
 rGo
 sDE
-bpT
-bcI
+hFY
+kCH
 mRX
 mGL
 tab
@@ -119546,7 +119543,7 @@ ayz
 jLx
 ffW
 oRI
-crL
+eIu
 ddu
 aqf
 arD

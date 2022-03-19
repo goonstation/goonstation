@@ -27850,13 +27850,6 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/bot,
 /area/station/security/main)
-"hPe" = (
-/obj/machinery/computer/aiupload,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "hPr" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/glass{
@@ -31414,6 +31407,13 @@
 /obj/decal/wreath,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/AIsat)
+"iVs" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/turf/simulated/floor/circuit/vintage,
+/area/station/turret_protected/ai_upload)
 "iVE" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 8;
@@ -48440,6 +48440,13 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
+"odw" = (
+/obj/machinery/lawrack,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "odN" = (
 /obj/machinery/computer/operating{
 	id = "robotics"
@@ -49027,6 +49034,25 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/engineering/breakroom)
+"onR" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/obj/machinery/light/small/sticky/cool/very,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/black/grime,
+/area/station/medical/robotics)
 "onT" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/jen/blue,
@@ -67230,25 +67256,6 @@
 	},
 /turf/simulated/wall/auto/jen/blue,
 /area/station/medical/medbay)
-"txr" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/machinery/light/small/sticky/cool/very,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/black/grime,
-/area/station/medical/robotics)
 "txt" = (
 /obj/submachine/claw_machine,
 /obj/decal/tile_edge/check{
@@ -75917,19 +75924,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/security/brig/south_side)
-"vXc" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8
-	},
-/obj/item/aiModule/rename{
-	pixel_y = 7
-	},
-/obj/item/aiModule/reset{
-	pixel_y = -7
-	},
-/turf/simulated/floor/circuit/vintage,
-/area/station/turret_protected/ai_upload)
 "vXu" = (
 /obj/machinery/vehicle/pod_smooth/light{
 	dir = 4
@@ -115927,7 +115921,7 @@ bJQ
 mHL
 rdj
 hAh
-hPe
+odw
 geN
 geN
 geN
@@ -116532,7 +116526,7 @@ mHL
 cNV
 fVZ
 vsn
-vXc
+iVs
 eyn
 idA
 lON
@@ -131684,7 +131678,7 @@ tUa
 bpe
 pME
 qXV
-txr
+onR
 pgO
 mNL
 mmR

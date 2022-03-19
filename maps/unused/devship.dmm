@@ -3315,14 +3315,6 @@
 	},
 /turf/simulated/floor/caution/west,
 /area/station/engine/core)
-"iO" = (
-/obj/machinery/light,
-/obj/table/auto,
-/obj/item/aiModule/rename,
-/turf/simulated/floor/circuit{
-	dir = 2
-	},
-/area/station/turret_protected/Zeta)
 "iP" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -3370,16 +3362,6 @@
 /area/station/turret_protected/Zeta)
 "iV" = (
 /obj/table/auto,
-/turf/simulated/floor/circuit{
-	dir = 2
-	},
-/area/station/turret_protected/Zeta)
-"iW" = (
-/obj/machinery/computer/aiupload,
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1"
-	},
 /turf/simulated/floor/circuit{
 	dir = 2
 	},
@@ -12541,13 +12523,6 @@
 /obj/item/stamp/ce,
 /turf/simulated/floor/yellow,
 /area/station/crew_quarters/heads)
-"CU" = (
-/obj/storage/secure/closet/command/medical_director,
-/obj/item/device/analyzer/healthanalyzer/upgraded,
-/obj/item/remote/porter/port_a_nanomed,
-/obj/item/stamp/md,
-/turf/simulated/floor/white,
-/area/station/crew_quarters/heads)
 "CV" = (
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/sanitary,
@@ -14602,6 +14577,30 @@
 /obj/item/plank,
 /turf/simulated/floor/grime,
 /area/ghostdrone_factory)
+"Is" = (
+/obj/storage/secure/closet/command/medical_director,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/remote/porter/port_a_nanomed,
+/obj/item/stamp/md,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/heads)
+"IM" = (
+/obj/machinery/lawrack,
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor/circuit{
+	dir = 2
+	},
+/area/station/turret_protected/Zeta)
+"KV" = (
+/obj/machinery/light,
+/obj/table/auto,
+/turf/simulated/floor/circuit{
+	dir = 2
+	},
+/area/station/turret_protected/Zeta)
 "Xp" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
@@ -56445,7 +56444,7 @@ jy
 CY
 yl
 ll
-iO
+KV
 iy
 uY
 Eh
@@ -57950,7 +57949,7 @@ bu
 hH
 mP
 iy
-iW
+IM
 kK
 ye
 yo
@@ -68836,7 +68835,7 @@ yQ
 up
 vm
 Af
-CU
+Is
 pw
 pY
 pz
