@@ -3068,7 +3068,7 @@
 /mob/proc/point_at(var/atom/target) //overriden by living and dead
 	.=0
 
-/mob/verb/pull_verb(atom/movable/A as mob|obj in view(1, get_turf(usr)))
+/mob/verb/pull_verb(atom/movable/A as mob|obj in view(1, usr))
 	set name = "Pull / Unpull"
 	set category = "Local"
 
