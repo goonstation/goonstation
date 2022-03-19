@@ -1,6 +1,6 @@
 /// # Collector structure
 /obj/flock_structure/collector
-	name = "Some weird lookin' pulsing thing"
+	name = "weird lookin' pulsing thing"
 	desc = "Seems to be pulsing."
 	flock_id = "Collector"
 	health = 60

@@ -403,6 +403,9 @@
 /datum/flock/proc/claimTurf(var/turf/simulated/T)
 	src.all_owned_tiles |= T
 	src.priority_tiles -= T // we have it now, it's no longer priority
+	for (var/obj/flock_structure/structure in T.contents)
+		structure.flock = src
+		src.registerStructure(structure)
 	src.updateAnnotations()
 
 /datum/flock/proc/isTurfFree(var/turf/simulated/T, var/queryName) // provide the drone's name here: if they own the turf it's free _to them_
@@ -479,7 +482,10 @@
 	/obj/lattice = /obj/lattice/flock,
 	/obj/machinery/light = /obj/machinery/light/flock,
 	/obj/storage/closet = /obj/storage/closet/flock,
-	/obj/storage/secure/closet = /obj/storage/closet/flock
+	/obj/storage/secure/closet = /obj/storage/closet/flock,
+	/obj/machinery/computer3 = /obj/flock_structure/compute,
+	/obj/machinery/computer = /obj/flock_structure/compute,
+	/obj/machinery/networked/teleconsole = /obj/flock_structure/compute,
 	)
 /proc/flock_convert_turf(var/turf/T)
 	if(!T)

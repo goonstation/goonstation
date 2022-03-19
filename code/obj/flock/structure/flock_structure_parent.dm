@@ -54,6 +54,7 @@
 	state["ref"] = "\ref[src]"
 	state["name"] = src.flock_id
 	state["health"] = src.health
+	state["compute"] = src.compute_provided()
 	var/area/myArea = get_area(src)
 	if(isarea(myArea))
 		state["area"] = myArea.name

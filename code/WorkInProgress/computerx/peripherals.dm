@@ -56,7 +56,7 @@
 		src.id = "\ref[src]"
 
 	disposing()
-		host?.peripherals.Remove(src)
+		host?.peripherals?.Remove(src)
 		..()
 
 

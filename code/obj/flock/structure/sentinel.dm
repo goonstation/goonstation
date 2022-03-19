@@ -6,7 +6,7 @@
 #define CHARGING 1 //! The sentinel is gaining charge
 #define CHARGED 2 //! The sentinel is charged
 /obj/flock_structure/sentinel
-	name = "Glowing pylon"
+	name = "glowing pylon"
 	desc = "A glowing pylon of sorts, faint sparks are jumping inside of it."
 	icon_state = "sentinel"
 	flock_id = "Sentinel"
