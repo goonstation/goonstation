@@ -30,6 +30,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\__secret_public.dme"
 
 // BEGIN_INCLUDE
+#include "_std\defines\data_input.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\base_lighting.dm"
@@ -609,6 +610,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\banshark.dm"
 #include "code\modules\admin\bomb_monitor.dm"
 #include "code\modules\admin\create.dm"
+#include "code\modules\admin\data_input.dm"
 #include "code\modules\admin\deadsay.dm"
 #include "code\modules\admin\debug.dm"
 #include "code\modules\admin\diagnostics.dm"
