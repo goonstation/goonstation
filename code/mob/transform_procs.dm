@@ -117,10 +117,7 @@
 	boutput(O, "To use something, simply double-click it.")
 	boutput(O, "Currently right-click functions will not work for the AI (except examine), and will either be replaced with dialogs or won't be usable by the AI.")
 
-//	O.laws_object = new /datum/ai_laws/asimov
-//	O.laws_object = ticker.centralized_ai_laws
-//	O.current_law_set = O.laws_object
-	ticker.centralized_ai_laws.show_laws(O)
+	O.show_laws()
 	boutput(O, "<b>These laws may be changed by other players.</b>")
 
 	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle

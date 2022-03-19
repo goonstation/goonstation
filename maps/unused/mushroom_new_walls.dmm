@@ -547,6 +547,16 @@
 	dir = 4
 	},
 /area/shuttle/arrival/station)
+"acD" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/lawrack{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/purple,
+/area/station/turret_protected/ai_upload)
 "acE" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -7385,17 +7395,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
-"aDx" = (
-/obj/machinery/activation_button/ignition_switch{
-	desc = "There's a note taped over it that says Fire!";
-	id = "chapelgun";
-	name = "Chapel Mass Driver Launch Button";
-	pixel_y = 23
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 8
-	},
-/area/station/chapel/sanctuary)
 "aDy" = (
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
@@ -10106,24 +10105,11 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/turret_protected/ai_module_storage)
-"aOx" = (
-/obj/table/reinforced,
-/obj/item/aiModule/freeform,
-/obj/item/aiModule/rename,
-/turf/simulated/floor/purple,
-/area/station/turret_protected/ai_module_storage)
 "aOy" = (
 /obj/table/reinforced,
 /obj/item/aiModule/makeCaptain,
 /obj/item/aiModule/oneHuman,
 /obj/item/aiModule/emergency,
-/turf/simulated/floor/purple,
-/area/station/turret_protected/ai_module_storage)
-"aOD" = (
-/obj/table/reinforced,
-/obj/item/aiModule/reset,
-/obj/item/aiModule/notHuman,
-/obj/item/aiModule/removeCrew,
 /turf/simulated/floor/purple,
 /area/station/turret_protected/ai_module_storage)
 "aOE" = (
@@ -12436,16 +12422,6 @@
 	},
 /obj/cable{
 	icon_state = "0-2"
-	},
-/turf/simulated/floor/purple,
-/area/station/turret_protected/ai_upload)
-"aWM" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/aiupload{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "0-8"
 	},
 /turf/simulated/floor/purple,
 /area/station/turret_protected/ai_upload)
@@ -15185,21 +15161,6 @@
 	dir = 1
 	},
 /area/station/medical/robotics)
-"bfs" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor/blueblack/corner,
-/area/station/medical/robotics)
 "bft" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/research)
@@ -15717,18 +15678,6 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
-/turf/simulated/floor/grime,
-/area/station/storage/warehouse)
-"bhh" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bhi" = (
@@ -22260,6 +22209,12 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"fog" = (
+/obj/table/reinforced,
+/obj/item/aiModule/notHuman,
+/obj/item/aiModule/removeCrew,
+/turf/simulated/floor/purple,
+/area/station/turret_protected/ai_module_storage)
 "foo" = (
 /obj/cable{
 	icon_state = "4-6"
@@ -22727,6 +22682,18 @@
 	dir = 8
 	},
 /area/station/medical/medbay)
+"fRa" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/turf/simulated/floor/grime,
+/area/station/storage/warehouse)
 "fRo" = (
 /obj/stool{
 	desc = "A soft little bed the general size and shape of a space bee.";
@@ -22837,6 +22804,11 @@
 	},
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
+"fZp" = (
+/obj/table/reinforced,
+/obj/item/aiModule/freeform,
+/turf/simulated/floor/purple,
+/area/station/turret_protected/ai_module_storage)
 "gaO" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
@@ -26012,15 +25984,6 @@
 /obj/stool,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/turret_protected/Zeta)
-"jUG" = (
-/obj/machinery/activation_button/ignition_switch{
-	desc = "There is a big red button here with many big red arrows pointing to it";
-	id = "getitout";
-	name = "Emergancy Ejector Button";
-	pixel_y = 23
-	},
-/turf/simulated/floor,
-/area/station/science/artifact)
 "jUT" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
@@ -26843,6 +26806,17 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"kTB" = (
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
+/obj/machinery/activation_button/ignition_switch{
+	id = "mixingroom";
+	pixel_x = 24;
+	pixel_y = -8
+	},
+/turf/simulated/floor/purple,
+/area/station/science/lab)
 "kTS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -30608,6 +30582,34 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"pFB" = (
+/obj/machinery/activation_button/ignition_switch{
+	desc = "There is a big red button here with many big red arrows pointing to it";
+	id = "getitout";
+	name = "Emergancy Ejector Button";
+	pixel_y = 23
+	},
+/turf/simulated/floor,
+/area/station/science/artifact)
+"pFN" = (
+/obj/table/auto,
+/obj/table/auto{
+	icon_state = "1"
+	},
+/obj/item/circuitboard/robotics{
+	pixel_x = 3;
+	pixel_y = 1
+	},
+/obj/item/paper/book/from_file/guardbot_guide{
+	pixel_x = -8;
+	pixel_y = 16
+	},
+/obj/item/paper/book/from_file/dwainedummies{
+	pixel_x = 4;
+	pixel_y = 13
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
 "pHd" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
@@ -30679,29 +30681,6 @@
 	icon_state = "fgreen2"
 	},
 /area/station/bridge)
-"pLl" = (
-/obj/table/auto,
-/obj/table/auto{
-	icon_state = "1"
-	},
-/obj/item/circuitboard/robotics{
-	pixel_x = 3;
-	pixel_y = 1
-	},
-/obj/item/aiModule/reset{
-	pixel_x = -6;
-	pixel_y = -2
-	},
-/obj/item/paper/book/from_file/guardbot_guide{
-	pixel_x = -8;
-	pixel_y = 16
-	},
-/obj/item/paper/book/from_file/dwainedummies{
-	pixel_x = 4;
-	pixel_y = 13
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
 "pMi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -32289,17 +32268,6 @@
 	},
 /turf/simulated/floor/greenwhite/corner,
 /area/station/turret_protected/AIsat)
-"ruk" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/obj/machinery/activation_button/ignition_switch{
-	id = "mixingroom";
-	pixel_x = 24;
-	pixel_y = -8
-	},
-/turf/simulated/floor/purple,
-/area/station/science/lab)
 "run" = (
 /obj/decal/tile_edge/line/white{
 	dir = 5;
@@ -34883,6 +34851,21 @@
 	name = "sand"
 	},
 /area/station/crew_quarters/pool)
+"ugM" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/blueblack/corner,
+/area/station/medical/robotics)
 "uhh" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/main)
@@ -35204,6 +35187,17 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"uyS" = (
+/obj/machinery/activation_button/ignition_switch{
+	desc = "There's a note taped over it that says Fire!";
+	id = "chapelgun";
+	name = "Chapel Mass Driver Launch Button";
+	pixel_y = 23
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/station/chapel/sanctuary)
 "uyY" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -84420,7 +84414,7 @@ bdb
 bea
 bbN
 bfW
-bhh
+fRa
 bbN
 bbN
 bbN
@@ -86805,7 +86799,7 @@ auB
 auB
 aBS
 aCs
-aDx
+uyS
 aEw
 aFa
 aHm
@@ -89231,7 +89225,7 @@ aaa
 aaa
 aaa
 aNC
-aOx
+fZp
 aPK
 aPK
 aPK
@@ -89835,7 +89829,7 @@ aaa
 aaa
 aaa
 aNC
-aOD
+fog
 aPK
 aQP
 aPK
@@ -93165,7 +93159,7 @@ aTs
 aTr
 aVa
 aUY
-aWM
+acD
 aXI
 aYp
 aTr
@@ -93478,7 +93472,7 @@ aYR
 bcy
 bdu
 ben
-bfs
+ugM
 bgn
 bhy
 bhy
@@ -94114,7 +94108,7 @@ uSS
 vLa
 wDA
 xCX
-pLl
+pFN
 wIj
 ncL
 gkG
@@ -98631,7 +98625,7 @@ aaa
 aaa
 aaa
 ivd
-jUG
+pFB
 lJG
 nIV
 jLz
@@ -98947,7 +98941,7 @@ lnh
 lQg
 ydz
 wSO
-ruk
+kTB
 iIu
 sXL
 tKf

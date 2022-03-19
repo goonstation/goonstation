@@ -23896,20 +23896,6 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
-"bcQ" = (
-/obj/machinery/light_switch/west,
-/obj/machinery/computer/aiupload{
-	dir = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
-/area/station/turret_protected/Zeta)
 "bcR" = (
 /obj/item/device/radio/intercom/AI,
 /obj/cable{
@@ -23931,15 +23917,6 @@
 /area/station/turret_protected/Zeta)
 "bcT" = (
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
-"bcU" = (
-/obj/table/auto,
-/obj/item/aiModule/freeform,
-/obj/item/aiModule/rename,
-/obj/item/aiModule/reset,
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
 /area/station/turret_protected/Zeta)
 "bcV" = (
 /obj/grille/steel,
@@ -40383,25 +40360,6 @@
 	},
 /turf/simulated/floor/plating/airless/random,
 /area/station/mining/magnet)
-"bLH" = (
-/obj/item/cable_coil/cut,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/storage/crate,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/medical/robotics)
 "bLI" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -59470,6 +59428,13 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/snow,
 /area/station/hydroponics/bay)
+"eRw" = (
+/obj/table/auto,
+/obj/item/aiModule/freeform,
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/turret_protected/Zeta)
 "eWt" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -59745,6 +59710,25 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/security/hos)
+"iVP" = (
+/obj/item/cable_coil/cut,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/obj/storage/crate,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/medical/robotics)
 "iYR" = (
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
@@ -60252,6 +60236,20 @@
 /obj/item/cargotele,
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
+"tJP" = (
+/obj/machinery/light_switch/west,
+/obj/machinery/lawrack{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/station/turret_protected/Zeta)
 "tLh" = (
 /obj/stocking,
 /turf/simulated/wall/auto/gannets,
@@ -102532,7 +102530,7 @@ aQL
 aTG
 aWG
 aZY
-bcQ
+tJP
 bfQ
 biP
 aOl
@@ -103740,7 +103738,7 @@ aQP
 aTK
 aWK
 bac
-bcU
+eRw
 bfU
 biT
 blJ
@@ -115213,7 +115211,7 @@ bwA
 bpg
 bpA
 hfH
-bLH
+iVP
 bUW
 bWX
 bXI

@@ -19,6 +19,8 @@
 	var/dependent = 0 // if we're host to a mainframe's mind
 	var/shell = 0 // are we available for use as a shell for an AI
 
+	var/obj/machinery/lawrack/law_rack_connection = null // which rack we're getting our laws from
+
 	var/obj/item/cell/cell = null
 
 	can_bleed = 0
@@ -36,6 +38,8 @@
 /mob/living/silicon/New()
 	..()
 	src.botcard = new /obj/item/card/id(src)
+	src.law_rack_connection = ticker?.ai_law_rack_manager.default_ai_rack
+	logTheThing("station", src, src.law_rack_connection, "New cyborg [src.name] connects to default rack at [log_loc(src.law_rack_connection)]")
 
 /mob/living/silicon/disposing()
 	req_access = null
@@ -549,9 +553,11 @@ var/global/list/module_editors = list()
 	. += pick("Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Mu", "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi", "Psi", "Omega")
 	. += "-[rand(1, 99)]"
 
+ //This whol proc seems like dead code - commenting it out until I'm sure
 // This proc adds and removes robot-related antagonist roles as needed (Convair880).
 /mob/living/silicon/proc/handle_robot_antagonist_status(var/action = "", var/remove = 0, var/mob/source)
-	if (!src || !issilicon(src))
+	return
+/*	if (!src || !issilicon(src))
 		return
 	if (!src.mind)
 		return
@@ -720,6 +726,7 @@ var/global/list/module_editors = list()
 				R.show_laws()
 
 	return
+	*/
 
 
 /mob/living/silicon/is_cold_resistant()

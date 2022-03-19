@@ -1433,6 +1433,9 @@
 	if(!istype(W,/obj/item/mechanics))
 		..()
 		return
+	if (W.cant_drop)
+		boutput(user, "<span class='alert'>You can't put [W] into a vending machine while it's attached to you!</span>")
+		return
 	for(var/datum/data/vending_product/product in product_list)
 		if(W.type == product.product_path)
 			boutput(user, "<span class='notice'>You return the [W] to the vending machine.</span>")
@@ -1920,6 +1923,9 @@
 			UpdateOverlays(null, "screen", 0, 1)
 
 	proc/addProduct(obj/item/target, mob/user)
+		if (target.cant_drop)
+			boutput(user, "<span class='alert'>You can't put [target] into a vending machine while it's attached to you!</span>")
+			return
 		var/obj/item/storage/targetContainer = target
 		if (!istype(targetContainer))
 			productListUpdater(target, user)
