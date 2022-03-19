@@ -12,6 +12,8 @@
 #define GET_ICON(title, message) {GET as null|icon}
 /// Get a color via color picker
 #define GET_COLOR(title, message) {GET as null|color}
+/// Get a type (prompts for input in the case of ambiguity)
+#define GET_TYPE(title, message) {get_one_match(GET_TEXT_SHORT(title, message))}
 
 
 /// For inputting data for things like edit-variables, proccall, etc
@@ -20,7 +22,7 @@
 /// @param custom_title  If not null, set as the title for the input
 ///	@param custom_text	 If not null, set as the text for the input
 /// @return 			 A data_input_result with the parsed input and the selected input type, or both null if we didn't get any data
-proc/input_data(list/allowed_types, client/user, custom_title = null, custom_text = null)
+proc/input_data(list/allowed_types, client/user, custom_title = null, custom_text = null, default = null, default_type = null)
 	. = new data_input_result(null, null) //in case anything goes wrong, return this
 
 	if (!isclient(user)) //attempt to recover
@@ -37,91 +39,145 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_tex
 		message_admins("Non-admin client [user.key] somehow tried to input some data. Huh?")
 		return
 
-	var/raw_input = null 	// The raw input from the user- usually text, but might be a file or something.
-	var/selected_type = tgui_input_list(user.mob, "Which input type?", "Input Type Selection", allowed_types, allowIllegal = TRUE)
+	var/input = null 	// The input from the user- usually text, but might be a file or something.
+	var/selected_type = input(user.mob, "Which input type?", "Input Type Selection") as null|text in allowed_types //TODO make this a TGUI list once we can indicate defaults on those
 
 	if (!selected_type)
 		return
 
 	switch(selected_type)
 		if (DATA_INPUT_NUM)
-			raw_input = GET_NUM("Enter number:", null)
+			input = GET_NUM("Enter number:", null)
 
 		if (DATA_INPUT_TYPE)
-			raw_input = get_one_match(GET_TEXT_SHORT("Enter type:", null))
+			input = GET_TYPE("Enter type:", null)
 
 		if (DATA_INPUT_COLOR)
-			raw_input = GET_COLOR("Select color:", null)
+			input = GET_COLOR("Select color:", null)
 
 		if (DATA_INPUT_TEXT)
-			raw_input = GET_TEXT_LONG("Enter text:", null)
+			input = GET_TEXT_LONG("Enter text:", null)
 
 		if (DATA_INPUT_ICON)
-			raw_input = GET_ICON("Select icon:", null)
+			input = GET_ICON("Select icon:", null)
 
 		if (DATA_INPUT_LIST)
 			//TODO uhhhhhhhh h
 
 		if (DATA_INPUT_FILE)
-			raw_input = GET_FILE("Select file:", null)
+			input = GET_FILE("Select file:", null)
 
 		if (DATA_INPUT_DIR)
-			raw_input = GET_TEXT_SHORT("Enter direction:", "Dir as text (e.g. North), case doesn't matter")
-			raw_input = raw_input.uppertext()
-			switch(raw_input)
+			input = GET_TEXT_SHORT("Enter direction:", "Dir as text (e.g. North), case doesn't matter")
+			input = input.uppertext()
+			switch(input)
 				if("NORTH")
-					raw_input = NORTH
+					input = NORTH
 				if("SOUTH")
-					raw_input = SOUTH
+					input = SOUTH
 				if("EAST")
-					raw_input = EAST
+					input = EAST
 				if("WEST")
-					raw_input = WEST
+					input = WEST
 				if("NORTHEAST")
-					raw_input = NORTHEAST
+					input = NORTHEAST
 				if("SOUTHEAST")
-					raw_input = SOUTHEAST
+					input = SOUTHEAST
 				if("NORTHWEST")
-					raw_input = NORTHWEST
+					input = NORTHWEST
 				if("SOUTHWEST")
-					raw_input = SOUTHWEST
+					input = SOUTHWEST
 				else
 					boutput(user, "<span class='alert>Invalid dir!</span>")
 					return
 
 		if (DATA_INPUT_JSON)
-			raw_input = GET_TEXT_SHORT("Enter JSON:", null)
-			raw_input = json_decode(raw_input)
+			input = GET_TEXT_SHORT("Enter JSON:", null)
+			input = json_decode(input)
 
 		if (DATA_INPUT_REF)
-			raw_input = GET_TEXT_SHORT("Enter ref:", "brackets don't matter")
-			raw_input = locate(raw_input)
-			if (!raw_input)
-				raw_input = locate("\[[raw_input]\]")
-			if (!raw_input)
+			input = GET_TEXT_SHORT("Enter ref:", "brackets don't matter")
+			input = locate(input)
+			if (!input)
+				input = locate("\[[input]\]")
+			if (!input)
 				boutput(user, "<span class='alert'>Invalid ref.</span>")
 				return
 
-		//next up: turf by coords
+		if (DATA_INPUT_TURF_BY_COORDS)
+			var/x = GET_NUM("X coordinate", "Set to turf at \[_, ?, ?\]")
+			var/y = GET_NUM("Y coordinate", "Set to turf at \[[x], _, ?\]")
+			var/z = GET_NUM("Z coordinate", "Set to turf at \[[x], [y], _\]")
+			input = locate(x, y, z)
+			if (!input)
+				boutput(user, "<span class='alert'>Invalid turf.</span>")
+				return
+
+		if (DATA_INPUT_REFPICKER)
+			var/datum/promise/promise = new
+			var/datum/targetable/refpicker/abil = new
+			abil.promise = promise
+			user.mob.targeting_ability = abil
+			user.mob.update_cursor()
+			input = promise.wait_for_value() //TODO timeout? maybe?
+
+		if (DATA_INPUT_NEW_INSTANCE)
+			var/type = GET_TYPE("Enter type to instantiate:", null)
+			if (!type)
+				boutput(user, "<span class='alert'>Cancelled.</span>")
+				return
+			input = new type
+
+		if (DATA_INPUT_NUM_ADJUST) // identical to num, but caller will treat it differently after we return
+			input = GET_NUM("Enter amount to adjust by:", null)
+
+		if (DATA_INPUT_ATOM_ON_CURRENT_TURF) // this is ugly but it's legacy so WHATEVER
+			var/list/possible = list()
+			var/turf/T = get_turf(user.mob)
+			possible += T.loc
+			possible += T
+			for (var/atom/A in T)
+				possible += A
+				for (var/atom/B in A)
+					possible += B
+			input = input("Select reference:","Reference") as null|mob|obj|turf|area in possible
+
+		if (DATA_INPUT_NULL) // this is the one case a null output is allowed- we check to ensure the selected input type is this
+			input = null //yes i am aware this is a useless statement. Clarity!!!
+
+		if (DATA_INPUT_RESTORE) // this is meaningless for cases other than varediting, so we just return a dummy value with the input type and let the caller handle it
+			input = TRUE
+
+		if (DATA_INPUT_NEW_LIST)
+			input = list()
+
+		if (DATA_INPUT_CANCEL) // don't crash, but don't do anything.
+
+		else
+			CRASH("Data input called with invalid data input type [selected_type]. How the fuck?")
 
 
+	if (isnull(input) && selected_type != DATA_INPUT_NULL)
+		boutput(user, "<span class='alert'>Cancelled.</span>")
 
+	// Done with the switch. Now we return whatever we have
+	var/datum/data_input_result/result = new(input, selected_type)
+	return result
 
 /// A datum holding the data we need from the user's input- the input itself and the format the user selected (text, JSON, color, etc etc)
 /// Functionally a named tuple.
 /datum/data_input_result
-	var/data
+	var/output
 	var/input_type
 
-	New(var/data, var/input_type)
+	New(var/output, var/input_type)
 		..()
-		src.data = data
+		src.output = output
 		src.input_type = input_type
 
 
 /// Refpicker - click thing, get its ref. Tied to the data_input proc via a promise.
 /datum/targetable/refpicker
-	var/datum/target = null
 	var/promise/promise = null
 	target_anything = TRUE
 	targeted = TRUE
