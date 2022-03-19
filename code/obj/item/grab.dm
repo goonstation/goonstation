@@ -864,7 +864,10 @@
 				for (var/mob/O in AIviewers(user))
 					O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
 				logTheThing("combat", user, dive_attack_hit, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
-			else
+
+			step_to(user, target_turf)
+
+			if(!dive_attack_hit && get_turf(user) == target_turf)
 				for (var/mob/O in AIviewers(user))
 					O.show_message("<span class='alert'><B>[user] slides to the ground!</B></span>", 1, group = "resist")
 
@@ -899,7 +902,6 @@
 						if (!item_num_to_throw)
 							break
 
-			step_to(user, target_turf)
 
 	user.u_equip(src)
 
