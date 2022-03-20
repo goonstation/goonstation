@@ -89,7 +89,7 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 					return
 
 		if (DATA_INPUT_JSON)
-			input = input(custom_title || "Enter JSON:", custom_message, default) as null|text //I expect that if you're passing in a JSON as a default, you decode it beforehand. YOU FUCKIN BETTER
+			input = input(custom_title || "Enter JSON:", custom_message, json_encode(default)) as null|text
 			input = json_decode(input)
 
 		if (DATA_INPUT_REF)
