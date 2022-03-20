@@ -199,8 +199,10 @@ var/global/debug_messages = 0
 	set desc = "Call proc on all instances of a type, will probably slow shit down"
 
 	if (!typename)
+		typename = input("Input part of type:", "Type Input") as null|text
+	if (!typename)
 		return
-	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
+	var/thetype = get_one_match(typename, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 	if (thetype)
 		var/procname = input("Procpath","path:", null) as text
 		var/list/listargs = get_proccall_arglist()
