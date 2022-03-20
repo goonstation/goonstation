@@ -8952,11 +8952,6 @@
 	dir = 1
 	},
 /area/station/quartermaster/office)
-"awA" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/decal/cleanable/blood,
-/turf/simulated/floor/plating,
-/area/station/storage/emergency2)
 "awB" = (
 /obj/item/clothing/shoes/moon,
 /turf/simulated/floor/plating,
@@ -23970,7 +23965,6 @@
 "bdp" = (
 /obj/table/auto,
 /obj/item/device/light/flashlight,
-/obj/item/aiModule/reset,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bdq" = (
@@ -26294,19 +26288,6 @@
 "biA" = (
 /mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/AIbasecore1{
-	name = "Upload Station"
-	})
-"biB" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/computer/aiupload,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor/delivery,
 /area/station/turret_protected/AIbasecore1{
 	name = "Upload Station"
 	})
@@ -38680,7 +38661,6 @@
 /obj/item/aiModule/oneHuman,
 /obj/item/aiModule/notHuman,
 /obj/item/aiModule/makeCaptain,
-/obj/item/aiModule/reset,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload{
 	name = "AI Module Storage"
@@ -39907,6 +39887,19 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"gvn" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/lawrack,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/delivery,
+/area/station/turret_protected/AIbasecore1{
+	name = "Upload Station"
+	})
 "gvK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -42085,6 +42078,12 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
+"lqu" = (
+/obj/table/auto,
+/turf/simulated/floor,
+/area/station/turret_protected/ai_upload{
+	name = "AI Module Storage"
+	})
 "lrL" = (
 /obj/cable{
 	d1 = 4;
@@ -43576,6 +43575,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/ranch)
+"oSK" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/plating,
+/area/station/storage/emergency2)
 "oTE" = (
 /obj/cable{
 	d1 = 1;
@@ -44038,13 +44042,6 @@
 	dir = 2
 	},
 /area/station/medical/medbay)
-"pRC" = (
-/obj/table/auto,
-/obj/item/circuitboard/aiupload,
-/turf/simulated/floor,
-/area/station/turret_protected/ai_upload{
-	name = "AI Module Storage"
-	})
 "pSN" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -46862,7 +46859,6 @@
 "vOv" = (
 /obj/table/auto,
 /obj/item/aiModule/freeform,
-/obj/item/aiModule/rename,
 /obj/item/aiModule/emergency,
 /obj/item/aiModule/removeCrew,
 /turf/simulated/floor,
@@ -81323,7 +81319,7 @@ aaa
 aaa
 bhY
 bhY
-biB
+gvn
 blw
 bkr
 fUr
@@ -82173,7 +82169,7 @@ aoN
 asi
 asi
 asm
-awA
+oSK
 aBc
 ayg
 aza
@@ -90953,7 +90949,7 @@ aLx
 aJf
 aIx
 aNB
-pRC
+lqu
 aOV
 aPG
 aQk

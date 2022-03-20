@@ -94,6 +94,10 @@
 			src.botcard.access = get_access(src.access_lookup)
 			src.botnet_id = format_net_id("\ref[src]")
 
+		#ifdef ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
+		START_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
+
 	disposing()
 		botcard = null
 		qdel(chat_text)
@@ -316,6 +320,11 @@
 			master.moving = FALSE
 		src.master = null
 		src.the_target = null
+
+		#ifdef ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
+		STOP_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
+
 		..()
 
 	proc/master_move()

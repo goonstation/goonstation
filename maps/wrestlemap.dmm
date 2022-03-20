@@ -6140,16 +6140,6 @@
 /area/station/crew_quarters/market{
 	name = "Seating Area"
 	})
-"cAU" = (
-/obj/machinery/computer/aiupload,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/decal/tile_edge/stripe,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "cBd" = (
 /obj/access_spawn/engineering_chief,
 /obj/machinery/door/airlock/pyro/glass/engineering{
@@ -7277,6 +7267,24 @@
 	},
 /turf/simulated/floor/plating/airless/random,
 /area/station/solar/east)
+"daI" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/obj/item/reagent_containers/food/snacks/candy/chocolate,
+/obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log,
+/obj/item/pen/pencil,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grey,
+/area/station/storage/warehouse)
 "daP" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/light_switch/south,
@@ -16375,18 +16383,6 @@
 	dir = 4
 	},
 /area/station/storage/tools)
-"gRl" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "gRF" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -16617,6 +16613,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
+"gVq" = (
+/obj/decal/tile_edge/stripe,
+/obj/table/glass/reinforced/auto,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "gVs" = (
 /obj/storage/closet/emergency,
 /obj/machinery/light/small{
@@ -22507,6 +22508,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/maintenance/inner/the_cage)
+"juT" = (
+/obj/machinery/lawrack,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/decal/tile_edge/stripe,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "jva" = (
 /obj/machinery/light/small/warm/very,
 /obj/cable{
@@ -26688,12 +26699,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/research)
-"lmx" = (
-/obj/decal/tile_edge/stripe,
-/obj/item/aiModule/rename,
-/obj/table/glass/reinforced/auto,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "lmJ" = (
 /obj/machinery/light{
 	dir = 4;
@@ -42477,22 +42482,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
-"scs" = (
-/obj/table/glass/auto,
-/obj/item/storage/toolbox/electrical,
-/obj/item/device/gps,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/item/circuitboard/aiupload,
-/obj/item/circuitboard/robotics,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "scv" = (
 /obj/machinery/atmospherics/portables_connector{
 	name = "Mixing Port"
@@ -50812,6 +50801,18 @@
 	},
 /turf/simulated/floor/black,
 /area/station/maintenance/inner/the_cage)
+"vNi" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "vNI" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 8;
@@ -51583,6 +51584,20 @@
 	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/courtroom)
+"wdn" = (
+/obj/table/glass/auto,
+/obj/item/storage/toolbox/electrical,
+/obj/item/device/gps,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/item/circuitboard/robotics,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "wds" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/central)
@@ -55736,24 +55751,6 @@
 /obj/disposalpipe/junction/right/east,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/detectives_office)
-"xPf" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/reagent_containers/food/snacks/candy/chocolate,
-/obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log,
-/obj/item/pen/pencil,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/grey,
-/area/station/storage/warehouse)
 "xPq" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -86221,7 +86218,7 @@ vnX
 vnX
 vnX
 nyP
-gRl
+vNi
 fau
 dNC
 qbR
@@ -92010,7 +92007,7 @@ pyz
 pyz
 bNs
 klA
-lmx
+gVq
 wTT
 kPv
 sGL
@@ -92312,7 +92309,7 @@ vnX
 vnX
 bNs
 klA
-cAU
+juT
 oqn
 edN
 rAb
@@ -103517,7 +103514,7 @@ xyH
 vlH
 aeV
 dzu
-xPf
+daI
 aSa
 qOg
 vwU
@@ -113145,7 +113142,7 @@ nZc
 buQ
 pyM
 dak
-scs
+wdn
 sVN
 sai
 fWM
