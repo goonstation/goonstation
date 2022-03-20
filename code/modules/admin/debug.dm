@@ -203,9 +203,8 @@ var/global/debug_messages = 0
 	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 	if (thetype)
 		var/procname = input("Procpath","path:", null) as text
-		var/argnum = input("Number of arguments:","Number", 0) as num
 		var/list/listargs = get_proccall_arglist()
-			if (listargs == null) return
+		if (listargs == null) return
 
 		var/list/results = find_all_by_type(thetype, procname, "instance", listargs)
 
