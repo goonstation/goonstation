@@ -128,7 +128,10 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 				return
 			input = get_one_match(stub, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 
-		if (DATA_INPUT_NUM_ADJUST) // identical to num, but caller will treat it differently after we return
+		if (DATA_INPUT_NUM_ADJUST)
+			if (!isnum(default)) //default is the value we're adjusting
+				boutput(user, "<span class='alert>You can't adjust a non-number.</span>")
+				return
 			input = input("Enter amount to adjust by:") as null|num
 
 		if (DATA_INPUT_ATOM_ON_CURRENT_TURF) // this is ugly but it's legacy so WHATEVER
