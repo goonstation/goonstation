@@ -453,8 +453,9 @@
 		src.visible_message("<span class='notice'>[src] harmlessly absorbs the [P].</span>")
 	else
 		..()
-		if(P.mob_shooter)
-			src.harmedBy(P.mob_shooter)
+		var/mob/attacker = P.shooter
+		if(istype(attacker))
+			src.harmedBy(attacker)
 
 /mob/living/critter/flock/drone/attackby(var/obj/item/I, var/mob/M)
 	// check whatever reagents are about to get dumped on us
