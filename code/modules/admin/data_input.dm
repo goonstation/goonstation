@@ -163,14 +163,14 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 			var/regex/R = new("(\\w*\\.*\\w+)(,|$)", "gi")
 			var/list/MV = list()
 			var/i = 1
-			while (R.Find(theInput))
+			while (R.Find(input))
 				if (i <= 6)
 					var/temp = R.group[1]
 					MV.Add(text2num(temp))
 					i++
 
 			if (MV.len >= 6)
-				return matrix(MV[1], MV[2], MV[3], MV[4], MV[5], MV[6])
+				input = matrix(MV[1], MV[2], MV[3], MV[4], MV[5], MV[6])
 
 			else
 				boutput(user, "<span class='alert'>Matrix too short. Cancelled.</span>")
