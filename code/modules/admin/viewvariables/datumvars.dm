@@ -855,9 +855,6 @@
 				else
 					D.vars[variable] = null
 		if("ref")
-			if (!(src.holder.rank in list("Host", "Coder", "Administrator")))
-				boutput( src, "<span class='alert'>This can super break shit so you can't use this. Sorry.</span> ")
-				return
 			var/theref = input("What ref?") as null|text
 			if(theref)
 				var/thing = locate(theref)
@@ -881,7 +878,6 @@
 				mod_list(global.vars[variable])
 			else
 				mod_list(D.vars[variable])
-			//return <- Way to screw up logging
 
 		if("json")
 			var/val = input("Enter json:", "JSON", json_encode(D.vars[variable])) as text|null
@@ -908,12 +904,6 @@
 					global.vars[variable] = initial(global.vars[variable])
 				else
 					D.vars[variable] = initial(D.vars[variable])
-
-		if("edit referenced object")
-			if(D == "GLOB")
-				return .(global.vars[variable])
-			else
-				return .(D.vars[variable])
 
 		if("create new list")
 			if(set_global)
@@ -1113,20 +1103,20 @@
 				boutput(usr, "<span class='alert'>Invalid coordinates!</span>")
 				return
 
-		if("reference picker")
-			boutput(usr, "<span class='hint'>Click the mob, object or turf to use as a reference.</span>")
-			var/mob/M = usr
-			if (istype(M))
-				var/datum/targetable/refpicker/R
-				if (set_global)
-					R = new /datum/targetable/refpicker/global()
-				else
-					R = new()
-				R.target = D
-				R.varname = variable
-				M.targeting_ability = R
-				M.update_cursor()
-				return
+		// if("reference picker")
+		// 	boutput(usr, "<span class='hint'>Click the mob, object or turf to use as a reference.</span>")
+		// 	var/mob/M = usr
+		// 	if (istype(M))
+		// 		var/datum/targetable/refpicker/R
+		// 		if (set_global)
+		// 			R = new /datum/targetable/refpicker/global()
+		// 		else
+		// 			R = new()
+		// 		R.target = D
+		// 		R.varname = variable
+		// 		M.targeting_ability = R
+		// 		M.update_cursor()
+		// 		return
 
 		if ("new instance of a type")
 			boutput(usr, "<span class='notice'>Type part of the path of type of thing to instantiate.</span>")

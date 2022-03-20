@@ -450,7 +450,7 @@
 		boutput(usr, "<span class='notice'>Set [target]\[[varname]\] to [selected]</span>")
 		target[varname] = selected
 
-/datum/targetable/refpicker
+/datum/targetable/refpicker/global
 	var/datum/target = null
 	var/varname = null
 	target_anything = 1
@@ -463,24 +463,13 @@
 			return 1
 
 	handleCast(var/atom/selected)
-		boutput(usr, "<span class='notice'>Set [target]/var/[varname] to [selected]</span>")
-		if(target == "GLOB")
-			global.vars[varname] = selected
-		else
-			target.vars[varname] = selected
-		logTheThing("admin", src, null, "modified [target]'s [varname] to [target.vars[varname]]")
-		logTheThing("diary", src, null, "modified [target]'s [varname] to [target.vars[varname]]", "admin")
-		message_admins("[key_name(src)] modified [target]'s [varname] to [target.vars[varname]]")
-
-	global
-		handleCast(var/atom/selected)
-			boutput(usr, "<span class='notice'>Set [target]/var/[varname] to [selected] on all entities of the same type.</span>")
-			for (var/datum/V as anything in find_all_by_type(target.type))
-				LAGCHECK(LAG_LOW)
-				V.vars[varname] = selected
-			logTheThing("admin", src, null, "modified [target]'s [varname] to [target.vars[varname]] on all entities of the same type")
-			logTheThing("diary", src, null, "modified [target]'s [varname] to [target.vars[varname]] on all entities of the same type", "admin")
-			message_admins("[key_name(src)] modified [target]'s [varname] to [target.vars[varname]] on all entities of the same type")
+		boutput(usr, "<span class='notice'>Set [target]/var/[varname] to [selected] on all entities of the same type.</span>")
+		for (var/datum/V as anything in find_all_by_type(target.type))
+			LAGCHECK(LAG_LOW)
+			V.vars[varname] = selected
+		logTheThing("admin", src, null, "modified [target]'s [varname] to [target.vars[varname]] on all entities of the same type")
+		logTheThing("diary", src, null, "modified [target]'s [varname] to [target.vars[varname]] on all entities of the same type", "admin")
+		message_admins("[key_name(src)] modified [target]'s [varname] to [target.vars[varname]] on all entities of the same type")
 
 
 /client/proc/modify_variables(var/atom/O)
@@ -664,16 +653,16 @@
 				boutput(usr, "<span class='alert'>Invalid coordinates!</span>")
 				return
 
-		if("reference picker")
-			boutput(usr, "<span class='notice'>Click the mob, object or turf to use as a reference.</span>")
-			var/mob/M = usr
-			if (istype(M))
-				var/datum/targetable/refpicker/R = new()
-				R.target = O
-				R.varname = variable
-				M.targeting_ability = R
-				M.update_cursor()
-				return
+		// if("reference picker")
+		// 	boutput(usr, "<span class='notice'>Click the mob, object or turf to use as a reference.</span>")
+		// 	var/mob/M = usr
+		// 	if (istype(M))
+		// 		var/datum/targetable/refpicker/R = new()
+		// 		R.target = O
+		// 		R.varname = variable
+		// 		M.targeting_ability = R
+		// 		M.update_cursor()
+		// 		return
 
 		if ("new instance of a type")
 			boutput(usr, "<span class='notice'>Type part of the path of type of thing to instantiate.</span>")
