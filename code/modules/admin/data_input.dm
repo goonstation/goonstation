@@ -34,9 +34,6 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 	if (!selected_type)
 		return
 
-	if (selected_type != default_type) //clear the default if we aren't using the suggested type
-		default = null
-
 	switch(selected_type)
 		if (DATA_INPUT_NUM)
 			input = input(custom_title || "Enter number:", custom_message, default) as null|num
@@ -132,7 +129,7 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 			if (!isnum(default)) //default is the value we're adjusting
 				boutput(user, "<span class='alert>You can't adjust a non-number.</span>")
 				return
-			input = input("Enter amount to adjust by:") as null|num
+			input = input("Enter amount to adjust by:", custom_message) as null|num
 
 		if (DATA_INPUT_ATOM_ON_CURRENT_TURF) // this is ugly but it's legacy so WHATEVER
 			var/list/possible = list()

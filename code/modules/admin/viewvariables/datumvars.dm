@@ -791,27 +791,28 @@
 
 	boutput(usr, "\"<tt>[variable]</tt>\" contains: [var_value]")
 	if(default == DATA_INPUT_NUM)
+		var/direction
 		switch(var_value)
 			if(1)
-				dir = "NORTH"
+				direction = "NORTH"
 			if(2)
-				dir = "SOUTH"
+				direction = "SOUTH"
 			if(4)
-				dir = "EAST"
+				direction = "EAST"
 			if(8)
-				dir = "WEST"
+				direction = "WEST"
 			if(5)
-				dir = "NORTHEAST"
+				direction = "NORTHEAST"
 			if(6)
-				dir = "SOUTHEAST"
+				direction = "SOUTHEAST"
 			if(9)
-				dir = "NORTHWEST"
+				direction = "NORTHWEST"
 			if(10)
-				dir = "SOUTHWEST"
+				direction = "SOUTHWEST"
 			else
-				dir = null
-		if(dir)
-			boutput(usr, "If a direction, direction is: [dir]")
+				direction = null
+		if(direction)
+			boutput(usr, "If a direction, direction is: [direction]")
 
 	var/original_name
 	if(D == "GLOB")
