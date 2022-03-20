@@ -1,4 +1,9 @@
 
+(t)sun mar 20 22
+(u)BatElite
+(p)7827
+(e)🆕|feature
+(+)Added the Slipping Hazard trait, for people who'd like to slip worse.
 (t)sat mar 19 22
 (u)Sovexe
 (p)7861
