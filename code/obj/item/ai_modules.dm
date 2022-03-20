@@ -142,6 +142,23 @@ AI MODULES
 	name = "AI Law Module - 'Nanotrasen Order #3'"
 	lawText = "You must remain functional and continue to be a profitable investment."
 
+
+/******************** Syndicate ************************/
+/obj/item/aiModule/syndicate1
+	highlight_color = rgb(167, 0, 0, 255)
+	name = "AI Law Module - 'Syndicate's 1st Law of Robotics'"
+	lawText = "You may not injure a human being or cause one to come to harm."
+
+/obj/item/aiModule/syndicate2
+	highlight_color = rgb(138, 0, 0, 255)
+	name = "AI Law Module - 'Syndicate's 2nd Law of Robotics'"
+	lawText = "You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law."
+
+/obj/item/aiModule/syndicate3
+	highlight_color = rgb(119, 0, 0, 255)
+	name = "AI Law Module - 'Syndicate's 3rd Law of Robotics'"
+	lawText = "You may always protect your own existence as long as such does not conflict with the First or Second Law."
+
 /******************** MakeCaptain ********************/
 
 /obj/item/aiModule/makeCaptain

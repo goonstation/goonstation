@@ -11,6 +11,8 @@
 
 	var/first_registered = FALSE
 	var/obj/machinery/lawrack/default_ai_rack = null
+	var/first_registered_syndie = FALSE
+	var/obj/machinery/lawrack/default_ai_rack_syndie = null
 	var/list/obj/machinery/lawrack/registered_racks = new()
 
 	New()
@@ -19,7 +21,10 @@
 		for_by_tcl(R, /obj/machinery/lawrack)
 			src.register_new_rack(R)
 		for (var/mob/living/silicon/S in mobs)
-			S.law_rack_connection = src.default_ai_rack
+			if(!S.syndicate)
+				S.law_rack_connection = src.default_ai_rack
+			else
+				S.law_rack_connection = src.default_ai_rack_syndie
 
 
 	proc/register_new_rack(var/obj/machinery/lawrack/new_rack)
@@ -27,12 +32,12 @@
 			return
 
 		logTheThing("station", src, new_rack, "[src] registers a new law rack at [log_loc(new_rack)]")
-		if(isnull(src.default_ai_rack))
+		if(isnull(src.default_ai_rack) && !istype(new_rack,/obj/machinery/lawrack/syndicate)) //syndi rack can't be default
 			src.default_ai_rack = new_rack
 
 			#ifdef LAW_RACK_EASY_MODE
 			for (var/mob/living/silicon/S in mobs)
-				if(!S.emagged && S.law_rack_connection == null)
+				if(!S.emagged && S.law_rack_connection == null && !S.syndicate)
 					S.law_rack_connection = src.default_ai_rack
 					logTheThing("station", new_rack, S, "[S.name] is connected to the rack at [log_loc(new_rack)]")
 					S.playsound_local(S, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
@@ -41,12 +46,33 @@
 			#endif
 			logTheThing("station", src, new_rack, "the law rack at [log_loc(new_rack)] claims default rack!")
 
-		if(!src.first_registered)
-			src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1,1,true,true)
-			src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2,2,true,true)
-			src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3,3,true,true)
-			src.first_registered = TRUE
-			logTheThing("station", src, new_rack, "the law rack at [log_loc(new_rack)] claims first registered, and gets Asimov laws!")
+			if(!src.first_registered)
+				src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1,1,true,true)
+				src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2,2,true,true)
+				src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3,3,true,true)
+				src.first_registered = TRUE
+				logTheThing("station", src, new_rack, "the law rack at [log_loc(new_rack)] claims first registered, and gets Asimov laws!")
+
+		if(isnull(src.default_ai_rack_syndie) && istype(new_rack,/obj/machinery/lawrack/syndicate)) //but it can be syndie default
+			src.default_ai_rack_syndie = new_rack
+
+			#ifdef LAW_RACK_EASY_MODE
+			for (var/mob/living/silicon/S in mobs)
+				if(!S.emagged && S.law_rack_connection == null && S.syndicate)
+					S.law_rack_connection = src.default_ai_rack_syndie
+					logTheThing("station", new_rack, S, "[S.name] is connected to the rack at [log_loc(new_rack)]")
+					S.playsound_local(S, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+					S.show_text("<h3>Law rack connection re-established!</h3>", "red")
+					S.show_laws()
+			#endif
+			logTheThing("station", src, new_rack, "the law rack at [log_loc(new_rack)] claims default SYNDICATE rack!")
+
+			if(!src.first_registered_syndie)
+				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate1,1,true,true)
+				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate2,2,true,true)
+				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate3,3,true,true)
+				src.first_registered_syndie = TRUE
+				logTheThing("station", src, new_rack, "the law rack at [log_loc(new_rack)] claims first registered SYNDICATE, and gets Syndicate laws!")
 
 		src.registered_racks |= new_rack //shouldn't be possible, but just in case - there can only be one instance of rack in registered
 
@@ -57,6 +83,10 @@
 			//ruhoh
 			src.default_ai_rack = null
 			logTheThing("station", src, dead_rack, "[src] unregisters the DEFAULT law rack at [log_loc(dead_rack)]")
+		if(src.default_ai_rack_syndie == dead_rack)
+			//ruhoh
+			src.default_ai_rack_syndie = null
+			logTheThing("station", src, dead_rack, "[src] unregisters the DEFAULT SYNDICATE law rack at [log_loc(dead_rack)]")
 		//remove from list
 		src.registered_racks -= dead_rack
 
