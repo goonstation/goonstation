@@ -145,14 +145,16 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 		if (DATA_INPUT_NULL) // this is the one case a null output is allowed- we check to ensure the selected input type is this
 			input = null //yes i am aware this is a useless statement. Clarity!!!
 
-		if (DATA_INPUT_RESTORE) // this is meaningless for cases other than varediting, so we just return a dummy value with the input type and let the caller handle it
-			input = TRUE
-
 		if (DATA_INPUT_NEW_LIST)
 			input = list()
 
 		if (DATA_INPUT_MOB_REFERENCE)
 			input = input(custom_title || "Select a mob:") as null|mob in world
+
+		if (DATA_INPUT_MATRIX)
+
+		if (DATA_INPUT_RESTORE, DATA_INPUT_PARTICLE_EDITOR, DATA_INPUT_FILTER_EDITOR) // these are meaningless for cases other than varediting, so we just return a dummy value with the input type and let the caller handle it
+			input = TRUE
 
 		else
 			CRASH("Data input called with invalid data input type [selected_type]. How the fuck?")
@@ -183,8 +185,9 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 	var/datum/promise/promise = null
 	target_anything = TRUE
 	targeted = TRUE
-	max_range = INFINITY
+	max_range = 3000
 	can_target_ghosts = TRUE
+	dont_lock_holder = TRUE
 
 	castcheck(var/mob/M)
 		if (M.client && M.client.holder)
