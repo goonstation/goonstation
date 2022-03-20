@@ -68,7 +68,7 @@
 		src.ears = src.radio
 
 		//Attach shit to tools
-		src.tools = list( // for part two: add 25 floor sheets, and a loofah(?)
+		src.tools = list(
 			new /obj/item/magtractor(src),
 			new /obj/item/tool/omnitool/silicon(src),
 			new /obj/item/rcd/material/cardboard(src),
