@@ -823,12 +823,10 @@
 		else
 			original_name = D:name
 
-	var/oldVal = D == "GLOB" ? global.vars[variable] : D.vars[variable]
-
 	var/datum/data_input_result/result = input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_NUM_ADJUST, DATA_INPUT_TYPE, DATA_INPUT_MOB_REFERENCE, \
 											DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_ICON, DATA_INPUT_FILE, \
 											DATA_INPUT_COLOR, DATA_INPUT_LIST, DATA_INPUT_JSON, DATA_INPUT_JSON, DATA_INPUT_NEW_LIST, DATA_INPUT_MATRIX, \
-											DATA_INPUT_NULL, DATA_INPUT_REF, DATA_INPUT_RESTORE), src, default = oldVal, default_type = default)
+											DATA_INPUT_NULL, DATA_INPUT_REF, DATA_INPUT_RESTORE), src, default = var_value, default_type = default)
 
 	if (isnull(result.output_type))
 		return
@@ -857,6 +855,8 @@
 				src.holder.particool.ui_interact(mob)
 
 		if (DATA_INPUT_NUM_ADJUST)
+			if (!isnum(var_value))
+				boutput(src, "<span class='alert'>You can't adjust a non-num, silly.</span>")
 			if (set_global)
 				for(var/datum/x as anything in find_all_by_type(D.type))
 					LAGCHECK(LAG_LOW)
@@ -885,7 +885,7 @@
 	message_admins("[key_name(src)] modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), 1)
 	SPAWN(0)
 		if (istype(D, /datum))
-			D.onVarChanged(variable, oldVal, D.vars[variable])
+			D.onVarChanged(variable, var_value, D.vars[variable])
 	if(src.refresh_varedit_onchange)
 		src.debug_variables(D)
 
