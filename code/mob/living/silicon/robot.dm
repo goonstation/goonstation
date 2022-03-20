@@ -1069,22 +1069,29 @@
 			if(isshell(src) || src.ai_interface)
 				boutput(user,"You need to use this on the AI core directly!")
 				return
+
 			if(!src.law_rack_connection)
-				if(!linker.linked_rack)
-					boutput(user,"No stored law rack link to connect to!")
-					return
-				if(linker.linked_rack in ticker.ai_law_rack_manager.registered_racks)
-					src.law_rack_connection = linker.linked_rack
-					logTheThing("station", src, src.law_rack_connection, "[src.name] is connected to the rack at [log_loc(src.law_rack_connection)] with a linker by [user]")
-					boutput(user, "You connect [src.name] to the stored law rack.")
-					src.playsound_local(src, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
-					src.show_text("<h3>You have been connected to a law rack</h3>", "red")
-					src.show_laws()
-				else
-					boutput(user,"Linker lost connection to the stored law rack!")
+				boutput(src,"[src.name] is not connected to a law rack")
 			else
 				var/area/A = get_area(src.law_rack_connection)
 				boutput(user, "[src.name] is connected to a law rack at [A.name].")
+
+			if(!linker.linked_rack)
+				return
+
+			if(linker.linked_rack in ticker.ai_law_rack_manager.registered_racks)
+				if(src.law_rack_connection)
+					var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
+					if (raw == "Yes")
+						src.law_rack_connection = linker.linked_rack
+						logTheThing("station", src, src.law_rack_connection, "[src.name] is connected to the rack at [log_loc(src.law_rack_connection)] with a linker by [user]")
+						var/area/A = get_area(src.law_rack_connection)
+						boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
+						src.playsound_local(src, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+						src.show_text("<h3>You have been connected to a law rack</h3>", "red")
+						src.show_laws()
+			else
+				boutput(user,"Linker lost connection to the stored law rack!")
 			return
 
 		if (isweldingtool(W))
