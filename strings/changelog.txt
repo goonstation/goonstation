@@ -1,5 +1,9 @@
 
 (t)sun mar 20 22
+(u)Amylizzle
+(p)7881
+(e)⚖|balance
+(*)The Linker tool can now overwrite the connection on a cyborg/AI without needing to be emagged first.
 (u)BatElite
 (p)7827
 (e)🆕|feature
