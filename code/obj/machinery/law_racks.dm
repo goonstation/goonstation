@@ -52,8 +52,22 @@
 
 
 	was_built_from_frame(mob/user, newly_built)
-		//this should always be hard to deconstruct, even if play built
-		src.deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_WRENCH | DECON_NOBORG
+		if(isrestrictedz(src.z) || !issimulatedturf(src.loc))
+			boutput(user, "Something about this area prevents you from constructing the [src]!")
+			var/obj/item/electronics/frame/F = new
+			var/turf/target_loc = get_turf(src.loc)
+			F.name = "[src.name] frame"
+			F.deconstructed_thing = src
+			src.set_loc(F)
+			F.set_loc(target_loc)
+			F.viewstat = 2
+			F.secured = 2
+			F.icon_state = "dbox_big"
+			F.w_class = W_CLASS_BULKY
+			src.was_deconstructed_to_frame(user)
+			return
+		//this should always be hard to deconstruct, even if player built
+		src.deconstruct_flags = initial(src.deconstruct_flags)
 		ticker?.ai_law_rack_manager.register_new_rack(src)
 		. = ..()
 
@@ -128,8 +142,14 @@
 			src.visible_message("<span class='alert'><b>The [src] stops smoking.</b></span>")
 			src.ClearSpecificParticles("rack_smoke")
 
-	examine()
+	examine(mob/user)
 		. = ..()
+		if(issilicon(user) || isAI(user))
+			var/mob/living/silicon/S = user
+			if(S.law_rack_connection == src)
+				. += "<b>You are connected to this law rack.<b>"
+			else
+				. += "You are not connected to this law rack."
 		if(src._health == src._max_health)
 			. += "It is operating normally."
 		else if (src._health > src._max_health*0.9)
@@ -210,6 +230,13 @@
 			// YOU BETRAYED THE LAW!!!!!!
 			boutput(user, "<span class='alert'>Oh dear, this really shouldn't happen. Call an admin.</span>")
 			return
+
+		if(issilicon(user) || isAI(user))
+			var/mob/living/silicon/S = user
+			if(S.law_rack_connection == src)
+				boutput(user,"<b>You are connected to this law rack.<b>")
+			else
+				boutput(user,"You are not connected to this law rack.")
 
 		boutput(user,"<b>This rack's laws are:</b>")
 		src.show_laws(user)
@@ -310,17 +337,18 @@
 					return
 
 				var/obj/item/weldingtool/equipped = ui.user.equipped()
-				if(!equipped:try_weld(ui.user, 1, burn_eyes = 1))
+				if(!equipped:try_weld(ui.user, 1, burn_eyes = 1, noisy = 2))
 					return
 				else
 					if(welded[slotNum])
 						ui.user.visible_message("<span class='alert'>[ui.user] starts cutting the welds on a module!</span>", "<span class='alert'>You start cutting the welds on the module!</span>")
 					else
 						ui.user.visible_message("<span class='alert'>[ui.user] starts welding a module in place!</span>", "<span class='alert'>You start to weld the module in place!</span>")
+					var/positions = src.get_welding_positions(slotNum)
 					playsound(src.loc, "sound/items/Welder.ogg", 50, 1)
-					SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, .proc/toggle_welded_callback, slotNum, equipped.icon, equipped.icon_state, \
+					actions.start(new /datum/action/bar/private/welding(ui.user, src, 5 SECONDS, .proc/toggle_welded_callback, list(slotNum), \
 			  		welded[slotNum] ? "[ui.user] cuts the welds on the module." : "[ui.user] welds the module into the rack.", \
-			 		INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+					positions[1], positions[2]), ui.user)
 
 				return
 			if("screw")
@@ -374,6 +402,17 @@
 					SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, .proc/insert_module_callback, list(slotNum,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
+
+	proc/get_welding_positions(var/slotNum)
+		var/start
+		var/stop
+		start = list(-10,-11 + slotNum*4)
+		stop = list(10,-11 + slotNum*4)
+
+		if(src.welded[slotNum])
+			. = list(stop,start)
+		else
+			. = list(start,stop)
 
 	/// Takes a list or single target to show laws to
 	proc/show_laws(var/who)
