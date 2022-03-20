@@ -204,54 +204,7 @@ var/global/debug_messages = 0
 	if (thetype)
 		var/procname = input("Procpath","path:", null) as text
 		var/argnum = input("Number of arguments:","Number", 0) as num
-		var/list/listargs = list()
-
-		for(var/i=0, i<argnum, i++)
-			var/class = input("Type of Argument #[i]","Variable Type", null) in list("text","num","type","json","ref","reference","mob reference","reference atom at current turf","icon","file","-cancel-")
-			switch(class)
-				if("-cancel-")
-					return
-
-				if("text")
-					listargs += input("Enter new text:","Text",null) as null|text
-
-				if("num")
-					listargs += input("Enter new number:","Num", 0) as null|num
-
-				if("type")
-					listargs += input("Enter type:","Type", null) in null|typesof(/obj,/mob,/area,/turf)
-
-				if("json")
-					listargs += list(json_decode(input("Enter json:") as null|text))
-
-				if ("ref")
-					var/input = input("Enter ref:") as null|text
-					var/target = locate(input)
-					if (!target) target = locate("\[[input]\]")
-					listargs += target
-
-				if("reference")
-					listargs += input("Select reference:","Reference", null) as null|mob|obj|turf|area in world
-
-				if("mob reference")
-					listargs += input("Select reference:","Reference", null) as null|mob in world
-
-				if("reference atom at current turf")
-					var/list/possible = list()
-					var/turf/T = get_turf(usr)
-					possible += T.loc
-					possible += T
-					for (var/atom/A in T)
-						possible += A
-						for (var/atom/B in A)
-							possible += B
-					listargs += input("Select reference:","Reference", null) as mob|obj|turf|area in possible
-
-				if("file")
-					listargs += input("Pick file:","File", null) as null|file
-
-				if("icon")
-					listargs += input("Pick icon:","Icon", null) as null|icon
+		var/list/listargs = get_proccall_arglist()
 			if (listargs == null) return
 
 		var/list/results = find_all_by_type(thetype, procname, "instance", listargs)
@@ -348,7 +301,7 @@ var/global/debug_messages = 0
 		return listargs
 	for (var/i = 1 , i <= argnum, i++)
 		var/datum/data_input_result/arg = input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_BOOL, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
-										DATA_INPUT_ATOM_ON_CURRENT_TURF, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_FILE), usr.client, \
+										DATA_INPUT_ATOM_ON_CURRENT_TURF, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_FILE, DATA_INPUT_REFPICKER, DATA_INPUT_NULL), usr.client, \
 										custom_type_title = arginfo ? arginfo[i][ARG_INFO_DESC] + ":" : "Type of Argument #[i]", \
 										custom_type_message =  arginfo ? "Argument #[i]: " + arginfo[i][ARG_INFO_NAME] : "Variable Type", \
 										default_type = arginfo?[i][ARG_INFO_TYPE])
