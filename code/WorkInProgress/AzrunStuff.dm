@@ -1143,3 +1143,252 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	defender
 	flippers
 	space
+
+/obj/item/clothing/shoes/dress_shoes/dance
+	desc = "A worn pair of suide soled shoes."
+	abilities = list(/obj/ability_button/dance/nc2s/basic, /obj/ability_button/dance/nc2s/grapevine, /obj/ability_button/dance/nc2s/closed_left_turn, /obj/ability_button/dance/speed/slower, /obj/ability_button/dance/speed/faster)
+	var/obj/ability_button/dance/current_move
+	var/datum/callback/next_move_callback
+
+	var/time_per_count = 3
+	attack_hand(mob/user)
+		. = ..()
+
+	New(newLoc)
+		..()
+		new /mob/living/carbon/human/normal/assistant(newLoc)
+
+#define BEAT_COUNT(_X) (time_per_count * _X)
+
+/obj/ability_button/dance
+	var/mob/lead
+	var/mob/follow
+	var/time_per_count
+	icon_state = "rocketshoes"
+
+	New()
+		..()
+		maptext = "<span class='vm l pixel sh'>[src.name]</span>"
+
+	ability_allowed()
+		var/obj/item/clothing/shoes/dress_shoes/dance/shoes = src.the_item
+		// if(istype(shoes))
+		// 	if(shoes.next_move_callback)
+		// 	shoes.next_move_callback = new(src, .proc/execute_ability)
+
+		. = ..()
+
+		if(.)
+			src.cooldown = 0
+
+		if(istype(shoes))
+			time_per_count = shoes.time_per_count
+
+		lead = src.the_mob
+		follow = null
+		for (var/obj/item/grab/G in lead?.equipped_list(check_for_magtractor = 0))
+			if (G.affecting.buckled) continue
+			follow = G.affecting
+
+	// on_cooldown()
+	// 	var/obj/item/clothing/shoes/dress_shoes/dance/shoes = src.the_item
+	// 	if(istype(shoes))
+	// 		if(shoes.next_move_callback)
+	// 			src.cooldown = 0
+	// 			shoes.next_move_callback.Invoke()
+
+/obj/ability_button/dance/speed
+	var/time_change
+
+	ability_allowed()
+		. = TRUE
+
+	execute_ability()
+		var/obj/item/clothing/shoes/dress_shoes/dance/shoes = src.the_item
+		if(istype(shoes))
+			shoes.time_per_count += time_change
+			boutput(the_mob,"[shoes.time_per_count/10] seconds per count.")
+
+	faster
+		name = "Faster"
+		icon_state = "northon"
+		time_change = -1
+
+	slower
+		name = "Slower"
+		icon_state = "southon"
+		time_change = 1
+
+
+#define DANCE_TRAVEL_FORWARD 1
+#define DANCE_TRAVEL_RIGHT 2
+#define DANCE_TRAVEL_LEFT 3
+#define DANCE_TRAVEL_BACK 4
+#define DANCE_TRAVEL_TOWARD 5
+#define DANCE_TRAVEL_AWAY 6
+
+/datum/dance_transform
+	var/x_offset
+	var/y_offset
+	var/layer
+	var/dir
+
+	proc/travel(mob/M, dance_dir, mob/lead, distance)
+		var/angle = dir_to_angle(M.dir)
+		switch(dance_dir)
+			if(DANCE_TRAVEL_FORWARD)
+				//noop
+			if(DANCE_TRAVEL_RIGHT)
+				angle += 90
+			if(DANCE_TRAVEL_LEFT)
+				angle += -90
+			if(DANCE_TRAVEL_BACK)
+				angle += 180
+			if(DANCE_TRAVEL_FORWARD)
+				//noop
+			if(DANCE_TRAVEL_AWAY)
+				angle += 180
+
+		if(M != lead) // follow
+			if( (dance_dir != DANCE_TRAVEL_TOWARD) && (dance_dir != DANCE_TRAVEL_AWAY))
+				angle += 180
+
+		x_offset = (distance*sin(angle))
+		y_offset = (distance*cos(angle))
+
+	proc/do_turn(mob/M, mob/lead, angle)
+		dir = turn(M.dir,angle)
+		layer = lead.layer
+		if(M != lead) // follow
+			if(dir == SOUTH)
+				layer -= 0.1
+			else
+				layer += 0.1
+
+			switch(dir)
+				if(NORTH)
+					x_offset += 5
+					y_offset += -2
+				if(EAST)
+					x_offset += -3 //-13 // great open position shift....
+					y_offset += -2
+				if(SOUTH)
+					x_offset += -5
+					y_offset += 2
+				if(WEST)
+					x_offset += 3
+					y_offset += 2
+
+
+
+/obj/ability_button/dance/nc2s
+
+	ability_allowed()
+		. = ..()
+		if(follow)
+			if(follow.dir == lead.dir)
+				follow.dir = turn(follow.dir,180)
+				switch(follow.dir)
+					if (NORTH)
+						follow.pixel_x = 2
+						follow.pixel_y = -2
+					if (EAST)
+						follow.pixel_x = -4
+					if (SOUTH)
+						follow.pixel_x = -2
+						follow.pixel_y = 2
+					if (WEST)
+						follow.pixel_x = 4
+
+	proc/basic(var/mob/dancer, loop=1)
+		if(dancer==lead)
+			src.cooldown += BEAT_COUNT(8)
+		if(!dancer)
+			return
+
+		var/datum/dance_transform/D = new
+		D.travel(dancer, DANCE_TRAVEL_AWAY, lead, 3)
+		animate(dancer, time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_TOWARD, lead, 3)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_LEFT, lead, 8)
+		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_AWAY, lead, 3)
+		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_TOWARD, lead, 3)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_RIGHT, lead, 8)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
+
+		// animate(dancer, time=BEAT_COUNT(1), pixel_y=-3*move_scale, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		// animate(time=BEAT_COUNT(1), pixel_y=3*move_scale, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		// animate(time=BEAT_COUNT(2), pixel_x=-8, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
+		// animate(time=BEAT_COUNT(1), pixel_y=-3*move_scale, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		// animate(time=BEAT_COUNT(1), pixel_y=3*move_scale, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		// animate(time=BEAT_COUNT(2), pixel_x=8, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
+
+	proc/closed_left_turn(var/mob/dancer, loop=1)
+		if(dancer==lead)
+			src.cooldown += BEAT_COUNT(8)
+		if(!dancer)
+			return
+
+		var/datum/dance_transform/D = new
+		D.travel(dancer, DANCE_TRAVEL_AWAY, lead, 3)
+		animate(dancer, time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_TOWARD, lead, 3)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_LEFT, lead, 8)
+		D.do_turn(dancer,lead, 90)
+		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, dir=D.dir, layer=D.layer, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_RIGHT, lead, 16)
+		animate(time=BEAT_COUNT(3), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_LEFT, lead, 2)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = BACK_EASING | EASE_IN, flags=ANIMATION_RELATIVE)
+
+
+	proc/grapevine(var/mob/dancer, loop=1)
+		if(dancer==lead)
+			src.cooldown += BEAT_COUNT(8)
+		if(!dancer)
+			return
+
+		var/datum/dance_transform/D = new
+		D.travel(dancer, DANCE_TRAVEL_LEFT, lead, 16)
+		animate(dancer, time=BEAT_COUNT(3), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_RIGHT, lead, 2)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = BACK_EASING | EASE_IN, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_RIGHT, lead, 16)
+		animate(time=BEAT_COUNT(3), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_LEFT, lead, 2)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = BACK_EASING | EASE_IN, flags=ANIMATION_RELATIVE)
+
+		// animate(dancer, time=BEAT_COUNT(3), pixel_x=-16, loop=loop, easing= QUAD_EASING, flags=ANIMATION_RELATIVE)
+		// animate(time=BEAT_COUNT(1), pixel_x=2, easing= BACK_EASING | EASE_IN, flags=ANIMATION_RELATIVE)
+		// animate(time=BEAT_COUNT(3), pixel_x=16, easing= QUAD_EASING, flags=ANIMATION_RELATIVE)
+		// animate(time=BEAT_COUNT(1), pixel_x=-2, easing= BACK_EASING | EASE_IN, flags=ANIMATION_RELATIVE)
+/obj/ability_button/dance/nc2s/basic
+	name = "Basic"
+
+	execute_ability()
+		basic(lead, 1)
+		basic(follow, 1)
+		..()
+
+/obj/ability_button/dance/nc2s/grapevine
+	name = "Grapevine"
+
+	execute_ability()
+		grapevine(lead, 1)
+		grapevine(follow, 1)
+		..()
+
+/obj/ability_button/dance/nc2s/closed_left_turn
+	name = "left turn"
+
+	execute_ability()
+		closed_left_turn(lead, 1)
+		closed_left_turn(follow, 1)
+		..()
+
+#undef BEAT_COUNT
