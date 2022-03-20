@@ -178,6 +178,12 @@
 		src.drop_resources(W,user)
 	..()
 
+/obj/item/electronics/frame/afterattack(atom/target, mob/user, reach, params)
+	. = ..()
+	if(isturf(target))
+		user.drop_item(src)
+		src.set_loc(target)
+
 /obj/item/electronics/frame/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 	if(!iscarbon(user) || user.stat || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis"))
 		return
