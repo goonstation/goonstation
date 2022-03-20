@@ -15,12 +15,13 @@
 #define DATA_INPUT_NUM_ADJUST "Num Adjust"
 #define DATA_INPUT_ATOM_ON_CURRENT_TURF "Reference Atom at Current Turf"
 #define DATA_INPUT_NULL "null"
-#define DATA_INPUT_RESTORE "Restore to Default"
+#define DATA_INPUT_RESTORE "Restore to Default (WILL NULL LISTS AND OBJECTS)"
 #define DATA_INPUT_NEW_LIST "New List" //TODO some way to build lists for proc calling/args
 #define DATA_INPUT_MOB_REFERENCE "Mob Reference"
 #define DATA_INPUT_BOOL "Boolean"
 #define DATA_INPUT_PARTICLE_EDITOR "Particle Editor"
 #define DATA_INPUT_FILTER_EDITOR "Filter Editor"
+#define DATA_INPUT_MATRIX "Matrix"
 
 //TODO figure out associated list shit
 //TODO way to call things with New args. might be a seperate problem actually? Add to build mode spawning idk

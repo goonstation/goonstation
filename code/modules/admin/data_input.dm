@@ -152,6 +152,26 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 			input = input(custom_title || "Select a mob:") as null|mob in world
 
 		if (DATA_INPUT_MATRIX)
+			input = input("Create a matrix:  (format: \"a,b,c,d,e,f\" without quotes). Must have a leading 0 for decimals:", custom_message, default) as null|message
+			if(input == null)
+				boutput(user, "<span class='alert'>Cancelled.</span>")
+				return
+
+			var/regex/R = new("(\\w*\\.*\\w+)(,|$)", "gi")
+			var/list/MV = list()
+			var/i = 1
+			while (R.Find(theInput))
+				if (i <= 6)
+					var/temp = R.group[1]
+					MV.Add(text2num(temp))
+					i++
+
+			if (MV.len >= 6)
+				return matrix(MV[1], MV[2], MV[3], MV[4], MV[5], MV[6])
+
+			else
+				boutput(user, "<span class='alert'>Matrix too short. Cancelled.</span>")
+				return
 
 		if (DATA_INPUT_RESTORE, DATA_INPUT_PARTICLE_EDITOR, DATA_INPUT_FILTER_EDITOR) // these are meaningless for cases other than varediting, so we just return a dummy value with the input type and let the caller handle it
 			input = TRUE
