@@ -19,7 +19,6 @@
 #define DATA_INPUT_NEW_LIST "New List" //TODO some way to build lists for proc calling/args
 #define DATA_INPUT_MOB_REFERENCE "Mob Reference"
 #define DATA_INPUT_BOOL "Boolean"
-#define DATA_INPUT_CANCEL "---CANCEL---"
 
 //TODO figure out associated list shit
 //TODO way to call things with New args. might be a seperate problem actually? Add to build mode spawning idk
