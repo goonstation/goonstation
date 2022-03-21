@@ -594,6 +594,7 @@ var/global/list/module_editors = list()
 			if (istype(O, /datum/objective/miscreant))
 				src.mind.objectives -= O
 				qdel(O)
+		src.syndicate = TRUE
 		return TRUE
 
 ///converts a cyborg/AI to a syndicate version, taking the causing agent as an argument
@@ -630,7 +631,7 @@ var/global/list/module_editors = list()
 
 	src.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack
 	logTheThing("station", src, src.law_rack_connection, "[src.name] is connected to the default rack at [log_loc(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
-	src.syndicate = 0
+	src.syndicate = FALSE
 	return TRUE
 
 /mob/living/silicon/is_cold_resistant()
