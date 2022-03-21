@@ -191,7 +191,7 @@
 
 		damage = round((0.15*P.power*P.proj_data.ks_ratio), 1.0)
 		damage = damage - min(damage,3) //bullet resist
-		if (damage < 1)
+		if (damage < 1 || istype(P.proj_data,/datum/projectile/laser/heavy/law_safe))
 			if(!P.proj_data.silentshot)
 				src.visible_message("<span class='alert'>[src] is hit by the [P] but it deflects harmlessly.</span>")
 			return
