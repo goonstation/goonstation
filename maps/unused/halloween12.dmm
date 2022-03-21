@@ -21134,7 +21134,7 @@
 /area/station/security/hos)
 "aPj" = (
 /turf/simulated/wall/r_wall,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aPk" = (
 /obj/closet/l3closet,
 /turf/simulated/floor/white,
@@ -21447,14 +21447,14 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aPX" = (
 /obj/machinery/camera/motion{
 	c_tag = "Armory";
 	dir = 2
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aPY" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -21470,7 +21470,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aPZ" = (
 /obj/secure_closet/animal,
 /turf/simulated/floor/white,
@@ -21667,7 +21667,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aQw" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -21675,10 +21675,10 @@
 	d2 = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aQx" = (
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aQy" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -21689,7 +21689,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aQz" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -21949,7 +21949,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aRf" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -21965,7 +21965,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/caution/west,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aRg" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";

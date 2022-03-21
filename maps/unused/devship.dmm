@@ -1127,11 +1127,11 @@
 /area/station/crew_quarters/kitchen)
 "dr" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ds" = (
 /obj/machinery/weapon_stand/shotgun_rack,
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "dt" = (
 /turf/simulated/floor/red,
 /area/station/security/brig)
@@ -1299,7 +1299,7 @@
 "dS" = (
 /obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "dT" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -1386,7 +1386,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "eg" = (
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Catering Storage"
@@ -1587,7 +1587,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "eI" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -2585,7 +2585,7 @@
 "hl" = (
 /obj/storage/secure/crate/plasma/armory,
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "hm" = (
 /turf/simulated/floor/red/side{
 	dir = 8
@@ -2959,7 +2959,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "hV" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/engineering)
@@ -9098,7 +9098,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "wl" = (
 /obj/machinery/vehicle/miniputt/indyputt,
 /obj/machinery/light,

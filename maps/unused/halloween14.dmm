@@ -27846,7 +27846,7 @@
 /area/station/security/hos)
 "bde" = (
 /turf/simulated/wall/r_wall,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bdf" = (
 /obj/closet/l3closet,
 /turf/simulated/floor/white/grime{
@@ -28210,14 +28210,14 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bdY" = (
 /obj/machinery/camera/motion{
 	c_tag = "Armory";
 	dir = 2
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bdZ" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -28233,7 +28233,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bea" = (
 /obj/secure_closet/animal,
 /turf/simulated/floor/white,
@@ -28434,7 +28434,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bey" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -28442,10 +28442,10 @@
 	d2 = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bez" = (
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "beA" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -28456,7 +28456,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "beB" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -28731,7 +28731,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bfj" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -28747,7 +28747,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/caution/west,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bfk" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";

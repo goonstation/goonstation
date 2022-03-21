@@ -27624,7 +27624,7 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "cAW" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/small{
@@ -28174,7 +28174,7 @@
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "eqo" = (
 /turf/simulated/floor{
 	icon_state = "carpetS"
@@ -28362,7 +28362,7 @@
 	},
 /obj/machinery/vending/security_ammo,
 /turf/simulated/floor/caution/west,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "eVc" = (
 /obj/machinery/door/window/northleft,
 /turf/simulated/floor/carpet/grime,
@@ -28515,7 +28515,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "foT" = (
 /obj/table/auto,
 /obj/disposalpipe/segment,
@@ -28700,7 +28700,7 @@
 	name = "Sorry"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "fXy" = (
 /obj/table/auto,
 /obj/disposalpipe/segment,
@@ -28798,7 +28798,7 @@
 /obj/table/reinforced/auto,
 /obj/item/clothing/ears/earmuffs,
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "gnZ" = (
 /obj/machinery/power/smes,
 /obj/cable{
@@ -29037,11 +29037,11 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "gRU" = (
 /obj/rack,
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "gVo" = (
 /obj/item/device/radio/intercom{
 	frequency = 1357;
@@ -29110,7 +29110,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "hqW" = (
 /obj/table/auto,
 /obj/item/assembly/time_ignite,
@@ -29214,7 +29214,7 @@
 	name = "Fire Range Robot"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "hGL" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -29371,7 +29371,7 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ifu" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -29566,7 +29566,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "iHg" = (
 /obj/grille/steel,
 /obj/window/reinforced/south,
@@ -29597,7 +29597,7 @@
 /area/station/security/hos)
 "iJI" = (
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "iKX" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -30131,7 +30131,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "khc" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
@@ -30194,7 +30194,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/red/side,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ksA" = (
 /turf/simulated/floor/darkpurple,
 /area/station/teleporter)
@@ -30725,7 +30725,7 @@
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "loK" = (
 /obj/cable{
 	d1 = 2;
@@ -30750,7 +30750,7 @@
 /area/station/maintenance/southwest)
 "luc" = (
 /turf/simulated/wall/r_wall,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "lxz" = (
 /obj/cable{
 	d2 = 2;
@@ -30859,7 +30859,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "lVv" = (
 /turf/simulated/shuttle/wall{
 	dir = 0;
@@ -30974,7 +30974,7 @@
 /obj/machinery/light,
 /obj/cable,
 /turf/simulated/floor/red/side,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "mdm" = (
 /obj/machinery/vending/cards,
 /turf/simulated/floor,
@@ -31112,11 +31112,11 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "mzR" = (
 /obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "mBg" = (
 /obj/cable{
 	d1 = 1;
@@ -31809,7 +31809,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "oYc" = (
 /obj/cable{
 	d1 = 1;
@@ -31989,7 +31989,7 @@
 /turf/simulated/floor/red/side{
 	dir = 6
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "pDU" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -32050,7 +32050,7 @@
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "pPx" = (
 /obj/grille/steel,
 /obj/window/reinforced/west,
@@ -32218,7 +32218,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "qqf" = (
 /obj/grille/steel,
 /obj/window/reinforced/south,
@@ -32918,7 +32918,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "rXN" = (
 /obj/machinery/camera{
 	c_tag = "Atmospherics Southeast";
@@ -33210,10 +33210,10 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "sUS" = (
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "sWl" = (
 /obj/cable{
 	d1 = 1;
@@ -33233,7 +33233,7 @@
 /obj/machinery/recharger,
 /obj/cable,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "sYn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -33434,13 +33434,13 @@
 /area/station/teleporter)
 "twS" = (
 /turf/simulated/wall,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "txG" = (
 /obj/table/auto,
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "txY" = (
 /obj/machinery/camera{
 	c_tag = "Test Chamber West";
@@ -33522,7 +33522,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "tFL" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -33553,7 +33553,7 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "tJk" = (
 /obj/machinery/door/poddoor{
 	id = "sciencedriver";
@@ -33616,7 +33616,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "tRv" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -34008,7 +34008,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "uza" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
@@ -34028,7 +34028,7 @@
 "uCj" = (
 /obj/table/auto,
 /turf/simulated/floor/red/side,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "uDx" = (
 /obj/grille/steel,
 /obj/window/reinforced/south,
@@ -34143,7 +34143,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "uWM" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -34165,7 +34165,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/east,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "uYx" = (
 /obj/cable{
 	d1 = 4;
@@ -34787,7 +34787,7 @@
 "wVf" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "wWu" = (
 /obj/stool,
 /obj/cable{
@@ -34882,7 +34882,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "xxA" = (
 /obj/cable{
 	d1 = 4;
@@ -35065,7 +35065,7 @@
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "xYh" = (
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -35185,7 +35185,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ylN" = (
 /obj/cable{
 	d1 = 4;
