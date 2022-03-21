@@ -184,7 +184,7 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 	var/datum/data_input_result/result = new(input, selected_type)
 	return result
 
-/// A datum holding the data we need from the user's input- the input itself and the format the user selected (text, JSON, color, etc etc)
+/// A datum holding the data the caller needs- the formatted output itself and the format the user selected (text, JSON, color, etc etc)
 /// Functionally a named tuple.
 /datum/data_input_result
 	var/output
