@@ -705,7 +705,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\spacebee_extension\system.dm"
 #include "code\modules\admin\viewvariables\call_proc_menu.dm"
 #include "code\modules\admin\viewvariables\datumvars.dm"
-#include "code\modules\admin\viewvariables\massmodifyvariables.dm"
 #include "code\modules\admin\viewvariables\modifyvariables.dm"
 #include "code\modules\admin\viewvariables\reference_tracking.dm"
 #include "code\modules\antagonists\arcfiend\arcfiend.dm"
