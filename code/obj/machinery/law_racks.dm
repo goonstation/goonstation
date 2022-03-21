@@ -406,8 +406,8 @@
 	proc/get_welding_positions(var/slotNum)
 		var/start
 		var/stop
-		start = list(-10,-11 + slotNum*4)
-		stop = list(10,-11 + slotNum*4)
+		start = list(-10,-15 + slotNum*4)
+		stop = list(10,-15 + slotNum*4)
 
 		if(src.welded[slotNum])
 			. = list(stop,start)

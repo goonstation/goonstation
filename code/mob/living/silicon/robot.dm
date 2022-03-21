@@ -248,8 +248,8 @@
 	death(gibbed)
 		logTheThing("combat", src, null, "was destroyed at [log_loc(src)].")
 		src.mind?.register_death()
-		if (src.mind?.special_role)
-			src.handle_robot_antagonist_status("death", 1)
+		if (src.syndicate)
+			src.remove_syndicate("death")
 		src.borg_death_alert()
 		if (!gibbed)
 			src.visible_message("<span class='alert'><b>[src]</b> falls apart into a pile of components!</span>")
@@ -936,7 +936,11 @@
 				src.emagged = 1
 				logTheThing("station", src, src.law_rack_connection, "[src.name] is emagged by [user] and loses connection to rack.")
 				src.law_rack_connection = null //emagging removes the connection for laws, essentially nulling the laws and allowing the emagger to connect this borg to a different rack
-				src.handle_robot_antagonist_status("emagged", 0, user)
+				if (!src.mind.special_role) // Preserve existing antag role (if any).
+					src.mind.special_role = ROLE_EMAGGED_ROBOT
+					if (!(src.mind in ticker.mode.Agimmicks))
+						ticker.mode.Agimmicks += src.mind
+				SHOW_EMAGGED_BORG_TIPS(src)
 				if(src.syndicate)
 					src.antagonist_overlay_refresh(1, 1)
 				update_appearance()
@@ -1234,8 +1238,8 @@
 						B.owner = M.ghostize()?.mind
 						qdel(M)
 					B.owner.transfer_to(src)
-					if (src.emagged || src.syndicate)
-						src.handle_robot_antagonist_status("brain_added", 0, user)
+					if (src.syndicate)
+						src.make_syndicate("brain added by [user]")
 
 				if (!src.emagged && !src.syndicate) // The antagonist proc does that too.
 					boutput(src, "<B>You are playing a Cyborg. You can interact with most electronic objects in your view.</B>")
@@ -1582,12 +1586,12 @@
 		if (!src.brain)
 			return
 
-		if (src.mind && src.mind.special_role)
-			src.handle_robot_antagonist_status("brain_removed", 1, user) // Mindslave or rogue (Convair880).
+		if (src.mind && src.mind.special_role && src.syndicate)
+			src.remove_syndicate("brain_removed")
 
 		if (user)
 			src.visible_message("<span class='alert'>[user] removes [src]'s brain!</span>")
-			logTheThing("combat", user, src, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
+			logTheThing("station", user, src, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
 		else
 			src.visible_message("<span class='alert'>[src]'s brain is ejected from its head!</span>")
 			playsound(src, "sound/misc/boing/[rand(1,6)].ogg", 40, 1)
