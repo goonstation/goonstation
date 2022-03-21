@@ -1596,6 +1596,9 @@ keeping this here because I want to make something else with it eventually
 		if (iswrenchingtool(W))
 			actions.start(new /datum/action/bar/icon/furniture_deconstruct(src, W, 30), user)
 			return
+		else if (istype(W, /obj/item/mechanics))
+			user.show_text("[W] slips off [src].")
+			return ..()
 		else if (src.place_on(W, user, params))
 			user.show_text("You place [W] on [src].")
 			src.attach(W)
@@ -1624,6 +1627,8 @@ keeping this here because I want to make something else with it eventually
 
 	proc/attach(obj/item/I as obj)
 		if(I.anchored) return
+		else if (istype(W, /obj/item/mechanics))
+			return
 		src.attached_objs.Add(I) // attach the item to the table
 		I.glide_size = 0 // required for smooth movement with the tray
 		// register for pickup, register for being pulled off the table, register for item deletion while attached to table
