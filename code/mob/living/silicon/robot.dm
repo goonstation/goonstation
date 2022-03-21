@@ -2134,11 +2134,17 @@
 		if (alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws","State Laws","Cancel") != "State Laws")
 			return
 
-		if(!src.law_rack_connection)
-			boutput(src, "You have no laws!")
-			return
-
-		var/laws = src.law_rack_connection.format_for_irc()
+		var/laws = null
+		if(src.dependent) //are you a shell?
+			if(!src?.mainframe?.law_rack_connection)
+				boutput(src, "You have no laws!")
+				return
+			laws = src.mainframe.law_rack_connection.format_for_irc()
+		else
+			if(!src.law_rack_connection)
+				boutput(src, "You have no laws!")
+				return
+			laws = src.law_rack_connection.format_for_irc()
 
 		for (var/number in laws)
 			src.say("[number]. [laws[number]]")

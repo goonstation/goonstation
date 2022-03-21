@@ -146,7 +146,13 @@
 		. = ..()
 		if(issilicon(user) || isAI(user))
 			var/mob/living/silicon/S = user
-			if(S.law_rack_connection == src)
+			var/test_connection = null
+			if(isAIeye(user) || S.dependent)
+				test_connection = S.mainframe.law_rack_connection
+			else
+				test_connection = S.law_rack_connection
+
+			if(test_connection == src)
 				. += "<b>You are connected to this law rack.<b>"
 			else
 				. += "You are not connected to this law rack."
@@ -233,7 +239,13 @@
 
 		if(issilicon(user) || isAI(user))
 			var/mob/living/silicon/S = user
-			if(S.law_rack_connection == src)
+			var/test_connection = null
+			if(isAIeye(user) || S.dependent)
+				test_connection = S.mainframe.law_rack_connection
+			else
+				test_connection = S.law_rack_connection
+
+			if(test_connection == src)
 				boutput(user,"<b>You are connected to this law rack.<b>")
 			else
 				boutput(user,"You are not connected to this law rack.")
