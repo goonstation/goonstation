@@ -191,7 +191,7 @@ var/global/debug_messages = 0
 	ADMIN_ONLY
 	if (!target)
 		return
-	doCallProc(target)
+	src.doCallProc(target)
 
 /client/proc/call_proc_all(var/typename as null|text)
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
@@ -205,7 +205,7 @@ var/global/debug_messages = 0
 	var/thetype = get_one_match(typename, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 	if (thetype)
 		var/procname = input("Procpath","path:", null) as text
-		var/list/listargs = get_proccall_arglist()
+		var/list/listargs = src.get_proccall_arglist()
 		if (listargs == null) return
 
 		var/list/results = find_all_by_type(thetype, procname, "instance", listargs)
@@ -236,16 +236,16 @@ var/global/debug_messages = 0
 				return
 		if ("No")
 			target = null
-	doCallProc(target)
+	src.doCallProc(target)
 
-/proc/doCallProc(target = null, procname = null) // also accepts actual proc
+/client/proc/doCallProc(target = null, procname = null) // also accepts actual proc
 	var/returnval = null
 	if(isnull(procname))
 		procname = input("Procpath (ex. bust_lights)","path:", null) as null|text
 	if (isnull(procname))
 		return
 
-	var/list/listargs = get_proccall_arglist()
+	var/list/listargs = src.get_proccall_arglist()
 
 	var/list/name_list
 
@@ -295,14 +295,14 @@ var/global/debug_messages = 0
 	boutput(usr, "<span class='notice'>Proc returned: [pretty_returnval]</span>")
 	return
 
-/proc/get_proccall_arglist(list/arginfo = null)
+/client/proc/get_proccall_arglist(list/arginfo = null)
 	var/argnum = arginfo ? length(arginfo) : input("Number of arguments:","Number", 0) as null|num
 	var/list/listargs = list()
 	if (!argnum)
 		return listargs
 	for (var/i = 1 , i <= argnum, i++)
-		var/datum/data_input_result/arg = input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_BOOL, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
-										DATA_INPUT_ATOM_ON_CURRENT_TURF, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_FILE, DATA_INPUT_REFPICKER, DATA_INPUT_NULL), usr.client, \
+		var/datum/data_input_result/arg = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_BOOL, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
+										DATA_INPUT_ATOM_ON_CURRENT_TURF, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_FILE, DATA_INPUT_REFPICKER, DATA_INPUT_NULL), \
 										custom_type_title = arginfo ? arginfo[i][ARG_INFO_DESC] + ":" : "Type of Argument #[i]", \
 										custom_type_message =  arginfo ? "Argument #[i]: " + arginfo[i][ARG_INFO_NAME] : "Variable Type", \
 										default_type = arginfo?[i][ARG_INFO_TYPE])

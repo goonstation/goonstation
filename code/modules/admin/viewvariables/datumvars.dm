@@ -502,9 +502,9 @@
 		if(holder && src.holder.level >= LEVEL_ADMIN)
 			var/target = href_list["CallProc"] == "global" ? null : locate(href_list["CallProc"])
 			if("proc_ref" in href_list)
-				doCallProc(target, locate(href_list["proc_ref"]))
+				src.doCallProc(target, locate(href_list["proc_ref"]))
 			else
-				doCallProc(target)
+				src.doCallProc(target)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to call a proc on something all rude-like.")
 		return
@@ -690,7 +690,7 @@
 			if (D)
 				var/datum/C = D.vars[href_list["procCall"]]
 				if (istype(C, /datum))
-					doCallProc(C)
+					src.doCallProc(C)
 		else
 			debug_variables(locate(href_list["Vars"]))
 	else
@@ -823,10 +823,10 @@
 		else
 			original_name = D:name
 
-	var/datum/data_input_result/result = input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_NUM_ADJUST, DATA_INPUT_TYPE, DATA_INPUT_MOB_REFERENCE, \
+	var/datum/data_input_result/result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_NUM_ADJUST, DATA_INPUT_TYPE, DATA_INPUT_MOB_REFERENCE, \
 											DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_ICON, DATA_INPUT_FILE, \
 											DATA_INPUT_COLOR, DATA_INPUT_LIST, DATA_INPUT_JSON, DATA_INPUT_JSON, DATA_INPUT_NEW_LIST, DATA_INPUT_MATRIX, \
-											DATA_INPUT_NULL, DATA_INPUT_REF, DATA_INPUT_RESTORE), src, default = var_value, default_type = default)
+											DATA_INPUT_NULL, DATA_INPUT_REF, DATA_INPUT_RESTORE), default = var_value, default_type = default)
 
 	if (isnull(result.output_type))
 		return
