@@ -1627,7 +1627,7 @@ keeping this here because I want to make something else with it eventually
 
 	proc/attach(obj/item/I as obj)
 		if(I.anchored) return
-		else if (istype(W, /obj/item/mechanics))
+		else if (istype(I, /obj/item/mechanics))
 			return
 		src.attached_objs.Add(I) // attach the item to the table
 		I.glide_size = 0 // required for smooth movement with the tray
