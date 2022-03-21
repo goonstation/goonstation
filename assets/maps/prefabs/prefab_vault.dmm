@@ -1,15 +1,17 @@
 "a" = (/turf/variableTurf/clear,/area/space)
 "c" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/vault)
-"d" = (/obj/rack,/obj/item/material_piece/uqill,/turf/simulated/floor/scorched2,/area/prefab/vault)
-"e" = (/obj/rack,/obj/item/material_piece/koshmarite,/obj/item/material_piece/koshmarite,/obj/item/material_piece/koshmarite,/obj/machinery/light/incandescent/netural{dir = 1; pixel_y = 20},/turf/simulated/floor/scorched,/area/prefab/vault)
-"f" = (/obj/rack,/obj/item/raw_material/gold,/obj/item/raw_material/gold,/obj/item/raw_material/gold,/turf/simulated/floor{icon_state = "damaged2"},/area/prefab/vault)
+"d" = (/obj/rack,/obj/item/raw_material/gold,/obj/item/raw_material/gold,/obj/item/raw_material/gold,/turf/simulated/floor{icon_state = "damaged2"},/area/prefab/vault)
+"e" = (/obj/rack,/obj/item/material_piece/uqill,/obj/machinery/light/incandescent/netural{dir = 1; pixel_y = 20},/turf/simulated/floor/void,/area/prefab/vault)
+"f" = (/obj/rack,/obj/item/material_piece/koshmarite,/obj/item/material_piece/koshmarite,/obj/item/material_piece/koshmarite,/turf/simulated/floor/void,/area/prefab/vault)
 "g" = (/turf/simulated/floor{icon_state = "damaged2"},/area/prefab/vault)
-"h" = (/turf/simulated/floor/scorched2,/area/prefab/vault)
+"h" = (/turf/simulated/floor/void,/area/prefab/vault)
 "j" = (/obj/machinery/door/airlock/pyro/safe{icon_state = "generic_locked"; locked = 1},/turf/simulated/floor/scorched,/area/prefab/vault)
-"k" = (/turf/variableTurf/floor,/area/prefab/vault)
+"k" = (/obj/decal/cleanable/writing/infrared{desc = "The handwriting seems nearly human."; pixel_x = -1; pixel_y = 31; words = "The Siren screams its song, the fool joins it and slowly sinks into its domain. Only the wise ignore there predecessors and continue sailing without another thought."},/turf/variableTurf/floor,/area/prefab/vault)
 "l" = (/obj/item/storage/toolbox/mechanical,/obj/item/cable_coil,/obj/item/device/multitool,/turf/variableTurf/floor,/area/prefab/vault)
 "m" = (/obj/item/device/light/flashlight,/turf/variableTurf/floor,/area/prefab/vault)
+"q" = (/obj/decal/cleanable/writing{words = "If pulsing any of the wires lead you to turning off the test wires, snip the wire, mend the wire and carry on again, searching for your wonderful prize!"},/turf/variableTurf/floor,/area/prefab/vault)
 "x" = (/obj/securearea,/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/vault)
+"P" = (/obj/decal/cleanable/writing{words = "Great Treasures inside! Open the panel and pulse the bolt wire with the multitool."},/turf/variableTurf/floor,/area/prefab/vault)
 
 (1,1,1) = {"
 aaaaaaa
@@ -17,6 +19,6 @@ accccca
 acdefca
 acgghca
 acxjxca
-akklkma
+akPlqma
 aaaaaaa
 "}
