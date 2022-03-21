@@ -346,9 +346,8 @@
 						ui.user.visible_message("<span class='alert'>[ui.user] starts welding a module in place!</span>", "<span class='alert'>You start to weld the module in place!</span>")
 					var/positions = src.get_welding_positions(slotNum)
 					playsound(src.loc, "sound/items/Welder.ogg", 50, 1)
-					actions.start(new /datum/action/bar/private/welding(ui.user, src, 5 SECONDS, .proc/toggle_welded_callback, list(slotNum), \
-			  		welded[slotNum] ? "[ui.user] cuts the welds on the module." : "[ui.user] welds the module into the rack.", \
-					positions[1], positions[2]), ui.user)
+					actions.start(new /datum/action/bar/private/welding(ui.user, src, 5 SECONDS, .proc/toggle_welded_callback, list(slotNum,ui.user), \
+			  		"",	positions[1], positions[2]), ui.user)
 
 				return
 			if("screw")
@@ -367,9 +366,8 @@
 				else
 					ui.user.visible_message("<span class='alert'>[ui.user] starts screwing a module in place!</span>", "<span class='alert'>You start to screw the module in place!</span>")
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, .proc/toggle_screwed_callback, slotNum, ui.user.equipped().icon, ui.user.equipped().icon_state, \
-				welded[slotNum] ? "[ui.user] unscrews the module." : "[ui.user] screws the module into the rack.", \
-				INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+				SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, .proc/toggle_screwed_callback, list(slotNum,ui.user), ui.user.equipped().icon, ui.user.equipped().icon_state, \
+				"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 				return
 			if("rack")
@@ -479,11 +477,19 @@
 			mobtextlist += constructName(M, "admin")
 		logTheThing("station", src, null, "the law update affects the following mobs: "+mobtextlist.Join(", "))
 
-	proc/toggle_welded_callback(var/slot_number)
+	proc/toggle_welded_callback(var/slot_number,var/mob/user)
+		if(src.welded[slot_number])
+			user.visible_message("<span class='alert'>[user] cuts the welds on the module.</span>","<span class='alert'>You cut the welds on the module.</span>")
+		else
+			user.visible_message("<span class='alert'>[user] welds the module in place.</span>","<span class='alert'>You weld the module in place.</span>")
 		src.welded[slot_number] = !src.welded[slot_number]
 		tgui_process.update_uis(src)
 
-	proc/toggle_screwed_callback(var/slot_number)
+	proc/toggle_screwed_callback(var/slot_number,var/mob/user)
+		if(src.screwed[slot_number])
+			user.visible_message("<span class='alert'>[user] unscrews the module.</span>","<span class='alert'>You unscrew the module from the rack.</span>")
+		else
+			user.visible_message("<span class='alert'>[user] screws in the module.</span>","<span class='alert'>You screw the module into the rack.</span>")
 		src.screwed[slot_number] = !src.screwed[slot_number]
 		tgui_process.update_uis(src)
 
@@ -494,12 +500,14 @@
 		user.visible_message("<span class='alert'>[user] slides a module into the law rack</span>", "<span class='alert'>You slide the module into the rack.</span>")
 		tgui_process.update_uis(src)
 		logTheThing("station", user, src, "[user.name] inserts law module into rack([log_loc(src)]): [equipped]:[equipped.lawText] at slot [slotNum]")
+		message_admins("[user.name] added a new law to rack([log_loc(src)]): [equipped]:[equipped.lawText] at slot [slotNum]")
 		UpdateIcon()
 		UpdateLaws()
 
 	proc/remove_module_callback(var/slotNum,var/mob/user)
 		//add circuit to hand
 		logTheThing("station", user, src, "[user.name] removes law module from rack([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].lawText] at slot [slotNum]")
+		message_admins("[user.name] removed a law from rack([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].lawText] at slot [slotNum]")
 		user.visible_message("<span class='alert'>[user] slides a module out of the law rack</span>", "<span class='alert'>You slide the module out of the rack.</span>")
 		user.put_in_hand_or_drop(src.law_circuits[slotNum])
 		src.law_circuits[slotNum] = null
