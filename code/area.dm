@@ -1231,6 +1231,8 @@ ABSTRACT_TYPE(/area/prefab)
 	icon_state = "orange"
 	requires_power = FALSE
 
+/area/prefab/vault
+	name = "Secure Vault"
 /area/prefab/discount_dans_asteroid
 	name = "Discount Dan's Delivery Asteroid"
 	icon_state = "orange"

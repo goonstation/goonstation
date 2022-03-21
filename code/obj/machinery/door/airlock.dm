@@ -26,6 +26,9 @@
 	if(!src.arePowerSystemsOn() || (status & NOPOWER))
 		boutput(user, "The door has no power - you can't electrify it.")
 		return
+	if(!src.can_shock)
+		boutput(user, "This door is unable to be electrified, you cannot shock it.")
+		return
 	if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
 		boutput(user, text("<span class='alert'>The electrification wire has been cut.<br><br></span>"))
 	else if (src.secondsElectrified==-1)
@@ -63,6 +66,8 @@
 		boutput(user, "<span class='alert'>The door has no power - you can't electrify it.</span>")
 		return
 	//electrify door indefinitely
+	if(!src.can_shock)
+		boutput(user, text("<span class='alert'>This door is unable to be electrified.<br><br></span>"))
 	if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
 		boutput(user, text("<span class='alert'>The electrification wire has been cut.<br><br></span>"))
 	else if (src.secondsElectrified==-1)
@@ -184,6 +189,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/id = null
 	var/radiorange = AIRLOCK_CONTROL_RANGE
 	var/safety = 1
+	var/can_shock = TRUE
 	var/hackingProgression = 0
 	var/HTML = null
 	var/has_panel = 1
@@ -322,6 +328,9 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	panel_icon_state = "panel_open"
 	welded_icon_state = "welded"
 	flags = FPRINT | IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID
+
+/obj/machinery/door/airlock/pyro/safe
+	can_shock = FALSE
 
 /obj/machinery/door/airlock/pyro/alt
 	icon_state = "generic2_closed"
