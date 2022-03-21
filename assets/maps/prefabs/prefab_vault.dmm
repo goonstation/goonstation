@@ -9,9 +9,9 @@
 "k" = (/obj/decal/cleanable/writing/infrared{desc = "The handwriting seems nearly human."; pixel_x = -1; pixel_y = 31; words = "The Siren screams its song, the fool joins it and slowly sinks into its domain. Only the wise ignore there predecessors and continue sailing without another thought."},/turf/variableTurf/floor,/area/prefab/vault)
 "l" = (/obj/item/storage/toolbox/mechanical,/obj/item/cable_coil,/obj/item/device/multitool,/turf/variableTurf/floor,/area/prefab/vault)
 "m" = (/obj/item/device/light/flashlight,/turf/variableTurf/floor,/area/prefab/vault)
-"t" = (/obj/decal/cleanable/writing{words = "Great Treasures inside! Open the panel and pulse the bolt wire with the multitool."},/turf/variableTurf/floor,/area/prefab/vault)
+"t" = (/obj/decal/cleanable/writing{words = "Great Treasures inside! Screwdriver open the panel and pulse the wires with a multitool until the door is unbolted."},/turf/variableTurf/floor,/area/prefab/vault)
 "x" = (/obj/securearea,/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/vault)
-"T" = (/obj/decal/cleanable/writing{words = "If pulsing any of the wires lead you to turning off the test wires, snip the wire, mend the wire and carry on again, searching for your wonderful prize!"},/turf/variableTurf/floor,/area/prefab/vault)
+"T" = (/obj/decal/cleanable/writing{words = "If pulsing any of the wires lead you to turning off the test light, snip and mend that wire, and carry on with your quest, searching for your wonderful prize!"},/turf/variableTurf/floor,/area/prefab/vault)
 
 (1,1,1) = {"
 aaaaaaa
