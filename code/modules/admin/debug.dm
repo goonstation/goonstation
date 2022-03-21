@@ -1249,7 +1249,7 @@ var/datum/flock/testflock
 		fdel(fname)
 #endif
 
-/proc/debugAddComponent(var/datum/target = null)
+/client/proc/debugAddComponent(var/datum/target = null)
 	var/pathpart = input("Part of component path.", "Part of component path.", "") as null|text
 	if(!pathpart)
 		pathpart = "/"
@@ -1259,14 +1259,14 @@ var/datum/flock/testflock
 
 	var/typeinfo/datum/component/TI = get_type_typeinfo(comptype)
 
-	var/list/listargs = get_proccall_arglist(TI.initialization_args)
+	var/list/listargs = src.get_proccall_arglist(TI.initialization_args)
 
 	var/returnval = target._AddComponent(list(comptype) + listargs)
 
 
 	boutput(usr, "<span class='notice'>Returned: [!isnull(returnval) ? returnval : "null"]</span>")
 
-/proc/debugRemoveComponent(var/datum/target = null)
+/client/proc/debugRemoveComponent(var/datum/target = null)
 	var/list/dc = target.datum_components
 	if(!dc)
 		boutput(usr, "<span class='notice'>No components present on [target].</span>")
