@@ -1,4 +1,18 @@
 
+(t)sun mar 20 22
+(u)Amylizzle
+(p)7881
+(e)⚖|balance
+(*)The Linker tool can now overwrite the connection on a cyborg/AI without needing to be emagged first.
+(u)BatElite
+(p)7827
+(e)🆕|feature
+(+)Added the Slipping Hazard trait, for people who'd like to slip worse.
+(t)sat mar 19 22
+(u)Sovexe
+(p)7861
+(e)🆕🗺|feature, mapping
+(*)The Cog1 ranch has been redesigned.
 (t)fri mar 18 22
 (u)tarmunora
 (e)⚖|balance

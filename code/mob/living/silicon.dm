@@ -192,6 +192,8 @@
 	return 0 // we have no hands doofus
 
 /mob/living/silicon/click(atom/target, params, location, control)
+	if (src.targeting_ability)
+		..()
 	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
 		if(src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK) && istype(target, /obj) )
 			var/obj/O = target
