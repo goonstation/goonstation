@@ -331,7 +331,7 @@
 		if (.)
 			return
 
-		if(isintangible(ui.user) || isdead(ui.user))
+		if(isintangible(ui.user) || isdead(ui.user) || isunconscious(ui.user) || ui.user.hasStatus("resting"))
 			return
 
 		var/slotNum = text2num(params["rack_index"])
