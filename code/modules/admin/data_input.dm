@@ -68,8 +68,7 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 			input = input(custom_title || "Select file:", custom_message) as null|file
 
 		if (DATA_INPUT_DIR)
-			input = input(custom_title || "Enter direction:", "Dir as text (e.g. North), case doesn't matter", default) as null|text
-			input = uppertext(input)
+			input = input(custom_title || "Enter direction:", custom_message, default) as null|anything in list("NORTH", "SOUTH", "EAST", "WEST", "NORTHEAST", "SOUTHEAST", "NORTHWEST", "SOUTHWEST")
 			switch(input)
 				if("NORTH")
 					input = NORTH
@@ -87,9 +86,6 @@ proc/input_data(list/allowed_types, client/user, custom_title = null, custom_mes
 					input = NORTHWEST
 				if("SOUTHWEST")
 					input = SOUTHWEST
-				else
-					boutput(user, "<span class='alert>Invalid dir!</span>")
-					return
 
 		if (DATA_INPUT_JSON)
 			input = input(custom_title || "Enter JSON:", custom_message, json_encode(default)) as null|text
