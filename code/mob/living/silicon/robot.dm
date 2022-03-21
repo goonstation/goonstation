@@ -936,7 +936,7 @@
 				src.emagged = 1
 				logTheThing("station", src, src.law_rack_connection, "[src.name] is emagged by [user] and loses connection to rack.")
 				src.law_rack_connection = null //emagging removes the connection for laws, essentially nulling the laws and allowing the emagger to connect this borg to a different rack
-				if (!src.mind.special_role) // Preserve existing antag role (if any).
+				if (src.mind && !src.mind.special_role) // Preserve existing antag role (if any).
 					src.mind.special_role = ROLE_EMAGGED_ROBOT
 					if (!(src.mind in ticker.mode.Agimmicks))
 						ticker.mode.Agimmicks += src.mind
