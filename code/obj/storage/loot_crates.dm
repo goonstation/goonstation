@@ -348,7 +348,7 @@
 				new X(src)
 			list_counter++
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			UpdateIcon()
 
 		return

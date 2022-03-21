@@ -419,12 +419,12 @@ THROWING DARTS
 				if (!H.reagents.has_reagent("omnizine", 10))
 					H.reagents.add_reagent("omnizine", 10)
 				src.inactive = 1
-				SPAWN_DBG(30 SECONDS) src.inactive = 0
+				SPAWN(30 SECONDS) src.inactive = 0
 		..()
 
 
-/obj/item/implant/antirev
-	name = "loyalty implant"
+/obj/item/implant/counterrev
+	name = "counter-revolutionary implant"
 	icon_state = "implant-b"
 	impcolor = "b"
 
@@ -436,7 +436,7 @@ THROWING DARTS
 
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 			if (H.mind in ticker.mode:head_revolutionaries)
-				H.visible_message("<span class='alert'><b>[H] resists the loyalty implant!</b></span>")
+				H.visible_message("<span class='alert'><b>[H] resists the counter-revolutionary implant!</b></span>")
 				H.changeStatus("weakened", 1 SECOND)
 				H.force_laydown_standup()
 				playsound(H.loc, "sound/effects/electric_shock.ogg", 60, 0,0,pitch = 2.4)
@@ -469,7 +469,7 @@ THROWING DARTS
 					ticker.mode:remove_revolutionary(H.mind)
 				else
 					if (prob(30))
-						H.show_text("<B>The [src] burns and rattles inside your chest! It's attempting to force your loyalty!</B>", "blue")
+						H.show_text("<B>The [src] burns and rattles inside your chest! It's attempting to force your loyalty to the heads of staff!</B>", "blue")
 						playsound(H.loc, "sound/effects/electric_shock_short.ogg", 60, 0,0,pitch = 0.8)
 						H.emote("twitch_v")
 
@@ -535,7 +535,8 @@ THROWING DARTS
 				source.visible_message("<span class='alert'><b>[source] emits a loud clunk!</b></span>")
 			else
 				source.visible_message("[source] emits a small clicking noise.")
-			logTheThing("bombing", source, null, "triggered a micro-/macrobomb implant on death.")
+			logTheThing("bombing", source, null, "triggered a micro-/macrobomb implant on death at [log_loc(source)].")
+			message_admins("[key_name(source)] triggered a micro-/macrobomb implant on death at [log_loc(source)].")
 			var/turf/T = get_turf(src)
 			src.set_loc(null) //so we don't get deleted prematurely by the blast.
 
@@ -558,7 +559,7 @@ THROWING DARTS
 				if(cutoff <= 25)
 					throwjunk += I
 
-			SPAWN_DBG(0) //Delete the overlay when finished with it.
+			SPAWN(0) //Delete the overlay when finished with it.
 				if(!QDELETED(source))
 					source?.gib()
 
@@ -716,7 +717,7 @@ THROWING DARTS
 
 		if (expire)
 			//25 minutes +/- 5
-			SPAWN_DBG((25 + rand(-5,5)) MINUTES)
+			SPAWN((25 + rand(-5,5)) MINUTES)
 				if (src && !ishuman(src.loc)) // Drop-all, gibbed etc (Convair880).
 					if (src.expire && (src.expired != 1)) src.expired = 1
 					return
@@ -786,6 +787,7 @@ THROWING DARTS
 
 	bullet_45
 		name = ".45 round"
+		icon_state = "bulletround"
 		desc = "An outdated army-issue bullet. Mainly used by war reenactors and space cowboys."
 
 	bullet_38AP
@@ -796,9 +798,15 @@ THROWING DARTS
 		name = "9mm NATO round"
 		desc = "A reliable bullet, used ubiquitously in law enforcement and armed forces a century ago."
 
+	ninemmplastic
+		name = "9mm Plastic round"
+		icon_state = "bulletplastic"
+		desc = "A small, sublethal plastic projectile."
+
 	bullet_308
-		name = ".308 round"
-		desc = "An old but very powerful rifle bullet."
+		name = "Rifle Round" // this is used by basically every rifle in the game, ignore the "308" path
+		icon_state = "bulletbig"
+		desc = "A large bullet from a rifle cartridge."
 
 	bullet_22
 		name = ".22 round"
@@ -806,14 +814,17 @@ THROWING DARTS
 
 	bullet_22HP
 		name = ".22 hollow point round"
-		desc = "A small calibre hollow point bullet for use against unarmored targets. Wait, aren't these a war crime?"
+		icon_state = "bulletexpanded"
+		desc = "A small calibre hollow point bullet for use against unarmored targets. Hang on, aren't these a war crime?"
 
 	bullet_41
 		name = ".41 round"
+		icon_state = "bulletexpanded"
 		desc = ".41? What the heck? Who even uses these anymore?"
 
 	bullet_12ga
 		name = "buckshot"
+		icon_state = "bulletround"
 		desc = "A commonly-used load for shotguns."
 
 	staple
@@ -844,11 +855,13 @@ THROWING DARTS
 
 	bullet_50
 		name = ".50AE round"
+		icon_state = "bulletbig"
 		desc = "Ouch."
 
 	rakshasa
 		name = "\improper Rakshasa round"
-		desc = "..."
+		desc = "A weird flechette-like projectile."
+		icon_state = "blowdart"
 
 /obj/item/implant/projectile/implanted(mob/living/carbon/C, var/mob/I, var/bleed_time = 60)
 	SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, C)
@@ -864,7 +877,7 @@ THROWING DARTS
 			return
 
 	src.bleed_timer = bleed_time
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 //		boutput(C, "<span class='alert'>You start bleeding!</span>") // the blood system takes care of this bit now
 		src.bleed_loop()
 
@@ -897,7 +910,7 @@ THROWING DARTS
 			C.take_toxin_damage(rand(1,3))
 			C.stamina -= 30
 			boutput(C, "<span class='alert'>You feel a [pick("searing", "hot", "burning")] pain in your chest![pick("", "There's gotta be silver in there!", )]</span>")
-	SPAWN_DBG(rand(40,70))
+	SPAWN(rand(40,70))
 		src.bleed_loop()
 	return
 
@@ -1200,9 +1213,9 @@ THROWING DARTS
 	name = "glass case - 'Freedom'"
 	implant_type = "/obj/item/implant/freedom"
 
-/obj/item/implantcase/antirev
-	name = "glass case - 'Loyalty'"
-	implant_type = "/obj/item/implant/antirev"
+/obj/item/implantcase/counterrev
+	name = "glass case - 'Counter-Rev'"
+	implant_type = "/obj/item/implant/counterrev"
 
 /obj/item/implantcase/microbomb
 	name = "glass case - 'Microbomb'"
@@ -1366,7 +1379,7 @@ THROWING DARTS
 		update()
 	else
 		if (src in user.contents)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				src.attack_self(user)
 				return
 		else
@@ -1459,10 +1472,10 @@ disintegrate into bio-safe elements.<BR>
 circuitry. As a result neurotoxins can cause massive damage.<BR>
 <i>Self-Destruct</i>- This implant will self terminate upon request from an authorized Command Implant <HR>
 <b>Level: 1 Auth</b>"}
-			else if (istype(src.case.imp, /obj/item/implant/antirev))
+			else if (istype(src.case.imp, /obj/item/implant/counterrev))
 				dat += {"
 <b>Implant Specifications:</b><BR>
-<b>Name:</b> Loyalty Implant<BR>
+<b>Name:</b> Counter-Revolutionary Implant<BR>
 <b>Zone:</b> Spinal Column> 5-7 vertebrae<BR>
 <b>Power Source:</b> Nervous System Ion Withdrawl Gradient<BR>
 <b>Important Notes:</b> Will make the crewmember loyal to the command staff and prevent thoughts of rebelling.<BR>"}

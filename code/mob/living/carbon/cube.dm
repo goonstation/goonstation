@@ -141,7 +141,7 @@
 					if(src.emote_check(voluntary, 10))
 						message = "<B>[src]</B> jiggles like only a meat cube can."
 				else
-					src.show_text("Invalid Emote: [act]")
+					if (voluntary) src.show_text("Invalid Emote: [act]")
 		if (message && isalive(src))
 			logTheThing("say", src, null, "EMOTE: [message]")
 			if (m_type & 1)
@@ -201,7 +201,7 @@
 			New()
 				..()
 				real_name = pick("Krampus", "Krampus 3.0", "The Krampmeister", "The Krampster") //For deadchat
-				SPAWN_DBG(2 SECONDS) //I do not know where the hell you get a bioholder from =I
+				SPAWN(2 SECONDS) //I do not know where the hell you get a bioholder from =I
 					if(src.bioHolder) src.bioHolder.age = 110
 
 			// people were somehow being shit even as a meatcube, so i'm removing the small mercy they had with being unpoppable - cirr

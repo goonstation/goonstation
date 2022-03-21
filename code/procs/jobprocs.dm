@@ -404,7 +404,7 @@
 		return
 
 	if (JOB.announce_on_join)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			boutput(world, "<b>[src.name] is the [JOB.name]!</b>")
 	boutput(src, "<B>You are the [JOB.name].</B>")
 	src.job = JOB.name
@@ -499,12 +499,14 @@
 		if (src.traitHolder && src.traitHolder.hasTrait("sleepy"))
 			var/list/valid_beds = list()
 			for_by_tcl(bed, /obj/stool/bed)
-				if (bed.z == Z_LEVEL_STATION && !istype(get_area(bed), /area/listeningpost) && !istype(get_turf(bed), /turf/space))
+				if (bed.z == Z_LEVEL_STATION && istype(get_area(bed), /area/station)) //believe it or not there are station areas on nonstation z levels
 					if (!locate(/mob/living/carbon/human) in get_turf(bed)) //this is slow but it's Probably worth it
 						valid_beds += bed
 
 			if (length(valid_beds) > 0)
-				src.set_loc(get_turf(pick(valid_beds)))
+				var/obj/stool/bed/picked = pick(valid_beds)
+				src.set_loc(get_turf(picked))
+				logTheThing("station", src, null, "has the Heavy Sleeper trait and spawns in a bed at [log_loc(picked)]")
 				src.setStatus("resting", INFINITE_STATUS)
 				src.setStatus("paralysis", 10 SECONDS)
 				src.force_laydown_standup()
@@ -535,11 +537,12 @@
 							A.announce_arrival(src)
 
 		//Equip_Bank_Purchase AFTER special_setup() call, because they might no longer be a human after that
-		if (possible_new_mob)
-			var/mob/living/newmob = possible_new_mob
-			newmob.Equip_Bank_Purchase(newmob.mind.purchased_bank_item)
-		else
-			src.Equip_Bank_Purchase(src.mind?.purchased_bank_item)
+	//this was previously indented in the ishuman() block, but I don't think it needs to be - Amylizzle
+	if (possible_new_mob)
+		var/mob/living/newmob = possible_new_mob
+		newmob.Equip_Bank_Purchase(newmob.mind.purchased_bank_item)
+	else
+		src.Equip_Bank_Purchase(src.mind?.purchased_bank_item)
 
 	return
 
@@ -565,7 +568,7 @@
 					var/datum/abilityHolder/A = src.abilityHolder.deepCopy()
 					R.fields["abilities"] = A
 
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if(!isnull(src.traitHolder))
 						R.fields["traits"] = src.traitHolder.copy()
 
@@ -667,7 +670,7 @@
 
 	if (src.traitHolder && src.traitHolder.hasTrait("onearmed"))
 		if (src.limbs)
-			SPAWN_DBG(6 SECONDS)
+			SPAWN(6 SECONDS)
 				if (prob(50))
 					if (src.limbs.l_arm)
 						qdel(src.limbs.l_arm.remove(0))
@@ -774,13 +777,9 @@ proc/antagify(mob/H, var/traitor_role, var/agimmick)
 	if (!agimmick)
 		var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
 		var/num_objectives = rand(1,3)
-		var/datum/objective/new_objective = null
 		for(var/i = 0, i < num_objectives, i++)
 			var/select_objective = pick(eligible_objectives)
-			new_objective = new select_objective
-			new_objective.owner = H.mind
-			new_objective.set_up()
-			H.mind.objectives += new_objective
+			new select_objective(null, H.mind)
 			H << browse(grabResource("html/traitorTips/traitorhardTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
 			ticker.mode.traitors |= H.mind
 	else

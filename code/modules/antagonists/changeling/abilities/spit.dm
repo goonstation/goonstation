@@ -26,7 +26,7 @@
 		if (isliving(MT))
 			MT:was_harmed(holder.owner, special = "ling")
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/obj/overlay/A = new /obj/overlay( holder.owner.loc )
 			A.icon_state = "acidspit"
 			A.icon = 'icons/obj/projectiles.dmi'

@@ -280,7 +280,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src)
 				// Why range 30? COG2 places linked fixtures much further away from the timer than originally envisioned.
 				for (var/obj/machinery/door_timer/DT in range(30, src))
@@ -294,7 +294,7 @@
 					logTheThing("debug", null, null, "<b>Convair880:</b> couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] for automatic locker at [log_loc(src)].")
 		return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
 		if (isobserver(usr) || isintangible(usr))
 			return
@@ -460,7 +460,7 @@
 	icon_state = "science"
 	icon_closed = "science"
 	icon_opened = "secure_white-open"
-	req_access = list(access_tox_storage)
+	req_access = list(access_research)
 
 /obj/storage/secure/closet/research/uniform
 	name = "science uniform locker"

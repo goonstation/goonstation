@@ -830,7 +830,7 @@
 /obj/item/grab/block/handle_throw(mob/living/user, atom/target)
 	if (isturf(user.loc) && target)
 		var/turf/T = user.loc
-		if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying) && can_act(user))
+		if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying) && can_act(user) && !HAS_MOB_PROPERTY(user, PROP_CANTMOVE))
 			user.changeStatus("weakened", max(user.movement_delay()*2, 0.5 SECONDS))
 			user.force_laydown_standup()
 

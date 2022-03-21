@@ -353,7 +353,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 
 	// Could be useful (Convair880).
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
 		if (isobserver(usr) || isintangible(usr))
 			return
@@ -567,7 +567,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		return
 
 	// Could be useful (Convair880).
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
 		if (isobserver(usr) || isintangible(usr))
 			return
@@ -705,7 +705,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 	// This thing isn't z-level-restricted except for the homeloc.
 	// Somebody WILL find an exploit otherwise (Convair880).
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
 		if (isobserver(usr) || isintangible(usr))
 			return
@@ -774,7 +774,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 					if(81 to INFINITY) //Travel sickness!
 						for(var/mob/living/carbon/M in src.contents)
-							SPAWN_DBG(rand(10,40))
+							SPAWN(rand(10,40))
 								M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>Oh god, that was terrible!</span>", "<span class='alert'>You hear a splat!</span>")
 								M.change_misstep_chance(40)
 								M.changeStatus("drowsy", 10 SECONDS)
@@ -892,7 +892,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		. += "Home turf: [get_area(src.homeloc)]."
 
 	// Could be useful (Convair880).
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
 		if (isobserver(usr) || isintangible(usr))
 			return

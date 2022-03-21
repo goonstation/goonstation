@@ -953,7 +953,7 @@
 							target.zone_sel.selecting = old_zone_sel
 
 						if (prob(20))
-							I.attack_self(target)
+							I.AttackSelf(target)
 
 
 				if ("shoved_down" in src.disarm_RNG_result)
@@ -1204,7 +1204,7 @@
 
 /mob/living/carbon/human/attack_effects(var/mob/target, var/obj/item/affecting)
 	if (src.is_hulk())
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (prob(20))
 				target.changeStatus("stunned", 1 SECOND)
 				step_away(target,src,15)
@@ -1231,12 +1231,12 @@
 		if(prob(50))
 			T.changeStatus("weakened", 2 SECONDS)
 			T.force_laydown_standup()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			step_rand(T, 15)
 	else
 		T.changeStatus("weakened", 2 SECONDS)
 		T.force_laydown_standup()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			step_away(T, H, 15)
 
 	return

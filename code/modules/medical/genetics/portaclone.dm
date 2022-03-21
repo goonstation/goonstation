@@ -15,7 +15,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			scanner = new /obj/machinery/clone_scanner(src) //Built-in scanner.
 			pod1 = new /obj/machinery/clonepod(src) //Built-in cloning pod.
 			computer = new /obj/machinery/computer/cloning(src) //Inbuilt computer for i/o.
@@ -23,7 +23,7 @@
 
 			if(computer) computer.portable = 1
 			if(pod1) pod1.portable = 1
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			computer.scanner = scanner
 			computer.linked_pods += pod1
 

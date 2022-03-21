@@ -16,7 +16,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.UpdateIcon()
 
 	disposing()

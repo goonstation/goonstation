@@ -279,7 +279,7 @@ Custom Books
 				if(hos && !ON_COOLDOWN(H, "spacelaw_confession", 10 SECONDS))
 					H.say("[pick("Alright, fine, I ", "I confess that I ", "I confess! I ", "Okay, okay, I admit that I ")][pick("nabbed ", "stole ", "klepped ", "grabbed ", "thieved ", "pilfered ")]the [pick("Head of Security's ", "Captain's ", "Head of Personnel's ", "Chief Engineer's ", "Research Director's ", "Science Department's ", "Mining Team's ", "Quartermaster's ")] [pick("hair brush!", "shoes!", "stuffed animal!", "spare uniform!", "bedsheets!", "hat!", "trophy!", "glasses!", "fizzy lifting drink!", "ID card!")]")
 				prob_clonk = min(prob_clonk + 5, 40)
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					prob_clonk = max(prob_clonk - 5, 0)
 
 		return ..(hit_atom)
@@ -427,6 +427,20 @@ Custom Books
 	name = "A SYNDIE'S GUIDE TO DOING YOUR FUCKING JOB"
 	icon_state = "syndiebook"
 	file_path = "strings/books/syndies_guide.txt"
+
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
+	stolen //crew obtainable version
+
+		New()
+			..()
+			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE) //ugly but oh well
 
 /obj/item/paper/book/from_file/zoo_diary
 	name = "grimy diary"

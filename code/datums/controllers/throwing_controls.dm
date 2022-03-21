@@ -63,7 +63,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 	if(src.running)
 		return
 	src.running = TRUE
-	SPAWN_DBG(0)
+	SPAWN(0)
 		while(src.tick())
 			sleep(0.1 SECONDS)
 		src.running = FALSE

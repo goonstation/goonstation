@@ -55,35 +55,9 @@
 
 	return (val + stam_mod_items)
 
-/mob/proc/add_stun_resist_mod(var/key, var/value)
-	if(!isnum(value)) return
-	if(stun_resist_mods.Find(key)) return 0
-	stun_resist_mods.Add(key)
-	stun_resist_mods[key] = value
-	return 1
-
-//Removes a stamina max modifier with the given key.
-/mob/proc/remove_stun_resist_mod(var/key)
-	if(!stun_resist_mods.Find(key)) return 0
-	stun_resist_mods.Remove(key)
-	return 1
-
 //Returns the total modifier for stamina max
 /mob/proc/get_stun_resist_mod()
-	.= 0
-	var/highest = 0
-	for(var/x in stun_resist_mods)
-		. += stun_resist_mods[x]
-		if (stun_resist_mods[x] > highest)
-			highest = stun_resist_mods[x]
-
-
-	var/max_allowed = 80 //basically if we dont have a singular 100% or above protection moddifier, we wont allow the user to completely ignore stuns
-	if (highest > 80)
-		max_allowed = min(highest, 100)
-
-	.= clamp(., 0, max_allowed)
-
+	return min(GET_MOB_PROPERTY(src, PROP_STUN_RESIST), clamp(GET_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX), 80, 100))
 
 //Restores stamina
 /mob/proc/add_stamina(var/x)
@@ -105,7 +79,7 @@
 	if(!src.use_stamina) return
 	if(!isnum(x)) return
 	if(prob(4) && ishellbanned(src)) //Chances are this will happen during combat
-		SPAWN_DBG(rand(5, 80)) //Detach the cause (hit, reduced stamina) from the consequence (disconnect)
+		SPAWN(rand(5, 80)) //Detach the cause (hit, reduced stamina) from the consequence (disconnect)
 			var/dur = src.client.fake_lagspike()
 			sleep(dur)
 			del(src.client)
@@ -216,13 +190,13 @@
 #define DISORIENT_EAR 4
 
 /mob/proc/get_disorient_protection()
-	return clamp(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_BODY), 90, GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_BODY_MAX))
+	return min(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_BODY), clamp(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_BODY_MAX), 90, 100))
 
 /mob/proc/get_disorient_protection_eye()
-	return clamp(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EYE), 90, GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EYE_MAX))
+	return min(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EYE), clamp(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EYE_MAX), 90, 100))
 
 /mob/proc/get_disorient_protection_ear()
-	return clamp(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EAR), 90, GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EAR_MAX))
+	return min(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EAR), clamp(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EAR_MAX), 90, 100))
 
 
 /mob/proc/force_laydown_standup() //the real force laydown lives in Life.dm

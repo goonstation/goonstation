@@ -65,7 +65,7 @@
 	src.radio = new /obj/item/device/radio/headset/command/ai(src)
 	src.ears = src.radio
 
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		if (!src.cell)
 			src.cell = new /obj/item/cell/shell_cell/charged (src)
 		src.camera = new /obj/machinery/camera(src)
@@ -94,7 +94,7 @@
 	src.UpdateIcon()
 /*
 	if(src.client)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/key = src.ckey
 			recently_dead += key
 			sleep(recently_time)
@@ -260,7 +260,7 @@
 		if ("twitch")
 			message = "<B>[src]</B> twitches."
 			m_type = 1
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/old_x = src.pixel_x
 				var/old_y = src.pixel_y
 				src.pixel_x += rand(-2,2)
@@ -272,7 +272,7 @@
 		if ("twitch_v","twitch_s")
 			message = "<B>[src]</B> twitches violently."
 			m_type = 1
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/old_x = src.pixel_x
 				var/old_y = src.pixel_y
 				src.pixel_x += rand(-3,3)
@@ -381,10 +381,10 @@
 #ifdef DATALOGGER
 				game_stats.Increment("farts")
 #endif
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					src.emote_allowed = 1
 		else
-			src.show_text("Invalid Emote: [act]")
+			if (voluntary) src.show_text("Invalid Emote: [act]")
 			return
 
 	if ((message && isalive(src)))
@@ -545,7 +545,7 @@
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
 				user.visible_message("<span class='notice'>[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
 			if(INTENT_DISARM) //Shove
-				SPAWN_DBG(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
+				SPAWN(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
 				user.visible_message("<span class='alert'><B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B></span>")
 			if(INTENT_GRAB) //Shake
 				if(src.beebot == 1)
@@ -810,15 +810,15 @@ Frequency:
 
 /mob/living/silicon/hivebot/say_understands(var/other)
 	if (isAI(other))
-		return 1
+		return TRUE
 	if (ishuman(other))
 		var/mob/living/carbon/human/H = other
 		if (!H.mutantrace || !H.mutantrace.exclusive_language)
-			return 1
+			return TRUE
 		else
-			return 0
+			return ..()
 	if (isrobot(other) || isshell(other))
-		return 1
+		return TRUE
 	return ..()
 
 /mob/living/silicon/hivebot/say_quote(var/text)
@@ -938,7 +938,7 @@ Frequency:
 		src.attach_hud(hud)
 		if(!bioHolder)
 			bioHolder = new/datum/bioHolder( src )
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src.module)
 				qdel(src.module)
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/construction))
@@ -998,7 +998,7 @@ Frequency:
 					else
 						src.icon_state = "[initial(icon_state)]"
 				else
-					SPAWN_DBG(0)
+					SPAWN(0)
 						while(src.pixel_y < 10)
 							src.pixel_y++
 							sleep(0.1 SECONDS)

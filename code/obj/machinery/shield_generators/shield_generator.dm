@@ -27,7 +27,7 @@
 	New()
 		..()
 		src.UpdateIcon()
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			if (!src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
@@ -102,7 +102,7 @@
 		//Otherwise, ff they aren't addressing us, ignore them
 		if (signal.data["address_1"] != src.net_id)
 			if ((signal.data["address_1"] == "ping") && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.post_status(target, "command", "ping_reply", "device", "PNET_SHIELD_GEN", "netid", src.net_id)
 			return
 
@@ -169,7 +169,7 @@
 	proc/post_reply(error_text, target_id)
 		if (!error_text || !target_id)
 			return
-		SPAWN_DBG(0.3 SECONDS)
+		SPAWN(0.3 SECONDS)
 			src.post_status(target_id, "command", "device_reply", "status", error_text)
 		return
 

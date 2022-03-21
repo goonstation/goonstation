@@ -89,14 +89,16 @@
 		owner.set_body_icon_dirty()
 		animate_levitate(owner)
 
-		owner.add_stun_resist_mod("revenant", 1000)
+		APPLY_MOB_PROPERTY(owner, PROP_STUN_RESIST, "revenant", 100)
+		APPLY_MOB_PROPERTY(owner, PROP_STUN_RESIST_MAX, "revenant", 100)
 		APPLY_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/revenant, src.type)
 
 		..()
 
 	OnRemove()
 		if (owner)
-			owner.remove_stun_resist_mod("revenant")
+			REMOVE_MOB_PROPERTY(owner, PROP_STUN_RESIST, "revenant")
+			REMOVE_MOB_PROPERTY(owner, PROP_STUN_RESIST_MAX, "revenant")
 			REMOVE_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/revenant, src.type)
 		..()
 
@@ -133,8 +135,8 @@
 		W.set_loc(src.owner)
 		W.abilityHolder.topBarRendered = 0
 
-		message_admins("[key_name(wraith)] possessed the corpse of [owner] as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
-		logTheThing("combat", usr, null, "possessed the corpse of [owner] as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
+		message_admins("[key_name(wraith)] possessed the corpse of [owner] as a revenant at [log_loc(owner)].")
+		logTheThing("combat", usr, null, "possessed the corpse of [owner] as a revenant at [log_loc(owner)].")
 
 
 		if (src.wraith.mind) // theoretically shouldn't happen
@@ -158,9 +160,9 @@
 		if (!src.owner.mind && !src.owner.client)
 			return
 
-		message_admins("Revenant [key_name(owner)] died at [showCoords(owner.x, owner.y, owner.z)].")
+		message_admins("Revenant [key_name(owner)] died at [log_loc(owner)].")
 		playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
-		logTheThing("combat", usr, null, "died as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
+		logTheThing("combat", usr, null, "died as a revenant at [log_loc(owner)].")
 		if (owner.mind)
 			owner.mind.transfer_to(src.wraith)
 		else if (owner.client)
@@ -209,7 +211,7 @@
 		if (owner.health < -50 || owner.max_health < -50) // Makes revenants have a definite time limit, instead of being able to just spam abilities in deepcrit.
 			boutput(owner, "<span class='alert'><strong>This vessel has grown too weak to maintain your presence.</strong></span>")
 			playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
-			owner.death(0) // todo: add custom death
+			owner.death(FALSE) // todo: add custom death
 			return
 
 		var/e_decomp_stage = 0
@@ -299,7 +301,7 @@
 			return
 		last_cast = world.time + cooldown
 		holder.updateButtons()
-		SPAWN_DBG(cooldown + 5)
+		SPAWN(cooldown + 5)
 			holder.updateButtons()
 
 
@@ -338,7 +340,7 @@
 					current_prob *= 0.75
 					thrown += O
 					animate_float(O)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(target, 32, 2)
 
@@ -356,7 +358,7 @@
 
 	proc/shock(var/turf/T)
 		playsound(usr.loc, "sound/voice/wraith/revshock.ogg", 30, 0)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/mob/living/carbon/human/M in T)
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
 					M.changeStatus("weakened", 2 SECONDS)
@@ -395,7 +397,7 @@
 		for (var/turf/T in orange(1, origin))
 			next += T
 			next[T] = get_dir(origin, T)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/i = 1, i <= iteration_depth, i++)
 				for (var/turf/T in next)
 					shock(T)
@@ -521,7 +523,7 @@
 		if (!RH || !istype(RH, /datum/abilityHolder/revenant/))
 			return
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			var/iterations = 0
 			while (holder.owner.loc == location && isalive(holder.owner) && !holder.owner.equipped())
 				iterations++

@@ -34,7 +34,7 @@
 			carried_reagents[reagent_id] = current_reagent.volume * carrymult
 
 /datum/effects/system/foam_spread/proc/start()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/obj/effects/foam/F = locate() in location
 		if(F)
 			DEBUG_MESSAGE("Located [F] in [location]")

@@ -68,7 +68,7 @@
 		user.TakeDamage("head", 0, 50 * icecount)
 		user.changeStatus("paralysis", icecount SECONDS) //in case the damage isn't enough to crit
 		user.bodytemperature -= 100
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -79,7 +79,7 @@
 /obj/item/reagent_containers/food/snacks/ice_cream/random
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.reagents)
 				var/flavor = null
 				if (all_functional_reagent_ids.len > 1)

@@ -179,12 +179,12 @@
 	boutput(world, "<span class='alert'>Lockdown cancelled by [usr.name]!</span>")
 
 	for(var/obj/machinery/firealarm/FA as anything in machine_registry[MACHINES_FIREALARMS]) //deactivate firealarms
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(FA.lockdownbyai == 1)
 				FA.lockdownbyai = 0
 				FA.reset()
 	for_by_tcl(AL, /obj/machinery/door/airlock) //open airlocks
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(AL.canAIControl() && AL.lockdownbyai == 1)
 				AL.open()
 				AL.lockdownbyai = 0

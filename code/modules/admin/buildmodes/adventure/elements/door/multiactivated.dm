@@ -20,7 +20,7 @@
 				door.act_needed = act_needed
 				if (door_type == "glass" || door_type == "runes")
 					door.opacity = 0
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					door.color = color_rgb
 		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable/door))

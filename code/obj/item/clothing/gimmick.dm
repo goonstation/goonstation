@@ -372,10 +372,13 @@
 /obj/item/clothing/mask/cursedclown_hat/custom_suicide = 1
 /obj/item/clothing/mask/cursedclown_hat/suicide_in_hand = 0
 /obj/item/clothing/mask/cursedclown_hat/suicide(var/mob/user, var/slot)
-	if (!user || user.wear_mask == src || get_dist(user, src) > 0)
+	if (user.wear_mask == src)
+		boutput(user, "<span class='alert'>You can't get the mask off to look into its eyes!</span>")
+
+	if (!user || get_dist(user, src) > 0)
 		return 0
 	user.visible_message("<span class='alert'><b>[user] gazes into the eyes of the [src.name]. The [src.name] gazes back!</b></span>") //And when you gaze long into an abyss, the abyss also gazes into you.
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		playsound(src.loc, "sound/voice/chanting.ogg", 25, 0, 0)
 		playsound(src.loc, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0)
 		sleep(1.5 SECONDS)
@@ -1178,7 +1181,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 			return
 		src.layer = initial(src.layer)
 		playsound(src.loc, "sound/items/coindrop.ogg", 50, 1, null, 2)
-		SPAWN_DBG(rand(2,5))
+		SPAWN(rand(2,5))
 			if (src && isturf(src.loc))
 				var/obj/table/T = locate(/obj/table) in range(3,src)
 				if (prob(66) && T)
@@ -1398,7 +1401,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	equipped(var/mob/user, var/slot)
 		if (slot == SLOT_W_UNIFORM && user.bioHolder)
 			user.bioHolder.AddEffect("jumpy_suit", 0, 0, 0, 1) // id, variant, time left, do stability, magical
-			SPAWN_DBG(0) // bluhhhhhhhh this doesn't work without a spawn
+			SPAWN(0) // bluhhhhhhhh this doesn't work without a spawn
 				if (ishuman(user))
 					var/mob/living/carbon/human/H = user
 					if (H.hud)

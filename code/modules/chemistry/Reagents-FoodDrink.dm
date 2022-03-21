@@ -98,6 +98,19 @@ datum
 			thirst_value = 0.75
 			value = 3 // 1 2
 
+		fooddrink/milk/blue_milk
+			name = "blue milk"
+			id = "blue_milk"
+			fluid_r = 196
+			fluid_g = 196
+			fluid_b = 248
+			transparency = 255
+			taste = "oily and sweet."
+			description = "Smells like blueberries and tastes worse."
+			reagent_state = LIQUID
+			thirst_value = 0.75
+			value = 3 // 1 2
+
 		fooddrink/milk/milk_punch
 			name = "milk punch"
 			id = "milk_punch"
@@ -487,7 +500,8 @@ datum
 						if (volume_passed + H.reagents.get_reagent_amount("bojack") > 10)
 
 							boutput(M, "<span class='alert'>Oh god, this stuff is far too manly to keep down...!</span>")
-							SPAWN_DBG(pick(30,50,70))
+							SPAWN(pick(30,50,70))
+								if(QDELETED(M) || QDELETED(M.reagents)) return
 								M.visible_message("<span class='alert'>[M] pukes everywhere and passes out!</span>")
 								M.vomit()
 								M.reagents.del_reagent("bojack")
@@ -656,7 +670,7 @@ datum
 									old_glasses.layer = initial(old_glasses.layer)
 							else
 								qdel(H.glasses)
-							SPAWN_DBG(0.5 SECONDS)
+							SPAWN(0.5 SECONDS)
 								if (H)
 									var/obj/item/clothing/glasses/eyepatch/E = new /obj/item/clothing/glasses/eyepatch(H)
 									E.name = "Pirate Eyepatch"
@@ -855,7 +869,7 @@ datum
 				var/power_granted = pick(mutini_effects)
 				var/power_time = rand(1,10)
 				M.bioHolder.AddEffect(power_granted)//, 0, power_time) the timeLeft var either wasn't working here or was grumpy about something so now we manually remove this below
-				SPAWN_DBG(power_time*10)
+				SPAWN(power_time*10)
 					if (M?.bioHolder)
 						M.bioHolder.RemoveEffect(power_granted)
 
@@ -867,7 +881,7 @@ datum
 				var/power_granted = pick(mutini_effects)
 				var/power_time = rand(1,10)
 				M.bioHolder.AddEffect(power_granted)//, 0, power_time)
-				SPAWN_DBG(power_time*10)
+				SPAWN(power_time*10)
 					if (M?.bioHolder)
 						M.bioHolder.RemoveEffect(power_granted)
 				..()
@@ -972,15 +986,15 @@ datum
 			taste = "fruity"
 
 		fooddrink/alcoholic/beach
-			name = "Sex on the Beach"
+			name = "Bliss on the Beach"
 			id = "beach"
 			fluid_r = 227
 			fluid_g = 121
 			fluid_b = 98
 			alch_strength = 0.1
-			description = "Fun fact: the name of this cocktail was deemed a war crime in 2025."
+			description = "Fun fact: the previous name of this cocktail was deemed a war crime in 2025."
 			reagent_state = LIQUID
-			taste = "sexy"
+			taste = "blissfully"
 
 		fooddrink/alcoholic/gtonic
 			name = "Gin and Tonic"
@@ -1018,6 +1032,7 @@ datum
 			taste = "FAST"
 			bladder_value = -5
 			stun_resist = 6
+			threshold = THRESHOLD_INIT
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -1108,7 +1123,7 @@ datum
 					if(istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", 100 SECONDS * mult)
 					if (prob(50))
-						SPAWN_DBG(2 SECONDS)
+						SPAWN(2 SECONDS)
 							//Roast up the player
 							if (M)
 								boutput(M, "<span class='alert'><b>IT BURNS!!!!</b></span>")
@@ -1314,6 +1329,7 @@ datum
 			description = "Mmm, tastes like heart attacks."
 			reagent_state = LIQUID
 			stun_resist = 8
+			threshold = THRESHOLD_INIT
 
 		fooddrink/alcoholic/longisland
 			name = "Long Island Iced Tea"
@@ -1596,7 +1612,7 @@ datum
 				if(probmult(0.2 * volume))
 					M.emote("scream")
 					boutput(M, "<span class='notice'><b>Oh. God.</b></span>")
-					SPAWN_DBG(2 SECONDS)
+					SPAWN(2 SECONDS)
 						if (M)
 							M.become_statue_ice()
 				..()
@@ -1820,6 +1836,17 @@ datum
 			description = "Contains no tea, and also no radioactive particles."
 			reagent_state = LIQUID
 			taste = "overwhelming"
+
+		fooddrink/alcoholic/romulale
+			name = "Romulale"
+			id = "romulale"
+			fluid_r = 20
+			fluid_g = 168
+			fluid_b = 240
+			alch_strength = 0.8
+			description = "Illegal in some jurisdictions."
+			reagent_state = LIQUID
+			taste ="medicinal"
 
 		fooddrink/sodawater
 			name = "soda water"
@@ -2212,18 +2239,19 @@ datum
 			energy_value = 0.3
 			stun_resist = 7
 			taste = "bitter"
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "consumable_good", 2)
-				. = ..()
+				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "consumable_good")
-				. = ..()
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
@@ -2255,18 +2283,19 @@ datum
 			var/caffeine_jitters = 10
 			stun_resist = 10
 			taste = "rich and fragrant"
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "caffeine rush", src.caffeine_rush)
-				. = ..()
+				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "caffeine rush")
-				. = ..()
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
@@ -2278,7 +2307,9 @@ datum
 			description = "An expresso is a strong black coffee with more stupid."
 			taste = "coffee yum"
 			stun_resist = 25
+			threshold = THRESHOLD_INIT
 			var/killer = 0
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
 				if(M.get_brain_damage() < 60 || killer)
@@ -2317,18 +2348,20 @@ datum
 			energy_value = 1
 			stun_resist = 25
 			taste = "supercharged"
+			threshold = THRESHOLD_INIT
 
-			on_add()
-				if (ismob(holder?.my_atom))
+
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/energydrink, src.type)
-				return ..()
+				..()
 
-			on_remove()
-				if (ismob(holder?.my_atom))
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/energydrink, src.type)
-				return ..()
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -2558,13 +2591,15 @@ datum
 			bladder_value = -1
 			viscosity = 0.3
 			taste = "festive"
+			threshold = THRESHOLD_INIT
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				M.reagents.add_reagent("sugar", 1.6 * mult)
 				M.nutrition++
 				..()
 
-			on_add()
+			cross_threshold_over()
+				..()
 				if(holder && ismob(holder.my_atom))
 					var/mob/M = holder.my_atom
 					if(M.client)
@@ -3561,15 +3596,20 @@ datum
 			bladder_value = -2
 			stun_resist = 100
 			taste = "bonkers"
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "tripletriple", 3333)
-
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
 					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
+				..()
+
+			cross_threshold_under()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "tripletriple")
 				..()
 
 			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
@@ -3581,17 +3621,9 @@ datum
 					boutput(M, "<span class='notice'><B>You feel refreshed.<B></span>")
 
 			on_remove()
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
-
+				..()
 				if(hascall(holder.my_atom,"removeOverlayComposition"))
 					holder.my_atom:removeOverlayComposition(/datum/overlayComposition/triplemeth)
-
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "tripletriple")
-				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
@@ -3710,6 +3742,85 @@ datum
 			viscosity = 0.1
 			taste = "refreshing"
 
+		fooddrink/laurapalmer
+			name = "laura palmer"
+			id = "laurapalmer"
+			fluid_r = 132
+			fluid_g = 110
+			fluid_b = 41
+			transparency = 200
+			taste = "bittersweet."
+			description = "A mixture of half lemonade and half coffee."
+			reagent_state = LIQUID
+			thirst_value = 0.75
+
+		fooddrink/pine_ginger
+			name = "pine-ginger"
+			id = "pine_ginger"
+			fluid_r = 230
+			fluid_g = 210
+			fluid_b = 90
+			transparency = 220
+			taste = "sweet and fruity"
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/vermont_breeze
+			name = "vermont breeze"
+			id = "vermont_breeze"
+			fluid_r = 220
+			fluid_g = 200
+			fluid_b = 80
+			transparency = 195
+			taste = "sweet and sour"
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/sail_boat
+			name = "sail boat"
+			id = "sail_boat"
+			fluid_r = 160
+			fluid_g = 220
+			fluid_b = 90
+			transparency = 160
+			taste = "sour and fizzy"
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/catamount
+			name = "catamount"
+			id = "catamount"
+			fluid_r = 230
+			fluid_g = 100
+			fluid_b = 60
+			transparency = 200
+			taste = "sweet and fruity"
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/tea/sun_tea
+			name = "sun tea"
+			id = "sun_tea"
+			fluid_r = 139
+			fluid_g = 110
+			fluid_b = 54
+			transparency = 220
+			taste = "aromatic and citrusy"
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/cafe_gele
+			name = "cafe gele"
+			id = "cafe_gele"
+			fluid_r = 140
+			fluid_g = 110
+			fluid_b = 30
+			transparency = 220
+			taste = "bittersweet"
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+
 		fooddrink/temp_bioeffect
 			var/bioeffect_id = null
 
@@ -3745,6 +3856,16 @@ datum
 			fluid_b = 0
 			transparency = 20
 			bioeffect_id = "accent_swedish"
+
+		fooddrink/temp_bioeffect/innitium
+			name = "innitium"
+			id = "innitium"
+			description = "A real bri'ish substance, innit bruv?"
+			fluid_r = 0
+			fluid_g = 35
+			fluid_b = 121
+			transparency = 60
+			bioeffect_id = "accent_chav"
 
 		fooddrink/temp_bioeffect/caledonium
 			name = "caledonium"
@@ -3966,7 +4087,7 @@ datum
 					if(istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", 100 SECONDS * mult)
 					if(prob(50))
-						SPAWN_DBG(2 SECONDS)
+						SPAWN(2 SECONDS)
 							//Roast up the player
 							if (M)
 								boutput(M, "<span class='alert'><b>IT BURNS!!!!</b></span>")

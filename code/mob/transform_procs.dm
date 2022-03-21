@@ -92,7 +92,6 @@
 	return ..()
 
 /mob/proc/AIize(var/mobile=0, var/do_not_move = 0)
-	src.client.screen.len = null
 	var/mob/living/silicon/ai/O
 	if (mobile)
 		O = new /mob/living/silicon/ai/mobile( src.loc )
@@ -154,7 +153,7 @@
 	O.verbs += /mob/living/silicon/ai/proc/view_messageLog
 	O.job = "AI"
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		O.choose_name(3)
 
 		boutput(world, text("<b>[O.real_name] is the AI!</b>"))
@@ -198,7 +197,7 @@
 		var/mob/living/critter/small_animal/small = newmob
 		small.setup_overlays() // this requires the small animal to have a client to set things up properly
 
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		qdel(src)
 	return newmob
 
@@ -386,7 +385,7 @@
 			W.mind.current = W
 		qdel(src)
 
-		SPAWN_DBG(2.5 SECONDS) // Don't remove.
+		SPAWN(2.5 SECONDS) // Don't remove.
 			if (W) W.assign_gimmick_skull()
 
 		if(shitty)
@@ -465,7 +464,7 @@
 			W.mind.ckey = ckey
 			W.mind.key = key
 			W.mind.current = W
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		qdel(src)
 	return W
 

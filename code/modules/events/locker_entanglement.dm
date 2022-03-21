@@ -30,7 +30,7 @@
 
 		if(isnull(src.time))
 			src.time = rand(1 MINUTE, 5 MINUTES)
-		SPAWN_DBG(src.time)
+		SPAWN(src.time)
 			for(var/obj/storage/closet/closet as anything in closets)
 				closet.entangled = null
 			command_alert("Locker quantum stability restored.", src.centcom_headline)
