@@ -7,6 +7,7 @@
 	anchored = 1
 	mats = list("MET-1" = 20, "MET-2" = 5, "INS-1" = 10, "CON-1" = 10) //this bitch should be expensive
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_WRENCH | DECON_NOBORG
+	layer = EFFECTS_LAYER_UNDER_1 //high layer, same as trees which are also tall as shit
 
 	var/datum/light/light
 	var/const/MAX_CIRCUITS = 9
