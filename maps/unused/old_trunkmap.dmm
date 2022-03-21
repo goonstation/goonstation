@@ -31644,25 +31644,25 @@
 /area/station/engine/engineering)
 "btT" = (
 /turf/simulated/wall/r_wall,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "btU" = (
 /obj/storage/secure/closet/security/armory,
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "btV" = (
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "btW" = (
 /obj/rack,
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "btX" = (
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "btY" = (
 /turf/simulated/wall/asteroid{
 	icon_state = "ast1"
@@ -31675,7 +31675,7 @@
 	name = "Sorry"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bua" = (
 /turf/simulated/wall/r_wall,
 /area/station/security/prison)
@@ -31735,19 +31735,19 @@
 	name = "Fire Range Robot"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bui" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/ears/earmuffs,
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "buj" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "buk" = (
 /turf/simulated/wall,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bul" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor,
@@ -31858,7 +31858,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "buu" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -31871,7 +31871,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "buv" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -31879,7 +31879,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "buw" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -31891,7 +31891,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bux" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -31899,7 +31899,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/caution/east,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "buy" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -31916,7 +31916,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "buz" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -31927,7 +31927,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "buA" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -31949,7 +31949,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "buB" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -32101,18 +32101,18 @@
 /obj/machinery/recharger,
 /obj/cable,
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "buR" = (
 /obj/table/auto,
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "buS" = (
 /obj/table/auto,
 /obj/machinery/recharger,
 /obj/machinery/light,
 /obj/cable,
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "buT" = (
 /obj/cable{
 	d1 = 1;
@@ -32124,7 +32124,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "buU" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -32136,7 +32136,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/caution/east,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "buV" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -32157,7 +32157,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "buW" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -32169,7 +32169,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "buX" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -32195,7 +32195,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "buY" = (
 /obj/cable{
 	icon_state = "1-2";

@@ -2725,11 +2725,6 @@ ABSTRACT_TYPE(/area/station/security)
 /area/station/security/checkpoint/research
 		name = "Research Security Checkpoint"
 
-/area/station/security/armory //what the fuck this is not the real armory???
-	name = "Armory" //ai_monitored/armory is, shitty ass code
-	icon_state = "armory"
-	sound_environment = 2
-
 /area/station/security/prison
 	name = "Prison Station"
 	icon_state = "brig"

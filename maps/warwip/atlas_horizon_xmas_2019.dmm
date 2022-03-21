@@ -45476,11 +45476,11 @@
 /area/station/security/checkpoint/sec_foyer)
 "bWK" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bWL" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bWM" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
@@ -48030,7 +48030,7 @@
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ccr" = (
 /obj/machinery/vending/security_ammo,
 /obj/cable{
@@ -48039,7 +48039,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ccs" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/vertical,
 /obj/machinery/computer3/generic/communications,
@@ -48049,7 +48049,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "cct" = (
 /obj/machinery/light{
 	dir = 4;
@@ -48064,7 +48064,7 @@
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ccu" = (
 /obj/stool/bed/brig,
 /obj/item/clothing/glasses/vr{
@@ -49345,7 +49345,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "cfr" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -49358,21 +49358,21 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "cfs" = (
 /obj/disposalpipe/segment/bent/south,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/southwest,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "cft" = (
 /obj/disposalpipe/segment/bent/east,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/vertical,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "cfu" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -49384,7 +49384,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "cfv" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -50891,7 +50891,7 @@
 /obj/access_spawn/hos,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ciD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -50905,7 +50905,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ciE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -50920,7 +50920,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ciF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -50933,7 +50933,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ciG" = (
 /obj/cable{
 	d2 = 8;
@@ -50954,7 +50954,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ciH" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -52202,14 +52202,14 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "clt" = (
 /obj/disposalpipe/segment/bent/north,
 /obj/machinery/atmospherics/pipe/manifold/overfloor/south,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "clu" = (
 /obj/disposalpipe/segment/brig,
 /obj/disposalpipe/segment/food{
@@ -52219,7 +52219,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "clv" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -52234,7 +52234,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "clw" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -53600,14 +53600,14 @@
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "cor" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
 /obj/storage/secure/crate/weapon/armory/shotgun,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "cos" = (
 /obj/disposalpipe/segment/brig,
 /obj/disposalpipe/segment/transport{
@@ -53616,7 +53616,7 @@
 /obj/storage/secure/crate/weapon/armory/pod_weapons,
 /obj/item/shipcomponent/mainweapon/disruptor,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "cot" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -53630,7 +53630,7 @@
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "cou" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -54715,7 +54715,7 @@
 "cqS" = (
 /obj/disposalpipe/segment/brig,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "cqT" = (
 /obj/disposalpipe/segment/transport,
 /obj/stool/chair/red{
@@ -75368,7 +75368,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "nXe" = (
 /obj/table/reinforced/auto,
 /obj/shrub{
