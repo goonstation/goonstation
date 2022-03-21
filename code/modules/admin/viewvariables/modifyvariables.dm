@@ -37,186 +37,33 @@
 		src.debug_variables(global_spawn_dbg)
 #endif
 
-/client/proc/mod_list_add_ass(var/list/L, var/index) //haha
-	var/class = input("What kind of variable?","Variable Type") as null|anything in list("text",
-	"num", "type", "json", "ref", "reference", "mob reference", "turf by coordinates", "reference picker", "new instance of a type", "icon", "file", "color")
-
-	if (!class)
-		return
-
-	if (!holder || holder.level < LEVEL_PA)
-		return
-
-	var/var_value = null
-
-	switch(class)
-
-		if ("text")
-			var_value = input("Enter new text:","Text") as null|text
-
-		if ("num")
-			var_value = input("Enter new number:","Num") as null|num
-
-		if ("type")
-			var_value = input("Enter type:","Type") in null|typesof(/obj,/mob,/area,/turf)
-
-		if("json")
-			var_value = json_decode(input("Enter json:") as null|text)
-
-		if ("ref")
-			var/input = input("Enter ref:") as null|text
-			var/target = locate(input)
-			if (!target) target = locate("\[[input]\]")
-			var_value = target
-
-		if ("reference")
-			var_value = input("Select reference:","Reference") as null|mob|obj|turf|area in world
-
-		if ("mob reference")
-			var_value = input("Select reference:","Reference") as null|mob in world
-
-		if ("file")
-			var_value = input("Pick file:","File") as null|file
-
-		if ("icon")
-			var_value = input("Pick icon:","Icon") as null|icon
-
-		if ("color")
-			var_value = input("Pick color:","Color") as null|color
-
-		if ("turf by coordinates")
-			var/x = input("X coordinate", "Set to turf at \[_, ?, ?\]", 1) as null|num
-			var/y = input("Y coordinate", "Set to turf at \[[x], _, ?\]", 1) as null|num
-			var/z = input("Z coordinate", "Set to turf at \[[x], [y], _\]", 1) as null|num
-			var/turf/T = locate(x, y, z)
-			if (istype(T))
-				var_value = T
-			else
-				boutput(usr, "<span class='alert'>Invalid coordinates!</span>")
-				return
-
-		if ("reference picker")
-			boutput(usr, "<span class='notice'>Click the mob, object or turf to use as a reference.</span>")
-			var/mob/M = usr
-			if (istype(M))
-				var/datum/targetable/listrefpicker/R = new()
-				R.target = L
-				R.varname = index
-				M.targeting_ability = R
-				M.update_cursor()
-			return
-
-		if ("new instance of a type")
-			boutput(usr, "<span class='notice'>Type part of the path of type of thing to instantiate.</span>")
-			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
-			if (typename)
-				var/basetype = /obj
-				if (src.holder.rank in list("Host", "Coder", "Administrator"))
-					basetype = /datum
-				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
-				if (match)
-					var_value = new match()
-
-	if (!var_value) return
-
-	return var_value
-
-
 /client/proc/mod_list_add(var/list/L)
-	var/class = input("What kind of variable?","Variable Type") as null|anything in list("text",
-	"num", "type", "json", "type", "reference", "mob reference", "turf by coordinates", "reference picker", "new instance of a type", "icon", "file", "color")
+	ADMIN_ONLY
 
-	if (!class)
+	var/val_result = src.data_input(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
+								  DATA_INPUT_FILE, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE))
+
+	if (isnull(val_result.output))
 		return
 
-	if (!holder || holder.level < LEVEL_PA)
-		return
-
-	var/var_value = null
-
-	switch(class)
-
-		if ("text")
-			var_value = input("Enter new text:","Text") as null|text
-
-		if ("num")
-			var_value = input("Enter new number:","Num") as null|num
-
-		if ("type")
-			var_value = input("Enter type:","Type") in null|typesof(/obj,/mob,/area,/turf)
-
-		if("json")
-			var_value = json_decode(input("Enter json:") as null|text)
-
-		if ("ref")
-			var/input = input("Enter ref:") as null|text
-			var/target = locate(input)
-			if (!target) target = locate("\[[input]\]")
-			var_value = target
-
-		if ("reference")
-			var_value = input("Select reference:","Reference") as null|mob|obj|turf|area in world
-
-		if ("mob reference")
-			var_value = input("Select reference:","Reference") as null|mob in world
-
-		if ("file")
-			var_value = input("Pick file:","File") as null|file
-
-		if ("icon")
-			var_value = input("Pick icon:","Icon") as null|icon
-
-		if ("color")
-			var_value = input("Pick color:","Color") as null|color
-
-		if ("turf by coordinates")
-			var/x = input("X coordinate", "Set to turf at \[_, ?, ?\]", 1) as null|num
-			var/y = input("Y coordinate", "Set to turf at \[[x], _, ?\]", 1) as null|num
-			var/z = input("Z coordinate", "Set to turf at \[[x], [y], _\]", 1) as null|num
-			var/turf/T = locate(x, y, z)
-			if (istype(T))
-				var_value = T
-			else
-				boutput(usr, "<span class='alert'>Invalid coordinates!</span>")
-				return
-
-		if ("reference picker")
-			boutput(usr, "<span class='notice'>Click the mob, object or turf to use as a reference.</span>")
-			var/mob/M = usr
-			if (istype(M))
-				var/datum/targetable/addtolistrefpicker/R = new()
-				R.target = L
-				M.targeting_ability = R
-				M.update_cursor()
-			return
-
-		if ("new instance of a type")
-			boutput(usr, "<span class='notice'>Type part of the path of type of thing to instantiate.</span>")
-			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
-			if (typename)
-				var/basetype = /obj
-				if (src.holder.rank in list("Host", "Coder", "Administrator"))
-					basetype = /datum
-				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
-				if (match)
-					var_value = new match()
-
-	if (!var_value) return
-
-	if (islist(var_value))
+	if (islist(val_result.output))
 		//embed the list inside rather than combining the two
-		L += list(var_value)
+		L += list(val_result.output)
 	else
-		switch(alert("Would you like to associate a var with the list entry?",,"Yes","No"))
-			if("Yes")
-				L += var_value
-				L[var_value] = mod_list_add_ass(L, var_value) //haha
-			if("No")
-				L += var_value
+		if(alert("Would you like to associate a value with the list entry and use the previously entered value as the key?",null,"Yes","No") == "Yes")
+			//RIP mod_list_add_ass, initial commit - March 2022
+			var/key_result = src.data_input(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
+								  DATA_INPUT_FILE, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE))
+			if (!isnull(key_result.output))
+				L[var_value] = key_result.output
+		L += var_value
 
 
 /client/proc/mod_list(var/list/L)
-	if(!islist(L)) boutput(src, "Not a List.")
+	ADMIN_ONLY
+
+	if(!islist(L))
+		boutput(src, "Not a List.")
 
 	var/list/locked = list("vars", "key", "ckey", "client", "holder")
 

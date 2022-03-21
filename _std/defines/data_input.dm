@@ -4,7 +4,6 @@
 #define DATA_INPUT_COLOR "Color"
 #define DATA_INPUT_TEXT "Text"
 #define DATA_INPUT_ICON "Icon"
-#define DATA_INPUT_LIST "List" //fuck you
 #define DATA_INPUT_FILE "File"
 #define DATA_INPUT_DIR "Direction"
 #define DATA_INPUT_JSON "JSON"
@@ -12,13 +11,15 @@
 #define DATA_INPUT_TURF_BY_COORDS "Turf By Coordinates"
 #define DATA_INPUT_REFPICKER "Reference Picker"
 #define DATA_INPUT_NEW_INSTANCE "New Instance of a Type"
-#define DATA_INPUT_NUM_ADJUST "Num Adjust"
 #define DATA_INPUT_ATOM_ON_CURRENT_TURF "Reference Atom at Current Turf"
 #define DATA_INPUT_NULL "null"
 #define DATA_INPUT_RESTORE "Restore to Default (WILL NULL LISTS AND OBJECTS)"
-#define DATA_INPUT_NEW_LIST "New List" //TODO some way to build lists for proc calling/args
+#define DATA_INPUT_BUILD_LIST "Build New List" //TODO some way to build lists for proc calling/args
 #define DATA_INPUT_MOB_REFERENCE "Mob Reference"
 #define DATA_INPUT_BOOL "Boolean"
+
+// varediting options
+#define DATA_INPUT_NUM_ADJUST "Num Adjust"
 #define DATA_INPUT_PARTICLE_EDITOR "Particle Editor"
 #define DATA_INPUT_FILTER_EDITOR "Filter Editor"
 #define DATA_INPUT_MATRIX "Matrix"

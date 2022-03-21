@@ -128,8 +128,8 @@
 		if (DATA_INPUT_NULL) // this is the one case a null output is allowed- we check to ensure the selected input type is this
 			input = null //yes i am aware this is a useless statement. Clarity!!!
 
-		if (DATA_INPUT_NEW_LIST)
-			input = list()
+		if (DATA_INPUT_BUILD_LIST)
+			input = build_list()
 
 		if (DATA_INPUT_MOB_REFERENCE)
 			input = input(custom_title || "Select a mob:") as null|mob in world
@@ -170,6 +170,9 @@
 	// Done with the switch. Now we return whatever we have
 	var/datum/data_input_result/result = new(input, selected_type)
 	return result
+
+///Iteratively build a new list, then return it.
+/client/proc/build_list()
 
 /// A datum holding the data the caller needs- the formatted output itself and the format the src selected (text, JSON, color, etc etc)
 /// Functionally a named tuple.
