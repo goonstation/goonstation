@@ -48,9 +48,6 @@
 			//lines written by the utterly insane
 			input = alert(custom_title || "True or False?", custom_message + (!isnull(default) ? "(Default: [default ? "True" : "False"])" : null), "True", "False") == "True" ? TRUE : FALSE
 
-		if (DATA_INPUT_LIST)
-			//TODO uhhhhhhhh h
-
 		if (DATA_INPUT_FILE)
 			input = input(custom_title || "Select file:", custom_message) as null|file
 
@@ -131,6 +128,10 @@
 		if (DATA_INPUT_BUILD_LIST)
 			input = build_list()
 
+		if (DATA_INPUT_EDIT_LIST)
+			input = TRUE
+			mod_list(default) // this modifies in place, so no need to return any meaningful value.
+
 		if (DATA_INPUT_MOB_REFERENCE)
 			input = input(custom_title || "Select a mob:") as null|mob in world
 
@@ -173,6 +174,12 @@
 
 ///Iteratively build a new list, then return it.
 /client/proc/build_list()
+	. = list()
+	var/idx = 0
+	var/confirm = TRUE
+	while(confirm)
+		idx++
+		confirm = src.mod_list_add(., "Type of element #[idx]")
 
 /// A datum holding the data the caller needs- the formatted output itself and the format the src selected (text, JSON, color, etc etc)
 /// Functionally a named tuple.

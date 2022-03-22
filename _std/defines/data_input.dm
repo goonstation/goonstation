@@ -14,7 +14,8 @@
 #define DATA_INPUT_ATOM_ON_CURRENT_TURF "Reference Atom at Current Turf"
 #define DATA_INPUT_NULL "null"
 #define DATA_INPUT_RESTORE "Restore to Default (WILL NULL LISTS AND OBJECTS)"
-#define DATA_INPUT_BUILD_LIST "Build New List" //TODO some way to build lists for proc calling/args
+#define DATA_INPUT_BUILD_LIST "Build New List"
+#define DATA_INPUT_EDIT_LIST "Edit as List"
 #define DATA_INPUT_MOB_REFERENCE "Mob Reference"
 #define DATA_INPUT_BOOL "Boolean"
 

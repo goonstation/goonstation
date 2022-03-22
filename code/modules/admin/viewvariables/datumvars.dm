@@ -783,7 +783,7 @@
 
 	else if (islist(var_value))
 		boutput(usr, "Variable appears to be <b>LIST</b>.")
-		default = DATA_INPUT_LIST
+		default = DATA_INPUT_EDIT_LIST
 
 	else
 		boutput(usr, "Variable appears to be <b>FILE</b>.")

@@ -37,14 +37,15 @@
 		src.debug_variables(global_spawn_dbg)
 #endif
 
-/client/proc/mod_list_add(var/list/L)
+/client/proc/mod_list_add(var/list/L, var/header = null)
 	ADMIN_ONLY
 
-	var/val_result = src.data_input(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
-								  DATA_INPUT_FILE, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE))
+	var/datum/data_input_result/val_result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
+								  DATA_INPUT_FILE, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE), \
+								  custom_type_title = header)
 
 	if (isnull(val_result.output))
-		return
+		return FALSE
 
 	if (islist(val_result.output))
 		//embed the list inside rather than combining the two
@@ -52,11 +53,12 @@
 	else
 		if(alert("Would you like to associate a value with the list entry and use the previously entered value as the key?",null,"Yes","No") == "Yes")
 			//RIP mod_list_add_ass, initial commit - March 2022
-			var/key_result = src.data_input(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
-								  DATA_INPUT_FILE, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE))
+			var/datum/data_input_result/key_result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
+								  DATA_INPUT_FILE, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_BUILD_LIST))
 			if (!isnull(key_result.output))
-				L[var_value] = key_result.output
-		L += var_value
+				L[val_result] = key_result.output
+		L += val_result
+	return TRUE
 
 
 /client/proc/mod_list(var/list/L)
