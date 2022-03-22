@@ -99,7 +99,7 @@
 			abil.promise = promise
 			src.mob.targeting_ability = abil
 			src.mob.update_cursor()
-			input = promise.wait_for_value() //TODO timeout? maybe?
+			input = promise.wait_for_value()
 
 		if (DATA_INPUT_NEW_INSTANCE)
 			var/stub = input(custom_title || "Enter part of type:", custom_message) as null|text
@@ -201,12 +201,12 @@
 /// @param var_value The value to evaluate
 /// @param L The list the value is contained in, if applicable, to determine if the var value is associated to another value
 /// @return Suggested input type for input_data()
-/client/proc/suggest_input_type(var/var_value, var/varname = null, var/list/L = null)
+/client/proc/suggest_input_type(var/var_value, var/varname = null, var/list/list = null)
 	var/default = null
 	if (isnull(var_value))
 		boutput(src, "Unable to determine variable type.")
 
-	else if (L && !isnull(L[var_value]))
+	else if (list && !isnull(list[var_value]))
 		boutput(src, "Variable appears to be an associated list entry.")
 		default = DATA_INPUT_LIST_EDIT_ASSOCIATED
 

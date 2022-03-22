@@ -93,7 +93,7 @@
 	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Administrator")))
 		return
 
-	var/default = suggest_input_type(variable, )
+	var/default = suggest_input_type(variable, list = L)
 
 	var/datum/data_input_result/result = input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
 													DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_ICON, DATA_INPUT_FILE, \
