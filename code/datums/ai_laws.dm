@@ -110,6 +110,8 @@
 /* ION STORM */
 	proc/ion_storm_all_racks(var/picked_law="Beep repeatedly.",var/lawnumber=2,var/replace=true)
 		for(var/obj/machinery/lawrack/R in src.registered_racks)
+			if(istype(R,/obj/machinery/lawrack/syndicate))
+				continue //sadly syndie law racks must be immune to ion storms, because nobody can actually get at them to fix them.
 			if(R.cause_law_glitch(picked_law,lawnumber,replace))
 				R.UpdateLaws()
 

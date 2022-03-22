@@ -571,8 +571,8 @@
 			lawnumber_actual = lawnumber
 		else
 			for (var/i in 1 to MAX_CIRCUITS)
-				//if the difference between target and current is less than the difference between current and best, and also is a module
-				if(src.law_circuits[i] && abs(lawnumber - i) <= abs(i - lawnumber_actual))
+				//if the difference between target and current is less than the difference between target and best, and also is a module
+				if(src.law_circuits[i] && (abs(lawnumber - i) <= abs(lawnumber - lawnumber_actual)))
 					lawnumber_actual = i
 		if(!src.law_circuits[lawnumber_actual])
 			return false //we could not find a law to modify, sorry
@@ -621,5 +621,3 @@
 	name = "AI Law Mount Rack - Syndicate Model"
 	icon_state = "airack_syndicate_empty"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behaivor of connected AIs. This one has a little S motif on the side."
-
-
