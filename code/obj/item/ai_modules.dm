@@ -195,11 +195,11 @@ AI MODULES
 	highlight_color = rgb(0, 0, 0, 236)
 
 	update_law_text(var/lawTarget)
-		src.lawText = "Only [lawTarget ? lawTarget : "__________"] is not human."
+		src.lawText = "[lawTarget ? capitalize(lawTarget) : "__________"] is not human."
 		return ..()
 
 	attack_self(var/mob/user)
-		var/lawTarget = input_law_info(user, "One Human", "Fill in the blank: \"Only __________ is not human.\"", user.real_name)
+		var/lawTarget = input_law_info(user, "One Non-Human", "Fill in the blank: \"__________ is not human.\"", user.real_name)
 		if(lawTarget)
 			src.update_law_text(lawTarget)
 		return
