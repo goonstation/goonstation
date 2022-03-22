@@ -5891,7 +5891,10 @@
 	},
 /area/space)
 "aqj" = (
-/turf/space,
+/obj/rack,
+/obj/item/satchel/mining/large,
+/obj/item/satchel/mining/large,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/mining/mainasteroid)
 "aqk" = (
 /turf/simulated/wall/asteroid{
@@ -7104,11 +7107,8 @@
 /turf/simulated/floor/bot,
 /area/radiostation/engineering)
 "asW" = (
-/obj/rack,
-/obj/item/satchel/mining/large,
-/obj/item/satchel/mining/large,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/mining/mainasteroid)
+/turf/simulated/floor/delivery,
+/area/mining/hangar)
 "asX" = (
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor2"
@@ -9445,19 +9445,18 @@
 /turf/simulated/floor/plating,
 /area/evilreaver/genetics)
 "azq" = (
-/obj/lattice{
+/obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	icon_state = "lattice-dir"
+	name = "Mining Outpost";
+	req_access_txt = "51"
 	},
-/turf/space,
-/area/mining/mainasteroid)
+/turf/simulated/floor/grime,
+/area/mining/hangar)
 "azr" = (
-/obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir"
+/turf/simulated/floor/orangeblack/side{
+	dir = 9
 	},
-/turf/space,
-/area/mining/mainasteroid)
+/area/mining/hangar)
 "azs" = (
 /obj/grille/catwalk,
 /obj/cable{
@@ -23919,9 +23918,10 @@
 /turf/space,
 /area/space)
 "bmX" = (
-/obj/effects/background_objects/x3,
-/turf/space,
-/area/space)
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
+/area/mining/hangar)
 "bmY" = (
 /obj/lattice{
 	dir = 5;
@@ -24224,6 +24224,12 @@
 	},
 /turf/space,
 /area/space)
+"cfW" = (
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/airless/carpet/office,
+/area/mining/hangar)
 "cSD" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
@@ -24231,6 +24237,10 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
+"cZx" = (
+/turf/space,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/mining/hangar)
 "daM" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 8
@@ -24261,6 +24271,12 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"evf" = (
+/obj/table/reinforced/auto,
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/mining/hangar)
 "exM" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating/damaged2,
@@ -24302,6 +24318,16 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
+"hkh" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname - Mining";
+	network = "Mining";
+	tag = ""
+	},
+/turf/simulated/floor/airless/carpet/office,
+/area/mining/hangar)
 "hme" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -24364,6 +24390,9 @@
 "iYn" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
+"iZr" = (
+/turf/simulated/floor/black,
+/area/mining/hangar)
 "jqk" = (
 /obj/decal/fakeobjects/lightbulb_broken,
 /turf/simulated/floor/airless/grime,
@@ -24379,6 +24408,18 @@
 	},
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedmedicalship)
+"jRX" = (
+/obj/item/device/radio/intercom/engineering{
+	dir = 4
+	},
+/turf/simulated/floor/airless/carpet/office,
+/area/mining/hangar)
+"jYx" = (
+/obj/stool/chair/comfy{
+	dir = 4
+	},
+/turf/simulated/floor/airless/carpet/office,
+/area/mining/hangar)
 "jZt" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor/plating/airless,
@@ -24437,6 +24478,27 @@
 	name = "space"
 	},
 /area/helldrone)
+"maw" = (
+/obj/stool/chair/comfy{
+	dir = 8
+	},
+/turf/simulated/floor/airless/carpet/office,
+/area/mining/hangar)
+"mea" = (
+/turf/unsimulated/floor/caution/east,
+/area/mining/hangar)
+"mFm" = (
+/obj/table/wood/round/champagne,
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 6;
+	pixel_y = 16
+	},
+/obj/machinery/light,
+/obj/item/decoration/ashtray{
+	pixel_x = -3
+	},
+/turf/simulated/floor/airless/carpet/office,
+/area/mining/hangar)
 "mHM" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
@@ -24450,6 +24512,10 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
+"nql" = (
+/obj/effects/background_objects/fatuus,
+/turf/space,
+/area/space)
 "nre" = (
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
@@ -24538,6 +24604,14 @@
 /obj/item/storage/box/record/notaquario,
 /turf/simulated/floor/wood/two,
 /area/space)
+"per" = (
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
+/obj/table/wood/round/champagne,
+/obj/machinery/phone,
+/turf/simulated/floor/airless/carpet/office,
+/area/mining/hangar)
 "plh" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -24585,6 +24659,21 @@
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
+"qnw" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/mining/hangar)
+"qum" = (
+/turf/space,
+/turf/simulated/floor/stairs{
+	dir = 1
+	},
+/area/mining/hangar)
 "qBE" = (
 /obj/lattice{
 	dir = 1;
@@ -24601,6 +24690,9 @@
 	},
 /turf/simulated/floor,
 /area/iss)
+"rbG" = (
+/turf/simulated/floor/airless/carpet/office,
+/area/mining/hangar)
 "rdq" = (
 /obj/decal/cleanable/gangtag{
 	icon_state = "gangtag22";
@@ -24639,6 +24731,10 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"sjy" = (
+/obj/stool/chair/comfy,
+/turf/simulated/floor/airless/carpet/office,
+/area/mining/hangar)
 "sFV" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/timewarp/ship)
@@ -24658,6 +24754,13 @@
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/longtile/black,
 /area/space)
+"sYT" = (
+/obj/storage/closet/welding_supply,
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/turf/space,
+/area/mining/hangar)
 "tha" = (
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4
@@ -24670,6 +24773,11 @@
 	stone_color = "#D1E6FF"
 	},
 /area/space)
+"uhA" = (
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/mining/hangar)
 "utd" = (
 /obj/decal/cleanable/robot_debris/gib,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -24691,6 +24799,11 @@
 /obj/item/clothing/under/misc/tourist,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
+"vjf" = (
+/turf/simulated/floor/stairs{
+	dir = 1
+	},
+/area/mining/hangar)
 "vrI" = (
 /obj/stool/chair,
 /turf/simulated/floor/black,
@@ -24701,6 +24814,12 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/iss)
+"vOH" = (
+/obj/item/device/radio/intercom/cargo{
+	dir = 4
+	},
+/turf/simulated/floor/airless/carpet/office,
+/area/mining/hangar)
 "vPx" = (
 /obj/decal/fakeobjects/lightbulb_broken,
 /obj/decal/cleanable/robot_debris/gib,
@@ -70777,9 +70896,9 @@ aan
 boP
 boP
 boP
-boP
-boP
 aan
+boP
+boP
 boP
 boP
 boP
@@ -71077,8 +71196,6 @@ afe
 ahq
 ahq
 age
-aqj
-aaa
 aaa
 aaa
 aao
@@ -71092,8 +71209,10 @@ aaa
 aaa
 aaa
 aaa
-atG
-aab
+aaa
+aaa
+atN
+aaa
 aab
 aab
 auL
@@ -71381,9 +71500,7 @@ aff
 age
 aqk
 aqk
-aqk
-age
-aao
+aaF
 aaa
 aaa
 aaa
@@ -71391,12 +71508,14 @@ aaa
 aaa
 aaa
 aaa
-aad
 aaa
 aaa
-atH
-aaz
-abg
+aaa
+aaa
+aaa
+atN
+aaa
+aaa
 aab
 auL
 avb
@@ -71673,9 +71792,9 @@ aob
 anJ
 aoo
 aoo
-aoo
 api
 api
+api
 aff
 aff
 aff
@@ -71683,10 +71802,7 @@ aff
 aff
 aff
 aff
-aff
-age
-aqk
-age
+aaF
 aaa
 aaa
 aaa
@@ -71698,8 +71814,11 @@ aaa
 aaa
 aaa
 aaa
-abg
-aaz
+aaa
+aaa
+aaa
+aaa
+aak
 auL
 aas
 aas
@@ -71985,10 +72104,10 @@ aff
 aff
 aff
 aff
-aff
-aff
-aff
-aff
+aaF
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -72008,7 +72127,7 @@ aaa
 aaa
 aaa
 aaa
-bmX
+aaa
 aaa
 aaa
 aaa
@@ -72279,18 +72398,18 @@ aoo
 aoo
 aoo
 api
-api
+aqj
 aff
 aff
 aff
-aff
-aff
-aff
-aff
-aff
-aff
-apV
-apV
+alb
+alb
+alb
+alb
+alb
+akT
+akT
+aaa
 aaa
 aaa
 aaa
@@ -72582,16 +72701,16 @@ aoo
 aoo
 aoo
 aoo
-asW
 aff
 aff
 aff
-aff
-aff
-aff
-aff
-aff
-aff
+alb
+sjy
+jRX
+vOH
+hkh
+jYx
+akT
 aaa
 aaa
 aaa
@@ -72883,17 +73002,17 @@ aoo
 aoo
 aoo
 aoo
-aoo
-aoo
-aff
-aff
-aff
-aff
-aff
-aff
-aff
-apV
-apV
+alb
+alb
+alb
+alb
+alb
+per
+cfW
+rbG
+rbG
+mFm
+akT
 aaa
 aaa
 aaa
@@ -73185,24 +73304,24 @@ aoo
 aoo
 aoo
 aoo
-aoo
-aff
-aff
-aff
-aff
-aff
-anK
-aiK
-aiK
-apV
-aaa
+alb
+asW
+vjf
+iZr
+vjf
+iZr
+qum
+rbG
+rbG
+maw
+akT
 aaa
 aaa
 aad
 aaa
 aaa
 aaa
-aaa
+nql
 aaa
 aaa
 aaa
@@ -73487,17 +73606,17 @@ aoo
 aoo
 aoo
 apj
-aoo
-aff
-aff
-aff
-aff
-aff
-agA
-aaa
-aao
-aaa
-aaa
+alb
+azq
+alb
+akT
+akT
+akT
+cZx
+alb
+alb
+akT
+akT
 aaa
 aaa
 aaa
@@ -73789,14 +73908,14 @@ akc
 aiP
 aiP
 akc
-aff
-aff
-aff
-aff
-aff
-aff
-agA
-boO
+alb
+azr
+uhA
+evf
+qnw
+uhA
+sYT
+afR
 aaF
 aaa
 aaa
@@ -74091,13 +74210,13 @@ akc
 aoI
 aoI
 aks
-aff
-aff
 alb
-alb
-alb
-alb
-alb
+bmX
+apS
+mea
+mea
+mea
+mea
 alb
 aaF
 aaa
@@ -74394,8 +74513,8 @@ aoJ
 aoJ
 akc
 alb
-alb
-alb
+bmX
+apO
 apX
 apX
 apX
@@ -74716,7 +74835,7 @@ aaa
 aaa
 aaa
 aaa
-aad
+aaa
 aaa
 aaa
 aak
@@ -78627,8 +78746,8 @@ aff
 aff
 aff
 aff
-azr
-azr
+boP
+boP
 boP
 boP
 boP
@@ -78928,9 +79047,9 @@ aff
 aff
 aff
 aff
-azq
-aqj
-aqj
+aao
+aaa
+aaa
 aaa
 aad
 aaa
@@ -79229,10 +79348,10 @@ akd
 aff
 aff
 aff
-aqj
-azq
-aqj
-aqj
+aaa
+aao
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -79531,9 +79650,9 @@ aff
 aff
 aff
 aff
-aqj
-azq
-aqj
+aaa
+aao
+aaa
 aaa
 aaa
 aaa
@@ -79833,8 +79952,8 @@ aff
 aff
 aff
 aoo
-aqj
-azq
+aaa
+aao
 aaa
 aaa
 aaa
@@ -80135,7 +80254,7 @@ aff
 aff
 aoo
 aoo
-aqj
+aaa
 aao
 aaa
 aaa
@@ -80436,7 +80555,7 @@ akd
 aff
 aoo
 aoo
-aqj
+aaa
 aaa
 aao
 aaa
@@ -80738,7 +80857,7 @@ aoo
 aoo
 aoo
 aoo
-aqj
+aaa
 aaa
 aao
 aaa
@@ -81040,7 +81159,7 @@ aoo
 aoo
 aoo
 aoo
-aqj
+aaa
 aaa
 aqg
 aaa

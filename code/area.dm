@@ -1292,7 +1292,6 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/lesbeeans/exterior
 	name = "Lesbian Bee Farm"
 	icon_state = "park"
-	force_fullbright = 1
 
 /area/prefab/crashed_hop_shuttle
 	name = "HoP Shuttle"
@@ -2373,27 +2372,21 @@ ABSTRACT_TYPE(/area/station/com_dish)
 	name = "Communications Dish"
 	icon_state = "yellow"
 	requires_power = FALSE
+	#ifdef UNDERWATER_MAP
+	ambient_light = OCEAN_LIGHT
+	#endif
 
 /area/station/com_dish/comdish
 	name = "Communications Dish"
 	icon_state = "yellow"
-#ifndef UNDERWATER_MAP
-	force_fullbright = 1 // ????
-#endif
 
 /area/station/com_dish/auxdish
 	name = "Auxilary Communications Dish"
 	icon_state = "yellow"
-#ifndef UNDERWATER_MAP
-	force_fullbright = 1
-#endif
 
 /area/station/com_dish/research_outpost
 	name = "Research Outpost Communications Dish"
 	icon_state = "yellow"
-#ifndef UNDERWATER_MAP
-	force_fullbright = 1
-#endif
 
 ABSTRACT_TYPE(/area/station/engine)
 /area/station/engine
@@ -2725,11 +2718,6 @@ ABSTRACT_TYPE(/area/station/security)
 /area/station/security/checkpoint/research
 		name = "Research Security Checkpoint"
 
-/area/station/security/armory //what the fuck this is not the real armory???
-	name = "Armory" //ai_monitored/armory is, shitty ass code
-	icon_state = "armory"
-	sound_environment = 2
-
 /area/station/security/prison
 	name = "Prison Station"
 	icon_state = "brig"
@@ -2822,7 +2810,6 @@ ABSTRACT_TYPE(/area/station/solar)
 /area/station/solar
 	requires_power = 0
 	luminosity = 1
-	force_fullbright = 1
 	workplace = 1
 	do_not_irradiate = 1
 
@@ -3151,7 +3138,6 @@ ABSTRACT_TYPE(/area/station/garden)
 	name = "Habitat Dome"
 	icon_state = "aviary"
 	sound_environment = 15
-	force_fullbright = 1
 
 /area/station/garden/zen
 	name = "Zen Garden"
@@ -3161,7 +3147,6 @@ ABSTRACT_TYPE(/area/station/garden)
 ABSTRACT_TYPE(/area/station/catwalk)
 /area/station/catwalk
 	icon_state = "yellow"
-	force_fullbright = 1
 	requires_power = FALSE
 
 /area/station/catwalk/north
@@ -3262,7 +3247,6 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	icon_state = "yellow"
 	requires_power = 0
 	luminosity = 1
-	force_fullbright = 1
 
 /// Nukeops spawn station
 /area/syndicate_station
@@ -3449,7 +3433,6 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	icon_state = "AIt"
 	requires_power = 0
 	sound_environment = 12
-	force_fullbright = 1
 
 /area/station/turret_protected/AIbasecore2
 	name = "AI Core 2"
@@ -3542,7 +3525,6 @@ ABSTRACT_TYPE(/area/mining)
 /area/mining/mainasteroid
 	name = "Main Asteroid"
 	icon_state = "green"
-	force_fullbright = 1
 
 /area/prefab/tunnelsnake
 	name = "Tunnel Snake Mining Rig"
