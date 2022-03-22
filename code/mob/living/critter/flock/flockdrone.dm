@@ -895,13 +895,12 @@
 	icon = 'icons/mob/flock_ui.dmi'
 	icon_state = "absorber"
 
+/datum/equipmentHolder/flockAbsorption/can_equip(var/obj/item/I)
+	if (istype(I, /obj/item/grab))
+		return FALSE
+	return ..()
+
 /datum/equipmentHolder/flockAbsorption/on_equip()
-	if(!isobj(item))
-		boutput(holder, "<span class='alert'>You can't possibly absorb that!</span>")
-		drop()
-	if(istype(item, /obj/item/grab))
-		// STOP TRYING TO EAT GRABS
-		drop()
 	holder.visible_message("<span class='alert'>[holder] absorbs [item]!</span>", "<span class='notice'>You place [item] into [src.name] and begin breaking it down.</span>")
 	animate_flockdrone_item_absorb(item)
 
