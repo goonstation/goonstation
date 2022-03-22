@@ -54,7 +54,7 @@
 		if(alert("Would you like to associate a value with the list entry and use the previously entered value as the key?",null,"Yes","No") == "Yes")
 			//RIP mod_list_add_ass, initial commit - March 2022
 			var/datum/data_input_result/key_result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
-								  DATA_INPUT_FILE, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_BUILD_LIST))
+								  DATA_INPUT_FILE, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_LIST_BUILD))
 			if (!isnull(key_result.output))
 				L[val_result] = key_result.output
 		L += val_result
@@ -89,237 +89,36 @@
 
 	variable = fixedList[variable]
 	var/variable_index = L.Find(variable)
-	var/default
-
-	var/dir
 
 	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Administrator")))
 		return
 
-	if (isnull(variable))
-		boutput(usr, "Unable to determine variable type.")
+	var/default = suggest_input_type(variable)
 
-	else if (L[variable] != null)
-		boutput(usr, "Variable appears to be an associated list entry.")
-		default = "associated"
-		dir = 1
+	var/datum/data_input_result/result = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
+		"num","type","json","ref","reference","mob reference","turf by coordinates","reference picker","new instance of a type", "icon","file","color","list","number",, default == "associated" ? "associated" : null, "(DELETE FROM LIST)","restore to default")
 
-	else if (isnum(variable))
-		boutput(usr, "Variable appears to be <b>NUM</b>.")
-		default = "num"
-		dir = 1
+	var/datum/data_input_result/result = input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
+													DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_ICON, DATA_INPUT_FILE, \
+													DATA_INPUT_COLOR, DATA_INPUT_LIST, DATA_INPUT, DATA_INPUT_LIST_DEL_FROM, DATA_INPUT_RESTORE, \
+													default == DATA_INPUT_LIST_EDIT_ASSOCIATED ? DATA_INPUT_LIST_EDIT_ASSOCIATED : null))
 
-	else if (is_valid_color_string(variable))
-		boutput(usr, "Variable appears to be <b>COLOR</b>.")
-		default = "color"
+	switch(result.output_type)
 
-	else if (istext(variable))
-		boutput(usr, "Variable appears to be <b>TEXT</b>.")
-		default = "text"
-
-	else if (isloc(variable))
-		boutput(usr, "Variable appears to be <b>REFERENCE</b>.")
-		default = "reference"
-
-	else if (isicon(variable))
-		boutput(usr, "Variable appears to be <b>ICON</b>.")
-		//variable = "[bicon(variable)]" //Wire: Bug me if you want the entirely too long winded explanation of why this is commented out
-		default = "icon"
-
-	else if (istype(variable,/atom) || istype(variable,/datum))
-		boutput(usr, "Variable appears to be <b>TYPE</b>.")
-		default = "type"
-
-	else if (islist(variable))
-		boutput(usr, "Variable appears to be <b>LIST</b>.")
-		default = "list"
-
-	else if (isclient(variable))
-		boutput(usr, "Variable appears to be <b>CLIENT</b>.")
-		default = "cancel"
-
-	else
-		boutput(usr, "Variable appears to be <b>FILE</b>.")
-		default = "file"
-
-	boutput(usr, "Variable contains: [variable]")
-	if(dir)
-		switch(variable)
-			if(1)
-				dir = "NORTH"
-			if(2)
-				dir = "SOUTH"
-			if(4)
-				dir = "EAST"
-			if(8)
-				dir = "WEST"
-			if(5)
-				dir = "NORTHEAST"
-			if(6)
-				dir = "SOUTHEAST"
-			if(9)
-				dir = "NORTHWEST"
-			if(10)
-				dir = "SOUTHWEST"
-			else
-				dir = null
-
-		if(dir)
-			boutput(usr, "If a direction, direction is: [dir]")
-
-	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","type","json","ref","reference","mob reference","turf by coordinates","reference picker","new instance of a type", "icon","file","color","list","number","edit referenced object", default == "associated" ? "associated" : null, "(DELETE FROM LIST)","restore to default")
-
-	if(!class)
-		return
-
-	switch(class)
-
-		if("associated")
-			modify_variables(L[variable])
-
-		if("list")
-			mod_list(variable)
-
-		if("restore to default")
-			L[variable_index] = initial(variable)
-
-		if("edit referenced object")
-			modify_variables(L[variable_index])
-
-		if("(DELETE FROM LIST)")
-			L -= variable
+		if (null)
 			return
 
-		if("text")
-			L[variable_index] = input("Enter new text:","Text",\
-				variable) as text
+		if(DATA_INPUT_LIST_EDIT_ASSOCIATED)
+			modify_variables(L[variable])
 
-		if("num")
-			L[variable_index] = input("Enter new number:","Num",\
-				variable) as num
+		if (DATA_INPUT_RESTORE)
+			L[variable_index] = initial(variable)
 
-		if("type")
-			boutput(usr, "<span class='notice'>Type part of the path of the type.</span>")
-			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
-			if (typename)
-				var/match = get_one_match(typename, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
-				if (match)
-					L[variable_index] = match
+		if (DATA_INPUT_LIST_DEL_FROM)
+			L -= variable
 
-		if("json")
-			L[variable_index] = json_decode(input("Enter json:") as null|text)
-
-		if ("ref")
-			var/input = input("Enter ref:") as null|text
-			var/target = locate(input)
-			if (!target) target = locate("\[[input]\]")
-			L[variable_index] = target
-
-		if("reference")
-			L[variable_index] = input("Select reference:","Reference",\
-				variable) as mob|obj|turf|area in world
-
-		if("mob reference")
-			L[variable_index] = input("Select reference:","Reference",\
-				variable) as mob in world
-
-		if("turf by coordinates")
-			var/x = input("X coordinate", "Set to turf at \[_, ?, ?\]", 1) as num
-			var/y = input("Y coordinate", "Set to turf at \[[x], _, ?\]", 1) as num
-			var/z = input("Z coordinate", "Set to turf at \[[x], [y], _\]", 1) as num
-			var/turf/T = locate(x, y, z)
-			if (istype(T))
-				L[variable_index] = T
-			else
-				boutput(usr, "<span class='alert'>Invalid coordinates!</span>")
-				return
-
-		if("reference picker")
-			boutput(usr, "<span class='notice'>Click the mob, object or turf to use as a reference.</span>")
-			var/mob/M = usr
-			if (istype(M))
-				var/datum/targetable/listrefpicker/R = new()
-				R.target = L
-				R.varname = variable_index
-				M.targeting_ability = R
-				M.update_cursor()
-				return
-
-		if ("new instance of a type")
-			boutput(usr, "<span class='notice'>Type part of the path of type of thing to instantiate.</span>")
-			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
-			if (typename)
-				var/basetype = /obj
-				if (src.holder.rank in list("Host", "Coder", "Administrator"))
-					basetype = /datum
-				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
-				if (match)
-					L[variable_index] = new match()
-
-		if("file")
-			L[variable_index] = input("Pick file:","File",variable) \
-				as file
-
-		if("icon")
-			L[variable_index] = input("Pick icon:","Icon",variable) \
-				as icon
-
-		if("color")
-			L[variable_index] = input("Pick color:","Color",variable) \
-				as color
-
-
-/datum/targetable/addtolistrefpicker
-	var/list/target = null
-	target_anything = 1
-	targeted = 1
-	max_range = 3000
-
-	castcheck(var/mob/M)
-		if (M.client && M.client.holder)
-			return 1
-
-	handleCast(var/atom/selected)
-		boutput(usr, "<span class='notice'>Added [selected] to [target]</span>")
-		target += selected
-
-/datum/targetable/listrefpicker
-	var/list/target = null
-	var/varname = null
-	target_anything = 1
-	targeted = 1
-	max_range = 3000
-
-	castcheck(var/mob/M)
-		if (M.client && M.client.holder)
-			return 1
-
-	handleCast(var/atom/selected)
-		boutput(usr, "<span class='notice'>Set [target]\[[varname]\] to [selected]</span>")
-		target[varname] = selected
-
-/datum/targetable/refpicker/global
-	var/datum/target = null
-	var/varname = null
-	target_anything = 1
-	targeted = 1
-	max_range = 3000
-	can_target_ghosts = 1
-
-	castcheck(var/mob/M)
-		if (M.client && M.client.holder)
-			return 1
-
-	handleCast(var/atom/selected)
-		boutput(usr, "<span class='notice'>Set [target]/var/[varname] to [selected] on all entities of the same type.</span>")
-		for (var/datum/V as anything in find_all_by_type(target.type))
-			LAGCHECK(LAG_LOW)
-			V.vars[varname] = selected
-		logTheThing("admin", src, null, "modified [target]'s [varname] to [target.vars[varname]] on all entities of the same type")
-		logTheThing("diary", src, null, "modified [target]'s [varname] to [target.vars[varname]] on all entities of the same type", "admin")
-		message_admins("[key_name(src)] modified [target]'s [varname] to [target.vars[varname]] on all entities of the same type")
-
+		else
+			L[variable_index] = result.output
 
 /client/proc/modify_variables(var/atom/O)
 	var/list/locked = list("vars", "key", "ckey", "client", "holder")
@@ -502,16 +301,6 @@
 				boutput(usr, "<span class='alert'>Invalid coordinates!</span>")
 				return
 
-		// if("reference picker")
-		// 	boutput(usr, "<span class='notice'>Click the mob, object or turf to use as a reference.</span>")
-		// 	var/mob/M = usr
-		// 	if (istype(M))
-		// 		var/datum/targetable/refpicker/R = new()
-		// 		R.target = O
-		// 		R.varname = variable
-		// 		M.targeting_ability = R
-		// 		M.update_cursor()
-		// 		return
 
 		if ("new instance of a type")
 			boutput(usr, "<span class='notice'>Type part of the path of type of thing to instantiate.</span>")

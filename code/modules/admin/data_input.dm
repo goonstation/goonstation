@@ -125,10 +125,10 @@
 		if (DATA_INPUT_NULL) // this is the one case a null output is allowed- we check to ensure the selected input type is this
 			input = null //yes i am aware this is a useless statement. Clarity!!!
 
-		if (DATA_INPUT_BUILD_LIST)
+		if (DATA_INPUT_LIST_BUILD)
 			input = build_list()
 
-		if (DATA_INPUT_EDIT_LIST)
+		if (DATA_INPUT_LIST_EDIT)
 			input = TRUE
 			mod_list(default) // this modifies in place, so no need to return any meaningful value.
 
@@ -157,7 +157,8 @@
 				boutput(src, "<span class='alert'>Matrix too short. Cancelled.</span>")
 				return
 
-		if (DATA_INPUT_RESTORE, DATA_INPUT_PARTICLE_EDITOR, DATA_INPUT_FILTER_EDITOR) // these are meaningless for cases other than varediting, so we just return a dummy value with the input type and let the caller handle it
+		// these are meaningless in certain cases, so we just return a dummy value with the input type and let the caller handle it
+		if (DATA_INPUT_RESTORE, DATA_INPUT_PARTICLE_EDITOR, DATA_INPUT_FILTER_EDITOR, DATA_INPUT_LIST_DEL_FROM, DATA_INPUT_LIST_EDIT_ASSOCIATED)
 			input = TRUE
 
 		else
@@ -192,6 +193,81 @@
 		src.output = output
 		src.output_type = output_type
 
+
+/// Get a suggested input type based on the thing you're editing
+/// @param var_value The value to evaluate
+/// @param L The list the value is contained in, if applicable, to determine if the var value is associated to another value
+/// @return Suggested input type for input_data()
+/client/proc/suggest_input_type(var/var_value, var/list/L = null)
+	if (isnull(var_value))
+		boutput(src, "Unable to determine variable type.")
+
+	else if (L && !isnull(L[var_value]))
+		boutput(src, "Variable appears to be an associated list entry.")
+		default = DATA_INPUT_LIST_EDIT_ASSOCIATED
+
+	else if (istype(var_value, /matrix))
+		boutput(src, "Variable appears to be <b>MATRIX</b>.")
+		default = DATA_INPUT_MATRIX
+
+	else if (isnum(var_value))
+		boutput(src, "Variable appears to be <b>NUM</b>.")
+		default = DATA_INPUT_NUM
+
+	else if (is_valid_color_string(var_value))
+		boutput(src, "Variable appears to be <b>COLOR</b>.")
+		default = DATA_INPUT_COLOR
+
+	else if (istext(var_value))
+		boutput(src, "Variable appears to be <b>TEXT</b>.")
+		default = DATA_INPUT_TEXT
+
+	else if (isatom(var_value))
+		boutput(src, "Variable appears to be <b>REFERENCE</b>.")
+		default = DATA_INPUT_NEW_INSTANCE //debatable
+
+	else if (isicon(var_value))
+		boutput(src, "Variable appears to be <b>ICON</b>.")
+		default = DATA_INPUT_ICON
+
+	else if (istype(var_value,/atom) || istype(var_value,/datum))
+		boutput(src, "Variable appears to be <b>TYPE</b>.")
+		default = DATA_INPUT_TYPE
+
+	else if (islist(var_value))
+		boutput(src, "Variable appears to be <b>LIST</b>.")
+		default = DATA_INPUT_LIST_EDIT
+
+	else
+		boutput(src, "Variable appears to be <b>FILE</b>.")
+		default = DATA_INPUT_FILE
+
+	boutput(src, "\"<tt>[variable]</tt>\" contains: [var_value]")
+	if(default == DATA_INPUT_NUM)
+		var/direction
+		switch(var_value)
+			if(1)
+				direction = "NORTH"
+			if(2)
+				direction = "SOUTH"
+			if(4)
+				direction = "EAST"
+			if(8)
+				direction = "WEST"
+			if(5)
+				direction = "NORTHEAST"
+			if(6)
+				direction = "SOUTHEAST"
+			if(9)
+				direction = "NORTHWEST"
+			if(10)
+				direction = "SOUTHWEST"
+			else
+				direction = null
+		if(direction)
+			boutput(src, "If a direction, direction is: [direction]")
+
+	return default
 
 /// Refpicker - click thing, get its ref. Tied to the data_input proc via a promise.
 /datum/targetable/refpicker

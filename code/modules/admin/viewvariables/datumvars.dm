@@ -729,7 +729,6 @@
 		if (tgui_alert(usr, "Modifying this variable might break pixel movement. Don't edit this unless you know what you're doing. Continue?", "Confirmation", list("Yes", "No")) == "No")
 			return
 
-	var/default
 	var/var_value = D == "GLOB" ? global.vars[variable] : D.vars[variable]
 	if( istype(var_value, /datum/admins) || istype(D, /datum/admins) || var_value == logs || var_value == logs["audit"] )
 		src.audit(AUDIT_ACCESS_DENIED, "tried to assign a value to a forbidden variable.")
@@ -749,70 +748,7 @@
 		message_admins("[key_name(usr)] tried to varedit [D.type] but was denied.") //If someone tries this let's make sure we all know it.
 		return
 
-
-	if (isnull(var_value))
-		boutput(usr, "Unable to determine variable type.")
-
-	else if (istype(var_value, /matrix))
-		boutput(usr, "Variable appears to be <b>MATRIX</b>.")
-		default = DATA_INPUT_MATRIX
-
-	else if (isnum(var_value))
-		boutput(usr, "Variable appears to be <b>NUM</b>.")
-		default = DATA_INPUT_NUM
-
-	else if (is_valid_color_string(var_value))
-		boutput(usr, "Variable appears to be <b>COLOR</b>.")
-		default = DATA_INPUT_COLOR
-
-	else if (istext(var_value))
-		boutput(usr, "Variable appears to be <b>TEXT</b>.")
-		default = DATA_INPUT_TEXT
-
-	else if (isloc(var_value))
-		boutput(usr, "Variable appears to be <b>REFERENCE</b>.")
-		default = DATA_INPUT_NEW_INSTANCE //debatable
-
-	else if (isicon(var_value))
-		boutput(usr, "Variable appears to be <b>ICON</b>.")
-		default = DATA_INPUT_ICON
-
-	else if (istype(var_value,/atom) || istype(var_value,/datum))
-		boutput(usr, "Variable appears to be <b>TYPE</b>.")
-		default = DATA_INPUT_TYPE
-
-	else if (islist(var_value))
-		boutput(usr, "Variable appears to be <b>LIST</b>.")
-		default = DATA_INPUT_EDIT_LIST
-
-	else
-		boutput(usr, "Variable appears to be <b>FILE</b>.")
-		default = DATA_INPUT_FILE
-
-	boutput(usr, "\"<tt>[variable]</tt>\" contains: [var_value]")
-	if(default == DATA_INPUT_NUM)
-		var/direction
-		switch(var_value)
-			if(1)
-				direction = "NORTH"
-			if(2)
-				direction = "SOUTH"
-			if(4)
-				direction = "EAST"
-			if(8)
-				direction = "WEST"
-			if(5)
-				direction = "NORTHEAST"
-			if(6)
-				direction = "SOUTHEAST"
-			if(9)
-				direction = "NORTHWEST"
-			if(10)
-				direction = "SOUTHWEST"
-			else
-				direction = null
-		if(direction)
-			boutput(usr, "If a direction, direction is: [direction]")
+	var/default = suggest_input_type(var_value)
 
 	var/original_name
 	if(D == "GLOB")
@@ -825,13 +761,13 @@
 
 	var/datum/data_input_result/result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_NUM_ADJUST, DATA_INPUT_TYPE, DATA_INPUT_MOB_REFERENCE, \
 											DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_ICON, DATA_INPUT_FILE, \
-											DATA_INPUT_COLOR, DATA_INPUT_LIST, DATA_INPUT_JSON, DATA_INPUT_JSON, DATA_INPUT_BUILD_LIST, DATA_INPUT_MATRIX, \
+											DATA_INPUT_COLOR, DATA_INPUT_LIST, DATA_INPUT_JSON, DATA_INPUT_JSON, DATA_INPUT_LIST_BUILD, DATA_INPUT_MATRIX, \
 											DATA_INPUT_NULL, DATA_INPUT_REF, DATA_INPUT_RESTORE), default = var_value, default_type = default)
 
-	if (isnull(result.output_type))
-		return
-
 	switch(result.output_type) // specified cases are special handling. everything in the `else` is generic cases
+
+		if (null)
+			return
 
 		if (DATA_INPUT_RESTORE)
 			if (set_global)

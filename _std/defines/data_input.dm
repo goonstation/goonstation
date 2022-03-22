@@ -14,8 +14,6 @@
 #define DATA_INPUT_ATOM_ON_CURRENT_TURF "Reference Atom at Current Turf"
 #define DATA_INPUT_NULL "null"
 #define DATA_INPUT_RESTORE "Restore to Default (WILL NULL LISTS AND OBJECTS)"
-#define DATA_INPUT_BUILD_LIST "Build New List"
-#define DATA_INPUT_EDIT_LIST "Edit as List"
 #define DATA_INPUT_MOB_REFERENCE "Mob Reference"
 #define DATA_INPUT_BOOL "Boolean"
 
@@ -24,6 +22,12 @@
 #define DATA_INPUT_PARTICLE_EDITOR "Particle Editor"
 #define DATA_INPUT_FILTER_EDITOR "Filter Editor"
 #define DATA_INPUT_MATRIX "Matrix"
+
+// list stuff
+#define DATA_INPUT_LIST_BUILD "Build New List"
+#define DATA_INPUT_LIST_EDIT "Edit as List"
+#define DATA_INPUT_LIST_EDIT_ASSOCIATED "Edit Associated Var"
+#define DATA_INPUT_LIST_DEL_FROM "Delete from List"
 
 //TODO figure out associated list shit
 //TODO way to call things with New args. might be a seperate problem actually? Add to build mode spawning idk
