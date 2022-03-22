@@ -1173,7 +1173,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 						O.update_appearance()
 				else if (src.syndicate)
 					O.syndicate = 1
-				O.handle_robot_antagonist_status("activated", 0, usr)
+				O.make_syndicate("activated by [usr]")
 			else
 				boutput(O, "<B>You must follow the AI's laws to the best of your ability.</B>")
 				O.show_laws() // The antagonist proc does that too.

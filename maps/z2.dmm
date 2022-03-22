@@ -14841,7 +14841,6 @@
 /area/crater/biodome/research)
 "aUa" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 2;
 	name = "Break Room"
 	},
 /turf/unsimulated/floor/delivery,
@@ -15596,7 +15595,6 @@
 /area/crater/biodome/crew)
 "aVW" = (
 /obj/machinery/door/airlock/pyro{
-	dir = 2;
 	name = "Restroom"
 	},
 /turf/unsimulated/floor/delivery,
@@ -23150,7 +23148,6 @@
 "bpB" = (
 /obj/overlay{
 	density = 1;
-	dir = 2;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "airlock_closed";
 	name = "airlock";
@@ -38271,7 +38268,6 @@
 	},
 /obj/machinery/door/poddoor/blast/single{
 	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
-	dir = 2;
 	id = "meatstation1";
 	name = "Safety Interlock"
 	},
@@ -71369,6 +71365,10 @@
 /obj/lattice,
 /turf/unsimulated/floor/void,
 /area/diner/cow)
+"gmY" = (
+/obj/machinery/lawrack/syndicate,
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "goR" = (
 /obj/table/wood/auto/desk{
 	color = "#333333";
@@ -72013,7 +72013,6 @@
 "iLT" = (
 /obj/machinery/door/poddoor/blast/single{
 	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
-	dir = 2;
 	id = "meatstation_wrath";
 	name = "Safety Interlock"
 	},
@@ -75195,7 +75194,6 @@
 /obj/overlay{
 	density = 1;
 	desc = "Somebody removed the control board without unlatching the door bolts.  Rude";
-	dir = 2;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "sec2_closed";
 	layer = 6;
@@ -76015,12 +76013,9 @@
 /obj/item/clothing/head/NTberet{
 	desc = "You can tell that this beret has been well looked after.";
 	layer = 30;
-	name = "Karu Karim's Nanotrasen Beret";
-	plane = -100
+	name = "Karu Karim's Nanotrasen Beret"
 	},
-/obj/item/luggable_computer/personal{
-	plane = -100
-	},
+/obj/item/luggable_computer/personal,
 /turf/unsimulated/floor/carpet{
 	dir = 5;
 	icon_state = "fblue2";
@@ -109775,7 +109770,7 @@ lzl
 lzl
 lzl
 lzl
-btf
+gmY
 btf
 btf
 btf
