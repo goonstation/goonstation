@@ -282,7 +282,7 @@
 				else
 					count++
 			if(!inserted)
-				boutput(user,"Oh no the rack is full")
+				boutput(user,"<span class='alert'>There's no more space on the rack!</span>")
 			else
 				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/insert_module_callback, list(count,user,AIM), user.equipped().icon, user.equipped().icon_state, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
