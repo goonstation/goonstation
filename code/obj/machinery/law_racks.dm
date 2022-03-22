@@ -514,7 +514,7 @@
 		user.visible_message("<span class='alert'>[user] slides a module into the law rack</span>", "<span class='alert'>You slide the module into the rack.</span>")
 		tgui_process.update_uis(src)
 		logTheThing("station", user, src, "[user.name] inserts law module into rack([log_loc(src)]): [equipped]:[equipped.lawText] at slot [slotNum]")
-		message_admins("[user.name] added a new law to rack([log_loc(src)]): [equipped]:[equipped.lawText] at slot [slotNum]")
+		message_admins("[user.name] added a new law to rack [log_loc(src)]: [equipped], with text '[equipped.lawText]' at slot [slotNum]")
 		UpdateIcon()
 		UpdateLaws()
 
