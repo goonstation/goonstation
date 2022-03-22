@@ -56,7 +56,7 @@
 			var/datum/data_input_result/key_result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
 								  DATA_INPUT_FILE, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_LIST_BUILD))
 			if (!isnull(key_result.output))
-				L[val_result] = key_result.output
+				L[val_result.output] = key_result.output
 		L += val_result.output
 	return TRUE
 
