@@ -140,9 +140,9 @@ var/mutable_appearance/fluid_ma
 
 	proc/trigger_fluid_enter()
 		for(var/atom/A in src.loc)
-			if (src.group && A.event_handler_flags & USE_FLUID_ENTER)
+			if (src.group && !src.group.disposed && A.event_handler_flags & USE_FLUID_ENTER)
 				A.EnteredFluid(src, src.loc)
-		if(src.group)
+		if(src.group && !src.group.disposed)
 			src.loc?.EnteredFluid(src, src.loc)
 
 	proc/turf_remove_cleanup(turf/the_turf)
@@ -225,7 +225,7 @@ var/mutable_appearance/fluid_ma
 	//incorporate touch_modifier?
 	Crossed(atom/movable/A)
 		..()
-		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid) || istype(src, /obj/fluid/airborne))
+		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid)  || src.group.disposed || istype(src, /obj/fluid/airborne))
 			return
 
 		my_depth_level = last_depth_level

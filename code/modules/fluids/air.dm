@@ -55,9 +55,9 @@ var/list/ban_from_airborne_fluid = list()
 
 	trigger_fluid_enter()
 		for(var/atom/A in src.loc)
-			if (src.group && A.event_handler_flags & USE_FLUID_ENTER)
+			if (src.group && !src.group.disposed && A.event_handler_flags & USE_FLUID_ENTER)
 				A.EnteredAirborneFluid(src, src.loc)
-		if(src.group)
+		if(src.group && !src.group.disposed)
 			src.loc?.EnteredAirborneFluid(src, src.loc)
 
 	turf_remove_cleanup(turf/the_turf)
@@ -119,7 +119,7 @@ var/list/ban_from_airborne_fluid = list()
 	//incorporate touch_modifier?
 	Crossed(atom/movable/A)
 		..()
-		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid))
+		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid) || src.group.disposed)
 			return
 		A.EnteredAirborneFluid(src, A.last_turf)
 
