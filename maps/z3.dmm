@@ -1545,11 +1545,11 @@
 /area/mining/comms)
 "aey" = (
 /obj/table/wood/auto,
-/obj/item/storage/box/record/radio/two{
+/obj/item/storage/box/record/radio/host{
 	pixel_x = -4;
 	pixel_y = 6
 	},
-/obj/item/storage/box/record/radio/one,
+/obj/item/storage/box/record/radio/host,
 /turf/simulated/floor/carpet/grime,
 /area/radiostation/studio)
 "aez" = (
