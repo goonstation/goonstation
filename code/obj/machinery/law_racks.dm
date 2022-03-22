@@ -226,6 +226,7 @@
 				circuit_image = image(src.icon, "aimod")
 				circuit_image.pixel_x = 0
 				circuit_image.pixel_y = -36 + i*4
+				circuit_image.color = law_circuits[i].color
 				color_overlay = image(src.icon, "aimod_over")
 				color_overlay.color = law_circuits[i].highlight_color
 				color_overlay.pixel_x = 0
@@ -618,6 +619,7 @@
 
 /obj/machinery/lawrack/syndicate
 	name = "AI Law Mount Rack - Syndicate Model"
+	icon_state = "airack_syndicate_empty"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behaivor of connected AIs. This one has a little S motif on the side."
 
 

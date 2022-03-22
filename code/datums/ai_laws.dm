@@ -68,10 +68,10 @@
 			logTheThing("station", src, new_rack, "the law rack at [log_loc(new_rack)] claims default SYNDICATE rack!")
 
 			if(!src.first_registered_syndie)
-				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate1,1,true,true)
-				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate2,2,true,true)
-				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate3,3,true,true)
-				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate4,4,true,true)
+				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law1,1,true,true)
+				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law2,2,true,true)
+				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law3,3,true,true)
+				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law4,4,true,true)
 				src.first_registered_syndie = TRUE
 				logTheThing("station", src, new_rack, "the law rack at [log_loc(new_rack)] claims first registered SYNDICATE, and gets Syndicate laws!")
 
