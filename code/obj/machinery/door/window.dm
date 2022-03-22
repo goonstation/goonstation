@@ -18,7 +18,7 @@
 	opacity = 0
 	brainloss_stumble = 1
 	autoclose = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
+	event_handler_flags = USE_FLUID_ENTER
 	object_flags = CAN_REPROGRAM_ACCESS | BOTS_DIRBLOCK | HAS_DIRECTIONAL_BLOCKING
 
 	New()
@@ -124,23 +124,25 @@
 		else
 			return TRUE
 
-	CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
+	Uncross(atom/movable/mover, do_bump = TRUE)
 		if (istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
 			if (P.proj_data.window_pass)
 				return 1
-
-		if (get_dir(loc, target) & dir)
+		if (get_dir(loc, mover.movement_newloc) & dir)
 			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
 				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
 					// If they're pulling something and the door would open anyway,
 					// just let the door open instead.
-					return 0
+					. = 0
+					UNCROSS_BUMP_CHECK(mover)
+					return
 				animate_door_squeeze(mover)
-				return 1 // they can pass through a closed door
-			return !density
+				. = 1 // they can pass through a closed door
+			. = !density
 		else
-			return 1
+			. = 1
+		UNCROSS_BUMP_CHECK(mover)
 
 	update_nearby_tiles(need_rebuild)
 		if (!air_master) return 0

@@ -80,7 +80,7 @@
 				logTheThing("combat", src.assailant, src.affecting, "releases their choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles at [log_loc(src.affecting)]")
 			else if (state == GRAB_PIN)
 				logTheThing("combat", src.assailant, src.affecting, "drops their pin on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
-			else
+			else if(!istype(src, /obj/item/grab/block))
 				logTheThing("combat", src.assailant, src.affecting, "drops their grab on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
 			if (affecting.grabbed_by)
 				affecting.grabbed_by -= src
@@ -102,7 +102,7 @@
 		..()
 		dropped += 1
 		if(src.assailant)
-			REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src)
+			REMOVE_ATOM_PROPERTY(src.assailant, PROP_MOB_CANTMOVE, src)
 			qdel(src)
 
 	process(var/mult = 1)
@@ -265,7 +265,7 @@
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
 		src.state = GRAB_KILL
-		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src)
+		REMOVE_ATOM_PROPERTY(src.assailant, PROP_MOB_CANTMOVE, src)
 		src.assailant.lastattacked = src.affecting
 		src.affecting.lastattacker = src.assailant
 		src.affecting.lastattackertime = world.time
@@ -307,7 +307,7 @@
 
 		if (ishuman(src.assailant))
 			var/mob/living/carbon/human/H = src.assailant
-			APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, src)
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_CANTMOVE, src)
 			H.update_canmove()
 
 		if (isliving(src.affecting))
@@ -830,11 +830,13 @@
 /obj/item/grab/block/handle_throw(mob/living/user, atom/target)
 	if (isturf(user.loc) && target)
 		var/turf/T = user.loc
-		if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying) && can_act(user) && !HAS_MOB_PROPERTY(user, PROP_CANTMOVE))
+		var/target_dir = get_dir(user,target)
+		if(!target_dir)
+			target_dir = user.dir
+		if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying) && can_act(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE) && target_dir)
+
 			user.changeStatus("weakened", max(user.movement_delay()*2, 0.5 SECONDS))
 			user.force_laydown_standup()
-
-			var/target_dir = get_dir(user,target)
 			var/turf/target_turf = get_step(user, target_dir)
 			if (!target_turf)
 				target_turf = T
@@ -842,7 +844,7 @@
 			var/mob/living/dive_attack_hit = null
 
 			for (var/mob/living/L in target_turf)
-				if (user == L) continue
+				if (user == L || isintangible(L)) continue
 				dive_attack_hit = L
 				break
 
@@ -862,7 +864,10 @@
 				for (var/mob/O in AIviewers(user))
 					O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
 				logTheThing("combat", user, dive_attack_hit, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
-			else
+
+			step_to(user, target_turf)
+
+			if(!dive_attack_hit && get_turf(user) == target_turf)
 				for (var/mob/O in AIviewers(user))
 					O.show_message("<span class='alert'><B>[user] slides to the ground!</B></span>", 1, group = "resist")
 
@@ -897,7 +902,6 @@
 						if (!item_num_to_throw)
 							break
 
-			step_to(user, target_turf)
 
 	user.u_equip(src)
 

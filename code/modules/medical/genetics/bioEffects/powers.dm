@@ -128,15 +128,15 @@
 	name = "Matter Eater"
 	desc = "Eat just about anything!"
 	icon_state = "mattereater"
-	targeted = 0
-	var/using = 0
+	targeted = FALSE
+	var/using = FALSE
 
 	cast()
 		if (..())
-			return 1
+			return TRUE
 		if (using)
-			return 1
-		using = 1
+			return TRUE
+		using = TRUE
 
 		var/datum/bioEffect/power/mattereater/ME = linked_power
 		var/base_path = text2path("[ME.target_path]")
@@ -152,38 +152,40 @@
 			items += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
 			//So people can still get the meat ending
 
-		if (!items.len)
-			boutput(usr, "/red You can't find anything nearby to eat.")
-			using = 0
+		if (!length(items))
+			boutput(usr, "<span class='alert'>You can't find anything nearby to eat.</span>")
+			using = FALSE
 			return
 
 		var/obj/the_object = input("Which item do you want to eat?","Matter Eater") as null|obj in items
 		if (!the_object || (!istype(the_object, /obj/the_server_ingame_whoa) && the_object.anchored))
-			using = 0
-			return 1
+			using = FALSE
+			return TRUE
 
 		if (!(the_object in get_filtered_atoms_in_touch_range(owner, base_path)))
 			owner.show_text("<span class='alert'>Man, that thing is long gone, far away, just let it go.</span>")
-			return 1
+			return TRUE
 
 		var/area/cur_area = get_area(owner)
 		var/turf/cur_turf = get_turf(owner)
 		if (isrestrictedz(cur_turf.z) && !cur_area.may_eat_here_in_restricted_z && (!owner.client || !owner.client.holder))
 			owner.show_text("<span class='alert'>Man, this place really did a number on your appetite. You can't bring yourself to eat anything here.</span>")
-			using = 0
-			return 1
+			using = FALSE
+			return TRUE
 
 		if (istype(the_object, /obj/the_server_ingame_whoa))
 			var/obj/the_server_ingame_whoa/the_server = the_object
 			the_server.eaten(owner)
-			using = 0
+			using = FALSE
 			return
 		owner.visible_message("<span class='alert'>[owner] eats [the_object].</span>")
-		playsound(owner.loc, "sound/items/eatfood.ogg", 50, 0)
-
-		qdel(the_object)
+		playsound(owner.loc, "sound/items/eatfood.ogg", 50, FALSE)
 
 		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (isitem(the_object))
+				var/obj/item/the_item = the_object
+				H.sims?.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
 			for(var/A in owner.organs)
 				var/obj/item/affecting = null
 				if (!owner.organs[A])    continue
@@ -193,8 +195,9 @@
 				affecting.heal_damage(4, 0)
 			owner.UpdateDamageIcon()
 
-		using = 0
-		return
+		qdel(the_object)
+
+		using = FALSE
 
 
 
@@ -1000,13 +1003,18 @@
 			if (linked_power.power > 1)
 				for (var/turf/T in range(owner,6))
 					animate_shake(T,5,rand(3,8),rand(3,8))
-			if (gib_user)
-				owner.gib()
 
 			// Superfarted on the bible? Off to hell.
 			for (var/obj/item/storage/bible/B in owner.loc)
-				owner.damn()
+				if(gib_user)
+					owner.mind.damned = TRUE
+				else
+					owner.damn()
 				break
+
+			if (gib_user)
+				owner.gib()
+
 		else
 			boutput(owner, "<span class='alert'>You were interrupted and couldn't fart! Rude!</span>")
 			SF.farting = 0
@@ -1830,10 +1838,10 @@
 
 		var/mob/living/L = owner
 		if (which_way == 1)
-			APPLY_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src, INVIS_INFRA)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_INFRA)
 			L.UpdateOverlays(overlay_image, id)
 		else
-			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
 			L.UpdateOverlays(null, id)
 
 	OnAdd()
@@ -1925,7 +1933,7 @@
 		if (isliving(owner))
 			var/mob/living/L = owner
 			L.UpdateOverlays(null, id)
-			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
 		if (src.active)
 			src.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
 		return
@@ -1937,14 +1945,14 @@
 			var/mob/living/L = owner
 			if (TIME - last_moved >= 3 SECONDS && can_act(owner))
 				L.UpdateOverlays(overlay_image, id)
-				APPLY_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src, INVIS_INFRA)
+				APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_INFRA)
 
 	proc/decloak()
 		if(isliving(owner))
 			var/mob/living/L = owner
 			last_moved = TIME
 			L.UpdateOverlays(null, id)
-			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
 
 /datum/targetable/geneticsAbility/chameleon
 	name = "Chameleon"

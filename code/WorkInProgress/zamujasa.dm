@@ -918,7 +918,7 @@
 				// no! how did you even get here. jesus
 				return
 
-			return call(src.effective_callee, src.monitored_proc)(src.monitored_args)
+			return call(src.effective_callee, src.monitored_proc)(arglist(src.monitored_args))
 
 
 		emergency_shuttle
@@ -1503,13 +1503,13 @@ Other Goonstation servers:[serverList]</span>"})
 
 	fast
 		t100		// ~10 sec
-			gib_time = 1000
+			gib_time = 100
 		t1000		// ~100 sec
 			gib_time = 1000
 		t3000		// ~300 sec (5 min)
-			gib_time = 1000
+			gib_time = 3000
 		t6000		// ~600 sec (10 min)
-			gib_time = 1000
+			gib_time = 6000
 
 		countdown()
 			do

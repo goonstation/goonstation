@@ -27,6 +27,7 @@
 	opacity = 0
 	anchored = 1
 	flags = TGUI_INTERACTIVE
+	layer = OBJ_LAYER - 0.1	// Match vending machines
 
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_buy = 'sound/machines/spend.ogg'
@@ -95,8 +96,6 @@
 
 
 	proc/vended(var/atom/A)
-		if(A.layer <= src.layer)
-			A.layer = src.layer + 0.1
 		if(log_purchase)
 			logTheThing("debug", usr, null, "bought [A] from [src] at [log_loc(get_turf(src))]")
 		.= 0
@@ -390,8 +389,8 @@
 
 /datum/materiel/loadout/custom
 	name = "Custom Class Uplink"
-	path = /obj/item/uplink/syndicate
-	description = "A standard syndicate uplink loaded with 12 telecrytals, allowing you to pick and choose from an array of syndicate items."
+	path = /obj/item/uplink/syndicate/nukeop
+	description = "A standard syndicate uplink loaded with 12 telecrystals, allowing you to pick and choose from an array of syndicate items."
 /*
 /datum/materiel/storage/rucksack
 	name = "Assault Rucksack"

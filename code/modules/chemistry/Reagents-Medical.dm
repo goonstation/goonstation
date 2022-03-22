@@ -24,13 +24,13 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_REBREATHING, src.type)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_REBREATHING, src.type)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_REBREATHING, src.type)
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_REBREATHING, src.type)
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -81,14 +81,14 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_morphine", -3)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_morphine", -3)
 					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/morphine, src.type)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_morphine")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_morphine")
 					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/morphine, src.type)
 				..()
 
@@ -130,13 +130,13 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_ether", -5)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_ether", -5)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_ether")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_ether")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -447,13 +447,13 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_synaptizine", 4)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_synaptizine", 4)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_synaptizine")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_synaptizine")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -627,13 +627,13 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_smelling_salt", 5)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_smelling_salt", 2)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_smelling_salt")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_smelling_salt")
 				..()
 
 			on_mob_life(var/mob/M, var/method=INGEST, var/mult = 1)
@@ -725,13 +725,13 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_haloperidol", -5)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_haloperidol", -5)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_haloperidol")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_haloperidol")
 				..()
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
@@ -793,14 +793,14 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_epinephrine", 3)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_epinephrine", 3)
 					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/epinepherine, src.type)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_epinephrine")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_epinephrine")
 					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/epinepherine, src.type)
 				..()
 
@@ -1089,13 +1089,13 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_ephedrine", 2)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_ephedrine", 2)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_ephedrine")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_ephedrine")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1183,13 +1183,13 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_diphenhydramine", -3)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_diphenhydramine", -3)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_diphenhydramine")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_diphenhydramine")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1274,17 +1274,6 @@ datum
 							var/mob/living/L = M
 							L.contract_disease(/datum/ailment/malady/bloodclot,null,null,1)
 
-#define CRYOMATH(temp, peak, coeff, offset) (max(coeff * eulers ** -((pi * (temp+peak)/50)**2) - offset , 0))
-#define BRUTE_PEAK 120
-#define BRUTE_SUBPEAK 145
-#define BURN_PEAK 150
-#define BURN_SUBPEAK 125
-#define TOX_PEAK 135
-#define PEAK_COEFF 1.25
-#define SUBPEAK_COEFF 1
-#define PEAK_OFFSET 0.25
-#define SUBPEAK_OFFSET 0.6666
-
 		medical/cryoxadone // COGWERKS CHEM REVISION PROJECT. magic drug, but isn't working right correctly
 			name = "cryoxadone"
 			id = "cryoxadone"
@@ -1297,46 +1286,38 @@ datum
 			value = 12 // 5 3 3 1
 			target_organs = list("left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")	//RN this is all the organs. Probably I'll remove some from this list later. no "brain",  either
 
+			/*reaction_temperature(exposed_temperature, exposed_volume)
+				var/myvol = volume
+
+				if(exposed_temperature > T0C + 50) //Turns into omnizine. Derp.
+					volume = 0
+					holder.add_reagent("omnizine", myvol, null)
+
+				return*/
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-
-				var/effective_temp = M.bodytemperature - M.base_body_temp
-				var/efficacy_brute = CRYOMATH(effective_temp, BRUTE_PEAK, PEAK_COEFF, PEAK_OFFSET) + CRYOMATH(effective_temp, BRUTE_SUBPEAK, SUBPEAK_COEFF, SUBPEAK_OFFSET)
-				var/efficacy_burn = CRYOMATH(effective_temp, BURN_PEAK, PEAK_COEFF, PEAK_OFFSET) + CRYOMATH(effective_temp, BURN_SUBPEAK, SUBPEAK_COEFF, SUBPEAK_OFFSET)
-				var/efficacy_tox = CRYOMATH(effective_temp, TOX_PEAK, PEAK_COEFF, PEAK_OFFSET)
-				var/efficacy_oxy = (efficacy_burn + efficacy_tox) * 0.6657 //magic number, sue me
-				var/efficacy_brain = (efficacy_brute + efficacy_tox) * 0.6657
-
-
-				if((efficacy_brute > 0 || efficacy_burn > 0) && !M.hasStatus("burning"))
+				if(M.bodytemperature < M.base_body_temp - 100 && !M.hasStatus("burning"))
+					var/health_before = M.health
 
 					if(M.get_oxygen_deprivation())
-						M.take_oxygen_deprivation(-10 * mult * efficacy_oxy)
-
+						M.take_oxygen_deprivation(-10 * mult)
 					if(M.get_toxin_damage())
-						M.take_toxin_damage(-3 * mult * efficacy_tox)
-
+						M.take_toxin_damage(-3 * mult)
 					if (M.get_brain_damage())
-						M.take_brain_damage(-2 * mult * efficacy_brain)
-
-					M.HealDamage("All", 12 * mult * efficacy_brute, 12 * mult * efficacy_burn)
+						M.take_brain_damage(-2 * mult)
+					M.HealDamage("All", 12 * mult, 12 * mult)
+					M.updatehealth() //I hate this, but we actually need the health on time here.
+					if(M.health > health_before)
+						var/increase = min((M.health - health_before)/37*25,25) //12+12+3+10 = 37 health healed possible, 25 max temp increase possible
+						M.bodytemperature = min(M.bodytemperature+increase,M.base_body_temp)
 
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
 						if (H.organHolder)
-							H.organHolder.heal_organs(2*mult * efficacy_brute, 2*mult * efficacy_burn, 2*mult * efficacy_tox, target_organs)
-				..()
+							H.organHolder.heal_organs(2*mult, 2*mult, 2*mult, target_organs)
 
-#undef CRYOMATH
-#undef BRUTE_PEAK
-#undef BRUTE_SUBPEAK
-#undef BURN_PEAK
-#undef BURN_SUBPEAK
-#undef TOX_PEAK
-#undef PEAK_COEFF
-#undef SUBPEAK_COEFF
-#undef PEAK_OFFSET
-#undef SUBPEAK_OFFSET
+				..()
 
 		medical/atropine // COGWERKS CHEM REVISION PROJECT. i dunno what the fuck this would be, probably something bad. maybe atropine?
 			name = "atropine"

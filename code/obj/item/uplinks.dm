@@ -33,6 +33,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/can_selfdestruct = 0
 	var/datum/syndicate_buylist/reading_about = null
 
+	/// Bitflags for what items this uplink can buy (see `_std/defines/uplink.dm` for flags)
+	var/purchase_flags
 	var/owner_ckey = null
 
 	// Spawned uplinks for which setup() wasn't called manually only get the standard (generic) items.
@@ -76,21 +78,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					src.items_general.Add(S)
 
 			else
-				var/blocked = 0
-				if (ticker?.mode)
-					if (S.blockedmode && islist(S.blockedmode) && length(S.blockedmode))
-						for (var/V in S.blockedmode)
-							if (ispath(V) && istype(ticker.mode, V)) // No meta by checking VR uplinks.
-								blocked = 1
-								continue
 
-					if (S.exclusivemode && islist(S.exclusivemode) && length(S.exclusivemode))
-						for (var/V in S.exclusivemode)
-							if (ispath(V) && !istype(ticker.mode, V)) // No meta by checking VR uplinks.
-								blocked = 1
-								continue
-
-				if (blocked)
+				if(!(S.can_buy & purchase_flags))
 					continue
 
 				if (istype(S, /datum/syndicate_buylist/surplus))
@@ -407,7 +396,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src))
-				I.run_on_spawn(item, usr)
+				I.run_on_spawn(item, usr, FALSE, src)
 				if (src.is_VR_uplink == 0)
 					statlog_traitor_item(usr, I.name, I.cost)
 			if (I.item2)
@@ -462,6 +451,26 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		name = "syndicate equipment uplink"
 		desc = "An uplink terminal that allows you to order weapons and items."
 		icon_state = "uplink"
+		purchase_flags = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_THIEF | UPLINK_HEAD_REV //Currently this sits unused except for an admin's character, so we can safely have fun with it
+
+	traitor
+		purchase_flags = UPLINK_TRAITOR
+
+	nukeop
+		purchase_flags = UPLINK_NUKE_OP
+
+	rev
+		purchase_flags = UPLINK_HEAD_REV
+
+	spy
+		purchase_flags = UPLINK_SPY
+
+	omni //For admin fuckery and omnitraitors, have fun.
+		name = "syndicate omnivendor"
+		desc = "Warning: User may suffer from choice paralysis."
+		icon_state = "uplink"
+		purchase_flags = UPLINK_TRAITOR | UPLINK_SPY | UPLINK_NUKE_OP | UPLINK_HEAD_REV | UPLINK_NUKE_COMMANDER | UPLINK_SPY_THIEF
+
 
 /obj/item/uplink/syndicate/virtual
 	name = "Syndicate Simulator 2053"
@@ -469,6 +478,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	uses = INFINITY
 	is_VR_uplink = 1
 	can_selfdestruct = 0
+	purchase_flags = UPLINK_TRAITOR
 
 	explode()
 		src.temp = "Bang! Just kidding."
@@ -636,6 +646,18 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		src.print_to_host(src.menu_message)
 		return
 
+	traitor
+		purchase_flags = UPLINK_TRAITOR
+
+	nukeop
+		purchase_flags = UPLINK_NUKE_OP
+
+	rev
+		purchase_flags = UPLINK_HEAD_REV
+
+	spy
+		purchase_flags = UPLINK_SPY
+
 /obj/item/uplink/integrated/radio
 	lock_code_autogenerate = 1
 	use_default_GUI = 1
@@ -671,6 +693,18 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				src.origradio = R
 		return
 
+	traitor
+		purchase_flags = UPLINK_TRAITOR
+
+	nukeop
+		purchase_flags = UPLINK_NUKE_OP
+
+	rev
+		purchase_flags = UPLINK_HEAD_REV
+
+	spy
+		purchase_flags = UPLINK_SPY
+
 /obj/item/uplink/integrated/pda/spy
 	uses = 5 //amount of times that we can deliver items
 			//When uses hits 0, the spawn will be an ID tracker
@@ -687,6 +721,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/last_photo_print = 0
 
 	var/datum/game_mode/spy_theft/game
+	purchase_flags = UPLINK_SPY_THIEF
 
 	disposing()
 		if (game)
@@ -807,7 +842,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			loops += 1
 
 	proc/spawn_reward(var/datum/bounty_item/B, var/mob/user)
-		B.spawn_reward(user,src)
+		B.spawn_reward(user,src.loc)
 
 		if (uses == 0)//Spawn ID tracker. Last item!
 
@@ -971,6 +1006,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/points = 2
 	var/list/commander_buylist = list()
 	var/datum/syndicate_buylist/reading_about = null
+	/// Bitflags for what items this uplink can buy (see `_std/defines/uplink.dm` for flags)
+	var/purchase_flags = UPLINK_NUKE_COMMANDER
 
 	New()
 		..()
@@ -999,7 +1036,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	proc/setup()
 		for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
-			if (istype(S, /datum/syndicate_buylist/commander) && !src.commander_buylist.Find(S))
+			if ((istype(S, /datum/syndicate_buylist/commander) || (S.can_buy & purchase_flags)) && !(S in src.commander_buylist))
 				src.commander_buylist.Add(S)
 
 		var/list/names = list()
@@ -1063,7 +1100,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 								new B.item2(get_turf(src))
 							if(B.item3)
 								new B.item3(get_turf(src))
-							B.run_on_spawn(A, usr)
+
+							B.run_on_spawn(A, usr, FALSE, src)
 							logTheThing("combat", usr, src, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
 							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B)]-Purchased")
 							if(isnull(loadnum))

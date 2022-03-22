@@ -2,17 +2,12 @@
 	name = "ampoule"
 	desc = "A chemical-containing ampoule."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "amp-1"
+	icon_state = "ampoule-0"
 	initial_volume = 5
 	flags = FPRINT | TABLEPASS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	var/expended = FALSE //Whether or not the ampoule has been used.
-	var/color_id = "1"
-
-/obj/item/reagent_containers/ampoule/New()
-	..()
-	color_id = pick("1", "2", "3", "4")
-	UpdateIcon()
+	var/image/fluid_image
 
 /obj/item/reagent_containers/ampoule/get_desc()
 	if(reagents.total_volume > 0)
@@ -20,9 +15,9 @@
 	else
 		. += "<br>It's empty."
 
-/obj/item/reagent_containers/ampoule/update_icon()
-	if(icon_state != "amp-[color_id]")
-		icon_state = "amp-[color_id]"
+/obj/item/reagent_containers/ampoule/New()
+	..()
+	UpdateIcon()
 
 /obj/item/reagent_containers/ampoule/attack(mob/M, mob/user)
 	if(expended || reagents.total_volume <= 0)
@@ -51,7 +46,7 @@
 /obj/item/reagent_containers/ampoule/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/spacecash) || istype(W, /obj/item/paper))
 		var/obj/item/clothing/mask/cigarette/custom/ampoule/C = new(user.loc)
-
+    
 		boutput(user, "<span class='alert'>You wrap the [src] in the [W].</span>")
 		src.reagents.copy_to(C.ampoulereagents)
 		src.reagents.trans_to(C, src.reagents.total_volume)
@@ -90,6 +85,28 @@
 
 /obj/item/reagent_containers/ampoule/proc/build_name(obj/item/W)
 	return "[istype(W, /obj/item/spacecash) ? "[W.amount]-credit " : ""][pick("joint","doobie","spliff","roach","blunt","roll","fatty","reefer")]"
+
+/obj/item/reagent_containers/ampoule/on_reagent_change()
+	..()
+	src.UpdateIcon()
+
+/obj/item/reagent_containers/ampoule/update_icon()
+	src.underlays = null
+	if (!src.fluid_image)
+		src.fluid_image = image('icons/obj/chemical.dmi')
+	src.fluid_image.icon_state = "ampoule_liquid"
+	if(reagents.total_volume)
+		var/datum/color/average = reagents.get_average_color()
+		src.fluid_image.color = average.to_rgba()
+		src.underlays += src.fluid_image
+		icon_state = "ampoule-5"
+		item_state = "ampoule-5"
+	else
+		icon_state = "ampoule-0"
+		item_state = "ampoule-0"
+	signal_event("icon_updated")
+
+
 //ampoule types
 
 /obj/item/reagent_containers/ampoule/smelling_salts

@@ -80,6 +80,9 @@ TYPEINFO(/datum/component/foldable)
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY
+	stamina_damage = 40
+	stamina_cost = 17
+	stamina_crit_chance = 10
 
 	burn_point = 2500
 	burn_output = 2500

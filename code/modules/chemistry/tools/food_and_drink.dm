@@ -3,6 +3,7 @@
 /* -------------------- Food -------------------- */
 /* ============================================== */
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 /obj/item/reagent_containers/food
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	var/heal_amt = 0
@@ -91,6 +92,7 @@
 /* -------------------- Snacks -------------------- */
 /* ================================================ */
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 /obj/item/reagent_containers/food/snacks
 	name = "snack"
 	desc = "yummy"
@@ -275,7 +277,7 @@
 		consumer.nutrition += src.heal_amt * 10
 		src.heal(consumer)
 		playsound(consumer.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
-		on_bite(consumer)
+		on_bite(consumer, feeder)
 		if (src.festivity)
 			modify_christmas_cheer(src.festivity)
 		if (!src.amount)
@@ -356,7 +358,7 @@
 
 
 
-	proc/on_bite(mob/eater)
+	proc/on_bite(mob/eater, mob/feeder)
 		//if (reagents?.total_volume)
 		//	reagents.reaction(M, INGEST)
 		//	reagents.trans_to(M, reagents.total_volume/(src.amount ? src.amount : 1))
@@ -386,7 +388,7 @@
 				src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
 		eat_twitch(eater)
-		eater.on_eat(src)
+		eater.on_eat(src, feeder)
 
 	proc/on_finish(mob/eater)
 		return
@@ -430,7 +432,7 @@
 				src.reagents.reaction(owner, INGEST, src.reagents.total_volume)
 				src.did_react = 1
 
-			src.reagents.trans_to(owner, process_rate, HAS_MOB_PROPERTY(owner, PROP_DIGESTION_EFFICIENCY) ? GET_MOB_PROPERTY(owner, PROP_DIGESTION_EFFICIENCY) : 1)
+			src.reagents.trans_to(owner, process_rate, HAS_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) ? GET_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) : 1)
 
 			if (src.reagents.total_volume <= 0)
 				owner.stomach_process -= src

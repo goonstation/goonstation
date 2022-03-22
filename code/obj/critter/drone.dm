@@ -5,7 +5,7 @@
 	icon_state = "drone"
 	density = 1
 	health = 65
-	var/maxhealth = 65 // for damage description
+	maxhealth = 65 // for damage description
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
@@ -1199,7 +1199,7 @@
 	beeptext = "neighs"
 	beepsound = 'sound/vox/na.ogg' //how is nay or neigh not a thing in vox?
 	alertsound1 = 'sound/effects/mag_pandroar.ogg'
-	alertsound2 = 'sound/voice/animal/wendigo_roar.ogg'
+	alertsound2 = 'sound/voice/animal/brullbar_roar.ogg'
 	projectile_type = /datum/projectile/bullet/autocannon/huge
 	current_projectile = new/datum/projectile/bullet/autocannon/huge
 	sphere_projectile = new/datum/projectile/laser/precursor/sphere

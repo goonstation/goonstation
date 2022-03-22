@@ -223,14 +223,14 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "aranesp", 15)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "aranesp", 15)
 					M.add_stam_mod_max("aranesp", 25)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "aranesp")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "aranesp")
 					M.remove_stam_mod_max("aranesp")
 				..()
 
@@ -283,14 +283,14 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "omegazine", 500)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "omegazine", 500)
 					M.add_stam_mod_max("omegazine", 500)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "omegazine")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "omegazine")
 					M.remove_stam_mod_max("omegazine")
 				..()
 
@@ -871,7 +871,11 @@ datum
 				var/list/covered = holder.covered_turf()
 				if (length(covered) > 5)
 					silent = TRUE
-				volume /= max(length(covered) / 5, 1)
+				volume /= max(length(covered), 1)
+				if(istype(holder, /datum/reagents/fluid_group))
+					volume = min(volume, src.volume / (2 + 3 / length(covered)))
+				if(volume < 5)
+					return
 				O.AddComponent(/datum/component/glue_ready, volume * 5 SECONDS, 5 SECONDS)
 				var/turf/T = get_turf(O)
 				if(!silent)
@@ -1965,7 +1969,7 @@ datum
 		pollen
 			name = "pollenium"
 			id = "pollen"
-			description = "A pollen-derivative with a number of proteins and other nutrients vital to space bee health. Not palatable for humans, but at least Russian dissidents have never been killed with it."
+			description = "A pollen-derivative with a number of proteins and other nutrients vital to space bee health. Not palatable for humans."
 			reagent_state = SOLID
 			fluid_r = 191
 			fluid_g = 191
@@ -2005,16 +2009,16 @@ datum
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					if (ismartian(M))
-						APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "reagent_martian_flesh", 15)
-						APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "reagent_martian_flesh", 15)
+						APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "reagent_martian_flesh", 15)
+						APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "reagent_martian_flesh", 15)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					if (ismartian(M))
-						REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "reagent_martian_flesh")
-						REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "reagent_martian_flesh")
+						REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "reagent_martian_flesh")
+						REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "reagent_martian_flesh")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2065,8 +2069,8 @@ datum
 			fluid_b = 109
 			transparency = 192
 			viscosity = 0.3
-			depletion_rate = 0.05
-			var/conversion_rate = 2
+			depletion_rate = 0.25
+			var/conversion_rate = 1
 			var/list/sounds = list("sound/machines/ArtifactFea1.ogg", "sound/machines/ArtifactFea2.ogg", "sound/machines/ArtifactFea3.ogg",
 							"sound/misc/flockmind/flockmind_cast.ogg", "sound/misc/flockmind/flockmind_caw.ogg",
 							"sound/misc/flockmind/flockdrone_beep1.ogg", "sound/misc/flockmind/flockdrone_beep2.ogg", "sound/misc/flockmind/flockdrone_beep3.ogg", "sound/misc/flockmind/flockdrone_beep4.ogg",
@@ -2082,16 +2086,23 @@ datum
 			proc/process_reactions()
 				// consume fellow reagents
 				if (istype(holder))
-					var/otherReagents = FALSE
-					for(var/reagent_id in holder.reagent_list)
-						if(reagent_id != id)
-							holder.remove_reagent(reagent_id, conversion_rate)
+					var/list/otherReagents = holder.reagent_list.Copy()
+					otherReagents -= src.id
+					if(ishuman(holder?.my_atom))
+						var/mob/living/carbon/human/H = holder.my_atom
+						if(H.blood_volume >= conversion_rate)
+							otherReagents += "blood_placeholder"
+
+					if(length(otherReagents) > 0)
+						var/targetReagent = pick(otherReagents) //pick one reagent and convert it
+						if(targetReagent != "blood_placeholder") //blood is handled in on_mob_life
+							holder.remove_reagent(targetReagent, conversion_rate)
 							holder.add_reagent(id, conversion_rate)
-							otherReagents = TRUE
-					if(!otherReagents)
+					else
 						// we ate them all, time to die
 						if(holder?.my_atom?.material?.mat_id == "gnesis") // gnesis material prevents coag. gnesis from evaporating
 							return
+
 						holder.remove_reagent(id, conversion_rate)
 
 			// let's put more teeth into this.
@@ -2103,9 +2114,9 @@ datum
 					// i'm sorry sir but your blood counts as raw materials
 					var/mob/living/carbon/human/H = M
 					var/amt = conversion_rate * mult
-					if(H.blood_volume >= amt)
+					if(H.blood_volume >= amt && holder.get_reagent_amount(src.id) > 50)
 						H.blood_volume -= amt
-					H.reagents.add_reagent(id, amt)
+						H.reagents.add_reagent(id, amt)
 					if(holder.get_reagent_amount(src.id) > 300)
 						// oh no
 						if(probmult(1)) // i hate you all, players
@@ -2243,13 +2254,13 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_flip", 2)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_flip", 2)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_flip")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_flip")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2363,13 +2374,13 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_glowing_flip", 4)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_glowing_flip", 4)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_glowing_flip")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_glowing_flip")
 				..()
 
 
@@ -2782,13 +2793,13 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_GHOSTVISION, src)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_GHOSTVISION, src)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_GHOSTVISION, src)
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_GHOSTVISION, src)
 				..()
 
 		voltagen

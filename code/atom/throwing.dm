@@ -142,7 +142,7 @@
 
 	if(isliving(src) && (throwing & THROW_PEEL_SLIP))
 		var/mob/living/L = src
-		APPLY_MOB_PROPERTY(L, PROP_CANTMOVE, "peel_slip_\ref[thr]")
+		APPLY_ATOM_PROPERTY(L, PROP_MOB_CANTMOVE, "peel_slip_\ref[thr]")
 
 	LAZYLISTADD(throwing_controller.thrown, thr)
 	throwing_controller.start()

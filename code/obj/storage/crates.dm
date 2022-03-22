@@ -15,7 +15,7 @@
 	soundproofing = 3
 	throwforce = 50 //ouch
 	can_flip_bust = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT  | NO_MOUSEDROP_QOL
+	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 
 	get_desc()
 		. = ..()
@@ -35,9 +35,9 @@
 			return 1
 		return ..()
 
-	CheckExit(atom/movable/O as mob|obj, target as turf)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if(istype(O, /obj/projectile))
-			return 1
+			. = 1
 		return ..()
 
 // Gore delivers new crates - woo!
@@ -273,11 +273,7 @@
 	var/static/list/possible_items = list()
 	grab_stuff_on_spawn = FALSE
 
-	New()
-		..()
-		spawn_items()
-
-	proc/spawn_items(var/mob/owner)
+	proc/spawn_items(mob/owner, obj/item/uplink/owner_uplink)
 		#define NESTED_SCALING_FACTOR 0.8
 		if (istype(src.loc, /obj/storage/crate/syndicate_surplus)) //if someone got lucky and rolled a surplus inside a surplus, scale the inner one (and its contents) down
 			src.nest_amt++
@@ -286,14 +282,10 @@
 
 		if (islist(syndi_buylist_cache) && !length(possible_items))
 			for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
-				var/blocked = 0
-				if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && length(S.blockedmode))
-					for (var/V in S.blockedmode)
-						if (ispath(V) && istype(ticker.mode, V))
-							blocked = 1
-							break
+				if(!isnull(owner_uplink) && !(S.can_buy & owner_uplink.purchase_flags)) //You can get anything (not usually excluded from surplus crates) from any gamemode if you spawn this without an uplink
+					continue
 
-				if (blocked == 0 && !S.not_in_crates)
+				if (!S.not_in_crates)
 					possible_items += S
 
 		if (islist(possible_items) && length(possible_items))
@@ -303,11 +295,17 @@
 				var/obj/item/I = new item_datum.item(src)
 				I.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the contents if we're nested
 				if (owner)
-					item_datum.run_on_spawn(I, owner, TRUE)
+					item_datum.run_on_spawn(I, owner, TRUE, owner_uplink)
 					if (owner.mind)
 						owner.mind.traitor_crate_items += item_datum
 				telecrystals += item_datum.cost
 		#undef NESTED_SCALING_FACTOR
+
+/obj/storage/crate/syndicate_surplus/spawnable
+
+	New()
+		..()
+		spawn_items() //null owner/uplink, so pulls from all possible items
 
 /obj/storage/crate/pizza
 	name = "pizza box"
@@ -546,7 +544,7 @@
 		/obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut,
 		/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector,
 		/obj/item/clothing/glasses/healthgoggles/upgraded,
-		/obj/item/device/analyzer/healthanalyzer/borg,
+		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
 		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,
@@ -557,7 +555,7 @@
 		name = "Class Crate - Field Medic"
 		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies."
 		spawn_contents = list(/obj/item/clothing/glasses/healthgoggles/upgraded,
-		/obj/item/device/analyzer/healthanalyzer/borg,
+		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
 		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,
@@ -771,7 +769,7 @@
 
 	cargonia
 		spawn_contents = list(/obj/item/radio_tape/advertisement/cargonia,
-		/obj/item/clothing/under/rank/cargo,/obj/decal/skeleton)
+		/obj/item/clothing/under/rank/cargo,/obj/decal/fakeobjects/skeleton)
 
 	escape
 		spawn_contents = list(/obj/item/sea_ladder,

@@ -906,7 +906,7 @@
 					game_stats.Increment("farts")
 #endif
 			else
-				src.show_text("Invalid Emote: [act]")
+				if (voluntary) src.show_text("Invalid Emote: [act]")
 				return
 
 		if (message && isalive(src))
@@ -1278,7 +1278,7 @@
 	M.transforming = 1
 	M.canmove = 0
 	M.icon = null
-	APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (isobserver(M) && M:corpse)
 		G.oldmob = M:corpse

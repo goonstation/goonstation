@@ -188,39 +188,56 @@
 		return 0
 
 	proc/mob_can_enter_storage(var/mob/living/L as mob, var/mob/user as mob)
+		// Game hasn't started
 		if (!ticker)
 			boutput(L, "<b>You can't enter cryogenic storage before the game's started!</b>")
 			boutput(user, "<b>You can't put someone in cryogenic storage before the game's started!</b>")
-			return 0
+			return FALSE
+		// It's a battle royale
 		if(master_mode == "battle_royale")
 			boutput(L, "<b>The high levels of BATTLE ENERGY in this area prevent the use of cryogenic storage! Get your ass out there and fight, coward!</b>")
 			boutput(user, "<b>The high levels of BATTLE ENERGY in this area prevent the use of cryogenic storage!</b>")
-		if (!istype(L) || isdead(L))
+			return FALSE
+		// Non-living mob (by type)
+		if (!istype(L))
+			boutput(L, "<b>You won't fit in the cryogenic storage!</b>")
+			boutput(user, "<b>That won't fit in the cryogenic storage!</b>")
+			return FALSE
+		// Dead person entering/being put in storage
+		if (isdead(L))
 			boutput(L, "<b>You have to be alive to enter cryogenic storage!</b>")
 			boutput(user, "<b>You can't put someone in cryogenic storage if they aren't alive!</b>")
-			return 0
+			return FALSE
+		// Incapacitated or restrained person trying to enter storage on their own
 		if (!user && (L.stat || L.restrained() || L.getStatusDuration("paralysis") || L.sleeping))
 			boutput(L, "<b>You can't enter cryogenic storage while incapacitated!</b>")
-			return 0
+			return FALSE
+		// Incapacitated or restrained person trying to put someone else in
 		if (user && (user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping))
 			boutput(user, "<b>You can't put someone in cryogenic storage while you're incapacitated or restrained!</b>")
-			return 0
+			return FALSE
+		// Person entering is too far away
 		if (get_dist(src, L) > 1)
 			boutput(L, "<b>You need to be closer to [src] to enter cryogenic storage!</b>")
 			boutput(user, "<b>[L] needs to be closer to [src] for you to put them in cryogenic storage!</b>")
-			return 0
+			return FALSE
+		// Person putting other person in is too far away
 		if (user && get_dist(src, user) > 1)
 			boutput(user, "<b>You need to be closer to [src] to put someone in cryogenic storage!</b>")
-			return 0
+			return FALSE
 		var/mob/living/silicon/R = L
+		// That's a goddamn robot
 		if (istype(R))
+			// That's the goddamn AI
 			if (R.mainframe || isAI(R) || isshell(R))
 				boutput(user, "<b>You can't put the AI in cryogenic storage!</b>")
-				return 0
+				return FALSE
+			// That's a goddamn cyborg
 			if (!isrobot(R) && !isghostdrone(R))
 				boutput(user, "<b>You can't put that machine in cryogenic storage!</b>")
-				return 0
-		return 1
+				return FALSE
+		// Gratz
+		return TRUE
 
 	proc/exit_prompt(var/mob/living/user as mob)
 		if (!user || !stored_mobs.Find(user))
@@ -280,6 +297,9 @@
 			return ..()
 
 	attack_ai(mob/user as mob)
+		if(isAIeye(user))
+			boutput(user, "<span class='alert'>An incorporeal manifestation of an artificial intelligence's presence can't enter \the [src]!</span>")
+			return FALSE
 		if (!enter_prompt(user))
 			return ..()
 

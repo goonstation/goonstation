@@ -321,6 +321,17 @@
 		user.put_in_hand_or_drop(M)
 		user.u_equip(src)
 		qdel(src)
+	else if (istype(P, /obj/item/paper))
+		var/obj/item/staple_gun/S = user.find_type_in_hand(/obj/item/staple_gun)
+		if (S?.ammo)
+			var/obj/item/paper_booklet/booklet = new(src.loc)
+			user.drop_item()
+			booklet.pages += src
+			src.set_loc(booklet)
+			booklet.Attackby(P, user, params)
+			return
+		else
+			boutput(user, "<span class='alert'>You need a loaded stapler in hand to staple the sheets into a booklet.</span>")
 	else
 		// cut paper?  the sky is the limit!
 		ui_interact(user)	// The other ui will be created with just read mode outside of this
@@ -449,7 +460,7 @@ ASC: Aux. Solar Control<BR>
 	<li>Secure a filled canister of O2 or another suitable air mixture to the attached connector using a wrench.</li>
 	<li>Add a 50-unit supply of cryoxadone to each of the two cryogenics chambers. There should be two nearby beakers for this purpose; if they are missing or empty, it is recommended
 	that a request be sent to the Research Department to synthesize an additional supply.</li>
-	<li>Set the freezer to an appropriate calibration temperature (-85C, -100C, and -115C work well for brute, toxin, and burn damage respectively, though there are other useful calibrations).</li>
+	<li>Set the freezer to the lowest possible temperature setting (73.15 K, the default) if necessary.</li>
 	<li>Turn on the power on the freezer and leave it on.</li>
 	<li>One can add a defibrillator to attempt to revive subjects as well.</li>
 	</ol>
@@ -460,7 +471,7 @@ ASC: Aux. Solar Control<BR>
 	<li>Stabilize the patient's health using CPR or cardiac stimulants.</li>
 	<li>Remove any exosuit, headgear, and any other insulative materials being worn by the patient. Failure to remove these will deter the effects of the cryoxadone and halt the
 	healing process.</li>
-	<li>Check to ensure that the gas temperature is correctly calibrated (see above) and there is no contamination in the system.</li>
+	<li>Check to ensure that the gas temperature is at optimal levels and there is no contamination in the system.</li>
 	<li>Put the patient in the cryogenics chamber and turn it on.</li>
 	</ol>
 	The cryogenics chamber will automatically eject patients once their health is back to normal, but post-cryo evaluation is recommended nevertheless.
@@ -911,6 +922,18 @@ as it may become compromised.
 	<hr>
 	<i>Ey! Yo! What the hell? You think you can take a day off - relax - and then these hungry n'angry food pirates come along! Damn Thompson McGreasy;
 	unable to close his trash-pod he arrived in. Now we gotta deal with some mutant mice problem!</i>
+	"}
+
+/obj/item/paper/cruiser_bought
+	name = "My very own space cruiser"
+	icon_state = "paper"
+	desc = "The first entry in a collection of never to be finished memoirs."
+	info = {"<center><h2>Finally, my own ship!</h2></center>
+	<hr>
+	<i>This is the begining of my log, I figured since I made it rich after all this time, I ought to recount my thoughts now in a log of sorts.
+	Years of working in a damm cubicle, my only worthwile cash comming from transfering dead crew members credits to my own account.
+	But it has all paid off, I got a beautiful ship, my dog, a whole damm vault, and plenty of room for guests!
+	I even got this bottle of blue label! I was going to save it for my first cruise with others, but I suppose it wont hurt to dip into a bit of it.</i>
 	"}
 
 /obj/item/paper/fortune
