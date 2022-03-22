@@ -333,7 +333,6 @@ var/mutable_appearance/fluid_ma
 		var/turf/t
 		if(!waterflow_enabled) return
 		for( var/dir in cardinal )
-			LAGCHECK(LAG_MED)
 			blocked_perspective_objects["[dir]"] = 0
 			t = get_step( src, dir )
 			if (!t) //the fuck? how
@@ -354,7 +353,6 @@ var/mutable_appearance/fluid_ma
 				var/suc = 1
 				var/push_thing = 0
 				for(var/obj/thing in t.contents)
-					LAGCHECK(LAG_HIGH)
 					var/found = 0
 					if (IS_SOLID_TO_FLUID(thing))
 						found = 1
@@ -374,13 +372,12 @@ var/mutable_appearance/fluid_ma
 							suc=0
 							break
 
-				if(suc && src.group) //group went missing? ok im doin a check here lol
-					LAGCHECK(LAG_HIGH)
+				if(suc && src.group && !src.group.disposed) //group went missing? ok im doin a check here lol
 					spawned_any = 1
 					src.icon_state = "15"
 					var/obj/fluid/F = new /obj/fluid
 					F.set_up(t,0)
-					if (!F || !src.group) continue //set_up may decide to remove F
+					if (!F || !src.group || src.group.disposed) continue //set_up may decide to remove F
 
 					F.amt = src.group.amt_per_tile
 					F.name = src.name
