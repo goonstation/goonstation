@@ -392,12 +392,13 @@ var/mutable_appearance/fluid_ma
 					F.movement_speed_mod = src.movement_speed_mod
 
 					if (src.group)
+						src.group.add(F, src.group.amt_per_tile)
 						F.group = src.group
-						. += F
 					else
 						var/datum/fluid_group/FG = new
 						FG.add(F, src.group.amt_per_tile)
 						F.group = FG
+					. += F
 
 					F.done_init()
 

@@ -211,12 +211,13 @@ var/list/ban_from_airborne_fluid = list()
 					F.movement_speed_mod = src.movement_speed_mod
 
 					if (src.group)
+						src.group.add(F, src.group.amt_per_tile)
 						F.group = src.group
-						. += F
 					else
 						var/datum/fluid_group/FG = new
 						FG.add(F, src.group.amt_per_tile)
 						F.group = FG
+					. += F
 
 					F.done_init()
 					last_spread_was_blocked = 0
