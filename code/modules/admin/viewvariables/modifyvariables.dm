@@ -57,7 +57,8 @@
 								  DATA_INPUT_FILE, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_LIST_BUILD))
 			if (!isnull(key_result.output))
 				L[val_result.output] = key_result.output
-		L += val_result.output
+		else
+			L += val_result.output
 	return TRUE
 
 
@@ -67,11 +68,10 @@
 	if(!islist(L))
 		boutput(src, "<span class='alert'>That's not a List!</span>")
 
-	var/list/locked = list("vars", "key", "ckey", "client", "holder")
 
 	var/list/names = sortList(L)
 
-	var/list/fixedList = new/list()
+	var/list/fixedList = list()
 
 	for(var/x in names)
 		var/addNew = istext(x) ? (isnull(L[x]) ? "\ref[x] - ([x])" : "\ref[x] -> ([L[x]])") : "\ref[x] - ([x])"
@@ -89,9 +89,6 @@
 
 	variable = fixedList[variable]
 	var/variable_index = L.Find(variable)
-
-	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Administrator")))
-		return
 
 	var/default = suggest_input_type(variable, list = L)
 
