@@ -65,7 +65,7 @@
 	ADMIN_ONLY
 
 	if(!islist(L))
-		boutput(src, "Not a List.")
+		boutput(src, "<span class='alert'>That's not a List!</span>")
 
 	var/list/locked = list("vars", "key", "ckey", "client", "holder")
 
@@ -75,7 +75,7 @@
 
 	for(var/x in names)
 		var/addNew = istext(x) ? (isnull(L[x]) ? "\ref[x] - ([x])" : "\ref[x] -> ([L[x]])") : "\ref[x] - ([x])"
-		fixedList.Add(addNew)
+
 		fixedList[addNew] = x
 
 	var/variable = input("Which var?","Var") as null|anything in fixedList + "(ADD VAR)"
@@ -93,7 +93,7 @@
 	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Administrator")))
 		return
 
-	var/default = suggest_input_type(variable)
+	var/default = suggest_input_type(variable, )
 
 	var/datum/data_input_result/result = input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
 													DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_ICON, DATA_INPUT_FILE, \

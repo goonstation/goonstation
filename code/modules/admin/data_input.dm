@@ -1,5 +1,5 @@
 /// For inputting data for things like edit-variables, proccall, etc
-/// @param allowed_types The types of input which are allowed, which the src selects from. The selected type is returned as part of the data_input_result
+/// @param allowed_types The types of input which are allowed, which the user selects from. The selected type is returned as part of the data_input_result
 /// @param custom_title 		If not null, set as the title for the input
 ///	@param custom_text			If not null, set as the text for the input
 /// @param default				The default value, if default_type is chosen as the input type
@@ -15,7 +15,7 @@
 		logTheThing("debug", src.mob, null, "somehow attempted to input data via the input_data proc.")
 		return
 
-	var/input = null 	// The input from the src- usually text, but might be a file or something.
+	var/input = null 	// The input from the user- usually text, but might be a file or something.
 	var/selected_type = input(custom_type_title || "Which input type?", custom_type_message || "Input Type Selection", default_type) as null|anything in allowed_types //TODO make this a TGUI list once we can indicate defaults on those
 
 	if (!selected_type)
@@ -201,7 +201,7 @@
 /// @param var_value The value to evaluate
 /// @param L The list the value is contained in, if applicable, to determine if the var value is associated to another value
 /// @return Suggested input type for input_data()
-/client/proc/suggest_input_type(var/var_value, varname, var/list/L = null)
+/client/proc/suggest_input_type(var/var_value, var/varname = null, var/list/L = null)
 	var/default = null
 	if (isnull(var_value))
 		boutput(src, "Unable to determine variable type.")
@@ -246,7 +246,7 @@
 		boutput(src, "Variable appears to be <b>FILE</b>.")
 		default = DATA_INPUT_FILE
 
-	//boutput(src, "\"<tt>[variable]</tt>\" contains: [var_value]") TODO figure out what the fuck mod_list is doing wrt var names
+	boutput(src, "\"<tt>[varname || 'Variable']</tt>\" contains: [var_value]")
 	if(default == DATA_INPUT_NUM)
 		var/direction
 		switch(var_value)

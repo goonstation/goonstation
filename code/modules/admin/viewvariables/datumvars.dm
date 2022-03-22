@@ -748,7 +748,7 @@
 		message_admins("[key_name(usr)] tried to varedit [D.type] but was denied.") //If someone tries this let's make sure we all know it.
 		return
 
-	var/default = suggest_input_type(var_value)
+	var/default = suggest_input_type(var_value, variable)
 
 	var/original_name
 	if(D == "GLOB")
