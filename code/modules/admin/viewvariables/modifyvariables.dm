@@ -95,12 +95,9 @@
 
 	var/default = suggest_input_type(variable)
 
-	var/datum/data_input_result/result = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","type","json","ref","reference","mob reference","turf by coordinates","reference picker","new instance of a type", "icon","file","color","list","number",, default == "associated" ? "associated" : null, "(DELETE FROM LIST)","restore to default")
-
 	var/datum/data_input_result/result = input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
 													DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_ICON, DATA_INPUT_FILE, \
-													DATA_INPUT_COLOR, DATA_INPUT_LIST, DATA_INPUT, DATA_INPUT_LIST_DEL_FROM, DATA_INPUT_RESTORE, \
+													DATA_INPUT_COLOR, DATA_INPUT_LIST_EDIT, DATA_INPUT_LIST_BUILD, DATA_INPUT_LIST_DEL_FROM, DATA_INPUT_RESTORE, \
 													default == DATA_INPUT_LIST_EDIT_ASSOCIATED ? DATA_INPUT_LIST_EDIT_ASSOCIATED : null))
 
 	switch(result.output_type)

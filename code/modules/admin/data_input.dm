@@ -198,7 +198,8 @@
 /// @param var_value The value to evaluate
 /// @param L The list the value is contained in, if applicable, to determine if the var value is associated to another value
 /// @return Suggested input type for input_data()
-/client/proc/suggest_input_type(var/var_value, var/list/L = null)
+/client/proc/suggest_input_type(var/var_value, varname, var/list/L = null)
+	var/default = null
 	if (isnull(var_value))
 		boutput(src, "Unable to determine variable type.")
 
@@ -242,7 +243,7 @@
 		boutput(src, "Variable appears to be <b>FILE</b>.")
 		default = DATA_INPUT_FILE
 
-	boutput(src, "\"<tt>[variable]</tt>\" contains: [var_value]")
+	//boutput(src, "\"<tt>[variable]</tt>\" contains: [var_value]") TODO figure out what the fuck mod_list is doing wrt var names
 	if(default == DATA_INPUT_NUM)
 		var/direction
 		switch(var_value)
