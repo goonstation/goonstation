@@ -246,7 +246,7 @@
 		boutput(src, "Variable appears to be <b>FILE</b>.")
 		default = DATA_INPUT_FILE
 
-	boutput(src, "\"<tt>[varname || 'Variable']</tt>\" contains: [var_value]")
+	boutput(src, "\"<tt>[varname || "Variable"]</tt>\" contains: [var_value]")
 	if(default == DATA_INPUT_NUM)
 		var/direction
 		switch(var_value)
