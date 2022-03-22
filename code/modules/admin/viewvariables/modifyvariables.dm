@@ -37,7 +37,7 @@
 		src.debug_variables(global_spawn_dbg)
 #endif
 
-/client/proc/mod_list_add(var/list/L, var/header = null, var/allow_assoc = TRUE)
+/client/proc/mod_list_add(var/list/L, var/header = null)
 	ADMIN_ONLY
 
 	var/datum/data_input_result/val_result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
@@ -51,7 +51,7 @@
 		//embed the list inside rather than combining the two
 		L += list(val_result.output)
 	else
-		if(allow_assoc && alert("Would you like to associate a value with the list entry and use the previously entered value as the key?",null,"Yes","No") == "Yes")
+		if(alert("Would you like to associate a value with the list entry and use the previously entered value as the key?",null,"Yes","No") == "Yes")
 			//RIP mod_list_add_ass, initial commit - March 2022
 			var/datum/data_input_result/key_result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
 								  DATA_INPUT_FILE, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_LIST_BUILD))
