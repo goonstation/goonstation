@@ -129,8 +129,8 @@
 			input = build_list()
 
 		if (DATA_INPUT_LIST_EDIT)
-			input = TRUE
-			mod_list(default) // this modifies in place, so no need to return any meaningful value.
+			mod_list(default)
+			input = default
 
 		if (DATA_INPUT_MOB_REFERENCE)
 			input = input(custom_title || "Select a mob:") as null|mob in world
@@ -181,6 +181,9 @@
 	while(confirm)
 		idx++
 		confirm = src.mod_list_add(., "Type of element #[idx]")
+
+	if (alert(src, "Use this list?<br>[english_list(.)]", "Confirmation", "Yes", "No") == "No")
+		return null
 
 /// A datum holding the data the caller needs- the formatted output itself and the format the src selected (text, JSON, color, etc etc)
 /// Functionally a named tuple.

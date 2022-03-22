@@ -57,7 +57,7 @@
 								  DATA_INPUT_FILE, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_LIST_BUILD))
 			if (!isnull(key_result.output))
 				L[val_result] = key_result.output
-		L += val_result
+		L += val_result.output
 	return TRUE
 
 
