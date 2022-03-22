@@ -138,6 +138,13 @@ var/mutable_appearance/fluid_ma
 				src.HasEntered(O,O.loc)
 		*/
 
+	proc/trigger_fluid_enter()
+		for(var/atom/A in src.loc)
+			if (src.group && A.event_handler_flags & USE_FLUID_ENTER)
+				A.EnteredFluid(src, src.loc)
+		if(src.group)
+			src.loc?.EnteredFluid(src, src.loc)
+
 	proc/turf_remove_cleanup(turf/the_turf)
 		the_turf.active_liquid = null
 
@@ -169,7 +176,7 @@ var/mutable_appearance/fluid_ma
 		amt = 0
 		avg_viscosity = initial(avg_viscosity)
 		movement_speed_mod = 0
-		group = 0
+		group = null
 		touched_other_group = 0
 		//float_anim = 0
 		step_sound = 0
@@ -198,7 +205,7 @@ var/mutable_appearance/fluid_ma
 		if (istype(W,/obj/item/rcd) || istype(W,/obj/item/tile) || istype(W,/obj/item/sheet) || ispryingtool(W) || istype(W,/obj/item/pen))
 			var/turf/T = get_turf(src)
 			T.Attackby(W,user)
-			W.afterattack(T,user)
+			W.AfterAttack(T,user)
 			return
 
 		.= ..()
@@ -314,7 +321,9 @@ var/mutable_appearance/fluid_ma
 
 	var/spawned_any = 0
 	proc/update() //returns list of created fluid tiles
-		if (!src.group) return
+		if (!src.group || src.group.disposed) //uh oh
+			src.removed()
+			return
 		.= list()
 		last_spread_was_blocked = 1
 		src.touched_channel = 0
@@ -325,9 +334,6 @@ var/mutable_appearance/fluid_ma
 		if(!waterflow_enabled) return
 		for( var/dir in cardinal )
 			LAGCHECK(LAG_MED)
-			if (!src.group)
-				src.removed()
-				return
 			blocked_perspective_objects["[dir]"] = 0
 			t = get_step( src, dir )
 			if (!t) //the fuck? how
@@ -356,7 +362,7 @@ var/mutable_appearance/fluid_ma
 						push_thing = thing
 
 					if (found)
-						if( thing.density )
+						if( thing.density || (thing.flags & FLUID_DENSE) )
 							suc=0
 							blocked_dirs++
 							if (IS_PERSPECTIVE_BLOCK(thing))
@@ -409,10 +415,7 @@ var/mutable_appearance/fluid_ma
 						else
 							step_away(push_thing,src)
 
-					for(var/atom/A in F.loc)
-						if (A.event_handler_flags & USE_FLUID_ENTER)
-							A.EnteredFluid(F, F.loc)
-					F.loc.EnteredFluid(F, F.loc)
+					F.trigger_fluid_enter()
 
 		if (spawned_any && prob(40))
 			playsound( src.loc, 'sound/misc/waterflow.ogg', 30,0.7,7)
@@ -552,7 +555,8 @@ var/mutable_appearance/fluid_ma
 						step_towards(M,F.loc)
 						break
 	*/
-	proc/update_icon(var/neighbor_was_removed = 0)  //BE WARNED THIS PROC HAS A REPLICA UP ABOVE IN FLUID GROUP UPDATE_LOOP. DO NOT CHANGE THIS ONE WITHOUT MAKING THE SAME CHANGES UP THERE OH GOD I HATE THIS
+	update_icon(var/neighbor_was_removed = 0)  //BE WARNED THIS PROC HAS A REPLICA UP ABOVE IN FLUID GROUP UPDATE_LOOP. DO NOT CHANGE THIS ONE WITHOUT MAKING THE SAME CHANGES UP THERE OH GOD I HATE THIS
+
 		if (!src.group || !src.group.reagents) return
 
 		src.name = src.group.master_reagent_name ? src.group.master_reagent_name : src.group.reagents.get_master_reagent_name() //maybe obscure later?
@@ -774,7 +778,7 @@ var/mutable_appearance/fluid_ma
 			F.group.reagents.remove_reagent(current_id, current_reagent.volume * volume_fraction)
 		/*
 		if (length(reacted_ids))
-			src.update_icon()
+			src.UpdateIcon()
 		*/
 
 	..()
@@ -811,10 +815,13 @@ var/mutable_appearance/fluid_ma
 
 	var/do_reagent_reaction = 1
 
+	if(F.my_depth_level == 1 && src.shoes?.permeability_coefficient < 1) //sandals do not help
+		do_reagent_reaction = 0
+
 	if (F.my_depth_level == 2 || F.my_depth_level == 3)
 		if (src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01)
 			do_reagent_reaction = 0
-	if (F.my_depth_level == 4)
+	if (F.my_depth_level >= 4)
 		if ((src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01) && (src.head && src.head.seal_hair))
 			do_reagent_reaction = 0
 

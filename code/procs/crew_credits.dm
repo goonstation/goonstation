@@ -85,7 +85,7 @@ var/global/crew_creds = null
 			crew_creds += "<B>Antagonist[round_antags.len == 1 ? "" : "s"]:</B><BR>"
 			for(var/datum/mind/M in round_antags)
 				if(!M.current) continue
-				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.key]) as \an [M.special_role]<BR>"
+				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.displayed_key]) as \an [M.special_role]<BR>"
 			crew_creds += "<HR>"
 
 		logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] done antags")
@@ -95,7 +95,7 @@ var/global/crew_creds = null
 			crew_creds += "<H3>Captain[round_captains.len == 1 ? "" : "s"]:</H3>"
 			for(var/datum/mind/M in round_captains)
 				if(!M.current) continue
-				crew_creds += "<H4>[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.key])</H4>"
+				crew_creds += "<H4>[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.displayed_key])</H4>"
 			//generate_crew_photo('icons/turf/floors.dmi',"greenchecker",round_captains,"captain_photo.png")
 			//crew_creds += "<img style=\"-ms-interpolation-mode:nearest-neighbor;\" src=captain_photo.png>"
 			crew_creds += "<HR>"
@@ -109,11 +109,11 @@ var/global/crew_creds = null
 			for(var/datum/mind/M in round_security)
 				if(!M.current) continue
 				if(M.assigned_role == "Head of Security")
-					crew_creds += "<H4>[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.key]) as the [M.assigned_role]<H4>"
+					crew_creds += "<H4>[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.displayed_key]) as the [M.assigned_role]<H4>"
 					round_security.Remove(M)
 			for(var/datum/mind/M in round_security)
 				if(!M.current) continue
-				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.key]) as [M.assigned_role]<BR>"
+				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.displayed_key]) as [M.assigned_role]<BR>"
 			crew_creds += "<HR>"
 
 		logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] done security")
@@ -125,11 +125,11 @@ var/global/crew_creds = null
 			for(var/datum/mind/M in round_medical)
 				if(!M.current) continue
 				if(M.assigned_role == "Medical Director")
-					crew_creds += "<H4>[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.key]) as the [M.assigned_role]<H4>"
+					crew_creds += "<H4>[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.displayed_key]) as the [M.assigned_role]<H4>"
 					round_medical.Remove(M)
 			for(var/datum/mind/M in round_medical)
 				if(!M.current) continue
-				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.key]) as [M.assigned_role]<BR>"
+				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.displayed_key]) as [M.assigned_role]<BR>"
 			crew_creds += "<HR>"
 
 		logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] done medical")
@@ -141,11 +141,11 @@ var/global/crew_creds = null
 			for(var/datum/mind/M in round_science)
 				if(!M.current) continue
 				if(M.assigned_role == "Research Director")
-					crew_creds += "<H4>[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.key]) as the [M.assigned_role]<H4>"
+					crew_creds += "<H4>[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.displayed_key]) as the [M.assigned_role]<H4>"
 					round_science.Remove(M)
 			for(var/datum/mind/M in round_science)
 				if(!M.current) continue
-				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.key]) as [M.assigned_role]<BR>"
+				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.displayed_key]) as [M.assigned_role]<BR>"
 			crew_creds += "<HR>"
 
 		logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] done science")
@@ -158,11 +158,11 @@ var/global/crew_creds = null
 			for(var/datum/mind/M in round_engineering)
 				if(!M.current) continue
 				if(M.assigned_role == "Chief Engineer")
-					crew_creds += "<H4>[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.key]) as the [M.assigned_role]<H4>"
+					crew_creds += "<H4>[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.displayed_key]) as the [M.assigned_role]<H4>"
 					round_engineering.Remove(M)
 			for(var/datum/mind/M in round_engineering)
 				if(!M.current) continue
-				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.key]) as [M.assigned_role]<BR>"
+				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.displayed_key]) as [M.assigned_role]<BR>"
 			crew_creds += "<HR>"
 
 		logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] done engineering")
@@ -175,11 +175,11 @@ var/global/crew_creds = null
 			for(var/datum/mind/M in round_civilian)
 				if(!M.current) continue
 				if(M.assigned_role == "Head of Personnel")
-					crew_creds += "<H4>[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.key]) as the [M.assigned_role]</H4>"
+					crew_creds += "<H4>[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.displayed_key]) as the [M.assigned_role]</H4>"
 					round_civilian.Remove(M)
 			for(var/datum/mind/M in round_civilian)
 				if(!M.current) continue
-				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.key]) as [M.assigned_role]<BR>"
+				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.displayed_key]) as [M.assigned_role]<BR>"
 			crew_creds += "<HR>"
 
 		logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] done civilian")
@@ -189,7 +189,7 @@ var/global/crew_creds = null
 			crew_creds += "<H3>Other:</H3>"
 			for(var/datum/mind/M in round_other)
 				if(!M.current) continue
-				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.key]) as [M.assigned_role]<BR>"
+				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[[__red("DEAD")]\] " : ""] (played by [M.displayed_key]) as [M.assigned_role]<BR>"
 			crew_creds += "<HR>"
 
 		logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] done other - all finished")

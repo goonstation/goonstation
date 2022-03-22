@@ -2,6 +2,7 @@
 	name = "cloaking device"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "shield0"
+	var/base_icon_state = "shield"
 	uses_multiple_icon_states = 1
 	var/active = 0.0
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSHIELD
@@ -17,6 +18,10 @@
 	stamina_cost = 0
 	stamina_crit_chance = 15
 	contraband = 6
+
+	New()
+		..()
+		src.icon_state = base_icon_state + "0"
 
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
@@ -41,7 +46,7 @@
 			return 0
 		RegisterSignal(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE, .proc/deactivate)
 		src.active = 1
-		src.icon_state = "shield1"
+		src.icon_state = base_icon_state + "1"
 		if (user && ismob(user))
 			user.update_inhands()
 			user.update_clothing()
@@ -52,7 +57,7 @@
 		if(src.active && istype(user))
 			user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
 		src.active = 0
-		src.icon_state = "shield0"
+		src.icon_state = base_icon_state + "0"
 		if (user && ismob(user))
 			user.update_inhands()
 			user.update_clothing()
@@ -60,7 +65,7 @@
 	// Fix for the backpack exploit. Spawn call is necessary for some reason (Convair880).
 	dropped(var/mob/user)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (!src) return
 			if (!user)
 				src.deactivate()
@@ -98,3 +103,24 @@
 				return
 			charges -= 1
 			..()
+
+	hunter
+		name = "Hunter cloaking device"
+		desc = "A cloaking device. It doesn't seem to be designed by humans."
+		icon_state = "hunter_cloak"
+		base_icon_state = "hunter_cloak"
+		var/hunter_key = "" // The owner of this cloak.
+
+		New()
+			..()
+			if(istype(src.loc, /mob/living))
+				var/mob/M = src.loc
+				src.AddComponent(/datum/component/self_destruct, M)
+				src.AddComponent(/datum/component/send_to_target_mob, src)
+				src.hunter_key = M.mind.key
+				START_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
+				flick("[src.base_icon_state]-tele", src)
+
+		disposing()
+			. = ..()
+			STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)

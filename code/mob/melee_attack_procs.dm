@@ -146,50 +146,13 @@
 	if (src == target) // :I
 		boutput(src, "<span class='alert'>You desperately try to think of a way to do CPR on yourself, but it's just not logically possible!</span>")
 		return
-
-	if (ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if (H.head && (H.head.c_flags & 4))
-			boutput(src, "<span class='notice'>You need to take off their headgear before you can give CPR!</span>")
-			return
-
-		if (H.wear_mask && !(H.wear_mask.c_flags & 32))
-			boutput(src, "<span class='notice'>You need to take off their facemask before you can give CPR!</span>")
-			return
-
-	if (target.cpr_time >= world.time)
-		return
-
-	if (isdead(target))
-		src.visible_message("<span class='alert'><B>[src] tries to perform CPR, but it's too late for [target]!</B></span>")
+	if(actions.hasAction(src, "cpr"))
+		boutput(src, "<span class='alert'>You're already doing CPR!</span>")
 		return
 
 	src.lastattacked = target
-	target.cpr_time = world.time + src.combat_click_delay
 
-	src.visible_message("<span class='alert'><B>[src] is trying to perform CPR on [target]!</B></span>")
-	if (do_mob(src, target, 40)) //todo : unfuck this into a progres bar or something that happens automatically over time
-		if (target.health < 0 || target.find_ailment_by_type(/datum/ailment/malady/flatline))
-			target.take_oxygen_deprivation(-15)
-			target.losebreath = 0
-			target.changeStatus("paralysis", -2 SECONDS)
-
-			if(target.find_ailment_by_type(/datum/ailment/malady/flatline) && target.health > -50)
-				if ((target.reagents?.has_reagent("epinephrine") || target.reagents?.has_reagent("atropine")) ? prob(5) : prob(2))
-					target.cure_disease_by_path(/datum/ailment/malady/flatline)
-
-			if (src)
-				src.visible_message("<span class='alert'>[src] performs CPR on [target]!</span>")
-
-/mob/living/carbon/human/administer_CPR(var/mob/living/target)
-	if (src.head && (src.head.c_flags & 4))
-		boutput(src, "<span class='notice'>You need to take off your headgear before you can give CPR!</span>")
-		return
-
-	if (src.wear_mask && !(src.wear_mask.c_flags & 32))
-		boutput(src, "<span class='notice'>You need to take off your facemask before you can give CPR!</span>")
-		return
-	..()
+	actions.start(new /datum/action/bar/icon/CPR(target), src)
 
 ///////////////////////////////////////////// Grab intent //////////////////////////////////////////////////////////
 
@@ -201,11 +164,14 @@
 /mob/living/grab_self()
 	if(!..())
 		return
+	var/block_it_up = TRUE
+	if (!src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
+		for(var/obj/stool/stool_candidate in src.loc)
+			if (stool_candidate.buckle_in(src, src, 1))
+				block_it_up = FALSE
+				break //found one, no need to continue
 
-	var/obj/stool/S = (locate(/obj/stool) in src.loc)
-	if (S && !src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
-		S.buckle_in(src,src,1)
-	else
+	if (block_it_up)
 		var/obj/item/grab/block/G = new /obj/item/grab/block(src, src, src)
 		src.put_in_hand(G, src.hand)
 
@@ -215,11 +181,6 @@
 		src.setStatus("blocking", duration = INFINITE_STATUS)
 		block_begin(src)
 		src.next_click = world.time + (COMBAT_CLICK_DELAY)
-		/*
-		RIP
-		else
-			src.visible_message("<span class='alert'><B>[src] tweaks [his_or_her(src)] own nipples! That's [pick_string("tweak_yo_self.txt", "tweakadj")] [pick_string("tweak_yo_self.txt", "tweak")]!</B></span>")
-		*/
 
 /mob/living/proc/grab_block() //this is sorta an ugly but fuck it!!!!
 	if (src.grabbed_by && src.grabbed_by.len > 0)
@@ -387,7 +348,7 @@
 			if (istext(attack_resistance))
 				msgs.show_message_target(attack_resistance)
 		msgs.damage = max(damage, 0)
-	else if ( !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)) )
+	else if ( !(HAS_ATOM_PROPERTY(target, PROP_MOB_CANTMOVE)) )
 		var/armor_mod = 0
 		armor_mod = target.get_melee_protection(def_zone)
 		if(target_stamina >= 0)
@@ -430,7 +391,7 @@
 
 	if (is_shove) return msgs
 	var/disarm_success = prob(40 * lerp(clamp(200 - target_stamina, 0, 100)/100, 1, 0.5) * mult)
-	if (disarm_success && target.check_block() && !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)))
+	if (disarm_success && target.check_block() && !(HAS_ATOM_PROPERTY(target, PROP_MOB_CANTMOVE)))
 		disarm_success = 0
 		msgs.stamina_target -= STAMINA_DEFAULT_BLOCK_COST * 2
 	var/list/obj/item/limbs = list()
@@ -688,14 +649,22 @@
 
 		msgs.played_sound = "punch"
 
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if (H.gloves)
+				damage += H.gloves.punch_damage_modifier
 		if (src != target && iswrestler(src) && prob(66))
 			msgs.base_attack_message = "<span class='alert'><B>[src]</b> winds up and delivers a backfist to [target], sending them flying!</span>"
 			damage += 4
 			msgs.after_effects += /proc/wrestler_backfist
+		if (src.reagents && (src.reagents.get_reagent_amount("ethanol") >= 100) && prob(40))
+			damage += rand(3,5)
+			msgs.show_message_self("<span class='alert'>You drunkenly throw a brutal punch!</span>")
 
 		def_zone = target.check_target_zone(def_zone)
 
 		var/stam_power = STAMINA_HTH_DMG * stamina_damage_mult
+
 
 		var/armor_mod = 0
 		armor_mod = target.get_melee_protection(def_zone, DAMAGE_BLUNT)
@@ -978,16 +947,16 @@
 							if (owner.zone_sel)
 								target.zone_sel.selecting = owner.zone_sel.selecting
 						var/prev_intent = target.a_intent
-						target.a_intent = INTENT_HARM
+						target.set_a_intent(INTENT_HARM)
 
 						target.Attackby(I, target)
 
-						target.a_intent = prev_intent
+						target.set_a_intent(prev_intent)
 						if (old_zone_sel)
 							target.zone_sel.selecting = old_zone_sel
 
 						if (prob(20))
-							I.attack_self(target)
+							I.AttackSelf(target)
 
 
 				if ("shoved_down" in src.disarm_RNG_result)
@@ -1171,13 +1140,6 @@
 
 /mob/living/carbon/human/calculate_bonus_damage(var/datum/attackResults/msgs)
 	. = ..()
-	if (src.gloves)
-		. += src.gloves.punch_damage_modifier
-
-	if (src.reagents && (src.reagents.get_reagent_amount("ethanol") >= 100) && prob(40))
-		. += rand(3,5)
-		if (msgs)
-			msgs.show_message_self("<span class='alert'>You drunkenly throw a brutal punch!</span>")
 
 	if (src.is_hulk())
 		. += max((abs(health+max_health)/max_health)*5, 5)
@@ -1245,7 +1207,7 @@
 
 /mob/living/carbon/human/attack_effects(var/mob/target, var/obj/item/affecting)
 	if (src.is_hulk())
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (prob(20))
 				target.changeStatus("stunned", 1 SECOND)
 				step_away(target,src,15)
@@ -1272,12 +1234,12 @@
 		if(prob(50))
 			T.changeStatus("weakened", 2 SECONDS)
 			T.force_laydown_standup()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			step_rand(T, 15)
 	else
 		T.changeStatus("weakened", 2 SECONDS)
 		T.force_laydown_standup()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			step_away(T, H, 15)
 
 	return

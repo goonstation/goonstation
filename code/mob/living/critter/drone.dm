@@ -29,7 +29,7 @@
 		setup_loot_table()
 		name = "[initial(name)] [drone_designation]-[rand(num_max)]"
 
-	Bump(atom/movable/AM)
+	bump(atom/movable/AM)
 		if(smashes_shit)
 			if(isobj(AM))
 				if (istype(AM, /obj/critter) || istype(AM, /obj/machinery/vehicle))
@@ -59,7 +59,7 @@
 			return
 		dying = 1
 		overlays += image('icons/obj/ship.dmi', "dying-overlay")
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			ghostize()
 			var/turf/L = get_turf(src)
 			for (var/T in loot_table)

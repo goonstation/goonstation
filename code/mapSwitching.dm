@@ -79,21 +79,18 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		else
 			mapName = getMapNameFromID(mapID)
 
-		//tell tgs, via goonhub, to compile with a new map
+		//compile with a new map
 		var/list/params = list(
 			"map" = mapID,
 			"votedFor" = trigger == "Player Vote"
 		)
-		var/data[] = apiHandler.queryAPI("map-switcher/switch-tgs", params, 1)
+		var/data[] = apiHandler.queryAPI("map-switcher/switch", params, 1)
 
 		if (!data)
 			throw EXCEPTION("No response from goonhub API route")
 
 		if (data["error"])
 			throw EXCEPTION("Received error from goonhub API: [data["error"]]")
-
-		if (!data["response"])
-			throw EXCEPTION("Missing response from TGS")
 
 		//make a note if this is a player voted map
 		src.nextMapIsVotedFor = trigger == "Player Vote" ? 1 : 0
@@ -138,7 +135,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		//if the vote was triggered with a duration, wait that long and end it
 		if (duration)
 			var/currentVoteIndex = src.voteIndex
-			SPAWN_DBG(duration)
+			SPAWN(duration)
 				//it's possible that a vote was started, cancelled, and then another started again. we don't want this spawn to prematurely end the new one
 				if (currentVoteIndex != src.voteIndex)
 					return

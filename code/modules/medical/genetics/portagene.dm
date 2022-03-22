@@ -4,6 +4,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "PAG_0"
 	anchored = 0
+	req_access = null //will revisit later
 	var/mob/occupant = null
 	var/datum/character_preview/multiclient/occupant_preview = null
 	var/locked = 0
@@ -31,7 +32,7 @@
 		. = ..()
 		. += "Home turf: [get_area(src.homeloc)]."
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
 		if (isobserver(usr) || isintangible(usr))
 			return
@@ -83,11 +84,11 @@
 			go_in(target)
 		else if (can_operate(user,target))
 			var/previous_user_intent = user.a_intent
-			user.a_intent = INTENT_GRAB
+			user.set_a_intent(INTENT_GRAB)
 			user.drop_item()
 			target.Attackhand(user)
-			user.a_intent = previous_user_intent
-			SPAWN_DBG(user.combat_click_delay + 2)
+			user.set_a_intent(previous_user_intent)
+			SPAWN(user.combat_click_delay + 2)
 				if (can_operate(user,target))
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)

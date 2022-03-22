@@ -18,7 +18,7 @@
 	src.c_state(0)
 
 	if (src.master)
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			var/datum/signal/signal = get_free_signal()
 			signal.source = src
 			signal.data["message"] = "ACTIVATE"
@@ -148,7 +148,7 @@
 		else
 			src.master.add_dialog(usr)
 		if (href_list["time"])
-			src.timing = text2num(href_list["time"])
+			src.timing = text2num_safe(href_list["time"])
 			if(timing)
 				src.c_state(1)
 				processing_items |= src
@@ -156,21 +156,23 @@
 			if (src.master && istype(master, /obj/item/device/transfer_valve))
 				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a timer on a transfer valve at [log_loc(src.master)].")
 				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a timer on a transfer valve at [log_loc(src.master)].")
+				SEND_SIGNAL(src.master, "[timing ? COMSIG_BOMB_SIGNAL_START : COMSIG_BOMB_SIGNAL_CANCEL]")
 			else if (src.master && istype(src.master, /obj/item/assembly/time_ignite)) //Timer-detonated beaker assemblies
 				var/obj/item/assembly/rad_ignite/RI = src.master
 				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a timer on a timer-igniter assembly at [log_loc(src.master)]. Contents: [log_reagents(RI.part3)]")
-
+				SEND_SIGNAL(src.master, "[timing ? COMSIG_BOMB_SIGNAL_START : COMSIG_BOMB_SIGNAL_CANCEL]")
 			else if(src.master && istype(src.master, /obj/item/assembly/time_bomb))	//Timer-detonated single-tank bombs
 				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a timer on a single-tank bomb at [log_loc(src.master)].")
 				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a timer on a single-tank bomb at [log_loc(src.master)].")
-
+				SEND_SIGNAL(src.master, "[timing ? COMSIG_BOMB_SIGNAL_START : COMSIG_BOMB_SIGNAL_CANCEL]")
 			else if (src.master && istype(src.master, /obj/item/mine)) // Land mine.
 				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a timer on a [src.master.name] at [log_loc(src.master)].")
+				SEND_SIGNAL(src.master, "[timing ? COMSIG_BOMB_SIGNAL_START : COMSIG_BOMB_SIGNAL_CANCEL]")
 
 		if (href_list["tp"])
-			var/tp = text2num(href_list["tp"])
+			var/tp = text2num_safe(href_list["tp"])
 			src.time += tp
-			src.time = min(max(round(src.time), src.min_time), src.max_time)
+			src.time = clamp(round(src.time), src.min_time, src.max_time)
 			if (can_use_detonator && src.time < src.min_detonator_time)
 				src.time = src.min_detonator_time
 

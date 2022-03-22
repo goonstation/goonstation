@@ -371,7 +371,7 @@
 				return
 
 			if(href_list["mode"])
-				var/newmode = text2num(href_list["mode"])
+				var/newmode = text2num_safe(href_list["mode"])
 				src.mode = max(newmode, 0)
 
 			if(href_list["delTone"])
@@ -422,7 +422,13 @@
 			else if(href_list["input"])
 				switch(href_list["input"])
 					if("tone")
-						var/t = input(usr, "Please enter new ring message", src.name, src.message_tone) as text
+						var/prompt = "Please enter new ring message"
+						var/default = src.message_tone
+						if (usr.ckey == src.master?.uplink?.owner_ckey)
+							default = src.master.uplink.lock_code
+							prompt += ". Your traitor uplink code has been pre-entered for your convenience"
+
+						var/t = input(usr, prompt, src.name, default) as text
 						if (!t)
 							return
 
@@ -432,7 +438,7 @@
 						if(!(src.holder in src.master))
 							return
 
-						if ((src.master.uplink) && (cmptext(t,src.master.uplink.lock_code)))
+						if (t == src.master?.uplink?.lock_code)
 							boutput(usr, "The PDA softly beeps.")
 							src.master.uplink.unlock()
 						else
@@ -721,7 +727,7 @@
 
 
 			else if(href_list["message_mode"])
-				var/newmode = text2num(href_list["message_mode"])
+				var/newmode = text2num_safe(href_list["message_mode"])
 				src.message_mode = max(newmode, 0)
 
 			src.master.add_fingerprint(usr)
@@ -778,7 +784,7 @@
 					pingreply.data["address_1"] = signal.data["sender"]
 					pingreply.data["command"] = "ping_reply"
 					pingreply.data["data"] = src.master.owner
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						src.post_signal(pingreply)
 					return
 
@@ -856,7 +862,7 @@
 					if((signal.data["batt_adjust"] == netpass_syndicate) && (signal.data["address_1"] == src.master.net_id) && !(src.master.exploding))
 						if (src.master)
 							src.master.exploding = 1
-						SPAWN_DBG(2 SECONDS)
+						SPAWN(2 SECONDS)
 							if (src.master)
 								src.master.explode()
 

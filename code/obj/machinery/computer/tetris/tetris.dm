@@ -7,13 +7,13 @@
 		return null
 	for(var/datum/game/tetris/T in by_type[/datum/game/tetris]) // JFC this a world loop before this. aaaAAAAAAA
 		if (T.highscore && T.highscorekey)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/list/response = world.GetScores(T.highscorekey, "Tetris", config.medal_hub, config.medal_password)
 				var/currScore = -1
 				if(response)
 					var/list/rList = params2list(response)
 					if(rList["Tetris"])
-						currScore = text2num(rList["Tetris"])
+						currScore = text2num_safe(rList["Tetris"])
 				if(T.highscore > currScore)
 					DEBUG_MESSAGE("Setting Tetris scores: Key: [T.highscorekey] Score: [T.highscore]")
 					var/returnval = world.SetScores(T.highscorekey, "Tetris=[T.highscore]", config.medal_hub, config.medal_password)
@@ -25,7 +25,7 @@
 	if(response)
 		var/list/rList = params2list(response)
 		if(rList[field_name])
-			result = text2num(rList[field_name])
+			result = text2num_safe(rList[field_name])
 	return result
 */
 
@@ -57,7 +57,7 @@
 			icon_state = initial(icon_state)
 			status &= ~NOPOWER
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				src.icon_state = "tetris0"
 				status |= NOPOWER
 
@@ -89,11 +89,11 @@ ABSTRACT_TYPE(/datum/game)
 		if (owner.Topic(href, href_list))
 			return
 		if (href_list["highscore"])
-			if (text2num(href_list["highscore"]))
-				if (text2num(href_list["highscore"]) >= 30000)
+			if (text2num_safe(href_list["highscore"]))
+				if (text2num_safe(href_list["highscore"]) >= 30000)
 					usr.unlock_medal("Block Stacker", 1)
-				if (text2num(href_list["highscore"]) > highscore)
-					highscore = text2num(href_list["highscore"])
+				if (text2num_safe(href_list["highscore"]) > highscore)
+					highscore = text2num_safe(href_list["highscore"])
 					highscorekey = usr.key
 					highscoreholder = html_encode(input("Congratulations! You have achieved the highscore! Enter a name:", "Highscore!", usr.name) as text)
 					src.end_game()
@@ -109,4 +109,4 @@ ABSTRACT_TYPE(/datum/game)
 
 	end_game()
 		if(istype(src.owner, /obj/machinery/computer/tetris))
-			src.owner.desc = "Instructions: Left/Right Arrows: move, Up Arrow: turn, Down Arrow: faster, Space: auto place<br><br><b>Highscore: [highscore] by [highscoreholder]</b>"
+			src.owner.desc = "Instructions: Left/Right Arrows: Move, Up Arrow/W/R: Turn CW, Q: Turn CCW, Down Arrow/S: Soft Drop, Space: Hard Drop<br><br><b>Highscore: [highscore] by [highscoreholder]</b>"

@@ -12,17 +12,18 @@
 	var/vision_radius = 3
 	var/mob/the_user = null
 	//Prolonged use causes damage.
-	New(mob/target, atom/location)
+	New(atom/location, mob/target)
 		..()
 		src.set_loc(location)
-		the_user = target
-		target.set_loc(src)
-		img = image('icons/effects/effects.dmi',src ,"energyorb")
-		target << img
+		if(target)
+			the_user = target
+			target.set_loc(src)
+			img = image('icons/effects/effects.dmi',src ,"energyorb")
+			target << img
 		RegisterSignal(the_user, list(COMSIG_MOB_DROPPED), .proc/handle_dropped_item)
-		APPLY_MOB_PROPERTY(the_user, PROP_CANTTHROW, src)
+		APPLY_ATOM_PROPERTY(the_user, PROP_MOB_CANTTHROW, src)
 
-		//SPAWN_DBG(0) check() but why
+		//SPAWN(0) check() but why
 
 	proc/handle_dropped_item(mob/user, atom/movable/AM)
 		AM.set_loc(get_turf(user))
@@ -34,12 +35,12 @@
 		return Air
 
 	proc/spawn_sparks()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			// Check spawn limits
 			if(limiter.canISpawn(/obj/effects/sparks))
 				var/obj/effects/sparks/O = new /obj/effects/sparks
 				O.set_loc(src.loc)
-				SPAWN_DBG(2 SECONDS) if (O) qdel(O)
+				SPAWN(2 SECONDS) if (O) qdel(O)
 
 	relaymove(mob/user, direction)
 
@@ -60,12 +61,12 @@
 
 				src.set_loc(new_loc)
 				can_move = 0
-				SPAWN_DBG(speed) can_move = 1
+				SPAWN(speed) can_move = 1
 		return
 
 	disposing()
-		REMOVE_MOB_PROPERTY(the_user, PROP_CANTTHROW, src)
-		the_user.client.images -= cableimgs
+		the_user?.client.images -= cableimgs
+		REMOVE_ATOM_PROPERTY(the_user, PROP_MOB_CANTTHROW, src)
 		the_user = null
 		return ..()
 
@@ -103,7 +104,7 @@
 	var/vision_radius = 2
 	New()
 		handle_overlay()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			check()//ohly fucke pls rewrite me
 		cableimgs = new/list((vision_radius*2+1)**2)
 		var/obj/cable/ctype = /obj/cable
@@ -225,7 +226,7 @@
 		activating = 1
 
 		on_cooldown = 1
-		SPAWN_DBG(3 SECONDS) on_cooldown = 0
+		SPAWN(3 SECONDS) on_cooldown = 0
 
 		var/atom/dummy = D
 		if(D)
@@ -277,7 +278,7 @@
 			user.transforming = 0
 			qdel(O)
 
-			D = new/obj/dummy/voltron(user, get_turf(src))
+			D = new/obj/dummy/voltron(get_turf(src), user)
 
 			target = user
 			active = 1

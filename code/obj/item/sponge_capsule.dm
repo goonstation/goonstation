@@ -28,7 +28,7 @@
 	animals = list(/obj/critter/microman,
 					/obj/critter/bear,
 					/obj/critter/spider/aggressive,
-					/obj/critter/wendigo,
+					/obj/critter/brullbar,
 					/obj/critter/bat/buff,
 					/obj/critter/spider/ice,
 					/obj/critter/townguard/passive,
@@ -60,6 +60,8 @@
 
 /obj/item/toy/sponge_capsule/proc/add_water()
 	playsound(src.loc, 'sound/effects/cheridan_pop.ogg', 100, 1)
+	if(isnull(animal_to_spawn)) // can probably happen if spawned directly in water
+		animal_to_spawn = pick(animals)
 	var/obj/critter/C = new animal_to_spawn(get_turf(src))
 	var/turf/T = get_turf(src)
 	T.visible_message("<span class='notice'>What was once [src] has become [C.name]!</span>")
@@ -69,6 +71,7 @@
 	if(F.group.reagents && F.group.reagents.reagent_list["water"])
 		src.add_water()
 
+/obj/item/toy/sponge_capsule/custom_suicide = TRUE
 /obj/item/toy/sponge_capsule/suicide(var/mob/user)
 	user.visible_message("<span class='alert'><b>[user] eats [src]!</b></span>")
 	var/obj/critter/C = new animal_to_spawn(user.loc)
@@ -107,7 +110,7 @@
 
 /obj/item/spongecaps/New()
 	..()
-	update_icon()
+	UpdateIcon()
 
 /obj/item/spongecaps/get_desc()
 	if(caps_amt >= 1)
@@ -115,7 +118,7 @@
 	else
 		. += "<br>It's empty."
 
-/obj/item/spongecaps/proc/update_icon()
+/obj/item/spongecaps/update_icon()
 	overlays = null
 	if(caps_amt <= 0)
 		icon_state = initial(icon_state)
@@ -133,6 +136,6 @@
 			if(caps_amt != -1)
 				caps_amt--
 				tooltip_rebuild = 1
-		update_icon()
+		UpdateIcon()
 	else
 		return ..()

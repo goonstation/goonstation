@@ -33,7 +33,7 @@
 	New()
 		..()
 		if (src.find_sleeper_in_range)
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				our_sleeper = locate() in get_step(src,src.dir)
 				if (!our_sleeper)
 					our_sleeper = locate() in orange(src,1)
@@ -58,9 +58,7 @@
 		src.add_fingerprint(user)
 		if (!src.our_sleeper)
 			return 0
-		switch (src.our_sleeper.emag_act(user, E))
-			if (0) return 0
-			if (1) return 1
+		return src.our_sleeper.emag_act(user, E)
 
 	proc/wake_occupant()
 		if (!src || !src.our_sleeper)
@@ -240,7 +238,7 @@
 	anchored = 1
 	mats = 25
 	deconstruct_flags = DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	var/mob/occupant = null
 	var/image/image_lid = null
 	var/obj/machinery/power/data_terminal/link = null
@@ -269,8 +267,8 @@
 
 	New()
 		..()
-		src.update_icon()
-		SPAWN_DBG(0.6 SECONDS)
+		src.UpdateIcon()
+		SPAWN(0.6 SECONDS)
 			if (src && !src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
@@ -285,7 +283,7 @@
 			occupant = null
 		..()
 
-	proc/update_icon()
+	update_icon()
 		ENSURE_IMAGE(src.image_lid, src.icon, "sleeperlid[!isnull(occupant)]")
 		src.UpdateOverlays(src.image_lid, "lid")
 		return
@@ -359,7 +357,7 @@
 		var/mob/living/carbon/human/H = G.affecting
 		H.set_loc(src)
 		src.occupant = H
-		src.update_icon()
+		src.UpdateIcon()
 #ifdef DATALOGGER
 		game_stats.Increment("sleeper")
 #endif
@@ -527,7 +525,7 @@
 			src.occupant.changeStatus("weakened", 1 SECOND)
 			src.occupant.force_laydown_standup()
 			src.occupant = null
-			src.update_icon()
+			src.UpdateIcon()
 			playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
 			return
 
@@ -549,11 +547,11 @@
 				return
 		else if (can_operate(user))
 			var/previous_user_intent = user.a_intent
-			user.a_intent = INTENT_GRAB
+			user.set_a_intent(INTENT_GRAB)
 			user.drop_item()
 			target.Attackhand(user)
-			user.a_intent = previous_user_intent
-			SPAWN_DBG(user.combat_click_delay + 2)
+			user.set_a_intent(previous_user_intent)
+			SPAWN(user.combat_click_delay + 2)
 				if (can_operate(user))
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)
@@ -587,7 +585,7 @@
 		usr.remove_pulling()
 		usr.set_loc(src)
 		src.occupant = usr
-		src.update_icon()
+		src.UpdateIcon()
 		for (var/obj/O in src)
 			if (O == src.our_console) // don't barf out the internal sleeper console tia
 				continue
@@ -599,7 +597,7 @@
 		..()
 		eject_occupant(user)
 
-	MouseDrop(mob/user as mob)
+	mouse_drop(mob/user as mob)
 		if (can_operate(user))
 			eject_occupant(user)
 		else
@@ -638,7 +636,7 @@
 				pingsignal.data["command"] = "ping_reply"
 				pingsignal.data["sender"] = src.net_id
 				pingsignal.transmission_method = TRANSMISSION_WIRE
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.link.post_signal(src, pingsignal)
 
 			return
@@ -659,7 +657,7 @@
 				reply.data["address_1"] = signal.data["sender"]
 				reply.data["sender"] = src.net_id
 				reply.transmission_method = TRANSMISSION_WIRE
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					src.link.post_signal(src, reply)
 
 			if("inject")
@@ -669,7 +667,7 @@
 
 /obj/machinery/sleeper/port_a_medbay
 	name = "Port-A-Medbay"
-	desc = "An emergency transportation device for critically injured patients."
+	desc = "A transportation and stabilization device for critically injured patients."
 	icon = 'icons/obj/porters.dmi'
 	anchored = 0
 	mats = 30
@@ -709,7 +707,7 @@
 		. += "Home turf: [get_area(src.homeloc)]."
 
 	// Could be useful (Convair880).
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if (src.occupant)
 			..()
 			return
@@ -765,7 +763,7 @@
 
 /obj/machinery/sleeper/compact
 	name = "Compact Sleeper"
-	desc = "Your usual sleeper, but compact this time. Wow!"
+	desc = "Has the same air supply and stabilization capabilites as your usual model, but compact this time. Wow!"
 	icon = 'icons/obj/compact_machines.dmi'
 	icon_state = "compact_sleeper"
 	anchored = 1

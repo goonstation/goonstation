@@ -72,7 +72,7 @@
 		var/obj/decal/icefloor/B
 		for (var/turf/TF in range(linked_power.power - 1,T))
 			B = new /obj/decal/icefloor(TF)
-			SPAWN_DBG(80 SECONDS)
+			SPAWN(80 SECONDS)
 				B.dispose()
 
 		for (var/mob/living/L in T.contents)
@@ -128,15 +128,15 @@
 	name = "Matter Eater"
 	desc = "Eat just about anything!"
 	icon_state = "mattereater"
-	targeted = 0
-	var/using = 0
+	targeted = FALSE
+	var/using = FALSE
 
 	cast()
 		if (..())
-			return 1
+			return TRUE
 		if (using)
-			return 1
-		using = 1
+			return TRUE
+		using = TRUE
 
 		var/datum/bioEffect/power/mattereater/ME = linked_power
 		var/base_path = text2path("[ME.target_path]")
@@ -152,34 +152,40 @@
 			items += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
 			//So people can still get the meat ending
 
-		if (!items.len)
-			boutput(usr, "/red You can't find anything nearby to eat.")
-			using = 0
+		if (!length(items))
+			boutput(usr, "<span class='alert'>You can't find anything nearby to eat.</span>")
+			using = FALSE
 			return
 
-		var/obj/the_item = input("Which item do you want to eat?","Matter Eater") as null|obj in items
-		if (!the_item || (!istype(the_item, /obj/the_server_ingame_whoa) && the_item.anchored))
-			using = 0
-			return 1
+		var/obj/the_object = input("Which item do you want to eat?","Matter Eater") as null|obj in items
+		if (!the_object || (!istype(the_object, /obj/the_server_ingame_whoa) && the_object.anchored))
+			using = FALSE
+			return TRUE
+
+		if (!(the_object in get_filtered_atoms_in_touch_range(owner, base_path)))
+			owner.show_text("<span class='alert'>Man, that thing is long gone, far away, just let it go.</span>")
+			return TRUE
 
 		var/area/cur_area = get_area(owner)
 		var/turf/cur_turf = get_turf(owner)
 		if (isrestrictedz(cur_turf.z) && !cur_area.may_eat_here_in_restricted_z && (!owner.client || !owner.client.holder))
 			owner.show_text("<span class='alert'>Man, this place really did a number on your appetite. You can't bring yourself to eat anything here.</span>")
-			using = 0
-			return 1
+			using = FALSE
+			return TRUE
 
-		if (istype(the_item, /obj/the_server_ingame_whoa))
-			var/obj/the_server_ingame_whoa/the_server = the_item
+		if (istype(the_object, /obj/the_server_ingame_whoa))
+			var/obj/the_server_ingame_whoa/the_server = the_object
 			the_server.eaten(owner)
-			using = 0
+			using = FALSE
 			return
-		owner.visible_message("<span class='alert'>[owner] eats [the_item].</span>")
-		playsound(owner.loc, "sound/items/eatfood.ogg", 50, 0)
-
-		qdel(the_item)
+		owner.visible_message("<span class='alert'>[owner] eats [the_object].</span>")
+		playsound(owner.loc, "sound/items/eatfood.ogg", 50, FALSE)
 
 		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (isitem(the_object))
+				var/obj/item/the_item = the_object
+				H.sims?.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
 			for(var/A in owner.organs)
 				var/obj/item/affecting = null
 				if (!owner.organs[A])    continue
@@ -189,8 +195,9 @@
 				affecting.heal_damage(4, 0)
 			owner.UpdateDamageIcon()
 
-		using = 0
-		return
+		qdel(the_object)
+
+		using = FALSE
 
 
 
@@ -220,8 +227,8 @@
 			using = 0
 			return
 
-		var/obj/the_item = input("Which item do you want to eat?","Matter Eater") as null|obj in items
-		if (!the_item)
+		var/obj/the_object = input("Which item do you want to eat?","Matter Eater") as null|obj in items
+		if (!the_object)
 			using = 0
 			return 1
 
@@ -232,12 +239,12 @@
 			using = 0
 			return 1
 
-		if (istype(the_item, /obj/the_server_ingame_whoa))
-			var/obj/the_server_ingame_whoa/the_server = the_item
+		if (istype(the_object, /obj/the_server_ingame_whoa))
+			var/obj/the_server_ingame_whoa/the_server = the_object
 			the_server.eaten(owner)
 			using = 0
 			return
-		owner.visible_message("<span class='alert'>[owner] tries to swallow [the_item] whole and nearly chokes on it.</span>")
+		owner.visible_message("<span class='alert'>[owner] tries to swallow [the_object] whole and nearly chokes on it.</span>")
 		playsound(owner.loc, "sound/items/eatfood.ogg", 50, 0)
 		playsound(owner.loc, "sound/misc/meat_plop.ogg", 50, 0)
 		using = 0
@@ -299,7 +306,7 @@
 			var/prevLayer = owner.layer
 			owner.layer = EFFECTS_LAYER_BASE
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for(var/i=0, i < jump_tiles, i++)
 					step(owner, owner.dir)
 					if(i < jump_tiles / 2)
@@ -319,7 +326,7 @@
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[owner.loc]</b> emits a loud thump and rattles a bit.</span>")
 			playsound(owner.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/wiggle = 6
 				while(wiggle > 0)
 					wiggle--
@@ -355,7 +362,7 @@
 			owner.changeStatus("weakened", 10 SECONDS)
 			owner.changeStatus("stunned", 5 SECONDS)
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for(var/i=0, i < jump_tiles, i++)
 					if(i < jump_tiles / 2)
 						owner.pixel_y += pixel_move
@@ -374,7 +381,7 @@
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[owner.loc]</b> emits a loud thump and rattles a bit.</span>")
 			playsound(owner.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/wiggle = 6
 				while(wiggle > 0)
 					wiggle--
@@ -439,7 +446,7 @@
 		playsound(owner.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
 		owner.visible_message("<span class='alert'><b>[owner]</b> touches [target], then begins to shifts and contort!</span>")
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(H && owner)
 				playsound(owner.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 				owner.bioHolder.CopyOther(H.bioHolder, copyAppearance = 1, copyPool = 0, copyEffectBlocks = 0, copyActiveEffects = 0)
@@ -861,8 +868,10 @@
 
 	cast()
 		if (..())
-			return 1
-
+			return TRUE
+		if (istype(owner.loc, /obj/dummy/spell_invis)) // stops biomass manipulation and dimension shift from messing with eachother.
+			boutput(owner, "<span class='alert'>You can't seem to turn incorporeal here.</span>")
+			return TRUE
 		if (spell_invisibility(owner, 1, 0, 0, 1) == 1)
 			if (!linked_power.safety)
 				// If unsynchronized, you don't get to keep anything you have on you.
@@ -878,8 +887,10 @@
 
 	cast_misfire()
 		if (..())
-			return 1
-
+			return TRUE
+		if (istype(owner.loc, /obj/dummy/spell_invis))
+			boutput(owner, "<span class='alert'>You can't seem to turn incorporeal here.</span>")
+			return TRUE
 		// Misfires still transform you, but bad things happen.
 
 		if (spell_invisibility(owner, 1, 0, 0, 1) == 1)
@@ -985,17 +996,25 @@
 				var/turf/fart_turf = get_turf(owner)
 				fart_turf.fluid_react_single("[toxic > 1 ?"very_":""]toxic_fart", toxic*2, airborne = 1)
 
+			if (owner.getStatusDuration("burning"))
+				fireflash(get_turf(owner), 3 * linked_power.power)
+
 			SF.farting = 0
 			if (linked_power.power > 1)
 				for (var/turf/T in range(owner,6))
 					animate_shake(T,5,rand(3,8),rand(3,8))
-			if (gib_user)
-				owner.gib()
 
 			// Superfarted on the bible? Off to hell.
 			for (var/obj/item/storage/bible/B in owner.loc)
-				owner.damn()
+				if(gib_user)
+					owner.mind.damned = TRUE
+				else
+					owner.damn()
 				break
+
+			if (gib_user)
+				owner.gib()
+
 		else
 			boutput(owner, "<span class='alert'>You were interrupted and couldn't fart! Rude!</span>")
 			SF.farting = 0
@@ -1216,22 +1235,29 @@
 			return 1
 
 		linked_power.using = 1
-		var/obj/the_item = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
-		if (!the_item)
+		var/obj/the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
+		if (!the_object)
 			last_cast = 0
 			linked_power.using = 0
 			return 1
 
+		if(isitem(the_object))
+			var/obj/item/the_item = the_object
+			if(the_item.amount > 1)
+				var/obj/item/split_item = the_item.split_stack(1)
+				split_item.set_loc(get_turf(the_item))
+				the_object = split_item
+
 		if (!linked_power)
-			owner.visible_message("[owner] touches [the_item].")
+			owner.visible_message("[owner] touches [the_object].")
 		else
 			if (istype(linked_power,/datum/bioEffect/power/midas))
 				var/datum/bioEffect/power/midas/linked = linked_power
-				owner.visible_message("<span class='alert'>[owner] touches [the_item], turning it to [linked.transmute_material]!</span>")
-				the_item.setMaterial(getMaterial(linked.transmute_material))
+				owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to [linked.transmute_material]!</span>")
+				the_object.setMaterial(getMaterial(linked.transmute_material))
 			else
-				owner.visible_message("<span class='alert'>[owner] touches [the_item], turning it to gold!</span>")
-				the_item.setMaterial(getMaterial("gold"))
+				owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to gold!</span>")
+				the_object.setMaterial(getMaterial("gold"))
 		linked_power.using = 0
 		return
 
@@ -1251,17 +1277,24 @@
 			return 1
 
 		linked_power.using = 1
-		var/obj/the_item = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
-		if (!the_item)
+		var/obj/the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
+		if (!the_object)
 			last_cast = 0
 			linked_power.using = 0
 			return 1
 
+		if(isitem(the_object))
+			var/obj/item/the_item = the_object
+			if(the_item.amount > 1)
+				var/obj/item/split_item = the_item.split_stack(1)
+				split_item.set_loc(get_turf(the_item))
+				the_object = split_item
+
 		if (!linked_power)
-			owner.visible_message("[owner] touches [the_item].")
+			owner.visible_message("[owner] touches [the_object].")
 		else
-			owner.visible_message("<span class='alert'>[owner] touches [the_item], turning it to flesh!</span>")
-			the_item.setMaterial(getMaterial("flesh"))
+			owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to flesh!</span>")
+			the_object.setMaterial(getMaterial("flesh"))
 		linked_power.using = 0
 		return
 
@@ -1368,7 +1401,7 @@
 	OnRemove()
 		..()
 		if(active)
-			processing = 1
+			processing = TRUE
 			var/obj/dummy/spell_invis/invis_object
 			if (istype(owner.loc,/obj/dummy/spell_invis/))
 				invis_object = owner.loc
@@ -1379,7 +1412,7 @@
 
 			owner.visible_message("<span class='alert'><b>[owner] appears in a burst of blue light!</b></span>")
 			playsound(owner.loc, "sound/effects/ghost2.ogg", 50, 0)
-			SPAWN_DBG(0.7 SECONDS)
+			SPAWN(0.7 SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
 				active = 0
@@ -1396,50 +1429,56 @@
 
 	cast()
 		if (..())
-			return 1
+			return TRUE
 
 		if (!istype(linked_power,/datum/bioEffect/power/dimension_shift))
-			return 1
+			return TRUE
 		var/datum/bioEffect/power/dimension_shift/P = linked_power
-
 		if (!istype(owner.loc,/turf/) && !istype(owner.loc,/obj/dummy/spell_invis/))
 			boutput(owner, "<span class='alert'>That won't work here.</span>")
-			return 1
-
+			return TRUE
 		if (P.processing)
-			return 1
+			return TRUE
 
-		P.processing = 1
+		P.processing = TRUE
 
 		if (!P.active)
-			P.active = 1
-			P.last_loc = owner.loc
+			if (istype(owner.loc, /obj/dummy/spell_invis/)) // check for if theres a spell_invis object we havent placed (from biomass manipulation)
+				// before this, dimension shift and biomass manipulation resulted in strange behavior, including being sent to nullspace.
+				boutput(owner, "<span class='alert'>That won't work here.</span>")
+				P.processing = FALSE
+				return TRUE
+			P.active = TRUE
+			P.last_loc = get_turf(owner)
 			owner.canmove = 0
 			owner.restrain_time = TIME + 0.7 SECONDS
 			owner.visible_message("<span class='alert'><b>[owner] vanishes in a burst of blue light!</b></span>")
 			playsound(owner.loc, "sound/effects/ghost2.ogg", 50, 0)
 			animate(owner, color = "#0000FF", time = 5, easing = LINEAR_EASING)
 			animate(alpha = 0, time = 5, easing = LINEAR_EASING)
-			SPAWN_DBG(0.7 SECONDS)
+			SPAWN(0.7 SECONDS)
 				owner.canmove = 1
 				owner.restrain_time = 0
 				var/obj/dummy/spell_invis/invis_object = new /obj/dummy/spell_invis(get_turf(owner))
 				invis_object.canmove = 0
 				owner.set_loc(invis_object)
-			P.processing = 0
-			return 1
+			P.processing = FALSE
+			return TRUE
 		else
 			var/obj/dummy/spell_invis/invis_object
 			if (istype(owner.loc,/obj/dummy/spell_invis/))
 				invis_object = owner.loc
-			owner.set_loc(P.last_loc)
+			if (isnull(P.last_loc))
+				owner.set_loc(get_turf(owner)) // better safe than sorry.
+			else // now it wont nullspace you if things go wrong.
+				owner.set_loc(P.last_loc)
 			if (invis_object)
 				qdel(invis_object)
 			P.last_loc = null
 
 			owner.visible_message("<span class='alert'><b>[owner] appears in a burst of blue light!</b></span>")
 			playsound(owner.loc, "sound/effects/ghost2.ogg", 50, 0)
-			SPAWN_DBG(0.7 SECONDS)
+			SPAWN(0.7 SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
 				P.active = 0
@@ -1509,7 +1548,7 @@
 		light.enable()
 
 		if (isnum(time))
-			SPAWN_DBG(time)
+			SPAWN(time)
 				qdel(src)
 
 	disposing()
@@ -1741,7 +1780,7 @@
 					current_prob *= modifier // very steep. probably grabs 3 or 4 objects per cast -- much less effective than revenant command
 					thrown += O
 					animate_float(O)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(T, 32, 2)
 
@@ -1762,7 +1801,7 @@
 					current_prob *= modifier // very steep. probably grabs 3 or 4 objects per cast -- much less effective than revenant command
 					thrown += O
 					animate_float(O)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(owner, 32, 2)
 
@@ -1799,13 +1838,14 @@
 
 		var/mob/living/L = owner
 		if (which_way == 1)
-			APPLY_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src, INVIS_INFRA)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_INFRA)
 			L.UpdateOverlays(overlay_image, id)
 		else
-			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
 			L.UpdateOverlays(null, id)
 
 	OnAdd()
+		active = 0
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#333333"
@@ -1882,6 +1922,7 @@
 	ability_path = /datum/targetable/geneticsAbility/chameleon
 
 	OnAdd()
+		active = 0
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 		..()
@@ -1892,7 +1933,7 @@
 		if (isliving(owner))
 			var/mob/living/L = owner
 			L.UpdateOverlays(null, id)
-			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
 		if (src.active)
 			src.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
 		return
@@ -1904,14 +1945,14 @@
 			var/mob/living/L = owner
 			if (TIME - last_moved >= 3 SECONDS && can_act(owner))
 				L.UpdateOverlays(overlay_image, id)
-				APPLY_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src, INVIS_INFRA)
+				APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_INFRA)
 
 	proc/decloak()
 		if(isliving(owner))
 			var/mob/living/L = owner
 			last_moved = TIME
 			L.UpdateOverlays(null, id)
-			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
 
 /datum/targetable/geneticsAbility/chameleon
 	name = "Chameleon"
@@ -1964,7 +2005,8 @@
 			return 1
 
 		var/turf/T = get_turf(target)
-		var/list/affected_turfs = getline(owner, T)
+		var/list/line_turfs = getline(owner, T)
+		var/list/affected_turfs = list()
 		var/datum/bioEffect/power/bigpuke/BP = linked_power
 		var/range = BP.range
 		range *= BP.power
@@ -1974,7 +2016,7 @@
 		owner.reagents.add_reagent("vomit",20)
 		var/turf/currentturf
 		var/turf/previousturf
-		for(var/turf/F in affected_turfs)
+		for(var/turf/F in line_turfs)
 			previousturf = currentturf
 			currentturf = F
 			if(currentturf.density || istype(currentturf, /turf/space))
@@ -1985,12 +2027,15 @@
 				continue
 			if (get_dist(owner,F) > range)
 				continue
-			owner.reagents.reaction(F,TOUCH)
+			affected_turfs += F
+		for(var/turf/F in affected_turfs)
+			owner.reagents.reaction(F,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 			for(var/mob/living/L in F.contents)
-				owner.reagents.reaction(L,TOUCH)
+				owner.reagents.reaction(L,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 			for(var/obj/O in F.contents)
-				owner.reagents.reaction(O,TOUCH)
+				owner.reagents.reaction(O,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 		owner.reagents.clear_reagents()
+		SEND_SIGNAL(owner, COMSIG_MOB_VOMIT, 10)
 		return 0
 
 /datum/bioEffect/power/bigpuke/acidpuke
@@ -2011,7 +2056,8 @@
 			return 1
 
 		var/turf/T = get_turf(target)
-		var/list/affected_turfs = getline(owner, T)
+		var/list/line_turfs = getline(owner, T)
+		var/list/affected_turfs = list()
 		var/range = 3
 		owner.visible_message("<span class='alert'><b>[owner] horfs up a huge stream of acidic puke!</b></span>")
 		logTheThing("combat", owner, target, "power-pukes [log_reagents(owner)] at [log_loc(owner)].")
@@ -2021,7 +2067,7 @@
 		owner.reagents.add_reagent("radium",5)
 		var/turf/currentturf
 		var/turf/previousturf
-		for(var/turf/F in affected_turfs)
+		for(var/turf/F in line_turfs)
 			previousturf = currentturf
 			currentturf = F
 			if(currentturf.density || istype(currentturf, /turf/space))
@@ -2032,11 +2078,13 @@
 				continue
 			if (get_dist(owner,F) > range)
 				continue
-			owner.reagents.reaction(F,TOUCH)
+			affected_turfs += F
+		for(var/turf/F in affected_turfs)
+			owner.reagents.reaction(F,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 			for(var/mob/living/L in F.contents)
-				owner.reagents.reaction(L,TOUCH)
+				owner.reagents.reaction(L,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 			for(var/obj/O in F.contents)
-				owner.reagents.reaction(O,TOUCH)
+				owner.reagents.reaction(O,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 		owner.reagents.clear_reagents()
 		return 0
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2076,17 +2124,17 @@
 			boutput(usr, "/red You can't find anything nearby to spray ink on.")
 			return 1
 
-		var/obj/the_item = input("Which item do you want to color?","Ink Glands") as null|obj in items
-		if (!the_item)
+		var/obj/the_object = input("Which item do you want to color?","Ink Glands") as null|obj in items
+		if (!the_object)
 			last_cast = 0
 			return 1
 
 		var/datum/bioEffect/power/ink/I = linked_power
 		if (!linked_power)
-			owner.visible_message("[owner] spits on [the_item]. Gross.")
+			owner.visible_message("[owner] spits on [the_object]. Gross.")
 		else
-			owner.visible_message("<span class='alert'>[owner] sprays ink onto [the_item]!</span>")
-			the_item.color = I.color
+			owner.visible_message("<span class='alert'>[owner] sprays ink onto [the_object]!</span>")
+			the_object.color = I.color
 		return 0
 
 /datum/bioEffect/power/shoot_limb
@@ -2169,7 +2217,7 @@
 				thrown_limb = H.limbs.r_arm.remove(0)
 			else
 				return 1
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				if (istype(thrown_limb))
 					//double power if the ability is empowered (doesn't really do anything, but w/e)
 					var/tmp_force = thrown_limb.throwforce
@@ -2191,7 +2239,7 @@
 
 					owner.visible_message("<span class='alert'><b>[thrown_limb][linked_power.power > 1 ? " violently " : " "]bursts off of its socket and flies towards [target]!</b></span>")
 					logTheThing("combat", owner, target, "shoot_limb [!linked_power.safety ? "Accidently" : ""] at [ismob(target)].")
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						if (thrown_limb)
 							thrown_limb.throwforce = tmp_force
 

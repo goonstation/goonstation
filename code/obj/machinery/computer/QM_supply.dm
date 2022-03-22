@@ -80,7 +80,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 					var/datum/pathogen/P = patho[uid]
 					var/datum/cdc_contact_analysis/D = new
 					D.uid = uid
-					var/sym_count = max(min(length(P.effects), 7), 2)
+					var/sym_count = clamp(length(P.effects), 2, 7)
 					D.time_factor = sym_count * rand(10, 15) // 200, 600
 					D.cure_cost = sym_count * rand(25, 40) // 2100, 4300
 					D.name = P.name
@@ -767,7 +767,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			var/datum/cdc_contact_analysis/C = locate(subaction)
 			if (!(C in QM_CDC.completed_analysis))
 				last_cdc_message = "<span style=\"color:red; font-style: italic\">That's not ready to be cured yet.</span>"
-			var/count = text2num(href_list["count"])
+			var/count = text2num_safe(href_list["count"])
 			var/cost = 0
 			switch (count)
 				if (1)
@@ -1077,7 +1077,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 /obj/machinery/computer/supplycomp/proc/print_requisition(var/datum/req_contract/contract)
 	src.printing = 1
 	playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
-	SPAWN_DBG(2 SECONDS)
+	SPAWN(2 SECONDS)
 		var/obj/item/paper/thermal/P = new(src.loc)
 		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"
 		P.info += "FOR SUPPLIER REFERENCE ONLY<br><br>"

@@ -23,7 +23,7 @@
 		if(player.ready)
 			numPlayers++
 
-	var/numConspirators = max(2, min(round(numPlayers / 5), maxConspirators)) // Selects number of conspirators
+	var/numConspirators = clamp(round(numPlayers / 5), 2, maxConspirators) // Selects number of conspirators
 
 	var/list/potentialAntags = get_possible_enemies(ROLE_CONSPIRATOR, numConspirators)
 	if (!potentialAntags.len)
@@ -54,7 +54,12 @@
 
 	var/conspiratorList = "The conspiracy consists of: "
 	for (var/datum/mind/conspirator in traitors)
-		conspiratorList = conspiratorList + "<b>" + conspirator.current.name + "</b>, "
+		var/conspirator_name
+		if (conspirator.assigned_role == "Clown")
+			conspirator_name = "a Clown"
+		else
+			conspirator_name = conspirator.current.real_name
+		conspiratorList += "<b>[conspirator_name]</b>, "
 
 	var/pickedObjective = pick(typesof(/datum/objective/conspiracy))
 	for(var/datum/mind/conspirator in traitors)
@@ -70,7 +75,7 @@
 		boutput(conspirator.current, conspiratorList)
 		boutput(conspirator.current, meetingPoint)
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/conspiracy/proc/random_radio_frequency()
@@ -81,7 +86,7 @@
 		. = rand(1352, 1439)
 	while (blacklisted.Find(.))
 
-/datum/game_mode/traitor/send_intercept()
+/datum/game_mode/conspiracy/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
 	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
 

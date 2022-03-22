@@ -1,6 +1,6 @@
 /obj/item/device/igniter
 	name = "igniter"
-	desc = "A small electronic device able to ignite combustable substances."
+	desc = "A small electronic device can be paired with other electronics, or used to heat chemicals directly."
 	icon_state = "igniter"
 	var/status = 1.0
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT | USEDELAY
@@ -124,7 +124,7 @@
 /obj/item/device/igniter/attack_self(mob/user as mob)
 
 	src.add_fingerprint(user)
-	SPAWN_DBG( 5 )
+	SPAWN( 5 )
 		ignite()
 		return
 	return
@@ -134,6 +134,7 @@
 
 /obj/item/device/igniter/afterattack(atom/target, mob/user as mob)
 	if (!ismob(target) && target.reagents && can_ignite())
+		flick("igniter_light", src)
 		boutput(user, "<span class='notice'>You heat \the [target.name]</span>")
 		target.reagents.temperature_reagents(4000,400)
 		last_ignite = world.time
@@ -145,6 +146,7 @@
 		if (src.master)
 			location = src.master.loc
 
+		flick("igniter_light", src)
 		location = get_turf(location)
 		location?.hotspot_expose((isturf(location) ? 3000 : 4000),2000)
 		last_ignite = world.time

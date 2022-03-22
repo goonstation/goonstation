@@ -22,9 +22,9 @@
 		O.pixel_y = -96
 		O.icon = 'icons/effects/214x246.dmi'
 		O.icon_state = "explosion"
-		//SPAWN_DBG(0.5 SECONDS)
+		//SPAWN(0.5 SECONDS)
 		M.gib()
-		SPAWN_DBG(3.5 SECONDS)
+		SPAWN(3.5 SECONDS)
 			if (O)
 				O.delaydispose()
 
@@ -44,7 +44,7 @@
 			logTheThing("diary", usr, M, "has partygibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has partygibbed [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.partygib()
+		M.partygib()
 
 /client/proc/cmd_admin_owlgib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -61,7 +61,7 @@
 			logTheThing("diary", usr, M, "has owlgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has owlgibbed [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.owlgib()
+		M.owlgib()
 
 /client/proc/cmd_admin_firegib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -78,7 +78,7 @@
 			logTheThing("diary", usr, M, "has firegibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has firegibbed [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.firegib()
+		M.firegib()
 
 /client/proc/cmd_admin_elecgib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -95,7 +95,7 @@
 			logTheThing("diary", usr, M, "has elecgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has elecgibbed [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.elecgib()
+		M.elecgib()
 
 /client/proc/cmd_admin_icegib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -116,7 +116,7 @@
 			logTheThing("diary", usr, M, "has icegibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has icegibbed [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.become_statue_ice()
+		M.become_statue_ice()
 
 /client/proc/cmd_admin_goldgib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -138,7 +138,7 @@
 			message_admins("[key_name(usr)] has goldgibbed [key_name(M)]")
 
 		M.desc = "A dumb looking statue. Very shiny, though."
-		SPAWN_DBG(0.5 SECONDS) M.become_statue(getMaterial("gold"))
+		M.become_statue(getMaterial("gold"))
 
 /client/proc/cmd_admin_spidergib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -153,13 +153,15 @@
 		boutput(src, "<span class='alert'>Only humans can be spidergibbed.</span>")
 		return
 
+	var/mob/living/carbon/human/spiderman = M
+
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
 			logTheThing("admin", usr, M, "has spidergibbed [constructTarget(M,"admin")]")
 			logTheThing("diary", usr, M, "has spidergibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has spidergibbed [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M:spidergib()
+		spiderman.spidergib()
 
 /client/proc/cmd_admin_implodegib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -180,7 +182,7 @@
 			logTheThing("diary", usr, M, "has imploded [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has imploded [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M:implode()
+		M.implode()
 
 /client/proc/cmd_admin_buttgib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -191,17 +193,13 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (!ishuman(M))
-		boutput(src, "<span class='alert'>Only humans can be buttgibbed.</span>")
-		return
-
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
 			logTheThing("admin", usr, M, "has buttgibbed [constructTarget(M,"admin")]")
 			logTheThing("diary", usr, M, "has buttgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has buttgibbed [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M:buttgib()
+		M.buttgib()
 
 /client/proc/cmd_admin_cluwnegib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -221,7 +219,7 @@
 			logTheThing("diary", usr, M, "has set a floor cluwne upon [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has set a floor cluwne upon [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.cluwnegib(duration)
+		SPAWN(0.5 SECONDS) M.cluwnegib(duration)
 
 /client/proc/cmd_admin_admindamn(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -239,7 +237,7 @@
 			logTheThing("diary", usr, M, "has damned [constructTarget(M,"diary")] to hell", "admin")
 			message_admins("[key_name(usr)] has damned [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.damn()
+		SPAWN(0.5 SECONDS) M.damn()
 
 /client/proc/cmd_admin_adminundamn(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -257,7 +255,7 @@
 			logTheThing("diary", usr, M, "has undamned [constructTarget(M,"diary")] from hell", "admin")
 			message_admins("[key_name(usr)] has undamned [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.un_damn()
+		M.un_damn()
 
 /client/proc/cmd_admin_gib_self()
 	set name = "Gibself"
@@ -274,7 +272,7 @@
 		O.icon = 'icons/effects/214x246.dmi'
 		O.icon_state = "explosion"
 		O.mouse_opacity = 0
-		SPAWN_DBG(3.5 SECONDS)
+		SPAWN(3.5 SECONDS)
 			qdel(O)
 	src.mob.gib(FALSE, TRUE)
 
@@ -362,20 +360,21 @@
 	var/tysonspeed = 1
 
 	New()
-		SPAWN_DBG(0) process()
+		SPAWN(0) process()
 		..()
 
-	Bump(M as turf|obj|mob)
-		M:density = 0
-		SPAWN_DBG(0.4 SECONDS)
-			M:density = 1
-		sleep(0.1 SECONDS)
-		var/turf/T = get_turf(M)
-		src.x = T.x
-		src.y = T.y
+	bump(atom/M as turf|obj|mob)
+		if(M.density)
+			M.density = 0
+			SPAWN(0.4 SECONDS)
+				M.density = 1
+		SPAWN(0.1 SECONDS)
+			var/turf/T = get_turf(M)
+			src.x = T.x
+			src.y = T.y
 
 	proc/process()
-		while (!disposed)
+		while (!disposed && tysontarget2)
 			if (tysoncantreach >= timelimit)
 				if (tysoncantreach >= 20)
 					qdel(src)
@@ -439,17 +438,18 @@
 	var/mob/caller = null
 
 	New()
-		SPAWN_DBG(0) process()
+		SPAWN(0) process()
 		..()
 
-	Bump(M as turf|obj|mob)
-		M:density = 0
-		SPAWN_DBG(0.4 SECONDS)
-			M:density = 1
-		sleep(0.1 SECONDS)
-		var/turf/T = get_turf(M)
-		src.x = T.x
-		src.y = T.y
+	bump(atom/M as turf|obj|mob)
+		if(M.density)
+			M.density = 0
+			SPAWN(0.4 SECONDS)
+				M.density = 1
+		SPAWN(0.1 SECONDS)
+			var/turf/T = get_turf(M)
+			src.x = T.x
+			src.y = T.y
 
 	proc/process()
 		while (!disposed)

@@ -50,6 +50,7 @@
 				dat += "<h4>Security Data</h4>"
 				if (istype(src.active2, /datum/db_record) && data_core.security.has_record(src.active2))
 					dat += "Criminal Status: [src.active2["criminal"]]<br>"
+					dat += "SecHUD Flag: [src.active2["sec_flag"]]<br>"
 
 					dat += "Minor Crimes: [src.active2["mi_crim"]]<br>"
 					dat += "Details: [src.active2["mi_crim"]]<br><br>"
@@ -71,7 +72,7 @@
 			return
 
 		if(href_list["mode"])
-			var/newmode = text2num(href_list["mode"])
+			var/newmode = text2num_safe(href_list["mode"])
 			src.mode = max(newmode, 0)
 
 		else if(href_list["select_rec"])
@@ -162,7 +163,7 @@
 			return
 
 		if(href_list["mode"])
-			var/newmode = text2num(href_list["mode"])
+			var/newmode = text2num_safe(href_list["mode"])
 			src.mode = max(newmode, 0)
 
 		else if(href_list["select_rec"])

@@ -163,18 +163,16 @@ obj/machinery/vehicle/miniputt/pilot
 	icon_state = "putt_wizard" //slick
 	health = 200
 	maxhealth = 200
+	init_comms_type = /obj/item/shipcomponent/communications/wizard
 
 	New()
 		..()
 		//Phaser
 		src.m_w_system = new /obj/item/shipcomponent/mainweapon
 		src.m_w_system.ship = src
-		src.com_system = new /obj/item/shipcomponent/communications/wizard(src)
-		src.com_system.ship = src
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
 		src.components += src.m_w_system
-		src.components += src.com_system
 		src.components += src.lock
 
 		myhud.update_systems()
@@ -189,18 +187,20 @@ obj/machinery/vehicle/miniputt/pilot
 	maxhealth = 250
 	armor_score_multiplier = 0.7
 	speed = 0.8
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
 		..()
-		src.com_system = new /obj/item/shipcomponent/communications/syndicate(src)
-		src.com_system.ship = src
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
-		src.components += src.com_system
 		src.components += src.lock
 		myhud.update_systems()
 		myhud.update_states()
-		return
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 //syndiput spawner
 /obj/syndi_putt_spawner
@@ -225,6 +225,9 @@ obj/machinery/vehicle/miniputt/pilot
 	armor_score_multiplier = 0.7
 	speed = 0.8
 
+	security
+		init_comms_type = /obj/item/shipcomponent/communications/security
+
 ////////soviet putt
 /obj/machinery/vehicle/miniputt/soviputt
 	name = "Strelka-"
@@ -233,15 +236,13 @@ obj/machinery/vehicle/miniputt/pilot
 	armor_score_multiplier = 1.0
 	health = 225
 	maxhealth = 225
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
 		..()
 		src.m_w_system = new /obj/item/shipcomponent/mainweapon/russian(src)
 		src.m_w_system.ship = src
-		src.com_system = new /obj/item/shipcomponent/communications/syndicate(src)
-		src.com_system.ship = src
 		src.components += src.m_w_system
-		src.components += src.com_system
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -302,6 +303,7 @@ obj/machinery/vehicle/miniputt/pilot
 	health = 150
 	maxhealth = 150
 	speed = 0.8
+	init_comms_type = /obj/item/shipcomponent/communications/security
 
 /obj/machinery/vehicle/miniputt/nt_robust
 	name = "Pod NTR-"
@@ -311,6 +313,7 @@ obj/machinery/vehicle/miniputt/pilot
 	health = 350
 	maxhealth = 350
 	speed = 0.6
+	init_comms_type = /obj/item/shipcomponent/communications/security
 
 /obj/machinery/vehicle/miniputt/sy_light
 	name = "Pod SYL-"
@@ -320,6 +323,7 @@ obj/machinery/vehicle/miniputt/pilot
 	health = 150
 	maxhealth = 150
 	speed = 0.8
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 /obj/machinery/vehicle/miniputt/sy_robust
 	name = "Pod SYR-"
@@ -329,6 +333,7 @@ obj/machinery/vehicle/miniputt/pilot
 	health = 350
 	maxhealth = 350
 	speed = 0.6
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 //pod wars end//
 
 /*-----------------------------*/
@@ -401,9 +406,9 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	attack_self(mob/user as mob)
 		boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
 		var/obj/O = new /obj/structure/vehicleframe/puttframe( get_turf(user) )
-		logTheThing("station", user, null, "builds [O] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
+		logTheThing("station", user, null, "builds [O] in [get_area(user)] ([log_loc(user)])")
 		O.fingerprints = src.fingerprints
-		O.fingerprintshidden = src.fingerprintshidden
+		O.fingerprints_full = src.fingerprints_full
 		qdel(src)
 
 /obj/item/sub/frame_box
@@ -415,9 +420,9 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	attack_self(mob/user as mob)
 		boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
 		var/obj/O = new /obj/structure/vehicleframe/subframe( get_turf(user) )
-		logTheThing("station", user, null, "builds [O] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
+		logTheThing("station", user, null, "builds [O] in [get_area(user)] ([log_loc(user)])")
 		O.fingerprints = src.fingerprints
-		O.fingerprintshidden = src.fingerprintshidden
+		O.fingerprints_full = src.fingerprints_full
 		qdel(src)
 
 /obj/structure/vehicleframe/puttframe
@@ -490,14 +495,14 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	if (stage == 10)
 		O = new src.control_type( get_turf(src) )
 		O.fingerprints = src.fingerprints
-		O.fingerprintshidden = src.fingerprintshidden
+		O.fingerprints_full = src.fingerprints_full
 		stage -= 2
 	if (stage == 9)
 		stage-- // no parts involved here, this construction step is welding the exterior
 	if (stage == 8)
 		O = new src.armor_type( get_turf(src) )
 		O.fingerprints = src.fingerprints
-		O.fingerprintshidden = src.fingerprintshidden
+		O.fingerprints_full = src.fingerprints_full
 		if (istype(O,/obj/item/podarmor/armor_custom))
 			O.setMaterial(src.material)
 			src.removeMaterial()
@@ -505,30 +510,30 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	if (stage == 7)
 		O = new src.engine_type( get_turf(src) )
 		O.fingerprints = src.fingerprints
-		O.fingerprintshidden = src.fingerprintshidden
+		O.fingerprints_full = src.fingerprints_full
 		stage--
 	if (stage == 6)
 		var/obj/item/sheet/steel/M = new ( get_turf(src) )
 		M.amount = src.metal_amt
 		M.fingerprints = src.fingerprints
-		M.fingerprintshidden = src.fingerprintshidden
+		M.fingerprints_full = src.fingerprints_full
 		stage--
 	if (stage == 5)
 		O = new src.boards_type( get_turf(src) )
 		O.fingerprints = src.fingerprints
-		O.fingerprintshidden = src.fingerprintshidden
+		O.fingerprints_full = src.fingerprints_full
 		stage--
 	if (stage == 4)
 		var/obj/item/cable_coil/cut/C = new ( get_turf(src) )
 		C.amount = src.cable_amt
 		C.fingerprints = src.fingerprints
-		C.fingerprintshidden = src.fingerprintshidden
+		C.fingerprints_full = src.fingerprints_full
 		// all other steps were tool applications, no more parts to create
 
 	O = new src.box_type( get_turf(src) )
-	logTheThing("station", usr, null, "deconstructs [src] in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+	logTheThing("station", usr, null, "deconstructs [src] in [get_area(usr)] ([log_loc(usr)])")
 	O.fingerprints = src.fingerprints
-	O.fingerprintshidden = src.fingerprintshidden
+	O.fingerprints_full = src.fingerprints_full
 	qdel(src)
 
 /*-----------------------------*/
@@ -720,7 +725,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				if (src.armor_type == /obj/item/podarmor/armor_custom)
 					V.name = src.vehicle_name
 					V.setMaterial(src.material)
-				logTheThing("station", user, null, "finishes building a [V] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
+				logTheThing("station", user, null, "finishes building a [V] in [get_area(user)] ([log_loc(user)])")
 				qdel(src)
 
 			else
@@ -909,7 +914,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 					P.pixel_y = V * 5
 	ex_act(severity)
 		if(!maxboom)
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				..()
 				maxboom = 0
 		maxboom = max(severity, maxboom)
@@ -939,13 +944,8 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	maxhealth = 500
 	speed = 0.9
 
-	/*prearmed // this doesn't seem to work yet, dangit
-		New()
-			..()
-			src.sec_system = new /obj/item/shipcomponent/pod_weapon/laser( src )
-			src.sec_system.ship = src
-			src.components += src.sec_system
-			return */
+	security
+		init_comms_type = /obj/item/shipcomponent/communications/security
 
 /obj/machinery/vehicle/pod_smooth/syndicate
 	name = "Pod S-"
@@ -955,6 +955,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 500
 	maxhealth = 500
 	speed = 0.9
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	/*prearmed
 		New()
@@ -966,21 +967,18 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		myhud.update_systems()
 		myhud.update_states()
-		return
-
-	New()
-		..()
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
-		src.com_system = new /obj/item/shipcomponent/communications/syndicate(src)
-		src.com_system.ship = src
 		src.components += src.lock
-		src.components += src.com_system
 		myhud.update_systems()
 		myhud.update_states()
 
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 /obj/machinery/vehicle/pod_smooth/black
 	name = "Pod X-"
 	desc = "????"
@@ -1017,6 +1015,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 250
 	maxhealth = 250
 	speed = 0.9
+	init_comms_type = /obj/item/shipcomponent/communications/
 
 /obj/machinery/vehicle/pod_smooth/nt_robust
 	name = "Pod NTR-"
@@ -1026,6 +1025,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 500
 	maxhealth = 500
 	speed = 0.8
+	init_comms_type = /obj/item/shipcomponent/communications/
 
 /obj/machinery/vehicle/pod_smooth/sy_light
 	name = "Pod SYL-"
@@ -1035,6 +1035,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 250
 	maxhealth = 250
 	speed = 0.9
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 /obj/machinery/vehicle/pod_smooth/sy_robust
 	name = "Pod SYR-"
@@ -1044,6 +1045,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 500
 	maxhealth = 500
 	speed = 0.8
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 //pod wars end//
 
 /obj/machinery/vehicle/pod_smooth/setup_ion_trail()
@@ -1141,7 +1143,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		src.pilot = M
 		src.ion_trail.start()
 
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		boarding = 0*/
 
 
@@ -1151,7 +1153,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		boutput(M, "<span class='alert'><b>You are ejected from [src]!</b></span>")
 		src.eject(M)
 		var/atom/target = get_edge_target_turf(M,pick(alldirs))
-		SPAWN_DBG(0)
+		SPAWN(0)
 		M.throw_at(target, 10, 2)*/
 
 //Returns the correct tile to spawn projectiles on for either side of the ship, given the current direction.
@@ -1336,9 +1338,9 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 		if (canbuild)
 			boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
 			var/obj/O = new /obj/structure/vehicleframe/podframe( get_turf(user) )
-			logTheThing("station", user, null, "builds [O] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
+			logTheThing("station", user, null, "builds [O] in [get_area(user)] ([log_loc(user)])")
 			O.fingerprints = src.fingerprints
-			O.fingerprintshidden = src.fingerprintshidden
+			O.fingerprints_full = src.fingerprints_full
 			qdel(src)
 
 /obj/item/pod/paintjob
@@ -1413,7 +1415,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	finish_board_pod(var/mob/boarder)
 		..()
 		if (!src.pilot) return //if they were stopped from entering by other parts of the board proc from ..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.escape()
 
 	proc/escape()
@@ -1505,7 +1507,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 					var/mob/living/carbon/human/H = pilot
 					for(var/effect in list("sever_left_leg","sever_right_leg","sever_left_arm","sever_right_arm"))
 						if(prob(40))
-							SPAWN_DBG(rand(0,5))
+							SPAWN(rand(0,5))
 								H.bioHolder.AddEffect(effect)
 				src.leave_pod(pilot)
 				src.icon_state = "escape_nowindow"

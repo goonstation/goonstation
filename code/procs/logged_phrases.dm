@@ -53,7 +53,7 @@ var/global/datum/phrase_log/phrase_log = new
 			"emergency. Prioritize orders from",
 			"has been removed from the manifest",
 			"This law intentionally left blank.",
-			"Eat shit and die",
+			"Make a funny beeping noise over the radio every few minutes",
 			"The AI is the head of this department.",
 			//
 			"overrides all",
@@ -143,6 +143,11 @@ var/global/datum/phrase_log/phrase_log = new
 			SEND_GLOBAL_SIGNAL(COMSIG_SUSSY_PHRASE, "<span class=\"admin\">Low RP word - [key_name(usr)] [category]: \"[phrase]\"</span>")
 		#endif
 		if(is_uncool(phrase))
+			var/ircmsg[] = new()
+			ircmsg["key"] = usr.key
+			ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+			ircmsg["msg"] = "triggered the uncool word detection: [category]: \"[phrase]\""
+			ircbot.export("admin", ircmsg)
 			message_admins("Uncool word - [key_name(usr)] [category]: \"[phrase]\"")
 			return
 		if(category in src.phrases)
@@ -198,6 +203,8 @@ var/global/datum/phrase_log/phrase_log = new
 	proc/random_api_phrase(category)
 		if(!length(src.cached_api_phrases[category]))
 			var/list/data = apiHandler.queryAPI("random-entries", list("type"=category, "count"=src.api_cache_size), 1, 1, 1)
+			if(!data)
+				return .
 			var/list/new_phrases = list()
 			for(var/list/entry in data["entries"])
 				switch(category)

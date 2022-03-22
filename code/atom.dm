@@ -10,7 +10,6 @@
 	var/flags = FPRINT
 	var/event_handler_flags = 0
 	var/tmp/temp_flags = 0
-	var/tmp/last_bumped = 0
 	var/shrunk = 0
 	var/list/cooldowns
 
@@ -41,6 +40,8 @@
 
 	/// If atmos should be blocked by this - special behaviours handled in gas_cross() overrides
 	var/gas_impermeable = FALSE
+
+	var/list/atom_properties
 
 /* -------------------- name stuff -------------------- */
 	/*
@@ -157,13 +158,15 @@
 		if (temp_flags & (HAS_BAD_SMOKE))
 			ClearBadsmokeRefs(src)
 
-		fingerprintshidden = null
+		fingerprints_full = null
 		tag = null
 
 		if(length(src.statusEffects))
 			for(var/datum/statusEffect/effect as anything in src.statusEffects)
 				src.delStatus(effect)
 			src.statusEffects = null
+		ClearAllParticles()
+		atom_properties = null
 		..()
 
 	proc/Turn(var/rot)
@@ -263,10 +266,24 @@
 /atom/proc/allow_drop()
 	return 1
 
-//atom.event_handler_flags & USE_CHECKEXIT MUST EVALUATE AS TRUE OR THIS PROC WONT BE CALLED
-/atom/proc/CheckExit(atom/mover, turf/target)
-	//return !(src.flags & ON_BORDER) || src.Cross(mover, target, 1, 0)
-	return 1 // fuck it
+// not actually overriden because we want to avoid the overhead if possible. This provides documentation
+#ifdef SPACEMAN_DMM
+/**
+ * Override and return FALSE to prevent O from moving out of the tile where src is.
+ * In order to override this properly be sure to have the `do_bump = TRUE` default argument AND
+ * to call UNCROSS_BUMP_CHECK(O) in all branches where the return value can be FALSE (assign this return
+ * value to `.` instead of doing an explicit `return`).
+ */
+/atom/Uncross(atom/movable/O, do_bump = TRUE)
+	. = TRUE
+	UNCROSS_BUMP_CHECK(O)
+#endif
+
+/// Wrapper around Uncross for when you want to call it manually with a target turf
+/atom/proc/CheckExit(atom/movable/mover, turf/target, do_bump=FALSE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	mover.movement_newloc = target
+	return src.Uncross(mover, do_bump=do_bump)
 
 /atom/Crossed(atom/movable/AM)
 	SHOULD_CALL_PARENT(TRUE)
@@ -302,6 +319,24 @@
 #endif
 	src.dir = new_dir
 
+
+/**
+ * DO NOT CALL THIS PROC - Call UpdateIcon(...) Instead!
+ *
+ * Only override this proc!
+ */
+/atom/proc/update_icon(...)
+	PROTECTED_PROC(TRUE)
+	return
+
+/// Call this proc inplace of update_icon(...)
+/atom/proc/UpdateIcon(...)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_PRE_UPDATE_ICON)
+	update_icon(arglist(args))
+	SEND_SIGNAL(src, COMSIG_ATOM_POST_UPDATE_ICON)
+	return
+
 /*
 /atom/MouseEntered()
 	usr << output("[src.name]", "atom_label")
@@ -330,7 +365,7 @@
 	icon = 'icons/mob/mob.dmi'
 
 /atom/movable/overlay/gibs/proc/delaydispose()
-	SPAWN_DBG(3 SECONDS)
+	SPAWN(3 SECONDS)
 		if (src)
 			dispose(src)
 
@@ -341,15 +376,18 @@
 
 /atom/movable
 	layer = OBJ_LAYER
-	var/turf/last_turf = 0
-	var/last_move = null
+	var/tmp/turf/last_turf = 0
+	var/tmp/last_move = null
 	var/anchored = 0
 	var/move_speed = 10
-	var/l_move_time = 1
+	var/tmp/l_move_time = 1
 	var/throwing = 0
 	var/throw_speed = 2
 	var/throw_range = 7
 	var/throwforce = 1
+
+	/// Temporary value to smuggle newloc to Uncross during Move-related procs
+	var/tmp/atom/movement_newloc = null
 
 	var/soundproofing = 5
 	appearance_flags = LONG_GLIDE | PIXEL_SCALE
@@ -372,9 +410,6 @@
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
 	if (isturf(src.loc))
 		var/turf/T = src.loc
-		if (src.event_handler_flags & USE_CHECKEXIT)
-			T.checkingexit++
-
 		if (src.event_handler_flags & USE_PROXIMITY)
 			T.checkinghasproximity++
 			for (var/turf/T2 in range(1, T))
@@ -401,13 +436,16 @@
 	src.attached_objs?.Cut()
 	src.attached_objs = null
 
+	src.vis_locs = null // cleans up vis_contents of visual holders of this too
+
 	last_turf = src.loc // instead rely on set_loc to clear last_turf
 	set_loc(null)
 	..()
 
 
 /atom/movable/Move(NewLoc, direct)
-
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_BLOCK_MOVE, NewLoc, direct))
+		return
 
 	//mbc disabled for now, i dont think this does too much for visuals i cant hit 40fps anyway argh i cant even tell
 	//tile glide smoothing:
@@ -429,7 +467,7 @@
 	//	var/atom/movable/A = atom
 	//	A.glide_size = src.glide_size
 
-	if (direct & (direct - 1))
+	if (!is_cardinal(direct))
 		ignore_simple_light_updates = 1 //to avoid double-updating on diagonal steps when we are really only taking a single step
 
 		if (direct & NORTH)
@@ -475,8 +513,6 @@
 				M.set_loc(src.loc)
 		if (islist(src.tracked_blood))
 			src.track_blood()
-		if (islist(src.tracked_mud))
-			src.track_mud()
 		actions.interrupt(src, INTERRUPT_MOVE)
 		#ifdef COMSIG_MOVABLE_MOVED
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
@@ -486,22 +522,17 @@
 	if(last_turf == src.loc)
 		return
 
-	if (src.event_handler_flags & (USE_CHECKEXIT | USE_PROXIMITY))
-		if (isturf(last_turf))
-			if (src.event_handler_flags & USE_CHECKEXIT)
-				last_turf.checkingexit = max(last_turf.checkingexit-1, 0)
-			if (src.event_handler_flags & USE_PROXIMITY)
-				last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
-				for (var/turf/T2 in range(1, last_turf))
-					T2.neighcheckinghasproximity--
-		if(isturf(src.loc))
-			var/turf/T = src.loc
-			if (src.event_handler_flags & USE_CHECKEXIT)
-				T.checkingexit++
-			if (src.event_handler_flags & USE_PROXIMITY)
-				T.checkinghasproximity++
-				for (var/turf/T2 in range(1, T))
-					T2.neighcheckinghasproximity++
+	if (isturf(last_turf))
+		if (src.event_handler_flags & USE_PROXIMITY)
+			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
+			for (var/turf/T2 in range(1, last_turf))
+				T2.neighcheckinghasproximity--
+	if(isturf(src.loc))
+		var/turf/T = src.loc
+		if (src.event_handler_flags & USE_PROXIMITY)
+			T.checkinghasproximity++
+			for (var/turf/T2 in range(1, T))
+				T2.neighcheckinghasproximity++
 
 	last_turf = isturf(src.loc) ? src.loc : null
 
@@ -525,16 +556,12 @@
 	if(src.loc == usr)
 		return
 
-	// eyebots aint got no arms man, how can they be pulling stuff???????
 	if (!isliving(usr))
 		return
-	if (isshell(usr))
-		if (!ticker)
-			return
-		if (!ticker.mode)
-			return
-		if (!istype(ticker.mode, /datum/game_mode/construction))
-			return
+
+	if (isintangible(usr)) //can't pull shit if you can't touch shit
+		return
+
 	// no pulling other mobs for ghostdrones (but they can pull other ghostdrones)
 	else if (isghostdrone(usr) && ismob(src) && !isghostdrone(src))
 		return
@@ -559,7 +586,6 @@
 		if (user.mob_flags & AT_GUNPOINT)
 			for(var/obj/item/grab/gunpoint/G in user.grabbed_by)
 				G.shoot()
-	return
 
 /atom/movable/set_dir(new_dir)
 	..()
@@ -579,8 +605,6 @@
 
 /atom/proc/examine(mob/user)
 	RETURN_TYPE(/list)
-	if(src.hiddenFrom && (user.client in src.hiddenFrom)) //invislist
-		return list()
 
 	var/dist = get_dist(src, user)
 	if (istype(user, /mob/dead/target_observer))
@@ -592,7 +616,6 @@
 
 	if(special_description)
 		return list(special_description)
-	//////////////////////////////
 
 	. = list("This is \an [src.name].")
 
@@ -608,7 +631,46 @@
 	if (extra)
 		. += " [extra]"
 
-/atom/proc/MouseDrop_T()
+	// handles PDA messaging shortcut for the AI
+	if (isAI(user) && ishuman(src))
+		var/mob/living/silicon/ai/mainframe
+		var/mob/living/carbon/human/person = src
+		if (isAIeye(user))
+			var/mob/living/intangible/aieye/ai = user
+			mainframe = ai.mainframe
+		else
+			mainframe = user
+
+		// we need to check to see if any of these are PDAs so that we can render them to the ai.
+		// these are where pdas can be visible in an inventory - lets check to see whats in them!
+		var/list/inv_list = list()
+		inv_list += person.get_slot(SLOT_BELT)
+		inv_list += person.get_slot(SLOT_WEAR_ID)
+		inv_list += person.get_slot(SLOT_L_HAND)
+		inv_list += person.get_slot(SLOT_R_HAND)
+
+		var/hasPDA = FALSE
+		for (var/obj/item/device/pda2/pda in inv_list) // we only care about PDAs
+			var/textToAdd
+			if (pda.host_program.message_on && pda.owner) // is their messenger enabled, is their pda swiped in??
+				textToAdd += "<br>[bicon(pda)][pda.name] - <a href='byond://?src=\ref[mainframe];net_id=[pda.net_id];owner=[pda.owner]'><u>*MESSAGE*</u></a>" // see ai.dm under Topic() to continue from here!
+			else if (pda.owner) // ownerless PDAs will not render, but we'll tell the AI when someone's messenger is disabled!
+				textToAdd += "<br>[bicon(pda)][pda.name] - *MESSENGER DISABLED*"
+			. += textToAdd
+			if (pda.owner) hasPDA = TRUE // we need at least ONE pda to be visible, or else we add the text below
+		if (!hasPDA)
+			. += "<br>*No PDA detected!*"
+
+/// Override MouseDrop_T instead of this. Call this instead of MouseDrop_T, but you probably shouldn't!
+/atom/proc/_MouseDrop_T(dropped, user)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	SPAWN(0) // Yes, things break if this isn't a spawn.
+		if(SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP_T, dropped, user))
+			return
+		src.MouseDrop_T(dropped, user)
+
+/atom/proc/MouseDrop_T(dropped, user)
+	PROTECTED_PROC(TRUE)
 	return
 
 /atom/proc/Attackhand(mob/user as mob)
@@ -629,7 +691,7 @@
 ///wrapper proc for /atom/proc/attackby so that signals are always sent. Call this, but do not override it.
 /atom/proc/Attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
 	SHOULD_NOT_OVERRIDE(1)
-	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user))
+	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user, params, is_special))
 		return
 	src.attackby(W, user, params, is_special)
 
@@ -638,7 +700,7 @@
 /atom/proc/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
 	PROTECTED_PROC(TRUE)
 	src.material?.triggerOnHit(src, W, user, 1)
-	if (user && W && !(W.flags & SUPPRESSATTACK))  //!( istype(W, /obj/item/grab)  || istype(W, /obj/item/spraybottle) || istype(W, /obj/item/card/emag)))
+	if (user && W && !(W.flags & SUPPRESSATTACK))
 		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
 	return
 
@@ -729,49 +791,53 @@
 
 	return null
 
-/atom/MouseDrop(atom/over_object as mob|obj|turf)
-	SPAWN_DBG( 0 )
-		if (istype(over_object, /atom))
-			if (isalive(usr))
-				//To stop ghostdrones dragging people anywhere
-				if (isghostdrone(usr) && ismob(src) && src != usr)
-					return
-
-				/* This was SUPPOSED to make the innerItem of items act on the mousedrop instead but it doesnt work for no reason
-				if (isitem(src))
-					var/obj/item/W = src
-					if (W.useInnerItem && W.contents.len > 0)
-						target = pick(W.contents)
-				//world.log << "calling mousedrop_t on [over_object] with params: [src], [usr]"
-				*/
-
-				over_object.MouseDrop_T(src, usr)
-			else
-				if (istype(over_object, /obj/machinery)) // For cyborg docking stations (Convair880).
-					var/obj/machinery/M = over_object
-					if (M.allow_stunned_dragndrop == 1)
-						M.MouseDrop_T(src, usr)
+/// Override mouse_drop instead of this. Call this instead of mouse_drop, but you probably shouldn't!
+/atom/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(!isatom(over_object))
 		return
-	..()
+	if (isalive(usr) && !isintangible(usr) && isghostdrone(usr) && ismob(src) && src != usr)
+		return // Stops ghost drones from MouseDropping mobs
+	over_object._MouseDrop_T(src, usr)
+	if (SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP, usr, over_object, src_location, over_location, over_control, params))
+		return
+	src.mouse_drop(over_object, src_location, over_location, over_control, params)
+
+/atom/proc/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+	PROTECTED_PROC(TRUE)
 	return
 
-/atom/proc/relaymove()
+/atom/proc/relaymove(mob/user, direction, delay, running)
 	.= 0
 
 /atom/proc/on_reagent_change(var/add = 0) // if the reagent container just had something added, add will be 1.
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_REAGENT_CHANGE)
 	return
 
 /atom/proc/Bumped(AM as mob|obj)
+	SHOULD_NOT_SLEEP(TRUE)
+	return
+
+/// override this instead of Bump
+/atom/movable/proc/bump(atom/A)
+	SHOULD_NOT_SLEEP(TRUE)
 	return
 
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area)
-	SPAWN_DBG( 0 )
-		if (A)
-			A.last_bumped = world.timeofday
-			A.Bumped(src)
-		return
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(!(A.flags & ON_BORDER))
+		for(var/atom/other in get_turf(A))
+			if((other.flags & ON_BORDER) && !other.Cross(src))
+				return
+	if(!(src.flags & ON_BORDER))
+		for(var/atom/other in get_turf(src))
+			if((other.flags & ON_BORDER) && !other.CheckExit(src, get_turf(A)))
+				return
+	bump(A)
+	if (!QDELETED(A))
+		A.Bumped(src)
 	..()
-	return
 
 // bullet_act called when anything is hit buy a projectile (bullet, tazer shot, laser, etc.)
 // flag is projectile type, can be:
@@ -799,6 +865,7 @@
 /atom/movable/proc/set_loc(atom/newloc)
 	SHOULD_CALL_PARENT(TRUE)
 	if (loc == newloc)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, loc)
 		return src
 
 	if (ismob(src)) // fuck haxploits
@@ -815,6 +882,7 @@
 	src.last_move = 0
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, oldloc)
+	actions.interrupt(src, INTERRUPT_MOVE)
 
 	oldloc?.Exited(src, newloc)
 
@@ -842,28 +910,19 @@
 		for (var/atom/movable/M in src.attached_objs)
 			M.set_loc(src.loc)
 
+	if (isturf(last_turf) && (src.event_handler_flags & USE_PROXIMITY))
+		last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
+		for (var/turf/T2 in range(1, last_turf))
+			T2.neighcheckinghasproximity--
 
-	// We only need to do any of these checks if one of the flags is set OR density = 1
-	var/do_checks = (src.event_handler_flags & (USE_CHECKEXIT  | USE_PROXIMITY)) || src.density == 1
-
-	if (do_checks && last_turf && isturf(last_turf))
-		if (src.event_handler_flags & USE_CHECKEXIT)
-			last_turf.checkingexit = max(last_turf.checkingexit-1, 0)
-		if (src.event_handler_flags & USE_PROXIMITY)
-			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
-			for (var/turf/T2 in range(1, last_turf))
-				T2.neighcheckinghasproximity--
-
-	if (do_checks && isturf(src.loc))
+	if (isturf(src.loc))
 		last_turf = src.loc
-		if (src.event_handler_flags & USE_CHECKEXIT)
-			last_turf.checkingexit++
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity++
 			for (var/turf/T2 in range(1, last_turf))
 				T2.neighcheckinghasproximity++
 	else
-		last_turf = 0
+		last_turf = null
 
 	if(src.medium_lights)
 		update_medium_light_visibility()

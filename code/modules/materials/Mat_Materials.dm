@@ -603,6 +603,7 @@
 	name = "quartz"
 	desc = "Quartz is somewhat valuable but not paticularly useful."
 	color = "#BBBBBB"
+	alpha = 220
 	quality = 50
 	var/gem_tier = 3
 
@@ -1236,10 +1237,10 @@
 		setProperty("electrical", 32)
 		return ..()
 
-/datum/material/fabric/cloth/wendigohide
-	mat_id = "wendigohide"
-	name = "wendigo hide"
-	desc = "The hide of a fearsome wendigo!"
+/datum/material/fabric/cloth/brullbarhide
+	mat_id = "brullbarhide"
+	name = "brullbar hide"
+	desc = "The hide of a fearsome brullbar!"
 	color = "#CCCCCC"
 	material_flags = MATERIAL_CLOTH
 
@@ -1250,10 +1251,10 @@
 		setProperty("electrical", 45)
 		return ..()
 
-/datum/material/fabric/cloth/wendigohide/king
-	mat_id = "kingwendigohide"
-	name = "king wendigo hide"
-	desc = "The hide of a terrifying wendigo king!!!"
+/datum/material/fabric/cloth/brullbarhide/king
+	mat_id = "kingbrullbarhide"
+	name = "king brullbar hide"
+	desc = "The hide of a terrifying brullbar king!!!"
 	color = "#EFEEEE"
 	material_flags = MATERIAL_CLOTH
 

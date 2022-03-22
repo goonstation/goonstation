@@ -37,6 +37,9 @@
 
 	attack_hand(mob/user)
 		if(..()) return
+		if(isghostdrone(user))
+			boutput(user, "<span class='alert'>Your processors refuse to interact with this machine!</span>")
+			return 1
 		src.add_dialog(user)
 		var/dat = {"
 			<body>
@@ -70,7 +73,9 @@
 		..()
 
 	Topic(href, href_list[])
-		if(..()) return
+		if(..()) return 1
+		if(isghostdrone(usr))
+			return 1
 
 		if(href_list["card"])
 			if(src.ID)
@@ -139,8 +144,8 @@
 			boutput(user, "You try to speak into \the [src] but you can't since you are mute.")
 			return
 
-		logTheThing("say", user, null, "created a command report: [message]")
-		logTheThing("diary", user, null, "created a command report: [message]", "say")
+		logTheThing("say", user, null, "as [ID.registered] ([ID.assignment]) created a command report: [message]")
+		logTheThing("diary", user, null, "as [ID.registered] ([ID.assignment]) created a command report: [message]", "say")
 
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -214,7 +219,10 @@
 		if (!src.announcement_radio)
 			src.announcement_radio = new(src)
 
-		var/message = replacetext(replacetext(replacetext(src.departurealert, "$STATION", "[station_name()]"), "$JOB", person.mind.assigned_role), "$NAME", person.real_name)
+		var/job = person.mind.assigned_role
+		if(!job || job == "MODE")
+			job = "Staff Assistant"
+		var/message = replacetext(replacetext(replacetext(src.departurealert, "$STATION", "[station_name()]"), "$JOB", job), "$NAME", person.real_name)
 		message = replacetext(replacetext(replacetext(message, "$THEY", "[he_or_she(person)]"), "$THEM", "[him_or_her(person)]"), "$THEIR", "[his_or_her(person)]")
 
 		var/list/messages = process_language(message)

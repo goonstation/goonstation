@@ -100,7 +100,8 @@
 				src.grenade = CG
 				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
 
-				message_admins("[key_name(user)] rigs [src] with [CG] at [log_loc(user)].")
+				if(CG.is_dangerous)
+					message_admins("[key_name(user)] rigs [src] with [CG] at [log_loc(user)].")
 				logTheThing("bombing", user, null, "rigs [src] with [CG] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/old_grenade/) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
@@ -112,7 +113,8 @@
 				src.grenade_old = OG
 				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
 
-				message_admins("[key_name(user)] rigs [src] with [OG] at [log_loc(user)].")
+				if(OG.is_dangerous)
+					message_admins("[key_name(user)] rigs [src] with [OG] at [log_loc(user)].")
 				logTheThing("bombing", user, null, "rigs [src] with [OG] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/pipebomb/bomb) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
@@ -462,22 +464,21 @@
 		src.set_dir(user.dir)
 		walk(src, src.dir, 3)
 
-	Bump(atom/movable/AM as mob|obj)
+	bump(atom/movable/AM as mob|obj)
 		if (src.armed && src.mousetrap)
 			src.visible_message("<span class='alert'>[src] bumps against [AM]!</span>")
 			walk(src, 0)
-			src.mousetrap.triggered(AM && ismob(AM) ? AM : null)
+			SPAWN(0)
+				src.mousetrap.triggered(AM && ismob(AM) ? AM : null)
 
-			if (src.mousetrap)
-				src.mousetrap.set_loc(src.loc)
-				src.mousetrap = null
-			if (src.frame)
-				src.frame.set_loc(src.loc)
-				src.frame = null
+				if (src.mousetrap)
+					src.mousetrap.set_loc(src.loc)
+					src.mousetrap = null
+				if (src.frame)
+					src.frame.set_loc(src.loc)
+					src.frame = null
 
-			qdel(src)
-
-		return
+				qdel(src)
 
 	Move(var/turf/new_loc,direction)
 		if (src.mousetrap.buttbomb && src.armed)

@@ -3,7 +3,7 @@
 
 	receive(list/data, datum/game_server/server)
 		command_alert(data["body"], data["title"], override_big_title="Communication from [data["station_name"]]")
-		global.cooldowns["transmit_centcom"] = 0 // reset cooldown for reply
+		global.cooldowns["transmit_station"] = 0 // reset cooldown for reply
 		return TRUE
 
 	send(datum/game_server/server, title, body)

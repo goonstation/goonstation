@@ -12,7 +12,7 @@ mob/verb/checkrewards()
 	return
 
 /proc/showJobRewards(var/job) //Pass in job instead
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/mob/M = usr
 		if(job)
 			if(!winexists(M, "winjobrewards_[M.ckey]"))
@@ -323,13 +323,22 @@ mob/verb/checkrewards()
 		boutput(C.mob, "<span class='emote'>A pamphlet flutters out.</span>")
 		return
 
-/datum/jobXpReward/head_of_security_LG/old
+/datum/jobXpReward/head_of_security_LG_old
 	name = "The Antique Lawbringer"
 	desc = "Gain access to a voice activated weapon of the past-future-past by sacrificing your gun of the future-past. I.E. The Lawbringer."
-	sacrifice_path = /obj/item/gun/energy/lawbringer
-	reward_path = /obj/item/gun/energy/lawbringer/old
-	sacrifice_name = "Lawbringer"
 	required_levels = list("Head of Security"=5)
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		var/obj/item/gun/energy/lawbringer/I = C.mob.find_type_in_hand(/obj/item/gun/energy/lawbringer)
+
+		if (I)
+			I.make_antique()
+			boutput(C.mob, "Your Lawbringer becomes a little more antique!")
+		else
+			boutput(C.mob, "You need to be holding your Lawbringer in order to claim this reward.")
+			src.claimedNumbers[usr.key] --
 
 //Captain
 
@@ -545,7 +554,7 @@ mob/verb/checkrewards()
 		boutput(C, "You get a \"banana\"!")
 		var/obj/item/banana = null
 		if (prob(1))
-			banana = new/obj/item/old_grenade/banana()
+			banana = new/obj/item/old_grenade/spawner/banana()
 		else
 			banana = new/obj/item/reagent_containers/food/snacks/plant/banana()
 		banana.set_loc(get_turf(C.mob))

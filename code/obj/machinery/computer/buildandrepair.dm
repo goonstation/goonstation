@@ -31,9 +31,7 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 /obj/item/circuitboard/security
 	name = "Circuit board (Security)"
 	computertype = "/obj/machinery/computer/security"
-/obj/item/circuitboard/aiupload
-	name = "Circuit board (AI Upload)"
-	computertype = "/obj/machinery/computer/aiupload"
+
 //obj/item/circuitboard/med_data
 //	name = "Circuit board (Medical)"
 //	computertype = "/obj/machinery/computer/med_data"
@@ -202,7 +200,7 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 				//my_cable = null
 				var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 				C.amount = 5
-				C.updateicon()
+				C.UpdateIcon()
 			if (istype(P, /obj/item/sheet))
 				var/obj/item/sheet/S = P
 				if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)

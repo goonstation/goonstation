@@ -19,7 +19,7 @@
 		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
 		//var/turf/T = get_turf(target)
 		if (A.activated)
-			if (A.can_teleport_here(U))
+			if (A.can_teleport_here(U,user))
 				A.effect_click_tile(src,user,U)
 			else
 				boutput(user, "<b>[src]</b> [A.error_phrase]")
@@ -27,6 +27,7 @@
 /datum/artifact/telewand
 	associated_object = /obj/item/artifact/teleport_wand
 	type_name = "Teleportation Wand"
+	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 200
 	validtypes = list("wizard","eldritch","precursor")
 	react_xray = list(10,75,90,11,"ANOMALOUS")
@@ -58,7 +59,7 @@
 			return
 
 		on_cooldown = 1
-		SPAWN_DBG(cooldown_delay)
+		SPAWN(cooldown_delay)
 			if (O.loc == user)
 				boutput(user, "<b>[O]</b> [recharge_phrase]")
 			on_cooldown = 0
@@ -71,14 +72,16 @@
 		O.ArtifactFaultUsed(user)
 		return
 
-	proc/can_teleport_here(var/turf/T)
+	proc/can_teleport_here(var/turf/T,mob/user)
+		if(istype(user.loc,/obj/dummy/spell_invis/))
+			return FALSE
 		if(isrestrictedz(T.z))
-			return 0
+			return FALSE
 		if (!istype(T,/turf/simulated/floor/))
-			return 0
+			return FALSE
 		if (T.density)
-			return 0
+			return FALSE
 		for(var/atom/X in T.contents)
 			if (X.density)
-				return 0
-		return 1
+				return FALSE
+		return TRUE

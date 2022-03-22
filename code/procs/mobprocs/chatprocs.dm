@@ -8,81 +8,57 @@
 	set name = "whisper"
 	return src.whisper(message)
 
-// actually a semi-replacement for say that does an input() rather than using the verb
-// this allows it to be, synchronious and let us remove the overlay later
-// if they close/cancel without saying anything
-//
-// hopefully it doesn't break anything but as usual i did some testing and it seemed ok
-// normal "say" is still there in the command bar if you want stealthy
-/mob/verb/start_say()
-	set name = "start say"
-	set hidden = 1
+/mob/verb/start_typing()
+	set name = ".starttyping"
+	set hidden = TRUE
 
-	var/mob/living/M = null
-	if (istype(src, /mob/living))
-		M = src
-
-	var/current_time = TIME
-	if (M && isalive(M))
-		M.speech_bubble.icon_state = "typing"
-		UpdateOverlays(M.speech_bubble, "speech_bubble")
-		M.last_typing = current_time
-
-		SPAWN_DBG(15 SECONDS)
-			if (M?.last_typing != current_time)
-				return
-			M.UpdateOverlays(null, "speech_bubble")
-
-	var/msg = input("", "Say") as null|text
-
-	if (msg)
-		// assume it will handle its own way of doing this
-		src.say_verb(msg)
+	var/mob/living/M = src
+	if(!istype(M) || !isalive(M) || isAIeye(M))
 		return
 
-	if (M?.last_typing == current_time)
-		M.last_typing = null
-		M.UpdateOverlays(null, "speech_bubble")
+	M.speech_bubble.icon_state = "typing"
+	UpdateOverlays(M.speech_bubble, "speech_bubble")
+	var/start_time = TIME
+	M.last_typing = start_time
 
+	SPAWN(15 SECONDS)
+		if(M.last_typing == start_time && src.GetOverlayImage("speech_bubble")?.icon_state == "typing")
+			src.UpdateOverlays(null, "speech_bubble")
 
 /mob/verb/say_verb(message as text)
 	set name = "say"
-	//&& !src.client.holder
-
 	if (!message)
+		if(src.GetOverlayImage("speech_bubble")?.icon_state == "typing")
+			src.UpdateOverlays(null, "speech_bubble")
 		return
 	if (src.client && url_regex?.Find(message) && !client.holder)
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
 	src.say(message)
+	if(src.GetOverlayImage("speech_bubble")?.icon_state == "typing")
+		src.UpdateOverlays(null, "speech_bubble")
 	if (!dd_hasprefix(message, "*")) // if this is an emote it is logged in emote
 		logTheThing("say", src, null, "SAY: [html_encode(message)] [log_loc(src)]")
-
-/mob/living/say_verb(message as text)
-	set name = "say"
-	. = ..()
-	if (src.speech_bubble?.icon_state == "typing")
-		src.UpdateOverlays(null, "speech_bubble")
 
 /mob/verb/say_radio()
 	set name = "say_radio"
 	set hidden = 1
 
-/mob/verb/say_main_radio()
+/mob/verb/say_main_radio(msg as text)
 	set name = "say_main_radio"
 	set hidden = 1
 
-/mob/living/say_main_radio()
+/mob/living/say_main_radio(msg as text)
 	set name = "say_main_radio"
+	set desc = "Speaking on the main radio frequency"
 	set hidden = 1
-	var/text = input("", "Speaking on the main radio frequency") as null|text
-	if (client.preferences.auto_capitalization)
+	if (src.capitalize_speech())
 		var/i = 1
-		while (copytext(text, i, i+1) == " ")
+		while (copytext(msg, i, i+1) == " ")
 			i++
-		text = capitalize(copytext(text, i))
-	src.say_verb(";" +text)
+		msg = capitalize(copytext(msg, i))
+	src.say_verb(";" + msg)
 
 /mob/living/say_radio()
 	set name = "say_radio"
@@ -129,8 +105,7 @@
 			boutput(src, "Somehow '[choice]' didn't match anything. Welp. Probably busted.")
 		var/text = input("", "Speaking over [choice] ([token])") as null|text
 		if (text)
-
-			if(src?.client?.preferences.auto_capitalization)
+			if (src.capitalize_speech())
 				text = capitalize(text)
 
 			src.say_verb(token + " " + text)
@@ -166,7 +141,7 @@
 			token = ":" + R.secure_frequencies[choice_index - 1]
 
 		var/text = input("", "Speaking to [choice] frequency") as null|text
-		if (client.preferences.auto_capitalization)
+		if (src.capitalize_speech())
 			var/i = 1
 			while (copytext(text, i, i+1) == " ")
 				i++
@@ -320,12 +295,17 @@
 	var/rendered = "<span class='game hivesay'><span class='prefix'>HIVEMIND:</span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 
 	//show to hivemind
+	var/list/mob/hivemind = hivemind_owner.get_current_hivemind()
 	for (var/client/C in clients)
+		if (C.mob in hivemind)
+			continue
 		try_render_chat_to_admin(C, rendered)
-	for (var/mob/M in (hivemind_owner.hivemind + hivemind_owner.owner))
-		if (M.client?.holder && M.client.deadchat && !M.client.player_mode) continue
-		if (isdead(M) || istype(M,/mob/living/critter/changeling) || (M == hivemind_owner.owner))
-			boutput(M, rendered)
+	if (isabomination(hivemind_owner.owner))
+		var/abomination_rendered = "<span class='game'><span class='prefix'></span> <span class='name' data-ctx='\ref[src.mind]'>Congealed [name]</span> <span class='message'>[message]</span></span>"
+		src.audible_message(abomination_rendered)
+	else
+		for (var/mob/member in hivemind)
+			boutput(member, rendered)
 
 //vampire thrall say
 /mob/proc/say_thrall(var/message, var/datum/abilityHolder/vampire/owner)
@@ -339,10 +319,8 @@
 		return
 
 	if (isvampire(src))
-		name = src.real_name
 		alt_name = " (VAMPIRE)"
 	else if (isvampiricthrall(src))
-		name = src.real_name
 		alt_name = " (THRALL)"
 
 #ifdef DATALOGGER
@@ -352,7 +330,7 @@
 	message = src.say_quote(message)
 	//logTheThing("say", src, null, "SAY: [message]")
 
-	var/rendered = "<span class='game ghoulsay'><span class='prefix'>GHOULSPEAK:</span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
+	var/rendered = "<span class='game thrallsay'><span class='prefix'>Thrall speak:</span> <span class='name [isvampire(src) ? "vamp" : ""]' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 
 	//show to ghouls
 	for (var/client/C in clients)
@@ -380,7 +358,7 @@
 	message = src.say_quote(message)
 	//logTheThing("say", src, null, "SAY: [message]")
 
-	var/rendered = "<span class='game kudzusay'><span class='prefix'><small>KUDZUSPEAK:</small></span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
+	var/rendered = "<span class='game kudzusay'><span class='prefix'><small>Kudzu speak:</small></span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 
 
 	//show message to admins (Follow rules of their deadchat toggle)
@@ -547,7 +525,7 @@
 				src.emote_allowed = 0
 				src.last_emote_time = world.time
 				src.last_emote_wait = time
-				SPAWN_DBG(time)
+				SPAWN(time)
 					src.emote_allowed = 1
 			return 1
 		else

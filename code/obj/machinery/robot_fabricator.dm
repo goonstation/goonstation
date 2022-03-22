@@ -14,7 +14,7 @@
 	if (istype(O, /obj/item/sheet/metal))
 		if (src.metal_amount < 150000.0)
 			var/count = 0
-			SPAWN_DBG(1.5 SECONDS)
+			SPAWN(1.5 SECONDS)
 				while(metal_amount < 150000 && O:amount)
 
 					if(!O:amount)
@@ -81,7 +81,7 @@ Please wait until completion...</TT><BR>
 
 	if (href_list["make"])
 		if (!src.operating)
-			var/part_type = text2num(href_list["make"])
+			var/part_type = text2num_safe(href_list["make"])
 
 			var/build_type = ""
 			var/build_time = 200
@@ -137,7 +137,7 @@ Please wait until completion...</TT><BR>
 
 					use_power(5000)
 
-					SPAWN_DBG (build_time)
+					SPAWN(build_time)
 						if (!isnull(src.being_built))
 							src.being_built.set_loc(get_turf(src))
 							src.being_built = null

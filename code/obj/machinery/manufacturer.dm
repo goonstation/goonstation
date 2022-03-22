@@ -32,12 +32,14 @@
 	// 0 is =>, 1 is ==
 	var/base_material_class = /obj/item/material_piece/ // please only material pieces
 	var/obj/item/reagent_containers/glass/beaker = null
+	var/obj/item/disk/data/floppy/manudrive = null
 	var/list/resource_amounts = list()
 	var/area_name = null
 	var/output_target = null
 	var/list/materials_in_use = list()
 	var/list/available = list()
 	var/list/download = list()
+	var/list/drive_recipes = list()
 	var/list/hidden = list()
 	var/list/queue = list()
 	var/last_queue_op = 0
@@ -95,7 +97,7 @@
 		src.work_display = image('icons/obj/manufacturer.dmi', "")
 		src.activity_display = image('icons/obj/manufacturer.dmi', "")
 		src.panel_sprite = image('icons/obj/manufacturer.dmi', "")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.build_icon()
 
 	disposing()
@@ -106,8 +108,10 @@
 		src.panel_sprite = null
 		src.output_target = null
 		src.beaker = null
+		src.manudrive = null
 		src.available.len = 0
 		src.available = null
+		src.drive_recipes = null
 		src.download.len = 0
 		src.download = null
 		src.hidden.len = 0
@@ -171,7 +175,7 @@
 			use_power(src.powconsumption)
 			if (src.timeleft < 1)
 				src.output_loop(src.queue[1])
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if (src.queue.len < 1)
 						src.manual_stop = 0
 						playsound(src.loc, src.sound_happy, 50, 1)
@@ -221,7 +225,7 @@
 	bullet_act(var/obj/projectile/P)
 		// swiped from guardbot.dm
 		var/damage = 0
-		damage = round(((P.power/6)*P.proj_data.ks_ratio), 1.0)
+		damage = round(((P.power/3)*P.proj_data.ks_ratio), 1.0)
 
 		if(src.material) src.material.triggerOnBullet(src, src, P)
 
@@ -240,7 +244,7 @@
 				status &= ~NOPOWER
 				src.build_icon()
 			else
-				SPAWN_DBG(rand(0, 15))
+				SPAWN(rand(0, 15))
 					status |= NOPOWER
 					src.build_icon()
 
@@ -390,7 +394,7 @@
 
 
 		var/list/dat = list()
-		var/delete_allowed = src.allowed(usr)
+		var/delete_allowed = src.allowed(user)
 
 		if (src.panelopen || isAI(user))
 			var/list/manuwires = list(
@@ -440,7 +444,7 @@
 		// 	dat += " <small>(Filter: \"[html_encode(src.category)]\")</small>"
 
 		// Get the list of stuff we can print ...
-		var/list/products = src.available + src.download
+		var/list/products = src.available + src.drive_recipes + src.download
 		if (src.hacked)
 			products += src.hidden
 
@@ -465,13 +469,13 @@
 			var/icon_text = "<img class='icon'>"
 			// @todo probably refactor this since it's copy pasted twice now.
 			if (A.item_outputs)
-				var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
+				var/icon_rsc = getItemIcon(A.item_outputs[1], C = user.client)
 				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
 				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
 			if (istype(A, /datum/manufacture/mechanics))
 				var/datum/manufacture/mechanics/F = A
-				var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
+				var/icon_rsc = getItemIcon(F.frame_path, C = user.client)
 				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
 				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
@@ -485,7 +489,7 @@
 				else
 					mat_name = A.item_names[i]
 				material_text += {"
-				<span class='mat[mats_used[A.item_paths[i]] ? "" : "-missing"]'>[A.item_amounts[i]] [mat_name]</span>
+				<span class='mat[mats_used[A.item_paths[i]] ? "" : "-missing"]'>[A.item_amounts[i]/10] [mat_name]</span>
 				"}
 
 			dat += {"
@@ -494,7 +498,7 @@
 			<div class='required'><div>[material_text.Join("<br>")]</div></div>
 			[icon_text]
 			[delete_link]
-			<span class='mats'>[material_count] mat.</span>
+			<span class='mats'>[material_count/10] mat.</span>
 			<span class='time'>[A.time && src.speed ? round(A.time / src.speed / 10, 0.1) : "??"] sec.</span>
 		</div>"}
 
@@ -542,6 +546,9 @@
 		if(src.download && (M in src.download))
 			return TRUE
 
+		if(src.drive_recipes && (M in src.drive_recipes))
+			return TRUE
+
 		if(src.hacked && src.hidden && (M in src.hidden))
 			return TRUE
 
@@ -576,8 +583,8 @@
 					for(var/obj/item/O in src.contents)
 						if (O.material && O.material.mat_id == mat_id)
 							if (!ejectamt)
-								ejectamt = input(usr,"How many material pieces (10 units per) do you want to eject?","Eject Materials") as num
-								if (ejectamt <= 0 || src.mode != "ready" || get_dist(src, usr) > 1)
+								ejectamt = input(usr,"How many material pieces do you want to eject?","Eject Materials") as num
+								if (ejectamt <= 0 || src.mode != "ready" || get_dist(src, usr) > 1 || !isnum_safe(ejectamt))
 									break
 							if (!ejectturf)
 								break
@@ -604,7 +611,7 @@
 					if (src.hacked)
 						upperbound = 5
 					var/newset = input(usr,"Enter from 1 to [upperbound]. Higher settings consume more power","Manufacturing Speed") as num
-					newset = max(1,min(newset,upperbound))
+					newset = clamp(newset, 1, upperbound)
 					src.speed = newset
 
 			if (href_list["clearQ"])
@@ -619,7 +626,7 @@
 					src.build_icon()
 
 			if (href_list["removefromQ"])
-				var/operation = text2num(href_list["removefromQ"])
+				var/operation = text2num_safe(href_list["removefromQ"])
 				if (!isnum(operation) || src.queue.len < 1 || operation > src.queue.len)
 					boutput(usr, "<span class='alert'>Invalid operation.</span>")
 					return
@@ -633,7 +640,7 @@
 				begin_work(1)//pesky exploits
 
 			if (href_list["page"])
-				var/operation = text2num(href_list["page"])
+				var/operation = text2num_safe(href_list["page"])
 				src.page = operation
 
 			if (href_list["repeat"])
@@ -703,6 +710,9 @@
 					src.updateUsrDialog()
 					return
 
+			if (href_list["ejectmanudrive"])
+				src.eject_manudrive(usr)
+
 			if (href_list["ejectbeaker"])
 				if (src.beaker)
 					src.beaker.set_loc(get_output_location(beaker,1))
@@ -714,7 +724,7 @@
 				if (!istype(B,/obj/item/reagent_containers/glass/))
 					return
 				var/howmuch = input("Transfer how much to [B]?","[src.name]",B.reagents.maximum_volume - B.reagents.total_volume) as null|num
-				if (!howmuch || !B || B != src.beaker )
+				if (!howmuch || !B || B != src.beaker || !isnum_safe(howmuch) )
 					return
 				src.reagents.trans_to(B,howmuch)
 
@@ -724,7 +734,7 @@
 				if (!istype(B,/obj/item/reagent_containers/glass/))
 					return
 				var/howmuch = input("Transfer how much from [B]?","[src.name]",B.reagents.total_volume) as null|num
-				if (!howmuch)
+				if (!howmuch || !isnum_safe(howmuch))
 					return
 				B.reagents.trans_to(src,howmuch)
 
@@ -733,7 +743,7 @@
 				if (!istext(the_reagent))
 					return
 				var/howmuch = input("Flush how much [the_reagent]?","[src.name]",0) as null|num
-				if (!howmuch)
+				if (!howmuch || !isnum_safe(howmuch))
 					return
 				src.reagents.remove_reagent(the_reagent,howmuch)
 
@@ -741,7 +751,7 @@
 				if (src.electrified)
 					if (src.manuf_zap(usr, 100))
 						return
-				var/twire = text2num(href_list["cutwire"])
+				var/twire = text2num_safe(href_list["cutwire"])
 				if (!usr.find_tool_in_hand(TOOL_SNIPPING))
 					boutput(usr, "You need a snipping tool!")
 					return
@@ -752,7 +762,7 @@
 				src.build_icon()
 
 			if ((href_list["pulsewire"]) && (src.panelopen || isAI(usr)))
-				var/twire = text2num(href_list["pulsewire"])
+				var/twire = text2num_safe(href_list["pulsewire"])
 				if ( !(usr.find_tool_in_hand(TOOL_PULSING) || isAI(usr)) )
 					boutput(usr, "You need a multitool or similar!")
 					return
@@ -793,7 +803,8 @@
 				if (account)
 					var/quantity = 1
 					quantity = max(0, input("How many units do you want to purchase?", "Ore Purchase", null, null) as num)
-
+					if(!isnum_safe(quantity))
+						return
 					////////////
 
 					if(OCD.amount >= quantity && quantity > 0)
@@ -854,7 +865,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (src.electrified)
-			if (src.manuf_zap(usr, 33))
+			if (src.manuf_zap(user, 33))
 				return
 
 		if (istype(W, /obj/item/ore_scoop))
@@ -906,7 +917,7 @@
 					continue
 				src.load_item(M)
 				amtload++
-			W:satchel_updateicon()
+			W:UpdateIcon()
 			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [W]!</span>")
 			else boutput(user, "<span class='alert'>No materials loaded!</span>")
 
@@ -1012,6 +1023,9 @@
 			src.build_icon()
 
 		else if (istype(W,/obj/item/reagent_containers/glass))
+			if (W.cant_drop)
+				boutput(user, "<span class='alert'>You cannot put the [W] into [src]!</span>")
+				return
 			if (src.beaker)
 				boutput(user, "<span class='alert'>There's already a receptacle in the machine. You need to remove it first.</span>")
 			else
@@ -1021,6 +1035,27 @@
 				if (user && W)
 					user.u_equip(W)
 					W.dropped()
+
+		else if (istype(W,/obj/item/disk/data/floppy))
+			if (src.manudrive)
+				boutput(user, "<span class='alert'>You swap out the manudrive in the manufacturer with a different one.</span>")
+				src.eject_manudrive(user)
+				src.manudrive = W
+				if (user && W)
+					user.u_equip(W)
+					W.dropped()
+				for (var/datum/computer/file/manudrive/MD in src.manudrive.root.contents)
+					src.drive_recipes = MD.drivestored
+			else
+				boutput(user, "<span class='notice'>You insert [W].</span>")
+				W.set_loc(src)
+				src.manudrive = W
+				if (user && W)
+					user.u_equip(W)
+					W.dropped()
+				for (var/datum/computer/file/manudrive/MD in src.manudrive.root.contents)
+					src.drive_recipes = MD.drivestored
+
 
 		else if (istype(W,/obj/item/sheet/) || (istype(W,/obj/item/cable_coil/ || (istype(W,/obj/item/raw_material/ )))))
 			boutput(user, "<span class='alert'>The fabricator rejects the [W]. You'll need to refine them in a reclaimer first.</span>")
@@ -1070,7 +1105,7 @@
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(ID.registered)
 			if(account)
-				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+				var/enterpin = usr.enter_pin("Card Reader")
 				if (enterpin == ID.pin)
 					boutput(usr, "<span class='notice'>Card authorized.</span>")
 					src.scan = ID
@@ -1083,7 +1118,7 @@
 				src.scan = null
 		return 0
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the manufacturer's output target.</span>")
 			return
@@ -1252,28 +1287,30 @@
 
 	proc/manuf_zap(mob/user, prb)
 		if(issilicon(user) || isAI(user))
-			return 0
+			return FALSE
 		if(!prob(prb))
-			return 0
+			return FALSE
 		if(src.status & (BROKEN|NOPOWER))
-			return 0
+			return FALSE
 		if(ishuman(user))
 			if (istype(user:gloves, /obj/item/clothing/gloves/yellow))
-				return 0
+				return FALSE
 
-		var/netnum = 0
+		var/netnum = FALSE
 		for(var/turf/T in range(1, user))
 			for(var/obj/cable/C in T.contents)
 				netnum = C.netnum
 				break
 			if (netnum) break
 
-		if (!netnum) return 0
+		if (!netnum) return FALSE
 
+		if (!IN_RANGE(src, user, 2))
+			return FALSE
 		if (src.electrocute(user,prb,netnum))
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 
 	proc/add_schematic(var/schematic_path,var/add_to_list = "available")
 		if (!ispath(schematic_path))
@@ -1308,9 +1345,11 @@
 
 		if (pattern == "ALL") // anything at all
 			return 1
+		if (pattern == "ORG|RUB")
+			return mat.material_flags & MATERIAL_RUBBER || mat.material_flags & MATERIAL_ORGANIC
 		else if (copytext(pattern, 4, 5) == "-") // wildcard
 			var/firstpart = copytext(pattern, 1, 4)
-			var/secondpart = text2num(copytext(pattern, 5))
+			var/secondpart = text2num_safe(copytext(pattern, 5))
 			switch(firstpart)
 				// this was kind of thrown together in a panic when i felt shitty so if its horrible
 				// go ahead and clean it up a bit
@@ -1425,7 +1464,7 @@
 
 		var/datum/manufacture/M = src.queue[1]
 		//Wire: Fix for href exploit creating arbitrary items
-		if (!(M in src.available + src.hidden + src.download))
+		if (!(M in src.available + src.hidden + src.drive_recipes + src.download))
 			src.mode = "halt"
 			src.error = "Corrupted entry purged from production queue."
 			src.queue -= src.queue[1]
@@ -1466,6 +1505,19 @@
 				src.timeleft += rand(2,6)
 				src.timeleft *= 1.5
 			src.timeleft /= src.speed
+
+		if(src.manudrive)
+			if(src.queue[1] in src.drive_recipes)
+				var/obj/item/disk/data/floppy/ManuD = src.manudrive
+				for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
+					if(MD.fablimit == 0)
+						src.mode = "halt"
+						src.error = "The inserted ManuDrive is unable to operate further."
+						src.queue = list()
+						return
+					else
+						MD.fablimit -= 1
+
 		playsound(src.loc, src.sound_beginwork, 50, 1, 0, 3)
 		src.mode = "working"
 		src.build_icon()
@@ -1482,7 +1534,7 @@
 			return
 		var/mcheck = check_enough_materials(M)
 		if(mcheck)
-			var/make = max(0,min(M.create,src.output_cap))
+			var/make = clamp(M.create, 0, src.output_cap)
 			switch(M.randomise_output)
 				if(1) // pick a new item each loop
 					while (make > 0)
@@ -1500,6 +1552,12 @@
 						make--
 
 			src.remove_materials(M)
+		else
+			src.mode = "halt"
+			src.error = "Insufficient usable materials to continue queue production."
+			src.visible_message("<span class='alert'>[src] emits an angry buzz!</span>")
+			playsound(src.loc, src.sound_grump, 50, 1)
+			src.build_icon()
 
 		return
 
@@ -1637,8 +1695,8 @@
 			var/datum/material/mat = getMaterial(mat_id)
 			dat += {"
 		<tr>
-			<td><a href='?src=\ref[src];eject=[mat_id]' class='buttonlink'>&#9167;</a> [mat]</td>
-			<td class='r'>[src.resource_amounts[mat_id]]</td>
+			<td><a href='?src=\ref[src];eject=[mat_id]' class='buttonlink'>&#9167;</a>  [mat]</td>
+			<td class='r'>[src.resource_amounts[mat_id]/10]</td>
 		</tr>
 			"}
 		if (dat.len == 1)
@@ -1648,6 +1706,24 @@
 		</tr>
 			"}
 
+		if (src.manudrive)
+			dat += {"
+		<tr><th colspan='2'>Manufacturer drive</th></tr>
+			"}
+
+			dat += {"
+		<tr><td colspan='2'><a href='?src=\ref[src];ejectmanudrive=\ref[src]' class='buttonlink'>&#9167;</a> [src.manudrive.name]</td></tr>
+			"}
+
+			var/obj/item/disk/data/floppy/ManuD = src.manudrive
+			for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
+				if(MD.fablimit >= 0)
+					dat += {"
+				<tr>
+					<td>ManuDrive Usages</td>
+					<td class='r'>[MD.fablimit]</td>
+				</tr>
+					"}
 
 		if (src.reagents.total_volume > 0)
 			dat += {"
@@ -1686,7 +1762,7 @@
 
 			if (src.beaker.reagents.total_volume > 0)
 				dat += {"
-				<a href='?src=\ref[src];transfrom=\ref[src.beaker]'>Transfer<br>Container &rarr; Machine</a>"
+				<a href='?src=\ref[src];transfrom=\ref[src.beaker]'>Transfer<br>Container &rarr; Machine</a>
 				"}
 
 			dat += {"
@@ -1747,13 +1823,13 @@
 
 			var/icon_text = "<img class='icon'>"
 			if (A.item_outputs)
-				var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
-				// usr << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+				var/icon_rsc = getItemIcon(A.item_outputs[1], C = user.client)
+				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
 				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
 			if (istype(A, /datum/manufacture/mechanics))
 				var/datum/manufacture/mechanics/F = A
-				var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
+				var/icon_rsc = getItemIcon(F.frame_path, C = user.client)
 				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
 				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
@@ -1773,6 +1849,11 @@
 			queue_num++
 
 		return dat.Join()
+
+	proc/eject_manudrive(var/mob/living/user)
+		src.drive_recipes = null
+		user.put_in_hand_or_drop(manudrive)
+		src.manudrive = null
 
 	proc/load_item(var/obj/item/O,var/mob/living/user)
 		if (!O)
@@ -1798,7 +1879,7 @@
 		if (!damage_amount)
 			return
 		src.health -= damage_amount
-		src.health = max(0,min(src.health,100))
+		src.health = clamp(src.health, 0, 100)
 		if (damage_amount > 0)
 			playsound(src.loc, src.sound_damaged, 50, 2)
 			if (src.health == 0)
@@ -2019,7 +2100,7 @@
 
 /obj/machinery/manufacturer/general
 	name = "General Manufacturer"
-	desc = "A manufacturing unit calibrated to produce tools and general purpose items."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing tools and general purpose items."
 	free_resource_amt = 5
 	free_resources = list(/obj/item/material_piece/steel,
 		/obj/item/material_piece/copper,
@@ -2080,7 +2161,7 @@
 
 /obj/machinery/manufacturer/robotics
 	name = "Robotics Fabricator"
-	desc = "A manufacturing unit calibrated to produce robot-related equipment."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing robot-related equipment."
 	icon_state = "fab-robotics"
 	icon_base = "robotics"
 	free_resource_amt = 5
@@ -2123,6 +2204,7 @@
 	/datum/manufacture/powercellC,
 	/datum/manufacture/crowbar,
 	/datum/manufacture/wrench,
+	/datum/manufacture/screwdriver,
 	/datum/manufacture/scalpel,
 	/datum/manufacture/circular_saw,
 	/datum/manufacture/surgical_scissors,
@@ -2170,18 +2252,22 @@
 	/datum/manufacture/cyberlung_right,
 	/datum/manufacture/rods2,
 	/datum/manufacture/metal,
-	/datum/manufacture/glass)
+	/datum/manufacture/glass,
+	/datum/manufacture/asimov_laws,
+	/datum/manufacture/borg_linker)
 
 	hidden = list(/datum/manufacture/flash,
 	/datum/manufacture/cybereye_thermal,
 	/datum/manufacture/cybereye_laser,
 	/datum/manufacture/cyberbutt,
 	/datum/manufacture/robup_expand,
-	/datum/manufacture/cardboard_ai)
+	/datum/manufacture/cardboard_ai,
+	/datum/manufacture/corporate_laws,
+	/datum/manufacture/robocop_laws)
 
 /obj/machinery/manufacturer/medical
 	name = "Medical Fabricator"
-	desc = "A manufacturing unit calibrated to produce medical equipment."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing medical equipment."
 	icon_state = "fab-med"
 	icon_base = "med"
 	free_resource_amt = 2
@@ -2221,6 +2307,7 @@
 		/datum/manufacture/eyepatch,
 		/datum/manufacture/blindfold,
 		/datum/manufacture/muzzle,
+		/datum/manufacture/stress_ball,
 		/datum/manufacture/body_bag,
 		/datum/manufacture/implanter,
 		/datum/manufacture/implant_health,
@@ -2247,7 +2334,7 @@
 
 /obj/machinery/manufacturer/mining
 	name = "Mining Fabricator"
-	desc = "A manufacturing unit calibrated to produce mining related equipment."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing mining related equipment."
 	icon_state = "fab-mining"
 	icon_base = "mining"
 	free_resource_amt = 2
@@ -2297,7 +2384,7 @@
 
 /obj/machinery/manufacturer/hangar
 	name = "Ship Component Fabricator"
-	desc = "A manufacturing unit calibrated to produce parts for ships."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing parts for ships."
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
 	free_resource_amt = 2
@@ -2338,15 +2425,19 @@
 
 /obj/machinery/manufacturer/uniform // add more stuff to this as needed, but it should be for regular uniforms the HoP might hand out, not tons of gimmicks. -cogwerks
 	name = "Uniform Manufacturer"
-	desc = "A manufacturing unit calibrated to produce workplace uniforms."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing workplace uniforms and headsets."
 	icon_state = "fab-jumpsuit"
 	icon_base = "jumpsuit"
 	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/cloth/cottonfabric)
+	free_resources = list(/obj/item/material_piece/cloth/cottonfabric,
+		/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper)
 	accept_blueprints = 0
 	available = list(/datum/manufacture/shoes,	//hey if you update these please remember to add it to /hop_and_uniform's list too
 	/datum/manufacture/shoes_brown,
 	/datum/manufacture/shoes_white,
+	/datum/manufacture/civilian_headset,
+	/datum/manufacture/jumpsuit_assistant,
 	/datum/manufacture/jumpsuit,
 	/datum/manufacture/jumpsuit_white,
 	/datum/manufacture/jumpsuit_red,
@@ -2363,6 +2454,7 @@
 	/datum/manufacture/pride_bi,
 	/datum/manufacture/pride_inter,
 	/datum/manufacture/pride_lesb,
+	/datum/manufacture/pride_gay,
 	/datum/manufacture/pride_nb,
 	/datum/manufacture/pride_pan,
 	/datum/manufacture/pride_poly,
@@ -2397,9 +2489,9 @@
 
 /obj/machinery/manufacturer/gas
 	name = "Gas Extractor"
-	desc = "A manufacturing unit that can produce gas canisters from certain ores."
-	icon_state = "fab-mining"
-	icon_base = "mining"
+	desc = "A 3D printer-like machine that can produce gas canisters from certain ores."
+	icon_state = "fab-atmos"
+	icon_base = "atmos"
 	accept_blueprints = 0
 	available = list(
 	/datum/manufacture/atmos_can,
@@ -2437,7 +2529,7 @@
 //and i hate this, i do, but you're gonna have to update this list whenever you update /personnel or /uniform
 /obj/machinery/manufacturer/hop_and_uniform
 	name = "Personnel Manufacturer"
-	desc = "A manufacturing unit calibrated to produce workplace uniforms and identification equipment."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing workplace uniforms, headsets, and identification equipment."
 	icon_state = "fab-access"
 	icon_base = "access"
 	free_resource_amt = 5
@@ -2452,6 +2544,8 @@
 	/datum/manufacture/shoes,
 	/datum/manufacture/shoes_brown,
 	/datum/manufacture/shoes_white,
+	/datum/manufacture/civilian_headset,
+	/datum/manufacture/jumpsuit_assistant,
 	/datum/manufacture/jumpsuit,
 	/datum/manufacture/jumpsuit_white,
 	/datum/manufacture/jumpsuit_red,
@@ -2468,6 +2562,7 @@
 	/datum/manufacture/pride_bi,
 	/datum/manufacture/pride_inter,
 	/datum/manufacture/pride_lesb,
+	/datum/manufacture/pride_gay,
 	/datum/manufacture/pride_nb,
 	/datum/manufacture/pride_pan,
 	/datum/manufacture/pride_poly,
@@ -2492,7 +2587,7 @@
 
 /obj/machinery/manufacturer/qm // This manufacturer just creates different crated and boxes for the QM. Lets give their boring lives at least something more interesting.
 	name = "Crate Manufacturer"
-	desc = "A manufacturing unit calibrated to produce different crates and boxes."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing different crates and boxes."
 	icon_state = "fab-crates"
 	icon_base = "crates"
 	free_resource_amt = 5
@@ -2509,7 +2604,7 @@
 
 /obj/machinery/manufacturer/zombie_survival
 	name = "Uber-Extreme Survival Manufacturer"
-	desc = "A manufacturing unit calibrated to produce items useful in surviving extreme scenarios."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing items useful in surviving extreme scenarios."
 	icon_state = "fab-crates"
 	icon_base = "crates"
 	free_resource_amt = 50
@@ -2601,7 +2696,7 @@
 		..()
 		MA.action_bar = null
 		if (src.completed && length(MA.queue))
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				MA.begin_work(1)
 
 

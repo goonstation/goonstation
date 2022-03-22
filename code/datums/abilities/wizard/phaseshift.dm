@@ -61,7 +61,7 @@
 			boutput(HH, "<span class='notice'>The flames sputter out as you phase shift.</span>")
 			HH.delStatus("burning")
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/mobloc = get_turf(H.loc)
 		var/obj/dummy/spell_invis/holder = new /obj/dummy/spell_invis( mobloc )
 		var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
@@ -132,7 +132,7 @@
 			src.y--
 			src.x--
 	src.movecd = 1
-	SPAWN_DBG(0.2 SECONDS) src.movecd = 0
+	SPAWN(0.2 SECONDS) src.movecd = 0
 
 /obj/dummy/spell_invis/ex_act(blah)
 	return
@@ -196,8 +196,11 @@
 
 	New(loc,ownermob,cloak)
 		..()
-		src.owner = ownermob
-		src.owner.set_loc(src)
+
+		if(ownermob)
+			src.owner = ownermob
+			src.owner.set_loc(src)
+			src.owner.remove_stamina(5)
 
 		use_cloakofdarkness = cloak
 
@@ -211,12 +214,11 @@
 		//overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 		//overlay_image.color = "#333333"
 
-		owner.remove_stamina(5)
 
 		if (use_cloakofdarkness)
 			processing_items |= src
 
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			var/reduc_count = 0
 			while(src && !src.qdeled && owner && owner.stamina >= STAMINA_SPRINT && owner.client && owner.client.check_key(KEY_RUN))
 				reduc_count++
@@ -268,7 +270,7 @@
 				//src.UpdateOverlays(null, "batpoof_cloak")
 
 	proc/dispel(var/forced = 0)
-		if (forced)
+		if (forced && owner)
 			owner.stamina = max(owner.stamina - 40, STAMINA_SPRINT)
 
 		var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof

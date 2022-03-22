@@ -132,7 +132,7 @@
 			PT.air_contents.temperature = btemp1 + T0C
 			OT.air_contents.temperature = btemp2 + T0C
 
-			V.update_icon()
+			V.UpdateIcon()
 
 		// proximity
 		if (1)
@@ -155,7 +155,7 @@
 			PT.air_contents.temperature = btemp1 + T0C
 			OT.air_contents.temperature = btemp2 + T0C
 
-			V.update_icon()
+			V.UpdateIcon()
 
 
 		// timer
@@ -178,7 +178,7 @@
 			PT.air_contents.temperature = btemp1 + T0C
 			OT.air_contents.temperature = btemp2 + T0C
 
-			V.update_icon()
+			V.UpdateIcon()
 	qdel(src)
 
 
@@ -218,14 +218,14 @@
 		if(!isturf(src.loc))
 			dispose()
 			return
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			explode()
 
 	Bumped(atom/A)
 		if(ismob(A))
 			walk(src, get_dir(A, src), 1)
 
-	Bump(atom/O)
+	bump(atom/O)
 		walk(src, 0)
 
 	ex_act(severity)
@@ -287,7 +287,7 @@
 			if (!isnull(O)) O.ex_act(rand(1,2))
 		playsound(src.loc, "explosion", 100, 1)
 		playsound(src.loc, "sound/effects/explosionfar.ogg", 100, 1, 14)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			animation.dispose()
 			for(var/atom/movable/overlay/A in (boom + boom_tips))
 				A.dispose()

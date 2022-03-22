@@ -49,8 +49,8 @@
 	disposing()
 		STOP_TRACKING
 		if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-			var/datum/game_mode/nuclear/NUKEMODE = ticker.mode
-			NUKEMODE.the_bomb = null
+			var/datum/game_mode/nuclear/gamemode = ticker.mode
+			gamemode.the_bomb = null
 		qdel(wirepanel)
 		..()
 
@@ -74,7 +74,7 @@
 			animate(src.simple_light, time = 2 MINUTES, alpha = 255, color = "#ff4444", transform = trans)
 
 		if (det_time && TIME >= det_time)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				explode()
 			src.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">--:--</span>"
 		else
@@ -115,66 +115,67 @@
 
 		user.lastattacked = src
 
-		var/datum/game_mode/nuclear/NUKEMODE = null
-		var/area/A = get_area(src)
+		var/datum/game_mode/nuclear/gamemode = ticker?.mode
+		ENSURE_TYPE(gamemode)
 
+		var/target_area = src.target_override
+		if(isnull(target_area))
+			target_area = gamemode?.target_location_type
+		var/target_name = src.target_override_name
+		if(!target_name && ispath(src.target_override))
+			var/area/TA = src.target_override
+			target_name = initial(TA.name)
+		else if(!target_name && istype(gamemode))
+			target_name = gamemode?.target_location_name
 
+		#define NUKE_AREA_CHECK (!src.armed && isturf(src.loc) && (\
+				(ispath(target_area) && istype(get_area(src), target_area)) || \
+				(islist(target_area) && ((get_area(src)):type in target_area)) \
+			))
 
-		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear) || src.target_override)
-			NUKEMODE = ticker.mode
-			var/target_area = src.target_override
-			if(isnull(target_area))
-				target_area = NUKEMODE.target_location_type
-			var/target_name = src.target_override_name
-			if(!target_name && ispath(src.target_override))
-				var/area/TA = src.target_override
-				target_name = initial(TA.name)
-			else if(!target_name && istype(NUKEMODE))
-				target_name = NUKEMODE.target_location_name
-
-			if (src.armed == 0)
-				if (src.anyone_can_activate || (istype(NUKEMODE, /datum/game_mode/nuclear) && (user.mind in NUKEMODE.syndicates)))
-					if (target_area && (A && istype(A)))
-						if (!((ispath(target_area) && istype(A, target_area)) || (islist(target_area) && (A.type in target_area))))
-							boutput(user, "<span class='alert'>You need to deploy the bomb in [target_name].</span>")
-						else
-							if (alert("Deploy and arm [src.name] here?", src.name, "Yes", "No") == "Yes" && !src.armed && get_dist(src, user) <= 1 && !(is_incapacitated(user) || user.restrained()))
-								src.armed = 1
-								src.anchored = 1
-								if (!src.image_light)
-									src.image_light = image(src.icon, "nblightc")
-									src.UpdateOverlays(src.image_light, "light")
-								else
-									src.image_light.icon_state = "nblightc"
-									src.UpdateOverlays(src.image_light, "light")
-								//src.icon_state = "nuclearbomb2"
-								src.det_time = TIME + src.timer_default
-								src.add_simple_light("nuke", list(255, 127, 127, 127))
-								command_alert("\A [src] has been armed in [A]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [A] to disarm the bomb immediately.", "Nuclear Weapon Detected")
-								playsound_global(world, "sound/machines/bomb_planted.ogg", 90)
-								logTheThing("bombing", user, null, "armed [src] at [log_loc(src)].")
-
-					else
-						boutput(user, "<span class='alert'>Deployment area definition missing or invalid! Please report this to a coder.</span>")
-				else
-					boutput(user, "<span class='alert'>It isn't deployed, and you don't know how to deploy it anyway.</span>")
-			else
-				if (istype(NUKEMODE, /datum/game_mode/nuclear) && (user.mind in NUKEMODE.syndicates))
-					boutput(user, "<span class='notice'>You don't need to do anything else with the bomb.</span>")
-				else
-					user.visible_message("<span class='alert'><b>[user]</b> kicks [src] uselessly!</span>")
-					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
-		else
+		if(!src.target_override && !istype(ticker?.mode, /datum/game_mode/nuclear))
 			boutput(user, "<span class='alert'>[src.name] seems to be completely inert and useless.</span>")
+		else if(src.armed)
+			if (user.mind in gamemode?.syndicates)
+				boutput(user, "<span class='notice'>You don't need to do anything else with the bomb.</span>")
+			else
+				user.visible_message("<span class='alert'><b>[user]</b> kicks [src] uselessly!</span>")
+				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
+		else if(!src.anyone_can_activate && !(user.mind in gamemode?.syndicates))
+			boutput(user, "<span class='alert'>It isn't deployed, and you don't know how to deploy it anyway.</span>")
+		else if (!target_area)
+			stack_trace("Nuclear bomb deployment area definition missing or invalid")
+			boutput(user, "<span class='alert'>Deployment area definition missing or invalid! Please report this to a coder.</span>")
+		else if (!NUKE_AREA_CHECK)
+			boutput(user, "<span class='alert'>You need to deploy the bomb in [target_name].</span>")
+		else if(alert("Deploy and arm [src.name] here?", src.name, "Yes", "No") != "Yes")
+			return
+		else if(src.armed || !NUKE_AREA_CHECK || !can_reach(user, src) || !can_act(user)) // gotta re-check after the alert!!!
+			boutput(user, "<span class='alert'>Deploying aborted due to you or [src] not being in [target_name].</span>")
+		else
+			src.armed = TRUE
+			src.anchored = TRUE
+			if (!src.image_light)
+				src.image_light = image(src.icon, "nblightc")
+				src.UpdateOverlays(src.image_light, "light")
+			else
+				src.image_light.icon_state = "nblightc"
+				src.UpdateOverlays(src.image_light, "light")
+			src.det_time = TIME + src.timer_default
+			src.add_simple_light("nuke", list(255, 127, 127, 127))
+			command_alert("\A [src] has been armed in [isturf(src.loc) ? get_area(src) : src.loc]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [get_area(src)] to disarm the bomb immediately.", "Nuclear Weapon Detected")
+			playsound_global(world, "sound/machines/bomb_planted.ogg", 90)
+			logTheThing("bombing", user, null, "armed [src] at [log_loc(src)].")
+			gamemode?.shuttle_available = FALSE
 
-		return
+		#undef NUKE_AREA_CHECK
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		src.add_fingerprint(user)
 		user.lastattacked = src
 
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-			var/datum/game_mode/nuclear/NUKEMODE = ticker.mode
+			var/datum/game_mode/nuclear/gamemode = ticker.mode
 			if (istype(W, /obj/item/disk/data/floppy/read_only/authentication))
 				if (src.disk && istype(src.disk))
 					boutput(user, "<span class='alert'>There's already something in the [src.name]'s disk drive.</span>")
@@ -184,7 +185,7 @@
 					return
 
 				var/timer_modifier = 0
-				if (user.mind in NUKEMODE.syndicates)
+				if (user.mind in gamemode.syndicates)
 					timer_modifier = -src.timer_modifier_disk
 					user.visible_message("<span class='alert'><b>[user]</b> inserts [W.name], shortening the bomb's timer by [src.timer_modifier_disk / 10] seconds!</span>")
 				else
@@ -193,6 +194,9 @@
 
 					if (user.mind && user.mind.assigned_role == "Captain") //the fat frog did it!
 						user.unlock_medal("Brown Pants", 1)
+
+					if(istype(ticker.mode, /datum/game_mode/nuclear))
+						ticker.mode.shuttle_available = 1
 
 				playsound(src.loc, "sound/machines/ping.ogg", 100, 0)
 				logTheThing("bombing", user, null, "inserted [W.name] into [src] at [log_loc(src)], modifying the timer by [timer_modifier / 10] seconds.")
@@ -216,12 +220,12 @@
 								S.recharging = 1
 								src.set_loc(R.loc)
 								showswirl(src.loc)
-								SPAWN_DBG(S.recharge)
+								SPAWN(S.recharge)
 									S.recharging = 0
-								SPAWN_DBG(R.recharge)
+								SPAWN(R.recharge)
 									R.recharging = 0
 
-			if (user.mind in NUKEMODE.syndicates && !src.anyone_can_activate)
+			if (user.mind in gamemode.syndicates && !src.anyone_can_activate)
 				if (src.armed == 1)
 					boutput(user, "<span class='notice'>You don't need to do anything else with the bomb.</span>")
 					return
@@ -229,18 +233,14 @@
 					boutput(user, "<span class='alert'>Why would you want to damage the nuclear bomb?</span>")
 					return
 
-			if (src.armed && src.anchored && !(user.mind in NUKEMODE.syndicates))
+			if (src.armed && src.anchored && !(user.mind in gamemode.syndicates))
 				if (isscrewingtool(W))
 					// Give the player a notice so they realize what has happened
 					boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
 					return
-				//else if (istype(W,/obj/item/wirecutters/))
-				//	user.visible_message("<b>[user]</b> opens up [src]'s wiring panel and takes a look.")
-				//	open_wire_panel(user)
-				//	return
 
 		if (istype(W, /obj/item/wrench/battle) && src._health <= src._max_health)
-			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[usr] repairs the [src]!", null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[user] repairs the [src]!", null)
 			return
 
 		if (W && !(istool(W, TOOL_SCREWING | TOOL_SNIPPING) || istype(W, /obj/item/disk/data/floppy/read_only/authentication)))
@@ -261,13 +261,7 @@
 		return
 
 	ex_act(severity)
-		/*switch(severity) // No more suicide-bombing the nuke.
-			if(1)
-				src.take_damage(80)
-			if(2)
-				src.take_damage(50)
-			if(3)
-				src.take_damage(20)*/
+		// No more suicide-bombing the nuke.
 		return
 
 	blob_act(var/power)
@@ -284,10 +278,10 @@
 
 		if(src.material) src.material.triggerOnBullet(src, src, P)
 
-		if (!damage)
+		if (damage <= 0)
 			return
 		if(P.proj_data.damage_type == D_KINETIC || (P.proj_data.damage_type == D_ENERGY && damage))
-			src.take_damage(damage / 1.7)
+			src.take_damage(damage / 3)
 		else if (P.proj_data.damage_type == D_PIERCING)
 			src.take_damage(damage)
 
@@ -322,10 +316,10 @@
 			src.visible_message("<b>[src]</b> breaks and falls apart into useless pieces!")
 			robogibs(src.loc,null)
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
-			var/datum/game_mode/nuclear/NUKEMODE = null
+			var/datum/game_mode/nuclear/gamemode = null
 			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-				NUKEMODE = ticker.mode
-				NUKEMODE.the_bomb = null
+				gamemode = ticker.mode
+				gamemode.the_bomb = null
 				logTheThing("station", null, null, "The nuclear bomb was destroyed at [log_loc(src)].")
 				message_admins("The nuclear bomb was destroyed at [log_loc(src)].")
 			qdel(src)
@@ -339,16 +333,16 @@
 			explosion_new(src, get_turf(src), src.boom_size)
 			qdel(src)
 			return
-		var/datum/game_mode/nuclear/NUKEMODE = ticker?.mode
+		var/datum/game_mode/nuclear/gamemode = ticker?.mode
 		var/turf/nuke_turf = get_turf(src)
 		var/area/nuke_area = get_area(src)
 		var/area_correct = 0
 		if(src.target_override && istype(nuke_area, src.target_override))
 			area_correct = 1
-		if(istype(ticker?.mode, /datum/game_mode/nuclear) && istype(nuke_area, NUKEMODE.target_location_type))
+		if(istype(ticker?.mode, /datum/game_mode/nuclear) && istype(nuke_area, gamemode.target_location_type))
 			area_correct = 1
 		if ((nuke_turf.z != 1 && !area_correct) && (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
-			NUKEMODE.the_bomb = null
+			gamemode.the_bomb = null
 			command_alert("A nuclear explosive has been detonated nearby. The station was not in range of the blast.", "Attention")
 			explosion(src, src.loc, 20, 30, 40, 50)
 			qdel(src)
@@ -361,9 +355,9 @@
 			cinematic.add_client(C)
 		cinematic.play("nuke")
 #endif
-		if(istype(NUKEMODE))
-			NUKEMODE.nuke_detonated = 1
-			NUKEMODE.check_win()
+		if(istype(gamemode))
+			gamemode.nuke_detonated = 1
+			gamemode.check_win()
 		sleep(5.5 SECONDS)
 
 		enter_allowed = 0
@@ -376,7 +370,7 @@
 
 		creepify_station()
 
-		if(!istype(NUKEMODE))
+		if(!istype(gamemode))
 			sleep(1 SECOND)
 			boutput(world, "<B>Everyone was killed by the nuclear blast! Resetting in 30 seconds!</B>")
 

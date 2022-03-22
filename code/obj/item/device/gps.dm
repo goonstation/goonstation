@@ -1,6 +1,6 @@
 /obj/item/device/gps
 	name = "space GPS"
-	desc = "Tells you your coordinates based on the nearest coordinate beacon."
+	desc = "A navigation device that can tell you your position, and the position of other GPS devices. Uses coordinate beacons."
 	icon_state = "gps-off"
 	item_state = "electronic"
 	var/allowtrack = 1 // defaults to on so people know where you are (sort of!)
@@ -221,8 +221,8 @@
 	proc/obtain_target_from_coords(href_list)
 		if (href_list["dest_cords"])
 			tracking_target = null
-			var/x = text2num(href_list["x"])
-			var/y = text2num(href_list["y"])
+			var/x = text2num_safe(href_list["x"])
+			var/y = text2num_safe(href_list["y"])
 			if (!x || !y)
 				boutput(usr, "<span class='alert'>Bad Topc call, if you see this something has gone wrong. And it's probably YOUR FAULT!</span>")
 				return
@@ -275,7 +275,7 @@
 		else
 			icon_state = "gps"
 
-		SPAWN_DBG(0.5 SECONDS) .()
+		SPAWN(0.5 SECONDS) .()
 
 	disposing()
 		STOP_TRACKING
@@ -292,7 +292,7 @@
 			if (!senderName)
 				return
 			if (lowertext(signal.data["distress_alert"] == "help"))
-				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal recieved from GPS [senderName].\".")
+				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal received from GPS [senderName].\".")
 			else if (lowertext(signal.data["distress_alert"] == "clear"))
 				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal cleared by GPS [senderName].\".")
 			return

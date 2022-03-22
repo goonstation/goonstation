@@ -18,18 +18,19 @@
 
 /mob/living/carbon/human/npc
 	name = "human"
+	real_name = "human"
 	is_npc = 1
 	ai_attacknpc = 0
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.mind = new(src)
 			if (src.name == "human")
 				randomize_look(src, 1, 1, 1, 1, 1, 0) // change gender/bloodtype/age/name/underwear, keep bioeffects
-				src.organHolder.head.update_icon()
-		SPAWN_DBG(1 SECOND)
+				src.organHolder.head.UpdateIcon()
+		SPAWN(1 SECOND)
 			set_clothing_icon_dirty()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			ai_init()
 
 /mob/living/carbon/human/npc/assistant
@@ -37,7 +38,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			JobEquipSpawned("Staff Assistant")
 
 	ai_findtarget_new()
@@ -61,6 +62,11 @@
 		"[target_name] just fucking attacked me",\
 		"SOMEONE [prob(40) ? "FUCKING " : ""]ARREST [uppertext(target_name)]",\
 		"need help",\
+		"[uppertext(target_name)] IS [prob(50) ? "A TRAITOR" : "AN ANTAG"] [prob(40) ? "FUCKING" : ""] HELP [prob(40) ? "ME" : ""]",\
+		"[prob(40) ? "please" : ""] I need help can someone [prob(50) ? "hear" : "help"] me",\
+		"[uppertext(target_name)] WON'T [prob(40) ? "FUCKING " : ""]LEAVE ME ALONE, HELP",\
+		"SOMEONE [prob(40) ? "PLEASE " : ""] [prob(40) ? "FUCKING" : ""] HELP [prob(40) ? "ME" : ""] [prob(40) ? "I SWEAR TO GOD" : ""]",\
+		"[prob(40) ? "FUCKING" : ""] GRIEFERES WON'T LEAVE ME ALONE",\
 		"[pick("HLEP","HELP")] ME [uppertext(target_name)] IS [prob(40) ? "FUCKING " : ""]KILLING ME")
 		if(prob(60))
 			complaint = uppertext(complaint)
@@ -73,7 +79,7 @@
 		..()
 		if(M.a_intent in list(INTENT_HARM,INTENT_DISARM,INTENT_GRAB))
 			if(!ON_COOLDOWN(src, "cry_grief", 5 SECONDS))
-				SPAWN_DBG(rand(10,30))
+				SPAWN(rand(10,30))
 					src.cry_grief(M)
 
 	attackby(obj/item/W, mob/M)
@@ -83,7 +89,7 @@
 		var/damage = ((get_brute_damage() - oldbloss) + (get_burn_damage() - oldfloss))
 		if((damage > 0) || W.force)
 			if(!ON_COOLDOWN(src, "cry_grief", 5 SECONDS))
-				SPAWN_DBG(rand(10,30))
+				SPAWN(rand(10,30))
 					src.cry_grief(M)
 
 
@@ -95,13 +101,13 @@
 	ai_aggressive = 1
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 				src.real_name = "[syndicate_name()] Operative #[ticker.mode:agent_number]"
 				ticker.mode:agent_number++
 			else
 				src.real_name = "Syndicate Agent"
-			JobEquipSpawned("Syndicate")
+			JobEquipSpawned("Syndicate Operative")
 			u_equip(l_store) // Deletes syndicate remote teleporter to keep people out of the syndie shuttle
 			u_equip(r_store) // Deletes uplink radio because fuckem
 
@@ -109,7 +115,7 @@
 	ai_aggressive = 1
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.real_name = "Junior Syndicate Agent"
 			JobEquipSpawned("Junior Syndicate Operative")
 
@@ -117,7 +123,7 @@
 	ai_aggressive = 1
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.real_name = "Junior Syndicate Agent"
 			JobEquipSpawned("Poorly Equipped Junior Syndicate Operative")
 
@@ -202,7 +208,7 @@
 	ai_move()
 
 	if(ai_target)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			ai_move()
 		action_delay += 10
 	else
@@ -281,7 +287,7 @@
 	switch(ai_state)
 		if(AI_PASSIVE) //Life is good.
 
-			src.a_intent = src.ai_default_intent
+			src.set_a_intent(src.ai_default_intent)
 
 			ai_pickupstuff()
 			ai_obstacle(1)
@@ -305,7 +311,7 @@
 
 		if(AI_ATTACKING)	//Gonna kick your ass.
 
-			src.a_intent = INTENT_HARM
+			src.set_a_intent(INTENT_HARM)
 
 			if(src.health < src.max_health / 8 && !src.ai_suicidal && !src.ai_aggressive)
 				src.ai_state = AI_FLEEING
@@ -417,7 +423,7 @@
 				if(istype(src.equipped(),/obj/item/gun))
 					src.swap_hand()
 
-				src.a_intent = INTENT_HARM
+				src.set_a_intent(INTENT_HARM)
 
 				var/prefer_hand = FALSE
 				if(istype(ai_target, /obj/fitness/speedbag))
@@ -435,7 +441,7 @@
 					//	target.attack_paw(src) // idiots bite
 					//else
 					if(prob(20) && !ON_COOLDOWN(src, "ai grab", 15 SECONDS))
-						src.a_intent = INTENT_GRAB
+						src.set_a_intent(INTENT_GRAB)
 					src.ai_attack_target(ai_target, null)
 				else // With a weapon
 					if(istype(src.equipped(), /obj/item/sword) && prob(80))
@@ -443,7 +449,7 @@
 						if(!csaber.open)
 							src.ai_attack_target(csaber, null)
 					src.ai_attack_target(ai_target, src.equipped())
-					src.a_intent = INTENT_HARM
+					src.set_a_intent(INTENT_HARM)
 
 
 
@@ -455,7 +461,7 @@
 					ai_pounced = world.timeofday
 					src.visible_message("<span class='alert'>[src] lunges at [ai_target]!</span>")
 					ai_target:changeStatus("weakened", 2 SECONDS)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						step_towards(src,ai_target)
 						step_towards(src,ai_target)
 
@@ -553,11 +559,11 @@
 				if(istype(src.equipped(), /obj/item/device/light/zippo))
 					var/obj/item/device/light/zippo/zippo = src.equipped()
 					if(!zippo.on)
-						zippo.attack_self(src)
+						zippo.AttackSelf(src)
 				if(istype(src.equipped(), /obj/item/weldingtool))
 					var/obj/item/weldingtool/welder = src.equipped()
 					if(!welder.welding)
-						welder.attack_self(src)
+						welder.AttackSelf(src)
 				src.ai_attack_target(cigarette, src.equipped())
 				throw_equipped = 1
 
@@ -592,20 +598,20 @@
 
 	// use
 	if(src.equipped() && prob(ai_state == AI_PASSIVE ? 2 : 7) && ai_useitems)
-		src.equipped().attack_self(src)
+		src.equipped().AttackSelf(src)
 
 	// throw
 	if(throw_equipped)
 		var/turf/T = get_turf(src)
 		if(T)
-			SPAWN_DBG(0.2 SECONDS) // todo: probably reorder ai_move stuff and remove this spawn, without this they keep hitting themselves
+			SPAWN(0.2 SECONDS) // todo: probably reorder ai_move stuff and remove this spawn, without this they keep hitting themselves
 				src.throw_item(locate(T.x + rand(-5, 5), T.y + rand(-5, 5), T.z), list("npc_throw"))
 
 	// give
 	if(prob(src.hand ? 5 : 1) && src.equipped() && ai_state != AI_ATTACKING)
 		for(var/mob/living/carbon/human/H in view(1))
 			if(H != src && isalive(H))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.give_to(H)
 				break
 

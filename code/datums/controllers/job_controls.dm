@@ -126,7 +126,7 @@ var/datum/job_controller/job_controls
 			dat += "<A href='?src=\ref[src];EditPock2=1'>Starting 2nd Pocket Item:</A> [english_list(src.job_creator.slot_poc2)]<br>"
 			dat += "<A href='?src=\ref[src];EditLhand=1'>Starting Left Hand Item:</A> [english_list(src.job_creator.slot_lhan)]<br>"
 			dat += "<A href='?src=\ref[src];EditRhand=1'>Starting Right Hand Item:</A> [english_list(src.job_creator.slot_rhan)]<br>"
-			dat += "<A href='?src=\ref[src];EditImpl=1'>Starting Implant:</A> [src.job_creator.recieves_implant]<br>"
+			dat += "<A href='?src=\ref[src];EditImpl=1'>Starting Implant:</A> [src.job_creator.receives_implant]<br>"
 			for(var/i in 1 to 7)
 				dat += "<A href='?src=\ref[src];EditBpItem=[i]'>Starting Backpack Item [i]:</A> [src.job_creator.items_in_backpack.len >= i ? src.job_creator.items_in_backpack[i] : null]<br>"
 			for(var/i in 1 to 7)
@@ -180,7 +180,7 @@ var/datum/job_controller/job_controls
 
 	Topic(href, href_list[])
 		// JOB CONFIG COMMANDS
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(href_list["AlterCap"])
 			var/list/alljobs = src.staple_jobs | src.special_jobs
 			var/datum/job/JOB = locate(href_list["AlterCap"]) in alljobs
@@ -732,7 +732,7 @@ var/datum/job_controller/job_controls
 		if(href_list["EditImpl"])
 			switch(alert("Clear or reselect implant?","Job Creator","Clear","Reselect"))
 				if("Clear")
-					src.job_creator.recieves_implant = null
+					src.job_creator.receives_implant = null
 
 				if("Reselect")
 					var/list/L = list()
@@ -752,7 +752,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No implant matching that name", "red")
 						return
 
-					src.job_creator.recieves_implant = picker
+					src.job_creator.receives_implant = picker
 
 			src.job_creator()
 
@@ -941,7 +941,7 @@ var/datum/job_controller/job_controls
 				JOB.radio_announcement = src.job_creator.radio_announcement
 				JOB.add_to_manifest = src.job_creator.add_to_manifest
 				JOB.spawn_miscreant = src.job_creator.spawn_miscreant
-				JOB.recieves_implant = src.job_creator.recieves_implant
+				JOB.receives_implant = src.job_creator.receives_implant
 				JOB.items_in_backpack = src.job_creator.items_in_backpack
 				JOB.items_in_belt = src.job_creator.items_in_belt
 				JOB.spawn_id = src.job_creator.spawn_id
@@ -954,13 +954,13 @@ var/datum/job_controller/job_controls
 
 		if(href_list["Save"])
 			if (!src.check_user_changed())
-				src.savefile_save(usr, (isnum(text2num(href_list["Save"])) ? text2num(href_list["Save"]) : 1))
+				src.savefile_save(usr.client, (isnum(text2num(href_list["Save"])) ? text2num(href_list["Save"]) : 1))
 				boutput(usr, "<span class='notice'><b>Job saved to Slot [text2num(href_list["Save"])].</b></span>")
 			src.job_creator()
 
 		if(href_list["Load"])
 			if (!src.check_user_changed())
-				if (!src.savefile_load(usr, (isnum(text2num(href_list["Load"])) ? text2num(href_list["Load"]) : 1)))
+				if (!src.savefile_load(usr.client, (isnum(text2num(href_list["Load"])) ? text2num(href_list["Load"]) : 1)))
 					alert(usr, "You do not have a job saved in this slot.")
 				else
 					boutput(usr, "<span class='notice'><b>Job loaded from Slot [text2num(href_list["Load"])].</b></span>")
@@ -974,7 +974,7 @@ var/datum/job_controller/job_controls
 		if (href_list["LoadDifKey"])
 			var/key = input("Which admin's jobs? (Enter ckey)","Job Creator")
 			src.load_another_ckey = key
-			if (!src.savefile_path_exists(usr))
+			if (!src.savefile_path_exists(key))
 				src.load_another_ckey = null
 				alert(usr, "Could not find a savefile with that ckey!.")
 			src.job_creator()
@@ -984,7 +984,10 @@ var/datum/job_controller/job_controls
 		logTheThing("debug", null, null, "<b>Job Controller:</b> Attempt to find job with bad string in controller detected")
 		return null
 	var/list/excluded_strings = list("Special Respawn","Custom Names","Everything Except Assistant",
-	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars")
+	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars", "Syndicate", "Construction Worker")
+	#ifndef MAP_OVERRIDE_MANTA
+	excluded_strings += "Communications Officer"
+	#endif
 	if (string in excluded_strings)
 		return null
 	for (var/datum/job/J in job_controls.staple_jobs)

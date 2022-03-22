@@ -3,9 +3,8 @@
 	desc = "A manufacturing unit calibrated to produce parts for ships."
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
-	free_resource_amt = 20
 	var/team_num = 0			//NT = 1, SY = 2
-
+	free_resource_amt = 20
 	free_resources = list(
 		/obj/item/material_piece/mauxite,
 		/obj/item/material_piece/pharosium,
@@ -28,26 +27,32 @@
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,
-		/datum/manufacture/pod/weapon/mining,
+		/datum/manufacture/pod/weapon/mining_podwars,
 		/datum/manufacture/pod/weapon/mining/drill,
 		/datum/manufacture/pod/weapon/ltlaser,
-		/datum/manufacture/pod/weapon/mining,
 		/datum/manufacture/pod/weapon/mining_weak,
 		/datum/manufacture/pod/weapon/taser,
 		/datum/manufacture/pod/weapon/laser/short,
 		/datum/manufacture/pod/weapon/laser,
 		/datum/manufacture/pod/weapon/disruptor,
 		/datum/manufacture/pod/weapon/disruptor/light,
-		/datum/manufacture/pod/weapon/shotgun,
-		/datum/manufacture/pod/weapon/ass_laser,
+		/datum/manufacture/pod/weapon/shotgun
 	)
 
 	New()
-		add_team_armor()
+		START_TRACKING
 		..()
 
-	proc/add_team_armor()
-		return
+	disposing()
+		STOP_TRACKING
+		..()
+
+	claim_free_resources(datum/game_mode/pod_wars/PW)
+		if (team_num == TEAM_NANOTRASEN)
+			src.resource_amounts = PW.team_NT.resources
+		else if (team_num == TEAM_SYNDICATE)
+			src.resource_amounts = PW.team_SY.resources
+		..()
 
 	attack_hand(var/mob/user as mob)
 		if (get_pod_wars_team_num(user) != src.team_num)
@@ -59,16 +64,68 @@
 /obj/machinery/manufacturer/pod_wars/nanotrasen
 	name = "NanoTrasen Ship Component Fabricator"
 	team_num = TEAM_NANOTRASEN
-	add_team_armor()
-		available += list(
+	available = list(
+		/datum/manufacture/pod_wars/lock,
+		/datum/manufacture/putt/engine,
+		/datum/manufacture/putt/boards,
+		/datum/manufacture/putt/control,
+		/datum/manufacture/putt/parts,
+		/datum/manufacture/pod/boards,
+		/datum/manufacture/pod/control,
+		/datum/manufacture/pod/parts,
+		/datum/manufacture/pod/engine,
+		/datum/manufacture/engine2,
+		/datum/manufacture/engine3,
+		/datum/manufacture/pod/lock,
+		/datum/manufacture/cargohold,
+		/datum/manufacture/orescoop,
+		/datum/manufacture/conclave,
+		/datum/manufacture/communications/mining,
+		/datum/manufacture/pod/weapon/mining_podwars,
+		/datum/manufacture/pod/weapon/mining/drill,
+		/datum/manufacture/pod/weapon/ltlaser,
+		/datum/manufacture/pod/weapon/mining_weak,
+		/datum/manufacture/pod/weapon/taser,
+		/datum/manufacture/pod/weapon/laser/short,
+		/datum/manufacture/pod/weapon/laser,
+		/datum/manufacture/pod/weapon/disruptor,
+		/datum/manufacture/pod/weapon/disruptor/light,
+		/datum/manufacture/pod/weapon/shotgun,
 		/datum/manufacture/pod_wars/pod/armor_light/nt,
 		/datum/manufacture/pod_wars/pod/armor_robust/nt
-		)
+
+	)
+
 /obj/machinery/manufacturer/pod_wars/syndicate
 	name = "Syndicate Ship Component Fabricator"
 	team_num = TEAM_SYNDICATE
-	add_team_armor()
-		available += list(
+	available = list(
+		/datum/manufacture/pod_wars/lock,
+		/datum/manufacture/putt/engine,
+		/datum/manufacture/putt/boards,
+		/datum/manufacture/putt/control,
+		/datum/manufacture/putt/parts,
+		/datum/manufacture/pod/boards,
+		/datum/manufacture/pod/control,
+		/datum/manufacture/pod/parts,
+		/datum/manufacture/pod/engine,
+		/datum/manufacture/engine2,
+		/datum/manufacture/engine3,
+		/datum/manufacture/pod/lock,
+		/datum/manufacture/cargohold,
+		/datum/manufacture/orescoop,
+		/datum/manufacture/conclave,
+		/datum/manufacture/communications/mining,
+		/datum/manufacture/pod/weapon/mining_podwars,
+		/datum/manufacture/pod/weapon/mining/drill,
+		/datum/manufacture/pod/weapon/ltlaser,
+		/datum/manufacture/pod/weapon/mining_weak,
+		/datum/manufacture/pod/weapon/taser,
+		/datum/manufacture/pod/weapon/laser/short,
+		/datum/manufacture/pod/weapon/laser,
+		/datum/manufacture/pod/weapon/disruptor,
+		/datum/manufacture/pod/weapon/disruptor/light,
+		/datum/manufacture/pod/weapon/shotgun,
 		/datum/manufacture/pod_wars/pod/armor_light/sy,
 		/datum/manufacture/pod_wars/pod/armor_robust/sy
 		)
@@ -83,7 +140,7 @@
 	create = 1
 	category = "Tool"
 
-/datum/manufacture/pod/weapon/mining
+/datum/manufacture/pod/weapon/mining_podwars
 	name = "Plasma Cutter System"
 	item_paths = list("MET-2","CON-2", "telecrystal")
 	item_amounts = list(50,50,10)
@@ -247,7 +304,10 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	category = "Ammo"
 
 /obj/machinery/manufacturer/mining/pod_wars/
+	var/team_num = 0
+
 	New()
+		START_TRACKING
 		available -= /datum/manufacture/ore_accumulator
 		available -= /datum/manufacture/jetpack
 
@@ -257,13 +317,28 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 		hidden = list()
 		..()
 
+	disposing()
+		STOP_TRACKING
+		..()
+
+	claim_free_resources(datum/game_mode/pod_wars/PW)
+		if (team_num == TEAM_NANOTRASEN)
+			src.resource_amounts = PW.team_NT.resources
+		else if (team_num == TEAM_SYNDICATE)
+			src.resource_amounts = PW.team_SY.resources
+		..()
+
 /obj/machinery/manufacturer/mining/pod_wars/syndicate
+	team_num = TEAM_SYNDICATE
+
 	New()
 		available += /datum/manufacture/pod_wars/accumulator/syndicate
 		available += /datum/manufacture/pod_wars/jetpack/syndicate
 		..()
 
 /obj/machinery/manufacturer/mining/pod_wars/nanotrasen
+	team_num = TEAM_NANOTRASEN
+
 	New()
 		available += /datum/manufacture/pod_wars/accumulator/nanotrasen
 		available += /datum/manufacture/pod_wars/jetpack

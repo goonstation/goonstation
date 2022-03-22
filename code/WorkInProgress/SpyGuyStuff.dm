@@ -67,12 +67,12 @@ Fibre wire
 		src.set_loc(H.loc)
 		src.layer = EFFECTS_LAYER_4
 		playsound(src.loc, 'sound/ambience/spooky/Void_Calls.ogg', 40, 1)
-		SPAWN_DBG(0) animate_levitate(src, -1)
+		SPAWN(0) animate_levitate(src, -1)
 		H.emote("scream")
 
 		H.changeStatus("weakened", 10 SECONDS)
 
-		SPAWN_DBG(7 SECONDS)
+		SPAWN(7 SECONDS)
 			if(!H)
 				being_mean = 0
 				return
@@ -122,7 +122,7 @@ proc/Create_Tommyname()
 	else
 		T.key = src.key
 
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		qdel(src)
 
 /mob/living/carbon/human/proc/tommyize_reshape()
@@ -221,9 +221,6 @@ proc/Create_Tommyname()
 		set_current_projectile(new/datum/projectile/tommy)
 		projectiles = list(new/datum/projectile/tommy)
 		..()
-
-	update_icon()
-		return
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		for(var/mob/O in AIviewers(user, null))
@@ -593,7 +590,7 @@ proc/Create_Tommyname()
 	var/paneldir2 = turn(extension_dir, -90)
 	var/list/turf/panelturfs = list()
 	var/turf/walker = get_turf(src)
-	DEBUG_MESSAGE("Extending panel at [showCoords(src.x, src.y, src.z)]. extension_dir: [extension_dir] ([dir2text(extension_dir)]), paneldir1: [paneldir1] ([dir2text(paneldir1)]), paneldir2: [paneldir2] ([dir2text(paneldir2)])")
+	DEBUG_MESSAGE("Extending panel at [log_loc(src)]. extension_dir: [extension_dir] ([dir2text(extension_dir)]), paneldir1: [paneldir1] ([dir2text(paneldir1)]), paneldir2: [paneldir2] ([dir2text(paneldir2)])")
 	var/total_len = station_padding + controller_padding + (panel_space * (num_panels -1)) + num_panels * panel_width
 	DEBUG_MESSAGE("Determined total length of panel to be [total_len] tiles.")
 
@@ -605,7 +602,7 @@ proc/Create_Tommyname()
 		walker = get_step(walker,extension_dir)
 		/*
 		if(i == 0)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir1, paneldir2 | extension_dir)
 			move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir2, paneldir1 | turn(extension_dir, 180))
 		*/
@@ -627,11 +624,11 @@ proc/Create_Tommyname()
 	DEBUG_MESSAGE("Creating solar panels")
 	var/list/solar_list = list(/turf/simulated/floor/airless/solar, /obj/machinery/power/solar)
 	for(var/turf/T in panelturfs)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/turf/w1 = T
 			var/turf/w2 = T
 			for(var/i = 0; i < panel_length; i++)
-				SPAWN_DBG(-1)
+				SPAWN(-1)
 					move_create_obj(solar_list, w1, paneldir1, paneldir1)
 				w1 = get_step(w1, paneldir1)
 				move_create_obj(solar_list, w2, paneldir2, paneldir2)
@@ -640,7 +637,7 @@ proc/Create_Tommyname()
 	DEBUG_MESSAGE("Creating solar controller")
 	move_create_obj(list(/turf/simulated/floor/plating/airless, /obj/machinery/power/tracker), walker, extension_dir)
 	walker = get_step(walker,extension_dir)
-	SPAWN_DBG(0) move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir1, paneldir2)
+	SPAWN(0) move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir1, paneldir2)
 	move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir2, paneldir1)
 
 	status = STAT_EXTENDED
@@ -655,7 +652,7 @@ proc/Create_Tommyname()
 	for(var/i = panels.len; i > 0; i--)
 		var/list/atom/L = panels[i]
 		for(var/atom/A in L)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				move_and_delete_object(A)
 		sleep(DEFAULT_ANIMATION_TIME)
 
@@ -745,7 +742,7 @@ proc/Create_Tommyname()
 		if(ispath(t_type, /turf))
 			turf_type = t_type
 			break
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for(var/t_type in to_create)
 			var/obj/O
 			is_turf = ispath(t_type, /turf) //If it's a turf we need some special handling.
@@ -774,7 +771,7 @@ proc/Create_Tommyname()
 	playsound(T, "sound/effects/airbridge_dpl.ogg", 50, 1)
 	sleep(animtime)
 	if(turf_type)
-		DEBUG_MESSAGE("Creating [turf_type] at [showCoords(T.x, T.y, T.z)]")
+		DEBUG_MESSAGE("Creating [turf_type] at [log_loc(T)]")
 		var/turf/NT = new turf_type(T)
 		if(setdir) NT.set_dir(setdir)
 		created_atoms += NT
@@ -794,7 +791,7 @@ proc/Create_Tommyname()
 	else if ( extension_dir & (EAST|WEST) )
 		.= abs(A.y - src.y)
 
-	DEBUG_MESSAGE("get_dist from [showCoords(A.x, A.y, A.z)] returned: [.]")
+	DEBUG_MESSAGE("get_dist from [log_loc(A)] returned: [.]")
 
 
 //The dummy object that imitates a turf
@@ -815,7 +812,7 @@ proc/Create_Tommyname()
 	src.layer = initial(T.layer)
 	src.invisibility = INVIS_NONE
 	if(TTL)
-		SPAWN_DBG(TTL)
+		SPAWN(TTL)
 			qdel(src)
 
 #undef STAT_STANDBY
@@ -874,6 +871,7 @@ proc/Create_Tommyname()
 	wire_readied = new_readiness
 	// Try to stretch the wire
 	if(!src.setTwoHanded(new_readiness))
+		usr.show_text("You need two free hands in order to activate the [src.name].", "red")
 		wire_readied = 0
 		return
 
@@ -1094,7 +1092,7 @@ proc/Create_Tommyname()
 			ircmsg["key"] =  M.key
 			ircmsg["name"] = stripTextMacros(M.real_name)
 			ircmsg["msg"] = "[message] and got themselves got by the anti-cheat cluwne."
-			ircbot.export("admin", ircmsg)
+			ircbot.export_async("admin", ircmsg)
 
 		M.cluwnegib(15, 1)
 

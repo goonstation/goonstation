@@ -24,9 +24,12 @@
 		..()
 
 /obj/submachine/slot_machine/emag_act(mob/user, obj/item/card/emag/E)
-	. = ..()
+	if (src.emagged)
+		user?.show_message("<span class='alert'>The [src] has already had been tampered with.</span>")
+		return
 	boutput(user, "<span class='notice'>You short out the random number generator on [src]")
 	src.emagged = 1
+	return TRUE
 
 /* INTERFACE */
 
@@ -80,7 +83,7 @@
 			playsound(src, "sound/machines/ding.ogg", 50, 1)
 			. = TRUE
 			ui_interact(usr, ui)
-			SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
+			SPAWN(2.5 SECONDS) // why was this at ten seconds, christ
 				money_roll(wager)
 				src.working = 0
 				src.icon_state = "[icon_base]-off"
@@ -122,30 +125,30 @@
 	src.add_fingerprint(usr)
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "machineUsed")
 
-/obj/submachine/slot_machine/attackby(var/obj/item/I as obj, user as mob)
+/obj/submachine/slot_machine/attackby(var/obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/card/id))
 		if(src.scan)
 			boutput(user, "<span class='alert'>There is a card already in the slot machine.</span>")
 		else
 			var/obj/item/card/id/idcard = I
 			boutput(user, "<span class='notice'>You insert your ID card.</span>")
-			usr.drop_item()
+			user.drop_item()
 			I.set_loc(src)
 			if(!idcard.registered)
-				boutput(usr, "<span class='alert'>No account data found!</span>")
-				usr.put_in_hand_or_eject(I)
+				boutput(user, "<span class='alert'>No account data found!</span>")
+				user.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
-			var/enterpin = input(user, "Please enter your PIN number.", "Enter PIN", 0) as null|num
+			var/enterpin = user.enter_pin("Enter PIN")
 			if (enterpin != idcard.pin)
 				boutput(user, "<span class='alert'>Pin number incorrect.</span>")
-				usr.put_in_hand_or_eject(I)
+				user.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
 			src.accessed_record = FindBankAccountByName(idcard.registered)
 			if(isnull(src.accessed_record))
 				boutput(user, "<span class='alert'>That card has no bank account associated.</span>")
-				usr.put_in_hand_or_eject(I)
+				user.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
 			boutput(user, "<span class='notice'>Card authorized.</span>")
@@ -232,7 +235,7 @@
 			return
 
 		if(href_list["ops"])
-			var/operation = text2num(href_list["ops"])
+			var/operation = text2num_safe(href_list["ops"])
 			if(operation == 1) // Play
 				if(src.working) return
 				/*if (src.money < 0)
@@ -248,7 +251,7 @@
 				var/roll = rand(1,101)
 
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-				SPAWN_DBG(2.5 SECONDS)
+				SPAWN(2.5 SECONDS)
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'JACKPOT! [usr.name] has won their freedom!'</span>", src), 1)
@@ -325,7 +328,7 @@
 			return
 
 		if(href_list["ops"])
-			var/operation = text2num(href_list["ops"])
+			var/operation = text2num_safe(href_list["ops"])
 			if(operation == 1) // Play
 				if(src.working) return
 				if (src.play_money < 20)
@@ -346,7 +349,7 @@
 				var/roll = rand(1,1350)
 
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-				SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
+				SPAWN(2.5 SECONDS) // why was this at ten seconds, christ
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'JACKPOT! You have won a MILLION CREDITS!'</span>", src), 1)

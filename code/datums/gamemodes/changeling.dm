@@ -29,7 +29,7 @@
 			num_players++
 
 	var/i = rand(5)
-	var/num_changelings = max(1, min(round((num_players + i) / pop_divisor), changelings_possible))
+	var/num_changelings = clamp(round((num_players + i) / pop_divisor), 1, changelings_possible)
 
 	var/list/possible_changelings = get_possible_enemies(ROLE_CHANGELING, num_changelings)
 
@@ -71,7 +71,7 @@
 				boutput(changeling.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 				obj_count++
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/changeling/send_intercept()

@@ -19,7 +19,7 @@
 	var/shot_delay = 15 //1.5 seconds between shots (previously 3, way too much to be useful)
 	var/shot_type = 0
 	var/override_area_bullshit = 0
-	var/datum/projectile/lethal = new/datum/projectile/laser/heavy
+	var/datum/projectile/lethal = new/datum/projectile/laser/heavy/law_safe
 	var/datum/projectile/stun = new/datum/projectile/energy_bolt/robust
 	var/list/mob/target_list = null
 
@@ -62,7 +62,7 @@
 				icon_state = "grey_target_prism"
 			status &= ~NOPOWER
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				src.icon_state = "grey_target_prism"
 				status |= NOPOWER
 
@@ -167,7 +167,7 @@
 		if (src.cover!=null)
 			flick("popup", src.cover)
 			src.cover.icon_state = "openTurretCover"
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (popping==1) popping = 0
 			set_density(1)
 
@@ -178,7 +178,7 @@
 		if (src.cover!=null)
 			flick("popdown", src.cover)
 			src.cover.icon_state = "turretCover"
-		SPAWN_DBG(1.3 SECONDS)
+		SPAWN(1.3 SECONDS)
 			if (popping==-1)
 				invisibility = INVIS_CLOAK
 				popping = 0
@@ -233,7 +233,7 @@
 
 /obj/machinery/turret/ex_act(severity)
 	if(severity < 3)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.die()
 
 /obj/machinery/turret/emp_act()
@@ -252,7 +252,7 @@
 		qdel(cover)
 	sleep(0.3 SECONDS)
 	flick("explosion", src)
-	SPAWN_DBG(1.3 SECONDS)
+	SPAWN(1.3 SECONDS)
 		qdel(src)
 
 /*
@@ -265,7 +265,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			src.net_id = generate_net_id(src)
 			if(!src.link)
 				var/turf/T = get_turf(src)
@@ -288,7 +288,7 @@
 
 		var/sender = signal.data["sender"]
 		if((signal.data["address_1"] == "ping") && sender)
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(sender, "command", "ping_reply", "device", "PNET_SEC_TURRT", "netid", src.net_id)
 			return
 
@@ -297,13 +297,13 @@
 			switch(command)
 				if("status")
 					var/status_string = "on=[!(status & NOPOWER)]&health=[src.health]&lethal=[src.lasers]&active=[src.enabled]"
-					SPAWN_DBG(0.3 SECONDS)
+					SPAWN(0.3 SECONDS)
 						src.post_status(sender, "command", "device_reply", status_string)
 				if("setmode")
 					var/list/L = params2list(signal.data["data"])
 					if(!L || !length(L)) return
-					var/new_lethal_state = text2num(L["lethal"])
-					var/new_enabled_state = text2num(L["active"])
+					var/new_lethal_state = text2num_safe(L["lethal"])
+					var/new_enabled_state = text2num_safe(L["active"])
 					if(!isnull(new_lethal_state))
 						if(new_lethal_state)
 							src.lasers = 1
@@ -435,16 +435,16 @@
 
 	if (href_list["toggleOn"])
 		src.enabled = !src.enabled
-		logTheThing("combat", usr, null, "turned [enabled ? "ON" : "OFF"] turrets from control \[[showCoords(src.x, src.y, src.z)]].")
+		logTheThing("combat", usr, null, "turned [enabled ? "ON" : "OFF"] turrets from control \[[log_loc(src)]].")
 		src.updateTurrets()
 	else if (href_list["toggleLethal"])
 		src.lethal = !src.lethal
 		if(src.lethal)
-			logTheThing("combat", usr, null, "set turrets to LETHAL from control \[[showCoords(src.x, src.y, src.z)]].")
-			message_admins("[key_name(usr)] set turrets to LETHAL from control \[[showCoords(src.x, src.y, src.z)]].")
+			logTheThing("combat", usr, null, "set turrets to LETHAL from control \[[log_loc(src)]].")
+			message_admins("[key_name(usr)] set turrets to LETHAL from control \[[log_loc(src)]].")
 		else
-			logTheThing("combat", usr, null, "set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
-			message_admins("[key_name(usr)] set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
+			logTheThing("combat", usr, null, "set turrets to STUN from control \[[log_loc(src)]].")
+			message_admins("[key_name(usr)] set turrets to STUN from control \[[log_loc(src)]].")
 		src.updateTurrets()
 	src.Attackhand(usr)
 
@@ -458,18 +458,18 @@
 		. = 1
 		src.enabled = !src.enabled
 		boutput(user, "You have <B>[src.enabled ? "en" : "dis"]abled</B> the turrets.")
-		logTheThing("combat", user, null, "turned [enabled ? "ON" : "OFF"] turrets from control \[[showCoords(src.x, src.y, src.z)]].")
+		logTheThing("combat", user, null, "turned [enabled ? "ON" : "OFF"] turrets from control \[[log_loc(src)]].")
 		src.updateTurrets()
 	else if(user.client.check_key(KEY_BOLT))
 		. = 1
 		src.lethal = !src.lethal
 		boutput(user, "You have set the turrets to <B>[src.lethal ? "laser" : "stun"]</B> mode.")
 		if(src.lethal)
-			logTheThing("combat", user, null, "set turrets to LETHAL from control \[[showCoords(src.x, src.y, src.z)]].")
-			message_admins("[key_name(user)] set turrets to LETHAL from control \[[showCoords(src.x, src.y, src.z)]].")
+			logTheThing("combat", user, null, "set turrets to LETHAL from control \[[log_loc(src)]].")
+			message_admins("[key_name(user)] set turrets to LETHAL from control \[[log_loc(src)]].")
 		else
-			logTheThing("combat", user, null, "set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
-			message_admins("[key_name(user)] set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
+			logTheThing("combat", user, null, "set turrets to STUN from control \[[log_loc(src)]].")
+			message_admins("[key_name(user)] set turrets to STUN from control \[[log_loc(src)]].")
 		src.updateTurrets()
 
 
@@ -478,9 +478,9 @@
 		var/area/A = get_area(turret)
 		if (A.type == src.turretArea)
 			turret.setState(enabled, lethal)
-			src.updateicon()
+			src.UpdateIcon()
 
-/obj/machinery/turretid/proc/updateicon()
+/obj/machinery/turretid/update_icon()
 	if (src.enabled)
 		if (src.lethal)
 			icon_state = "ai1"
@@ -493,12 +493,12 @@
 	if(!emagged)
 		if(user)
 			user.show_text("You short out the control circuit on [src]!", "blue")
-			logTheThing("combat", user, null, "emagged the turret control in [loc.name] \[[showCoords(src.x, src.y, src.z)]]")
-			logTheThing("admin", user, null, "emagged the turret control in [loc.name] \[[showCoords(src.x, src.y, src.z)]]")
+			logTheThing("combat", user, null, "emagged the turret control in [loc.name] \[[log_loc(src)]]")
+			logTheThing("admin", user, null, "emagged the turret control in [loc.name] \[[log_loc(src)]]")
 		emagged = 1
 		enabled = 0
 		updateTurrets()
-		SPAWN_DBG(100 + (rand(0,20)*10))
+		SPAWN(100 + (rand(0,20)*10))
 			process_emag()
 
 		return 1

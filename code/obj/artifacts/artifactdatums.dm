@@ -9,6 +9,9 @@ ABSTRACT_TYPE(/datum/artifact/)
 	var/rarity_weight = 0
 	/// the name for this artifact type, used for displaying it visually (for instance in analysis forms)
 	var/type_name = "buggy artifact code"
+	/// the size category of the artifact
+	// this could probably be determined via the icon of the associated_object type right now, but that'd be weird and dumb
+	var/type_size = ARTIFACT_SIZE_LARGE
 	/// the artifact origin (martian, eldritch, etc...)
 	var/datum/artifact_origin/artitype = null
 	/// the list of options for the origin from which to pick from
@@ -250,7 +253,22 @@ ABSTRACT_TYPE(/datum/artifact/art)
 // for use with the wizard spell prismatic_spray
 /datum/projectile/artifact/prismatic_projectile
 	is_magical = 1
-	hit_ground_chance = 10
+
+	shot_volume = 66
+	projectile_speed = 54
+
+	randomise()
+		. = ..()
+		src.dissipation_rate = 0
+		src.max_range = 13
+		src.power = max(10, src.power)
+		if(prob(90))
+			src.ks_ratio = 1
+
+	on_pre_hit(atom/hit, angle, obj/projectile/O)
+		. = ..()
+		if(ismob(hit) && ON_COOLDOWN(hit, "prismaticed", 1.5 SECONDS))
+			. = TRUE
 
 	New()
 		..()

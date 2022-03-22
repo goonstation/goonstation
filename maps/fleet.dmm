@@ -122,7 +122,7 @@
 	icon_state = "hvent";
 	name = "air vent"
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of a human. There seem to be a few bits missing."
 	},
 /obj/item/clothing/mask/breath,
@@ -5875,7 +5875,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/hangar/sec)
 "mr" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "ms" = (
@@ -6508,7 +6508,7 @@
 	},
 /area/station/hangar/sec)
 "nA" = (
-/obj/machinery/vehicle/miniputt/nanoputt,
+/obj/machinery/vehicle/miniputt/nanoputt/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "nB" = (
@@ -6570,6 +6570,26 @@
 /turf/space,
 /area/station/solar/small_backup1{
 	name = "Erebus Solar Array"
+	})
+"nH" = (
+/obj/table/auto,
+/obj/item/clothing/glasses/visor,
+/obj/item/device/radio/headset/deaf,
+/obj/item/robodefibrillator,
+/obj/item/remote/porter/port_a_nanomed,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/clothing/glasses/healthgoggles,
+/obj/item/reagent_containers/hypospray,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/medical/head{
+	name = "Asclepius Command"
 	})
 "nI" = (
 /obj/lattice{
@@ -8960,7 +8980,7 @@
 	name = "Asclepius Command"
 	})
 "sr" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /turf/simulated/floor/sanitary/white,
@@ -9217,26 +9237,6 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/utility{
 	name = "Dionysus Cryocore"
-	})
-"sQ" = (
-/obj/table/auto,
-/obj/item/clothing/glasses/visor,
-/obj/item/device/radio/headset/deaf,
-/obj/item/robodefibrillator,
-/obj/item/remote/porter/port_a_nanomed,
-/obj/item/device/analyzer/healthanalyzer/borg,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/item/reagent_containers/hypospray,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/medical/head{
-	name = "Asclepius Command"
 	})
 "sR" = (
 /obj/table/auto,
@@ -9551,7 +9551,7 @@
 	name = "Asclepius Command"
 	})
 "tu" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -13626,7 +13626,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "AT" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /obj/machinery/crema_switch{
@@ -13898,19 +13898,6 @@
 /area/station/bridge/captain{
 	name = "Meridian Command"
 	})
-"By" = (
-/obj/machinery/computer/aiupload{
-	dir = 4
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/turret_protected/ai)
 "Bz" = (
 /obj/stool/chair/office{
 	dir = 8
@@ -14071,21 +14058,6 @@
 /area/station/bridge/captain{
 	name = "Meridian Command"
 	})
-"BR" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/freeform,
-/obj/item/aiModule/oneHuman,
-/obj/item/aiModule/notHuman,
-/obj/item/aiModule/makeCaptain,
-/obj/item/aiModule/rename,
-/obj/item/aiModule/reset,
-/obj/machinery/power/apc/autoname_west,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/ai)
 "BS" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -16128,7 +16100,7 @@
 /obj/airbridge_controller{
 	id = "escape";
 	primary_controller = 1;
-	tunnel_width = 2
+	tunnel_width = 3
 	},
 /turf/space,
 /area/space)
@@ -16994,13 +16966,10 @@
 /area/station/maintenance/south{
 	name = "Demeter Operations Room"
 	})
-"Hs" = (
-/turf/space,
-/area/shuttle/escape/station/cogmap2)
 "Ht" = (
 /obj/airbridge_controller{
 	id = "escape";
-	tunnel_width = 2
+	tunnel_width = 3
 	},
 /turf/space,
 /area/space)
@@ -22624,6 +22593,9 @@
 /area/station/science/construction{
 	name = "Tenebrae Maintenance"
 	})
+"Rn" = (
+/turf/space,
+/area/shuttle/escape/station)
 "Ro" = (
 /obj/machinery/dispenser,
 /turf/simulated/floor/darkpurple,
@@ -24097,7 +24069,7 @@
 	dir = 1;
 	level = 2
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "eng_ignition";
 	name = "Burn Chamber Ignition";
 	pixel_x = 7;
@@ -24945,6 +24917,19 @@
 /area/station/maintenance/southwest{
 	name = "Erebus Maintenance Room"
 	})
+"Yp" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/freeform,
+/obj/item/aiModule/oneHuman,
+/obj/item/aiModule/notHuman,
+/obj/item/aiModule/makeCaptain,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai)
 "Yq" = (
 /obj/disposalpipe/trunk/west,
 /obj/machinery/disposal/transport{
@@ -25255,6 +25240,19 @@
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})
+"Zn" = (
+/obj/machinery/lawrack{
+	dir = 4
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/turret_protected/ai)
 "Zs" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -63753,8 +63751,8 @@ Ay
 AI
 AI
 Bg
-By
-BR
+Zn
+Yp
 Cs
 AI
 Dt
@@ -66188,16 +66186,16 @@ Aw
 aa
 aa
 aa
+Rn
+Rn
+Rn
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -66488,20 +66486,20 @@ GA
 Hb
 Aw
 aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -66790,20 +66788,20 @@ Gi
 Hb
 Aw
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -67053,7 +67051,7 @@ aa
 aa
 aa
 sp
-sQ
+nH
 ts
 tR
 uA
@@ -67092,20 +67090,20 @@ Gi
 Hb
 Aw
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -67393,21 +67391,21 @@ UF
 GA
 PV
 Aw
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -67695,21 +67693,21 @@ GA
 GA
 Xa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -67997,21 +67995,21 @@ aa
 aa
 Xa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -68300,20 +68298,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -68602,20 +68600,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -68904,20 +68902,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -69206,20 +69204,20 @@ aa
 Xa
 aa
 Ht
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -69508,20 +69506,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -69810,20 +69808,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -70112,20 +70110,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -70414,20 +70412,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -70716,19 +70714,19 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -71018,17 +71016,17 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
 aa
+aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -71321,16 +71319,16 @@ Xa
 aa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
 aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -71623,16 +71621,16 @@ Xa
 aa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
 aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -71926,14 +71924,14 @@ aa
 aa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
 aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -72228,11 +72226,11 @@ aa
 aa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -72531,9 +72529,9 @@ aa
 aa
 aa
 aa
-Hs
-Hs
-Hs
+aa
+aa
+aa
 aa
 aa
 aa

@@ -7,7 +7,7 @@
 	stops_space_move = 1
 	dir = 5 //full tile
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT 
+	event_handler_flags = USE_FLUID_ENTER
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	text = "<font color=#aaf>#"
 	var/health = 30
@@ -51,13 +51,33 @@
 			//DEBUG ("[src.name] [log_loc(src)] has [health] health / [health_max] max health ([health_multiplier] multiplier).")
 
 		if(current_state >= GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				initialize()
 
 	initialize()
 		src.set_layer_from_settings()
 		update_nearby_tiles(need_rebuild=1)
+
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME && !is_cardinal(src.dir))
+			xmasify()
+		#endif
 		..()
+
+	proc/xmasify()
+		var/turf/T = get_step(src, SOUTH)
+		for(var/obj/O in T)
+			if(istype(O, /obj/machinery/light) || istype(O, /obj/machinery/recharger/wall))
+				if(O.pixel_y > 6)
+					return
+		if(locate(/obj/decal) in src.loc)
+			return
+		if(fixed_random(src.x / world.maxx, src.y / world.maxy) <= 0.02)
+			new /obj/decal/wreath(src.loc)
+		else
+			if(!T.density && !(locate(/obj/window) in T) && !(locate(/obj/machinery/door) in T))
+				var/obj/decal/xmas_lights/lights = new(src.loc)
+				lights.light_pattern(y % 5)
 
 	proc/set_layer_from_settings()
 		if (!map_settings)
@@ -146,7 +166,7 @@
 
 		amount = get_damage_after_percentage_based_armor_reduction(armor,amount)
 
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 
 		if (src.health == 0 && nosmash)
 			qdel(src)
@@ -164,7 +184,7 @@
 		if (amount <= 0)
 			return
 
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
 
@@ -179,7 +199,7 @@
 		if (amount <= 0)
 			return
 
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
 
@@ -190,7 +210,7 @@
 		amount = get_damage_after_percentage_based_armor_reduction(corrode_resist,amount)
 		if (amount <= 0)
 			return
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
 
@@ -205,7 +225,7 @@
 
 		if (amount <= 0)
 			return
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			if (nosmash)
 				qdel(src)
@@ -246,7 +266,7 @@
 		if (damage < 1)
 			return
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		..()
 
 		switch(P.proj_data.damage_type)
 			if(D_KINETIC)
@@ -255,7 +275,6 @@
 				damage_piercing(damage*2)
 			if(D_ENERGY)
 				damage_heat(damage / 5)
-		return
 
 	reagent_act(var/reagent_id,var/volume)
 		if (..())
@@ -292,9 +311,9 @@
 			var/obj/projectile/P = mover
 			if(P.proj_data.window_pass)
 				return 1
-		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST)
+		if (!is_cardinal(dir))
 			return 0 //full tile window, you can't move into it!
-		if(get_dir(loc, mover) == dir)
+		if(get_dir(loc, mover) & dir)
 
 			return !density
 		else
@@ -302,18 +321,22 @@
 
 	gas_cross(turf/target)
 		. = TRUE
-		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || get_dir(loc, target) == dir)
+		if (!is_cardinal(dir) || get_dir(loc, target) & dir)
 			. = ..()
 
-	CheckExit(atom/movable/O as mob|obj, target as turf)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if (!src.density)
 			return 1
 		if(istype(O, /obj/projectile))
 			var/obj/projectile/P = O
 			if(P.proj_data.window_pass)
 				return 1
-		if (get_dir(loc, target) == src.dir)
-			return 0
+		if (!is_cardinal(dir))
+			return 1 // let people move out of full tile windows
+		if (get_dir(loc, O.movement_newloc) & src.dir)
+			. = 0
+			UNCROSS_BUMP_CHECK(O)
+			return
 		return 1
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
@@ -351,7 +374,7 @@
 			if (ishuman(user))
 				src.visible_message("<span class='alert'><b>[user]</b> knocks on [src].</span>")
 				playsound(src.loc, src.hitsound, 100, 1)
-				SPAWN_DBG(-1) //uhhh maybe let's not sleep() an attack_hand. fucky effects up the chain?
+				SPAWN(-1) //uhhh maybe let's not sleep() an attack_hand. fucky effects up the chain?
 					sleep(0.3 SECONDS)
 					playsound(src.loc, src.hitsound, 100, 1)
 					sleep(0.3 SECONDS)
@@ -383,6 +406,7 @@
 				src.anchored = !(src.anchored)
 				src.stops_space_move = !(src.stops_space_move)
 				user.show_text("You have [src.anchored ? "fastened the frame to" : "unfastened the frame from"] the floor.", "blue")
+				logTheThing("station", user, null, "[src.anchored ? " anchored" : " unanchored"] [src] at [log_loc(src)].")
 				return 1
 			else
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
@@ -394,6 +418,7 @@
 				src.anchored = !(src.anchored)
 				src.stops_space_move = !(src.stops_space_move)
 				user.show_text("You have [src.anchored ? "fastened the window to" : "unfastened the window from"] the floor.", "blue")
+				logTheThing("station", user, null, "[src.anchored ? " anchored" : " unanchored"] [src] at [log_loc(src)].")
 				return 1
 
 		else if (ispryingtool(W) && state <= 1)
@@ -442,7 +467,7 @@
 		return
 
 	proc/smash()
-		logTheThing("station", usr, null, "smashes a [src] in [src.loc?.loc] ([showCoords(src.x, src.y, src.z)])")
+		logTheThing("station", usr, null, "smashes a [src] in [src.loc?.loc] ([log_loc(src)])")
 		if (src.health < (src.health_max * -0.75))
 			// You managed to destroy it so hard you ERASED it.
 			qdel(src)
@@ -628,7 +653,7 @@
 
 	New()
 		for (var/turf/simulated/wall/auto/T in orange(1))
-			T.update_icon()
+			T.UpdateIcon()
 */
 /obj/window/north
 	dir = NORTH
@@ -705,7 +730,7 @@
 		/obj/machinery/door, /obj/window, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/jen/red, /turf/simulated/wall/auto/jen/green, /turf/simulated/wall/auto/jen/yellow, /turf/simulated/wall/auto/jen/cyan, /turf/simulated/wall/auto/jen/purple,  /turf/simulated/wall/auto/jen/blue,
 		/turf/simulated/wall/auto/reinforced/jen, /turf/simulated/wall/auto/reinforced/jen/red, /turf/simulated/wall/auto/reinforced/jen/green, /turf/simulated/wall/auto/reinforced/jen/yellow, /turf/simulated/wall/auto/reinforced/jen/cyan, /turf/simulated/wall/auto/reinforced/jen/purple, /turf/simulated/wall/auto/reinforced/jen/blue,
-		/turf/unsimulated/wall/auto/supernorn/wood)
+		/turf/unsimulated/wall/auto/supernorn/wood, /turf/unsimulated/wall/auto/adventure/shuttle/dark, /turf/simulated/wall/auto/reinforced/old, /turf/unsimulated/wall/auto/lead/blue, /turf/unsimulated/wall/auto/adventure/old, /turf/unsimulated/wall/auto/adventure/mars/interior, /turf/unsimulated/wall/auto/adventure/shuttle, /turf/unsimulated/wall/auto/reinforced/supernorn)
 	alpha = 160
 	the_tuff_stuff
 		explosion_resistance = 3
@@ -715,8 +740,8 @@
 		if (map_setting && ticker)
 			src.update_neighbors()
 
-		SPAWN_DBG(0)
-			src.update_icon()
+		SPAWN(0)
+			src.UpdateIcon()
 
 	disposing()
 		..()
@@ -724,7 +749,7 @@
 		if (map_setting)
 			src.update_neighbors()
 
-	proc/update_icon()
+	update_icon()
 		if (!src.anchored)
 			icon_state = "[mod]0"
 			return
@@ -748,15 +773,15 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (..(W, user))
-			src.update_icon()
+			src.UpdateIcon()
 
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))
-			T.update_icon()
+			T.UpdateIcon()
 		for (var/obj/window/auto/O in orange(1,src))
-			O.update_icon()
+			O.UpdateIcon()
 		for (var/obj/grille/G in orange(1,src))
-			G.update_icon()
+			G.UpdateIcon()
 
 /obj/window/auto/reinforced
 	icon_state = "mapwin_r"
@@ -773,7 +798,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			ini_dir = 5//gurgle
 			set_dir(5)//grumble
 
@@ -783,7 +808,7 @@
 
 	attack_hand(mob/user as mob)
 		if(!ON_COOLDOWN(user, "glass_tap", 5 SECONDS))
-			src.visible_message("<span class='alert'><b>[usr]</b> knocks on [src].</span>")
+			src.visible_message("<span class='alert'><b>[user]</b> knocks on [src].</span>")
 			playsound(src.loc, src.hitsound, 100, 1)
 			sleep(0.3 SECONDS)
 			playsound(src.loc, src.hitsound, 100, 1)
@@ -817,7 +842,7 @@
 	disposing()
 		SHOULD_CALL_PARENT(0) //These are ACTUALLY indestructible.
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			loc = initialPos
 			qdeled = 0// L   U    L
 
@@ -881,7 +906,7 @@
 	New()
 		..()
 		if(current_state >= GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				initialize()
 
 	initialize()
@@ -899,7 +924,10 @@
 				var/turf/T = get_step(src, dir)
 				if ((!locate(/obj/wingrille_spawn) in T) && (!locate(/obj/grille) in T))
 					var/obj/window/new_win = text2path("[src.win_path]/[dir2text(dir)]")
-					new new_win(src.loc)
+					if(new_win)
+						new new_win(src.loc)
+					else
+						CRASH("Invalid path: [src.win_path]/[dir2text(dir)]")
 		if (src.full_win)
 			if(!no_dirs || !locate(text2path(src.win_path)) in get_turf(src))
 				// if we have directional windows, there's already a window (or windows) from directional windows

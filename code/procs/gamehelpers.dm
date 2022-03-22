@@ -99,7 +99,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 /// For interacting with stuff.
 /proc/in_interact_range(atom/source, atom/user)
 	. = FALSE
-	if(bounds_dist(source, user) == 0 || IN_RANGE(source, user, 1)) // fucking byond
+	if(bounds_dist(source, user) == 0 || IN_RANGE(source, user, 1)) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
 		return TRUE
 	else if (source in bible_contents && locate(/obj/item/storage/bible) in range(1, user)) // whoever added the global bibles, fuck you
 		return TRUE
@@ -113,7 +113,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 				if (isrestrictedz(Z) || isrestrictedz(user:z))
 					boutput(user, "<span class='alert'>Your telekinetic powers don't seem to work here.</span>")
 					return 0
-				SPAWN_DBG(0)
+				SPAWN(0)
 					//I really shouldnt put this here but i dont have a better idea
 					var/obj/overlay/O = new /obj/overlay ( locate(X,Y,Z) )
 					O.name = "sparkles"
@@ -141,17 +141,21 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 				return TRUE
 
 
-var/obj/item/dummy/click_dummy = new
 /proc/test_click(turf/from, turf/target)
+	var/obj/item/dummy/click_dummy = get_singleton(/obj/item/dummy)
+	click_dummy.set_loc(from)
 	for (var/atom/A in from)
 		if (A.flags & ON_BORDER)
 			if (!A.CheckExit(click_dummy, target))
-				return 0
+				click_dummy.set_loc(null)
+				return FALSE
 	for (var/atom/A in target)
-		if (A.flags & ON_BORDER)
+		if ((A.flags & ON_BORDER))
 			if (!A.Cross(click_dummy))
-				return 0
-	return 1
+				click_dummy.set_loc(null)
+				return FALSE
+	click_dummy.set_loc(null)
+	return TRUE
 
 /proc/can_reach(mob/user, atom/target)
 	if (target in bible_contents)
@@ -176,9 +180,6 @@ var/obj/item/dummy/click_dummy = new
 		if (T1 == T2)
 			return 1
 		else
-			if (!click_dummy)
-				click_dummy = new
-
 			var/dir = get_dir(T1, T2)
 			if (dir & (dir-1))
 				var/dir1, dir2
@@ -195,13 +196,13 @@ var/obj/item/dummy/click_dummy = new
 					if (SOUTHWEST)
 						dir1 = SOUTH
 						dir2 = WEST
-				var/D1 = get_step(T1, dir1)
-				var/D2 = get_step(T1, dir2)
+				var/turf/D1 = get_step(T1, dir1)
+				var/turf/D2 = get_step(T1, dir2)
 
-				if (test_click(T1, D1))
+				if (!D1.density && test_click(T1, D1))
 					if ((target.flags & ON_BORDER) || test_click(D1, T2))
 						return 1
-				if (test_click(T1, D2))
+				if (!D2.density && test_click(T1, D2))
 					if ((target.flags & ON_BORDER) || test_click(D2, T2))
 						return 1
 			else
@@ -220,12 +221,12 @@ var/obj/item/dummy/click_dummy = new
 	. = list()
 
 	var/turf/T = get_turf(center)
-	for_by_tcl(theAI, /mob/living/silicon/ai)
-		if (theAI.deployed_to_eyecam)
-			var/mob/dead/aieye/AIeye = theAI.eyecam
-			if(IN_RANGE(center, AIeye, distance) && T.cameras && length(T.cameras))
-				. += AIeye
-				. += theAI
+	if(length(T?.cameras))
+		for_by_tcl(theAI, /mob/living/silicon/ai)
+			if (theAI.deployed_to_eyecam)
+				var/mob/living/intangible/aieye/AIeye = theAI.eyecam
+				if(IN_RANGE(center, AIeye, distance))
+					. += theAI
 
 //Kinda sorta like viewers but includes observers. In theory.
 /proc/observersviewers(var/Dist=world.view, var/Center=usr)
@@ -270,6 +271,9 @@ var/obj/item/dummy/click_dummy = new
 	var/prefixAndMessage = separate_radio_prefix_and_message(message)
 	var/prefix = prefixAndMessage[1]
 	message = prefixAndMessage[2]
+	//Stores a human readable list of effects on the speech for admin logging. Please append to this list if you add more stuff here.
+	var/messageEffects = list()
+	var/wasUncool = phrase_log.is_uncool(message)
 
 	if (!H || !istext(message))
 		return
@@ -280,20 +284,24 @@ var/obj/item/dummy/click_dummy = new
 			S = H.bioHolder.GetEffect(X)
 			if (istype(S,/datum/bioEffect/speech/))
 				message = S.OnSpeak(message)
+				messageEffects += S
 
 	if (H.grabbed_by && length(H.grabbed_by))
 		for (var/obj/item/grab/rag_muffle/RM in H.grabbed_by)
 			if (RM.state > 0)
 				message = mufflespeech(message)
+				messageEffects += "Muffled by [H.grabbed_by]"
 				break
 
 	if (iscluwne(H))
 		message = honk(message)
+		messageEffects += "Cluwne Honk"
 		if (world.time >= (H.last_cluwne_noise + CLUWNE_NOISE_DELAY))
 			playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
 			H.last_cluwne_noise = world.time
 	if (ishorse(H))
 		message = neigh(message)
+		messageEffects += "Horse"
 		if (world.time >= (H.last_cluwne_noise + CLUWNE_NOISE_DELAY))
 			playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
 			H.last_cluwne_noise = world.time
@@ -301,17 +309,21 @@ var/obj/item/dummy/click_dummy = new
 	if ((H.reagents && H.reagents.get_reagent_amount("ethanol") > 30 && !isdead(H)) || H.traitHolder.hasTrait("alcoholic"))
 		if((H.reagents.get_reagent_amount("ethanol") > 125 && prob(20)))
 			message = say_superdrunk(message)
+			messageEffects += "Superdrunk"
 		else
 			message = say_drunk(message)
+			messageEffects += "Drunk"
 
 	var/datum/ailment_data/disease/berserker = H.find_ailment_by_type(/datum/ailment/disease/berserker/)
 	if (istype(berserker,/datum/ailment_data/disease/) && berserker.stage > 1)
 		if (prob(10))
 			message = say_furious(message)
+			messageEffects += "Furious"
 		message = replacetext(message, ".", "!")
 		message = replacetext(message, ",", "!")
 		message = replacetext(message, "?", "!")
 		message = uppertext(message)
+		messageEffects += "Berserk"
 		var/addexc = rand(2,6)
 		while (addexc > 0)
 			message += "!"
@@ -320,9 +332,11 @@ var/obj/item/dummy/click_dummy = new
 	if(H.bioHolder && H.bioHolder.genetic_stability < 50)
 		if (prob(40))
 			message = say_gurgle(message)
+			messageEffects += "Gurgle"
 
 	if(H.mutantrace && !isdead(H))
 		message = H.mutantrace.say_filter(message)
+		messageEffects += "[H.mutantrace] say_filter()"
 
 	if(HasturPresent == 1)
 		message = replacetext(message, "Hastur", "????")
@@ -340,11 +354,17 @@ var/obj/item/dummy/click_dummy = new
 		message = replacetext(message, "H astur", "????")
 		message = replacetext(message, "H a s tur", "????")
 		message = replacetext(message, "H a s t ur", "????")
+		messageEffects += "Hastur"
 
 #ifdef CANADADAY
-	if (prob(30)) message = replacetext(message, "?", " Eh?")
+	if (prob(30))
+		message = replacetext(message, "?", " Eh?")
+		messageEffects += "Canada Day eh?"
 #endif
 
+	if(phrase_log.is_uncool(message) && !wasUncool)
+		logTheThing("admin",H,null,"[H] tried to say [prefixAndMessage[2]] but it was garbled into [message] which is uncool by the following effects: "+jointext(messageEffects,", ")+". We garbled the bad words.")
+		message = replacetext(message,phrase_log.uncool_words,pick("urr","blargh","der","hurr","pllt"))
 	return prefix + message
 
 
@@ -552,7 +572,7 @@ var/obj/item/dummy/click_dummy = new
 		return rgb(r,g,b,a)
 
 
-/area/proc/move_contents_to(var/area/A, var/turftoleave=null, var/ignore_fluid = 0)
+/area/proc/move_contents_to(var/area/A, var/turftoleave=null, var/ignore_fluid = 0, turf_to_skip=null)
 	//Takes: Area. Optional: turf type to leave behind.
 	//Returns: Nothing.
 	//Notes: Attempts to move the contents of one area to another area.
@@ -581,7 +601,7 @@ var/obj/item/dummy/click_dummy = new
 
 	for (var/turf/S in turfs_src)
 		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
-		if(T?.loc != A) continue
+		if(T?.loc != A || istype(S, turf_to_skip)) continue
 		T.ReplaceWith(S.type, keep_old_material = 0, force=1)
 		T.appearance = S.appearance
 		T.set_density(S.density)
@@ -592,6 +612,7 @@ var/obj/item/dummy/click_dummy = new
 		for (var/atom/movable/AM as anything in S)
 			if (istype(AM, /obj/forcefield) || istype(AM, /obj/overlay/tile_effect)) continue
 			if (!ignore_fluid && istype(AM, /obj/fluid)) continue
+			if (istype(AM, /obj/decal/tile_edge) && istype(S, turf_to_skip)) continue
 			AM.set_loc(T)
 		if(turftoleave)
 			S.ReplaceWith(turftoleave, keep_old_material = 0, force=1)
@@ -676,8 +697,9 @@ proc/GetRandomPerimeterTurf(var/atom/A, var/dist = 10, var/dir)
 				out_y = clamp(T_y + dist, 1, world.maxy)
 			else if (dir == SOUTH)
 				out_y = clamp(T_y - dist, 1, world.maxy)
+		else
+			out_y = clamp(pick((T_y + dist), (T_y - dist)), 1, world.maxy)
 		out_x = clamp(rand(T_x - dist, T_x + dist), 1, world.maxx)
-		out_y = clamp(pick((T_y + dist), (T_y - dist)), 1, world.maxy)
 	T = locate(out_x, out_y, T_z)
 	if(isturf(T))
 		return T

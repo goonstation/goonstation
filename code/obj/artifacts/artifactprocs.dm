@@ -39,7 +39,7 @@
 		return 0
 	// if the artifact var isn't set at all, it's probably not an artifact so don't bother continuing
 	if (!istype(src.artifact,/datum/artifact/))
-		logTheThing("debug", null, null, "<b>I Said No/Artifact:</b> Invalid artifact variable in [src.type] at [showCoords(src.x, src.y, src.z)]")
+		logTheThing("debug", null, null, "<b>I Said No/Artifact:</b> Invalid artifact variable in [src.type] at [log_loc(src)]")
 		qdel(src) // wipes itself out since if it's processing it'd be calling procs it can't use again and again
 		return 0 // uh oh, we've got a poorly set up artifact and now we need to stop the proc that called it!
 	else
@@ -225,11 +225,6 @@
 	return
 
 /obj/proc/Artifact_attackby(obj/item/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/cargotele)) // Re-added (Convair880).
-		var/obj/item/cargotele/CT = W
-		CT.cargoteleport(src, user)
-		return
-
 	if (isrobot(user))
 		src.ArtifactStimulus("silitouch", 1)
 
@@ -447,6 +442,8 @@
 					src.ArtifactActivated()
 
 /obj/proc/ArtifactTouched(mob/user as mob)
+	if (!in_interact_range(get_turf(src), user))
+		return
 	if (isAI(user))
 		return
 	if (isobserver(user))
@@ -487,7 +484,7 @@
 	var/datum/artifact/A = src.artifact
 
 	A.health -= dmg_amount
-	A.health = max(0,min(A.health,100))
+	A.health = clamp(A.health, 0, 100)
 
 	if (A.health <= 0)
 		src.ArtifactDestroyed()
@@ -553,7 +550,7 @@
 
 	if (A.artitype.name == "eldritch")
 		faultprob *= 2 // eldritch artifacts fucking hate you and are twice as likely to go faulty
-	faultprob = max(0,min(faultprob,100))
+	faultprob = clamp(faultprob, 0, 100)
 
 	if (prob(faultprob) && length(A.fault_types))
 		var/new_fault = weighted_pick(A.fault_types)

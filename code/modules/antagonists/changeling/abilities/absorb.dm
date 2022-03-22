@@ -128,7 +128,7 @@
 			return
 
 		var/done = TIME - started
-		var/complete = max(min((done / duration), 1), 0)
+		var/complete = clamp((done / duration), 0, 1)
 		if (complete >= 0.2 && last_complete < 0.2)
 			boutput(ownerMob, "<span class='notice'>We extend a proboscis.</span>")
 			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] extends a proboscis!</B></span>"))
@@ -148,18 +148,21 @@
 			return
 
 		var/mob/ownerMob = owner
-		target.vamp_beingbitten = 1
-		ownerMob.show_message("<span class='notice'>We must hold still...</span>", 1)
 
 		if (isliving(target))
 			target:was_harmed(owner, special = "ling")
+
+		var/datum/abilityHolder/changeling/C = devour.holder
+		if (istype(C))
+			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(target)
+			originalBHolder.CopyOther(target.bioHolder)
+			C.absorbed_dna[target.real_name] = originalBHolder
+			ownerMob.show_message("<span class='notice'>We can now transform into [target.real_name], we must hold still...</span>", 1)
 
 	onEnd()
 		..()
 
 		var/mob/ownerMob = owner
-		if (target)
-			target.vamp_beingbitten = 0
 		if(owner && ownerMob && target && get_dist(owner, target) <= 1 && devour)
 			var/datum/abilityHolder/changeling/C = devour.holder
 			if (istype(C))
@@ -169,14 +172,13 @@
 			logTheThing("combat", ownerMob, target, "absorbs [constructTarget(target,"combat")] as a changeling [log_loc(owner)].")
 
 			target.dna_to_absorb = 0
-			target.death(0)
+			target.death(FALSE)
 			target.real_name = "Unknown"
 			target.bioHolder.AddEffect("husk")
 			target.bioHolder.mobAppearance.flavor_text = "A desiccated husk."
 
 	onInterrupt()
 		..()
-		target.vamp_beingbitten = 0
 		boutput(owner, "<span class='alert'>Our absorbtion of [target] has been interrupted!</span>")
 
 /datum/targetable/changeling/absorb

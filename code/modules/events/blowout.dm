@@ -18,7 +18,7 @@
 		world << siren
 		command_alert("Extreme levels of radiation detected approaching the [station_or_ship()]. All personnel have [timetoreach].[timetoreachsec] seconds to enter a maintenance tunnel or radiation safezone. Maintenance doors have temporarily had their access requirements removed. This is not a test.", "Anomaly Alert")
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for_by_tcl(A, /obj/machinery/door/airlock)
 				LAGCHECK(LAG_LOW)
 				if (A.z != Z_LEVEL_STATION)
@@ -32,14 +32,15 @@
 
 			for (var/area/A in world)
 				LAGCHECK(LAG_LOW)
-				if (A.z != Z_LEVEL_STATION)
+				var/turf/a_turf = locate(/turf) in A
+				if (a_turf?.z != Z_LEVEL_STATION)
 					continue
 				if (A.do_not_irradiate)
 					continue
 				else
 					if (!A.irradiated)
 						A.irradiated = TRUE
-						A.icon_state = "blowout"
+						A.UpdateIcon()
 					for (var/turf/T in A)
 						if (rand(0,1000) < 5 && istype(T,/turf/simulated/floor))
 							Artifact_Spawn(T)
@@ -71,7 +72,7 @@
 			boutput(world, "<span class='alert'><B>WARNING</B>: Mass radiation has struck [station_name(1)]. Do not leave safety until all radiation alerts have been cleared.</span>")
 
 			for (var/mob/M in mobs)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					shake_camera(M, 400, 16)
 
 			sleep(rand(1.5 MINUTES,2 MINUTES)) // drsingh lowered these by popular request.
@@ -85,7 +86,7 @@
 					continue
 				if (!A.permarads)
 					A.irradiated = FALSE
-				A.icon_state = null
+				A.UpdateIcon()
 			blowout = FALSE
 
 			command_alert("All radiation alerts onboard [station_name(1)] have been cleared. You may now leave the tunnels freely. Maintenance doors will regain their normal access requirements shortly.", "All Clear")

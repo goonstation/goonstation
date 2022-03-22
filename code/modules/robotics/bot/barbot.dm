@@ -152,12 +152,12 @@
 				var/pickedStuff = pick(possible_stuffs)
 				var/obj/item/cocktail_stuff/U = new pickedStuff(null)
 				W.in_glass = U
-				W.update_icon()
+				W.UpdateIcon()
 			if (prob(25)) // Chance of wedge!
 				var/pickedWedge = pick(possible_wedges)
 				var/obj/item/reagent_containers/food/snacks/plant/P = new pickedWedge(null)
 				W.wedge = P
-				W.update_icon()
+				W.UpdateIcon()
 			hasDrink = 0
 			targets -= moveTowards
 			KillPathAndGiveUp(1)
@@ -165,7 +165,8 @@
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (user)
 			user.show_text("You show [src] your [E]. They smile so hard that they begin sparking!", "red")
-		emagged = 1
+		emagged = TRUE
+		return TRUE
 
 	demag(var/mob/user)
 		emagged = 0

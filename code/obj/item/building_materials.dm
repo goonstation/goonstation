@@ -54,7 +54,7 @@ MATERIAL
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			update_appearance()
 		create_inventory_counter()
 		BLOCK_SETUP(BLOCK_ALL)
@@ -119,7 +119,7 @@ MATERIAL
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			if(!in_interact_range(src, user))
+			if(!in_interact_range(src, user) || !isnum_safe(splitnum))
 				return
 			splitnum = round(clamp(splitnum, 0, src.amount))
 			if(amount == 0)
@@ -133,6 +133,13 @@ MATERIAL
 			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [src.amount] sheets behind.</span>")
 		else
 			..(user)
+
+	split_stack(toRemove)
+		. = ..()
+		if(src.reinforcement)
+			var/obj/item/sheet/S = .
+			S.set_reinforcement(src.reinforcement)
+			. = S
 
 	attackby(obj/item/W, mob/user as mob)
 		if (istype(W, /obj/item/sheet))
@@ -186,7 +193,7 @@ MATERIAL
 			if (src.material && (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL))
 				var/makesheets = min(min(R.amount,src.amount),50)
 				var/sheetsinput = input("Reinforce how many sheets?","Min: 1, Max: [makesheets]",1) as num
-				if (sheetsinput < 1)
+				if (sheetsinput < 1 || !isnum_safe(sheetsinput))
 					return
 				sheetsinput = min(sheetsinput,makesheets)
 
@@ -329,7 +336,7 @@ MATERIAL
 				if("rods")
 					var/makerods = min(src.amount,25)
 					var/rodsinput = input("Use how many sheets? (Get 2 rods for each sheet used)","Min: 1, Max: [makerods]",1) as num
-					if (rodsinput < 1) return
+					if (rodsinput < 1 || !isnum_safe(rodsinput)) return
 					rodsinput = min(rodsinput,makerods)
 
 					if (!in_interact_range(src, usr)) //no walking away
@@ -345,7 +352,7 @@ MATERIAL
 				if("fl_tiles")
 					var/maketiles = min(src.amount,20)
 					var/tileinput = input("Use how many sheets? (Get 4 tiles for each sheet used)","Max: [maketiles]",1) as num
-					if (tileinput < 1) return
+					if (tileinput < 1 || !isnum_safe(tileinput)) return
 					tileinput = min(tileinput,maketiles)
 
 					if (!in_interact_range(src, usr)) //no walking away
@@ -580,7 +587,7 @@ MATERIAL
 				if("remetal")
 					// what the fuck is this
 					var/input = input("Use how many sheets?","Max: [src.amount]",1) as num
-					if (input < 1) return
+					if (input < 1 || !isnum_safe(input)) return
 					input = min(input,src.amount)
 
 					if (!in_interact_range(src, usr)) //no walking away
@@ -674,7 +681,7 @@ MATERIAL
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			update_stack_appearance()
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -718,7 +725,7 @@ MATERIAL
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many rods do you want to take from the stack?","Stack of [src.amount]",1) as num)
 
-			if (!in_interact_range(src, user)) //no walking away
+			if (!in_interact_range(src, user) || !isnum_safe(splitnum)) //no walking away
 				return
 
 			var/obj/item/rods/new_stack = split_stack(splitnum)
@@ -752,7 +759,7 @@ MATERIAL
 				weldinput = input("How many sheets do you want to make?","Welding",1) as num
 				makemetal = round(src.amount / 2) // could have changed during input()
 
-				if (!in_interact_range(src, user)) //no walking away
+				if (!in_interact_range(src, user) || !isnum_safe(weldinput)) //no walking away
 					return
 
 				if (weldinput < 1) return
@@ -812,7 +819,7 @@ MATERIAL
 					G.health = G.health_max
 					G.set_density(1)
 					G.ruined = 0
-					G.update_icon()
+					G.UpdateIcon()
 					if(src.material)
 						G.setMaterial(src.material)
 					boutput(user, "<span class='notice'>You repair the broken grille.</span>")
@@ -826,7 +833,7 @@ MATERIAL
 				return
 			user.visible_message("<span class='notice'><b>[user]</b> begins building a grille.</span>")
 			var/turf/T = user.loc
-			SPAWN_DBG(1.5 SECONDS)
+			SPAWN(1.5 SECONDS)
 				if (T == user.loc && !user.getStatusDuration("weakened") && !user.getStatusDuration("stunned") && src.amount >= 2)
 					var/atom/G = new /obj/grille(user.loc)
 					G.setMaterial(src.material)
@@ -848,7 +855,7 @@ MATERIAL
 
 	New()
 		..()
-		SPAWN_DBG(0) //wait for the head to be added
+		SPAWN(0) //wait for the head to be added
 			update()
 
 	attack_hand(mob/user as mob)
@@ -925,7 +932,7 @@ MATERIAL
 				src.name = "heads on a spike"
 				var/obj/item/organ/head/head1 = heads[1]
 				var/obj/item/organ/head/head2 = heads[2]
-				src.desc = "The heads of [head1.donor] and [head2.donor] impaled on a spike."
+				src.desc = "The heads of [head1.donor_original] and [head2.donor_original] impaled on a spike."
 				/*	This shit doesn't work ugh
 				src.desc = "The heads of [heads[1]:donor] and [heads[2]:donor] impaled on a spike."*/
 			if(3)
@@ -933,7 +940,7 @@ MATERIAL
 				var/obj/item/organ/head/head1 = heads[1]
 				var/obj/item/organ/head/head2 = heads[2]
 				var/obj/item/organ/head/head3 = heads[3]
-				src.desc = "The heads of [head1.donor], [head2.donor] and [head3.donor] impaled on a spike."
+				src.desc = "The heads of [head1.donor_original], [head2.donor_original] and [head3.donor_original] impaled on a spike."
 				/*	This shit doesn't work ugh
 				src.desc = "The heads of [heads[1]:donor], [heads[2]:donor] and [heads[3]:donor] impaled on a spike."*/
 
@@ -971,7 +978,7 @@ MATERIAL
 		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 		if(prob(40)) user.emote("scream")
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			user.visible_message("<span class='alert'><b>[user] tears [his_or_her(user)] body away from the spike, leaving [his_or_her(user)] head behind!</b></span>")
 			var/obj/head = user.organHolder.drop_organ("head")
 			head.set_loc(src)
@@ -980,7 +987,7 @@ MATERIAL
 			make_cleanable( /obj/decal/cleanable/blood,user.loc)
 			playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 
@@ -1020,7 +1027,7 @@ MATERIAL
 		..()
 		src.pixel_x = rand(0, 14)
 		src.pixel_y = rand(0, 14)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			update_stack_appearance()
 			src.inventory_counter?.update_number(amount)
 		return

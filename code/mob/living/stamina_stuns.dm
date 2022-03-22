@@ -55,35 +55,9 @@
 
 	return (val + stam_mod_items)
 
-/mob/proc/add_stun_resist_mod(var/key, var/value)
-	if(!isnum(value)) return
-	if(stun_resist_mods.Find(key)) return 0
-	stun_resist_mods.Add(key)
-	stun_resist_mods[key] = value
-	return 1
-
-//Removes a stamina max modifier with the given key.
-/mob/proc/remove_stun_resist_mod(var/key)
-	if(!stun_resist_mods.Find(key)) return 0
-	stun_resist_mods.Remove(key)
-	return 1
-
 //Returns the total modifier for stamina max
 /mob/proc/get_stun_resist_mod()
-	.= 0
-	var/highest = 0
-	for(var/x in stun_resist_mods)
-		. += stun_resist_mods[x]
-		if (stun_resist_mods[x] > highest)
-			highest = stun_resist_mods[x]
-
-
-	var/max_allowed = 80 //basically if we dont have a singular 100% or above protection moddifier, we wont allow the user to completely ignore stuns
-	if (highest > 80)
-		max_allowed = min(highest, 100)
-
-	.= clamp(., 0, max_allowed)
-
+	return min(GET_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST), clamp(GET_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX), 80, 100)) + 0
 
 //Restores stamina
 /mob/proc/add_stamina(var/x)
@@ -105,7 +79,7 @@
 	if(!src.use_stamina) return
 	if(!isnum(x)) return
 	if(prob(4) && ishellbanned(src)) //Chances are this will happen during combat
-		SPAWN_DBG(rand(5, 80)) //Detach the cause (hit, reduced stamina) from the consequence (disconnect)
+		SPAWN(rand(5, 80)) //Detach the cause (hit, reduced stamina) from the consequence (disconnect)
 			var/dur = src.client.fake_lagspike()
 			sleep(dur)
 			del(src.client)
@@ -119,7 +93,7 @@
 		percReduction = (x * (stam_mod_items / 100))
 
 	stamina = max(STAMINA_NEG_CAP, stamina - (x - percReduction) )
-	if(src.stamina_bar.last_update != TIME) src.stamina_bar?.update_value(src)
+	if(src.stamina_bar?.last_update != TIME) src.stamina_bar?.update_value(src)
 	return
 
 /mob/living/carbon/human/remove_stamina(var/x)
@@ -140,7 +114,7 @@
 /mob/living/set_stamina(var/x)
 	if(!src.use_stamina) return
 	if(!isnum(x)) return
-	stamina = max(min(stamina_max, x), STAMINA_NEG_CAP)
+	stamina = clamp(x, STAMINA_NEG_CAP, stamina_max)
 	if(src.stamina_bar) src.stamina_bar.update_value(src)
 	return
 
@@ -179,7 +153,7 @@
 		src.changeStatus("stunned", STAMINA_STUN_ON_CRIT_SEV)
 		#endif
 		#if STAMINA_NEG_CRIT_KNOCKOUT == 1
-		if(!src.getStatusDuration("weakened"))
+		if(!src.getStatusDuration("weakened") && isalive(src))
 			src.visible_message("<span class='alert'>[src] collapses!</span>")
 			src.changeStatus("weakened", (STAMINA_STUN_CRIT_TIME) SECONDS)
 		#endif
@@ -204,7 +178,7 @@
 		var/chance = STAMINA_SCALING_KNOCKOUT_BASE
 		chance += (src.stamina / STAMINA_NEG_CAP) * STAMINA_SCALING_KNOCKOUT_SCALER
 		if(prob(chance))
-			if(!src.getStatusDuration("weakened"))
+			if(!src.getStatusDuration("weakened") && isalive(src))
 				src.visible_message("<span class='alert'>[src] collapses!</span>")
 				src.changeStatus("weakened", (STAMINA_STUN_TIME * stunmult) SECONDS)
 				src.force_laydown_standup()
@@ -216,13 +190,13 @@
 #define DISORIENT_EAR 4
 
 /mob/proc/get_disorient_protection()
-	return clamp(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_BODY), 90, GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_BODY_MAX))
+	return min(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY), clamp(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY_MAX), 90, 100)) + 0
 
 /mob/proc/get_disorient_protection_eye()
-	return clamp(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EYE), 90, GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EYE_MAX))
+	return min(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_EYE), clamp(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_EYE_MAX), 90, 100)) + 0
 
 /mob/proc/get_disorient_protection_ear()
-	return clamp(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EAR), 90, GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EAR_MAX))
+	return min(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_EAR), clamp(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_EAR_MAX), 90, 100)) + 0
 
 
 /mob/proc/force_laydown_standup() //the real force laydown lives in Life.dm

@@ -1,11 +1,13 @@
 // A dummy parent type used for easily making components that target an item's holder rather than the item itself.
-
 /datum/component/holdertargeting
 	var/list/signals = list()
 	var/proctype // = .proc/pass
 	var/mobtype = /mob/living
 	var/mob/current_user
 	var/keep_while_on_mob = FALSE
+
+TYPEINFO(/datum/component/holdertargeting)
+	initialization_args = list()
 
 /datum/component/holdertargeting/Initialize()
 	if(!isitem(parent))

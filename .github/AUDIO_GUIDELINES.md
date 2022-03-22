@@ -22,7 +22,9 @@ You still need to edit it. Because the game is a multiplayer environment and pla
 
 ## The soundcache and you
 
-When you've implemented your sound and are ready to PR it, make sure you run `buildSoundList.ps1` in your root codebase directory. This is a powershell script that automatically sorts and adds audio files to the sound cache, which is what the game uses to determine which audio files go into the RSC (the thing that clients download when they connect to our servers). If the script is successful, you should see your file added to `soundCache.dm` alongside any other changes you've made for your PR.
+When you've implemented your sound and are ready to PR it, make sure you run `buildSoundList.ps1` in `tools/` directory of the codebase. This is a powershell script that automatically sorts and adds audio files to the sound cache, which is what the game uses to determine which audio files go into the RSC (the thing that clients download when they connect to our servers). If the script is successful, you should see your file added to `soundCache.dm` alongside any other changes you've made for your PR.
+
+When using sound files in the code, we generally prefer the `'foo.ogg'` syntax for including files over the `"foo.ogg"` syntax due to some safety benefits. However, if you need to build a string (e.g. `"foo_[rand(2)].ogg"`) then you will need to use the latter.
 
 ## Things to keep in mind
 

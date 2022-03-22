@@ -86,7 +86,7 @@
 				air_contents.merge(removed)
 
 		src.updateDialog()
-	src.update_icon()
+	src.UpdateIcon()
 	return
 
 /obj/machinery/portable_atmospherics/pump/return_air()
@@ -148,7 +148,8 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 			on = !on
 			if (src.direction_out)
 				if (src.on)
-					message_admins("[key_name(usr)] turns on [src], pumping its contents into the air at [log_loc(src)]. See station logs for atmos readout.")
+					if(src.air_contents.check_if_dangerous())
+						message_admins("[key_name(usr)] turns on [src] [alert_atmos(src)], pumping its contents into the air at [log_loc(src)].")
 					logTheThing("station", usr, null, "turns on [src] [log_atmos(src)], pumping its contents into the air at [log_loc(src)].")
 				else
 					logTheThing("station", usr, null, "turns off [src] [log_atmos(src)], stopping it from pumping its contents into the air at [log_loc(src)].")
@@ -162,21 +163,22 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 				usr.put_in_hand_or_eject(holding) // try to eject it into the users hand, if we can
 				holding = null
 			if (src.on && src.direction_out)
-				message_admins("[key_name(usr)] removed a tank from [src], pumping its contents into the air at [log_loc(src)]. See station logs for atmos readout.")
+				if(src.air_contents.check_if_dangerous())
+					message_admins("[key_name(usr)] removed a tank from [src] [alert_atmos(src)], pumping its contents into the air at [log_loc(src)].")
 				logTheThing("station", usr, null, "removed a tank from [src] [log_atmos(src)], pumping its contents into the air at [log_loc(src)].")
 
 		if (href_list["pressure_adj"])
-			var/diff = text2num(href_list["pressure_adj"])
-			target_pressure = min(10*ONE_ATMOSPHERE, max(0, target_pressure+diff))
+			var/diff = text2num_safe(href_list["pressure_adj"])
+			target_pressure = clamp(target_pressure+diff, 0, 10*ONE_ATMOSPHERE)
 
 		else if (href_list["pressure_set"])
 			var/change = input(usr,"Target Pressure (0-[10*ONE_ATMOSPHERE]):","Enter target pressure",target_pressure) as num
-			if(!isnum(change)) return
-			target_pressure = min(10*ONE_ATMOSPHERE, max(0, change))
+			if(!isnum_safe(change)) return
+			target_pressure = clamp(change, 0, 10*ONE_ATMOSPHERE)
 
 		src.updateUsrDialog()
 		src.add_fingerprint(usr)
-		update_icon()
+		UpdateIcon()
 	else
 		usr.Browse(null, "window=pump")
 		return
@@ -189,7 +191,7 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 
 	if (!on) //Can't chop your head off if the fan's not spinning
 		on = 1
-		update_icon()
+		UpdateIcon()
 
 	user.visible_message("<span class='alert'><b>[user] forces [his_or_her(user)] head into [src]'s unprotected fan, mangling it in a horrific and violent display!</b></span>")
 	var/obj/head = user.organHolder.drop_organ("head")
@@ -207,7 +209,7 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 			V.vomit()
 	if (user) //ZeWaka: Fix for null.loc
 		health_update_queue |= user
-	SPAWN_DBG(50 SECONDS)
+	SPAWN(50 SECONDS)
 		if (user && !isdead(user))
 			user.suiciding = 0
 	return 1

@@ -18,11 +18,11 @@
 
 /obj/item/storage/box/clothing/hos
 	name = "\improper Head of Security's clothing"
-	spawn_contents = list(/obj/item/clothing/under/rank/head_of_securityold,
-	/obj/item/clothing/under/rank/head_of_securityold/dress,
+	spawn_contents = list(/obj/item/clothing/under/rank/head_of_security,
+	/obj/item/clothing/under/rank/head_of_security/dress,
 	/obj/item/clothing/under/suit/hos,
 	/obj/item/clothing/under/suit/hos/dress,
-	/obj/item/clothing/under/rank/head_of_securityold/fancy,
+	/obj/item/clothing/under/rank/head_of_security/fancy,
 	/obj/item/clothing/suit/wintercoat/command)
 
 /obj/item/storage/box/clothing/hop
@@ -81,7 +81,7 @@
 /obj/item/storage/box/clothing/rancher
 	name = "\improper Rancher's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/rancher,\
-	/obj/item/clothing/shoes/brown,\
+	/obj/item/clothing/shoes/westboot/brown/rancher,\
 	/obj/item/device/radio/headset/civilian,\
 	/obj/item/device/pda2/botanist,\
 	/obj/item/clothing/gloves/black)
@@ -160,6 +160,7 @@
 	spawn_contents = list(/obj/item/clothing/under/rank/geneticist,\
 	/obj/item/clothing/shoes/white,\
 	/obj/item/clothing/suit/labcoat/genetics,\
+	/obj/item/clothing/suit/wintercoat/genetics,\
 	/obj/item/device/radio/headset/medical,\
 	/obj/item/device/pda2/genetics)
 

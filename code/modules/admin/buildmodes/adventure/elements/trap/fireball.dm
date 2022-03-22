@@ -152,7 +152,7 @@
 		..()
 		src.flags |= TABLEPASS
 
-	Bump(var/atom/A)
+	bump(var/atom/A)
 		var/turf/T = get_turf(A)
 		if (T)
 			set_loc(T)
@@ -161,7 +161,7 @@
 	proc/launch()
 		if (!target)
 			qdel(src)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while (loc != get_turf(target))
 				if (exploding)
 					return

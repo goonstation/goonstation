@@ -26,7 +26,6 @@
 	asteroiddoors
 		name = "Safehouse (asteroid doors)"
 		icon_state = "green"
-		force_fullbright = 1
 
 //TURFS
 
@@ -208,7 +207,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 			var/datum/reagent/blood/B = O.reagents.reagent_list["blood"]
 			B.data = D //Give the blood Jean's bioHolder info.
 
-		SPAWN_DBG(5 SECONDS) //Jean's just here to set up the puzzle, we don't want him sticking around.
+		SPAWN(5 SECONDS) //Jean's just here to set up the puzzle, we don't want him sticking around.
 		qdel(M)
 
 	attack_hand(mob/user as mob)
@@ -280,11 +279,12 @@ obj/item/reagent_containers/iv_drip/dead_exec
 				boutput(H,"Link to cloning computer establised succesfully.")
 				playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)
 				var/has_puritan = FALSE
-				if("puritan" in R["traits"]) //Does the user's clone record have puritan?
+				var/datum/traitHolder/traits = R["traits"]
+				if(traits.hasTrait("puritan")) //Does the user's clone record have puritan?
 					has_puritan = TRUE
 					boutput(H,"Subject had puritan")
 				if(prob(20) && !has_puritan) //If the scan doesn't have puritan, roll a dice. Too uncommon to weaponise too common for general use.
-					R["traits"] += "puritan" // Signal has degraded. Did the player learn nothing from the prefab??
+					traits.addTrait("puritan") // Signal has degraded. Did the player learn nothing from the prefab??
 
 //DECORATIVE OBJECTS
 

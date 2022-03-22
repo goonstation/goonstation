@@ -171,7 +171,7 @@
 		src.state = 1
 		src.icon_state = icon_state_armed
 		playsound(src, "sound/weapons/armbomb.ogg", 75, 1, -3)
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			if (src && !src.disposed)
 				if(user?.equipped() == src)
 					user.u_equip(src)
@@ -208,7 +208,7 @@
 
 		invisibility = INVIS_ALWAYS_ISH //Why am i doing this?
 		if (src.master) src.master.invisibility = INVIS_ALWAYS_ISH
-		SPAWN_DBG(5 SECONDS)		   //To make sure all reagents can work
+		SPAWN(5 SECONDS)		   //To make sure all reagents can work
 			if (src.master) qdel(src.master)
 			if (src) qdel(src)	   //correctly before deleting the grenade.
 
@@ -237,7 +237,7 @@
 
 /obj/item/chem_grenade/metalfoam
 	name = "metal foam grenade"
-	desc = "Used for emergency sealing of air breaches."
+	desc = "After activating, creates a mess of foamed metal. Useful for plugging the hull up."
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "metalfoam"
 	icon_state_armed = "metalfoam1"
@@ -258,7 +258,7 @@
 
 /obj/item/chem_grenade/firefighting
 	name = "fire fighting grenade"
-	desc = "Can help to put out dangerous fires from a distance."
+	desc = "Propells firefighting foam in a wide area around it after activation, putting out fires."
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "firefighting"
 	icon_state_armed = "firefighting1"
@@ -327,6 +327,7 @@
 	icon_state_armed = "flashbang1"
 	stage = 2
 	is_syndicate = 1
+	is_dangerous = FALSE
 	mats = 6
 
 	New()
@@ -371,13 +372,13 @@
 							else
 								can_convert = 1
 
-							for (var/obj/item/implant/antirev/found_imp in H.implant)
+							for (var/obj/item/implant/counterrev/found_imp in H.implant)
 								found_imp.on_remove(H)
 								H.implant.Remove(found_imp)
 								qdel(found_imp)
 
 								playsound(H.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.9)
-								H.visible_message("<span class='notice'>The loyalty implant inside [H] shatters into one million pieces!</span>")
+								H.visible_message("<span class='notice'>The counter-revolutionary implant inside [H] shatters into one million pieces!</span>")
 
 							if (can_convert && !(H.mind in R.revolutionaries))
 								R.add_revolutionary(H.mind)

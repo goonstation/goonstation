@@ -93,7 +93,7 @@
 
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.on_chair = 0
+			H.on_chair = null
 
 		playsound(M.loc, "sound/effects/flip.ogg", 50, 1)
 		M.throw_at(target, 10, 1, throw_type = THROW_CHAIRFLIP)
@@ -122,13 +122,15 @@
 
 		if (isliving(hit_atom))
 			var/mob/living/M = hit_atom
-
-			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 			SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+			if (check_target_immunity(M, source = src))
+				src.visible_message("<b><span class='alert'>[src] bounces off [M] harmlessly!</span></b>")
+				return
+			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 			if (prob(25))
 				M.emote("scream")
 
-			logTheThing("combat", src, M, "[src] chairflips into [constructTarget(M,"combat")], [showCoords(M.x, M.y, M.z)].")
+			logTheThing("combat", src, M, "[src] chairflips into [constructTarget(M,"combat")], [log_loc(M)].")
 			M.lastattacker = src
 			M.lastattackertime = world.time
 
@@ -145,7 +147,7 @@
 					M.changeStatus("weakened", 4 SECONDS * effect_mult)
 					M.force_laydown_standup()
 
-				if (src.hasStatus("weakened") && src.getStatusDuration("weakened") < 3 SECONDS * effect_mult) //address race of thus throw_end() happening before this proc lands due to Bump() timing
+				if (src.hasStatus("weakened") && src.getStatusDuration("weakened") < 3 SECONDS * effect_mult) //address race of thus throw_end() happening before this proc lands due to bump() timing
 					src.setStatus("weakened", 3 SECONDS * effect_mult)
 				else
 					src.changeStatus("weakened", 3 SECONDS * effect_mult)

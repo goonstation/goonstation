@@ -34,7 +34,7 @@
 	src.add_dialog(usr)
 	src.add_fingerprint(usr)
 	if(href_list["make"])
-		var/p_type = text2num(href_list["make"])
+		var/p_type = text2num_safe(href_list["make"])
 		var/obj/item/pipe/P = new /obj/item/pipe(src.loc)
 		P.pipe_type = p_type
 		P.update()
@@ -50,8 +50,9 @@
 
 /obj/machinery/disposal_pipedispenser
 	name = "Disposal Pipe Dispenser"
+	desc = "A clunky, old machine that dispenses unanchored disposal pipes one at a time."
 	icon = 'icons/obj/manufacturer.dmi'
-	icon_state = "fab-general"
+	icon_state = "pipe-fab"
 	density = 1
 	anchored = 1.0
 	mats = 16
@@ -81,7 +82,7 @@
 	src.add_dialog(usr)
 	src.add_fingerprint(usr)
 	if(href_list["dmake"])
-		var/p_type = text2num(href_list["dmake"])
+		var/p_type = text2num_safe(href_list["dmake"])
 		var/obj/disposalconstruct/C = new (src.loc)
 		switch(p_type)
 			if(0)
@@ -242,7 +243,7 @@
 			src.Attackhand(usr)
 			return
 		else if(href_list["dmake"])
-			var/p_type = text2num(href_list["dmake"])
+			var/p_type = text2num_safe(href_list["dmake"])
 			var/obj/disposalconstruct/C = new (src.loc)
 			switch(p_type)
 				if(0)

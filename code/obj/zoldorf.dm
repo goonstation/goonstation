@@ -137,7 +137,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 					boutput(user,"<span class='success'><b>You have been queued for succession!</b></span>")
 					src.usurper = user
 					if(z.client)
-						SPAWN_DBG(300) //starting the afk timer, in case the zoldorf is afk or theyre deliberately not answering the prompt
+						SPAWN(300) //starting the afk timer, in case the zoldorf is afk or theyre deliberately not answering the prompt
 							if(!src.usurper) //after the wait, making sure the usurper still exists
 								return
 							if(!src.usurper.client || isdead(src.usurper)) //making sure the usurper is still in the game and not dead
@@ -193,8 +193,8 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		if(istype(H))
 			holderim = image(H.flat_icon)
 		holderim.filters += filter(type="alpha", icon=image('icons/obj/zoldorf.dmi', "take_off_shoes_mask"))
-		holderim.overlays += image('icons/mob/overcoats/worn_suit.dmi', icon_state="wizard")
-		holderim.overlays += image('icons/mob/head.dmi', icon_state="wizard")
+		holderim.overlays += image('icons/mob/clothing/overcoats/worn_suit.dmi', icon_state="wizard")
+		holderim.overlays += image('icons/mob/clothing/head.dmi', icon_state="wizard")
 		holderim.pixel_y = -3
 
 		//overlay player
@@ -393,8 +393,8 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 				user << output(list2params(list("add",null,null,weapon.amount)),"Zoldorf.browser:updatecredits")
 			updateui(user)
 			weapon.amount = 0
-			usr.visible_message("<span class='notice'><b>[src.name] magically vacuums up [user.name]'s credits!</b></span>","<span class='notice'><b>Poof! The great [src.name] has made your credits disappear! Just kidding they're in the booth.</b></span>")
-			usr.u_equip(weapon)
+			user.visible_message("<span class='notice'><b>[src.name] magically vacuums up [user.name]'s credits!</b></span>","<span class='notice'><b>Poof! The great [src.name] has made your credits disappear! Just kidding they're in the booth.</b></span>")
+			user.u_equip(weapon)
 			weapon.dropped()
 			qdel(weapon)
 
@@ -473,7 +473,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 					item.stock--
 					item.raw_list["stock"]--
 		else
-			if((text2num(href_list["credits"]) <= src.credits) && (text2num(href_list["credits"])>=1) && (usr in range(1,src)) && (!(usr in src))) //return command
+			if((text2num_safe(href_list["credits"]) <= src.credits) && (text2num_safe(href_list["credits"])>=1) && (usr in range(1,src)) && (!(usr in src))) //return command
 				usr << output("return","Zoldorf.browser:serverconfirm")
 				var/obj/item/moneyreturn = new /obj/item/spacecash(get_turf(src),src.credits)
 				src.credits = 0

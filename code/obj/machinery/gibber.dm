@@ -72,7 +72,7 @@
 		boutput(user, "<span class='alert'>This item is not suitable for the gibber!</span>")
 		return
 	if (!isdead(G.affecting))
-		boutput(user, "<span class='alert'>[G.affecting] needs to be dead first!</span>")
+		boutput(user, "<span class='alert'>[G.affecting.name] needs to be dead first!</span>")
 		return
 	user.visible_message("<span class='alert'>[user] starts to put [G.affecting] onto the gibber!</span>")
 	src.add_fingerprint(user)
@@ -80,8 +80,6 @@
 	if(G?.affecting && IN_RANGE(user, src, 1)) // would be great to have an action here
 		user.visible_message("<span class='alert'>[user] shoves [G.affecting] on top of the gibber!</span>")
 		logTheThing("combat", user, G.affecting, "forced [constructTarget(G.affecting,"combat")] into a gibber at [log_loc(src)].")
-		if(G.affecting.last_ckey)
-			message_admins("[key_name(user)] forced [key_name(G.affecting, 1)] ([isdead(G.affecting) ? "dead" : "alive"]) into a gibber at [log_loc(src)].")
 		var/mob/M = G.affecting
 		enter_gibber(M)
 		qdel(G)
@@ -91,6 +89,7 @@
 	src.occupant = entering_mob
 	entering_mob.set_dir(SOUTH)
 	var/atom/movable/proxy = new
+	proxy.mouse_opacity = FALSE
 	src.proxy = proxy
 	proxy.appearance = entering_mob.appearance
 	proxy.transform = null
@@ -115,6 +114,10 @@
 /obj/machinery/gibber/proc/go_out()
 	if (!src.occupant)
 		return
+	if(src.proxy)
+		src.vis_contents -= src.proxy
+		qdel(src.proxy)
+		src.proxy = null
 	for(var/obj/O in src)
 		O.set_loc(src.loc)
 	src.occupant.set_loc(src.loc)
@@ -137,15 +140,6 @@
 		src.operating = 1
 		src.icon_state = "grinder-on"
 
-		var/sourcename = src.occupant.real_name
-		var/sourcejob
-		if (src.occupant.mind && src.occupant.mind.assigned_role)
-			sourcejob = src.occupant.mind.assigned_role
-		else if (src.occupant.ghost && src.occupant.ghost.mind && src.occupant.ghost.mind.assigned_role)
-			sourcejob = src.occupant.ghost.mind.assigned_role
-		else
-			sourcejob = "Stowaway"
-
 		var/decomp = 0
 		if(ishuman(src.occupant))
 			decomp = src.occupant:decomp_stage
@@ -157,7 +151,7 @@
 			logTheThing("combat", user, src.occupant, "grinds [constructTarget(src.occupant,"combat")] in a gibber at [log_loc(src)].")
 			if(src.occupant.last_ckey)
 				message_admins("[key_name(src.occupant, 1)] is ground up in a gibber by [key_name(user)] at [log_loc(src)].")
-		src.occupant.death(1)
+		src.occupant.death(TRUE)
 
 		if (src.occupant.mind)
 			src.occupant.ghostize()
@@ -178,7 +172,7 @@
 			if(src.disposed)
 				return
 			if(i % 3 == 0) // alternate between dispensing meat or gibs
-				var/atom/movable/generated_meat = generate_meat(sourcename, sourcejob, decomp, get_turf(src))
+				var/atom/movable/generated_meat = generate_meat(src.occupant, decomp, get_turf(src))
 				generated_meat.throw_at(dispense_direction, rand(1,4), 3, throw_type = THROW_NORMAL)
 			else
 				var/obj/decal/cleanable/blood/gibs/mess = new /obj/decal/cleanable/blood/gibs(get_turf(src))
@@ -206,14 +200,12 @@
 
 		src.operating = 0
 
-/obj/machinery/gibber/proc/generate_meat(var/meat_origin_name, var/meat_origin_job, var/decomposed_level, var/spawn_location)
+/obj/machinery/gibber/proc/generate_meat(var/mob/meat_source, var/decomposed_level, var/spawn_location)
 	if(decomposed_level < 3) // fresh or fresh enough
-		var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(spawn_location)
-		generated_meat.name = meat_origin_name + generated_meat.name
-		generated_meat.subjectname = meat_origin_name
-		generated_meat.subjectjob = meat_origin_job
+		var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(spawn_location,meat_source)
+
 		return generated_meat
 	else // rotten yucky mess
 		var/obj/item/reagent_containers/food/snacks/yuck/generated_yuck = new /obj/item/reagent_containers/food/snacks/yuck(spawn_location)
-		generated_yuck.name = meat_origin_name + " meat-related substance"
+		generated_yuck.name = meat_source.real_name + " meat-related substance"
 		return generated_yuck

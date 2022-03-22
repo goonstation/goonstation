@@ -29,7 +29,7 @@
 				H.transforming = 1
 				H.canmove = 0
 				H.icon = null
-				APPLY_MOB_PROPERTY(H, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+				APPLY_ATOM_PROPERTY(H, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 				var/atom/movable/overlay/animation = new /atom/movable/overlay( usr.loc )
 				animation.icon_state = "blank"
 				animation.icon = 'icons/mob/mob.dmi'
@@ -42,7 +42,7 @@
 				H.transforming = 0
 				H.canmove = 1
 				H.icon = initial(H.icon)
-				REMOVE_MOB_PROPERTY(H, PROP_INVISIBILITY, "transform")
+				REMOVE_ATOM_PROPERTY(H, PROP_MOB_INVISIBILITY, "transform")
 				H.update_face()
 				H.update_body()
 				H.update_clothing()
@@ -103,7 +103,7 @@
 		C.bioHolder.CopyOther(D)
 		C.real_name = target_name
 		C.bioHolder.RemoveEffect("husk")
-		C.organHolder.head.update_icon()
+		C.organHolder.head.UpdateIcon()
 		if (C.bioHolder?.mobAppearance?.mutant_race)
 			C.set_mutantrace(C.bioHolder.mobAppearance.mutant_race.type)
 		else

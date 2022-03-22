@@ -68,6 +68,7 @@
 	var/irclog_url = null
 	var/ircbot_api = null
 	var/ircbot_ip = null
+	var/spacebee_api_url = "https://spacebee.goonhub.com"
 	var/spacebee_api_key = null
 
 	//External server configuration (for central bans etc)
@@ -101,7 +102,7 @@
 
 	//Are we limiting connected players to certain ckeys?
 	var/whitelistEnabled = 0
-	var/whitelist_path = "strings/whitelist.txt"
+	var/whitelist_path = "config/whitelist.txt"
 
 	//Which server can ghosts join by clicking on an on-screen link
 	var/server_buddy_id = null
@@ -305,6 +306,8 @@
 			if ("ircbot_ip")
 				config.ircbot_ip = trim(value)
 
+			if ("spacebee_api_url")
+				config.spacebee_api_url = trim(value)
 			if ("spacebee_api_key")
 				config.spacebee_api_key = trim(value)
 

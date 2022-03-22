@@ -62,12 +62,13 @@
 		dat += get_manifest()
 		dat += "<br>"
 
-		var/stored = ""
+		var/list/stored = list()
 		if(length(by_type[/obj/cryotron]))
 			var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
 			for(var/L as anything in cryo_unit.stored_crew_names)
 				stored += "<i>- [L]<i><br>"
-		dat += "<b>In Cryogenic Storage:</b><hr>[stored]<br>"
+		if(length(stored))
+			dat += "<b>In Cryogenic Storage:</b><hr>[jointext("", stored)]<br>"
 
 		return dat
 
@@ -214,8 +215,8 @@ Code:
 			if(last_transmission && world.time < (last_transmission + 5))
 				return
 			last_transmission = world.time
-			SPAWN_DBG( 0 )
-				logTheThing("signalers", usr, null, "used [src.master] @ location ([showCoords(src.master.loc.x, src.master.loc.y, src.master.loc.z)]) <B>:</B> [format_frequency(send_freq)]/[send_code]")
+			SPAWN( 0 )
+				logTheThing("signalers", usr, null, "used [src.master] @ location ([log_loc(src.master.loc)]) <B>:</B> [format_frequency(send_freq)]/[send_code]")
 
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
@@ -227,11 +228,11 @@ Code:
 				return
 
 		else if (href_list["adj_freq"])
-			src.send_freq = sanitize_frequency(src.send_freq + text2num(href_list["adj_freq"]))
+			src.send_freq = sanitize_frequency(src.send_freq + text2num_safe(href_list["adj_freq"]))
 			get_radio_connection_by_id(master, "signaller").update_frequency(src.send_freq)
 
 		else if (href_list["adj_code"])
-			src.send_code += text2num(href_list["adj_code"])
+			src.send_code += text2num_safe(href_list["adj_code"])
 			src.send_code = round(src.send_code)
 			src.send_code = min(100, src.send_code)
 			src.send_code = max(1, src.send_code)
@@ -308,7 +309,7 @@ Code:
 			return
 
 		if (href_list["adj_volume"])
-			var/adjust_num = text2num(href_list["adj_volume"])
+			var/adjust_num = text2num_safe(href_list["adj_volume"])
 			src.honk_volume += adjust_num
 			if(src.honk_volume < 1)
 				src.honk_volume = 1
@@ -379,7 +380,7 @@ Code:
 				if (bl.z != cl.z)
 					continue
 
-				ldat += "Bucket - <b>\[[bl.x],[bl.y] ([get_area(bl)])\]</b> - Water level: [B.reagents.total_volume]/50<br>"
+				ldat += "Bucket - <b>\[[bl.x],[bl.y] ([get_area(bl)])\]</b> - Water level: [B.reagents.total_volume]/[B.reagents.maximum_volume]<br>"
 
 			if (!ldat)
 				dat += "None"
@@ -441,10 +442,10 @@ Code:
 				if (M.id != src.id)
 					continue
 				if (M.density)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						M.open()
 				else
-					SPAWN_DBG(0)
+					SPAWN(0)
 						M.close()
 
 		src.master.add_fingerprint(usr)
@@ -762,7 +763,7 @@ Code:
 			return
 
 		if (href_list["alert"])
-			confirm_menu = text2num(href_list["alert"])
+			confirm_menu = text2num_safe(href_list["alert"])
 
 		else if (href_list["confirm"])
 			if (href_list["confirm"] == "y")
@@ -824,7 +825,7 @@ Code:
 
 		if(!detonating)
 			src.detonating = 1
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				src.master.explode()
 
 		return dat
@@ -1031,7 +1032,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 
 			logTheThing("admin", usr, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
-			SPAWN_DBG(3 SECONDS)
+			SPAWN(3 SECONDS)
 				var/obj/item/paper/p = new /obj/item/paper
 				p.set_loc(get_turf(src.master))
 				p.name = "Official Caution - [ticket_target]"
@@ -1062,7 +1063,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			if(!ticket_reason) return
 			ticket_reason = copytext(strip_html(ticket_reason), 1, MAX_MESSAGE_LEN)
 			var/fine_amount = input(usr, "Fine amount (1-1000):",src.name, 0) as num
-			if(!fine_amount) return
+			if(!isnum_safe(fine_amount)) return
 			fine_amount = min(fine_amount,1000)
 			fine_amount = max(fine_amount,1)
 
@@ -1080,7 +1081,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			if(PDAownerjob in list("Head of Security","Head of Personnel","Captain"))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
 				playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					F.approve(PDAowner,PDAownerjob)
 					var/obj/item/paper/p = new /obj/item/paper
 					p.set_loc(get_turf(src.master))
@@ -1097,7 +1098,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			var/datum/fine/F = locate(href_list["approve"])
 
 			playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
-			SPAWN_DBG(3 SECONDS)
+			SPAWN(3 SECONDS)
 				F.approve(PDAowner,PDAownerjob)
 				var/ticket_text = "[F.target] has been fined [F.amount] credits by Nanotrasen Corporate Security for [F.reason] on [time2text(world.realtime, "DD/MM/53")].<br>Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [PDAowner] - [PDAownerjob]<br>"
 				var/obj/item/paper/p = new /obj/item/paper

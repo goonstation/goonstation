@@ -184,9 +184,9 @@
 			damageArmor(damage, D_KINETIC)
 			shakeCruiser(6, 2, 0.2)
 
-		if(shields <= 0 && prob(75))
+		if(length(src.interior_area.contents) && shields <= 0 && prob(75))
 			var/atom/source = pick(src.interior_area.contents)
-			explosion_new(source, source, max(min(1,4-severity), 5))
+			explosion_new(source, source, clamp(4 - severity, 1, 3))
 		return
 
 	New()
@@ -304,7 +304,7 @@
 				boutput(usr, "<span class='alert'>Fire mode now: Simultaneous</span>")
 		return
 
-	Bump(atom/O)
+	bump(atom/O)
 		..(O)
 		if(ramming)
 			ramming--
@@ -329,7 +329,7 @@
 		internal_sound(src.loc, 'sound/machines/boost.ogg', 100, 1, -1)
 		src.speed_mod -= 2
 		src.ramming += 8
-		SPAWN_DBG(10 SECONDS)
+		SPAWN(10 SECONDS)
 			src.speed_mod += 2
 			src.removePowerUse("rammingMode")
 			src.ramming = max(src.ramming - 8, 0)
@@ -341,7 +341,7 @@
 		src.addPowerUse("weaponOverload", 90, -1)
 		internal_sound(src.loc, 'sound/machines/weaponoverload.ogg', 80, 1, -1)
 		src.weapon_cooldown_mod -= 3
-		SPAWN_DBG(10 SECONDS)
+		SPAWN(10 SECONDS)
 			src.weapon_cooldown_mod += 3
 			src.removePowerUse("weaponOverload")
 		return
@@ -354,7 +354,7 @@
 		I.alpha = 150
 		shield_obj.overlays += I
 		internal_sound(src.loc, 'sound/machines/shieldoverload.ogg', 80, 0, -1)
-		SPAWN_DBG(15 SECONDS)
+		SPAWN(15 SECONDS)
 			src.removePowerUse("shieldOverload")
 			src.shield_regen_always -= 1
 			src.shield_regen_boost -= 5
@@ -401,8 +401,8 @@
 		for(var/U in powerUse) //v FUCK BYOND. FUCK. DOUBLEFUCK. TRIPLEFUCK.
 			var/params = powerUse[U]
 			var/list/L = params2list(params)
-			var/usage = text2num(L[1])
-			var/rounds = text2num(L[L[1]])
+			var/usage = text2num_safe(L[1])
+			var/rounds = text2num_safe(L[L[1]])
 			power_used += usage
 			if(rounds > 0)
 				if((--rounds) <= 0) removePowerUse(U)
@@ -485,9 +485,9 @@
 	proc/adjustShields(var/amount, var/type = D_SPECIAL)
 		shields_last = shields
 		shields += amount
-		shields = max(min(shields, shields_max), 0)
+		shields = clamp(shields, 0, shields_max)
 
-		var/percent_shields = max(min((shields / shields_max), 1), 0)
+		var/percent_shields = clamp((shields / shields_max), 0, 1)
 		if(shields_last > 0 && shields <= 0) //Collapse
 			if(shield_obj.icon_state != "shield_collapse")
 				internal_sound(src.loc, 'sound/machines/shielddown.ogg', 100, 1, -1)
@@ -630,7 +630,7 @@
 		return
 
 	proc/startFire(var/amount = 1)
-		if(interior_area)
+		if(interior_area && length(interior_area))
 			var/list/hotspot_turfs = list()
 			for(var/turf/T in interior_area)
 				if(T.density) continue
@@ -646,15 +646,15 @@
 		return
 
 	proc/updateIndicators()
-		var/percent_health = max(min((health / health_max), 1), 0)
+		var/percent_health = clamp((health / max(1,health_max)), 0, 1)
 		bar_top.transform = matrix(percent_health, 1, MATRIX_SCALE)
 		bar_top.pixel_x = -nround( ((81 - (81 * percent_health)) / 2) )
 
-		var/percent_shields = max(min((shields / shields_max), 1), 0)
+		var/percent_shields = clamp((shields / shields_max), 0, 1)
 		bar_middle.transform = matrix(percent_shields, 1, MATRIX_SCALE)
 		bar_middle.pixel_x = -nround( ((81 - (81 * percent_shields)) / 2) )
 
-		var/percent_power = max(min((power_used_last / max(1,power_produced_last)), 1), 0)
+		var/percent_power = clamp((power_used_last / max(1,power_produced_last)), 0, 1)
 		bar_bottom.transform = matrix(percent_power, 1, MATRIX_SCALE)
 		bar_bottom.pixel_x = -nround( ((81 - (81 * percent_power)) / 2) )
 
@@ -663,7 +663,7 @@
 				S.setValues(percent_health, percent_shields, percent_power)
 		return
 
-	proc/recieveMovement(var/direction)
+	proc/receiveMovement(var/direction)
 		if(!hasPower() || !(direction == NORTH || direction == EAST || direction == SOUTH || direction == WEST))
 			return
 
@@ -941,7 +941,7 @@
 
 	proc/reboot() //Called when the device is rebooted / in override mode.
 		rebooting = 1
-		SPAWN_DBG(1 SECOND) rebooting = 0
+		SPAWN(1 SECOND) rebooting = 0
 		return "Reboot complete"
 
 	proc/adjustHealth(var/amount)
@@ -1045,7 +1045,7 @@
 				boutput(user, "<span class='alert'>Something is preventing the [src] from opening.</span>")
 		else
 			ready = 0
-			SPAWN_DBG(1 SECOND) ready = 1
+			SPAWN(1 SECOND) ready = 1
 			playsound(src.loc, 'sound/machines/hydraulic.ogg', 50, 0, -1)
 			open = 1
 			setIcon()
@@ -1059,7 +1059,7 @@
 			boutput(user, "<span class='alert'>This device is currently disabled.</span>")
 			return
 		ready = 0
-		SPAWN_DBG(1 SECOND) ready = 1
+		SPAWN(1 SECOND) ready = 1
 		playsound(src.loc, 'sound/machines/weapons-deploy.ogg', 60, 0, -1)
 		open = 0
 		setIcon()
@@ -1371,7 +1371,7 @@
 	relaymove(mob/user, direction)
 		var/obj/machinery/cruiser/C = interior.ship
 		if (C)
-			C.recieveMovement(direction)
+			C.receiveMovement(direction)
 		return
 
 /obj/machinery/cruiser_destroyable/cruiser_pod/security

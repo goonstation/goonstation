@@ -51,6 +51,8 @@ datum
 		var/random_chem_blacklisted = 0 // will not appear in random chem sources oddcigs/artifacts/etc
 		var/boiling_point = T0C + 100
 		var/can_crack = 0 // used by organic chems
+		var/threshold_volume = null //defaults to not using threshold
+		var/threshold = null
 
 		New()
 			..()
@@ -63,18 +65,34 @@ datum
 			..()
 
 		proc/on_add()
-			if (stun_resist > 0)
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.add_stun_resist_mod("reagent_[src.id]", stun_resist)
 			return
 
 		proc/on_remove()
-			if (stun_resist > 0)
-				if (ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					M.remove_stun_resist_mod("reagent_[src.id]")
 			return
+
+		proc/check_threshold()
+			SHOULD_NOT_OVERRIDE(TRUE)
+
+			if (src.threshold == THRESHOLD_UNDER && src.volume >= (src.threshold_volume || src.depletion_rate))
+				src.cross_threshold_over()
+			else if (src.threshold == THRESHOLD_OVER && src.volume < (src.threshold_volume || src.depletion_rate))
+				src.cross_threshold_under()
+
+		proc/cross_threshold_over()
+			SHOULD_CALL_PARENT(TRUE)
+			threshold = THRESHOLD_OVER
+			if (stun_resist > 0 && ismob(holder?.my_atom))
+				var/mob/M = holder.my_atom
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "reagent_[src.id]", stun_resist)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "reagent_[src.id]", stun_resist)
+
+		proc/cross_threshold_under()
+			SHOULD_CALL_PARENT(TRUE)
+			threshold = THRESHOLD_UNDER
+			if (stun_resist > 0 && ismob(holder?.my_atom))
+				var/mob/M = holder.my_atom
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "reagent_[src.id]")
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "reagent_[src.id]")
 
 		proc/on_copy(var/datum/reagent/new_reagent)
 			//To support deep copying of a reagent holder
@@ -129,31 +147,12 @@ datum
 
 				if(INGEST)
 					var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
-					/*var/addProb = addiction_prob
-					if(ishuman(M))
-						var/mob/living/carbon/human/H = M
-						if(H.traitHolder.hasTrait("strongwilled"))
-							addProb = round(addProb / 2)
-					if(prob(addProb) && ishuman(M) && !AD)
-						// i would set up a proc for this but this is the only place that adds addictions
-						boutput(M, "<span class='alert'><B>You suddenly feel invigorated and guilty...</B></span>")
-						AD = new
-						AD.associated_reagent = src.name
-						AD.last_reagent_dose = world.timeofday
-						AD.name = "[src.name] addiction"
-						AD.affected_mob = M
-						AD.max_severity = src.max_addiction_severity
-						M.ailments += AD
-					else */if (AD)
+					if (AD)
 						boutput(M, "<span class='notice'><b>You feel slightly better, but for how long?</b></span>")
 						M.make_jittery(-5)
 						AD.last_reagent_dose = world.timeofday
 						AD.stage = 1
-/*					if (ishuman(M) && thirst_value)
-						var/mob/living/carbon/human/H = M
-						if (H.sims)
-							H.sims.affectMotive("Thirst", volume * thirst_value)
-*/
+
 			M.material?.triggerChem(M, src, volume)
 			for(var/atom/A in M)
 				if(A.material) A.material.triggerChem(A, src, volume)
@@ -162,8 +161,6 @@ datum
 		proc/reaction_obj(var/obj/O, var/volume) //By default we transfer a small part of the reagent to the object
 								//if it can hold reagents. nope!
 			O.material?.triggerChem(O, src, volume)
-			//if(O.reagents)
-			//	O.reagents.add_reagent(id,volume/3)
 			return 1
 
 		proc/reaction_turf(var/turf/T, var/volume)
@@ -227,7 +224,6 @@ datum
 			holder.remove_reagent(src.id, deplRate) //By default it slowly disappears.
 
 			if(M && overdose > 0) check_overdose(M, mult)
-			//if(M && isdead(M) && src.id != "montaguone" && src.id != "montaguone_extra") M.reagents.del_reagent(src.id) // no more puking corpses and such
 			return
 
 		//when we entirely drained from sstem, do this

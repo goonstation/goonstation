@@ -8,6 +8,11 @@
 /datum/component/foldable/keep_name
 	change_name = 0
 
+TYPEINFO(/datum/component/foldable)
+	initialization_args = list(
+		ARG_INFO("briefcase_path", "type", "Path of item that will be folded up into", /obj/item/objBriefcase)
+	)
+
 /datum/component/foldable/Initialize(var/briefcase_path = /obj/item/objBriefcase)
 	if(!istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
@@ -75,6 +80,9 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY
+	stamina_damage = 40
+	stamina_cost = 17
+	stamina_crit_chance = 10
 
 	burn_point = 2500
 	burn_output = 2500
@@ -86,9 +94,10 @@
 	New(var/loc, var/obj/object)
 		..(loc)
 		src.set_loc(loc)
-		src.thingInside = object
-		src.name = "foldable [object.name]"
-		src.desc = "A briefcase with a [object.name] inside. A breakthrough in briefcase technology!"
+		if(object)
+			src.thingInside = object
+			src.name = "foldable [object.name]"
+			src.desc = "A briefcase with a [object.name] inside. A breakthrough in briefcase technology!"
 		BLOCK_SETUP(BLOCK_BOOK)
 
 	attack_self(mob/user)

@@ -27,6 +27,7 @@
 	opacity = 0
 	anchored = 1
 	flags = TGUI_INTERACTIVE
+	layer = OBJ_LAYER - 0.1	// Match vending machines
 
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_buy = 'sound/machines/spend.ogg'
@@ -84,6 +85,8 @@
 		else
 			..()
 
+
+
 	proc/accepted_token(var/token, var/mob/user)
 		src.ui_interact(user)
 		playsound(src.loc, sound_token, 80, 1)
@@ -124,7 +127,7 @@
 	vended(var/atom/A)
 		..()
 		if (istype(A,/obj/item/storage/belt/security))
-			SPAWN_DBG(2 DECI SECONDS) //ugh belts do this on spawn and we need to wait
+			SPAWN(2 DECI SECONDS) //ugh belts do this on spawn and we need to wait
 				var/list/tracklist = list()
 				for(var/atom/C in A.contents)
 					if (istype(C,/obj/item/gun) || istype(C,/obj/item/baton))
@@ -151,8 +154,12 @@
 	token_accepted = /obj/item/requisition_token/syndicate
 	log_purchase = TRUE
 
+	ex_act()
+		return
+
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		// List of avaliable objects for purchase
 		materiel_stock += new/datum/materiel/sidearm/smartgun
 		materiel_stock += new/datum/materiel/sidearm/pistol
@@ -168,6 +175,7 @@
 		materiel_stock += new/datum/materiel/loadout/engineer
 		materiel_stock += new/datum/materiel/loadout/marksman
 		materiel_stock += new/datum/materiel/loadout/knight
+		materiel_stock += new/datum/materiel/loadout/bard
 		materiel_stock += new/datum/materiel/loadout/custom
 /*
 		materiel_stock += new/datum/materiel/storage/rucksack
@@ -187,6 +195,10 @@
 		src.credits[WEAPON_VENDOR_CATEGORY_SIDEARM]++
 		src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
 		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
 // Materiel avaliable for purchase:
@@ -265,7 +277,7 @@
 
 /datum/materiel/utility/donuts
 	name = "Robust(ed) Donuts"
-	path = /obj/item/storage/box/robustdonuts
+	path = /obj/item/storage/lunchbox/robustdonuts
 	description = "Two Robust Donuts and two Robusted Donuts, which are loaded with helpful chemicals that help you resist stuns and heal you!"
 
 /datum/materiel/utility/crowdgrenades
@@ -366,14 +378,19 @@
 	description = "High-powered sniper rifle that can fire through two solid walls, optical thermal scanner and a pouch of smoke grenades"
 
 /datum/materiel/loadout/knight
-	name = "Knight (Prototype)"
+	name = "Knight"
 	path = /obj/storage/crate/classcrate/melee
-	description = "A prototype melee focused class. Equipped with massive, heavy armour and a versatile sword that can switch special attack modes."
+	description = "A powerful melee focused class. Equipped with massive, heavy armour and a versatile sword that can switch special attack modes."
+
+/datum/materiel/loadout/bard
+	name = "Bard (Prototype)"
+	path = /obj/storage/crate/classcrate/bard
+	description = "An experimental musician class that supports their team with area of effect buffs centered around amp stacks and hitting things with a cool guitar."
 
 /datum/materiel/loadout/custom
 	name = "Custom Class Uplink"
-	path = /obj/item/uplink/syndicate
-	description = "A standard syndicate uplink loaded with 12 telecrytals, allowing you to pick and choose from an array of syndicate items."
+	path = /obj/item/uplink/syndicate/nukeop
+	description = "A standard syndicate uplink loaded with 12 telecrystals, allowing you to pick and choose from an array of syndicate items."
 /*
 /datum/materiel/storage/rucksack
 	name = "Assault Rucksack"

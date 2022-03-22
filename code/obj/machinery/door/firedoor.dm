@@ -9,7 +9,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.setup()
 			sleep(1 SECOND)
 			qdel(src)
@@ -35,6 +35,12 @@
 	var/welded_icon_state = "welded"
 	has_crush = 0
 	cant_emag = 1
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_DESTRUCT
+	mats = 30 // maybe a bit high??
+	health = 200
+	health_max = 200
+	xmasify()
+		return
 
 /obj/machinery/door/firedoor/border_only
 	name = "Firelock"
@@ -50,7 +56,7 @@
 
 /obj/machinery/door/firedoor/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		var/list/zones = list()
 		for (var/d in list(0) + cardinal)
 			var/turf/T = get_step(src,d)
@@ -124,11 +130,11 @@
 
 	if (!src.blocked && !src.operating)
 		if(src.density)
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				src.operating = 1
 
 				play_animation("opening")
-				update_icon(1)
+				UpdateIcon(1)
 				sleep(1.5 SECONDS)
 				src.set_density(0)
 				update_nearby_tiles()
@@ -139,11 +145,11 @@
 				src.operating = 0
 				return
 		else //close it up again
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				src.operating = 1
 
 				play_animation("closing")
-				update_icon(1)
+				UpdateIcon(1)
 				src.set_density(1)
 				update_nearby_tiles()
 				sleep(1.5 SECONDS)
@@ -215,7 +221,7 @@
 
 		return 1
 
-/obj/machinery/door/firedoor/update_icon(var/toggling = 0)
+/obj/machinery/door/firedoor/update_icon(var/toggling = 0, override_parent = TRUE)
 	if(toggling? !density : density)
 		if (locked)
 			icon_state = "[icon_base]_locked"
@@ -236,9 +242,9 @@
 /obj/machinery/door/firedoor/custom_suicide = 1
 /obj/machinery/door/firedoor/suicide(var/mob/living/carbon/human/user as mob)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
-		return 0
-	if (!src.allowed(user) || src.density)
-		return 0
+		return FALSE
+	if (src.density)
+		return FALSE
 	user.visible_message("<span class='alert'><b>[user] sticks [his_or_her(user)] head into [src] and closes it!</b></span>")
 	src.close()
 	var/obj/head = user.organHolder.drop_organ("head")
@@ -246,4 +252,4 @@
 	make_cleanable( /obj/decal/cleanable/blood/gibs,src.loc)
 	playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 
-	return 1
+	return TRUE

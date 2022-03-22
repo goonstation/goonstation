@@ -231,7 +231,7 @@ var/list/telescope_computers = list()
 		user << browse(html, "window=telescope;size=800x435;can_resize=0;can_minimize=0;can_close=1")
 		onclose(user, "telescope", src)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			callJsFunc(user, "setRef", list("\ref[src]")) //This is shit but without it, it calls the JS before the window is open and doesn't work.
 			loadContent("Starmap", "#contentInner")
 		return
@@ -329,8 +329,8 @@ var/list/telescope_computers = list()
 						if(tracking_id)
 							if(tele_man.events_active.Find(tracking_id))
 								var/datum/telescope_event/E = tele_man.events_active[tracking_id]
-								var/posx = text2num(href_list["posx"])
-								var/posy = text2num(href_list["posy"])
+								var/posx = text2num_safe(href_list["posx"])
+								var/posy = text2num_safe(href_list["posy"])
 								var/distx = abs(posx - E.loc_x)
 								var/disty = abs(posy - E.loc_y)
 

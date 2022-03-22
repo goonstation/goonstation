@@ -362,7 +362,7 @@
 		switch(href_list["operation"])
 
 			if ("enterpin")
-				var/enterpin = input(usr, "Please enter your PIN number.", "ATM", 0) as null|num
+				var/enterpin = usr.enter_pin("ATM")
 				if (enterpin == src.scan.pin)
 					if(TryToFindRecord())
 						src.state = STATE_LOGGEDIN
@@ -640,6 +640,7 @@
 					if (t1 > 10000)
 						t1 = 10000
 						boutput(usr, "<span class='alert'>Maximum wage is $10,000.</span>")
+					logTheThing("station", usr, null, "sets <b>[R["name"]]</b>'s wage to $[t1].")
 					R["wage"] = t1
 				else if(href_list["Fmoney"])
 					var/datum/db_record/R = locate(href_list["Fmoney"])
@@ -656,6 +657,7 @@
 						if (t1 < 1) return
 						R["current_money"] -= t1
 						wagesystem.station_budget += t1
+						logTheThing("station", usr, null, "adds $[t1] to the station budget from <b>[R["name"]]</b>'s account.")
 						boutput(usr, "<span class='notice'>$[t1] added to station budget from [R["name"]]'s account.</span>")
 					else if (t2 == "Deposit")
 						avail = wagesystem.station_budget
@@ -663,6 +665,7 @@
 						if (t1 < 1) return
 						R["current_money"] += t1
 						wagesystem.station_budget -= t1
+						logTheThing("station", usr, null, "adds $[t1] to <b>[R["name"]]</b>'s account from the station budget.")
 						boutput(usr, "<span class='notice'>$[t1] added to [R["name"]]'s account from station budget.</span>")
 					else boutput(usr, "<span class='alert'>Error selecting withdraw/deposit mode.</span>")
 				else if(href_list["payroll"])
@@ -673,9 +676,11 @@
 						return
 					if (wagesystem.pay_active)
 						wagesystem.pay_active = 0
+						logTheThing("station", usr, null, "suspends the station payroll.")
 						command_alert("The payroll has been suspended until further notice. No further wages will be paid until the payroll is resumed.","Payroll Announcement")
 					else
 						wagesystem.pay_active = 1
+						logTheThing("station", usr, null, "resumes the station payroll.")
 						command_alert("The payroll has been resumed. Wages will now be paid into employee accounts normally.","Payroll Announcement")
 				else if(href_list["transfer"])
 					var/transfrom = input("Transfer from which?", "Budgeting", null, null) in list("Payroll", "Shipping", "Research")
@@ -716,6 +721,19 @@
 /obj/machinery/computer/bank_data/console_lower
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "bank2"
+
+/obj/submachine
+	name = "You shouldn't see me!"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "atm"
+
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
 
 /obj/submachine/ATM
 	name = "ATM"
@@ -878,7 +896,7 @@
 		switch(href_list["operation"])
 
 			if ("enterpin")
-				var/enterpin = input(usr, "Please enter your PIN number.", "ATM", 0) as null|num
+				var/enterpin = usr.enter_pin("ATM")
 				if (enterpin == src.scan.pin)
 					if(TryToFindRecord())
 						src.state = STATE_LOGGEDIN

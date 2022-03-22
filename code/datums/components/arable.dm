@@ -18,6 +18,9 @@
 	manual_water
 		auto_water = FALSE
 
+TYPEINFO(/datum/component/arable)
+	initialization_args = list()
+
 /datum/component/arable/Initialize()
 	if(!istype(parent, /turf) && !istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
