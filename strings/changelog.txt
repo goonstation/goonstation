@@ -1,4 +1,9 @@
 
+(t)tue mar 22 22
+(u)nefarious6th
+(p)7886
+(e)|
+(+)you can now break firelocks down by hitting them repeatedly, just like airlocks
 (t)sun mar 20 22
 (u)Amylizzle
 (p)7881
