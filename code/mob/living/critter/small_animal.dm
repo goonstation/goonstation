@@ -2526,7 +2526,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/screams/Robot_scream_2.ogg", 50, 1, 0.1, 2.6, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/screams/Robot_Scream_2.ogg', 50, 1, 0.1, 2.6, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> squeaks!</span>"
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
