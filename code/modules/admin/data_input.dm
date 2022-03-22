@@ -1,4 +1,6 @@
 /// For inputting data for things like edit-variables, proccall, etc
+/// Generally you should only use the associated defines for allowed_types. However, you CAN display anything as a choice for the user, allowing for
+/// custom prompts for specific cases. Just make sure the caller can handle the case!
 /// @param allowed_types The types of input which are allowed, which the user selects from. The selected type is returned as part of the data_input_result
 /// @param custom_title 		If not null, set as the title for the input
 ///	@param custom_text			If not null, set as the text for the input
@@ -158,12 +160,8 @@
 				return
 
 		// these are meaningless in certain cases, so we just return a dummy value with the input type and let the caller handle it
-		if (DATA_INPUT_RESTORE, DATA_INPUT_PARTICLE_EDITOR, DATA_INPUT_FILTER_EDITOR, DATA_INPUT_LIST_DEL_FROM, DATA_INPUT_LIST_EDIT_ASSOCIATED)
+		if (DATA_INPUT_RESTORE, DATA_INPUT_PARTICLE_EDITOR, DATA_INPUT_FILTER_EDITOR, DATA_INPUT_LIST_DEL_FROM)
 			input = TRUE
-
-		else
-			CRASH("Data input called with invalid data input type [selected_type]. How the fuck?")
-
 
 	if (isnull(input) && selected_type != DATA_INPUT_NULL)
 		boutput(src, "<span class='alert'>Cancelled.</span>")
@@ -201,14 +199,10 @@
 /// @param var_value The value to evaluate
 /// @param L The list the value is contained in, if applicable, to determine if the var value is associated to another value
 /// @return Suggested input type for input_data()
-/client/proc/suggest_input_type(var/var_value, var/varname = null, var/list/list = null)
+/client/proc/suggest_input_type(var/var_value, var/varname = null)
 	var/default = null
 	if (isnull(var_value))
 		boutput(src, "Unable to determine variable type.")
-
-	else if (list && !isnull(list[var_value]))
-		boutput(src, "Variable appears to be an associated list entry.")
-		default = DATA_INPUT_LIST_EDIT_ASSOCIATED
 
 	else if (istype(var_value, /matrix))
 		boutput(src, "Variable appears to be <b>MATRIX</b>.")
