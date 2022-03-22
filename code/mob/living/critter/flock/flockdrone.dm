@@ -118,6 +118,7 @@
 	pilot.set_loc(src)
 	controller = pilot
 	src.client?.color = null // stop being all fucked up and weird aaaagh
+	src.hud?.update_intent()
 	boutput(src, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] established.\]</b></span>")
 
 /mob/living/critter/flock/drone/proc/release_control()
