@@ -47,9 +47,13 @@
 		src.desk_drawer = L
 
 
+/obj/machinery/plantpot/bareplant/swamp_flora
+	New()
+		..()
+		spawn_plant = pick(/datum/plant/spore_poof, /datum/plant/seed_spitter)
 
 /datum/plant/spore_poof
-	name = "Spore Ball"
+	name = "mysterious plant"
 	plant_icon = 'icons/obj/hydroponics/plants_alien.dmi'
 	growthmode = "weed"
 	sprite = "Poof"
@@ -63,7 +67,7 @@
 	cropsize = 1
 	harvests = 0
 	endurance = 5
-	//vending = 0
+	vending = 0
 
 
 	var/list/cooldowns
@@ -76,15 +80,17 @@
 
 		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
 			for (var/mob/living/X in view(1,POT.loc))
-				poof(X, POT)
-				break
+				if(isalive(X) && !iskudzuman(X))
+					poof(X, POT)
+					break
 
 	HYPattacked_proc(obj/machinery/plantpot/POT, mob/user)
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
 		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
-			poof(user, POT)
+			if(!iskudzuman(user))
+				poof(user, POT)
 
 	proc/poof(atom/movable/AM, obj/machinery/plantpot/POT)
 		if(!ON_COOLDOWN(src,"spore_poof", 2 SECONDS))
@@ -114,7 +120,7 @@
 		src.planttype = HY_get_species_from_path(/datum/plant/spore_poof, src)
 
 /datum/plant/seed_spitter
-	name = "Moving Seed Pod"
+	name = "mysterious plant"
 	plant_icon = 'icons/obj/hydroponics/plants_alien.dmi'
 	sprite = "Spit"
 	growthmode = "weed"
@@ -128,7 +134,7 @@
 	harvests = 0
 	endurance = 5
 	assoc_reagents = list("toxin", "histamine")
-	//vending = 0
+	vending = 0
 
 	var/datum/projectile/syringe/seed/projectile
 
@@ -158,7 +164,7 @@
 		if (POT.growth > (P.harvtime + DNA.harvtime + 5))
 			var/list/stuffnearby = list()
 			for (var/mob/living/X in view(7,POT.loc))
-				if(isalive(X) && (X != POT.loc))
+				if(isalive(X) && (X != POT.loc) && !iskudzuman(X))
 					stuffnearby += X
 			if(length(stuffnearby))
 				var/mob/living/target = pick(stuffnearby)
@@ -189,7 +195,6 @@
 
 	var/heart_ticker = 10
 	online = TRUE
-
 
 	implanted(mob/M, mob/Implanter)
 		..()
