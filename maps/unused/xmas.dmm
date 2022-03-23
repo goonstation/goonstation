@@ -12956,7 +12956,6 @@
 	icon_state = "tabledir";
 	dir = 10
 	},
-/obj/item/aiModule/reset,
 /obj/item/disk/data/cartridge/atmos,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/light/small{
@@ -13457,14 +13456,6 @@
 /area/storage/tech)
 "azC" = (
 /obj/item/screwdriver,
-/turf/simulated/floor/plating,
-/area/storage/tech)
-"azD" = (
-/obj/rack,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/item/circuitboard/aiupload,
-/obj/item/circuitboard/card,
 /turf/simulated/floor/plating,
 /area/storage/tech)
 "azE" = (
@@ -16465,7 +16456,6 @@
 /obj/item/aiModule/freeform,
 /obj/item/aiModule/protectStation,
 /obj/item/aiModule/conservePower,
-/obj/item/aiModule/rename,
 /obj/machinery/door/window/northleft,
 /turf/simulated/floor{
 	icon_state = "snow"
@@ -16491,7 +16481,6 @@
 /obj/item/aiModule/oneHuman,
 /obj/item/aiModule/notHuman,
 /obj/item/aiModule/makeCaptain,
-/obj/item/aiModule/reset,
 /obj/machinery/door/window/northright,
 /turf/simulated/floor{
 	icon_state = "snow"
@@ -23260,21 +23249,6 @@
 "aRs" = (
 /mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/circuit,
-/area/turret_protected/AIbasecore1{
-	name = "Upload Station"
-	})
-"aRt" = (
-/obj/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/machinery/computer/aiupload,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor{
-	icon_state = "snow"
-	},
 /area/turret_protected/AIbasecore1{
 	name = "Upload Station"
 	})
@@ -41761,14 +41735,6 @@
 /obj/stool,
 /turf/simulated/floor/specialroom/bar,
 /area/space_diner)
-"bEk" = (
-/obj/decal/fakeobjects/sink,
-/turf/simulated/floor/specialroom/bar,
-/area/space_diner)
-"bEl" = (
-/obj/decal/fakeobjects/oven,
-/turf/simulated/floor/specialroom/bar,
-/area/space_diner)
 "bEm" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -58173,6 +58139,36 @@
 	icon_state = "snow"
 	},
 /area/crew_quarters/captain)
+"mng" = (
+/obj/decal/fakeobjects/oven,
+/turf/simulated/floor/specialroom/bar,
+/area/space_diner)
+"sts" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/specialroom/bar,
+/area/space_diner)
+"xcy" = (
+/obj/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/lawrack,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "snow"
+	},
+/area/turret_protected/AIbasecore1{
+	name = "Upload Station"
+	})
+"xpl" = (
+/obj/rack,
+/obj/item/circuitboard/robot_module_rewriter,
+/obj/item/circuitboard/cloning,
+/obj/item/circuitboard/card,
+/turf/simulated/floor/plating,
+/area/storage/tech)
 
 (1,1,1) = {"
 aaa
@@ -83272,7 +83268,7 @@ aaa
 aaa
 aQl
 aQP
-aRt
+xcy
 aSh
 aTe
 aUa
@@ -88225,7 +88221,7 @@ axv
 axX
 ayE
 azf
-azD
+xpl
 aAb
 ayX
 aBo
@@ -197391,9 +197387,9 @@ bDV
 bDZ
 bEc
 bEh
-bEk
-bEl
-bEl
+sts
+mng
+mng
 bEo
 bDX
 bDX

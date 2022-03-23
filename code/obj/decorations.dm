@@ -756,6 +756,12 @@
 		pixel_x = -256
 		pixel_y = -256
 
+	fatuus
+		icon_state = "fatuus"
+		name = "Fatuus"
+		pixel_x = -256
+		pixel_y = -256
+
 	magus
 		icon_state = "magus"
 		name = "Magus"
@@ -768,8 +774,11 @@
 		pixel_x = -256
 		pixel_y = -256
 
-
-
+	amantes
+		icon_state = "amantes"
+		name = "Amantes"
+		pixel_x = -256
+		pixel_y = -256
 
 	station
 		name = "Space Station 14"

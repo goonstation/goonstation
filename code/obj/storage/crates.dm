@@ -15,7 +15,7 @@
 	soundproofing = 3
 	throwforce = 50 //ouch
 	can_flip_bust = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT  | NO_MOUSEDROP_QOL
+	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 
 	get_desc()
 		. = ..()
@@ -35,9 +35,9 @@
 			return 1
 		return ..()
 
-	CheckExit(atom/movable/O as mob|obj, target as turf)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if(istype(O, /obj/projectile))
-			return 1
+			. = 1
 		return ..()
 
 // Gore delivers new crates - woo!

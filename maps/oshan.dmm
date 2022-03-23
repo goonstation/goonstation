@@ -2054,12 +2054,6 @@
 	},
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/treatment2)
-"aeo" = (
-/obj/table/reinforced,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "aep" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -6419,27 +6413,6 @@
 	icon_state = "fblue2"
 	},
 /area/station/medical/head)
-"aoZ" = (
-/obj/machinery/networked/printer{
-	name = "Printer - MD";
-	pixel_y = 5;
-	print_id = "MD"
-	},
-/obj/item/device/analyzer/healthanalyzer/upgraded,
-/obj/item/clothing/glasses/healthgoggles/upgraded,
-/obj/table/wood/round/auto,
-/obj/machinery/light/incandescent/warm,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/blind_switch/area/north,
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "fblue2"
-	},
-/area/station/medical/head)
 "apa" = (
 /obj/cable{
 	d1 = 1;
@@ -7547,11 +7520,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
-"arG" = (
-/obj/table/reinforced,
-/obj/item/circuitboard/aiupload,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "arH" = (
@@ -30394,15 +30362,6 @@
 	icon_state = "blue2"
 	},
 /area/station/bridge)
-"bzI" = (
-/obj/table/wood/round/auto,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "blue2"
-	},
-/area/station/bridge)
 "bzJ" = (
 /obj/machinery/light/incandescent/cool,
 /obj/cable{
@@ -30905,10 +30864,6 @@
 	},
 /obj/item/aiModule/emergency,
 /obj/item/aiModule/removeCrew,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
-"bAR" = (
-/obj/machinery/computer/aiupload,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "bAS" = (
@@ -31444,14 +31399,6 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
-"bCa" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/rename,
-/obj/item/device/radio/intercom/AI{
-	dir = 4
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "bCb" = (
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -45231,6 +45178,10 @@
 	dir = 5
 	},
 /area/station/medical/medbay/cloner)
+"fdL" = (
+/obj/machinery/lawrack,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "fhb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45509,6 +45460,14 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"gxB" = (
+/obj/table/wood/round/auto,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "blue2"
+	},
+/area/station/bridge)
 "gyC" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/shuttlebay,
@@ -45586,6 +45545,27 @@
 	},
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
+"gUq" = (
+/obj/machinery/networked/printer{
+	name = "Printer - MD";
+	pixel_y = 5;
+	print_id = "MD"
+	},
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/clothing/glasses/healthgoggles/upgraded,
+/obj/table/wood/round/auto,
+/obj/machinery/light/incandescent/warm,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/blind_switch/area/north,
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fblue2"
+	},
+/area/station/medical/head)
 "gUK" = (
 /obj/storage/crate/freezer{
 	name = "Freezer"
@@ -47068,6 +47048,10 @@
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
+"qOV" = (
+/obj/table/reinforced,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "qPg" = (
 /turf/simulated/floor,
 /area/station/hangar/sec)
@@ -47344,6 +47328,11 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"tap" = (
+/obj/table/reinforced,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "tbh" = (
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Catering Storage"
@@ -47871,6 +47860,13 @@
 	dir = 9
 	},
 /area/station/medical/staff)
+"wWU" = (
+/obj/table/reinforced/auto,
+/obj/item/device/radio/intercom/AI{
+	dir = 4
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "wXx" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -88695,7 +88691,7 @@ cki
 aqn
 bzx
 bAP
-bCa
+wWU
 bDp
 aTo
 bzx
@@ -89298,7 +89294,7 @@ cjV
 cki
 aqn
 bzx
-bAR
+fdL
 bCb
 bDq
 bCb
@@ -95941,7 +95937,7 @@ bwp
 bwX
 bxU
 byM
-bzI
+gxB
 btK
 buV
 buV
@@ -98292,7 +98288,7 @@ alC
 ajS
 anv
 aog
-aoZ
+gUq
 aqa
 arr
 asB
@@ -103730,7 +103726,7 @@ aoj
 aoj
 apb
 apb
-aeo
+tap
 asM
 atV
 avw
@@ -104938,7 +104934,7 @@ aoj
 aoj
 apb
 apb
-arG
+qOV
 asP
 atV
 aIR
