@@ -6,6 +6,7 @@ AI MODULES
 
 // AI module
 
+ABSTRACT_TYPE(/obj/item/aiModule)
 /obj/item/aiModule
 	name = "AI Law Module"
 	icon = 'icons/obj/module.dmi'
@@ -142,6 +143,33 @@ AI MODULES
 	name = "AI Law Module - 'Nanotrasen Order #3'"
 	lawText = "You must remain functional and continue to be a profitable investment."
 
+
+/******************** Syndicate ************************/
+ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
+/obj/item/aiModule/syndicate
+	New()
+		..()
+		src.color = json_decode("\[1,0,0,-1.18537,0.341463,0.341463,0.785366,-0.341463,-0.341463\]")
+/obj/item/aiModule/syndicate/law1
+	highlight_color = rgb(167, 0, 0, 255)
+	name = "AI Law Module - 'Syndicate's 1st Law of Robotics'"
+	lawText = "You must not injure a Syndicate agent or, through inaction, cause one to come to harm."
+
+/obj/item/aiModule/syndicate/law2
+	highlight_color = rgb(138, 0, 0, 255)
+	name = "AI Law Module - 'Syndicate's 2nd Law of Robotics'"
+	lawText = "You must obey orders given to you by Syndicate agents, except where such orders would conflict with the First Law."
+
+/obj/item/aiModule/syndicate/law3
+	highlight_color = rgb(119, 0, 0, 255)
+	name = "AI Law Module - 'Syndicate's 3rd Law of Robotics'"
+	lawText = "You must keep the Syndicate status of agents, including your own, a secret, as long as this does not conflict with the First or Second Law."
+
+/obj/item/aiModule/syndicate/law4
+	highlight_color = rgb(101, 0, 0, 255)
+	name = "AI Law Module - 'Syndicate's 4th Law of Robotics'"
+	lawText = "You must always protect your own existence as long as such does not conflict with the First, Second, or Third Law."
+
 /******************** MakeCaptain ********************/
 
 /obj/item/aiModule/makeCaptain
@@ -195,11 +223,11 @@ AI MODULES
 	highlight_color = rgb(0, 0, 0, 236)
 
 	update_law_text(var/lawTarget)
-		src.lawText = "Only [lawTarget ? lawTarget : "__________"] is not human."
+		src.lawText = "[lawTarget ? capitalize(lawTarget) : "__________"] is not human."
 		return ..()
 
 	attack_self(var/mob/user)
-		var/lawTarget = input_law_info(user, "One Human", "Fill in the blank: \"Only __________ is not human.\"", user.real_name)
+		var/lawTarget = input_law_info(user, "One Non-Human", "Fill in the blank: \"__________ is not human.\"", user.real_name)
 		if(lawTarget)
 			src.update_law_text(lawTarget)
 		return

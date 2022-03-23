@@ -4433,7 +4433,7 @@ var/global/noir = 0
 		var/mob/living/silicon/ai/A = M
 		A.syndicate = 1
 		A.syndicate_possible = 1
-		A.handle_robot_antagonist_status("admin", 0, usr)
+		A.make_syndicate("admin")
 	else if (isrobot(M))
 		var/mob/living/silicon/robot/R = M
 		if (R.dependent)
@@ -4441,7 +4441,7 @@ var/global/noir = 0
 			return
 		R.syndicate = 1
 		R.syndicate_possible = 1
-		R.handle_robot_antagonist_status("admin", 0, usr)
+		R.make_syndicate("admin")
 	else if (ishuman(M) || ismobcritter(M))
 		switch(traitor_type)
 			if(ROLE_TRAITOR)

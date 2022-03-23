@@ -328,6 +328,71 @@ datum
 				..()
 				return
 
+		harmful/ricin
+			name = "space ricin"
+			id = "ricin"
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_g = 255
+			fluid_b = 255
+			transparency = 255
+			description = "Extremely toxic, but slow acting, stealthy, and hard to cure agent that causes organ failure."
+			depletion_rate = 0.025
+			penetrates_skin = 0
+			target_organs = list("left_kidney","right_kidney","liver","stomach","intestines","spleen","pancreas")
+			var/counter = 1
+			var/flushing = 0.1 //standard efficacy against flushing
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				if (!counter) counter = 1
+
+				if(holder.has_reagent("charcoal")) //to make it a tad harder to treat
+					holder.remove_reagent("charcoal", flushing * mult)
+				if(holder.has_reagent("penteticacid"))
+					holder.remove_reagent("penteticacid", flushing * mult)
+
+				switch(counter += (1 * mult))
+					if (75 to 125)
+						if (probmult(4))
+							M.emote(pick("sneeze","cough","moan","groan"))
+					if (125 to 175)
+						flushing = 1.5 //it gets a tad harder to cure here
+
+						if (probmult(8))
+							M.emote(pick("sneeze","cough","moan","groan"))
+						else if (probmult(5))
+							boutput(M, "<span class='alert'>You feel weak and tired.</span>")
+							M.setStatus("drowsy", 4 SECONDS)
+							M.change_eye_blurry(5, 5)
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (H.organHolder)
+								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 20)
+					if (175 to INFINITY)
+						flushing = 3 // time to ramp up that flusher flushing
+
+						if (probmult(10))
+							M.emote(pick("sneeze","drool","cough","moan","groan"))
+						if (probmult(20))
+							boutput(M, "<span class='alert'>You feel weak and drowsy.</span>")
+							M.setStatus("drowsy", 5 SECONDS)
+						if (probmult(8))
+							M.visible_message("<span class='alert'>[M] vomits a lot of blood!</span>")
+							playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
+						else if (probmult(5))
+							boutput(M, "<span class='alert'>You feel a sudden pain in your chest.</span>")
+							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 6 SECONDS))
+							M.take_toxin_damage(3)
+						M.change_eye_blurry(5, 5)
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (H.organHolder)
+								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 50)
+				..()
+				return
+
 		harmful/formaldehyde
 			name = "embalming fluid"
 			id = "formaldehyde"

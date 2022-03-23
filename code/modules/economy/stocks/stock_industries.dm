@@ -173,6 +173,6 @@
 	)
 
 	generateProductName(company)
-		var/list/meat = list("chicken", "beef", "seal", "monkey", "goat", "insect", "pigeon", "human", "walrus", "wendigo", "bear", "horse", "turkey", "pork", "shellfish", "starfish", "mimic", "mystery")
+		var/list/meat = list("chicken", "beef", "seal", "monkey", "goat", "insect", "pigeon", "human", "walrus", "brullbar", "bear", "horse", "turkey", "pork", "shellfish", "starfish", "mimic", "mystery")
 		var/list/qualifier = list("synthetic", "organic", "bio", "diet", "sugar-free", "paleolithic", "homeopathic", "recycled", "reclaimed", "vat-grown")
 		return "the [pick(qualifier)] [pick(meat)] meat product line"

@@ -129,6 +129,8 @@
 
 	if (movedelay < slip_delay)
 		var/intensity = (-0.33)+(6.033763-(-0.33))/(1+(movement_delay_real/(0.4))-1.975308)  //y=d+(6.033763-d)/(1+(x/c)-1.975308)
+		if (traitHolder && traitHolder.hasTrait("super_slips"))
+			intensity = max(intensity, 12) //the 12 is copied from the range of lube slips because that's what I'm trying to emulate
 		var/throw_range = min(round(intensity),50)
 		if (intensity < 1 && intensity > 0 && throw_range <= 0)
 			throw_range = max(throw_range,1)
