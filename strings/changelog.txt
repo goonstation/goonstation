@@ -1,5 +1,9 @@
 
 (t)wed mar 23 22
+(u)Hans
+(p)7636
+(e)🆕|feature
+(*)Added ricin to the game as a slow stealth poison.
 (u)Flappybat
 (p)7777
 (e)⚖|balance
