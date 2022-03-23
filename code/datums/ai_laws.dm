@@ -8,7 +8,6 @@
 
 
 /datum/ai_rack_manager
-
 	var/first_registered = FALSE
 	var/obj/machinery/lawrack/default_ai_rack = null
 	var/first_registered_syndie = FALSE
