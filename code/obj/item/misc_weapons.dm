@@ -701,6 +701,8 @@
 /obj/item/knife/butcher/throw_impact(atom/A, datum/thrown_thing/thr)
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
+		if (C.spellshield)
+			return ..()
 		if (ismob(usr))
 			A:lastattacker = usr
 			A:lastattackertime = world.time
@@ -1033,6 +1035,10 @@
 
 /obj/item/katana/attack(mob/target as mob, mob/user as mob, def_zone, is_special = 0)
 	if(!ishuman(target)) //only humans can currently be dismembered
+		return ..()
+	if (target.nodamage)
+		return ..()
+	if (target.spellshield)
 		return ..()
 	var/zoney = user.zone_sel.selecting
 	var/mob/living/carbon/human/H = target
