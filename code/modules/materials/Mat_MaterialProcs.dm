@@ -65,7 +65,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			I.set_loc(get_turf(I))
 		return
 
-/datum/materialProc/wendigo_temp_onlife
+/datum/materialProc/brullbar_temp_onlife
 	desc = "It feels furry."
 
 	execute(var/mob/M, var/obj/item/I, mult)

@@ -107,7 +107,7 @@
 				ticker.mode:agent_number++
 			else
 				src.real_name = "Syndicate Agent"
-			JobEquipSpawned("Syndicate")
+			JobEquipSpawned("Syndicate Operative")
 			u_equip(l_store) // Deletes syndicate remote teleporter to keep people out of the syndie shuttle
 			u_equip(r_store) // Deletes uplink radio because fuckem
 

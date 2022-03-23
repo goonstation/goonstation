@@ -691,7 +691,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		src.homeloc = src.loc
 
 		possible_new_friend = typesof(/obj/critter/bear) + typesof(/obj/critter/spider/ice) + typesof(/obj/critter/cat) + typesof(/obj/critter/parrot)\
-						+ list(/obj/critter/aberration, /obj/critter/domestic_bee, /obj/critter/domestic_bee/chef, /obj/critter/bat/buff, /obj/critter/bat, /obj/critter/bloodling, /obj/critter/wraithskeleton, /obj/critter/magiczombie, /obj/critter/wendigo)\
+						+ list(/obj/critter/aberration, /obj/critter/domestic_bee, /obj/critter/domestic_bee/chef, /obj/critter/bat/buff, /obj/critter/bat, /obj/critter/bloodling, /obj/critter/wraithskeleton, /obj/critter/magiczombie, /obj/critter/brullbar)\
 						- list(/obj/critter/spider/ice/queen)
 
 	disposing()

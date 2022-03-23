@@ -70,7 +70,7 @@
 			playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 50, 1)
 			for(var/mob/M in view(7, src.loc))
 				shake_camera(M, 20, 8)
-				if(gib_mobs && M.loc == src.loc)
+				if(gib_mobs && M.loc == src.loc && isliving(M) && !isintangible(M))
 					M.gib(1, 1)
 			sleep(0.5 SECONDS)
 			if (obj_path && no_lootbox)

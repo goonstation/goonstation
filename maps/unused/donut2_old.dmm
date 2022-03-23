@@ -12408,7 +12408,6 @@
 	icon_state = "tabledir";
 	dir = 10
 	},
-/obj/item/aiModule/reset,
 /obj/item/disk/data/cartridge/atmos,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/light/small{
@@ -12927,14 +12926,6 @@
 /area/storage/tech)
 "aAA" = (
 /obj/item/screwdriver,
-/turf/simulated/floor/plating,
-/area/storage/tech)
-"aAB" = (
-/obj/rack,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/item/circuitboard/aiupload,
-/obj/item/circuitboard/card,
 /turf/simulated/floor/plating,
 /area/storage/tech)
 "aAC" = (
@@ -15782,7 +15773,6 @@
 /obj/item/aiModule/freeform,
 /obj/item/aiModule/protectStation,
 /obj/item/aiModule/conservePower,
-/obj/item/aiModule/rename,
 /obj/machinery/door/window/northleft,
 /turf/simulated/floor,
 /area/turret_protected/ai_upload{
@@ -15806,7 +15796,6 @@
 /obj/item/aiModule/oneHuman,
 /obj/item/aiModule/notHuman,
 /obj/item/aiModule/makeCaptain,
-/obj/item/aiModule/reset,
 /obj/machinery/door/window/northright,
 /turf/simulated/floor,
 /area/turret_protected/ai_upload{
@@ -22600,19 +22589,6 @@
 "aTj" = (
 /mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/circuit,
-/area/turret_protected/AIbasecore1{
-	name = "Upload Station"
-	})
-"aTk" = (
-/obj/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/machinery/computer/aiupload,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor,
 /area/turret_protected/AIbasecore1{
 	name = "Upload Station"
 	})
@@ -43847,18 +43823,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/derelict/evilreaver/security)
-"bOE" = (
-/obj/decal/fakeobjects/skeleton{
-	density = 0;
-	desc = "Huh, this isn't trash.";
-	icon = 'evilreaverstation.dmi';
-	icon_state = "victim2";
-	name = "trash incinerator";
-	opacity = 0;
-	tag = "icon-body2"
-	},
-/turf/simulated/floor/grime,
-/area/derelict/evilreaver/security)
 "bOF" = (
 /obj/secure_closet/personal,
 /turf/simulated/floor/grime,
@@ -44508,21 +44472,6 @@
 /obj/machinery/door/window/southright,
 /turf/simulated/floor/grime,
 /area/derelict/evilreaver/security)
-"bQb" = (
-/obj/decal/fakeobjects/sink,
-/obj/decal/cleanable/cobweb,
-/turf/simulated/floor/specialroom/cafeteria{
-	dir = 1
-	},
-/area/derelict/evilreaver/bar)
-"bQc" = (
-/obj/decal/fakeobjects/oven,
-/obj/item/reagent_containers/food/snacks/cake/meat,
-/obj/item/crowbar,
-/turf/simulated/floor/specialroom/cafeteria{
-	dir = 1
-	},
-/area/derelict/evilreaver/bar)
 "bQd" = (
 /obj/table/woodentable{
 	tag = "icon-woodentable (SOUTHWEST)";
@@ -44853,19 +44802,6 @@
 /obj/item/baton,
 /turf/simulated/floor/grime,
 /area/derelict/evilreaver/security)
-"bQR" = (
-/obj/decal/cleanable/blood,
-/obj/decal/fakeobjects/skeleton{
-	desc = "The head seems to be gone.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body2";
-	name = "corpse";
-	tag = "icon-body2"
-	},
-/turf/simulated/floor/specialroom/cafeteria{
-	dir = 1
-	},
-/area/derelict/evilreaver/bar)
 "bQS" = (
 /obj/kitchenspike,
 /turf/simulated/floor/specialroom/cafeteria{
@@ -45497,20 +45433,6 @@
 /turf/simulated/floor/blue/side{
 	dir = 9
 	},
-/area/derelict/evilreaver)
-"bSq" = (
-/obj/decal/fakeobjects/skeleton{
-	density = 1;
-	desc = "There seems to be a lot of flesh wedged in this airlock.";
-	icon = 'evilreaverstation.dmi';
-	icon_state = "victim1";
-	name = "bloody mess";
-	opacity = 1;
-	tag = "icon-body2"
-	},
-/obj/spook,
-/obj/effect_sparker,
-/turf/simulated/floor/grime,
 /area/derelict/evilreaver)
 "bSr" = (
 /obj/grille,
@@ -47332,14 +47254,6 @@
 /obj/decal/cleanable/blood,
 /obj/decal/ash,
 /turf/simulated/floor/scorched,
-/area/derelict/evilreaver/toxins)
-"bWz" = (
-/obj/decal/cleanable/blood,
-/obj/decal/fakeobjects/skeleton{
-	name = "scorched remains"
-	},
-/obj/decal/ash,
-/turf/simulated/floor/scorched2,
 /area/derelict/evilreaver/toxins)
 "bWA" = (
 /obj/cable{
@@ -49325,15 +49239,6 @@
 "cbf" = (
 /obj/grille,
 /obj/securearea,
-/turf/space,
-/area/space)
-"cbg" = (
-/obj/decal/fakeobjects/skeleton{
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body1";
-	name = "corpse";
-	tag = "icon-body1"
-	},
 /turf/space,
 /area/space)
 "cbh" = (
@@ -59606,18 +59511,6 @@
 /obj/item/ore/bohrum,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"cvC" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/item/ore/pharosium,
-/obj/item/ore/bohrum,
-/obj/item/ore/bohrum,
-/obj/item/ore/claretine,
-/obj/item/ore/claretine,
-/obj/item/ore/claretine,
-/obj/item/ore/uqill,
-/obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "cvD" = (
 /obj/item/ore/pharosium,
 /obj/item/ore/pharosium,
@@ -59923,12 +59816,6 @@
 /obj/item/clothing/suit/space/engineer,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"cwj" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/item/powerhammer,
-/obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "cwk" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -60102,11 +59989,6 @@
 	},
 /turf/simulated/wall/asteroid,
 /area/space)
-"cwA" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/item/oreprospector,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "cwB" = (
 /obj/item/drill,
 /obj/item/clothing/suit/space/engineer,
@@ -60139,12 +60021,6 @@
 /obj/item/ore/syreline,
 /obj/item/ore/syreline,
 /obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
-"cwG" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/item/ore/cobryl,
-/obj/item/ore/cobryl,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "cwH" = (
@@ -64376,20 +64252,6 @@
 /obj/item/gun/russianrevolver,
 /turf/simulated/floor/carpet,
 /area/crunch)
-"cEZ" = (
-/obj/stool/chair{
-	dir = 8
-	},
-/obj/window/cubicle,
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of a human. The skull has a hole in it.  An extra one, I mean.";
-	layer = 2.5;
-	pixel_y = 8
-	},
-/obj/decal/cleanable/blood/splatter,
-/obj/spook,
-/turf/simulated/floor/carpet,
-/area/crunch)
 "cFa" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -65686,12 +65548,6 @@
 	},
 /turf/simulated/floor,
 /area/crunch)
-"cIl" = (
-/obj/decal/cleanable/blood/splatter,
-/obj/decal/fakeobjects/skeleton,
-/obj/spook,
-/turf/simulated/floor/white,
-/area/crunch)
 "cIm" = (
 /obj/table{
 	tag = "icon-tabledir";
@@ -65882,12 +65738,98 @@
 	},
 /turf/simulated/floor/delivery,
 /area/crunch)
+"dgn" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/ore/pharosium,
+/obj/item/ore/bohrum,
+/obj/item/ore/bohrum,
+/obj/item/ore/claretine,
+/obj/item/ore/claretine,
+/obj/item/ore/claretine,
+/obj/item/ore/uqill,
+/obj/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
+"giV" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/powerhammer,
+/obj/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "gnx" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
 	},
 /turf/simulated/floor,
 /area/crew_quarters/captain)
+"iTD" = (
+/obj/decal/fakeobjects/skeleton{
+	density = 0;
+	desc = "Huh, this isn't trash.";
+	icon = 'evilreaverstation.dmi';
+	icon_state = "victim2";
+	name = "trash incinerator";
+	opacity = 0;
+	tag = "icon-body2"
+	},
+/turf/simulated/floor/grime,
+/area/derelict/evilreaver/security)
+"jUl" = (
+/obj/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/lawrack,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/turret_protected/AIbasecore1{
+	name = "Upload Station"
+	})
+"kBk" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/window/cubicle,
+/obj/decal/fakeobjects/skeleton{
+	desc = "The remains of a human. The skull has a hole in it.  An extra one, I mean.";
+	layer = 2.5;
+	pixel_y = 8
+	},
+/obj/decal/cleanable/blood/splatter,
+/obj/spook,
+/turf/simulated/floor/carpet,
+/area/crunch)
+"kUd" = (
+/obj/decal/fakeobjects/skeleton{
+	density = 1;
+	desc = "There seems to be a lot of flesh wedged in this airlock.";
+	icon = 'evilreaverstation.dmi';
+	icon_state = "victim1";
+	name = "bloody mess";
+	opacity = 1;
+	tag = "icon-body2"
+	},
+/obj/spook,
+/obj/effect_sparker,
+/turf/simulated/floor/grime,
+/area/derelict/evilreaver)
+"lbU" = (
+/obj/decal/fakeobjects/sink,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/specialroom/cafeteria{
+	dir = 1
+	},
+/area/derelict/evilreaver/bar)
+"mDN" = (
+/obj/decal/cleanable/blood,
+/obj/decal/fakeobjects/skeleton{
+	name = "scorched remains"
+	},
+/obj/decal/ash,
+/turf/simulated/floor/scorched2,
+/area/derelict/evilreaver/toxins)
 "omC" = (
 /obj/table{
 	tag = "icon-tabledir (SOUTHEAST)";
@@ -65903,6 +65845,22 @@
 /obj/item/camera,
 /turf/simulated/floor,
 /area/crew_quarters/captain)
+"ped" = (
+/obj/decal/fakeobjects/skeleton{
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body1";
+	name = "corpse";
+	tag = "icon-body1"
+	},
+/turf/space,
+/area/space)
+"slP" = (
+/obj/rack,
+/obj/item/circuitboard/robot_module_rewriter,
+/obj/item/circuitboard/cloning,
+/obj/item/circuitboard/card,
+/turf/simulated/floor/plating,
+/area/storage/tech)
 "suU" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -65919,6 +65877,44 @@
 	icon_state = "carpetS"
 	},
 /area/security/detectives_office)
+"syr" = (
+/obj/decal/cleanable/blood/splatter,
+/obj/decal/fakeobjects/skeleton,
+/obj/spook,
+/turf/simulated/floor/white,
+/area/crunch)
+"tbO" = (
+/obj/decal/fakeobjects/oven,
+/obj/item/reagent_containers/food/snacks/cake/meat,
+/obj/item/crowbar,
+/turf/simulated/floor/specialroom/cafeteria{
+	dir = 1
+	},
+/area/derelict/evilreaver/bar)
+"wEr" = (
+/obj/decal/cleanable/blood,
+/obj/decal/fakeobjects/skeleton{
+	desc = "The head seems to be gone.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body2";
+	name = "corpse";
+	tag = "icon-body2"
+	},
+/turf/simulated/floor/specialroom/cafeteria{
+	dir = 1
+	},
+/area/derelict/evilreaver/bar)
+"wMw" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/oreprospector,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
+"xCb" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/ore/cobryl,
+/obj/item/ore/cobryl,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -91018,7 +91014,7 @@ aaa
 aaa
 aRR
 aSB
-aTk
+jUl
 aUg
 aVa
 aVW
@@ -95971,7 +95967,7 @@ ayo
 ayP
 azw
 aAa
-aAB
+slP
 aBe
 azS
 aAV
@@ -188625,7 +188621,7 @@ bVg
 bVw
 bVV
 bWn
-bWz
+mDN
 bRT
 bWY
 bXr
@@ -194782,7 +194778,7 @@ caO
 caO
 aab
 aaa
-cbg
+ped
 aaa
 aaa
 aaa
@@ -195650,7 +195646,7 @@ bOf
 bOf
 bOf
 bOf
-bSq
+kUd
 bSI
 bTb
 bTw
@@ -198588,7 +198584,7 @@ bKZ
 bNC
 bNP
 bOi
-bOE
+iTD
 bNU
 bOi
 bPN
@@ -202678,10 +202674,10 @@ bLo
 bLo
 bPz
 bPP
-bQb
+lbU
 bQv
 bQv
-bQR
+wEr
 bPP
 bRo
 bRC
@@ -202905,7 +202901,7 @@ bLo
 bOY
 bNh
 bPP
-bQc
+tbO
 bQv
 bQG
 bQv
@@ -289406,7 +289402,7 @@ aij
 aij
 cvz
 cli
-cwj
+giV
 cli
 cjR
 aij
@@ -289627,7 +289623,7 @@ aaa
 ahP
 aij
 cvv
-cvC
+dgn
 cvK
 aij
 aij
@@ -290776,7 +290772,7 @@ cuV
 cwv
 cwv
 aij
-cwA
+wMw
 cwE
 ajd
 ajc
@@ -291231,7 +291227,7 @@ cwv
 aij
 cwh
 cwC
-cwG
+xCb
 cwI
 ajf
 aaa
@@ -339095,7 +339091,7 @@ cEp
 cEx
 cEF
 cEO
-cEZ
+kBk
 cFd
 cDw
 cDw
@@ -340498,7 +340494,7 @@ cHT
 cGx
 cDw
 cGx
-cIl
+syr
 cGx
 cDu
 cDi
