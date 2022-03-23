@@ -28,7 +28,7 @@ export const ChemHeater = (props, context) => {
                 onDrag={(e, value) => act('adjustTemp', { temperature: value })}
               />
             </Stack.Item>
-            <Stack.Item grow overflow="hidden" py={1}>
+            <Stack.Item grow basis={0} overflow="hidden">
               <Box
                 className="ChemHeater__TemperatureNumber"
                 nowrap
