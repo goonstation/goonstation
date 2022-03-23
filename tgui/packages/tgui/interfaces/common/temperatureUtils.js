@@ -7,7 +7,8 @@ export const TemperatureColors = {
   veryhot: new Color(255, 0, 0),
 };
 
-const neutralTemperature = 293.15;
+export const freezeTemperature = 273.15;
+export const neutralTemperature = 293.15;
 const deviation = 200;
 const highTemperature = neutralTemperature + deviation;
 
@@ -30,7 +31,7 @@ export const getTemperatureIcon = (temperature) => {
   }
 };
 
-export const getTemperatureChange = (temperature, targetTemperature) => {
+export const getTemperatureChangeName = (temperature, targetTemperature) => {
   if (temperature < targetTemperature) return "heating";
   if (temperature > targetTemperature) return "cooling";
   return "neutral";

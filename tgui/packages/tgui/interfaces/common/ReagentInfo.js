@@ -1,4 +1,5 @@
 import { Box, ColorBox, Flex, Icon, NoticeBox, Section, Tooltip } from '../../components';
+import { freezeTemperature } from './temperatureUtils';
 
 export const NoContainer = {
   name: "No Beaker Inserted",
@@ -6,7 +7,7 @@ export const NoContainer = {
   maxVolume: 100,
   totalVolume: 0,
   finalColor: "#000000",
-  temperature: 273.15,
+  temperature: freezeTemperature,
   fake: true,
 };
 

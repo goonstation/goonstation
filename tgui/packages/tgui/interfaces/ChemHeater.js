@@ -1,7 +1,7 @@
 import { useBackend } from "../backend";
 import { AnimatedNumber, Box, Button, Dimmer, Flex, Icon, Knob, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { getTemperatureColor, getTemperatureIcon, getTemperatureChange } from './common/temperatureUtils.js';
+import { freezeTemperature, getTemperatureColor, getTemperatureIcon, getTemperatureChangeName } from './common/temperatureUtils.js';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo.js';
 
 export const ChemHeater = (props, context) => {
@@ -44,7 +44,7 @@ export const ChemHeater = (props, context) => {
             <Stack.Item basis={9.6} align="center">
               <Button
                 icon="power-off"
-                disabled={!(containerData && containerData.totalVolume)}
+                disabled={!containerData?.totalVolume}
                 color={isActive ? "red" : "green"}
                 fluid
                 height="100%"
@@ -63,8 +63,8 @@ export const ChemHeater = (props, context) => {
 
 const ChemDisplay = (props, context) => {
   const { act } = useBackend(context);
-  const { active = false, targetTemperature = 273.15 } = props;
-  const container = props.container || NoContainer;
+  const { active = false, targetTemperature = freezeTemperature } = props;
+  const container = props.container ?? NoContainer;
   const working = active && !container.fake;
   const { temperature, totalVolume } = container;
 
