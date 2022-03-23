@@ -194,7 +194,7 @@
 	accepted_token()
 		src.credits[WEAPON_VENDOR_CATEGORY_SIDEARM]++
 		src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
-		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
+		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+2
 		..()
 
 	disposing()
@@ -439,6 +439,7 @@
 	name = "Hi-grip Assault Boots"
 	path = /obj/item/clothing/shoes/swat/noslip
 	description = "Avoid slipping in firefights with these combat boots designed to provide enhanced grip and ankle stability."
+	cost = 2
 
 /datum/materiel/utility/bomb_decoy
 	name = "Decoy Bomb Balloon"
