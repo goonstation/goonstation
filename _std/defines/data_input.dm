@@ -26,7 +26,6 @@
 // list stuff
 #define DATA_INPUT_LIST_BUILD "Build New List"
 #define DATA_INPUT_LIST_EDIT "Edit as List"
-#define DATA_INPUT_LIST_EDIT_ASSOCIATED "Edit Associated Var"
 #define DATA_INPUT_LIST_DEL_FROM "Delete from List"
 
 //TODO figure out associated list shit
