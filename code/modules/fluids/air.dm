@@ -55,9 +55,9 @@ var/list/ban_from_airborne_fluid = list()
 
 	trigger_fluid_enter()
 		for(var/atom/A in src.loc)
-			if (src.group && A.event_handler_flags & USE_FLUID_ENTER)
+			if (src.group && !src.group.disposed && A.event_handler_flags & USE_FLUID_ENTER)
 				A.EnteredAirborneFluid(src, src.loc)
-		if(src.group)
+		if(src.group && !src.group.disposed)
 			src.loc?.EnteredAirborneFluid(src, src.loc)
 
 	turf_remove_cleanup(turf/the_turf)
@@ -119,7 +119,7 @@ var/list/ban_from_airborne_fluid = list()
 	//incorporate touch_modifier?
 	Crossed(atom/movable/A)
 		..()
-		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid))
+		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid) || src.group.disposed)
 			return
 		A.EnteredAirborneFluid(src, A.last_turf)
 
@@ -146,7 +146,6 @@ var/list/ban_from_airborne_fluid = list()
 		var/turf/t
 		if(!waterflow_enabled) return
 		for( var/dir in cardinal )
-			LAGCHECK(LAG_LOW)
 			blocked_perspective_objects["[dir]"] = 0
 			t = get_step( src, dir )
 			if (!t) //the fuck? how
@@ -167,7 +166,6 @@ var/list/ban_from_airborne_fluid = list()
 				var/suc = 1
 				var/push_thing = 0
 				for(var/obj/thing in t.contents) //HEY maybe do item pushing here since you're looping thru turf contents anyway??
-					LAGCHECK(LAG_MED)
 					var/found = 0
 					if (IS_SOLID_TO_FLUID(thing))
 						found = 1
@@ -194,13 +192,12 @@ var/list/ban_from_airborne_fluid = list()
 							suc=0
 							break
 
-				if(suc && src.group) //group went missing? ok im doin a check here lol
-					LAGCHECK(LAG_MED)
+				if(suc && src.group && !src.group.disposed) //group went missing? ok im doin a check here lol
 					spawned_any = 1
 					src.icon_state = "airborne"
 					var/obj/fluid/F = new /obj/fluid/airborne
 					F.set_up(t,0)
-					if (!F || !src.group) continue //set_up may decide to remove F
+					if (!F || !src.group || src.group.disposed) continue //set_up may decide to remove F
 
 					F.amt = src.group.amt_per_tile
 					F.name = src.name
@@ -214,12 +211,13 @@ var/list/ban_from_airborne_fluid = list()
 					F.movement_speed_mod = src.movement_speed_mod
 
 					if (src.group)
+						src.group.add(F, src.group.amt_per_tile)
 						F.group = src.group
-						. += F
 					else
 						var/datum/fluid_group/FG = new
 						FG.add(F, src.group.amt_per_tile)
 						F.group = FG
+					. += F
 
 					F.done_init()
 					last_spread_was_blocked = 0

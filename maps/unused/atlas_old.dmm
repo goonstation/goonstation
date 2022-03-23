@@ -1114,7 +1114,7 @@
 "ds" = (
 /obj/machinery/weapon_stand/shotgun_rack,
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "dt" = (
 /turf/simulated/floor/red,
 /area/station/security/brig)
@@ -1265,7 +1265,7 @@
 "dS" = (
 /obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "dT" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -1351,7 +1351,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "eg" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -1376,7 +1376,7 @@
 /area/station/quartermaster/office)
 "ei" = (
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ej" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
@@ -1558,7 +1558,7 @@
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "eI" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -2592,7 +2592,7 @@
 "hl" = (
 /obj/storage/secure/crate/plasma/armory,
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "hm" = (
 /turf/simulated/floor/red/side{
 	dir = 8
@@ -2944,7 +2944,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "hV" = (
 /turf/simulated/wall/auto/supernorn/the_tuff_stuff,
 /area/station/hallway/primary/west)
@@ -9126,7 +9126,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "wl" = (
 /obj/machinery/vehicle/miniputt/indyputt,
 /obj/machinery/light,
@@ -16671,7 +16671,7 @@
 "Zz" = (
 /obj/decal/poster/wallsign/framed_award/hos_medal,
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 
 (1,1,1) = {"
 aa

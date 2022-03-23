@@ -494,7 +494,7 @@
 "acn" = (
 /obj/machinery/weapon_stand/shotgun_rack,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aco" = (
 /obj/deployable_turret/riot{
 	active = 1;
@@ -508,7 +508,7 @@
 	},
 /obj/access_spawn/hos,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "acp" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -677,7 +677,7 @@
 /area/station/turret_protected/armory_outside)
 "acV" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "acW" = (
 /obj/lattice{
 	dir = 5;
@@ -993,7 +993,7 @@
 /area/space)
 "adE" = (
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "adF" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -1095,7 +1095,7 @@
 	pixel_y = 1
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "adW" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
@@ -1185,7 +1185,7 @@
 	name = "peststart"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aes" = (
 /obj/decal/poster/wallsign/stencil/right/s{
 	pixel_x = 10
@@ -1416,7 +1416,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aeY" = (
 /obj/storage/crate,
 /obj/item/clothing/under/gimmick/princess,
@@ -1720,7 +1720,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "afP" = (
 /obj/table/auto,
 /obj/machinery/light/small{
@@ -1738,7 +1738,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "afS" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -1889,7 +1889,7 @@
 	pixel_y = 11
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "age" = (
 /obj/decal/cleanable/dirt,
 /obj/item/bananapeel,
@@ -2260,7 +2260,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ahs" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/routing/security)
@@ -2685,7 +2685,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aip" = (
 /obj/machinery/conveyor{
 	name = "cargo belt - south";
@@ -3035,7 +3035,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ajj" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -3044,7 +3044,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ajk" = (
 /obj/machinery/door_control{
 	id = "hangar_north";
@@ -3102,7 +3102,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aju" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -3953,7 +3953,7 @@
 	},
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "alQ" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment,
@@ -52477,7 +52477,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "diH" = (
 /obj/machinery/atmospherics/valve{
 	name = "gas mix supply valve"
@@ -53908,7 +53908,7 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "fpy" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
@@ -54037,7 +54037,7 @@
 	},
 /obj/machinery/power/apc/autoname_north/noaicontrol,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "fBp" = (
 /obj/grille/catwalk,
 /obj/cable/yellow{
@@ -54166,7 +54166,7 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "fGO" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -54332,7 +54332,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "fXj" = (
 /obj/stool/chair{
 	dir = 4
@@ -56924,7 +56924,7 @@
 	pixel_y = 10
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "kwa" = (
 /obj/disposalpipe/segment/ejection,
 /obj/cable{
@@ -57418,7 +57418,7 @@
 	pixel_y = 10
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "lCB" = (
 /obj/landmark/gps_waypoint,
 /obj/cable/brown{
@@ -58204,7 +58204,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "nje" = (
 /obj/cable/yellow{
 	icon_state = "4-8"
@@ -62018,7 +62018,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "tAc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -63513,7 +63513,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "vOp" = (
 /obj/shrub{
 	dir = 4;

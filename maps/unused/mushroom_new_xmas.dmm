@@ -27275,7 +27275,7 @@
 /area/station/security/brig)
 "bfw" = (
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bfx" = (
 /obj/machinery/bot/secbot/beepsky,
 /obj/item/clothing/suit/bedsheet,
@@ -27534,7 +27534,7 @@
 /area/station/security/brig)
 "bfZ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bga" = (
 /turf/space,
 /area/station/turret_protected/ai)
@@ -27627,7 +27627,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bgn" = (
 /turf/simulated/floor/red/side{
 	dir = 9
@@ -27635,7 +27635,7 @@
 /area/station/security/brig)
 "bgo" = (
 /turf/simulated/floor/caution/west,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bgp" = (
 /obj/lattice,
 /turf/space,
@@ -27717,7 +27717,7 @@
 	},
 /obj/storage/secure/crate/plasma/armory/anti_biological,
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bgy" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -27732,7 +27732,7 @@
 /obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/machinery/light,
 /turf/simulated/floor/caution/west,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bgA" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -31309,7 +31309,7 @@
 "bnN" = (
 /obj/storage/secure/crate/gear/armory/grenades,
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bnO" = (
 /obj/storage/secure/closet/security/armory{
 	req_access_txt = "37"
@@ -31317,7 +31317,7 @@
 /obj/item/gun/kinetic/flaregun,
 /obj/item/ammo/bullets/flare,
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bnP" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,

@@ -30456,7 +30456,7 @@
 	},
 /obj/machinery/weapon_stand/shotgun_rack,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "biw" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -30819,7 +30819,7 @@
 /area/station/security/hos)
 "bjs" = (
 /turf/simulated/wall/r_wall,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bjt" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -31328,7 +31328,7 @@
 	},
 /obj/machinery/vending/security_ammo,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bkn" = (
 /obj/window/reinforced{
 	icon_state = "rwindow";
@@ -31342,7 +31342,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bko" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/suit/straight_jacket,
@@ -31360,7 +31360,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/caution/west,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bkp" = (
 /obj/storage/closet/wardrobe/white/genetics,
 /turf/simulated/floor/greenwhite{
@@ -31570,10 +31570,10 @@
 	d2 = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bkP" = (
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bkQ" = (
 /obj/machinery/power/apc{
 	dir = 2;
@@ -31583,7 +31583,7 @@
 /obj/cable,
 /obj/storage/secure/crate/weapon/armory/tranquilizer,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bkR" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -31883,11 +31883,11 @@
 /obj/item/ammo/bullets/autocannon/seeker,
 /obj/item/ammo/bullets/autocannon/seeker,
 /turf/simulated/floor/caution/west,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "blz" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "blA" = (
 /obj/grille/catwalk/cross{
 	dir = 10

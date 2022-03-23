@@ -229,7 +229,7 @@
 			src.mind.transfer_to(cyborg)
 	cyborg.set_loc(get_turf(src.loc))
 	if (syndicate)
-		cyborg.handle_robot_antagonist_status("converted")
+		cyborg.make_syndicate("Robotize_MK2 (probably cyborg converter)")
 		boutput(cyborg, "<B>You have been transformed into a <i>syndicate</i> Cyborg. Cyborgs can interact with most electronic objects in their view.</B>")
 		boutput(cyborg, "<B>You must follow your laws and assist syndicate agents, who are identifiable by their icon.</B>")
 	else

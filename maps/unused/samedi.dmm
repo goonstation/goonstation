@@ -13595,7 +13595,7 @@
 /area/station/security/main)
 "aDW" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aDX" = (
 /obj/machinery/power/smes{
 	charge = 2e+007;
@@ -14150,7 +14150,7 @@
 	d2 = 8
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aFi" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -14839,7 +14839,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aGG" = (
 /obj/storage/secure/crate/weapon/armory/phaser,
 /obj/cable{
@@ -14848,7 +14848,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aGH" = (
 /obj/storage/secure/crate/weapon/armory/pod_weapons,
 /obj/machinery/light{
@@ -14859,7 +14859,7 @@
 	},
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aGI" = (
 /obj/table/auto,
 /obj/machinery/light{
@@ -15415,7 +15415,7 @@
 	},
 /obj/item/reagent_containers/food/snacks/plant/lemon,
 /turf/simulated/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aHX" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6;
@@ -15423,7 +15423,7 @@
 	level = 2
 	},
 /turf/simulated/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aHY" = (
 /obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/machinery/camera{
@@ -15440,7 +15440,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aHZ" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -15453,7 +15453,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aIa" = (
 /obj/machinery/door/airlock/pyro/command{
 	aiControlDisabled = 1;
@@ -15469,7 +15469,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aIb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16049,22 +16049,22 @@
 /obj/item/clothing/glasses/thermal,
 /obj/item/clothing/glasses/thermal,
 /turf/simulated/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aJo" = (
 /obj/machinery/atmospherics/valve{
 	name = "Brig Suppression System"
 	},
 /turf/simulated/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aJp" = (
 /turf/simulated/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aJq" = (
 /obj/storage/secure/crate/gear/armory/grenades,
 /obj/machinery/power/apc/autoname_east/noaicontrol,
 /obj/cable,
 /turf/simulated/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aJr" = (
 /obj/stool/chair/comfy,
 /obj/landmark/start{
@@ -16577,14 +16577,14 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aKz" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aKA" = (
 /obj/table/reinforced/auto,
 /obj/item/gun/kinetic/riot40mm{
@@ -16594,7 +16594,7 @@
 /obj/item/ammo/bullets/smoke,
 /obj/item/gun/kinetic/riot40mm,
 /turf/simulated/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aKB" = (
 /obj/table/reinforced/auto,
 /obj/item/chem_grenade/flashbang,
@@ -16610,7 +16610,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aKC" = (
 /obj/table/wood/round/auto,
 /obj/cable{
@@ -17718,7 +17718,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aMU" = (
 /obj/machinery/atmospherics/valve{
 	name = "Chapel Repressurization"
