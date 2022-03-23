@@ -9445,6 +9445,7 @@
 /turf/simulated/floor/plating,
 /area/evilreaver/genetics)
 "azq" = (
+/obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
 	name = "Mining Outpost";
@@ -24485,7 +24486,7 @@
 /turf/simulated/floor/airless/carpet/office,
 /area/mining/hangar)
 "mea" = (
-/turf/unsimulated/floor/caution/east,
+/turf/simulated/floor/caution/east,
 /area/mining/hangar)
 "mFm" = (
 /obj/table/wood/round/champagne,
@@ -73915,7 +73916,7 @@ evf
 qnw
 uhA
 sYT
-afR
+alb
 aaF
 aaa
 aaa
