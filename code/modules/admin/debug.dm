@@ -295,15 +295,15 @@ var/global/debug_messages = 0
 	boutput(usr, "<span class='notice'>Proc returned: [pretty_returnval]</span>")
 	return
 
-/client/proc/get_proccall_arglist(list/arginfo = null)
+/client/proc/get_proccall_arglist(list/arginfo = null, var/list/custom_options = null)
 	var/argnum = arginfo ? length(arginfo) : input("Number of arguments:","Number", 0) as null|num
 	var/list/listargs = list()
 	if (!argnum)
 		return listargs
 	for (var/i = 1 , i <= argnum, i++)
 		var/datum/data_input_result/arg = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_BOOL, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
-										DATA_INPUT_ATOM_ON_CURRENT_TURF, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_FILE, DATA_INPUT_REFPICKER, DATA_INPUT_LIST_BUILD, DATA_INPUT_NULL), \
-										custom_type_title = arginfo ? arginfo[i][ARG_INFO_DESC] + ":" : "Type of Argument #[i]", \
+										DATA_INPUT_ATOM_ON_CURRENT_TURF, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_FILE, DATA_INPUT_REFPICKER, DATA_INPUT_LIST_BUILD, DATA_INPUT_NULL) \
+										+ custom_options, custom_type_title = arginfo ? arginfo[i][ARG_INFO_DESC] + ":" : "Type of Argument #[i]", \
 										custom_type_message =  arginfo ? "Argument #[i]: " + arginfo[i][ARG_INFO_NAME] : "Variable Type", \
 										default_type = arginfo?[i][ARG_INFO_TYPE])
 

@@ -20,13 +20,13 @@
 	var/input = null 	// The input from the user- usually text, but might be a file or something.
 	var/selected_type = input(custom_type_title || "Which input type?", custom_type_message || "Input Type Selection", default_type) as null|anything in allowed_types //TODO make this a TGUI list once we can indicate defaults on those
 
-	if (!selected_type)
-		return
-
 	if (selected_type != default_type) //clear the default if we aren't using the suggested type
 		default = null
 
 	switch(selected_type)
+		if (null)
+			return
+
 		if (DATA_INPUT_NUM)
 			input = input(custom_title || "Enter number:", custom_message, default) as null|num
 
@@ -159,9 +159,9 @@
 				boutput(src, "<span class='alert'>Matrix too short. Cancelled.</span>")
 				return
 
-		// these are meaningless in certain cases, so we just return a dummy value with the input type and let the caller handle it
-		if (DATA_INPUT_RESTORE, DATA_INPUT_PARTICLE_EDITOR, DATA_INPUT_FILTER_EDITOR, DATA_INPUT_LIST_DEL_FROM)
-			input = TRUE
+		// anything else, we just return a dummy value with the input type and let the caller handle it
+		else
+			input = selected_type
 
 	if (isnull(input) && selected_type != DATA_INPUT_NULL)
 		boutput(src, "<span class='alert'>Cancelled.</span>")
