@@ -11,7 +11,7 @@
 /turf/simulated/floor/plating/random,
 /area/dmm_suite/clear_area)
 "n" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/dmm_suite/clear_area)
 

@@ -338,7 +338,7 @@
 /turf/space,
 /area/prefab/silverglass/research)
 "lq" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/prefab/silverglass/bay)
 "lB" = (
@@ -814,7 +814,7 @@
 /turf/space,
 /area/prefab/silverglass/research)
 "Ct" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/prefab/silverglass)
 "Cv" = (
@@ -1096,7 +1096,7 @@
 /turf/simulated/floor/neutral/side,
 /area/prefab/silverglass)
 "LO" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/prefab/silverglass/eats)
 "LY" = (
@@ -1414,7 +1414,7 @@
 /turf/simulated/floor/airless/specialroom/bar,
 /area/prefab/silverglass/eats)
 "VF" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/prefab/silverglass/research)
 "VP" = (

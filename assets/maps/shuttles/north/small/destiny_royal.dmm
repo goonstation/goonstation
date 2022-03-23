@@ -192,7 +192,7 @@
 	},
 /area/shuttle/escape/centcom)
 "nf" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},
@@ -349,7 +349,7 @@
 /turf/unsimulated/floor/marble/border_bw,
 /area/shuttle/escape/centcom)
 "DK" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},
@@ -625,7 +625,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/escape/centcom)
 "RD" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
 	},

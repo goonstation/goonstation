@@ -236,7 +236,7 @@
 	},
 /area/centcom)
 "Hx" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
 	icon_state = "floor2"
@@ -252,7 +252,7 @@
 	},
 /area/shuttle/escape/centcom)
 "Jz" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},

@@ -182,7 +182,7 @@
 	},
 /area/shuttle/escape/centcom)
 "Ry" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/martian/floor,
 /area/shuttle/escape/centcom)
 "SD" = (

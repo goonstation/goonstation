@@ -667,7 +667,7 @@
 	},
 /area/centcom/outside)
 "wT" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "xn" = (

@@ -535,7 +535,7 @@
 /turf/simulated/floor/circuit/red,
 /area/space)
 "bB" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/decal/fakeobjects/shuttleweapon/base,
 /turf/simulated/floor/plating,
 /area/space)
@@ -553,7 +553,7 @@
 	},
 /area/space)
 "bE" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/decal/fakeobjects/shuttleweapon/base,
 /turf/space,
 /area/space)
@@ -712,7 +712,7 @@
 	},
 /area/space)
 "cd" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
 /area/space)
 "ce" = (
@@ -792,7 +792,7 @@
 	},
 /area/space)
 "cr" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
 	icon_state = "alt_heater-R"
@@ -843,7 +843,7 @@
 	},
 /area/space)
 "cx" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -869,7 +869,7 @@
 	},
 /area/space)
 "cB" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
 	icon_state = "alt_heater-M"
@@ -917,7 +917,7 @@
 	},
 /area/space)
 "cJ" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
 	icon_state = "alt_heater-L"
@@ -1010,7 +1010,7 @@
 /turf/unsimulated/floor/plating,
 /area/space)
 "cX" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-L"
@@ -1070,7 +1070,7 @@
 /turf/unsimulated/floor/plating,
 /area/space)
 "dg" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-M"
@@ -1114,7 +1114,7 @@
 /turf/unsimulated/floor/plating,
 /area/space)
 "dn" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-R"
@@ -1328,21 +1328,21 @@
 	},
 /area/space)
 "dQ" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/floor/plating,
 /area/space)
 "dR" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},
 /turf/unsimulated/floor/plating,
 /area/space)
 "dS" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},
@@ -1474,13 +1474,13 @@
 	},
 /area/space)
 "ej" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
 /area/space)
 "ek" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -2007,7 +2007,7 @@
 	},
 /area/space)
 "fF" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
 /area/space)
 "fG" = (
@@ -2142,7 +2142,7 @@
 	},
 /area/space)
 "fZ" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/engine,
 /area/space)
 "ga" = (
@@ -2433,7 +2433,7 @@
 /turf/space,
 /area/space)
 "gI" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/space)
 "gJ" = (
@@ -3057,7 +3057,7 @@
 /turf/simulated/floor/stairs,
 /area/space)
 "iA" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/black,
 /area/space)
@@ -3068,7 +3068,7 @@
 /turf/simulated/floor/wood/two,
 /area/space)
 "iC" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right,
 /obj/machinery/light/small{
 	base_state = "radio";
@@ -3145,7 +3145,7 @@
 /turf/simulated/floor/grime,
 /area/space)
 "iM" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
@@ -3185,7 +3185,7 @@
 /turf/simulated/floor/wood/two,
 /area/space)
 "iS" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
 	dir = 8
 	},
@@ -3724,7 +3724,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "kl" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor,
 /area/space)
 "km" = (

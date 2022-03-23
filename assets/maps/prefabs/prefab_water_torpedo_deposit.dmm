@@ -25,8 +25,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/torpedo_deposit)
 "dg" = (
-/obj/wingrille_spawn/auto,
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/prefab/torpedo_deposit)
 "dj" = (
@@ -104,7 +104,7 @@
 /turf/simulated/floor,
 /area/prefab/torpedo_deposit)
 "kU" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/prefab/torpedo_deposit)
 "lz" = (

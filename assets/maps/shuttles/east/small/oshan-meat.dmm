@@ -34,7 +34,7 @@
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
 /area/shuttle/escape/centcom)
 "iN" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-R"
@@ -157,7 +157,7 @@
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
 /area/shuttle/escape/centcom)
 "tv" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-L"
@@ -205,7 +205,7 @@
 /turf/unsimulated/floor/setpieces/bloodfloor,
 /area/shuttle/escape/centcom)
 "xL" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-M"
@@ -408,7 +408,7 @@
 	},
 /area/shuttle/escape/centcom)
 "YK" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/setpieces/bloodfloor{
 	icon_state = "bloodfloor_2";
 	name = "Fleshy Floor"

@@ -6,7 +6,7 @@
 /turf/variableTurf/wall,
 /area/noGenerate)
 "ac" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "ad" = (

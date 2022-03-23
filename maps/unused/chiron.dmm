@@ -32636,7 +32636,7 @@
 /turf/simulated/floor/plating/random,
 /area/space)
 "bmK" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/space)
 "bmL" = (

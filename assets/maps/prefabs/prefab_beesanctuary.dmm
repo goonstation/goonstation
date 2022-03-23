@@ -1536,7 +1536,7 @@
 /turf/unsimulated/grass,
 /area/prefab/bee_sanctuary)
 "SN" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
 "SP" = (

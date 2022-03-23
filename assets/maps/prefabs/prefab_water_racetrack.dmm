@@ -222,7 +222,7 @@
 	},
 /area/prefab/raceway)
 "aF" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/prefab/raceway)
 "aG" = (
@@ -460,7 +460,7 @@
 	},
 /area/prefab/raceway)
 "bn" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/prefab/raceway)
 "bo" = (

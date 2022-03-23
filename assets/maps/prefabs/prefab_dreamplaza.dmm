@@ -75,7 +75,7 @@
 /turf/simulated/floor/marble/border_bw,
 /area/prefab/dreamplaza)
 "cc" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/decal/poster/wallsign/neonsparkle{
 	dir = 1
 	},
@@ -1039,7 +1039,7 @@
 /turf/simulated/floor/terrazzo/black,
 /area/prefab/dreamplaza)
 "HI" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/decal/poster/wallsign/neonicecream,
 /obj/map/light/pink,
 /turf/simulated/floor/purpleblack{
@@ -1561,7 +1561,7 @@
 /turf/simulated/floor/terrazzo/black,
 /area/prefab/dreamplaza)
 "Yr" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/decal/poster/wallsign/neonsparkle,
 /obj/map/light/cyan,
 /turf/simulated/floor/purpleblack{
@@ -1609,7 +1609,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "ZN" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},

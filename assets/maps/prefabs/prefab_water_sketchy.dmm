@@ -75,7 +75,7 @@
 /turf/simulated/floor/scorched2,
 /area/prefab/sea_sketch)
 "ap" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/prefab/sea_sketch)
 "aq" = (

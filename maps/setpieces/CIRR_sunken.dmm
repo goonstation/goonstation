@@ -33,7 +33,7 @@
 /turf/unsimulated/wall/cave,
 /area/sunken)
 "k" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},

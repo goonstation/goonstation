@@ -49,7 +49,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
 "cu" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "cA" = (
@@ -620,7 +620,7 @@
 /turf/unsimulated/floor/stairs/dark/wide,
 /area/centcom/outside)
 "xq" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},

@@ -56,11 +56,11 @@
 	},
 /area/shuttle/escape/centcom)
 "js" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "jN" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-L"
@@ -178,7 +178,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "zv" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-R"
@@ -276,7 +276,7 @@
 	},
 /area/shuttle/escape/centcom)
 "Ji" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-M"
@@ -382,7 +382,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "RD" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},

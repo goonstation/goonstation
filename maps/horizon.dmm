@@ -28740,7 +28740,7 @@
 /turf/space,
 /area/station/com_dish/comdish)
 "buQ" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -31556,7 +31556,7 @@
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
 "bCk" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/security/brig/genpop)
 "bCm" = (
@@ -35998,7 +35998,7 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bNR" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/random,
 /area/station/security/main)
@@ -36013,7 +36013,7 @@
 /turf/simulated/floor/redwhite,
 /area/station/security/main)
 "bNT" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/plating/random,
 /area/station/security/main)
@@ -37516,7 +37516,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "bRL" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
@@ -41129,7 +41129,7 @@
 /turf/simulated/floor/carpet/red/standard/edge/east,
 /area/station/security/main)
 "cay" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
@@ -54355,7 +54355,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "hZG" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/junction/middle/west,
 /turf/simulated/floor/plating/random,
 /area/station/security/brig/genpop)
@@ -55470,7 +55470,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/storage/auxillary)
 "kFm" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/junction/middle/east,
 /turf/simulated/floor/plating/random,
 /area/station/security/brig/genpop)
@@ -58287,7 +58287,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai)
 "roN" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/security/main)
 "roW" = (

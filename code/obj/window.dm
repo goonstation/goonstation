@@ -990,12 +990,15 @@
 
 
 	auto
-		name = "reinforced autowindow grille spawner"
-		win_path = "/obj/window/auto/reinforced"
+		name = "autowindow grille spawner"
+		win_path = "/obj/window/auto"
 		full_win = 1
 		no_dirs = 1
-		icon_state = "r-wingrille_f"
-
+		icon_state = "wingrille_f"
+		reinforced
+			name = "reinforced autowindow grille spawner"
+			win_path = "/obj/window/auto/reinforced"
+			icon_state = "r-wingrille_f"
 		crystal
 			name = "crystal autowindow grille spawner"
 			win_path = "/obj/window/auto/crystal/reinforced"

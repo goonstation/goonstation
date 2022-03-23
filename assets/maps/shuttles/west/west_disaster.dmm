@@ -721,7 +721,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "xq" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "xv" = (

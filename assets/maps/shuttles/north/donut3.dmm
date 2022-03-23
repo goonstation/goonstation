@@ -232,7 +232,7 @@
 	},
 /area/centcom)
 "gJ" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
 	},
@@ -378,7 +378,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "mg" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "mq" = (
@@ -520,7 +520,7 @@
 	},
 /area/shuttle/escape/centcom)
 "tL" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},
@@ -590,7 +590,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom)
 "xe" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},
@@ -907,7 +907,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "Ms" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -970,7 +970,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "PO" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},

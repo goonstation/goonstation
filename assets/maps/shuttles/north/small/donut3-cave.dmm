@@ -75,14 +75,14 @@
 /turf/unsimulated/floor/cave,
 /area/shuttle/escape/centcom)
 "pz" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},
 /turf/unsimulated/floor/cave,
 /area/shuttle/escape/centcom)
 "pJ" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/cave,
 /area/shuttle/escape/centcom)
 "qy" = (
@@ -160,7 +160,7 @@
 /turf/unsimulated/floor/cave,
 /area/shuttle/escape/centcom)
 "BR" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
 	},
@@ -225,7 +225,7 @@
 /turf/unsimulated/floor/cave,
 /area/shuttle/escape/centcom)
 "Sm" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},

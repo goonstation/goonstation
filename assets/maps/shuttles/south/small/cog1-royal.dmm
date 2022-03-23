@@ -68,7 +68,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/escape/centcom)
 "eB" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom)

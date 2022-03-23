@@ -6,7 +6,7 @@
 /turf/variableTurf/clear,
 /area/space)
 "ac" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor,
 /area/prefab/sea_mining)
 "ad" = (
@@ -47,7 +47,7 @@
 /turf/simulated/floor,
 /area/prefab/sea_mining)
 "ak" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/sea_mining)
 "al" = (

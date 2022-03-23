@@ -175,7 +175,7 @@
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "hY" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/decal/stage_edge{
 	layer = 2.9
 	},
@@ -299,7 +299,7 @@
 /turf/unsimulated/floor/white/checker2,
 /area/shuttle/escape/centcom)
 "mr" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "mu" = (
@@ -666,7 +666,7 @@
 /turf/unsimulated/floor/white/checker2,
 /area/shuttle/escape/centcom)
 "xT" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/white,
 /area/shuttle/escape/centcom)
 "ye" = (

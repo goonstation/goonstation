@@ -202,7 +202,7 @@
 /turf/unsimulated/floor/black/grime,
 /area/prefab/bee_sanctuary)
 "ik" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
 "il" = (

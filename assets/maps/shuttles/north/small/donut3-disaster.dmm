@@ -56,7 +56,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "fK" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},
@@ -246,7 +246,7 @@
 	},
 /area/shuttle/escape/centcom)
 "tJ" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
 	},
@@ -328,7 +328,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/shuttle/escape/centcom)
 "zx" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},
@@ -400,7 +400,7 @@
 /turf/unsimulated/floor/plating/damaged2,
 /area/shuttle/escape/centcom)
 "DS" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Et" = (
@@ -609,7 +609,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Qy" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},

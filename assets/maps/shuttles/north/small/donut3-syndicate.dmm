@@ -31,7 +31,7 @@
 	},
 /area/shuttle/escape/centcom)
 "fK" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},
@@ -155,7 +155,7 @@
 	},
 /area/shuttle/escape/centcom)
 "uj" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},
@@ -213,7 +213,7 @@
 	},
 /area/shuttle/escape/centcom)
 "zD" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
 	},

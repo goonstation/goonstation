@@ -286,7 +286,7 @@
 	},
 /area/centcom)
 "gJ" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
 	},
@@ -564,7 +564,7 @@
 	},
 /area/centcom/outside)
 "qY" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
@@ -613,7 +613,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "tL" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},
@@ -699,7 +699,7 @@
 /turf/unsimulated/floor/plating/damaged3,
 /area/shuttle/escape/centcom)
 "xe" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},
@@ -1069,7 +1069,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Ms" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Ng" = (
@@ -1148,7 +1148,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "PO" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},

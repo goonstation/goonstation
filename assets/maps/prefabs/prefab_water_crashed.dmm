@@ -32,7 +32,7 @@
 /turf/variableTurf/wall,
 /area/space)
 "ai" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/airless/plating,
 /area/station/turret_protected/sea_crashed)
 "ak" = (
@@ -131,7 +131,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/sea_crashed)
 "aG" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/variableTurf/wall,
 /area/station/turret_protected/sea_crashed)
 "aH" = (
@@ -216,7 +216,7 @@
 /area/station/turret_protected/sea_crashed)
 "aV" = (
 /obj/item/raw_material/shard,
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/airless/plating,
 /area/station/turret_protected/sea_crashed)
 "aW" = (

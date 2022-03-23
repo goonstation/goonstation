@@ -3030,7 +3030,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "dIA" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/wall/auto/supernorn/wood,
 /area/swampzone/interiors/outbuildings)
 "dIX" = (
@@ -14396,7 +14396,7 @@
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek)
 "rhP" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/wood/eight{
 	dir = 8
 	},
@@ -16850,7 +16850,7 @@
 	},
 /area/swampzone/deeps)
 "ues" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/wall/cave{
 	name = "rock"
 	},

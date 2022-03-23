@@ -105,7 +105,7 @@
 /turf/simulated/floor/airless/scorched,
 /area/noGenerate)
 "at" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
@@ -215,7 +215,7 @@
 	},
 /area/noGenerate)
 "aF" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/airless/scorched,
 /area/noGenerate)
 "aG" = (
@@ -605,7 +605,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "bz" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/airless{
 	icon_state = "floorgrime"
 	},
@@ -677,7 +677,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "bK" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/noGenerate)
 "bL" = (

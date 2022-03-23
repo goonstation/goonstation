@@ -243,7 +243,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/mining/refinery)
 "aM" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/mining/refinery)
 "aN" = (
@@ -1686,8 +1686,8 @@
 /turf/simulated/floor/carpet/blue/fancy,
 /area/station/mining/refinery)
 "fn" = (
-/obj/wingrille_spawn/auto,
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/mining/refinery)
 "fo" = (
@@ -1868,7 +1868,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "fT" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/space)
 "fU" = (
@@ -3328,7 +3328,7 @@
 	},
 /area/space)
 "jX" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/green,
 /area/space)
 "jY" = (

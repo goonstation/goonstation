@@ -224,7 +224,7 @@
 	},
 /area/shuttle/escape/centcom)
 "L" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/iomoon/ancient_floor,
 /area/shuttle/escape/centcom)
 "N" = (

@@ -1320,7 +1320,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "TB" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Up" = (
