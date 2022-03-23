@@ -27,8 +27,12 @@
 		if (!src.throwing && !src.lying && isturf(NewLoc))
 			var/turf/T = NewLoc
 			if (T.turf_flags & MOB_SLIP)
-				switch (T.wet)
-					if (1)
+				var/wet_adjusted = T.wet
+				if (traitHolder?.hasTrait("super_slips") && T.wet) //non-zero wet
+					wet_adjusted = max(wet_adjusted, 2) //whee
+
+				switch (wet_adjusted)
+					if (1) //ATM only the ancient mop does this
 						if (locate(/obj/item/clothing/under/towel) in T)
 							src.inertia_dir = 0
 							T.wet = 0

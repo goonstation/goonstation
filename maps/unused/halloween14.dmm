@@ -14372,19 +14372,6 @@
 /obj/machinery/vending/computer3,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"aDe" = (
-/obj/table{
-	icon_state = "tabledir";
-	dir = 10
-	},
-/obj/item/aiModule/reset,
-/obj/item/disk/data/cartridge/atmos,
-/obj/item/clothing/glasses/meson,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
 "aDf" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -14938,14 +14925,6 @@
 /area/station/storage/tech)
 "aEo" = (
 /obj/item/screwdriver,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
-"aEp" = (
-/obj/rack,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/item/circuitboard/aiupload,
-/obj/item/circuitboard/card,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "aEq" = (
@@ -18532,49 +18511,6 @@
 	d2 = 8
 	},
 /turf/simulated/wall/r_wall,
-/area/station/turret_protected/ai_upload{
-	name = "AI Module Storage"
-	})
-"aLM" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/obj/table{
-	icon_state = "tabledir";
-	dir = 1
-	},
-/obj/item/aiModule/freeform,
-/obj/item/aiModule/protectStation,
-/obj/item/aiModule/conservePower,
-/obj/item/aiModule/rename,
-/obj/machinery/door/window/northleft,
-/turf/simulated/floor,
-/area/station/turret_protected/ai_upload{
-	name = "AI Module Storage"
-	})
-"aLN" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/obj/table{
-	icon_state = "tabledir";
-	dir = 1
-	},
-/obj/item/aiModule/oneHuman,
-/obj/item/aiModule/notHuman,
-/obj/item/aiModule/makeCaptain,
-/obj/item/aiModule/reset,
-/obj/machinery/door/window/northright,
-/turf/simulated/floor,
 /area/station/turret_protected/ai_upload{
 	name = "AI Module Storage"
 	})
@@ -27910,7 +27846,7 @@
 /area/station/security/hos)
 "bde" = (
 /turf/simulated/wall/r_wall,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bdf" = (
 /obj/closet/l3closet,
 /turf/simulated/floor/white/grime{
@@ -28274,14 +28210,14 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bdY" = (
 /obj/machinery/camera/motion{
 	c_tag = "Armory";
 	dir = 2
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bdZ" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -28297,7 +28233,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bea" = (
 /obj/secure_closet/animal,
 /turf/simulated/floor/white,
@@ -28498,7 +28434,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bey" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -28506,10 +28442,10 @@
 	d2 = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bez" = (
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "beA" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -28520,7 +28456,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "beB" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -28652,19 +28588,6 @@
 	})
 "beP" = (
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/AIbasecore1{
-	name = "Upload Station"
-	})
-"beQ" = (
-/obj/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/machinery/computer/aiupload,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor,
 /area/station/turret_protected/AIbasecore1{
 	name = "Upload Station"
 	})
@@ -28808,7 +28731,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bfj" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -28824,7 +28747,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/caution/west,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bfk" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -46175,17 +46098,6 @@
 	icon_state = "mars-reinf"
 	},
 /area/marsoutpost/duststorm)
-"bQW" = (
-/obj/lattice{
-	tag = "icon-lattice-dir (SOUTHEAST)";
-	icon_state = "lattice-dir";
-	dir = 6
-	},
-/obj/critter/wendigo{
-	wanderer = 0
-	},
-/turf/unsimulated/floor/arctic/snow,
-/area/upper_arctic/exterior/surface)
 "bQX" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 9
@@ -48343,10 +48255,6 @@
 /obj/item/storage/secure/ssafe/icemoon,
 /turf/unsimulated/wall/setpieces/leadwall,
 /area/lower_arctic/pod1)
-"bVI" = (
-/obj/critter/wendigo,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "bVJ" = (
 /obj/shrub{
 	tag = "icon-shrub (WEST)";
@@ -48690,11 +48598,6 @@
 	dir = 6
 	},
 /area/lower_arctic/pod1)
-"bWt" = (
-/obj/decal/icefloor,
-/obj/critter/wendigo,
-/turf/unsimulated/floor/arctic/snow/lake,
-/area/lower_arctic/lower)
 "bWu" = (
 /obj/grille/steel,
 /obj/window/crystal/reinforced/north,
@@ -49521,11 +49424,6 @@
 	icon_state = "plating_dusty3"
 	},
 /area/marsoutpost)
-"bXS" = (
-/obj/decal/icefloor,
-/obj/critter/wendigo/king,
-/turf/unsimulated/floor/arctic/snow/lake,
-/area/lower_arctic/lower)
 "bXT" = (
 /obj/landmark{
 	name = "icefall"
@@ -49624,15 +49522,6 @@
 	icon_state = "plating_dusty2"
 	},
 /area/marsoutpost)
-"bYh" = (
-/obj/critter/wendigo,
-/obj/lattice{
-	tag = "icon-lattice-dir (NORTHWEST)";
-	icon_state = "lattice-dir";
-	dir = 9
-	},
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "bYi" = (
 /obj/item/raw_material/shard/glass{
 	tag = "icon-medium";
@@ -50352,11 +50241,6 @@
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
-"bZU" = (
-/obj/decal/cleanable/blood,
-/obj/critter/wendigo,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "bZV" = (
 /obj/decal/cleanable/dirt,
 /obj/stone{
@@ -51036,11 +50920,6 @@
 /obj/item/chem_grenade/incendiary,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
-"cbG" = (
-/obj/critter/wendigo,
-/obj/decal/cleanable/blood,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "cbH" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (NORTHWEST)";
@@ -51113,12 +50992,6 @@
 /area/upper_arctic/exterior/surface)
 "cbP" = (
 /obj/item/scrap,
-/turf/unsimulated/floor/arctic/snow,
-/area/upper_arctic/exterior/surface)
-"cbQ" = (
-/obj/critter/wendigo{
-	wanderer = 0
-	},
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "cbR" = (
@@ -90460,6 +90333,16 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
+"ffs" = (
+/obj/decal/icefloor,
+/obj/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow/lake,
+/area/lower_arctic/lower)
+"iUn" = (
+/obj/critter/brullbar,
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "kas" = (
 /obj/table{
 	tag = "icon-tabledir (SOUTHEAST)";
@@ -90475,6 +90358,51 @@
 /obj/item/camera,
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/captain)
+"kcY" = (
+/obj/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
+"kmK" = (
+/obj/decal/icefloor,
+/obj/critter/brullbar/king,
+/turf/unsimulated/floor/arctic/snow/lake,
+/area/lower_arctic/lower)
+"muf" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2";
+	d1 = 1;
+	d2 = 2
+	},
+/obj/table{
+	icon_state = "tabledir";
+	dir = 1
+	},
+/obj/item/aiModule/oneHuman,
+/obj/item/aiModule/notHuman,
+/obj/item/aiModule/makeCaptain,
+/obj/machinery/door/window/northright,
+/turf/simulated/floor,
+/area/station/turret_protected/ai_upload{
+	name = "AI Module Storage"
+	})
+"pdr" = (
+/obj/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/lawrack,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/turret_protected/AIbasecore1{
+	name = "Upload Station"
+	})
 "sAE" = (
 /obj/table/reinforced{
 	tag = "icon-reinf_tabledir (SOUTHEAST)";
@@ -90484,6 +90412,65 @@
 /obj/item/camera,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
+"tFz" = (
+/obj/rack,
+/obj/item/circuitboard/robot_module_rewriter,
+/obj/item/circuitboard/cloning,
+/obj/item/circuitboard/card,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"unt" = (
+/obj/critter/brullbar{
+	wanderer = 0
+	},
+/turf/unsimulated/floor/arctic/snow,
+/area/upper_arctic/exterior/surface)
+"uBH" = (
+/obj/decal/cleanable/blood,
+/obj/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
+"viW" = (
+/obj/lattice{
+	tag = "icon-lattice-dir (SOUTHEAST)";
+	icon_state = "lattice-dir";
+	dir = 6
+	},
+/obj/critter/brullbar{
+	wanderer = 0
+	},
+/turf/unsimulated/floor/arctic/snow,
+/area/upper_arctic/exterior/surface)
+"vUP" = (
+/obj/cable{
+	icon_state = "4-8";
+	d1 = 4;
+	d2 = 8
+	},
+/obj/table{
+	icon_state = "tabledir";
+	dir = 1
+	},
+/obj/item/aiModule/freeform,
+/obj/item/aiModule/protectStation,
+/obj/item/aiModule/conservePower,
+/obj/machinery/door/window/northleft,
+/turf/simulated/floor,
+/area/station/turret_protected/ai_upload{
+	name = "AI Module Storage"
+	})
+"vWz" = (
+/obj/table{
+	icon_state = "tabledir";
+	dir = 10
+	},
+/obj/item/disk/data/cartridge/atmos,
+/obj/item/clothing/glasses/meson,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "xoo" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -90500,6 +90487,15 @@
 	icon_state = "carpetS"
 	},
 /area/station/security/detectives_office)
+"xzF" = (
+/obj/critter/brullbar,
+/obj/lattice{
+	tag = "icon-lattice-dir (NORTHWEST)";
+	icon_state = "lattice-dir";
+	dir = 9
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 
 (1,1,1) = {"
 aaa
@@ -123924,7 +123920,7 @@ aaa
 aaa
 bdD
 bek
-beQ
+pdr
 bfJ
 bgF
 bhF
@@ -130223,7 +130219,7 @@ aAm
 aBd
 aBS
 aCw
-aDe
+vWz
 aDL
 aEo
 aER
@@ -130527,7 +130523,7 @@ aBT
 aCw
 aDf
 aDM
-aEp
+tFz
 aES
 aDE
 aGj
@@ -133558,7 +133554,7 @@ aIt
 aJX
 aKA
 aLa
-aLM
+vUP
 aIt
 aMz
 aNL
@@ -133860,7 +133856,7 @@ aJi
 aJY
 aKB
 aLb
-aLN
+muf
 aMw
 aNh
 aNM
@@ -184549,7 +184545,7 @@ bMv
 bMv
 bPz
 bLy
-bQW
+viW
 bQX
 bRU
 bRU
@@ -192731,7 +192727,7 @@ bFj
 bFI
 bFD
 cal
-cbQ
+unt
 bFD
 bFD
 bFD
@@ -199662,7 +199658,7 @@ bCs
 bCs
 bXp
 bXE
-bXS
+kmK
 bDB
 bDB
 bDB
@@ -200875,7 +200871,7 @@ bCs
 bCs
 bCs
 bCs
-bVI
+kcY
 bCs
 bCs
 bCs
@@ -203583,7 +203579,7 @@ bCE
 bVh
 bCs
 bCs
-bWt
+ffs
 bCs
 bCs
 bCs
@@ -203891,7 +203887,7 @@ bCs
 bCs
 bCs
 bCs
-bYh
+xzF
 bCs
 bCE
 bCE
@@ -204789,7 +204785,7 @@ bHd
 bJs
 bCE
 bCs
-bVI
+kcY
 bCE
 bCE
 bCE
@@ -205414,7 +205410,7 @@ bCs
 bCs
 bCE
 bDh
-cbG
+iUn
 bCs
 caa
 bZQ
@@ -206309,12 +206305,12 @@ bCs
 bCs
 bCs
 bCE
-bVI
+kcY
 bCs
 bSj
 bZr
 bCs
-bZU
+uBH
 bCs
 bCs
 bCs
@@ -207821,7 +207817,7 @@ bVh
 bCE
 bCs
 bCE
-bVI
+kcY
 bCs
 bCE
 bCE

@@ -26,7 +26,6 @@
 	asteroiddoors
 		name = "Safehouse (asteroid doors)"
 		icon_state = "green"
-		force_fullbright = 1
 
 //TURFS
 
