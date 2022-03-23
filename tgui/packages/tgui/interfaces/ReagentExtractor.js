@@ -1,5 +1,5 @@
 import { useBackend, useSharedState, useLocalState } from "../backend";
-import { Button, Dimmer, Divider, Flex, NumberInput, Section, Stack } from '../components';
+import { Box, Button, Dimmer, Divider, Flex, NumberInput, Section, SectionWithTitleOverflow, Stack } from '../components';
 import { Window } from '../layouts';
 import { Fragment } from 'inferno';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo.js';
@@ -60,19 +60,14 @@ const ReagentDisplay = (props, context) => {
   const [transferAmount, setTransferAmount] = useSharedState(context, `transferAmount_${container.id}`, 10);
 
   return (
-    <Section
+    <SectionWithTitleOverflow
       title={
-        <Flex inline nowrap>
-          <Flex.Item grow
-            overflow="hidden"
-            style={{
-              "text-overflow": "ellipsis",
-              "text-transform": "capitalize",
-            }}>
-            {container.name}
-          </Flex.Item>
-          <Flex.Item px={4} /> {/* this prevents the title buttons from being overlapped by the title text */}
-        </Flex>
+        <Box as="span"
+          style={{
+            "text-transform": "capitalize",
+          }}>
+          {container.name}
+        </Box>
       }
       buttons={
         <>
@@ -171,7 +166,7 @@ const ReagentDisplay = (props, context) => {
           </Flex>
         </Flex.Item>
       </Flex>
-    </Section>
+    </SectionWithTitleOverflow>
   );
 };
 

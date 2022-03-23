@@ -34,6 +34,7 @@ export { ProgressBar } from './ProgressBar';
 export { Popper } from './Popper';
 export { RoundGauge } from './RoundGauge';
 export { Section } from './Section';
+export { SectionWithTitleOverflow } from './goonstation/SectionWithTitleOverflow';
 export { Slider } from './Slider';
 export { Stack } from './Stack';
 export { Table } from './Table';

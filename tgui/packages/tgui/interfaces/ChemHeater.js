@@ -1,5 +1,5 @@
 import { useBackend } from "../backend";
-import { AnimatedNumber, Box, Button, Dimmer, Flex, Icon, Knob, Section, Stack } from '../components';
+import { AnimatedNumber, Box, Button, Dimmer, Icon, Knob, Section, SectionWithTitleOverflow, Stack } from '../components';
 import { Window } from '../layouts';
 import { freezeTemperature, getTemperatureColor, getTemperatureIcon, getTemperatureChangeName } from './common/temperatureUtils.js';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo.js';
@@ -69,19 +69,14 @@ const ChemDisplay = (props, context) => {
   const { temperature, totalVolume } = container;
 
   return (
-    <Section
+    <SectionWithTitleOverflow
       title={
-        <Flex inline nowrap>
-          <Flex.Item grow
-            overflow="hidden"
-            style={{
-              "text-overflow": "ellipsis",
-              "text-transform": "capitalize",
-            }}>
-            {container.name}
-          </Flex.Item>
-          <Flex.Item px={4.25} /> {/* button overlap prevention */}
-        </Flex>
+        <Box as="span"
+          style={{
+            "text-transform": "capitalize",
+          }}>
+          {container.name}
+        </Box>
       }
       buttons={
         <Button
@@ -123,6 +118,6 @@ const ChemDisplay = (props, context) => {
           </Button>
         </Dimmer>
       )}
-    </Section>
+    </SectionWithTitleOverflow>
   );
 };
