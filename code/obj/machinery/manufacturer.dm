@@ -2252,14 +2252,18 @@
 	/datum/manufacture/cyberlung_right,
 	/datum/manufacture/rods2,
 	/datum/manufacture/metal,
-	/datum/manufacture/glass)
+	/datum/manufacture/glass,
+	/datum/manufacture/asimov_laws,
+	/datum/manufacture/borg_linker)
 
 	hidden = list(/datum/manufacture/flash,
 	/datum/manufacture/cybereye_thermal,
 	/datum/manufacture/cybereye_laser,
 	/datum/manufacture/cyberbutt,
 	/datum/manufacture/robup_expand,
-	/datum/manufacture/cardboard_ai)
+	/datum/manufacture/cardboard_ai,
+	/datum/manufacture/corporate_laws,
+	/datum/manufacture/robocop_laws)
 
 /obj/machinery/manufacturer/medical
 	name = "Medical Fabricator"
