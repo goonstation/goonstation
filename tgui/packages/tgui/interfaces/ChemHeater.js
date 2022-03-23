@@ -16,7 +16,6 @@ export const ChemHeater = (props, context) => {
       <Window.Content>
         <ChemDisplay container={containerData} targetTemperature={targetTemperature} active={isActive} />
         <Section title="Temperature Control">
-
           <Stack align="center">
             <Stack.Item>
               <Knob
@@ -56,7 +55,6 @@ export const ChemHeater = (props, context) => {
               </Button>
             </Stack.Item>
           </Stack>
-
         </Section>
       </Window.Content>
     </Window>
