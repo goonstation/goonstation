@@ -234,6 +234,13 @@ var/global/logLength = 0
 			key = clientRef.key
 		if (clientRef.ckey)
 			ckey = clientRef.ckey
+	else if (istype(ref,/obj/machinery/lawrack))
+		var/list/nice_rack  = list()
+		var/obj/machinery/lawrack/rack_ref = ref
+		nice_rack += rack_ref.name
+		nice_rack += "(UID: [rack_ref.unique_id]) at "
+		nice_rack += log_loc(rack_ref)
+		return nice_rack.Join()
 	else
 		return ref
 
