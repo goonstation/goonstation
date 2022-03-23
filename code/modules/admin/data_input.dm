@@ -51,6 +51,10 @@
 
 		if (DATA_INPUT_ICON)
 			input = input(custom_title || "Select icon:", custom_message) as null|icon
+			if (alert("Would you like to associate an icon_state with the icon?", "icon_state", "Yes", "No") == "Yes")
+				var/state = input("Enter icon_state:", null) as null|text
+				if (state)
+					input = icon(input, state)
 
 		if (DATA_INPUT_BOOL)
 			//lines written by the utterly insane
