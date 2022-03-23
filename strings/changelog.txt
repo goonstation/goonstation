@@ -1,5 +1,9 @@
 
 (t)wed mar 23 22
+(u)Flappybat
+(p)7777
+(e)⚖|balance
+(+)Nuclear operative assault pods are detected much later when there are more than 70 players.
 (u)Eagle
 (p)7677
 (e)🗺⚖|mapping, balance
