@@ -211,10 +211,8 @@
 /// @return Suggested input type for input_data()
 /client/proc/suggest_input_type(var/var_value, var/varname = null)
 	var/default = null
-	if (isnull(var_value))
-		boutput(src, "Unable to determine variable type.")
 
-	else if (istype(var_value, /matrix))
+	if (istype(var_value, /matrix))
 		boutput(src, "Variable appears to be <b>MATRIX</b>.")
 		default = DATA_INPUT_MATRIX
 
@@ -246,9 +244,16 @@
 		boutput(src, "Variable appears to be <b>LIST</b>.")
 		default = DATA_INPUT_LIST_EDIT
 
-	else
+	else if (isfile(var_value))
 		boutput(src, "Variable appears to be <b>FILE</b>.")
 		default = DATA_INPUT_FILE
+
+	else if (ispath(var_value))
+		boutput(src, "Variable appears to be <b>TYPE</b>.")
+		default = DATA_INPUT_TYPE
+
+	else
+		boutput(src, "Unable to determine variable type.")
 
 	boutput(src, "\"<tt>[varname || "Variable"]</tt>\" contains: [var_value]")
 	if(default == DATA_INPUT_NUM)
