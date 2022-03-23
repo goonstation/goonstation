@@ -56,7 +56,7 @@
 	special_proc = 1
 	attacked_proc = 1
 	harvestable = 0
-	assoc_reagents = list("cyanide")
+	assoc_reagents = list("cyanide", "histamine", "nitrogen_dioxide")
 	starthealth = 40
 	growtime = 50
 	harvtime = 90
@@ -93,7 +93,7 @@
 			reagents_temp.my_atom = POT
 
 			for (var/plantReagent in assoc_reagents)
-				reagents_temp.add_reagent(plantReagent, 3 * round(max(1,(1 + DNA.potency / (10 * length(assoc_reagents))))))
+				reagents_temp.add_reagent(plantReagent, 2 * round(max(1,(1 + DNA.potency / (10 * length(assoc_reagents))))))
 
 			SPAWN(0) // spawning to kick fluid processing out of machine loop
 				reagents_temp.smoke_start()
@@ -127,6 +127,7 @@
 	cropsize = 1
 	harvests = 0
 	endurance = 5
+	assoc_reagents = list("toxin", "histamine")
 	//vending = 0
 
 	var/datum/projectile/syringe/seed/projectile
@@ -139,9 +140,8 @@
 		if (!P.reagents)
 			P.reagents = new /datum/reagents(P.proj_data.cost)
 			P.reagents.my_atom = P
-
-		P.reagents.add_reagent("histamine", 5)
-		P.reagents.add_reagent("toxin", 5)
+		for (var/plantReagent in assoc_reagents)
+			P.reagents.add_reagent(plantReagent, 2)
 
 	HYPspecial_proc(var/obj/machinery/plantpot/POT)
 		..()
@@ -149,10 +149,16 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
+		var/mob/M = POT.loc
+		if(isalive(M))
+			M.TakeDamage("All", 2, 0, 0, DAMAGE_STAB)
+			if(prob(20))
+				return
+
 		if (POT.growth > (P.harvtime + DNA.harvtime + 5))
 			var/list/stuffnearby = list()
 			for (var/mob/living/X in view(7,POT.loc))
-				if(isalive(X))
+				if(isalive(X) && (X != POT.loc))
 					stuffnearby += X
 			if(length(stuffnearby))
 				var/mob/living/target = pick(stuffnearby)
@@ -196,7 +202,7 @@
 		var/atom/movable/P = locate(/obj/machinery/plantpot/bareplant) in src.owner
 		// Uhhh.. just one thanks
 		if(!P)
-			P = new /obj/machinery/plantpot/bareplant {spawn_plant=/datum/plant/seed_spitter;} (src.owner)
+			P = new /obj/machinery/plantpot/bareplant {spawn_plant=/datum/plant/seed_spitter; spawn_growth=1; auto_water=FALSE;} (src.owner)
 			var/atom/movable/target = src.owner
 			src.owner.vis_contents |= P
 			P.alpha = 0
