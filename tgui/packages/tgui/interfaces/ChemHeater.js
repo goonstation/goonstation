@@ -30,7 +30,7 @@ export const ChemHeater = (props, context) => {
             </Stack.Item>
             <Stack.Item grow overflow="hidden" py={1}>
               <Box
-                className="TemperatureNumber"
+                className="ChemHeater__TemperatureNumber"
                 nowrap
                 p={1}
                 fontSize={1.5}
@@ -93,14 +93,14 @@ const ChemDisplay = (props, context) => {
       }>
       <ReagentGraph container={container} />
       <ReagentList container={container} />
-      <Box className={"TemperatureBox " + (working && `TemperatureBox__${getTemperatureChange(temperature, targetTemperature)}`)}>
+      <Box className={"ChemHeater__TemperatureBox " + (working && `ChemHeater__TemperatureBox__${getTemperatureChangeName(temperature, targetTemperature)}`)}>
         {!totalVolume || (
           <Box
             fontSize={2}
             color={getTemperatureColor(temperature)}
             className={"TemperatureNumber"}>
             <Icon name="long-arrow-alt-down"
-              className={"TemperatureArrow " + (working && `TemperatureArrow__${getTemperatureChange(temperature, targetTemperature)}`)}
+              className={"ChemHeater__TemperatureArrow " + (working && `ChemHeater__TemperatureArrow__${getTemperatureChangeName(temperature, targetTemperature)}`)}
               pt="2px"
               pr={0.25}
               style={{

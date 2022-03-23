@@ -5,62 +5,66 @@ $neutral: #AAAAAA !default;
 $hot: #f2711c !default;
 $cold: #2185d0 !default;
 
-@keyframes heating {
+@keyframes ChemHeater__heating {
   to {
     box-shadow: 0 0 15px 0 $hot;
     border-color: $hot;
   }
 }
 
-@keyframes cooling {
+@keyframes ChemHeater__cooling {
   to {
     box-shadow: 0 0 15px 0 $cold;
     border-color: $cold;
   }
 }
 
-@keyframes heating_fill {
+@keyframes ChemHeater__heating_fill {
   to {
     color: $hot;
   }
 }
 
-@keyframes cooling_fill {
+@keyframes ChemHeater__cooling_fill {
   to {
     color: $cold;
   }
 }
 
-.TemperatureNumber {
-  transition: color 500ms ease-out;
-}
 
-.TemperatureArrow {
-  color: $neutral;
-  transition: transform 500ms ease-out;
+.ChemHeater {
 
-  &__heating {
-    animation: heating_fill 2s ease infinite alternate;
+  &__TemperatureNumber {
+    transition: color 500ms ease-out;
   }
 
-  &__cooling {
-    animation: cooling_fill 2s ease infinite alternate;
-  }
-}
+  &__TemperatureArrow {
+    color: $neutral;
+    transition: transform 500ms ease-out;
 
-.TemperatureBox {
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0);
-  border-color: $neutral;
-  border-style: solid;
-  border-radius: 4px;
-  height: 3em;
-  text-align: center;
+    &__heating {
+      animation: ChemHeater__heating_fill 2s ease infinite alternate;
+    }
 
-  &__heating {
-    animation: heating 2s ease infinite alternate;
+    &__cooling {
+      animation: ChemHeater__cooling_fill 2s ease infinite alternate;
+    }
   }
 
-  &__cooling {
-    animation: cooling 2s ease infinite alternate;
+  &__TemperatureBox {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0);
+    border-color: $neutral;
+    border-style: solid;
+    border-radius: 4px;
+    height: 3em;
+    text-align: center;
+
+    &__heating {
+      animation: ChemHeater__heating 2s ease infinite alternate;
+    }
+
+    &__cooling {
+      animation: ChemHeater__cooling 2s ease infinite alternate;
+    }
   }
 }
