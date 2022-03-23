@@ -19,7 +19,7 @@
 
 	// clear out invalid options. TODO might want to datumize these at some point
 	if (!islist(default))
-		allowed_types -= DATA_INPUT_EDIT_LIST
+		allowed_types -= DATA_INPUT_LIST_EDIT
 	if (!isnum(default))
 		allowed_types -= DATA_INPUT_NUM_ADJUST
 

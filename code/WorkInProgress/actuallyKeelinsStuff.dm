@@ -2313,7 +2313,6 @@ Returns:
 				target = null
 
 		var/procname = input("Procpath","path:", null) as text
-		var/argnum = input("Number of arguments:","Number", 0) as num
 		var/list/listargs = usr.client.get_proccall_arglist(custom_options = list("*triggering object*"))
 
 		procArgs = listargs
