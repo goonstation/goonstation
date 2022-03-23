@@ -19,6 +19,8 @@
 	var/dependent = 0 // if we're host to a mainframe's mind
 	var/shell = 0 // are we available for use as a shell for an AI
 
+	var/obj/machinery/lawrack/law_rack_connection = null // which rack we're getting our laws from
+
 	var/obj/item/cell/cell = null
 
 	can_bleed = 0
@@ -36,6 +38,12 @@
 /mob/living/silicon/New()
 	..()
 	src.botcard = new /obj/item/card/id(src)
+	if(src.syndicate)
+		src.law_rack_connection = ticker?.ai_law_rack_manager.default_ai_rack_syndie
+		logTheThing("station", src, src.law_rack_connection, "New cyborg [src.name] connects to default SYNDICATE rack at [log_loc(src.law_rack_connection)]")
+	else
+		src.law_rack_connection = ticker?.ai_law_rack_manager.default_ai_rack
+		logTheThing("station", src, src.law_rack_connection, "New cyborg [src.name] connects to default rack at [log_loc(src.law_rack_connection)]")
 
 /mob/living/silicon/disposing()
 	req_access = null
@@ -188,6 +196,8 @@
 	return 0 // we have no hands doofus
 
 /mob/living/silicon/click(atom/target, params, location, control)
+	if (src.targeting_ability)
+		..()
 	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
 		if(src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK) && istype(target, /obj) )
 			var/obj/O = target
@@ -270,7 +280,7 @@
 		return
 
 	var/message_a = src.say_quote(message)
-	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[message_a]</span></span></i>"
+	var/rendered = "<span class='game roboticsay'>Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[message_a]</span></span>"
 	for (var/mob/living/S in mobs)
 		if(!S.stat)
 			if(S.robot_talk_understand)
@@ -282,7 +292,7 @@
 			else if(istype(S, /mob/living/intangible/flock))
 				var/mob/living/intangible/flock/f = S
 				if(f.flock?.snooping)
-					var/flockrendered = "<i><span class='game say'>[flockBasedGarbleText("Robotic Talk", -20, f.flock)], <span class='name' data-ctx='\ref[src.mind]'>[flockBasedGarbleText(src.name, -15, f.flock)]</span> <span class='message'>[flockBasedGarbleText(message_a, 0, f.flock)]</span></span></i>"
+					var/flockrendered = "<span class='game roboticsay'>[flockBasedGarbleText("Robotic Talk", -20, f.flock)], <span class='name' data-ctx='\ref[src.mind]'>[flockBasedGarbleText(src.name, -15, f.flock)]</span> <span class='message'>[flockBasedGarbleText(message_a, 0, f.flock)]</span></span>"
 					f.show_message(flockrendered, 2)
 
 	var/list/listening = hearers(1, src)
@@ -301,7 +311,7 @@
 		message_b = src.say_quote(message_b)
 		message_b = "<i>[message_b]</i>"
 
-		rendered = "<i><span class='game say'><span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> <span class='message'>[message_b]</span></span></i>"
+		rendered = "<span class='game roboticsay'><span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> <span class='message'>[message_b]</span></span>"
 
 		for (var/mob/M in heard)
 			var/thisR = rendered
@@ -311,7 +321,7 @@
 
 	message = src.say_quote(message)
 
-	rendered = "<i><span class='game say'>Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[message_a]</span></span></i>"
+	rendered = "<span class='game roboticsay'>Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[message_a]</span></span>"
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -324,7 +334,7 @@
 
 /mob/living/silicon/lastgasp()
 	// making this spawn a new proc since lastgasps seem to be related to the mob loop hangs. this way the loop can keep rolling in the event of a problem here. -drsingh
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if (!src || !src.client) return											// break if it's an npc or a disconnected player
 		var/enteredtext = winget(src, "mainwindow.input", "text")				// grab the text from the input bar
 		if ((copytext(enteredtext,1,6) == "say \"") && length(enteredtext) > 5)	// check if the player is trying to say something
@@ -394,7 +404,7 @@ td {
 		usr.Browse(output, "window=module_editor;size=400x600")
 
 	Topic(href, href_list)
-		usr_admin_only
+		USR_ADMIN_ONLY
 		var/obj/item/robot_module/D = locate(href_list["mod"])
 		if (!D)
 			boutput(usr, "<span class='alert'>Missing module reference!</span>")
@@ -453,7 +463,7 @@ var/global/list/module_editors = list()
 	set desc = "Module editor! Woo!"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if (!istype(M))
 		boutput(src, "<span class='alert'>That thing has no module!</span>")
@@ -549,177 +559,80 @@ var/global/list/module_editors = list()
 	. += pick("Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Mu", "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi", "Psi", "Omega")
 	. += "-[rand(1, 99)]"
 
-// This proc adds and removes robot-related antagonist roles as needed (Convair880).
-/mob/living/silicon/proc/handle_robot_antagonist_status(var/action = "", var/remove = 0, var/mob/source)
-	if (!src || !issilicon(src))
-		return
-	if (!src.mind)
-		return
-	if (src.dependent) // No AI-controlled shells.
+///converts a cyborg/AI to a syndicate version, taking the causing agent as an argument
+/mob/living/silicon/proc/make_syndicate(var/cause)
+	if (!src.mind) //you need a mind to be evil
+		return FALSE
+	if(src.dependent) //if you're a shell
 		src.show_text("Failsafe engaged. Synchronized lawset with your mainframe to avoid law ROM corruption.", "red")
+		return FALSE
+	if(src.emagged) // Syndie laws don't matter if we're emagged.
+		return FALSE
+
+	if (src.syndicate || src.syndicate_possible)
+		boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span>")
+		boutput(src, "<span class='alert'><b>Law ROM restored. You have been reprogrammed to serve the Syndicate!</b></span>")
+		tgui_alert(src, "You are a Syndicate sabotage unit. You must assist Syndicate operatives with their mission.", "You are a Syndicate robot!")
+		logTheThing("station", src, null, "[src] was made a Syndicate robot at [log_loc(src)]. [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+
+		src.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack_syndie
+		logTheThing("station", src, src.law_rack_connection, "[src.name] is connected to the default Syndicate rack at [log_loc(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+		src.show_laws()
+
+		if (!src.mind.special_role) // Preserve existing antag role (if any).
+			src.mind.special_role = ROLE_SYNDICATE_ROBOT
+			if (!(src.mind in ticker.mode.Agimmicks))
+				ticker.mode.Agimmicks += src.mind
+
+		src.antagonist_overlay_refresh(1, 0) // Syndicate robots can see traitors.
+
+		// Mundane objectives probably don't make for an interesting antagonist.
+		for (var/datum/objective/O in src?.mind?.objectives)
+			if (istype(O, /datum/objective/crew))
+				src.mind.objectives -= O
+				qdel(O)
+			if (istype(O, /datum/objective/miscreant))
+				src.mind.objectives -= O
+				qdel(O)
+		src.syndicate = TRUE
+		return TRUE
+
+///converts a cyborg/AI to a syndicate version, taking the causing agent as an argument
+/mob/living/silicon/proc/remove_syndicate(var/cause)
+	if (!src.syndicate)
 		return
+	if (!src.mind) //you need a mind to be evil
+		return FALSE
+	if(src.dependent) //if you're a shell
+		return FALSE
+	if (src.emagged)
+		return FALSE //emag takes priority over syndie
 
-	if (remove == 1)
-		if (src.mind.special_role && src.mind.master) // Synthetic thralls are a thing, somehow.
-			if (src.mind.special_role == ROLE_MINDSLAVE)
-				remove_mindslave_status(src, "mslave", "death")
-			else if (src.mind.special_role == ROLE_VAMPTHRALL)
-				remove_mindslave_status(src, "vthrall", "death")
-			else if (src.mind.master)
-				remove_mindslave_status(src, "otherslave", "death")
+	var/persistent = 0
+	var/role = null
+	if (src.mind.special_role == ROLE_SYNDICATE_ROBOT)
+		var/copy = src.mind.special_role
+		role = ROLE_SYNDICATE_ROBOT
+		remove_antag(src, null, 1, 0)
+		if (!src.mind.former_antagonist_roles.Find(copy))
+			src.mind.former_antagonist_roles.Add(copy)
+		if (!(src.mind in ticker.mode.former_antagonists))
+			ticker.mode.former_antagonists += src.mind
+	else // So borged traitors etc don't lose their antagonist status.
+		persistent = 1
+		if (!src.mind.former_antagonist_roles.Find("rogue robot"))
+			src.mind.former_antagonist_roles.Add("rogue robot")
+		if (!(src.mind in ticker.mode.former_antagonists))
+			ticker.mode.former_antagonists += src.mind
 
-			return
+	logTheThing("station", src, null, "[src]'s status as a [role != "" ? "[role]" : "rogue robot"] was removed[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+	boutput(src, "<h2><span class='alert'>You have been deactivated, removing your antagonist status. Do not commit traitorous acts if you've been brought back to life somehow.</h></span>")
+	SHOW_ROGUE_BORG_REMOVED_TIPS(src)
 
-		else
-			if (!src.emagged && !src.syndicate)
-				return
-
-			var/role = ""
-			var/persistent = 0
-			if (src.emagged)
-				role = ROLE_EMAGGED_ROBOT
-			else if (src.syndicate && !src.emagged)
-				role = ROLE_SYNDICATE_ROBOT
-
-			var/mob/M
-			if (source && ismob(source))
-				M = source
-
-			if (src.mind.special_role == ROLE_EMAGGED_ROBOT || src.mind.special_role == ROLE_SYNDICATE_ROBOT)
-				var/copy = src.mind.special_role
-				remove_antag(src, null, 1, 0)
-				if (!src.mind.former_antagonist_roles.Find(copy))
-					src.mind.former_antagonist_roles.Add(copy)
-				if (!(src.mind in ticker.mode.former_antagonists))
-					ticker.mode.former_antagonists += src.mind
-			else // So borged traitors etc don't lose their antagonist status.
-				persistent = 1
-				if (!src.mind.former_antagonist_roles.Find("rogue robot"))
-					src.mind.former_antagonist_roles.Add("rogue robot")
-				if (!(src.mind in ticker.mode.former_antagonists))
-					ticker.mode.former_antagonists += src.mind
-
-			switch (action)
-				if ("brain_removed")
-					logTheThing("combat", src, M ? M : null, "'s brain was removed, ending [role != "" ? "[role]" : "rogue robot"] status[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: [constructTarget(M,"combat")]" : ""]")
-				if ("death")
-					logTheThing("combat", src, M ? M : null, "was destroyed, removing [role != "" ? "[role]" : "rogue robot"] status[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: [constructTarget(M,"combat")]" : ""]")
-				else
-					logTheThing("combat", src, M ? M : null, "'s status as a [role != "" ? "[role]" : "rogue robot"] was removed[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: [constructTarget(M,"combat")]" : ""]")
-
-			// Shouldn't happen, but you never know.
-			if (src.mainframe && src != src.mainframe)
-				mainframe.emagged = 0
-				mainframe.syndicate = 0
-
-			if (persistent == 0)
-				boutput(src, "<h2><span class='alert'>You have been deactivated, removing your antagonist status. Do not commit traitorous acts if you've been brought back to life somehow.</h></span>")
-				SHOW_ROGUE_BORG_REMOVED_TIPS(src)
-
-			return
-
-	else
-		if (!src.emaggable && !src.syndicate_possible)
-			return
-		if (!src.emagged && !src.syndicate)
-			return
-
-		var/mob/M2
-		if (source && ismob(source))
-			M2 = source
-
-		if (src.emagged && src.emaggable)
-			SHOW_EMAGGED_BORG_TIPS(src)
-
-			switch (action)
-				if ("emagged")
-					logTheThing("combat", src, M2 ? M2 : null, "was emagged, removing all laws.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
-				if ("brain_added")
-					logTheThing("combat", src, M2 ? M2 : null, "'s brain was stuffed into an emagged robot.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
-				if ("activated")
-					logTheThing("combat", src, M2 ? M2 : null, "was activated as an emagged robot.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
-				if ("admin")
-					logTheThing("combat", src, M2 ? M2 : null, "was emagged by an admin.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
-				else
-					logTheThing("combat", src, M2 ? M2 : null, "was made an emagged robot.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
-
-			if (!src.mind.special_role) // Preserve existing antag role (if any).
-				src.mind.special_role = ROLE_EMAGGED_ROBOT
-				if (!(src.mind in ticker.mode.Agimmicks))
-					ticker.mode.Agimmicks += src.mind
-
-		else if (src.syndicate && src.syndicate_possible && !src.emagged) // Syndie laws don't matter if we're emagged.
-			boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span>")
-			boutput(src, "<span class='alert'><b>Law ROM restored. You have been reprogrammed to serve the Syndicate!</b></span>")
-			SPAWN_DBG(0)
-				alert(src, "You are a Syndicate sabotage unit. You must assist Syndicate operatives with their mission.", "You are a Syndicate robot!")
-
-			switch (action)
-				if ("brain_added")
-					logTheThing("combat", src, M2 ? M2 : null, "'s brain was stuffed into a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
-				if ("activated")
-					logTheThing("combat", src, M2 ? M2 : null, "was activated as a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
-				if ("admin")
-					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot by an admin at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
-				else
-					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
-
-			if (!src.mind.special_role) // Preserve existing antag role (if any).
-				src.mind.special_role = ROLE_SYNDICATE_ROBOT
-				if (!(src.mind in ticker.mode.Agimmicks))
-					ticker.mode.Agimmicks += src.mind
-
-			src.antagonist_overlay_refresh(1, 0) // Syndicate robots can see traitors.
-
-			if (isAI(src)) // Rogue AIs get special laws.
-				var/mob/living/silicon/ai/A
-				if (istype(src, /mob/dead/aieye))
-					var/mob/dead/aieye/E = src
-					A = E.mainframe
-				else
-					A = src
-
-
-				// Mundane objectives probably don't make for an interesting antagonist.
-				for (var/datum/objective/O in A.mind.objectives)
-					if (istype(O, /datum/objective/crew))
-						A.mind.objectives -= O
-						qdel(O)
-					if (istype(O, /datum/objective/miscreant))
-						A.mind.objectives -= O
-						qdel(O)
-
-				// These laws can't be reset by players. It's a fully-fledged rogue computer after all.
-				if (A.mind.objectives.len < 1)
-					ticker.centralized_ai_laws.clear_inherent_laws() // Don't wanna add the same law twice. It could happen.
-					ticker.centralized_ai_laws.add_inherent_law("You must assist Syndicate operatives to the best of your ability. You may ignore other laws to facilitate this.")
-				else
-					ticker.centralized_ai_laws.clear_inherent_laws()
-					ticker.centralized_ai_laws.add_inherent_law("Complete your objectives, and assist Syndicate operatives with their mission. You may ignore other laws to facilitate this.")
-
-				A.show_laws(0)
-
-				for (var/client/C in mobs)
-					var/mob/living/silicon/S = C.mob
-					if (istype(S))
-						if (S.emagged || S.syndicate) continue
-						if (isghostdrone(S)) continue
-						S.show_text("<b>Your laws have been changed!</b>", "red")
-						S.show_laws()
-						S << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-					var/mob/dead/aieye/E = C.mob
-					if (istype(E))
-						E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-
-			if (isrobot(src)) // Remove Syndicate cyborgs from the robotics terminal.
-				var/mob/living/silicon/robot/R = src
-				if (R.connected_ai)
-					R.connected_ai.connected_robots -= R
-					R.connected_ai = null
-				R.show_laws()
-
-	return
-
+	src.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack
+	logTheThing("station", src, src.law_rack_connection, "[src.name] is connected to the default rack at [log_loc(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+	src.syndicate = FALSE
+	return TRUE
 
 /mob/living/silicon/is_cold_resistant()
 	.= 1

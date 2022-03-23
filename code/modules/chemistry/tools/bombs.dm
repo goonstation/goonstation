@@ -34,7 +34,7 @@
 /obj/item/assembly/chem_bomb/bump(atom/O)
 	if (!istype(src.triggering_device, /obj/item/device/prox_sensor))
 		return
-	SPAWN_DBG(0)
+	SPAWN(0)
 		//boutput(world, "miptank bumped into [O]")
 		if (src.triggering_device:state)
 			//boutput(world, "sending signal")
@@ -54,13 +54,13 @@
 			src.triggering_device:sense()
 			break
 
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		prox_check()
 
 /obj/item/assembly/chem_bomb/dropped()
 	if (!istype(src.triggering_device, /obj/item/device/prox_sensor))
 		return
-	SPAWN_DBG( 0 )
+	SPAWN( 0 )
 		src.triggering_device:sense()
 		return
 	return

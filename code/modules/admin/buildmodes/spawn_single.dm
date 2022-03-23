@@ -14,7 +14,7 @@ change the direction of created objects.<br>
 	icon_state = "buildmode2"
 	var/objpath = null
 	var/cinematic = "Blink"
-	var/matrix/mtx = matrix()
+	var/tmp/matrix/mtx = matrix()
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if(ctrl)
 			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "Supplydrop", "Supplydrop (no lootbox)", "Lethal Supplydrop", "Lethal Supplydrop (no lootbox)", "Spawn Heavenly", "Spawn Demonically", "Missile", "None")) || cinematic
@@ -42,7 +42,7 @@ change the direction of created objects.<br>
 					mtx.Translate(0, 64)
 					pad.transform = mtx
 					animate(pad, alpha = 255, transform = mtx.Reset(), time = 5, easing=SINE_EASING)
-					SPAWN_DBG(0.7 SECONDS)
+					SPAWN(0.7 SECONDS)
 						swirl.loc = T
 						flick("portswirl", swirl)
 
@@ -114,7 +114,7 @@ change the direction of created objects.<br>
 						marker.appearance_flags = RESET_ALPHA | RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART | RESET_TRANSFORM
 						marker.alpha = 100
 						usr.client.images += marker
-						SPAWN_DBG(0)
+						SPAWN(0)
 							launch_with_missile(new objpath, T, (holder.dir in cardinal) ? holder.dir : null)
 							qdel(marker)
 							usr.client.images -= marker

@@ -368,7 +368,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		Create(var/mob/living/M)
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				SPAWN_DBG(6 SECONDS)
+				SPAWN(6 SECONDS)
 					if (H.limbs)
 						if (H.limbs.l_arm)
 							H.limbs.l_arm.delete()
@@ -390,7 +390,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		Create(var/mob/living/M)
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				SPAWN_DBG(6 SECONDS)
+				SPAWN(6 SECONDS)
 					if (H.limbs)
 						if (H.limbs.l_leg)
 							H.limbs.l_leg.delete()
@@ -439,7 +439,18 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			else
 				S = new /obj/storage/crate/wooden()
 				M.set_loc(S)
-			shippingmarket.receive_crate(S)
+			SPAWN(1)
+				for(var/i in 1 to 3)
+					shippingmarket.receive_crate(S)
+					sleep(randfloat(10 SECONDS, 20 SECONDS))
+					if(istype(get_area(S), /area/station))
+						break
+					boutput(M, "<span class='alert'><b>Something went wrong with mail order, retrying!</b></span>")
+				var/list/turf/last_chance_turfs = get_area_turfs(/area/station/quartermaster/office, 1)
+				if(length(last_chance_turfs))
+					S.set_loc(pick(last_chance_turfs))
+				else
+					S.set_loc(get_random_station_turf())
 			return 1
 
 	frog
@@ -448,7 +459,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 		Create(var/mob/living/M)
 			var/obj/critter/frog/froggo = new(M.loc)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				froggo.real_name = input(M.client, "Name your frog:", "Name your frog!", "frog")
 				phrase_log.log_phrase("name-frog", froggo.real_name, TRUE)
 				logTheThing("station", M, null, "named their adopted frog [froggo.real_name]")
@@ -467,7 +478,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			var/mob/living/carbon/human/H = M
 			if(istype(H))
 				H.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if(istype(M.loc, /obj/storage))
 					launch_with_missile(M.loc)
 				else

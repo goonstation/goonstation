@@ -105,17 +105,18 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 			switch(remove_stage)
 				if(0)
 					tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] staples [holder.name]'s [src.name] securely to their stump with [tool].</span>", "<span class='alert'>You staple [holder.name]'s [src.name] securely to their stump with [tool].</span>")
+					logTheThing("combat", tool.the_mob, holder, "staples [constructTarget(holder,"combat")]'s [src.name] back on.")
 				if(1)
 					tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] slices through the attachment mesh of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You slice through the attachment mesh of [holder.name]'s [src.name] with [tool].</span>")
 				if(2)
 					tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] saws through the base mount of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You saw through the base mount of [holder.name]'s [src.name] with [tool].</span>")
 
-					SPAWN_DBG(rand(150,200))
+					SPAWN(rand(150,200))
 						if(remove_stage == 2)
 							src.remove(0)
 				if(3)
 					tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] cuts through the remaining strips of material holding [holder.name]'s [src.name] on with [tool].</span>", "<span class='alert'>You cut through the remaining strips of material holding [holder.name]'s [src.name] on with [tool].</span>")
-
+					logTheThing("combat", tool.the_mob, holder, "removes [constructTarget(holder,"combat")]'s [src.name].")
 					src.remove(0)
 
 			if(!isdead(holder))
@@ -1168,11 +1169,11 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 					ticker.mode:update_rev_icons_added(O.mind)
 				if (src.emagged)
 					O.emagged = 1
-					SPAWN_DBG(0)
+					SPAWN(0)
 						O.update_appearance()
 				else if (src.syndicate)
 					O.syndicate = 1
-				O.handle_robot_antagonist_status("activated", 0, usr)
+				O.make_syndicate("activated by [usr]")
 			else
 				boutput(O, "<B>You must follow the AI's laws to the best of your ability.</B>")
 				O.show_laws() // The antagonist proc does that too.
@@ -1234,58 +1235,3 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		AI.verbs -= whatever the vox verb is i guess
 */
 
-/obj/item/roboupgrade/ai/law_override
-	name = "AI Law Override Module"
-	desc = "A module that overrides the AI's inherent law set with a customised one."
-	icon_state = "mod-sec"
-	var/datum/ai_laws/law_set = null
-	var/datum/ai_laws/old_law_set = null
-
-	New()
-		..()
-		src.law_set = new /datum/ai_laws(src)
-
-	slot_in(var/mob/living/silicon/ai/AI)
-		if (..())
-			return
-		boutput(AI, "<b>Your inherent laws have been overridden by an inserted module.</b>")
-		src.old_law_set = ticker.centralized_ai_laws
-		ticker.centralized_ai_laws = src.law_set
-		ticker.centralized_ai_laws.show_laws(AI)
-		AI << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-		if (AI.deployed_to_eyecam)
-			AI.eyecam << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-
-	slot_out(var/mob/living/silicon/ai/AI)
-		if (..())
-			return
-		boutput(AI, "<b>Your inherent laws have been restored.</b>")
-		ticker.centralized_ai_laws = src.old_law_set
-		ticker.centralized_ai_laws.show_laws(AI)
-		AI << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-		if (AI.deployed_to_eyecam)
-			AI.eyecam << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-		src.old_law_set = null
-
-	attack_self(var/mob/user as mob)
-		if (!iscarbon(user))
-			boutput(user, "<span class='alert'>Silicon lifeforms cannot access this module's functions.</span>")
-			return
-
-		if (!istype(src.law_set,/datum/ai_laws))
-			src.law_set = new /datum/ai_laws(src)
-			// just in case
-
-		var/datum/ai_laws/LAW = src.law_set
-		var/law_counter = 1
-		var/entered_text = ""
-		while (law_counter < 4)
-			entered_text = input("Enter Law #[law_counter].","[src.name]") as null|text
-			if (entered_text)
-				if (law_counter > LAW.inherent.len)
-					LAW.inherent += entered_text
-				else
-					LAW.inherent[law_counter] = entered_text
-			else
-				break
-			law_counter++

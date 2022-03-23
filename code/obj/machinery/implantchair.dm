@@ -1,6 +1,6 @@
 /obj/machinery/imp/chair
 	name = "Implant Chair"
-	desc = "Implants the user with a loyalty implant"
+	desc = "Implants the user with an counter-revolutionary implant"
 	icon = 'icons/misc/simroom.dmi'
 	icon_state = "simchair"
 	anchored = 1
@@ -48,7 +48,7 @@
 	if (!ismob(M))
 		return
 
-	src.imp = new/obj/item/implant/antirev(src)
+	src.imp = new/obj/item/implant/counterrev(src)
 
 	M.visible_message("<span class='alert'>[M] has been implanted by the [src].</span>")
 

@@ -18,7 +18,7 @@
 	// TODO: initialize
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.spawn_items()
 			sleep(10 SECONDS)
 			qdel(src)
@@ -942,7 +942,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.set_up()
 			sleep(1 SECOND)
 			qdel(src)
@@ -1860,7 +1860,7 @@
 /obj/random_item_spawner/organs/bloody
 	New()
 		. = ..()
-		SPAWN_DBG(1 DECI SECOND) //sync with the organs spawn
+		SPAWN(1 DECI SECOND) //sync with the organs spawn
 			make_cleanable(/obj/decal/cleanable/blood/gibs, src.loc)
 
 	one_to_three

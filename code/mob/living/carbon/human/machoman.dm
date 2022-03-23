@@ -69,7 +69,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		if (src.stance == "defensive")
 			src.visible_message("<span class='alert'><B>[user] attempts to attack [src]!</B></span>")
 			playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 1)
-			SPAWN_DBG(0.2 SECONDS)
+			SPAWN(0.2 SECONDS)
 				macho_parry(user)
 			return
 		..()
@@ -148,7 +148,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				src.visible_message("<span class='alert'><B>[src] parries [M]'s attack, knocking them to the ground!</B></span>")
 			M.changeStatus("weakened", 10 SECONDS)
 			playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 65, 1)
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				playsound(src.loc, pick(snd_macho_rage), 60, 0, 0, src.get_age_pitch())
 		return
 
@@ -213,7 +213,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					src.visible_message("<span class='alert'><B>[src] crushes [G.affecting]'s body into bits!</B></span>")
 					G.affecting.gib()
 					qdel(G)
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					playsound(src.loc, pick(snd_macho_rage), 50, 0, 0, src.get_age_pitch())
 					src.visible_message("<span class='alert'><b>[src]</b> lets out an angry warcry!</span>")
 				break
@@ -239,7 +239,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					src.visible_message("<span class='alert'><B>[src] crushes [G.affecting]'s body into bits!</B></span>")
 					G.affecting.gib()
 					qdel(G)
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					playsound(src.loc, pick(snd_macho_rage), 50, 0, 0, src.get_age_pitch())
 					src.visible_message("<span class='alert'><b>[src]</b> lets out an angry warcry!</span>")
 				break
@@ -352,7 +352,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			for (var/mob/M in viewers(src, 5))
 				if (M != src)
 					M.changeStatus("weakened", 8 SECONDS)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					shake_camera(M, 4, 16)
 			if (istype(src.loc, /turf/simulated/floor))
 				src.loc:break_tile()
@@ -366,7 +366,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				O.pixel_y = -96
 				O.icon = 'icons/effects/214x246.dmi'
 				O.icon_state = "explosion"
-				SPAWN_DBG(3.5 SECONDS) qdel(O)
+				SPAWN(3.5 SECONDS) qdel(O)
 				random_brute_damage(H, 50)
 				H.changeStatus("weakened", 1 SECOND)
 				H.pixel_x = 0
@@ -377,7 +377,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			src.pixel_y = 0
 			src.transforming = 0
 			src.set_density(1)
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.verbs += /mob/living/carbon/human/machoman/verb/macho_leap
 
 	verb/macho_rend()
@@ -448,7 +448,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 						HU.changeStatus("stunned", 10 SECONDS)
 						HU.changeStatus("weakened", 10 SECONDS)
 						var/turf/target = get_edge_target_turf(src, src.dir)
-						SPAWN_DBG(0)
+						SPAWN(0)
 							playsound(src.loc, "swing_hit", 40, 1)
 							src.visible_message("<span class='alert'><B>[src] casually punts [H] away!</B></span>")
 							HU.throw_at(target, 10, 2)
@@ -461,7 +461,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 						H.gib()
 					src.transforming = 0
 					src.verbs += /mob/living/carbon/human/machoman/verb/macho_rend
-					SPAWN_DBG(2 SECONDS)
+					SPAWN(2 SECONDS)
 						playsound(src.loc, pick(snd_macho_rage), 50, 0, 0, src.get_age_pitch())
 						src.visible_message("<span class='alert'><b>[src]</b> gloats and boasts!</span>")
 
@@ -487,7 +487,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					/*   // too many issues with canpass and/or lights breaking, maybe sometime in the future?
 					if(isfloor(T))
 						animate_buff_out(T)
-						SPAWN_DBG(1 SECOND)
+						SPAWN(1 SECOND)
 							var/floor_type = T.type
 							var/turf/unsimulated/floor/specialroom/gym/macho_arena/new_turf = T.ReplaceWith("/turf/unsimulated/floor/specialroom/gym/macho_arena/new_turf", 1)
 							new_turf.previous_turf_type = floor_type
@@ -510,7 +510,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 									FF.set_dir(SOUTHEAST)
 							arenaropes += FF
 							var/random_deviation = rand(0, 5)
-							SPAWN_DBG(random_deviation)
+							SPAWN(random_deviation)
 								spawn_animation1(FF)
 								sleep(10) // animation, also to simulate them coming in and slamming into the ground
 								FF.visible_message("<span class='alert'><B>[FF] slams and anchors itself into the ground!</B></span>")
@@ -546,11 +546,11 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	proc/clean_up_arena_turfs(var/list/arena_turfs_to_cleanup) // if we get to removing the verbs, remove this and the arena_turfs var on the mob too
 		src.macho_arena_turfs = null
 		for (var/obj/decal/boxingrope/F in arena_turfs_to_cleanup)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				leaving_animation(F)
 				qdel(F)
 		for (var/obj/stool/chair/boxingrope_corner/F in arena_turfs_to_cleanup)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				leaving_animation(F)
 				qdel(F)
 
@@ -625,7 +625,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 						qdel(H)
 					src.transforming = 0
 					src.verbs += /mob/living/carbon/human/machoman/verb/macho_slimjim_snap
-					SPAWN_DBG(20)
+					SPAWN(20)
 						playsound(src.loc, pick(snd_macho_rage), 50, 0, 0, src.get_age_pitch())
 						src.visible_message("<span class='alert'><b>[src]</b> gloats and boasts!</span>")
 
@@ -683,7 +683,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					src.transforming = 0
 					src.bioHolder.RemoveEffect("fire_resist")
 					src.verbs += /mob/living/carbon/human/machoman/verb/macho_touch
-					SPAWN_DBG(0)
+					SPAWN(0)
 						if (H)
 							H.become_statue(getMaterial("gold"), "A really dumb looking statue. Very shiny, though.", TRUE)
 							H.transforming = 0
@@ -717,7 +717,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			src.transforming = 0
 			src.bioHolder.RemoveEffect("fire_resist")
 			playsound(src.loc, pick(snd_macho_rage), 50, 0, 0, src.get_age_pitch())
-			SPAWN_DBG(2 MINUTES) // holy shit the micro man spam from ONE macho man is awful
+			SPAWN(2 MINUTES) // holy shit the micro man spam from ONE macho man is awful
 				src.verbs += /mob/living/carbon/human/machoman/verb/macho_minions
 */
 	verb/macho_piledriver()
@@ -793,7 +793,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					O.pixel_y = -96
 					O.icon = 'icons/effects/214x246.dmi'
 					O.icon_state = "explosion"
-					SPAWN_DBG(3.5 SECONDS) qdel(O)
+					SPAWN(3.5 SECONDS) qdel(O)
 					random_brute_damage(H, 50)
 					H.changeStatus("weakened", 10 SECONDS)
 					src.verbs += /mob/living/carbon/human/machoman/verb/macho_piledriver
@@ -848,7 +848,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					playsound(src.loc, "sound/weapons/rocket.ogg", 50)
 					src.visible_message("<span class='alert'><B>[src] flings [H] with all of his might!</B></span>")
 					var/target_dir = get_dir(src, H)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						if (H)
 							walk(H, target_dir, 1)
 							sleep(1.5 SECONDS)
@@ -862,7 +862,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 							O.icon = 'icons/effects/214x246.dmi'
 							O.icon_state = "explosion"
 							O.fingerprintslast = src.key
-							SPAWN_DBG(3.5 SECONDS) qdel(O)
+							SPAWN(3.5 SECONDS) qdel(O)
 							explosion(O, H.loc, 1, 2, 3, 4, 1)
 							H.gib()
 					src.verbs += /mob/living/carbon/human/machoman/verb/macho_superthrow
@@ -1003,7 +1003,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					src.verbs += /mob/living/carbon/human/machoman/verb/macho_heal
 					random_brute_damage(src, 25)
 					src.UpdateDamageIcon()
-					SPAWN_DBG(0)
+					SPAWN(0)
 						if (H)
 							H.pixel_x = 0
 							H.pixel_y = 0
@@ -1074,7 +1074,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 						if (N.client)
 							shake_camera(N, 6, 16)
 					qdel(H)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						//alldirs
 						var/icon/overlay = icon('icons/effects/96x96.dmi',"smoke")
 						overlay.Blend(rgb(200,0,0,200),ICON_MULTIPLY)
@@ -1117,7 +1117,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				did_it = 1
 			else
 				src.show_text("Man, this poor sucker ain't got a heart to punch, whatta chump.", "blue")
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					if (!src.stat)
 						src.emote("sigh")
 
@@ -1140,18 +1140,18 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 
 			else //Uh?
 				src.show_text("Man, this poor sucker ain't even got a chest to punch, whatta chump.", "blue")
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					if (!src.stat)
 						src.emote("sigh")
 
 		else
 			src.show_text("You're not entirely sure where the heart is on this thing. Better leave it alone.", "blue")
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				if (!src.stat)
 					src.emote("sigh")
 
 		if (did_it)
-			SPAWN_DBG (rand(2,4) * 10)
+			SPAWN(rand(2,4) * 10)
 				playsound(src.loc, pick(snd_macho_rage), 50, 0, 0, src.get_age_pitch())
 				src.visible_message("<span class='alert'><b>[src]</b> gloats and boasts!</span>")
 
@@ -1188,7 +1188,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			for (var/area/A in masters)
 				if (A.type == /area) continue
 				for (var/area/R in A.related)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						R.eject = 1
 						R.UpdateIcon()
 			siren.repeat = 1
@@ -1206,7 +1206,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			for (var/mob/M in viewers(src, 5))
 				if (M != src)
 					M.weakened = max(M.weakened, 8)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					shake_camera(M, 4, 8)
 			playsound(src.loc, "explosion", 40, 1)
 			playsound(src.loc, pick(snd_macho_rage), 50)
@@ -1215,7 +1215,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			src.transforming = 0
 			src.bioHolder.RemoveEffect("fire_resist")
 			src.mouse_opacity = 1
-			SPAWN_DBG(1 MINUTE)
+			SPAWN(1 MINUTE)
 				if (siren)
 					siren.repeat = 0
 					siren.status = SOUND_UPDATE
@@ -1224,7 +1224,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				for (var/area/A in masters)
 					if (A.type == /area) continue
 					for (var/area/R in A.related)
-						SPAWN_DBG(0)
+						SPAWN(0)
 							R.eject = 0
 							R.UpdateIcon()
 				src.verbs += /mob/living/carbon/human/machoman/verb/macho_meteor
@@ -1300,7 +1300,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			if (prob(10))
 				playsound(src.loc, pick(snd_macho_rage), 50, 1, 0, 1.75)
 			random_brute_damage(src.target, rand(0,1))
-			SPAWN_DBG(rand(1,3))
+			SPAWN(rand(1,3))
 				src.attacking = 0
 
 	ChaseAttack(mob/M)
@@ -1391,7 +1391,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				H.bodytemperature = H.base_body_temp
 		else
 			target.visible_message("<span class='alert'>[target] shoves \his face deep into [src]!</span>")
-			SPAWN_DBG(2.5 SECONDS)
+			SPAWN(2.5 SECONDS)
 			target.visible_message("<span class='alert'>[target]'s pupils dilate.</span>")
 			target.changeStatus("stunned", 10 SECONDS)
 
@@ -1417,7 +1417,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			sleep(rand(10,20))
 			var/turf/T = get_turf(M)
 			playsound(user.loc, "explosion", 100, 1)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/obj/overlay/O = new/obj/overlay(T)
 				O.anchored = 1
 				O.name = "Explosion"
@@ -1430,10 +1430,10 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					shake_camera(N, 8, 24)
 				sleep(3.5 SECONDS)
 				qdel(O)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/obj/item/old_grenade/emp/temp_nade = new(user.loc)
 				temp_nade.prime()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for (var/atom/A in range(user.loc, 4))
 					if (ismob(A) && A != user)
 						var/mob/N = A
@@ -1582,7 +1582,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 			for (var/mob/M in viewers(holder.owner, 5))
 				if (M != holder.owner)
 					M.changeStatus("weakened", 8 SECONDS)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					shake_camera(M, 4, 16)
 			if (istype(holder.owner.loc, /turf/simulated/floor))
 				holder.owner.loc:break_tile()
@@ -1596,7 +1596,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 				O.pixel_y = -96
 				O.icon = 'icons/effects/214x246.dmi'
 				O.icon_state = "explosion"
-				SPAWN_DBG(3.5 SECONDS) qdel(O)
+				SPAWN(3.5 SECONDS) qdel(O)
 				random_brute_damage(H, 50)
 				H.changeStatus("weakened", 1 SECOND)
 				H.pixel_x = 0
@@ -1607,7 +1607,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 			holder.owner.pixel_y = 0
 			holder.owner.transforming = 0
 			holder.owner.set_density(1)
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				holder.owner.verbs += /mob/living/carbon/human/machoman/verb/macho_leap
 
 /datum/targetable/macho/macho_offense
@@ -1687,7 +1687,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					holder.owner.visible_message("<span class='alert'><B>[holder.owner] crushes [G.affecting]'s body into bits!</B></span>")
 					G.affecting.gib()
 					qdel(G)
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					playsound(holder.owner.loc, pick(snd_macho_rage), 50, 0, 0, holder.owner.get_age_pitch())
 					holder.owner.visible_message("<span class='alert'><b>[holder.owner]</b> lets out an angry warcry!</span>")
 				break
@@ -1715,7 +1715,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					holder.owner.visible_message("<span class='alert'><B>[holder.owner] crushes [G.affecting]'s body into bits!</B></span>")
 					G.affecting.gib()
 					qdel(G)
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					playsound(holder.owner.loc, pick(snd_macho_rage), 50, 0, 0, holder.owner.get_age_pitch())
 					holder.owner.visible_message("<span class='alert'><b>[holder.owner]</b> lets out an angry warcry!</span>")
 				break
@@ -1789,7 +1789,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 						HU.changeStatus("stunned", 10 SECONDS)
 						HU.changeStatus("weakened", 10 SECONDS)
 						var/turf/T = get_edge_target_turf(holder.owner, holder.owner.dir)
-						SPAWN_DBG(0)
+						SPAWN(0)
 							playsound(holder.owner.loc, "swing_hit", 40, 1)
 							holder.owner.visible_message("<span class='alert'><B>[holder.owner] casually punts [H] away!</B></span>")
 							HU.throw_at(T, 10, 2)
@@ -1802,7 +1802,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 						H.gib()
 					holder.owner.transforming = 0
 					holder.owner.verbs += /mob/living/carbon/human/machoman/verb/macho_rend
-					SPAWN_DBG(2 SECONDS)
+					SPAWN(2 SECONDS)
 						playsound(holder.owner.loc, pick(snd_macho_rage), 50, 0, 0, holder.owner.get_age_pitch())
 						holder.owner.visible_message("<span class='alert'><b>[holder.owner]</b> gloats and boasts!</span>")
 
@@ -1835,7 +1835,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					/*   // too many issues with canpass and/or lights breaking, maybe sometime in the future?
 					if(isfloor(T))
 						animate_buff_out(T)
-						SPAWN_DBG(1 SECOND)
+						SPAWN(1 SECOND)
 							var/floor_type = T.type
 							var/turf/unsimulated/floor/specialroom/gym/macho_arena/new_turf = T.ReplaceWith("/turf/unsimulated/floor/specialroom/gym/macho_arena/new_turf", 1)
 							new_turf.previous_turf_type = floor_type
@@ -1858,7 +1858,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 									FF.set_dir(SOUTHEAST)
 							arenaropes += FF
 							var/random_deviation = rand(0, 5)
-							SPAWN_DBG(random_deviation)
+							SPAWN(random_deviation)
 								spawn_animation1(FF)
 								sleep(10) // animation, also to simulate them coming in and slamming into the ground
 								FF.visible_message("<span class='alert'><B>[FF] slams and anchors itself into the ground!</B></span>")
@@ -1895,18 +1895,18 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 		src.macho_arena_turfs = null
 		/*   // too many issues with canpass and/or lights breaking, maybe sometime in the future?
 			for (var/turf/unsimulated/floor/specialroom/gym/macho_arena/F in arenaropes)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					arenaropes -= F
 					animate_buff_out(F)
 					sleep(10)
 					F.change_back()
 			*/
 		for (var/obj/decal/boxingrope/F in arena_turfs_to_cleanup)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				leaving_animation(F)
 				qdel(F)
 		for (var/obj/stool/chair/boxingrope_corner/F in arena_turfs_to_cleanup)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				leaving_animation(F)
 				qdel(F)
 
@@ -1982,7 +1982,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 						qdel(H)
 					holder.owner.transforming = 0
 					holder.owner.verbs += /mob/living/carbon/human/machoman/verb/macho_slimjim_snap
-					SPAWN_DBG(20)
+					SPAWN(20)
 						playsound(holder.owner.loc, pick(snd_macho_rage), 50, 0, 0, holder.owner.get_age_pitch())
 						holder.owner.visible_message("<span class='alert'><b>[holder.owner]</b> gloats and boasts!</span>")
 
@@ -2041,7 +2041,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					holder.owner.transforming = 0
 					holder.owner.bioHolder.RemoveEffect("fire_resist")
 					holder.owner.verbs += /mob/living/carbon/human/machoman/verb/macho_touch
-					SPAWN_DBG(0)
+					SPAWN(0)
 						if (H)
 							H.desc = "A really dumb looking statue. Very shiny, though."
 							H.become_statue(getMaterial("gold"), survive=TRUE)
@@ -2076,7 +2076,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 			holder.owner.transforming = 0
 			holder.owner.bioHolder.RemoveEffect("fire_resist")
 			playsound(holder.owner.loc, pick(snd_macho_rage), 50, 0, 0, holder.owner.get_age_pitch())
-			SPAWN_DBG(2 MINUTES) // holy shit the micro man spam from ONE macho man is awful
+			SPAWN(2 MINUTES) // holy shit the micro man spam from ONE macho man is awful
 				holder.owner.verbs += /mob/living/carbon/human/machoman/verb/macho_minions
 */
 /datum/targetable/macho/macho_piledriver
@@ -2153,7 +2153,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					O.pixel_y = -96
 					O.icon = 'icons/effects/214x246.dmi'
 					O.icon_state = "explosion"
-					SPAWN_DBG(3.5 SECONDS) qdel(O)
+					SPAWN(3.5 SECONDS) qdel(O)
 					random_brute_damage(H, 50)
 					H.changeStatus("weakened", 10 SECONDS)
 					holder.owner.verbs += /mob/living/carbon/human/machoman/verb/macho_piledriver
@@ -2209,7 +2209,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					playsound(holder.owner.loc, "sound/weapons/rocket.ogg", 50)
 					holder.owner.visible_message("<span class='alert'><B>[holder.owner] flings [H] with all of his might!</B></span>")
 					var/target_dir = get_dir(holder.owner, H)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						if (H)
 							walk(H, target_dir, 1)
 							sleep(1.5 SECONDS)
@@ -2223,7 +2223,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 							O.icon = 'icons/effects/214x246.dmi'
 							O.icon_state = "explosion"
 							O.fingerprintslast = holder.owner.key
-							SPAWN_DBG(3.5 SECONDS) qdel(O)
+							SPAWN(3.5 SECONDS) qdel(O)
 							explosion(O, H.loc, 1, 2, 3, 4, 1)
 							H.gib()
 					holder.owner.verbs += /mob/living/carbon/human/machoman/verb/macho_superthrow
@@ -2367,7 +2367,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					holder.owner.verbs += /mob/living/carbon/human/machoman/verb/macho_heal
 					random_brute_damage(holder.owner, 25)
 					holder.owner.UpdateDamageIcon()
-					SPAWN_DBG(0)
+					SPAWN(0)
 						if (H)
 							H.pixel_x = 0
 							H.pixel_y = 0
@@ -2440,7 +2440,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 						if (N.client)
 							shake_camera(N, 6, 16)
 					qdel(H)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						//alldirs
 						var/icon/overlay = icon('icons/effects/96x96.dmi',"smoke")
 						overlay.Blend(rgb(200,0,0,200),ICON_MULTIPLY)
@@ -2488,7 +2488,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 				did_it = 1
 			else
 				holder.owner.show_text("Man, this poor sucker ain't got a heart to punch, whatta chump.", "blue")
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					if (isalive(holder.owner))
 						holder.owner.emote("sigh")
 
@@ -2511,18 +2511,18 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 
 			else //Uh?
 				holder.owner.show_text("Man, this poor sucker ain't even got a chest to punch, whatta chump.", "blue")
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					if (isalive(holder.owner))
 						holder.owner.emote("sigh")
 
 		else
 			holder.owner.show_text("You're not entirely sure where the heart is on this thing. Better leave it alone.", "blue")
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				if (isalive(holder.owner))
 					holder.owner.emote("sigh")
 
 		if (did_it)
-			SPAWN_DBG (rand(2,4) * 10)
+			SPAWN(rand(2,4) * 10)
 				playsound(holder.owner.loc, pick(snd_macho_rage), 50, 0, 0, holder.owner.get_age_pitch())
 				holder.owner.visible_message("<span class='alert'><b>[holder.owner]</b> gloats and boasts!</span>")
 

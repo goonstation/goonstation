@@ -104,7 +104,7 @@ Contents:
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			process()
 
 	proc/process()
@@ -127,7 +127,7 @@ Contents:
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			JobEquipSpawned("Samurai")
 			return
 
@@ -468,7 +468,7 @@ Contents:
 			K = pick(src.contents)
 			if(istype(K))
 				K.set_real_color()
-			usr.put_in_hand_or_eject(K)
+			user.put_in_hand_or_eject(K)
 
 	process(mult)
 		for(var/obj/O in contents)

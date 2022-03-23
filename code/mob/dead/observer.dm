@@ -5,7 +5,7 @@
 	icon_state = "ghost"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_ABOVE
-	event_handler_flags =  IMMUNE_MANTA_PUSH | USE_FLUID_ENTER //maybe?
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER //maybe?
 	density = 0
 	canmove = 1
 	blinded = 0
@@ -73,7 +73,7 @@
 	// heres a thought: maybe ghostize() could look for your ghost or smth
 	// and put you in it instead of just making a new one.
 	// idk this codebase is an eldritch horror and i dont wanna try rn
-	REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, "clientless")
+	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "clientless")
 
 
 /mob/dead/observer/point_at(var/atom/target)
@@ -208,7 +208,7 @@
 			if (M.client && isliving(M) && !M.unobservable)
 				candidates += M
 		if (candidates.len)
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				src.insert_observer(pick(candidates))
 #endif
 
@@ -222,8 +222,8 @@
 
 /mob/dead/observer/New(mob/corpse)
 	. = ..()
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, ghost_invisibility)
-	APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, ghost_invisibility)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	src.see_invisible = INVIS_SPOOKY
 	src.see_in_dark = SEE_DARK_FULL
@@ -249,7 +249,7 @@
 	if (render_special)
 		render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src.mind && istype(src.mind.purchased_bank_item, /datum/bank_purchaseable/golden_ghost))
 			src.setMaterial(getMaterial("gold"))
 //#ifdef HALLOWEEN
@@ -434,12 +434,11 @@
 		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 
-	if(!ticker || !ticker.centralized_ai_laws)
+	if(!ticker || !ticker.ai_law_rack_manager)
 		boutput( src, "Abort abort abort! No laws! No laws!!" )
 		return
 
-	boutput( src, "<b>AI laws:</b>" )
-	ticker.centralized_ai_laws.show_laws(usr)
+	boutput( src, ticker.ai_law_rack_manager.format_for_logs() )
 
 
 /mob/dead/observer/Logout()
@@ -465,7 +464,7 @@
 		// but that's way too much effort to fix and i do not feel like debugging
 		// 2000 different "use after free" issues.
 		// so. your ghost doesnt go away. it just, uh. it takes a break for a while.
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "clientless", INVIS_ALWAYS)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "clientless", INVIS_ALWAYS)
 	return
 
 /mob/dead/observer/Move(NewLoc, direct)
@@ -498,7 +497,7 @@
 		src.x--
 	OnMove()
 
-/mob/dead/observer/MouseDrop(atom/A)
+/mob/dead/observer/mouse_drop(atom/A)
 	if (usr != src || isnull(A)) return
 	if (ismob(A))
 		var/mob/M = A
@@ -537,8 +536,8 @@
 		boutput(usr, "Not when you're not dead!")
 		return
 	var/A
-
-	A = input("Area to jump to", "BOOYEA", A) as null|anything in get_teleareas()
+	var/list/tele_areas = get_teleareas()
+	A = tgui_input_list(src, "Area to jump to", "Jump", tele_areas)
 	if (!A)
 		// aaaaaaaaaaaaaaaaaaaagggggggggggg
 		return
@@ -612,10 +611,6 @@
 	var/list/namecounts = list()
 	var/list/creatures = list()
 
-	//prefix list with option for alphabetic sorting
-	var/const/SORT = "* Sort alphabetically..."
-	creatures.Add(SORT)
-
 	for (var/client/C in clients)
 		LAGCHECK(LAG_LOW)
 		// not sure how this could happen, but be safe about it
@@ -643,17 +638,8 @@
 		creatures[name] = M
 
 	var/eye_name = null
-
-	eye_name = input("Please, select a target!", "Observe", null, null) as null|anything in creatures
-
-	//sort alphabetically if user so chooses
-	if (eye_name == SORT)
-		creatures.Remove(SORT)
-
-		creatures = sortList(creatures)
-
-		//redisplay sorted list
-		eye_name = input("Please, select a target!", "Observe (Sorted)", null, null) as null|anything in creatures
+	creatures = sortList(creatures)
+	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
 
 	if (!eye_name)
 		return
@@ -668,10 +654,6 @@
 	var/list/names = list()
 	var/list/namecounts = list()
 	var/list/creatures = list()
-
-	//prefix list with option for alphabetic sorting
-	var/const/SORT = "* Sort alphabetically..."
-	creatures.Add(SORT)
 
 	// Same thing you could do with the old auth disk. The bomb is equally important
 	// and should appear at the top of any unsorted list  (Convair880).
@@ -767,7 +749,6 @@
 			namecounts[name] = 1
 		creatures[name] = B
 
-	var/eye_name = null
 
 	for(var/name in creatures)
 		var/obj/O = creatures[name]
@@ -782,19 +763,9 @@
 				if(!T || isghostrestrictedz(T.z))
 					creatures -= name
 
-	eye_name = input("Please, select a target!", "Observe", null, null) as null|anything in creatures
-
-	//sort alphabetically if user so chooses
-	if (eye_name == SORT)
-		creatures.Remove(SORT)
-
-		for(var/i = 1; i <= creatures.len; i++)
-			for(var/j = i+1; j <= creatures.len; j++)
-				if(sorttext(creatures[i], creatures[j]) == -1)
-					creatures.Swap(i, j)
-
-		//redisplay sorted list
-		eye_name = input("Please, select a target!", "Observe (Sorted)", null, null) as null|anything in creatures
+	var/eye_name = null
+	creatures = sortList(creatures)
+	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
 
 	if (!eye_name)
 		return

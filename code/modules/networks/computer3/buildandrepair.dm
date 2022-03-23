@@ -208,7 +208,7 @@
 			if(user.equipped(P) && isweldingtool(P))
 				boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
 				var/obj/item/sheet/A = new /obj/item/sheet( src.loc )
-				A.amount = 5
+				A.amount = metal_given
 				if (src.material)
 					A.setMaterial(src.material)
 				else

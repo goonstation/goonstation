@@ -1,7 +1,8 @@
 import { useBackend, useSharedState, useLocalState } from "../backend";
-import { Box, Button, ColorBox, Dimmer, Divider, Flex, Icon, NoticeBox, NumberInput, Section, Stack, Tooltip } from '../components';
+import { Button, Dimmer, Divider, Flex, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { Fragment } from 'inferno';
+import { ReagentGraph, ReagentList } from './common/ReagentInfo.js';
 
 // Feel free to adjust this for performance
 const extractablesPerPage = 25;
@@ -112,7 +113,29 @@ const ReagentDisplay = (props, context) => {
         </Dimmer>
       )}
       <ReagentGraph container={container} />
-      <ReagentList container={container} />
+      <ReagentList container={container}
+        renderButtons={(reagent) => {
+          return (
+            <>
+              <Button
+                px={0.75}
+                mr={1.5}
+                icon="filter"
+                color="red"
+                tooltip="Isolate"
+                onClick={() => act('isolate', { container_id: container.id, reagent_id: reagent.id })}
+              />
+              <Button
+                px={0.75}
+                icon="times"
+                color="red"
+                tooltip="Flush"
+                onClick={() => act('flush_reagent', { container_id: container.id, reagent_id: reagent.id })}
+              />
+            </>
+          );
+        }}
+      />
       <Flex wrap justify="center">
         <Flex.Item grow />
         <Flex.Item grow>
@@ -156,108 +179,6 @@ const ReagentDisplay = (props, context) => {
           </Flex>
         </Flex.Item>
       </Flex>
-    </Section>
-  );
-};
-
-const ReagentGraph = (props, context) => {
-  const { container } = props;
-  const { maxVolume, totalVolume, finalColor } = container;
-  const contents = container.contents || [];
-
-  return (
-    <>
-      <Flex>
-        {contents.map((reagent, index) => (
-          <Flex.Item grow={reagent.volume/maxVolume} key={reagent.id}>
-            <Tooltip content={`${reagent.name} (${reagent.volume}u)`} position="bottom">
-              <Box
-                py={3}
-                px={0}
-                my={0}
-                backgroundColor={`rgb(${reagent.colorR}, ${reagent.colorG}, ${reagent.colorB})`}
-              />
-            </Tooltip>
-          </Flex.Item>
-        ))}
-        <Flex.Item grow={((maxVolume - totalVolume)/maxVolume)}>
-          <Tooltip content={`Nothing (${maxVolume - totalVolume}u)`} position="bottom">
-            <NoticeBox
-              py={3}
-              px={0}
-              my={0}
-              backgroundColor="rgba(0, 0, 0, 0)" // invisible noticebox kind of nice
-            />
-          </Tooltip>
-        </Flex.Item>
-      </Flex>
-      <Tooltip
-        content={
-          <Box>
-            <ColorBox color={finalColor} /> Current Mixture Color
-          </Box>
-        }
-        position="bottom">
-        <Box height="14px" // same height as a Divider
-          backgroundColor={contents.length ? finalColor : "rgba(0, 0, 0, 0.1)"}
-          textAlign="center">
-          {container.fake || (
-            <Box
-              as="span"
-              backgroundColor="rgba(0, 0, 0, 0.5)"
-              px={1}>
-              {`${totalVolume}/${maxVolume}`}
-            </Box>
-          )}
-        </Box>
-      </Tooltip>
-    </>
-  );
-};
-
-const ReagentList = (props, context) => {
-  const { act } = useBackend(context);
-  const { container } = props;
-  const contents = container.contents || [];
-
-  return (
-    <Section scrollable>
-      <Box height={6}>
-        {contents.length ? contents.map((reagent, index) => (
-          <Flex key={reagent.id} mb={0.5}>
-            <Flex.Item grow>
-              <Icon
-                pr={0.9}
-                name="circle"
-                style={{
-                  "text-shadow": "0 0 3px #000;",
-                }}
-                color={`rgb(${reagent.colorR}, ${reagent.colorG}, ${reagent.colorB})`}
-              />
-              {`( ${reagent.volume}u ) ${reagent.name}`}
-            </Flex.Item>
-            <Flex.Item>
-              <Button
-                px={0.5}
-                icon="times"
-                color="red"
-                tooltip="Flush"
-                onClick={() => act('flush_reagent', { container_id: container.id, reagent_id: reagent.id })}
-              />
-            </Flex.Item>
-          </Flex>
-        )) : (
-          <Box color="label">
-            <Icon
-              pr={0.9}
-              name="circle-o"
-              style={{
-                "text-shadow": "0 0 3px #000;",
-              }}
-            />
-            Empty
-          </Box>)}
-      </Box>
     </Section>
   );
 };

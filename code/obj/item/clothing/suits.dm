@@ -996,7 +996,7 @@
 
 		New()
 			..()
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				src.name = initial(src.name)
 				src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
 
@@ -1081,7 +1081,7 @@
 			T = T.loc
 		src.set_loc(T)
 		user.u_equip(src)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			qdel(src)
 
 /obj/item/clothing/suit/space/captain
@@ -1549,17 +1549,12 @@
 	permeability_coefficient = 0.01
 	body_parts_covered = TORSO|LEGS|ARMS
 	contraband = 4
+	duration_remove = 10 SECONDS
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 90)
 		setProperty("heatprot", 30)
-
-	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
-		. = ..()
-		if ( . &&prob(75))
-			source.show_message(text("<span class='alert'>\The [src] writhes in your hands as though it is alive! It just barely wriggles out of your grip!</span>"), 1)
-			.  = 0
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
@@ -1618,6 +1613,11 @@
 	name = "medical winter coat"
 	icon_state = "wintercoat-medical"
 	item_state = "wintercoat-medical"
+
+/obj/item/clothing/suit/wintercoat/genetics
+	name = "genetics winter coat"
+	icon_state = "wintercoat-genetics"
+	item_state = "wintercoat-genetics"
 
 /obj/item/clothing/suit/wintercoat/research
 	name = "research winter coat"
@@ -1726,6 +1726,9 @@
 
 	attack_self(mob/user as mob)
 		user.visible_message("[user] flashes the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].</span>", "You show off the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].</span>")
+
+	attack(mob/target, mob/user)
+		user.visible_message("[user] flashes the badge at [target.name]: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].</span>", "You show off the badge to [target.name]: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].</span>")
 
 /obj/item/clothing/suit/hosmedal
 	name = "war medal"

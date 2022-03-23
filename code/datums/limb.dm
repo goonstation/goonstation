@@ -152,7 +152,7 @@
 		next_shot_at = ticker.round_elapsed_ticks + cooldown
 
 		playsound(user, "sound/effects/mag_warp.ogg", 50, 1)
-		SPAWN_DBG(rand(1,3)) // so it might miss, sometimes, maybe
+		SPAWN(rand(1,3)) // so it might miss, sometimes, maybe
 			var/obj/target_r = new/obj/railgun_trg_dummy(target)
 
 			playsound(user, "sound/weapons/railgun.ogg", 50, 1)
@@ -413,7 +413,7 @@
 		if (holder?.remove_object && istype(holder.remove_object))
 			target.Attackby(holder.remove_object, user, params, location, control)
 			if (target)
-				holder.remove_object.afterattack(target, src, reach)
+				holder.remove_object.AfterAttack(target, src, reach)
 
 /datum/limb/bear
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
@@ -657,8 +657,8 @@
 			target.changeStatus("weakened", 2 SECONDS)
 		user.lastattacked = target
 
-/datum/limb/wendigo
-	var/log_name = "wendigo limbs"
+/datum/limb/brullbar
+	var/log_name = "brullbar limbs"
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
 			return
@@ -735,7 +735,7 @@
 			target.changeStatus("weakened", (4 * quality) SECONDS)
 		user.lastattacked = target
 
-/datum/limb/wendigo/severed_werewolf
+/datum/limb/brullbar/severed_werewolf
 	log_name = "severed werewolf limb"
 
 // Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears, which are currently commented out. Go there to make use of this.
@@ -838,11 +838,11 @@
 			var/obj/critter/victim = target
 
 			if (src.weak == 1)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					step_away(victim, user, 15)
 
 				playsound(user.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-				SPAWN_DBG(0.1 SECONDS)
+				SPAWN(0.1 SECONDS)
 					if (user) playsound(user.loc, "sound/impact_sounds/Flesh_Tear_3.ogg", 40, 1, -1)
 
 				user.visible_message("<span class='alert'><B>[user] slashes viciously at [victim]!</B></span>")
@@ -1358,7 +1358,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 				var/obj/item/O = target
 				var/can_pickup = 1
 
-				if (issmallanimal(usr))
+				if (issmallanimal(user))
 					var/mob/living/critter/small_animal/C = user
 					if (C.ghost_spawned && ghostcritter_blocked[O.type])
 						can_pickup = 0
@@ -1424,7 +1424,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 		..()
 
 	disarm(mob/target, var/mob/living/user)
-		if (issmallanimal(usr) && iscarbon(target))
+		if (issmallanimal(user) && iscarbon(target))
 			user.lastattacked = target
 			var/mob/living/critter/small_animal/C = user
 			if (C.ghost_spawned)

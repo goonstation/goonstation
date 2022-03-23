@@ -13,7 +13,7 @@
 	set hidden = TRUE
 
 	var/mob/living/M = src
-	if(!istype(M) || !isalive(M))
+	if(!istype(M) || !isalive(M) || isAIeye(M))
 		return
 
 	M.speech_bubble.icon_state = "typing"
@@ -21,7 +21,7 @@
 	var/start_time = TIME
 	M.last_typing = start_time
 
-	SPAWN_DBG(15 SECONDS)
+	SPAWN(15 SECONDS)
 		if(M.last_typing == start_time && src.GetOverlayImage("speech_bubble")?.icon_state == "typing")
 			src.UpdateOverlays(null, "speech_bubble")
 
@@ -295,12 +295,17 @@
 	var/rendered = "<span class='game hivesay'><span class='prefix'>HIVEMIND:</span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 
 	//show to hivemind
+	var/list/mob/hivemind = hivemind_owner.get_current_hivemind()
 	for (var/client/C in clients)
+		if (C.mob in hivemind)
+			continue
 		try_render_chat_to_admin(C, rendered)
-	for (var/mob/M in (hivemind_owner.hivemind + hivemind_owner.owner))
-		if (M.client?.holder && M.client.deadchat && !M.client.player_mode) continue
-		if (isdead(M) || istype(M,/mob/living/critter/changeling) || (M == hivemind_owner.owner))
-			boutput(M, rendered)
+	if (isabomination(hivemind_owner.owner))
+		var/abomination_rendered = "<span class='game'><span class='prefix'></span> <span class='name' data-ctx='\ref[src.mind]'>Congealed [name]</span> <span class='message'>[message]</span></span>"
+		src.audible_message(abomination_rendered)
+	else
+		for (var/mob/member in hivemind)
+			boutput(member, rendered)
 
 //vampire thrall say
 /mob/proc/say_thrall(var/message, var/datum/abilityHolder/vampire/owner)
@@ -314,10 +319,8 @@
 		return
 
 	if (isvampire(src))
-		name = src.real_name
 		alt_name = " (VAMPIRE)"
 	else if (isvampiricthrall(src))
-		name = src.real_name
 		alt_name = " (THRALL)"
 
 #ifdef DATALOGGER
@@ -327,7 +330,7 @@
 	message = src.say_quote(message)
 	//logTheThing("say", src, null, "SAY: [message]")
 
-	var/rendered = "<span class='game ghoulsay'><span class='prefix'>GHOULSPEAK:</span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
+	var/rendered = "<span class='game thrallsay'><span class='prefix'>Thrall speak:</span> <span class='name [isvampire(src) ? "vamp" : ""]' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 
 	//show to ghouls
 	for (var/client/C in clients)
@@ -355,7 +358,7 @@
 	message = src.say_quote(message)
 	//logTheThing("say", src, null, "SAY: [message]")
 
-	var/rendered = "<span class='game kudzusay'><span class='prefix'><small>KUDZUSPEAK:</small></span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
+	var/rendered = "<span class='game kudzusay'><span class='prefix'><small>Kudzu speak:</small></span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 
 
 	//show message to admins (Follow rules of their deadchat toggle)
@@ -522,7 +525,7 @@
 				src.emote_allowed = 0
 				src.last_emote_time = world.time
 				src.last_emote_wait = time
-				SPAWN_DBG(time)
+				SPAWN(time)
 					src.emote_allowed = 1
 			return 1
 		else

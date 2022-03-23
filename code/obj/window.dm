@@ -7,7 +7,7 @@
 	stops_space_move = 1
 	dir = 5 //full tile
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
+	event_handler_flags = USE_FLUID_ENTER
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	text = "<font color=#aaf>#"
 	var/health = 30
@@ -51,7 +51,7 @@
 			//DEBUG ("[src.name] [log_loc(src)] has [health] health / [health_max] max health ([health_multiplier] multiplier).")
 
 		if(current_state >= GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				initialize()
 
 	initialize()
@@ -266,7 +266,7 @@
 		if (damage < 1)
 			return
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		..()
 
 		switch(P.proj_data.damage_type)
 			if(D_KINETIC)
@@ -275,7 +275,6 @@
 				damage_piercing(damage*2)
 			if(D_ENERGY)
 				damage_heat(damage / 5)
-		return
 
 	reagent_act(var/reagent_id,var/volume)
 		if (..())
@@ -312,7 +311,7 @@
 			var/obj/projectile/P = mover
 			if(P.proj_data.window_pass)
 				return 1
-		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST)
+		if (!is_cardinal(dir))
 			return 0 //full tile window, you can't move into it!
 		if(get_dir(loc, mover) & dir)
 
@@ -322,18 +321,22 @@
 
 	gas_cross(turf/target)
 		. = TRUE
-		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || get_dir(loc, target) & dir)
+		if (!is_cardinal(dir) || get_dir(loc, target) & dir)
 			. = ..()
 
-	CheckExit(atom/movable/O as mob|obj, target as turf)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if (!src.density)
 			return 1
 		if(istype(O, /obj/projectile))
 			var/obj/projectile/P = O
 			if(P.proj_data.window_pass)
 				return 1
-		if (get_dir(loc, target) & src.dir)
-			return 0
+		if (!is_cardinal(dir))
+			return 1 // let people move out of full tile windows
+		if (get_dir(loc, O.movement_newloc) & src.dir)
+			. = 0
+			UNCROSS_BUMP_CHECK(O)
+			return
 		return 1
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
@@ -371,7 +374,7 @@
 			if (ishuman(user))
 				src.visible_message("<span class='alert'><b>[user]</b> knocks on [src].</span>")
 				playsound(src.loc, src.hitsound, 100, 1)
-				SPAWN_DBG(-1) //uhhh maybe let's not sleep() an attack_hand. fucky effects up the chain?
+				SPAWN(-1) //uhhh maybe let's not sleep() an attack_hand. fucky effects up the chain?
 					sleep(0.3 SECONDS)
 					playsound(src.loc, src.hitsound, 100, 1)
 					sleep(0.3 SECONDS)
@@ -464,7 +467,7 @@
 		return
 
 	proc/smash()
-		logTheThing("station", usr, null, "smashes a [src] in [src.loc?.loc] ([showCoords(src.x, src.y, src.z)])")
+		logTheThing("station", usr, null, "smashes a [src] in [src.loc?.loc] ([log_loc(src)])")
 		if (src.health < (src.health_max * -0.75))
 			// You managed to destroy it so hard you ERASED it.
 			qdel(src)
@@ -727,7 +730,7 @@
 		/obj/machinery/door, /obj/window, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/jen/red, /turf/simulated/wall/auto/jen/green, /turf/simulated/wall/auto/jen/yellow, /turf/simulated/wall/auto/jen/cyan, /turf/simulated/wall/auto/jen/purple,  /turf/simulated/wall/auto/jen/blue,
 		/turf/simulated/wall/auto/reinforced/jen, /turf/simulated/wall/auto/reinforced/jen/red, /turf/simulated/wall/auto/reinforced/jen/green, /turf/simulated/wall/auto/reinforced/jen/yellow, /turf/simulated/wall/auto/reinforced/jen/cyan, /turf/simulated/wall/auto/reinforced/jen/purple, /turf/simulated/wall/auto/reinforced/jen/blue,
-		/turf/unsimulated/wall/auto/supernorn/wood, /turf/unsimulated/wall/auto/adventure/shuttle/dark)
+		/turf/unsimulated/wall/auto/supernorn/wood, /turf/unsimulated/wall/auto/adventure/shuttle/dark, /turf/simulated/wall/auto/reinforced/old, /turf/unsimulated/wall/auto/lead/blue, /turf/unsimulated/wall/auto/adventure/old, /turf/unsimulated/wall/auto/adventure/mars/interior, /turf/unsimulated/wall/auto/adventure/shuttle, /turf/unsimulated/wall/auto/reinforced/supernorn)
 	alpha = 160
 	the_tuff_stuff
 		explosion_resistance = 3
@@ -737,7 +740,7 @@
 		if (map_setting && ticker)
 			src.update_neighbors()
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.UpdateIcon()
 
 	disposing()
@@ -795,7 +798,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			ini_dir = 5//gurgle
 			set_dir(5)//grumble
 
@@ -805,7 +808,7 @@
 
 	attack_hand(mob/user as mob)
 		if(!ON_COOLDOWN(user, "glass_tap", 5 SECONDS))
-			src.visible_message("<span class='alert'><b>[usr]</b> knocks on [src].</span>")
+			src.visible_message("<span class='alert'><b>[user]</b> knocks on [src].</span>")
 			playsound(src.loc, src.hitsound, 100, 1)
 			sleep(0.3 SECONDS)
 			playsound(src.loc, src.hitsound, 100, 1)
@@ -839,7 +842,7 @@
 	disposing()
 		SHOULD_CALL_PARENT(0) //These are ACTUALLY indestructible.
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			loc = initialPos
 			qdeled = 0// L   U    L
 
@@ -903,7 +906,7 @@
 	New()
 		..()
 		if(current_state >= GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				initialize()
 
 	initialize()

@@ -124,7 +124,7 @@
 		if (user.a_intent == INTENT_HELP)
 			user.visible_message("<span class='combat bold'>[user] [pick_string("descriptors.txt", pick("mopey", "borg_shake"))] baps [target] on the [pick("nose", "forehead", "wrist", "chest")] with \the [src]'s handle!</span>")
 			if(prob(3))
-				SPAWN_DBG(0.2 SECONDS)
+				SPAWN(0.2 SECONDS)
 					target.visible_message("<span class='bold'>[target.name]</span> flops over in shame!")
 					target.changeStatus("stunned", 5 SECONDS)
 					target.changeStatus("weakened", 5 SECONDS)
@@ -269,7 +269,7 @@
 	user.visible_message("<span class='alert'><b>[user] stabs [src] through [his_or_her(user)] chest.</b></span>")
 	take_bleeding_damage(user, null, 250, DAMAGE_STAB)
 	user.TakeDamage("chest", 200, 0)
-	SPAWN_DBG(50 SECONDS)
+	SPAWN(50 SECONDS)
 		if (user && !isdead(user))
 			user.suiciding = 0
 	return 1
@@ -728,17 +728,8 @@
 		else
 			if (src.makemeat)
 				logTheThing("combat", user, C, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
-				var/sourcename = C.real_name
-				var/sourcejob = "Stowaway"
-				if (C.mind && C.mind.assigned_role)
-					sourcejob = C.mind.assigned_role
-				else if (C.ghost && C.ghost.mind && C.ghost.mind.assigned_role)
-					sourcejob = C.ghost.mind.assigned_role
-				for (var/i=0, i<3, i++)
-					var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C))
-					meat.name = sourcename + meat.name
-					meat.subjectname = sourcename
-					meat.subjectjob = sourcejob
+				for (var/i in 0 to 2)
+					new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C),C)
 				if (C.mind)
 					C.ghostize()
 					qdel(C)
@@ -860,9 +851,10 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "fireaxe"
 	item_state = "fireaxe"
+	hitsound = null
 	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY | ONBELT
 	object_flags = NO_ARM_ATTACH
-	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items to 4 times as much damage to doors.
+	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items do 4 times as much damage to doors.
 	hit_type = DAMAGE_CUT
 	click_delay = 10
 	two_handed = 0
@@ -914,6 +906,11 @@
 		src.two_handed = 0
 		set_values()
 		return ..()
+
+	attack(mob/target, mob/user) // custom hit sounds so we can get nice n meaty
+		..()
+		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 25 * (1 + src.two_handed), pitch=0.7) // magic numbers abound. trial and error
+		playsound(target, 'sound/impact_sounds/Generic_Hit_3.ogg', 18 * (1 + src.two_handed), pitch=0.55)
 
 	New()
 		..()
@@ -1107,7 +1104,7 @@
 	user.say(say)
 	blood_slash(user, 25)
 	user.TakeDamage("chest", 150, 0)
-	SPAWN_DBG(10 SECONDS)
+	SPAWN(10 SECONDS)
 		if (user)
 			user.suiciding = 0
 	return 1
@@ -1174,7 +1171,7 @@
 		user.organHolder.drop_and_throw_organ(organtokill, dist = 5, speed = 1, showtext = 1)
 		playsound(src.loc, "sound/impact_sounds/Blade_Small_Bloody.ogg", 50, 1)
 		user.TakeDamage("chest", 100, 0)
-		SPAWN_DBG(10 SECONDS)
+		SPAWN(10 SECONDS)
 		if (user)
 			user.suiciding = 0
 		return 1

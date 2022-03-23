@@ -28,8 +28,8 @@
 #define isrobot(x) istype(x, /mob/living/silicon/robot)
 #define ishivebot(x) istype(x, /mob/living/silicon/hivebot)
 #define ismainframe(x) istype(x, /mob/living/silicon/hive_mainframe)
-#define isAI(x) (istype(x, /mob/living/silicon/ai) || istype (x, /mob/dead/aieye))
-#define isAIeye(x) istype (x, /mob/dead/aieye)
+#define isAI(x) (istype(x, /mob/living/silicon/ai) || istype (x, /mob/living/intangible/aieye))
+#define isAIeye(x) istype (x, /mob/living/intangible/aieye)
 #define isshell(x) istype(x, /mob/living/silicon/hivebot/eyebot)//istype(x, /mob/living/silicon/shell)
 #define isdrone(x) istype(x, /mob/living/silicon/hivebot/drone)
 #define isghostdrone(x) istype(x, /mob/living/silicon/ghostdrone)
@@ -46,4 +46,4 @@
 #define isnewplayer(x) (istype(x, /mob/new_player))
 
 /// Returns true if this mob immune to breathing in smoke?
-#define issmokeimmune(x) (!isliving(x) || isintangible(x) || issilicon(x) || ((x?.wear_mask && (x.wear_mask.c_flags & BLOCKSMOKE || (x.wear_mask.c_flags & MASKINTERNALS && x.internal))) || ischangeling(x) || HAS_MOB_PROPERTY(x, PROP_REBREATHING) || HAS_MOB_PROPERTY(x, PROP_BREATHLESS) || isdead(x)))
+#define issmokeimmune(x) (!isliving(x) || isintangible(x) || issilicon(x) || ((x?.wear_mask && (x.wear_mask.c_flags & BLOCKSMOKE || (x.wear_mask.c_flags & MASKINTERNALS && x.internal))) || ischangeling(x) || HAS_ATOM_PROPERTY(x, PROP_MOB_REBREATHING) || HAS_ATOM_PROPERTY(x, PROP_MOB_BREATHLESS) || isdead(x)))

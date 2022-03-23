@@ -20,9 +20,10 @@ var/global/noir = 0
 		if (!asay && rank_to_level(C.holder.rank) < LEVEL_MOD) // No confidential info for goat farts (Convair880).
 			continue
 		if (C.player_mode)
-			continue
-		else
-			boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
+			if (!asay || (asay && !C.player_mode_asay))
+				continue
+		boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
+
 
 /proc/message_coders(var/text) //Shamelessly adapted from message_admins
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span></span>"
@@ -390,7 +391,7 @@ var/global/noir = 0
 				ircmsg["key"] = src.owner:key
 				ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 				ircmsg["msg"] = "Has [emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle"
-				ircbot.export("admin", ircmsg)
+				ircbot.export_async("admin", ircmsg)
 			else
 				alert("You need to be at least a Primary Administrator to enable/disable shuttle calling.")
 
@@ -442,7 +443,7 @@ var/global/noir = 0
 							ircmsg["key"] = src.owner:key
 							ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 							ircmsg["msg"] = "Deleted note [noteId] belonging to [player]"
-							ircbot.export("admin", ircmsg)
+							ircbot.export_async("admin", ircmsg)
 
 				if("add")
 					if(src.level < LEVEL_SA)
@@ -454,7 +455,7 @@ var/global/noir = 0
 						return
 
 					addPlayerNote(player, usr.ckey, the_note)
-					SPAWN_DBG(2 SECONDS) src.viewPlayerNotes(player)
+					SPAWN(2 SECONDS) src.viewPlayerNotes(player)
 
 					logTheThing("admin", usr, null, "added a note for [player]: [the_note]")
 					logTheThing("diary", usr, null, "added a note for [player]: [the_note]", "admin")
@@ -464,7 +465,7 @@ var/global/noir = 0
 					ircmsg["key"] = src.owner:key
 					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "Added a note for [player]: [the_note]"
-					ircbot.export("admin", ircmsg)
+					ircbot.export_async("admin", ircmsg)
 
 		if("loginnotice")
 			var/player = null
@@ -1774,10 +1775,7 @@ var/global/noir = 0
 						do
 							WO = input("What objective?", "Objective", null) as null|anything in childrentypesof(/datum/objective/specialist/wraith)
 							if (WO)
-								var/datum/objective/specialist/wraith/WObj = new WO()
-								WObj.owner = mind
-								WObj.set_up()
-								mind.objectives += WObj
+								new WO(null, mind)
 						while (WO != null)
 					if ("Random")
 						generate_wraith_objectives(mind)
@@ -1823,7 +1821,7 @@ var/global/noir = 0
 						ticker.mode.Agimmicks += B.mind
 						B.antagonist_overlay_refresh(1, 0)
 
-						SPAWN_DBG(0)
+						SPAWN(0)
 							var/newname = input(B, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
 
 							if (newname)
@@ -2057,7 +2055,7 @@ var/global/noir = 0
 							else
 								evilize(M, selection)
 						/*	else
-								SPAWN_DBG(0) alert("An error occurred, please try again.")*/
+								SPAWN(0) alert("An error occurred, please try again.")*/
 					else
 						var/list/traitor_types = list(ROLE_TRAITOR, ROLE_WIZARD, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WEREWOLF, ROLE_HUNTER, ROLE_WRESTLER, ROLE_GRINCH, ROLE_OMNITRAITOR, ROLE_SPY_THIEF, ROLE_ARCFIEND)
 						if(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang))
@@ -2072,7 +2070,7 @@ var/global/noir = 0
 							else
 								evilize(M, selection)
 							/*else
-								SPAWN_DBG(0) alert("An error occurred, please try again.")*/
+								SPAWN(0) alert("An error occurred, please try again.")*/
 			//they're a ghost/hivebotthing/etc
 			else
 				alert("Cannot make this mob a traitor")
@@ -2151,7 +2149,7 @@ var/global/noir = 0
 					ircmsg["key"] = usr.client.key
 					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "has removed [C]'s adminship"
-					ircbot.export("admin", ircmsg)
+					ircbot.export_async("admin", ircmsg)
 
 					admins.Remove(C.ckey)
 					onlineAdmins.Remove(C)
@@ -2166,7 +2164,7 @@ var/global/noir = 0
 					ircmsg["key"] = usr.client.key
 					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "has made [C] a [rank]"
-					ircbot.export("admin", ircmsg)
+					ircbot.export_async("admin", ircmsg)
 
 					admins[C.ckey] = rank
 					onlineAdmins.Add(C)
@@ -2541,7 +2539,7 @@ var/global/noir = 0
 									if(AffectedArea.name != "Space" && AffectedArea.name != "Ocean" && AffectedArea.name != "Engine Walls" && AffectedArea.name != "Chemical Lab Test Chamber" && AffectedArea.name != "Escape Shuttle" && AffectedArea.name != "Arrival Area" && AffectedArea.name != "Arrival Shuttle" && AffectedArea.name != "start area" && AffectedArea.name != "Engine Combustion Chamber")
 										AffectedArea.power_light = 0
 										AffectedArea.power_change()
-										SPAWN_DBG(rand(55,185))
+										SPAWN(rand(55,185))
 											AffectedArea.power_light = 1
 											AffectedArea.power_change()
 										var/Message = rand(1,4)
@@ -2760,7 +2758,7 @@ var/global/noir = 0
 									else
 										string_version = "\"[pick]\""
 
-								SPAWN_DBG(0)
+								SPAWN(0)
 									for(var/mob/living/carbon/X in mobs)
 										for(pick in picklist)
 											if (adding)
@@ -2824,7 +2822,7 @@ var/global/noir = 0
 									else
 										string_version = "[amt] \"[pick]\""
 
-								SPAWN_DBG(0)
+								SPAWN(0)
 									for(var/mob/living/carbon/X in mobs)
 										for(pick in picklist)
 											var/amt = picklist[pick]
@@ -3114,7 +3112,7 @@ var/global/noir = 0
 							logTheThing("diary", src, null, "created a shake effect (intensity [intensity], length [time])", "admin")
 							message_admins("[key_name(usr)] has created a shake effect (intensity [intensity], length [time]).")
 							for (var/mob/M in mobs)
-								SPAWN_DBG(0)
+								SPAWN(0)
 									shake_camera(M, time * 10, intensity)
 								if (intensity >= 64)
 									M.changeStatus("weakened", 2 SECONDS)
@@ -4218,9 +4216,9 @@ var/global/noir = 0
 		ircmsg["key"] = usr.client.key
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "manually restarted the server."
-		ircbot.export("admin", ircmsg)
+		ircbot.export_async("admin", ircmsg)
 
-		round_end_data(2) //Wire: Export round end packet (manual restart)
+		round_end_data(2) //Wire: export_async round end packet (manual restart)
 
 		sleep(3 SECONDS)
 		Reboot_server()
@@ -4298,7 +4296,7 @@ var/global/noir = 0
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "has delayed the server restart."
-		ircbot.export("admin", ircmsg)
+		ircbot.export_async("admin", ircmsg)
 
 	else if (game_end_delayed == 1)
 		game_end_delayed = 0
@@ -4311,7 +4309,7 @@ var/global/noir = 0
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "has removed the server restart delay."
-		ircbot.export("admin", ircmsg)
+		ircbot.export_async("admin", ircmsg)
 
 /mob/proc/revive()
 	if(ishuman(src))
@@ -4381,14 +4379,10 @@ var/global/noir = 0
 	special = lowertext(special)
 
 	if(mass_traitor_obj)
-		var/datum/objective/custom_objective = new /datum/objective(mass_traitor_obj)
-		custom_objective.owner = M.mind
-		M.mind.objectives += custom_objective
+		new /datum/objective(mass_traitor_obj, M.mind)
 
 		if(mass_traitor_esc)
-			var/datum/objective/escape/escape_objective = new mass_traitor_esc
-			escape_objective.owner = M.mind
-			M.mind.objectives += escape_objective
+			new mass_traitor_esc(null, M.mind)
 	else
 		var/list/eligible_objectives = list()
 		if (ishuman(M) || ismobcritter(M))
@@ -4412,13 +4406,10 @@ var/global/noir = 0
 			if (ROLE_GRINCH)
 				eligible_objectives += /datum/objective/specialist/ruin_xmas
 			if (ROLE_GANG_LEADER)
-				var/datum/objective/gangObjective = new /datum/objective/specialist/gang(  )
-				gangObjective.owner = M.mind
+				new /datum/objective/specialist/gang(null, M.mind)
 				M.mind.special_role = ROLE_GANG_LEADER
-				M.mind.objectives += gangObjective
 		var/done = 0
 		var/select_objective = null
-		var/datum/objective/new_objective = null
 		var/custom_text = "Go hog wild!"
 		while (done != 1)
 			select_objective = input(usr, "Add a new objective. Hit cancel when finished adding.", "Traitor Objectives") as null|anything in eligible_objectives
@@ -4428,17 +4419,11 @@ var/global/noir = 0
 			if (select_objective == /datum/objective/regular)
 				custom_text = input(usr,"Enter custom objective text.","Traitor Objectives","Go hog wild!") as null|text
 				if (custom_text)
-					new_objective = new select_objective(custom_text)
-					new_objective.owner = M.mind
-					new_objective.set_up()
-					M.mind.objectives += new_objective
+					new select_objective(custom_text, M.mind)
 				else
 					boutput(usr, "<span class='alert'>No text was entered. Objective not given.</span>")
 			else
-				new_objective = new select_objective
-				new_objective.owner = M.mind
-				new_objective.set_up()
-				M.mind.objectives += new_objective
+				new select_objective(null, M.mind)
 
 		if (M.mind.objectives.len < 1)
 			boutput(usr, "<span class='alert'>Not enough objectives specified.</span>")
@@ -4448,7 +4433,7 @@ var/global/noir = 0
 		var/mob/living/silicon/ai/A = M
 		A.syndicate = 1
 		A.syndicate_possible = 1
-		A.handle_robot_antagonist_status("admin", 0, usr)
+		A.make_syndicate("admin")
 	else if (isrobot(M))
 		var/mob/living/silicon/robot/R = M
 		if (R.dependent)
@@ -4456,7 +4441,7 @@ var/global/noir = 0
 			return
 		R.syndicate = 1
 		R.syndicate_possible = 1
-		R.handle_robot_antagonist_status("admin", 0, usr)
+		R.make_syndicate("admin")
 	else if (ishuman(M) || ismobcritter(M))
 		switch(traitor_type)
 			if(ROLE_TRAITOR)
@@ -4623,7 +4608,7 @@ var/global/noir = 0
 			var/typeinfo/atom/typeinfo = get_type_typeinfo(path)
 			if(!typeinfo.admin_spawnable)
 				continue
-		if(findtext("[path]", object))
+		if(findtext("[path]$", object))
 			matches += path
 
 	. = matches
@@ -4670,7 +4655,7 @@ var/global/noir = 0
 					A = new chosen(get_turf(usr))
 				if (client.flourish)
 					spawn_animation1(A)
-			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
+			logTheThing("admin", usr, null, "spawned [chosen] at ([log_loc(usr)])")
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
 
 	else
@@ -4697,7 +4682,7 @@ var/global/noir = 0
 				A = new /obj/item/toy/figure(get_turf(usr), new chosen)
 			if (client.flourish)
 				spawn_animation1(A)
-			logTheThing("admin", usr, null, "spawned figurine [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
+			logTheThing("admin", usr, null, "spawned figurine [chosen] at ([log_loc(usr)])")
 			logTheThing("diary", usr, null, "spawned figurine [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
 
 	else
@@ -4718,7 +4703,7 @@ var/global/noir = 0
 			var/turf/T = get_turf(usr)
 			A.set_loc(T)
 			heavenly_spawn(A)
-			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
+			logTheThing("admin", usr, null, "spawned [chosen] at ([log_loc(T)])")
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
 	else
@@ -4738,7 +4723,7 @@ var/global/noir = 0
 		if (chosen)
 			var/turf/T = get_turf(usr)
 			new/obj/effect/supplymarker/safe(T, preDropTime, chosen)
-			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
+			logTheThing("admin", usr, null, "spawned [chosen] at ([log_loc(T)])")
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
 	else
@@ -4759,7 +4744,7 @@ var/global/noir = 0
 			var/turf/T = get_turf(usr)
 			A.set_loc(T)
 			demonic_spawn(A)
-			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
+			logTheThing("admin", usr, null, "spawned [chosen] at ([log_loc(T)])")
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
 	else
@@ -4820,7 +4805,7 @@ var/global/noir = 0
 	set name = "Manage Bioeffects"
 	set desc = "Select a mob to manage its bioeffects."
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	var/list/dat = list()
 	dat += {"
@@ -4930,7 +4915,7 @@ var/global/noir = 0
 	set name = "Manage Abilities"
 	set desc = "Select a mob to manage its abilities."
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	var/list/dat = list()
 	dat += {"
@@ -5061,7 +5046,7 @@ var/global/noir = 0
 
 // Handling noclip logic
 /client/Move(NewLoc, direct)
-	if(usr.client.flying || (ismob(usr) && HAS_MOB_PROPERTY(usr, PROP_NOCLIP)))
+	if(usr.client.flying || (ismob(usr) && HAS_ATOM_PROPERTY(usr, PROP_MOB_NOCLIP)))
 		if(isnull(NewLoc))
 			return
 

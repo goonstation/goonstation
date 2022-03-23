@@ -39,14 +39,16 @@
 
 		src.changeStatus(id, bite_time)
 
+#define DIGESTION_PER_LIFE_TICK 3 //Total amount of reagents we can digest each Life tick
 /mob/living/proc/handle_digestion(var/mult = 1)
 	if (src.stomach_process && length(src.stomach_process))
 		var/count_to_process = min(length(src.stomach_process), 10)
 		var/count_left = count_to_process
 		for(var/obj/item/reagent_containers/food/snacks/bite/B in stomach_process)
-			B.process_stomach(src, (1 / count_to_process) * mult) //1 units processed per Life() tick. Takes an even amt of reagents from all stomach contents
+			B.process_stomach(src, (DIGESTION_PER_LIFE_TICK / count_to_process) * mult) //Takes an even amt of reagents from all stomach contents
 			if(count_left-- <= 0)
 				break
+#undef DIGESTION_PER_LIFE_TICK
 
 //TODO MOVE
 /mob/living/proc/handle_skinstuff(var/mult = 1)
@@ -391,13 +393,13 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_EXPLOPROT, src, optional)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_EXPLOPROT, src, optional)
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			REMOVE_MOB_PROPERTY(M, PROP_EXPLOPROT, src)
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_EXPLOPROT, src)
 
 /datum/statusEffect/disease_resist
 	id = "food_disease_resist"
@@ -427,13 +429,13 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, optional)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT, src, optional)
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			REMOVE_MOB_PROPERTY(M, PROP_RADPROT, src)
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_RADPROT, src)
 
 /datum/statusEffect/space_farts
 	id = "food_space_farts"

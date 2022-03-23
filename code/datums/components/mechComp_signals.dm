@@ -189,7 +189,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 /datum/component/mechanics_holder/proc/fireInput(var/comsig_target, var/name, var/datum/mechanicsMessage/msg)
 	if(!(name in src.inputs)) return
 	var/path = src.inputs[name]
-	SPAWN_DBG(1 DECI SECOND) call(parent, path)(msg)
+	SPAWN(1 DECI SECOND) call(parent, path)(msg)
 	return
 
 //Fire an outgoing connection with given value. Try to re-use incoming messages for outgoing signals whenever possible!

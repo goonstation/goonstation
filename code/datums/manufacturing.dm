@@ -697,6 +697,24 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/civilian_headset
+	name = "Civilian Headset"
+	item_paths = list("MET-1", "CON-1")
+	item_amounts = list(2, 1)
+	item_outputs = list(/obj/item/device/radio/headset)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/jumpsuit_assistant
+	name = "Staff Assistant Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/rank)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/jumpsuit
 	name = "Grey Jumpsuit"
 	item_paths = list("FAB-1")
@@ -1307,6 +1325,42 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 15 SECONDS
 	create = 1
 	category = "Tool"
+
+/datum/manufacture/borg_linker
+	name = "AI Linker"
+	item_paths = list("MET-1","CRY-1","CON-1")
+	item_amounts = list(2,1,2)
+	item_outputs = list(/obj/item/device/borg_linker)
+	time = 15 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/asimov_laws
+	name = "Standard Asimov Law Module Set"
+	item_paths = list("MET-2")
+	item_amounts = list(30)
+	item_outputs = list(/obj/item/aiModule/asimov1,/obj/item/aiModule/asimov2,/obj/item/aiModule/asimov3)
+	time = 60 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/corporate_laws
+	name = "Nanotrasen Law Module Set"
+	item_paths = list("MET-2")
+	item_amounts = list(30)
+	item_outputs = list(/obj/item/aiModule/nanotrasen1,/obj/item/aiModule/nanotrasen2,/obj/item/aiModule/nanotrasen3)
+	time = 60 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/robocop_laws
+	name = "RoboCop Law Module Set"
+	item_paths = list("MET-2")
+	item_amounts = list(40)
+	item_outputs = list(/obj/item/aiModule/robocop1,/obj/item/aiModule/robocop2,/obj/item/aiModule/robocop3,/obj/item/aiModule/robocop4)
+	time = 60 SECONDS
+	create = 1
+	category = "Component"
 
 // Robotics Research
 
