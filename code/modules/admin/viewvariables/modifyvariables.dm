@@ -67,6 +67,7 @@
 
 	if(!islist(L))
 		boutput(src, "<span class='alert'>That's not a List!</span>")
+		return
 
 	var/list/names = sortList(L)
 

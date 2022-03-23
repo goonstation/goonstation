@@ -762,7 +762,7 @@
 	var/datum/data_input_result/result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_NUM_ADJUST, DATA_INPUT_TYPE, DATA_INPUT_MOB_REFERENCE, \
 											DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_ICON, DATA_INPUT_FILE, \
 											DATA_INPUT_COLOR, DATA_INPUT_LIST_EDIT, DATA_INPUT_JSON, DATA_INPUT_JSON, DATA_INPUT_LIST_BUILD, DATA_INPUT_MATRIX, \
-											DATA_INPUT_LIST_BUILD, DATA_INPUT_NULL, DATA_INPUT_REF, DATA_INPUT_RESTORE), default = var_value, default_type = default)
+											DATA_INPUT_NULL, DATA_INPUT_REF, DATA_INPUT_RESTORE), default = var_value, default_type = default)
 
 	switch(result.output_type) // specified cases are special handling. everything in the `else` is generic cases
 
@@ -793,6 +793,7 @@
 		if (DATA_INPUT_NUM_ADJUST)
 			if (!isnum(var_value))
 				boutput(src, "<span class='alert'>You can't adjust a non-num, silly.</span>")
+				return
 			if (set_global)
 				for(var/datum/x as anything in find_all_by_type(D.type))
 					LAGCHECK(LAG_LOW)
