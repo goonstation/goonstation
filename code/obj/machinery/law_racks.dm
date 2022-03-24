@@ -192,7 +192,7 @@
 			. += "It's about to collapse!"
 
 	blob_act(power)
-		changeHealth(-power*0.15,,"blob")
+		changeHealth(-power*0.15,"blob")
 
 	ex_act(severity)
 		src.material?.triggerExp(src, severity)
