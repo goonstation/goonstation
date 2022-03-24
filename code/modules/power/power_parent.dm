@@ -99,17 +99,14 @@ var/makingpowernetssince = 0
 
 	for_by_tcl(PC, /obj/cable)
 		PC.netnum = 0
-	LAGCHECK(LAG_MED)
 
 	for(var/obj/machinery/power/M as anything in machine_registry[MACHINES_POWER])
 		if(M.netnum >=0)
 			M.netnum = 0
-	LAGCHECK(LAG_MED)
 
 	for_by_tcl(PC, /obj/cable)
 		if(!PC.netnum)
 			powernet_nextlink(PC, ++netcount)
-		LAGCHECK(LAG_MED)
 
 	for(var/L = 1 to netcount)
 		var/datum/powernet/PN = new()
@@ -123,7 +120,6 @@ var/makingpowernetssince = 0
 			PN.cables += C
 		else
 			stack_trace("Tried to add cable [C] \ref[C] to the cables of powernet [C.netnum], but that powernet number was larger than the powernets list length of [length(powernets)]")
-		LAGCHECK(LAG_MED)
 
 	for(var/obj/machinery/power/M as anything in machine_registry[MACHINES_POWER])
 		if(M.netnum<=0)		// APCs have netnum=-1 so they don't count as network nodes directly
@@ -133,7 +129,6 @@ var/makingpowernetssince = 0
 		M.powernet.nodes += M
 		if(M.use_datanet)
 			M.powernet.data_nodes += M
-		LAGCHECK(LAG_MED)
 
 	makingpowernets = 0
 	DEBUG_MESSAGE("rebuilding powernets end")
