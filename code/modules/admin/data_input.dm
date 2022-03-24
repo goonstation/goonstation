@@ -92,10 +92,10 @@
 			input = json_decode(input)
 
 		if (DATA_INPUT_REF)
-			input = input("brackets don't matter", custom_title || "Enter ref:", null) as null|text
-			input = locate(input)
+			var/reftext = input("brackets don't matter", custom_title || "Enter ref:", null) as null|text
+			input = locate(reftext)
 			if (!input)
-				input = locate("\[[input]\]")
+				input = locate("\[[reftext]\]")
 			if (!input)
 				boutput(src, "<span class='alert'>Invalid ref.</span>")
 				return
