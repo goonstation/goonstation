@@ -73,6 +73,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
+	health = 8
 	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	object_flags = NO_ARM_ATTACH
