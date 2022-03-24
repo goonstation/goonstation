@@ -1102,14 +1102,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		borg.name = "Cyborg"
 		borg.real_name = "Cyborg"
 
-		if (src.head)
-			if (src.head.ai_interface)
-				borg.ai_interface = src.head.ai_interface
-			else if (!src.head.brain)
-				borg.death()
-				qdel(src)
-				return
-		else
+		if (!src.head)
 			// how the fuck did you even do this
 			stack_trace("Attempted to finish a cyborg from borg frame [src] (\ref[src]) without a head. That's bad.")
 			borg.death()
@@ -1136,7 +1129,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			borg.part_head.brain.owner.transfer_to(borg)
 			if (isdead(M) && !isliving(M))
 				qdel(M)
-		else if (borg.ai_interface)
+		else if (src.head.ai_interface)
+			borg.ai_interface = src.head.ai_interface
 			if (!(borg in available_ai_shells))
 				available_ai_shells += borg
 			for_by_tcl(AI, /mob/living/silicon/ai)
