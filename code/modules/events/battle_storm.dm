@@ -13,32 +13,33 @@
 		..()
 		safe_locations = get_accessible_station_areas()
 
-	event_effect()
+	event_effect(var/final = FALSE)
 		// Pick a safe area(s)
 		activations++
 		safe_area_names = list()
 		safe_areas = list()
-		var/num_safe_areas = clamp(6 - activations, 1, 5)
-		var/area/temp = null
-		var/list/locations_copy = list()
-		for(var/A in safe_locations)
-			locations_copy.Add(A)
-		for(var/i = 0, i < num_safe_areas, i++)
-			temp = pick(locations_copy)
-			locations_copy.Remove(temp)
-			safe_area_names.Add(temp)
-			safe_areas.Add(safe_locations[temp])
-			safe_locations[temp].icon_state = "blue"
+		if (!final)
+			var/num_safe_areas = clamp(6 - activations, 1, 5)
+			var/area/temp = null
+			var/list/locations_copy = list()
+			for(var/A in safe_locations)
+				locations_copy.Add(A)
+			for(var/i = 0, i < num_safe_areas, i++)
+				temp = pick(locations_copy)
+				locations_copy.Remove(temp)
+				safe_area_names.Add(temp)
+				safe_areas.Add(safe_locations[temp])
+				safe_locations[temp].icon_state = "blue"
 
 		for (var/mob/M in mobs)
-			if (!inafterlife(M) && !isVRghost(M))
+			if (M.z == Z_LEVEL_STATION)
 				M.flash(3 SECONDS)
 		var/sound/siren = sound('sound/misc/airraid_loop_short.ogg')
 		siren.repeat = TRUE
 		siren.channel = 5
 		siren.volume = 50 // wire note: lets not deafen players with an air raid siren
 		world << siren
-		command_alert("A BATTLE STORM is approaching the [station_or_ship()]! Impact in 60 seconds. You will take large amounts of damage unless you are standing in [get_battle_area_names(safe_area_names)]!", "BATTLE STORM INCOMING")
+		command_alert("A BATTLE STORM is approaching the [station_or_ship()]! Impact in 60 seconds. [final ? "You must make it to the escape shuttle or die" : "You will take large amounts of damage unless you are standing in [get_battle_area_names(safe_area_names)]"]!", "BATTLE STORM INCOMING")
 
 		SPAWN(60 SECONDS)
 
@@ -47,7 +48,7 @@
 			siren.volume = 50
 
 			for (var/mob/M in mobs)
-				if (!inafterlife(M) && !isVRghost(M))
+				if (M.z == Z_LEVEL_STATION)
 					M.flash(3 SECONDS)
 
 	#ifndef UNDERWATER_MAP

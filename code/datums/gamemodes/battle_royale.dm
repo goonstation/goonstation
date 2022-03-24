@@ -7,8 +7,8 @@ var/global/list/datum/mind/battle_pass_holders = list()
 
 #define TIME_BETWEEN_SHUTTLE_MOVES 5 SECONDS
 #define MAX_TIME_ON_SHUTTLE 60 SECONDS
-#define MIN_TIME_BETWEEN_STORMS 240 SECONDS
-#define MAX_TIME_BETWEEN_STORMS 480 SECONDS
+#define MIN_TIME_BETWEEN_STORMS 140 SECONDS
+#define MAX_TIME_BETWEEN_STORMS 140 SECONDS
 #define MIN_TIME_BETWEEN_SUPPLY_DROPS 60 SECONDS
 #define MAX_TIME_BETWEEN_SUPPLY_DROPS 180 SECONDS
 
@@ -164,7 +164,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	else if(someone_died && living_battlers.len % 10 == 0)
 		command_alert("[living_battlers.len] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
 	if(living_battlers.len <= 1)
-		return TRUE
+		return FALSE
 	return FALSE
 
 
@@ -212,15 +212,25 @@ var/global/list/datum/mind/battle_pass_holders = list()
 							random_brute_damage(H, 8, 0)
 
 	// Is it time for a storm
-	if(src.next_storm < world.time)
-		src.next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
+	if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
 		storm.event_effect()
-		SPAWN(85 SECONDS)
-			var/you_died_good_work = recently_deceased.len > 0 ? "The following players recently died: " : ""
-			for(var/datum/mind/M in recently_deceased)
-				you_died_good_work += " [M.current.name],"
-			recently_deceased = list()
-			command_alert("The BATTLE STORM has ended. You can run around wherever now. [you_died_good_work]", "All Clear")
+	else if(src.next_storm < world.time)
+		src.next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
+		if (emergency_shuttle.online && (emergency_shuttle.location == SHUTTLE_LOC_CENTCOM))
+			if (emergency_shuttle.endtime > 0)
+				message_admins("A storm would trigger but the shuttle is enroute, restarting storm timer.")
+				return
+		else if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
+			message_admins("A storm would trigger but the shuttle is parked, restarting storm timer.")
+			return
+		else
+			storm.event_effect()
+			SPAWN(85 SECONDS)
+				var/you_died_good_work = recently_deceased.len > 0 ? "The following players recently died: " : ""
+				for(var/datum/mind/M in recently_deceased)
+					you_died_good_work += " [M.current.name],"
+				recently_deceased = list()
+				command_alert("The BATTLE STORM has ended. You can run around wherever now. [you_died_good_work]", "All Clear")
 
 	// Is it time for a supply drop?
 	if(src.next_drop < world.time)
