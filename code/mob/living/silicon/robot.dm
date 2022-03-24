@@ -182,6 +182,8 @@
 		src.zone_sel.change_hud_style('icons/mob/hud_robot.dmi')
 		src.attach_hud(zone_sel)
 
+		update_bodypart()
+
 		if (src.shell)
 			if (!(src in available_ai_shells))
 				available_ai_shells += src
@@ -236,7 +238,7 @@
 					src.part_head = H
 					B.set_loc(H)
 					H.brain = B
-			update_bodypart()
+			update_bodypart() //TODO probably remove this later. keeping in for safety
 
 		if (prob(50))
 			src.sound_scream = "sound/voice/screams/Robot_Scream_2.ogg"
@@ -251,6 +253,7 @@
 		if (src.syndicate)
 			src.remove_syndicate("death")
 		src.borg_death_alert()
+		src.eject_brain(fling = TRUE) //EJECT
 		if (!gibbed)
 			src.visible_message("<span class='alert'><b>[src]</b> falls apart into a pile of components!</span>")
 			var/turf/T = get_turf(src)
@@ -1482,7 +1485,7 @@
 			switch(action)
 				if ("Remove the Brain")
 					//Wire: Fix for multiple players queuing up brain removals, triggering this again
-					src.eject_brain()
+					src.eject_brain(user)
 
 				if ("Remove the AI Interface")
 					if (!src.ai_interface)
@@ -1582,7 +1585,7 @@
 
 		add_fingerprint(user)
 
-	proc/eject_brain(var/mob/user = null, var/fling = null)
+	proc/eject_brain(var/mob/user = null, var/fling = FALSE)
 		if (!src.brain)
 			return
 
@@ -1617,7 +1620,8 @@
 			user.put_in_hand_or_drop(src.brain)
 		else
 			src.brain.set_loc(get_turf(src))
-			src.brain.throw_at(get_edge_cheap(get_turf(src), pick(cardinal)), 16, 3) // heh
+			if (fling)
+				src.brain.throw_at(get_edge_cheap(get_turf(src), pick(cardinal)), 5, 1) // heh
 
 		src.brain = null
 		src.part_head?.brain = null
@@ -2496,7 +2500,7 @@
 				logTheThing("combat", src, null, "has died to the killswitch robot self destruct protocol")
 
 				// Pop the head ompartment open and eject the brain
-				src.eject_brain()
+				src.eject_brain(fling = TRUE)
 				src.update_appearance()
 				src.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
 
@@ -2919,6 +2923,7 @@
 			src.visible_message("<b>[src]'s</b> head breaks apart!")
 			if (src.brain)
 				src.brain.set_loc(get_turf(src))
+			src.brain = null
 			src.part_head.brain = null
 			src.part_head = null
 		if (istype(part,/obj/item/parts/robot_parts/arm/))
