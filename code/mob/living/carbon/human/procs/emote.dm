@@ -1767,6 +1767,8 @@
 										do_flip = FALSE
 									if(do_flip && (!oldloc.Enter(tmob) || !newloc.Enter(src)))
 										do_flip = FALSE
+									if(do_flip && !IN_RANGE(newloc, oldloc, 1))
+										do_flip = FALSE
 									if(do_flip)
 										for(var/atom/movable/obstacle in oldloc)
 											if(!ismob(obstacle) && !obstacle.Cross(tmob))
