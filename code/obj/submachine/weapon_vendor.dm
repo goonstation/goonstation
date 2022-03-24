@@ -454,6 +454,7 @@
 	vr_allowed = FALSE
 
 /datum/materiel/utility/beartraps
+	name = "Beartraps"
 	path = /obj/item/storage/beartrap_pouch
 	description = "A pouch of 4 pressure sensitive beartraps used to snare and maim unexpecting victims entering your target area."
 
