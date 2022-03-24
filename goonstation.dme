@@ -1307,7 +1307,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\artifacts\artifact_machines\warper.dm"
 #include "code\obj\artifacts\artifact_objects\augmentor.dm"
 #include "code\obj\artifacts\artifact_objects\bombs.dm"
-#include "code\obj\artifacts\artifact_objects\borg_maker.dm"
+#include "code\obj\artifacts\artifact_objects\borgifier.dm"
 #include "code\obj\artifacts\artifact_objects\cloner.dm"
 #include "code\obj\artifacts\artifact_objects\container.dm"
 #include "code\obj\artifacts\artifact_objects\curser.dm"
