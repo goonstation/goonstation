@@ -527,6 +527,8 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 /mob/living/critter/aquatic/fish/jellyfish/New()
 	..()
 	src.color = random_saturated_hex_color()
+	var/list/color_list = rgb2num(src.color)
+	src.add_medium_light("jellyglow", color_list + list(100))
 	SPAWN(0)
 		if(src.client)
 			src.is_npc = 0
