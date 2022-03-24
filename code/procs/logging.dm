@@ -173,6 +173,7 @@ var/global/logLength = 0
 	var/online
 	var/dead = 1
 	var/mobType = null
+	var/lawrack = null
 
 	var/mob/mobRef
 	if (ismob(ref))
@@ -251,6 +252,19 @@ var/global/logLength = 0
 		else if (isAI(mobRef)) mobType = "AI"
 		else if (!ckey && !mobRef.last_ckey) mobType = "NPC"
 
+	if (mobRef && (issilicon(mobRef) || isAIeye(mobRef)))
+		if(isAIeye(mobRef))
+			var/mob/living/intangible/aieye/aieye = mobRef
+			lawrack = aieye?.mainframe?.law_rack_connection?.unique_id
+		else if(isshell(mobRef))
+			var/mob/living/silicon/sil = mobRef
+			lawrack = sil?.mainframe?.law_rack_connection?.unique_id
+		else
+			var/mob/living/silicon/sil = mobRef
+			lawrack = sil?.law_rack_connection?.unique_id
+		if(isnull(lawrack))
+			lawrack = "NONE"
+
 	var/list/data = list()
 	if (name)
 		if (type == "diary")
@@ -281,6 +295,8 @@ var/global/logLength = 0
 			data += " \[DEAD\]"
 		else
 			data += " \[<span class='alert'>DEAD</span>\]"
+	if(lawrack)
+		data += "\[LawRack: [lawrack]\]"
 	return data.Join()
 
 proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
