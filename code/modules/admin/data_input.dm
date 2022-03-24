@@ -22,6 +22,8 @@
 		allowed_types -= DATA_INPUT_LIST_EDIT
 	if (!isnum(default))
 		allowed_types -= DATA_INPUT_NUM_ADJUST
+	if (!istype(default, /particles))
+		allowed_types -= DATA_INPUT_PARTICLE_EDITOR
 
 	var/input = null 	// The input from the user- usually text, but might be a file or something.
 	var/selected_type = input(custom_type_title || "Which input type?", custom_type_message || "Input Type Selection", default_type) as null|anything in allowed_types //TODO make this a TGUI list once we can indicate defaults on those
@@ -217,7 +219,13 @@
 /client/proc/suggest_input_type(var/var_value, var/varname = null)
 	var/default = null
 
-	if (istype(var_value, /matrix))
+	if (varname == "particles")
+		default = DATA_INPUT_PARTICLE_EDITOR
+
+	else if (varname == "filters")
+		default = DATA_INPUT_FILTER_EDITOR
+
+	else if (istype(var_value, /matrix))
 		boutput(src, "Variable appears to be <b>MATRIX</b>.")
 		default = DATA_INPUT_MATRIX
 
