@@ -39,7 +39,7 @@
 		siren.channel = 5
 		siren.volume = 50 // wire note: lets not deafen players with an air raid siren
 		world << siren
-		command_alert("A BATTLE STORM is approaching the [station_or_ship()]! Impact in 60 seconds. [final ? "You must make it to the escape shuttle or die" : "You will take large amounts of damage unless you are standing in [get_battle_area_names(safe_area_names)]"]!", "BATTLE STORM INCOMING")
+		command_alert("[final ? "The FINAL STORM" : "A BATTLE STORM"] is approaching the [station_or_ship()]! Impact in 60 seconds. [final ? "You must make it to the escape shuttle or die" : "You will take large amounts of damage unless you are standing in [get_battle_area_names(safe_area_names)]"]!", "[final ? "FINAL" : "BATTLE"] STORM INCOMING")
 
 		SPAWN(60 SECONDS)
 
@@ -53,12 +53,14 @@
 
 	#ifndef UNDERWATER_MAP
 			for (var/turf/space/S in world)
-				if (S.z == 1)
+				if (S.z == Z_LEVEL_STATION)
 					S.color = src.space_color
 				else
 					break
 	#endif
 			for(var/area/A in world)
+				if (A.z != Z_LEVEL_STATION)
+					continue
 				var/B = 1
 				for(var/area/S in safe_areas)
 					if(istype(A,S))
@@ -80,24 +82,35 @@
 			blowoutsound.channel = 5
 			blowoutsound.volume = 50
 			world << blowoutsound
-			boutput(world, "<span class='alert'><B>WARNING</B>: A BATTLE STORM has struck [station_name(1)]. You will take damage unless you are in [get_battle_area_names(safe_area_names)]!</span>")
+			boutput(world, "<span class='alert'>[final ? "The FINAL STORM has reached the [station_or_ship()]. You must make it to the escape shuttle or die" : "<B>WARNING</B>: A BATTLE STORM has struck [station_name(1)]. You will take damage unless you are in [get_battle_area_names(safe_area_names)]"]!</span>")
 
 			for (var/mob/M in mobs)
 				SPAWN(0)
 					if (!inafterlife(M) && !isVRghost(M))
 						shake_camera(M, 100, 16) // wire note: lowered strength from 840 to 400, by popular request
 
-			// Hit everyone every 2 seconds when they are not in the safe zone
-			// Everyone gets set more and more on fire the longer they arent in the safe area
-			for(var/i = 0, i < 10, i++)
-				sleep(2 SECONDS)
-				for(var/mob/living/M in mobs)
-					var/area/mob_area = get_area(M)
-					if(mob_area?.storming)
-						M.changeStatus("burning", clamp(2 * activations, 2, 8) SECONDS)
-						if  (activations > 1)
-							M.changeStatus("radiation", clamp(1 * activations, 2, 6) SECONDS)
-						random_brute_damage(M, clamp(2 * activations, 2, 10))
+			if (final)
+				// Yes we are going forever
+				for(var/i = 0, i < INFINITY, i++)
+					sleep(2 SECONDS)
+					for(var/mob/living/M in mobs)
+						if(M.z == Z_LEVEL_STATION)
+							M.changeStatus("burning", 10 SECONDS)
+							M.changeStatus("radiation", 10 SECONDS)
+							random_brute_damage(M, 14)
+							random_burn_damage(M, 14)
+			else
+				// Hit everyone every 2 seconds when they are not in the safe zone
+				// Everyone gets set more and more on fire the longer they arent in the safe area
+				for(var/i = 0, i < 10, i++)
+					sleep(2 SECONDS)
+					for(var/mob/living/M in mobs)
+						var/area/mob_area = get_area(M)
+						if(mob_area?.storming)
+							M.changeStatus("burning", clamp(2 * activations, 2, 8) SECONDS)
+							if  (activations > 1)
+								M.changeStatus("radiation", clamp(1 * activations, 2, 6) SECONDS)
+							random_brute_damage(M, clamp(2 * activations, 2, 10))
 
 			command_alert("The storm has almost passed. ETA 5 seconds until all areas are safe.", "BATTLE STORM ABOUT TO END")
 

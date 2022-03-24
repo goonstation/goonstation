@@ -7,8 +7,8 @@ var/global/list/datum/mind/battle_pass_holders = list()
 
 #define TIME_BETWEEN_SHUTTLE_MOVES 5 SECONDS
 #define MAX_TIME_ON_SHUTTLE 60 SECONDS
-#define MIN_TIME_BETWEEN_STORMS 140 SECONDS
-#define MAX_TIME_BETWEEN_STORMS 140 SECONDS
+#define MIN_TIME_BETWEEN_STORMS 240 SECONDS
+#define MAX_TIME_BETWEEN_STORMS 480 SECONDS
 #define MIN_TIME_BETWEEN_SUPPLY_DROPS 60 SECONDS
 #define MAX_TIME_BETWEEN_SUPPLY_DROPS 180 SECONDS
 
@@ -161,10 +161,13 @@ var/global/list/datum/mind/battle_pass_holders = list()
 			someone_died++
 	if(someone_died && living_battlers.len <= 5)
 		command_alert("[living_battlers.len] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
+		if (!emergency_shuttle.online)
+			emergency_shuttle.incall()
+			command_alert("The escape shuttle has been automatically called. Escape on the shuttle, kill everyone else or die!","Escape Shuttle")
 	else if(someone_died && living_battlers.len % 10 == 0)
 		command_alert("[living_battlers.len] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
 	if(living_battlers.len <= 1)
-		return FALSE
+		return TRUE
 	return FALSE
 
 
@@ -208,29 +211,36 @@ var/global/list/datum/mind/battle_pass_holders = list()
 								no_tick_damage = TRUE
 								break
 						if (!no_tick_damage)
-							boutput(H, "<span class='alert'>You are outside the battle area! Return to the station!</span>")
-							random_brute_damage(H, 8, 0)
+							if (src.next_storm == null)
+								boutput(H, "<span class='alert'>You were outside the [station_or_ship()] after the shuttle left!</span>")
+								H.gib()
+							else
+								boutput(H, "<span class='alert'>You are outside the battle area! Return to the station!</span>")
+								random_brute_damage(H, 10, 0)
 
-	// Is it time for a storm
-	if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
-		storm.event_effect()
-	else if(src.next_storm < world.time)
-		src.next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
-		if (emergency_shuttle.online && (emergency_shuttle.location == SHUTTLE_LOC_CENTCOM))
-			if (emergency_shuttle.endtime > 0)
-				message_admins("A storm would trigger but the shuttle is enroute, restarting storm timer.")
-				return
-		else if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
-			message_admins("A storm would trigger but the shuttle is parked, restarting storm timer.")
-			return
-		else
-			storm.event_effect()
-			SPAWN(85 SECONDS)
-				var/you_died_good_work = recently_deceased.len > 0 ? "The following players recently died: " : ""
-				for(var/datum/mind/M in recently_deceased)
-					you_died_good_work += " [M.current.name],"
-				recently_deceased = list()
-				command_alert("The BATTLE STORM has ended. You can run around wherever now. [you_died_good_work]", "All Clear")
+	// Is it time for a storm?
+	if (src.next_storm != null)
+		// Game ending storm
+		if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
+			if (emergency_shuttle.timeleft() < 60)
+				storm.event_effect(TRUE)
+				src.next_storm = null
+				SPAWN(65 SECONDS)
+					emergency_shuttle.endtime = ticker.round_elapsed_ticks + (20 MINUTES / (1 SECOND))*10
+		else if(src.next_storm < world.time)
+			// Regular storm
+			src.next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
+			if (emergency_shuttle.online && (emergency_shuttle.location == SHUTTLE_LOC_CENTCOM))
+				if (emergency_shuttle.endtime > 0)
+					return
+			else
+				storm.event_effect()
+				SPAWN(85 SECONDS)
+					var/you_died_good_work = recently_deceased.len > 0 ? "The following players recently died: " : ""
+					for(var/datum/mind/M in recently_deceased)
+						you_died_good_work += " [M.current.name],"
+					recently_deceased = list()
+					command_alert("The BATTLE STORM has ended. You can run around wherever now. [you_died_good_work]", "All Clear")
 
 	// Is it time for a supply drop?
 	if(src.next_drop < world.time)
