@@ -115,8 +115,19 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
 	ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Battle Royale","BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.",1,true,true)
 
-
 	emergency_shuttle.disabled = 1
+
+	for(var/x in 1 to world.maxx)
+		var/turf/T = locate(x, 1, Z_LEVEL_STATION)
+		T.ReplaceWith(/turf/cordon, force = TRUE)
+		T = locate(x, world.maxy - 2, Z_LEVEL_STATION)	// Why is the Z change edge not at the actual edge??
+		T.ReplaceWith(/turf/cordon, force = TRUE)
+
+	for(var/y in 1 to world.maxy)
+		var/turf/T = locate(1, y, Z_LEVEL_STATION)
+		T.ReplaceWith(/turf/cordon, force = TRUE)
+		T = locate(world.maxx - 2, y, Z_LEVEL_STATION)	// Why is the Z change edge not at the actual edge??
+		T.ReplaceWith(/turf/cordon, force = TRUE)
 	return 1
 
 
@@ -205,18 +216,14 @@ var/global/list/datum/mind/battle_pass_holders = list()
 					var/turf/T = get_turf(H)
 					if (T.z != Z_LEVEL_STATION)
 						var/area/GA = get_area(T)
-						var/no_tick_damage = FALSE
+						var/safe_area = FALSE
 						for (var/EA in excluded_areas)
 							if(istype(GA, EA))
-								no_tick_damage = TRUE
+								safe_area = TRUE
 								break
-						if (!no_tick_damage)
-							if (src.next_storm == null)
-								boutput(H, "<span class='alert'>You were outside the [station_or_ship()] after the shuttle left!</span>")
-								H.gib()
-							else
-								boutput(H, "<span class='alert'>You are outside the battle area! Return to the station!</span>")
-								random_brute_damage(H, 10, 0)
+						if (!safe_area)
+							boutput(H, "<span class='alert'>You were outside the [station_or_ship()] during a Battle Royale!</span>")
+							H.gib()
 
 	// Is it time for a storm?
 	if (src.next_storm != null)
