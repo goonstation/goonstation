@@ -88,7 +88,7 @@
 					input = SOUTHWEST
 
 		if (DATA_INPUT_JSON)
-			input = input(custom_message, custom_title || "Enter JSON:", json_encode(default)) as null|text
+			input = input(custom_message || "Enter JSON:", custom_title, json_encode(default)) as null|text
 			input = json_decode(input)
 
 		if (DATA_INPUT_REF)
