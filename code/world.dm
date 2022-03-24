@@ -67,6 +67,8 @@ var/global/mob/twitch_mob = 0
 
 	var/savefile/F = new /savefile(path, -1)
 	F["[field]"] >> .
+	if(length(.) == 0)
+		return null
 
 /world/proc/save_intra_round_value(var/field, var/value)
 	if (!field || isnull(value))

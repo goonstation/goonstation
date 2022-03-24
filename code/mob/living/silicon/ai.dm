@@ -437,8 +437,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 					if(B.owner.current.client)
 						src.lastKnownIP = B.owner.current.client.address
 				B.owner.transfer_to(src)
-				if (src.emagged || src.syndicate)
-					src.handle_robot_antagonist_status("brain_added", 0, user)
+				if (src.syndicate)
+					src.make_syndicate("brain added by [user]")
 			W.set_loc(src)
 			src.brain = W
 			src.dismantle_stage = 3
@@ -535,7 +535,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/proc/eject_brain(var/mob/user)
 	if (src.mind && src.mind.special_role)
-		src.handle_robot_antagonist_status("brain_removed", 1, user) // Mindslave or rogue (Convair880).
+		src.remove_syndicate("brain_removed by [user]")
 
 	src.dismantle_stage = 4
 	if (user)
@@ -881,8 +881,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	if (src.mind)
 		src.mind.register_death()
-		if (src.mind.special_role)
-			src.handle_robot_antagonist_status("death", 1) // Mindslave or rogue (Convair880).
+		if (src.syndicate)
+			src.remove_syndicate("death")
 
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel

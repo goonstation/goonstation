@@ -1,5 +1,25 @@
 
+(t)wed mar 23 22
+(u)Hans
+(p)7636
+(e)🆕|feature
+(*)Added ricin to the game as a slow stealth poison.
+(u)Flappybat
+(p)7777
+(e)⚖|balance
+(+)Nuclear operative assault pods are detected much later when there are more than 70 players.
+(u)Eagle
+(p)7677
+(e)🗺⚖|mapping, balance
+(+)The blueprint for a certain gun has been swapped out with some examples of it.
 (t)tue mar 22 22
+(u)Amylizzle
+(p)7904
+(e)🐛🆕🗺🎨|bug, feature, mapping, sprites
+(*)The Syndicate get their own rack now, which all Syndicate borgs and AI will be connected to. It's on the Cairngorm.
+(*)Emagged borgs can no longer be connected to a new law rack.
+(+)Welding the module on the law rack now has a nice animation which shows others what module you're welding.
+(+)Borgs/AI can now see if a rack they are examining is the one they are connected to.
 (u)nefarious6th
 (p)7886
 (e)|

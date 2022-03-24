@@ -542,8 +542,8 @@
 				H.l_hand = null
 
 		if (delete && remove_object)
-			remove_object = null
 			qdel(remove_object)
+			remove_object = null
 
 	getHandIconState()
 		if (handlistPart && !(handlistPart in icon_states(special_icons)))
