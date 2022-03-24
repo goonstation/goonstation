@@ -6,7 +6,7 @@
 	var/list/area/safe_areas = list()
 	var/list/safe_area_names = list()
 	var/list/area/safe_locations = list()
-	var/list/area/excluded_areas = list(/area/sim, /area/afterlife, /area/gauntlet/, /area/shuttle/battle, /area/shuttle/escape/transit, /area/shuttle_transit_space)
+	var/list/area/excluded_areas = list(/area/shuttle/battle, /area/shuttle/escape/transit, /area/shuttle_transit_space)
 	var/activations = 0
 
 	New()
