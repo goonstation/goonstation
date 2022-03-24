@@ -265,7 +265,7 @@ TYPEINFO(/datum/component/consume/organheal)
 
 TYPEINFO(/datum/component/consume/food_effects)
 	initialization_args = list(
-		ARG_INFO("status_effects", DATA_INPUT_BUILD_LIST, "List of status effects to apply when eaten")
+		ARG_INFO("status_effects", DATA_INPUT_LIST_BUILD, "List of status effects to apply when eaten")
 	)
 /datum/component/consume/food_effects/Initialize(var/list/_status_effects)
 	..()
