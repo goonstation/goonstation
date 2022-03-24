@@ -123,6 +123,7 @@
 				boutput(src, "<span class='alert'>Cancelled.</span>")
 				return
 			input = get_one_match(stub, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
+			input = new input
 
 		if (DATA_INPUT_NUM_ADJUST)
 			input = input("Enter amount to adjust by:", custom_title) as null|num
