@@ -210,10 +210,10 @@ var/global/debug_messages = 0
 
 		var/list/results = find_all_by_type(thetype, procname, "instance", listargs)
 
-		boutput(usr, "<span class='notice'>'[procname]' called on [length(results)] instances of '[typename]'</span>")
-		message_admins("<span class='alert'>Admin [key_name(src)] called '[procname]' on all instances of '[typename]'</span>")
-		logTheThing("admin", src, null, "called [procname] on all instances of [typename]")
-		logTheThing("diary", src, null, "called [procname] on all instances of [typename]")
+		boutput(usr, "<span class='notice'>'[procname]' called on [length(results)] instances of '[thetype]'</span>")
+		message_admins("<span class='alert'>Admin [key_name(src)] called '[procname]' on all instances of '[thetype]'</span>")
+		logTheThing("admin", src, null, "called [procname] on all instances of [thetype]")
+		logTheThing("diary", src, null, "called [procname] on all instances of [thetype]")
 	else
 		boutput(usr, "No type matches for [typename]")
 		return
