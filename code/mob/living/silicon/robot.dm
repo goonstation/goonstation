@@ -47,7 +47,6 @@
 	var/obj/item/device/radio/ai_radio = null // Radio used for when this is an AI-controlled shell.
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/machinery/camera/camera = null
-	var/obj/item/organ/brain/brain = null
 	var/obj/item/ai_interface/ai_interface = null
 	var/obj/item/robot_module/module = null
 	var/list/upgrades = list()
@@ -216,24 +215,25 @@
 			src.camera.network = "Robots"
 
 		SPAWN(1.5 SECONDS)
-			if (!src.brain && src.key && !(src.dependent || src.shell || src.ai_interface))
+			if (!src.part_head.brain && src.key && !(src.dependent || src.shell || src.ai_interface))
 				var/obj/item/organ/brain/B = new /obj/item/organ/brain(src)
 				B.owner = src.mind
 				B.icon_state = "borg_brain"
 				if (!B.owner) //Oh no, they have no mind!
 					logTheThing("debug", null, null, "<b>Mind</b> Cyborg spawn forced to create new mind for key \[[src.key ? src.key : "INVALID KEY"]]")
+					stack_trace("Cyborg [src] (\ref[src]) was created without a mind, somehow. Mind force-created for key \[[src.key ? src.key : "INVALID KEY"]]. That's bad.")
 					var/datum/mind/newmind = new
 					newmind.ckey = ckey
 					newmind.key = src.key
 					newmind.current = src
 					B.owner = newmind
 					src.mind = newmind
-				src.brain = B
 				if (src.part_head)
 					B.set_loc(src.part_head)
 					src.part_head.brain = B
 				else
 					// how the hell would this happen. oh well
+					stack_trace("Cyborg [src] (\ref[src]) was created without a head, somehow. That's bad.")
 					var/obj/item/parts/robot_parts/head/standard/H = new /obj/item/parts/robot_parts/head/standard(src)
 					src.part_head = H
 					B.set_loc(H)
@@ -1216,7 +1216,10 @@
 			return
 
 		else if (istype(W, /obj/item/organ/brain) && src.brainexposed)
-			if (src.brain || src.ai_interface)
+			if (!src.part_head)
+				boutput(user, "<span class='alert'>That cyborg doesn't even have a head. Where are you going to put [W]?</span>")
+				return
+			if (src.part_head.brain || src.ai_interface)
 				boutput(user, "<span class='alert'>There's already something in the head compartment! Use a wrench to remove it before trying to insert something else.</span>")
 			else
 				var/obj/item/organ/brain/B = W
@@ -1226,11 +1229,8 @@
 					src.visible_message("<span class='alert'>The safeties on [src] engage, zapping [B]! [B] must not be compatible with silicon bodies.</span>")
 					B.combust()
 					return
-				W.set_loc(src)
-				src.brain = B
-				if (src.part_head)
-					src.part_head.brain = B
-					B.set_loc(src.part_head)
+				src.part_head.brain = B
+				B.set_loc(src.part_head)
 				if (B.owner)
 					var/mob/M = find_ghost_by_key(B.owner.key)
 					if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
@@ -1252,7 +1252,10 @@
 				src.update_appearance()
 
 		else if (istype(W, /obj/item/ai_interface) && src.brainexposed)
-			if (src.brain || src.ai_interface)
+			if (!src.part_head)
+				boutput(user, "<span class='alert'>That cyborg doesn't even have a head. Where are you going to put [W]?</span>")
+				return
+			if (src.part_head.brain || src.ai_interface)
 				boutput(user, "<span class='alert'>There's already something in the head compartment! Use a wrench to remove it before trying to insert something else.</span>")
 			else
 				var/obj/item/ai_interface/I = W
@@ -1461,7 +1464,7 @@
 	attack_hand(mob/user)
 
 		var/list/available_actions = list()
-		if (src.brainexposed && src.brain)
+		if (src.brainexposed && src.part_head.brain)
 			available_actions.Add("Remove the Brain")
 		if (src.brainexposed && src.ai_interface)
 			available_actions.Add("Remove the AI Interface")
@@ -1586,7 +1589,7 @@
 		add_fingerprint(user)
 
 	proc/eject_brain(var/mob/user = null, var/fling = FALSE)
-		if (!src.brain)
+		if (!src.part_head || !src.part_head.brain)
 			return
 
 		if (src.mind && src.mind.special_role && src.syndicate)
@@ -1608,8 +1611,8 @@
 			if (!newmob || !istype(newmob, /mob/dead/observer))
 				return
 			newmob.corpse = null // Otherwise they could return to a brainless body.And that is weird.
-			newmob.mind.brain = src.brain
-			src.brain.owner = newmob.mind
+			newmob.mind.brain = src.part_head.brain
+			src.part_head.brain.owner = newmob.mind
 
 		// Brain box is forced open if it wasn't already (suicides, killswitch)
 		src.locked = 0
@@ -1617,14 +1620,13 @@
 		src.opened = 0
 		src.brainexposed = 1
 		if (user)
-			user.put_in_hand_or_drop(src.brain)
+			user.put_in_hand_or_drop(src.part_head.brain)
 		else
-			src.brain.set_loc(get_turf(src))
+			src.part_head.brain.set_loc(get_turf(src))
 			if (fling)
-				src.brain.throw_at(get_edge_cheap(get_turf(src), pick(cardinal)), 5, 1) // heh
+				src.part_head.brain.throw_at(get_edge_cheap(get_turf(src), pick(cardinal)), 5, 1) // heh
 
-		src.brain = null
-		src.part_head?.brain = null
+		src.part_head.brain = null
 		src.update_appearance()
 
 	Topic(href, href_list)
@@ -2684,7 +2686,7 @@
 		UpdateOverlays(src.i_arm_decor, "arm_decor")
 
 		if (src.brainexposed)
-			if (src.brain)
+			if (src.part_head.brain)
 				src.i_details.icon_state = "openbrain"
 			else
 				src.i_details.icon_state = "openbrainless"
@@ -2921,9 +2923,9 @@
 			src.part_chest = null
 		if (istype(part,/obj/item/parts/robot_parts/head/))
 			src.visible_message("<b>[src]'s</b> head breaks apart!")
-			if (src.brain)
-				src.brain.set_loc(get_turf(src))
-			src.brain = null
+			if (src.part_head.brain)
+				src.part_head.brain.set_loc(get_turf(src))
+			src.part_head.brain = null
 			src.part_head.brain = null
 			src.part_head = null
 		if (istype(part,/obj/item/parts/robot_parts/arm/))

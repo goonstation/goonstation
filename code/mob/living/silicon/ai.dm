@@ -272,7 +272,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				available_ai_shells += E
 
 		for (var/mob/living/silicon/robot/R in mobs)
-			if (R.brain || !R.ai_interface || R.dependent)
+			if (R.part_head?.brain || !R.ai_interface || R.dependent)
 				continue
 			if (!(R in available_ai_shells))
 				available_ai_shells += R
