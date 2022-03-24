@@ -269,7 +269,7 @@
 					hit_with_existing_projectile(P, target) // Includes log entry.
 				else
 					P.launch()
-			user.visible_message("<b class='alert'>[user] shoots [user == target ? "[him_or_her(user)]self" : target] point-blank with the [holder.name]!</b>")
+			user.visible_message("<b class='alert'>[user] shoots [target] point-blank with the [holder.name]!</b>")
 			next_shot_at = ticker.round_elapsed_ticks + cooldown
 			if (!current_shots)
 				reloaded_at = ticker.round_elapsed_ticks + reload_time
