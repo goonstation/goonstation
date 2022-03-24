@@ -3,7 +3,7 @@
 
 TYPEINFO(/datum/component/sniper_wallpierce)
 	initialization_args = list(
-		ARG_INFO("num_pierces", "num", "number of walls/etc to pierce", 1)
+		ARG_INFO("num_pierces", DATA_INPUT_NUM, "number of walls/etc to pierce", 1)
 	)
 /datum/component/sniper_wallpierce/Initialize(var/num_pierces)
 	if(!istype(parent, /obj/projectile))

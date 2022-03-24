@@ -4555,23 +4555,6 @@ var/global/noir = 0
 		message_admins("<span class='internal'>[key_name(usr)] has made [key_name(M)] a[special ? " [special]" : ""] [traitor_type].</span>")
 	return
 
-/datum/admins/proc/get_item_desc(var/target)
-	switch (target)
-		if (1)
-			return "a fully loaded laser gun"
-		if (2)
-			return "a hand teleporter"
-		if (3)
-			return "a fully armed and heated plasma bomb"
-		if (4)
-			return "a jet pack"
-		if (5)
-			return "an ID card with universal access"
-		if (6)
-			return "a captain's dark green jumpsuit"
-		else
-			return "Error: Invalid theft target: [target]"
-
 /proc/get_matches_string(var/text, var/list/possibles)
 	var/list/matches = new()
 	for (var/possible in possibles)

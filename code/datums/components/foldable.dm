@@ -10,7 +10,7 @@
 
 TYPEINFO(/datum/component/foldable)
 	initialization_args = list(
-		ARG_INFO("briefcase_path", "type", "Path of item that will be folded up into", /obj/item/objBriefcase)
+		ARG_INFO("briefcase_path", DATA_INPUT_TYPE, "Path of item that will be folded up into", /obj/item/objBriefcase)
 	)
 
 /datum/component/foldable/Initialize(var/briefcase_path = /obj/item/objBriefcase)
