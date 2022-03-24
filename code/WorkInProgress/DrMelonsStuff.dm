@@ -117,7 +117,6 @@
 			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 			animate_wiggle_then_reset(src, 1, 3)
 			src.reagents.trans_to(src.last_turf, 5)
-			return
 		else
 			..()
 
