@@ -34,10 +34,10 @@
 			return
 
 		if (DATA_INPUT_NUM)
-			input = input(custom_title || "Enter number:", custom_message, default) as null|num
+			input = input(custom_message, custom_title || "Enter number:", default) as null|num
 
 		if (DATA_INPUT_TYPE)
-			var/stub = input(custom_title || "Enter part of type:", custom_message) as null|text
+			var/stub = input(custom_message, custom_title || "Enter part of type:") as null|text
 			if (!stub)
 				boutput(src, "<span class='alert'>Cancelled.</span>")
 				return
@@ -48,27 +48,27 @@
 
 
 		if (DATA_INPUT_COLOR)
-			input = input(custom_title || "Select color:", custom_message, default) as null|color
+			input = input(custom_message, custom_title || "Select color:", default) as null|color
 
 		if (DATA_INPUT_TEXT)
-			input = input(custom_title || "Enter text:", custom_message, default) as null|message
+			input = input(custom_message, custom_title || "Enter text:", default) as null|message
 
 		if (DATA_INPUT_ICON)
-			input = input(custom_title || "Select icon:", custom_message) as null|icon
+			input = input(custom_message, custom_title || "Select icon:") as null|icon
 			if (alert("Would you like to associate an icon_state with the icon?", "icon_state", "Yes", "No") == "Yes")
-				var/state = input("Enter icon_state:", null) as null|text
+				var/state = input(null, "Enter icon_state:") as null|text
 				if (state)
 					input = icon(input, state)
 
 		if (DATA_INPUT_BOOL)
 			//lines written by the utterly insane
-			input = alert(custom_title || "True or False?", custom_message + (!isnull(default) ? "(Default: [default ? "True" : "False"])" : null), "True", "False") == "True" ? TRUE : FALSE
+			input = alert(custom_message + (!isnull(default) ? "(Default: [default ? "True" : "False"])" : null), custom_title || "True or False?", "True", "False") == "True" ? TRUE : FALSE
 
 		if (DATA_INPUT_FILE)
-			input = input(custom_title || "Select file:", custom_message) as null|file
+			input = input(custom_message, custom_title || "Select file:") as null|file
 
 		if (DATA_INPUT_DIR)
-			input = input(custom_title || "Enter direction:", custom_message, default) as null|anything in list("NORTH", "SOUTH", "EAST", "WEST", "NORTHEAST", "SOUTHEAST", "NORTHWEST", "SOUTHWEST")
+			input = input(custom_message, custom_title || "Pick direction:", default) as null|anything in list("NORTH", "SOUTH", "EAST", "WEST", "NORTHEAST", "SOUTHEAST", "NORTHWEST", "SOUTHWEST")
 			switch(input)
 				if("NORTH")
 					input = NORTH
@@ -88,11 +88,11 @@
 					input = SOUTHWEST
 
 		if (DATA_INPUT_JSON)
-			input = input(custom_title || "Enter JSON:", custom_message, json_encode(default)) as null|text
+			input = input(custom_message, custom_title || "Enter JSON:", json_encode(default)) as null|text
 			input = json_decode(input)
 
 		if (DATA_INPUT_REF)
-			input = input(custom_title || "Enter ref:", "brackets don't matter", null) as null|text
+			input = input("brackets don't matter", custom_title || "Enter ref:", null) as null|text
 			input = locate(input)
 			if (!input)
 				input = locate("\[[input]\]")
@@ -118,14 +118,14 @@
 			input = promise.wait_for_value()
 
 		if (DATA_INPUT_NEW_INSTANCE)
-			var/stub = input(custom_title || "Enter part of type:", custom_message) as null|text
+			var/stub = input(custom_message, custom_title || "Enter part of type:") as null|text
 			if (!stub)
 				boutput(src, "<span class='alert'>Cancelled.</span>")
 				return
 			input = get_one_match(stub, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 
 		if (DATA_INPUT_NUM_ADJUST)
-			input = input("Enter amount to adjust by:", custom_message) as null|num
+			input = input(custom_message, "Enter amount to adjust by:") as null|num
 
 		if (DATA_INPUT_ATOM_ON_CURRENT_TURF) // this is ugly but it's legacy so WHATEVER
 			var/list/possible = list()
@@ -136,7 +136,7 @@
 				possible += A
 				for (var/atom/B in A)
 					possible += B
-			input = input(custom_title || "Select reference:", custom_message || "Reference") as null|mob|obj|turf|area in possible
+			input = input(custom_message || "Reference", custom_title || "Select reference:") as null|mob|obj|turf|area in possible
 
 		if (DATA_INPUT_NULL) // this is the one case a null output is allowed- we check to ensure the selected input type is this
 			input = null //yes i am aware this is a useless statement. Clarity!!!
@@ -149,10 +149,10 @@
 			input = default
 
 		if (DATA_INPUT_MOB_REFERENCE)
-			input = input(custom_title || "Select a mob:") as null|mob in world
+			input = input(null, custom_title || "Select a mob:") as null|mob in world
 
 		if (DATA_INPUT_MATRIX)
-			input = input("Create a matrix:  (format: \"a,b,c,d,e,f\" without quotes). Must have a leading 0 for decimals:", custom_message, default) as null|message
+			input = input("Create a matrix:  (format: \"a,b,c,d,e,f\" without quotes). Must have a leading 0 for decimals:", custom_title, default) as null|message
 			if(input == null)
 				boutput(src, "<span class='alert'>Cancelled.</span>")
 				return
