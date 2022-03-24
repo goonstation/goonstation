@@ -220,3 +220,12 @@
 	slots = 7 //bonus two slots for the banana grenade kit
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/old_grenade/spawner/banana = 5)
+
+/obj/item/storage/beartrap_pouch
+	name = "beartrap pouch"
+	desc = "A large pouch for safely storing unarmed beartraps."
+	icon_state = "ammopouch-large"
+	w_class = W_CLASS_SMALL
+	slots = 4
+	does_not_open_in_pocket = 0
+	spawn_contents = list(/obj/item/beartrap = 4)
