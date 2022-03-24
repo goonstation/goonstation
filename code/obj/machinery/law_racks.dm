@@ -47,6 +47,7 @@
 		. = ..()
 
 	was_deconstructed_to_frame(mob/user)
+		logTheThing("station", user, null, "<b>deconstructed</b> rack [constructName(src)]")
 		ticker?.ai_law_rack_manager.unregister_rack(src)
 		src.drop_all_modules()
 		UpdateIcon()
@@ -56,6 +57,7 @@
 	was_built_from_frame(mob/user, newly_built)
 		if(isrestrictedz(src.z) || !issimulatedturf(src.loc))
 			boutput(user, "Something about this area prevents you from constructing the [src]!")
+			logTheThing("station", user, null, "tried to construct a [src] in restricted area [log_loc(src)]")
 			var/obj/item/electronics/frame/F = new
 			var/turf/target_loc = get_turf(src.loc)
 			F.name = "[src.name] frame"
@@ -71,6 +73,7 @@
 		//this should always be hard to deconstruct, even if player built
 		src.deconstruct_flags = initial(src.deconstruct_flags)
 		ticker?.ai_law_rack_manager.register_new_rack(src)
+		logTheThing("station", user, null, "constructed a new rack [constructName(src)] from frame")
 		. = ..()
 
 	changeHealth(change,var/causer=null) //override so I can pass causer down the chain. Gross.
@@ -464,7 +467,12 @@
 		for (var/obj/item/aiModule/X in law_circuits)
 			if(!X)
 				continue
-			lawOut += "[law_counter++]: [X.get_law_text()]"
+			var/lt = X.get_law_text(TRUE)
+			if(islist(lt))
+				for(var/law in lt)
+					lawOut += "[law_counter++]: [law]"
+			else
+				lawOut += "[law_counter++]: [lt]"
 
 		return jointext(lawOut, glue)
 
@@ -478,9 +486,12 @@
 		for (var/obj/item/aiModule/X in law_circuits)
 			if(!X)
 				continue
-			laws["[law_counter]"] = X.get_law_text()
-			law_counter++
-
+			var/lt = X.get_law_text(TRUE)
+			if(islist(lt))
+				for(var/law in lt)
+					laws["[law_counter++]"] = law
+			else
+				laws["[law_counter]"] = lt
 		return laws
 
 	/** Pushes law updates to all connected AIs and Borgs - notification text allows you to customise the header
@@ -529,15 +540,15 @@
 		equipped.set_loc(src)
 		user.visible_message("<span class='alert'>[user] slides a module into the law rack</span>", "<span class='alert'>You slide the module into the rack.</span>")
 		tgui_process.update_uis(src)
-		logTheThing("station", user, null, "[constructName(user)] <b>inserts</b> law module into rack([constructName(src)]): [equipped]:[equipped.lawText] at slot [slotNum]")
-		message_admins("[user.name] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.lawText]' at slot [slotNum]")
+		logTheThing("station", user, null, "[constructName(user)] <b>inserts</b> law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
+		message_admins("[user.name] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]")
 		UpdateIcon()
 		UpdateLaws()
 
 	proc/remove_module_callback(var/slotNum,var/mob/user)
 		//add circuit to hand
-		logTheThing("station", user, null, "[constructName(user)] <b>removes</b> law module from rack([constructName(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].lawText] at slot [slotNum]")
-		message_admins("[user.name] removed a law from rack at ([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].lawText] at slot [slotNum]")
+		logTheThing("station", user, null, "[constructName(user)] <b>removes</b> law module from rack([constructName(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
+		message_admins("[user.name] removed a law from rack at ([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
 		user.visible_message("<span class='alert'>[user] slides a module out of the law rack</span>", "<span class='alert'>You slide the module out of the rack.</span>")
 		user.put_in_hand_or_drop(src.law_circuits[slotNum])
 		src.law_circuits[slotNum] = null
