@@ -725,12 +725,12 @@
 
 			if ("nod")  // we want it so ghostdrones can answer yes/no wuestions
 				if (!src.restrained())
-					message = "<B>[src]</B> nods its head yes."
+					message = "<B>[src]</B> nods its head."
 					m_type = 2
 
 			if ("snap")
 				if (!src.restrained())
-					message = "<B>[src]</B> shakes its head no."
+					message = "<B>[src]</B> shakes its head."
 					m_type = 2
 
 			if ("flap")
