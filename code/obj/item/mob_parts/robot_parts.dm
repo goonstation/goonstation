@@ -1156,7 +1156,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			borg.cell.set_loc(borg)
 
 		if (borg.mind && !borg.ai_interface)
-			borg.unlock_medal("Adjutant borgnline", 1)
+			borg.unlock_medal("Adjutant Online", 1)
 			borg.set_loc(get_turf(src))
 
 			boutput(borg, "<B>You are playing a Robot. The Robot can interact with most electronic objects in its view point.</B>")
