@@ -314,6 +314,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/telecrystal_entered
 	execute(var/atom/owner, var/atom/movable/entering)
+		if (isobserver(entering) || isintangible(entering))
+			return
 		var/turf/T = get_turf(entering)
 		if(prob(50) && owner && isturf(owner) && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(entering), rand(-2, 2), rand(-2, 2))
