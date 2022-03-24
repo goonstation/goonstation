@@ -1320,8 +1320,8 @@
 		bulletcount--
 		if(bulletcount<=0)// out of ammo? bedtime
 			SPAWN(0.5 SECONDS)
-			src.visible_message("[src] runs out of ammo!")
-			task = "sleeping"
-			src.health = 0
-			src.CritterDeath()
-
+				src.visible_message("[src] runs out of ammo!")
+				task = "sleeping"
+				src.health = 0
+				src.CritterDeath()
+	
