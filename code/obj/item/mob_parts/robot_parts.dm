@@ -1106,7 +1106,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			if (src.head.ai_interface)
 				borg.ai_interface = src.head.ai_interface
 			else if (!src.head.brain)
-				stack_trace("Attempted to finish a cyborg from borg frame [src] (\ref[src]) without a brain. That's bad.")
 				borg.death()
 				qdel(src)
 				return
