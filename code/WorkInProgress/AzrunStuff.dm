@@ -67,7 +67,7 @@
 	cropsize = 1
 	harvests = 0
 	endurance = 5
-	vending = 0
+	vending = FALSE
 
 
 	var/list/cooldowns
@@ -134,7 +134,7 @@
 	harvests = 0
 	endurance = 5
 	assoc_reagents = list("toxin", "histamine")
-	vending = 0
+	vending = FALSE
 
 	var/datum/projectile/syringe/seed/projectile
 
@@ -205,7 +205,8 @@
 		if(!online)
 			return
 		var/atom/movable/P = locate(/obj/machinery/plantpot/bareplant) in src.owner
-		// Uhhh.. just one thanks
+
+		// Uhhh.. just one thanks, don't need a pew pew army growing out of someone
 		if(!P)
 			P = new /obj/machinery/plantpot/bareplant {spawn_plant=/datum/plant/seed_spitter; spawn_growth=1; auto_water=FALSE;} (src.owner)
 			var/atom/movable/target = src.owner
