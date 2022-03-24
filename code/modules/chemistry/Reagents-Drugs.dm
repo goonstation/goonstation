@@ -292,7 +292,6 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.druggy = max(M.druggy, 15)
 				// TODO. Write awesome hallucination algorithm!
 //				if(M.canmove) step(M, pick(cardinal))
 //				if(prob(7)) M.emote(pick("twitch","drool","moan","giggle"))
@@ -334,9 +333,13 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				animate_fade_drug(M.client, 20)
 				if(method == INGEST)
 					boutput(M, "<span class='alert'><font face='[pick("Arial", "Georgia", "Impact", "Mucida Console", "Symbol", "Tahoma", "Times New Roman", "Verdana")]' size='[rand(3,6)]'>Holy shit, you start tripping balls!</font></span>")
 				return
+
+			on_mob_life_complete(var/mob/living/M)
+				animate_fade_from_drug(M.client, 20)
 
 		drug/lsd_bee
 			name = "lsbee"
