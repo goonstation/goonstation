@@ -49647,7 +49647,18 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/turret,
+/obj/machinery/turretid{
+	name = "External perimeter turret deactivation control";
+	req_access = null;
+	turretArea = /area/station/turret_protected/armory_outside;
+	pixel_y = -24
+	},
+/obj/access_spawn/hos,
+/obj/deployable_turret/riot{
+	active = 1;
+	anchored = 1;
+	dir = 1
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "mTQ" = (
@@ -57655,11 +57666,6 @@
 "uNX" = (
 /obj/stool/chair/red{
 	dir = 4
-	},
-/obj/machinery/turretid{
-	pixel_x = -26;
-	req_access = null;
-	req_access_txt = "1"
 	},
 /turf/simulated/floor/engine,
 /area/station/security/secwing)
