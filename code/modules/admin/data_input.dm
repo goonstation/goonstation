@@ -41,7 +41,11 @@
 			if (!stub)
 				boutput(src, "<span class='alert'>Cancelled.</span>")
 				return
-			input = get_one_match(stub, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
+			while (!input)
+				input = get_one_match(stub, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
+				if (!input)
+					alert("No types found matching that string.")
+
 
 		if (DATA_INPUT_COLOR)
 			input = input(custom_title || "Select color:", custom_message, default) as null|color
