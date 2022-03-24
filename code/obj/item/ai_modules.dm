@@ -74,7 +74,7 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 			var/pos = rand(1,length(src.name)-1)
 			var/pos2 = rand(pos,length(src.name))
 			var/part1 = copytext( src.name , 1 , pos)
-            var/part2 = copytext( src.name , pos2)
+			var/part2 = copytext( src.name , pos2)
 			return part1+pick("^^vv<><>BA","AAAAAAAAAAAAAAAAAA","ID10-T ERROR","%FUDGE%","CRASH()","BEEES",":) :) :)","~#@@@#~","\\x00\\x00\\x00\\xDE\\xAD\\xBE\\xEF","\\x00\\x00\\x00\\x00","#BADREF#","OH NO IONS","FFFFBABAFFFBA","?","*?!","$var","001011001111011001","ERR0R")+part2
 		else
 			return src.name
