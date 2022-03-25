@@ -4,6 +4,8 @@
 (p)7636
 (e)⚖|balance
 (+)Power cell sec utility purchase cost raised to 2 credits, only-a-baton loadout comes with an additional utility token.
+(u)aloe
+(+)The nuke op sniper has been changed a bit- it no longer disorients people (still does stamina damage), loses some damage when shooting through obstacles, and doesn't throw people back as far. The class gets an extra mag in their pouch to offset this a bit.
 (t)wed mar 23 22
 (u)Hans
 (p)7636
@@ -78,7 +80,7 @@
 (u)Cogwerks
 (e)🎨🗺|sprites, mapping
 (+)Made some more background art for a bunch of orbital objects
-(+)Slightly rearranged solar control rooms on Cogmaps 1 & 2 for view of stars 
+(+)Slightly rearranged solar control rooms on Cogmaps 1 & 2 for view of stars
 (t)mon mar 14 22
 (u)Conchuckter
 (p)7784
