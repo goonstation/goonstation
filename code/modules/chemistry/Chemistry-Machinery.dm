@@ -106,7 +106,35 @@
 	ui_data(mob/user)
 		. = list()
 		var/obj/item/reagent_containers/glass/container = src.beaker
-		.["containerData"] = container?.tgui_format()
+		// Container data
+		var/list/containerData
+		if(container)
+			var/datum/reagents/R = container.reagents
+			containerData = list(
+				name = container.name,
+				maxVolume = R.maximum_volume,
+				totalVolume = R.total_volume,
+				temperature = R.total_temperature,
+				contents = list(),
+				finalColor = "#000000"
+			)
+
+			var/list/contents = containerData["contents"]
+			if(istype(R) && R.reagent_list.len>0)
+				containerData["finalColor"] = R.get_average_rgb()
+				// Reagent data
+				for(var/reagent_id in R.reagent_list)
+					var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
+
+					contents.Add(list(list(
+						name = reagents_cache[reagent_id],
+						id = reagent_id,
+						colorR = current_reagent.fluid_r,
+						colorG = current_reagent.fluid_g,
+						colorB = current_reagent.fluid_b,
+						volume = current_reagent.volume
+					)))
+		.["containerData"] = containerData
 		.["targetTemperature"] = src.target_temp
 		.["isActive"] = src.active
 
