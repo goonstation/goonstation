@@ -1,4 +1,9 @@
 
+(t)thu mar 24 22
+(u)tarmunora
+(p)7636
+(e)⚖|balance
+(+)Power cell sec utility purchase cost raised to 2 credits, only-a-baton loadout comes with an additional utility token.
 (t)wed mar 23 22
 (u)Hans
 (p)7636

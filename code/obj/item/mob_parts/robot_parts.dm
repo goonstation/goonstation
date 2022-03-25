@@ -1102,13 +1102,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		borg.name = "Cyborg"
 		borg.real_name = "Cyborg"
 
-		if (src.head)
-			if (!src.head.brain && !src.head.ai_interface)
-				stack_trace("Attempted to finish a cyborg from borg frame [src] (\ref[src]) without a brain or AI interface. That's bad.")
-				borg.death()
-				qdel(src)
-				return
-		else
+		if (!src.head)
 			// how the fuck did you even do this
 			stack_trace("Attempted to finish a cyborg from borg frame [src] (\ref[src]) without a head. That's bad.")
 			borg.death()
@@ -1135,7 +1129,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			borg.part_head.brain.owner.transfer_to(borg)
 			if (isdead(M) && !isliving(M))
 				qdel(M)
-		else if (borg.part_head.ai_interface)
+
+		else if (src.head.ai_interface)
 			if (!(borg in available_ai_shells))
 				available_ai_shells += borg
 			for_by_tcl(AI, /mob/living/silicon/ai)
@@ -1155,7 +1150,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			borg.cell.set_loc(borg)
 
 		if (borg.mind && !borg.part_head.ai_interface)
-			borg.unlock_medal("Adjutant borgnline", 1)
+			borg.unlock_medal("Adjutant Online", 1)
 			borg.set_loc(get_turf(src))
 
 			boutput(borg, "<B>You are playing a Robot. The Robot can interact with most electronic objects in its view point.</B>")
