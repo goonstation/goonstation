@@ -271,15 +271,15 @@ world/proc/updateCameraVisibility()
 		t.cameraTotal++
 
 /turf/MouseEntered()
-	if(istype(usr,/mob/dead/aieye))//todo, make this a var for cheapernesseress?
+	if(istype(usr,/mob/living/intangible/aieye))//todo, make this a var for cheapernesseress?
 		if(aiImage)
 			usr.client.show_popup_menus = !!cameraTotal
 
 /client/Click(thing)
-	if(isturf(thing) && istype(src.mob,/mob/dead/aieye) && !thing:cameraTotal)
+	if(isturf(thing) && istype(src.mob,/mob/living/intangible/aieye) && !thing:cameraTotal)
 		return
 	return ..()
-/mob/dead/aieye
+/mob/living/intangible/aieye
 	name = "AI Eyeball"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "a-eye"

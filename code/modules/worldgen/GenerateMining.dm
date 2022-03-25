@@ -1,7 +1,6 @@
 #define ISDISTEDGE(A, D) (((A.x > (world.maxx - D) || A.x <= D)||(A.y > (world.maxy - D) || A.y <= D))?1:0) //1 if A is within D tiles range from edge of the map.
 
 var/list/miningModifiers = list()
-var/list/miningModifiersUsed = list()//Assoc list, type:times used
 
 //Notes:
 //Anything not encased in an area inside a prefab may be replaced with asteroids during generation. In other words, everything not inside that area is considered "transparent"
@@ -282,7 +281,9 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 	var/num_to_place = AST_NUMPREFABS + rand(0,AST_NUMPREFABSEXTRA)
 	for (var/n = 1, n <= num_to_place, n++)
 		game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
-		var/datum/generatorPrefab/M = pickPrefab()
+		var/datum/mapPrefab/mining/M = pick_map_prefab(/datum/mapPrefab/mining,
+			wanted_tags = map_currently_underwater ? list("underwater") : null,
+			unwanted_tags = map_currently_underwater ? null : list("underwater"))
 		if (M)
 			var/maxX = (world.maxx - M.prefabSizeX - AST_MAPBORDER)
 			var/maxY = (world.maxy - M.prefabSizeY - AST_MAPBORDER)
@@ -325,41 +326,3 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
 
 	hotspot_controller.generate_map()
-
-/proc/pickPrefab()
-	var/list/eligible = list()
-	var/list/required = list()
-
-	for(var/datum/generatorPrefab/M in miningModifiers)
-		if(M.underwater != map_currently_underwater) continue
-		if(M.type in miningModifiersUsed)
-			if(M.required) continue
-			if(M.maxNum != -1)
-				if(miningModifiersUsed[M.type] >= M.maxNum)
-					continue
-				else
-					eligible.Add(M)
-					eligible[M] = M.probability
-			else
-				eligible.Add(M)
-				eligible[M] = M.probability
-		else
-			eligible.Add(M)
-			eligible[M] = M.probability
-			if(M.required) required.Add(M)
-
-	if(required.len)
-		var/datum/generatorPrefab/P = required[1]
-		miningModifiersUsed.Add(P.type)
-		miningModifiersUsed[P.type] = 1
-		return P
-	else
-		if(eligible.len)
-			var/datum/generatorPrefab/P = weighted_pick(eligible)
-			if(P.type in miningModifiersUsed)
-				miningModifiersUsed[P.type] = (miningModifiersUsed[P.type] + 1)
-			else
-				miningModifiersUsed.Add(P.type)
-				miningModifiersUsed[P.type] = 1
-			return P
-		else return null

@@ -62,6 +62,9 @@
 		icon = art
 		pop_open_a_browser_box(user)
 
+	attack_self(mob/user)
+		. = ..()
+		pop_open_a_browser_box(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (!W || !user)
@@ -77,15 +80,20 @@
 
 			// tracks how many things someone's drawn on it.
 			// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
-			artists[ckey(usr.ckey)]++
+			artists[ckey(user.ckey)]++
 
 			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 40, 1)
 			user.visible_message("[user] paints over \the [src] with \the [W].", "You paint over \the [src] with \the [W].")
 			logTheThing("station", user, null, "coated [src] in paint: [log_loc(src)]: canvas{\ref[src], -1, -1, [P.paint_color]}")
 
 			// send the damn icon and gently nudge the page into refreshing it
-			send_the_damn_icon(usr)
+			send_the_damn_icon(user)
 			return
+
+		else if (istype(W, /obj/item/pen))
+			pop_open_a_browser_box(user)
+		else
+			. = ..()
 
 
 	Topic(href, href_list)
@@ -249,6 +257,13 @@
 		"}
 
 		user << browse(dat, "window=canvas;size=900x680")
+
+	picklify(atom/loc)
+		if(!startswith(src.name, "pickled"))
+			src.name = "pickled [src.name]"
+		src.desc = "A fairly pickled canvas for wowing the station with your pickled talent. Coming soon: Pickles!"
+		src.edible = TRUE
+		return src
 
 // the intro at the start of this file is a joke:
 // https://www.youtube.com/watch?v=wpNxzJk7xUc#t=42s

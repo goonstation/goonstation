@@ -217,7 +217,7 @@
 			if (O)
 				boutput(O, "<span class='alert'><strong>Your control is wrested away! The item is no longer yours.</strong></span>")
 				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithleaveoject.ogg", 50, 0)
-				O.death(0)
+				O.death(FALSE)
 		return 0
 
 

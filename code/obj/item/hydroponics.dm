@@ -32,7 +32,7 @@
 	tool_flags = TOOL_SAWING
 	mats = 12
 	var/sawnoise = "sound/machines/chainsaw_green.ogg"
-	arm_icon = "chainsaw-A"
+	arm_icon = "chainsaw-D"
 	var/base_arm = "chainsaw"
 	over_clothes = 1
 	override_attack_hand = 1
@@ -46,6 +46,7 @@
 	active
 		active = 1
 		force = 12
+		arm_icon = "chainsaw-A"
 
 		New()
 			..()
@@ -64,6 +65,13 @@
 		set_icon_state("[src.base_state][src.active ? null : "_off"]")
 		src.item_state = "[src.base_state][src.active ? "-A" : "-D"]"
 		src.arm_icon = "[src.base_arm][src.active ? "-A" : "-D"]"
+		if (src.temp_flags & IS_LIMB_ITEM)
+			if (istype(src.loc,/obj/item/parts/human_parts/arm/left/item))
+				var/obj/item/parts/human_parts/arm/left/item/I = src.loc
+				I.handlistPart = "l_arm_[src.arm_icon]"
+			else
+				var/obj/item/parts/human_parts/arm/right/item/I = src.loc
+				I.handlistPart = "r_arm_[src.arm_icon]"
 		return
 
 	// Fixed a couple of bugs and cleaned code up a little bit (Convair880).
@@ -144,7 +152,7 @@
 	desc = "A gas powered antique. This one is the real deal. Time for a space chainsaw massacre."
 	contraband = 10 //scary
 	sawnoise = "sound/machines/chainsaw_red.ogg"
-	arm_icon = "chainsaw_s-A"
+	arm_icon = "chainsaw_s-D"
 	base_arm = "chainsaw_s"
 	stamina_damage = 100
 	stamina_cost = 30
@@ -171,22 +179,14 @@
 			var/mob/living/carbon/C = target
 			if (isdead(C))
 				logTheThing("combat", user, C, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
-				var/sourcename = C.real_name
-				var/sourcejob = "Stowaway"
-				if (C.mind && C.mind.assigned_role)
-					sourcejob = C.mind.assigned_role
-				else if (C.ghost && C.ghost.mind && C.ghost.mind.assigned_role)
-					sourcejob = C.ghost.mind.assigned_role
 				for (var/i=0, i<3, i++)
-					var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C))
-					meat.name = sourcename + meat.name
-					meat.subjectname = sourcename
-					meat.subjectjob = sourcejob
+					new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C),C)
 				if (C.mind)
 					C.ghostize()
 					qdel(C)
 				else
 					qdel(C)
+				return
 			else
 				C.changeStatus("weakened", 3 SECONDS)
 
@@ -354,6 +354,7 @@
 	sawnoise = "sound/machines/chainsaw_red.ogg"
 	hitsound = "sound/machines/chainsaw_red.ogg"
 	arm_icon = "chainsaw_s-A"
+	base_arm = "chainsaw_s"
 	stamina_damage = 40
 	stamina_cost = 40
 	stamina_crit_chance = 50
@@ -409,7 +410,7 @@
 	attack_self(var/mob/user as mob)
 		playsound(src.loc, "sound/machines/click.ogg", 100, 1)
 		var/holder = src.loc
-		var/datum/plant/pick = tgui_input_list(usr, "Which seed do you want?", "Portable Seed Fabricator", hydro_controls.vendable_plants)
+		var/datum/plant/pick = tgui_input_list(user, "Which seed do you want?", "Portable Seed Fabricator", hydro_controls.vendable_plants)
 		if (src.loc != holder)
 			return
 		src.selected = pick

@@ -3,7 +3,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "WireTest"
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 
 	//mapWorldNew(src)
 	//boop2
@@ -128,7 +128,7 @@ var/global/deathConfettiActive = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle Death Confetti"
 	set desc = "Toggles the fun confetti effect and sound whenever a mob dies"
-	admin_only
+	ADMIN_ONLY
 
 	deathConfettiActive = !deathConfettiActive
 
@@ -202,7 +202,7 @@ var/global/deathConfettiActive = 0
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 
 	for (var/mob/living/L in mobs)
 		if (L.client && !isghostdrone(L))
@@ -218,7 +218,7 @@ var/global/deathConfettiActive = 0
 	set name = "Toggle Hard Reboot"
 	set desc = "A hard reboot is when the game instance outright ends, and the backend server reinitialises it"
 
-	admin_only
+	ADMIN_ONLY
 
 	var/hardRebootFileExists = fexists(hardRebootFilePath)
 	var/logMessage = ""
@@ -241,4 +241,4 @@ var/global/deathConfettiActive = 0
 	var/ircmsg[] = new()
 	ircmsg["key"] = src.key
 	ircmsg["msg"] = logMessage
-	ircbot.export("admin", ircmsg)
+	ircbot.export_async("admin", ircmsg)

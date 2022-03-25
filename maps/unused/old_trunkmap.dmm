@@ -2426,7 +2426,7 @@
 /turf/simulated/floor/white,
 /area/russian)
 "aff" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /turf/simulated/floor/white,
 /area/russian)
 "afg" = (
@@ -24294,7 +24294,7 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "beB" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "beC" = (

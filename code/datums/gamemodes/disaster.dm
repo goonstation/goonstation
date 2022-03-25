@@ -42,7 +42,7 @@
 			var/list/CORPSES = landmarks[LANDMARK_PESTSTART]
 			var/list/JUNK = landmarks[LANDMARK_HALLOWEEN_SPAWN]
 			for(var/turf/T in CORPSES)
-				var/obj/decal/skeleton/S = new/obj/decal/skeleton(T)
+				var/obj/decal/fakeobjects/skeleton/S = new/obj/decal/fakeobjects/skeleton(T)
 				S.name = "corpse"
 				S.desc = "The mangled body of some poor [pick("chump","sap","chap","crewmember","jerk","dude","lady","idiot","employee","oaf")]."
 				S.icon = 'icons/misc/hstation.dmi'

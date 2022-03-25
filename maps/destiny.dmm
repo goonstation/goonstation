@@ -3441,7 +3441,7 @@
 	})
 "anA" = (
 /obj/disposalpipe/segment,
-/obj/decal/pole{
+/obj/decal/fakeobjects/pole{
 	pixel_x = -14
 	},
 /turf/simulated/floor/black,

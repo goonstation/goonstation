@@ -693,7 +693,7 @@ proc/get_angle(atom/a, atom/b)
 	for_by_tcl(M, /mob/living/silicon/ai)
 		. += M
 		LAGCHECK(LAG_REALTIME)
-	for(var/mob/dead/aieye/M in mobs)
+	for(var/mob/living/intangible/aieye/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/living/silicon/robot/M in mobs)
@@ -1258,7 +1258,7 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 
 /proc/obj_loc_chain(var/atom/movable/whose)
 	. = list()
-	if (isturf(whose) || isarea(whose) || isturf(whose.loc))
+	if (isnull(whose) || isnull(whose.loc) || isturf(whose) || isarea(whose) || isturf(whose.loc))
 		return
 	var/atom/movable/M = whose
 	while (ismob(M.loc) || isobj(M.loc))

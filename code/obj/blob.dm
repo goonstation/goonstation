@@ -1084,12 +1084,11 @@
 	name = "mitochondria"
 	state_overlay = "mitochondria"
 	special_icon = 1
-	desc = "It's a giant energy converting cell. It seems to be knitting together nearby holes in the blob."
+	desc = "It's a giant energy converting cell. It seems to be knitting together nearby holes in the blob... and pushing around any toxins."
 	armor = 0
 	gen_rate_value = 0
 	can_absorb = 0
 	runOnLife = 1
-	poison_coefficient = 2
 	poison_spread_coefficient = 2
 	var/heal_range = 2
 	var/heal_amount = 4
@@ -1100,6 +1099,17 @@
 		for (var/obj/blob/B in view(heal_range,src))
 			if (B.health < B.health_max)
 				B.heal_damage(heal_amount)
+
+			if(B.poison && !istype(B, /obj/blob/mitochondria) && !istype(B, /obj/blob/lipid))
+				src.poison += B.poison/2
+				B.poison = 0
+
+		for (var/obj/blob/lipid/B in view(1))
+			if(istype(B, /obj/blob/lipid))
+				if(B.poison < 50)
+					B.poison += src.poison / 2 + 2
+					src.poison /= 2
+					src.poison -= 2
 
 /obj/blob/reflective
 	name = "reflective membrane"
@@ -1218,11 +1228,11 @@
 	name = "lipid"
 	state_overlay = "lipid"
 	special_icon = 1
-	desc = "It's an energy storage cell. It stores biopoints."
+	desc = "It's an energy storage cell. It stores biopoints... and toxins."
 	armor = 0
 	can_absorb = 0
+	fire_coefficient = 1.5
 	poison_coefficient = 0
-	poison_spread_coefficient = 3
 
 	onAttach(var/mob/living/intangible/blob_overmind/O)
 		..()
@@ -1235,6 +1245,7 @@
 		set_loc(null)
 		var/obj/blob/B = new /obj/blob(T)
 		B.overmind = overmind
+		B.poison = src.poison
 		overmind.blobs += B
 		B.color = overmind.color
 		qdel(src)

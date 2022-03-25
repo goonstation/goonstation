@@ -5,14 +5,13 @@
 	icon = 'icons/obj/zoldorf.dmi'
 	icon_state = "zolsoulgrey"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	density = 0
 	canmove = 0
 	blinded = 0
 	anchored = 1
 	alpha = 180
 	stat = 0
-	suicide_can_succumb = 0
 	var/autofree = 0
 	var/firstfortune = 1
 	var/free = 0
@@ -23,7 +22,7 @@
 
 	New(var/mob/M)
 		..()
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
 		src.abilityHolder = new /datum/abilityHolder/zoldorf(src)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = INVIS_GHOST
@@ -146,7 +145,7 @@
 			else
 				animate_spin(src, "L", 1, 0)
 			src.UpdateOverlays(image('icons/obj/zoldorf.dmi',"ectooverlay"),"ecto")
-			REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 			qdel(target)
 		else
 			src.examine_verb(target)
@@ -254,7 +253,7 @@
 							sleep(0.1 SECONDS)
 						src.pixel_x = 0
 						src.pixel_y = 0
-						APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+						APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
 						src.ClearAllOverlays()
 						var/obj/item/reagent_containers/food/snacks/ectoplasm/e = new /obj/item/reagent_containers/food/snacks/ectoplasm
 						e.set_loc(get_turf(src))
@@ -264,7 +263,7 @@
 				soulcache = src.icon
 				if(!src.invisibility)
 					src.visible_message("<span class='alert'><b>The ectoplasm falls off! Oh no!</b></span>")
-					APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
 					src.ClearAllOverlays()
 					var/obj/item/reagent_containers/food/snacks/ectoplasm/e = new /obj/item/reagent_containers/food/snacks/ectoplasm
 					e.set_loc(get_turf(src))

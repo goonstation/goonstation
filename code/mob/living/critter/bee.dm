@@ -1063,13 +1063,6 @@ obj/effects/bees
 		if(istype(A))
 			A.vis_contents += src
 
-	disposing()
-		var/atom/movable/A
-		A = src.loc
-		if(istype(A))
-			A.vis_contents -= src
-		. = ..()
-
 
 particles/swarm/bees
 	icon = 'icons/misc/bee.dmi'

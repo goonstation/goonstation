@@ -6,8 +6,8 @@ Ctrl + LMB mob/obj/turf            = *Attempts* to restore initial appearance (C
 Right Mouse Button on mob/obj/turf = Copy Appearance<br>
 ***********************************************************"}
 	icon_state = "buildappearance"
-	var/mutable_appearance/MA = null
-	var/datum/appearanceHolder/AH = null
+	var/tmp/mutable_appearance/MA = null
+	var/tmp/datum/appearanceHolder/AH = null
 
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)

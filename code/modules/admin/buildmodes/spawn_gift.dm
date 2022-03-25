@@ -16,8 +16,8 @@ change the direction of created objects.<br>
 	var/objpath = null
 	var/cinematic = "Blink"
 	var/giftwrap_style = "Regular"
-	var/turf/first_corner = null
-	var/matrix/mtx = matrix()
+	var/tmp/turf/first_corner = null
+	var/tmp/matrix/mtx = matrix()
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if(ctrl)
 			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "None")) || cinematic

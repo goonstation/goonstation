@@ -139,7 +139,7 @@ obj/item/engivac/attack_hand(mob/living/user as mob)
 obj/item/engivac/attack_self(mob/user)
 	..()
 	var/list/options = list("Toggle collecting building materials", "Toggle collecting debris",held_toolbox ? "Toggle floor tile auto-placement" : null, held_toolbox ? "Remove Toolbox" : null)
-	var/input = input(usr,"Select option:","Option") in options
+	var/input = input(user,"Select option:","Option") in options
 	switch(input)
 		if ("Toggle collecting building materials")
 			collect_buildmats = !collect_buildmats

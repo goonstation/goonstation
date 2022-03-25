@@ -29,14 +29,14 @@
 
 ////Dead sight
 		var/turf/T = owner.eye ? get_turf(owner.eye) : get_turf(owner) //They might be in a closet or something idk
-		if ((isdead(owner) || HAS_MOB_PROPERTY(owner, PROP_XRAYVISION) || HAS_MOB_PROPERTY(owner, PROP_XRAYVISION_WEAK)) && (T && !isrestrictedz(T.z)))
+		if ((isdead(owner) || HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION) || HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK)) && (T && !isrestrictedz(T.z)))
 			owner.sight |= SEE_TURFS
 			owner.sight |= SEE_MOBS
 			owner.sight |= SEE_OBJS
 			owner.see_in_dark = SEE_DARK_FULL
 			if (owner.client?.adventure_view)
 				owner.see_invisible = INVIS_ADVENTURE
-			else if(HAS_MOB_PROPERTY(owner, PROP_XRAYVISION_WEAK))
+			else if(HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK))
 				owner.sight &= ~SEE_BLACKNESS
 				owner.sight &= ~SEE_MOBS
 			else
@@ -97,7 +97,7 @@
 			if (owner.see_invisible < INVIS_INFRA)
 				owner.see_invisible = INVIS_INFRA
 
-		if (HAS_MOB_PROPERTY(owner, PROP_GHOSTVISION) && (T && !isrestrictedz(T.z)))
+		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_GHOSTVISION) && (T && !isrestrictedz(T.z)))
 			if (owner.see_in_dark != 1)
 				owner.see_in_dark = 1
 			if (owner.see_invisible < INVIS_GHOST)
@@ -106,7 +106,7 @@
 		if (owner.client?.adventure_view)
 			owner.see_invisible = INVIS_ADVENTURE
 
-		if (HAS_MOB_PROPERTY(owner, PROP_THERMALVISION_MK2))
+		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_THERMALVISION_MK2))
 			owner.sight |= SEE_MOBS //traitor item can see through walls
 			owner.sight &= ~SEE_BLACKNESS
 			if (owner.see_in_dark < SEE_DARK_FULL)
@@ -117,7 +117,7 @@
 				owner.see_infrared = 1
 			owner.render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
-		if (HAS_MOB_PROPERTY(owner, PROP_THERMALVISION))	//  && (T && !isrestrictedz(T.z))
+		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_THERMALVISION))	//  && (T && !isrestrictedz(T.z))
 			// This kinda fucks up the ability to hide things in infra writing in adv zones
 			// so away the restricted z check goes.
 			// with mobs invisible it shouldn't matter anyway? probably? idk.
@@ -130,16 +130,16 @@
 				owner.see_infrared = 1
 			owner.render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
-		if (HAS_MOB_PROPERTY(owner, PROP_MESONVISION) && (T && !isrestrictedz(T.z)))
+		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_MESONVISION) && (T && !isrestrictedz(T.z)))
 			owner.sight |= SEE_TURFS
 			owner.sight &= ~SEE_BLACKNESS
 			if (owner.see_in_dark < initial(owner.see_in_dark) + 1)
 				owner.see_in_dark++
 			owner.render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (owner.client?.widescreen))
 
-		if (HAS_MOB_PROPERTY(owner, PROP_NIGHTVISION))
+		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION))
 			owner.render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
-		else if (HAS_MOB_PROPERTY(owner, PROP_NIGHTVISION_WEAK))
+		else if (HAS_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION_WEAK))
 			owner.render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
 		if (human_owner)////Glasses handled separately because i dont have a fast way to get glasses on any mob type

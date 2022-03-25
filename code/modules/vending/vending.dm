@@ -118,6 +118,7 @@
 	var/window_size = "400x475"
 
 	New()
+		START_TRACKING
 		src.create_products()
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", "vendinput")
@@ -131,6 +132,9 @@
 		src.panel_image = image(src.icon, src.icon_panel)
 	var/lastvend = 0
 
+	disposing()
+		STOP_TRACKING
+		..()
 
 	was_built_from_frame(mob/user, newly_built)
 		. = ..()
@@ -281,7 +285,7 @@
 	var/datum/db_record/account = null
 	account = FindBankAccountByName(card.registered)
 	if (account)
-		var/enterpin = usr.enter_pin("Enter PIN")
+		var/enterpin = user.enter_pin("Enter PIN")
 		if (enterpin == card.pin)
 			boutput(user, "<span class='notice'>Card authorized.</span>")
 			src.scan = card
@@ -841,7 +845,7 @@
 
 	if(length(item_name_to_throw))
 		for(var/datum/data/vending_product/R in src.product_list)
-			if(item_name_to_throw == R.product_name_cache[R.product_path])
+			if(lowertext(item_name_to_throw) == lowertext(strip_html(R.product_name_cache[R.product_path], no_fucking_autoparse = TRUE)))
 				if(R.product_amount > 0)
 					throw_item_act(R, target)
 					return R
@@ -1252,7 +1256,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/device/pda2/security, 2)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 2)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO, 2)
-		product_list += new/datum/data/vending_product(/obj/item/implantcase/antirev, 3)
+		product_list += new/datum/data/vending_product(/obj/item/implantcase/counterrev, 3)
 		product_list += new/datum/data/vending_product(/obj/item/implanter, 1)
 #ifdef RP_MODE
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/space_law, 1)
@@ -1580,7 +1584,7 @@
 
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/the_trial, 1, cost=PAY_UNTRAINED/5, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/critter_compendium, 1, cost=PAY_UNTRAINED/5, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/syndies_guide, 1, cost=PAY_UNTRAINED/5, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/syndies_guide/stolen, 1, cost=PAY_UNTRAINED/5, hidden=1)
 
 /obj/machinery/vending/kitchen
 	name = "FoodTech"
@@ -2568,6 +2572,8 @@
 		product_list += new/datum/data/vending_product(/obj/item/gobowl/w, 1, cost=PAY_TRADESMAN/4)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/clow, 5, cost=PAY_TRADESMAN/2) // (this is an anime joke)
 		product_list += new/datum/data/vending_product(/obj/item/clow_key, 5, cost=PAY_TRADESMAN/2)      //      (please laugh)
+		product_list += new/datum/data/vending_product(/obj/item/card_box/Mono, 5, cost=PAY_UNTRAINED/4)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/MONOrules, 5, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/dice/weighted, rand(1,3), cost=PAY_TRADESMAN/2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/dice/d1, rand(0,1), cost=PAY_TRADESMAN/3, hidden=1)
 
@@ -2736,7 +2742,7 @@
 	attack_hand(mob/user as mob)
 		if (status & (BROKEN|NOPOWER))
 			return
-		if (usr.stat || usr.restrained())
+		if (user.stat || user.restrained())
 			return
 
 		src.add_dialog(user)

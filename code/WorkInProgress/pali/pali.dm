@@ -1,6 +1,6 @@
 // im pali
 
-//bonk
+//bonk 2
 
 
 // Pill of sheltestgrog for my office
@@ -329,7 +329,7 @@
 			src.transforming = 1
 			src.canmove = 0
 			src.icon = null
-			APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 			if (src.mind || src.client)
 				src.ghostize()
 			qdel(src)

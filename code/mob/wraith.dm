@@ -17,7 +17,7 @@
 	blinded = 0
 	anchored = 1
 	alpha = 180
-	event_handler_flags =  IMMUNE_MANTA_PUSH
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	plane = PLANE_NOSHADOW_ABOVE
 
 	var/deaths = 0
@@ -72,8 +72,8 @@
 	New(var/mob/M)
 		. = ..()
 		src.poltergeists = list()
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_SPOOKY)
-		APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		//src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.sight |= SEE_SELF // let's not make it see through walls
 		src.see_invisible = INVIS_SPOOKY
@@ -150,7 +150,7 @@
 		src.abilityHolder.updateText()
 
 		if (src.health < 1)
-			src.death(0)
+			src.death(FALSE)
 			return
 		else if (src.health < src.max_health)
 			HealDamage("chest", 1 * (life_time_passed / life_tick_spacing), 0)
@@ -201,7 +201,7 @@
 			src.transforming = 1
 			src.canmove = 0
 			src.icon = null
-			APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 			if (client) client.color = null
 
@@ -278,7 +278,7 @@
 		health -= brute * 3
 		health = min(max_health, health)
 		if (src.health <= 0)
-			src.death(0)
+			src.death(FALSE)
 		health_update_queue |= src
 
 	HealDamage(zone, brute, burn)
@@ -523,7 +523,7 @@
 		makeCorporeal()
 			if (!src.density)
 				src.set_density(1)
-				REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
+				REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 				src.alpha = 255
 				src.see_invisible = INVIS_NONE
 				src.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
@@ -532,7 +532,7 @@
 			if (src.density)
 				src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The wraith dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
 				src.set_density(0)
-				APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_SPOOKY)
+				APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
 				src.alpha = 160
 				src.see_invisible = INVIS_SPOOKY
 
@@ -688,49 +688,18 @@
 /proc/generate_wraith_objectives(var/datum/mind/traitor)
 	switch (rand(1,3))
 		if (1)
-			var/datum/objective/specialist/wraith/murder/M1 = new
-			M1.owner = traitor
-			M1.set_up()
-			traitor.objectives += M1
-			var/datum/objective/specialist/wraith/murder/M2 = new
-			M2.owner = traitor
-			M2.set_up()
-			traitor.objectives += M2
-			var/datum/objective/specialist/wraith/murder/M3 = new
-			M3.owner = traitor
-			M3.set_up()
-			traitor.objectives += M3
+			for(var/i in 1 to 3)
+				new/datum/objective/specialist/wraith/murder(null, traitor)
 		if (2)
-			var/datum/objective/specialist/wraith/absorb/A1 = new
-			A1.owner = traitor
-			A1.set_up()
-			traitor.objectives += A1
-			var/datum/objective/specialist/wraith/prevent/P2 = new
-			P2.owner = traitor
-			P2.set_up()
-			traitor.objectives += P2
+			new/datum/objective/specialist/wraith/absorb(null, traitor)
+			new/datum/objective/specialist/wraith/prevent(null, traitor)
 		if (3)
-			var/datum/objective/specialist/wraith/absorb/A1 = new
-			A1.owner = traitor
-			A1.set_up()
-			traitor.objectives += A1
-			var/datum/objective/specialist/wraith/murder/absorb/M2 = new
-			M2.owner = traitor
-			M2.set_up()
-			traitor.objectives += M2
+			new/datum/objective/specialist/wraith/absorb(null, traitor)
+			new/datum/objective/specialist/wraith/murder/absorb(null, traitor)
 	switch (rand(1,3))
-		if (1)
-			var/datum/objective/specialist/wraith/travel/T = new
-			T.owner = traitor
-			T.set_up()
-			traitor.objectives += T
-		if (2)
-			var/datum/objective/specialist/wraith/survive/T = new
-			T.owner = traitor
-			T.set_up()
-			traitor.objectives += T
-		if (3)
-			var/datum/objective/specialist/wraith/flawless/T = new
-			T.owner = traitor
-			T.set_up()
-			traitor.objectives += T
+		if(1)
+			new/datum/objective/specialist/wraith/travel(null, traitor)
+		if(2)
+			new/datum/objective/specialist/wraith/survive(null, traitor)
+		if(3)
+			new/datum/objective/specialist/wraith/flawless(null, traitor)
