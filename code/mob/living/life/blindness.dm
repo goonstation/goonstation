@@ -14,9 +14,9 @@
 					eyes_blinded |= EYEBLIND_L
 					eyes_blinded |= EYEBLIND_R
 				else
-					if (!human_owner.get_organ("left_eye"))
+					if (!human_owner.get_organ("left_eye") || human_owner.get_organ("left_eye").blind)
 						eyes_blinded |= EYEBLIND_L
-					if (!human_owner.get_organ("right_eye"))
+					if (!human_owner.get_organ("right_eye") || human_owner.get_organ("right_eye").blind)
 						eyes_blinded |= EYEBLIND_R
 					if (istype(human_owner.glasses))
 						if (human_owner.glasses.block_eye)
