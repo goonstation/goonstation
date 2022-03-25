@@ -192,10 +192,19 @@
 	on_transplant(mob/M)
 		. = ..()
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_THERMALVISION, src)
+		if(emagged)
+			boutput(donor, "<span class='notice'>You feel warm.</span>")
 
 	on_removal()
 		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_THERMALVISION, src)
+		if(emagged)
+			boutput(donor, "<span class='notice'>You feel a bit cooler.</span>")
 		. = ..()
+
+	on_life()
+		if(emagged)
+			donor.bodytemperature += 5 // get it? cause thermal
+
 
 /obj/item/organ/eye/cyber/meson
 	name = "mesonic imager cybereye"
