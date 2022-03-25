@@ -1131,29 +1131,6 @@ datum
 			else
 				smoke_reaction(src, round(min(5, round(volume/10))), location = my_atom ? get_turf(my_atom) : 0)
 
-		proc/tgui_format(list/add_props)
-			. = list(
-				maxVolume = src.maximum_volume,
-				totalVolume = src.total_volume,
-				contents = list(),
-				finalColor = "#000000",
-				temperature = src.total_temperature
-			)
-
-			var/list/contents = .["contents"]
-			if(src.reagent_list.len>0)
-				.["finalColor"] = src.get_average_rgb()
-				// Reagent data
-				for(var/reagent_id in src.reagent_list)
-					var/datum/reagent/current_reagent = src.reagent_list[reagent_id]
-
-					contents.Add(list(current_reagent.tgui_format(list(
-						name = reagents_cache[reagent_id],
-						id = reagent_id,
-					))))
-
-			. += add_props
-
 ///////////////////////////////////////////////////////////////////////////////////
 
 

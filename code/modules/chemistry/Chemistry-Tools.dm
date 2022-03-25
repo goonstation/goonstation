@@ -58,12 +58,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			src.reagents.add_reagent(src.initial_reagents, initial_volume)
 		src.initial_reagents = null // no mo, no mooooo
 
-	proc/tgui_format(list/add_props)
-		var/datum/reagents/R = src.reagents
-		. = R.tgui_format(list(name = src.name))
-
-		. += add_props
-
 	attack_self(mob/user as mob)
 		return
 	attack(mob/M as mob, mob/user as mob, def_zone)

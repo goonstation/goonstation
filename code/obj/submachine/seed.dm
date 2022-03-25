@@ -806,10 +806,33 @@
 		for(var/container_id in containers)
 			var/obj/item/reagent_containers/glass/thisContainer = containers[container_id]
 			if(thisContainer)
-				containersData[container_id] = thisContainer.tgui_format(list(
+				var/datum/reagents/R = thisContainer.reagents
+				var/list/thisContainerData = list(
+					name = thisContainer.name,
 					id = container_id,
-					selected = src.extract_to == thisContainer
-				))
+					maxVolume = R.maximum_volume,
+					totalVolume = R.total_volume,
+					selected = src.extract_to == thisContainer,
+					contents = list(),
+					finalColor = "#000000"
+				)
+
+				var/list/contents = thisContainerData["contents"]
+				if(istype(R) && R.reagent_list.len>0)
+					thisContainerData["finalColor"] = R.get_average_rgb()
+					// Reagent data
+					for(var/reagent_id in R.reagent_list)
+						var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
+
+						contents.Add(list(list(
+							name = reagents_cache[reagent_id],
+							id = reagent_id,
+							colorR = current_reagent.fluid_r,
+							colorG = current_reagent.fluid_g,
+							colorB = current_reagent.fluid_b,
+							volume = current_reagent.volume
+						)))
+				containersData[container_id] = thisContainerData
 
 		.["containersData"] = containersData
 

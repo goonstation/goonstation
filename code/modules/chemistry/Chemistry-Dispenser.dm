@@ -251,17 +251,29 @@
 
 	ui_data(mob/user)
 		. = list()
-		// Tried not to change anything that would require the frontend to also be changed -CodeJester
-		var/obj/item/reagent_containers/B = beaker
-		var/list/beakerData = B?.tgui_format()
+		var/list/beakerContentsTemp = list()
 		.["idCardInserted"] = !isnull(src.user_id)
 		.["idCardName"] = !isnull(src.user_id) ? src.user_id.registered : "None"
-		.["maximumBeakerVolume"] = (!isnull(beaker) ? beakerData["maxVolume"] : 0)
-		.["beakerTotalVolume"] = (!isnull(beaker) ? beakerData["totalVolume"] : 0)
-		.["beakerContents"] = (!isnull(beaker) ? beakerData["contents"] : list())
+		.["maximumBeakerVolume"] = (!isnull(beaker) ? beaker.reagents.maximum_volume : 0)
+		.["beakerTotalVolume"] = (!isnull(beaker) ? beaker.reagents.total_volume : 0)
 		if(beaker)
-			.["currentBeakerName"] = beakerData["name"]
-			.["finalColor"] = beakerData["finalColor"]
+			var/datum/reagents/R = beaker.reagents
+			var/datum/color/average = R.get_average_color()
+			.["currentBeakerName"] = beaker.name
+			.["finalColor"] = average.to_rgba()
+			if(istype(R) && R.reagent_list.len>0)
+				for(var/reagent in R.reagent_list)
+					var/datum/reagent/current_reagent = R.reagent_list[reagent]
+					beakerContentsTemp.Add(list(list(
+						name = reagents_cache[reagent],
+						id = reagent,
+						colorR = current_reagent.fluid_r,
+						colorG = current_reagent.fluid_g,
+						colorB = current_reagent.fluid_b,
+						state = current_reagent.reagent_state,
+						volume = current_reagent.volume
+					)))
+		.["beakerContents"] = beakerContentsTemp
 
 	ui_act(action, params, datum/tgui/ui)
 		if(..())
