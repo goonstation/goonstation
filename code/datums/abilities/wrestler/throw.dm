@@ -77,12 +77,13 @@
 				if ((S && isturf(S) && S.Exit(HH)) && (T && isturf(T) && T.Enter(HH)))
 					HH.set_loc(T)
 					HH.set_dir(get_dir(HH, M))
-					for(var/mob/living/L in T)
-						if (L == HH || isintangible(L))
-							continue
-						L.throw_at(get_edge_target_turf(L, turn(get_dir(M, T), 90)), 5, 2)
-						random_brute_damage(L, 10, 1)
-						random_brute_damage(HH, 5, 1)
+					if(TIME > spin_start + 1 SECOND)
+						for(var/mob/living/L in T)
+							if (L == HH || isintangible(L))
+								continue
+							L.throw_at(get_edge_target_turf(L, turn(get_dir(M, T), 90)), 5, 2)
+							random_brute_damage(L, 10, 1)
+							random_brute_damage(HH, 5, 1)
 			else
 				return 0
 
