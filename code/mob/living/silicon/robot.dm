@@ -47,7 +47,6 @@
 	var/obj/item/device/radio/ai_radio = null // Radio used for when this is an AI-controlled shell.
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/machinery/camera/camera = null
-	var/obj/item/ai_interface/ai_interface = null
 	var/obj/item/robot_module/module = null
 	var/list/upgrades = list()
 	var/max_upgrades = 3
@@ -188,8 +187,8 @@
 				available_ai_shells += src
 			for_by_tcl(AI, /mob/living/silicon/ai)
 				boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
-			if (!src.ai_interface)
-				src.ai_interface = new(src)
+			if (!src.part_head.ai_interface)
+				src.part_head.ai_interface = new(src)
 
 		if (!src.dependent && !src.shell)
 			boutput(src, "<span class='notice'>Your icons have been generated!</span>")
@@ -215,7 +214,7 @@
 			src.camera.network = "Robots"
 
 		SPAWN(1.5 SECONDS)
-			if (!src.part_head.brain && src.key && !(src.dependent || src.shell || src.ai_interface))
+			if (!src.part_head.brain && src.key && !(src.dependent || src.shell || src.part_head.ai_interface))
 				var/obj/item/organ/brain/B = new /obj/item/organ/brain(src)
 				B.owner = src.mind
 				B.icon_state = "borg_brain"
@@ -926,7 +925,8 @@
 			src.compborg_lose_limb(PART)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		if(isshell(src) || src.ai_interface)
+		if(isshell(src) || src.part_head.ai_interface)
+			boutput(user, "<span class='alert'>Emagging an AI shell wouldn't work, their laws can't be overwritten!</span>")
 			return 0 //emags don't do anything to AI shells
 
 		if (!src.emagged)	// trying to unlock with an emag card
@@ -1073,7 +1073,7 @@
 			if(!opened)
 				boutput(user, "You need to open [src.name]'s cover before you can change their law rack link.")
 				return
-			if(isshell(src) || src.ai_interface)
+			if(isshell(src) || src.part_head.ai_interface)
 				boutput(user,"You need to use this on the AI core directly!")
 				return
 
@@ -1219,7 +1219,7 @@
 			if (!src.part_head)
 				boutput(user, "<span class='alert'>That cyborg doesn't even have a head. Where are you going to put [W]?</span>")
 				return
-			if (src.part_head.brain || src.ai_interface)
+			if (src.part_head.brain || src.part_head.ai_interface)
 				boutput(user, "<span class='alert'>There's already something in the head compartment! Use a wrench to remove it before trying to insert something else.</span>")
 			else
 				var/obj/item/organ/brain/B = W
@@ -1255,17 +1255,15 @@
 			if (!src.part_head)
 				boutput(user, "<span class='alert'>That cyborg doesn't even have a head. Where are you going to put [W]?</span>")
 				return
-			if (src.part_head.brain || src.ai_interface)
+			if (src.part_head.brain || src.part_head.ai_interface)
 				boutput(user, "<span class='alert'>There's already something in the head compartment! Use a wrench to remove it before trying to insert something else.</span>")
 			else
 				var/obj/item/ai_interface/I = W
 				user.drop_item()
 				user.visible_message("<span class='notice'>[user] inserts [W] into [src]'s head.</span>")
 				W.set_loc(src)
-				src.ai_interface = I
-				if (src.part_head)
-					src.part_head.ai_interface = I
-					I.set_loc(src.part_head)
+				src.part_head.ai_interface = I
+				I.set_loc(src.part_head)
 				if (!(src in available_ai_shells))
 					if(isnull(src.ai_radio))
 						src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
@@ -1466,7 +1464,7 @@
 		var/list/available_actions = list()
 		if (src.brainexposed && src.part_head.brain)
 			available_actions.Add("Remove the Brain")
-		if (src.brainexposed && src.ai_interface)
+		if (src.brainexposed && src.part_head.ai_interface)
 			available_actions.Add("Remove the AI Interface")
 		if (src.opened && !src.wiresexposed)
 			if (src.upgrades.len)
@@ -1491,7 +1489,7 @@
 					src.eject_brain(user)
 
 				if ("Remove the AI Interface")
-					if (!src.ai_interface)
+					if (!src.part_head?.ai_interface)
 						return
 
 					src.visible_message("<span class='alert'>[user] removes [src]'s AI interface!</span>")
@@ -1501,13 +1499,13 @@
 					for (var/obj/item/roboupgrade/UPGR in src.contents)
 						UPGR.upgrade_deactivate(src)
 
-					user.put_in_hand_or_drop(src.ai_interface)
+					user.put_in_hand_or_drop(src.part_head.ai_interface)
 					src.radio = src.default_radio
 					if (src.module && istype(src.module.radio))
 						src.radio = src.module.radio
 					src.ears = src.radio
 					src.radio.set_loc(src)
-					src.ai_interface = null
+					src.part_head.ai_interface = null
 					if(src.ai_radio)
 						qdel(src.ai_radio)
 						src.ai_radio = null
