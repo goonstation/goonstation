@@ -128,7 +128,7 @@
 
 				if (ishuman(affected_mob))
 					var/mob/living/carbon/human/human = affected_mob
-					if (human.head)
+					if (human.head && !istype(human.head, /obj/item/clothing/head/void_crown))
 						var/obj/item/clothing/head/cloned_hat = new human.head.type
 						cloned_hat.set_loc(larva)
 						larva.stored_hat = cloned_hat
