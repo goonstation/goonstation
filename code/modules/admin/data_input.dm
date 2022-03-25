@@ -64,7 +64,7 @@
 
 		if (DATA_INPUT_BOOL)
 			//lines written by the utterly insane
-			input = alert(custom_message + (!isnull(default) ? "(Default: [default ? "True" : "False"])" : null), custom_title || "True or False?", "True", "False") == "True" ? TRUE : FALSE
+			input = alert(custom_message  || "True or False?", custom_title + (!isnull(default) ? "(Default: [default ? "True" : "False"])" : null), "True", "False") == "True" ? TRUE : FALSE
 
 		if (DATA_INPUT_FILE)
 			input = input(custom_message  || "Select file:", custom_title) as null|file
