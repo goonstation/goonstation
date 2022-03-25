@@ -7,7 +7,7 @@
 	target_nodamage_check = 1
 	target_selection_check = 1
 	max_range = 1
-	cooldown = 300
+	cooldown = 200
 	start_on_cooldown = 1
 	pointCost = 0
 	when_stunned = 1
@@ -50,9 +50,10 @@
 
 		var/turf/T = get_edge_target_turf(M, get_dir(M, get_step_away(target, M)))
 		if (!fake && T && isturf(T))
-			target.throw_at(T, 3, 2)
-			target.changeStatus("weakened", 2 SECONDS)
-			target.changeStatus("stunned", 2 SECONDS)
+			target.throw_at(T, 3, 2, bonus_throwforce = 15)
+			target.changeStatus("weakened", 3 SECONDS)
+			target.changeStatus("stunned", 3 SECONDS)
+			target.changeStatus("slowed", 8 SECONDS, 2)
 			target.force_laydown_standup()
 
 		logTheThing("combat", M, target, "uses the [fake ? "fake " : ""]kick wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")

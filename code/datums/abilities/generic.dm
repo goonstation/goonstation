@@ -162,3 +162,48 @@
 		if (src.getStatusDuration("weakened") < params["stun"])
 			src.setStatus("weakened", params["stun"])
 			src.force_laydown_standup()
+
+
+/datum/targetable/ai_toggle
+	name = "Toggle AI"
+	desc = "Toggle the Mob AI allowing you to following along with the AI."
+	targeted = FALSE
+	cooldown = 0
+
+	onAttach(datum/abilityHolder/holder)
+		. = ..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image('icons/obj/surgery.dmi', "brain1"), "brain_state")
+
+	castcheck()
+		. = isadmin(holder.owner)
+
+	cast(atom/target)
+		..()
+		var/mob/living/M = holder.owner
+		if (M.ai && M.is_npc)
+			if(M.ai.enabled )
+				M.ai.enabled = FALSE
+			else
+				M.ai.enabled = TRUE
+		else if( M.is_npc && ishuman(M) )
+			var/mob/living/carbon/human/H = M
+			H.ai_set_active(!H.ai_active)
+		updateObject()
+
+	updateObject()
+		var/mob/living/M = holder.owner
+		var/atom/movable/screen/ability/topBar/B = src.object
+		var/image/I = B.SafeGetOverlayImage("brain_state", 'icons/obj/surgery.dmi', "brain1")
+		if(M.ai?.enabled || M.ai_active)
+			I.icon_state = "ai_brain"
+		else
+			I.icon_state = "brain1"
+
+		B.UpdateOverlays(I, "brain_state")
+
+	display_available()
+		. = ..()
+		if(.)
+			. = isadmin(holder.owner)
+
