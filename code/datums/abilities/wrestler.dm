@@ -260,7 +260,7 @@
 		return 0
 
 	doCooldown()
-		src.last_cast = world.time
+		src.last_cast = world.time + src.cooldown
 
 		if (!src.holder.owner || !ismob(src.holder.owner))
 			return
