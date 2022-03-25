@@ -36784,6 +36784,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
+/obj/item/paper/manufacturer_blueprint/lawrack,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "byO" = (

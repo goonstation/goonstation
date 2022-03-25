@@ -33715,6 +33715,7 @@
 /obj/item/device/radio/intercom/engineering{
 	dir = 1
 	},
+/obj/item/paper/manufacturer_blueprint/lawrack,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "diy" = (

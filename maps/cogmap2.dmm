@@ -54786,6 +54786,7 @@
 "crp" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools,
+/obj/item/paper/manufacturer_blueprint/lawrack,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "crq" = (
