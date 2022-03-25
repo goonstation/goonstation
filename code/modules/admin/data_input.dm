@@ -56,7 +56,7 @@
 		if (DATA_INPUT_ICON)
 			input = input(custom_message  || "Select icon:", custom_title) as null|icon
 			if (alert("Would you like to associate an icon_state with the icon?", "icon_state", "Yes", "No") == "Yes")
-				var/state = input(null, "Enter icon_state:") as null|text
+				var/state = input("Enter icon_state:", "icon_state") as null|text
 				if (state)
 					input = icon(input, state)
 
