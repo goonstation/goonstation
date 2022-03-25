@@ -1083,6 +1083,12 @@ ABSTRACT_TYPE(/obj/trait/job)
 		..()
 		owner.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
 
+/obj/trait/super_slips
+	name = "Slipping Hazard (+1)"
+	id = "super_slips"
+	desc = "You never were good at managing yourself slipping."
+	points = 1
+
 //Infernal Contract Traits
 /obj/trait/hair
 	name = "Wickedly Good Hair"

@@ -67,6 +67,8 @@ var/global/mob/twitch_mob = 0
 
 	var/savefile/F = new /savefile(path, -1)
 	F["[field]"] >> .
+	if(length(.) == 0)
+		return null
 
 /world/proc/save_intra_round_value(var/field, var/value)
 	if (!field || isnull(value))
@@ -573,6 +575,11 @@ var/f_color_selector_handler/F_Color_Selector
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
 	Z_LOG_DEBUG("World/Init", "Now in pre-game state.")
+
+	#ifndef LIVE_SERVER
+	for (var/thing in by_cat[TR_CAT_DELETE_ME])
+		qdel(thing)
+	#endif
 
 #ifdef MOVING_SUB_MAP
 	Z_LOG_DEBUG("World/Init", "Making Manta start moving...")
@@ -1484,7 +1491,7 @@ var/f_color_selector_handler/F_Color_Selector
 			//Tells shitbee what the current AI laws are (if there are any custom ones)
 			if ("ailaws")
 				if (current_state > GAME_STATE_PREGAME)
-					var/list/laws = ticker.centralized_ai_laws.format_for_irc()
+					var/list/laws = ticker.ai_law_rack_manager.format_for_irc()
 					return ircbot.response(laws)
 				else
 					return 0

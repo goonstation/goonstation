@@ -4812,14 +4812,14 @@
 		..()
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 0", "fire0")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", "fire1")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", "fire2")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", "fire3")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", "fire4")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", "fire5")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", "fire6")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", "fire7")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 0", .proc/fire0)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", .proc/fire1)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", .proc/fire2)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", .proc/fire3)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", .proc/fire4)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", .proc/fire5)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", .proc/fire6)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", .proc/fire7)
 
 	return_html_interface()
 		. = {"<b>INPUT STATUS</b>

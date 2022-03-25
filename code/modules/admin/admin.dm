@@ -4433,7 +4433,7 @@ var/global/noir = 0
 		var/mob/living/silicon/ai/A = M
 		A.syndicate = 1
 		A.syndicate_possible = 1
-		A.handle_robot_antagonist_status("admin", 0, usr)
+		A.make_syndicate("admin")
 	else if (isrobot(M))
 		var/mob/living/silicon/robot/R = M
 		if (R.dependent)
@@ -4441,7 +4441,7 @@ var/global/noir = 0
 			return
 		R.syndicate = 1
 		R.syndicate_possible = 1
-		R.handle_robot_antagonist_status("admin", 0, usr)
+		R.make_syndicate("admin")
 	else if (ishuman(M) || ismobcritter(M))
 		switch(traitor_type)
 			if(ROLE_TRAITOR)
@@ -4554,23 +4554,6 @@ var/global/noir = 0
 		logTheThing("diary", usr, M, "made [constructTarget(M,"diary")] a[special ? " [special]" : ""] [traitor_type].", "admin")
 		message_admins("<span class='internal'>[key_name(usr)] has made [key_name(M)] a[special ? " [special]" : ""] [traitor_type].</span>")
 	return
-
-/datum/admins/proc/get_item_desc(var/target)
-	switch (target)
-		if (1)
-			return "a fully loaded laser gun"
-		if (2)
-			return "a hand teleporter"
-		if (3)
-			return "a fully armed and heated plasma bomb"
-		if (4)
-			return "a jet pack"
-		if (5)
-			return "an ID card with universal access"
-		if (6)
-			return "a captain's dark green jumpsuit"
-		else
-			return "Error: Invalid theft target: [target]"
 
 /proc/get_matches_string(var/text, var/list/possibles)
 	var/list/matches = new()

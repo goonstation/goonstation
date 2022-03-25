@@ -17,9 +17,9 @@
 
 TYPEINFO(/datum/component/holdertargeting/fullauto)
 	initialization_args = list(
-		ARG_INFO("delaystart", "num", "Initial delay between shots (in deciseconds)", 1.5),
-		ARG_INFO("delaymin", "num", "Minimum delay between shots (in deciseconds)", 1.5),
-		ARG_INFO("rampfactor", "num", "Multiplicitive decrease in delay after each shot, (0, 1]", 1),
+		ARG_INFO("delaystart", DATA_INPUT_NUM, "Initial delay between shots (in deciseconds)", 1.5),
+		ARG_INFO("delaymin", DATA_INPUT_NUM, "Minimum delay between shots (in deciseconds)", 1.5),
+		ARG_INFO("rampfactor", DATA_INPUT_NUM, "Multiplicitive decrease in delay after each shot, (0, 1]", 1),
 	)
 
 /datum/component/holdertargeting/fullauto

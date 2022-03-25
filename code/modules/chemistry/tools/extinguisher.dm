@@ -8,6 +8,7 @@
 	var/const/min_distance = 1
 	var/const/max_distance = 5
 	var/const/reagents_per_dist = 5
+	var/initial_volume = 100
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | OPENCONTAINER
 	tooltip_flags = REBUILD_DIST
@@ -54,8 +55,8 @@
 
 /obj/item/extinguisher/New()
 	..()
-	src.create_reagents(100)
-	reagents.add_reagent("ff-foam", 100)
+	src.create_reagents(initial_volume)
+	reagents.add_reagent("ff-foam", initial_volume)
 	src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 	BLOCK_SETUP(BLOCK_TANK)
 
@@ -210,3 +211,7 @@
 		reagents.move_trigger(M, kindof)
 
 /obj/item/extinguisher/abilities = list(/obj/ability_button/extinguisher_ab)
+
+/obj/item/extinguisher/large //for borgs. feel free to use elsewhere if applicable
+	name = "fire extinguisher XL"
+	initial_volume = 300

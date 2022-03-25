@@ -297,6 +297,9 @@
 			return ..()
 
 	attack_ai(mob/user as mob)
+		if(isAIeye(user))
+			boutput(user, "<span class='alert'>An incorporeal manifestation of an artificial intelligence's presence can't enter \the [src]!</span>")
+			return FALSE
 		if (!enter_prompt(user))
 			return ..()
 

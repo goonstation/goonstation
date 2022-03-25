@@ -14841,7 +14841,6 @@
 /area/crater/biodome/research)
 "aUa" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 2;
 	name = "Break Room"
 	},
 /turf/unsimulated/floor/delivery,
@@ -15596,7 +15595,6 @@
 /area/crater/biodome/crew)
 "aVW" = (
 /obj/machinery/door/airlock/pyro{
-	dir = 2;
 	name = "Restroom"
 	},
 /turf/unsimulated/floor/delivery,
@@ -15991,16 +15989,6 @@
 	},
 /turf/unsimulated/floor/engine,
 /area/marsoutpost)
-"aXh" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/obj/critter/wendigo{
-	wanderer = 0
-	},
-/turf/unsimulated/floor/arctic/snow,
-/area/upper_arctic/exterior/surface)
 "aXk" = (
 /obj/decal/cleanable/blood/tracks,
 /obj/machinery/door/airlock/pyro/glass,
@@ -17773,10 +17761,6 @@
 /obj/stool,
 /turf/unsimulated/floor/plating/scorched,
 /area/lower_arctic/pod1)
-"bbT" = (
-/obj/critter/wendigo,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "bbU" = (
 /obj/shrub{
 	dir = 8
@@ -18065,11 +18049,6 @@
 	dir = 6
 	},
 /area/upper_arctic/exterior/surface)
-"bcE" = (
-/obj/decal/icefloor,
-/obj/critter/wendigo,
-/turf/unsimulated/floor/arctic/snow/lake,
-/area/lower_arctic/lower)
 "bcF" = (
 /obj/grille/catwalk{
 	dir = 9;
@@ -18779,11 +18758,6 @@
 	icon_state = "plating_dusty3"
 	},
 /area/marsoutpost)
-"bee" = (
-/obj/decal/icefloor,
-/obj/critter/wendigo/king,
-/turf/unsimulated/floor/arctic/snow/lake,
-/area/lower_arctic/lower)
 "bef" = (
 /obj/landmark{
 	name = "icefall"
@@ -18863,14 +18837,6 @@
 	icon_state = "plating_dusty2"
 	},
 /area/marsoutpost)
-"bet" = (
-/obj/critter/wendigo,
-/obj/lattice{
-	dir = 9;
-	icon_state = "lattice-dir"
-	},
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "beu" = (
 /obj/item/raw_material/shard/glass{
 	icon_state = "medium"
@@ -19546,11 +19512,6 @@
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
-"bgl" = (
-/obj/decal/cleanable/blood,
-/obj/critter/wendigo,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "bgm" = (
 /obj/decal/stalagtite,
 /turf/unsimulated/floor/cave,
@@ -20158,11 +20119,6 @@
 /obj/item/chem_grenade/incendiary,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
-"bhY" = (
-/obj/critter/wendigo,
-/obj/decal/cleanable/blood,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "bhZ" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9
@@ -20226,12 +20182,6 @@
 /area/upper_arctic/exterior/surface)
 "bih" = (
 /obj/item/scrap,
-/turf/unsimulated/floor/arctic/snow,
-/area/upper_arctic/exterior/surface)
-"bii" = (
-/obj/critter/wendigo{
-	wanderer = 0
-	},
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bij" = (
@@ -23198,7 +23148,6 @@
 "bpB" = (
 /obj/overlay{
 	density = 1;
-	dir = 2;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "airlock_closed";
 	name = "airlock";
@@ -38319,7 +38268,6 @@
 	},
 /obj/machinery/door/poddoor/blast/single{
 	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
-	dir = 2;
 	id = "meatstation1";
 	name = "Safety Interlock"
 	},
@@ -53757,6 +53705,11 @@
 /obj/item/reagent_containers/food/snacks/granola_bar,
 /turf/unsimulated/grass,
 /area/owlery/owllock)
+"cVc" = (
+/obj/decal/cleanable/blood,
+/obj/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "cVd" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -71412,6 +71365,10 @@
 /obj/lattice,
 /turf/unsimulated/floor/void,
 /area/diner/cow)
+"gmY" = (
+/obj/machinery/lawrack/syndicate,
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "goR" = (
 /obj/table/wood/auto/desk{
 	color = "#333333";
@@ -71647,6 +71604,12 @@
 "hnO" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"hnR" = (
+/obj/map/light/graveyard,
+/obj/graveyard/lightning_trigger,
+/mob/living/critter/small_animal/firefly/ai_controlled,
+/turf/unsimulated/dirt,
+/area/crypt/graveyard)
 "hoh" = (
 /turf/unsimulated/wall/auto/sengoku{
 	icon_state = "9";
@@ -71703,6 +71666,11 @@
 "hCh" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/tdome/tdome2)
+"hDJ" = (
+/obj/critter/brullbar,
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "hEG" = (
 /obj/item/raw_material/shard/glass{
 	pixel_x = 4;
@@ -71729,6 +71697,10 @@
 	icon_state = "bloodfloor_3"
 	},
 /area/meat_derelict/guts)
+"hIb" = (
+/obj/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "hIz" = (
 /obj/machinery/light{
 	dir = 8
@@ -72041,7 +72013,6 @@
 "iLT" = (
 /obj/machinery/door/poddoor/blast/single{
 	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
-	dir = 2;
 	id = "meatstation_wrath";
 	name = "Safety Interlock"
 	},
@@ -72117,6 +72088,12 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"iVf" = (
+/obj/critter/brullbar{
+	wanderer = 0
+	},
+/turf/unsimulated/floor/arctic/snow,
+/area/upper_arctic/exterior/surface)
 "iXR" = (
 /obj/spacevine{
 	icon_state = "vine-light2"
@@ -72592,6 +72569,11 @@
 /obj/machinery/light/incandescent/greenish,
 /turf/unsimulated/floor/setpieces/swampgrass,
 /area/centcom/offices/tterc)
+"kni" = (
+/obj/map/light/graveyard,
+/mob/living/critter/small_animal/firefly/ai_controlled,
+/turf/unsimulated/grasstodirt,
+/area/crypt/graveyard)
 "knY" = (
 /obj/lattice,
 /obj/machinery/vending/cola/red,
@@ -74534,6 +74516,14 @@
 	icon_state = "shore-49"
 	},
 /area/titlescreen)
+"pRr" = (
+/obj/critter/brullbar,
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "pTc" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/north)
@@ -75041,6 +75031,11 @@
 	icon_state = "floor"
 	},
 /area/centcom/offices/pali)
+"rrB" = (
+/obj/decal/icefloor,
+/obj/critter/brullbar/king,
+/turf/unsimulated/floor/arctic/snow/lake,
+/area/lower_arctic/lower)
 "rst" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -75199,7 +75194,6 @@
 /obj/overlay{
 	density = 1;
 	desc = "Somebody removed the control board without unlatching the door bolts.  Rude";
-	dir = 2;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "sec2_closed";
 	layer = 6;
@@ -76019,12 +76013,9 @@
 /obj/item/clothing/head/NTberet{
 	desc = "You can tell that this beret has been well looked after.";
 	layer = 30;
-	name = "Karu Karim's Nanotrasen Beret";
-	plane = -100
+	name = "Karu Karim's Nanotrasen Beret"
 	},
-/obj/item/luggable_computer/personal{
-	plane = -100
-	},
+/obj/item/luggable_computer/personal,
 /turf/unsimulated/floor/carpet{
 	dir = 5;
 	icon_state = "fblue2";
@@ -76323,6 +76314,11 @@
 	icon_state = "floor"
 	},
 /area/meat_derelict/guts)
+"vtG" = (
+/obj/map/light/graveyard,
+/mob/living/critter/small_animal/firefly/ai_controlled,
+/turf/unsimulated/dirt,
+/area/crypt/graveyard)
 "vum" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/decal/tile_edge/line/green{
@@ -76431,6 +76427,16 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"vOz" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/obj/critter/brullbar{
+	wanderer = 0
+	},
+/turf/unsimulated/floor/arctic/snow,
+/area/upper_arctic/exterior/surface)
 "vTG" = (
 /obj/machinery/light{
 	dir = 8
@@ -76752,6 +76758,11 @@
 "wXY" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon)
+"xch" = (
+/obj/decal/icefloor,
+/obj/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow/lake,
+/area/lower_arctic/lower)
 "xcv" = (
 /obj/lattice{
 	dir = 9;
@@ -80567,7 +80578,7 @@ aSG
 aSG
 aVL
 aRJ
-aXh
+vOz
 faP
 faP
 faP
@@ -88749,7 +88760,7 @@ aLr
 aLS
 aLN
 bgC
-bii
+iVf
 aLN
 aLN
 aLN
@@ -95677,7 +95688,7 @@ aIp
 aIp
 bdB
 bdQ
-bee
+rrB
 aJE
 aJE
 aJE
@@ -96890,7 +96901,7 @@ aIp
 aIp
 aIp
 aIp
-bbT
+hIb
 aIp
 aIp
 aIp
@@ -99598,7 +99609,7 @@ aIC
 bbs
 aIp
 aIp
-bcE
+xch
 aIp
 aIp
 aIp
@@ -99906,7 +99917,7 @@ aIp
 aIp
 aIp
 aIp
-bet
+pRr
 aIp
 aIC
 aIC
@@ -100804,7 +100815,7 @@ aNq
 aPE
 aIC
 aIp
-bbT
+hIb
 aIC
 aIC
 aIC
@@ -101429,7 +101440,7 @@ aIp
 aIp
 aIC
 aJi
-bhY
+hDJ
 aIp
 bgr
 bgr
@@ -102324,12 +102335,12 @@ aIp
 aIp
 aIp
 aIC
-bbT
+hIb
 aIp
 aYu
 bwn
 aIp
-bgl
+cVc
 aIp
 aIp
 aIp
@@ -103836,7 +103847,7 @@ bwk
 aIC
 aIp
 aIC
-bbT
+hIb
 aIp
 aIC
 aIC
@@ -109759,7 +109770,7 @@ lzl
 lzl
 lzl
 lzl
-btf
+gmY
 btf
 btf
 btf
@@ -117792,7 +117803,7 @@ aaa
 bFS
 nYR
 bGG
-bGG
+vtG
 bGG
 bGG
 bGG
@@ -118105,7 +118116,7 @@ bHe
 bJK
 bGr
 bGG
-bIP
+hnR
 bIP
 bIP
 bGG
@@ -119605,7 +119616,7 @@ bFS
 bGj
 bGG
 bGG
-bHe
+kni
 bFS
 bFR
 ngk
@@ -121718,13 +121729,13 @@ aaa
 bFS
 bGj
 bGG
-bGG
+vtG
 bHe
 bFR
 bFR
 bGj
 bGG
-bGG
+vtG
 bGG
 bHf
 bGF
@@ -125041,7 +125052,7 @@ bFS
 bGt
 bGt
 bGX
-bGG
+vtG
 bHI
 bIa
 bIy
@@ -125950,7 +125961,7 @@ bFS
 bHm
 bHJ
 bIc
-bGG
+vtG
 bGG
 bGG
 bGG

@@ -107,7 +107,7 @@
 				ticker.mode:agent_number++
 			else
 				src.real_name = "Syndicate Agent"
-			JobEquipSpawned("Syndicate")
+			JobEquipSpawned("Syndicate Operative")
 			u_equip(l_store) // Deletes syndicate remote teleporter to keep people out of the syndie shuttle
 			u_equip(r_store) // Deletes uplink radio because fuckem
 
@@ -157,6 +157,10 @@
 	ai_threatened = 0
 	ai_movedelay = 3
 	ai_attacked = 0
+
+	if(abilityHolder)
+		if(!abilityHolder.getAbility(/datum/targetable/ai_toggle))
+			abilityHolder.addAbility(/datum/targetable/ai_toggle)
 
 /mob/living/carbon/human/proc/ai_stop()
 	ai_set_active(0)

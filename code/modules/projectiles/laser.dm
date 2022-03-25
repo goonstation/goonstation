@@ -96,6 +96,9 @@ toxic - poisons
 	color_green = 0
 	color_blue = 1
 
+/datum/projectile/laser/heavy/law_safe //subclass of heavy laser that can't damage the law rack - for AI turrets
+	name = "heavy laser"
+
 /datum/projectile/laser/asslaser // heh
 	name = "assault laser"
 	icon_state = "u_laser"

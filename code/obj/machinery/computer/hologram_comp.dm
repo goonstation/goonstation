@@ -52,7 +52,6 @@
 		if (href_list["power"])
 			if (src.projector.projection)
 				src.projector.icon_state = "hologram0"
-				//src.projector.projection = null
 				qdel(src.projector.projection)
 			else
 				src.projector.projection = new /obj/projection(src.projector.loc)

@@ -649,6 +649,7 @@
 				chair_chump.changeStatus("stunned", 2 SECONDS)
 				random_brute_damage(chair_chump, 15)
 				playsound(chair_chump.loc, "swing_hit", 50, 1)
+				chair_chump.end_chair_flip_targeting()
 
 			var/obj/item/chair/folded/C = null
 			if(istype(src, /obj/stool/chair/syndicate))
