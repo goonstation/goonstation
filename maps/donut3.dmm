@@ -33655,6 +33655,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
+"jCE" = (
+/obj/machinery/r_door_control/podbay/security/new_walls/south{
+	pixel_y = -24
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
 "jCF" = (
 /obj/storage/secure/closet/fridge,
 /obj/item/storage/box/donkpocket_kit,
@@ -63292,11 +63298,7 @@
 /turf/simulated/floor/blueblack/corner,
 /area/station/turret_protected/AIsat)
 "scx" = (
-/obj/machinery/door_control{
-	id = "hangar_security";
-	name = "Secure Hangar Door Control";
-	pixel_x = -24
-	},
+/obj/machinery/door_control/podbay/security/new_walls/west,
 /turf/simulated/floor/bot/white,
 /area/station/hangar/sec)
 "scE" = (
@@ -105801,7 +105803,7 @@ alB
 alB
 alB
 alB
-alB
+jCE
 plN
 jBH
 fMH
