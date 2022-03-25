@@ -1,7 +1,9 @@
 
 (t)thu mar 24 22
 (u)tarmunora
-(p)7636
+(e)⚖|balance
+(*)Wrestler changes: suplexes have a brief self-stun and much reduced chance for an "explosive" suplex; throw power now knocks around people during the cast; all powers cd reduced by 10s and stun duration increased by 1s; cooldowns no longer scale with stamina buffs
+(u)tarmunora
 (e)⚖|balance
 (+)Power cell sec utility purchase cost raised to 2 credits, only-a-baton loadout comes with an additional utility token.
 (u)aloe
