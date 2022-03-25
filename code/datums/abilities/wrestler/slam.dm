@@ -7,7 +7,7 @@
 	target_nodamage_check = 0
 	target_selection_check = 0
 	max_range = 0
-	cooldown = 350
+	cooldown = 250
 	start_on_cooldown = 1
 	pointCost = 0
 	when_stunned = 0
@@ -40,10 +40,10 @@
 
 		SPAWN(0)
 			if (HH)
-				animate(HH, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
+				animate(HH, transform = HH.transform.Turn(180), time = 1, loop = 0)
 				sleep (15)
 				if (HH)
-					animate(HH, transform = null, time = 1, loop = 0)
+					animate(HH, transform = HH.transform.Turn(-180), time = 1, loop = 0)
 
 		var/GT = G.state // Can't include a possibly non-existent item in the loop before we can run the check.
 		for (var/i = 0, i < (GT * 3), i++)
@@ -149,8 +149,8 @@
 			if (!fake)
 				if (!isdead(HH))
 					HH.emote("scream")
-					HH.changeStatus("weakened", 2 SECONDS)
-					HH.changeStatus("stunned", 2 SECONDS)
+					HH.changeStatus("weakened", 3 SECONDS)
+					HH.changeStatus("stunned", 3 SECONDS)
 					HH.force_laydown_standup()
 
 					switch (G.state)

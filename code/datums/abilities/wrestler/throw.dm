@@ -7,7 +7,7 @@
 	target_nodamage_check = 0
 	target_selection_check = 0
 	max_range = 0
-	cooldown = 300
+	cooldown = 200
 	start_on_cooldown = 1
 	pointCost = 0
 	when_stunned = 0
