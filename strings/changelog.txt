@@ -1,4 +1,11 @@
 
+(t)fri mar 25 22
+(u)NightmareChamillian
+(p)7778
+(e)🎨|sprites
+(*)Adds seven new faces for ghostdrones to choose from! See minor changes for a list
+(+)Faces are as follows: sleepy, exclamation mark, question mark, lopsy, kitty, and eye
+(+)Furthermore, drones can now nod (Ctrl+N) and shake (Ctrl+X) their heads to respond to basic yes-no questions
 (t)thu mar 24 22
 (u)tarmunora
 (e)⚖|balance
