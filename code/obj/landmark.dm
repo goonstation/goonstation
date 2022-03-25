@@ -196,6 +196,13 @@ var/global/list/job_start_locations = list()
 			src.type_to_spawn = name_to_type[src.name]
 		if(isnull(src.type_to_spawn))
 			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
+
+		#ifdef BAD_MONKEY_NO_BANANA
+		if (findtext("[src.type_to_spawn]", "monkey")) //ugly
+			qdel(src)
+			return
+		#endif
+
 		new type_to_spawn(src.loc)
 		qdel(src)
 

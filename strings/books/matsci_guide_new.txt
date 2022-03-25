@@ -496,7 +496,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 <td align="right">n/a</td>
 <td align="right">n/a</td>
 </tr>
-<tr><td align="right">Wendigo Hide</td>
+<tr><td align="right">Brullbar Hide</td>
 <td align="right">n/a</td>
 <td align="right"><b>45</b></td>
 <td align="right"><b>20</b></td>
@@ -507,7 +507,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 <td align="right">n/a</td>
 <td align="right">n/a</td>
 </tr>
-<tr><td align="right">King Wendigo Hide</td>
+<tr><td align="right">King Brullbar Hide</td>
 <td align="right">n/a</td>
 <td align="right"><b>45</b></td>
 <td align="right"><b>10</b></td>
@@ -1006,7 +1006,7 @@ Thank you for your service to Nanotrasen.</i></p>
 <b>Fabric/Cloth</b>
 <ul><li>Bee Wool</li><li>Blob (Amoeba)</li><li>Carbon Nanofiber</li><li>Char</li><li>Coral</li>
 <li>Cotton</li><li>Dyneema</li><li>Ectofiber</li><li>Fibrilith</li><li>Hauntium</li>
-<li>Koshmarite</li><li>Leather</li><li>Space Spider Silk</li><li>Synthleather</li><li>Wendigo Hide</li></ul>
+<li>Koshmarite</li><li>Leather</li><li>Space Spider Silk</li><li>Synthleather</li><li>Brullbar Hide</li></ul>
 
 <b>Organic</b>
 <ul><li>Bamboo</li><li>Beeswax</li><li>Blob (Amoeba)</li><li>Bone</li><li>Char</li><li>Chitin</li>

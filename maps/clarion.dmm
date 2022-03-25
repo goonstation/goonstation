@@ -8468,14 +8468,6 @@
 /obj/machinery/hair_dye_dispenser,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
-"api" = (
-/obj/decal/fakeobjects/pole{
-	pixel_x = -14
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
 "apj" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	name = "Maintenance"
@@ -27301,7 +27293,6 @@
 /obj/table/reinforced/auto,
 /obj/item/device/infra_sensor,
 /obj/item/clothing/glasses/meson,
-/obj/item/aiModule/rename,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -27726,17 +27717,17 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bgy" = (
 /obj/disposalpipe/segment/food{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bgz" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bgB" = (
 /obj/cable{
 	d1 = 4;
@@ -28598,7 +28589,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "biR" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -29688,7 +29679,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "blm" = (
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -30281,18 +30272,6 @@
 /obj/cable,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
-"bmK" = (
-/obj/machinery/light,
-/obj/table/reinforced/auto,
-/obj/item/aiModule/reset,
-/obj/item/circuitboard/aiupload,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/decal/tile_edge/line/green{
-	dir = 9;
-	icon_state = "line2"
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
 "bmL" = (
 /obj/shrub{
 	dir = 1
@@ -30704,7 +30683,7 @@
 "bnE" = (
 /obj/disposalpipe/segment/food,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bnG" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/Zeta)
@@ -43999,7 +43978,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "csQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos)
@@ -44031,7 +44010,7 @@
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "cye" = (
 /obj/cable{
 	d1 = 4;
@@ -44236,7 +44215,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "cVf" = (
 /obj/machinery/light,
 /turf/simulated/floor/red/side,
@@ -45061,13 +45040,6 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
-"fdK" = (
-/obj/machinery/computer/aiupload,
-/obj/disposalpipe/segment,
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/turret_protected/ai)
 "fho" = (
 /obj/machinery/light_switch/west{
 	dir = 4
@@ -45162,7 +45134,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "foU" = (
 /obj/landmark/gps_waypoint,
 /obj/cable{
@@ -45481,7 +45453,7 @@
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "fZZ" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
@@ -45563,7 +45535,7 @@
 /area/station/turret_protected/ai)
 "glL" = (
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "gnD" = (
 /obj/stool/chair/red{
 	anchored = 0;
@@ -45944,7 +45916,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "hpd" = (
 /obj/cable{
 	d1 = 2;
@@ -46510,7 +46482,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "iMu" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -46637,7 +46609,7 @@
 	pixel_y = -10
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "jhR" = (
 /obj/cable{
 	d1 = 2;
@@ -46880,7 +46852,7 @@
 	},
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "jUC" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -46977,7 +46949,7 @@
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "kcx" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -47039,7 +47011,7 @@
 	pixel_y = -19
 	},
 /turf/simulated/floor/redblack,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "khz" = (
 /obj/pool/perspective{
 	dir = 4;
@@ -47513,7 +47485,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/redblack,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "lfI" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel{
@@ -48892,6 +48864,14 @@
 /obj/access_spawn/cargo,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
+"oZj" = (
+/obj/decal/fakeobjects/pole{
+	pixel_x = -14
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/entry{
+	name = "Entry Hallway"
+	})
 "oZJ" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -48973,7 +48953,7 @@
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "pox" = (
 /obj/disposalpipe/segment/food{
 	dir = 2;
@@ -49380,14 +49360,14 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "qAY" = (
 /obj/disposalpipe/segment/food,
 /obj/machinery/weapon_stand/shotgun_rack,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "qBc" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -49588,7 +49568,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "rgv" = (
 /obj/table/wood/auto,
 /obj/item/storage/secure/ssafe{
@@ -49819,7 +49799,7 @@
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "rUq" = (
 /obj/disposalpipe/segment/mail,
 /obj/table/reinforced/auto,
@@ -50428,7 +50408,7 @@
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "tAi" = (
 /turf/simulated/floor/red/side{
 	dir = 10
@@ -50593,6 +50573,16 @@
 	icon_state = "fpurple2"
 	},
 /area/station/science/research_director)
+"tRG" = (
+/obj/machinery/light,
+/obj/table/reinforced/auto,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/decal/tile_edge/line/green{
+	dir = 9;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
 "tUJ" = (
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn{
@@ -50857,7 +50847,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "uDI" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment{
@@ -51479,7 +51469,7 @@
 /turf/simulated/floor/redblack/corner{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "wlE" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -51959,6 +51949,13 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/security/brig)
+"xPV" = (
+/obj/machinery/lawrack,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/turret_protected/ai)
 "xRz" = (
 /obj/machinery/light{
 	dir = 8;
@@ -86654,7 +86651,7 @@ aWQ
 aWQ
 kGL
 ben
-fdK
+xPV
 bgF
 bhE
 biT
@@ -87125,7 +87122,7 @@ amX
 any
 aeG
 aeG
-api
+oZj
 aeG
 aqr
 aCN
@@ -88202,7 +88199,7 @@ bhF
 biZ
 bkk
 blx
-bmK
+tRG
 bnG
 bpe
 bqr

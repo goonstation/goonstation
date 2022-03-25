@@ -238,7 +238,7 @@ var/global/meteor_shower_active = 0
 			walk_towards(src, target, speed, pix_speed)
 		if(!hit_object)
 			last_tile = src.loc
-			src.loc.Exit()
+			src.loc.Exit(src, NewLoc)
 			if(NewLoc.Enter())
 				src.set_loc(NewLoc)
 				src.set_dir(Dir)

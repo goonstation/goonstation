@@ -215,7 +215,7 @@
 		if (istype(A, /obj/itemspecialeffect))
 			var/obj/itemspecialeffect/E = A
 			return (E.can_clash && world.time != E.create_time && E.clash_time > 0 && world.time <= E.create_time + E.clash_time)
-		.= ((istype(A, /obj/critter) || (isliving(A)) || istype(A, /obj/machinery/bot)) && A != usr && A != user)
+		.= ((istype(A, /obj/critter) || (isliving(A) && !isintangible(A)) || istype(A, /obj/machinery/bot)) && A != usr && A != user)
 
 	proc/showEffect(var/name = null, var/direction = NORTH, var/mob/user, alpha=255)
 		if(name == null || master == null) return

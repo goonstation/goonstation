@@ -20,7 +20,7 @@
 
 	RawClick(location,control,params)
 		var/mob/user = usr
-		if (ismobcritter(user) || issilicon(user) || isobserver(user))
+		if (ismobcritter(user) || issilicon(user) || isobserver(user) || isAI(user))
 			return
 		if(can_act(user) && can_reach(user, src))
 			var/list/paramList = params2list(params)

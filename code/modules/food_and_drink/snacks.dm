@@ -509,6 +509,7 @@
 		food_effects = list("food_refreshed_big")
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 /obj/item/reagent_containers/food/snacks/soup
 	name = "soup"
 	desc = "A soup of indeterminable type."

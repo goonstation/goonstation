@@ -805,6 +805,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	..()
 
+/obj/machinery/containment_field/ex_act(severity)
+	return
+
 /obj/machinery/containment_field/attack_hand(mob/user as mob)
 	return
 
