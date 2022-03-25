@@ -201,7 +201,7 @@
 			if(src.decal)
 				qdel(src.decal)
 			if(F.flock)
-				F.flock.unreserveTurf(target, F.real_name)
+				F.flock.unreserveTurf(F.real_name)
 
 	onEnd()
 		..()
