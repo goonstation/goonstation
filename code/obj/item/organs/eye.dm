@@ -363,9 +363,13 @@
 	on_transplant(mob/M)
 		. = ..()
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_NIGHTVISION, src)
+		if(emagged)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_XRAYVISION_WEAK, src)
 
 	on_removal()
 		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_NIGHTVISION, src)
+		if(emagged)
+			REMOVE_ATOM_PROPERTY(donor, PROP_MOB_XRAYVISION_WEAK, src)
 		. = ..()
 
 /obj/item/organ/eye/cyber/laser
