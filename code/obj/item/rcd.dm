@@ -774,6 +774,7 @@ Broken RCD + Effects
 
 /obj/item/rcd/material/cardboard
 	name = "cardboard rapid construction Device"
+	icon_state = "base_cardboard"
 	desc = "Also known as a C-RCD, this device is able to rapidly construct cardboard props."
 	mats = list("DEN-3" = 10, "POW-2" = 10, "cardboard" = 30)
 	force = 0

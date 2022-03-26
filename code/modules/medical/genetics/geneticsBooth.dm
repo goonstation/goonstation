@@ -109,8 +109,10 @@
 		if (occupant)
 			if (!powered())
 				eject_occupant(0)
-			if (occupant.loc != src)
+			if (occupant?.loc != src)
 				eject_occupant(0)
+			if(!occupant)
+				return
 
 			started++
 			if (started == 2)

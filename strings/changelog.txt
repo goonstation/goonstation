@@ -1,4 +1,21 @@
 
+(t)fri mar 25 22
+(u)NightmareChamillian
+(p)7778
+(e)🎨|sprites
+(*)Adds seven new faces for ghostdrones to choose from! See minor changes for a list
+(+)Faces are as follows: sleepy, exclamation mark, question mark, lopsy, kitty, and eye
+(+)Furthermore, drones can now nod (Ctrl+N) and shake (Ctrl+X) their heads to respond to basic yes-no questions
+(t)thu mar 24 22
+(u)tarmunora
+(e)⚖|balance
+(*)Wrestler changes: suplexes have a brief self-stun and will never be "explosive" (that's what your powers are for); throw power now knocks people around after the first second of spinning; all powers cd reduced by 10s and stun duration increased by 1s; cooldowns no longer scale with stamina buffs
+(+)You can only suplex once per person per flip
+(u)tarmunora
+(e)⚖|balance
+(+)Power cell sec utility purchase cost raised to 2 credits, only-a-baton loadout comes with an additional utility token.
+(u)aloe
+(+)The nuke op sniper has been changed a bit- it no longer disorients people (still does stamina damage), loses some damage when shooting through obstacles, and doesn't throw people back as far. The class gets an extra mag in their pouch to offset this a bit.
 (t)wed mar 23 22
 (u)Hans
 (p)7636
@@ -73,7 +90,7 @@
 (u)Cogwerks
 (e)🎨🗺|sprites, mapping
 (+)Made some more background art for a bunch of orbital objects
-(+)Slightly rearranged solar control rooms on Cogmaps 1 & 2 for view of stars 
+(+)Slightly rearranged solar control rooms on Cogmaps 1 & 2 for view of stars
 (t)mon mar 14 22
 (u)Conchuckter
 (p)7784

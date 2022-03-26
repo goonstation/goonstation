@@ -40,7 +40,7 @@ Hold down CTRL, ALT or SHIFT to modify, call or view proc bound to those keys.<b
 		var/newpn = input("Enter proc name[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]:", "Proc Name[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]", ctrl ? procname_c : alt ? procname_a : shift ? procname_s : procname_n) as text|null
 		if (!newpn)
 			return
-		var/nargs = get_proccall_arglist()
+		var/nargs = holder.owner.get_proccall_arglist()
 		if (ctrl)
 			procname_c = newpn
 			targeted_c = istargeted

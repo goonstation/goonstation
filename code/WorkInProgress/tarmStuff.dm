@@ -42,6 +42,12 @@
 			qdel(start)
 			qdel(end)
 
+/datum/projectile/laser/light/camera_snipe
+	goes_through_walls = 1
+	pierces = -1
+	projectile_speed = 144
+	dissipation_rate = 0
+
 /datum/projectile/bullet/rifle_3006/rakshasa
 	sname = "\improper Rakshasa"
 	name = "\improper Rakshasa round"
