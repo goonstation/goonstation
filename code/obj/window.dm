@@ -27,6 +27,7 @@
 	var/default_reinforcement = null
 	var/reinf = 0 // cant figure out how to remove this without the map crying aaaaa - ISN
 	var/deconstruct_time = 0//20
+	var/image/connect_image = null
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
 	anchored = 1
@@ -43,6 +44,7 @@
 		if (default_reinforcement)
 			src.reinforcement = getMaterial(default_reinforcement)
 		onMaterialChanged()
+		src.UpdateIcon()
 
 		// The health multiplier var wasn't implemented at all, apparently (Convair880)?
 		if (src.health_multiplier != 1 && src.health_multiplier > 0)
@@ -731,6 +733,7 @@
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/jen/red, /turf/simulated/wall/auto/jen/green, /turf/simulated/wall/auto/jen/yellow, /turf/simulated/wall/auto/jen/cyan, /turf/simulated/wall/auto/jen/purple,  /turf/simulated/wall/auto/jen/blue,
 		/turf/simulated/wall/auto/reinforced/jen, /turf/simulated/wall/auto/reinforced/jen/red, /turf/simulated/wall/auto/reinforced/jen/green, /turf/simulated/wall/auto/reinforced/jen/yellow, /turf/simulated/wall/auto/reinforced/jen/cyan, /turf/simulated/wall/auto/reinforced/jen/purple, /turf/simulated/wall/auto/reinforced/jen/blue,
 		/turf/unsimulated/wall/auto/supernorn/wood, /turf/unsimulated/wall/auto/adventure/shuttle/dark, /turf/simulated/wall/auto/reinforced/old, /turf/unsimulated/wall/auto/lead/blue, /turf/unsimulated/wall/auto/adventure/old, /turf/unsimulated/wall/auto/adventure/mars/interior, /turf/unsimulated/wall/auto/adventure/shuttle, /turf/unsimulated/wall/auto/reinforced/supernorn)
+	var/list/connects_with_overlay_exceptions = list(/obj/window)
 	alpha = 160
 	the_tuff_stuff
 		explosion_resistance = 3
@@ -752,24 +755,21 @@
 	update_icon()
 		if (!src.anchored)
 			icon_state = "[mod]0"
+			src.UpdateOverlays(null, "connect")
 			return
 
-		var/builtdir = 0
-		for (var/dir in cardinal)
-			var/turf/T = get_step(src, dir)
-			if (T && (T.type in connects_to))
-				builtdir |= dir
-			else if (islist(connects_to) && length(connects_to))
-				for (var/i=1, i <= connects_to.len, i++)
-					var/atom/A = locate(connects_to[i]) in T
-					if (!isnull(A))
-						if (istype(A, /atom/movable))
-							var/atom/movable/M = A
-							if (!M.anchored)
-								continue
-						builtdir |= dir
-						break
-		src.icon_state = "[mod][builtdir]"
+		var/connectdir = get_connected_directions_bitflag(connects_to)
+		var/overlaydir = get_connected_directions_bitflag(connects_to, connects_with_overlay_exceptions)
+
+		src.icon_state = "[mod][connectdir]"
+		if (overlaydir)
+			if (!src.connect_image)
+				src.connect_image = image(src.icon, "overlay-[overlaydir]")
+			else
+				src.connect_image.icon_state = "overlay-[overlaydir]"
+				src.UpdateOverlays(src.connect_image, "connect")
+		else
+			src.UpdateOverlays(null, "connect")
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (..(W, user))
