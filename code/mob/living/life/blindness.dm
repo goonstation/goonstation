@@ -14,8 +14,8 @@
 					eyes_blinded |= EYEBLIND_L
 					eyes_blinded |= EYEBLIND_R
 				else
-					/var/obj/item/organ/Eye/left_eye = human_owner.get_organ("left_eye")
-					/var/obj/item/organ/Eye/right_eye = human_owner.get_organ("right_eye")
+					var/obj/item/organ/eye/left_eye = human_owner.get_organ("left_eye")
+					var/obj/item/organ/eye/right_eye = human_owner.get_organ("right_eye")
 					if (!left_eye || left_eye.blind)
 						eyes_blinded |= EYEBLIND_L
 					if (!right_eye || right_eye.blind)
