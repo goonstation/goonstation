@@ -1492,7 +1492,7 @@ var/f_color_selector_handler/F_Color_Selector
 			if ("ailaws")
 				if (current_state > GAME_STATE_PREGAME)
 					var/ircmsg[] = new()
-					ircmsg["laws"] = ticker.ai_law_rack_manager.format_for_logs(glue = "\n", include_link = FALSE)
+					ircmsg["laws"] = ticker.ai_law_rack_manager.format_for_logs(glue = "\n", round_end = TRUE, include_link = FALSE)
 					return ircbot.response(ircmsg)
 				else
 					return 0
