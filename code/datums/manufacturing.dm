@@ -125,6 +125,16 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	frame_path = /obj/disposalpipe/loafer
 
+/******************** AI Law Rack *******************/
+
+/datum/manufacture/mechanics/lawrack
+	name = "AI Law Rack Mount"
+	item_paths = list("MET-1", "MET-2", "INS-1" , "CON-1")
+	item_amounts = list(20,5,10,10)
+	time = 60 SECONDS
+	create = 1
+	frame_path = /obj/machinery/lawrack
+
 /******************** AI display (temp) *******************/
 
 /datum/manufacture/mechanics/ai_status_display
