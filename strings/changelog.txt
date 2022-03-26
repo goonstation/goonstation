@@ -1,5 +1,9 @@
 
 (t)sat mar 26 22
+(u)Amylizzle
+(p)7973
+(e)🐛|bug
+(+)Bank account balance now counts towards richest escapee.
 (u)Flaborized
 (p)7962
 (e)🎨|sprites
