@@ -136,6 +136,6 @@
 				for(var/mob/living/M in affected_mobs)
 					mobtextlist += M.real_name ? M.real_name : M.name
 
-				laws += "Laws for [R] at [include_link ? log_loc(R) : "([R.x], [R.y], [R.z] in [get_area(R)])"]:[glue]" + R.format_for_logs(glue) \
+				laws += "Laws for [R] at [include_link ? log_loc(R) : "([R.x], [R.y], [R.z]) in [get_area(R)]"]:[glue]" + R.format_for_logs(glue) \
 						+ "[glue]The law rack is connected to the following silicons: "+mobtextlist.Join(", ") + "[glue]--------------[glue]"
 		return jointext(laws, glue)
