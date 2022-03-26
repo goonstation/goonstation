@@ -514,15 +514,15 @@
 		equipped.set_loc(src)
 		user.visible_message("<span class='alert'>[user] slides a module into the law rack</span>", "<span class='alert'>You slide the module into the rack.</span>")
 		tgui_process.update_uis(src)
-		logTheThing("station", user, src, "[user.name] inserts law module into rack([log_loc(src)]): [equipped]:[equipped.lawText] at slot [slotNum]")
-		message_admins("[user.name] added a new law to rack [log_loc(src)]: [equipped], with text '[equipped.lawText]' at slot [slotNum]")
+		logTheThing("station", user, src, "inserts law module into rack([log_loc(src)]): [equipped]:[equipped.lawText] at slot [slotNum]")
+		message_admins("[key_name(user)] added a new law to rack [log_loc(src)]: [equipped], with text '[equipped.lawText]' at slot [slotNum]")
 		UpdateIcon()
 		UpdateLaws()
 
 	proc/remove_module_callback(var/slotNum,var/mob/user)
 		//add circuit to hand
-		logTheThing("station", user, src, "[user.name] removes law module from rack([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].lawText] at slot [slotNum]")
-		message_admins("[user.name] removed a law from rack([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].lawText] at slot [slotNum]")
+		logTheThing("station", user, src, "removes law module from rack([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].lawText] at slot [slotNum]")
+		message_admins("[key_name(user)] removed a law from rack([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].lawText] at slot [slotNum]")
 		user.visible_message("<span class='alert'>[user] slides a module out of the law rack</span>", "<span class='alert'>You slide the module out of the rack.</span>")
 		user.put_in_hand_or_drop(src.law_circuits[slotNum])
 		src.law_circuits[slotNum] = null
