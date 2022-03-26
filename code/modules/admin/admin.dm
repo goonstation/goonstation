@@ -843,7 +843,7 @@ var/global/noir = 0
 		if ("c_mode_current")
 			if (src.level >= LEVEL_SA)
 				if (current_state > GAME_STATE_PREGAME)
-					return tgui_alert(usr, "The game has already started.", null, null, null, null)
+					return tgui_alert(usr, "The game has already started.")
 
 #ifndef MAP_OVERRIDE_POD_WARS
 				if (href_list["type"] == "pod_wars")
@@ -2522,7 +2522,7 @@ var/global/noir = 0
 						logTheThing("diary", usr, null, "transformed everyone into a [which].", "admin")
 					if("prisonwarp")
 						if(!ticker)
-							tgui_alert(usr,"The game hasn't started yet!", null, null, null, null, null)
+							tgui_alert(usr,"The game hasn't started yet!")
 							return
 						message_admins("<span class='internal'>[key_name(usr)] teleported all players to the prison zone.</span>")
 						logTheThing("admin", usr, null, "teleported all players to the prison zone.")
@@ -3596,7 +3596,7 @@ var/global/noir = 0
 						boutput(world, text("<B>A secret has been activated by []!</B>", usr.key))
 				return
 			else
-				tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+				tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 
 		if ("view_logs_web")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
@@ -3619,7 +3619,7 @@ var/global/noir = 0
 
 				usr.Browse(adminLogHtml, "window=[logType]_log_[gettxt];size=750x500")
 			else
-				tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+				tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 
 		if ("view_logs_pathology_strain")
 			if (src.level >= LEVEL_MOD)
@@ -3735,7 +3735,7 @@ var/global/noir = 0
 
 					else
 			else
-				tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+				tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 		if ("respawntarget")
 			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
@@ -4309,7 +4309,7 @@ var/global/noir = 0
 	set name="Delay Round Start"
 
 	if (current_state > GAME_STATE_PREGAME)
-		return tgui_alert(usr,"Too late... The game has already started!", null, null, null, null, null)
+		return tgui_alert(usr,"Too late... The game has already started!")
 	game_start_delayed = !(game_start_delayed)
 
 	if (game_start_delayed)
@@ -4692,7 +4692,7 @@ var/global/noir = 0
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
 
 	else
-		tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 		return
 
 /datum/admins/proc/spawn_figurine(var/figurine as text)
@@ -4719,7 +4719,7 @@ var/global/noir = 0
 			logTheThing("diary", usr, null, "spawned figurine [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
 
 	else
-		tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 		return
 
 /datum/admins/proc/heavenly_spawn_obj(var/obj/object as text)
@@ -4740,7 +4740,7 @@ var/global/noir = 0
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
 	else
-		tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 		return
 
 /datum/admins/proc/supplydrop_spawn_obj(var/obj/object as text)
@@ -4760,7 +4760,7 @@ var/global/noir = 0
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
 	else
-		tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 		return
 
 /datum/admins/proc/demonically_spawn_obj(var/obj/object as text)
@@ -4781,7 +4781,7 @@ var/global/noir = 0
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
 	else
-		tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 		return
 
 /datum/admins/proc/show_chatbans(var/client/C)//do not use this as an example of how to write DM please.
