@@ -23818,7 +23818,6 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/item/paper/manufacturer_blueprint/lawrack,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "eUq" = (

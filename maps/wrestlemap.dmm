@@ -45602,7 +45602,6 @@
 	},
 /obj/item/electronics/soldering,
 /obj/table/auto,
-/obj/item/paper/manufacturer_blueprint/lawrack,
 /turf/simulated/floor/orange/side{
 	dir = 1
 	},

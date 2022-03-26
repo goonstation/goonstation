@@ -10200,7 +10200,6 @@
 "aCB" = (
 /obj/machinery/rkit,
 /obj/machinery/light_switch/west,
-/obj/item/paper/manufacturer_blueprint/lawrack,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},

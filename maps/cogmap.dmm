@@ -36778,7 +36778,6 @@
 /obj/table/auto,
 /obj/item/plate,
 /obj/random_item_spawner/snacks/maybe_few,
-/obj/item/paper/manufacturer_blueprint/lawrack,
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bQi" = (

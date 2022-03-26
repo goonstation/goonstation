@@ -27807,7 +27807,6 @@
 /area/station/hallway/primary/southeast)
 "hMu" = (
 /obj/table/auto,
-/obj/item/paper/manufacturer_blueprint/lawrack,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "hMC" = (

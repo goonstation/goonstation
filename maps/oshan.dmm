@@ -24861,7 +24861,6 @@
 /obj/item/hand_labeler,
 /obj/item/device/t_scanner,
 /obj/item/disk/data/cartridge/diagnostics,
-/obj/item/paper/manufacturer_blueprint/lawrack,
 /turf/simulated/floor/plating/random,
 /area/station/engine/elect)
 "bma" = (
