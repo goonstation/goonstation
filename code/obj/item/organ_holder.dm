@@ -1443,10 +1443,10 @@
 		var/obj/item/organ/eye/right_eye = H.get_organ("right_eye")
 
 		if(left_eye.emagged && istype(left_eye, /obj/item/organ/eye/cyber/laser))
-			power_mod += 0.5
+			power_mod += 0.75
 
 		if(right_eye.emagged && istype(right_eye, /obj/item/organ/eye/cyber/laser))
-			power_mod += 0.5
+			power_mod += 0.75
 
 		var/mult = src.eye_proj == /datum/projectile/laser/eyebeams ? 1 : 0
 		H.visible_message("<span class='combat'><b>[H]</b> shoots [mult ? "eye beams" : "an eye beam"]!</span>")
@@ -1457,15 +1457,9 @@
 		if(power_mod >= 1.5)
 			H.visible_message("<span class='combat'><b>[H]</b>'s [mult ? "laser cybereyes explode" : "laser cybereye explodes"]!</span>")
 			if(mult)
-				explosion(H, H.last_turf, 1, 2, 4, 10) // might be too strong? then again getting two emagged cybereyes is hard
+				explosion(H, H.last_turf, 0, 0, 2, 4)
 			else
-				explosion(H, H.last_turf, 0, 1, 2, 8)
-
-			if(left_eye.emagged && istype(left_eye, /obj/item/organ/eye/cyber/laser))
-				qdel(left_eye)
-
-			if(right_eye.emagged && istype(right_eye, /obj/item/organ/eye/cyber/laser))
-				qdel(right_eye)
+				explosion(H, H.last_turf, 0, 0, 1, 2)
 
 
 /datum/projectile/laser/eyebeams/left
