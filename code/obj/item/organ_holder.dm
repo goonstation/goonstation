@@ -1416,8 +1416,9 @@
 		if (..())
 			return 1
 
-		if (ishuman(holder.owner)) // remember to take off your headgear if you want to fire the laser
-			var/mob/living/carbon/human/H = holder.owner
+		var/mob/living/carbon/human/H = holder.owner
+
+		if (ishuman(H)) // remember to take off your headgear if you want to fire the laser
 			var/obj/item/I
 			if (istype(H.glasses) && H.glasses.c_flags & COVERSEYES)
 				I = H.glasses
@@ -1429,7 +1430,7 @@
 				I = H.wear_suit
 			if (istype(I)) // or it might go
 				I.combust() // POOF
-				holder.owner.visible_message("<span class='combat'><b>[holder.owner]'s [I.name] catches on fire!</b></span>",\
+				H.visible_message("<span class='combat'><b>[H]'s [I.name] catches on fire!</b></span>",\
 				"<span class='combat'><b>Your [I.name] catches on fire!</b> Maybe you should have taken it off first!</span>")
 				return
 
@@ -1437,11 +1438,35 @@
 			return 1
 
 		var/turf/T = get_turf(target)
+		var/power_mod = 1
+		var/obj/item/organ/eye/left_eye = H.get_organ("left_eye")
+		var/obj/item/organ/eye/right_eye = H.get_organ("right_eye")
+
+		if(left_eye.emagged && istype(left_eye, /obj/item/organ/eye/cyber/laser))
+			power_mod += 0.5
+
+		if(right_eye.emagged && istype(right_eye, /obj/item/organ/eye/cyber/laser))
+			power_mod += 0.5
 
 		var/mult = src.eye_proj == /datum/projectile/laser/eyebeams ? 1 : 0
-		holder.owner.visible_message("<span class='combat'><b>[holder.owner]</b> shoots [mult ? "eye beams" : "an eye beam"]!</span>")
+		H.visible_message("<span class='combat'><b>[H]</b> shoots [mult ? "eye beams" : "an eye beam"]!</span>")
 		var/datum/projectile/PJ = new eye_proj
-		shoot_projectile_ST(holder.owner, PJ, T)
+		PJ.power *= power_mod
+		shoot_projectile_ST(H, PJ, T)
+
+		if(power_mod >= 1.5)
+			H.visible_message("<span class='combat'><b>[H]</b>'s [mult ? "laser cybereyes explode" : "laser cybereye explodes"]!</span>")
+			if(mult)
+				explosion(H, H.last_turf, 1, 2, 4, 10) // might be too strong? then again getting two emagged cybereyes is hard
+			else
+				explosion(H, H.last_turf, 0, 1, 2, 8)
+
+			if(left_eye.emagged && istype(left_eye, /obj/item/organ/eye/cyber/laser))
+				qdel(left_eye)
+
+			if(right_eye.emagged && istype(right_eye, /obj/item/organ/eye/cyber/laser))
+				qdel(right_eye)
+
 
 /datum/projectile/laser/eyebeams/left
 	icon_state = "eyebeamL"
