@@ -37,7 +37,7 @@
 /obj/flock_structure/ghost/process()
 	if(currentmats > goal)
 		var/obj/item/flockcache/c = new(get_turf(src))
-		flock_speak(null, "ALERT: Material excess detected, ejecting excess", flock)
+		flock_speak(src, "ALERT: Material excess detected, ejecting excess", flock)
 		c.resources = (currentmats - goal)
 		src.completebuild()
 	else if(currentmats == goal)
@@ -57,6 +57,6 @@
 	if (currentmats > 0)
 		var/obj/item/flockcache/cache = new(get_turf(src))
 		cache.resources = currentmats
-	flock_speak(null, "Tealprint derealizing", flock)
+	flock_speak(src, "Tealprint derealizing", flock)
 	playsound(src, 'sound/misc/flockmind/flockdrone_door_deny.ogg', 50, 1)
 	qdel(src)
