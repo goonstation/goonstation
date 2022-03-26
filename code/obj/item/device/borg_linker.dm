@@ -1,5 +1,5 @@
 /obj/item/device/borg_linker
-	name = "linker"
+	name = "cyborg law linker"
 	icon_state = "cyborg_linker"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	force = 5.0
