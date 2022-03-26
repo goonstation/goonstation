@@ -5,7 +5,7 @@
  */
 
 
-//<(-[>--{|}={I}={|}--<=(-Electronics parts-)=>--{|}={I}={|}--<[-)>
+/////////////Electronics parts////////
 /obj/item/electronics/
 	name = "electronic thing"
 	icon = 'icons/obj/electronics.dmi'
@@ -375,7 +375,7 @@
 			return 0
 	return 1
 
-//<(-[>--{|}={I}={|}--<=(-Other stuff-)=>--{|}={I}={|}--<[-)>
+//////////Other stuff///////////
 /obj/item/electronics/soldering
 	name = "soldering iron"
 	icon = 'icons/obj/electronics.dmi'
@@ -762,7 +762,7 @@
 /obj/machinery/rkit/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 	var/dat
-	var/hide_allowed = src.allowed(usr)
+	var/hide_allowed = src.allowed(user)
 	dat = "<b>Ruckingenur Kit</b><HR>"
 
 	dat += "<b>Scanned Items:</b><br>"
