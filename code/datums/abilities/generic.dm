@@ -214,9 +214,10 @@
 	targeted = TRUE
 	target_anything = 1
 	cooldown = 1 SECOND
+	current_projectile = new/datum/projectile/laser/eyebeams
 
 	cast(atom/target)
 		. = ..()
 		var/turf/T = get_turf(target)
 		for(var/obj/O in T.cameras)
-			shoot_projectile_ST(O, new/datum/projectile/laser/eyebeams, T)
+			shoot_projectile_ST(O, current_projectile, T)
