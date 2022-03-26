@@ -1530,16 +1530,23 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+	onInterrupt()
+		..()
+		if (target?.butcherer == owner)
+			target.butcherer = null
+
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(get_dist(owner, target) > 1 || target == null || owner == null || target.butcherer)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		target.butcherer = owner
 		for(var/mob/O in AIviewers(owner))
 			O.show_message("<span class='alert'><B>[owner] begins to butcher [target].</B></span>", 1)
 
 	onEnd()
 		..()
+		target?.butcherer = null
 		if(owner && target)
 			target.butcher(owner)
 			for(var/mob/O in AIviewers(owner))

@@ -765,7 +765,7 @@ butcher
 /datum/aiTask/sequence/goalbased/butcher/get_targets()
 	. = list()
 	for(var/mob/living/critter/flock/drone/F in view(max_dist, holder.owner))
-		if(F == holder.owner)
+		if(F == holder.owner || F.butcherer)
 			continue
 		if(isdead(F))
 			. += F

@@ -58,6 +58,8 @@
 	// moved up from critter/small_animal
 	var/butcherable = 0
 	var/butcher_time = 1.2 SECONDS
+	/// The mob who is butchering this critter
+	var/mob/butcherer = null
 	var/meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 	var/name_the_meat = 0
 	var/skinresult = /obj/item/material_piece/cloth/leather //YEP
