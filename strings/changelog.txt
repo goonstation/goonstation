@@ -1,5 +1,11 @@
 
 (t)sat mar 26 22
+(u)Gannets
+(p)7951
+(e)|
+(*)Syndicate requisition tokens now award players 2 utility credits instead of 1.
+(*)Hi-grip Assault Boots now cost 2 utility credits.
+(*)Adds a pouch of 4 beartraps as a new 1 cost utility purchase.
 (u)Amylizzle
 (p)7961
 (e)🗺|mapping
