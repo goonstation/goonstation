@@ -117,7 +117,7 @@
 
 
 /* General ai_law functions */
-	proc/format_for_logs(var/glue = "<br>",var/round_end=false)
+	proc/format_for_logs(var/glue = "<br>", var/round_end = FALSE, var/include_link = TRUE)
 		var/list/laws = list()
 		for(var/obj/machinery/lawrack/R in src.registered_racks)
 			var/list/affected_mobs = list()
@@ -136,5 +136,6 @@
 				for(var/mob/living/M in affected_mobs)
 					mobtextlist += M.real_name ? M.real_name : M.name
 
-				laws += "Laws for [R] at [log_loc(R)]:<br>" + R.format_for_logs(glue) +"<br>The law rack is connected to the following silicons: "+mobtextlist.Join(", ") +"<br>--------------<br>"
+				laws += "Laws for [R] at [include_link ? log_loc(R) : "([R.x], [R.y], [R.z])"]:[glue]" + R.format_for_logs(glue) \
+						+ "[glue]The law rack is connected to the following silicons: "+mobtextlist.Join(", ") + "[glue]--------------[glue]"
 		return jointext(laws, glue)
