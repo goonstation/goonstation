@@ -473,7 +473,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				if(!smoothEdge && prob(distPercent))
 					continue
 				if(istype(G, /mob))
-					if(!istype(G, /mob/living)) // not stuff like ghosts, please
+					if(!isliving(G) || isintangible(G)) // not stuff like ghosts, please
 						continue
 					var/mob/M = G
 					switch(affects_organic)
