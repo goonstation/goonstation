@@ -1,5 +1,9 @@
 
 (t)sat mar 26 22
+(u)Flappybat
+(p)7907
+(e)🗺⚖|mapping, balance
+(*)Kondaru armory has changed, it now has a NARCS instead of an interior turret, it has interior/exterior logical areas so the exterior turrets no longer attempt to shoot through the walls and the turret control panel has moved inside and now controls the exterior turrets (HoS access).
 (u)Gannets
 (p)7951
 (e)|
