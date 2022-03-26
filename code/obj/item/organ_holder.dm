@@ -1443,23 +1443,46 @@
 		var/obj/item/organ/eye/right_eye = H.get_organ("right_eye")
 
 		if(left_eye.emagged && istype(left_eye, /obj/item/organ/eye/cyber/laser))
-			power_mod += 0.75
+			power_mod += 1
 
 		if(right_eye.emagged && istype(right_eye, /obj/item/organ/eye/cyber/laser))
-			power_mod += 0.75
+			power_mod += 1
 
 		var/mult = src.eye_proj == /datum/projectile/laser/eyebeams ? 1 : 0
 		H.visible_message("<span class='combat'><b>[H]</b> shoots [mult ? "eye beams" : "an eye beam"]!</span>")
 		var/datum/projectile/PJ = new eye_proj
 		PJ.power *= power_mod
-		shoot_projectile_ST(H, PJ, T)
 
 		if(power_mod >= 1.5)
-			H.visible_message("<span class='combat'><b>[H]</b>'s [mult ? "laser cybereyes explode" : "laser cybereye explodes"]!</span>")
-			if(mult)
-				explosion(H, H.last_turf, 0, 0, 2, 4)
-			else
-				explosion(H, H.last_turf, 0, 0, 1, 2)
+			H.visible_message("<span class='combat'><b>[H]</b>'s [mult ? "laser cybereyes overload" : "laser cybereye overloads"]!</span>")
+
+			switch(rand(0,5)) // random drawback
+				if(0)
+					T = pick(getneighbours(T), T) // be inaccurate
+					H.visible_message("0")
+				if(1)
+					PJ.shot_sound_extrarange += 10
+					PJ.shot_volume += 50
+					H.visible_message("1")
+				if(2)
+					PJ.projectile_speed += rand(-15,15)
+					H.visible_message("2")
+				if(3)
+					if(mult)
+						explosion(H, H.last_turf, 0, 0, 1, 2)
+					else
+						explosion(H, H.last_turf, 0, 0, 0, 1)
+					H.visible_message("3")
+				if(4)
+					PJ.hit_type = DAMAGE_CUT // surgical laser
+					PJ.dissipation_delay = 2 // turns out that a surgical laser is a terrible ranged weapon, so falloff is high
+					PJ.dissipation_rate = 4  // should still deal more damage at close range, since it has a 75% power buff and causes bleeding (?)
+					H.visible_message("4")
+				if(5)
+					PJ.is_magical = 1 // originally wanted to leave this without effect, but I think it's funny if the chaplain randomly tanks a shot
+					H.visible_message("5")
+
+		shoot_projectile_ST(H, PJ, T)
 
 
 /datum/projectile/laser/eyebeams/left
