@@ -1,11 +1,9 @@
-// electronics.dmm_suite
-
 /*contains the misc robot parts dropped by drones
- also most things related to mechanics work
+ as well as most things related to mechanics work
  */
 
 
-/////////////Electronics parts////////
+/////////////Electronics parts/////////////
 /obj/item/electronics/
 	name = "electronic thing"
 	icon = 'icons/obj/electronics.dmi'
@@ -375,7 +373,7 @@
 			return 0
 	return 1
 
-//////////Other stuff///////////
+/////////////Other stuff/////////////
 /obj/item/electronics/soldering
 	name = "soldering iron"
 	icon = 'icons/obj/electronics.dmi'
