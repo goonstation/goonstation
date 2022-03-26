@@ -906,7 +906,7 @@ var/global/noir = 0
 			var/mob/M = locate(href_list["target"])
 			if (src.level >= LEVEL_PA || isnull(M.client) && src.level >= LEVEL_SA)
 				if (ismob(M))
-					var/speech = input("What will [M] say?", "Force speech", "")
+					var/speech = input("What will [M] say?", "Force speech", null) as text
 					if(!speech)
 						return
 					M.say(speech)
@@ -1059,7 +1059,8 @@ var/global/noir = 0
 				for (var/area/A in world)
 					areas += A
 					LAGCHECK(LAG_LOW)
-				var/area = input(usr, "Select an area") as null|anything in areas
+				areas = sortList(areas)
+				var/area = tgui_input_list(usr, "Area to send to", "Send", areas)
 				if (area)
 					usr.client.sendmob(M, area)
 			else
@@ -1184,7 +1185,8 @@ var/global/noir = 0
 					alert("This secret can only be used on human mobs.")
 					return
 				var/mob/living/carbon/human/H = M
-				var/which = input("Transform them into what?","Transform") as null|anything in list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman", "Kudzuman","Ghostdrone","Flubber","Cow")
+
+				var/which = tgui_input_list(src, "Transform them into what?", "Transform", list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman", "Kudzuman","Ghostdrone","Flubber","Cow"))
 				if (!which)
 					return
 				. = 0
@@ -1226,10 +1228,39 @@ var/global/noir = 0
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])	//doesn't really have to be mob, could be atom.
 
-				var/effect = input("Which Status Effect?","Give Status Effect") as null|text
+				var/list/L = list()
+				for(var/R in concrete_typesof(/datum/statusEffect))
+					L += R
+				L = sortList(L)
+				var/datum/statusEffect/effect = tgui_input_list(usr, "Which Status Effect?", "Give Status Effect", L)
+
 				if (!effect)
 					return
 
+				var/duration = input("Duration (in seconds)?","Status Effect Duration") as null|num
+				if (isnull(duration))
+					return
+
+				if (duration <= 0)
+					M.delStatus(initial(effect.id))
+					message_admins("[key_name(usr)] removed the [initial(effect.id)] status-effect from [key_name(M)].")
+				else
+					M.setStatus(initial(effect.id), duration SECONDS)
+					message_admins("[key_name(usr)] added the [initial(effect.id)] status-effect on [key_name(M)] for [duration] seconds.")
+
+			else
+				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to statuseffect a player.")
+
+		if ("modifystatuseffect")
+			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
+				var/mob/M = locate(href_list["target"])	//doesn't really have to be mob, could be atom.
+
+				var/list/statusList = M.getStatusList()
+				var/datum/statusEffect/effect = tgui_input_list(usr, "Which Status Effect?", "Modify Status Effect", statusList)
+
+				if (!effect)
+					return
+				message_admins("selected [effect]")
 				var/duration = input("Duration (in seconds)?","Status Effect Duration") as null|num
 				if (isnull(duration))
 					return
@@ -1239,7 +1270,7 @@ var/global/noir = 0
 					message_admins("[key_name(usr)] removed the [effect] status-effect from [key_name(M)].")
 				else
 					M.setStatus(effect, duration SECONDS)
-					message_admins("[key_name(usr)] added the [effect] status-effect to [key_name(M)] for [duration] seconds.")
+					message_admins("[key_name(usr)] modified the [effect] status-effect on [key_name(M)] to [duration] seconds.")
 
 			else
 				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to statuseffect a player.")
@@ -1526,21 +1557,10 @@ var/global/noir = 0
 				if(!M.reagents) M.create_reagents(100)
 
 				var/list/L = list()
-				var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
-				if(searchFor)
-					for(var/R in concrete_typesof(/datum/reagent))
-						if(findtext("[R]", searchFor)) L += R
-				else
-					L = concrete_typesof(/datum/reagent)
-
-				var/type
-				if(L.len == 1)
-					type = L[1]
-				else if(L.len > 1)
-					type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
-				else
-					usr.show_text("No reagents matching that name", "red")
-					return
+				for(var/R in concrete_typesof(/datum/reagent))
+					L += R
+				L = sortList(L)
+				var/type = tgui_input_list(usr, "Select Reagent:", "Select", L)
 
 				if(!type) return
 				var/datum/reagent/reagent = new type()
@@ -1574,26 +1594,43 @@ var/global/noir = 0
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
 
-				var/pick = input("Which reagent(s)?","Remove Reagents") as null|text
+				if (!M.reagents) // || !target.reagents.total_volume)
+					boutput(usr, "<span class='notice'><b>[M] contains no reagents.</b></span>")
+					return
+				var/datum/reagents/reagents = M.reagents
+
+				var/list/target_reagents = list()
+				var/pick
+				for (var/current_id in reagents.reagent_list)
+					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
+					target_reagents += current_reagent.name
+					pick = tgui_input_list(usr, "Select Reagent:", "Select", target_reagents)
 				if (!pick)
 					return
+				var/pick_id
+				if(!isnull(reagents.reagent_list[pick]))
+					pick_id = pick
+				else
+					for (var/current_id in reagents.reagent_list)
+						if(pick == reagents.reagent_list[current_id].name)
+							var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
+							pick_id = current_reagent.id
+							break
 
-				var/list/picklist = params2list(pick)
-				if (length(picklist))
+				if (pick_id)
 					var/string_version
 
-					for(pick in picklist)
-						var/amt = input("How much of [pick]?","Remove Reagent") as null|num
-						if(!amt || amt < 0)
-							return
+					var/amt = input("How much of [pick]?","Remove Reagent") as null|num
+					if(!amt || amt < 0)
+						return
 
-						if (M.reagents)
-							M.reagents.remove_reagent(pick,amt)
+					if (M.reagents)
+						M.reagents.remove_reagent(pick_id,amt)
 
-						if (string_version)
-							string_version = "[string_version], [amt] \"[pick]\""
-						else
-							string_version = "[amt] \"[pick]\""
+					if (string_version)
+						string_version = "[string_version], [amt] \"[pick]\""
+					else
+						string_version = "[amt] \"[pick]\""
 
 					message_admins("[key_name(usr)] removed [string_version] from [M.real_name].")
 			else
@@ -1635,9 +1672,13 @@ var/global/noir = 0
 				if (!M.abilityHolder)
 					alert("No ability holder detected. Create a holder first!")
 					return
-				var/ab_to_add = input("Enter a /datum/targetable path or search by partial path", "Add an Ability", null) as null|text
-				ab_to_add = get_one_match(ab_to_add, "/datum/targetable")
-				if (!ab_to_add) return // user canceled
+				var/list/L = list()
+				for(var/R in concrete_typesof(/datum/targetable))
+					L += R
+				L = sortList(L)
+				var/ab_to_add = tgui_input_list(usr, "Add an Ability:", "Select", L)
+				if (!ab_to_add)
+					return // user canceled
 				M.abilityHolder.addAbility(ab_to_add)
 				M.abilityHolder.updateButtons()
 				message_admins("[key_name(usr)] added ability [ab_to_add] to [key_name(M)].")
@@ -1672,7 +1713,8 @@ var/global/noir = 0
 					boutput(usr, "<b><span class='alert'>[M] doesn't have any abilities!</span></b>")
 					return //nothing to remove
 
-				ab_to_rem = input("Remove which ability?", "Ability", null) as null|anything in abils
+				abils = sortList(abils)
+				ab_to_rem = tgui_input_list(usr, "Remove which ability?", "Ability", abils)
 				if (!ab_to_rem) return //user cancelled
 				message_admins("[key_name(usr)] removed ability [ab_to_rem] from [key_name(M)].")
 				logTheThing("admin", usr, M, "removed ability [ab_to_rem] from [constructTarget(M,"admin")].")
@@ -3702,7 +3744,8 @@ var/global/noir = 0
 				var/client/C = M.client
 				if (!M) return
 				var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
-				var/datum/job/job = input(usr,"Select job to respawn [M] as:","Respawn As",null) as null|anything in jobs
+				jobs = sortList(jobs)
+				var/datum/job/job = tgui_input_list(usr,"Select job to respawn [M] as:","Respawn As","Cancel",jobs)
 				if(!job) return
 				var/mob/new_player/newM = usr.client.respawn_target(M)
 				newM.AttemptLateSpawn(job, force=1)
