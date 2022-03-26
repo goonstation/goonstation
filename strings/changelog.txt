@@ -1,4 +1,9 @@
 
+(t)sat mar 26 22
+(u)NightmareChamillian
+(p)7833
+(e)|
+(*)The mini-syndies from the syndicate pipe bomb now have more ammo and health, but shoot .22 rounds instead of .375
 (t)fri mar 25 22
 (u)NightmareChamillian
 (p)7778
