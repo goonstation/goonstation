@@ -364,7 +364,7 @@
 		. = ..()
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_NIGHTVISION, src)
 		if(emagged)
-			APPLY_ATOM_PROPERTY(M, PROP_MOB_XRAYVISION_WEAK, src)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_XRAYVISION_WEAK, src) // first you could see through darkness, now you can see through walls
 
 	on_removal()
 		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_NIGHTVISION, src)
