@@ -149,7 +149,7 @@
 
 		if(user != src.occupant) //for suiciding with gibber
 			logTheThing("combat", user, src.occupant, "grinds [constructTarget(src.occupant,"combat")] in a gibber at [log_loc(src)].")
-			if(src.occupant.last_ckey)
+			if(src.occupant.client)
 				message_admins("[key_name(src.occupant, 1)] is ground up in a gibber by [key_name(user)] at [log_loc(src)].")
 		src.occupant.death(TRUE)
 
