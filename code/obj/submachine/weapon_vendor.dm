@@ -192,11 +192,12 @@
 		materiel_stock += new/datum/materiel/utility/noslip_boots
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
 		materiel_stock += new/datum/materiel/utility/comtac
+		materiel_stock += new/datum/materiel/utility/beartraps
 
 	accepted_token()
 		src.credits[WEAPON_VENDOR_CATEGORY_SIDEARM]++
 		src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
-		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
+		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+=2
 		..()
 
 	disposing()
@@ -442,6 +443,7 @@
 	name = "Hi-grip Assault Boots"
 	path = /obj/item/clothing/shoes/swat/noslip
 	description = "Avoid slipping in firefights with these combat boots designed to provide enhanced grip and ankle stability."
+	cost = 2
 
 /datum/materiel/utility/bomb_decoy
 	name = "Decoy Bomb Balloon"
@@ -453,6 +455,12 @@
 	path = /obj/item/device/radio/headset/syndicate/comtac
 	description = "A two-way radio headset designed to protect against any incoming hazardous noise, including flashbangs."
 	vr_allowed = FALSE
+
+/datum/materiel/utility/beartraps
+	name = "Beartraps"
+	path = /obj/item/storage/beartrap_pouch
+	description = "A pouch of 4 pressure sensitive beartraps used to snare and maim unexpecting victims entering your target area."
+
 // Requisition tokens
 
 /obj/item/requisition_token
