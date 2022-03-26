@@ -42,26 +42,11 @@
 			qdel(start)
 			qdel(end)
 
-/datum/projectile/laser/light/beam
+/datum/projectile/laser/light/camera_snipe
 	goes_through_walls = 1
 	pierces = -1
-	projectile_speed = 12800
+	projectile_speed = 144
 	dissipation_rate = 0
-
-	on_end(obj/projectile/P)
-		. = ..()
-		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
-		var/obj/railgun_trg_dummy/end = new(get_turf(P))
-		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
-		for(var/obj/O in affected)
-			O.color = "#ff0000"
-			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
-		SPAWN(1 SECOND)
-			for(var/obj/O in affected)
-				O.alpha = initial(O.alpha)
-				qdel(O)
-			qdel(start)
-			qdel(end)
 
 /datum/projectile/bullet/rifle_3006/rakshasa
 	sname = "\improper Rakshasa"
