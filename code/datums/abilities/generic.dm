@@ -214,7 +214,7 @@
 	targeted = TRUE
 	target_anything = 1
 	cooldown = 1 SECOND
-	current_projectile = new/datum/projectile/laser/eyebeams
+	var/current_projectile = new/datum/projectile/laser/eyebeams
 
 	cast(atom/target)
 		. = ..()
