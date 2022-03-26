@@ -43,13 +43,13 @@
 		var/suit_name = ""
 		switch(suit)
 			if(1)
-				suit_name = "Green"
+				suit_name = "Eldritch"
 			if(2)
-				suit_name = "Blue"
+				suit_name = "Martian"
 			if(3)
-				suit_name = "Yellow"
+				suit_name = "Precursor"
 			if(4)
-				suit_name = "Red"
+				suit_name = "Wizard"
 			if(5)
 				plain_suit = FALSE
 		if(plain_suit)
