@@ -1,6 +1,10 @@
 
 (t)sat mar 26 22
 (u)Amylizzle
+(p)7961
+(e)🗺|mapping
+(+)Adds a blueprint for the AI Law Rack to the Chief Engineer's locker on all maps in rotation. Don't use it for crime!
+(u)Amylizzle
 (p)7973
 (e)🐛|bug
 (+)Bank account balance now counts towards richest escapee.
