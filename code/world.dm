@@ -1491,8 +1491,9 @@ var/f_color_selector_handler/F_Color_Selector
 			//Tells shitbee what the current AI laws are (if there are any custom ones)
 			if ("ailaws")
 				if (current_state > GAME_STATE_PREGAME)
-					var/list/laws = ticker.ai_law_rack_manager.format_for_irc()
-					return ircbot.response(laws)
+					var/ircmsg[] = new()
+					ircmsg["laws"] = ticker.ai_law_rack_manager.format_for_logs(glue = "\n")
+					return ircbot.response(ircmsg)
 				else
 					return 0
 

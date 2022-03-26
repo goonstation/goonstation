@@ -117,13 +117,6 @@
 
 
 /* General ai_law functions */
-	proc/format_for_irc()
-		var/list/laws = list()
-		for(var/obj/machinery/lawrack/R in src.registered_racks)
-			laws += R.format_for_irc()
-		return laws
-
-
 	proc/format_for_logs(var/glue = "<br>",var/round_end=false)
 		var/list/laws = list()
 		for(var/obj/machinery/lawrack/R in src.registered_racks)
