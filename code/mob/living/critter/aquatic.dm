@@ -106,7 +106,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 	process()
 		src.update_water_status()
-		if (HAS_MOB_PROPERTY(src.critter_owner, PROP_BREATHLESS)) return
+		if (HAS_ATOM_PROPERTY(src.critter_owner, PROP_MOB_BREATHLESS)) return
 		if(src.critter_owner)
 			if(src.water_need)
 				if(prob(50 * src.water_need) && !critter_owner.nodamage) // question: this gets rid of like one proc call; worth it?

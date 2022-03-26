@@ -28,7 +28,7 @@
 	animals = list(/obj/critter/microman,
 					/obj/critter/bear,
 					/obj/critter/spider/aggressive,
-					/obj/critter/wendigo,
+					/obj/critter/brullbar,
 					/obj/critter/bat/buff,
 					/obj/critter/spider/ice,
 					/obj/critter/townguard/passive,
@@ -71,6 +71,7 @@
 	if(F.group.reagents && F.group.reagents.reagent_list["water"])
 		src.add_water()
 
+/obj/item/toy/sponge_capsule/custom_suicide = TRUE
 /obj/item/toy/sponge_capsule/suicide(var/mob/user)
 	user.visible_message("<span class='alert'><b>[user] eats [src]!</b></span>")
 	var/obj/critter/C = new animal_to_spawn(user.loc)

@@ -150,7 +150,7 @@
 						return
 				var/obj/item/storage/S = W
 				for (var/obj/item/I in S.get_contents())
-					if(src.check_can_hold(I) > 0)
+					if(src.check_can_hold(I) > 0 && !I.anchored)
 						src.Attackby(I, user, S)
 				return
 			if(!does_not_open_in_pocket)
@@ -429,6 +429,7 @@
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_BULKY
 	max_wclass = 3
+	var/fire_delay = 0.4 SECONDS
 
 	New()
 		..()
@@ -438,6 +439,8 @@
 		if (target == loc)
 			return
 		if (!src.contents.len)
+			return
+		if (ON_COOLDOWN(src, "rockit_firerate", src.fire_delay))
 			return
 		var/obj/item/I = pick(src.contents)
 		if (!I)

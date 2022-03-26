@@ -27,6 +27,7 @@
 	opacity = 0
 	anchored = 1
 	flags = TGUI_INTERACTIVE
+	layer = OBJ_LAYER - 0.1	// Match vending machines
 
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_buy = 'sound/machines/spend.ogg'
@@ -95,8 +96,6 @@
 
 
 	proc/vended(var/atom/A)
-		if(A.layer <= src.layer)
-			A.layer = src.layer + 0.1
 		if(log_purchase)
 			logTheThing("debug", usr, null, "bought [A] from [src] at [log_loc(get_turf(src))]")
 		.= 0
@@ -141,6 +140,8 @@
 	accepted_token(var/token)
 		if (istype(token, /obj/item/requisition_token/security/assistant))
 			src.credits[WEAPON_VENDOR_CATEGORY_ASSISTANT]++
+		else if (istype(token, /obj/item/requisition_token/security/utility))
+			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
 		else
 			src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
 			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
@@ -269,7 +270,7 @@
 /datum/materiel/loadout/justabaton
 	name = "Just a Baton"
 	path = /obj/item/storage/belt/security/baton
-	description = "One belt containing a baton and barrier. Does NOT come with a ranged weapon. Only for officers who DO NOT want a ranged weapon!"
+	description = "One belt containing a baton, a barrier, and a spare utility token. Does NOT come with a ranged weapon. Only for officers who DO NOT want a ranged weapon!"
 
 /datum/materiel/utility/morphineinjectors
 	name = "Morphine Autoinjectors"
@@ -295,6 +296,7 @@
 	name = "Spare Power Cell"
 	path = /obj/item/ammo/power_cell/self_charging/disruptor
 	description = "A small(100u) self-charging power cell repurposed from a decommissioned distruptor blaster."
+	cost = 2
 
 /datum/materiel/utility/nightvisiongoggles
 	name = "Night Vision Goggles"
@@ -390,8 +392,8 @@
 
 /datum/materiel/loadout/custom
 	name = "Custom Class Uplink"
-	path = /obj/item/uplink/syndicate
-	description = "A standard syndicate uplink loaded with 12 telecrytals, allowing you to pick and choose from an array of syndicate items."
+	path = /obj/item/uplink/syndicate/nukeop
+	description = "A standard syndicate uplink loaded with 12 telecrystals, allowing you to pick and choose from an array of syndicate items."
 /*
 /datum/materiel/storage/rucksack
 	name = "Assault Rucksack"
@@ -474,6 +476,10 @@
 
 		assistant
 			desc = "An NT-provided token compatible with the Security Weapons Vendor. This one says <i>for security assistant use only</i>."
+			icon_state = "req-token-secass"
+
+		utility
+			desc = "An NT-provided token that entitles the owner to one additional utility purchase."
 			icon_state = "req-token-secass"
 
 #undef WEAPON_VENDOR_CATEGORY_SIDEARM

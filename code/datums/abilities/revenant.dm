@@ -89,16 +89,16 @@
 		owner.set_body_icon_dirty()
 		animate_levitate(owner)
 
-		APPLY_MOB_PROPERTY(owner, PROP_STUN_RESIST, "revenant", 100)
-		APPLY_MOB_PROPERTY(owner, PROP_STUN_RESIST_MAX, "revenant", 100)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST, "revenant", 100)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST_MAX, "revenant", 100)
 		APPLY_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/revenant, src.type)
 
 		..()
 
 	OnRemove()
 		if (owner)
-			REMOVE_MOB_PROPERTY(owner, PROP_STUN_RESIST, "revenant")
-			REMOVE_MOB_PROPERTY(owner, PROP_STUN_RESIST_MAX, "revenant")
+			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST, "revenant")
+			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST_MAX, "revenant")
 			REMOVE_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/revenant, src.type)
 		..()
 
@@ -131,7 +131,7 @@
 			owner.ghost.corpse = null
 			owner.ghost = null
 		src.wraith = W
-		APPLY_MOB_PROPERTY(W, PROP_INVISIBILITY, W, INVIS_WRAITH_VERY)
+		APPLY_ATOM_PROPERTY(W, PROP_MOB_INVISIBILITY, W, INVIS_WRAITH_VERY)
 		W.set_loc(src.owner)
 		W.abilityHolder.topBarRendered = 0
 
@@ -167,7 +167,7 @@
 			owner.mind.transfer_to(src.wraith)
 		else if (owner.client)
 			owner.client.mob = src.wraith
-		APPLY_MOB_PROPERTY(src.wraith, PROP_INVISIBILITY, src.wraith, INVIS_GHOST)
+		APPLY_ATOM_PROPERTY(src.wraith, PROP_MOB_INVISIBILITY, src.wraith, INVIS_GHOST)
 		src.wraith.set_loc(get_turf(owner))
 		src.wraith.abilityHolder.topBarRendered = 1
 		src.wraith.abilityHolder.regenRate /= 3

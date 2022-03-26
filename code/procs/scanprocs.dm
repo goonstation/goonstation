@@ -432,7 +432,7 @@
 	record_prog.active1 = GR
 	record_prog.active2 = MR
 	record_prog.mode = 1
-	pda.attack_self(usr)
+	pda.AttackSelf(usr)
 
 /proc/scan_reagents(var/atom/A as turf|obj|mob, var/show_temp = 1, var/single_line = 0, var/visible = 0, var/medical = 0)
 	if (!A)

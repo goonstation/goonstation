@@ -3441,7 +3441,7 @@
 	})
 "anA" = (
 /obj/disposalpipe/segment,
-/obj/decal/pole{
+/obj/decal/fakeobjects/pole{
 	pixel_x = -14
 	},
 /turf/simulated/floor/black,
@@ -12372,15 +12372,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
-"bcI" = (
-/obj/table/reinforced/auto,
-/obj/item/device/infra_sensor,
-/obj/item/aiModule/rename,
-/obj/item/aiModule/emergency,
-/obj/item/aiModule/removeCrew,
-/obj/random_item_spawner/ai_experimental,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "bcN" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -14210,16 +14201,6 @@
 	dir = 8
 	},
 /area/station/engine/elect)
-"bpT" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -28
-	},
-/obj/machinery/computer/aiupload{
-	dir = 4
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "bpV" = (
 /obj/disposalpipe/switch_junction{
 	dir = 1;
@@ -18263,17 +18244,6 @@
 	},
 /turf/space,
 /area/space)
-"crL" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/reset,
-/obj/item/circuitboard/aiupload,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/machinery/light/incandescent{
-	dir = 8;
-	nostick = 1
-	},
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "crP" = (
 /obj/railing/orange{
 	dir = 4
@@ -23361,6 +23331,15 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/outer/sw)
+"eIu" = (
+/obj/table/reinforced/auto,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/machinery/light/incandescent{
+	dir = 8;
+	nostick = 1
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "eIO" = (
 /obj/machinery/disposal/mail/small{
 	dir = 1;
@@ -29490,6 +29469,16 @@
 	},
 /turf/simulated/floor,
 /area/station/medical/medbay/lobby)
+"hFY" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -28
+	},
+/obj/machinery/lawrack{
+	dir = 4
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "hGG" = (
 /obj/cable,
 /obj/cable{
@@ -34538,6 +34527,14 @@
 	icon_state = "fpurple5"
 	},
 /area/station/crew_quarters/bar)
+"kCH" = (
+/obj/table/reinforced/auto,
+/obj/item/device/infra_sensor,
+/obj/item/aiModule/emergency,
+/obj/item/aiModule/removeCrew,
+/obj/random_item_spawner/ai_experimental,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "kCM" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -34779,6 +34776,12 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
+"kJZ" = (
+/obj/machinery/r_door_control/podbay/security/new_walls/west{
+	pixel_x = -24
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/sec)
 "kKn" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -42451,18 +42454,6 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
-"oOb" = (
-/obj/decal/tile_edge/line/red{
-	icon_state = "line1"
-	},
-/obj/table/wood/auto,
-/obj/item/clothing/glasses/healthgoggles/upgraded,
-/obj/item/device/analyzer/healthanalyzer/borg,
-/obj/item/reagent_containers/hypospray,
-/turf/simulated/floor/blue/checker{
-	dir = 8
-	},
-/area/station/medical/head)
 "oOi" = (
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
@@ -44859,23 +44850,6 @@
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"qeV" = (
-/obj/machinery/door/poddoor/blast{
-	autoclose = 1;
-	dir = 4;
-	id = "pod_port";
-	layer = 4;
-	name = "West Pod Hangar"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/engine{
-	icon_state = "engine_caution_south"
-	},
-/area/station/hangar/sec)
 "qff" = (
 /obj/machinery/recharger/wall{
 	pixel_y = 32
@@ -47219,17 +47193,13 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "rsa" = (
-/obj/machinery/door_control{
-	id = "pod_port";
-	name = "Hangar Door Control";
-	pixel_x = -24
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
+/obj/machinery/door_control/podbay/security/new_walls/west,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "rsg" = (
@@ -47989,25 +47959,6 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
-"rMT" = (
-/obj/machinery/door/poddoor/blast{
-	autoclose = 1;
-	dir = 4;
-	doordir = "left";
-	icon_state = "bdoorleft1";
-	id = "pod_port";
-	layer = 4;
-	name = "West Pod Hangar"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/engine{
-	icon_state = "engine_caution_south"
-	},
-/area/station/hangar/sec)
 "rMU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -49003,6 +48954,18 @@
 "sra" = (
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
+"srb" = (
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/obj/table/wood/auto,
+/obj/item/clothing/glasses/healthgoggles/upgraded,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/reagent_containers/hypospray,
+/turf/simulated/floor/blue/checker{
+	dir = 8
+	},
+/area/station/medical/head)
 "sri" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -52780,23 +52743,13 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "uuE" = (
-/obj/machinery/door/poddoor/blast{
-	autoclose = 1;
-	dir = 4;
-	doordir = "right";
-	icon_state = "bdoorright1";
-	id = "pod_port";
-	layer = 4;
-	name = "West Pod Hangar"
-	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/engine{
-	icon_state = "engine_caution_south"
-	},
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
+/turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "uuU" = (
 /obj/item/storage/box/biohazard_bags,
@@ -87848,7 +87801,7 @@ udk
 uLy
 vXK
 wUk
-oOb
+srb
 hHS
 uyP
 tYa
@@ -94209,9 +94162,9 @@ plD
 xJT
 xJT
 xJT
+kJZ
 xJT
-xJT
-rMT
+uuE
 lqq
 aaa
 aag
@@ -94513,7 +94466,7 @@ xJT
 hrs
 xJT
 xJT
-qeV
+uuE
 lqq
 aaa
 aag
@@ -107130,8 +107083,8 @@ hvw
 swT
 rGo
 sDE
-bpT
-bcI
+hFY
+kCH
 mRX
 mGL
 tab
@@ -119546,7 +119499,7 @@ ayz
 jLx
 ffW
 oRI
-crL
+eIu
 ddu
 aqf
 arD

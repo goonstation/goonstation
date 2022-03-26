@@ -397,7 +397,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	is_syndicate = 0
 	sound_armed = "sound/weapons/pindrop.ogg"
 	icon_state_armed = "fragnade1"
-	var/custom_projectile_type = null
+	var/custom_projectile_type = /datum/projectile/bullet/stinger_ball
 	var/pellets_to_fire = 20
 
 	prime()
@@ -442,6 +442,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "fragnade-alt"
 	icon_state_armed = "fragnade-alt1"
 	var/datum/effects/system/bad_smoke_spread/smoke
+	custom_projectile_type = /datum/projectile/bullet/grenade_fragment
 
 	New()
 		..()

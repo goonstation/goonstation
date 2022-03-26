@@ -492,15 +492,15 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_DISARM_RESIST, "focus_music", 10)
-			APPLY_MOB_PROPERTY(M, PROP_DISORIENT_RESIST_BODY, "focus_music", 10)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_DISARM_RESIST, "focus_music", 10)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_DISORIENT_RESIST_BODY, "focus_music", 10)
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			REMOVE_MOB_PROPERTY(M, PROP_DISARM_RESIST, "focus_music")
-			REMOVE_MOB_PROPERTY(M, PROP_DISORIENT_RESIST_BODY, "focus_music")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_DISARM_RESIST, "focus_music")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_DISORIENT_RESIST_BODY, "focus_music")
 
 	getTooltip()
 		. = "Your feel like you would be difficult to stop."
@@ -589,20 +589,20 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims", 100)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "stims", 100)
 			M.add_stam_mod_max("stims", 100)
-			APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "stims", 100)
-			APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "stims", 100)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "stims", 100)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "stims", 100)
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
 			M.jitteriness = 110
-			REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "stims")
 			M.remove_stam_mod_max("stims")
-			REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "stims")
-			REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "stims")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "stims")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "stims")
 
 	onUpdate(timePassed)
 		. = ..()

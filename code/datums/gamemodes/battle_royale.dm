@@ -46,6 +46,13 @@ var/global/list/datum/mind/battle_pass_holders = list()
 				player.mind.special_role = ROLE_BATTLER
 				living_battlers.Add(player.mind)
 
+	for (var/turf/space/space in world)
+		LAGCHECK(LAG_LOW)
+		if(space.icon_state != "darkvoid")
+			space.icon_state = "darkvoid"
+			space.icon = 'icons/turf/floors.dmi'
+			space.name = "void"
+
 	storm = new /datum/random_event/special/battlestorm()
 	dropper = new/datum/random_event/special/supplydrop()
 
@@ -96,14 +103,18 @@ var/global/list/datum/mind/battle_pass_holders = list()
 				qdel(MAC)
 			if (/obj/machinery/networked/telepad)
 				qdel(MAC)
+			if (/obj/machinery/portable_atmospherics/canister/sleeping_agent)
+				qdel(MAC)
+			if (/obj/machinery/portable_atmospherics/canister/toxins)
+				qdel(MAC)
 
-	hide_weapons_everywhere()
+	hide_weapons_everywhere(length(living_battlers))
 	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
 	next_drop = world.time + rand(MIN_TIME_BETWEEN_SUPPLY_DROPS,MAX_TIME_BETWEEN_SUPPLY_DROPS)
 
-	ticker.centralized_ai_laws.replace_inherent_law(1, "BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.")
-	ticker.centralized_ai_laws.replace_inherent_law(2, "")
-	ticker.centralized_ai_laws.replace_inherent_law(3, "")
+	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
+	ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Battle Royale","BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.",1,true,true)
+
 
 	emergency_shuttle.disabled = 1
 	return 1
@@ -218,7 +229,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 
 
 // Does what it says on the tin
-proc/hide_weapons_everywhere()
+proc/hide_weapons_everywhere(var/total_battlers = 1)
 	boutput(world, "<span class='notice'>Now hiding a shitton of goodies on the [station_or_ship()]. Please be patient!</span>")
 	// Replace all lockers with generic syndicate to clear out junk items, remove sec lockers so it's not too much of a hot spot
 	// Im stealing the list of items from the surplus crate so this check needs to happen
@@ -257,10 +268,10 @@ proc/hide_weapons_everywhere()
 	/datum/syndicate_buylist/traitor/mindslave_module,
 	/datum/syndicate_buylist/traitor/deluxe_mindslave_module,
 	/datum/syndicate_buylist/surplus/cybereye_kit_sechud,
-	/datum/syndicate_buylist/generic/revflash,
-	/datum/syndicate_buylist/generic/revflashbang,
-	/datum/syndicate_buylist/generic/revsign,
-	/datum/syndicate_buylist/generic/rev_normal_flash,
+	/datum/syndicate_buylist/generic/head_rev/revflash,
+	/datum/syndicate_buylist/generic/head_rev/revflashbang,
+	/datum/syndicate_buylist/generic/head_rev/revsign,
+	/datum/syndicate_buylist/generic/head_rev/rev_normal_flash,
 	/datum/syndicate_buylist/traitor/kudzuseed,
 	/datum/syndicate_buylist/traitor/moonshine)
 
@@ -323,20 +334,35 @@ proc/hide_weapons_everywhere()
 	chest_supplies.Add(/obj/item/clothing/head/helmet/football)
 	chest_supplies.Add(/obj/item/clothing/head/helmet/batman)
 
+	var/total_storage
+	switch(total_battlers)
+		if(100 to 999)
+			total_storage = 0.1
+		if(70 to 99)
+			total_storage = 0.2
+		if(50 to 69)
+			total_storage = 0.3
+		if(0 to 49)
+			total_storage = 0.4
+
+	var/total_utility
 	for_by_tcl(S, /obj/storage)
 		var/turf/T = get_turf(S)
 		if (T.z != Z_LEVEL_STATION)
 			continue
-		if (istype(S, /obj/storage/secure/closet) || istype(S, /obj/storage/closet) || istype(S, /obj/storage/crate))
+		if (istype(S, /obj/storage/secure/closet) || istype(S, /obj/storage/closet) || istype(S, /obj/storage/crate) || istype(S, /obj/storage/cart))
 			qdel(S)
 			var/rand_storage = rand()
-			if (rand_storage <= 0.4)
-				continue
-			else if (rand_storage <= 0.5)
-				if (prob(50))
-					new /obj/storage/closet/emergency(T)
+			if (rand_storage <= total_storage)
+				if (total_utility < 30)
+					if (prob((100 - ((total_storage + 0.1) * 100))))
+						total_utility++
+						if (prob(50))
+							new /obj/storage/closet/emergency(T)
+						else
+							new /obj/storage/closet/fire(T)
 				else
-					new /obj/storage/closet/fire(T)
+					continue
 			else
 				if (prob(50))
 					var/obj/storage/closet/locker = new /obj/storage/closet/syndicate(T)

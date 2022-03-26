@@ -68,7 +68,7 @@
 		src.ears = src.radio
 
 		//Attach shit to tools
-		src.tools = list( // for part two: add 25 floor sheets, and a loofah(?)
+		src.tools = list(
 			new /obj/item/magtractor(src),
 			new /obj/item/tool/omnitool/silicon(src),
 			new /obj/item/rcd/material/cardboard(src),
@@ -369,7 +369,7 @@
 
 		var/obj/item/item = target
 		if (istype(item) && item == src.equipped())
-			item.attack_self(src)
+			item.AttackSelf(src)
 			return
 
 		if (src.client && src.client.check_key(KEY_PULL))
@@ -725,12 +725,12 @@
 
 			if ("nod")  // we want it so ghostdrones can answer yes/no wuestions
 				if (!src.restrained())
-					message = "<B>[src]</B> nods its head yes."
+					message = "<B>[src]</B> nods its head."
 					m_type = 2
 
 			if ("snap")
 				if (!src.restrained())
-					message = "<B>[src]</B> shakes its head no."
+					message = "<B>[src]</B> shakes its head."
 					m_type = 2
 
 			if ("flap")
@@ -917,7 +917,7 @@
 					game_stats.Increment("farts")
 #endif
 			else
-				src.show_text("Invalid Emote: [act]")
+				if (voluntary) src.show_text("Invalid Emote: [act]")
 				return
 
 		if (message && isalive(src))
@@ -1034,7 +1034,6 @@
 			if (dd_hasprefix(message, ";"))
 				message = trim(copytext(message, 2, MAX_MESSAGE_LEN))
 				broadcast = 1
-
 		if (broadcast)
 			return src.drone_broadcast(message)
 		else
@@ -1289,7 +1288,7 @@
 	M.transforming = 1
 	M.canmove = 0
 	M.icon = null
-	APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (isobserver(M) && M:corpse)
 		G.oldmob = M:corpse

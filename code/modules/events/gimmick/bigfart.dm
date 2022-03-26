@@ -178,7 +178,7 @@
 				return 0
 		else if((HAS_FLAG(F,LIMB_ABOM)) || (HAS_FLAG(F,LIMB_BEAR)))
 			return 0 // Not even magic wants to get near these things
-		else if((HAS_FLAG(F,LIMB_WENDIGO)) || (HAS_FLAG(F,LIMB_WOLF)) || (HAS_FLAG(F,LIMB_STONE)))
+		else if((HAS_FLAG(F,LIMB_BRULLBAR)) || (HAS_FLAG(F,LIMB_WOLF)) || (HAS_FLAG(F,LIMB_STONE)))
 			return 2 // Both sturdy and scary
 
 /// returns some flufftext as to why their limb didnt come off. Or came off anyway.
@@ -258,7 +258,7 @@
 					boutput(H, "<span class='alert'>You feel a cosmic force conduct through your body, coursing into your [L]!</span>")
 					boutput(H, "<span class='notification'>...it flails around and disperses the energy back into the aether.</span>")
 
-		else if (HAS_FLAG(F,LIMB_WENDIGO))
+		else if (HAS_FLAG(F,LIMB_BRULLBAR))
 			if(magical)
 				boutput(H, "<span class='alert'>An invisible hand clamps down around [ch ? "our" : "your"] [L] and yanks it with a powerful, otherworldly force!</span>")
 				if(severed)

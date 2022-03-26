@@ -2946,8 +2946,6 @@
 						next_destination = signal.data["next_patrol"]
 						target = signal.source.loc
 						destination = recv
-						awaiting_beacon = 0
-						patrol_delay = 5
 						return
 					else
 						return
@@ -2957,8 +2955,6 @@
 					next_destination = signal.data["next_patrol"]
 					target = signal.source.loc
 					destination = recv
-					awaiting_beacon = 0
-					patrol_delay = 5
 			return
 
 		attack_response(mob/attacker as mob)
@@ -3414,7 +3410,6 @@
 					src.follow_attempts = 0
 					actions.stopId("buddy_cuff", src.master)
 				if("path_error","path_blocked")
-
 					if (src.protected)
 						if(!(src.protected in view(7,master)))
 							src.follow_attempts++
@@ -3561,7 +3556,7 @@
 				return
 
 			if (src.protected && prob(5))
-      
+
 				if (prob(40))
 					var/buddy_cheer_up_chooser = rand(1, length(buddy_cheer_up_phrases))
 					master.speak(buddy_cheer_up_phrases[buddy_cheer_up_chooser])

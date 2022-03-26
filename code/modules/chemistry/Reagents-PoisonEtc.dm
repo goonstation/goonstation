@@ -328,6 +328,71 @@ datum
 				..()
 				return
 
+		harmful/ricin
+			name = "space ricin"
+			id = "ricin"
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_g = 255
+			fluid_b = 255
+			transparency = 255
+			description = "Extremely toxic, but slow acting, stealthy, and hard to cure agent that causes organ failure."
+			depletion_rate = 0.025
+			penetrates_skin = 0
+			target_organs = list("left_kidney","right_kidney","liver","stomach","intestines","spleen","pancreas")
+			var/counter = 1
+			var/flushing = 0.1 //standard efficacy against flushing
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				if (!counter) counter = 1
+
+				if(holder.has_reagent("charcoal")) //to make it a tad harder to treat
+					holder.remove_reagent("charcoal", flushing * mult)
+				if(holder.has_reagent("penteticacid"))
+					holder.remove_reagent("penteticacid", flushing * mult)
+
+				switch(counter += (1 * mult))
+					if (75 to 125)
+						if (probmult(4))
+							M.emote(pick("sneeze","cough","moan","groan"))
+					if (125 to 175)
+						flushing = 1.5 //it gets a tad harder to cure here
+
+						if (probmult(8))
+							M.emote(pick("sneeze","cough","moan","groan"))
+						else if (probmult(5))
+							boutput(M, "<span class='alert'>You feel weak and tired.</span>")
+							M.setStatus("drowsy", 4 SECONDS)
+							M.change_eye_blurry(5, 5)
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (H.organHolder)
+								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 20)
+					if (175 to INFINITY)
+						flushing = 3 // time to ramp up that flusher flushing
+
+						if (probmult(10))
+							M.emote(pick("sneeze","drool","cough","moan","groan"))
+						if (probmult(20))
+							boutput(M, "<span class='alert'>You feel weak and drowsy.</span>")
+							M.setStatus("drowsy", 5 SECONDS)
+						if (probmult(8))
+							M.visible_message("<span class='alert'>[M] vomits a lot of blood!</span>")
+							playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
+						else if (probmult(5))
+							boutput(M, "<span class='alert'>You feel a sudden pain in your chest.</span>")
+							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 6 SECONDS))
+							M.take_toxin_damage(3)
+						M.change_eye_blurry(5, 5)
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (H.organHolder)
+								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 50)
+				..()
+				return
+
 		harmful/formaldehyde
 			name = "embalming fluid"
 			id = "formaldehyde"
@@ -417,13 +482,13 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_initropidril", 33)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_initropidril", 33)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_initropidril")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_initropidril")
 				..()
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
@@ -563,7 +628,7 @@ datum
 
 								if (H.organHolder.heart.robotic)
 									B = new/obj/critter/domestic_bee/buddy(H.loc)
-									REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "heart")
+									REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "heart")
 									H.remove_stam_mod_max("heart")
 
 								else
@@ -1665,7 +1730,7 @@ datum
 					//POWER UP!!
 				if (t7 && ticks >= t7)
 					t6 = 0
-					APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, src.id, 100) //Buff
+					APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, src.id, 100) //Buff
 					H.show_text("You feel very buff!", "red")
 
 				if (t8 && ticks >= t8)
@@ -1727,7 +1792,7 @@ datum
 					H.ai_calm_down = initial(H.ai_calm_down)
 					H.ai_suicidal = 0
 					if (ticks >= 30)
-						REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, src.id) //Not so buff
+						REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, src.id) //Not so buff
 						logTheThing("combat", H, null, "has their AI disabled by [src.id]")
 						H.show_text("It's okay... it's okay... breathe... calm... it's okay...", "blue")
 				..()
@@ -1774,7 +1839,7 @@ datum
 					if(4)
 						H.remove_stam_mod_max(src.id)
 						H.add_stam_mod_max(src.id, -50)
-						APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, src.id, -2)
+						APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, src.id, -2)
 						if(ticks >= 26)
 							stage++
 					if(5)
@@ -1792,7 +1857,7 @@ datum
 				var/mob/living/carbon/human/H = holder.my_atom
 				if (!istype(H)) return
 				H.remove_stam_mod_max(src.id)
-				REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, src.id)
+				REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, src.id)
 
 
 			proc/do_stuff(var/severity, var/mob/living/carbon/human/H, var/mult = 1)
