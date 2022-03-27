@@ -820,6 +820,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 							user.show_text("That isn't the right limb!", "red")
 					else
 						M.drop_from_slot(delivery,get_turf(M))
+				logTheThing("debug", user, null, "spy thief claimed delivery of: [delivery] at [log_loc(user)]")
 				qdel(delivery)
 				if (user.mind && user.mind.special_role == ROLE_SPY_THIEF)
 					user.mind.spy_stolen_items += B.name
