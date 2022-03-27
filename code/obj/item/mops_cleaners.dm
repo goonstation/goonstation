@@ -314,7 +314,7 @@ WET FLOOR SIGN
 	if(reagents?.total_volume)
 		. += "<span class='notice'>[src] is wet!</span>"
 
-/obj/item/mop/afterattack(atom/A, mob/user as mob)
+/obj/item/mop/afterattack(atom/A, mob/user as mob)// the main utility of all moppage and mopkind
 	if (ismob(A))
 		return
 	if ((src.reagents.total_volume < 1 || mopcount >= 9) && !istype(A, /obj/fluid))
@@ -654,6 +654,21 @@ WET FLOOR SIGN
 				return
 	else
 		..()
+/obj/item/sponge/ghostdronesafe
+	name = "Integrated sponge"
+	desc = "A cleaning utensil with a trough system to prevent any fluids from escaping when wrung out."
+
+
+/obj/item/sponge/ghostdronesafe/attack_self(mob/user as mob)
+	if (ON_COOLDOWN(user, "ghostdrone sponge wringing", 5 SECONDS))// from playtesting: Wtihout the cooldown, this is stupid powerful
+		boutput(user, "<span class='notice'> The [src] is still processing fluids, please wait!</span>")
+		return
+	user.visible_message("<span class='notice'>[user] drains the [src].</span>")
+	src.reagents.clear_reagents()
+
+
+
+
 
 /obj/item/sponge/cheese
 	name = "cheese-shaped sponge"

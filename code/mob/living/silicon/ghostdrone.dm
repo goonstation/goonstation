@@ -74,14 +74,16 @@
 			new /obj/item/tool/omnitool/silicon(src),
 			new /obj/item/rcd/material/cardboard(src),
 			new /obj/item/lamp_manufacturer(src),
+			new /obj/item/spraybottle/cleaner/robot/drone(src),
+			new /obj/item/sponge/ghostdronesafe(src),
 			new /obj/item/device/analyzer/atmospheric(src),
 			new /obj/item/device/t_scanner(src),
 			new /obj/item/electronics/soldering(src),
 			new /obj/item/electronics/scanner(src),
 			new /obj/item/deconstructor/borg(src),
 			new /obj/item/weldingtool(src),
-			new /obj/item/tile/cardboardcolor/fullstack(src),
-			new /obj/item/spraybottle/cleaner/robot/drone(src)
+			new /obj/item/tile/cardboardcolor/fullstack(src)
+
 
 		)
 
