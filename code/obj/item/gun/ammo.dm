@@ -578,12 +578,7 @@
 	max_amount = 6
 	ammo_cat = AMMO_FOAMDART
 	ammo_type = new/datum/projectile/bullet/foamdart
-
-	update_icon()
-		if(amount_left == 0)
-			qdel(src)
-		else
-			..()
+	delete_on_reload = TRUE
 
 //0.40
 /obj/item/ammo/bullets/blow_darts

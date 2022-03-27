@@ -207,3 +207,18 @@
 		if(.)
 			. = isadmin(holder.owner)
 
+
+/datum/targetable/camera_shoot
+	name = "Camera Lasers"
+	desc = "Makes nearby cameras shoot lasers at the target. Somehow."
+	targeted = TRUE
+	target_anything = 1
+	cooldown = 1 SECOND
+	var/current_projectile = new/datum/projectile/laser/eyebeams
+
+	cast(atom/target)
+		. = ..()
+		var/turf/T = get_turf(target)
+		for(var/obj/O in T.cameras)
+			shoot_projectile_ST(O, current_projectile, T)
+

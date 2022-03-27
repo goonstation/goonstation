@@ -47,7 +47,7 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 		return
 
 	get_desc()
-		return "It reads, \"<em>[get_law_text(for_silicons=FALSE)]</em>\""
+		return "It reads, \"<em>[get_law_text()]</em>\""
 
 	proc/input_law_info(var/mob/user, var/title = null, var/text = null, var/default = null)
 		if (!user)
@@ -63,12 +63,19 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 		tooltip_rebuild = 1
 		return
 
-	proc/get_law_text(for_silicons)
+	proc/get_law_text(allow_list=FALSE)
+		if(islist(src.lawText))
+			if(!allow_list)
+				return jointext(src.lawText,"\n#: ")
 		return src.lawText
 
-	proc/get_law_name(for_silicons)
+	proc/get_law_name()
 		if(src.glitched)
-			return src.name+"\\x00\\x00\\x00\\xDE\\xAD\\xBE\\xEF"
+			var/pos = rand(1,length(src.name)-1)
+			var/pos2 = rand(pos,length(src.name))
+			var/part1 = copytext( src.name , 1 , pos)
+			var/part2 = copytext( src.name , pos2)
+			return part1+pick("^^vv<><>BA","AAAAAAAAAAAAAAAAAA","ID10-T ERROR","%FUDGE%","CRASH()","BEEES",":) :) :)","~#@@@#~","\\x00\\x00\\x00\\xDE\\xAD\\xBE\\xEF","\\x00\\x00\\x00\\x00","#BADREF#","OH NO IONS","FFFFBABAFFFBA","?","*?!","$var","001011001111011001","ERR0R")+part2
 		else
 			return src.name
 
@@ -80,7 +87,7 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 		if(total_replace)
 			src.lawText = lawtext_replace
 		else
-			src.lawText = src.lawText + "\n#.5: " + lawtext_replace
+			src.lawText = list(src.lawText, lawtext_replace)
 		tooltip_rebuild = 1
 
 	attackby(obj/item/W, mob/user)
@@ -383,6 +390,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 /obj/item/aiModule/hologram_expansion
 	name = "Hologram Expansion Module"
 	desc = "A module that updates an AI's hologram images."
+	lawText = "&lt; UNRECOGNISED HARDWARE IN LAW MODULE SLOT &rt;"
 	var/expansion
 
 
