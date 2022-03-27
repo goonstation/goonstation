@@ -227,14 +227,18 @@ ABSTRACT_TYPE(/datum/ion_category)
 		switch(door_diceroll)
 			if(1)
 				door.secondsElectrified = -1
+				logTheThing("station", null, null, "Ion storm electrified an airlock ([door.name]) at [log_loc(door)]")
 			if(2)
 				door.locked = 1
 				door.UpdateIcon()
+				logTheThing("station", null, null, "Ion storm locked an airlock ([door.name]) at [log_loc(door)]")
 			if(3)
 				if (door.density)
 					door.open()
+					logTheThing("station", null, null, "Ion storm opened an airlock ([door.name]) at [log_loc(door)]")
 				else
 					door.close()
+					logTheThing("station", null, null, "Ion storm closed an airlock ([door.name]) at [log_loc(door)]")
 
 
 /datum/ion_category/lights
@@ -253,11 +257,13 @@ ABSTRACT_TYPE(/datum/ion_category)
 		switch(light_diceroll)
 			if(1)
 				light.broken()
+				logTheThing("station", null, null, "Ion storm overloaded lighting at [log_loc(light)]")
 			if(2)
 				light.light.set_color(rand(1,100) / 100, rand(1,100) / 100, rand(1,100) / 100)
 				light.brightness = rand(4,32) / 10
 			if(3)
 				light.on = 0
+				logTheThing("station", null, null, "Ion storm turned off the lighting at [log_loc(light)]")
 
 		light.update()
 

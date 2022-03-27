@@ -1,4 +1,35 @@
 
+(t)sat mar 26 22
+(u)glowbold
+(p)7932
+(e)🐛|bug
+(+)Chocolate pie is now made from sweet dough and chocolate.
+(u)Flappybat
+(p)7907
+(e)🗺⚖|mapping, balance
+(*)Kondaru armory has changed, it now has a NARCS instead of an interior turret, it has interior/exterior logical areas so the exterior turrets no longer attempt to shoot through the walls and the turret control panel has moved inside and now controls the exterior turrets (HoS access).
+(u)Gannets
+(p)7951
+(e)|
+(*)Syndicate requisition tokens now award players 2 utility credits instead of 1.
+(*)Hi-grip Assault Boots now cost 2 utility credits.
+(*)Adds a pouch of 4 beartraps as a new 1 cost utility purchase.
+(u)Amylizzle
+(p)7961
+(e)🗺|mapping
+(+)Adds a blueprint for the AI Law Rack to the Chief Engineer's locker on all maps in rotation. Don't use it for crime!
+(u)Amylizzle
+(p)7973
+(e)🐛|bug
+(+)Bank account balance now counts towards richest escapee.
+(u)Flaborized
+(p)7962
+(e)🎨|sprites
+(+)Resprited cargo loaders.
+(u)NightmareChamillian
+(p)7833
+(e)|
+(*)The mini-syndies from the syndicate pipe bomb now have more ammo and health, but shoot .22 rounds instead of .375
 (t)fri mar 25 22
 (u)NightmareChamillian
 (p)7778

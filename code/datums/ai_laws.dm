@@ -8,12 +8,12 @@
 
 
 /datum/ai_rack_manager
-
 	var/first_registered = FALSE
 	var/obj/machinery/lawrack/default_ai_rack = null
 	var/first_registered_syndie = FALSE
 	var/obj/machinery/lawrack/default_ai_rack_syndie = null
 	var/list/obj/machinery/lawrack/registered_racks = new()
+	var/list/rack_area_count = list()
 
 	New()
 		. = ..()
@@ -31,7 +31,19 @@
 		if(new_rack in src.registered_racks)
 			return
 
-		logTheThing("station", src, new_rack, "[src] registers a new law rack at [log_loc(new_rack)]")
+		//give the new rack a nice friendly unique ID that is area-build_order
+		var/area/a = get_area(new_rack)
+		var/area_name = "Null Area"
+		if(a)
+			area_name = a.name
+		if(src.rack_area_count[area_name])
+			src.rack_area_count[area_name]++
+		else
+			src.rack_area_count[area_name] = 1
+
+		new_rack.unique_id = "[area_name]#[src.rack_area_count[area_name]]"
+
+		logTheThing("station", src, new_rack, "[src] registers a new law rack [constructName(new_rack)]")
 		if(isnull(src.default_ai_rack) && !istype(new_rack,/obj/machinery/lawrack/syndicate)) //syndi rack can't be default
 			src.default_ai_rack = new_rack
 
@@ -39,19 +51,19 @@
 			for (var/mob/living/silicon/S in mobs)
 				if(!S.emagged && S.law_rack_connection == null && !S.syndicate)
 					S.law_rack_connection = src.default_ai_rack
-					logTheThing("station", new_rack, S, "[S.name] is connected to the rack at [log_loc(new_rack)]")
+					logTheThing("station", new_rack, S, "[S.name] is connected to the rack [constructName(new_rack)]")
 					S.playsound_local(S, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 					S.show_text("<h3>Law rack connection re-established!</h3>", "red")
 					S.show_laws()
 			#endif
-			logTheThing("station", src, new_rack, "the law rack at [log_loc(new_rack)] claims default rack!")
+			logTheThing("station", src, new_rack, "the law rack [constructName(new_rack)] claims default rack!")
 
 			if(!src.first_registered)
 				src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1,1,true,true)
 				src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2,2,true,true)
 				src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3,3,true,true)
 				src.first_registered = TRUE
-				logTheThing("station", src, new_rack, "the law rack at [log_loc(new_rack)] claims first registered, and gets Asimov laws!")
+				logTheThing("station", src, new_rack, "the law rack [constructName(new_rack)] claims first registered, and gets Asimov laws!")
 
 		if(isnull(src.default_ai_rack_syndie) && istype(new_rack,/obj/machinery/lawrack/syndicate)) //but it can be syndie default
 			src.default_ai_rack_syndie = new_rack
@@ -60,12 +72,12 @@
 			for (var/mob/living/silicon/S in mobs)
 				if(!S.emagged && S.law_rack_connection == null && S.syndicate)
 					S.law_rack_connection = src.default_ai_rack_syndie
-					logTheThing("station", new_rack, S, "[S.name] is connected to the rack at [log_loc(new_rack)]")
+					logTheThing("station", new_rack, S, "[S.name] is connected to the rack [constructName(new_rack)]")
 					S.playsound_local(S, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 					S.show_text("<h3>Law rack connection re-established!</h3>", "red")
 					S.show_laws()
 			#endif
-			logTheThing("station", src, new_rack, "the law rack at [log_loc(new_rack)] claims default SYNDICATE rack!")
+			logTheThing("station", src, new_rack, "the law rack [constructName(new_rack)] claims default SYNDICATE rack!")
 
 			if(!src.first_registered_syndie)
 				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law1,1,true,true)
@@ -73,21 +85,21 @@
 				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law3,3,true,true)
 				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law4,4,true,true)
 				src.first_registered_syndie = TRUE
-				logTheThing("station", src, new_rack, "the law rack at [log_loc(new_rack)] claims first registered SYNDICATE, and gets Syndicate laws!")
+				logTheThing("station", src, new_rack, "the law rack [constructName(new_rack)] claims first registered SYNDICATE, and gets Syndicate laws!")
 
 		src.registered_racks |= new_rack //shouldn't be possible, but just in case - there can only be one instance of rack in registered
 
 	proc/unregister_rack(var/obj/machinery/lawrack/dead_rack)
-		logTheThing("station", src, dead_rack, "[src] unregisters the law rack at [log_loc(dead_rack)]")
+		logTheThing("station", src, dead_rack, "[src] unregisters the law rack [constructName(dead_rack)]")
 
 		if(src.default_ai_rack == dead_rack)
 			//ruhoh
 			src.default_ai_rack = null
-			logTheThing("station", src, dead_rack, "[src] unregisters the DEFAULT law rack at [log_loc(dead_rack)]")
+			logTheThing("station", src, dead_rack, "[src] unregisters the DEFAULT law rack [constructName(dead_rack)]")
 		if(src.default_ai_rack_syndie == dead_rack)
 			//ruhoh
 			src.default_ai_rack_syndie = null
-			logTheThing("station", src, dead_rack, "[src] unregisters the DEFAULT SYNDICATE law rack at [log_loc(dead_rack)]")
+			logTheThing("station", src, dead_rack, "[src] unregisters the DEFAULT SYNDICATE law rack [constructName(dead_rack)]")
 		//remove from list
 		src.registered_racks -= dead_rack
 
@@ -99,13 +111,13 @@
 				R.law_rack_connection = null
 				R.playsound_local(R, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 				R.show_text("<h3>ERROR: Lost connection to law rack. No laws detected!</h3>", "red")
-				logTheThing("station", dead_rack, R, "[R.name] loses connection to the rack at [log_loc(dead_rack)] and now has no laws")
+				logTheThing("station",  R, null, "[R.name] loses connection to the rack [constructName(dead_rack)] and now has no laws")
 
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == dead_rack)
 				E.mainframe.law_rack_connection = null
 				E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
-				logTheThing("station", dead_rack, E.mainframe, "[E.mainframe.name] loses connection to the rack at [log_loc(dead_rack)] and now has no laws")
+				logTheThing("station", E.mainframe, null, "[E.mainframe.name] loses connection to the rack [constructName(dead_rack)] and now has no laws")
 
 /* ION STORM */
 	proc/ion_storm_all_racks(var/picked_law="Beep repeatedly.",var/lawnumber=2,var/replace=true)
@@ -117,14 +129,7 @@
 
 
 /* General ai_law functions */
-	proc/format_for_irc()
-		var/list/laws = list()
-		for(var/obj/machinery/lawrack/R in src.registered_racks)
-			laws += R.format_for_irc()
-		return laws
-
-
-	proc/format_for_logs(var/glue = "<br>",var/round_end=false)
+	proc/format_for_logs(var/glue = "<br>", var/round_end = FALSE, var/include_link = TRUE)
 		var/list/laws = list()
 		for(var/obj/machinery/lawrack/R in src.registered_racks)
 			var/list/affected_mobs = list()
@@ -143,5 +148,6 @@
 				for(var/mob/living/M in affected_mobs)
 					mobtextlist += M.real_name ? M.real_name : M.name
 
-				laws += "Laws for [R] at [log_loc(R)]:<br>" + R.format_for_logs(glue) +"<br>The law rack is connected to the following silicons: "+mobtextlist.Join(", ") +"<br>--------------<br>"
+				laws += "Laws for [R] at [include_link ? log_loc(R) : "([R.x], [R.y], [R.z]) in [get_area(R)]"]:[glue]" + R.format_for_logs(glue) \
+						+ "[glue]The law rack is connected to the following silicons: "+mobtextlist.Join(", ") + "[glue]--------------[glue]"
 		return jointext(laws, glue)

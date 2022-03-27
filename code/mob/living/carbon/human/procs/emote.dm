@@ -2360,6 +2360,7 @@
 		G.affecting.force_laydown_standup()
 		SPAWN(0.8 SECONDS) //let us do that combo shit people like with throwing
 			src.force_laydown_standup()
+			qdel(G)
 
 		G.affecting.TakeDamage("head", 9, 0, 0, DAMAGE_BLUNT)
 		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
