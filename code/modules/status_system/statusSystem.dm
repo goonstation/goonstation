@@ -226,6 +226,10 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		throw EXCEPTION("Unknown status type passed: [statusId]")
 		return null
 
+// Sets the status duration of the passed statusId to the smaller of the existing status of that ID and the passed {maxDuration}
+/atom/proc/setStatusMax(statusId, maxDuration, optional) //this is probably inefficient
+	src.setStatus(statusId, min(src.getStatusDuration(statusId), maxDuration), optional)
+
 /**
 	* Returns duration of status with given {statusId}, or null if not found.
 	*/
