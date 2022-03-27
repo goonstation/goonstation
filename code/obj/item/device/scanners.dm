@@ -346,7 +346,7 @@ that cannot be itched
 
 
 
-/obj/item/device/analyzer/healthanalyzer/borg
+/obj/item/device/analyzer/healthanalyzer/upgraded
 	icon_state = "health"
 	reagent_upgrade = 1
 	reagent_scan = 1
@@ -767,8 +767,8 @@ that cannot be itched
 			return
 
 		var/datum/artifact/art = null
+		var/obj/O = A
 		if (isobj(A))
-			var/obj/O = A
 			art = O.artifact
 		else
 			// objs only
@@ -777,10 +777,18 @@ that cannot be itched
 		var/sell_value = 0
 		var/out_text = ""
 		if (art)
-			// TODO: Artifact valuation
-			// shippingmarket.sell_artifact(AM, art)
-			boutput(user, "<span class='alert'>Artifact appraisal not yet available. Coming Soon&trade;!</span>")
-			return
+			var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in O.vis_contents
+			if (pap?.artifactType)
+				out_text = "<strong>The following values depend on correct analysis of the artifact<br>Average price for [pap.artifactType] type artifacts</strong><br>"
+				// the unrandomized sell value for an artifact of the type detailed on the form, with perfect analysis
+				sell_value = shippingmarket.calculate_artifact_price(artifact_controls.artifact_types_from_name[pap.artifactType].get_rarity_modifier(), 3)
+				sell_value = round(sell_value, 5)
+			else if (pap)
+				boutput(user, "<span class='alert'>Attached Analysis Form&trade; needs to be filled out!</span>")
+				return
+			else
+				boutput(user, "<span class='alert'>Artifact appraisal is only possible via an attached Analysis Form&trade;!</span>")
+				return
 
 		else if (istype(A, /obj/storage/crate))
 			sell_value = -1
@@ -825,6 +833,8 @@ that cannot be itched
 			var/image/chat_maptext/chat_text = null
 			var/popup_text = "<span class='ol c pixel'[sell_value == 0 ? " style='color: #bbbbbb;'>No value" : ">$[round(sell_value)]"]</span>"
 			chat_text = make_chat_maptext(A, popup_text, alpha = 180, force = 1, time = 1.5 SECONDS)
+			// many of the artifacts are upside down and stuff, it makes text a bit hard to read!
+			chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
 			if (chat_text)
 				// don't bother bumping up other things
 				chat_text.show_to(user.client)

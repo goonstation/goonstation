@@ -842,7 +842,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			loops += 1
 
 	proc/spawn_reward(var/datum/bounty_item/B, var/mob/user)
-		B.spawn_reward(user,src)
+		B.spawn_reward(user,src.loc)
 
 		if (uses == 0)//Spawn ID tracker. Last item!
 
@@ -1127,6 +1127,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/list/spells = list()
 	flags = FPRINT | ONBELT | TABLEPASS
 	throwforce = 5
+	health = 5
 	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20

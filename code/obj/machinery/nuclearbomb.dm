@@ -238,10 +238,6 @@
 					// Give the player a notice so they realize what has happened
 					boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
 					return
-				//else if (istype(W,/obj/item/wirecutters/))
-				//	user.visible_message("<b>[user]</b> opens up [src]'s wiring panel and takes a look.")
-				//	open_wire_panel(user)
-				//	return
 
 		if (istype(W, /obj/item/wrench/battle) && src._health <= src._max_health)
 			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[user] repairs the [src]!", null)
@@ -265,13 +261,7 @@
 		return
 
 	ex_act(severity)
-		/*switch(severity) // No more suicide-bombing the nuke.
-			if(1)
-				src.take_damage(80)
-			if(2)
-				src.take_damage(50)
-			if(3)
-				src.take_damage(20)*/
+		// No more suicide-bombing the nuke.
 		return
 
 	blob_act(var/power)
@@ -288,10 +278,10 @@
 
 		if(src.material) src.material.triggerOnBullet(src, src, P)
 
-		if (!damage)
+		if (damage <= 0)
 			return
 		if(P.proj_data.damage_type == D_KINETIC || (P.proj_data.damage_type == D_ENERGY && damage))
-			src.take_damage(damage / 1.7)
+			src.take_damage(damage / 3)
 		else if (P.proj_data.damage_type == D_PIERCING)
 			src.take_damage(damage)
 

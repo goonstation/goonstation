@@ -710,14 +710,75 @@
 	star_red
 		icon = 'icons/misc/galactic_objects_large.dmi'
 		icon_state = "star-red"
-		name = "Fugg"
+		name = "Shidd"
 		desc = "A dying red subgiant star shrouded in cast-off shells of gas."
 
 	star_blue
 		icon = 'icons/misc/galactic_objects_large.dmi'
 		icon_state = "star-blue"
-		name = "Shidd"
+		name = "Fugg"
 		desc = "A blazing young blue star."
+
+
+	domus_dei
+		icon_state = "domusDei"
+		name = "Domus Dei"
+		pixel_x = -256
+		pixel_y = -256
+
+	quadriga
+		icon_state = "quadriga"
+		name = "Quadriga"
+		pixel_x = -256
+		pixel_y = -256
+
+	mundus
+		icon_state = "mundus"
+		name = "Mundus"
+		pixel_x = -256
+		pixel_y = -256
+
+	iustitia
+		icon_state = "iustitia"
+		name = "Iustitia"
+		pixel_x = -256
+		pixel_y = -256
+
+	iudicium
+		icon_state = "iudicium"
+		name = "Iudicium"
+		pixel_x = -256
+		pixel_y = -256
+
+	fortuna
+		icon_state = "fortuna"
+		name = "Fortuna"
+		pixel_x = -256
+		pixel_y = -256
+
+	fatuus
+		icon_state = "fatuus"
+		name = "Fatuus"
+		pixel_x = -256
+		pixel_y = -256
+
+	magus
+		icon_state = "magus"
+		name = "Magus"
+		pixel_x = -256
+		pixel_y = -256
+
+	regis
+		icon_state ="regis"
+		name = "Regis"
+		pixel_x = -256
+		pixel_y = -256
+
+	amantes
+		icon_state = "amantes"
+		name = "Amantes"
+		pixel_x = -256
+		pixel_y = -256
 
 	station
 		name = "Space Station 14"

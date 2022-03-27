@@ -721,7 +721,7 @@ datum/chemicompiler_core/stationaryCore
 	New()
 		..()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Run Script", "runscript")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Run Script", .proc/runscript)
 		executor = new(src, /datum/chemicompiler_core/stationaryCore)
 		light = new /datum/light/point
 		light.set_brightness(0.4)

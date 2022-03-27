@@ -2043,7 +2043,10 @@
 /obj/item/paper/manufacturer_blueprint/loafer
 	blueprint = /datum/manufacture/mechanics/loafer
 
+/******************** AI Law Rack Blueprint (probably a terrible idea) *******************/
 
+/obj/item/paper/manufacturer_blueprint/lawrack
+	blueprint = /datum/manufacture/mechanics/lawrack
 
 /******************** AI Display Blueprints (should be temporary but we know how that goes in coding) *******************/
 
@@ -2266,14 +2269,18 @@
 	/datum/manufacture/cyberlung_right,
 	/datum/manufacture/rods2,
 	/datum/manufacture/metal,
-	/datum/manufacture/glass)
+	/datum/manufacture/glass,
+	/datum/manufacture/asimov_laws,
+	/datum/manufacture/borg_linker)
 
 	hidden = list(/datum/manufacture/flash,
 	/datum/manufacture/cybereye_thermal,
 	/datum/manufacture/cybereye_laser,
 	/datum/manufacture/cyberbutt,
 	/datum/manufacture/robup_expand,
-	/datum/manufacture/cardboard_ai)
+	/datum/manufacture/cardboard_ai,
+	/datum/manufacture/corporate_laws,
+	/datum/manufacture/robocop_laws)
 
 /obj/machinery/manufacturer/medical
 	name = "Medical Fabricator"
