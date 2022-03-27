@@ -30,13 +30,6 @@
 	animate(A, color=list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1), time=time, easing=SINE_EASING)
 	return
 
-/proc/animate_fade_drug(var/atom/A, var/time=5) //This fades from normal colors to red being green, green being blue and blue being red
-	if (!istype(A) && !isclient(A))
-		return
-	A.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1)
-	animate(A, color=list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1), time=time, easing=SINE_EASING)
-	return
-
 /proc/animate_fade_from_drug_1(var/atom/A, var/time=5) //This smoothly fades from animated_fade_drug_inbetween_1 to normal colors
 	if (!istype(A) && !isclient(A))
 		return
