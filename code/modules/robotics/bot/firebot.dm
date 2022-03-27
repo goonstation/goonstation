@@ -70,7 +70,7 @@
 //	if(!src.locked)
 //To-Do: Behavior control stuff to go with ~fire patrols~
 
-	if (user.client.tooltipHolder)
+	if (user.client?.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
 			"params" = params,
 			"title" = "Firebot v1.0 controls",
@@ -86,7 +86,7 @@
 //	if(!src.locked)
 //To-Do: Behavior control stuff to go with ~fire patrols~
 
-	if (user.client.tooltipHolder)
+	if (user.client?.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
 			"params" = params,
 			"title" = "Firebot v1.0 controls",

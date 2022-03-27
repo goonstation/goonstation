@@ -13,7 +13,7 @@
 	/obj/item/toy/plush/small/kitten,\
 	/obj/item/toy/plush/small/monkey,\
 	/obj/item/toy/plush/small/possum,\
-	/obj/item/toy/plush/small/wendigo,\
+	/obj/item/toy/plush/small/brullbar,\
 	/obj/item/toy/plush/small/bunny,\
 	/obj/item/toy/plush/small/penguin)
 	var/list/prizes_rare = list(/obj/item/toy/plush/small/bee/cute,\
@@ -220,9 +220,9 @@
 	name = "possum plush toy"
 	icon_state = "possum"
 
-/obj/item/toy/plush/small/wendigo
-	name = "wendigo plush toy"
-	icon_state = "wendigo"
+/obj/item/toy/plush/small/brullbar
+	name = "brullbar plush toy"
+	icon_state = "brullbar"
 
 /obj/item/toy/plush/small/bunny
 	name = "bunny plush toy"

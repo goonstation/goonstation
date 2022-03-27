@@ -1138,9 +1138,9 @@
 		..()
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleactivation")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", "activate")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", "deactivate")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleactivation)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", .proc/activate)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", .proc/deactivate)
 
 		SPAWN(1 SECOND)
 			switch_dir = turn(dir, 90)

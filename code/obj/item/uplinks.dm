@@ -1127,6 +1127,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/list/spells = list()
 	flags = FPRINT | ONBELT | TABLEPASS
 	throwforce = 5
+	health = 5
 	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20

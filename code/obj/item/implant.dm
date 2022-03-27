@@ -42,6 +42,8 @@ THROWING DARTS
 			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, pda_alert_frequency)
 
 	disposing()
+		if (owner)
+			on_remove(owner)
 		owner = null
 		former_implantee = null
 		if (uses_radio)
@@ -883,6 +885,8 @@ THROWING DARTS
 
 	if (C != src.owner)
 		src.owner = C
+
+	src.blood_DNA = src.owner.bioHolder.Uid
 
 	for (var/obj/item/implant/projectile/P in C)
 		if (P.bleed_timer)

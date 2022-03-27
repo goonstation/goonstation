@@ -1524,6 +1524,7 @@
 	icon_state = "pickaxe"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "pick"
+	health = 8
 	w_class = W_CLASS_NORMAL
 	flags = ONBELT
 	force = 7

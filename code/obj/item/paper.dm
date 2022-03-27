@@ -44,7 +44,6 @@
 	burn_point = 220
 	burn_output = 900
 	burn_possible = 2
-	health = 10
 	var/list/form_startpoints
 	var/list/form_endpoints
 	var/font_css_crap = null
