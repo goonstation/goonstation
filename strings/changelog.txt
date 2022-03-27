@@ -1,5 +1,7 @@
 
 (t)sat mar 26 22
+(u)aloe
+(+)Spaceacillin cures food poisoning. This is medically dubious but a guy in an alleyway told me it works so uh.
 (u)glowbold
 (p)7955
 (e)|
