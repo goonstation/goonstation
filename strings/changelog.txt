@@ -1,6 +1,10 @@
 
 (t)sat mar 26 22
 (u)glowbold
+(p)7955
+(e)|
+(+)Crowbars can now stand up and lay down dowsing rods.
+(u)glowbold
 (p)7932
 (e)🐛|bug
 (+)Chocolate pie is now made from sweet dough and chocolate.
