@@ -119,15 +119,15 @@ var/global/list/datum/mind/battle_pass_holders = list()
 
 	for(var/x in 1 to world.maxx)
 		var/turf/T = locate(x, 1, Z_LEVEL_STATION)
-		T.ReplaceWith(/turf/cordon, force = TRUE)
+		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
 		T = locate(x, world.maxy - 2, Z_LEVEL_STATION)	// Why is the Z change edge not at the actual edge??
-		T.ReplaceWith(/turf/cordon, force = TRUE)
+		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
 
 	for(var/y in 1 to world.maxy)
 		var/turf/T = locate(1, y, Z_LEVEL_STATION)
-		T.ReplaceWith(/turf/cordon, force = TRUE)
+		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
 		T = locate(world.maxx - 2, y, Z_LEVEL_STATION)	// Why is the Z change edge not at the actual edge??
-		T.ReplaceWith(/turf/cordon, force = TRUE)
+		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
 	return 1
 
 
