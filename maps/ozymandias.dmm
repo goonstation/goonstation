@@ -2053,13 +2053,6 @@
 	},
 /turf/simulated/floor/green/checker,
 /area/station/storage/emergency)
-"aEJ" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/bent/east,
-/turf/simulated/floor/plating,
-/area/station/maintenance/south)
 "aEM" = (
 /obj/rack,
 /obj/item/clothing/under/jersey,
@@ -2360,6 +2353,15 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/north)
+"aJg" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/south)
 "aJm" = (
 /obj/stool/chair/comfy,
 /turf/simulated/floor/wood/seven,
@@ -7866,9 +7868,6 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/medical)
 "cno" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -11303,6 +11302,10 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5
 	},
+/obj/disposalpipe/segment/morgue{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "dlg" = (
@@ -11422,15 +11425,12 @@
 /turf/simulated/floor/grey,
 /area/station/engine/engineering/private)
 "dmo" = (
+/obj/disposalpipe/junction/middle/west,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
 /obj/cable{
 	icon_state = "2-5"
-	},
-/obj/disposalpipe/segment/vertical,
-/obj/disposalpipe/segment/morgue{
-	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
@@ -14459,9 +14459,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5
 	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "eev" = (
@@ -15008,6 +15006,9 @@
 	icon_state = "1-6"
 	},
 /obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "elR" = (
@@ -20560,9 +20561,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "fQg" = (
@@ -21890,11 +21889,11 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "gim" = (
-/obj/machinery/space_heater,
 /obj/disposalpipe/segment/morgue{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "gip" = (
@@ -23283,9 +23282,8 @@
 	},
 /area/station/hydroponics/bay)
 "gzm" = (
-/obj/machinery/portable_atmospherics/pump,
 /obj/disposalpipe/segment/morgue{
-	dir = 4
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
@@ -25538,6 +25536,9 @@
 	},
 /obj/disposalpipe/segment/morgue{
 	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
@@ -28834,9 +28835,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "iar" = (
@@ -32407,9 +32406,7 @@
 /turf/simulated/floor/yellow/side,
 /area/station/engine/storage)
 "jdU" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "jdW" = (
@@ -38747,6 +38744,9 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 1
 	},
+/obj/cable{
+	icon_state = "1-6"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "kMX" = (
@@ -39983,10 +39983,8 @@
 /turf/simulated/floor/grey,
 /area/station/mining/staff_room)
 "lej" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/turf/simulated/floor/plating/random,
+/obj/machinery/portable_atmospherics/pump,
+/turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "lem" = (
 /obj/rack,
@@ -40562,6 +40560,9 @@
 /area/station/science/lab)
 "lkV" = (
 /obj/disposalpipe/segment/bent/north,
+/obj/cable{
+	icon_state = "1-10"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "lkZ" = (
@@ -49266,10 +49267,8 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "nDD" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment/horizontal,
+/obj/landmark/random_room/size5x3,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "nDJ" = (
@@ -52762,10 +52761,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "oxu" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
+/obj/machinery/space_heater,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "oxx" = (
@@ -54783,11 +54779,8 @@
 	},
 /area/station/engine/gas)
 "pab" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/plating/random,
+/obj/random_item_spawner/junk/five,
+/turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "pag" = (
 /obj/stool/chair/yellow{
@@ -56055,6 +56048,9 @@
 	freq = 1447;
 	location = "tour10";
 	name = "node 10"
+	},
+/obj/disposalpipe/segment/morgue{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
@@ -66121,13 +66117,13 @@
 	},
 /area/station/medical/medbay/lobby)
 "saJ" = (
-/obj/random_item_spawner/junk/few,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "6-9"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
@@ -68124,6 +68120,12 @@
 	})
 "sBA" = (
 /obj/decal/cleanable/cobweb2,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "sBB" = (
@@ -73821,6 +73823,18 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/station/crew_quarters/quartersA)
+"tXB" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "tXH" = (
 /obj/machinery/light{
 	dir = 8;
@@ -78782,10 +78796,7 @@
 	name = "The Warrens"
 	})
 "viG" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
+/obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "viH" = (
@@ -81124,6 +81135,9 @@
 	icon_state = "6-9"
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/disposalpipe/segment/morgue{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "vLk" = (
@@ -82354,13 +82368,10 @@
 /turf/simulated/floor/wood/seven,
 /area/station/engine/engineering/private)
 "wcb" = (
+/obj/disposalpipe/segment/vertical,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/disposalpipe/junction/middle/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "wcf" = (
@@ -84386,12 +84397,13 @@
 	name = "The Warrens"
 	})
 "wBu" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/horizontal,
+/obj/random_item_spawner/junk/one_or_zero,
 /obj/disposalpipe/segment/morgue{
-	dir = 1
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "4-9"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
@@ -87466,8 +87478,7 @@
 	dir = 10
 	},
 /obj/disposalpipe/segment/morgue{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
@@ -89018,9 +89029,6 @@
 /area/station/medical/medbay/lobby)
 "xGq" = (
 /obj/machinery/door/airlock/pyro/maintenance,
-/obj/disposalpipe/segment/morgue{
-	dir = 1
-	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "xGu" = (
@@ -89239,6 +89247,15 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
+"xIB" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "xIC" = (
 /obj/machinery/light,
 /turf/simulated/floor/shuttlebay,
@@ -90539,13 +90556,16 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/turf/simulated/wall/auto/supernorn,
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "xZz" = (
 /obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -134711,7 +134731,7 @@ vAw
 xkd
 gaQ
 xrA
-tyS
+lej
 wCq
 aJu
 wqf
@@ -135015,7 +135035,7 @@ qPp
 xrA
 wCq
 wCq
-ydz
+wCq
 xGX
 aJu
 aJu
@@ -135316,8 +135336,8 @@ xkd
 hfo
 kMN
 gim
+oxu
 wCq
-aJu
 wqf
 aJu
 aJu
@@ -135618,8 +135638,8 @@ xkd
 xZz
 xrA
 saJ
+pab
 mjI
-aJu
 wqf
 aJu
 aJu
@@ -135917,11 +135937,11 @@ bqz
 mfl
 tUl
 xkd
-aEJ
+viG
 wOf
 gzm
+wBu
 wCq
-qTl
 xGX
 aJu
 aJu
@@ -136221,8 +136241,8 @@ xkd
 xkd
 cno
 wCq
-xZy
 wCq
+xZy
 wCq
 wCq
 iOi
@@ -136519,12 +136539,12 @@ tJI
 kvI
 dmR
 uGO
-jRy
+jdU
 jRy
 nDD
 wCq
-lej
 etf
+aJg
 vUr
 wCq
 aJu
@@ -136823,10 +136843,10 @@ ihY
 uGO
 pIT
 jRy
-nDD
+xrA
 wCq
-lej
 etf
+aJg
 etf
 mjI
 aJu
@@ -137123,12 +137143,12 @@ oDl
 tJI
 kBD
 uGO
-oxu
+jRy
 viG
-wBu
+hkN
 xGq
-pab
 etf
+aJg
 etf
 mjI
 iOi
@@ -137426,11 +137446,11 @@ jpS
 qVX
 uGO
 jRy
-jdU
-nDD
+xrA
+jRy
 wCq
 etf
-etf
+aJg
 etf
 wCq
 aJu
@@ -137729,10 +137749,10 @@ iyT
 huu
 erp
 eek
-nDD
+jRy
 wCq
 sBA
-etf
+aJg
 etf
 wCq
 aJu
@@ -138034,7 +138054,7 @@ iab
 wCq
 wCq
 wCq
-wCq
+tXB
 wCq
 wCq
 iOi
@@ -138333,10 +138353,10 @@ amX
 uGO
 tyS
 fQd
-nDD
+jRy
 pFp
 tyS
-tyS
+xIB
 lmO
 wCq
 aJu
@@ -138937,8 +138957,8 @@ bZK
 bZK
 lsO
 xnp
-erp
-erp
+mvM
+mvM
 vLj
 dle
 aIl
