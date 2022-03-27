@@ -5381,7 +5381,6 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 4;
 	pixel_x = -21
 	},
@@ -11270,8 +11269,7 @@
 	},
 /obj/disposalpipe/trunk/mail/west,
 /obj/item/device/radio/intercom/engineering{
-	pixel_x = -28;
-	pixel_y = 0
+	pixel_x = -28
 	},
 /obj/machinery/disposal/mail/autoname/mechanics{
 	mail_tag = "Mechanics"
@@ -25082,9 +25080,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer3/generic/engine/console_upper{
-	name = "Engine Control Console"
-	},
+/obj/machinery/computer3/generic/engine/console_upper,
 /obj/decal/tile_edge/stripe{
 	dir = 1
 	},
@@ -30374,9 +30370,7 @@
 	},
 /area/station/engine/elect)
 "mTr" = (
-/obj/machinery/atmospherics/valve/purge/horizontal{
-	name = "purge valve"
-	},
+/obj/machinery/atmospherics/valve/purge/horizontal,
 /obj/decal/tile_edge/line/red{
 	dir = 10;
 	icon_state = "line1"
@@ -31929,7 +31923,6 @@
 	icon_state = "2-8"
 	},
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 8;
 	frequency = 1441;
 	name = "Engineering Intercom";
@@ -40801,7 +40794,6 @@
 "rvQ" = (
 /obj/storage/crate/furnacefuel,
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	frequency = 1485;
 	name = "Security Intercom";
 	pixel_x = 26
@@ -41122,7 +41114,6 @@
 "rAB" = (
 /obj/machinery/atmospherics/pipe/simple/horizontal,
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 4;
 	frequency = 1441;
 	name = "Engineering Intercom";
