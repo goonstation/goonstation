@@ -12,7 +12,6 @@
 	var/color_r = 1 // same as glasses/helmets/masks/etc, used for vision color modifications, see human/handle_regular_hud_updates()
 	var/color_g = 1
 	var/color_b = 1
-	var/blind = 0 // only used for emagged sunglass eyes
 	var/show_on_examine = 0 // do we get mentioned when our donor is examined?
 
 	New()
@@ -141,13 +140,10 @@
 
 	on_transplant(mob/M)
 		. = ..()
-		if(emagged)
-			src.blind = 1
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_DISORIENT_RESIST_EYE, src, 100)
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_DISORIENT_RESIST_EYE_MAX, src, 100)
 
 	on_removal()
-		src.blind = 0
 		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_DISORIENT_RESIST_EYE, src)
 		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_DISORIENT_RESIST_EYE_MAX, src)
 		. = ..()
