@@ -6669,7 +6669,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai_upload)
 "dDo" = (
@@ -6831,11 +6831,18 @@
 	pixel_x = -5;
 	pixel_y = -5
 	},
-/obj/item/disk/data/tape/master/readonly,
+/obj/item/disk/data/tape/master/readonly{
+	pixel_x = -3;
+	pixel_y = 5
+	},
 /obj/item/paper/book/from_file/dwainedummies{
+	pixel_x = 3;
 	pixel_y = 6
 	},
-/obj/item/device/multitool,
+/obj/item/device/multitool{
+	pixel_x = -14;
+	pixel_y = 7
+	},
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
 	},
@@ -7531,11 +7538,12 @@
 /area/station/medical/medbay/surgery)
 "efc" = (
 /obj/table/auto,
-/obj/item/circuitboard/aiupload,
-/obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/communications,
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
+	},
+/obj/item/disk/data/floppy/read_only/network_progs{
+	pixel_x = 15
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/Zeta)
@@ -10447,26 +10455,11 @@
 "fJQ" = (
 /obj/table/reinforced/auto,
 /obj/item/aiModule/freeform{
-	pixel_x = 2;
-	pixel_y = -3
+	pixel_x = -2;
+	pixel_y = -2
 	},
 /obj/item/aiModule/makeCaptain{
-	pixel_x = 1;
-	pixel_y = 3
-	},
-/obj/item/aiModule/removeCrew{
-	pixel_y = 9
-	},
-/obj/item/aiModule/oneHuman{
-	pixel_x = -13;
-	pixel_y = -3
-	},
-/obj/item/aiModule/notHuman{
-	pixel_x = -14;
-	pixel_y = 3
-	},
-/obj/item/aiModule/emergency{
-	pixel_x = -15;
+	pixel_x = -2;
 	pixel_y = 9
 	},
 /turf/simulated/floor/engine,
@@ -11769,7 +11762,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/item/device/analyzer/healthanalyzer/borg{
+/obj/item/device/analyzer/healthanalyzer/upgraded{
 	pixel_y = -9
 	},
 /obj/item/robodefibrillator{
@@ -35733,16 +35726,24 @@
 /area/ghostdrone_factory)
 "sYa" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/rename{
-	pixel_x = -2;
-	pixel_y = -3
-	},
-/obj/item/aiModule/reset{
-	pixel_x = -3;
-	pixel_y = 7
-	},
 /obj/machinery/power/apc/autoname_west,
 /obj/cable,
+/obj/item/aiModule/oneHuman{
+	pixel_x = -4;
+	pixel_y = -2
+	},
+/obj/item/aiModule/notHuman{
+	pixel_x = -4;
+	pixel_y = 9
+	},
+/obj/item/aiModule/emergency{
+	pixel_x = 13;
+	pixel_y = 9
+	},
+/obj/item/aiModule/removeCrew{
+	pixel_x = 13;
+	pixel_y = -2
+	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai_upload)
 "sZh" = (
@@ -36968,7 +36969,6 @@
 "tHl" = (
 /obj/table/auto,
 /obj/item/circuitboard/robotics,
-/obj/item/disk/data/floppy/read_only/network_progs,
 /obj/machinery/light,
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -37013,14 +37013,6 @@
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
-	},
-/obj/item/circuitboard/aiupload{
-	pixel_x = -2;
-	pixel_y = 15
-	},
-/obj/item/aiModule/reset{
-	pixel_x = 2;
-	pixel_y = 13
 	},
 /obj/item/device/multitool{
 	pixel_x = -7;
@@ -44512,9 +44504,6 @@
 /turf/simulated/floor/engine,
 /area/station/medical/robotics)
 "ylk" = (
-/obj/stool/chair/office/blue{
-	dir = 1
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
