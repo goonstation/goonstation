@@ -1012,6 +1012,10 @@
 		destroy_asteroid(dropOre)
 			ClearSpecificOverlays("glow_vine")
 			remove_medium_light("glow_vine")
+			var/list/turf/neighbors = getNeighbors(src, alldirs)
+			for (var/turf/T as anything in neighbors)
+				if (!length(T.medium_lights)) continue
+				T.update_medium_light_visibility()
 			. = ..()
 	lighted
 		fullbright = 1
