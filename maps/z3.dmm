@@ -22823,7 +22823,6 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/turf/space,
 /area/mining/hangar)
 "tha" = (
 /obj/machinery/door/airlock/pyro/glass/med{
