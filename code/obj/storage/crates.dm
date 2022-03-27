@@ -302,7 +302,7 @@
 						owner.mind.traitor_crate_items += item_datum
 				telecrystals += item_datum.cost
 			var/str_contents = kText.list2text(crate_contents, ", ")
-			logTheThing("debug", owner, null, "surplus crate contains: [str_contents] at [log_loc(A)]")
+			logTheThing("debug", owner, null, "surplus crate contains: [str_contents] at [log_loc(src)]")
 		#undef NESTED_SCALING_FACTOR
 
 /obj/storage/crate/syndicate_surplus/spawnable
