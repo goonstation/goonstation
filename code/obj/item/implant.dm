@@ -886,6 +886,8 @@ THROWING DARTS
 	if (C != src.owner)
 		src.owner = C
 
+	src.blood_DNA = src.owner.bioHolder.Uid
+
 	for (var/obj/item/implant/projectile/P in C)
 		if (P.bleed_timer)
 			P.bleed_timer = max(bleed_time, P.bleed_timer)
