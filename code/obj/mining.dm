@@ -1000,6 +1000,19 @@
 		fullbright = 0
 		luminosity = 1
 
+		space_overlays()
+			. = ..()
+			if (length(space_overlays))
+				//new /obj/bioluminescent_algae(get_turf(src))
+				var/list/color_vals = bioluminescent_algae?.get_color(src)
+				if (length(color_vals))
+					UpdateOverlays(image('icons/obj/objects.dmi', "vine-light1"), "glow_vine")
+					add_simple_light("glow_vine", (color_vals))
+
+		destroy_asteroid(dropOre)
+			ClearSpecificOverlays("glow_vine")
+			remove_simple_light("glow_vine")
+			. = ..()
 	lighted
 		fullbright = 1
 
