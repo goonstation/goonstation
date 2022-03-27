@@ -400,7 +400,7 @@
 				if (ishuman(holder.owner))
 					var/mob/living/carbon/human/H = holder.owner
 					H.death()
-					logTheThing("combat", usr, null, "died from the sims fun motive at [log_loc(owner)].")
+					logTheThing("combat", usr, null, "died from the sims fun motive at [log_loc(H)].")
 
 		onLife()
 			if (value < 10)
