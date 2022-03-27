@@ -48,6 +48,8 @@ ABSTRACT_TYPE(/datum/artifact/)
 	var/scramblechance = 10
 	/// used to set straight icon_states on activation instead of fx overlays
 	var/nofx = 0
+	/// special_addendum for ArtifactLogs() proc
+	var/log_addendum = null
 
 	/// the list of all the artifacts faults
 	var/list/faults = list()
@@ -123,7 +125,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 		if (!O)
 			return 1
 		O.add_fingerprint(usr)
-		ArtifactLogs(usr, null, O, "activated", null, istype(src, /datum/artifact/bomb/) ? 1 : 0)
+		ArtifactLogs(usr, null, O, "activated", log_addendum, istype(src, /datum/artifact/bomb/) ? 1 : 0)
 		return 0
 
 	/// What the artifact does once when deactivated.
@@ -131,7 +133,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 		if (!O)
 			return 1
 		O.add_fingerprint(usr)
-		ArtifactLogs(usr, null, O, "deactivated", null, 0)
+		ArtifactLogs(usr, null, O, "deactivated", log_addendum, 0)
 		return 0
 
 	/// What activated artifact machines do each processing tick.

@@ -222,18 +222,3 @@
 		for(var/obj/O in T.cameras)
 			shoot_projectile_ST(O, current_projectile, T)
 
-/datum/targetable/camera_shoot_omni
-	name = "Camera Snipers"
-	desc = "Makes all cameras on the Z-level shoot railguns at the target. WHY."
-	targeted = TRUE
-	target_anything = 1
-	cooldown = 1 SECOND
-	var/current_projectile = new/datum/projectile/laser/light/camera_snipe
-
-	cast(atom/target)
-		. = ..()
-		var/turf/T = get_turf(target)
-		for_by_tcl(C, /obj/machinery/camera)
-			if(C.z == T.z)
-				shoot_projectile_ST(C, current_projectile, T)
-

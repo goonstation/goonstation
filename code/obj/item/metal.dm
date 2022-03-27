@@ -15,6 +15,7 @@ MATERIAL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
+	health = 3
 	w_class = W_CLASS_NORMAL
 	force = 9.0
 	throwforce = 15.0
