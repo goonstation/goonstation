@@ -1454,7 +1454,7 @@
 		PJ.power *= power_mod
 
 		if(power_mod >= 1.5)
-			H.visible_message("<span class='combat'><b>[H]</b>'s [mult ? "laser cybereyes overload" : "laser cybereye overloads"]!</span>")
+			H.show_message("<span class='alert'>Your [mult ? "laser cybereyes overload" : "laser cybereye overloads"]!</span>")
 
 			switch(rand(0,5)) // random drawback
 				if(0)
@@ -1472,9 +1472,22 @@
 				if(4)
 					PJ.hit_type = DAMAGE_CUT // surgical laser
 					PJ.dissipation_delay = 2 // turns out that a surgical laser is a terrible ranged weapon, so falloff is high
-					PJ.dissipation_rate = 4  // should still deal more damage at close range, since it has a 75% power buff and causes bleeding (?)
+					PJ.dissipation_rate = 4  // should still deal more damage at close range, since it has a 100% power buff and might cause bleeding (?)
 				if(5)
 					PJ.is_magical = 1 // originally wanted to leave this without effect, but I think it's funny if the chaplain randomly tanks a shot
+
+			if(rand() >= 0.9) // may burn out
+				var/obj/item/organ/eye/E = null
+				if(left_eye.emagged && istype(left_eye, /obj/item/organ/eye/cyber/laser) && right_eye.emagged && istype(right_eye, /obj/item/organ/eye/cyber/laser))
+					E = pick(left_eye, right_eye)
+				else if(right_eye.emagged && istype(right_eye, /obj/item/organ/eye/cyber/laser))
+					E = right_eye
+				else if(left_eye.emagged && istype(left_eye, /obj/item/organ/eye/cyber/laser))
+					E = left_eye
+
+				if(E)
+					H.show_message("<span class='alert'>You feel your [E] fizzling out!</span>")
+					qdel(E)
 
 		shoot_projectile_ST(H, PJ, T)
 
