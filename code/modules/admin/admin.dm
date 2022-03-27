@@ -4254,7 +4254,7 @@ var/global/noir = 0
 	set name = "Restart"
 	set desc= "Restarts the world"
 
-	var/confirm = tgui_alert(usr,"Restart the game world?", "Restart", "Yes", "Cancel")
+	var/confirm = tgui_alert(usr,"Restart the game world?", "Restart", list("Yes", "Cancel"))
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
