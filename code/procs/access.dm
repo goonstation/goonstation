@@ -341,7 +341,7 @@
 		if("Chaplain")
 			return list(access_morgue, access_chapel_office, access_crematorium)
 		if("Janitor")
-			return list(access_janitor, access_maint_tunnels, access_medical, access_morgue, access_crematorium)
+			return list(access_janitor, access_maint_tunnels, access_medical, access_morgue, access_crematorium, access_robotics)
 		if("Botanist", "Apiculturist")
 			return list(access_maint_tunnels, access_hydro)
 		if("Rancher")
