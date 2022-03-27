@@ -69,6 +69,7 @@
 
 		//Attach shit to tools
 		src.tools = list(
+			new /obj/item/device/light/flashlight(src),
 			new /obj/item/magtractor(src),
 			new /obj/item/tool/omnitool/silicon(src),
 			new /obj/item/rcd/material/cardboard(src),
@@ -79,7 +80,9 @@
 			new /obj/item/electronics/scanner(src),
 			new /obj/item/deconstructor/borg(src),
 			new /obj/item/weldingtool(src),
-			new /obj/item/device/light/flashlight(src)
+			new /obj/item/tile/cardboardcolor/fullstack(src),
+			new /obj/item/spraybottle/cleaner/robot/drone(src)
+
 		)
 
 		var/obj/item/cable_coil/W = new /obj/item/cable_coil(src)

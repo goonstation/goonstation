@@ -54,6 +54,9 @@ WET FLOOR SIGN
 		..()
 		reagents.add_reagent("cleaner", 100)
 
+/obj/item/spraybottle/cleaner/robot/New()
+	..()
+	create_reagents(25)// no more 100 units on spawn for you, mister!
 /obj/item/spraybottle/cleaner/robot
 	name = "cybernetic cleaner spray bottle"
 	desc = "A cleaner spray bottle jury-rigged to synthesize space cleaner."
@@ -70,12 +73,25 @@ WET FLOOR SIGN
 
 	process()
 		..()
-		// starts with 100 cleaner but only autofills to 25. thanks, nanotrasen!
 		if (src.reagents.total_volume < 25)
 			src.reagents.add_reagent("cleaner", 1)
 		else
 			processing_items.Remove(src)
 		return 0
+
+/obj/item/spraybottle/cleaner/robot/drone
+	name = "cybernetic cleaning spray bottle"
+	desc = "A small spray bottle that very slowly synthesises space cleaner."
+	icon_state = "cleaner_robot"
+
+	process()
+		..()
+		if (src.reagents.total_volume < 25)
+			src.reagents.add_reagent("cleaner", 0.5)
+		else
+			processing_items.Remove(src)
+		return 0
+
 
 /obj/janitorTsunamiWave
 	name = "chemicals"

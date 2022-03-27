@@ -1163,6 +1163,14 @@ MATERIAL
 		var/datum/material/M = getMaterial("steel")
 		src.setMaterial(M)
 
+/obj/item/tile/cardboardcolor
+	desc = "They keep the floor in a good and walkable condition. At least, they would if they were actually made of steel."
+	New()
+		..()
+		var/datum/material/M = getMaterial("cardboardcolor")
+
+		src.setMaterial(M)
+
 /obj/item/sheet/electrum
 	New()
 		..()
@@ -1191,4 +1199,6 @@ MATERIAL
 /obj/item/rods/steel/fullstack
 	amount = 50
 /obj/item/tile/steel/fullstack
+	amount = 80
+/obj/item/tile/cardboardcolor/fullstack
 	amount = 80
