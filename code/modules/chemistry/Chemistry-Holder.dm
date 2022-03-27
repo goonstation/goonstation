@@ -927,9 +927,22 @@ datum
 
 				. += "<br><span class='alert'>Spectroscopic analysis:</span>"
 
+				var/absorb = 0 // this is some hacky code for checking if youre using an emagged spectro eye, but i have no better idea how to do this
+				if(istype(user, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = user
+					var/obj/item/organ/eye/left_eye = H.get_organ("left_eye")
+					var/obj/item/organ/eye/right_eye = H.get_organ("right_eye")
+					if(left_eye.emagged && istype(left_eye, /obj/item/organ/eye/cyber/spectro))
+						absorb += 0.1
+					if(right_eye.emagged && istype(right_eye, /obj/item/organ/eye/cyber/spectro))
+						absorb += 0.1
+
 				for(var/current_id in reagent_list)
 					var/datum/reagent/current_reagent = reagent_list[current_id]
 					. += "<br><span class='alert'>[current_reagent.volume] units of [current_reagent.name]</span>"
+					if(absorb > 0)
+						user.reagents.add_reagent(current_reagent.id, current_reagent.volume*absorb)
+						src.remove_reagent(current_reagent.id, current_reagent.volume*absorb)
 			return
 
 		proc/get_reagents_fullness()
