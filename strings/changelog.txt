@@ -1,4 +1,9 @@
 
+(t)sun mar 27 22
+(u)NightmareChamillian
+(p)7443
+(e)⚖|balance
+(*)Weird and stupid material properties' numbers have been made less weird and stupid
 (t)sat mar 26 22
 (u)aloe
 (+)Spaceacillin cures food poisoning. This is medically dubious but a guy in an alleyway told me it works so uh.
