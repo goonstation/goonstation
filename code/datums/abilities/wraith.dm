@@ -332,11 +332,17 @@
 				boutput(usr, "<span class='alert'>Some mysterious force protects [T] from your influence.</span>")
 				return 1
 			else
-				H.setStatus("stunned", max(H.getStatusDuration("weakened"), max(H.getStatusDuration("stunned"), 3))) // change status "stunned" to max(stunned,weakened,3)
-				// T:stunned = max(max(T:weakened, T:stunned), 3)
-				H.delStatus("weakened")
-				H.lying = 0
+				// this is stupid garbage but I promise you it's better than what was here before
+				// WE NEED: to make sure this fucker is standing so we can bean them with objects
+				H.setStatusMin("stunned", 3 SECONDS)
 				H.show_message("<span class='alert'>A ghostly force compels you to be still on your feet.</span>")
+				if (!H.cant_lie) //if they can't lie down they're already standing and we don't need to do anything
+					H.cant_lie = TRUE
+					H.force_laydown_standup() // lift em up
+					SPAWN(3 SECONDS)
+						H.cant_lie = FALSE
+						H.force_laydown_standup() //set em down
+
 		for (var/obj/O in view(7, holder.owner))
 			if (!O.anchored && isturf(O.loc))
 				if (prob(current_prob))
