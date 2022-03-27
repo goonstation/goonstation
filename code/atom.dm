@@ -972,29 +972,27 @@
 	if (!cross_areas && (get_area(T) != get_area(src))) // don't connect across areas
 		return FALSE
 
-	var/list/CL = connect_to
-	var/list/EL = exceptions
-
-	for (var/i = 1, i <= CL.len, i++)
-		var/match = null
-		if(istype(T, CL[i]))  // connect if we should, unless we shouldn't
-			match = T
-		else if(CL)
-			var/atom/A = locate(CL[i]) in T // ok, what else you got in there?
-			if (!isnull(A))
-				if (istype(A, /atom/movable))
-					var/atom/movable/M = A
-					if (!M.anchored)
-						continue
-					if (istype(A, CL[i]))
-						match = A
-		if (match)
-			if (EL && islist(EL) && EL.len > 0)
-				for (var/j = 1, j <= EL.len, j++)
-					if(istype(match, EL[j]))
-						match = null
-		if (match)
-			return TRUE
+	for (var/connect in connect_to)
+		var/list/matches= list()
+		if(istype(T, connect))
+			matches.Add(T)
+		else
+			for (var/atom/A in T)
+				if (!isnull(A))
+					if (istype(A, /atom/movable))
+						var/atom/movable/M = A
+						if (!M.anchored)
+							continue
+						if (istype(A, connect))
+							matches.Add(A)
+		for (var/match in matches)
+			var/valid = TRUE
+			if (exceptions && islist(exceptions))
+				for (var/exception in exceptions)
+					if (istype(match, exception))
+						valid = FALSE
+			if (valid)
+				return TRUE
 	return FALSE
 
 /// Return a bitflag that represents all potential connected icon_states
@@ -1005,24 +1003,25 @@ N, S, E, W, NE, SE, SW, NW
 1, 2, 4, 8, 16, 32, 64, 128
 */
 /atom/proc/get_connected_directions_bitflag(var/valid_atoms = list(), var/exceptions = list(), var/cross_areas = TRUE, var/connect_diagonal = 0)
+	var/ordir = null
 	var/connected_directions = 0
 	if (!valid_atoms || !islist(valid_atoms))
 		return
 
 	// cardinals first
 	for (var/dir in cardinal)
-		var/turf/T = get_step(src, dir)
-		if (should_auto_connect(T, valid_atoms, exceptions, cross_areas))
+		var/turf/CT = get_step(src, dir)
+		if (should_auto_connect(CT, valid_atoms, exceptions, cross_areas))
 			connected_directions |= dir
 
 	// connect_diagonals 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
 	if (connect_diagonal)
-		for (var/i = 1 to 4)
-			var/dir = ordinal[i]
-			if (connect_diagonal < 2 && (dir & connected_directions != dir))
+		for (var/i = 1 to 4)  // needed for bitshift
+			ordir = ordinal[i]
+			if (connect_diagonal < 2 && (ordir & connected_directions) != ordir)
 				continue
-			var/turf/T = get_step(src, dir)
-			if (should_auto_connect(T, valid_atoms, exceptions, cross_areas))
+			var/turf/OT = get_step(src, ordir)
+			if (should_auto_connect(OT, valid_atoms, exceptions, cross_areas))
 				connected_directions |= 8 << i
 	return connected_directions
 
