@@ -386,7 +386,6 @@
 							smashed_recently = 1
 							SPAWN(smash_cooldown)
 								smashed_recently = 0
-
 							walk_towards(src, src.target, 1, 4)*/
 						else walk_to(src, src.target,1,4)
 
@@ -932,10 +931,7 @@
 		A.set_icon()
 		if(src.current_projectile.shot_sound)
 			playsound(src, src.current_projectile.shot_sound, 60)
-
-
 		if(!A)	return
-
 		if (!istype(target, /turf))
 			A.die()
 			return
@@ -1158,11 +1154,9 @@
 
 	/*proc/elec_zap()
 		playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
-
 		var/list/lineObjs
 		for (var/mob/living/poorSoul in range(src, 5))
 			lineObjs += DrawLine(src, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
-
 			poorSoul << sound('sound/effects/electric_shock.ogg', volume=50)
 			random_burn_damage(poorSoul, 45)
 			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
@@ -1172,13 +1166,10 @@
 			poorSoul:weakened += rand(3,5)
 			if (isdead(poorSoul) && prob(25))
 				poorSoul.gib()
-
 		for (var/obj/machinery/vehicle/poorPod in range(src, 5))
 			lineObjs += DrawLine(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
-
 			playsound(poorPod.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
 			poorPod.ex_act(3)
-
 		SPAWN(0.6 SECONDS)
 			for (var/obj/O in lineObjs)
 				qdel(O)*/
@@ -1265,8 +1256,8 @@
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "minisyndie"
 	density = 1
-	health = 5
-	maxhealth = 5 // for damage description
+	health = 8
+	maxhealth = 8
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
@@ -1284,10 +1275,10 @@
 	beeptext = "prepares to finish the fight!"
 	beepsound = 0
 	alertsound1 = 0
-
+	var/bulletcount = 0
 	alertsound2 = 0
-	projectile_type = /datum/projectile/bullet/revolver_357
-	current_projectile = new/datum/projectile/bullet/revolver_357
+	projectile_type = /datum/projectile/bullet/bullet_22
+	current_projectile = new/datum/projectile/bullet/bullet_22
 	attack_cooldown = 20
 	mats = 12 //this should be funny
 
@@ -1297,6 +1288,8 @@
 		..()
 		voice_gender = pick("male","female")
 		name = "miniature Syndicate Operative"
+		bulletcount = rand(4, 6) // don't give them too many bullets!
+
 
 	select_target(var/atom/newtarget)
 		..()
@@ -1308,15 +1301,18 @@
 	CritterDeath()
 		if(dying) return
 		playsound(src, 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
-		src.visible_message("[src] emits a very small clicking noise.")
 		icon_state = dead_state
-		SPAWN(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)// for the dramatic effect
 			explosion(src, get_turf(src), -1, -1, 2, 3)
 		..()
 
 	Shoot(var/target, var/start, var/user, var/bullet = 0)
 		..()
-		SPAWN(0.5 SECONDS)
-			task = "sleeping"
-			src.health = 0
-			src.CritterDeath()
+		bulletcount--
+		if(bulletcount<=0)// out of ammo? bedtime
+			SPAWN(0.5 SECONDS)
+				src.visible_message("[src] runs out of ammo!")
+				task = "sleeping"
+				src.health = 0
+				src.CritterDeath()
+	
