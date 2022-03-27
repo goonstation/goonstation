@@ -2085,7 +2085,7 @@ var/global/noir = 0
 			//they're nothing so turn them into a traitor!
 			if(ishuman(M) || isAI(M) || isrobot(M) || ismobcritter(M))
 				var/antagonize = "Cancel"
-				antagonize = tgui_alert(usr,"Is not an antagonist, make antagonist?", "antagonist", "Yes", "Cancel")
+				antagonize = tgui_alert(usr,"Is not an antagonist, make antagonist?", "antagonist", list("Yes", "Cancel"))
 				if(antagonize == "Cancel")
 					return
 				if(antagonize == "Yes")
