@@ -380,8 +380,8 @@ Press **Ctrl+T** and start typing the path / name of something you want to find,
 Press **Ctrl+P** and start typing the name of a file you want to open, then hit enter to open it.
 
 ### Using Command Line git
-
-Sometimes it might be useful to type in git commands directly. To do that press **ctrl + \`** to open PowerShell in VS Code. (Or **ctrl + shift + \`** to make a new PowerShell window.) Though this might depend on your operating system and default shell configuration.
+	
+Sometimes it might be useful to type in git commands directly. To do that press <kbd>Ctrl + \`</kbd> to open PowerShell in VS Code. (Or <kbd>Ctrl + Shift + \`</kbd> to make a new PowerShell window.) Though this might depend on your operating system and default shell configuration.
 
 Cloning your repository: `git clone https://github.com/YOURNAME/goonstation`
 
