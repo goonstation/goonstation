@@ -272,8 +272,8 @@
 	quality = 5
 
 	New()
-		setProperty("electrical", 80)
-		setProperty("density", 5)
+		setProperty("electrical", 85)
+		setProperty("density", 35)
 		setProperty("hard", 5)
 		return ..()
 
@@ -283,18 +283,10 @@
 	desc = "Terrestrial steel from Earth."
 	New()
 		setProperty("density", 30)
-		setProperty("hard", 15)
+		setProperty("hard", 30)
 		return ..()
 
-/datum/material/metal/mauxite
-	mat_id = "mauxite"
-	name = "mauxite"
-	desc = "Mauxite is a sturdy common metal."
-	color = "#574846"
-	New()
-		setProperty("density", 50)
-		setProperty("hard", 15)
-		return ..()
+
 
 /datum/material/metal/copper
 	mat_id = "copper"
@@ -304,8 +296,8 @@
 	New()
 		setProperty("stability", 30)
 		setProperty("electrical", 51)
-		setProperty("density", 5)
-		setProperty("hard", 5)
+		setProperty("density", 10)
+		setProperty("hard", 10)
 		return ..()
 
 /datum/material/metal/pharosium
@@ -335,10 +327,19 @@
 	desc = "Bohrum is a heavy and highly durable metal."
 	color = "#3D692D"
 	New()
-		setProperty("density", 40)
-		setProperty("hard", 30)
+		setProperty("density", 50)
+		setProperty("hard", 40)
 		return ..()
 
+/datum/material/metal/mauxite
+	mat_id = "mauxite"
+	name = "mauxite"
+	desc = "Mauxite is a sturdy common metal."
+	color = "#574846"
+	New()
+		setProperty("density", 40)
+		setProperty("hard", 20)
+		return ..()
 
 /datum/material/metal/cerenkite
 	mat_id = "cerenkite"
@@ -383,10 +384,10 @@
 	New()
 		value = 300
 
-		setProperty("density", 2)
+		setProperty("density", 45)
 		setProperty("hard", 2)
 		setProperty("reflective", 55)
-		setProperty("electrical", 60)
+		setProperty("electrical", 68)
 
 		addTrigger(triggersOnAdd, new /datum/materialProc/gold_add())
 		return ..()
@@ -401,8 +402,8 @@
 	New()
 		value = 250
 
-		setProperty("density", 1)
-		setProperty("hard", 1)
+		setProperty("density", 20)
+		setProperty("hard", 10)
 		setProperty("reflective", 50)
 		setProperty("electrical", 60)
 		return ..()
@@ -448,8 +449,8 @@
 	New()
 		value = 10
 
-		setProperty("density", 1)
-		setProperty("hard", 1)
+		setProperty("density", 14) //fucked up values for fucked up material but not silly putty
+		setProperty("hard", 12)
 		setProperty("stability", 3)
 		setProperty("electrical", 20)
 		return ..()
@@ -489,7 +490,8 @@
 	material_flags = MATERIAL_METAL | MATERIAL_ENERGY
 
 	New()
-		setProperty("density", 65)
+		setProperty("density", 60)
+		setProperty("hard", 20)
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
 		return ..()
 
@@ -497,6 +499,12 @@
 /datum/material/crystal
 	material_flags = MATERIAL_CRYSTAL
 	color = "#A3DCFF"
+	New()
+		setProperty("density", 40)
+		setProperty("hard", 40)
+
+		return ..()
+
 
 /datum/material/crystal/glass
 	mat_id = "glass"
@@ -504,6 +512,10 @@
 	desc = "Terrestrial glass. Inferior to Molitz."
 	color = "#A3DCFF"
 	alpha = 180
+	New()
+		setProperty("density", 40)
+		setProperty("hard", 40)
+		return ..()
 
 /datum/material/crystal/molitz
 	mat_id = "molitz"
@@ -514,7 +526,7 @@
 
 	New()
 		setProperty("density", 40)
-		setProperty("hard", 40)
+		setProperty("hard", 45)
 		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
 		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
 		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
@@ -987,7 +999,7 @@
 	edible = 1
 
 	New()
-		setProperty("density", 65)
+		setProperty("density", 45)
 		setProperty("hard", 3)
 		setProperty("corrosion", 70)
 		setProperty("permeable", 95)
@@ -1044,8 +1056,8 @@
 	material_flags = MATERIAL_ORGANIC
 
 	New()
-		setProperty("density", 25)
-		setProperty("hard", 25)
+		setProperty("density", 20)
+		setProperty("hard", 5)
 		setProperty("flammable", 67)
 		addTrigger(triggersOnBlobHit, new /datum/materialProc/cardboard_blob_hit())
 		addTrigger(triggersOnHit, new /datum/materialProc/cardboard_on_hit())
@@ -1410,8 +1422,8 @@
 	color = "#ccffcc"
 
 	New()
-		setProperty("density", 1)
-		setProperty("hard", 1)
+		setProperty("density", 3)
+		setProperty("hard", 5)
 		setProperty("stability", 3)
 		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
 		return ..()
