@@ -1442,10 +1442,10 @@
 		var/obj/item/organ/eye/left_eye = H.get_organ("left_eye")
 		var/obj/item/organ/eye/right_eye = H.get_organ("right_eye")
 
-		if(left_eye.emagged && istype(left_eye, /obj/item/organ/eye/cyber/laser))
+		if(left_eye && left_eye.emagged && istype(left_eye, /obj/item/organ/eye/cyber/laser))
 			power_mod += 1
 
-		if(right_eye.emagged && istype(right_eye, /obj/item/organ/eye/cyber/laser))
+		if(right_eye && right_eye.emagged && istype(right_eye, /obj/item/organ/eye/cyber/laser))
 			power_mod += 1
 
 		var/mult = src.eye_proj == /datum/projectile/laser/eyebeams ? 1 : 0
@@ -1479,11 +1479,11 @@
 
 			if(rand() >= 0.9) // may burn out
 				var/obj/item/organ/eye/E = null
-				if(left_eye.emagged && istype(left_eye, /obj/item/organ/eye/cyber/laser) && right_eye.emagged && istype(right_eye, /obj/item/organ/eye/cyber/laser))
+				if(left_eye && left_eye.emagged && istype(left_eye, /obj/item/organ/eye/cyber/laser) && right_eye && right_eye.emagged && istype(right_eye, /obj/item/organ/eye/cyber/laser))
 					E = pick(left_eye, right_eye)
-				else if(right_eye.emagged && istype(right_eye, /obj/item/organ/eye/cyber/laser))
+				else if(right_eye && right_eye.emagged && istype(right_eye, /obj/item/organ/eye/cyber/laser))
 					E = right_eye
-				else if(left_eye.emagged && istype(left_eye, /obj/item/organ/eye/cyber/laser))
+				else if(left_eye && left_eye.emagged && istype(left_eye, /obj/item/organ/eye/cyber/laser))
 					E = left_eye
 
 				if(E)

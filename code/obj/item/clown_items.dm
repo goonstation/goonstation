@@ -46,6 +46,10 @@ VUVUZELA
 			boutput(M, "<span class='notice'>You slipped on the banana peel!</span>")
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
+				var/obj/item/organ/eye/left_eye = H.get_organ("left_eye")
+				var/obj/item/organ/eye/right_eye = H.get_organ("right_eye")
+				if(left_eye && left_eye.emagged && istype(left_eye, /obj/item/organ/eye/cyber/camera) || right_eye && right_eye.emagged && istype(right_eye, /obj/item/organ/eye/cyber/camera))
+					playsound(H.loc,"sound/misc/laughter/laughtrack[rand(1, 5)].ogg",50,0)
 				if (H.sims)
 					H.sims.affectMotive("fun", -10)
 					if (H == last_touched)

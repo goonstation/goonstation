@@ -932,9 +932,9 @@ datum
 					var/mob/living/carbon/human/H = user
 					var/obj/item/organ/eye/left_eye = H.get_organ("left_eye")
 					var/obj/item/organ/eye/right_eye = H.get_organ("right_eye")
-					if(left_eye.emagged && istype(left_eye, /obj/item/organ/eye/cyber/spectro))
+					if(left_eye && left_eye.emagged && istype(left_eye, /obj/item/organ/eye/cyber/spectro))
 						absorb += 0.1
-					if(right_eye.emagged && istype(right_eye, /obj/item/organ/eye/cyber/spectro))
+					if(right_eye && right_eye.emagged && istype(right_eye, /obj/item/organ/eye/cyber/spectro))
 						absorb += 0.1
 
 				for(var/current_id in reagent_list)
