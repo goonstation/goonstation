@@ -107,68 +107,6 @@
 			src.UpdateOverlays(working_image, "NWcorner")
 		else
 			src.UpdateOverlays(null, "NWcorner")
-		// //christ this is ugly
-		// //seconded, its also broken for tables in diagonal directions // maybe not any more?
-		// var/obj/table/WT = locate(src.auto_type) in get_step(src, WEST)
-		// var/obj/table/ST = locate(src.auto_type) in get_step(src, SOUTH)
-		// var/obj/table/ET = locate(src.auto_type) in get_step(src, EAST)
-		// var/obj/table/NT = locate(src.auto_type) in get_step(src, NORTH)
-
-		// // west, south, and southwest
-		// if (WT && ST)
-		// 	var/obj/table/SWT = locate(src.auto_type) in get_step(src, SOUTHWEST)
-		// 	if (SWT)
-		// 		if (!src.working_image)
-		// 			src.working_image = image(src.icon, "SW")
-		// 		else
-		// 			working_image.icon_state = "SW"
-		// 		src.UpdateOverlays(working_image, "SWcorner")
-		// 	else
-		// 		src.UpdateOverlays(null, "SWcorner")
-		// else
-		// 	src.UpdateOverlays(null, "SWcorner")
-
-		// // south, east, and southeast
-		// if (ST && ET)
-		// 	var/obj/table/SET = locate(src.auto_type) in get_step(src, SOUTHEAST)
-		// 	if (SET)
-		// 		if (!src.working_image)
-		// 			src.working_image = image(src.icon, "SE")
-		// 		else
-		// 			working_image.icon_state = "SE"
-		// 		src.UpdateOverlays(working_image, "SEcorner")
-		// 	else
-		// 		src.UpdateOverlays(null, "SEcorner")
-		// else
-		// 	src.UpdateOverlays(null, "SEcorner")
-
-		// // north, east, and northeast
-		// if (NT && ET)
-		// 	var/obj/table/NET = locate(src.auto_type) in get_step(src, NORTHEAST)
-		// 	if (NET)
-		// 		if (!src.working_image)
-		// 			src.working_image = image(src.icon, "NE")
-		// 		else
-		// 			working_image.icon_state = "NE"
-		// 		src.UpdateOverlays(working_image, "NEcorner")
-		// 	else
-		// 		src.UpdateOverlays(null, "NEcorner")
-		// else
-		// 	src.UpdateOverlays(null, "NEcorner")
-
-		// // north, west, and northwest
-		// if (NT && WT)
-		// 	var/obj/table/NWT = locate(src.auto_type) in get_step(src, NORTHWEST)
-		// 	if (NWT)
-		// 		if (!src.working_image)
-		// 			src.working_image = image(src.icon, "NW")
-		// 		else
-		// 			working_image.icon_state = "NW"
-		// 		src.UpdateOverlays(working_image, "NWcorner")
-		// 	else
-		// 		src.UpdateOverlays(null, "NWcorner")
-		// else
-		// 	src.UpdateOverlays(null, "NWcorner")
 
 	proc/deconstruct() //feel free to burn me alive because im stupid and couldnt figure out how to properly do it- Ze // im helping - haine
 		var/obj/item/furniture_parts/P
