@@ -408,7 +408,7 @@
 		START_TRACKING
 		UpdateIcon()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", .proc/trigger)
 		conveyors = list()
 		SPAWN(0.5 SECONDS)
 			link_conveyors()

@@ -2282,13 +2282,13 @@ Returns:
 			var/list/modList = list()
 
 			for(var/x in procArgs)
-				if(x == "***trigger***")
+				if(x == "*triggering object*")
 					modList += O
 				else
 					modList += x
 
 			if (procTarget)
-				if(procTarget == "***trigger***")
+				if(procTarget == "*triggering object*")
 					if(hascall(O, procName))
 						call(O,procName)(arglist(modList))
 				else
@@ -2299,61 +2299,21 @@ Returns:
 		return
 
 	Click()
-		if(!usr.client.holder) return //basic admin check
+		USR_ADMIN_ONLY
 		var/target = null
 
 		switch(alert("Proc owned by obj?",,"Yes","No"))
 			if("Yes")
 				switch(alert("Proc owned by triggering object?",,"Yes","No"))
 					if("Yes")
-						target = "***trigger***"
+						target = "*triggering object*"
 					if("No")
 						target = input("Select target:","Target",null) as obj|mob|area|turf in world
 			if("No")
 				target = null
 
 		var/procname = input("Procpath","path:", null) as text
-		var/argnum = input("Number of arguments:","Number", 0) as num
-		var/list/listargs = list()
-
-		for(var/i=0, i<argnum, i++)
-			var/class = input("Type of Argument #[i]","Variable Type", null) in list("text","num","type","json","ref","reference","mob reference", "icon","file", "*triggering object*","cancel")
-			switch(class)
-				if("-cancel-")
-					return
-
-				if("*triggering object*")
-					listargs += "***trigger***"
-
-				if("text")
-					listargs += input("Enter new text:","Text",null) as text
-
-				if("num")
-					listargs += input("Enter new number:","Num", 0) as num
-
-				if("type")
-					listargs += input("Enter type:","Type", null) in typesof(/obj,/mob,/area,/turf)
-
-				if("json")
-					listargs += list(json_decode(input("Enter json:") as null|text))
-
-				if ("ref")
-					var/input = input("Enter ref:") as null|text
-					var/ref_target = locate(input)
-					if (!ref_target) ref_target = locate("\[[input]\]")
-					listargs += ref_target
-
-				if("reference")
-					listargs += input("Select reference:","Reference", null) as mob|obj|turf|area in world
-
-				if("mob reference")
-					listargs += input("Select reference:","Reference", null) as mob in world
-
-				if("file")
-					listargs += input("Pick file:","File", null) as file
-
-				if("icon")
-					listargs += input("Pick icon:","Icon", null) as icon
+		var/list/listargs = usr.client.get_proccall_arglist(custom_options = list("*triggering object*"))
 
 		procArgs = listargs
 		procName = procname
@@ -3779,7 +3739,7 @@ var/list/lag_list = new/list()
 				if(!active_mode.saved_var || isnull(active_mode.saved_var)) active_mode = null
 
 			if(istype(active_mode,/datum/engibox_mode/transmute)) //You only have yourself to blame for this. This shitty code is the fault of whoever changed this!!!
-				active_mode:mat_id = input(usr,"Select material","material","gold") in list("gold", "steel", "mauxite", "pharosium","cobryl","bohrum","cerenkite","syreline","glass","molitz","claretine","erebite","plasmastone","plasmaglass","quartz","uqill","telecrystal","miraclium","starstone","flesh","char","koshmarite","viscerite","beeswax","latex","synthrubber","synthblubber","wendigohide","cotton","fibrilith")
+				active_mode:mat_id = input(usr,"Select material","material","gold") in list("gold", "steel", "mauxite", "pharosium","cobryl","bohrum","cerenkite","syreline","glass","molitz","claretine","erebite","plasmastone","plasmaglass","quartz","uqill","telecrystal","miraclium","starstone","flesh","char","koshmarite","viscerite","beeswax","latex","synthrubber","synthblubber","brullbarhide","cotton","fibrilith")
 
 			if(istype(active_mode,/datum/engibox_mode/replicate))
 				active_mode:obj_path = null

@@ -29,6 +29,7 @@
 #include "defines\computer.dm"
 #include "defines\construction.dm"
 #include "defines\critter.dm"
+#include "defines\data_input.dm"
 #include "defines\dialogue.dm"
 #include "defines\dmm_suite.dm"
 #include "defines\door.dm"

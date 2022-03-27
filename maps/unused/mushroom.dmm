@@ -26614,7 +26614,7 @@
 	name = "very r wall";
 	explosion_resistance = 15
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bga" = (
 /turf/space,
 /area/station/turret_protected/ai)
@@ -26713,16 +26713,16 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bgn" = (
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bgo" = (
 /obj/storage/secure/closet/security/armory{
 	req_access_txt = "37"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bgp" = (
 /obj/lattice,
 /turf/space,
@@ -26819,7 +26819,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bgz" = (
 /obj/machinery/light,
 /turf/space,
@@ -27067,7 +27067,7 @@
 	explosion_resistance = 15;
 	name = "very r wall"
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bhb" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";

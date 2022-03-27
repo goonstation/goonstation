@@ -1714,7 +1714,7 @@
 			if (S2.emagged || S2.syndicate) continue
 			if (isghostdrone(S2)) continue
 			S2.law_rack_connection = ticker.ai_law_rack_manager.default_ai_rack
-			logTheThing("station", S2, S2.law_rack_connection, "[S2.name] is connected to the default rack at [log_loc(S2.law_rack_connection)] by admemery")
+			logTheThing("station", S2, null, "[S2.name] is connected to the default rack at [constructName(S2.law_rack_connection)] by admemery")
 			S2.show_text("<b>Your laws have been changed!</b>", "red")
 			S2.playsound_local(S2, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 			S2.show_laws()

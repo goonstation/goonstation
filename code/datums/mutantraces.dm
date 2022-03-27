@@ -985,48 +985,7 @@ TYPEINFO(/datum/mutantrace)
 				if (!mob.organHolder.brain || !mob.organHolder.skull || !mob.organHolder.head)
 					mob.show_message("<span class='notice'>You fail to rise, your brain has been destroyed.</span>")
 				else
-					// ha ha nope. Instead we copy paste a bunch of shit from full_heal but leave out select bits such as : limb regeneration, reagent clearing
-					//mob.full_heal()
-
-					mob.HealDamage("All", 100000, 100000)
-					mob.delStatus("drowsy")
-					mob.stuttering = 0
-					mob.losebreath = 0
-					mob.delStatus("paralysis")
-					mob.delStatus("stunned")
-					mob.delStatus("weakened")
-					mob.delStatus("slowed")
-					mob.delStatus("radiation")
-					mob.change_eye_blurry(-INFINITY)
-					mob.take_eye_damage(-INFINITY)
-					mob.take_eye_damage(-INFINITY, 1)
-					mob.take_ear_damage(-INFINITY)
-					mob.take_ear_damage(-INFINITY, 1)
-					mob?.organHolder?.brain?.unbreakme()
-					mob.take_brain_damage(-120)
-					mob.health = mob.max_health
-					if (mob.stat > 1)
-						setalive(mob)
-
-					mob.remove_ailments()
-					mob.take_toxin_damage(-INFINITY)
-					mob.take_oxygen_deprivation(-INFINITY)
-					mob.change_misstep_chance(-INFINITY)
-
-					mob.blinded = 0
-					mob.bleeding = 0
-					mob.blood_volume = 500
-
-					if (!mob.organHolder)
-						mob.organHolder = new(mob)
-					mob.organHolder.create_organs()
-
-					if (mob.get_stamina() != (STAMINA_MAX + mob.get_stam_mod_max()))
-						mob.set_stamina(STAMINA_MAX + mob.get_stam_mod_max())
-
-					mob.update_body()
-					mob.update_face()
-
+					mob.full_heal()
 
 					mob.emote("scream")
 					mob.visible_message("<span class='alert'><B>[mob]</B> rises from the dead!</span>")

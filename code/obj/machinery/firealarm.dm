@@ -48,7 +48,7 @@
 	UpdateIcon()
 
 	AddComponent(/datum/component/mechanics_holder)
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleinput)
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, alarm_frequency)
 
 /obj/machinery/firealarm/disposing()

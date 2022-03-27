@@ -125,6 +125,14 @@
 
 				larva.beeMom = affected_mob
 				larva.beeMomCkey = affected_mob.ckey
+
+				if (ishuman(affected_mob))
+					var/mob/living/carbon/human/human = affected_mob
+					if (human.head && !istype(human.head, /obj/item/clothing/head/void_crown))
+						var/obj/item/clothing/head/cloned_hat = new human.head.type
+						cloned_hat.set_loc(larva)
+						larva.stored_hat = cloned_hat
+
 				playsound(affected_mob.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 				affected_mob.visible_message("<span class='alert'><b>[affected_mob] horks up a bee larva!  Grody!</b></span>", "<span class='alert'><b>You cough up...a bee larva. Uhhhhh</b></span>")
 

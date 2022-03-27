@@ -20,8 +20,6 @@
 
 	initialize()
 		armory_area = get_area_by_type(/area/station/ai_monitored/armory)
-		if (!armory_area || armory_area.contents.len <= 1)
-			armory_area = get_area_by_type(/area/station/security/armory)
 
 		src.net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, control_frequency)

@@ -2043,7 +2043,10 @@
 /obj/item/paper/manufacturer_blueprint/loafer
 	blueprint = /datum/manufacture/mechanics/loafer
 
+/******************** AI Law Rack Blueprint (probably a terrible idea) *******************/
 
+/obj/item/paper/manufacturer_blueprint/lawrack
+	blueprint = /datum/manufacture/mechanics/lawrack
 
 /******************** AI Display Blueprints (should be temporary but we know how that goes in coding) *******************/
 
