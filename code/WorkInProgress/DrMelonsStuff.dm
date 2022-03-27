@@ -96,7 +96,6 @@
 	icon_state = "bathtub"
 	flags = OPENCONTAINER
 	var/mob/living/carbon/human/occupant = null
-	var/original_occupant_layer = null
 	var/default_reagent = "water"
 
 	New()
@@ -107,7 +106,6 @@
 		if(src.occupant)
 			src.occupant.set_loc(get_turf(src))
 			src.occupant = null
-			src.original_occupant_layer = null
 		. = ..()
 
 	mob_flip_inside(var/mob/user)
@@ -193,14 +191,12 @@
 				qdel(O)
 			if (count > 0)
 				boutput(user, "<span class='alert'>...and flush something down the drain. Damn!</span>")
-		return
 
 	proc/enter_bathtub(mob/living/carbon/human/target)
 		target.set_loc(src)
 		src.occupant = target
 		src.UpdateOverlays(src.SafeGetOverlayImage("bath_edge", 'icons/obj/stationobjs.dmi', "bath_edge", MOB_LAYER - 0.1), "bath_edge")
 		src.on_reagent_change()
-		src.original_occupant_layer = target.layer
 		target.layer = MOB_LAYER - 0.3
 
 		src.vis_contents += target
@@ -211,18 +207,16 @@
 		boutput("<span class='notice'>You get out of the bath.</span>")
 		src.occupant.visible_message("<span class='notice'>[src.occupant] gets out of the bath.</span>")
 		src.occupant.pixel_y = 0
-		src.occupant.layer = src.original_occupant_layer
+		src.occupant.layer = initial(occupant.layer)
 		src.occupant.set_loc(get_turf(src))
 		src.vis_contents -= src.occupant
 		src.occupant = null
-		src.original_occupant_layer = null
 		src.UpdateOverlays(null, "fluid_overlay")
 		src.UpdateOverlays(null, "bath_edge")
 		src.on_reagent_change()
 
 		for (var/obj/O in src)
 			O.set_loc(get_turf(src))
-		return
 
 	relaymove(mob/user as mob, dir)
 		src.eject_occupant()
@@ -240,7 +234,6 @@
 			else
 				src.reagents.clear_reagents()
 				on_reagent_change()
-		return
 
 	MouseDrop_T(mob/living/carbon/human/target, mob/user)
 		if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
@@ -263,7 +256,6 @@
 		src.add_fingerprint(user)
 		enter_bathtub(target)
 		target.visible_message(msg)
-		return
 
 	is_open_container()
 		return 1
@@ -272,7 +264,7 @@
     set name = "Draw A Bath" // idea: emagging bathtub makes the bath spit out a photo of itself when you draw a bath?
     set src in oview(1)
     set category = "Local"
-    if (get_dist(usr, src) <= 1 && !usr.stat)
+    if (get_dist(usr, src) <= 1 && !is_incapacitated(usr))
         playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_2.ogg", 50, 1)
         src.reagents.add_reagent(default_reagent, 100)
         usr.visible_message("<span class='notice'>[usr] draws a bath.</span>",\
