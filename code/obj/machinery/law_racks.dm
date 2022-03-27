@@ -8,7 +8,8 @@
 	mats = list("MET-1" = 20, "MET-2" = 5, "INS-1" = 10, "CON-1" = 10) //this bitch should be expensive
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_WRENCH | DECON_NOBORG
 	layer = EFFECTS_LAYER_UNDER_1 //high layer, same as trees which are also tall as shit
-
+	///unique id for logs - please don't ever assign except in ai_law_rack_manager.register
+	var/unique_id = "OMG THIS WASN'T SET OH NO THIS SHOULD NEVER HAPPEN AHHH"
 	var/datum/light/light
 	var/const/MAX_CIRCUITS = 9
 	/// list of aiModules ref'd by slot number.
@@ -46,6 +47,7 @@
 		. = ..()
 
 	was_deconstructed_to_frame(mob/user)
+		logTheThing("station", user, null, "<b>deconstructed</b> rack [constructName(src)]")
 		ticker?.ai_law_rack_manager.unregister_rack(src)
 		src.drop_all_modules()
 		UpdateIcon()
@@ -55,6 +57,7 @@
 	was_built_from_frame(mob/user, newly_built)
 		if(isrestrictedz(src.z) || !issimulatedturf(src.loc))
 			boutput(user, "Something about this area prevents you from constructing the [src]!")
+			logTheThing("station", user, null, "tried to construct a [src] in restricted area [log_loc(src)]")
 			var/obj/item/electronics/frame/F = new
 			var/turf/target_loc = get_turf(src.loc)
 			F.name = "[src.name] frame"
@@ -70,10 +73,22 @@
 		//this should always be hard to deconstruct, even if player built
 		src.deconstruct_flags = initial(src.deconstruct_flags)
 		ticker?.ai_law_rack_manager.register_new_rack(src)
+		logTheThing("station", user, null, "constructed a new rack [constructName(src)] from frame")
 		. = ..()
 
-	updateHealth(var/prevHealth)
+	changeHealth(change,var/causer=null) //override so I can pass causer down the chain. Gross.
+		var/prevHealth = _health
+		_health += change
+		_health = min(_health, _max_health)
+		updateHealth(prevHealth,causer)
+
+
+	updateHealth(var/prevHealth, var/causer = null)
+		if(!causer)
+			causer = "Unknown"
+
 		if(_health <= 0)
+			logTheThing("station", causer, null, "[causer] <b>destroyed</b> the [constructName(src)] causing a law update")
 			src.visible_message("<span class='alert'><b>The [src] collapses completely!</b></span>")
 			playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
 			for(var/turf/T in range(src,0))
@@ -122,8 +137,12 @@
 			src.visible_message("<span class='alert'><b>Some of the [src]'s shelves collapse!</b></span>")
 
 		if(law_update_needed)
+			logTheThing("station", causer, null, "[causer] damaged the [constructName(src)] causing a law update")
 			UpdateIcon()
 			UpdateLaws()
+
+
+
 
 		//handle particles
 		if(_health <= 75)
@@ -173,19 +192,19 @@
 			. += "It's about to collapse!"
 
 	blob_act(power)
-		changeHealth(-power*0.15)
+		changeHealth(-power*0.15,"blob")
 
 	ex_act(severity)
 		src.material?.triggerExp(src, severity)
 		switch(severity)
 			if(1.0)
-				changeHealth(rand(-105,-90))
+				changeHealth(rand(-105,-90),"explosion severity [severity]")
 				return
 			if(2.0)
-				changeHealth(rand(-80,-50))
+				changeHealth(rand(-80,-50),"explosion severity [severity]")
 				return
 			if(3.0)
-				changeHealth(rand(-30,-10))
+				changeHealth(rand(-30,-10),"explosion severity [severity]")
 				return
 
 	bullet_act(obj/projectile/P)
@@ -203,15 +222,15 @@
 
 		switch (P.proj_data.damage_type)
 			if (D_KINETIC)
-				changeHealth(-damage)
+				changeHealth(-damage,P.shooter)
 			if (D_PIERCING)
-				changeHealth(-damage*1.25)
+				changeHealth(-damage*1.25,P.shooter)
 			if (D_SLASHING)
-				changeHealth(-damage*0.75)
+				changeHealth(-damage*0.75,P.shooter)
 			if (D_BURNING)
-				changeHealth(-damage*0.5)
+				changeHealth(-damage*0.5,P.shooter)
 			if (D_ENERGY)
-				changeHealth(-damage*0.75)
+				changeHealth(-damage*0.75,P.shooter)
 
 		if(!P.proj_data.silentshot)
 			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
@@ -448,7 +467,12 @@
 		for (var/obj/item/aiModule/X in law_circuits)
 			if(!X)
 				continue
-			lawOut += "[law_counter++]: [X.get_law_text()]"
+			var/lt = X.get_law_text(TRUE)
+			if(islist(lt))
+				for(var/law in lt)
+					lawOut += "[law_counter++]: [law]"
+			else
+				lawOut += "[law_counter++]: [lt]"
 
 		return jointext(lawOut, glue)
 
@@ -462,16 +486,18 @@
 		for (var/obj/item/aiModule/X in law_circuits)
 			if(!X)
 				continue
-			laws["[law_counter]"] = X.get_law_text()
-			law_counter++
-
+			var/lt = X.get_law_text(TRUE)
+			if(islist(lt))
+				for(var/law in lt)
+					laws["[law_counter++]"] = law
+			else
+				laws["[law_counter]"] = lt
 		return laws
 
 	/** Pushes law updates to all connected AIs and Borgs - notification text allows you to customise the header
 	* Defaults to <h3>Law update detected</h3>
 	*/
 	proc/UpdateLaws(var/notification_text="<h3>Law update detected</h3>")
-		logTheThing("station", src, null, "Law Update: "+src.format_for_logs())
 		var/list/affected_mobs = list()
 		for (var/mob/living/silicon/R in mobs)
 			if (isghostdrone(R))
@@ -490,7 +516,7 @@
 		var/list/mobtextlist = list()
 		for(var/mob/living/M in affected_mobs)
 			mobtextlist += constructName(M, "admin")
-		logTheThing("station", src, null, "the law update affects the following mobs: "+mobtextlist.Join(", "))
+		logTheThing("station", src, null, "Law Update:<br> [src.format_for_logs()]<br>The law update affects the following mobs: "+mobtextlist.Join(", "))
 
 	proc/toggle_welded_callback(var/slot_number,var/mob/user)
 		if(src.welded[slot_number])
@@ -514,15 +540,15 @@
 		equipped.set_loc(src)
 		user.visible_message("<span class='alert'>[user] slides a module into the law rack</span>", "<span class='alert'>You slide the module into the rack.</span>")
 		tgui_process.update_uis(src)
-		logTheThing("station", user, src, "inserts law module into rack([log_loc(src)]): [equipped]:[equipped.lawText] at slot [slotNum]")
-		message_admins("[key_name(user)] added a new law to rack [log_loc(src)]: [equipped], with text '[equipped.lawText]' at slot [slotNum]")
+		logTheThing("station", user, null, "[constructName(user)] <b>inserts</b> law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
+		message_admins("[key_name(user)] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]")
 		UpdateIcon()
 		UpdateLaws()
 
 	proc/remove_module_callback(var/slotNum,var/mob/user)
 		//add circuit to hand
-		logTheThing("station", user, src, "removes law module from rack([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].lawText] at slot [slotNum]")
-		message_admins("[key_name(user)] removed a law from rack([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].lawText] at slot [slotNum]")
+		logTheThing("station", user, null, "[constructName(user)] <b>removes</b> law module from rack([constructName(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
+		message_admins("[key_name(user)] removed a law from rack at ([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
 		user.visible_message("<span class='alert'>[user] slides a module out of the law rack</span>", "<span class='alert'>You slide the module out of the rack.</span>")
 		user.put_in_hand_or_drop(src.law_circuits[slotNum])
 		src.law_circuits[slotNum] = null

@@ -24,7 +24,7 @@ export const AIRack = (props, context) => {
                 key={index}
                 title={item ? lawTitles[index] : "Empty"}
                 open={item ? true : false}>
-                <BlockQuote>{item ? lawText[index] : "<Empty Slot>"}</BlockQuote>
+                <BlockQuote preserveWhitespace>{item ? lawText[index] : "<Empty Slot>"}</BlockQuote>
                 <Button
                   icon={item ? 'circle' : 'circle-o'}
                   content={item ? "Remove" : "Empty"}
