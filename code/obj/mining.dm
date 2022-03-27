@@ -1003,7 +1003,6 @@
 		space_overlays()
 			. = ..()
 			if (length(space_overlays))
-				//new /obj/bioluminescent_algae(get_turf(src))
 				var/list/color_vals = bioluminescent_algae?.get_color(src)
 				if (length(color_vals))
 					UpdateOverlays(image('icons/obj/objects.dmi', "vine-light1"), "glow_vine")
