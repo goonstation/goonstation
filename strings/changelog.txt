@@ -1,4 +1,69 @@
 
+(t)sat mar 26 22
+(u)glowbold
+(p)7955
+(e)|
+(+)Crowbars can now stand up and lay down dowsing rods.
+(u)glowbold
+(p)7932
+(e)🐛|bug
+(+)Chocolate pie is now made from sweet dough and chocolate.
+(u)Flappybat
+(p)7907
+(e)🗺⚖|mapping, balance
+(*)Kondaru armory has changed, it now has a NARCS instead of an interior turret, it has interior/exterior logical areas so the exterior turrets no longer attempt to shoot through the walls and the turret control panel has moved inside and now controls the exterior turrets (HoS access).
+(u)Gannets
+(p)7951
+(e)|
+(*)Syndicate requisition tokens now award players 2 utility credits instead of 1.
+(*)Hi-grip Assault Boots now cost 2 utility credits.
+(*)Adds a pouch of 4 beartraps as a new 1 cost utility purchase.
+(u)Amylizzle
+(p)7961
+(e)🗺|mapping
+(+)Adds a blueprint for the AI Law Rack to the Chief Engineer's locker on all maps in rotation. Don't use it for crime!
+(u)Amylizzle
+(p)7973
+(e)🐛|bug
+(+)Bank account balance now counts towards richest escapee.
+(u)Flaborized
+(p)7962
+(e)🎨|sprites
+(+)Resprited cargo loaders.
+(u)NightmareChamillian
+(p)7833
+(e)|
+(*)The mini-syndies from the syndicate pipe bomb now have more ammo and health, but shoot .22 rounds instead of .375
+(t)fri mar 25 22
+(u)NightmareChamillian
+(p)7778
+(e)🎨|sprites
+(*)Adds seven new faces for ghostdrones to choose from! See minor changes for a list
+(+)Faces are as follows: sleepy, exclamation mark, question mark, lopsy, kitty, and eye
+(+)Furthermore, drones can now nod (Ctrl+N) and shake (Ctrl+X) their heads to respond to basic yes-no questions
+(t)thu mar 24 22
+(u)tarmunora
+(e)⚖|balance
+(*)Wrestler changes: suplexes have a brief self-stun and will never be "explosive" (that's what your powers are for); throw power now knocks people around after the first second of spinning; all powers cd reduced by 10s and stun duration increased by 1s; cooldowns no longer scale with stamina buffs
+(+)You can only suplex once per person per flip
+(u)tarmunora
+(e)⚖|balance
+(+)Power cell sec utility purchase cost raised to 2 credits, only-a-baton loadout comes with an additional utility token.
+(u)aloe
+(+)The nuke op sniper has been changed a bit- it no longer disorients people (still does stamina damage), loses some damage when shooting through obstacles, and doesn't throw people back as far. The class gets an extra mag in their pouch to offset this a bit.
+(t)wed mar 23 22
+(u)Hans
+(p)7636
+(e)🆕|feature
+(*)Added ricin to the game as a slow stealth poison.
+(u)Flappybat
+(p)7777
+(e)⚖|balance
+(+)Nuclear operative assault pods are detected much later when there are more than 70 players.
+(u)Eagle
+(p)7677
+(e)🗺⚖|mapping, balance
+(+)The blueprint for a certain gun has been swapped out with some examples of it.
 (t)tue mar 22 22
 (u)Amylizzle
 (p)7904
@@ -60,7 +125,7 @@
 (u)Cogwerks
 (e)🎨🗺|sprites, mapping
 (+)Made some more background art for a bunch of orbital objects
-(+)Slightly rearranged solar control rooms on Cogmaps 1 & 2 for view of stars 
+(+)Slightly rearranged solar control rooms on Cogmaps 1 & 2 for view of stars
 (t)mon mar 14 22
 (u)Conchuckter
 (p)7784

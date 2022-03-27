@@ -6597,18 +6597,11 @@
 /area/station/turret_protected/AIsat)
 "bGV" = (
 /obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "1-8"
 	},
 /obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "4-8"
 	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable,
 /turf/simulated/floor/caution/south,
 /area/listeningpost)
 "bHg" = (
@@ -7198,19 +7191,12 @@
 	},
 /area/station/crew_quarters/hor)
 "bOs" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
+/obj/machinery/power/terminal{
+	dir = 8
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable,
 /turf/simulated/floor/plating/jen,
 /area/listeningpost)
 "bOA" = (
@@ -11416,6 +11402,17 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
+"dcB" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/plating/jen,
+/area/listeningpost)
 "dcD" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -15293,13 +15290,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/engineering)
 "egM" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/computer/power_monitor{
-	dir = 4
-	},
+/obj/machinery/power/smes,
+/obj/cable,
 /turf/simulated/floor/plating/jen,
 /area/listeningpost)
 "ehA" = (
@@ -15441,13 +15433,16 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "ekR" = (
+/obj/machinery/power/apc/autoname_north/noaicontrol,
+/obj/machinery/light{
+	dir = 8
+	},
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_north/noaicontrol,
-/obj/machinery/light{
-	dir = 8
+/obj/cable{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/caution/south,
 /area/listeningpost)
@@ -21450,12 +21445,12 @@
 /area/station/hangar/qm)
 "fUN" = (
 /obj/storage/crate,
-/obj/item/fuel_pellet/cerenkite,
-/obj/item/fuel_pellet/cerenkite,
-/obj/item/fuel_pellet/cerenkite,
-/obj/item/fuel_pellet/cerenkite,
-/obj/item/fuel_pellet/cerenkite,
-/obj/item/fuel_pellet/cerenkite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
 /turf/simulated/floor/circuit,
 /area/listeningpost)
 "fUU" = (
@@ -29051,8 +29046,10 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "ifA" = (
-/obj/machinery/power/rtg,
-/obj/cable,
+/obj/cable{
+	d2 = 2;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/plating/jen,
 /area/listeningpost)
 "ifC" = (
@@ -33658,6 +33655,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
+"jCE" = (
+/obj/machinery/r_door_control/podbay/security/new_walls/south{
+	pixel_y = -24
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
 "jCF" = (
 /obj/storage/secure/closet/fridge,
 /obj/item/storage/box/donkpocket_kit,
@@ -35718,14 +35721,14 @@
 /area/station/crew_quarters/kitchen)
 "kjJ" = (
 /obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "1-8"
 	},
 /obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "1-2"
 	},
-/obj/cable,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/plating/jen,
 /area/listeningpost)
 "kjM" = (
@@ -40798,14 +40801,6 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
-"lJF" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/plating/jen,
-/area/listeningpost)
 "lJL" = (
 /obj/table/auto,
 /obj/machinery/light/incandescent/netural,
@@ -43030,6 +43025,11 @@
 "mqx" = (
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/solar/west)
+"mqN" = (
+/obj/cable,
+/obj/machinery/power/rtg/erebite_loaded,
+/turf/simulated/floor/plating/jen,
+/area/listeningpost)
 "mqY" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -51531,6 +51531,13 @@
 /obj/machinery/bot/secbot,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
+"oOT" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/listeningpost)
 "oPb" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 1
@@ -52005,12 +52012,7 @@
 /area/station/crew_quarters/arcade)
 "oXA" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
-	},
-/obj/machinery/light{
-	dir = 4
 	},
 /turf/simulated/floor/plating/jen,
 /area/listeningpost)
@@ -63296,11 +63298,7 @@
 /turf/simulated/floor/blueblack/corner,
 /area/station/turret_protected/AIsat)
 "scx" = (
-/obj/machinery/door_control{
-	id = "hangar_security";
-	name = "Secure Hangar Door Control";
-	pixel_x = -24
-	},
+/obj/machinery/door_control/podbay/security/new_walls/west,
 /turf/simulated/floor/bot/white,
 /area/station/hangar/sec)
 "scE" = (
@@ -105805,7 +105803,7 @@ alB
 alB
 alB
 alB
-alB
+jCE
 plN
 jBH
 fMH
@@ -163286,7 +163284,7 @@ iyR
 bGV
 bOs
 ifA
-iOW
+mqN
 iOW
 csA
 csA
@@ -163586,10 +163584,10 @@ hzO
 qCC
 dRn
 pSb
-lJF
+oXA
 kjJ
-ifA
-iOW
+oOT
+mqN
 csA
 csA
 csA
@@ -163890,8 +163888,8 @@ sGi
 pSb
 kvx
 oXA
-ifA
-iOW
+dcB
+mqN
 csA
 csA
 csA

@@ -16,6 +16,7 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 /obj/item/circuitboard
 	density = 0
 	anchored = 0
+	health = 6
 	w_class = W_CLASS_SMALL
 	name = "Circuit board"
 	icon = 'icons/obj/module.dmi'

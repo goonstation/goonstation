@@ -158,6 +158,10 @@
 	ai_movedelay = 3
 	ai_attacked = 0
 
+	if(abilityHolder)
+		if(!abilityHolder.getAbility(/datum/targetable/ai_toggle))
+			abilityHolder.addAbility(/datum/targetable/ai_toggle)
+
 /mob/living/carbon/human/proc/ai_stop()
 	ai_set_active(0)
 	ai_laststep = 0

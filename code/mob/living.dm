@@ -1681,7 +1681,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		if (src.pushing && (src.pulling != src.pushing))
 			. *= lerp(1, max(src.pushing.p_class, 1), pushpull_multiplier)
 
-		for (var/obj/item/grab/G in list(src.r_hand, src.l_hand))
+		for (var/obj/item/grab/G in src.equipped_list())
 			var/mob/M = G.affecting
 			if (isnull(M))
 				continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them

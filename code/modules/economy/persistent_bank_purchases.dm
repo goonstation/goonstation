@@ -444,7 +444,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					shippingmarket.receive_crate(S)
 					sleep(randfloat(10 SECONDS, 20 SECONDS))
 					if(istype(get_area(S), /area/station))
-						break
+						return
 					boutput(M, "<span class='alert'><b>Something went wrong with mail order, retrying!</b></span>")
 				var/list/turf/last_chance_turfs = get_area_turfs(/area/station/quartermaster/office, 1)
 				if(length(last_chance_turfs))

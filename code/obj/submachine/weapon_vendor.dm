@@ -140,6 +140,8 @@
 	accepted_token(var/token)
 		if (istype(token, /obj/item/requisition_token/security/assistant))
 			src.credits[WEAPON_VENDOR_CATEGORY_ASSISTANT]++
+		else if (istype(token, /obj/item/requisition_token/security/utility))
+			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
 		else
 			src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
 			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
@@ -190,11 +192,12 @@
 		materiel_stock += new/datum/materiel/utility/noslip_boots
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
 		materiel_stock += new/datum/materiel/utility/comtac
+		materiel_stock += new/datum/materiel/utility/beartraps
 
 	accepted_token()
 		src.credits[WEAPON_VENDOR_CATEGORY_SIDEARM]++
 		src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
-		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
+		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+=2
 		..()
 
 	disposing()
@@ -268,7 +271,7 @@
 /datum/materiel/loadout/justabaton
 	name = "Just a Baton"
 	path = /obj/item/storage/belt/security/baton
-	description = "One belt containing a baton and barrier. Does NOT come with a ranged weapon. Only for officers who DO NOT want a ranged weapon!"
+	description = "One belt containing a baton, a barrier, and a spare utility token. Does NOT come with a ranged weapon. Only for officers who DO NOT want a ranged weapon!"
 
 /datum/materiel/utility/morphineinjectors
 	name = "Morphine Autoinjectors"
@@ -294,6 +297,7 @@
 	name = "Spare Power Cell"
 	path = /obj/item/ammo/power_cell/self_charging/disruptor
 	description = "A small(100u) self-charging power cell repurposed from a decommissioned distruptor blaster."
+	cost = 2
 
 /datum/materiel/utility/nightvisiongoggles
 	name = "Night Vision Goggles"
@@ -439,6 +443,7 @@
 	name = "Hi-grip Assault Boots"
 	path = /obj/item/clothing/shoes/swat/noslip
 	description = "Avoid slipping in firefights with these combat boots designed to provide enhanced grip and ankle stability."
+	cost = 2
 
 /datum/materiel/utility/bomb_decoy
 	name = "Decoy Bomb Balloon"
@@ -450,6 +455,12 @@
 	path = /obj/item/device/radio/headset/syndicate/comtac
 	description = "A two-way radio headset designed to protect against any incoming hazardous noise, including flashbangs."
 	vr_allowed = FALSE
+
+/datum/materiel/utility/beartraps
+	name = "Beartraps"
+	path = /obj/item/storage/beartrap_pouch
+	description = "A pouch of 4 pressure sensitive beartraps used to snare and maim unexpecting victims entering your target area."
+
 // Requisition tokens
 
 /obj/item/requisition_token
@@ -473,6 +484,10 @@
 
 		assistant
 			desc = "An NT-provided token compatible with the Security Weapons Vendor. This one says <i>for security assistant use only</i>."
+			icon_state = "req-token-secass"
+
+		utility
+			desc = "An NT-provided token that entitles the owner to one additional utility purchase."
 			icon_state = "req-token-secass"
 
 #undef WEAPON_VENDOR_CATEGORY_SIDEARM
