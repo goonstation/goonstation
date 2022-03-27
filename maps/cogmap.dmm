@@ -51260,7 +51260,7 @@
 	icon_state = "0-4"
 	},
 /obj/marker/supplymarker,
-/obj/machinery/power/apc/autoname_west,
+/obj/machinery/power/apc/autoname_west/noaicontrol,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -54375,10 +54375,6 @@
 	icon_state = "11"
 	},
 /area/shuttle/arrival/station)
-"fYP" = (
-/obj/storage/crate/robotparts,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/storage)
 "fYR" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/firedoor_spawn,
@@ -89689,7 +89685,7 @@ aap
 aar
 aar
 aar
-fYP
+bXs
 bXs
 bXs
 bXs

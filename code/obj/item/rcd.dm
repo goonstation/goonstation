@@ -49,6 +49,7 @@ Broken RCD + Effects
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
+	health = 7
 	w_class = W_CLASS_NORMAL
 	m_amt = 50000
 
@@ -866,6 +867,7 @@ Broken RCD + Effects
 	anchored = 0.0
 	m_amt = 30000
 	g_amt = 15000
+	health = 6
 	var/matter = 10
 
 	get_desc()

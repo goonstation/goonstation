@@ -816,10 +816,13 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 							H.changeStatus("weakened", 3 SECONDS)
 							playsound(H.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 							H.emote("scream")
+							logTheThing("combat", user, null, "spy thief claimed [constructTarget(H)]'s [HP] at [log_loc(user)]")
 						else
 							user.show_text("That isn't the right limb!", "red")
 					else
 						M.drop_from_slot(delivery,get_turf(M))
+				if (!istype(delivery,/obj/item/parts))
+					logTheThing("debug", user, null, "spy thief claimed delivery of: [delivery] at [log_loc(user)]")
 				qdel(delivery)
 				if (user.mind && user.mind.special_role == ROLE_SPY_THIEF)
 					user.mind.spy_stolen_items += B.name
@@ -1127,6 +1130,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/list/spells = list()
 	flags = FPRINT | ONBELT | TABLEPASS
 	throwforce = 5
+	health = 5
 	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20

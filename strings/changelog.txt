@@ -1,5 +1,20 @@
 
+(t)sun mar 27 22
+(u)Amylizzle
+(p)7992
+(e)|
+(+)Adds a hint to the AI Law Module description telling users they can reset it with a multitool if it's glitchy.
+(u)NightmareChamillian
+(p)7443
+(e)⚖|balance
+(*)Weird and stupid material properties' numbers have been made less weird and stupid
 (t)sat mar 26 22
+(u)aloe
+(+)Spaceacillin cures food poisoning. This is medically dubious but a guy in an alleyway told me it works so uh.
+(u)glowbold
+(p)7955
+(e)|
+(+)Crowbars can now stand up and lay down dowsing rods.
 (u)glowbold
 (p)7932
 (e)🐛|bug
