@@ -1,5 +1,9 @@
 
 (t)sun mar 27 22
+(u)Amylizzle
+(p)7992
+(e)|
+(+)Adds a hint to the AI Law Module description telling users they can reset it with a multitool if it's glitchy.
 (u)NightmareChamillian
 (p)7443
 (e)⚖|balance
