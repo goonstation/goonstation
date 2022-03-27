@@ -656,19 +656,14 @@ WET FLOOR SIGN
 		..()
 /obj/item/sponge/ghostdronesafe
 	name = "Integrated sponge"
-	desc = "A cleaning utensil with a trough system to prevent any fluids from escaping when wrung out."
-
+	desc = "A cleaning utensil with an associated drainage system to prevent fluids from dripping when wrung out."
 
 /obj/item/sponge/ghostdronesafe/attack_self(mob/user as mob)
-	if (ON_COOLDOWN(user, "ghostdrone sponge wringing", 5 SECONDS))// from playtesting: Wtihout the cooldown, this is stupid powerful
+	if (ON_COOLDOWN(user, "ghostdrone sponge wringing", 5 SECONDS))// Wtihout the cooldown, this is stupid powerful
 		boutput(user, "<span class='notice'> The [src] is still processing fluids, please wait!</span>")
 		return
 	user.visible_message("<span class='notice'>[user] drains the [src].</span>")
 	src.reagents.clear_reagents()
-
-
-
-
 
 /obj/item/sponge/cheese
 	name = "cheese-shaped sponge"
