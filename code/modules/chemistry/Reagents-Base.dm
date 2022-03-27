@@ -296,8 +296,8 @@ datum
 						M.vomit()
 						M.nutrition -= rand(3,5)
 						M.take_toxin_damage(10) // im bad
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS))
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 3 SECONDS))
+						M.setStatusMax("stunned", 3 SECONDS * mult)
+						M.setStatusMax("weakened", 3 SECONDS * mult)
 
 		lithium
 			name = "lithium"
