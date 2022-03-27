@@ -1454,17 +1454,18 @@
 		PJ.power *= power_mod
 
 		if(power_mod >= 1.5)
-			H.show_message("<span class='alert'>Your [mult ? "laser cybereyes overload" : "laser cybereye overloads"]!</span>")
-
 			switch(rand(0,5)) // random drawback
 				if(0)
+					H.show_message("<span class='alert'>Your [mult ? "laser cybereyes twitch" : "laser cybereye twitches"] briefly!</span>")
 					T = pick(getneighbours(T), T) // be inaccurate
 				if(1)
+					H.show_message("<span class='alert'>Your [mult ? "laser cybereyes make" : "laser cybereye makes"] a very loud noise when shooting!</span>")
 					PJ.shot_sound_extrarange += 10
 					PJ.shot_volume += 50
 				if(2)
 					PJ.projectile_speed += rand(-15,15)
 				if(3)
+					H.show_message("<span class='alert'>Your [mult ? "laser cybereyes overload" : "laser cybereye overloads"]!</span>")
 					if(mult)
 						explosion(H, H.last_turf, 0, 0, 1, 2)
 					else
