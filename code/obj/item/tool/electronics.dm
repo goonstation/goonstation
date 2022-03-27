@@ -3,7 +3,8 @@
  */
 
 
-/////////////Electronics parts/////////////
+//Electronics parts
+
 /obj/item/electronics/
 	name = "electronic thing"
 	icon = 'icons/obj/electronics.dmi'
@@ -373,7 +374,8 @@
 			return 0
 	return 1
 
-/////////////Other stuff/////////////
+// Other stuff
+
 /obj/item/electronics/soldering
 	name = "soldering iron"
 	icon = 'icons/obj/electronics.dmi'
