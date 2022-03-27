@@ -499,12 +499,6 @@
 /datum/material/crystal
 	material_flags = MATERIAL_CRYSTAL
 	color = "#A3DCFF"
-	New()
-		setProperty("density", 40)
-		setProperty("hard", 40)
-
-		return ..()
-
 
 /datum/material/crystal/glass
 	mat_id = "glass"
