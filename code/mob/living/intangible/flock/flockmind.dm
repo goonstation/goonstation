@@ -113,7 +113,7 @@
 /mob/living/intangible/flock/flockmind/Topic(href, href_list)
 	if(href_list["origin"])
 		var/atom/movable/origin = locate(href_list["origin"])
-		if(origin)
+		if(!QDELETED(origin))
 			src.set_loc(get_turf(origin))
 
 // receive volunteers to be a promoted flockdrone
