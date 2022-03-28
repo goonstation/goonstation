@@ -102,6 +102,9 @@
 	New()
 		..()
 		src.create_reagents(500)
+		if (prob(1))
+			default_reagent = "sodawater"
+			desc += " But, it's faintly fizzing?"
 
 	disposing()
 		if(src.occupant)
