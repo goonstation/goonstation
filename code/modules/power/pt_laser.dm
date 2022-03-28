@@ -272,7 +272,7 @@
 
 	var/scale_factor = round(bound_width / 96)
 	for(var/dist = 0, dist < range / scale_factor, dist += scale_factor) // creates each field tile
-		for(var/i in 1 to scale_factor)
+		for(var/i in 1 to (dist == 0 ? 1 : scale_factor))
 			T = get_step(T, dir)
 		if(!T) break //edge of the map
 		var/obj/lpt_laser/laser = new/obj/lpt_laser(T)
