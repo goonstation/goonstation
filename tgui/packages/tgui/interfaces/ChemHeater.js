@@ -1,3 +1,4 @@
+import { classes } from 'common/react';
 import { useBackend } from "../backend";
 import { AnimatedNumber, Box, Button, Dimmer, Icon, Knob, Section, SectionWithTitleOverflow, Stack } from '../components';
 import { Window } from '../layouts';
@@ -88,14 +89,14 @@ const ChemDisplay = (props, context) => {
       }>
       <ReagentGraph container={container} />
       <ReagentList container={container} />
-      <Box className={"ChemHeater__TemperatureBox " + (working && `ChemHeater__TemperatureBox__${getTemperatureChangeName(temperature, targetTemperature)}`)}>
+      <Box className={classes("ChemHeater__TemperatureBox ", working && `ChemHeater__TemperatureBox__${getTemperatureChangeName(temperature, targetTemperature)}`)}>
         {!totalVolume || (
           <Box
             fontSize={2}
             color={getTemperatureColor(temperature)}
             className={"ChemHeater__TemperatureNumber"}>
             <Icon name="long-arrow-alt-down"
-              className={"ChemHeater__TemperatureArrow " + (working && `ChemHeater__TemperatureArrow__${getTemperatureChangeName(temperature, targetTemperature)}`)}
+              className={classes("ChemHeater__TemperatureArrow ", working && `ChemHeater__TemperatureArrow__${getTemperatureChangeName(temperature, targetTemperature)}`)}
               pt="2px"
               pr={0.25}
               style={{
@@ -107,7 +108,7 @@ const ChemDisplay = (props, context) => {
           </Box>
         )}
       </Box>
-      {!!props.container || (
+      {!props.container && (
         <Dimmer>
           <Button
             icon="eject"
