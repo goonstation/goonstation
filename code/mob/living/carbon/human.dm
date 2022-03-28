@@ -653,7 +653,7 @@
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
 				var/datum/mind/M = src.mind
 				sleep(20 SECONDS)
-				if(!M || M.disposed || M.current != src || isalive(src))
+				if(!M || M.disposed || (M.current != src && !istype(M.current, /mob/dead)) || isalive(src))
 					return
 				if (M.current)
 					M.current.show_text("<b>We released a headspider, using up some of our DNA reserves.</b>", "blue")
