@@ -654,13 +654,16 @@
 				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(src) //we spawn the headspider inside this dude immediately.
 				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, .proc/ghostize) //if this dude gets grindered or cremated or whatever, we go with it
 				src.mind?.transfer_to(HS) //ok we're a headspider now
-				HS.owner = src.mind
 				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
 				HS.changeling = C
+				C.transferOwnership(HS)
+				C.owner = HS
+				C.reassign_hivemind_target_mob()
 				sleep(20 SECONDS)
 				if(HS.disposed || !HS.mind || HS.mind.disposed || isdead(HS)) // we went somewhere else, or suicided, or something idk
 					return
 				boutput(HS, "<b class = 'hint'>We released a headspider, using up some of our DNA reserves.</b>")
+				HS.set_loc(get_turf(src)) //be free!!!
 				src.visible_message("<span class='alert'><B>[src]</B>'s head detaches, sprouts legs and wanders off looking for food!</span>")
 				//make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards
 				remove_ability_holder(/datum/abilityHolder/changeling/)
@@ -671,10 +674,6 @@
 
 				logTheThing("combat", src, null, "became a headspider at [log_loc(src)].")
 
-
-				HS.changeling.transferOwnership(HS)
-				HS.changeling.owner = HS
-				HS.changeling.reassign_hivemind_target_mob()
 				if(src.wear_mask)
 					var/obj/item/dropped_mask = src.wear_mask
 					src.u_equip(dropped_mask)
