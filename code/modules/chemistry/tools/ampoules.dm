@@ -70,3 +70,10 @@
 /obj/item/reagent_containers/ampoule/smelling_salts/New()
 	..()
 	reagents.add_reagent("smelling_salt", 5)
+
+/obj/item/reagent_containers/ampoule/ricin
+	name = "ampoule (ricin)"
+
+/obj/item/reagent_containers/ampoule/ricin/New()
+	..()
+	reagents.add_reagent("ricin", 5)
