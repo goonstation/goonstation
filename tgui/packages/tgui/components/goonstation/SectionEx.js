@@ -1,19 +1,21 @@
 import { classes } from 'common/react';
-import { computeBoxClassName, computeBoxProps } from '../Box';
+import { computeBoxClassName } from '../Box';
 import { Section } from '../Section';
 
-export const SectionWithTitleOverflow = props => {
+export const SectionEx = props => {
   const {
     className,
+    capitalize,
     ...rest
   } = props;
   return (
     <Section
       className={classes([
-        'SectionWithTitleOverflow',
+        'SectionEx',
+        capitalize && 'SectionEx__capitalize',
         className,
         computeBoxClassName(rest),
       ])}
-      {...computeBoxProps(rest)} />
+      {...rest} />
   );
 };

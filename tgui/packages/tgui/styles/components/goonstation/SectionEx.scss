@@ -1,4 +1,4 @@
-.SectionWithTitleOverflow {
+.SectionEx {
   .Section__title {
     display: flex;
   }
@@ -14,5 +14,11 @@
     position: inherit;
     right: inherit;
     flex: none;
+  }
+
+  &__capitalize {
+    .Section__titleText {
+      text-transform: capitalize
+    }
   }
 }

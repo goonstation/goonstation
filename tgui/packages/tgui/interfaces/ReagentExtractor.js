@@ -1,5 +1,5 @@
 import { useBackend, useSharedState, useLocalState } from "../backend";
-import { Box, Button, Dimmer, Divider, Flex, NumberInput, Section, SectionWithTitleOverflow, Stack } from '../components';
+import { Box, Button, Dimmer, Divider, Flex, NumberInput, Section, SectionEx, Stack } from '../components';
 import { Window } from '../layouts';
 import { Fragment } from 'inferno';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo.js';
@@ -60,15 +60,9 @@ const ReagentDisplay = (props, context) => {
   const [transferAmount, setTransferAmount] = useSharedState(context, `transferAmount_${container.id}`, 10);
 
   return (
-    <SectionWithTitleOverflow
-      title={
-        <Box as="span"
-          style={{
-            "text-transform": "capitalize",
-          }}>
-          {container.name}
-        </Box>
-      }
+    <SectionEx
+      capitalize
+      title={container.name}
       buttons={
         <>
           <Button
@@ -166,7 +160,7 @@ const ReagentDisplay = (props, context) => {
           </Flex>
         </Flex.Item>
       </Flex>
-    </SectionWithTitleOverflow>
+    </SectionEx>
   );
 };
 

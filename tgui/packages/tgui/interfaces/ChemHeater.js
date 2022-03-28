@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { useBackend } from "../backend";
-import { AnimatedNumber, Box, Button, Dimmer, Icon, Knob, Section, SectionWithTitleOverflow, Stack } from '../components';
+import { AnimatedNumber, Box, Button, Dimmer, Icon, Knob, Section, SectionEx, Stack } from '../components';
 import { Window } from '../layouts';
 import { freezeTemperature, getTemperatureColor, getTemperatureIcon, getTemperatureChangeName } from './common/temperatureUtils.js';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo.js';
@@ -70,15 +70,9 @@ const ChemDisplay = (props, context) => {
   const { temperature, totalVolume } = container;
 
   return (
-    <SectionWithTitleOverflow
-      title={
-        <Box as="span"
-          style={{
-            "text-transform": "capitalize",
-          }}>
-          {container.name}
-        </Box>
-      }
+    <SectionEx
+      capitalize
+      title={container.name}
       buttons={
         <Button
           icon="eject"
@@ -119,6 +113,6 @@ const ChemDisplay = (props, context) => {
           </Button>
         </Dimmer>
       )}
-    </SectionWithTitleOverflow>
+    </SectionEx>
   );
 };
