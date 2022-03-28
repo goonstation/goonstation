@@ -442,11 +442,14 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		..()
 
 	is_friend(var/mob/living/C)
-		return istype(C.get_id(), /obj/item/card/id/syndicate)
+		return istype(C.get_id(), /obj/item/card/id/syndicate) || istype(C, /mob/living/critter/gunbot/syndicate) //dumb lazy
 
 /obj/deployable_turret/syndicate/active
-	active = 1
 	anchored = 1
+
+	New(loc)
+		..(src.loc, src.dir)
+		src.toggle_activated()
 
 /obj/deployable_turret/riot
 	name = "N.A.R.C.S."
@@ -478,7 +481,10 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 /obj/deployable_turret/riot/active
 	anchored = 1
-	active = 1
+
+	New(loc)
+		..(src.loc, src.dir)
+		src.toggle_activated()
 
 /////////////////////////////
 //   Turret Ability Stuff  //

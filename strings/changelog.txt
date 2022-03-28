@@ -1,5 +1,22 @@
 
+(t)mon mar 28 22
+(u)Yellow
+(p)7547
+(e)⚖|balance
+(*)Changes up Research Assistant, Medical Assistant, and Technical Assistant to make them more applicable for those who want to learn
+(+)Gives both Barbers and Musicians civilian headsets
+(t)sun mar 27 22
+(u)Amylizzle
+(p)7992
+(e)|
+(+)Adds a hint to the AI Law Module description telling users they can reset it with a multitool if it's glitchy.
+(u)NightmareChamillian
+(p)7443
+(e)⚖|balance
+(*)Weird and stupid material properties' numbers have been made less weird and stupid
 (t)sat mar 26 22
+(u)aloe
+(+)Spaceacillin cures food poisoning. This is medically dubious but a guy in an alleyway told me it works so uh.
 (u)glowbold
 (p)7955
 (e)|

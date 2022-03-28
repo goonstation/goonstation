@@ -47,7 +47,11 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 		return
 
 	get_desc()
-		return "It reads, \"<em>[get_law_text()]</em>\""
+		. = ""
+		if(src.glitched)
+			.+= "It isn't working right. You could use a multitool to reset it.<br>"
+		. +=  "It reads, \"<em>[get_law_text()]</em>\""
+
 
 	proc/input_law_info(var/mob/user, var/title = null, var/text = null, var/default = null)
 		if (!user)

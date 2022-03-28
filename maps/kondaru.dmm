@@ -37166,12 +37166,12 @@
 /area/listeningpost)
 "cla" = (
 /obj/storage/crate,
-/obj/item/fuel_pellet/cerenkite,
-/obj/item/fuel_pellet/cerenkite,
-/obj/item/fuel_pellet/cerenkite,
-/obj/item/fuel_pellet/cerenkite,
-/obj/item/fuel_pellet/cerenkite,
-/obj/item/fuel_pellet/cerenkite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "clb" = (
@@ -37277,10 +37277,10 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "clo" = (
-/obj/machinery/power/rtg,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/power/rtg/erebite_loaded,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "clp" = (
@@ -37390,7 +37390,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/power/rtg,
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
@@ -37400,6 +37399,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/power/rtg/erebite_loaded,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "clB" = (
@@ -37447,7 +37447,7 @@
 /area/listeningpost)
 "clH" = (
 /obj/cable,
-/obj/machinery/power/rtg,
+/obj/machinery/power/rtg/erebite_loaded,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "clI" = (
@@ -49649,9 +49649,9 @@
 	},
 /obj/machinery/turretid{
 	name = "External perimeter turret deactivation control";
+	pixel_y = -24;
 	req_access = null;
-	turretArea = /area/station/turret_protected/armory_outside;
-	pixel_y = -24
+	turretArea = /area/station/turret_protected/armory_outside
 	},
 /obj/access_spawn/hos,
 /obj/deployable_turret/riot{
