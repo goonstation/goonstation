@@ -83,14 +83,15 @@ const ChemDisplay = (props, context) => {
       }>
       <ReagentGraph container={container} />
       <ReagentList container={container} />
-      <Box className={classes("ChemHeater__TemperatureBox ", working && `ChemHeater__TemperatureBox__${getTemperatureChangeName(temperature, targetTemperature)}`)}>
+      <Box
+        className={classes(["ChemHeater__TemperatureBox", working && `ChemHeater__TemperatureBox__${getTemperatureChangeName(temperature, targetTemperature)}`])}>
         {!totalVolume || (
           <Box
             fontSize={2}
             color={getTemperatureColor(temperature)}
             className={"ChemHeater__TemperatureNumber"}>
             <Icon name="long-arrow-alt-down"
-              className={classes("ChemHeater__TemperatureArrow ", working && `ChemHeater__TemperatureArrow__${getTemperatureChangeName(temperature, targetTemperature)}`)}
+              className={classes(["ChemHeater__TemperatureArrow", working && `ChemHeater__TemperatureArrow__${getTemperatureChangeName(temperature, targetTemperature)}`])}
               pt="2px"
               pr={0.25}
               style={{
