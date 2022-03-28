@@ -491,7 +491,7 @@
 				for(var/law in lt)
 					laws["[law_counter++]"] = law
 			else
-				laws["[law_counter]"] = lt
+				laws["[law_counter++]"] = lt
 		return laws
 
 	/** Pushes law updates to all connected AIs and Borgs - notification text allows you to customise the header
