@@ -1354,7 +1354,8 @@
 /turf/unsimulated/floor/white,
 /area/hospital)
 "acQ" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/straight_jacket,
 /turf/unsimulated/floor/white,
 /area/hospital)
@@ -1665,7 +1666,8 @@
 /turf/unsimulated/wall/setpieces/hospital/window,
 /area/hospital)
 "adH" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/window/south,
 /obj/item/clothing/suit/straight_jacket,
 /turf/unsimulated/floor/white,
@@ -3082,7 +3084,8 @@
 /turf/unsimulated/floor/engine/caution/north,
 /area/hospital/samostrel)
 "agR" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
@@ -4117,7 +4120,8 @@
 	},
 /area/hospital/samostrel)
 "akk" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -4367,7 +4371,8 @@
 /turf/unsimulated/floor/carpet/office,
 /area/hospital/samostrel)
 "alL" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -4957,7 +4962,8 @@
 /turf/unsimulated/floor/carpet/office,
 /area/hospital/samostrel)
 "anS" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -11279,7 +11285,8 @@
 	},
 /area/marsoutpost)
 "aIX" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -12060,7 +12067,8 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aLD" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "aLE" = (
@@ -12367,7 +12375,8 @@
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
 "aMr" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
@@ -12620,7 +12629,8 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/upper_arctic/pod2)
 "aNe" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/window/cubicle,
 /obj/item/clothing/suit/bedsheet,
 /obj/decal/cleanable/cobweb2,
@@ -12771,7 +12781,8 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/upper_arctic/pod2)
 "aNE" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/window/cubicle,
 /obj/item/clothing/suit/bedsheet,
 /obj/decal/fakeobjects/skeleton,
@@ -13638,7 +13649,8 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/upper_arctic/pod2)
 "aQb" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/window/cubicle{
 	dir = 1
 	},
@@ -14217,7 +14229,8 @@
 /turf/unsimulated/floor/arctic/plating,
 /area/lower_arctic/mining)
 "aRW" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/unsimulated/floor/carpet{
 	dir = 9;
@@ -14245,7 +14258,8 @@
 	},
 /area/crater/biodome/crew)
 "aRZ" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/unsimulated/floor/carpet{
 	dir = 5;
@@ -14515,7 +14529,8 @@
 	},
 /area/lower_arctic/lower)
 "aSU" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/unsimulated/floor/carpet{
 	dir = 10;
@@ -14537,7 +14552,8 @@
 	},
 /area/crater/biodome/crew)
 "aSX" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/under/misc/chaplain/rasta,
 /obj/item/clothing/head/rastacap,
 /obj/item/clothing/suit/bedsheet,
@@ -19613,7 +19629,8 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bgD" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
@@ -19670,7 +19687,8 @@
 /turf/unsimulated/floor/wood,
 /area/marsoutpost)
 "bgL" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/decal/cleanable/dirt,
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
@@ -19694,7 +19712,8 @@
 /turf/unsimulated/floor/purple/corner,
 /area/marsoutpost)
 "bgP" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -19858,7 +19877,8 @@
 /turf/unsimulated/floor/wood,
 /area/marsoutpost)
 "bhp" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/decal/cleanable/urine,
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
@@ -20146,7 +20166,8 @@
 /turf/unsimulated/floor/wood,
 /area/marsoutpost)
 "bic" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
@@ -20154,7 +20175,8 @@
 /turf/unsimulated/floor/wood,
 /area/marsoutpost)
 "bid" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/decal/cleanable/dirt,
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
@@ -20542,7 +20564,8 @@
 	},
 /area/precursor/pit)
 "biZ" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/unsimulated/floor/carpet/grime,
 /area/drone/crew_quarters)
@@ -20867,7 +20890,8 @@
 	},
 /area/precursor/pit)
 "bjM" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /obj/item/gun/kinetic/gyrojet,
 /turf/unsimulated/floor/carpet/grime,
@@ -21204,7 +21228,8 @@
 /turf/unsimulated/floor/purple/side,
 /area/marsoutpost)
 "bkC" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
@@ -28815,7 +28840,8 @@
 	},
 /area/iomoon)
 "bFh" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
@@ -28857,7 +28883,8 @@
 	},
 /area/iomoon)
 "bFx" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/yellow,
 /turf/unsimulated/floor/carpet/grime,
 /area/owlery/staffhall)
@@ -29110,7 +29137,8 @@
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
 "bGi" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
@@ -29869,7 +29897,8 @@
 /turf/unsimulated/wall/setpieces/leadwindow,
 /area/solarium)
 "bIn" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/hop,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
@@ -29889,7 +29918,8 @@
 	},
 /area/solarium)
 "bIq" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/unsimulated/floor/carpet{
 	dir = 5;
@@ -29968,7 +29998,8 @@
 /turf/space/no_replace,
 /area/space)
 "bID" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /obj/item/clothing/under/gimmick/snazza,
 /turf/unsimulated/floor/carpet{
@@ -29982,7 +30013,8 @@
 	},
 /area/solarium)
 "bIF" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/unsimulated/floor/carpet{
 	dir = 6;
@@ -32509,7 +32541,8 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/crew)
 "bQr" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
@@ -32892,7 +32925,8 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "bRx" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
@@ -34661,7 +34695,8 @@
 	},
 /area/sim/racing_track)
 "bXF" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/device/audio_log/meatland_03,
 /turf/unsimulated/floor/white,
 /area/meat_derelict/main)
@@ -36406,7 +36441,8 @@
 	},
 /area/meat_derelict/guts)
 "cde" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -40344,7 +40380,8 @@
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
 "cnv" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /obj/item/paper/ACNote,
 /turf/unsimulated/floor/carpet{
@@ -40967,7 +41004,8 @@
 /turf/unsimulated/floor/tatami/east,
 /area/dojo)
 "cpM" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
@@ -42328,7 +42366,8 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
 "ctP" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -42781,7 +42820,8 @@
 	},
 /area/sim/racing_entry)
 "cve" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/window/cubicle{
 	dir = 1
 	},
@@ -43131,7 +43171,8 @@
 /turf/unsimulated/floor/caution/north,
 /area/drone/office)
 "cvU" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/royal,
 /obj/critter/crow{
 	generic = 0;
@@ -43594,7 +43635,8 @@
 /area/owlery/staffhall)
 "cxg" = (
 /obj/item/clothing/suit/bedsheet/random,
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /turf/unsimulated/floor/carpet/grime,
 /area/owlery/staffhall)
 "cxh" = (
@@ -43750,7 +43792,8 @@
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
 "cxB" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/blue,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
@@ -50296,7 +50339,8 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cNQ" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/hop,
 /turf/unsimulated/floor/carpet/grime,
 /area/owlery/office)
@@ -59021,7 +59065,8 @@
 	},
 /area/syndicate_station/battlecruiser)
 "dhw" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red";
@@ -59048,7 +59093,8 @@
 	},
 /area/syndicate_station/battlecruiser)
 "dhy" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red";
@@ -59333,7 +59379,8 @@
 	},
 /area/syndicate_station/battlecruiser)
 "dip" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red";
@@ -59352,7 +59399,8 @@
 /turf/unsimulated/floor/redblack,
 /area/syndicate_station/battlecruiser)
 "dir" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red";
@@ -70584,7 +70632,8 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
 "dUl" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -74123,7 +74172,8 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
 "oYg" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/blue,
 /obj/item/toy/plush/small/kitten/wizard,
 /turf/unsimulated/floor/wood/two{
@@ -75622,7 +75672,8 @@
 	icon_state = "blue"
 	})
 "sMO" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/pink,
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";

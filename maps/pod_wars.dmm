@@ -1452,7 +1452,8 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "fy" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/window/cubicle{
 	dir = 1
 	},
@@ -2068,7 +2069,8 @@
 	},
 /area/pod_wars/spacejunk/fstation/maintdock)
 "hJ" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/window/cubicle{
 	dir = 1
 	},
@@ -2599,7 +2601,8 @@
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
 "jR" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/window/cubicle{
 	dir = 4
 	},
@@ -3969,7 +3972,8 @@
 /turf/simulated/wall/asteroid/pod_wars,
 /area/pod_wars/asteroid/major/maj_3)
 "pb" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/orange,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
@@ -4879,7 +4883,8 @@
 /obj/window/cubicle{
 	dir = 1
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/yellow,
 /turf/simulated/floor/purple/side{
 	dir = 6
@@ -5680,7 +5685,8 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "vl" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/window/cubicle{
 	dir = 1
 	},
@@ -6212,7 +6218,8 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/uvb67/power)
 "wZ" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/red,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/black,
@@ -7567,7 +7574,8 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "Cb" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
@@ -10856,7 +10864,8 @@
 	},
 /area/pod_wars/team1/bridge)
 "Pa" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/window/cubicle{
 	dir = 1
 	},
@@ -12977,7 +12986,8 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "Xh" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/window/cubicle{
 	dir = 1
 	},
@@ -13714,7 +13724,8 @@
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
 "ZQ" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/window/cubicle{
 	dir = 4
 	},

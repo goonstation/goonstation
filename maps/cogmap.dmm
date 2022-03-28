@@ -1319,7 +1319,8 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "aeF" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/decal/cleanable/dirt,
 /obj/machinery/light/small{
 	dir = 1;
@@ -1751,7 +1752,8 @@
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/armory_outside)
 "afT" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -2057,7 +2059,8 @@
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/armory_outside)
 "agE" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -3584,7 +3587,8 @@
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/quartersB)
 "akL" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -3827,7 +3831,8 @@
 	name = "Catering Hangar"
 	})
 "alp" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -3886,7 +3891,8 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/wreckage)
 "alG" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -4688,7 +4694,8 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "anL" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -5105,7 +5112,8 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -5530,7 +5538,8 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "aqp" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -15031,7 +15040,8 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -16197,7 +16207,8 @@
 	name = "S light switch";
 	pixel_y = -24
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -20448,7 +20459,8 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/sticker/ribbon/first_place{
 	pixel_x = -1
 	},
@@ -24066,7 +24078,8 @@
 /turf/simulated/floor/purple/side,
 /area/station/janitor/office)
 "bjs" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/machinery/light_switch{
 	name = "E light switch";
 	pixel_x = 24
@@ -26243,7 +26256,8 @@
 	},
 /area/space)
 "boq" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -34546,7 +34560,8 @@
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred5"
@@ -44525,7 +44540,8 @@
 /turf/simulated/floor/grime,
 /area/station/security/checkpoint/cargo)
 "ckd" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -44894,7 +44910,8 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/head)
 "ckS" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/machinery/light_switch{
 	name = "E light switch";
 	pixel_x = 24
@@ -51084,7 +51101,8 @@
 /turf/space,
 /area/space)
 "cAj" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
@@ -54565,6 +54583,20 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"gpE" = (
+/obj/machinery/bot/mulebot/broken,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
+/obj/window/cubicle{
+	dir = 2
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "blue";
+	icon_state = "bedsheet-blue"
+	},
+/turf/simulated/floor/blue,
+/area/station/crew_quarters/quartersB)
 "gpQ" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
@@ -58990,7 +59022,8 @@
 /turf/simulated/floor,
 /area/station/hangar/main)
 "oFI" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
@@ -62860,7 +62893,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "uHv" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -104998,7 +105032,7 @@ ada
 adO
 aeB
 afh
-agE
+gpE
 agS
 agE
 ahE

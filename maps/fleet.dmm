@@ -311,7 +311,8 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/maru)
 "aP" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
@@ -503,7 +504,8 @@
 	name = "Asclepius Primary Zone"
 	})
 "bi" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
@@ -576,7 +578,8 @@
 /turf/space,
 /area/space)
 "br" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -855,7 +858,8 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/tenebrae)
 "bR" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
@@ -1816,7 +1820,8 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/science/artifact)
 "dX" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
@@ -2312,7 +2317,8 @@
 /turf/simulated/floor/caution/north,
 /area/station/garden/owlery)
 "eW" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
@@ -3194,7 +3200,8 @@
 /turf/simulated/floor/caution/west,
 /area/station/garden/owlery)
 "gK" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -4075,7 +4082,8 @@
 	name = "Hammer Crew Quarters"
 	})
 "iM" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -4093,7 +4101,8 @@
 	name = "Hammer Crew Quarters"
 	})
 "iO" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -4136,7 +4145,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Chief Engineer"
 	},
@@ -5475,7 +5485,8 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/security/secwing)
 "lu" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
@@ -5483,7 +5494,8 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/secwing)
 "lv" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
@@ -5564,7 +5576,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "lD" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -6988,7 +7001,8 @@
 	name = "Hammer Command"
 	})
 "ot" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -8249,7 +8263,8 @@
 	name = "Asclepius Quarters"
 	})
 "qT" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Geneticist"
 	},
@@ -8267,7 +8282,8 @@
 	name = "Asclepius Quarters"
 	})
 "qV" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -8360,7 +8376,8 @@
 	name = "Asclepius Quarters"
 	})
 "re" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Medical Doctor"
 	},
@@ -8683,7 +8700,8 @@
 	name = "Asclepius Quarters"
 	})
 "rM" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Roboticist"
 	},
@@ -8696,7 +8714,8 @@
 	name = "Asclepius Quarters"
 	})
 "rN" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/machinery/light/small,
 /obj/landmark/start{
 	name = "Roboticist"
@@ -8938,7 +8957,8 @@
 	name = "Asclepius Quarters"
 	})
 "sm" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Chef"
 	},
@@ -9467,7 +9487,8 @@
 	name = "Dionysus Cryocore"
 	})
 "to" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Botanist"
 	},
@@ -9481,7 +9502,8 @@
 	})
 "tp" = (
 /obj/machinery/light/small,
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Botanist"
 	},
@@ -9772,7 +9794,8 @@
 	name = "Asclepius Command"
 	})
 "tS" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
@@ -10377,7 +10400,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
 "uT" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
@@ -10818,7 +10842,8 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/bridge/hos)
 "vK" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
@@ -12311,7 +12336,8 @@
 	name = "Dionysus Primary Zone"
 	})
 "yv" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
@@ -12688,7 +12714,8 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Janitor"
 	},
@@ -13636,7 +13663,8 @@
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "AU" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
@@ -13845,7 +13873,8 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/storage/tech)
 "Bs" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Clown"
 	},
@@ -15092,7 +15121,8 @@
 	name = "Meridian Command"
 	})
 "DO" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
@@ -18066,7 +18096,8 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "JB" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /obj/machinery/light_switch{
 	name = "W light switch";
@@ -18128,7 +18159,8 @@
 	frequency = 1485;
 	name = "Security Intercom"
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /obj/machinery/light_switch{
 	name = "E light switch";
@@ -18748,7 +18780,8 @@
 /turf/simulated/floor/plating,
 /area/research_outpost/indigo_rye)
 "Lo" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
@@ -19019,7 +19052,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/indigo_rye)
 "LW" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
@@ -19090,7 +19124,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/indigo_rye)
 "Mc" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
@@ -20699,7 +20734,8 @@
 	name = "Dionysus Primary Zone"
 	})
 "OC" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Geneticist"
 	},
@@ -22266,7 +22302,8 @@
 	name = "Demeter Solar Array"
 	})
 "QC" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
@@ -22616,7 +22653,8 @@
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "Rs" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Engineer"
 	},

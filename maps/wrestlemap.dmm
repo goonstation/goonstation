@@ -3122,7 +3122,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/quartermaster/office)
 "bph" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest{
 	name = "Corpse Tunnel"
@@ -7344,7 +7345,8 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "dbK" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/pink,
 /obj/decal/tile_edge/stripe{
 	dir = 8;
@@ -11141,7 +11143,8 @@
 	},
 /area/station/chapel/sanctuary)
 "ezi" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/pink,
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -13898,7 +13901,8 @@
 /turf/space,
 /area/space)
 "fKY" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/orange,
 /obj/decal/cleanable/blood,
 /turf/simulated/floor/carpet/green/fancy/edge/se,
@@ -14381,7 +14385,8 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/northwest)
 "fWu" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/black,
 /obj/machinery/light/small/warm,
 /obj/landmark/start{
@@ -16052,7 +16057,8 @@
 	name = "Ringside Hallway"
 	})
 "gKu" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/hop,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
@@ -17011,7 +17017,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "hev" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/black,
 /obj/item/clothing/under/gimmick/macho,
 /turf/simulated/floor/wood,
@@ -18072,7 +18079,8 @@
 	name = "Laundry Room"
 	})
 "hCV" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -21852,7 +21860,8 @@
 	name = "The Ring Entrance"
 	})
 "jgF" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/red,
 /turf/simulated/floor/carpet/purple/fancy/edge/sw,
 /area/listeningpost)
@@ -22735,7 +22744,8 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
 "jzU" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -25659,7 +25669,8 @@
 	name = "Laundry Room"
 	})
 "kOK" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor,
 /area/station/medical/cdc)
@@ -25788,7 +25799,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "kRT" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/blue,
 /obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/cobwebFloor,
@@ -28983,7 +28995,8 @@
 /turf/simulated/floor/caution/east,
 /area/station/hangar/sec)
 "mkJ" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/toy/plush/small/bunny,
 /obj/decal/cleanable/paper,
 /turf/simulated/floor/plating,
@@ -33320,7 +33333,8 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/crew_quarters/arcade)
 "ohs" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -34529,7 +34543,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "oLf" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/blue,
 /obj/disposalpipe/segment/mail/vertical,
 /obj/item/toy/plush/small/monkey/assistant,
@@ -35139,7 +35154,8 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/data)
 "oYv" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /obj/decoration/clock{
 	pixel_y = 30
@@ -36006,7 +36022,8 @@
 	name = "Crashed Limo"
 	})
 "pvP" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -38138,7 +38155,8 @@
 /turf/simulated/floor/delivery/caution,
 /area/station/quartermaster/office)
 "qqi" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/captain,
 /obj/decal/tile_edge/stripe{
 	dir = 4
@@ -46227,7 +46245,8 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/science/teleporter)
 "tKt" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/pink,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quarters_north)
@@ -46807,7 +46826,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/the_cage)
 "uav" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/yellow,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quarters_north)
@@ -47807,7 +47827,8 @@
 /turf/simulated/floor/black,
 /area/station/janitor/office)
 "uwX" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/royal,
 /obj/decal/cleanable/ketchup,
 /obj/item/toy/plush/small/bunny,
@@ -50285,7 +50306,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "vyr" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quarters_south)
@@ -56775,7 +56797,8 @@
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/pharmacy)
 "ylE" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/red,
 /turf/simulated/floor/wood/six,
 /area/station/crew_quarters/hos)

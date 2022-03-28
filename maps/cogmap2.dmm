@@ -1734,7 +1734,8 @@
 	name = "Clown's Quarters"
 	})
 "adE" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/decal/cleanable/dirt,
 /obj/landmark/start{
 	name = "Clown"
@@ -3912,7 +3913,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "aiT" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Chef"
 	},
@@ -3948,7 +3950,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "aiX" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
@@ -3966,7 +3969,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aiZ" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -4494,7 +4498,8 @@
 /turf/simulated/floor/plating/damaged3,
 /area/station/crew_quarters/quartersB)
 "akh" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -4503,7 +4508,8 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/quartersB)
 "aki" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -4543,7 +4549,8 @@
 /turf/simulated/floor/plating/damaged3,
 /area/station/crew_quarters/quartersB)
 "akl" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -4555,7 +4562,8 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/quartersB)
 "akm" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -5181,7 +5189,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "alD" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
@@ -5633,7 +5642,8 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/north)
 "amE" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -5643,7 +5653,8 @@
 /turf/simulated/floor/plating/damaged3,
 /area/station/crew_quarters/quartersB)
 "amF" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -5666,7 +5677,8 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/quartersB)
 "amI" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -5698,7 +5710,8 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/quartersB)
 "amL" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -5711,7 +5724,8 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/quartersB)
 "amM" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -16775,7 +16789,8 @@
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/entry)
 "aMI" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -17279,7 +17294,8 @@
 /turf/simulated/floor/sanitary,
 /area/station/hallway/secondary/entry)
 "aNU" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -23691,7 +23707,8 @@
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/quarters_west)
 "bdd" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
@@ -23703,7 +23720,8 @@
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/quarters_west)
 "bdf" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
@@ -23945,7 +23963,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "bdJ" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -23967,7 +23986,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "bdM" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -26676,7 +26696,8 @@
 /area/station/hangar/sec)
 "bkr" = (
 /obj/machinery/atmospherics/unary/vent_pump/security/south,
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -26708,7 +26729,8 @@
 /area/station/security/brig)
 "bkv" = (
 /obj/machinery/atmospherics/unary/vent_pump/security/south,
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -27351,7 +27373,8 @@
 /turf/simulated/floor/engine,
 /area/station/security/brig)
 "blW" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -27615,7 +27638,8 @@
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
 "bmA" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
@@ -27638,7 +27662,8 @@
 	},
 /area/station/engine/engineering)
 "bmC" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
@@ -30651,7 +30676,8 @@
 	},
 /area/station/crew_quarters/heads)
 "bsW" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
@@ -32125,7 +32151,8 @@
 	},
 /area/station/security/hos)
 "bwj" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -40337,7 +40364,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/podbay)
 "bLq" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -40353,7 +40381,8 @@
 /area/station/security/checkpoint/podbay)
 "bLs" = (
 /obj/disposalpipe/segment/mail/bent/north,
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -45588,7 +45617,8 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/routing/depot)
 "bVN" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -46183,7 +46213,8 @@
 /turf/simulated/floor/plating/damaged2,
 /area/station/routing/depot)
 "bXh" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -46201,7 +46232,8 @@
 	},
 /area/station/security/main)
 "bXj" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -46424,7 +46456,8 @@
 	},
 /area/station/crew_quarters/captain)
 "bXJ" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
@@ -46777,7 +46810,8 @@
 	},
 /area/station/security/main)
 "bYy" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -48807,7 +48841,8 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "cdb" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
@@ -48820,7 +48855,8 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "cdc" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
@@ -48833,7 +48869,8 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "cdd" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/northwest,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
@@ -48851,7 +48888,8 @@
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/security/brig)
 "cdf" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -48862,7 +48900,8 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "cdg" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -49060,7 +49099,8 @@
 	},
 /area/station/catwalk/south)
 "cdE" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -49400,7 +49440,8 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/southeast)
 "cey" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
@@ -50397,7 +50438,8 @@
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/quarters_east)
 "chl" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
@@ -50408,7 +50450,8 @@
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/quarters_east)
 "chn" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
@@ -50435,7 +50478,8 @@
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/quarters_east)
 "chr" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
@@ -50443,7 +50487,8 @@
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/quarters_east)
 "chs" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/quarters_east)
@@ -51215,7 +51260,8 @@
 	},
 /area/station/crew_quarters/hor)
 "cjr" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
@@ -56014,7 +56060,8 @@
 	},
 /area/station/janitor/office)
 "cuj" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
@@ -70158,7 +70205,8 @@
 	},
 /area/station/medical/medbay/surgery)
 "cZP" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
@@ -75703,7 +75751,8 @@
 /turf/simulated/floor/plating,
 /area/research_outpost)
 "dmu" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
@@ -75723,7 +75772,8 @@
 	},
 /area/research_outpost)
 "dmw" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
@@ -75748,7 +75798,8 @@
 	},
 /area/research_outpost)
 "dmy" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
@@ -76410,7 +76461,8 @@
 	},
 /area/listeningpost)
 "dnR" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -76559,7 +76611,8 @@
 	},
 /area/listeningpost)
 "doi" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -79893,7 +79946,8 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "trr" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"

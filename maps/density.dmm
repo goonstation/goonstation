@@ -228,7 +228,8 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aB" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -352,7 +353,8 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "aP" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -1285,7 +1287,8 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "cX" = (
@@ -2238,7 +2241,8 @@
 /area/station/quartermaster/office)
 "fb" = (
 /obj/decal/cleanable/dirt,
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/paper/book/from_file/the_trial,
 /obj/landmark/start{
 	name = "Clown"

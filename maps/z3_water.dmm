@@ -702,7 +702,8 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
 "cm" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/captain,
 /obj/machinery/light_switch/auto{
 	last_throw_y = 0;
@@ -2914,7 +2915,8 @@
 "hH" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/decal/cleanable/dirt/jen,
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/black,
 /obj/machinery/light_switch/west,
 /turf/unsimulated/floor/grime,
@@ -2958,7 +2960,8 @@
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "hN" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/black,
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/machinery/light/small{

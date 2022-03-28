@@ -688,7 +688,8 @@
 /turf/unsimulated/floor,
 /area/space_hive)
 "acf" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -1910,14 +1911,16 @@
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
 "afG" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /turf/simulated/floor,
 /area/mining/quarters)
 "afH" = (
 /turf/simulated/floor/grime,
 /area/mining/quarters)
 "afI" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/grime,
 /area/mining/quarters)
@@ -2039,7 +2042,8 @@
 	},
 /area/mining/mainasteroid)
 "agf" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor,
 /area/mining/quarters)
@@ -8011,7 +8015,8 @@
 	},
 /area/tech_outpost)
 "avu" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor{
 	dir = 4;
@@ -8975,7 +8980,8 @@
 /turf/simulated/floor/plating/damaged3,
 /area/spyshack)
 "azL" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/plating/damaged3,
 /area/spyshack)
@@ -9320,7 +9326,8 @@
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
 "aEn" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/unsimulated/floor/white/grime,
 /area/timewarp/ship)
@@ -9664,7 +9671,8 @@
 	},
 /area/timewarp/ship)
 "aGm" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred2"
@@ -14191,7 +14199,8 @@
 /area/derelict_ai_sat)
 "aSa" = (
 /obj/item/storage/wall/random,
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/red,
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/carpet,
@@ -14571,7 +14580,8 @@
 /area/derelict_ai_sat)
 "aSU" = (
 /obj/item/storage/wall/random,
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/red,
 /obj/item/storage/bible/mini,
 /turf/simulated/floor/carpet,
@@ -14672,7 +14682,8 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aTj" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/decal/cleanable/cobweb,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
@@ -14686,7 +14697,8 @@
 /turf/simulated/floor/airless/grime,
 /area/abandonedship)
 "aTl" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/under/gimmick/dawson{
 	name = "hipster clothes"
 	},
@@ -14713,7 +14725,8 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/red,
 /obj/item/seed/cannabis,
 /turf/simulated/floor/carpet,
@@ -14805,7 +14818,8 @@
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "aTD" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
@@ -14839,7 +14853,8 @@
 /turf/simulated/floor/airless/grime,
 /area/abandonedship)
 "aTG" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/overlay{
 	desc = "Oh.  So THAT'S where he went off to.";
 	icon = 'icons/misc/hstation.dmi';
@@ -15382,7 +15397,8 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "aVl" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
@@ -15595,7 +15611,8 @@
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aVN" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
@@ -15607,7 +15624,8 @@
 /area/abandonedoutpostthing)
 "aVO" = (
 /obj/machinery/light/worn,
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
@@ -17729,7 +17747,8 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "baH" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /turf/simulated/floor/grime,
 /area/iss)
 "baI" = (
@@ -18069,12 +18088,14 @@
 /turf/simulated/floor/airless/damaged5,
 /area/abandonedship)
 "bby" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/machinery/light/small,
 /turf/simulated/floor/grime,
 /area/iss)
 "bbz" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/decal/cleanable/blood/splatter,
 /obj/item/storage/secure/ssafe/loot{
 	pixel_x = 6;
@@ -18114,7 +18135,8 @@
 /turf/simulated/floor/plating,
 /area/iss)
 "bbG" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/critter/zombie/scientist,
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
@@ -18139,7 +18161,8 @@
 	},
 /area/abandonedoutpostthing)
 "bbK" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
@@ -18351,7 +18374,8 @@
 	},
 /area/abandonedoutpostthing)
 "bcr" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fpurple2"
@@ -18383,7 +18407,8 @@
 	},
 /area/h7/crew)
 "bcw" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fpurple2"
@@ -18452,7 +18477,8 @@
 	},
 /area/abandonedoutpostthing)
 "bcH" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/decal/fakeobjects/skeleton,
 /obj/item/clothing/suit/bedsheet,
 /obj/decal/cleanable/blood/splatter{
@@ -18477,7 +18503,8 @@
 	},
 /area/h7/crew)
 "bcK" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fpurple2"
@@ -18545,7 +18572,8 @@
 	},
 /area/abandonedoutpostthing)
 "bcU" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fpurple2"
@@ -18568,7 +18596,8 @@
 	},
 /area/h7/crew)
 "bcX" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -18643,7 +18672,8 @@
 	},
 /area/abandonedoutpostthing)
 "bdi" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -18663,7 +18693,8 @@
 	},
 /area/h7/crew)
 "bdl" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bio_suit,
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -20443,7 +20474,8 @@
 	icon_state = "hvent";
 	name = "air vent"
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/decal/fakeobjects/skeleton,
 /obj/item/reagent_containers/pill/tox{
 	pixel_x = -8;
@@ -20967,7 +20999,8 @@
 /turf/simulated/floor/plating/damaged3,
 /area/spyshack)
 "biZ" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/red,
 /turf/simulated/floor{
 	icon_state = "carpetSE"

@@ -1367,7 +1367,8 @@
 /area/station/mining/staff_room)
 "dt" = (
 /obj/plasticflaps,
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -9693,7 +9694,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "xx" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/pen/crayon/random,
 /obj/landmark/start{
 	name = "Captain"
@@ -10551,7 +10553,8 @@
 /obj/landmark/start{
 	name = "Clown"
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/pen/crayon/rainbow{
 	pixel_x = -7;
 	pixel_y = -4
@@ -13287,7 +13290,8 @@
 	},
 /area/station/janitor/office)
 "GE" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/pink,
 /obj/landmark/start{
 	name = "Janitor"
@@ -16156,7 +16160,8 @@
 /turf/simulated/floor/redblack,
 /area/listeningpost)
 "NX" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red";
@@ -16168,7 +16173,8 @@
 /turf/simulated/floor/redblack,
 /area/listeningpost)
 "NZ" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red";
@@ -18983,7 +18989,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "Vm" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/hop,
 /obj/landmark/start{
 	name = "Head of Personnel"
@@ -19713,7 +19720,8 @@
 /turf/simulated/floor/black,
 /area/station/storage/tech)
 "Xt" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -20537,7 +20545,8 @@
 	},
 /area/station/bridge/customs)
 "ZD" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -20637,7 +20646,8 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/artifact)
 "ZR" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},

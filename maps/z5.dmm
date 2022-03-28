@@ -505,7 +505,8 @@
 /area/diner/arcade)
 "bR" = (
 /obj/decal/cleanable/dirt,
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
@@ -533,7 +534,8 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/motel)
 "ca" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
@@ -1072,7 +1074,8 @@
 /area/diner/motel)
 "dB" = (
 /obj/decal/cleanable/dirt,
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -1341,7 +1344,8 @@
 /area/noGenerate)
 "eq" = (
 /obj/decal/cleanable/dirt,
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
@@ -1358,7 +1362,8 @@
 /area/diner/motel)
 "et" = (
 /obj/decal/cleanable/dirt,
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"

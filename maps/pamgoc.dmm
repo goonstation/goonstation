@@ -8589,7 +8589,8 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -11952,7 +11953,8 @@
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred5"
@@ -23433,7 +23435,8 @@
 	name = "S light switch";
 	pixel_y = -24
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -35768,7 +35771,8 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/sticker/ribbon/first_place{
 	pixel_x = 1
 	},
@@ -35871,7 +35875,8 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -54105,7 +54110,8 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "bZJ" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -54126,7 +54132,8 @@
 	},
 /area/station/crew_quarters/captain)
 "bZL" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -54138,7 +54145,8 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bZM" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -54148,26 +54156,30 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bZN" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bZO" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
 /turf/simulated/floor/grime,
 /area/station/security/checkpoint/cargo)
 "bZP" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "bZQ" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
@@ -54180,7 +54192,8 @@
 	},
 /area/station/engine/engineering/ce)
 "bZR" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -54191,7 +54204,8 @@
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/quartersB)
 "bZS" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -54202,7 +54216,8 @@
 /turf/simulated/floor/purple,
 /area/station/crew_quarters/quartersA)
 "bZT" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -54216,7 +54231,8 @@
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/quartersB)
 "bZU" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -54230,7 +54246,8 @@
 /turf/simulated/floor/purple,
 /area/station/crew_quarters/quartersA)
 "bZV" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/machinery/light_switch{
 	name = "E light switch";
 	pixel_x = -24
@@ -54242,7 +54259,8 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/head)
 "bZW" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/machinery/light_switch{
 	name = "E light switch";
 	pixel_x = -24
@@ -68577,7 +68595,8 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "kEM" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -70295,7 +70314,8 @@
 	},
 /area/station/hydroponics/bay)
 "wen" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/decal/cleanable/dirt,
 /obj/machinery/light/small{
 	dir = 1;

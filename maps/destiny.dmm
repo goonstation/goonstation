@@ -400,7 +400,8 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "abB" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -566,7 +567,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/captain)
 "acg" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
@@ -1309,7 +1311,8 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersC)
 "aff" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -1783,7 +1786,8 @@
 	},
 /area/station/crew_quarters/sauna)
 "agJ" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -1901,7 +1905,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/bridge/captain)
 "ahc" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/royal,
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -2960,7 +2965,8 @@
 	},
 /area/station/solar/east)
 "alN" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -3134,7 +3140,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/central)
 "amA" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
@@ -3382,7 +3389,8 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "anr" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
@@ -3678,7 +3686,8 @@
 	},
 /area/station/science/chemistry)
 "aoZ" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
@@ -16143,7 +16152,8 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "bAM" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
@@ -19535,7 +19545,8 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "cXp" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "hop";
 	icon_state = "bedsheet-hop"
@@ -22749,7 +22760,8 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -23207,7 +23219,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/medical/medbay/cloner)
 "eFD" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/green,
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -26498,7 +26511,8 @@
 	},
 /area/station/crew_quarters/sauna)
 "gfI" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -27485,7 +27499,8 @@
 /area/station/quartermaster/office)
 "gED" = (
 /obj/disposalpipe/segment,
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -30425,7 +30440,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/staff_room)
 "ilK" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/black,
 /turf/simulated/floor/white/checker2,
 /area/station/maintenance/outer/sw)
@@ -37665,7 +37681,8 @@
 /turf/space,
 /area/station/hangar/qm)
 "mlY" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -39144,7 +39161,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/cloner)
 "nbB" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/pink,
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -39989,7 +40007,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/lounge/starboard)
 "nvT" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/red,
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -40203,7 +40222,8 @@
 	pixel_x = 10;
 	pixel_y = 32
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/captain,
 /obj/item/paper/book/from_file/the_trial,
 /obj/landmark/start{
@@ -41975,7 +41995,8 @@
 	name = "Research Director's Quarters"
 	})
 "ozD" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -48022,7 +48043,8 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "rOK" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/pink,
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -49135,7 +49157,8 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "sxz" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/yellow,
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -49299,7 +49322,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/security/hos)
 "sEl" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
@@ -49851,7 +49875,8 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "sUb" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/red,
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -51721,7 +51746,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -54030,7 +54056,8 @@
 	},
 /area/station/medical/medbay)
 "uWZ" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -54253,7 +54280,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/research_director)
 "vbd" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -55318,7 +55346,8 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "vED" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/green,
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -55556,7 +55585,8 @@
 	},
 /area/station/solar/east)
 "vLx" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -58949,7 +58979,8 @@
 /turf/simulated/floor/circuit,
 /area/station/medical/robotics)
 "xxD" = (
-/obj/stool/bed,
+/obj/machinery/bot/mulebot/broken,
+
 /obj/item/clothing/suit/bedsheet/yellow,
 /obj/landmark/start{
 	name = "Staff Assistant"
