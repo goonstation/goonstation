@@ -651,19 +651,18 @@
 				emote("deathgasp")
 				src.visible_message("<span class='alert'><B>[src]</B> head starts to shift around!</span>")
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
-				var/datum/mind/M = src.mind
-				sleep(20 SECONDS)
-				if(!M || M.disposed || (M.current != src && !istype(M.current, /mob/dead)) || isalive(src))
-					return
-				if (M.current)
-					M.current.show_text("<b>We released a headspider, using up some of our DNA reserves.</b>", "blue")
-				src.visible_message("<span class='alert'><B>[src]</B> head detaches, sprouts legs and wanders off looking for food!</span>")
-				//make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards
-				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(get_turf(src))
+				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(src) //we spawn the headspider inside this dude immediately.
+				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, .proc/ghostize) //if this dude gets grindered or cremated or whatever, we go with it
+				src.mind?.transfer_to(HS) //ok we're a headspider now
+				HS.owner = src.mind
 				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
-				M.transfer_to(HS)
-				HS.owner = M //In case we ghosted ourselves then the body won't hold the mind. Bad times.
 				HS.changeling = C
+				sleep(20 SECONDS)
+				if(HS.disposed || !HS.mind || HS.mind.disposed || isdead(HS)) // we went somewhere else, or suicided, or something idk
+					return
+				boutput(HS, "<b class = 'hint'>We released a headspider, using up some of our DNA reserves.</b>")
+				src.visible_message("<span class='alert'><B>[src]</B>'s head detaches, sprouts legs and wanders off looking for food!</span>")
+				//make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards
 				remove_ability_holder(/datum/abilityHolder/changeling/)
 
 				if(src.client)
@@ -694,10 +693,6 @@
 					dropped_earwear.set_loc(src.loc)
 				var/obj/item/organ/head/organ_head = src.organHolder.drop_organ("head")
 				qdel(organ_head)
-
-				//HS.process() //A little kickstart to get you out into the big world (and some chump), li'l guy! O7
-
-				return
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			NORMAL BUSINESS
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
