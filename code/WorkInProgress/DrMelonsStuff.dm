@@ -192,6 +192,8 @@
 		src.on_reagent_change()
 		target.layer = MOB_LAYER - 0.3
 		src.vis_contents += target
+		if (src.reagents.total_volume)
+			playsound(src.loc, "sound/misc/splash_2.ogg", 70, 3)
 
 	proc/eject_occupant(user)
 		if (is_incapacitated(user)) return
@@ -210,6 +212,8 @@
 		src.UpdateOverlays(null, "fluid_overlay")
 		src.UpdateOverlays(null, "bath_edge")
 		src.on_reagent_change()
+		if (src.reagents.total_volume)
+			playsound(src.loc, "sound/misc/splash_1.ogg", 70, 3)
 
 		for (var/obj/O in src)
 			O.set_loc(get_turf(src))
