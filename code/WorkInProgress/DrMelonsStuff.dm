@@ -98,6 +98,7 @@
 	var/mob/living/carbon/human/occupant = null
 	var/default_reagent = "water"
 	var/on = FALSE
+	var/suffocation_volume = 200 // tracking fluid_core's drowning depth_level vOv
 
 	New()
 		..()
@@ -120,6 +121,16 @@
 			src.reagents.trans_to(src.last_turf, 5)
 		else
 			..()
+
+	// I Can't Believe It's Not Drowning!, a dirty copy/paste hack from breath & fluid_core
+	handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
+		var/mob/M = lifeform_inside_me
+		if (M.lying && M.get_oxygen_deprivation() > 40 && src.reagents.total_volume > suffocation_volume && breath_request > 0 )
+			src.reagents.reaction(M, INGEST)
+			src.reagents.trans_to(M, 5) // in addition to TOUCH in process()
+			return null
+		else
+			. = ..()
 
 	mouse_drop(obj/over_object as obj, src_location, over_location)
 		if (src.occupant)

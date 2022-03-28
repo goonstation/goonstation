@@ -102,11 +102,15 @@
 			return // no breathing inside possessed objects
 		else if (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			return
+
+		// kludge: fake fluid to trigger underwater suffocation check
 		else if (istype(owner.loc, /obj/machinery/bathtub) && owner.lying)
-			if (owner.loc.reagents.total_volume > 300)
+			var/obj/machinery/bathtub/B = owner.loc
+			if (B.reagents.total_volume > B.suffocation_volume)
 				var/obj/fluid/F = new
 				F.reagents = owner.loc.reagents
 				underwater = F
+
 		//if (istype(loc, /obj/machinery/clonepod)) return
 
 		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING))
