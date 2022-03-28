@@ -93,7 +93,7 @@ const ChemDisplay = (props, context) => {
           <Box
             fontSize={2}
             color={getTemperatureColor(temperature)}
-            className={"TemperatureNumber"}>
+            className={"ChemHeater__TemperatureNumber"}>
             <Icon name="long-arrow-alt-down"
               className={"ChemHeater__TemperatureArrow " + (working && `ChemHeater__TemperatureArrow__${getTemperatureChangeName(temperature, targetTemperature)}`)}
               pt="2px"
