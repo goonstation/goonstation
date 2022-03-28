@@ -1346,7 +1346,7 @@
 	..()
 	if (M != usr) return
 	if (usr == src) return
-	if (get_dist(usr,src) > 1) return
+	if (bounds_dist(usr, src) > 0) return
 	if (!M.can_strip(src)) return
 	if (LinkBlocked(usr.loc,src.loc)) return
 	if (isAI(usr) || isAI(src)) return

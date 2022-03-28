@@ -828,7 +828,7 @@
 
 	onUpdate()
 		..()
-		if (the_door == null || the_tool == null || owner == null || get_dist(owner, the_door) > 1 || !the_door.locked || the_door.operating)
+		if (the_door == null || the_tool == null || owner == null || bounds_dist(owner, the_door) > 0 || !the_door.locked || the_door.operating)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

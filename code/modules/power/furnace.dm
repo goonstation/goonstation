@@ -111,11 +111,11 @@
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (get_dist(src,user) > 1)
+		if (bounds_dist(src, user) > 0)
 			boutput(user, "<span class='alert'>You are too far away to do that.</span>")
 			return
 
-		if (get_dist(src,O) > 1)
+		if (bounds_dist(src, O) > 0)
 			boutput(user, "<span class='alert'>[O] is too far away to do that.</span>")
 			return
 

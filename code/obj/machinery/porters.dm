@@ -361,10 +361,10 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			return
 		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
 			return
-		if (get_dist(src, usr) > 1)
+		if (bounds_dist(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
 			return
-		if (get_dist(over_object, src) > 1)
+		if (bounds_dist(over_object, src) > 0)
 			usr.show_text("The [src.name] is too far away from the target!", "red")
 			return
 		if (!istype(over_object,/turf/simulated/floor/))
@@ -575,10 +575,10 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			return
 		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
 			return
-		if (get_dist(src, usr) > 1)
+		if (bounds_dist(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
 			return
-		if (get_dist(over_object, src) > 1)
+		if (bounds_dist(over_object, src) > 0)
 			usr.show_text("The [src.name] is too far away from the target!", "red")
 			return
 		if (!istype(over_object,/turf/simulated/floor/))
@@ -713,10 +713,10 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			return
 		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
 			return
-		if (get_dist(src, usr) > 1)
+		if (bounds_dist(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
 			return
-		if (get_dist(over_object, src) > 1)
+		if (bounds_dist(over_object, src) > 0)
 			usr.show_text("The [src.name] is too far away from the target!", "red")
 			return
 		if (!istype(over_object,/turf/simulated/floor/))
@@ -900,10 +900,10 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			return
 		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
 			return
-		if (get_dist(src, usr) > 1)
+		if (bounds_dist(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
 			return
-		if (get_dist(over_object, src) > 1)
+		if (bounds_dist(over_object, src) > 0)
 			usr.show_text("The [src.name] is too far away from the target!", "red")
 			return
 		if (!istype(over_object,/turf/simulated/floor/))

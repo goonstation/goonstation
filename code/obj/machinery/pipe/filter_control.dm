@@ -51,7 +51,7 @@
 		return
 	if(user.stat || user.lying)
 		return
-	if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !isAI(user))
+	if ((bounds_dist(src, user) > 0 || !istype(src.loc, /turf)) && !isAI(user))
 		return 0
 
 	var/list/gases = list("O2", "N2", "Plasma", "CO2", "N2O")

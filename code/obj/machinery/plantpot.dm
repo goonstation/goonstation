@@ -825,7 +825,7 @@
 	mouse_drop(over_object, src_location, over_location)
 		..()
 		if(!isliving(usr) || isintangible(usr)) return // ghosts killing plants fix
-		if(get_dist(src, usr) > 1)
+		if(bounds_dist(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You need to be closer to empty the tray out!</span>")
 			return
 
@@ -874,13 +874,13 @@
 		return
 
 	MouseDrop_T(atom/over_object as obj, mob/user as mob) // ty to Razage for the initial code
-		if(get_dist(user, src) > 1 || get_dist(user, over_object) > 1 || is_incapacitated(user) || isAI(user))
+		if(bounds_dist(user, src) > 0 || bounds_dist(user, over_object) > 0 || is_incapacitated(user) || isAI(user))
 			return
 		if(istype(over_object, /obj/item/seed))  // Checks to make sure it's a seed being dragged onto the tray.
-			if(get_dist(user, src) > 1)
+			if(bounds_dist(user, src) > 0)
 				boutput(user, "<span class='alert'>You need to be closer to the tray!</span>")
 				return
-			if(get_dist(user, over_object) > 1)
+			if(bounds_dist(user, over_object) > 0)
 				boutput(user, "<span class='alert'>[over_object] is too far away!</span>")
 				return
 			src.Attackby(over_object, user)  // Activates the same command as would be used with a seed in hand on the tray.

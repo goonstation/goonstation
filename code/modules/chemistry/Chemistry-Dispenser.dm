@@ -90,7 +90,7 @@
 			if (isnull(amount) || amount <= 0)
 				return
 			amount = clamp(amount, 0, amtlimit)
-			if (get_dist(src,user) > 1)
+			if (bounds_dist(src, user) > 0)
 				boutput(user, "You need to move closer to get the chemicals!")
 				return
 			if (status & (NOPOWER|BROKEN))
@@ -181,11 +181,11 @@
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the dispenser's output target.</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(bounds_dist(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>The dispenser is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(bounds_dist(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 

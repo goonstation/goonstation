@@ -19,13 +19,13 @@
 	onUpdate()
 		..()
 
-		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(bounds_dist(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(bounds_dist(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -73,7 +73,7 @@
 		if (!isliving(target))
 			boutput(holder.owner, __red("Invalid target."))
 			return 1
-		if (get_dist(holder.owner, target) > 1)
+		if (bounds_dist(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to devour."))
 			return 1
 		actions.start(new/datum/action/bar/icon/devourAbility(target, src), holder.owner)

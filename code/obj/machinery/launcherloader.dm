@@ -487,9 +487,9 @@
 
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		if(!istype(usr, /mob/living) || !isturf(src.loc) || \
-				get_dist(get_turf(over_object), get_turf(src)) > 1 || \
-				get_dist(usr, get_turf(over_object)) > 1 ||  \
-				get_dist(usr, src) > 1 || \
+				bounds_dist(get_turf(over_object), get_turf(src)) > 0 || \
+				bounds_dist(usr, get_turf(over_object)) > 0 ||  \
+				bounds_dist(usr, src) > 0 || \
 				over_object == usr || !istype(over_object, /atom/movable))
 			return ..()
 		var/atom/movable/target = over_object

@@ -256,14 +256,14 @@
 	onUpdate()
 		..()
 		// you gotta hold still to jump!
-		if (get_dist(ownerMob, the_railing) > 1)
+		if (bounds_dist(ownerMob, the_railing) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			ownerMob.show_text("Your jump was interrupted!", "red")
 			return
 
 	onStart()
 		..()
-		if (get_dist(ownerMob, the_railing) > 1 || the_railing == null || ownerMob == null)
+		if (bounds_dist(ownerMob, the_railing) > 0 || the_railing == null || ownerMob == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		for(var/mob/O in AIviewers(ownerMob))
@@ -363,14 +363,14 @@
 
 	onUpdate()
 		..()
-		if (tool == null || the_railing == null || owner == null || get_dist(owner, the_railing) > 1)
+		if (tool == null || the_railing == null || owner == null || bounds_dist(owner, the_railing) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		//featuring code shamelessly copypasted from table.dm because fuuuuuuuck
 		..()
-		if (get_dist(ownerMob, the_railing) > 1 || the_railing == null || ownerMob == null)
+		if (bounds_dist(ownerMob, the_railing) > 0 || the_railing == null || ownerMob == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!tool)

@@ -330,7 +330,7 @@
 				qdel(src)
 				return 1
 
-		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && get_dist(assailant, affecting) > 1) )
+		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && bounds_dist(assailant, affecting) > 0) )
 			qdel(src)
 			return 1
 
@@ -404,7 +404,7 @@
 	//returns an atom to be thrown if any
 	proc/handle_throw(var/mob/living/user, var/atom/target)
 		if (!src.affecting) return 0
-		if (get_dist(user, src.affecting) > 1)
+		if (bounds_dist(user, src.affecting) > 0)
 			return 0
 		if ((src.state < 1 && !(src.affecting.getStatusDuration("paralysis") || src.affecting.getStatusDuration("weakened") || src.affecting.stat)) || !isturf(user.loc))
 			user.visible_message("<span class='alert'>[src.affecting] stumbles a little!</span>")
@@ -450,7 +450,7 @@
 	onUpdate()
 		..()
 
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(bounds_dist(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -460,7 +460,7 @@
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(bounds_dist(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -505,7 +505,7 @@
 	onUpdate()
 		..()
 
-		if(get_dist(owner, target) > 1 || target == null || owner == null || get_dist(owner,T) > 1)
+		if(bounds_dist(owner, target) > 0 || target == null || owner == null || bounds_dist(owner, T) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -515,7 +515,7 @@
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null || get_dist(owner,T) > 1)
+		if(bounds_dist(owner, target) > 0 || target == null || owner == null || bounds_dist(owner, T) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -544,7 +544,7 @@
 	if  (!(ismob(G.affecting)))
 		return 0
 
-	if (get_dist(src, M) > 1)
+	if (bounds_dist(src, M) > 0)
 		return 0
 
 	user.visible_message("<span class='alert'><B>[M] has been smashed against [src] by [user]!</B></span>")
@@ -566,7 +566,7 @@
 	if  (!(ismob(G.affecting)))
 		return 0
 
-	if (get_dist(src, M) > 1)
+	if (bounds_dist(src, M) > 0)
 		return 0
 
 	if (!G.can_pin)
@@ -584,7 +584,7 @@
 	if  (!(ismob(G.affecting)))
 		return 0
 
-	if (get_dist(src, M) > 1)
+	if (bounds_dist(src, M) > 0)
 		return 0
 
 	if (!G.can_pin)
@@ -627,7 +627,7 @@
 			qdel(src)
 			return 1
 
-		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && get_dist(assailant, affecting) > 1) )
+		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && bounds_dist(assailant, affecting) > 0) )
 			qdel(src)
 			return 1
 
@@ -675,7 +675,7 @@
 			qdel(src)
 			return 1
 
-		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && get_dist(assailant, affecting) > 1) )
+		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && bounds_dist(assailant, affecting) > 0) )
 			qdel(src)
 			return 1
 

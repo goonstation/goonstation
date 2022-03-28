@@ -1281,7 +1281,7 @@
 			src.task?.task_input("hugged")
 			return
 
-		if(get_dist(user, src) > 1)
+		if(bounds_dist(user, src) > 0)
 			return
 
 		src.interacted(user)
@@ -1655,7 +1655,7 @@
 					SPAWN(3 SECONDS)
 						src.set_emotion("sad")		// Still kinda sad that someone would bully a defenseless little rectangle.
 			else if(src.tool && (src.tool.tool_id != "GUN"))
-				var/is_ranged = get_dist(src, target) > 1
+				var/is_ranged = bounds_dist(src, target) > 0
 				src.tool.bot_attack(target, src, is_ranged, lethal)
 			return
 
@@ -4657,7 +4657,7 @@
 		return
 
 	MouseDrop_T(obj/O as obj, mob/user as mob)
-		if(user.stat || get_dist(user,src)>1)
+		if(user.stat || bounds_dist(user, src) > 0)
 			return
 		if(istype(O, /obj/machinery/bot/guardbot) && !src.current && !O:charge_dock)
 			if(O.loc != src.loc) return

@@ -110,7 +110,7 @@
             src.frustration = 0
       else src.task = "thinking"
     if("attacking")
-      if ((get_dist(src, src.target) > 1) || ((src.target:loc != src.target_lastloc)))
+      if ((bounds_dist(src, src.target) > 0) || ((src.target:loc != src.target_lastloc)))
         src.anchored = 0
         src.task = "chasing"
       else

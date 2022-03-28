@@ -186,7 +186,7 @@ var/list/telescope_computers = list()
 		if(status & (BROKEN|NOPOWER))
 			return
 
-		if(using && (!using.client || using.client.inactivity >= 1200 || get_dist(src, using) > 1))
+		if(using && (!using.client || using.client.inactivity >= 1200 || bounds_dist(src, using) > 0))
 			using << browse(null, "window=materials")
 			using = null
 
@@ -290,7 +290,7 @@ var/list/telescope_computers = list()
 
 	Topic(href, href_list)
 		//boutput(world, href)
-		if(!using || get_dist(using, src) > 1)
+		if(!using || bounds_dist(using, src) > 0)
 			using << browse(null, "window=telescope")
 			using = null
 			return

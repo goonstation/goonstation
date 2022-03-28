@@ -86,7 +86,7 @@
 			if (abilityHolder.click(target, params))
 				return 100
 	//Pull cancel 'hotkey'
-	if (src.pulling && get_dist(src,target) > 1)
+	if (src.pulling && bounds_dist(src, target) > 0)
 		if (!islist(params))
 			params = params2list(params)
 		if(params["ctrl"])

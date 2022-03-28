@@ -21,13 +21,13 @@
 	onUpdate()
 		..()
 
-		if (get_dist(owner, target) > 1 || target == null || owner == null || !envelope || !envelope.cooldowncheck())
+		if (bounds_dist(owner, target) > 0 || target == null || owner == null || !envelope || !envelope.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if (get_dist(owner, target) > 1 || target == null || owner == null || !envelope || !envelope.cooldowncheck())
+		if (bounds_dist(owner, target) > 0 || target == null || owner == null || !envelope || !envelope.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -84,7 +84,7 @@
 		if (!istype(target, /mob/living))
 			boutput(holder.owner, __red("Invalid target."))
 			return 1
-		if (get_dist(holder.owner, target) > 1)
+		if (bounds_dist(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to envelope."))
 			return 1
 		actions.start(new/datum/action/bar/icon/envelopeAbility(target, src), holder.owner)

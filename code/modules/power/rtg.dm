@@ -55,7 +55,7 @@
 
 
 	proc/interacted(mob/user)
-		if (get_dist(src, user) > 1 && !isAI(user))
+		if (bounds_dist(src, user) > 0 && !isAI(user))
 			src.remove_dialog(user)
 			user.Browse(null, "window=rtg")
 			return

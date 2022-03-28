@@ -364,10 +364,10 @@
 		if (!isliving(user))
 			boutput(user, "<span class='alert'>Excuse me you are dead, get your gross dead hands off that!</span>")
 			return
-		if (get_dist(user,src) > 1)
+		if (bounds_dist(user, src) > 0)
 			boutput(user, "<span class='alert'>You need to move closer to [src] to do that.</span>")
 			return
-		if (get_dist(O,src) > 1 || get_dist(O,user) > 1)
+		if (bounds_dist(O, src) > 0 || bounds_dist(O, user) > 0)
 			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
 			return
 

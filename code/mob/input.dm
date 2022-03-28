@@ -128,10 +128,10 @@
 						C.rotate(src.move_dir)
 
 				for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-					if (get_dist(src, G.affecting) > 1)
+					if (bounds_dist(src, G.affecting) > 0)
 						qdel(G)
 				for (var/obj/item/grab/G as anything in src.grabbed_by)
-					if (istype(G) && get_dist(src, G.assailant) > 1)
+					if (istype(G) && bounds_dist(src, G.assailant) > 0)
 						if (G.state > 1)
 							delay += G.assailant.p_class
 						qdel(G)

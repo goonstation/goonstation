@@ -254,7 +254,7 @@
 
 		if (istype(W, /obj/item/reagent_containers/food/snacks) || istype(W, /obj/item/seed))
 			boutput(user, "You offer [src] [W].")
-			if (!do_mob(user, src, 1 SECOND) || get_dist(user, src) > 1)
+			if (!do_mob(user, src, 1 SECOND) || bounds_dist(user, src) > 0)
 				if (user && ismob(user))
 					user.show_text("You were interrupted!", "red")
 				return

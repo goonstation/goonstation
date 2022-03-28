@@ -641,7 +641,7 @@
 
 		var/turf/turftarget = get_turf(target)
 
-		if(turftarget == loc || get_dist(src,target) > 1) return
+		if(turftarget == loc || bounds_dist(src, target) > 0) return
 
 		if(!user.mind || !user.mind.gang)
 			boutput(user, "<span class='alert'>You aren't in a gang, why would you do that?</span>")
@@ -714,7 +714,7 @@
 			..()
 			throw e
 
-		if(get_dist(owner, target_turf) > 1 || target_turf == null || !owner)
+		if(bounds_dist(owner, target_turf) > 0 || target_turf == null || !owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -724,7 +724,7 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target_turf) > 1 || target_turf == null || !owner)
+		if(bounds_dist(owner, target_turf) > 0 || target_turf == null || !owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -741,7 +741,7 @@
 
 	onEnd()
 		..()
-		if(get_dist(owner, target_turf) > 1 || target_turf == null || !owner)
+		if(bounds_dist(owner, target_turf) > 0 || target_turf == null || !owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -876,7 +876,7 @@
 
 	Topic(href, href_list)
 		..()
-		if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
+		if ((usr.stat || usr.restrained()) || (bounds_dist(src, usr) > 0))
 			return
 
 		if (href_list["get_gear"])

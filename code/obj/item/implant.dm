@@ -1101,13 +1101,13 @@ THROWING DARTS
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(bounds_dist(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(bounds_dist(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

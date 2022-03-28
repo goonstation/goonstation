@@ -504,7 +504,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				netnum = C.netnum
 				break
 
-		if(get_dist(user, target) > 1 && !user:equipped())
+		if(bounds_dist(user, target) > 0 && !user:equipped())
 
 			if(!netnum)
 				boutput(user, "<span class='alert'>The gloves find no cable to draw power from.</span>")

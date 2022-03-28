@@ -588,7 +588,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/rice_ball(src)
 
 	Topic(href, href_list)
-		if ((get_dist(src, usr) > 1 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if ((bounds_dist(src, usr) > 0 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
@@ -1042,7 +1042,7 @@ table#cooktime a#start {
 
 	mouse_drop(over_object, src_location, over_location)
 		..()
-		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (bounds_dist(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
@@ -1054,7 +1054,7 @@ table#cooktime a#start {
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (get_dist(src, user) > 1 || !isliving(user) || iswraith(user) || isintangible(user))
+		if (bounds_dist(src, user) > 0 || !isliving(user) || iswraith(user) || isintangible(user))
 			return
 		if (is_incapacitated(user) || user.restrained())
 			return
@@ -1176,7 +1176,7 @@ var/list/mixer_recipes = list()
 		return ..()
 
 	Topic(href, href_list)
-		if ((get_dist(src, usr) > 1 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if ((bounds_dist(src, usr) > 0 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return

@@ -114,7 +114,7 @@
 	proc/can_operate(var/mob/M, var/mob/living/target)
 		if (!isalive(M))
 			return 0
-		if (get_dist(src,M) > 1)
+		if (bounds_dist(src, M) > 0)
 			return 0
 		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
 			return 0

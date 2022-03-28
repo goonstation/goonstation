@@ -399,7 +399,7 @@
 			if("attacking")
 				if(prob(15)) walk_rand(src,4) // juke around and dodge shots
 				// see if he got away
-				if ((get_dist(src, src.target) > 1) || ((src.target:loc != src.target_lastloc)))
+				if ((bounds_dist(src, src.target) > 0) || ((src.target:loc != src.target_lastloc)))
 					src.anchored = 0
 					src.task = "chasing"
 				else
@@ -1324,4 +1324,4 @@
 				task = "sleeping"
 				src.health = 0
 				src.CritterDeath()
-	
+

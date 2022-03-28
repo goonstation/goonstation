@@ -1004,7 +1004,7 @@ SYNDICATE DRONE FACTORY AREAS
 	var/datum/light/light
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(get_dist(target,user) > 1)
+		if(bounds_dist(target, user) > 0)
 			return
 		return
 

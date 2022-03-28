@@ -163,7 +163,7 @@
 
   onUpdate()
     ..()
-    if (grab == null || target == null || pool == null || owner == null || get_dist(owner, pool) > 1 || get_dist(owner, target) > 1 || get_dist(target, pool) > 1)
+    if (grab == null || target == null || pool == null || owner == null || bounds_dist(owner, pool) > 0 || bounds_dist(owner, target) > 0 || bounds_dist(target, pool) > 0)
       interrupt(INTERRUPT_ALWAYS)
       return
 

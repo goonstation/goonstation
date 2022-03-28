@@ -894,7 +894,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		var/active = 0
 
 		attack_hand(mob/user as mob)
-			if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1 || !user.can_use_hands())
+			if (user.stat || user.getStatusDuration("weakened") || bounds_dist(user, src) > 0 || !user.can_use_hands())
 				return
 
 			user.visible_message("<span class='alert'>[user] presses [src].</span>", "<span class='alert'>You press [src].</span>")
@@ -1356,7 +1356,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 	attack_hand(mob/user as mob)
 		if (src.broken) return
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1)
+		if (user.stat || user.getStatusDuration("weakened") || bounds_dist(user, src) > 0)
 			return
 		src.climb(user)
 
@@ -1810,7 +1810,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			id = params2list(id)
 
 	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1 || !user.can_use_hands() || !ishuman(user))
+		if (user.stat || user.getStatusDuration("weakened") || bounds_dist(user, src) > 0 || !user.can_use_hands() || !ishuman(user))
 			return
 
 		user.visible_message("<span class='alert'>[user] presses [src].</span>", "<span class='alert'>You press [src].</span>")

@@ -1417,7 +1417,7 @@
 		else if(ispulsingtool(W))
 			. = alert(user, "What should trigger the sensor?","Disposal Sensor", "Creatures", "Anything", "A mail tag")
 			if (.)
-				if (get_dist(user, src) > 1 || user.stat)
+				if (bounds_dist(user, src) > 0 || user.stat)
 					return
 
 				switch (.)

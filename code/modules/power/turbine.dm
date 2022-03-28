@@ -160,7 +160,7 @@
 
 /obj/machinery/power/turbine/proc/interacted(mob/user)
 
-	if ( (get_dist(src, user) > 1 ) || (status & (NOPOWER|BROKEN)) && (!isAI(user)) )
+	if ( (bounds_dist(src, user) > 0 ) || (status & (NOPOWER|BROKEN)) && (!isAI(user)) )
 		src.remove_dialog(user)
 		user.Browse(null, "window=turbine")
 		return

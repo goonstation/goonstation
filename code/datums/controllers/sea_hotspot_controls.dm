@@ -231,7 +231,7 @@
 
 				//ahhhh shit
 				var/turf/center = S.center.turf()
-				if (get_dist(T,center) > 1) //smash center to lock me in place
+				if (bounds_dist(T, center) > 0) //smash center to lock me in place
 					S.can_drift = 1
 					.= 1
 				else
@@ -1025,19 +1025,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null || V.loc != T)
+		if(bounds_dist(owner, T) > 0 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null || V.loc != T)
+		if(bounds_dist(owner, T) > 0 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null || V.loc != T)
+		if(bounds_dist(owner, T) > 0 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(locate(/obj/machinery/power/vent_capture) in T)
@@ -1062,19 +1062,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, V) > 1 || V == null || owner == null)
+		if(bounds_dist(owner, V) > 0 || V == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, V) > 1 || V == null || owner == null)
+		if(bounds_dist(owner, V) > 0 || V == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, V) > 1 || V == null || owner == null)
+		if(bounds_dist(owner, V) > 0 || V == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(owner && V)
@@ -1095,19 +1095,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, T) > 1 || T == null)
+		if(bounds_dist(owner, T) > 0 || T == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, T) > 1 || T == null)
+		if(bounds_dist(owner, T) > 0 || T == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, T) > 1 || T == null)
+		if(bounds_dist(owner, T) > 0 || T == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

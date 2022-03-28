@@ -325,7 +325,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		return 0
 
-#define CHECK1 (get_dist(src, usr) > 1 || !usr.contents.Find(src) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+#define CHECK1 (bounds_dist(src, usr) > 0 || !usr.contents.Find(src) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 #define CHECK2 (is_incapacitated(usr) || usr.restrained())
 	Topic(href, href_list)
 		..()
@@ -591,7 +591,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			src.uses = 0
 		if (isnull(src.hostpda) || !src.active)
 			return
-		if (get_dist(src.hostpda, usr) > 1 || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (bounds_dist(src.hostpda, usr) > 0 || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
@@ -981,7 +981,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	Topic(href, href_list)
 		if (isnull(src.hostpda) || !src.active)
 			return
-		if (get_dist(src.hostpda, usr) > 1 || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (bounds_dist(src.hostpda, usr) > 0 || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return

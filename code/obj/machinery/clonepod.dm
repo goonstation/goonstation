@@ -1165,7 +1165,7 @@
 
 	onUpdate()
 		..()
-		if (grab == null || target == null || grinder == null || owner == null || get_dist(owner, grinder) > 1 || get_dist(owner, target) > 1 || get_dist(target, grinder) > 1)
+		if (grab == null || target == null || grinder == null || owner == null || bounds_dist(owner, grinder) > 0 || bounds_dist(owner, target) > 0 || bounds_dist(target, grinder) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

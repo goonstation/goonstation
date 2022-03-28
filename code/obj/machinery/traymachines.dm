@@ -244,7 +244,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	attack_hand(user)
 
 /obj/machine_tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (!(isobj(O) || ismob(O)) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(O))
+	if (!(isobj(O) || ismob(O)) || O.anchored || bounds_dist(user, src) > 0 || bounds_dist(user, O) > 0 || user.contents.Find(O))
 		return
 	if (istype(O, /atom/movable/screen) || istype(O, /obj/effects) || istype(O, /obj/ability_button) || istype(O, /obj/item/grab))
 		return

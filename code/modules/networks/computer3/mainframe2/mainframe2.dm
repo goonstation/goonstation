@@ -174,7 +174,7 @@
 					return
 
 				//Ai/cyborgs cannot physically remove a memory board from a room away.
-				if(issilicon(usr) && get_dist(src, usr) > 1)
+				if(issilicon(usr) && bounds_dist(src, usr) > 0)
 					boutput(usr, "<span class='alert'>You cannot physically touch the board.</span>")
 					return
 

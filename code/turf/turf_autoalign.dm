@@ -966,7 +966,7 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/hedge)
 
 	onUpdate()
 		..()
-		if (the_wall == null || the_tool == null || owner == null || get_dist(owner, the_wall) > 1)
+		if (the_wall == null || the_tool == null || owner == null || bounds_dist(owner, the_wall) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

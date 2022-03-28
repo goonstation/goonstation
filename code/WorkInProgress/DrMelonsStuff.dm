@@ -184,7 +184,7 @@
 		return
 
 	MouseDrop_T(mob/living/carbon/human/target, mob/user)
-		if (src.myuser || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
+		if (src.myuser || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || bounds_dist(user, src) > 0 || bounds_dist(user, target) > 0 || is_incapacitated(user) || isAI(user))
 			return
 
 		var/msg

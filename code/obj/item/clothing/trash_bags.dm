@@ -126,7 +126,7 @@
 
 	mouse_drop(atom/over_object, src_location, over_location)
 		..()
-		if (!usr || usr.stat || usr.restrained() || get_dist(src, usr) > 1 || get_dist(usr, over_object) > 1)
+		if (!usr || usr.stat || usr.restrained() || bounds_dist(src, usr) > 0 || bounds_dist(usr, over_object) > 0)
 			return
 		if (usr.is_in_hands(src))
 			var/turf/T = over_object

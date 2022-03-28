@@ -1289,20 +1289,20 @@
 
 	onUpdate()
 		..()
-		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+		if(bounds_dist(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+		if(bounds_dist(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		return
 
 	onEnd()
 		..()
-		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+		if(bounds_dist(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return

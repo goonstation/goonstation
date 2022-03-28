@@ -553,13 +553,13 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, the_window) > 1 || the_window == null || owner == null || the_tool == null)
+		if(bounds_dist(owner, the_window) > 0 || the_window == null || owner == null || the_tool == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, the_window) > 1 || the_window == null || owner == null || the_tool == null)
+		if(bounds_dist(owner, the_window) > 0 || the_window == null || owner == null || the_tool == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		boutput(owner, "<span class='notice'>Now disassembling [the_window]</span>")
@@ -567,7 +567,7 @@
 
 	onEnd()
 		..()
-		if(get_dist(owner, the_window) > 1 || the_window == null || owner == null || the_tool == null)
+		if(bounds_dist(owner, the_window) > 0 || the_window == null || owner == null || the_tool == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(ismob(owner))

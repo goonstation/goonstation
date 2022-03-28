@@ -20,7 +20,7 @@
 	onUpdate()
 		..()
 
-		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour)
+		if(bounds_dist(owner, target) > 0 || target == null || owner == null || !devour)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -33,7 +33,7 @@
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour)
+		if(bounds_dist(owner, target) > 0 || target == null || owner == null || !devour)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -116,7 +116,7 @@
 	onUpdate()
 		..()
 
-		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(bounds_dist(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -143,7 +143,7 @@
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(bounds_dist(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

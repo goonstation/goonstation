@@ -459,7 +459,7 @@ proc/find_ghost_by_key(var/find_key)
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
+		if (bounds_dist(src, user) > 0 || bounds_dist(user, target) > 0)
 			return
 
 		if (target == user)

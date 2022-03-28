@@ -149,7 +149,7 @@
 
 /datum/aiTask/succeedable/build/failed()
 	var/turf/simulated/floor/build_target = holder.target
-	if(!build_target || get_dist(holder.owner, build_target) > 1)
+	if(!build_target || bounds_dist(holder.owner, build_target) > 0)
 		return 1
 	var/mob/living/critter/flock/F = holder.owner
 	if(!F)
@@ -221,7 +221,7 @@
 /datum/aiTask/succeedable/repair/failed()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	var/mob/living/critter/flock/drone/T = holder.target
-	if(!F || !T || get_dist(T, F) > 1)
+	if(!F || !T || bounds_dist(T, F) > 0)
 		return 1
 	if(F && (!F.can_afford() || !F.abilityHolder))
 		return 1
@@ -286,7 +286,7 @@
 /datum/aiTask/succeedable/deposit/failed()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	var/obj/flock_structure/ghost/T = holder.target
-	if(!F || !T || get_dist(T, F) > 1)
+	if(!F || !T || bounds_dist(T, F) > 0)
 		return 1
 	if(F && (!F.can_afford() || !F.abilityHolder))
 		return 1
@@ -341,7 +341,7 @@
 
 /datum/aiTask/succeedable/open_container/failed()
 	var/obj/storage/container_target = holder.target
-	if(!container_target || get_dist(holder.owner, container_target) > 1 || fails >= max_fails)
+	if(!container_target || bounds_dist(holder.owner, container_target) > 0 || fails >= max_fails)
 		. = 1
 
 /datum/aiTask/succeedable/open_container/succeeded()
@@ -398,7 +398,7 @@
 
 /datum/aiTask/succeedable/rummage/failed()
 	var/obj/item/storage/container_target = holder.target
-	if(!container_target || get_dist(holder.owner, container_target) > 1 || fails >= max_fails)
+	if(!container_target || bounds_dist(holder.owner, container_target) > 0 || fails >= max_fails)
 		. = 1
 
 /datum/aiTask/succeedable/rummage/succeeded()
@@ -496,7 +496,7 @@
 
 /datum/aiTask/succeedable/harvest/failed()
 	var/obj/item/harvest_target = holder.target
-	if(!harvest_target || get_dist(holder.owner, harvest_target) > 1 || fails >= max_fails)
+	if(!harvest_target || bounds_dist(holder.owner, harvest_target) > 0 || fails >= max_fails)
 		. = 1
 
 /datum/aiTask/succeedable/harvest/succeeded()
@@ -685,7 +685,7 @@
 /datum/aiTask/succeedable/butcher/failed()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	var/mob/living/critter/flock/drone/T = holder.target
-	if(!F || !T || get_dist(T, F) > 1)
+	if(!F || !T || bounds_dist(T, F) > 0)
 		return 1
 	if(F && !F.abilityHolder)
 		return 1

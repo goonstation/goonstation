@@ -541,7 +541,7 @@ RACK PARTS
 
 	onUpdate()
 		..()
-		if (fparts == null || owner == null || get_dist(owner, fparts) > 1)
+		if (fparts == null || owner == null || bounds_dist(owner, fparts) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -592,7 +592,7 @@ RACK PARTS
 
 	onUpdate()
 		..()
-		if (the_furniture == null || the_tool == null || owner == null || get_dist(owner, the_furniture) > 1)
+		if (the_furniture == null || the_tool == null || owner == null || bounds_dist(owner, the_furniture) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

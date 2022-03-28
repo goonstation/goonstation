@@ -231,7 +231,7 @@
 				boutput(user, "<span class='alert'>You can't press it when you're incapacitated.</span>")
 				being_pressed = 0
 				return
-			if (get_dist(user,src) > 1)
+			if (bounds_dist(user, src) > 0)
 				boutput(user, "<span class='alert'>You can't press it from over there.</span>")
 				being_pressed = 0
 				return

@@ -41,7 +41,7 @@ Contains:
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (istype(A, /turf))
-			if (get_dist(A,user) > 1) // Scanning for COOL LORE SECRETS over the camera network is fun, but so is drinking and driving.
+			if (bounds_dist(A, user) > 0) // Scanning for COOL LORE SECRETS over the camera network is fun, but so is drinking and driving.
 				return
 			if(A.interesting && src.on)
 				animate_scanning(A, "#7693d3")
@@ -185,7 +185,7 @@ that cannot be itched
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 
-		if (get_dist(A,user) > 1 || istype(A, /obj/ability_button)) // Scanning for fingerprints over the camera network is fun, but doesn't really make sense (Convair880).
+		if (bounds_dist(A, user) > 0 || istype(A, /obj/ability_button)) // Scanning for fingerprints over the camera network is fun, but doesn't really make sense (Convair880).
 			return
 
 		user.visible_message("<span class='alert'><b>[user]</b> has scanned [A].</span>")
@@ -455,7 +455,7 @@ that cannot be itched
 	// Distance upgrade action code
 	pixelaction(atom/target, params, mob/user, reach)
 		var/turf/T = get_turf(target)
-		if ((analyzer_upgrade == 1) && (get_dist(user, T)>1))
+		if ((analyzer_upgrade == 1) && (bounds_dist(user, T) > 0))
 			user.visible_message("<span class='notice'><b>[user]</b> takes a distant atmospheric reading of [T].</span>")
 			boutput(user, scan_atmospheric(T, visible = 1))
 			src.add_fingerprint(user)
@@ -480,7 +480,7 @@ that cannot be itched
 		addUpgrade(src, W, user, src.analyzer_upgrade)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		if (get_dist(A, user) > 1 || istype(A, /obj/ability_button))
+		if (bounds_dist(A, user) > 0 || istype(A, /obj/ability_button))
 			return
 
 		if (istype(A, /obj) || isturf(A))
@@ -763,7 +763,7 @@ that cannot be itched
 	// i dunno, who knows. at least you'd be able to take stock easier.
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		if (get_dist(A,user) > 1)
+		if (bounds_dist(A, user) > 0)
 			return
 
 		var/datum/artifact/art = null

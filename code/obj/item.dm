@@ -404,7 +404,7 @@
 
 		if (!do_mob(user, M))
 			return 0
-		if (get_dist(user,M) > 1)
+		if (bounds_dist(user, M) > 0)
 			return 0
 
 		user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
@@ -609,7 +609,7 @@
 
 /obj/item/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 	..()
-	if (max_stack > 1 && src.loc == user && get_dist(O, user) <= 1 && check_valid_stack(O))
+	if (max_stack > 1 && src.loc == user && bounds_dist(O, user) == 0 && check_valid_stack(O))
 		if ( src.amount >= max_stack)
 			failed_stack(O, user)
 			return

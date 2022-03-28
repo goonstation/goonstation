@@ -481,13 +481,13 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 
 	onUpdate()
 		..()
-		if(get_dist(owner, M) > 1 || M == null || owner == null)
+		if(bounds_dist(owner, M) > 0 || M == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, M) > 1 || M == null || owner == null)
+		if(bounds_dist(owner, M) > 0 || M == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

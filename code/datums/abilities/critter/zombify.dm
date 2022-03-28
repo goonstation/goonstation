@@ -19,13 +19,13 @@
 	onUpdate()
 		..()
 
-		if(get_dist(owner, target) > 1 || target == null || owner == null || target == owner || !zombify || !zombify.cooldowncheck())
+		if(bounds_dist(owner, target) > 0 || target == null || owner == null || target == owner || !zombify || !zombify.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null || target == owner || !zombify || !zombify.cooldowncheck())
+		if(bounds_dist(owner, target) > 0 || target == null || owner == null || target == owner || !zombify || !zombify.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -81,7 +81,7 @@
 		if (!ishuman(target))
 			boutput(holder.owner, __red("Invalid target."))
 			return 1
-		if (get_dist(holder.owner, target) > 1)
+		if (bounds_dist(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to zombify."))
 			return 1
 		var/mob/living/carbon/human/H = target

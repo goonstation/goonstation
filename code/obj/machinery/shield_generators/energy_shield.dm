@@ -57,7 +57,7 @@
 					var/the_level = input("Enter a power level from [src.MIN_POWER_LEVEL]-[src.MAX_POWER_LEVEL]. Higher levels use more power.","[src.name]",1) as null|num
 					if(!the_level)
 						return
-					if(get_dist(user,src) > 1)
+					if(bounds_dist(user, src) > 0)
 						boutput(user, "<span class='alert'>You flail your arms at [src] from across the room like a complete muppet. Move closer, genius!</span>")
 						return
 					the_level = clamp(the_level, MIN_POWER_LEVEL, MAX_POWER_LEVEL)

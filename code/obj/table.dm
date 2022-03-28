@@ -1054,7 +1054,7 @@
 
 	onUpdate()
 		..()
-		if (the_table == null || the_tool == null || owner == null || get_dist(owner, the_table) > 1)
+		if (the_table == null || the_tool == null || owner == null || bounds_dist(owner, the_table) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -1146,7 +1146,7 @@
 
 	onUpdate()
 		..()
-		if (the_table == null || owner == null || get_dist(owner, the_table) > 1)
+		if (the_table == null || owner == null || bounds_dist(owner, the_table) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

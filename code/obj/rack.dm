@@ -136,7 +136,7 @@
 
 	onUpdate()
 		..()
-		if (the_rack == null || the_tool == null || owner == null || get_dist(owner, the_rack) > 1)
+		if (the_rack == null || the_tool == null || owner == null || bounds_dist(owner, the_rack) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

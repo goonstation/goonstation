@@ -939,7 +939,7 @@ proc/generate_space_color()
 		return
 	if (user.pulling.anchored)
 		return
-	if ((user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
+	if ((user.pulling.loc != user.loc && bounds_dist(user, user.pulling) > 0))
 		return
 	if (!isturf(user.pulling.loc))
 		var/obj/container = user.pulling.loc
@@ -964,7 +964,7 @@ proc/generate_space_color()
 		return
 	if (user.pulling.anchored)
 		return
-	if ((user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
+	if ((user.pulling.loc != user.loc && bounds_dist(user, user.pulling) > 0))
 		return
 	if (!isturf(user.pulling.loc))
 		return
