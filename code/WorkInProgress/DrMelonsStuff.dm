@@ -110,8 +110,7 @@
 
 	mob_flip_inside(var/mob/user)
 		if (src.reagents.total_volume)
-			user.show_text("<span class='alert'>You splash around enough to shake the tub!</span>")
-			src.visible_message("<span class='notice'>[src.occupant] splish-splashes around!</span>")
+			user.visible_message("<span class='notice'>[src.occupant] splish-splashes around.</span>", "<span class='alert'>You splash around enough to shake the tub!</span>", "<span class='notice'>You hear liquid splash on the ground.</span>")
 			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 			animate_wiggle_then_reset(src, 1, 3)
 			src.reagents.trans_to(src.last_turf, 5)
@@ -198,14 +197,17 @@
 		src.UpdateOverlays(src.SafeGetOverlayImage("bath_edge", 'icons/obj/stationobjs.dmi', "bath_edge", MOB_LAYER - 0.1), "bath_edge")
 		src.on_reagent_change()
 		target.layer = MOB_LAYER - 0.3
-
 		src.vis_contents += target
 
-	proc/eject_occupant()
-		if (!src.occupant)
+	proc/eject_occupant(user)
+		if (is_incapacitated(user)) return
+		if (issilicon(user) || isAI(user))
+			boutput("<span class='alert'>You can't quite lift [src.occupant] out of the tub!</span>")
 			return
-		boutput("<span class='notice'>You get out of the bath.</span>")
-		src.occupant.visible_message("<span class='notice'>[src.occupant] gets out of the bath.</span>")
+		if (!src.occupant)
+			boutput("<span class='alert'>There's no one inside!</span>")
+			return
+		src.occupant.visible_message("<span class='notice'>[src.occupant] gets out of the bath.</span>", "<span class='notice'>You get out of the bath.</span>")
 		src.occupant.pixel_y = 0
 		src.occupant.layer = initial(occupant.layer)
 		src.occupant.set_loc(get_turf(src))
@@ -226,14 +228,11 @@
 			if(src.occupant.loc != src)
 				src.occupant.pixel_y = 0
 				src.occupant = null
-				on_reagent_change()
+				src.on_reagent_change()
 				return
-			if(src.reagents.total_volume > 5)
-				reagents.reaction(src.occupant, TOUCH)
-				src.reagents.trans_to(src.occupant,5,1)
-			else
-				src.reagents.clear_reagents()
-				on_reagent_change()
+			if(src.reagents.total_volume)
+				src.reagents.reaction(src.occupant, TOUCH)
+				src.reagents.trans_to(src.occupant, 5)
 
 	MouseDrop_T(mob/living/carbon/human/target, mob/user)
 		if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
@@ -242,20 +241,15 @@
 			boutput(user, "<span class='alert'>Someone's already in the bathtub!</span>")
 			return
 
-		var/msg
-
-		if(target == user && !user.stat)	// if drop self, then climbed in
-			msg = "[user.name] climbs into the [src]."
-			boutput(user, "<span class='notice'>You climb into the [src].</span>")
+		if(target == user && !user.stat)
+			target.visible_message("[user.name] climbs into the [src].", "You climb into the [src]")
 		else if(target != user && !user.restrained())
-			msg = "[user.name] pushes [target.name] into the [src]!"
-			boutput(user, "<span class='notice'>You push [target.name] into the [src]!</span>")
+			target.visible_message("<span class='alert'>[user.name] pushes [target.name] into the [src]!</alert>", "<span class='notice'>You push [target.name] into the [src]!</span>")
 		else
 			return
 
 		src.add_fingerprint(user)
 		enter_bathtub(target)
-		target.visible_message(msg)
 
 	is_open_container()
 		return 1
