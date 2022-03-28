@@ -97,6 +97,7 @@
 	flags = OPENCONTAINER
 	var/mob/living/carbon/human/occupant = null
 	var/default_reagent = "water"
+	var/on = FALSE
 
 	New()
 		..()
@@ -116,6 +117,13 @@
 			src.reagents.trans_to(src.last_turf, 5)
 		else
 			..()
+
+	mouse_drop(obj/over_object as obj, src_location, over_location)
+		if (src.occupant)
+			eject_occupant(usr, over_object)
+		else
+			src.reagents.clear_reagents()
+			src.on_reagent_change()
 
 	get_desc(dist, mob/user)
 		if (dist > 2)
@@ -172,24 +180,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if (is_incapacitated(user) || issilicon(user) || isAI(user)) return
-		if (src.occupant)
-			boutput(user, "<span class='alert'>You pull [src.occupant] out of the bath!</span>")
-			src.eject_occupant()
-		else
-			boutput(user, "<span class='notice'>You reach into the bath and pull the plug.</span>")
-			if (ishuman(user))
-				var/mob/living/carbon/human/H = user
-				if(!H.gloves)
-					reagents.reaction(user, TOUCH)
-			src.reagents.clear_reagents()
-			src.on_reagent_change()
-			var/count = 0
-			for (var/obj/O in src)
-				count++
-				qdel(O)
-			if (count > 0)
-				boutput(user, "<span class='alert'>...and flush something down the drain. Damn!</span>")
+		src.turn_tap(user)
 
 	proc/enter_bathtub(mob/living/carbon/human/target)
 		target.set_loc(src)
@@ -220,10 +211,54 @@
 		for (var/obj/O in src)
 			O.set_loc(get_turf(src))
 
+	proc/turn_tap(mob/user as mob)
+		src.add_fingerprint(user)
+		if (on)
+			user.visible_message("[user] turns off the bathtub's tap.", "You turn off the bathtub's tap.")
+			playsound(src.loc, "sound/effects/valve_creak.ogg", 30, 2)
+			on = FALSE
+		else
+			if(src.reagents.is_full())
+				boutput(user, "<span class='alert'>The tub is already full!</alert>")
+			else
+				user.visible_message("[user] turns on the bathtub's tap.", "You turn on the bathtub's tap.")
+				playsound(src.loc, "sound/misc/pourdrink.ogg", 60, 4)
+				src.on_reagent_change()
+				on = TRUE
+
+	proc/drain_bathtub(mob/user as mob)
+		src.add_fingerprint(user)
+		if (get_dist(usr, src) <= 1 && !is_incapacitated(usr))
+			if (src.reagents.total_volume)
+				user.visible_message("<span class='notice'>[user] reaches into the bath and pulls the plug.", "<span class='notice'>You reach into the bath and pull the plug.</span>")
+				if (ishuman(usr))
+					var/mob/living/carbon/human/H = usr
+					if(!H.gloves)
+						reagents.reaction(H, TOUCH)
+				playsound(src.loc, "sound/misc/drain_glug.ogg", 70, 1)
+				src.reagents.clear_reagents()
+				src.on_reagent_change()
+
+				var/count = 0
+				for (var/obj/O in src)
+					count++
+					qdel(O)
+				if (count > 0)
+					user.visible_message("<span class='alert'>...and something flushes down the drain. Damn!", "<span class='alert'>...and flush something down the drain. Damn!</span>")
+			else
+				boutput(usr, "<span class='notice'>The bathtub's already empty.</span>")
+
 	relaymove(mob/user as mob, dir)
-		src.eject_occupant()
+		src.eject_occupant(user)
 
 	process()
+		if (src.on)
+			src.reagents.add_reagent(src.default_reagent, 100)
+			src.on_reagent_change()
+			if (src.reagents.is_full())
+				src.visible_message("<span class='notice'>As the [src] finishes filling, the tap shuts off automatically.</span>")
+				playsound(src.loc, "sound/misc/pourdrink2.ogg", 60, 5)
+				src.on = FALSE
 		if (src.occupant)
 			if(src.occupant.loc != src)
 				src.occupant.pixel_y = 0
@@ -238,7 +273,7 @@
 		if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
 			return
 		if (src.occupant)
-			boutput(user, "<span class='alert'>Someone's already in the bathtub!</span>")
+			boutput(user, "<span class='alert'>Someone's already in the [src]!</span>")
 			return
 
 		if(target == user && !user.stat)
@@ -249,20 +284,10 @@
 			return
 
 		src.add_fingerprint(user)
-		enter_bathtub(target)
+		src.enter_bathtub(target)
 
 	is_open_container()
 		return 1
-
-/obj/machinery/bathtub/verb/draw_bath()
-    set name = "Draw A Bath" // idea: emagging bathtub makes the bath spit out a photo of itself when you draw a bath?
-    set src in oview(1)
-    set category = "Local"
-    if (get_dist(usr, src) <= 1 && !is_incapacitated(usr))
-        playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_2.ogg", 50, 1)
-        src.reagents.add_reagent(default_reagent, 100)
-        usr.visible_message("<span class='notice'>[usr] draws a bath.</span>",\
-        "<span class='success'>You draw a nice bath!</span>")
 
 /obj/item/clothing/head/apprentice
 	proc/fantasia()
