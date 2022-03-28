@@ -1301,6 +1301,5 @@
 /obj/item/portable_typewriter/borg
 	name = "integrated typewriter"
 	desc = "A built-in typewriter that can even create its own paper, whoa!"
-	cant_drop = TRUE
 	paper_creation_cooldown = 10 SECONDS
 	can_create_paper = TRUE

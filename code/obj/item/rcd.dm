@@ -49,6 +49,7 @@ Broken RCD + Effects
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
+	health = 7
 	w_class = W_CLASS_NORMAL
 	m_amt = 50000
 
@@ -774,6 +775,7 @@ Broken RCD + Effects
 
 /obj/item/rcd/material/cardboard
 	name = "cardboard rapid construction Device"
+	icon_state = "base_cardboard"
 	desc = "Also known as a C-RCD, this device is able to rapidly construct cardboard props."
 	mats = list("DEN-3" = 10, "POW-2" = 10, "cardboard" = 30)
 	force = 0
@@ -865,6 +867,7 @@ Broken RCD + Effects
 	anchored = 0.0
 	m_amt = 30000
 	g_amt = 15000
+	health = 6
 	var/matter = 10
 
 	get_desc()

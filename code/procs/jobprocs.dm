@@ -63,6 +63,9 @@
 		if (player.ready && !player.mind.assigned_role)
 			unassigned += player
 
+	var/percent_readied_up = length(clients) ? (length(unassigned)/length(clients)) * 100 : 0
+	logTheThing("debug", null, null, "<b>Aloe</b>: roughly [percent_readied_up]% of players were readied up at roundstart (blobs and wraiths don't count).")
+
 	if (unassigned.len == 0)
 		return 0
 

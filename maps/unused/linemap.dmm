@@ -7563,9 +7563,7 @@
 /obj/machinery/door/window/southleft{
 	req_access_txt = "19"
 	},
-/obj/item/aiModule/rename,
 /obj/item/aiModule/freeform,
-/obj/item/aiModule/reset,
 /obj/item/aiModule/protectStation,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload_foyer)
@@ -8727,17 +8725,6 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
-"aua" = (
-/obj/machinery/computer/aiupload{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/cable,
-/turf/simulated/floor/bot,
 /area/station/turret_protected/ai_upload)
 "aub" = (
 /obj/cable{
@@ -10002,7 +9989,6 @@
 /area/space)
 "awQ" = (
 /obj/table/auto,
-/obj/item/aiModule/reset,
 /obj/item/device/audio_log,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -13872,7 +13858,7 @@
 	explosion_resistance = 20;
 	name = "very reinforced wall"
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aGi" = (
 /obj/decal/boxingrope{
 	icon_state = "ringrope";
@@ -14140,16 +14126,16 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aGN" = (
 /obj/item/storage/box/patchbox,
 /obj/iv_stand,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aGO" = (
 /obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aGP" = (
 /obj/decal/boxingrope{
 	density = 1;
@@ -14506,11 +14492,11 @@
 /area/station/security/hos)
 "aHA" = (
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aHB" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aHC" = (
 /obj/item/screwdriver,
 /turf/simulated/floor/plating,
@@ -14731,7 +14717,7 @@
 	},
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aIh" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -14742,7 +14728,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aIi" = (
 /obj/machinery/computer3/generic/communications{
 	tag = "icon-comm (WEST)";
@@ -14755,7 +14741,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aIj" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/wood,
@@ -14955,13 +14941,13 @@
 /obj/item/ammo/bullets/tranq_darts,
 /obj/item/ammo/bullets/tranq_darts,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aIJ" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aIK" = (
 /obj/rack,
 /obj/item/clothing/mask/gas,
@@ -14974,7 +14960,7 @@
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aIL" = (
 /obj/fitness/speedbag/captain,
 /turf/simulated/floor/wood,
@@ -15227,7 +15213,7 @@
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/reagent_containers/syringe/haloperidol,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aJs" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
@@ -15240,7 +15226,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aJt" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/light,
@@ -15462,7 +15448,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aJW" = (
 /turf/simulated/wall/auto/gannets,
 /area/station/crew_quarters/bathroom)
@@ -16405,10 +16391,6 @@
 /obj/machinery/door/airlock/gannets/security/alt{
 	name = "Interrogation Room"
 	},
-/turf/simulated/floor/plating,
-/area/station/security/main)
-"aMo" = (
-/obj/decal/skeleton,
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "aMp" = (
@@ -24371,24 +24353,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/kitchen)
-"bep" = (
-/obj/decal/sink{
-	tag = "icon-sink (WEST)";
-	icon_state = "sink";
-	dir = 8
-	},
-/obj/item/plate,
-/obj/item/plate,
-/obj/item/plate,
-/obj/item/reagent_containers/food/drinks/bowl,
-/obj/item/reagent_containers/food/drinks/bowl,
-/obj/item/plate,
-/obj/item/plate,
-/obj/decal/poster/wallsign/chsl{
-	pixel_x = 32
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/kitchen)
 "beq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -27829,15 +27793,6 @@
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
-"bmK" = (
-/obj/decal/sink{
-	dir = 4;
-	icon_state = "sink";
-	pixel_x = -2;
-	tag = "icon-sink (EAST)"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/cdc)
 "bmL" = (
 /obj/machinery/door/airlock/gannets/glass/toxins{
 	name = "Pathology Quarantine";
@@ -32386,13 +32341,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
-"bxa" = (
-/obj/table/reinforced/auto,
-/obj/item/circuitboard/aiupload,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/network_progs,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
 "bxb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -35105,6 +35053,26 @@
 	},
 /turf/space,
 /area/space)
+"eWt" = (
+/obj/decal/fakeobjects/sink{
+	dir = 4;
+	icon_state = "sink";
+	pixel_x = -2;
+	tag = "icon-sink (EAST)"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
+"fWz" = (
+/obj/machinery/lawrack{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/cable,
+/turf/simulated/floor/bot,
+/area/station/turret_protected/ai_upload)
 "gVa" = (
 /obj/table/wood/auto,
 /obj/item/camera{
@@ -35149,6 +35117,28 @@
 /obj/item/paper/book/from_file/critter_compendium,
 /turf/simulated/floor,
 /area/station/science/teleporter)
+"iGJ" = (
+/obj/decal/fakeobjects/skeleton,
+/turf/simulated/floor/plating,
+/area/station/security/main)
+"lia" = (
+/obj/decal/fakeobjects/sink{
+	tag = "icon-sink (WEST)";
+	icon_state = "sink";
+	dir = 8
+	},
+/obj/item/plate,
+/obj/item/plate,
+/obj/item/plate,
+/obj/item/reagent_containers/food/drinks/bowl,
+/obj/item/reagent_containers/food/drinks/bowl,
+/obj/item/plate,
+/obj/item/plate,
+/obj/decal/poster/wallsign/chsl{
+	pixel_x = 32
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/kitchen)
 "slg" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
@@ -35162,6 +35152,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
+"uiF" = (
+/obj/table/reinforced/auto,
+/obj/item/disk/data/floppy/read_only/network_progs,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
 "uVE" = (
 /obj/table/auto,
 /obj/item/camera,
@@ -71312,7 +71307,7 @@ bkr
 bkS
 blw
 blZ
-bmK
+eWt
 bnq
 bod
 boX
@@ -77305,7 +77300,7 @@ aJL
 aKg
 aKQ
 aKS
-aMo
+iGJ
 aMU
 aNI
 awt
@@ -77878,7 +77873,7 @@ ark
 arU
 asI
 atq
-aua
+fWz
 auF
 avl
 avO
@@ -84919,7 +84914,7 @@ btp
 btp
 bvR
 bwt
-bxa
+uiF
 bxC
 bxU
 bvR
@@ -87905,7 +87900,7 @@ baZ
 bda
 bdv
 bdR
-bep
+lia
 beE
 baZ
 bfA

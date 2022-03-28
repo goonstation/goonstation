@@ -139,7 +139,7 @@
 			cut_resist = material.hasProperty("hard") ? material.getProperty("hard") : cut_resist
 			blunt_resist = material.hasProperty("density") ? material.getProperty("density") : blunt_resist
 			corrode_resist = material.hasProperty("corrosion") ? material.getProperty("corrosion") : corrode_resist
-			//temp_resist = material.hasProperty(PROP_MELTING) ? material.getProperty(PROP_MELTING) : temp_resist
+			//temp_resist = material.hasProperty(PROP_MOB_MELTING) ? material.getProperty(PROP_MOB_MELTING) : temp_resist
 			if (blunt_resist != 0) blunt_resist /= 2
 
 	damage_blunt(var/amount)
@@ -575,7 +575,7 @@
 				if (!isliving(AM) || isintangible(AM)) // I assume this was left out by accident (Convair880).
 					return
 				var/mob/M = AM
-				if (M.client && M.client.flying || (ismob(M) && HAS_MOB_PROPERTY(M, PROP_NOCLIP))) // noclip
+				if (M.client && M.client.flying || (ismob(M) && HAS_ATOM_PROPERTY(M, PROP_MOB_NOCLIP))) // noclip
 					return
 				var/s_chance = 10
 				if (M.m_intent != "walk") // move carefully

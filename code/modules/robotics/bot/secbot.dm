@@ -157,6 +157,11 @@
 			our_baton.dispose()
 			our_baton = null
 		target = null
+
+		#ifdef I_AM_ABOVE_THE_LAW
+		STOP_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
+
 		..()
 
 /obj/machinery/bot/secbot/autopatrol
@@ -257,6 +262,10 @@
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("beacon", beacon_freq)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
+		#ifdef I_AM_ABOVE_THE_LAW
+		START_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
+
 	speak(var/message, var/sing, var/just_float)
 		if (src.emagged >= 2)
 			message = capitalize(ckeyEx(message))
@@ -291,7 +300,7 @@
 			Guard Lockdown: <A href='?src=\ref[src];operation=lockdown'>[src.guard_area_lockdown ? "On" : "Off"]</A><BR>
 			<A href='?src=\ref[src];operation=guardhere'>Guard Here</A>"}
 
-		if (user.client.tooltipHolder)
+		if (user.client?.tooltipHolder)
 			user.client.tooltipHolder.showClickTip(src, list(
 				"params" = params,
 				"title" = "Securitron v2.0 controls",

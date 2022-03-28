@@ -100,7 +100,7 @@ var/global/list/playersSeen = list()
 
 		timeAdded = (row["ckey"] != ckey && newChain > 1 ? 1 : 0) //only add time if a ckey didnt match, and it's a second evasion
 		var/CMinutes = (world.realtime / 10) / 60
-		var/remaining = (timestamp > 0 ? timestamp - CMinutes : 0)
+		var/remaining = (timestamp > 0 ? timestamp - CMinutes : timestamp)
 		var/addData[] = new()
 		addData["ckey"] = ckey
 		addData["compID"] = compID
@@ -147,7 +147,7 @@ var/global/list/playersSeen = list()
 		if(timestamp == 0)
 			details += "This is a permanent ban, you can't appeal this ban until 30 days have passed."
 		else if(timestamp == -1)
-			details += "Please make an <a href='https://forum.ss13.co/showthread.php?tid=14863'>appeal on the forums</a> to have it lifted."
+			details += "Please make an <a href='https://forum.ss13.co/forumdisplay.php?fid=54'>appeal on the forums</a> to have it lifted."
 		return details
 
 /proc/addBan(data)
@@ -193,7 +193,7 @@ var/global/list/playersSeen = list()
 				if(duration == "Permanent")
 					boutput(targetC, "<span class='alert'>You have received a permanent ban, you can't appeal this ban until 30 days have passed.</span>")
 				else if(duration == "Until Appeal")
-					boutput(targetC, "<span class='alert'>You have received a ban. Make an <a href='https://forum.ss13.co/showthread.php?tid=14863'>appeal on the forums</a> to have it lifted.</span>")
+					boutput(targetC, "<span class='alert'>You have received a ban. Make an <a href='https://forum.ss13.co/forumdisplay.php?fid=54'>appeal on the forums</a> to have it lifted.</span>")
 				else
 					boutput(targetC, "<span class='alert'>You have received a ban. Duration: [duration]</span>")
 			logTheThing("admin", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"admin")]" : replacement_text] [serverLogSnippet]. duration: [duration] Reason: [row["reason"]].")

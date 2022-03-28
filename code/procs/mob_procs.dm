@@ -129,6 +129,8 @@
 
 	if (movedelay < slip_delay)
 		var/intensity = (-0.33)+(6.033763-(-0.33))/(1+(movement_delay_real/(0.4))-1.975308)  //y=d+(6.033763-d)/(1+(x/c)-1.975308)
+		if (traitHolder && traitHolder.hasTrait("super_slips"))
+			intensity = max(intensity, 12) //the 12 is copied from the range of lube slips because that's what I'm trying to emulate
 		var/throw_range = min(round(intensity),50)
 		if (intensity < 1 && intensity > 0 && throw_range <= 0)
 			throw_range = max(throw_range,1)
@@ -479,7 +481,7 @@
 	return 0
 
 /mob/living/carbon/human/get_explosion_resistance()
-	return min(GET_MOB_PROPERTY(src, PROP_EXPLOPROT), 100) / 100
+	return min(GET_ATOM_PROPERTY(src, PROP_MOB_EXPLOPROT), 100) / 100
 
 /mob/proc/spread_blood_clothes(mob/whose)
 	return
@@ -1135,8 +1137,8 @@
 	ghost_invisibility = new_invis
 	for (var/mob/dead/observer/G in mobs)
 		G.invisibility = new_invis
-		REMOVE_MOB_PROPERTY(G, PROP_INVISIBILITY, G)
-		APPLY_MOB_PROPERTY(G, PROP_INVISIBILITY, G, new_invis)
+		REMOVE_ATOM_PROPERTY(G, PROP_MOB_INVISIBILITY, G)
+		APPLY_ATOM_PROPERTY(G, PROP_MOB_INVISIBILITY, G, new_invis)
 		if (new_invis != prev_invis && (new_invis == 0 || prev_invis == 0))
 			boutput(G, "<span class='notice'>You are [new_invis == 0 ? "now" : "no longer"] visible to the living!</span>")
 

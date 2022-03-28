@@ -60,7 +60,8 @@
 		var/list/blocked_numbers = list()
 		/// List of mailgroups we don't want to hear from anymore
 		var/list/muted_mailgroups = list()
-
+		/// Whether there's a PDA-report packet-reply-triggered UI update queued
+		var/report_refresh_queued = FALSE
 
 		mess_off //Same as regular but with messaging off
 			message_on = 0
@@ -771,7 +772,13 @@
 				newsignal.data["owner"] = src.master.owner
 				src.post_signal(newsignal)
 
-				src.master.updateSelfDialog()
+				if(!ON_COOLDOWN(src.master, "report_pda_refresh", 1 SECOND))
+					src.master.updateSelfDialog()
+				else if(!src.report_refresh_queued)
+					src.report_refresh_queued = TRUE
+					SPAWN(1 SECOND)
+						src.report_refresh_queued = FALSE
+						src.master.updateSelfDialog()
 
 			if(signal.encryption) return
 
@@ -998,7 +1005,13 @@
 					detected_pdas[newsender] = sender_name
 					master.pdasay_autocomplete[sender_name] = newsender
 
-					src.master.updateSelfDialog()
+					if(!ON_COOLDOWN(src.master, "report_pda_refresh", 1 SECOND))
+						src.master.updateSelfDialog()
+					else if(!src.report_refresh_queued)
+						src.report_refresh_queued = TRUE
+						SPAWN(1 SECOND)
+							src.report_refresh_queued = FALSE
+							src.master.updateSelfDialog()
 
 			return
 

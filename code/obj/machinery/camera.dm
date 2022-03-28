@@ -408,7 +408,7 @@
 	name_autoname_cameras()
 	var/list/cameras = by_type[/obj/machinery/camera]
 	if (!isnull(cameras))
-		connect_camera_list(by_type[/obj/machinery/camera])
+		connect_camera_list(cameras)
 
 /proc/rebuild_camera_network()
 	if(defer_camnet_rebuild || !camnet_needs_rebuild) return

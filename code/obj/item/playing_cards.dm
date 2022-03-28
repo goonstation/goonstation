@@ -377,14 +377,14 @@
 
 	attack_hand(mob/user as mob)
 		if(!is_hand && (isturf(src.loc) || src.loc == user)) //handling the player interacting with a deck of cards with an empty hand
-			update_card_actions("empty")
+			update_card_actions(user, "empty")
 			user.showContextActions(cardActions, src)
 		else
 			..()
 
 	attack_self(mob/user as mob)
 		if(is_hand) //attack_self with hand to pull up the menu
-			update_card_actions("handself")
+			update_card_actions(user, "handself")
 			user.showContextActions(cardActions, src)
 		else //attack_self with deck to shuffle
 			if (length(stored_cards) < 11)
@@ -404,13 +404,13 @@
 				add_to_group(card)
 				user.visible_message("<b>[user.name]</b> adds a card to [his_or_her(user)] [src.name]")
 			else
-				update_card_actions("card")
+				update_card_actions(user, "card")
 				user.showContextActions(cardActions, src)
 			update_group_sprite()
 		else if(istype(W,/obj/item/card_group)) //adding a hand to a deck is similar to adding a card to a deck, whereas adding a deck plops it on top
 			var/obj/item/card_group/group = W
 			if(group.is_hand && !is_hand)
-				update_card_actions("group")
+				update_card_actions(user, "group")
 				user.showContextActions(cardActions, src)
 			else
 				top_or_bottom(user,group,"top",1)
@@ -538,7 +538,7 @@
 			group.card_style = FB.card_style
 			group.card_name = FB.card_name
 
-	proc/update_card_actions(var/hitby) //generates card actions based on which interaction is causing the list to be updated
+	proc/update_card_actions(mob/user, var/hitby) //generates card actions based on which interaction is causing the list to be updated
 		cardActions = list()
 
 		//card to deck
@@ -549,7 +549,7 @@
 		//empty to deck
 		else if(hitby == "empty") //reordered this a bit to prevent overdrawing and have the correct actions avaliable
 			cardActions += new /datum/contextAction/card/pickup
-			if(!(usr.find_in_hand(/obj/item/card_group)) || length(usr.contents.Find(/obj/item/card_group)) < max_hand_size)
+			if(!(user.find_in_hand(/obj/item/card_group)) || length(user.contents.Find(/obj/item/card_group)) < max_hand_size)
 				cardActions += new /datum/contextAction/card/draw
 				cardActions += new /datum/contextAction/card/draw_facedown
 				cardActions += new /datum/contextAction/card/draw_multiple

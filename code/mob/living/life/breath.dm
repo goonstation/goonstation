@@ -105,7 +105,7 @@
 
 		//if (istype(loc, /obj/machinery/clonepod)) return
 
-		if (HAS_MOB_PROPERTY(owner, PROP_REBREATHING))
+		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING))
 			return
 
 		// Changelings generally can't take OXY/LOSEBREATH damage...except when they do.
@@ -115,7 +115,7 @@
 		// If you have the breathless effect, same deal - you'd never heal oxy damage
 		// If your mutant race doesn't need oxygen from breathing, ya no losebreath
 		// so, now you do
-		if (ischangeling(owner) || HAS_MOB_PROPERTY(owner, PROP_BREATHLESS))
+		if (ischangeling(owner) || HAS_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS))
 			if (owner.losebreath)
 				owner.losebreath = 0
 			if (owner.get_oxygen_deprivation())

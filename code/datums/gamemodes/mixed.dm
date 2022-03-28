@@ -2,7 +2,7 @@
 	name = "mixed (action)"
 	config_tag = "mixed"
 	latejoin_antag_compatible = 1
-	latejoin_antag_roles = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WRESTLER, ROLE_WEREWOLF, ROLE_ARCFIEND)
+	latejoin_antag_roles = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_WRESTLER = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
 
 	var/const/traitors_possible = 8 // cogwerks - lowered from 10
 	var/const/werewolf_players_req = 15
@@ -11,7 +11,7 @@
 	var/has_werewolves = 1
 	var/has_blobs = 1
 
-	var/list/traitor_types = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_SPY_THIEF, ROLE_WEREWOLF, ROLE_ARCFIEND)
+	var/list/traitor_types = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1 , ROLE_SPY_THIEF = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -33,7 +33,7 @@
 			num_players++
 
 	if (num_players < werewolf_players_req || !has_werewolves)
-		traitor_types -= ROLE_WEREWOLF
+		traitor_types[ROLE_WEREWOLF] = 0;
 
 	var/i = rand(25)
 	var/num_enemies = 1
@@ -52,8 +52,8 @@
 	var/num_werewolves = 0
 	var/num_arcfiends = 0
 #if defined(XMAS) && !defined(RP_MODE)
-	src.traitor_types += ROLE_GRINCH
-	src.latejoin_antag_roles += ROLE_GRINCH
+	src.traitor_types[ROLE_GRINCH] = 1;
+	src.latejoin_antag_roles[ROLE_GRINCH] = 1;
 #endif
 
 	if ((num_enemies >= 4 && prob(20)) || debug_mixed_forced_wraith || debug_mixed_forced_blob)
@@ -68,7 +68,7 @@
 			num_wizards++
 			// if any combat roles end up in this mode they go here ok
 		else // more stealthy roles
-			switch(pick(src.traitor_types))
+			switch(weighted_pick(src.traitor_types))
 				if(ROLE_TRAITOR) num_traitors++
 				if(ROLE_CHANGELING) num_changelings++
 				if(ROLE_VAMPIRE) num_vampires++
@@ -85,7 +85,7 @@
 	for(var/datum/mind/tplayer in token_players)
 		if (!token_players.len)
 			break
-		switch(pick(traitor_types))
+		switch(weighted_pick(traitor_types))
 			if(ROLE_WIZARD)
 				traitors += tplayer
 				token_players.Remove(tplayer)
@@ -375,8 +375,8 @@
 /datum/game_mode/mixed/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs. You may ignore any of your laws to do this."
 	boutput(killer, "<b>Your laws have been changed!</b>")
-	killer:set_zeroth_law(law)
-	boutput(killer, "New law: 0. [law]")
+	killer.law_rack_connection?.SetLawCustom("Objective Law Module",law,1,true,true)
+	killer.law_rack_connection?.UpdateLaws()
 
 /datum/game_mode/mixed/proc/get_mob_list()
 	var/list/mobs = list()

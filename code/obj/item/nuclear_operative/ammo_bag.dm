@@ -126,3 +126,31 @@
 	New()
 		..()
 		desc = "A bag that can fabricate specialist magazines for standard syndicate weapons. Technology! It has [charge] charge left."
+
+//Universal
+/obj/item/ammo/ammobox/shootingrange
+	name = "Shooting Range Ammo Bag"
+	desc = "A universal ammo bag for kinetic ammunition."
+	icon_state = "ammobag-sp-d"
+	anchored = 2
+
+	attackby(obj/item/I as obj, mob/user as mob)
+		if(istype(I, /obj/item/gun/kinetic))
+			var/obj/item/gun/kinetic/K = I
+			if(!K.ammo.refillable)
+				boutput(user, "<span class='alert'>The ammobag grumps unhappily. What?</span>")
+			if(K.ammo.amount_left>=K.max_ammo_capacity)
+				user.show_text("[K] is full!", "red")
+				return
+			K.ammo.amount_left = K.max_ammo_capacity
+			K.UpdateIcon()
+			user.visible_message("<span class='alert'>[user] refills [K] from [src].</span>", "<span class='alert'>You fully refill [K] with ammo from [src].</span>")
+			var/obj/item/ammo/bullets/magazine = K.default_magazine
+			var/reload_sound = initial(magazine.sound_load)
+			if(isnull(reload_sound))
+				playsound(K, 'sound/weapons/gunload_light.ogg', 50, 1)
+			else
+				playsound(K, reload_sound, 50, 1)
+
+	ex_act(severity)
+		return

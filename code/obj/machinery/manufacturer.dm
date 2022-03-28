@@ -1287,28 +1287,30 @@
 
 	proc/manuf_zap(mob/user, prb)
 		if(issilicon(user) || isAI(user))
-			return 0
+			return FALSE
 		if(!prob(prb))
-			return 0
+			return FALSE
 		if(src.status & (BROKEN|NOPOWER))
-			return 0
+			return FALSE
 		if(ishuman(user))
 			if (istype(user:gloves, /obj/item/clothing/gloves/yellow))
-				return 0
+				return FALSE
 
-		var/netnum = 0
+		var/netnum = FALSE
 		for(var/turf/T in range(1, user))
 			for(var/obj/cable/C in T.contents)
 				netnum = C.netnum
 				break
 			if (netnum) break
 
-		if (!netnum) return 0
+		if (!netnum) return FALSE
 
+		if (!IN_RANGE(src, user, 2))
+			return FALSE
 		if (src.electrocute(user,prb,netnum))
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 
 	proc/add_schematic(var/schematic_path,var/add_to_list = "available")
 		if (!ispath(schematic_path))
@@ -2041,7 +2043,10 @@
 /obj/item/paper/manufacturer_blueprint/loafer
 	blueprint = /datum/manufacture/mechanics/loafer
 
+/******************** AI Law Rack Blueprint (probably a terrible idea) *******************/
 
+/obj/item/paper/manufacturer_blueprint/lawrack
+	blueprint = /datum/manufacture/mechanics/lawrack
 
 /******************** AI Display Blueprints (should be temporary but we know how that goes in coding) *******************/
 
@@ -2250,14 +2255,18 @@
 	/datum/manufacture/cyberlung_right,
 	/datum/manufacture/rods2,
 	/datum/manufacture/metal,
-	/datum/manufacture/glass)
+	/datum/manufacture/glass,
+	/datum/manufacture/asimov_laws,
+	/datum/manufacture/borg_linker)
 
 	hidden = list(/datum/manufacture/flash,
 	/datum/manufacture/cybereye_thermal,
 	/datum/manufacture/cybereye_laser,
 	/datum/manufacture/cyberbutt,
 	/datum/manufacture/robup_expand,
-	/datum/manufacture/cardboard_ai)
+	/datum/manufacture/cardboard_ai,
+	/datum/manufacture/corporate_laws,
+	/datum/manufacture/robocop_laws)
 
 /obj/machinery/manufacturer/medical
 	name = "Medical Fabricator"

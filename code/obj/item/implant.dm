@@ -42,6 +42,8 @@ THROWING DARTS
 			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, pda_alert_frequency)
 
 	disposing()
+		if (owner)
+			on_remove(owner)
 		owner = null
 		former_implantee = null
 		if (uses_radio)
@@ -72,6 +74,8 @@ THROWING DARTS
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = owner
 			H.implant -= src
+		if (implant_overlay)
+			M.update_clothing()
 		src.owner = null
 		src.implanted = 0
 		return
@@ -824,12 +828,23 @@ THROWING DARTS
 
 	bullet_12ga
 		name = "buckshot"
-		icon_state = "bulletround"
-		desc = "A commonly-used load for shotguns."
+		icon_state = "buckshot"
+		desc = "A collection of buckshot rounds, a very commonly used load for shotguns."
 
 	staple
 		name = "staple"
+		icon_state = "staple"
 		desc = "Well that's not very nice."
+
+	stinger_ball
+		name = "rubber ball"
+		icon_state = "rubberball"
+		desc = "A rubber ball from a stinger grenade. Ouch."
+
+	grenade_fragment
+		name = "grenade fragment"
+		icon_state = "grenadefragment"
+		desc = "A sharp and twisted grenade fragment. Comes from your typical frag grenade."
 
 	shrapnel
 		name = "shrapnel"
@@ -870,6 +885,8 @@ THROWING DARTS
 
 	if (C != src.owner)
 		src.owner = C
+
+	src.blood_DNA = src.owner.bioHolder.Uid
 
 	for (var/obj/item/implant/projectile/P in C)
 		if (P.bleed_timer)

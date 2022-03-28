@@ -498,13 +498,18 @@
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
+	use_new_interface = 1
+	//Start at E3
+	key_offset = 5
 
 	New()
-		if (sounds_instrument == null)
-			sounds_instrument = list()
-			for (var/i in 1 to 12)
-				sounds_instrument += "sound/musical_instruments/trumpet/trumpet_[i].ogg"
+		notes = list("e3","f3","f-3","g3","g-3","a3","a-3","b3","c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6")
+		sounds_instrument = list()
+		for (var/i in 1 to length(notes))
+			note = notes[i]
+			sounds_instrument += "sound/musical_instruments/trumpet/notes/[note].ogg"
 		..()
+		BLOCK_SETUP(BLOCK_ROD)
 
 /* -------------------- Spooky Trumpet -------------------- */
 

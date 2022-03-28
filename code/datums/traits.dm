@@ -687,7 +687,7 @@ ABSTRACT_TYPE(/obj/trait/job)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.add_stam_mod_max("trait", STAMINA_MAX * 0.1)
-			APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "trait", STAMINA_REGEN * 0.1)
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "trait", STAMINA_REGEN * 0.1)
 
 /obj/trait/bigbruiser
 	name = "Big Bruiser (-2) \[Stats\]"
@@ -1082,6 +1082,12 @@ ABSTRACT_TYPE(/obj/trait/job)
 	onAdd(var/mob/owner)
 		..()
 		owner.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
+
+/obj/trait/super_slips
+	name = "Slipping Hazard (+1)"
+	id = "super_slips"
+	desc = "You never were good at managing yourself slipping."
+	points = 1
 
 //Infernal Contract Traits
 /obj/trait/hair
