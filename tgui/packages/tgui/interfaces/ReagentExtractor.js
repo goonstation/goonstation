@@ -6,7 +6,7 @@
  */
 
 import { useBackend, useSharedState, useLocalState } from "../backend";
-import { Box, Button, Dimmer, Divider, Flex, NumberInput, Section, SectionEx, Stack } from '../components';
+import { Button, Dimmer, Divider, Flex, NumberInput, Section, SectionEx, Stack } from '../components';
 import { Window } from '../layouts';
 import { Fragment } from 'inferno';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo.js';
