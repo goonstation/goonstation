@@ -1646,6 +1646,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
+	var/frog_sound = list("sound/voice/screams/frogscream1.ogg","sound/voice/screams/frogscream3.ogg", "sound/voice/screams/frogscream4.ogg")
 
 	New()
 		if (prob(80))
@@ -1674,6 +1675,16 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.limb_name = "mouth"
 		HH.can_hold_items = 0
 
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream","croak")
+				if (src.emote_check(voluntary, 50))
+					if(rand(1,1000) == 1000)
+						playsound(src, frog_sound, 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+						return "<span class='emote'><b>[src]</b> makes a horrifying noise!</span>"
+					else
+						playsound(src, "sound/misc/croak.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+						return "<span class='emote'><b>[src]</b> croaks!</span>"
 
 	weak
 		health_brute = 10
