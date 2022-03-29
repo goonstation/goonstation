@@ -63,7 +63,9 @@ var/global/mob/twitch_mob = 0
 	var/path = "data/intra_round.sav"
 
 	if (!fexists(path))
+#ifdef LIVE_SERVER
 		stack_trace("data/intra_round.sav does not exist! No intra round data can be loaded.")
+#endif
 		return null
 
 	var/savefile/F = new /savefile(path, 10)
