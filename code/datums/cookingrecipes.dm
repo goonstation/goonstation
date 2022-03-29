@@ -1738,21 +1738,29 @@
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/chickenpineapplecurry
 
-/datum/cookingrecipe/ramenbowl
+/datum/cookingrecipe/ramen_bowl
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/ramen
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/soysauce
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/seaweed
 	item4 = /obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
 	cookbonus = 14
-	output = /obj/item/reagent_containers/food/snacks/ramenbowl
+	output = /obj/item/reagent_containers/food/snacks/ramen_bowl
 
-/datum/cookingrecipe/udonbowl
+/datum/cookingrecipe/udon_bowl
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/udon
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/soysauce
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/seaweed
 	item4 = /obj/item/reagent_containers/food/snacks/ingredient/kamaboko
 	cookbonus = 14
-	output = /obj/item/reagent_containers/food/snacks/udonbowl
+	output = /obj/item/reagent_containers/food/snacks/udon_bowl
+
+/datum/cookingrecipe/curry_udon_bowl
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/udon
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/currypowder
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/seaweed
+	item4 = /obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/curry_udon_bowl
 
 // Recipe for zongzi is a WIP; we're gonna need rice balls or something
 

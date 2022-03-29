@@ -2830,20 +2830,35 @@
 	initial_reagents = list("currypowder"=10, "capsaicin"=5, "salicylic_acid"=10)
 	food_effects = list("food_brute","food_tox","food_warm")
 
-/obj/item/reagent_containers/food/snacks/ramenbowl
+/obj/item/reagent_containers/food/snacks/ramen_bowl
 	name = "bowl of ramen"
-	desc = "A hearty bowl of real Japanese ramen; not the packet stuff!"
+	desc = "A hearty bowl of real Japanese ramen with a halved boiled egg; not the instant stuff!"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "ramen"
 	needfork = TRUE
 	amount = 5
+	initial_volume = 20
+	initial_reagents = "soysauce"
 	food_effects = list("food_brute","food_energized","food_warm")
 
-/obj/item/reagent_containers/food/snacks/udonbowl
+/obj/item/reagent_containers/food/snacks/udon_bowl
 	name = "bowl of udon"
-	desc = "A bowl of very chewy wheat noodles served in a warm broth."
+	desc = "A bowl of very chewy wheat noodles and fish cake served in a warm, savoury broth."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "udon"
 	needfork = TRUE
 	amount = 5
+	initial_volume = 20
+	initial_reagents = "soysauce"
 	food_effects = list("food_hp_up","food_explosion_resist","food_warm")
+
+/obj/item/reagent_containers/food/snacks/curry_udon_bowl
+	name = "bowl of curry udon"
+	desc = "A bowl of very chewy wheat noodles with a halved boiled egg in a fragrant curry broth."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "udon_curry"
+	needfork = TRUE
+	amount = 5
+	initial_volume = 20
+	initial_reagents = "currypowder"
+	food_effects = list("food_hp_up","food_refreshed","food_warm")
