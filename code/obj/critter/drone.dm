@@ -386,7 +386,6 @@
 							smashed_recently = 1
 							SPAWN(smash_cooldown)
 								smashed_recently = 0
-
 							walk_towards(src, src.target, 1, 4)*/
 						else walk_to(src, src.target,1,4)
 
@@ -932,10 +931,7 @@
 		A.set_icon()
 		if(src.current_projectile.shot_sound)
 			playsound(src, src.current_projectile.shot_sound, 60)
-
-
 		if(!A)	return
-
 		if (!istype(target, /turf))
 			A.die()
 			return
@@ -1158,11 +1154,9 @@
 
 	/*proc/elec_zap()
 		playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
-
 		var/list/lineObjs
 		for (var/mob/living/poorSoul in range(src, 5))
 			lineObjs += DrawLine(src, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
-
 			poorSoul << sound('sound/effects/electric_shock.ogg', volume=50)
 			random_burn_damage(poorSoul, 45)
 			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
@@ -1172,13 +1166,10 @@
 			poorSoul:weakened += rand(3,5)
 			if (isdead(poorSoul) && prob(25))
 				poorSoul.gib()
-
 		for (var/obj/machinery/vehicle/poorPod in range(src, 5))
 			lineObjs += DrawLine(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
-
 			playsound(poorPod.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
 			poorPod.ex_act(3)
-
 		SPAWN(0.6 SECONDS)
 			for (var/obj/O in lineObjs)
 				qdel(O)*/
@@ -1267,7 +1258,7 @@
 	density = 1
 	health = 8
 	maxhealth = 8
-	aggressive = 8
+	aggressive = 1
 	defensive = 1
 	wanderer = 1
 	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
@@ -1318,10 +1309,10 @@
 	Shoot(var/target, var/start, var/user, var/bullet = 0)
 		..()
 		bulletcount--
-		SPAWN(0.5 SECONDS)
 		if(bulletcount<=0)// out of ammo? bedtime
-			src.visible_message("[src] runs out of ammo!")
-			task = "sleeping"
-			src.health = 0
-			src.CritterDeath()
+			SPAWN(0.5 SECONDS)
+				src.visible_message("[src] runs out of ammo!")
+				task = "sleeping"
+				src.health = 0
+				src.CritterDeath()
 
