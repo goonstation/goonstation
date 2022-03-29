@@ -1631,7 +1631,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/syrup, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/mayo, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/ketchup, 5)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/soysauce, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/soysauce, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/tomato, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/apple, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/lettuce, 10)
