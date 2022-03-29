@@ -17,10 +17,10 @@ You should be greeted with a screen that looks like this:![](https://i.imgur.com
 If this is your first time using VSCode, take a minute to familiarize yourself with the layout of the software. Here's an example of what it may look like when you're working on something:
  ![](https://i.imgur.com/wP6byLS.png)
 1: This is your sidebar. From this, you can search the codebase, browse files, debug your code, and manage your branches.
-2: This bar is an extension of whatever you have selected from the smaller sidebar. Here you see the source control window's user interface. (Please do note that, unless you have the GitLens and GitGraph extensions, your source control sidebar will probably look different than what is displayed.)
-3: These are the tabs and files you have open. From here, you can see any files you've changed, and any unsaved work
-4: This is the current file you have open.
-5: This is the output terminal. If and when you have any bugs, you'll see them here, and you can track your code compiling from here.
+2: This bar is an extension of whatever you have selected from the smaller sidebar. Here you see the source control window's user interface. (Please do note that, unless you have the GitLens and GitGraph extensions, your source control sidebar will probably look different than what is displayed!)
+3: These are the tabs and files you have open. From here, you can see any files you've changed, and see any unsaved or modified files
+4: This is the current file that you've selected's contents.
+5: This is the output terminal. If and when you have any bugs, you'll see them here, and you can track your code compiling from here, as well as being able to interface with git directly through command-line prompts.
 
 
 Now, we need to create our own repository to contribute to! :rocket:
@@ -43,7 +43,7 @@ Git is what will let you synchronize your code with others, make your own branch
 
 Next, go back to VSCode and relaunch it. Under the version control sidebar (looks like a tree branch) click Clone Repository. It should look like this: ![](https://i.imgur.com/pBqGiT2.png)
 
-If that's not there, you can press `Ctrl+Shift+P` to open the command palette, then type `Git: Clone`, and then press enter. 
+If that's not there, you can press <kbd>Ctrl + Shift + P</kbd> to open the command palette, then type `Git: Clone`, and then press enter. 
 
 Now, paste the URL of the repository you created in the last step. It should look like this: `https://github.com/YOURNAME/goonstation`. Then, select a folder to keep your local repository. *The process of downloading might take a while.*
 
@@ -53,7 +53,8 @@ Next, we're going to need to get some necessary extensions!
 
 ### Step 4: Extension-O-Rama :gear: 
 
-Click the Extensions button on the left bar or press `Ctrl+Shift+X`. It looks like a bunch of squares. You should see 2 recommended extensions. If you don't, type `@recommended` into the search bar. You'll want to install all of these.
+Click the Extensions button on the left bar or press <kbd>Ctrl + Shift + X</kbd>. It looks like a bunch of squares. You should see 2 recommended extensions. If you don't, type `@recommended` into the search bar. You'll want to install all of these.
+
 
 :::warning
 If this does not work, search for the following extensions:
@@ -81,7 +82,7 @@ Now, let's connect the main goonstation repository to your client.
 
 We need to add the main Goonstation repository as a remote now. :satellite:
 
-If you haven't already relaunched VSCode, make sure to do this now; otherwise you'll have troubles on this step. To do this, open the command palette (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>) and type `Git: Add Remote`. It'll prompt you for a name, which should be `upstream`. Then, put https://github.com/goonstation/goonstation as the URL. Now, you'll have the main Goonstation repository as a remote named upstream: This will let you easily send your pull requests there later.
+If you haven't already relaunched VSCode, make sure to do this now; otherwise you'll have troubles on this step. To do this, open the command palette (<kbd>Ctrl + Shift + P</kbd>) and type `Git: Add Remote`. It'll prompt you for a name, which should be `upstream`. Then, put https://github.com/goonstation/goonstation as the URL. Now, you'll have the main Goonstation repository as a remote named upstream: This will let you easily send your pull requests there later.
 
 You're just about done with that! Just one last thing you need to manually do.
 
@@ -147,13 +148,13 @@ Now, save your changes. If we look at the Source Control tab, we'll see that we 
 
 ### Step 3: Testing your code :game_die:
 
-The easiest way to test your changes is to press <kbd>F5</<kbd>. This compiles your code, runs the server and connects you to it, as well as automatically giving you admin permissions. It also starts a debugger that will let you examine what went wrong when a runtime error happens. If you want to avoid the debugger press <kbd>Ctrl</kbd> + <kbd>F5</kbd> instead. **Keep in mind that this can take anywhere from 2 to 10 minutes**. Be patient, and while waiting, you may want to pay attention to your pets, stand up and walk around, or drink some water.
+The easiest way to test your changes is to press <kbd>F5</kbd>. This compiles your code, runs the server and connects you to it, as well as automatically giving you admin permissions. It also starts a debugger that will let you examine what went wrong when a runtime error happens. If you want to avoid the debugger press <kbd>Ctrl + F5</kbd> instead. **Keep in mind that this can take anywhere from 2 to 10 minutes**. Be patient, and while waiting, you may want to pay attention to your pets, stand up and walk around, or drink some water.
 
 :::warning
 If you are on a version of BYOND different from the one specified in buildByond.conf the debugger might be somewhat unstable and not work properly.
 :::
 
-Alternative solution is to press `ctrl+shift+B` and then select the build task by hitting enter. This one does not automatically make you an administrator in-game so you will need to edit the config/admins.txt file by adding a `yourckey - Host` line there. Just make sure you don't commit this file later!
+An alternative solution is to press <kbd>Ctrl + Shift + B</kbd> and then select the build task by hitting enter. This one does not automatically make you an administrator in-game so you will need to edit the config/admins.txt file by adding a `yourckey - Host` line there. Just make sure you don't commit this file later!
 
 :::info
 If an error popup with an error message of "Could not find the task 'dm: build - goonstation.dme'." shows up, one possible cause is that a VS Code Workspace is confusing things. If this is the case, close your current workspace (`File` -> `Close Workspace`) then use the `Open Folder` option to select the `goonstation` folder and try to build again.
@@ -278,7 +279,7 @@ It might happen that somewhere in the process of making a PR you see a message a
 
 Changes will be made to the upstream repo and it's a good idea to keep your master in sync with that.
 
-0. This step is only necessary if you're doing this for the first time! Press **Ctrl + Shift + P** and type in "fetch from all remotes" and choose the relevant command.
+0. This step is only necessary if you're doing this for the first time! Press <kbd>Ctrl + Shift + P</kbd> and type in "fetch from all remotes" and choose the relevant command.
 1. Checkout the master branch
     You do that by clicking on the name of the current branch in the bottom left corner and then selecting "master" in the command palette.
     ![](https://i.imgur.com/z2o1Nw6.png)
@@ -298,7 +299,7 @@ Congratulations! Your master branch should now be up to date with all the newest
 :::
 
 1. Checkout your feature branch (as above)
-2. Press **Ctrl + Shift + P** and type in "git merge", choose the Git: Merge Branch... command
+2. Press <kbd>Ctrl + Shift + P</kbd> and type in "git merge", choose the Git: Merge Branch... command
     ![](https://i.imgur.com/LbH8XB9.png)
 3. Choose the master branch
 
@@ -361,27 +362,27 @@ You can press the Ticked / Unticked button in the bottom right corner to add / r
 
 ![](https://i.imgur.com/goYeY9R.png)
 
-Do you vaguely remember the name of a command you want to do? Press **Ctrl+Shift+P** to open the Command Palette and start typing. There's a decent chance that VS Code will be able to suggest the correct thing. 
+Do you vaguely remember the name of a command you want to do? Press <kbd>Ctrl + Shift + P</kbd> to open the Command Palette and start typing. There's a decent chance that VS Code will be able to suggest the correct thing. 
 
-One of the tabs in VS Code usually has its name written in italics; that means that it's a temporary tab (often created by Find) and any new tab will replace it. You can turn it into a permanent tab by doubleclicking on it or pressing Ctrl + K and Enter.
+One of the tabs in VS Code usually has its name written in italics; that means that it's a temporary tab (often created by Find) and any new tab will replace it. You can turn it into a permanent tab by doubleclicking on it or pressing <kbd>Ctrl + K</kbd> and Enter.
 
-**F12** jumps to the definition of the thing you have your cursor over.
+<kbd>F12</kbd> jumps to the definition of the thing you have your cursor over.
 
-**Shift+F12** shows you all uses of the thing you have your cursor over.
+<kbd>Shift + F12</kbd> shows you all uses of the thing you have your cursor over.
 
 The above features might stop being accurate if you are doing a lot of changes, to refresh how VS Code sees the environment click the "goonstation" button in the bar at the bottom of the window.
 
 ![](https://i.imgur.com/Lhs7EHK.png)
 
-**Ctrl + Shift + F** lets you search across the whole codebase.
+<kbd>Ctrl + Shift + F</kbd> lets you search across the whole codebase.
 
-Press **Ctrl+T** and start typing the path / name of something you want to find, then hit enter to jump to its definition.
+Press <kbd>Ctrl + T</kbd> and start typing the path / name of something you want to find, then hit enter to jump to its definition.
 
-Press **Ctrl+P** and start typing the name of a file you want to open, then hit enter to open it.
+Press <kbd>Ctrl + K</kbd> and start typing the name of a file you want to open, then hit enter to open it.
 
 ### Using Command Line git
 
-Sometimes it might be useful to type in git commands directly. To do that press **ctrl + \`** to open PowerShell in VS Code. (Or **ctrl + shift + \`** to make a new PowerShell window.) Though this might depend on your operating system and default shell configuration.
+Sometimes it might be useful to type in git commands directly. To do that press <kbd>Ctrl + \`</kbd> to open PowerShell in VS Code. (Or <kbd>Ctrl + Shift + \`</kbd> to make a new PowerShell window.) Though this might depend on your operating system and default shell configuration.
 
 Cloning your repository: `git clone https://github.com/YOURNAME/goonstation`
 
