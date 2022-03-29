@@ -739,7 +739,7 @@ ABSTRACT_TYPE(/obj/trait/job)
 /obj/trait/weakorgans
 	name = "Frail Constitution (+2)"
 	cleanName = "Frail Constitution"
-	desc = "Your internal organs (brain included) are extremely vulnerable to damage"
+	desc = "Your internal organs (brain included) are extremely vulnerable to damage."
 	id = "weakorgans"
 	points = 2
 
