@@ -65,6 +65,7 @@
 
 	for (var/obj/machinery/conveyor_switch/S as anything in linked_switches) //conveyor switch could've been exploded
 		S.conveyors -= src
+	id = null
 	..()
 
 	// set the dir and target turf depending on the operating direction
