@@ -63,18 +63,13 @@ var/global/mob/twitch_mob = 0
 	var/path = "data/intra_round.sav"
 
 	if (!fexists(path))
-#ifdef LIVE_SERVER
-		stack_trace("data/intra_round.sav does not exist! No intra round data can be loaded.")
-#endif
 		return null
 
 	var/savefile/F = new /savefile(path, 10)
 	if (!F)
-		stack_trace("Failed to load data/intra_round.sav within 10 second timeout. File exists but may be locked by another process. Failed to load intra round data.")
+		logTheThing("debug", null, null, "Failed to load intra round value \"[field]\". Save file exists but may be locked by another process.")
 		return
 	F["[field]"] >> .
-	if(length(.) == 0)
-		return null
 
 /world/proc/save_intra_round_value(var/field, var/value)
 	if (!field || isnull(value))
@@ -82,13 +77,13 @@ var/global/mob/twitch_mob = 0
 
 	var/savefile/F = new /savefile("data/intra_round.sav", 10)
 	if (!F)
-		stack_trace("Failed to load data/intra_round.sav within 10 second timeout, file may be locked by another process. Failed to save intra round data.")
+		logTheThing("debug", null, null, "Unable to save intra round value to field \"[field]\". Save file may be locked by another process.")
 		return
 	if (F.Lock(10))
 		F["[field]"] << value
 		return 0
 	else
-		stack_trace("Failed to obtain exclusive file lock on data/intra_round.sav within 10 second timeout. Failed to save intra round data.")
+		logTheThing("debug", null, null, "Unable to save intra round value to field \"[field]\". Failed to obtain an exclusive save file lock.")
 
 /world/proc/load_motd()
 	join_motd = grabResource("html/motd.html")
