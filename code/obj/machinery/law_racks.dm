@@ -18,6 +18,8 @@
 	var/list/welded[MAX_CIRCUITS]
 	/// screwed status of law module by slot number
 	var/list/screwed[MAX_CIRCUITS]
+	/// list of hologram expansions
+	var/list/holo_expansions = list()
 
 	New(loc)
 		START_TRACKING
@@ -507,12 +509,17 @@
 				R.show_text(notification_text, "red")
 				src.show_laws(R)
 				affected_mobs |= R
+				if(isAI(R))
+					var/mob/living/silicon/ai/holoAI = R
+					holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
 
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == src)
 				E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 				src.show_laws(E)
 				affected_mobs |= E.mainframe
+				var/mob/living/silicon/ai/holoAI = E.mainframe
+				holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
 		var/list/mobtextlist = list()
 		for(var/mob/living/M in affected_mobs)
 			mobtextlist += constructName(M, "admin")
@@ -540,6 +547,9 @@
 		equipped.set_loc(src)
 		user.visible_message("<span class='alert'>[user] slides a module into the law rack</span>", "<span class='alert'>You slide the module into the rack.</span>")
 		tgui_process.update_uis(src)
+		if(istype(equipped,/obj/item/aiModule/hologram_expansion))
+			var/obj/item/aiModule/hologram_expansion/holo = equipped
+			src.holo_expansions |= holo.expansion
 		logTheThing("station", user, null, "[constructName(user)] <b>inserts</b> law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]")
 		UpdateIcon()
@@ -551,6 +561,9 @@
 		message_admins("[key_name(user)] removed a law from rack at ([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
 		user.visible_message("<span class='alert'>[user] slides a module out of the law rack</span>", "<span class='alert'>You slide the module out of the rack.</span>")
 		user.put_in_hand_or_drop(src.law_circuits[slotNum])
+		if(istype(src.law_circuits[slotNum],/obj/item/aiModule/hologram_expansion))
+			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slotNum]
+			src.holo_expansions -= holo.expansion
 		src.law_circuits[slotNum] = null
 		tgui_process.update_uis(src)
 		UpdateIcon()
@@ -563,6 +576,9 @@
 			src.welded[slot] = welded_in
 			src.screwed[slot] = screwed_in
 			tgui_process.update_uis(src)
+			if(istype(mod,/obj/item/aiModule/hologram_expansion))
+				var/obj/item/aiModule/hologram_expansion/holo = mod
+				src.holo_expansions |= holo.expansion
 			UpdateIcon()
 			return true
 
@@ -575,6 +591,9 @@
 
 	/// Deletes a law in an abritrary slot. Does not call UpdateLaws()
 	proc/DeleteLaw(var/slot=1)
+		if(istype(src.law_circuits[slot],/obj/item/aiModule/hologram_expansion))
+			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slot]
+			src.holo_expansions -= holo.expansion
 		src.law_circuits[slot]=null
 		src.welded[slot]=false
 		src.screwed[slot]=false
