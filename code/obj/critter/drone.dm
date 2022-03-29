@@ -1315,3 +1315,4 @@
 				task = "sleeping"
 				src.health = 0
 				src.CritterDeath()
+	
