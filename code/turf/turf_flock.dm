@@ -61,11 +61,11 @@
 		src.visible_message("<span class='alert'><span class='bold'>[user]</span> smacks [src] with [C], shattering it!</span>")
 		src.name = "weird broken floor"
 		src.desc = "It's broken. You could probably use a crowbar to pull the remnants out."
-		playsound(src.loc, "sound/impact_sounds/Crystal_Shatter_1.ogg", 25, 1)
+		playsound(src, "sound/impact_sounds/Crystal_Shatter_1.ogg", 25, 1)
 		break_tile()
 	else
 		src.visible_message("<span class='alert'><span class='bold'>[user]</span> smacks [src] with [C]!</span>")
-		playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 25, 1)
+		playsound(src, "sound/impact_sounds/Crystal_Hit_1.ogg", 25, 1)
 
 /turf/simulated/floor/feather/break_tile_to_plating()
 	// if the turf's on, turn it off
@@ -119,7 +119,7 @@
 	src.name = "weird glowing floor"
 	src.desc = "Looks like disco's not dead after all."
 	on = 1
-	playsound(src.loc, "sound/machines/ArtifactFea3.ogg", 25, 1)
+	//playsound(src.loc, "sound/machines/ArtifactFea3.ogg", 25, 1)
 	src.light.enable()
 
 /turf/simulated/floor/feather/proc/off()
