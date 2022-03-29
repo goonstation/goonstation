@@ -83,6 +83,8 @@
 			f.group?.removestructure(f)
 			f.group = null
 
+/turf/simulated/floor/feather/burn_tile()
+	return
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // stuff to make floorrunning possible (god i wish i could think of a better verb than "floorrunning")
