@@ -146,6 +146,9 @@
 	if (src == target) // :I
 		boutput(src, "<span class='alert'>You desperately try to think of a way to do CPR on yourself, but it's just not logically possible!</span>")
 		return
+	if(actions.hasAction(src, "cpr"))
+		boutput(src, "<span class='alert'>You're already doing CPR!</span>")
+		return
 
 	src.lastattacked = target
 
@@ -161,11 +164,14 @@
 /mob/living/grab_self()
 	if(!..())
 		return
+	var/block_it_up = TRUE
+	if (!src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
+		for(var/obj/stool/stool_candidate in src.loc)
+			if (stool_candidate.buckle_in(src, src, 1))
+				block_it_up = FALSE
+				break //found one, no need to continue
 
-	var/obj/stool/S = (locate(/obj/stool) in src.loc)
-	if (S && !src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
-		S.buckle_in(src,src,1)
-	else
+	if (block_it_up)
 		var/obj/item/grab/block/G = new /obj/item/grab/block(src, src, src)
 		src.put_in_hand(G, src.hand)
 
@@ -175,11 +181,6 @@
 		src.setStatus("blocking", duration = INFINITE_STATUS)
 		block_begin(src)
 		src.next_click = world.time + (COMBAT_CLICK_DELAY)
-		/*
-		RIP
-		else
-			src.visible_message("<span class='alert'><B>[src] tweaks [his_or_her(src)] own nipples! That's [pick_string("tweak_yo_self.txt", "tweakadj")] [pick_string("tweak_yo_self.txt", "tweak")]!</B></span>")
-		*/
 
 /mob/living/proc/grab_block() //this is sorta an ugly but fuck it!!!!
 	if (src.grabbed_by && src.grabbed_by.len > 0)
@@ -347,7 +348,7 @@
 			if (istext(attack_resistance))
 				msgs.show_message_target(attack_resistance)
 		msgs.damage = max(damage, 0)
-	else if ( !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)) )
+	else if ( !(HAS_ATOM_PROPERTY(target, PROP_MOB_CANTMOVE)) )
 		var/armor_mod = 0
 		armor_mod = target.get_melee_protection(def_zone)
 		if(target_stamina >= 0)
@@ -390,7 +391,7 @@
 
 	if (is_shove) return msgs
 	var/disarm_success = prob(40 * lerp(clamp(200 - target_stamina, 0, 100)/100, 1, 0.5) * mult)
-	if (disarm_success && target.check_block() && !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)))
+	if (disarm_success && target.check_block() && !(HAS_ATOM_PROPERTY(target, PROP_MOB_CANTMOVE)))
 		disarm_success = 0
 		msgs.stamina_target -= STAMINA_DEFAULT_BLOCK_COST * 2
 	var/list/obj/item/limbs = list()
@@ -955,7 +956,7 @@
 							target.zone_sel.selecting = old_zone_sel
 
 						if (prob(20))
-							I.attack_self(target)
+							I.AttackSelf(target)
 
 
 				if ("shoved_down" in src.disarm_RNG_result)
@@ -1206,7 +1207,7 @@
 
 /mob/living/carbon/human/attack_effects(var/mob/target, var/obj/item/affecting)
 	if (src.is_hulk())
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (prob(20))
 				target.changeStatus("stunned", 1 SECOND)
 				step_away(target,src,15)
@@ -1233,12 +1234,12 @@
 		if(prob(50))
 			T.changeStatus("weakened", 2 SECONDS)
 			T.force_laydown_standup()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			step_rand(T, 15)
 	else
 		T.changeStatus("weakened", 2 SECONDS)
 		T.force_laydown_standup()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			step_away(T, H, 15)
 
 	return

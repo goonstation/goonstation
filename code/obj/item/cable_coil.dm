@@ -60,7 +60,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 			return 0
 		user.visible_message("<span class='alert'><b>[user] wraps the cable around \his neck and tightens it.</b></span>")
 		user.take_oxygen_deprivation(160)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -235,7 +235,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 /obj/item/cable_coil/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W) && src.amount > 1)
 		src.amount--
-		take(1, usr.loc)
+		take(1, user.loc)
 		boutput(user, "You cut a piece off the [base_name].")
 		src.UpdateIcon()
 		return

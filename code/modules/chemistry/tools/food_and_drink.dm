@@ -3,6 +3,7 @@
 /* -------------------- Food -------------------- */
 /* ============================================== */
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 /obj/item/reagent_containers/food
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	var/heal_amt = 0
@@ -17,6 +18,12 @@
 	var/from_emagged_oven = 0 // to prevent re-rolling of food in emagged ovens
 	var/doants = 1
 	var/made_ants = 0
+	/// for if a food is intended to be able to be sliced
+	var/sliceable = FALSE
+	/// what product to spawn when sliced
+	var/slice_product = null
+	/// how much product to spawn when sliced
+	var/slice_amount = 0
 	rc_flags = 0
 
 	proc/on_table()
@@ -64,10 +71,28 @@
 		else
 			M.HealDamage("All", healing, healing)
 
+	//slicing food can be done here using sliceable == TRUE, slice_amount, and slice_product
+	//there will probably be a good deal of food that can be sliced but use their own slicing mechanisms instead of this, just gonna make a few things sliceable for now (aka just tomatoes, pepperoni, and cheese)
+	//might be a good idea to call a proc in the src obj and carry over the new src.slice_product so the src can fuck with the new obj as necessary?
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (src.sliceable && istool(W, TOOL_CUTTING | TOOL_SAWING))
+			var/turf/T = get_turf(src)
+			user.visible_message("[user] cuts [src] into [src.slice_amount] slices.", "You cut [src] into [src.slice_amount] slices.")
+			var/amount_to_transfer = src.reagents.total_volume / src.slice_amount
+			for (var/i in 1 to src.slice_amount)
+				var/obj/item/reagent_containers/food/slice = new src.slice_product(T)
+				slice.reagents.clear_reagents() // dont need initial_reagents when you're inheriting reagents of another obj (no cheese duping >:[ )
+				src.reagents.trans_to(slice, amount_to_transfer)
+			qdel (src)
+		else
+			..()
+
+
 /* ================================================ */
 /* -------------------- Snacks -------------------- */
 /* ================================================ */
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 /obj/item/reagent_containers/food/snacks
 	name = "snack"
 	desc = "yummy"
@@ -252,7 +277,7 @@
 		consumer.nutrition += src.heal_amt * 10
 		src.heal(consumer)
 		playsound(consumer.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
-		on_bite(consumer)
+		on_bite(consumer, feeder)
 		if (src.festivity)
 			modify_christmas_cheer(src.festivity)
 		if (!src.amount)
@@ -333,7 +358,7 @@
 
 
 
-	proc/on_bite(mob/eater)
+	proc/on_bite(mob/eater, mob/feeder)
 		//if (reagents?.total_volume)
 		//	reagents.reaction(M, INGEST)
 		//	reagents.trans_to(M, reagents.total_volume/(src.amount ? src.amount : 1))
@@ -363,7 +388,7 @@
 				src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
 		eat_twitch(eater)
-		eater.on_eat(src)
+		eater.on_eat(src, feeder)
 
 	proc/on_finish(mob/eater)
 		return
@@ -407,7 +432,7 @@
 				src.reagents.reaction(owner, INGEST, src.reagents.total_volume)
 				src.did_react = 1
 
-			src.reagents.trans_to(owner, process_rate, HAS_MOB_PROPERTY(owner, PROP_DIGESTION_EFFICIENCY) ? GET_MOB_PROPERTY(owner, PROP_DIGESTION_EFFICIENCY) : 1)
+			src.reagents.trans_to(owner, process_rate, HAS_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) ? GET_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) : 1)
 
 			if (src.reagents.total_volume <= 0)
 				owner.stomach_process -= src
@@ -444,6 +469,7 @@
 		return
 
 	on_reagent_change()
+		..()
 		update_gulp_size()
 		doants = src.reagents && src.reagents.total_volume > 0
 
@@ -455,7 +481,7 @@
 			src.reagents.reaction(get_turf(user), TOUCH)
 			src.reagents.clear_reagents()
 
-	MouseDrop(atom/over_object)
+	mouse_drop(atom/over_object)
 		..()
 		if(!(usr == over_object)) return
 		if(!istype(usr, /mob/living/carbon)) return
@@ -555,7 +581,7 @@
 			if (src.reagents.total_volume)
 				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
 				src.reagents.reaction(M, INGEST, clamp(reagents.total_volume, CHEM_EPSILON, min(gulp_size, (M.reagents?.maximum_volume - M.reagents?.total_volume))))
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					if (src?.reagents && M?.reagents)
 						src.reagents.trans_to(M, min(reagents.total_volume, gulp_size))
 
@@ -647,7 +673,7 @@
 
 			if (src.splash_all_contents) src.reagents.reaction(target,TOUCH)
 			else src.reagents.reaction(target, TOUCH, src.amount_per_transfer_from_this)
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				if (src.splash_all_contents) src.reagents.clear_reagents()
 				else src.reagents.remove_any(src.amount_per_transfer_from_this)
 				can_mousedrop = 1
@@ -700,6 +726,7 @@
 	var/image/fluid_image = null
 
 	on_reagent_change()
+		..()
 		if (reagents.total_volume)
 			ENSURE_IMAGE(src.fluid_image, src.icon, "fluid")
 			//if (!src.fluid_image)
@@ -799,6 +826,7 @@
 		src.UpdateIcon()
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	custom_suicide = 1
@@ -809,7 +837,7 @@
 			user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 			blood_slash(user, 25)
 			user.TakeDamage("head", 150, 0, 0, DAMAGE_CUT)
-			SPAWN_DBG(50 SECONDS)
+			SPAWN(50 SECONDS)
 				if (user && !isdead(user))
 					user.suiciding = 0
 			return 1
@@ -965,7 +993,7 @@
 				playsound(U, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 				random_brute_damage(user, damage)
 				take_bleeding_damage(user, user, damage)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				qdel(src)
 
 /obj/item/reagent_containers/food/drinks/bottle/soda //for soda bottles and bottles from the glass recycler specifically
@@ -1000,6 +1028,7 @@
 	var/image/image_doodad
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon()
@@ -1313,7 +1342,7 @@
 		user.weapon_attack(source_table, src, TRUE, list())
 		var/list/turf/path = raytrace(get_turf(source_table), get_turf(target_table))
 		var/turf/last_turf = get_turf(source_table)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for(var/turf/T in path)
 				if(src.loc != last_turf)
 					break
@@ -1340,7 +1369,8 @@
 		icon_state = glass.icon_state
 
 	proc/checkContinue()
-		if (glass.reagents.total_volume <= 0 || !isalive(glassholder) || !glassholder.find_in_hand(glass))
+		if (glass.reagents.total_volume <= 0 || !isalive(glassholder) || !glassholder.find_in_hand(glass) || \
+				glassholder.reagents.total_volume >= glassholder.reagents.maximum_volume - CHEM_EPSILON)
 			return FALSE
 		return TRUE
 
@@ -1455,6 +1485,7 @@
 	var/image/chem = new /image('icons/obj/foodNdrink/food.dmi',"icing_tube_chem")
 
 	on_reagent_change()
+		..()
 		src.underlays = null
 		if (reagents.total_volume >= 0)
 			if(reagents.total_volume == 0)
@@ -1519,7 +1550,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.reagents)
 				src.fill_it_up()
 
@@ -1584,6 +1615,7 @@
 		UpdateIcon()
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon()
@@ -1671,6 +1703,7 @@
 
 	var/image/fluid_image
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon() //updates icon based on fluids inside
@@ -1694,6 +1727,7 @@
 	var/image/fluid_image
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon() //updates icon based on fluids inside

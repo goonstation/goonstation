@@ -7,7 +7,7 @@
 	target_nodamage_check = 1
 	target_selection_check = 1
 	max_range = 1
-	cooldown = 250
+	cooldown = 150
 	start_on_cooldown = 1
 	pointCost = 0
 	when_stunned = 1
@@ -39,7 +39,7 @@
 		if (T && isturf(T) && target && isturf(target.loc))
 			playsound(M.loc, "swing_hit", 50, 1)
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for (var/i = 0, i < 4, i++)
 					M.set_dir(turn(M.dir, 90))
 
@@ -54,6 +54,7 @@
 			if (!fake)
 				random_brute_damage(target, 15, 1)
 				target.changeStatus("paralysis", 2 SECONDS)
+				target.changeStatus("weakened", 3 SECONDS)
 				target.force_laydown_standup()
 				target.change_misstep_chance(25)
 

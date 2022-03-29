@@ -305,8 +305,6 @@
 /area/station/bridge)
 "aaT" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/rename,
-/obj/item/aiModule/reset,
 /obj/item/aiModule/removeCrew,
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/starboard)
@@ -3649,12 +3647,6 @@
 	icon_state = "floorgrime-w"
 	},
 /area/listeningpost/syndicateassaultvessel)
-"amk" = (
-/obj/table/reinforced/auto,
-/obj/item/circuitboard/aiupload,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/longtile/black,
-/area/station/turret_protected/starboard)
 "aml" = (
 /obj/machinery/optable,
 /obj/decal/fakeobjects{
@@ -3841,7 +3833,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 4
 	},
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /turf/simulated/floor,
 /area/listeningpost/syndicateassaultvessel)
 "amJ" = (
@@ -3936,10 +3928,10 @@
 /turf/simulated/floor,
 /area/listeningpost/syndicateassaultvessel)
 "amY" = (
-/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-5"
 	},
+/obj/machinery/power/apc/autoname_west/noaicontrol,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -4770,7 +4762,7 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "aoV" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/incandescent/cool/very{
 	dir = 1
 	},
@@ -4785,7 +4777,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "aoX" = (
-/obj/crematorium,
+/obj/machinery/traymachine/locking/crematorium,
 /obj/machinery/crema_switch{
 	pixel_y = 32
 	},
@@ -4827,7 +4819,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "apd" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "ape" = (
@@ -7114,10 +7106,6 @@
 	icon_state = "yellowblackcorner"
 	},
 /area/station/engine/engineering/breakroom)
-"avh" = (
-/obj/decal/sink,
-/turf/simulated/floor/black,
-/area/listeningpost/syndicateassaultvessel)
 "avi" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering/private)
@@ -9637,9 +9625,6 @@
 	name = "table"
 	},
 /obj/item/handcuffs,
-/obj/item/aiModule/reset{
-	pixel_y = 10
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -15065,7 +15050,7 @@
 /turf/simulated/floor,
 /area/station/security/brig/genpop)
 "aRj" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -15289,7 +15274,7 @@
 /turf/simulated/floor,
 /area/station/security/brig/genpop)
 "aRQ" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -15648,7 +15633,7 @@
 /turf/simulated/floor,
 /area/station/security/brig/genpop)
 "aTa" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -16054,7 +16039,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/brig/cell1)
 "aUh" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/decal/cleanable/dirt/dirt3,
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -18679,7 +18664,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "bbp" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/item/reagent_containers/food/snacks/pizza/meatball,
@@ -20479,13 +20464,13 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bfC" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 1
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bfD" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 1
 	},
 /obj/machinery/light/incandescent/cool/very,
@@ -21510,6 +21495,15 @@
 	},
 /turf/simulated/floor/green/corner,
 /area/station/hydroponics/bay)
+"bic" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/lawrack,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "bie" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -29001,6 +28995,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/storage/crate/adventure,
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 6
 	},
@@ -31535,6 +31530,10 @@
 /area/shuttle/escape/station)
 "bKj" = (
 /obj/table/reinforced/auto,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 4;
+	pixel_y = 5
+	},
 /obj/item/storage/box/tapebox,
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -33603,6 +33602,10 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/starboard)
+"cUA" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/black,
+/area/listeningpost/syndicateassaultvessel)
 "cUH" = (
 /obj/decal/tile_edge/check{
 	dir = 1;
@@ -35169,15 +35172,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
-"gdN" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/aiupload,
-/obj/cable,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "ghs" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crewquarters/cryotron)
@@ -35543,7 +35537,7 @@
 /turf/simulated/floor,
 /area/station/crewquarters/garbagegarbs)
 "gTH" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/machinery/light/incandescent/cool/very{
@@ -36238,6 +36232,10 @@
 /area/mantaSpace)
 "ixV" = (
 /obj/table/reinforced/auto,
+/obj/item/hand_labeler{
+	pixel_x = 4;
+	pixel_y = 10
+	},
 /obj/item/storage/box/revimp_kit{
 	pixel_x = 6
 	},
@@ -42372,6 +42370,11 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/inner)
+"xRV" = (
+/obj/table/reinforced/auto,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/longtile/black,
+/area/station/turret_protected/starboard)
 "xSi" = (
 /obj/cable,
 /obj/cable{
@@ -84661,7 +84664,7 @@ hSP
 tII
 aQm
 fCv
-gdN
+bic
 aqO
 aCG
 xVU
@@ -85996,7 +85999,7 @@ alY
 atB
 amd
 akH
-avh
+cUA
 avM
 avQ
 avS
@@ -88278,7 +88281,7 @@ aBz
 abd
 akB
 aqS
-amk
+xRV
 aEw
 aPt
 aPG

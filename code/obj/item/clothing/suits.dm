@@ -32,34 +32,19 @@
 	name = "hoodie"
 	desc = "Nice and comfy on those cold space evenings."
 	icon_state = "hoodie"
-	uses_multiple_icon_states = 1
 	item_state = "hoodie"
 	body_parts_covered = TORSO|ARMS
-	var/hood = 0
 	var/hcolor = null
 
 	New()
 		..()
+		src.AddComponent(/datum/component/toggle_hood, hood_style="hoodie[src.hcolor ? "-[hcolor]" : null]")
 		src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 		src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 25)
-
-	attack_self(mob/user as mob)
-		src.hood = !(src.hood)
-		user.show_text("You flip [src]'s hood [src.hood ? "up" : "down"].")
-		if (src.hood)
-			src.over_hair = 1
-			src.body_parts_covered = HEAD|TORSO|ARMS
-			src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]-up"
-			src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]-up"
-		else
-			src.over_hair = 0
-			src.body_parts_covered = TORSO|ARMS
-			src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
-			src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 
 	blue
 		desc = "Would fit well on a skeleton."
@@ -149,7 +134,7 @@
 
 	plastic
 		name = "plastic jacket"
-		desc = "A translucent plastic jacket. It looks flimsy and incredibly tacky."
+		desc = "A flimsy and translucent plastic jacket that comes in a variety of colors. Someone who wears this must either have negative fashion or impeccable taste."
 		icon_state = "jacket_plastic"
 		item_state = "jacket_plastic"
 
@@ -479,6 +464,12 @@
 			setProperty("coldprot", 10)
 			setProperty("heatprot", 10)
 			setProperty("movespeed", 0.4)
+
+/obj/item/clothing/suit/apron/surgeon
+	name = "surgeon's apron"
+	desc = "A white apron with a tendency to be spattered with red substances."
+	icon_state = "apron-surgeon"
+	item_state = "apron-surgeon"
 
 /obj/item/clothing/suit/labcoat
 	name = "labcoat"
@@ -1005,7 +996,7 @@
 
 		New()
 			..()
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				src.name = initial(src.name)
 				src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
 
@@ -1071,7 +1062,7 @@
 
 /obj/item/clothing/suit/space/emerg
 	name = "emergency suit"
-	desc = "A suit that protects against low pressure environments for a short time."
+	desc = "A suit that protects against low pressure environments for a short time. Amazingly, it's even more bulky and uncomfortable than the engineering suits."
 	icon_state = "emerg"
 	item_state = "emerg"
 	c_flags = SPACEWEAR
@@ -1090,7 +1081,7 @@
 			T = T.loc
 		src.set_loc(T)
 		user.u_equip(src)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			qdel(src)
 
 /obj/item/clothing/suit/space/captain
@@ -1558,17 +1549,12 @@
 	permeability_coefficient = 0.01
 	body_parts_covered = TORSO|LEGS|ARMS
 	contraband = 4
+	duration_remove = 10 SECONDS
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 90)
 		setProperty("heatprot", 30)
-
-	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
-		. = ..()
-		if ( . &&prob(75))
-			source.show_message(text("<span class='alert'>\The [src] writhes in your hands as though it is alive! It just barely wriggles out of your grip!</span>"), 1)
-			.  = 0
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
@@ -1627,6 +1613,11 @@
 	name = "medical winter coat"
 	icon_state = "wintercoat-medical"
 	item_state = "wintercoat-medical"
+
+/obj/item/clothing/suit/wintercoat/genetics
+	name = "genetics winter coat"
+	icon_state = "wintercoat-genetics"
+	item_state = "wintercoat-genetics"
 
 /obj/item/clothing/suit/wintercoat/research
 	name = "research winter coat"
@@ -1735,6 +1726,9 @@
 
 	attack_self(mob/user as mob)
 		user.visible_message("[user] flashes the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].</span>", "You show off the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].</span>")
+
+	attack(mob/target, mob/user)
+		user.visible_message("[user] flashes the badge at [target.name]: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].</span>", "You show off the badge to [target.name]: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].</span>")
 
 /obj/item/clothing/suit/hosmedal
 	name = "war medal"

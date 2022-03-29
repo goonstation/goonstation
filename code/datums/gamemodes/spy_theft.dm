@@ -96,23 +96,15 @@
 		//Find a suitable reward
 		var/list/possible_items = list()
 		for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
-			var/blocked = 0
-			if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && length(S.blockedmode))
-				if (/datum/game_mode/spy_theft in S.blockedmode) //Spies can show up in modes outside spy_theft, so just check if the item would be blocked
-					blocked = 1
-					continue
+			if(!(S.can_buy & UPLINK_SPY_THIEF))
+				continue
 
-			if (ticker?.mode && S.exclusivemode && islist(S.exclusivemode) && length(S.exclusivemode))
-				if (!(/datum/game_mode/spy_theft in S.exclusivemode))
-					blocked = 1
-					continue
-
-			if (blocked == 0 && S.cost <= value_high && S.cost >= value_low)
+			if (S.cost <= value_high && S.cost >= value_low)
 				possible_items += S
 
 		reward = pick(possible_items)
 
-	proc/spawn_reward(var/mob/user,var/obj/item/hostpda)
+	proc/spawn_reward(var/mob/user,var/obj/item/device/pda2/hostpda)
 		if (reward_was_spawned) return
 
 		var/turf/pda_turf = get_turf(hostpda)
@@ -124,8 +116,9 @@
 
 		if (reward.item)
 			var/obj/item = new reward.item(pda_turf)
+			logTheThing("debug", user, null, "spy thief reward spawned: [item] at [log_loc(user)]")
 			user.show_text("Your PDA accepts the bounty and spits out [reward] in exchange.", "red")
-			reward.run_on_spawn(item, user)
+			reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
 			user.put_in_hand_or_drop(item)
 			//if (src.is_VR_uplink == 0)
 			//	statlog_traitor_item(user, reward.name, reward.cost)
@@ -191,7 +184,7 @@
 		objective_set_path = pick(typesof(/datum/objective_set/spy_theft))
 
 		new objective_set_path(spy)
-		SPAWN_DBG(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs (can't find PDA)
+		SPAWN(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs (can't find PDA)
 			equip_spy_theft(spy.current)
 
 		var/obj_count = 1
@@ -201,10 +194,10 @@
 
 		//spy_name_list += spy.current.real_name
 
-	SPAWN_DBG(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
+	SPAWN(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
 		build_bounty_list()
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/spy_theft/process()
@@ -338,7 +331,7 @@
 	station_bounties[/obj/item/disk/data/floppy/read_only/communications] = 2
 	station_bounties[/obj/item/disk/data/floppy/read_only/authentication] = 3
 	station_bounties[/obj/item/aiModule/freeform] = 3
-	station_bounties[/obj/item/aiModule/reset] = 3
+
 
 	station_bounties[/obj/item/cell] = 1
 	station_bounties[/obj/item/device/multitool] = 1
@@ -489,7 +482,7 @@
 	big_station_bounties[/obj/machinery/computer/card] = 2
 	big_station_bounties[/obj/machinery/computer/genetics] = 2
 	big_station_bounties[/obj/machinery/computer/robotics] = 2
-	big_station_bounties[/obj/machinery/computer/aiupload] = 3
+	big_station_bounties[/obj/machinery/lawrack] = 3
 
 	big_station_bounties[/obj/machinery/vending/medical] = 1
 	big_station_bounties[/obj/machinery/vending/port_a_nanomed] = 1
@@ -498,7 +491,7 @@
 	big_station_bounties[/obj/machinery/vending/monkey] = 1
 	big_station_bounties[/obj/machinery/vending/security] = 2
 
-	big_station_bounties[/obj/morgue] = 1
+	big_station_bounties[/obj/machinery/traymachine/morgue] = 1
 	big_station_bounties[/obj/machinery/optable] = 2
 	big_station_bounties[/obj/machinery/clonegrinder] = 1
 	big_station_bounties[/obj/machinery/genetics_scanner] = 2

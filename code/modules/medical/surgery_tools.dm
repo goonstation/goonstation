@@ -76,7 +76,7 @@ CONTAINS:
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -91,7 +91,7 @@ CONTAINS:
 
 /obj/item/circular_saw
 	name = "circular saw"
-	desc = "A saw used to cut bone with precision."
+	desc = "A saw used to slice through bone in surgeries, and attackers in self defense."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
@@ -141,7 +141,7 @@ CONTAINS:
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -209,7 +209,7 @@ CONTAINS:
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -347,7 +347,7 @@ CONTAINS:
 
 /obj/item/robodefibrillator
 	name = "defibrillator"
-	desc = "Used to resuscitate critical patients."
+	desc = "Uses electrical currents to restart the hearts of critical patients."
 	flags = FPRINT | TABLEPASS | CONDUCT
 	icon = 'icons/obj/surgery.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
@@ -385,7 +385,7 @@ CONTAINS:
 		if (user)
 			user.show_text("You reapair the on board medical scanner.", "blue")
 			src.desc = null
-			src.desc = "Used to resuscitate critical patients."
+			src.desc = "Uses electrical currents to restart the hearts of critical patients."
 		src.emagged = 0
 		return 1
 
@@ -395,10 +395,13 @@ CONTAINS:
 		if (src.defibrillate(M, user, src.emagged, src.makeshift, src.cell))
 			JOB_XP(user, "Medical Doctor", 5)
 			src.charged = 0
+			if(istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
+				var/obj/machinery/atmospherics/unary/cryo_cell/cryo = src.loc
+				cryo.shock_icon()
 			set_icon_state("[src.icon_base]-shock")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				set_icon_state("[src.icon_base]-off")
-			SPAWN_DBG(src.charge_time)
+			SPAWN(src.charge_time)
 				src.charged = 1
 				set_icon_state("[src.icon_base]-on")
 				playsound(user.loc, "sound/items/defib_charge.ogg", 90, 0)
@@ -413,10 +416,13 @@ CONTAINS:
 			return 0
 		playsound(src.loc, "sound/impact_sounds/Energy_Hit_3.ogg", 75, 1, pitch = 0.92)
 		src.charged = 0
+		if(istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
+			var/obj/machinery/atmospherics/unary/cryo_cell/cryo = src.loc
+			cryo.shock_icon()
 		set_icon_state("[src.icon_base]-shock")
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			set_icon_state("[src.icon_base]-off")
-		SPAWN_DBG(src.charge_time)
+		SPAWN(src.charge_time)
 			src.charged = 1
 			set_icon_state("[src.icon_base]-on")
 			playsound(src.loc, "sound/items/defib_charge.ogg", 90, 0)
@@ -445,7 +451,7 @@ CONTAINS:
 		if (!src.user_can_suicide(user))
 			return 0
 		if (src.defibrillate(user, user, src.emagged, src.makeshift, src.cell, 1))
-			SPAWN_DBG(50 SECONDS)
+			SPAWN(50 SECONDS)
 				if (user && !isdead(user))
 					user.suiciding = 0
 		else
@@ -466,8 +472,9 @@ CONTAINS:
 			shockcure = 1
 			break
 
-	user.visible_message("<span class='alert'><b>[user]</b> places the electrodes of [src] onto [user == patient ? "[his_or_her(user)] own" : "[patient]'s"] [suiciding ? "eyes" : "chest"]!</span>",\
-	"<span class='alert'>You place the electrodes of [src] onto [user == patient ? "your own" : "[patient]'s"] [suiciding ? "eyes" : "chest"]!</span>")
+	if(!istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
+		user.visible_message("<span class='alert'><b>[user]</b> places the electrodes of [src] onto [user == patient ? "[his_or_her(user)] own" : "[patient]'s"] [suiciding ? "eyes" : "chest"]!</span>",\
+		"<span class='alert'>You place the electrodes of [src] onto [user == patient ? "your own" : "[patient]'s"] [suiciding ? "eyes" : "chest"]!</span>")
 
 	if (emagged || (patient.health < 0 && !faulty) || (shockcure && !faulty) || (faulty && prob(25 + suiciding)) || (suiciding && prob(44)))
 
@@ -589,7 +596,7 @@ CONTAINS:
 
 /obj/item/robodefibrillator/emagged
 	emagged = 1
-	desc = "Used to resuscitate critical patients.  The screen only shows the word KILL flashing over and over."
+	desc = "Uses electrical currents to restart the hearts of critical patients. The screen only shows the word KILL flashing over and over."
 
 /obj/item/robodefibrillator/vr
 	icon = 'icons/effects/VR.dmi'
@@ -630,7 +637,7 @@ CONTAINS:
 /obj/machinery/defib_mount
 	name = "mounted defibrillator"
 	icon = 'icons/obj/compact_machines.dmi'
-	desc = "Used to resuscitate critical patients."
+	desc = "Uses electrical currents to restart the hearts of critical patients."
 	icon_state = "defib1"
 	anchored = 1
 	density = 0
@@ -752,7 +759,7 @@ CONTAINS:
 			return 0
 		user.visible_message("<span class='alert'><b>[user] rapidly sews [his_or_her(user)] mouth and nose closed with [src]! Holy shit, how?!</b></span>")
 		user.take_oxygen_deprivation(160)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -898,11 +905,9 @@ CONTAINS:
 			return
 
 		if (zone && surgery_status)
-			duration = duration * surgery_status
 			target.visible_message("<span class='notice'>[owner] begins [vrb]ing the surgical incisions on [owner == target ? his_or_her(owner) : "[target]'s"] [zone_sel2name[zone]] closed with [tool].</span>",\
 			"<span class='notice'>[owner == target ? "You begin" : "[owner] begins"] [vrb]ing the surgical incisions on your [zone_sel2name[zone]] closed with [tool].</span>")
 		else
-			duration = duration * target.bleeding
 			target.visible_message("<span class='notice'>[owner] begins [vrb]ing [owner == target ? his_or_her(owner) : "[target]'s"] wounds closed with [tool].</span>",\
 			"<span class='notice'>[owner == target ? "You begin" : "[owner] begins"] [vrb]ing your wounds closed with [tool].</span>")
 
@@ -1170,7 +1175,7 @@ CONTAINS:
 		src.open()
 		src.visible_message("<span class='alert'><b>[user]</b> unzips themselves from [src]!</span>")
 
-	MouseDrop(atom/over_object)
+	mouse_drop(atom/over_object)
 		if (!over_object) return
 		if(isturf(over_object))
 			..() //Lets it do the turf-to-turf slide
@@ -1195,7 +1200,7 @@ CONTAINS:
 			O.set_loc(get_turf(src))
 		for (var/mob/M in src)
 			M.changeStatus("weakened", 0.5 SECONDS)
-			SPAWN_DBG(0.3 SECONDS)
+			SPAWN(0.3 SECONDS)
 				M.set_loc(get_turf(src))
 		src.open = 1
 		src.UpdateIcon()
@@ -1364,6 +1369,7 @@ CONTAINS:
 	item_state = "pen"
 	icon_on = "penlight1"
 	icon_off = "penlight0"
+	icon_broken = "penlightbroken"
 	w_class = W_CLASS_TINY
 	throwforce = 0
 	throw_speed = 7
@@ -1558,7 +1564,7 @@ keeping this here because I want to make something else with it eventually
 		if (!islist(src.attached_objs))
 			src.attached_objs = list()
 		if (!ticker) // pre-roundstart, this is a thing made on the map so we want to grab whatever's been placed on top of us automatically
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/stuff_added = 0
 				for (var/obj/item/I in src.loc.contents)
 					if (I.anchored || I.layer < src.layer)
@@ -1590,6 +1596,9 @@ keeping this here because I want to make something else with it eventually
 		if (iswrenchingtool(W))
 			actions.start(new /datum/action/bar/icon/furniture_deconstruct(src, W, 30), user)
 			return
+		else if (istype(W, /obj/item/mechanics))
+			user.show_text("[W] slips off [src].")
+			return ..()
 		else if (src.place_on(W, user, params))
 			user.show_text("You place [W] on [src].")
 			src.attach(W)
@@ -1618,10 +1627,12 @@ keeping this here because I want to make something else with it eventually
 
 	proc/attach(obj/item/I as obj)
 		if(I.anchored) return
+		else if (istype(I, /obj/item/mechanics))
+			return
 		src.attached_objs.Add(I) // attach the item to the table
 		I.glide_size = 0 // required for smooth movement with the tray
 		// register for pickup, register for being pulled off the table, register for item deletion while attached to table
-		SPAWN_DBG(0)
+		SPAWN(0)
 			RegisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING), .proc/detach)
 
 	proc/detach(obj/item/I as obj) //remove from the attached items list and deregister signals
@@ -1702,5 +1713,5 @@ keeping this here because I want to make something else with it eventually
 	bloody
 		New()
 			. = ..()
-			SPAWN_DBG(1 DECI SECOND) //sync with the organs spawn
+			SPAWN(1 DECI SECOND) //sync with the organs spawn
 				make_cleanable(/obj/decal/cleanable/blood/gibs, src.loc)

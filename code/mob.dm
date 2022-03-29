@@ -173,8 +173,6 @@
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
-	var/vamp_beingbitten = 0 // Are we being drained by a vampire?
-
 	var/atom/eye = null
 	var/eye_pixel_x = 0
 	var/eye_pixel_y = 0
@@ -218,7 +216,6 @@
 
 	var/dir_locked = FALSE
 
-	var/list/mob_properties
 
 	var/last_move_dir = null
 
@@ -258,7 +255,6 @@
 
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
-	mob_properties = list()
 	src.chat_text = new
 
 	src.name_tag = new
@@ -318,7 +314,6 @@
 /mob/disposing()
 	STOP_TRACKING
 
-	src.vis_contents -= src.name_tag
 	qdel(src.name_tag)
 	src.name_tag = null
 
@@ -427,7 +422,6 @@
 		src.vars["hud"] = null
 
 	..()
-	src.mob_properties = null
 
 /mob/Login()
 	if(src.skipped_mobs_list)
@@ -441,22 +435,11 @@
 		global.ai_mobs |= src
 
 	if(!src.last_ckey)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/area/AR = get_area(src)
 			AR?.wake_critters(src)
 
 	src.last_ckey = src.ckey
-
-	if (!src.client.chatOutput)
-		//At least once, some dude has gotten here without a chatOutput datum. Fuck knows how.
-		src.client.chatOutput = new /datum/chatOutput(src.client)
-
-	if (!src.client.chatOutput.loaded)
-		//Load custom chat
-		src.client.chatOutput.start()
-
-	//src.client.screen = null //ov1 - to make sure we don't keep overlays of our old mob. This is here since logout wont work - when logout is called client is already null
-	src.client.setup_special_screens()
 
 	src.last_client = src.client
 	src.apply_camera(src.client)
@@ -466,56 +449,8 @@
 
 	src.client.mouse_pointer_icon = src.cursor
 
-	logTheThing("diary", null, src, "Login: [constructTarget(src,"diary")] from [src.client.address]", "access")
 	src.lastKnownIP = src.client.address
 	src.computer_id = src.client.computer_id
-	if (config.log_access)
-		for (var/client/C)
-			var/mob/M = C.mob
-			if ((!M) || M == src || M.client == null)
-				continue
-			else if (M && M.client && M.client.address == src.client.address)
-				if(!src.client.holder && !M.client.holder)
-					logTheThing("admin", src, M, "has same IP address as [constructTarget(M,"admin")]")
-					logTheThing("diary", src, M, "has same IP address as [constructTarget(M,"diary")]", "access")
-					if (IP_alerts)
-						message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same IP address as [key_name(M)]</span>")
-			else if (M && M.lastKnownIP && M.lastKnownIP == src.client.address && M.ckey != src.ckey && M.key)
-				if(!src.client.holder && !M.client.holder)
-					logTheThing("diary", src, M, "has same IP address as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", "access")
-					if (IP_alerts)
-						message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same IP address as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
-			if (M && M.client && M.client.computer_id == src.client.computer_id)
-				logTheThing("admin", src, M, "has same computer ID as [constructTarget(M,"admin")]")
-				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")]", "access")
-				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B><font class='internal'> as [key_name(M)]</span>")
-				SPAWN_DBG(0)
-					if(M.lastKnownIP == src.client.address)
-						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
-			else if (M && M.computer_id && M.computer_id == src.client.computer_id && M.ckey != src.ckey && M.key)
-				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", null, "access")
-				logTheThing("admin", M, null, "is no longer logged in.")
-				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B></span><span class='internal'> as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
-				SPAWN_DBG(0)
-					if(M.lastKnownIP == src.client.address)
-						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
-/*  don't get me wrong this was awesome but it's leading to false positives now and we stopped caring about that guy
-	var/evaderCheck = copytext(lastKnownIP,1, findtext(lastKnownIP, ".", 5))
-	if (evaderCheck in list("174.50", "69.245", "71.228", "69.247", "71.203", "98.211", "68.53"))
-		SPAWN_DBG(0)
-			var/joinstring = "???"
-			var/list/response = world.Export("http://www.byond.com/members/[src.ckey]?format=text")
-			if (response && response["CONTENT"])
-				var/result = html_encode(file2text(response["CONTENT"]))
-				if (result)
-					var/pos = findtext(result, "joined = ")
-					joinstring = copytext(result, pos+14, pos+24)
-			message_admins("<font color=red>Possible login by That Ban Evader Jerk: [key_name(src)] with IP \"[lastKnownIP]\" and computer ID \[[src.client.computer_id]]. (Regdate: [joinstring])</font>")
-			logTheThing("admin", src, null, "Possible login by Ban Evader Jerk:. IP: [lastKnownIP], Computer ID: \[[src.client.computer_id]], Regdate: [joinstring]")
-			logTheThing("diary", src, null, "Possible login by Ban Evader Jerk:. IP: [lastKnownIP], Computer ID: \[[src.client.computer_id]], Regdate: [joinstring]", "admin")
-			if (!("[src.ckey]" in IRC_alerted_keys))
-				IRC_alerted_keys += "[src.ckey]"
-*/
 
 	world.update_status()
 
@@ -706,7 +641,7 @@
 							break
 						M.throw_at(source, 20, 3)
 						LAGCHECK(LAG_MED)
-					SPAWN_DBG(5 SECONDS)
+					SPAWN(5 SECONDS)
 						src.now_pushing = 0
 						if (tmob) //Wire: Fix for: Cannot modify null.now_pushing
 							tmob.now_pushing = 0
@@ -759,11 +694,13 @@
 			var/mob/victim = AM
 			deliver_move_trigger("bump")
 			victim.deliver_move_trigger("bump")
+			var/was_in_space = istype(victim.loc, /turf/space)
+			var/was_in_fire = locate(/obj/hotspot) in victim.loc
 			if (victim.buckled && !victim.buckled.anchored)
 				step(victim.buckled, t)
-			if (istype(victim.loc, /turf/space))
+			if (!was_in_space && istype(victim.loc, /turf/space))
 				logTheThing("combat", src, victim, "pushes [constructTarget(victim,"combat")] into space.")
-			else if (locate(/obj/hotspot) in victim.loc)
+			else if (!was_in_fire && (locate(/obj/hotspot) in victim.loc))
 				logTheThing("combat", src, victim, "pushes [constructTarget(victim,"combat")] into a fire.")
 
 		step(src,t)
@@ -908,7 +845,7 @@
 
 	var/key = src.key
 	var/displayed_key = src.mind.displayed_key
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/result = world.SetMedal(title, key, config.medal_hub, config.medal_password)
 
 		if (result == 1)
@@ -958,7 +895,7 @@
 
 	boutput(src, "Retrieving your medal information...")
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/list/output = list()
 		var/medals = world.GetMedal("", src.key, config.medal_hub, config.medal_password)
 
@@ -1127,6 +1064,11 @@
 	health += max(0, tox)
 	health = min(max_health, health)
 
+/mob/setStatus(statusId, duration, optional)
+	if (src.nodamage)
+		return
+	. = ..()
+
 /mob/proc/set_pulling(atom/movable/A)
 	if(A == src)
 		return
@@ -1248,6 +1190,9 @@
 		src.suicide_alert = 0
 	if(src.ckey)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
+	//stop piloting pods or whatever
+	src.use_movement_controller = null
+
 
 /mob/proc/restrained()
 	. = src.hasStatus("handcuffed")
@@ -1517,18 +1462,6 @@
 
 /mob/verb/succumb()
 	set hidden = 1
-/*
-//prevent a
- if the person is infected with the headspider disease.
-	for (var/datum/ailment/V in src.ailments)
-		if (istype(V, /datum/ailment/parasite/headspider) || istype(V, /datum/ailment/parasite/alien_embryo))
-			boutput(src, "You can't muster the willpower. Something is preventing you from doing it.")
-			return
-*/
-//or if they are being drained of blood
-	if (src.vamp_beingbitten)
-		boutput(src, "You can't muster the willpower. Something is preventing you from doing it.")
-		return
 
 	if (src.health < 0)
 		boutput(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
@@ -1732,7 +1665,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		src.ghostize()
@@ -1748,12 +1681,12 @@
 	game_stats.Increment("violence")
 #endif
 	logTheThing("combat", src, null, "is gibbed at [log_loc(src)].")
-	src.death(1)
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null // For forensics (Convair880).
 	var/btype = null
@@ -1836,20 +1769,34 @@
 	game_stats.Increment("violence")
 #endif
 	logTheThing("combat", src, null, "is electric-gibbed at [log_loc(src)].")
-	src.death(1)
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
-
+	var/col_r = 0.4
+	var/col_g = 0.8
+	var/col_b = 1.0
+	var/brightness = 0.7
+	var/height = 1
+	var/datum/light/light
+	var/light_type = /datum/light/point
 
 	if (ishuman(src))
 		animation = new(src.loc)
 		animation.master = src
 		flick("elecgibbed", animation)
-
+		if(ispath(light_type))
+			light = new light_type
+			light.set_brightness(brightness)
+			light.set_color(col_r, col_g, col_b)
+			light.set_height(height)
+			light.attach(animation)
+			light.enable()
+			SPAWN(1 SECOND)
+				qdel(light)
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
@@ -1868,12 +1815,12 @@
 	game_stats.Increment("violence")
 #endif
 	logTheThing("combat", src, null, "is fire-gibbed at [log_loc(src)].")
-	src.death(1)
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (ishuman(src))
 		animation = new(src.loc)
@@ -1907,12 +1854,12 @@
 	game_stats.Increment("violence")
 #endif
 	logTheThing("combat", src, null, "is party-gibbed at [log_loc(src)].")
-	src.death(1)
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null // For forensics (Convair880).
 	var/btype = null
@@ -1953,12 +1900,12 @@
 #endif
 	var/transfer_mind_to_owl = prob(control_chance)
 	logTheThing("combat", src, null, "is owl-gibbed at [log_loc(src)].")
-	src.death(1)
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null // For forensics (Convair880).
 	var/btype = null
@@ -2000,12 +1947,12 @@
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
 #endif
-	src.death(1)
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 	logTheThing("combat", src, null, "is vaporized at [log_loc(src)].")
 
 	if (ishuman(src))
@@ -2038,12 +1985,12 @@
 	game_stats.Increment("violence")
 #endif
 	logTheThing("combat", src, null, "imploded at [log_loc(src)].")
-	src.death(1)
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (ishuman(src))
 		animation = new(src.loc)
@@ -2062,7 +2009,7 @@
 
 /mob/proc/cluwnegib(var/duration = 30, var/anticheat = 0)
 	if(isobserver(src)) return
-	SPAWN_DBG(0) //multicluwne
+	SPAWN(0) //multicluwne
 		duration = clamp(duration, 10, 100)
 
 	#ifdef DATALOGGER
@@ -2124,7 +2071,7 @@
 		src.plane = PLANE_UNDERFLOOR
 		animate_slide(the_turf, 0, 0, duration)
 		sleep(duration+5)
-		src.death(1)
+		src.death(TRUE)
 		var/mob/dead/observer/newmob = ghostize()
 		newmob?.corpse = null
 
@@ -2140,7 +2087,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null
 	var/btype = null
@@ -2194,7 +2141,7 @@
 		for(var/mob/living/L in range(src_turf, 6))
 			shake_camera(L, 10, 32)
 
-	src.death(1)
+	src.death(TRUE)
 	if (animation)
 		animation.delaydispose()
 	qdel(src)
@@ -2364,7 +2311,7 @@
 	dizziness = min(500, dizziness + amount)	// store what will be new value
 													// clamped to max 500
 	if (dizziness > 100 && !is_dizzy)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			dizzy_process()
 
 
@@ -2395,7 +2342,7 @@
 	jitteriness = min(500, jitteriness + amount)	// store what will be new value
 													// clamped to max 500
 	if (jitteriness > 100 && !is_jittery)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			jittery_process()
 
 
@@ -2427,9 +2374,19 @@
 	SEND_SIGNAL(src, COMSIG_MOB_THROW_ITEM, target, params)
 
 /mob/throw_impact(atom/hit, datum/thrown_thing/thr)
+	if (thr.throw_type & THROW_PEEL_SLIP)
+		var/stun_duration = ("peel_stun" in thr.params) ? thr.params["peel_stun"] : 3 SECONDS
+		if(("slip_obj" in thr.params) && istype(thr.params["slip_obj"], /obj/item/device/pda2/clown))
+			animate_peel_slip(src, stun_duration=stun_duration, T = 0.85 SECONDS, n_flips = 2, height = 24)
+		else
+			animate_peel_slip(src, stun_duration=stun_duration)
+		if(!isturf(hit) || hit.density)
+			random_brute_damage(src, min((6 + (thr?.get_throw_travelled() / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
+		return ..()
+
 	if(!isturf(hit) || hit.density)
 		if (thr?.get_throw_travelled() <= 410)
-			if (!((src.throwing & THROW_CHAIRFLIP) && ismob(hit)))
+			if (!((thr.throw_type & THROW_CHAIRFLIP) && ismob(hit)))
 				random_brute_damage(src, min((6 + (thr?.get_throw_travelled() / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
 				if (!src.hasStatus("weakened"))
 					src.changeStatus("weakened", 2 SECONDS)
@@ -2553,7 +2510,7 @@
 					eyeblind = 5
 					src.change_eye_blurry(5)
 					src.bioHolder.AddEffect("bad_eyesight")
-					SPAWN_DBG(10 SECONDS)
+					SPAWN(10 SECONDS)
 						src.bioHolder.RemoveEffect("bad_eyesight")
 
 			if (25 to INFINITY)
@@ -2952,7 +2909,7 @@
 	animation.master = src
 	animation.icon_state = "ungibbed"
 	src = null //Detach this, what if we get deleted before the animation ends??
-	SPAWN_DBG(0.7 SECONDS) //Length of animation.
+	SPAWN(0.7 SECONDS) //Length of animation.
 		newbody.set_loc(animation.loc)
 		qdel(animation)
 		newbody.anchored = 1 // Stop running into the lava every half second jeez!
@@ -2966,7 +2923,7 @@
 	src.nodamage = 1
 	var/duration = 30
 
-	SPAWN_DBG(0) //multisatan
+	SPAWN(0) //multisatan
 		logTheThing("combat", src, null, "is damned to hell from [log_loc(src)].")
 		src.transforming = 1
 		src.canmove = 0
@@ -3090,14 +3047,14 @@
 //MOB VERBS ARE FASTER THAN OBJ VERBS, ELIMINATE ALL OBJ VERBS WHERE U CAN
 // ALSO EXCLUSIVE VERBS (LIKE ADMIN VERBS) ARE BAD FOR RCLICK TOO, TRY NOT TO USE THOSE OK
 
-/mob/verb/point(atom/A as mob|obj|turf in view(,get_turf(usr)))
+/mob/verb/point(atom/A as mob|obj|turf in view(,usr))
 	set name = "Point"
 	src.point_at(A)
 
 /mob/proc/point_at(var/atom/target) //overriden by living and dead
 	.=0
 
-/mob/verb/pull_verb(atom/movable/A as mob|obj in view(1, get_turf(usr)))
+/mob/verb/pull_verb(atom/movable/A as mob|obj in oview(1, usr))
 	set name = "Pull / Unpull"
 	set category = "Local"
 
@@ -3108,7 +3065,7 @@
 		A.pull()
 
 
-/mob/verb/examine_verb(atom/A as mob|obj|turf in view(,get_turf(usr)))
+/mob/verb/examine_verb(atom/A as mob|obj|turf in view(,usr))
 	set name = "Examine"
 	set category = "Local"
 	var/list/result = A.examine(src)
@@ -3116,7 +3073,7 @@
 	boutput(src, result.Join("\n"))
 
 
-/mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1, get_turf(usr)))
+/mob/living/verb/interact_verb(atom/A as mob|obj|turf in oview(1, usr))
 	set name = "Pick Up / Left Click"
 	set category = "Local"
 
@@ -3142,7 +3099,7 @@
 	return
 
 /mob/set_density(var/newdensity)
-	if(HAS_MOB_PROPERTY(src, PROP_NEVER_DENSE))
+	if(HAS_ATOM_PROPERTY(src, PROP_MOB_NEVER_DENSE))
 		..(0)
 	else
 		..(newdensity)

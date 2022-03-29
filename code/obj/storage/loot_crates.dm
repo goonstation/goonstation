@@ -48,7 +48,7 @@
 					switch(picker)
 						if(1)
 							items += pick(/obj/critter/bear,/obj/critter/domestic_bee,
-							/obj/critter/wendigo,/obj/critter/nicespider) // 1/2 chance for scary thing that has cool arms you can use, 1/2 chance for cute thing!!
+							/obj/critter/brullbar,/obj/critter/nicespider) // 1/2 chance for scary thing that has cool arms you can use, 1/2 chance for cute thing!!
 							item_amounts += 1
 						if(2)
 							items += pick(/obj/item/injector_belt,/obj/item/clothing/mask/gas/injector_mask)
@@ -148,7 +148,7 @@
 							item_amounts += 1
 							items += /obj/item/clothing/under/rank/cargo
 							item_amounts += 1
-							items += /obj/decal/skeleton
+							items += /obj/decal/fakeobjects/skeleton
 							item_amounts += 1
 						else
 							items += /obj/critter/rockworm
@@ -180,7 +180,7 @@
 					picker = rand(1,10)
 					switch(picker)
 						if(1)
-							items += pick(/obj/item/gun/energy/laser_gun/pred)
+							items += pick(/obj/item/gun/energy/plasma_gun)
 							item_amounts += 1
 						if(2 to 6)
 							items += /obj/item/gun/energy/phaser_gun
@@ -348,7 +348,7 @@
 				new X(src)
 			list_counter++
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			UpdateIcon()
 
 		return

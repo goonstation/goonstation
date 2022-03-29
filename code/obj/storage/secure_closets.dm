@@ -168,7 +168,8 @@
 	/obj/item/clothing/suit/space/engineer,
 	/obj/item/clothing/head/helmet/space/engineer,
 #endif
-	/obj/item/device/radio/headset/command/ce)
+	/obj/item/device/radio/headset/command/ce,
+	/obj/item/paper/manufacturer_blueprint/lawrack)
 
 /* ==================== */
 /* ----- Security ----- */
@@ -280,7 +281,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src)
 				// Why range 30? COG2 places linked fixtures much further away from the timer than originally envisioned.
 				for (var/obj/machinery/door_timer/DT in range(30, src))
@@ -294,7 +295,7 @@
 					logTheThing("debug", null, null, "<b>Convair880:</b> couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] for automatic locker at [log_loc(src)].")
 		return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
 		if (isobserver(usr) || isintangible(usr))
 			return
@@ -460,7 +461,7 @@
 	icon_state = "science"
 	icon_closed = "science"
 	icon_opened = "secure_white-open"
-	req_access = list(access_tox_storage)
+	req_access = list(access_research)
 
 /obj/storage/secure/closet/research/uniform
 	name = "science uniform locker"
@@ -617,9 +618,7 @@
 	/obj/item/reagent_containers/glass/bottle/acetone/janitors = 1,\
 	/obj/item/reagent_containers/glass/bottle/ammonia/janitors = 1,\
 	/obj/item/device/light/flashlight,\
-	/obj/item/caution = 4,
-	/obj/item/clothing/gloves/long,
-	/obj/item/handheld_vacuum)
+	/obj/item/caution = 4)
 
 /obj/storage/secure/closet/civilian/hydro
 	name = "\improper Botanical supplies locker"
@@ -672,6 +671,8 @@
 	/obj/item/clothing/head/formal_turban,\
 	/obj/item/clothing/head/turban,\
 	/obj/item/clothing/shoes/sandal,\
+	/obj/item/clothing/under/misc/chaplain/nun,\
+	/obj/item/clothing/head/nunhood,\
 	/obj/item/clothing/suit/flockcultist,\
 	/obj/item/storage/box/holywaterkit)
 

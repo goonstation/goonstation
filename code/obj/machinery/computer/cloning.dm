@@ -12,6 +12,8 @@
 	req_access = list(access_heads) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_CLONINGCONSOLES
+	processing_tier = PROCESSING_32TH
+	power_usage = 5000
 	can_reconnect = TRUE
 	circuit_type = /obj/item/circuitboard/cloning
 	records = list()
@@ -61,7 +63,7 @@
 					icon_state = initial(icon_state)
 					status &= ~NOPOWER
 				else
-					SPAWN_DBG(rand(0, 15))
+					SPAWN(rand(0, 15))
 						src.icon_state = "old20"
 						status |= NOPOWER
 
@@ -70,6 +72,7 @@
 	desc = "A circuit module designed to improve cloning machine scanning capabilities to the point where even the deceased may be scanned."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cloner_upgrade"
+	health = 8
 	w_class = W_CLASS_TINY
 	throwforce = 1
 
@@ -78,15 +81,31 @@
 	desc = "A circuit module designed to improve enzymatic reclaimer capabilities so that the machine will be able to reclaim more matter, faster."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "grinder_upgrade"
+	health = 8
 	w_class = W_CLASS_TINY
 	throwforce = 1
 
 /obj/machinery/computer/cloning/New()
 	..()
 	START_TRACKING
-	SPAWN_DBG(0.7 SECONDS)
+	SPAWN(0.7 SECONDS)
 		connection_scan()
 	return
+
+/obj/machinery/computer/cloning/proc/records_scan()
+	for(var/datum/db_record/R as anything in src.records)
+		var/mob/selected = find_ghost_by_key(R["ckey"])
+		if (!selected || (selected.mind && selected.mind.dnr))
+			continue
+		// else there's someone we can clone
+		icon_state = "dnac"
+		return TRUE
+	icon_state = "dna"
+	return FALSE
+
+/obj/machinery/computer/cloning/process()
+	..()
+	src.records_scan()
 
 /obj/machinery/computer/cloning/connection_scan()
 	if (src.portable)
@@ -187,7 +206,7 @@
 	//prevents us from overwriting the wrong message
 	currentMessageNumber += 1
 	var/messageNumber = currentMessageNumber
-	SPAWN_DBG(MESSAGE_SHOW_TIME)
+	SPAWN(MESSAGE_SHOW_TIME)
 	if(src.currentMessageNumber == messageNumber)
 		src.currentStatusMessage["text"] = ""
 		src.currentStatusMessage["status"] = ""
@@ -361,6 +380,7 @@
 		qdel(C)
 		JOB_XP(usr, "Medical Doctor", 15)
 		src.menu = 1
+		src.records_scan()
 
 /// find a ghost mob (or a ghost respawned as critter in vr/afterlife bar)
 proc/find_ghost_by_key(var/find_key)
@@ -370,8 +390,8 @@ proc/find_ghost_by_key(var/find_key)
 	var/datum/player/player = find_player(find_key)
 	if (player?.client?.mob)
 		var/mob/M = player.client.mob
-		if(iswraith(M))
-			return
+		if(iswraith(M) || istype(M, /mob/dead/target_observer/hivemind_observer))
+			return null
 		if (isdead(M) || isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
 			return M
 	return null
@@ -382,7 +402,7 @@ proc/find_ghost_by_key(var/find_key)
 
 /obj/machinery/clone_scanner
 	name = "cloning machine scanner"
-	desc = "Some sort of weird machine that you stuff people into to scan their genetic DNA for cloning."
+	desc = "A machine that you stuff living, and freshly not-so-living people into in order to scan them for cloning"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "scanner_0"
 	density = 1
@@ -450,7 +470,7 @@ proc/find_ghost_by_key(var/find_key)
 			user.drop_item()
 			target.Attackhand(user)
 			user.set_a_intent(previous_user_intent)
-			SPAWN_DBG(user.combat_click_delay + 2)
+			SPAWN(user.combat_click_delay + 2)
 				if (can_operate(user))
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)
@@ -487,7 +507,7 @@ proc/find_ghost_by_key(var/find_key)
 			O.set_loc(src.loc)
 
 		src.add_fingerprint(usr)
-		src?.connected.updateUsrDialog()
+		src.connected?.updateUsrDialog()
 
 		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
 
@@ -495,7 +515,7 @@ proc/find_ghost_by_key(var/find_key)
 		..()
 		eject_occupant(user)
 
-	MouseDrop(mob/user as mob)
+	mouse_drop(mob/user as mob)
 		if (istype(user) && can_operate(user))
 			eject_occupant(user)
 		else
@@ -618,7 +638,7 @@ proc/find_ghost_by_key(var/find_key)
 	proc/do_mince()
 		if (process_timer-- < 1)
 			active_process = PROCESS_IDLE
-			src.occupant.death(1)
+			src.occupant.death(TRUE)
 			src.occupant.ghostize()
 			qdel(src.occupant)
 			DEBUG_MESSAGE("[src].reagents.total_volume on completion of cycle: [src.reagents.total_volume]")
@@ -646,7 +666,7 @@ proc/find_ghost_by_key(var/find_key)
 		if(prob(50))
 			playsound(src, 'sound/machines/mixer.ogg', 50, 1)
 		if(prob(30))
-			SPAWN_DBG(0.3 SECONDS)
+			SPAWN(0.3 SECONDS)
 				playsound(src.loc, pick('sound/impact_sounds/Flesh_Stab_1.ogg', \
 									'sound/impact_sounds/Slimy_Hit_3.ogg', \
 									'sound/impact_sounds/Slimy_Hit_4.ogg', \

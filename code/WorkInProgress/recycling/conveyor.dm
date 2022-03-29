@@ -65,6 +65,7 @@
 
 	for (var/obj/machinery/conveyor_switch/S as anything in linked_switches) //conveyor switch could've been exploded
 		S.conveyors -= src
+	id = null
 	..()
 
 	// set the dir and target turf depending on the operating direction
@@ -267,7 +268,7 @@
 	desc = "A diverter arm for a conveyor belt."
 	anchored = 1
 	layer = FLY_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
+	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/conveyor/conv // the conveyor this diverter works on
 	var/deployed = 0	// true if diverter arm is extended
 	var/operating = 0	// true if arm is extending/contracting
@@ -306,7 +307,7 @@
 		if(SOUTHWEST)
 			divert_to = SOUTH
 			divert_from = WEST
-	SPAWN_DBG(0.2 SECONDS)
+	SPAWN(0.2 SECONDS)
 		// wait for map load then find the conveyor in this turf
 		conv = locate() in src.loc
 		if(conv)	// divert_from dir must match possible conveyor movement
@@ -369,13 +370,15 @@
 	return(direct != turn(divert_from,180))
 
 // don't allow movement through the arm if deployed
-/obj/machinery/diverter/CheckExit(atom/movable/O, var/turf/target)
-	var/direct = get_dir(O, target)
+/obj/machinery/diverter/Uncross(atom/movable/O, do_bump=TRUE)
+	var/direct = get_dir(O, O.movement_newloc)
 	if(direct == turn(divert_to,180))	// prevent movement through body of diverter
-		return 0
-	if(!deployed)
-		return 1
-	return(direct != divert_from)
+		. = 0
+	else if(!deployed)
+		. = 1
+	else
+		. = direct != divert_from
+	UNCROSS_BUMP_CHECK(O)
 
 
 
@@ -406,9 +409,9 @@
 		START_TRACKING
 		UpdateIcon()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", .proc/trigger)
 		conveyors = list()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			link_conveyors()
 			for (var/obj/machinery/conveyor/C as anything in conveyors)
 				if (C.id == src.id)
@@ -455,10 +458,11 @@
 			else
 				position = CONVEYOR_REVERSE
 				last_pos = CONVEYOR_STOPPED
+			logTheThing("station", user, null, "turns the conveyor switch on in [last_pos == CONVEYOR_REVERSE ? "forward" : "reverse"] mode at [log_loc(src)].")
 		else
 			last_pos = position
 			position = CONVEYOR_STOPPED
-
+			logTheThing("station", user, null, "turns the conveyor switch off at [log_loc(src)].")
 		UpdateIcon()
 
 		// find any switches with same id as this one, and set their positions to match us

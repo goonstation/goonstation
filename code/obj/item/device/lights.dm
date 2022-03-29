@@ -29,7 +29,7 @@
 	dropped(mob/user)
 		..()
 		if (light)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (src.loc != user)
 					light.attach(src)
 
@@ -45,6 +45,7 @@
 	item_state = "flight"
 	icon_on = "flight1"
 	icon_off = "flight0"
+	var/icon_broken = "flightbroken"
 	w_class = W_CLASS_SMALL
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	m_amt = 50
@@ -58,13 +59,13 @@
 	light_type = null
 	brightness = 4.6
 
-	var/datum/component/holdertargeting/simple_light/light_dir
+	var/datum/component/loctargeting/medium_directional_light/light_dir
 	New(loc, R = initial(col_r), G = initial(col_g), B = initial(col_b))
 		..()
 		col_r = R
 		col_g = G
 		col_b = B
-		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light, col_r * 255, col_g * 255, col_b  * 255, 210)
+		light_dir = src.AddComponent(/datum/component/loctargeting/medium_directional_light, col_r * 255, col_g * 255, col_b  * 255, 210)
 		light_dir.update(0)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -108,8 +109,8 @@
 				user.visible_message("<span class='alert'>The [src] in [user]'s hand bursts with a blinding flash!</span>", "<span class='alert'>The bulb in your hand explodes with a blinding flash!</span>")
 				on = 0
 				light_dir.update(0)
-				icon_state = "flightbroken"
-				name = "broken flashlight"
+				icon_state = icon_broken
+				name = "broken [name]"
 				src.broken = 1
 			else
 				light_dir.update(1)
@@ -124,7 +125,7 @@
 	icon_state = "glowstick-green0"
 	var/base_state = "glowstick-green"
 	name = "emergency glowstick"
-	desc = "For emergency use only. Not for use in illegal lightswitch raves."
+	desc = "A small tube that reacts chemicals in order to produce a larger radius of illumination than PDA lights. A label on it reads, WARNING: USE IN RAVES, DANCING, OR FUN WILL VOID WARRANTY."// I love the idea of a glowstick having a warranty so I'm leaving the description like this
 	w_class = W_CLASS_SMALL
 	flags = ONBELT | TABLEPASS
 	var/heated = 0
@@ -135,11 +136,11 @@
 	height = 0.75
 	var/color_name = "green"
 	light_type = null
-	var/datum/component/holdertargeting/sm_light/light_c
+	var/datum/component/loctargeting/sm_light/light_c
 
 	New()
 		..()
-		light_c = src.AddComponent(/datum/component/holdertargeting/sm_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
+		light_c = src.AddComponent(/datum/component/loctargeting/sm_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
 		light_c.update(0)
 
 	proc/burst()
@@ -382,7 +383,7 @@
 		..()
 		var/spookydegrees = rand(5, 20)
 
-		SPAWN_DBG(rand(1, 10))
+		SPAWN(rand(1, 10))
 			animate(src, pixel_y = 32, transform = matrix(spookydegrees, MATRIX_ROTATE), time = 20, loop = -1, easing = SINE_EASING)
 			animate(pixel_y = 0, transform = matrix(spookydegrees * -1, MATRIX_ROTATE), time = 20, loop = -1, easing = SINE_EASING)
 
@@ -456,6 +457,25 @@
 			src.light.disable()
 
 /obj/item/device/light/lava_lamp/activated
+	New()
+		..()
+		on = 1
+		set_icon_state(src.icon_on)
+		src.light.enable()
+
+/obj/item/device/light/magic_lantern
+	name = "magical lantern"
+	desc = "A magical lantern that burns with no fuel."
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "wizard1"
+	icon_on = "wizard1"
+	icon_off = "wizard0"
+	anchored = 1
+	col_r = 1
+	col_g = 0.9
+	col_b = 0.9
+	brightness = 0.8
+
 	New()
 		..()
 		on = 1

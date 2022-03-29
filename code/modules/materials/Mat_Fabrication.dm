@@ -66,7 +66,7 @@
 /// Material science fabricator
 /obj/machinery/nanofab
 	name = "Nano-fabricator"
-	desc = "'Nano' means it's high-tech stuff."
+	desc = "A more complicated sibling to the manufacturers, this machine can make things that inherit material properties."// this isnt super good but it's better than what it was
 	icon = 'icons/obj/manufacturer.dmi'
 	icon_state = "fab2-on"
 	anchored = 1
@@ -104,7 +104,7 @@
 		user.Browse(buildHtml(), "window=nfab;size=550x650;title=Nano-fabricator;fade_in=0;can_resize=0", 1)
 		return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(over_object == src)
 			boutput(usr, "<span class='notice'>You reset the output location of [src]!</span>")
 			src.output_target = src.loc

@@ -22,9 +22,9 @@
 		O.pixel_y = -96
 		O.icon = 'icons/effects/214x246.dmi'
 		O.icon_state = "explosion"
-		//SPAWN_DBG(0.5 SECONDS)
+		//SPAWN(0.5 SECONDS)
 		M.gib()
-		SPAWN_DBG(3.5 SECONDS)
+		SPAWN(3.5 SECONDS)
 			if (O)
 				O.delaydispose()
 
@@ -219,7 +219,7 @@
 			logTheThing("diary", usr, M, "has set a floor cluwne upon [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has set a floor cluwne upon [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.cluwnegib(duration)
+		SPAWN(0.5 SECONDS) M.cluwnegib(duration)
 
 /client/proc/cmd_admin_admindamn(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -237,7 +237,7 @@
 			logTheThing("diary", usr, M, "has damned [constructTarget(M,"diary")] to hell", "admin")
 			message_admins("[key_name(usr)] has damned [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.damn()
+		SPAWN(0.5 SECONDS) M.damn()
 
 /client/proc/cmd_admin_adminundamn(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -272,7 +272,7 @@
 		O.icon = 'icons/effects/214x246.dmi'
 		O.icon_state = "explosion"
 		O.mouse_opacity = 0
-		SPAWN_DBG(3.5 SECONDS)
+		SPAWN(3.5 SECONDS)
 			qdel(O)
 	src.mob.gib(FALSE, TRUE)
 
@@ -360,15 +360,15 @@
 	var/tysonspeed = 1
 
 	New()
-		SPAWN_DBG(0) process()
+		SPAWN(0) process()
 		..()
 
 	bump(atom/M as turf|obj|mob)
 		if(M.density)
 			M.density = 0
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				M.density = 1
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			var/turf/T = get_turf(M)
 			src.x = T.x
 			src.y = T.y
@@ -438,15 +438,15 @@
 	var/mob/caller = null
 
 	New()
-		SPAWN_DBG(0) process()
+		SPAWN(0) process()
 		..()
 
 	bump(atom/M as turf|obj|mob)
 		if(M.density)
 			M.density = 0
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				M.density = 1
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			var/turf/T = get_turf(M)
 			src.x = T.x
 			src.y = T.y

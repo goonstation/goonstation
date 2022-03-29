@@ -1,6 +1,7 @@
 /*
  * Copyright 2021 Gomble (https://github.com/AndrewL97)
  * Changes: Azrun (https://github.com/Azrun)
+ * Changes: Sovexe (https://github.com/Sovexe)
  * Licensed under MIT to Goonstation only (https://choosealicense.com/licenses/mit/)
  */
 

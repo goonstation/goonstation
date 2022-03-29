@@ -2,7 +2,7 @@
 
 /obj/item/device/pda2
 	name = "PDA"
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by an EEPROM cartridge."
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. It has a slot for an ID card, and a hole to put a pen into."
 	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "pda"
 	item_state = "pda"
@@ -220,17 +220,27 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/clown
 		event_handler_flags = USE_FLUID_ENTER
 
+		proc/on_mob_throw_end(mob/M)
+			UnregisterSignal(M, COMSIG_MOVABLE_THROW_END)
+			LAZYLISTREMOVE(M.attached_objs, src)
+			src.glide_size = initial(src.glide_size)
+
 		Crossed(atom/movable/AM)
 			..()
 			if (istype(src.loc, /turf/space))
 				return
 			if (iscarbon(AM))
 				var/mob/M = AM
-				if (M.slip(ignore_actual_delay = 1))
+				LAZYLISTADDUNIQUE(M.attached_objs, src)
+				src.glide_size = M.glide_size
+				RegisterSignal(M, COMSIG_MOVABLE_THROW_END, .proc/on_mob_throw_end)
+				if (M.slip(ignore_actual_delay = 1, throw_type=THROW_PEEL_SLIP, params=list("slip_obj"=src)))
 					boutput(M, "<span class='notice'>You slipped on the PDA!</span>")
 					if (M.bioHolder.HasEffect("clumsy"))
 						M.changeStatus("weakened", 5 SECONDS)
 						JOB_XP(M, "Clown", 1)
+				else
+					src.on_mob_throw_end(M)
 
 	janitor
 		icon_state = "pda-j"
@@ -251,6 +261,11 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
 		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS)
+
+	technical_assistant
+		icon_state = "pda-e" //tech ass is too broad to have a set cartridge but should get alerts
+		mailgroups = list(MGD_STATIONREPAIR,MGD_PARTY)
+		alertgroups = list(MGA_MAIL,MGA_RADIO)
 
 	mining
 		icon_state = "pda-e"
@@ -321,58 +336,57 @@
 
 	src.update_colors(src.bg_color, src.linkbg_color)
 
-	SPAWN_DBG(0.5 SECONDS)
-		src.hd = new /obj/item/disk/data/fixed_disk(src)
-		src.hd.file_amount = src.setup_drive_size
-		src.hd.name = "Minidrive"
-		src.hd.title = "Minidrive"
+	src.hd = new /obj/item/disk/data/fixed_disk(src)
+	src.hd.file_amount = src.setup_drive_size
+	src.hd.name = "Minidrive"
+	src.hd.title = "Minidrive"
 
-		if(src.setup_system_os_path)
-			src.set_host_program(new src.setup_system_os_path)
-			src.set_active_program(src.host_program)
+	if(src.setup_system_os_path)
+		src.set_host_program(new src.setup_system_os_path)
+		src.set_active_program(src.host_program)
 
-			src.hd.file_amount = max(src.hd.file_amount, src.host_program.size)
+		src.hd.file_amount = max(src.hd.file_amount, src.host_program.size)
 
-			src.host_program.transfer_holder(src.hd)
+		src.host_program.transfer_holder(src.hd)
 
-			src.hd.root.add_file(new /datum/computer/file/text/pda2manual)
-			src.hd.root.add_file(new /datum/computer/file/pda_program/robustris)
-			src.hd.root.add_file(new /datum/computer/file/pda_program/emergency_alert)
-			src.hd.root.add_file(new /datum/computer/file/pda_program/gps)
-			src.hd.root.add_file(new /datum/computer/file/pda_program/cargo_request(src))
-			if(length(src.default_muted_mailgroups))
-				src.host_program.muted_mailgroups = src.default_muted_mailgroups
-			if(ismob(src.loc))
-				var/mob/mob = src.loc
-				get_all_character_setup_ringtones()
-				if(mob.client && (mob.client.preferences.pda_ringtone_index in selectable_ringtones) && mob.client?.preferences.pda_ringtone_index != "Two-Beep")
-					src.set_ringtone(selectable_ringtones[mob.client.preferences.pda_ringtone_index], FALSE, FALSE, "main", null, FALSE)
-					var/rtone_program = src.ringtone2program(src.r_tone)
-					if(rtone_program)
-						src.hd.root.add_file(new rtone_program)
+		src.hd.root.add_file(new /datum/computer/file/text/pda2manual)
+		src.hd.root.add_file(new /datum/computer/file/pda_program/robustris)
+		src.hd.root.add_file(new /datum/computer/file/pda_program/emergency_alert)
+		src.hd.root.add_file(new /datum/computer/file/pda_program/gps)
+		src.hd.root.add_file(new /datum/computer/file/pda_program/cargo_request(src))
+		if(length(src.default_muted_mailgroups))
+			src.host_program.muted_mailgroups = src.default_muted_mailgroups
+		if(ismob(src.loc))
+			var/mob/mob = src.loc
+			get_all_character_setup_ringtones()
+			if(mob.client && (mob.client.preferences.pda_ringtone_index in selectable_ringtones) && mob.client?.preferences.pda_ringtone_index != "Two-Beep")
+				src.set_ringtone(selectable_ringtones[mob.client.preferences.pda_ringtone_index], FALSE, FALSE, "main", null, FALSE)
+				var/rtone_program = src.ringtone2program(src.r_tone)
+				if(rtone_program)
+					src.hd.root.add_file(new rtone_program)
 
-		src.net_id = format_net_id("\ref[src]")
+	src.net_id = format_net_id("\ref[src]")
 
-		if (src.setup_default_pen)
-			src.pen = new src.setup_default_pen(src)
-			if(istype(src.pen, /obj/item/clothing/mask/cigarette))
-				src.UpdateOverlays(image(src.icon, "cig"), "pen")
-			else if(istype(src.pen, /obj/item/pen/crayon))
-				var/image/pen_overlay = image(src.icon, "crayon")
-				pen_overlay.color = pen.color
-				src.UpdateOverlays(pen_overlay, "pen")
-			else if(istype(src.pen, /obj/item/pen/pencil))
-				src.UpdateOverlays(image(src.icon, "pencil"), "pen")
-			else
-				src.UpdateOverlays(image(src.icon, "pen"), "pen")
+	if (src.setup_default_pen)
+		src.pen = new src.setup_default_pen(src)
+		if(istype(src.pen, /obj/item/clothing/mask/cigarette))
+			src.UpdateOverlays(image(src.icon, "cig"), "pen")
+		else if(istype(src.pen, /obj/item/pen/crayon))
+			var/image/pen_overlay = image(src.icon, "crayon")
+			pen_overlay.color = pen.color
+			src.UpdateOverlays(pen_overlay, "pen")
+		else if(istype(src.pen, /obj/item/pen/pencil))
+			src.UpdateOverlays(image(src.icon, "pencil"), "pen")
+		else
+			src.UpdateOverlays(image(src.icon, "pen"), "pen")
 
-		if (src.setup_default_cartridge)
-			src.cartridge = new src.setup_default_cartridge(src)
+	if (src.setup_default_cartridge)
+		src.cartridge = new src.setup_default_cartridge(src)
 
-		if (src.setup_scanner_on && src.cartridge)
-			var/datum/computer/file/pda_program/scan/scan = locate() in src.cartridge.root.contents
-			if (istype(scan))
-				src.set_scan_program(scan)
+	if (src.setup_scanner_on && src.cartridge)
+		var/datum/computer/file/pda_program/scan/scan = locate() in src.cartridge.root.contents
+		if (istype(scan))
+			src.set_scan_program(scan)
 
 /obj/item/device/pda2/disposing()
 	if (src.cartridge)
@@ -519,7 +533,7 @@
 /obj/item/device/pda2/Topic(href, href_list)
 	..()
 	if (usr.contents.Find(src) || usr.contents.Find(src.master) || ((istype(src.loc, /turf) || isAI(usr)) && ( get_dist(src, usr) <= 1 || isAI(usr) )))
-		if (usr.stat || usr.restrained())
+		if(!can_act(usr))
 			return
 
 		src.add_fingerprint(usr)
@@ -695,7 +709,7 @@
 
 	return
 
-/obj/item/device/pda2/MouseDrop(atom/over_object, src_location, over_location)
+/obj/item/device/pda2/mouse_drop(atom/over_object, src_location, over_location)
 	..()
 	if (over_object == usr && src.loc == usr && isliving(usr) && !usr.stat)
 		src.attack_self(usr)
@@ -709,7 +723,7 @@
 	if (!target || !message)
 		return
 
-	if (is_incapacitated(usr))
+	if (!can_act(usr))
 		return
 
 	if (istype(src.host_program))
@@ -1136,7 +1150,7 @@
 		if (S.mainframe && S.mainframe == loc)
 			return 1
 	if (isAIeye(user))
-		var/mob/dead/aieye/E = user
+		var/mob/living/intangible/aieye/E = user
 		if (E.mainframe)
 			return 1
 	return ..(user)

@@ -4,10 +4,11 @@
 	density = 1
 	anchored = 1
 	mats = 10
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "geneman-on"
-	flags = NOSPLASH
+	flags = NOSPLASH | FPRINT
+	event_handler_flags = NO_MOUSEDROP_QOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/mode = "overview"
 	var/list/seeds = list()
 	var/seedfilter = null
@@ -459,6 +460,10 @@
 			var/obj/item/seed/seed1 = src.splicing1
 			var/obj/item/seed/seed2 = src.splicing2
 
+			// How the fuck
+			if (!seed1 || !seed2)
+				return
+
 			// Now work out whether we fail to splice or not based on species compatability
 			// And the health of the two seeds you're using
 			var/splice_chance = 100
@@ -752,8 +757,8 @@
 ////// Reagent Extractor
 
 /obj/submachine/chem_extractor/
-	name = "Reagent Extractor"
-	desc = "A machine which can extract reagents from organic matter."
+	name = "reagent extractor"
+	desc = "A machine which can extract reagents from matter. Has a slot for a beaker and a chute to put things into."
 	density = 1
 	anchored = 1
 	mats = 6
@@ -761,16 +766,16 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "reex-off"
-	flags = NOSPLASH
+	flags = NOSPLASH | TGUI_INTERACTIVE
 	var/mode = "overview"
-	var/autoextract = 0
+	var/autoextract = FALSE
+	var/nextingredientkey = 0
 	var/obj/item/reagent_containers/glass/extract_to = null
 	var/obj/item/reagent_containers/glass/inserted = null
 	var/obj/item/reagent_containers/glass/storage_tank_1 = null
 	var/obj/item/reagent_containers/glass/storage_tank_2 = null
 	var/list/ingredients = list()
 	var/list/allowed = list(/obj/item/reagent_containers/food/snacks/,/obj/item/plant/,/obj/item/seashell)
-	var/output_target = null
 
 	New()
 		..()
@@ -780,303 +785,173 @@
 		for (var/obj/item/reagent_containers/glass/beaker/extractor_tank/ST in src.contents)
 			ST.name = "Storage Tank [count]"
 			count++
-		output_target = src.loc
+		AddComponent(/datum/component/transfer_input/quickloading, allowed, "tryLoading")
+		AddComponent(/datum/component/transfer_output)
 
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
 
-	attack_hand(var/mob/user as mob)
-		src.add_dialog(user)
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ReagentExtractor", src.name)
+			ui.open()
 
-		var/list/dat = list("<B>Reagent Extractor</B><BR><HR>")
-		if (src.mode == "overview")
-			dat += "<b><u>Extractor Overview</u></b><br><br>"
-			// Overview mode is just a general outline of what's in the machine at the time
-			// Internal Storage Tanks
-			if (src.storage_tank_1)
-				dat += "<b>Storage Tank 1:</b> ([src.storage_tank_1.reagents.total_volume]/[src.storage_tank_1.reagents.maximum_volume])<br>"
-				if(src.storage_tank_1.reagents.reagent_list.len)
-					for(var/current_id in storage_tank_1.reagents.reagent_list)
-						var/datum/reagent/current_reagent = storage_tank_1.reagents.reagent_list[current_id]
-						dat += "* <i>[current_reagent.volume] units of [current_reagent.name]</i><br>"
-				else dat += "Empty<BR>"
-				dat += "<br>"
-			else dat += "<b>Storage Tank 1 Missing!</b><br>"
-			if (src.storage_tank_2)
-				dat += "<b>Storage Tank 2:</b> ([src.storage_tank_2.reagents.total_volume]/[src.storage_tank_2.reagents.maximum_volume])<br>"
-				if(src.storage_tank_2.reagents.reagent_list.len)
-					for(var/current_id in storage_tank_2.reagents.reagent_list)
-						var/datum/reagent/current_reagent = storage_tank_2.reagents.reagent_list[current_id]
-						dat += "* <i>[current_reagent.volume] units of [current_reagent.name]</i><br>"
-				else dat += "Empty<BR>"
-				dat += "<br>"
-			else dat += "<b>Storage Tank 2 Missing!</b><br>"
-			// Inserted Beaker or whatever
-			if (src.inserted)
-				dat += "<B>Receptacle:</B> [src.inserted] ([src.inserted.reagents.total_volume]/[src.inserted.reagents.maximum_volume]) <A href='?src=\ref[src];ejectbeaker=1'>(Eject)</A><BR>"
-				dat += "<b>Contents:</b> "
-				if(src.inserted.reagents.reagent_list.len)
-					for(var/current_id in inserted.reagents.reagent_list)
-						var/datum/reagent/current_reagent = inserted.reagents.reagent_list[current_id]
-						dat += "<BR><i>[current_reagent.volume] units of [current_reagent.name]</i>"
-				else dat += "Empty<BR>"
-			else dat += "<B>No receptacle inserted!</B><BR>"
+	ui_data(mob/user)
+		. = list()
+		var/list/containers = src.getContainers()
 
-			if(src.ingredients.len)
-				dat += "<BR><B>[src.ingredients.len] Items Ready for Extraction</B>"
-			else
-				dat += "<BR><B>No Items inserted!</B>"
+		var/list/containersData = list()
+		// Container data
+		for(var/container_id in containers)
+			var/obj/item/reagent_containers/glass/thisContainer = containers[container_id]
+			if(thisContainer)
+				var/datum/reagents/R = thisContainer.reagents
+				var/list/thisContainerData = list(
+					name = thisContainer.name,
+					id = container_id,
+					maxVolume = R.maximum_volume,
+					totalVolume = R.total_volume,
+					selected = src.extract_to == thisContainer,
+					contents = list(),
+					finalColor = "#000000"
+				)
 
-		else if (src.mode == "extraction")
-			dat += "<b><u>Extraction Management</u></b><br><br>"
-			if (src.autoextract)
-				dat += "<b>Auto-Extraction:</b> <A href='?src=\ref[src];autoextract=1'>Enabled</A>"
-			else
-				dat += "<b>Auto-Extraction:</b> <A href='?src=\ref[src];autoextract=1'>Disabled</A>"
-			dat += "<br>"
-			if (src.extract_to)
-				dat += "<b>Extraction Target:</b> <A href='?src=\ref[src];extracttarget=1'>[src.extract_to]</A> ([src.extract_to.reagents.total_volume]/[src.extract_to.reagents.maximum_volume])"
-				if (src.extract_to == src.inserted) dat += "<A href='?src=\ref[src];ejectbeaker=1'>(Eject)</A>"
-			else dat += "<A href='?src=\ref[src];extracttarget=1'><b>No current extraction target set.</b></A>"
+				var/list/contents = thisContainerData["contents"]
+				if(istype(R) && R.reagent_list.len>0)
+					thisContainerData["finalColor"] = R.get_average_rgb()
+					// Reagent data
+					for(var/reagent_id in R.reagent_list)
+						var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
 
-			if(src.ingredients.len)
-				dat += "<br><br><B>Extractable Items:</B><br><br>"
-				for (var/obj/item/I in src.ingredients)
-					dat += "* [I]<br>"
-					dat += "<A href='?src=\ref[src];extractingred=\ref[I]'>(Extract)</A> <A href='?src=\ref[src];ejectingred=\ref[I]'>(Eject)</A><br>"
-			else dat += "<br><br><B>No Items inserted!</B>"
+						contents.Add(list(list(
+							name = reagents_cache[reagent_id],
+							id = reagent_id,
+							colorR = current_reagent.fluid_r,
+							colorG = current_reagent.fluid_g,
+							colorB = current_reagent.fluid_b,
+							volume = current_reagent.volume
+						)))
+				containersData[container_id] = thisContainerData
 
-		else if (src.mode == "transference")
-			dat += "<b><u>Transfer Management</u></b><br><br>"
+		.["containersData"] = containersData
 
-			if (src.inserted)
-				dat += "<A href='?src=\ref[src];chemtransfer=\ref[src.inserted]'><b>[src.inserted]:</b></A> ([src.inserted.reagents.total_volume]/[src.inserted.reagents.maximum_volume]) <A href='?src=\ref[src];flush=\ref[src.inserted]'>(Flush All)</A> <A href='?src=\ref[src];ejectbeaker=1'>(Eject)</A><br>"
-				if(src.inserted.reagents.reagent_list.len)
-					for(var/current_id in inserted.reagents.reagent_list)
-						var/datum/reagent/current_reagent = inserted.reagents.reagent_list[current_id]
-						dat += "* <i>[current_reagent.volume] units of [current_reagent.name]</i> <A href='?src=\ref[src];flush=\ref[src.inserted];flush_reagent=[current_id]'>(X)</A><br>"
-				else dat += "Empty<BR>"
-			else dat += "<b>No receptacle inserted!</b><br>"
+		var/list/ingredientsData = list()
+		// Ingredient/Extractable data
+		for(var/ingredient_id in src.ingredients)
+			var/obj/item/thisIngredient = src.ingredients[ingredient_id]
+			if(thisIngredient)
+				var/list/thisIngredientData = list(
+					name = thisIngredient.name,
+					id = ingredient_id
+				)
+				ingredientsData += list(thisIngredientData)
 
-			dat += "<br>"
+		.["ingredientsData"] = ingredientsData
 
-			dat += "<A href='?src=\ref[src];chemtransfer=\ref[src.storage_tank_1]'><b>Storage Tank 1:</b></A> ([src.storage_tank_1.reagents.total_volume]/[src.storage_tank_1.reagents.maximum_volume]) <A href='?src=\ref[src];flush=\ref[src.storage_tank_1]'>(Flush All)</A><br>"
-			if(src.storage_tank_1.reagents.reagent_list.len)
-				for(var/current_id in storage_tank_1.reagents.reagent_list)
-					var/datum/reagent/current_reagent = storage_tank_1.reagents.reagent_list[current_id]
-					dat += "* <i>[current_reagent.volume] units of [current_reagent.name]</i> <A href='?src=\ref[src];flush=\ref[src.storage_tank_1];flush_reagent=[current_id]'>(X)</A><br>"
-			else dat += "Empty<BR>"
+		.["autoextract"] = src.autoextract
 
-			dat += "<br>"
-			dat += "<A href='?src=\ref[src];chemtransfer=\ref[src.storage_tank_2]'><b>Storage Tank 2:</b></A> ([src.storage_tank_2.reagents.total_volume]/[src.storage_tank_2.reagents.maximum_volume]) <A href='?src=\ref[src];flush=\ref[src.storage_tank_2]'>(Flush All)</A><br>"
-			if(src.storage_tank_2.reagents.reagent_list.len)
-				for(var/current_id in storage_tank_2.reagents.reagent_list)
-					var/datum/reagent/current_reagent = storage_tank_2.reagents.reagent_list[current_id]
-					dat += "* <i>[current_reagent.volume] units of [current_reagent.name]</i> <A href='?src=\ref[src];flush=\ref[src.storage_tank_2];flush_reagent=[current_id]'>(X)</A><br>"
-			else dat += "Empty<BR>"
 
-		else
-			dat += {"<b>Software Error.</b><br>
-			<A href='?src=\ref[src];page=1'>Please click here to return to the Overview.</A>"}
 
-		dat += "<HR>"
-		dat += "<b><u>Mode:</u></b> <A href='?src=\ref[src];page=1'>(Overview)</A> <A href='?src=\ref[src];page=2'>(Extraction)</A> <A href='?src=\ref[src];page=3'>(Transference)</A>"
-
-		user.Browse(dat.Join(), "window=rextractor;size=370x500")
-		onclose(user, "rextractor")
-
-	handle_event(var/event, var/sender)
-		if (event == "reagent_holder_update")
-			src.updateUsrDialog()
-
-	Topic(href, href_list)
-		if(get_dist(usr,src) > 1 && !issilicon(usr) && !isAI(usr) )
-			boutput(usr, "<span class='alert'>You need to be closer to the extractor to do that!</span>")
+	ui_act(action, params)
+		. = ..()
+		if(.)
 			return
-		if(href_list["page"])
-			var/ops = text2num_safe(href_list["page"])
-			switch(ops)
-				if(2) src.mode = "extraction"
-				if(3) src.mode = "transference"
-				else src.mode = "overview"
-			src.UpdateIcon()
-			src.updateUsrDialog()
-
-		else if(href_list["ejectbeaker"])
-			if (!src.inserted) boutput(usr, "<span class='alert'>No receptacle found to eject.</span>")
-			else
+		var/list/containers = src.getContainers()
+		switch(action)
+			if("ejectcontainer")
+				if (!src.inserted)
+					return
 				if (src.inserted == src.extract_to) src.extract_to = null
-				src.inserted.set_loc(src.output_target)
-				usr.put_in_hand_or_eject(inserted)
+				TRANSFER_OR_DROP(src, src.inserted)
+				usr.put_in_hand_or_eject(src.inserted)
 				src.inserted = null
-			src.updateUsrDialog()
-
-		else if(href_list["ejectingred"])
-			var/obj/item/I = locate(href_list["ejectingred"]) in src
-			if (istype(I))
-				src.ingredients.Remove(I)
-				I.set_loc(src.output_target)
-				boutput(usr, "<span class='notice'>You eject [I] from the machine!</span>")
-				src.UpdateIcon()
-			src.updateUsrDialog()
-
-		else if (href_list["autoextract"])
-			src.autoextract = !src.autoextract
-			src.UpdateIcon()
-			src.updateUsrDialog()
-
-		else if (href_list["flush_reagent"])
-			var/id = href_list["flush_reagent"]
-			var/obj/item/reagent_containers/T = locate(href_list["flush"]) in src
-			if (istype(T, /obj/item/reagent_containers/food/drinks) || istype(T, /obj/item/reagent_containers/glass) && T.reagents)
-				T.reagents.remove_reagent(id, 500)
-			src.updateUsrDialog()
-
-		else if (href_list["flush"])
-			var/obj/item/reagent_containers/T = locate(href_list["flush"]) in src
-			if (istype(T, /obj/item/reagent_containers/food/drinks) || istype(T, /obj/item/reagent_containers/glass) && T.reagents)
-				T.reagents.clear_reagents()
-			src.updateUsrDialog()
-
-		else if(href_list["extracttarget"])
-			var/list/ext_targets = list(src.storage_tank_1,src.storage_tank_2)
-			if (src.inserted) ext_targets.Add(src.inserted)
-			var/target = input(usr, "Extract to which target?", "Reagent Extractor", 0) in ext_targets
-			if(get_dist(usr, src) > 1) return
-			src.extract_to = target
-			src.UpdateIcon()
-			src.updateUsrDialog()
-
-		else if(href_list["extractingred"])
-			if (!src.extract_to)
-				boutput(usr, "<span class='alert'>You must first select an extraction target.</span>")
-			else
-				if (src.extract_to.reagents.total_volume == src.extract_to.reagents.maximum_volume)
-					boutput(usr, "<span class='alert'>The extraction target is already full.</span>")
-				else
-					var/obj/item/I = locate(href_list["extractingred"]) in src
-					if (!istype(I) || !I.reagents)
-						return
-
-					src.doExtract(I)
-					src.ingredients -= I
-					qdel(I)
-			src.UpdateIcon()
-			src.updateUsrDialog()
-
-		else if(href_list["chemtransfer"])
-			var/obj/item/reagent_containers/glass/G = locate(href_list["chemtransfer"]) in src
-			if (!G)
-				boutput(usr, "<span class='alert'>Transfer target not found.</span>")
-				src.updateUsrDialog()
-				return
-			else if (!G.reagents.total_volume)
-				boutput(usr, "<span class='alert'>Nothing in container to transfer.</span>")
-				src.updateUsrDialog()
-				return
-
-			var/list/ext_targets = list(src.storage_tank_1,src.storage_tank_2)
-			if (src.inserted) ext_targets.Add(src.inserted)
-			ext_targets.Remove(G)
-			var/target = input(usr, "Transfer to which target?", "Reagent Extractor", 0) in ext_targets
-			if(get_dist(usr, src) > 1) return
-			var/obj/item/reagent_containers/glass/T = target
-
-			if (!T) boutput(usr, "<span class='alert'>Transfer target not found.</span>")
-			else if (G == T) boutput(usr, "<span class='alert'>Cannot transfer a container's contents to itself.</span>")
-			else
-				var/amt = input(usr, "Transfer how many units?", "Chemical Transfer", 0) as null|num
-				if(get_dist(usr, src) > 1) return
-				if (amt < 1) boutput(usr, "<span class='alert'>Invalid transfer quantity.</span>")
-				else G.reagents.trans_to(T,amt)
-
-			src.updateUsrDialog()
+				. = TRUE
+			if("insertcontainer")
+				if (src.inserted)
+					return
+				var/obj/item/inserting = usr.equipped()
+				if(istype(inserting, /obj/item/reagent_containers/glass/) || istype(inserting, /obj/item/reagent_containers/food/drinks/))
+					src.inserted = inserting
+					usr.drop_item()
+					inserting.set_loc(src)
+					if(!src.extract_to) src.extract_to = inserting
+					. = TRUE
+			if("ejectingredient")
+				var/id = params["ingredient_id"]
+				var/obj/item/ingredient = src.ingredients[id]
+				if (istype(ingredient))
+					src.ingredients.Remove(id)
+					TRANSFER_OR_DROP(src, ingredient)
+					. = TRUE
+			if("autoextract")
+				src.autoextract = !src.autoextract
+				. = TRUE
+			if("flush_reagent")
+				var/obj/item/reagent_containers/glass/target = containers[params["container_id"]]
+				var/id = params["reagent_id"]
+				if (target?.reagents)
+					target.reagents.remove_reagent(id, 500)
+					. = TRUE
+			if("isolate")
+				var/obj/item/reagent_containers/glass/target = containers[params["container_id"]]
+				var/id = params["reagent_id"]
+				if (target?.reagents)
+					target.reagents.isolate_reagent(id)
+					. = TRUE
+			if("flush")
+				var/obj/item/reagent_containers/glass/target = containers[params["container_id"]]
+				if (target)
+					target.reagents.clear_reagents()
+					. = TRUE
+			if("extractto")
+				var/obj/item/reagent_containers/glass/target = containers[params["container_id"]]
+				if (target)
+					src.extract_to = target
+					. = TRUE
+			if("extractingredient")
+				if (!src.extract_to || src.extract_to.reagents.total_volume >= src.extract_to.reagents.maximum_volume)
+					return
+				var/id = params["ingredient_id"]
+				var/obj/item/ingredient = src.ingredients[id]
+				if (!istype(ingredient) || !ingredient.reagents)
+					return
+				src.doExtract(ingredient)
+				src.ingredients.Remove(id)
+				qdel(ingredient)
+				. = TRUE
+			if("chemtransfer")
+				var/obj/item/reagent_containers/glass/from = containers[params["container_id"]]
+				var/obj/item/reagent_containers/glass/target = src.extract_to
+				if (from?.reagents.total_volume && target && from != target)
+					from.reagents.trans_to(target, clamp(params["amount"], 1, 500))
+					. = TRUE
+		src.UpdateIcon()
 
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
-		if (isrobot(user))
-			boutput(user, "This machine is not compatible with mechanical users.")
-			return
-
 		if(istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
+			if (isrobot(user))
+				boutput(user, "This machine does not accept containers from robots!")
+				return
 			if(src.inserted)
 				boutput(user, "<span class='alert'>A container is already loaded into the machine.</span>")
 				return
 			src.inserted =  W
 			user.drop_item()
 			W.set_loc(src)
+			if(!src.extract_to) src.extract_to = W
 			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
-			src.updateUsrDialog()
+			src.ui_interact(user)
 
-		else if (istype(W,/obj/item/satchel/hydro))
-			var/obj/item/satchel/S = W
-			var/loadcount = 0
-			for (var/obj/item/I in S.contents)
-				if (src.canExtract(I) && (src.tryLoading(I, user)))
-					loadcount++
-			if (!loadcount)
-				boutput(user, "<span class='alert'>No items were loaded from the satchel!</span>")
-			else if (src.autoextract)
-				boutput(user, "<span class='notice'>[loadcount] items were automatically extracted from the satchel!</span>")
-			else
-				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
+		..()
 
-			S.UpdateIcon()
-			src.UpdateIcon()
-			src.updateUsrDialog()
 
-		else
-			if (!src.canExtract(W))
-				boutput(user, "<span class='alert'>The extractor cannot accept that!</span>")
-				return
-
-			if (!src.tryLoading(W, user)) return
-			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
-
-			user.u_equip(W)
-			W.dropped()
-
-			src.UpdateIcon()
-			src.updateUsrDialog()
-			return
-
-	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (!in_interact_range(src, user)  || !IN_RANGE(user, O, 1))
-			return
-		if (istype(O, /obj/item/reagent_containers/glass/) || istype(O, /obj/item/reagent_containers/food/drinks/) || istype(O, /obj/item/satchel/hydro))
-			return src.Attackby(O, user)
-		if (!src.canExtract(O)) ..()
-		else
-			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O.name] into [src]!</span>")
-			var/staystill = user.loc
-			for (var/obj/item/P in view(1,user))
-				if (user.loc != staystill) break
-				if (P.type == O.type)
-					if (!src.tryLoading(P, user)) break
-					sleep(0.2 SECONDS)
-				else continue
-			boutput(user, "<span class='notice'>You finish stuffing items into [src]!</span>")
-		src.UpdateIcon()
-
-	MouseDrop(over_object, src_location, over_location)
-		if(!isliving(usr))
-			boutput(usr, "<span class='alert'>Only living mobs are able to set the extractor's output target.</span>")
-			return
-
-		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span class='alert'>The extractor is too far away from the target!</span>")
-			return
-
-		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
-			return
-
-		else if (istype(over_object,/turf/simulated/floor/))
-			src.output_target = over_object
-			boutput(usr, "<span class='notice'>You set the extractor to output to [over_object]!</span>")
-
-		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
-		return
+/obj/submachine/chem_extractor/proc/getContainers()
+	. = list(
+		inserted = src.inserted,
+		storage_tank_1 = src.storage_tank_1,
+		storage_tank_2 = src.storage_tank_2
+	)
 
 /obj/submachine/chem_extractor/update_icon()
 	if (src.ingredients.len)
@@ -1084,38 +959,30 @@
 	else
 		src.icon_state = "reex-off"
 
-/obj/submachine/chem_extractor/proc/doExtract(var/obj/item/I)
+/obj/submachine/chem_extractor/proc/doExtract(atom/movable/AM)
 	// Welp -- we don't want anyone extracting these. They'll probably
 	// feed them to monkeys and then exsanguinate them trying to get at the chemicals.
-	if (istype(I, /obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor))
+	if (istype(AM, /obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor))
 		src.extract_to.reagents.add_reagent("sugar", 50)
 		return
-
-	I.reagents.trans_to(src.extract_to, I.reagents.total_volume)
+	AM.reagents.trans_to(src.extract_to, AM.reagents.total_volume)
+	qdel(AM)
 	src.UpdateIcon()
 
-/obj/submachine/chem_extractor/proc/canExtract(O)
-	. = FALSE
-	for(var/check_path in src.allowed)
-		if(istype(O, check_path))
-			return TRUE
+/obj/submachine/chem_extractor/proc/tryLoading(atom/movable/incoming)
+	var/can_autoextract = src.autoextract && src.extract_to
+	if (can_autoextract && src.extract_to.reagents.total_volume >= src.extract_to.reagents.maximum_volume)
+		playsound(src, "sound/machines/chime.ogg", 10, 1)
+		src.visible_message("<span class='alert'>[src]'s tank over-fill alarm burps!</span>")
+		can_autoextract = FALSE
 
-/obj/submachine/chem_extractor/proc/tryLoading(var/obj/item/O, var/mob/user as mob)
-	// Pre: make sure that the item type can be extracted
-	if (src.autoextract)
-		if (!src.extract_to)
-			boutput(user, "<span class='alert'>You must first select an extraction target if you want items to be automatically extracted.</span>")
-			return FALSE
-		if (src.extract_to.reagents.total_volume >= src.extract_to.reagents.maximum_volume)
-			boutput(user, "<span class='alert'>The auto-extraction target is full.</span>")
-			return FALSE
-		src.doExtract(O)
-		qdel(O)
-		return TRUE
+	if (can_autoextract)
+		doExtract(incoming)
 	else
-		O.set_loc(src)
-		src.ingredients += O
-		return TRUE
+		src.ingredients["[nextingredientkey++]"] = incoming
+		tgui_process.update_uis(src)
+		src.UpdateIcon()
+
 
 /obj/submachine/seed_vendor
 	name = "Seed Fabricator"
@@ -1126,7 +993,7 @@
 	anchored = 1
 	mats = 6
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
-	var/vendamt = 1
+	flags = TGUI_INTERACTIVE
 	var/hacked = 0
 	var/panelopen = 0
 	var/malfunction = 0
@@ -1135,7 +1002,6 @@
 	var/can_vend = 1
 	var/seedcount = 0
 	var/maxseed = 25
-	var/category = null
 	var/list/available = list()
 	var/const
 		WIRE_EXTEND = 1
@@ -1150,34 +1016,87 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attack_hand(var/mob/user as mob)
-		src.add_dialog(user)
-		var/dat = "<B>[src.name]</B><BR><HR>"
-		dat += "<b>Amount to Vend</b>: <A href='?src=\ref[src];amount=1'>[src.vendamt]</A><br>"
-		if (src.category)
-			dat += "<b>Filter</b>: [src.category] <A href='?src=\ref[src];category=1'>(Clear)</A><br>"
-		else
-			dat += "<b>Filter</b>: <A href='?src=\ref[src];category=1'>(Set)</A><br>"
-		if (!src.can_vend)
-			dat+= "<u>Unit currently out of charge. Please wait.</u><br>"
-		dat += "<br>"
-		for(var/datum/plant/A in hydro_controls.plant_species)
-			if (!A.vending)
-				continue
-			if (A.vending > 1)
-				if (src.hacked)
-					if (!src.category || (src.category == A.category))
-						dat += "<b>[A.name]</b>: <A href='?src=\ref[src];disp=\ref[A]'>(VEND)</A><br>"
-				else
-					continue
-			else
-				if (!src.category || (src.category == A.category))
-					dat += "<b>[A.name]</b>: <A href='?src=\ref[src];disp=\ref[A]'>(VEND)</A><br>"
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "SeedFabricator", src.name)
+			ui.open()
 
-		user.Browse(dat, "window=seedfab;size=400x500")
-		onclose(user, "seedfab")
+	ui_data(mob/user)
+		. = list()
+		.["seedCount"] = src.seedcount
+		.["canVend"] = src.can_vend
+		.["isWorking"] = src.working
+
+	ui_static_data(mob/user)
+		. = list()
+
+		.["maxSeed"] = src.maxseed
+		.["name"] = src.name
+
+		// Start with associative list, where each key is a seed category
+		var/list/categories = list()
+		for(var/datum/plant/A in hydro_controls.vendable_plants)
+			if (A.vending == 1 || src.hacked)
+				if (!categories[A.category])
+					categories[A.category] = list()
+				categories[A.category] += list(list(
+					name = A.name,
+					path = A.type,
+					img = A.getBase64Img()
+				))
+		// Convert to non-associative list holding each category
+		var/list/categoriesArray = list()
+		for(var/category_name in categories)
+			var/category = categories[category_name]
+			categoriesArray += list(list(
+				name = category_name,
+				seeds = category
+			))
+		.["seedCategories"] = categoriesArray
+
+
+	ui_act(action, params)
+		. = ..()
+		if(. || action != "disp" || !src.can_vend || !src.working)
+			return
+		var/datum/plant/I = locate(text2path(params["path"])) in src.available
+
+		if (!istype(I))
+			return
+
+		if(!I.vending)
+			trigger_anti_cheat(usr, "tried to href exploit vend forbidden seed [I] on [src]")
+			return
+
+		var/vend = clamp(params["amount"], 1, 10)
+
+		while(vend > 0)
+			var/obj/item/seed/S
+			if (I.unique_seed)
+				S = new I.unique_seed
+				S.set_loc(src.loc)
+			else
+				S = new /obj/item/seed
+				S.set_loc(src.loc)
+				S.removecolor()
+			S.generic_seed_setup(I)
+			vend--
+			src.seedcount++
+
+		if(src.seedcount >= src.maxseed)
+			src.can_vend = 0
+			SPAWN(10 SECONDS)
+				src.can_vend = 1
+				src.seedcount = 0
+		. = TRUE
+
+
+	attack_hand(var/mob/user as mob)
+		. = ..()
 
 		if (src.panelopen || isAI(user))
+			src.add_dialog(user)
 			var/list/fabwires = list(
 			"Puce" = 1,
 			"Mauve" = 2,
@@ -1207,67 +1126,14 @@
 		if(get_dist(usr,src) > 1 && !issilicon(usr) && !isAI(usr))
 			boutput(usr, "<span class='alert'>You need to be closer to the vendor to do that!</span>")
 			return
-		if(href_list["amount"])
-			var/amount = input(usr, "How many seeds do you want?", "[src.name]", 0) as null|num
-			if(!amount) return
-			if(amount < 0) return
-			if(amount > 10) amount = 10
-			src.vendamt = amount
-			src.updateUsrDialog()
-
-		if(href_list["category"])
-			if (src.category) src.category = null
-			else
-				var/filter = input(usr, "Filter by which category?", "[src.name]", 0) in list("Fruit","Vegetable","Herb","Flower","Miscellaneous")
-				if(!filter) return
-				src.category = filter
-			src.updateUsrDialog()
-
-		if(href_list["disp"])
-			if (src.can_vend == 0)
-				boutput(usr, "<span class='alert'>It's charging.</span>")
-				return
-			//var/getseed = null
-			var/datum/plant/I = locate(href_list["disp"])
-
-			if (!src.working || !istype(I))
-				boutput(usr, "<span class='alert'>[src.name] fails to dispense anything.</span>")
-				return
-
-			if(!I.vending)
-				trigger_anti_cheat(usr, "tried to href exploit vend forbidden seed [I] on [src]")
-				return
-
-			var/vend = src.vendamt
-			while(vend > 0)
-				//new getseed(src.loc)
-				var/obj/item/seed/S
-				if (I.unique_seed)
-					S = new I.unique_seed
-					S.set_loc(src.loc)
-				else
-					S = new /obj/item/seed
-					S.set_loc(src.loc)
-					S.removecolor()
-				S.generic_seed_setup(I)
-				vend--
-				src.seedcount++
-			SPAWN_DBG(0)
-				for(var/obj/item/seed/S in src.contents) S.set_loc(src.loc)
-			if(src.seedcount >= src.maxseed)
-				src.can_vend = 0
-				SPAWN_DBG(10 SECONDS)
-					src.can_vend = 1
-					src.seedcount = 0
-			src.updateUsrDialog()
 
 		if ((href_list["cutwire"]) && (src.panelopen || isAI(usr)))
 			var/twire = text2num_safe(href_list["cutwire"])
 			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
 				boutput(usr, "You need a snipping tool!")
 				return
-			else if (src.isWireColorCut(twire)) src.mend(twire)
-			else src.cut(twire)
+			else if (src.isWireColorCut(twire)) src.mend(twire, usr)
+			else src.cut(twire, usr)
 			src.updateUsrDialog()
 
 		if ((href_list["pulsewire"]) && (src.panelopen || isAI(usr)))
@@ -1278,7 +1144,7 @@
 			else if (src.isWireColorCut(twire))
 				boutput(usr, "You can't pulse a cut wire.")
 				return
-			else src.pulse(twire)
+			else src.pulse(twire, usr)
 			src.updateUsrDialog()
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -1287,6 +1153,7 @@
 				boutput(user, "<span class='notice'>You disable the [src]'s product locks!</span>")
 			src.hacked = 1
 			src.name = "Feed Sabricator"
+			update_static_data(user)
 			src.updateUsrDialog()
 			return 1
 		else
@@ -1316,7 +1183,7 @@
 		var/wireFlag = APCIndexToFlag[wireIndex]
 		return ((src.wires & wireFlag) == 0)
 
-	proc/cut(var/wireColor)
+	proc/cut(var/wireColor, var/mob/user as mob)
 		var/wireFlag = APCWireColorToFlag[wireColor]
 		var/wireIndex = APCWireColorToIndex[wireColor]
 		src.wires &= ~wireFlag
@@ -1324,17 +1191,18 @@
 			if(WIRE_EXTEND)
 				src.hacked = 0
 				src.name = "Seed Fabricator"
+				update_static_data(user)
 			if(WIRE_MALF) src.malfunction = 1
 			if(WIRE_POWER) src.working = 0
 
-	proc/mend(var/wireColor)
+	proc/mend(var/wireColor, var/mob/user as mob)
 		var/wireFlag = APCWireColorToFlag[wireColor]
 		var/wireIndex = APCWireColorToIndex[wireColor]
 		src.wires |= wireFlag
 		switch(wireIndex)
 			if(WIRE_MALF) src.malfunction = 0
 
-	proc/pulse(var/wireColor)
+	proc/pulse(var/wireColor, var/mob/user as mob)
 		var/wireIndex = APCWireColorToIndex[wireColor]
 		switch(wireIndex)
 			if(WIRE_EXTEND)
@@ -1344,6 +1212,7 @@
 				else
 					src.hacked = 1
 					src.name = "Feed Sabricator"
+				update_static_data(user)
 			if (WIRE_MALF)
 				if (src.malfunction) src.malfunction = 0
 				else src.malfunction = 1

@@ -82,7 +82,7 @@
 		icon_state_base = copytext(icon_state, 1, -1)
 		src.add_simple_light("bot", list(255, 255, 255, 255 * 0.4))
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src)
 				src.clear_invalid_targets = TIME
 
@@ -163,7 +163,7 @@
 		dat += "<br><br>"
 		dat += "Status: <A href='?src=\ref[src];start=1'>[src.on ? "On" : "Off"]</A><br>"
 
-		if (user.client.tooltipHolder)
+		if (user.client?.tooltipHolder)
 			user.client.tooltipHolder.showClickTip(src, list(
 				"params" = params,
 				"title" = "Cleanerbot v1.1 controls",
@@ -236,6 +236,10 @@
 			// are we there yet
 			if (IN_RANGE(src, src.target, 1))
 				do_the_thing()
+				// stop the bot mover so it doesn't interrupt us if we're already in range
+				src.frustration = 0
+				src.path = null
+				qdel(src.bot_mover)
 				return
 
 			// we are not there. how do we get there
@@ -394,8 +398,7 @@
 			return
 
 	onInterrupt(flag)
-		master.cleanbottargets -= master.turf2coordinates(get_turf(master.target))
-		master.KillPathAndGiveUp(1)
+		master.KillPathAndGiveUp(0)
 		. = ..()
 
 	onEnd()

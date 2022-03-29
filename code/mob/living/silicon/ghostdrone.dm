@@ -90,7 +90,7 @@
 		for (var/obj/item/O in src.tools)
 			O.cant_drop = 1
 
-		/*SPAWN_DBG(0)
+		/*SPAWN(0)
 			out(src, "<b>Use \"say ; (message)\" to speak to fellow drones through the spooky power of spirits within machines.</b>")
 			src.show_laws_drone()*/
 
@@ -206,6 +206,7 @@
 	examine()
 		. = ..()
 
+		. += "\n It's a cute little maintenance drone. There seems to be a glowing source inside it." // I hereby that declare the ghost part of ghostdrone is what makes them glow
 		. += "*---------*"
 
 		if (isdead(src))
@@ -278,7 +279,7 @@
 		return 1
 
 	proc/setFaceDialog()
-		var/newFace = input(usr, "Select your faceplate", "Drone", src.faceType) as null|anything in list("Happy", "Sad", "Mad")
+		var/newFace = input(usr, "Select your faceplate", "Drone", src.faceType) as null|anything in list("Happy", "Sad", "Mad", "Heart", "Sleepy", "Exclaim", "Question", "Lopsy", "Kitty", "Eye")
 		if (!newFace) return 0
 		var/newColor = input(usr, "Select your faceplate color", "Drone", src.faceColor) as null|color
 		if (!newFace && !newColor) return 0
@@ -352,9 +353,10 @@
 			src.examine_verb(target) // in theory, usr should be us, this is shit though
 			return
 
-		if (src.in_point_mode)
+		if (src.in_point_mode || src.client?.check_key(KEY_POINT))
 			src.point(target)
-			src.toggle_point_mode()
+			if (src.in_point_mode)
+				src.toggle_point_mode()
 			return
 
 		if (get_dist(src, target) > 0) // temporary fix for cyborgs turning by clicking
@@ -367,7 +369,7 @@
 
 		var/obj/item/item = target
 		if (istype(item) && item == src.equipped())
-			item.attack_self(src)
+			item.AttackSelf(src)
 			return
 
 		if (src.client && src.client.check_key(KEY_PULL))
@@ -419,7 +421,7 @@
 		W.set_loc(src)
 		var/image/hatImage = image(icon = W.icon, icon_state = W.icon_state, layer = src.layer+0.1)
 		hatImage.pixel_y = 5
-		hatImage.transform *= 0.85
+		hatImage.transform *= 0.90
 		UpdateOverlays(hatImage, "hat")
 		return 1
 
@@ -532,7 +534,7 @@
 					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
 					user.visible_message("<span class='notice'>[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
 				if(INTENT_DISARM) //Shove
-					SPAWN_DBG(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
+					SPAWN(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
 					user.visible_message("<span class='alert'><B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B></span>")
 					if (src.hat)
 						user.visible_message("<b>[user]</b> knocks \the [src.hat] off [src]!", "You knock the hat off [src]!")
@@ -721,6 +723,16 @@
 					message = "<B>[src]</B> claps."
 					m_type = 2
 
+			if ("nod")  // we want it so ghostdrones can answer yes/no wuestions
+				if (!src.restrained())
+					message = "<B>[src]</B> nods its head."
+					m_type = 2
+
+			if ("snap")
+				if (!src.restrained())
+					message = "<B>[src]</B> shakes its head."
+					m_type = 2
+
 			if ("flap")
 				if (!src.restrained())
 					message = "<B>[src]</B> flaps its wings."
@@ -766,7 +778,7 @@
 				message = "<b>[src]</b> [param]"
 				m_type = 1
 
-			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","nod","shrug","think","ponder","contemplate")
+			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","shrug","think","ponder","contemplate")
 				// basic visible single-word emotes
 				message = "<B>[src]</B> [act]s."
 				m_type = 1
@@ -782,7 +794,7 @@
 			if ("twitch")
 				message = "<B>[src]</B> twitches."
 				m_type = 1
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/old_x = src.pixel_x
 					var/old_y = src.pixel_y
 					src.pixel_x += rand(-2,2)
@@ -794,7 +806,7 @@
 			if ("twitch_v","twitch_s")
 				message = "<B>[src]</B> twitches violently."
 				m_type = 1
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/old_x = src.pixel_x
 					var/old_y = src.pixel_y
 					src.pixel_x += rand(-3,3)
@@ -905,7 +917,7 @@
 					game_stats.Increment("farts")
 #endif
 			else
-				src.show_text("Invalid Emote: [act]")
+				if (voluntary) src.show_text("Invalid Emote: [act]")
 				return
 
 		if (message && isalive(src))
@@ -918,7 +930,7 @@
 					O.show_message("<span class='emote'>[message]</span>", m_type)
 
 			if (m_anim) //restart our passive animation
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					animate_bumble(src, floatspeed = 15, Y1 = 2, Y2 = -2)
 
 		return
@@ -1008,7 +1020,7 @@
 
 		UpdateOverlays(speech_bubble, "speech_bubble")
 		var/speech_bubble_time = src.last_typing
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			if(speech_bubble_time == src.last_typing)
 				UpdateOverlays(null, "speech_bubble")
 
@@ -1101,28 +1113,29 @@
 		return 0
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		setFace(pick("happy", "sad", "mad"), random_color())
+		setFace(pick("happy", "sad", "mad", "heart", "sleepy", "exclaim", "question", "lopsy", "kitty", "eye"), random_color())
 
 		if (limiter.canISpawn(/obj/effects/sparks))
 			var/obj/sparks = new /obj/effects/sparks
 			sparks.set_loc(get_turf(src))
-			SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
+			SPAWN(2 SECONDS) if (sparks) qdel(sparks)
+		return TRUE
 
 	ex_act(severity)
 		if (src.nodamage) return
 		src.flash(3 SECONDS)
 		switch (severity)
 			if (1.0)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.gib(1)
 
 			if (2.0)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.TakeDamage(null, round(src.health / 2, 1.0))
 					src.changeStatus("stunned", 10 SECONDS)
 
 			if (3.0)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.TakeDamage(null, round(src.health / 3, 1.0))
 					src.changeStatus("stunned", 5 SECONDS)
 
@@ -1276,7 +1289,7 @@
 	M.transforming = 1
 	M.canmove = 0
 	M.icon = null
-	APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (isobserver(M) && M:corpse)
 		G.oldmob = M:corpse
@@ -1297,7 +1310,7 @@
 	if (G.mind)
 		G.Browse(grabResource("html/ghostdrone.html"),"window=ghostdrone;size=600x440;title=Ghostdrone Help")
 
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		G.show_laws_drone()
 
 	theMind.transfer_to(G)

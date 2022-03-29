@@ -151,7 +151,7 @@
 				boutput(user, "<span class='notice'>You unsecure the [src].</span>")
 			else if(secured == 2)
 				boutput(user, "<span class='alert'>You deploy the [src]!</span>")
-				logTheThing("station", user, null, "deploys a [src.name] in [user.loc.loc] ([showCoords(src.x, src.y, src.z)])")
+				logTheThing("station", user, null, "deploys a [src.name] in [user.loc.loc] ([log_loc(src)])")
 				if (!istype(user.loc,/turf) && (store_type in typesof(/obj/critter)))
 					qdel(user.loc)
 
@@ -439,7 +439,7 @@
 ////////////////////////////////////////////////////////////////no
 /obj/machinery/rkit
 	name = "ruckingenur kit"
-	desc = "Used for reverse engineering certain items."
+	desc = "A device that takes data scans from a device analyser, then interprets and encodes them into blueprints for fabricators to read."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "rkit"
 	anchored = 1
@@ -485,7 +485,7 @@
 
 /obj/machinery/rkit/disposing()
 	if (src.net_id == host_ruck) send_sync(1) //Everyone needs to find a new master
-	SPAWN_DBG(0.8 SECONDS) //Wait for the sync to send
+	SPAWN(0.8 SECONDS) //Wait for the sync to send
 		if (src.net_id)
 			ruck_controls.rkit_addresses -= src.net_id
 		..()
@@ -504,7 +504,7 @@
 
 /obj/machinery/rkit/proc/send_sync(var/dispose) //Request SYNCREPLY from other rucks
 	//If dispose is true we use "DROP" which won't be saved as the host
-	SPAWN_DBG(rand(5, 10)) //Keep these out of sync a little, less spammy
+	SPAWN(rand(5, 10)) //Keep these out of sync a little, less spammy
 		if(!boot_time) boot_time = world.time
 		host_ruck = src.net_id //We're the host until someone else proves they are
 		var/datum/signal/newsignal = get_free_signal()
@@ -518,7 +518,7 @@
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
 
 /obj/machinery/rkit/proc/upload_blueprint(var/datum/electronics/scanned_item/O, var/target, var/internal)
-	SPAWN_DBG(0.5 SECONDS) //This proc sends responses so there must be a delay
+	SPAWN(0.5 SECONDS) //This proc sends responses so there must be a delay
 		var/datum/computer/file/electronics_scan/scanFile = new
 		scanFile.scannedName = O.name
 		scanFile.scannedPath = O.item_type
@@ -536,7 +536,7 @@
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
 
 /obj/machinery/rkit/proc/pda_message(var/target, var/message)
-	SPAWN_DBG(0.5 SECONDS) //response proc
+	SPAWN(0.5 SECONDS) //response proc
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
 		newsignal.data["command"] = "text_message"
@@ -554,7 +554,7 @@
 	rkitFile.ruckData = ruck_controls
 	rkitFile.target = target
 	rkitFile.known_rucks = src.known_rucks.Copy()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
 		newsignal.data["command"] = "UPLOAD"
@@ -579,7 +579,7 @@
 		src.known_rucks = rkitFile.known_rucks
 		known_rucks |= target
 		data_initialized = TRUE
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.data["command"] = "SYNCREPLY"
@@ -649,7 +649,7 @@
 
 
 	if((signal.data["address_1"] == "ping") && target)
-		SPAWN_DBG(0.5 SECONDS)	//Send a reply for those curious jerks
+		SPAWN(0.5 SECONDS)	//Send a reply for those curious jerks
 								//Any replies in receive signal need a delay
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
@@ -696,7 +696,7 @@
 			if (target > host_ruck && command == "SYNC") //Unless they are
 				host_ruck = target
 
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.source = src
 				newsignal.data["command"] = "SYNCREPLY"
@@ -736,7 +736,7 @@
 				var/datum/electronics/scanned_item/O = ruck_controls.scan_in(tempobj.name,tempobj.type,tempobj.mats)
 				if(O)
 					upload_blueprint(O, "TRANSRKIT", 1)
-					SPAWN_DBG(4 SECONDS)
+					SPAWN(4 SECONDS)
 						qdel(tempobj)
 				S.scanned -= X
 				add_count++
@@ -755,7 +755,7 @@
 /obj/machinery/rkit/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 	var/dat
-	var/hide_allowed = src.allowed(usr)
+	var/hide_allowed = src.allowed(user)
 	dat = "<b>Ruckingenur Kit</b><HR>"
 
 	dat += "<b>Scanned Items:</b><br>"
@@ -808,7 +808,7 @@
 							var/datum/manufacture/mechanics/M = O.blueprint
 							playsound(src.loc, 'sound/machines/printer_thermal.ogg', 25, 1)
 							src.no_print_spam = world.time
-							SPAWN_DBG(2.5 SECONDS)
+							SPAWN(2.5 SECONDS)
 								if (src)
 									new /obj/item/paper/manufacturer_blueprint(src.loc, M)
 
@@ -838,14 +838,14 @@
 
 /obj/item/deconstructor
 	name = "deconstruction device"
-	desc = "A device meant to facilitate the deconstruction of scannable machines."
+	desc = "A saw-like device capable of taking apart reverse-engineered machines. Or your crewmates."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "deconstruction-saw"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "deconstruction-saw"
 	force = 10
 	throwforce = 4
-	hitsound = 'sound/machines/chainsaw_green.ogg'
+	hitsound = 'sound/machines/chainsaw.ogg'
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_SAWING
 	w_class = W_CLASS_NORMAL
@@ -854,7 +854,7 @@
 		if (!isobj(target))
 			return
 		var/obj/O = target
-		logTheThing("station", user, null, "deconstructs [target] in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+		logTheThing("station", user, null, "deconstructs [target] in [user.loc.loc] ([log_loc(user)])")
 		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<B>[user.name]</B> deconstructs [target].")
 
@@ -881,7 +881,7 @@
 	MouseDrop_T(atom/target, mob/user)
 		if (!isobj(target))
 			return
-		src.afterattack(target,user)
+		src.AfterAttack(target,user)
 		..()
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -895,7 +895,9 @@
 			if (O.deconstruct_flags & DECON_ACCESS)
 				boutput(user, "<span class='alert'>[target] is under an access lock and must have its access requirements removed first.</span>")
 			return
-
+		if (issilicon(user) && (O.deconstruct_flags & DECON_NOBORG))
+			boutput(user, "<span class='alert'>Cyborgs cannot deconstruct this [target].</span>")
+			return
 		if ((!O.allowed(user) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] without sufficient access to operate it.</span>")
 			return

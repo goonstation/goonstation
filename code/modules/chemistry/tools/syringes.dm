@@ -6,7 +6,7 @@
 #define S_INJECT 1
 /obj/item/reagent_containers/syringe
 	name = "syringe"
-	desc = "A syringe."
+	desc = "A hollow device with a metal tip. Used to draw or deposit reagents into containers, and with co-operation, people."
 	icon = 'icons/obj/syringe.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "syringe_0"
@@ -21,6 +21,7 @@
 	hide_attack = 2
 
 	on_reagent_change()
+		..()
 		if (src.reagents.is_full() && src.mode == S_DRAW)
 			src.mode = S_INJECT
 		else if (!src.reagents.total_volume && src.mode == S_INJECT)
@@ -55,7 +56,7 @@
 
 	dropped(mob/user)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			UpdateIcon()
 
 	attack_self(mob/user as mob)
@@ -184,7 +185,7 @@
 						boutput(user, "<span class='alert'>You break [P]'s tamper-proof seal!</span>")
 						P.medical = 0
 
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					if (src?.reagents && target?.reagents)
 						logTheThing("combat", user, target, "injects [constructTarget(target,"combat")] with a syringe [log_reagents(src)] at [log_loc(user)].")
 						// Convair880: Seems more efficient than separate calls. I believe this shouldn't clutter up the logs, as the number of targets you can inject is limited.
@@ -285,6 +286,10 @@
 	name = "syringe (synaptizine)"
 	desc = "Contains synaptizine, a mild stimulant to increase alertness."
 	initial_reagents = "synaptizine"
-
+	
+/obj/item/reagent_containers/syringe/formaldehyde
+	name = "syringe (embalming fluid)"
+	desc = "Contains formaldehyde, a chemical that prevents corpses from decaying."
+	initial_reagents = "formaldehyde"
 #undef S_DRAW
 #undef S_INJECT

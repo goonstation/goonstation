@@ -9,10 +9,10 @@ Left Mouse Button on turf/mob/obj      = Load a .dmm file (with the tile clicked
 Right Mouse Button on the mode         = Cycle loading modes<br>
 ***********************************************************"}
 	icon_state = "buildmode5"
-	var/loading = 0
-	var/dmm_suite/dmm_suite
+	var/tmp/loading = 0
+	var/tmp/dmm_suite/dmm_suite
 	var/mode_number = 0
-	var/list/mode_names = list("no deleting", "delete objects first (slow!)", "delete objects AND MOBS first (slow!)")
+	var/static/list/mode_names = list("no deleting", "delete objects first (slow!)", "delete objects AND MOBS first (slow!)")
 
 	selected()
 		. = ..()

@@ -33,6 +33,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	tool_flags = TOOL_SNIPPING
 	force = 8.0
+	health = 6
 	w_class = W_CLASS_TINY
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
@@ -64,7 +65,7 @@
 		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -77,6 +78,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_CUTTING
 	force = 7.0
+	health = 6
 	w_class = W_CLASS_TINY
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
@@ -106,7 +108,7 @@
 		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -156,6 +158,7 @@
 		reagents.add_reagent("hairgrownium", 40)
 
 	on_reagent_change()
+		..()
 		src.icon_state = "tonic[src.reagents.total_volume ? "1" : "0"]"
 
 /obj/stool/barber_chair //there shouldn't be any of these, here in case there's a secret map that has one, replace with /obj/stool/chair/comfy/barber_chair if you see one
@@ -262,7 +265,7 @@
 					result_msg2 ="<span class='notice'>You dump the [src] in [M]'s eyes.</span>"
 					result_msg3 ="<span class='alert'>[user] dumps the [src] into your eyes!</span>"
 					if(user.mind.assigned_role == "Barber")
-						SPAWN_DBG(2 SECONDS)
+						SPAWN(2 SECONDS)
 							boutput(M, "Huh, that actually didn't hurt that much. What a great [pick("barber", "stylist", "bangmangler")]!")
 					else
 						M.emote("scream", 0)

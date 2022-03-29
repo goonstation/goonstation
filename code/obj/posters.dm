@@ -52,13 +52,12 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	var/print_or_place = alert(usr, "Print out at all printers or place on your tile?", "Selection", "Place", "Print")
 	if (alert(usr, "Confirm poster creation", "Confirmation", "OK", "Cancel") == "OK")
 		if (print_or_place == "Print")
-			for (var/obj/machinery/networked/printer/P in world)
-				LAGCHECK(LAG_LOW)
+			for_by_tcl(P, /obj/machinery/networked/printer)
 				if (P.status & (NOPOWER|BROKEN))
 					continue
 				flick("printer-printing",P)
 				playsound(P.loc, "sound/machines/printer_dotmatrix.ogg", 50, 1)
-				SPAWN_DBG(3.2 SECONDS)
+				SPAWN(3.2 SECONDS)
 					var/obj/item/poster/titled_photo/np = new(get_turf(P))
 					if (p_title)
 						np.line_title = p_title
@@ -156,13 +155,12 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	var/print_or_place = alert(usr, "Print out at all printers or place on your tile?", "Selection", "Place", "Print")
 	if (alert(usr, "Confirm poster creation", "Confirmation", "OK", "Cancel") == "OK")
 		if (print_or_place == "Print")
-			for (var/obj/machinery/networked/printer/P in world)
-				LAGCHECK(LAG_LOW)
+			for_by_tcl(P, /obj/machinery/networked/printer)
 				if (P.status & (NOPOWER|BROKEN))
 					continue
 				flick("printer-printing",P)
 				playsound(P.loc, "sound/machines/printer_dotmatrix.ogg", 50, 1)
-				SPAWN_DBG(3.2 SECONDS)
+				SPAWN(3.2 SECONDS)
 					var/obj/item/poster/titled_photo/wp = new(get_turf(P))
 					if (w_name)
 						wp.line_title = w_name
@@ -316,12 +314,13 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	var/line_b1 = null
 	var/line_b2 = null
 	var/line_b3 = null
+	var/author = null
 
 	var/list/plist = null
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (!src.poster_HTML)
 				src.generate_poster()
 
@@ -502,6 +501,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		src.papers --
 		playsound(src, "sound/machines/printer_dotmatrix.ogg", 30, 1)
 		var/obj/item/poster/titled_photo/P = new (src.loc)
+		P.author = user.key
 		P.name = "Wanted: [src.plist["name"]]"
 		P.line_title = "NAME: [src.plist["name"]]"
 		P.poster_image = src.plist["image"]

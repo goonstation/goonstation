@@ -14,7 +14,7 @@ var/global/list/queue_stat_list = list()
 #endif
 
 // dumb, bad
-var/list/extra_resources = list('code/pressstart2p.ttf', 'ibmvga9.ttf', 'xfont.ttf', 'code/statusdisp.ttf')
+var/list/extra_resources = list('interface/fonts/pressstart2p.ttf', 'interface/fonts/ibmvga9.ttf', 'interface/fonts/xfont.ttf', 'interface/fonts/statusdisp.ttf')
 // Press Start 2P - 6px
 // PxPlus IBM VGA9 - 12px
 
@@ -344,10 +344,6 @@ var/global
 	)
 	savefile/compid_file 	//The file holding computer ID information
 	do_compid_analysis = 1	//Should we be analysing the comp IDs of new clients?
-	list/admins = list(  )
-	list/onlineAdmins = list(  )
-	list/whitelistCkeys = list(  )
-	list/bypassCapCkeys = list(  )
 	list/warned_keys = list()	// tracking warnings per round, i guess
 
 	datum/dj_panel/dj_panel = new()
@@ -385,6 +381,9 @@ var/global
 #endif
 
 	narrator_mode = 0
+
+	// Zam note: this is horrible
+	forced_desussification = 0
 
 	disable_next_click = 0
 
@@ -503,6 +502,11 @@ var/global
 		,"pod_wars"
 #endif
 	)
+
+	hardRebootFilePath = "data/hard-reboot"
+
+	/// The map object used to display the AI station map
+	obj/station_map/ai_station_map
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])

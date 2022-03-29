@@ -45,7 +45,7 @@
 			if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(800))
 				src.stabilize()
 				break
-		SPAWN_DBG(duration)
+		SPAWN(duration)
 			qdel(src)
 
 	disposing()

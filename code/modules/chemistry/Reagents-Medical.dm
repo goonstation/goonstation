@@ -19,19 +19,19 @@ datum
 			transparency = 80
 			depletion_rate = 0.2
 			value = 3
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_REBREATHING, src.type)
-				return
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_REBREATHING, src.type)
+				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_REBREATHING, src.type)
-				return
-
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_REBREATHING, src.type)
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -76,20 +76,21 @@ datum
 			overdose = 20
 			var/counter = 1 //Data is conserved...so some jerkbag could inject a monkey with this, wait for data to build up, then extract some instant KO juice.  Dumb.
 			value = 5
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_morphine", -3)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_morphine", -3)
 					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/morphine, src.type)
-				return
+				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_morphine")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_morphine")
 					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/morphine, src.type)
-				return
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -104,7 +105,7 @@ datum
 					if(16 to 35)
 						M.setStatus("drowsy", 40 SECONDS)
 					if(36 to INFINITY)
-						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 3 SECONDS * mult))
+						M.setStatusMin("paralysis", 3 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 
 				..()
@@ -124,18 +125,19 @@ datum
 			overdose = 20
 			var/counter = 1 //Data is conserved...so some jerkbag could inject a monkey with this, wait for data to build up, then extract some instant KO juice.  Dumb.
 			value = 5
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_ether", -5)
-				return
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_ether", -5)
+				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_ether")
-				return
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_ether")
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -150,7 +152,7 @@ datum
 					if(16 to 35)
 						M.setStatus("drowsy", 40 SECONDS)
 					if(36 to INFINITY)
-						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 3 SECONDS * mult))
+						M.setStatusMin("paralysis", 3 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 
 				..()
@@ -193,9 +195,9 @@ datum
 						M.change_misstep_chance(8 * mult)
 					else if (effect <= 9)
 						M.emote("twitch")
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 3 SECONDS * mult))
+						M.setStatusMin("weakened", 3 SECONDS * mult)
 					else if(effect <= 12)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
+						M.setStatusMin("weakened", 5 SECONDS * mult)
 						M.druggy ++
 				else if (severity == 2)
 					if(effect <= 4)
@@ -203,9 +205,9 @@ datum
 						M.change_misstep_chance(14 * mult)
 					else if (effect <= 10)
 						M.emote("twitch")
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 3 SECONDS * mult))
+						M.setStatusMin("weakened", 3 SECONDS * mult)
 					else if (effect <= 13)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
+						M.setStatusMin("weakened", 5 SECONDS * mult)
 						M.druggy ++
 
 
@@ -246,6 +248,19 @@ datum
 			overdose = 25
 			depletion_rate = 0.1
 			value = 11 // 5c + 3c + 1c + 1c + 1c
+			threshold = THRESHOLD_INIT
+
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/salicylic_acid, src.type)
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/salicylic_acid, src.type)
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -260,16 +275,6 @@ datum
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(10 * mult))
 				..()
 				return
-
-			on_add()
-				if (ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/salicylic_acid, src.type)
-
-			on_remove()
-				if (ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/salicylic_acid, src.type)
 
 		medical/menthol
 			name = "menthol"
@@ -314,7 +319,7 @@ datum
 				if(M.health > 20)
 					M.take_toxin_damage(5 * mult, 1)	//calomel doesn't damage organs.
 				if(probmult(6))
-					M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>")
+					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>")
 					M.vomit()
 				if(probmult(4))
 					M.emote("piss")
@@ -437,17 +442,18 @@ datum
 			overdose = 40
 			value = 7
 			stun_resist = 31
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_synaptizine", 4)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_synaptizine", 4)
 				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_synaptizine")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_synaptizine")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -527,14 +533,14 @@ datum
 					if(effect <= 1)
 						M.visible_message("<span class='alert'><b>[M.name]</b> suddenly cluches their gut!</span>")
 						M.emote("scream")
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS * mult))
+						M.setStatusMin("weakened", 4 SECONDS * mult)
 					else if(effect <= 3)
 						M.visible_message("<span class='alert'><b>[M.name]</b> completely spaces out for a moment.</span>")
 						M.change_misstep_chance(15 * mult)
 					else if(effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> stumbles and staggers.</span>")
 						M.dizziness += 5
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS * mult))
+						M.setStatusMin("weakened", 4 SECONDS * mult)
 					else if(effect <= 7)
 						M.visible_message("<span class='alert'><b>[M.name]</b> shakes uncontrollably.</span>")
 						M.make_jittery(30)
@@ -542,14 +548,14 @@ datum
 					if(effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]</b> suddenly cluches their gut!</span>")
 						M.emote("scream")
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 8 SECONDS * mult))
+						M.setStatusMin("weakened", 8 SECONDS * mult)
 					else if(effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> jerks bolt upright, then collapses!</span>")
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 8 SECONDS * mult))
+						M.setStatusMin("weakened", 8 SECONDS * mult)
 					else if(effect <= 8)
 						M.visible_message("<span class='alert'><b>[M.name]</b> stumbles and staggers.</span>")
 						M.dizziness += 5
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS * mult))
+						M.setStatusMin("weakened", 4 SECONDS * mult)
 
 		medical/saline // COGWERKS CHEM REVISION PROJECT. magic drug, ought to use plasma or something
 			name = "saline-glucose solution"
@@ -616,18 +622,19 @@ datum
 			fluid_b = 60
 			transparency = 40
 			value = 3
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_smelling_salt", 5)
-				return
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_smelling_salt", 2)
+				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_smelling_salt")
-				return
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_smelling_salt")
+				..()
 
 			on_mob_life(var/mob/M, var/method=INGEST, var/mult = 1)
 				if(!M)
@@ -713,18 +720,19 @@ datum
 			fluid_b = 255
 			transparency = 255
 			value = 8 // 2c + 3c + 1c + 1c + 1c
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_haloperidol", -5)
-				return
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_haloperidol", -5)
+				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_haloperidol")
-				return
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_haloperidol")
+				..()
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -780,20 +788,19 @@ datum
 			overdose = 20
 			value = 17 // 5c + 5c + 4c + 1c + 1c + 1c
 			stun_resist = 10
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_epinephrine", 3)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_epinephrine", 3)
 					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/epinepherine, src.type)
 				..()
 
-
-
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_epinephrine")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_epinephrine")
 					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/epinepherine, src.type)
 				..()
 
@@ -832,7 +839,7 @@ datum
 					else if (effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
 						M.dizziness += 2
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS * mult))
+						M.setStatusMin("weakened", 4 SECONDS * mult)
 					if (effect <= 15) M.emote("collapse")
 
 		medical/heparin
@@ -1077,17 +1084,18 @@ datum
 			value = 9 // 4c + 3c + 1c + 1c
 			var/remove_buff = 0
 			stun_resist = 15
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_ephedrine", 2)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_ephedrine", 2)
 				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_ephedrine")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_ephedrine")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1124,7 +1132,7 @@ datum
 					else if (effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
 						M.dizziness += 8
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
+						M.setStatusMin("weakened", 5 SECONDS * mult)
 					if (effect <= 15)
 						M.take_toxin_damage(1 * mult)
 
@@ -1170,18 +1178,19 @@ datum
 			addiction_prob = 1//10
 			addiction_min = 10
 			value = 10 // 4 3 1 1 1
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_diphenhydramine", -3)
-				return
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_diphenhydramine", -3)
+				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_diphenhydramine")
-				return
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_diphenhydramine")
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -1192,7 +1201,7 @@ datum
 					holder.remove_reagent("itching", 3 * mult)
 				if(probmult(7)) M.emote("yawn")
 				if(prob(3))
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS * mult))
+					M.setStatusMin("stunned", 3 SECONDS * mult)
 					M.changeStatus("drowsy", 12 SECONDS)
 					M.visible_message("<span class='notice'><b>[M.name]<b> looks a bit dazed.</span>")
 				..()
@@ -1324,23 +1333,30 @@ datum
 			var/remove_buff = 0
 			var/total_misstep = 0
 			value = 18 // 5 4 5 3 1
+			threshold = THRESHOLD_INIT
+
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stam_mod_max("atropine", -30)
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stam_mod_max("atropine")
+				..()
+
 
 			on_add()
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
-					remove_buff = holder.my_atom:add_stam_mod_max("atropine", -30)
-					src.total_misstep = 0
-				return
+				src.total_misstep = 0
+				..()
 
 			on_remove()
-				if(remove_buff)
-					if(istype(holder) && istype(holder.my_atom))
-						if (hascall(holder.my_atom,"remove_stam_mod_max"))
-							holder.my_atom:remove_stam_mod_max("atropine")
-
-					if (ismob(holder.my_atom))
-						var/mob/M = holder.my_atom
-						M.change_misstep_chance(-src.total_misstep)
-				return
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.change_misstep_chance(-src.total_misstep)
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1) //god fuck this proc
 				if(!M) M = holder.my_atom
@@ -1536,7 +1552,7 @@ datum
 				if(M.health > 25)
 					M.take_toxin_damage(1 * mult)
 				if(probmult(25))
-					M.visible_message("<span class='alert'>[M] pukes all over \himself!</span>")
+					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)]!</span>")
 					M.vomit()
 				if(probmult(5))
 					var/mob/living/L = M

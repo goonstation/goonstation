@@ -388,7 +388,7 @@
 				logTheThing("bombing", null, null, logmsg)
 				logTheThing("diary", null, null, logmsg, "game")
 
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				LAGCHECK(LAG_HIGH)
 				src.do_phenomena( recursion++, heat - (9000 + (9000 * recursion)) )
 		else
@@ -571,15 +571,21 @@
 
 				speech_bubble.icon_state = "[val]"
 				UpdateOverlays(speech_bubble, "speech_bubble")
-				SPAWN_DBG(1.5 SECONDS)
+				SPAWN(1.5 SECONDS)
 					UpdateOverlays(null, "speech_bubble")
 
+	attackby(var/obj/item/I as obj, var/mob/M as mob)
+		if (ispryingtool(I))
+			if (deployed)
+				src.undeploy()
+			else
+				if (src in M.contents)
+					src.force_drop()
+				src.deploy()
+		..()
 
 	attack_hand(var/mob/living/carbon/human/user as mob)
-		icon_state = "dowsing_hands"
-		deployed = 0
-		closest_hotspot = 0
-		processing_items -= src
+		src.undeploy()
 		..()
 
 	afterattack(var/turf/T, var/mob/user)
@@ -593,6 +599,11 @@
 			return
 		..()
 
+	proc/undeploy()
+		src.icon_state = "dowsing_hands"
+		deployed = 0
+		closest_hotspot = 0
+		processing_items -= src
 
 	proc/deploy()
 		processing_items |= src
@@ -847,6 +858,7 @@
 	var/mode_toggle = 0
 	var/set_anchor = 1
 
+	var/emagged = FALSE
 
 	New()
 		..()
@@ -858,11 +870,15 @@
 		return //nah
 
 	emag_act(mob/user, obj/item/card/emag/E)
+		if (src.emagged)
+			user?.show_message("<span class='alert'>[src] has already had its safety restrictions disabled.</span>")
+			return
+		src.emagged = TRUE
 		power_up_realtime = 10
 		set_anchor = 0
 		for (var/mob/O in hearers(src, null))
 			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Safety restrictions disabled.\"</span></span>", 2)
-		..()
+		return TRUE
 
 	update_icon()
 		icon_state = "stomper[on]"
@@ -955,7 +971,7 @@
 		flick("stomper2",src)
 
 		if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 99, 1, 0.1, 0.7)
 
 		for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
@@ -967,10 +983,11 @@
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 99, 1, 0.1, 0.7)
 
 		for (var/mob/M in src.loc)
-			random_brute_damage(M, 55, 1)
-			M.changeStatus("weakened", 1 SECOND)
-			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
-			playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 70, 1)
+			if (isliving(M))
+				random_brute_damage(M, 55, 1)
+				M.changeStatus("weakened", 1 SECOND)
+				INVOKE_ASYNC(M, /mob.proc/emote, "scream")
+				playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 70, 1)
 
 		for (var/mob/C in viewers(src))
 			shake_camera(C, 5, 8)

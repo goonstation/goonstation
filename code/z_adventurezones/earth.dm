@@ -112,6 +112,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	atomicthumbs
 		ckey = ""
 		name = "Office of Atomicthumbs"
+	azrun
+		ckey = "azrun"
+		name = "Office of Azrun"
 	bubs
 		ckey = "insanoblan"
 		name = "Office of bubs"
@@ -163,6 +166,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	grayshift
 		ckey = "grayshift"
 		name = "Office of Grayshift"
+	grifflez
+		ckey = "grifflez"
+		name = "Office of Grifflez"
 	hazoflabs
 		// ckey = ""
 		name = "Shared Office Space of Gerhazo and Flaborized"
@@ -268,9 +274,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	virvatuli
 		ckey = "virvatuli"
 		name = "Office of Virvatuli"
-		New()
-			..()
-			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "snowverlay", layer = EFFECTS_LAYER_BASE)
+		sound_loop = 'sound/ambience/music/officebeats.ogg'
+		sound_loop_vol = 80
+		sound_group = "virva_office"
 	wire
 		ckey = "wirewraith"
 		name = "Office of Wire"
@@ -539,7 +545,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		boutput(user, "<span class='alert'>You can feel a proud and angry presence probing your mind...</span>")
 		src.cant_self_remove = true
 		src.cant_other_remove = true
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (user.bioHolder && user.bioHolder.HasEffect("accent_scots"))
 				boutput(user, "<span class='notice'>YE AR' ALREADY BLESSED!!!</span>")
 			else if (prob(50) && user.bioHolder && !src.rejected_mobs.Find(user))
@@ -560,7 +566,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	Entered(atom/movable/Obj,atom/OldLoc)
 		if (isliving(Obj))
 			var/mob/living/L = Obj
-			if (L.ckey == "enakai" || L.ckey == "rodneydick")		//The aussies are immune due to constant exposure
+			if (down_under_verification(L))		//The aussies are immune due to constant exposure
 				return
 			var/matrix/M = L.transform
 			animate(L, transform = matrix(M, 90, MATRIX_ROTATE | MATRIX_MODIFY), time = 3)
@@ -569,13 +575,14 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	Exited(atom/movable/Obj, atom/newloc)
 		if (isliving(Obj))
 			var/mob/living/L = Obj
-			if (L.ckey == "enakai" || L.ckey == "rodneydick")
+			if (down_under_verification(L))
 				return
 			var/matrix/M = L.transform
 			animate(L, transform = matrix(M, -90, MATRIX_ROTATE | MATRIX_MODIFY), time = 3)
 			animate( transform = matrix(M, -90, MATRIX_ROTATE | MATRIX_MODIFY), time = 3)
 
-
+	proc/down_under_verification(var/mob/living/L)
+		return L.ckey in list("enakai", "rodneydick", "walpvrgis", "chrisb340")
 
 
 
@@ -640,7 +647,7 @@ proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
 			conveyor.operating = 1
 			conveyor.setdir()
 	conveyor_running_count++
-	SPAWN_DBG(8 SECONDS)
+	SPAWN(8 SECONDS)
 		conveyor_running_count--
 		if(conveyor_running_count == 0)
 			for(var/obj/machinery/conveyor/conveyor as anything in conveyors)

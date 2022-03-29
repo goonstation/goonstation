@@ -25,6 +25,7 @@
 /obj/machinery/computer/pod/old/swf
 	name = "Magix System IV"
 	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorceror's Edition"
+	icon_state = "wizard"
 	circuit_type = /obj/item/circuitboard/swfdoor
 
 	attack_hand(var/mob/user as mob)
@@ -43,7 +44,7 @@
 		return
 	for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				M.open()
 				return
 	sleep(2 SECONDS)
@@ -57,14 +58,14 @@
 	sleep(5 SECONDS)
 	for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				M.close()
 				return
 	return
 
 /obj/machinery/computer/pod/New()
 	..()
-	SPAWN_DBG( 5 )
+	SPAWN( 5 )
 		for(var/obj/machinery/mass_driver/M as anything in machine_registry[MACHINES_MASSDRIVERS])
 			if (M.id == src.id)
 				src.connected = M
@@ -119,7 +120,7 @@
 		if (src.time > 0)
 			src.time = round(src.time) - 1
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				alarm()
 				src.time = 0
 				src.timing = 0
@@ -133,7 +134,7 @@
 		src.add_dialog(usr)
 		if (href_list["spell_teleport"])
 			//src.TPR = 1
-			//SPAWN_DBG(1 MINUTE)
+			//SPAWN(1 MINUTE)
 			//	if(src)
 			//		src.TPR = 0
 			//		src.updateDialog()
@@ -162,11 +163,11 @@
 							for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 								if (M.id == src.id)
 									if (M.density)
-										SPAWN_DBG( 0 )
+										SPAWN( 0 )
 											M.open()
 											return
 									else
-										SPAWN_DBG( 0 )
+										SPAWN( 0 )
 											M.close()
 											return
 								//Foreach goto(298)

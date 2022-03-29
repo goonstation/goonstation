@@ -15,6 +15,7 @@ MATERIAL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
+	health = 3
 	w_class = W_CLASS_NORMAL
 	force = 9.0
 	throwforce = 15.0
@@ -123,12 +124,12 @@ MATERIAL
 				return
 			user.visible_message("<span class='notice'><b>[user]</b> begins building a grille.</span>")
 			var/turf/T = user.loc
-			SPAWN_DBG(1.5 SECONDS)
+			SPAWN(1.5 SECONDS)
 				if (T == user.loc && !user.weakened && !user.getStatusDuration("stunned"))
 					src.amount -= 2
 					var/atom/G = new /obj/grille(user.loc)
 					G.setMaterial(src.material)
-					logTheThing("station", user, null, "builds a Grille in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+					logTheThing("station", user, null, "builds a Grille in [user.loc.loc] ([log_loc(user)])")
 		if (src.amount < 1)
 			qdel(src)
 			return
@@ -309,9 +310,9 @@ MATERIAL
 						boutput(usr, text("<span class='alert'>You need at least two metal to build a closet.</span>"))
 						return
 					src.amount -= 2
-					var/atom/A = new /obj/closet( usr.loc )
+					var/atom/A = new /obj/storage/closet( usr.loc )
 					A.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Closet in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", usr, null, "builds a Closet in [usr.loc.loc] ([log_loc(usr)])")
 				if("fl_tiles")
 					var/maketiles = round(src.amount * 4)
 					if (maketiles > 80) maketiles = 80
@@ -345,7 +346,7 @@ MATERIAL
 					src.amount -= 5
 					var/atom/A = new /obj/computerframe( usr.loc )
 					A.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Console Frame in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", usr, null, "builds a Console Frame in [usr.loc.loc] ([log_loc(usr)])")
 				if("hcomputer")
 					if(src.amount < 5)
 						boutput(usr, text("<span class='alert'>You need at least five metal to make a computer frame.</span>"))
@@ -353,7 +354,7 @@ MATERIAL
 					src.amount -= 5
 					var/atom/A = new /obj/computer3frame( usr.loc )
 					A.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Computer Frame in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", usr, null, "builds a Computer Frame in [usr.loc.loc] ([log_loc(usr)])")
 				if("tcomputer")
 					if(src.amount < 3)
 						boutput(usr, text("<span class='alert'>You need at least three metal to make a terminal computer frame.</span>"))
@@ -361,7 +362,7 @@ MATERIAL
 					src.amount -= 3
 					var/atom/A = new /obj/computer3frame/terminal( usr.loc )
 					A.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Terminal Frame in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", usr, null, "builds a Terminal Frame in [usr.loc.loc] ([log_loc(usr)])")
 				if("construct")
 					if (src.amount < 2)
 						boutput(usr, text("<span class='alert'>You need at least two metal to build wall girders.</span>"))
@@ -376,7 +377,7 @@ MATERIAL
 						src.amount -= 2
 						var/atom/A = new /obj/structure/girder(location)
 						A.setMaterial(src.material)
-						logTheThing("station", usr, null, "builds Wall Girders in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+						logTheThing("station", usr, null, "builds Wall Girders in [usr.loc.loc] ([log_loc(usr)])")
 
 			if (src.amount <= 0)
 				usr << browse(null, "window=met_sheet")
@@ -387,7 +388,7 @@ MATERIAL
 
 
 				return
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			src.attack_self(usr)
 			return
 		return
@@ -499,7 +500,7 @@ MATERIAL
 
 
 				return
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			src.attack_self(usr)
 			return
 		return

@@ -9,11 +9,8 @@
 /* 514 checklist
 	?[] experimentation perhaps
 	make some lib animate stuff better with spaces? (better rainbow anyone?)
-	enable TILE_MOVEMENT_MODE and see if break
 	particle abuse
 */
-
-// cat
 
 // Greek Adventurezone Thingy
 
@@ -174,7 +171,7 @@
 		src.attacking = 1
 		src.visible_message("<span class='combat'><B>[src]</B> bites [src.target] viciously!</span>")
 		random_brute_damage(src.target, rand(5,15),1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 // Underworld Stuff

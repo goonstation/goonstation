@@ -100,6 +100,11 @@
 		STOP_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
 		. = ..()
 
+/obj/machinery/bot/medbot/hippocrates
+	name = "Hippocrates The Cleric"
+	desc = "A mage practicing in the art of healing magic. He's not very good but he's enthusiastic."
+	skin = "wizard"
+
 /obj/machinery/bot/medbot/head_surgeon/no_camera
 	no_camera = 1
 
@@ -146,7 +151,7 @@
 
 /obj/item/firstaid_arm_assembly/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src.skin)
 			src.overlays += "medskin-[src.skin]"
 			src.overlays += "medibot-arm"
@@ -187,7 +192,7 @@
 /obj/machinery/bot/medbot/New()
 	..()
 	add_simple_light("medbot", list(220, 220, 255, 0.5*255))
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src)
 			src.UpdateIcon()
 	return
@@ -226,7 +231,7 @@
 		dat += "Reagent Source: "
 		dat += "<a href='?src=\ref[src];use_beaker=1'>[src.use_beaker ? "Loaded Beaker (When available)" : "Internal Synthesizer"]</a><br>"
 
-	if (user.client.tooltipHolder)
+	if (user.client?.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
 			"params" = params,
 			"title" = "Medibot v1.0 controls",
@@ -650,7 +655,7 @@
 					'sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
 					playsound(master.loc, glitchsound, 50, 1)
 					// let's grustle a bit
-					SPAWN_DBG(1 DECI SECOND)
+					SPAWN(1 DECI SECOND)
 						master.pixel_x += rand(-2,2)
 						master.pixel_y += rand(-2,2)
 						sleep(0.1 SECONDS)

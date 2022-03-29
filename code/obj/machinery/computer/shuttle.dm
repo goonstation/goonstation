@@ -218,7 +218,6 @@
 				else
 					boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 60 seconds!</B></span>")
 					emergency_shuttle.settimeleft(60)
-					//src.authorized = null
 					qdel(src.authorized)
 					src.authorized = list(  )
 
@@ -278,8 +277,8 @@
 	if(!active)
 		for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 			active = 1
-			C.visible_message("<span class='alert'>The Mining Shuttle has been Called and will leave shortly!</span>")
-		SPAWN_DBG(10 SECONDS)
+			C.visible_message("<span class='alert'>The Mining Shuttle has been called and will leave shortly!</span>")
+		SPAWN(10 SECONDS)
 			call_shuttle()
 
 /obj/machinery/computer/mining_shuttle/proc/call_shuttle()
@@ -306,7 +305,7 @@
 
 	for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
-		C.visible_message("<span class='alert'>The Mining Shuttle has Moved!</span>")
+		C.visible_message("<span class='alert'>The Mining Shuttle has moved!</span>")
 
 	return
 
@@ -345,9 +344,9 @@
 			if(!active)
 				for(var/obj/machinery/computer/prison_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 					active = 1
-					C.visible_message("<span class='alert'>The Prison Shuttle has been Called and will leave shortly!</span>")
+					C.visible_message("<span class='alert'>The Prison Shuttle has been called and will leave shortly!</span>")
 
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					call_shuttle()
 
 		else if (href_list["close"])
@@ -399,13 +398,13 @@
 
 	for(var/obj/machinery/computer/prison_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
-		C.visible_message("<span class='alert'>The Prison Shuttle has Moved!</span>")
+		C.visible_message("<span class='alert'>The Prison Shuttle has moved!</span>")
 
 	return
 
 /obj/machinery/computer/research_shuttle/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		src.net_id = generate_net_id(src)
 
 		if(!src.link)
@@ -454,9 +453,9 @@
 			if(!active)
 				for(var/obj/machinery/computer/research_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 					active = 1
-					C.visible_message("<span class='alert'>The Research Shuttle has been Called and will leave shortly!</span>")
+					C.visible_message("<span class='alert'>The Research Shuttle has been called and will leave shortly!</span>")
 
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					call_shuttle()
 
 		else if (href_list["close"])
@@ -493,7 +492,7 @@
 
 	for(var/obj/machinery/computer/research_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
-		C.visible_message("<span class='alert'>The Research Shuttle has Moved!</span>")
+		C.visible_message("<span class='alert'>The Research Shuttle has moved!</span>")
 
 	return
 
@@ -564,7 +563,7 @@
 				if(3)
 					message_string = "Pathology Research"
 			C.visible_message("<span class='alert'>The Asylum Shuttle has been sent to [message_string]!</span>")
-		SPAWN_DBG(10 SECONDS)
+		SPAWN(10 SECONDS)
 			var/area/start_location
 			var/area/end_location
 			switch(shuttle_loc)
@@ -583,7 +582,7 @@
 					end_location = locate(/area/shuttle/asylum/pathology)
 
 			for(var/x in end_location)
-				if(isliving(x))
+				if(isliving(x) && !isintangible(x))
 					var/mob/living/M = x
 					M.gib(1)
 				if(istype(x, /obj/storage))
@@ -600,7 +599,7 @@
 			for(var/obj/machinery/computer/asylum_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 				C.active = 0
 				C.shuttle_loc = target_loc
-				C.visible_message("<span class='alert'>The Asylum Shuttle has Moved!</span>")
+				C.visible_message("<span class='alert'>The Asylum Shuttle has moved!</span>")
 			return
 
 
@@ -635,7 +634,7 @@
 					active = 1
 					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
 					playsound(C.loc, "sound/machines/elevator_move.ogg", 100, 0)
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					call_shuttle()
 
 		if (href_list["close"])
@@ -657,8 +656,10 @@
 	else // at top
 		var/area/start_location = locate(/area/shuttle/icebase_elevator/upper)
 		var/area/end_location = locate(/area/shuttle/icebase_elevator/lower)
-		for(var/mob/M in end_location) // oh dear, stay behind the yellow line kids
-			SPAWN_DBG(1 DECI SECOND) M.gib()
+		for(var/mob/living/L in end_location) // oh dear, stay behind the yellow line kids
+			if(!isintangible(L))
+				SPAWN(1 DECI SECOND)
+					L.gib()
 		start_location.move_contents_to(end_location, /turf/simulated/floor/arctic_elevator_shaft)
 		location = 0
 
@@ -700,7 +701,7 @@
 					active = 1
 					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
 					playsound(C.loc, "sound/machines/elevator_move.ogg", 100, 0)
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					call_shuttle()
 
 		if (href_list["close"])
@@ -725,8 +726,10 @@
 	else // at top
 		var/area/start_location = locate(/area/shuttle/biodome_elevator/upper)
 		var/area/end_location = locate(/area/shuttle/biodome_elevator/lower)
-		for(var/mob/M in end_location) // oh dear, stay behind the yellow line kids
-			SPAWN_DBG(1 DECI SECOND) M.gib()
+		for(var/mob/living/L in end_location) // oh dear, stay behind the yellow line kids
+			if(!isintangible(L))
+				SPAWN(1 DECI SECOND)
+					L.gib()
 			bioele_accident()
 		start_location.move_contents_to(end_location, /turf/unsimulated/floor/setpieces/ancient_pit/shaft)
 		location = 0
@@ -881,7 +884,7 @@ var/bombini_saved = 0
 
 				for(var/obj/machinery/computer/shuttle_bus/embedded/B in machine_registry[MACHINES_SHUTTLECOMPS])
 					T = get_turf(B)
-					SPAWN_DBG(1 DECI SECOND)
+					SPAWN(1 DECI SECOND)
 						playsound(T, "sound/effects/ship_charge.ogg", 60, 1)
 						sleep(3 SECONDS)
 						playsound(T, "sound/machines/weaponoverload.ogg", 60, 1)
@@ -907,7 +910,7 @@ var/bombini_saved = 0
 							shake_camera(M, 10, 16)
 
 				T = get_turf(src)
-				SPAWN_DBG(25 SECONDS)
+				SPAWN(25 SECONDS)
 					playsound(T, "sound/effects/flameswoosh.ogg", 70, 1)
 					call_shuttle()
 

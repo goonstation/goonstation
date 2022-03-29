@@ -6,12 +6,12 @@
 	associated_reagent = "liquid spacetime"
 	affected_species = list("Human")
 
-/datum/ailment/disease/teleportitis/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/disease/teleportitis/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
-	if(prob(5))
+	if(probmult(5))
 		affected_mob.emote("hiccup")
-	if(prob(15))
+	if(probmult(15))
 		if (!isturf(affected_mob.loc))
 			return
 		if (isrestrictedz(affected_mob.z))

@@ -5,6 +5,7 @@
 /datum/artifact/cloner
 	associated_object = /obj/artifact/cloner
 	type_name = "Cloner"
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 90
 	min_triggers = 2
 	max_triggers = 2
@@ -39,7 +40,7 @@
 			if(swapSouls)
 				boutput(user, "<span class='alert'>You feel your soul being sucked out of your body by [O]!</span>")
 			H.add_filter("cloner_art_outline", 0, outline_filter(size=0.5, color=rgb(255,0,0), flags=OUTLINE_SHARP))
-			SPAWN_DBG(0.7 SECONDS)
+			SPAWN(0.7 SECONDS)
 				H.remove_filter("cloner_art_outline")
 
 			if(deep_count > 0 && prob(5))
@@ -78,7 +79,7 @@
 				// make original body evil
 				H.attack_alert = 0
 				H.ai_init()
-				SPAWN_DBG(rand(1 SECOND, 10 SECONDS))
+				SPAWN(rand(1 SECOND, 10 SECONDS))
 					if(H) // completely convincing dialogue
 						H.say(pick(
 							"Well, that was weird!",
@@ -99,7 +100,7 @@
 				clone.ai_aggressive = 1
 				clone.ai_calm_down = 0
 
-			SPAWN_DBG(imprison_time)
+			SPAWN(imprison_time)
 				if (!O.disposed)
 					O.ArtifactDeactivated()
 

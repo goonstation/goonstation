@@ -67,10 +67,11 @@
 	var/clear_invalid_targets = 1 // In relation to world time. Clear list periodically.
 	var/clear_invalid_targets_interval = 30 SECONDS // How frequently?
 
+	var/list/chase_lines = list("Gimme!", "Hey!", "Oi!", "Mine!", "Want!", "Need!")
 
 /obj/machinery/bot/floorbot/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src)
 			src.UpdateIcon()
 	return
@@ -87,7 +88,7 @@
 		dat += "Finds tiles: \[<A href='?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A>\]<BR>"
 		dat += "Make single pieces of metal into tiles when empty: \[<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>\]"
 
-	if (user.client.tooltipHolder)
+	if (user.client?.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
 			"params" = params,
 			"title" = "Repairbot v1.0 controls",
@@ -280,6 +281,9 @@
 	if (!src.on || src.repairing || !isturf(src.loc))
 		return
 
+	if (src.target?.disposed || !isturf(get_turf(src.target)))
+		src.target = null
+
 	// Invalid targets may not be unreachable anymore. Clear list periodically.
 	if (src.clear_invalid_targets && !ON_COOLDOWN(src, FLOORBOT_CLEARTARGET_COOLDOWN, src.clear_invalid_targets_interval))
 		src.targets_invalid = list()
@@ -314,6 +318,11 @@
 				src.KillPathAndGiveUp(1)
 				return
 		src.point(src.target)
+		var/obj/A = src.target
+		while(!isnull(A) && !istype(A.loc, /turf) && !ishuman(A.loc))
+			A = A.loc
+		if (ishuman(A?.loc) && prob(30))
+			speak(pick(src.chase_lines))
 		src.doing_something = 1
 		src.search_range = 1
 	else

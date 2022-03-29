@@ -155,7 +155,7 @@
 		status |= BROKEN
 		doupdateicon = 0
 		src.stop_interdicting()
-		message_admins("Interdictor at ([showCoords(src.x, src.y, src.z)]) is missing a power cell. This is not supposed to happen, yell at kubius")
+		message_admins("Interdictor at ([log_loc(src)]) is missing a power cell. This is not supposed to happen, yell at kubius")
 		return
 	if(anchored)
 		if(intcap.charge < intcap.maxcharge && powered())
@@ -210,10 +210,10 @@
 
 	src.canInterdict = 1
 	playsound(src.loc, src.sound_interdict_on, 40, 0)
-	SPAWN_DBG(rand(30,40)) //after it's been on for a little bit, check for tears
+	SPAWN(rand(30,40)) //after it's been on for a little bit, check for tears
 		if(src.canInterdict)
 			for (var/obj/forcefield/event/tear in by_type[/obj/forcefield/event])
-				SPAWN_DBG(rand(8,22)) //stagger stabilizations, since it's getting stabilized post-formation
+				SPAWN(rand(8,22)) //stagger stabilizations, since it's getting stabilized post-formation
 					if (!tear.stabilized && IN_RANGE(src,tear,src.interdict_range) && src.expend_interdict(800))
 						tear.stabilize()
 	src.UpdateIcon()
@@ -283,6 +283,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "electronic"
 	mats = 6
+	health = 6
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | CONDUCT
 

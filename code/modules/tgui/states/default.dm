@@ -49,7 +49,7 @@ var/global/datum/ui_state/tgui_default_state/tgui_default_state = new /datum/ui_
 
 	return UI_UPDATE // AI eyebots can recieve updates from anything that the AI can see.
 
-/mob/dead/aieye/default_can_use_topic(src_object)
+/mob/living/intangible/aieye/default_can_use_topic(src_object)
 	. = shared_ui_interaction(src_object)
 	if(. < UI_INTERACTIVE)
 		return
