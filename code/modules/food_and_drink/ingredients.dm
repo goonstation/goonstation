@@ -524,7 +524,6 @@
 		new /obj/item/reagent_containers/food/snacks/ingredient/dough_circle(get_turf(src))
 		qdel (src)
 
-
 /obj/item/reagent_containers/food/snacks/ingredient/dough_circle
 	name = "dough circle"
 	desc = "Used for making torus-shaped things." //I used to eat out with friends, but bagels just torus apart.
