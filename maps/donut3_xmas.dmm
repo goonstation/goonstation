@@ -26520,9 +26520,7 @@
 	name = "Genetic Research"
 	})
 "hwr" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/station/turret_protected/AIbaseoutside)
 "hwN" = (
 /obj/loudspeaker,
@@ -41784,9 +41782,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/breakroom)
 "mdn" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/station/turret_protected/armory_outside)
 "mdw" = (
 /obj/decal/tile_edge/line/blue{
@@ -56267,9 +56263,7 @@
 /obj/machinery/turret{
 	dir = 1
 	},
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/station/turret_protected/armory_outside)
 "qny" = (
 /obj/cable{
@@ -69043,9 +69037,7 @@
 	},
 /area/station/medical/cdc)
 "tXv" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "tXG" = (
 /obj/cable{
