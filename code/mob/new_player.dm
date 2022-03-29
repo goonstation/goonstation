@@ -304,7 +304,7 @@ mob/new_player
 				return latejoin
 		if (istype(S,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = S
-			var/obj/item/organ/brain/latejoin/latejoin = R.part_head?.brain
+			var/obj/item/organ/brain/latejoin/latejoin = R.brain
 			if (istype(latejoin) && !latejoin.activated)
 				return latejoin
 		return 0

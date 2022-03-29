@@ -184,7 +184,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.casings_to_eject = 0
 
 			src.ammo.amount_left = 0
-			src.ammo.refillable = FALSE
 			src.UpdateIcon()
 			src.add_fingerprint(user)
 			ammoHand.add_fingerprint(user)

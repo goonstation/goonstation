@@ -574,18 +574,12 @@
 				SPAWN(1.5 SECONDS)
 					UpdateOverlays(null, "speech_bubble")
 
-	attackby(var/obj/item/I as obj, var/mob/M as mob)
-		if (ispryingtool(I))
-			if (deployed)
-				src.undeploy()
-			else
-				if (src in M.contents)
-					src.force_drop()
-				src.deploy()
-		..()
 
 	attack_hand(var/mob/living/carbon/human/user as mob)
-		src.undeploy()
+		icon_state = "dowsing_hands"
+		deployed = 0
+		closest_hotspot = 0
+		processing_items -= src
 		..()
 
 	afterattack(var/turf/T, var/mob/user)
@@ -599,11 +593,6 @@
 			return
 		..()
 
-	proc/undeploy()
-		src.icon_state = "dowsing_hands"
-		deployed = 0
-		closest_hotspot = 0
-		processing_items -= src
 
 	proc/deploy()
 		processing_items |= src

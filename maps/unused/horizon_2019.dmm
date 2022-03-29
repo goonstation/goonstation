@@ -23948,6 +23948,20 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
+"bcR" = (
+/obj/machinery/light_switch/west,
+/obj/machinery/computer/aiupload{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/station/turret_protected/Zeta)
 "bcS" = (
 /obj/item/device/radio/intercom/AI,
 /obj/cable{
@@ -23969,6 +23983,15 @@
 /area/station/turret_protected/Zeta)
 "bcU" = (
 /turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
+"bcV" = (
+/obj/table/auto,
+/obj/item/aiModule/freeform,
+/obj/item/aiModule/rename,
+/obj/item/aiModule/reset,
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
 /area/station/turret_protected/Zeta)
 "bcW" = (
 /obj/grille/steel,
@@ -27101,6 +27124,20 @@
 "bjj" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/central)
+"bjk" = (
+/obj/item/cable_coil/cut,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/obj/storage/crate,
+/obj/item/storage/box/cablesbox,
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/carpet/grime,
+/area/station/medical/robotics)
 "bjl" = (
 /obj/reagent_dispensers/fueltank,
 /obj/item/storage/belt/medical,
@@ -35277,11 +35314,11 @@
 /area/station/security/checkpoint/sec_foyer)
 "bBg" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bBh" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bBi" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
@@ -37745,7 +37782,7 @@
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bGE" = (
 /obj/stool/bed/brig,
 /obj/item/clothing/glasses/vr{
@@ -38992,7 +39029,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bJv" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/shuttle,
@@ -39003,14 +39040,14 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bJx" = (
 /obj/disposalpipe/segment/bent/east,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/vertical,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bJy" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -39022,7 +39059,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bJz" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -40571,7 +40608,7 @@
 /obj/access_spawn/hos,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bMH" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -40586,7 +40623,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bMI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -40599,7 +40636,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bMJ" = (
 /obj/cable{
 	d2 = 8;
@@ -40620,7 +40657,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bMK" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -41052,7 +41089,7 @@
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bNP" = (
 /obj/landmark{
 	icon_state = "x3";
@@ -41438,7 +41475,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bOG" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -41554,7 +41591,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bOQ" = (
 /obj/landmark{
 	name = "JoinLate"
@@ -41798,14 +41835,14 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bPs" = (
 /obj/disposalpipe/segment/bent/north,
 /obj/machinery/atmospherics/pipe/manifold/overfloor/south,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bPt" = (
 /obj/disposalpipe/segment/brig,
 /obj/disposalpipe/segment/food{
@@ -41815,7 +41852,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bPu" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -41830,7 +41867,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bPv" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -42725,7 +42762,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bRs" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -43116,14 +43153,14 @@
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bSj" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
 /obj/storage/secure/crate/weapon/armory/shotgun,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bSk" = (
 /obj/disposalpipe/segment/brig,
 /obj/table/auto,
@@ -43145,7 +43182,7 @@
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bSm" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -43959,7 +43996,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bUa" = (
 /obj/disposalpipe/segment/bent/north,
 /obj/cable{
@@ -44210,7 +44247,7 @@
 "bUH" = (
 /obj/disposalpipe/segment/brig,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bUI" = (
 /obj/disposalpipe/segment/transport,
 /obj/stool/chair/red{
@@ -47215,7 +47252,7 @@
 /obj/storage/secure/crate/weapon/armory/pod_weapons,
 /obj/item/shipcomponent/mainweapon/disruptor,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "cax" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 4
@@ -57489,20 +57526,6 @@
 /obj/item/paper/book/from_file/medical_surgery_guide,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay/surgery)
-"efL" = (
-/obj/item/cable_coil/cut,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/storage/crate,
-/obj/item/storage/box/cablesbox,
-/obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/carpet/grime,
-/area/station/medical/robotics)
 "flY" = (
 /obj/decal/cleanable/dirt,
 /obj/item/paper/book/from_file/the_trial,
@@ -57559,7 +57582,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "iuM" = (
 /obj/table/wood/round/auto,
 /obj/item/paper/book/from_file/critter_compendium,
@@ -57663,13 +57686,6 @@
 /obj/item/spacecash/hundred,
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/listeningpost/power)
-"qbs" = (
-/obj/table/auto,
-/obj/item/aiModule/freeform,
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/turret_protected/Zeta)
 "qYq" = (
 /obj/table/reinforced/auto,
 /obj/item/stg_booster,
@@ -57759,20 +57775,6 @@
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/grey/blackgrime,
 /area/tech_outpost)
-"udQ" = (
-/obj/machinery/light_switch/west,
-/obj/machinery/lawrack{
-	dir = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
-/area/station/turret_protected/Zeta)
 "uSE" = (
 /obj/table/reinforced/auto,
 /obj/shrub{
@@ -99970,7 +99972,7 @@ aRc
 aTS
 aWL
 aZZ
-udQ
+bcR
 bfO
 biF
 aOU
@@ -101178,7 +101180,7 @@ aRg
 aTW
 aWP
 bad
-qbs
+bcV
 bfS
 bmz
 blv
@@ -111146,7 +111148,7 @@ aXi
 bby
 bbB
 bdr
-efL
+bjk
 bkg
 bpO
 bWk

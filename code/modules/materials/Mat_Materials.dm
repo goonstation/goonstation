@@ -272,8 +272,8 @@
 	quality = 5
 
 	New()
-		setProperty("electrical", 85)
-		setProperty("density", 35)
+		setProperty("electrical", 80)
+		setProperty("density", 5)
 		setProperty("hard", 5)
 		return ..()
 
@@ -283,10 +283,18 @@
 	desc = "Terrestrial steel from Earth."
 	New()
 		setProperty("density", 30)
-		setProperty("hard", 30)
+		setProperty("hard", 15)
 		return ..()
 
-
+/datum/material/metal/mauxite
+	mat_id = "mauxite"
+	name = "mauxite"
+	desc = "Mauxite is a sturdy common metal."
+	color = "#574846"
+	New()
+		setProperty("density", 50)
+		setProperty("hard", 15)
+		return ..()
 
 /datum/material/metal/copper
 	mat_id = "copper"
@@ -296,8 +304,8 @@
 	New()
 		setProperty("stability", 30)
 		setProperty("electrical", 51)
-		setProperty("density", 10)
-		setProperty("hard", 10)
+		setProperty("density", 5)
+		setProperty("hard", 5)
 		return ..()
 
 /datum/material/metal/pharosium
@@ -327,19 +335,10 @@
 	desc = "Bohrum is a heavy and highly durable metal."
 	color = "#3D692D"
 	New()
-		setProperty("density", 50)
-		setProperty("hard", 40)
+		setProperty("density", 40)
+		setProperty("hard", 30)
 		return ..()
 
-/datum/material/metal/mauxite
-	mat_id = "mauxite"
-	name = "mauxite"
-	desc = "Mauxite is a sturdy common metal."
-	color = "#574846"
-	New()
-		setProperty("density", 40)
-		setProperty("hard", 20)
-		return ..()
 
 /datum/material/metal/cerenkite
 	mat_id = "cerenkite"
@@ -384,10 +383,10 @@
 	New()
 		value = 300
 
-		setProperty("density", 45)
+		setProperty("density", 2)
 		setProperty("hard", 2)
 		setProperty("reflective", 55)
-		setProperty("electrical", 68)
+		setProperty("electrical", 60)
 
 		addTrigger(triggersOnAdd, new /datum/materialProc/gold_add())
 		return ..()
@@ -402,8 +401,8 @@
 	New()
 		value = 250
 
-		setProperty("density", 20)
-		setProperty("hard", 10)
+		setProperty("density", 1)
+		setProperty("hard", 1)
 		setProperty("reflective", 50)
 		setProperty("electrical", 60)
 		return ..()
@@ -449,8 +448,8 @@
 	New()
 		value = 10
 
-		setProperty("density", 14) //fucked up values for fucked up material but not silly putty
-		setProperty("hard", 12)
+		setProperty("density", 1)
+		setProperty("hard", 1)
 		setProperty("stability", 3)
 		setProperty("electrical", 20)
 		return ..()
@@ -490,8 +489,7 @@
 	material_flags = MATERIAL_METAL | MATERIAL_ENERGY
 
 	New()
-		setProperty("density", 60)
-		setProperty("hard", 20)
+		setProperty("density", 65)
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
 		return ..()
 
@@ -506,10 +504,6 @@
 	desc = "Terrestrial glass. Inferior to Molitz."
 	color = "#A3DCFF"
 	alpha = 180
-	New()
-		setProperty("density", 40)
-		setProperty("hard", 40)
-		return ..()
 
 /datum/material/crystal/molitz
 	mat_id = "molitz"
@@ -520,7 +514,7 @@
 
 	New()
 		setProperty("density", 40)
-		setProperty("hard", 45)
+		setProperty("hard", 40)
 		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
 		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
 		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
@@ -993,7 +987,7 @@
 	edible = 1
 
 	New()
-		setProperty("density", 45)
+		setProperty("density", 65)
 		setProperty("hard", 3)
 		setProperty("corrosion", 70)
 		setProperty("permeable", 95)
@@ -1050,8 +1044,8 @@
 	material_flags = MATERIAL_ORGANIC
 
 	New()
-		setProperty("density", 20)
-		setProperty("hard", 5)
+		setProperty("density", 25)
+		setProperty("hard", 25)
 		setProperty("flammable", 67)
 		addTrigger(triggersOnBlobHit, new /datum/materialProc/cardboard_blob_hit())
 		addTrigger(triggersOnHit, new /datum/materialProc/cardboard_on_hit())
@@ -1243,10 +1237,10 @@
 		setProperty("electrical", 32)
 		return ..()
 
-/datum/material/fabric/cloth/brullbarhide
-	mat_id = "brullbarhide"
-	name = "brullbar hide"
-	desc = "The hide of a fearsome brullbar!"
+/datum/material/fabric/cloth/wendigohide
+	mat_id = "wendigohide"
+	name = "wendigo hide"
+	desc = "The hide of a fearsome wendigo!"
 	color = "#CCCCCC"
 	material_flags = MATERIAL_CLOTH
 
@@ -1257,10 +1251,10 @@
 		setProperty("electrical", 45)
 		return ..()
 
-/datum/material/fabric/cloth/brullbarhide/king
-	mat_id = "kingbrullbarhide"
-	name = "king brullbar hide"
-	desc = "The hide of a terrifying brullbar king!!!"
+/datum/material/fabric/cloth/wendigohide/king
+	mat_id = "kingwendigohide"
+	name = "king wendigo hide"
+	desc = "The hide of a terrifying wendigo king!!!"
 	color = "#EFEEEE"
 	material_flags = MATERIAL_CLOTH
 
@@ -1416,8 +1410,8 @@
 	color = "#ccffcc"
 
 	New()
-		setProperty("density", 3)
-		setProperty("hard", 5)
+		setProperty("density", 1)
+		setProperty("hard", 1)
 		setProperty("stability", 3)
 		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
 		return ..()

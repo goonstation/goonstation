@@ -117,7 +117,10 @@
 	boutput(O, "To use something, simply double-click it.")
 	boutput(O, "Currently right-click functions will not work for the AI (except examine), and will either be replaced with dialogs or won't be usable by the AI.")
 
-	O.show_laws()
+//	O.laws_object = new /datum/ai_laws/asimov
+//	O.laws_object = ticker.centralized_ai_laws
+//	O.current_law_set = O.laws_object
+	ticker.centralized_ai_laws.show_laws(O)
 	boutput(O, "<b>These laws may be changed by other players.</b>")
 
 	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
@@ -229,7 +232,7 @@
 			src.mind.transfer_to(cyborg)
 	cyborg.set_loc(get_turf(src.loc))
 	if (syndicate)
-		cyborg.make_syndicate("Robotize_MK2 (probably cyborg converter)")
+		cyborg.handle_robot_antagonist_status("converted")
 		boutput(cyborg, "<B>You have been transformed into a <i>syndicate</i> Cyborg. Cyborgs can interact with most electronic objects in their view.</B>")
 		boutput(cyborg, "<B>You must follow your laws and assist syndicate agents, who are identifiable by their icon.</B>")
 	else

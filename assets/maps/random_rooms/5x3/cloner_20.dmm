@@ -2,18 +2,18 @@
 "a" = (
 /obj/machinery/clone_scanner,
 /turf/simulated/floor/specialroom/medbay,
-/area/dmm_suite/clear_area)
+/area/space)
 "j" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/specialroom/medbay,
-/area/dmm_suite/clear_area)
+/area/space)
 "l" = (
 /obj/machinery/clonegrinder,
 /turf/simulated/floor/specialroom/medbay,
-/area/dmm_suite/clear_area)
+/area/space)
 "n" = (
 /obj/table/auto/desk,
 /obj/item/reagent_containers/glass/beaker/large{
@@ -27,31 +27,31 @@
 	},
 /obj/item/paper/manufacturer_blueprint/clonepod,
 /turf/simulated/floor/specialroom/medbay,
-/area/dmm_suite/clear_area)
+/area/space)
 "o" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/specialroom/medbay,
-/area/dmm_suite/clear_area)
+/area/space)
 "p" = (
 /obj/machinery/light/incandescent/broken,
 /turf/simulated/floor/specialroom/medbay,
-/area/dmm_suite/clear_area)
+/area/space)
 "y" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
 	},
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/specialroom/medbay,
-/area/dmm_suite/clear_area)
+/area/space)
 "A" = (
 /obj/stool/chair/office/red{
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/medbay,
-/area/dmm_suite/clear_area)
+/area/space)
 "H" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/item/raw_material/shard/glass{
@@ -63,10 +63,10 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/medbay,
-/area/dmm_suite/clear_area)
+/area/space)
 "I" = (
 /turf/simulated/floor/specialroom/medbay,
-/area/dmm_suite/clear_area)
+/area/space)
 "V" = (
 /obj/machinery/computer/cloning{
 	name = "Busted Cloning Console";
@@ -76,7 +76,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/medbay,
-/area/dmm_suite/clear_area)
+/area/space)
 "X" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/landmark/spawner{
@@ -84,11 +84,11 @@
 	},
 /obj/item/storage/toolbox/electrical/mechanic_spawn,
 /turf/simulated/floor/specialroom/medbay,
-/area/dmm_suite/clear_area)
+/area/space)
 "Z" = (
 /obj/machinery/light/emergencyflashing,
 /turf/simulated/floor/specialroom/medbay,
-/area/dmm_suite/clear_area)
+/area/space)
 
 (1,1,1) = {"
 n

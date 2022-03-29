@@ -63,7 +63,7 @@
 				//inescapable version slices em up more
 				random_brute_damage(humanuser, (escapable ? 10 : 15))
 				take_bleeding_damage(humanuser, null, (escapable ? 3 : 4))
-				user.changeStatus("stunned", 7 SECONDS)
+				user.changeStatus("paralysis", 7 SECONDS)
 				playsound(user.loc, pick(work_sounds), 50, 1, -1)
 				if (loops % loops_per_conversion_step == 0)
 					if (!convertable_limbs.len) //avoid runtiming once all limbs are converted

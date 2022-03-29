@@ -34,7 +34,6 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	health = 7
 	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
@@ -1559,7 +1558,6 @@ obj/item/whetstone
 
 	tool_flags = TOOL_CHOPPING //to chop through doors
 	hit_type = DAMAGE_BLUNT
-	health = 10
 	w_class = W_CLASS_NORMAL
 	two_handed = 1
 	click_delay = 30

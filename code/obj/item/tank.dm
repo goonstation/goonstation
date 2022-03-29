@@ -425,7 +425,6 @@ Contains:
 	name = "emergency oxygentank"
 	icon_state = "em_oxtank"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
-	health = 5
 	w_class = W_CLASS_SMALL
 	force = 3.0
 	stamina_damage = 30

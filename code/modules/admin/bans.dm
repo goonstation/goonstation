@@ -100,7 +100,7 @@ var/global/list/playersSeen = list()
 
 		timeAdded = (row["ckey"] != ckey && newChain > 1 ? 1 : 0) //only add time if a ckey didnt match, and it's a second evasion
 		var/CMinutes = (world.realtime / 10) / 60
-		var/remaining = (timestamp > 0 ? timestamp - CMinutes : timestamp)
+		var/remaining = (timestamp > 0 ? timestamp - CMinutes : 0)
 		var/addData[] = new()
 		addData["ckey"] = ckey
 		addData["compID"] = compID

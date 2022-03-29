@@ -3729,7 +3729,7 @@
 	name = "peststart"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "afL" = (
 /obj/cable{
 	d1 = 1;
@@ -5149,7 +5149,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aic" = (
 /obj/cable{
 	d1 = 1;
@@ -7484,6 +7484,33 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
+"ama" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/table/auto,
+/obj/item/aiModule/reset{
+	pixel_x = -1;
+	pixel_y = -1
+	},
+/obj/item/disk/data/floppy/read_only/network_progs{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/item/disk/data/floppy/read_only/communications{
+	pixel_x = 1;
+	pixel_y = 10
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "amb" = (
 /obj/cable{
 	d1 = 1;
@@ -12504,7 +12531,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "atE" = (
 /obj/cable{
 	d1 = 4;
@@ -13330,7 +13357,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "auN" = (
 /obj/cable{
 	d1 = 4;
@@ -13935,7 +13962,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "avL" = (
 /obj/cable{
 	d1 = 4;
@@ -15029,7 +15056,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "axY" = (
 /obj/cable{
 	d1 = 6;
@@ -18204,7 +18231,7 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aFH" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 4;
@@ -33772,6 +33799,28 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/bridge)
+"bmF" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 8
+	},
+/obj/table/auto,
+/obj/item/aiModule/reset{
+	pixel_x = -11;
+	pixel_y = -1
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_x = -14;
+	pixel_y = 10
+	},
+/obj/item/disk/data/floppy/read_only/communications{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/device/radio/intercom/security{
+	dir = 1
+	},
+/turf/simulated/floor/circuit,
+/area/station/bridge)
 "bmG" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 8
@@ -40264,7 +40313,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bzr" = (
 /obj/machinery/door/airlock/pyro/security{
 	aiControlDisabled = 1;
@@ -40277,7 +40326,7 @@
 	pixel_y = 10
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bzs" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Arrivals Desk";
@@ -42240,6 +42289,28 @@
 	dir = 8
 	},
 /area/station/security/main)
+"bCH" = (
+/obj/machinery/door_control{
+	id = "dwaine_core";
+	name = "DWAINE Core Shield";
+	pixel_x = 25
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/table/auto,
+/obj/item/circuitboard/robotics{
+	pixel_x = 2;
+	pixel_y = 8
+	},
+/obj/item/circuitboard/aiupload{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "bCI" = (
 /obj/machinery/door_control{
 	id = "eva";
@@ -49350,7 +49421,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bQy" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -50061,6 +50132,24 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
+"bRw" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/aiupload{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 0;
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/item/device/radio/intercom/AI{
+	dir = 4
+	},
+/turf/simulated/floor/blue,
+/area/station/turret_protected/ai_upload)
 "bRx" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer/supplycomp,
@@ -50432,7 +50521,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bSh" = (
 /obj/rack,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -51198,11 +51287,11 @@
 	},
 /obj/machinery/power/apc/autoname_north/noaicontrol,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bUp" = (
 /obj/machinery/weapon_stand/shotgun_rack,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bUq" = (
 /obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -51561,7 +51650,7 @@
 	pixel_y = 1
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bVe" = (
 /obj/rack,
 /obj/item/caution{
@@ -51767,7 +51856,7 @@
 	pixel_y = 11
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bVl" = (
 /obj/rack,
 /obj/item/clothing/mask/gas/emergency{
@@ -57233,7 +57322,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "cfT" = (
 /obj/storage/secure/crate/plasma/armory/anti_biological{
 	req_access = null
@@ -61058,6 +61147,22 @@
 /obj/machinery/microwave,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
+"ckH" = (
+/obj/table/auto,
+/obj/cable{
+	d1 = 0;
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/item/clothing/glasses/visor,
+/obj/item/device/radio/headset/deaf,
+/obj/item/robodefibrillator,
+/obj/item/remote/porter/port_a_nanomed,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/clothing/glasses/healthgoggles,
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/head)
 "ckI" = (
 /obj/cable{
 	d1 = 4;
@@ -61071,7 +61176,7 @@
 	},
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "ckJ" = (
 /obj/table/auto,
 /obj/machinery/recharger{
@@ -61489,6 +61594,11 @@
 	pixel_x = 1;
 	pixel_y = 8
 	},
+/turf/simulated/floor/blue,
+/area/station/turret_protected/ai_upload)
+"clu" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/rename,
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
 "clw" = (
@@ -64693,7 +64803,7 @@
 /area/station/medical/robotics)
 "crq" = (
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "crr" = (
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
@@ -66805,7 +66915,7 @@
 /area/station/science/teleporter)
 "cAL" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "cAM" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
@@ -67380,7 +67490,7 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "dcm" = (
 /obj/storage/crate/adventure,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -67480,7 +67590,7 @@
 	},
 /obj/access_spawn/hos,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "dOS" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/surgery)
@@ -67713,7 +67823,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "fsm" = (
 /obj/machinery/vending/cola/red,
 /turf/simulated/floor,
@@ -68056,10 +68166,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"hfy" = (
-/obj/table/reinforced/auto,
-/turf/simulated/floor/blue,
-/area/station/turret_protected/ai_upload)
 "hkd" = (
 /obj/cable{
 	d1 = 4;
@@ -68101,7 +68207,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "hHs" = (
 /obj/cable/brown{
 	d1 = 4;
@@ -68240,24 +68346,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"imB" = (
-/obj/machinery/door_control{
-	id = "dwaine_core";
-	name = "DWAINE Core Shield";
-	pixel_x = 25
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/table/auto,
-/obj/item/circuitboard/robotics{
-	pixel_x = 2;
-	pixel_y = 8
-	},
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "isx" = (
 /obj/table/auto,
 /obj/item/plantanalyzer{
@@ -68653,7 +68741,7 @@
 	pixel_y = 10
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "laJ" = (
 /obj/storage/crate/robotparts,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -68991,7 +69079,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "nwg" = (
 /obj/cable{
 	d1 = 4;
@@ -69260,22 +69348,6 @@
 	dir = 10
 	},
 /area/station/medical/medbay)
-"oKM" = (
-/obj/table/auto,
-/obj/cable{
-	d1 = 0;
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/item/clothing/glasses/visor,
-/obj/item/device/radio/headset/deaf,
-/obj/item/robodefibrillator,
-/obj/item/remote/porter/port_a_nanomed,
-/obj/item/device/analyzer/healthanalyzer/upgraded,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/head)
 "oNk" = (
 /obj/cable{
 	d1 = 1;
@@ -69327,7 +69399,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "pqJ" = (
 /obj/machinery/chem_dispenser,
 /obj/machinery/light,
@@ -69632,24 +69704,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/engineering/ce)
-"rRj" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 8
-	},
-/obj/table/auto,
-/obj/item/storage/toolbox/electrical{
-	pixel_x = -14;
-	pixel_y = 10
-	},
-/obj/item/disk/data/floppy/read_only/communications{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/device/radio/intercom/security{
-	dir = 1
-	},
-/turf/simulated/floor/circuit,
-/area/station/bridge)
 "rRA" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -69935,29 +69989,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"tOU" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/table/auto,
-/obj/item/disk/data/floppy/read_only/network_progs{
-	pixel_x = 7;
-	pixel_y = 10
-	},
-/obj/item/disk/data/floppy/read_only/communications{
-	pixel_x = 1;
-	pixel_y = 10
-	},
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "tTL" = (
 /obj/landmark/start{
 	name = "Mechanic"
@@ -70538,24 +70569,6 @@
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"ydW" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/lawrack{
-	dir = 4
-	},
-/obj/cable{
-	d1 = 0;
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/item/device/radio/intercom/AI{
-	dir = 4
-	},
-/turf/simulated/floor/blue,
-/area/station/turret_protected/ai_upload)
 "yfM" = (
 /obj/cable{
 	d1 = 0;
@@ -119073,8 +119086,8 @@ bEu
 ctV
 bSV
 cpg
-ydW
-hfy
+bRw
+clu
 cBc
 aWg
 abt
@@ -119691,7 +119704,7 @@ ahU
 aiF
 alt
 aiA
-tOU
+ama
 cBa
 cBa
 cBa
@@ -120295,7 +120308,7 @@ ahU
 ake
 akc
 acZ
-imB
+bCH
 cBa
 cBa
 cBa
@@ -123035,7 +123048,7 @@ bYo
 axv
 bYJ
 cAs
-oKM
+ckH
 cxx
 bbm
 abF
@@ -134739,7 +134752,7 @@ bor
 czj
 ccD
 avI
-rRj
+bmF
 blC
 cow
 biK

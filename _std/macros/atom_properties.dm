@@ -426,7 +426,7 @@ To remove:
 	} while (0)
 
 
-#define APPLY_ATOM_PROPERTY_PRIORITY(target, property, do_update, update_macro, source, value, priority) \
+#define APPLY_ATOM_PROPERTY_PRIORITY(target, property, source, do_update, update_macro, value, priority) \
 	do { \
 		LAZYLISTINIT(target.atom_properties); \
 		var/list/_L = target.atom_properties; \

@@ -148,6 +148,7 @@
 			return
 
 		var/mob/ownerMob = owner
+		target.vamp_beingbitten = 1
 
 		if (isliving(target))
 			target:was_harmed(owner, special = "ling")
@@ -163,6 +164,8 @@
 		..()
 
 		var/mob/ownerMob = owner
+		if (target)
+			target.vamp_beingbitten = 0
 		if(owner && ownerMob && target && get_dist(owner, target) <= 1 && devour)
 			var/datum/abilityHolder/changeling/C = devour.holder
 			if (istype(C))
@@ -179,6 +182,7 @@
 
 	onInterrupt()
 		..()
+		target.vamp_beingbitten = 0
 		boutput(owner, "<span class='alert'>Our absorbtion of [target] has been interrupted!</span>")
 
 /datum/targetable/changeling/absorb

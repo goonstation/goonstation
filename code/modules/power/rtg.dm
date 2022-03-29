@@ -86,16 +86,6 @@
 			return
 		src.UpdateOverlays(image('icons/obj/power.dmi', "rtg-f[min(1 + ceil(fuel_pellet.material.getProperty("radioactive") / 2), 5)]"), "rtg")
 
-	cerenkite_loaded
-		New()
-			..()
-			fuel_pellet = new /obj/item/fuel_pellet/cerenkite
-
-	erebite_loaded
-		New()
-			..()
-			fuel_pellet = new /obj/item/fuel_pellet/erebite
-
 /obj/item/fuel_pellet
 	name = "fuel pellet"
 	desc = "A rather small fuel pellet for use in RTGs."
@@ -108,8 +98,3 @@
 		New()
 			..()
 			src.setMaterial(getMaterial("cerenkite"))
-
-	erebite
-		New()
-			..()
-			src.setMaterial(getMaterial("erebite"))

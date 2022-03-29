@@ -1355,6 +1355,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	icon_state = "yellow"
 	requires_power = 0
 	luminosity = 1
+	force_fullbright = 1
 	teleport_blocked = 0
 
 /area/owlery/Owlmait2

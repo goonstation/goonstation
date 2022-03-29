@@ -6879,6 +6879,27 @@
 	icon_state = "fblue2"
 	},
 /area/station/medical/head)
+"aoY" = (
+/obj/machinery/networked/printer{
+	name = "Printer - MD";
+	pixel_y = 5;
+	print_id = "MD"
+	},
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/clothing/glasses/healthgoggles/upgraded,
+/obj/table/wood/round/auto,
+/obj/machinery/light/incandescent/warm,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/blind_switch/area/north,
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fblue2"
+	},
+/area/station/medical/head)
 "aoZ" = (
 /obj/cable{
 	d1 = 1;
@@ -7960,6 +7981,12 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
+"arB" = (
+/obj/table/reinforced,
+/obj/item/aiModule/reset,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "arC" = (
 /obj/cable{
 	d1 = 1;
@@ -7998,6 +8025,11 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
+"arF" = (
+/obj/table/reinforced,
+/obj/item/circuitboard/aiupload,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "arG" = (
@@ -33093,6 +33125,15 @@
 	icon_state = "blue2"
 	},
 /area/station/bridge)
+"bzI" = (
+/obj/table/wood/round/auto,
+/obj/item/aiModule/reset,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "blue2"
+	},
+/area/station/bridge)
 "bzJ" = (
 /obj/machinery/light/incandescent/cool,
 /obj/cable{
@@ -33569,6 +33610,10 @@
 	},
 /obj/item/aiModule/emergency,
 /obj/item/aiModule/removeCrew,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
+"bAR" = (
+/obj/machinery/computer/aiupload,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "bAS" = (
@@ -34130,6 +34175,15 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
+"bCa" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/rename,
+/obj/machinery/light_switch/auto,
+/obj/item/device/radio/intercom/AI{
+	dir = 4
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "bCb" = (
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -47998,10 +48052,6 @@
 /obj/stocking,
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/sanctuary)
-"fjo" = (
-/obj/table/reinforced,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "flD" = (
 /obj/machinery/vending/air_vendor,
 /turf/simulated/floor/plating/random,
@@ -48132,27 +48182,6 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"gzs" = (
-/obj/machinery/networked/printer{
-	name = "Printer - MD";
-	pixel_y = 5;
-	print_id = "MD"
-	},
-/obj/item/device/analyzer/healthanalyzer/upgraded,
-/obj/item/clothing/glasses/healthgoggles/upgraded,
-/obj/table/wood/round/auto,
-/obj/machinery/light/incandescent/warm,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/blind_switch/area/north,
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "fblue2"
-	},
-/area/station/medical/head)
 "gGw" = (
 /obj/table/wood/round/auto,
 /obj/item/paper_bin,
@@ -48757,11 +48786,6 @@
 "ovU" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
-"oFk" = (
-/obj/table/reinforced,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "oLW" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -48915,14 +48939,6 @@
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
-"sbZ" = (
-/obj/table/reinforced/auto,
-/obj/machinery/light_switch/auto,
-/obj/item/device/radio/intercom/AI{
-	dir = 4
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "sjd" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/wreath,
@@ -49030,14 +49046,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
-"uNU" = (
-/obj/table/wood/round/auto,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "blue2"
-	},
-/area/station/bridge)
 "uRT" = (
 /obj/table/auto,
 /obj/item/instrument/bikehorn/dramatic,
@@ -49358,10 +49366,6 @@
 /obj/item/device/multitool,
 /turf/simulated/floor/caution/south,
 /area/station/hangar/sec)
-"yga" = (
-/obj/machinery/lawrack,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "ygP" = (
 /obj/machinery/light/incandescent/greenish,
 /obj/item/shipcomponent/pod_lights/police_siren,
@@ -90034,7 +90038,7 @@ ckj
 chg
 bzx
 bAP
-sbZ
+bCa
 bDp
 aTo
 bzx
@@ -90637,7 +90641,7 @@ cjV
 cki
 aqn
 bzx
-yga
+bAR
 bCb
 bDq
 bCb
@@ -96978,7 +96982,7 @@ bwp
 bwX
 bxU
 byM
-uNU
+bzI
 btK
 buV
 buV
@@ -99027,7 +99031,7 @@ alB
 akS
 anu
 aog
-gzs
+aoY
 apZ
 arq
 asA
@@ -104163,7 +104167,7 @@ any
 aoj
 apb
 apb
-oFk
+arB
 aek
 atV
 avu
@@ -105371,7 +105375,7 @@ laJ
 aoj
 apb
 apb
-fjo
+arF
 asO
 atV
 avy

@@ -163,7 +163,7 @@
 		dat += "<br><br>"
 		dat += "Status: <A href='?src=\ref[src];start=1'>[src.on ? "On" : "Off"]</A><br>"
 
-		if (user.client?.tooltipHolder)
+		if (user.client.tooltipHolder)
 			user.client.tooltipHolder.showClickTip(src, list(
 				"params" = params,
 				"title" = "Cleanerbot v1.1 controls",

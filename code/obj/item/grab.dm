@@ -147,7 +147,7 @@
 			H.stamina_stun(mult)
 			if(H.stamina <= -75)
 				H.losebreath += (3 * mult)
-				H.setStatusMin("paralysis", STAMINA_NEG_CAP_STUN_TIME * mult) //not ideal
+				H.setStatus("paralysis", max(getStatusDuration("paralysis"), STAMINA_NEG_CAP_STUN_TIME * mult)) //not ideal
 			else if(H.stamina <= -50)
 				H.losebreath += (1.5 * mult)
 			else if(H.stamina <= -33)
@@ -156,7 +156,7 @@
 				if(prob(33)) H.losebreath += (0.2 * mult)
 
 	proc/set_affected_loc()
-		if (!isturf(src.assailant.loc) || !IN_RANGE(src.assailant, src.affecting, 1))
+		if (!isturf(src.assailant.loc))
 			return
 
 		actions.interrupt(src.affecting, INTERRUPT_ALWAYS)
@@ -864,10 +864,7 @@
 				for (var/mob/O in AIviewers(user))
 					O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
 				logTheThing("combat", user, dive_attack_hit, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
-
-			step_to(user, target_turf)
-
-			if(!dive_attack_hit && get_turf(user) == target_turf)
+			else
 				for (var/mob/O in AIviewers(user))
 					O.show_message("<span class='alert'><B>[user] slides to the ground!</B></span>", 1, group = "resist")
 
@@ -902,6 +899,7 @@
 						if (!item_num_to_throw)
 							break
 
+			step_to(user, target_turf)
 
 	user.u_equip(src)
 

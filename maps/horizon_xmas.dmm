@@ -16092,7 +16092,7 @@
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aME" = (
 /obj/machinery/light{
 	dir = 1;
@@ -17074,7 +17074,7 @@
 /obj/item/old_grenade/spawner/banana,
 /obj/item/old_grenade/spawner/banana,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aOL" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -23250,7 +23250,7 @@
 	},
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bbs" = (
 /obj/decal/poster/wallsign/stencil/right/e,
 /obj/decal/poster/wallsign/stencil/left/s,
@@ -23896,6 +23896,20 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
+"bcQ" = (
+/obj/machinery/light_switch/west,
+/obj/machinery/computer/aiupload{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/station/turret_protected/Zeta)
 "bcR" = (
 /obj/item/device/radio/intercom/AI,
 /obj/cable{
@@ -23917,6 +23931,15 @@
 /area/station/turret_protected/Zeta)
 "bcT" = (
 /turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
+"bcU" = (
+/obj/table/auto,
+/obj/item/aiModule/freeform,
+/obj/item/aiModule/rename,
+/obj/item/aiModule/reset,
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
 /area/station/turret_protected/Zeta)
 "bcV" = (
 /obj/grille/steel,
@@ -24527,7 +24550,7 @@
 /obj/access_spawn/hos,
 /obj/decal/garland,
 /turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bek" = (
 /obj/disposalpipe/trunk{
 	dir = 8;
@@ -28365,7 +28388,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bme" = (
 /obj/disposalpipe/trunk,
 /obj/machinery/floorflusher/industrial{
@@ -35889,11 +35912,11 @@
 /area/station/security/checkpoint/sec_foyer)
 "bCj" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bCk" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bCl" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
@@ -38447,7 +38470,7 @@
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bHO" = (
 /obj/machinery/vending/security_ammo,
 /obj/cable{
@@ -38456,7 +38479,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bHP" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/vertical,
 /obj/machinery/computer3/generic/communications,
@@ -38466,7 +38489,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bHQ" = (
 /obj/grille/catwalk{
 	dir = 6;
@@ -39850,7 +39873,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bKN" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -39863,21 +39886,21 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bKO" = (
 /obj/disposalpipe/segment/bent/south,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/southwest,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bKP" = (
 /obj/disposalpipe/segment/bent/east,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/vertical,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bKQ" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -39889,7 +39912,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bKR" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -40360,6 +40383,25 @@
 	},
 /turf/simulated/floor/plating/airless/random,
 /area/station/mining/magnet)
+"bLH" = (
+/obj/item/cable_coil/cut,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/obj/storage/crate,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/medical/robotics)
 "bLI" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -41443,7 +41485,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bOb" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -41456,7 +41498,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bOc" = (
 /obj/cable{
 	d2 = 8;
@@ -41477,7 +41519,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bOd" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -42726,7 +42768,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bQO" = (
 /obj/disposalpipe/segment/bent/north,
 /obj/machinery/atmospherics/pipe/manifold/overfloor/south,
@@ -42735,7 +42777,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bQP" = (
 /obj/disposalpipe/segment/brig,
 /obj/disposalpipe/segment/food{
@@ -42745,7 +42787,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bQQ" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -42760,7 +42802,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bQR" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -44114,7 +44156,7 @@
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bTM" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 8;
@@ -44132,7 +44174,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bTO" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -44146,7 +44188,7 @@
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bTP" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -59428,13 +59470,6 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/snow,
 /area/station/hydroponics/bay)
-"eRw" = (
-/obj/table/auto,
-/obj/item/aiModule/freeform,
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/turret_protected/Zeta)
 "eWt" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -59710,25 +59745,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/security/hos)
-"iVP" = (
-/obj/item/cable_coil/cut,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/storage/crate,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/medical/robotics)
 "iYR" = (
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
@@ -60213,7 +60229,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "sVX" = (
 /obj/item/paper/book/from_file/pocketguide/quartermaster,
 /turf/simulated/floor/plating/random,
@@ -60236,20 +60252,6 @@
 /obj/item/cargotele,
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
-"tJP" = (
-/obj/machinery/light_switch/west,
-/obj/machinery/lawrack{
-	dir = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
-/area/station/turret_protected/Zeta)
 "tLh" = (
 /obj/stocking,
 /turf/simulated/wall/auto/gannets,
@@ -102530,7 +102532,7 @@ aQL
 aTG
 aWG
 aZY
-tJP
+bcQ
 bfQ
 biP
 aOl
@@ -103738,7 +103740,7 @@ aQP
 aTK
 aWK
 bac
-eRw
+bcU
 bfU
 biT
 blJ
@@ -115211,7 +115213,7 @@ bwA
 bpg
 bpA
 hfH
-iVP
+bLH
 bUW
 bWX
 bXI

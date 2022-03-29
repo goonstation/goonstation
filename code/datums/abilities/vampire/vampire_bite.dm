@@ -384,6 +384,7 @@
 
 		if (istype(H))
 			H.vamp_isbiting = HH
+		HH.vamp_beingbitten = 1
 
 		src.loopStart()
 
@@ -433,6 +434,8 @@
 	proc/end()
 		if (istype(H))
 			H.vamp_isbiting = null
+		if (HH)
+			HH.vamp_beingbitten = 0 // Victim might have been gibbed, who knowns.
 
 
 
@@ -528,6 +531,7 @@
 
 		if (istype(H))
 			H.vamp_isbiting = HH
+		HH.vamp_beingbitten = 1
 
 		src.loopStart()
 
@@ -567,3 +571,5 @@
 	proc/end()
 		if (istype(H))
 			H.vamp_isbiting = null
+		if (HH)
+			HH.vamp_beingbitten = 0 // Victim might have been gibbed, who knowns.

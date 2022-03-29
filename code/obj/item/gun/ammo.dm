@@ -51,7 +51,6 @@
 	var/amount_left = 0.0
 	var/max_amount = 1000
 	var/unusualCell
-	var/refillable = TRUE
 	ammo_type = new/datum/projectile/bullet
 
 	var/ammo_cat = null
@@ -578,7 +577,12 @@
 	max_amount = 6
 	ammo_cat = AMMO_FOAMDART
 	ammo_type = new/datum/projectile/bullet/foamdart
-	delete_on_reload = TRUE
+
+	update_icon()
+		if(amount_left == 0)
+			qdel(src)
+		else
+			..()
 
 //0.40
 /obj/item/ammo/bullets/blow_darts

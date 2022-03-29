@@ -1199,7 +1199,7 @@
 	beeptext = "neighs"
 	beepsound = 'sound/vox/na.ogg' //how is nay or neigh not a thing in vox?
 	alertsound1 = 'sound/effects/mag_pandroar.ogg'
-	alertsound2 = 'sound/voice/animal/brullbar_roar.ogg'
+	alertsound2 = 'sound/voice/animal/wendigo_roar.ogg'
 	projectile_type = /datum/projectile/bullet/autocannon/huge
 	current_projectile = new/datum/projectile/bullet/autocannon/huge
 	sphere_projectile = new/datum/projectile/laser/precursor/sphere
@@ -1267,7 +1267,7 @@
 	density = 1
 	health = 8
 	maxhealth = 8
-	aggressive = 1
+	aggressive = 8
 	defensive = 1
 	wanderer = 1
 	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
@@ -1318,10 +1318,10 @@
 	Shoot(var/target, var/start, var/user, var/bullet = 0)
 		..()
 		bulletcount--
+		SPAWN(0.5 SECONDS)
 		if(bulletcount<=0)// out of ammo? bedtime
-			SPAWN(0.5 SECONDS)
-				src.visible_message("[src] runs out of ammo!")
-				task = "sleeping"
-				src.health = 0
-				src.CritterDeath()
-	
+			src.visible_message("[src] runs out of ammo!")
+			task = "sleeping"
+			src.health = 0
+			src.CritterDeath()
+

@@ -90,7 +90,10 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 					M.gib()
 			else if(istype(M, /mob/living/silicon/robot))
 				var/mob/living/silicon/robot/R = M
-				R.eject_brain(fling = TRUE)
+				if(R.brain)
+					R.brain.set_loc(get_turf(R))
+					R.brain.throw_at(get_edge_cheap(get_turf(R), pick(cardinal)), 16, 3)
+					R.brain = null
 				R.update_appearance()
 				R.TakeDamage("head", 420, 0)
 			else

@@ -141,8 +141,8 @@ Contains:
 					I.process()
 				return
 	if (!( src.state ))
-		qdel(src.first)
 		//src.first = null
+		qdel(src.first)
 	return
 
 /obj/item/device/infra/attackby(obj/item/device/radio/signaler/S as obj, mob/user as mob)
@@ -212,8 +212,8 @@ Contains:
 	return
 
 /obj/item/device/infra/attack_hand()
-	qdel(src.first)
 	//src.first = null
+	qdel(src.first)
 	..()
 	return
 
@@ -221,8 +221,8 @@ Contains:
 	var/t = src.dir
 	..()
 	src.set_dir(t)
-	qdel(src.first)
 	//src.first = null
+	qdel(src.first)
 	return
 
 /obj/item/device/infra/verb/rotate()
@@ -306,8 +306,8 @@ Contains:
 	var/t = src.dir
 	..()
 	src.set_dir(t)
-	qdel(src.part2.first)
 	//src.part2.first = null
+	qdel(src.part2.first)
 	return
 
 /obj/item/assembly/rad_infra/attack_hand(M)

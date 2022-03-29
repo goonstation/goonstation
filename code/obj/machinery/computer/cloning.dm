@@ -72,7 +72,6 @@
 	desc = "A circuit module designed to improve cloning machine scanning capabilities to the point where even the deceased may be scanned."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cloner_upgrade"
-	health = 8
 	w_class = W_CLASS_TINY
 	throwforce = 1
 
@@ -81,7 +80,6 @@
 	desc = "A circuit module designed to improve enzymatic reclaimer capabilities so that the machine will be able to reclaim more matter, faster."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "grinder_upgrade"
-	health = 8
 	w_class = W_CLASS_TINY
 	throwforce = 1
 

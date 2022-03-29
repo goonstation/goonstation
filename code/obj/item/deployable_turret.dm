@@ -362,9 +362,6 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 			return 0
 		if (C.stat == 2)
 			return 0
-		for(var/atom/movable/some_loc in obj_loc_chain(C))
-			if(istype(some_loc, /obj/item)) // prevent shooting at pickled people and such
-				return 0
 		if (istype(C,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = C
 			if (H.hasStatus(list("resting", "weakened", "stunned", "paralysis"))) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
@@ -442,14 +439,11 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		..()
 
 	is_friend(var/mob/living/C)
-		return istype(C.get_id(), /obj/item/card/id/syndicate) || istype(C, /mob/living/critter/gunbot/syndicate) //dumb lazy
+		return istype(C.get_id(), /obj/item/card/id/syndicate)
 
 /obj/deployable_turret/syndicate/active
+	active = 1
 	anchored = 1
-
-	New(loc)
-		..(src.loc, src.dir)
-		src.toggle_activated()
 
 /obj/deployable_turret/riot
 	name = "N.A.R.C.S."
@@ -481,10 +475,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 /obj/deployable_turret/riot/active
 	anchored = 1
-
-	New(loc)
-		..(src.loc, src.dir)
-		src.toggle_activated()
+	active = 1
 
 /////////////////////////////
 //   Turret Ability Stuff  //

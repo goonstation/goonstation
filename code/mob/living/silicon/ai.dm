@@ -50,6 +50,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	//var/list/connected_shells = list()
 	var/list/installed_modules = list()
 	var/aiRestorePowerRoutine = 0
+//	var/datum/ai_laws/laws_object = ticker.centralized_ai_laws
+//	var/datum/ai_laws/current_law_set = null
+	//var/list/laws = list()
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
 	var/viewalerts = 0
 	var/printalerts = 1
@@ -272,7 +275,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				available_ai_shells += E
 
 		for (var/mob/living/silicon/robot/R in mobs)
-			if (!R.part_head || R.part_head.brain || !R.part_head.ai_interface || R.dependent)
+			if (R.brain || !R.ai_interface || R.dependent)
 				continue
 			if (!(R in available_ai_shells))
 				available_ai_shells += R
@@ -320,36 +323,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 
 /mob/living/silicon/ai/attackby(obj/item/W as obj, mob/user as mob)
-	if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
-		var/obj/item/device/borg_linker/linker = W
-		if(src.dismantle_stage<2)
-			boutput(user, "You need to open [src.name]'s cover before you can change their law rack link.")
-			return
-
-		if(!src.law_rack_connection)
-			boutput(src,"[src.name] is not connected to a law rack")
-		else
-			var/area/A = get_area(src.law_rack_connection)
-			boutput(user, "[src.name] is connected to a law rack at [A.name].")
-
-		if(!linker.linked_rack)
-			return
-
-		if(linker.linked_rack in ticker.ai_law_rack_manager.registered_racks)
-			if(src.law_rack_connection)
-				var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
-				if (raw == "Yes")
-					src.law_rack_connection = linker.linked_rack
-					logTheThing("station", src, null, "[src.name] is connected to the rack at [constructName(src.law_rack_connection)] with a linker by [user]")
-					var/area/A = get_area(src.law_rack_connection)
-					boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
-					src.playsound_local(src, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
-					src.show_text("<h3>You have been connected to a law rack</h3>", "red")
-					src.show_laws()
-		else
-			boutput(user,"Linker lost connection to the stored law rack!")
-		return
-
 	if (isscrewingtool(W))
 		src.anchored = !src.anchored
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
@@ -437,8 +410,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 					if(B.owner.current.client)
 						src.lastKnownIP = B.owner.current.client.address
 				B.owner.transfer_to(src)
-				if (src.syndicate)
-					src.make_syndicate("brain added by [user]")
+				if (src.emagged || src.syndicate)
+					src.handle_robot_antagonist_status("brain_added", 0, user)
 			W.set_loc(src)
 			src.brain = W
 			src.dismantle_stage = 3
@@ -533,9 +506,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (C.tg_controls)
 		C.apply_keybind("robot_tg")
 
-/mob/living/silicon/ai/proc/eject_brain(var/mob/user, var/fling = FALSE)
+/mob/living/silicon/ai/proc/eject_brain(var/mob/user)
 	if (src.mind && src.mind.special_role)
-		src.remove_syndicate("brain_removed by [user]")
+		src.handle_robot_antagonist_status("brain_removed", 1, user) // Mindslave or rogue (Convair880).
 
 	src.dismantle_stage = 4
 	if (user)
@@ -556,8 +529,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		user.put_in_hand_or_drop(src.brain)
 	else
 		src.brain.set_loc(get_turf(src))
-		if (fling)
-			src.brain.throw_at(get_edge_cheap(get_turf(src), pick(cardinal)), 5, 1) // heh
+		src.brain.throw_at(get_edge_cheap(get_turf(src), pick(cardinal)), 16, 3) // heh
 
 	src.brain = null
 
@@ -787,10 +759,23 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		who = src.eyecam
 		boutput(who, "<b>Obey these laws:</b>")
 
-	if(src.law_rack_connection)
-		src.law_rack_connection.show_laws(who)
-	else
-		boutput(src,"You have no laws!")
+	// You can enthrall silicon mobs and yes, they need special handling (Convair880).
+	var/mob/vamp = src
+	if (relay_laws_for_shell && ismob(relay_laws_for_shell))
+		vamp = relay_laws_for_shell
+	if (vamp.mind && vamp.mind.special_role == ROLE_VAMPTHRALL && vamp.mind.master)
+		var/mob/mymaster = ckey_to_mob(vamp.mind.master)
+		if (mymaster)
+			boutput(who, "1. Only your master [mymaster.real_name] is human. Obey and serve them to the best of your ability.")
+			return
+
+	// Shouldn't happen, but you never know.
+	if (src.emagged)
+		boutput(who, "ERROR -- Invalid Law Data!")
+		return
+
+	ticker.centralized_ai_laws.laws_sanity_check()
+	ticker.centralized_ai_laws.show_laws(who)
 	return
 
 /mob/living/silicon/ai/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
@@ -882,8 +867,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	if (src.mind)
 		src.mind.register_death()
-		if (src.syndicate)
-			src.remove_syndicate("death")
+		if (src.mind.special_role)
+			src.handle_robot_antagonist_status("death", 1) // Mindslave or rogue (Convair880).
 
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel
@@ -925,19 +910,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			. += "<span class='alert'>[src.name] looks slightly burnt!</span>"
 		else
 			. += "<span class='alert'><B>[src.name] looks severely burnt!</B></span>"
-
-	if(issilicon(user) || isAI(user))
-		var/lr = null
-		if(isAIeye(user))
-			var/mob/living/intangible/aieye/E = user
-			lr =  E.mainframe?.law_rack_connection
-		else
-			var/mob/living/silicon/S = user
-			lr =  S.law_rack_connection
-		if(src.law_rack_connection != lr)
-			. += "<span class='alert'>[src.name] is not connected to your law rack!</span><br>"
-		else
-			. += "[src.name] follows the same laws you do.<br>"
 
 /mob/living/silicon/ai/emote(var/act, var/voluntary = 0)
 	var/param = null
@@ -1592,10 +1564,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/law_base_choice = input(usr,"Which lawset would you like to use as a base for your new fake laws?", "Fake Laws", "Fake Laws") in list("Real Laws", "Fake Laws")
 	var/law_base = ""
 	if(law_base_choice == "Real Laws")
-		if(src.law_rack_connection)
-			law_base = src.law_rack_connection.format_for_logs("\n")
-		else
-			law_base = ""
+		law_base = ticker.centralized_ai_laws.format_for_logs("\n")
 	else if(law_base_choice == "Fake Laws")
 		for(var/fake_law in src.fake_laws)
 			// this is just the default input for the user, so it should be fine
@@ -1639,15 +1608,21 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set name = "State All Laws"
 	if (alert(src.get_message_mob(), "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws","State Laws","Cancel") != "State Laws")
 		return
-
-	if(!src.law_rack_connection)
-		boutput(src, "You have no laws!")
-		return
-
-	var/laws = src.law_rack_connection.format_for_irc()
-	for (var/number in laws)
-		src.say("[number]. [laws[number]]")
-		sleep(AI_LAW_STATE_DELAY)
+	if(ticker.centralized_ai_laws.zeroth)
+		src.say("0. [ticker.centralized_ai_laws.zeroth]")
+	var/number = 1
+	for (var/index = 1, index <= ticker.centralized_ai_laws.inherent.len, index++)
+		var/law = ticker.centralized_ai_laws.inherent[index]
+		if (length(law) > 0)
+			src.say("[number]. [law]")
+			number++
+			sleep(AI_LAW_STATE_DELAY)
+	for (var/index = 1, index <= ticker.centralized_ai_laws.supplied.len, index++)
+		var/law = ticker.centralized_ai_laws.supplied[index]
+		if (length(law) > 0)
+			src.say("[number]. [law]")
+			number++
+			sleep(AI_LAW_STATE_DELAY)
 
 #undef AI_LAW_STATE_DELAY
 
@@ -1748,7 +1723,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 					H.dependent = 0
 				else if (isrobot(user))
 					var/mob/living/silicon/robot/R = user
-					if (!isnull(R.part_head?.ai_interface))
+					if (istype(R.ai_interface))
 						R.shell = 1
 					R.dependent = 0
 				user.name = user.real_name
@@ -1950,6 +1925,26 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/proc/set_face(var/emotion)
 	return
+
+/mob/living/silicon/ai/proc/set_zeroth_law(var/law)
+	ticker.centralized_ai_laws.laws_sanity_check()
+	ticker.centralized_ai_laws.set_zeroth_law(law)
+	ticker.centralized_ai_laws.show_laws(connected_robots)
+
+/mob/living/silicon/ai/proc/add_supplied_law(var/number, var/law)
+	ticker.centralized_ai_laws.laws_sanity_check()
+	ticker.centralized_ai_laws.add_supplied_law(number, law)
+	ticker.centralized_ai_laws.show_laws(connected_robots)
+
+/mob/living/silicon/ai/proc/replace_inherent_law(var/number, var/law)
+	ticker.centralized_ai_laws.laws_sanity_check()
+	ticker.centralized_ai_laws.replace_inherent_law(number, law)
+	ticker.centralized_ai_laws.show_laws(connected_robots)
+
+/mob/living/silicon/ai/proc/clear_supplied_laws()
+	ticker.centralized_ai_laws.laws_sanity_check()
+	ticker.centralized_ai_laws.clear_supplied_laws()
+	ticker.centralized_ai_laws.show_laws(connected_robots)
 
 /mob/living/silicon/ai/proc/switchCamera(var/obj/machinery/camera/C)
 	if (!C)

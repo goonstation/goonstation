@@ -24,8 +24,7 @@
 	var/burn_possible = 1 //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
 	//MBC : im shit. change burn_possible to '2' if you want it to pool itself instead of qdeling when burned
 	var/burning = null
-	/// How long an item takes to burn (or be consumed by other means), based on the weight class if no value is set
-	var/health = null
+	var/health = 4 //burn faster
 	var/burn_point = 15000  //this already exists but nothing uses it???
 	var/burn_output = 1500 //how hot should it burn
 	var/burn_type = 0 //0 = ash, 1 = melt
@@ -297,12 +296,6 @@
 		if (src.amount != 1)
 			// this is a gross hack to make things not just show "1" by default
 			src.inventory_counter.update_number(src.amount)
-	if (isnull(src.health))
-		switch (src.w_class)
-			if (W_CLASS_TINY to W_CLASS_NORMAL)
-				src.health = src.w_class + 1
-			else
-				src.health = src.w_class + 2
 	..()
 
 /obj/item/set_loc(var/newloc as turf|mob|obj in world)

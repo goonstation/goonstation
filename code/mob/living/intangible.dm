@@ -6,7 +6,6 @@
 	canmove = 1
 	blinded = 0
 	anchored = 1
-	throws_can_hit_me = FALSE
 	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 
 	New()

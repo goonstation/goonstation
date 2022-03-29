@@ -1,10 +1,10 @@
-/mob/living/critter/brullbar
-	name = "brullbar"
-	real_name = "brullbar"
+/mob/living/critter/wendigo
+	name = "wendigo"
+	real_name = "wendigo"
 	desc = "Oh god."
 	density = 1
-	icon_state = "brullbar"
-	icon_state_dead = "brullbar-dead"
+	icon_state = "wendigo"
+	icon_state_dead = "wendigo-dead"
 	custom_gib_handler = /proc/gibs
 	hand_count = 2
 	can_throw = 1
@@ -17,7 +17,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/animal/brullbar_roar.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, "sound/voice/animal/wendigo_roar.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] howls!</span></b>"
 		return null
 
@@ -36,21 +36,21 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = new /datum/limb/brullbar
+		HH.limb = new /datum/limb/wendigo
 		HH.icon_state = "handl"				// the icon state of the hand UI background
-		HH.limb_name = "left brullbar arm"
+		HH.limb_name = "left wendigo arm"
 
 		HH = hands[2]
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = new /datum/limb/brullbar
+		HH.limb = new /datum/limb/wendigo
 		HH.name = "right hand"
 		HH.suffix = "-R"
 		HH.icon_state = "handr"				// the icon state of the hand UI background
-		HH.limb_name = "right brullbar arm"
+		HH.limb_name = "right wendigo arm"
 
 	New()
 		..()
-		abilityHolder.addAbility(/datum/targetable/critter/fadeout/brullbar)
+		abilityHolder.addAbility(/datum/targetable/critter/fadeout/wendigo)
 		abilityHolder.addAbility(/datum/targetable/critter/tackle)
 		abilityHolder.addAbility(/datum/targetable/critter/frenzy)
 

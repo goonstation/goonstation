@@ -105,7 +105,7 @@ datum
 					if(16 to 35)
 						M.setStatus("drowsy", 40 SECONDS)
 					if(36 to INFINITY)
-						M.setStatusMin("paralysis", 3 SECONDS * mult)
+						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 3 SECONDS * mult))
 						M.setStatus("drowsy", 40 SECONDS)
 
 				..()
@@ -152,7 +152,7 @@ datum
 					if(16 to 35)
 						M.setStatus("drowsy", 40 SECONDS)
 					if(36 to INFINITY)
-						M.setStatusMin("paralysis", 3 SECONDS * mult)
+						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 3 SECONDS * mult))
 						M.setStatus("drowsy", 40 SECONDS)
 
 				..()
@@ -195,9 +195,9 @@ datum
 						M.change_misstep_chance(8 * mult)
 					else if (effect <= 9)
 						M.emote("twitch")
-						M.setStatusMin("weakened", 3 SECONDS * mult)
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 3 SECONDS * mult))
 					else if(effect <= 12)
-						M.setStatusMin("weakened", 5 SECONDS * mult)
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
 						M.druggy ++
 				else if (severity == 2)
 					if(effect <= 4)
@@ -205,9 +205,9 @@ datum
 						M.change_misstep_chance(14 * mult)
 					else if (effect <= 10)
 						M.emote("twitch")
-						M.setStatusMin("weakened", 3 SECONDS * mult)
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 3 SECONDS * mult))
 					else if (effect <= 13)
-						M.setStatusMin("weakened", 5 SECONDS * mult)
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
 						M.druggy ++
 
 
@@ -533,14 +533,14 @@ datum
 					if(effect <= 1)
 						M.visible_message("<span class='alert'><b>[M.name]</b> suddenly cluches their gut!</span>")
 						M.emote("scream")
-						M.setStatusMin("weakened", 4 SECONDS * mult)
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS * mult))
 					else if(effect <= 3)
 						M.visible_message("<span class='alert'><b>[M.name]</b> completely spaces out for a moment.</span>")
 						M.change_misstep_chance(15 * mult)
 					else if(effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> stumbles and staggers.</span>")
 						M.dizziness += 5
-						M.setStatusMin("weakened", 4 SECONDS * mult)
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS * mult))
 					else if(effect <= 7)
 						M.visible_message("<span class='alert'><b>[M.name]</b> shakes uncontrollably.</span>")
 						M.make_jittery(30)
@@ -548,14 +548,14 @@ datum
 					if(effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]</b> suddenly cluches their gut!</span>")
 						M.emote("scream")
-						M.setStatusMin("weakened", 8 SECONDS * mult)
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 8 SECONDS * mult))
 					else if(effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> jerks bolt upright, then collapses!</span>")
-						M.setStatusMin("weakened", 8 SECONDS * mult)
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 8 SECONDS * mult))
 					else if(effect <= 8)
 						M.visible_message("<span class='alert'><b>[M.name]</b> stumbles and staggers.</span>")
 						M.dizziness += 5
-						M.setStatusMin("weakened", 4 SECONDS * mult)
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS * mult))
 
 		medical/saline // COGWERKS CHEM REVISION PROJECT. magic drug, ought to use plasma or something
 			name = "saline-glucose solution"
@@ -839,7 +839,7 @@ datum
 					else if (effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
 						M.dizziness += 2
-						M.setStatusMin("weakened", 4 SECONDS * mult)
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS * mult))
 					if (effect <= 15) M.emote("collapse")
 
 		medical/heparin
@@ -1132,7 +1132,7 @@ datum
 					else if (effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
 						M.dizziness += 8
-						M.setStatusMin("weakened", 5 SECONDS * mult)
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
 					if (effect <= 15)
 						M.take_toxin_damage(1 * mult)
 
@@ -1201,7 +1201,7 @@ datum
 					holder.remove_reagent("itching", 3 * mult)
 				if(probmult(7)) M.emote("yawn")
 				if(prob(3))
-					M.setStatusMin("stunned", 3 SECONDS * mult)
+					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS * mult))
 					M.changeStatus("drowsy", 12 SECONDS)
 					M.visible_message("<span class='notice'><b>[M.name]<b> looks a bit dazed.</span>")
 				..()

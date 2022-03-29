@@ -358,8 +358,8 @@
 			var/obj/effects/explosion/E = new /obj/effects/explosion(get_turf(src.loc))
 			E.fingerprintslast = src.fingerprintslast
 			playsound(src.loc, 'sound/voice/farts/superfart.ogg', 100, 1)
-			qdel(src.buttbomb)
 			src.buttbomb = null
+			qdel(src.buttbomb)
 		clear_armer()
 		return
 

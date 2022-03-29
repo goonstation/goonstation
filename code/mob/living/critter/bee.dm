@@ -601,7 +601,7 @@
 			if ((get_dist(holder.owner, MT) <= 6) && !isdead(holder.owner))
 				MT.visible_message("<span class='combat'><b>[MT] clutches their temples!</b></span>")
 				MT.emote("scream")
-				MT.setStatusMin("paralysis", 20 SECONDS)
+				MT.setStatus("paralysis", max(MT.getStatusDuration("paralysis"), 20 SECONDS))
 				MT.take_brain_damage(10)
 
 				do_teleport(MT, locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1), 0)

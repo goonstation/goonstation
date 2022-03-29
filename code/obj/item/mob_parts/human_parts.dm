@@ -395,7 +395,7 @@
 			holder.emote(pick("trip", "collapse"))
 		else if(prob(rebelliousness)) //Slow down
 			boutput(holder, "<span class='alert'><b>Your [src.name] is slowing you down!</b></span>")
-			holder.setStatusMin("slowed", 1 SECOND)
+			holder.setStatus("slowed", max(holder.getStatusDuration("slowed"), 1 SECOND))
 		else if(prob(rebelliousness)) //Stumble around
 			boutput(holder, "<span class='alert'><b>Your [src.name] won't do what you tell it to!</b></span>")
 			if (holder.misstep_chance < 20)
@@ -542,8 +542,8 @@
 				H.l_hand = null
 
 		if (delete && remove_object)
-			qdel(remove_object)
 			remove_object = null
+			qdel(remove_object)
 
 	getHandIconState()
 		if (handlistPart && !(handlistPart in icon_states(special_icons)))
@@ -704,21 +704,21 @@
 		if (src.remove_object)
 			return "has [bicon(src.remove_object)] \an [src.remove_object] attached as a"
 
-/obj/item/parts/human_parts/arm/left/brullbar
-	name = "left brullbar arm"
-	icon_state = "arm_left_brullbar"
+/obj/item/parts/human_parts/arm/left/wendigo
+	name = "left wendigo arm"
+	icon_state = "arm_left_wendigo"
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = 0
 	skintoned = 0
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
-	limb_type = /datum/limb/brullbar
-	handlistPart = "l_hand_brullbar"
+	limb_type = /datum/limb/wendigo
+	handlistPart = "l_hand_wendigo"
 	show_on_examine = 1
-	/// Brullbar are pretty unnatural, and most people'd miss em if they suddenly turned into a lizard arm
+	/// Wendigeese are pretty unnatural, and most people'd miss em if they suddenly turned into a lizard arm
 	limb_is_unnatural = TRUE
-	kind_of_limb = (LIMB_BRULLBAR)
+	kind_of_limb = (LIMB_WENDIGO)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -729,24 +729,24 @@
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_brullbar")
+		src.standImage = image('icons/mob/human.dmi', "[src.slot]_wendigo")
 		return standImage
 
-/obj/item/parts/human_parts/arm/right/brullbar
-	name = "right brullbar arm"
-	icon_state = "arm_right_brullbar"
+/obj/item/parts/human_parts/arm/right/wendigo
+	name = "right wendigo arm"
+	icon_state = "arm_right_wendigo"
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = 0
 	skintoned = 0
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
-	limb_type = /datum/limb/brullbar
-	handlistPart = "r_hand_brullbar"
+	limb_type = /datum/limb/wendigo
+	handlistPart = "r_hand_wendigo"
 	show_on_examine = 1
 	/// If you went through the trouble to get yourself a wendy arm, you should keep it no matter how inhuman you become
 	limb_is_unnatural = TRUE
-	kind_of_limb = (LIMB_BRULLBAR)
+	kind_of_limb = (LIMB_WENDIGO)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -757,7 +757,7 @@
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_brullbar")
+		src.standImage = image('icons/mob/human.dmi', "[src.slot]_wendigo")
 		return standImage
 
 /obj/item/parts/human_parts/arm/left/hot
@@ -1131,7 +1131,7 @@
 
 /obj/item/parts/human_parts/arm/left/claw
 	name = "left claw arm"
-	icon_state = "arm_left_brullbar"
+	icon_state = "arm_left_wendigo"
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = 0
@@ -1139,11 +1139,11 @@
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
 	limb_type = /datum/limb/claw
-	handlistPart = "l_hand_brullbar"
+	handlistPart = "l_hand_wendigo"
 	siemens_coefficient = 0
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
-	kind_of_limb = (LIMB_BRULLBAR)
+	kind_of_limb = (LIMB_WENDIGO)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1154,12 +1154,12 @@
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_brullbar")
+		src.standImage = image('icons/mob/human.dmi', "[src.slot]_wendigo")
 		return standImage
 
 /obj/item/parts/human_parts/arm/right/claw
 	name = "right claw arm"
-	icon_state = "arm_right_brullbar"
+	icon_state = "arm_right_wendigo"
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = 0
@@ -1167,11 +1167,11 @@
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
 	limb_type = /datum/limb/claw
-	handlistPart = "r_hand_brullbar"
+	handlistPart = "r_hand_wendigo"
 	siemens_coefficient = 0
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
-	kind_of_limb = (LIMB_BRULLBAR)
+	kind_of_limb = (LIMB_WENDIGO)
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1182,7 +1182,7 @@
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_brullbar")
+		src.standImage = image('icons/mob/human.dmi', "[src.slot]_wendigo")
 		return standImage
 
 /obj/item/parts/human_parts/arm/right/stone
@@ -1681,12 +1681,12 @@
 	sever(mob/user)
 		. = ..()
 		src.visible_message("<span class='notice'>[src] withers greatly as it falls off!</span>")
-		src.limb_data = new/datum/limb/brullbar/severed_werewolf(src)
+		src.limb_data = new/datum/limb/wendigo/severed_werewolf(src)
 
 	remove(show_message)
 		. = ..()
 		src.visible_message("<span class='notice'>[src] withers greatly as it falls off!</span>")
-		src.limb_data = new/datum/limb/brullbar/severed_werewolf(src)
+		src.limb_data = new/datum/limb/wendigo/severed_werewolf(src)
 
 //// THE ACTUAL WOLFLIMBS ////
 /obj/item/parts/human_parts/leg/mutant/werewolf/left

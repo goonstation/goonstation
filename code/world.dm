@@ -67,8 +67,6 @@ var/global/mob/twitch_mob = 0
 
 	var/savefile/F = new /savefile(path, -1)
 	F["[field]"] >> .
-	if(length(.) == 0)
-		return null
 
 /world/proc/save_intra_round_value(var/field, var/value)
 	if (!field || isnull(value))
@@ -1491,9 +1489,8 @@ var/f_color_selector_handler/F_Color_Selector
 			//Tells shitbee what the current AI laws are (if there are any custom ones)
 			if ("ailaws")
 				if (current_state > GAME_STATE_PREGAME)
-					var/ircmsg[] = new()
-					ircmsg["laws"] = ticker.ai_law_rack_manager.format_for_logs(glue = "\n", round_end = TRUE, include_link = FALSE)
-					return ircbot.response(ircmsg)
+					var/list/laws = ticker.centralized_ai_laws.format_for_irc()
+					return ircbot.response(laws)
 				else
 					return 0
 

@@ -218,6 +218,7 @@
 				else
 					boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 60 seconds!</B></span>")
 					emergency_shuttle.settimeleft(60)
+					//src.authorized = null
 					qdel(src.authorized)
 					src.authorized = list(  )
 

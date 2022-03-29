@@ -957,6 +957,12 @@ proc/debug_map_apc_count(delim,zlim)
 		proc/is_ok(atom/A)
 			return TRUE
 
+	checkingexit
+		name = "checkingexit"
+		help = "Green = yes."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.color = theTurf.checkingexit ? "#0f0" : "#f00"
+
 	blocked_dirs
 		name = "blocked dirs"
 		help = "Displays dir flags of blocked turf exits"
@@ -1273,8 +1279,8 @@ proc/info_overlay_choices()
 				img:loc = null
 				qdel(img)
 			infoOverlayImages = list()
-		qdel(activeOverlay)
 		activeOverlay = null
+		qdel(activeOverlay)
 	else
 		var/type = available_overlays[name]
 		activeOverlay = new type()

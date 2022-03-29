@@ -77,6 +77,7 @@
 			return
 
 	on_removal()
+		..()
 		if (donor)
 			if (src.donor.reagents && src.reagents)
 				src.donor.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.total_volume)
@@ -97,7 +98,6 @@
 				donor.ailments.Remove(HD)
 				HD.affected_mob = null
 				src.diseases.Add(HD)
-		..()
 		return
 
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)

@@ -37,8 +37,7 @@
 	cant_emag = 1
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_DESTRUCT
 	mats = 30 // maybe a bit high??
-	health = 200
-	health_max = 200
+
 	xmasify()
 		return
 

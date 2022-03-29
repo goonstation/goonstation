@@ -290,12 +290,17 @@
 
 		//Mostly copy pasted from turf/Enter. Sucks, but we need an object rather than a boolean
 		//First, check for directional blockers on the entering object's tile
-		for(var/obj/obstacle in orig_turf)
-			if(obstacle == thing)
-				continue
-			if(!obstacle.CheckExit(thing, dest_turf))
-				no_go = obstacle
-				break
+		if (orig_turf.checkingexit > 0)
+			for(var/obj/obstacle in orig_turf)
+				if(obstacle == thing)
+					continue
+				if(obstacle.event_handler_flags & USE_CHECKEXIT)
+					var/obj/O = thing
+					if (!istype(O) || !(HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING) \
+					  && HAS_FLAG(obstacle.object_flags, HAS_DIRECTIONAL_BLOCKING) \
+					  && obstacle.dir == O.dir))
+						if(!obstacle.CheckExit(thing, dest_turf))
+							no_go = obstacle
 
 		//next, check if the turf itself prevents something from entering it (i.e. it's a wall)
 		if (isnull(no_go))

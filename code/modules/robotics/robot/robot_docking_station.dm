@@ -822,7 +822,7 @@
 				boutput(H, "<span class='alert'>You feel... different.</span>")
 				src.go_out()
 
-				SPAWN(0)
+				SPAWN(0) // handle_robot_antagonist_status can sleep if it needs to grab a resource so here we are
 					var/bdna = null // For forensics (Convair880).
 					var/btype = null
 					if (H.bioHolder.Uid && H.bioHolder.bloodType)

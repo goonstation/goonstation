@@ -21,7 +21,6 @@
 
 /obj/item/plant/herb
 	name = "herb base"
-	health = 4
 	burn_point = 330
 	burn_output = 800
 	burn_possible = 2

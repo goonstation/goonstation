@@ -1026,7 +1026,7 @@ Frequency:
 		if (istype(aiMainframe))
 			aiMainframe.show_laws(0, src)
 		else
-			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
+			ticker.centralized_ai_laws.show_laws(src)
 
 		return
 

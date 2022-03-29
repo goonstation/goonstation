@@ -417,7 +417,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon_state = "ringrope"
 	plane = PLANE_DEFAULT
 	layer = OBJ_LAYER
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 
 	Cross(atom/movable/mover) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
@@ -430,14 +430,12 @@ obj/decal/fakeobjects/teleport_pad
 		else
 			return 1
 
-	Uncross(atom/movable/O, do_bump = TRUE)
+	CheckExit(atom/movable/O as mob|obj, target as turf)
 		if (!src.density)
-			. = 1
-		else if (get_dir(O.loc, O.movement_newloc) & src.dir)
-			. = 0
-		else
-			. = 1
-		UNCROSS_BUMP_CHECK(O)
+			return 1
+		if (get_dir(O.loc, target) & src.dir)
+			return 0
+		return 1
 
 /obj/stool/chair/boxingrope_corner
 	name = "Boxing Ropes"
@@ -447,7 +445,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 
 	rotatable = 0
 	foldable = 0
@@ -479,14 +477,12 @@ obj/decal/fakeobjects/teleport_pad
 		else
 			return 1
 
-	Uncross(atom/movable/O, do_bump = TRUE)
+	CheckExit(atom/movable/O as mob|obj, target as turf)
 		if (!src.density)
-			. = 1
-		else if (get_dir(O.loc, O.movement_newloc) & src.dir)
-			. = 0
-		else
-			. = 1
-		UNCROSS_BUMP_CHECK(O)
+			return 1
+		if (get_dir(O.loc, target) & src.dir)
+			return 0
+		return 1
 
 /obj/decal/boxingropeenter
 	name = "Ring entrance"

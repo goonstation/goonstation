@@ -6251,7 +6251,7 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/sec)
 "alj" = (
-/obj/machinery/vehicle/miniputt/nanoputt/security,
+/obj/machinery/vehicle/miniputt/nanoputt,
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "alk" = (
@@ -6281,6 +6281,11 @@
 /obj/item/crowbar,
 /obj/item/device/gps,
 /obj/item/storage/belt/utility,
+/obj/machinery/door_control{
+	id = "pod_port";
+	name = "Hangar Door Control";
+	pixel_y = 28
+	},
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -6557,8 +6562,27 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/space)
+"alN" = (
+/obj/machinery/door/poddoor/blast{
+	autoclose = 1;
+	doordir = "left";
+	icon_state = "bdoorright1";
+	id = "pod_port";
+	layer = 4;
+	name = "West Pod Hangar"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/engine{
+	icon_state = "engine_caution_we"
+	},
+/area/station/hangar/sec)
 "alO" = (
-/obj/machinery/vehicle/pod_smooth/heavy/security,
+/obj/machinery/vehicle/pod_smooth/heavy,
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "alP" = (
@@ -6910,6 +6934,23 @@
 	icon_state = "engine_caution_we"
 	},
 /area/station/hangar/main)
+"amh" = (
+/obj/machinery/door/poddoor/blast{
+	autoclose = 1;
+	id = "pod_port";
+	layer = 4;
+	name = "West Pod Hangar"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/engine{
+	icon_state = "engine_caution_we"
+	},
+/area/station/hangar/sec)
 "ami" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7072,14 +7113,23 @@
 	},
 /area/station/hangar/main)
 "amy" = (
+/obj/machinery/door/poddoor/blast{
+	autoclose = 1;
+	doordir = "left";
+	icon_state = "bdoorleft1";
+	id = "pod_port";
+	layer = 4;
+	name = "West Pod Hangar"
+	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	dir = 4;
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal/vertical,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/engine{
+	icon_state = "engine_caution_we"
+	},
 /area/station/hangar/sec)
 "amz" = (
 /obj/disposalpipe/segment{
@@ -7523,7 +7573,7 @@
 /area/station/hangar/sec)
 "ani" = (
 /obj/machinery/light,
-/obj/machinery/vehicle/miniputt/nanoputt/security,
+/obj/machinery/vehicle/miniputt/nanoputt,
 /turf/simulated/floor/engine{
 	dir = 6;
 	icon_state = "engine_caution_corners2"
@@ -7536,7 +7586,7 @@
 	},
 /area/station/hangar/sec)
 "ank" = (
-/obj/machinery/vehicle/pod_smooth/heavy/security,
+/obj/machinery/vehicle/pod_smooth/heavy,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
 	icon_state = "engine_caution_south"
@@ -8468,6 +8518,14 @@
 /obj/machinery/hair_dye_dispenser,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
+"api" = (
+/obj/decal/fakeobjects/pole{
+	pixel_x = -14
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/entry{
+	name = "Entry Hallway"
+	})
 "apj" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	name = "Maintenance"
@@ -27293,6 +27351,7 @@
 /obj/table/reinforced/auto,
 /obj/item/device/infra_sensor,
 /obj/item/clothing/glasses/meson,
+/obj/item/aiModule/rename,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -27717,17 +27776,17 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bgy" = (
 /obj/disposalpipe/segment/food{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bgz" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bgB" = (
 /obj/cable{
 	d1 = 4;
@@ -28589,7 +28648,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "biR" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -29679,7 +29738,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "blm" = (
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -30272,6 +30331,18 @@
 /obj/cable,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
+"bmK" = (
+/obj/machinery/light,
+/obj/table/reinforced/auto,
+/obj/item/aiModule/reset,
+/obj/item/circuitboard/aiupload,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/decal/tile_edge/line/green{
+	dir = 9;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
 "bmL" = (
 /obj/shrub{
 	dir = 1
@@ -30683,7 +30754,7 @@
 "bnE" = (
 /obj/disposalpipe/segment/food,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bnG" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/Zeta)
@@ -32154,7 +32225,9 @@
 	},
 /area/station/hallway/primary/east)
 "bqv" = (
-/obj/machinery/door_control/podbay/security/new_walls/north{
+/obj/machinery/door_control{
+	id = "pod_port";
+	name = "Hangar Door Control";
 	pixel_y = 28
 	},
 /turf/simulated/floor/engine,
@@ -43978,7 +44051,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "csQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos)
@@ -44010,7 +44083,7 @@
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "cye" = (
 /obj/cable{
 	d1 = 4;
@@ -44215,7 +44288,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "cVf" = (
 /obj/machinery/light,
 /turf/simulated/floor/red/side,
@@ -45040,6 +45113,13 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
+"fdK" = (
+/obj/machinery/computer/aiupload,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/turret_protected/ai)
 "fho" = (
 /obj/machinery/light_switch/west{
 	dir = 4
@@ -45134,7 +45214,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "foU" = (
 /obj/landmark/gps_waypoint,
 /obj/cable{
@@ -45453,7 +45533,7 @@
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "fZZ" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
@@ -45535,7 +45615,7 @@
 /area/station/turret_protected/ai)
 "glL" = (
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "gnD" = (
 /obj/stool/chair/red{
 	anchored = 0;
@@ -45916,7 +45996,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "hpd" = (
 /obj/cable{
 	d1 = 2;
@@ -46482,7 +46562,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "iMu" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -46609,7 +46689,7 @@
 	pixel_y = -10
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "jhR" = (
 /obj/cable{
 	d1 = 2;
@@ -46852,7 +46932,7 @@
 	},
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "jUC" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -46949,7 +47029,7 @@
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "kcx" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -47011,7 +47091,7 @@
 	pixel_y = -19
 	},
 /turf/simulated/floor/redblack,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "khz" = (
 /obj/pool/perspective{
 	dir = 4;
@@ -47485,7 +47565,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/redblack,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "lfI" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel{
@@ -47657,12 +47737,6 @@
 	dir = 5
 	},
 /area/station/security/hos)
-"ltT" = (
-/obj/machinery/r_door_control/podbay/security/new_walls/west{
-	pixel_x = -24
-	},
-/turf/simulated/floor/engine,
-/area/station/hangar/sec)
 "lzZ" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2"
@@ -48864,14 +48938,6 @@
 /obj/access_spawn/cargo,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
-"oZj" = (
-/obj/decal/fakeobjects/pole{
-	pixel_x = -14
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
 "oZJ" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -48953,7 +49019,7 @@
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "pox" = (
 /obj/disposalpipe/segment/food{
 	dir = 2;
@@ -49360,14 +49426,14 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "qAY" = (
 /obj/disposalpipe/segment/food,
 /obj/machinery/weapon_stand/shotgun_rack,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "qBc" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -49568,7 +49634,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "rgv" = (
 /obj/table/wood/auto,
 /obj/item/storage/secure/ssafe{
@@ -49799,7 +49865,7 @@
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "rUq" = (
 /obj/disposalpipe/segment/mail,
 /obj/table/reinforced/auto,
@@ -50408,7 +50474,7 @@
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "tAi" = (
 /turf/simulated/floor/red/side{
 	dir = 10
@@ -50573,16 +50639,6 @@
 	icon_state = "fpurple2"
 	},
 /area/station/science/research_director)
-"tRG" = (
-/obj/machinery/light,
-/obj/table/reinforced/auto,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/decal/tile_edge/line/green{
-	dir = 9;
-	icon_state = "line2"
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
 "tUJ" = (
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn{
@@ -50847,7 +50903,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "uDI" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment{
@@ -51469,7 +51525,7 @@
 /turf/simulated/floor/redblack/corner{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "wlE" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -51949,13 +52005,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/security/brig)
-"xPV" = (
-/obj/machinery/lawrack,
-/obj/disposalpipe/segment,
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/turret_protected/ai)
 "xRz" = (
 /obj/machinery/light{
 	dir = 8;
@@ -77864,8 +77913,8 @@ aay
 aac
 aaT
 aiW
-amy
-amy
+alN
+amh
 amy
 aiW
 aiW
@@ -78124,7 +78173,7 @@ aiW
 bqv
 all
 all
-ltT
+all
 ali
 aoe
 anh
@@ -86651,7 +86700,7 @@ aWQ
 aWQ
 kGL
 ben
-xPV
+fdK
 bgF
 bhE
 biT
@@ -87122,7 +87171,7 @@ amX
 any
 aeG
 aeG
-oZj
+api
 aeG
 aqr
 aCN
@@ -88199,7 +88248,7 @@ bhF
 biZ
 bkk
 blx
-tRG
+bmK
 bnG
 bpe
 bqr

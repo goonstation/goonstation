@@ -25,6 +25,12 @@
 	name = "astroturf"
 	},
 /area/prefab/zoo)
+"g" = (
+/obj/critter/wendigo,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/zoo)
 "h" = (
 /obj/critter/maneater,
 /turf/simulated/floor/grass{
@@ -123,6 +129,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/prefab/zoo)
+"z" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/clothing/shoes/clown_shoes/blue,
+/obj/item/clothing/under/misc/clown/blue,
+/obj/item/clothing/mask/clown_hat/blue,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/zoo)
 "A" = (
 /obj/item/raw_material/erebite,
 /obj/item/raw_material/plasmastone{
@@ -156,21 +171,6 @@
 /area/prefab/zoo)
 "E" = (
 /obj/critter/bear,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/prefab/zoo)
-"J" = (
-/obj/critter/brullbar,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/prefab/zoo)
-"X" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/item/clothing/shoes/clown_shoes/blue,
-/obj/item/clothing/under/misc/clown/blue,
-/obj/item/clothing/mask/clown_hat/blue,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -304,7 +304,7 @@ l
 l
 l
 k
-X
+z
 e
 c
 b
@@ -407,7 +407,7 @@ b
 (13,1,1) = {"
 b
 c
-J
+g
 e
 k
 l

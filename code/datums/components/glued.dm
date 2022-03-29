@@ -2,9 +2,9 @@
 
 TYPEINFO(/datum/component/glued)
 	initialization_args = list(
-		ARG_INFO("target", DATA_INPUT_REF, "What is this glued to", null),
-		ARG_INFO("glue_duration", DATA_INPUT_NUM, "How long the glue lasts, null for infinity", null),
-		ARG_INFO("glue_removal_time", DATA_INPUT_NUM, "How long does it take to unglue stuff", null),
+		ARG_INFO("target", "ref", "What is this glued to", null),
+		ARG_INFO("glue_duration", "num", "How long the glue lasts, null for infinity", null),
+		ARG_INFO("glue_removal_time", "num", "How long does it take to unglue stuff", null),
 	)
 
 /datum/component/glued
@@ -53,7 +53,6 @@ TYPEINFO(/datum/component/glued)
 	RegisterSignal(parent, COMSIG_MOVABLE_BLOCK_MOVE, .proc/move_blocked_check)
 	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, .proc/on_set_loc)
 	RegisterSignal(parent, list(COMSIG_ATOM_EXPLODE, COMSIG_ATOM_EXPLODE_INSIDE), .proc/on_explode)
-	RegisterSignal(parent, COMSIG_ATOM_HITBY_PROJ, .proc/on_hitby_proj)
 
 /datum/component/glued/proc/delayed_dry_up(glue_duration)
 	set waitfor = FALSE
@@ -84,10 +83,6 @@ TYPEINFO(/datum/component/glued)
 
 /datum/component/glued/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, list/params, is_special)
 	src.glued_to.Attackby(item, user, params, is_special)
-	user.lastattacked = user
-
-/datum/component/glued/proc/on_hitby_proj(atom/movable/parent, obj/projectile/proj)
-	src.glued_to.bullet_act(proj)
 
 /datum/component/glued/proc/move_blocked_check(atom/movable/parent, atom/new_loc, direct)
 	return new_loc != glued_to.loc
@@ -110,8 +105,7 @@ TYPEINFO(/datum/component/glued)
 
 /datum/component/glued/UnregisterFromParent()
 	var/atom/movable/parent = src.parent
-	UnregisterSignal(parent, list(COMSIG_ATTACKHAND, COMSIG_ATTACKBY, COMSIG_MOVABLE_BLOCK_MOVE, COMSIG_MOVABLE_SET_LOC, COMSIG_ATOM_EXPLODE,
-		COMSIG_ATOM_EXPLODE_INSIDE, COMSIG_ATOM_HITBY_PROJ))
+	UnregisterSignal(parent, list(COMSIG_ATTACKHAND, COMSIG_ATTACKBY, COMSIG_MOVABLE_BLOCK_MOVE, COMSIG_MOVABLE_SET_LOC, COMSIG_ATOM_EXPLODE, COMSIG_ATOM_EXPLODE_INSIDE))
 	UnregisterSignal(glued_to, COMSIG_PARENT_PRE_DISPOSING)
 	parent.remove_filter("glued_outline")
 	parent.animate_movement = src.original_animate_movement

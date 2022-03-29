@@ -1801,7 +1801,7 @@
 /area/station/medical/research)
 "aeb" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
@@ -11046,7 +11046,7 @@
 "avq" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
-	},
+},
 /turf/simulated/floor,
 /area/station/bridge)
 "avr" = (
@@ -16799,6 +16799,7 @@
 /obj/item/aiModule/protectStation,
 /obj/item/aiModule/oneHuman,
 /obj/item/aiModule/freeform,
+/obj/item/aiModule/reset,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "aFS" = (
@@ -17379,7 +17380,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/lawrack,
+/obj/machinery/computer/aiupload,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "aGU" = (
@@ -18494,7 +18495,7 @@
 /area/station/turret_protected/ai)
 "aIO" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/lawrack,
+/obj/machinery/computer/aiupload,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -19166,6 +19167,7 @@
 /obj/item/aiModule/protectStation,
 /obj/item/aiModule/oneHuman,
 /obj/item/aiModule/freeform,
+/obj/item/aiModule/reset,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "aJZ" = (
@@ -28977,7 +28979,7 @@
 	icon_state = "1-8"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)

@@ -16,7 +16,6 @@ RACK PARTS
 	stamina_damage = 35
 	stamina_cost = 22
 	stamina_crit_chance = 10
-	health = 8
 	var/furniture_type = /obj/table/auto
 	var/furniture_name = "table"
 	var/reinforced = 0

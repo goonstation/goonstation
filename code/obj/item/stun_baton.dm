@@ -19,7 +19,6 @@
 	flags = FPRINT | ONBELT | TABLEPASS
 	force = 10
 	throwforce = 7
-	health = 7
 	w_class = W_CLASS_NORMAL
 	mats = list("MET-3"=10, "CON-2"=10)
 	contraband = 4

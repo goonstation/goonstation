@@ -8,7 +8,7 @@
 	layer = OBJ_LAYER
 	color = "#ffffff"
 	flags = FPRINT | USEDELAY | ON_BORDER
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	dir = SOUTH
 	custom_suicide = 1
@@ -101,14 +101,12 @@
 			return !density
 		return 1
 
-	Uncross(atom/movable/O, do_bump = TRUE)
+	CheckExit(atom/movable/O as mob|obj, target as turf)
 		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced)  || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
-			. = 1
-		else if (dir & get_dir(O.loc, O.movement_newloc))
-			. = 0
-		else
-			. = 1
-		UNCROSS_BUMP_CHECK(O)
+			return 1
+		if (dir & get_dir(O.loc, target))
+			return 0
+		return 1
 
 	attackby(obj/item/W as obj, mob/user)
 		if (isweldingtool(W))
@@ -157,7 +155,7 @@
 	proc/try_vault(mob/user, use_owner_dir = FALSE)
 		if (railing_is_broken(src))
 			user.show_text("[src] is broken! All you can really do is break it down...", "red")
-		else if(!actions.hasAction(user, "railing_jump"))
+		else
 			actions.start(new /datum/action/bar/icon/railing_jump(user, src, use_owner_dir), user)
 
 	reinforced
