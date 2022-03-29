@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author CodeJester (https://github.com/codeJester27)
+ * @license ISC
+ */
+
 import { classes } from 'common/react';
 import { useBackend } from "../backend";
 import { AnimatedNumber, Box, Button, Dimmer, Icon, Knob, Section, SectionEx, Stack } from '../components';

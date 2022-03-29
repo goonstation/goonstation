@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author CodeJester (https://github.com/codeJester27)
+ * @license ISC
+ */
+
 import { Box, ColorBox, Flex, Icon, NoticeBox, Section, Tooltip } from '../../components';
 import { freezeTemperature } from './temperatureUtils';
 

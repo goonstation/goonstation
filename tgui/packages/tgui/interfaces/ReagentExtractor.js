@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author CodeJester (https://github.com/codeJester27)
+ * @license ISC
+ */
+
 import { useBackend, useSharedState, useLocalState } from "../backend";
 import { Box, Button, Dimmer, Divider, Flex, NumberInput, Section, SectionEx, Stack } from '../components';
 import { Window } from '../layouts';

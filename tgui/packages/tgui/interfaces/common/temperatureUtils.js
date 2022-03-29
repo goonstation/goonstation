@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author CodeJester (https://github.com/codeJester27)
+ * @license ISC
+ */
+
 import { Color } from 'common/color';
 
 export const TemperatureColors = {
