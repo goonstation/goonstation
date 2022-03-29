@@ -726,7 +726,7 @@
 	object_flags = 0 // so they don't inherit the HAS_DIRECTIONAL_BLOCKING flag from thindows
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
-	var/mod = null
+	var/mod = "W-"
 	var/list/connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood, /turf/simulated/wall/auto/marsoutpost,
 		/turf/simulated/shuttle/wall, /turf/unsimulated/wall, /turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner,
 		/obj/machinery/door, /obj/window, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,
@@ -759,8 +759,8 @@
 			src.UpdateOverlays(null, "connect")
 			return
 
-		var/connectdir = get_connected_directions_bitflag(connects_to, connects_to_exceptions)
-		var/overlaydir = get_connected_directions_bitflag(connects_to, mergeLists(connects_to_exceptions, connects_with_overlay_exceptions))
+		var/connectdir = get_connected_directions_bitflag(connects_to, connects_to_exceptions, connect_diagonal=1)
+		var/overlaydir = get_connected_directions_bitflag(connects_to, mergeLists(connects_to_exceptions, connects_with_overlay_exceptions), connect_diagonal=1)
 
 		src.icon_state = "[mod][connectdir]"
 		if (overlaydir)
@@ -786,7 +786,7 @@
 
 /obj/window/auto/reinforced
 	icon_state = "mapwin_r"
-	mod = "R"
+	mod = "R-"
 	default_reinforcement = "steel"
 	health = 50
 	health_max = 50
@@ -867,7 +867,7 @@
 
 /obj/window/auto/crystal/reinforced
 	icon_state = "mapwin_r"
-	mod = "R"
+	mod = "R-"
 	default_reinforcement = "steel"
 	health = 100
 	health_max = 100
