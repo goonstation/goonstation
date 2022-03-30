@@ -1498,17 +1498,28 @@ obj/item/whetstone
 
 	var/mode = 1
 	var/maximum_force = 100
+	var/swipe_color = "#0081DF"
+	var/stab_color = "#FF0000"
 
 	New()
 		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.setItemSpecial(/datum/item_special/swipe)
+		src.update_special_color()
 		AddComponent(/datum/component/itemblock/saberblock)
 		BLOCK_SETUP(BLOCK_SWORD)
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
+
+/obj/item/heavy_power_sword/proc/update_special_color()
+	var/datum/item_special/swipe/swipe = src.special
+	var/datum/item_special/rangestab/stab = src.special
+	if (istype(swipe))
+		swipe.swipe_color = src.swipe_color
+	else if (istype(stab))
+		stab.stab_color = src.stab_color
 
 /obj/item/heavy_power_sword/attack(mob/M as mob, mob/user as mob, def_zone)
 
@@ -1540,17 +1551,16 @@ obj/item/whetstone
 			icon_state = "hadar_sword1"
 			item_state = "hadar_sword1"
 			src.mode = 2
-			user.update_inhands()
 			src.setItemSpecial(/datum/item_special/rangestab)
-			tooltip_rebuild = TRUE
 		if(2)
 			boutput(user, "<span class='alert'>[src] transforms in order to swing wide!</span>")
 			icon_state = "hadar_sword2"
 			item_state = "hadar_sword2"
 			src.mode = 1
-			user.update_inhands()
 			src.setItemSpecial(/datum/item_special/swipe)
-			tooltip_rebuild = TRUE
+	user.update_inhands()
+	tooltip_rebuild = TRUE
+	src.update_special_color()
 	..()
 
 // Battering ram - a door breeching melee tool for the armory
