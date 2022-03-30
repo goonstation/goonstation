@@ -115,7 +115,7 @@
 		name = initial(name)
 
 		if (istype(src.material))
-			health_max = material.hasProperty("density") ? round(max(material.getProperty("density"), 100) * 1.5) : health_max
+			health_max = material.hasProperty("density") ? round(material.getProperty("density") * 2) : health_max
 			health = health_max
 			cut_resist = material.hasProperty("hard") ? material.getProperty("hard")*2 : cut_resist
 			blunt_resist = material.hasProperty("density") ? material.getProperty("density")*2 : blunt_resist

@@ -1,4 +1,9 @@
 
+(t)tue mar 29 22
+(u)Wisemonster
+(p)7956
+(e)|
+(*)Engineering cyborg modules now come with a battery-hungry power shovel, to help with the Oshan engine. (Shovel is restricted to modules on Oshan)
 (t)mon mar 28 22
 (u)Yellow
 (p)7547
