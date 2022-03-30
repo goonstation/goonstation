@@ -1,5 +1,9 @@
 
 (t)wed mar 30 22
+(u)Hans
+(p)7563
+(e)🆕🎨|feature, sprites
+(*)Added space rattlesnakes to the game. Beware!
 (u)CodeJester
 (p)7822
 (e)📄|tgui
