@@ -1,5 +1,9 @@
 
 (t)wed mar 30 22
+(u)zjdtmkhzt
+(p)8026
+(e)🆕⚖|feature, balance
+(+)The nukeops heavy energy sword can now reflect projectiles like a csaber can. (This was always there, it just didn't work because it was bugged until now.)
 (u)Hans
 (p)7563
 (e)🆕🎨|feature, sprites
