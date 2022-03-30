@@ -1527,3 +1527,73 @@
 			return prob(50)
 		else
 			return ..()
+
+/obj/critter/spacerattlesnake
+	name = "space rattlesnake"
+	desc = "A rattlesnake in space."
+	icon_state = "rattlesnake"
+	dead_state = "rattlesnake_dead"
+	density = 1
+	health = 50
+	aggressive = 1
+	defensive = 1
+	wanderer = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
+	atkcarbon = 1
+	atksilicon = 1
+	firevuln = 1
+	brutevuln = 1
+	angertext = "hisses at"
+	butcherable = 0
+	flags = NOSPLASH | OPENCONTAINER | TABLEPASS
+	flying = 0
+
+	seek_target()
+		src.anchored = 0
+		for (var/mob/living/C in hearers(src.seekrange,src))
+			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
+			if (iscarbon(C) && !src.atkcarbon) continue
+			if (issilicon(C) && !src.atksilicon) continue
+			if (C.health < 0) continue
+			if (C in src.friends) continue
+
+			if(!src.attack)
+				switch(get_dist(src, C))
+					if (0 to 1)
+						icon_state = "rattlesnake"
+						if (iscarbon(C) && src.atkcarbon) src.attack = 1
+						if (issilicon(C) && src.atksilicon) src.attack = 1
+						if(!ON_COOLDOWN(src, "snake bite", 10 SECONDS))
+							C.visible_message("<span class='combat'><B>[src]</B> bites [C.name]!</span>")
+							C.reagents?.add_reagent("viper_venom", rand(15,25))
+							playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+							C.emote("scream")
+					if (1 to 2)
+						icon_state = "rattlesnake_rattle"
+						if(!ON_COOLDOWN(src, "Rattle", 6 SECONDS))
+							C.visible_message("<span class='combat'><B>[src]</B> is rattling, better not get much closer!</span>")
+							playsound(src.loc, "sound/musical_instruments/tambourine/tambourine_4.ogg", 80, 0, 0, 0.75)
+					if (2 to 3)
+						icon_state = "rattlesnake_coiled"
+					if (3 to INFINITY)
+						icon_state = "rattlesnake"
+
+			if (src.attack)
+				icon_state = "rattlesnake"
+				src.target = C
+				src.oldtarget_name = C.name
+				src.visible_message("<span class='combat'><b>[src]</b> charges at [C.name]!</span>")
+				src.task = "chasing"
+				break
+
+	ChaseAttack(mob/M)
+		..()
+		if(!ON_COOLDOWN(src, "snake bite", 10 SECONDS))
+			M.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
+			M.reagents?.add_reagent("viper_venom", rand(10,15))
+			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			M.emote("scream")
+		src.task = "chasing"
+
+	CritterAttack(mob/M)
+		src.task = "chasing"
