@@ -589,7 +589,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	name = "flyzapper implant" //todo better name idk
 	big_message = " begins radiating electricity"
 	small_message = "'s hair starts standing on end"
-	power = 2
+	power = 3
 
 	// this is kinda horribly inefficient but it runs pretty rarely so eh
 	on_death()
