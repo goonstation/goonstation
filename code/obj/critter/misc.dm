@@ -1060,33 +1060,10 @@
 		qdel(src)
 
 	CritterAttack(mob/M)
-		if(GET_COOLDOWN(src, "envelope_attack"))
+		if(GET_COOLDOWN(src, "envelop_attack"))
 			return
-
-		src.visible_message("<span class='combat'><B>The [src.name]</B> starts to envelop [M]!</span>")
-		SETUP_GENERIC_ACTIONBAR(src, src, 6 SECONDS, .proc/finish_envelope, list(M), 'icons/mob/critter_ui.dmi', "devour_over", \
-					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
-		ON_COOLDOWN(src, "envelope_attack",7 SECONDS)
-
-	proc/finish_envelope(var/mob/M)
-		if (M && IN_RANGE(src, M, 1))
-			logTheThing("combat", M, null, "was enveloped by [src] (obj) at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
-			for (var/mob/O in AIviewers(src))
-				O.show_message("<span class='combat'><B>[src]</B> completely envelops [M]!</span>", 1)
-			playsound(src, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
-
-			M.death()
-			M.ghostize()
-			if (iscarbon(M))
-				for (var/obj/item/W as anything in M)
-					M.u_equip(W)
-					if (W)
-						W.set_loc(M.loc)
-						W.dropped(M)
-						W.layer = initial(W.layer)
-
-			qdel(M)
-
+		actions.start(new/datum/action/bar/icon/envelopAbility/critter(M, null), src)
+		ON_COOLDOWN(src, "envelop_attack",7 SECONDS)
 
 	blob_act(power)
 		return
@@ -1094,7 +1071,6 @@
 	attack_hand(var/mob/user as mob)
 		if (src.alive)
 			boutput(user, "<span class='combat'><b>Your hand passes right through! It's so cold...</b></span>")
-
 		return
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
