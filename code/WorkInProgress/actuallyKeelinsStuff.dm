@@ -2715,7 +2715,7 @@ Returns:
 			if(T.movable_area_prev_type != null)
 				new T.movable_area_prev_type (T)
 			else
-				T.ReplaceWithSpace()
+				T.ReplaceWithSpaceForce()
 
 		for(var/atom/movable/A in objects_to_move)
 			A.animate_movement = 0
