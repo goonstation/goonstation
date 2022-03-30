@@ -16,11 +16,11 @@ You should be greeted with a screen that looks like this:![](https://i.imgur.com
 
 If this is your first time using VSCode, take a minute to familiarize yourself with the layout of the software. Here's an example of what it may look like when you're working on something:
  ![](https://i.imgur.com/wP6byLS.png)
-1: This is your sidebar. From this, you can search the codebase, browse files, debug your code, and manage your branches.
-2: This bar is an extension of whatever you have selected from the smaller sidebar. Here you see the source control window's user interface. (Please do note that, unless you have the GitLens and GitGraph extensions, your source control sidebar will probably look different than what is displayed!)
-3: These are the tabs and files you have open. From here, you can see any files you've changed, and see any unsaved or modified files
-4: This is the current file that you've selected's contents.
-5: This is the output terminal. If and when you have any bugs, you'll see them here, and you can track your code compiling from here, as well as being able to interface with git directly through command-line prompts.
+1. This is your sidebar. From this, you can search the codebase, browse files, debug your code, and manage your branches.
+2. This bar is an extension of whatever you have selected from the smaller sidebar. Here you see the source control window's user interface. (Please do note that, unless you have the GitLens and GitGraph extensions, your source control sidebar will probably look different than what is displayed!)
+3. These are the tabs and files you have open. From here, you can see any files you've changed, and see any unsaved or modified files
+4. This is the current file that you've selected's contents.
+5. This is the output terminal. If and when you have any bugs, you'll see them here, and you can track your code compiling from here, as well as being able to interface with git directly through command-line prompts.
 
 
 Now, we need to create our own repository to contribute to! :rocket:
@@ -262,7 +262,7 @@ Worry not, friend! Atomization just means to break your PR down into smaller chu
 
 -"Man, this sure is taking a long while!"
 The unforunate truth of Goonstation is that the developers are, just like you and the admins, unpaid volunteers who do this in their spare time, and can take a while before merging your request. Furthermore, depending on how large it is, how many systems are changed, and how controversial it might be, the developers usually give people ample time to bring up any concerns or problems. 
-**With these two factors in mind, it can take anywhere from a day to two weeks for your PR to finally be merged.** In the meantime, ensure that there are no merge conflicts, that all comments are resolved, and everything is polished as possible to signal that it's ready for merging. If you want to know if there's any issues, you can always copy the four digit number (e.g., `#1111`) into the imcoder channel of the [Discord](https://discord.gg/zd8t6pY)to bring up the PR with the server's medibot, then ask around for feedback.
+**With these two factors in mind, it can take anywhere from a day to two weeks (or longer) for your PR to finally be merged.** In the meantime, ensure that there are no merge conflicts, that all comments are resolved, and everything is polished as possible to signal that it's ready for merging. If you want to know if there's any issues, you can always copy the four digit number (e.g., `#1111`) into the imcoder channel of the [Discord](https://discord.gg/zd8t6pY)to bring up the PR with the server's medibot, then ask around for feedback.
 
 -"If I want a picture, how do I add images?"
 Pictures are as easy as taking a screenshot of whatever you're made, then copying and directly pasting it into the text box. For this reason, Windows' snipping tool is excellent at this task, since it automatically copies whatever you capture.
