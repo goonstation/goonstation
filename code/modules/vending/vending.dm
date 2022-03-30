@@ -839,7 +839,12 @@
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /obj/machinery/vending/proc/throw_item(var/item_name_to_throw = "")
-	var/mob/living/target = locate() in view(7,src)
+	var/mob/living/target = null
+	for (var/mob/living/mob in view(7,src))
+		if (!isintangible(mob))
+			target = mob
+			break
+
 	if(!target)
 		return null
 

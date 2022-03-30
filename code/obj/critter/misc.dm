@@ -723,6 +723,7 @@
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if (C.ckey == null) continue //do not attack non-threats ie. NPC monkeys and AFK players
 			if (iswizard(C)) continue //do not attack our master
+			if (isintangible(C)) continue
 			var/mob/living/carbon/human/H = C
 			if (istype(C) && (H.traitHolder.hasTrait("training_chaplain"))) continue
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
