@@ -7,9 +7,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aae" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "aaf" = (
 /obj/lattice{

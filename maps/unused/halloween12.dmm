@@ -39337,9 +39337,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bCE" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "bCF" = (
 /turf/simulated/wall/asteroid{
@@ -48311,9 +48309,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bXR" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 9;
 	icon_state = "astedge"
@@ -49910,9 +49906,7 @@
 /turf/simulated/wall,
 /area/mining/exit_east)
 "cby" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
@@ -49920,9 +49914,7 @@
 /area/space)
 "cbz" = (
 /obj/lattice,
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "cbA" = (
 /turf/space,
@@ -50541,9 +50533,7 @@
 /turf/simulated/wall/asteroid,
 /area/space)
 "ccR" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 4;
 	icon_state = "astedge"

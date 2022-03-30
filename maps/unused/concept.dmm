@@ -47448,9 +47448,7 @@
 /turf/simulated/wall/r_wall,
 /area/space)
 "bQk" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "bQl" = (
 /turf/space,
@@ -49706,9 +49704,7 @@
 /area/h7/crew)
 "bVh" = (
 /obj/lattice,
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "bVi" = (
 /turf/simulated/wall,
@@ -56886,9 +56882,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "cif" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 9;
 	icon_state = "astedge"
@@ -59912,9 +59906,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fuck/main)
 "coC" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
@@ -60621,9 +60613,7 @@
 /turf/space,
 /area/fuck/main)
 "cqc" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 4;
 	icon_state = "astedge"
