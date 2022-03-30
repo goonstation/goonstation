@@ -9,7 +9,7 @@ import { useBackend, useSharedState, useLocalState } from "../backend";
 import { Button, Dimmer, Divider, Flex, NumberInput, Section, SectionEx, Stack } from '../components';
 import { Window } from '../layouts';
 import { Fragment } from 'inferno';
-import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo.js';
+import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
 
 // Feel free to adjust this for performance
 const extractablesPerPage = 25;
