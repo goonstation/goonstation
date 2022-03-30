@@ -103,8 +103,11 @@
 		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
-		AddComponent(/datum/component/itemblock/saberblock)
+		AddComponent(/datum/component/itemblock/saberblock, .proc/can_reflect)
 		BLOCK_SETUP(BLOCK_SWORD)
+
+/obj/item/sword/proc/can_reflect()
+	return src.active
 
 /obj/item/sword/attack(mob/target, mob/user, def_zone, is_special = 0)
 	if(active)
@@ -432,6 +435,9 @@
 	active_stamina_dmg = 65
 	inactive_stamina_dmg = 30
 	hit_type = DAMAGE_BLUNT
+
+	can_reflect()
+		return FALSE
 
 	get_desc()
 		..()
