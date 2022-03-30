@@ -42,7 +42,11 @@
 		// and stops the "decompression" from coming out the left side
 		START_TRACKING
 		processing_items += src
-		x += 1
+		x += -bound_x / world.icon_size
+		#ifdef UPSCALED_MAP
+		pixel_x = -64
+		#endif
+
 
 	disposing()
 		STOP_TRACKING
