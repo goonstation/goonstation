@@ -1,5 +1,8 @@
 
 (t)wed mar 30 22
+(u)aloe
+(*)Macrobombs have been removed. You can still just buy 12 micros, though.
+(*)Engineers get a flyzapper implant- costs 1 TC, acts sort of like a micro except you shock the shit out of people when you die instead of exploding. Stacks. Probably a bit weak (when compared to micros) currently, will do a numbers pass soon.
 (u)Amylizzle
 (p)8019
 (e)|
