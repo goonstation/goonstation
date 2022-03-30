@@ -1,5 +1,9 @@
 
 (t)wed mar 30 22
+(u)Yellow/Myco
+(p)7983
+(e)🎨|sprites
+(+)Changes the sprite of almost every beard, along with Hogan and Vandyke
 (u)zjdtmkhzt
 (p)8026
 (e)🆕⚖|feature, balance
