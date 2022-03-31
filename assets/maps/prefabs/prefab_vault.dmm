@@ -6,7 +6,7 @@
 "g" = (/turf/simulated/floor{icon_state = "damaged2"},/area/prefab/vault)
 "h" = (/obj/decal/floatingtiles{dir = 1},/turf/simulated/floor/void,/area/prefab/vault)
 "j" = (/obj/machinery/door/airlock/pyro/safe{icon_state = "generic_locked"; locked = 1},/turf/simulated/floor/scorched,/area/prefab/vault)
-"k" = (/obj/decal/cleanable/writing/infrared{desc = "The handwriting seems nearly human."; pixel_x = -1; pixel_y = 31; words = "The Siren screams its song, the fool joins it and slowly sinks into its domain. Only the wise ignore there predecessors and continue sailing without another thought."},/turf/variableTurf/floor,/area/prefab/vault)
+"k" = (/obj/decal/cleanable/writing/infrared{desc = "The handwriting seems nearly human."; pixel_x = -1; pixel_y = 31; words = "The Siren screams its song, the fool joins it and slowly sinks into its domain. Only the wise ignore their predecessors and continue sailing without another thought."},/turf/variableTurf/floor,/area/prefab/vault)
 "l" = (/obj/item/storage/toolbox/mechanical,/obj/item/cable_coil,/obj/item/device/multitool,/turf/variableTurf/floor,/area/prefab/vault)
 "m" = (/obj/item/device/light/flashlight,/turf/variableTurf/floor,/area/prefab/vault)
 "t" = (/obj/decal/cleanable/writing{words = "Great Treasures inside! Screwdriver open the panel and pulse the wires with a multitool until the door is unbolted."},/turf/variableTurf/floor,/area/prefab/vault)
