@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author CodeJester (https://github.com/codeJester27)
+ * @license ISC
+ */
+
 import { useBackend, useLocalState } from "../backend";
 import { Blink, Box, Button, Collapsible, Flex, Icon, Modal, NumberInput, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';

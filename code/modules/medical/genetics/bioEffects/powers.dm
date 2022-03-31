@@ -2026,7 +2026,8 @@
 		owner.visible_message("<span class='alert'><b>[owner] horfs up a huge stream of puke!</b></span>")
 		logTheThing("combat", owner, target, "power-pukes [log_reagents(owner)] at [log_loc(owner)].")
 		playsound(owner.loc, "sound/misc/meat_plop.ogg", 50, 0)
-		owner.reagents.add_reagent("vomit",20)
+		for (var/reagent_id in puke_reagents)
+			owner.reagents.add_reagent(reagent_id, puke_reagents[reagent_id])
 		var/turf/currentturf
 		var/turf/previousturf
 		for(var/turf/F in line_turfs)

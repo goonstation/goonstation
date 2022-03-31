@@ -2315,7 +2315,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
-	receives_implant = /obj/item/implant/microbomb
+	receives_implant = /obj/item/implant/revenge/microbomb
 	slot_back = list(/obj/item/storage/backpack/satchel)
 	slot_belt = list(/obj/item/gun/kinetic/pistol)
 	slot_jump = list(/obj/item/clothing/under/misc/syndicate)

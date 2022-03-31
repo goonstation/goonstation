@@ -73704,9 +73704,7 @@
 /turf/space,
 /area/space)
 "dhQ" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "dhR" = (
 /obj/cable{

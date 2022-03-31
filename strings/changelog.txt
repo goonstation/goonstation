@@ -1,4 +1,33 @@
 
+(t)wed mar 30 22
+(u)Yellow/Myco
+(p)7983
+(e)🎨|sprites
+(+)Changes the sprite of almost every beard, along with Hogan and Vandyke
+(u)zjdtmkhzt
+(p)8026
+(e)🆕⚖|feature, balance
+(+)The nukeops heavy energy sword can now reflect projectiles like a csaber can. (This was always there, it just didn't work because it was bugged until now.)
+(u)Hans
+(p)7563
+(e)🆕🎨|feature, sprites
+(*)Added space rattlesnakes to the game. Beware!
+(u)CodeJester
+(p)7822
+(e)📄|tgui
+(*)The Reagent Heater/Cooler has a new UI menu. Enjoy the blazing red color of setting the temperature to 1000 K every time.
+(u)aloe
+(*)Macrobombs have been removed. You can still just buy 12 micros, though.
+(*)Engineers get a flyzapper implant- costs 1 TC, acts sort of like a micro except you shock the shit out of people when you die instead of exploding. Stacks. Probably a bit weak (when compared to micros) currently, will do a numbers pass soon.
+(u)Amylizzle
+(p)8019
+(e)|
+(*)Hologram expansion modules now work properly with AI Law Racks.
+(t)tue mar 29 22
+(u)Wisemonster
+(p)7956
+(e)|
+(*)Engineering cyborg modules now come with a battery-hungry power shovel, to help with the Oshan engine. (Shovel is restricted to modules on Oshan)
 (t)mon mar 28 22
 (u)Yellow
 (p)7547

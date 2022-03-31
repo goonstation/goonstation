@@ -43439,9 +43439,7 @@
 /turf/simulated/floor,
 /area/station/security/checkpoint/east)
 "mdr" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "mdw" = (
 /obj/table/auto,

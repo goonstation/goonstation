@@ -95,7 +95,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		explosion_resistance = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_resistance
 		explosion_protection = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_protection
 		if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 50)) flags |= CONDUCT
-	return
 
 
 /// Simply removes a material from an object.
@@ -118,7 +117,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	src.UpdateOverlays(null, "material")
 
 	src.material = null
-	return
 
 //Time for some super verbose proc names.
 /proc/get_material_trait_desc(var/datum/material/mat1)
