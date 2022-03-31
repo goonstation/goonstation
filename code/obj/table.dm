@@ -69,73 +69,43 @@
 	proc/set_up()
 		if (!ispath(src.auto_type))
 			return
-		var/dirs = 0
-		for (var/direction in cardinal)
-			var/turf/T = get_step(src, direction)
-			if (locate(src.auto_type) in T)
-				dirs |= direction
+
+		var/connections = get_connected_directions_bitflag(list(src.auto_type), connect_diagonal = 1)
+		var/dirs = connections % 16 // get cardinals from match
+		var/connecting_ordinals = connections >> 8
 		icon_state = num2text(dirs)
 
-		//christ this is ugly
-		//seconded, its also broken for tables in diagonal directions // maybe not any more?
-		var/obj/table/WT = locate(src.auto_type) in get_step(src, WEST)
-		var/obj/table/ST = locate(src.auto_type) in get_step(src, SOUTH)
-		var/obj/table/ET = locate(src.auto_type) in get_step(src, EAST)
-		var/obj/table/NT = locate(src.auto_type) in get_step(src, NORTH)
-
-		// west, south, and southwest
-		if (WT && ST)
-			var/obj/table/SWT = locate(src.auto_type) in get_step(src, SOUTHWEST)
-			if (SWT)
-				if (!src.working_image)
-					src.working_image = image(src.icon, "SW")
-				else
-					working_image.icon_state = "SW"
-				src.UpdateOverlays(working_image, "SWcorner")
+		if(connecting_ordinals & NORTHEAST)
+			if (!src.working_image)
+				src.working_image = image(src.icon, "NE")
 			else
-				src.UpdateOverlays(null, "SWcorner")
+				working_image.icon_state = "NE"
+			src.UpdateOverlays(working_image, "NEcorner")
+		else
+			src.UpdateOverlays(null, "NEcorner")
+		if(connecting_ordinals & SOUTHEAST)
+			if (!src.working_image)
+				src.working_image = image(src.icon, "SE")
+			else
+				working_image.icon_state = "SE"
+			src.UpdateOverlays(working_image, "SEcorner")
+		else
+			src.UpdateOverlays(null, "SEcorner")
+		if(connecting_ordinals & SOUTHWEST)
+			if (!src.working_image)
+				src.working_image = image(src.icon, "SW")
+			else
+				working_image.icon_state = "SW"
+			src.UpdateOverlays(working_image, "SWcorner")
 		else
 			src.UpdateOverlays(null, "SWcorner")
 
-		// south, east, and southeast
-		if (ST && ET)
-			var/obj/table/SET = locate(src.auto_type) in get_step(src, SOUTHEAST)
-			if (SET)
-				if (!src.working_image)
-					src.working_image = image(src.icon, "SE")
-				else
-					working_image.icon_state = "SE"
-				src.UpdateOverlays(working_image, "SEcorner")
+		if(connecting_ordinals & NORTHWEST)
+			if (!src.working_image)
+				src.working_image = image(src.icon, "NW")
 			else
-				src.UpdateOverlays(null, "SEcorner")
-		else
-			src.UpdateOverlays(null, "SEcorner")
-
-		// north, east, and northeast
-		if (NT && ET)
-			var/obj/table/NET = locate(src.auto_type) in get_step(src, NORTHEAST)
-			if (NET)
-				if (!src.working_image)
-					src.working_image = image(src.icon, "NE")
-				else
-					working_image.icon_state = "NE"
-				src.UpdateOverlays(working_image, "NEcorner")
-			else
-				src.UpdateOverlays(null, "NEcorner")
-		else
-			src.UpdateOverlays(null, "NEcorner")
-
-		// north, west, and northwest
-		if (NT && WT)
-			var/obj/table/NWT = locate(src.auto_type) in get_step(src, NORTHWEST)
-			if (NWT)
-				if (!src.working_image)
-					src.working_image = image(src.icon, "NW")
-				else
-					working_image.icon_state = "NW"
-				src.UpdateOverlays(working_image, "NWcorner")
-			else
-				src.UpdateOverlays(null, "NWcorner")
+				working_image.icon_state = "NW"
+			src.UpdateOverlays(working_image, "NWcorner")
 		else
 			src.UpdateOverlays(null, "NWcorner")
 
