@@ -240,7 +240,7 @@
 				famtofuckup.emote("scream")
 			boutput(user, "And now you're out of dye. Well done.")
 			src.uses_left = 0
-			src.overlays = null
+			src.ClearSpecificOverlays("dye_color")
 
 		if(passed_dye_roll)
 			switch(bottle.hair_group)
@@ -281,14 +281,14 @@
 			if (bottle.hair_group == ALL_HAIR)
 				boutput(user, "That was a big dyejob! It used the whole bottle!")
 				src.uses_left = 0
-				src.overlays = null
+				src.ClearSpecificOverlays("dye_color")
 			else if(src.uses_left > 1 && is_barber && bottle.hair_group != ALL_HAIR)
 				src.uses_left --
 				boutput(user, "Hey, there's still some dye left in the bottle! Looks about [get_english_num(src.uses_left)] third\s full!")
 			else
 				boutput(user, "You used the whole bottle!")
 				src.uses_left = 0
-				src.overlays = null
+				src.ClearSpecificOverlays("dye_color")
 
 		M.update_colorful_parts()
 	return 1
@@ -404,7 +404,7 @@
 			if(href_list["emptyb"])
 				if(src.bottle)
 					bottle.uses_left = 0
-					bottle.overlays = null
+					bottle.ClearSpecificOverlays("dye_color")
 				src.updateDialog()
 
 			src.add_fingerprint(usr)
