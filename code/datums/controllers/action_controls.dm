@@ -1624,6 +1624,7 @@ var/datum/action_controller/actions
 
 /datum/action/bar/icon/CPR
 	duration = 4 SECONDS
+	id = "cpr"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "cpr"

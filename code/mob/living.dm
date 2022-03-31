@@ -1091,7 +1091,7 @@
 		for(var/i = 0; i < 5; i++)
 			for(var/mob/living/L in T)
 				if(L != src)
-					for(var/image/chat_maptext/I in L.chat_text.lines)
+					for(var/image/chat_maptext/I in L.chat_text?.lines)
 						I.bump_up()
 			T = get_step(T, EAST)
 
@@ -1681,7 +1681,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		if (src.pushing && (src.pulling != src.pushing))
 			. *= lerp(1, max(src.pushing.p_class, 1), pushpull_multiplier)
 
-		for (var/obj/item/grab/G in list(src.r_hand, src.l_hand))
+		for (var/obj/item/grab/G in src.equipped_list())
 			var/mob/M = G.affecting
 			if (isnull(M))
 				continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them

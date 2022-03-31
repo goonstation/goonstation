@@ -1147,7 +1147,7 @@
 			if ((get_dist(src, M) <= 6) && src.alive)
 				M.visible_message("<span class='alert'><b>[M.name] clutches their temples!</b></span>")
 				M.emote("scream")
-				M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 10 SECONDS))
+				M.setStatusMin("paralysis", 10 SECONDS)
 				M.take_brain_damage(10)
 
 				do_teleport(M, locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1), 0)
@@ -1460,7 +1460,8 @@
 	var/grow_anim = "grow"
 	var/beeMomCkey = null
 	var/scolded = 0
-
+	/// stored when a larva is puked up by someone. when the larva grows up, the bee puts on this hat
+	var/obj/item/clothing/head/stored_hat
 	var/tmp/blog = "larvalog|"
 
 	bonnet
@@ -1516,6 +1517,12 @@
 
 					grownbee.beeMom = src.beeMom
 					grownbee.beeMomCkey = src.beeMomCkey
+
+					if (src.stored_hat && !grownbee.cant_take_hat && (src.stored_hat.icon_state in grownbee.hat_list))
+						grownbee.hat_that_bee(src.stored_hat)
+						src.stored_hat.set_loc(grownbee)
+						src.stored_hat = null
+
 					grownbee.UpdateIcon()
 					src.reagents = null
 					qdel(src)
@@ -1542,6 +1549,12 @@
 					grownbee.beeMomCkey = src.beeMomCkey
 					grownbee.UpdateIcon()
 					grownbee.blog = src.blog + "all grown up!|"
+
+					if (src.stored_hat && !grownbee.cant_take_hat && (src.stored_hat.icon_state in grownbee.hat_list))
+						grownbee.hat_that_bee(src.stored_hat)
+						src.stored_hat.set_loc(grownbee)
+						src.stored_hat = null
+
 					src.reagents = null
 					qdel(src)
 

@@ -356,20 +356,20 @@
 		src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
 		..()
 
-/obj/item/material_piece/cloth/wendigohide
-	name = "wendigo hide"
-	desc = "The hide of a wendigo."
-	icon_state = "wendigohide-fabric"
+/obj/item/material_piece/cloth/brullbarhide
+	name = "brullbar hide"
+	desc = "The hide of a brullbar."
+	icon_state = "brullbarhide-fabric"
 	setup_material()
-		src.setMaterial(getMaterial("wendigohide"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("brullbarhide"), appearance = 0, setname = 0)
 		..()
 
-/obj/item/material_piece/cloth/kingwendigohide
-	name = "king wendigo hide"
-	desc = "The hide of a king wendigo."
-	icon_state = "wendigohide-fabric"
+/obj/item/material_piece/cloth/kingbrullbarhide
+	name = "king brullbar hide"
+	desc = "The hide of a king brullbar."
+	icon_state = "brullbarhide-fabric"
 	setup_material()
-		src.setMaterial(getMaterial("kingwendigohide"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("kingbrullbarhide"), appearance = 0, setname = 0)
 		..()
 
 /obj/item/material_piece/cloth/carbon

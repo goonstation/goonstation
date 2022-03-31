@@ -7,7 +7,7 @@
 	target_nodamage_check = 1
 	target_selection_check = 1
 	max_range = 1
-	cooldown = 350
+	cooldown = 250
 	start_on_cooldown = 1
 	pointCost = 0
 	when_stunned = 0
@@ -86,10 +86,10 @@
 
 			SPAWN(0)
 				if (M)
-					animate(M, transform = matrix(90, MATRIX_ROTATE), time = 1, loop = 0)
+					animate(M, transform = M.transform.Turn(90), time = 1, loop = 0)
 				sleep (10)
 				if (M)
-					animate(M, transform = null, time = 1, loop = 0)
+					animate(M, transform = M.transform.Turn(-90), time = 1, loop = 0)
 
 			M.set_loc(target.loc)
 
@@ -106,8 +106,8 @@
 				else
 					random_brute_damage(target, 15, 1)
 
-			target.changeStatus("weakened", 1 SECOND)
-			target.changeStatus("stunned", 2 SECONDS)
+			target.changeStatus("weakened", 3 SECOND)
+			target.changeStatus("stunned", 3 SECONDS)
 			target.force_laydown_standup()
 
 			M.pixel_y = 0

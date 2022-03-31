@@ -233,8 +233,8 @@ datum/controller/air_system
 	process()
 		current_cycle++
 
-		process_tiles_to_space()
 		is_busy = TRUE
+		process_tiles_to_space()
 
 		if(!explosions.exploding)
 			if(groups_to_rebuild.len > 0)

@@ -372,7 +372,7 @@
 		cost = 20
 		size = 1
 		research_requirements = list("analysis" = 16, "medicine" = 10, "devices" = 10)
-		item_path = /obj/item/device/analyzer/healthanalyzer/borg
+		item_path = /obj/item/device/analyzer/healthanalyzer/upgraded
 
 	reagentscanner
 		name = "Reagent Scanner"

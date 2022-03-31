@@ -19,7 +19,7 @@
 	var/shot_delay = 15 //1.5 seconds between shots (previously 3, way too much to be useful)
 	var/shot_type = 0
 	var/override_area_bullshit = 0
-	var/datum/projectile/lethal = new/datum/projectile/laser/heavy
+	var/datum/projectile/lethal = new/datum/projectile/laser/heavy/law_safe
 	var/datum/projectile/stun = new/datum/projectile/energy_bolt/robust
 	var/list/mob/target_list = null
 

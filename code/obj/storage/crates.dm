@@ -15,7 +15,7 @@
 	soundproofing = 3
 	throwforce = 50 //ouch
 	can_flip_bust = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT  | NO_MOUSEDROP_QOL
+	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 
 	get_desc()
 		. = ..()
@@ -35,9 +35,9 @@
 			return 1
 		return ..()
 
-	CheckExit(atom/movable/O as mob|obj, target as turf)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if(istype(O, /obj/projectile))
-			return 1
+			. = 1
 		return ..()
 
 // Gore delivers new crates - woo!
@@ -273,10 +273,6 @@
 	var/static/list/possible_items = list()
 	grab_stuff_on_spawn = FALSE
 
-	New()
-		..()
-		spawn_items()
-
 	proc/spawn_items(mob/owner, obj/item/uplink/owner_uplink)
 		#define NESTED_SCALING_FACTOR 0.8
 		if (istype(src.loc, /obj/storage/crate/syndicate_surplus)) //if someone got lucky and rolled a surplus inside a surplus, scale the inner one (and its contents) down
@@ -293,8 +289,10 @@
 					possible_items += S
 
 		if (islist(possible_items) && length(possible_items))
+			var/list/crate_contents = list()
 			while(telecrystals < 18)
 				var/datum/syndicate_buylist/item_datum = pick(possible_items)
+				crate_contents += item_datum.name
 				if(telecrystals + item_datum.cost > 24) continue
 				var/obj/item/I = new item_datum.item(src)
 				I.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the contents if we're nested
@@ -303,7 +301,15 @@
 					if (owner.mind)
 						owner.mind.traitor_crate_items += item_datum
 				telecrystals += item_datum.cost
+			var/str_contents = kText.list2text(crate_contents, ", ")
+			logTheThing("debug", owner, null, "surplus crate contains: [str_contents] at [log_loc(src)]")
 		#undef NESTED_SCALING_FACTOR
+
+/obj/storage/crate/syndicate_surplus/spawnable
+
+	New()
+		..()
+		spawn_items() //null owner/uplink, so pulls from all possible items
 
 /obj/storage/crate/pizza
 	name = "pizza box"
@@ -542,7 +548,7 @@
 		/obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut,
 		/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector,
 		/obj/item/clothing/glasses/healthgoggles/upgraded,
-		/obj/item/device/analyzer/healthanalyzer/borg,
+		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
 		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,
@@ -553,7 +559,7 @@
 		name = "Class Crate - Field Medic"
 		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies."
 		spawn_contents = list(/obj/item/clothing/glasses/healthgoggles/upgraded,
-		/obj/item/device/analyzer/healthanalyzer/borg,
+		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
 		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,

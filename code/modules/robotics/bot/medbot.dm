@@ -231,7 +231,7 @@
 		dat += "Reagent Source: "
 		dat += "<a href='?src=\ref[src];use_beaker=1'>[src.use_beaker ? "Loaded Beaker (When available)" : "Internal Synthesizer"]</a><br>"
 
-	if (user.client.tooltipHolder)
+	if (user.client?.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
 			"params" = params,
 			"title" = "Medibot v1.0 controls",

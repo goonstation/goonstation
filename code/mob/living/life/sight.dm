@@ -57,7 +57,7 @@
 				if (sight_meson)
 					robot_owner.sight &= ~SEE_BLACKNESS
 					robot_owner.sight |= SEE_TURFS
-					robot_owner.render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
+					robot_owner.render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (owner.client?.widescreen))
 					robot_owner.vision.set_scan(1)
 					robot_owner.client.color = "#c2ffc2"
 				else
