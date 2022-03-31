@@ -209,6 +209,9 @@ var/list/miningModifiers = list()
 /datum/mapGenerator/asteroidsDistance //Generates a bunch of asteroids based on distance to seed/center. Super simple.
 	generate(var/list/miningZ)
 		var/numAsteroidSeed = AST_SEEDS + rand(1, 5)
+		#ifdef UPSCALED_MAP
+		numAsteroidSeed *= 4
+		#endif
 		for(var/i=0, i<numAsteroidSeed, i++)
 			var/turf/X = pick(miningZ)
 			var/quality = rand(-101,101)
@@ -290,6 +293,9 @@ var/list/miningModifiers = list()
 	var/list/miningZ = block(locate(1, 1, AST_ZLEVEL), locate(world.maxx, world.maxy, AST_ZLEVEL))
 
 	var/num_to_place = AST_NUMPREFABS + rand(0,AST_NUMPREFABSEXTRA)
+	#ifdef UPSCALED_MAP
+	num_to_place *= 3
+	#endif
 	for (var/n = 1, n <= num_to_place, n++)
 		game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
 		var/datum/mapPrefab/mining/M = pick_map_prefab(/datum/mapPrefab/mining,
