@@ -235,8 +235,6 @@
 							var/obj/storage/closet/port_a_sci/PS = P4
 							PS.on_teleport()
 
-						if ("[P4.icon_state]-tele" in P4.icon_state())
-							flick("[P4.icon_state]-tele", P4)
 						elecflash(P4)
 
 			if ("return")
@@ -284,8 +282,6 @@
 							var/obj/storage/closet/port_a_sci/PS2 = P5
 							PS2.on_teleport()
 
-						if ("[P5.icon_state]-tele" in P5.icon_state())
-							flick("[P5.icon_state]-tele", P5)
 						elecflash(P5)
 
 		PDA.updateSelfDialog()
