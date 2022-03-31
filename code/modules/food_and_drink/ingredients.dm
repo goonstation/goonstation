@@ -787,8 +787,8 @@
 	desc = "An uncooked sheet of pasta."
 	icon_state = "pasta-sheet"
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles)
 /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles
-	// generic parent
 	name = "wheat noodles"
 	heal_amt = 0
 	amount = 1
