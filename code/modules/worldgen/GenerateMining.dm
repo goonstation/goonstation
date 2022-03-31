@@ -280,7 +280,6 @@ var/list/miningModifiers = list()
 		return miningZ
 
 /proc/makeMiningLevel()
-	var/list/miningZ = list()
 	var/startTime = world.timeofday
 	if(world.maxz < AST_ZLEVEL)
 		boutput(world, "<span class='alert'>Skipping Mining Generation!</span>")
@@ -288,9 +287,7 @@ var/list/miningModifiers = list()
 	else
 		boutput(world, "<span class='alert'>Generating Mining Level ...</span>")
 
-	for(var/turf/T)
-		if(T.z == AST_ZLEVEL)
-			miningZ.Add(T)
+	var/list/miningZ = block(locate(1, 1, AST_ZLEVEL), locate(world.maxx, world.maxy, AST_ZLEVEL))
 
 	var/num_to_place = AST_NUMPREFABS + rand(0,AST_NUMPREFABSEXTRA)
 	for (var/n = 1, n <= num_to_place, n++)
