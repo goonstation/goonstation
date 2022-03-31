@@ -506,10 +506,6 @@ var/f_color_selector_handler/F_Color_Selector
 		bust_lights()
 		master_mode = "disaster" // heh pt. 2
 
-	UPDATE_TITLE_STATUS("Lighting up")
-	Z_LOG_DEBUG("World/Init", "RobustLight2 init...")
-	RL_Start()
-
 	//SpyStructures and caches live here
 	UPDATE_TITLE_STATUS("Updating cache")
 	Z_LOG_DEBUG("World/Init", "Building various caches...")
@@ -536,6 +532,10 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
 	makeMiningLevel()
 	#endif
+
+	UPDATE_TITLE_STATUS("Lighting up")
+	Z_LOG_DEBUG("World/Init", "RobustLight2 init...")
+	RL_Start()
 
 	UPDATE_TITLE_STATUS("Building random station rooms")
 	Z_LOG_DEBUG("World/Init", "Setting up random rooms...")

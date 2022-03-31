@@ -866,6 +866,9 @@ atom
 			if(src.disposed) return
 			if (src.opacity == new_opacity)
 				return
+			if(!RL_Started)
+				src.opacity = new_opacity
+				return
 
 			var/list/datum/light/lights = list()
 			for (var/turf/T in view(RL_MaxRadius, src))
