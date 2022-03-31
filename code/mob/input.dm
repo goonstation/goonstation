@@ -247,7 +247,7 @@
 
 						var/list/pulling = list()
 						if (src.pulling)
-							if ((!IN_RANGE(old_loc, src.pulling, 1) && !IN_RANGE(src, src.pulling, 1)) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
+							if ((bounds_dist(old_loc, src.pulling) > 0 && bounds_dist(src, src.pulling) > 0) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
 								src.remove_pulling()
 								//hud.update_pulling() // FIXME
 							else
