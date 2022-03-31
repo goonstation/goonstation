@@ -107,6 +107,11 @@ proc/get_moving_lights_stats()
 #define RL_MaxRadius 6 // maximum allowed light.radius value. if any light ends up needing more than this it'll cap and look screwy
 #define DLL 0 //Darkness Lower Limit, at 0 things can get absolutely pitch black.
 
+#ifdef UPSCALED_MAP
+#undef DLL
+#define DLL 0.2
+#endif
+
 #define D_BRIGHT 1
 #define D_COLOR 2
 #define D_HEIGHT 4
