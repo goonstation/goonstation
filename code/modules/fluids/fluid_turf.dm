@@ -78,7 +78,8 @@
 			// idk about the above. walls still use [src]=1 ...
 			// the bottom is much faster in my testing and works just as well
 			// maybe should be converted to this everywhere?
-			worldgenCandidates += src //Adding self to possible worldgen turfs
+			if(src.z == Z_LEVEL_STATION || src.z == Z_LEVEL_MINING)
+				worldgenCandidates += src //Adding self to possible worldgen turfs
 
 		if(current_state > GAME_STATE_WORLD_INIT)
 			for(var/dir in cardinal)
