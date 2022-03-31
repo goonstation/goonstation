@@ -11,26 +11,26 @@
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "devour_over"
 	var/mob/living/target
-	var/datum/targetable/critter/envelop/envelop
+	var/datum/targetable/critter/envelop/ability
 
 	critter
 		duration = 6 SECONDS
 
 	New(Target, Envelop)
 		target = Target
-		envelop = Envelop
+		ability = Envelop
 		..()
 
 	onUpdate()
 		..()
 
-		if (!IN_RANGE(owner, target, 1) || target == null || owner == null || (envelop && !envelop.cooldowncheck()))
+		if (!IN_RANGE(owner, target, 1) || target == null || owner == null || (ability && !ability.cooldowncheck()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if (!IN_RANGE(owner, target, 1) || target == null || owner == null || (envelop && !envelop.cooldowncheck()))
+		if (!IN_RANGE(owner, target, 1) || target == null || owner == null || (ability && !ability.cooldowncheck()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		owner.visible_message("<span class='combat'><B>[owner]</B> starts to envelop [target]!</span>")
@@ -38,7 +38,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if (ownerMob && target && IN_RANGE(owner, target, 1) && (!envelop || envelop.cooldowncheck()))
+		if (ownerMob && target && IN_RANGE(owner, target, 1) && (!ability || ability.cooldowncheck()))
 			logTheThing("combat", target, ownerMob, "was enveloped by [constructTarget(ownerMob,"combat")] [ismob(ownerMob) ? "(mob) " : ""]at [log_loc(ownerMob)].")
 			owner.visible_message("<span class='combat'><B>[ownerMob]</B> completely envelops [target]!</span>")
 			playsound(ownerMob, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
@@ -56,7 +56,7 @@
 							W.set_loc(target.loc)
 							W.dropped(target)
 							W.layer = initial(W.layer)
-			envelop?.actionFinishCooldown()
+			ability?.actionFinishCooldown()
 			qdel(target)
 
 /datum/targetable/critter/envelop
