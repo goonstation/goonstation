@@ -18,6 +18,11 @@ Contains:
 #define WRENCHED 1
 #define WELDED 2
 
+#ifdef UPSCALED_MAP
+#undef SINGULARITY_MAX_DIMENSION
+#define SINGULARITY_MAX_DIMENSION 22
+#endif
+
 // I'm sorry
 //////////////////////////////////////////////////// Singularity generator /////////////////////
 
@@ -548,7 +553,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		T = get_step(T2, NSEW)
 		T2 = T
 		steps += 1
-		if(locate(/obj/machinery/field_generator) in T)
+		G = (locate(/obj/machinery/field_generator) in T)
+		if(G && G != src)
 			G = (locate(/obj/machinery/field_generator) in T)
 			steps -= 1
 			if(shortestlink==0)
