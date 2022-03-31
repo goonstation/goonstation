@@ -407,51 +407,51 @@ ABSTRACT_TYPE(/obj/item/record/random)
 	record_name = "chill track #4"
 	song = "sound/radio_station/music/chill_4.ogg"
 
-/obj/item/record/january
+/obj/item/record/random/january
 	record_name = "january"
 	song = "sound/radio_station/music/january.xm"
 
-/obj/item/record/february
+/obj/item/record/random/february
 	record_name = "february"
 	song = "sound/radio_station/music/february.xm"
 
-/obj/item/record/march
+/obj/item/record/random/march
 	record_name = "march"
 	song = "sound/radio_station/music/march.xm"
 
-/obj/item/record/april
+/obj/item/record/random/april
 	record_name = "april"
 	song = "sound/radio_station/music/april.xm"
 
-/obj/item/record/may
+/obj/item/record/random/may
 	record_name = "may"
 	song = "sound/radio_station/music/may.xm"
 
-/obj/item/record/june
+/obj/item/record/random/june
 	record_name = "june"
 	song = "sound/radio_station/music/june.xm"
 
-/obj/item/record/july
+/obj/item/record/random/july
 	record_name = "july"
 	song = "sound/radio_station/music/july.xm"
 
-/obj/item/record/august
+/obj/item/record/random/august
 	record_name = "august"
 	song = "sound/radio_station/music/august.xm"
 
-/obj/item/record/september
+/obj/item/record/random/september
 	record_name = "september"
 	song = "sound/radio_station/music/september.xm"
 
-/obj/item/record/october
+/obj/item/record/random/october
 	record_name = "october"
 	song = "sound/radio_station/music/october.xm"
 
-/obj/item/record/november
+/obj/item/record/random/november
 	record_name = "november"
 	song = "sound/radio_station/music/november.xm"
 
-/obj/item/record/december
+/obj/item/record/random/december
 	record_name = "december"
 	song = "sound/radio_station/music/december.xm"
 

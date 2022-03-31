@@ -4291,6 +4291,8 @@
 	icon_state = "tile1"
 	},
 /obj/storage/crate/bloody,
+/obj/item/storage/box/record/radio/two,
+/obj/item/storage/box/record/radio/one,
 /obj/item/paper/tug/warehouse,
 /obj/item/cigpacket/cigarillo/juicer,
 /obj/item/cigpacket/cigarillo/juicer,
