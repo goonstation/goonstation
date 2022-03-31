@@ -2354,9 +2354,7 @@
 /turf/simulated/floor/industrial,
 /area/space)
 "afY" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "afZ" = (
 /turf/simulated/floor/engine/vacuum{

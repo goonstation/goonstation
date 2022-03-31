@@ -67185,9 +67185,7 @@
 /turf/space,
 /area/supply/spawn_point)
 "cDf" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "cDn" = (
 /obj/decal/cleanable/dirt,

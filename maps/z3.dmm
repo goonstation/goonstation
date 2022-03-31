@@ -9,9 +9,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aad" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "aae" = (
 /obj/indestructible/shuttle_corner{
@@ -1231,9 +1229,7 @@
 	dir = 8;
 	icon_state = "lattice-dir"
 	},
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "adH" = (
 /obj/lattice{
@@ -2968,9 +2964,7 @@
 /area/mining/refinery)
 "aiG" = (
 /obj/grille/catwalk,
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "aiH" = (
@@ -3165,9 +3159,7 @@
 /area/mining/magnet_control)
 "aji" = (
 /obj/lattice,
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "ajj" = (
 /obj/decal/tile_edge/stripe{
@@ -4909,9 +4901,7 @@
 	dir = 1;
 	layer = 3
 	},
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "anH" = (
@@ -5292,9 +5282,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mining/mainasteroid)
 "aoG" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 6
 	},
@@ -5742,9 +5730,7 @@
 	dir = 6;
 	icon_state = "lattice-dir"
 	},
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "apO" = (
 /turf/simulated/floor/caution/south,
@@ -5876,9 +5862,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "aqh" = (
 /obj/cable,
@@ -7895,9 +7879,7 @@
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "ave" = (
 /obj/table/auto,
@@ -18958,9 +18940,7 @@
 	dir = 1;
 	icon_state = "floattiles4"
 	},
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "beg" = (
 /obj/storage/crate/loot,
@@ -21695,9 +21675,7 @@
 	dir = 8;
 	icon_state = "floattiles4"
 	},
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "blA" = (
 /obj/decal/fakeobjects/pipe{

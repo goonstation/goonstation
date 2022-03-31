@@ -494,6 +494,12 @@
 		a:hover   { background-color: [src.link_color];   color: [src.bg_color]; }
 
 	</style>
+	<script>
+		function updateScroll() {window.name = document.documentElement.scrollTop || document.body.scrollTop;}
+		window.addEventListener("beforeunload", updateScroll);
+		window.addEventListener("scroll", updateScroll);
+		window.addEventListener("load", function() {document.documentElement.scrollTop = document.body.scrollTop = window.name;});
+	</script>
 </head>
 <body>"}
 

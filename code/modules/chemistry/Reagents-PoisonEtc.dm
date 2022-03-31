@@ -1219,6 +1219,42 @@ datum
 				..()
 				return
 
+		harmful/viper_venom
+			name = "viper venom"
+			id = "viper_venom"
+			description = "A dangerous toxin that causes massive bleeding and tissue damage"
+			reagent_state = LIQUID
+			fluid_r = 210
+			fluid_g = 180
+			fluid_b = 25
+			depletion_rate = 0.3
+			blob_damage = 1
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				M.take_toxin_damage(1*mult)
+				random_brute_damage(M, 1*mult, FALSE)
+
+				if (prob(25))
+					M.reagents.add_reagent("histamine", rand(5,10) * mult)
+
+				if (probmult(10))
+					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 5 SECONDS))
+					boutput(M, "<span class='alert'><b>Your body hurts so much.</b></span>")
+					bleed(M, rand(30,60), rand(3,9))
+					if (!isdead(M))
+						M.emote(pick("cry", "tremble", "scream"))
+
+				if (probmult(10))
+					M.setStatus("slowed", max(M.getStatusDuration("slowed"), 10 SECONDS))
+					boutput(M, "<span class='alert'><b>Everything starts hurting.</b></span>")
+					M.take_toxin_damage(8)
+					if (!isdead(M))
+						M.emote(pick("shake", "tremble", "shudder"))
+
+				..()
+				return
+
 		harmful/neurotoxin // COGWERKS CHEM REVISION PROJECT. which neurotoxin?
 			name = "neurotoxin"
 			id = "neurotoxin"
