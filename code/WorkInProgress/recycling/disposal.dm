@@ -1755,9 +1755,11 @@
 		sleep(2 SECONDS)	//wait until correct animation frame
 		playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
 
-
+		var/turf/expel_loc = get_turf(src)
+		while(locate(src.type) in get_step(expel_loc, src.dir))
+			expel_loc = get_step(expel_loc, src.dir)
 		for(var/atom/movable/AM in H)
-			AM.set_loc(src.loc)
+			AM.set_loc(expel_loc)
 			AM.pipe_eject(dir)
 			AM.throw_at(target, src.throw_range, src.throw_speed)
 		H.vent_gas(src.loc)
