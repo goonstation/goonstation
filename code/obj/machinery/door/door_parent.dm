@@ -3,7 +3,11 @@
 /obj/machinery/door
 	name = "door"
 	icon_state = "door1"
+	#ifdef UPSCALED_MAP
+	opacity = 0
+	#else
 	opacity = 1
+	#endif
 	density = 1
 	flags = FPRINT | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER
@@ -678,14 +682,22 @@
 	icon = 'icons/turf/shuttle.dmi'
 	name = "door"
 	icon_state = "door1"
+	#ifdef UPSCALED_MAP
+	opacity = 0
+	#else
 	opacity = 1
+	#endif
 	density = 1
 
 /obj/machinery/door/unpowered/martian
 	icon = 'icons/turf/martian.dmi'
 	name = "Orifice"
 	icon_state = "door1"
+	#ifdef UPSCALED_MAP
+	opacity = 0
+	#else
 	opacity = 1
+	#endif
 	density = 1
 	var/id = null
 
@@ -703,7 +715,11 @@
 	name = "door"
 	icon = 'icons/obj/doors/door_wood.dmi'
 	icon_state = "door1"
+	#ifdef UPSCALED_MAP
+	opacity = 0
+	#else
 	opacity = 1
+	#endif
 	density = 1
 	p_open = 0
 	operating = 0
