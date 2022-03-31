@@ -190,7 +190,7 @@
 	if (usr.stat || usr.restrained() )
 		return
 
-	if (( usr.using_dialog_of(src) && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
+	if (( usr.using_dialog_of(src) && ((bounds_dist(src, usr) == 0) && istype(src.loc, /turf))) || (isAI(usr)))
 		if( href_list["close"] )
 			usr.Browse(null, "window=turbine")
 			src.remove_dialog(usr)

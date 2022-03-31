@@ -1072,7 +1072,7 @@ var/datum/action_controller/actions
 				remove_internals = 0
 	onEnd()
 		..()
-		if(owner && target && get_dist(owner, target) <= 1)
+		if(owner && target && bounds_dist(owner, target) == 0)
 			if(remove_internals)
 				target.internal.add_fingerprint(owner)
 				for (var/obj/ability_button/tank_valve_toggle/T in target.internal.ability_buttons)
@@ -1138,7 +1138,7 @@ var/datum/action_controller/actions
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && cuffs && !target.hasStatus("handcuffed") && cuffs == ownerMob.equipped() && get_dist(owner, target) <= 1)
+		if(owner && ownerMob && target && cuffs && !target.hasStatus("handcuffed") && cuffs == ownerMob.equipped() && bounds_dist(owner, target) == 0)
 
 			var/obj/item/handcuffs/tape/cuffs2
 

@@ -1275,7 +1275,7 @@
 	attack_hand(mob/user as mob)
 		if(..())
 			return
-		if(user.a_intent == "help" && !user.using_dialog_of(src) && (get_dist(user,src) <= 1))
+		if(user.a_intent == "help" && !user.using_dialog_of(src) && (bounds_dist(user, src) == 0))
 			var/affection = pick("hug","cuddle","snuggle")
 			user.visible_message("<span class='notice'>[user] [affection]s [src]!</span>","<span class='notice'>You [affection] [src]!</span>")
 			src.task?.task_input("hugged")
@@ -2797,7 +2797,7 @@
 							master.set_emotion("sad")
 							return
 
-						if(get_dist(master, hug_target) <= 1)
+						if(bounds_dist(master, hug_target) == 0)
 							master.visible_message("<b>[master]</b> hugs [hug_target]!")
 							if (hug_target.reagents)
 								hug_target.reagents.add_reagent("hugs", 10)
@@ -3253,7 +3253,7 @@
 						master.set_emotion("sad")
 						return
 
-					if(get_dist(master, hug_target) <= 1)
+					if(bounds_dist(master, hug_target) == 0)
 						if (prob(2))
 							master.speak("Merry Spacemas!")
 							SPAWN(1 SECOND)

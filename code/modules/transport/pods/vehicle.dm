@@ -193,7 +193,7 @@
 
 	updateDialog()
 		for(var/client/C)
-			if (C.mob && C.mob.using_dialog_of(src) && get_dist(C.mob,src) <= 1)
+			if (C.mob && C.mob.using_dialog_of(src) && bounds_dist(C.mob, src) == 0)
 				src.open_parts_panel(C.mob)
 
 	Topic(href, href_list)

@@ -143,7 +143,7 @@
 
 
 	afterattack(obj/O as obj, mob/user as mob)
-		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && get_dist(src,O) <= 1)
+		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && bounds_dist(src, O) == 0)
 			if  (!O.reagents.total_volume)
 				boutput(user, "<span class='alert'>The [O.name] is empty!</span>")
 				return

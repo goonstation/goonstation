@@ -276,7 +276,7 @@
 		usr.show_text("You must attach [src]'s floor bolts before the machine will work.", "red")
 		return
 
-	if ((usr.contents.Find(src) || src.contents.Find(usr) || can_access_remotely(usr) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))
+	if ((usr.contents.Find(src) || src.contents.Find(usr) || can_access_remotely(usr) || ((bounds_dist(src, usr) == 0) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 
 		if (href_list["refresh"])

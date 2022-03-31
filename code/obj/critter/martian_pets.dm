@@ -114,7 +114,7 @@
         src.anchored = 0
         src.task = "chasing"
       else
-        if (get_dist(src, src.target) <= 1)
+        if (bounds_dist(src, src.target) == 0)
           var/mob/living/carbon/M = src.target
           if (!src.attacking) CritterAttack(src.target)
           if (!src.aggressive)

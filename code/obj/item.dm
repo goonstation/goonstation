@@ -656,7 +656,7 @@
 		if (user == over_object)
 			actions.start(new /datum/action/bar/private/icon/pickup(src), user)
 		//else // use laterr, after we improve the 'give' dialog to work with multicontext
-		//	if (get_dist(user,over_object) <= 1 && src_exists_inside_usr_or_usr_storage)
+		//	if (bounds_dist(user, over_object) == 0 && src_exists_inside_usr_or_usr_storage)
 		//		user.give_to(over_object)
 	else
 

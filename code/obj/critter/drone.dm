@@ -276,7 +276,7 @@
 
 			for (var/client/C)
 				var/mob/M = C.mob
-				if (M && src.z == M.z && get_dist(src,M) <= 10)
+				if (M && src.z == M.z && bounds_dist(src, M) == 00)
 					if (isliving(M))
 						waking = 1
 						break
@@ -288,7 +288,7 @@
 
 			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				var/atom/A = atom
-				if (A && src.z == A.z && get_dist(src,A) <= 10)
+				if (A && src.z == A.z && bounds_dist(src, A) == 00)
 					waking = 1
 					break
 
@@ -314,7 +314,7 @@
 
 			for (var/client/C)
 				var/mob/M = C.mob
-				if (M && src.z == M.z && get_dist(src,M) <= 10)
+				if (M && src.z == M.z && bounds_dist(src, M) == 00)
 					if (isliving(M))
 						stay_awake = 1
 						break
@@ -326,7 +326,7 @@
 
 			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				var/atom/A = atom
-				if (A && src.z == A.z && get_dist(src,A) <= 10)
+				if (A && src.z == A.z && bounds_dist(src, A) == 00)
 					stay_awake = 1
 					break
 
@@ -403,7 +403,7 @@
 					src.anchored = 0
 					src.task = "chasing"
 				else
-					if (get_dist(src, src.target) <= 1)
+					if (bounds_dist(src, src.target) == 0)
 						var/mob/living/carbon/M = src.target
 						if (!src.attacking) CritterAttack(src.target)
 						if (!src.aggressive)

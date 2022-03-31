@@ -137,7 +137,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 	if (mirrored_physical_zone_created) //checking for vistargets if true
 		var/turf/T = get_turf(source)
 		if (T.vistarget)
-			if(bounds_dist(T.vistarget, user) == 0 || get_dist(T.vistarget, user) <= 1)
+			if(bounds_dist(T.vistarget, user) == 0 || bounds_dist(T.vistarget, user) == 0)
 				return TRUE
 
 

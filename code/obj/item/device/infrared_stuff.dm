@@ -72,7 +72,7 @@ Contains:
 	..()
 	if (usr.stat || usr.restrained())
 		return
-	if ((usr.contents.Find(src) || (usr.contents.Find(src.master) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))))
+	if ((usr.contents.Find(src) || (usr.contents.Find(src.master) || ((bounds_dist(src, usr) == 0) && istype(src.loc, /turf)))))
 		src.add_dialog(usr)
 		if (href_list["passive"])
 			src.passive = !( src.passive )

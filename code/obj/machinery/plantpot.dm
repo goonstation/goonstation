@@ -766,7 +766,7 @@
 		else ..()
 
 	attack_ai(mob/user as mob)
-		if(isrobot(user) && get_dist(src, user) <= 1) return src.Attackhand(user)
+		if(isrobot(user) && bounds_dist(src, user) == 0) return src.Attackhand(user)
 
 	attack_hand(var/mob/user as mob)
 		if(isAI(user) || isobserver(user)) return // naughty AIs used to be able to harvest plants

@@ -249,7 +249,7 @@
 				var/obj/projectile/P = initialize_projectile_pixel(user, proj, target, 0, 0)
 				if (!P)
 					return FALSE
-				if(get_dist(user,target) <= 1)
+				if(bounds_dist(user, target) == 0)
 					P.was_pointblank = 1
 					hit_with_existing_projectile(P, target) // Includes log entry.
 				else

@@ -1673,7 +1673,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		return
 	if (user.stat || user.restrained() || user.lying)
 		return
-	if ((get_dist(src, user) <= 1 && istype(src.loc, /turf)))
+	if ((bounds_dist(src, user) == 0 && istype(src.loc, /turf)))
 		src.add_dialog(user)
 		/*
 		var/dat = text("<TT><B>Timing Unit</B><br>[] []:[]<br><A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='?src=\ref[];time=0'>Timing</A>", src) : text("<A href='?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)

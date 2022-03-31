@@ -688,7 +688,7 @@
 
 	onEnd()
 		..()
-		if ((get_dist(master, master.patient) <= 1) && (master.on))
+		if ((bounds_dist(master, master.patient) == 0) && (master.on))
 			if ((reagent_id == "internal_beaker") && (master.reagent_glass) && (master.reagent_glass.reagents.total_volume))
 				master.reagent_glass.reagents.trans_to(master.patient,master.injection_amount) //Inject from beaker instead.
 				master.reagent_glass.reagents.reaction(master.patient, 2, master.injection_amount)

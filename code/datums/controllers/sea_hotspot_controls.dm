@@ -975,7 +975,7 @@
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 99, 1, 0.1, 0.7)
 
 		for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
-			if (get_dist(src,H.center.turf()) <= 1)
+			if (bounds_dist(src, H.center.turf()) == 0)
 				playsound(src, "sound/machines/twobeep.ogg", 50, 1,0.1,0.7)
 				for (var/mob/O in hearers(src, null))
 					O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)

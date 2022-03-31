@@ -467,7 +467,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && get_dist(owner, target) <= 1)
+		if(owner && ownerMob && target && G && bounds_dist(owner, target) == 0)
 			G.upgrade_to_kill()
 		else
 			interrupt(INTERRUPT_ALWAYS)
@@ -522,7 +522,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && get_dist(owner, target) <= 1 && get_dist(owner,T) <= 1)
+		if(owner && ownerMob && target && G && bounds_dist(owner, target) == 0 && bounds_dist(owner, T) == 0)
 			G.upgrade_to_pin(T)
 		else
 			interrupt(INTERRUPT_ALWAYS)

@@ -117,7 +117,7 @@
 		return attack_hand(user)
 
 	Topic(href, href_list)
-		if (istype(src.loc, /turf) && (( get_dist(src, usr) <= 1) || issilicon(usr) || isAI(usr)))
+		if (istype(src.loc, /turf) && (( bounds_dist(src, usr) == 0) || issilicon(usr) || isAI(usr)))
 			if (!isliving(usr) || iswraith(usr) || isintangible(usr))
 				return
 			if (is_incapacitated(usr) || usr.restrained())

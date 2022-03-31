@@ -220,7 +220,7 @@
     set name = "Draw A Bath" // idea: emagging bathtub makes the bath spit out a photo of itself when you draw a bath?
     set src in oview(1)
     set category = "Local"
-    if (get_dist(usr, src) <= 1 && !usr.stat)
+    if (bounds_dist(usr, src) == 0 && !usr.stat)
         src.reagents.add_reagent(default_reagent,120)
         usr.visible_message("<span class='notice'>[usr] draws a bath.</span>",\
         "<span class='success'>You draw a nice bath!</span>")

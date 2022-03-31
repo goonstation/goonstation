@@ -567,7 +567,7 @@
 				if (src.manuf_zap(usr, 10))
 					return
 
-		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1 || isAI(usr)) && istype(src.loc, /turf))))
+		if ((usr.contents.Find(src) || ((bounds_dist(src, usr) == 0 || isAI(usr)) && istype(src.loc, /turf))))
 			src.add_dialog(usr)
 
 			if (src.malfunction && prob(10))

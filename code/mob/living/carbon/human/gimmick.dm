@@ -494,7 +494,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 					target = null
 				if(bounds_dist(src, target) > 0)
 					step_to(src, target, 1)
-				if(get_dist(src, target) <= 1 && !LinkBlocked(src.loc, target.loc))
+				if(bounds_dist(src, target) == 0 && !LinkBlocked(src.loc, target.loc))
 					var/obj/item/W = src.equipped()
 					if (!src.restrained())
 						if(W)

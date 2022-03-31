@@ -4111,7 +4111,7 @@ datum
 
 	proc/process()
 		while (!disposed)
-			if (get_dist(src, src.deathtarget) <= 1)
+			if (bounds_dist(src, src.deathtarget) == 0)
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span class='alert'><B>[src]</B> flips up, over and behind [deathtarget] and punches them in the groin before rolling under the floortiles!</span>", 1)
 

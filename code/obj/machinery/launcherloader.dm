@@ -458,7 +458,7 @@
 		return
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob, reach, params)
-		if(get_dist(get_turf(target), get_turf(src)) <= 1 && istype(target, /atom/movable))
+		if(bounds_dist(get_turf(target), get_turf(src)) == 0 && istype(target, /atom/movable))
 			if(target==loc && target != user) return //Backpack or something
 			target:delivery_destination = destination
 			user.visible_message("<span class='notice'>[user] sticks a [src.name] on [target].</span>")

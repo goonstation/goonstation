@@ -914,7 +914,7 @@ CONTAINS:
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if (owner && ownerMob && target && tool && tool == ownerMob.equipped() && get_dist(owner, target) <= 1)
+		if (owner && ownerMob && target && tool && tool == ownerMob.equipped() && bounds_dist(owner, target) == 0)
 			if (zone && surgery_status)
 				target.visible_message("<span class='success'>[owner] [vrb]es the surgical incisions on [owner == target ? his_or_her(owner) : "[target]'s"] [zone_sel2name[zone]] closed with [tool].</span>",
 				"<span class='success'>[owner == target ? "You [vrb]e" : "[owner] [vrb]es"] the surgical incisions on your [zone_sel2name[zone]] closed with [tool].</span>")

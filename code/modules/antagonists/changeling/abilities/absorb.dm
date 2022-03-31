@@ -44,7 +44,7 @@
 		..()
 
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && get_dist(owner, target) <= 1 && devour)
+		if(owner && ownerMob && target && bounds_dist(owner, target) == 0 && devour)
 			var/datum/abilityHolder/changeling/C = devour.holder
 			if (istype(C))
 				C.addDna(target)
@@ -163,7 +163,7 @@
 		..()
 
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && get_dist(owner, target) <= 1 && devour)
+		if(owner && ownerMob && target && bounds_dist(owner, target) == 0 && devour)
 			var/datum/abilityHolder/changeling/C = devour.holder
 			if (istype(C))
 				C.addDna(target)

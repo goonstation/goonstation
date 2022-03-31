@@ -161,7 +161,7 @@
 		if(status & BROKEN)
 			return
 
-		if (istype(src.loc, /turf) && get_dist(src, usr) <= 1)
+		if (istype(src.loc, /turf) && bounds_dist(src, usr) == 0)
 			if (usr.stat || usr.restrained())
 				return
 

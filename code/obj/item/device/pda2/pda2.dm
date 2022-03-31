@@ -538,7 +538,7 @@
 
 /obj/item/device/pda2/Topic(href, href_list)
 	..()
-	if (usr.contents.Find(src) || usr.contents.Find(src.master) || ((istype(src.loc, /turf) || isAI(usr)) && ( get_dist(src, usr) <= 1 || isAI(usr) )))
+	if (usr.contents.Find(src) || usr.contents.Find(src.master) || ((istype(src.loc, /turf) || isAI(usr)) && ( bounds_dist(src, usr) == 0 || isAI(usr) )))
 		if(!can_act(usr))
 			return
 

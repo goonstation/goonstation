@@ -2028,7 +2028,7 @@ obj/machinery/door/airlock
 			if("openClose")
 				user_toggle_open(usr)
 				. = TRUE
-	if(src.p_open && get_dist(src, usr) <= 1 && !isAI(usr))
+	if(src.p_open && bounds_dist(src, usr) == 0 && !isAI(usr))
 		switch(action)
 			if("cut")
 				var/which_wire = params["wireColorIndex"]

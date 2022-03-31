@@ -89,7 +89,7 @@
 		return	//Who cares if we're dead or whatever let us close the fucking window
 	if(..())
 		return
-	if ((((get_dist(src, usr) <= 1 || usr.telekinesis == 1) || isAI(usr)) && isturf(src.loc)))
+	if ((((bounds_dist(src, usr) == 0 || usr.telekinesis == 1) || isAI(usr)) && isturf(src.loc)))
 		src.add_dialog(usr)
 		if (src.allowed(usr) || src.emagged && !(status & BROKEN))
 			if (href_list["tg"])	//someone modified the html so I added a check here

@@ -1281,7 +1281,7 @@
 
 		master.cuffing = 0
 
-		if (get_dist(master, master.target) <= 1)
+		if (bounds_dist(master, master.target) == 0)
 			if (!master.target || master.target.hasStatus("handcuffed"))
 				return
 
