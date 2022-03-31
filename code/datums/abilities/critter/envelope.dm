@@ -24,13 +24,13 @@
 	onUpdate()
 		..()
 
-		if (bounds_dist(owner, target) > 0 || target == null || owner == null || !envelope || (ability && !ability.cooldowncheck()))
+		if (bounds_dist(owner, target) > 0 || target == null || owner == null || (ability && !ability.cooldowncheck()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if (bounds_dist(owner, target) > 0 || target == null || owner == null || !envelope || (ability && !ability.cooldowncheck()))
+		if (bounds_dist(owner, target) > 0 || target == null || owner == null || (ability && !ability.cooldowncheck()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		owner.visible_message("<span class='combat'><B>[owner]</B> starts to envelop [target]!</span>")
