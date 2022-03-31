@@ -1,10 +1,6 @@
 
 TYPEINFO(/datum/mapPrefab/shuttle)
-	#ifdef UPSCALED_MAP
-	folder = "shuttles_upscaled"
-	#else
 	folder = "shuttles"
-	#endif
 
 	prefab_from_path(full_path, local_path)
 		RETURN_TYPE(/datum/mapPrefab/shuttle)
