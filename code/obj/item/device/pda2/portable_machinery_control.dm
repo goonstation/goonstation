@@ -237,8 +237,7 @@
 
 						if ("[P4.icon_state]-tele" in P4.icon_state())
 							flick("[P4.icon_state]-tele", P)
-						else
-							elecflash(P4)
+						elecflash(P4)
 
 			if ("return")
 				var/obj/P5 = src.active
@@ -287,8 +286,7 @@
 
 						if ("[P5.icon_state]-tele" in P5.icon_state())
 							flick("[P5.icon_state]-tele", P)
-						else
-							elecflash(P5)
+						elecflash(P5)
 
 		PDA.updateSelfDialog()
 		return
