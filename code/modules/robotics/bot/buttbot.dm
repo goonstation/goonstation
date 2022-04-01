@@ -134,7 +134,7 @@
 		if(src.buttmobile && prob(80) && !ON_COOLDOWN(global, "butt_scooter", src.scoot_cooldown))
 			src.scoot()
 	if(src.emagged == 1)
-		var/message = src.buttifricky()
+		var/message = src.buttifucky()
 		if(prob(2))
 			playsound(src.loc, "sound/misc/extreme_ass.ogg", 35, 1)
 		speak(message)
@@ -177,7 +177,7 @@
 		if(src.health <= 0)
 			src.explode()
 
-/obj/machinery/bot/buttbot/proc/buttifricky()
+/obj/machinery/bot/buttbot/proc/buttifucky()
 	if(prob(50))
 		return pick("BuTTS", "buTt", "b##t", "bztBUTT", "b^%t", "BUTT", "buott", "bats", "bates", "bouuts", "buttH", "b&/t", "beats", "boats", "booots", "BAAAAATS&/", "//t/%/")
 	else

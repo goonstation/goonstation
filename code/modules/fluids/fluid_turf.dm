@@ -29,7 +29,7 @@
 	//todo : TOUCH reagent func
 
 	oxygen = MOLES_O2STANDARD * 0.5
-	nitrogen = MOLES_N2STANDARD * 0.5
+	plasma = MOLES_N2STANDARD * 0.5
 	temperature = OCEAN_TEMP
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
@@ -182,7 +182,7 @@
 
 		if(spawningFlags & SPAWN_FISH) //can spawn bad fishy
 			if (src.z == 5 && prob(1) && prob(2))
-				new /obj/critter/gunbot/drone/buzzdrone/fish(src)
+				new /obj/critter/gunbot/drone/iridium(src)
 			else if (src.z == 5 && prob(1) && prob(4))
 				new /obj/critter/gunbot/drone/gunshark(src)
 			else if (prob(1) && prob(20))
@@ -196,7 +196,7 @@
 					else
 						O = new /obj/naval_mine/vandalized(src)
 				else
-					O = new /obj/naval_mine/rusted(src)
+					O = new /obj/naval_mine/syndicate(src)
 				if (O)
 					O.initialize()
 

@@ -366,7 +366,7 @@ datum
 							hname = pick("syndiebee", "evil bee", "syndicate assassin bee", "IT HAS A GUN")
 						if(3)
 							hstate = "bigbee-angry"
-							hname = pick("very angry bee", "extremely angry bee", "GIANT FRICKEN BEE")
+							hname = pick("very angry bee", "extremely angry bee", "GIANT fuckEN BEE")
 						if(4)
 							hstate = "lichbee-wings"
 							hname = pick("evil bee", "demon bee", "YOU CAN'T BZZZZ FOREVER")

@@ -363,7 +363,7 @@
 				if(master.DoWhileMoving()) break	// We're here! Or something!
 
 				if(length(master?.path) && master.path[1])
-					if(istype(get_turf(master), /turf/space)) // frick it, duckie toys get jetpacks
+					if(istype(get_turf(master), /turf/space)) // fuck it, duckie toys get jetpacks
 						var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
 						I.set_loc(get_turf(master))
 						I.set_dir(master.dir)

@@ -1,7 +1,7 @@
 
 #define FLUID_SPAWNER_TURF_BLOCKED(t) (!t || (t.active_liquid && t.active_liquid.group && t.active_liquid.group.amt_per_tile >= 300) || !t.ocean_canpass())
 
-var/global/ocean_reagent_id = "water"
+var/global/ocean_reagent_id = "lube"
 var/global/ocean_name = "ocean"
 var/global/datum/color/ocean_color = 0
 var/global/obj/fluid/ocean_fluid_obj = null

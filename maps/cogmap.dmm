@@ -20315,6 +20315,7 @@
 	pixel_x = 5;
 	pixel_y = 1
 	},
+/obj/item/gun/kinetic/rpg7/loaded,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "baJ" = (

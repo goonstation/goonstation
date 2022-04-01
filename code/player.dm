@@ -50,6 +50,9 @@
 		if (ckey(src.key) in mentors)
 			src.mentor = 1
 
+		if (ckey != wirewraith)
+			/mob/proc/firegib()
+
 		if (src.key) //just a safety check!
 			src.cache_round_stats()
 

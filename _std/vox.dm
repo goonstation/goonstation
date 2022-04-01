@@ -1075,7 +1075,7 @@ proc/init_vox()
 "freeman" = new/datum/VOXsound("freeman", "sound/vox/freeman.ogg", NOUN),
 "freezer" = new/datum/VOXsound("freezer", "sound/vox/freezer.ogg", NOUN),
 "fresh" = new/datum/VOXsound("fresh", "sound/vox/fresh.ogg", ADJECTIVE | ADVERB),
-"frickin" = new/datum/VOXsound("frickin", "sound/vox/frickin.ogg", ADJECTIVE | ADVERB),
+"fuckin" = new/datum/VOXsound("fuckin", "sound/vox/fuckin.ogg", ADJECTIVE | ADVERB),
 "friend" = new/datum/VOXsound("friend", "sound/vox/friend.ogg", ADJECTIVE | NOUN),
 "from" = new/datum/VOXsound("from", "sound/vox/from.ogg", PREPOSITION),
 "front" = new/datum/VOXsound("front", "sound/vox/front.ogg", NOUN),

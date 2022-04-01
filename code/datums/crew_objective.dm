@@ -790,7 +790,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 		return check_result
 /datum/objective/crew/medicaldirector/cryo
 	explanation_text = "Ensure that both cryo cells are online and below 225K at the end of the round."
-	medal_name = "It's frickin' freezing in here, Mr. Bigglesworth"
+	medal_name = "It's fuckin' freezing in here, Mr. Bigglesworth"
 	var/static/check_result = null
 	check_completion()
 		if(isnull(check_result))
@@ -897,7 +897,7 @@ ABSTRACT_TYPE(/datum/objective/crew/roboticist)
 ABSTRACT_TYPE(/datum/objective/crew/medicaldoctor)
 /datum/objective/crew/medicaldoctor/cryo
 	explanation_text = "Ensure that both cryo cells are online and below 225K at the end of the round."
-	medal_name = "It's frickin' freezing in here, Mr. Bigglesworth"
+	medal_name = "It's fuckin' freezing in here, Mr. Bigglesworth"
 	var/static/check_result = null
 	check_completion()
 		if(isnull(check_result))
