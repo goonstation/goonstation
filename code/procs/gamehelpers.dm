@@ -99,7 +99,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 /// For interacting with stuff.
 /proc/in_interact_range(atom/source, atom/user)
 	. = FALSE
-	if(bounds_dist(source, user) == 0 || (IN_RANGE(source, user) == 0)) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
+	if(bounds_dist(source, user) == 0 || (IN_RANGE(source, user, 1))) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
 		return TRUE
 	else if (source in bible_contents && locate(/obj/item/storage/bible) in range(1, user)) // whoever added the global bibles, fuck you
 		return TRUE
