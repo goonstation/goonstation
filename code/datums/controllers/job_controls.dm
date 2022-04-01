@@ -48,8 +48,8 @@ var/datum/job_controller/job_controls
 
 		#ifdef UPSCALED_MAP
 		for (var/datum/job/J in staple_jobs)
-			if (limit > 0)
-				limit *= 4
+			if (J.limit > 0)
+				J.limit *= 4
 		#endif
 
 
