@@ -182,6 +182,7 @@
 				P.initialize()
 
 		if(spawningFlags & SPAWN_FISH) //can spawn bad fishy
+			#ifndef UPSCALED_MAP
 			if (src.z == 5 && prob(1) && prob(2))
 				new /obj/critter/gunbot/drone/buzzdrone/fish(src)
 			else if (src.z == 5 && prob(1) && prob(4))
@@ -200,6 +201,7 @@
 					O = new /obj/naval_mine/rusted(src)
 				if (O)
 					O.initialize()
+			#endif
 
 		if(spawningFlags & SPAWN_TRILOBITE)
 			if (prob(17))
