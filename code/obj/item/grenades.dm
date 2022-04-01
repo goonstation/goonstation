@@ -681,7 +681,11 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 	New()
 		..()
+		#ifdef UPSCALED_MAP
+		destination = locate(40 * 2,19 * 2,2)
+		#else
 		destination = locate(40,19,2)
+		#endif
 
 	primed
 		state = 1
