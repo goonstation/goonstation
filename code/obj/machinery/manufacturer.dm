@@ -2038,11 +2038,6 @@
 /obj/item/paper/manufacturer_blueprint/clone_scanner
 	blueprint = /datum/manufacture/mechanics/clone_scanner
 
-/******************** Loafer Blueprints *******************/
-
-/obj/item/paper/manufacturer_blueprint/loafer
-	blueprint = /datum/manufacture/mechanics/loafer
-
 /******************** AI Law Rack Blueprint (probably a terrible idea) *******************/
 
 /obj/item/paper/manufacturer_blueprint/lawrack

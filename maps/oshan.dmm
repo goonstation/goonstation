@@ -9087,7 +9087,7 @@
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
 "avt" = (
-/obj/disposalpipe/loafer{
+/obj/disposalpipe/segment{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/arcade,

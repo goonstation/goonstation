@@ -9149,7 +9149,7 @@
 /area/station/crew_quarters/captain)
 "ctq" = (
 /obj/decal/cleanable/dirt,
-/obj/disposalpipe/loafer{
+/obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor/plating,

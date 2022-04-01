@@ -53773,7 +53773,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/exit)
 "gzG" = (
-/obj/disposalpipe/loafer/horizontal,
+/obj/disposalpipe/segment/horizontal,
 /obj/item/device/radio/beacon,
 /turf/simulated/floor,
 /area/station/security/main)

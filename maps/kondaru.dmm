@@ -16928,7 +16928,7 @@
 /area/station/maintenance/east)
 "aWS" = (
 /obj/grille/steel,
-/obj/disposalpipe/loafer{
+/obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor/plating,

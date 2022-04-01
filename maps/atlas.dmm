@@ -5284,6 +5284,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"nw" = (
+/obj/disposalpipe/loafer,
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "nx" = (
 /obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/green/side{
@@ -68533,7 +68537,7 @@ iI
 hV
 sJ
 hV
-fl
+nw
 mO
 tZ
 he

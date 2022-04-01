@@ -14092,7 +14092,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "dYw" = (
-/obj/disposalpipe/loafer{
+/obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor/plating,

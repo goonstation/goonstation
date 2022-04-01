@@ -23855,7 +23855,7 @@
 	name = "Dionysus Cryocore"
 	})
 "Vk" = (
-/obj/disposalpipe/loafer/horizontal,
+/obj/disposalpipe/segment/horizontal,
 /obj/machinery/abcu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west{

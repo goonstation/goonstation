@@ -6487,7 +6487,7 @@
 /turf/simulated/floor/bot,
 /area/station/security/brig)
 "atc" = (
-/obj/disposalpipe/loafer,
+/obj/disposalpipe/segment,
 /obj/decal/glow{
 	brightness = 3;
 	color_b = 0.35;

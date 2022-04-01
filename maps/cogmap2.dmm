@@ -34525,7 +34525,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/routing/depot)
 "bBa" = (
-/obj/disposalpipe/loafer,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/plating/scorched,
 /area/station/routing/depot)
 "bBb" = (

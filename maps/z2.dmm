@@ -57053,7 +57053,7 @@
 /turf/unsimulated/floor/wood,
 /area/afterlife/bar/sanctuary)
 "dcS" = (
-/obj/disposalpipe/loafer/horizontal{
+/obj/disposalpipe/segment/horizontal{
 	dir = 1
 	},
 /turf/unsimulated/floor/grey,

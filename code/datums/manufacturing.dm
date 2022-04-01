@@ -116,15 +116,6 @@ ABSTRACT_TYPE(/datum/manufacture)
 	frame_path = /obj/machinery/clone_scanner
 
 
-/******************** Loafer *******************/
-
-/datum/manufacture/mechanics/loafer
-	name = "loafer (deploy on plating)"
-	item_amounts = list(5,6,4)
-	time = 30 SECONDS
-	create = 1
-	frame_path = /obj/disposalpipe/loafer
-
 /******************** AI Law Rack *******************/
 
 /datum/manufacture/mechanics/lawrack

@@ -833,135 +833,20 @@
 		qdel(src)
 
 /obj/disposalpipe/loafer
-	name = "disciplinary loaf processor"
-	desc = "A pipe segment designed to convert detritus into a nutritionally-complete meal for inmates."
-	icon_state = "pipe-loaf0"
-	mats = 100
-	is_syndicate = 1
-	var/is_doing_stuff = FALSE
+	name = "delete this with a segment"
+	icon = 'icons/mob/inhand/hand_general.dmi'
+	icon_state = "DONGS"
 
 	horizontal
 		dir = EAST
 	vertical
 		dir = NORTH
 
-	New()
+	New() // for any loafers in the secret module
 		..()
-
-		dpdir = dir | turn(dir, 180)
-		update()
-
-	was_built_from_frame(mob/user, newly_built)
-		. = ..()
-		dpdir = dir | turn(dir, 180)
-		update()
-
-	transfer(var/obj/disposalholder/H)
-		while(src.is_doing_stuff)
-			sleep(1 SECOND)
-		src.is_doing_stuff = TRUE
-
-		if (H.contents.len)
-			playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
-			//src.visible_message("<b>[src] activates!</b>") // Processor + loop = SPAM
-			src.icon_state = "pipe-loaf1"
-
-			var/doSuperLoaf = 0
-			for (var/obj/item/reagent_containers/food/snacks/prison_loaf/O in H)
-				if(O.name == "strangelet loaf")
-					doSuperLoaf = 1
-					break
-
-			if(doSuperLoaf)
-				for (var/atom/movable/O2 in H)
-					if(ismob(O2))
-						var/mob/M = O2
-						M.ghostize()
-					qdel(O2)
-
-				var/obj/item/reagent_containers/food/snacks/einstein_loaf/estein = new /obj/item/reagent_containers/food/snacks/einstein_loaf(src)
-				estein.set_loc(H)
-				goto StopLoafing
-
-
-			var/obj/item/reagent_containers/food/snacks/prison_loaf/newLoaf = new /obj/item/reagent_containers/food/snacks/prison_loaf(src)
-			for (var/atom/movable/newIngredient in H)
-
-				LAGCHECK(LAG_MED)
-
-				if (istype(newIngredient, /obj/item/reagent_containers/food/snacks/prison_loaf))
-					var/obj/item/reagent_containers/food/snacks/prison_loaf/otherLoaf = newIngredient
-					newLoaf.loaf_factor += otherLoaf.loaf_factor * 1.2
-					otherLoaf = null
-
-				else if (isliving(newIngredient))
-					playsound(src.loc, pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Liquid_Slosh_1.ogg","sound/impact_sounds/Wood_Hit_1.ogg","sound/impact_sounds/Slimy_Hit_3.ogg","sound/impact_sounds/Slimy_Hit_4.ogg","sound/impact_sounds/Flesh_Stab_1.ogg"), 50, 1)
-					var/mob/living/poorSoul = newIngredient
-					if (issilicon(poorSoul))
-						newLoaf.reagents.add_reagent("oil",10)
-						newLoaf.reagents.add_reagent("silicon",10)
-						newLoaf.reagents.add_reagent("iron",10)
-					else
-						newLoaf.reagents.add_reagent("bloodc",10) // heh
-						newLoaf.reagents.add_reagent("ectoplasm",10)
-
-					if(ishuman(newIngredient))
-						newLoaf.loaf_factor += (newLoaf.loaf_factor / 5) + 50 // good god this is a weird value
-					else
-						newLoaf.loaf_factor += (newLoaf.loaf_factor / 10) + 50
-					if(!isdead(poorSoul))
-						poorSoul:emote("scream")
-					poorSoul.death()
-					if (poorSoul.mind || poorSoul.client)
-						poorSoul.ghostize()
-				else if (isitem(newIngredient))
-					var/obj/item/I = newIngredient
-					newLoaf.loaf_factor += I.w_class * 5
-					I = null
-				else
-					newLoaf.loaf_factor++
-
-				qdel(newIngredient)
-
-			newLoaf.update()
-			newLoaf.set_loc(H)
-
-			StopLoafing:
-
-			sleep(0.3 SECONDS)	//make a bunch of ongoing noise i guess?
-			playsound(src.loc, pick("sound/machines/mixer.ogg","sound/machines/mixer.ogg","sound/machines/mixer.ogg","sound/machines/hiss.ogg","sound/machines/ding.ogg","sound/machines/buzz-sigh.ogg","sound/impact_sounds/Machinery_Break_1.ogg","sound/effects/pop.ogg","sound/machines/warning-buzzer.ogg","sound/impact_sounds/Glass_Shatter_1.ogg","sound/impact_sounds/Flesh_Break_2.ogg","sound/effects/spring.ogg","sound/machines/engine_grump1.ogg","sound/machines/engine_grump2.ogg","sound/machines/engine_grump3.ogg","sound/impact_sounds/Glass_Hit_1.ogg","sound/effects/bubbles.ogg","sound/effects/brrp.ogg"), 50, 1)
-			sleep(0.3 SECONDS)
-
-			playsound(src.loc, "sound/machines/engine_grump1.ogg", 50, 1)
-			sleep(3 SECONDS)
-			src.icon_state = "pipe-loaf0"
-			//src.visible_message("<b>[src] deactivates!</b>") // Processor + loop = SPAM
-
-		var/nextdir = nextdir(H.dir)
-		H.set_dir(nextdir)
-		var/turf/T = H.nextloc()
-		var/obj/disposalpipe/P = H.findpipe(T)
-
-		src.is_doing_stuff = FALSE
-
-		if(P)
-			// find other holder in next loc, if inactive merge it with current
-			var/obj/disposalholder/H2 = locate() in P
-			if(H2 && !H2.active)
-				H.merge(H2)
-
-			H.set_loc(P)
-		else			// if wasn't a pipe, then set loc to turf
-			H.set_loc(T)
-			return null
-
-		return P
-
-	welded()
-		return //can't let them unweld the loafer
-	update()
-		..()
-		src.name = initial(src.name)
+		var/obj/disposalpipe/segment/S = new(src.loc)
+		S.dir = src.dir
+		qdel(src)
 
 #define MAXIMUM_LOAF_STATE_VALUE 10
 

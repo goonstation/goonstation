@@ -31253,7 +31253,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "boO" = (
-/obj/disposalpipe/loafer/horizontal,
+/obj/disposalpipe/segment/horizontal,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;

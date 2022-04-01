@@ -19265,7 +19265,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/northwest)
 "ieH" = (
-/obj/disposalpipe/loafer{
+/obj/disposalpipe/segment{
 	dir = 4
 	},
 /obj/cable{
