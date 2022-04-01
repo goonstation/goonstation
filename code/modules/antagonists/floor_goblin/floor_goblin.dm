@@ -152,7 +152,7 @@
 			return 1
 		if(target == holder.owner || !ishuman(target))
 			return 1
-		if(!IN_RANGE(holder.owner, target, 1))
+		if(!(bounds_dist(holder.owner, target) == 0))
 			boutput(holder.owner, __red("Target is too far away."))
 			return 1
 		var/mob/living/carbon/human/target_human = target
@@ -169,7 +169,7 @@
 			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
 			APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_CANTMOVE, "floorbiting")
 			SPAWN(0.4 SECONDS)
-				if(holder.owner && target_human && IN_RANGE(holder.owner, target, 1))
+				if(holder.owner && target_human && (bounds_dist(holder.owner, target) == 0))
 					playsound(floorturf, "sound/impact_sounds/Flesh_Tear_3.ogg", 50, 1, pitch = 1.3)
 					target_human.changeStatus("weakened", 2 SECONDS)
 					target_human.force_laydown_standup()
@@ -211,7 +211,7 @@
 			return 1
 		if(target == holder.owner || !ishuman(target))
 			return 1
-		if(!IN_RANGE(holder.owner, target, 1))
+		if(!(bounds_dist(holder.owner, target) == 0))
 			boutput(holder.owner, __red("Target is too far away."))
 			return 1
 
@@ -278,7 +278,7 @@
 	onEnd()
 		..()
 
-		if(!IN_RANGE(source, target, 1) || target == null || source == null)
+		if(!(bounds_dist(source, target) == 0) || target == null || source == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -308,7 +308,7 @@
 	onUpdate()
 		..()
 
-		if(!IN_RANGE(source, target, 1) || target == null || source == null)
+		if(!(bounds_dist(source, target) == 0) || target == null || source == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

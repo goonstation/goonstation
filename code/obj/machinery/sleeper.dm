@@ -558,7 +558,7 @@
 		return
 
 	proc/can_operate(var/mob/M)
-		if (!IN_RANGE(src, M, 1))
+		if (!(bounds_dist(src, M) == 0))
 			return FALSE
 		if (istype(M) && is_incapacitated(M))
 			return FALSE

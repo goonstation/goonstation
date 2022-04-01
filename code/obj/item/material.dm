@@ -1032,7 +1032,7 @@
 		if (!output_location)
 			return src.loc
 
-		if (!IN_RANGE(src.output_location, src, 1))
+		if (!(bounds_dist(src.output_location, src) == 0))
 			output_location = null
 			return src.loc
 

@@ -24,7 +24,7 @@
 					src.targeting_ability = S
 					update_cursor()
 				return 100
-			if (S.target_in_inventory && (!IN_RANGE(src, target, 1) && !isturf(target) && !isturf(target.loc)))
+			if (S.target_in_inventory && (!(bounds_dist(src, target) == 0) && !isturf(target) && !isturf(target.loc)))
 				if(S.sticky)
 					src.targeting_ability = S
 					update_cursor()

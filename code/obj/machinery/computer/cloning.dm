@@ -478,7 +478,7 @@ proc/find_ghost_by_key(var/find_key)
 
 
 	proc/can_operate(var/mob/M)
-		if (!IN_RANGE(src, M, 1))
+		if (!(bounds_dist(src, M) == 0))
 			return FALSE
 		if (is_incapacitated(M))
 			return FALSE
