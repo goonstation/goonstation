@@ -25,6 +25,7 @@
 	flags = FPRINT | FLUID_SUBMERGE
 	throwforce = 10
 	pressure_resistance = 3*ONE_ATMOSPHERE
+	layer = STORAGE_LAYER //dumb
 	var/allow_unbuckle = 1
 	var/mob/living/buckled_guy = null
 	var/deconstructable = 1
