@@ -1245,7 +1245,7 @@
 		var/my_turf = get_turf(src)
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
-			if((bounds_dist(target_turf, my_turf) == 0))
+			if(IN_RANGE(target_turf, my_turf, 1))
 				budgun.shoot_point_blank(target, src)
 			else
 				budgun.shoot(target_turf, my_turf, src)
@@ -2021,7 +2021,7 @@
 	proc/failchecks()
 		if (!master || !master.on || master.idle || master.stunned || master.moving)
 			return 1
-		if (!(bounds_dist(master, task.arrest_target) == 0) || !task.arrest_target || task.arrest_target.hasStatus("handcuffed"))
+		if (!IN_RANGE(master, task.arrest_target, 1) || !task.arrest_target || task.arrest_target.hasStatus("handcuffed"))
 			return 1
 
 //Robot tools.  Flash boards, batons, etc
@@ -2861,7 +2861,7 @@
 						master.frustration += 2
 
 					// Right up against them? Book em!
-					if((bounds_dist(src.master, src.arrest_target) == 0) && is_incapacitated(src.arrest_target))
+					if(IN_RANGE(src.master, src.arrest_target, 1) && is_incapacitated(src.arrest_target))
 						actions.start(new/datum/action/bar/icon/buddy_cuff(src.master, src), src.master)
 					// Otherwise, go get them!
 					else

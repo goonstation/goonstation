@@ -92,7 +92,7 @@ Contains:
 					our_mob.playsound_local(A, "sound/machines/ping.ogg", 55, 1)
 				if(ismob(A))
 					var/mob/M = A
-					if(M?.invisibility != INVIS_CLOAK || !(bounds_dist(src, M) == 0))
+					if(M?.invisibility != INVIS_CLOAK || !IN_RANGE(src, M, 1))
 						continue
 				else if(isobj(A))
 					var/obj/O = A
@@ -178,7 +178,7 @@ that cannot be itched
 
 	pixelaction(atom/target, params, mob/user, reach)
 		if(distancescan)
-			if(!(bounds_dist(user, target) == 0) && IN_RANGE(user, target, 3))
+			if(!IN_RANGE(user, target, 1) && IN_RANGE(user, target, 3))
 				user.visible_message("<span class='notice'><b>[user]</b> takes a distant forensic scan of [target].</span>")
 				boutput(user, scan_forensic(target, visible = 1))
 				src.add_fingerprint(user)

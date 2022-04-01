@@ -274,7 +274,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(ownerMob && target && (bounds_dist(owner, target) == 0) && mechanimate?.cooldowncheck())
+		if(ownerMob && target && IN_RANGE(owner, target, 1) && mechanimate?.cooldowncheck())
 			logTheThing("combat", ownerMob, target, "injects [constructTarget(target,"combat")]. Crawler transformation")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='alert'><B>[owner] successfully injected [target]!</B></span>", 1)

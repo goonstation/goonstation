@@ -112,7 +112,7 @@
 			KillPathAndGiveUp(1)
 			return
 
-		if ((bounds_dist(src, src.moveTowards) == 0))
+		if (IN_RANGE(src, src.moveTowards, 1))
 			bartend()
 			src.worryLevel = 0
 			src.setEmotion("happy")

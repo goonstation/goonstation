@@ -638,7 +638,7 @@
 			return
 
 		if (master.terrifying)
-			if(!(bounds_dist(master, master.patient) == 0) && !master.moving)
+			if(!IN_RANGE(master, master.patient, 1) && !master.moving)
 				master.navigate_to(get_turf(master.patient), MEDBOT_MOVE_SPEED, 1, 10)
 			if(!src.did_spooky && prob(10))
 				if (prob(20))
@@ -717,7 +717,7 @@
 			return TRUE
 		if(!istype(master.patient))
 			return TRUE
-		if(!master.terrifying && !(bounds_dist(master, master.patient) == 0))
+		if(!master.terrifying && !IN_RANGE(master, master.patient, 1))
 			return TRUE
 
 // copied from transposed scientists

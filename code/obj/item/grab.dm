@@ -156,7 +156,7 @@
 				if(prob(33)) H.losebreath += (0.2 * mult)
 
 	proc/set_affected_loc()
-		if (!isturf(src.assailant.loc) || !(bounds_dist(src.assailant, src.affecting) == 0))
+		if (!isturf(src.assailant.loc) || !IN_RANGE(src.assailant, src.affecting, 1))
 			return
 
 		actions.interrupt(src.affecting, INTERRUPT_ALWAYS)

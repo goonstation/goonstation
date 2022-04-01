@@ -68,7 +68,7 @@
 
 	onUpdate()
 		. = ..()
-		if(!(bounds_dist(owner, target) == 0) || QDELETED(target))
+		if(!IN_RANGE(owner, target, 1) || QDELETED(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!ON_COOLDOWN(owner, "crusher_sound", rand(0.5, 2.5) SECONDS))
@@ -103,7 +103,7 @@
 
 	onEnd()
 		. = ..()
-		if(!(bounds_dist(owner, target) == 0) || QDELETED(target))
+		if(!IN_RANGE(owner, target, 1) || QDELETED(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

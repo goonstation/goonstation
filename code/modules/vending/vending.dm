@@ -1018,7 +1018,7 @@
 
 	onUpdate()
 		..()
-		if(!(bounds_dist(src.owner, src.vendor) == 0) || src.vendor == null || src.owner == null)
+		if(!IN_RANGE(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1028,7 +1028,7 @@
 
 	onStart()
 		..()
-		if(!(bounds_dist(src.owner, src.vendor) == 0) || src.vendor == null || src.owner == null)
+		if(!IN_RANGE(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

@@ -141,7 +141,7 @@
 
 	proc/eject_card()
 		if (src.user_id)
-			if((bounds_dist(usr, src) == 0))
+			if(IN_RANGE(usr, src, 1))
 				usr.put_in_hand_or_drop(src.user_id)
 			else
 				src.user_id.set_loc(src.loc)
@@ -212,7 +212,7 @@
 	proc/remove_distant_beaker()
 		// borgs and people with item arms don't insert the beaker into the machine itself
 		// but whenever something would happen to the dispenser and the beaker is far it should disappear
-		if(beaker && !(bounds_dist(get_turf(beaker), src) == 0))
+		if(beaker && !IN_RANGE(get_turf(beaker), src, 1))
 			beaker = null
 			src.UpdateIcon()
 
@@ -293,7 +293,7 @@
 			if ("eject")
 				if (beaker)
 					if(beaker.loc == src)
-						if((bounds_dist(usr, src) == 0))
+						if(IN_RANGE(usr, src, 1))
 							usr.put_in_hand_or_drop(beaker)
 						else
 							beaker.set_loc(src.loc)

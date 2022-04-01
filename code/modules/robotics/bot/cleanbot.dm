@@ -234,7 +234,7 @@
 			src.doing_something = 1
 
 			// are we there yet
-			if ((bounds_dist(src, src.target) == 0))
+			if (IN_RANGE(src, src.target, 1))
 				do_the_thing()
 				// stop the bot mover so it doesn't interrupt us if we're already in range
 				src.frustration = 0
