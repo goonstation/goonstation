@@ -13,6 +13,9 @@
 
 	New()
 		..()
+		#ifdef UPSCALED_MAP
+		groups_to_create *= 4
+		#endif
 		#ifdef UNDERWATER_MAP
 		var/datum/sea_hotspot/new_hotspot = 0
 		for (var/i = 1, i <= groups_to_create, i++)
