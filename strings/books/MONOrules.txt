@@ -4,7 +4,7 @@
 <hr>
 
 <h2>Contents</h2>
-<p>Each box of MONO playing cards has 108 cards, as follows:</p>
+<p>Each box of MONO playing cards has 108 cards of 4 main suits, as follows:</p>
 <ul>
 <li><b>19 Eldritch cards,</b> from 0 to 9</li>
 <li><b>19 Martian cards,</b> from 0 to 9</li>
@@ -16,7 +16,7 @@
 <li><b>4 Wild cards</b></li>
 <li><b>4 Wild Draw 4 cards</b></li>
 </ul>
-
+<p> The 4 main suits are based of origins, Namely artifact origins, 4 main origins are used in mono: Eldritch, Martian, Precursor, and Wizard. Although there are other card types within the deck, namely wild cards, they are not considered a suit.</p>
 <h2>Objective</h2>
 <p>The first player to play all of their cards within a round scores a number of points depending on the number of cards currently possessed by other players. The first player to 500 points wins the game.</p>
 
