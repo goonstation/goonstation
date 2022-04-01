@@ -168,3 +168,90 @@
 		<br><span class='bold'>###=-</span></span>"}
 	else
 		return null // give the standard description
+
+/obj/item/organ/brain/ghost
+	name = "Ghost Intelligence Core"
+	desc = "A brain shaped mass of silicon, soulsteel, and LED lights. Attempts to hold onto soul to give life to something else."
+	icon_state = "ai_brain"
+	item_state = "ai_brain"
+	created_decal = /obj/decal/cleanable/oil
+	made_from = "soulsteel"
+	var/activated = 0
+	var/lastTrigger
+	var/datum/movement_controller/ghost_brain/MC
+
+	New()
+		..()
+		MC = new
+
+	get_movement_controller()
+		.= MC
+
+	get_desc()
+		if (usr?.traitHolder?.hasTrait("training_medical"))
+			if (activated)
+				if (src.owner?.key)
+					if (!find_ghost_by_key(src.owner?.key))
+						. += "<br><span class='notice'>[src]'s indicators show that it once had a conciousness installed, but that conciousness cannot be located.</span>"
+					else
+						. += "<br><span class='notice'>[src]'s indicators show that it is still operational, and can be installed into a new body immediately.</span>"
+				else
+					. += "<br><span class='alert'>[src] has powered down fully.</span>"
+			else
+				. += "<br><span class='alert'>[src] is brand new. No conciousness has entered it yet.</span>"
+
+	Crossed(atom/movable/AM)
+		..()
+		if (istype(AM, /mob/dead/observer) && prob(33))
+			var/mob/dead/observer/O = AM
+			if(O.observe_round) return
+			if(world.time - lastTrigger < 20 SECONDS)
+				boutput(AM, "<span class='alert'>[src] can not be possessed again so soon!</span>")
+				return
+			lastTrigger = world.time
+
+
+			var/mob/mobenter = AM
+			if(mobenter.client)
+				activated = TRUE
+				AM.set_loc(src)
+				if(MC)
+					mobenter.use_movement_controller = src
+				// OB.canspeak = 0
+				// SHOW_SOULSTEEL_TIPS(OB)
+		return
+
+	relaymove(mob/user, direction, delay, running)
+		. = ..()
+		if(!ON_COOLDOWN(src,"ghost_glow", 5 SECONDS))
+			src.visible_message("[src] glows brightly momentarily.")
+
+/datum/movement_controller/ghost_brain
+	keys_changed(mob/user, keys, changed)
+		if (changed & (KEY_FORWARD|KEY_BACKWARD|KEY_RIGHT|KEY_LEFT))
+			var/move_x = 0
+			var/move_y = 0
+			if (keys & KEY_FORWARD)
+				move_y += 1
+			if (keys & KEY_BACKWARD)
+				move_y -= 1
+			if (keys & KEY_RIGHT)
+				move_x += 1
+			if (keys & KEY_LEFT)
+				move_x -= 1
+			if (move_x || move_y)
+				if(!user.move_dir && user.canmove && user.restrained())
+					if (user.pulled_by || length(user.grabbed_by))
+						boutput(user, "<span class='notice'>You're restrained! You can't move!</span>")
+
+				user.move_dir = angle2dir(arctan(move_y, move_x))
+				//attempt_move(user)
+				if(!ON_COOLDOWN(src,"ghost_glow", 5 SECONDS))
+					src.visible_message("[src] glows brightly momentarily.")
+			else
+				user.move_dir = 0
+
+		if(!user.dir_locked) //in order to not turn around and good fuckin ruin the emote animation
+			user.set_dir(user.move_dir)
+		if (changed & (KEY_THROW|KEY_PULL|KEY_POINT|KEY_EXAMINE|KEY_BOLT|KEY_OPEN|KEY_SHOCK)) // bleh
+			user.update_cursor()
