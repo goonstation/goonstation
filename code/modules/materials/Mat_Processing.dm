@@ -169,11 +169,11 @@
 			boutput(usr, "<span class='notice'>You reset the processor's output target.</span>")
 			return
 
-		if(bounds_dist(over_object, src) > 0)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>The processor is too far away from the target!</span>")
 			return
 
-		if(bounds_dist(over_object, usr) > 0)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -224,7 +224,7 @@
 		return
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
-		if (bounds_dist(user, src) > 0 || bounds_dist(user, O) > 0 || is_incapacitated(user) || isAI(user))
+		if (BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, O) > 0 || is_incapacitated(user) || isAI(user))
 			return
 
 		if (istype(O, /obj/storage/crate/) || istype(O, /obj/storage/cart/))
@@ -291,7 +291,7 @@
 		if (isnull(output_location))
 			return src.loc
 
-		if (bounds_dist(src.output_location, src) > 0)
+		if (BOUNDS_DIST(src.output_location, src) > 0)
 			output_location = null
 			return src.loc
 
@@ -371,7 +371,7 @@
 		return
 
 	Topic(href, href_list)
-		if(bounds_dist(usr, src) > 0 || usr.z != src.z) return
+		if(BOUNDS_DIST(usr, src) > 0 || usr.z != src.z) return
 
 		if(href_list["select_l"])
 			var/obj/item/L = locate(href_list["select_l"]) in src

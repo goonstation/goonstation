@@ -156,7 +156,7 @@
 				if(prob(33)) H.losebreath += (0.2 * mult)
 
 	proc/set_affected_loc()
-		if (!isturf(src.assailant.loc) || !(bounds_dist(src.assailant, src.affecting) == 0))
+		if (!isturf(src.assailant.loc) || !(BOUNDS_DIST(src.assailant, src.affecting) == 0))
 			return
 
 		actions.interrupt(src.affecting, INTERRUPT_ALWAYS)
@@ -330,7 +330,7 @@
 				qdel(src)
 				return 1
 
-		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && bounds_dist(assailant, affecting) > 0) )
+		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && BOUNDS_DIST(assailant, affecting) > 0) )
 			qdel(src)
 			return 1
 
@@ -404,7 +404,7 @@
 	//returns an atom to be thrown if any
 	proc/handle_throw(var/mob/living/user, var/atom/target)
 		if (!src.affecting) return 0
-		if (bounds_dist(user, src.affecting) > 0)
+		if (BOUNDS_DIST(user, src.affecting) > 0)
 			return 0
 		if ((src.state < 1 && !(src.affecting.getStatusDuration("paralysis") || src.affecting.getStatusDuration("weakened") || src.affecting.stat)) || !isturf(user.loc))
 			user.visible_message("<span class='alert'>[src.affecting] stumbles a little!</span>")
@@ -450,7 +450,7 @@
 	onUpdate()
 		..()
 
-		if(bounds_dist(owner, target) > 0 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -460,14 +460,14 @@
 
 	onStart()
 		..()
-		if(bounds_dist(owner, target) > 0 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && bounds_dist(owner, target) == 0)
+		if(owner && ownerMob && target && G && BOUNDS_DIST(owner, target) == 0)
 			G.upgrade_to_kill()
 		else
 			interrupt(INTERRUPT_ALWAYS)
@@ -505,7 +505,7 @@
 	onUpdate()
 		..()
 
-		if(bounds_dist(owner, target) > 0 || target == null || owner == null || bounds_dist(owner, T) > 0)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -515,14 +515,14 @@
 
 	onStart()
 		..()
-		if(bounds_dist(owner, target) > 0 || target == null || owner == null || bounds_dist(owner, T) > 0)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && bounds_dist(owner, target) == 0 && bounds_dist(owner, T) == 0)
+		if(owner && ownerMob && target && G && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0)
 			G.upgrade_to_pin(T)
 		else
 			interrupt(INTERRUPT_ALWAYS)
@@ -544,7 +544,7 @@
 	if  (!(ismob(G.affecting)))
 		return 0
 
-	if (bounds_dist(src, M) > 0)
+	if (BOUNDS_DIST(src, M) > 0)
 		return 0
 
 	user.visible_message("<span class='alert'><B>[M] has been smashed against [src] by [user]!</B></span>")
@@ -566,7 +566,7 @@
 	if  (!(ismob(G.affecting)))
 		return 0
 
-	if (bounds_dist(src, M) > 0)
+	if (BOUNDS_DIST(src, M) > 0)
 		return 0
 
 	if (!G.can_pin)
@@ -584,7 +584,7 @@
 	if  (!(ismob(G.affecting)))
 		return 0
 
-	if (bounds_dist(src, M) > 0)
+	if (BOUNDS_DIST(src, M) > 0)
 		return 0
 
 	if (!G.can_pin)
@@ -627,7 +627,7 @@
 			qdel(src)
 			return 1
 
-		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && bounds_dist(assailant, affecting) > 0) )
+		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && BOUNDS_DIST(assailant, affecting) > 0) )
 			qdel(src)
 			return 1
 
@@ -675,7 +675,7 @@
 			qdel(src)
 			return 1
 
-		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && bounds_dist(assailant, affecting) > 0) )
+		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && BOUNDS_DIST(assailant, affecting) > 0) )
 			qdel(src)
 			return 1
 

@@ -551,7 +551,7 @@
 		if (overmind != user)
 			return
 		if (isitem(O))
-			if (bounds_dist(O, src) > 0)
+			if (BOUNDS_DIST(O, src) > 0)
 				return
 			var/datum/blob_ability/devour_item/D = overmind.get_ability(/datum/blob_ability/devour_item)
 			if (D)

@@ -425,7 +425,7 @@
 		if (target == owner)
 			boutput(owner, "<span class='alert'>While \"be yourself\" is pretty good advice, that would be taking it a bit too literally.</span>")
 			return 1
-		if (bounds_dist(target, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
+		if (BOUNDS_DIST(target, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
 			boutput(owner, "<span class='alert'>You must be within touching distance of [target] for this to work.</span>")
 			return 1
 
@@ -478,7 +478,7 @@
 			boutput(owner, "<span class='alert'>[target] does not seem to be compatible with this ability.</span>")
 			return 1
 
-		if (bounds_dist(H, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
+		if (BOUNDS_DIST(H, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
 			boutput(owner, "<span class='alert'>You must be within touching distance of [target] for this to work.</span>")
 			return 1
 
@@ -1334,7 +1334,7 @@
 		if (..())
 			return 1
 
-		if (bounds_dist(target, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
+		if (BOUNDS_DIST(target, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
 			boutput(usr, "<span class='alert'>You need to be closer to do that.</span>")
 			return 1
 
@@ -1360,7 +1360,7 @@
 		if (..())
 			return 1
 
-		if (bounds_dist(target, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
+		if (BOUNDS_DIST(target, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
 			boutput(usr, "<span class='alert'>You need to be closer to do that.</span>")
 			return 1
 

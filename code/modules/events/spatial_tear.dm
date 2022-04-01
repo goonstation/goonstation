@@ -97,14 +97,14 @@
 	onUpdate()
 		..()
 		// you gotta hold still to jump!
-		if (bounds_dist(ownerMob, spatialtear) > 0)
+		if (BOUNDS_DIST(ownerMob, spatialtear) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			ownerMob.show_text("Your attempt to push through the spatial tear was interrupted!", "red")
 			return
 
 	onStart()
 		..()
-		if (bounds_dist(ownerMob, spatialtear) > 0 || spatialtear == null || ownerMob == null)
+		if (BOUNDS_DIST(ownerMob, spatialtear) > 0 || spatialtear == null || ownerMob == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		for(var/mob/O in AIviewers(ownerMob))

@@ -417,7 +417,7 @@
 		if(user.stat)
 			return
 
-		if (!on || !istype(C)|| C.anchored || bounds_dist(user, src) > 0 || bounds_dist(src, C) > 0 )
+		if (!on || !istype(C)|| C.anchored || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(src, C) > 0 )
 			return
 
 		if(load)
@@ -430,7 +430,7 @@
 		if (istype(C, /atom/movable/screen) || C.anchored)
 			return
 
-		if(bounds_dist(C, src) > 0 || load || !on)
+		if(BOUNDS_DIST(C, src) > 0 || load || !on)
 			return
 		mode = 1
 

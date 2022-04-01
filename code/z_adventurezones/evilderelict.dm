@@ -18,7 +18,7 @@ var/maniac_previous_victim = "Unknown"
 
 	proc/process()
 		if(target)
-			if (bounds_dist(src, src.target) == 0)
+			if (BOUNDS_DIST(src, src.target) == 0)
 				proximity_act()
 
 			var/dist = get_dist(src, src.target)

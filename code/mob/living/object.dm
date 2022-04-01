@@ -219,7 +219,7 @@
 				else //This shouldnt ever happen.
 					src.item.Attackby(src.item, src)
 		else
-			if(src.a_intent == INTENT_GRAB && istype(target, /atom/movable) && bounds_dist(src, target) == 0)
+			if(src.a_intent == INTENT_GRAB && istype(target, /atom/movable) && BOUNDS_DIST(src, target) == 0)
 				var/atom/movable/M = target
 				if(ismob(target) || !M.anchored)
 					src.visible_message("<span class='alert'>[src] grabs [target]!</span>")

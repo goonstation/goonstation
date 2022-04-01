@@ -15,7 +15,7 @@
 	if (!ticker)
 		boutput(user, "You can't buckle anyone in before the game starts.")
 		return
-	if ((!( iscarbon(M) ) || bounds_dist(src, user) > 0 || M.loc != src.loc || user.restrained() || user.stat))
+	if ((!( iscarbon(M) ) || BOUNDS_DIST(src, user) > 0 || M.loc != src.loc || user.restrained() || user.stat))
 		return
 	if (M.buckled)	return
 	if (M == user)

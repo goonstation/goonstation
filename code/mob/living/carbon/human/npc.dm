@@ -636,7 +636,7 @@
 	if( ai_state == AI_ATTACKING && ai_canmove() )
 		if(src.pulling)
 			src.set_pulling(null)
-		if(!ai_validpath() && bounds_dist(src, ai_target) == 0)
+		if(!ai_validpath() && BOUNDS_DIST(src, ai_target) == 0)
 			set_dir(get_step_towards(src,ai_target))
 			ai_obstacle() //Remove.
 		else

@@ -505,7 +505,7 @@
 		if (!usr || usr.stat)
 			return
 
-		if ((bounds_dist(src, usr) == 0) || (usr.loc == src.loc))
+		if ((BOUNDS_DIST(src, usr) == 0) || (usr.loc == src.loc))
 			src.add_dialog(usr)
 			switch (href_list["change_setting"])
 				if ("spynetwork")

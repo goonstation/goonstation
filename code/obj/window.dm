@@ -454,7 +454,7 @@
 
 		else if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
-			if (ishuman(G.affecting) && bounds_dist(G.affecting, src) == 0)
+			if (ishuman(G.affecting) && BOUNDS_DIST(G.affecting, src) == 0)
 				src.visible_message("<span class='alert'><B>[user] slams [G.affecting]'s head into [src]!</B></span>")
 				logTheThing("combat", user, G.affecting, "slams [constructTarget(user,"combat")]'s head into [src]")
 				playsound(src.loc, src.hitsound , 100, 1)
@@ -555,13 +555,13 @@
 
 	onUpdate()
 		..()
-		if(bounds_dist(owner, the_window) > 0 || the_window == null || owner == null || the_tool == null)
+		if(BOUNDS_DIST(owner, the_window) > 0 || the_window == null || owner == null || the_tool == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(bounds_dist(owner, the_window) > 0 || the_window == null || owner == null || the_tool == null)
+		if(BOUNDS_DIST(owner, the_window) > 0 || the_window == null || owner == null || the_tool == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		boutput(owner, "<span class='notice'>Now disassembling [the_window]</span>")
@@ -569,7 +569,7 @@
 
 	onEnd()
 		..()
-		if(bounds_dist(owner, the_window) > 0 || the_window == null || owner == null || the_tool == null)
+		if(BOUNDS_DIST(owner, the_window) > 0 || the_window == null || owner == null || the_tool == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(ismob(owner))

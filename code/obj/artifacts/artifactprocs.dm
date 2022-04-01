@@ -319,7 +319,7 @@
 
 			var/mob/M = GRAB.affecting
 			var/mob/A = GRAB.assailant
-			if (bounds_dist(src.loc, M.loc) > 0)
+			if (BOUNDS_DIST(src.loc, M.loc) > 0)
 				return
 			src.visible_message("<strong class='combat'>[A] shoves [M] against \the [src]!</strong>")
 			logTheThing("combat", A, M, "forces [constructTarget(M,"combat")] to touch \an ([src.type]) artifact at [log_loc(src)].")

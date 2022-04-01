@@ -361,10 +361,10 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			return
 		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
 			return
-		if (bounds_dist(src, usr) > 0)
+		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
 			return
-		if (bounds_dist(over_object, src) > 0)
+		if (BOUNDS_DIST(over_object, src) > 0)
 			usr.show_text("The [src.name] is too far away from the target!", "red")
 			return
 		if (!istype(over_object,/turf/simulated/floor/))
@@ -480,7 +480,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		..()
 		if (!src.owner || !src.victim || QDELETED(G))
 			interrupt(INTERRUPT_ALWAYS)
-		if (!(bounds_dist(src.owner, src.brig) == 0) || !(bounds_dist(src.victim, src.brig) == 0))
+		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))
 			interrupt(INTERRUPT_ALWAYS)
 		src.brig.visible_message("<span class='alert'>[owner] begins shoving [victim] into [src.brig]!</span>")
 
@@ -489,14 +489,14 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		..()
 		if (!src.owner || !src.victim || QDELETED(G))
 			interrupt(INTERRUPT_ALWAYS)
-		if (!(bounds_dist(src.owner, src.brig) == 0) || !(bounds_dist(src.victim, src.brig) == 0))
+		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
 		..()
 		if (!src.owner || !src.victim || QDELETED(G))
 			interrupt(INTERRUPT_ALWAYS)
-		if (!(bounds_dist(src.owner, src.brig) == 0) || !(bounds_dist(src.victim, src.brig) == 0))
+		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))
 			interrupt(INTERRUPT_ALWAYS)
 		src.brig.visible_message("<span class='alert'>[owner] shoves [victim] into [src.brig]!</span>")
 		victim.set_loc(src.brig)
@@ -575,10 +575,10 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			return
 		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
 			return
-		if (bounds_dist(src, usr) > 0)
+		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
 			return
-		if (bounds_dist(over_object, src) > 0)
+		if (BOUNDS_DIST(over_object, src) > 0)
 			usr.show_text("The [src.name] is too far away from the target!", "red")
 			return
 		if (!istype(over_object,/turf/simulated/floor/))
@@ -713,10 +713,10 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			return
 		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
 			return
-		if (bounds_dist(src, usr) > 0)
+		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
 			return
-		if (bounds_dist(over_object, src) > 0)
+		if (BOUNDS_DIST(over_object, src) > 0)
 			usr.show_text("The [src.name] is too far away from the target!", "red")
 			return
 		if (!istype(over_object,/turf/simulated/floor/))
@@ -900,10 +900,10 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			return
 		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
 			return
-		if (bounds_dist(src, usr) > 0)
+		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
 			return
-		if (bounds_dist(over_object, src) > 0)
+		if (BOUNDS_DIST(over_object, src) > 0)
 			usr.show_text("The [src.name] is too far away from the target!", "red")
 			return
 		if (!istype(over_object,/turf/simulated/floor/))

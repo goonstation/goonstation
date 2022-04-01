@@ -172,11 +172,11 @@
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the output target for [src].</span>")
 			return
 
-		if(bounds_dist(over_object, src) > 0)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>[src] is too far away from the target!</span>")
 			return
 
-		if(bounds_dist(over_object, usr) > 0)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -205,7 +205,7 @@
 		if (!src.output_target)
 			return src.loc
 
-		if (bounds_dist(src.output_target, src) > 0)
+		if (BOUNDS_DIST(src.output_target, src) > 0)
 			src.output_target = null
 			return src.loc
 
@@ -802,7 +802,7 @@
 //		src.icon_state = "[initial(icon_state)]-fall"
 //		SPAWN(2 SECONDS)
 //			src.icon_state = "[initial(icon_state)]-fallen"
-	if (istype(victim) && vicTurf && (bounds_dist(vicTurf, src) == 0))
+	if (istype(victim) && vicTurf && (BOUNDS_DIST(vicTurf, src) == 0))
 		victim.changeStatus("weakened", 30 SECONDS)
 		src.visible_message("<b><font color=red>[src.name] tips over onto [victim]!</font></b>")
 		victim.force_laydown_standup()
@@ -1018,7 +1018,7 @@
 
 	onUpdate()
 		..()
-		if(!(bounds_dist(src.owner, src.vendor) == 0) || src.vendor == null || src.owner == null)
+		if(!(BOUNDS_DIST(src.owner, src.vendor) == 0) || src.vendor == null || src.owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1028,7 +1028,7 @@
 
 	onStart()
 		..()
-		if(!(bounds_dist(src.owner, src.vendor) == 0) || src.vendor == null || src.owner == null)
+		if(!(BOUNDS_DIST(src.owner, src.vendor) == 0) || src.vendor == null || src.owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

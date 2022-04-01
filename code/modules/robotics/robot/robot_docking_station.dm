@@ -276,7 +276,7 @@
 		usr.show_text("You must attach [src]'s floor bolts before the machine will work.", "red")
 		return
 
-	if ((usr.contents.Find(src) || src.contents.Find(usr) || can_access_remotely(usr) || ((bounds_dist(src, usr) == 0) && istype(src.loc, /turf))))
+	if ((usr.contents.Find(src) || src.contents.Find(usr) || can_access_remotely(usr) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 
 		if (href_list["refresh"])
@@ -311,7 +311,7 @@
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/newname = copytext(strip_html(sanitize(input(usr, "What do you want to rename [R]?", "Cyborg Maintenance", R.name) as null|text)), 1, 64)
-			if ((!issilicon(usr) && (bounds_dist(usr, src) > 0)) || usr.stat || !newname)
+			if ((!issilicon(usr) && (BOUNDS_DIST(usr, src) > 0)) || usr.stat || !newname)
 				return
 			if (url_regex?.Find(newname))
 				boutput(usr, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
@@ -347,7 +347,7 @@
 					boutput(usr, "<span class='alert'>Not enough welding fuel for repairs.</span>")
 					return
 				var/usage = input(usr, "How much welding fuel do you want to use?", "Docking Station", 0) as num
-				if ((!issilicon(usr) && (bounds_dist(usr, src) > 0)) || usr.stat || !isnum_safe(usage))
+				if ((!issilicon(usr) && (BOUNDS_DIST(usr, src) > 0)) || usr.stat || !isnum_safe(usage))
 					return
 				if (usage > R.compborg_get_total_damage(1))
 					usage = R.compborg_get_total_damage(1)
@@ -363,7 +363,7 @@
 					boutput(usr, "<span class='alert'>Not enough wiring for repairs.</span>")
 					return
 				var/usage = input(usr, "How much wiring do you want to use?", "Docking Station", 0) as num
-				if ((!issilicon(usr) && (bounds_dist(usr, src) > 0)) || usr.stat || !isnum_safe(usage))
+				if ((!issilicon(usr) && (BOUNDS_DIST(usr, src) > 0)) || usr.stat || !isnum_safe(usage))
 					return
 				if (usage > R.compborg_get_total_damage(2))
 					usage = R.compborg_get_total_damage(2)
@@ -685,7 +685,7 @@
 		..()
 
 /obj/machinery/recharge_station/MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
-	if (bounds_dist(AM, user) > 0 || bounds_dist(src, user) > 0)
+	if (BOUNDS_DIST(AM, user) > 0 || BOUNDS_DIST(src, user) > 0)
 		return
 	if (!isliving(user) || isAI(user))
 		return

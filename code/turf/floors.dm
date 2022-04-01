@@ -1577,7 +1577,7 @@ DEFINE_FLOORS(grasslush/thin,
 		return
 	if (!user.canmove || user.restrained())
 		return
-	if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && bounds_dist(user, user.pulling) > 0))
+	if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0))
 		//get rid of click delay since we didn't do anything
 		user.next_click = world.time
 		return
@@ -1937,7 +1937,7 @@ DEFINE_FLOORS(grasslush/thin,
 		if (K)
 			K.Attackby(C, user, params)
 
-	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && bounds_dist(user, user.pulling) > 0)) // this seemed like the neatest way to make attack_hand still trigger when needed
+	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0)) // this seemed like the neatest way to make attack_hand still trigger when needed
 		src?.material?.triggerOnHit(src, C, user, 1)
 	else
 		return attack_hand(user)
@@ -1950,7 +1950,7 @@ DEFINE_FLOORS(grasslush/thin,
 		if(I)
 			if(istype(I,/obj/item/cable_coil))
 				var/obj/item/cable_coil/C = I
-				if(bounds_dist(user,F) == 0 && bounds_dist(user,src) == 0)
+				if(BOUNDS_DIST(user,F) == 0 && BOUNDS_DIST(user,src) == 0)
 					C.move_callback(user, F, src)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////

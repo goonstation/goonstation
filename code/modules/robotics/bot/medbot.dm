@@ -638,7 +638,7 @@
 			return
 
 		if (master.terrifying)
-			if(!(bounds_dist(master, master.patient) == 0) && !master.moving)
+			if(!(BOUNDS_DIST(master, master.patient) == 0) && !master.moving)
 				master.navigate_to(get_turf(master.patient), MEDBOT_MOVE_SPEED, 1, 10)
 			if(!src.did_spooky && prob(10))
 				if (prob(20))
@@ -688,7 +688,7 @@
 
 	onEnd()
 		..()
-		if ((bounds_dist(master, master.patient) == 0) && (master.on))
+		if ((BOUNDS_DIST(master, master.patient) == 0) && (master.on))
 			if ((reagent_id == "internal_beaker") && (master.reagent_glass) && (master.reagent_glass.reagents.total_volume))
 				master.reagent_glass.reagents.trans_to(master.patient,master.injection_amount) //Inject from beaker instead.
 				master.reagent_glass.reagents.reaction(master.patient, 2, master.injection_amount)
@@ -717,7 +717,7 @@
 			return TRUE
 		if(!istype(master.patient))
 			return TRUE
-		if(!master.terrifying && !(bounds_dist(master, master.patient) == 0))
+		if(!master.terrifying && !(BOUNDS_DIST(master, master.patient) == 0))
 			return TRUE
 
 // copied from transposed scientists

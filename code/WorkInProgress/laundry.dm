@@ -163,7 +163,7 @@
 
 /obj/submachine/laundry_machine/mouse_drop(over_object,src_location,over_location)
 	var/mob/user = usr
-	if (!user || !over_object || bounds_dist(user, src) > 0 || bounds_dist(user, over_object) > 0 || is_incapacitated(user) || (issilicon(user) && bounds_dist(src, user) > 0))
+	if (!user || !over_object || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, over_object) > 0 || is_incapacitated(user) || (issilicon(user) && BOUNDS_DIST(src, user) > 0))
 		return
 	if (src.on)
 		src.visible_message("[user] tries to open [src]'s door, but [src] is running and the door is locked!")
@@ -184,7 +184,7 @@
 /obj/submachine/laundry_machine/Topic(href, href_list)
 	..()
 	DEBUG_MESSAGE(json_encode(href_list))
-	if (!usr || usr.restrained() || usr.lying || usr.stat || (!issilicon(usr) && bounds_dist(src, usr) > 0))
+	if (!usr || usr.restrained() || usr.lying || usr.stat || (!issilicon(usr) && BOUNDS_DIST(src, usr) > 0))
 		return 1
 	src.add_fingerprint(usr)
 	if (href_list["cycle"])

@@ -696,7 +696,7 @@
 		src.tag = "cave[id][src.icon_state == "cave_entrance" ? 0 : 1]"
 
 	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("weakened") || bounds_dist(user, src) > 0)
+		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
 			return
 
 		var/obj/cave_entrance/otherEntrance = locate("cave[id][src.icon_state == "cave_entrance"]")
@@ -1170,7 +1170,7 @@
 
 	Bumped(mob/user as mob)
 		if(busy) return
-		if(bounds_dist(user, src) > 0 || user.z != src.z) return
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		src.add_dialog(user)
 		busy = 1
 		showswirl(user.loc)
@@ -1296,7 +1296,7 @@
 
 	onUpdate()
 		..()
-		if (thecrate == null || the_tool == null || owner == null || bounds_dist(owner, thecrate) > 0)
+		if (thecrate == null || the_tool == null || owner == null || BOUNDS_DIST(owner, thecrate) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

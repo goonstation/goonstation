@@ -430,7 +430,7 @@
 			boutput(usr, "Control panel is locked!")
 			return
 
-	if ((!issilicon(usr) && !isAIeye(usr)) && bounds_dist(usr, src) > 0)
+	if ((!issilicon(usr) && !isAIeye(usr)) && BOUNDS_DIST(usr, src) > 0)
 		return
 
 	if (href_list["toggleOn"])

@@ -97,7 +97,7 @@
 		onclose(user, "freezer")
 
 	Topic(href, href_list)
-		if ((usr.contents.Find(src) || ((bounds_dist(src, usr) == 0) && istype(src.loc, /turf))) || (isAI(usr)))
+		if ((usr.contents.Find(src) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))) || (isAI(usr)))
 			src.add_dialog(usr)
 			if (href_list["start"])
 				src.on = !src.on

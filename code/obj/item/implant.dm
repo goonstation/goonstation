@@ -1118,13 +1118,13 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 	onUpdate()
 		..()
-		if(bounds_dist(owner, target) > 0 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(bounds_dist(owner, target) > 0 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

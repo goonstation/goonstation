@@ -21,7 +21,7 @@
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (bounds_dist(holder.owner, target) > 0)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to bite."))
 			return 1
 		playsound(target,"sound/items/drink.ogg", rand(10,50), 1, pitch = 1.4)

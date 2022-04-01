@@ -523,7 +523,7 @@ var/reverse_mode = 0
 	if (!my_target)
 		qdel(src)
 		return
-	if (bounds_dist(src, my_target) > 0)
+	if (BOUNDS_DIST(src, my_target) > 0)
 		step_towards(src,my_target)
 	else
 		if (prob(15))

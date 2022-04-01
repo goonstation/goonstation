@@ -226,7 +226,7 @@
 */
 /obj/item/storage/secure/Topic(href, href_list)
 	..()
-	if ((usr.stat || usr.restrained()) || (bounds_dist(src, usr) > 0))
+	if ((usr.stat || usr.restrained()) || (BOUNDS_DIST(src, usr) > 0))
 		return
 
 	if ("enter" in href_list)

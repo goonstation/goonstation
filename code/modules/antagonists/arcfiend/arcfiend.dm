@@ -79,7 +79,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	cast(atom/target)
 		. = ..()
 		if (target == holder.owner) return
-		if (!(bounds_dist(holder.owner, target) == 0)) return TRUE
+		if (!(BOUNDS_DIST(holder.owner, target) == 0)) return TRUE
 		if (isnpcmonkey(target))
 			boutput(holder.owner, "<span class='alert'>This creature lacks sufficient energy to consume.")
 			return
@@ -119,13 +119,13 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 	onUpdate()
 		..()
-		if(!(bounds_dist(user, target) == 0))
+		if(!(BOUNDS_DIST(user, target) == 0))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onStart()
 		..()
 		P.spawning = initial(P.spawning)
-		if(!(bounds_dist(user, target) == 0))
+		if(!(BOUNDS_DIST(user, target) == 0))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.loopStart()
@@ -135,7 +135,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		. = ..()
 
 	onEnd()
-		if(!(bounds_dist(user, target) == 0))
+		if(!(BOUNDS_DIST(user, target) == 0))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 
@@ -227,7 +227,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	cast(atom/target)
 		. = ..()
 		if (target == holder.owner) return TRUE
-		if (!(bounds_dist(holder.owner, target) == 0)) return TRUE
+		if (!(BOUNDS_DIST(holder.owner, target) == 0)) return TRUE
 		if (ismob(target))
 			var/mob/M = target
 			M.shock(holder.owner, wattage, ignore_gloves = TRUE)
@@ -361,7 +361,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 	cast(atom/target)
 		. = ..()
-		if (!(bounds_dist(holder.owner, target) == 0)) return TRUE
+		if (!(BOUNDS_DIST(holder.owner, target) == 0)) return TRUE
 		if (ishuman(target))
 			if (target == holder.owner)
 				self_cast(target)
@@ -405,7 +405,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 	onUpdate(timePassed)
 		..()
-		if(!(bounds_dist(user, target) == 0))
+		if(!(BOUNDS_DIST(user, target) == 0))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!ON_COOLDOWN(owner, "jolt", 1 SECOND))
@@ -421,7 +421,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	onStart()
 		..()
 		P.spawning = initial(P.spawning)
-		if(!(bounds_dist(user, target) == 0))
+		if(!(BOUNDS_DIST(user, target) == 0))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

@@ -599,13 +599,13 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 			return TRUE
 		if(isdead(M))
 			if(ishuman(M) && M.hasStatus("soulstolen"))
-				if (bounds_dist(W, M) > 0)
+				if (BOUNDS_DIST(W, M) > 0)
 					boutput(src.holder.owner, "<span class='alert'>You must be closer in order to steal [M]'s soul.</span>")
 					return TRUE
 				else
 					return W.soulStealSetup(M, TRUE)
 			else if(ishuman(M) && (M.mind && M.mind.soul >= 100))
-				if (bounds_dist(W, M) > 0)
+				if (BOUNDS_DIST(W, M) > 0)
 					boutput(src.holder.owner, "<span class='alert'>You must be closer in order to steal [M]'s soul.</span>")
 					return TRUE
 				else

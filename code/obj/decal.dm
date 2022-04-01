@@ -458,7 +458,7 @@ obj/decal/fakeobjects/teleport_pad
 	can_buckle(var/mob/M as mob, var/mob/user as mob)
 		if (M != user)
 			return 0
-		if ((!( iscarbon(M) ) || bounds_dist(src, user) > 0 || user.restrained() || user.stat || !user.canmove))
+		if ((!( iscarbon(M) ) || BOUNDS_DIST(src, user) > 0 || user.restrained() || user.stat || !user.canmove))
 			return 0
 		return 1
 

@@ -221,12 +221,12 @@
 			boutput(user, "<b>You can't put someone in cryogenic storage while you're incapacitated or restrained!</b>")
 			return FALSE
 		// Person entering is too far away
-		if (bounds_dist(src, L) > 0)
+		if (BOUNDS_DIST(src, L) > 0)
 			boutput(L, "<b>You need to be closer to [src] to enter cryogenic storage!</b>")
 			boutput(user, "<b>[L] needs to be closer to [src] for you to put them in cryogenic storage!</b>")
 			return FALSE
 		// Person putting other person in is too far away
-		if (user && bounds_dist(src, user) > 0)
+		if (user && BOUNDS_DIST(src, user) > 0)
 			boutput(user, "<b>You need to be closer to [src] to put someone in cryogenic storage!</b>")
 			return FALSE
 		var/mob/living/silicon/R = L
@@ -336,7 +336,7 @@
 			return ..()
 
 	MouseDrop_T(atom/target, mob/user as mob)
-		if (ishuman(target) && isrobot(user) && bounds_dist(src, user) == 0 && bounds_dist(src, target) == 0 && bounds_dist(user, target) == 0)
+		if (ishuman(target) && isrobot(user) && BOUNDS_DIST(src, user) == 0 && BOUNDS_DIST(src, target) == 0 && BOUNDS_DIST(user, target) == 0)
 			insert_prompt(target, user)
 			return
 		return ..()

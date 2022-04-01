@@ -411,7 +411,7 @@
 		if ((src.material && src.material.hasProperty("electrical") && src.material.getProperty("electrical") > 30))
 			dmg_mod = 60 - src.material.getProperty("electrical")
 
-		if (OSHA_is_crying && (bounds_dist(src, user) == 0) && shock(user, 100 - dmg_mod))
+		if (OSHA_is_crying && (BOUNDS_DIST(src, user) == 0) && shock(user, 100 - dmg_mod))
 			return
 
 		// Things that will electrocute you

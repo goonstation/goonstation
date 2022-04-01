@@ -91,7 +91,7 @@
 		if (to_buckle.buckled)
 			boutput(user, "They're already buckled into something!", "red")
 			return FALSE
-		if (bounds_dist(src, user) > 0 || to_buckle.loc != src.loc || user.restrained() || is_incapacitated(user) || !isalive(user))
+		if (BOUNDS_DIST(src, user) > 0 || to_buckle.loc != src.loc || user.restrained() || is_incapacitated(user) || !isalive(user))
 			return FALSE
 		if (user.hasStatus("weakened"))
 			return FALSE
@@ -458,7 +458,7 @@
 		src.Sheet = null
 
 	MouseDrop_T(atom/A as mob|obj, mob/user as mob)
-		if (bounds_dist(src, user) > 0 || A.loc != src.loc || user.restrained() || !isalive(user))
+		if (BOUNDS_DIST(src, user) > 0 || A.loc != src.loc || user.restrained() || !isalive(user))
 			..()
 		else if (istype(A, /obj/item/clothing/suit/bedsheet))
 			if ((!src.Sheet || (src.Sheet && src.Sheet.loc != src.loc)) && A.loc == src.loc)
@@ -689,7 +689,7 @@
 		return
 
 	mouse_drop(atom/over_object as mob|obj)
-		if(bounds_dist(src,usr) == 0)
+		if(BOUNDS_DIST(src,usr) == 0)
 			src.rotate(get_dir(get_turf(src),get_turf(over_object)))
 		..()
 

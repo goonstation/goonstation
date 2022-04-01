@@ -1157,7 +1157,7 @@ Returns:
 
 	onEnd()
 		..()
-		if(bounds_dist(user, target) > 0 || target == null || user == null)
+		if(BOUNDS_DIST(user, target) > 0 || target == null || user == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1167,7 +1167,7 @@ Returns:
 				return
 
 	onUpdate()
-		if(bounds_dist(user, target) > 0 || target == null || user == null)
+		if(BOUNDS_DIST(user, target) > 0 || target == null || user == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -3268,7 +3268,7 @@ Returns:
 		return attack_hand(user)
 
 	MouseDrop_T(atom/target, mob/user)
-		if (bounds_dist(user, src) == 0 && target == user)
+		if (BOUNDS_DIST(user, src) == 0 && target == user)
 			src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
@@ -3701,7 +3701,7 @@ var/list/lag_list = new/list()
 		if(ckey_lock && user.ckey != ckey_lock)
 			boutput(user, "<span class='alert'>You are not authorized to use this item.</span>")
 			return
-		if(bounds_dist(target, user) > 0)
+		if(BOUNDS_DIST(target, user) > 0)
 			boutput(user, "<span class='alert'>You are too far away.</span>")
 			return
 		if(target == loc) return

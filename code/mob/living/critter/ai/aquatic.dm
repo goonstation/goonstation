@@ -100,12 +100,12 @@
 
 /datum/aiTask/succeedable/evaluate_hotspot/failed()
 	var/datum/aiHolder/aquatic/fish/F = holder
-	if (!F.my_hotspot || (bounds_dist(get_turf(holder.owner), F.my_hotspot.center.turf())) > 05)
+	if (!F.my_hotspot || (BOUNDS_DIST(get_turf(holder.owner), F.my_hotspot.center.turf())) > 05)
 		. = 1
 
 /datum/aiTask/succeedable/evaluate_hotspot/succeeded()
 	var/datum/aiHolder/aquatic/fish/F = holder
-	if (F.my_hotspot && (bounds_dist(get_turf(holder.owner), F.my_hotspot.center.turf())) == 05)
+	if (F.my_hotspot && (BOUNDS_DIST(get_turf(holder.owner), F.my_hotspot.center.turf())) == 05)
 		. = 1
 
 /datum/aiTask/succeedable/evaluate_hotspot/on_tick()

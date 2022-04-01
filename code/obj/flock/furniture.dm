@@ -151,7 +151,7 @@
 		qdel(src)
 
 /obj/storage/closet/flock/attack_hand(mob/user as mob)
-	if (bounds_dist(user, src) > 0)
+	if (BOUNDS_DIST(user, src) > 0)
 		return
 
 	interact_particle(user,src)

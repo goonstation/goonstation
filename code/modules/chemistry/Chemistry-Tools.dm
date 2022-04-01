@@ -107,7 +107,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		if (!istype(src, /obj/item/reagent_containers/glass) && !istype(src, /obj/item/reagent_containers/food/drinks))
 			return ..()
 
-		if (usr.stat || usr.getStatusDuration("weakened") || bounds_dist(usr, src) > 0 || bounds_dist(usr, over_object) > 0)  //why has this bug been in since i joined goonstation and nobody even looked here yet wtf -ZeWaka
+		if (usr.stat || usr.getStatusDuration("weakened") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)  //why has this bug been in since i joined goonstation and nobody even looked here yet wtf -ZeWaka
 			boutput(usr, "<span class='alert'>That's too far!</span>")
 			return
 

@@ -227,7 +227,7 @@ Shield and graivty well generators
 
 		for (var/atom/X in orange(range,src))
 			//Skip if they're right beside the thing
-			if (bounds_dist(src, X) == 0)
+			if (BOUNDS_DIST(src, X) == 0)
 				continue
 			//Get the distance
 			var/dist = get_dist(src,X)

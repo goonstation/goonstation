@@ -13,7 +13,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(bounds_dist(user, src) > 0 || user.z != src.z) return
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 

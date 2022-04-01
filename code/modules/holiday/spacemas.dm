@@ -1135,7 +1135,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 					src.visible_message("<span class='alert'><B>[src] begins squeezing [H] in \his hand!</B></span>")
 					H.set_loc(src.loc)
 					while (!isdead(H))
-						if (src.stat || src.transforming || bounds_dist(src, H) > 0)
+						if (src.stat || src.transforming || BOUNDS_DIST(src, H) > 0)
 							boutput(src, "<span class='alert'>Your victim escaped! Curses!</span>")
 							qdel(G)
 							src.verbs += /mob/living/carbon/human/krampus/verb/krampus_crush
@@ -1175,7 +1175,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 					src.visible_message("<span class='alert'><B>[src] raises [H] up to \his mouth! Oh shit!</B></span>")
 					H.set_loc(src.loc)
 					sleep(6 SECONDS)
-					if (src.stat || src.transforming || bounds_dist(src, H) > 0)
+					if (src.stat || src.transforming || BOUNDS_DIST(src, H) > 0)
 						boutput(src, "<span class='alert'>Your prey escaped! Curses!</span>")
 					else
 						src.visible_message("<span class='alert'><B>[src] devours [H] whole!</B></span>")

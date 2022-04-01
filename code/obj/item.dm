@@ -404,7 +404,7 @@
 
 		if (!do_mob(user, M))
 			return 0
-		if (bounds_dist(user, M) > 0)
+		if (BOUNDS_DIST(user, M) > 0)
 			return 0
 
 		user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
@@ -609,7 +609,7 @@
 
 /obj/item/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 	..()
-	if (max_stack > 1 && src.loc == user && bounds_dist(O, user) == 0 && check_valid_stack(O))
+	if (max_stack > 1 && src.loc == user && BOUNDS_DIST(O, user) == 0 && check_valid_stack(O))
 		if ( src.amount >= max_stack)
 			failed_stack(O, user)
 			return
@@ -656,7 +656,7 @@
 		if (user == over_object)
 			actions.start(new /datum/action/bar/private/icon/pickup(src), user)
 		//else // use laterr, after we improve the 'give' dialog to work with multicontext
-		//	if (bounds_dist(user, over_object) == 0 && src_exists_inside_usr_or_usr_storage)
+		//	if (BOUNDS_DIST(user, over_object) == 0 && src_exists_inside_usr_or_usr_storage)
 		//		user.give_to(over_object)
 	else
 

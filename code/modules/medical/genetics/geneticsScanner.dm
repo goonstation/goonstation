@@ -62,7 +62,7 @@ var/list/genetek_hair_styles = list()
 		if (!istype(target) || isAI(user))
 			return
 
-		if (bounds_dist(src, user) > 0 || bounds_dist(user, target) > 0)
+		if (BOUNDS_DIST(src, user) > 0 || BOUNDS_DIST(user, target) > 0)
 			return
 
 		if (target == user)
@@ -82,7 +82,7 @@ var/list/genetek_hair_styles = list()
 	proc/can_operate(var/mob/M, var/mob/living/target)
 		if (!isalive(M))
 			return 0
-		if (bounds_dist(src, M) > 0)
+		if (BOUNDS_DIST(src, M) > 0)
 			return 0
 		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
 			return 0

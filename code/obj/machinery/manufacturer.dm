@@ -567,7 +567,7 @@
 				if (src.manuf_zap(usr, 10))
 					return
 
-		if ((usr.contents.Find(src) || ((bounds_dist(src, usr) == 0 || isAI(usr)) && istype(src.loc, /turf))))
+		if ((usr.contents.Find(src) || ((BOUNDS_DIST(src, usr) == 0 || isAI(usr)) && istype(src.loc, /turf))))
 			src.add_dialog(usr)
 
 			if (src.malfunction && prob(10))
@@ -584,7 +584,7 @@
 						if (O.material && O.material.mat_id == mat_id)
 							if (!ejectamt)
 								ejectamt = input(usr,"How many material pieces do you want to eject?","Eject Materials") as num
-								if (ejectamt <= 0 || src.mode != "ready" || bounds_dist(src, usr) > 0 || !isnum_safe(ejectamt))
+								if (ejectamt <= 0 || src.mode != "ready" || BOUNDS_DIST(src, usr) > 0 || !isnum_safe(ejectamt))
 									break
 							if (!ejectturf)
 								break
@@ -1123,11 +1123,11 @@
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the manufacturer's output target.</span>")
 			return
 
-		if(bounds_dist(over_object, src) > 0)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>The manufacturing unit is too far away from the target!</span>")
 			return
 
-		if(bounds_dist(over_object, usr) > 0)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -1172,7 +1172,7 @@
 			boutput(user, "<span class='alert'>You can't quick-load that.</span>")
 			return
 
-		if(bounds_dist(O, user) > 0)
+		if(BOUNDS_DIST(O, user) > 0)
 			boutput(user, "<span class='alert'>You are too far away!</span>")
 			return
 
@@ -1925,7 +1925,7 @@
 		if (!src.output_target)
 			return src.loc
 
-		if (bounds_dist(src.output_target, src) > 0)
+		if (BOUNDS_DIST(src.output_target, src) > 0)
 			src.output_target = null
 			return src.loc
 

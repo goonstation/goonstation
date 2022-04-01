@@ -62,7 +62,7 @@
 /datum/emoot/carbon
 
 /datum/emoot/carbon/proc/emote_slap(var/mob/M, var/argstr, var/mob/T)
-	if(T && bounds_dist(M, T) == 0)
+	if(T && BOUNDS_DIST(M, T) == 0)
 		//random_brute_damage( M, 3 )
 		return "slaps [T]! Rude!"
 	else
