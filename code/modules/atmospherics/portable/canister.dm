@@ -48,6 +48,13 @@
 	powered()
 		return 1
 
+	attackby(obj/item/W as obj, mob/user as mob)
+		..()
+		user.lastattacked = src
+		attack_particle(user,src)
+		hit_twitch(src)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
+
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
 	name = "Canister: \[N2O\]"
 	icon_state = "redws"
