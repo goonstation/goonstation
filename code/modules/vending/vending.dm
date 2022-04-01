@@ -120,6 +120,12 @@
 	New()
 		START_TRACKING
 		src.create_products()
+
+		#ifdef UPSCALED_MAP
+		for (var/datum/data/vending_product/product in src.product_list)
+			product.product_amount *= 4
+		#endif
+
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", .proc/vendinput)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", .proc/vendname)
