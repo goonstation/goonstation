@@ -75,7 +75,7 @@
 		icon_state = num2text(cardinals)
 		var/ordinals = connectdirs_to_byonddirs(connections)
 
-		if(ordinals & NORTHEAST)
+		if((NORTHEAST & ordinals) == NORTHEAST)
 			if (!src.working_image)
 				src.working_image = image(src.icon, "NE")
 			else
@@ -83,7 +83,7 @@
 			src.UpdateOverlays(working_image, "NEcorner")
 		else
 			src.UpdateOverlays(null, "NEcorner")
-		if(ordinals & SOUTHEAST)
+		if((SOUTHEAST & ordinals) == SOUTHEAST)
 			if (!src.working_image)
 				src.working_image = image(src.icon, "SE")
 			else
@@ -91,7 +91,7 @@
 			src.UpdateOverlays(working_image, "SEcorner")
 		else
 			src.UpdateOverlays(null, "SEcorner")
-		if(ordinals & SOUTHWEST)
+		if((SOUTHWEST & ordinals) == SOUTHWEST)
 			if (!src.working_image)
 				src.working_image = image(src.icon, "SW")
 			else
@@ -100,7 +100,7 @@
 		else
 			src.UpdateOverlays(null, "SWcorner")
 
-		if(ordinals & NORTHWEST)
+		if((NORTHWEST & ordinals) == NORTHWEST)
 			if (!src.working_image)
 				src.working_image = image(src.icon, "NW")
 			else

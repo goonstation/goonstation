@@ -2618,8 +2618,7 @@ proc/get_all_character_setup_ringtones()
 proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 	. = 0
 	if (!connectdir_bitflag) return
-	var/B = connectdir_bitflag >> 4
-	if(B == 1) .&= NORTHEAST
-	if(B == 2) .&= SOUTHEAST
-	if(B == 4) .&= SOUTHWEST
-	if(B == 8) .&= NORTHWEST
+	if(16 & connectdir_bitflag) .|= NORTHEAST
+	if(32 & connectdir_bitflag) .|= SOUTHEAST
+	if(64 & connectdir_bitflag) .|= SOUTHWEST
+	if(128 & connectdir_bitflag) .|= NORTHWEST
