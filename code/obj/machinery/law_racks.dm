@@ -558,7 +558,6 @@
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == src)
 				E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
-				E.show_text(notification_text, "red")
 				src.show_laws(E)
 				affected_mobs |= E.mainframe
 				var/mob/living/silicon/ai/holoAI = E.mainframe
@@ -597,7 +596,7 @@
 		logTheThing("station", user, null, "[constructName(user)] <b>inserts</b> law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]")
 		UpdateIcon()
-		UpdateLaws(slotNum)
+		UpdateLaws()
 
 	proc/remove_module_callback(var/slotNum,var/mob/user)
 		//add circuit to hand
