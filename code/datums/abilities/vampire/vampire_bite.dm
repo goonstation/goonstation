@@ -409,7 +409,7 @@
 		logTheThing("combat", M, HH, "steals blood from [constructTarget(HH,"combat")] at [log_loc(M)].")
 
 	onEnd()
-		if(get_dist(M, HH) > 7 || M == null || HH == null)
+		if(get_dist(M, HH) > 7 || M == null || HH == null || !H.can_bite(HH, is_pointblank = 0))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			src.end()

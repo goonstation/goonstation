@@ -392,7 +392,10 @@
 			M.real_name = "thrall [M.real_name]"
 			if (M.mind)
 				M.mind.special_role = ROLE_VAMPTHRALL
-				M.mind.master = owner.ckey
+				if(ismob(owner))
+					M.mind.master = owner.ckey
+				else
+					M.mind.master = owner
 				if (!(M.mind in ticker.mode.Agimmicks))
 					ticker.mode.Agimmicks += M.mind
 
