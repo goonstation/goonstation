@@ -22,7 +22,7 @@
 	var/listening = TRUE
 	var/list/datum/component/packet_connected/radio/secure_connections = null
 	var/speaker_range = 2
-	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
+	var/static/mutable_appearance/speech_bubble = living_speech_bubble //typing_indicator.dm
 	///This is for being able to run through signal jammers (just solar flares for now). acceptable values = 0 and 1.
 	var/hardened = 1
 

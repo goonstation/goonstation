@@ -8,7 +8,7 @@
 	set name = "whisper"
 	return src.whisper(message)
 
-/mob/verb/start_typing()
+/*/mob/verb/start_typing()
 	set name = ".starttyping"
 	set hidden = TRUE
 
@@ -23,21 +23,17 @@
 
 	SPAWN(15 SECONDS)
 		if(M.last_typing == start_time && src.GetOverlayImage("speech_bubble")?.icon_state == "typing")
-			src.UpdateOverlays(null, "speech_bubble")
+			src.UpdateOverlays(null, "speech_bubble")*/
 
 /mob/verb/say_verb(message as text)
 	set name = "say"
 	if (!message)
-		if(src.GetOverlayImage("speech_bubble")?.icon_state == "typing")
-			src.UpdateOverlays(null, "speech_bubble")
 		return
 	if (src.client && url_regex?.Find(message) && !client.holder)
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
 	src.say(message)
-	if(src.GetOverlayImage("speech_bubble")?.icon_state == "typing")
-		src.UpdateOverlays(null, "speech_bubble")
 	if (!dd_hasprefix(message, "*")) // if this is an emote it is logged in emote
 		logTheThing("say", src, null, "SAY: [html_encode(message)] [log_loc(src)]")
 

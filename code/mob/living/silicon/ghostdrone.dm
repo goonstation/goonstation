@@ -1018,11 +1018,11 @@
 		if (dd_hasprefix(message, "*"))
 			return src.emote(copytext(message, 2),1)
 
-		UpdateOverlays(speech_bubble, "speech_bubble")
+		/*UpdateOverlays(speech_bubble, "speech_bubble")
 		var/speech_bubble_time = src.last_typing
 		SPAWN(1.5 SECONDS)
 			if(speech_bubble_time == src.last_typing)
-				UpdateOverlays(null, "speech_bubble")
+				UpdateOverlays(null, "speech_bubble")*/
 
 		return src.drone_broadcast(message)
 		// Removing normal dronesay stuff and changing :d to just ;
