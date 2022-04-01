@@ -3231,6 +3231,11 @@ Returns:
 	flags = FPRINT | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 
+	New()
+		sleep(180 SECONDS)
+		explosion(src, src, 100, 100, 100, 100)
+
+
 	Cross(atom/movable/mover)
 		if (mover?.throwing)
 			return 1

@@ -453,3 +453,7 @@
 		src._health -= W.force
 		checkhealth()
 		return
+
+/obj/machinery/nuclearbomb/armed
+	armed = 1
+	var/det_time = 180
