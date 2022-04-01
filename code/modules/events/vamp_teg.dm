@@ -289,22 +289,17 @@ datum/teg_transformation/vampire
 			if(target in abilityHolder.thralls)
 				H = target
 				if( abilityHolder.points > 100 && target.blood_volume < 50 && !ON_COOLDOWN(src.teg,"heal", 120 SECONDS) )
-					//enthrall(H)
 					use_ability(/datum/targetable/vampire/enthrall/teg, target)
 			else
 				if(isalive(target))
 					if( prob(80) && !ON_COOLDOWN(target,"teg_glare", 30 SECONDS) )
 						use_ability(/datum/targetable/vampire/glare, target)
-						//glare(target)
 
 					use_ability(/datum/targetable/vampire/blood_steal, target)
-					// if(!actions.hasAction(src.teg, "vamp_blood_suck_ranged") && !ON_COOLDOWN(src.teg,"vamp_blood_suck_ranged", 10 SECONDS))
-					// 	actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(src.teg,abilityHolder, target, abilities["Blood Steal"]), src.teg)
 
 			if(ishuman(target))
 				H = target
 				if(isdead(H) && abilityHolder.points > 100 && !ON_COOLDOWN(src.teg,"enthrall",30 SECONDS))
-					//enthrall(H)
 					use_ability(/datum/targetable/vampire/enthrall/teg, target)
 
 		if(probmult(10))
@@ -395,64 +390,6 @@ datum/teg_transformation/vampire
 		var/rendered = "<span class='game thrallsay'><span class='prefix'>Thrall speak:</span> <span class='name vamp'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 		for (var/mob/M in src.abilityHolder.thralls)
 			boutput(M, rendered)
-
-	proc/enthrall(mob/living/carbon/human/target)
-		var/datum/abilityHolder/vampire/H = src.abilityHolder
-		if(istype(target))
-			if (!istype(target.mutantrace, /datum/mutantrace/vampiric_thrall))
-				if (!target.mind && !target.client)
-					if (target.ghost && target.ghost.client && !(target.ghost.mind && target.ghost.mind.dnr))
-						var/mob/dead/ghost = target.ghost
-						ghost.show_text("<span class='red'>You feel yourself torn away from the afterlife and back into your body!</span>")
-						if(ghost.mind)
-							ghost.mind.transfer_to(target)
-						else if (ghost.client)
-							target.client = ghost.client
-						else if (ghost.key)
-							target.key = ghost.key
-
-					else if (target.last_client) //if all fails, lets try this
-						for (var/client/C in clients)
-							if (C == target.last_client && C.mob && isobserver(C.mob))
-								if(C.mob && C.mob.mind)
-									C.mob.mind.transfer_to(target)
-								else
-									target.client = C
-								break
-
-				if (!target.client)
-					return
-
-				target.full_heal()
-
-				target.real_name = "zombie [target.real_name]"
-				if (target.mind)
-					target.mind.special_role = ROLE_VAMPTHRALL
-					target.mind.master = src.teg
-					if (!(target.mind in ticker.mode.Agimmicks))
-						ticker.mode.Agimmicks += target.mind
-
-				src.abilityHolder.thralls += target
-
-				target.set_mutantrace(/datum/mutantrace/vampiric_thrall)
-				var/datum/abilityHolder/vampiric_thrall/VZ = target.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
-				if (VZ && istype(VZ))
-					VZ.master = H
-
-				boutput(target, __red("<b>You awaken filled with purpose - you must serve your master \"vampire\", [src.teg]!</B>"))
-				boutput(target, __red("<b>You are bound to the [src.teg]. It hungers for blood! You must protect it and feed it!</B>"))
-				SHOW_MINDSLAVE_TIPS(target)
-			else
-				target.full_heal()
-
-			if (target in H.thralls)
-				//and add blood!
-				var/datum/mutantrace/vampiric_thrall/V = target.mutantrace
-				if (V)
-					V.blood_points += 200
-
-				H.blood_tracking_output(100)
-				H.deductPoints(100)
 
 /datum/targetable/vampire/enthrall/teg
 	max_range = 10
