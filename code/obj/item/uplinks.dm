@@ -591,7 +591,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			src.uses = 0
 		if (isnull(src.hostpda) || !src.active)
 			return
-		if (bounds_dist(src.hostpda, usr) > 0 || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (!in_interact_range(src.hostpda, usr) || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
