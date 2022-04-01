@@ -71,11 +71,11 @@
 			return
 
 		var/connections = get_connected_directions_bitflag(list(src.auto_type), connect_diagonal = 1)
-		var/dirs = connections % 16 // get cardinals from match
-		var/connecting_ordinals = connections >> 8
-		icon_state = num2text(dirs)
+		var/cardinals = connections % 16
+		icon_state = num2text(cardinals)
+		var/ordinals = connections >> 4
 
-		if(connecting_ordinals & NORTHEAST)
+		if(ordinals == 1)
 			if (!src.working_image)
 				src.working_image = image(src.icon, "NE")
 			else
@@ -83,7 +83,7 @@
 			src.UpdateOverlays(working_image, "NEcorner")
 		else
 			src.UpdateOverlays(null, "NEcorner")
-		if(connecting_ordinals & SOUTHEAST)
+		if(ordinals == 2)
 			if (!src.working_image)
 				src.working_image = image(src.icon, "SE")
 			else
@@ -91,7 +91,7 @@
 			src.UpdateOverlays(working_image, "SEcorner")
 		else
 			src.UpdateOverlays(null, "SEcorner")
-		if(connecting_ordinals & SOUTHWEST)
+		if(ordinals == 4)
 			if (!src.working_image)
 				src.working_image = image(src.icon, "SW")
 			else
@@ -100,7 +100,7 @@
 		else
 			src.UpdateOverlays(null, "SWcorner")
 
-		if(connecting_ordinals & NORTHWEST)
+		if(ordinals == 8)
 			if (!src.working_image)
 				src.working_image = image(src.icon, "NW")
 			else
