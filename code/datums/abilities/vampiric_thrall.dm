@@ -92,8 +92,8 @@
 			var/mob/living/carbon/human/H = owner
 			if (istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
 				var/datum/mutantrace/vampiric_thrall/V = H.mutantrace
-				.["Blood:"] = V.blood_points
-				.["Max HP:"] = H.max_health
+				.["Blood:"] = round(V.blood_points)
+				.["Max HP:"] = round(H.max_health)
 
 	proc/msg_to_master(var/msg)
 		if (master)

@@ -48,12 +48,10 @@
 
 		if (!isnum(warning_delay))
 			warning_delay = rand(10, 50)
-			warning_delay = 1 // AZRUN REMOVE THIS YOU MAD LAD
 		warning_delay = warning_delay SECONDS
 
 		if (!isnum(event_duration))
 			event_duration = rand(7, 9)
-			event_duration = 0.01 // AZRUN REMOVE THIS YOU MAD LAD
 		event_duration = event_duration MINUTES
 
 		if (!isnum(grump_to_overcome))
@@ -195,7 +193,6 @@ datum/teg_transformation/vampire
 	var/datum/abilityHolder/vampire/abilityHolder
 	var/list/datum/targetable/vampire/abilities = list()
 	var/health = 150
-	health = 1 // AZRUN REMOVE THIS YOU MAD LAD
 
 	proc/attach_hud()
 		. = FALSE
