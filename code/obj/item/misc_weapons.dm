@@ -1076,7 +1076,7 @@
 
 /// Checks if the target is facing in some way away from the user. Or they're lying down
 /obj/item/katana/proc/SeverButtStuff(var/mob/living/carbon/human/target, var/mob/user)
-	if(ismob(target) && IN_RANGE(target, user, 1) && (target.dir == user.dir || target.lying))
+	if(ismob(target) && (bounds_dist(target, user) == 0) && (target.dir == user.dir || target.lying))
 		if(target.organHolder?.tail)
 			target.organHolder.drop_and_throw_organ("tail", dist = 5, speed = 1, showtext = 1)
 		else if(target.organHolder?.butt)
