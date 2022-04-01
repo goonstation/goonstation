@@ -233,8 +233,8 @@ datum/controller/air_system
 	process()
 		current_cycle++
 
-		is_busy = TRUE
 		process_tiles_to_space()
+		is_busy = TRUE
 
 		if(!explosions.exploding)
 			if(groups_to_rebuild.len > 0)
@@ -268,7 +268,7 @@ datum/controller/air_system
 	process_tiles_to_space()
 		if(length(tiles_to_space))
 			for(var/turf/T as anything in tiles_to_space)
-				T.ReplaceWithSpace()
+				T.ReplaceWithSpaceForce() // If we made it this far, force is appropriate as we know it NEEDs to be updated
 			tiles_to_space.len = 0
 
 	process_update_tiles()
