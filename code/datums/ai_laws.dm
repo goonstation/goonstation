@@ -88,6 +88,7 @@
 				logTheThing("station", src, new_rack, "the law rack [constructName(new_rack)] claims first registered SYNDICATE, and gets Syndicate laws!")
 
 		src.registered_racks |= new_rack //shouldn't be possible, but just in case - there can only be one instance of rack in registered
+		new_rack.update_last_laws()
 
 	proc/unregister_rack(var/obj/machinery/lawrack/dead_rack)
 		logTheThing("station", src, dead_rack, "[src] unregisters the law rack [constructName(dead_rack)]")
