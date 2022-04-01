@@ -48,10 +48,12 @@
 
 		if (!isnum(warning_delay))
 			warning_delay = rand(10, 50)
+			warning_delay = 1 // AZRUN REMOVE THIS YOU MAD LAD
 		warning_delay = warning_delay SECONDS
 
 		if (!isnum(event_duration))
 			event_duration = rand(7, 9)
+			event_duration = 0.01 // AZRUN REMOVE THIS YOU MAD LAD
 		event_duration = event_duration MINUTES
 
 		if (!isnum(grump_to_overcome))
@@ -193,6 +195,7 @@ datum/teg_transformation/vampire
 	var/datum/abilityHolder/vampire/abilityHolder
 	var/list/datum/targetable/vampire/abilities = list()
 	var/health = 150
+	health = 1 // AZRUN REMOVE THIS YOU MAD LAD
 
 	proc/attach_hud()
 		. = FALSE
@@ -208,6 +211,8 @@ datum/teg_transformation/vampire
 		abilityHolder = new /datum/abilityHolder/vampire(src)
 		abilityHolder.owner = teg
 		abilityHolder.addAbility(/datum/targetable/vampire/blood_steal)
+		abilityHolder.addAbility(/datum/targetable/vampire/glare)
+		abilityHolder.addAbility(/datum/targetable/vampire/enthrall/teg)
 		for(var/datum/targetable/vampire/A in abilityHolder.abilities)
 			abilities[A.name] = A
 		RegisterSignal(src.teg, COMSIG_ATOM_HITBY_PROJ, .proc/projectile_collide)
@@ -234,6 +239,14 @@ datum/teg_transformation/vampire
 		animate_levitate(O, -1, 50, random_side = FALSE)
 		O.color = "#bd1335"
 		animate_flash_color_fill_inherit(O,"#e13333",-1, 2 SECONDS)
+
+	proc/use_ability(abilityType, mob/target)
+		var/datum/targetable/vampire/A = abilityHolder.getAbility(abilityType)
+		if(A)
+			if (world.time < A.last_cast)
+				return
+			SPAWN(0)
+				A.handleCast(target)
 
 	on_revert()
 		var/datum/reagents/leaked
@@ -276,19 +289,23 @@ datum/teg_transformation/vampire
 			if(target in abilityHolder.thralls)
 				H = target
 				if( abilityHolder.points > 100 && target.blood_volume < 50 && !ON_COOLDOWN(src.teg,"heal", 120 SECONDS) )
-					enthrall(H)
+					//enthrall(H)
+					use_ability(/datum/targetable/vampire/enthrall/teg, target)
 			else
 				if(isalive(target))
 					if( prob(80) && !ON_COOLDOWN(target,"teg_glare", 30 SECONDS) )
-						glare(target)
+						use_ability(/datum/targetable/vampire/glare, target)
+						//glare(target)
 
-					if(!actions.hasAction(src.teg, "vamp_blood_suck_ranged") && !ON_COOLDOWN(src.teg,"vamp_blood_suck_ranged", 10 SECONDS))
-						actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(src.teg,abilityHolder, target, abilities["Blood Steal"]), src.teg)
+					use_ability(/datum/targetable/vampire/blood_steal, target)
+					// if(!actions.hasAction(src.teg, "vamp_blood_suck_ranged") && !ON_COOLDOWN(src.teg,"vamp_blood_suck_ranged", 10 SECONDS))
+					// 	actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(src.teg,abilityHolder, target, abilities["Blood Steal"]), src.teg)
 
 			if(ishuman(target))
 				H = target
 				if(isdead(H) && abilityHolder.points > 100 && !ON_COOLDOWN(src.teg,"enthrall",30 SECONDS))
-					enthrall(H)
+					//enthrall(H)
+					use_ability(/datum/targetable/vampire/enthrall/teg, target)
 
 		if(probmult(10))
 			var/list/responses = list("I hunger! Bring us food so we may eat!", "Blood... I needs it.", "I HUNGER!", "Summon them here so we may feast!")
@@ -354,34 +371,18 @@ datum/teg_transformation/vampire
 
 	// Customized implementation of collision with vamp blood and be susceptable to projectiles
 	proc/projectile_collide(owner, obj/projectile/P)
-		if (("vamp" in P.special_data))
-			var/bitesize = 10
-			var/mob/living/carbon/victim = P.special_data["victim"]
-			var/datum/abilityHolder/vampire/vampire = P.special_data["vamp"]
-			if (vampire == abilityHolder && P.max_range == PROJ_INFINITE_RANGE)
-				P.travelled = 0
-				P.max_range = 4
-				P.special_data.len = 0 // clear special data so normal on_end() wont trigger
-				vampire.vamp_blood += bitesize
-				vampire.addPoints(bitesize)
-				vampire.tally_bite(victim,bitesize)
-				if (victim.blood_volume < bitesize)
-					victim.blood_volume = 0
-				else
-					victim.blood_volume -= bitesize
-		else
-			if(P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING))
-				var/damage = P.power*P.proj_data.ks_ratio
+		if(P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING))
+			var/damage = P.power*P.proj_data.ks_ratio
 
-				switch (P.proj_data.damage_type)
-					if (D_KINETIC)
-						damage /= 5
-					if (D_SLASHING)
-						damage /= 7
-					if (D_ENERGY)
-						damage /= 10
+			switch (P.proj_data.damage_type)
+				if (D_KINETIC)
+					damage /= 5
+				if (D_SLASHING)
+					damage /= 7
+				if (D_ENERGY)
+					damage /= 10
 
-				health -= round(damage, 1.0)
+			health -= round(damage, 1.0)
 
 	// Talk like a vampire
 	proc/say_thrall(var/message)
@@ -394,32 +395,6 @@ datum/teg_transformation/vampire
 		var/rendered = "<span class='game thrallsay'><span class='prefix'>Thrall speak:</span> <span class='name vamp'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 		for (var/mob/M in src.abilityHolder.thralls)
 			boutput(M, rendered)
-
-	// Look at others like a vampire
-	proc/glare(mob/living/carbon/target)
-		var/obj/O = src.teg
-		if (!target || !ismob(target))
-			return 1
-
-		if (get_dist(src.teg, target) > 3)
-			return 1
-
-		if (isdead(target))
-			return 1
-
-		O.visible_message("<span class='alert'><B>[O] emits a blinding flash at [target]!</B></span>")
-		var/obj/itemspecialeffect/glare/E = new /obj/itemspecialeffect/glare
-		E.color = "#FFFFFF"
-		E.setup(O.loc)
-		playsound(O.loc,"sound/effects/glare.ogg", 50, 1, pitch = 1, extrarange = -4)
-
-		SPAWN(1 DECI SECOND)
-			var/obj/itemspecialeffect/glare/EE = new /obj/itemspecialeffect/glare
-			EE.color = "#FFFFFF"
-			EE.setup(target.loc)
-			playsound(target.loc,"sound/effects/glare.ogg", 50, 1, pitch = 0.8, extrarange = -4)
-
-		target.apply_flash(30, rand(1,5), stamina_damage = 350)
 
 	proc/enthrall(mob/living/carbon/human/target)
 		var/datum/abilityHolder/vampire/H = src.abilityHolder
@@ -478,3 +453,6 @@ datum/teg_transformation/vampire
 
 				H.blood_tracking_output(100)
 				H.deductPoints(100)
+
+/datum/targetable/vampire/enthrall/teg
+	max_range = 10

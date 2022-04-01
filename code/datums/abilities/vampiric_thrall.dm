@@ -99,6 +99,20 @@
 		if (master)
 			master.transmit_thrall_msg(msg,owner)
 
+	proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
+		if(!total_blood)
+			var/mob/living/carbon/human/M = owner
+			if(istype(M) && istype(M.mutantrace, /datum/mutantrace/vampiric_thrall))
+				var/datum/mutantrace/vampiric_thrall/V = M.mutantrace
+				if (V.blood_points < 0)
+					V.blood_points = 0
+					if (haine_blood_debug) logTheThing("debug", M, null, "<b>HAINE BLOOD DEBUG:</b> [M]'s blood_points dropped below 0 and was reset to 0")
+
+				if (set_null == 1)
+					V.blood_points = 0
+				else
+					V.blood_points = max(V.blood_points + change, 0)
+
 
 /datum/targetable/vampiric_thrall
 	icon = 'icons/mob/spell_buttons.dmi'
