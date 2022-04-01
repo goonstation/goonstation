@@ -492,12 +492,13 @@
 		for (var/i in 1 to MAX_CIRCUITS)
 			var/obj/item/aiModule/module = law_circuits[i]
 			if(!module)
-				if (last_laws[i]) //if a module doesn't exist but was there last time it has been removed
-					removed_laws += "<del class=\"alert\">[i]: [last_laws[i]]</del>"
+				if (last_laws[i])
+					//load the law number and text from our saved law list
+					removed_laws += "<del class=\"alert\">[last_laws[i]["number"]]: [last_laws[i]["law"]]</del>"
 				continue
 			var/lt = module.get_law_text(TRUE)
 			var/class = "regular"
-			if (lt != last_laws[i])
+			if (!last_laws[i] || lt != last_laws[i]["law"])
 				class = "lawupdate"
 			if(islist(lt))
 				for(var/law in lt)
@@ -531,10 +532,12 @@
 
 	/// Saves the current law list to last_laws so we can see diffs
 	proc/update_last_laws()
+		var/law_counter = 1
 		for (var/i in 1 to MAX_CIRCUITS)
 			var/obj/item/aiModule/module = law_circuits[i]
 			if (module)
-				last_laws[i] = module.get_law_text(TRUE)
+				//save the law text and the displayed law number (not the rack position)
+				last_laws[i] = list("law" = module.get_law_text(TRUE), "number" = law_counter++)
 			else
 				last_laws[i] = null
 
