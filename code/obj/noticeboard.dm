@@ -43,7 +43,7 @@
 
 
 /obj/noticeboard/Topic(href, href_list)
-	if (bounds_dist(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))
+	if (BOUNDS_DIST(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 		return
 	if (is_incapacitated(usr) || usr.restrained())
 		return

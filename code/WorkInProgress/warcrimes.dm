@@ -197,9 +197,9 @@ var/fartcount = 0
 			if(target)
 				if(isdead(target))
 					target = null
-				if(bounds_dist(src, target) > 0)
+				if(BOUNDS_DIST(src, target) > 0)
 					step_to(src, target, 1)
-				if(bounds_dist(src, target) == 0 && !LinkBlocked(src.loc, target.loc))
+				if(BOUNDS_DIST(src, target) == 0 && !LinkBlocked(src.loc, target.loc))
 					var/obj/item/W = src.equipped()
 					if (!src.restrained())
 						if(W)

@@ -295,7 +295,7 @@
 	if(..())
 		return
 
-	if ( (bounds_dist(src, user) > 0 ))
+	if ( (BOUNDS_DIST(src, user) > 0 ))
 		if (!isAI(user))
 			src.remove_dialog(user)
 			user.Browse(null, "window=solcon")

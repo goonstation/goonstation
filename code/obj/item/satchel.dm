@@ -114,7 +114,7 @@
 
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
-		if (!in_interact_range(src, user)  || bounds_dist(O, user) > 0)
+		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0)
 			return
 		var/proceed = 0
 		for(var/check_path in src.allowed)

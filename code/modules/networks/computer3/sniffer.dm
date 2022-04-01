@@ -88,7 +88,7 @@
 		..()
 
 		if (!issilicon(usr) && !isAIeye(usr))
-			if (!(src in usr.contents) && !(src.master in usr.contents) && !(istype(src.loc, /turf) && (bounds_dist(src, usr) == 0)))
+			if (!(src in usr.contents) && !(src.master in usr.contents) && !(istype(src.loc, /turf) && (BOUNDS_DIST(src, usr) == 0)))
 				return
 			if (usr.stat || usr.restrained())
 				return

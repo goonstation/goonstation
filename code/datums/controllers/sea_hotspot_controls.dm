@@ -234,7 +234,7 @@
 
 				//ahhhh shit
 				var/turf/center = S.center.turf()
-				if (bounds_dist(T, center) > 0) //smash center to lock me in place
+				if (BOUNDS_DIST(T, center) > 0) //smash center to lock me in place
 					S.can_drift = 1
 					.= 1
 				else
@@ -978,7 +978,7 @@
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 99, 1, 0.1, 0.7)
 
 		for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
-			if (bounds_dist(src, H.center.turf()) == 0)
+			if (BOUNDS_DIST(src, H.center.turf()) == 0)
 				playsound(src, "sound/machines/twobeep.ogg", 50, 1,0.1,0.7)
 				for (var/mob/O in hearers(src, null))
 					O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
@@ -1028,19 +1028,19 @@
 
 	onUpdate()
 		..()
-		if(bounds_dist(owner, T) > 0 || V == null || owner == null || T == null || V.loc != T)
+		if(BOUNDS_DIST(owner, T) > 0 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(bounds_dist(owner, T) > 0 || V == null || owner == null || T == null || V.loc != T)
+		if(BOUNDS_DIST(owner, T) > 0 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(bounds_dist(owner, T) > 0 || V == null || owner == null || T == null || V.loc != T)
+		if(BOUNDS_DIST(owner, T) > 0 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(locate(/obj/machinery/power/vent_capture) in T)
@@ -1065,19 +1065,19 @@
 
 	onUpdate()
 		..()
-		if(bounds_dist(owner, V) > 0 || V == null || owner == null)
+		if(BOUNDS_DIST(owner, V) > 0 || V == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(bounds_dist(owner, V) > 0 || V == null || owner == null)
+		if(BOUNDS_DIST(owner, V) > 0 || V == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(bounds_dist(owner, V) > 0 || V == null || owner == null)
+		if(BOUNDS_DIST(owner, V) > 0 || V == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(owner && V)
@@ -1098,19 +1098,19 @@
 
 	onUpdate()
 		..()
-		if(bounds_dist(owner, T) > 0 || T == null)
+		if(BOUNDS_DIST(owner, T) > 0 || T == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(bounds_dist(owner, T) > 0 || T == null)
+		if(BOUNDS_DIST(owner, T) > 0 || T == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(bounds_dist(owner, T) > 0 || T == null)
+		if(BOUNDS_DIST(owner, T) > 0 || T == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

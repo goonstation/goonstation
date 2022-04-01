@@ -166,7 +166,7 @@
 
 	if (user)
 		var/choice = alert(user, "Would you like to launch the shuttle?","Shuttle control", "Launch", "Cancel")
-		if(bounds_dist(user, src) > 0 || emergency_shuttle.location != SHUTTLE_LOC_STATION) return
+		if(BOUNDS_DIST(user, src) > 0 || emergency_shuttle.location != SHUTTLE_LOC_STATION) return
 		switch(choice)
 			if("Launch")
 				boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
@@ -206,7 +206,7 @@
 			return 0
 
 		var/choice = alert(user, text("Would you like to (un)authorize a shortened launch time? [] authorization\s are still needed. Use abort to cancel all authorizations.", src.auth_need - src.authorized.len), "Shuttle Launch", "Authorize", "Repeal", "Abort")
-		if(emergency_shuttle.location != SHUTTLE_LOC_STATION || bounds_dist(user, src) > 0) return
+		if(emergency_shuttle.location != SHUTTLE_LOC_STATION || BOUNDS_DIST(user, src) > 0) return
 		switch(choice)
 			if("Authorize")
 				if(emergency_shuttle.timeleft() < 60)

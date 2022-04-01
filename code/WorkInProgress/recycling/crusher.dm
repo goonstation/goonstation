@@ -68,7 +68,7 @@
 
 	onUpdate()
 		. = ..()
-		if(!(bounds_dist(owner, target) == 0) || QDELETED(target))
+		if(!(BOUNDS_DIST(owner, target) == 0) || QDELETED(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!ON_COOLDOWN(owner, "crusher_sound", rand(0.5, 2.5) SECONDS))
@@ -103,7 +103,7 @@
 
 	onEnd()
 		. = ..()
-		if(!(bounds_dist(owner, target) == 0) || QDELETED(target))
+		if(!(BOUNDS_DIST(owner, target) == 0) || QDELETED(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -156,7 +156,7 @@
 
 
 /obj/machinery/crusher/attack_hand(mob/user)
-	if(!user || user.stat || bounds_dist(user, src) > 0 || isintangible(user)) //No unconscious / dead / distant users
+	if(!user || user.stat || BOUNDS_DIST(user, src) > 0 || isintangible(user)) //No unconscious / dead / distant users
 		return
 
 	//Daring text showing how BRAVE THIS PERSON IS!!!

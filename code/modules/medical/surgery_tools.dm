@@ -662,7 +662,7 @@ CONTAINS:
 
 	process()
 		if (src.defib && src.defib.loc != src)
-			if (bounds_dist(get_turf(src.defib), get_turf(src)) > 0)
+			if (BOUNDS_DIST(get_turf(src.defib), get_turf(src)) > 0)
 				if (isliving(src.defib.loc))
 					put_back_defib(src.defib.loc)
 		..()
@@ -888,7 +888,7 @@ CONTAINS:
 
 	onUpdate()
 		..()
-		if (bounds_dist(owner, target) > 0 || target == null || owner == null || tool == null)
+		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || tool == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -900,7 +900,7 @@ CONTAINS:
 
 	onStart()
 		..()
-		if (bounds_dist(owner, target) > 0 || !ishuman(target) || owner == null || tool == null)
+		if (BOUNDS_DIST(owner, target) > 0 || !ishuman(target) || owner == null || tool == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -914,7 +914,7 @@ CONTAINS:
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if (owner && ownerMob && target && tool && tool == ownerMob.equipped() && bounds_dist(owner, target) == 0)
+		if (owner && ownerMob && target && tool && tool == ownerMob.equipped() && BOUNDS_DIST(owner, target) == 0)
 			if (zone && surgery_status)
 				target.visible_message("<span class='success'>[owner] [vrb]es the surgical incisions on [owner == target ? his_or_her(owner) : "[target]'s"] [zone_sel2name[zone]] closed with [tool].</span>",
 				"<span class='success'>[owner == target ? "You [vrb]e" : "[owner] [vrb]es"] the surgical incisions on your [zone_sel2name[zone]] closed with [tool].</span>")
@@ -1025,7 +1025,7 @@ CONTAINS:
 						H.visible_message("<span class='alert'><b>[src] runs out of blood!</b></span>")
 						src.in_use = 0
 						break
-					if (bounds_dist(src, H) > 0)
+					if (BOUNDS_DIST(src, H) > 0)
 						var/fluff = pick("pulled", "yanked", "ripped")
 						H.visible_message("<span class='alert'><b>[src]'s needle gets [fluff] out of [H]'s arm!</b></span>", \
 						"<span class='alert'><b>[src]'s needle gets [fluff] out of your arm!</b></span>")
@@ -1185,7 +1185,7 @@ CONTAINS:
 		else if (!(over_object == usr))
 			return
 		..()
-		if (!length(src.contents) && usr.can_use_hands() && isalive(usr) && bounds_dist(src, usr) > 0 && !issilicon(usr))
+		if (!length(src.contents) && usr.can_use_hands() && isalive(usr) && BOUNDS_DIST(src, usr) > 0 && !issilicon(usr))
 			if (src.icon_state != "bodybag")
 				usr.visible_message("<b>[usr]</b> folds up [src].",\
 				"You fold up [src].")

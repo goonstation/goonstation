@@ -379,7 +379,7 @@
 				SPAWN(1 MINUTE) //one minute
 					src.makeIncorporeal()
 
-		//if ((marker && bounds_dist(src, marker) > 05) && (master && bounds_dist(P, src) > 02 ))
+		//if ((marker && BOUNDS_DIST(src, marker) > 05) && (master && BOUNDS_DIST(P, src) > 02 ))
 
 			return
 

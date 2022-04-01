@@ -28,7 +28,7 @@
 		if(T.intact || !istype(T, /turf/simulated/floor))
 			return
 
-		if(bounds_dist(src, user) > 0)
+		if(BOUNDS_DIST(src, user) > 0)
 			return
 
 		if(!directwired)		// only for attaching to directwired machines

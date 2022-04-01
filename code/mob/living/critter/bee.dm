@@ -472,7 +472,7 @@
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (bounds_dist(holder.owner, target) > 0)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to sting."))
 			return 1
 		var/mob/living/MT = target
@@ -540,7 +540,7 @@
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (bounds_dist(holder.owner, target) > 0)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to swallow."))
 			return 1
 		var/mob/living/MT = target
@@ -589,7 +589,7 @@
 		if (target == holder.owner)
 			return 1
 		var/mob/living/MT = target
-		if (bounds_dist(holder.owner, target) > 0)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to teleport away."))
 			return 1
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner]</b> stares at [MT]!</span>")

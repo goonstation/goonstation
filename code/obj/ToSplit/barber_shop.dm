@@ -383,7 +383,7 @@
 			boutput(usr, "<span class='alert'>You are unable to dispense anything, since the controls are physical levers which don't go through any other kind of input.</span>")
 			return
 
-		if ((usr.contents.Find(src) || ((bounds_dist(src, usr) == 0) && istype(src.loc, /turf))))
+		if ((usr.contents.Find(src) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))))
 			src.add_dialog(usr)
 
 			if (href_list["eject"])

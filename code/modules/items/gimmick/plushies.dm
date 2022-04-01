@@ -89,7 +89,7 @@
 
 /datum/action/bar/icon/claw_machine/onUpdate()
 	..()
-	if(bounds_dist(M, CM) > 0 || M == null || CM == null)
+	if(BOUNDS_DIST(M, CM) > 0 || M == null || CM == null)
 		interrupt(INTERRUPT_ALWAYS)
 		return
 	if(prob(10) && !M.traitHolder?.hasTrait("claw"))
@@ -109,7 +109,7 @@
 
 /datum/action/bar/icon/claw_machine/onStart()
 	..()
-	if(bounds_dist(M, CM) > 0 || M == null || CM == null)
+	if(BOUNDS_DIST(M, CM) > 0 || M == null || CM == null)
 		interrupt(INTERRUPT_ALWAYS)
 		return
 	playsound(CM, 'sound/machines/capsulebuy.ogg', 80, 1)
@@ -118,7 +118,7 @@
 
 /datum/action/bar/icon/claw_machine/onEnd()
 	..()
-	if(bounds_dist(M, CM) > 0 || M == null || CM == null)
+	if(BOUNDS_DIST(M, CM) > 0 || M == null || CM == null)
 		interrupt(INTERRUPT_ALWAYS)
 		return
 	CM.busy = 0
@@ -156,7 +156,7 @@
 /obj/item/toy/plush/proc/say_something(mob/user as mob)
 	var/message = input("What should [src] say?")
 	message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
-	if (!message || bounds_dist(src, user) > 0)
+	if (!message || BOUNDS_DIST(src, user) > 0)
 		return
 	logTheThing("say", user, null, "makes [src] say, \"[message]\"")
 	user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")

@@ -24,13 +24,13 @@
 	onUpdate()
 		..()
 
-		if (bounds_dist(owner, target) > 0 || target == null || owner == null || (ability && !ability.cooldowncheck()))
+		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || (ability && !ability.cooldowncheck()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if (bounds_dist(owner, target) > 0 || target == null || owner == null || (ability && !ability.cooldowncheck()))
+		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || (ability && !ability.cooldowncheck()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		owner.visible_message("<span class='combat'><B>[owner]</B> starts to envelop [target]!</span>")
@@ -38,7 +38,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if (ownerMob && target && (bounds_dist(owner, target) == 0) && (!ability || ability.cooldowncheck()))
+		if (ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && (!ability || ability.cooldowncheck()))
 			logTheThing("combat", target, ownerMob, "was enveloped by [constructTarget(ownerMob,"combat")] [ismob(ownerMob) ? "(mob) " : ""]at [log_loc(ownerMob)].")
 			owner.visible_message("<span class='combat'><B>[ownerMob]</B> completely envelops [target]!</span>")
 			playsound(ownerMob, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
@@ -85,7 +85,7 @@
 		if (!istype(target, /mob/living))
 			boutput(holder.owner, __red("Invalid target."))
 			return 1
-		if (bounds_dist(holder.owner, target) > 0)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to envelop."))
 			return 1
 		actions.start(new/datum/action/bar/icon/envelopAbility(target, src), holder.owner)

@@ -122,7 +122,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 			onclose(user, "mcu14500b")
 
 	proc/user_interface(mob/user as mob)
-		if (!user || user.stat ||(iscarbon(user) && bounds_dist(user, src) > 0))
+		if (!user || user.stat ||(iscarbon(user) && BOUNDS_DIST(user, src) > 0))
 			return
 
 		src.add_dialog(user)

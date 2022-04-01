@@ -779,7 +779,7 @@
 				break
 
 		if(entrance)
-			if(bounds_dist(O, getExitLoc()) == 0)
+			if(BOUNDS_DIST(O, getExitLoc()) == 0)
 				O.set_loc(entrance)
 				if(ismob(O))
 					crew.Add(O)

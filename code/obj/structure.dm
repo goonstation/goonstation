@@ -140,7 +140,7 @@ obj/structure/ex_act(severity)
 
 	onUpdate()
 		..()
-		if (the_girder == null || the_tool == null || owner == null || bounds_dist(owner, the_girder) > 0)
+		if (the_girder == null || the_tool == null || owner == null || BOUNDS_DIST(owner, the_girder) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

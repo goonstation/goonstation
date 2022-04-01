@@ -73,7 +73,7 @@
 	var/teleport_next_switch = 0 //Should we hop somewhere else next switch?
 
 	attack_ai(mob/user as mob)
-		if(bounds_dist(src, user) == 0)
+		if(BOUNDS_DIST(src, user) == 0)
 			return attack_hand(user)
 		else
 			boutput(user, "This jukebox is too old to be controlled remotely.")

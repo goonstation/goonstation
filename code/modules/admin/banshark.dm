@@ -119,7 +119,7 @@
 				src.z = sharktarget2.z
 				banproc()
 				return
-			else if ((bounds_dist(src, src.sharktarget2) == 0))
+			else if ((BOUNDS_DIST(src, src.sharktarget2) == 0))
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span class='alert'><B>[src]</B> bites [sharktarget2]!</span>", 1)
 				sharktarget2.changeStatus("weakened", 1 SECOND)
@@ -178,7 +178,7 @@
 
 	proc/process()
 		while (!disposed)
-			if ((bounds_dist(src, src.sharktarget2) == 0))
+			if ((BOUNDS_DIST(src, src.sharktarget2) == 0))
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span class='alert'><B>[src]</B> bites [sharktarget2]!</span>", 1)
 				sharktarget2.changeStatus("weakened", 1 SECOND)
@@ -193,7 +193,7 @@
 	proc/gibproc()
 		// drsingh for various cannot read null.
 		sleep(1.5 SECONDS)
-		if ((bounds_dist(src, src.sharktarget2) == 0))
+		if ((BOUNDS_DIST(src, src.sharktarget2) == 0))
 			for(var/mob/O in AIviewers(src, null))
 				O.show_message("<span class='alert'><B>[src]</B> gibs [sharktarget2] in one bite!</span>", 1)
 			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)

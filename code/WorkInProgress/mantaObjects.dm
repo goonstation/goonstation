@@ -641,7 +641,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	attack_hand(mob/user as mob)
 		if(busy) return
-		if(bounds_dist(user, src) > 0 || user.z != src.z) return
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		src.add_dialog(user)
 		add_fingerprint(user)
 		busy = 1
@@ -932,7 +932,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	onUpdate()
 		..()
-		if (propeller == null || the_tool == null || owner == null || bounds_dist(owner, propeller) > 0)
+		if (propeller == null || the_tool == null || owner == null || BOUNDS_DIST(owner, propeller) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -1070,7 +1070,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	onUpdate()
 		..()
-		if (box == null || the_tool == null || owner == null || bounds_dist(owner, box) > 0)
+		if (box == null || the_tool == null || owner == null || BOUNDS_DIST(owner, box) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -1161,7 +1161,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	onUpdate()
 		..()
-		if (magnet == null || the_tool == null || owner == null || bounds_dist(owner, magnet) > 0)
+		if (magnet == null || the_tool == null || owner == null || BOUNDS_DIST(owner, magnet) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

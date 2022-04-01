@@ -97,10 +97,10 @@
 			return
 
 		if(!istype(over_object, /atom/movable/screen/hud))
-			if (bounds_dist(usr, src) > 0)
+			if (BOUNDS_DIST(usr, src) > 0)
 				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
-			if (bounds_dist(usr, over_object) > 0)
+			if (BOUNDS_DIST(usr, over_object) > 0)
 				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
 
@@ -934,11 +934,11 @@
 			boutput(usr, "<span class='notice'>You reset the reclaimer's output target.</span>")
 			return
 
-		if(bounds_dist(over_object, src) > 0)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>The reclaimer is too far away from the target!</span>")
 			return
 
-		if(bounds_dist(over_object, usr) > 0)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -991,7 +991,7 @@
 			boutput(user, "<span class='alert'>You can't quick-load that.</span>")
 			return
 
-		if(bounds_dist(O, user) > 0)
+		if(BOUNDS_DIST(O, user) > 0)
 			boutput(user, "<span class='alert'>You are too far away!</span>")
 			return
 
@@ -1032,7 +1032,7 @@
 		if (!output_location)
 			return src.loc
 
-		if (!(bounds_dist(src.output_location, src) == 0))
+		if (!(BOUNDS_DIST(src.output_location, src) == 0))
 			output_location = null
 			return src.loc
 

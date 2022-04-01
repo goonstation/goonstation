@@ -1647,7 +1647,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 	targeted = 1
 	cast(atom/target)
 		var/mob/M = target
-		if (!(bounds_dist(M, holder.owner) == 0))
+		if (!(BOUNDS_DIST(M, holder.owner) == 0))
 			return
 		if (istype(M) && isalive(holder.owner) && !holder.owner.transforming)
 			for (var/obj/item/grab/G in holder.owner)
@@ -2464,7 +2464,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 	targeted = 1
 	cast(atom/target)
 		var/mob/M = target
-		if (!(bounds_dist(M, holder.owner) == 0))
+		if (!(BOUNDS_DIST(M, holder.owner) == 0))
 			return
 
 		var/did_it = 0

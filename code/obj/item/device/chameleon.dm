@@ -117,7 +117,7 @@
 		scan(target, user)
 
 	proc/scan(obj/target, mob/user)
-		if (bounds_dist(src, target) > 0)
+		if (BOUNDS_DIST(src, target) > 0)
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
 			return
@@ -231,7 +231,7 @@
 			return ..()
 
 	scan(obj/target, mob/user)
-		if (bounds_dist(src, target) > 0)
+		if (BOUNDS_DIST(src, target) > 0)
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
 			return

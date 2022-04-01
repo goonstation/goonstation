@@ -24,7 +24,7 @@
 
 	Topic(var/href, var/href_list)
 
-		if (bounds_dist(src, usr) > 0 || iswraith(usr) || isintangible(usr) || is_incapacitated(usr))
+		if (BOUNDS_DIST(src, usr) > 0 || iswraith(usr) || isintangible(usr) || is_incapacitated(usr))
 			return
 		..()
 

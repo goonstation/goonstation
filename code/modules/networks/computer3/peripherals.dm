@@ -1108,7 +1108,7 @@
 		if(..())
 			return
 
-		if(issilicon(usr) && bounds_dist(src, usr) > 0)
+		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
@@ -1226,7 +1226,7 @@
 		if(..())
 			return
 
-		if(issilicon(usr) && bounds_dist(src, usr) > 0)
+		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 

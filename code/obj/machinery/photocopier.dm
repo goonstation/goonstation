@@ -151,7 +151,7 @@
 			boutput(user, "<span class='alert'>\The [src] is busy right now! Try again later!</span>")
 			return
 		var/mode_sel =  input("Which do you want to do?", "Photocopier Controls") as null|anything in list("Reset Memory", "Print Copies", "Adjust Amount", "Toggle Lid")
-		if (bounds_dist(user, src) == 0)
+		if (BOUNDS_DIST(user, src) == 0)
 			switch(mode_sel)
 				if ("Reset Memory")
 					if (src.use_state == 2)
@@ -191,7 +191,7 @@
 						boutput(user, "\The [src] is busy right now! Try again later!")
 						return
 					var/num_sel = input("How many copies do you want to make?", "Photocopier Controls") as num
-					if (isnum_safe(num_sel) && num_sel && bounds_dist(user, src) == 0)
+					if (isnum_safe(num_sel) && num_sel && BOUNDS_DIST(user, src) == 0)
 						if (num_sel <= src.paper_amount)
 							src.make_amount = num_sel
 							playsound(src.loc, "sound/machines/ping.ogg", 50, 1)

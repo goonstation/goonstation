@@ -767,7 +767,7 @@
 
 	onUpdate()
 		..()
-		if (!the_storage || !the_wrench || !owner || bounds_dist(owner, the_storage) > 0)
+		if (!the_storage || !the_wrench || !owner || BOUNDS_DIST(owner, the_storage) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

@@ -268,7 +268,7 @@ var/list/cached_colors = new/list()
 		generate_icon()
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(target == loc || bounds_dist(src, target) > 0 || istype(target,/obj/machinery/vending/paint) ) return
+		if(target == loc || BOUNDS_DIST(src, target) > 0 || istype(target,/obj/machinery/vending/paint) ) return
 
 		if(!uses)
 			boutput(user, "It's empty.")
@@ -386,7 +386,7 @@ var/list/cached_colors = new/list()
 		currentpattern = 1
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(target == loc || bounds_dist(src, target) > 0 || istype(target,/obj/machinery/vending/paint) ) return
+		if(target == loc || BOUNDS_DIST(src, target) > 0 || istype(target,/obj/machinery/vending/paint) ) return
 
 		if(!uses)
 			boutput(user, "It's empty.")

@@ -1732,6 +1732,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 #elif defined(MAP_OVERRIDE_OSHAN)
 	limit = 1
 	special_spawn_location = 0
+#elif defined(UPSCALED_MAP)
+	limit = 1
+	special_spawn_location = 1
+	spawn_x = 276 * 2
+	spawn_y = 257 * 2
+	spawn_z = 3
 #else
 	limit = 1
 	special_spawn_location = 1

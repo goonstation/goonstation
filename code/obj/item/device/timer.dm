@@ -103,7 +103,7 @@
 	if (user.stat || user.restrained() || user.lying)
 		return
 
-	if ((src in user) || (src.master && (src.master in user)) || (bounds_dist(src, user) == 0 && istype(src.loc, /turf)) || src.is_detonator_trigger())
+	if ((src in user) || (src.master && (src.master in user)) || (BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)) || src.is_detonator_trigger())
 		if (!src.master)
 			src.add_dialog(user)
 		else

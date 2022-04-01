@@ -511,14 +511,14 @@
 
 	onUpdate()
 		..()
-		if(bounds_dist(M, HH) > 0 || M == null || HH == null || B == null)
+		if(BOUNDS_DIST(M, HH) > 0 || M == null || HH == null || B == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 
 	onStart()
 		..()
-		if(bounds_dist(M, HH) > 0 || M == null || HH == null || B == null)
+		if(BOUNDS_DIST(M, HH) > 0 || M == null || HH == null || B == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -537,7 +537,7 @@
 		return
 
 	onEnd()
-		if(bounds_dist(M, HH) > 0 || M == null || HH == null || B == null)
+		if(BOUNDS_DIST(M, HH) > 0 || M == null || HH == null || B == null)
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			src.end()

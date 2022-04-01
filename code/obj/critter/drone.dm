@@ -276,7 +276,7 @@
 
 			for (var/client/C)
 				var/mob/M = C.mob
-				if (M && src.z == M.z && bounds_dist(src, M) == 00)
+				if (M && src.z == M.z && BOUNDS_DIST(src, M) == 00)
 					if (isliving(M))
 						waking = 1
 						break
@@ -288,7 +288,7 @@
 
 			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				var/atom/A = atom
-				if (A && src.z == A.z && bounds_dist(src, A) == 00)
+				if (A && src.z == A.z && BOUNDS_DIST(src, A) == 00)
 					waking = 1
 					break
 
@@ -314,7 +314,7 @@
 
 			for (var/client/C)
 				var/mob/M = C.mob
-				if (M && src.z == M.z && bounds_dist(src, M) == 00)
+				if (M && src.z == M.z && BOUNDS_DIST(src, M) == 00)
 					if (isliving(M))
 						stay_awake = 1
 						break
@@ -326,7 +326,7 @@
 
 			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				var/atom/A = atom
-				if (A && src.z == A.z && bounds_dist(src, A) == 00)
+				if (A && src.z == A.z && BOUNDS_DIST(src, A) == 00)
 					stay_awake = 1
 					break
 
@@ -399,11 +399,11 @@
 			if("attacking")
 				if(prob(15)) walk_rand(src,4) // juke around and dodge shots
 				// see if he got away
-				if ((bounds_dist(src, src.target) > 0) || ((src.target:loc != src.target_lastloc)))
+				if ((BOUNDS_DIST(src, src.target) > 0) || ((src.target:loc != src.target_lastloc)))
 					src.anchored = 0
 					src.task = "chasing"
 				else
-					if (bounds_dist(src, src.target) == 0)
+					if (BOUNDS_DIST(src, src.target) == 0)
 						var/mob/living/carbon/M = src.target
 						if (!src.attacking) CritterAttack(src.target)
 						if (!src.aggressive)

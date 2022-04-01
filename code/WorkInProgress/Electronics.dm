@@ -182,7 +182,7 @@
 	if(!iscarbon(user) || user.stat || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis"))
 		return
 
-	if(bounds_dist(user, src) > 0)
+	if(BOUNDS_DIST(user, src) > 0)
 		return
 
 	var/list/bad_types = list(/obj/item/electronics/disk, /obj/item/electronics/scanner, /obj/item/electronics/soldering, /obj/item/electronics/frame)
@@ -343,19 +343,19 @@
 
 	onUpdate()
 		..()
-		if(bounds_dist(owner, F) > 0 || F == null || owner == null)
+		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(bounds_dist(owner, F) > 0 || F == null || owner == null)
+		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(bounds_dist(owner, F) > 0 || F == null || owner == null)
+		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(owner && F)
@@ -986,19 +986,19 @@
 
 	onUpdate()
 		..()
-		if(bounds_dist(owner, O) > 0 || O == null || owner == null || D == null || locate(/mob/living) in O)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || locate(/mob/living) in O)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(bounds_dist(owner, O) > 0 || O == null || owner == null || D == null || locate(/mob/living) in O)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || locate(/mob/living) in O)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(bounds_dist(owner, O) > 0 || O == null || owner == null || D == null || locate(/mob/living) in O)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || locate(/mob/living) in O)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (ismob(owner))

@@ -1300,7 +1300,7 @@
 			var/action = input("What do you want to do?", "Cyborg Deconstruction") in actions
 			if (!action) return
 			if (action == "Do nothing") return
-			if (bounds_dist(src.loc, user.loc) > 0 && (!user.bioHolder || !user.bioHolder.HasEffect("telekinesis")))
+			if (BOUNDS_DIST(src.loc, user.loc) > 0 && (!user.bioHolder || !user.bioHolder.HasEffect("telekinesis")))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
 				return
 
@@ -1480,7 +1480,7 @@
 			var/action = input("What do you want to do?", "Cyborg Maintenance") as null|anything in available_actions
 			if (!action)
 				return
-			if (bounds_dist(src.loc, user.loc) > 0 && !src.bioHolder?.HasEffect("telekinesis"))
+			if (BOUNDS_DIST(src.loc, user.loc) > 0 && !src.bioHolder?.HasEffect("telekinesis"))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
 				return
 

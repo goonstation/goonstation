@@ -1465,7 +1465,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	onUpdate()
 		..()
-		if (bounds_dist(owner, target) > 0 || target == null || owner == null || makeup == null)
+		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || makeup == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/ownerMob = owner
@@ -1475,7 +1475,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	onStart()
 		..()
-		if (bounds_dist(owner, target) > 0 || target == null || owner == null || makeup == null)
+		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || makeup == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/ownerMob = owner
@@ -1498,7 +1498,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if (owner && ownerMob && target && makeup && makeup == ownerMob.equipped() && bounds_dist(owner, target) == 0)
+		if (owner && ownerMob && target && makeup && makeup == ownerMob.equipped() && BOUNDS_DIST(owner, target) == 0)
 			target.makeup = 1
 			target.makeup_color = makeup.font_color
 			target.update_body()

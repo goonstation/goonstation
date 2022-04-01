@@ -303,7 +303,7 @@
 	Topic(href, href_list)
 		if (usr.stat || usr.restrained())
 			return
-		if (bounds_dist(src, usr) == 0)
+		if (BOUNDS_DIST(src, usr) == 0)
 			src.add_dialog(usr)
 
 			if (href_list["slurp"])

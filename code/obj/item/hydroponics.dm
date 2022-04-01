@@ -390,7 +390,7 @@
 	mats = 4
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		if (bounds_dist(A, user) > 0)
+		if (BOUNDS_DIST(A, user) > 0)
 			return
 
 		boutput(user, scan_plant(A, user, visible = 1)) // Replaced with global proc (Convair880).

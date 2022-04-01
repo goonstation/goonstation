@@ -151,7 +151,7 @@
 					openup()
 
 	MouseDrop_T(mob/target, mob/user)
-		if (!istype(target) || target.buckled || bounds_dist(user, src) > 0 || bounds_dist(user, target) > 0 || is_incapacitated(user) || isAI(user))
+		if (!istype(target) || target.buckled || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
 			return
 
 		if(open != 1)

@@ -114,7 +114,7 @@
 	proc/can_operate(var/mob/M, var/mob/living/target)
 		if (!isalive(M))
 			return 0
-		if (bounds_dist(src, M) > 0)
+		if (BOUNDS_DIST(src, M) > 0)
 			return 0
 		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
 			return 0
@@ -188,7 +188,7 @@
 			return "<B>Reagent Scan : </B>[ reagent_scan_active ? "<A href='?src=\ref[src];reagent_scan_active=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];reagent_scan_active=1'>On</A>"]"
 
 	Topic(href, href_list)
-		if (( usr.using_dialog_of(src) && ((bounds_dist(src, usr) == 0) && istype(src.loc, /turf))) || (isAI(usr)))
+		if (( usr.using_dialog_of(src) && ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))) || (isAI(usr)))
 			if(href_list["start"])
 				src.on = !src.on
 				build_icon()

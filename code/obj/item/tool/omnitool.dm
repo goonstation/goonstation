@@ -276,7 +276,7 @@
 
 	afterattack(obj/O as obj, mob/user as mob)
 
-		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && bounds_dist(src, O) == 0)
+		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && BOUNDS_DIST(src, O) == 0)
 			if (O.reagents.total_volume)
 				O.reagents.trans_to(src, 20)
 				boutput(user, "<span class='notice'>Welder refueled</span>")
