@@ -4,6 +4,8 @@
 	soundproofing = 3
 	can_flip_bust = 1
 	p_class = 3
+	_max_health = 150
+	_health = 150
 
 	New()
 		. = ..()
@@ -12,6 +14,34 @@
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+	attackby(obj/item/I as obj, mob/user as mob)
+		if (src.open || !src.locked)
+			..()
+		else if (!I)
+			..()
+		else if (istype(I, /obj/item/satchel/))
+			..()
+		else if (isweldingtool(I))
+			..()
+		else if (istype(I, /obj/item/card/))
+			..()
+		else if (user.a_intent == INTENT_HELP)
+			..()
+		else if (I.force > 0)
+			src._health -= clamp(I.force, 1, 20)
+			user.lastattacked = src
+			attack_particle(user,src)
+			hit_twitch(src)
+			if(_health <= 0)
+				_health = 0
+				src.unlock()
+				src.open()
+				playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
+			else
+				playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 90, 1)
+		else
+			..()
 
 /obj/storage/closet/emergency
 	name = "emergency supplies closet"
