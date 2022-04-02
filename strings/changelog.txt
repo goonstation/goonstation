@@ -1,5 +1,10 @@
 
 (t)sat apr 02 22
+(u)Flappybat
+(p)7950
+(e)🆕|feature
+(*)Battle Royale now forces a shuttle when five players remain. A deadly storm will hit the entire station, finish everyone else off or escape on the shuttle to survive!
+(+)Battle Royale now prevents you leaving the station level edges, be careful spacing players as they may return.
 (u)NightmareChamillian
 (p)7694
 (e)⚖|balance
