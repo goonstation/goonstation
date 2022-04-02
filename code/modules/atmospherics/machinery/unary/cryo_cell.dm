@@ -109,7 +109,10 @@
 				if (can_operate(user,target))
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)
-		return
+
+	Exited(atom/movable/AM)
+		if (AM == occupant)
+			src.go_out()
 
 	proc/can_operate(var/mob/M, var/mob/living/target)
 		if (!isalive(M))
@@ -390,7 +393,7 @@
 			src.occupant.set_loc(src.loc)
 		src.occupant = null
 		build_icon()
-		return
+
 
 	verb/move_eject()
 		set src in oview(1)
@@ -399,7 +402,6 @@
 			return
 		src.go_out()
 		add_fingerprint(usr)
-		return
 
 	verb/move_inside()
 		set src in oview(1)
@@ -425,16 +427,6 @@
 			O.set_loc(get_turf(src))
 		src.add_fingerprint(usr)
 		build_icon()
-		return
-
-/datum/data/function/proc/reset()
-	return
-
-/datum/data/function/proc/r_input(href, href_list, mob/user as mob)
-	return
-
-/datum/data/function/proc/display()
-	return
 
 /obj/shock_overlay
 	icon = 'icons/obj/Cryogenic2.dmi'
