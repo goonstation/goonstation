@@ -265,7 +265,7 @@ TYPEINFO(/datum/component/barber)
 	else
 		var/datum/mutantrace/mutant = M.mutantrace.name
 		var/datum/mutantrace/mutant_us = "human"
-		if (user?.mutantrace)
+		if (ishuman(user) && user?.mutantrace)
 			mutant_us = user.mutantrace.name
 		switch(mutant)
 			if("blob")
@@ -481,13 +481,13 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 
 	onUpdate()
 		..()
-		if(get_dist(owner, M) > 1 || M == null || owner == null)
+		if(BOUNDS_DIST(owner, M) > 0 || M == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, M) > 1 || M == null || owner == null)
+		if(BOUNDS_DIST(owner, M) > 0 || M == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

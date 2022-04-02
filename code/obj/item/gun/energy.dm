@@ -1028,7 +1028,7 @@
 
 ///////////////////////////////////////Hunter
 /obj/item/gun/energy/plasma_gun/ // Made use of a spare sprite here (Convair880).
-	name = "Plasma rifle"
+	name = "plasma rifle"
 	desc = "This advanced bullpup rifle contains a self-recharging power cell."
 	icon_state = "bullpup"
 	item_state = "bullpup"
@@ -1054,7 +1054,7 @@
 		..()
 
 /obj/item/gun/energy/plasma_gun/vr
-	name = "Advanced laser gun"
+	name = "advanced laser gun"
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "wavegun"
 	base_item_state = "wavegun"
@@ -1203,6 +1203,7 @@
 	cell_type = /obj/item/ammo/power_cell/med_power
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	muzzle_flash = "muzzle_flash_laser"
+	is_syndicate = 1
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/alastor)
@@ -1624,7 +1625,7 @@
 		shotcount = 0
 		. = ..()
 
-	shoot_point_blank(mob/M, mob/user, second_shot)
+	shoot_point_blank(atom/target, mob/user, second_shot)
 		shotcount = 0
 		. = ..()
 

@@ -38,7 +38,6 @@
 	var/tmp/pathable = 1
 	var/can_write_on = 0
 	var/tmp/messy = 0 //value corresponds to how many cleanables exist on this turf. Exists for the purpose of making fluid spreads do less checks.
-	var/tmp/checkingexit = 0 //value corresponds to how many objs on this turf implement checkexit(). lets us skip a costly loop later!
 	var/tmp/checkinghasproximity = 0
 	var/tmp/neighcheckinghasproximity = 0
 	/// directions of this turf being blocked by directional blocking objects. So we don't need to loop through the entire contents
@@ -199,6 +198,9 @@
 		oxygen = MOLES_O2STANDARD
 		nitrogen = MOLES_N2STANDARD
 
+	asteroid
+		icon_state = "aplaceholder"
+
 /turf/space/no_replace
 
 /turf/space/New()
@@ -309,6 +311,11 @@ proc/generate_space_color()
 /turf/space/proc/process_cell()
 	return
 
+/turf/proc/delay_space_conversion()
+	if(air_master?.is_busy)
+		air_master.tiles_to_space |= src
+		return TRUE
+
 /turf/cordon
 	name = "CORDON"
 	icon = 'icons/effects/mapeditor.dmi'
@@ -334,6 +341,11 @@ proc/generate_space_color()
 	if(!RL_Started)
 		RL_Init()
 
+/turf/Exit(atom/movable/AM, atom/newloc)
+	SHOULD_CALL_PARENT(TRUE)
+	// per DM reference Exit gets called before Uncross so we use this temporary var to smuggle newloc there
+	AM.movement_newloc = newloc
+	. = ..()
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if (!mover)
@@ -342,21 +354,6 @@ proc/generate_space_color()
 	var/turf/cturf = get_turf(mover)
 	if (cturf == src)
 		return TRUE
-
-	//First, check objects to block exit
-	if (cturf?.checkingexit > 0) //dont bother checking unless the turf actually contains a checkable :)
-		for(var/obj/obstacle in cturf)
-			if(obstacle == mover)
-				continue
-			if((mover != obstacle) && (forget != obstacle))
-				if(obstacle.event_handler_flags & USE_CHECKEXIT)
-					var/obj/obj_mover = mover
-					if (!istype(obj_mover) || !(HAS_FLAG(obj_mover.object_flags, HAS_DIRECTIONAL_BLOCKING) \
-					  && HAS_FLAG(obstacle.object_flags, HAS_DIRECTIONAL_BLOCKING) \
-					  && obstacle.dir == mover.dir)) //Allow objects that block the same dirs to be pushed past each other
-						if(!obstacle.CheckExit(mover, src))
-							mover.Bump(obstacle, 1)
-							return FALSE
 
 	if (mirrored_physical_zone_created) //checking visual mirrors for blockers if set
 		if (length(src.vis_contents))
@@ -541,7 +538,6 @@ proc/generate_space_color()
 
 	var/old_opacity = src.opacity
 
-	var/old_checkingexit = src.checkingexit
 	var/old_blocked_dirs = src.blocked_dirs
 	var/old_checkinghasproximity = src.checkinghasproximity
 	var/old_neighcheckinghasproximity = src.neighcheckinghasproximity
@@ -555,8 +551,10 @@ proc/generate_space_color()
 
 	var/new_type = ispath(what) ? what : text2path(what) //what what, what WHAT WHAT WHAAAAAAAAT
 	if (new_type)
+		if(ispath(new_type, /turf/space) && delay_space_conversion()) return
 		new_turf = new new_type(src)
 		if (!isturf(new_turf))
+			if (delay_space_conversion()) return
 			new_turf = new /turf/space(src)
 
 	else switch(what)
@@ -585,6 +583,7 @@ proc/generate_space_color()
 		if ("Unsimulated Floor")
 			new_turf = new /turf/unsimulated/floor(src)
 		else
+			if (delay_space_conversion()) return
 			new_turf = new /turf/space(src)
 
 	if(keep_old_material && oldmat && !istype(new_turf, /turf/space)) new_turf.setMaterial(oldmat)
@@ -614,7 +613,6 @@ proc/generate_space_color()
 	new_turf.opaque_atom_count = opaque_atom_count
 
 
-	new_turf.checkingexit = old_checkingexit
 	new_turf.blocked_dirs = old_blocked_dirs
 	new_turf.checkinghasproximity = old_checkinghasproximity
 	new_turf.neighcheckinghasproximity = old_neighcheckinghasproximity
@@ -721,10 +719,6 @@ proc/generate_space_color()
 	return floor
 
 /turf/proc/ReplaceWithSpace()
-	if( air_master.is_busy )
-		air_master.tiles_to_space |= src
-		return
-
 	var/area/my_area = loc
 	var/turf/floor
 	if (my_area)
@@ -952,7 +946,7 @@ proc/generate_space_color()
 		return
 	if (user.pulling.anchored)
 		return
-	if ((user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
+	if ((user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0))
 		return
 	if (!isturf(user.pulling.loc))
 		var/obj/container = user.pulling.loc
@@ -977,7 +971,7 @@ proc/generate_space_color()
 		return
 	if (user.pulling.anchored)
 		return
-	if ((user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
+	if ((user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0))
 		return
 	if (!isturf(user.pulling.loc))
 		return

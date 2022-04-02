@@ -105,10 +105,10 @@
 	if (!ishuman(O))
 		boutput(user, "<span class='alert'>You can only put carbon lifeforms on the operating table.</span>")
 		return
-	if (get_dist(user,src) > 1)
+	if (BOUNDS_DIST(user, src) > 0)
 		boutput(user, "<span class='alert'>You need to be closer to the operating table.</span>")
 		return
-	if (get_dist(user,O) > 1)
+	if (BOUNDS_DIST(user, O) > 0)
 		boutput(user, "<span class='alert'>Your target needs to be near you to put them on the operating table.</span>")
 		return
 

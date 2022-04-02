@@ -1,3 +1,9 @@
+/*contains the misc robot parts dropped by drones
+ as well as most things related to mechanics work
+ */
+
+
+//Electronics parts
 
 /obj/item/electronics/
 	name = "electronic thing"
@@ -188,7 +194,7 @@
 	if(!iscarbon(user) || user.stat || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis"))
 		return
 
-	if(get_dist(user, src) > 1)
+	if(BOUNDS_DIST(user, src) > 0)
 		return
 
 	var/list/bad_types = list(/obj/item/electronics/disk, /obj/item/electronics/scanner, /obj/item/electronics/soldering, /obj/item/electronics/frame)
@@ -349,19 +355,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, F) > 1 || F == null || owner == null)
+		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, F) > 1 || F == null || owner == null)
+		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, F) > 1 || F == null || owner == null)
+		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(owner && F)
@@ -374,7 +380,8 @@
 			return 0
 	return 1
 
-////////////////////////////////////////////////////////////////?
+// Other stuff
+
 /obj/item/electronics/soldering
 	name = "soldering iron"
 	icon = 'icons/obj/electronics.dmi'
@@ -854,9 +861,10 @@
 	hitsound = 'sound/machines/chainsaw.ogg'
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_SAWING
+	flags = ONBELT | FPRINT | TABLEPASS
 	w_class = W_CLASS_NORMAL
 
-	proc/finish_decon(atom/target,mob/user)
+	proc/finish_decon(atom/target,mob/user) // deconstructing work
 		if (!isobj(target))
 			return
 		var/obj/O = target
@@ -901,7 +909,9 @@
 			if (O.deconstruct_flags & DECON_ACCESS)
 				boutput(user, "<span class='alert'>[target] is under an access lock and must have its access requirements removed first.</span>")
 			return
-
+		if (issilicon(user) && (O.deconstruct_flags & DECON_NOBORG))
+			boutput(user, "<span class='alert'>Cyborgs cannot deconstruct this [target].</span>")
+			return
 		if ((!O.allowed(user) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] without sufficient access to operate it.</span>")
 			return
@@ -922,6 +932,45 @@
 			user.showContextActions(O.decon_contexts, O)
 			boutput(user, "<span class='alert'>You need to use some tools on [target] before it can be deconstructed.</span>")
 			return
+
+ // here be extra surgery penalties
+	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+
+		if(!surgeryCheck(M, user)) // if it ain't surgery compatible, do whatever!
+			return ..()
+
+		if(prob(20))// doing surgery with a buzzsaw isn't a good idea
+			user.visible_message("<span class='alert'><b>[user]</b> messes up and injures [himself_or_herself(user)] with the [src]! </span>")
+			random_brute_damage(user, 7)
+			take_bleeding_damage(user, null, 7, DAMAGE_CUT, 1)
+			playsound(user, 'sound/machines/chainsaw.ogg', 70)
+
+
+		else if(user?.bioHolder.HasEffect("clumsy") && prob(40)) // ESPECIALLY if you're a stupid clown
+			playsound(user, 'sound/machines/chainsaw.ogg', 70)
+			user.visible_message("<span class='alert'><b>[user] fucks up really badly and maims [himself_or_herself(user)] with the [src]! </b> </span>")
+			random_brute_damage(user, 15)
+			take_bleeding_damage(user, null, 15, DAMAGE_CUT, 1)
+			user.emote("scream")
+			JOB_XP(user, "Clown", 3)
+
+
+		else // congrats buddy!!!!! you managed to pass all the checks!!!!! you get to do surgery!!!!
+			saw_surgery(M,user)
+
+
+/obj/item/deconstructor/borg
+	name = "deconstruction device"
+	desc = "A device meant to facilitate the deconstruction of scannable machines. This one has been modified for safe use by borgs."
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "deconstruction"
+	force = 0
+	throwforce = 0
+	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+	hit_type = DAMAGE_BLUNT
+	tool_flags = 0
+	w_class = W_CLASS_NORMAL
+
 
 /obj/var/list/decon_contexts = null
 
@@ -990,19 +1039,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null || locate(/mob/living) in O)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || locate(/mob/living) in O)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null || locate(/mob/living) in O)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || locate(/mob/living) in O)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null || locate(/mob/living) in O)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || locate(/mob/living) in O)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (ismob(owner))
@@ -1017,14 +1066,3 @@
 			boutput(owner, "<span class='alert'>Deconstruction of [O] interrupted!</span>")
 		..()
 
-/obj/item/deconstructor/borg
-	name = "deconstruction device"
-	desc = "A device meant to facilitate the deconstruction of scannable machines. This one has been modified for safe use by borgs."
-	icon = 'icons/obj/items/device.dmi'
-	icon_state = "deconstruction"
-	force = 0
-	throwforce = 0
-	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
-	hit_type = DAMAGE_BLUNT
-	tool_flags = 0
-	w_class = W_CLASS_NORMAL

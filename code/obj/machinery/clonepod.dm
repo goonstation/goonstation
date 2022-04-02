@@ -520,11 +520,14 @@
 				src.UpdateIcon()
 			power_usage = 200
 
+
+			#ifndef CLONING_IS_A_SIN
 			if (!src.operating && src.auto_mode)
 				// Attempt to start a new clone (if possible)
 				src.auto_delay -= mult
 				if (src.auto_delay < 0)
 					src.start_clone()
+			#endif
 
 			return ..()
 
@@ -1162,7 +1165,7 @@
 
 	onUpdate()
 		..()
-		if (grab == null || target == null || grinder == null || owner == null || get_dist(owner, grinder) > 1 || get_dist(owner, target) > 1 || get_dist(target, grinder) > 1)
+		if (grab == null || target == null || grinder == null || owner == null || BOUNDS_DIST(owner, grinder) > 0 || BOUNDS_DIST(owner, target) > 0 || BOUNDS_DIST(target, grinder) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

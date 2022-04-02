@@ -147,7 +147,7 @@
 			H.stamina_stun(mult)
 			if(H.stamina <= -75)
 				H.losebreath += (3 * mult)
-				H.setStatus("paralysis", max(getStatusDuration("paralysis"), STAMINA_NEG_CAP_STUN_TIME * mult)) //not ideal
+				H.setStatusMin("paralysis", STAMINA_NEG_CAP_STUN_TIME * mult) //not ideal
 			else if(H.stamina <= -50)
 				H.losebreath += (1.5 * mult)
 			else if(H.stamina <= -33)
@@ -156,7 +156,7 @@
 				if(prob(33)) H.losebreath += (0.2 * mult)
 
 	proc/set_affected_loc()
-		if (!isturf(src.assailant.loc))
+		if (!isturf(src.assailant.loc) || !(BOUNDS_DIST(src.assailant, src.affecting) == 0))
 			return
 
 		actions.interrupt(src.affecting, INTERRUPT_ALWAYS)
@@ -330,7 +330,7 @@
 				qdel(src)
 				return 1
 
-		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && get_dist(assailant, affecting) > 1) )
+		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && BOUNDS_DIST(assailant, affecting) > 0) )
 			qdel(src)
 			return 1
 
@@ -404,7 +404,7 @@
 	//returns an atom to be thrown if any
 	proc/handle_throw(var/mob/living/user, var/atom/target)
 		if (!src.affecting) return 0
-		if (get_dist(user, src.affecting) > 1)
+		if (BOUNDS_DIST(user, src.affecting) > 0)
 			return 0
 		if ((src.state < 1 && !(src.affecting.getStatusDuration("paralysis") || src.affecting.getStatusDuration("weakened") || src.affecting.stat)) || !isturf(user.loc))
 			user.visible_message("<span class='alert'>[src.affecting] stumbles a little!</span>")
@@ -450,7 +450,7 @@
 	onUpdate()
 		..()
 
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -460,14 +460,14 @@
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && get_dist(owner, target) <= 1)
+		if(owner && ownerMob && target && G && BOUNDS_DIST(owner, target) == 0)
 			G.upgrade_to_kill()
 		else
 			interrupt(INTERRUPT_ALWAYS)
@@ -505,7 +505,7 @@
 	onUpdate()
 		..()
 
-		if(get_dist(owner, target) > 1 || target == null || owner == null || get_dist(owner,T) > 1)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -515,14 +515,14 @@
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null || get_dist(owner,T) > 1)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && get_dist(owner, target) <= 1 && get_dist(owner,T) <= 1)
+		if(owner && ownerMob && target && G && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0)
 			G.upgrade_to_pin(T)
 		else
 			interrupt(INTERRUPT_ALWAYS)
@@ -544,7 +544,7 @@
 	if  (!(ismob(G.affecting)))
 		return 0
 
-	if (get_dist(src, M) > 1)
+	if (BOUNDS_DIST(src, M) > 0)
 		return 0
 
 	user.visible_message("<span class='alert'><B>[M] has been smashed against [src] by [user]!</B></span>")
@@ -566,7 +566,7 @@
 	if  (!(ismob(G.affecting)))
 		return 0
 
-	if (get_dist(src, M) > 1)
+	if (BOUNDS_DIST(src, M) > 0)
 		return 0
 
 	if (!G.can_pin)
@@ -584,7 +584,7 @@
 	if  (!(ismob(G.affecting)))
 		return 0
 
-	if (get_dist(src, M) > 1)
+	if (BOUNDS_DIST(src, M) > 0)
 		return 0
 
 	if (!G.can_pin)
@@ -627,7 +627,7 @@
 			qdel(src)
 			return 1
 
-		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && get_dist(assailant, affecting) > 1) )
+		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && BOUNDS_DIST(assailant, affecting) > 0) )
 			qdel(src)
 			return 1
 
@@ -675,7 +675,7 @@
 			qdel(src)
 			return 1
 
-		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && get_dist(assailant, affecting) > 1) )
+		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && BOUNDS_DIST(assailant, affecting) > 0) )
 			qdel(src)
 			return 1
 
@@ -830,11 +830,13 @@
 /obj/item/grab/block/handle_throw(mob/living/user, atom/target)
 	if (isturf(user.loc) && target)
 		var/turf/T = user.loc
-		if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying) && can_act(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE))
+		var/target_dir = get_dir(user,target)
+		if(!target_dir)
+			target_dir = user.dir
+		if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying) && can_act(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE) && target_dir)
+
 			user.changeStatus("weakened", max(user.movement_delay()*2, 0.5 SECONDS))
 			user.force_laydown_standup()
-
-			var/target_dir = get_dir(user,target)
 			var/turf/target_turf = get_step(user, target_dir)
 			if (!target_turf)
 				target_turf = T
@@ -842,7 +844,7 @@
 			var/mob/living/dive_attack_hit = null
 
 			for (var/mob/living/L in target_turf)
-				if (user == L) continue
+				if (user == L || isintangible(L)) continue
 				dive_attack_hit = L
 				break
 
@@ -862,7 +864,10 @@
 				for (var/mob/O in AIviewers(user))
 					O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
 				logTheThing("combat", user, dive_attack_hit, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
-			else
+
+			step_to(user, target_turf)
+
+			if(!dive_attack_hit && get_turf(user) == target_turf)
 				for (var/mob/O in AIviewers(user))
 					O.show_message("<span class='alert'><B>[user] slides to the ground!</B></span>", 1, group = "resist")
 
@@ -897,7 +902,6 @@
 						if (!item_num_to_throw)
 							break
 
-			step_to(user, target_turf)
 
 	user.u_equip(src)
 

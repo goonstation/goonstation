@@ -497,7 +497,7 @@
 			return
 /*
 		else if (issilicon(user))
-			if (get_dist(src, user) <= 1)
+			if (BOUNDS_DIST(src, user) == 0)
 				return src.Attackhand(user)
 */
 		else

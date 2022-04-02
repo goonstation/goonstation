@@ -120,9 +120,15 @@
 	New()
 		START_TRACKING
 		src.create_products()
+
+		#ifdef UPSCALED_MAP
+		for (var/datum/data/vending_product/product in src.product_list)
+			product.product_amount *= 4
+		#endif
+
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", "vendinput")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", "vendname")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", .proc/vendinput)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", .proc/vendname)
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(0.6)
@@ -166,11 +172,11 @@
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the output target for [src].</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>[src] is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -199,7 +205,7 @@
 		if (!src.output_target)
 			return src.loc
 
-		if (get_dist(src.output_target,src) > 1)
+		if (BOUNDS_DIST(src.output_target, src) > 0)
 			src.output_target = null
 			return src.loc
 
@@ -796,7 +802,7 @@
 //		src.icon_state = "[initial(icon_state)]-fall"
 //		SPAWN(2 SECONDS)
 //			src.icon_state = "[initial(icon_state)]-fallen"
-	if (istype(victim) && vicTurf && (get_dist(vicTurf, src) <= 1))
+	if (istype(victim) && vicTurf && (BOUNDS_DIST(vicTurf, src) == 0))
 		victim.changeStatus("weakened", 30 SECONDS)
 		src.visible_message("<b><font color=red>[src.name] tips over onto [victim]!</font></b>")
 		victim.force_laydown_standup()
@@ -839,7 +845,12 @@
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /obj/machinery/vending/proc/throw_item(var/item_name_to_throw = "")
-	var/mob/living/target = locate() in view(7,src)
+	var/mob/living/target = null
+	for (var/mob/living/mob in view(7,src))
+		if (!isintangible(mob))
+			target = mob
+			break
+
 	if(!target)
 		return null
 
@@ -1007,7 +1018,7 @@
 
 	onUpdate()
 		..()
-		if(!IN_RANGE(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
+		if(!(BOUNDS_DIST(src.owner, src.vendor) == 0) || src.vendor == null || src.owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1017,7 +1028,7 @@
 
 	onStart()
 		..()
-		if(!IN_RANGE(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
+		if(!(BOUNDS_DIST(src.owner, src.vendor) == 0) || src.vendor == null || src.owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1432,6 +1443,9 @@
 /obj/machinery/vending/mechanics/attackby(obj/item/W as obj, mob/user as mob)
 	if(!istype(W,/obj/item/mechanics))
 		..()
+		return
+	if (W.cant_drop)
+		boutput(user, "<span class='alert'>You can't put [W] into a vending machine while it's attached to you!</span>")
 		return
 	for(var/datum/data/vending_product/product in product_list)
 		if(W.type == product.product_path)
@@ -1920,6 +1934,9 @@
 			UpdateOverlays(null, "screen", 0, 1)
 
 	proc/addProduct(obj/item/target, mob/user)
+		if (target.cant_drop)
+			boutput(user, "<span class='alert'>You can't put [target] into a vending machine while it's attached to you!</span>")
+			return
 		var/obj/item/storage/targetContainer = target
 		if (!istype(targetContainer))
 			productListUpdater(target, user)

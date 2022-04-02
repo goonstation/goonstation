@@ -297,7 +297,7 @@
 	I.icon = 'icons/obj/items/card.dmi'
 	synd_mob.equip_if_possible(I, synd_mob.slot_wear_id)
 
-	var/obj/item/implant/microbomb/M = new /obj/item/implant/microbomb(synd_mob)
+	var/obj/item/implant/revenge/microbomb/M = new /obj/item/implant/revenge/microbomb(synd_mob)
 	M.implanted = 1
 	synd_mob.implant.Add(M)
 	M.implanted(synd_mob)

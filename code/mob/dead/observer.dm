@@ -434,12 +434,11 @@
 		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 
-	if(!ticker || !ticker.centralized_ai_laws)
+	if(!ticker || !ticker.ai_law_rack_manager)
 		boutput( src, "Abort abort abort! No laws! No laws!!" )
 		return
 
-	boutput( src, "<b>AI laws:</b>" )
-	ticker.centralized_ai_laws.show_laws(usr)
+	boutput( src, ticker.ai_law_rack_manager.format_for_logs() )
 
 
 /mob/dead/observer/Logout()

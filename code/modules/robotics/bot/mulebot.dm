@@ -249,7 +249,7 @@
 			else
 				dat += "The bot is in maintenance mode and cannot be controlled.<BR>"
 
-		if (user.client.tooltipHolder)
+		if (user.client?.tooltipHolder)
 			user.client.tooltipHolder.showClickTip(src, list(
 				"params" = params,
 				"title" = "Mulebot [suffix ? "([suffix])" : ""] controls",
@@ -417,7 +417,7 @@
 		if(user.stat)
 			return
 
-		if (!on || !istype(C)|| C.anchored || get_dist(user, src) > 1 || get_dist(src,C) > 1 )
+		if (!on || !istype(C)|| C.anchored || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(src, C) > 0 )
 			return
 
 		if(load)
@@ -430,7 +430,7 @@
 		if (istype(C, /atom/movable/screen) || C.anchored)
 			return
 
-		if(get_dist(C, src) > 1 || load || !on)
+		if(BOUNDS_DIST(C, src) > 0 || load || !on)
 			return
 		mode = 1
 

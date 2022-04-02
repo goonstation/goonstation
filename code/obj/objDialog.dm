@@ -59,7 +59,7 @@ var/global/list/objects_using_dialogs
 		for(var/x in clients_operating)
 			C = x
 			if (C?.mob)
-				if (get_dist(C.mob,src) <= 1)
+				if (BOUNDS_DIST(C.mob, src) == 0)
 					src.Attackhand(C.mob)
 				else
 					if (C.mob.mob_flags & USR_DIALOG_UPDATES_RANGE)
@@ -73,7 +73,7 @@ var/global/list/objects_using_dialogs
 		for(var/x in clients_operating)
 			C = x
 			if (C?.mob)
-				if (get_dist(C.mob,src) <= 1)
+				if (BOUNDS_DIST(C.mob, src) == 0)
 					src.Attackhand(C.mob)
 				else
 					src.remove_dialog(C.mob)
@@ -83,7 +83,7 @@ var/global/list/objects_using_dialogs
 /obj/item/proc/updateSelfDialogFromTurf()	//It's weird, yes. only used for spy stickers as of now
 	if (length(clients_operating))
 		for(var/client/C in clients_operating)
-			if (C.mob && get_dist(C.mob,src) <= 1)
+			if (C.mob && BOUNDS_DIST(C.mob, src) == 0)
 				src.attack_self(C.mob)
 
 		for_by_tcl(M, /mob/living/silicon/ai)
@@ -149,7 +149,7 @@ var/global/list/objects_using_dialogs
 	if (length(clients_operating))
 		for(var/client/C in clients_operating)
 			if (C.mob)
-				if (get_dist(C.mob,src) <= 1)
+				if (BOUNDS_DIST(C.mob, src) == 0)
 					src.interacted(C.mob)
 				else if (issilicon(C.mob) || isAI(C.mob))
 					src.interacted(C.mob)
@@ -160,7 +160,7 @@ var/global/list/objects_using_dialogs
 	if (length(clients_operating))
 		for(var/client/C in clients_operating)
 			if (C.mob)
-				if (get_dist(C.mob,src) <= 1)
+				if (BOUNDS_DIST(C.mob, src) == 0)
 					src.interacted(C.mob)
 				else
 					src.remove_dialog(C.mob)
@@ -172,7 +172,7 @@ var/global/list/objects_using_dialogs
 	if (length(clients_operating))
 		for(var/client/C in clients_operating)
 			if (C.mob)
-				if (get_dist(C.mob,src) <= 1)
+				if (BOUNDS_DIST(C.mob, src) == 0)
 					src.openTrade(C.mob)
 				else if (issilicon(C.mob) || isAI(C.mob))
 					src.openTrade(C.mob)
