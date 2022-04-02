@@ -579,6 +579,10 @@ butcher
 				var/obj/item/paper_bin/P = I
 				if(P.amount <= 0)
 					continue // do not try to fetch paper out of an empty paper bin forever
+			if(istype(I,/obj/item/card_group))
+				if(I.loc == holder.owner) //checks hand for card to allow taking from pockets/storage
+					holder.owner.u_equip(I)
+				holder.owner.put_in_hand_or_drop(I)
 			// if we can get a valid path to the target, include it for consideration
 			. += I
 	. = get_path_to(holder.owner, ., 40, 1)
