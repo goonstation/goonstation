@@ -117,7 +117,7 @@
 		name = initial(name)
 
 		if (istype(src.material))
-			health_max = material.hasProperty("density") ? round(material.getProperty("density") * 2) : health_max
+			health_max = material.hasProperty("density") ? round(material.getProperty("density") * 3) : health_max
 			health = health_max
 			cut_resist = material.hasProperty("hard") ? material.getProperty("hard")*2 : cut_resist
 			blunt_resist = material.hasProperty("density") ? material.getProperty("density")*2 : blunt_resist
@@ -129,8 +129,6 @@
 				opacity = 1 // useless opaque window
 			else
 				opacity = 0
-
-			name = "[getQualityName(material.quality)] [material.name] " + name
 
 		if (istype(reinforcement))
 			if(reinforcement.hasProperty("density"))
@@ -180,8 +178,6 @@
 			return
 
 		amount = get_damage_after_percentage_based_armor_reduction(cut_resist,amount)
-		if (src.quality < 10)
-			amount += rand(1,3)
 
 		if (amount <= 0)
 			return
@@ -195,8 +191,6 @@
 			return
 
 		amount = get_damage_after_percentage_based_armor_reduction(stab_resist,amount)
-		if (src.quality < 10)
-			amount += rand(1,3)
 
 		if (amount <= 0)
 			return
