@@ -1,5 +1,9 @@
 
 (t)sat apr 02 22
+(u)Flaborized
+(p)7952
+(e)|
+(*)LSD now has a different, unique color-changing animation when in your system.
 (u)Flappybat
 (p)7929
 (e)⚖|balance
