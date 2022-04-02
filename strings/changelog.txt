@@ -2,6 +2,12 @@
 (t)sat apr 02 22
 (u)aloe
 (+)Pods now "eject" you on exploding. This also applies to the SEED.
+(u)Cogwerks
+(e)🗺🎨|mapping, sprites
+(*)Revising positions of stuff in the debris field and the dining level
+(*)Hemera, zombie-roid, drone carrier, time ship, and flock ship moved around 
+(*)Martian derelict moved to dining level
+(*)Added more background space planets and moons to the imagined plasma giant orbits 
 (u)Flappybat
 (p)7950
 (e)🆕|feature
