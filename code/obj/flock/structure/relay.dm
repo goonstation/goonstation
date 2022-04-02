@@ -17,6 +17,8 @@
 	pixel_y = -64
 	bound_x = -64
 	bound_y = -64
+	layer = EFFECTS_LAYER_BASE //big spooky thing needs to render over everything
+	plane = PLANE_NOSHADOW_ABOVE
 	var/last_time_sound_played_in_seconds = 0
 	var/sound_length_in_seconds = 27
 	var/charge_time_length = 600 // also in seconds
