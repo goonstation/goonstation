@@ -1,5 +1,14 @@
 
 (t)sat apr 02 22
+(u)Flappybat
+(p)7950
+(e)🆕|feature
+(*)Battle Royale now forces a shuttle when five players remain. A deadly storm will hit the entire station, finish everyone else off or escape on the shuttle to survive!
+(+)Battle Royale now prevents you leaving the station level edges, be careful spacing players as they may return.
+(u)NightmareChamillian
+(p)7694
+(e)⚖|balance
+(*)Deconstruction devices can now be used in surgeries- at your own personal risk
 (u)Flaborized
 (p)7952
 (e)|
@@ -8,9 +17,6 @@
 (p)7929
 (e)⚖|balance
 (+)Spellshield now protects wizards from the syndicate saw, butcher knife and katana.
-(t)fri apr 01 22
-(u)pali
-(*)Due to increased server playercount we have decided to introduce some brand-new large maps to accomodate this many people!
 (t)thu mar 31 22
 (u)Laboredih123 & pgmzeta
 (p)7928
