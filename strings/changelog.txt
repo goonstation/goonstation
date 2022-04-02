@@ -1,4 +1,9 @@
 
+(t)sat apr 02 22
+(u)Flappybat
+(p)7929
+(e)⚖|balance
+(+)Spellshield now protects wizards from the syndicate saw, butcher knife and katana.
 (t)fri apr 01 22
 (u)pali
 (*)Due to increased server playercount we have decided to introduce some brand-new large maps to accomodate this many people!
