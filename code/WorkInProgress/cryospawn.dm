@@ -1,16 +1,7 @@
 #define CRYOSLEEP_DELAY 5 MINUTES
 #define CRYOTRON_MESSAGE_DELAY 3 SECONDS
 
-/obj/cryotron_spawner
-	New()
-		..()
-		SPAWN(1 SECOND)
-#ifdef RP_MODE
-			new /obj/cryotron(src.loc)
-#endif
-			qdel(src)
-
-//Special destiny spawn point doodad
+//Latejoin spawn point thing, for gracefully leaving rounds. Also replaces the arrivals shuttle on some maps.
 /obj/cryotron
 	name = "industrial cryogenic sleep unit"
 	desc = "The terminus of a large underfloor cryogenic storage complex."
@@ -261,8 +252,7 @@
 						time_left_message = "[minutes] minute[s_es(minutes)] and [time_left_message]"
 
 					boutput(user, "<b>You must wait at least [time_left_message] until you can leave cryosleep.</b>")
-					user.last_cryotron_message = ticker.round_elapsed_ticks
-					return 0
+					return FALSE
 		if (alert(user, "Would you like to leave cryogenic storage?", "Confirmation", "Yes", "No") == "No")
 			return 0
 		if (user.loc != src || !stored_mobs.Find(user))
@@ -330,7 +320,7 @@
 		return FALSE
 
 	relaymove(var/mob/user as mob, dir)
-		if ((user.last_cryotron_message + CRYOTRON_MESSAGE_DELAY) > ticker.round_elapsed_ticks)
+		if (ON_COOLDOWN(user, "cryotron_move", CRYOTRON_MESSAGE_DELAY))
 			return ..()
 		if (!exit_prompt(user))
 			return ..()
