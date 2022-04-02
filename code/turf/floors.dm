@@ -179,6 +179,7 @@
 		..()
 		if (prob(20))
 			src.icon_state = pick("panelscorched", "platingdmg1", "platingdmg2", "platingdmg3")
+			src.UpdateIcon()
 		if (prob(2))
 			make_cleanable(/obj/decal/cleanable/dirt,src)
 		if (prob(2))
@@ -208,6 +209,7 @@
 		..()
 		if (prob(20))
 			src.icon_state = pick("panelscorched", "platingdmg1", "platingdmg2", "platingdmg3")
+			src.UpdateIcon()
 
 
 /////////////////////////////////////////
@@ -1326,6 +1328,7 @@ DEFINE_FLOORS(techfloor/green,
 /turf/simulated/floor/grassify()
 	src.icon = 'icons/turf/outdoors.dmi'
 	src.icon_state = "grass"
+	src.UpdateIcon()
 	if(prob(30))
 		src.icon_state += pick("_p", "_w", "_b", "_y", "_r", "_a")
 	src.name = "grass"
@@ -1477,6 +1480,7 @@ DEFINE_FLOORS(grasslush/thin,
 // metal foam floors
 
 /turf/simulated/floor/metalfoam/update_icon()
+	. = ..()
 	if(metal == 1)
 		icon_state = "metalfoam"
 	else
@@ -1573,7 +1577,7 @@ DEFINE_FLOORS(grasslush/thin,
 		return
 	if (!user.canmove || user.restrained())
 		return
-	if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
+	if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0))
 		//get rid of click delay since we didn't do anything
 		user.next_click = world.time
 		return
@@ -1608,6 +1612,7 @@ DEFINE_FLOORS(grasslush/thin,
 		name_old = name
 	src.name = "plating"
 	src.icon_state = "plating"
+	src.UpdateIcon()
 	setIntact(FALSE)
 	broken = 0
 	burnt = 0
@@ -1640,6 +1645,7 @@ DEFINE_FLOORS(grasslush/thin,
 	else
 		src.icon_state = "platingdmg[pick(1,2,3)]"
 		broken = 1
+	src.UpdateIcon()
 
 /turf/simulated/floor/proc/burn_tile()
 	if(broken || burnt || reinforced) return
@@ -1649,6 +1655,7 @@ DEFINE_FLOORS(grasslush/thin,
 		src.icon_state = "floorscorched[pick(1,2)]"
 	else
 		src.icon_state = "panelscorched"
+	src.UpdateIcon()
 	burnt = 1
 
 /turf/simulated/floor/shuttle/burn_tile()
@@ -1664,6 +1671,7 @@ DEFINE_FLOORS(grasslush/thin,
 		icon_state = icon_old
 	else
 		icon_state = "floor"
+	src.UpdateIcon()
 	if (name_old)
 		name = name_old
 	levelupdate()
@@ -1929,7 +1937,7 @@ DEFINE_FLOORS(grasslush/thin,
 		if (K)
 			K.Attackby(C, user, params)
 
-	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1)) // this seemed like the neatest way to make attack_hand still trigger when needed
+	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0)) // this seemed like the neatest way to make attack_hand still trigger when needed
 		src?.material?.triggerOnHit(src, C, user, 1)
 	else
 		return attack_hand(user)
@@ -1942,7 +1950,7 @@ DEFINE_FLOORS(grasslush/thin,
 		if(I)
 			if(istype(I,/obj/item/cable_coil))
 				var/obj/item/cable_coil/C = I
-				if((get_dist(user,F)<2) && (get_dist(user,src)<2))
+				if(BOUNDS_DIST(user,F) == 0 && BOUNDS_DIST(user,src) == 0)
 					C.move_callback(user, F, src)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////

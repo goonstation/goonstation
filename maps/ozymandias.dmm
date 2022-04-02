@@ -149,7 +149,6 @@
 /area/station/crew_quarters/hop)
 "acL" = (
 /obj/lattice{
-	dir = 2;
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/runway_light/delay2,
@@ -161,9 +160,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "adw" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2/middle{
@@ -320,7 +317,6 @@
 	})
 "afs" = (
 /obj/lattice{
-	dir = 2;
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/runway_light/delay3,
@@ -1308,13 +1304,6 @@
 /obj/item/clothing/suit/cardboard_box,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quartersA)
-"ath" = (
-/obj/lattice{
-	dir = 2;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/space)
 "ati" = (
 /obj/item/device/radio/intercom,
 /turf/simulated/floor/yellowblack{
@@ -1550,7 +1539,6 @@
 	})
 "awx" = (
 /obj/lattice{
-	dir = 2;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
@@ -1630,7 +1618,6 @@
 /area/station/hallway/primary/south)
 "axi" = (
 /obj/lattice{
-	dir = 2;
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/runway_light/delay5,
@@ -2828,7 +2815,6 @@
 /area/station/security/brig)
 "aPR" = (
 /obj/lattice{
-	dir = 2;
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/runway_light,
@@ -3137,9 +3123,7 @@
 /turf/simulated/floor/stairs/wide/other{
 	dir = 8
 	},
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "aUa" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -5055,14 +5039,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
-"bxy" = (
-/obj/lattice{
-	dir = 2;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/light/runway_light/delay4,
-/turf/space,
-/area/space)
 "bxD" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 8
@@ -5167,9 +5143,7 @@
 	pixel_y = 20
 	},
 /turf/simulated/floor/grass,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "byk" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -5430,8 +5404,7 @@
 /area/station/hallway/primary/east/restroom)
 "bCi" = (
 /obj/stool/chair/comfy{
-	dir = 1;
-	icon_state = "chair_comfy"
+	dir = 1
 	},
 /obj/cable{
 	d1 = 1;
@@ -5497,7 +5470,6 @@
 	operating = 1
 	},
 /obj/lattice{
-	dir = 2;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
@@ -5636,7 +5608,6 @@
 	})
 "bFd" = (
 /obj/lattice{
-	dir = 2;
 	icon_state = "lattice-dir"
 	},
 /obj/disposalpipe/segment/transport,
@@ -5867,7 +5838,6 @@
 /area/station/hallway/secondary/west)
 "bIq" = (
 /obj/lattice{
-	dir = 2;
 	icon_state = "lattice-dir"
 	},
 /obj/disposalpipe/segment/transport,
@@ -5927,8 +5897,7 @@
 /area/station/crew_quarters/jazz)
 "bJm" = (
 /obj/stool/chair{
-	dir = 8;
-	icon_state = "chair"
+	dir = 8
 	},
 /obj/machinery/alarm{
 	dir = 8;
@@ -10506,9 +10475,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "cYW" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -12572,9 +12539,7 @@
 /turf/simulated/floor/stairs/wide/other{
 	dir = 8
 	},
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "dDs" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
@@ -13090,9 +13055,7 @@
 /area/station/hallway/secondary/north)
 "dKB" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "dKE" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor,
@@ -14064,9 +14027,7 @@
 "dXs" = (
 /obj/machinery/chem_dispenser/alcohol,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "dXE" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4
@@ -16348,9 +16309,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "eFr" = (
 /obj/table/reinforced/auto,
 /obj/machinery/networked/printer{
@@ -16437,7 +16396,6 @@
 "eGi" = (
 /obj/machinery/light/runway_light/delay2,
 /obj/lattice{
-	dir = 2;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
@@ -19187,9 +19145,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "fwO" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -19396,9 +19352,7 @@
 	},
 /obj/machinery/light,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "fzy" = (
 /obj/table/round/auto,
 /obj/item/wrench,
@@ -19772,9 +19726,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "fFi" = (
 /obj/machinery/light/emergency{
 	dir = 8;
@@ -20932,7 +20884,6 @@
 /area/station/maintenance/west)
 "fXg" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -21567,9 +21518,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "ggi" = (
 /obj/table/auto,
 /obj/item/storage/box/stma_kit,
@@ -21884,9 +21833,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "gjr" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -22513,8 +22460,7 @@
 	})
 "gsR" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10;
-	icon_state = "ringrope"
+	dir = 10
 	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/hallway/secondary/construction{
@@ -22525,9 +22471,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "gtj" = (
 /obj/machinery/portable_atmospherics/pump,
 /obj/machinery/camera{
@@ -22886,8 +22830,7 @@
 /area/station/engine/elect)
 "gwt" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6;
-	icon_state = "ringrope"
+	dir = 6
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -24137,9 +24080,7 @@
 	},
 /obj/item/device/radio/intercom/science,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "gMQ" = (
 /obj/stool/chair/couch{
 	desc = "It's comfortable, but has an aura of unease about it, like somebody's watching you the moment you sit down.";
@@ -26568,9 +26509,7 @@
 /turf/simulated/floor/stairs/wide{
 	dir = 8
 	},
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "htM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -26675,9 +26614,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/grey,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "huQ" = (
 /obj/table/auto,
 /obj/item/paper_bin,
@@ -27862,8 +27799,7 @@
 	name = "autoname - SS13"
 	},
 /turf/simulated/floor/green/side{
-	dir = 9;
-	icon_state = "green"
+	dir = 9
 	},
 /area/station/hydroponics/bay)
 "hNP" = (
@@ -28741,7 +28677,6 @@
 /area/station/engine/coldloop)
 "ibr" = (
 /obj/lattice{
-	dir = 2;
 	icon_state = "lattice-dir"
 	},
 /obj/disposalpipe/segment/transport,
@@ -29286,12 +29221,10 @@
 /area/station/crew_quarters/quartersA)
 "ikV" = (
 /obj/machinery/door/poddoor/pyro{
-	dir = 2;
 	id = "backup_plan";
 	name = "hatch"
 	},
 /obj/machinery/mass_driver{
-	dir = 2;
 	id = "backup_plan"
 	},
 /turf/simulated/floor/grime,
@@ -30084,9 +30017,7 @@
 	},
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "iyz" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4;
@@ -31357,9 +31288,7 @@
 /area/station/security/secoffquarters)
 "iPP" = (
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "iPS" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	name = "Engineering";
@@ -31569,9 +31498,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/grass,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "iUg" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -32072,9 +31999,7 @@
 	name = "Heisenbee's Office Shutters"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "jcD" = (
 /obj/cable{
 	d2 = 4;
@@ -33146,9 +33071,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "jrg" = (
 /obj/cable{
 	d1 = 4;
@@ -33846,9 +33769,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "jzA" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -34366,9 +34287,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "jHs" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/specialroom/chapel{
@@ -39757,9 +39676,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "lgA" = (
 /turf/simulated/floor/engine/caution/east,
 /area/station/mining/refinery)
@@ -41432,9 +41349,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "lDB" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -43524,9 +43439,7 @@
 /turf/simulated/floor,
 /area/station/security/checkpoint/east)
 "mdr" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "mdw" = (
 /obj/table/auto,
@@ -44062,9 +43975,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/grass,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "mll" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/wood/seven,
@@ -44293,9 +44204,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "moh" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -44406,7 +44315,6 @@
 	dir = 4
 	},
 /obj/lattice{
-	dir = 2;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
@@ -44473,9 +44381,7 @@
 	name = "Heisenbee's Office Shutters"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "mqr" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
@@ -46768,9 +46674,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "mYy" = (
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -47424,9 +47328,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 8
 	},
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "nin" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4
@@ -47568,7 +47470,6 @@
 /area/station/security/hos)
 "nkn" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -48418,8 +48319,7 @@
 /obj/window/auto/reinforced/indestructible,
 /turf/simulated/floor{
 	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
+	icon = 'icons/turf/shuttle.dmi'
 	},
 /area/shuttle/arrival/station)
 "nzt" = (
@@ -48828,9 +48728,7 @@
 	name = "wooden table"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "nEx" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating,
@@ -49548,9 +49446,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 8
 	},
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "nOs" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -49742,9 +49638,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 8
 	},
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "nQc" = (
 /obj/stool/chair/office/green{
 	dir = 8
@@ -50246,9 +50140,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "nXm" = (
 /turf/simulated/floor/yellowblack{
 	dir = 8
@@ -51354,7 +51246,6 @@
 "omd" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	pixel_y = -1
 	},
 /turf/simulated/floor/industrial,
@@ -52791,9 +52682,7 @@
 /turf/simulated/floor/stairs/wide{
 	dir = 8
 	},
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "oGu" = (
 /obj/machinery/power/smes{
 	chargelevel = 10000;
@@ -52973,9 +52862,7 @@
 "oIF" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "oII" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor/south,
 /obj/cable{
@@ -53439,9 +53326,7 @@
 /area/station/maintenance/inner/west)
 "oOe" = (
 /turf/simulated/floor/grey,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "oOA" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -53660,9 +53545,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "oSh" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -55996,9 +55879,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "pBv" = (
 /obj/cable{
 	d1 = 1;
@@ -58117,9 +57998,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "qhr" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -58681,9 +58560,7 @@
 	},
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "qqF" = (
 /obj/table/auto,
 /obj/item/storage/box/cablesbox,
@@ -58903,9 +58780,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "qtv" = (
 /obj/machinery/atmospherics/valve/notify_admins/vertical{
 	name = "Air Reserve (Lower West Hallway)"
@@ -59154,9 +59029,7 @@
 	},
 /obj/critter/domestic_bee/heisenbee,
 /turf/simulated/floor/grass,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "qxi" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/engine/caution/corner{
@@ -60218,9 +60091,7 @@
 "qMQ" = (
 /obj/storage/secure/filing_cabinet,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "qMS" = (
 /obj/decal/cleanable/dirt,
 /obj/submachine/chef_sink{
@@ -60543,7 +60414,6 @@
 	})
 "qPX" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -60845,8 +60715,7 @@
 /area/station/ai_monitored/armory)
 "qUf" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6;
-	icon_state = "ringrope"
+	dir = 6
 	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/hallway/secondary/construction{
@@ -62539,7 +62408,6 @@
 /area/station/hallway/secondary/exit)
 "rse" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -63035,8 +62903,7 @@
 /area/station/crew_quarters/catering)
 "rzj" = (
 /obj/stool/chair{
-	dir = 8;
-	icon_state = "chair"
+	dir = 8
 	},
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/industrial,
@@ -63429,7 +63296,6 @@
 /area/listeningpost)
 "rDG" = (
 /obj/lattice{
-	dir = 2;
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -63779,7 +63645,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/autoname_north,
+/obj/machinery/power/apc/autoname_north/noaicontrol,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -64706,9 +64572,7 @@
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "rUG" = (
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/north)
@@ -66233,7 +66097,6 @@
 /area/station/crew_quarters/quartersA)
 "spC" = (
 /obj/lattice{
-	dir = 2;
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -66435,8 +66298,7 @@
 "ssu" = (
 /obj/decal/cleanable/cobweb2,
 /obj/stool/chair{
-	dir = 8;
-	icon_state = "chair"
+	dir = 8
 	},
 /obj/landmark/start{
 	name = "Clown"
@@ -68940,9 +68802,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "sXK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -71968,9 +71828,7 @@
 /turf/simulated/floor/bot/caution,
 /area/station/maintenance/solar/south)
 "tMs" = (
-/obj/machinery/the_singularitygen{
-	bhole = 0
-	},
+/obj/machinery/the_singularitygen,
 /turf/simulated/floor/airless/circuit,
 /area/space)
 "tMz" = (
@@ -73079,7 +72937,6 @@
 /area/station/medical/medbay/lobby)
 "uaY" = (
 /obj/machinery/mass_driver{
-	dir = 2;
 	id = "backup_plan"
 	},
 /turf/simulated/floor/grime,
@@ -73830,8 +73687,7 @@
 /area/station/crew_quarters/quartersA)
 "umg" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10;
-	icon_state = "ringrope"
+	dir = 10
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -77703,9 +77559,7 @@
 /area/station/turret_protected/ai)
 "viL" = (
 /turf/simulated/floor/grass,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "viO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -81081,9 +80935,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "was" = (
 /obj/stool/chair/office/yellow{
 	dir = 4
@@ -84746,9 +84598,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "wUC" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -85367,9 +85217,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "xcI" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -86537,8 +86385,7 @@
 /area/station/storage/emergency2)
 "xru" = (
 /obj/stool/chair{
-	dir = 8;
-	icon_state = "chair"
+	dir = 8
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -88396,7 +88243,6 @@
 /area/station/hallway/primary/east)
 "xNz" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -90099,9 +89945,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "yjM" = (
 /turf/simulated/floor/grey/side{
 	dir = 8
@@ -90208,9 +90052,7 @@
 	},
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/hor{
-	name = "Research Director's Office"
-	})
+/area/station/crew_quarters/hor)
 "ylE" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -111491,85 +111333,85 @@ awu
 agm
 akv
 aeX
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 qTl
-ath
-ath
-ath
+ydz
+ydz
+ydz
 qTl
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 dze
 aTL
 twi
@@ -111882,108 +111724,108 @@ asq
 uVD
 ydz
 ydz
-ath
-ath
-ath
-ath
-ath
-ath
-ydz
-ath
-ath
-qTl
-ath
-ath
-ath
-ydz
-ath
-qTl
-ath
-ath
-ath
-qTl
-ath
-ath
 ydz
 ydz
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 qTl
 ydz
 ydz
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
 qTl
-ath
-ath
+ydz
+ydz
+ydz
 qTl
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+qTl
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+qTl
+ydz
+ydz
+qTl
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 qTl
 qTl
 dze
@@ -112428,27 +112270,27 @@ bIq
 bIq
 ibr
 iAW
-ath
+ydz
 wCE
-ath
-ath
-ath
+ydz
+ydz
+ydz
 wCE
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 qTl
 wbX
 ucQ
@@ -112458,24 +112300,24 @@ ucQ
 ucQ
 wbX
 qTl
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 avG
 tSM
 uVD
@@ -112515,78 +112357,78 @@ xCp
 xCp
 ydz
 ydz
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 wCE
-ath
-ath
+ydz
+ydz
 wCE
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 tSM
 tSM
 uVD
@@ -112788,8 +112630,8 @@ aJu
 fdT
 ydz
 ydz
-ath
-ath
+ydz
+ydz
 sTI
 yeC
 yeC
@@ -114600,8 +114442,8 @@ aJu
 fdT
 ydz
 ydz
-ath
-ath
+ydz
+ydz
 sTI
 yeC
 yeC
@@ -116110,8 +115952,8 @@ aJu
 fdT
 ydz
 ydz
-ath
-ath
+ydz
+ydz
 sTI
 yeC
 yeC
@@ -117620,8 +117462,8 @@ aJu
 fdT
 ydz
 ydz
-ath
-ath
+ydz
+ydz
 sTI
 yeC
 yeC
@@ -118218,9 +118060,9 @@ xGX
 aJu
 aJu
 fdT
-ath
+ydz
 bCJ
-ath
+ydz
 xGX
 aJu
 aJu
@@ -118920,21 +118762,21 @@ vHi
 yhK
 rCI
 fXG
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 wCE
-ath
-ath
+ydz
+ydz
 xGX
 aJu
 aJu
@@ -119376,7 +119218,7 @@ aJu
 iBP
 aJu
 fdT
-ath
+ydz
 mFJ
 lhp
 lLK
@@ -119829,18 +119671,18 @@ qTJ
 aTb
 dYM
 qTl
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
 qTl
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
 wCE
-ath
-ath
+ydz
+ydz
 xGX
 aJu
 aJu
@@ -120438,8 +120280,8 @@ aJu
 aJu
 aJu
 fdT
-ath
-ath
+ydz
+ydz
 wlq
 wLP
 xGX
@@ -121344,8 +121186,8 @@ fkW
 ucM
 wfZ
 dlK
-ath
-ath
+ydz
+ydz
 vaI
 vaI
 xGX
@@ -121792,7 +121634,7 @@ aJu
 iBP
 aJu
 fdT
-ath
+ydz
 tYO
 tYO
 tYO
@@ -121946,7 +121788,7 @@ wfZ
 xfK
 pAW
 wfZ
-ath
+ydz
 xGX
 aJu
 aJu
@@ -122550,7 +122392,7 @@ rJM
 aVA
 eeH
 wfZ
-ath
+ydz
 xGX
 aJu
 aJu
@@ -122962,43 +122804,43 @@ aJu
 aJu
 aJu
 fdT
-ath
-ath
+ydz
+ydz
 wCE
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 iBY
-ath
+ydz
 nEV
 khR
 khR
@@ -123154,7 +122996,7 @@ wfZ
 wfZ
 wfZ
 ygY
-ath
+ydz
 xGX
 aJu
 aJu
@@ -124472,43 +124314,43 @@ aJu
 aJu
 aJu
 fdT
-ath
-ath
+ydz
+ydz
 wCE
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 iBY
-ath
+ydz
 nEV
 xSn
 sDx
@@ -126013,10 +125855,10 @@ aJu
 xIa
 gLs
 eGi
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
 kQN
 wpW
 wpW
@@ -135948,10 +135790,10 @@ aJu
 aJu
 aJu
 fdT
-ath
-ath
+ydz
+ydz
 wCE
-ath
+ydz
 tDZ
 tFX
 tDZ
@@ -135963,12 +135805,12 @@ tFX
 tDZ
 tFX
 tDZ
-ath
+ydz
 qTl
-ath
-ath
+ydz
+ydz
 qTl
-ath
+ydz
 xZg
 aom
 leR
@@ -138666,10 +138508,10 @@ aJu
 aJu
 aJu
 fdT
-ath
-ath
+ydz
+ydz
 wCE
-ath
+ydz
 bNh
 bNh
 bNh
@@ -141082,10 +140924,10 @@ aJu
 aJu
 aJu
 fdT
-ath
-ath
+ydz
+ydz
 wCE
-ath
+ydz
 bNh
 bNh
 bNh
@@ -143498,10 +143340,10 @@ aJu
 aJu
 aJu
 fdT
-ath
-ath
+ydz
+ydz
 wCE
-ath
+ydz
 bNh
 bNh
 bNh
@@ -147118,21 +146960,21 @@ aJu
 aaq
 pqJ
 acL
-ath
+ydz
 afs
-ath
+ydz
 anl
-ath
+ydz
 axi
 wCE
 aPR
-ath
+ydz
 acL
-ath
+ydz
 afs
-ath
-bxy
-ath
+ydz
+kud
+ydz
 axi
 bZJ
 gwD
@@ -148635,20 +148477,20 @@ aoQ
 asq
 tSM
 atY
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 qTl
-ath
-ath
-ath
+ydz
+ydz
+ydz
 wCE
-ath
-ath
-ath
+ydz
+ydz
+ydz
 cVE
 dfs
 doZ
@@ -149541,20 +149383,20 @@ uVD
 atY
 wLP
 wLP
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 wCE
-ath
-ath
-ath
+ydz
+ydz
+ydz
 wCE
-ath
+ydz
 qTl
-ath
+ydz
 cVk
 dfO
 dfO
@@ -150447,20 +150289,20 @@ aJu
 avG
 aDD
 ygY
-ath
+ydz
 qTl
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
 ygY
-ath
-ath
-ath
+ydz
+ydz
+ydz
 ygY
-ath
+ydz
 ygY
-ath
+ydz
 cVk
 cVk
 cVk
@@ -152300,7 +152142,7 @@ mcT
 soW
 cKg
 eCw
-ath
+ydz
 smR
 oVX
 oVX
@@ -152904,7 +152746,7 @@ lBR
 mcm
 mDS
 hOd
-ath
+ydz
 pLR
 oWo
 tVv
@@ -154112,7 +153954,7 @@ xDC
 eCw
 eCw
 eCw
-ath
+ydz
 smR
 oZN
 pHP
@@ -154715,7 +154557,7 @@ kZs
 hud
 mgC
 mFW
-ath
+ydz
 qTl
 ygY
 uyh
@@ -155103,8 +154945,8 @@ mYy
 slf
 lHb
 xsJ
-ath
-ath
+ydz
+ydz
 wCE
 xGX
 aJu
@@ -156311,8 +156153,8 @@ jIV
 uQc
 oIy
 fzC
-ath
-ath
+ydz
+ydz
 wCE
 wLP
 asq
@@ -157131,7 +156973,7 @@ ldV
 hGI
 mgC
 cCn
-ath
+ydz
 ygY
 qTl
 gEd
@@ -157503,24 +157345,24 @@ wLP
 asq
 atY
 qTl
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 wCE
 dze
 atY
@@ -157736,7 +157578,7 @@ uFu
 tMz
 tMz
 tMz
-ath
+ydz
 uyh
 pbo
 pTB
@@ -158340,7 +158182,7 @@ lKB
 mjl
 mJA
 ucq
-ath
+ydz
 xWt
 ejN
 xhf
@@ -158944,7 +158786,7 @@ one
 hZy
 mLU
 wAh
-ath
+ydz
 jii
 peV
 pUL
@@ -159013,24 +158855,24 @@ uVD
 aDD
 avG
 ygY
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 ygY
 wLP
 tSM
@@ -159548,7 +159390,7 @@ rRq
 xuQ
 kSU
 tMz
-ath
+ydz
 gEd
 pfF
 pVz
@@ -160444,18 +160286,18 @@ aJu
 fdT
 mpE
 mpE
-ath
+ydz
 wCE
 mpE
 mpE
 wCE
-ath
+ydz
 mpE
 mpE
 wCE
-ath
-ath
-ath
+ydz
+ydz
+ydz
 bNR
 bNR
 qHq
@@ -161048,22 +160890,22 @@ aJu
 eYW
 rDG
 spC
-ath
+ydz
 ygY
 rDG
 spC
 ygY
-ath
+ydz
 rDG
 spC
 ygY
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
 wCE
-ath
-ath
+ydz
+ydz
 wCE
 bXM
 lVt
@@ -161968,8 +161810,8 @@ aJu
 aJu
 aJu
 fdT
-ath
-ath
+ydz
+ydz
 jIN
 smL
 xYZ
@@ -162874,8 +162716,8 @@ aJu
 aJu
 aJu
 fdT
-ath
-ath
+ydz
+ydz
 tpT
 sqv
 ssG
@@ -162884,7 +162726,7 @@ ssG
 ssG
 ssG
 sqv
-ath
+ydz
 wFl
 xfJ
 xYZ
@@ -163784,11 +163626,11 @@ aJu
 aJu
 tpT
 ssG
-ath
-ath
+ydz
+ydz
 tMs
-ath
-ath
+ydz
+ydz
 ssG
 aJu
 soc
@@ -164686,8 +164528,8 @@ aJu
 aJu
 aJu
 fdT
-ath
-ath
+ydz
+ydz
 tpT
 svH
 ssG
@@ -164696,7 +164538,7 @@ ssG
 ssG
 ssG
 svH
-ath
+ydz
 wGh
 xfJ
 xYZ
@@ -165592,8 +165434,8 @@ aJu
 aJu
 aJu
 fdT
-ath
-ath
+ydz
+ydz
 rGg
 xYZ
 xYZ
@@ -166845,22 +166687,22 @@ bYJ
 bYJ
 jya
 qNj
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
 ygY
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 wCE
 tSM
 atY
@@ -167059,68 +166901,68 @@ qTl
 avG
 aoQ
 aTL
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 wCE
-ath
-ath
+ydz
+ydz
 wCE
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 wCE
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 bYJ
 bYJ
 bYJ
@@ -167965,107 +167807,107 @@ asq
 brx
 avG
 wCE
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 ygY
-ath
-ath
+ydz
+ydz
 ygY
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 ygY
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 ygY
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 ygY
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 ygY
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 ygY
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
-ath
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
 tSM
 tSM
 aoX

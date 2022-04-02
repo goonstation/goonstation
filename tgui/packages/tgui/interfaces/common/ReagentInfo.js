@@ -1,4 +1,22 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author CodeJester (https://github.com/codeJester27)
+ * @license ISC
+ */
+
 import { Box, ColorBox, Flex, Icon, NoticeBox, Section, Tooltip } from '../../components';
+import { freezeTemperature } from './temperatureUtils';
+
+export const NoContainer = {
+  name: "No Beaker Inserted",
+  id: "inserted",
+  maxVolume: 100,
+  totalVolume: 0,
+  finalColor: "#000000",
+  temperature: freezeTemperature,
+  fake: true,
+};
 
 export const ReagentGraph = props => {
   const {
@@ -92,9 +110,11 @@ export const ReagentList = props => {
               />
               {`( ${reagent.volume}u ) ${reagent.name}`}
             </Flex.Item>
-            <Flex.Item nowrap>
-              {renderButtons(reagent)}
-            </Flex.Item>
+            {renderButtons && (
+              <Flex.Item nowrap>
+                {renderButtons(reagent)}
+              </Flex.Item>
+            )}
           </Flex>
         )) : (
           <Box color="label">

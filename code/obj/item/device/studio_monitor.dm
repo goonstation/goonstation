@@ -379,7 +379,7 @@
 		..()
 		icon_image.pixel_y += 8
 		icon_image.alpha = 200
-		if(get_dist(owner, instrument) > 1 || instrument == null || owner == null) //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
+		if(BOUNDS_DIST(owner, instrument) > 0 || instrument == null || owner == null) //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/M = owner

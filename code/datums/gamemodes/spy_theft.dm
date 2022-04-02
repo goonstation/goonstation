@@ -116,6 +116,7 @@
 
 		if (reward.item)
 			var/obj/item = new reward.item(pda_turf)
+			logTheThing("debug", user, null, "spy thief reward spawned: [item] at [log_loc(user)]")
 			user.show_text("Your PDA accepts the bounty and spits out [reward] in exchange.", "red")
 			reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
 			user.put_in_hand_or_drop(item)

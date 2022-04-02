@@ -50847,9 +50847,7 @@
 /turf/simulated/floor/plating,
 /area/AIsattele)
 "bYP" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "bYQ" = (
 /turf/simulated/wall/asteroid{
@@ -50875,9 +50873,7 @@
 	},
 /area/space)
 "bYV" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	icon_state = "nw1"
 	},
@@ -50901,9 +50897,7 @@
 	},
 /area/fuck/main)
 "bYZ" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	icon_state = "north1"
 	},
@@ -52324,9 +52318,7 @@
 /turf/simulated/wall/asteroid,
 /area/space)
 "cbU" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	icon_state = "west1"
 	},
@@ -52739,9 +52731,7 @@
 /turf/simulated/floor/plating,
 /area/engine/miningoutpost)
 "ccO" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	icon_state = "ise1"
 	},
@@ -52950,9 +52940,7 @@
 /turf/simulated/floor/plating,
 /area/fuck/main)
 "cdp" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	icon_state = "east1"
 	},

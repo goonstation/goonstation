@@ -96,7 +96,7 @@
 /obj/item/device/prox_sensor/attack_self(mob/user as mob)
 	if (user.stat || user.restrained() || user.lying)
 		return
-	if ((src in user) || (src.master && (src.master in user)) || get_dist(src, user) <= 1 && istype(src.loc, /turf))
+	if ((src in user) || (src.master && (src.master in user)) || BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf))
 		if (!src.master)
 			src.add_dialog(user)
 		else
@@ -120,7 +120,7 @@
 	..()
 	if (usr.stat || usr.restrained() || usr.lying)
 		return
-	if ((src in usr) || (src.master && (src.master in usr)) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
+	if ((src in usr) || (src.master && (src.master in usr)) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf)))
 		if (!src.master)
 			src.add_dialog(usr)
 		else

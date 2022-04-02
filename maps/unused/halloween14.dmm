@@ -658,9 +658,7 @@
 	},
 /area/space)
 "abq" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "abr" = (
 /obj/lattice{

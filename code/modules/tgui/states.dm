@@ -115,7 +115,7 @@
 	if (istype(src_object.loc, /obj/item/storage)) // If the object is in a storage item, like a backpack.
 		return UI_CLOSE
 
-	var/dist = GET_DIST(src_object, src)
+	var/dist = min(GET_DIST(src_object, src), bounds_dist(src_object, src) / world.icon_size)
 
 	if(viewcheck && !(dist <= 1 || (src_object in view(src)))) // If the object is obscured, close it.
 		return UI_CLOSE

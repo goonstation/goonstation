@@ -54,7 +54,7 @@
 		src.attacking = 1
 		src.visible_message("<span class='combat'><B>[src]</B> starts trying to eat [M]!</span>")
 		SPAWN(7 SECONDS)
-			if (get_dist(src, M) <= 1 && ((M:loc == target_lastloc)) && src.alive) // added a health check so dead maneaters stop eating people - cogwerks
+			if (BOUNDS_DIST(src, M) == 0 && ((M:loc == target_lastloc)) && src.alive) // added a health check so dead maneaters stop eating people - cogwerks
 				if(iscarbon(M))
 					src.visible_message("<span class='combat'><B>[src]</B> ravenously wolfs down [M]!</span>")
 					logTheThing("combat", M, null, "was devoured by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
