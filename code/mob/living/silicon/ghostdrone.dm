@@ -82,7 +82,7 @@
 			new /obj/item/electronics/scanner(src),
 			new /obj/item/deconstructor/borg(src),
 			new /obj/item/weldingtool(src),
-			new /obj/item/tile/cardboardcolor/fullstack(src)
+			new /obj/item/tile/cardboard/fullstack(src)
 
 
 		)

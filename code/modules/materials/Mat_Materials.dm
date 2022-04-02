@@ -1051,12 +1051,6 @@
 		addTrigger(triggersOnHit, new /datum/materialProc/cardboard_on_hit())
 		return ..()
 
-/datum/material/organic/cardboard/colored // for ghostdrones to tidy the floor with
-	color = "#AD9D7F"
-	mat_id = "cardboardcolor"
-	name = "painted cardboard"
-	desc = "Someone colored this cardboard to make it slightly steel"
-
 /datum/material/organic/chitin
 	mat_id = "chitin"
 	name = "chitin"
