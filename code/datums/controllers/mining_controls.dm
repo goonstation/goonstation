@@ -166,6 +166,7 @@ var/list/asteroid_blocked_turfs = list()
 	force_fullbright = 1
 	requires_power = 0
 	luminosity = 1
+	expandable = 0
 
 	proc/check_for_unacceptable_content()
 		for (var/mob/living/L in src.contents)
