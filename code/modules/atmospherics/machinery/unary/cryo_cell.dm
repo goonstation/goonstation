@@ -110,8 +110,9 @@
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)
 
-	Exited(atom/movable/AM)
-		if (AM == occupant)
+	Exited(atom/movable/AM, atom/newloc)
+		..()
+		if (AM == occupant && newloc != src)
 			src.go_out()
 
 	proc/can_operate(var/mob/M, var/mob/living/target)
@@ -393,7 +394,6 @@
 			src.occupant.set_loc(src.loc)
 		src.occupant = null
 		build_icon()
-
 
 	verb/move_eject()
 		set src in oview(1)
