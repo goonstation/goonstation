@@ -1310,15 +1310,19 @@
 			if(src.material.hasProperty("density"))
 				var/prot = round(src.material.getProperty("density") / 13)// for RANGED
 				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
+			else
+				setProperty("rangedprot", 0.4)
 
+			if(renf.material.hasproperty("density"))
 				prot = round(renf.getProperty("dense") / 13)// for MELEE
-				if(prot < 3)
+				if(prot <= 3) // keep it between 3 and 6
 					setProperty("meleeprot", 3)
-				if(prot > 6 )
+				else if(prot >= 6 )
 					setProperty("meleeprot", 6)
-				setProperty("meleeprot", prot)
+				else // congrats, you're within the bounds!
+					setProperty("meleeprot", prot)
 
-				var/clunk = renf.getProperty("density") // for MOVEMENT SPEED
+				var/clunk = renf.getProperty("density") // for MOVEMENT SPEED- based off density
 				if (clunk <= 15) // lighter metals = faster
 					setProperty("space_movespeed", 0.4) // since movespeed is already initalized, no need to have final conditional
 				else if (clunk >= 40)
@@ -1326,8 +1330,9 @@
 
 
 			else
-				setProperty("meleeprot", 2)
-				setProperty("rangedprot", 0.4)
+				setProperty("meleeprot", 3)
+				setProperty("space_movespeed", 0.6)
+
 
 
 	UpdateName()
