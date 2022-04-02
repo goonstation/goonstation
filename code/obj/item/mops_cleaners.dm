@@ -378,7 +378,7 @@ WET FLOOR SIGN
 			var/turf/U = get_turf(A)
 
 			if (do_after(user, 4 SECONDS))
-				if (get_dist(A, user) > 1)
+				if (BOUNDS_DIST(A, user) > 0)
 					user.show_text("You were interrupted.", "red")
 					return
 				user.show_text("You have finished mopping!", "blue")
@@ -565,7 +565,7 @@ WET FLOOR SIGN
 			selection = choices[1]
 		else
 			selection = input(user, "What do you want to do with [src]?", "Selection") as null|anything in choices
-		if (isnull(selection) || user.equipped() != src || get_dist(user, target) > 1)
+		if (isnull(selection) || user.equipped() != src || BOUNDS_DIST(user, target) > 0)
 			return
 
 		switch (selection)
@@ -1082,7 +1082,7 @@ WET FLOOR SIGN
 		if(!isturf(user.loc)) return
 		var/turf/target_turf = get_turf(target)
 		var/turf/master_turf = get_turf(master)
-		if(params["left"] && master && (get_dist(master_turf, target_turf) > 1 || ismob(target) && target != user))
+		if(params["left"] && master && (BOUNDS_DIST(master_turf, target_turf) > 0 || ismob(target) && target != user))
 			if(ON_COOLDOWN(master, "suck", src.cooldown)) return
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)

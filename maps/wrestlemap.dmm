@@ -1728,9 +1728,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aHg" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "aHh" = (
 /obj/tree1,
@@ -3426,9 +3424,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "btr" = (
 /obj/machinery/turret,
@@ -6698,9 +6694,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "cOU" = (
 /obj/table/reinforced/auto,
@@ -13071,9 +13065,7 @@
 /turf/simulated/floor/wood,
 /area/station/chapel/sanctuary)
 "fsQ" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/mining/magnet)
 "fsW" = (
 /obj/storage/cart/trash,
@@ -45008,9 +45000,7 @@
 	dir = 6;
 	icon_state = "lattice-dir"
 	},
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "thQ" = (
 /obj/disposalpipe/segment/morgue{

@@ -20,6 +20,10 @@
 	if(AM.flags & UNCRUSHABLE)
 		return
 
+	var/turf/T = get_turf(src)
+	if (T.density) // no clipping through walls ty
+		return
+
 	if(!(AM.temp_flags & BEING_CRUSHERED))
 		actions.start(new /datum/action/bar/crusher(AM), src)
 
@@ -31,6 +35,10 @@
 /obj/machinery/crusher/Crossed(atom/movable/AM)
 	. = ..()
 	if(AM.flags & UNCRUSHABLE)
+		return
+
+	var/turf/T = get_turf(src)
+	if (T.density) // no clipping through walls ty
 		return
 
 	if(!(AM.temp_flags & BEING_CRUSHERED))
@@ -68,7 +76,7 @@
 
 	onUpdate()
 		. = ..()
-		if(!IN_RANGE(owner, target, 1) || QDELETED(target))
+		if(!(BOUNDS_DIST(owner, target) == 0) || QDELETED(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!ON_COOLDOWN(owner, "crusher_sound", rand(0.5, 2.5) SECONDS))
@@ -103,7 +111,7 @@
 
 	onEnd()
 		. = ..()
-		if(!IN_RANGE(owner, target, 1) || QDELETED(target))
+		if(!(BOUNDS_DIST(owner, target) == 0) || QDELETED(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -156,7 +164,7 @@
 
 
 /obj/machinery/crusher/attack_hand(mob/user)
-	if(!user || user.stat || get_dist(user,src)>1 || isintangible(user)) //No unconscious / dead / distant users
+	if(!user || user.stat || BOUNDS_DIST(user, src) > 0 || isintangible(user)) //No unconscious / dead / distant users
 		return
 
 	//Daring text showing how BRAVE THIS PERSON IS!!!
@@ -225,3 +233,5 @@
 		src.visible_message("<span style='color:red'>\The [src] fails to deploy because there's already a crusher there! Find someplace else!")
 		qdel(src)
 		return
+	for (var/atom/movable/AM in T) //heh
+		src.Crossed(AM)

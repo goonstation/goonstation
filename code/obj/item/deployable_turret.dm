@@ -26,6 +26,9 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 
 
 	attack_self(mob/user as mob)
+		if(istype(get_area(src), /area/sim/gunsim))
+			boutput(user, "You can't deploy the turret here!")
+			return
 		user.show_message("You assemble the turret parts.")
 		src.set_loc(get_turf(user))
 		src.spawn_turret(user.dir)
@@ -41,6 +44,9 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 		return turret
 
 	throw_end(list/params, turf/thrown_from)
+		if(istype(get_area(src), /area/sim/gunsim))
+			boutput(usr, "You can't deploy the turret here!")
+			return
 		if(src.quick_deploy_fuel > 0)
 			var/turf/thrown_to = get_turf(src)
 			var/spawn_direction = get_dir(thrown_to,thrown_from)
@@ -442,11 +448,14 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		..()
 
 	is_friend(var/mob/living/C)
-		return istype(C.get_id(), /obj/item/card/id/syndicate)
+		return istype(C.get_id(), /obj/item/card/id/syndicate) || istype(C, /mob/living/critter/gunbot/syndicate) //dumb lazy
 
 /obj/deployable_turret/syndicate/active
-	active = 1
 	anchored = 1
+
+	New(loc)
+		..(src.loc, src.dir)
+		src.toggle_activated()
 
 /obj/deployable_turret/riot
 	name = "N.A.R.C.S."
@@ -478,7 +487,10 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 /obj/deployable_turret/riot/active
 	anchored = 1
-	active = 1
+
+	New(loc)
+		..(src.loc, src.dir)
+		src.toggle_activated()
 
 /////////////////////////////
 //   Turret Ability Stuff  //

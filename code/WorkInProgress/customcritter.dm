@@ -150,7 +150,7 @@
 		play_optional_sound(chase_sound)
 		if (stun_prob)
 			SPAWN(1 SECOND)
-				if (get_dist(src, target) <= 1)
+				if (BOUNDS_DIST(src, target) == 0)
 					if (prob(stun_prob))
 						M.changeStatus("stunned", 3 SECONDS)
 						tokenized_message(stun_text, target)

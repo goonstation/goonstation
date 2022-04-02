@@ -9883,9 +9883,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/engine/substation/pylon)
 "axK" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "axL" = (
 /turf/simulated/floor/engine/vacuum{
