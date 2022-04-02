@@ -118,13 +118,13 @@
 /obj/item/clothing/head/helmet/space/custom
 
 	name = "bespoke space helmet"
-	desc = "A custom built helmet with a visor that encompasses most of the face."
+	desc = "A custom built helmet with a fancy visor!"
 	icon_state = "spacemat"
 
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi' // inhand shit
 	item_state = "s_helmet"
 
-	icon = 'icons/obj/clothing/item_hats.dmi' // prep the world icon_state for building, is made later
+	icon = 'icons/obj/clothing/item_hats.dmi'
 	var/datum/material/visr_material = null
 	var/image/fabrImg = null
 	var/image/visrImg = null
@@ -132,7 +132,7 @@
 	New()
 		..()
 
-		visrImg = SafeGetOverlayImage("visor", src.icon, "spacemat-vis")
+		visrImg = SafeGetOverlayImage("visor", src.icon, "spacemat-vis") // prep the world icon_state for building, is made later
 		fabrImg = SafeGetOverlayImage("helmet", src.icon, "spacemat")
 
 	proc/setupVisorMat(var/datum/material/V)
@@ -159,11 +159,12 @@
 				setProperty("meleeprot_head", 2)
 
 		// overlay stuff
-		visrImg.color = visr_material.color
-		UpdateOverlays(visrImg, "visor")
 
 		fabrImg.color = src.material
 		UpdateOverlays(fabrImg, "helmet")
+
+		visrImg.color = visr_material.color
+		UpdateOverlays(visrImg, "visor")
 
 
 	UpdateName()
