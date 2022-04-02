@@ -173,6 +173,13 @@ var/list/asteroid_blocked_turfs = list()
 				return 1
 		for (var/obj/machinery/vehicle/V in src.contents)
 			return 1
+		for (var/obj/artifact/A in src.contents) // check if an artifact has someone inside
+			if (istype(A, /obj/artifact/prison))
+				var/datum/artifact/prison/P = A.artifact
+				if(istype(P.prisoner)) return 1
+			else if (istype(A, /obj/artifact/cloner))
+				var/datum/artifact/cloner/C = A.artifact
+				if(istype(C.clone)) return 1
 		return 0
 
 /obj/forcefield/mining
