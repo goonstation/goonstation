@@ -193,7 +193,7 @@
 	if (prob(delib_chance) && !shielded)
 		if (src.traitHolder && src.traitHolder.hasTrait("explolimbs"))
 			if(prob(50))
-				boutput(src, "<span class='notice'><b>Your unusually strong bones keep your limbs attatched through the blast!</b></span>")
+				boutput(src, "<span class='notice'><b>Your unusually strong bones keep your limbs attached through the blast!</b></span>")
 			else
 				src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg")))
 		else
