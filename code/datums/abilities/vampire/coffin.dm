@@ -32,6 +32,7 @@
 		playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 50, 1, pitch = 1.1)
 
 		if (_health <= 0)
+			logTheThing("combat", user, null, "destroyed [src] at [log_loc(src)]")
 			bust_out()
 
 

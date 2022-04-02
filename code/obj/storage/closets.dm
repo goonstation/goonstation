@@ -29,6 +29,7 @@
 		else if (user.a_intent == INTENT_HELP)
 			..()
 		else if (I.force > 0)
+			user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]!</span>")
 			src._health -= clamp(I.force, 1, 20)
 			user.lastattacked = src
 			attack_particle(user,src)
@@ -38,6 +39,7 @@
 				src.unlock()
 				src.open()
 				playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
+				logTheThing("combat", user, null, "broke open [src] with [I] at [log_loc(src)]")
 			else
 				playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 90, 1)
 		else
