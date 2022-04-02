@@ -1,5 +1,7 @@
 
 (t)sat apr 02 22
+(u)aloe
+(+)Pods now "eject" you on exploding. This also applies to the SEED.
 (u)Flappybat
 (p)7950
 (e)🆕|feature
