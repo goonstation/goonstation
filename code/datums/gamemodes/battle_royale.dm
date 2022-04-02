@@ -264,52 +264,11 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 		build_syndi_buylist_cache()
 
 	var/list/obj/murder_supplies = list()
-	var/list/banned_items = list(/datum/syndicate_buylist/traitor/classcrate,
-	/datum/syndicate_buylist/traitor/surplus,
-	/datum/syndicate_buylist/traitor/floorcloset,
-	/datum/syndicate_buylist/traitor/wiretap,
-	/datum/syndicate_buylist/traitor/buddy_ammofab,
-	/datum/syndicate_buylist/traitor/chargehacker,
-	/datum/syndicate_buylist/generic/psink,
-	/datum/syndicate_buylist/traitor/shotglass,
-	/datum/syndicate_buylist/generic/chamsuit,
-	/datum/syndicate_buylist/generic/telecrystal,
-	/datum/syndicate_buylist/generic/trick_telecrystal,
-	/datum/syndicate_buylist/traitor/idtracker,
-	/datum/syndicate_buylist/traitor/mindslave,
-	/datum/syndicate_buylist/traitor/deluxe_mindslave,
-	/datum/syndicate_buylist/generic/detomatix,
-	/datum/syndicate_buylist/generic/spy_sticker_kit,
-	/datum/syndicate_buylist/traitor/ringtone,
-	/datum/syndicate_buylist/traitor/sinjector,
-	/datum/syndicate_buylist/traitor/minibible,
-	/datum/syndicate_buylist/traitor/contract,
-	/datum/syndicate_buylist/traitor/maneater,
-	/datum/syndicate_buylist/traitor/hotbox_lighter,
-	/datum/syndicate_buylist/traitor/syndanalyser,
-	/datum/syndicate_buylist/traitor/powergloves,
-	/datum/syndicate_buylist/traitor/chemicompiler,
-	/datum/syndicate_buylist/traitor/robosuit,
-	/datum/syndicate_buylist/traitor/conversion_chamber,
-	/datum/syndicate_buylist/traitor/telegun,
-	/datum/syndicate_buylist/traitor/mindslave_module,
-	/datum/syndicate_buylist/traitor/deluxe_mindslave_module,
-	/datum/syndicate_buylist/surplus/cybereye_kit_sechud,
-	/datum/syndicate_buylist/generic/head_rev/revflash,
-	/datum/syndicate_buylist/generic/head_rev/revflashbang,
-	/datum/syndicate_buylist/generic/head_rev/revsign,
-	/datum/syndicate_buylist/generic/head_rev/rev_normal_flash,
-	/datum/syndicate_buylist/traitor/kudzuseed,
-	/datum/syndicate_buylist/traitor/moonshine)
 
 	for(var/datum/syndicate_buylist/D in syndi_buylist_cache)
 		if(D.item)
-			var/add_item = TRUE
-			for (var/B in banned_items)
-				if (istype(D, B))
-					add_item = FALSE
-					break
-			if (add_item)
+			if(D.can_buy & UPLINK_BATTLEROYALE)
+				message_admins("adding [D]")
 				murder_supplies.Add(D.item)
 
 	var/list/chest_supplies = list()
