@@ -1185,7 +1185,7 @@ CONTAINS:
 		else if (!(over_object == usr))
 			return
 		..()
-		if (!length(src.contents) && usr.can_use_hands() && isalive(usr) && BOUNDS_DIST(src, usr) > 0 && !issilicon(usr))
+		if (!length(src.contents) && usr.can_use_hands() && isalive(usr) && BOUNDS_DIST(src, usr) == 0 && !issilicon(usr))
 			if (src.icon_state != "bodybag")
 				usr.visible_message("<b>[usr]</b> folds up [src].",\
 				"You fold up [src].")
