@@ -20,6 +20,9 @@
 	if(AM.flags & UNCRUSHABLE)
 		return
 
+	if (get_turf(src).density) // no clipping through walls ty
+		return
+
 	if(!(AM.temp_flags & BEING_CRUSHERED))
 		actions.start(new /datum/action/bar/crusher(AM), src)
 
