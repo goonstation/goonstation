@@ -297,7 +297,6 @@
 	attack_hand(mob/user)
 		if(!shock(user, 70))
 			var/damage = 1
-			var/dam_type = "blunt"
 			var/text = "[user.kickMessage] [src]"
 
 			if (user.is_hulk())
