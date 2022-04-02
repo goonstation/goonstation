@@ -1289,6 +1289,7 @@
 	name = "bespoke space suit"
 	desc = "A custom built suit that protects your fragile body from hard vacuum."
 	var/datum/material/renf=null
+	var/prot = 0 //tired of this being initalized in the setup code so it gets a special place now
 
 	proc/setupReinforcement(var/datum/material/R) // passes the reinforcement variable, sets up protection
 		renf = R
@@ -1302,18 +1303,18 @@
 				setProperty("heatprot", 15)
 
 			if (src.material.hasProperty("permeable"))
-				var/prot = 100 - src.material.getProperty("permeable")
-				setProperty("viralprot", prot)
+				var/permprot = 100 - src.material.getProperty("permeable")
+				setProperty("viralprot", permprot)
 			else
 				setProperty("viralprot", 40)
 
 			if(src.material.hasProperty("density"))
-				var/prot = round(src.material.getProperty("density") / 13)// for RANGED
+				prot = round(src.material.getProperty("density") / 13)// for RANGED
 				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
 			else
 				setProperty("rangedprot", 0.4)
 
-			if(renf.material.hasproperty("density"))
+			if(renf.hasProperty("density"))
 				prot = round(renf.getProperty("dense") / 13)// for MELEE
 				if(prot <= 3) // keep it between 3 and 6
 					setProperty("meleeprot", 3)
