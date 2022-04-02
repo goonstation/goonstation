@@ -20,7 +20,8 @@
 	if(AM.flags & UNCRUSHABLE)
 		return
 
-	if (get_turf(src).density) // no clipping through walls ty
+	var/turf/T = get_turf(src)
+	if (T.density) // no clipping through walls ty
 		return
 
 	if(!(AM.temp_flags & BEING_CRUSHERED))
@@ -34,6 +35,10 @@
 /obj/machinery/crusher/Crossed(atom/movable/AM)
 	. = ..()
 	if(AM.flags & UNCRUSHABLE)
+		return
+
+	var/turf/T = get_turf(src)
+	if (T.density) // no clipping through walls ty
 		return
 
 	if(!(AM.temp_flags & BEING_CRUSHERED))
@@ -228,3 +233,5 @@
 		src.visible_message("<span style='color:red'>\The [src] fails to deploy because there's already a crusher there! Find someplace else!")
 		qdel(src)
 		return
+	for (var/atom/movable/AM in T) //heh
+		src.Crossed(AM)
