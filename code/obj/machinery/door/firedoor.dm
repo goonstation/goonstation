@@ -39,7 +39,6 @@
 	var/image/welded_image = null
 	var/welded_icon_state = "welded"
 	has_crush = 0
-	cant_emag = 1
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_DESTRUCT
 	mats = 30 // maybe a bit high??
 	health = 200
@@ -122,6 +121,9 @@
 	if (src.blocked)
 		return 1
 	return 0
+
+/obj/machinery/door/firedoor/emag_act(mob/user, obj/item/card/emag/E) //BELIEVE IT OR NOT, THIS AND THE CANT_EMAG VAR ARE DISTINCT
+	return
 
 /obj/machinery/door/firedoor/attackby(obj/item/C, mob/user)
 	src.add_fingerprint(user)
