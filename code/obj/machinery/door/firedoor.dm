@@ -115,7 +115,7 @@
 	else
 		status |= NOPOWER
 
-/obj/machinery/door/firedoor/bumpopen(mob/user as mob)
+/obj/machinery/door/firedoor/bumpopen(mob/user)
 	return
 
 /obj/machinery/door/firedoor/isblocked()
@@ -123,14 +123,15 @@
 		return 1
 	return 0
 
-/obj/machinery/door/firedoor/attackby(obj/item/C as obj, mob/user as mob)
+/obj/machinery/door/firedoor/attackby(obj/item/C, mob/user)
 	src.add_fingerprint(user)
 	if (!ispryingtool(C))
-		if (src.density && !src.operating)
+		if (src.density)
 			user.lastattacked = src
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
-			if (C) src.take_damage(C.force) //TODO: FOR MBC, WILL RUNTIME IF ATTACKED WITH BARE HAND, C IS NULL. ADD LIMB INTERACTIONS
+			if (C)
+				src.take_damage(C.force) //TODO: FOR MBC, WILL RUNTIME IF ATTACKED WITH BARE HAND, C IS NULL. ADD LIMB INTERACTIONS
 		return
 
 	if (!src.blocked && !src.operating)
