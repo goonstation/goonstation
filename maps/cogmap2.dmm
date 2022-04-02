@@ -73714,23 +73714,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/research_outpost)
-"dip" = (
-/obj/wingrille_spawn/auto,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4;
-	opacity = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/research_outpost)
 "diq" = (
 /obj/item/raw_material/rock,
 /obj/storage/crate/loot,
@@ -94391,7 +94374,7 @@ abC
 doU
 aab
 dii
-dip
+htk
 sfG
 diN
 djb
