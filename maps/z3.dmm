@@ -2965,7 +2965,7 @@
 "aiG" = (
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
-/turf/space/asteroid,
+/turf/space,
 /area/space)
 "aiH" = (
 /obj/storage/secure/closet/engineering/mining,
