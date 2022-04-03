@@ -74,7 +74,7 @@
 		if("delete_trace")
 			var/mob/living/intangible/flock/trace/T = locate(params["origin"])
 			if(T)
-				if(alert(user, "This will destroy the flocktrace. Are you ABSOLUTELY SURE you want to do this?", "Confirmation", "Yes", "No") == "Yes")
+				if(tgui_alert(user, "This will destroy the Flocktrace. Are you sure you want to do this?", "Confirmation", list("Yes", "No")) == "Yes")
 					// if they're in a drone, kick them out
 					var/mob/living/critter/flock/drone/host = T.loc
 					if(istype(host))
