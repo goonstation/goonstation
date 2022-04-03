@@ -1157,6 +1157,40 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			qdel(swirl)
 	return
 
+/proc/showswirl_out(var/atom/target, var/play_sound = TRUE)
+	if (!target)
+		return
+	var/turf/target_turf = get_turf(target)
+	if (!target_turf)
+		return
+	var/obj/decal/teleport_swirl/swirl/ = new /obj/decal/teleport_swirl/out
+	swirl.set_loc(target_turf)
+	swirl.pixel_y = 10
+	if (play_sound)
+		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
+	SPAWN(1.5 SECONDS)
+		if (swirl)
+			swirl.pixel_y = 0
+			qdel(swirl)
+	return
+
+/proc/showswirl_error(var/atom/target, var/play_sound = TRUE)
+	if (!target)
+		return
+	var/turf/target_turf = get_turf(target)
+	if (!target_turf)
+		return
+	var/obj/decal/teleport_swirl/swirl/ = new /obj/decal/teleport_swirl/error
+	swirl.set_loc(target_turf)
+	swirl.pixel_y = 10
+	if (play_sound)
+		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
+	SPAWN(1.5 SECONDS)
+		if (swirl)
+			swirl.pixel_y = 0
+			qdel(swirl)
+	return
+
 /proc/leaveresidual(var/atom/target)
 	if (!target)
 		return

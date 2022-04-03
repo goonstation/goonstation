@@ -782,6 +782,12 @@
 		pixel_x = -256
 		pixel_y = -256
 
+	antistes
+		icon_state = "antistes"
+		name = "Antistes"
+		pixel_x = -256
+		pixel_y = -256
+
 	station
 		name = "Space Station 14"
 		desc = "Another Nanotrasen station passing by your orbit."

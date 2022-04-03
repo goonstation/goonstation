@@ -8,6 +8,7 @@
 	anchored = 1.0
 	mats = 20
 	is_syndicate = 1
+	flags = FLUID_SUBMERGE | UNCRUSHABLE
 	event_handler_flags = USE_FLUID_ENTER
 	var/osha_prob = 40 //How likely it is anyone touching it is to get dragged in
 	var/list/poking_jerks = null //Will be a list if need be
@@ -17,6 +18,7 @@
 	var/last_sfx = 0
 
 /obj/machinery/crusher/Bumped(atom/AM)
+	return_if_overlay_or_effect(AM)
 	if(AM.flags & UNCRUSHABLE)
 		return
 
@@ -34,6 +36,7 @@
 
 /obj/machinery/crusher/Crossed(atom/movable/AM)
 	. = ..()
+	return_if_overlay_or_effect(AM)
 	if(AM.flags & UNCRUSHABLE)
 		return
 
