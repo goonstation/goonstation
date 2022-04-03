@@ -283,6 +283,8 @@
 			if ("dispense")
 				if (!beaker || !(params["reagentId"] in dispensable_reagents))
 					return
+				if (usr.bioHolder.HasEffect("clumsy") && prob(20)) //funni clown bad at chemistry
+					params["reagentId"] = pick(dispensable_reagents)
 				var/amount = clamp(round(params["amount"]), 1, 100)
 				beaker.reagents.add_reagent(params["reagentId"], isnum(amount) ? amount : 10)
 				beaker.reagents.handle_reactions()
