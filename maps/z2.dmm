@@ -58823,6 +58823,7 @@
 /area/syndicate_station/battlecruiser)
 "dgR" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/storage/crate/packing,
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dgS" = (
@@ -58862,6 +58863,14 @@
 "dgY" = (
 /obj/storage/crate/wooden,
 /obj/random_item_spawner/junk/some,
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 7;
+	pixel_y = 5
+	},
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dgZ" = (
