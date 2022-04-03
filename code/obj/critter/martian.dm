@@ -197,7 +197,7 @@
 		..()
 		if (prob(33)) M.changeStatus("weakened", 3 SECONDS)
 		SPAWN(2.5 SECONDS)
-			if (get_dist(src, M) <= 1)
+			if (BOUNDS_DIST(src, M) == 0)
 				src.visible_message("<span class='alert'><B>[src]</B> starts strangling [M]!</span>")
 
 	CritterAttack(mob/M)

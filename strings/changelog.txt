@@ -1,5 +1,75 @@
 
+(t)sat apr 02 22
+(u)aloe
+(+)Pods now "eject" you on exploding. This also applies to the SEED.
+(u)Cogwerks
+(e)🗺🎨|mapping, sprites
+(*)Revising positions of stuff in the debris field and the dining level
+(*)Hemera, zombie-roid, drone carrier, time ship, and flock ship moved around 
+(*)Martian derelict moved to dining level
+(*)Added more background space planets and moons to the imagined plasma giant orbits 
+(u)Flappybat
+(p)7950
+(e)🆕|feature
+(*)Battle Royale now forces a shuttle when five players remain. A deadly storm will hit the entire station, finish everyone else off or escape on the shuttle to survive!
+(+)Battle Royale now prevents you leaving the station level edges, be careful spacing players as they may return.
+(u)NightmareChamillian
+(p)7694
+(e)⚖|balance
+(*)Deconstruction devices can now be used in surgeries- at your own personal risk
+(u)Flaborized
+(p)7952
+(e)|
+(*)LSD now has a different, unique color-changing animation when in your system.
+(u)Flappybat
+(p)7929
+(e)⚖|balance
+(+)Spellshield now protects wizards from the syndicate saw, butcher knife and katana.
+(t)thu mar 31 22
+(u)Laboredih123 & pgmzeta
+(p)7928
+(e)🎨|sprites
+(+)Nanotrasen has now made windows fully connected, removing seams.
+(t)wed mar 30 22
+(u)Yellow/Myco
+(p)7983
+(e)🎨|sprites
+(+)Changes the sprite of almost every beard, along with Hogan and Vandyke
+(u)zjdtmkhzt
+(p)8026
+(e)🆕⚖|feature, balance
+(+)The nukeops heavy energy sword can now reflect projectiles like a csaber can. (This was always there, it just didn't work because it was bugged until now.)
+(u)Hans
+(p)7563
+(e)🆕🎨|feature, sprites
+(*)Added space rattlesnakes to the game. Beware!
+(u)CodeJester
+(p)7822
+(e)📄|tgui
+(*)The Reagent Heater/Cooler has a new UI menu. Enjoy the blazing red color of setting the temperature to 1000 K every time.
+(u)aloe
+(*)Macrobombs have been removed. You can still just buy 12 micros, though.
+(*)Engineers get a flyzapper implant- costs 1 TC, acts sort of like a micro except you shock the shit out of people when you die instead of exploding. Stacks. Probably a bit weak (when compared to micros) currently, will do a numbers pass soon.
+(u)Amylizzle
+(p)8019
+(e)|
+(*)Hologram expansion modules now work properly with AI Law Racks.
+(t)tue mar 29 22
+(u)Wisemonster
+(p)7956
+(e)|
+(*)Engineering cyborg modules now come with a battery-hungry power shovel, to help with the Oshan engine. (Shovel is restricted to modules on Oshan)
+(t)mon mar 28 22
+(u)Yellow
+(p)7547
+(e)⚖|balance
+(*)Changes up Research Assistant, Medical Assistant, and Technical Assistant to make them more applicable for those who want to learn
+(+)Gives both Barbers and Musicians civilian headsets
 (t)sun mar 27 22
+(u)Amylizzle
+(p)7992
+(e)|
+(+)Adds a hint to the AI Law Module description telling users they can reset it with a multitool if it's glitchy.
 (u)NightmareChamillian
 (p)7443
 (e)⚖|balance

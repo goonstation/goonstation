@@ -80,7 +80,7 @@
 					HH.pixel_y = 0
 					return 0
 
-				if (get_dist(M, HH) > 1)
+				if (BOUNDS_DIST(M, HH) > 0)
 					boutput(M, __red("[target] is too far away!"))
 					qdel(G)
 					M.pixel_x = 0
@@ -123,7 +123,7 @@
 				qdel(G)
 				return 0
 
-			if (get_dist(M, HH) > 1)
+			if (BOUNDS_DIST(M, HH) > 0)
 				boutput(M, __red("[HH] is too far away!"))
 				qdel(G)
 				return 0

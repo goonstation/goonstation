@@ -3,9 +3,7 @@
 /turf/space,
 /area/space)
 "aab" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "aac" = (
 /turf/simulated/wall/asteroid/dark,

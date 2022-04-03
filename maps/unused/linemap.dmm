@@ -34289,9 +34289,7 @@
 /turf/space,
 /area/space)
 "bAT" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "bAU" = (
 /obj/grille/steel,

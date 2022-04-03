@@ -47,7 +47,11 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 		return
 
 	get_desc()
-		return "It reads, \"<em>[get_law_text()]</em>\""
+		. = ""
+		if(src.glitched)
+			.+= "It isn't working right. You could use a multitool to reset it.<br>"
+		. +=  "It reads, \"<em>[get_law_text()]</em>\""
+
 
 	proc/input_law_info(var/mob/user, var/title = null, var/text = null, var/default = null)
 		if (!user)
@@ -386,21 +390,22 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 			src.update_law_text(lawTarget)
 		return
 
-//are these implemented?
+ABSTRACT_TYPE(/obj/item/aiModule/hologram_expansion)
 /obj/item/aiModule/hologram_expansion
 	name = "Hologram Expansion Module"
 	desc = "A module that updates an AI's hologram images."
-	lawText = "&lt; UNRECOGNISED HARDWARE IN LAW MODULE SLOT &rt;"
+	lawText = "HOLOGRAM EXPANSION MODULE"
 	var/expansion
-
 
 /obj/item/aiModule/hologram_expansion/clown
 	name = "Clown Hologram Expansion Module"
 	icon_state = "holo_mod_c"
+	highlight_color = rgb(241, 94, 180, 255)
 	expansion = "clown"
 
 /obj/item/aiModule/hologram_expansion/syndicate
 	name = "Syndicate Hologram Expansion Module"
 	icon_state = "holo_mod_s"
+	highlight_color = rgb(173, 11, 11, 255)
 	expansion = "rogue"
 

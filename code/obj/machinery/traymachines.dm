@@ -54,6 +54,9 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	my_tray.set_dir(src.dir)
 	my_tray.my_machine = src
 	my_tray.layer = OBJ_LAYER - 0.02
+	my_tray.bound_width = src.bound_width
+	my_tray.bound_height = src.bound_height
+	my_tray.transform = src.transform
 
 	..()
 
@@ -131,7 +134,9 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 
 	var/turf/T_src = get_turf(src)
-	var/turf/T = get_step(src, src.dir)
+	var/turf/T = T_src
+	for(var/i in 1 to src.bound_width / world.icon_size)
+		T = get_step(T, src.dir)
 
 	//handle animation and ejection of contents
 	for(var/atom/movable/AM as anything in src)
@@ -244,7 +249,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	attack_hand(user)
 
 /obj/machine_tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (!(isobj(O) || ismob(O)) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(O))
+	if (!(isobj(O) || ismob(O)) || O.anchored || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, O) > 0 || user.contents.Find(O))
 		return
 	if (istype(O, /atom/movable/screen) || istype(O, /obj/effects) || istype(O, /obj/ability_button) || istype(O, /obj/item/grab))
 		return

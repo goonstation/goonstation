@@ -88,7 +88,7 @@
 										playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 									return
 						if ("Remove cup")
-							if (get_dist(src, user) > 1 || isAI(user))
+							if (BOUNDS_DIST(src, user) > 0 || isAI(user))
 								user.show_text("You can not do that remotely.")
 								return
 							src.cupinside = 0
@@ -189,7 +189,7 @@
 							if (!src.my_carafe)
 								user.show_text("The carafe is gone!")
 								return
-							if (get_dist(src, user) > 1 || isAI(user))
+							if (BOUNDS_DIST(src, user) > 0 || isAI(user))
 								user.show_text("You can not do that remotely.")
 								return
 							user.put_in_hand_or_drop(src.my_carafe)

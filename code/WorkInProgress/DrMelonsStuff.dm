@@ -288,11 +288,11 @@
 				src.reagents.trans_to(src.occupant, 5)
 
 	MouseDrop_T(mob/living/carbon/human/target, mob/user)
-		if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
+
+		if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 1 || BOUNDS_DIST(user, target) > 1 || is_incapacitated(user) || isAI(user))
 			return
 		if (src.occupant)
 			boutput(user, "<span class='alert'>Someone's already in the [src]!</span>")
-			return
 
 		if(target == user && !user.stat)
 			target.visible_message("[user.name] climbs into the [src].", "You climb into the [src]")

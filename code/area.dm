@@ -529,8 +529,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			jerk.remove()
 		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect) && !istype(O, /obj/landmark))
 			qdel(O)
-		return
-
+		. = ..()
 /area/battle_royale_spawn //People entering VR or exiting VR with stupid exploits are jerks.
 	name = "Battle Royale warp zone"
 	skip_sims = 1

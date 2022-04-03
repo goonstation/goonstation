@@ -198,6 +198,9 @@
 		oxygen = MOLES_O2STANDARD
 		nitrogen = MOLES_N2STANDARD
 
+	asteroid
+		icon_state = "aplaceholder"
+
 /turf/space/no_replace
 
 /turf/space/New()
@@ -307,6 +310,11 @@ proc/generate_space_color()
 
 /turf/space/proc/process_cell()
 	return
+
+/turf/proc/delay_space_conversion()
+	if(air_master?.is_busy)
+		air_master.tiles_to_space |= src
+		return TRUE
 
 /turf/cordon
 	name = "CORDON"
@@ -543,8 +551,10 @@ proc/generate_space_color()
 
 	var/new_type = ispath(what) ? what : text2path(what) //what what, what WHAT WHAT WHAAAAAAAAT
 	if (new_type)
+		if(ispath(new_type, /turf/space) && delay_space_conversion()) return
 		new_turf = new new_type(src)
 		if (!isturf(new_turf))
+			if (delay_space_conversion()) return
 			new_turf = new /turf/space(src)
 
 	else switch(what)
@@ -573,6 +583,7 @@ proc/generate_space_color()
 		if ("Unsimulated Floor")
 			new_turf = new /turf/unsimulated/floor(src)
 		else
+			if (delay_space_conversion()) return
 			new_turf = new /turf/space(src)
 
 	if(keep_old_material && oldmat && !istype(new_turf, /turf/space)) new_turf.setMaterial(oldmat)
@@ -708,10 +719,6 @@ proc/generate_space_color()
 	return floor
 
 /turf/proc/ReplaceWithSpace()
-	if( air_master.is_busy )
-		air_master.tiles_to_space |= src
-		return
-
 	var/area/my_area = loc
 	var/turf/floor
 	if (my_area)
@@ -939,7 +946,7 @@ proc/generate_space_color()
 		return
 	if (user.pulling.anchored)
 		return
-	if ((user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
+	if ((user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0))
 		return
 	if (!isturf(user.pulling.loc))
 		var/obj/container = user.pulling.loc
@@ -964,7 +971,7 @@ proc/generate_space_color()
 		return
 	if (user.pulling.anchored)
 		return
-	if ((user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
+	if ((user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0))
 		return
 	if (!isturf(user.pulling.loc))
 		return

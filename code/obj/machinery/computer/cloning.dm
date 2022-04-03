@@ -459,7 +459,7 @@ proc/find_ghost_by_key(var/find_key)
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
+		if (BOUNDS_DIST(src, user) > 0 || BOUNDS_DIST(user, target) > 0)
 			return
 
 		if (target == user)
@@ -478,7 +478,7 @@ proc/find_ghost_by_key(var/find_key)
 
 
 	proc/can_operate(var/mob/M)
-		if (!IN_RANGE(src, M, 1))
+		if (!(BOUNDS_DIST(src, M) == 0))
 			return FALSE
 		if (is_incapacitated(M))
 			return FALSE

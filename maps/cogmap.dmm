@@ -7,9 +7,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aae" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "aaf" = (
 /obj/lattice{
@@ -13165,7 +13163,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/stairs{
 	icon_state = "stairs_middle"
 	},
@@ -54375,10 +54372,6 @@
 	icon_state = "11"
 	},
 /area/shuttle/arrival/station)
-"fYP" = (
-/obj/storage/crate/robotparts,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/storage)
 "fYR" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/firedoor_spawn,
@@ -56348,7 +56341,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple,
 /obj/firedoor_spawn,
-/obj/machinery/atmospherics/pipe/simple,
 /obj/access_spawn/medlab,
 /turf/simulated/floor/delivery,
 /area/station/medical/research)
@@ -89689,7 +89681,7 @@ aap
 aar
 aar
 aar
-fYP
+bXs
 bXs
 bXs
 bXs

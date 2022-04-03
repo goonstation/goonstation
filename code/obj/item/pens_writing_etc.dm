@@ -95,14 +95,14 @@
 		return FALSE
 
 	proc/write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
-		if (!T || !user || src.in_use || get_dist(T, user) > 1 || isghostdrone(user))
+		if (!T || !user || src.in_use || BOUNDS_DIST(T, user) > 0 || isghostdrone(user))
 			return
 		if(!user.literate)
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		src.in_use = 1
 		var/t = input(user, "What do you want to write?", null, null) as null|text
-		if (!t || get_dist(T, user) > 1)
+		if (!t || BOUNDS_DIST(T, user) > 0)
 			src.in_use = 0
 			return
 		phrase_log.log_phrase("floorpen", t)
@@ -383,7 +383,7 @@
 				src.color = src.font_color
 
 		write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
-			if (!T || !user || src.in_use || get_dist(T, user) > 1)
+			if (!T || !user || src.in_use || BOUNDS_DIST(T, user) > 0)
 				return
 			src.font_color = random_saturated_hex_color(1)
 			src.color_name = hex2color_name(src.font_color)
@@ -465,7 +465,7 @@
 
 
 	write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
-		if (!T || !user || src.in_use || get_dist(T, user) > 1)
+		if (!T || !user || src.in_use || BOUNDS_DIST(T, user) > 0)
 			return
 
 		var/t // t is for what we're tdrawing
@@ -488,7 +488,7 @@
 				t = t[1]
 			update_inventory_counter()
 
-		if (!t || get_dist(T, user) > 1)
+		if (!t || BOUNDS_DIST(T, user) > 0)
 			return
 
 		if(t == " ")
@@ -635,14 +635,14 @@
 	font_color = "#D20040"
 
 	write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
-		if (!T || !user || src.in_use || get_dist(T, user) > 1)
+		if (!T || !user || src.in_use || BOUNDS_DIST(T, user) > 0)
 			return
 		if(!user.literate)
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		src.in_use = 1
 		var/t = input(user, "What do you want to write?", null, null) as null|text
-		if (!t || get_dist(T, user) > 1)
+		if (!t || BOUNDS_DIST(T, user) > 0)
 			src.in_use = 0
 			return
 		var/obj/decal/cleanable/writing/infrared/G = make_cleanable(/obj/decal/cleanable/writing/infrared,T)
@@ -997,7 +997,7 @@
 		show_window(user)
 
 	Topic(var/href, var/href_list)
-		if (get_dist(src, usr) > 1 || iswraith(usr) || isintangible(usr))
+		if (BOUNDS_DIST(src, usr) > 0 || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr))
 			return
@@ -1109,7 +1109,7 @@
 	Topic(href, href_list)
 		..()
 
-		if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
+		if ((usr.stat || usr.restrained()) || (BOUNDS_DIST(src, usr) > 0))
 			return
 
 		var/page_num = text2num(href_list["page"])

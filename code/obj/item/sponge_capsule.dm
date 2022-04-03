@@ -59,11 +59,13 @@
 		return
 
 /obj/item/toy/sponge_capsule/proc/add_water()
+	var/turf/T = get_turf(src)
+	if (!T)
+		return
 	playsound(src.loc, 'sound/effects/cheridan_pop.ogg', 100, 1)
 	if(isnull(animal_to_spawn)) // can probably happen if spawned directly in water
 		animal_to_spawn = pick(animals)
-	var/obj/critter/C = new animal_to_spawn(get_turf(src))
-	var/turf/T = get_turf(src)
+	var/obj/critter/C = new animal_to_spawn(T)
 	T.visible_message("<span class='notice'>What was once [src] has become [C.name]!</span>")
 	qdel(src)
 
