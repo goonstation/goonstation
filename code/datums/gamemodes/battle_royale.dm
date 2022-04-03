@@ -176,6 +176,8 @@ var/global/list/datum/mind/battle_pass_holders = list()
 
 
 /datum/game_mode/battle_royale/check_finished()
+	if(!emergency_shuttle.online)
+		emergency_shuttle.incall()
 	var/someone_died = 0
 	for(var/datum/mind/M in living_battlers)
 		if(isdead(M.current) || !ishuman(M.current) || inafterlife(M.current) || isVRghost(M.current))
@@ -192,7 +194,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 				emergency_shuttle.incall()
 				command_alert("The escape shuttle has been automatically called. Arrival in six minutes. Escape on the shuttle, kill everyone else or die!","Escape Shuttle")
 	if(living_battlers.len <= 1)
-		return TRUE
+		return FALSE
 	return FALSE
 
 
@@ -246,7 +248,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 			if (emergency_shuttle.timeleft() < 60)
 				storm.event_effect(TRUE)
 				src.next_storm = null
-				SPAWN(65 SECONDS)
+				SPAWN(70 SECONDS)
 					emergency_shuttle.endtime = ticker.round_elapsed_ticks + (20 MINUTES / (1 SECOND))*10
 		else if(src.next_storm < world.time)
 			// Regular storm
