@@ -16,14 +16,12 @@ TYPEINFO(/datum/component/teleport_on_enter)
 	src.destination = destination
 	src.noisy = noisy
 	RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/teleport)
+	RegisterSignal(destination, COMSIG_PARENT_PRE_DISPOSING, .proc/UnregisterFromParent)
 
 
 /datum/component/teleport_on_enter/proc/teleport(var/teleporter, var/atom/movable/teleportee)
 	return_if_overlay_or_effect(teleportee)
 	if (teleportee.invisibility >= INVIS_ALWAYS_ISH || teleportee:anchored) //minor safety. this is currently intended for admin usage, so intangible things can still tele
-		return
-	if (destination.loc == null) // no teleporting people to things in nullspace ty
-		src.RemoveComponent() // in fact if your destination gets deleted I'm just going to stop ya right there
 		return
 	if (src.noisy)
 		playsound(get_turf(parent), "warp", 50, 1, 0.2, 1.2)
@@ -32,4 +30,5 @@ TYPEINFO(/datum/component/teleport_on_enter)
 
 /datum/component/teleport_on_enter/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_ENTERED)
+	UnregisterSignal(destination, COMSIG_PARENT_PRE_DISPOSING)
 

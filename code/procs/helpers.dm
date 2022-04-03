@@ -2613,3 +2613,12 @@ proc/get_all_character_setup_ringtones()
 			var/datum/ringtone/R_prime = new R
 			selectable_ringtones[R_prime.name] = R_prime
 	return selectable_ringtones
+
+/// converts `get_connected_directions_bitflag()` diagonal bits to byond direction flags
+proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
+	. = 0
+	if (!connectdir_bitflag) return
+	if(16 & connectdir_bitflag) .|= NORTHEAST
+	if(32 & connectdir_bitflag) .|= SOUTHEAST
+	if(64 & connectdir_bitflag) .|= SOUTHWEST
+	if(128 & connectdir_bitflag) .|= NORTHWEST

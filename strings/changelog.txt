@@ -1,13 +1,22 @@
 
+(t)sun apr 03 22
+(u)ThyOverlord
+(p)8072
+(e)🎨|sprites
+(+)Resprited Mono cards and their respective stacks/hands. Also updated MonoRules.txt to
+(u)LeahTheTech
+(p)8058
+(e)🆕|feature
+(*)AI law changes are now highlighted and display removed laws
 (t)sat apr 02 22
 (u)aloe
 (+)Pods now "eject" you on exploding. This also applies to the SEED.
 (u)Cogwerks
 (e)🗺🎨|mapping, sprites
 (*)Revising positions of stuff in the debris field and the dining level
-(*)Hemera, zombie-roid, drone carrier, time ship, and flock ship moved around 
+(*)Hemera, zombie-roid, drone carrier, time ship, and flock ship moved around
 (*)Martian derelict moved to dining level
-(*)Added more background space planets and moons to the imagined plasma giant orbits 
+(*)Added more background space planets and moons to the imagined plasma giant orbits
 (u)Flappybat
 (p)7950
 (e)🆕|feature
@@ -26,7 +35,7 @@
 (e)⚖|balance
 (+)Spellshield now protects wizards from the syndicate saw, butcher knife and katana.
 (t)thu mar 31 22
-(u)Laboredih123 & pgmzeta
+(u)Laboredih123 & glowbold
 (p)7928
 (e)🎨|sprites
 (+)Nanotrasen has now made windows fully connected, removing seams.
