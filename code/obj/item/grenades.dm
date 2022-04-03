@@ -62,7 +62,7 @@ PIPE BOMBS + CONSTRUCTION
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
 		if (src.state)
 			return
-		if (get_dist(user, target) <= 1 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc) || !src.state )
+		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc) || !src.state )
 			return
 		if (user.equipped() == src)
 			if (!src.state)
@@ -681,7 +681,11 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 	New()
 		..()
+		#ifdef UPSCALED_MAP
+		destination = locate(40 * 2,19 * 2,2)
+		#else
 		destination = locate(40,19,2)
+		#endif
 
 	primed
 		state = 1
@@ -693,7 +697,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			state = 1
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (get_dist(user, target) <= 1 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc))
+		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc))
 			return
 		if (istype(target, /obj/item/storage)) return ..()
 		if (src.state == 0)

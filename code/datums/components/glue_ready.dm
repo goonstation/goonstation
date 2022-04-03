@@ -1,7 +1,7 @@
 TYPEINFO(/datum/component/glue_ready)
 	initialization_args = list(
-		ARG_INFO("glue_duration", "num", "How long the glue lasts, null for infinity", null),
-		ARG_INFO("glue_removal_time", "num", "How long does it take to unglue stuff", null),
+		ARG_INFO("glue_duration", DATA_INPUT_NUM, "How long the glue lasts, null for infinity", null),
+		ARG_INFO("glue_removal_time", DATA_INPUT_NUM, "How long does it take to unglue stuff", null),
 	)
 
 /datum/component/glue_ready

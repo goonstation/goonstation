@@ -249,7 +249,7 @@
 				var/obj/projectile/P = initialize_projectile_pixel(user, proj, target, 0, 0)
 				if (!P)
 					return FALSE
-				if(get_dist(user,target) <= 1)
+				if(BOUNDS_DIST(user, target) == 0)
 					P.was_pointblank = 1
 					hit_with_existing_projectile(P, target) // Includes log entry.
 				else
@@ -657,8 +657,8 @@
 			target.changeStatus("weakened", 2 SECONDS)
 		user.lastattacked = target
 
-/datum/limb/wendigo
-	var/log_name = "wendigo limbs"
+/datum/limb/brullbar
+	var/log_name = "brullbar limbs"
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
 			return
@@ -735,7 +735,7 @@
 			target.changeStatus("weakened", (4 * quality) SECONDS)
 		user.lastattacked = target
 
-/datum/limb/wendigo/severed_werewolf
+/datum/limb/brullbar/severed_werewolf
 	log_name = "severed werewolf limb"
 
 // Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears, which are currently commented out. Go there to make use of this.
