@@ -2802,6 +2802,7 @@ datum
 			fluid_g = 33
 			fluid_b = 28
 			transparency = 255
+			taste = "salty"
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				M.reagents.add_reagent("salt", 0.5 * mult)
