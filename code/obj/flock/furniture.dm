@@ -167,6 +167,7 @@
   if(isflock(user))
     return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
     <br><span class='bold'>ID:</span> Containment Capsule
+	<br><span class='bold'>System Integrity:</span> [round((src.health_attack/src.health_max)*100)]%
     <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
@@ -295,6 +296,7 @@
 	if(isflock(user))
 		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Reinforced Barricade
+		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 	else
 		return null // give the standard description

@@ -10,6 +10,7 @@
 	icon_state = "cage"
 	steam_on_death = 0
 	health = 30
+	var/health_max = 30
 	alpha = 192
 	var/datum/flock/flock
 	var/mob/living/occupant = null // todo: make this work with more than just humans (borgs, critters, probably not cubes)
@@ -167,6 +168,7 @@
 	if(isflock(user))
 		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Matter Reprocessor
+		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
 		<br><span class='bold'>Volume:</span> [src.reagents.get_reagent_amount(src.target_fluid)]
 		<br><span class='bold'>Needed volume:</span> [src.create_egg_at_fluid]
 		<br><span class='bold'>###=-</span></span>"}
