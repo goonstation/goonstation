@@ -82,7 +82,7 @@
 				src.visible_message("<span class='alert'><B>[src] pulls a [P.pull_out_name] out of themselves!</B></span>")
 				P.on_remove(M)
 				M.implant.Remove(P)
-				P.Attackhand(M)
+				src.put_in_hand(P)
 			else
 				src.visible_message("<span class='alert'><B>[src] tries to pull a [P.pull_out_name] out of themselves, but it's stuck in!</B></span>")
 			return
@@ -116,8 +116,7 @@
 				src.visible_message("<span class='alert'><B>[src] pulls a [P.pull_out_name] out of [target]!</B></span>")
 				P.on_remove(M)
 				M.implant.Remove(P)
-				P.set_loc(src)
-				P.Attackhand(src)
+				src.put_in_hand(P)
 			else
 				src.visible_message("<span class='alert'><B>[src] tries to pull a [P.pull_out_name] out of [target], but it's stuck in!</B></span>")
 			return
