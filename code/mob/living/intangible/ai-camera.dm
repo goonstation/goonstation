@@ -107,7 +107,7 @@
 
 		src.closeContextActions()
 		// contextbuttons can also exist on our mainframe and the eye shares the same hud, fun stuff.
-		src.mainframe.closeContextActions()
+		src.mainframe?.closeContextActions()
 
 		if (src.mainframe)
 			src.mainframe.tracker.cease_track()
