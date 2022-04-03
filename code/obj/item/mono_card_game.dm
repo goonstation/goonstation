@@ -72,4 +72,3 @@
 		card_name = "MONO"
 		card_style = "mono"
 		total_cards = 108
-		//Changes to card names as to seperate it from a specific game
