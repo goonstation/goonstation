@@ -129,21 +129,21 @@
 				if (lowertext(sechud_flag) != "none")
 					. += "<br><span class='notice'>[src.name] has a Security HUD flag set:</span> <span class='alert'>[sechud_flag]</span>"
 
-	if (locate(/obj/item/implant/projectile/dart) in src.implant)
+	if (locate(/obj/item/implant/projectile/body_visible/dart) in src.implant)
 		var/count = 0
-		for (var/obj/item/implant/projectile/dart/P in src.implant)
+		for (var/obj/item/implant/projectile/body_visible/dart/P in src.implant)
 			count++
 		. += "<br><span class='alert'>[src] has [count > 1 ? "darts" : "a dart"] stuck in them!</span>"
 
-	if (locate(/obj/item/implant/projectile/syringe) in src.implant)
+	if (locate(/obj/item/implant/projectile/body_visible/syringe) in src.implant)
 		var/count = 0
-		for (var/obj/item/implant/projectile/syringe/P in src.implant)
+		for (var/obj/item/implant/projectile/body_visible/syringe/P in src.implant)
 			count++
 		. += "<br><span class='alert'>[src] has [count > 1 ? "syringes" : "a syringe"] stuck in them!</span>"
 
-	if (locate(/obj/item/implant/projectile/arrow) in src.implant)
+	if (locate(/obj/item/implant/projectile/body_visible/arrow) in src.implant)
 		var/count = 0
-		for (var/obj/item/implant/projectile/arrow/P in src.implant)
+		for (var/obj/item/implant/projectile/body_visible/arrow/P in src.implant)
 			count++
 		. += "<br><span class='alert'>[src] has [count > 1 ? "arrows" : "an arrow"] stuck in them!</span>"
 

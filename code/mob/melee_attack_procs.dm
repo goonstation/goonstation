@@ -75,7 +75,7 @@
 	if (src == target)
 		var/mob/living/M = src
 
-		var/obj/item/implant/projectile/dart/P = locate(/obj/item/implant/projectile/dart) in M.implant
+		var/obj/item/implant/projectile/body_visible/P = locate(/obj/item/implant/projectile/body_visible) in M.implant
 
 		if (P?.barbed == FALSE)
 			src.visible_message("<span class='alert'><B>[src] pulls a dart out of themselves!</B></span>")
@@ -118,18 +118,7 @@
 	else
 		var/mob/living/M = target
 
-		var/obj/item/implant/projectile/dart/P = locate(/obj/item/implant/projectile/dart) in M.implant
-
-		if (P?.barbed == FALSE)
-			src.visible_message("<span class='alert'><B>[src] pulls a dart out of [target]!</B></span>")
-			P.on_remove(M)
-			M.implant.Remove(P)
-			P.set_loc(M.loc)
-		else if (P?.barbed == TRUE)
-			src.visible_message("<span class='alert'><B>[src] tries to pull a dart out of [target], but it's stuck in!</B></span>")
-
-		if (!P || P?.barbed == TRUE)
-			P = locate(/obj/item/implant/projectile/syringe) in M.implant
+		var/obj/item/implant/projectile/body_visible/P = locate(/obj/item/implant/projectile/body_visible) in M.implant
 
 			if (P?.barbed == FALSE)
 				src.visible_message("<span class='alert'><B>[src] pulls a syringe out of [target]!</B></span>")

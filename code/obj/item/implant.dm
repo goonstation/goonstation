@@ -851,59 +851,62 @@ THROWING DARTS
 		desc = "A bunch of jagged shards of metal."
 		icon_state = "2metal2"
 
-	dart
-		name = "dart"
-		icon = 'icons/obj/chemical.dmi'
-		desc = "A small hollow dart."
-		icon_state = "syringeproj"
+	body_visible
 		bleed_time = 0
 		var/barbed = FALSE
+		var/pull_out_name = ""
 
-		tranq_dart_sleepy
-			name = "tranquilizer dart"
-			desc = "A small tranquilizer dart, emptied of its contents. Useful for putting animals (or people!) to sleep."
-			icon_state = "tranqdart_red"
+		dart
+			name = "dart"
+			pull_out_name = "dart"
+			icon = 'icons/obj/chemical.dmi'
+			desc = "A small hollow dart."
+			icon_state = "syringeproj"
+
+			tranq_dart_sleepy
+				name = "spent tranquilizer dart"
+				desc = "A small tranquilizer dart, emptied of its contents. Useful for putting animals (or people!) to sleep."
+				icon_state = "tranqdart_red"
+
+				New()
+					..()
+					implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "tranqdart_red_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
+
+			tranq_dart_sleepy_barbed
+				name = "barbed tranquilizer dart"
+				desc = "An empty tranquilizer dart, with a barbed tip. It was likely loaded with some bad stuff..."
+				icon_state = "tranqdart_red_barbed"
+				barbed = TRUE
+
+				New()
+					..()
+					implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "tranqdart_red_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
+
+			tranq_dart_mutadone
+				name = "spent tranquilizer dart"
+				desc = "A small tranquilizer dart, emptied of its contents. This one is specialized for removing genetic mutations."
+				icon_state = "tranqdart_green"
+
+				New()
+					..()
+					implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "tranqdart_green_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
+
+		syringe
+			name = "spent syringe round"
+			pull_out_name = "syringe"
+			desc = "A syringe round, of the type that is fired from a syringe gun. Not very common."
+			icon = 'icons/obj/chemical.dmi'
+			icon_state = "syringeproj"
 
 			New()
 				..()
-				implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "tranqdart_red_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
+				implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "syringe_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
 
-		tranq_dart_sleepy_barbed
-			name = "barbed tranquilizer dart"
-			desc = "An empty tranquilizer dart, with a barbed tip. It was likely loaded with some bad stuff..."
-			icon_state = "tranqdart_red_barbed"
-			barbed = TRUE
-
-			New()
-				..()
-				implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "tranqdart_red_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
-
-		tranq_dart_mutadone
-			name = "tranquilizer dart"
-			desc = "A small tranquilizer dart, emptied of its contents. This one is specialized for removing genetic mutations."
-			icon_state = "tranqdart_green"
-
-			New()
-				..()
-				implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "tranqdart_green_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
-
-	syringe
-		name = "syringe"
-		desc = "A syringe, of the type that is fired from a syringe gun. Not very common."
-		icon = 'icons/obj/chemical.dmi'
-		icon_state = "syringeproj"
-		bleed_time = 0
-		var/barbed = FALSE
-
-		New()
-			..()
-			implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "syringe_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
-
-		syringe_barbed
-			name = "barbed syringe"
-			desc = "A syringe, of the type that is fired from a syringe gun. This one has a barbed tip."
-			icon_state = "syringeproj_barbed"
-			barbed = TRUE
+			syringe_barbed
+				name = "barbed syringe round"
+				desc = "A syringe round, of the type that is fired from a syringe gun. This one has a barbed tip."
+				icon_state = "syringeproj_barbed"
+				barbed = TRUE
 
 	blowdart
 		name = "blowdart"
@@ -1744,7 +1747,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 /* ------------------------- Throwing Darts ---------------------- */
 /* =============================================================== */
 
-/obj/item/implant/projectile/dart/bardart
+/obj/item/implant/projectile/body_visible/dart/bardart
 	name = "dart"
 	desc = "An object of d'art."
 	w_class = W_CLASS_TINY
@@ -1772,7 +1775,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 		src.pixel_y = 0
 		..()
 
-/obj/item/implant/projectile/dart/lawndart
+/obj/item/implant/projectile/body_visible/dart/lawndart
 	name = "lawn dart"
 	desc = "An oversized plastic dart with a metal spike at the tip. Fun for the whole family!"
 	w_class = W_CLASS_TINY

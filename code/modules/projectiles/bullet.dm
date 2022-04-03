@@ -241,7 +241,7 @@ toxic - poisons
 	icon_state = "tranqdart_red"
 	damage_type = D_TOXIC
 	hit_type = DAMAGE_BLUNT
-	implanted = /obj/item/implant/projectile/dart/tranq_dart_sleepy
+	implanted = /obj/item/implant/projectile/body_visible/dart/tranq_dart_sleepy
 	shot_sound = 'sound/effects/syringeproj.ogg'
 	dissipation_delay = 10
 	reagent_payload = "haloperidol"
@@ -250,7 +250,7 @@ toxic - poisons
 	syndicate
 		reagent_payload = "sodium_thiopental" // HEH
 		icon_state = "tranqdart_red_barbed"
-		implanted = /obj/item/implant/projectile/dart/tranq_dart_sleepy_barbed
+		implanted = /obj/item/implant/projectile/body_visible/dart/tranq_dart_sleepy_barbed
 
 		pistol
 			casing = /obj/item/casing/small
@@ -265,7 +265,7 @@ toxic - poisons
 	anti_mutant
 		reagent_payload = "mutadone" // HAH
 		icon_state = "tranqdart_green"
-		implanted = /obj/item/implant/projectile/dart/tranq_dart_mutadone
+		implanted = /obj/item/implant/projectile/body_visible/dart/tranq_dart_mutadone
 
 /datum/projectile/bullet/lmg
 	name = "bullet"

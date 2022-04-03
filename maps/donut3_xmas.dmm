@@ -13973,32 +13973,32 @@
 /area/station/science/chemistry)
 "dLT" = (
 /obj/table/wood/round/auto,
-/obj/item/implant/projectile/dart/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	dir = 8;
 	pixel_x = -1;
 	pixel_y = 8
 	},
-/obj/item/implant/projectile/dart/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	dir = 8;
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/implant/projectile/dart/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	dir = 8;
 	pixel_x = 2;
 	pixel_y = 1
 	},
-/obj/item/implant/projectile/dart/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	dir = 8;
 	pixel_x = 3;
 	pixel_y = 6
 	},
-/obj/item/implant/projectile/dart/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	dir = 8;
 	pixel_x = -4;
 	pixel_y = 11
 	},
-/obj/item/implant/projectile/dart/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	dir = 8;
 	pixel_x = 3;
 	pixel_y = 13
