@@ -6,6 +6,15 @@
 	p_class = 3
 	_max_health = 300
 	_health = 300
+	/// Anchored if TRUE
+	var/bolted = FALSE
+	/// Can't be broken open with melee
+	var/reinforced = FALSE
+
+	New()
+		..()
+		if (bolted)
+			anchored = 1
 
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (src.open || !src.locked)
@@ -16,11 +25,18 @@
 			..()
 		else if (isweldingtool(I))
 			..()
+		else if (iswrenchingtool(I))
+			if (istype(get_turf(src), /turf/space))
+				if (user)
+					user.show_text("What exactly are you gunna secure [src] to?", "red")
+				return
+			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/toggle_bolts, user, I.icon, I.icon_state,"", null)
 		else if (istype(I, /obj/item/card/))
 			..()
 		else if (user.a_intent == INTENT_HELP)
 			..()
-		else if (I.force > 0)
+		else if ((I.force > 0) && !reinforced)
 			user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]!</span>")
 			src._health -= clamp(I.force, 1, 20)
 			user.lastattacked = src
@@ -36,6 +52,14 @@
 				playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 90, 1)
 		else
 			..()
+
+	get_desc(dist)
+		. += "[reinforced ? "It's reinforced, only a bomb could break into this. " : ""] [bolted ? "It's bolted to the floor." : ""]"
+
+	proc/toggle_bolts(var/mob/M)
+		M.visible_message("<b>[M]</b> [src.bolted ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
+		src.bolted = !src.bolted
+		src.anchored = !src.anchored
 
 /obj/storage/secure/closet/personal
 	name = "personal locker"
@@ -66,6 +90,7 @@
 	icon_state = "command"
 	icon_closed = "command"
 	icon_opened = "secure_blue-open"
+	bolted = TRUE
 
 /obj/storage/secure/closet/command/captain
 	name = "\improper Captain's locker"
@@ -92,6 +117,7 @@
 
 /obj/storage/secure/closet/command/hos
 	name = "\improper Head of Security's locker"
+	reinforced = TRUE
 	req_access = list(access_maxsec)
 	spawn_contents = list(/obj/item/storage/box/id_kit,
 	/obj/item/handcuffs,
@@ -245,6 +271,7 @@
 
 /obj/storage/secure/closet/security/armory
 	name = "\improper Special Equipment locker"
+	reinforced = TRUE
 	req_access = list(access_maxsec)
 	spawn_contents = list(/obj/item/requisition_token/security = 2,
 	/obj/item/turret_deployer/riot = 2,
@@ -256,6 +283,7 @@
 
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items locker"
+	reinforced = TRUE
 	req_access = list(access_brig)
 
 // Old Mushroom-era feature I fixed up (Convair880).
