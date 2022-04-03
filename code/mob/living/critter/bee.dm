@@ -472,7 +472,7 @@
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to sting."))
 			return 1
 		var/mob/living/MT = target
@@ -540,7 +540,7 @@
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to swallow."))
 			return 1
 		var/mob/living/MT = target
@@ -589,7 +589,7 @@
 		if (target == holder.owner)
 			return 1
 		var/mob/living/MT = target
-		if (get_dist(holder.owner, target) > 1)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to teleport away."))
 			return 1
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner]</b> stares at [MT]!</span>")
@@ -601,7 +601,7 @@
 			if ((get_dist(holder.owner, MT) <= 6) && !isdead(holder.owner))
 				MT.visible_message("<span class='combat'><b>[MT] clutches their temples!</b></span>")
 				MT.emote("scream")
-				MT.setStatus("paralysis", max(MT.getStatusDuration("paralysis"), 20 SECONDS))
+				MT.setStatusMin("paralysis", 20 SECONDS)
 				MT.take_brain_damage(10)
 
 				do_teleport(MT, locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1), 0)

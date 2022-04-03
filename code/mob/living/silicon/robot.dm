@@ -937,7 +937,7 @@
 					boutput(user, "You emag [src]'s interface.")
 				src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
 				src.emagged = 1
-				logTheThing("station", src, src.law_rack_connection, "[src.name] is emagged by [user] and loses connection to rack.")
+				logTheThing("station", src, null, "[src.name] is emagged by [user] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
 				src.law_rack_connection = null //emagging removes the connection for laws, essentially nulling the laws and allowing the emagger to connect this borg to a different rack
 				if (src.mind && !src.mind.special_role) // Preserve existing antag role (if any).
 					src.mind.special_role = ROLE_EMAGGED_ROBOT
@@ -1089,13 +1089,13 @@
 			if(linker.linked_rack in ticker.ai_law_rack_manager.registered_racks)
 				if(src.emagged)
 					boutput(user, "The link port sparks violently! It didn't work!")
-					logTheThing("station", src, null, "[user] tried to connect [src] to the rack at [log_loc(src.law_rack_connection)] but they are emagged, so it failed.")
+					logTheThing("station", src, null, "[constructName(user)] tried to connect [src] to the rack [constructName(src.law_rack_connection)] but they are emagged, so it failed.")
 					elecflash(src,power=2)
 				if(src.law_rack_connection)
 					var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
 					if (raw == "Yes")
 						src.law_rack_connection = linker.linked_rack
-						logTheThing("station", src, src.law_rack_connection, "[src.name] is connected to the rack at [log_loc(src.law_rack_connection)] with a linker by [user]")
+						logTheThing("station", src, src.law_rack_connection, "[src.name] is connected to the rack [constructName(src.law_rack_connection)] with a linker by [constructName(user)]")
 						var/area/A = get_area(src.law_rack_connection)
 						boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
 						src.playsound_local(src, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
@@ -1300,7 +1300,7 @@
 			var/action = input("What do you want to do?", "Cyborg Deconstruction") in actions
 			if (!action) return
 			if (action == "Do nothing") return
-			if (get_dist(src.loc,user.loc) > 1 && (!user.bioHolder || !user.bioHolder.HasEffect("telekinesis")))
+			if (BOUNDS_DIST(src.loc, user.loc) > 0 && (!user.bioHolder || !user.bioHolder.HasEffect("telekinesis")))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
 				return
 
@@ -1462,10 +1462,11 @@
 	attack_hand(mob/user)
 
 		var/list/available_actions = list()
-		if (src.brainexposed && src.part_head.brain)
-			available_actions.Add("Remove the Brain")
-		if (src.brainexposed && src.part_head.ai_interface)
-			available_actions.Add("Remove the AI Interface")
+		if (src.part_head)
+			if (src.brainexposed && src.part_head.brain)
+				available_actions.Add("Remove the Brain")
+			if (src.brainexposed && src.part_head.ai_interface)
+				available_actions.Add("Remove the AI Interface")
 		if (src.opened && !src.wiresexposed)
 			if (src.upgrades.len)
 				available_actions.Add("Remove an Upgrade")
@@ -1479,7 +1480,7 @@
 			var/action = input("What do you want to do?", "Cyborg Maintenance") as null|anything in available_actions
 			if (!action)
 				return
-			if (get_dist(src.loc,user.loc) > 1 && !src.bioHolder?.HasEffect("telekinesis"))
+			if (BOUNDS_DIST(src.loc, user.loc) > 0 && !src.bioHolder?.HasEffect("telekinesis"))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
 				return
 

@@ -114,11 +114,11 @@
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the output target for [src].</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>[src] is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -147,7 +147,7 @@
 		if (!src.output_target)
 			return src.loc
 
-		if (get_dist(src.output_target,src) > 1)
+		if (BOUNDS_DIST(src.output_target, src) > 0)
 			src.output_target = null
 			return src.loc
 
@@ -248,7 +248,7 @@
 		return jointext(html, "")
 
 	Topic(href, href_list)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(BOUNDS_DIST(usr, src) > 0 || usr.z != src.z) return
 
 		if(href_list["tab"])
 			tab = href_list["tab"]

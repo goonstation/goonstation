@@ -20,7 +20,7 @@
 			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			if (!src.loc || get_dist(src, user) > 1)
+			if (!src.loc || BOUNDS_DIST(src, user) > 0)
 				return
 			var/obj/item/raw_material/new_stack = split_stack(splitnum)
 			user.put_in_hand_or_drop(new_stack)

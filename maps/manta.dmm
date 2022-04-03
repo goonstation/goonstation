@@ -3928,10 +3928,10 @@
 /turf/simulated/floor,
 /area/listeningpost/syndicateassaultvessel)
 "amY" = (
-/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-5"
 	},
+/obj/machinery/power/apc/autoname_west/noaicontrol,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},

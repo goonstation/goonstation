@@ -1395,7 +1395,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 		var/frosting_type = null
 		frosting_type = input("Which frosting style would you like?", "Frosting Style", null) as null|anything in frosting_styles
-		if(frosting_type && (get_dist(src, user) <= 1))
+		if(frosting_type && (BOUNDS_DIST(src, user) == 0))
 			frosting_type = src.frosting_styles[frosting_type]
 			var/datum/color/average = tube.reagents.get_average_color()
 			var/image/frosting_overlay = new(src.icon, frosting_type)

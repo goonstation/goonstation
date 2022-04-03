@@ -143,7 +143,7 @@ datum
 						M.emote("twitch_s")
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(1 * mult)
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 4 SECONDS))
+						M.setStatusMin("stunned", 4 SECONDS * mult)
 						M.change_eye_blurry(7, 7)
 						M.reagents.add_reagent("salts1", 5 * mult)
 					else if (effect <= 7)
@@ -154,7 +154,7 @@ datum
 						M.visible_message("<span class='alert'><b>[M.name]'s</b> eyes dilate!</span>")
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(1 * mult)
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 4 SECONDS))
+						M.setStatusMin("stunned", 4 SECONDS * mult)
 						M.change_eye_blurry(7, 7)
 						M.reagents.add_reagent("salts1", 5 * mult)
 					else if (effect <= 4)
@@ -162,7 +162,7 @@ datum
 						M.make_jittery(50)
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(1 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 9 SECONDS))
+						M.setStatusMin("weakened", 9 SECONDS * mult)
 						M.emote("gasp")
 						M.reagents.add_reagent("salts1", 5 * mult)
 					else if (effect <= 7)
@@ -252,7 +252,7 @@ datum
 						M.bodytemperature += rand(5,30) * mult
 						M.take_brain_damage(1 * mult)
 						M.take_toxin_damage(1 * mult)
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS))
+						M.setStatusMin("stunned", 3 SECONDS * mult)
 					else if (effect <= 7)
 						M.make_jittery(30)
 						M.emote("grumble")
@@ -261,13 +261,13 @@ datum
 						M.visible_message("<span class='alert'><b>[M.name]</b> is sweating like a pig!</span>")
 						M.bodytemperature += rand(20,100) * mult
 						M.take_toxin_damage(5 * mult)
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 4 SECONDS))
+						M.setStatusMin("stunned", 4 SECONDS * mult)
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'><b>[M.name]</b> starts tweaking the hell out!</span>")
 						M.make_jittery(100)
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(8 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS))
+						M.setStatusMin("weakened", 4 SECONDS * mult)
 						M.change_misstep_chance(25 * mult)
 						M.emote("scream")
 						M.reagents.add_reagent("salts1", 5 * mult)
@@ -289,13 +289,20 @@ datum
 			transparency = 20
 			value = 6 // 4 2
 			thirst_value = -0.03
+			var/current_color_pattern = 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.druggy = max(M.druggy, 15)
 				// TODO. Write awesome hallucination algorithm!
 //				if(M.canmove) step(M, pick(cardinal))
 //				if(prob(7)) M.emote(pick("twitch","drool","moan","giggle"))
+				if(prob(20))
+					if(src.current_color_pattern == 1)
+						animate_fade_drug_inbetween_1(M.client, 40)
+						src.current_color_pattern = 2
+					else
+						animate_fade_drug_inbetween_2(M.client, 40)
+						src.current_color_pattern = 1
 				if(probmult(6))
 					switch(rand(1,2))
 						if(1)
@@ -337,6 +344,13 @@ datum
 				if(method == INGEST)
 					boutput(M, "<span class='alert'><font face='[pick("Arial", "Georgia", "Impact", "Mucida Console", "Symbol", "Tahoma", "Times New Roman", "Verdana")]' size='[rand(3,6)]'>Holy shit, you start tripping balls!</font></span>")
 				return
+
+			on_mob_life_complete(var/mob/living/M)
+				if(src.current_color_pattern == 1)
+					animate_fade_from_drug_1(M.client, 40)
+				else
+					animate_fade_from_drug_2(M.client, 40)
+
 
 		drug/lsd_bee
 			name = "lsbee"
@@ -565,19 +579,19 @@ datum
 						boutput(M, "<span class='alert'><b>You can't breathe!</b></span>")
 						M.take_oxygen_deprivation(15 * mult)
 						M.take_toxin_damage(3 * mult)
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 1 SECOND * mult))
+						M.setStatusMin("stunned", 1 SECOND * mult)
 					else if (effect <= 4)
 						boutput(M, "<span class='alert'><b>You feel terrible!</b></span>")
 						M.emote("drool")
 						M.make_jittery(10)
 						M.take_toxin_damage(5 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 1 SECOND * mult))
+						M.setStatusMin("weakened", 1 SECOND * mult)
 						M.change_misstep_chance(33 * mult)
 					else if (effect <= 7)
 						M.emote("collapse")
 						boutput(M, "<span class='alert'><b>Your heart is pounding!</b></span>")
 						M << sound('sound/effects/heartbeat.ogg')
-						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 5 SECONDS * mult))
+						M.setStatusMin("paralysis", 5 SECONDS * mult)
 						M.make_jittery(30)
 						M.take_toxin_damage(6 * mult)
 						M.take_oxygen_deprivation(20 * mult)
@@ -720,12 +734,12 @@ datum
 								if(3)
 									boutput(M, "<span class='alert'><b>Unknown has punched [M]</b></span>")
 									boutput(M, "<span class='alert'><b>Unknown has weakened [M]</b></span>")
-									M.setStatus("weakened", max(M.getStatusDuration("weakened"), 1 SECOND))
+									M.setStatusMin("weakened", 1 SECOND * mult)
 									M.playsound_local(M.loc, pick(sounds_punch), 50, 1)
 								if(4)
 									boutput(M, "<span class='alert'><b>[M] has been attacked with the taser gun by Unknown</b></span>")
 									boutput(M, "<i>You can almost hear someone talking...</i>")
-									M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 3 SECONDS))
+									M.setStatusMin("paralysis", 3 SECONDS * mult)
 				..()
 
 
@@ -756,7 +770,7 @@ datum
 				if(prob(5))
 					boutput(M, "<span class='alert'><b>You feel too chill!</b></span>")
 					M.emote(pick("yawn", "drool"))
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
+					M.setStatusMin("stunned", 2 SECONDS * mult)
 					M.take_toxin_damage(1 * mult)
 					M.take_brain_damage(1 * mult)
 					M.bodytemperature -= 20 * mult
@@ -771,7 +785,7 @@ datum
 				if (severity == 1)
 					if (effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]</b> looks dazed!</span>")
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 4 SECONDS))
+						M.setStatusMin("stunned", 4 SECONDS * mult)
 						M.emote("drool")
 					else if (effect <= 4)
 						M.emote("shiver")
@@ -787,7 +801,7 @@ datum
 						M.visible_message("<span class='alert'><b>[M.name]</b> sways and falls over!</span>")
 						M.take_toxin_damage(3 * mult)
 						M.take_brain_damage(3 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 9 SECONDS * mult))
+						M.setStatusMin("weakened", 9 SECONDS * mult)
 						M.emote("faint")
 					else if (effect <= 4)
 						if(ishuman(M))
@@ -909,7 +923,7 @@ datum
 					if (effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]</b> can't seem to control their legs!</span>")
 						M.change_misstep_chance(12 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
+						M.setStatusMin("weakened", 5 SECONDS * mult)
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")
 						M.drop_item()
@@ -928,7 +942,7 @@ datum
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'><b>[M.name]</b> falls to the floor and flails uncontrollably!</span>")
 						M.make_jittery(10)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 10 SECONDS * mult))
+						M.setStatusMin("weakened", 10 SECONDS * mult)
 					else if (effect <= 7)
 						M.emote("laugh")
 
@@ -1004,7 +1018,7 @@ datum
 					if (effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]</b> can't seem to control their legs!</span>")
 						M.change_misstep_chance(20 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
+						M.setStatusMin("weakened", 5 SECONDS * mult)
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")
 						M.drop_item()
@@ -1028,7 +1042,7 @@ datum
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'><b>[M.name]</b> falls to the floor and flails uncontrollably!</span>")
 						M.make_jittery(10)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 2 SECONDS * mult))
+						M.setStatusMin("weakened", 2 SECONDS * mult)
 					else if (effect <= 7)
 						M.emote("laugh")
 

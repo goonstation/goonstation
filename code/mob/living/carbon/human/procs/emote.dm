@@ -1769,7 +1769,7 @@
 										do_flip = FALSE
 									if(do_flip && (!oldloc.Enter(tmob) || !newloc.Enter(src)))
 										do_flip = FALSE
-									if(do_flip && !IN_RANGE(newloc, oldloc, 1))
+									if(do_flip && !(BOUNDS_DIST(newloc, oldloc) == 0))
 										do_flip = FALSE
 									if(do_flip)
 										for(var/atom/movable/obstacle in oldloc)
@@ -2323,7 +2323,7 @@
 /mob/living/proc/do_suplex(obj/item/grab/G)
 	if (!(G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc)))
 		return null
-	if(!IN_RANGE(src, G.affecting, 1))
+	if(!(BOUNDS_DIST(src, G.affecting) == 0))
 		return null
 
 	var/obj/table/tabl = locate() in src.loc.contents
@@ -2360,6 +2360,7 @@
 		G.affecting.force_laydown_standup()
 		SPAWN(0.8 SECONDS) //let us do that combo shit people like with throwing
 			src.force_laydown_standup()
+			qdel(G)
 
 		G.affecting.TakeDamage("head", 9, 0, 0, DAMAGE_BLUNT)
 		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)

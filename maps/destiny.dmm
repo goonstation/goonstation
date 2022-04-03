@@ -8838,7 +8838,6 @@
 /area/station/hallway/primary/southeast)
 "aKe" = (
 /obj/machinery/door/airlock/pyro{
-	dir = 2;
 	name = "Restroom"
 	},
 /obj/firedoor_spawn,
@@ -15684,9 +15683,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bzl" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "bzn" = (
 /obj/lattice{
@@ -16252,13 +16249,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	noalerts = 1;
-	pixel_x = -24
-	},
 /obj/marker/supplymarker,
+/obj/machinery/power/apc/autoname_west/noaicontrol,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -34776,6 +34768,12 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
+"kJZ" = (
+/obj/machinery/r_door_control/podbay/security/new_walls/west{
+	pixel_x = -24
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/sec)
 "kKn" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -44844,23 +44842,6 @@
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"qeV" = (
-/obj/machinery/door/poddoor/blast{
-	autoclose = 1;
-	dir = 4;
-	id = "pod_port";
-	layer = 4;
-	name = "West Pod Hangar"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/engine{
-	icon_state = "engine_caution_south"
-	},
-/area/station/hangar/sec)
 "qff" = (
 /obj/machinery/recharger/wall{
 	pixel_y = 32
@@ -47204,17 +47185,13 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "rsa" = (
-/obj/machinery/door_control{
-	id = "pod_port";
-	name = "Hangar Door Control";
-	pixel_x = -24
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
+/obj/machinery/door_control/podbay/security/new_walls/west,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "rsg" = (
@@ -47974,25 +47951,6 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
-"rMT" = (
-/obj/machinery/door/poddoor/blast{
-	autoclose = 1;
-	dir = 4;
-	doordir = "left";
-	icon_state = "bdoorleft1";
-	id = "pod_port";
-	layer = 4;
-	name = "West Pod Hangar"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/engine{
-	icon_state = "engine_caution_south"
-	},
-/area/station/hangar/sec)
 "rMU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -52777,23 +52735,13 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "uuE" = (
-/obj/machinery/door/poddoor/blast{
-	autoclose = 1;
-	dir = 4;
-	doordir = "right";
-	icon_state = "bdoorright1";
-	id = "pod_port";
-	layer = 4;
-	name = "West Pod Hangar"
-	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/engine{
-	icon_state = "engine_caution_south"
-	},
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
+/turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "uuU" = (
 /obj/item/storage/box/biohazard_bags,
@@ -94206,9 +94154,9 @@ plD
 xJT
 xJT
 xJT
+kJZ
 xJT
-xJT
-rMT
+uuE
 lqq
 aaa
 aag
@@ -94510,7 +94458,7 @@ xJT
 hrs
 xJT
 xJT
-qeV
+uuE
 lqq
 aaa
 aag
