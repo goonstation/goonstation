@@ -77,24 +77,15 @@
 
 		var/obj/item/implant/projectile/body_visible/P = locate(/obj/item/implant/projectile/body_visible) in M.implant
 
-		if (P?.barbed == FALSE)
-			src.visible_message("<span class='alert'><B>[src] pulls a dart out of themselves!</B></span>")
-			P.on_remove(M)
-			M.implant.Remove(P)
-			P.set_loc(M.loc)
-		else if (P?.barbed == TRUE)
-			src.visible_message("<span class='alert'><B>[src] tries to pull a dart out of themselves, but it's stuck in!</B></span>")
-
-		if (!P || P?.barbed == TRUE)
-			P = locate(/obj/item/implant/projectile/syringe) in M.implant
-
-			if (P?.barbed == FALSE)
-				src.visible_message("<span class='alert'><B>[src] pulls a syringe out of themselves!</B></span>")
+		if (P)
+			if (P.barbed == FALSE)
+				src.visible_message("<span class='alert'><B>[src] pulls a [P.pull_out_name] out of themselves!</B></span>")
 				P.on_remove(M)
 				M.implant.Remove(P)
-				P.set_loc(M.loc)
-			else if (P?.barbed == TRUE)
-				src.visible_message("<span class='alert'><B>[src] tries to pull a syringe out of themselves, but it's stuck in!</B></span>")
+				P.Attackhand(M)
+			else
+				src.visible_message("<span class='alert'><B>[src] tries to pull a [P.pull_out_name] out of themselves, but it's stuck in!</B></span>")
+			return
 
 		var/obj/stool/S = (locate(/obj/stool) in src.loc)
 		if (S)
@@ -120,13 +111,15 @@
 
 		var/obj/item/implant/projectile/body_visible/P = locate(/obj/item/implant/projectile/body_visible) in M.implant
 
-			if (P?.barbed == FALSE)
-				src.visible_message("<span class='alert'><B>[src] pulls a syringe out of [target]!</B></span>")
+		if (P)
+			if (P.barbed == FALSE)
+				src.visible_message("<span class='alert'><B>[src] pulls a [P.pull_out_name] out of [target]!</B></span>")
 				P.on_remove(M)
 				M.implant.Remove(P)
-				P.set_loc(M.loc)
-			else if (P?.barbed == TRUE)
-				src.visible_message("<span class='alert'><B>[src] tries to pull a syringe out of [target], but it's stuck in!</B></span>")
+				P.Attackhand(src)
+			else
+				src.visible_message("<span class='alert'><B>[src] tries to pull a [P.pull_out_name] out of [target], but it's stuck in!</B></span>")
+			return
 
 		if (target.lying)
 			src.visible_message("<span class='notice'>[src] shakes [target], trying to wake them up!</span>")
