@@ -116,7 +116,39 @@
 		if(!QDELETED(origin))
 			src.set_loc(get_turf(origin))
 
-// receive volunteers to be a promoted flockdrone
+
+/mob/living/intangible/flock/flockmind/proc/partition()
+	boutput(src, "<span class='notice'>Partitioning initiated. Stand by.</span>")
+
+	var/ghost_confirmation_delay = 30 SECONDS
+
+	var/list/text_messages = list()
+	text_messages.Add("Would you like to respawn as a Flocktrace? Your name will be added to the list of eligible candidates.")
+	text_messages.Add("You are eligible to be respawned as a Flocktrace. You have [ghost_confirmation_delay / 10] seconds to respond to the offer.")
+	text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
+
+	message_admins("Sending Flocktrace offer to eligible ghosts. They have [ghost_confirmation_delay / 10] seconds to respond.")
+	var/list/candidates = dead_player_list(FALSE, ghost_confirmation_delay, text_messages)
+
+	if (!src) // doesnt work yet
+		message_admins("[src.real_name] has died during a Flocktrace respawn offer event.")
+		logTheThing("admin", null, null, "No Flocktraces were created for [src.real_name] due to their death.")
+		return TRUE
+
+	if (!length(candidates))
+		message_admins("No ghosts responded to a Flocktrace offer from [src.real_name]")
+		logTheThing("admin", null, null, "No ghosts responded to Flocktrace offer from [src.real_name]")
+		boutput(src, "<span class='alert'>Unable to partition, please try again later.</span>")
+		return TRUE
+
+	var/mob/picked = pick(candidates)
+
+	message_admins("[picked.key] respawned as a Flocktrace under [src.real_name].")
+	logTheThing("admin", picked.key, null, "respawned as a Flocktrace under [src.real_name].")
+
+	picked.make_flocktrace(get_turf(src), src.flock)
+
+// old code for flocktrace respawns
 /datum/ghost_notification/respawn/flockdrone
 	respawn_explanation = "flockmind partition"
 	icon = 'icons/misc/featherzone.dmi'
@@ -141,9 +173,3 @@
 		message_admins("[key_name(src)] made [key_name(trace)] a flocktrace via ghost volunteer respawn.")
 		logTheThing("admin", src, trace, "made [key_name(trace)] a flocktrace via ghost volunteer respawn.")
 		flock_speak(null, "Trace partition \[ [trace.real_name] \] has been instantiated.", src.flock)
-
-/mob/living/intangible/flock/flockmind/proc/partition()
-	// send out a request to ghosts
-	ghost_notifier.send_notification(src, src, /datum/ghost_notification/respawn/flockdrone)
-	boutput(src, "<span class='notice'>Partitioning initiated. Stand by.</span>")
-
