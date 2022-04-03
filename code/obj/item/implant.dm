@@ -894,7 +894,7 @@ THROWING DARTS
 		syringe
 			name = "spent syringe round"
 			pull_out_name = "syringe"
-			desc = "A syringe round, of the type that is fired from a syringe gun. Not very common."
+			desc = "A syringe round, of the type that is fired from a syringe gun. Whatever was inside is completely gone."
 			icon = 'icons/obj/chemical.dmi'
 			icon_state = "syringeproj"
 
@@ -904,7 +904,7 @@ THROWING DARTS
 
 			syringe_barbed
 				name = "barbed syringe round"
-				desc = "A syringe round, of the type that is fired from a syringe gun. This one has a barbed tip."
+				desc = "An empty syringe round, of the type that is fired from a syringe gun. It has a barbed tip. Nasty!"
 				icon_state = "syringeproj_barbed"
 				barbed = TRUE
 
