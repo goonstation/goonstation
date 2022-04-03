@@ -1,4 +1,9 @@
 
+(t)sun apr 03 22
+(u)LeahTheTech
+(p)8058
+(e)🆕|feature
+(*)AI law changes are now highlighted and display removed laws
 (t)sat apr 02 22
 (u)aloe
 (+)Pods now "eject" you on exploding. This also applies to the SEED.
