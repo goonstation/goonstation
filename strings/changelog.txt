@@ -1,5 +1,9 @@
 
 (t)sun apr 03 22
+(u)ThyOverlord
+(p)8072
+(e)🎨|sprites
+(+)Resprited Mono cards and their respective stacks/hands. Also updated MonoRules.txt to
 (u)LeahTheTech
 (p)8058
 (e)🆕|feature
