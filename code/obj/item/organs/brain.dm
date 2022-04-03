@@ -169,13 +169,22 @@
 	else
 		return null // give the standard description
 
-/obj/item/organ/brain/ghost
+/datum/manufacture/ghost_brain // Move to manufacturing.dm
+	name = "Ghost Intelligence Core"
+	item_paths = list("MET-1","CON-1","ALL", "soulsteel")
+	item_amounts = list(6,5,3,5)
+	item_outputs = list(/obj/item/organ/brain/ghost)
+	time = 45 SECONDS
+	create = 1
+	category = "Component"
+
+/obj/item/organ/brain/ghost // Move to brain.dm
 	name = "Ghost Intelligence Core"
 	desc = "A brain shaped mass of silicon, soulsteel, and LED lights. Attempts to hold onto soul to give life to something else."
-	icon_state = "ai_brain"
+	icon_state = "ghost_brain"
 	item_state = "ai_brain"
 	created_decal = /obj/decal/cleanable/oil
-	made_from = "soulsteel"
+	made_from = "pharosium"
 	var/activated = 0
 	var/lastTrigger
 	var/datum/movement_controller/ghost_brain/MC
@@ -184,8 +193,6 @@
 		..()
 		MC = new
 
-	get_movement_controller()
-		.= MC
 
 	get_desc()
 		if (usr?.traitHolder?.hasTrait("training_medical"))
@@ -200,58 +207,154 @@
 			else
 				. += "<br><span class='alert'>[src] is brand new. No conciousness has entered it yet.</span>"
 
+	on_life()
+		var/mob/living/M = holder.donor
+		if(!ishuman(M)) // silicon shouldn't have these problems
+			return
+
+		if(M.client && (isnull(M.client.color) || M.client.color == "#FFFFFF") && !ON_COOLDOWN(src,"ghost_eyes", 5 MINUTES))
+			animate(M.client, color=COLOR_MATRIX_GRAYSCALE, time=5 SECONDS, easing=SINE_EASING)
+			animate(color=COLOR_MATRIX_IDENTITY, time=30 SECONDS, easing=SINE_EASING)
+		if(prob(1))
+			boutput(M,"You find you lose control of your body for a moment...")
+			M.changeStatus("paralysis", 2 SECONDS)
+		if(prob(1))
+			boutput(M,"You suddenly feel sluggish as though your connection to your body isn't as strong.")
+			M.changeStatus("slowed", 8 SECONDS, 2)
+
+	get_movement_controller()
+		.= MC
+
 	Crossed(atom/movable/AM)
 		..()
-		if (istype(AM, /mob/dead/observer) && prob(33))
-			var/mob/dead/observer/O = AM
-			if(O.observe_round) return
-			if(world.time - lastTrigger < 20 SECONDS)
-				boutput(AM, "<span class='alert'>[src] can not be possessed again so soon!</span>")
-				return
-			lastTrigger = world.time
 
+		var/mob/dead/observer/O = AM
+		if(istype(O))
+			actions.start(new/datum/action/bar/capture_ghost(O), src)
 
-			var/mob/mobenter = AM
-			if(mobenter.client)
-				activated = TRUE
-				AM.set_loc(src)
-				if(MC)
-					mobenter.use_movement_controller = src
-				// OB.canspeak = 0
-				// SHOW_SOULSTEEL_TIPS(OB)
-		return
-
-	relaymove(mob/user, direction, delay, running)
+	Entered(atom/movable/A,atom/OldLoc)
 		. = ..()
-		if(!ON_COOLDOWN(src,"ghost_glow", 5 SECONDS))
-			src.visible_message("[src] glows brightly momentarily.")
+		var/mob/dead/observer/O = A
+		if(MC && istype(O) )
+			O.use_movement_controller = src
+			O.setStatus("bound_ghost", duration = 2 MINUTES, optional=list("anchor"=src, "client"=O.client))
+			if (istype(O.abilityHolder, /datum/abilityHolder/ghost_observer))
+				var/datum/abilityHolder/ghost_observer/GH = O.abilityHolder
+				GH.disable(TRUE)
+				GH.updateButtons()
+
+	Exited(atom/movable/A,atom/OldLoc)
+		. = ..()
+		var/mob/dead/observer/O = A
+		if(istype(O) && O.use_movement_controller == src)
+			O.use_movement_controller = null
+
+			if (istype(O.abilityHolder, /datum/abilityHolder/ghost_observer))
+				var/datum/abilityHolder/ghost_observer/GH = O.abilityHolder
+				GH.disable(FALSE)
+				GH.updateButtons()
+
+/datum/action/bar/capture_ghost
+	id = "capture_ghost"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 5 SECONDS
+	var/mob/dead/observer/target
+	var/image/pulling
+
+	New(mob/dead/observer/O)
+		..()
+		if (istype(O))
+			target = O
+		if(!pulling)
+			pulling = image('icons/effects/effects.dmi',"pulling",pixel_y=16)
+			pulling.alpha = 200
+
+	onUpdate()
+		..()
+		if(GET_DIST(target,owner) != 0)
+			interrupt(INTERRUPT_ALWAYS)
+
+	onStart()
+		..()
+		boutput(target, "<span class='notice'>You feel yourself being pulled into [owner]!</span>")
+		owner.UpdateOverlays(pulling, "pulling")
+
+	onEnd()
+		..()
+		var/obj/item/organ/brain/ghost/B = owner
+		if(target.observe_round) return
+		if(B && target.client)
+			B.activated = TRUE
+			playsound(B, "sound/effects/suck.ogg", 20, TRUE, 0, 0.9)
+			B.setOwner(target.mind)
+			target.set_loc(B)
+			target.changeStatus("ghost_bound", 2 MINUTES, B)
+
+	onDelete()
+		..()
+		owner.ClearSpecificOverlays("pulling")
+
 
 /datum/movement_controller/ghost_brain
 	keys_changed(mob/user, keys, changed)
-		if (changed & (KEY_FORWARD|KEY_BACKWARD|KEY_RIGHT|KEY_LEFT))
-			var/move_x = 0
-			var/move_y = 0
-			if (keys & KEY_FORWARD)
-				move_y += 1
-			if (keys & KEY_BACKWARD)
-				move_y -= 1
-			if (keys & KEY_RIGHT)
-				move_x += 1
-			if (keys & KEY_LEFT)
-				move_x -= 1
-			if (move_x || move_y)
-				if(!user.move_dir && user.canmove && user.restrained())
-					if (user.pulled_by || length(user.grabbed_by))
-						boutput(user, "<span class='notice'>You're restrained! You can't move!</span>")
 
-				user.move_dir = angle2dir(arctan(move_y, move_x))
-				//attempt_move(user)
-				if(!ON_COOLDOWN(src,"ghost_glow", 5 SECONDS))
-					src.visible_message("[src] glows brightly momentarily.")
-			else
-				user.move_dir = 0
+		var/obj/O = user.loc
+		if(istype(O))
+			if (changed & (KEY_FORWARD|KEY_BACKWARD|KEY_RIGHT|KEY_LEFT))
+				var/move_x = 0
+				var/move_y = 0
+				if (keys & KEY_FORWARD)
+					move_y += 1
+				if (keys & KEY_BACKWARD)
+					move_y -= 1
+				if (keys & KEY_RIGHT)
+					move_x += 1
+				if (keys & KEY_LEFT)
+					move_x -= 1
+				if (move_x || move_y)
+					if(!user.move_dir && user.canmove && user.restrained())
+						if (user.pulled_by || length(user.grabbed_by))
+							boutput(user, "<span class='notice'>You're restrained! You can't move!</span>")
 
-		if(!user.dir_locked) //in order to not turn around and good fuckin ruin the emote animation
-			user.set_dir(user.move_dir)
-		if (changed & (KEY_THROW|KEY_PULL|KEY_POINT|KEY_EXAMINE|KEY_BOLT|KEY_OPEN|KEY_SHOCK)) // bleh
-			user.update_cursor()
+					user.move_dir = angle2dir(arctan(move_y, move_x))
+					//attempt_move(user)
+					if(!ON_COOLDOWN(user,"ghost_glow", 5 SECONDS))
+						O.visible_message("[O] glows brightly momentarily.")
+					if(!ON_COOLDOWN(user,"ghost_wiggle", 1 SECONDS))
+						animate(O, time=0.5 SECONDS, pixel_x=move_x, pixel_y=move_y, flags=ANIMATION_RELATIVE)
+						animate(pixel_x=-move_x, pixel_y=-move_y, time=0.2 SECONDS, flags=ANIMATION_RELATIVE)
+				else
+					user.move_dir = 0
+
+			if(!user.dir_locked)
+				user.set_dir(user.move_dir)
+			if (changed & (KEY_THROW|KEY_PULL|KEY_POINT|KEY_EXAMINE|KEY_BOLT|KEY_OPEN|KEY_SHOCK)) // bleh
+				user.update_cursor()
+
+/datum/statusEffect/bound_ghost
+	id= "bound_ghost"
+	var/atom/bound_target
+	var/client/target_client
+	move_triggered = TRUE
+	onAdd(optional)
+		..()
+		var/list/statusargs = optional
+		if(statusargs["anchor"])
+			bound_target = statusargs["anchor"]
+		if(statusargs["client"])
+			target_client = statusargs["client"]
+
+	onUpdate()
+		..()
+		get_back_here()
+
+	move_trigger(mob/user, ev)
+		. = 0
+		get_back_here()
+
+	proc/get_back_here()
+		var/mob/dead/observer/ghost = owner
+		if(istype(ghost) && bound_target && ghost.loc != bound_target)
+			boutput(ghost, "You find yourself pulled back into [bound_target]!")
+			ghost.set_loc(bound_target)
+

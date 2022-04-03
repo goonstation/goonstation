@@ -93,6 +93,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	tabName = "Abilities"
 	cast_while_dead = 1
 	var/display_buttons = 1
+	var/disabled = FALSE
 
 #ifdef HALLOWEEN
 	usesPoints = 1
@@ -133,6 +134,9 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		..()
 		add_all_abilities()
 		updateButtons()
+
+	proc/disable(disable)
+		src.disabled = disable
 
 	proc/toggle()
 		if (!islist(src.abilities))
@@ -214,6 +218,18 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	preferred_holder_type = /datum/abilityHolder/ghost_observer
 	icon = 'icons/mob/ghost_observer_abilities.dmi'
 	icon_state = "teleport"
+
+	display_available()
+		. = ..()
+		var/datum/abilityHolder/ghost_observer/AH = holder
+		if(istype(AH) && AH.disabled)
+			. = FALSE
+
+	castcheck(atom/target)
+		. = ..()
+		var/datum/abilityHolder/ghost_observer/AH = holder
+		if(istype(AH) && AH.disabled)
+			. = FALSE
 
 ///////////////////////////////////////
 
