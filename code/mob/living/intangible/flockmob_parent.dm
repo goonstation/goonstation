@@ -128,6 +128,8 @@
 	else
 		if (get_dist(src, target) > 0)
 			set_dir(get_dir(src, target))
+		if (abilityHolder.click(target, params))
+			return
 		src.examine_verb(target)
 
 /mob/living/intangible/flock/say_quote(var/text)
