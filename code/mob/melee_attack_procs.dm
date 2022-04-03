@@ -116,6 +116,7 @@
 				src.visible_message("<span class='alert'><B>[src] pulls a [P.pull_out_name] out of [target]!</B></span>")
 				P.on_remove(M)
 				M.implant.Remove(P)
+				P.set_loc(src)
 				P.Attackhand(src)
 			else
 				src.visible_message("<span class='alert'><B>[src] tries to pull a [P.pull_out_name] out of [target], but it's stuck in!</B></span>")
