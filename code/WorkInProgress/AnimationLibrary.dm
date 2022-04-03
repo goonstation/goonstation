@@ -30,6 +30,34 @@
 	animate(A, color=list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1), time=time, easing=SINE_EASING)
 	return
 
+/proc/animate_fade_from_drug_1(var/atom/A, var/time=5) //This smoothly fades from animated_fade_drug_inbetween_1 to normal colors
+	if (!istype(A) && !isclient(A))
+		return
+	A.color = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1)
+	animate(A, color=list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1), time=time, easing=SINE_EASING)
+	return
+
+/proc/animate_fade_from_drug_2(var/atom/A, var/time=5) //This smoothly fades from animated_fade_drug_inbetween_2 to normal colors
+	if (!istype(A) && !isclient(A))
+		return
+	A.color = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1)
+	animate(A, color=list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1), time=time, easing=SINE_EASING)
+	return
+
+/proc/animate_fade_drug_inbetween_1(var/atom/A, var/time=5) //This fades from red being green, green being blue and blue being red to red being blue, green being red and blue being green
+	if (!istype(A) && !isclient(A))
+		return
+	A.color = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1)
+	animate(A, color=list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1), time=time, easing=SINE_EASING)
+	return
+
+/proc/animate_fade_drug_inbetween_2(var/atom/A, var/time=5) //This fades from rred being blue, green being red and blue being green to red being green, green being blue and blue being red
+	if (!istype(A) && !isclient(A))
+		return
+	A.color = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1)
+	animate(A, color=list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1), time=time, easing=SINE_EASING)
+	return
+
 /proc/animate_melt_pixel(var/atom/A)
 	if (!istype(A))
 		return
@@ -1119,6 +1147,40 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if (!target_turf)
 		return
 	var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
+	swirl.set_loc(target_turf)
+	swirl.pixel_y = 10
+	if (play_sound)
+		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
+	SPAWN(1.5 SECONDS)
+		if (swirl)
+			swirl.pixel_y = 0
+			qdel(swirl)
+	return
+
+/proc/showswirl_out(var/atom/target, var/play_sound = TRUE)
+	if (!target)
+		return
+	var/turf/target_turf = get_turf(target)
+	if (!target_turf)
+		return
+	var/obj/decal/teleport_swirl/swirl/ = new /obj/decal/teleport_swirl/out
+	swirl.set_loc(target_turf)
+	swirl.pixel_y = 10
+	if (play_sound)
+		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
+	SPAWN(1.5 SECONDS)
+		if (swirl)
+			swirl.pixel_y = 0
+			qdel(swirl)
+	return
+
+/proc/showswirl_error(var/atom/target, var/play_sound = TRUE)
+	if (!target)
+		return
+	var/turf/target_turf = get_turf(target)
+	if (!target_turf)
+		return
+	var/obj/decal/teleport_swirl/swirl/ = new /obj/decal/teleport_swirl/error
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)

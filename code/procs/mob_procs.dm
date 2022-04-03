@@ -94,7 +94,11 @@
 	if (!I)
 		return 0
 	if (!src.put_in_hand(I))
+		#ifdef UPSCALED_MAP
+		I.set_loc(get_turf(src))
+		#else
 		I.set_loc(get_turf(I))
+		#endif
 		return 1
 	return 1
 

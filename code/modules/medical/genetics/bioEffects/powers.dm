@@ -425,7 +425,7 @@
 		if (target == owner)
 			boutput(owner, "<span class='alert'>While \"be yourself\" is pretty good advice, that would be taking it a bit too literally.</span>")
 			return 1
-		if (get_dist(target,owner) > 1 && !owner.bioHolder.HasEffect("telekinesis"))
+		if (BOUNDS_DIST(target, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
 			boutput(owner, "<span class='alert'>You must be within touching distance of [target] for this to work.</span>")
 			return 1
 
@@ -478,7 +478,7 @@
 			boutput(owner, "<span class='alert'>[target] does not seem to be compatible with this ability.</span>")
 			return 1
 
-		if (get_dist(H,owner) > 1 && !owner.bioHolder.HasEffect("telekinesis"))
+		if (BOUNDS_DIST(H, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
 			boutput(owner, "<span class='alert'>You must be within touching distance of [target] for this to work.</span>")
 			return 1
 
@@ -1334,7 +1334,7 @@
 		if (..())
 			return 1
 
-		if (get_dist(target,owner) > 1 && !owner.bioHolder.HasEffect("telekinesis"))
+		if (BOUNDS_DIST(target, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
 			boutput(usr, "<span class='alert'>You need to be closer to do that.</span>")
 			return 1
 
@@ -1360,7 +1360,7 @@
 		if (..())
 			return 1
 
-		if (get_dist(target,owner) > 1 && !owner.bioHolder.HasEffect("telekinesis"))
+		if (BOUNDS_DIST(target, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
 			boutput(usr, "<span class='alert'>You need to be closer to do that.</span>")
 			return 1
 
@@ -2026,7 +2026,8 @@
 		owner.visible_message("<span class='alert'><b>[owner] horfs up a huge stream of puke!</b></span>")
 		logTheThing("combat", owner, target, "power-pukes [log_reagents(owner)] at [log_loc(owner)].")
 		playsound(owner.loc, "sound/misc/meat_plop.ogg", 50, 0)
-		owner.reagents.add_reagent("vomit",20)
+		for (var/reagent_id in puke_reagents)
+			owner.reagents.add_reagent(reagent_id, puke_reagents[reagent_id])
 		var/turf/currentturf
 		var/turf/previousturf
 		for(var/turf/F in line_turfs)

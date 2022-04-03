@@ -653,13 +653,7 @@ datum
 						H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/dreads
 						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/fullbeard
 						H.real_name = "Captain [H.real_name]"
-						if (H.wear_id)
-							if (istype(H.wear_id, /obj/item/card/id))
-								H.wear_id:registered = H.real_name
-								H.wear_id:name = "[H.real_name]'s ID ([H.wear_id:assignment])"
-							else if (istype(H.wear_id, /obj/item/device/pda2) && H.wear_id:ID_card)
-								H.wear_id:ID_card:registered = H.real_name
-								H.wear_id:ID_card:name = "[H.real_name]'s ID ([H.wear_id:ID_card:assignment])"
+
 						if(!istype(H.glasses, /obj/item/clothing/glasses/eyepatch))
 							var/obj/item/old_glasses = H.glasses
 							if(istype(old_glasses))

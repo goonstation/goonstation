@@ -126,12 +126,20 @@ var/global/list/mapNames = list(
 	proc/get_shuttle_path()
 		var/dirname = dir_to_dirname(escape_dir)
 		var/shuttle_name = src.default_shuttle || "[dirname]base"
+		#ifdef UPSCALED_MAP
+		. = "assets/maps/shuttles/[dirname]/[shuttle_name]_big.dmm"
+		#else
 		. = "assets/maps/shuttles/[dirname]/[shuttle_name].dmm"
+		#endif
 
 	proc/get_shuttle_transit_path()
 		var/dirname = dir_to_dirname(escape_dir)
 		var/shuttle_name = src.default_shuttle || "[dirname]base"
+		#ifdef UPSCALED_MAP
+		. = "assets/maps/transit/[dirname]/[shuttle_name]_big.dmm"
+		#else
 		. = "assets/maps/transit/[dirname]/[shuttle_name].dmm"
+		#endif
 
 	proc/init() /// Map-specific initialization, feel free to override for your map!
 		// map limits

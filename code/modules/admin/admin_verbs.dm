@@ -1954,8 +1954,8 @@ var/list/fun_images = list()
 	if (microbombs_4_everyone > 0)
 		var/implanted = 0
 		for (var/mob/living/carbon/human/H in mobs)
-			var/obj/item/implant/microbomb/MB = new (H)
-			MB.explosionPower = microbombs_4_everyone
+			var/obj/item/implant/revenge/microbomb/MB = new (H)
+			MB.power = microbombs_4_everyone
 			MB.implanted = 1
 			H.implant.Add(MB)
 			MB.implanted(H, 0)

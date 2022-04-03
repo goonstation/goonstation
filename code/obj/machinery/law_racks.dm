@@ -14,10 +14,14 @@
 	var/const/MAX_CIRCUITS = 9
 	/// list of aiModules ref'd by slot number.
 	var/obj/item/aiModule/law_circuits[MAX_CIRCUITS]
+	/// used during UpdateLaws to determine which laws have changed
+	var/list/last_laws[MAX_CIRCUITS]
 	/// welded status of law module by slot number
 	var/list/welded[MAX_CIRCUITS]
 	/// screwed status of law module by slot number
 	var/list/screwed[MAX_CIRCUITS]
+	/// list of hologram expansions
+	var/list/holo_expansions = list()
 
 	New(loc)
 		START_TRACKING
@@ -29,6 +33,7 @@
 		src.light.set_brightness(0.4)
 		src.light.attach(src)
 		UpdateIcon()
+		update_last_laws()
 
 	/// Causes all law modules to drop to the ground, does not call UpdateLaws()
 	proc/drop_all_modules()
@@ -451,11 +456,11 @@
 		var/list/L =list()
 		L += who
 
-		var/laws_text = src.format_for_logs()
+		var/laws_text = src.format_for_display()
 		for (var/W in L)
 			boutput(W, laws_text)
 
-	/** Formats current laws for display or logging, argument glue defaults to <br>
+	/** Formats current laws for logging, argument glue defaults to <br>
 	 * Output is:
 	 * [law number]: [law text]<br>
 	 * [law number]: [law text]
@@ -476,6 +481,37 @@
 
 		return jointext(lawOut, glue)
 
+	/** Formats current laws for display to game chat
+	 * Output is the same as format_for_logs, but also includes removed laws at the top and styling for added laws
+	**/
+	proc/format_for_display(var/glue = "<br>")
+		var/law_counter = 1 //make the laws always sequential regardless of where in the rack they are
+		var/list/lawOut = new
+		var/list/removed_laws = new
+
+		for (var/i in 1 to MAX_CIRCUITS)
+			var/obj/item/aiModule/module = law_circuits[i]
+			if(!module)
+				if (last_laws[i])
+					//load the law number and text from our saved law list
+					removed_laws += "<del class=\"alert\">[last_laws[i]["number"]]: [last_laws[i]["law"]]</del>"
+				continue
+			var/lt = module.get_law_text(TRUE)
+			var/class = "regular"
+			if (!last_laws[i] || lt != last_laws[i]["law"])
+				class = "lawupdate"
+			if(islist(lt))
+				for(var/law in lt)
+					lawOut += "<span class=\"[class]\">[law_counter++]: [law]</span>"
+			else
+				lawOut += "<span class=\"[class]\">[law_counter++]: [lt]</span>"
+
+		var/text_output = ""
+		if (length(removed_laws))
+			text_output += "<span class=\"alert\">Removed law[(length(removed_laws) > 1) ? "s" : ""]:</span>" + glue + jointext(removed_laws, glue) + glue
+		text_output += jointext(lawOut, glue)
+		return text_output
+
 	/** Formats current laws as a list in the format:
 	 * {[lawnumber]=lawtext,etc.}
 	 */
@@ -491,8 +527,19 @@
 				for(var/law in lt)
 					laws["[law_counter++]"] = law
 			else
-				laws["[law_counter]"] = lt
+				laws["[law_counter++]"] = lt
 		return laws
+
+	/// Saves the current law list to last_laws so we can see diffs
+	proc/update_last_laws()
+		var/law_counter = 1
+		for (var/i in 1 to MAX_CIRCUITS)
+			var/obj/item/aiModule/module = law_circuits[i]
+			if (module)
+				//save the law text and the displayed law number (not the rack position)
+				last_laws[i] = list("law" = module.get_law_text(TRUE), "number" = law_counter++)
+			else
+				last_laws[i] = null
 
 	/** Pushes law updates to all connected AIs and Borgs - notification text allows you to customise the header
 	* Defaults to <h3>Law update detected</h3>
@@ -507,16 +554,22 @@
 				R.show_text(notification_text, "red")
 				src.show_laws(R)
 				affected_mobs |= R
+				if(isAI(R))
+					var/mob/living/silicon/ai/holoAI = R
+					holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
 
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == src)
 				E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 				src.show_laws(E)
 				affected_mobs |= E.mainframe
+				var/mob/living/silicon/ai/holoAI = E.mainframe
+				holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
 		var/list/mobtextlist = list()
 		for(var/mob/living/M in affected_mobs)
 			mobtextlist += constructName(M, "admin")
 		logTheThing("station", src, null, "Law Update:<br> [src.format_for_logs()]<br>The law update affects the following mobs: "+mobtextlist.Join(", "))
+		update_last_laws()
 
 	proc/toggle_welded_callback(var/slot_number,var/mob/user)
 		if(src.welded[slot_number])
@@ -540,6 +593,9 @@
 		equipped.set_loc(src)
 		user.visible_message("<span class='alert'>[user] slides a module into the law rack</span>", "<span class='alert'>You slide the module into the rack.</span>")
 		tgui_process.update_uis(src)
+		if(istype(equipped,/obj/item/aiModule/hologram_expansion))
+			var/obj/item/aiModule/hologram_expansion/holo = equipped
+			src.holo_expansions |= holo.expansion
 		logTheThing("station", user, null, "[constructName(user)] <b>inserts</b> law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]")
 		UpdateIcon()
@@ -551,6 +607,9 @@
 		message_admins("[key_name(user)] removed a law from rack at ([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
 		user.visible_message("<span class='alert'>[user] slides a module out of the law rack</span>", "<span class='alert'>You slide the module out of the rack.</span>")
 		user.put_in_hand_or_drop(src.law_circuits[slotNum])
+		if(istype(src.law_circuits[slotNum],/obj/item/aiModule/hologram_expansion))
+			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slotNum]
+			src.holo_expansions -= holo.expansion
 		src.law_circuits[slotNum] = null
 		tgui_process.update_uis(src)
 		UpdateIcon()
@@ -563,6 +622,9 @@
 			src.welded[slot] = welded_in
 			src.screwed[slot] = screwed_in
 			tgui_process.update_uis(src)
+			if(istype(mod,/obj/item/aiModule/hologram_expansion))
+				var/obj/item/aiModule/hologram_expansion/holo = mod
+				src.holo_expansions |= holo.expansion
 			UpdateIcon()
 			return true
 
@@ -575,6 +637,9 @@
 
 	/// Deletes a law in an abritrary slot. Does not call UpdateLaws()
 	proc/DeleteLaw(var/slot=1)
+		if(istype(src.law_circuits[slot],/obj/item/aiModule/hologram_expansion))
+			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slot]
+			src.holo_expansions -= holo.expansion
 		src.law_circuits[slot]=null
 		src.welded[slot]=false
 		src.screwed[slot]=false

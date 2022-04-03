@@ -79,7 +79,8 @@
 			// idk about the above. walls still use [src]=1 ...
 			// the bottom is much faster in my testing and works just as well
 			// maybe should be converted to this everywhere?
-			worldgenCandidates += src //Adding self to possible worldgen turfs
+			if(src.z == Z_LEVEL_STATION || src.z == Z_LEVEL_MINING)
+				worldgenCandidates += src //Adding self to possible worldgen turfs
 
 		if(current_state > GAME_STATE_WORLD_INIT)
 			for(var/dir in cardinal)
@@ -181,6 +182,7 @@
 				//mbc : bleh init() happens BFORRE this, most likely
 				P.initialize()
 
+		#ifndef UPSCALED_MAP
 		if(spawningFlags & SPAWN_FISH) //can spawn bad fishy
 			if (src.z == 5 && prob(1) && prob(2))
 				new /obj/critter/gunbot/drone/buzzdrone/fish(src)
@@ -200,6 +202,7 @@
 					O = new /obj/naval_mine/rusted(src)
 				if (O)
 					O.initialize()
+		#endif
 
 		if(spawningFlags & SPAWN_TRILOBITE)
 			if (prob(17))
@@ -321,6 +324,7 @@
 				L+=T
 
 	Entered(var/atom/movable/AM)
+		. = ..()
 		if (istype(AM,/mob/dead) || istype(AM,/mob/wraith) || istype(AM,/mob/living/intangible) || istype(AM, /obj/lattice) || istype(AM, /obj/cable/reinforced) || istype(AM,/obj/torpedo_targeter) || istype(AM,/obj/overlay) || istype (AM, /obj/arrival_missile) || istype(AM, /obj/sea_ladder_deployed))
 			return
 		if (locate(/obj/lattice) in src)

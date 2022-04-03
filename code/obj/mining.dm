@@ -181,15 +181,7 @@
 		return walls
 
 	proc/check_for_unacceptable_content()
-		var/turf/origin = get_turf(src)
-		for (var/turf/T in block(locate(origin.x - 1, origin.y - 1, origin.z), locate(origin.x + width, origin.y + height, origin.z)))
-			var/mob/M = locate() in T //living
-			if (M)
-				return 1
-			var/obj/machinery/vehicle/V = locate() in T
-			if (V)
-				return 1
-		return 0
+		mining_controls.magnet_area.check_for_unacceptable_content()
 
 	proc/UL()
 		var/turf/origin = get_turf(src)
