@@ -41,7 +41,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist)
 	/// The category of the item, currently unused (somewhat used in the Nukeop Commander uplink)
 	var/category
 	/// Bitflags for what uplinks can buy this item (see `_std/defines/uplink.dm` for flags)
-	var/can_buy
+	var/can_buy = 0
 
 	/**
 	 * Runs on the purchase of the buylist datum
@@ -72,7 +72,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/storage/box/revolver
 	cost = 6
 	desc = "The traditional sidearm of a Syndicate field agent. Holds 7 rounds and comes with extra ammo."
-	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF  | UPLINK_BATTLEROYALE
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/generic/pistol
 	name = "Suppressed .22 Pistol"
@@ -87,7 +87,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 8
 	desc = "Not exactly stealthy, but it'll certainly make an impression."
 	not_in_crates = 1
-	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP  | UPLINK_BATTLEROYALE
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 /datum/syndicate_buylist/generic/radbow
 	name = "Rad Poison Crossbow"
