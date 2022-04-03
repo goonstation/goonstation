@@ -133,19 +133,19 @@
 		var/count = 0
 		for (var/obj/item/implant/projectile/dart/P in src.implant)
 			count++
-		. += "<br><span class='alert'>[src] has [count > 1 ? "darts" : "a dart"] in them!</span>"
+		. += "<br><span class='alert'>[src] has [count > 1 ? "darts" : "a dart"] stuck in them!</span>"
 
 	if (locate(/obj/item/implant/projectile/syringe) in src.implant)
 		var/count = 0
 		for (var/obj/item/implant/projectile/syringe/P in src.implant)
 			count++
-		. += "<br><span class='alert'>[src] has [count > 1 ? "syringes" : "a syringe"] in them!</span>"
+		. += "<br><span class='alert'>[src] has [count > 1 ? "syringes" : "a syringe"] stuck in them!</span>"
 
 	if (locate(/obj/item/implant/projectile/arrow) in src.implant)
 		var/count = 0
 		for (var/obj/item/implant/projectile/arrow/P in src.implant)
 			count++
-		. += "<br><span class='alert'>[src] has [count > 1 ? "arrows" : "an arrow"] in them!</span>"
+		. += "<br><span class='alert'>[src] has [count > 1 ? "arrows" : "an arrow"] stuck in them!</span>"
 
 	if (src.is_jittery)
 		switch(src.jitteriness)
