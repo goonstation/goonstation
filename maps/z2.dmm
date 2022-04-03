@@ -58823,7 +58823,6 @@
 /area/syndicate_station/battlecruiser)
 "dgR" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/storage/crate/packing,
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dgS" = (
