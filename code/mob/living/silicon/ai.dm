@@ -1964,7 +1964,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	choose_name(retries=3, default_name=real_name)
-	// last_rename = world.time // REMOVE BEFORE COMITTING
+	last_rename = world.time
 
 // CALCULATIONS
 
