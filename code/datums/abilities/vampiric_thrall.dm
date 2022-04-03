@@ -108,7 +108,7 @@
 					V.blood_points = 0
 					if (haine_blood_debug) logTheThing("debug", M, null, "<b>HAINE BLOOD DEBUG:</b> [M]'s blood_points dropped below 0 and was reset to 0")
 
-				if (set_null == 1)
+				if (set_null)
 					V.blood_points = 0
 				else
 					V.blood_points = max(V.blood_points + change, 0)

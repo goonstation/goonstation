@@ -219,7 +219,7 @@
 				src.vamp_blood = 0
 				if (haine_blood_debug) logTheThing("debug", owner, null, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood dropped below 0 and was reset to 0")
 
-			if (set_null == 1)
+			if (set_null)
 				src.vamp_blood = 0
 			else
 				src.vamp_blood = max(src.vamp_blood + change, 0)
@@ -229,7 +229,7 @@
 				src.points = 0
 				if (haine_blood_debug) logTheThing("debug", owner, null, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood_remaining dropped below 0 and was reset to 0")
 
-			if (set_null == 1)
+			if (set_null)
 				src.points = 0
 			else
 				src.points = max(src.points + change, 0)
