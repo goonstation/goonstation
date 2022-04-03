@@ -23927,7 +23927,8 @@
 	},
 /obj/machinery/power/smes{
 	charge = 100000;
-	chargelevel = 50000
+	chargelevel = 50000;
+	output = 30500
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
@@ -29345,7 +29346,8 @@
 /obj/cable,
 /obj/machinery/power/smes{
 	charge = 100000;
-	chargelevel = 50000
+	chargelevel = 50000;
+	output = 30500
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation{
