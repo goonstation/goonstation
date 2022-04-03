@@ -352,10 +352,7 @@
 		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1,1,true,true)
 		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2,2,true,true)
 		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3,3,true,true)
-		for(var/mob/living/silicon/O in mobs)
-			if (isghostdrone(O)) continue
-			if (O.emagged || O.syndicate) continue
-			ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
+		ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 
 		logTheThing("admin", usr, null, "reset the centralized AI laws.")
 		logTheThing("diary", usr, null, "reset the centralized AI laws.", "admin")

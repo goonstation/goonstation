@@ -14,6 +14,8 @@
 	var/const/MAX_CIRCUITS = 9
 	/// list of aiModules ref'd by slot number.
 	var/obj/item/aiModule/law_circuits[MAX_CIRCUITS]
+	/// used during UpdateLaws to determine which laws have changed
+	var/list/last_laws[MAX_CIRCUITS]
 	/// welded status of law module by slot number
 	var/list/welded[MAX_CIRCUITS]
 	/// screwed status of law module by slot number
@@ -31,6 +33,7 @@
 		src.light.set_brightness(0.4)
 		src.light.attach(src)
 		UpdateIcon()
+		update_last_laws()
 
 	/// Causes all law modules to drop to the ground, does not call UpdateLaws()
 	proc/drop_all_modules()
@@ -453,11 +456,11 @@
 		var/list/L =list()
 		L += who
 
-		var/laws_text = src.format_for_logs()
+		var/laws_text = src.format_for_display()
 		for (var/W in L)
 			boutput(W, laws_text)
 
-	/** Formats current laws for display or logging, argument glue defaults to <br>
+	/** Formats current laws for logging, argument glue defaults to <br>
 	 * Output is:
 	 * [law number]: [law text]<br>
 	 * [law number]: [law text]
@@ -478,6 +481,37 @@
 
 		return jointext(lawOut, glue)
 
+	/** Formats current laws for display to game chat
+	 * Output is the same as format_for_logs, but also includes removed laws at the top and styling for added laws
+	**/
+	proc/format_for_display(var/glue = "<br>")
+		var/law_counter = 1 //make the laws always sequential regardless of where in the rack they are
+		var/list/lawOut = new
+		var/list/removed_laws = new
+
+		for (var/i in 1 to MAX_CIRCUITS)
+			var/obj/item/aiModule/module = law_circuits[i]
+			if(!module)
+				if (last_laws[i])
+					//load the law number and text from our saved law list
+					removed_laws += "<del class=\"alert\">[last_laws[i]["number"]]: [last_laws[i]["law"]]</del>"
+				continue
+			var/lt = module.get_law_text(TRUE)
+			var/class = "regular"
+			if (!last_laws[i] || lt != last_laws[i]["law"])
+				class = "lawupdate"
+			if(islist(lt))
+				for(var/law in lt)
+					lawOut += "<span class=\"[class]\">[law_counter++]: [law]</span>"
+			else
+				lawOut += "<span class=\"[class]\">[law_counter++]: [lt]</span>"
+
+		var/text_output = ""
+		if (length(removed_laws))
+			text_output += "<span class=\"alert\">Removed law[(length(removed_laws) > 1) ? "s" : ""]:</span>" + glue + jointext(removed_laws, glue) + glue
+		text_output += jointext(lawOut, glue)
+		return text_output
+
 	/** Formats current laws as a list in the format:
 	 * {[lawnumber]=lawtext,etc.}
 	 */
@@ -495,6 +529,17 @@
 			else
 				laws["[law_counter++]"] = lt
 		return laws
+
+	/// Saves the current law list to last_laws so we can see diffs
+	proc/update_last_laws()
+		var/law_counter = 1
+		for (var/i in 1 to MAX_CIRCUITS)
+			var/obj/item/aiModule/module = law_circuits[i]
+			if (module)
+				//save the law text and the displayed law number (not the rack position)
+				last_laws[i] = list("law" = module.get_law_text(TRUE), "number" = law_counter++)
+			else
+				last_laws[i] = null
 
 	/** Pushes law updates to all connected AIs and Borgs - notification text allows you to customise the header
 	* Defaults to <h3>Law update detected</h3>
@@ -524,6 +569,7 @@
 		for(var/mob/living/M in affected_mobs)
 			mobtextlist += constructName(M, "admin")
 		logTheThing("station", src, null, "Law Update:<br> [src.format_for_logs()]<br>The law update affects the following mobs: "+mobtextlist.Join(", "))
+		update_last_laws()
 
 	proc/toggle_welded_callback(var/slot_number,var/mob/user)
 		if(src.welded[slot_number])
