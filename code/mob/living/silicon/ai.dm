@@ -116,6 +116,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/last_vox = -INFINITY
 	var/vox_cooldown = 1200
 
+	var/last_rename = -INFINITY
+	var/rename_cooldown = 9000 // 15 minutes
+
 	var/has_feet = 0
 
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
@@ -470,6 +473,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				src.verbs += /mob/living/silicon/ai/proc/ai_colorchange
 				src.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
 				src.verbs += /mob/living/silicon/ai/proc/view_messageLog
+				src.verbs += /mob/living/silicon/ai/verb/rename_self
 				src.job = "AI"
 				if (src.mind)
 					src.mind.assigned_role = "AI"
@@ -1945,6 +1949,22 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			message_mob.client.screen += ai_station_map
 		map_ui = new(usr, message_mob, "AIMap")
 		map_ui.open()
+
+/mob/living/silicon/ai/verb/rename_self()
+	set category = "AI Commands"
+	set name = "Change Designation"
+	set desc = "Change your name."
+
+	var/mob/message_mob = src.get_message_mob()
+	if (!src || !message_mob.client || isdead(src))
+		return
+
+	if (last_rename + rename_cooldown > world.time)
+		src.show_text("This ability is still on cooldown for [round((src.rename_cooldown + src.last_rename - world.time) / 10)] seconds!", "red")
+		return
+
+	choose_name(retries=3, default_name=real_name)
+	// last_rename = world.time // REMOVE BEFORE COMITTING
 
 // CALCULATIONS
 

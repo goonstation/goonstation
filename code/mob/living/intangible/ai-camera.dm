@@ -490,6 +490,11 @@
 		set category = "AI Commands"
 		mainframe?.open_map()
 
+	verb/change_name()
+		set category = "AI Commands"
+		set name = "Change Designation"
+		set desc = "Change your name."
+		mainframe?.rename_self()
 
 //---TURF---//
 /turf/var/image/aiImage
