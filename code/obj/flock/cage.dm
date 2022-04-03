@@ -37,6 +37,7 @@
 			occupant = iced
 		processing_items |= src
 		src.setMaterial(getMaterial("gnesis"))
+		src.health = initial(src.health)
 
 	proc/getHumanPiece(var/mob/living/carbon/human/H)
 		// prefer inventory items before limbs, and limbs before organs
