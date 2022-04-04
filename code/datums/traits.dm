@@ -736,6 +736,13 @@ ABSTRACT_TYPE(/obj/trait/job)
 	points = 1
 	category = list("hemophilia")
 
+/obj/trait/weakorgans
+	name = "Frail Constitution (+2)"
+	cleanName = "Frail Constitution"
+	desc = "Your internal organs (brain included) are extremely vulnerable to damage."
+	id = "weakorgans"
+	points = 2
+
 /obj/trait/slowmetabolism
 	name = "Slow Metabolism (0)"
 	cleanName = "Slow Metabolism"
