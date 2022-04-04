@@ -293,6 +293,7 @@
 			return
 		if (src.occupant)
 			boutput(user, "<span class='alert'>Someone's already in the [src]!</span>")
+			return
 
 		if(target == user && !user.stat)
 			target.visible_message("[user.name] climbs into the [src].", "You climb into the [src]")
