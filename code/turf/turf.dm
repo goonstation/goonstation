@@ -556,7 +556,7 @@ proc/generate_space_color()
 		if (!isturf(new_turf))
 			if (delay_space_conversion()) return
 			new_turf = new /turf/space(src)
-		if(!istype(new_turf, new_type)) return new_turf // fix for variable turfs janking up lighting during game setup
+		if(!istype(new_turf, new_type)) return new_turf // New() replaced the turf with something else, its ReplaceWith handled everything for us already (otherwise we'd screw up lighting)
 
 	else switch(what)
 		if ("Ocean")
