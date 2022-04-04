@@ -777,6 +777,8 @@ turf
 		RL_Init()
 			if (!fullbright && !loc:force_fullbright)
 				if(!src.RL_MulOverlay)
+					if (!RL_Started && (locate(/obj/overlay/tile_effect/lighting/mul) in src))
+						return // ReplaceWith is being used before RL has started running
 					src.RL_MulOverlay = new /obj/overlay/tile_effect/lighting/mul
 					src.RL_MulOverlay.set_loc(src)
 					src.RL_MulOverlay.icon_state = src.RL_OverlayState
