@@ -7,7 +7,7 @@
 	_max_health = LOCKER_HEALTH_AVERAGE
 	_health = LOCKER_HEALTH_AVERAGE
 	/// Anchored if TRUE
-	var/bolted = FALSE
+	var/bolted = TRUE
 	/// Can't be broken open with melee
 	var/reinforced = FALSE
 
