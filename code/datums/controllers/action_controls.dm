@@ -718,7 +718,7 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, repairing) > 1 || repairing == null || owner == null || using == null)
+		if(BOUNDS_DIST(owner, repairing) > 0 || repairing == null || owner == null || using == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -984,7 +984,7 @@ var/datum/action_controller/actions
 	onEnd()
 		..()
 
-		if(get_dist(source, target) > 1 || target == null || source == null)
+		if(BOUNDS_DIST(source, target) > 0 || target == null || source == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1027,7 +1027,7 @@ var/datum/action_controller/actions
 				boutput(source, "<span class='alert'>You fail to remove [I] from [target].</span>")
 	onUpdate()
 		..()
-		if(get_dist(source, target) > 1 || target == null || source == null)
+		if(BOUNDS_DIST(source, target) > 0 || target == null || source == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1053,13 +1053,13 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1072,7 +1072,7 @@ var/datum/action_controller/actions
 				remove_internals = 0
 	onEnd()
 		..()
-		if(owner && target && get_dist(owner, target) <= 1)
+		if(owner && target && BOUNDS_DIST(owner, target) == 0)
 			if(remove_internals)
 				target.internal.add_fingerprint(owner)
 				for (var/obj/ability_button/tank_valve_toggle/T in target.internal.ability_buttons)
@@ -1109,7 +1109,7 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null || cuffs == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || cuffs == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1119,7 +1119,7 @@ var/datum/action_controller/actions
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null || cuffs == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || cuffs == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1138,7 +1138,7 @@ var/datum/action_controller/actions
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && cuffs && !target.hasStatus("handcuffed") && cuffs == ownerMob.equipped() && get_dist(owner, target) <= 1)
+		if(owner && ownerMob && target && cuffs && !target.hasStatus("handcuffed") && cuffs == ownerMob.equipped() && BOUNDS_DIST(owner, target) == 0)
 
 			var/obj/item/handcuffs/tape/cuffs2
 
@@ -1192,7 +1192,7 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1202,7 +1202,7 @@ var/datum/action_controller/actions
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1437,13 +1437,13 @@ var/datum/action_controller/actions
 
 	onUpdate() //check for special conditions that could interrupt the picking-up here.
 		..()
-		if(get_dist(owner, target) > 1 || picker == null || target == null || owner == null) //If the thing is suddenly out of range, interrupt the action. Also interrupt if the user or the item disappears.
+		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null) //If the thing is suddenly out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || picker == null || target == null || owner == null || picker.working)  //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
+		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null || picker.working)  //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		else
@@ -1526,7 +1526,7 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1537,7 +1537,7 @@ var/datum/action_controller/actions
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null || target.butcherer)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target.butcherer)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		target.butcherer = owner
@@ -1568,13 +1568,13 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1611,19 +1611,19 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(owner && target)
@@ -1631,6 +1631,7 @@ var/datum/action_controller/actions
 
 /datum/action/bar/icon/CPR
 	duration = 4 SECONDS
+	id = "cpr"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "cpr"
@@ -1642,12 +1643,12 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || !target || !owner || target.health > 0 || !src.can_cpr())
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || target.health > 0 || !src.can_cpr())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
-		if(get_dist(owner, target) > 1 || !target || !owner || target.health > 0 || !src.can_cpr())
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || target.health > 0 || !src.can_cpr())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1655,7 +1656,7 @@ var/datum/action_controller/actions
 		..()
 
 	onEnd()
-		if(get_dist(owner, target) > 1 || !target || !owner || target.health > 0)
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || target.health > 0)
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -1719,20 +1720,20 @@ var/datum/action_controller/actions
 
 		src.mob_owner = owner
 
-		if(get_dist(owner, consumer) > 1 || !consumer || !owner || mob_owner.equipped() != foodish)
+		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || mob_owner.equipped() != foodish)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		..()
 
 	onUpdate()
 		..()
-		if(get_dist(owner, consumer) > 1 || !consumer || !owner || mob_owner.equipped() != foodish)
+		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || mob_owner.equipped() != foodish)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, consumer) > 1 || !consumer || !owner || mob_owner.equipped() != foodish)
+		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || mob_owner.equipped() != foodish)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1752,13 +1753,13 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		playsound(owner.loc, "sound/machines/click.ogg", 60, 1)
@@ -1875,13 +1876,13 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(ishuman(owner)) //This is horrible and clunky and probably going to kill us all, I am so, so sorry.
@@ -1963,7 +1964,7 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if (target == null || tool == null || owner == null || get_dist(owner, target) > 1)
+		if (target == null || tool == null || owner == null || BOUNDS_DIST(owner, target) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

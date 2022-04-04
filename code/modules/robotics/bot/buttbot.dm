@@ -216,7 +216,7 @@
 
 
 /obj/machinery/bot/buttbot/Topic(href, href_list)
-	if(!IN_RANGE(usr, src, 1))
+	if(!(BOUNDS_DIST(usr, src) == 0))
 		boutput(usr, "You're too far away from [src], get closer.[prob(5) ? pick(" ...if you really want to."," It won't bite.") : ""]")
 		return
 

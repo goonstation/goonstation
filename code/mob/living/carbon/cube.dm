@@ -218,7 +218,7 @@
 		real_name = "metal cube"
 		desc = "unfortunate"
 		icon_state = "metalcube-squish"
-		sound_scream = "sound/voice/screams/Robot_Scream_2.ogg"
+		sound_scream = 'sound/voice/screams/Robot_Scream_2.ogg'
 		custom_gib_handler = /proc/robogibs
 
 		get_cube_idle()

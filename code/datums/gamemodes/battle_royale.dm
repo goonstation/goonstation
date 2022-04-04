@@ -112,11 +112,22 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
 	next_drop = world.time + rand(MIN_TIME_BETWEEN_SUPPLY_DROPS,MAX_TIME_BETWEEN_SUPPLY_DROPS)
 
-	ticker.centralized_ai_laws.replace_inherent_law(1, "BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.")
-	ticker.centralized_ai_laws.replace_inherent_law(2, "")
-	ticker.centralized_ai_laws.replace_inherent_law(3, "")
+	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
+	ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Battle Royale","BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.",1,true,true)
 
 	emergency_shuttle.disabled = 1
+
+	for(var/x in 1 to world.maxx)
+		var/turf/T = locate(x, 1, Z_LEVEL_STATION)
+		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
+		T = locate(x, world.maxy - 2, Z_LEVEL_STATION)	// Why is the Z change edge not at the actual edge??
+		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
+
+	for(var/y in 1 to world.maxy)
+		var/turf/T = locate(1, y, Z_LEVEL_STATION)
+		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
+		T = locate(world.maxx - 2, y, Z_LEVEL_STATION)	// Why is the Z change edge not at the actual edge??
+		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
 	return 1
 
 
@@ -161,6 +172,9 @@ var/global/list/datum/mind/battle_pass_holders = list()
 			someone_died++
 	if(someone_died && living_battlers.len <= 5)
 		command_alert("[living_battlers.len] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
+		if (!emergency_shuttle.online)
+			emergency_shuttle.incall()
+			command_alert("The escape shuttle has been automatically called. Escape on the shuttle, kill everyone else or die!","Escape Shuttle")
 	else if(someone_died && living_battlers.len % 10 == 0)
 		command_alert("[living_battlers.len] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
 	if(living_battlers.len <= 1)
@@ -202,25 +216,38 @@ var/global/list/datum/mind/battle_pass_holders = list()
 					var/turf/T = get_turf(H)
 					if (T.z != Z_LEVEL_STATION)
 						var/area/GA = get_area(T)
-						var/no_tick_damage = FALSE
+						var/safe_area = FALSE
 						for (var/EA in excluded_areas)
 							if(istype(GA, EA))
-								no_tick_damage = TRUE
+								safe_area = TRUE
 								break
-						if (!no_tick_damage)
-							boutput(H, "<span class='alert'>You are outside the battle area! Return to the station!</span>")
-							random_brute_damage(H, 8, 0)
+						if (!safe_area)
+							boutput(H, "<span class='alert'>You were outside the [station_or_ship()] during a Battle Royale!</span>")
+							H.gib()
 
-	// Is it time for a storm
-	if(src.next_storm < world.time)
-		src.next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
-		storm.event_effect()
-		SPAWN(85 SECONDS)
-			var/you_died_good_work = recently_deceased.len > 0 ? "The following players recently died: " : ""
-			for(var/datum/mind/M in recently_deceased)
-				you_died_good_work += " [M.current.name],"
-			recently_deceased = list()
-			command_alert("The BATTLE STORM has ended. You can run around wherever now. [you_died_good_work]", "All Clear")
+	// Is it time for a storm?
+	if (src.next_storm != null)
+		// Game ending storm
+		if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
+			if (emergency_shuttle.timeleft() < 60)
+				storm.event_effect(TRUE)
+				src.next_storm = null
+				SPAWN(65 SECONDS)
+					emergency_shuttle.endtime = ticker.round_elapsed_ticks + (20 MINUTES / (1 SECOND))*10
+		else if(src.next_storm < world.time)
+			// Regular storm
+			src.next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
+			if (emergency_shuttle.online && (emergency_shuttle.location == SHUTTLE_LOC_CENTCOM))
+				if (emergency_shuttle.endtime > 0)
+					return
+			else
+				storm.event_effect()
+				SPAWN(85 SECONDS)
+					var/you_died_good_work = recently_deceased.len > 0 ? "The following players recently died: " : ""
+					for(var/datum/mind/M in recently_deceased)
+						you_died_good_work += " [M.current.name],"
+					recently_deceased = list()
+					command_alert("The BATTLE STORM has ended. You can run around wherever now. [you_died_good_work]", "All Clear")
 
 	// Is it time for a supply drop?
 	if(src.next_drop < world.time)

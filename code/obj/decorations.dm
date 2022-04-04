@@ -304,12 +304,14 @@
 		src.set_density(0)
 		src.desc = "The scattered remains of a once-beautiful bonsai tree."
 		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 0)
-		// The bonsai tree goes to the deadbar because of course it does
-		var/obj/shrub/captainshrub/C = new /obj/shrub/captainshrub
-		C.overlays += image('icons/misc/32x64.dmi',"halo")
-		C.set_loc(pick(get_area_turfs(/area/afterlife/bar)))
-		C.anchored = 0
-		C.set_density(0)
+		// The bonsai tree goes to the deadbar because of course it does, except when there is no deadbar of course
+		var/list/afterlife_turfs = get_area_turfs(/area/afterlife/bar)
+		if(length(afterlife_turfs))
+			var/obj/shrub/captainshrub/C = new /obj/shrub/captainshrub
+			C.overlays += image('icons/misc/32x64.dmi',"halo")
+			C.set_loc(pick(afterlife_turfs))
+			C.anchored = 0
+			C.set_density(0)
 		for (var/mob/living/M in mobs)
 			if (M.mind && M.mind.assigned_role == "Captain")
 				boutput(M, "<span class='alert'>You suddenly feel hollow. Something very dear to you has been lost.</span>")
@@ -756,6 +758,12 @@
 		pixel_x = -256
 		pixel_y = -256
 
+	fatuus
+		icon_state = "fatuus"
+		name = "Fatuus"
+		pixel_x = -256
+		pixel_y = -256
+
 	magus
 		icon_state = "magus"
 		name = "Magus"
@@ -768,8 +776,17 @@
 		pixel_x = -256
 		pixel_y = -256
 
+	amantes
+		icon_state = "amantes"
+		name = "Amantes"
+		pixel_x = -256
+		pixel_y = -256
 
-
+	antistes
+		icon_state = "antistes"
+		name = "Antistes"
+		pixel_x = -256
+		pixel_y = -256
 
 	station
 		name = "Space Station 14"

@@ -1020,7 +1020,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 				return
 			if (action == "Do nothing")
 				return
-			if (get_dist(src.loc,user.loc) > 1 && !user.bioHolder.HasEffect("telekinesis"))
+			if (BOUNDS_DIST(src.loc, user.loc) > 0 && !user.bioHolder.HasEffect("telekinesis"))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
 				return
 
@@ -1092,99 +1092,93 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		return 0
 
 	proc/finish_cyborg()
-		var/mob/living/silicon/robot/O = null
-		O = new /mob/living/silicon/robot(get_turf(src.loc),src,0,src.syndicate,src.emagged)
+		var/mob/living/silicon/robot/borg = null
+		borg = new /mob/living/silicon/robot(get_turf(src.loc),src,0,src.syndicate,src.emagged)
 		// there was a big transferring list of parts from the frame to the compborg here at one point, but it didn't work
 		// because the cyborg's process proc would kill it for having no chest piece set up after New() finished but
 		// before it could get around to this list, so i tweaked their New() proc instead to grab all the shit out of
 		// the frame before process could go off resulting in a borg that doesn't instantly die
 
-		O.name = "Cyborg"
-		O.real_name = "Cyborg"
+		borg.name = "Cyborg"
+		borg.real_name = "Cyborg"
 
-		if (src.head)
-			if (src.head.brain)
-				O.brain = src.head.brain
-			else if (src.head.ai_interface)
-				O.ai_interface = src.head.ai_interface
-			else
-				O.death()
-				qdel(src)
-				return
-		else
+		if (!src.head)
 			// how the fuck did you even do this
-			O.death()
+			stack_trace("Attempted to finish a cyborg from borg frame [src] (\ref[src]) without a head. That's bad.")
+			borg.death()
 			qdel(src)
 			return
 
-		if(O.brain?.owner?.key)
-			if(O.brain.owner.current)
-				O.gender = O.brain.owner.current.gender
-				if(O.brain.owner.current.client)
-					O.lastKnownIP = O.brain.owner.current.client.address
-			var/mob/M = find_ghost_by_key(O.brain.owner.key)
+		if(borg.part_head.brain?.owner?.key)
+			if(borg.part_head.brain.owner.current)
+				borg.gender = borg.part_head.brain.owner.current.gender
+				if(borg.part_head.brain.owner.current.client)
+					borg.lastKnownIP = borg.part_head.brain.owner.current.client.address
+			var/mob/M = find_ghost_by_key(borg.part_head.brain.owner.key)
 			if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
 				src.visible_message("<span class='alert'><b>[src]</b> remains inactive, as the conciousness associated with that brain could not be reached.</span>")
-				O.death()
+				borg.death()
 				qdel(src)
 				return
 			if (!isdead(M)) // so if they're in VR, the afterlife bar, or a ghostcritter
 				boutput(M, "<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
-				O.brain.owner = M.ghostize()?.mind
+				borg.part_head.brain.owner = M.ghostize()?.mind
 				qdel(M)
 			else
 				boutput(M, "<span class='alert'>You feel yourself being dragged out of the afterlife!</span>")
-			O.brain.owner.transfer_to(O)
+			borg.part_head.brain.owner.transfer_to(borg)
 			if (isdead(M) && !isliving(M))
 				qdel(M)
-		else if (O.ai_interface)
-			if (!(O in available_ai_shells))
-				available_ai_shells += O
+
+		else if (src.head.ai_interface)
+			if (!(borg in available_ai_shells))
+				available_ai_shells += borg
 			for_by_tcl(AI, /mob/living/silicon/ai)
 				boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
-			O.shell = 1
-		else if (istype(O.brain, /obj/item/organ/brain/latejoin))
+			borg.shell = 1
+		else if (istype(borg.part_head.brain, /obj/item/organ/brain/latejoin))
 			boutput(usr, "<span class='notice'>You activate the frame and a audible beep emanates from the head.</span>")
 			playsound(src, "sound/weapons/radxbow.ogg", 40, 1)
 		else
-			O.death()
+			stack_trace("We finished cyborg [borg] (\ref[borg]) from frame [src] (\ref[src]) with a brain, but somehow lost the brain??? Where did it go")
+			borg.death()
 			qdel(src)
 			return
 
 		if (src.chest && src.chest.cell)
-			O.cell = src.chest.cell
-			O.cell.set_loc(O)
+			borg.cell = src.chest.cell
+			borg.cell.set_loc(borg)
 
-		if (O.mind && !O.ai_interface)
-			O.unlock_medal("Adjutant Online", 1)
-			O.set_loc(get_turf(src))
+		if (borg.mind && !borg.part_head.ai_interface)
+			borg.unlock_medal("Adjutant Online", 1)
+			borg.set_loc(get_turf(src))
 
-			boutput(O, "<B>You are playing a Robot. The Robot can interact with most electronic objects in its view point.</B>")
-			boutput(O, "To use something, simply double-click it.")
-			boutput(O, "Use say \":s to speak to fellow cyborgs and the AI through binary.")
+			boutput(borg, "<B>You are playing a Robot. The Robot can interact with most electronic objects in its view point.</B>")
+			boutput(borg, "To use something, simply double-click it.")
+			boutput(borg, "Use say \":s to speak to fellow cyborgs and the AI through binary.")
 
 			if (src.emagged || src.syndicate)
-				if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && O.mind)
-					ticker.mode:revolutionaries += O.mind
-					ticker.mode:update_rev_icons_added(O.mind)
+				if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && borg.mind)
+					ticker.mode:revolutionaries += borg.mind
+					ticker.mode:update_rev_icons_added(borg.mind)
 				if (src.emagged)
-					O.emagged = 1
+					borg.emagged = 1
 					SPAWN(0)
-						O.update_appearance()
+						borg.update_appearance()
 				else if (src.syndicate)
-					O.syndicate = 1
-				O.handle_robot_antagonist_status("activated", 0, usr)
+					borg.syndicate = 1
+				borg.make_syndicate("activated by [usr]")
 			else
-				boutput(O, "<B>You must follow the AI's laws to the best of your ability.</B>")
-				O.show_laws() // The antagonist proc does that too.
+				boutput(borg, "<B>You must follow the AI's laws to the best of your ability.</B>")
+				borg.show_laws() // The antagonist proc does that too.
 
-			O.job = "Cyborg"
+			borg.job = "Cyborg"
 
 		// final check to guarantee the icon shows up for everyone
-		if(O.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
-			if ((O.mind in ticker.mode:revolutionaries) || (O.mind in ticker.mode:head_revolutionaries))
+		if(borg.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
+			if ((borg.mind in ticker.mode:revolutionaries) || (borg.mind in ticker.mode:head_revolutionaries))
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
-		O.update_appearance()
+		borg.update_appearance()
 
 		qdel(src)
 		return
@@ -1235,58 +1229,3 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		AI.verbs -= whatever the vox verb is i guess
 */
 
-/obj/item/roboupgrade/ai/law_override
-	name = "AI Law Override Module"
-	desc = "A module that overrides the AI's inherent law set with a customised one."
-	icon_state = "mod-sec"
-	var/datum/ai_laws/law_set = null
-	var/datum/ai_laws/old_law_set = null
-
-	New()
-		..()
-		src.law_set = new /datum/ai_laws(src)
-
-	slot_in(var/mob/living/silicon/ai/AI)
-		if (..())
-			return
-		boutput(AI, "<b>Your inherent laws have been overridden by an inserted module.</b>")
-		src.old_law_set = ticker.centralized_ai_laws
-		ticker.centralized_ai_laws = src.law_set
-		ticker.centralized_ai_laws.show_laws(AI)
-		AI << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-		if (AI.deployed_to_eyecam)
-			AI.eyecam << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-
-	slot_out(var/mob/living/silicon/ai/AI)
-		if (..())
-			return
-		boutput(AI, "<b>Your inherent laws have been restored.</b>")
-		ticker.centralized_ai_laws = src.old_law_set
-		ticker.centralized_ai_laws.show_laws(AI)
-		AI << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-		if (AI.deployed_to_eyecam)
-			AI.eyecam << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-		src.old_law_set = null
-
-	attack_self(var/mob/user as mob)
-		if (!iscarbon(user))
-			boutput(user, "<span class='alert'>Silicon lifeforms cannot access this module's functions.</span>")
-			return
-
-		if (!istype(src.law_set,/datum/ai_laws))
-			src.law_set = new /datum/ai_laws(src)
-			// just in case
-
-		var/datum/ai_laws/LAW = src.law_set
-		var/law_counter = 1
-		var/entered_text = ""
-		while (law_counter < 4)
-			entered_text = input("Enter Law #[law_counter].","[src.name]") as null|text
-			if (entered_text)
-				if (law_counter > LAW.inherent.len)
-					LAW.inherent += entered_text
-				else
-					LAW.inherent[law_counter] = entered_text
-			else
-				break
-			law_counter++

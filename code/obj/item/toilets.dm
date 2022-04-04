@@ -49,7 +49,7 @@ TOILET
 	if (!ticker)
 		boutput(user, "You can't help relieve anyone before the game starts.")
 		return
-	if (!ishuman(M) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || user.stat)
+	if (!ishuman(M) || BOUNDS_DIST(src, user) > 0 || M.loc != src.loc || user.restrained() || user.stat)
 		return
 	if (M == user && ishuman(user))
 		var/mob/living/carbon/human/H = user

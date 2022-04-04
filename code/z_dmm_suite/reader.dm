@@ -102,17 +102,21 @@ dmm_suite
 			var/gridCoordY = text2num(coordShifts[posZ][2])  + coordY - 1
 			var/gridCoordZ = text2num(coordShifts[posZ][3])  + coordZ - 1
 
-			if(overwrite)
-				for(var/posY = 1 to yLines.len)
-					var yLine = yLines[posY]
-					for(var/posX = 1 to length(yLine)/key_len)
-						var/turf/T = locate(posX + gridCoordX - 1, posY+gridCoordY - 1, gridCoordZ)
-						for(var/x in T)
-							if(istype(x, /obj) && overwrite & DMM_OVERWRITE_OBJS && !istype(x, /obj/overlay))
-								qdel(x)
-							else if(istype(x, /mob) && overwrite & DMM_OVERWRITE_MOBS)
-								qdel(x)
-							LAGCHECK(LAG_MED)
+			if(overwrite && posZ == 1) // do this only once so we don't delete our own stuff if it's big!!!
+				for(var/internalPosZ = 1 to gridLevels.len)
+					var/igridCoordX = text2num(coordShifts[internalPosZ][1]) + coordX - 1
+					var/igridCoordY = text2num(coordShifts[internalPosZ][2])  + coordY - 1
+					var/igridCoordZ = text2num(coordShifts[internalPosZ][3])  + coordZ - 1
+					for(var/posY = 1 to yLines.len)
+						var yLine = yLines[posY]
+						for(var/posX = 1 to length(yLine)/key_len)
+							var/turf/T = locate(posX + igridCoordX - 1, posY+igridCoordY - 1, igridCoordZ)
+							for(var/x in T)
+								if(istype(x, /obj) && overwrite & DMM_OVERWRITE_OBJS && !istype(x, /obj/overlay))
+									qdel(x)
+								else if(istype(x, /mob) && overwrite & DMM_OVERWRITE_MOBS)
+									qdel(x)
+								LAGCHECK(LAG_MED)
 
 			for(var/posY = 1 to yLines.len)
 				var yLine = yLines[posY]
@@ -140,7 +144,7 @@ dmm_suite
 
 	var
 		quote = "\""
-		regex/comma_delim = new(@"[\s\r\n]*,[\s\r\n]*")
+		regex/comma_delim = new(@"[\s\r\n]*,[\r\n][\s\r\n]*")
 		regex/semicolon_delim = new(@"[\s\r\n]*;[\s\r\n]*")
 		regex/key_value_regex = new(@"^[\s\r\n]*([^=]*?)[\s\r\n]*=[\s\r\n]*(.*?)[\s\r\n]*$")
 
@@ -229,12 +233,15 @@ dmm_suite
 					if (atomPath)
 						instance = new atomPath(location)
 			// Handle cases where Atom/New was redifined without calling Super()
-			if(preloader && instance) // Atom could delete itself in New()
+			if(preloader && instance && !instance.disposed) // Atom could delete itself in New()
 				preloader.load(instance)
 			//
 			return instance
 
 		loadAttribute(value, list/strings)
+			// Check for typepath
+			if(copytext(value, 1, 2) == "/")
+				return text2path(value)
 			//Check for string
 			if(copytext(value, 1, 2) == "\"")
 				return strings[value]
@@ -246,8 +253,23 @@ dmm_suite
 			else if(copytext(value,1,2) == "'")
 				return get_cached_file(copytext(value,2,length(value)))
 				// return file(copytext(value,2,length(value)))
-			// Check for lists
-				// To Do
+			else if(startswith(value, "list("))
+				value = copytext(value, 6, -1)
+				var/list/list_values = splittext(value, ",")
+				// todo associations
+				// also todo , in strings
+				. = list()
+				for(var/list_value in list_values)
+					var/key_str = list_value
+					var/val_str = null
+					if(findtext(key_str, "="))
+						key_value_regex.Find(key_str)
+						key_str = key_value_regex.group[1]
+						val_str = key_value_regex.group[2]
+						var/val = isnull(val_str) ? null : loadAttribute(trim(val_str), strings)
+						.[loadAttribute(trim(key_str), strings)] = val
+					else
+						. += loadAttribute(trim(key_str), strings)
 
 
 //-- Preloading ----------------------------------------------------------------

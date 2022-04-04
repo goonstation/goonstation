@@ -1279,7 +1279,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	set category = "Local"
 
 	SPAWN(0.7 SECONDS) //secret spawn delay, so you can't spam this during combat for a free "stun"
-		if (usr && isliving(usr) && !issilicon(usr) && get_dist(src,usr) <= 1)
+		if (usr && isliving(usr) && !issilicon(usr) && BOUNDS_DIST(src, usr) == 0)
 			var/mob/living/L = usr
 			L.give_to(src)
 
@@ -1332,7 +1332,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (thing)
 
 		if (M.client && tgui_alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Accept given [thing]", list("Yes", "No"), timeout = 10 SECONDS) == "Yes" || M.ai_active)
-			if (!thing || !M || !(get_dist(src, M) <= 1) || thing.loc != src || src.restrained())
+			if (!thing || !M || !(BOUNDS_DIST(src, M) == 0) || thing.loc != src || src.restrained())
 				return
 			src.u_equip(thing)
 			if (src.bioHolder && src.bioHolder.HasEffect("clumsy") && prob(50))
@@ -1681,7 +1681,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		if (src.pushing && (src.pulling != src.pushing))
 			. *= lerp(1, max(src.pushing.p_class, 1), pushpull_multiplier)
 
-		for (var/obj/item/grab/G in list(src.r_hand, src.l_hand))
+		for (var/obj/item/grab/G in src.equipped_list())
 			var/mob/M = G.affecting
 			if (isnull(M))
 				continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them

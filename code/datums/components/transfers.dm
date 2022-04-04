@@ -226,19 +226,19 @@
 
 	onUpdate()
 		. = ..()
-		if(get_dist(owner, target) > 1)
+		if(BOUNDS_DIST(owner, target) > 0)
 			src.interrupt(INTERRUPT_ALWAYS)
 
 	loopStart()
 		. = ..()
-		if(get_dist(owner, target) > 1)
+		if(BOUNDS_DIST(owner, target) > 0)
 			src.interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
 		. = ..()
 		if (!load_type)
 			return
-		if(get_dist(owner, target) > 1)
+		if(BOUNDS_DIST(owner, target) > 0)
 			src.interrupt(INTERRUPT_ALWAYS)
 			return
 		for(var/obj/item/M in view(1, owner))

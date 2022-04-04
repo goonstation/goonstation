@@ -545,7 +545,7 @@
 	onEnd()
 		..()
 
-		if(get_dist(source, target) > 1 || target == null || source == null)
+		if(BOUNDS_DIST(source, target) > 0 || target == null || source == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/obj/item/I = target.get_slot(slot)
@@ -571,7 +571,7 @@
 
 	onUpdate()
 		..()
-		if(get_dist(source, target) > 1 || target == null || source == null)
+		if(BOUNDS_DIST(source, target) > 0 || target == null || source == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

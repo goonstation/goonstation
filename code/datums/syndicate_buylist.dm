@@ -105,7 +105,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/storage/emp_grenade_pouch
 	cost = 1
 	desc = "A pouch of EMP grenades, each capable of causing havoc with the electrical and computer systems found aboard the modern space station. Shorts out power systems, causes feedback in electronic vision devices such as thermals, and causes robots to go haywire."
-	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF | UPLINK_HEAD_REV
 
 /datum/syndicate_buylist/generic/tacticalgrenades
 	name = "Tactical Grenades"
@@ -340,13 +340,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	vr_allowed = 0
 	desc = "This miniaturized explosive packs a decent punch and will detonate upon the unintentional death of the host. Do not swallow and keep out of reach of children."
 
-/datum/syndicate_buylist/traitor/macrobomb
-	name = "Macrobomb Implant"
-	item = /obj/item/implanter/uplink_macrobomb
-	cost = 12
-	vr_allowed = 0
-	desc = "Like the microbomb, but much more powerful. Macrobombs for macrofun!"
-
 /datum/syndicate_buylist/traitor/lightbreaker
 	name = "Light Breaker"
 	item = /obj/item/lightbreaker
@@ -401,7 +394,7 @@ This is basically useless for anyone but miners.
 	not_in_crates = 1
 	vr_allowed = 0
 	objective = /datum/objective/regular/assassinate
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY | UPLINK_HEAD_REV
 
 	run_on_spawn(var/obj/item/pinpointer/idtracker/tracker, var/mob/living/owner, in_surplus_crate)
 		tracker.owner = owner
@@ -656,8 +649,15 @@ This is basically useless for anyone but miners.
 	cost = 6
 	desc = "These marvels of modern technology employ nanites and space science to draw energy from nearby cables to zap things. BZZZZT!"
 	not_in_crates = 1
+
+
+/datum/syndicate_buylist/traitor/zappy_implant
+	name = "Flyzapper Implant"
+	item = /obj/item/implanter/zappy
+	cost = 1
+	desc = "This implant turns you into a living (or dying) generator, zapping those around you with a volume of electricity that scales with the number of implants upon your demise."
 	job = list("Engineer", "Chief Engineer", "Mechanic")
-	can_buy = UPLINK_TRAITOR
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/pickpocket
 	name = "Pickpocket Gun"

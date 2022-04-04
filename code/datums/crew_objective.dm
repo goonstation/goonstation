@@ -456,12 +456,11 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 		/obj/item/reagent_containers/food/snacks/mushroom,
 		/obj/item/reagent_containers/food/snacks/pickle/trash,
 		/obj/item/reagent_containers/food/snacks/pizza/xmas,
-		/obj/item/reagent_containers/food/snacks/plant,
 		/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
-		/obj/item/reagent_containers/food/snacks/soup,
+		/obj/item/reagent_containers/food/snacks/soup/custom,
 		/obj/item/reagent_containers/food/snacks/condiment/syndisauce
 	)
-	var/static/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks)-blacklist-concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
+	var/static/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks) - blacklist - concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
 /datum/objective/crew/chef/cake
 	var/choices[CAKE_OBJ_COUNT]
 	var/completed = FALSE

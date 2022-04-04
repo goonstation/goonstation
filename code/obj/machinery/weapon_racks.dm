@@ -249,7 +249,7 @@
 				SEND_SIGNAL(A, COMSIG_CELL_CHARGE, 10)
 
 	Topic(href, href_list)
-		if(get_dist(usr,src) > 1 && !issilicon(usr) && !isAI(usr))
+		if(BOUNDS_DIST(usr, src) > 0 && !issilicon(usr) && !isAI(usr))
 			boutput(usr, "<span class='alert'>You need to be closer to the rack to do that!</span>")
 			return
 

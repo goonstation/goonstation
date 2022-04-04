@@ -3,6 +3,7 @@
 /* -------------------- Food -------------------- */
 /* ============================================== */
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 /obj/item/reagent_containers/food
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	var/heal_amt = 0
@@ -91,6 +92,7 @@
 /* -------------------- Snacks -------------------- */
 /* ================================================ */
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 /obj/item/reagent_containers/food/snacks
 	name = "snack"
 	desc = "yummy"
@@ -1220,7 +1222,7 @@
 			return
 
 		var/selection = input(user, "What do you want to do with [src]?") as null|anything in choices
-		if (isnull(selection) || get_dist(src, user) > 1)
+		if (isnull(selection) || BOUNDS_DIST(src, user) > 0)
 			return
 
 		var/obj/item/remove_thing

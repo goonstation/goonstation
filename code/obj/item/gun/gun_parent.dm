@@ -12,6 +12,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	m_amt = 2000
 	force = 10.0
 	throwforce = 5
+	health = 7
 	w_class = W_CLASS_NORMAL
 	throw_speed = 4
 	throw_range = 6
@@ -272,7 +273,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				var/target_turf = get_turf(target)
 				is_dual_wield = 1
 				SPAWN(0.2 SECONDS)
-					if (get_dist(user,target)<=1)
+					if (BOUNDS_DIST(user, target) == 0)
 						user.r_hand:shoot_point_blank(target,user,second_shot = 1)
 					else
 						user.r_hand:shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5), is_dual_wield)
@@ -280,7 +281,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				var/target_turf = get_turf(target)
 				is_dual_wield = 1
 				SPAWN(0.2 SECONDS)
-					if (get_dist(user,target)<=1)
+					if (BOUNDS_DIST(user, target) == 0)
 						user.l_hand:shoot_point_blank(target,user,second_shot = 11)
 					else
 						user.l_hand:shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5), is_dual_wield)
@@ -346,7 +347,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			P.mob_shooter = user
 
 		P.forensic_ID = src.forensic_ID // Was missing (Convair880).
-		if(get_dist(user,target) <= 1)
+		if(BOUNDS_DIST(user, target) == 0)
 			P.was_pointblank = 1
 			hit_with_existing_projectile(P, target) // Includes log entry.
 		else

@@ -236,6 +236,7 @@
 	mats = 6
 	temp_tolerance = T0C+500
 	var/overloading = 0
+	var/grace_period = 30
 	safe_oxygen_min = 9
 	safe_co2_max = 18
 	safe_toxins_max = 5		//making it a lot higher than regular, because even doubling the regular value is pitifully low. This is still reasonably low, but it might be noticable
@@ -272,7 +273,11 @@
 			return 0
 
 		if(overloading)
-			src.take_damage(0, 1 * mult)
+			src.grace_period = max(grace_period - 3 * mult, 0)
+			if(grace_period <= 5)
+				src.take_damage(0, 1 * mult)
+		else
+			src.grace_period = min(grace_period + 1 * mult, initial(src.grace_period))
 		return 1
 
 	disposing()

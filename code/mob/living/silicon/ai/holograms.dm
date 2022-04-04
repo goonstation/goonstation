@@ -7,7 +7,7 @@
 	var/image_expansion
 	var/holograms = 0
 	var/const/max_holograms = 8
-	var/text_expansion
+	var/list/text_expansion = list()
 	var/text_holograms = 0
 	var/const/max_text_holograms = 3
 
@@ -43,10 +43,6 @@
 					boutput(E, "Not enough V-RAM to project more holograms. Delete others to make room.")
 					. = FALSE
 
-	proc/expansion(string)
-		text_expansion = string
-
-
 /mob/living/silicon/ai
 	contextLayout = new /datum/contextLayout/experimentalcircle(36)
 
@@ -71,14 +67,15 @@
 			return
 
 		if(holo_type == "write")
-			var/list/holo_setences = list()
+			var/list/holo_sentences = list()
 			var/list/holo_actions = list()
 			var/list/holo_nouns = list()
-			holo_setences += strings("hologram.txt", "sentences")
+			holo_sentences += strings("hologram.txt", "sentences")
 			if(src.holoHolder.text_expansion)
-				holo_setences += strings("hologram.txt", "sentences_[src.holoHolder.text_expansion]")
-			holo_setences = sortList(holo_setences)
-			var/text = tgui_input_list(usr, "Select a word:", "Hologram Text", holo_setences, allowIllegal=TRUE)
+				for(var/te in src.holoHolder.text_expansion)
+					holo_sentences += strings("hologram.txt", "sentences_[te]")
+			holo_sentences = sortList(holo_sentences)
+			var/text = tgui_input_list(usr, "Select a word:", "Hologram Text", holo_sentences, allowIllegal=TRUE)
 			if(!text)
 				return
 
@@ -86,14 +83,16 @@
 				if("Remember to ...", "Employees must ...")
 					holo_actions += strings("hologram.txt", "verbs")
 					if(src.holoHolder.text_expansion)
-						holo_actions += strings("hologram.txt", "verbs_[src.holoHolder.text_expansion]")
+						for(var/te in src.holoHolder.text_expansion)
+							holo_actions += strings("hologram.txt", "verbs_[te]")
 					holo_actions = sortList(holo_actions)
 					var/selection = tgui_input_list(usr, "Select a word:", text, holo_actions, allowIllegal=TRUE)
 					text = replacetext(text, "...", selection)
 				else
 					holo_nouns = sortList(strings("hologram.txt", "nouns"))
 					if(src.holoHolder.text_expansion)
-						holo_nouns += strings("hologram.txt", "nouns_[src.holoHolder.text_expansion]")
+						for(var/te in src.holoHolder.text_expansion)
+							holo_nouns += strings("hologram.txt", "nouns_[te]")
 					holo_nouns = sortList(holo_nouns)
 					var/blank_found = findtext(text,"...")
 					while(blank_found)
