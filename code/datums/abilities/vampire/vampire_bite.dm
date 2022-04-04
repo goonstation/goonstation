@@ -384,7 +384,6 @@
 
 		if (istype(H))
 			H.vamp_isbiting = HH
-		HH.vamp_beingbitten = 1
 
 		src.loopStart()
 
@@ -434,8 +433,6 @@
 	proc/end()
 		if (istype(H))
 			H.vamp_isbiting = null
-		if (HH)
-			HH.vamp_beingbitten = 0 // Victim might have been gibbed, who knowns.
 
 
 
@@ -514,14 +511,14 @@
 
 	onUpdate()
 		..()
-		if(get_dist(M, HH) > 1 || M == null || HH == null || B == null)
+		if(BOUNDS_DIST(M, HH) > 0 || M == null || HH == null || B == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 
 	onStart()
 		..()
-		if(get_dist(M, HH) > 1 || M == null || HH == null || B == null)
+		if(BOUNDS_DIST(M, HH) > 0 || M == null || HH == null || B == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -531,7 +528,6 @@
 
 		if (istype(H))
 			H.vamp_isbiting = HH
-		HH.vamp_beingbitten = 1
 
 		src.loopStart()
 
@@ -541,7 +537,7 @@
 		return
 
 	onEnd()
-		if(get_dist(M, HH) > 1 || M == null || HH == null || B == null)
+		if(BOUNDS_DIST(M, HH) > 0 || M == null || HH == null || B == null)
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			src.end()
@@ -571,5 +567,3 @@
 	proc/end()
 		if (istype(H))
 			H.vamp_isbiting = null
-		if (HH)
-			HH.vamp_beingbitten = 0 // Victim might have been gibbed, who knowns.

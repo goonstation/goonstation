@@ -290,17 +290,12 @@
 
 		//Mostly copy pasted from turf/Enter. Sucks, but we need an object rather than a boolean
 		//First, check for directional blockers on the entering object's tile
-		if (orig_turf.checkingexit > 0)
-			for(var/obj/obstacle in orig_turf)
-				if(obstacle == thing)
-					continue
-				if(obstacle.event_handler_flags & USE_CHECKEXIT)
-					var/obj/O = thing
-					if (!istype(O) || !(HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING) \
-					  && HAS_FLAG(obstacle.object_flags, HAS_DIRECTIONAL_BLOCKING) \
-					  && obstacle.dir == O.dir))
-						if(!obstacle.CheckExit(thing, dest_turf))
-							no_go = obstacle
+		for(var/obj/obstacle in orig_turf)
+			if(obstacle == thing)
+				continue
+			if(!obstacle.CheckExit(thing, dest_turf))
+				no_go = obstacle
+				break
 
 		//next, check if the turf itself prevents something from entering it (i.e. it's a wall)
 		if (isnull(no_go))
@@ -772,7 +767,7 @@
 
 	onUpdate()
 		..()
-		if (!the_storage || !the_wrench || !owner || get_dist(owner, the_storage) > 1)
+		if (!the_storage || !the_wrench || !owner || BOUNDS_DIST(owner, the_storage) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

@@ -384,7 +384,7 @@
 				src.z = tysontarget2.z
 				banproc()
 				return
-			else if (get_dist(src, src.tysontarget2) <= 1)
+			else if (BOUNDS_DIST(src, src.tysontarget2) == 0)
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span class='alert'><B>[src]</B> punches [tysontarget2]!</span>", 1)
 				tysontarget2.changeStatus("weakened", 10 SECONDS)
@@ -453,7 +453,7 @@
 
 	proc/process()
 		while (!disposed)
-			if (get_dist(src, src.tysontarget2) <= 1)
+			if (BOUNDS_DIST(src, src.tysontarget2) == 0)
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span class='alert'><B>[src]</B> punches [tysontarget2]!</span>", 1)
 				tysontarget2.changeStatus("weakened", 10 SECONDS)
@@ -471,7 +471,7 @@
 	proc/gibproc()
 		// drsingh for various cannot read null.
 		sleep(1.5 SECONDS)
-		if (get_dist(src, src.tysontarget2) <= 1)
+		if (BOUNDS_DIST(src, src.tysontarget2) == 0)
 			for(var/mob/O in AIviewers(src, null))
 				O.show_message("<span class='alert'><B>[src]</B> KOs [tysontarget2] in one punch!</span>", 1)
 			playsound(src.loc, 'sound/impact_sounds/generic_hit_3.ogg', 30, 1, -2)

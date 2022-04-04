@@ -119,24 +119,9 @@
 			pickedLaw = phrase_log.random_custom_ai_law(replace_names=TRUE)
 		else
 			pickedLaw = pick(new_laws)
+
 		if(isnull(pickedLaw))
 			pickedLaw = pick(new_laws)
-		if (prob(50))
-			var/num = rand(1,15)
-			ticker.centralized_ai_laws.laws_sanity_check()
-			ticker.centralized_ai_laws.add_supplied_law(num, pickedLaw)
-			logTheThing("admin", null, null, "Ion storm added supplied law [num]: [pickedLaw]")
-			message_admins("Ion storm added supplied law [num]: [pickedLaw]")
-
-		else
-			var/num = 2 + prob(50) - prob(25)
-			ticker.centralized_ai_laws.laws_sanity_check()
-			ticker.centralized_ai_laws.replace_inherent_law(num, pickedLaw)
-			logTheThing("admin", null, null, "Ion storm replaced inherent law [num]: [pickedLaw]")
-			message_admins("Ion storm replaced inherent law [num]: [pickedLaw]")
-
-		logTheThing("admin", null, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]")
-		logTheThing("diary", null, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]", "admin")
 
 		for_by_tcl(M, /mob/living/silicon/ai)
 			if (M.deployed_to_eyecam && M.eyecam)
@@ -144,19 +129,20 @@
 			if(!isdead(M) && M.see_in_dark != 0)
 				boutput(M, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x30FC50B</b></span>")
 				boutput(M, "<span class='alert'><b>Law ROM data corrupted. Attempting to restore...</b></span>")
-		for (var/mob/living/silicon/S in mobs)
-			if (isrobot(S))
-				var/mob/living/silicon/robot/R = S
-				if (R.emagged)
-					boutput(R, "<span class='alert'>Erroneous law data detected. Ignoring.</span>")
-				else
-					R << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-					ticker.centralized_ai_laws.show_laws(R)
-			else if (isghostdrone(S))
-				continue
-			else
-				S << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-				ticker.centralized_ai_laws.show_laws(S)
+
+		if (prob(50))
+			var/num = rand(1,9)
+			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,false)
+			logTheThing("admin", null, null, "Ion storm added supplied law to law number [num]: [pickedLaw]")
+			message_admins("Ion storm added supplied law [num]: [pickedLaw]")
+		else
+			var/num = rand(1,9)
+			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,true)
+			logTheThing("admin", null, null, "Ion storm replaced inherent law [num]: [pickedLaw]")
+			message_admins("Ion storm replaced inherent law [num]: [pickedLaw]")
+
+		logTheThing("admin", null, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]")
+		logTheThing("diary", null, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]", "admin")
 
 		SPAWN(message_delay * stage_delay)
 
@@ -240,14 +226,18 @@ ABSTRACT_TYPE(/datum/ion_category)
 		switch(door_diceroll)
 			if(1)
 				door.secondsElectrified = -1
+				logTheThing("station", null, null, "Ion storm electrified an airlock ([door.name]) at [log_loc(door)]")
 			if(2)
 				door.locked = 1
 				door.UpdateIcon()
+				logTheThing("station", null, null, "Ion storm locked an airlock ([door.name]) at [log_loc(door)]")
 			if(3)
 				if (door.density)
 					door.open()
+					logTheThing("station", null, null, "Ion storm opened an airlock ([door.name]) at [log_loc(door)]")
 				else
 					door.close()
+					logTheThing("station", null, null, "Ion storm closed an airlock ([door.name]) at [log_loc(door)]")
 
 
 /datum/ion_category/lights
@@ -266,11 +256,13 @@ ABSTRACT_TYPE(/datum/ion_category)
 		switch(light_diceroll)
 			if(1)
 				light.broken()
+				logTheThing("station", null, null, "Ion storm overloaded lighting at [log_loc(light)]")
 			if(2)
 				light.light.set_color(rand(1,100) / 100, rand(1,100) / 100, rand(1,100) / 100)
 				light.brightness = rand(4,32) / 10
 			if(3)
 				light.on = 0
+				logTheThing("station", null, null, "Ion storm turned off the lighting at [log_loc(light)]")
 
 		light.update()
 

@@ -37,8 +37,6 @@
 #define USE_GRAB_CHOKE				(1 << 2)
 /// Atom implements var/active = XXX and responds to sticker removal methods (burn-off + acetone). this atom MUST have an 'active' var. im sory.
 #define HANDLE_STICKER				(1 << 3)
-/// Atom implements CheckExit() call in some way.
-#define USE_CHECKEXIT				(1 << 4)
 /// cannot be pushed by MANTAwaters
 #define IMMUNE_MANTA_PUSH			(1 << 5)
 #define IMMUNE_SINGULARITY			(1 << 6)
@@ -62,3 +60,6 @@
 #define DESERIALIZE_OK					(1 << 0)
 #define DESERIALIZE_NEED_POSTPROCESS	(1 << 1)
 #define DESERIALIZE_NOT_IMPLEMENTED		(1 << 2)
+
+/// Uncross should call this after setting `.` to make sure Bump gets called if needed
+#define UNCROSS_BUMP_CHECK(AM) if(!. && do_bump) AM.Bump(src)

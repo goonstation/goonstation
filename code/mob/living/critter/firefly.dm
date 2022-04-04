@@ -25,7 +25,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 	flags = TABLEPASS
 	fits_under_table = 1
 	base_move_delay = 1.5
-	base_walk_delay = 2.5
+	base_walk_delay = 3.5
 	isFlying = 1
 
 	New()
@@ -61,6 +61,8 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 			// 	swap = -1
 			// animate(src, time=duration*(2+rand()), loop = -1, pixel_x=4*swap, flags=ANIMATION_PARALLEL)
 			// animate(time=duration*(2+rand()), loop = -1, pixel_x=-4*swap)
+
+		hotkey("walk")
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		// Move to TYPEINFO if more containers are whitelisted, k thx

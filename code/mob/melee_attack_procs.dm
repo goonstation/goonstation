@@ -146,6 +146,9 @@
 	if (src == target) // :I
 		boutput(src, "<span class='alert'>You desperately try to think of a way to do CPR on yourself, but it's just not logically possible!</span>")
 		return
+	if(actions.hasAction(src, "cpr"))
+		boutput(src, "<span class='alert'>You're already doing CPR!</span>")
+		return
 
 	src.lastattacked = target
 
@@ -1272,7 +1275,7 @@
 	.= 0
 	if (prob(60) && M && src.stance == "defensive" && iswerewolf(src) && src.stat)
 		src.set_dir(get_dir(src, M))
-		playsound(src.loc, "sound/weapons/punchmiss.ogg", 50, 1)
+		playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 1)
 		//dodge more likely, we're more agile than macho
 		if (prob(60))
 			src.visible_message("<span class='alert'><B>[src] dodges the blow by [M]!</B></span>")

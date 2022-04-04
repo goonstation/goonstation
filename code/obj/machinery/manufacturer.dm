@@ -567,7 +567,7 @@
 				if (src.manuf_zap(usr, 10))
 					return
 
-		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1 || isAI(usr)) && istype(src.loc, /turf))))
+		if ((usr.contents.Find(src) || ((BOUNDS_DIST(src, usr) == 0 || isAI(usr)) && istype(src.loc, /turf))))
 			src.add_dialog(usr)
 
 			if (src.malfunction && prob(10))
@@ -584,7 +584,7 @@
 						if (O.material && O.material.mat_id == mat_id)
 							if (!ejectamt)
 								ejectamt = input(usr,"How many material pieces do you want to eject?","Eject Materials") as num
-								if (ejectamt <= 0 || src.mode != "ready" || get_dist(src, usr) > 1 || !isnum_safe(ejectamt))
+								if (ejectamt <= 0 || src.mode != "ready" || BOUNDS_DIST(src, usr) > 0 || !isnum_safe(ejectamt))
 									break
 							if (!ejectturf)
 								break
@@ -1123,11 +1123,11 @@
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the manufacturer's output target.</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>The manufacturing unit is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -1172,7 +1172,7 @@
 			boutput(user, "<span class='alert'>You can't quick-load that.</span>")
 			return
 
-		if(get_dist(O,user) > 1)
+		if(BOUNDS_DIST(O, user) > 0)
 			boutput(user, "<span class='alert'>You are too far away!</span>")
 			return
 
@@ -1925,7 +1925,7 @@
 		if (!src.output_target)
 			return src.loc
 
-		if (get_dist(src.output_target,src) > 1)
+		if (BOUNDS_DIST(src.output_target, src) > 0)
 			src.output_target = null
 			return src.loc
 
@@ -2043,7 +2043,10 @@
 /obj/item/paper/manufacturer_blueprint/loafer
 	blueprint = /datum/manufacture/mechanics/loafer
 
+/******************** AI Law Rack Blueprint (probably a terrible idea) *******************/
 
+/obj/item/paper/manufacturer_blueprint/lawrack
+	blueprint = /datum/manufacture/mechanics/lawrack
 
 /******************** AI Display Blueprints (should be temporary but we know how that goes in coding) *******************/
 
@@ -2252,14 +2255,18 @@
 	/datum/manufacture/cyberlung_right,
 	/datum/manufacture/rods2,
 	/datum/manufacture/metal,
-	/datum/manufacture/glass)
+	/datum/manufacture/glass,
+	/datum/manufacture/asimov_laws,
+	/datum/manufacture/borg_linker)
 
 	hidden = list(/datum/manufacture/flash,
 	/datum/manufacture/cybereye_thermal,
 	/datum/manufacture/cybereye_laser,
 	/datum/manufacture/cyberbutt,
 	/datum/manufacture/robup_expand,
-	/datum/manufacture/cardboard_ai)
+	/datum/manufacture/cardboard_ai,
+	/datum/manufacture/corporate_laws,
+	/datum/manufacture/robocop_laws)
 
 /obj/machinery/manufacturer/medical
 	name = "Medical Fabricator"

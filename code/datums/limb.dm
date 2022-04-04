@@ -235,7 +235,22 @@
 		else
 			reloaded_at = ticker.round_elapsed_ticks + reload_time
 
+	attack_hand(atom/target, mob/user, var/reach, params, location, control)
+		return
+
+	help(mob/living/target, mob/living/user)
+		return
+
+	disarm(mob/living/target, mob/living/user)
+		src.point_blank(target, user)
+
+	grab(mob/living/target, mob/living/user)
+		return
+
 	harm(mob/living/target, mob/living/user)
+		src.point_blank(target, user)
+
+	proc/point_blank(mob/living/target, mob/living/user)
 		if (reloaded_at > ticker.round_elapsed_ticks && !current_shots)
 			boutput(user, "<span class='alert'>The [holder.name] is [reloading_str]!</span>")
 			return
@@ -249,12 +264,12 @@
 				var/obj/projectile/P = initialize_projectile_pixel(user, proj, target, 0, 0)
 				if (!P)
 					return FALSE
-				if(get_dist(user,target) <= 1)
+				if(BOUNDS_DIST(user, target) == 0)
 					P.was_pointblank = 1
 					hit_with_existing_projectile(P, target) // Includes log entry.
 				else
 					P.launch()
-			user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
+			user.visible_message("<b class='alert'>[user] shoots [target] point-blank with the [holder.name]!</b>")
 			next_shot_at = ticker.round_elapsed_ticks + cooldown
 			if (!current_shots)
 				reloaded_at = ticker.round_elapsed_ticks + reload_time
@@ -657,8 +672,8 @@
 			target.changeStatus("weakened", 2 SECONDS)
 		user.lastattacked = target
 
-/datum/limb/wendigo
-	var/log_name = "wendigo limbs"
+/datum/limb/brullbar
+	var/log_name = "brullbar limbs"
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
 			return
@@ -735,7 +750,7 @@
 			target.changeStatus("weakened", (4 * quality) SECONDS)
 		user.lastattacked = target
 
-/datum/limb/wendigo/severed_werewolf
+/datum/limb/brullbar/severed_werewolf
 	log_name = "severed werewolf limb"
 
 // Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears, which are currently commented out. Go there to make use of this.

@@ -16,6 +16,7 @@ RACK PARTS
 	stamina_damage = 35
 	stamina_cost = 22
 	stamina_crit_chance = 10
+	health = 8
 	var/furniture_type = /obj/table/auto
 	var/furniture_name = "table"
 	var/reinforced = 0
@@ -540,7 +541,7 @@ RACK PARTS
 
 	onUpdate()
 		..()
-		if (fparts == null || owner == null || get_dist(owner, fparts) > 1)
+		if (fparts == null || owner == null || BOUNDS_DIST(owner, fparts) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -591,7 +592,7 @@ RACK PARTS
 
 	onUpdate()
 		..()
-		if (the_furniture == null || the_tool == null || owner == null || get_dist(owner, the_furniture) > 1)
+		if (the_furniture == null || the_tool == null || owner == null || BOUNDS_DIST(owner, the_furniture) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

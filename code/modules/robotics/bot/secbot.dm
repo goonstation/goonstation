@@ -277,7 +277,7 @@
 		if (src.attack_per_step && prob(src.attack_per_step == 2 ? 25 : 75))
 			if (oldloc != NewLoc)
 				if (mode == SECBOT_AGGRO && target)
-					if (IN_RANGE(src, src.target, 1))
+					if ((BOUNDS_DIST(src, src.target) == 0))
 						src.baton_attack(src.target, 1)
 
 	attack_hand(mob/user as mob, params)
@@ -300,7 +300,7 @@
 			Guard Lockdown: <A href='?src=\ref[src];operation=lockdown'>[src.guard_area_lockdown ? "On" : "Off"]</A><BR>
 			<A href='?src=\ref[src];operation=guardhere'>Guard Here</A>"}
 
-		if (user.client.tooltipHolder)
+		if (user.client?.tooltipHolder)
 			user.client.tooltipHolder.showClickTip(src, list(
 				"params" = params,
 				"title" = "Securitron v2.0 controls",
@@ -575,7 +575,7 @@
 
 			while (stuncount > 0 && src.target)
 				// they moved while we were sleeping, abort
-				if(!IN_RANGE(src, src.target, 1))
+				if(!(BOUNDS_DIST(src, src.target) == 0))
 					src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 					src.weeoo()
 					src.process()
@@ -770,7 +770,7 @@
 		/// Tango!
 		if(src.target)
 			/// Tango in batonning distance?
-			if (IN_RANGE(src, src.target, 1))
+			if ((BOUNDS_DIST(src, src.target) == 0))
 				/// Are they good and downed, and are we allowed to cuff em?
 				if(!src.arrest_type && src.target?.getStatusDuration("weakened") >= 3 SECONDS)
 					if(!src.warn_minor_crime || ((src.warn_minor_crime || src.guard_area_lockdown) && src.threatlevel >= src.cuff_threat_threshold))
@@ -993,7 +993,7 @@
 			src.look_for_perp()
 
 		/// If we happen to be chasing someone and get in batonning range, let's stop and maybe try to hit them
-		if(src.target && IN_RANGE(src, src.target, 1))
+		if(src.target && (BOUNDS_DIST(src, src.target) == 0))
 			return TRUE
 
 	KillPathAndGiveUp(var/give_up = KPAGU_CLEAR_PATH)
@@ -1281,7 +1281,7 @@
 
 		master.cuffing = 0
 
-		if (get_dist(master, master.target) <= 1)
+		if (BOUNDS_DIST(master, master.target) == 0)
 			if (!master.target || master.target.hasStatus("handcuffed"))
 				return
 
@@ -1330,7 +1330,7 @@
 					master.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
 
 	proc/failchecks()
-		if (!IN_RANGE(master, master.target, 1))
+		if (!(BOUNDS_DIST(master, master.target) == 0))
 			return 1
 		if (!master.target || master.target.hasStatus("handcuffed") || master.moving)
 			return 1
@@ -1377,7 +1377,7 @@
 	onEnd()
 		..()
 		master.baton_charging = 0
-		if(IN_RANGE(master, master.target, 1))
+		if((BOUNDS_DIST(master, master.target) == 0))
 			master.baton_attack(master.target, 1)
 		else
 			master.charge_baton()
