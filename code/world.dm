@@ -647,6 +647,8 @@ var/f_color_selector_handler/F_Color_Selector
 	processScheduler.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
+	for_by_tcl(canvas, /obj/item/canvas/big_persistent)
+		canvas.save()
 	global.phrase_log.save()
 	for_by_tcl(P, /datum/player)
 		P.on_round_end()
