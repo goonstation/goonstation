@@ -1,5 +1,9 @@
 
 (t)mon apr 04 22
+(u)RubberRats
+(p)7796
+(e)🆕|feature
+(*)Added a new negative trait: Frail Constitution. Taking this trait greatly increases the amount of damage that your internal organs take from all sources.
 (u)Flaborized
 (p)8060
 (e)🔄|rework
