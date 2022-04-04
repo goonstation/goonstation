@@ -66860,6 +66860,7 @@
 /turf/simulated/wall/false_wall/centcom,
 /area/centcom/lounge)
 "dJU" = (
+/obj/item/canvas/big_persistent/centcom,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon = 'icons/misc/racing.dmi';
