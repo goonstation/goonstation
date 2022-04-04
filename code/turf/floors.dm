@@ -1524,7 +1524,10 @@ DEFINE_FLOORS(grasslush/thin,
 	return ..()
 
 /turf/simulated/floor/burn_down()
-	src.ex_act(2)
+	if (src.intact)
+		src.ex_act(2)
+	else //make sure plating always burns down to space and not... plating
+		src.ex_act(1)
 
 /turf/simulated/floor/ex_act(severity)
 	switch(severity)
