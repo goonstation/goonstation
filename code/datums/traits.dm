@@ -952,12 +952,12 @@ ABSTRACT_TYPE(/obj/trait/job)
 		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_NERVOUS_MOBS)
 
 /obj/trait/burning
-	name = "Human Torch (+1)"
+	name = "Human Torch (+2)"
 	cleanName = "Human Torch"
-	desc = "Extends the time that you remain on fire for, when burning."
+	desc = "Fire no longer slowly peters out when you're burning."
 	id = "burning"
 	icon_state = "onfire"
-	points = 1
+	points = 2
 
 /obj/trait/carpenter
 	name = "Carpenter (-1)"
