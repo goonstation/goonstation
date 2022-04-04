@@ -1,5 +1,9 @@
 
 (t)mon apr 04 22
+(u)Flaborized
+(p)8062
+(e)|
+(+)The Adamantium Skeleton trait now outputs a message in the chat when it prevents you from losing a limb.
 (u)RubberRats
 (p)7796
 (e)🆕|feature
