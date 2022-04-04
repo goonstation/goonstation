@@ -4,8 +4,8 @@
 	soundproofing = 5
 	can_flip_bust = 1
 	p_class = 3
-	_max_health = 300
-	_health = 300
+	_max_health = LOCKER_HEALTH_AVERAGE
+	_health = LOCKER_HEALTH_AVERAGE
 	/// Anchored if TRUE
 	var/bolted = FALSE
 	/// Can't be broken open with melee
@@ -15,6 +15,9 @@
 		..()
 		if (bolted)
 			anchored = 1
+
+	get_desc(dist)
+		. += "[reinforced ? "It's reinforced, only a bomb could break into this. " : ""] [bolted ? "It's bolted to the floor." : ""]"
 
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (src.open || !src.locked)
@@ -38,28 +41,49 @@
 			..()
 		else if ((I.force > 0) && !reinforced)
 			user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]!</span>")
-			src._health -= clamp(I.force, 1, 20)
 			user.lastattacked = src
 			attack_particle(user,src)
 			hit_twitch(src)
-			if(_health <= 0)
-				_health = 0
-				src.unlock()
-				src.open()
-				playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
-				logTheThing("combat", user, null, "broke open [src] with [I] at [log_loc(src)]")
-			else
-				playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 90, 1)
+			take_damage(clamp(I.force, 1, 20), user)
+			playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 90, 1)
 		else
 			..()
 
-	get_desc(dist)
-		. += "[reinforced ? "It's reinforced, only a bomb could break into this. " : ""] [bolted ? "It's bolted to the floor." : ""]"
+	bullet_act(var/obj/projectile/P)
+		var/damage = 0
+		if (!P || !istype(P.proj_data,/datum/projectile/))
+			return
+		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
+		if (damage < 1)
+			return
+
+		switch(P.proj_data.damage_type)
+			if(D_KINETIC)
+				take_damage(damage)
+			if(D_PIERCING)
+				take_damage(damage)
+			if(D_ENERGY)
+				take_damage(damage / 2)
+		return
 
 	proc/toggle_bolts(var/mob/M)
 		M.visible_message("<b>[M]</b> [src.bolted ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
 		src.bolted = !src.bolted
 		src.anchored = !src.anchored
+
+	proc/take_damage(var/amount, var/mob/M = 0)
+		if (!isnum(amount) || amount <= 0)
+			return
+		src._health -= amount
+		if(_health <= 0)
+			_health = 0
+			//logTheThing("combat", M, null, "broke open [M] with [I] at [log_loc(src)]")
+			break_open()
+
+	proc/break_open()
+		src.unlock()
+		src.open()
+		playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
 
 /obj/storage/secure/closet/personal
 	name = "personal locker"
@@ -86,6 +110,8 @@
 
 /obj/storage/secure/closet/command
 	name = "command locker"
+	_max_health = LOCKER_HEALTH_STRONG
+	_health = LOCKER_HEALTH_STRONG
 	req_access = list(access_heads)
 	icon_state = "command"
 	icon_closed = "command"

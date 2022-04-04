@@ -4,8 +4,8 @@
 	soundproofing = 3
 	can_flip_bust = 1
 	p_class = 3
-	_max_health = 150
-	_health = 150
+	_max_health = LOCKER_HEALTH_WEAK
+	_health = LOCKER_HEALTH_WEAK
 
 	New()
 		. = ..()
@@ -28,22 +28,46 @@
 			..()
 		else if (user.a_intent == INTENT_HELP)
 			..()
-		else if (I.force > 0)
+		else if ((I.force > 0))
 			user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]!</span>")
-			src._health -= clamp(I.force, 1, 20)
 			user.lastattacked = src
 			attack_particle(user,src)
 			hit_twitch(src)
-			if(_health <= 0)
-				_health = 0
-				src.unlock()
-				src.open()
-				playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
-				logTheThing("combat", user, null, "broke open [src] with [I] at [log_loc(src)]")
-			else
-				playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 90, 1)
+			take_damage(clamp(I.force, 1, 20), user)
+			playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 90, 1)
 		else
 			..()
+
+	bullet_act(var/obj/projectile/P)
+		var/damage = 0
+		if (!P || !istype(P.proj_data,/datum/projectile/))
+			return
+		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
+		if (damage < 1)
+			return
+
+		switch(P.proj_data.damage_type)
+			if(D_KINETIC)
+				take_damage(damage)
+			if(D_PIERCING)
+				take_damage(damage)
+			if(D_ENERGY)
+				take_damage(damage / 2)
+		return
+
+	proc/take_damage(var/amount, var/mob/M = 0)
+		if (!isnum(amount) || amount <= 0)
+			return
+		src._health -= amount
+		if(_health <= 0)
+			_health = 0
+			//logTheThing("combat", M, null, "broke open [M] with [I] at [log_loc(src)]")
+			break_open()
+
+	proc/break_open()
+		src.unlock()
+		src.open()
+		playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
 
 /obj/storage/closet/emergency
 	name = "emergency supplies closet"
