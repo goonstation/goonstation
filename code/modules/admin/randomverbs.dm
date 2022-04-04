@@ -527,13 +527,13 @@
 		return
 
 	boutput(usr, "<b>[V.name]'s Occupants:</b>")
+	var/obj/machinery/vehicle/MV = V
+	ENSURE_TYPE(MV)
 	for(var/mob/M in V.contents)
-		var/obj/machinery/vehicle/MV = V
 		var/info = ""
-		if(istype(MV))
-			info = M == MV.pilot ? "*Pilot*" : ""
-
-		boutput(usr, "[M.real_name] ([M.key || "**No Key**"]) [info]")
+		info = M == MV?.pilot ? "*Pilot*" : ""
+		var/role = getRole(M)
+		boutput(usr, "<span class='notice'><b>[key_name(M, 1, 0)][role ? " ([role])" : ""] [info]</b></span>")
 
 /client/proc/cmd_admin_remove_plasma()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
