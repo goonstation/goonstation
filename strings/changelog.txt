@@ -1,4 +1,9 @@
 
+(t)mon apr 04 22
+(u)Flaborized
+(p)8060
+(e)🔄|rework
+(*)The human torch trait is now worth two points, but totally prevents the burning status counter from decrementing on its own.
 (t)sun apr 03 22
 (u)ThyOverlord
 (p)8072
