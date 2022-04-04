@@ -4239,13 +4239,6 @@
 /obj/machinery/door/airlock/pyro/security/alt,
 /turf/simulated/floor/industrial,
 /area/space)
-"amd" = (
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/space)
 "ame" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -82443,7 +82436,7 @@ laI
 ngA
 ngA
 ngA
-amd
+ngA
 laI
 lCx
 aaF
