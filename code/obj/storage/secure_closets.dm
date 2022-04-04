@@ -63,6 +63,8 @@
 			if(D_PIERCING)
 				take_damage(damage)
 			if(D_ENERGY)
+				if (reinforced)
+					return
 				take_damage(damage / 2)
 		return
 
