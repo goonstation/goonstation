@@ -45,7 +45,7 @@ var/datum/action_controller/actions
 			for(var/datum/action/OA in running[owner])
 				//Meant to catch users starting the same action twice, and saving the first-attempt from deletion
 				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE && (OA.interrupt_flags & INTERRUPT_ACTION) && OA.resumable)
-					OA.onResume()
+					OA.onResume(A)
 					qdel(A)
 					return OA
 			running[owner] += A
@@ -116,7 +116,7 @@ var/datum/action_controller/actions
 	proc/loopStart()				//Called after restarting. Meant to cotain code from -and be called from- onStart()
 		return
 
-	proc/onResume()				   //Called when the action resumes - likely from almost ending
+	proc/onResume(datum/action/attempted)	 //Called when the action resumes - likely from almost ending. Arg is the action which would have cancelled this.
 		state = ACTIONSTATE_RUNNING
 		return
 
@@ -262,7 +262,7 @@ var/datum/action_controller/actions
 				animate( target_bar, color = src.color_failure, time = 2.5 )
 		..()
 
-	onResume()
+	onResume(datum/action/attempted)
 		if (bar)
 			updateBar()
 			bar.color = src.color_active
