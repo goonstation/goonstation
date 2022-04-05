@@ -490,7 +490,7 @@
 				target = null
 			if(/turf/simulated/wall/auto/feather)
 				var/turf/simulated/wall/auto/feather/f = target
-				f.dismantle_wall()
+				f.destroy_resources()
 			if(/obj/machinery/door/feather)
 				var/turf/T = get_turf(target)
 				playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)

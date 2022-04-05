@@ -269,6 +269,13 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
   else
     return null // give the standard description
 
+/turf/simulated/wall/auto/feather/proc/destroy_resources()
+	src.ReplaceWith("/turf/simulated/floor/feather", FALSE)
+
+	if (map_settings?.auto_walls)
+		for (var/turf/simulated/wall/auto/feather/W in orange(1, src))
+			W.UpdateIcon()
+
 /turf/simulated/wall/auto/feather/Entered(var/mob/living/critter/flock/drone/F, atom/oldloc)
 	..()
 	if(!istype(F) || !oldloc)
