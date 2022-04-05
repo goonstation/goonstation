@@ -1,5 +1,15 @@
 
 (t)mon apr 04 22
+(u)pali
+(*)CentCom dance floor has been covered by some kind of a canvas, huh. <s>r/place don't sure me pls</s>
+(u)Flaborized
+(p)8062
+(e)|
+(+)The Adamantium Skeleton trait now outputs a message in the chat when it prevents you from losing a limb.
+(u)RubberRats
+(p)7796
+(e)🆕|feature
+(*)Added a new negative trait: Frail Constitution. Taking this trait greatly increases the amount of damage that your internal organs take from all sources.
 (u)Flaborized
 (p)8060
 (e)🔄|rework

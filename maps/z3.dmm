@@ -988,7 +988,6 @@
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -2962,11 +2961,6 @@
 /obj/item/device/matanalyzer,
 /turf/simulated/floor/grime,
 /area/mining/refinery)
-"aiG" = (
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
-/turf/space/asteroid,
-/area/space)
 "aiH" = (
 /obj/storage/secure/closet/engineering/mining,
 /obj/cable{
@@ -4244,14 +4238,6 @@
 	},
 /obj/machinery/door/airlock/pyro/security/alt,
 /turf/simulated/floor/industrial,
-/area/space)
-"amd" = (
-/obj/grille/catwalk,
-/turf/space,
-/turf/simulated/floor/airless/plating/catwalk,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
 /area/space)
 "ame" = (
 /obj/decal/tile_edge/line/black{
@@ -21712,6 +21698,15 @@
 	name = "space"
 	},
 /area/abandonedship)
+"laI" = (
+/obj/grille/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "lbt" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
@@ -21772,6 +21767,15 @@
 	dir = 5
 	},
 /area/derelict_ai_sat)
+"lCx" = (
+/obj/grille/catwalk{
+	dir = 10;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10
+	},
+/area/space)
 "lGG" = (
 /obj/table/auto,
 /obj/decal/fakeobjects{
@@ -22009,6 +22013,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
+"ngl" = (
+/obj/grille/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/space)
 "ngu" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -22020,6 +22033,10 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/helldrone/core)
+"ngA" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
 "nmd" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -22345,6 +22362,14 @@
 	},
 /turf/simulated/floor,
 /area/derelict_ai_sat)
+"pPj" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/space)
 "pQo" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -22596,6 +22621,15 @@
 	},
 /turf/space,
 /area/timewarp)
+"suJ" = (
+/obj/grille/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5
+	},
+/area/space)
 "svs" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -82389,22 +82423,22 @@ aaa
 aaa
 aak
 adb
-afQ
-afQ
-afQ
-aiG
-afQ
-afQ
-akO
-akO
-akO
-akO
-afQ
-afQ
-afQ
-amd
-akO
-anb
+ngA
+ngA
+ngA
+ngA
+ngA
+ngA
+laI
+laI
+laI
+laI
+ngA
+ngA
+ngA
+ngA
+laI
+lCx
 aaF
 aaa
 aaa
@@ -82690,7 +82724,7 @@ aaa
 aaa
 aaa
 aak
-adz
+pPj
 aaa
 aaa
 aaa
@@ -82706,7 +82740,7 @@ aaa
 aaa
 aaa
 aaa
-adz
+pPj
 aaF
 aaa
 aaa
@@ -82992,7 +83026,7 @@ aaa
 aaa
 aaa
 aak
-adz
+pPj
 aaa
 aaa
 aaa
@@ -83008,7 +83042,7 @@ aaa
 aaa
 aaa
 aaa
-adz
+pPj
 aaF
 aaa
 aar
@@ -83294,7 +83328,7 @@ aaa
 aaa
 aaa
 aak
-adz
+pPj
 aaa
 aaa
 aaa
@@ -83310,7 +83344,7 @@ aaa
 aaa
 aaa
 aaa
-adz
+pPj
 aaF
 aaa
 abf
@@ -83596,7 +83630,7 @@ aaa
 aaa
 aaa
 aak
-adz
+pPj
 aaa
 aaa
 aaa
@@ -83612,7 +83646,7 @@ aaa
 aaa
 aaa
 aaa
-adz
+pPj
 aaF
 aaa
 abf
@@ -83898,7 +83932,7 @@ aaa
 aaa
 aaa
 aak
-adz
+pPj
 aaa
 aaa
 aaa
@@ -83914,7 +83948,7 @@ aaa
 aaa
 aaa
 aaa
-adz
+pPj
 aaF
 aaa
 abg
@@ -84200,7 +84234,7 @@ aaa
 aaa
 aaa
 adG
-adz
+pPj
 aaa
 aaa
 aaa
@@ -84216,7 +84250,7 @@ aaa
 aaa
 aaa
 aaa
-adz
+pPj
 aaF
 aaa
 aaa
@@ -84502,7 +84536,7 @@ aaa
 aaa
 aaa
 aak
-adz
+pPj
 aaa
 aaa
 aaa
@@ -84518,7 +84552,7 @@ aaa
 aaa
 aaa
 aaa
-adz
+pPj
 aaF
 aaa
 aaa
@@ -84804,7 +84838,7 @@ aaa
 aaa
 aaa
 aak
-adz
+pPj
 aaa
 aaa
 aaa
@@ -84820,7 +84854,7 @@ aaa
 aaa
 aaa
 aaa
-adz
+pPj
 aaF
 aad
 aaa
@@ -85106,7 +85140,7 @@ aaa
 aaa
 aaa
 aak
-adz
+pPj
 aaa
 aaa
 aaa
@@ -85122,7 +85156,7 @@ aaa
 aaa
 aaa
 aaa
-adz
+pPj
 aaF
 aaa
 aaa
@@ -85408,7 +85442,7 @@ aaa
 aaa
 aaa
 aak
-adz
+pPj
 aaa
 aaa
 aaa
@@ -85424,7 +85458,7 @@ aaa
 aaa
 aaa
 aaa
-adz
+pPj
 aaF
 aaa
 aaa
@@ -85710,7 +85744,7 @@ aaa
 aaa
 aaa
 aak
-adz
+pPj
 aaa
 aaa
 aaa
@@ -85726,7 +85760,7 @@ aaa
 aaa
 aaa
 aaa
-adz
+pPj
 aaF
 aaa
 aad
@@ -86012,7 +86046,7 @@ aaa
 aaa
 aaa
 aak
-adz
+pPj
 aaa
 aaa
 aaa
@@ -86028,7 +86062,7 @@ aaa
 aaa
 aaa
 aaa
-adz
+pPj
 aaF
 aaa
 aaa
@@ -86314,7 +86348,7 @@ aaa
 aaa
 aaa
 aak
-adz
+pPj
 aaa
 aaa
 aaa
@@ -86330,7 +86364,7 @@ aaa
 aaa
 aaa
 aaa
-adz
+pPj
 aaF
 aaa
 aaa
@@ -86616,7 +86650,7 @@ aaa
 aaa
 aaa
 aak
-adz
+pPj
 aaa
 aaa
 aaa
@@ -86632,7 +86666,7 @@ aaa
 aaa
 aaa
 aaa
-adz
+pPj
 aaF
 aaa
 aaa
@@ -86918,7 +86952,7 @@ aaa
 aaa
 aaa
 aak
-adz
+pPj
 aaa
 aaa
 aaa
@@ -86934,7 +86968,7 @@ aaa
 aaa
 aaa
 aaa
-adz
+pPj
 aaF
 aaa
 aaa
@@ -87220,23 +87254,23 @@ aaa
 aaa
 aaa
 aak
-adR
-afQ
-afQ
-afQ
-afQ
-afQ
-afQ
-afQ
-afQ
-afQ
-afQ
-afQ
-afQ
-afQ
-afQ
-afQ
-anm
+suJ
+ngA
+ngA
+ngA
+ngA
+ngA
+ngA
+ngA
+ngA
+ngA
+ngA
+ngA
+ngA
+ngA
+ngA
+ngA
+ngl
 aaF
 aaa
 aaa

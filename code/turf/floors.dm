@@ -19,8 +19,8 @@
 	var/plate_mat = null
 	var/reinforced = FALSE
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
-	var/roundstart_icon_state
-	var/roundstart_dir
+	var/tmp/roundstart_icon_state
+	var/tmp/roundstart_dir
 
 	New()
 		..()
