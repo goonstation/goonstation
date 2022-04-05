@@ -180,25 +180,25 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	for(var/datum/mind/M in living_battlers)
 		if(isdead(M.current) || !ishuman(M.current) || inafterlife(M.current) || isVRghost(M.current))
 			living_battlers.Remove(M)
-			DEBUG_MESSAGE("[M.current.name] died. There are [living_battlers.len] left!")
+			DEBUG_MESSAGE("[M.current.name] died. There are [length(living_battlers)] left!")
 			recently_deceased.Add(M)
 			someone_died++
-	if(someone_died && living_battlers.len <= 5)
-		command_alert("[living_battlers.len] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
-	else if(someone_died && living_battlers.len % 10 == 0)
-		command_alert("[living_battlers.len] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
-	if(living_battlers.len <= 10)
+	if(someone_died && length(living_battlers) <= 5)
+		command_alert("[length(living_battlers)] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
+	else if(someone_died && length(living_battlers) % 10 == 0)
+		command_alert("[length(living_battlers)] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
+	if(length(living_battlers) <= 10)
 		if(!emergency_shuttle.online)
 			emergency_shuttle.incall()
 			command_alert("The escape shuttle has been automatically called. Arrival in six minutes. Escape on the shuttle, kill everyone else or die!","Escape Shuttle")
-	if(living_battlers.len <= 1)
+	if(length(living_battlers) <= 1)
 		return TRUE
 	return FALSE
 
 
 /datum/game_mode/battle_royale/declare_completion()
 	boutput(world,"<h2>BATTLE COMPLETE</h2>")
-	if(living_battlers.len == 1)
+	if(length(living_battlers) == 1)
 		boutput(world,"<h2 class='alert'>[living_battlers[1].current.name] (played by [living_battlers[1].current.ckey]) has won!</h2>")
 		boutput(living_battlers[1].current,"<h1 class='notice'>Holy shit you won!!!</h1>")
 	else
@@ -257,7 +257,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 			else
 				storm.event_effect()
 				SPAWN(85 SECONDS)
-					var/you_died_good_work = recently_deceased.len > 0 ? "The following players recently died: " : ""
+					var/you_died_good_work = length(recently_deceased) > 0 ? "The following players recently died: " : ""
 					for(var/datum/mind/M in recently_deceased)
 						you_died_good_work += " [M.current.name],"
 					recently_deceased = list()
