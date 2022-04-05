@@ -340,25 +340,18 @@ datum
 			depletion_rate = 0.025
 			penetrates_skin = 0
 			target_organs = list("left_kidney","right_kidney","liver","stomach","intestines","spleen","pancreas")
+			flushing_multiplier = 0.15
 			var/counter = 1
-			var/flushing = 0.1 //standard efficacy against flushing
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
-
-				if(holder.has_reagent("charcoal")) //to make it a tad harder to treat
-					holder.remove_reagent("charcoal", flushing * mult)
-				if(holder.has_reagent("penteticacid"))
-					holder.remove_reagent("penteticacid", flushing * mult)
 
 				switch(counter += (1 * mult))
 					if (75 to 125)
 						if (probmult(4))
 							M.emote(pick("sneeze","cough","moan","groan"))
 					if (125 to 175)
-						flushing = 1.5 //it gets a tad harder to cure here
-
 						if (probmult(8))
 							M.emote(pick("sneeze","cough","moan","groan"))
 						else if (probmult(5))
@@ -370,8 +363,6 @@ datum
 							if (H.organHolder)
 								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 20)
 					if (175 to INFINITY)
-						flushing = 3 // time to ramp up that flusher flushing
-
 						if (probmult(10))
 							M.emote(pick("sneeze","drool","cough","moan","groan"))
 						if (probmult(20))
