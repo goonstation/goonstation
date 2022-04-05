@@ -1412,6 +1412,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/cockroach
 	name = "cockroach"
 	real_name = "cockroach"
+	blood_id = "hemolymph"
 	desc = "An unpleasant insect that lives in filthy places."
 	icon_state = "roach"
 	icon_state_dead = "roach-dead"
@@ -1479,6 +1480,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/scorpion
 	name = "scorpion"
 	real_name = "scorpion"
+	blood_id = "hemolymph"
 	desc = "Ack! Get it away! AAAAAAAA."
 	icon_state = "spacescorpion"
 	icon_state_dead = "spacescorpion-dead"
@@ -1527,6 +1529,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/cockroach/robo
 	name = "roboroach"
 	real_name = "roboroach"
+	blood_id = "oil"
 	desc = "The vermin of the future!"
 	health_brute = 10
 	health_burn = 10
@@ -2224,6 +2227,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/butterfly
 	name = "butterfly"
 	real_name = "butterfly"
+	blood_id = "hemolymph"
 	desc = "It's a beautiful butterfly! How did it get here?"
 	hand_count = 2
 	icon_state = "butterfly1"
@@ -3019,6 +3023,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/trilobite
 	name = "trilobite"
 	real_name = "trilobite"
+	blood_id = "hemolymph"
 	desc = "This is an alien trilobite."
 	icon_state = "trilobite"
 	icon_state_dead = "trilobite-dead"

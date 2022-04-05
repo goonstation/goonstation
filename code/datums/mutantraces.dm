@@ -1663,8 +1663,12 @@ TYPEINFO(/datum/mutantrace)
 	New(mob/living/carbon/human/M)
 		. = ..()
 		if(ishuman(M))
+			M.blood_id = "hemolymph"
+			H.blood_color = "009E81"
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT, src, 100)
+
+
 
 	say_verb()
 		return "clicks"
