@@ -666,7 +666,6 @@
 			if (I)
 				fireflash(I,0,TRUE)
 				I.combust()
-				I.take_damage()
 
 	/// Sets an arbitrary slot to the passed aiModule - will override any module in the slot. Does not call UpdateLaws()
 	proc/SetLaw(var/obj/item/aiModule/mod,var/slot=1,var/screwed_in=false,var/welded_in=false)
