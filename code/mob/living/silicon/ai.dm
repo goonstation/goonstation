@@ -1959,11 +1959,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if (!ON_COOLDOWN(src, "ai_self_rename", src.rename_cooldown))
-		src.show_text("This ability is still on cooldown for [GET_COOLDOWN(src, "ai_self_rename")] seconds!", "red")
-		return
-
-	choose_name(retries=3, default_name=real_name)
-	last_rename = world.time
+		choose_name(retries=3, default_name=real_name)
+	else
+		src.show_text("This ability is still on cooldown for [round(GET_COOLDOWN(src, "ai_self_rename") / 10)] seconds!", "red")
 
 // CALCULATIONS
 
