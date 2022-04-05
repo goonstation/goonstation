@@ -204,7 +204,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	else
 		turf_place_between(source, target)
 
-	if (!src.amount)
+	if (!src.amount || QDELETED(src))
 		M.move_laying = null
 		boutput(M, "<span class='alert'>Your cable coil runs out!</span>")
 		return
@@ -216,7 +216,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	else
 		turf_place_between(target, source)
 
-	if (!src.amount)
+	if (!src.amount || QDELETED(src))
 		M.move_laying = null
 		boutput(M, "<span class='alert'>Your cable coil runs out!</span>")
 		return
