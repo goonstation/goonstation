@@ -88,11 +88,11 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	proc/use(var/used)
 		if (src.amount < used)
 			return 0
-		else if (src.amount == used)
+		amount -= used
+		else if (src.amount <= 0)
 			qdel(src)
 			return 1
 		else
-			amount -= used
 			UpdateIcon()
 			return 1
 
