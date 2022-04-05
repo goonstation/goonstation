@@ -6,7 +6,7 @@
 (+)Hovering over a pixel in the canvas editor now displays its coordinates.
 (t)mon apr 04 22
 (u)pali
-(*)CentCom dance floor has been covered by some kind of a canvas, huh. <s>r/place don't sure me pls</s>
+(*)CentCom dance floor has been covered by some kind of a canvas, huh. <s>r/place don't sue me pls</s>
 (u)Flaborized
 (p)8062
 (e)|
