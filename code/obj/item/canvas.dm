@@ -220,7 +220,7 @@
 <div id="container">
 	<div id="inner">
 		<img id="back" src="canvas-\ref[src]-base.png">
-		<img id="canvas" src="canvas-\ref[src].png" title="snarky comment here">
+		<img id="canvas" src="canvas-\ref[src].png">
 		<div id="cursor"></div>
 	</div>
 </div>
@@ -246,6 +246,7 @@
 		var oy = e.offsetY;
 		x = Math.floor(ox / [mult]);
 		y = Math.floor(oy / [mult]);
+		cursor.title = (x - [left]) + "," + (y - [bottom])
 		cursor.style.left = (x * [mult]) + "px"
 		cursor.style.top = (y * [mult]) + "px"
 	});
