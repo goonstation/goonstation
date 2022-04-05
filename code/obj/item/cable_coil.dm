@@ -89,7 +89,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		if (src.amount < used)
 			return 0
 		amount -= used
-		else if (src.amount <= 0)
+		if (src.amount <= 0)
 			qdel(src)
 			return 1
 		else
