@@ -18,6 +18,7 @@ RACK PARTS
 	stamina_crit_chance = 10
 	health = 8
 	var/furniture_type = /obj/table/auto
+	var/check_existing_type = null
 	var/furniture_name = "table"
 	var/reinforced = 0
 	var/build_duration = 50
@@ -37,6 +38,9 @@ RACK PARTS
 			T = user ? get_turf(user) : get_turf(src)
 			if (!T) // buh??
 				return
+		if(locate(check_existing_type) in T)
+			boutput(user, "<span class='alert'>There is already a [furniture_name] there.</span>")
+			return
 		if (ispath(src.furniture_type))
 			newThing = new src.furniture_type(T, src.contained_storage ? src.contained_storage : null)
 		else
@@ -100,6 +104,7 @@ RACK PARTS
 /obj/item/furniture_parts/table
 	name = "table parts"
 	desc = "A collection of parts that can be used to make a table."
+	check_existing_type = /obj/table
 
 /obj/item/furniture_parts/table/desk
 	name = "desk parts"
@@ -270,6 +275,7 @@ RACK PARTS
 	stamina_cost = 22
 	stamina_crit_chance = 15
 	furniture_type = /obj/rack
+	check_existing_type = /obj/rack
 	furniture_name = "rack"
 
 //bookshelf part construction
@@ -295,6 +301,7 @@ RACK PARTS
 	stamina_damage = 15
 	stamina_cost = 15
 	furniture_type = /obj/stool
+	check_existing_type = /obj/stool
 	furniture_name = "stool"
 
 /obj/item/furniture_parts/woodenstool
@@ -305,6 +312,7 @@ RACK PARTS
 	stamina_damage = 15
 	stamina_cost = 15
 	furniture_type = /obj/stool/wooden
+	check_existing_type = /obj/stool/wooden
 	furniture_name = "wooden stool"
 
 /obj/item/furniture_parts/stool/bee_bed
@@ -313,12 +321,14 @@ RACK PARTS
 	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "comf_chair_parts-b"	// @TODO new icon, mprobably
 	furniture_type = /obj/stool/bee_bed
+	check_existing_type = /obj/stool/bee_bed
 	furniture_name = "bee bed"
 
 /obj/item/furniture_parts/stool/bee_bed/double
 	name = "double bee bed parts"
 	desc = "A pile of cloth and wicker that you can attempt to fumble back into a double bee bed."
 	furniture_type = /obj/stool/bee_bed/double
+	check_existing_type = /obj/stool/bee_bed/double
 	furniture_name = "double bee bed"
 
 /obj/item/furniture_parts/stool/bar
@@ -346,6 +356,7 @@ RACK PARTS
 	stamina_damage = 15
 	stamina_cost = 15
 	furniture_type = /obj/stool/bench/auto
+	check_existing_type = /obj/stool/bench
 	furniture_name = "bench"
 
 /obj/item/furniture_parts/bench/red
@@ -385,6 +396,7 @@ RACK PARTS
 	stamina_damage = 15
 	stamina_cost = 15
 	furniture_type = /obj/stool/chair/wooden
+	check_existing_type = /obj/stool/chair
 	furniture_name = "wooden chair"
 
 /obj/item/furniture_parts/wood_chair/regal
@@ -407,6 +419,7 @@ RACK PARTS
 	stamina_damage = 15
 	stamina_cost = 15
 	furniture_type = /obj/stool/chair/comfy/wheelchair
+	check_existing_type = /obj/stool/chair/comfy/wheelchair
 	furniture_name = "wheelchair"
 
 /obj/item/furniture_parts/barber_chair
@@ -417,6 +430,7 @@ RACK PARTS
 	stamina_damage = 15
 	stamina_cost = 15
 	furniture_type = /obj/stool/chair/comfy/barber_chair
+	check_existing_type = /obj/stool/chair/comfy/barber_chair
 	furniture_name = "barber chair"
 
 /obj/item/furniture_parts/office_chair
@@ -427,6 +441,7 @@ RACK PARTS
 	stamina_damage = 15
 	stamina_cost = 15
 	furniture_type = /obj/stool/chair/office
+	check_existing_type = /obj/stool/chair/office
 	furniture_name = "office chair"
 
 /obj/item/furniture_parts/office_chair/red
@@ -457,6 +472,7 @@ RACK PARTS
 	stamina_damage = 15
 	stamina_cost = 15
 	furniture_type = /obj/stool/chair/comfy
+	check_existing_type = /obj/stool/chair/comfy
 	furniture_name = "comfy chair"
 
 /obj/item/furniture_parts/comfy_chair/blue
@@ -487,6 +503,7 @@ RACK PARTS
 	stamina_damage = 15
 	stamina_cost = 15
 	furniture_type = /obj/stool/chair/comfy/throne_gold
+	check_existing_type = /obj/stool/chair/comfy/throne_gold
 	furniture_name = "golden throne"
 
 /* ---------- Bed Parts ---------- */
@@ -498,6 +515,7 @@ RACK PARTS
 	stamina_damage = 15
 	stamina_cost = 15
 	furniture_type = /obj/stool/bed
+	check_existing_type = /obj/stool/bed
 	furniture_name = "bed"
 
 /obj/item/furniture_parts/bed/roller
@@ -515,6 +533,7 @@ RACK PARTS
 	icon = 'icons/misc/walp_decor.dmi'
 	icon_state = "lamp_regal_parts"
 	furniture_type = /obj/decoration/regallamp
+	check_existing_type = /obj/decoration/regallamp
 	furniture_name = "regal lamp"
 
 /* -------------------- Furniture Actions -------------------- */
