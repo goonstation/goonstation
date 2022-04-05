@@ -641,9 +641,9 @@
 					playsound(src, "sound/machines/bweep.ogg", 50)
 					mined.throw_at(target, 5, 5)
 					src.visible_message("<span class='alert'>[I] energetically expels [mined]!</span>")
-			if (src && !src.GetParticles("rack_spark"))
+			if (src && !src.GetParticles("mine_spark"))
 				playsound(src, "sound/effects/electric_shock_short.ogg", 50)
-				src.UpdateParticles(new/particles/rack_spark,"rack_spark")
+				src.UpdateParticles(new/particles/rack_spark,"mine_spark")
 				src.visible_message("<span class='alert'><b>The [src] starts sparking!</b></span>")
 			sleep(2 SECONDS)
 			if (src && I)
@@ -655,7 +655,7 @@
 						break
 				I.throw_at(target, 5, 5)
 				src.visible_message("<span class='alert'>The [I] is forcefully ejected from the [src]!</span>")
-				src.ClearSpecificParticles("rack_spark")
+				src.ClearSpecificParticles("mine_spark")
 			sleep(0.5 SECONDS)
 			I?.combust()
 
