@@ -66497,6 +66497,7 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
+/obj/machinery/light/small/floor,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -66788,6 +66789,7 @@
 /area/centcom/lounge)
 "dJH" = (
 /obj/disco_ball,
+/obj/machinery/light/small/floor,
 /turf/unsimulated/floor{
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_1"
