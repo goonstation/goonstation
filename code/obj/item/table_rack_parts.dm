@@ -6,6 +6,7 @@ RACK PARTS
 */
 
 /* -------------------- Furniture Parts-------------------- */
+ABSTRACT_TYPE(/obj/item/furniture_parts)
 /obj/item/furniture_parts
 	name = "furniture parts"
 	desc = "A collection of parts that can be used to make some kind of furniture."
@@ -87,6 +88,11 @@ RACK PARTS
 		else
 			return ..()
 
+	afterattack(atom/target, mob/user)
+		if (!isturf(target))
+			return ..()
+		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, target), user)
+
 	attack_self(mob/user as mob)
 		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration), user)
 
@@ -101,10 +107,23 @@ RACK PARTS
 		..()
 
 /* ---------- Table Parts ---------- */
+#define TABLE_WARNING(user) boutput(user, "<span class='alert'>You can't build a table under yourself! You'll have to build it somewhere adjacent instead.</span>")
 /obj/item/furniture_parts/table
 	name = "table parts"
 	desc = "A collection of parts that can be used to make a table."
 	check_existing_type = /obj/table
+
+	afterattack(atom/target, mob/user)
+		if (isturf(target) && target == get_turf(user))
+			TABLE_WARNING(user)
+			return
+		else
+			return ..()
+
+	attack_self(mob/user)
+		TABLE_WARNING(user)
+
+#undef TABLE_WARNING
 
 /obj/item/furniture_parts/table/desk
 	name = "desk parts"
@@ -191,6 +210,7 @@ RACK PARTS
 	mat_appearances_to_ignore = list("glass")
 	furniture_type = /obj/table/glass/auto
 	furniture_name = "glass table"
+	check_existing_type = null //FOR NOW
 	var/has_glass = 1
 	var/default_material = "glass"
 
@@ -540,19 +560,21 @@ RACK PARTS
 /datum/action/bar/icon/furniture_build
 	id = "furniture_build"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	duration = 50
+	duration = 5 SECONDS
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 
-	var/obj/item/furniture_parts/fparts
-	var/fname = "piece of furniture"
+	var/obj/item/furniture_parts/parts //! The parts we're building from
+	var/furniture_name = "piece of furniture" //! Displayed name for the thing we're building (for chat)
+	var/target_turf = null //! The turf we're trying to build on
 
-	New(var/obj/item/furniture_parts/fp, var/fn, var/duration_i)
+	New(var/obj/item/furniture_parts/parts, var/name, var/duration, var/target_turf)
 		..()
-		fparts = fp
-		fname = fn
-		if (duration_i)
-			duration = duration_i
+		src.parts = parts
+		src.furniture_name = name
+		src.target_turf = target_turf
+		if (duration)
+			src.duration = duration
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
@@ -560,7 +582,7 @@ RACK PARTS
 
 	onUpdate()
 		..()
-		if (fparts == null || owner == null || BOUNDS_DIST(owner, fparts) > 0)
+		if (parts == null || owner == null || BOUNDS_DIST(owner, parts) > 0 || BOUNDS_DIST(owner, target_turf) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -569,19 +591,24 @@ RACK PARTS
 			if(istype(source.equipped(), /obj/item/magtractor))
 				// check to see it's holding the right thing
 				var/obj/item/magtractor/M = source.equipped()
-				if(fparts != M.holding)
+				if(parts != M.holding)
 					interrupt(INTERRUPT_ALWAYS)
-			else if (fparts != source.equipped())
+			else if (parts != source.equipped())
 				interrupt(INTERRUPT_ALWAYS)
 
 	onStart()
 		..()
-		owner.visible_message("<span class='notice'>[owner] begins constructing \an [fname]!</span>")
+		owner.visible_message("<span class='notice'>[owner] begins constructing \a [furniture_name]!</span>")
+
+	onResume(datum/action/bar/icon/furniture_build/attempted) //guaranteed since we only resume with the same type
+		..()
+		if (attempted.target_turf != src.target_turf)
+			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
 		..()
-		owner.visible_message("<span class='notice'>[owner] constructs \an [fname]!</span>")
-		fparts.construct(owner)
+		owner.visible_message("<span class='notice'>[owner] constructs \a [furniture_name]!</span>")
+		parts.construct(owner, target_turf)
 
 /datum/action/bar/icon/furniture_deconstruct
 	id = "furniture_deconstruct"

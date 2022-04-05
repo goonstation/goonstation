@@ -301,10 +301,10 @@
 		return
 
 	Cross(atom/movable/mover)
-		if (!src.density || (mover.flags & TABLEPASS || istype(mover, /obj/newmeteor)) )
-			return 1
+		if (!src.density || (locate(/obj/table) in mover.loc) || (mover.flags & TABLEPASS || istype(mover, /obj/newmeteor)))
+			return TRUE
 		else
-			return 0
+			return FALSE
 
 	MouseDrop_T(atom/O, mob/user as mob)
 		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
@@ -362,6 +362,7 @@
 	id = "table_jump"
 	var/const/throw_range = 7
 	var/const/iteration_limit = 5
+	resumable = TRUE
 
 	getLandingLoc()
 		var/iteration = 0
@@ -395,7 +396,6 @@
 			if (is_athletic_jump) // athletic jumps are more athletic!!
 				the_text = "[ownerMob] swooces right over [the_railing]!"
 			M.show_text("[the_text]", "red")
-		// logTheThing("combat", ownerMob, the_railing, "[is_athletic_jump ? "leaps over [the_railing] with [his_or_her(ownerMob)] athletic trait" : "crawls over [the_railing%]].")
 
 /* ======================================== */
 /* ---------------------------------------- */
@@ -636,7 +636,6 @@
 	mat_appearances_to_ignore = list("glass")
 	parts_type = /obj/item/furniture_parts/table/glass
 	auto_type = /obj/table/glass // has to be the base type here or else regular glass tables won't connect to reinforced ones
-	check_existing_type = null //FOR NOW
 	var/glass_broken = GLASS_INTACT
 	var/reinforced = 0
 	var/default_material = "glass"
