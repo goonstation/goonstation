@@ -620,13 +620,13 @@
 		UpdateLaws()
 
 	proc/insert_videocard_callback(var/mob/user, var/obj/item/peripheral/videocard/I)
-		var/mob/living/target = orange(1,src)[rand(1,8)]
+		var/mob/living/target = null
 		user.u_equip(I)
 		I.set_loc(src)
-		playsound(src, "sound/machines/interdictor_activate.ogg", 50)
+		playsound(src, "sound/machines/interdictor_activate.ogg", 70, extrarange=3)
 		src.visible_message("<span class='alert'>[I] emits a loud whirring noise as it connects into the [src]!</span>")
 		SPAWN(7 SECONDS)
-			playsound(src, "sound/machines/engine_highpower.ogg", 50)
+			playsound(src, "sound/machines/engine_highpower.ogg", 80)
 			src.use_power(500)
 			for (var/i in 1 to 10)
 				sleep(0.3 SECONDS)
@@ -638,8 +638,8 @@
 						if (!isintangible(mob))
 							target = mob
 							break
-					playsound(src, "sound/machines/bweep.ogg", 50)
-					mined.throw_at(target, 5, 5)
+					playsound(src, "sound/machines/bweep.ogg", rand(45,70), 1, pitch = 1.6)
+					mined.throw_at(target, 7, rand(4,6))
 					src.visible_message("<span class='alert'>[I] energetically expels [mined]!</span>")
 			if (src && !src.GetParticles("mine_spark"))
 				playsound(src, "sound/effects/electric_shock_short.ogg", 50)
@@ -649,15 +649,18 @@
 			if (src && I)
 				target = orange(1,src)[rand(1,8)]
 				I.set_loc(src.loc)
-				for (var/mob/living/mob in view(7,src))
+				for (var/mob/living/mob in view(5,src))
 					if (!isintangible(mob))
 						target = mob
 						break
-				I.throw_at(target, 5, 5)
+				I.throw_at(target, 7, rand(6,9))
 				src.visible_message("<span class='alert'>The [I] is forcefully ejected from the [src]!</span>")
 				src.ClearSpecificParticles("mine_spark")
-			sleep(0.5 SECONDS)
-			I?.combust()
+			sleep(0.7 SECONDS) // just enough time to recognize the card
+			if (I)
+				fireflash(I,0,TRUE)
+				I.combust()
+
 
 
 
