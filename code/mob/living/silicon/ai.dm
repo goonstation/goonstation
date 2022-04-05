@@ -116,8 +116,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/last_vox = -INFINITY
 	var/vox_cooldown = 1200
 
-	var/last_rename = -INFINITY
-	var/rename_cooldown = 9000 // 15 minutes
+	var/rename_cooldown = 10 MINUTES
 
 	var/has_feet = 0
 
@@ -1959,8 +1958,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (!src || !message_mob.client || isdead(src))
 		return
 
-	if (last_rename + rename_cooldown > world.time)
-		src.show_text("This ability is still on cooldown for [round((src.rename_cooldown + src.last_rename - world.time) / 10)] seconds!", "red")
+	if (!ON_COOLDOWN(src, "ai_self_rename", src.rename_cooldown))
+		src.show_text("This ability is still on cooldown for [GET_COOLDOWN(src, "ai_self_rename")] seconds!", "red")
 		return
 
 	choose_name(retries=3, default_name=real_name)
