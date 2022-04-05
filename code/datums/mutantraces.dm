@@ -1664,7 +1664,7 @@ TYPEINFO(/datum/mutantrace)
 		. = ..()
 		if(ishuman(M))
 			M.blood_id = "hemolymph"
-			H.blood_color = "009E81"
+			//H.blood_color = "009E81"
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT, src, 100)
 
