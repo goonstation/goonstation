@@ -286,6 +286,7 @@
 	display_mult = 4
 	plane = PLANE_FLOOR
 	var/id = null
+	burn_possible = FALSE
 
 	New(loc)
 		..()
@@ -323,6 +324,11 @@
 
 	attack_hand(mob/user)
 		pop_open_a_browser_box(user)
+
+	reagent_act()
+		return
+	ex_act(severity)
+		return
 
 /obj/item/canvas/big_persistent/centcom
 	name = "Memorial CentCom Canvas"
