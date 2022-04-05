@@ -646,7 +646,7 @@ CONTAINS:
 
 	emag_act()
 		..()
-		defib.emag_act()
+		return defib?.emag_act()
 
 	disposing()
 		if (defib)

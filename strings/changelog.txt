@@ -1,5 +1,42 @@
 
+(t)tue apr 05 22
+(u)Sovexe
+(p)8111
+(e)🆕|feature
+(+)Hovering over a pixel in the canvas editor now displays its coordinates.
+(t)mon apr 04 22
+(u)pali
+(*)CentCom dance floor has been covered by some kind of a canvas, huh. <s>r/place don't sure me pls</s>
+(u)Flaborized
+(p)8062
+(e)|
+(+)The Adamantium Skeleton trait now outputs a message in the chat when it prevents you from losing a limb.
+(u)RubberRats
+(p)7796
+(e)🆕|feature
+(*)Added a new negative trait: Frail Constitution. Taking this trait greatly increases the amount of damage that your internal organs take from all sources.
+(u)Flaborized
+(p)8060
+(e)🔄|rework
+(*)The human torch trait is now worth two points, but totally prevents the burning status counter from decrementing on its own.
+(t)sun apr 03 22
+(u)ThyOverlord
+(p)8072
+(e)🎨|sprites
+(+)Resprited Mono cards and their respective stacks/hands. Also updated MonoRules.txt to
+(u)LeahTheTech
+(p)8058
+(e)🆕|feature
+(*)AI law changes are now highlighted and display removed laws
 (t)sat apr 02 22
+(u)aloe
+(+)Pods now "eject" you on exploding. This also applies to the SEED.
+(u)Cogwerks
+(e)🗺🎨|mapping, sprites
+(*)Revising positions of stuff in the debris field and the dining level
+(*)Hemera, zombie-roid, drone carrier, time ship, and flock ship moved around
+(*)Martian derelict moved to dining level
+(*)Added more background space planets and moons to the imagined plasma giant orbits
 (u)Flappybat
 (p)7950
 (e)🆕|feature
@@ -17,11 +54,8 @@
 (p)7929
 (e)⚖|balance
 (+)Spellshield now protects wizards from the syndicate saw, butcher knife and katana.
-(t)fri apr 01 22
-(u)pali
-(*)Due to increased server playercount we have decided to introduce some brand-new large maps to accomodate this many people!
 (t)thu mar 31 22
-(u)Laboredih123 & pgmzeta
+(u)Laboredih123 & glowbold
 (p)7928
 (e)🎨|sprites
 (+)Nanotrasen has now made windows fully connected, removing seams.

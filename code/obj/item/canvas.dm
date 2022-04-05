@@ -14,7 +14,7 @@
 	name = "canvas"
 	desc = "A fairly big canvas for wowing the station with your artistic talent. Coming soon: Saving!"
 
-	icon = null
+	icon = 'icons/obj/canvas.dmi'
 	icon_state = null
 
 	var/icon/base = null
@@ -24,6 +24,8 @@
 	var/bottom = 0
 	var/left = 0
 	var/list/artists = list()
+	var/display_mult = 16
+
 
 	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
@@ -48,14 +50,17 @@
 	New()
 		..()
 
-		base = icon('icons/obj/canvas.dmi', icon_state = "[canvas_width]x[canvas_height]_base")
-		art = icon('icons/obj/canvas.dmi', icon_state = "[canvas_width]x[canvas_height]_blank")
+		init_canvas()
+
+		left = round((bound_width - canvas_width) / 2)
+		bottom = round((bound_height - canvas_height) / 2)
+
+	proc/init_canvas()
+		base = icon(src.icon, icon_state = "[canvas_width]x[canvas_height]_base")
+		art = icon(src.icon, icon_state = "[canvas_width]x[canvas_height]_blank")
 
 		underlays += base
 		icon = art
-
-		left = round((32 - canvas_width) / 2)
-		bottom = round((32 - canvas_height) / 2)
 
 	examine(mob/user)
 		. = ..()
@@ -95,6 +100,18 @@
 		else
 			. = ..()
 
+	proc/get_dot_color(mob/user)
+		// check for writing implement...
+		// in active hand ...
+		var/obj/item/active_item = user.equipped()
+
+		if (!istype(active_item, /obj/item/pen))
+			// you need something to draw with you dope
+			boutput(user, "You need something to draw with!")
+			return null
+
+		var/obj/item/pen/P = active_item
+		return P.font_color
 
 	Topic(href, href_list)
 		// stolen from /obj/item/engibox. sorry, tgui.
@@ -102,25 +119,16 @@
 		if (usr.stat || usr.restrained()) return
 		if (!in_interact_range(src, usr)) return
 
-		// check for writing implement...
-		// in active hand ...
-		var/obj/item/active_item = usr.equipped()
-
-		if (!istype(active_item, /obj/item/pen))
-			// you need something to draw with you dope
-			boutput(usr, "You need something to draw with!")
+		var/dot_color = get_dot_color(usr)
+		if(isnull(dot_color))
 			return
-
-		var/obj/item/pen/P = active_item
-		var/dot_color = P.font_color
-
 
 		if (!href_list["x"] || !href_list["y"])
 			CRASH("something broke. [json_encode(href_list)]")
 
 		var/x = text2num(href_list["x"]) + 1
 		var/y = text2num(href_list["y"]) - 1
-		y = 31 - y	// byond is upside down relative to reality
+		y = bound_height - 1 - y	// byond is upside down relative to reality
 
 		if (x <= left || y <= bottom || x > (left + canvas_width) || y > (bottom + canvas_height))
 			// YOU CAN'T DRAW OFF THE DANG CANVAS LIKE WHAT ARE YOU GONNA PUT THE INK ON
@@ -147,12 +155,14 @@
 
 	proc/pop_open_a_browser_box(mob/user)
 		send_the_damn_icon(user)
-		var/mult = 16
+		var/mult = src.display_mult
 
 		var/dat = {"
 <!doctype html>
 <html>
-<head><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<head>
+<title>[src]</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="pragma" content="no-cache">
 <style>
@@ -167,8 +177,8 @@
 		}
 	#inner {
 		position: relative;
-		width: [32 * mult]px;
-		height: [32 * mult]px;
+		width: [bound_width * mult]px;
+		height: [bound_height * mult]px;
 		margin: auto;
 		}
 	#cursor {
@@ -191,10 +201,10 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		rigth: [32 * mult]px;
-		bottom: [32 * mult]px;
-		width: [32 * mult]px;
-		height: [32 * mult]px;
+		rigth: [bound_width * mult]px;
+		bottom: [bound_height * mult]px;
+		width: [bound_width * mult]px;
+		height: [bound_height * mult]px;
 		}
 	#back {
 		z-index: -1;
@@ -210,7 +220,7 @@
 <div id="container">
 	<div id="inner">
 		<img id="back" src="canvas-\ref[src]-base.png">
-		<img id="canvas" src="canvas-\ref[src].png" title="snarky comment here">
+		<img id="canvas" src="canvas-\ref[src].png">
 		<div id="cursor"></div>
 	</div>
 </div>
@@ -236,6 +246,7 @@
 		var oy = e.offsetY;
 		x = Math.floor(ox / [mult]);
 		y = Math.floor(oy / [mult]);
+		cursor.title = (x - [left]) + "," + (y - [bottom])
 		cursor.style.left = (x * [mult]) + "px"
 		cursor.style.top = (y * [mult]) + "px"
 	});
@@ -256,7 +267,7 @@
 
 		"}
 
-		user << browse(dat, "window=canvas;size=900x680")
+		user << browse(dat, "window=canvas;size=[bound_width * mult + 100]x[bound_height * mult + 100]")
 
 	picklify(atom/loc)
 		if(!startswith(src.name, "pickled"))
@@ -264,6 +275,67 @@
 		src.desc = "A fairly pickled canvas for wowing the station with your pickled talent. Coming soon: Pickles!"
 		src.edible = TRUE
 		return src
+
+/obj/item/canvas/big_persistent
+	name = "Big Persistent Canvas"
+	desc = "A huge canvas. You don't even need a crayon to draw on it but you can only draw one dot per shift."
+	canvas_width = 7 * 32
+	canvas_height = 7 * 32
+	bound_width = 7 * 32
+	bound_height = 7 * 32
+	anchored = TRUE
+	display_mult = 4
+	plane = PLANE_FLOOR
+	var/id = null
+	burn_possible = FALSE
+
+	New(loc)
+		..()
+		START_TRACKING
+		src.add_filter("frame", 1, outline_filter(2, "#ccaa00"))
+
+	init_canvas()
+		if(isnull(id))
+			SPAWN(1)
+				qdel(src)
+			CRASH("big canvas has no id set")
+		src.art = world.load_intra_round_value("persistent_canvas_[id]")
+		if(isnull(src.art))
+			src.art = icon(src.icon, icon_state = "blank")
+			src.art.Scale(canvas_width, canvas_height)
+		src.art.Crop(1, 1, canvas_width, canvas_height)
+		src.base = icon(src.icon, icon_state = "transparent") // idc
+		src.icon = src.art
+
+	disposing()
+		STOP_TRACKING
+		..()
+
+	proc/save()
+		world.save_intra_round_value("persistent_canvas_[id]", src.art)
+
+	get_dot_color(mob/user)
+		if(user.ckey in src.artists)
+			boutput(user, "<span class='alert'>The first brush stroke exhausted you too much. You will need to wait until the next shift for another.</span>")
+			return null
+		return input(user, "Please select the color to paint with.", "Your Single Brushstroke", null) as null|color
+
+	attackby(obj/item/W, mob/user)
+		pop_open_a_browser_box(user)
+
+	attack_hand(mob/user)
+		pop_open_a_browser_box(user)
+
+	reagent_act()
+		return
+	ex_act(severity)
+		return
+
+/obj/item/canvas/big_persistent/centcom
+	name = "Memorial CentCom Canvas"
+	id = "centcom"
+	icon_state = "centcomcanvas"
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 // the intro at the start of this file is a joke:
 // https://www.youtube.com/watch?v=wpNxzJk7xUc#t=42s
