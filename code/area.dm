@@ -443,6 +443,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 
 	Del()
 		STOP_TRACKING
+		dispose()
 		..()
 
 /area/space // the base area you SHOULD be using for space/ocean/etc.

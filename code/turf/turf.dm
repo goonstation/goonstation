@@ -135,6 +135,10 @@
 			if (HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING))
 				ADD_FLAG(src.blocked_dirs, O.dir)
 
+	Del()
+		dispose()
+		..()
+
 /obj/overlay/tile_effect
 	name = ""
 	anchored = 1
