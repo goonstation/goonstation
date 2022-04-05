@@ -313,9 +313,11 @@
 		switch (mode)
 			if (S_DRAW)
 				if (!istype(target, /obj/item/reagent_containers))
+					boutput(user, "<span class='alert'>You can't fit [src]'s nozzle in that</span>")
 					return
 			if (S_INJECT)
 				if (!istype(target, /obj/item/reagent_containers/food) && !istype(target, /obj/item/reagent_containers/glass))
+					boutput(user, "<span class='alert'>You can't fit [src]'s nozzle in that</span>")
 					return
 		..()
 
