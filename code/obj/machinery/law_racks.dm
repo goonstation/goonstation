@@ -317,6 +317,10 @@
 					M.moustache_mode = 1
 					user.visible_message("<span class='alert'><b>[user.name]</b> uploads a moustache to [M.name]!</span>")
 					M.update_appearance()
+		else if (istype(I, /obj/item/peripheral/videocard))
+			var/obj/item/peripheral/videocard/V = I
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/insert_videocard_callback, list(user,V), user.equipped().icon, user.equipped().icon_state, \
+					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 		else
 			return ..()
 
@@ -614,6 +618,48 @@
 		tgui_process.update_uis(src)
 		UpdateIcon()
 		UpdateLaws()
+
+	proc/insert_videocard_callback(var/mob/user, var/obj/item/peripheral/videocard/I)
+		var/mob/living/target = orange(1,src)[rand(1,8)]
+		user.u_equip(I)
+		I.set_loc(src)
+		playsound(src, "sound/machines/interdictor_activate.ogg", 50)
+		src.visible_message("<span class='alert'>[I] emits a loud whirring noise as it connects into the [src]!</span>")
+		SPAWN(7 SECONDS)
+			playsound(src, "sound/machines/engine_highpower.ogg", 50)
+			src.use_power(500)
+			for (var/i in 1 to 10)
+				sleep(0.3 SECONDS)
+				if(src && prob(60))
+					var/obj/mined = new /obj/item/spacecash/buttcoin
+					mined.set_loc(src.loc)
+					target = orange(1,src)[rand(1,8)]
+					for (var/mob/living/mob in view(7,src))
+						if (!isintangible(mob))
+							target = mob
+							break
+					playsound(src, "sound/machines/bweep.ogg", 50)
+					mined.throw_at(target, 5, 5)
+					src.visible_message("<span class='alert'>[I] energetically expels [mined]!</span>")
+			if (src && !src.GetParticles("rack_spark"))
+				playsound(src, "sound/effects/electric_shock_short.ogg", 50)
+				src.UpdateParticles(new/particles/rack_spark,"rack_spark")
+				src.visible_message("<span class='alert'><b>The [src] starts sparking!</b></span>")
+			sleep(2 SECONDS)
+			if (src && I)
+				target = orange(1,src)[rand(1,8)]
+				I.set_loc(src.loc)
+				for (var/mob/living/mob in view(7,src))
+					if (!isintangible(mob))
+						target = mob
+						break
+				I.throw_at(target, 5, 5)
+				src.visible_message("<span class='alert'>The [I] is forcefully ejected from the [src]!</span>")
+				src.ClearSpecificParticles("rack_spark")
+			sleep(0.5 SECONDS)
+			I?.combust()
+
+
 
 	/// Sets an arbitrary slot to the passed aiModule - will override any module in the slot. Does not call UpdateLaws()
 	proc/SetLaw(var/obj/item/aiModule/mod,var/slot=1,var/screwed_in=false,var/welded_in=false)
