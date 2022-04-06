@@ -215,7 +215,7 @@
 
 			var/remove_tablepass = HAS_FLAG(grabbed.flags, TABLEPASS) ? FALSE : TRUE //this sucks and should be a mob property. love
 			grabbed.flags |= TABLEPASS
-			step(grabbed, get_dir(grabbed, table))
+			step(grabbed, get_dir(grabbed, src))
 			if (remove_tablepass) REMOVE_FLAG(grabbed.flags, TABLEPASS)
 
 			if (user.a_intent == "harm")
@@ -522,9 +522,9 @@
 
 	harm_slam(mob/user, mob/victim)
 		if (!victim.hasStatus("weakened"))
-			grabbed.changeStatus("weakened", 4 SECONDS)
-			grabbed.force_laydown_standup()
-		src.visible_message("<span class='alert'><b>[user] slams [grabbed] onto \the [src], collapsing it instantly!</b></span>")
+			victim.changeStatus("weakened", 4 SECONDS)
+			victim.force_laydown_standup()
+		src.visible_message("<span class='alert'><b>[user] slams [victim] onto \the [src], collapsing it instantly!</b></span>")
 		playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 		deconstruct()
 

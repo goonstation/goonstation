@@ -579,7 +579,20 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 
 	onStart()
 		..()
-		owner.visible_message("<span class='notice'>[owner] begins constructing \a [furniture_name]!</span>")
+		if (length(target_turf.contents) > 50) // chosen fairly arbitrarily; prevent too much iteration. also how the fuck did you even click the turf
+			boutput(user, "<span class='alert'>There's way too much stuff in the way to build there!</span>")
+
+		var/obj/blocker
+		for (var/obj/O in target_turf)
+			if (O.density)
+				blocker = O
+				break
+
+		if (blocker)
+			boutput(user, "<span class='alert'>You try to build \a [furniture_name], but there's \a [blocker] in the way!</span>")
+			interrupt(INTERRUPT_ALWAYS)
+		else
+			owner.visible_message("<span class='notice'>[owner] begins constructing \a [furniture_name]!</span>")
 
 	onResume(datum/action/bar/icon/furniture_build/attempted) //guaranteed since we only resume with the same type
 		..()
