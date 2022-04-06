@@ -912,14 +912,14 @@ var/datum/action_controller/actions
 			if(item.duration_put > 0)
 				duration = item.duration_put
 			else
-				duration = 45
+				duration = 4.5 SECONDS
 		else
 			var/obj/item/I = target.get_slot(slot)
 			if(I)
 				if(I.duration_remove > 0)
 					duration = I.duration_remove
 				else
-					duration = 25
+					duration = 2.5 SECONDS
 
 		duration += ExtraDuration
 
