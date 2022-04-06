@@ -548,7 +548,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 
 	var/obj/item/furniture_parts/parts //! The parts we're building from
 	var/furniture_name = "piece of furniture" //! Displayed name for the thing we're building (for chat)
-	var/target_turf = null //! The turf we're trying to build on
+	var/turf/target_turf = null //! The turf we're trying to build on
 
 	New(var/obj/item/furniture_parts/parts, var/name, var/duration, var/target_turf)
 		..()
@@ -580,7 +580,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 
 	onStart()
 		..()
-		if (density_check)
+		if (parts.density_check)
 			if (length(target_turf.contents) > 50) // chosen fairly arbitrarily; prevent too much iteration. also how the fuck did you even click the turf
 				boutput(owner, "<span class='alert'>There's way too much stuff in the way to build there!</span>")
 
@@ -590,11 +590,11 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 					blocker = O
 					break
 
-		if (blocker)
-			boutput(owner, "<span class='alert'>You try to build \a [furniture_name], but there's \a [blocker] in the way!</span>")
-			interrupt(INTERRUPT_ALWAYS)
-		else
-			owner.visible_message("<span class='notice'>[owner] begins constructing \a [furniture_name]!</span>")
+			if (blocker)
+				boutput(owner, "<span class='alert'>You try to build \a [furniture_name], but there's \a [blocker] in the way!</span>")
+				interrupt(INTERRUPT_ALWAYS)
+				return
+		owner.visible_message("<span class='notice'>[owner] begins constructing \a [furniture_name]!</span>")
 
 	onResume(datum/action/bar/icon/furniture_build/attempted) //guaranteed since we only resume with the same type
 		..()
