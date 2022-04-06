@@ -1928,14 +1928,14 @@ datum
 			id = "copper"
 			result = "copper"
 			mix_sound = 'sound/misc/drinkfizz.ogg'
-			required_reagents = list("hemolymph" = 3, "cleaner" = 1,  "acetone" = 2)// 6 u total to make
+			required_reagents = list("hemolymph" = 5, "cleaner" = 1,  "acetone" = 1)
 			required_temperature = T0C + 30 // just a little bit of heat
 			result_amount = 1
 			mix_phrase = "The hemolymph bubbles as a black precipitate falls out of the solution, denaturing into basic components."
 			on_reaction(var/datum/reagents/holder, created_volume)
-				holder.add_reagent("meat_slurry", created_volume)// 2 meat slurry, since animal tissue
-				holder.add_reagent("saline", 2*created_volume)// 1 saline-glucose solution, since blood
-				holder.add_reagent("spaceacillin", created_volume)// 1 spaceacillin, since hemolymph is used for bacterial tests IRL
+				holder.add_reagent("meat_slurry", created_volume)// meat slurry, since animal tissue
+				holder.add_reagent("saline", 2*created_volume)//  saline-glucose solution, since blood
+				holder.add_reagent("spaceacillin", created_volume)//  spaceacillin, since hemolymph is used for bacterial tests IRL
 				holder.add_reagent("denatured_enzyme", created_volume)// and just some random biological chemicals for good measure
 
 		mutagen
