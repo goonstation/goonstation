@@ -1935,7 +1935,7 @@ datum
 				holder.add_reagent("meat_slurry", 2*created_volume)// 2 meat slurry, since animal tissue
 				holder.add_reagent("saline", created_volume)// 1 saline-glucose solution, since blood
 				holder.add_reagent("spaceacillin", created_volume)// 1 spaceacillin, since hemolymph is used for bacterial tests IRL
-				holder.add_reagent("enzymatic_leftovers", created_volume)// and just some random biological chemicals for good measure
+				holder.add_reagent("denatured_enzyme", created_volume)// and just some random biological chemicals for good measure
 
 		mutagen
 			name = "Unstable mutagen"
