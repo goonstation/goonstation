@@ -13,6 +13,8 @@
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/storage/box/starter)
+	duration_remove = 3 SECONDS
+	duration_put = 3 SECONDS
 
 	blue
 		icon_state = "backpackb"
