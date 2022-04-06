@@ -894,7 +894,6 @@ var/datum/action_controller/actions
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
-	resumable = FALSE //temp while abusable
 
 	var/mob/living/carbon/human/source  //The person doing the action
 	var/mob/living/carbon/human/target  //The target of the action
@@ -939,6 +938,7 @@ var/datum/action_controller/actions
 
 		if (source.get_stamina() < STAM_COST)
 			boutput(owner, "<span class='alert>You're too winded to [item ? "place that on" : "take that from"] [him_or_her(target)].</span>")
+			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		source.remove_stamina(STAM_COST)

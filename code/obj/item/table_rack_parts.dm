@@ -545,7 +545,6 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	duration = 5 SECONDS
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
-	resumable = FALSE //temp while abusable
 
 	var/obj/item/furniture_parts/parts //! The parts we're building from
 	var/furniture_name = "piece of furniture" //! Displayed name for the thing we're building (for chat)
@@ -593,6 +592,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 
 			if (blocker)
 				boutput(owner, "<span class='alert'>You try to build \a [furniture_name], but there's \a [blocker] in the way!</span>")
+				src.resumable = FALSE
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		owner.visible_message("<span class='notice'>[owner] begins constructing \a [furniture_name]!</span>")
