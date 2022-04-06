@@ -827,19 +827,19 @@
 			if (!G.state)
 				boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 				return
-
+			var/mob/grabbed = G.affecting
 			// duplicated as hell but i'm leaving it cleaner than I found it
 			var/remove_tablepass = HAS_FLAG(grabbed.flags, TABLEPASS) ? FALSE : TRUE //this sucks and should be a mob property. love
 			grabbed.flags |= TABLEPASS
-			step(grabbed, get_dir(grabbed, table))
+			step(grabbed, get_dir(grabbed, src))
 			if (remove_tablepass) REMOVE_FLAG(grabbed.flags, TABLEPASS)
 
 			if (user.a_intent == "harm")
-				logTheThing("combat", user, G.affecting, "slams [constructTarget(G.affecting,"combat")] onto a glass table")
-				src.harm_slam(user, G.affecting)
+				logTheThing("combat", user, grabbed, "slams [constructTarget(grabbed,"combat")] onto a glass table")
+				src.harm_slam(user, grabbed)
 			else
-				logTheThing("station", user, G.affecting, "puts [constructTarget(G.affecting,"combat")] onto a glass table")
-				src.gentle_slam(user, G.affecting)
+				logTheThing("station", user, grabbed, "puts [constructTarget(grabbed,"combat")] onto a glass table")
+				src.gentle_slam(user, grabbed)
 
 		else if (istype(W, /obj/item/plank) || istool(W, TOOL_SCREWING | TOOL_WRENCHING) || (istype(W, /obj/item/reagent_containers/food/drinks/bottle) && user.a_intent == "harm"))
 			return ..()
