@@ -53,7 +53,14 @@
 		var/damage = 0
 		if (!P || !istype(P.proj_data,/datum/projectile/))
 			return
+		if (reinforced)
+			// To prevent parking in front of NARCS for ammo free locker entry
+			if (istype(P.proj_data, /datum/projectile/bullet/abg))
+				return
 		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
+		// .22 is quite high raw damage and can be manufactured. Custom is material dipped .22. Stinger grenades did 60 damage.
+		if (istype(P.proj_data, /datum/projectile/bullet/bullet_22) || istype_exact(P.proj_data, /datum/projectile/bullet/custom) || istype(P.proj_data, /datum/projectile/bullet/stinger_ball))
+			damage = round(damage * 0.5)
 		if (damage < 1)
 			return
 
