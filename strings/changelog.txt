@@ -1,5 +1,14 @@
 
 (t)tue apr 05 22
+(u)aloe
+(*)Taking items off people now takes 30 stamina when starting the action.
+(*)Some timings for taking items off people have been slightly adjusted. See minor changes for a list.
+(+)INCREASED: Backpacks, jumpsuits, helmets, space suits<br>DECREASED: Radios, gloves, non-helmet hats, glasses<br>Exact timings vary, but most are 1 second increase/decreases. Space suits take significantly longer.
+(+)Grenades can be put in people's pockets very fast. If you're into that.
+(u)aloe
+(*)You can now construct furniture on adjacent tiles by clicking those tiles.
+(*)You can now walk on tables as long as you're also on a table. However, you can no longer build tables on the same tile you're standing on.
+(+)Furniture can no longer be built on the same tile as impassable objects- e.g. no stacking multiple tables, no building chairs on the same tile as a vending machine.
 (u)Sovexe
 (p)8111
 (e)🆕|feature
