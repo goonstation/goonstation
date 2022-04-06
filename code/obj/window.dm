@@ -1053,6 +1053,10 @@
 	health_max = 50
 	density = 1
 
+/obj/window/feather/New()
+	..()
+	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)
+
 /obj/window/feather/special_desc(dist, mob/user)
   if(isflock(user))
     return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.

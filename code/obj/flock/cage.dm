@@ -38,6 +38,7 @@
 		processing_items |= src
 		src.setMaterial(getMaterial("gnesis"))
 		src.health = src.health_max
+		src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)
 
 	proc/getHumanPiece(var/mob/living/carbon/human/H)
 		// prefer inventory items before limbs, and limbs before organs
@@ -164,7 +165,6 @@
 		occupant?.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 		..()
 
-
 /obj/icecube/flockdrone/special_desc(dist, mob/user)
 	if(isflock(user))
 		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
@@ -177,10 +177,11 @@
 		return null // give the standard description
 
 /obj/icecube/flockdrone/attack_hand(mob/user as mob)
-	user.visible_message("<span class='alert'><b>[user]</b> kicks [src]!</span>", "<span class='alert'>You kick [src]!</span>")
-	attack_particle(user, src)
-	takeDamage(2)
-	playsound(src, "sound/impact_sounds/Crystal_Hit_1.ogg", 25, 1)
+	if (user.a_intent == INTENT_HARM)
+		user.visible_message("<span class='alert'><b>[user]</b> kicks [src]!</span>", "<span class='alert'>You kick [src]!</span>")
+		attack_particle(user, src)
+		takeDamage(2)
+		playsound(src, "sound/impact_sounds/Crystal_Hit_1.ogg", 25, 1)
 
 /obj/icecube/flockdrone/attackby(obj/item/W as obj, mob/user as mob)
 	user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [W]!</span>", "<span class='alert'>You hit [src] with [W]!</span>")

@@ -17,6 +17,8 @@
 		return
 
 	if (istype(user, /mob/living/critter/flock/drone) && !flockdrones_can_hit)
+		if (istype(source, /obj/storage/closet/flock) || istype(source, /turf/simulated/floor/feather) || istype(source, /obj/machinery/door/feather))
+			return
 		boutput(user, "<span class='alert'>The grip tool refuses to harm this, jamming briefly.</span>")
 		return TRUE
 
@@ -25,11 +27,40 @@
 
 /datum/component/flock_protection/proc/handle_attackby(source, obj/item/W as obj, mob/user as mob)
 	if (istype(user, /mob/living/critter/flock/drone) && !flockdrones_can_hit)
-		boutput(user, "<span class='alert'>The grip tool refuses to allow damage to this, jamming briefly.</span>")
-		return TRUE
+		if (istype(source, /obj/lattice/flock))
+			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
+				boutput(user, "<span class='alert'>The grip tool refuses to allow damage to this, jamming briefly.</span>")
+				return TRUE
+		else if (istype(source, /obj/storage/closet/flock))
+			var/obj/storage/closet/flock/flockcloset = source
+			if (!flockcloset.open)
+				boutput(user, "<span class='alert'>The grip tool refuses to allow damage to this, jamming briefly.</span>")
+				return TRUE
+		else if (istype(source, /obj/machinery/door/feather))
+			var/mob/living/critter/flock/drone/flockdrone = user
+			if (flockdrone.find_type_in_hand(/obj/item))
+				boutput(user, "<span class='alert'>The grip tool refuses to allow damage to this, jamming briefly.</span>")
+				return TRUE
+		else
+			boutput(user, "<span class='alert'>The grip tool refuses to allow damage to this, jamming briefly.</span>")
+			return TRUE
 
 	if (!istype(user, /mob/living/critter/flock/drone) && report_obj_attack)
-		src.attempt_report_attack(source, user)
+		if (istype(source, /obj/lattice/flock))
+			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
+				src.attempt_report_attack(source, user)
+		else if (istype(source, /obj/storage/closet/flock))
+			var/obj/storage/closet/flock/flockcloset = source
+			if (!flockcloset.open)
+				if (istype(W, /obj/item/cargotele) || istype(W, /obj/item/satchel))
+					return
+				else
+					src.attempt_report_attack(source, user)
+		else if (istype(source, /obj/machinery/door/feather))
+			if (user.equipped())
+				src.attempt_report_attack(source, user)
+		else
+			src.attempt_report_attack(source, user)
 
 /datum/component/flock_protection/proc/attempt_report_attack(source, mob/attacker)
 	var/list/nearby_flockdrones = list()

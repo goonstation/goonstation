@@ -35,6 +35,7 @@
 	src.checknearby() //check for nearby groups
 	if(!group)//if no group found
 		initializegroup() //make a new one
+	src.AddComponent(/datum/component/flock_protection, FALSE, FALSE, TRUE)
 
 /turf/simulated/floor/feather/special_desc(dist, mob/user)
   if(isflock(user))
@@ -258,6 +259,7 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 /turf/simulated/wall/auto/feather/New()
 	..()
 	setMaterial(getMaterial("gnesis"))
+	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)
 
 /turf/simulated/wall/auto/feather/special_desc(dist, mob/user)
   if(isflock(user))

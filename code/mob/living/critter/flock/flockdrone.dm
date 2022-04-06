@@ -63,6 +63,8 @@
 			emote("beep")
 			say(pick_string("flockmind.txt", "flockdrone_created"))
 
+	src.AddComponent(/datum/component/flock_protection, FALSE, FALSE, FALSE)
+
 /mob/living/critter/flock/drone/disposing()
 	src.remove_simple_light("drone_light")
 	..()
@@ -703,9 +705,8 @@
 		return 0
 	if (user.floorrunning)
 		return 0 // you'll need to be out of the floor to do anything
-	var/mob/living/critter/flock/drone/F = target
-	if(istype(F, /mob/living/critter/flock/drone))
-		boutput(user, "<span class='alert'>The grip tool refuses to harm another flockdrone, jamming briefly.</span>")
+	if (istype(target, /mob/living/critter/flock))
+		boutput(user, "<span class='alert'>The grip tool refuses to harm this, jamming briefly.</span>")
 	else
 		if (!target.melee_attack_test(user))
 			return

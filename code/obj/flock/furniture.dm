@@ -111,6 +111,7 @@
 /obj/storage/closet/flock/New()
 	..()
 	setMaterial("gnesis")
+	src.AddComponent(/datum/component/flock_protection, FALSE, FALSE, TRUE)
 
 /obj/storage/closet/flock/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/grab))
@@ -190,6 +191,7 @@
 /obj/machinery/light/flock/New()
 	..()
 	light.set_color(0.45, 0.75, 0.675)
+	src.AddComponent(/datum/component/flock_protection, TRUE, FALSE, TRUE)
 
 /obj/machinery/light/flock/attack_hand(mob/user)
 	if(isflock(user))
@@ -222,6 +224,7 @@
 /obj/lattice/flock/New()
 	..()
 	setMaterial("gnesis")
+	src.AddComponent(/datum/component/flock_protection, FALSE, FALSE, TRUE)
 
 /obj/lattice/flock/attackby(obj/item/C as obj, mob/user as mob)
 	if (istype(C, /obj/item/tile))
@@ -282,6 +285,7 @@
 	..()
 	setMaterial("gnesis")
 	src.UpdateIcon()
+	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)
 
 
 // flockdrones can always move through
@@ -301,3 +305,8 @@
 		<br><span class='bold'>###=-</span></span>"}
 	else
 		return null // give the standard description
+
+/obj/grille/flock/attack_hand(mob/user)
+	if (user.a_intent != INTENT_HARM)
+		return
+	..()
