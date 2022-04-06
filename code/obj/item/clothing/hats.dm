@@ -14,8 +14,8 @@
 	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 	var/team_num
 	var/blocked_from_petasusaphilic = FALSE //Replacing the global blacklist
-	duration_remove = 3 SECONDS
-	duration_put = 3 SECONDS
+	duration_remove = 1.5 SECONDS
+	duration_put = 1.5 SECONDS
 
 	setupProperties()
 		..()
