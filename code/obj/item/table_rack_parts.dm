@@ -545,6 +545,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	duration = 5 SECONDS
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
+	resumable = FALSE //temp while abusable
 
 	var/obj/item/furniture_parts/parts //! The parts we're building from
 	var/furniture_name = "piece of furniture" //! Displayed name for the thing we're building (for chat)

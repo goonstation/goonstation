@@ -894,6 +894,7 @@ var/datum/action_controller/actions
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
+	resumable = FALSE //temp while abusable
 
 	var/mob/living/carbon/human/source  //The person doing the action
 	var/mob/living/carbon/human/target  //The target of the action
