@@ -11,6 +11,7 @@
 	icon_state = "sentinel"
 	flock_id = "Sentinel"
 	health = 80
+	resourcecost = 300
 	var/charge_status = NOT_CHARGED
 	/// 0-100 charge percent
 	var/charge = 0

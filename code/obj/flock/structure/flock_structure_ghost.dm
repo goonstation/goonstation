@@ -17,13 +17,19 @@
 /obj/flock_structure/ghost/New(var/atom/location, building = null, var/datum/flock/F = null, goal = 0)
 	..(location, F)
 	if(building)
-		var/atom/b = building
+		var/obj/flock_structure/b = building
 		icon = initial(b.icon)
 		icon_state = initial(b.icon_state)
 		src.color = COLOR_MATRIX_FLOCKMIND
 		src.alpha = 104
 		src.goal = goal //???? wuh
 		src.building = building
+		src.bound_width = initial(b.bound_width)
+		src.bound_height = initial(b.bound_height)
+		src.pixel_x = initial(b.pixel_x)
+		src.pixel_y = initial(b.pixel_y)
+		src.bound_x = initial(b.bound_x)
+		src.bound_y = initial(b.bound_y)
 	else
 		flock_speak(null, "ERROR: No Structure Tealprint Assigned, Deleting", flock)
 		qdel(src) //no exist if building null

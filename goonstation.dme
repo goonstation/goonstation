@@ -373,6 +373,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\flock\flock.dm"
 #include "code\datums\flock\flockprotection.dm"
 #include "code\datums\flock\flocktilegroup.dm"
+#include "code\datums\flock\flockunlockable.dm"
 #include "code\datums\gamemodes\arcfiend.dm"
 #include "code\datums\gamemodes\assday_classic.dm"
 #include "code\datums\gamemodes\battle_royale.dm"

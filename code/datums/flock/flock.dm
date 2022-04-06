@@ -16,6 +16,9 @@
 	var/list/annotation_viewers = list()
 	var/list/annotations = list() // key is atom ref, value is image
 	var/list/obj/flock_structure/structures = list()
+	var/list/datum/unlockable_flock_structure/unlockableStructures = list()
+	///list of strings that lets flock record achievements for structure unlocks
+	var/list/achievements = list()
 	var/mob/living/intangible/flock/flockmind/flockmind
 	var/snoop_clarity = 80 // how easily we can see silicon messages, how easily silicons can see this flock's messages
 	var/snooping = 0 //are both sides of communication currently accessible?
@@ -27,6 +30,8 @@
 	src.name = "[pick(consonants_lower)][pick(vowels_lower)].[pick(consonants_lower)][pick(vowels_lower)]"
 	flocks[src.name] = src
 	processing_items |= src
+	for(var/DT in childrentypesof(/datum/unlockable_flock_structure))
+		src.unlockableStructures += new DT(src)
 
 /datum/flock/ui_status(mob/user)
 	// only flockminds and admins allowed
@@ -321,6 +326,14 @@
 		aH.updateCompute()
 // STRUCTURES
 
+///This function only notifies the flock of the unlock, actual unlock logic is handled in the datum
+/datum/flock/proc/notifyUnlockStructure(var/datum/unlockable_flock_structure/SD)
+	flock_speak(null, "New structure devised: [SD.friendly_name]", src)
+
+///This function only notifies the flock of the relock, actual unlock logic is handled in the datum
+/datum/flock/proc/notifyRelockStructure(var/datum/unlockable_flock_structure/SD)
+	flock_speak(null, "Alert, structure tealprint disabled: [SD.friendly_name]", src)
+
 /datum/flock/proc/registerStructure(var/atom/movable/S)
 	if(isflockstructure(S))
 		src.structures |= S
@@ -447,24 +460,25 @@
 			// tile got killed, remove it
 			floors_no_longer_existing |= T
 			continue
-		// check adjacent tiles to see if we've been surrounded and can start generating, or if we're no longer surrounded and can't generate
-		// var/validNeighbors = 0
-		// var/list/neighbors = getNeighbors(T, cardinal)
-		// for(var/turf/simulated/floor/feather/F in neighbors)
-		// 	validNeighbors += 1
-		// if(validNeighbors < 4 && T.generating)
-		// 	T.off()
-		// else if(validNeighbors >= 4 && !T.generating)
-		// 	T.on()
 
 	if(floors_no_longer_existing.len > 0)
 		src.all_owned_tiles -= floors_no_longer_existing
+
+	for(var/datum/unlockable_flock_structure/ufs as anything in src.unlockableStructures)
+		ufs.process()
 
 /datum/flock/proc/convert_turf(var/turf/T, var/converterName)
 	src.unreserveTurf(converterName)
 	src.claimTurf(flock_convert_turf(T))
 	playsound(T, "sound/items/Deconstruct.ogg", 70, 1)
 
+///Unlock an achievement (string) if it isn't already unlocked
+/datum/flock/proc/achieve(var/str)
+	src.achievements |= str
+
+///Unlock an achievement (string) if it isn't already unlocked
+/datum/flock/proc/hasAchieved(var/str)
+	return (str in src.achievements)
 ////////////////////
 // GLOBAL PROCS!!
 ////////////////////

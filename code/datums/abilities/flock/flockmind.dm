@@ -377,8 +377,6 @@
 	targeted = 0
 
 /datum/targetable/flockmindAbility/createStructure/cast()
-	var/resourcecost = null
-	var/structurewantedtype = null
 	var/turf/T = get_turf(holder.owner)
 	if(!istype(T, /turf/simulated/floor/feather))
 		boutput(holder.owner, "<span class='alert'>You aren't above a flocktile.</span>")//todo maybe make this flock themed?
@@ -389,21 +387,31 @@
 	if(locate(/obj/flock_structure) in T)
 		boutput(holder.owner, "<span class='alert'>There is already a flock structure on this flocktile!</span>")
 		return 1
+
 	for (var/atom/O in T.contents)
 		if (O.density && !isflock(O))
 			boutput(holder.owner, "<span class='alert'>That tile has something that blocks tealprint creation!</span>")
 			return 1
+
+	var/list/friendlyNames = list()
+	var/mob/living/intangible/flock/flockmind/F = holder.owner
+	for(var/datum/unlockable_flock_structure/ufs as anything in F.flock.unlockableStructures)
+		if(ufs.check_unlocked())
+			friendlyNames += ufs.friendly_name
+
+
 	//todo: replace with FANCY tgui/chui window with WHEELS and ICONS and stuff!
-	var/structurewanted = tgui_input_list(holder.owner, "Select which structure you would like to create", "Tealprint selection", list("Collector", "Sentinel"))
+	var/structurewanted = tgui_input_list(holder.owner, "Select which structure you would like to create", "Tealprint selection", friendlyNames)
+
 	if (!structurewanted)
 		return TRUE
-	switch(structurewanted)
-		if("Collector")
-			structurewantedtype = /obj/flock_structure/collector
-			resourcecost = 200
-		if("Sentinel")
-			structurewantedtype = /obj/flock_structure/sentinel
-			resourcecost = 300
+	var/obj/flock_structure/structurewantedtype = null
+	for(var/datum/unlockable_flock_structure/ufs as anything in F.flock.unlockableStructures)
+		if(ufs.friendly_name == structurewanted)
+			structurewantedtype = ufs.structType
+			break
+
 	if(structurewantedtype)
-		var/mob/living/intangible/flock/F = holder.owner
-		F.createstructure(structurewantedtype, resourcecost)
+		F.createstructure(structurewantedtype, initial(structurewantedtype.resourcecost))
+
+

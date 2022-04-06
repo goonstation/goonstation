@@ -18,6 +18,8 @@
 	var/datum/flock/flock = null
 	//base compute provided
 	var/compute = 0
+	//resource cost for building
+	var/resourcecost = 50
 	/// can flockdrones pass through this akin to a grille? need to set USE_CANPASS to make this work however
 	var/passthrough = FALSE
 	/// not everything needs a group so dont check for everysingle god damn structure

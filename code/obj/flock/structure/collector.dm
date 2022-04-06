@@ -4,6 +4,7 @@
 	desc = "Seems to be pulsing."
 	flock_id = "Collector"
 	health = 60
+	resourcecost = 200
 	/// does it draw from the local apc if its strong enough.
 	var/drawfromgrid = 0
 	/// is it active?

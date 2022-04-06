@@ -11,6 +11,7 @@
 	flock_id = "Signal Relay Broadcast Amplifier"
 	build_time = 30
 	health = 5000
+	resourcecost = 1000
 	bound_width = 160
 	bound_height = 160
 	pixel_x = -64
