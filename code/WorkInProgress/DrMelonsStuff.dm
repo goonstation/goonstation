@@ -149,11 +149,11 @@
 
 	// using overlay levels so it looks like you're in the bath
 	// we don't use show_submerged_image since we want the head to poke out
-	// MOB_LEVEL(-0) =  all other mobs on top of us
-	// MOB_LEVEL-0.1 = Bath edge to trim feet
-	// MOB_LEVEL-0.2 = Water overlay
-	// MOB_LEVEL-0.3 = Occupant
-	// MOB_LEVEL-0.4 = Water underlay
+	// MOB_LAYER(-0) =  all other mobs on top of us
+	// MOB_LAYER-0.1 = Bath edge to trim feet
+	// MOB_LAYER-0.2 = Water overlay
+	// MOB_LAYER-0.3 = Occupant
+	// MOB_LAYER-0.4 = Water underlay
 
 	on_reagent_change()
 		if(reagents.total_volume)
