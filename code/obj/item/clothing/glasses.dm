@@ -11,6 +11,8 @@
 	var/allow_blind_sight = 0
 	wear_layer = MOB_GLASSES_LAYER
 	block_vision = 0
+	duration_remove = 2 SECONDS
+	duration_put = 2 SECONDS
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
 	compatible_species = list("human", "cow", "werewolf", "flubber")
