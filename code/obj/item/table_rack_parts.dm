@@ -89,7 +89,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 			return ..()
 
 	afterattack(atom/target, mob/user)
-		if (!isturf(target))
+		if (!isturf(target) || target:density)
 			return ..()
 		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, target), user)
 
