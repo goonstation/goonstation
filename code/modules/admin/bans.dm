@@ -259,7 +259,7 @@ var/global/list/playersSeen = list()
 
 //Starts the dialog for banning a dude
 /client/proc/genericBanDialog(target)
-	if (src.holder && usr.level >= LEVEL_SA)
+	if (src.holder?.level >= LEVEL_SA)
 		var/mob/M
 		var/mobRef = 0
 		if (target && ismob(target))
@@ -267,7 +267,7 @@ var/global/list/playersSeen = list()
 			M = target
 
 		if (mobRef)
-			if (M.client && M.client.holder && (M.client.holder.level >= usr.level))
+			if (M.client && M.client.holder && (M.client.holder.level >= src.holder.level))
 				alert("You can't ban another admin you huge jerk!!!!!")
 				return null
 
