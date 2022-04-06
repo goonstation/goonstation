@@ -634,7 +634,7 @@
 /obj/item/storage/belt/roboticist
 	icon_state = "utilrobotics"
 	name = "Roboticist's belt"
-	item_state = "secbelt"
+	item_state = "robotics"
 	desc = "A utility belt, in the departmental colors of someone who loves robots and surgery."
 
 /obj/item/storage/belt/roboticist/prepared
