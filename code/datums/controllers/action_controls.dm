@@ -888,6 +888,7 @@ var/datum/action_controller/actions
 		else
 			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
 
+#define STAM_COST 30
 /datum/action/bar/icon/otherItem//Putting items on or removing items from others.
 	id = "otheritem"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -935,6 +936,12 @@ var/datum/action_controller/actions
 			for(var/obj/item/grab/gunpoint/G in source.grabbed_by)
 				G.shoot()
 
+		if (source.get_stamina() < STAM_COST)
+			boutput(owner, "<span class='alert>You're too winded to [item ? "place that on" : "take that from"] [him_or_her(target)].</span>")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		source.remove_stamina(STAM_COST)
+
 		if(item)
 			if(!target.can_equip(item, slot))
 				boutput(source, "<span class='alert'>[item] can not be put there.</span>")
@@ -963,12 +970,6 @@ var/datum/action_controller/actions
 				boutput(source, "<span class='alert'>You can't remove [I] from [target] when [(he_or_she(target))] is in [target.loc]!</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			/* Some things use handle_other_remove to do stuff (ripping out staples, wiz hat probability, etc) should only be called once per removal.
-			if(!I.handle_other_remove(source, target))
-				boutput(source, "<span class='alert'>[I] can not be removed.</span>")
-				interrupt(INTERRUPT_ALWAYS)
-				return
-			*/
 			logTheThing("combat", source, target, "tries to remove \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 			var/name = "something"
 			if (!hidden)
@@ -1037,6 +1038,7 @@ var/datum/action_controller/actions
 		else
 			if(!target.get_slot(slot=slot))
 				interrupt(INTERRUPT_ALWAYS)
+#undef STAM_COST
 
 /datum/action/bar/icon/internalsOther //This is used when you try to set someones internals
 	duration = 40
