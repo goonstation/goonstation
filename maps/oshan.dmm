@@ -43012,12 +43012,6 @@
 	dir = 6
 	},
 /area/station/hallway/primary/east)
-"cgP" = (
-/obj/table/wood/auto{
-	pixel_w = -1
-	},
-/turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/lab)
 "cgQ" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/cable{
@@ -108037,7 +108031,7 @@ bRa
 bSi
 bUu
 bUu
-cgP
+bUu
 cfu
 bKe
 aqn
