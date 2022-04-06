@@ -22373,8 +22373,10 @@
 	},
 /area/station/hallway/primary/west)
 "bfp" = (
-/turf/space/fluid,
-/area/flock_trader)
+/turf/simulated/shuttle/wall/cockpit/flock{
+	dir = 8
+	},
+/area/space)
 "bfq" = (
 /obj/lattice/flock,
 /turf/simulated/shuttle/wall/flock,
