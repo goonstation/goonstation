@@ -319,7 +319,7 @@
 				return
 			if(newname && newname != R.name)
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
-			logTheThing("combat", usr, R, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
+			logTheThing("station", usr, R, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
 			R.real_name = "[newname]"
 			R.UpdateName()
 			if (R.internal_pda)
