@@ -60,7 +60,7 @@
 					assailant.hand = !assailant.hand
 
 		if(affecting)
-			if (state >= GRAB_NECK)
+			if (state >= GRAB_AGGRESSIVE)
 				if (assailant)
 					affecting.layer = assailant.layer
 				else
@@ -76,7 +76,7 @@
 				assailant.force_laydown_standup()
 				affecting.force_laydown_standup()
 
-			if (state == GRAB_KILL)
+			if (state == GRAB_CHOKE)
 				logTheThing("combat", src.assailant, src.affecting, "releases their choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles at [log_loc(src.affecting)]")
 			else if (state == GRAB_PIN)
 				logTheThing("combat", src.assailant, src.affecting, "drops their pin on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
@@ -113,11 +113,11 @@
 		if(ishuman(src.affecting))
 			H = src.affecting
 
-		if (src.state >= GRAB_NECK)
+		if (src.state >= GRAB_AGGRESSIVE)
 			if(H) H.remove_stamina(STAMINA_REGEN * 0.5 * mult)
 			src.affecting.set_density(0)
 
-		if (src.state == GRAB_KILL)
+		if (src.state == GRAB_CHOKE)
 			//src.affecting.losebreath++
 			//if (src.affecting.paralysis < 2)
 			//	src.affecting.paralysis = 2
@@ -207,12 +207,12 @@
 					for(var/mob/O in AIviewers(src.assailant, null))
 						O.show_message("<span class='alert'>[src.assailant] has grabbed [src.affecting] aggressively (now hands)!</span>", 1)
 					icon_state = "reinforce"
-					src.state = GRAB_NECK //used to be '1'. SKIP LEVEL 1
+					src.state = GRAB_AGGRESSIVE //used to be '1'. SKIP LEVEL 1
 					if (!src.affecting.buckled)
 						set_affected_loc()
 
 					user.next_click = world.time + user.combat_click_delay //+ rand(6,11) //this was utterly disgusting, leaving it here in memorial
-			if (GRAB_AGGRESSIVE)
+			if (GRAB_STRONG)
 				if (ishuman(src.affecting))
 					var/mob/living/carbon/human/H = src.affecting
 					for (var/obj/item/clothing/C in list(H.head, H.wear_suit, H.wear_mask, H.w_uniform))
@@ -220,16 +220,16 @@
 							boutput(src.assailant, "<span class='notice'>You have to take off [src.affecting]'s [C.name] first!</span>")
 							return
 				icon_state = "!reinforce"
-				src.state = GRAB_NECK
+				src.state = GRAB_AGGRESSIVE
 				if (!src.affecting.buckled)
 					set_affected_loc()
 				src.assailant.lastattacked = src.affecting
 				src.affecting.lastattacker = src.assailant
 				src.affecting.lastattackertime = world.time
-				logTheThing("combat", src.assailant, src.affecting, "'s grip upped to neck on [constructTarget(src.affecting,"combat")]")
+				logTheThing("combat", src.assailant, src.affecting, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 				user.next_click = world.time + user.combat_click_delay
-				src.assailant.visible_message("<span class='alert'>[src.assailant] has reinforced [his_or_her(assailant)] grip on [src.affecting] (now neck)!</span>")
-			if (GRAB_NECK)
+				src.assailant.visible_message("<span class='alert'>[src.assailant] has reinforced [his_or_her(assailant)] grip on [src.affecting] (now aggressive)!</span>")
+			if (GRAB_AGGRESSIVE)
 				if (ishuman(src.affecting))
 					var/mob/living/carbon/human/H = src.affecting
 					for (var/obj/item/clothing/C in list(H.head, H.wear_suit, H.wear_mask, H.w_uniform))
@@ -240,8 +240,8 @@
 				//user.next_click = world.time + 1 //mbc : wow. this makes so much sense as to why i would always toggle killchoke off immediately
 				// this is also gross enough to leave in memorial. lol
 				user.next_click = world.time + user.combat_click_delay
-			if (GRAB_KILL)
-				src.state = GRAB_NECK
+			if (GRAB_CHOKE)
+				src.state = GRAB_AGGRESSIVE
 				logTheThing("combat", src.assailant, src.affecting, "releases their choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles")
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message("<span class='alert'>[src.assailant] has loosened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
@@ -264,7 +264,7 @@
 			else
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
-		src.state = GRAB_KILL
+		src.state = GRAB_CHOKE
 		REMOVE_ATOM_PROPERTY(src.assailant, PROP_MOB_CANTMOVE, src)
 		src.assailant.lastattacked = src.affecting
 		src.affecting.lastattacker = src.assailant
@@ -341,11 +341,11 @@
 		switch (src.state)
 			if (GRAB_PASSIVE)
 				icon_state = "reinforce"
-			if (GRAB_AGGRESSIVE)
+			if (GRAB_STRONG)
 				icon_state = "!reinforce"
-			if (GRAB_NECK)
+			if (GRAB_AGGRESSIVE)
 				icon_state = "disarm/kill"
-			if (GRAB_KILL)
+			if (GRAB_CHOKE)
 				icon_state = "disarm/kill1"
 			if (GRAB_PIN)
 				icon_state = "pin"
@@ -454,7 +454,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (!G || !istype(G) || G.affecting != target || G.state < GRAB_NECK)
+		if (!G || !istype(G) || G.affecting != target || G.state < GRAB_AGGRESSIVE)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -497,7 +497,7 @@
 		if (ishuman(target) && target:stamina < target:stamina_max/2)
 			duration -= 15 * (1-(target:stamina/(target:stamina_max/2)))
 
-		if (G.state < GRAB_NECK)
+		if (G.state < GRAB_AGGRESSIVE)
 			duration += 25 //takes longer if you dont have a good gripp
 
 		..()
@@ -603,7 +603,7 @@
 
 /obj/item/proc/process_grab(var/mult = 1) //items override for unique behaviorse
 	.= 0
-	if (src.chokehold && src.chokehold.state == GRAB_KILL)
+	if (src.chokehold && src.chokehold.state == GRAB_CHOKE)
 		if (tool_flags & TOOL_CUTTING && hit_type == DAMAGE_CUT)		//bleed em a bit
 			src.chokehold.affecting.TakeDamage(zone="All", brute=(1 * mult))  //hurt em a bit
 			take_bleeding_damage(src.chokehold.affecting, src.chokehold.assailant, 1.4 * mult, bloodsplatter = 0)
@@ -637,7 +637,7 @@
 
 	proc/get_breath(volume_needed)
 		.= null
-		if (src.state == GRAB_KILL)
+		if (src.state == GRAB_CHOKE)
 			for (var/obj/item/tank/use_internal in src.assailant.equipped_list(check_for_magtractor = 0))
 				return use_internal.remove_air_volume(volume_needed)
 
@@ -924,7 +924,7 @@
 
 	process_grab(var/mult = 1)
 		..()
-		if (src.chokehold && src.reagents && src.reagents.total_volume > 0 && chokehold.state == GRAB_KILL && iscarbon(src.chokehold.affecting))
+		if (src.chokehold && src.reagents && src.reagents.total_volume > 0 && chokehold.state == GRAB_CHOKE && iscarbon(src.chokehold.affecting))
 			src.reagents.reaction(chokehold.affecting, INGEST, 0.5 * mult)
 			src.reagents.trans_to(chokehold.affecting, 0.5 * mult)
 
@@ -935,7 +935,7 @@
 
 /obj/item/cable_coil/process_grab(var/mult = 1)
 	..()
-	if (src.chokehold?.state == GRAB_KILL)
+	if (src.chokehold?.state == GRAB_CHOKE)
 		if (ishuman(src.chokehold.affecting))
 			var/mob/living/carbon/human/H = src.chokehold.affecting
 			H.losebreath += (0.5 * mult)

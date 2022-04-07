@@ -945,7 +945,7 @@ proc/Create_Tommyname()
 /obj/item/garrote/try_grab(var/mob/living/target, var/mob/living/assailant)
 	if(..())
 		assailant.visible_message("<span class='combat bold'>[assailant] wraps \the [src] around [target]'s neck!</span>")
-		chokehold.state = GRAB_NECK
+		chokehold.state = GRAB_AGGRESSIVE
 		chokehold.upgrade_to_kill()
 		update_state()
 

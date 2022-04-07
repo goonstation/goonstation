@@ -1019,11 +1019,11 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 				return 0
 
 			if (G.affecting == src) // we won't put up with shit being done to us nearly as much as we'll put up with it for others
-				if (G.state == GRAB_AGGRESSIVE)
+				if (G.state == GRAB_STRONG)
 					src.im_mad += 20
-				else if (G.state == GRAB_NECK)
+				else if (G.state == GRAB_AGGRESSIVE)
 					src.im_mad += 60
-				else if (G.state == GRAB_KILL)
+				else if (G.state == GRAB_CHOKE)
 					src.im_mad += 100
 				return 1
 

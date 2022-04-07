@@ -294,7 +294,7 @@
 /mob/proc/update_grab_loc()
 	//robust grab : keep em close
 	for (var/obj/item/grab/G in equipped_list(check_for_magtractor = 0))
-		if (G.state < GRAB_NECK) continue
+		if (G.state < GRAB_AGGRESSIVE) continue
 		if (BOUNDS_DIST(src, G.affecting) > 0)
 			qdel(G)
 			continue
@@ -1084,7 +1084,7 @@
 		var/mob/living/carbon/human/H = pulling
 		if (H.grabbed_by.len)
 			for (var/obj/item/grab/G in src.grabbed_by)
-				if (G.state < GRAB_NECK) continue
+				if (G.state < GRAB_AGGRESSIVE) continue
 				pulling = G.assailant
 				G.assailant.pulled_by = src
 

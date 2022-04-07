@@ -13,13 +13,16 @@
 
 /// Regular old grab to pull someone
 #define GRAB_PASSIVE 0
-/// Special case grab for limbs which grab aggressively immediately, but don't want to pull the person to their tile like a neck grab would.
-/// Most mobs skip this step entirely; only limbs which use it as a base use it at all.
-#define GRAB_AGGRESSIVE 1
-/// What's normally known as an 'aggressive' grab. Basically carrying someone.
-#define GRAB_NECK 2
+/**
+ * Special case grab for limbs which grab 'aggressively' immediately, but don't want to pull the person to their tile like a neck grab would.
+ * Allows you to do 'aggressive' maneuvers like throwing people or suplexing them, but people can still just walk out of the grab.
+ * Most mobs skip this step entirely; only limbs which use it as a base use it at all.
+*/
+#define GRAB_STRONG 1
+/// Basically carrying someone. Allows you to suplex/throw/etc them, needs to be resisted out of.
+#define GRAB_AGGRESSIVE 2
 /// Choking someone.
-#define GRAB_KILL 3
+#define GRAB_CHOKE 3
 /// Pinned someone.
 #define GRAB_PIN 4
 

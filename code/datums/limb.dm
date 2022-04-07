@@ -578,7 +578,7 @@
 		// Werewolves and shamblers grab aggressively by default.
 		var/obj/item/grab/GD = user.equipped()
 		if (GD && istype(GD) && (GD.affecting && GD.affecting == target))
-			GD.state = GRAB_AGGRESSIVE
+			GD.state = GRAB_STRONG
 			GD.UpdateIcon()
 			user.visible_message("<span class='alert'>[user] grabs hold of [target] aggressively!</span>")
 
@@ -935,7 +935,7 @@
 		var/obj/item/grab/GD = user.equipped()
 		if (GD && istype(GD) && (GD.affecting && GD.affecting == target))
 			target.changeStatus("stunned", 2 SECONDS)
-			GD.state = GRAB_AGGRESSIVE
+			GD.state = GRAB_STRONG
 			GD.UpdateIcon()
 			user.visible_message("<span class='alert'>[user] grabs hold of [target] aggressively!</span>")
 
