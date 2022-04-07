@@ -186,7 +186,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			var/obj/item/grab/G = new /obj/item/grab(src, src, M)
 			src.put_in_hand(G, src.hand)
 			M.changeStatus("stunned", 10 SECONDS)
-			G.state = 2
+			G.state = GRAB_NECK
 			G.UpdateIcon()
 			src.set_dir(get_dir(src, M))
 			playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 65, 1)
@@ -1658,7 +1658,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 			var/obj/item/grab/G = new /obj/item/grab(holder.owner, holder.owner, M)
 			holder.owner.put_in_hand(G, holder.owner.hand)
 			M.changeStatus("stunned", 10 SECONDS)
-			G.state = 2
+			G.state = GRAB_NECK
 			G.UpdateIcon()
 			holder.owner.set_dir(get_dir(holder.owner, M))
 			playsound(holder.owner.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 65, 1)

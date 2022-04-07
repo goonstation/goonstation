@@ -132,7 +132,7 @@
 						qdel(G)
 				for (var/obj/item/grab/G as anything in src.grabbed_by)
 					if (istype(G) && BOUNDS_DIST(src, G.assailant) > 0)
-						if (G.state > 1)
+						if (G.state > GRAB_AGGRESSIVE)
 							delay += G.assailant.p_class
 						qdel(G)
 

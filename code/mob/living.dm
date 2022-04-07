@@ -1686,7 +1686,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if (isnull(M))
 				continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
 
-			if (G.state == 0)
+			if (G.state == GRAB_PASSIVE)
 				if (get_dist(src,M) > 0 && get_dist(move_target,M) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
 					if(ismob(M) && M.lying)
 						. *= lerp(1, max(M.p_class, 1), pushpull_multiplier)

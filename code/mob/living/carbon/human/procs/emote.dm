@@ -2321,7 +2321,7 @@
 		src.render_target = "\ref[src]"
 
 /mob/living/proc/do_suplex(obj/item/grab/G)
-	if (!(G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc)))
+	if (!(G.state >= GRAB_AGGRESSIVE && isturf(src.loc) && isturf(G.affecting.loc)))
 		return null
 	if(!(BOUNDS_DIST(src, G.affecting) == 0))
 		return null
