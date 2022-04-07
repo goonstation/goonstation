@@ -738,7 +738,7 @@
 			return
 		src.label = "[str]"
 		boutput(user, "<span class='notice'>You set the text to '[str]'.</span>")
-		logTheThing("combat", user, null, "sets a hand labeler label to \"[str]\".")
+		logTheThing("station", user, null, "sets a hand labeler label to \"[str]\".")
 
 	proc/RemoveLabel(var/atom/A, var/mob/user, var/no_message = 0)
 		if(!islist(A.name_suffixes))
@@ -774,7 +774,7 @@
 			A.UpdateName()
 		playsound(src, "sound/items/hand_label.ogg", 40, 1)
 		if (user && !no_message)
-			logTheThing("combat", user, A, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
+			logTheThing(ismob(A) ? "combat" : "station", user, A, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
 		else if(!no_message)
 			logTheThing("combat", A, null, "has a label applied to them, \"[src.label]\"")
 		A.add_fingerprint(user)
