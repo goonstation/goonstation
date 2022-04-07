@@ -24,7 +24,11 @@
 		allowed_types -= DATA_INPUT_NUM_ADJUST
 
 	var/input = null 	// The input from the user- usually text, but might be a file or something.
-	var/selected_type = input(custom_type_title || "Which input type?", custom_type_message || "Input Type Selection", default_type) as null|anything in allowed_types //TODO make this a TGUI list once we can indicate defaults on those
+	var/selected_type
+	if (length(allowed_types) == 1)
+		selected_type = allowed_types[1]
+	else
+		selected_type = input(custom_type_title || "Which input type?", custom_type_message || "Input Type Selection", default_type) as null|anything in allowed_types //TODO make this a TGUI list once we can indicate defaults on those
 
 	if (selected_type != default_type) //clear the default if we aren't using the suggested type
 		default = null

@@ -1222,7 +1222,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			return
 
 		var/selection = input(user, "What do you want to do with [src]?") as null|anything in choices
-		if (isnull(selection) || get_dist(src, user) > 1)
+		if (isnull(selection) || BOUNDS_DIST(src, user) > 0)
 			return
 
 		var/obj/item/remove_thing

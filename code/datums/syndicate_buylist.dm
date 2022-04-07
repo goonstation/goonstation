@@ -105,7 +105,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/storage/emp_grenade_pouch
 	cost = 1
 	desc = "A pouch of EMP grenades, each capable of causing havoc with the electrical and computer systems found aboard the modern space station. Shorts out power systems, causes feedback in electronic vision devices such as thermals, and causes robots to go haywire."
-	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF | UPLINK_HEAD_REV
 
 /datum/syndicate_buylist/generic/tacticalgrenades
 	name = "Tactical Grenades"
@@ -394,7 +394,7 @@ This is basically useless for anyone but miners.
 	not_in_crates = 1
 	vr_allowed = 0
 	objective = /datum/objective/regular/assassinate
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY | UPLINK_HEAD_REV
 
 	run_on_spawn(var/obj/item/pinpointer/idtracker/tracker, var/mob/living/owner, in_surplus_crate)
 		tracker.owner = owner

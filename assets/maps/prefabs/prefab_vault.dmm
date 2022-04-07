@@ -2,10 +2,15 @@
 "a" = (
 /turf/variableTurf/clear,
 /area/space)
-"c" = (
+"b" = (
 /turf/simulated/wall/r_wall{
 	icon = 'icons/misc/evilreaverstation.dmi';
 	icon_state = "old_rwall"
+	},
+/area/noGenerate)
+"c" = (
+/turf/simulated/wall/r_wall{
+	opacity = 0
 	},
 /area/noGenerate)
 "d" = (
@@ -39,6 +44,12 @@
 "h" = (
 /turf/simulated/floor/scorched2,
 /area/noGenerate)
+"i" = (
+/obj/securearea,
+/turf/simulated/wall/r_wall{
+	opacity = 0
+	},
+/area/noGenerate)
 "j" = (
 /obj/machinery/door/airlock/classic{
 	name = "rusty airlock"
@@ -58,17 +69,6 @@
 /obj/item/device/light/flashlight,
 /turf/variableTurf/floor,
 /area/noGenerate)
-"v" = (
-/turf/simulated/wall/r_wall{
-	opacity = 0
-	},
-/area/noGenerate)
-"x" = (
-/obj/securearea,
-/turf/simulated/wall/r_wall{
-	opacity = 0
-	},
-/area/noGenerate)
 
 (1,1,1) = {"
 a
@@ -81,25 +81,25 @@ a
 "}
 (2,1,1) = {"
 a
+b
 c
-v
-v
 c
+b
 k
 a
 "}
 (3,1,1) = {"
 a
-v
+c
 d
 g
-x
+i
 k
 a
 "}
 (4,1,1) = {"
 a
-v
+c
 e
 g
 j
@@ -108,19 +108,19 @@ a
 "}
 (5,1,1) = {"
 a
-v
+c
 f
 h
-x
+i
 k
 a
 "}
 (6,1,1) = {"
 a
+b
 c
-v
-v
 c
+b
 m
 a
 "}

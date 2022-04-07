@@ -766,7 +766,7 @@
 		else ..()
 
 	attack_ai(mob/user as mob)
-		if(isrobot(user) && get_dist(src, user) <= 1) return src.Attackhand(user)
+		if(isrobot(user) && BOUNDS_DIST(src, user) == 0) return src.Attackhand(user)
 
 	attack_hand(var/mob/user as mob)
 		if(isAI(user) || isobserver(user)) return // naughty AIs used to be able to harvest plants
@@ -825,7 +825,7 @@
 	mouse_drop(over_object, src_location, over_location)
 		..()
 		if(!isliving(usr) || isintangible(usr)) return // ghosts killing plants fix
-		if(get_dist(src, usr) > 1)
+		if(BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You need to be closer to empty the tray out!</span>")
 			return
 
@@ -874,13 +874,13 @@
 		return
 
 	MouseDrop_T(atom/over_object as obj, mob/user as mob) // ty to Razage for the initial code
-		if(get_dist(user, src) > 1 || get_dist(user, over_object) > 1 || is_incapacitated(user) || isAI(user))
+		if(BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, over_object) > 0 || is_incapacitated(user) || isAI(user))
 			return
 		if(istype(over_object, /obj/item/seed))  // Checks to make sure it's a seed being dragged onto the tray.
-			if(get_dist(user, src) > 1)
+			if(BOUNDS_DIST(user, src) > 0)
 				boutput(user, "<span class='alert'>You need to be closer to the tray!</span>")
 				return
-			if(get_dist(user, over_object) > 1)
+			if(BOUNDS_DIST(user, over_object) > 0)
 				boutput(user, "<span class='alert'>[over_object] is too far away!</span>")
 				return
 			src.Attackby(over_object, user)  // Activates the same command as would be used with a seed in hand on the tray.

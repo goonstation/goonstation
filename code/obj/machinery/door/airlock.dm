@@ -1473,7 +1473,7 @@ About the new airlock wires panel:
 				boutput(user, "<span class='notice'>[bicon(C)] Regular electrical response received from access panel.</span>")
 		return
 
-	if (!issilicon(user) && IN_RANGE(src, user, 1))
+	if (!issilicon(user) && (BOUNDS_DIST(src, user) == 0))
 		if (src.isElectrified())
 			if(src.shock(user, 75))
 				return
@@ -2037,7 +2037,7 @@ obj/machinery/door/airlock
 			if("openClose")
 				user_toggle_open(usr)
 				. = TRUE
-	if(src.p_open && get_dist(src, usr) <= 1 && !isAI(usr))
+	if(src.p_open && BOUNDS_DIST(src, usr) == 0 && !isAI(usr))
 		switch(action)
 			if("cut")
 				var/which_wire = params["wireColorIndex"]

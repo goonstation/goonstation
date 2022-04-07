@@ -588,7 +588,7 @@ function lineEnter (ev)
 	else if(href_list["disk"])
 		if (src.diskette)
 			//Ai/cyborgs cannot press a physical button from a room away.
-			if((issilicon(usr) || isAI(usr)) && get_dist(src, usr) > 1)
+			if((issilicon(usr) || isAI(usr)) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 				return
 

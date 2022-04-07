@@ -24,6 +24,7 @@
 	stamina_cost = 0
 	stamina_crit_chance = 0
 	move_triggered = 1
+	duration_put = 0.25 SECONDS //crime
 	var/is_dangerous = TRUE
 	var/detonating = 0
 
@@ -122,7 +123,7 @@
 
 // warcrimes: Why the fuck is autothrow a feature why would this ever be a feature WHY. Now it wont do it unless it's primed i think.
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (get_dist(user, target) <= 1 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc) || !src.state)
+		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc) || !src.state)
 			return
 		var/area/a = get_area(target)
 		if(a.sanctuary) return

@@ -4,19 +4,19 @@
 <hr>
 
 <h2>Contents</h2>
-<p>Each box of MONO playing cards has 108 cards, as follows:</p>
+<p>Each box of MONO playing cards has 108 cards of 4 main suits, as follows:</p>
 <ul>
-<li><b>19 Green cards,</b> from 0 to 9</li>
-<li><b>19 Blue cards,</b> from 0 to 9</li>
-<li><b>19 Yellow cards,</b> from 0 to 9</li>
-<li><b>19 Red cards,</b> from 0 to 9</li>
-<li><b>8 Skip cards,</b> 2 of each color</li>
-<li><b>8 Reverse cards,</b> 2 of each color</li>
-<li><b>8 Draw 2 cards,</b> 2 of each color</li>
+<li><b>19 Eldritch cards,</b> from 0 to 9</li>
+<li><b>19 Martian cards,</b> from 0 to 9</li>
+<li><b>19 Precursor cards,</b> from 0 to 9</li>
+<li><b>19 Wizard cards,</b> from 0 to 9</li>
+<li><b>8 Skip cards,</b> 2 of each Origin</li>
+<li><b>8 Reverse cards,</b> 2 of each Origin</li>
+<li><b>8 Draw 2 cards,</b> 2 of each Origin</li>
 <li><b>4 Wild cards</b></li>
 <li><b>4 Wild Draw 4 cards</b></li>
 </ul>
-
+<p> The 4 main suits are based of origins, Namely artifact origins, 4 main origins are used in mono: Eldritch, Martian, Precursor, and Wizard. Although there are also Wild card types within the deck,S they are not considered a suit.</p>
 <h2>Objective</h2>
 <p>The first player to play all of their cards within a round scores a number of points depending on the number of cards currently possessed by other players. The first player to 500 points wins the game.</p>
 
@@ -26,7 +26,7 @@
 <h2>Rules of Play</h2>
 <p>For games with two players, please refer to the <b>2 Player Rules</b> section.</p>
 
-<p>Play begins from the dealer or <b>first player.</b> At the beginning of a player's turn, they may choose to place a card which matches the color or number of the top card on the <b>DISCARD</b> pile. Alternatively, a player can place a <b>Wild card</b> at any time or a <b>Wild Draw 4 card</b> when they have no other valid cards to place. If a player has no valid cards to place, they must a card from the <b>DRAW</b> pile. If they draw a card they can play, they may choose to play it. Their turn then ends and play continues to the next person. Before playing your next to last card, you must utter "MONO". If you fail to do so and are caught before the next player starts their turn, you must draw 4 cards from the <b>DRAW</b> pile. If you are not caught before then, play continues as normal. Once a player plays their last card, the round is over. The player that plays their last card gains a number of points according to the following <b>Score Sheet</b> and a new round can begin.</p>
+<p>Play begins from the dealer or <b>first player.</b> At the beginning of a player's turn, they may choose to place a card which matches the Origin or number of the top card on the <b>DISCARD</b> pile. Alternatively, a player can place a <b>Wild card</b> at any time or a <b>Wild Draw 4 card</b> when they have no other valid cards to place. If a player has no valid cards to place, they must a card from the <b>DRAW</b> pile. If they draw a card they can play, they may choose to play it. Their turn then ends and play continues to the next person. Before playing your next to last card, you must utter "MONO". If you fail to do so and are caught before the next player starts their turn, you must draw 4 cards from the <b>DRAW</b> pile. If you are not caught before then, play continues as normal. Once a player plays their last card, the round is over. The player that plays their last card gains a number of points according to the following <b>Score Sheet</b> and a new round can begin.</p>
 
 <h2>Score Sheet</h2>
 <p>The point values of every card remaining in each player's hands is added and awarded to the winner of each round.</p>
@@ -45,7 +45,7 @@
 <li><b>Reverse card:</b> When played, the order of play is reversed from left to right or vice vice versa. If this is the first card in the <b>DISCARD</b> pile, the player to the right of the first player now plays first and play continues to the right.</li>
 <li><b>Draw 2 card:</b> When played, the next player must pick up two cards from the <b>DRAW</b> pile and forfeit their turn. If this is the first card in the <b>DISCARD</b> pile, the first player must draw two cards but does not forfeit their turn.</li>
 <li><b>Wild card:</b> When played, the player may change the color of the next card to be placed down on the <b>DISCARD</b> pile. This can be played at any time even if it is legal for the player to place another card from their hand.</li>
-<li><b>Wild Draw 4 card:</b> When played, the player may change the color of the next card to be placed down on the <b>DISCARD</b> pile and the next player must pick up two cards from the <b>DRAW</b> pile and forfeit their turn. A player can only play this card if they have no other cards they can legally played. If the player who is required to pick up the 4 cards suspects that another player has illegally played a <b>Wild Draw 4 card,</b> they may be challenged. When a player is challenged, they must reveal their hand to the player who initiated the challenge. If the challenged player is guilty of illegally playing a <b>Wild Draw 4 card,</b> they become the player which draws 4 cards alongside an additional 2 cards. If the challenged player is innocent,  the challenger must draw the 4 cards alongside an additional 2 cards.</li>
+<li><b>Wild Draw 4 card:</b> When played, the player may change the Origin of the next card to be placed down on the <b>DISCARD</b> pile and the next player must pick up two cards from the <b>DRAW</b> pile and forfeit their turn. A player can only play this card if they have no other cards they can legally played. If the player who is required to pick up the 4 cards suspects that another player has illegally played a <b>Wild Draw 4 card,</b> they may be challenged. When a player is challenged, they must reveal their hand to the player who initiated the challenge. If the challenged player is guilty of illegally playing a <b>Wild Draw 4 card,</b> they become the player which draws 4 cards alongside an additional 2 cards. If the challenged player is innocent,  the challenger must draw the 4 cards alongside an additional 2 cards.</li>
 </ul>
 
 <h2>2 Player Rules</h2>

@@ -1020,7 +1020,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 				return
 			if (action == "Do nothing")
 				return
-			if (get_dist(src.loc,user.loc) > 1 && !user.bioHolder.HasEffect("telekinesis"))
+			if (BOUNDS_DIST(src.loc, user.loc) > 0 && !user.bioHolder.HasEffect("telekinesis"))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
 				return
 

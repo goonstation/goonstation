@@ -25,6 +25,7 @@
 	flags = FPRINT | FLUID_SUBMERGE
 	throwforce = 10
 	pressure_resistance = 3*ONE_ATMOSPHERE
+	layer = STORAGE_LAYER //dumb
 	var/allow_unbuckle = 1
 	var/mob/living/buckled_guy = null
 	var/deconstructable = 1
@@ -90,7 +91,7 @@
 		if (to_buckle.buckled)
 			boutput(user, "They're already buckled into something!", "red")
 			return FALSE
-		if (get_dist(src, user) > 1 || to_buckle.loc != src.loc || user.restrained() || is_incapacitated(user) || !isalive(user))
+		if (BOUNDS_DIST(src, user) > 0 || to_buckle.loc != src.loc || user.restrained() || is_incapacitated(user) || !isalive(user))
 			return FALSE
 		if (user.hasStatus("weakened"))
 			return FALSE
@@ -457,7 +458,7 @@
 		src.Sheet = null
 
 	MouseDrop_T(atom/A as mob|obj, mob/user as mob)
-		if (get_dist(src, user) > 1 || A.loc != src.loc || user.restrained() || !isalive(user))
+		if (BOUNDS_DIST(src, user) > 0 || A.loc != src.loc || user.restrained() || !isalive(user))
 			..()
 		else if (istype(A, /obj/item/clothing/suit/bedsheet))
 			if ((!src.Sheet || (src.Sheet && src.Sheet.loc != src.loc)) && A.loc == src.loc)
@@ -688,7 +689,7 @@
 		return
 
 	mouse_drop(atom/over_object as mob|obj)
-		if(get_dist(src,usr) <= 1)
+		if(BOUNDS_DIST(src,usr) == 0)
 			src.rotate(get_dir(get_turf(src),get_turf(over_object)))
 		..()
 

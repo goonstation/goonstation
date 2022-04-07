@@ -134,7 +134,7 @@
 					src.attacking = 0
 				return
 			SPAWN(6 SECONDS)
-				if (get_dist(src, M) <= 1 && ((M:loc == target_lastloc)) && M.lying)
+				if (BOUNDS_DIST(src, M) == 0 && ((M:loc == target_lastloc)) && M.lying)
 					if(iscarbon(M))
 						logTheThing("combat", M, null, "was zombified by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
 						M.death(TRUE)
