@@ -304,7 +304,7 @@
 						shake_camera(N, 4, 8, 0.5)
 			if (prob(40))
 				boutput(user, text("<span class='notice'>You smash through the [src.name].</span>"))
-				logTheThing("combat", user, null, "uses hulk to smash a wall at [log_loc(src)].")
+				logTheThing("station", user, null, "uses hulk to smash a wall at [log_loc(src)].")
 				dismantle_wall(1)
 				return
 			else
