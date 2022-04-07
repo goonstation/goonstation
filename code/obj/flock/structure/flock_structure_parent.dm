@@ -6,6 +6,7 @@
 	density = 1
 	name = "uh oh"
 	desc = "CALL A CODER THIS SHOULDN'T BE SEEN"
+	flags = USEDELAY
 	var/flock_id = "ERROR"
 	/// when did we get created?
 	var/time_started = 0
@@ -168,6 +169,7 @@
 			if(INTENT_GRAB)
 				action = "squeezes"
 		src.visible_message("<span class='alert'><b>[user]</b> [action] [src], but nothing happens.</span>")
+	user.lastattacked = src
 
 /obj/flock_structure/attackby(obj/item/W as obj, mob/user as mob)
 	src.visible_message("<span class='alert'><b>[user]</b> attacks [src] with [W]!</span>")
@@ -178,6 +180,8 @@
 		damtype = "fire"
 
 	takeDamage(damtype, W.force)
+
+	user.lastattacked = src
 
 /obj/flock_structure/ex_act(severity)
 	var/damage = 0

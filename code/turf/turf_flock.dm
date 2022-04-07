@@ -8,6 +8,7 @@
 	desc = "I don't like the looks of that whatever-it-is."
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "floor"
+	flags = USEDELAY
 	mat_appearances_to_ignore = list("steel","gnesis")
 	mat_changename = 0
 	mat_changedesc = 0
@@ -67,6 +68,7 @@
 	else
 		src.visible_message("<span class='alert'><span class='bold'>[user]</span> smacks [src] with [C]!</span>")
 		playsound(src, "sound/impact_sounds/Crystal_Hit_1.ogg", 25, 1)
+	user.lastattacked = src
 
 /turf/simulated/floor/feather/break_tile_to_plating()
 	// if the turf's on, turn it off
