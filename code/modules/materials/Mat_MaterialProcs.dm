@@ -49,8 +49,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/ethereal_add
 	desc = "It is almost impossible to grasp."
 	max_generations = 1
-
 	execute(var/atom/owner)
+		APPLY_ATOM_PROPERTY(owner, PROP_ATOM_NEVER_DENSE, "ethereal")
 		owner.set_density(0)
 		return
 

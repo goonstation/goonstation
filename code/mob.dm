@@ -3088,11 +3088,6 @@
 /mob/proc/on_eat(var/atom/A)
 	return
 
-/mob/set_density(var/newdensity)
-	if(HAS_ATOM_PROPERTY(src, PROP_MOB_NEVER_DENSE))
-		..(0)
-	else
-		..(newdensity)
 
 // to check if someone is abusing cameras with stuff like artifacts, power gloves, etc
 /mob/proc/in_real_view_range(var/turf/T)
