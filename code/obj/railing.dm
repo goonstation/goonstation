@@ -326,7 +326,7 @@
 			else
 				the_text = "[ownerMob] pulls [himself_or_herself(ownerMob)] over [the_railing]."
 			O.show_text("[the_text]", "red")
-		logTheThing("combat", ownerMob, the_railing, "[is_athletic_jump ? "leaps over [the_railing] with [his_or_her(ownerMob)] athletic trait" : "crawls over [the_railing]"].")
+		logTheThing("station", ownerMob, the_railing, "[is_athletic_jump ? "leaps over [the_railing] with [his_or_her(ownerMob)] athletic trait" : "crawls over [the_railing]"].")
 
 
 /datum/action/bar/icon/railing_tool_interact
