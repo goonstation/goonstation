@@ -712,20 +712,20 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	icon_state = "sleeve_[rand(4,36)]"
 
 /obj/item/storage/box/record/radio/one
-	spawn_contents = list(/obj/item/record/january,
-	/obj/item/record/february,
-	/obj/item/record/march,
-	/obj/item/record/april,
-	/obj/item/record/may,
-	/obj/item/record/june)
+	spawn_contents = list(/obj/item/record/random/january,
+	/obj/item/record/random/february,
+	/obj/item/record/random/march,
+	/obj/item/record/random/april,
+	/obj/item/record/random/may,
+	/obj/item/record/random/june)
 
 /obj/item/storage/box/record/radio/two
-	spawn_contents = list(/obj/item/record/july,
-	/obj/item/record/august,
-	/obj/item/record/september,
-	/obj/item/record/october,
-	/obj/item/record/november,
-	/obj/item/record/december)
+	spawn_contents = list(/obj/item/record/random/july,
+	/obj/item/record/random/august,
+	/obj/item/record/random/september,
+	/obj/item/record/random/october,
+	/obj/item/record/random/november,
+	/obj/item/record/random/december)
 
 /obj/item/storage/box/record/radio/nostalgic
 	name = "\improper Nostalgic Dance record sleeve"
