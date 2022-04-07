@@ -384,7 +384,7 @@
 
 /datum/movement_controller/ghost_brain
 	var/next_move = 0
-	var/mc_delay = 5
+	var/mc_delay = 20
 
 	keys_changed(mob/user, keys, changed)
 		var/do_step = TRUE
@@ -408,13 +408,17 @@
 							do_step = FALSE
 
 					user.move_dir = angle2dir(arctan(move_y, move_x))
+					var/old_loc = O.loc
 					if(do_step)
-						if(!attempt_move(user) )
-							if(!ON_COOLDOWN(user,"ghost_glow", 5 SECONDS))
-								O.visible_message("[O] glows brightly momentarily.")
-							if(!ON_COOLDOWN(user,"ghost_wiggle", 1 SECONDS))
-								animate(O, time=0.5 SECONDS, pixel_x=move_x, pixel_y=move_y, flags=ANIMATION_RELATIVE)
-								animate(pixel_x=-move_x, pixel_y=-move_y, time=0.2 SECONDS, flags=ANIMATION_RELATIVE)
+						attempt_move(user)
+
+					if(old_loc == O.loc)
+						if(!ON_COOLDOWN(user,"ghost_glow", 5 SECONDS))
+							O.visible_message("[O] glows brightly momentarily.")
+						if(!ON_COOLDOWN(user,"ghost_wiggle", 1 SECONDS))
+							animate(O, time=0.5 SECONDS, pixel_x=move_x, pixel_y=move_y, flags=ANIMATION_RELATIVE)
+							animate(pixel_x=-move_x, pixel_y=-move_y, time=0.2 SECONDS, flags=ANIMATION_RELATIVE)
+
 				else
 					user.move_dir = 0
 
@@ -424,6 +428,8 @@
 				user.update_cursor()
 
 	process_move(mob/user, keys)
+		set waitfor = 0
+
 		var/obj/O = user.loc
 		var/old_loc = O.loc
 		var/delay = src.mc_delay
@@ -431,19 +437,22 @@
 		if (next_move - world.time >= world.tick_lag / 10)
 			return max(world.tick_lag, (next_move - world.time) - world.tick_lag / 10)
 
-		if (user.move_dir & (user.move_dir-1))
-			delay *= DIAG_MOVE_DELAY_MULT
-		var/glide = (world.icon_size / ceil(delay / world.tick_lag))
-		O.glide_size = glide // dumb hack: some Move() code needs glide_size to be set early in order to adjust "following" objects
-		O.animate_movement = SLIDE_STEPS
-		step(O, user.move_dir)
-		if (O.loc != old_loc)
-			O.OnMove()
-		O.glide_size = glide // but Move will auto-set glide_size, so we need to override it again
+		if(!isturf(old_loc))
+			return // You are subject to the whims of the holder
 
-		next_move = world.time + delay
+		if (user.move_dir)
+			if (user.move_dir & (user.move_dir-1))
+				delay *= DIAG_MOVE_DELAY_MULT
+			var/glide = (world.icon_size / ceil(delay / world.tick_lag))
+			O.glide_size = glide // dumb hack: some Move() code needs glide_size to be set early in order to adjust "following" objects
+			O.animate_movement = SLIDE_STEPS
+			step(O, user.move_dir)
+			if (O.loc != old_loc)
+				O.OnMove()
+				. = TRUE
+			O.glide_size = glide // but Move will auto-set glide_size, so we need to override it again
 
-		return O.loc != old_loc
+			next_move = world.time + delay
 
 /datum/statusEffect/bound_ghost
 	id= "bound_ghost"
@@ -545,7 +554,7 @@ TYPEINFO(/datum/component/controlled_by_mob)
 	var/image/I = A.SafeGetOverlayImage("brain",image('icons/obj/items/device.dmi', "head-brain"))
 	I.appearance_flags = RESET_COLOR | KEEP_APART
 	if(istype(parent, /mob/living/critter/bot/cleanbot))
-		I.pixel_x = -4
+		I.pixel_x = -3
 		I.pixel_y = 3
 	else if(istype(parent, /mob/living/critter/bot/firebot ))
 		I.pixel_x = -5
