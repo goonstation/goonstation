@@ -156,7 +156,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 				boutput(user, "<span class='alert'>[target] is full!</span>")
 				return
 
-			logTheThing("combat", user, null, "dumps the contents of [src] [log_reagents(src)] into [target] at [log_loc(user)].")
+			logTheThing("chemistry", user, null, "dumps the contents of [src] [log_reagents(src)] into [target] at [log_loc(user)].")
 			boutput(user, "<span class='notice'>You dump the contents of [src] into [target].</span>")
 			src.reagents.trans_to(target, src.reagents.total_volume)
 
