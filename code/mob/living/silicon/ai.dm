@@ -272,7 +272,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				available_ai_shells += E
 
 		for (var/mob/living/silicon/robot/R in mobs)
-			if (R.brain || !R.ai_interface || R.dependent)
+			if (!R.part_head || R.part_head.brain || !R.part_head.ai_interface || R.dependent)
 				continue
 			if (!(R in available_ai_shells))
 				available_ai_shells += R
@@ -340,7 +340,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
 				if (raw == "Yes")
 					src.law_rack_connection = linker.linked_rack
-					logTheThing("station", src, src.law_rack_connection, "[src.name] is connected to the rack at [log_loc(src.law_rack_connection)] with a linker by [user]")
+					logTheThing("station", src, null, "[src.name] is connected to the rack at [constructName(src.law_rack_connection)] with a linker by [user]")
 					var/area/A = get_area(src.law_rack_connection)
 					boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
 					src.playsound_local(src, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
@@ -533,7 +533,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (C.tg_controls)
 		C.apply_keybind("robot_tg")
 
-/mob/living/silicon/ai/proc/eject_brain(var/mob/user)
+/mob/living/silicon/ai/proc/eject_brain(var/mob/user, var/fling = FALSE)
 	if (src.mind && src.mind.special_role)
 		src.remove_syndicate("brain_removed by [user]")
 
@@ -556,7 +556,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		user.put_in_hand_or_drop(src.brain)
 	else
 		src.brain.set_loc(get_turf(src))
-		src.brain.throw_at(get_edge_cheap(get_turf(src), pick(cardinal)), 16, 3) // heh
+		if (fling)
+			src.brain.throw_at(get_edge_cheap(get_turf(src), pick(cardinal)), 5, 1) // heh
 
 	src.brain = null
 
@@ -1747,7 +1748,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 					H.dependent = 0
 				else if (isrobot(user))
 					var/mob/living/silicon/robot/R = user
-					if (istype(R.ai_interface))
+					if (!isnull(R.part_head?.ai_interface))
 						R.shell = 1
 					R.dependent = 0
 				user.name = user.real_name

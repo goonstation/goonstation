@@ -533,7 +533,11 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 			if(M.id == src.id)
 				M.drive()
 
+		#ifdef UPSCALED_MAP
+		sleep(8 SECONDS)
+		#else
 		sleep(5 SECONDS)
+		#endif
 
 		for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 			if (M.id == src.id)

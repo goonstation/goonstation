@@ -135,7 +135,15 @@
 					L.throw_at(target, 3, 1)
 					L.changeStatus("stunned", 2 SECONDS)
 					L.changeStatus("weakened", 2 SECONDS)
-			command_alert("A Syndicate Assault pod is heading towards [station_name], be on high alert.", "Central Command Alert", "sound/misc/announcement_1.ogg")
+			var/num_players = 0
+			for(var/client/C)
+				var/mob/new_player/player = C.mob
+				if (!istype(player))
+					continue
+				if(player.ready)
+					num_players++
+			if (num_players <= 70)
+				command_alert("A Syndicate Assault pod is heading towards [station_name], be on high alert.", "Central Command Alert", "sound/misc/announcement_1.ogg")
 			sleep(rand_time / 2)
 			command_alert("Our sensors have determined the Syndicate Assault pod is headed towards the [src.landing_area], a response would be advised.", "Central Command Alert", "sound/misc/announcement_1.ogg")
 			sleep(rand_time / 2)

@@ -294,7 +294,10 @@
 		if (isghostrestrictedz(O.z) && !restricted_z_allowed(O, get_turf(O)) && !(src.client && src.client.holder))
 			O.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 
-		src.mind?.transfer_to(O)
+		if (src.mind)
+			src.mind.transfer_to(O)
+		else
+			O.key = src.key //they're probably logged out, set key so they're in the ghost when they get back
 		src.ghost = O
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)

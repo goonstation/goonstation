@@ -395,7 +395,7 @@
 			holder.emote(pick("trip", "collapse"))
 		else if(prob(rebelliousness)) //Slow down
 			boutput(holder, "<span class='alert'><b>Your [src.name] is slowing you down!</b></span>")
-			holder.setStatus("slowed", max(holder.getStatusDuration("slowed"), 1 SECOND))
+			holder.setStatusMin("slowed", 1 SECOND)
 		else if(prob(rebelliousness)) //Stumble around
 			boutput(holder, "<span class='alert'><b>Your [src.name] won't do what you tell it to!</b></span>")
 			if (holder.misstep_chance < 20)
@@ -542,8 +542,8 @@
 				H.l_hand = null
 
 		if (delete && remove_object)
-			remove_object = null
 			qdel(remove_object)
+			remove_object = null
 
 	getHandIconState()
 		if (handlistPart && !(handlistPart in icon_states(special_icons)))
