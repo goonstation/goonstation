@@ -89,6 +89,7 @@
 					var/mob/living/carbon/human/H = target
 					if (target != user)
 						L.visible_message("<span class='alert'><B>[user] is trying to draw blood from [L]!</B></span>")
+						logTheThing("combat", user, target, "tries to draw blood from [constructTarget(target,"combat")] with a syringe [log_reagents(src)] at [log_loc(user)].")
 
 						if (!do_mob(user, L))
 							if (user && ismob(user))
@@ -113,6 +114,7 @@
 					user.update_inhands()
 
 					boutput(user, "<span class='notice'>You fill the syringe with 5 units of [target]'s blood.</span>")
+					logTheThing(user == target ? "chemistry" : "combat", user, target, "draws blood from [constructTarget(target,"combat")] with a syringe [log_reagents(src)] at [log_loc(user)].")
 					return
 
 				if (!target.reagents.total_volume)
@@ -128,6 +130,7 @@
 					return
 
 				target.reagents.trans_to(src, 5)
+				logTheThing("chemistry", user, target, "draws 5 units of reagents from [constructTarget(target,"combat")] [log_reagents(target)] with a syringe [log_reagents(src)] at [log_loc(user)].")
 				user.update_inhands()
 
 				boutput(user, "<span class='notice'>You fill the syringe with 5 units of the solution.</span>")
@@ -187,7 +190,7 @@
 
 				SPAWN(0.5 SECONDS)
 					if (src?.reagents && target?.reagents)
-						logTheThing("combat", user, target, "injects [constructTarget(target,"combat")] with a syringe [log_reagents(src)] at [log_loc(user)].")
+						logTheThing((!ismob(target) || target == user) ? "chemistry" : "combat", user, target, "injects [constructTarget(target,"combat")] with a syringe [log_reagents(src)] at [log_loc(user)].")
 						// Convair880: Seems more efficient than separate calls. I believe this shouldn't clutter up the logs, as the number of targets you can inject is limited.
 						// Also wraps up injecting food (advertised in the 'Tip of the Day' list) and transferring chems to other containers (i.e. brought in line with beakers and droppers).
 
