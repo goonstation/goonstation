@@ -321,7 +321,8 @@ TYPEINFO(/datum/component/mechanics_holder)
 			return
 	if(length(src.configs))
 		var/selected_config = input("Select a config to modify!", "Config", null) as null|anything in src.configs
-		if(selected_config && in_interact_range(parent, user))
+		if (!in_interact_range(parent, user)) return TRUE
+		if(selected_config)
 			switch(selected_config)
 				if(SET_SEND)
 					var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
