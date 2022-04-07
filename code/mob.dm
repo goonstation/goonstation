@@ -327,7 +327,7 @@
 		ghost.corpse = null
 	else
 		src.ghost = src.ghostize()
-		ghost.corpse = null
+		ghost?.corpse = null
 
 	if (traitHolder)
 		traitHolder.removeAll()
