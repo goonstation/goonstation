@@ -282,36 +282,48 @@
 
 /mob/proc/ghostize()
 	RETURN_TYPE(/mob/dead/observer)
+	// do nothing for NPCs
 	if(src.key || src.client)
+
 		if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.
 			INVOKE_ASYNC(src, /mob.proc/hell_respawn, src.mind)
 			return null
-		var/mob/dead/observer/O = new/mob/dead/observer(src)
-		O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
-		if(!src.mouse_opacity)
-			O.mouse_opacity = 0
-			O.alpha = 0
-		if (isghostrestrictedz(O.z) && !restricted_z_allowed(O, get_turf(O)) && !(src.client && src.client.holder))
-			O.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 
-		if (src.mind)
-			src.mind.transfer_to(O)
+		// step 1: either find a ghost or make one
+		var/mob/dead/observer/our_ghost = null
+
+		// if we already have a ghost, just go get that instead
+		if (src.ghost && !src.ghost.disposed)
+			our_ghost = src.ghost
+		// no existing ghost, make a new one
 		else
-			O.key = src.key //they're probably logged out, set key so they're in the ghost when they get back
-		src.ghost = O
+			our_ghost = new/mob/dead/observer(src)
+			our_ghost.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
+			if(!src.mouse_opacity)
+				our_ghost.mouse_opacity = 0
+				our_ghost.alpha = 0
+			if (isghostrestrictedz(our_ghost.z) && !restricted_z_allowed(our_ghost, get_turf(our_ghost)) && !(src.client?.holder))
+				our_ghost.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
+			src.ghost = our_ghost
+
+		// step 2: make sure they actually make it to the ghost
+		if (src.mind)
+			src.mind.transfer_to(our_ghost)
+		else
+			our_ghost.key = src.key //they're probably logged out, set key so they're in the ghost when they get back
+
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
 
-		respawn_controller.subscribeNewRespawnee(O.ckey)
-		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[O.ckey]
+		respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
+		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
 		if(istype(respawnee))
 			respawnee.update_time_display()
-			O.hud?.get_join_other() // remind them of the other server
+			our_ghost.hud?.get_join_other() // remind them of the other server
 
-		O.update_item_abilities()
-		return O
+		our_ghost.update_item_abilities()
+		return our_ghost
 	return null
-
 
 /mob/dead/observer/movement_delay()
 #ifdef HALLOWEEN
@@ -777,13 +789,13 @@
 
 mob/dead/observer/proc/insert_observer(var/atom/target)
 	var/mob/dead/target_observer/newobs = new /mob/dead/target_observer
-	set_loc(newobs)
+	set_loc(null) // we are not being deleted we are simply storing ourselves in null
 	newobs.attach_hud(hud)
 	newobs.set_observe_target(target)
 	newobs.name = src.name
 	newobs.real_name = src.real_name
 	newobs.corpse = src.corpse
-	newobs.my_ghost = src
+	newobs.ghost = src
 	delete_on_logout_reset = delete_on_logout
 	delete_on_logout = 0
 	if (target?.invisibility)
@@ -804,7 +816,7 @@ mob/dead/observer/proc/insert_slasher_observer(var/atom/target) //aaaaaa i had t
 	newobs.name = src.name
 	newobs.real_name = src.real_name
 	newobs.corpse = src.corpse
-	newobs.my_ghost = src
+	newobs.ghost = src
 	delete_on_logout_reset = delete_on_logout
 	delete_on_logout = 0
 	if (target?.invisibility)

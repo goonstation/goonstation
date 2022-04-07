@@ -1616,8 +1616,7 @@
 		message_admins("[key_name(src)] moved [selection.ckey] into [M].")
 		logTheThing("admin", src, selection, "ckey transferred [constructTarget(selection,"admin")]")
 		if (istype(selection.mob,/mob/dead/target_observer))
-			var/mob/dead/target_observer/O = src
-			O.stop_observing()
+			qdel(src)
 
 		M.client = selection
 
@@ -1955,8 +1954,7 @@
 		return
 
 	if (istype(src.mob, /mob/dead/target_observer))
-		var/mob/dead/target_observer/TO = src.mob
-		TO.stop_observing()
+		qdel(src)
 
 	var/mob/dead/observer/O = src.mob
 	var/client/C
