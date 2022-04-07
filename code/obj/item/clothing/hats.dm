@@ -969,7 +969,7 @@ proc/filter_trait_hats(var/type)
 
 	equipped(var/mob/user, var/slot)
 		..()
-		logTheThing("combat", user, null, "equipped [src].")
+		logTheThing("combat", user, null, "equipped [src] at [log_loc(src)]")
 		if (!src.processing)
 			src.processing++
 			processing_items |= src
