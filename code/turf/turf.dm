@@ -135,6 +135,10 @@
 			if (HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING))
 				ADD_FLAG(src.blocked_dirs, O.dir)
 
+	Del()
+		dispose()
+		..()
+
 /obj/overlay/tile_effect
 	name = ""
 	anchored = 1
@@ -338,7 +342,7 @@ proc/generate_space_color()
 		pathable = 0
 	for(var/atom/movable/AM as mob|obj in src)
 		src.Entered(AM)
-	if(!RL_Started)
+	if(current_state < GAME_STATE_WORLD_NEW)
 		RL_Init()
 
 /turf/Exit(atom/movable/AM, atom/newloc)
@@ -556,6 +560,7 @@ proc/generate_space_color()
 		if (!isturf(new_turf))
 			if (delay_space_conversion()) return
 			new_turf = new /turf/space(src)
+		if(!istype(new_turf, new_type)) return new_turf // New() replaced the turf with something else, its ReplaceWith handled everything for us already (otherwise we'd screw up lighting)
 
 	else switch(what)
 		if ("Ocean")

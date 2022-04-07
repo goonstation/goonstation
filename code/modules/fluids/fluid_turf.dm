@@ -315,6 +315,7 @@
 				L+=T
 
 	Entered(var/atom/movable/AM)
+		. = ..()
 		if (istype(AM,/mob/dead) || istype(AM,/mob/wraith) || istype(AM,/mob/living/intangible) || istype(AM, /obj/lattice) || istype(AM, /obj/cable/reinforced) || istype(AM,/obj/torpedo_targeter) || istype(AM,/obj/overlay) || istype (AM, /obj/arrival_missile) || istype(AM, /obj/sea_ladder_deployed))
 			return
 		if (locate(/obj/lattice) in src)

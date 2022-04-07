@@ -72,13 +72,12 @@ THROWING DARTS
 		SHOULD_CALL_PARENT(TRUE)
 		deactivate()
 		SEND_SIGNAL(src, COMSIG_IMPLANT_REMOVED, M)
-		if (ishuman(src.owner))
-			var/mob/living/carbon/human/H = owner
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
 			H.implant -= src
-		if (ismobcritter(src.owner))
-			var/mob/living/critter/C = owner
-			if(C.implants)
-				C.implants -= src
+		if (ismobcritter(M))
+			var/mob/living/critter/C = M
+			C.implants -= src
 		if (implant_overlay)
 			M.update_clothing()
 		src.owner = null

@@ -7,7 +7,7 @@
 	density = 0
 	mats = 25
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
-	_health = 50
+	_health = 25
 	color = null
 	var/can_talk_across_z_levels = 0
 	var/phone_id = null
@@ -155,6 +155,9 @@
 		..()
 		src._health -= P.force
 		attack_particle(user,src)
+		user.lastattacked = src
+		hit_twitch(src)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 		if(src._health <= 0)
 			if(src.linked)
 				hang_up()

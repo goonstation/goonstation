@@ -527,11 +527,10 @@
 			src.occupant = null
 			src.UpdateIcon()
 			playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
-			return
+
 
 	relaymove(mob/user as mob, dir)
 		eject_occupant(user)
-		return
 
 	MouseDrop_T(mob/living/target, mob/user)
 		if (!istype(target) || isAI(user))
@@ -555,7 +554,6 @@
 				if (can_operate(user))
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)
-		return
 
 	proc/can_operate(var/mob/M)
 		if (!(BOUNDS_DIST(src, M) == 0))

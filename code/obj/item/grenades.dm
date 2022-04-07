@@ -29,6 +29,7 @@ PIPE BOMBS + CONSTRUCTION
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
+	duration_put = 0.25 SECONDS //crime
 	var/is_dangerous = TRUE
 	var/sound_armed = null
 	var/icon_state_armed = null
@@ -1404,6 +1405,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 /obj/item/pipebomb
 	icon = 'icons/obj/items/assemblies.dmi'
 	item_state = "r_hands"
+	duration_put = 0.5 SECONDS //crime
 
 /obj/item/pipebomb/frame
 	name = "pipe frame"

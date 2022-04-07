@@ -71,11 +71,11 @@
 			return
 
 		var/connections = get_connected_directions_bitflag(list(src.auto_type), connect_diagonal = 1)
-		var/dirs = connections % 16 // get cardinals from match
-		var/connecting_ordinals = connections >> 8
-		icon_state = num2text(dirs)
+		var/cardinals = connections % 16
+		icon_state = num2text(cardinals)
+		var/ordinals = connectdirs_to_byonddirs(connections)
 
-		if(connecting_ordinals & NORTHEAST)
+		if((NORTHEAST & ordinals) == NORTHEAST)
 			if (!src.working_image)
 				src.working_image = image(src.icon, "NE")
 			else
@@ -83,7 +83,7 @@
 			src.UpdateOverlays(working_image, "NEcorner")
 		else
 			src.UpdateOverlays(null, "NEcorner")
-		if(connecting_ordinals & SOUTHEAST)
+		if((SOUTHEAST & ordinals) == SOUTHEAST)
 			if (!src.working_image)
 				src.working_image = image(src.icon, "SE")
 			else
@@ -91,7 +91,7 @@
 			src.UpdateOverlays(working_image, "SEcorner")
 		else
 			src.UpdateOverlays(null, "SEcorner")
-		if(connecting_ordinals & SOUTHWEST)
+		if((SOUTHWEST & ordinals) == SOUTHWEST)
 			if (!src.working_image)
 				src.working_image = image(src.icon, "SW")
 			else
@@ -100,7 +100,7 @@
 		else
 			src.UpdateOverlays(null, "SWcorner")
 
-		if(connecting_ordinals & NORTHWEST)
+		if((NORTHWEST & ordinals) == NORTHWEST)
 			if (!src.working_image)
 				src.working_image = image(src.icon, "NW")
 			else
@@ -126,6 +126,25 @@
 		for (var/obj/table/T in orange(1,oldloc))
 			if (T.auto)
 				T.set_up()
+
+	/// Slam a dude on a table (harmfully)
+	proc/harm_slam(mob/user, mob/victim)
+		if (!victim.hasStatus("weakened"))
+			victim.changeStatus("weakened", 3 SECONDS)
+			victim.force_laydown_standup()
+		src.visible_message("<span class='alert'><b>[user] slams [victim] onto \the [src]!</b></span>")
+		playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+		if (src.material)
+			src.material.triggerOnAttacked(src, user, victim, src)
+
+
+	/// Slam a dude on the table (gently, with great care)
+	proc/gentle_slam(mob/user, mob/victim)
+		if (!victim.hasStatus("weakened"))
+			victim.changeStatus("weakened", 2 SECONDS)
+			victim.force_laydown_standup()
+		src.visible_message("<span class='alert'>[user] puts [victim] on \the [src].</span>")
+
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob) //if this is TOO ridiculous just remove it idc
@@ -192,29 +211,19 @@
 			if (!G.state)
 				boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 				return
-			G.affecting.set_loc(src.loc)
+			var/mob/grabbed = G.affecting
+
+			var/remove_tablepass = HAS_FLAG(grabbed.flags, TABLEPASS) ? FALSE : TRUE //this sucks and should be a mob property. love
+			grabbed.flags |= TABLEPASS
+			step(grabbed, get_dir(grabbed, src))
+			if (remove_tablepass) REMOVE_FLAG(grabbed.flags, TABLEPASS)
+
 			if (user.a_intent == "harm")
-				logTheThing("combat", user, G.affecting, "slams [constructTarget(G.affecting,"combat")] onto a table")
-				if (istype(src, /obj/table/folding))
-					if (!G.affecting.hasStatus("weakened"))
-						G.affecting.changeStatus("weakened", 4 SECONDS)
-						G.affecting.force_laydown_standup()
-					src.visible_message("<span class='alert'><b>[G.assailant] slams [G.affecting] onto \the [src], collapsing it instantly!</b></span>")
-					playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
-					deconstruct()
-				else
-					if (!G.affecting.hasStatus("weakened"))
-						G.affecting.changeStatus("weakened", 3 SECONDS)
-						G.affecting.force_laydown_standup()
-					src.visible_message("<span class='alert'><b>[G.assailant] slams [G.affecting] onto \the [src]!</b></span>")
-					playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
-					if (src.material)
-						src.material.triggerOnAttacked(src, G.assailant, G.affecting, src)
+				src.harm_slam(user, grabbed)
+				logTheThing("combat", user, grabbed, "slams [constructTarget(grabbed,"combat")] onto a table")
 			else
-				if (!G.affecting.hasStatus("weakened"))
-					G.affecting.changeStatus("weakened", 2 SECONDS)
-					G.affecting.force_laydown_standup()
-				src.visible_message("<span class='alert'>[G.assailant] puts [G.affecting] on \the [src].</span>")
+				src.gentle_slam(user, grabbed)
+				logTheThing("station", user, grabbed, "puts [constructTarget(grabbed,"combat")] onto a table at")
 			qdel(W)
 			return
 
@@ -301,10 +310,13 @@
 		return
 
 	Cross(atom/movable/mover)
-		if (!src.density || (mover.flags & TABLEPASS || istype(mover, /obj/newmeteor)) )
-			return 1
-		else
-			return 0
+
+		if (!src.density || (mover.flags & TABLEPASS || istype(mover, /obj/newmeteor)))
+			return TRUE
+		var/obj/table = locate(/obj/table) in mover.loc
+		if (table && table.density)
+			return TRUE
+		return FALSE
 
 	MouseDrop_T(atom/O, mob/user as mob)
 		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
@@ -362,6 +374,7 @@
 	id = "table_jump"
 	var/const/throw_range = 7
 	var/const/iteration_limit = 5
+	resumable = TRUE
 
 	getLandingLoc()
 		var/iteration = 0
@@ -395,7 +408,6 @@
 			if (is_athletic_jump) // athletic jumps are more athletic!!
 				the_text = "[ownerMob] swooces right over [the_railing]!"
 			M.show_text("[the_text]", "red")
-		// logTheThing("combat", ownerMob, the_railing, "[is_athletic_jump ? "leaps over [the_railing] with [his_or_her(ownerMob)] athletic trait" : "crawls over [the_railing%]].")
 
 /* ======================================== */
 /* ---------------------------------------- */
@@ -510,6 +522,14 @@
 			else
 				actions.start(new /datum/action/bar/icon/fold_folding_table(src, null), user)
 		return
+
+	harm_slam(mob/user, mob/victim)
+		if (!victim.hasStatus("weakened"))
+			victim.changeStatus("weakened", 4 SECONDS)
+			victim.force_laydown_standup()
+		src.visible_message("<span class='alert'><b>[user] slams [victim] onto \the [src], collapsing it instantly!</b></span>")
+		playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+		deconstruct()
 
 /obj/table/syndicate
 	name = "crimson glass table"
@@ -810,33 +830,19 @@
 			if (!G.state)
 				boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 				return
+			var/mob/grabbed = G.affecting
+			// duplicated as hell but i'm leaving it cleaner than I found it
+			var/remove_tablepass = HAS_FLAG(grabbed.flags, TABLEPASS) ? FALSE : TRUE //this sucks and should be a mob property. love
+			grabbed.flags |= TABLEPASS
+			step(grabbed, get_dir(grabbed, src))
+			if (remove_tablepass) REMOVE_FLAG(grabbed.flags, TABLEPASS)
+
 			if (user.a_intent == "harm")
-				logTheThing("combat", user, G.affecting, "slams [constructTarget(G.affecting,"combat")] onto a glass table")
-				G.affecting.set_loc(src.loc)
-				G.affecting.changeStatus("weakened", 4 SECONDS)
-				src.visible_message("<span class='alert'><b>[G.assailant] slams [G.affecting] onto \the [src]!</b></span>")
-				playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
-				if (src.material)
-					src.material.triggerOnAttacked(src, G.assailant, G.affecting, src)
-				if ((prob(src.reinforced ? 60 : 80)) || (G.assailant.bioHolder.HasEffect("clumsy") && (!src.reinforced || prob(90))))
-					src.smash()
-					random_brute_damage(G.affecting, rand(20,40),1)
-					take_bleeding_damage(G.affecting, G.assailant, rand(20,40))
-					if (prob(30) || G.assailant.bioHolder.HasEffect("clumsy"))
-						boutput(user, "<span class='alert'>You cut yourself on \the [src] as [G.affecting] slams through the glass!</span>")
-						random_brute_damage(G.assailant, rand(10,30),1)
-						take_bleeding_damage(G.assailant, G.assailant, rand(10,30))
-					qdel(W)
-					return
+				logTheThing("combat", user, grabbed, "slams [constructTarget(grabbed,"combat")] onto a glass table")
+				src.harm_slam(user, grabbed)
 			else
-				G.affecting.set_loc(src.loc)
-				G.affecting.changeStatus("weakened", 4 SECONDS)
-				src.visible_message("<span class='alert'>[G.assailant] puts [G.affecting] on \the [src].</span>")
-				if (G.assailant.bioHolder.HasEffect("clumsy"))
-					smashprob += 25
-				else
-					smashprob += 10
-			qdel(W)
+				logTheThing("station", user, grabbed, "puts [constructTarget(grabbed,"combat")] onto a glass table")
+				src.gentle_slam(user, grabbed)
 
 		else if (istype(W, /obj/item/plank) || istool(W, TOOL_SCREWING | TOOL_WRENCHING) || (istype(W, /obj/item/reagent_containers/food/drinks/bottle) && user.a_intent == "harm"))
 			return ..()
@@ -875,6 +881,22 @@
 
 		else
 			return ..()
+
+	harm_slam(mob/user, mob/victim)
+		victim.set_loc(src.loc)
+		victim.changeStatus("weakened", 4 SECONDS)
+		src.visible_message("<span class='alert'><b>[user] slams [victim] onto \the [src]!</b></span>")
+		playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+		if (src.material)
+			src.material.triggerOnAttacked(src, user, victim, src)
+		if ((prob(src.reinforced ? 60 : 80)) || (user.bioHolder.HasEffect("clumsy") && (!src.reinforced || prob(90))))
+			src.smash()
+			random_brute_damage(victim, rand(20,40),1)
+			take_bleeding_damage(victim, user, rand(20,40))
+			if (prob(30) || user.bioHolder.HasEffect("clumsy"))
+				boutput(user, "<span class='alert'>You cut yourself on \the [src] as [victim] slams through the glass!</span>")
+				random_brute_damage(user, rand(10,30),1)
+				take_bleeding_damage(user, user, rand(10,30))
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()

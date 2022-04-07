@@ -212,7 +212,7 @@
 	proc/remove_distant_beaker()
 		// borgs and people with item arms don't insert the beaker into the machine itself
 		// but whenever something would happen to the dispenser and the beaker is far it should disappear
-		if(beaker && !(BOUNDS_DIST(get_turf(beaker), src) == 0))
+		if(beaker && BOUNDS_DIST(beaker, src) > 0)
 			beaker = null
 			src.UpdateIcon()
 
