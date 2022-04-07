@@ -955,6 +955,8 @@ About the new airlock wires panel:
 				src.shock(usr, 25)
 		if (AIRLOCK_WIRE_ELECTRIFY)
 			//one wire for electrifying the door. Sending a pulse through this electrifies the door for 30 seconds.
+			if (src.can_shock == 0)
+				return
 			if (src.secondsElectrified==0)
 				src.secondsElectrified = 30
 				logTheThing("station", usr, null, "temporarily electrified an airlock at [log_loc(src)] with a pulse.")
@@ -1059,7 +1061,7 @@ About the new airlock wires panel:
 
 		if (AIRLOCK_WIRE_ELECTRIFY)
 			//Cutting this wire electrifies the door, so that the next person to touch the door without insulated gloves gets electrocuted.
-			if (src.secondsElectrified != -1)
+			if (src.secondsElectrified != -1 && can_shock)
 				logTheThing("station", usr, null, "permanently electrified an airlock at [log_loc(src)] by cutting the shock wire.")
 				src.secondsElectrified = -1
 
@@ -1220,7 +1222,7 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/proc/airlockelectrocute(mob/user, netnum) // cogwerks - this should be commented out or removed later but i am too tired right now
 	//You're probably getting shocked deal w/ it
 
-	if(!netnum)		// unconnected cable is unpowered
+	if(!netnum || can_shock)		// unconnected cable is unpowered or the door is unable to shock
 		return 0
 
 	var/prot = 1
