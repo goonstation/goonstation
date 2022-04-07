@@ -243,7 +243,7 @@ WET FLOOR SIGN
 			sleep(0.3 SECONDS)
 		qdel(D)
 	var/turf/logTurf = get_turf(D)
-	logTheThing("combat", user, logTurf, "sprays [src] at [constructTarget(logTurf,"combat")] [log_reagents] at [log_loc(user)].")
+	logTheThing("chemistry", user, logTurf, "sprays [src] at [constructTarget(logTurf,"combat")] [log_reagents] at [log_loc(user)].") // spraying mobs logged above
 
 	return
 
@@ -320,7 +320,7 @@ WET FLOOR SIGN
 	// Some people use mops for heat-delayed fireballs and stuff.
 	// Mopping the floor with just water isn't of any interest, however (Convair880).
 	if (src.reagents.total_volume && (!src.reagents.has_reagent("water") || (src.reagents.has_reagent("water") && src.reagents.reagent_list.len > 1)))
-		logTheThing("combat", user, null, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
+		logTheThing("chemistry", user, null, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
 
 	if (U && isturf(U))
 		src.reagents.reaction(U,1,5)
