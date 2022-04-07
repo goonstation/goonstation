@@ -1082,7 +1082,7 @@
 	//this is so much simpler than pulling the victim and invoking movment on the captor through that chain of events.
 	if (ishuman(pulling))
 		var/mob/living/carbon/human/H = pulling
-		if (H.grabbed_by.len)
+		if (length(H.grabbed_by))
 			for (var/obj/item/grab/G in src.grabbed_by)
 				if (G.state < GRAB_AGGRESSIVE) continue
 				pulling = G.assailant

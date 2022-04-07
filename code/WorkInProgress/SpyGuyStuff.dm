@@ -946,7 +946,7 @@ proc/Create_Tommyname()
 	if(..())
 		assailant.visible_message("<span class='combat bold'>[assailant] wraps \the [src] around [target]'s neck!</span>")
 		chokehold.state = GRAB_AGGRESSIVE
-		chokehold.upgrade_to_kill()
+		chokehold.upgrade_to_choke()
 		update_state()
 
 // Drop the grab

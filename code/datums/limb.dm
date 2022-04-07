@@ -579,6 +579,8 @@
 		var/obj/item/grab/GD = user.equipped()
 		if (GD && istype(GD) && (GD.affecting && GD.affecting == target))
 			GD.state = GRAB_STRONG
+			APPLY_ATOM_PROPERTY(target, PROP_MOB_CANTMOVE, GD)
+			target.update_canmove()
 			GD.UpdateIcon()
 			user.visible_message("<span class='alert'>[user] grabs hold of [target] aggressively!</span>")
 
@@ -936,6 +938,8 @@
 		if (GD && istype(GD) && (GD.affecting && GD.affecting == target))
 			target.changeStatus("stunned", 2 SECONDS)
 			GD.state = GRAB_STRONG
+			APPLY_ATOM_PROPERTY(target, PROP_MOB_CANTMOVE, GD)
+			target.update_canmove()
 			GD.UpdateIcon()
 			user.visible_message("<span class='alert'>[user] grabs hold of [target] aggressively!</span>")
 

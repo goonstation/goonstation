@@ -84,8 +84,11 @@
 				logTheThing("combat", src.assailant, src.affecting, "drops their grab on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
 			if (affecting.grabbed_by)
 				affecting.grabbed_by -= src
-			affecting = null
 
+			REMOVE_ATOM_PROPERTY(src.affecting, PROP_MOB_CANTMOVE, src) // in case they were stronggrabbed
+			affecting.update_canmove()
+
+			affecting = null
 		UnregisterSignal(assailant, COMSIG_ATOM_HITBY_PROJ)
 		assailant = null
 		..()
@@ -96,7 +99,7 @@
 	set_loc() //never ever ever ever!!!
 		..()
 		if (src.loc && !istype(src.loc, /mob))
-			set_loc(null)
+			qdel(src)
 
 	dropped()
 		..()
@@ -208,17 +211,10 @@
 						O.show_message("<span class='alert'>[src.assailant] has grabbed [src.affecting] aggressively (now hands)!</span>", 1)
 					icon_state = "reinforce"
 					src.state = GRAB_AGGRESSIVE //used to be '1'. SKIP LEVEL 1
-					if (!src.affecting.buckled)
-						set_affected_loc()
+					set_affected_loc()
 
 					user.next_click = world.time + user.combat_click_delay //+ rand(6,11) //this was utterly disgusting, leaving it here in memorial
 			if (GRAB_STRONG)
-				if (ishuman(src.affecting))
-					var/mob/living/carbon/human/H = src.affecting
-					for (var/obj/item/clothing/C in list(H.head, H.wear_suit, H.wear_mask, H.w_uniform))
-						if (C.body_parts_covered & HEAD)
-							boutput(src.assailant, "<span class='notice'>You have to take off [src.affecting]'s [C.name] first!</span>")
-							return
 				icon_state = "!reinforce"
 				src.state = GRAB_AGGRESSIVE
 				if (!src.affecting.buckled)
@@ -248,7 +244,7 @@
 				user.next_click = world.time + user.combat_click_delay
 		UpdateIcon()
 
-	proc/upgrade_to_kill(var/msg_overridden = 0)
+	proc/upgrade_to_choke(var/msg_overridden = 0)
 		if (!assailant || !affecting)
 			return
 
@@ -362,9 +358,12 @@
 
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 
-		if (src.state == GRAB_PASSIVE && prob(STAMINA_P_GRAB_RESIST_CHANCE * prob_mod))
+		if ((src.state == GRAB_PASSIVE && prob(STAMINA_P_GRAB_RESIST_CHANCE * prob_mod)))
 			for (var/mob/O in AIviewers(src.affecting, null))
 				O.show_message(text("<span class='alert'>[] has broken free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
+			qdel(src)
+		else if ((src.state == GRAB_STRONG && prob(STAMINA_S_GRAB_RESIST_CHANCE * prob_mod)))
+			affecting.visible_message("<span class='alert'>[src.affecting] has broken free of [src.assailant]'s powerful grip!</span>")
 			qdel(src)
 		else if (src.state == GRAB_PIN)
 			var/succ = 0
@@ -400,6 +399,10 @@
 
 				for (var/mob/O in AIviewers(src.affecting, null))
 					O.show_message(text("<span class='alert'>[] attempts to break free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
+
+	/// Helper for allowing people to move again for strong grabs so I can listen for the grab being deleted and run this
+	proc/on_strong_grab_drop()
+		src.affecting.update_canmove()
 
 	//returns an atom to be thrown if any
 	proc/handle_throw(var/mob/living/user, var/atom/target)
@@ -468,7 +471,7 @@
 		..()
 		var/mob/ownerMob = owner
 		if(owner && ownerMob && target && G && BOUNDS_DIST(owner, target) == 0)
-			G.upgrade_to_kill()
+			G.upgrade_to_choke()
 		else
 			interrupt(INTERRUPT_ALWAYS)
 
@@ -641,7 +644,7 @@
 			for (var/obj/item/tank/use_internal in src.assailant.equipped_list(check_for_magtractor = 0))
 				return use_internal.remove_air_volume(volume_needed)
 
-	upgrade_to_kill()
+	upgrade_to_choke()
 		var/list/clothing = list(src.affecting.wear_mask)
 		if(ishuman(src.affecting))
 			var/mob/living/carbon/human/H = src.affecting
