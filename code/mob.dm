@@ -326,7 +326,7 @@
 	if (ghost && ghost.corpse == src)
 		ghost.corpse = null
 	else
-		src.ghostize()
+		src.ghost = src.ghostize()
 		ghost.corpse = null
 
 	if (traitHolder)
