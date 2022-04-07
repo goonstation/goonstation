@@ -337,6 +337,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 					if(istype(parent, /atom))
 						var/atom/AP = parent
 						boutput(user, "<span class='notice'>You disconnect [AP.name].</span>")
+					return TRUE
 				if(CONNECT_COMP)
 					W.AddComponent(/datum/component/mechanics_connector, src.parent)
 					boutput(user, "<span class='notice'>Your [W] will now link other mechanics components to [src.parent]! Use it in hand to stop linking!</span>")
