@@ -2999,7 +2999,7 @@
 	src.drop_from_slot(src.r_hand)
 	src.drop_from_slot(src.l_hand)
 	src.update_body()
-	logTheThing("combat", src, null, "drops the items they were juggling")
+	logTheThing("station", src, null, "drops the items they were juggling")
 
 /mob/living/carbon/human/proc/add_juggle(var/obj/thing as obj)
 	if (!thing || src.stat)
@@ -3028,7 +3028,7 @@
 		var/obj/item/i = thing
 		i.on_spin_emote(src)
 	src.update_body()
-	logTheThing("combat", src, null, "juggles [thing]")
+	logTheThing("station", src, null, "juggles [thing]")
 
 /mob/living/carbon/human/does_it_metabolize()
 	return 1
