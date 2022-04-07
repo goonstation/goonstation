@@ -136,6 +136,10 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		updateButtons()
 
 	proc/disable(disable)
+		if(disable)
+			boutput(owner, "You trapped in here!")
+		else
+			boutput(owner, "Your ghost powers return!")
 		src.disabled = disable
 
 	proc/toggle()

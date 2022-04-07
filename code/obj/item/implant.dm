@@ -77,7 +77,8 @@ THROWING DARTS
 			H.implant -= src
 		if (ismobcritter(src.owner))
 			var/mob/living/critter/C = owner
-			C.implants -= src
+			if(C.implants)
+				C.implants -= src
 		if (implant_overlay)
 			M.update_clothing()
 		src.owner = null
