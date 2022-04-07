@@ -816,7 +816,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 							H.changeStatus("weakened", 3 SECONDS)
 							playsound(H.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 							H.emote("scream")
-							logTheThing("combat", user, null, "spy thief claimed [constructTarget(H)]'s [HP] at [log_loc(user)]")
+							logTheThing("station", user, null, "spy thief claimed [constructTarget(H)]'s [HP] at [log_loc(user)]")
 						else
 							user.show_text("That isn't the right limb!", "red")
 					else
@@ -1105,7 +1105,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 								new B.item3(get_turf(src))
 
 							B.run_on_spawn(A, usr, FALSE, src)
-							logTheThing("combat", usr, src, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
+							logTheThing("station", usr, src, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
 							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B)]-Purchased")
 							if(isnull(loadnum))
 								loadnum = 0
