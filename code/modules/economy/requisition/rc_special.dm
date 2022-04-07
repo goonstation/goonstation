@@ -1,18 +1,22 @@
 ABSTRACT_TYPE(/datum/req_contract/special)
-//contracts for utilisation by the special order event
-//these are distinguished by the requisition being sent physically, either standalone or in a crate with stuff
-//they are not inspected by the requisitions handler, and do not receive the screwup protection that is afforded to regular contracts
-
+/**
+ * Contracts for utilisation by the special order event.
+ * These are distinguished by the requisition being sent physically, either standalone or in a crate with stuff.
+ * They are not inspected by the requisitions handler, and do not receive the screwup protection that is afforded to regular contracts.
+ * They do not appear in the general market.
+ */
 /datum/req_contract/special
 	req_code = "REQ-THIRDPARTY"
 
-	var/obj/storage/crate/sendingCrate // specify crate to send, if desired
+	///Specify a crate to send the requisition in, if desired.
+	var/obj/storage/crate/sendingCrate
 
-	var/obj/item/paper/req_sheet // physical manifest of requested items. its presence in the crate is required to send order back successfully
-	//these are contained in special_order.dm, along with the event that creates these contracts
+	//Physical manifest of requested items. Its presence in the crate is required to send order back successfully. Automatically set up.
+	var/obj/item/paper/req_sheet
+	//These are contained in special_order.dm, along with the event that creates these contracts
 
 	New()
-		//add entries, then call this
+		//in subtypes, add entries, then call back to this
 		..()
 		update_requisition(req_sheet)
 
@@ -25,7 +29,7 @@ ABSTRACT_TYPE(/datum/req_contract/special)
 			req_sheet.info += get_rewards_list()
 		req_sheet.info += "<BR/><BR/><font face='System' size='1'><span style='color:#666666;'><center>╔ REQHUB: THIRD PARTY REQUISITION ╗<br>TAG SENT CRATE WITH REQ_THIRDPARTY<br>╚ RETURNS AT DISCRETION OF CLIENT ╝</center></span>"
 
-	//formats src.rc_entries for being put onto paper
+	///Formats src.rc_entries for being put onto paper.
 	proc/get_shopping_list()
 		. = "<ul>"
 		for(var/datum/rc_entry/rce in src.rc_entries)
@@ -42,7 +46,7 @@ ABSTRACT_TYPE(/datum/req_contract/special)
 		. += "</ul>"
 		return
 
-	//formats src.item_rewarders for being put on paper
+	///Formats the requisition's item rewarders for being put on paper.
 	proc/get_rewards_list()
 		. += "<br/><ul>"
 		if(src.payout) . += "<li>[src.payout] credits</li>"

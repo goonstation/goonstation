@@ -2,7 +2,10 @@
 //inspired by azrun's special order events
 //but a whole other thing
 
-//simplify entry creation
+/**
+ * Small helper proc to simplify basic contract entry creation.
+ * Accepts the path to the entry datum, and the count (in whatever unit it uses) to require.
+ */
 /proc/rc_buildentry(entry_datum_type,number_of)
 	var/datum/rc_entry/entryize = new entry_datum_type
 	entryize.count = number_of
@@ -19,33 +22,39 @@
 
 //base entry
 ABSTRACT_TYPE(/datum/rc_entry)
-///Requisition contract entry: analyzes objects passed to it, returns whether they were needed, and is checked for completion at end of analyses
+///Requisition contract entry: analyzes things passed to it, returns whether they were needed, and is checked for completion at end of analyses.
 /datum/rc_entry
-	///Name as shown on the requisition contract itself. Can be different from your item's real name for flavor purposes
+	///Name as shown on the requisition contract itself. Can be different from your item's real name for flavor purposes.
 	var/name
-	///The evaluation class of the entry; used when building the text form of a contract's list of requirements
+	///The evaluation class of the entry; used for formatting when building the text form of a contract's list of requirements.
 	var/entryclass = RC_ITEM
-	///What quantity this entry requires, be it in item quantity, stack quantity or reagent units; can be adjusted at any point during creation
+	///What quantity this entry requires (examples: item quantity, stack quantity or reagent units); can be adjusted at any point during creation.
 	var/count = 1
-	///When an item fulfills a requirement, this value should be incremented; when it matches or exceeds the count, the entry is fully satisfied
+	///When an item contributes to fulfillment, this value should be incremented; when it matches or exceeds the count, the entry is fully satisfied.
 	var/rollcount = 0
-	///How much this entry will contribute to a contract's overall payout, PER COUNT; commodities will add to this themselves
+	///How much this entry will contribute to a contract's overall payout, PER COUNT. Some entry types can configure this from commodity data.
 	var/feemod = 0
 
-	proc/rc_eval(atom/eval_item) //evaluation procedure, used in different entry classes
+	/**
+	 * Evaluation proc called by contracts to see whether an item fulfills the entry's requirements.
+	 *
+	 * When creating an entry type, there are two required outputs from the variant's rc_eval proc.
+	 * First, it must return true if the atom the entry has been passed contributes to satisfying the condition, so the atom can be consumed.
+	 * Second, you must increment rollcount if the condition was satisfied; often by 1, but can be multiple for things like reagents or stacks.
+	 */
+	proc/rc_eval(atom/eval_item)
 		. = FALSE
 
-//when performing custom evaluations, there are 2 actions that must occur
-//first, you must return true if the atom the entry has been passed contributes to satisfying the condition
-//second, you must increment rollcount on satisfying condition; for a simple "is satisfied or not", increment rollcount by 1 with count left default
-
-//items, by the path
 ABSTRACT_TYPE(/datum/rc_entry/item)
+///Basic item entry. Use for items that can't stack, and whose properties outside of path aren't relevant.
 /datum/rc_entry/item
 	entryclass = RC_ITEM
-	var/typepath //item that must be sold
-	var/exactpath = FALSE //evaluates precise path, instead of path and subtypes
-	var/commodity //commodity path. if defined, will automatically adjust feemod and (if unset) typepath
+	///Type path of the item the entry is looking for.
+	var/typepath
+	///If true, requires precise path; if false (default), sub-paths are accepted.
+	var/exactpath = FALSE
+	///Commodity path. If defined, will set the per-item payout to the highest market rate for that commodity, and set type path if not manually set.
+	var/commodity
 
 	New()
 		if(src.commodity)
@@ -63,11 +72,39 @@ ABSTRACT_TYPE(/datum/rc_entry/item)
 		src.rollcount++
 		. = TRUE
 
-//reagents, by the unit
+ABSTRACT_TYPE(/datum/rc_entry/stack)
+///Stackable item entry. Remarkably, used for items that can be stacked.
+/datum/rc_entry/stack
+	entryclass = RC_STACK
+	///Type path of the item the entry is looking for.
+	var/typepath
+	///Optional alternate type path to look for. Useful when an item has two functionally interchangeable forms, such as raw or refined ore.
+	var/typepath_alt
+	///Commodity path. If defined, will set the per-item payout to the highest market rate for that commodity, and set type path if not manually set.
+	var/commodity
+
+	New()
+		if(src.commodity)
+			var/datum/commodity/CM = src.commodity
+			src.typepath = initial(CM.comtype)
+			src.feemod += initial(CM.baseprice)
+			src.feemod += initial(CM.upperfluc)
+		..()
+
+	rc_eval(obj/item/eval_item)
+		. = ..()
+		if(rollcount >= count) return // standard skip-if-complete
+		if(!istype(eval_item)) return // if it's not an item, it's not a stackable
+		if(eval_item.type == typepath || (typepath_alt && eval_item.type == typepath_alt))
+			rollcount += eval_item.amount
+			. = TRUE //let manager know passed eval item is claimed by contract
+
+///Reagent entry. Searches for reagents in sent objects, consuming any suitable reagent containers until the quantity is satisfied.
 ABSTRACT_TYPE(/datum/rc_entry/reagent)
 /datum/rc_entry/reagent
 	entryclass = RC_REAGENT
-	var/chemname = "water" //chem(s) being looked for in the evaluation; can be a list of several, or just the one
+	///Reagents being looked for in the evaluation; can be a list of several, or just the one.
+	var/chemname = "water"
 
 	rc_eval(atom/eval_item)
 		. = ..()
@@ -83,42 +120,26 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent)
 				rollcount += C
 				. = TRUE //let manager know reagent was found in passed eval item
 
-//stacks, path (or alt path) and amount
-ABSTRACT_TYPE(/datum/rc_entry/stack)
-/datum/rc_entry/stack
-	entryclass = RC_STACK
-	var/typepath
-	var/typepath_alt //use when an item can have two stackable forms, such as with a raw and refined ore (can use this along commodity)
-	var/commodity //commodity path. if defined, will automatically adjust feemod and (if unset) typepath
-
-	New()
-		if(src.commodity)
-			var/datum/commodity/CM = src.commodity
-			src.typepath = initial(CM.comtype)
-			src.feemod += initial(CM.baseprice)
-			src.feemod += initial(CM.upperfluc)
-		..()
-
-	rc_eval(obj/item/eval_item)
-		. = ..()
-		if(rollcount >= count) return // standard skip-if-complete
-		if(!istype(eval_item)) return //if it's not an item, it's not a stackable
-		if(eval_item.type == typepath || (typepath_alt && eval_item.type == typepath_alt))
-			rollcount += eval_item.amount
-			. = TRUE //let manager know passed eval item is claimed by contract
-
-//seeds, analyzed by genetic composition
+///Seed entry. Searches for seeds of the correct crop name, typically matching a particular genetic makeup.
 ABSTRACT_TYPE(/datum/rc_entry/seed)
 /datum/rc_entry/seed
 	entryclass = RC_SEED
+	///Name of the desired crop, as it appears in plant genes.
 	var/cropname = "Tomato"
+
+	/**
+	 * List of required plant gene parameters, formatted as a key-value pair, i.e.
+	 * src.gene_reqs["Maturation"] = rand(10,20) * -1
+	 *
+	 * Add your key value pairs to this list, either hard-coded or with a thing in New() BEFORE ..(), for evaluation.
+	 * Available keys (strings): Maturation, Production, Lifespan, Yield, Potency, Endurance.
+	 * Number paired with key should be a negative integer for maturation or production, or a positive integer otherwise.
+	 */
+	var/gene_reqs = list()
+
+	//Variables for evaluation purposes. Should not be changed in base type configuration.
 	var/gene_factors = 0
 	var/gene_count = 0
-
-	var/gene_reqs = list() //this and cropname are the only things you need to set
-	// add your key value pairs to this list, either hard-coded or with a thing in New before ..(), for evaluation
-	// available keys (strings): Maturation, Production, Lifespan, Yield, Potency, Endurance
-	// number paired with key should be a negative integer for maturation or production, or a positive integer otherwise
 
 	New()
 		src.gene_factors = length(src.gene_reqs)
@@ -153,20 +174,42 @@ ABSTRACT_TYPE(/datum/rc_entry/seed)
 			src.rollcount++
 			. = TRUE
 
-//item rewarders: contract creation instantiates these to fill item payout list if applicable
-//distinct from rc_entry datums, these -!! are instantiators of their own !!- that the requisition handler calls on
+/**
+ * Item reward datum optionally used in contract creation.
+ * Should generally return an object, or set of objects that makes sense as a list entry (i.e. "fast food meal" for a burger, fries and soda).
+ * To use: in a contract's New(), instantiate one of these and add it to src.item_rewarders.
+ *
+ * Rewards are only physically created once the contract is successfully fulfilled, so time-sensitive rewards should be feasible if desired.
+ */
 /datum/rc_itemreward
-	var/name = "something" // what the reward is, description wise
-	var/count // how many of the reward you'll get; optional, used for front end descriptive purposes
+	///What the reward is, as shown in front-end if showing item rewards is not disabled
+	var/name = "something"
+	///How many of the reward you'll get; optional, used for more flexibility in front end descriptions
+	var/count
 
 	New()
 		..()
 
-	proc/build_reward() // this should return an item or list of items, for requisition handler to pack
+	///This should return an item or list of items (NOT A PATH) for the requisition handler to physically pack.
+	proc/build_reward()
 
 
 ABSTRACT_TYPE(/datum/req_contract)
-///Datum that holds and manages contract entries; most handling of contracts should reference these
+/**
+ * The primary datum for requisitions contracts.
+ * Top level contains cargo handling data, payout data, item reward generators if present, and formatted descriptions for the QM requisitions menu.
+ *
+ * Actual evaluation of contract entries occurs through requisition entries (/datum/rc_entry) contained within.
+ * The contents of containers are evaluated sequentially, using the rc_eval proc of each entry that hasn't been fulfilled yet at time of evaluation.
+ *
+ * Fulfillment is managed internally within entries; the contract only cares about whether an item was needed, and whether the entry is satisfied.
+ * You can have any sort of evaluation you like within new types of contract entry, as long as you're feeding back those two pieces of information.
+ *
+ * Contracts are divided by requisition class. Three market classes of requisition currently exist: Aid, Civilian and Scientific.
+ * Each market cycle, these requisitions are refreshed, with at least one requisition from each category being present after the refresh.
+ * These contract types have different requirements and sometimes an influence on what you can do with them. See individual files for more details.
+ * Special requisition contracts also exist, shipped directly as a hard copy. These obey notably different rules, as described in rc_special.dm.
+ */
 /datum/req_contract
 	///Title of the contract as used by the requisitions clearinghouse seen in the QM supply computer
 	var/name = "Gary's Secret Mission"
@@ -202,7 +245,7 @@ ABSTRACT_TYPE(/datum/req_contract)
 				if(SCI_CONTRACT) flavoraffix = prob(50) ? "S" : "R"
 			src.req_code = "REQ-[flavoraffix][rand(0,9)][rand(0,9)][rand(0,9)]-[pick(consonants_upper)][prob(20) ? pick(consonants_upper) : rand(0,9)]"
 
-		for(var/datum/rc_entry/rce in rc_entries)
+		for(var/datum/rc_entry/rce in rc_entries) //Visual formatting of list entries
 			switch(rce.entryclass)
 				if(RC_ITEM)
 					src.requis_desc += "[rce.count]x [rce.name]<br>"

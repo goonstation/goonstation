@@ -1,5 +1,10 @@
 ABSTRACT_TYPE(/datum/req_contract/scientific)
-/datum/req_contract/scientific //adam savage dense gas voice: it's scientific!
+/**
+ * Scientific contracts are one of the three standard contract types.
+ * Of the contract types, these should typically lean more heavily on unusual materials or ones that require a sophisticated acquisition process.
+ * This doesn't have to be limited to what the science department puts out; if a researcher somewhere wants it, that could be a contract.
+ */
+/datum/req_contract/scientific
 	req_class = SCI_CONTRACT
 
 /datum/req_contract/scientific/internalaffairs //get it?

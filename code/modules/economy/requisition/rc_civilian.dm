@@ -1,5 +1,10 @@
 ABSTRACT_TYPE(/datum/req_contract/civilian)
-/datum/req_contract/civilian //masters of the three seashells
+/**
+ * Civilian contracts are one of the three standard contract types.
+ * These contracts should typically be somewhat "tame", revolving around what a station might need in normal, non-catastrophe operation.
+ * If you can picture a station or colony needing something for expansion, or under-provisioned it, it's a good candidate for a Civilian contract.
+ */
+/datum/req_contract/civilian
 	req_class = CIV_CONTRACT
 
 /datum/req_contract/civilian/event_catering
