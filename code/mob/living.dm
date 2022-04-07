@@ -367,9 +367,9 @@
 		if (pixelable)
 			if (!W.pixelaction(target, params, src, reach))
 				if (W)
-					W.afterattack(target, src, reach, params)
+					W.AfterAttack(target, src, reach, params)
 		else if (!pixelable && W)
-			W.afterattack(target, src, reach, params)
+			W.AfterAttack(target, src, reach, params)
 
 /mob/living/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
 	if (!src.restrained() && !is_incapacitated(src))
@@ -499,7 +499,7 @@
 				grace_penalty = time_left
 
 		if (target == equipped)
-			equipped.attack_self(src, params, location, control)
+			equipped.AttackSelf(src)
 			if(equipped.flags & ATTACK_SELF_DELAY)
 				src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 		else if (params["ctrl"])
@@ -673,6 +673,21 @@
 
 	if (!message)
 		return
+
+	// Zam note: this is horrible
+	if (forced_desussification)
+		// "Surely this goes somewhere else, right, Zam?"
+		// maybe? i guess?
+		// i mean, i don't care. i'm stoned and i have commit rights
+		// and this is 100% a joke. it'll probably get refactored into
+		// something reasonable later if people like it.
+		//
+		// when you think about it, github is like amogus
+		// if it finds dead code, it calls an emergeny meeting!
+		if (phrase_log.is_sussy(message))
+			// var/turf/T = get_turf(src)
+			// var/turf/M = locate(T.x, max(world.maxy, T.y + 8), T.z)
+			arcFlash(src, src, 5000)
 
 	if (reverse_mode) message = reverse_text(message)
 
@@ -1076,7 +1091,7 @@
 		for(var/i = 0; i < 5; i++)
 			for(var/mob/living/L in T)
 				if(L != src)
-					for(var/image/chat_maptext/I in L.chat_text.lines)
+					for(var/image/chat_maptext/I in L.chat_text?.lines)
 						I.bump_up()
 			T = get_step(T, EAST)
 
@@ -1264,7 +1279,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	set category = "Local"
 
 	SPAWN(0.7 SECONDS) //secret spawn delay, so you can't spam this during combat for a free "stun"
-		if (usr && isliving(usr) && !issilicon(usr) && get_dist(src,usr) <= 1)
+		if (usr && isliving(usr) && !issilicon(usr) && BOUNDS_DIST(src, usr) == 0)
 			var/mob/living/L = usr
 			L.give_to(src)
 
@@ -1317,7 +1332,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (thing)
 
 		if (M.client && tgui_alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Accept given [thing]", list("Yes", "No"), timeout = 10 SECONDS) == "Yes" || M.ai_active)
-			if (!thing || !M || !(get_dist(src, M) <= 1) || thing.loc != src || src.restrained())
+			if (!thing || !M || !(BOUNDS_DIST(src, M) == 0) || thing.loc != src || src.restrained())
 				return
 			src.u_equip(thing)
 			if (src.bioHolder && src.bioHolder.HasEffect("clumsy") && prob(50))
@@ -1540,16 +1555,16 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 		if (world.time < src.next_move + SUSTAINED_RUN_GRACE)
 			if(move_dir & last_move_dir)
-				if (sustained_moves < SUSTAINED_RUN_REQ+1 && sustained_moves + steps >= SUSTAINED_RUN_REQ+1 && !HAS_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS))
+				if (sustained_moves < SUSTAINED_RUN_REQ+1 && sustained_moves + steps >= SUSTAINED_RUN_REQ+1 && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS))
 					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),move_dir)
 					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.5)
 				sustained_moves += steps
 			else
-				if (sustained_moves >= SUSTAINED_RUN_REQ+1 && !isFlying && !HAS_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS))
+				if (sustained_moves >= SUSTAINED_RUN_REQ+1 && !isFlying && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS))
 					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
 				else if (move_dir == turn(last_move_dir,180) && !isFlying)
-					if(!HAS_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS))
+					if(!HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS))
 						sprint_particle_tiny(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 						playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.9)
 					if(src.bioHolder.HasEffect("magnets_pos") || src.bioHolder.HasEffect("magnets_neg"))
@@ -1574,7 +1589,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 /mob/living/Move(var/turf/NewLoc, direct)
 	. = ..()
 	if (. && move_dir && !(direct & move_dir) && src.use_stamina)
-		if (sustained_moves >= SUSTAINED_RUN_REQ+1 && !HAS_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS))
+		if (sustained_moves >= SUSTAINED_RUN_REQ+1 && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS))
 			sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 			playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
 		sustained_moves = 0
@@ -1666,7 +1681,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		if (src.pushing && (src.pulling != src.pushing))
 			. *= lerp(1, max(src.pushing.p_class, 1), pushpull_multiplier)
 
-		for (var/obj/item/grab/G in list(src.r_hand, src.l_hand))
+		for (var/obj/item/grab/G in src.equipped_list())
 			var/mob/M = G.affecting
 			if (isnull(M))
 				continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
@@ -1705,17 +1720,17 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 /mob/living/critter/keys_changed(keys, changed)
 	..()
 	if (changed & KEY_RUN)
-		if (hud && !HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
+		if (hud && !HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
 			src.hud.set_sprint(keys & KEY_RUN)
 
 /mob/living/carbon/human/keys_changed(keys, changed)
 	..()
 	if (changed & KEY_RUN)
-		if (hud && !HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
+		if (hud && !HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
 			src.hud.set_sprint(keys & KEY_RUN)
 
 /mob/living/proc/start_sprint()
-	if (HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
+	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
 		return
 	if (special_sprint && src.client)
 		if (special_sprint & SPRINT_BAT)
@@ -1730,7 +1745,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			begin_designating()
 	else if (src.use_stamina)
 		if (!next_step_delay && world.time >= next_sprint_boost)
-			if (!(HAS_MOB_PROPERTY(src, PROP_CANTMOVE) || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || GET_COOLDOWN(src, "unlying_speed_cheesy")))
+			if (!(HAS_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE) || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || GET_COOLDOWN(src, "unlying_speed_cheesy")))
 				//if (src.hasStatus("blocking"))
 				//	for (var/obj/item/grab/block/G in src.equipped_list(check_for_magtractor = 0)) //instant break blocks when we start a sprint
 				//		qdel(G)
@@ -1743,7 +1758,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				attempt_move(src)
 				next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
 
-				if ((src.loc != last || force_puff) && !HAS_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds
+				if ((src.loc != last || force_puff) && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds
 					sprint_particle(src, last)
 					if (!isFlying)
 						playsound(src.loc,"sound/effects/sprint_puff.ogg", 29, 1,extrarange = -4)
@@ -1794,7 +1809,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			S.active = 0
 			S.icon_state = "shield0"
 
-	if (!P.was_pointblank && HAS_MOB_PROPERTY(src, PROP_REFLECTPROT))
+	if (!P.was_pointblank && HAS_ATOM_PROPERTY(src, PROP_MOB_REFLECTPROT))
 		var/obj/item/equipped = src.equipped()
 		if (equipped && istype(equipped,/obj/item/sword))
 			var/obj/item/sword/S = equipped
@@ -1905,11 +1920,11 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.stamina_stun()
 
 				src.changeStatus("radiation", damage SECONDS)
-				var/orig_val = GET_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS)
-				APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "projectile", -5)
-				if(GET_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS) != orig_val)
+				var/orig_val = GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS)
+				APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile", -5)
+				if(GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS) != orig_val)
 					SPAWN(30 SECONDS)
-						REMOVE_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "projectile")
+						REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile")
 				if(rangedprot > 1)
 					armor_msg = ", but your armor softens the hit!"
 

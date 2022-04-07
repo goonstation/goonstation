@@ -166,7 +166,7 @@
 
 	if (user)
 		var/choice = alert(user, "Would you like to launch the shuttle?","Shuttle control", "Launch", "Cancel")
-		if(get_dist(user, src) > 1 || emergency_shuttle.location != SHUTTLE_LOC_STATION) return
+		if(BOUNDS_DIST(user, src) > 0 || emergency_shuttle.location != SHUTTLE_LOC_STATION) return
 		switch(choice)
 			if("Launch")
 				boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
@@ -206,7 +206,7 @@
 			return 0
 
 		var/choice = alert(user, text("Would you like to (un)authorize a shortened launch time? [] authorization\s are still needed. Use abort to cancel all authorizations.", src.auth_need - src.authorized.len), "Shuttle Launch", "Authorize", "Repeal", "Abort")
-		if(emergency_shuttle.location != SHUTTLE_LOC_STATION || get_dist(user, src) > 1) return
+		if(emergency_shuttle.location != SHUTTLE_LOC_STATION || BOUNDS_DIST(user, src) > 0) return
 		switch(choice)
 			if("Authorize")
 				if(emergency_shuttle.timeleft() < 60)
@@ -218,7 +218,6 @@
 				else
 					boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 60 seconds!</B></span>")
 					emergency_shuttle.settimeleft(60)
-					//src.authorized = null
 					qdel(src.authorized)
 					src.authorized = list(  )
 
@@ -583,7 +582,7 @@
 					end_location = locate(/area/shuttle/asylum/pathology)
 
 			for(var/x in end_location)
-				if(isliving(x))
+				if(isliving(x) && !isintangible(x))
 					var/mob/living/M = x
 					M.gib(1)
 				if(istype(x, /obj/storage))
@@ -657,8 +656,10 @@
 	else // at top
 		var/area/start_location = locate(/area/shuttle/icebase_elevator/upper)
 		var/area/end_location = locate(/area/shuttle/icebase_elevator/lower)
-		for(var/mob/M in end_location) // oh dear, stay behind the yellow line kids
-			SPAWN(1 DECI SECOND) M.gib()
+		for(var/mob/living/L in end_location) // oh dear, stay behind the yellow line kids
+			if(!isintangible(L))
+				SPAWN(1 DECI SECOND)
+					L.gib()
 		start_location.move_contents_to(end_location, /turf/simulated/floor/arctic_elevator_shaft)
 		location = 0
 
@@ -725,8 +726,10 @@
 	else // at top
 		var/area/start_location = locate(/area/shuttle/biodome_elevator/upper)
 		var/area/end_location = locate(/area/shuttle/biodome_elevator/lower)
-		for(var/mob/M in end_location) // oh dear, stay behind the yellow line kids
-			SPAWN(1 DECI SECOND) M.gib()
+		for(var/mob/living/L in end_location) // oh dear, stay behind the yellow line kids
+			if(!isintangible(L))
+				SPAWN(1 DECI SECOND)
+					L.gib()
 			bioele_accident()
 		start_location.move_contents_to(end_location, /turf/unsimulated/floor/setpieces/ancient_pit/shaft)
 		location = 0

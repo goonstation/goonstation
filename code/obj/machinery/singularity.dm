@@ -18,6 +18,11 @@ Contains:
 #define WRENCHED 1
 #define WELDED 2
 
+#ifdef UPSCALED_MAP
+#undef SINGULARITY_MAX_DIMENSION
+#define SINGULARITY_MAX_DIMENSION 22
+#endif
+
 // I'm sorry
 //////////////////////////////////////////////////// Singularity generator /////////////////////
 
@@ -548,7 +553,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		T = get_step(T2, NSEW)
 		T2 = T
 		steps += 1
-		if(locate(/obj/machinery/field_generator) in T)
+		G = (locate(/obj/machinery/field_generator) in T)
+		if(G && G != src)
 			G = (locate(/obj/machinery/field_generator) in T)
 			steps -= 1
 			if(shortestlink==0)
@@ -602,6 +608,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		return
 	if(P.proj_data.damage_type == D_ENERGY)
 		src.power += P.power
+		flick("Field_Gen_Flash", src)
 
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
@@ -803,6 +810,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	light.enable()
 
 	..()
+
+/obj/machinery/containment_field/ex_act(severity)
+	return
 
 /obj/machinery/containment_field/attack_hand(mob/user as mob)
 	return
@@ -1663,7 +1673,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		return
 	if (user.stat || user.restrained() || user.lying)
 		return
-	if ((get_dist(src, user) <= 1 && istype(src.loc, /turf)))
+	if ((BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)))
 		src.add_dialog(user)
 		/*
 		var/dat = text("<TT><B>Timing Unit</B><br>[] []:[]<br><A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='?src=\ref[];time=0'>Timing</A>", src) : text("<A href='?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)

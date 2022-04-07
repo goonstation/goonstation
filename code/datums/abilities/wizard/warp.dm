@@ -21,6 +21,10 @@
 		if(!istype(target))
 			return 1
 
+		if (holder.owner == target)
+			boutput(holder.owner, "<span class='alert'>You can't warp yourself!</span>")
+			return 1
+
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
 			holder.owner.say("GHEIT AUT")
 		..()
@@ -58,4 +62,6 @@
 		animate_blink(target)
 		target.visible_message("<span class='alert'>[target] is warped away!</span>")
 		playsound(target.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
-		target.set_loc(pick(randomturfs))
+		var/turf/destination = pick(randomturfs)
+		logTheThing("combat", holder.owner, target, "warped [constructTarget(target,"combat")] from [log_loc(target)] to [log_loc(destination)].")
+		target.set_loc(destination)

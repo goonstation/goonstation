@@ -83,8 +83,8 @@
 			boutput(M, __red("The blood of the dead provides little sustenance..."))
 
 		var/bitesize = 5 * mult
-		M.change_vampire_blood(bitesize, 1)
-		M.change_vampire_blood(bitesize, 0)
+		H.change_vampire_blood(bitesize, 1)
+		H.change_vampire_blood(bitesize, 0)
 		H.tally_bite(HH,bitesize)
 		if (HH.blood_volume < 20 * mult)
 			HH.blood_volume = 0
@@ -93,13 +93,14 @@
 		if (istype(H)) H.blood_tracking_output()
 
 	else if (HH.bioHolder && HH.traitHolder.hasTrait("training_chaplain"))
-		M.visible_message("<span class='alert'><b>[M]</b> begins to crisp and burn!</span>", "<span class='alert'>You drank the blood of a holy man! It burns!</span>")
-		M.emote("scream")
-		if (M.get_vampire_blood() >= 20 * mult)
-			M.change_vampire_blood(-20 * mult, 0)
-		else
-			M.change_vampire_blood(0, 0, 1)
-		M.TakeDamage("chest", 0, 30 * mult)
+		if(istype(M))
+			M.visible_message("<span class='alert'><b>[M]</b> begins to crisp and burn!</span>", "<span class='alert'>You drank the blood of a holy man! It burns!</span>")
+			M.emote("scream")
+			if (M.get_vampire_blood() >= 20 * mult)
+				M.change_vampire_blood(-20 * mult, 0)
+			else
+				M.change_vampire_blood(0, 0, 1)
+			M.TakeDamage("chest", 0, 30 * mult)
 
 	else
 		if (isvampire(HH))
@@ -108,8 +109,8 @@
 				HH.change_vampire_blood(-bitesize, 0)
 				HH.change_vampire_blood(-bitesize, 1) // Otherwise, two vampires could perpetually feed off of each other, trading blood endlessly.
 
-				M.change_vampire_blood(bitesize, 0)
-				M.change_vampire_blood(bitesize, 1)
+				H.change_vampire_blood(bitesize, 0)
+				H.change_vampire_blood(bitesize, 1)
 				H.tally_bite(HH,bitesize)
 				if (istype(H))
 					H.blood_tracking_output()
@@ -121,8 +122,8 @@
 				return 0
 		else
 			var/bitesize = 10 * mult
-			M.change_vampire_blood(bitesize, 1)
-			M.change_vampire_blood(bitesize, 0)
+			H.change_vampire_blood(bitesize, 1)
+			H.change_vampire_blood(bitesize, 0)
 			H.tally_bite(HH,bitesize)
 			if (HH.blood_volume < 20 * mult)
 				HH.blood_volume = 0
@@ -130,9 +131,10 @@
 				HH.blood_volume -= 20 * mult
 			//vampires heal, thralls don't
 			if (!thrall)
-				M.HealDamage("All", 3, 3)
-				M.take_toxin_damage(-1)
-				M.take_oxygen_deprivation(-1)
+				if(istype(M))
+					M.HealDamage("All", 3, 3)
+					M.take_toxin_damage(-1)
+					M.take_oxygen_deprivation(-1)
 
 				if (mult >= 1) //mult is only 1 or greater during a pointblank true suck
 					if (HH.blood_volume < 300 && prob(15))
@@ -367,7 +369,6 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-
 	onStart()
 		..()
 		if(M == null || HH == null)
@@ -384,7 +385,6 @@
 
 		if (istype(H))
 			H.vamp_isbiting = HH
-		HH.vamp_beingbitten = 1
 
 		src.loopStart()
 
@@ -398,6 +398,7 @@
 
 		proj.special_data["vamp"] = H
 		proj.special_data["victim"] = HH
+		proj.special_data["returned"] = FALSE
 		proj.targets = list(M)
 
 		proj.launch()
@@ -408,7 +409,7 @@
 		logTheThing("combat", M, HH, "steals blood from [constructTarget(HH,"combat")] at [log_loc(M)].")
 
 	onEnd()
-		if(get_dist(M, HH) > 7 || M == null || HH == null)
+		if(get_dist(M, HH) > 7 || M == null || HH == null || !H.can_bite(HH, is_pointblank = 0))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			src.end()
@@ -434,8 +435,6 @@
 	proc/end()
 		if (istype(H))
 			H.vamp_isbiting = null
-		if (HH)
-			HH.vamp_beingbitten = 0 // Victim might have been gibbed, who knowns.
 
 
 
@@ -514,14 +513,14 @@
 
 	onUpdate()
 		..()
-		if(get_dist(M, HH) > 1 || M == null || HH == null || B == null)
+		if(BOUNDS_DIST(M, HH) > 0 || M == null || HH == null || B == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 
 	onStart()
 		..()
-		if(get_dist(M, HH) > 1 || M == null || HH == null || B == null)
+		if(BOUNDS_DIST(M, HH) > 0 || M == null || HH == null || B == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -531,7 +530,6 @@
 
 		if (istype(H))
 			H.vamp_isbiting = HH
-		HH.vamp_beingbitten = 1
 
 		src.loopStart()
 
@@ -541,7 +539,7 @@
 		return
 
 	onEnd()
-		if(get_dist(M, HH) > 1 || M == null || HH == null || B == null)
+		if(BOUNDS_DIST(M, HH) > 0 || M == null || HH == null || B == null)
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			src.end()
@@ -571,5 +569,3 @@
 	proc/end()
 		if (istype(H))
 			H.vamp_isbiting = null
-		if (HH)
-			HH.vamp_beingbitten = 0 // Victim might have been gibbed, who knowns.

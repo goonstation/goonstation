@@ -117,7 +117,7 @@
 		return attack_hand(user)
 
 	Topic(href, href_list)
-		if (istype(src.loc, /turf) && (( get_dist(src, usr) <= 1) || issilicon(usr) || isAI(usr)))
+		if (istype(src.loc, /turf) && (( BOUNDS_DIST(src, usr) == 0) || issilicon(usr) || isAI(usr)))
 			if (!isliving(usr) || iswraith(usr) || isintangible(usr))
 				return
 			if (is_incapacitated(usr) || usr.restrained())
@@ -375,6 +375,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/omelette_bee(src)
 			src.recipes += new /datum/cookingrecipe/omelette(src)
 			src.recipes += new /datum/cookingrecipe/monster(src)
+			src.recipes += new /datum/cookingrecipe/c_butty(src)
 			src.recipes += new /datum/cookingrecipe/scarewich_h(src)
 			src.recipes += new /datum/cookingrecipe/scarewich_p_h(src)
 			src.recipes += new /datum/cookingrecipe/scarewich_p(src)
@@ -587,7 +588,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/rice_ball(src)
 
 	Topic(href, href_list)
-		if ((get_dist(src, usr) > 1 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if ((BOUNDS_DIST(src, usr) > 0 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
@@ -937,6 +938,16 @@ table#cooktime a#start {
 					var/obj/item/reagent_containers/food/snacks/condiment/hotsauce/F = new(src.loc)
 					F.reagents.add_reagent("capsaicin", DNA.potency)
 					qdel( P )
+				if (/obj/item/reagent_containers/food/snacks/plant/coffeeberry/mocha)
+					var/datum/plantgenes/DNA = P:plantgenes
+					var/obj/item/reagent_containers/food/snacks/candy/chocolate/F = new(src.loc)
+					F.reagents.add_reagent("chocolate", DNA.potency)
+					qdel( P )
+				if (/obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte)
+					var/datum/plantgenes/DNA = P:plantgenes
+					var/obj/item/reagent_containers/food/snacks/condiment/cream/F = new(src.loc)
+					F.reagents.add_reagent("milk", DNA.potency)
+					qdel( P )
 				if (/obj/item/plant/sugar)
 					var/obj/item/reagent_containers/food/snacks/ingredient/sugar/F = new(src.loc)
 					F.reagents.add_reagent("sugar", 20)
@@ -1031,7 +1042,7 @@ table#cooktime a#start {
 
 	mouse_drop(over_object, src_location, over_location)
 		..()
-		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (BOUNDS_DIST(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
@@ -1043,7 +1054,7 @@ table#cooktime a#start {
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (get_dist(src, user) > 1 || !isliving(user) || iswraith(user) || isintangible(user))
+		if (BOUNDS_DIST(src, user) > 0 || !isliving(user) || iswraith(user) || isintangible(user))
 			return
 		if (is_incapacitated(user) || user.restrained())
 			return
@@ -1165,7 +1176,7 @@ var/list/mixer_recipes = list()
 		return ..()
 
 	Topic(href, href_list)
-		if ((get_dist(src, usr) > 1 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if ((BOUNDS_DIST(src, usr) > 0 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return

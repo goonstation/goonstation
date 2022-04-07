@@ -37,10 +37,10 @@
 						return
 				if(make_inherent)
 					src.add_stam_mod_max("wrestler", 50)
-					APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "wrestler", 5)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "wrestler", 5)
 					src.max_health += 50
 					health_update_queue |= src
-				APPLY_MOB_PROPERTY(src, PROP_PASSIVE_WRESTLE, "wrestledoodle")
+				APPLY_ATOM_PROPERTY(src, PROP_MOB_PASSIVE_WRESTLE, "wrestledoodle")
 				C.abilityHolder.addAbility("/datum/targetable/wrestler/kick[fake_wrestler ? "/fake" : ""]")
 				C.abilityHolder.addAbility("/datum/targetable/wrestler/strike[fake_wrestler ? "/fake" : ""]")
 				C.abilityHolder.addAbility("/datum/targetable/wrestler/drop[fake_wrestler ? "/fake" : ""]")
@@ -91,7 +91,7 @@
 				if (make_inherent == 1)
 					A5.is_inherent = 1
 					src.add_stam_mod_max("wrestler", 50)
-					APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "wrestler", 5)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "wrestler", 5)
 					src.max_health += 50
 					health_update_queue |= src
 
@@ -259,31 +259,8 @@
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		return 0
 
-	proc/calculate_cooldown()
-		if (!holder)
-			return 0
-
-		var/mob/living/M = holder.owner
-
-		if (!M || !istype(M))
-			return 0
-
-		var/CD = src.cooldown
-		var/ST_mod_max = M.get_stam_mod_max()
-		var/ST_mod_regen = GET_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS)
-
-		// Balanced for 200/12 and 200/13 drugs (e.g. epinephrine or meth), so stamina regeneration
-		// buffs are prioritized over total stamina modifiers.
-		var/R = src.cooldown - (((ST_mod_max / 3 ) + (ST_mod_regen * 2)) * 10)
-		if (R > (src.cooldown * 2.5))
-			R = src.cooldown * 2.5 // Chems with severe stamina penalty exist, so this should be capped.
-		CD = max((src.cooldown / 2.5), R) // About the same minimum as the old wrestling belt procs.
-
-		//DEBUG_MESSAGE("Default CD: [src.cooldown]. Modifier: [R]. Actual CD: [CD].")
-		return CD
-
 	doCooldown()
-		src.last_cast = world.time + calculate_cooldown()
+		src.last_cast = world.time + src.cooldown
 
 		if (!src.holder.owner || !ismob(src.holder.owner))
 			return

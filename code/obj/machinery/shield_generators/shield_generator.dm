@@ -3,6 +3,7 @@
 
 /area/station/shield_zone
 	icon_state = "shield_zone"
+	expandable = 0
 
 /* ==================== Generator ==================== */
 

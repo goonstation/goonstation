@@ -1,3 +1,4 @@
+// If you're looking for ghostdrone code itself, check mob\living\silicon\ghostdrone.dm. This is hud.
 /datum/hud/ghostdrone
 	var/atom/movable/screen/hud
 		mod1

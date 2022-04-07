@@ -179,12 +179,7 @@
 			return src.Attackby(null, user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/cargotele))
-			var/obj/item/cargotele/CT = W
-			CT.cargoteleport(src, user)
-			return
-
-		else if (istype(W, /obj/item/satchel/))
+		if (istype(W, /obj/item/satchel/))
 			if(secure && locked)
 				user.show_text("Access Denied", "red")
 				return
@@ -235,13 +230,13 @@
 				return
 
 		else if (!src.open && isweldingtool(W))
-			if(!W:try_weld(user, 1, burn_eyes = 1))
+			if(!W:try_weld(user, 1, burn_eyes = TRUE))
 				return
 			if (!src.welded)
-				src.weld(1, W, user)
+				src.weld(1, user)
 				src.visible_message("<span class='alert'>[user] welds [src] closed with [W].</span>")
 			else
-				src.weld(0, W, user)
+				src.weld(0, user)
 				src.visible_message("<span class='alert'>[user] unwelds [src] with [W].</span>")
 			return
 
@@ -295,17 +290,12 @@
 
 		//Mostly copy pasted from turf/Enter. Sucks, but we need an object rather than a boolean
 		//First, check for directional blockers on the entering object's tile
-		if (orig_turf.checkingexit > 0)
-			for(var/obj/obstacle in orig_turf)
-				if(obstacle == thing)
-					continue
-				if(obstacle.event_handler_flags & USE_CHECKEXIT)
-					var/obj/O = thing
-					if (!istype(O) || !(HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING) \
-					  && HAS_FLAG(obstacle.object_flags, HAS_DIRECTIONAL_BLOCKING) \
-					  && obstacle.dir == O.dir))
-						if(!obstacle.CheckExit(thing, dest_turf))
-							no_go = obstacle
+		for(var/obj/obstacle in orig_turf)
+			if(obstacle == thing)
+				continue
+			if(!obstacle.CheckExit(thing, dest_turf))
+				no_go = obstacle
+				break
 
 		//next, check if the turf itself prevents something from entering it (i.e. it's a wall)
 		if (isnull(no_go))
@@ -490,7 +480,7 @@
 		. = TRUE
 		if (!A || !(isobj(A) || ismob(A)))
 			return 0
-		if (istype(A, /obj/decal/skeleton)) // uuuuuuugh
+		if (istype(A, /obj/decal/fakeobjects/skeleton)) // uuuuuuugh
 			return 1
 		if (isobj(A) && ((A.density && !istype(A, /obj/critter)) || A:anchored || A == src || istype(A, /obj/decal) || istype(A, /atom/movable/screen) || istype(A, /obj/storage)))
 			return 0
@@ -658,7 +648,7 @@
 				make_cleanable( /obj/decal/cleanable/machine_debris,newloc)
 				qdel(src)
 
-	proc/weld(var/shut = 0, var/obj/item/weldingtool/W as obj, var/mob/weldman as mob)
+	proc/weld(var/shut = 0, var/mob/weldman as mob)
 		if (shut)
 			weldman.visible_message("<span class='alert'>[weldman] welds [src] shut.</span>")
 			src.welded = 1
@@ -668,7 +658,6 @@
 		src.UpdateIcon()
 		for (var/mob/M in src.contents)
 			src.log_me(weldman, M, src.welded ? "welds" : "unwelds")
-		return
 
 	proc/crunch(var/mob/M as mob)
 		if (!M || istype(M, /mob/living/carbon/wall))
@@ -778,7 +767,7 @@
 
 	onUpdate()
 		..()
-		if (!the_storage || !the_wrench || !owner || get_dist(owner, the_storage) > 1)
+		if (!the_storage || !the_wrench || !owner || BOUNDS_DIST(owner, the_storage) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

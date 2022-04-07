@@ -96,14 +96,14 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 
 		if(!istype(get_area(M), /area/sim/gunsim))
 			M.say("YORAF UHRY") // AN EMAL? PAL EMORF? TURAN SPHORM?
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))
-					playsound(H.loc, spell.voice_grim, 50, 0, -1)
-				else if(spell.voice_fem && H.gender == "female")
-					playsound(H.loc, spell.voice_fem, 50, 0, -1)
-				else if (spell.voice_other)
-					playsound(H.loc, spell.voice_other, 50, 0, -1)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))
+				playsound(H.loc, spell.voice_grim, 50, 0, -1)
+			else if(spell.voice_fem && H.gender == "female")
+				playsound(H.loc, spell.voice_fem, 50, 0, -1)
+			else if (spell.voice_other)
+				playsound(H.loc, spell.voice_other, 50, 0, -1)
 
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 		smoke.set_up(5, 0, target.loc)
@@ -120,6 +120,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 			var/mob/living/critter/C = target.make_critter(pick(animal_spell_critter_paths))
 			C.real_name = "[target.real_name] the [C.real_name]"
 			C.name = C.real_name
+			logTheThing("combat", M, target, "casts the Polymorph spell on [constructTarget(target,"combat")] turning them into [constructTarget(C,"combat")] at [log_loc(C)].")
 			C.butcherable = 1 // we would like the brain to be recoverable, please
 			if (istype(C, /mob/living/critter/small_animal/bee))
 				var/mob/living/critter/small_animal/bee/B = C

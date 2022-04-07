@@ -107,7 +107,7 @@
 				ticker.mode:agent_number++
 			else
 				src.real_name = "Syndicate Agent"
-			JobEquipSpawned("Syndicate")
+			JobEquipSpawned("Syndicate Operative")
 			u_equip(l_store) // Deletes syndicate remote teleporter to keep people out of the syndie shuttle
 			u_equip(r_store) // Deletes uplink radio because fuckem
 
@@ -157,6 +157,10 @@
 	ai_threatened = 0
 	ai_movedelay = 3
 	ai_attacked = 0
+
+	if(abilityHolder)
+		if(!abilityHolder.getAbility(/datum/targetable/ai_toggle))
+			abilityHolder.addAbility(/datum/targetable/ai_toggle)
 
 /mob/living/carbon/human/proc/ai_stop()
 	ai_set_active(0)
@@ -559,11 +563,11 @@
 				if(istype(src.equipped(), /obj/item/device/light/zippo))
 					var/obj/item/device/light/zippo/zippo = src.equipped()
 					if(!zippo.on)
-						zippo.attack_self(src)
+						zippo.AttackSelf(src)
 				if(istype(src.equipped(), /obj/item/weldingtool))
 					var/obj/item/weldingtool/welder = src.equipped()
 					if(!welder.welding)
-						welder.attack_self(src)
+						welder.AttackSelf(src)
 				src.ai_attack_target(cigarette, src.equipped())
 				throw_equipped = 1
 
@@ -598,7 +602,7 @@
 
 	// use
 	if(src.equipped() && prob(ai_state == AI_PASSIVE ? 2 : 7) && ai_useitems)
-		src.equipped().attack_self(src)
+		src.equipped().AttackSelf(src)
 
 	// throw
 	if(throw_equipped)
@@ -632,7 +636,7 @@
 	if( ai_state == AI_ATTACKING && ai_canmove() )
 		if(src.pulling)
 			src.set_pulling(null)
-		if(!ai_validpath() && get_dist(src,ai_target) <= 1)
+		if(!ai_validpath() && BOUNDS_DIST(src, ai_target) == 0)
 			set_dir(get_step_towards(src,ai_target))
 			ai_obstacle() //Remove.
 		else

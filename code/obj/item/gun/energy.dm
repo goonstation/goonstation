@@ -220,7 +220,7 @@
 	uses_multiple_icon_states = 1
 	desc = "Wait, that's not a plastic toy..."
 	muzzle_flash = "muzzle_flash_laser"
-	cell_type = /obj/item/ammo/power_cell/med_power
+	cell_type = null
 
 	New()
 		if (!src.current_projectile)
@@ -1028,7 +1028,7 @@
 
 ///////////////////////////////////////Hunter
 /obj/item/gun/energy/plasma_gun/ // Made use of a spare sprite here (Convair880).
-	name = "Plasma rifle"
+	name = "plasma rifle"
 	desc = "This advanced bullpup rifle contains a self-recharging power cell."
 	icon_state = "bullpup"
 	item_state = "bullpup"
@@ -1054,7 +1054,7 @@
 		..()
 
 /obj/item/gun/energy/plasma_gun/vr
-	name = "Advanced laser gun"
+	name = "advanced laser gun"
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "wavegun"
 	base_item_state = "wavegun"
@@ -1203,6 +1203,7 @@
 	cell_type = /obj/item/ammo/power_cell/med_power
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	muzzle_flash = "muzzle_flash_laser"
+	is_syndicate = 1
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/alastor)
@@ -1388,7 +1389,11 @@
 	//all gun modes use the same base sprite icon "lawbringer0" depending on the current projectile/current mode, we apply a coloured overlay to it.
 	update_icon()
 		..()
-		src.icon_state = "[old ? "old-" : ""]lawbringer0"
+		var/prefix = ""
+		if(old)
+			prefix = "old-"
+
+		src.icon_state = "[prefix]lawbringer0"
 		src.overlays = null
 
 		var/list/ret = list()
@@ -1398,7 +1403,7 @@
 			//if we're showing zero charge, don't do any overlay, since the main image shows an empty gun anyway
 			if (ratio == 0)
 				return
-			indicator_display.icon_state = "[old ? "old-" : ""]lawbringer-d[ratio]"
+			indicator_display.icon_state = "[prefix]lawbringer-d[ratio]"
 
 			if(current_projectile.type == /datum/projectile/energy_bolt/aoe)			//detain - yellow
 				indicator_display.color = "#FFFF00"
@@ -1442,6 +1447,11 @@
 		if (!owner_prints || (user.bioHolder.uid_hash == owner_prints))
 			return 1
 		return 0
+
+	proc/make_antique()
+		icon_state = "old-lawbringer0"
+		old = 1
+		UpdateIcon()
 
 	shoot(var/target,var/start,var/mob/user)
 		if (canshoot())
@@ -1615,7 +1625,7 @@
 		shotcount = 0
 		. = ..()
 
-	shoot_point_blank(mob/M, mob/user, second_shot)
+	shoot_point_blank(atom/target, mob/user, second_shot)
 		shotcount = 0
 		. = ..()
 

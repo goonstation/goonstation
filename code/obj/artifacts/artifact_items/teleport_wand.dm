@@ -27,6 +27,7 @@
 /datum/artifact/telewand
 	associated_object = /obj/item/artifact/teleport_wand
 	type_name = "Teleportation Wand"
+	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 200
 	validtypes = list("wizard","eldritch","precursor")
 	react_xray = list(10,75,90,11,"ANOMALOUS")

@@ -947,7 +947,7 @@
 				target.visible_message("<span class='alert'><B>[src.holder.owner]'s attack has no effect on [target] whatsoever!</B></span>")
 				src.holder.locked = 0
 				return 998
-			if (!castcheck())
+			if (!castcheck(target))
 				src.holder.locked = 0
 				return 998
 			var/datum/abilityHolder/localholder = src.holder
@@ -963,7 +963,7 @@
 		doCooldown()
 			src.last_cast = world.time + src.cooldown
 
-		castcheck()
+		castcheck(atom/target)
 			return 1
 
 		cooldowncheck()

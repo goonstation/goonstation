@@ -208,6 +208,10 @@ var/list/list/by_cat = list()
 // powernets? processing_items?
 // mobs? ai-mobs?
 
+#ifndef LIVE_SERVER
+#define TR_CAT_DELETE_ME "delete_me" // Things we delete after setup if we're on a local and the relevant compile options are uncommented
+#endif
+
 
 /// type-level information type
 /typeinfo

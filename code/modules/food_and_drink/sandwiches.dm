@@ -62,6 +62,13 @@
 		initial_reagents = list("bread"=10,"juice_tomato"=2,"cholesterol"=3,"porktonium"=3)
 		food_effects = list("food_refreshed", "food_energized_big")
 
+	c_butty
+		name = "chip butty"
+		desc = "French fries and ketchup between two slices of bread."
+		icon_state = "c_butty"
+		initial_reagents = list("innitium"=25,"ketchup"=20)
+		food_effects = list("food_sweaty", "food_energized_big")
+
 	elvis_meat_h
 		name = "elvismanwich"
 		desc = "Human meat between two slices of elvis bread."

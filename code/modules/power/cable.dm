@@ -28,7 +28,7 @@
 		if(T.intact || !istype(T, /turf/simulated/floor))
 			return
 
-		if(get_dist(src, user) > 1)
+		if(BOUNDS_DIST(src, user) > 0)
 			return
 
 		if(!directwired)		// only for attaching to directwired machines
@@ -186,6 +186,8 @@
 	var/datum/powernet/PN			// find the powernet
 	if(netnum && powernets && powernets.len >= netnum)
 		PN = powernets[netnum]
+	if (isnull(PN) && netnum)
+		CRASH("Attempted to get powernet number [netnum] but it was null.")
 	return PN
 
 /obj/cable/proc/cut(mob/user,turf/T)
