@@ -8,52 +8,63 @@
 //	jobprocs.dm    :  call Equip_Bank_Purchase()
 //	persistent_bank_purchases.dm  :	(contains all purchaseable data)
 
-/chui/window/spend_spacebux
-	name = "Spacebux"
-	windowSize = "300x600"
+/datum/spend_spacebux
 
-	GetBody()
-		if (!usr.client)
-			return "Something went wrong loading your bank! If the issue persists, try relogging or asking an admin for help."
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "SpendSpacebux", "Spend Spacebux")
+			ui.open()
 
-		var/found_held = FALSE
+	ui_state(mob/user)
+		return tgui_always_state
+
+	ui_data(mob/user)
+		var/found_held = null
+		var/list/purchasables = list()
+
 		for(var/datum/bank_purchaseable/p in persistent_bank_purchaseables)
-			if(p.name == usr.client.persistent_bank_item)
-				found_held = TRUE
-				break
-		if(usr.client.persistent_bank_item && usr.client.persistent_bank_item != "none" && !found_held)
-			usr.client.set_last_purchase(null)
-			boutput( usr, "<span class='notice'><b>The thing you previously purchased has been removed from your inventory due to it no longer existing.</b></span>")
-
-		var/ret = "<p style=\"font-size:125%;\">BALANCE :  <b>[usr.client.persistent_bank]</b></p><br/>"
-		ret += "<p style=\"font-size:110%;\">HELD ITEM :  <b>[usr.client.persistent_bank_item ? usr.client.persistent_bank_item : "Nothing!"]</b></p><br/>"
-		ret += "Purchase an item for the upcoming round. Earn more cash by completing rounds.<br/>"
-		ret += "A purchased item will persist until you die or fail to escape the station. If you have a Held Item, buying a new one will replace it.<br/><br/>"
-		for(var/i=1, i <= persistent_bank_purchaseables.len, i++)
-			var/datum/bank_purchaseable/p = persistent_bank_purchaseables[i]
-
-			if(!p.hasJobXP(usr.client.key)) continue
-
-			ret += "[theme.generateButton(i, "[p.name] $[p.cost]")] <br/>"
-
+			if(!p.hasJobXP(user.client.key)) continue
+			purchasables += list(
+				list(
+					"name" = p.name,
+					"cost" = p.cost,
+					"img" = icon2base64(icon(initial(p.icon), initial(p.icon_state))),
+				)
+			)
 			//Convert the HELD ITEM string into a purchased item on Mind if applicable here
-			if (p.name == usr.client.persistent_bank_item)
-				var/mob/new_player/playermob = usr.client.mob
+			if (p.name == user.client.persistent_bank_item)
+				found_held = p.name
+				var/mob/new_player/playermob = user.client.mob
 				if (playermob.mind)
 					playermob.mind.purchased_bank_item = p
 
-		ret += "<br>This menu is a WIP! Expect additional items and other changes to come in the future!<br/>"
-		return ret
+		if(user.client.persistent_bank_item && user.client.persistent_bank_item != "none" && !found_held)
+			user.client.set_last_purchase(null)
+			boutput(user, "<span class='notice'><b>The thing you previously purchased has been removed from your inventory due to it no longer existing.</b></span>")
 
-	OnClick( var/client/who, var/id )
-		if (istext(id))
-			id = text2num(id)
-		var/datum/bank_purchaseable/p = persistent_bank_purchaseables[id]
-		if( p )
-			if (try_purchase(who, p))
-				Unsubscribe( who )
+		. = list(
+			"purchasables" = purchasables,
+			"held" = found_held,
+			"balance" = user.client.persistent_bank
+		)
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if (.)
+			return
+		boutput(ui.user,params)
+		var/id = params["id"]
+		var/datum/bank_purchaseable/purchased = null
+		for(var/datum/bank_purchaseable/p in persistent_bank_purchaseables)
+			if(id == p.name)
+				purchased = p
+
+		if(istype(purchased))
+			if (try_purchase(ui.user.client, purchased))
+				ui.close()
 		else
-			boutput( who, "<span class='notice'><b>Oh no! Something is broken. Please tell a coder. (problem retrieving purchaseable id : [id])</b></span>" )
+			boutput( ui.user, "<span class='notice'><b>Oh no! Something is broken. Please tell a coder. (problem retrieving purchaseable id : [id])</b></span>" )
 
 	proc/try_purchase(var/client/c, var/datum/bank_purchaseable/p)
 		if (c.bank_can_afford(p.cost))
@@ -76,7 +87,6 @@
 			c << sound( 'sound/items/penclick.ogg' )
 			boutput( usr, "<span class='notice'><b>You can't afford [p.name]!</b></span>" )
 			return 0
-
 
 
 /chui/window/earn_spacebux

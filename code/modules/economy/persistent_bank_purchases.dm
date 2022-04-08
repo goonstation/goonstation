@@ -62,6 +62,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	var/cost = 0
 	var/atom/path = null //Object to spawn. If null, spawn nothing
 	var/carries_over = 1
+	var/icon = 'icons/obj/items/items.dmi'
+	var/icon_state = "spacebux"
 
 	var/list/required_levels = list() //Associated List of JOB:REQUIRED LEVEL ("Clown"=999) etc. Optional jobxp requirements for this.
 
