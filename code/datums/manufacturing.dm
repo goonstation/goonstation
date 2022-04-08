@@ -568,6 +568,33 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Machinery"
 
+/datum/manufacture/shieldgen
+	name = "Energy-Shield Gen."
+	item_paths = list("MET-2","CON-1","CRY-1")
+	item_amounts = list(20,10,5)
+	item_outputs = list(/obj/machinery/shieldgenerator/energy_shield/nocell)
+	time = 60 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/doorshieldgen
+	name = "Door-Shield Gen."
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(20,15)
+	item_outputs = list(/obj/machinery/shieldgenerator/energy_shield/doorlink/nocell)
+	time = 60 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/meteorshieldgen
+	name = "Meteor-Shield Gen."
+	item_paths = list("MET-1","MET-2","CON-1")
+	item_amounts = list(10,10,10)
+	item_outputs = list(/obj/machinery/shieldgenerator/meteorshield/nocell)
+	time = 30 SECONDS
+	create = 1
+	category = "Machinery"
+
 //// cogwerks - gas extraction stuff
 
 

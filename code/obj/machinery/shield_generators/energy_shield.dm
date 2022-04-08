@@ -13,6 +13,9 @@
 	direction = "dir"
 	layer = 3
 
+	nocell
+		starts_with_cell = FALSE
+
 	New()
 		..()
 		display_active.icon_state = "energyShieldOn"
@@ -137,6 +140,9 @@
 	max_power_level = 2
 	max_range = 3
 	var/emagged = FALSE
+
+	nocell
+		starts_with_cell = FALSE
 
 	New()
 		..()

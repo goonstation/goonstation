@@ -7,10 +7,10 @@
 	density = 1
 	opacity = 0
 	anchored = 0
-	mats = 50
 	layer = FLOOR_EQUIP_LAYER1
 	deconstruct_flags = DECON_DESTRUCT
 	var/obj/item/cell/PCEL = null
+	var/starts_with_cell = TRUE
 	var/coveropen = 0
 	var/active = 0
 	var/range = 2
@@ -31,9 +31,11 @@
 	var/obj/cable/connected_wire = null	//wire the gen is wrenched over. used to validate pnet connection
 	var/backup = 0		//if equip power went out while connected to wire, this should be true. Used to automatically turn gen back on if power is restored
 	var/first = 0		//tic when the power goes out.
+
 	New()
-		PCEL = new /obj/item/cell/supercell(src)
-		PCEL.charge = PCEL.maxcharge
+		if(starts_with_cell)
+			PCEL = new /obj/item/cell/supercell(src)
+			PCEL.charge = PCEL.maxcharge
 
 		src.display_active = image('icons/obj/meteor_shield.dmi', "on")
 		src.display_battery = image('icons/obj/meteor_shield.dmi', "")
