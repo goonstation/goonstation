@@ -15,6 +15,7 @@
 
 #define WEAPON_VENDOR_CATEGORY_SIDEARM "sidearm"
 #define WEAPON_VENDOR_CATEGORY_LOADOUT "loadout"
+#define WEAPON_VENDOR_CATEGORY_AMMO "ammo"
 #define WEAPON_VENDOR_CATEGORY_UTILITY "utility"
 #define WEAPON_VENDOR_CATEGORY_ASSISTANT "assistant"
 
@@ -31,7 +32,7 @@
 
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_buy = 'sound/machines/spend.ogg'
-	var/list/credits = list(WEAPON_VENDOR_CATEGORY_SIDEARM = 0, WEAPON_VENDOR_CATEGORY_LOADOUT = 0, WEAPON_VENDOR_CATEGORY_UTILITY = 0, WEAPON_VENDOR_CATEGORY_ASSISTANT = 0)
+	var/list/credits = list(WEAPON_VENDOR_CATEGORY_SIDEARM = 0, WEAPON_VENDOR_CATEGORY_LOADOUT = 0, WEAPON_VENDOR_CATEGORY_UTILITY = 0, WEAPON_VENDOR_CATEGORY_AMMO = 0, WEAPON_VENDOR_CATEGORY_ASSISTANT = 0)
 	var/list/datum/materiel_stock = list()
 	var/token_accepted = /obj/item/requisition_token
 	var/log_purchase = FALSE
@@ -118,10 +119,11 @@
 		materiel_stock += new/datum/materiel/utility/donuts
 		materiel_stock += new/datum/materiel/utility/crowdgrenades
 		materiel_stock += new/datum/materiel/utility/detscanner
-		materiel_stock += new/datum/materiel/utility/medcappowercell
 		materiel_stock += new/datum/materiel/utility/nightvisiongoggles
 		materiel_stock += new/datum/materiel/utility/markerrounds
 		materiel_stock += new/datum/materiel/utility/prisonerscanner
+		materiel_stock += new/datum/materiel/ammo/medium
+		materiel_stock += new/datum/materiel/ammo/self_charging
 		materiel_stock += new/datum/materiel/assistant/basic
 
 	vended(var/atom/A)
@@ -144,6 +146,7 @@
 			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
 		else
 			src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
+			src.credits[WEAPON_VENDOR_CATEGORY_AMMO]++
 			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
 			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
 		..()
@@ -226,6 +229,9 @@
 /datum/materiel/assistant
 	category = WEAPON_VENDOR_CATEGORY_ASSISTANT
 
+/datum/materiel/ammo
+	category = WEAPON_VENDOR_CATEGORY_AMMO
+
 //SECURITY
 
 /datum/materiel/sidearm/barrier
@@ -293,12 +299,6 @@
 	path = /obj/item/device/detective_scanner
 	description = "A scanner capable of reading fingerprints on objects and looking up the records in real time. A favorite of investigators."
 
-/datum/materiel/utility/medcappowercell
-	name = "Spare Power Cell"
-	path = /obj/item/ammo/power_cell/self_charging/disruptor
-	description = "A small(100u) self-charging power cell repurposed from a decommissioned distruptor blaster."
-	cost = 2
-
 /datum/materiel/utility/nightvisiongoggles
 	name = "Night Vision Goggles"
 	path = /obj/item/clothing/glasses/nightvision
@@ -313,6 +313,16 @@
 	name = "RecordTrak Scannner"
 	path = /obj/item/device/prisoner_scanner
 	description = "A device used to scan in prisoners and update their security records."
+
+/datum/materiel/ammo/medium
+	name = "Spare Power Cell"
+	path = /obj/item/ammo/power_cell/med_power
+	description = "A spare (200u) power cell. Fits in standard issue energy weapons."
+
+/datum/materiel/ammo/self_charging
+	name = "Distruptor Power Cell"
+	path = /obj/item/ammo/power_cell/self_charging/disruptor
+	description = "A small(100u) self-charging power cell repurposed from a decommissioned distruptor blaster."
 
 /datum/materiel/assistant/basic
 	name = "Assistant"
