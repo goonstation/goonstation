@@ -35,7 +35,7 @@ TOILET
 	if (istype(W, /obj/item/grab))
 		var/obj/item/grab/G = W
 		playsound(src, 'sound/effects/toilet_flush.ogg', 50, 1)
-		user.visible_message("<span class='notice'>[user] gives [G] a swirlie!</span>", "<span class='notice'>You give [G] a swirlie. It's like Middle School all over again!</span>")
+		user.visible_message("<span class='notice'>[user] gives [G.affecting] a swirlie!</span>", "<span class='notice'>You give [G.affecting] a swirlie. It's like Middle School all over again!</span>")
 		if (G.affecting.hasStatus("burning"))
 			G.affecting.changeStatus("burning", -2 SECONDS)
 			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
