@@ -26,7 +26,6 @@
 	src.update_name_tag()
 	src.flock.registerFlockmind(src)
 	src.flock.showAnnotations(src)
-	src.addAbility(/datum/targetable/flockmindAbility/controlPanel)
 	src.addAbility(/datum/targetable/flockmindAbility/spawnEgg)
 
 /mob/living/intangible/flock/flockmind/special_desc(dist, mob/user)
@@ -76,6 +75,7 @@
 	src.addAllAbilities()
 
 /mob/living/intangible/flock/flockmind/proc/addAllAbilities()
+	src.addAbility(/datum/targetable/flockmindAbility/controlPanel)
 	src.addAbility(/datum/targetable/flockmindAbility/designateTile)
 	src.addAbility(/datum/targetable/flockmindAbility/designateEnemy)
 	src.addAbility(/datum/targetable/flockmindAbility/partitionMind)

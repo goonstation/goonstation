@@ -355,8 +355,8 @@
 /////////////////////////////////////////
 
 /datum/targetable/flockmindAbility/controlPanel
-	name = "Flock Control"
-	desc = "(TEMPORARY) Open flock control panel."
+	name = "Flock Control Panel"
+	desc = "Open the Flock control panel."
 	icon_state = "radio_stun"
 	targeted = 0
 	cooldown = 0
