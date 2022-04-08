@@ -251,6 +251,18 @@
 	relaymove(mob/user as mob, dir)
 		src.eject_occupant(user)
 
+	mouse_drop(atom/over_object as obj)
+		if (istype(over_object, /turf))
+			drain_bathtub(usr)
+			return
+		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/reagent_dispensers) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/item/reagent_containers/mender) && !istype(over_object, /obj/item/tank/jetpack/backtank) && !istype(over_object, /obj/machinery/bathtub))
+			return ..()
+		if (usr.stat || usr.getStatusDuration("weakened") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)  //why has this bug been in since i joined goonstation and nobody even looked here yet wtf -ZeWaka
+			boutput(usr, "<span class='alert'>That's too far!</span>")
+			return
+
+		src.transfer_all_reagents(over_object, usr)
+
 	process()
 		if (src.on)
 			src.reagents.add_reagent(src.default_reagent, 100)
