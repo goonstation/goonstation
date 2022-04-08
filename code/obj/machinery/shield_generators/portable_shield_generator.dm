@@ -28,6 +28,7 @@
 	var/list/deployed_shields = list()
 	var/direction = ""	//for building the icon, always north or directional
 	var/connected = 0	//determine if gen is wrenched over a wire.
+	var/obj/cable/connected_wire = null	//wire the gen is wrenched over. used to validate pnet connection
 	var/backup = 0		//if equip power went out while connected to wire, this should be true. Used to automatically turn gen back on if power is restored
 	var/first = 0		//tic when the power goes out.
 	New()
@@ -99,14 +100,25 @@
 		qdel(src)
 		return
 
+	//Code for power draw. Dictates actual draw, also used in description.
+	proc/get_draw()
+		return 30 * src.range * (src.power_level * src.power_level)
+
+	//Checks if connected grid exists and is adequately powered. Doesn't use get_direct_powernet because that requires knots
+	proc/line_powered()
+		. = FALSE
+		if(!src.connected_wire)
+			return
+		var/datum/powernet/net = src.connected_wire.get_powernet()
+		if (net)
+			if (net.avail - net.newload > power_usage)
+				. = TRUE
+		return
 
 	proc/process_wired()
-		//must be wrenched on top of a wire
-		if(!connected)
-			return
-
-		if(powered()) //if connected to power grid and there is power
-			src.power_usage = 30 * (src.range + 1) * (power_level * power_level)
+		//check for linepower
+		if(line_powered())
+			src.power_usage = get_draw()
 			use_power(src.power_usage)
 
 			//automatically turn back on if gen was deactivated due to power outage
@@ -118,7 +130,7 @@
 			src.build_icon()
 
 			return
-		else //connected grid has no power
+		else //connected grid missing or has no power
 			if(!backup)
 				backup = !backup
 				first = 1
@@ -129,7 +141,7 @@
 			return
 
 	proc/process_battery()
-		PCEL.use(30 * src.range * (power_level * power_level))
+		PCEL.use(get_draw())
 		var/charge_percentage = 0
 		var/current_battery_level = 0
 		if(PCEL?.charge > 0 && PCEL.maxcharge > 0)
@@ -202,7 +214,7 @@
 					else
 						boutput(user, "The [src.name]'s battery light flickers briefly.")
 				else	//turn on power if connected to a power grid with power in it
-					if(powered() && connected)
+					if(line_powered() && connected)
 						src.shield_on()
 						src.visible_message("<b>[user.name]</b> powers up the [src.name].")
 					else
@@ -232,6 +244,10 @@
 			//just checking if it's placed on any wire, like powersink
 			var/obj/cable/C = locate() in get_turf(src)
 			if(C) //if generator is on wire
+				if(!src.connected)
+					src.connected_wire = C
+				else
+					src.connected_wire = null
 				src.connected = !src.connected
 				src.anchored = !src.anchored
 				src.backup = 0
@@ -422,10 +438,12 @@
 	icon_state = "shieldw"
 	event_handler_flags = USE_FLUID_ENTER
 	var/powerlevel //Stores the power level of the deployer
+	var/isactive = TRUE
 	density = 0
 
 	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
 	var/obj/machinery/shieldgenerator/deployer = null
+	var/obj/machinery/door/linked_door = null
 	var/update_tiles
 
 	flags = 0
@@ -471,11 +489,28 @@
 			density = 1
 
 	disposing()
+		if(linked_door)
+			linked_door.linked_forcefield = null
 		if(update_tiles)
 			update_nearby_tiles()
 		deployer = 0
 		..()
 
+	//hello it is kubius, this is moved here and changed to respect + not modify powerlevel
+	proc/setactive(var/a = 0) //this is called in a bunch of diff. door open procs. because the code was messy when i made this and i dont wanna redo door open code
+		if(a == 1)
+			src.icon_state = "shieldw"
+			src.isactive = TRUE
+			src.invisibility = INVIS_NONE
+			//these power levels are kind of arbitrary
+			if(src.powerlevel >= 2) src.flags |= FLUID_DENSE
+			if(src.powerlevel < 3) src.gas_impermeable = TRUE
+		else
+			src.icon_state = ""
+			src.isactive = FALSE
+			src.invisibility = INVIS_ALWAYS_ISH //ehh whatever this "works"
+			src.flags &= ~FLUID_DENSE
+			src.gas_impermeable = FALSE
 
 	proc/update_nearby_tiles(need_rebuild)
 		var/turf/simulated/source = loc
@@ -575,7 +610,7 @@
 
 
 //sealab arrivalss
-/obj/machinery/door/var/obj/forcefield/energyshield/perma/linked_forcefield = 0
+/obj/machinery/door/var/obj/forcefield/energyshield/linked_forcefield = 0
 
 /obj/forcefield/energyshield/perma
 	name = "Permanent Atmospheric/Liquid Forcefield"
@@ -586,20 +621,6 @@
 	flags = ALWAYS_SOLID_FLUID | FLUID_DENSE
 	gas_impermeable = TRUE
 	event_handler_flags = USE_FLUID_ENTER
-
-	proc/setactive(var/a = 0) //this is called in a bunch of diff. door open procs. because the code was messy when i made this and i dont wanna redo door open code
-		if(a)
-			icon_state = "shieldw"
-			powerlevel = 2
-			invisibility = INVIS_NONE
-			flags |= FLUID_DENSE
-			gas_impermeable = TRUE
-		else
-			icon_state = ""
-			powerlevel = 0
-			invisibility = INVIS_ALWAYS_ISH //ehh whatever this "works"
-			flags &= ~FLUID_DENSE
-			gas_impermeable = FALSE
 
 	meteorhit(obj/O as obj)
 		return
@@ -627,6 +648,7 @@
 			var/obj/machinery/door/door = (locate() in src.loc)
 			if(door)
 				door.linked_forcefield = src
+				src.linked_door = door
 				src.set_dir(door.dir)
 
 /obj/machinery/door/disposing()
