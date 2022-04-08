@@ -164,10 +164,9 @@
 	generate_shield()
 		if (range < 1)
 			return
-		else
-			for (var/obj/machinery/door/D in orange(src.range,src))
-				if(!D.linked_forcefield && !istype(D,/obj/machinery/door/firedoor))
-					createDoorForcefield(D)
+		for (var/obj/machinery/door/D in orange(src.range,src))
+			if(!D.linked_forcefield && !istype(D,/obj/machinery/door/firedoor))
+				createDoorForcefield(D)
 
 		src.anchored = 1
 		src.active = 1
