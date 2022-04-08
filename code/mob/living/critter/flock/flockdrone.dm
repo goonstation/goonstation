@@ -887,7 +887,8 @@
 	color_green = 0.9
 	color_blue = 0.8
 	disruption = 10
-
+	hit_ground_chance = 50
+	ks_ratio = 0.1
 /////////////////////////////////////////////////////////////////////////////////
 
 /datum/equipmentHolder/flockAbsorption
