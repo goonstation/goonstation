@@ -122,12 +122,12 @@
 		else
 			..()
 
-	// I Can't Believe It's Not Drowning!, a dirty copy/paste hack from breath & fluid_core
+	// dirty copy/paste hack from breath & fluid_core
 	handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 		var/mob/M = lifeform_inside_me
 		if (M.lying && M.get_oxygen_deprivation() > 40 && src.reagents.total_volume > suffocation_volume && breath_request > 0 )
 			src.reagents.reaction(M, INGEST)
-			src.reagents.trans_to(M, 5) // in addition to TOUCH in process()
+			src.reagents.trans_to(M, 5)
 			return null
 		else
 			. = ..()
@@ -154,7 +154,6 @@
 	// MOB_LAYER-0.2 = Water overlay
 	// MOB_LAYER-0.3 = Occupant
 	// MOB_LAYER-0.4 = Water underlay
-
 	on_reagent_change()
 		if(reagents.total_volume)
 			var/image/new_underlay = src.SafeGetOverlayImage("fluid_underlay", 'icons/obj/stationobjs.dmi', "fluid_bathtub", MOB_LAYER - 0.4)
@@ -171,23 +170,6 @@
 				var/image/new_overlay = src.SafeGetOverlayImage("fluid_overlay", 'icons/obj/stationobjs.dmi', "fluid_bathtub", MOB_LAYER - 0.2)
 				new_overlay.color = average.to_rgba()
 				src.UpdateOverlays(new_overlay, "fluid_overlay")
-
-				// I don't want to do this here but no where else feels right
-				// maybe a new chem transfer instead? Could be a new knob to tweak for cyrox too?
-				// #define SUBMERGED 4
-				// it would also make future projects of mine easier, so both this is and i am a hack
-				if(reagents.get_reagent_amount("blood") > 200) // arbitrary
-					// reagents don't track DNA, so it's your own blood vOv
-					src.occupant.shoes?.add_blood(src.occupant)
-					src.occupant.gloves?.add_blood(src.occupant)
-					if (src.occupant.wear_suit)
-						src.occupant.wear_suit.add_blood(src.occupant)
-					else if (src.occupant.w_uniform)
-						src.occupant.w_uniform.add_blood(src.occupant)
-					src.occupant.add_blood(src.occupant)
-					src.occupant.update_clothing()
-					src.occupant.update_body()
-
 		else
 			src.UpdateOverlays(null, "fluid_underlay")
 			src.UpdateOverlays(null, "fluid_overlay")
@@ -285,10 +267,27 @@
 				return
 			if(src.reagents.total_volume)
 				src.reagents.reaction(src.occupant, TOUCH)
-				src.reagents.trans_to(src.occupant, 5)
+				// hacky, but we don't have a SUBMERGED reaction
+				if(reagents.has_reagent("blood", suffocation_volume))
+					var/dna = null
+					var/datum/reagent/blood/sample = reagents.get_reagent("blood")
+					if (sample && istype(sample.data, /datum/bioHolder))
+						var/datum/bioHolder/tocopy = sample.data
+						dna = tocopy.owner
+					if (!dna)
+						dna = src.occupant
+					src.occupant.shoes?.add_blood(dna)
+					src.occupant.gloves?.add_blood(dna)
+					src.occupant.belt?.add_blood(dna)
+					if (src.occupant.wear_suit)
+						src.occupant.wear_suit.add_blood(dna)
+					else if (src.occupant.w_uniform)
+						src.occupant.w_uniform.add_blood(dna)
+					src.occupant.add_blood(dna)
+					src.occupant.update_clothing()
+					src.occupant.update_body()
 
 	MouseDrop_T(mob/living/carbon/human/target, mob/user)
-
 		if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 1 || BOUNDS_DIST(user, target) > 1 || is_incapacitated(user) || isAI(user))
 			return
 		if (src.occupant)
