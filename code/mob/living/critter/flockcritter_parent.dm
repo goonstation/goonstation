@@ -16,9 +16,7 @@
 	custom_vomit_type = /obj/decal/cleanable/flockdrone_debris/fluid
 	// HEALTHS
 	var/health_brute = 1
-	var/health_brute_vuln = 1.2 // glass
 	var/health_burn = 1
-	var/health_burn_vuln = 0.2 // don't burn very well at all
 	//base compute provided
 	var/compute = 0
 	// if we're extinguishing ourselves don't extinguish ourselves repeatedly
@@ -38,8 +36,17 @@
 	blood_id = "flockdrone_fluid"
 
 /mob/living/critter/flock/setup_healths()
-	add_hh_robot(src.health_brute, src.health_brute_vuln)
-	add_hh_robot_burn(src.health_burn, src.health_burn_vuln)
+	var/datum/healthHolder/brute = src.add_health_holder(/datum/healthHolder/flesh_flock)
+	brute.value = src.health_brute
+	brute.maximum_value = src.health_brute
+	brute.last_value = src.health_brute
+	brute.damage_multiplier = 1.2
+
+	var/datum/healthHolder/burn = src.add_health_holder(/datum/healthHolder/flesh_burn_flock)
+	burn.value = src.health_burn
+	burn.maximum_value = src.health_burn
+	burn.last_value = src.health_burn
+	burn.damage_multiplier = 0.2
 
 /mob/living/critter/flock/New(var/atom/L, var/datum/flock/F=null)
 	..()
@@ -543,3 +550,13 @@
 		target.currentmats += amounttopay
 		if(F.resources && !F.is_npc) //npc check just to make sure it doesnt interfere with their ai.
 			src.onRestart() //restart the action akin to automenders
+
+// flock health holders
+
+/datum/healthHolder/flesh_flock
+	name = "brute"
+	associated_damage_type = "brute"
+
+/datum/healthHolder/flesh_burn_flock
+	name = "burn"
+	associated_damage_type = "burn"
