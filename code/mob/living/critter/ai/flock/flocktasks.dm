@@ -498,8 +498,9 @@ butcher
 
 /datum/aiTask/succeedable/rummage/succeeded()
 	var/obj/item/storage/container_target = holder.target
+	var/mob/living/critter/flock/drone/F = holder.owner
 	if(container_target) // fix runtime Cannot read null.contents
-		return container_target.contents.len <= 0
+		return (container_target.contents.len <= 0) || (F.absorber.item == container_target)
 	else
 		return 0
 
@@ -510,38 +511,31 @@ butcher
 		usr = F // don't ask, please, don't
 		if(F?.set_hand(1)) // grip tool
 			// drop whatever we're holding
-			F.drop_item()
-			F.set_dir(get_dir(F, container_target))
-			F.hand_attack(container_target)
-			if(F.equipped() == container_target)
-				// we've picked up a container, just eat it, dump it onto the floor
-				container_target.MouseDrop(get_turf(F))
-				F.drop_item() // might as well eat the container now
-				return
+			if(!F.is_in_hands(container_target)) //if it's not in any of our hands, pick it up
+				F.drop_item()
+				F.set_dir(get_dir(F, container_target))
+				F.hand_attack(container_target) //try and pick it up
+			if(F.is_in_hands(container_target)) //did we do it?
+				if(F.absorber.item != container_target) //if it's in our manipulating hand
+					// we've picked up a container, just eat it, dump it onto the floor
+					container_target.MouseDrop(get_turf(F)) //this will do nothing on a locked secure storage
+					// might as well eat the container now
+					F.absorber.equip(container_target) //eating the container drops the contents anyway
+					return
 			else
 				// we've opened a HUD, do a fake HUD click, because i am dedicated to this whole puppetry schtick
 				container_target.hud.relay_click("boxes", F, dummy_params)
 				if(isitem(F.equipped()))
-					// we got an item from the thing, THROW IT
-					// we can't actually fake a throw command because we don't have a client (no, so do a bit more trickery to simulate it)
-					F.throw_mode_on()
-					var/list/random_pixel_offsets = list("icon-x" = rand(1, 32), "icon-y" = rand(1, 32))
-					// pick a random turf in sight to throw this at
-					var/list/throw_targets = list()
-					for(var/turf/T in oview(3, F))
-						throw_targets += T
-					if(throw_targets.len <= 0)
-						fails++
-						return
-					var/turf/throw_target = pick(throw_targets)
-					F.throw_item(throw_target, random_pixel_offsets)
-					F.throw_mode_off()
+					// we got an item from the thing, drop it for our friends to munch on
+					F.drop_item()
 					return
 				else
-					// either the container is empty and we're fruitlessly trying to get something, or we can't work the HUD for some reason
-					// (maybe the format got changed?)
-					fails++
-					return
+					container_target.MouseDrop(holder.owner) //last ditch, try click dragging it onto us
+					if(isitem(F.equipped()))
+						return
+				// either the container is empty and we're fruitlessly trying to get something, or we can't work the HUD for some reason
+				// (maybe the format got changed?)
+
 	// tick up a fail counter so we don't try to open something we can't forever
 	fails++
 
