@@ -72,8 +72,8 @@
 		return 1
 	var/datum/abilityHolder/flockmind/aH = src.abilityHolder
 	aH.updateCompute()
-	if (src.flock && src.flock.total_compute() <= src.flock.used_compute())
-		boutput(src, "<span class='alert'>There are insufficient drones left in the flock to compute your consciousness!</span>")
+	if (src.flock && src.flock.total_compute() < src.flock.used_compute())
+		boutput(src, "<span class='alert'>The Flock has insufficient compute to sustain your consciousness!</span>")
 		src.death() // get rekt
 
 /mob/living/intangible/flock/trace/death(gibbed)
