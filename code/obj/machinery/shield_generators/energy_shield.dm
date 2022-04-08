@@ -162,10 +162,8 @@
 			return 0
 
 	generate_shield()
-		if (range == 0)
-			var/obj/forcefield/energyshield/S = new /obj/forcefield/energyshield ( locate((src.x),(src.y),src.z), src , 1 )
-			S.icon_state = "enshieldw"
-			src.deployed_shields += S
+		if (range < 1)
+			return
 		else
 			for (var/obj/machinery/door/D in orange(src.range,src))
 				if(!D.linked_forcefield && !istype(D,/obj/machinery/door/firedoor))
