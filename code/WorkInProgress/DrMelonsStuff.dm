@@ -159,11 +159,11 @@
 		if(reagents.total_volume)
 			var/image/new_underlay = src.SafeGetOverlayImage("fluid_underlay", 'icons/obj/stationobjs.dmi', "fluid_bathtub", MOB_LAYER - 0.4)
 			var/datum/color/average = reagents.get_average_color()
-			var/percent_filled = reagents.total_volume / reagents.maximum_volume
-			if (percent_filled < 0.5)
-				average.a = round(average.a * percent_filled * 2)
+			var/fill_ratio = reagents.total_volume / reagents.maximum_volume
+			if (fill_ratio < 0.5)
+				average.a = round(average.a * fill_ratio * 2)
 			else
-				average.a = average.a + round((255 - average.a) * (percent_filled - 0.5) * 2)
+				average.a = average.a + round((255 - average.a) * (fill_ratio - 0.5) * 2)
 			new_underlay.color = average.to_rgba()
 			src.UpdateOverlays(new_underlay, "fluid_underlay")
 
