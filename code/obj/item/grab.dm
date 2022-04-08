@@ -98,6 +98,8 @@
 
 	set_loc() //never ever ever ever!!!
 		..()
+		if (src.disposed)
+			src.set_loc(null)
 		if (src.loc && !istype(src.loc, /mob))
 			qdel(src)
 
