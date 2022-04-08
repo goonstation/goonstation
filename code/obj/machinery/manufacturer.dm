@@ -2150,6 +2150,7 @@
 		/datum/manufacture/shoes,
 		/datum/manufacture/breathmask,
 		/datum/manufacture/fluidcanister,
+		/datum/manufacture/meteorshieldgen,
 		/datum/manufacture/shieldgen,
 		/datum/manufacture/doorshieldgen,
 		/datum/manufacture/patch)
