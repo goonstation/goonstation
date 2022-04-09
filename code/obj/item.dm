@@ -545,7 +545,6 @@
 	STOP_TRACKING_CAT(TR_CAT_CORRODING_ITEMS)
 	src.corroding = FALSE
 	src.corrosion = 0
-	name = "[pick("corroded","eroded","acidworn")] [name]"
 
 /obj/item/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if (src.burn_possible && !src.burning)
