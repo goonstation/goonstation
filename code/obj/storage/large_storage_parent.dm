@@ -442,10 +442,10 @@
 	alter_health()
 		. = get_turf(src)
 
-	Cross(atom/movable/mover)
-		. = open
-		if (src.is_short)
-			return 0
+	//Cross(atom/movable/mover)
+	//	. = open
+	//	if (src.is_short)
+	//		return 0
 
 	ex_act(severity)
 		switch (severity)
@@ -508,6 +508,8 @@
 			src.dump_contents(user)
 		else
 			src.dump_contents()
+		if (!is_short)
+			src.set_density(0)
 		src.open = 1
 		src.UpdateIcon()
 		p_class = initial(p_class)
@@ -528,7 +530,8 @@
 		if(entangled && !entangleLogic && !entangled.can_open())
 			visible_message("<span class='alert'>It won't budge!</span>")
 			return 0
-
+		if (!is_short)
+			src.set_density(1)
 		src.open = 0
 
 		for (var/obj/O in get_turf(src))
