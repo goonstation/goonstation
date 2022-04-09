@@ -860,7 +860,7 @@ datum
 								if(!D.corroding)
 									boutput(M, "<span class='alert'>Your [H.head.name] is being damaged by the acid.</span>")
 									newly_corroding = TRUE
-								D.corrode(volume/2)
+								D.corrode(volume)
 							protected_zones |= HEAD
 							if(H.head?.c_flags & COVERSMOUTH)
 								protected_zones |= PROT_FACE
@@ -871,7 +871,7 @@ datum
 									if(!K.corroding)
 										boutput(M, "<span class='alert'>Your [H.wear_mask.name] is being damaged by the acid.</span>")
 										newly_corroding = TRUE
-									K.corrode(volume/2)
+									K.corrode(volume)
 								protected_zones |= PROT_FACE
 						if (H.wear_suit)
 							var/obj/item/clothing/suit/SU = H.wear_suit
@@ -879,7 +879,7 @@ datum
 								if(!SU.corroding)
 									boutput(M, "<span class='alert'>Your [H.wear_suit.name] is being damaged by the acid.</span>")
 									newly_corroding = TRUE
-								SU.corrode(volume/2)
+								SU.corrode(volume)
 
 							protected_zones |= SU.body_parts_covered
 						if (!(protected_zones & TORSO) || !(protected_zones & ARMS) || !(protected_zones & LEGS))
@@ -889,7 +889,7 @@ datum
 									if(!UN.corroding)
 										boutput(M, "<span class='alert'>Your [H.w_uniform.name] is being damaged by the acid.</span>")
 										newly_corroding = TRUE
-									UN.corrode(volume/2)
+									UN.corrode(volume)
 								protected_zones |= TORSO
 								protected_zones |= LEGS
 								if(!(UN.c_flags & SLEEVELESS))
@@ -931,7 +931,7 @@ datum
 								if (!(D.item_function_flags & IMMUNE_TO_ACID))
 									if(!D.corroding)
 										boutput(M, "<span class='alert'>Your [H.head] is being damaged by the acid.</span>")
-									D.corrode(volume/2)
+									D.corrode(volume)
 								else
 									H.visible_message("<span class='alert>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
 								blocked = 1
@@ -940,7 +940,7 @@ datum
 								if (!(K.item_function_flags & IMMUNE_TO_ACID))
 									if(!K.corroding)
 										boutput(M, "<span class='alert'>Your [H.wear_mask] is being damaged by the acid.</span>")
-									K.corrode(volume/2)
+									K.corrode(volume)
 								else
 									H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [K] harmlessly.</span>", "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
 								blocked = 1
