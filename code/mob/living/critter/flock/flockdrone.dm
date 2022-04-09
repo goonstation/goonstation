@@ -219,9 +219,9 @@
 
 /mob/living/critter/flock/drone/Cross(atom/movable/mover)
 	if(isflock(mover))
-		return 1
+		return TRUE
 	else
-		return 0
+		return !src.density
 
 /mob/living/critter/flock/drone/MouseDrop_T(mob/living/target, mob/user)
 	if(!target || !user)
@@ -523,6 +523,18 @@
 				src.icon_state = "drone-d2"
 	return
 
+/mob/living/critter/flock/drone/proc/reduce_lifeprocess_on_death() //used for AI mobs we dont give a dang about them after theyre dead
+	remove_lifeprocess(/datum/lifeprocess/blood)
+	remove_lifeprocess(/datum/lifeprocess/canmove)
+	remove_lifeprocess(/datum/lifeprocess/disability)
+	remove_lifeprocess(/datum/lifeprocess/fire)
+	remove_lifeprocess(/datum/lifeprocess/hud)
+	remove_lifeprocess(/datum/lifeprocess/mutations)
+	remove_lifeprocess(/datum/lifeprocess/organs)
+	remove_lifeprocess(/datum/lifeprocess/sight)
+	remove_lifeprocess(/datum/lifeprocess/skin)
+	remove_lifeprocess(/datum/lifeprocess/statusupdate)
+
 /mob/living/critter/flock/drone/death(var/gibbed)
 	if(src.floorrunning)
 		src.end_floorrunning()
@@ -547,7 +559,8 @@
 	..()
 	src.icon_state = "drone-dead"
 	playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
-	src.set_density(0)
+	src.reduce_lifeprocess_on_death()
+	src.set_density(FALSE)
 	desc = "[initial(desc)]<br><span class='alert'>\The [src] is a dead, broken heap.</span>"
 	src.remove_simple_light("drone_light")
 
