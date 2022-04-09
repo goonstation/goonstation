@@ -442,11 +442,6 @@
 	alter_health()
 		. = get_turf(src)
 
-	//Cross(atom/movable/mover)
-	//	. = open
-	//	if (src.is_short)
-	//		return 0
-
 	ex_act(severity)
 		switch (severity)
 			if (1)
