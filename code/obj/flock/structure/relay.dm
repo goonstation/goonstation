@@ -101,3 +101,26 @@
 			flockdronegibs(locate(location.x + x, location.y + y, location.z))
 	explosion_new(src, location, 2000)
 	gib(location)
+	sleep(2 SECONDS) //allow them to hear the explosion before their headsets scream and die
+	destroy_radios()
+
+///Brick every headset noisily
+/obj/flock_structure/relay/proc/destroy_radios()
+	//mid-tier jank, but it's a nice easy way to get the radio network
+	var/obj/item/device/radio/headset/entrypoint = new()
+	var/list/obj/radios = get_radio_connection_by_id(entrypoint, "main").network.analog_devices
+	for (var/obj/item/device/radio/radio in radios)
+		if (!istype(radio))
+			continue
+		if (prob(30)) //give it a slight cascading effect
+			sleep(0.1 SECONDS)
+		playsound(radio, "sound/effects/radio_sweep[rand(1,5)].ogg", 100, 1, pitch = 0.4)
+		var/mob/wearer = radio.loc
+		if (istype(wearer))
+			wearer.show_text("A final scream of horrific static bursts from your radio, destroying it!", "red")
+			wearer.apply_sonic_stun(3, 6, 60, 0, 0, rand(1, 3), rand(1, 3))
+		radio.bricked = TRUE
+		radio.frequency = rand(R_FREQ_MINIMUM, 10000)
+		radio.secure_frequencies = list()
+		radio.set_secure_frequencies()
+	qdel(entrypoint)

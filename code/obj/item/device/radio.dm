@@ -25,7 +25,10 @@
 	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
 	///This is for being able to run through signal jammers (just solar flares for now). acceptable values = 0 and 1.
 	var/hardened = 1
-
+	///Set to make it not work, used by flock victory screech
+	var/bricked = FALSE
+	///Message shown when you attempt to use the radio while bricked
+	var/bricked_msg = "The radio is utterly dead and silent."
 	/// Set to TRUE for your radio obj to have unconditional flying text. Override showMapText() to conditionalize it.
 	var/doesMapText = FALSE
 	// probably not too resource intensive but I'd be careful using this just in case
@@ -103,6 +106,9 @@ var/list/headset_channel_lookup
 	return
 
 /obj/item/device/radio/ui_interact(mob/user, datum/tgui/ui)
+	if (src.bricked)
+		user.show_text(src.bricked_msg, "red")
+		return
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Radio")
@@ -147,7 +153,8 @@ var/list/headset_channel_lookup
 	. = ..()
 	if (.)
 		return
-
+	if (src.bricked)
+		return
 	switch(action)
 		if ("set-frequency")
 			if (src.locked_frequency)
@@ -249,6 +256,9 @@ var/list/headset_channel_lookup
 		return
 //	if (last_transmission && world.time < (last_transmission + TRANSMISSION_DELAY))
 //		return
+	if (src.bricked)
+		M.show_text(src.bricked_msg, "red")
+		return
 
 	var/ai_sender = 0
 	var/eqjobname
@@ -289,7 +299,8 @@ var/list/headset_channel_lookup
 	for (var/obj/item/I as anything in connection.network?.analog_devices)
 		if (istype(I, /obj/item/device/radio))
 			var/obj/item/device/radio/R = I
-
+			if (R.bricked)
+				continue
 			if (length(by_cat[TR_CAT_RADIO_JAMMERS]) && check_for_radio_jammers(R))
 				continue
 			//if we have signal_loss (solar flare), and the radio isn't hardened don't send message, then block general frequencies.
