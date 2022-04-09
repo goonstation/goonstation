@@ -32359,11 +32359,7 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/decal/tile_edge/stripe{
-	dir = 4;
-	icon_state = "delivery2";
-	tag = ""
-	},
+/obj/stool/bench/green,
 /turf/simulated/floor/black,
 /area/station/hydroponics/lobby)
 "bDP" = (
@@ -32377,12 +32373,6 @@
 	dir = 9;
 	name = "autoname - SS13";
 	pixel_x = 10;
-	tag = ""
-	},
-/obj/machinery/navbeacon/mule/hydroponics_north/west,
-/obj/decal/tile_edge/stripe{
-	dir = 4;
-	icon_state = "bot2";
 	tag = ""
 	},
 /turf/simulated/floor/greenblack{
@@ -33382,6 +33372,12 @@
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
+	},
+/obj/machinery/navbeacon/mule/hydroponics_north/south,
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "bot2";
+	tag = ""
 	},
 /turf/simulated/floor/greenblack{
 	dir = 4
@@ -34426,7 +34422,10 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/stool/bench/green/auto,
+/obj/stool/bench/green,
+/obj/landmark/start{
+	name = "Botanist"
+	},
 /turf/simulated/floor/greenblack,
 /area/station/hydroponics/lobby)
 "bJu" = (
@@ -34435,9 +34434,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east,
-/obj/stool/bench/green/auto,
-/obj/landmark/start{
-	name = "Botanist"
+/obj/decal/tile_edge/stripe{
+	icon_state = "delivery2";
+	tag = ""
 	},
 /turf/simulated/floor/greenblack{
 	dir = 6
