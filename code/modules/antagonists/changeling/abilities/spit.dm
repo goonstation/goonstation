@@ -35,9 +35,9 @@
 			A.set_density(0)
 			A.layer = EFFECTS_LAYER_UNDER_1
 			A.flags += TABLEPASS
-			A.reagents = new /datum/reagents(10)
+			A.reagents = new /datum/reagents(15)
 			A.reagents.my_atom = A
-			A.reagents.add_reagent("pacid", 10)
+			A.reagents.add_reagent("pacid", 15)
 			animate_spin(A, "R", 1.4, -1)
 
 			var/obj/overlay/B = new /obj/overlay( A.loc )
