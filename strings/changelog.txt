@@ -1,5 +1,10 @@
 
 (t)sat apr 09 22
+(u)NightmareChamillian
+(p)8087
+(e)🎨|sprites
+(+)Added purple jumpsuits and hats to uniform manufacturers
+(+)Sorted jumpsuits and hats in manufacturers by the rainbow
 (u)Flappybat
 (p)8149
 (e)🐛⚖|bug, balance
