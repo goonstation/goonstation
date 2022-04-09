@@ -323,8 +323,8 @@
 		m.set_loc(src.loc)
 		m.ghostize()
 
-	if (!src.ghost)
-		src.ghost = src.ghostize()
+	// this looks sketchy, but ghostize is fairly safe- we check for an existing ghost or NPC status, and only make a new ghost if we need to
+	src.ghost = src.ghostize()
 	if (src.ghost?.corpse == src)
 		src.ghost.corpse = null
 
