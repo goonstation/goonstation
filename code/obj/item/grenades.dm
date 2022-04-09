@@ -155,6 +155,23 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	payload = /obj/critter/spacebee
 	is_dangerous = TRUE
 
+
+/obj/item/old_grenade/spawner/sawfly
+	name = "Compact sawfly"
+	desc = "A self-deploying area antipersonnel robot. It's folded up and offline..."
+	icon_state = "sawfly"
+	icon_state_armed = "sawfly1"
+	payload = /obj/critter/gunbot/drone/buzzdrone/sawfly
+	is_dangerous = TRUE
+
+	prime() // we only want one drone
+		var/turf/T = ..()
+		if (T)
+			new /obj/critter/gunbot/drone/buzzdrone/sawfly(T)// this is probably a shitty way of doing it but it works
+		qdel(src)
+		return
+
+
 /obj/item/old_grenade/thing_thrower
 	desc = "It is set to detonate in 3 seconds."
 	name = "banana grenade"

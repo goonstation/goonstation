@@ -498,6 +498,19 @@ toxic - poisons
 				V.health -= power * 1.8
 				V.checkhealth()
 
+	sawfly// sawfly weapon
+		name = "Whirring Blades"
+		shot_sound = "sound/machines/chainsaw_green.ogg"
+		hit_human_sound = "sound/impact_sounds/Flesh_Tear_1.ogg"
+		power = 20
+		dissipation_rate = 20
+		sname = "Whirring Blades"
+
+		on_hit(atom/hit)
+
+			if (istype(hit,/obj/critter/gunbot/drone))//NO FRIENDLY FIRE YOU STUPID FUCKING DRONES
+				return
+			..()
 /datum/projectile/laser/alastor
 	name = "laser"
 	icon = 'icons/obj/projectiles.dmi'
