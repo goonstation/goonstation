@@ -79,7 +79,7 @@
 	setupProperties()
 		..()
 		if(src.permeability_coefficient < 1)
-			var/crossfactor = min(98,100-(100*permeability_coefficient))
+			var/crossfactor = min(99,100-(100*permeability_coefficient))
 			setProperty("acidres", crossfactor)
 
 /obj/item/clothing/under
