@@ -604,12 +604,13 @@
 							break
 
 			if (href_list["speed"])
+				var/upperbound = src.hacked ? 5 : 3
+				var/given_speed = text2num(href_list["speed"])
 				if (src.mode == "working")
 					boutput(usr, "<span class='alert'>You cannot alter the speed setting while the unit is working.</span>")
+				else if (given_speed >= 1 && given_speed <= upperbound)
+					src.speed = given_speed
 				else
-					var/upperbound = 3
-					if (src.hacked)
-						upperbound = 5
 					var/newset = input(usr,"Enter from 1 to [upperbound]. Higher settings consume more power","Manufacturing Speed") as num
 					newset = clamp(newset, 1, upperbound)
 					src.speed = newset
