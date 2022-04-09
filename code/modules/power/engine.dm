@@ -3,7 +3,7 @@
 		return
 	if (user.pulling.anchored)
 		return
-	if ((user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
+	if ((user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0))
 		return
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling

@@ -622,15 +622,15 @@ ABSTRACT_TYPE(/datum/job/research)
 	limit = 3
 	wages = 200
 	slot_back = list(/obj/item/storage/backpack/robotics)
-	slot_belt = list(/obj/item/device/pda2/medical/robotics)
+	slot_belt = list(/obj/item/storage/belt/roboticist/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/roboticist)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/robotics)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
-	slot_lhan = list(/obj/item/storage/toolbox/mechanical)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
-	slot_poc1 = list(/obj/item/reagent_containers/mender/brute)
+	slot_poc1 = list(/obj/item/device/pda2/medical/robotics)
+	slot_poc2 = list(/obj/item/reagent_containers/mender/brute)
 
 	New()
 		..()
@@ -1197,11 +1197,13 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/research_assistant
 	name = "Research Assistant"
 	linkcolor = "#9900FF"
-	limit = 1
+	limit = 2
 	wages = PAY_UNTRAINED
 	low_priority_job = 1
 	slot_jump = list(/obj/item/clothing/under/color/white)
 	slot_foot = list(/obj/item/clothing/shoes/white)
+	slot_belt = list(/obj/item/device/pda2/toxins)
+	slot_ears = list(/obj/item/device/radio/headset/research)
 
 	New()
 		..()
@@ -1211,11 +1213,13 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/medical_assistant
 	name = "Medical Assistant"
 	linkcolor = "#9900FF"
-	limit = 1
+	limit = 2
 	wages = PAY_UNTRAINED
 	low_priority_job = 1
-	slot_jump = list(/obj/item/clothing/under/color/white)
-	slot_foot = list(/obj/item/clothing/shoes/white)
+	slot_jump = list(/obj/item/clothing/under/scrub = 30,/obj/item/clothing/under/scrub/teal = 14,/obj/item/clothing/under/scrub/blue = 14,/obj/item/clothing/under/scrub/purple = 14,/obj/item/clothing/under/scrub/orange = 14,/obj/item/clothing/under/scrub/pink = 14)
+	slot_foot = list(/obj/item/clothing/shoes/red)
+	slot_ears = list(/obj/item/device/radio/headset/medical)
+	slot_belt = list(/obj/item/device/pda2/medical)
 
 	New()
 		..()
@@ -1243,11 +1247,13 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/tech_assistant
 	name = "Technical Assistant"
 	linkcolor = "#FF9900"
-	limit = 1
+	limit = 2
 	wages = PAY_UNTRAINED
 	low_priority_job = 1
 	slot_jump = list(/obj/item/clothing/under/color/yellow)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_ears = list(/obj/item/device/radio/headset/engineer)
+	slot_belt = list(/obj/item/device/pda2/technical_assistant)
 
 	New()
 		..()
@@ -1278,6 +1284,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_poc1 = list(/obj/item/scissors)
 	slot_poc2 = list(/obj/item/razor_blade)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
 
 	New()
 		..()
@@ -1381,6 +1388,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = list(/obj/item/clothing/under/suit/pinstripe)
 	slot_head = list(/obj/item/clothing/head/flatcap)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
 
 // randomizd gimmick jobs
@@ -1724,6 +1732,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 #elif defined(MAP_OVERRIDE_OSHAN)
 	limit = 1
 	special_spawn_location = 0
+#elif defined(UPSCALED_MAP)
+	limit = 1
+	special_spawn_location = 1
+	spawn_x = 276 * 2
+	spawn_y = 257 * 2
+	spawn_z = 3
 #else
 	limit = 1
 	special_spawn_location = 1
@@ -2307,7 +2321,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
-	receives_implant = /obj/item/implant/microbomb
+	receives_implant = /obj/item/implant/revenge/microbomb
 	slot_back = list(/obj/item/storage/backpack/satchel)
 	slot_belt = list(/obj/item/gun/kinetic/pistol)
 	slot_jump = list(/obj/item/clothing/under/misc/syndicate)
@@ -2603,6 +2617,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_poc1 = list(/obj/item/scissors)
 	slot_poc2 = list(/obj/item/razor_blade)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
 
 	New()
 		..()
@@ -2673,6 +2688,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_jump = list(/obj/item/clothing/under/suit/pinstripe)
 	slot_head = list(/obj/item/clothing/head/flatcap)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
 
 /datum/job/battler

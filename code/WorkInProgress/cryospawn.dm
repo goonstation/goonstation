@@ -1,16 +1,7 @@
 #define CRYOSLEEP_DELAY 5 MINUTES
 #define CRYOTRON_MESSAGE_DELAY 3 SECONDS
 
-/obj/cryotron_spawner
-	New()
-		..()
-		SPAWN(1 SECOND)
-#ifdef RP_MODE
-			new /obj/cryotron(src.loc)
-#endif
-			qdel(src)
-
-//Special destiny spawn point doodad
+//Latejoin spawn point thing, for gracefully leaving rounds. Also replaces the arrivals shuttle on some maps.
 /obj/cryotron
 	name = "industrial cryogenic sleep unit"
 	desc = "The terminus of a large underfloor cryogenic storage complex."
@@ -42,7 +33,11 @@
 		// and stops the "decompression" from coming out the left side
 		START_TRACKING
 		processing_items += src
-		x += 1
+		x += -bound_x / world.icon_size
+		#ifdef UPSCALED_MAP
+		pixel_x = -64
+		#endif
+
 
 	disposing()
 		STOP_TRACKING
@@ -217,12 +212,12 @@
 			boutput(user, "<b>You can't put someone in cryogenic storage while you're incapacitated or restrained!</b>")
 			return FALSE
 		// Person entering is too far away
-		if (get_dist(src, L) > 1)
+		if (BOUNDS_DIST(src, L) > 0)
 			boutput(L, "<b>You need to be closer to [src] to enter cryogenic storage!</b>")
 			boutput(user, "<b>[L] needs to be closer to [src] for you to put them in cryogenic storage!</b>")
 			return FALSE
 		// Person putting other person in is too far away
-		if (user && get_dist(src, user) > 1)
+		if (user && BOUNDS_DIST(src, user) > 0)
 			boutput(user, "<b>You need to be closer to [src] to put someone in cryogenic storage!</b>")
 			return FALSE
 		var/mob/living/silicon/R = L
@@ -257,8 +252,7 @@
 						time_left_message = "[minutes] minute[s_es(minutes)] and [time_left_message]"
 
 					boutput(user, "<b>You must wait at least [time_left_message] until you can leave cryosleep.</b>")
-					user.last_cryotron_message = ticker.round_elapsed_ticks
-					return 0
+					return FALSE
 		if (alert(user, "Would you like to leave cryogenic storage?", "Confirmation", "Yes", "No") == "No")
 			return 0
 		if (user.loc != src || !stored_mobs.Find(user))
@@ -326,13 +320,13 @@
 		return FALSE
 
 	relaymove(var/mob/user as mob, dir)
-		if ((user.last_cryotron_message + CRYOTRON_MESSAGE_DELAY) > ticker.round_elapsed_ticks)
+		if (ON_COOLDOWN(user, "cryotron_move", CRYOTRON_MESSAGE_DELAY))
 			return ..()
 		if (!exit_prompt(user))
 			return ..()
 
 	MouseDrop_T(atom/target, mob/user as mob)
-		if (ishuman(target) && isrobot(user) && get_dist(src, user) <= 1 && get_dist(src, target) <= 1 && get_dist(user, target) <= 1)
+		if (ishuman(target) && isrobot(user) && BOUNDS_DIST(src, user) == 0 && BOUNDS_DIST(src, target) == 0 && BOUNDS_DIST(user, target) == 0)
 			insert_prompt(target, user)
 			return
 		return ..()

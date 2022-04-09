@@ -1769,7 +1769,7 @@
 										do_flip = FALSE
 									if(do_flip && (!oldloc.Enter(tmob) || !newloc.Enter(src)))
 										do_flip = FALSE
-									if(do_flip && !IN_RANGE(newloc, oldloc, 1))
+									if(do_flip && !(BOUNDS_DIST(newloc, oldloc) == 0))
 										do_flip = FALSE
 									if(do_flip)
 										for(var/atom/movable/obstacle in oldloc)
@@ -2321,9 +2321,9 @@
 		src.render_target = "\ref[src]"
 
 /mob/living/proc/do_suplex(obj/item/grab/G)
-	if (!(G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc)))
+	if (!(G.state >= GRAB_STRONG && isturf(src.loc) && isturf(G.affecting.loc)))
 		return null
-	if(!IN_RANGE(src, G.affecting, 1))
+	if(!(BOUNDS_DIST(src, G.affecting) == 0))
 		return null
 
 	var/obj/table/tabl = locate() in src.loc.contents

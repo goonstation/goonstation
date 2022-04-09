@@ -1555,7 +1555,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		if (status & NOPOWER)
 			return
 
-		if (get_dist(src, usr) > 1 && !issilicon(usr))
+		if (BOUNDS_DIST(src, usr) > 0 && !issilicon(usr))
 			return
 
 		program?.receive_user_command(href_list["command"])
@@ -2132,7 +2132,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 		return attack_hand(user)
 
 	attack_hand(mob/living/user)
-		if (!istype(user) || user.stat || (get_dist(src, user) > 1) || well_fuck_its_armed)
+		if (!istype(user) || user.stat || (BOUNDS_DIST(src, user) > 0) || well_fuck_its_armed)
 			return
 
 		well_fuck_its_armed = 1

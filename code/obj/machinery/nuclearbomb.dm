@@ -110,7 +110,7 @@
 		if (src.debugmode)
 			open_wire_panel(user)
 			return
-		if (!user.mind || get_dist(src, user) > 1)
+		if (!user.mind || BOUNDS_DIST(src, user) > 0)
 			return
 
 		user.lastattacked = src
@@ -392,7 +392,7 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, the_bomb) > 1 || the_bomb == null || owner == null)
+		if(BOUNDS_DIST(owner, the_bomb) > 0 || the_bomb == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -402,7 +402,7 @@
 
 	onStart()
 		..()
-		if(get_dist(owner, the_bomb) > 1 || the_bomb == null || owner == null)
+		if(BOUNDS_DIST(owner, the_bomb) > 0 || the_bomb == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

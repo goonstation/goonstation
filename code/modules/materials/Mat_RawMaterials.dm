@@ -78,10 +78,10 @@
 			return
 
 		if(!istype(over_object, /atom/movable/screen/hud))
-			if (get_dist(usr,src) > 1)
+			if (BOUNDS_DIST(usr, src) > 0)
 				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
-			if (get_dist(usr,over_object) > 1)
+			if (BOUNDS_DIST(usr, over_object) > 0)
 				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
 

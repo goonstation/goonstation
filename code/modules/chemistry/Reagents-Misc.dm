@@ -3191,6 +3191,16 @@ datum
 				holder.del_reagent(id)
 				holder.del_reagent("blood")
 
+		blood/hemolymph
+			name = "hemolymph"
+			id = "hemolymph"
+			//taste = "metallic yet slightly bitter"
+			description = "Hemolymph is a blood-like bodily fluid found in many invertibrates that derives its blue-green color from the presence of copper proteins."
+			reagent_state = LIQUID
+			fluid_r = 6
+			fluid_b = 161
+			fluid_g = 125
+
 
 		vomit
 			name = "vomit"
@@ -4111,7 +4121,7 @@ datum
 
 	proc/process()
 		while (!disposed)
-			if (get_dist(src, src.deathtarget) <= 1)
+			if (BOUNDS_DIST(src, src.deathtarget) == 0)
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span class='alert'><B>[src]</B> flips up, over and behind [deathtarget] and punches them in the groin before rolling under the floortiles!</span>", 1)
 

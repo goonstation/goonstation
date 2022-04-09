@@ -1,4 +1,143 @@
 
+(t)sat apr 09 22
+(u)Ikea
+(p)7912
+(e)🗺|mapping
+(+)The vault prefab has had its contents nerfed, and has undergone minor changes.
+(u)NightmareChamillian
+(p)8081
+(e)🎨|sprites
+(+)Roboticists now spawn with a stocked toolbelt
+(u)NightmareChamillian
+(p)8117
+(e)🆕|feature
+(*)Roach people (and some bug critters for that matter) now bleed hemolymph instead of normal blood
+(+)Hemolymph can be broken down with space cleaner, acetone, and some heat.
+(u)NightmareChamillian
+(p)8087
+(e)🎨|sprites
+(+)Added purple jumpsuits and hats to uniform manufacturers
+(+)Sorted jumpsuits and hats in manufacturers by the rainbow
+(u)Flappybat
+(p)8149
+(e)🐛⚖|bug, balance
+(+)Added protection to nodamage/spellshield from force drinking, flash and Securitron batons.
+(t)thu apr 07 22
+(u)tarmunora
+(+)Ammo cell in security pouch replaced with donut.
+(+)Distruptor cell utility purchase in sec vendors removed, tokens now give a "ammo" credit that can be used to acquire either a spare 200u cell or the distruptor cell.
+(+)Distruptor cell self-charge rate reduced back down to 5.
+(u)aloe
+(+)Werewolf/abomination/zombie arms now prevent you from moving while they grab you. You can still resist out it's just a bit harder than a passive grab. Will tweak the percentages as needed.
+(+)Fiber wire should work now
+(u)Ikea
+(p)7914
+(e)🗺|mapping
+(+)The records contained within the radio station are now randomized.
+(t)tue apr 05 22
+(u)aloe
+(*)Taking items off people now takes 30 stamina when starting the action.
+(*)Some timings for taking items off people have been slightly adjusted. See minor changes for a list.
+(+)INCREASED: Backpacks, jumpsuits, helmets, space suits<br>DECREASED: Radios, gloves, non-helmet hats, glasses<br>Exact timings vary, but most are 1 second increase/decreases. Space suits take significantly longer.
+(+)Grenades can be put in people's pockets very fast. If you're into that.
+(u)aloe
+(*)You can now construct furniture on adjacent tiles by clicking those tiles.
+(*)You can now walk on tables as long as you're also on a table. However, you can no longer build tables on the same tile you're standing on.
+(+)Furniture can no longer be built on the same tile as impassable objects- e.g. no stacking multiple tables, no building chairs on the same tile as a vending machine.
+(u)Sovexe
+(p)8111
+(e)🆕|feature
+(+)Hovering over a pixel in the canvas editor now displays its coordinates.
+(t)mon apr 04 22
+(u)pali
+(*)CentCom dance floor has been covered by some kind of a canvas, huh. <s>r/place don't sue me pls</s>
+(u)Flaborized
+(p)8062
+(e)|
+(+)The Adamantium Skeleton trait now outputs a message in the chat when it prevents you from losing a limb.
+(u)RubberRats
+(p)7796
+(e)🆕|feature
+(*)Added a new negative trait: Frail Constitution. Taking this trait greatly increases the amount of damage that your internal organs take from all sources.
+(u)Flaborized
+(p)8060
+(e)🔄|rework
+(*)The human torch trait is now worth two points, but totally prevents the burning status counter from decrementing on its own.
+(t)sun apr 03 22
+(u)ThyOverlord
+(p)8072
+(e)🎨|sprites
+(+)Resprited Mono cards and their respective stacks/hands. Also updated MonoRules.txt to
+(u)LeahTheTech
+(p)8058
+(e)🆕|feature
+(*)AI law changes are now highlighted and display removed laws
+(t)sat apr 02 22
+(u)aloe
+(+)Pods now "eject" you on exploding. This also applies to the SEED.
+(u)Cogwerks
+(e)🗺🎨|mapping, sprites
+(*)Revising positions of stuff in the debris field and the dining level
+(*)Hemera, zombie-roid, drone carrier, time ship, and flock ship moved around
+(*)Martian derelict moved to dining level
+(*)Added more background space planets and moons to the imagined plasma giant orbits
+(u)Flappybat
+(p)7950
+(e)🆕|feature
+(*)Battle Royale now forces a shuttle when five players remain. A deadly storm will hit the entire station, finish everyone else off or escape on the shuttle to survive!
+(+)Battle Royale now prevents you leaving the station level edges, be careful spacing players as they may return.
+(u)NightmareChamillian
+(p)7694
+(e)⚖|balance
+(*)Deconstruction devices can now be used in surgeries- at your own personal risk
+(u)Flaborized
+(p)7952
+(e)|
+(*)LSD now has a different, unique color-changing animation when in your system.
+(u)Flappybat
+(p)7929
+(e)⚖|balance
+(+)Spellshield now protects wizards from the syndicate saw, butcher knife and katana.
+(t)thu mar 31 22
+(u)Laboredih123 & glowbold
+(p)7928
+(e)🎨|sprites
+(+)Nanotrasen has now made windows fully connected, removing seams.
+(t)wed mar 30 22
+(u)Yellow/Myco
+(p)7983
+(e)🎨|sprites
+(+)Changes the sprite of almost every beard, along with Hogan and Vandyke
+(u)zjdtmkhzt
+(p)8026
+(e)🆕⚖|feature, balance
+(+)The nukeops heavy energy sword can now reflect projectiles like a csaber can. (This was always there, it just didn't work because it was bugged until now.)
+(u)Hans
+(p)7563
+(e)🆕🎨|feature, sprites
+(*)Added space rattlesnakes to the game. Beware!
+(u)CodeJester
+(p)7822
+(e)📄|tgui
+(*)The Reagent Heater/Cooler has a new UI menu. Enjoy the blazing red color of setting the temperature to 1000 K every time.
+(u)aloe
+(*)Macrobombs have been removed. You can still just buy 12 micros, though.
+(*)Engineers get a flyzapper implant- costs 1 TC, acts sort of like a micro except you shock the shit out of people when you die instead of exploding. Stacks. Probably a bit weak (when compared to micros) currently, will do a numbers pass soon.
+(u)Amylizzle
+(p)8019
+(e)|
+(*)Hologram expansion modules now work properly with AI Law Racks.
+(t)tue mar 29 22
+(u)Wisemonster
+(p)7956
+(e)|
+(*)Engineering cyborg modules now come with a battery-hungry power shovel, to help with the Oshan engine. (Shovel is restricted to modules on Oshan)
+(t)mon mar 28 22
+(u)Yellow
+(p)7547
+(e)⚖|balance
+(*)Changes up Research Assistant, Medical Assistant, and Technical Assistant to make them more applicable for those who want to learn
+(+)Gives both Barbers and Musicians civilian headsets
 (t)sun mar 27 22
 (u)Amylizzle
 (p)7992

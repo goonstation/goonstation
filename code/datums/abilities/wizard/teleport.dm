@@ -95,7 +95,7 @@
 			if (comp_check.status & (NOPOWER|BROKEN))
 				src.show_text("[comp_check] is out of order.", "red")
 				return 0
-			if (get_dist(src, comp_check) > 1)
+			if (BOUNDS_DIST(src, comp_check) > 0)
 				src.show_text("[comp_check] is too far away.", "red")
 				return 0
 

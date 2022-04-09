@@ -269,7 +269,7 @@
 				return
 
 			//Ai/cyborgs cannot physically remove a tape from a room away.
-			if(issilicon(usr) && get_dist(src, usr) > 1)
+			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 				return
 
@@ -742,7 +742,7 @@
 		if(user.lying || user.stat)
 			return 1
 
-		if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user))
+		if ((BOUNDS_DIST(src, user) > 0 || !istype(src.loc, /turf)) && !issilicon(user))
 			return 1
 
 		src.add_dialog(user)
@@ -784,7 +784,7 @@
 		if (href_list["tank"])
 
 			//Ai/cyborgs cannot physically remove a tape from a room away.
-			if(issilicon(usr) && get_dist(src, usr) > 1)
+			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 				return
 
@@ -1819,7 +1819,7 @@
 
 		if (href_list["unjam"])
 			if(src.jam)
-				if(get_dist(src,usr) > 1)
+				if(BOUNDS_DIST(src, usr) > 0)
 					boutput(usr, "You are too far away to unjam it.")
 					return
 				src.jam = 0
@@ -2174,7 +2174,7 @@
 		if(user.lying || user.stat)
 			return 1
 
-		if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user))
+		if ((BOUNDS_DIST(src, user) > 0 || !istype(src.loc, /turf)) && !issilicon(user))
 			return 1
 
 		src.add_dialog(user)
@@ -2228,7 +2228,7 @@
 		src.add_dialog(usr)
 
 		if (href_list["document"])
-			if(issilicon(usr) && get_dist(src, usr) > 1)
+			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, "<span class='alert'>There is no electronic control over the actual document.</span>")
 				return
 
@@ -3455,7 +3455,7 @@
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!istype(O,/obj/) || O.anchored) return
-		if (get_dist(src,O) > 1 || !isturf(O.loc)) return
+		if (BOUNDS_DIST(src, O) > 0 || !isturf(O.loc)) return
 		if (!in_interact_range(user, O) || !in_interact_range(user, src) || !isalive(user)) return
 		if (src.dragload)
 			if (src.contents.len)
@@ -3479,7 +3479,7 @@
 
 	proc/ejectContents(var/mob/unloader, var/target_location)
 		if (!istype(target_location, /turf/)) return
-		if (get_dist(src,target_location) > 1) return
+		if (BOUNDS_DIST(src, target_location) > 0) return
 		if (!in_interact_range(unloader, target_location) || !in_interact_range(unloader, src) || !isalive(unloader)) return
 		if (src.active)
 			boutput(unloader, "<span class='alert'>You can't unload it while it's active!</span>")
