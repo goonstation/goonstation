@@ -2544,8 +2544,6 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 ABSTRACT_TYPE(/datum/manufacture/sub)
 
-#ifdef UNDERWATER_MAP
-
 /datum/manufacture/sub/parts
 	name = "Minisub Frame Kit"
 	item_paths = list("MET-2")
@@ -2581,7 +2579,6 @@ ABSTRACT_TYPE(/datum/manufacture/sub)
 	time = 5 SECONDS
 	create = 1
 	category = "Component"
-#endif
 
 ABSTRACT_TYPE(/datum/manufacture/putt)
 
