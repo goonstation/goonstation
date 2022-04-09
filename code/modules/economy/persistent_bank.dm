@@ -32,8 +32,12 @@
 					"img" = icon2base64(icon(initial(p.icon), initial(p.icon_state), dir=p.icon_dir, frame=p.icon_frame, moving=0)),
 				)
 			)
-			//Convert the HELD ITEM string into a purchased item on Mind if applicable here
-			if (p.name == user.client.persistent_bank_item)
+			//If you have a purchased item: set held
+			// or you have a persistent item: set it as purchased, and set held
+			var/datum/bank_purchaseable/already_purchased = user.client?.mob?.mind?.purchased_bank_item
+			if (istype(already_purchased) && p.name == already_purchased.name)
+				found_held = p.name
+			else if (p.name == user.client.persistent_bank_item)
 				found_held = p.name
 				var/mob/new_player/playermob = user.client.mob
 				if (playermob.mind)
@@ -53,6 +57,10 @@
 		. = ..()
 		if (.)
 			return
+		if(current_state >= GAME_STATE_PLAYING)
+			boutput(ui.user, "<span class='notice'><b>The round has started, you'll have to wait until the next round!</b></span>" )
+			ui.close()
+			return
 		var/id = params["pname"]
 		var/datum/bank_purchaseable/purchased = null
 		for(var/datum/bank_purchaseable/p in persistent_bank_purchaseables)
@@ -66,6 +74,8 @@
 			boutput( ui.user, "<span class='notice'><b>Oh no! Something is broken. Please tell a coder. (problem retrieving purchaseable id : [id])</b></span>" )
 
 	proc/try_purchase(var/client/c, var/datum/bank_purchaseable/p)
+		if(current_state >= GAME_STATE_PLAYING) //if the game has started, you can't buy things
+			return FALSE
 		if (c.bank_can_afford(p.cost))
 			c << sound( 'sound/misc/cashregister.ogg' )
 			boutput( usr, "<span class='notice'><b>You purchased [p.name] for the round!</b></span>" )
@@ -76,16 +86,16 @@
 					c.persistent_bank_item = 0
 				else
 					boutput( usr, "<span class='notice'><b>Can't find mind of new player mob [playermob]... please report this to a coder</b></span>" )
-					return 0
+					return FALSE
 			else
 				boutput( usr, "<span class='notice'><b>Can't find new player mob from client [c]... please report this to a coder</b></span>" )
-				return 0
+				return FALSE
 
-			return 1
+			return TRUE
 		else
 			c << sound( 'sound/items/penclick.ogg' )
 			boutput( usr, "<span class='notice'><b>You can't afford [p.name]!</b></span>" )
-			return 0
+			return FALSE
 
 
 /chui/window/earn_spacebux

@@ -69,6 +69,14 @@ export const SpendSpacebux = (props, context) => {
             If you have a Held Item, buying a new one will replace it.
           </BlockQuote>
           <Stack vertical fill>
+            { held ? (
+              <Stack.Item>
+                <Box>
+                  Held Item: {held}
+                </Box>
+              </Stack.Item>
+            )
+              : ""}
             <Stack.Item>
               <Section>
                 <Flex direction="row" align="center">
@@ -76,7 +84,6 @@ export const SpendSpacebux = (props, context) => {
                     <Box>
                       Balance: ${balance}
                     </Box>
-                    {held ? <BlockQuote>Held Item: {held}</BlockQuote> : ""}
                   </Flex.Item>
                   <Flex.Item>
                     <Button.Checkbox checked={filterAvailable} onClick={() => setFilterAvailable(!filterAvailable)}>
@@ -88,7 +95,7 @@ export const SpendSpacebux = (props, context) => {
             </Stack.Item>
             <Stack.Item>
               {purchasables
-                .filter(({ cost }) => !filterAvailable && balance < cost)
+                .filter(({ cost }) => !(filterAvailable && balance < cost))
                 .map(purchase => {
                   const {
                     pname,
