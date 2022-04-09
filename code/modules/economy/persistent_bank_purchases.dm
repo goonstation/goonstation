@@ -64,6 +64,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	var/carries_over = 1
 	var/icon = 'icons/obj/items/items.dmi'
 	var/icon_state = "spacebux"
+	var/icon_dir = 0
+	var/icon_frame = 1
 
 	var/list/required_levels = list() //Associated List of JOB:REQUIRED LEVEL ("Clown"=999) etc. Optional jobxp requirements for this.
 
@@ -285,7 +287,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			cost = 2000
 			path = /obj/item/record/spacebux
 			icon = 'icons/obj/radiostation.dmi'
-			icon_state = "record"
+			icon_state = "record_red"
 
 		sparkler_box
 			name = "Sparkler Box"
@@ -413,6 +415,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	limbless
 		name = "No Limbs"
 		cost = 10000
+		icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
+		icon_state = "nugget0"
 
 		Create(var/mob/living/M)
 			if (ishuman(M))
@@ -435,6 +439,9 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		name = "No Legs"
 		cost = 5000
 		path = /obj/item/furniture_parts/wheelchair
+		icon = 'icons/obj/furniture/chairs.dmi'
+		icon_state = "wheelchair"
+		icon_dir = EAST
 
 		Create(var/mob/living/M)
 			if (ishuman(M))
@@ -453,6 +460,9 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		name = "Corpse"
 		cost = 15000
 		carries_over = 0
+		icon = 'icons/mob/skeleton.dmi'
+		icon_state = "skeleton"
+		icon_dir = SOUTH
 
 		Create(var/mob/living/M)
 			M.death(FALSE)
@@ -462,6 +472,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	space_diner
 		name = "Space Diner Patron"
 		cost = 5000
+		icon = 'icons/obj/furniture/chairs.dmi'
+		icon_state = "bar-stool"
 
 		Create(var/mob/living/M)
 			var/list/start
@@ -480,6 +492,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	mail_order
 		name = "Mail Order"
 		cost = 5000
+		icon = 'icons/obj/large_storage.dmi'
+		icon_state = "woodencrate1"
 
 		Create(var/mob/living/M)
 			var/obj/storage/S
@@ -507,6 +521,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		cost = 6000
 		icon = 'icons/misc/critter.dmi'
 		icon_state = "frog"
+		icon_dir = SOUTH
 
 		Create(var/mob/living/M)
 			var/obj/critter/frog/froggo = new(M.loc)
@@ -520,6 +535,9 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	missile_arrival
 		name = "Missile Arrival"
 		cost = 20000
+		icon = 'icons/obj/large/32x64.dmi'
+		icon_state = "arrival_missile"
+		icon_dir = SOUTH
 
 		Create(var/mob/living/M)
 			if(istype(M.back, /obj/item/storage))
@@ -551,6 +569,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		cost = 1000
 		icon = 'icons/misc/critter.dmi'
 		icon_state = "sparrow"
+		icon_dir = SOUTH
 		var/list/respawn_critter_types = list(/mob/living/critter/small_animal/sparrow/weak, /mob/living/critter/small_animal/sparrow/robin/weak)
 
 		Create(var/mob/M)
@@ -559,6 +578,9 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	golden_ghost
 		name = "Golden Ghost"
 		cost = 1500
+		icon = 'icons/mob/mob.dmi'
+		icon_state = "ghost"
+		icon_dir = SOUTH
 
 		Create(var/mob/M)
 			return 1
@@ -567,7 +589,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		name = "Rucksack"
 		cost = 1400
 		icon_state = "bp_fjallraven_red"
-		icon = 'icons/mob/inhand/hand_storage.dmi'
+		icon = 'icons/obj/items/storage.dmi'
 
 		Create(var/mob/living/M)
 			if (ishuman(M))
@@ -584,7 +606,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		name = "Randoseru"
 		cost = 1500
 		icon_state = "bp_randoseru"
-		icon = 'icons/mob/inhand/hand_storage.dmi'
+		icon = 'icons/obj/items/storage.dmi'
 
 		Create(var/mob/living/M)
 			if (ishuman(M))
@@ -600,7 +622,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		name = "Travel Backpack"
 		cost = 1600
 		icon_state = "bp_anello"
-		icon = 'icons/mob/inhand/hand_storage.dmi'
+		icon = 'icons/obj/items/storage.dmi'
 
 		Create(var/mob/living/M)
 			if (ishuman(M))
@@ -616,7 +638,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		name = "NT Backpack"
 		cost = 600
 		icon_state = "NTbackpack"
-		icon = 'icons/mob/inhand/hand_storage.dmi'
+		icon = 'icons/obj/items/storage.dmi'
 
 		Create(var/mob/living/M)
 			if (ishuman(M))
@@ -632,7 +654,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		name = "Studded Backpack"
 		cost = 1500
 		icon_state = "bp_studded"
-		icon = 'icons/mob/inhand/hand_storage.dmi'
+		icon = 'icons/obj/items/storage.dmi'
 
 		Create(var/mob/living/M)
 			if (ishuman(M))
@@ -648,7 +670,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		name = "Itabag"
 		cost = 1600
 		icon_state = "bp_itabag_pink"
-		icon = 'icons/mob/inhand/hand_storage.dmi'
+		icon = 'icons/obj/items/storage.dmi'
 
 		Create(var/mob/living/M)
 			if (ishuman(M))
@@ -666,7 +688,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		name = "Brown Backpack"
 		cost = 500
 		icon_state = "backpackbr"
-		icon = 'icons/mob/inhand/hand_storage.dmi'
+		icon = 'icons/obj/items/storage.dmi'
 
 		Create(var/mob/living/M)
 			if (ishuman(M))
@@ -681,8 +703,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	lunchbox
 		name = "Lunchbox"
 		cost = 600
-		icon = 'icons/mob/inhand/hand_lunchboxes.dmi'
-		icon_state = "lunchbox"
+		icon = 'icons/obj/items/storage.dmi'
+		icon_state = "lunchbox_purple"
 
 		Create(var/mob/living/M)
 			if (ishuman(M))
@@ -701,14 +723,14 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		name = "Fruit Hat"
 		cost = 150
 		path = /obj/item/clothing/head/fruithat
-		icon = 'icons/mob/inhand/hand_headgear.dmi'
+		icon = 'icons/obj/clothing/item_hats.dmi'
 		icon_state = "fruithat"
 
 	hoodie
 		name = "Hoodie"
 		cost = 1500
 		path = /obj/item/clothing/suit/hoodie/random
-		icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
+		icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 		icon_state = "hoodie"
 
 	pride_o_matic
@@ -722,7 +744,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		name = "Stripe Outfit"
 		cost = 1400
 		path = /obj/item/clothing/under/gimmick/fake_waldo
-		icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
+		icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
 		icon_state = "waldont1"
 
 	moustache
@@ -755,6 +777,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		cost = 4000
 		icon = 'icons/mob/robots.dmi'
 		icon_state = "alohamaton"
+		icon_dir = SOUTH
 
 		Create(var/mob/living/M)
 			if (isrobot(M))
@@ -787,7 +810,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		name = "AI hat"
 		cost = 1000
 		icon = 'icons/obj/clothing/item_hats.dmi'
-		icon_state = "gtophat"
+		icon_state = "frog_hat"
 
 		Create(var/mob/living/M)
 			if (isAI(M))

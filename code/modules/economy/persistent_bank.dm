@@ -29,7 +29,7 @@
 				list(
 					"pname" = p.name,
 					"cost" = p.cost,
-					"img" = icon2base64(icon(initial(p.icon), initial(p.icon_state))),
+					"img" = icon2base64(icon(initial(p.icon), initial(p.icon_state), dir=p.icon_dir, frame=p.icon_frame, moving=0)),
 				)
 			)
 			//Convert the HELD ITEM string into a purchased item on Mind if applicable here
@@ -53,7 +53,6 @@
 		. = ..()
 		if (.)
 			return
-		boutput(ui.user,params)
 		var/id = params["pname"]
 		var/datum/bank_purchaseable/purchased = null
 		for(var/datum/bank_purchaseable/p in persistent_bank_purchaseables)
