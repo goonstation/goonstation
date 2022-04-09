@@ -129,6 +129,8 @@
 
 					D.stealth_asymptomatic = 1 //Retain the disease but don't actually do anything with it
 					SPAWN(2 MINUTES) //Disease stays for two minutes after a complete infection, then it removes itself.
+						for (var/mob/living/critter/changeling/headspider/HS in M.contents)
+							qdel(HS)
 						affected_mob.cure_disease_by_path(/datum/ailment/parasite/headspider)
 
 				return
