@@ -1550,6 +1550,7 @@
 	body_parts_covered = TORSO|LEGS|ARMS
 	contraband = 4
 	duration_remove = 10 SECONDS
+	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
 		..()
