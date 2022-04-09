@@ -1,6 +1,11 @@
 
 (t)sat apr 09 22
 (u)NightmareChamillian
+(p)8117
+(e)🆕|feature
+(*)Roach people (and some bug critters for that matter) now bleed hemolymph instead of normal blood
+(+)Hemolymph can be broken down with space cleaner, acetone, and some heat.
+(u)NightmareChamillian
 (p)8087
 (e)🎨|sprites
 (+)Added purple jumpsuits and hats to uniform manufacturers
