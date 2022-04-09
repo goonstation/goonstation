@@ -1,6 +1,10 @@
 
 (t)sat apr 09 22
 (u)NightmareChamillian
+(p)8081
+(e)🎨|sprites
+(+)Roboticists now spawn with a stocked toolbelt
+(u)NightmareChamillian
 (p)8117
 (e)🆕|feature
 (*)Roach people (and some bug critters for that matter) now bleed hemolymph instead of normal blood
