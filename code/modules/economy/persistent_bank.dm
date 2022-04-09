@@ -62,10 +62,17 @@
 		. = ..()
 		if (.)
 			return
-		if(current_state >= GAME_STATE_PLAYING)
+		if(istype(ui.user,/mob/new_player))
+			var/mob/new_player/playermob = ui.user
+			if(playermob.spawning)
+				boutput(ui.user, "<span class='notice'><b>The round has started, you'll have to wait until the next round!</b></span>" )
+				ui.close()
+				return
+		else
 			boutput(ui.user, "<span class='notice'><b>The round has started, you'll have to wait until the next round!</b></span>" )
 			ui.close()
 			return
+
 		var/id = params["pname"]
 		var/datum/bank_purchaseable/purchased = null
 		for(var/datum/bank_purchaseable/p in persistent_bank_purchaseables)
@@ -79,8 +86,13 @@
 			boutput( ui.user, "<span class='notice'><b>Oh no! Something is broken. Please tell a coder. (problem retrieving purchaseable id : [id])</b></span>" )
 
 	proc/try_purchase(var/client/c, var/datum/bank_purchaseable/p)
-		if(current_state >= GAME_STATE_PLAYING) //if the game has started, you can't buy things
-			return FALSE
+		if(istype(c.mob,/mob/new_player))
+			var/mob/new_player/playermob = c.mob
+			if(playermob.spawning) //if you've spawned into the game, you can't buy things
+				return FALSE
+		else
+			return FALSE //if the client's mob isn't a new_player, we've probably started already. If it's just null, we've got bigger problems
+
 		if(istype(src.bought_this_round))
 			//we already picked something this round, so refund it first
 			c.add_to_bank(src.bought_this_round.cost)
