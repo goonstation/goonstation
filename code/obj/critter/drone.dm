@@ -1332,9 +1332,9 @@
 	desc = "A cheap antipersonnel drone of syndicate origin."
 	icon_state = "sawfly"
 	beeptext = "BEEEEEP"
-	dead_state = "sawfly"
-	projectile_type = /datum/projectile/laser/drill/cutter
-	current_projectile = new/datum/projectile/laser/drill/cutter
+	dead_state = "sawflydead"
+	projectile_type = /datum/projectile/laser/drill/sawfly
+	current_projectile = new/datum/projectile/laser/drill/sawfly
 	//angertext = "detects the presence of"
 	smashes_shit = 0
 	droploot = /obj/item/survival_machete
@@ -1349,7 +1349,7 @@
 		..()
 		death_text = "[src] jutters and falls from the air, whirring to a stop"
 		name = "Microdrone unit [pick(sawflynames)]-[rand(1,999)]"
-		beeptext = "gently [pick(list("beeps", "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs"))]"
+		beeptext = "[pick(list("beeps", "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs"))]"
 
 	CritterDeath()
 		if (!src.alive) return
