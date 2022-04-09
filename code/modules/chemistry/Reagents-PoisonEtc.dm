@@ -108,7 +108,7 @@ datum
 				if (isitem(O))
 					var/obj/item/toMelt = O
 					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
-						toMelt.corrode(volume/5)
+						toMelt.corrode(volume)
 					else
 						O.visible_message("The acidic substance slides off \the [O] harmlessly.")
 
