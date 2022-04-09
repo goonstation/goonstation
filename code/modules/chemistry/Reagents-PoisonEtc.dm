@@ -105,11 +105,10 @@ datum
 					return 1
 				if (istype(O,/obj/item/clothing/head/chemhood || /obj/item/clothing/suit/chemsuit))
 					return 1
-				if (isitem(O) && prob(40))
+				if (isitem(O))
 					var/obj/item/toMelt = O
 					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
-						if(!O.hasStatus("acid"))
-							O.changeStatus("acid", 5 SECONDS, list("leave_cleanable" = 1))
+						toMelt.corrode(volume/5)
 					else
 						O.visible_message("The acidic substance slides off \the [O] harmlessly.")
 
@@ -862,9 +861,9 @@ datum
 							if (H.head)
 								var/obj/item/clothing/head/D = H.head
 								if (!(D.item_function_flags & IMMUNE_TO_ACID))
-									if(!D.hasStatus("acid"))
-										boutput(M, "<span class='alert'>Your [H.head] begins to melt!</span>")
-										D.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
+									if(!D.corroding)
+										boutput(M, "<span class='alert'>Your [H.head] is being damaged by the acid.</span>")
+									D.corrode(volume/2)
 								else
 									H.visible_message("<span class='alert>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
 								blocked = 1
@@ -872,9 +871,9 @@ datum
 								if (H.wear_mask)
 									var/obj/item/clothing/mask/K = H.wear_mask
 									if (!(K.item_function_flags & IMMUNE_TO_ACID))
-										if(!K.hasStatus("acid"))
-											boutput(M, "<span class='alert'>Your [H.wear_mask] begins to melt away!</span>")
-											K.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
+										if(!K.corroding)
+											boutput(M, "<span class='alert'>Your [H.wear_mask] is being damaged by the acid.</span>")
+										K.corrode(volume/2)
 									else
 										H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [K] harmlessly.</span>", "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
 									blocked = 1
@@ -883,7 +882,7 @@ datum
 								return
 					else
 						random_brute_damage(M, min(15,volume))
-				else if (method == TOUCH && volume <= 10 && prob(20))
+				else if (method == TOUCH && volume <= 10)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
 						var/blocked = 0
@@ -891,9 +890,9 @@ datum
 							if (H.head)
 								var/obj/item/clothing/head/D = H.head
 								if (!(D.item_function_flags & IMMUNE_TO_ACID))
-									if(!D.hasStatus("acid"))
-										boutput(M, "<span class='alert'>Your [H.head] begins to melt!</span>")
-										D.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
+									if(!D.corroding)
+										boutput(M, "<span class='alert'>Your [H.head] is being damaged by the acid.</span>")
+									D.corrode(volume/2)
 								else
 									H.visible_message("<span class='alert>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
 								blocked = 1
@@ -901,9 +900,9 @@ datum
 								if (H.wear_mask)
 									var/obj/item/clothing/mask/K = H.wear_mask
 									if (!(K.item_function_flags & IMMUNE_TO_ACID))
-										if(!K.hasStatus("acid"))
-											boutput(M, "<span class='alert'>Your [H.wear_mask] begins to melt away!</span>")
-											K.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
+										if(!K.corroding)
+											boutput(M, "<span class='alert'>Your [H.wear_mask] is being damaged by the acid.</span>")
+										K.corrode(volume/2)
 									else
 										H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [K] harmlessly.</span>", "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
 									blocked = 1
@@ -928,8 +927,7 @@ datum
 				if (isitem(O) && volume > O:w_class)
 					var/obj/item/toMelt = O
 					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
-						if(!O.hasStatus("acid"))
-							O.changeStatus("acid", 5 SECONDS, list("leave_cleanable" = 1))
+						toMelt.corrode(volume/2)
 					else
 						O.visible_message("The blueish acidic substance slides off \the [O] harmlessly.")
 

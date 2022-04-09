@@ -32,6 +32,13 @@
 	var/burning_last_process = 0
 	var/firesource = FALSE //TRUE or FALSE : dictates whether or not the item can be used as a valid source of fire
 
+	/*_________*/
+	/*Corroding*/ //time to steal fire and turn it into acid
+	/*‾‾‾‾‾‾‾‾‾*/
+
+	var/corroding = FALSE //whether corrosion is occuring or not
+	var/corrosion = 0 //how much corrosion is "built up". acid applies this based on how much was in the given touch reaction, and it gradually decays
+
 	/*______*/
 	/*Combat*/
 	/*‾‾‾‾‾‾*/
@@ -516,6 +523,14 @@
 						C.expose()
 				the_dir = turn(the_dir,45) */
 
+/obj/item/proc/corrode(var/acidamount)
+	if(src.corroding || (src in by_cat[TR_CAT_CORRODING_ITEMS]))
+		return
+	START_TRACKING_CAT(TR_CAT_CORRODING_ITEMS)
+	src.corroding = 1
+	src.corrosion = acidamount
+	src.add_filter("acid_displace", 0, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "acid"), size=0))
+
 /obj/item/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if (src.burn_possible && !src.burning)
 		if ((temperature > T0C + src.burn_point) && prob(5))
@@ -881,6 +896,43 @@
 			return
 		STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 	burning_last_process = src.burning
+
+/obj/item/proc/process_corrode()
+	SHOULD_NOT_SLEEP(TRUE)
+	if (src.corrosion)
+		var/acid_taken_mult = 1
+		if(src.hasProperty("acidprot"))
+			acid_taken_mult = 0.01 * (100 - src.getProperty("acidprot"))
+
+		var/base_melt = max(0.1 * src.corrosion,1) //calculate how much corrosion to consume, with a simple floor.
+		src.corrosion -= base_melt //consume the corrosion accordingly.
+		src.health -= 0.1 * base_melt * acid_taken_mult //apply the mult at this phase, so more acid protection doesn't just prolong damage
+
+		if (src.health <= 0)
+			STOP_TRACKING_CAT(TR_CAT_CORRODING_ITEMS)
+			src.remove_filter("acid_displace")
+			if (burn_type == 1) //if it burns to a glob, it probably at least partially stays intact when melted.
+				make_cleanable( /obj/decal/cleanable/molten_item,get_turf(src))
+
+			if (istype(src,/obj/item/parts/human_parts))
+				src:holder = null
+
+			if (istype(src.loc,/mob))
+				var/mob/M = src.loc
+				M.u_equip(src)
+				M.drop_item(src)
+				src.visible_message("<span class='alert'>\The [src] melts off of [M].</span>")
+			else
+				src.visible_message("<span class='alert'>\The [src] melts.</span>")
+
+			src.corroding = FALSE
+			src.corrosion = null
+
+			qdel(src)
+	else
+		src.corroding = FALSE
+		src.remove_filter("acid_displace")
+		STOP_TRACKING_CAT(TR_CAT_CORRODING_ITEMS)
 
 /// Call this proc inplace of attack_self(...)
 /obj/item/proc/AttackSelf(mob/user as mob)
