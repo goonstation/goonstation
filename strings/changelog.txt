@@ -1,5 +1,23 @@
 
 (t)sat apr 09 22
+(u)Ikea
+(p)7912
+(e)🗺|mapping
+(+)The vault prefab has had its contents nerfed, and has undergone minor changes.
+(u)NightmareChamillian
+(p)8081
+(e)🎨|sprites
+(+)Roboticists now spawn with a stocked toolbelt
+(u)NightmareChamillian
+(p)8117
+(e)🆕|feature
+(*)Roach people (and some bug critters for that matter) now bleed hemolymph instead of normal blood
+(+)Hemolymph can be broken down with space cleaner, acetone, and some heat.
+(u)NightmareChamillian
+(p)8087
+(e)🎨|sprites
+(+)Added purple jumpsuits and hats to uniform manufacturers
+(+)Sorted jumpsuits and hats in manufacturers by the rainbow
 (u)Flappybat
 (p)8149
 (e)🐛⚖|bug, balance
