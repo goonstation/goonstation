@@ -4,7 +4,6 @@
 	icon = null
 	event_handler_flags = 0
 	var/atom/target
-	var/mob/corpse = null
 
 	New()
 		..()
@@ -17,8 +16,41 @@
 		var/mob/living/M = src.target
 		if(istype(M))
 			M.observers -= src
-		if (src.ghost)
-			src.ghost.set_loc(get_turf(src))
+
+		if (isobj(target))
+			src.UnregisterSignal(target, list(COMSIG_PARENT_PRE_DISPOSING))
+
+		if (!src.ghost)
+			src.ghost = new(src.corpse)
+
+			if (!src.corpse)
+				src.ghost.name = src.name
+				src.ghost.real_name = src.real_name
+
+		if (corpse)
+			corpse.ghost = src.ghost
+			src.ghost.corpse = corpse
+
+		src.ghost.delete_on_logout = src.ghost.delete_on_logout_reset
+
+		if (src.client)
+			src.removeOverlaysClient(src.client)
+
+		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
+		if (target)
+			var/turf/T = get_turf(target)
+			if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && (restricted_z_allowed(src.ghost, T) || (src.ghost.client && src.ghost.client.holder)))))
+				src.ghost.set_loc(T)
+			else
+				if (ASLoc)
+					src.ghost.set_loc(ASLoc)
+				else
+					src.ghost.z = 1
+		else
+			if (ASLoc)
+				src.ghost.set_loc(ASLoc)
+			else
+				src.ghost.z = 1
 		STOP_TRACKING
 		..()
 
@@ -42,7 +74,7 @@
 
 	process_move(keys)
 		if(keys && src.move_dir)
-			qdel(src)
+			stop_observing()
 
 	apply_camera(client/C)
 		var/mob/living/M = src.target
@@ -57,7 +89,8 @@
 
 	proc/set_observe_target(target)
 		//If there's an existing target we should clean up after ourselves
-		if(src.target == target) return //No sense in doing all this if we're not changing targets
+		if(src.target == target)
+			return //No sense in doing all this if we're not changing targets
 		if(src.target)
 			var/mob/living/M = src.target
 			src.target = null
@@ -66,8 +99,6 @@
 				src.detach_hud(hud)
 			if(istype(M))
 				M.observers -= src
-
-
 
 		if(!target) //Uh oh, something went wrong here. Act natural and return the user to a regular ghost.
 			qdel(src)
@@ -95,46 +126,7 @@
 			set name = "Stop Observing"
 			set category = "Commands"
 
-			if (isobj(target))
-				src.UnregisterSignal(target, list(COMSIG_PARENT_PRE_DISPOSING))
-
-			if (!src.ghost)
-				src.ghost = new(src.corpse)
-
-				if (!src.corpse)
-					src.ghost.name = src.name
-					src.ghost.real_name = src.real_name
-
-			if (corpse)
-				corpse.ghost = src.ghost
-				src.ghost.corpse = corpse
-
-			src.ghost.delete_on_logout = src.ghost.delete_on_logout_reset
-
-			if (src.client)
-				src.removeOverlaysClient(src.client)
-				client.mob = src.ghost
-
-			if (src.mind)
-				mind.transfer_to(src.ghost)
-
-			var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-			if (target)
-				var/turf/T = get_turf(target)
-				if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && (restricted_z_allowed(src.ghost, T) || (src.ghost.client && src.ghost.client.holder)))))
-					src.ghost.set_loc(T)
-				else
-					if (ASLoc)
-						src.ghost.set_loc(ASLoc)
-					else
-						src.ghost.z = 1
-			else
-				if (ASLoc)
-					src.ghost.set_loc(ASLoc)
-				else
-					src.ghost.z = 1
-
-			qdel(src)
+			qdel(src) //lol
 
 
 /mob/dead/target_observer/slasher_ghost
