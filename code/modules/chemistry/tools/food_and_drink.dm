@@ -236,7 +236,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				src.take_a_bite(M, user)
 				return 1
 			if (check_target_immunity(M))
-				user.visible_message("<span class='alert'>You try to feed [M] [src], but fail!</span>")
+				user.visible_message("<span class='alert'>[user] tries to feed [M] [src], but fails!</span>", "<span class='alert'>You try to feed [M] [src], but fail!</span>")
+				return 0
 			else if(!M.can_eat(src))
 				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src], but they can't eat that!</span>",\
 				user, "<span class='alert'>You try to feed [M] [src], but they can't eat that!</span>",\
@@ -566,7 +567,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src].</span>")
 				logTheThing("combat", user, M, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
-
+				if (check_target_immunity(M))
+					user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src], but fails!.</span>", "<span class='alert'>You try to force [M] to drink [src], but fail!</span>")
+					return
 				if (!do_mob(user, M))
 					if (user && ismob(user))
 						user.show_text("You were interrupted!", "red")
