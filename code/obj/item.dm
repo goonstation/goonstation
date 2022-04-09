@@ -528,7 +528,7 @@
 				the_dir = turn(the_dir,45) */
 
 /obj/item/proc/corrode(var/acidamount)
-	src.corrosion = min(acidamount+src.corrosion,40) //add corrosion, up to a cap
+	src.corrosion = min(acidamount+src.corrosion,40) //add corrosion, up to a cap; there's only so much an item can saturate
 	if(src.corroding || (src in by_cat[TR_CAT_CORRODING_ITEMS]))
 		return
 	START_TRACKING_CAT(TR_CAT_CORRODING_ITEMS)
