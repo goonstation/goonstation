@@ -8,7 +8,7 @@ import { capitalize, pluralize } from './common/stringUtils';
 const SBPurchaseEntry = (props, context) => {
   const {
     product: {
-      name,
+      pname,
       cost,
       img,
     },
@@ -30,15 +30,15 @@ const SBPurchaseEntry = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1}>
           <Box bold>
-            {capitalize(name)}
+            {pname}
           </Box>
           <Box>
-            {`Cost: $${cost}}`}
+            {`Cost: $${cost}`}
           </Box>
         </Flex.Item>
         <Flex.Item>
           <Button onClick={onClick} disabled={disabled}>
-            Create
+            Buy
           </Button>
         </Flex.Item>
       </Flex>
@@ -81,38 +81,30 @@ export const SpendSpacebux = (props, context) => {
                   </Flex.Item>
                   <Flex.Item>
                     <Button.Checkbox checked={filterAvailable} onClick={() => setFilterAvailable(!filterAvailable)}>
-                      Filter Available
+                      Filter Affordable
                     </Button.Checkbox>
                   </Flex.Item>
                 </Flex>
               </Section>
             </Stack.Item>
-            <Stack.Item grow={1}>
-              <Section
-                fill
-                scrollable
-                title="Purchases">
-                {purchasables.map(purchase => {
-                  const {
-                    name,
-                    cost,
-                    img,
-                  } = purchase;
-                  return (
-                    <Box key>{name} {cost}</Box>
-                  );
-                  if (filterAvailable && (balance < cost)) {
-                    return;
-                  }
-                  return (
-                    <SBPurchaseEntry
-                      key={name}
-                      product={product}
-                      disabled={balance < cost}
-                      onClick={() => act('purchase', { name })} />
-                  );
-                })}
-              </Section>
+            <Stack.Item>
+              {purchasables.map(purchase => {
+                const {
+                  pname,
+                  cost,
+                  img,
+                } = purchase;
+                if (filterAvailable && (balance < cost)) {
+                  return;
+                }
+                return (
+                  <SBPurchaseEntry
+                    key={pname}
+                    product={purchase}
+                    disabled={balance < cost}
+                    onClick={() => act('purchase', { pname })} />
+                );
+              })}
             </Stack.Item>
           </Stack>
         </Section>

@@ -27,7 +27,7 @@
 			if(!p.hasJobXP(user.client.key)) continue
 			purchasables += list(
 				list(
-					"name" = p.name,
+					"pname" = p.name,
 					"cost" = p.cost,
 					"img" = icon2base64(icon(initial(p.icon), initial(p.icon_state))),
 				)
@@ -54,7 +54,7 @@
 		if (.)
 			return
 		boutput(ui.user,params)
-		var/id = params["id"]
+		var/id = params["pname"]
 		var/datum/bank_purchaseable/purchased = null
 		for(var/datum/bank_purchaseable/p in persistent_bank_purchaseables)
 			if(id == p.name)
