@@ -56186,6 +56186,14 @@
 /obj/machinery/bot/medbot,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
+"mdX" = (
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/disposalpipe/segment/transport,
+/obj/machinery/navbeacon/mule/crewA_north,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/quarters_south)
 "mex" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -106433,7 +106441,7 @@ vUi
 kex
 bEk
 cdE
-cdE
+mdX
 bNb
 aMF
 bEe
