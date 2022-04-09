@@ -534,7 +534,7 @@
 	START_TRACKING_CAT(TR_CAT_CORRODING_ITEMS)
 	src.create_durability_bar()
 	src.corroding = 1
-	if(!filter_data["acid_displace"] || !src.hasProperty("acidres") || src.getProperty("acidres") <= 20) //get melty
+	if((!src.filter_data || !src.filter_data["acid_displace"]) && (!src.hasProperty("acidres") || src.getProperty("acidres") <= 20)) //get melty
 		src.add_filter("acid_displace", 0, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "acid"), size=0))
 		var/meltyboi = src.get_filter("acid_displace")
 		animate(meltyboi, size=8, time=1 SECOND, easing=SINE_EASING)

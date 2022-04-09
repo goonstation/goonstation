@@ -2,6 +2,7 @@
 	name = "durability bar"
 	icon = 'icons/ui/durabar.dmi'
 	icon_state = "durabar-0"
+	alpha = 140
 	invisibility = INVIS_ALWAYS
 	plane = PLANE_HUD
 	layer = HUD_LAYER_3
