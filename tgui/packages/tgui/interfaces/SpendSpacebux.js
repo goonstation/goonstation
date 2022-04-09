@@ -1,7 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { BlockQuote, Button, Stack, Section } from '../components';
 import { Window } from '../layouts';
-import { Fragment } from 'inferno';
 import { Box, Divider, Flex } from "../components";
 import { capitalize, pluralize } from './common/stringUtils';
 
@@ -17,7 +16,7 @@ const SBPurchaseEntry = (props, context) => {
   } = props;
 
   return (
-    <Fragment>
+    <>
       <Flex direction="row" align="center">
         <Flex.Item>
           <img
@@ -43,7 +42,7 @@ const SBPurchaseEntry = (props, context) => {
         </Flex.Item>
       </Flex>
       <Divider />
-    </Fragment>
+    </>
   );
 };
 
@@ -88,23 +87,22 @@ export const SpendSpacebux = (props, context) => {
               </Section>
             </Stack.Item>
             <Stack.Item>
-              {purchasables.map(purchase => {
-                const {
-                  pname,
-                  cost,
-                  img,
-                } = purchase;
-                if (filterAvailable && (balance < cost)) {
-                  return;
-                }
-                return (
-                  <SBPurchaseEntry
-                    key={pname}
-                    product={purchase}
-                    disabled={balance < cost}
-                    onClick={() => act('purchase', { pname })} />
-                );
-              })}
+              {purchasables
+                .filter(({ cost }) => !filterAvailable && balance < cost)
+                .map(purchase => {
+                  const {
+                    pname,
+                    cost,
+                  } = purchase;
+                  return (
+                    <SBPurchaseEntry
+                      key={pname}
+                      product={purchase}
+                      disabled={balance < cost}
+                      onClick={() => act('purchase', { pname })}
+                    />
+                  );
+                })}
             </Stack.Item>
           </Stack>
         </Section>
