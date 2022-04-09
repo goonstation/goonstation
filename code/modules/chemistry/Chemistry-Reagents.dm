@@ -134,11 +134,8 @@ datum
 							for(var/atom in M.get_equipped_items())
 								if (istype(atom, /obj/item/clothing))
 									var/obj/item/clothing/C = atom
-									if(C.item_function_flags & IMMUNE_TO_ACID)
-										modifier -= 0.5
-									else
-										modifier -= (1 - C.permeability_coefficient)/3
-						modifier = max(modifier,0)
+									modifier -= (1 - C.permeability_coefficient)/3
+
 						if(M.reagents)
 							M.reagents.add_reagent(self.id,volume*modifier,self.data)
 							did_not_react = 0
