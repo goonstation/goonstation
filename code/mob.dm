@@ -294,7 +294,7 @@
 /mob/proc/update_grab_loc()
 	//robust grab : keep em close
 	for (var/obj/item/grab/G in equipped_list(check_for_magtractor = 0))
-		if (G.state < GRAB_NECK) continue
+		if (G.state < GRAB_AGGRESSIVE) continue
 		if (BOUNDS_DIST(src, G.affecting) > 0)
 			qdel(G)
 			continue
@@ -323,11 +323,10 @@
 		m.set_loc(src.loc)
 		m.ghostize()
 
-	if (ghost && ghost.corpse == src)
-		ghost.corpse = null
-	else
-		src.ghost = src.ghostize()
-		src.ghost?.corpse = null
+	// this looks sketchy, but ghostize is fairly safe- we check for an existing ghost or NPC status, and only make a new ghost if we need to
+	src.ghost = src.ghostize()
+	if (src.ghost?.corpse == src)
+		src.ghost.corpse = null
 
 	if (traitHolder)
 		traitHolder.removeAll()
@@ -1082,9 +1081,9 @@
 	//this is so much simpler than pulling the victim and invoking movment on the captor through that chain of events.
 	if (ishuman(pulling))
 		var/mob/living/carbon/human/H = pulling
-		if (H.grabbed_by.len)
+		if (length(H.grabbed_by))
 			for (var/obj/item/grab/G in src.grabbed_by)
-				if (G.state < GRAB_NECK) continue
+				if (G.state < GRAB_AGGRESSIVE) continue
 				pulling = G.assailant
 				G.assailant.pulled_by = src
 

@@ -208,7 +208,7 @@
 			var/obj/item/grab/G = W
 			if (!G.affecting || G.affecting.buckled)
 				return
-			if (!G.state)
+			if (G.state == GRAB_PASSIVE)
 				boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 				return
 			var/mob/grabbed = G.affecting
@@ -827,7 +827,7 @@
 			var/obj/item/grab/G = W
 			if (!G.affecting || G.affecting.buckled)
 				return
-			if (!G.state)
+			if (G.state == GRAB_PASSIVE)
 				boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 				return
 			var/mob/grabbed = G.affecting

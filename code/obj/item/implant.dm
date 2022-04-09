@@ -77,7 +77,7 @@ THROWING DARTS
 			H.implant -= src
 		if (ismobcritter(M))
 			var/mob/living/critter/C = M
-			C.implants -= src
+			C.implants?.Remove(src)
 		if (implant_overlay)
 			M.update_clothing()
 		src.owner = null

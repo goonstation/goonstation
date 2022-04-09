@@ -27,7 +27,7 @@
 		var/mob/ownerMob = owner
 		var/obj/item/grab/G = ownerMob.equipped()
 
-		if (!istype(G) || G.affecting != target || G.state < 1)
+		if (!istype(G) || G.affecting != target || G.state == GRAB_PASSIVE)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -123,7 +123,7 @@
 		var/mob/ownerMob = owner
 		var/obj/item/grab/G = ownerMob.equipped()
 
-		if (!istype(G) || G.affecting != target || G.state < GRAB_KILL)
+		if (!istype(G) || G.affecting != target || G.state < GRAB_CHOKE)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

@@ -1607,17 +1607,17 @@
 		// Stick the player (if one exists) in a ghost mob
 		if (src.mind)
 			var/mob/dead/observer/newmob = src.ghostize()
-			if (!newmob || !istype(newmob, /mob/dead/observer))
-				return
-			newmob.corpse = null // Otherwise they could return to a brainless body.And that is weird.
-			newmob.mind.brain = src.part_head.brain
-			src.part_head.brain.owner = newmob.mind
+			if (newmob)
+				newmob.corpse = null // Otherwise they could return to a brainless body.And that is weird.
+				newmob.mind.brain = src.part_head.brain
+				src.part_head.brain.owner = newmob.mind
 
 		// Brain box is forced open if it wasn't already (suicides, killswitch)
 		src.locked = 0
 		src.locking = 0
 		src.opened = 0
 		src.brainexposed = 1
+
 		if (user)
 			user.put_in_hand_or_drop(src.part_head.brain)
 		else

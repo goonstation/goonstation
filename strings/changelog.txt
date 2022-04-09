@@ -1,5 +1,12 @@
 
 (t)thu apr 07 22
+(u)tarmunora
+(+)Ammo cell in security pouch replaced with donut.
+(+)Distruptor cell utility purchase in sec vendors removed, tokens now give a "ammo" credit that can be used to acquire either a spare 200u cell or the distruptor cell.
+(+)Distruptor cell self-charge rate reduced back down to 5.
+(u)aloe
+(+)Werewolf/abomination/zombie arms now prevent you from moving while they grab you. You can still resist out it's just a bit harder than a passive grab. Will tweak the percentages as needed.
+(+)Fiber wire should work now
 (u)Ikea
 (p)7914
 (e)🗺|mapping
