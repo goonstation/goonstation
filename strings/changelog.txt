@@ -1,4 +1,9 @@
 
+(t)sat apr 09 22
+(u)Flappybat
+(p)8149
+(e)🐛⚖|bug, balance
+(+)Added protection to nodamage/spellshield from force drinking, flash and Securitron batons.
 (t)thu apr 07 22
 (u)tarmunora
 (+)Ammo cell in security pouch replaced with donut.
