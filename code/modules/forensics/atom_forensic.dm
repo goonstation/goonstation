@@ -168,15 +168,17 @@
 			src.fingerprints = null
 			src.add_forensic_trace("btype", src.blood_type)
 			src.blood_type = null
+			var/obj/item/CI = src
 			if (src.blood_DNA)
 				src.add_forensic_trace("bDNA", src.blood_DNA)
-				var/obj/item/CI = src
 				CI.blood_DNA = null
 				#ifdef OLD_BLOOD_OVERLAY
 				CI.icon = initial(icon)
 				#else
 				CI.UpdateOverlays(null, "blood_splatter")
 				#endif
+			if (CI.corrosion > 0)
+				CI.stop_corrode()
 		if (istype(src, /obj/item/clothing))
 			var/obj/item/clothing/C = src
 			C.clean_stains()
@@ -220,6 +222,10 @@
 				if (istype(check, /obj/item/clothing))
 					var/obj/item/clothing/C = check
 					C.clean_stains()
+				if (check.corrosion > 0)
+					check.corrosion -= 15
+					if(check.corrosion <= 0)
+						check.stop_corrode()
 
 			if (isnull(M.gloves)) // Can't clean your hands when wearing gloves.
 				M.add_forensic_trace("bDNA", M.blood_DNA)

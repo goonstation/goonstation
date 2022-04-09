@@ -120,6 +120,7 @@ proc/filter_trait_hats(var/type)
 	desc = "Helps protect from vacuum for a short period of time."
 	seal_hair = 1
 	path_prot = 0
+	health = 5
 
 	setupProperties()
 		..()

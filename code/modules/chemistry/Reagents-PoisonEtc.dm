@@ -843,61 +843,95 @@ datum
 				return
 
 #define PROT_FACE 16
+#define PROT_HANDS 32
+#define PROT_FEET 64
+
+			//proc to try corroding a thing, returns whether it's corrodeable. pass a mob to notify the mob of newly started decay
+			proc/try_corrode(var/reag_vol,var/obj/item/I,var/mob/M)
+				. = FALSE
+				if (!I) return
+				if (!(I.item_function_flags & IMMUNE_TO_ACID))
+					if (!I.corroding && M)
+						boutput(M, "<span class='alert'>Your [I.name] is being damaged by the acid.</span>")
+					I.corrode(reag_vol)
+					. = TRUE
+				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				var/took_damage = FALSE //don't spam protection alerts
-				var/newly_corroding = FALSE //don't spam corrosion alerts
-				if(method == TOUCH)
+				if (method == TOUCH)
 					. = 0
-				if (method == TOUCH && volume >= 10)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
-						var/protected_zones = 0
-						if (H.head)
-							var/obj/item/clothing/head/D = H.head
-							if (!(D.item_function_flags & IMMUNE_TO_ACID))
-								if(!D.corroding)
-									boutput(M, "<span class='alert'>Your [H.head.name] is being damaged by the acid.</span>")
-									newly_corroding = TRUE
-								D.corrode(volume*2)
-							protected_zones |= HEAD
-							if(H.head?.c_flags & COVERSMOUTH)
-								protected_zones |= PROT_FACE
-						if (!(protected_zones & PROT_FACE))
-							if (H.wear_mask)
-								var/obj/item/clothing/mask/K = H.wear_mask
-								if (!(K.item_function_flags & IMMUNE_TO_ACID))
-									if(!K.corroding)
-										boutput(M, "<span class='alert'>Your [H.wear_mask.name] is being damaged by the acid.</span>")
-										newly_corroding = TRUE
-									K.corrode(volume*2)
-								protected_zones |= PROT_FACE
-						if (H.wear_suit)
-							var/obj/item/clothing/suit/SU = H.wear_suit
-							if (!(SU.item_function_flags & IMMUNE_TO_ACID))
-								if(!SU.corroding)
-									boutput(M, "<span class='alert'>Your [H.wear_suit.name] is being damaged by the acid.</span>")
-									newly_corroding = TRUE
-								SU.corrode(volume*2)
 
-							protected_zones |= SU.body_parts_covered
-						if (!(protected_zones & TORSO) || !(protected_zones & ARMS) || !(protected_zones & LEGS))
-							if (H.w_uniform)
-								var/obj/item/clothing/under/UN = H.w_uniform
-								if (!(UN.item_function_flags & IMMUNE_TO_ACID))
-									if(!UN.corroding)
-										boutput(M, "<span class='alert'>Your [H.w_uniform.name] is being damaged by the acid.</span>")
-										newly_corroding = TRUE
-									UN.corrode(volume*2)
-								protected_zones |= TORSO
-								protected_zones |= LEGS
-								if(!(UN.c_flags & SLEEVELESS))
-									protected_zones |= ARMS
+						//bitflag regions for regionalized damage: uses TORSO, ARMS, LEGS, HEAD from clothing bitflags + local face, hands, feet
+						var/splash_zones = 0
+						//if a fluid pool, calculate regionalized damage based on depth
+						var/datum/reagents/fluid_group/wildwetride = src.holder
+						if(istype(wildwetride))
+							var/acid_depth = wildwetride.my_group.last_depth_level
+							switch(acid_depth)
+								if(1)
+									splash_zones = LEGS | PROT_FEET
+								if(2)
+									splash_zones = LEGS | PROT_HANDS | PROT_FEET
+								if(3)
+									splash_zones = TORSO | LEGS | ARMS | PROT_HANDS | PROT_FEET
+								if(4)
+									splash_zones = 127 //i am become acid
+						else //default to splashing top of body
+							splash_zones = HEAD | TORSO | ARMS | PROT_FACE
 
-						if(protected_zones == 31 && newly_corroding == TRUE) //all flags active, total protection
-							H.visible_message("<span class='alert'>The blueish acidic substance slides off [H] harmlessly.</span>", "<span class='alert'>Your equipment protects you from the acid.</span>")
-						if (!(protected_zones & PROT_FACE))
+						var/newly_corroding = FALSE //don't spam corrosion alerts
+
+						//head protection cascade
+						if (splash_zones & HEAD || splash_zones & PROT_FACE)
+							if (H.head)
+								newly_corroding = try_corrode(volume,H.head,M)
+								splash_zones &= ~HEAD
+								if(H.head?.c_flags & COVERSMOUTH)
+									splash_zones &= ~PROT_FACE
+							else
+								if(H.ears)
+									try_corrode(volume,H.ears)
+							if (splash_zones & PROT_FACE)
+								if (H.wear_mask)
+									newly_corroding = try_corrode(volume,H.wear_mask,M)
+									splash_zones &= ~PROT_FACE
+								else
+									if(H.glasses)
+										try_corrode(volume,H.glasses)
+						//body protection cascade
+						if (splash_zones & TORSO || splash_zones & ARMS || splash_zones & LEGS || splash_zones & PROT_HANDS || splash_zones & PROT_FEET)
+							if (H.wear_suit)
+								var/obj/item/clothing/suit/SU = H.wear_suit
+								newly_corroding = try_corrode(volume,SU,M)
+								splash_zones &= ~SU.body_parts_covered
+								//bonus regional protection
+								if(SU.body_parts_covered & ARMS) splash_zones &= ~PROT_HANDS
+								if(SU.body_parts_covered & LEGS) splash_zones &= ~PROT_FEET
+							if (splash_zones & TORSO || splash_zones & ARMS || splash_zones & LEGS) //check recurs if suit doesn't totally cover
+								if (H.w_uniform)
+									var/obj/item/clothing/suit/UN = H.w_uniform
+									newly_corroding = try_corrode(volume,UN,M)
+									splash_zones &= ~TORSO
+									splash_zones &= ~LEGS
+									if(!(UN.c_flags & SLEEVELESS))
+										splash_zones &= ~ARMS
+							if(splash_zones & PROT_HANDS)
+								if (H.gloves)
+									try_corrode(volume,H.gloves)
+									splash_zones &= ~PROT_HANDS
+							if(splash_zones & PROT_FEET)
+								if (H.shoes)
+									try_corrode(volume,H.shoes)
+									splash_zones &= ~PROT_FEET
+
+						if(splash_zones == 0 && newly_corroding == TRUE) //all flags inactive, total protection
+							H.visible_message("<span class='alert'>The blueish acidic substance slides off [H].</span>", "<span class='alert'>Your equipment protects you from the acid.</span>")
+
+						if (splash_zones & PROT_FACE)
 							took_damage = TRUE
 							H.TakeDamage("head", 0, clamp((volume - 5), 4, 25), 0, DAMAGE_BURN)
 							H.emote("scream")
@@ -905,50 +939,22 @@ datum
 								boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
 								H.real_name = "Unknown"
 							H.unlock_medal("Red Hood", 1)
-						if (!(protected_zones & HEAD))
+						if (splash_zones & HEAD)
 							took_damage = TRUE
 							H.TakeDamage("head", 0, clamp((volume - 5) / 2, 4, 25), 0, DAMAGE_BURN)
-						if (!(protected_zones & TORSO))
+						if (splash_zones & TORSO)
 							took_damage = TRUE
 							H.TakeDamage("chest", 0, clamp((volume - 5) / 2, 4, 25), 0, DAMAGE_BURN)
-						if (!(protected_zones & ARMS))
+						if (splash_zones & ARMS || splash_zones && PROT_HANDS)
 							took_damage = TRUE
 							H.TakeDamage("l_arm", 0, clamp((volume - 5) / 4, 2, 12), 0, DAMAGE_BURN)
 							H.TakeDamage("r_arm", 0, clamp((volume - 5) / 4, 2, 12), 0, DAMAGE_BURN)
-						if (!(protected_zones & LEGS))
+						if (splash_zones & LEGS || splash_zones && PROT_FEET)
 							took_damage = TRUE
 							H.TakeDamage("l_leg", 0, clamp((volume - 5) / 4, 2, 12), 0, DAMAGE_BURN)
 							H.TakeDamage("r_leg", 0, clamp((volume - 5) / 4, 2, 12), 0, DAMAGE_BURN)
 					else
 						random_brute_damage(M, min(15,volume))
-				else if (method == TOUCH && volume <= 10)
-					if (ishuman(M))
-						var/mob/living/carbon/human/H = M
-						var/blocked = 0
-						if (H.wear_mask || H.head)
-							if (H.head)
-								var/obj/item/clothing/head/D = H.head
-								if (!(D.item_function_flags & IMMUNE_TO_ACID))
-									if(!D.corroding)
-										boutput(M, "<span class='alert'>Your [H.head] is being damaged by the acid.</span>")
-									D.corrode(volume*2)
-								else
-									H.visible_message("<span class='alert>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
-								blocked = 1
-							else if (H.wear_mask)
-								var/obj/item/clothing/mask/K = H.wear_mask
-								if (!(K.item_function_flags & IMMUNE_TO_ACID))
-									if(!K.corroding)
-										boutput(M, "<span class='alert'>Your [H.wear_mask] is being damaged by the acid.</span>")
-									K.corrode(volume*2)
-								else
-									H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [K] harmlessly.</span>", "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
-								blocked = 1
-
-							if (blocked)
-								return
-						M.TakeDamage("head", 0, clamp((volume - 5) * 2, 8, 50), 0, DAMAGE_BURN)
-						took_damage = TRUE
 				else if (volume >= 5)
 					M.emote("scream")
 					M.TakeDamage("All", 0, clamp((volume - 5) * 3, 8, 75), 0, DAMAGE_BURN)
@@ -958,6 +964,8 @@ datum
 				return
 
 #undef PROT_FACE
+#undef PROT_HANDS
+#undef PROT_FEET
 
 			reaction_obj(var/obj/O, var/volume)
 				var/list/covered = holder.covered_turf()
@@ -969,7 +977,7 @@ datum
 				if (isitem(O) && volume > O:w_class)
 					var/obj/item/toMelt = O
 					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
-						toMelt.corrode(volume*2)
+						toMelt.corrode(volume/5)
 					else
 						O.visible_message("The blueish acidic substance slides off \the [O] harmlessly.")
 

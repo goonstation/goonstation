@@ -539,6 +539,14 @@
 		var/meltyboi = src.get_filter("acid_displace")
 		animate(meltyboi, size=8, time=1 SECOND, easing=SINE_EASING)
 
+/obj/item/proc/stop_corrode()
+	if(!src.corroding)
+		return
+	STOP_TRACKING_CAT(TR_CAT_CORRODING_ITEMS)
+	src.corroding = FALSE
+	src.corrosion = 0
+	name = "[pick("corroded","eroded","acidworn")] [name]"
+
 /obj/item/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if (src.burn_possible && !src.burning)
 		if ((temperature > T0C + src.burn_point) && prob(5))
@@ -917,7 +925,7 @@
 
 		var/base_melt = max(0.1 * src.corrosion,1) //calculate how much corrosion to consume, with a simple floor.
 		src.corrosion -= base_melt //consume the corrosion accordingly.
-		src.health -= 0.1 * base_melt * acid_taken_mult //apply the mult at this phase, so more acid resistance doesn't just prolong damage
+		src.health -= base_melt * acid_taken_mult //apply the mult at this phase, so more acid resistance doesn't just prolong damage
 
 		if (src.health <= 0)
 			STOP_TRACKING_CAT(TR_CAT_CORRODING_ITEMS)
