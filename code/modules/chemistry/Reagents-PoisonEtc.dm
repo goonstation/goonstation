@@ -846,15 +846,15 @@ datum
 #define PROT_HANDS 32
 #define PROT_FEET 64
 
-			//proc to try corroding a thing, returns whether it's corrodeable. pass a mob to notify the mob of newly started decay
+			//proc to try corroding a thing, returns whether it's newly started corroding. pass a mob to notify the mob of this as well
 			proc/try_corrode(var/reag_vol,var/obj/item/I,var/mob/M)
 				. = FALSE
 				if (!I) return
 				if (!(I.item_function_flags & IMMUNE_TO_ACID))
 					if (!I.corroding && M)
-						boutput(M, "<span class='alert'>Your [I.name] is being damaged by the acid.</span>")
+						boutput(M, "<span class='alert'>Your [I.name] is being damaged by the acid.</span>"
+						. = TRUE
 					I.corrode(reag_vol)
-					. = TRUE
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
