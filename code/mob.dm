@@ -323,10 +323,10 @@
 		m.set_loc(src.loc)
 		m.ghostize()
 
-	if (ghost && ghost.corpse == src)
-		ghost.corpse = null
-	else
+	if (!src.ghost)
 		src.ghost = src.ghostize()
+	if (src.ghost?.corpse == src)
+		src.ghost.corpse = null
 
 	if (traitHolder)
 		traitHolder.removeAll()
