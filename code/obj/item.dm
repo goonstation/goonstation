@@ -95,6 +95,9 @@
 	var/tmp/inventory_counter_enabled = 0 // Inventory count display. Call create_inventory_counter in New()
 	var/tmp/obj/overlay/inventory_counter/inventory_counter = null
 
+	///Durability bar. Attached when an item takes damage from corrosion (Nadir support); only visible while in a mob's possession.
+	var/tmp/obj/overlay/durability_bar/durability_bar = null
+
 	/*_____*/
 	/*Flags*/
 	/*‾‾‾‾‾*/
@@ -457,6 +460,7 @@
 		return
 	START_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 	src.visible_message("<span class='alert'>[src] catches on fire!</span>")
+	src.create_durability_bar()
 	src.burning = 1
 	src.firesource = FIRESOURCE_OPEN_FLAME
 	if (istype(src, /obj/item/plant))
@@ -524,12 +528,16 @@
 				the_dir = turn(the_dir,45) */
 
 /obj/item/proc/corrode(var/acidamount)
+	src.corrosion = min(acidamount+src_corrosion,40) //add corrosion, up to a cap
 	if(src.corroding || (src in by_cat[TR_CAT_CORRODING_ITEMS]))
 		return
 	START_TRACKING_CAT(TR_CAT_CORRODING_ITEMS)
+	src.create_durability_bar()
 	src.corroding = 1
-	src.corrosion = acidamount
-	src.add_filter("acid_displace", 0, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "acid"), size=0))
+	if(!filter_data["acid_displace"] || !src.hasProperty("acidres") || src.getProperty("acidres") <= 20) //get melty
+		src.add_filter("acid_displace", 0, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "acid"), size=0))
+		var/meltyboi = src.get_filter("acid_displace")
+		animate(meltyboi, size=8, time=1 SECOND, easing=SINE_EASING)
 
 /obj/item/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if (src.burn_possible && !src.burning)
@@ -868,6 +876,7 @@
 				src.health /= 4
 			else
 				src.health -= 2
+			src.durability_bar.update_durability(src.health)
 
 		if (src.health <= 0)
 			STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
@@ -899,14 +908,16 @@
 
 /obj/item/proc/process_corrode()
 	SHOULD_NOT_SLEEP(TRUE)
-	if (src.corrosion)
+	if (src.corrosion > 0)
 		var/acid_taken_mult = 1
-		if(src.hasProperty("acidprot"))
-			acid_taken_mult = 0.01 * (100 - src.getProperty("acidprot"))
+		if(src.hasProperty("acidres")) //multiplier from permeability coefficient
+			acid_taken_mult = 0.01 * (100 - src.getProperty("acidres"))
+		if (istype(src.material) && src.material.hasProperty("corrosion")) //multiplier from corrosion resistance
+			acid_taken_mult = acid_taken_mult * (0.01 * (100 - src.material.getProperty("corrosion")))
 
 		var/base_melt = max(0.1 * src.corrosion,1) //calculate how much corrosion to consume, with a simple floor.
 		src.corrosion -= base_melt //consume the corrosion accordingly.
-		src.health -= 0.1 * base_melt * acid_taken_mult //apply the mult at this phase, so more acid protection doesn't just prolong damage
+		src.health -= 0.1 * base_melt * acid_taken_mult //apply the mult at this phase, so more acid resistance doesn't just prolong damage
 
 		if (src.health <= 0)
 			STOP_TRACKING_CAT(TR_CAT_CORRODING_ITEMS)
@@ -929,9 +940,11 @@
 			src.corrosion = null
 
 			qdel(src)
+		else
+			src.durability_bar.update_durability(src.health)
 	else
 		src.corroding = FALSE
-		src.remove_filter("acid_displace")
+		src.corrosion = 0
 		STOP_TRACKING_CAT(TR_CAT_CORRODING_ITEMS)
 
 /// Call this proc inplace of attack_self(...)
@@ -978,6 +991,8 @@
 	src.equipped_in_slot = slot
 	for(var/datum/objectProperty/equipment/prop in src.properties)
 		prop.onEquipped(src, user, src.properties[prop])
+	if (src.durability_bar)
+		src.durability_bar.show_bar()
 	var/datum/movement_modifier/equipment/equipment_proxy = locate() in user.movement_modifiers
 	if (!equipment_proxy)
 		equipment_proxy = new
@@ -1001,6 +1016,8 @@
 	#endif
 	for(var/datum/objectProperty/equipment/prop in src.properties)
 		prop.onUnequipped(src, user, src.properties[prop])
+	if (src.durability_bar)
+		src.durability_bar.hide_bar()
 	src.equipped_in_slot = null
 	var/datum/movement_modifier/equipment/equipment_proxy = locate() in user.movement_modifiers
 	if (!equipment_proxy)
@@ -1588,6 +1605,14 @@
 			if(src in M.equipped_list())
 				src.inventory_counter.show_count()
 
+/obj/item/proc/create_durability_bar()
+	if (!src.durability_bar)
+		src.durability_bar = new /obj/overlay/durability_bar
+		src.durability_bar.update_durability(src.health,src.health)
+		src.vis_contents += src.durability_bar
+		if(ismob(src.loc))
+			src.durability_bar.show_bar()
+
 /obj/item/proc/log_firesource(obj/item/O, datum/thrown_thing/thr, mob/user)
 	UnregisterSignal(O, COMSIG_MOVABLE_THROW_END)
 	if (!O?.firesource == FIRESOURCE_OPEN_FLAME) return
@@ -1639,6 +1664,8 @@
 	clear_mob()
 	if (src.inventory_counter)
 		src.inventory_counter.hide_count()
+	if (src.durability_bar)
+		src.durability_bar.hide_bar()
 	if (special_grab || chokehold)
 		drop_grab()
 	return
@@ -1655,6 +1682,8 @@
 	show_buttons()
 	if (src.inventory_counter)
 		src.inventory_counter.show_count()
+	if (src.durability_bar)
+		src.durability_bar.show_bar()
 	if (src.c_flags & EQUIPPED_WHILE_HELD)
 		src.equipped(user, user.get_slot_from_item(src))
 

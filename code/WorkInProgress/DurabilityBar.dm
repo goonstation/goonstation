@@ -13,10 +13,12 @@
 		..()
 
 	proc/update_durability(var/upd_health,var/init_health)
-		if(init_health)
-			src.start_health = init_health
 		if(!src.start_health)
-			return
+			if(init_health)
+				src.start_health = init_health
+			else
+				return
+		src.current_health = upd_health
 		var/barmod = ceil((current_health/start_health)*20)
 		src.icon_state = "durabar-[barmod]"
 

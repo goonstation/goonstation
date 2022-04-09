@@ -75,6 +75,12 @@
 			src.stains = list()
 			src.UpdateName()
 
+//kubius acid melt adjustment: calibrate acid resilience automatically based on permeability coefficient
+	setupProperties()
+		..()
+		if(src.permeability_coefficient < 1)
+			var/crossfactor = min(98,100-(100*permeability_coefficient))
+			setProperty("acidres", crossfactor)
 
 /obj/item/clothing/under
 	equipped(var/mob/user, var/slot)

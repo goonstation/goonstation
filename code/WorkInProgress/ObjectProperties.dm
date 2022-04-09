@@ -486,6 +486,16 @@ to say if there's demand for that.
 
 	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_EXPLOPROT)
 
+/datum/objectProperty/equipment/acidres
+	name = "Acid Resilience"
+	id = "acidres"
+	desc = "Slows corrosion. Influenced by permability."
+	tooltipImg = "acidres.png"
+	defaultValue = 10
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal]%"
+
+	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_ACIDRES)
 
 
 /datum/objectProperty/equipment/reflection // force increases as you attack players.
