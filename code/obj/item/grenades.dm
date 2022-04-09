@@ -232,18 +232,13 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				elecflash(src,power = 4)
 				qdel(src)
 				return
-			for (var/atom/X in orange(9, T))
-				if (istype(X,/obj/machinery/containment_field))
+			for (var/atom/movable/X in orange(9, T))
+				if (istypes(X, list(/obj/machinery/containment_field, /obj/machinery/field_generator, /obj/fluid, /obj/effect, /obj/overlay)))
 					continue
-				if (istype(X,/obj/machinery/field_generator))
-					continue
-				if (istype(X,/turf))
-					continue
-				if (istype(X, /obj))
-					var/area/t = get_area(X)
-					if(t?.sanctuary) continue
-					if (prob(50) && X:anchored != 2)
-						step_towards(X,src)
+				var/area/t = get_area(X)
+				if(t?.sanctuary) continue
+				if (prob(50) && X.anchored != 2)
+					step_towards(X,src)
 		qdel(src)
 		return
 
