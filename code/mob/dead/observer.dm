@@ -10,7 +10,6 @@
 	canmove = 1
 	blinded = 0
 	anchored = 1	//  don't get pushed around
-	var/mob/living/corpse = null	//	observer mode
 	var/observe_round = 0
 	var/health_shown = 0
 	var/arrest_shown = 0
@@ -789,7 +788,7 @@
 
 mob/dead/observer/proc/insert_observer(var/atom/target)
 	var/mob/dead/target_observer/newobs = new /mob/dead/target_observer
-	set_loc(null) // we are not being deleted we are simply storing ourselves in null
+	src.set_loc(newobs)
 	newobs.attach_hud(hud)
 	newobs.set_observe_target(target)
 	newobs.name = src.name
