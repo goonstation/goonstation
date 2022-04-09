@@ -9,6 +9,7 @@
 //	persistent_bank_purchases.dm  :	(contains all purchaseable data)
 
 /datum/spend_spacebux
+	var/datum/bank_purchaseable/bought_this_round = null
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -47,10 +48,14 @@
 			user.client.set_last_purchase(null)
 			boutput(user, "<span class='notice'><b>The thing you previously purchased has been removed from your inventory due to it no longer existing.</b></span>")
 
+		var/truebalance = user.client.persistent_bank
+		if(istype(src.bought_this_round))
+			truebalance += src.bought_this_round.cost
 		. = list(
 			"purchasables" = purchasables,
 			"held" = found_held,
-			"balance" = user.client.persistent_bank
+			"balance" = user.client.persistent_bank,
+			"truebalance" = truebalance
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -76,12 +81,22 @@
 	proc/try_purchase(var/client/c, var/datum/bank_purchaseable/p)
 		if(current_state >= GAME_STATE_PLAYING) //if the game has started, you can't buy things
 			return FALSE
+		if(istype(src.bought_this_round))
+			//we already picked something this round, so refund it first
+			c.add_to_bank(src.bought_this_round.cost)
+			if (istype(c.mob,/mob/new_player))
+				var/mob/new_player/playermob = c.mob
+				if (playermob.mind)
+					playermob.mind.purchased_bank_item = null
+					c.persistent_bank_item = 0
+
 		if (c.bank_can_afford(p.cost))
 			c << sound( 'sound/misc/cashregister.ogg' )
 			boutput( usr, "<span class='notice'><b>You purchased [p.name] for the round!</b></span>" )
 			if (istype(c.mob,/mob/new_player))
 				var/mob/new_player/playermob = c.mob
 				if (playermob.mind)
+					src.bought_this_round = p
 					playermob.mind.purchased_bank_item = p
 					c.persistent_bank_item = 0
 				else

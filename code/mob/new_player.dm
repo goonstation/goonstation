@@ -846,8 +846,8 @@ a.latejoin-card:hover {
 				if (usr.client) winset(src, "joinmenu.button_cancel", "is-disabled=false;is-visible=true")
 				if (usr.client) winset(src, "joinmenu.button_ready_antag", "is-disabled=true")
 				usr.Browse(null, "window=mob_occupation")
-
-				bank_menu = new
+				if(!bank_menu)
+					bank_menu = new
 				bank_menu.ui_interact( usr, null )
 				src.client.loadResources()
 		else

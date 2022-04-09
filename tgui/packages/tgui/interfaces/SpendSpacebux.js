@@ -52,6 +52,7 @@ export const SpendSpacebux = (props, context) => {
     purchasables,
     held,
     balance,
+    truebalance,
   } = data;
 
   const [filterAvailable, setFilterAvailable] = useLocalState(context, 'filter-available', false);
@@ -95,7 +96,7 @@ export const SpendSpacebux = (props, context) => {
             </Stack.Item>
             <Stack.Item>
               {purchasables
-                .filter(({ cost }) => !(filterAvailable && balance < cost))
+                .filter(({ cost }) => !(filterAvailable && truebalance < cost))
                 .map(purchase => {
                   const {
                     pname,
@@ -105,7 +106,7 @@ export const SpendSpacebux = (props, context) => {
                     <SBPurchaseEntry
                       key={pname}
                       product={purchase}
-                      disabled={balance < cost}
+                      disabled={truebalance < cost}
                       onClick={() => act('purchase', { pname })}
                     />
                   );
