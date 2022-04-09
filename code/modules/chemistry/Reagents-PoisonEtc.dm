@@ -852,7 +852,7 @@ datum
 				if (!I) return
 				if (!(I.item_function_flags & IMMUNE_TO_ACID))
 					if (!I.corroding && M)
-						boutput(M, "<span class='alert'>Your [I.name] is being damaged by the acid.</span>"
+						boutput(M, "<span class='alert'>Your [I.name] is being damaged by the acid.</span>")
 						. = TRUE
 					I.corrode(reag_vol)
 				return
