@@ -452,7 +452,7 @@
 		boutput( src, "Abort abort abort! No laws! No laws!!" )
 		return
 
-	boutput( src, ticker.ai_law_rack_manager.format_for_logs() )
+	boutput( src, ticker.ai_law_rack_manager.format_for_logs(round_end = TRUE) )
 
 
 /mob/dead/observer/Logout()
