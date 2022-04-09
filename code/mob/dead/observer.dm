@@ -532,7 +532,7 @@
 	set category = null
 	set name = "Re-enter Corpse"
 	if(!corpse || corpse.disposed)
-		alert("You don't have a corpse!")
+		alert("You don't have a corpse! If you're very sure you do, and this seems wrong, make a bug report!")
 		return
 	if(src.client && src.client.holder && src.client.holder.state == 2)
 		var/rank = src.client.holder.rank
