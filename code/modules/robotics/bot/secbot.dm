@@ -1290,8 +1290,6 @@
 				return
 
 			var/uncuffable = 0
-			if (ishuman(master.target))
-				var/mob/living/carbon/human/H = master.target
 
 			if (!isturf(master.target.loc))
 				uncuffable = 1
