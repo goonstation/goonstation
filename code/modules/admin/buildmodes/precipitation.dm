@@ -30,19 +30,24 @@ Ctrl + Alt + Shift Left Click          - Open Particool for Precipitation<br>
 		if(ctrl && alt && shift)
 			var/obj/effects/precipitation/P = locate() in T
 			if(!P.PC)
+				update_button_text("Connecting...")
 				P.generate_controller()
 			usr.client.open_particle_editor(P)
 			return
 
+
 		if (ctrl)
+			update_button_text("Spawning...")
 			var/area/A = get_area(T)
 			for(var/turf/AT in A)
+				if(T.z != AT.z) continue
 				new effect_type(AT)
 				blink(AT)
 		else if(alt)
 			var/obj/effects/precipitation/P = locate() in T
 			if(P)
 				if(!P.PC)
+					update_button_text("Connecting...")
 					P.generate_controller()
 				add_reagents(P.PC)
 				P.PC.update()
@@ -51,6 +56,7 @@ Ctrl + Alt + Shift Left Click          - Open Particool for Precipitation<br>
 		else
 			new effect_type(T)
 			blink(T)
+		update_button_text()
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
 		var/turf/T = get_turf(object)
@@ -58,7 +64,9 @@ Ctrl + Alt + Shift Left Click          - Open Particool for Precipitation<br>
 
 		if (ctrl)
 			var/area/A = get_area(T)
+			update_button_text("Clearing...")
 			for(var/turf/AT in A)
+				if(T.z != AT.z) continue
 				P = locate() in AT
 				if(P)
 					blink(AT)
@@ -73,6 +81,7 @@ Ctrl + Alt + Shift Left Click          - Open Particool for Precipitation<br>
 			if(P)
 				blink(T)
 				qdel(P)
+		update_button_text()
 
 	proc/add_reagents(datum/precipitation_controller/PC)
 		var/list/L = list()
@@ -99,6 +108,3 @@ Ctrl + Alt + Shift Left Click          - Open Particool for Precipitation<br>
 		if(!amount) return
 
 		PC.reagents.add_reagent(reagent.id, amount)
-
-
-

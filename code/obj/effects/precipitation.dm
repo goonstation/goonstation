@@ -108,6 +108,7 @@ particles/rain
 
 
 obj/effects/precipitation
+	anchored = 2
 	var/datum/precipitation_controller/PC
 
 	Crossed(var/atom/A)
