@@ -169,7 +169,7 @@ var/datum/station_zlevel_repair/station_repair = new
 						station_repair.weather_img.alpha = 200
 						station_repair.weather_img.plane = PLANE_NOSHADOW_ABOVE
 					else
-						station_repair.weather_effect = /obj/effects/snow/grey/tile
+						station_repair.weather_effect = /obj/effects/precipitation/snow/grey/tile
 
 				if(alert("Should it be pitch black?",,"Yes", "No")=="No")
 					station_repair.ambient_light = new /image/ambient
@@ -238,7 +238,7 @@ var/datum/station_zlevel_repair/station_repair = new
 					station_repair.weather_img.alpha = 200
 					station_repair.weather_img.plane = PLANE_NOSHADOW_ABOVE
 				else if(rain)
-					station_repair.weather_effect = /obj/effects/rain/sideways/tile
+					station_repair.weather_effect = /obj/effects/precipitation/rain/sideways/tile
 
 				station_repair.ambient_light = new /image/ambient
 				station_repair.ambient_light.color = ambient_light
@@ -425,9 +425,9 @@ var/datum/station_zlevel_repair/station_repair = new
 				var/vehicles = alert("Land vehicles available?",,"Yes", "No", "Some cars too!")
 				snow = (snow == "No") ? null : snow
 				if(snow == "Light")
-					station_repair.weather_effect = /obj/effects/snow/grey/tile/light
+					station_repair.weather_effect = /obj/effects/precipitation/snow/grey/tile/light
 				else if(snow == "Yes")
-					station_repair.weather_effect = /obj/effects/snow/grey/tile
+					station_repair.weather_effect = /obj/effects/precipitation/snow/grey/tile
 
 				var/list/space = list()
 				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
