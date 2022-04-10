@@ -495,8 +495,7 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal]%"
 
-	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_ACIDRES)
-
+	//no mob property, as acid resilience is per-item
 
 /datum/objectProperty/equipment/reflection // force increases as you attack players.
 	name = "Reflection"
