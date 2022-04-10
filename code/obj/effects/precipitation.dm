@@ -39,7 +39,87 @@ particles/rain
 			height = 96
 
 
-obj/effects/rain
+/datum/precipitation_controller
+	var/name = "Precipitation Controller"
+	var/datum/reagents/reagents
+	var/particles/shared_particle
+	var/probability = 100
+	var/cooldown = 5 SECONDS
+	var/max_pool_depth = 0
+	var/orig_color
+
+	New(obj/effects/precipitation/start)
+		..()
+		src.reagents = new/datum/reagents(100)
+		propogate_controller(get_turf(start), start.type)
+
+	proc/cross_check(atom/A)
+		if(prob(probability) && !ON_COOLDOWN(A, "precipitation_cd_\ref[src]", src.cooldown))
+			if(src.reagents.total_volume)
+				var/datum/reagents/R = new
+				src.reagents.copy_to(R)
+				R.reaction(A,TOUCH)
+
+	proc/propogate_controller(turf/start, desired_type)
+		var/list/nodes = list()
+		var/index_open = 1
+		var/list/open = list(start)
+		var/list/next_open = list()
+
+		var/obj/effects/precipitation/PE = locate() in start
+		nodes[PE] = TRUE
+		var/i = 0
+		while (index_open <= length(open) || length(next_open))
+			if(i++ % 500 == 0)
+				LAGCHECK(LAG_HIGH)
+			if(index_open > length(open))
+				open = next_open
+				next_open = list()
+				index_open = 1
+			var/turf/T = open[index_open++]
+			for (var/dir in alldirs)
+				var/turf/target = get_step(T, dir)
+				if (!target) continue // map edge
+				PE = locate() in target
+				if(!PE) continue
+				if(nodes[PE]) continue
+				if(PE.type != desired_type) continue
+				nodes[PE] = TRUE
+				next_open[target] = TRUE
+
+		for (PE as anything in nodes)
+			if(!src.shared_particle)
+				src.shared_particle = new PE.particles.type()
+				src.orig_color = shared_particle.color
+			PE.particles = src.shared_particle
+			PE.PC = src
+
+
+	proc/update()
+		if(shared_particle)
+			if(reagents.total_volume)
+				var/datum/color/C = reagents.get_average_color()
+				shared_particle.color = rgb(C.r, C.g, C.b)
+			else
+				if(src.orig_color)
+					shared_particle.color = src.orig_color
+				else
+					shared_particle.color = "#fff"
+
+
+obj/effects/precipitation
+	var/datum/precipitation_controller/PC
+
+	Crossed(var/atom/A)
+		..()
+		if(PC)
+			PC.cross_check(A)
+
+	proc/generate_controller()
+		PC = new(src)
+
+
+obj/effects/precipitation/rain
 	particles = new/particles/rain
 	plane = PLANE_NOSHADOW_ABOVE
 	alpha = 200
@@ -118,12 +198,11 @@ particles/snow
 				lifespan = generator("num", 20, 90, LINEAR_RAND)
 
 
-
-
-obj/effects/snow
+obj/effects/precipitation/snow
 	particles = new/particles/snow
 	plane = PLANE_NOSHADOW_ABOVE
 	var/static/list/particles/z_particles
+
 	client_attach
 		screen_loc = "CENTER"
 	dense
