@@ -271,6 +271,7 @@
 	icon_state = "sec"
 	icon_closed = "sec"
 	icon_opened = "secure_red-open"
+	bolted = TRUE
 
 /obj/storage/secure/closet/security/equipment
 	name = "\improper Security equipment locker"
@@ -316,6 +317,7 @@
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items locker"
 	reinforced = TRUE
+	bolted = TRUE
 	req_access = list(access_brig)
 
 // Old Mushroom-era feature I fixed up (Convair880).
