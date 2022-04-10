@@ -1,5 +1,36 @@
 //bot go brr?
 //GUNS GUNS GUNS
+/obj/item/gun/energy/cannon
+	name = "Vexillifer IV"
+	desc = "It's a cannon? A laser gun? You can't tell."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "cannon"
+	item_state = "cannon"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	force = MELEE_DMG_LARGE
+
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+
+	can_dual_wield = 0
+
+	color = list(0.270962,0.341855,1.01981,0,0.349084,0.256569,-1.36355,0,0.831095,0.954234,1.8664,0,0,0,0,1,0,0,0,0)
+
+	two_handed = 1
+	w_class = W_CLASS_BULKY
+	muzzle_flash = "muzzle_flash_bluezap"
+	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
+	shoot_delay = 0.8 SECONDS
+
+
+	New()
+		set_current_projectile(new/datum/projectile/laser/asslaser)
+		..()
+
+	setupProperties()
+		..()
+		setProperty("movespeed", 0.3)
+
 /datum/projectile/special/target_designator
 	sname = "foo"
 	name = "bar"
