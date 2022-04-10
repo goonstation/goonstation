@@ -155,9 +155,7 @@
 
 			if (visr_material.hasProperty("density"))
 				var/prot = round(visr_material.getProperty("density") / 20)
-				setProperty("meleeprot_head", 2+prot)
-				if(prot<=2)
-					setProperty("meleeprot_head", 4) // even if soft visor, still decent helmet
+				setProperty("meleeprot_head", 2+ max(2, prot)) // even if soft visor, still decent helmet
 			else
 				setProperty("meleeprot_head", 4) // always at least be as good as baseline item
 
