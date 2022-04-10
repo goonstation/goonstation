@@ -106,7 +106,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/rc_entry/reagent/cryox
 	name = "cryoxadone coolant"
-	chemname = "cryoxadone"
+	chem_ids = "cryoxadone"
 	feemod = 60
 
 /datum/rc_entry/item/lambdarod

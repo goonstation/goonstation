@@ -53,11 +53,11 @@ ABSTRACT_TYPE(/datum/rc_entry/item)
 	var/typepath
 	///If true, requires precise path; if false (default), sub-paths are accepted.
 	var/exactpath = FALSE
-	///Commodity path. If defined, will set the per-item payout to the highest market rate for that commodity, and set type path if not manually set.
+	///Commodity path. If defined, will augment the per-item payout with the highest market rate for that commodity, and set the type path if not initially specified.
 	var/commodity
 
 	New()
-		if(src.commodity)
+		if(src.commodity) // Fetch configuration data from commodity if specified
 			var/datum/commodity/CM = src.commodity
 			if(!src.typepath) src.typepath = initial(CM.comtype)
 			src.feemod += initial(CM.baseprice)
@@ -66,9 +66,9 @@ ABSTRACT_TYPE(/datum/rc_entry/item)
 
 	rc_eval(obj/eval_item)
 		. = ..()
-		if(rollcount >= count) return // standard skip-if-complete
-		if(src.exactpath && eval_item.type != typepath) return // more fussy type evaluation
-		else if(!istype(eval_item,typepath)) return // regular type evaluation
+		if(rollcount >= count) return // Standard skip-if-complete
+		if(src.exactpath && eval_item.type != typepath) return // More fussy type evaluation
+		else if(!istype(eval_item,typepath)) return // Regular type evaluation
 		src.rollcount++
 		. = TRUE
 
@@ -80,11 +80,11 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 	var/typepath
 	///Optional alternate type path to look for. Useful when an item has two functionally interchangeable forms, such as raw or refined ore.
 	var/typepath_alt
-	///Commodity path. If defined, will set the per-item payout to the highest market rate for that commodity, and set type path if not manually set.
+	///Commodity path. If defined, will augment the per-item payout with the highest market rate for that commodity, and set the type path.
 	var/commodity
 
 	New()
-		if(src.commodity)
+		if(src.commodity) // Fetch configuration data from commodity if specified
 			var/datum/commodity/CM = src.commodity
 			src.typepath = initial(CM.comtype)
 			src.feemod += initial(CM.baseprice)
@@ -93,32 +93,32 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 
 	rc_eval(obj/item/eval_item)
 		. = ..()
-		if(rollcount >= count) return // standard skip-if-complete
-		if(!istype(eval_item)) return // if it's not an item, it's not a stackable
+		if(rollcount >= count) return // Standard skip-if-complete
+		if(!istype(eval_item)) return // If it's not an item, it's not a stackable
 		if(eval_item.type == typepath || (typepath_alt && eval_item.type == typepath_alt))
 			rollcount += eval_item.amount
-			. = TRUE //let manager know passed eval item is claimed by contract
+			. = TRUE // Let manager know passed eval item is claimed by contract
 
 ///Reagent entry. Searches for reagents in sent objects, consuming any suitable reagent containers until the quantity is satisfied.
 ABSTRACT_TYPE(/datum/rc_entry/reagent)
 /datum/rc_entry/reagent
 	entryclass = RC_REAGENT
-	///Reagents being looked for in the evaluation; can be a list of several, or just the one.
-	var/chemname = "water"
+	///IDs of reagents being looked for in the evaluation; can be a single one in string form, or a list containing several strings.
+	var/chem_ids = "water"
 
 	rc_eval(atom/eval_item)
 		. = ..()
-		if(rollcount >= count) return // standard skip-if-complete
+		if(rollcount >= count) return //standard skip-if-complete
 		if(eval_item.reagents)
-			var/C
-			if(islist(src.chemname))
-				for(var/chemplural in src.chemname)
+			var/C // Total count of matching reagents, by unit
+			if(islist(src.chem_ids)) // If there are multiple reagents to evaluate, iterate by chem IDs
+				for(var/chemplural in src.chem_ids)
 					C += eval_item.reagents.get_reagent_amount(chemplural)
-			else
-				C = eval_item.reagents.get_reagent_amount(src.chemname)
+			else // If there's just the one, check for it directly
+				C = eval_item.reagents.get_reagent_amount(src.chem_ids)
 			if(C)
 				rollcount += C
-				. = TRUE //let manager know reagent was found in passed eval item
+				. = TRUE // Let manager know reagent was found in passed eval item
 
 ///Seed entry. Searches for seeds of the correct crop name, typically matching a particular genetic makeup.
 ABSTRACT_TYPE(/datum/rc_entry/seed)
@@ -128,12 +128,14 @@ ABSTRACT_TYPE(/datum/rc_entry/seed)
 	var/cropname = "Tomato"
 
 	/**
-	 * List of required plant gene parameters, formatted as a key-value pair, i.e.
+	 * List of required plant gene parameters, each formatted as a key-value pair.
+	 * Add your key value pairs to this list, either hard-coded or with a thing in New() BEFORE ..(), for evaluation. Example of the latter:
 	 * src.gene_reqs["Maturation"] = rand(10,20) * -1
 	 *
-	 * Add your key value pairs to this list, either hard-coded or with a thing in New() BEFORE ..(), for evaluation.
 	 * Available keys (strings): Maturation, Production, Lifespan, Yield, Potency, Endurance.
 	 * Number paired with key should be a negative integer for maturation or production, or a positive integer otherwise.
+	 *
+	 * If this is left empty, any seed with a genome and the appropriate crop name will be accepted.
 	 */
 	var/gene_reqs = list()
 
@@ -147,15 +149,15 @@ ABSTRACT_TYPE(/datum/rc_entry/seed)
 
 	rc_eval(atom/eval_item)
 		. = ..()
-		if(rollcount >= count) return // standard skip-if-complete
-		gene_count = 0
+		if(rollcount >= count) return // Standard skip-if-complete
+		if(!istype(eval_item,/obj/item/seed)) return // Not a seed? Skip it
 
-		if(!istype(eval_item,/obj/item/seed)) return
 		var/obj/item/seed/cultivar = eval_item
-		if(!cultivar.plantgenes) return
-		if(cultivar.planttype.name != cropname) return
+		if(!cultivar.plantgenes) return // No genome? Skip it
+		if(cultivar.planttype.name != cropname) return // Wrong species? Skip it
 
-		for(var/index in gene_reqs)
+		gene_count = 0
+		for(var/index in gene_reqs) // Iterate over each parameter to see if the genome meets it, or exceeds it in the right direction
 			switch(index)
 				if("Maturation")
 					if(cultivar.plantgenes.growtime <= gene_reqs["Maturation"]) gene_count++
@@ -170,9 +172,9 @@ ABSTRACT_TYPE(/datum/rc_entry/seed)
 				if("Endurance")
 					if(cultivar.plantgenes.endurance >= gene_reqs["Endurance"]) gene_count++
 
-		if(gene_count >= gene_factors)
+		if(gene_count >= gene_factors) // Compare satisfied parameter count to number of parameters. Met or exceeded means seed satisfies requirements
 			src.rollcount++
-			. = TRUE
+			. = TRUE // Let manager know seed passes muster and is claimed by contract
 
 /**
  * Item reward datum optionally used in contract creation.

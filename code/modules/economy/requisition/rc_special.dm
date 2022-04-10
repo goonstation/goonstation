@@ -265,5 +265,5 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 
 /datum/rc_entry/reagent/blood
 	name = "blood"
-	chemname = "blood"
+	chem_ids = "blood"
 	feemod = 10

@@ -67,27 +67,27 @@ ABSTRACT_TYPE(/datum/rc_entry/item/caterfood)
 ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/reagent/caterdrink/appletini
 	name = "appletini"
-	chemname = "appletini"
+	chem_ids = "appletini"
 	feemod = 60
 
 /datum/rc_entry/reagent/caterdrink/fruitpunch
 	name = "fruit punch"
-	chemname = "fruit_punch"
+	chem_ids = "fruit_punch"
 	feemod = 60
 
 /datum/rc_entry/reagent/caterdrink/spacecuba
 	name = "space-cuba libre"
-	chemname = "libre"
+	chem_ids = "libre"
 	feemod = 30
 
 /datum/rc_entry/reagent/caterdrink/margarita
 	name = "margarita"
-	chemname = "margarita"
+	chem_ids = "margarita"
 	feemod = 20
 
 /datum/rc_entry/reagent/caterdrink/champagne
 	name = "champagne"
-	chemname = "champagne"
+	chem_ids = "champagne"
 	feemod = 24
 
 
@@ -135,7 +135,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/reagent/carpet
 	name = "liquid carpet"
-	chemname = "carpet"
+	chem_ids = "carpet"
 	feemod = 120
 
 /datum/rc_entry/item/table
@@ -267,7 +267,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/reagent/water
 	name = "water"
-	chemname = "water"
+	chem_ids = "water"
 	feemod = 10
 
 
@@ -401,7 +401,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/reagent/cola
 	name = "cola"
-	chemname = "cola"
+	chem_ids = "cola"
 	feemod = 12
 
 /datum/rc_entry/item/chaps
@@ -428,7 +428,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/reagent/glitter
 	name = "glitter"
-	chemname = "glitter"
+	chem_ids = "glitter"
 	feemod = 160
 
 /datum/rc_entry/item/paperhat
