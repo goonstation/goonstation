@@ -1678,7 +1678,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			. = lerp(1, . , pushpull_multiplier)
 
 
-		if (src.pushing && (src.pulling != src.pushing))
+		if (src.pushing)
 			. *= lerp(1, max(src.pushing.p_class, 1), pushpull_multiplier)
 
 		for (var/obj/item/grab/G in src.equipped_list())
