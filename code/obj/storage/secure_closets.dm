@@ -299,6 +299,8 @@
 	icon_state = "sec"
 	icon_closed = "sec"
 	icon_opened = "secure_red-open"
+	_max_health = LOCKER_HEALTH_STRONG
+	_health = LOCKER_HEALTH_STRONG
 	bolted = TRUE
 
 /obj/storage/secure/closet/security/equipment
@@ -344,9 +346,11 @@
 
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items locker"
+	req_access = list(access_brig)
+	_max_health = LOCKER_HEALTH_STRONG
+	_health = LOCKER_HEALTH_STRONG
 	reinforced = TRUE
 	bolted = TRUE
-	req_access = list(access_brig)
 
 // Old Mushroom-era feature I fixed up (Convair880).
 /obj/storage/secure/closet/brig/automatic
