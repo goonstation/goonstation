@@ -318,7 +318,9 @@
 		if(user.ckey in src.artists)
 			boutput(user, "<span class='alert'>The first brush stroke exhausted you too much. You will need to wait until the next shift for another.</span>")
 			return null
-		return input(user, "Please select the color to paint with.", "Your Single Brushstroke", null) as null|color
+		. = input(user, "Please select the color to paint with.", "Your Single Brushstroke", null) as null|color
+		if(user.ckey in src.artists)
+			return null
 
 	attackby(obj/item/W, mob/user)
 		pop_open_a_browser_box(user)
