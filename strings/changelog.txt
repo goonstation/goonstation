@@ -1,4 +1,72 @@
 
+(t)sat apr 09 22
+(u)LeahTheTech
+(p)7489
+(e)🔄⛔|rework, removal
+(*)Reworked conspiracy objectives.
+(u)Ikea
+(p)7912
+(e)🗺|mapping
+(+)The vault prefab has had its contents nerfed, and has undergone minor changes.
+(u)NightmareChamillian
+(p)8081
+(e)🎨|sprites
+(+)Roboticists now spawn with a stocked toolbelt
+(u)NightmareChamillian
+(p)8117
+(e)🆕|feature
+(*)Roach people (and some bug critters for that matter) now bleed hemolymph instead of normal blood
+(+)Hemolymph can be broken down with space cleaner, acetone, and some heat.
+(u)NightmareChamillian
+(p)8087
+(e)🎨|sprites
+(+)Added purple jumpsuits and hats to uniform manufacturers
+(+)Sorted jumpsuits and hats in manufacturers by the rainbow
+(u)Flappybat
+(p)8149
+(e)🐛⚖|bug, balance
+(+)Added protection to nodamage/spellshield from force drinking, flash and Securitron batons.
+(t)thu apr 07 22
+(u)tarmunora
+(+)Ammo cell in security pouch replaced with donut.
+(+)Distruptor cell utility purchase in sec vendors removed, tokens now give a "ammo" credit that can be used to acquire either a spare 200u cell or the distruptor cell.
+(+)Distruptor cell self-charge rate reduced back down to 5.
+(u)aloe
+(+)Werewolf/abomination/zombie arms now prevent you from moving while they grab you. You can still resist out it's just a bit harder than a passive grab. Will tweak the percentages as needed.
+(+)Fiber wire should work now
+(u)Ikea
+(p)7914
+(e)🗺|mapping
+(+)The records contained within the radio station are now randomized.
+(t)tue apr 05 22
+(u)aloe
+(*)Taking items off people now takes 30 stamina when starting the action.
+(*)Some timings for taking items off people have been slightly adjusted. See minor changes for a list.
+(+)INCREASED: Backpacks, jumpsuits, helmets, space suits<br>DECREASED: Radios, gloves, non-helmet hats, glasses<br>Exact timings vary, but most are 1 second increase/decreases. Space suits take significantly longer.
+(+)Grenades can be put in people's pockets very fast. If you're into that.
+(u)aloe
+(*)You can now construct furniture on adjacent tiles by clicking those tiles.
+(*)You can now walk on tables as long as you're also on a table. However, you can no longer build tables on the same tile you're standing on.
+(+)Furniture can no longer be built on the same tile as impassable objects- e.g. no stacking multiple tables, no building chairs on the same tile as a vending machine.
+(u)Sovexe
+(p)8111
+(e)🆕|feature
+(+)Hovering over a pixel in the canvas editor now displays its coordinates.
+(t)mon apr 04 22
+(u)pali
+(*)CentCom dance floor has been covered by some kind of a canvas, huh. <s>r/place don't sue me pls</s>
+(u)Flaborized
+(p)8062
+(e)|
+(+)The Adamantium Skeleton trait now outputs a message in the chat when it prevents you from losing a limb.
+(u)RubberRats
+(p)7796
+(e)🆕|feature
+(*)Added a new negative trait: Frail Constitution. Taking this trait greatly increases the amount of damage that your internal organs take from all sources.
+(u)Flaborized
+(p)8060
+(e)🔄|rework
+(*)The human torch trait is now worth two points, but totally prevents the burning status counter from decrementing on its own.
 (t)sun apr 03 22
 (u)ThyOverlord
 (p)8072

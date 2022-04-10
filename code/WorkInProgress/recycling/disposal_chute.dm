@@ -196,6 +196,7 @@
 				I.set_loc(get_turf(src))
 				if(prob(30)) //It landed cleanly!
 					I.set_loc(src)
+					update()
 					src.visible_message("<span class='alert'>\The [I] lands cleanly in \the [src]!</span>")
 				else	//Aaaa the tension!
 					src.visible_message("<span class='alert'>\The [I] teeters on the edge of \the [src]!</span>")
@@ -228,6 +229,8 @@
 					if (!is_processing)
 						SubscribeToProcess()
 						is_processing = 1
+					update()
+				else
 					update()
 		else
 			return ..()

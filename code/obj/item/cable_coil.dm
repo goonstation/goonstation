@@ -88,11 +88,11 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	proc/use(var/used)
 		if (src.amount < used)
 			return 0
-		else if (src.amount == used)
+		amount -= used
+		if (src.amount <= 0)
 			qdel(src)
 			return 1
 		else
-			amount -= used
 			UpdateIcon()
 			return 1
 
@@ -204,7 +204,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	else
 		turf_place_between(source, target)
 
-	if (!src.amount)
+	if (!src.amount || QDELETED(src))
 		M.move_laying = null
 		boutput(M, "<span class='alert'>Your cable coil runs out!</span>")
 		return
@@ -216,7 +216,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	else
 		turf_place_between(target, source)
 
-	if (!src.amount)
+	if (!src.amount || QDELETED(src))
 		M.move_laying = null
 		boutput(M, "<span class='alert'>Your cable coil runs out!</span>")
 		return

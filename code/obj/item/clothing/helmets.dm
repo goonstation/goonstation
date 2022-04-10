@@ -7,6 +7,7 @@
 	item_state = "helmet"
 	desc = "Somewhat protects your head from being bashed in."
 	protective_temperature = 500
+	duration_remove = 5 SECONDS
 
 	setupProperties()
 		..()
