@@ -8,6 +8,10 @@
 	_max_health = 50
 	_health = 50
 
+	open(entangleLogic, mob/user)
+		if (!isvampire(user))
+			return
+		. = ..()
 
 	attack_hand(mob/user as mob)
 		if (!isvampire(user))

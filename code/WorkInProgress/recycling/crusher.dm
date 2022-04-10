@@ -8,6 +8,7 @@
 	anchored = 1.0
 	mats = 20
 	is_syndicate = 1
+	flags = FLUID_SUBMERGE | UNCRUSHABLE
 	event_handler_flags = USE_FLUID_ENTER
 	var/osha_prob = 40 //How likely it is anyone touching it is to get dragged in
 	var/list/poking_jerks = null //Will be a list if need be
@@ -17,7 +18,12 @@
 	var/last_sfx = 0
 
 /obj/machinery/crusher/Bumped(atom/AM)
+	return_if_overlay_or_effect(AM)
 	if(AM.flags & UNCRUSHABLE)
+		return
+
+	var/turf/T = get_turf(src)
+	if (T.density) // no clipping through walls ty
 		return
 
 	if(!(AM.temp_flags & BEING_CRUSHERED))
@@ -30,7 +36,12 @@
 
 /obj/machinery/crusher/Crossed(atom/movable/AM)
 	. = ..()
+	return_if_overlay_or_effect(AM)
 	if(AM.flags & UNCRUSHABLE)
+		return
+
+	var/turf/T = get_turf(src)
+	if (T.density) // no clipping through walls ty
 		return
 
 	if(!(AM.temp_flags & BEING_CRUSHERED))
@@ -225,3 +236,5 @@
 		src.visible_message("<span style='color:red'>\The [src] fails to deploy because there's already a crusher there! Find someplace else!")
 		qdel(src)
 		return
+	for (var/atom/movable/AM in T) //heh
+		src.Crossed(AM)

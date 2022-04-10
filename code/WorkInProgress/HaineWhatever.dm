@@ -1017,22 +1017,13 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			var/obj/item/grab/G = H.find_type_in_hand(/obj/item/grab)
 			if (!G)
 				return 0
-/*
-			if (G.affecting in npc_protected_mobs)
-				if (G.state == 1)
-					src.im_mad += 5
-				else if (G.state == 2)
-					src.im_mad += 20
-				else if (G.state == 3)
-					src.im_mad += 50
-				return 1
-*/
+
 			if (G.affecting == src) // we won't put up with shit being done to us nearly as much as we'll put up with it for others
-				if (G.state == 1)
+				if (G.state == GRAB_STRONG)
 					src.im_mad += 20
-				else if (G.state == 2)
+				else if (G.state == GRAB_AGGRESSIVE)
 					src.im_mad += 60
-				else if (G.state == 3)
+				else if (G.state == GRAB_CHOKE)
 					src.im_mad += 100
 				return 1
 

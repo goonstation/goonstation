@@ -644,14 +644,10 @@
 /mob/living/critter/changeling/headspider/death_effect()
 	var/datum/abilityHolder/changeling/C = changeling
 	if (C)
-		if (C.points < 10)
-			boutput(src, "You try to release a headspider but don't have enough DNA points (requires 10)!")
 		for (var/mob/living/critter/changeling/spider in C.hivemind)
 			boutput(spider, __red("Your telepathic link to your master has been destroyed!"))
 			spider.hivemind_owner = 0
 		for (var/mob/dead/target_observer/hivemind_observer/obs in C.hivemind)
 			boutput(obs, __red("Your telepathic link to your master has been destroyed!"))
 			obs.boot()
-		if (C.hivemind.len > 0)
-			boutput(src, "Contact with the hivemind has been lost.")
-		C.hivemind = list()
+		C.hivemind.Cut()

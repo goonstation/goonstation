@@ -228,11 +228,11 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 				if(IN_RANGE(center, AIeye, distance))
 					. += theAI
 
-//Kinda sorta like viewers but includes observers. In theory.
+//Kinda sorta like viewers but includes target observers inside viewing mobs
 /proc/observersviewers(var/Dist=world.view, var/Center=usr)
 	var/list/viewMobs = viewers(Dist, Center)
 
-	for(var/mob/dead/target_observer/M in observers)
+	for_by_tcl(M, /mob/dead/target_observer)
 		if(!M.client) continue
 		if(M.target in view(Dist, Center) || M.target == Center)
 			viewMobs += M

@@ -29,6 +29,7 @@ PIPE BOMBS + CONSTRUCTION
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
+	duration_put = 0.25 SECONDS //crime
 	var/is_dangerous = TRUE
 	var/sound_armed = null
 	var/icon_state_armed = null
@@ -231,18 +232,13 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				elecflash(src,power = 4)
 				qdel(src)
 				return
-			for (var/atom/X in orange(9, T))
-				if (istype(X,/obj/machinery/containment_field))
+			for (var/atom/movable/X in orange(9, T))
+				if (istypes(X, list(/obj/machinery/containment_field, /obj/machinery/field_generator, /obj/fluid, /obj/effect, /obj/overlay)))
 					continue
-				if (istype(X,/obj/machinery/field_generator))
-					continue
-				if (istype(X,/turf))
-					continue
-				if (istype(X, /obj))
-					var/area/t = get_area(X)
-					if(t?.sanctuary) continue
-					if (prob(50) && X:anchored != 2)
-						step_towards(X,src)
+				var/area/t = get_area(X)
+				if(t?.sanctuary) continue
+				if (prob(50) && X.anchored != 2)
+					step_towards(X,src)
 		qdel(src)
 		return
 
@@ -1404,6 +1400,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 /obj/item/pipebomb
 	icon = 'icons/obj/items/assemblies.dmi'
 	item_state = "r_hands"
+	duration_put = 0.5 SECONDS //crime
 
 /obj/item/pipebomb/frame
 	name = "pipe frame"

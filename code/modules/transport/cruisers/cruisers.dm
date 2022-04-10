@@ -1196,7 +1196,7 @@
 	attackby(var/obj/item/grab/G as obj, mob/user as mob)
 		if ((!( istype(G, /obj/item/grab) ) || !( ismob(G.affecting) )))
 			return
-		if (!G.state)
+		if (G.state == GRAB_PASSIVE)
 			boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 			return
 		var/mob/M = G.affecting

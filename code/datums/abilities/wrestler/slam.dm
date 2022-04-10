@@ -64,7 +64,7 @@
 						HH.pixel_x = M.pixel_x + 8
 
 				// These are necessary because of the sleep call.
-				if (!G || !istype(G) || G.state < 1)
+				if (!G || !istype(G) || G.state == GRAB_PASSIVE)
 					boutput(M, __red("You can't slam the target without a firm grab!"))
 					M.pixel_x = 0
 					M.pixel_y = 0
@@ -115,7 +115,7 @@
 			HH.pixel_y = 0
 
 			// These are necessary because of the sleep call.
-			if (!G || !istype(G) || G.state < 1)
+			if (!G || !istype(G) || G.state == GRAB_PASSIVE)
 				boutput(M, __red("You can't slam the target without a firm grab!"))
 				return 0
 
