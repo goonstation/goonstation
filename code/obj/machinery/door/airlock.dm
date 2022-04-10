@@ -1437,6 +1437,58 @@ About the new airlock wires panel:
 		tgui_not_incapacitated_state.can_use_topic(src, user)
 	)
 
+/obj/machinery/door/airlock/proc/get_welding_positions(mob/user)
+	var/start
+	var/stop
+	var/rel_dir = get_dir(user, src)
+	if(istype(src, /obj/machinery/door/airlock/gannets)) //Gannets why your airlocks have so many welded icon states!!
+		start = list(0,5)
+		stop = list(0,-15)
+	else
+		switch(welded_icon_state)
+			if("welded")
+				start = list(0,5)
+				stop = list(0,-15)
+			if("2_welded")
+				if(dir == NORTH || dir == SOUTH)
+					start = list(0,5)
+					stop = list(0,-15)
+				else
+					start = list(15,0)
+					stop = list(-15,0)
+			if("old_welded")
+				if(dir == NORTH || dir == SOUTH)
+					start = list(0,5)
+					stop = list(0,-15)
+				else
+					start = list(15,0)
+					stop = list(-15,0)
+			if("fdoor_weld")
+				if(dir == EAST)
+					start = list(15,-15)
+					stop = list(15,15)
+				else if(dir == WEST)
+					start = list(-15,-15)
+					stop = list(-15,15)
+				else
+					start = list(-15,-15)
+					stop = list(15,-15)
+			else
+				if(dir == NORTH || dir == SOUTH)
+					start = list(-15,-15)
+					stop = list(15,-15)
+				else
+					if(rel_dir == EAST || rel_dir == SOUTHEAST || rel_dir == NORTHEAST)
+						start = list(-15,-15)
+						stop = list(-15,15)
+					else
+						start = list(15,-15)
+						stop = list(15,15)
+
+	if(welded)
+		. = list(stop,start)
+	else
+		. = list(start,stop)
 
 /obj/machinery/door/airlock/attack_hand(mob/user as mob)
 	if (!issilicon(user))
@@ -1487,19 +1539,16 @@ About the new airlock wires panel:
 	if ((isweldingtool(C) && !( src.operating ) && src.density))
 		if(!C:try_weld(user, 1, burn_eyes = 1))
 			return
-		if (!src.welded)
-			src.welded = 1
-			logTheThing("station", user, null, "welded [name] shut at [log_loc(user)].")
-			user.unlock_medal("Lock Block", 1)
-		else
-			logTheThing("station", user, null, "un-welded [name] at [log_loc(user)].")
-			src.welded = null
+
+		var/positions = src.get_welding_positions(user)
+
+		actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/door/airlock/proc/weld_action, \
+			list(user), null, positions[1], positions[2]),user)
 
 		if (src.health < src.health_max)
 			src.heal_damage()
 			boutput(user, "<span class='notice'>Your repair the damage to [src].</span>")
 
-		src.UpdateIcon()
 		return
 	else if (isscrewingtool(C))
 		if (src.hardened == 1)
@@ -1522,6 +1571,16 @@ About the new airlock wires panel:
 	else
 		..()
 	return
+
+/obj/machinery/door/airlock/proc/weld_action(mob/user)
+	if (!src.welded)
+		src.welded = 1
+		logTheThing("station", user, null, "welded [name] shut at [log_loc(user)].")
+		user.unlock_medal("Lock Block", 1)
+	else
+		logTheThing("station", user, null, "un-welded [name] at [log_loc(user)].")
+		src.welded = null
+	src.UpdateIcon()
 
 /obj/machinery/door/airlock/proc/unpowered_open_close()
 	if (!src || !istype(src))
