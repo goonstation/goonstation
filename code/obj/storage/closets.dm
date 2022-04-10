@@ -15,29 +15,6 @@
 		. = ..()
 		STOP_TRACKING
 
-	attackby(obj/item/I as obj, mob/user as mob)
-		if (src.open || !src.locked)
-			..()
-		else if (!I)
-			..()
-		else if (istype(I, /obj/item/satchel/))
-			..()
-		else if (isweldingtool(I))
-			..()
-		else if (istype(I, /obj/item/card/))
-			..()
-		else if (user.a_intent == INTENT_HELP)
-			..()
-		else if ((I.force > 0))
-			user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]!</span>")
-			user.lastattacked = src
-			attack_particle(user,src)
-			hit_twitch(src)
-			take_damage(clamp(I.force, 1, 20), user)
-			playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 90, 1)
-		else
-			..()
-
 	bullet_act(var/obj/projectile/P)
 		var/damage = 0
 		if (!P || !istype(P.proj_data,/datum/projectile/))
@@ -48,20 +25,42 @@
 
 		switch(P.proj_data.damage_type)
 			if(D_KINETIC)
-				take_damage(damage)
+				take_damage(damage, P)
 			if(D_PIERCING)
-				take_damage(damage)
+				take_damage(damage, P)
 			if(D_ENERGY)
-				take_damage(damage / 2)
+				take_damage(damage / 2, P)
 		return
 
-	proc/take_damage(var/amount, var/mob/M = 0)
+	proc/take_damage(var/amount, var/obj/projectile/P)
+		if (!P)
+			message_admins("P Gone")
+			return
 		if (!isnum(amount) || amount <= 0)
 			return
 		src._health -= amount
 		if(_health <= 0)
 			_health = 0
-			//logTheThing("combat", M, null, "broke open [M] with [I] at [log_loc(src)]")
+			if (isnull(P))
+				logTheThing("combat", src, null, "is hit and broken open by a projectile at [log_loc(src)]. No projectile data.]")
+			else
+				var/shooter_data = null
+				var/vehicle
+				if (P.mob_shooter)
+					shooter_data = P.mob_shooter
+				else if (ismob(P.shooter))
+					var/mob/M = P.shooter
+					shooter_data = M
+				var/obj/machinery/vehicle/V
+				if (istype(P.shooter,/obj/machinery/vehicle/))
+					V = P.shooter
+					if (!shooter_data)
+						shooter_data = V.pilot
+					vehicle = 1
+				if(shooter_data)
+					logTheThing("combat", shooter_data, src, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+				else
+					logTheThing("combat", src, null, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 			break_open()
 
 	proc/break_open()

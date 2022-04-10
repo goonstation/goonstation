@@ -40,11 +40,18 @@
 		else if (user.a_intent == INTENT_HELP)
 			..()
 		else if ((I.force > 0) && !reinforced)
-			user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]!</span>")
+			var/damage
+			var/damage_text
+			if (I.force <= 10)
+				damage = round(I.force * 0.6)
+				damage_text = " It's not very effective."
+			else
+				damage = I.force
+			user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]! [damage_text]</span>")
 			user.lastattacked = src
 			attack_particle(user,src)
 			hit_twitch(src)
-			take_damage(clamp(I.force, 1, 20), user)
+			take_damage(clamp(damage, 1, 20), user, I, null)
 			playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 90, 1)
 		else
 			..()
@@ -63,13 +70,13 @@
 
 		switch(P.proj_data.damage_type)
 			if(D_KINETIC)
-				take_damage(damage)
+				take_damage(damage, null, null, P)
 			if(D_PIERCING)
-				take_damage(damage)
+				take_damage(damage, null, null, P)
 			if(D_ENERGY)
 				if (reinforced)
 					return
-				take_damage(damage / 2)
+				take_damage(damage / 2, null, null, P)
 		return
 
 	proc/toggle_bolts(var/mob/M)
@@ -77,16 +84,37 @@
 		src.bolted = !src.bolted
 		src.anchored = !src.anchored
 
-	proc/take_damage(var/amount, var/mob/M = 0)
+	proc/take_damage(var/amount, var/mob/M = null, obj/item/I = null, var/obj/projectile/P = null)
 		if (!isnum(amount) || amount <= 0)
 			return
 		src._health -= amount
 		if(_health <= 0)
 			_health = 0
-			//logTheThing("combat", M, null, "broke open [M] with [I] at [log_loc(src)]")
+			if (P)
+				var/shooter_data = null
+				var/vehicle
+				if (P.mob_shooter)
+					shooter_data = P.mob_shooter
+				else if (ismob(P.shooter))
+					var/mob/PS = P.shooter
+					shooter_data = PS
+				var/obj/machinery/vehicle/V
+				if (istype(P.shooter,/obj/machinery/vehicle/))
+					V = P.shooter
+					if (!shooter_data)
+						shooter_data = V.pilot
+					vehicle = 1
+				if(shooter_data)
+					logTheThing("combat", shooter_data, src, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+				else
+					logTheThing("combat", src, null, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+			else if (M)
+				logTheThing("combat", M, null, "broke open [src] with [I] at [log_loc(src)]")
+			else
+				logTheThing("combat", src, null, "was broken open by an unknown cause at [log_loc(src)]")
 			break_open()
 
-	proc/break_open()
+	proc/break_open(var/obj/projectile/P)
 		src.unlock()
 		src.open()
 		playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
