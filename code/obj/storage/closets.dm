@@ -64,6 +64,7 @@
 			break_open()
 
 	proc/break_open()
+		src.welded = 0
 		src.unlock()
 		src.open()
 		playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)

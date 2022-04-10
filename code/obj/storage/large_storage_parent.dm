@@ -293,7 +293,7 @@
 				return
 			var/positions = src.get_welding_positions()
 			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/storage/proc/weld_action, \
-				list(W, user), null, positions[1], positions[2]),user)
+				list(I, user), null, positions[1], positions[2]),user)
 			return
 
 		if (src.secure)
