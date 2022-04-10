@@ -500,8 +500,9 @@ toxic - poisons
 
 	sawfly// sawfly weapon
 		name = "Whirring Blades"
-		shot_sound = "sound/machines/chainsaw_green.ogg"
-		hit_human_sound = "sound/impact_sounds/Flesh_Tear_1.ogg"
+		damtype = DAMAGE_CUT
+		shot_sound = null
+		hit_human_sound = "sound/machines/chainsaw_green.ogg"
 		power = 20
 		dissipation_rate = 20
 		sname = "Whirring Blades"
