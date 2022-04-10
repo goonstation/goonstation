@@ -1,6 +1,6 @@
 ABSTRACT_TYPE(/datum/req_contract/aid)
 /**
- * Aid contracts are one of the three standard contract types.
+ * Aid contracts are a class of standard (market-listed) contract.
  * Uniquely among contracts, aid contracts can't be pinned due to their urgency. Requirements and flavor text should convey this urgency.
  *
  * These should -usually- be fairly ordinary supplies that a fast-moving Quartermasters' office can scrounge up with relatively little aid.

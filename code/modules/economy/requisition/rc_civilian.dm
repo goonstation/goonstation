@@ -1,6 +1,6 @@
 ABSTRACT_TYPE(/datum/req_contract/civilian)
 /**
- * Civilian contracts are one of the three standard contract types.
+ * Civilian contracts are a class of standard (market-listed) contract.
  * These contracts should typically be somewhat "tame", revolving around what a station might need in normal, non-catastrophe operation.
  * If you can picture a station or colony needing something for expansion, or under-provisioned it, it's a good candidate for a Civilian contract.
  */
