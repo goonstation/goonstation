@@ -98,7 +98,7 @@
 	var/mob/living/carbon/human/occupant = null
 	var/default_reagent = "water"
 	var/on = FALSE
-	var/suffocation_volume = 200 // tracking fluid_core's drowning depth_level vOv
+	var/suffocation_volume = 100 // drowning while laying down from breath.dm
 
 	New()
 		..()
