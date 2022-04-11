@@ -1322,7 +1322,7 @@
 				setProperty("meleeprot", prot)
 
 				 // for MOVESPEED
-				var/clunk = round((((renf.getProperty("density")/33) /10)+0.3), 0.1) // one-line fuckyou code that scales speed between 0.4 and 0.7
+				var/clunk = round((((renf.getProperty("density")/33) /10)+0.3), 0.1) // one-line fuckyou code that scales speed between 0.3 and 0.7
 				clunk = clamp(clunk, 0.3, 0.7) // again, keep it safe
 				setProperty("space_movespeed", clunk)
 
