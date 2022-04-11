@@ -26,6 +26,7 @@
 	var/list/artists = list()
 	var/list/pixel_artists
 	var/display_mult = 16
+	var/gray_padding = 100
 
 
 	uses_multiple_icon_states = 1
@@ -241,6 +242,12 @@
 	var y = 0;
 	[isadmin ? "var pixel_artists = [json_encode(src.pixel_artists)];" : ""]
 
+	window.onkeydown = function( event ) {
+		if ( event.keyCode == 27 ) {
+			window.close();
+		}
+	};
+
 	cursor.addEventListener("click", function(e) {
 		var url = "byond://?\ref[src];x="+ x +";y="+ y;
 		ehjax.src = url
@@ -277,7 +284,7 @@
 
 		"}
 
-		user << browse(dat, "window=canvas;size=[bound_width * mult + 100]x[bound_height * mult + 100]")
+		user << browse(dat, "window=canvas;size=[bound_width * mult + gray_padding]x[bound_height * mult + gray_padding]")
 
 	picklify(atom/loc)
 		if(!startswith(src.name, "pickled"))
@@ -333,6 +340,7 @@
 	plane = PLANE_FLOOR
 	var/id = null
 	burn_possible = FALSE
+	gray_padding = 5
 
 	New(loc)
 		..()
