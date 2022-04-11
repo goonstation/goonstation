@@ -1040,8 +1040,6 @@
 	item_state = "s_suit"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
-	duration_remove = 6 SECONDS
-	duration_put = 6 SECONDS
 	permeability_coefficient = 0.1
 	protective_temperature = 1000
 
@@ -1317,18 +1315,13 @@
 				setProperty("rangedprot", 0.4)
 
 			if(renf.hasProperty("density"))
-				prot = round(renf.getProperty("dense") / 13)// for MELEE
-				if(prot <= 3) // keep it between 3 and 6
-					setProperty("meleeprot", 3)
-				else if(prot >= 6 )
-					setProperty("meleeprot", 6)
-				else // congrats, you're within the bounds!
-					setProperty("meleeprot", prot)
+				prot = round(((renf.getProperty("dense") / 33))+3, 0.5)// for MELEE- scaling of protection/density with formula (x/33)+3
+				clamp(prot, 3, 6)// it shouldn't be outside these two numbers but just in case
 
-				var/clunk = renf.getProperty("density") // for MOVEMENT SPEED- based off density
+				var/clunk = renf.getProperty("density") //since movespeed is already initalized, no need to have final conditional
 				if (clunk <= 15) // lighter metals = faster
-					setProperty("space_movespeed", 0.4) // since movespeed is already initalized, no need to have final conditional
-				else if (clunk >= 40)
+					setProperty("space_movespeed", 0.4)
+				else if (clunk >= 65)// penalize for having melee prot over 5
 					setProperty("space_movespeed", 0.7) // .1 above normal spacesuits
 
 
