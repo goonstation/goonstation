@@ -72,7 +72,7 @@
 			boutput(user, "<span class='alert'>You need to secure the floor bolts!</span>")
 	else if (iswrenchingtool(W))
 		if (src.securedstate <= 1)
-			playsound(src.loc, "sound/items/Wrench.ogg", 30, 1, -2)
+			playsound(src.loc, "sound/items/Ratchet.ogg", 30, 1, -2)
 			boutput(user, "<span class='alert'>You [securedstate == 1 ? "un" : ""]secure the floor bolts on the [src].</span>")
 			src.securedstate = (securedstate == 1) ? 0 : 1
 

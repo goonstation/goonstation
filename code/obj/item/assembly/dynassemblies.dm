@@ -59,7 +59,7 @@ For hairball DynAssemblies see: jonescity.dm
 				actions.start(new/datum/action/bar/icon/dynassemblySecure(src, user, secure_duration), user)
 		else if (iswrenchingtool(W)) //use a wrench to deconstruct
 			if (contents)
-				playsound(src.loc, "sound/items/Wrench.ogg", 30, 1, -2)
+				playsound(src.loc, "sound/items/Ratchet.ogg", 30, 1, -2)
 				actions.start(new/datum/action/bar/icon/dynassemblyUnsecure(src, user, secure_duration), user)
 
 	proc/newpart(var/obj/item/M, var/obj/item/P, firstrun = 0) //1st arg is the source object (norm. the assembly), 2nd arg is the thing you are adding
