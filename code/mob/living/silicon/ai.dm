@@ -1451,12 +1451,11 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /// Movement ////
 /////////////////
 
-/mob/living/silicon/ai/process_move()
+/mob/living/silicon/ai/process_move(keys)
 	if(has_feet)
 		return ..()
-	if (isdead(src))
-		src.tracker.cease_track()
-		src.eye_view()
+	if (isdead(src) && keys)
+		src.ghostize()
 	return FALSE
 
 /mob/living/silicon/ai/keys_changed(keys, changed)
@@ -1465,6 +1464,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	if (changed & (KEY_EXAMINE|KEY_BOLT|KEY_OPEN|KEY_SHOCK))
 		src.update_cursor()
+
+	if (keys & changed & (KEY_FORWARD|KEY_BACKWARD|KEY_LEFT|KEY_RIGHT))
+		src.tracker.cease_track()
+		src.eye_view()
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // PROCS AND VERBS ///////////////////////////////////////////////////////////////////////////////////
