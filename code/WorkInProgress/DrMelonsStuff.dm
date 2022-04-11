@@ -108,9 +108,9 @@
 			desc += " But, it's faintly fizzing?"
 
 	disposing()
-		if(src.occupant)
-			src.occupant.set_loc(get_turf(src))
-			src.occupant = null
+		if (src.occupant) Exited(src.occupant, get_turf(src))
+		for (var/obj/O in src)
+			O.set_loc(get_turf(src))
 		. = ..()
 
 	mob_flip_inside(var/mob/user)
@@ -132,12 +132,19 @@
 		else
 			. = ..()
 
-	mouse_drop(obj/over_object as obj, src_location, over_location)
+	mouse_drop(obj/over_object, src_location, over_location)
 		if (src.occupant)
 			eject_occupant(usr, over_object)
-		else
-			src.reagents.clear_reagents()
-			src.on_reagent_change()
+			return
+		else if (istype(over_object, /turf))
+			drain_bathtub(usr)
+			return
+		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/reagent_dispensers) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/item/reagent_containers/mender) && !istype(over_object, /obj/item/tank/jetpack/backtank) && !istype(over_object, /obj/machinery/bathtub))
+			return ..()
+		if (usr.stat || usr.getStatusDuration("weakened") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
+			boutput(usr, "<span class='alert'>That's too far!</span>")
+			return
+		src.transfer_all_reagents(over_object, usr)
 
 	get_desc(dist, mob/user)
 		if (dist > 2)
@@ -196,17 +203,7 @@
 		if (!src.occupant)
 			boutput("<span class='alert'>There's no one inside!</span>")
 			return
-		src.occupant.visible_message("<span class='notice'>[src.occupant] gets out of the bath.</span>", "<span class='notice'>You get out of the bath.</span>")
-		src.occupant.pixel_y = 0
-		src.occupant.layer = initial(occupant.layer)
-		src.occupant.set_loc(get_turf(src))
-		src.vis_contents -= src.occupant
-		src.occupant = null
-		src.UpdateOverlays(null, "fluid_overlay")
-		src.UpdateOverlays(null, "bath_edge")
-		src.on_reagent_change()
-		if (src.reagents.total_volume)
-			playsound(src.loc, "sound/misc/splash_1.ogg", 70, 3)
+		Exited(src.occupant, user.loc)
 
 		for (var/obj/O in src)
 			O.set_loc(get_turf(src))
@@ -248,20 +245,8 @@
 			else
 				boutput(usr, "<span class='notice'>The bathtub's already empty.</span>")
 
-	relaymove(mob/user as mob, dir)
-		src.eject_occupant(user)
-
-	mouse_drop(atom/over_object as obj)
-		if (istype(over_object, /turf))
-			drain_bathtub(usr)
-			return
-		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/reagent_dispensers) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/item/reagent_containers/mender) && !istype(over_object, /obj/item/tank/jetpack/backtank) && !istype(over_object, /obj/machinery/bathtub))
-			return ..()
-		if (usr.stat || usr.getStatusDuration("weakened") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)  //why has this bug been in since i joined goonstation and nobody even looked here yet wtf -ZeWaka
-			boutput(usr, "<span class='alert'>That's too far!</span>")
-			return
-
-		src.transfer_all_reagents(over_object, usr)
+	relaymove(mob/user)
+		Exited(user, src.loc)
 
 	process()
 		if (src.on)
@@ -298,6 +283,24 @@
 					src.occupant.add_blood(dna)
 					src.occupant.update_clothing()
 					src.occupant.update_body()
+
+	Exited(atom/movable/Obj, loc)
+		..()
+		if (ismob(Obj))
+			src.visible_message("<span class='notice'>[src.occupant] gets out of the bath.</span>", "<span class='notice'>You get out of the bath.</span>")
+			if (src.reagents.total_volume)
+				playsound(src.loc, "sound/misc/splash_1.ogg", 70, 3)
+			var/mob/M = Obj
+			M.pixel_y = 0
+			M.layer = initial(src.occupant.layer)
+			M.loc = loc
+			src.vis_contents -= src.occupant
+			src.occupant = null
+			src.UpdateOverlays(null, "fluid_overlay")
+			src.UpdateOverlays(null, "bath_edge")
+			src.on_reagent_change()
+			for (var/obj/O in src)
+				O.set_loc(get_turf(src))
 
 	MouseDrop_T(mob/living/carbon/human/target, mob/user)
 		if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 1 || BOUNDS_DIST(user, target) > 1 || is_incapacitated(user) || isAI(user))
