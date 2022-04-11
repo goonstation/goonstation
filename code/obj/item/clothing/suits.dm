@@ -1040,6 +1040,8 @@
 	item_state = "s_suit"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
+	duration_remove = 6 SECONDS
+	duration_put = 6 SECONDS
 	permeability_coefficient = 0.1
 	protective_temperature = 1000
 
@@ -1315,8 +1317,8 @@
 				setProperty("rangedprot", 0.4)
 
 			if(renf.hasProperty("density"))
-				prot = round(((renf.getProperty("density") / 33)+3), 0.5)// for MELEE- scaling of protection/density with formula (x/33)+3
-				prot = clamp(prot, 3, 6)// it shouldn't be outside these two numbers but just in case
+				prot = round(((renf.getProperty("density") / 24)+2), 0.5)// for MELEE- scaling of protection/density with formula y=(x/24)+2
+				prot = clamp(prot, 2, 6)// it shouldn't be outside these two numbers but just in case
 				setProperty("meleeprot", prot)
 
 				 // for MOVESPEED
