@@ -162,7 +162,7 @@
 
 	// using overlay levels so it looks like you're in the bath
 	// we don't use show_submerged_image since we want the head to poke out
-	// MOB_LAYER(-0) =  all other mobs on top of us
+	// MOB_LAYER(-0) = Other mobs render on top
 	// MOB_LAYER-0.1 = Bath edge to trim feet
 	// MOB_LAYER-0.2 = Water overlay
 	// MOB_LAYER-0.3 = Occupant
@@ -201,7 +201,7 @@
 		if (src.reagents.total_volume)
 			playsound(src.loc, "sound/misc/splash_2.ogg", 70, 3)
 
-	proc/eject_occupant(user)
+	proc/eject_occupant(mob/user)
 		if (is_incapacitated(user)) return
 		if (issilicon(user) || isAI(user))
 			boutput("<span class='alert'>You can't quite lift [src.occupant] out of the tub!</span>")
@@ -211,10 +211,7 @@
 			return
 		Exited(src.occupant, user.loc)
 
-		for (var/obj/O in src)
-			O.set_loc(get_turf(src))
-
-	proc/turn_tap(mob/user as mob)
+	proc/turn_tap(mob/user)
 		src.add_fingerprint(user)
 		if (on)
 			user.visible_message("[user] turns off the bathtub's tap.", "You turn off the bathtub's tap.")
@@ -229,7 +226,7 @@
 				src.on_reagent_change()
 				on = TRUE
 
-	proc/drain_bathtub(mob/user as mob)
+	proc/drain_bathtub(mob/user)
 		src.add_fingerprint(user)
 		if (get_dist(usr, src) <= 1 && !is_incapacitated(usr))
 			if (src.reagents.total_volume)
