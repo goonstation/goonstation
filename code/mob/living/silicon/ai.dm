@@ -581,7 +581,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 
 /mob/living/silicon/ai/proc/turn_it_back_on()
-	if (src.health >= 50 && isdead(src) && src.brain)
+	if (src.health >= 50 && src.brain)
 		setalive(src)
 		if (src.brain.owner && src.brain.owner.current)
 			if (!find_ghost_by_key(src.brain.owner.current.key)) // we don't actually need a ref to the mob (since we already have that via current)
