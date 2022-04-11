@@ -255,23 +255,130 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 	desc = "You can feel it thrumming and pulsing."
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "0"
-	mat_appearances_to_ignore = list("steel","gnesis")
+	health = 250
+	var/max_health = 250
+	flags = USEDELAY
+	mat_appearances_to_ignore = list("steel", "gnesis")
 	connects_to = list(/turf/simulated/wall/auto/feather, /obj/machinery/door/feather)
+
+	var/broken = FALSE
+
+	update_icon()
+		..()
+		if (src.broken)
+			icon_state = icon_state + "b"
 
 /turf/simulated/wall/auto/feather/New()
 	..()
 	setMaterial(getMaterial("gnesis"))
+	src.health = src.max_health
 	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)
 
 /turf/simulated/wall/auto/feather/special_desc(dist, mob/user)
   if(isflock(user))
     return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
     <br><span class='bold'>ID:</span> Nanite Block
-    <br><span class='bold'>System Integrity:</span> 100%
+    <br><span class='bold'>System Integrity:</span> [round((src.health/src.max_health)*100)]%
     <br><span class='bold'>###=-</span></span>"}
-    // todo: damageable walls
   else
-    return null // give the standard description
+    return null
+
+/turf/simulated/wall/auto/feather/attack_hand(mob/user)
+	if (user.a_intent == INTENT_HARM)
+		if(src.broken)
+			boutput(user, "<span class='hint'>It's already broken, you need to take the pieces apart with a crowbar.</span>")
+		else
+			src.takeDamage("brute", 1)
+			if (src.broken)
+				user.visible_message("<span class='alert'><b>[user]</b> punches the [initial(src.name)], shattering it!</span>")
+			else
+				user.visible_message("<span class='alert'><b>[user]</b> punches [src]! Ouch!</span>")
+			user.lastattacked = src
+			attack_particle(user, src)
+
+/turf/simulated/wall/auto/feather/attackby(obj/item/C as obj, mob/user as mob)
+	if(!C || !user)
+		return
+	if(ispryingtool(C) && src.broken)
+		playsound(src, "sound/items/Crowbar.ogg", 80, 1)
+		src.destroy()
+		return
+	if(src.broken)
+		boutput(user, "<span class='hint'>It's already broken, you need to take the pieces apart with a crowbar.</span>")
+		return
+	if (src.health > 0)
+		src.takeDamage("brute", C.force)
+	if(src.health <= 0)
+		src.visible_message("<span class='alert'><span class='bold'>[user]</span> smacks the [initial(src.name)] with [C], shattering it!</span>")
+	else
+		src.visible_message("<span class='alert'><span class='bold'>[user]</span> smacks [src] with [C]!</span>")
+	user.lastattacked = src
+	attack_particle(user, src)
+
+/turf/simulated/wall/auto/feather/burn_down()
+	src.takeDamage("fire", 1)
+	if (src.health <= 0)
+		src.destroy()
+
+/turf/simulated/wall/auto/feather/ex_act(severity)
+	var/damage = 0
+	var/damage_mult = 1
+
+	switch(severity)
+		if(1)
+			damage = rand(30,50)
+			damage_mult = 8
+		if(2)
+			damage = rand(25,40)
+			damage_mult = 4
+		if(3)
+			damage = rand(10,20)
+			damage_mult = 2
+	src.takeDamage("mixed", damage * damage_mult)
+
+	if (src.health <= 0)
+		src.destroy()
+
+/turf/simulated/wall/auto/feather/blob_act(power)
+	var/modifier = power / 20
+	var/damage = rand(modifier, 12 + 8 * modifier)
+
+	src.takeDamage("mixed", damage, FALSE)
+	src.visible_message("<span class='alert'>[initial(src.name)] is hit by the blob!/span>")
+
+	if (src.health <= 0)
+		src.destroy()
+
+/turf/simulated/wall/auto/feather/proc/takeDamage(damageType, amount, playAttackSound = TRUE)
+	src.health = max(src.health - amount, 0)
+	if (src.health > 0 && playAttackSound)
+		playsound(src, "sound/impact_sounds/Crystal_Hit_1.ogg", 80, 1)
+
+	if (!src.broken && src.health <= 0)
+		src.name = "weird broken wall"
+		src.desc = "It's broken. You could probably use a crowbar to break the pieces apart."
+		src.broken = TRUE
+		src.UpdateIcon()
+		if (playAttackSound)
+			playsound(src, "sound/impact_sounds/Crystal_Shatter_1.ogg", 25, 1)
+
+/turf/simulated/wall/auto/feather/proc/destroy()
+	var/turf/T = get_turf(src)
+
+	var/atom/movable/B
+	for (var/i = 1 to rand(3, 6))
+		if (prob(70))
+			B = new /obj/item/raw_material/scrap_metal(T)
+			B.setMaterial(getMaterial("gnesis"))
+		else
+			B = new /obj/item/raw_material/shard(T)
+			B.setMaterial(getMaterial("gnesisglass"))
+
+	src.ReplaceWith("/turf/simulated/floor/feather", FALSE)
+
+	if (map_settings?.auto_walls)
+		for (var/turf/simulated/wall/auto/feather/W in orange(1))
+			W.UpdateIcon()
 
 /turf/simulated/wall/auto/feather/proc/destroy_resources()
 	src.ReplaceWith("/turf/simulated/floor/feather", FALSE)
