@@ -24,6 +24,7 @@
 	var/bottom = 0
 	var/left = 0
 	var/list/artists = list()
+	var/list/pixel_artists
 	var/display_mult = 16
 
 
@@ -61,6 +62,7 @@
 
 		underlays += base
 		icon = art
+		pixel_artists = list()
 
 	examine(mob/user)
 		. = ..()
@@ -125,6 +127,7 @@
 
 		if (!href_list["x"] || !href_list["y"])
 			CRASH("something broke. [json_encode(href_list)]")
+		var/pixel_id = href_list["x"] + "," + href_list["y"]
 
 		var/x = text2num(href_list["x"]) + 1
 		var/y = text2num(href_list["y"]) - 1
@@ -141,6 +144,7 @@
 		// tracks how many things someone's drawn on it.
 		// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
 		artists[ckey(usr.ckey)]++
+		pixel_artists[pixel_id] = usr.ckey
 		logTheThing("station", usr, null, "draws on [src]: [log_loc(src)]: canvas{\ref[src], [x], [y], [dot_color]}")
 
 
@@ -156,6 +160,8 @@
 	proc/pop_open_a_browser_box(mob/user)
 		send_the_damn_icon(user)
 		var/mult = src.display_mult
+
+		var/isadmin = user?.client?.holder.level >= LEVEL_MOD
 
 		var/dat = {"
 <!doctype html>
@@ -229,8 +235,9 @@
 	var canvas = document.getElementById("canvas");
 	var cursor = document.getElementById("cursor");
 	var ehjax = document.getElementById("ehjax");
-	var x = 0
-	var y = 0
+	var x = 0;
+	var y = 0;
+	[isadmin ? "var pixel_artists = [json_encode(src.pixel_artists)];" : ""]
 
 	cursor.addEventListener("click", function(e) {
 		var url = "byond://?\ref[src];x="+ x +";y="+ y;
@@ -246,9 +253,10 @@
 		var oy = e.offsetY;
 		x = Math.floor(ox / [mult]);
 		y = Math.floor(oy / [mult]);
-		cursor.title = (x - [left]) + "," + (y - [bottom])
-		cursor.style.left = (x * [mult]) + "px"
-		cursor.style.top = (y * [mult]) + "px"
+		cursor.title = (x - [left]) + "," + (y - [bottom]);
+		[isadmin ? {"cursor.title += " - " + pixel_artists\[x + "," + y\];"} : ""]
+		cursor.style.left = (x * [mult]) + "px";
+		cursor.style.top = (y * [mult]) + "px";
 	});
 
 	canvasURL = canvas.src
@@ -306,6 +314,7 @@
 		src.art.Crop(1, 1, canvas_width, canvas_height)
 		src.base = icon(src.icon, icon_state = "transparent") // idc
 		src.icon = src.art
+		src.pixel_artists = world.load_intra_round_value("persistent_canvas_artists_[id]") || list()
 
 	disposing()
 		STOP_TRACKING
@@ -313,6 +322,7 @@
 
 	proc/save()
 		world.save_intra_round_value("persistent_canvas_[id]", src.art)
+		world.save_intra_round_value("persistent_canvas_artists_[id]", src.pixel_artists)
 
 	get_dot_color(mob/user)
 		if(user.ckey in src.artists)
