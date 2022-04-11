@@ -299,7 +299,7 @@
 
 	Exited(atom/movable/Obj, loc)
 		..()
-		if (ismob(Obj))
+		if (Obj == src.occupant)
 			src.visible_message("<span class='notice'>[src.occupant] gets out of the bath.</span>", "<span class='notice'>You get out of the bath.</span>")
 			if (src.reagents.total_volume)
 				playsound(src.loc, "sound/misc/splash_1.ogg", 70, 3)
