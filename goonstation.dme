@@ -1036,6 +1036,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\networks\computer3\terminal.dm"
 #include "code\modules\networks\computer3\textfiles.dm"
 #include "code\modules\networks\computer3\writer.dm"
+#include "code\modules\networks\computer3\customserver.dm"
 #include "code\modules\networks\computer3\mainframe2\_base_os.dm"
 #include "code\modules\networks\computer3\mainframe2\artifact_res.dm"
 #include "code\modules\networks\computer3\mainframe2\base_program.dm"
