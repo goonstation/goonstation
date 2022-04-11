@@ -301,9 +301,12 @@
 			if(!src.mouse_opacity)
 				our_ghost.mouse_opacity = 0
 				our_ghost.alpha = 0
-			if (isghostrestrictedz(our_ghost.z) && !restricted_z_allowed(our_ghost, get_turf(our_ghost)) && !(src.client?.holder))
-				our_ghost.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 			src.ghost = our_ghost
+
+		if (isghostrestrictedz(our_ghost.z) && !restricted_z_allowed(our_ghost, get_turf(our_ghost)) && !(src.client?.holder))
+			our_ghost.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
+		else
+			our_ghost.set_loc(get_turf(src))
 
 		// step 2: make sure they actually make it to the ghost
 		if (src.mind)

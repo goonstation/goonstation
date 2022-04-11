@@ -591,7 +591,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\silicon\ai\camera_handling.dm"
 #include "code\mob\living\silicon\ai\holograms.dm"
 #include "code\mob\living\silicon\ai\mobile.dm"
-#include "code\mob\living\silicon\ai\move.dm"
 #include "code\mob\living\silicon\hivebot\hive_modules.dm"
 #include "code\mob\living\silicon\hivebot\hivebot_statusupdate.dm"
 #include "code\mob\living\silicon\hivebot\mainframe.dm"

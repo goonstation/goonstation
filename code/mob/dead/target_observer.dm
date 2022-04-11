@@ -39,7 +39,7 @@
 		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 		if (target)
 			var/turf/T = get_turf(target)
-			if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && (restricted_z_allowed(src.ghost, T) || (src.ghost.client && src.ghost.client.holder)))))
+			if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && (restricted_z_allowed(src.ghost, T) || (src.client && src.client.holder)))))
 				src.ghost.set_loc(T)
 			else
 				if (ASLoc)

@@ -328,6 +328,8 @@
 			return ..()
 
 	proc/weld_action(obj/item/W, mob/user)
+		if(src.open)
+			return
 		if (!src.welded)
 			src.weld(1, user)
 			src.visible_message("<span class='alert'>[user] welds [src] closed with [W].</span>")
