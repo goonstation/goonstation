@@ -192,7 +192,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/full_heal()
 	..()
-	src.try_rebooting_it()
+	src.turn_it_back_on()
 
 /mob/living/silicon/ai/disposing()
 	STOP_TRACKING
