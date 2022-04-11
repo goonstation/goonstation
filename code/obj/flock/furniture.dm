@@ -133,8 +133,11 @@
 			..()
 		else if (!issilicon(user))
 			if (istype(user, /mob/living/critter/flock/drone))
-				user.u_equip(W)
-				W?.set_loc(src.loc)
+				if (W)
+					user.u_equip(W)
+					W.set_loc(src.loc)
+				else
+					return ..()
 			else if(user.drop_item())
 				W?.set_loc(src.loc)
 
