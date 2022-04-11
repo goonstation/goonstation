@@ -217,8 +217,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.brain = new /obj/item/organ/brain/ai(src)
 
 	src.local_apc = get_local_apc(src)
-	if(src.local_apc)
-		src.power_area = src.local_apc.loc.loc
+	src.power_area = get_area(src.local_apc)
 	src.cell = new /obj/item/cell(src)
 	src.radio1 = new /obj/item/device/radio(src)
 	src.radio2 = new /obj/item/device/radio(src)
@@ -515,10 +514,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			if (ismob(target) && is_mob_trackable_by_AI(target))
 				ai_actual_track(target)
 				return
-			//else if (isturf(target))
-			//	var/turf/T = target
-			//	T.move_camera_by_click()
-			//	return
 	. = ..()
 
 /mob/living/silicon/ai/build_keybind_styles(client/C)
@@ -589,7 +584,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (src.health >= 50 && isdead(src) && src.brain)
 		setalive(src)
 		if (src.brain.owner && src.brain.owner.current)
-			if (!isobserver(src.brain.owner.current))
+			if (!find_ghost_by_key(src.brain.owner.current.key)) // we don't actually need a ref to the mob (since we already have that via current)
+																// just using this proc to check for VR/afterlife/ghostcritter/etc
 				return FALSE
 			var/mob/ghost = src.brain.owner.current
 			ghost.show_text("<span class='alert'><B>You feel your self being pulled back from the afterlife!</B></span>")
