@@ -108,7 +108,7 @@
 			desc += " But, it's faintly fizzing?"
 
 	disposing()
-		if (src.occupant) Exited(src.occupant, get_turf(src))
+		src.occupant?.set_loc(get_turf(src))
 		for (var/obj/O in src)
 			O.set_loc(get_turf(src))
 		. = ..()
@@ -209,7 +209,7 @@
 		if (!src.occupant)
 			boutput("<span class='alert'>There's no one inside!</span>")
 			return
-		Exited(src.occupant, user.loc)
+		src.occupant.set_loc(user.loc)
 
 	proc/turn_tap(mob/user)
 		src.add_fingerprint(user)
@@ -249,7 +249,7 @@
 				boutput(usr, "<span class='notice'>The bathtub's already empty.</span>")
 
 	relaymove(mob/user)
-		Exited(user, src.loc)
+		user.set_loc(src.loc)
 
 	process()
 		if (src.on)
@@ -304,9 +304,8 @@
 			if (src.reagents.total_volume)
 				playsound(src.loc, "sound/misc/splash_1.ogg", 70, 3)
 			var/mob/M = Obj
-			M.pixel_y = 0
+			M.set_loc(loc)
 			M.layer = initial(src.occupant.layer)
-			M.loc = loc
 			src.vis_contents -= src.occupant
 			src.occupant = null
 			src.UpdateOverlays(null, "fluid_overlay")
