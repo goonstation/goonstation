@@ -659,7 +659,7 @@ butcher
 			if(owncritter.active_hand != 3) // stunner
 				owncritter.set_hand(3)
 			owncritter.set_dir(get_dir(owncritter, holder.target))
-			owncritter.hand_attack(holder.target, dummy_params)
+			owncritter.hand_range_attack(holder.target, dummy_params)
 			if(dist < run_range)
 				// RUN
 				walk_away(owncritter, holder.target, 1, 4)
