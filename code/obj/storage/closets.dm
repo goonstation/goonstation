@@ -336,7 +336,7 @@
 	bound_width = 32
 	anchored = 2
 
-	open(var/entangleLogic)
+	open(var/entangleLogic, mob/user)
 		if (src.open)
 			return 0
 		if (!src.can_open())

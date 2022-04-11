@@ -181,7 +181,7 @@
 			return
 		src.last_relaymove_time = world.time
 
-		if (!src.open())
+		if (!src.open(user=user))
 			if (!src.is_short && src.legholes)
 				step(src, pick(alldirs))
 			if (!src.jiggled)
@@ -215,7 +215,7 @@
 			return
 
 		// if all else fails:
-		src.open()
+		src.open(user=user)
 		src.visible_message("<span class='alert'><b>[user]</b> kicks [src] open!</span>")
 
 	attack_hand(mob/user as mob)
@@ -420,7 +420,7 @@
 			return
 
 		if (!src.open)
-			src.open()
+			src.open(user=user)
 
 		if (count_turf_items() >= max_capacity)
 			user.show_text("[src] is too full!", "red")
@@ -685,9 +685,7 @@
 	proc/toggle(var/mob/user)
 		if (src.open)
 			return src.close()
-		if (user)
-			return src.open(null,user)
-		return src.open()
+		return src.open(user=user)
 
 	proc/unlock()
 		if (src.locked)
@@ -782,7 +780,7 @@
 				if (src.is_short)
 					usr.lying = 1
 				src.close()
-		else if (src.open())
+		else if (src.open(user=usr))
 			step_towards(usr, src)
 			sleep(1 SECOND)
 			if (usr.loc == src.loc)
