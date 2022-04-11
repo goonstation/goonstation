@@ -229,7 +229,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.UpdateOverlays(get_image("ai_blank"), "backscreen")
 	update_appearance()
 
-	src.eyecam = new /mob/living/intangible/aieye(src.loc)
+	src.eyecam = new /mob/living/intangible/aieye(src)
 
 	hud = new(src)
 	src.attach_hud(hud)
@@ -854,16 +854,11 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	src.lastgasp() // calling lastgasp() here because we just died
 	setdead(src)
-	src.canmove = 0
+	src.canmove = FALSE
 	vision.set_color_mod("#ffffff")
-	src.sight |= SEE_TURFS
-	src.sight |= SEE_MOBS
-	src.sight |= SEE_OBJS
-	src.see_in_dark = SEE_DARK_FULL
-	src.see_invisible = INVIS_CLOAK
-	src.lying = 1
 	src.light.disable()
 	src.update_appearance()
+	src.ghostize()
 
 	logTheThing("combat", src, null, "was destroyed at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
 
