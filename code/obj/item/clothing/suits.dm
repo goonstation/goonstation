@@ -1315,7 +1315,7 @@
 				setProperty("rangedprot", 0.4)
 
 			if(renf.hasProperty("density"))
-				prot = round(((renf.getProperty("dense") / 33)+3), 0.5)// for MELEE- scaling of protection/density with formula (x/33)+3
+				prot = round(((renf.getProperty("density") / 33)+3), 0.5)// for MELEE- scaling of protection/density with formula (x/33)+3
 				prot = clamp(prot, 3, 6)// it shouldn't be outside these two numbers but just in case
 				setProperty("meleeprot", prot)
 
