@@ -1573,6 +1573,8 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/proc/weld_action(mob/user)
+	if(!src.density)
+		return
 	if (!src.welded)
 		src.welded = 1
 		logTheThing("station", user, null, "welded [name] shut at [log_loc(user)].")
