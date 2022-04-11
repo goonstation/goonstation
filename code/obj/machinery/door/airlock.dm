@@ -1471,7 +1471,7 @@ About the new airlock wires panel:
 			if("old_welded")
 				if(dir == NORTH || dir == SOUTH)
 					start = list(0,-15)
-					stop = list(0,-5)
+					stop = list(0,5)
 				else
 					if(rel_dir == EAST || rel_dir == SOUTHEAST || rel_dir == NORTHEAST)
 						start = list(-15,0)
