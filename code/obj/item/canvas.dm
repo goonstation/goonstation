@@ -325,6 +325,15 @@
 		..(loc)
 		src.id = id
 
+	save_to_id(id)
+		if(initialized)
+			..()
+		else if(id == src.id)
+			return
+		else
+			src.load_from_id(src.id)
+			..()
+
 	set_loc(newloc)
 		. = ..()
 		if(!initialized)
