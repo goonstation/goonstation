@@ -119,7 +119,9 @@
 		// stolen from /obj/item/engibox. sorry, tgui.
 
 		if (usr.stat || usr.restrained()) return
-		if (!in_interact_range(src, usr)) return
+		var/obj/noticeboard/our_board = src.loc
+		ENSURE_TYPE(our_board)
+		if (!in_interact_range(our_board || src, usr)) return
 
 		var/dot_color = get_dot_color(usr)
 		if(isnull(dot_color))
@@ -284,6 +286,41 @@
 		src.edible = TRUE
 		return src
 
+	proc/load_from_id(id)
+		src.art = world.load_intra_round_value("persistent_canvas_[id]")
+		if(isnull(src.art))
+			src.art = icon(src.icon, icon_state = "blank")
+			src.art.Scale(bound_width, bound_height)
+		src.art.Crop(1, 1, bound_width, bound_height)
+		if(isnull(src.base))
+			src.base = icon(src.icon, icon_state = "transparent") // idc
+		src.icon = src.art
+		src.pixel_artists = world.load_intra_round_value("persistent_canvas_artists_[id]") || list()
+
+	proc/save_to_id(id)
+		world.save_intra_round_value("persistent_canvas_[id]", src.art)
+		world.save_intra_round_value("persistent_canvas_artists_[id]", src.pixel_artists)
+
+/obj/item/canvas/lazy_restore
+	var/id = null
+	var/initialized = FALSE
+
+	New(loc, id)
+		..(loc)
+		src.id = id
+
+	set_loc(newloc)
+		. = ..()
+		if(!initialized)
+			src.load_from_id(src.id)
+			initialized = TRUE
+
+	pop_open_a_browser_box(mob/user)
+		if(!initialized)
+			src.load_from_id(src.id)
+			initialized = TRUE
+		. = ..()
+
 /obj/item/canvas/big_persistent
 	name = "Big Persistent Canvas"
 	desc = "A huge canvas. You don't even need a crayon to draw on it but you can only draw one dot per shift."
@@ -303,26 +340,18 @@
 		src.add_filter("frame", 1, outline_filter(2, "#ccaa00"))
 
 	init_canvas()
-		if(isnull(id))
+		if(isnull(src.id))
 			SPAWN(1)
 				qdel(src)
 			CRASH("big canvas has no id set")
-		src.art = world.load_intra_round_value("persistent_canvas_[id]")
-		if(isnull(src.art))
-			src.art = icon(src.icon, icon_state = "blank")
-			src.art.Scale(canvas_width, canvas_height)
-		src.art.Crop(1, 1, canvas_width, canvas_height)
-		src.base = icon(src.icon, icon_state = "transparent") // idc
-		src.icon = src.art
-		src.pixel_artists = world.load_intra_round_value("persistent_canvas_artists_[id]") || list()
+		load_from_id(src.id)
 
 	disposing()
 		STOP_TRACKING
 		..()
 
 	proc/save()
-		world.save_intra_round_value("persistent_canvas_[id]", src.art)
-		world.save_intra_round_value("persistent_canvas_artists_[id]", src.pixel_artists)
+		save_to_id(src.id)
 
 	get_dot_color(mob/user)
 		if(user.ckey in src.artists)

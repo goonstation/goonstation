@@ -1,5 +1,7 @@
 
 (t)mon apr 11 22
+(u)pali
+(*)You can now pin canvases onto noticeboards. These should persist across rounds just like other pinned stuff. I recommend using a labeller to give them descriptive names first.
 (u)tarmunora
 (e)⚖|balance
 (*)Most power-cell using guns and stun batons deployed from frames (i.e.: mechscanned) come with a smaller (and initially empty) power cell.
