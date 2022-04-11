@@ -261,7 +261,7 @@
 				new /obj/critter/spirit( src )
 			return 1
 
-	open()
+	open(entanglelogic, mob/user)
 		..()
 		if(!triggered)
 			triggered = 1

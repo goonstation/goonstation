@@ -1442,27 +1442,43 @@ About the new airlock wires panel:
 	var/stop
 	var/rel_dir = get_dir(user, src)
 	if(istype(src, /obj/machinery/door/airlock/gannets)) //Gannets why your airlocks have so many welded icon states!!
-		start = list(0,5)
-		stop = list(0,-15)
+		if(rel_dir == NORTH || rel_dir == NORTHWEST || rel_dir == NORTHEAST)
+			start = list(0,-15)
+			stop = list(0,15)
+		else
+			start = list(0,15)
+			stop = list(0,-15)
 	else
 		switch(welded_icon_state)
 			if("welded")
-				start = list(0,5)
-				stop = list(0,-15)
+				if(rel_dir == NORTH || rel_dir == NORTHWEST || rel_dir == NORTHEAST)
+					start = list(0,-15)
+					stop = list(0,15)
+				else
+					start = list(0,15)
+					stop = list(0,-15)
 			if("2_welded")
 				if(dir == NORTH || dir == SOUTH)
-					start = list(0,5)
-					stop = list(0,-15)
+					start = list(0,-15)
+					stop = list(0,5)
 				else
-					start = list(15,0)
-					stop = list(-15,0)
+					if(rel_dir == EAST || rel_dir == SOUTHEAST || rel_dir == NORTHEAST)
+						start = list(-15,0)
+						stop = list(15,0)
+					else
+						start = list(15,0)
+						stop = list(-15,0)
 			if("old_welded")
 				if(dir == NORTH || dir == SOUTH)
-					start = list(0,5)
-					stop = list(0,-15)
+					start = list(0,-15)
+					stop = list(0,5)
 				else
-					start = list(15,0)
-					stop = list(-15,0)
+					if(rel_dir == EAST || rel_dir == SOUTHEAST || rel_dir == NORTHEAST)
+						start = list(-15,0)
+						stop = list(15,0)
+					else
+						start = list(15,0)
+						stop = list(-15,0)
 			if("fdoor_weld")
 				if(dir == EAST)
 					start = list(15,-15)
@@ -1573,6 +1589,8 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/proc/weld_action(mob/user)
+	if(!src.density)
+		return
 	if (!src.welded)
 		src.welded = 1
 		logTheThing("station", user, null, "welded [name] shut at [log_loc(user)].")

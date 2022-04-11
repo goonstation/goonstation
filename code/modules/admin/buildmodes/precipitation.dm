@@ -33,6 +33,7 @@ Ctrl + Alt + Shift Left Click          - Open Particool for Precipitation<br>
 				update_button_text("Connecting...")
 				P.generate_controller()
 			usr.client.open_particle_editor(P)
+			update_button_text()
 			return
 
 
