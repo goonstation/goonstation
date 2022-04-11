@@ -590,7 +590,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			var/mob/ghost = src.brain.owner.current
 			ghost.show_text("<span class='alert'><B>You feel your self being pulled back from the afterlife!</B></span>")
 			ghost.mind.transfer_to(src)
-			qdel(ghost)
+			if (isdead(ghost))
+				qdel(ghost)
 			update_appearance()
 		return TRUE
 	return FALSE
