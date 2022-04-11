@@ -98,7 +98,7 @@
 	var/mob/living/carbon/human/occupant = null
 	var/default_reagent = "water"
 	var/on = FALSE
-	var/suffocation_volume = 100 // drowning while laying down from breath.dm
+	var/suffocation_volume = 100 // drowning while laying down depth from breath.dm
 
 	New()
 		..()
@@ -122,13 +122,19 @@
 		else
 			..()
 
-	// dirty copy/paste hack from breath & fluid_core
 	handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 		var/mob/M = lifeform_inside_me
-		if (M.lying && M.get_oxygen_deprivation() > 40 && src.reagents.total_volume > suffocation_volume && breath_request > 0 )
-			src.reagents.reaction(M, INGEST)
-			src.reagents.trans_to(M, 5)
-			return null
+		if (breath_request > 0 && M.lying && src.reagents.total_volume > suffocation_volume) // drowning
+			// mimics `force_mob_to_ingest` in fluid_core.dm
+			// we can skip some checks due to obj handling in breath.dm
+			if (M.get_oxygen_deprivation() > 40)
+				var/react_volume = src.reagents.total_volume > 10 ? (src.reagents.total_volume / 2) : (src.reagents.total_volume)
+				react_volume = min(react_volume, 20)
+				if (M.reagents)
+					react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
+				src.reagents.reaction(M, INGEST, react_volume, 1, src.reagents.reagent_list.len)
+				src.reagents.trans_to(M, react_volume)
+			return new/datum/gas_mixture
 		else
 			. = ..()
 
@@ -231,7 +237,7 @@
 				if (ishuman(usr))
 					var/mob/living/carbon/human/H = usr
 					if(!H.gloves)
-						reagents.reaction(H, TOUCH)
+						reagents.reaction(H, TOUCH, 5)
 				playsound(src.loc, "sound/misc/drain_glug.ogg", 70, 1)
 				src.reagents.clear_reagents()
 				src.on_reagent_change()
@@ -263,8 +269,18 @@
 				src.on_reagent_change()
 				return
 			if(src.reagents.total_volume)
-				src.reagents.reaction(src.occupant, TOUCH)
-				// hacky, but we don't have a SUBMERGED reaction
+				// copied from fluid_core.dm
+				var/react_volume = src.reagents.total_volume > 10 ? (src.reagents.total_volume / 2) : (src.reagents.total_volume)
+				react_volume = min(react_volume, 100) //capping the react amt
+				var/list/reacted_ids = src.reagents.reaction(src.occupant, TOUCH, react_volume)
+				var/volume_fraction = src.reagents.total_volume ? (react_volume / src.reagents.total_volume) : 0
+
+				for(var/current_id in reacted_ids)
+					var/datum/reagent/current_reagent = src.reagents.reagent_list[current_id]
+					if (!current_reagent) continue
+					src.reagents.remove_reagent(current_id, current_reagent.volume * volume_fraction)
+
+				// hacky, but cool effect
 				if(reagents.has_reagent("blood", suffocation_volume))
 					var/dna = null
 					var/datum/reagent/blood/sample = reagents.get_reagent("blood")
