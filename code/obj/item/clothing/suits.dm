@@ -1317,13 +1317,12 @@
 			if(renf.hasProperty("density"))
 				prot = round(((renf.getProperty("dense") / 33))+3, 0.5)// for MELEE- scaling of protection/density with formula (x/33)+3
 				clamp(prot, 3, 6)// it shouldn't be outside these two numbers but just in case
+				setProperty("meleeprot", prot)
 
-				var/clunk = renf.getProperty("density") //since movespeed is already initalized, no need to have final conditional
-				if (clunk <= 15) // lighter metals = faster
-					setProperty("space_movespeed", 0.4)
-				else if (clunk >= 65)// penalize for having melee prot over 5
-					setProperty("space_movespeed", 0.7) // .1 above normal spacesuits
-
+				 // for MOVESPEED
+				var/clunk = round((((renf.getProperty("density")/33) /10)+0.3), 0.1) // one-line fuckyou code that scales speed between 0.4 and 0.7
+				clamp(clunk, 0.3, 0.7)
+				setProperty("space_movespeed", clunk)
 
 			else
 				setProperty("meleeprot", 3)
