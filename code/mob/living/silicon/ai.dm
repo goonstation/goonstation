@@ -1447,6 +1447,25 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			src.link = null
 
 
+/////////////////
+/// Movement ////
+/////////////////
+
+/mob/living/silicon/ai/process_move()
+	if(has_feet)
+		return ..()
+	if (isdead(src))
+		src.tracker.cease_track()
+		src.eye_view()
+	return FALSE
+
+/mob/living/silicon/ai/keys_changed(keys, changed)
+	if(has_feet)
+		return ..()
+
+	if (changed & (KEY_EXAMINE|KEY_BOLT|KEY_OPEN|KEY_SHOCK))
+		src.update_cursor()
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // PROCS AND VERBS ///////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1717,7 +1736,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.eyecam.real_name = src.real_name
 		src.deployed_to_eyecam = 1
 		src.mind.transfer_to(src.eyecam)
-		return
 
 /mob/living/silicon/ai/proc/notify_attacked()
 	if( last_notice > world.time + 100 ) return
