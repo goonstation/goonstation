@@ -118,6 +118,9 @@
 
 	Topic(href, href_list)
 		// stolen from /obj/item/engibox. sorry, tgui.
+		if(href_list["close"])
+			usr << browse(null, "window=canvas")
+			return
 
 		if (usr.stat || usr.restrained()) return
 		var/obj/noticeboard/our_board = src.loc
@@ -179,16 +182,22 @@
 		background: #666; /* hail satin */
 		color: white;
 		font-family: Tahoma, sans-serif;
+		margin: 0;
 		}
 	#container {
-		position: relative;
-		margin: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    top: 0px;
 		}
 	#inner {
 		position: relative;
 		width: [bound_width * mult]px;
 		height: [bound_height * mult]px;
-		margin: auto;
 		}
 	#cursor {
 		width: [mult]px;
@@ -244,7 +253,7 @@
 
 	window.onkeydown = function( event ) {
 		if ( event.keyCode == 27 ) {
-			window.close();
+			ehjax.src = "byond://?\ref[src];close=1";
 		}
 	};
 
