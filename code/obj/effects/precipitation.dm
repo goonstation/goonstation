@@ -41,17 +41,21 @@ particles/rain
 
 /datum/precipitation_controller
 	var/name = "Precipitation Controller"
+	var/list/obj/effects/precipitation/effects
 	var/datum/reagents/reagents
 	var/particles/shared_particle
 	var/probability = 100
 	var/cooldown = 5 SECONDS
 	var/max_pool_depth = 0
 	var/orig_color
+	var/lock_deletion = FALSE
 
 	New(obj/effects/precipitation/start)
 		..()
 		src.reagents = new/datum/reagents(100)
-		propogate_controller(get_turf(start), start.type)
+		LAZYLISTINIT(effects)
+		if(start)
+			propogate_controller(get_turf(start), start.type)
 
 	proc/cross_check(atom/A)
 		if(prob(probability) && !ON_COOLDOWN(A, "precipitation_cd_\ref[src]", src.cooldown))
@@ -88,12 +92,41 @@ particles/rain
 				next_open[target] = TRUE
 
 		for (PE as anything in nodes)
-			if(!src.shared_particle)
-				src.shared_particle = new PE.particles.type()
-				src.orig_color = shared_particle.color
-			PE.particles = src.shared_particle
-			PE.PC = src
+			add_effect(PE)
 
+	proc/add_effect(obj/effects/precipitation/PE)
+		if(!src.shared_particle)
+			src.shared_particle = new PE.particles.type()
+			src.orig_color = shared_particle.color
+		PE.particles = src.shared_particle
+		PE.PC = src
+		PE.PC.effects += PE
+
+	proc/add_turfs(list/turf/turfs, type)
+		if(!ispath(type, /obj/effects/precipitation))
+			return
+		for(var/turf/T in turfs)
+			var/obj/effects/precipitation/PE = new type(T)
+			add_effect(PE)
+
+	proc/remove(obj/effects/precipitation/P)
+		effects -= P
+		if(!length(effects) && !src.lock_deletion)
+			qdel(src)
+
+	proc/clear_active_effects()
+		lock_deletion = TRUE
+		for(var/obj/effects/precipitation/P in effects)
+			qdel(P)
+		lock_deletion = FALSE
+
+	disposing()
+		for(var/obj/effects/precipitation/P in effects )
+			qdel(P)
+		if (!isnull(reagents))
+			qdel(reagents)
+			reagents = null
+		..()
 
 	proc/update()
 		if(shared_particle)
@@ -105,7 +138,6 @@ particles/rain
 					shared_particle.color = src.orig_color
 				else
 					shared_particle.color = "#fff"
-
 
 obj/effects/precipitation
 	anchored = 2
@@ -119,6 +151,11 @@ obj/effects/precipitation
 	proc/generate_controller()
 		PC = new(src)
 
+	disposing()
+		if(PC)
+			PC.remove(src)
+			PC = null
+		..()
 
 obj/effects/precipitation/rain
 	particles = new/particles/rain
