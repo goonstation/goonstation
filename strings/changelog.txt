@@ -1,4 +1,8 @@
 
+(t)mon apr 11 22
+(u)tarmunora
+(e)⚖|balance
+(*)Most power-cell using guns and stun batons deployed from frames (i.e.: mechscanned) come with a smaller (and initially empty) power cell.
 (t)sun apr 10 22
 (u)Walpvrgis
 (p)8161
