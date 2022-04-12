@@ -2354,9 +2354,6 @@ var/global/noir = 0
 				var/mob/M = locate(href_list["target"])
 				if (!M)
 					return
-				if (M.ckey && M.ckey == usr.ckey)
-					tgui_alert(usr, "You cannot modify your own spacebux.")
-					return
 				var/spacebux = input(usr, "Current Spacebux: [M.client.persistent_bank]","Set Spacebux to...") as null|num
 				if (!spacebux)
 					return
