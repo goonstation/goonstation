@@ -100,7 +100,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				user.show_text("<span class='notice'><b>You turn off the propellers.</b></span>")
 				on = 0
 				UpdateIcon()
-				command_alert("Attention, NSS Manta is slowing down to a halt. Shutting down propellers.", "NSS Manta Movement Computer", ALERT_STATION)
+				command_alert("Attention, NSS Manta is slowing down to a halt. Shutting down propellers.", "NSS Manta Movement Computer", alert_origin = ALERT_STATION)
 				mantaSetMove(on)
 			else
 				user.show_text("<span class='notice'><b>You turn on the propellers.</b></span>")
@@ -108,7 +108,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				playsound_global(world, "sound/effects/mantamoving.ogg", 90)
 				sleep(7 SECONDS)
 				UpdateIcon()
-				command_alert("Attention, firing up propellers.  NSS Manta will be on the move shortly.", "NSS Manta Movement Computer", ALERT_STATION)
+				command_alert("Attention, firing up propellers.  NSS Manta will be on the move shortly.", "NSS Manta Movement Computer", alert_origin = ALERT_STATION)
 				mantaSetMove(on)
 			return
 		else
