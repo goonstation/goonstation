@@ -89,7 +89,7 @@
 				sleep(rand(1 MINUTE, 2.5 MINUTES))
 
 			if(event_active)
-				pda_msg("Unknown substance detected in Themo-Electric Generator Circulators. Please drain and replace lubricants.", alert_origin = ALERT_STATION)
+				pda_msg("Unknown substance detected in Themo-Electric Generator Circulators. Please drain and replace lubricants."
 
 		// FAILURE EVENT
 		SPAWN(event_duration)
