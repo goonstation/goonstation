@@ -26,6 +26,7 @@
 	var/list/artists = list()
 	var/list/pixel_artists
 	var/display_mult = 16
+	var/gray_padding = 100
 
 
 	uses_multiple_icon_states = 1
@@ -117,9 +118,14 @@
 
 	Topic(href, href_list)
 		// stolen from /obj/item/engibox. sorry, tgui.
+		if(href_list["close"])
+			usr << browse(null, "window=canvas")
+			return
 
 		if (usr.stat || usr.restrained()) return
-		if (!in_interact_range(src, usr)) return
+		var/obj/noticeboard/our_board = src.loc
+		ENSURE_TYPE(our_board)
+		if (!in_interact_range(our_board || src, usr)) return
 
 		var/dot_color = get_dot_color(usr)
 		if(isnull(dot_color))
@@ -161,7 +167,7 @@
 		send_the_damn_icon(user)
 		var/mult = src.display_mult
 
-		var/isadmin = user?.client?.holder.level >= LEVEL_MOD
+		var/isadmin = user?.client?.holder?.level >= LEVEL_MOD
 
 		var/dat = {"
 <!doctype html>
@@ -176,16 +182,22 @@
 		background: #666; /* hail satin */
 		color: white;
 		font-family: Tahoma, sans-serif;
+		margin: 0;
 		}
 	#container {
-		position: relative;
-		margin: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    top: 0px;
 		}
 	#inner {
 		position: relative;
 		width: [bound_width * mult]px;
 		height: [bound_height * mult]px;
-		margin: auto;
 		}
 	#cursor {
 		width: [mult]px;
@@ -239,6 +251,12 @@
 	var y = 0;
 	[isadmin ? "var pixel_artists = [json_encode(src.pixel_artists)];" : ""]
 
+	window.onkeydown = function( event ) {
+		if ( event.keyCode == 27 ) {
+			ehjax.src = "byond://?\ref[src];close=1";
+		}
+	};
+
 	cursor.addEventListener("click", function(e) {
 		var url = "byond://?\ref[src];x="+ x +";y="+ y;
 		ehjax.src = url
@@ -275,7 +293,7 @@
 
 		"}
 
-		user << browse(dat, "window=canvas;size=[bound_width * mult + 100]x[bound_height * mult + 100]")
+		user << browse(dat, "window=canvas;size=[bound_width * mult + gray_padding]x[bound_height * mult + gray_padding]")
 
 	picklify(atom/loc)
 		if(!startswith(src.name, "pickled"))
@@ -283,6 +301,50 @@
 		src.desc = "A fairly pickled canvas for wowing the station with your pickled talent. Coming soon: Pickles!"
 		src.edible = TRUE
 		return src
+
+	proc/load_from_id(id)
+		src.art = world.load_intra_round_value("persistent_canvas_[id]")
+		if(isnull(src.art))
+			src.art = icon(src.icon, icon_state = "blank")
+			src.art.Scale(bound_width, bound_height)
+		src.art.Crop(1, 1, bound_width, bound_height)
+		if(isnull(src.base))
+			src.base = icon(src.icon, icon_state = "transparent") // idc
+		src.icon = src.art
+		src.pixel_artists = world.load_intra_round_value("persistent_canvas_artists_[id]") || list()
+
+	proc/save_to_id(id)
+		world.save_intra_round_value("persistent_canvas_[id]", src.art)
+		world.save_intra_round_value("persistent_canvas_artists_[id]", src.pixel_artists)
+
+/obj/item/canvas/lazy_restore
+	var/id = null
+	var/initialized = FALSE
+
+	New(loc, id)
+		..(loc)
+		src.id = id
+
+	save_to_id(id)
+		if(initialized)
+			..()
+		else if(id == src.id)
+			return
+		else
+			src.load_from_id(src.id)
+			..()
+
+	set_loc(newloc)
+		. = ..()
+		if(!initialized)
+			src.load_from_id(src.id)
+			initialized = TRUE
+
+	pop_open_a_browser_box(mob/user)
+		if(!initialized)
+			src.load_from_id(src.id)
+			initialized = TRUE
+		. = ..()
 
 /obj/item/canvas/big_persistent
 	name = "Big Persistent Canvas"
@@ -296,6 +358,7 @@
 	plane = PLANE_FLOOR
 	var/id = null
 	burn_possible = FALSE
+	gray_padding = 5
 
 	New(loc)
 		..()
@@ -303,26 +366,18 @@
 		src.add_filter("frame", 1, outline_filter(2, "#ccaa00"))
 
 	init_canvas()
-		if(isnull(id))
+		if(isnull(src.id))
 			SPAWN(1)
 				qdel(src)
 			CRASH("big canvas has no id set")
-		src.art = world.load_intra_round_value("persistent_canvas_[id]")
-		if(isnull(src.art))
-			src.art = icon(src.icon, icon_state = "blank")
-			src.art.Scale(canvas_width, canvas_height)
-		src.art.Crop(1, 1, canvas_width, canvas_height)
-		src.base = icon(src.icon, icon_state = "transparent") // idc
-		src.icon = src.art
-		src.pixel_artists = world.load_intra_round_value("persistent_canvas_artists_[id]") || list()
+		load_from_id(src.id)
 
 	disposing()
 		STOP_TRACKING
 		..()
 
 	proc/save()
-		world.save_intra_round_value("persistent_canvas_[id]", src.art)
-		world.save_intra_round_value("persistent_canvas_artists_[id]", src.pixel_artists)
+		save_to_id(src.id)
 
 	get_dot_color(mob/user)
 		if(user.ckey in src.artists)

@@ -1,5 +1,24 @@
 
+(t)tue apr 12 22
+(u)None
+(p)8166
+(e)|
+(*)Revhead scaling has been adjusted to where you should actually see more then 3 revheads on higherpops. Please yell or something if there's you believe theres an imbalance of revheads.
+(u)glowbold
+(p)8110
+(e)🆕|feature
+(+)You can now mine for buttcoin.
+(u)Amylizzle
+(p)8142
+(e)📄|tgui
+(*)Spacebux purchase menu is all nice and shiny now. With icons!
 (t)mon apr 11 22
+(u)aloe
+(+)Flyzapper implants have had their range lowered but should be generally stronger
+(u)aloe
+(+)Dead emagged/syndicate borgs now drop emagged/syndicate frames
+(u)pali
+(*)You can now pin canvases onto noticeboards. These should persist across rounds just like other pinned stuff. I recommend using a labeller to give them descriptive names first.
 (u)tarmunora
 (e)⚖|balance
 (*)Most power-cell using guns and stun batons deployed from frames (i.e.: mechscanned) come with a smaller (and initially empty) power cell.
