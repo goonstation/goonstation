@@ -151,7 +151,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Desertify"
 	set desc = "Turns space into a desert"
-	admin_only
+	ADMIN_ONLY
 	var/const/ambient_light = "#cfcfcf"
 
 #ifdef UNDERWATER_MAP
@@ -162,19 +162,20 @@ var/datum/station_zlevel_repair/station_repair = new
 	if(src.holder.level >= LEVEL_ADMIN)
 		switch(alert("Turn space into a desert? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
 			if("Yes")
-				var/list/space = list()
 
+				var/vehicles = alert("Land vehicles available?",,"Yes", "No", "Some cars too!")
 				station_repair.station_generator = new/datum/map_generator/desert_generator
 				station_repair.ambient_light = new /image/ambient
 				station_repair.ambient_light.color = ambient_light
 
+				var/list/space = list()
 				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 					space += S
 				station_repair.station_generator.generate_terrain(space)
 				for (var/turf/S in space)
 					S.UpdateOverlays(station_repair.ambient_light, "ambient")
 
-				shippingmarket.clear_path_to_market()
+				station_repair.clean_up_station_level(vehicles=="Some cars too!", vehicles != "No")
 
 				logTheThing("admin", src, null, "turned space into a desert.")
 				logTheThing("diary", src, null, "turned space into a desert.", "admin")
