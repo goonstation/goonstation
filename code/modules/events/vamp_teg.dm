@@ -82,14 +82,14 @@
 		// Delayed Warning and Instruction
 		SPAWN(warning_delay)
 			if(event_active)
-				command_alert("Reports indicate that the engine on-board [station_name()] is behaving unusually. Stationwide power failures may occur or worse.", "Engine Warning")
+				command_alert("Reports indicate that the engine on-board [station_name()] is behaving unusually. Stationwide power failures may occur or worse.", "Engine Warning", alert_origin = ALERT_STATION)
 				sleep(30 SECONDS)
 			if(event_active)
 				command_alert("Onsite Engineers inform us a sympathetic connection exists between the furnaces and the engine. Considering burning something it might enjoy: food, people, weed. We're grasping at straws here. ", "Engine Suggestion")
 				sleep(rand(1 MINUTE, 2.5 MINUTES))
 
 			if(event_active)
-				pda_msg("Unknown substance detected in Themo-Electric Generator Circulators. Please drain and replace lubricants.")
+				pda_msg("Unknown substance detected in Themo-Electric Generator Circulators. Please drain and replace lubricants.", alert_origin = ALERT_STATION)
 
 		// FAILURE EVENT
 		SPAWN(event_duration)

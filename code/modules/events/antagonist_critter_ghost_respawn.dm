@@ -202,7 +202,7 @@
 					antagify(M.current, null, 1)
 				candidates -= M
 
-			command_alert("Our sensors have detected a hostile nonhuman lifeform in the vicinity of the station.", "Hostile Critter")
+			command_alert("Our sensors have detected a hostile nonhuman lifeform in the vicinity of the station.", "Hostile Critter", alert_origin = ALERT_GENERAL)
 		cleanup_event()
 
 	proc/cleanup_event()
