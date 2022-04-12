@@ -162,10 +162,10 @@
 	/obj/item/stamp/ce,
 	/obj/item/clothing/suit/hi_vis,
 #ifdef UNDERWATER_MAP
-	/obj/item/clothing/suit/space/diving/engineering,
+	/obj/item/clothing/suit/space/diving/engineeringcheif,
 	/obj/item/clothing/head/helmet/space/engineer/diving,
 #else
-	/obj/item/clothing/suit/space/engineer,
+	/obj/item/clothing/suit/space/engineer/cheif,
 	/obj/item/clothing/head/helmet/space/engineer,
 #endif
 	/obj/item/device/radio/headset/command/ce,

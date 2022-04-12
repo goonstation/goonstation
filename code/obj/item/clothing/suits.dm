@@ -1278,6 +1278,12 @@
 		icon_state = "espace-alt"
 		item_state = "es_suit"
 
+	cheif
+		name = "Cheif engineer's space suit"
+		icon_state = "espace-cheif"
+		item_state = "espace-cheif"
+		desc = "An engineering space suit with rank markings to prove that yes, in fact, you are the Cheif Engineer."
+
 /obj/item/clothing/suit/space/neon
 	name = "neon space suit"
 	desc = "It comes in fun colours, but is as bulky and slow to move in as any standard space suit..."
@@ -1342,6 +1348,13 @@
 		name = "engineering diving suit"
 		icon_state = "diving_suit-eng"
 		item_state = "diving_suit-eng"
+
+
+	engineeringcheif
+		name = "engineering diving suit"
+		icon_state = "diving_suit-engcheif"
+		item_state = "diving_suit-engcheif"
+
 
 /obj/item/clothing/suit/space/industrial
 	desc = "Very heavy armour for prolonged industrial activity. Protects from radiation and explosions."
