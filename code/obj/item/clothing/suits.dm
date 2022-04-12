@@ -1278,11 +1278,11 @@
 		icon_state = "espace-alt"
 		item_state = "es_suit"
 
-	cheif
-		name = "Cheif engineer's space suit"
-		icon_state = "espace-cheif"
-		item_state = "espace-cheif"
-		desc = "An engineering space suit with rank markings to prove that yes, in fact, you are the Cheif Engineer."
+	chief
+		name = "Chief engineer's space suit"
+		icon_state = "espace-chief"
+		item_state = "espace-chief"
+		desc = "An engineering space suit with rank markings to prove that yes, in fact, you are the Chief Engineer."
 
 /obj/item/clothing/suit/space/neon
 	name = "neon space suit"
@@ -1350,10 +1350,10 @@
 		item_state = "diving_suit-eng"
 
 
-	engineeringcheif
+	engineeringchief
 		name = "engineering diving suit"
-		icon_state = "diving_suit-engcheif"
-		item_state = "diving_suit-engcheif"
+		icon_state = "diving_suit-engchief"
+		item_state = "diving_suit-engchief"
 
 
 /obj/item/clothing/suit/space/industrial
