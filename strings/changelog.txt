@@ -1,5 +1,9 @@
 
 (t)mon apr 11 22
+(u)aloe
+(+)Flyzapper implants have had their range lowered but should be generally stronger
+(u)aloe
+(+)Dead emagged/syndicate borgs now drop emagged/syndicate frames
 (u)pali
 (*)You can now pin canvases onto noticeboards. These should persist across rounds just like other pinned stuff. I recommend using a labeller to give them descriptive names first.
 (u)tarmunora
