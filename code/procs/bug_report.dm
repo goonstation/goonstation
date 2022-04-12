@@ -1,5 +1,5 @@
 /proc/bug_report_form(mob/user, easteregg_chance=0)
-	report_key = user.key
+	var/report_key = user.key
 	var/datum/tgui_bug_report_form/form = new
 	form.ui_interact(user)
 	UNTIL(form.done || form.closed)
