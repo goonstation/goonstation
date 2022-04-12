@@ -98,7 +98,7 @@
 			message_coders("ALERT: Critter [type] ([name]) does not have health holders.")
 		count_healths()
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(!src.disposed)
 				src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
 				src.attach_hud(zone_sel)
@@ -133,7 +133,7 @@
 				if (ispath(abil))
 					abilityHolder.addAbility(abil)
 
-		SPAWN_DBG(0.5 SECONDS) //if i don't spawn, no abilities even show up
+		SPAWN(0.5 SECONDS) //if i don't spawn, no abilities even show up
 			if (abilityHolder)
 				abilityHolder.updateButtons()
 
@@ -359,7 +359,7 @@
 
 	throw_item(atom/target, list/params)
 		..()
-		if (HAS_MOB_PROPERTY(src, PROP_CANTTHROW))
+		if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTTHROW))
 			return
 		if (!can_throw)
 			return
@@ -1162,11 +1162,11 @@
 			severity++
 		switch(severity)
 			if (1)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					gib()
 			if (2)
 				if (health < max_health * 0.35 && prob(50))
-					SPAWN_DBG(0)
+					SPAWN(0)
 						gib()
 				else
 					TakeDamage("All", rand(10, 30), rand(10, 30))
@@ -1242,6 +1242,13 @@
 				src.click(W, list())
 		if ("togglethrow")
 			src.toggle_throw_mode()
+		if ("walk")
+			if (src.m_intent == "run")
+				src.m_intent = "walk"
+			else
+				src.m_intent = "run"
+			out(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
+			hud.update_mintent()
 		else
 			return ..()
 
@@ -1323,3 +1330,15 @@
 
 	src.TakeDamage("All", damage, 0)
 	return
+
+/mob/living/critter/Logout()
+	..()
+	if (src.ai && !src.ai.enabled && src.is_npc)
+		ai.enabled = TRUE
+
+/mob/living/critter/Login()
+	..()
+	if (src.ai?.enabled && src.is_npc)
+		ai.enabled = FALSE
+		var/datum/targetable/A = src.abilityHolder?.getAbility(/datum/targetable/ai_toggle)
+		A?.updateObject()

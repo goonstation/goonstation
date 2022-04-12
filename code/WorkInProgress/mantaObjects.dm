@@ -641,14 +641,14 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	attack_hand(mob/user as mob)
 		if(busy) return
-		if(get_dist(user, src) > 1 || user.z != src.z) return
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		src.add_dialog(user)
 		add_fingerprint(user)
 		busy = 1
 		flick("englrt1", src)
 		playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
 		animate_teleport(user)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 		teleport(user)
 		busy = 0
 
@@ -662,7 +662,7 @@ var/obj/manta_speed_lever/mantaLever = null
 					src.recharging = 1
 					user.set_loc(S.loc)
 					showswirl(user.loc)
-					SPAWN_DBG(recharge)
+					SPAWN(recharge)
 						S.recharging = 0
 						src.recharging = 0
 				return
@@ -932,7 +932,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	onUpdate()
 		..()
-		if (propeller == null || the_tool == null || owner == null || get_dist(owner, propeller) > 1)
+		if (propeller == null || the_tool == null || owner == null || BOUNDS_DIST(owner, propeller) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -1070,7 +1070,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	onUpdate()
 		..()
-		if (box == null || the_tool == null || owner == null || get_dist(owner, box) > 1)
+		if (box == null || the_tool == null || owner == null || BOUNDS_DIST(owner, box) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -1161,7 +1161,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	onUpdate()
 		..()
-		if (magnet == null || the_tool == null || owner == null || get_dist(owner, magnet) > 1)
+		if (magnet == null || the_tool == null || owner == null || BOUNDS_DIST(owner, magnet) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

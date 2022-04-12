@@ -40,7 +40,7 @@ TYPEINFO(/datum/component/baseball_bat_reflect)
 	if(isnull(T))
 		return
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		thing.throw_at( \
 			T,
 			round(12 + gen.Rand() * 4),

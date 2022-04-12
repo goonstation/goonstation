@@ -55,7 +55,7 @@
 		abilityHolder.addAbility(/datum/targetable/critter/teleport)
 
 		// back once again to ruin the day, it's CIRR fucking up things
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/randomname = pick(strings("martian_names.txt", "martianname"))
 			var/newname = adminscrub(input(src,"You are a Martian. Would you like to change your name to something else?", "Name change", randomname) as text)
 
@@ -282,7 +282,7 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 	New()
 		..()
 		// TEMPORARY THING TO ESTABLISH THESE DUDES AS EXPLICITLY ANTAGS OK
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			SHOW_MARTIAN_TIPS(src)
 			boutput(src, "<h2><font color=red>You are a Martian Infiltrator!</font></h2>")
 			boutput(src, "<font color=red>Find a safe place to start building a base with your teammates!</font>")

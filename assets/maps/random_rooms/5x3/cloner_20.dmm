@@ -1,0 +1,117 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/clone_scanner,
+/turf/simulated/floor/specialroom/medbay,
+/area/dmm_suite/clear_area)
+"j" = (
+/obj/decal/tile_edge/stripe/big,
+/obj/landmark/spawner{
+	name = "monkeyspawn_normal"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/dmm_suite/clear_area)
+"l" = (
+/obj/machinery/clonegrinder,
+/turf/simulated/floor/specialroom/medbay,
+/area/dmm_suite/clear_area)
+"n" = (
+/obj/table/auto/desk,
+/obj/item/reagent_containers/glass/beaker/large{
+	initial_reagents = "blood";
+	pixel_x = 5;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_x = -4;
+	pixel_y = 11
+	},
+/obj/item/paper/manufacturer_blueprint/clonepod,
+/turf/simulated/floor/specialroom/medbay,
+/area/dmm_suite/clear_area)
+"o" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/specialroom/medbay,
+/area/dmm_suite/clear_area)
+"p" = (
+/obj/machinery/light/incandescent/broken,
+/turf/simulated/floor/specialroom/medbay,
+/area/dmm_suite/clear_area)
+"y" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/big,
+/turf/simulated/floor/specialroom/medbay,
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/stool/chair/office/red{
+	dir = 1
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/dmm_suite/clear_area)
+"H" = (
+/obj/decal/tile_edge/stripe/big,
+/obj/item/raw_material/shard/glass{
+	pixel_x = 8;
+	pixel_y = 15
+	},
+/obj/item/raw_material/shard/glass{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/dmm_suite/clear_area)
+"I" = (
+/turf/simulated/floor/specialroom/medbay,
+/area/dmm_suite/clear_area)
+"V" = (
+/obj/machinery/computer/cloning{
+	name = "Busted Cloning Console";
+	status = 1
+	},
+/obj/machinery/light/incandescent/broken{
+	dir = 1
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/dmm_suite/clear_area)
+"X" = (
+/obj/decal/tile_edge/stripe/big,
+/obj/landmark/spawner{
+	name = "monkeyspawn_normal"
+	},
+/obj/item/storage/toolbox/electrical/mechanic_spawn,
+/turf/simulated/floor/specialroom/medbay,
+/area/dmm_suite/clear_area)
+"Z" = (
+/obj/machinery/light/emergencyflashing,
+/turf/simulated/floor/specialroom/medbay,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+n
+A
+p
+"}
+(2,1,1) = {"
+o
+y
+Z
+"}
+(3,1,1) = {"
+a
+X
+I
+"}
+(4,1,1) = {"
+V
+H
+Z
+"}
+(5,1,1) = {"
+l
+j
+p
+"}

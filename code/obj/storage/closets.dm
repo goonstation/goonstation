@@ -124,6 +124,14 @@
 	icon_closed = "syndicate"
 	icon_opened = "syndicate-open"
 
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 /obj/storage/closet/syndicate/personal
 	desc = "Gear preperations closet."
 	spawn_contents = list(
@@ -328,7 +336,7 @@
 	bound_width = 32
 	anchored = 2
 
-	open(var/entangleLogic)
+	open(var/entangleLogic, mob/user)
 		if (src.open)
 			return 0
 		if (!src.can_open())
@@ -489,7 +497,7 @@
 			return
 /*
 		else if (issilicon(user))
-			if (get_dist(src, user) <= 1)
+			if (BOUNDS_DIST(src, user) == 0)
 				return src.Attackhand(user)
 */
 		else

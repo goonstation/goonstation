@@ -72,7 +72,7 @@
 				return 1
 			var/datum/tutorialStep/T = steps[current_step]
 			if (T.PerformAction(action, context))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					CheckAdvance()
 				return 1
 			else
@@ -87,7 +87,7 @@
 				return 1
 			var/datum/tutorialStep/T = steps[current_step]
 			if (T.PerformSilentAction(action, context))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					CheckAdvance()
 				return 1
 			else

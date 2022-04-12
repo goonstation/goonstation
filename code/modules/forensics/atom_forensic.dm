@@ -238,6 +238,10 @@
 			M.tracked_blood = null
 			M.set_clothing_icon_dirty()
 
+			// Noir effect alters M.color, so reapply
+			if (M.bioHolder.HasEffect("noir"))
+				animate_fade_grayscale(M, 0)
+
 		else
 
 			var/mob/living/L = src // Punching cyborgs does leave fingerprints for instance.
@@ -287,7 +291,7 @@
 /mob/living/track_blood()
 	if (!islist(src.tracked_blood))
 		return
-	if (HAS_MOB_PROPERTY(src, PROP_BLOOD_TRACKING_ALWAYS) && (tracked_blood["count"] > 0))
+	if (HAS_ATOM_PROPERTY(src, PROP_MOB_BLOOD_TRACKING_ALWAYS) && (tracked_blood["count"] > 0))
 		return
 	var/turf/T = get_turf(src)
 	var/obj/decal/cleanable/blood/dynamic/tracks/B = null

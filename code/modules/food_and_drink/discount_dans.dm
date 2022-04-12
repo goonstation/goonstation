@@ -171,7 +171,7 @@
 			reagents.add_reagent("thalmerite",2)
 			reagents.add_reagent("oxygen", 2)
 			reagents.handle_reactions()
-			SPAWN_DBG(10 SECONDS)
+			SPAWN(10 SECONDS)
 				reagents.del_reagent("thalmerite")
 		boutput(user, "The cup emits a soft clack as the heater triggers.")
 		return

@@ -87,7 +87,7 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] shoves [src] down [his_or_her(user)] throat and chokes on it!</b></span>")
 		user.take_oxygen_deprivation(175)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		qdel(src)
@@ -120,7 +120,7 @@
 			return
 		var/message = input("What should [src] say?")
 		message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
-		if (!message || get_dist(src, user) > 1)
+		if (!message || BOUNDS_DIST(src, user) > 0)
 			return
 		logTheThing("say", user, null, "makes [src] say,  \"[message]\"")
 		user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
@@ -747,10 +747,10 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "dennismccreary"
 		ckey = "lordvoxelrot"
 
-	Stinko
+	stinko
 		name = "\improper Stinko"
 		icon_state = "stinko"
-		ckey = "data_err0r"
+		ckey = "dataerr0r"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
@@ -817,7 +817,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 
 	prevend_effect()
 		playsound(src.loc, sound_vend, 80, 1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			var/datum/data/vending_product/R = src.product_list[1]
 			src.capsule_image.icon_state = "m_caps[R.product_amount]"
 			src.UpdateOverlays(src.capsule_image, "capsules")

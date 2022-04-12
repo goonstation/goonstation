@@ -34,6 +34,10 @@ var/list/ai_move_scheduled = list()
 			M.skipped_mobs_list |= SKIPPED_AI_MOBS_LIST
 			LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, M)
 
+		if(owner?.abilityHolder)
+			if(!owner.abilityHolder.getAbility(/datum/targetable/ai_toggle))
+				owner.abilityHolder.addAbility(/datum/targetable/ai_toggle)
+
 	disposing()
 		..()
 		stop_move()
@@ -135,12 +139,11 @@ var/list/ai_move_scheduled = list()
 		else if (src.move_reverse)
 			if (get_dist(src.owner,get_turf(src.move_target)) < src.move_dist)
 				var/turn = 180
-				switch(rand(1,4)) //fudge walk away behavior
-					if (1)
+				if (prob(50)) //fudge walk away behavior
+					if (prob(50))
 						turn -= 45
-					if (2)
+					else
 						turn += 45
-
 				src.owner.move_dir = turn(get_dir(src.owner,get_turf(src.move_target)),turn)
 				src.owner.process_move()
 		else

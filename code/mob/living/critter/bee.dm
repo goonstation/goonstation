@@ -59,7 +59,7 @@
 		..()
 		// bee mobs should have their actual bee names
 		real_name = name
-		SPAWN_DBG(0)
+		SPAWN(0)
 			ADMIN_BEES_ONLY
 			//statlog_bees(src)
 			src.UpdateIcon()
@@ -71,7 +71,7 @@
 		switch (act)
 			if ("flip")
 				if (src.emote_check(voluntary, 50) && !src.shrunk)
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						// animate_bumble(src)
 						// either stays put or bumbles
 						src.animate_lying(src.lying)
@@ -143,7 +143,7 @@
 		for (var/obj/critter/domestic_bee/fellow_bee in view(7,src)) // once mobcritters have AI we can change this to the mob version of bees, but for now we do this
 			if (fellow_bee?.alive)
 				fellow_bee.aggressive = 1
-				SPAWN_DBG(0.7 SECONDS)
+				SPAWN(0.7 SECONDS)
 					fellow_bee.aggressive = 0
 		..()
 
@@ -472,7 +472,7 @@
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to sting."))
 			return 1
 		var/mob/living/MT = target
@@ -540,14 +540,14 @@
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to swallow."))
 			return 1
 		var/mob/living/MT = target
 		if (MT.loc != holder.owner)
 			holder.owner.visible_message("<span class='combat'><b>[holder.owner] swallows [MT] whole!</b></span>")
 			MT.set_loc(holder.owner)
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				var/obj/icecube/honeycube = new /obj/icecube(src)
 				MT.set_loc(honeycube)
 				honeycube.name = "block of honey"
@@ -589,7 +589,7 @@
 		if (target == holder.owner)
 			return 1
 		var/mob/living/MT = target
-		if (get_dist(holder.owner, target) > 1)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to teleport away."))
 			return 1
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner]</b> stares at [MT]!</span>")
@@ -597,11 +597,11 @@
 			playsound(holder.owner, 'sound/voice/animal/buzz.ogg', 100, 1)
 		boutput(MT, "<span class='combat'>You feel a horrible pain in your head!</span>")
 		MT.changeStatus("stunned", 2 SECONDS)
-		SPAWN_DBG(2.5 SECONDS)
+		SPAWN(2.5 SECONDS)
 			if ((get_dist(holder.owner, MT) <= 6) && !isdead(holder.owner))
 				MT.visible_message("<span class='combat'><b>[MT] clutches their temples!</b></span>")
 				MT.emote("scream")
-				MT.setStatus("paralysis", max(MT.getStatusDuration("paralysis"), 20 SECONDS))
+				MT.setStatusMin("paralysis", 20 SECONDS)
 				MT.take_brain_damage(10)
 
 				do_teleport(MT, locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1), 0)
@@ -635,7 +635,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 
-			SPAWN_DBG(rand(10,20))
+			SPAWN(rand(10,20))
 				src.visible_message("<span class='alert'><b>[src] begins to move at unpredicable speeds!</b></span>")
 				animate_bumble(src, floatspeed = 3)
 				sleep(rand(30,50))
@@ -887,7 +887,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			user.visible_message("<b>[user]</b> feeds [W] to [src]!","You feed [W] to [src]. Fuck!")
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				W.icon_state = "key_gold"
 				W.desc += "  It appears to be covered in honey.  Gross."
 				src.visible_message("<b>[src]</b> regurgitates [W]!")
@@ -1062,13 +1062,6 @@ obj/effects/bees
 		..()
 		if(istype(A))
 			A.vis_contents += src
-
-	disposing()
-		var/atom/movable/A
-		A = src.loc
-		if(istype(A))
-			A.vis_contents -= src
-		. = ..()
 
 
 particles/swarm/bees

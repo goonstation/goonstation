@@ -137,10 +137,6 @@ datum/mind
 			Z_LOG_DEBUG("Mind/TransferTo", "Transferring abilityHolder")
 			new_character.abilityHolder.transferOwnership(new_character)
 
-
-		if (isrobot(new_character))
-			var/mob/living/silicon/robot/R = new_character
-			R.show_laws()
 		Z_LOG_DEBUG("Mind/TransferTo", "Complete")
 
 		SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, current)
@@ -226,6 +222,14 @@ datum/mind
 		if(src.current)
 			SEND_SIGNAL(src, COMSIG_MIND_DETACH_FROM_MOB, current)
 		..()
+
+	/// Output of this gets logged when the mind is added to the game ticker
+	proc/on_ticker_add_log()
+		var/list/traits = list()
+		for(var/trait_id in src.current.traitHolder.traits)
+			var/obj/trait/trait = src.current.traitHolder.traits[trait_id]
+			traits += trait.name
+		. = "<br>Traits: [jointext(traits, ", ")]"
 
 /datum/mind/proc/add_karma(how_much)
 	src.karma += how_much

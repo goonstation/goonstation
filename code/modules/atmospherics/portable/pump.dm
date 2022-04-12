@@ -141,14 +141,15 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 	if (usr.stat || usr.restrained())
 		return
 
-	if (((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
+	if (((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 
 		if(href_list["power"])
 			on = !on
 			if (src.direction_out)
 				if (src.on)
-					message_admins("[key_name(usr)] turns on [src], pumping its contents into the air at [log_loc(src)]. See station logs for atmos readout.")
+					if(src.air_contents.check_if_dangerous())
+						message_admins("[key_name(usr)] turns on [src] [alert_atmos(src)], pumping its contents into the air at [log_loc(src)].")
 					logTheThing("station", usr, null, "turns on [src] [log_atmos(src)], pumping its contents into the air at [log_loc(src)].")
 				else
 					logTheThing("station", usr, null, "turns off [src] [log_atmos(src)], stopping it from pumping its contents into the air at [log_loc(src)].")
@@ -162,7 +163,8 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 				usr.put_in_hand_or_eject(holding) // try to eject it into the users hand, if we can
 				holding = null
 			if (src.on && src.direction_out)
-				message_admins("[key_name(usr)] removed a tank from [src], pumping its contents into the air at [log_loc(src)]. See station logs for atmos readout.")
+				if(src.air_contents.check_if_dangerous())
+					message_admins("[key_name(usr)] removed a tank from [src] [alert_atmos(src)], pumping its contents into the air at [log_loc(src)].")
 				logTheThing("station", usr, null, "removed a tank from [src] [log_atmos(src)], pumping its contents into the air at [log_loc(src)].")
 
 		if (href_list["pressure_adj"])
@@ -207,7 +209,7 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 			V.vomit()
 	if (user) //ZeWaka: Fix for null.loc
 		health_update_queue |= user
-	SPAWN_DBG(50 SECONDS)
+	SPAWN(50 SECONDS)
 		if (user && !isdead(user))
 			user.suiciding = 0
 	return 1

@@ -73,9 +73,12 @@
 		return
 	if (length(ejectables))
 		for (var/atom/movable/I in ejectables)
-			if(istype(I.loc, /mob))
-				var/mob/M = I.loc
-				M.u_equip(I)
+			if(istype(I.loc, /mob) && isitem(I))
+				var/obj/item/item = I
+				var/mob/M = item.loc
+				M.u_equip(item)
+				item.dropped(M)
+				item.layer = initial(item.layer)
 			I.set_loc(location)
 			ThrowRandom(I, 12, 3)
 

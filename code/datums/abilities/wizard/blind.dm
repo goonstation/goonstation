@@ -38,7 +38,7 @@
 		B.set_density(0)
 		B.layer = MOB_EFFECT_LAYER
 		target.canmove = 0
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			qdel(B)
 			target.canmove = 1
 		boutput(target, "<span class='notice'>Your eyes cry out in pain!</span>")
@@ -57,7 +57,7 @@
 			target.changeStatus("weakened", 2 SECONDS)
 			if (!blindProtected)
 				target.bioHolder.AddEffect("bad_eyesight")
-				SPAWN_DBG(45 SECONDS)
+				SPAWN(45 SECONDS)
 					if (target) target.bioHolder.RemoveEffect("bad_eyesight")
 			target.take_eye_damage(blindProtected ? 5 : 10, 1)
 			target.change_eye_blurry(blindProtected ? 10 : 20)
@@ -66,7 +66,7 @@
 			target.changeStatus("weakened", 1 SECOND)
 			if (!blindProtected)
 				target.bioHolder.AddEffect("bad_eyesight")
-				SPAWN_DBG(30 SECONDS)
+				SPAWN(30 SECONDS)
 					target.bioHolder.RemoveEffect("bad_eyesight")
 			target.take_eye_damage(blindProtected ? 2 : 4, 1)
 			target.change_eye_blurry(blindProtected ? 5 : 10)

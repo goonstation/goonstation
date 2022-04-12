@@ -45,7 +45,7 @@
 			if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(800))
 				src.stabilize()
 				break
-		SPAWN_DBG(duration)
+		SPAWN(duration)
 			qdel(src)
 
 	disposing()
@@ -97,14 +97,14 @@
 	onUpdate()
 		..()
 		// you gotta hold still to jump!
-		if (get_dist(ownerMob, spatialtear) > 1)
+		if (BOUNDS_DIST(ownerMob, spatialtear) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			ownerMob.show_text("Your attempt to push through the spatial tear was interrupted!", "red")
 			return
 
 	onStart()
 		..()
-		if (get_dist(ownerMob, spatialtear) > 1 || spatialtear == null || ownerMob == null)
+		if (BOUNDS_DIST(ownerMob, spatialtear) > 0 || spatialtear == null || ownerMob == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		for(var/mob/O in AIviewers(ownerMob))

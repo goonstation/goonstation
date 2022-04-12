@@ -15,7 +15,7 @@
 				boutput(user, "You file the folder.")
 			user.drop_item()
 			W.set_loc(src)
-			SPAWN_DBG(5 DECI SECONDS)
+			SPAWN(5 DECI SECONDS)
 				icon_state = "filecabinet"
 
 	attack_hand(var/mob/user as mob)
@@ -24,7 +24,7 @@
 
 	Topic(var/href, var/href_list)
 
-		if (get_dist(src, usr) > 1 || iswraith(usr) || isintangible(usr) || is_incapacitated(usr))
+		if (BOUNDS_DIST(src, usr) > 0 || iswraith(usr) || isintangible(usr) || is_incapacitated(usr))
 			return
 		..()
 

@@ -184,6 +184,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.casings_to_eject = 0
 
 			src.ammo.amount_left = 0
+			src.ammo.refillable = FALSE
 			src.UpdateIcon()
 			src.add_fingerprint(user)
 			ammoHand.add_fingerprint(user)
@@ -275,7 +276,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "Seems to be a small pistol cartridge."
 		New()
 			..()
-			SPAWN_DBG(rand(1, 3))
+			SPAWN(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-small-0[rand(1,6)].ogg", 20, 0.1)
 
 	medium
@@ -283,7 +284,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "Seems to be a common revolver cartridge."
 		New()
 			..()
-			SPAWN_DBG(rand(1, 3))
+			SPAWN(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1)
 
 	rifle
@@ -291,7 +292,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "Seems to be a rifle cartridge."
 		New()
 			..()
-			SPAWN_DBG(rand(1, 3))
+			SPAWN(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1, 0, 0.8)
 
 
@@ -300,7 +301,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "Seems to be a rifle cartridge."
 		New()
 			..()
-			SPAWN_DBG(rand(1, 3))
+			SPAWN(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-large-0[rand(1,4)].ogg", 25, 0.1)
 
 	derringer
@@ -308,7 +309,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "A fat and stumpy bullet casing. Looks pretty old."
 		New()
 			..()
-			SPAWN_DBG(rand(1, 3))
+			SPAWN(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1)
 
 	deagle
@@ -316,7 +317,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "An uncomfortably large pistol cartridge."
 		New()
 			..()
-			SPAWN_DBG(rand(1, 3))
+			SPAWN(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1, 0, 0.9)
 	shotgun
 		red
@@ -336,7 +337,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			desc = "An gray shotgun shell."
 		New()
 			..()
-			SPAWN_DBG(rand(4, 7))
+			SPAWN(rand(4, 7))
 				playsound(src.loc, "sound/weapons/casings/casing-shell-0[rand(1,7)].ogg", 20, 0.1)
 
 	cannon
@@ -345,7 +346,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		w_class = W_CLASS_SMALL
 		New()
 			..()
-			SPAWN_DBG(rand(2, 4))
+			SPAWN(rand(2, 4))
 				playsound(src.loc, "sound/weapons/casings/casing-large-0[rand(1,4)].ogg", 35, 0.1, 0, 0.8)
 
 	grenade
@@ -354,7 +355,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "A 40mm grenade round casing. Huh."
 		New()
 			..()
-			SPAWN_DBG(rand(3, 6))
+			SPAWN(rand(3, 6))
 				playsound(src.loc, "sound/weapons/casings/casing-xl-0[rand(1,6)].ogg", 15, 0.1)
 
 
@@ -635,28 +636,28 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		playsound(src.loc, "rustle", 50, 1)
 		return ..(target)
 
-	throw_impact(atom/hit_atom)
-		if(hit_atom == usr)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		var/mob/user = thr.user
+		if(hit_atom == user)
 			if(prob(prob_clonk))
-				var/mob/living/carbon/human/user = usr
 				user.visible_message("<span class='alert'><B>[user] fumbles the catch and accidentally discharges [src]!</B></span>")
 				src.shoot_point_blank(user, user)
 				user.force_laydown_standup()
 			else
-				src.Attackhand(usr)
+				src.Attackhand(user)
 			return
 		else
 			var/mob/M = hit_atom
 			if(istype(M))
-				var/mob/living/carbon/human/user = usr
-				if(istype(user.wear_suit, /obj/item/clothing/suit/security_badge))
+				var/mob/living/carbon/human/H = user
+				if(istype(H) && istype(H.wear_suit, /obj/item/clothing/suit/security_badge))
 					src.silenced = 1
 					src.shoot_point_blank(M, M)
 					M.visible_message("<span class='alert'><B>[src] fires, hitting [M] point blank!</B></span>")
 					src.silenced = initial(src.silenced)
 
 			prob_clonk = min(prob_clonk + 5, 100)
-			SPAWN_DBG(1 SECONDS)
+			SPAWN(1 SECONDS)
 				prob_clonk = max(prob_clonk - 5, 0)
 
 		return ..(hit_atom)
@@ -832,7 +833,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		pulled = 0
 		UpdateIcon()
 
-	shoot_point_blank(var/mob/M as mob, var/mob/user as mob)
+	shoot_point_blank(atom/target, var/mob/user as mob)
 		if(!pulled)
 			boutput(user, "<span class='notice'>You need to pull back the pully tab thingy first!</span>")
 			playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
@@ -1093,7 +1094,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.UpdateIcon()
 			src.casings_to_eject = 0
 
-	shoot_point_blank(user, user)
+	shoot_point_blank(atom/target, mob/user)
 		if(ammo.amount_left > 0 && !racked_slide)
 			boutput(user, "<span class='notice'>You need to rack the slide before you can fire!</span>")
 			return
@@ -1221,7 +1222,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 		..()
 
-	MouseDrop(atom/over_object, src_location, over_location, params)
+	mouse_drop(atom/over_object, src_location, over_location, params)
 		if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
 			return ..()
 		if (over_object == usr && src.icon_state == "slamgun-open-loaded") // sorry for doing it like this, but i have no idea how to do it cleaner.

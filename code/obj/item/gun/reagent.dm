@@ -81,12 +81,12 @@
 			src.UpdateIcon()
 		return 1
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
 		if(!isliving(usr))
 			return
 
-		if(get_dist(src, usr) > 1)
+		if(BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You need to be closer to empty \the [src] out!</span>")
 			return
 

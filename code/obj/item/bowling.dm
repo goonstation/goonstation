@@ -59,7 +59,7 @@
 			if (ismob(hit_atom))
 				var/mob/hitMob = hit_atom
 				if (ishuman(hitMob))
-					SPAWN_DBG( 0 )
+					SPAWN( 0 )
 						if (istype(user))
 							if (user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
 								src.hitHard(hitMob, user)

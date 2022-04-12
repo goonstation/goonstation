@@ -42,7 +42,7 @@
 
 	range = max(world.maxx,world.maxy)
 
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		var/turf/origin = get_rear_turf()
 		if(!origin) return //just in case
 		dir_loop:
@@ -220,19 +220,21 @@
 /obj/machinery/power/pt_laser/proc/get_barrel_turf()
 	var/x_off = 0
 	var/y_off = 0
+	var/bw = round(bound_width / world.icon_size)
+	var/bh = round(bound_width / world.icon_size)
 	switch(dir)
 		if(1)
-			x_off = 1
-			y_off = 2
+			x_off = round((bw - 1) / 2)
+			y_off = bh - 1
 		if(2)
-			x_off = 1
+			x_off = round((bw - 1) / 2)
 			y_off = 0
 		if(4)
-			x_off = 2
-			y_off = 1
+			x_off = bw - 1
+			y_off = round((bh - 1) / 2)
 		if(8)
 			x_off = 0
-			y_off = 1
+			y_off = round((bh - 1) / 2)
 
 	var/turf/T = locate(src.x + x_off,src.y + y_off,src.z)
 
@@ -241,19 +243,21 @@
 /obj/machinery/power/pt_laser/proc/get_rear_turf()
 	var/x_off = 0
 	var/y_off = 0
+	var/bw = round(bound_width / world.icon_size)
+	var/bh = round(bound_width / world.icon_size)
 	switch(dir)
 		if(1)
-			x_off = 1
+			x_off = round((bw - 1) / 2)
 			y_off = 0
 		if(2)
-			x_off = 1
-			y_off = 2
+			x_off = round((bw - 1) / 2)
+			y_off = bh - 1
 		if(4)
 			x_off = 0
-			y_off = 1
+			y_off = round((bh - 1) / 2)
 		if(8)
-			x_off = 2
-			y_off = 1
+			x_off = bw - 1
+			y_off = round((bh - 1) / 2)
 
 	var/turf/T = locate(src.x + x_off,src.y + y_off,src.z)
 
@@ -266,16 +270,22 @@
 	firing = 1
 	UpdateIcon(1)
 
-	for(var/dist = 0, dist < range, dist += 1) // creates each field tile
-		T = get_step(T, dir)
+	var/scale_factor = round(bound_width / 96)
+	for(var/dist = 0, dist < range / scale_factor, dist += scale_factor) // creates each field tile
+		for(var/i in 1 to (dist == 0 ? 1 : scale_factor))
+			T = get_step(T, dir)
 		if(!T) break //edge of the map
 		var/obj/lpt_laser/laser = new/obj/lpt_laser(T)
+		laser.bound_width *= scale_factor
+		laser.bound_height *= scale_factor
+		laser.Scale(scale_factor, scale_factor)
+		laser.Translate((scale_factor - 1) * world.icon_size / 2, (scale_factor - 1) * world.icon_size / 2)
 		laser.set_dir(dir)
 		laser.power = round(abs(output)*PTLEFFICIENCY)
 		laser.source = src
 		laser.active = 0
 		src.laser_parts += laser
-		src.laser_turfs += T
+		src.laser_turfs += laser.locs
 
 	melt_blocking_objects()
 	update_laser()
@@ -495,7 +505,7 @@
 	light.set_height(0.5)
 	light.enable()
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		alpha = clamp(((log(10, max(src.power,1)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 		if(active)
 			if(istype(src.loc, /turf) && power > 5e7)

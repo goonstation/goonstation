@@ -44,6 +44,9 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY
+	stamina_damage = 40
+	stamina_cost = 17
+	stamina_crit_chance = 10
 
 	burn_point = 2500
 	burn_output = 2500
@@ -396,9 +399,11 @@
 			var/access_type = text2num_safe(href_list["access"])
 			var/access_allowed = text2num_safe(href_list["allowed"])
 			if(access_type in get_all_accesses())
-				src.modify.access -= access_type
-				if(access_allowed == 1)
+				if(!access_allowed)
+					src.modify.access -= access_type
+				else
 					src.modify.access += access_type
+				logTheThing("station", usr, null, "[access_allowed ? "adds" : "removes"] [get_access_desc(access_type)] access to the ID card (<b>[src.modify.registered]</b>).")
 
 	if (href_list["pronouns"])
 		if (src.authenticated && src.modify)
@@ -422,10 +427,16 @@
 				if(!src.modify || !src.authenticated)
 					return
 				t1 = strip_html(t1, 100, 1)
-				logTheThing("station", usr, null, "changes the assignment on the ID card from [src.modify.assignment] to [t1]")
+				logTheThing("station", usr, null, "changes the assignment on the ID card (<b>[src.modify.registered]</b>) from <b>[src.modify.assignment]</b> to <b>[t1]</b>.")
 				playsound(src.loc, "keyboard", 50, 1, -15)
 			else
-				src.modify.access = get_access(t1)
+				// preserve accesses which are otherwise unobtainable
+				var/bonus_access = list()
+				for (var/access in src.modify.access)
+					if (!(access in get_all_accesses())) //fuck this proc name
+						bonus_access += list(access)
+				src.modify.access = get_access(t1) + bonus_access
+				logTheThing("station", usr, null, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to <b>[t1]</b>.")
 
 			//Wire: This possibly happens after the input() above, so we re-do the initial checks
 			if (src.authenticated && src.modify)
@@ -440,7 +451,7 @@
 			t1 = strip_html(t1, 100, 1)
 
 			if ((src.authenticated && src.modify == t2 && (in_interact_range(src, usr) || (issilicon(usr) || isAI(usr))) && istype(src.loc, /turf)))
-				logTheThing("station", usr, null, "changes the registered name on the ID card from [src.modify.registered] to [t1]")
+				logTheThing("station", usr, null, "changes the registered name on the ID card from <b>[src.modify.registered]</b> to <b>[t1]</b>.")
 				src.modify.registered = t1
 
 			playsound(src.loc, "keyboard", 50, 1, -15)
@@ -458,6 +469,7 @@
 					src.modify.pin = 9999
 				else
 					src.modify.pin = round(newpin)
+				logTheThing("station", usr, null, "changes the pin on the ID card (<b>[src.modify.registered]</b>) to [src.modify.pin].")
 				playsound(src.loc, "keyboard", 50, 1, -15)
 
 	if (href_list["mode"])
@@ -507,11 +519,13 @@
 			src.custom_names[slot] = src.modify.assignment
 		src.custom_access_list[slot] = src.modify.access.Copy()
 		src.custom_access_list[slot] &= allowed_access_list //prevent saving non-allowed accesses
+		logTheThing("station", usr, null, "saves custom assignment <b>[src.custom_names[slot]]</b>.")
 	if (href_list["apply"])
 		var/slot = text2num_safe(href_list["apply"])
 		src.modify.assignment = src.custom_names[slot]
 		var/list/selected_access_list = src.custom_access_list[slot]
 		src.modify.access = selected_access_list.Copy()
+		logTheThing("station", usr, null, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to custom assignment <b>[src.modify.assignment]</b>.")
 	if (src.modify)
 		src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
 	if (src.eject)

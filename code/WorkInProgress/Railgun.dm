@@ -21,6 +21,7 @@
 	icon_state = "railgun"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	health = 10
 	w_class = W_CLASS_SMALL
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
@@ -45,7 +46,7 @@
 //			var/turf/T = O.loc
 //			for(var/atom/A in T.contents)
 //				boutput(src, "There is a [A.name] at this location.")
-			SPAWN_DBG(0.5 SECONDS) qdel(O)
+			SPAWN(0.5 SECONDS) qdel(O)
 
 		if(istype(target_r, /obj/railgun_trg_dummy)) qdel(target_r)
 

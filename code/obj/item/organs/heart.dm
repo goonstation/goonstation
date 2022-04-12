@@ -54,13 +54,15 @@
 
 		if (src.robotic)
 			if (src.emagged)
-				APPLY_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "heart", 15)
+				APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, "heart", 15)
 				src.donor.add_stam_mod_max("heart", 90)
-				src.donor.add_stun_resist_mod("heart", 30)
+				APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STUN_RESIST, "heart", 30)
+				APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STUN_RESIST_MAX, "heart", 30)
 			else
-				APPLY_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "heart", 5)
+				APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, "heart", 5)
 				src.donor.add_stam_mod_max("heart", 40)
-				src.donor.add_stun_resist_mod("heart", 15)
+				APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STUN_RESIST, "heart", 15)
+				APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STUN_RESIST_MAX, "heart", 15)
 
 		if (src.donor)
 			for (var/datum/ailment_data/disease in src.donor.ailments)
@@ -75,7 +77,6 @@
 			return
 
 	on_removal()
-		..()
 		if (donor)
 			if (src.donor.reagents && src.reagents)
 				src.donor.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.total_volume)
@@ -83,9 +84,10 @@
 			src.blood_id = src.donor.blood_id //keep our owner's blood (for mutantraces etc)
 
 			if (src.robotic)
-				REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "heart")
+				REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, "heart")
 				src.donor.remove_stam_mod_max("heart")
-				src.donor.remove_stun_resist_mod("heart")
+				REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_STUN_RESIST, "heart")
+				REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_STUN_RESIST_MAX, "heart")
 
 			var/datum/ailment_data/malady/HD = donor.find_ailment_by_type(/datum/ailment/malady/heartdisease)
 			if (HD)
@@ -95,6 +97,7 @@
 				donor.ailments.Remove(HD)
 				HD.affected_mob = null
 				src.diseases.Add(HD)
+		..()
 		return
 
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)

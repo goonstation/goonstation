@@ -24,9 +24,12 @@
 		..()
 
 /obj/submachine/slot_machine/emag_act(mob/user, obj/item/card/emag/E)
-	. = ..()
+	if (src.emagged)
+		user?.show_message("<span class='alert'>The [src] has already had been tampered with.</span>")
+		return
 	boutput(user, "<span class='notice'>You short out the random number generator on [src]")
 	src.emagged = 1
+	return TRUE
 
 /* INTERFACE */
 
@@ -80,7 +83,7 @@
 			playsound(src, "sound/machines/ding.ogg", 50, 1)
 			. = TRUE
 			ui_interact(usr, ui)
-			SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
+			SPAWN(2.5 SECONDS) // why was this at ten seconds, christ
 				money_roll(wager)
 				src.working = 0
 				src.icon_state = "[icon_base]-off"
@@ -129,23 +132,23 @@
 		else
 			var/obj/item/card/id/idcard = I
 			boutput(user, "<span class='notice'>You insert your ID card.</span>")
-			usr.drop_item()
+			user.drop_item()
 			I.set_loc(src)
 			if(!idcard.registered)
-				boutput(usr, "<span class='alert'>No account data found!</span>")
-				usr.put_in_hand_or_eject(I)
+				boutput(user, "<span class='alert'>No account data found!</span>")
+				user.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
 			var/enterpin = user.enter_pin("Enter PIN")
 			if (enterpin != idcard.pin)
 				boutput(user, "<span class='alert'>Pin number incorrect.</span>")
-				usr.put_in_hand_or_eject(I)
+				user.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
 			src.accessed_record = FindBankAccountByName(idcard.registered)
 			if(isnull(src.accessed_record))
 				boutput(user, "<span class='alert'>That card has no bank account associated.</span>")
-				usr.put_in_hand_or_eject(I)
+				user.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
 			boutput(user, "<span class='notice'>Card authorized.</span>")
@@ -226,7 +229,7 @@
 			onclose(user, "slotmachine")
 
 	Topic(href, href_list)
-		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (BOUNDS_DIST(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
@@ -248,7 +251,7 @@
 				var/roll = rand(1,101)
 
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-				SPAWN_DBG(2.5 SECONDS)
+				SPAWN(2.5 SECONDS)
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'JACKPOT! [usr.name] has won their freedom!'</span>", src), 1)
@@ -319,7 +322,7 @@
 			onclose(user, "slotmachine")
 
 	Topic(href, href_list)
-		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (BOUNDS_DIST(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
@@ -346,7 +349,7 @@
 				var/roll = rand(1,1350)
 
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-				SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
+				SPAWN(2.5 SECONDS) // why was this at ten seconds, christ
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'JACKPOT! You have won a MILLION CREDITS!'</span>", src), 1)

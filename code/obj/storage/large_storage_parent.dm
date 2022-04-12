@@ -49,7 +49,6 @@
 	var/open_fail_prob = 50
 	var/crunches_contents = 0 // for the syndicate trashcart & hotdog stand
 	var/crunches_deliciously = 0 // :I
-	//var/mob/living/carbon/to_crunch = null
 	var/owner_ckey = null // owner of the crunchy cart, so they don't get crunched
 	var/opening_anim = null
 	var/closing_anim = null
@@ -65,7 +64,7 @@
 		weld_image = image(src.icon, src.icon_welded)
 		weld_image.pixel_x = weld_image_offset_X
 		weld_image.pixel_y = weld_image_offset_Y
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.UpdateIcon()
 
 			if (!src.open && grab_stuff_on_spawn)		// if closed, any item at src's loc is put in the contents
@@ -90,6 +89,58 @@
 				amt = abs(spawn_contents[thing])
 			do new thing(src)	//Two lines! I TOLD YOU I COULD DO IT!!!
 			while (--amt > 0)
+
+	proc/get_welding_positions()
+		var/start
+		var/stop
+		var/start_x
+		var/start_y
+		var/stop_x
+		var/stop_y
+
+		switch(icon_welded)
+			if("welded-crate")
+				start_x = -11
+				start_y = -4
+				stop_x = 11
+				stop_y = -4
+			if("welded-short-horizontal")
+				start_x = -8
+				stop_x = 8
+			if("welded-closet")
+				start_x = 6
+				stop_x = 6
+				start_y = -15
+				stop_y = 8
+			if("welded-coffin-4dirs")
+				if(dir == NORTH || dir == SOUTH)
+					start_x = -4
+					stop_x = 4
+					start_y = -13
+					stop_y = -13
+				else if(dir == WEST)
+					start_x = -12
+					stop_x = 14
+					start_y = -12
+					stop_y = -12
+				else
+					start_x = -14
+					stop_x = 12
+					start_y = -12
+					stop_y = -12
+			if("welded-coffin-1dir")
+				start_x = -4
+				stop_x = 4
+				start_y = -13
+				stop_y = -13
+
+		start = list(start_x + src.weld_image_offset_X, start_y + src.weld_image_offset_Y)
+		stop = list(stop_x + src.weld_image_offset_X, stop_y + src.weld_image_offset_Y)
+
+		if(welded)
+			. = list(stop,start)
+		else
+			. = list(start,stop)
 
 	Entered(atom/movable/Obj, OldLoc)
 		. = ..()
@@ -130,7 +181,7 @@
 			return
 		src.last_relaymove_time = world.time
 
-		if (!src.open())
+		if (!src.open(user=user))
 			if (!src.is_short && src.legholes)
 				step(src, pick(alldirs))
 			if (!src.jiggled)
@@ -148,7 +199,7 @@
 					sleep(0.1 SECONDS)
 				src.pixel_x = 0
 				src.pixel_y = 0
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					src.jiggled = 0
 
 			if (prob(10) && src.can_flip_bust)
@@ -164,7 +215,7 @@
 			return
 
 		// if all else fails:
-		src.open()
+		src.open(user=user)
 		src.visible_message("<span class='alert'><b>[user]</b> kicks [src] open!</span>")
 
 	attack_hand(mob/user as mob)
@@ -180,12 +231,7 @@
 			return src.Attackby(null, user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/cargotele))
-			var/obj/item/cargotele/CT = W
-			CT.cargoteleport(src, user)
-			return
-
-		else if (istype(W, /obj/item/satchel/))
+		if (istype(W, /obj/item/satchel/))
 			if(secure && locked)
 				user.show_text("Access Denied", "red")
 				return
@@ -236,14 +282,11 @@
 				return
 
 		else if (!src.open && isweldingtool(W))
-			if(!W:try_weld(user, 1, burn_eyes = 1))
+			if(!W:try_weld(user, 1, burn_eyes = TRUE))
 				return
-			if (!src.welded)
-				src.weld(1, W, user)
-				src.visible_message("<span class='alert'>[user] welds [src] closed with [W].</span>")
-			else
-				src.weld(0, W, user)
-				src.visible_message("<span class='alert'>[user] unwelds [src] with [W].</span>")
+			var/positions = src.get_welding_positions()
+			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/storage/proc/weld_action, \
+				list(W, user), null, positions[1], positions[2]),user)
 			return
 
 		if (src.secure)
@@ -284,6 +327,16 @@
 		else
 			return ..()
 
+	proc/weld_action(obj/item/W, mob/user)
+		if(src.open)
+			return
+		if (!src.welded)
+			src.weld(1, user)
+			src.visible_message("<span class='alert'>[user] welds [src] closed with [W].</span>")
+		else
+			src.weld(0, user)
+			src.visible_message("<span class='alert'>[user] unwelds [src] with [W].</span>")
+
 	proc/check_if_enterable(var/atom/movable/thing, var/skip_penalty=0)
 		//return 1 if an atom can enter, 0 if not (this is used for scooting over crates and dragging things into crates)
 		var/mob/living/L = thing
@@ -296,17 +349,12 @@
 
 		//Mostly copy pasted from turf/Enter. Sucks, but we need an object rather than a boolean
 		//First, check for directional blockers on the entering object's tile
-		if (orig_turf.checkingexit > 0)
-			for(var/obj/obstacle in orig_turf)
-				if(obstacle == thing)
-					continue
-				if(obstacle.event_handler_flags & USE_CHECKEXIT)
-					var/obj/O = thing
-					if (!istype(O) || !(HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING) \
-					  && HAS_FLAG(obstacle.object_flags, HAS_DIRECTIONAL_BLOCKING) \
-					  && obstacle.dir == O.dir))
-						if(!obstacle.CheckExit(thing, dest_turf))
-							no_go = obstacle
+		for(var/obj/obstacle in orig_turf)
+			if(obstacle == thing)
+				continue
+			if(!obstacle.CheckExit(thing, dest_turf))
+				no_go = obstacle
+				break
 
 		//next, check if the turf itself prevents something from entering it (i.e. it's a wall)
 		if (isnull(no_go))
@@ -374,7 +422,7 @@
 			return
 
 		if (!src.open)
-			src.open()
+			src.open(user=user)
 
 		if (count_turf_items() >= max_capacity)
 			user.show_text("[src] is too full!", "red")
@@ -394,7 +442,7 @@
 			O.set_loc(get_turf(O))
 			storage.hud.remove_item(O)
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			var/stuffed = FALSE
 			var/list/draggable_types = list(
 				/obj/item/plant = "produce",
@@ -432,7 +480,7 @@
 					if (length(T.contents) >= max_capacity)
 						break
 				user.show_text("You finish stuffing [type_name] into [src]!", "blue")
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					if (src.open)
 						src.close()
 			if(!stuffed)
@@ -441,7 +489,7 @@
 					if (user != O)
 						user.visible_message("<span class='alert'>[user] stuffs [O] into [src]!</span>",\
 						"<span class='alert'>You stuff [O] into [src]!</span>")
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						if (src.open)
 							src.close()
 		return ..()
@@ -491,7 +539,7 @@
 		. = TRUE
 		if (!A || !(isobj(A) || ismob(A)))
 			return 0
-		if (istype(A, /obj/decal/skeleton)) // uuuuuuugh
+		if (istype(A, /obj/decal/fakeobjects/skeleton)) // uuuuuuugh
 			return 1
 		if (isobj(A) && ((A.density && !istype(A, /obj/critter)) || A:anchored || A == src || istype(A, /obj/decal) || istype(A, /atom/movable/screen) || istype(A, /obj/storage)))
 			return 0
@@ -639,9 +687,7 @@
 	proc/toggle(var/mob/user)
 		if (src.open)
 			return src.close()
-		if (user)
-			return src.open(null,user)
-		return src.open()
+		return src.open(user=user)
 
 	proc/unlock()
 		if (src.locked)
@@ -654,12 +700,12 @@
 		if (src.health <= 0)
 			src.visible_message("<span class='alert'>[src] breaks apart!</span>")
 			src.dump_contents()
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				var/newloc = get_turf(src)
 				make_cleanable( /obj/decal/cleanable/machine_debris,newloc)
 				qdel(src)
 
-	proc/weld(var/shut = 0, var/obj/item/weldingtool/W as obj, var/mob/weldman as mob)
+	proc/weld(var/shut = 0, var/mob/weldman as mob)
 		if (shut)
 			weldman.visible_message("<span class='alert'>[weldman] welds [src] shut.</span>")
 			src.welded = 1
@@ -669,7 +715,6 @@
 		src.UpdateIcon()
 		for (var/mob/M in src.contents)
 			src.log_me(weldman, M, src.welded ? "welds" : "unwelds")
-		return
 
 	proc/crunch(var/mob/M as mob)
 		if (!M || istype(M, /mob/living/carbon/wall))
@@ -677,35 +722,27 @@
 
 		if (M.ckey && (M.ckey == owner_ckey))
 			return
-		else
-			M.show_text("Is it getting... smaller in here?", "red")
-			SPAWN_DBG(5 SECONDS)
+		src.locked = TRUE
+		M.show_text("Is it getting... smaller in here?", "red")
+		SPAWN(5 SECONDS)
+			if (M in src.contents)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
+				M.show_text("<b>OH JESUS CHRIST</b>", "red")
+				bleed(M, 500, 5)
+				src.log_me(usr && ismob(usr) ? usr : null, M, "uses trash compactor")
+				var/mob/living/carbon/cube/meat/meatcube = M.make_cube(/mob/living/carbon/cube/meat, rand(10,15), get_turf(src))
+				if (src.crunches_deliciously)
+					meatcube.name = "hotdog"
+					var/obj/item/reagent_containers/food/snacks/hotdog/syndicate/snoopdog = new /obj/item/reagent_containers/food/snacks/hotdog/syndicate(src)
+					snoopdog.victim = meatcube
 
-				var/found = 0
-				for (var/mob/contained_mob in src.contents)
-					if (M == contained_mob)
-						found = 1
+				for (var/obj/item/I in M)
+					if (istype(I, /obj/item/implant))
+						I.set_loc(meatcube)
 
-				if (found)
-					playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
-					M.show_text("<b>OH JESUS CHRIST</b>", "red")
-					bleed(M, 500, 5)
-					src.log_me(usr && ismob(usr) ? usr : null, M, "uses trash compactor")
-					var/mob/living/carbon/cube/meat/W = M.make_cube(/mob/living/carbon/cube/meat, rand(10,15), get_turf(src))
-					if (src.crunches_deliciously)
-						W.name = "hotdog"
-						var/obj/item/reagent_containers/food/snacks/hotdog/syndicate/snoopdog = new /obj/item/reagent_containers/food/snacks/hotdog/syndicate(src)
-						snoopdog.victim = W
+					I.set_loc(src)
 
-					for (var/obj/item/I in M)
-						if (istype(I, /obj/item/implant))
-							I.set_loc(W)
-							continue
-
-						I.set_loc(src)
-
-					src.locked = 0
-					src.open()
+			src.locked = FALSE
 
 	// Added (Convair880).
 	proc/log_me(var/mob/user, var/mob/occupant, var/action = "")
@@ -745,7 +782,7 @@
 				if (src.is_short)
 					usr.lying = 1
 				src.close()
-		else if (src.open())
+		else if (src.open(user=usr))
 			step_towards(usr, src)
 			sleep(1 SECOND)
 			if (usr.loc == src.loc)
@@ -787,7 +824,7 @@
 
 	onUpdate()
 		..()
-		if (!the_storage || !the_wrench || !owner || get_dist(owner, the_storage) > 1)
+		if (!the_storage || !the_wrench || !owner || BOUNDS_DIST(owner, the_storage) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -909,7 +946,7 @@
 						reply.data["data"] = "badpass"
 				else
 					return //COMMAND NOT RECOGNIZED
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply, 2)
 
 		else if (signal.data["address_1"] == "ping")
@@ -919,7 +956,7 @@
 			reply.data["command"] = "ping_reply"
 			reply.data["device"] = "WNET_SECLOCKER"
 			reply.data["netid"] = src.net_id
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply, 2)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)

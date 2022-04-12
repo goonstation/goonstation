@@ -64,7 +64,7 @@
 		set_loc(D.trunk)
 		active = 1
 		set_dir(DOWN)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			process()		// spawn off the movement process
 
 		return
@@ -358,7 +358,7 @@
 			// otherswise, do normal expel from turf
 			expel(H, T, 0)
 
-		SPAWN_DBG(0.2 SECONDS)	// delete pipe after 2 ticks to ensure expel proc finished
+		SPAWN(0.2 SECONDS)	// delete pipe after 2 ticks to ensure expel proc finished
 			qdel(src)
 
 
@@ -889,11 +889,6 @@
 
 				LAGCHECK(LAG_MED)
 
-
-
-				if (newIngredient.reagents)
-					newIngredient.reagents.trans_to(newLoaf, 1000)
-
 				if (istype(newIngredient, /obj/item/reagent_containers/food/snacks/prison_loaf))
 					var/obj/item/reagent_containers/food/snacks/prison_loaf/otherLoaf = newIngredient
 					newLoaf.loaf_factor += otherLoaf.loaf_factor * 1.2
@@ -977,7 +972,7 @@
 	icon_state = "eloaf"
 	force = 0
 	throwforce = 0
-	initial_volume = 1000
+	initial_volume = 400
 
 	New()
 		..()
@@ -991,7 +986,7 @@
 	icon_state = "ploaf0"
 	force = 0
 	throwforce = 0
-	initial_volume = 1000
+	initial_volume = 400
 	var/loaf_factor = 1
 	var/processing = 0
 
@@ -1143,11 +1138,11 @@
 		..()
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleactivation")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", "activate")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", "deactivate")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleactivation)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", .proc/activate)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", .proc/deactivate)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			switch_dir = turn(dir, 90)
 			dpdir = dir | switch_dir | turn(dir,180)
 
@@ -1238,7 +1233,7 @@
 
 		bioHolder.active = 1
 		bioHolder.set_dir(biodir)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			bioHolder.process()
 
 		return nonBioPipe
@@ -1273,7 +1268,7 @@
 		..()
 
 		dpdir = dir | turn(dir, 270) | turn(dir, 90)
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			stuff_chucking_target = get_ranged_target_turf(src, dir, 1)
 
 	welded()
@@ -1340,7 +1335,7 @@
 		..()
 
 		dpdir = dir | turn(dir, 270) | turn(dir, 90)
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			stuff_chucking_target = get_ranged_target_turf(src, dir, 1)
 
 	welded()
@@ -1422,7 +1417,7 @@
 		else if(ispulsingtool(W))
 			. = alert(user, "What should trigger the sensor?","Disposal Sensor", "Creatures", "Anything", "A mail tag")
 			if (.)
-				if (get_dist(user, src) > 1 || user.stat)
+				if (BOUNDS_DIST(user, src) > 0 || user.stat)
 					return
 
 				switch (.)
@@ -1438,7 +1433,7 @@
 							sense_mode = SENSE_TAG
 							sense_tag_filter = .
 
-	MouseDrop(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)
+	mouse_drop(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)
 
 		if(!isliving(usr))
 			return
@@ -1561,7 +1556,7 @@
 	New()
 		..()
 		dpdir = dir
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			getlinked()
 
 		update()
@@ -1719,7 +1714,7 @@
 	New()
 		..()
 
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			target = get_ranged_target_turf(src, dir, range)
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
@@ -1760,9 +1755,11 @@
 		sleep(2 SECONDS)	//wait until correct animation frame
 		playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
 
-
+		var/turf/expel_loc = get_turf(src)
+		while(locate(src.type) in get_step(expel_loc, src.dir))
+			expel_loc = get_step(expel_loc, src.dir)
 		for(var/atom/movable/AM in H)
-			AM.set_loc(src.loc)
+			AM.set_loc(expel_loc)
 			AM.pipe_eject(dir)
 			AM.throw_at(target, src.throw_range, src.throw_speed)
 		H.vent_gas(src.loc)

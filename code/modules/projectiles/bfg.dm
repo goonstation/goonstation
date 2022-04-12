@@ -19,7 +19,7 @@
 		explosion.pixel_y = -16
 		explosion.icon = 'icons/effects/64x64.dmi'
 		flick("bfg_explode", explosion)
-		SPAWN_DBG(1.6 SECONDS)
+		SPAWN(1.6 SECONDS)
 			qdel(explosion)
 		playsound(master, "sound/weapons/DSRXPLOD.ogg", 75)
 //		explosion(master, get_turf(master), 2, 3, 4, 5, lagreducer = 1)

@@ -87,7 +87,7 @@
 						continue
 				else
 					boutput(user, "<span class='alert'><b>WARNING: XP unlocks failed to update. Some traits may not be available. Please try again in a moment.</b></span>")
-					SPAWN_DBG(0) user.client.updateXpRewards()
+					SPAWN(0) user.client.updateXpRewards()
 					skipUnlocks = 1
 					continue
 
@@ -257,7 +257,7 @@
 	category = list("body")
 
 	onAdd(var/mob/owner)
-		SPAWN_DBG(4 SECONDS) //Fuck this. Fuck the way limbs are added with a delay. FUCK IT
+		SPAWN(4 SECONDS) //Fuck this. Fuck the way limbs are added with a delay. FUCK IT
 			if(ishuman(owner))
 				var/mob/living/carbon/human/H = owner
 				if(H.limbs != null)
@@ -277,7 +277,7 @@
 	category = list("body")
 
 	onAdd(var/mob/owner)
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			if(ishuman(owner))
 				var/mob/living/carbon/human/H = owner
 				if(H.limbs != null)
@@ -566,12 +566,12 @@
 	category = list("trinkets", "nopug")
 
 /obj/trait/one_armed
-	name = "One Armed Spaceman (-2)"	//it's so expensive cause right now, one arm is a benefit in that you can't be handcuffed...
+	name = "One Armed Spaceman (0)"	//it's so expensive cause right now, one arm is a benefit in that you can't be handcuffed...
 	cleanName = "One Armed Spaceman"
 	desc = "You only have one arm. But which one? It's a mystery... or is it a thriller?"
 	id = "onearmed"
 	icon_state = "placeholder"
-	points = -2
+	points = 0
 
 // Skill - White Border
 
@@ -687,7 +687,7 @@ ABSTRACT_TYPE(/obj/trait/job)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.add_stam_mod_max("trait", STAMINA_MAX * 0.1)
-			APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "trait", STAMINA_REGEN * 0.1)
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "trait", STAMINA_REGEN * 0.1)
 
 /obj/trait/bigbruiser
 	name = "Big Bruiser (-2) \[Stats\]"
@@ -735,6 +735,13 @@ ABSTRACT_TYPE(/obj/trait/job)
 	id = "hemophilia"
 	points = 1
 	category = list("hemophilia")
+
+/obj/trait/weakorgans
+	name = "Frail Constitution (+2)"
+	cleanName = "Frail Constitution"
+	desc = "Your internal organs (brain included) are extremely vulnerable to damage."
+	id = "weakorgans"
+	points = 2
 
 /obj/trait/slowmetabolism
 	name = "Slow Metabolism (0)"
@@ -808,7 +815,7 @@ ABSTRACT_TYPE(/obj/trait/job)
 
 	onAdd(var/mob/owner)
 		if(isliving(owner))
-			SPAWN_DBG(rand(4 MINUTES, 8 MINUTES))
+			SPAWN(rand(4 MINUTES, 8 MINUTES))
 				addAddiction(owner)
 				do_addiction = TRUE
 
@@ -952,12 +959,12 @@ ABSTRACT_TYPE(/obj/trait/job)
 		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_NERVOUS_MOBS)
 
 /obj/trait/burning
-	name = "Human Torch (+1)"
+	name = "Human Torch (+2)"
 	cleanName = "Human Torch"
-	desc = "Extends the time that you remain on fire for, when burning."
+	desc = "Fire no longer slowly peters out when you're burning."
 	id = "burning"
 	icon_state = "onfire"
-	points = 1
+	points = 2
 
 /obj/trait/carpenter
 	name = "Carpenter (-1)"
@@ -1082,6 +1089,12 @@ ABSTRACT_TYPE(/obj/trait/job)
 	onAdd(var/mob/owner)
 		..()
 		owner.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
+
+/obj/trait/super_slips
+	name = "Slipping Hazard (+1)"
+	id = "super_slips"
+	desc = "You never were good at managing yourself slipping."
+	points = 1
 
 //Infernal Contract Traits
 /obj/trait/hair

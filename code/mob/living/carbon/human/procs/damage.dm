@@ -133,7 +133,7 @@
 	src.flash(3 SECONDS)
 
 	if (isdead(src) && src.client)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.gib(1)
 		return
 
@@ -146,7 +146,7 @@
 		if (src.bioHolder && src.bioHolder.Uid && src.bioHolder.bloodType) //ZeWaka: Fix for null.bioHolder
 			bdna = src.bioHolder.Uid
 			btype = src.bioHolder.bloodType
-		SPAWN_DBG(0)
+		SPAWN(0)
 			gibs(A, virus, null, bdna, btype)
 
 		qdel(src)
@@ -187,18 +187,24 @@
 	if(src.bioHolder && src.bioHolder.HasEffect("shoot_limb"))
 		delib_chance += 20
 
-	if (src.traitHolder && src.traitHolder.hasTrait("explolimbs") || src.getStatusDuration("food_explosion_resist"))
+	if (src.getStatusDuration("food_explosion_resist"))
 		delib_chance = round(delib_chance / 2)
 
 	if (prob(delib_chance) && !shielded)
-		src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg"))) //max one delimb at once
+		if (src.traitHolder && src.traitHolder.hasTrait("explolimbs"))
+			if(prob(50))
+				boutput(src, "<span class='notice'><b>Your unusually strong bones keep your limbs attached through the blast!</b></span>")
+			else
+				src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg")))
+		else
+			src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg"))) //max one delimb at once
 
 	switch (power)
 		if (-INFINITY to 0) //blocked
 			boutput(src, "<span class='alert'><b>You are shielded from the blast!</b></span>")
 			return
 		if (6 to INFINITY) //gib
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				src.gib(1)
 			return
 	src.apply_sonic_stun(0, 0, 0, 0, 0, round(power*7), round(power*7), power*40)
@@ -553,7 +559,7 @@
 					eyeblind = 5
 					src.change_eye_blurry(5)
 					src.bioHolder.AddEffect("bad_eyesight")
-					SPAWN_DBG(10 SECONDS)
+					SPAWN(10 SECONDS)
 						src.bioHolder.RemoveEffect("bad_eyesight")
 
 			if (25 to INFINITY)

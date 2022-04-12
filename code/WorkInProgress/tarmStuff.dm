@@ -1,5 +1,36 @@
 //bot go brr?
 //GUNS GUNS GUNS
+/obj/item/gun/energy/cannon
+	name = "Vexillifer IV"
+	desc = "It's a cannon? A laser gun? You can't tell."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "cannon"
+	item_state = "cannon"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	force = MELEE_DMG_LARGE
+
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+
+	can_dual_wield = 0
+
+	color = list(0.110785,0.179801,0.533943,0.0890215,-0.0605533,-1.35334,0.823851,0.958116,1.79703)
+
+	two_handed = 1
+	w_class = W_CLASS_BULKY
+	muzzle_flash = "muzzle_flash_bluezap"
+	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
+	shoot_delay = 0.8 SECONDS
+
+
+	New()
+		set_current_projectile(new/datum/projectile/laser/asslaser)
+		..()
+
+	setupProperties()
+		..()
+		setProperty("movespeed", 0.3)
+
 /datum/projectile/special/target_designator
 	sname = "foo"
 	name = "bar"
@@ -31,7 +62,7 @@
 			animate(time = 0.1 SECONDS, alpha = 0, easing = JUMP_EASING | EASE_IN)
 			animate(time = 0.1 SECONDS, alpha = 255, easing = JUMP_EASING | EASE_IN)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for(var/obj/O in affected)
 				O.alpha = initial(O.alpha)
 				O.color = initial(O.color)
@@ -62,7 +93,7 @@
 		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
 		for(var/obj/O in affected)
 			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for(var/obj/O in affected)
 				O.alpha = initial(O.alpha)
 				qdel(O)
@@ -108,7 +139,7 @@
 		. = ..(target, start, user, POX+rand(-spread_angle, spread_angle)*16, POY+rand(-spread_angle, spread_angle)*16)
 		last_shot_time = TIME
 
-	shoot_point_blank(mob/M, mob/user, second_shot)
+	shoot_point_blank(atom/target, mob/user, second_shot)
 		shotcount = 0
 		. = ..()
 
@@ -146,7 +177,7 @@
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	shot_number = 3
-	shot_delay = 0.4
+	shot_delay = 0.04 SECONDS
 	shot_sound = 'sound/weapons/gunshot.ogg'
 	shot_volume = 66
 	dissipation_delay = 10
@@ -429,7 +460,7 @@
 				message_admins("[user] ([user?.ckey]) has made a suggestion in [src]:<br>[P.name]<br><br>[copytext(P.info,1,MAX_MESSAGE_LEN)]")
 				var/ircmsg[] = new()
 				ircmsg["msg"] = "[user] ([user?.ckey]) has made a suggestion in [src]:\n**[P.name]**\n[strip_html_tags(P.info)]"
-				ircbot.export("admin", ircmsg)
+				ircbot.export_async("admin", ircmsg)
 				taken_suggestion = 1
 			user.u_equip(P)
 			qdel(P)

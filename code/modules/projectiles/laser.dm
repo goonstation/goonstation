@@ -96,6 +96,9 @@ toxic - poisons
 	color_green = 0
 	color_blue = 1
 
+/datum/projectile/laser/heavy/law_safe //subclass of heavy laser that can't damage the law rack - for AI turrets
+	name = "heavy laser"
+
 /datum/projectile/laser/asslaser // heh
 	name = "assault laser"
 	icon_state = "u_laser"
@@ -484,7 +487,7 @@ toxic - poisons
 		power = 5
 		dissipation_rate = 5
 		sname = "saw teeth"
-		shot_sound = 'sound/machines/chainsaw_green.ogg'
+		shot_sound = 'sound/machines/chainsaw.ogg'
 		hit_human_sound = "sound/impact_sounds/Flesh_Tear_1.ogg"
 		damtype = DAMAGE_CUT
 

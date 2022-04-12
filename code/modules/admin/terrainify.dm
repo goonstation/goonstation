@@ -2,7 +2,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Terrainify"
 	set desc = "Turns space into a terrain type"
-	admin_only
+	ADMIN_ONLY
 	var/static/client/terrainifier
 
 	var/options = list(
@@ -42,7 +42,7 @@ var/datum/station_zlevel_repair/station_repair = new
 		if(src.station_generator)
 			src.station_generator.generate_terrain(turfs,reuse_seed=TRUE)
 
-		SPAWN_DBG(overlay_delay)
+		SPAWN(overlay_delay)
 			for(var/turf/T as anything in turfs)
 				if(src.ambient_light)
 					T.UpdateOverlays(src.ambient_light, "ambient")
@@ -51,12 +51,71 @@ var/datum/station_zlevel_repair/station_repair = new
 				if(src.weather_effect)
 					new src.weather_effect(T)
 
+	proc/clean_up_station_level(replace_with_cars, add_sub)
+		mass_driver_fixup()
+		shipping_market_fixup()
+		land_vehicle_fixup(replace_with_cars, add_sub)
+
+	proc/land_vehicle_fixup(replace_with_cars, add_sub)
+		if(replace_with_cars)
+			for_by_tcl(V, /obj/machinery/vehicle)
+				if(V.z == Z_LEVEL_STATION)
+					if(istype(V, /obj/machinery/vehicle/pod_smooth/light) || istype(V, /obj/machinery/vehicle/miniputt))
+						if(prob(50))
+							new /obj/machinery/vehicle/tank/car(get_turf(V))
+							qdel(V)
+
+		if(add_sub)
+			for_by_tcl(man, /obj/machinery/manufacturer)
+				if(istype(man, /obj/machinery/manufacturer/hangar) && (man.z == Z_LEVEL_STATION))
+					man.add_schematic(/datum/manufacture/sub/engine)
+					man.add_schematic(/datum/manufacture/sub/boards)
+					man.add_schematic(/datum/manufacture/sub/control)
+					man.add_schematic(/datum/manufacture/sub/parts)
+					man.add_schematic(/datum/manufacture/sub/wheels)
+
+	proc/mass_driver_fixup()
+		var/list/turfs_to_fix = get_mass_driver_turfs()
+		clear_out_turfs(turfs_to_fix)
+
+	proc/get_mass_driver_turfs()
+		var/list/turfs_to_fix = list()
+		for(var/obj/machinery/mass_driver/M as anything in machine_registry[MACHINES_MASSDRIVERS])
+			if(M.z == Z_LEVEL_STATION)
+				var/atom/start = get_turf(M)
+				var/atom/end = get_ranged_target_turf(M, M.dir, M.drive_range)
+
+				turfs_to_fix |= block(start, end)
+
+		return turfs_to_fix
+
+	proc/shipping_market_fixup()
+		var/list/turfs_to_fix = shippingmarket.get_path_to_market()
+		clear_out_turfs(turfs_to_fix)
+
+	proc/clear_out_turfs(list/turf/to_clear)
+		for(var/turf/T as anything in to_clear)
+			//Wacks asteroids and skip normal turfs that belong
+			if(istype(T, /turf/simulated/wall/asteroid))
+				var/turf/simulated/wall/asteroid/AST = T
+				AST.destroy_asteroid(dropOre=FALSE)
+				continue
+			else if(!istype(T, /turf/unsimulated))
+				continue
+
+			//Uh, make sure we don't block the shipping lanes!
+			for(var/atom/A in T)
+				if(A.density)
+					qdel(A)
+
+			LAGCHECK(LAG_MED)
+
 
 /client/proc/cmd_voidify_station()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Void Station"
 	set desc = "Turns space into the THE VOID..."
-	admin_only
+	ADMIN_ONLY
 #ifdef UNDERWATER_MAP
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
 	boutput(src, "You cannot use this command on underwater maps. Sorry!")
@@ -65,6 +124,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	if(src.holder.level >= LEVEL_ADMIN)
 		switch(alert("Turn space into the unknowable void? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
 			if("Yes")
+				var/vehicles = alert("Land vehicles available?",,"Yes", "No", "Some cars too!")
 				station_repair.ambient_light = new /image/ambient
 				station_repair.ambient_light.color = rgb(6.9, 4.20, 6.9)
 
@@ -77,7 +137,7 @@ var/datum/station_zlevel_repair/station_repair = new
 				for (var/turf/S in space)
 					S.UpdateOverlays(station_repair.ambient_light, "ambient")
 
-				shippingmarket.clear_path_to_market()
+				station_repair.clean_up_station_level(vehicles=="Some cars too!", vehicles != "No")
 
 				logTheThing("admin", src, null, "turned space into an THE VOID.")
 				logTheThing("diary", src, null, "turned space into an THE VOID.", "admin")
@@ -128,7 +188,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Ice Station"
 	set desc = "Turns space into the Outpost Theta..."
-	admin_only
+	ADMIN_ONLY
 #ifdef UNDERWATER_MAP
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
 	boutput(src, "You cannot use this command on underwater maps. Sorry!")
@@ -146,20 +206,26 @@ var/datum/station_zlevel_repair/station_repair = new
 						station_repair.weather_img.alpha = 200
 						station_repair.weather_img.plane = PLANE_NOSHADOW_ABOVE
 					else
-						station_repair.weather_effect = /obj/effects/snow/grey/tile
+						station_repair.weather_effect = /obj/effects/precipitation/snow/grey/tile
 
 				if(alert("Should it be pitch black?",,"Yes", "No")=="No")
 					station_repair.ambient_light = new /image/ambient
 
+				var/vehicles = alert("Land vehicles available?",,"Yes", "No", "Some cars too!")
+
+
 				station_repair.station_generator = new/datum/map_generator/icemoon_generator
 
+				var/list/turf/traveling_crate_turfs = station_repair.get_mass_driver_turfs()
 				var/list/turf/shipping_path = shippingmarket.get_path_to_market()
-				for(var/turf/space/T in shipping_path)
+				traveling_crate_turfs |= shipping_path
+				for(var/turf/space/T in traveling_crate_turfs)
 					T.ReplaceWith(/turf/unsimulated/floor/arctic/snow/ice)
 					if(station_repair.ambient_light)
 						ambient_value = lerp(10,50,min(1-T.x/300,0.8))
 						station_repair.ambient_light.color = rgb(ambient_value,ambient_value+((rand()*1)),ambient_value+((rand()*1))) //randomly shift green&blue to reduce vertical banding
 						T.UpdateOverlays(station_repair.ambient_light, "ambient")
+				station_repair.land_vehicle_fixup(vehicles=="Some cars too!", vehicles != "No")
 
 				var/list/space = list()
 				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
@@ -188,7 +254,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Swampify"
 	set desc = "Turns space into a swamp"
-	admin_only
+	ADMIN_ONLY
 	var/const/ambient_light = "#222222"
 #ifdef UNDERWATER_MAP
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
@@ -200,6 +266,7 @@ var/datum/station_zlevel_repair/station_repair = new
 			if("Yes")
 				var/rain = alert("Should it be raining?",,"Yes", "No", "Particles!")
 				rain = (rain == "No") ? null : rain
+				var/vehicles = alert("Land vehicles available?",,"Yes", "No", "Some cars too!")
 
 				station_repair.station_generator = new/datum/map_generator/jungle_generator
 
@@ -208,7 +275,7 @@ var/datum/station_zlevel_repair/station_repair = new
 					station_repair.weather_img.alpha = 200
 					station_repair.weather_img.plane = PLANE_NOSHADOW_ABOVE
 				else if(rain)
-					station_repair.weather_effect = /obj/effects/rain/sideways/tile
+					station_repair.weather_effect = /obj/effects/precipitation/rain/sideways/tile
 
 				station_repair.ambient_light = new /image/ambient
 				station_repair.ambient_light.color = ambient_light
@@ -227,7 +294,8 @@ var/datum/station_zlevel_repair/station_repair = new
 						else
 							new station_repair.weather_effect(S)
 					S.UpdateOverlays(station_repair.ambient_light, "ambient")
-				shippingmarket.clear_path_to_market()
+
+				station_repair.clean_up_station_level(vehicles=="Some cars too!", vehicles != "No")
 
 				logTheThing("admin", src, null, "turned space into a swamp.")
 				logTheThing("diary", src, null, "turned space into a swamp.", "admin")
@@ -241,7 +309,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Marsify"
 	set desc = "Turns space into a Mars"
-	admin_only
+	ADMIN_ONLY
 #ifdef UNDERWATER_MAP
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
 	boutput(src, "You cannot use this command on underwater maps. Sorry!")
@@ -251,6 +319,7 @@ var/datum/station_zlevel_repair/station_repair = new
 		switch(alert("Turn space into the sands of Mars? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
 			if("Yes")
 				var/ambient_value
+				var/vehicles = alert("Land vehicles available?",,"Yes", "No", "Some cars too!")
 
 				station_repair.station_generator = new/datum/map_generator/mars_generator
 				station_repair.overlay_delay = 3.5 SECONDS // Delay to let rocks cull
@@ -273,7 +342,7 @@ var/datum/station_zlevel_repair/station_repair = new
 					for(var/obj/machinery/M in S)
 						qdel(M)
 
-				shippingmarket.clear_path_to_market()
+				station_repair.clean_up_station_level(vehicles=="Some cars too!", vehicles != "No")
 
 				var/list/turf/shipping_path = shippingmarket.get_path_to_market()
 				for(var/turf/unsimulated/wall/setpieces/martian/auto/T in shipping_path)
@@ -299,11 +368,12 @@ var/datum/station_zlevel_repair/station_repair = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Trenchify"
 	set desc = "Generates trench caves on the station Z"
-	admin_only
+	ADMIN_ONLY
 	if(src.holder.level >= LEVEL_ADMIN)
 		switch(alert("Generate a trench on the station Z level? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
 			if("Yes")
 				var/hostile_mob_toggle = FALSE
+				var/vehicles = alert("Vehicles available?",,"Yes", "No")
 				if(alert("Include hostile mobs?",,"Yes","No")=="Yes") hostile_mob_toggle = TRUE
 
 				boutput(src, "Now generating trench, pleast wait.")
@@ -362,7 +432,7 @@ var/datum/station_zlevel_repair/station_repair = new
 						created_loot.initialize()
 
 					LAGCHECK(LAG_MED)
-				shippingmarket.clear_path_to_market()
+				station_repair.clean_up_station_level(add_sub=vehicles != "No")
 				logTheThing("admin", src, null, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
 				logTheThing("diary", src, null, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].", "admin")
 				message_admins("[key_name(src)] generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
@@ -373,7 +443,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Winterify"
 	set desc = "Turns space into a colder snowy place"
-	admin_only
+	ADMIN_ONLY
 	var/const/ambient_light = "#222"
 #ifdef UNDERWATER_MAP
 	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
@@ -389,11 +459,12 @@ var/datum/station_zlevel_repair/station_repair = new
 				station_repair.ambient_light.color = ambient_light
 
 				var/snow = alert("Should it be snowing?",, "Yes", "No", "Light")
+				var/vehicles = alert("Land vehicles available?",,"Yes", "No", "Some cars too!")
 				snow = (snow == "No") ? null : snow
 				if(snow == "Light")
-					station_repair.weather_effect = /obj/effects/snow/grey/tile/light
+					station_repair.weather_effect = /obj/effects/precipitation/snow/grey/tile/light
 				else if(snow == "Yes")
-					station_repair.weather_effect = /obj/effects/snow/grey/tile
+					station_repair.weather_effect = /obj/effects/precipitation/snow/grey/tile
 
 				var/list/space = list()
 				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
@@ -404,7 +475,7 @@ var/datum/station_zlevel_repair/station_repair = new
 					if(snow)
 						new station_repair.weather_effect(S)
 
-				shippingmarket.clear_path_to_market()
+				station_repair.clean_up_station_level(vehicles=="Some cars too!", vehicles != "No")
 
 				logTheThing("admin", src, null, "turned space into a snowscape.")
 				logTheThing("diary", src, null, "turned space into a snowscape.", "admin")

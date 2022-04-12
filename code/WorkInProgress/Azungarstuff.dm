@@ -70,7 +70,7 @@
 			return_if_overlay_or_effect(O)
 
 			if (O.throwing && !isliving(O))
-				SPAWN_DBG(0.8 SECONDS)
+				SPAWN(0.8 SECONDS)
 					if (O && O.loc == src)
 						melt_away(O)
 				return
@@ -108,6 +108,7 @@
 	temperature = 10+T0C
 
 	Entered(var/mob/M)
+		. = ..()
 		if (istype(M,/mob/dead) || istype(M,/mob/wraith) || istype(M,/mob/living/intangible) || istype(M, /obj/lattice))
 			return
 		if(!ismob(M))
@@ -115,7 +116,7 @@
 		return_if_overlay_or_effect(M)
 
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(M.loc == src)
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
@@ -696,7 +697,7 @@
 		src.tag = "cave[id][src.icon_state == "cave_entrance" ? 0 : 1]"
 
 	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1)
+		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
 			return
 
 		var/obj/cave_entrance/otherEntrance = locate("cave[id][src.icon_state == "cave_entrance"]")
@@ -828,7 +829,7 @@
 		src.visible_message("<span class='combat'><B>[src]</B> bites and claws at [src.target]!</span>")
 		random_brute_damage(src.target, rand(3,5))
 		random_burn_damage(src.target, rand(2,3))
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 
@@ -849,7 +850,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			bioHolder.mobAppearance.underwear = "briefs"
 			JobEquipSpawned("DO NOT USE THIS JOB")
 			update_clothing()
@@ -915,7 +916,7 @@
 		light.set_brightness(0.7)
 		light.enable()
 
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			animate(src, alpha=130, color="#DDDDDD", time=7, loop=-1)
 			animate(alpha=180, color="#FFFFFF", time=1)
 			animate(src, pixel_y=10, time=15, flags=ANIMATION_PARALLEL, easing=SINE_EASING, loop=-1)
@@ -1066,7 +1067,7 @@
 		src.maptext_x = -1
 		src.maptext_y = 8
 		src.maptext = "<span class='xfont sh c vm' style='background: [background_color];'> [src.last_result] </span>"
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			src.maptext = ""
 
 
@@ -1149,7 +1150,7 @@
 					playsound(H.loc, "swing_hit", 50, 1)
 					usr.say("I AM THE LAW!")
 				prob_clonk = min(prob_clonk + 5, 40)
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					prob_clonk = max(prob_clonk - 5, 0)
 
 		return ..(hit_atom)
@@ -1170,12 +1171,12 @@
 
 	Bumped(mob/user as mob)
 		if(busy) return
-		if(get_dist(user, src) > 1 || user.z != src.z) return
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		src.add_dialog(user)
 		busy = 1
 		showswirl(user.loc)
 		playsound(src, 'sound/effects/teleport.ogg', 60, 1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 		teleport(user)
 		busy = 0
 
@@ -1189,7 +1190,7 @@
 					src.recharging = 1
 					user.set_loc(S.loc)
 					showswirl(user.loc)
-					SPAWN_DBG(recharge)
+					SPAWN(recharge)
 						S.recharging = 0
 						src.recharging = 0
 				return
@@ -1245,7 +1246,7 @@
 		src.visible_message("<span class='combat'><B>[src]</B> bites and claws at [src.target]!</span>")
 		random_brute_damage(src.target, rand(3,5),1)
 		random_burn_damage(src.target, rand(2,3))
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 	CritterDeath()
@@ -1296,7 +1297,7 @@
 
 	onUpdate()
 		..()
-		if (thecrate == null || the_tool == null || owner == null || get_dist(owner, thecrate) > 1)
+		if (thecrate == null || the_tool == null || owner == null || BOUNDS_DIST(owner, thecrate) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

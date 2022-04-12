@@ -34,7 +34,7 @@
 	name = "Memorial Plaque"
 
 	examine(mob/user)
-		boutput(usr, "Here lies [user.real_name]. Loved by all. R.I.P.")
+		boutput(user, "Here lies [user.real_name]. Loved by all. R.I.P.")
 
 /*
  *	Spooky TOMBSTONE.  It is a tombstone.
@@ -73,7 +73,7 @@
 	var/teleport_next_switch = 0 //Should we hop somewhere else next switch?
 
 	attack_ai(mob/user as mob)
-		if(get_dist(src, user) <= 1)
+		if(BOUNDS_DIST(src, user) == 0)
 			return attack_hand(user)
 		else
 			boutput(user, "This jukebox is too old to be controlled remotely.")
@@ -292,7 +292,7 @@
 
 			if(src.gender == MALE) playsound(src, "sound/voice/screams/male_scream.ogg", 100, 0, 0, 0.91, channel=VOLUME_CHANNEL_EMOTE)
 			else playsound(src, "sound/voice/screams/female_scream.ogg", 100, 0, 0, 0.9, channel=VOLUME_CHANNEL_EMOTE)
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				src.emote_allowed = 1
 			return "screams!"
 		else
@@ -413,7 +413,7 @@
 						user.show_text("You feel a spooky rumbling in your guts! Maybe you ate a ghoooooost?!","#8218A8")
 					if (C.bioHolder)
 						C.bioHolder.age += 125
-						SPAWN_DBG(1 MINUTE)
+						SPAWN(1 MINUTE)
 							C.bioHolder.age -= 125
 			if("NULL MOSS NOOK") // Anagram: SKULL MONSOON
 				particleMaster.SpawnSystem(new /datum/particleSystem/skull_rain(get_turf(user)))
@@ -426,7 +426,7 @@
 				user.blend_mode = 2
 				user.alpha = 150
 				user.show_text("You feel extra spooky!","#8218A8")
-				SPAWN_DBG(2 MINUTES)
+				SPAWN(2 MINUTES)
 					user.blend_mode = 0
 					user.alpha = 255
 			else
@@ -525,7 +525,7 @@
 			src.spam_flag = 1
 			if (prob(66)) // our sensor isn't the best
 				src.scare_some_people()
-			SPAWN_DBG(src.spam_timer)
+			SPAWN(src.spam_timer)
 				if (src)
 					src.spam_flag = 0
 

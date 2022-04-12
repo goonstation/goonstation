@@ -1,5 +1,10 @@
 ABSTRACT_TYPE(/datum/req_contract/civilian)
-/datum/req_contract/civilian //masters of the three seashells
+/**
+ * Civilian contracts are a class of standard (market-listed) contract.
+ * These contracts should typically be somewhat "tame", revolving around what a station might need in normal, non-catastrophe operation.
+ * If you can picture a station or colony needing something for expansion, or under-provisioned it, it's a good candidate for a Civilian contract.
+ */
+/datum/req_contract/civilian
 	req_class = CIV_CONTRACT
 
 /datum/req_contract/civilian/event_catering
@@ -42,48 +47,48 @@ ABSTRACT_TYPE(/datum/rc_entry/item/caterfood)
 /datum/rc_entry/item/caterfood/sandwich
 	name = "sandwich"
 	typepath = /obj/item/reagent_containers/food/snacks/sandwich
-	feemod = 330
+	feemod = 660
 
 /datum/rc_entry/item/caterfood/burger
 	name = "burger"
 	typepath = /obj/item/reagent_containers/food/snacks/burger
-	feemod = 330
+	feemod = 660
 
 /datum/rc_entry/item/caterfood/soup
 	name = "pre-portioned soup bowl"
 	typepath = /obj/item/reagent_containers/food/snacks/soup
-	feemod = 280
+	feemod = 560
 
 /datum/rc_entry/item/caterfood/salad
 	name = "pre-portioned salad"
 	typepath = /obj/item/reagent_containers/food/snacks/salad
-	feemod = 250
+	feemod = 500
 
 ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/reagent/caterdrink/appletini
 	name = "appletini"
-	chemname = "appletini"
-	feemod = 30
+	chem_ids = "appletini"
+	feemod = 60
 
 /datum/rc_entry/reagent/caterdrink/fruitpunch
 	name = "fruit punch"
-	chemname = "fruit_punch"
-	feemod = 30
+	chem_ids = "fruit_punch"
+	feemod = 60
 
 /datum/rc_entry/reagent/caterdrink/spacecuba
 	name = "space-cuba libre"
-	chemname = "libre"
-	feemod = 15
+	chem_ids = "libre"
+	feemod = 30
 
 /datum/rc_entry/reagent/caterdrink/margarita
 	name = "margarita"
-	chemname = "margarita"
-	feemod = 10
+	chem_ids = "margarita"
+	feemod = 20
 
 /datum/rc_entry/reagent/caterdrink/champagne
 	name = "champagne"
-	chemname = "champagne"
-	feemod = 12
+	chem_ids = "champagne"
+	feemod = 24
 
 
 /datum/req_contract/civilian/furnishing
@@ -126,17 +131,17 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/stack/floortiles
 	name = "floor tile"
 	typepath = /obj/item/tile
-	feemod = 20
+	feemod = 40
 
 /datum/rc_entry/reagent/carpet
 	name = "liquid carpet"
-	chemname = "carpet"
-	feemod = 60
+	chem_ids = "carpet"
+	feemod = 120
 
 /datum/rc_entry/item/table
 	name = "table"
 	typepath = /obj/item/furniture_parts/table
-	feemod = 220
+	feemod = 200
 
 /datum/rc_entry/item/rack
 	name = "rack part set"
@@ -146,17 +151,17 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/chair
 	name = "folding chair"
 	typepath = /obj/item/chair/folded
-	feemod = 190
+	feemod = 180
 
 /datum/rc_entry/item/light_bulb
 	name = "light bulb"
 	typepath = /obj/item/light/bulb
-	feemod = 60
+	feemod = 50
 
 /datum/rc_entry/item/light_tube
 	name = "light bulb"
 	typepath = /obj/item/light/tube
-	feemod = 60
+	feemod = 50
 
 
 /datum/req_contract/civilian/greytide
@@ -202,17 +207,17 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/jumpsuit
 	name = "black jumpsuit"
 	typepath = /obj/item/clothing/under/color
-	feemod = 260
+	feemod = 300
 	exactpath = TRUE
 
 	any
 		name = "single-color jumpsuit"
-		feemod = 190
+		feemod = 200
 		exactpath = FALSE
 
 	scrubs
 		name = "medical scrubs"
-		feemod = 230
+		feemod = 380
 		typepath = /obj/item/clothing/under/scrub
 		exactpath = FALSE
 
@@ -243,7 +248,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/backpack
 	name = "backpack"
 	typepath = /obj/item/storage/backpack
-	feemod = 350
+	feemod = 400
 
 /datum/rc_entry/item/shoes
 	name = "pair of shoes"
@@ -253,17 +258,17 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/headset
 	name = "radio headset"
 	typepath = /obj/item/device/radio/headset
-	feemod = 470
+	feemod = 940
 
 /datum/rc_entry/item/literallyanyfood
 	name = "solid food, preferably nutritious"
 	typepath = /obj/item/reagent_containers/food/snacks
-	feemod = 70
+	feemod = 140
 
 /datum/rc_entry/reagent/water
 	name = "water"
-	chemname = "water"
-	feemod = 5
+	chem_ids = "water"
+	feemod = 10
 
 
 /datum/req_contract/civilian/birthdaybash
@@ -300,23 +305,25 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		src.flavor_desc = "A birthday [pick(desc_event)] is being held for [firstnom] [lastnom]. [pick(desc_partyzone)]."
 		src.payout += rand(0,50) * 10
 
-		if(prob(70)) //pizza party
+		if (prob(70)) //pizza party
 			src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pizza,rand(2,3)*6)
 			src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/cola,rand(4,8)*10)
 
-		switch(rand(1,50)) //Special Outcomes Zone
-			if(1)
+		switch (rand(1, 50)) //Special Outcomes Zone
+			if (1)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/item/chaps,rand(3,6))
-			if(11 to 15)
+			if (2 to 6)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/item/grapes,rand(3,6))
-			if(16 to 20)
+			if (7 to 11)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/item/banana,rand(4,8))
-			if(21 to 25)
+			if (12 to 16)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/item/cannabis,rand(4,8))
-			if(26 to 30)
+			if (17 to 21)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/glitter,rand(4,8)*5)
-			if(30 to 40)
+			if (22 to 31)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/item/paperhat,rand(6,12))
+			else
+				// nothing
 
 		if(!length(src.rc_entries)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/paperhat,rand(6,12)) //fallback
 
@@ -375,56 +382,56 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/yourowngift
 	name = "wrapped gift of your choice"
 	typepath = /obj/item/gift
-	feemod = 300
+	feemod = 600
 
 /datum/rc_entry/item/cake
 	name = "cake"
 	typepath = /obj/item/reagent_containers/food/snacks/cake
-	feemod = 800
+	feemod = 1600
 
 /datum/rc_entry/item/cookie
 	name = "cookie"
 	typepath = /obj/item/reagent_containers/food/snacks/cookie
-	feemod = 240
+	feemod = 360
 
 /datum/rc_entry/stack/pizza
 	name = "slices' worth of pizza"
 	typepath = /obj/item/reagent_containers/food/snacks/pizza
-	feemod = 50
+	feemod = 100
 
 /datum/rc_entry/reagent/cola
 	name = "cola"
-	chemname = "cola"
-	feemod = 6
+	chem_ids = "cola"
+	feemod = 12
 
 /datum/rc_entry/item/chaps
 	name = "assless chaps"
 	typepath = /obj/item/clothing/under/gimmick/chaps
-	feemod = 800
+	feemod = 1600
 
 /datum/rc_entry/item/grapes
 	name = "grapes"
 	typepath = /obj/item/reagent_containers/food/snacks/plant/grape
 	commodity = /datum/commodity/produce
-	feemod = 90
+	feemod = 180
 
 /datum/rc_entry/item/banana
 	name = "banana"
 	typepath = /obj/item/reagent_containers/food/snacks/plant/banana
 	commodity = /datum/commodity/produce
-	feemod = 80
+	feemod = 160
 
 /datum/rc_entry/item/cannabis
 	name = "cannabis"
 	commodity = /datum/commodity/drugs/cannabis
-	feemod = 80
+	feemod = 160
 
 /datum/rc_entry/reagent/glitter
 	name = "glitter"
-	chemname = "glitter"
-	feemod = 80
+	chem_ids = "glitter"
+	feemod = 160
 
 /datum/rc_entry/item/paperhat
 	name = "paper hat"
 	typepath = /obj/item/clothing/head/paper_hat
-	feemod = 40
+	feemod = 80

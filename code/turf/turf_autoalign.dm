@@ -24,7 +24,7 @@
 			src.update_neighbors()
 
 		if (current_state > GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(0) //worldgen overrides ideally
+			SPAWN(0) //worldgen overrides ideally
 				src.UpdateIcon()
 
 		else
@@ -39,87 +39,25 @@
 
 	the_tuff_stuff
 		explosion_resistance = 7
-	// ty to somepotato for assistance with making this proc actually work right :I
 	update_icon()
-		var/builtdir = 0
-		if (connect_overlay && !islist(connects_with_overlay))
-			connects_with_overlay = list()
-		src.connect_overlay_dir = 0
-		for (var/dir in cardinal)
-			var/turf/T = get_step(src, dir)
-			if(!connect_across_areas && get_area(T) != get_area(src))
-				continue
-			if (T && (istype(T, src.type)))
-				builtdir |= dir
-			else if (connects_to)
-				for (var/i=1, i <= connects_to.len, i++)
-					// if the turf appears in our connection list AND isn't in our exceptions...
-					if (istype(T, connects_to[i]) && !(T.type in connects_to_exceptions))
-						builtdir |= dir
-						break
-					// Search for non-turf atoms we can connect to
-					var/atom/A = locate(connects_to[i]) in T
-					if (!isnull(A))
-						if (istype(A, /atom/movable))
-							var/atom/movable/M = A
-							if (!M.anchored)
-								continue
-						builtdir |= dir
-						break
-			if (connect_overlay && connects_with_overlay)
-				for (var/i=1, i <= connects_with_overlay.len, i++)
-					// if the turf appears in our overlay'd connection list, AND isn't in our exceptions, AND isn't... well, a copy of ourselves...
-					if (istype(T, connects_with_overlay[i]) && !(T.type in connects_with_overlay_exceptions) && !(T.type == src.type))
-						src.connect_overlay_dir |= dir
-						break
-					// Search for non-turf atoms we can connect to
-					var/atom/A = locate(connects_with_overlay[i]) in T
-					if (!isnull(A))
-						if (istype(A, /atom/movable))
-							var/atom/movable/M = A
-							if (!M.anchored)
-								continue
-						src.connect_overlay_dir |= dir
-		if (connect_diagonal)
-			for (var/j = 1 to 4)
-				if (connect_diagonal < 2 && ((builtdir & ordinal[j]) != ordinal[j]))
-					continue
-				var/turf/T = get_step(src, ordinal[j])
-				if(!connect_across_areas && get_area(T) != get_area(src))
-					continue
-				var/dir = 8 << j
-				if (T && (istype(T, src.type)))
-					builtdir |= dir
-				else if (connects_to)
-					for (var/i=1, i <= connects_to.len, i++)
-						// if the turf appears in our connection list AND isn't in our exceptions...
-						if (istype(T, connects_to[i]) && !(T.type in connects_to_exceptions))
-							builtdir |= dir
-							break
-						// Search for non-turf atoms we can connect to
-						var/atom/A = locate(connects_to[i]) in T
-						if (!isnull(A))
-							if (istype(A, /atom/movable))
-								var/atom/movable/M = A
-								if (!M.anchored)
-									continue
-							builtdir |= dir
-							break
+		var/connectdir = get_connected_directions_bitflag(connects_to, connects_to_exceptions, connect_across_areas, connect_diagonal)
 
-		var/the_state = "[mod][builtdir]"
+		var/the_state = "[mod][connectdir]"
 		if ( !(istype(src, /turf/simulated/wall/auto/jen)) && !(istype(src, /turf/simulated/wall/auto/reinforced/jen)) ) //please no more sprite, i drained my brain doing this
 			src.icon_state += "[src.d_state ? "C" : null]"
 		icon_state = the_state
 
 		if (light_mod)
-			src.RL_SetSprite("[light_mod][builtdir]")
+			src.RL_SetSprite("[light_mod][connectdir]")
 
 		if (connect_overlay)
-			if (src.connect_overlay_dir)
+			var/overlaydir = get_connected_directions_bitflag(connects_with_overlay, connects_with_overlay_exceptions, connect_across_areas)
+			src.connect_overlay_dir = overlaydir  // this looks important ???
+			if (overlaydir)
 				if (!src.connect_image)
-					src.connect_image = image(src.icon, "connect[src.connect_overlay_dir]")
+					src.connect_image = image(src.icon, "connect[overlaydir]")
 				else
-					src.connect_image.icon_state = "connect[src.connect_overlay_dir]"
+					src.connect_image.icon_state = "connect[overlaydir]"
 				src.UpdateOverlays(src.connect_image, "connect")
 			else
 				src.UpdateOverlays(null, "connect")
@@ -320,6 +258,8 @@
 	connects_with_overlay = list(/turf/simulated/wall/auto/reinforced/supernorn,
 	/turf/simulated/wall/auto/jen,
 	/turf/simulated/wall/auto/shuttle, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred)
+
+	connects_with_overlay_exceptions = list(/turf/simulated/wall/auto/reinforced/jen)
 
 	the_tuff_stuff
 		explosion_resistance = 3
@@ -578,7 +518,7 @@
 		if (map_setting && ticker)
 			src.update_neighbors()
 		if (current_state > GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(0) //worldgen overrides ideally
+			SPAWN(0) //worldgen overrides ideally
 				src.UpdateIcon()
 
 		else
@@ -593,67 +533,17 @@
 
 
 	update_icon()
-		var/builtdir = 0
-		var/overlaydir = 0
-		if (connect_overlay && !islist(connects_with_overlay))
-			connects_with_overlay = list()
-		for (var/dir in cardinal)
-			var/turf/T = get_step(src, dir)
-			if (!T)
-				continue
-			if (T && (T.type == src.type || (T.type in connects_to)))
-				builtdir |= dir
-			else if (connects_to)
-				for (var/i=1, i <= connects_to.len, i++)
-					var/atom/A = locate(connects_to[i]) in T
-					if (!isnull(A))
-						if (istype(A, /atom/movable))
-							var/atom/movable/M = A
-							if (!M.anchored)
-								continue
-						builtdir |= dir
-						break
-			if (connect_overlay && connects_with_overlay)
-				if (T.type in connects_with_overlay)
-					overlaydir |= dir
-				else
-					for (var/i=1, i <= connects_with_overlay.len, i++)
-						var/atom/A = locate(connects_with_overlay[i]) in T
-						if (!isnull(A))
-							if (istype(A, /atom/movable))
-								var/atom/movable/M = A
-								if (!M.anchored)
-									continue
-							overlaydir |= dir
-		if (connect_diagonal)
-			for (var/j = 1 to 4)
-				if (connect_diagonal < 2 && ((builtdir & ordinal[j]) != ordinal[j]))
-					continue
-				var/turf/T = get_step(src, ordinal[j])
-				var/dir = 8 << j
-				if (T && (istype(T, src.type)))
-					builtdir |= dir
-				else if (connects_to)
-					for (var/i=1, i <= connects_to.len, i++)
-						// if the turf appears in our connection list AND isn't in our exceptions...
-						if (istype(T, connects_to[i]) && !(T.type in connects_to_exceptions))
-							builtdir |= dir
-							break
-						// Search for non-turf atoms we can connect to
-						var/atom/A = locate(connects_to[i]) in T
-						if (!isnull(A))
-							if (istype(A, /atom/movable))
-								var/atom/movable/M = A
-								if (!M.anchored)
-									continue
-							builtdir |= dir
-							break
+		var/connectdir = get_connected_directions_bitflag(connects_to, connects_to_exceptions, TRUE, connect_diagonal)
+		var/the_state = "[mod][connectdir]"
+		if ( !(istype(src, /turf/simulated/wall/auto/jen)) && !(istype(src, /turf/simulated/wall/auto/reinforced/jen)) ) //please no more sprite, i drained my brain doing this
+			src.icon_state += "[src.d_state ? "C" : null]"
+		icon_state = the_state
 
-		src.icon_state = "[mod][builtdir][src.d_state ? "C" : null]"
 		if (light_mod)
-			src.RL_SetSprite("[light_mod][builtdir]")
+			src.RL_SetSprite("[light_mod][connectdir]")
 
 		if (connect_overlay)
+			var/overlaydir = get_connected_directions_bitflag(connects_with_overlay, connects_with_overlay_exceptions, TRUE)
 			if (overlaydir)
 				if (!src.connect_image)
 					src.connect_image = image(src.icon, "connect[overlaydir]")
@@ -694,7 +584,7 @@
 	connect_overlay = 1
 	connect_diagonal = 1
 	connects_to = list(/turf/unsimulated/wall/auto/supernorn, /turf/unsimulated/wall/auto/reinforced/supernorn, /obj/machinery/door,
-	/obj/window)
+	/obj/window, /turf/simulated/wall/false_wall/reinforced, /turf/unsimulated/wall/auto/adventure/old, /turf/unsimulated/wall/setpieces/fakewindow, /turf/unsimulated/wall/auto/adventure/meat)
 	connects_with_overlay = list(/obj/machinery/door, /obj/window)
 
 /turf/unsimulated/wall/auto/supernorn/wood
@@ -827,6 +717,101 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/adventure)
 	exterior
 		mod = "martout-"
 
+/turf/unsimulated/wall/auto/adventure/iomoon // fancy walls part 3: the rest of z2
+	name = "silicate crust"
+	icon = 'icons/turf/walls_iomoon.dmi'
+	mod = "silicate-"
+	connect_overlay = 0
+	icon_state = "silicate-0"
+
+	interior
+		name = "strange wall"
+		mod = "interior-"
+		icon_state = "interior-0"
+
+/turf/unsimulated/wall/auto/adventure/hospital
+	name = "asteroid"
+	icon = 'icons/turf/walls_hospital.dmi'
+	mod = "exterior-"
+	connect_overlay = 0
+	icon_state = "exterior-0"
+
+	interior
+		name = "panel wall"
+		mod = "interior-"
+		icon_state = "interior-0"
+		connects_to = list(/turf/cordon, /turf/unsimulated/wall/auto/adventure, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/,
+	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom, /turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave,
+	/turf/simulated/shuttle/wall, /turf/unsimulated/wall/setpieces/hospital/window)
+
+
+/turf/unsimulated/wall/auto/adventure/icemoon
+	name = "ice wall"
+	icon = 'icons/turf/walls_icemoon.dmi'
+	mod = "ice-"
+	connect_overlay = 0
+	icon_state = "ice-0"
+
+	interior
+		name = "blue wall"
+		mod = "interior-"
+		icon_state = "interior-0"
+
+/turf/unsimulated/wall/auto/adventure/moon
+	name = "moon rock"
+	icon = 'icons/turf/walls_planet.dmi'
+	mod = "moon-"
+	connect_overlay = 0
+	icon_state = "moon-0"
+
+/turf/unsimulated/wall/auto/adventure/mars
+	name = "martian rock"
+	icon = 'icons/turf/walls_planet.dmi'
+	mod = "mars-"
+	connect_overlay = 0
+	icon_state = "mars-0"
+
+	interior
+		name = "wall"
+		mod = "interior-"
+		icon = 'icons/turf/walls_marsoutpost.dmi'
+		connect_overlay = 1
+		icon_state = "interior-0"
+
+/turf/unsimulated/wall/auto/adventure/meat
+	name = "wall"
+	icon = 'icons/turf/walls_meat.dmi'
+	mod = "meaty-"
+	icon_state = "meaty-0"
+	connect_overlay = 0
+	connects_to = list(/turf/cordon, /turf/unsimulated/wall/auto/adventure, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/,
+	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom, /turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave,
+	/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner,/turf/unsimulated/wall/auto/adventure/old,/turf/unsimulated/wall/auto/adventure/meat,
+	/turf/unsimulated/wall/auto/adventure/meat/eyes, /turf/unsimulated/wall/auto/adventure/meat/meatier, /turf/unsimulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/false_wall/reinforced)
+
+	meatier
+		mod = "meatier-"
+		icon_state = "meatier-0"
+
+	eyes
+		mod = "meateyes-"
+		icon_state = "meateyes-0"
+
+/turf/unsimulated/wall/auto/adventure/old
+	name = "wall"
+	icon = 'icons/turf/walls_derelict.dmi'
+	mod = "old-"
+	icon_state = ""
+	connects_to = list(/turf/cordon, /turf/unsimulated/wall/auto/adventure, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/,
+	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom, /turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave,
+	/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner, /turf/unsimulated/wall/auto/adventure/meat, /turf/unsimulated/wall/setpieces/fakewindow, /turf/unsimulated/wall/auto/reinforced/supernorn)
+
+	reinforced
+		name = "reinforced wall"
+		icon = 'icons/turf/walls_derelict.dmi'
+		mod = "oldr-"
+		icon_state = "oldr"
+
 // Some fun walls by Walpvrgis
 ABSTRACT_TYPE(turf/unsimulated/wall/auto/hedge)
 /turf/unsimulated/wall/auto/hedge
@@ -871,7 +856,7 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/hedge)
 
 	onUpdate()
 		..()
-		if (the_wall == null || the_tool == null || owner == null || get_dist(owner, the_wall) > 1)
+		if (the_wall == null || the_tool == null || owner == null || BOUNDS_DIST(owner, the_wall) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -955,6 +940,6 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/hedge)
 			if (WALL_PRYSHEATH)
 				self_message = "You remove the outer sheath."
 				message = "[owner] removes \the [the_wall]'s outer sheath."
-				logTheThing("station", owner, null, "dismantles a Reinforced Wall in [owner.loc.loc] ([showCoords(owner.x, owner.y, owner.z)])")
+				logTheThing("station", owner, null, "dismantles a Reinforced Wall in [owner.loc.loc] ([log_loc(owner)])")
 				the_wall.dismantle_wall()
 		owner.visible_message("<span class='alert'>[message]</span>", "<span class='notice'>[self_message]</span>")

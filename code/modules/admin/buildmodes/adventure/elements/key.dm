@@ -39,7 +39,7 @@
 				key.icon_state = "key_[key_type]"
 				key.triggered = selected_triggerable.Copy()
 				key.oneshot = oneshot
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					key.color = color_rgb
 		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable))

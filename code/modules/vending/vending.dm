@@ -118,10 +118,17 @@
 	var/window_size = "400x475"
 
 	New()
+		START_TRACKING
 		src.create_products()
+
+		#ifdef UPSCALED_MAP
+		for (var/datum/data/vending_product/product in src.product_list)
+			product.product_amount *= 4
+		#endif
+
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", "vendinput")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", "vendname")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", .proc/vendinput)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", .proc/vendname)
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(0.6)
@@ -131,6 +138,9 @@
 		src.panel_image = image(src.icon, src.icon_panel)
 	var/lastvend = 0
 
+	disposing()
+		STOP_TRACKING
+		..()
 
 	was_built_from_frame(mob/user, newly_built)
 		. = ..()
@@ -157,16 +167,16 @@
 	proc/create_products()
 		return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!istype(usr,/mob/living/))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the output target for [src].</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>[src] is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -195,7 +205,7 @@
 		if (!src.output_target)
 			return src.loc
 
-		if (get_dist(src.output_target,src) > 1)
+		if (BOUNDS_DIST(src.output_target, src) > 0)
 			src.output_target = null
 			return src.loc
 
@@ -232,12 +242,12 @@
 				return
 		if(3.0)
 			if (prob(25))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.malfunction()
 					return
 				return
 			else if (prob(25))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.fall()
 					return
 		else
@@ -245,7 +255,7 @@
 
 /obj/machinery/vending/blob_act(var/power)
 	if (prob(power * 1.25))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (prob(power / 3) && can_fall == 2)
 				for (var/i = 0, i < rand(4,7), i++)
 					src.malfunction()
@@ -281,7 +291,7 @@
 	var/datum/db_record/account = null
 	account = FindBankAccountByName(card.registered)
 	if (account)
-		var/enterpin = usr.enter_pin("Enter PIN")
+		var/enterpin = user.enter_pin("Enter PIN")
 		if (enterpin == card.pin)
 			boutput(user, "<span class='notice'>Card authorized.</span>")
 			src.scan = card
@@ -480,7 +490,7 @@
 		attack_particle(user,src)
 		playsound(src,"sound/impact_sounds/Metal_Clang_2.ogg",50,1)
 		..()
-		if (W?.force >= 5 && prob(4 + (W.force - 5)))
+		if (W.force >= 5 && prob(4 + (W.force - 5)))
 			src.fall(user)
 
 /obj/machinery/vending/hitby(atom/movable/M, datum/thrown_thing/thr)
@@ -601,7 +611,7 @@
 						return
 
 			if (((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.speak(src.vend_reply)
 					src.last_reply = world.time
 
@@ -626,13 +636,13 @@
 					wagesystem.shipping_budget += round(R.product_cost * (1 - profit))
 				if(R.product_amount <= 0 && !isplayer == 0)
 					src.player_list -= R
-			//Gotta do this before the SPAWN_DBG
+			//Gotta do this before the SPAWN
 			var/obj/item/playervended
 			if (player_list)
 				var/datum/data/vending_product/player_product/T = R
 				playervended = T.contents[1]
 				T.contents -= playervended
-			SPAWN_DBG(src.vend_delay)
+			SPAWN(src.vend_delay)
 				src.vend_ready = 1 // doin this at the top here just in case something goes fucky and the proc crashes
 
 				if (ispath(product_path))
@@ -679,7 +689,7 @@
 			src.generate_HTML(1)
 
 		if (href_list["return_credits"])
-			SPAWN_DBG(src.vend_delay)
+			SPAWN(src.vend_delay)
 				if (src.credit > 0)
 					var/obj/item/spacecash/returned = new /obj/item/spacecash
 					returned.setup(src.get_output_location(), src.credit)
@@ -776,7 +786,7 @@
 			status &= ~NOPOWER
 			light.enable()
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				src.icon_state = icon_off ? icon_off : "[initial(icon_state)]-off"
 				status |= NOPOWER
 				light.disable()
@@ -788,11 +798,11 @@
 	status |= BROKEN
 	var/turf/vicTurf = get_turf(victim)
 	src.icon_state = "[initial(icon_state)]-fallen"
-//	SPAWN_DBG(0)
+//	SPAWN(0)
 //		src.icon_state = "[initial(icon_state)]-fall"
-//		SPAWN_DBG(2 SECONDS)
+//		SPAWN(2 SECONDS)
 //			src.icon_state = "[initial(icon_state)]-fallen"
-	if (istype(victim) && vicTurf && (get_dist(vicTurf, src) <= 1))
+	if (istype(victim) && vicTurf && (BOUNDS_DIST(vicTurf, src) == 0))
 		victim.changeStatus("weakened", 30 SECONDS)
 		src.visible_message("<b><font color=red>[src.name] tips over onto [victim]!</font></b>")
 		victim.force_laydown_standup()
@@ -835,13 +845,18 @@
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /obj/machinery/vending/proc/throw_item(var/item_name_to_throw = "")
-	var/mob/living/target = locate() in view(7,src)
+	var/mob/living/target = null
+	for (var/mob/living/mob in view(7,src))
+		if (!isintangible(mob))
+			target = mob
+			break
+
 	if(!target)
 		return null
 
 	if(length(item_name_to_throw))
 		for(var/datum/data/vending_product/R in src.product_list)
-			if(item_name_to_throw == R.product_name_cache[R.product_path])
+			if(lowertext(item_name_to_throw) == lowertext(strip_html(R.product_name_cache[R.product_path], no_fucking_autoparse = TRUE)))
 				if(R.product_amount > 0)
 					throw_item_act(R, target)
 					return R
@@ -881,7 +896,7 @@
 		var/sound/S = sound(R.product_path)
 		if (S)
 			R.product_amount--
-			SPAWN_DBG(0)
+			SPAWN(0)
 				playsound(src.loc, S, 50, 0)
 				src.visible_message("<span class='alert'><b>[src] launches [R.product_name] at [target.name]!</b></span>")
 				src.generate_HTML(1)
@@ -1003,7 +1018,7 @@
 
 	onUpdate()
 		..()
-		if(!IN_RANGE(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
+		if(!(BOUNDS_DIST(src.owner, src.vendor) == 0) || src.vendor == null || src.owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1013,7 +1028,7 @@
 
 	onStart()
 		..()
-		if(!IN_RANGE(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
+		if(!(BOUNDS_DIST(src.owner, src.vendor) == 0) || src.vendor == null || src.owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1116,6 +1131,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/nicotine, 10, cost=PAY_TRADESMAN/10)
 		product_list += new/datum/data/vending_product(/obj/item/matchbook, 10, cost=PAY_UNTRAINED/20)
 		product_list += new/datum/data/vending_product(/obj/item/device/light/zippo, 5, cost=PAY_TRADESMAN/10)
+		product_list += new/datum/data/vending_product(/obj/item/decoration/ashtray, 5, cost=PAY_TRADESMAN/10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vape, 10, cost=PAY_TRADESMAN/2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ecig_refill_cartridge, 20, cost=PAY_TRADESMAN/5)
 
@@ -1252,7 +1268,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/device/pda2/security, 2)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 2)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO, 2)
-		product_list += new/datum/data/vending_product(/obj/item/implantcase/antirev, 3)
+		product_list += new/datum/data/vending_product(/obj/item/implantcase/counterrev, 3)
 		product_list += new/datum/data/vending_product(/obj/item/implanter, 1)
 #ifdef RP_MODE
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/space_law, 1)
@@ -1429,6 +1445,9 @@
 	if(!istype(W,/obj/item/mechanics))
 		..()
 		return
+	if (W.cant_drop)
+		boutput(user, "<span class='alert'>You can't put [W] into a vending machine while it's attached to you!</span>")
+		return
 	for(var/datum/data/vending_product/product in product_list)
 		if(W.type == product.product_path)
 			boutput(user, "<span class='notice'>You return the [W] to the vending machine.</span>")
@@ -1580,7 +1599,7 @@
 
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/the_trial, 1, cost=PAY_UNTRAINED/5, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/critter_compendium, 1, cost=PAY_UNTRAINED/5, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/syndies_guide, 1, cost=PAY_UNTRAINED/5, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/syndies_guide/stolen, 1, cost=PAY_UNTRAINED/5, hidden=1)
 
 /obj/machinery/vending/kitchen
 	name = "FoodTech"
@@ -1916,6 +1935,9 @@
 			UpdateOverlays(null, "screen", 0, 1)
 
 	proc/addProduct(obj/item/target, mob/user)
+		if (target.cant_drop)
+			boutput(user, "<span class='alert'>You can't put [target] into a vending machine while it's attached to you!</span>")
+			return
 		var/obj/item/storage/targetContainer = target
 		if (!istype(targetContainer))
 			productListUpdater(target, user)
@@ -1958,7 +1980,7 @@
 				R.product_amount += 1
 				existed = TRUE
 				break
-			else if (istype(target,R.product_type) && R.real_name == target.real_name)
+			else if (istype(target,R.product_type) && (R.real_name || R.product_name) == (target.real_name || target.name))
 				R.contents += target
 				R.product_amount += 1
 				existed = TRUE
@@ -2568,6 +2590,8 @@
 		product_list += new/datum/data/vending_product(/obj/item/gobowl/w, 1, cost=PAY_TRADESMAN/4)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/clow, 5, cost=PAY_TRADESMAN/2) // (this is an anime joke)
 		product_list += new/datum/data/vending_product(/obj/item/clow_key, 5, cost=PAY_TRADESMAN/2)      //      (please laugh)
+		product_list += new/datum/data/vending_product(/obj/item/card_box/Mono, 5, cost=PAY_UNTRAINED/4)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/MONOrules, 5, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/dice/weighted, rand(1,3), cost=PAY_TRADESMAN/2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/dice/d1, rand(0,1), cost=PAY_TRADESMAN/3, hidden=1)
 
@@ -2736,7 +2760,7 @@
 	attack_hand(mob/user as mob)
 		if (status & (BROKEN|NOPOWER))
 			return
-		if (usr.stat || usr.restrained())
+		if (user.stat || user.restrained())
 			return
 
 		src.add_dialog(user)

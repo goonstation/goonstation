@@ -36,6 +36,8 @@
 	var/list/cloudsaves = null
 	/// saved data from the cloud (spacebux, volume settings, ...)
 	var/list/clouddata = null
+	/// buildmode holder of our client so it doesn't need to get rebuilt every time we reconnect
+	var/datum/buildmode_holder/buildmode = null
 
 	/// sets up vars, caches player stats, adds by_type list entry for this datum
 	New(key)
@@ -137,8 +139,8 @@
 			decoded_json = json_decode(json)
 		else
 			decoded_json = list()
-		// need to wrap the clouddata within index named cdata
-		decoded_json["[ckey(ckey)]"] = list(cdata = clouddata)
+
+		decoded_json["[ckey(ckey)]"] = clouddata
 		//t2f appends, but need to to replace
 		fdel("data/simulated_cloud.json")
 		text2file(json_encode(decoded_json),"data/simulated_cloud.json")
@@ -147,15 +149,15 @@
 
 	/// Sets a cloud key value pair and sends it to goonhub for a target ckey
 	proc/cloud_put_target(target, key, value)
-		var/list/data = cloud_fetch_target_data_only(target)
+		var/list/data = cloud_fetch_target_ckey(target)
 		if(!data)
 			return FALSE
-		data[key] = "[value]"
+		data[key] = "[json_encode(value)]"
 
 #ifdef LIVE_SERVER
 		// Via rust-g HTTP
 		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[target]&key=[url_encode(key)]&value=[url_encode(data[key])]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[ckey(target)]&key=[url_encode(key)]&value=[url_encode(data[key])]", "", "")
 		request.begin_async()
 #else
 		var/json = null
@@ -165,8 +167,7 @@
 			decoded_json = json_decode(json)
 		else
 			decoded_json = list()
-		// need to wrap the clouddata within index named cdata
-		decoded_json["[ckey(target)]"] = list(cdata = data)
+		decoded_json["[ckey(target)]"] = data
 		//t2f appends, but need to to replace
 		fdel("data/simulated_cloud.json")
 		text2file(json_encode(decoded_json),"data/simulated_cloud.json")
@@ -257,6 +258,37 @@
 			// we need to return a list with a list in the cdata index or it causes a deadlock where we can't save
 			return list(cdata = list())
 #endif
+
+	proc/get_buildmode()
+		RETURN_TYPE(/datum/buildmode_holder)
+		if(src.buildmode)
+			return src.buildmode
+		var/saved_buildmode = src.cloud_get("buildmode")
+		if(!saved_buildmode)
+			src.buildmode = new /datum/buildmode_holder(src.client)
+		else
+			var/savefile/save = new
+			save.ImportText("/", saved_buildmode)
+			save.eof = 0
+			try
+				save["buildmode"] >> src.buildmode
+			catch(var/exception/e)
+				stack_trace("loading buildmode error\n[e.name]\n[e.desc]")
+				boutput(src.client, "<span class='internal'>Loading your buildmode failed. Check runtime log for details.</span>")
+				qdel(src.buildmode)
+				src.buildmode = new /datum/buildmode_holder(src.client)
+			if(isnull(src.buildmode))
+				boutput(src.client, "<span class='internal'>Loading your buildmode failed. No clue why.</span>")
+				src.buildmode = new /datum/buildmode_holder(src.client)
+			if(isnull(src.buildmode.owner))
+				src.buildmode.set_client(src.client)
+		return src.buildmode
+
+	proc/on_round_end()
+		if(src.buildmode)
+			var/savefile/S = new
+			S["buildmode"] << buildmode
+			src.cloud_put("buildmode", S.ExportText())
 
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)

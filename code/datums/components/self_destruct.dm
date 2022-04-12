@@ -2,6 +2,9 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/mob/tracked_mob = null
 
+TYPEINFO(/datum/component/self_destruct)
+	initialization_args = list()
+
 /datum/component/self_destruct/Initialize(tracked_mob)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -10,7 +13,7 @@
 
 /datum/component/self_destruct/proc/destruct(datum/source)
 	var/obj/item/I = src.parent
-	SPAWN_DBG(2 SECONDS)
+	SPAWN(2 SECONDS)
 		I.visible_message("<span class='alert'>\The [I] <b>self destructs!</b></span>", "<span class='alert'>You hear a small explosion!</b></span>")
 		new /obj/effect/supplyexplosion(I.loc)
 		if(ismob(I.loc))

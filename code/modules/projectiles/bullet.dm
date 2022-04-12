@@ -150,7 +150,7 @@ toxic - poisons
 	power = 8
 	cost = 10
 	shot_number = 10
-	shot_delay = 0.7
+	shot_delay = 0.07 SECONDS
 	dissipation_delay = 7
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
@@ -217,21 +217,22 @@ toxic - poisons
 	casing = /obj/item/casing/rifle_loud
 	icon_turf_hit = "bhole-small"
 	on_launch(obj/projectile/O)
-		O.AddComponent(/datum/component/sniper_wallpierce, 3) //pierces 3 walls/lockers/doors/etc. Does not function on restriced Z, rwalls and blast doors use 2 pierces
+		O.AddComponent(/datum/component/sniper_wallpierce, 3, 20) //pierces 3 walls/lockers/doors/etc. Does not function on restriced Z, rwalls and blast doors use 2 pierces
 
 	on_hit(atom/hit, dirflag, obj/projectile/P)
-		if(ishuman(hit))
-			var/mob/living/carbon/human/M = hit
-			if(power > 40)
-#ifdef USE_STAMINA_DISORIENT
-				M.do_disorient(50, weakened = 20, stunned = 20, disorient = 30, remove_stamina_below_zero = 0)
-#else
-				M.changeStatus("stunned", 4 SECONDS)
-				M.changeStatus("weakened", 3 SECONDS)
-#endif
-			if(power > 60)
-				var/turf/target = get_edge_target_turf(M, dirflag)
-				M.throw_at(target, 3, 3, throw_type = THROW_GUNIMPACT)
+		if (ismob(hit))
+			var/mob/M = hit
+			if(ishuman(hit))
+				var/mob/living/carbon/human/H = hit
+				if(power > 40)
+	#ifdef USE_STAMINA_DISORIENT
+					H.do_disorient(50, weakened = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
+	#else
+					H.changeStatus("stunned", 4 SECONDS)
+					H.changeStatus("weakened", 3 SECONDS)
+	#endif
+			var/turf/target = get_edge_target_turf(hit, dirflag)
+			M.throw_at(target, 1, 3, throw_type = THROW_GUNIMPACT)
 		..()
 
 /datum/projectile/bullet/tranq_dart
@@ -273,7 +274,7 @@ toxic - poisons
 	power = 15
 	cost = 8
 	shot_number = 8
-	shot_delay = 1
+	shot_delay = 0.1 SECONDS
 	dissipation_delay = 12
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
@@ -300,7 +301,7 @@ toxic - poisons
 	power = 1
 	cost = 2
 	shot_number = 16
-	shot_delay = 0.7
+	shot_delay = 0.07 SECONDS
 	dissipation_delay = 8
 	silentshot = 1
 	slow = 0
@@ -334,7 +335,7 @@ toxic - poisons
 	projectile_speed = 48
 	icon_turf_hit = "bhole-small"
 	hit_type = DAMAGE_BLUNT
-	implanted = /obj/item/implant/projectile/bullet_nine_mm_NATO
+	implanted = /obj/item/implant/projectile/ninemmplastic
 	casing = /obj/item/casing/small
 
 	on_hit(atom/hit)
@@ -521,6 +522,7 @@ toxic - poisons
 //0.72
 /datum/projectile/bullet/a12
 	name = "buckshot"
+	icon_state = "buckshot"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	power = 70
 	ks_ratio = 1.0
@@ -562,6 +564,28 @@ toxic - poisons
 	name = "flak chunk"
 	sname = "flak chunk"
 	icon_state = "trace"
+	shot_sound = null
+	power = 12
+	dissipation_rate = 5
+	dissipation_delay = 8
+	damage_type = D_KINETIC
+
+/datum/projectile/bullet/stinger_ball
+	name = "rubber ball"
+	sname = "rubber ball"
+	icon_state = "rubberball"
+	implanted = /obj/item/implant/projectile/stinger_ball
+	shot_sound = null
+	power = 12
+	dissipation_rate = 5
+	dissipation_delay = 8
+	damage_type = D_KINETIC
+
+/datum/projectile/bullet/grenade_fragment
+	name = "grenade fragment"
+	sname = "grenade fragment"
+	icon_state = "grenadefragment"
+	implanted = /obj/item/implant/projectile/grenade_fragment
 	shot_sound = null
 	power = 12
 	dissipation_rate = 5
@@ -773,7 +797,7 @@ toxic - poisons
 
 		..()
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			//hit.setTexture()
 
 			var/turf/T = get_turf(hit)
@@ -1017,7 +1041,7 @@ datum/projectile/bullet/autocannon
 			if(!(A in centerview)) continue
 			var/obj/smokeDummy/D = new(A)
 			smokeLocs.Add(D)
-			SPAWN_DBG(smokeLength) qdel(D)
+			SPAWN(smokeLength) qdel(D)
 		particleMaster.SpawnSystem(new/datum/particleSystem/areaSmoke("#ffffff", smokeLength, trgloc))
 		return*/
 
@@ -1167,14 +1191,14 @@ datum/projectile/bullet/autocannon
 				var/obj/item/chem_grenade/C = SEMI_DEEP_COPY(CHEM)
 				C.set_loc(T)
 				src.has_det = 1
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					C.explode()
 				return
 			else if (src.OLD != null)
 				var/obj/item/old_grenade/O = SEMI_DEEP_COPY(OLD)
 				O.set_loc(T)
 				src.has_det = 1
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					O.prime()
 				return
 			else //what the hell happened

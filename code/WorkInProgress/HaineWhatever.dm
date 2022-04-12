@@ -31,7 +31,7 @@
 				var/obj/machinery/disposal/mail/mail_chute = D
 
 				mail_chute.Topic("?rescan=1", params2list("rescan=1"))
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					for(var/dest in mail_chute.destinations)
 						var/obj/item/disposal_test_dummy/mail_test/MD = new /obj/item/disposal_test_dummy/mail_test(mail_chute, sleep_time)
 						MD.source_disposal = mail_chute
@@ -47,7 +47,7 @@
 			TD.expected_y = expected_y
 			dummy_list.Add(TD)
 			TD.source_disposal = D
-			SPAWN_DBG(0)
+			SPAWN(0)
 				D.flush()
 
 	message_coders("test_disposal_system() sleeping [sleep_time] and spawned [dummy_list.len] dummies")
@@ -74,7 +74,7 @@
 	New(var/atom/loc, var/TTL=0)
 		..(loc)
 		if(TTL)
-			SPAWN_DBG(TTL)
+			SPAWN(TTL)
 				die()
 
 	proc/report_fail()
@@ -97,7 +97,7 @@
 	destination_disposal = locate(/obj/machinery/disposal/mail) in src.loc
 	if(destination_disposal && destination_disposal.mail_tag == destination_tag)
 		success = 1
-	SPAWN_DBG(5 SECONDS)
+	SPAWN(5 SECONDS)
 		die()
 	..()
 
@@ -182,7 +182,7 @@
 				src.spam_flag = src.spam_timer
 				if (src.reagents && src.reagents.total_volume)
 					src.reagents.reaction(src.chewer, INGEST, chew_size)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						if (src?.reagents && src.chewer?.reagents)
 							src.reagents.trans_to(src.chewer, min(reagents.total_volume, chew_size))
 			else if (src.spam_flag)
@@ -866,7 +866,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			randomize_look(src)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/black, slot_shoes)
 			src.equip_new_if_possible(/obj/item/clothing/under/rank/bartender, slot_w_uniform)
@@ -909,7 +909,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			if (!customer || customer == src) // they're doing shit to us
 				src.im_mad += 50 // we're double mad
 
-		SPAWN_DBG(rand(10, 30))
+		SPAWN(rand(10, 30))
 			src.yell_at(M, customer)
 
 	proc/yell_at(var/mob/M as mob, var/mob/customer as mob) // blatantly stolen from NPC assistants and then hacked up
@@ -1017,22 +1017,13 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			var/obj/item/grab/G = H.find_type_in_hand(/obj/item/grab)
 			if (!G)
 				return 0
-/*
-			if (G.affecting in npc_protected_mobs)
-				if (G.state == 1)
-					src.im_mad += 5
-				else if (G.state == 2)
-					src.im_mad += 20
-				else if (G.state == 3)
-					src.im_mad += 50
-				return 1
-*/
+
 			if (G.affecting == src) // we won't put up with shit being done to us nearly as much as we'll put up with it for others
-				if (G.state == 1)
+				if (G.state == GRAB_STRONG)
 					src.im_mad += 20
-				else if (G.state == 2)
+				else if (G.state == GRAB_AGGRESSIVE)
 					src.im_mad += 60
-				else if (G.state == 3)
+				else if (G.state == GRAB_CHOKE)
 					src.im_mad += 100
 				return 1
 
@@ -1302,7 +1293,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -1361,15 +1352,15 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			bling.set_loc(T)
 			bling.throwforce = 8
 			src.cash_amt = max(src.cash_amt-src.shot_cost, 0)
-			SPAWN_DBG(1.5 SECONDS)
+			SPAWN(1.5 SECONDS)
 				if (bling)
 					bling.throwforce = 1
 			bling.throw_at(target, 8, 2)
 			playsound(T, "sound/effects/bamf.ogg", 40, 1)
 			user.visible_message("<span class='success'><b>[user]</b> blasts some bling at [target]!</span>")
 
-	shoot_point_blank(mob/M, mob/user, second_shot)
-		shoot(get_turf(M), get_turf(user), user, 0, 0)
+	shoot_point_blank(atom/target, mob/user, second_shot)
+		shoot(get_turf(target), get_turf(user), user, 0, 0)
 
 	attackby(var/obj/item/spacecash/C as obj, mob/user as mob)
 		if (!istype(C))
@@ -1465,7 +1456,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	onUpdate()
 		..()
-		if (get_dist(owner, target) > 1 || target == null || owner == null || makeup == null)
+		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || makeup == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/ownerMob = owner
@@ -1475,7 +1466,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	onStart()
 		..()
-		if (get_dist(owner, target) > 1 || target == null || owner == null || makeup == null)
+		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || makeup == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/ownerMob = owner
@@ -1498,7 +1489,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if (owner && ownerMob && target && makeup && makeup == ownerMob.equipped() && get_dist(owner, target) <= 1)
+		if (owner && ownerMob && target && makeup && makeup == ownerMob.equipped() && BOUNDS_DIST(owner, target) == 0)
 			target.makeup = 1
 			target.makeup_color = makeup.font_color
 			target.update_body()
@@ -1754,7 +1745,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	set name = "Throw"
 	set desc = "Spin a grabbed opponent around and throw them."
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 
 		if(!src.stat && !src.transforming && M)
 			if(src.getStatusDuration("paralysis") || src.getStatusDuration("weakened") || src.stunned > 0)
@@ -1830,7 +1821,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 							HU.stunned += 10
 							HU.weakened += 12
 							var/turf/target = get_edge_target_turf(src, src.dir)
-							SPAWN_DBG(0)
+							SPAWN(0)
 								playsound(src.loc, "swing_hit", 40, 1)
 								src.visible_message("<span class='alert'><B>[src] casually tosses [H] away!</B></span>")
 								HU.throw_at(target, 10, 2)
@@ -1839,7 +1830,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 							HU.transforming = 0
 
 						var/cooldown = max(100,(300-src.jitteriness))
-						SPAWN_DBG(cooldown)
+						SPAWN(cooldown)
 							src.verbs -= /mob/proc/kali_ma_placeholder
 							if (istype(src:w_uniform, /obj/item/clothing/under/mola_ram))
 								src.verbs += /mob/proc/kali_ma
@@ -1939,7 +1930,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	on_add()
 		if(ismob(holder?.my_atom))
 			var/mob/M = holder.my_atom
-			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_cocaine", 200)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_cocaine", 200)
 			M.addOverlayComposition(/datum/overlayComposition/cocaine)
 		return
 
@@ -1947,7 +1938,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		if(ismob(holder?.my_atom))
 			var/mob/M = holder.my_atom
 			if (remove_buff)
-				REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_cocaine")
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_cocaine")
 			M.removeOverlayComposition(/datum/overlayComposition/cocaine)
 			M.removeOverlayComposition(/datum/overlayComposition/cocaine_minor_od)
 			M.removeOverlayComposition(/datum/overlayComposition/cocaine_major_od)
