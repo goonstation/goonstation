@@ -1,4 +1,5 @@
 /proc/bug_report_form(mob/user, easteregg_chance=0)
+	report_key = user.key
 	var/datum/tgui_bug_report_form/form = new
 	form.ui_interact(user)
 	UNTIL(form.done || form.closed)
@@ -29,7 +30,7 @@
 
 [form.data["additional"]]
 
-Reported by: [user.key]
+Reported by: [report_key]
 On server: [global.config.server_name]
 Round log date: [global.roundLog_date]
 Reported on: [time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]
