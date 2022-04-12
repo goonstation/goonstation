@@ -643,10 +643,10 @@
 
 /mob/living/critter/changeling/headspider/death_effect()
 	if (changeling) // don't do this if we're an empty headspider (already took control of a body)
-		for (var/mob/living/critter/changeling/spider in C.hivemind)
+		for (var/mob/living/critter/changeling/spider in changeling.hivemind)
 			boutput(spider, __red("Your telepathic link to your master has been destroyed!"))
 			spider.hivemind_owner = 0
-		for (var/mob/dead/target_observer/hivemind_observer/obs in C.hivemind)
+		for (var/mob/dead/target_observer/hivemind_observer/obs in changeling.hivemind)
 			boutput(obs, __red("Your telepathic link to your master has been destroyed!"))
 			obs.boot()
 		changeling.hivemind.Cut()
