@@ -67,7 +67,7 @@
 			if (3,4)
 				spyObjective = bestow_objective(leaderMind,/datum/objective/regular/steal)
 
-		SHOW_SPY_TIPS(leaderMind.current)
+		leaderMind.current.show_antag_popup("spy")
 		boutput(leaderMind.current, "<span class='alert'>Oh yes, and <b>one more thing:</b> <b>[spyObjective.explanation_text]</b> That is, if you <i>really</i> want that new position.</span>")
 
 		equip_leader(leaderMind.current)

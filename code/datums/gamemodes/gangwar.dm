@@ -1239,7 +1239,7 @@
 		src.gang.members += target.mind
 		if (!target.mind.special_role)
 			target.mind.special_role = ROLE_GANG_MEMBER
-		SHOW_GANG_MEMBER_TIPS(target)
+		target.show_antag_popup("gang_member")
 		new /datum/objective/specialist/gang(
 			"Protect your boss, recruit new members, tag up the station and beware the other gangs! [src.gang.gang_name] FOR LIFE!",
 			target.mind)

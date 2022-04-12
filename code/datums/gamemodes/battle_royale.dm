@@ -159,7 +159,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 				player.current.set_loc(pick(found_areas))
 			player.current.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 			player.current.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
-	SHOW_BATTLE_ROYALE_TIPS(player.current)
+	player.current.show_antag_popup("battle")
 
 
 /datum/game_mode/battle_royale/check_finished()
