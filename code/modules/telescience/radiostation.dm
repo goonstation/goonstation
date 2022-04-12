@@ -178,7 +178,7 @@
 		if("add_voice")
 			if(length(src.voices) >= src.max_voices)
 				return FALSE
-			var/name = input("Enter voice name:", "Voice name")
+			var/name = strip_html(input("Enter voice name:", "Voice name"))
 			if(!name)
 				return FALSE
 			phrase_log.log_phrase("voice-radiostation", name, no_duplicates=TRUE)
@@ -216,7 +216,7 @@
 			. = TRUE
 		if("say")
 			src.say_popup = FALSE
-			var/message = html_encode(params["message"])
+			var/message = strip_html(params["message"])
 			if(src.selected_voice <= 0 || src.selected_voice > length(voices))
 				usr.say(message)
 				return TRUE
