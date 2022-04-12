@@ -359,6 +359,7 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 		src.desc = "It's broken. You could probably use a crowbar to break the pieces apart."
 		src.broken = TRUE
 		src.UpdateIcon()
+		src.material.setProperty("reflective", 25)
 		if (playAttackSound)
 			playsound(src, "sound/impact_sounds/Crystal_Shatter_1.ogg", 25, 1)
 
