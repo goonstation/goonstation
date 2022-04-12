@@ -399,7 +399,7 @@
 		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
 		if (!message)
 			return
-		logTheThing("say", holder.owner, holder.owner.name, "[message]")
+		logTheThing("say", holder.owner, holder.owner.name, "<b>(HIVESAY):</b> [message]")
 		//logTheThing("diary", holder.owner, null, "(HIVEMIND): [message]", "hivesay")
 		.= holder.owner.say_hive(message, holder)
 
