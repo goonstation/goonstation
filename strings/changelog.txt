@@ -1,5 +1,9 @@
 
 (t)tue apr 12 22
+(u)None
+(p)8166
+(e)|
+(*)Revhead scaling has been adjusted to where you should actually see more then 3 revheads on higherpops. Please yell or something if there's you believe theres an imbalance of revheads.
 (u)glowbold
 (p)8110
 (e)🆕|feature
