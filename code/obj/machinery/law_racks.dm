@@ -317,6 +317,13 @@
 					M.moustache_mode = 1
 					user.visible_message("<span class='alert'><b>[user.name]</b> uploads a moustache to [M.name]!</span>")
 					M.update_appearance()
+		else if (istype(I, /obj/item/peripheral/videocard))
+			var/obj/item/peripheral/videocard/V = I
+			if (GET_COOLDOWN(src, "mine_cooldown") == 0)
+				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/insert_videocard_callback, list(user,V), user.equipped().icon, user.equipped().icon_state, \
+						"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+			else
+				user.visible_message("<span class='alert'>The [src]'s graphics port isn't ready to accept [I] yet.</span>")
 		else
 			return ..()
 
@@ -614,6 +621,51 @@
 		tgui_process.update_uis(src)
 		UpdateIcon()
 		UpdateLaws()
+
+	proc/insert_videocard_callback(var/mob/user, var/obj/item/peripheral/videocard/I)
+		var/mob/living/target = null
+		ON_COOLDOWN(src, "mine_cooldown", 30 SECONDS)
+		user.u_equip(I)
+		I.set_loc(src)
+		playsound(src, "sound/misc/JetpackMK2on.ogg", 70, extrarange=3)
+		src.visible_message("<span class='alert'>[I] emits a loud whirring noise as it connects into the [src]!</span>")
+		SPAWN(6 SECONDS)
+			if (src && !src.GetParticles("mine_spark"))
+				playsound(src, "sound/effects/electric_shock_short.ogg", 50)
+				src.UpdateParticles(new/particles/rack_spark,"mine_spark")
+				src.visible_message("<span class='alert'><b>The [src] starts sparking!</b></span>")
+			sleep(2 SECONDS)
+			if (!src) return
+			src.use_power(500)
+			for (var/i in 1 to 10)
+				sleep(0.4 SECONDS)
+				if(src && prob(60))
+					var/obj/mined = new /obj/item/spacecash/buttcoin
+					mined.set_loc(src.loc)
+					target = get_step(src, rand(1,8))
+					for (var/mob/living/mob in view(7,src))
+						if (!isintangible(mob))
+							target = mob
+							break
+					playsound(src, "sound/machines/bweep.ogg", rand(45,70), 1, pitch = 1.6)
+					mined.throw_at(target, 7, rand(4,6))
+					src.visible_message("<span class='alert'>[I] energetically expels [mined]!</span>")
+			sleep(1 SECOND)
+			if (src && I)
+				target = get_step(src, rand(1,8))
+				I.set_loc(src.loc)
+				for (var/mob/living/mob in view(7,src))
+					if (!isintangible(mob))
+						target = mob
+						break
+				playsound(src, "sound/impact_sounds/Metal_Clang_3.ogg", 90)
+				I.throw_at(target, 7, rand(6,9))
+				src.visible_message("<span class='alert'>The [I] is forcefully ejected from the [src]!</span>")
+				src.ClearSpecificParticles("mine_spark")
+			sleep(0.7 SECONDS) // just enough time to recognize the card
+			if (I)
+				fireflash(I,0,TRUE)
+				I.combust()
 
 	/// Sets an arbitrary slot to the passed aiModule - will override any module in the slot. Does not call UpdateLaws()
 	proc/SetLaw(var/obj/item/aiModule/mod,var/slot=1,var/screwed_in=false,var/welded_in=false)
