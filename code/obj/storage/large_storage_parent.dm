@@ -90,6 +90,58 @@
 			do new thing(src)	//Two lines! I TOLD YOU I COULD DO IT!!!
 			while (--amt > 0)
 
+	proc/get_welding_positions()
+		var/start
+		var/stop
+		var/start_x
+		var/start_y
+		var/stop_x
+		var/stop_y
+
+		switch(icon_welded)
+			if("welded-crate")
+				start_x = -11
+				start_y = -4
+				stop_x = 11
+				stop_y = -4
+			if("welded-short-horizontal")
+				start_x = -8
+				stop_x = 8
+			if("welded-closet")
+				start_x = 6
+				stop_x = 6
+				start_y = -15
+				stop_y = 8
+			if("welded-coffin-4dirs")
+				if(dir == NORTH || dir == SOUTH)
+					start_x = -4
+					stop_x = 4
+					start_y = -13
+					stop_y = -13
+				else if(dir == WEST)
+					start_x = -12
+					stop_x = 14
+					start_y = -12
+					stop_y = -12
+				else
+					start_x = -14
+					stop_x = 12
+					start_y = -12
+					stop_y = -12
+			if("welded-coffin-1dir")
+				start_x = -4
+				stop_x = 4
+				start_y = -13
+				stop_y = -13
+
+		start = list(start_x + src.weld_image_offset_X, start_y + src.weld_image_offset_Y)
+		stop = list(stop_x + src.weld_image_offset_X, stop_y + src.weld_image_offset_Y)
+
+		if(welded)
+			. = list(stop,start)
+		else
+			. = list(start,stop)
+
 	Entered(atom/movable/Obj, OldLoc)
 		. = ..()
 		if(src.open || length(contents) >= src.max_capacity)
@@ -232,12 +284,9 @@
 		else if (!src.open && isweldingtool(W))
 			if(!W:try_weld(user, 1, burn_eyes = TRUE))
 				return
-			if (!src.welded)
-				src.weld(1, user)
-				src.visible_message("<span class='alert'>[user] welds [src] closed with [W].</span>")
-			else
-				src.weld(0, user)
-				src.visible_message("<span class='alert'>[user] unwelds [src] with [W].</span>")
+			var/positions = src.get_welding_positions()
+			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/storage/proc/weld_action, \
+				list(W, user), null, positions[1], positions[2]),user)
 			return
 
 		if (src.secure)
@@ -278,6 +327,16 @@
 		else
 			return ..()
 
+	proc/weld_action(obj/item/W, mob/user)
+		if(src.open)
+			return
+		if (!src.welded)
+			src.weld(1, user)
+			src.visible_message("<span class='alert'>[user] welds [src] closed with [W].</span>")
+		else
+			src.weld(0, user)
+			src.visible_message("<span class='alert'>[user] unwelds [src] with [W].</span>")
+
 	proc/check_if_enterable(var/atom/movable/thing, var/skip_penalty=0)
 		//return 1 if an atom can enter, 0 if not (this is used for scooting over crates and dragging things into crates)
 		var/mob/living/L = thing
@@ -290,17 +349,12 @@
 
 		//Mostly copy pasted from turf/Enter. Sucks, but we need an object rather than a boolean
 		//First, check for directional blockers on the entering object's tile
-		if (orig_turf.checkingexit > 0)
-			for(var/obj/obstacle in orig_turf)
-				if(obstacle == thing)
-					continue
-				if(obstacle.event_handler_flags & USE_CHECKEXIT)
-					var/obj/O = thing
-					if (!istype(O) || !(HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING) \
-					  && HAS_FLAG(obstacle.object_flags, HAS_DIRECTIONAL_BLOCKING) \
-					  && obstacle.dir == O.dir))
-						if(!obstacle.CheckExit(thing, dest_turf))
-							no_go = obstacle
+		for(var/obj/obstacle in orig_turf)
+			if(obstacle == thing)
+				continue
+			if(!obstacle.CheckExit(thing, dest_turf))
+				no_go = obstacle
+				break
 
 		//next, check if the turf itself prevents something from entering it (i.e. it's a wall)
 		if (isnull(no_go))
@@ -772,7 +826,7 @@
 
 	onUpdate()
 		..()
-		if (!the_storage || !the_wrench || !owner || get_dist(owner, the_storage) > 1)
+		if (!the_storage || !the_wrench || !owner || BOUNDS_DIST(owner, the_storage) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

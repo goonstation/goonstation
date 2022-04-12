@@ -42,6 +42,8 @@ THROWING DARTS
 			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, pda_alert_frequency)
 
 	disposing()
+		if (owner)
+			on_remove(owner)
 		owner = null
 		former_implantee = null
 		if (uses_radio)
@@ -67,16 +69,19 @@ THROWING DARTS
 
 	// called when an implant is removed from M
 	proc/on_remove(var/mob/M)
+		SHOULD_CALL_PARENT(TRUE)
 		deactivate()
 		SEND_SIGNAL(src, COMSIG_IMPLANT_REMOVED, M)
-		if (ishuman(src.owner))
-			var/mob/living/carbon/human/H = owner
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
 			H.implant -= src
+		if (ismobcritter(M))
+			var/mob/living/critter/C = M
+			C.implants?.Remove(src)
 		if (implant_overlay)
 			M.update_clothing()
 		src.owner = null
 		src.implanted = 0
-		return
 
 	proc/activate()
 		online = 1
@@ -496,101 +501,115 @@ THROWING DARTS
 	icon_state = "implant-b"
 	impcolor = "b"
 
-/obj/item/implant/microbomb
-	name = "microbomb implant"
+ABSTRACT_TYPE(/obj/item/implant/revenge)
+/// Abstract supertype for implants that do something explodey-ish when you die. Includes functionality for scaling with implant number
+/obj/item/implant/revenge
+	name = "YOU SHOULDN'T SEE THIS - TELL A CODER"
 	icon_state = "implant-r"
 	impcolor = "r"
-	instant = 1
-	var/active = 0
-	var/explosionPower = 1
-
-	implanted(mob/M, mob/I)
-//	implanted(mob/source as mob, var/letpeopleknow = 1)
-		// I = implanter, M = implantee
-		..()
-		var/is_macro = istype(src, /obj/item/implant/microbomb/macrobomb)
-		if (M == I)
-			M.mind.store_memory("Your implanted [is_macro ? "macrobomb" : "microbomb"] will detonate upon unintentional death.", 0, 0)
-			boutput(M, "The implanted [is_macro ? "macrobomb" : "microbomb"] will detonate upon unintentional death. (Suiciding will likely fail to trigger it, but succumbing while in crit will trigger it.)")
-		else if (istype(I))
-			boutput(I, "The implanted [is_macro ? "macrobomb" : "microbomb"] will detonate upon [M]'s unintentional death.")
-
+	instant = TRUE
+	var/active = FALSE
+	var/power = 1 //! Means different things for different implants, but in a general sense how Powerful the effect is. Scales additively with implant number.
+	var/big_message = " fucks up really bad why did you do this"
+	var/small_message = " just fucks up a little bit"
 
 	on_death()
-		//if (ishuman(src.owner))
-		if (isliving(src.owner) && !isnull(src.loc)) // if we're in nullspace then we've already triggered
-			//var/mob/living/carbon/human/source = owner
+		SHOULD_CALL_PARENT(TRUE)
+		..()
+		if (isliving(src.owner) && !src.active)
 			var/mob/living/source = owner
 			if(source.suiciding && prob(60)) //Probably won't trigger on suicide though
 				source.visible_message("[source] emits a somber buzzing noise.")
 				return
 			. = 0
-			var/hasMacro = 0
-			for (var/obj/item/implant/microbomb/other_bomb in src.loc)
-				if (!other_bomb.active)
-					if (istype(other_bomb, /obj/item/implant/microbomb/macrobomb))
-						hasMacro = 1
-					other_bomb.active = 1 //This actually should include us, ok.
-					.+= other_bomb.explosionPower //tally the total power we're dealing with here
+			for (var/obj/item/implant/implant in src.loc)
+				if (implant.type == src.type) //only interact with implants that are the same type as us
+					var/obj/item/implant/revenge/revenge_implant = implant
+					if (!revenge_implant.active)
+						revenge_implant.active = TRUE
+						. += revenge_implant.power //tally the total power we're dealing with here
 
-			if (hasMacro)
-				source.visible_message("<span class='alert'><b>[source] emits a loud clunk!</b></span>")
+			if (. >= 6)
+				source.visible_message("<span class='alert'><b>[source][big_message]!</b></span>")
 			else
-				source.visible_message("[source] emits a small clicking noise.")
-			logTheThing("bombing", source, null, "triggered a micro-/macrobomb implant on death at [log_loc(source)].")
-			message_admins("[key_name(source)] triggered a micro-/macrobomb implant on death at [log_loc(source)].")
-			var/turf/T = get_turf(src)
-			src.set_loc(null) //so we don't get deleted prematurely by the blast.
+				source.visible_message("[source][small_message].")
+			logTheThing("bombing", source, null, "triggered \a [src] on death at [log_loc(source)].")
+			message_admins("[key_name(source)] triggered \a [src] on death at [log_loc(source)].")
 
-			source.transforming = 1
+/obj/item/implant/revenge/microbomb
+	name = "microbomb implant"
+	big_message = "emits a loud clunk"
+	small_message = "makes a small clicking noise"
 
-			var/obj/overlay/Ov = new/obj/overlay(T)
-			Ov.anchored = 1 //Create a big bomb explosion overlay.
-			Ov.name = "Explosion"
-			Ov.layer = NOLIGHT_EFFECTS_LAYER_BASE
-			Ov.pixel_x = -92
-			Ov.pixel_y = -96
-			Ov.icon = 'icons/effects/214x246.dmi'
-			Ov.icon_state = "explosion"
+	implanted(mob/target, mob/user)
+		..()
+		if (target == user)
+			target.mind.store_memory("Your implanted [src] will detonate upon unintentional death.", 0, 0)
+			boutput(target, "The implanted [src] will detonate upon unintentional death. (Suiciding will likely fail to trigger it, but succumbing while in crit will trigger it.)")
+		else if (istype(user))
+			boutput(user, "The implanted [src] will detonate upon [target]'s unintentional death.")
 
-			var/list/throwjunk = list() //List of stuff to throw as if the explosion knocked it around.
-			var/cutoff = 0 //So we don't freak out and throw more than ~25 things and act like the old mass driver bug.
-			for(var/obj/item/I in source)
-				cutoff++
-				I.set_loc(T)
-				if(cutoff <= 25)
-					throwjunk += I
 
-			SPAWN(0) //Delete the overlay when finished with it.
-				if(!QDELETED(source))
-					source?.gib()
+	on_death()
+		. = ..()
+		var/turf/T = get_turf(src)
 
-				for(var/obj/O in throwjunk) //Throw this junk around
-					var/edge = get_edge_target_turf(T, pick(alldirs))
-					O.throw_at(edge, 80, 4)
+		var/obj/overlay/Ov = new/obj/overlay(T)
+		Ov.anchored = 1 //Create a big bomb explosion overlay.
+		Ov.name = "Explosion"
+		Ov.layer = NOLIGHT_EFFECTS_LAYER_BASE
+		Ov.pixel_x = -92
+		Ov.pixel_y = -96
+		Ov.icon = 'icons/effects/214x246.dmi'
+		Ov.icon_state = "explosion"
 
-				sleep(1.5 SECONDS)
-				qdel(Ov)
+		var/list/throwjunk = list() //List of stuff to throw as if the explosion knocked it around.
+		var/cutoff = 0 //So we don't freak out and throw more than ~25 things and act like the old mass driver bug.
+		for(var/obj/item/I in src.owner)
+			cutoff++
+			I.set_loc(T)
+			if(cutoff <= 25)
+				throwjunk += I
 
-				if (ishuman(owner))
-					var/mob/living/carbon/human/H = owner
-					H.implant -= src
-				else if (ismobcritter(owner))
-					var/mob/living/critter/C = owner
-					C.implants -= src
+		for(var/obj/O in throwjunk) //Throw this junk around
+			var/edge = get_edge_target_turf(T, pick(alldirs))
+			O.throw_at(edge, 80, 4)
 
-				qdel(src)
+		SPAWN(0) //Delete the overlay when finished with it.
+			sleep(1.5 SECONDS)
+			qdel(Ov)
 
-			T.hotspot_expose(800,125)
-			explosion_new(src, T, 7 * ., 1) //The . is the tally of explosionPower in this poor slob.
-			return
+		T.hotspot_expose(800,125)
+		explosion_new(src, T, 7 * ., 1) //The . is the tally of explosionPower in this poor slob.
 
-/obj/item/implant/microbomb/hunter
-	explosionPower = 2
+/obj/item/implant/revenge/microbomb/hunter
+	power = 4
 
-/obj/item/implant/microbomb/macrobomb
-	name = "macrobomb implant"
-	explosionPower = 12
+/obj/item/implant/revenge/zappy
+	name = "flyzapper implant" //todo better name idk
+	big_message = " begins radiating electricity"
+	small_message = "'s hair starts standing on end"
+	power = 3
+
+	// this is kinda horribly inefficient but it runs pretty rarely so eh
+	on_death()
+		. = ..()
+		elecflash(src, ., . * 2, TRUE)
+		for (var/mob/living/M in orange(. + 1, src.owner))
+			if (!isintangible(M))
+				arcFlash(src.owner, M, (250000 / get_dist(src.owner, M)) * .) // need to adjust the damage on these a bit- probably bump the lower end, lower the top end idk
+		for (var/obj/machinery/machine in orange(round(. / 2) + 1)) // machinery around you also zaps people, based on the amount of power in the grid
+			if (prob(. * 8))
+				var/mob/living/target
+				for (var/mob/living/L in orange(machine, 1)) //TODO this could probably be 2 at the risk of More Lag
+					if (!isintangible(L))
+						target = L
+						break
+				if (target)
+					arcFlash(src, target, 100000) //TODO scale this with powergrid... somehow. get area APC
+
+		src.owner?.elecgib()
+
 
 /obj/item/implant/robotalk
 	name = "machine translator"
@@ -884,6 +903,8 @@ THROWING DARTS
 	if (C != src.owner)
 		src.owner = C
 
+	src.blood_DNA = src.owner.bioHolder.Uid
+
 	for (var/obj/item/implant/projectile/P in C)
 		if (P.bleed_timer)
 			P.bleed_timer = max(bleed_time, P.bleed_timer)
@@ -1097,13 +1118,13 @@ THROWING DARTS
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1119,69 +1140,53 @@ THROWING DARTS
 	New()
 		src.imp = new /obj/item/implant/sec( src )
 		..()
-		return
 
 /obj/item/implanter/freedom
 	icon_state = "implanter1-g"
 	New()
 		src.imp = new /obj/item/implant/freedom( src )
 		..()
-		return
 
 /obj/item/implanter/mindslave
 	icon_state = "implanter1-g"
 	New()
 		src.imp = new /obj/item/implant/mindslave( src )
 		..()
-		return
 
 /obj/item/implanter/super_mindslave
 	icon_state = "implanter1-g"
 	New()
 		src.imp = new /obj/item/implant/mindslave/super( src )
 		..()
-		return
 
 /obj/item/implanter/microbomb
 	name = "microbomb implanter"
 	icon_state = "implanter1-g"
-	sneaky = 1
-	New()
-		src.imp = new /obj/item/implant/microbomb( src )
+	sneaky = TRUE
 
-		..()
-		return
-
-/obj/item/implanter/macrobomb
-	name = "macrobomb implanter"
-	icon_state = "implanter1-g"
-	sneaky = 1
 	New()
-		src.imp = new /obj/item/implant/microbomb/macrobomb( src )
+		src.imp = new /obj/item/implant/revenge/microbomb( src )
 		..()
-		return
-
-/obj/item/implanter/uplink_macrobomb
-	name = "macrobomb implanter"
-	icon_state = "implanter1-g"
-	sneaky = 1
-	New()
-		var/obj/item/implant/microbomb/macrobomb/newbomb = new/obj/item/implant/microbomb/macrobomb( src )
-		newbomb.explosionPower = rand(22,32)
-		src.imp = newbomb
-		..()
-		return
 
 /obj/item/implanter/uplink_microbomb
 	name = "microbomb implanter"
 	icon_state = "implanter1-g"
-	sneaky = 1
+	sneaky = TRUE
+
 	New()
-		var/obj/item/implant/microbomb/newbomb = new/obj/item/implant/microbomb( src )
-		newbomb.explosionPower = prob(75) ? 2 : 3
+		var/obj/item/implant/revenge/microbomb/newbomb = new/obj/item/implant/revenge/microbomb( src )
+		newbomb.power = prob(75) ? 2 : 3
 		src.imp = newbomb
 		..()
-		return
+
+/obj/item/implanter/zappy
+	name = "flyzapper implanter"
+	icon_state = "implanter1-g"
+	sneaky = TRUE
+
+	New()
+		src.imp = new /obj/item/implant/revenge/zappy(src)
+		..()
 
 /* ================================================================ */
 /* ------------------------- Implant Case ------------------------- */
@@ -1232,11 +1237,11 @@ THROWING DARTS
 
 /obj/item/implantcase/microbomb
 	name = "glass case - 'Microbomb'"
-	implant_type = "/obj/item/implant/microbomb"
+	implant_type = "/obj/item/implant/revenge/microbomb"
 
 /obj/item/implantcase/microbomb/macrobomb
 	name = "glass case - 'Macrobomb'"
-	implant_type = "/obj/item/implant/microbomb/macrobomb"
+	implant_type = "/obj/item/implant/revenge/microbomb/macrobomb"
 
 /obj/item/implantcase/robotalk
 	name = "glass case - 'Machine Translator'"
@@ -1492,7 +1497,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 <b>Zone:</b> Spinal Column> 5-7 vertebrae<BR>
 <b>Power Source:</b> Nervous System Ion Withdrawl Gradient<BR>
 <b>Important Notes:</b> Will make the crewmember loyal to the command staff and prevent thoughts of rebelling.<BR>"}
-			else if (istype(src.case.imp, /obj/item/implant/microbomb))
+			else if (istype(src.case.imp, /obj/item/implant/revenge/microbomb))
 				dat += {"
 <b>Implant Specifications:</b><br>
 <b>Name:</b> Microbomb Implant<br>

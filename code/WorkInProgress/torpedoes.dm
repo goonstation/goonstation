@@ -366,8 +366,8 @@
 		return
 
 	MouseDrop_T(atom/target, mob/user)
-		if(ismob(target) && get_dist(src,target) <= 1 && can_act(user) && can_reach(user, src) && can_reach(user, target))
-			if (istype(target, /obj/storage/closet) && get_dist(src,target) <= 1 && can_act(user) && can_reach(user, src) && can_reach(user, target))
+		if(ismob(target) && BOUNDS_DIST(src,target) == 0 && can_act(user) && can_reach(user, src) && can_reach(user, target))
+			if (istype(target, /obj/storage/closet) && BOUNDS_DIST(src,target) == 0 && can_act(user) && can_reach(user, src) && can_reach(user, target))
 				var/obj/storage/closet/O = target
 				O.set_loc(src.loc)
 				logTheThing("combat", user, null, " loads \a [O] into \the [src] at [log_loc(src)]")
@@ -503,12 +503,12 @@
 		return
 
 	MouseDrop_T(target, mob/user)
-		if(istype(target, /obj/torpedo) && loaded == null && get_dist(src,target) <= 1)
+		if(istype(target, /obj/torpedo) && loaded == null && BOUNDS_DIST(src,target) == 0)
 			add(target)
 		return
 
 	mouse_drop(atom/over_object,src_location,over_location,src_control,over_control,params)
-		if(loaded && get_dist(src,over_object) <= 1)
+		if(loaded && BOUNDS_DIST(src,over_object) == 0)
 			var/turf/T = get_turf(over_object)
 			if(T.density) return
 			var/atom/trg = over_object

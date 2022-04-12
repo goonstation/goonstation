@@ -1923,6 +1923,21 @@ datum
 			result_amount = 3
 			mix_phrase = "An iridescent black chemical forms in the container."
 
+		hemodissolve // denaturing hemolymph
+			name = "Copper"
+			id = "copper"
+			result = "copper"
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			required_reagents = list("hemolymph" = 5, "cleaner" = 1,  "acetone" = 1)
+			required_temperature = T0C + 30 // just a little bit of heat
+			result_amount = 1
+			mix_phrase = "The hemolymph bubbles as a black precipitate falls out of the solution, denaturing into basic components."
+			on_reaction(var/datum/reagents/holder, created_volume)
+				holder.add_reagent("meat_slurry", created_volume)// meat slurry, since animal tissue
+				holder.add_reagent("saline", 2*created_volume)//  saline-glucose solution, since blood
+				holder.add_reagent("spaceacillin", created_volume)//  spaceacillin, since hemolymph is used for bacterial tests IRL
+				holder.add_reagent("denatured_enzyme", created_volume)// and just some random biological chemicals for good measure
+
 		mutagen
 			name = "Unstable mutagen"
 			id = "mutagen"
@@ -1990,22 +2005,15 @@ datum
 			mix_phrase = "The mixture yields a colorless, odorless liquid."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
-			on_reaction(var/datum/reagents/holder)
+			on_reaction(var/datum/reagents/holder, created_volume)
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in all_viewers(null, location))
 					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
 				if(holder?.my_atom?.is_open_container())
 					// A slightly less stupid way of smoking contents. Maybe.
 					var/datum/reagents/smokeContents = new/datum/reagents/
-					smokeContents.add_reagent("sarin", holder.reagent_list["sarin"].volume / 6)
-					//particleMaster.SpawnSystem(new /datum/particleSystem/chemSmoke(location, smokeContents, 10, 2))
+					smokeContents.add_reagent("sarin", created_volume / 6)
 					smoke_reaction(smokeContents, 2, location)
-					/*
-					for(var/mob/living/carbon/human/H in range(location, 2)) // nurfed.
-						if(ishuman(H))
-							if(!H.wear_mask)
-								H.reagents.add_reagent("sarin",4) // griff
-					*/
 					return
 
 

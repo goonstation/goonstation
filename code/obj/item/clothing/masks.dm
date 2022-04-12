@@ -507,7 +507,7 @@
 	burn_point = 220
 	burn_output = 900
 	burn_possible = 1
-	health = 10
+	health = 3
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/pen))

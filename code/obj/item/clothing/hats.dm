@@ -14,6 +14,8 @@
 	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 	var/team_num
 	var/blocked_from_petasusaphilic = FALSE //Replacing the global blacklist
+	duration_remove = 1.5 SECONDS
+	duration_put = 1.5 SECONDS
 
 	setupProperties()
 		..()
@@ -49,6 +51,11 @@ proc/filter_trait_hats(var/type)
 	desc = "A knit cap in orange."
 	icon_state = "orange"
 	item_state = "ogloves"
+
+/obj/item/clothing/head/purple
+	desc = "A knit cap in orange."
+	icon_state = "purple"
+	item_state = "jgloves"
 
 /obj/item/clothing/head/dolan
 	name = "Dolan's hat"
@@ -661,17 +668,12 @@ proc/filter_trait_hats(var/type)
 	item_state = "wizard"
 	magical = 1
 	item_function_flags = IMMUNE_TO_ACID
+	duration_remove = 10 SECONDS
 
 	setupProperties()
 		..()
 		setProperty("disorient_resist_eye", 15)
 		setProperty("disorient_resist_ear", 15)
-
-	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
-		. = ..()
-		if (prob(75))
-			source.show_message(text("<span class='alert'>\The [src] writhes in your hands as though it is alive! It just barely wriggles out of your grip!</span>"), 1)
-			. = 0
 
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
