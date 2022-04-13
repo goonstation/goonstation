@@ -133,6 +133,17 @@ var/global/datum/region_allocator/region_allocator = new
 		src.node = null
 		global.region_allocator.allocated_regions -= src
 
+	proc/clean_up(turf/main_turf=/turf/space, turf/edge_turf=/turf/cordon, area/main_area=/area/space)
+		for(var/x in 1 to width)
+			for(var/y in 1 to height)
+				var/turf/T = turf_at(x, y)
+				var/target_type = (x == 1 || y == 1 || x == width || y == height) ? edge_turf : main_turf
+				T.ReplaceWith(target_type, FALSE, FALSE, FALSE, force=TRUE)
+				new main_area(T)
+				for(var/atom/movable/AM in T)
+					if(!istype(AM, /obj/overlay/tile_effect))
+						qdel(AM)
+
 	/**
 	 * Given local coordinates (x, y) returns you a turf at these coordinates in the region.
 	 * I.e. (1, 1) will return src.bottom_left .
