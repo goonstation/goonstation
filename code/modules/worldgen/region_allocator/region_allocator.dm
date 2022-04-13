@@ -1,3 +1,28 @@
+/**
+ * Allocation of map regions.
+ *
+ * The system written in this file is used to get access to rectangular regions of the map space where you can place whatever you want to.
+ * Intended usage is for map structures that either don't need to be loaded at all times or of which there can be multiples of. For example if you
+ * wanted to make a locker that leads to its pocket dimension you will need to create a new pocket dimension for each locker. That's where allocating
+ * a region for each of them would come in handy.
+ *
+ * Example usage:
+ * ```
+ * var/datum/allocated_region/region = global.region_allocator.allocate(width=10, height=8)
+ * for(var/x in 1 to region.width)
+ * 	for(var/y in 1 to region.height)
+ * 		if(x == 1 || y == 1 || x == region.width || y == region.height)
+ * 			region.turf_at(x, y).ReplaceWith(/turf/unsimulated/wall)
+ * 		else
+ * 			region.turf_at(x, y).ReplaceWith(/turf/unsimulated/floor)
+ * mob.set_loc(region.turf_at(2, 2))
+ * boutput(mob, "You are in prison now.")
+ * SPAWN(60 SECONDS)
+ * 	mob.set_loc(whatever)
+ * 	qdel(region)
+ * ```
+ */
+
 #define NODE_STATE_FREE 0
 #define NODE_STATE_USED 1
 #define NODE_STATE_SPLIT 2
@@ -74,10 +99,21 @@ var/global/datum/region_allocator/region_allocator = new
 		return TRUE
 
 
+
+/**
+ * Represents a map region you have allocated access to.
+ * While you hold a reference to this region you are free to assume nothing else will allocate this part of the map and touch your region.
+ * You should also not go out of its bounds of course.
+ * Deallocate the region by qdel()ing it or dropping all references to it.
+ */
 /datum/allocated_region
+	/// Bottom left corner of the region
 	var/turf/bottom_left
+	/// Width in tiles
 	var/width
+	/// Height in tiles
 	var/height
+	/// Corresponding node in the region_allocator quad tree
 	var/datum/region_node/node
 
 	New(turf/bottom_left, width, height, datum/region_node/node)
@@ -97,6 +133,12 @@ var/global/datum/region_allocator/region_allocator = new
 		src.node = null
 		global.region_allocator.allocated_regions -= src
 
+	/**
+	 * Given local coordinates (x, y) returns you a turf at these coordinates in the region.
+	 * I.e. (1, 1) will return src.bottom_left .
+	 * This is the preferred method to access turfs in the region.
+	 * If coordinates are out of bounds null will be returned.
+	 */
 	proc/turf_at(x, y)
 		RETURN_TYPE(/turf)
 		if(x > width || y > height || x < 1 || y < 1)
@@ -107,6 +149,9 @@ var/global/datum/region_allocator/region_allocator = new
 			bottom_left.z
 		)
 
+	/**
+	 * Checks if a turf is in the region.
+	 */
 	proc/turf_in_region(turf/T)
 		return T.z == bottom_left.z && T.x >= bottom_left.x && T.x < bottom_left.x + width && T.y >= bottom_left.y && T.y < bottom_left.y + height
 
@@ -132,6 +177,7 @@ var/global/datum/region_allocator/region_allocator = new
 
 	proc/get_free_node(size)
 		RETURN_TYPE(/datum/region_node)
+		PRIVATE_PROC(TRUE)
 		var/datum/region_node/best_fit = null
 		for(var/node_size_str in src.free_nodes)
 			if(length(src.free_nodes[node_size_str]) <= 0)
@@ -149,6 +195,13 @@ var/global/datum/region_allocator/region_allocator = new
 			best_fit = best_fit.children[length(best_fit.children)]
 		return best_fit
 
+	/**
+	 * Calling this proc will give you an access to a region of the map where you can do whatever you want. (Usually load a prefab or generate
+	 * some room or something like that).
+	 * This region is not guaranteed to be empty of things so clean it up before use.
+	 * To free up the region just delete the /datum/allocated_region object or drop all references to it.
+	 * See [/datum/allocated_region] for details.
+	 */
 	proc/allocate(width, height)
 		RETURN_TYPE(/datum/allocated_region)
 		var/datum/region_node/node = src.get_free_node(max(width, height))
