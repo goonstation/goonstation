@@ -460,38 +460,31 @@
 			..()
 
 /obj/item/clothing/mask/cigarette/cigarillo/ampoule
-	var/ampoulename = "ampoule"
-	var/datum/reagents/ampoulereagents
-	var/ampoulecolor
-
-	New()
-		..()
-		ampoulecolor = pick("1", "2", "3", "4")
-		ampoulereagents = new()
+	var/obj/item/reagent_containers/ampoule/ampoule
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(((W.tool_flags & TOOL_CUTTING) || (W.hit_type & DAMAGE_CUT) || (W.hit_type & DAMAGE_STAB)) && !src.on)
-			var/obj/item/reagent_containers/ampoule/A = new(user.loc)
-			A.name = src.ampoulename
-			A.color_id = src.ampoulecolor
-			A.update_icon()
-			src.reagents.subtract_reagents(src.ampoulereagents.reagent_list)
-			src.ampoulereagents.trans_to(A, src.ampoulereagents.total_volume)
+		if((W.tool_flags & TOOL_CUTTING) || (W.hit_type & DAMAGE_CUT) || (W.hit_type & DAMAGE_STAB))
+			if(src.on || !src.ampoule)
+				new/obj/decal/cleanable/ash(user.loc)
+				boutput(user, "<span class='alert'>You cut open the [src] and a bunch of ash falls out! Guess that wasn't the smartest idea.</span>")
+				qdel(src)
+				return
 
 			var/obj/item/bluntwrap/B = new(user.loc)
+
 			if(src.flavor)
 				B.reagents.remove_any(20)
 				B.flavor = src.flavor
 				B.name = "[reagent_id_to_name(src.flavor)]-flavoured blunt wrap"
+
+			src.reagents.subtract_reagents(src.ampoule.reagents.reagent_list)
 			src.reagents.trans_to(B, 20)
+
 			boutput(user, "<span class='alert'>You cut the [src] open to make a blunt wrap and an ampoule falls out!</span>")
-			qdel(src)
+
+			var/obj/item/reagent_containers/ampoule/A = src.ampoule
 			user.put_in_hand_or_drop(B)
 			user.put_in_hand_or_drop(A)
-
-		else if(((W.tool_flags & TOOL_CUTTING) || (W.hit_type & DAMAGE_CUT) || (W.hit_type & DAMAGE_STAB)) && src.on)
-			new/obj/decal/cleanable/ash(user.loc)
-			boutput(user, "<span class='alert'>You cut open the [src] and a bunch of ash falls out! Guess that wasn't the smartest idea.</span>")
 			qdel(src)
 
 		else
@@ -563,31 +556,20 @@
 	desc = "There could be anything in this. It feels quite heavy."
 	flags = FPRINT|TABLEPASS
 
-	var/ampoulecolor
-	var/ampoulename = "ampoule"
-	var/datum/reagents/ampoulereagents
-
-	New()
-		..()
-		src.reagents.maximum_volume = 5
-		ampoulereagents = new()
-		ampoulecolor = pick("1", "2", "3", "4")
+	var/obj/item/reagent_containers/ampoule/ampoule = null
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		..()
-		if(((W.tool_flags & TOOL_CUTTING) || (W.hit_type & DAMAGE_CUT) || (W.hit_type & DAMAGE_STAB)) && !src.on)
-			var/obj/item/reagent_containers/ampoule/A = new(user.loc)
-			src.ampoulereagents.trans_to(A, src.ampoulereagents.total_volume)
-			A.name = src.ampoulename
-			A.color_id = src.ampoulecolor
-			A.update_icon()
-			boutput(user, "<span class='alert'>You cut open the [src] open and an ampoule falls out!</span>")
-			qdel(src)
-			user.put_in_hand_or_drop(A)
+		if((W.tool_flags & TOOL_CUTTING) || (W.hit_type & DAMAGE_CUT) || (W.hit_type & DAMAGE_STAB))
+			if(src.on || !src.ampoule)
+				new/obj/decal/cleanable/ash(user.loc)
+				boutput(user, "<span class='alert'>You cut open the [src] and a bunch of ash falls out!</span>")
+				qdel(src)
+				return
 
-		else if(((W.tool_flags & TOOL_CUTTING) || (W.hit_type & DAMAGE_CUT) || (W.hit_type & DAMAGE_STAB)) && src.on)
-			new/obj/decal/cleanable/ash(user.loc)
-			boutput(user, "<span class='alert'>You cut open the [src] and a bunch of ash falls out! Guess that wasn't the smartest idea.</span>")
+			var/obj/item/reagent_containers/ampoule/A = src.ampoule
+			boutput(user, "<span class='alert'>You cut open the [src] open and an ampoule falls out!</span>")
+			user.put_in_hand_or_drop(A)
 			qdel(src)
 
 		else
