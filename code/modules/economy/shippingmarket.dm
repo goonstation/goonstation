@@ -486,24 +486,6 @@
 
 		shipped_thing.throw_at(target, 100, 1)
 
-	proc/clear_path_to_market()
-		var/list/turf/to_clear = get_path_to_market()
-		for(var/turf/T as anything in to_clear)
-			//Wacks asteroids and skip normal turfs that belong
-			if(istype(T, /turf/simulated/wall/asteroid))
-				var/turf/simulated/wall/asteroid/AST = T
-				AST.destroy_asteroid(dropOre=FALSE)
-				continue
-			else if(!istype(T, /turf/unsimulated))
-				continue
-
-			//Uh, make sure we don't block the shipping lanes!
-			for(var/atom/A in T)
-				if(A.density)
-					qdel(A)
-
-			LAGCHECK(LAG_MED)
-
 	proc/get_path_to_market()
 		var/list/bounds = get_area_turfs(/area/supply/delivery_point)
 		bounds += get_area_turfs(/area/supply/sell_point)

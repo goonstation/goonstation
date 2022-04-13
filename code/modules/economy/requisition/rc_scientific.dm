@@ -1,5 +1,10 @@
 ABSTRACT_TYPE(/datum/req_contract/scientific)
-/datum/req_contract/scientific //adam savage dense gas voice: it's scientific!
+/**
+ * Scientific contracts are a class of standard (market-listed) contract.
+ * Of the contract types, these should typically lean more heavily on unusual materials or ones that require a sophisticated acquisition process.
+ * This doesn't have to be limited to what the science department puts out; if a researcher somewhere wants it, that could be a contract.
+ */
+/datum/req_contract/scientific
 	req_class = SCI_CONTRACT
 
 /datum/req_contract/scientific/internalaffairs //get it?
@@ -101,8 +106,8 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/rc_entry/reagent/cryox
 	name = "cryoxadone coolant"
-	chemname = "cryoxadone"
-	feemod = 120
+	chem_ids = "cryoxadone"
+	feemod = 60
 
 /datum/rc_entry/item/lambdarod
 	name = "Lambda phase-control rod"

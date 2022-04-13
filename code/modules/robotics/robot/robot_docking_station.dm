@@ -666,7 +666,7 @@
 		if (isdead(G.affecting))
 			boutput(user, "<span class='alert'>[G.affecting] is dead and cannot be forced inside.</span>")
 			return
-		if (G.state < GRAB_AGGRESSIVE)
+		if (G.state == GRAB_PASSIVE)
 			boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 			return
 

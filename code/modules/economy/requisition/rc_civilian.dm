@@ -1,5 +1,10 @@
 ABSTRACT_TYPE(/datum/req_contract/civilian)
-/datum/req_contract/civilian //masters of the three seashells
+/**
+ * Civilian contracts are a class of standard (market-listed) contract.
+ * These contracts should typically be somewhat "tame", revolving around what a station might need in normal, non-catastrophe operation.
+ * If you can picture a station or colony needing something for expansion, or under-provisioned it, it's a good candidate for a Civilian contract.
+ */
+/datum/req_contract/civilian
 	req_class = CIV_CONTRACT
 
 /datum/req_contract/civilian/event_catering
@@ -62,28 +67,28 @@ ABSTRACT_TYPE(/datum/rc_entry/item/caterfood)
 ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/reagent/caterdrink/appletini
 	name = "appletini"
-	chemname = "appletini"
-	feemod = 120
+	chem_ids = "appletini"
+	feemod = 60
 
 /datum/rc_entry/reagent/caterdrink/fruitpunch
 	name = "fruit punch"
-	chemname = "fruit_punch"
-	feemod = 120
+	chem_ids = "fruit_punch"
+	feemod = 60
 
 /datum/rc_entry/reagent/caterdrink/spacecuba
 	name = "space-cuba libre"
-	chemname = "libre"
-	feemod = 60
+	chem_ids = "libre"
+	feemod = 30
 
 /datum/rc_entry/reagent/caterdrink/margarita
 	name = "margarita"
-	chemname = "margarita"
-	feemod = 40
+	chem_ids = "margarita"
+	feemod = 20
 
 /datum/rc_entry/reagent/caterdrink/champagne
 	name = "champagne"
-	chemname = "champagne"
-	feemod = 48
+	chem_ids = "champagne"
+	feemod = 24
 
 
 /datum/req_contract/civilian/furnishing
@@ -130,8 +135,8 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/reagent/carpet
 	name = "liquid carpet"
-	chemname = "carpet"
-	feemod = 240
+	chem_ids = "carpet"
+	feemod = 120
 
 /datum/rc_entry/item/table
 	name = "table"
@@ -262,8 +267,8 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/reagent/water
 	name = "water"
-	chemname = "water"
-	feemod = 20
+	chem_ids = "water"
+	feemod = 10
 
 
 /datum/req_contract/civilian/birthdaybash
@@ -396,8 +401,8 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/reagent/cola
 	name = "cola"
-	chemname = "cola"
-	feemod = 24
+	chem_ids = "cola"
+	feemod = 12
 
 /datum/rc_entry/item/chaps
 	name = "assless chaps"
@@ -423,8 +428,8 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/reagent/glitter
 	name = "glitter"
-	chemname = "glitter"
-	feemod = 320
+	chem_ids = "glitter"
+	feemod = 160
 
 /datum/rc_entry/item/paperhat
 	name = "paper hat"

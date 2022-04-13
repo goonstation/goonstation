@@ -1071,7 +1071,7 @@
 				if (G.affecting == mode.kidnapping_target)		//Can only shove the target in, nobody else. target must be not dead and must have a kill or pin grab on em.
 					if (G.affecting.stat == 2)
 						boutput(user, "<span class='alert'>[G.affecting] is dead, you can't kidnap a dead person!</span>")
-					else if (G.state < 3)
+					else if (G.state < GRAB_AGGRESSIVE)
 						boutput(user, "<span class='alert'>You'll need a stronger grip to successfully kinapp this person!")
 					else
 						user.visible_message("<span class='notice'>[user] shoves [G.affecting] into [src]!</span></span>")

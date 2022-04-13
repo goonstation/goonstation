@@ -69,7 +69,7 @@
 		if (tutorial)
 			return
 		tutorial = new(src)
-		if (tutorial.tutorial_area)
+		if (tutorial.initial_turf)
 			tutorial.Start()
 		else
 			boutput(src, "<span class='alert'>Could not start tutorial! Please try again later or call Wire.</span>")

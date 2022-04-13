@@ -622,15 +622,15 @@ ABSTRACT_TYPE(/datum/job/research)
 	limit = 3
 	wages = 200
 	slot_back = list(/obj/item/storage/backpack/robotics)
-	slot_belt = list(/obj/item/device/pda2/medical/robotics)
+	slot_belt = list(/obj/item/storage/belt/roboticist/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/roboticist)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/robotics)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
-	slot_lhan = list(/obj/item/storage/toolbox/mechanical)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
-	slot_poc1 = list(/obj/item/reagent_containers/mender/brute)
+	slot_poc1 = list(/obj/item/device/pda2/medical/robotics)
+	slot_poc2 = list(/obj/item/reagent_containers/mender/brute)
 
 	New()
 		..()

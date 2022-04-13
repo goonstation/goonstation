@@ -23,7 +23,7 @@
 		..()
 		return
 
-	open()
+	open(entanglelogic, mob/user)
 		if (src.welded)
 			return
 		src.icon = 'icons/obj/large_storage.dmi'

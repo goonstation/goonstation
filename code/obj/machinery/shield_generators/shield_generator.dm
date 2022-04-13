@@ -4,6 +4,7 @@
 /area/station/shield_zone
 	icon_state = "shield_zone"
 	expandable = 0
+	do_not_irradiate = 1
 
 /* ==================== Generator ==================== */
 
