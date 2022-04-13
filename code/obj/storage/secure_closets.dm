@@ -10,11 +10,14 @@
 	var/bolted = TRUE
 	/// Can't be broken open with melee
 	var/reinforced = FALSE
+	var/obj/particle/attack/attack_particle
 
 	New()
 		..()
 		if (bolted)
 			anchored = 1
+		src.attack_particle = new /obj/particle/attack
+		src.attack_particle.icon = 'icons/mob/mob.dmi'
 
 	get_desc(dist)
 		. += "[reinforced ? "It's reinforced, only stronger firearms and explosives could break into this. " : ""] [bolted ? "It's bolted to the floor." : ""]"
@@ -63,6 +66,7 @@
 		if (reinforced)
 			// Prevent weakness to weak guns, shrapnel and NARCS
 			if (P.power <= 25)
+				hit_particle(TRUE)
 				return
 		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
 		if (damage < 1)
@@ -75,9 +79,27 @@
 				take_damage(damage, null, null, P)
 			if(D_ENERGY)
 				if (reinforced)
+					hit_particle(TRUE)
 					return
 				take_damage(damage / 2, null, null, P)
+
+		hit_particle(FALSE)
 		return
+
+	proc/hit_particle(var/block = FALSE)
+		if(ON_COOLDOWN(src, "locker_projectile_hit", 0.3 SECONDS))
+			return
+		if(block)
+			flick("block_spark_armor",src.attack_particle)
+		else
+			flick("block_spark",src.attack_particle)
+		src.attack_particle.alpha = 255
+		src.attack_particle.loc = src.loc
+		src.attack_particle.pixel_x = 0
+		src.attack_particle.pixel_y = 0
+		src.attack_particle.transform.Turn(rand(0,360))
+		SPAWN(0.2 SECONDS)
+			src.attack_particle.alpha = 0
 
 	proc/toggle_bolts(var/mob/M)
 		M.visible_message("<b>[M]</b> [src.bolted ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
