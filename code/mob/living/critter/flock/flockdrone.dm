@@ -457,6 +457,12 @@
 		if(istype(attacker))
 			src.harmedBy(attacker)
 
+/mob/living/critter/flock/drone/hitby(atom/movable/AM, datum/thrown_thing/thr)
+	. = ..()
+	var/mob/attacker = thr.user
+	if(istype(attacker) && !isflock(attacker))
+		src.harmedBy(attacker)
+
 /mob/living/critter/flock/drone/attackby(var/obj/item/I, var/mob/M)
 	// check whatever reagents are about to get dumped on us
 	var/has_harmful_chemicals = 0
