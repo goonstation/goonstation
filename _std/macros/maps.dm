@@ -3,10 +3,10 @@
 #define ismap(x) (map_setting == x)
 
 #ifdef UNDERWATER_MAP //should this be using z level defines? maybe not
-#define isrestrictedz(z) ((z) == 2 || (z) == 3  || (z) == 4)
+#define isrestrictedz(z) ((z) != 1 && (z) != 5 && (z) != 6)
 #define isghostrestrictedz(z) (isrestrictedz(z) || (z) == 5)
 #else
-#define isrestrictedz(z) ((z) == 2 || (z) == 4)
+#define isrestrictedz(z) ((z) != 1 && (z) != 3 && (z) != 5 && (z) != 6)
 #define isghostrestrictedz(z) (isrestrictedz(z))
 #endif
 #define isonstationz(z) ((z) == 1)
