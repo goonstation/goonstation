@@ -1223,6 +1223,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\worldgen\GenerateMining.dm"
 #include "code\modules\worldgen\PrefabRuntimeChecker.dm"
 #include "code\modules\worldgen\worldgen_parent.dm"
+#include "code\modules\worldgen\prefab\allocated.dm"
 #include "code\modules\worldgen\prefab\mapPrefab.dm"
 #include "code\modules\worldgen\prefab\mining.dm"
 #include "code\modules\worldgen\prefab\random_rooms.dm"

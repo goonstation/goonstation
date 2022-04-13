@@ -103,7 +103,7 @@ proc/get_map_prefabs(prefab_type)
 
 	if(typeinfo.stored_as_subtypes)
 		for(var/datum/mapPrefab/prefabType as anything in concrete_typesof(prefab_type, cache=FALSE))
-			var/datum/mapPrefab/prefab = new prefabType
+			var/datum/mapPrefab/prefab = get_singleton(prefabType)
 			prefab_cache[prefab_type][prefab.name] = prefab
 	else
 		for(var/base_path in list("assets/maps/[typeinfo.folder]/", "+secret/assets/[typeinfo.folder]/"))
