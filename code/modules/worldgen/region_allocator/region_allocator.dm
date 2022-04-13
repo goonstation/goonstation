@@ -88,12 +88,14 @@ var/global/datum/region_allocator/region_allocator = new
 		ASSERT(node.state == NODE_STATE_FREE)
 		node.set_state(NODE_STATE_USED)
 		src.node = node
+		global.region_allocator.allocated_regions[src] = 1
 
 	proc/free()
 		PRIVATE_PROC(TRUE)
 		ASSERT(node.state == NODE_STATE_USED)
 		node.free_up_from_used()
 		src.node = null
+		global.region_allocator.allocated_regions -= src
 
 	proc/turf_at(x, y)
 		RETURN_TYPE(/turf)
@@ -120,6 +122,7 @@ var/global/datum/region_allocator/region_allocator = new
 
 /datum/region_allocator
 	var/list/list/free_nodes = list()
+	var/list/datum/allocated_region/allocated_regions = list()
 
 	proc/add_z_level()
 		RETURN_TYPE(/datum/region_node)
