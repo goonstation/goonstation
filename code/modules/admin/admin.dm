@@ -2354,9 +2354,6 @@ var/global/noir = 0
 				var/mob/M = locate(href_list["target"])
 				if (!M)
 					return
-				if (M.ckey && M.ckey == usr.ckey)
-					tgui_alert(usr, "You cannot modify your own spacebux.")
-					return
 				var/spacebux = input(usr, "Current Spacebux: [M.client.persistent_bank]","Set Spacebux to...") as null|num
 				if (!spacebux)
 					return
@@ -5064,10 +5061,6 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set desc = "Respawn yourself"
 
-	if(!isobserver(usr))
-		boutput(usr, "You can't respawn unless you're dead!")
-		return
-
 	logTheThing("admin", src, null, "respawned themselves.")
 	logTheThing("diary", src, null, "respawned themselves.", "admin")
 	message_admins("[key_name(src)] respawned themselves.")
@@ -5076,6 +5069,8 @@ var/global/noir = 0
 
 	M.key = usr.client.key
 	M.Login()
+
+	usr.remove()
 
 // Handling noclip logic
 /client/Move(NewLoc, direct)

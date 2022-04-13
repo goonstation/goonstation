@@ -636,21 +636,21 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		playsound(src.loc, "rustle", 50, 1)
 		return ..(target)
 
-	throw_impact(atom/hit_atom)
-		if(hit_atom == usr)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		var/mob/user = thr.user
+		if(hit_atom == user)
 			if(prob(prob_clonk))
-				var/mob/living/carbon/human/user = usr
 				user.visible_message("<span class='alert'><B>[user] fumbles the catch and accidentally discharges [src]!</B></span>")
 				src.shoot_point_blank(user, user)
 				user.force_laydown_standup()
 			else
-				src.Attackhand(usr)
+				src.Attackhand(user)
 			return
 		else
 			var/mob/M = hit_atom
 			if(istype(M))
-				var/mob/living/carbon/human/user = usr
-				if(istype(user.wear_suit, /obj/item/clothing/suit/security_badge))
+				var/mob/living/carbon/human/H = user
+				if(istype(H) && istype(H.wear_suit, /obj/item/clothing/suit/security_badge))
 					src.silenced = 1
 					src.shoot_point_blank(M, M)
 					M.visible_message("<span class='alert'><B>[src] fires, hitting [M] point blank!</B></span>")

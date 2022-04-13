@@ -940,10 +940,7 @@
 
 //reason for having this proc is explained below
 /atom/proc/set_density(var/newdensity)
-	src.density = newdensity
-
-/atom/movable/set_density(var/newdensity)
-	..()
+	src.density = HAS_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE) ? 0 : newdensity
 
 // standardized damage procs
 

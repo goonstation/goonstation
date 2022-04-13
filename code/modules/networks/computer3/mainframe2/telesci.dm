@@ -1233,9 +1233,10 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (!src.host_id || !message)
 			return
 
+		if (ON_COOLDOWN(src, "hostmsg", 0.5 SECONDS))
+			return
+
 		if (file)
 			src.post_file(src.host_id,"data",message, file)
 		else
 			src.post_status(src.host_id,"command","term_message","data",message)
-
-		return

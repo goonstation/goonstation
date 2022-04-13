@@ -604,12 +604,13 @@
 							break
 
 			if (href_list["speed"])
+				var/upperbound = src.hacked ? 5 : 3
+				var/given_speed = text2num(href_list["speed"])
 				if (src.mode == "working")
 					boutput(usr, "<span class='alert'>You cannot alter the speed setting while the unit is working.</span>")
+				else if (given_speed >= 1 && given_speed <= upperbound)
+					src.speed = given_speed
 				else
-					var/upperbound = 3
-					if (src.hacked)
-						upperbound = 5
 					var/newset = input(usr,"Enter from 1 to [upperbound]. Higher settings consume more power","Manufacturing Speed") as num
 					newset = clamp(newset, 1, upperbound)
 					src.speed = newset
@@ -2441,16 +2442,17 @@
 	/datum/manufacture/shoes_white,
 	/datum/manufacture/civilian_headset,
 	/datum/manufacture/jumpsuit_assistant,
-	/datum/manufacture/jumpsuit,
-	/datum/manufacture/jumpsuit_white,
+	/datum/manufacture/jumpsuit_pink,
 	/datum/manufacture/jumpsuit_red,
+	/datum/manufacture/jumpsuit_orange,
 	/datum/manufacture/jumpsuit_yellow,
 	/datum/manufacture/jumpsuit_green,
-	/datum/manufacture/jumpsuit_pink,
 	/datum/manufacture/jumpsuit_blue,
-	/datum/manufacture/jumpsuit_brown,
+	/datum/manufacture/jumpsuit_purple,
 	/datum/manufacture/jumpsuit_black,
-	/datum/manufacture/jumpsuit_orange,
+	/datum/manufacture/jumpsuit,
+	/datum/manufacture/jumpsuit_white,
+	/datum/manufacture/jumpsuit_brown,
 	/datum/manufacture/pride_lgbt,
 	/datum/manufacture/pride_ace,
 	/datum/manufacture/pride_aro,
@@ -2466,12 +2468,13 @@
 	/datum/manufacture/dress_black,
 	/datum/manufacture/hat_black,
 	/datum/manufacture/hat_white,
-	/datum/manufacture/hat_blue,
-	/datum/manufacture/hat_yellow,
-	/datum/manufacture/hat_red,
-	/datum/manufacture/hat_green,
 	/datum/manufacture/hat_pink,
+	/datum/manufacture/hat_red,
+	/datum/manufacture/hat_yellow,
 	/datum/manufacture/hat_orange,
+	/datum/manufacture/hat_green,
+	/datum/manufacture/hat_blue,
+	/datum/manufacture/hat_purple,
 	/datum/manufacture/hat_tophat,
 	/datum/manufacture/backpack,
 	/datum/manufacture/backpack_red,
@@ -2551,14 +2554,15 @@
 	/datum/manufacture/jumpsuit_assistant,
 	/datum/manufacture/jumpsuit,
 	/datum/manufacture/jumpsuit_white,
+	/datum/manufacture/jumpsuit_pink,
 	/datum/manufacture/jumpsuit_red,
+	/datum/manufacture/jumpsuit_orange,
 	/datum/manufacture/jumpsuit_yellow,
 	/datum/manufacture/jumpsuit_green,
-	/datum/manufacture/jumpsuit_pink,
 	/datum/manufacture/jumpsuit_blue,
-	/datum/manufacture/jumpsuit_brown,
+	/datum/manufacture/jumpsuit_purple,
 	/datum/manufacture/jumpsuit_black,
-	/datum/manufacture/jumpsuit_orange,
+	/datum/manufacture/jumpsuit_brown,
 	/datum/manufacture/pride_lgbt,
 	/datum/manufacture/pride_ace,
 	/datum/manufacture/pride_aro,
@@ -2570,15 +2574,15 @@
 	/datum/manufacture/pride_pan,
 	/datum/manufacture/pride_poly,
 	/datum/manufacture/pride_trans,
-	/datum/manufacture/suit_black,
 	/datum/manufacture/hat_black,
 	/datum/manufacture/hat_white,
-	/datum/manufacture/hat_blue,
-	/datum/manufacture/hat_yellow,
-	/datum/manufacture/hat_red,
-	/datum/manufacture/hat_green,
 	/datum/manufacture/hat_pink,
+	/datum/manufacture/hat_red,
+	/datum/manufacture/hat_yellow,
 	/datum/manufacture/hat_orange,
+	/datum/manufacture/hat_green,
+	/datum/manufacture/hat_blue,
+	/datum/manufacture/hat_purple,
 	/datum/manufacture/hat_tophat)
 
 	hidden = list(/datum/manufacture/id_card_gold,

@@ -240,6 +240,8 @@
 	if (animation_duration <= 0)
 		return
 
+	if (check_target_immunity(src))
+		return 0
 	// Target checks.
 	var/mod_animation = 0 // Note: these aren't multipliers.
 	var/mod_weak = 0

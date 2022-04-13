@@ -555,7 +555,7 @@ proc/generate_space_color()
 
 	var/new_type = ispath(what) ? what : text2path(what) //what what, what WHAT WHAT WHAAAAAAAAT
 	if (new_type)
-		if(ispath(new_type, /turf/space) && delay_space_conversion()) return
+		if(ispath(new_type, /turf/space) && !ispath(new_type, /turf/space/fluid) && delay_space_conversion()) return
 		new_turf = new new_type(src)
 		if (!isturf(new_turf))
 			if (delay_space_conversion()) return

@@ -339,7 +339,7 @@
 	if (ticker.ai_law_rack_manager == null)
 		boutput(usr, "Oh god somehow the law rack manager is null. This is real bad. Contact an admin. You are an admin? Oh no...")
 	else
-		boutput(usr,ticker.ai_law_rack_manager.format_for_logs())
+		boutput(usr,ticker.ai_law_rack_manager.format_for_logs(round_end = TRUE))
 	return
 
 /client/proc/cmd_admin_reset_ai()
@@ -1616,8 +1616,7 @@
 		message_admins("[key_name(src)] moved [selection.ckey] into [M].")
 		logTheThing("admin", src, selection, "ckey transferred [constructTarget(selection,"admin")]")
 		if (istype(selection.mob,/mob/dead/target_observer))
-			var/mob/dead/target_observer/O = src
-			O.stop_observing()
+			qdel(src)
 
 		M.client = selection
 
@@ -1955,8 +1954,7 @@
 		return
 
 	if (istype(src.mob, /mob/dead/target_observer))
-		var/mob/dead/target_observer/TO = src.mob
-		TO.stop_observing()
+		qdel(src)
 
 	var/mob/dead/observer/O = src.mob
 	var/client/C
