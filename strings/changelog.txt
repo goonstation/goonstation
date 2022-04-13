@@ -1,5 +1,9 @@
 
 (t)tue apr 12 22
+(u)Sovexe
+(p)7984
+(e)🆕🎨|feature, sprites
+(*)The trench can now spawn patches of vibrantly colored bioluminescent algae on its walls
 (u)None
 (p)8166
 (e)|
