@@ -68,28 +68,33 @@
 			if (P.power <= 25)
 				hit_particle(TRUE)
 				return
-		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
+		var/reduced_power
+		if (P.proj_data.damage_type != D_ENERGY)
+			reduced_power = round(P.power * 0.8)
+		else
+			reduced_power = round(P.power * 0.4)
+		damage = round((reduced_power*P.proj_data.ks_ratio), 1.0)
 		if (damage < 1)
 			return
 
 		switch(P.proj_data.damage_type)
-			if(D_KINETIC)
+			if (D_KINETIC)
 				take_damage(damage, null, null, P)
-			if(D_PIERCING)
+			if (D_PIERCING)
 				take_damage(damage, null, null, P)
-			if(D_ENERGY)
+			if (D_ENERGY)
 				if (reinforced)
 					hit_particle(TRUE)
 					return
-				take_damage(damage / 2, null, null, P)
+				take_damage(damage, null, null, P)
 
 		hit_particle(FALSE)
 		return
 
 	proc/hit_particle(var/block = FALSE)
-		if(ON_COOLDOWN(src, "locker_projectile_hit", 0.3 SECONDS))
+		if (ON_COOLDOWN(src, "locker_projectile_hit", 0.3 SECONDS))
 			return
-		if(block)
+		if (block)
 			flick("block_spark_armor",src.attack_particle)
 		else
 			flick("block_spark",src.attack_particle)
