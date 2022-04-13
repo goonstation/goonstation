@@ -997,12 +997,14 @@
 			if (length(space_overlays))
 				var/list/color_vals = bioluminescent_algae?.get_color(src)
 				if (length(color_vals))
-					UpdateOverlays(image('icons/obj/objects.dmi', "vine-light1"), "glow_vine")
-					add_medium_light("glow_vine", color_vals)
+					var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
+					algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
+					UpdateOverlays(algea, "glow_algae")
+					add_medium_light("glow_algae", color_vals)
 
 		destroy_asteroid(dropOre)
-			ClearSpecificOverlays("glow_vine")
-			remove_medium_light("glow_vine")
+			ClearSpecificOverlays("glow_algae")
+			remove_medium_light("glow_algae")
 			var/list/turf/neighbors = getNeighbors(src, alldirs)
 			for (var/turf/T as anything in neighbors)
 				if (!length(T.medium_lights)) continue
