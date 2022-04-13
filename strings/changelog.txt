@@ -3,7 +3,7 @@
 (u)Sovexe
 (p)7984
 (e)🆕🎨|feature, sprites
-(*)The trench can now spawn patches of vibrantly colored bioluminescent algae on its walls
+(*)The trench can now spawn patches of vibrantly colored bioluminescent algae on its walls. Sprite by Waffleloffle
 (u)None
 (p)8166
 (e)|
