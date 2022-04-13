@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 
 /datum/req_contract/aid/wrecked
 	//name = "Breach Recovery"
-	payout = 2000
+	payout = 4000
 	var/list/namevary = list("Breach Recovery","Breach Response","Integrity Failure","Crisis Response","Disaster Assistance","Disaster Response")
 	var/list/desc_placejob = list("research","mining","security","cargo transfer")
 	var/list/desc_placetype = list("vessel","ship","station","outpost")
@@ -33,49 +33,49 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 /datum/rc_entry/item/spacesuit
 	name = "space suit"
 	typepath = /obj/item/clothing/suit/space
-	feemod = 1260
+	feemod = 2520
 
 /datum/rc_entry/item/spacehelmet
 	name = "space helmet"
 	typepath = /obj/item/clothing/head/helmet/space
-	feemod = 1260
+	feemod = 2520
 
 /datum/rc_entry/stack/steelsheet
 	name = "NT-spec steel sheet"
 	typepath = /obj/item/sheet/steel
-	feemod = 15
+	feemod = 30
 
 ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 /datum/rc_entry/item/basictool/crowbar
 	name = "crowbar"
 	typepath = /obj/item/crowbar
-	feemod = 130
+	feemod = 260
 
 /datum/rc_entry/item/basictool/screwdriver
 	name = "screwdriver"
 	typepath = /obj/item/screwdriver
-	feemod = 140
+	feemod = 280
 
 /datum/rc_entry/item/basictool/wirecutters
 	name = "wirecutters"
 	typepath = /obj/item/wirecutters
-	feemod = 140
+	feemod = 280
 
 /datum/rc_entry/item/basictool/wrench
 	name = "wrench"
 	typepath = /obj/item/wrench
-	feemod = 140
+	feemod = 280
 
 /datum/rc_entry/item/basictool/welder
 	name = "welding tool"
 	typepath = /obj/item/weldingtool
-	feemod = 220
+	feemod = 440
 
 
 
 /datum/req_contract/aid/triage
 	//name = "Medical Aid"
-	payout = 3000
+	payout = 6000
 	var/list/namevary = list("Medical Aid","Medical Emergency","Triage Support","Aid Request","Critical Condition")
 	var/list/desc_helpsite = list("A medical facility","An affiliated station's medical bay","A triage center","A medical outpost","Our nearest station")
 	var/list/desc_tense = list("to assist with","after heavy load due to","to restock after")
@@ -106,7 +106,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 				src.rc_entries += rc_buildentry(S,rand(1,4))
 
 		if(prob(80))
-			src.rc_entries += rc_buildentry(/datum/rc_entry/item/bandage,rand(3,8))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/defib,rand(1,4))
 		else
 			src.rc_entries += rc_buildentry(/datum/rc_entry/item/hypospray,rand(2,5))
 
@@ -118,7 +118,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 
 ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/item/surgical
-	feemod = 240
+	feemod = 480
 
 	scalpel
 		name = "scalpel"
@@ -126,7 +126,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 	saw
 		name = "circular saw"
-		feemod = 250
+		feemod = 500
 		typepath = /obj/item/circular_saw
 
 	scissors
@@ -143,34 +143,34 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 	stapler
 		name = "staple gun"
-		feemod = 330
+		feemod = 660
 		typepath = /obj/item/staple_gun
 
-/datum/rc_entry/item/bandage
-	name = "bandage roll"
-	feemod = 210
-	typepath = /obj/item/bandage
+/datum/rc_entry/item/defib
+	name = "defibrillator"
+	feemod = 1750
+	typepath = /obj/item/robodefibrillator
 
 /datum/rc_entry/item/lgloves
 	name = "latex glove pair"
-	feemod = 150
+	feemod = 300
 	typepath = /obj/item/clothing/gloves/latex
 
 /datum/rc_entry/item/hypospray
 	name = "hypospray"
-	feemod = 500
+	feemod = 1000
 	typepath = /obj/item/reagent_containers/hypospray
 
 /datum/rc_entry/item/med_analyzer
 	name = "health analyzer"
-	feemod = 800
+	feemod = 1600
 	typepath = /obj/item/device/analyzer/healthanalyzer
 
 
 
 /datum/req_contract/aid/geeksquad
 	//name = "Computer Failure"
-	payout = 2500
+	payout = 5000
 	var/list/namevary = list("Systems Failure","Short Circuit","Computer Overload","Electronics Failure","Systems Breakdown")
 	var/list/desc_wherebork = list("research","mining","security","cargo transfer","communications","deep-space survey")
 	var/list/desc_whobork = list("vessel","ship","station","outpost")
@@ -225,50 +225,50 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/item/mainboard
 	name = "computer mainboard"
 	typepath = /obj/item/motherboard
-	feemod = 1240
+	feemod = 2480
 
 /datum/rc_entry/item/cardscan
 	name = "ID scanner module"
 	typepath = /obj/item/peripheral/card_scanner
 	exactpath = TRUE
-	feemod = 1120
+	feemod = 2240
 
 /datum/rc_entry/item/netcard
 	name = "wired network card"
 	typepath = /obj/item/peripheral/network/powernet_card
 	exactpath = TRUE
-	feemod = 1080
+	feemod = 2160
 
 /datum/rc_entry/item/interfaceboard
 	name = "AI interface board"
 	typepath = /obj/item/ai_interface
-	feemod = 2500
+	feemod = 5000
 
 /datum/rc_entry/item/t_ray
 	name = "T-ray scanner"
 	typepath = /obj/item/device/t_scanner
-	feemod = 680
+	feemod = 1360
 
 /datum/rc_entry/item/soldering
 	name = "soldering iron"
 	typepath = /obj/item/electronics/soldering
-	feemod = 520
+	feemod = 1040
 
 /datum/rc_entry/item/multitool
 	name = "multitool"
 	typepath = /obj/item/device/multitool
-	feemod = 900
+	feemod = 1800
 
 /datum/rc_entry/stack/cable
 	name = "lengths of electrical cabling"
 	typepath = /obj/item/cable_coil
-	feemod = 30
+	feemod = 60
 
 
 
 /datum/req_contract/aid/supplyshort
 	//name = "Supply Chain Failure"
-	payout = 2400
+	payout = 4800
 	var/list/namevary = list("Urgent Restock","Supply Crisis","Supply Chain Failure","Short Stock","Emergency Resupply")
 	var/list/desc_placejob = list("research","mining","hydroponics","civilian","Nanotrasen")
 	var/list/desc_place = list("vessel","station","outpost","colony")
@@ -322,12 +322,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/stack/char
 	name = "char ore"
 	commodity = /datum/commodity/ore/char
-	feemod = 50
+	feemod = 100
 
 /datum/rc_entry/reagent/fuel
 	name = "welding-grade liquid fuel"
 	chemname = "fuel"
-	feemod = 6
+	feemod = 12
 
 /datum/rc_entry/reagent/coffee
 	name = "coffee"
@@ -338,13 +338,13 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 		"expresso",
 		"energydrink"
 	)
-	feemod = 10
+	feemod = 20
 
 /datum/rc_entry/item/medherb
 	name = "medical herb"
 	typepath = /obj/item/plant/herb
 	commodity = /datum/commodity/herbs
-	feemod = 160
+	feemod = 320
 	var/list/herblist = list()
 
 	alpha

@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 
 /datum/req_contract/scientific/internalaffairs //get it?
 	//name = "Don't Ask Too Many Questions"
-	payout = 2500
+	payout = 5000
 	weight = 80
 	var/list/namevary = list("Organ Analysis","Organ Research","Biolab Supply","Biolab Partnership","ERROR: CANNOT VERIFY ORIGIN")
 	var/list/desc_begins = list("conducting","performing","beginning","initiating","seeking supplies for","organizing")
@@ -25,7 +25,7 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 
 ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/item/organ
-	feemod = 400
+	feemod = 800
 	exactpath = TRUE
 
 /datum/rc_entry/item/organ/brain
@@ -48,7 +48,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/req_contract/scientific/spectrometry
 	//name = "Totally Will Not Result In A Resonance Cascade"
-	payout = 1200
+	payout = 2400
 	var/list/namevary = list("Beamline Calibration","Spectral Analysis","Chromatic Analysis","Refraction Survey")
 	var/list/desc_wherestudy = list(
 		"Optics calibration laboratory",
@@ -86,35 +86,35 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/item/lens
 	name = "nano-fabricated lens"
 	typepath = /obj/item/lens
-	feemod = 1000
+	feemod = 2000
 
 /datum/rc_entry/stack/gemstone
 	name = "non-anomalous gemstone"
 	typepath = /obj/item/raw_material/gemstone
-	feemod = 2500
+	feemod = 5000
 
 /datum/rc_entry/stack/telec
 	name = "telecrystal"
 	commodity = /datum/commodity/ore/telecrystal
 	typepath_alt = /obj/item/material_piece/telecrystal
-	feemod = 1240
+	feemod = 2480
 
 /datum/rc_entry/reagent/cryox
 	name = "cryoxadone coolant"
 	chemname = "cryoxadone"
-	feemod = 60
+	feemod = 120
 
 /datum/rc_entry/item/lambdarod
 	name = "Lambda phase-control rod"
 	typepath = /obj/item/interdictor_rod
 	exactpath = TRUE
-	feemod = 6000
+	feemod = 12000
 
 
 
 /datum/req_contract/scientific/botanical
 	//name = "Feed Me, Seymour (Butz)"
-	payout = 2500
+	payout = 5000
 	var/list/namevary = list("Botanical Prototyping","Hydroponic Acclimation","Cultivar Propagation","Plant Genotype Study")
 	var/list/desc_wherestudy = list(
 		"An affiliated hydroponics lab",
@@ -152,7 +152,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/seed/scientific
 	name = "genetically fussy seed"
 	cropname = "Durian"
-	feemod = 4000
+	feemod = 8000
 	var/crop_genpath = /datum/plant
 
 	fruit
