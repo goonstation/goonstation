@@ -21,6 +21,7 @@
 	icon_state = "railgun"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	health = 10
 	w_class = W_CLASS_SMALL
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)

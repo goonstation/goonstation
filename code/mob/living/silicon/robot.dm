@@ -47,7 +47,6 @@
 	var/obj/item/device/radio/ai_radio = null // Radio used for when this is an AI-controlled shell.
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/machinery/camera/camera = null
-	var/obj/item/ai_interface/ai_interface = null
 	var/obj/item/robot_module/module = null
 	var/list/upgrades = list()
 	var/max_upgrades = 3
@@ -188,8 +187,8 @@
 				available_ai_shells += src
 			for_by_tcl(AI, /mob/living/silicon/ai)
 				boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
-			if (!src.ai_interface)
-				src.ai_interface = new(src)
+			if (!src.part_head.ai_interface)
+				src.part_head.ai_interface = new(src)
 
 		if (!src.dependent && !src.shell)
 			boutput(src, "<span class='notice'>Your icons have been generated!</span>")
@@ -215,7 +214,7 @@
 			src.camera.network = "Robots"
 
 		SPAWN(1.5 SECONDS)
-			if (!src.part_head.brain && src.key && !(src.dependent || src.shell || src.ai_interface))
+			if (!src.part_head.brain && src.key && !(src.dependent || src.shell || src.part_head.ai_interface))
 				var/obj/item/organ/brain/B = new /obj/item/organ/brain(src)
 				B.owner = src.mind
 				B.icon_state = "borg_brain"
@@ -259,7 +258,12 @@
 			var/turf/T = get_turf(src)
 			for(var/obj/item/parts/robot_parts/R in src.contents)
 				R.set_loc(T)
-			new /obj/item/parts/robot_parts/robot_frame(T)
+			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
+
+			if (src.emagged)
+				frame.emagged = TRUE
+			if (src.syndicate)
+				frame.syndicate = TRUE
 
 			src.ghostize()
 			qdel(src)
@@ -926,7 +930,8 @@
 			src.compborg_lose_limb(PART)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		if(isshell(src) || src.ai_interface)
+		if(isshell(src) || src.part_head.ai_interface)
+			boutput(user, "<span class='alert'>Emagging an AI shell wouldn't work, their laws can't be overwritten!</span>")
 			return 0 //emags don't do anything to AI shells
 
 		if (!src.emagged)	// trying to unlock with an emag card
@@ -937,7 +942,7 @@
 					boutput(user, "You emag [src]'s interface.")
 				src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
 				src.emagged = 1
-				logTheThing("station", src, src.law_rack_connection, "[src.name] is emagged by [user] and loses connection to rack.")
+				logTheThing("station", src, null, "[src.name] is emagged by [user] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
 				src.law_rack_connection = null //emagging removes the connection for laws, essentially nulling the laws and allowing the emagger to connect this borg to a different rack
 				if (src.mind && !src.mind.special_role) // Preserve existing antag role (if any).
 					src.mind.special_role = ROLE_EMAGGED_ROBOT
@@ -1073,7 +1078,7 @@
 			if(!opened)
 				boutput(user, "You need to open [src.name]'s cover before you can change their law rack link.")
 				return
-			if(isshell(src) || src.ai_interface)
+			if(isshell(src) || src.part_head.ai_interface)
 				boutput(user,"You need to use this on the AI core directly!")
 				return
 
@@ -1089,13 +1094,13 @@
 			if(linker.linked_rack in ticker.ai_law_rack_manager.registered_racks)
 				if(src.emagged)
 					boutput(user, "The link port sparks violently! It didn't work!")
-					logTheThing("station", src, null, "[user] tried to connect [src] to the rack at [log_loc(src.law_rack_connection)] but they are emagged, so it failed.")
+					logTheThing("station", src, null, "[constructName(user)] tried to connect [src] to the rack [constructName(src.law_rack_connection)] but they are emagged, so it failed.")
 					elecflash(src,power=2)
 				if(src.law_rack_connection)
 					var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
 					if (raw == "Yes")
 						src.law_rack_connection = linker.linked_rack
-						logTheThing("station", src, src.law_rack_connection, "[src.name] is connected to the rack at [log_loc(src.law_rack_connection)] with a linker by [user]")
+						logTheThing("station", src, src.law_rack_connection, "[src.name] is connected to the rack [constructName(src.law_rack_connection)] with a linker by [constructName(user)]")
 						var/area/A = get_area(src.law_rack_connection)
 						boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
 						src.playsound_local(src, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
@@ -1219,7 +1224,7 @@
 			if (!src.part_head)
 				boutput(user, "<span class='alert'>That cyborg doesn't even have a head. Where are you going to put [W]?</span>")
 				return
-			if (src.part_head.brain || src.ai_interface)
+			if (src.part_head.brain || src.part_head.ai_interface)
 				boutput(user, "<span class='alert'>There's already something in the head compartment! Use a wrench to remove it before trying to insert something else.</span>")
 			else
 				var/obj/item/organ/brain/B = W
@@ -1255,17 +1260,15 @@
 			if (!src.part_head)
 				boutput(user, "<span class='alert'>That cyborg doesn't even have a head. Where are you going to put [W]?</span>")
 				return
-			if (src.part_head.brain || src.ai_interface)
+			if (src.part_head.brain || src.part_head.ai_interface)
 				boutput(user, "<span class='alert'>There's already something in the head compartment! Use a wrench to remove it before trying to insert something else.</span>")
 			else
 				var/obj/item/ai_interface/I = W
 				user.drop_item()
 				user.visible_message("<span class='notice'>[user] inserts [W] into [src]'s head.</span>")
 				W.set_loc(src)
-				src.ai_interface = I
-				if (src.part_head)
-					src.part_head.ai_interface = I
-					I.set_loc(src.part_head)
+				src.part_head.ai_interface = I
+				I.set_loc(src.part_head)
 				if (!(src in available_ai_shells))
 					if(isnull(src.ai_radio))
 						src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
@@ -1302,7 +1305,7 @@
 			var/action = input("What do you want to do?", "Cyborg Deconstruction") in actions
 			if (!action) return
 			if (action == "Do nothing") return
-			if (get_dist(src.loc,user.loc) > 1 && (!user.bioHolder || !user.bioHolder.HasEffect("telekinesis")))
+			if (BOUNDS_DIST(src.loc, user.loc) > 0 && (!user.bioHolder || !user.bioHolder.HasEffect("telekinesis")))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
 				return
 
@@ -1464,10 +1467,11 @@
 	attack_hand(mob/user)
 
 		var/list/available_actions = list()
-		if (src.brainexposed && src.part_head.brain)
-			available_actions.Add("Remove the Brain")
-		if (src.brainexposed && src.ai_interface)
-			available_actions.Add("Remove the AI Interface")
+		if (src.part_head)
+			if (src.brainexposed && src.part_head.brain)
+				available_actions.Add("Remove the Brain")
+			if (src.brainexposed && src.part_head.ai_interface)
+				available_actions.Add("Remove the AI Interface")
 		if (src.opened && !src.wiresexposed)
 			if (src.upgrades.len)
 				available_actions.Add("Remove an Upgrade")
@@ -1481,7 +1485,7 @@
 			var/action = input("What do you want to do?", "Cyborg Maintenance") as null|anything in available_actions
 			if (!action)
 				return
-			if (get_dist(src.loc,user.loc) > 1 && !src.bioHolder?.HasEffect("telekinesis"))
+			if (BOUNDS_DIST(src.loc, user.loc) > 0 && !src.bioHolder?.HasEffect("telekinesis"))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
 				return
 
@@ -1491,7 +1495,7 @@
 					src.eject_brain(user)
 
 				if ("Remove the AI Interface")
-					if (!src.ai_interface)
+					if (!src.part_head?.ai_interface)
 						return
 
 					src.visible_message("<span class='alert'>[user] removes [src]'s AI interface!</span>")
@@ -1501,13 +1505,13 @@
 					for (var/obj/item/roboupgrade/UPGR in src.contents)
 						UPGR.upgrade_deactivate(src)
 
-					user.put_in_hand_or_drop(src.ai_interface)
+					user.put_in_hand_or_drop(src.part_head.ai_interface)
 					src.radio = src.default_radio
 					if (src.module && istype(src.module.radio))
 						src.radio = src.module.radio
 					src.ears = src.radio
 					src.radio.set_loc(src)
-					src.ai_interface = null
+					src.part_head.ai_interface = null
 					if(src.ai_radio)
 						qdel(src.ai_radio)
 						src.ai_radio = null
@@ -1608,17 +1612,17 @@
 		// Stick the player (if one exists) in a ghost mob
 		if (src.mind)
 			var/mob/dead/observer/newmob = src.ghostize()
-			if (!newmob || !istype(newmob, /mob/dead/observer))
-				return
-			newmob.corpse = null // Otherwise they could return to a brainless body.And that is weird.
-			newmob.mind.brain = src.part_head.brain
-			src.part_head.brain.owner = newmob.mind
+			if (newmob)
+				newmob.corpse = null // Otherwise they could return to a brainless body.And that is weird.
+				newmob.mind.brain = src.part_head.brain
+				src.part_head.brain.owner = newmob.mind
 
 		// Brain box is forced open if it wasn't already (suicides, killswitch)
 		src.locked = 0
 		src.locking = 0
 		src.opened = 0
 		src.brainexposed = 1
+
 		if (user)
 			user.put_in_hand_or_drop(src.part_head.brain)
 		else
@@ -2685,7 +2689,7 @@
 		UpdateOverlays(src.i_leg_decor, "leg_decor")
 		UpdateOverlays(src.i_arm_decor, "arm_decor")
 
-		if (src.brainexposed)
+		if (src.brainexposed && src.part_head)
 			if (src.part_head.brain)
 				src.i_details.icon_state = "openbrain"
 			else

@@ -24,9 +24,13 @@
 		allowed_types -= DATA_INPUT_NUM_ADJUST
 
 	var/input = null 	// The input from the user- usually text, but might be a file or something.
-	var/selected_type = input(custom_type_title || "Which input type?", custom_type_message || "Input Type Selection", default_type) as null|anything in allowed_types //TODO make this a TGUI list once we can indicate defaults on those
+	var/selected_type
+	if (length(allowed_types) == 1)
+		selected_type = allowed_types[1]
+	else
+		selected_type = input(custom_type_title || "Which input type?", custom_type_message || "Input Type Selection", default_type) as null|anything in allowed_types //TODO make this a TGUI list once we can indicate defaults on those
 
-	if (selected_type != default_type) //clear the default if we aren't using the suggested type
+	if (selected_type != default_type && selected_type != "JSON") //clear the default if we aren't using the suggested type
 		default = null
 
 	switch(selected_type)
@@ -56,13 +60,13 @@
 		if (DATA_INPUT_ICON)
 			input = input(custom_message  || "Select icon:", custom_title) as null|icon
 			if (alert("Would you like to associate an icon_state with the icon?", "icon_state", "Yes", "No") == "Yes")
-				var/state = input(null, "Enter icon_state:") as null|text
+				var/state = input("Enter icon_state:", "icon_state") as null|text
 				if (state)
 					input = icon(input, state)
 
 		if (DATA_INPUT_BOOL)
 			//lines written by the utterly insane
-			input = alert(custom_message + (!isnull(default) ? "(Default: [default ? "True" : "False"])" : null), custom_title || "True or False?", "True", "False") == "True" ? TRUE : FALSE
+			input = alert(custom_message  || "True or False?", custom_title + (!isnull(default) ? "(Default: [default ? "True" : "False"])" : null), "True", "False") == "True" ? TRUE : FALSE
 
 		if (DATA_INPUT_FILE)
 			input = input(custom_message  || "Select file:", custom_title) as null|file
@@ -89,6 +93,8 @@
 
 		if (DATA_INPUT_JSON)
 			input = input(custom_message || "Enter JSON:", custom_title, json_encode(default)) as null|text
+			if(isnull(input))
+				return
 			input = json_decode(input)
 
 		if (DATA_INPUT_REF)
@@ -217,7 +223,13 @@
 /client/proc/suggest_input_type(var/var_value, var/varname = null)
 	var/default = null
 
-	if (istype(var_value, /matrix))
+	if (varname == "particles")
+		default = DATA_INPUT_PARTICLE_EDITOR
+
+	else if (varname == "filters")
+		default = DATA_INPUT_FILTER_EDITOR
+
+	else if (istype(var_value, /matrix))
 		boutput(src, "Variable appears to be <b>MATRIX</b>.")
 		default = DATA_INPUT_MATRIX
 

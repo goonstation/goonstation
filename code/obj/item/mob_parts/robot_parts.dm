@@ -1020,7 +1020,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 				return
 			if (action == "Do nothing")
 				return
-			if (get_dist(src.loc,user.loc) > 1 && !user.bioHolder.HasEffect("telekinesis"))
+			if (BOUNDS_DIST(src.loc, user.loc) > 0 && !user.bioHolder.HasEffect("telekinesis"))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
 				return
 
@@ -1102,21 +1102,14 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		borg.name = "Cyborg"
 		borg.real_name = "Cyborg"
 
-		if (src.head)
-			if (src.head.ai_interface)
-				borg.ai_interface = src.head.ai_interface
-			else if (src.head.brain)
-				borg.death()
-				qdel(src)
-				return
-		else
+		if (!src.head)
 			// how the fuck did you even do this
 			stack_trace("Attempted to finish a cyborg from borg frame [src] (\ref[src]) without a head. That's bad.")
 			borg.death()
 			qdel(src)
 			return
 
-		if(borg.part_head?.brain?.owner?.key)
+		if(borg.part_head.brain?.owner?.key)
 			if(borg.part_head.brain.owner.current)
 				borg.gender = borg.part_head.brain.owner.current.gender
 				if(borg.part_head.brain.owner.current.client)
@@ -1136,7 +1129,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			borg.part_head.brain.owner.transfer_to(borg)
 			if (isdead(M) && !isliving(M))
 				qdel(M)
-		else if (borg.ai_interface)
+
+		else if (src.head.ai_interface)
 			if (!(borg in available_ai_shells))
 				available_ai_shells += borg
 			for_by_tcl(AI, /mob/living/silicon/ai)
@@ -1146,6 +1140,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			boutput(usr, "<span class='notice'>You activate the frame and a audible beep emanates from the head.</span>")
 			playsound(src, "sound/weapons/radxbow.ogg", 40, 1)
 		else
+			stack_trace("We finished cyborg [borg] (\ref[borg]) from frame [src] (\ref[src]) with a brain, but somehow lost the brain??? Where did it go")
 			borg.death()
 			qdel(src)
 			return
@@ -1154,8 +1149,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			borg.cell = src.chest.cell
 			borg.cell.set_loc(borg)
 
-		if (borg.mind && !borg.ai_interface)
-			borg.unlock_medal("Adjutant borgnline", 1)
+		if (borg.mind && !borg.part_head.ai_interface)
+			borg.unlock_medal("Adjutant Online", 1)
 			borg.set_loc(get_turf(src))
 
 			boutput(borg, "<B>You are playing a Robot. The Robot can interact with most electronic objects in its view point.</B>")

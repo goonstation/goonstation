@@ -509,7 +509,7 @@
 	///////////////////////////////////
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
-		if(get_dist(O,user) > 1) return
+		if(BOUNDS_DIST(O, user) > 0) return
 		if(!isliving(user)) return
 		if(!src.scan)
 			boutput(user, "<span class='alert'>You have to scan your ID first!</span>")

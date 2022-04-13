@@ -94,7 +94,11 @@
 	if (!I)
 		return 0
 	if (!src.put_in_hand(I))
+		#ifdef UPSCALED_MAP
+		I.set_loc(get_turf(src))
+		#else
 		I.set_loc(get_turf(I))
+		#endif
 		return 1
 	return 1
 
@@ -236,6 +240,8 @@
 	if (animation_duration <= 0)
 		return
 
+	if (check_target_immunity(src))
+		return 0
 	// Target checks.
 	var/mod_animation = 0 // Note: these aren't multipliers.
 	var/mod_weak = 0

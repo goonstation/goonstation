@@ -62,7 +62,7 @@
 	if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket))
 		return ..()
 
-	if (get_dist(usr, src) > 1 || get_dist(usr, over_object) > 1)
+	if (BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
 		boutput(usr, "<span class='alert'>That's too far!</span>")
 		return
 

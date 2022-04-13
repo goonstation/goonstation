@@ -40,10 +40,10 @@
 	src.botcard = new /obj/item/card/id(src)
 	if(src.syndicate)
 		src.law_rack_connection = ticker?.ai_law_rack_manager.default_ai_rack_syndie
-		logTheThing("station", src, src.law_rack_connection, "New cyborg [src.name] connects to default SYNDICATE rack at [log_loc(src.law_rack_connection)]")
+		logTheThing("station", src, null, "New cyborg [src] connects to default SYNDICATE rack [constructName(src.law_rack_connection)]")
 	else
 		src.law_rack_connection = ticker?.ai_law_rack_manager.default_ai_rack
-		logTheThing("station", src, src.law_rack_connection, "New cyborg [src.name] connects to default rack at [log_loc(src.law_rack_connection)]")
+		logTheThing("station", src, null, "New cyborg [src] connects to default rack [constructName(src.law_rack_connection)]")
 
 /mob/living/silicon/disposing()
 	req_access = null
@@ -77,7 +77,7 @@
 		return
 	src.return_mainframe()
 	mainframe.eye_view()
-	mainframe.eyecam.set_loc(src)
+	mainframe.eyecam.set_loc(get_turf(src))
 
 // Moves this down from ai.dm so AI shells and AI-controlled cyborgs can use it too.
 // Also made it a little more functional and less buggy (Convair880).
@@ -576,7 +576,7 @@ var/global/list/module_editors = list()
 		logTheThing("station", src, null, "[src] was made a Syndicate robot at [log_loc(src)]. [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
 
 		src.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack_syndie
-		logTheThing("station", src, src.law_rack_connection, "[src.name] is connected to the default Syndicate rack at [log_loc(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+		logTheThing("station", src, null, "[src.name] is connected to the default Syndicate rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
 		src.show_laws()
 
 		if (!src.mind.special_role) // Preserve existing antag role (if any).
@@ -630,7 +630,7 @@ var/global/list/module_editors = list()
 	SHOW_ROGUE_BORG_REMOVED_TIPS(src)
 
 	src.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack
-	logTheThing("station", src, src.law_rack_connection, "[src.name] is connected to the default rack at [log_loc(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+	logTheThing("station", src, null, "[src.name] is connected to the default rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
 	src.syndicate = FALSE
 	return TRUE
 

@@ -73,7 +73,8 @@
 
 /proc/smoke_reaction(var/datum/reagents/holder, var/smoke_size, var/turf/location, var/vox_smoke = 0, var/do_sfx = 1)
 	var/block = 0
-	if (holder.my_atom)
+
+	if (holder?.my_atom) //this happens with burning plants somehow
 		var/atom/psource = holder.my_atom.loc
 		while (psource)
 			if (istype(psource, /obj/machinery/vehicle))

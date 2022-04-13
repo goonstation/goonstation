@@ -66480,6 +66480,7 @@
 	dir = 8;
 	tag = ""
 	},
+/obj/disco_ball,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -66497,6 +66498,7 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
+/obj/machinery/light/small/floor,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -66506,6 +66508,7 @@
 	dir = 10;
 	icon_state = "line1"
 	},
+/obj/disco_ball,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -66787,7 +66790,9 @@
 /turf/unsimulated/floor/black,
 /area/centcom/lounge)
 "dJH" = (
-/obj/disco_ball,
+/obj/machinery/light/small/floor{
+	layer = 2
+	},
 /turf/unsimulated/floor{
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_1"
@@ -66860,6 +66865,7 @@
 /turf/simulated/wall/false_wall/centcom,
 /area/centcom/lounge)
 "dJU" = (
+/obj/item/canvas/big_persistent/centcom,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon = 'icons/misc/racing.dmi';
@@ -66902,6 +66908,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
+/obj/disco_ball,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -66943,6 +66950,7 @@
 	dir = 9;
 	icon_state = "line1"
 	},
+/obj/disco_ball,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -73906,6 +73914,15 @@
 "osO" = (
 /turf/unsimulated/floor/carpet/office/other,
 /area/centcom/offices/adhara)
+"otN" = (
+/obj/machinery/light/small/floor{
+	layer = null
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/centcom/lounge)
 "oum" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/rd)
@@ -150280,7 +150297,7 @@ dJi
 dJw
 dJw
 dJw
-dJw
+otN
 dJw
 dJV
 dKb

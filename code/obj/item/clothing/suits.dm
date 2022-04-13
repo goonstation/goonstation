@@ -1040,6 +1040,8 @@
 	item_state = "s_suit"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
+	duration_remove = 6 SECONDS
+	duration_put = 6 SECONDS
 	permeability_coefficient = 0.1
 	protective_temperature = 1000
 

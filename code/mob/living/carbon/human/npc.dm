@@ -158,6 +158,10 @@
 	ai_movedelay = 3
 	ai_attacked = 0
 
+	if(abilityHolder)
+		if(!abilityHolder.getAbility(/datum/targetable/ai_toggle))
+			abilityHolder.addAbility(/datum/targetable/ai_toggle)
+
 /mob/living/carbon/human/proc/ai_stop()
 	ai_set_active(0)
 	ai_laststep = 0
@@ -632,7 +636,7 @@
 	if( ai_state == AI_ATTACKING && ai_canmove() )
 		if(src.pulling)
 			src.set_pulling(null)
-		if(!ai_validpath() && get_dist(src,ai_target) <= 1)
+		if(!ai_validpath() && BOUNDS_DIST(src, ai_target) == 0)
 			set_dir(get_step_towards(src,ai_target))
 			ai_obstacle() //Remove.
 		else
@@ -917,9 +921,9 @@
 		var/obj/storage/closet/C = src.loc
 		if (C.open)
 			C.close()
-			C.open()
+			C.open(user=src)
 		else
-			C.open()
+			C.open(user=src)
 
 	else if(istype(src.loc, /obj/vehicle/))
 		var/obj/vehicle/V = src.loc
@@ -965,10 +969,10 @@
 		return
 	for (var/obj/storage/closet/C in view(1,src))
 		if (!C.open)
-			C.open()
+			C.open(user=src)
 	for (var/obj/storage/secure/closet/S in view(1,src))
 		if (!S.open && !S.locked)
-			S.open()
+			S.open(user=src)
 
 
 #undef IS_NPC_HATED_ITEM

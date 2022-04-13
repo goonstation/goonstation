@@ -19,7 +19,7 @@ TYPEINFO(/datum/mutantrace)
 	var/override_beard = 1
 	var/override_detail = 1
 	var/override_skintone = 1
-	var/override_attack = 1		 // set to 1 to override the limb attack actions. Mutantraces may use the limb action within custom_attack(),
+	var/override_attack = FALSE		 // set to 1 to override the limb attack actions. Mutantraces may use the limb action within custom_attack(),
 								// but they must explicitly specify if they're overriding via this var
 	var/override_language = null // set to a language ID to replace the language of the human
 	var/understood_languages = list() // additional understood languages (in addition to override_language if set, or english if not)
@@ -222,9 +222,10 @@ TYPEINFO(/datum/mutantrace)
 		return null
 
 	// custom attacks, should return attack_hand by default or bad things will happen!!
+	// if you did something, return TRUE, else return FALSE and the normal hand stuff will be done
 	// ^--- Outdated, please use limb datums instead if possible.
 	proc/custom_attack(atom/target)
-		return target.Attackhand(mob)
+		return FALSE
 
 	// vision modifier (see_mobs, etc i guess)
 	proc/sight_modifier()
@@ -985,48 +986,7 @@ TYPEINFO(/datum/mutantrace)
 				if (!mob.organHolder.brain || !mob.organHolder.skull || !mob.organHolder.head)
 					mob.show_message("<span class='notice'>You fail to rise, your brain has been destroyed.</span>")
 				else
-					// ha ha nope. Instead we copy paste a bunch of shit from full_heal but leave out select bits such as : limb regeneration, reagent clearing
-					//mob.full_heal()
-
-					mob.HealDamage("All", 100000, 100000)
-					mob.delStatus("drowsy")
-					mob.stuttering = 0
-					mob.losebreath = 0
-					mob.delStatus("paralysis")
-					mob.delStatus("stunned")
-					mob.delStatus("weakened")
-					mob.delStatus("slowed")
-					mob.delStatus("radiation")
-					mob.change_eye_blurry(-INFINITY)
-					mob.take_eye_damage(-INFINITY)
-					mob.take_eye_damage(-INFINITY, 1)
-					mob.take_ear_damage(-INFINITY)
-					mob.take_ear_damage(-INFINITY, 1)
-					mob?.organHolder?.brain?.unbreakme()
-					mob.take_brain_damage(-120)
-					mob.health = mob.max_health
-					if (mob.stat > 1)
-						setalive(mob)
-
-					mob.remove_ailments()
-					mob.take_toxin_damage(-INFINITY)
-					mob.take_oxygen_deprivation(-INFINITY)
-					mob.change_misstep_chance(-INFINITY)
-
-					mob.blinded = 0
-					mob.bleeding = 0
-					mob.blood_volume = 500
-
-					if (!mob.organHolder)
-						mob.organHolder = new(mob)
-					mob.organHolder.create_organs()
-
-					if (mob.get_stamina() != (STAMINA_MAX + mob.get_stam_mod_max()))
-						mob.set_stamina(STAMINA_MAX + mob.get_stam_mod_max())
-
-					mob.update_body()
-					mob.update_face()
-
+					mob.full_heal()
 
 					mob.emote("scream")
 					mob.visible_message("<span class='alert'><B>[mob]</B> rises from the dead!</span>")
@@ -1458,6 +1418,7 @@ TYPEINFO(/datum/mutantrace)
 	voice_message = "chimpers"
 	voice_name = "monkey"
 	override_language = "monkey"
+	override_attack = FALSE
 	understood_languages = list("english")
 	clothing_icon_override = 'icons/mob/monkey_clothes.dmi'
 	race_mutation = /datum/bioEffect/mutantrace/monkey
@@ -1467,8 +1428,6 @@ TYPEINFO(/datum/mutantrace)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/monkey/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	var/sound_monkeyscream = 'sound/voice/screams/monkey_scream.ogg'
-	var/had_tablepass = 0
-	var/table_hide = 0
 	mutant_organs = list("tail" = /obj/item/organ/tail/monkey)
 	dna_mutagen_banned = FALSE
 
@@ -1486,26 +1445,6 @@ TYPEINFO(/datum/mutantrace)
 
 	say_verb()
 		return "chimpers"
-
-	custom_attack(atom/target) // Fixed: monkeys can click-hide under every table now, not just the parent type. Also added beds (Convair880).
-		if(istype(target, /obj/machinery/optable/))
-			do_table_hide(target)
-		if(istype(target, /obj/stool/bed/))
-			do_table_hide(target)
-		return target.Attackhand(mob)
-
-	proc
-		do_table_hide(obj/target)
-			step(mob, get_dir(mob, target))
-			if (mob.loc == target.loc)
-				if (table_hide)
-					table_hide = 0
-					mob.layer = MOB_LAYER
-					mob.visible_message("[mob] crawls on top of [target]!")
-				else
-					table_hide = 1
-					mob.layer = target.layer - 0.01
-					mob.visible_message("[mob] hides under [target]!")
 
 	emote(var/act, var/voluntary)
 		. = null
@@ -1724,8 +1663,12 @@ TYPEINFO(/datum/mutantrace)
 	New(mob/living/carbon/human/M)
 		. = ..()
 		if(ishuman(M))
+			M.blood_id = "hemolymph"
+			//H.blood_color = "009E81"
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT, src, 100)
+
+
 
 	say_verb()
 		return "clicks"
@@ -1925,8 +1868,8 @@ TYPEINFO(/datum/mutantrace)
 	custom_attack(atom/target)
 		if(ishuman(target))
 			mob.visible_message("<span class='alert'><B>[mob]</B> waves its limbs at [target] threateningly!</span>")
-		else
-			return target.Attackhand(mob)
+			return TRUE
+		return FALSE
 
 	say_verb()
 		return "rasps"

@@ -578,12 +578,7 @@
 	max_amount = 6
 	ammo_cat = AMMO_FOAMDART
 	ammo_type = new/datum/projectile/bullet/foamdart
-
-	update_icon()
-		if(amount_left == 0)
-			qdel(src)
-		else
-			..()
+	delete_on_reload = TRUE
 
 //0.40
 /obj/item/ammo/bullets/blow_darts
@@ -1114,6 +1109,9 @@
 			. += "There are [ret["charge"]]/[ret["max_charge"]] PU left!"
 
 
+/obj/item/ammo/power_cell/empty
+	charge = 0
+
 /obj/item/ammo/power_cell/med_power
 	name = "Power Cell - 200"
 	desc = "A power cell that holds a max of 200PU"
@@ -1211,7 +1209,6 @@
 	g_amt = 38000
 	charge = 100.0
 	max_charge = 100.0
-	recharge_rate = 7.5
 
 /obj/item/ammo/power_cell/self_charging/ntso_baton
 	name = "Power Cell - NTSO Stun Baton"
@@ -1230,6 +1227,12 @@
 	charge = 250.0
 	max_charge = 250.0
 	recharge_rate = 6
+
+/obj/item/ammo/power_cell/self_charging/ntso_signifer/bad
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 150PU."
+	charge = 150.0
+	max_charge = 150.0
+	recharge_rate = 4
 
 /obj/item/ammo/power_cell/self_charging/medium
 	name = "Power Cell - Hicap RTG"
@@ -1269,6 +1272,11 @@
 	max_charge = 300.0
 	recharge_rate = 10.0
 
+/obj/item/ammo/power_cell/self_charging/lawbringer/bad
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 175PU."
+	max_charge = 175.0
+	recharge_rate = 6.0
+
 /obj/item/ammo/power_cell/self_charging/howitzer
 	name = "Miniaturized SMES"
 	desc = "This thing is huge! How did you even lift it put it into the gun?"
@@ -1294,20 +1302,20 @@
 
 	onUpdate()
 		..()
-		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+		if(BOUNDS_DIST(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+		if(BOUNDS_DIST(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		return
 
 	onEnd()
 		..()
-		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+		if(BOUNDS_DIST(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return

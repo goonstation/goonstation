@@ -1672,7 +1672,7 @@
 
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
-					var/combatflip = 0
+					var/list/combatflipped = list()
 					//TODO: space flipping
 					//if ((!src.restrained()) && (!src.lying) && (istype(src.loc, /turf/space)))
 					//	message = "<B>[src]</B> does a flip!"
@@ -1746,15 +1746,17 @@
 									continue
 								if (!G.affecting) //Wire note: Fix for Cannot read null.loc
 									continue
+								if (G.affecting in combatflipped)
+									continue
 								if (src.a_intent == INTENT_HELP)
 									M.emote("flip", 1) // make it voluntary so there's a cooldown and stuff
 									continue
 								flipped_a_guy = TRUE
 								var/suplex_result = src.do_suplex(G)
 								if(suplex_result)
-									combatflip |= TRUE
+									combatflipped |= G.affecting
 									message = suplex_result
-								if(!combatflip)
+								if(!length(combatflipped))
 									var/turf/oldloc = src.loc
 									var/turf/newloc = G.affecting.loc
 									var/mob/tmob = G.affecting
@@ -1766,6 +1768,8 @@
 									if(!istype(oldloc) || !istype(newloc))
 										do_flip = FALSE
 									if(do_flip && (!oldloc.Enter(tmob) || !newloc.Enter(src)))
+										do_flip = FALSE
+									if(do_flip && !(BOUNDS_DIST(newloc, oldloc) == 0))
 										do_flip = FALSE
 									if(do_flip)
 										for(var/atom/movable/obstacle in oldloc)
@@ -1789,11 +1793,13 @@
 								for (var/mob/living/M in view(1, null))
 									if (M == src)
 										continue
+									if (M in combatflipped)
+										continue
 									if (src.reagents && src.reagents.get_reagent_amount("ethanol") > 10)
 										if (!iswrestler(src) && src.traitHolder && !src.traitHolder.hasTrait("glasscannon"))
 											src.remove_stamina(STAMINA_FLIP_COST)
 											src.stamina_stun()
-										combatflip = 1
+										combatflipped |= M
 										message = "<span class='alert'><B>[src]</B> flips into [M]!</span>"
 										logTheThing("combat", src, M, "flips into [constructTarget(M,"combat")]")
 										src.changeStatus("weakened", 6 SECONDS)
@@ -1806,7 +1812,7 @@
 									else
 										message = "<B>[src]</B> flips in [M]'s general direction."
 									break
-					if(combatflip)
+					if(length(combatflipped))
 						actions.interrupt(src, INTERRUPT_ACT)
 					if (src.lying)
 						message = "<B>[src]</B> flops on the floor like a fish."
@@ -2315,9 +2321,9 @@
 		src.render_target = "\ref[src]"
 
 /mob/living/proc/do_suplex(obj/item/grab/G)
-	if (!(G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc)))
+	if (!(G.state >= GRAB_STRONG && isturf(src.loc) && isturf(G.affecting.loc)))
 		return null
-	if(!IN_RANGE(src, G.affecting, 1))
+	if(!(BOUNDS_DIST(src, G.affecting) == 0))
 		return null
 
 	var/obj/table/tabl = locate() in src.loc.contents
@@ -2338,25 +2344,23 @@
 	G.affecting.lastattacker = src
 	G.affecting.lastattackertime = world.time
 	if (iswrestler(src))
-		if (prob(50))
-			G.affecting.ex_act(3) // this is hilariously overpowered, but WHATEVER!!!
-		else
-			G.affecting.changeStatus("weakened", 5 SECONDS)
-			G.affecting.force_laydown_standup()
-			G.affecting.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
+		G.affecting.changeStatus("weakened", max(G.affecting.getStatusDuration("weakened"), 4.4 SECONDS))
+		G.affecting.force_laydown_standup()
+		G.affecting.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
+		src.changeStatus("weakened", 1.5 SECONDS)
 		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 	else
 		src.changeStatus("weakened", 3.9 SECONDS)
 
 		if (client?.hellbanned)
 			src.changeStatus("weakened", 4 SECONDS)
-		if (G.affecting && !G.affecting.hasStatus("weakened"))
-			G.affecting.changeStatus("weakened", 4.5 SECONDS)
+		G.affecting.changeStatus("weakened", max(G.affecting.getStatusDuration("weakened"), 4.4 SECONDS))
 
 
 		G.affecting.force_laydown_standup()
-		SPAWN(1 SECOND) //let us do that combo shit people like with throwing
+		SPAWN(0.8 SECONDS) //let us do that combo shit people like with throwing
 			src.force_laydown_standup()
+			qdel(G)
 
 		G.affecting.TakeDamage("head", 9, 0, 0, DAMAGE_BLUNT)
 		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)

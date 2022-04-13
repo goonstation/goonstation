@@ -163,7 +163,7 @@
 		dat += "<br><br>"
 		dat += "Status: <A href='?src=\ref[src];start=1'>[src.on ? "On" : "Off"]</A><br>"
 
-		if (user.client.tooltipHolder)
+		if (user.client?.tooltipHolder)
 			user.client.tooltipHolder.showClickTip(src, list(
 				"params" = params,
 				"title" = "Cleanerbot v1.1 controls",
@@ -234,7 +234,7 @@
 			src.doing_something = 1
 
 			// are we there yet
-			if (IN_RANGE(src, src.target, 1))
+			if ((BOUNDS_DIST(src, src.target) == 0))
 				do_the_thing()
 				// stop the bot mover so it doesn't interrupt us if we're already in range
 				src.frustration = 0

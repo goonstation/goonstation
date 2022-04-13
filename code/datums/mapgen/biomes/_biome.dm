@@ -70,7 +70,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 /datum/biome/jungle
 	turf_type = /turf/unsimulated/floor/auto/grass/leafy
-	flora_types = list(/obj/tree1/elm_random = 50, /obj/shrub/random = 100, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
+	flora_types = list(/obj/tree1/elm_random = 75, /obj/shrub/random = 150, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10, /obj/machinery/plantpot/bareplant/swamp_flora = 1)
 	flora_density = 40
 
 /datum/biome/jungle/deep

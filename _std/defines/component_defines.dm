@@ -101,13 +101,15 @@
 #define COMSIG_ATOM_EXPLODE "atom_explode"
 /// When the atom somewhere (possibly nested deep) in contents is a source of an explosion (object, args_to_explode_at)
 #define COMSIG_ATOM_EXPLODE_INSIDE "atom_explode_inside"
+/// When something enters the contents of this atom (i.e. Entered())
+#define COMSIG_ATOM_ENTERED "atom_entered"
 
 // ---- atom/movable signals ----
 
 /// when an AM moves (thing, previous_loc, direction)
 #define COMSIG_MOVABLE_MOVED "mov_moved"
 /// when a movable is about to move, return true to prevent (thing, new_loc, direction)
-#define COMSIG_MOVABLE_BLOCK_MOVE "mov_moved"
+#define COMSIG_MOVABLE_BLOCK_MOVE "mov_block_moved"
 /// when an AM moves (thing, previous_loc)
 #define COMSIG_MOVABLE_SET_LOC "mov_set_loc"
 /// when an AM ends throw (thing, /datum/thrown_thing)

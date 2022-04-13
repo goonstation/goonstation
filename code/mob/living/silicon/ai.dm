@@ -192,7 +192,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/full_heal()
 	..()
-	src.try_rebooting_it()
+	src.turn_it_back_on()
 
 /mob/living/silicon/ai/disposing()
 	STOP_TRACKING
@@ -217,8 +217,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.brain = new /obj/item/organ/brain/ai(src)
 
 	src.local_apc = get_local_apc(src)
-	if(src.local_apc)
-		src.power_area = src.local_apc.loc.loc
+	src.power_area = get_area(src.local_apc)
 	src.cell = new /obj/item/cell(src)
 	src.radio1 = new /obj/item/device/radio(src)
 	src.radio2 = new /obj/item/device/radio(src)
@@ -230,7 +229,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.UpdateOverlays(get_image("ai_blank"), "backscreen")
 	update_appearance()
 
-	src.eyecam = new /mob/living/intangible/aieye(src.loc)
+	src.eyecam = new /mob/living/intangible/aieye(src)
 
 	hud = new(src)
 	src.attach_hud(hud)
@@ -272,7 +271,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				available_ai_shells += E
 
 		for (var/mob/living/silicon/robot/R in mobs)
-			if (R.part_head?.brain || !R.ai_interface || R.dependent)
+			if (!R.part_head || R.part_head.brain || !R.part_head.ai_interface || R.dependent)
 				continue
 			if (!(R in available_ai_shells))
 				available_ai_shells += R
@@ -340,7 +339,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
 				if (raw == "Yes")
 					src.law_rack_connection = linker.linked_rack
-					logTheThing("station", src, src.law_rack_connection, "[src.name] is connected to the rack at [log_loc(src.law_rack_connection)] with a linker by [user]")
+					logTheThing("station", src, null, "[src.name] is connected to the rack at [constructName(src.law_rack_connection)] with a linker by [user]")
 					var/area/A = get_area(src.law_rack_connection)
 					boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
 					src.playsound_local(src, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
@@ -515,10 +514,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			if (ismob(target) && is_mob_trackable_by_AI(target))
 				ai_actual_track(target)
 				return
-			//else if (isturf(target))
-			//	var/turf/T = target
-			//	T.move_camera_by_click()
-			//	return
 	. = ..()
 
 /mob/living/silicon/ai/build_keybind_styles(client/C)
@@ -586,15 +581,17 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 
 /mob/living/silicon/ai/proc/turn_it_back_on()
-	if (src.health >= 50 && isdead(src) && src.brain)
+	if (src.health >= 50 && src.brain)
 		setalive(src)
 		if (src.brain.owner && src.brain.owner.current)
-			if (!isobserver(src.brain.owner.current))
+			if (!find_ghost_by_key(src.brain.owner.current.key)) // we don't actually need a ref to the mob (since we already have that via current)
+																// just using this proc to check for VR/afterlife/ghostcritter/etc
 				return FALSE
 			var/mob/ghost = src.brain.owner.current
 			ghost.show_text("<span class='alert'><B>You feel your self being pulled back from the afterlife!</B></span>")
 			ghost.mind.transfer_to(src)
-			qdel(ghost)
+			if (isdead(ghost))
+				qdel(ghost)
 			update_appearance()
 		return TRUE
 	return FALSE
@@ -858,16 +855,11 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	src.lastgasp() // calling lastgasp() here because we just died
 	setdead(src)
-	src.canmove = 0
+	src.canmove = FALSE
 	vision.set_color_mod("#ffffff")
-	src.sight |= SEE_TURFS
-	src.sight |= SEE_MOBS
-	src.sight |= SEE_OBJS
-	src.see_in_dark = SEE_DARK_FULL
-	src.see_invisible = INVIS_CLOAK
-	src.lying = 1
 	src.light.disable()
 	src.update_appearance()
+	src.ghostize()
 
 	logTheThing("combat", src, null, "was destroyed at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
 
@@ -1451,6 +1443,28 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			src.link = null
 
 
+/////////////////
+/// Movement ////
+/////////////////
+
+/mob/living/silicon/ai/process_move(keys)
+	if(has_feet)
+		return ..()
+	if (isdead(src) && keys)
+		src.ghostize()
+	return FALSE
+
+/mob/living/silicon/ai/keys_changed(keys, changed)
+	if(has_feet)
+		return ..()
+
+	if (changed & (KEY_EXAMINE|KEY_BOLT|KEY_OPEN|KEY_SHOCK))
+		src.update_cursor()
+
+	if (keys & changed & (KEY_FORWARD|KEY_BACKWARD|KEY_LEFT|KEY_RIGHT))
+		src.tracker.cease_track()
+		src.eye_view()
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // PROCS AND VERBS ///////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1721,7 +1735,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.eyecam.real_name = src.real_name
 		src.deployed_to_eyecam = 1
 		src.mind.transfer_to(src.eyecam)
-		return
 
 /mob/living/silicon/ai/proc/notify_attacked()
 	if( last_notice > world.time + 100 ) return
@@ -1748,7 +1761,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 					H.dependent = 0
 				else if (isrobot(user))
 					var/mob/living/silicon/robot/R = user
-					if (istype(R.ai_interface))
+					if (!isnull(R.part_head?.ai_interface))
 						R.shell = 1
 					R.dependent = 0
 				user.name = user.real_name

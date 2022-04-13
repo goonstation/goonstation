@@ -90,6 +90,58 @@
 			do new thing(src)	//Two lines! I TOLD YOU I COULD DO IT!!!
 			while (--amt > 0)
 
+	proc/get_welding_positions()
+		var/start
+		var/stop
+		var/start_x
+		var/start_y
+		var/stop_x
+		var/stop_y
+
+		switch(icon_welded)
+			if("welded-crate")
+				start_x = -11
+				start_y = -4
+				stop_x = 11
+				stop_y = -4
+			if("welded-short-horizontal")
+				start_x = -8
+				stop_x = 8
+			if("welded-closet")
+				start_x = 6
+				stop_x = 6
+				start_y = -15
+				stop_y = 8
+			if("welded-coffin-4dirs")
+				if(dir == NORTH || dir == SOUTH)
+					start_x = -4
+					stop_x = 4
+					start_y = -13
+					stop_y = -13
+				else if(dir == WEST)
+					start_x = -12
+					stop_x = 14
+					start_y = -12
+					stop_y = -12
+				else
+					start_x = -14
+					stop_x = 12
+					start_y = -12
+					stop_y = -12
+			if("welded-coffin-1dir")
+				start_x = -4
+				stop_x = 4
+				start_y = -13
+				stop_y = -13
+
+		start = list(start_x + src.weld_image_offset_X, start_y + src.weld_image_offset_Y)
+		stop = list(stop_x + src.weld_image_offset_X, stop_y + src.weld_image_offset_Y)
+
+		if(welded)
+			. = list(stop,start)
+		else
+			. = list(start,stop)
+
 	Entered(atom/movable/Obj, OldLoc)
 		. = ..()
 		if(src.open || length(contents) >= src.max_capacity)
@@ -129,7 +181,7 @@
 			return
 		src.last_relaymove_time = world.time
 
-		if (!src.open())
+		if (!src.open(user=user))
 			if (!src.is_short && src.legholes)
 				step(src, pick(alldirs))
 			if (!src.jiggled)
@@ -163,7 +215,7 @@
 			return
 
 		// if all else fails:
-		src.open()
+		src.open(user=user)
 		src.visible_message("<span class='alert'><b>[user]</b> kicks [src] open!</span>")
 
 	attack_hand(mob/user as mob)
@@ -232,12 +284,9 @@
 		else if (!src.open && isweldingtool(W))
 			if(!W:try_weld(user, 1, burn_eyes = TRUE))
 				return
-			if (!src.welded)
-				src.weld(1, user)
-				src.visible_message("<span class='alert'>[user] welds [src] closed with [W].</span>")
-			else
-				src.weld(0, user)
-				src.visible_message("<span class='alert'>[user] unwelds [src] with [W].</span>")
+			var/positions = src.get_welding_positions()
+			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/storage/proc/weld_action, \
+				list(W, user), null, positions[1], positions[2]),user)
 			return
 
 		if (src.secure)
@@ -277,6 +326,16 @@
 
 		else
 			return ..()
+
+	proc/weld_action(obj/item/W, mob/user)
+		if(src.open)
+			return
+		if (!src.welded)
+			src.weld(1, user)
+			src.visible_message("<span class='alert'>[user] welds [src] closed with [W].</span>")
+		else
+			src.weld(0, user)
+			src.visible_message("<span class='alert'>[user] unwelds [src] with [W].</span>")
 
 	proc/check_if_enterable(var/atom/movable/thing, var/skip_penalty=0)
 		//return 1 if an atom can enter, 0 if not (this is used for scooting over crates and dragging things into crates)
@@ -363,7 +422,7 @@
 			return
 
 		if (!src.open)
-			src.open()
+			src.open(user=user)
 
 		if (count_turf_items() >= max_capacity)
 			user.show_text("[src] is too full!", "red")
@@ -628,9 +687,7 @@
 	proc/toggle(var/mob/user)
 		if (src.open)
 			return src.close()
-		if (user)
-			return src.open(null,user)
-		return src.open()
+		return src.open(user=user)
 
 	proc/unlock()
 		if (src.locked)
@@ -725,7 +782,7 @@
 				if (src.is_short)
 					usr.lying = 1
 				src.close()
-		else if (src.open())
+		else if (src.open(user=usr))
 			step_towards(usr, src)
 			sleep(1 SECOND)
 			if (usr.loc == src.loc)
@@ -767,7 +824,7 @@
 
 	onUpdate()
 		..()
-		if (!the_storage || !the_wrench || !owner || get_dist(owner, the_storage) > 1)
+		if (!the_storage || !the_wrench || !owner || BOUNDS_DIST(owner, the_storage) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
