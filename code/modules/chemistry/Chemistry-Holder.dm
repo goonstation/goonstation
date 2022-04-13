@@ -602,7 +602,7 @@ datum
 			for (var/current_id in reagents_to_subtract)
 				var/datum/reagent/current_reagent = reagent_list[current_id]
 				if (!current_reagent || !src.has_reagent(current_reagent.id))
-					return
+					continue
 
 				src.remove_reagent(current_reagent.id, current_reagent.volume)
 
