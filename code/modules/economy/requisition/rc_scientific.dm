@@ -30,7 +30,7 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 
 ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/item/organ
-	feemod = 550
+	feemod = 2550
 	exactpath = TRUE
 
 /datum/rc_entry/item/organ/appendix
