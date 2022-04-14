@@ -14,6 +14,7 @@
 	..()
 	// populate the list of tasks
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/replicate, list(holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/nest, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/build/drone, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/repair, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/deposit, list(holder, src))
@@ -22,7 +23,7 @@
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/rummage, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/harvest, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/timed/targeted/flockdrone_shoot, list(holder, src))
-	transition_tasks += holder.get_instance(/datum/aiTask/timed/targeted/flockdrone_capture, list(holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/flockdrone_capture, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander, list(holder, src))
 
 /datum/aiTask/prioritizer/flock/drone/on_reset()

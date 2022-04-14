@@ -84,6 +84,7 @@ const iconLookup = {
   "rummaging": "dumpster",
   "wandering": "route",
   "building": "hammer",
+  "nesting": "hammer",
   "harvesting": "cogs",
   "controlled": "wifi",
   "replicating": "egg",

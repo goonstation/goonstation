@@ -43,6 +43,10 @@ datum/controller/process/mob_ai
 					else
 						H.ai_process()
 					scheck()
+				else if(istype(X,/mob/living/critter))
+					var/mob/living/critter/C = X
+					if(C.is_npc && C.ai)
+						C.ai.tick()
 				else if(M.ai)
 					M.ai.tick()
 					scheck()

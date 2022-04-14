@@ -406,6 +406,8 @@
 /datum/flock/proc/reserveTurf(var/turf/simulated/T, var/name)
 	if(T in all_owned_tiles)
 		return
+	if(T in src.busy_tiles)
+		return //can't reserve tiles that are already reserved
 	src.busy_tiles[name] = T
 	src.updateAnnotations()
 
