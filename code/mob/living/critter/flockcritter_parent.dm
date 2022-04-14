@@ -51,8 +51,8 @@
 /mob/living/critter/flock/New(var/atom/L, var/datum/flock/F=null)
 	..()
 
-	// throw away the ability holder
 	qdel(abilityHolder)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT, src, 100)
 
 	// do not automatically set up a flock if one is not provided
 	// flockless drones act differently
