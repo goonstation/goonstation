@@ -211,7 +211,15 @@
   else
     return null // give the standard description
 
-
+/obj/machinery/light/flock/floor
+	name = "pulsing cabochon"
+	desc = "It pulses and flares to a strange rhythm."
+	icon_state = "flock_floor1"
+	base_state = "flock_floor"
+	brightness = 1.2
+	power_usage = 0
+	on = 1
+	removable_bulb = 0
 /////////////
 // FIBRENET
 /////////////
