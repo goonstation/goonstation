@@ -1,5 +1,9 @@
 
 (t)thu apr 14 22
+(u)pali
+(p)8204
+(e)|
+(*)Fingerprint IDs should now be slightly easier to remember
 (u)Gannets
 (p)8185
 (e)⚖|balance
