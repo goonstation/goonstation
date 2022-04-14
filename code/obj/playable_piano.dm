@@ -153,7 +153,7 @@
 		else //just in case
 			return
 
-	mouse_drop(obj/player_piano/piano, null)//, var/src_location, var/control_orig, var/control_new, var/params)
+	mouse_drop(obj/player_piano/piano)
 		if (!istype(usr, /mob/living))
 			return
 		if (usr.stat)
