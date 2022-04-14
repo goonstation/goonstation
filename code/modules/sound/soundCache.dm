@@ -1766,6 +1766,7 @@ var/global/list/soundCache = list(
  	"sound/weapons/female_cswordturnon.ogg" = 'sound/weapons/female_cswordturnon.ogg',\
  	"sound/weapons/female_toyattack.ogg" = 'sound/weapons/female_toyattack.ogg',\
  	"sound/weapons/female_toyattack2.ogg" = 'sound/weapons/female_toyattack2.ogg',\
+ 	"sound/weapons/flamethrower.ogg" = 'sound/weapons/flamethrower.ogg',\
  	"sound/weapons/flaregun.ogg" = 'sound/weapons/flaregun.ogg',\
  	"sound/weapons/flash.ogg" = 'sound/weapons/flash.ogg',\
  	"sound/weapons/flashbang.ogg" = 'sound/weapons/flashbang.ogg',\
