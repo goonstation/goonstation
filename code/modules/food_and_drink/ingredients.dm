@@ -136,6 +136,24 @@
 		if (icon_state == "nugget0")
 			icon_state = "nugget1"
 		return ..()
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (iscuttingtool(W))
+			var/turf/T = get_turf(src)
+			user.visible_message("[user] cuts [src] into slices.", "You peel [src] and cut it into strips.")
+			var/makeslices = 3
+			while (makeslices > 0)
+				new /obj/item/reagent_containers/food/snacks/ingredient/meat/chickenstrip(T)
+				makeslices -= 1
+			qdel(src)
+		..()
+
+/obj/item/reagent_containers/food/snacks/ingredient/meat/chickenstrip
+	name = "chicken strip"
+	desc = "Looks like someone peeled a chicken nugget and sliced it apart. But why?"
+	icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
+	icon_state = "meat-nugget"
+	color = "#ffd0a0"
+	food_color = "#ffd0a0"
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/spicy
 	name = "Windy's spicy chicken nugget"

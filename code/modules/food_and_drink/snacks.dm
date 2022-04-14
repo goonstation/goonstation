@@ -523,7 +523,7 @@
 	dropped_item = /obj/item/reagent_containers/food/drinks/bowl
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/reagent_containers/food/snacks/tortilla_chip))
+		if (istype(W,/obj/item/reagent_containers/food/snacks/tortilla_chip) || istype(W,/obj/item/reagent_containers/food/snacks/ingredient/chickentender))
 			if (amount <= 1)
 				boutput(user, "You scoop up the last of [src] with the [W.name].")
 			else
@@ -2836,3 +2836,34 @@
 	initial_volume = 25
 	initial_reagents = list("currypowder"=10, "capsaicin"=5, "salicylic_acid"=10)
 	food_effects = list("food_brute","food_tox","food_warm")
+
+/obj/item/reagent_containers/food/snacks/proc/random_tender_firstname()
+	.= pick(list("chicken","chiccy","chikin","fried chicken","chicke","chucken","chucken","chickeen"))
+/obj/item/reagent_containers/food/snacks/proc/random_tender_lastname()
+	.= pick(list("tender","tendie","tenderloin","finger","goujon","filet","tendieloin","tendar","tenderino",))
+
+/obj/item/reagent_containers/food/snacks/ingredient/chickentender
+	name = "chicken tender"
+	desc = "For good boys only."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "tendie"
+	heal_amt = 2
+	amount = 2
+	food_effects = list("food_all")
+	on_reagent_change()
+		..()
+		if (src.reagents && src.reagents.total_volume)
+			var/image/dip = image('icons/obj/foodNdrink/food_snacks.dmi', "tendie-overlay")
+			dip.color = src.reagents.get_average_color().to_rgba()
+			src.UpdateOverlays(dip, "dip")
+		else
+			src.UpdateOverlays(null, "dip")
+	New()
+		..()
+		name = "[random_tender_firstname()] [random_tender_lastname()]"
+	New()
+		..()
+		src.pixel_x = rand(-6, 6)
+		src.pixel_y = rand(-6, 6)
+
+

@@ -760,7 +760,7 @@
 
 			qdel(src)
 
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/tortilla_chip))
+		else if (istype(W,/obj/item/reagent_containers/food/snacks/tortilla_chip) || istype(W,/obj/item/reagent_containers/food/snacks/ingredient/chickentender))
 			if (reagents.total_volume)
 				boutput(user, "You dip [W] into the bowl.")
 				reagents.trans_to(W, 10)
