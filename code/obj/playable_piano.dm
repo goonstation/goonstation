@@ -4,6 +4,10 @@
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "piano_key"
 
+
+#define MIN_TIMING 0.25
+#define MAX_TIMING 0.5
+
 /obj/player_piano //this is the big boy im pretty sure all this code is garbage
 	name = "player piano"
 	desc = "A piano that can take raw text and turn it into music! The future is now!"
@@ -30,9 +34,23 @@
 
 	New()
 		..()
-//		linked_pianos += src
 		if (!items_claimed)
 			src.desc += " The free user essentials box is untouched!" //jank
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "play", .proc/trigger)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set notes", .proc/trigger)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set timing", .proc/mechcompTiming)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "reset", .proc/reset_piano)
+
+	proc/mechcompNotes(var/datum/mechanicsMessage/input)
+		var/new_timing = text2num(input.signal)
+		if (new_timing)
+			set_timing(new_timing)
+
+	proc/mechcompTiming(var/datum/mechanicsMessage/input)
+		var/new_timing = text2num(input.signal)
+		if (new_timing)
+			set_timing(new_timing)
 
 	attackby(obj/item/W as obj, mob/user as mob) //this one is big and sucks, where all of our key and construction stuff is
 		if (istype(W, /obj/item/piano_key)) //piano key controls
@@ -41,7 +59,7 @@
 			switch(mode_sel)
 				if ("Reset Piano") //reset piano B)
 					reset_piano()
-					src.visible_message("<span class='alert'>[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] grumbles and shuts down completely.</span>")
+					src.visible_message("<span class='alert'>[user] sticks \the [W] into a slot on \the [src] and twists it!</span>")
 					return
 
 				if ("Toggle Looping") //self explanatory, sets whether or not the piano should be looping
@@ -56,10 +74,9 @@
 
 				if ("Adjust Timing") //adjusts tempo
 					var/time_sel = input("Input a custom tempo from 0.25 to 0.5 BPS", "Tempo Control") as num
-					if (time_sel < 0.25 || time_sel > 0.5)
+					if (!src.set_timing(time_sel))
 						src.visible_message("<span class='alert'>The mechanical workings of [src] emit a horrible din for several seconds before \the [src] shuts down.")
 						return
-					timing = time_sel
 					src.visible_message("<span class='alert'>[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] rumbles indifferently.")
 
 		else if (istype(W, /obj/item/screwdriver)) //unanchoring piano
@@ -276,6 +293,7 @@
 				is_busy = 0
 				curr_note = 0
 				src.visible_message("<span class='notice'>\The [src] stops playing music.</span>")
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "musicStopped")
 				UpdateIcon(0)
 				return
 			sleep((timing * 10)) //to get delay into 10ths of a second
@@ -283,7 +301,14 @@
 			sound_name += "[compiled_notes[curr_note]].ogg"
 			playsound(src, sound_name, note_volumes[curr_note],0,10,0)
 
+	proc/set_timing(var/time_sel)
+		if (time_sel < MIN_TIMING || time_sel > MAX_TIMING)
+			return FALSE
+		src.timing = time_sel
+		return TRUE
+
 	proc/reset_piano(var/disposing) //so i dont have to have duplicate code for multiool pulsing and piano key
+		src.visible_message("<span class='notice'>\The [src] grumbles and shuts down completely.</span>")
 		if (is_looping != 2 || disposing)
 			is_looping = 0
 		song_length = 0
@@ -330,3 +355,6 @@
 		items_claimed = 1
 		src.visible_message("\The [src] spills out a key and a booklet! Nifty!")
 		src.desc = "A piano that can take raw text and turn it into music! The future is now! The free user essentials box has been raided!" //jaaaaaaaank
+
+#undef MIN_TIMING
+#undef MAX_TIMING
