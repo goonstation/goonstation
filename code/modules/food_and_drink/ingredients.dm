@@ -140,10 +140,8 @@
 		if (iscuttingtool(W))
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into slices.", "You peel [src] and cut it into strips.")
-			var/makeslices = 3
-			while (makeslices > 0)
+			for (var/i in 1 to 3)
 				new /obj/item/reagent_containers/food/snacks/ingredient/meat/chickenstrip(T)
-				makeslices -= 1
 			qdel(src)
 		..()
 
