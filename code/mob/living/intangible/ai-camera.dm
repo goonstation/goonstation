@@ -520,7 +520,7 @@
 
 /obj/machinery/camera/proc/updateCoverage()
 	LAZYLISTADDUNIQUE(camerasToRebuild, src)
-	if (current_state > GAME_STATE_WORLD_INIT && !global.explosions.exploding)
+	if (current_state > GAME_STATE_WORLD_NEW && !global.explosions.exploding)
 		world.updateCameraVisibility()
 
 //---MISC---//

@@ -545,7 +545,7 @@
 
 		for (var/client/C)
 			var/mob/M = C.mob
-			if (M && src.z == M.z && BOUNDS_DIST(src, M) == 00)
+			if (M && src.z == M.z && GET_DIST(src, M) <= 10)
 				if (isliving(M))
 					waking = 1
 					break
@@ -580,7 +580,7 @@
 
 		for (var/client/C)
 			var/mob/M = C.mob
-			if (M && src.z == M.z && BOUNDS_DIST(src, M) == 00)
+			if (M && src.z == M.z && GET_DIST(src, M) <= 10)
 				if (isliving(M))
 					stay_awake = 1
 					break

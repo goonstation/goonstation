@@ -3191,6 +3191,16 @@ datum
 				holder.del_reagent(id)
 				holder.del_reagent("blood")
 
+		blood/hemolymph
+			name = "hemolymph"
+			id = "hemolymph"
+			//taste = "metallic yet slightly bitter"
+			description = "Hemolymph is a blood-like bodily fluid found in many invertibrates that derives its blue-green color from the presence of copper proteins."
+			reagent_state = LIQUID
+			fluid_r = 6
+			fluid_b = 161
+			fluid_g = 125
+
 
 		vomit
 			name = "vomit"

@@ -228,7 +228,8 @@
 		src.authorized_registered = list()
 
 	var/choice = alert(user, text("Would you like to authorize access to riot gear? [] authorization\s are still needed.", src.auth_need - src.authorized.len), "Armory Auth", "Authorize", "Repeal")
-	if(BOUNDS_DIST(user, src) > 0) return
+	if(BOUNDS_DIST(user, src) > 0 || src.authorized)
+		return
 	src.add_fingerprint(user)
 	switch(choice)
 		if("Authorize")
