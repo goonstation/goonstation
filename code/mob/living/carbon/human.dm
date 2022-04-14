@@ -3191,7 +3191,7 @@
 	activate_chest_item()
 
 ///Little wrapper proc to clean up the reference in case AttackSelf moves the chest item outside the mob (items that dispose inside the mob get handled in /obj/item/disposing())
-/mob/living/carbon/human/proc/activate_chest_item() //For edge cases like mousetrap roller assemblies and gifts
+/mob/living/carbon/human/proc/activate_chest_item() //For edge cases like mousetrap roller assemblies
 	src.chest_item.AttackSelf(src)
 	SPAWN(1 SECOND)
 		if (chest_item?.loc != src)
