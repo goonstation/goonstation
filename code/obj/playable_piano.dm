@@ -257,6 +257,8 @@
 		is_busy = 0
 
 	proc/ready_piano(var/is_linked) //final checks to make sure stuff is right, gets notes into a compiled form for easy playsounding
+		if (is_busy)
+			return
 		is_busy = 1
 		if (note_volumes.len + note_octaves.len - note_names.len - note_accidentals.len)
 			src.visible_message("<span class='alert'>\The [src] makes a grumpy ratchetting noise and shuts down!</span>")
@@ -307,6 +309,8 @@
 			playsound(src, sound_name, note_volumes[curr_note],0,10,0)
 
 	proc/set_notes(var/given_notes)
+		if (is_busy)
+			return FALSE
 		if (length(note_input) > MAX_NOTE_INPUT)
 			return FALSE
 		src.note_input = given_notes
@@ -315,6 +319,8 @@
 		return TRUE
 
 	proc/set_timing(var/time_sel)
+		if (is_busy)
+			return FALSE
 		if (time_sel < MIN_TIMING || time_sel > MAX_TIMING)
 			return FALSE
 		src.timing = time_sel
