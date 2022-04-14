@@ -2838,7 +2838,7 @@
 	food_effects = list("food_brute","food_tox","food_warm")
 
 /obj/item/reagent_containers/food/snacks/proc/random_tender_firstname()
-	.= pick(list("chicken","chiccy","chikin","fried chicken","chicke","chucken","chucken","chickeen"))
+	.= pick(list("chicken","chiccy","chikin","chicke","chucken","chucken","chickeen"))
 /obj/item/reagent_containers/food/snacks/proc/random_tender_lastname()
 	.= pick(list("tender","tendie","tenderloin","finger","goujon","filet","tendieloin","tendar","tenderino",))
 
