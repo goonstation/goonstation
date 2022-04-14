@@ -403,7 +403,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/reagent/cola
 	name = "cola"
 	chem_ids = "cola"
-	feemod = 15
+	feemod = 20
 
 /datum/rc_entry/item/chaps
 	name = "assless chaps"
@@ -444,7 +444,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	var/list/namevary = list("Structural Setup","Brick by Brick","New Construction","Building Supply","Structure Fabrication")
 	var/list/desc_thingbuilt = list("A planetary barracks","A new deluxe retreat","A new station wing","An affiliated construction project")
 	var/list/desc_progress = list("currently underway","delayed by supply difficulties","planned for near-term assembly","commissioned by a third party")
-	var/list/desc_resource = list("stone","turf seed","window treatment","wood","detailing metal")
+	var/list/desc_resource = list("stone","turf seed","window treatment","wood","solvent","detailing metal")
 	var/list/desc_flavorize = list(
 		null,
 		" Packing material will be returned to you for reuse if possible.",
@@ -476,6 +476,8 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/silicate,rand(3,10)*10*req_quant)
 			if("wood")
 				src.rc_entries += rc_buildentry(/datum/rc_entry/item/plank,rand(5,12)*req_quant)
+			if("solvent")
+				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/acetone,rand(4,8)*10)
 			if("detailing metal")
 				if(prob(70))
 					src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cobryl,rand(1,6)*req_quant)
@@ -492,6 +494,8 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 					src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/silicate,rand(3,10)*10)
 				if("wood")
 					src.rc_entries += rc_buildentry(/datum/rc_entry/item/plank,rand(5,12))
+				if("solvent")
+					src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/acetone,rand(4,8)*10)
 				if("detailing metal")
 					if(prob(70))
 						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cobryl,rand(1,6))
@@ -522,6 +526,11 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	typepath = /obj/item/plank
 	exactpath = TRUE
 	feemod = 470
+
+/datum/rc_entry/reagent/acetone
+	name = "acetone"
+	chem_ids = "acetone"
+	feemod = 18
 
 /datum/rc_entry/stack/cobryl
 	name = "cobryl"

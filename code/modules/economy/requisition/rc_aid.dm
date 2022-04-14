@@ -325,7 +325,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 			if("furnace fuel")
 				src.rc_entries += rc_buildentry(/datum/rc_entry/stack/char,rand(24,36))
 			if("liquid fuel")
-				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/fuel,rand(40,60)*10)
+				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/fuel,rand(30,40)*10)
 			if("coffee")
 				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/coffee,rand(24,36)*10)
 
@@ -339,7 +339,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/reagent/fuel
 	name = "welding-grade liquid fuel"
 	chem_ids = "fuel"
-	feemod = 10
+	feemod = 25
 
 /datum/rc_entry/reagent/coffee
 	name = "coffee"
