@@ -11,6 +11,32 @@
 	entryize.count = number_of
 	return entryize
 
+/**
+ * Proc to test a standard market contract for functionality. Test special orders with random event trigger instead.
+ *
+ * Will add the contract to requisitions list and pin the contract, ignoring the one-pin limit or any contract type pin restrictions.
+ * Don't use this in live rounds, pin behavior will be wonky.
+ */
+/client/proc/TestMarketReq()
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Requisition Test"
+	set desc = "Generates a specified requisition path and pins it to market."
+
+	var/contract_path = input("Specify type path", "Requisition", null, null)
+	if (!contract_path) return
+	if (istext(contract_path))
+		contract_path = text2path(contract_path)
+	if (!ispath(contract_path))
+		boutput(usr, "<span class='alert'>Requisition test failed - no path specified.</span>")
+		return
+	var/datum/req_contract/new_contract = new contract_path
+	if(!istype(new_contract))
+		boutput(usr, "<span class='alert'>Requisition test failed - invalid type path.</span>")
+		return
+	shippingmarket.req_contracts += new_contract
+	new_contract.pinned = TRUE
+	boutput(usr, "Pinned [new_contract.name] to shipping market.")
+
 //contract entries: contract creation instantiates these for "this much of whatever"
 //these entries each have their own "validation protocol", automatically set up when instantiated
 
@@ -95,7 +121,7 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 		. = ..()
 		if(rollcount >= count) return // Standard skip-if-complete
 		if(!istype(eval_item)) return // If it's not an item, it's not a stackable
-		if(eval_item.type == typepath || (typepath_alt && eval_item.type == typepath_alt))
+		if(istype(eval_item,typepath) || (typepath_alt && istype(eval_item,typepath_alt)))
 			rollcount += eval_item.amount
 			. = TRUE // Let manager know passed eval item is claimed by contract
 

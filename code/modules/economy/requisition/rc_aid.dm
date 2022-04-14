@@ -108,9 +108,9 @@ ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 		src.flavor_desc = "[pick(desc_helpsite)] requires additional supplies [pick(desc_tense)] [pick(desc_crisis)]. [pick(desc_emphasis)]"
 		src.payout += rand(0,60) * 10
 
-		if(prob(80))
+		if(prob(60))
 			src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/brutepatch,rand(1,4)*30)
-		if(prob(80))
+		if(prob(70))
 			src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/burnpatch,rand(1,4)*30)
 
 		if(!length(src.rc_entries)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/hypospray,rand(2,5))
@@ -160,14 +160,14 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 	container_name = "Patches"
 	name = "styptic powder"
 	chem_ids = "styptic_powder"
-	feemod = 25
+	feemod = 50
 
 /datum/rc_entry/reagent/burnpatch
 	contained_in = /obj/item/reagent_containers/patch
 	container_name = "Patches"
 	name = "silver sulfadiazine"
 	chem_ids = "silver_sulfadiazine"
-	feemod = 25
+	feemod = 50
 
 /datum/rc_entry/item/lgloves
 	name = "latex glove pair"
