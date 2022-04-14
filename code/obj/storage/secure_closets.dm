@@ -4,6 +4,9 @@
 	soundproofing = 5
 	can_flip_bust = 1
 	p_class = 3
+	open_sound = 'sound/misc/locker_open.ogg'
+	close_sound = 'sound/misc/locker_close.ogg'
+	volume = 70
 
 /obj/storage/secure/closet/personal
 	name = "personal locker"
@@ -690,6 +693,9 @@
 	icon_sparks = "fridge-sparks"
 	intact_frame = 1
 	weld_image_offset_X = 3
+	open_sound = 'sound/misc/fridge_open.ogg'
+	close_sound = 'sound/misc/fridge_close.ogg'
+	volume = 80
 
 /obj/storage/secure/closet/fridge/opened
 	New()

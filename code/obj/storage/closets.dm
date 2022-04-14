@@ -4,6 +4,9 @@
 	soundproofing = 3
 	can_flip_bust = 1
 	p_class = 3
+	open_sound = 'sound/misc/locker_open.ogg'
+	close_sound = 'sound/misc/locker_close.ogg'
+	volume = 70
 
 	New()
 		. = ..()
