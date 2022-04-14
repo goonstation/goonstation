@@ -122,7 +122,8 @@
 
 					// Transfer player control.
 
-					changeto.current.remove_ability_holder(/datum/abilityHolder/changeling) //so the spider doesn't have a ref to our holder as well
+					var/mob/living/critter/changeling/headspider/HS = changeto.current
+					HS.changeling = null //so the spider doesn't have a ref to our holder as well
 					changeto.transfer_to(affected_mob)
 					changeto.is_changeling = changeling
 					changeto = null
