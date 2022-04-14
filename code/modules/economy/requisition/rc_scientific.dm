@@ -120,7 +120,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/req_contract/scientific/botanical
 	//name = "Feed Me, Seymour (Butz)"
-	payout = 3500
+	payout = 2500
 	var/list/namevary = list("Botanical Prototyping","Hydroponic Acclimation","Cultivar Propagation","Plant Genotype Study")
 	var/list/desc_wherestudy = list(
 		"An affiliated hydroponics lab",
@@ -150,9 +150,8 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/seed/scientific/fruit,rand(1,3))
 		if(!length(src.rc_entries) || prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/seed/scientific/crop,rand(1,3))
 		if(length(src.rc_entries) == 1 || prob(30)) src.rc_entries += rc_buildentry(/datum/rc_entry/seed/scientific/veg,rand(1,3))
-		if(length(src.rc_entries) == 3)
-			src.payout += 8000
-			src.item_rewarders += new /datum/rc_itemreward/strange_seed
+		if(length(src.rc_entries) == 3) src.item_rewarders += new /datum/rc_itemreward/strange_seed
+		src.payout += 8000 * length(src.rc_entries)
 
 		src.item_rewarders += new /datum/rc_itemreward/plant_cartridge
 		..()
@@ -160,7 +159,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/seed/scientific
 	name = "genetically fussy seed"
 	cropname = "Durian"
-	feemod = 4000
+	feemod = 1000
 	var/crop_genpath = /datum/plant
 
 	fruit
