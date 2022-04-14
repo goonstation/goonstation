@@ -80,13 +80,13 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 	var/typepath
 	///Optional alternate type path to look for. Useful when an item has two functionally interchangeable forms, such as raw or refined ore.
 	var/typepath_alt
-	///Commodity path. If defined, will augment the per-item payout with the highest market rate for that commodity, and set the type path.
+	///Commodity path. If defined, will augment the per-item payout with the highest market rate for that commodity, and set the type path if not initially specified.
 	var/commodity
 
 	New()
 		if(src.commodity) // Fetch configuration data from commodity if specified
 			var/datum/commodity/CM = src.commodity
-			src.typepath = initial(CM.comtype)
+			if(!src.typepath) src.typepath = initial(CM.comtype)
 			src.feemod += initial(CM.baseprice)
 			src.feemod += initial(CM.upperfluc)
 		..()
@@ -105,10 +105,15 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent)
 	entryclass = RC_REAGENT
 	///IDs of reagents being looked for in the evaluation; can be a single one in string form, or a list containing several strings.
 	var/chem_ids = "water"
+	///Reagent container type: optionally set this to a path to require reagents be contained in that particular thing to count.
+	var/contained_in
+	///Plural description of that container - beakers, patches, pills, etc. First letter capitalized. Should be set if contained_in is set.
+	var/container_name
 
 	rc_eval(atom/eval_item)
 		. = ..()
 		if(rollcount >= count) return //standard skip-if-complete
+		if(contained_in && !istype(eval_item,contained_in)) return // Do we have a required container type? If so, validate it
 		if(eval_item.reagents)
 			var/C // Total count of matching reagents, by unit
 			if(islist(src.chem_ids)) // If there are multiple reagents to evaluate, iterate by chem IDs
@@ -214,7 +219,7 @@ ABSTRACT_TYPE(/datum/req_contract)
  */
 /datum/req_contract
 	///Title of the contract as used by the requisitions clearinghouse seen in the QM supply computer
-	var/name = "Gary's Secret Mission"
+	var/name = "Requisition Contract"
 	///Class of the requisition contract, defaulting to misc (0); aid requisitions are urgent and will not wait for you
 	var/req_class = MISC_CONTRACT
 	///Requisition code used for standard contracts; is automatically generated if not specified, but can be manually set if desired
@@ -252,17 +257,24 @@ ABSTRACT_TYPE(/datum/req_contract)
 				if(RC_ITEM)
 					src.requis_desc += "[rce.count]x [rce.name]<br>"
 				if(RC_REAGENT)
-					src.requis_desc += "[rce.count]+ unit[s_es(rce.count)] of [rce.name]<br>"
+					var/datum/rc_entry/reagent/rchem = rce
+					if(rchem.container_name)
+						src.requis_desc += "[rchem.container_name] containing [rchem.count]+ unit[s_es(rchem.count)] of [rchem.name]<br>"
+					else
+						src.requis_desc += "[rchem.count]+ unit[s_es(rchem.count)] of [rchem.name]<br>"
 				if(RC_STACK)
 					src.requis_desc += "[rce.count]+ [rce.name]<br>"
 				if(RC_SEED)
 					var/datum/rc_entry/seed/rceed = rce
-					src.requis_desc += "[rce.count]x [rceed.cropname] seed with following traits:<br>"
-					for(var/index in rceed.gene_reqs)
-						if(index == "Maturation" || index == "Production")
-							src.requis_desc += "* [index]: [rceed.gene_reqs[index]] or lower<br>"
-						else
-							src.requis_desc += "* [index]: [rceed.gene_reqs[index]] or higher<br>"
+					if(length(rceed.gene_reqs))
+						src.requis_desc += "[rce.count]x [rceed.cropname] seed with following traits:<br>"
+						for(var/index in rceed.gene_reqs)
+							if(index == "Maturation" || index == "Production")
+								src.requis_desc += "* [index]: [rceed.gene_reqs[index]] or lower<br>"
+							else
+								src.requis_desc += "* [index]: [rceed.gene_reqs[index]] or higher<br>"
+					else
+						src.requis_desc += "[rce.count]x [rceed.cropname] seed<br>"
 			src.payout += rce.feemod * rce.count
 
 	proc/requisify(obj/storage/crate/sell_crate)
