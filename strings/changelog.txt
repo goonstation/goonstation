@@ -1,4 +1,13 @@
 
+(t)thu apr 14 22
+(u)pali
+(p)8204
+(e)|
+(*)Fingerprint IDs should now be slightly easier to remember
+(u)Gannets
+(p)8185
+(e)⚖|balance
+(*)Nuclear Operatives now spawn wearing Hi-grip Assault Boots. They have also been removed from the Syndicate Weapons Vendor purchase list.
 (t)tue apr 12 22
 (u)Sovexe
 (p)7984

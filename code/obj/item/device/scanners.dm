@@ -600,7 +600,7 @@ that cannot be itched
 				if (M.gloves)
 					R["fingerprint"] = "Unknown"
 				else
-					R["fingerprint"] = M.bioHolder.uid_hash
+					R["fingerprint"] = M.bioHolder.fingerprints
 				R["p_stat"] = "Active"
 				R["m_stat"] = "Stable"
 				src.active1 = R
@@ -618,7 +618,7 @@ that cannot be itched
 			if (M.gloves)
 				src.active1["fingerprint"] = "Unknown"
 			else
-				src.active1["fingerprint"] = M.bioHolder.uid_hash
+				src.active1["fingerprint"] = M.bioHolder.fingerprints
 			src.active1["p_stat"] = "Active"
 			src.active1["m_stat"] = "Stable"
 			data_core.general.add_record(src.active1)
