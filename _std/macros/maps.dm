@@ -6,7 +6,7 @@
 #define isrestrictedz(z) ((z) != Z_LEVEL_STATION && (z) != Z_LEVEL_MINING && (z) != Z_LEVEL_FOOTBALL)
 #define isghostrestrictedz(z) (isrestrictedz(z) || (z) == Z_LEVEL_DEBRIS)
 #else
-#define isrestrictedz(z) ((z) != Z_LEVEL_STATION && (z) != Z_LEVEL_DEBRIS && (z) != Z_LEVEL_MINING && (z) != Z_LEVEL_FOOTBALL)
+#define isrestrictedz(z) ((z) != Z_LEVEL_NULL && (z) != Z_LEVEL_STATION && (z) != Z_LEVEL_DEBRIS && (z) != Z_LEVEL_MINING && (z) != Z_LEVEL_FOOTBALL)
 #define isghostrestrictedz(z) (isrestrictedz(z))
 #endif
 #define isonstationz(z) ((z) == Z_LEVEL_STATION)

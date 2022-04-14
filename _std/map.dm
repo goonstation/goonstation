@@ -1,3 +1,4 @@
+#define Z_LEVEL_NULL 0 				//Nullspace/Z0/The Darkness
 #define Z_LEVEL_STATION 1           //The station Z-level.
 #define Z_LEVEL_ADVENTURE 2         //The Z-level used for Adventure Zones.
 #define Z_LEVEL_DEBRIS 3            //The debris Z-level. Blank on underwater maps.
