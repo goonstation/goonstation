@@ -182,7 +182,7 @@
 		if ((isnull(src.original_DNA) || isnull(src.original_fprints)) && ismob(src.original_holder))
 			if (src.original_holder && src.original_holder.bioHolder) //ZeWaka: Fix for null.bioHolder
 				src.original_DNA = src.original_holder.bioHolder.Uid
-				src.original_fprints = src.original_holder.bioHolder.uid_hash
+				src.original_fprints = src.original_holder.bioHolder.fingerprints
 		return ..()
 
 	attach(mob/living/carbon/human/attachee, mob/attacher, both_legs)
@@ -192,7 +192,7 @@
 					src.original_holder = attachee // Now it does
 					if (src.original_holder?.bioHolder)
 						src.original_DNA = src.original_holder.bioHolder.Uid
-						src.original_fprints = src.original_holder.bioHolder.uid_hash
+						src.original_fprints = src.original_holder.bioHolder.fingerprints
 					return
 				if(src.original_DNA != attachee.bioHolder.Uid) // Limb isnt ours
 					src.limb_is_transplanted = TRUE
