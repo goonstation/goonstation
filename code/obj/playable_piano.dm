@@ -5,9 +5,9 @@
 	icon_state = "piano_key"
 	w_class = W_CLASS_TINY
 
-
 #define MIN_TIMING 0.25
 #define MAX_TIMING 0.5
+#define MAX_NOTE_INPUT 2048
 
 /obj/player_piano //this is the big boy im pretty sure all this code is garbage
 	name = "player piano"
@@ -38,15 +38,18 @@
 		if (!items_claimed)
 			src.desc += " The free user essentials box is untouched!" //jank
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "play", .proc/trigger)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set notes", .proc/trigger)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "play", .proc/mechcompPlay)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set notes", .proc/mechcompNotes)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set timing", .proc/mechcompTiming)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "reset", .proc/reset_piano)
 
+	// requires it's own proc because else the mechcomp input will be taken as first argument of ready_piano()
+	proc/mechcompPlay(var/datum/mechanicsMessage/input)
+		ready_piano()
+
 	proc/mechcompNotes(var/datum/mechanicsMessage/input)
-		var/new_timing = text2num(input.signal)
-		if (new_timing)
-			set_timing(new_timing)
+		if (input.signal)
+			set_notes(input.signal)
 
 	proc/mechcompTiming(var/datum/mechanicsMessage/input)
 		var/new_timing = text2num(input.signal)
@@ -156,13 +159,9 @@
 			return
 		var/mode_sel = input("Which mode would you like?", "Mode Select") as null|anything in list("Choose Notes", "Play Song")
 		if (mode_sel == "Choose Notes")
-			note_input = ""
-			note_input = input("Write out the notes you want to be played.", "Composition Menu", note_input)
-			if (length(note_input) > 2048)//still room to get long piano songs in, but not too crazy
+			var/given_notes = input("Write out the notes you want to be played.", "Composition Menu", note_input)
+			if (!set_notes(given_notes))//still room to get long piano songs in, but not too crazy
 				src.visible_message("<span class='alert'>\The [src] makes an angry whirring noise and shuts down.</span>")
-				return
-			clean_input(note_input) //if updating input order to have a different order, update build_notes to reflect that order
-			build_notes(piano_notes)
 			return
 		else if (mode_sel == "Play Song")
 			ready_piano()
@@ -205,7 +204,7 @@
 					return 1
 		return 0
 
-	proc/clean_input(var/list/input) //breaks our big input string into chunks
+	proc/clean_input() //breaks our big input string into chunks
 		is_busy = 1
 		piano_notes = list()
 //		src.visible_message("<span class='notice'>\The [src] starts humming and rattling as it processes!</span>")
@@ -307,6 +306,14 @@
 			var/sound_name = "sound/piano/[compiled_notes[curr_note]].ogg"
 			playsound(src, sound_name, note_volumes[curr_note],0,10,0)
 
+	proc/set_notes(var/given_notes)
+		if (length(note_input) > MAX_NOTE_INPUT)
+			return FALSE
+		src.note_input = given_notes
+		clean_input()
+		build_notes(piano_notes)
+		return TRUE
+
 	proc/set_timing(var/time_sel)
 		if (time_sel < MIN_TIMING || time_sel > MAX_TIMING)
 			return FALSE
@@ -364,3 +371,4 @@
 
 #undef MIN_TIMING
 #undef MAX_TIMING
+#undef MAX_NOTE_INPUT
