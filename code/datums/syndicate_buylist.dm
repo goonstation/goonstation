@@ -649,6 +649,7 @@ This is basically useless for anyone but miners.
 	cost = 6
 	desc = "These marvels of modern technology employ nanites and space science to draw energy from nearby cables to zap things. BZZZZT!"
 	not_in_crates = 1
+	job = list("Engineer", "Chief Engineer", "Mechanic")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 
