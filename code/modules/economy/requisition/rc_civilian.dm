@@ -57,7 +57,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/caterfood)
 /datum/rc_entry/item/caterfood/soup
 	name = "pre-portioned soup bowl"
 	typepath = /obj/item/reagent_containers/food/snacks/soup
-	feemod = 980
+	feemod = 1160
 
 /datum/rc_entry/item/caterfood/salad
 	name = "pre-portioned salad"
