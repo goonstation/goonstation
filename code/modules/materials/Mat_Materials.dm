@@ -259,11 +259,10 @@
 	texture = "rock"
 
 	New()
-		..()
 		setProperty("density", 20)
 		setProperty("hard", 20)
 		setProperty("stability", 20)
-
+		return ..()
 
 /datum/material/metal/electrum
 	mat_id = "electrum"
@@ -273,70 +272,19 @@
 	quality = 5
 
 	New()
-		..()
-		setProperty("electrical", 85)
-		setProperty("density", 35)
+		setProperty("electrical", 80)
+		setProperty("density", 5)
 		setProperty("hard", 5)
-
+		return ..()
 
 /datum/material/metal/steel
 	mat_id = "steel"
 	name = "steel"
 	desc = "Terrestrial steel from Earth."
 	New()
-		..()
 		setProperty("density", 30)
-		setProperty("hard", 20)
-
-
-
-
-/datum/material/metal/copper
-	mat_id = "copper"
-	name = "copper"
-	desc = "Copper is a terrestrial conductive metal from proto-Dan mines. It is inferior to pharosium."
-	color = "#B87333" //the hex value known as copper in RGB colorspace
-	New()
-		..()
-		setProperty("stability", 30)
-		setProperty("electrical", 51)
-		setProperty("density", 10)
-		setProperty("hard", 10)
-
-
-/datum/material/metal/pharosium
-	mat_id = "pharosium"
-	name = "pharosium"
-	desc = "Pharosium is a conductive metal."
-	color = "#E39362"
-	New()
-		..()
-		setProperty("stability", 60)
-		setProperty("electrical", 65)
-		setProperty("density", 15)
 		setProperty("hard", 15)
-
-
-/datum/material/metal/cobryl
-	mat_id = "cobryl"
-	name = "cobryl"
-	desc = "Cobryl is a somewhat valuable metal."
-	color = "#84D5F0"
-	New()
-		..()
-		value = 175
-
-
-/datum/material/metal/bohrum
-	mat_id = "bohrum"
-	name = "bohrum"
-	desc = "Bohrum is a heavy and highly durable metal."
-	color = "#3D692D"
-	New()
-		..()
-		setProperty("density", 50)
-		setProperty("hard", 40)
-
+		return ..()
 
 /datum/material/metal/mauxite
 	mat_id = "mauxite"
@@ -344,9 +292,52 @@
 	desc = "Mauxite is a sturdy common metal."
 	color = "#574846"
 	New()
-		..()
+		setProperty("density", 50)
+		setProperty("hard", 15)
+		return ..()
+
+/datum/material/metal/copper
+	mat_id = "copper"
+	name = "copper"
+	desc = "Copper is a terrestrial conductive metal from proto-Dan mines. It is inferior to pharosium."
+	color = "#B87333" //the hex value known as copper in RGB colorspace
+	New()
+		setProperty("stability", 30)
+		setProperty("electrical", 51)
+		setProperty("density", 5)
+		setProperty("hard", 5)
+		return ..()
+
+/datum/material/metal/pharosium
+	mat_id = "pharosium"
+	name = "pharosium"
+	desc = "Pharosium is a conductive metal."
+	color = "#E39362"
+	New()
+		setProperty("stability", 60)
+		setProperty("electrical", 65)
+		setProperty("density", 15)
+		setProperty("hard", 15)
+		return ..()
+
+/datum/material/metal/cobryl
+	mat_id = "cobryl"
+	name = "cobryl"
+	desc = "Cobryl is a somewhat valuable metal."
+	color = "#84D5F0"
+	New()
+		value = 175
+		return ..()
+
+/datum/material/metal/bohrum
+	mat_id = "bohrum"
+	name = "bohrum"
+	desc = "Bohrum is a heavy and highly durable metal."
+	color = "#3D692D"
+	New()
 		setProperty("density", 40)
-		setProperty("hard", 20)
+		setProperty("hard", 30)
+		return ..()
 
 
 /datum/material/metal/cerenkite
@@ -357,14 +348,13 @@
 	material_flags = MATERIAL_ENERGY | MATERIAL_METAL
 
 	New()
-		..()
 		value = 200
 
 		setProperty("electrical", 55)
 		setProperty("stability", 30)
 		setProperty("radioactive", 55)
 		setProperty("hard", 15)
-
+		return ..()
 
 /datum/material/metal/syreline
 	mat_id = "syreline"
@@ -374,7 +364,6 @@
 	quality = 30
 
 	New()
-		..()
 		value = 400
 
 		setProperty("density", 5)
@@ -382,7 +371,7 @@
 		setProperty("reflective", 70)
 
 		addTrigger(triggersOnAdd, new /datum/materialProc/gold_add())
-
+		return ..()
 
 /datum/material/metal/gold
 	mat_id = "gold"
@@ -392,16 +381,15 @@
 	quality = 30
 
 	New()
-		..()
 		value = 300
 
-		setProperty("density", 45)
+		setProperty("density", 2)
 		setProperty("hard", 2)
 		setProperty("reflective", 55)
-		setProperty("electrical", 68)
+		setProperty("electrical", 60)
 
 		addTrigger(triggersOnAdd, new /datum/materialProc/gold_add())
-
+		return ..()
 
 /datum/material/metal/silver
 	mat_id = "silver"
@@ -411,14 +399,13 @@
 	quality = 5
 
 	New()
-		..()
 		value = 250
 
-		setProperty("density", 20)
-		setProperty("hard", 10)
+		setProperty("density", 1)
+		setProperty("hard", 1)
 		setProperty("reflective", 50)
 		setProperty("electrical", 60)
-
+		return ..()
 
 /datum/material/metal/plasmasteel //This should have inverted plasmaglass stats
 	mat_id = "plasmasteel"
@@ -428,10 +415,9 @@
 	alpha = 255
 
 	New()
-		..()
 		setProperty("density", 75)
 		setProperty("hard", 30)
-
+		return ..()
 
 /datum/material/metal/neutronium
 	mat_id = "neutronium"
@@ -442,13 +428,12 @@
 	alpha = 255
 
 	New()
-		..()
 		setProperty("density", 100) //👀
 		setProperty("hard", 10)
 		setProperty("electrical", 70)
 		setProperty("stability", 20)
 		setProperty("n_radioactive", 85)
-
+		return ..()
 
 
 // Special Metals
@@ -461,14 +446,13 @@
 	quality = -50
 
 	New()
-		..()
 		value = 10
 
-		setProperty("density", 14) //fucked up values for fucked up material but not silly putty
-		setProperty("hard", 12)
+		setProperty("density", 1)
+		setProperty("hard", 1)
 		setProperty("stability", 3)
 		setProperty("electrical", 20)
-
+		return ..()
 
 /datum/material/metal/spacelag
 	mat_id = "spacelag"
@@ -477,11 +461,10 @@
 	color = "#0F0A08"
 
 	New()
-		..()
 		setProperty("stability", 95)
 		setProperty("density", 80)
 		setProperty("hard", 5)
-
+		return ..()
 
 /datum/material/metal/iridiumalloy
 	mat_id = "iridiumalloy"
@@ -493,10 +476,9 @@
 	quality = 60
 
 	New()
-		..()
 		setProperty("density", 80)
 		setProperty("hard", 80)
-
+		return ..()
 
 //GIVE THIS STATS AND SPECIAL EFFECTS.
 /datum/material/metal/soulsteel
@@ -507,11 +489,9 @@
 	material_flags = MATERIAL_METAL | MATERIAL_ENERGY
 
 	New()
-		..()
-		setProperty("density", 60)
-		setProperty("hard", 20)
+		setProperty("density", 65)
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
-
+		return ..()
 
 // Crystals
 /datum/material/crystal
@@ -524,11 +504,6 @@
 	desc = "Terrestrial glass. Inferior to Molitz."
 	color = "#A3DCFF"
 	alpha = 180
-	New()
-		..()
-		setProperty("density", 15)
-		setProperty("hard", 30)
-
 
 /datum/material/crystal/molitz
 	mat_id = "molitz"
@@ -538,13 +513,12 @@
 	alpha = 180
 
 	New()
-		..()
-		setProperty("density", 25)
-		setProperty("hard", 30)
+		setProperty("density", 40)
+		setProperty("hard", 40)
 		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
 		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
 		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
-
+		return ..()
 
 	beta
 		mat_id = "molitz_b"
@@ -553,7 +527,6 @@
 		desc = "A rare form of Molitz. When heated produces a powerful plasma fire catalyst."
 
 		New()
-			..()
 			..()
 			removeTrigger(triggersTemp, /datum/materialProc/molitz_temp) // no need to remove molitz_on_hit, all it
 			addTrigger(triggersTemp, new /datum/materialProc/molitz_temp/agent_b()) // does is call molitz_temp
@@ -566,11 +539,10 @@
 	color = "#C2280A"
 
 	New()
-		..()
 		setProperty("density", 30)
 		setProperty("hard", 30)
 		setProperty("electrical", 75)
-
+		return ..()
 
 /datum/material/crystal/erebite
 	mat_id = "erebite"
@@ -580,7 +552,6 @@
 	material_flags = MATERIAL_CRYSTAL | MATERIAL_ENERGY
 
 	New()
-		..()
 		setProperty("density", 20)
 		setProperty("hard", 20)
 		setProperty("electrical", 60)
@@ -594,7 +565,7 @@
 		addTrigger(triggersOnAttack, new /datum/materialProc/generic_explode_attack(33))
 		addTrigger(triggersOnAttacked, new /datum/materialProc/generic_explode_attack(33))
 		addTrigger(triggersOnHit, new /datum/materialProc/generic_explode_attack(33))
-
+		return ..()
 
 /datum/material/crystal/plasmastone
 	mat_id = "plasmastone"
@@ -604,7 +575,6 @@
 	material_flags = MATERIAL_CRYSTAL | MATERIAL_ENERGY
 
 	New()
-		..()
 		setProperty("density", 10)
 		setProperty("hard", 10)
 		setProperty("electrical", 50)
@@ -614,7 +584,7 @@
 		addTrigger(triggersTemp, new /datum/materialProc/plasmastone())
 		addTrigger(triggersExp, new /datum/materialProc/plasmastone())
 		addTrigger(triggersOnHit, new /datum/materialProc/plasmastone_on_hit())
-
+		return ..()
 
 /datum/material/crystal/plasmaglass
 	mat_id = "plasmaglass"
@@ -624,10 +594,9 @@
 	alpha = 180
 
 	New()
-		..()
 		setProperty("density", 30)
 		setProperty("hard", 75)
-
+		return ..()
 
 /datum/material/crystal/gemstone
 	mat_id = "quartz"
@@ -639,7 +608,6 @@
 	var/gem_tier = 3
 
 	New()
-		..()
 		switch(gem_tier)
 			if(1)
 				value = 700
@@ -657,7 +625,7 @@
 				name = "inferior [src.name]"
 				setProperty("density", 40)
 				setProperty("hard", 40)
-
+		return ..()
 
 	diamond
 		mat_id = "diamond"
@@ -788,11 +756,10 @@
 		alpha = 180
 
 	New()
-		..()
 		setProperty("density", 75)
 		setProperty("hard", 65)
 		setProperty("corrosion", 60)
-
+		return ..()
 
 // hi it me cirr im doing dumb
 /datum/material/crystal/gnesis //Feather
@@ -810,13 +777,12 @@
 		alpha = 180
 
 	New()
-		..()
 		setProperty("density", 5) // incredibly brittle
 		setProperty("hard", 50) // very dense
 		setProperty("reflective", 90) // shiny
 		setProperty("stability", 45) // constantly fluctuating
 		setProperty("electrical", 80) // good conductor
-
+		return ..()
 
 /datum/material/crystal/telecrystal
 	mat_id = "telecrystal"
@@ -827,14 +793,13 @@
 	alpha = 100
 
 	New()
-		..()
 		setProperty("density", 10)
 		setProperty("hard", 10)
 		setProperty("reflective", 80)
 		addTrigger(triggersOnLife, new /datum/materialProc/telecrystal_life())
 		addTrigger(triggersOnEntered, new /datum/materialProc/telecrystal_entered())
 		addTrigger(triggersOnAttack, new /datum/materialProc/telecrystal_onattack())
-
+		return ..()
 
 
 /datum/material/crystal/miracle
@@ -844,7 +809,6 @@
 	color = "#FFFFFF"
 
 	New()
-		..()
 		addTrigger(triggersOnAdd, new /datum/materialProc/miracle_add())
 		quality = rand(-50, 100)
 		alpha = rand(20, 255)
@@ -853,7 +817,7 @@
 		setProperty("corrosion", rand(1, 80))
 		setProperty("permeable", rand(30, 90))
 		addTrigger(triggersTemp, new /datum/materialProc/temp_miraclium())
-
+		return..()
 
 /datum/material/crystal/starstone
 	mat_id = "starstone"
@@ -864,7 +828,6 @@
 	quality = 45
 
 	New()
-		..()
 		value = 1000
 		setProperty("reflective", 90)
 		setProperty("density", 85)
@@ -872,7 +835,7 @@
 		setProperty("stability", 70)
 		setProperty("electrical", 10)
 		addTrigger(triggersOnAdd, new /datum/materialProc/gold_add())
-
+		return ..()
 
 /datum/material/crystal/ice
 	mat_id = "ice"
@@ -885,26 +848,24 @@
 	edible = 1
 
 	New()
-		..()
 		setProperty("electrical", 70)
 		setProperty("density", 15)
 		setProperty("hard", 15)
 		addTrigger(triggersOnLife, new /datum/materialProc/ice_life())
 		addTrigger(triggersOnAttack, new /datum/materialProc/slippery_attack())
 		addTrigger(triggersOnEntered, new /datum/materialProc/slippery_entered())
-
+		return ..()
 
 /datum/material/crystal/wizard
 	quality = 50
 	alpha = 100
 
 	New()
-		..()
 		value = 650
 		setProperty("density", 60)
 		setProperty("hard", 60)
 		addTrigger(triggersOnAdd, new /datum/materialProc/enchanted_add())
-
+		return ..()
 
 	quartz // basically wizard glass
 		mat_id = "wiz_quartz"
@@ -960,13 +921,12 @@
 	edible = 1
 
 	New()
-		..()
 		setProperty("corrosion", 30)
 		setProperty("density", 45)
 		setProperty("hard", 5)
 		setProperty("flammable", 120)
 		addTrigger(triggersOnEat, new /datum/materialProc/oneat_blob())
-
+		return ..()
 
 
 /datum/material/organic/flesh
@@ -980,11 +940,10 @@
 	edible = 1
 
 	New()
-		..()
 		setProperty("density", 35)
 		setProperty("hard", 5)
 		//addTrigger(triggersOnEat, new /datum/materialProc/oneat_flesh())
-
+		return ..()
 
 	butt
 		mat_id = "butt"
@@ -998,11 +957,10 @@
 	color = "#555555"
 
 	New()
-		..()
 		setProperty("flammable", 60)
 		setProperty("hard", 15)
 		setProperty("density", 15)
-
+		return ..()
 
 /datum/material/organic/koshmarite
 	mat_id = "koshmarite"
@@ -1012,12 +970,11 @@
 	material_flags = MATERIAL_ORGANIC | MATERIAL_CRYSTAL
 
 	New()
-		..()
 		setProperty("hard", 55)
 		setProperty("reflective", 60)
 		setProperty("radioactive", 20)
 		setProperty("density", 35)
-
+		return ..()
 
 /datum/material/organic/viscerite
 	mat_id = "viscerite"
@@ -1030,13 +987,12 @@
 	edible = 1
 
 	New()
-		..()
-		setProperty("density", 45)
+		setProperty("density", 65)
 		setProperty("hard", 3)
 		setProperty("corrosion", 70)
 		setProperty("permeable", 95)
 		addTrigger(triggersOnEat, new /datum/materialProc/oneat_viscerite())
-
+		return ..()
 
 /datum/material/organic/bone
 	mat_id = "bone"
@@ -1046,10 +1002,9 @@
 	material_flags = MATERIAL_ORGANIC
 
 	New()
-		..()
 		setProperty("density", 20)
 		setProperty("hard", 64)
-
+		return ..()
 
 /datum/material/organic/wood
 	mat_id = "wood"
@@ -1061,11 +1016,10 @@
 	texture_blend = ICON_MULTIPLY
 
 	New()
-		..()
 		setProperty("density", 55)
 		setProperty("hard", 52)
 		setProperty("flammable", 67)
-
+		return ..()
 
 /datum/material/organic/bamboo
 	mat_id = "bamboo"
@@ -1077,11 +1031,10 @@
 	texture_blend = ICON_MULTIPLY
 
 	New()
-		..()
 		setProperty("density", 45)
 		setProperty("flammable", 67)
 		setProperty("stability", 53)
-
+		return ..()
 
 /datum/material/organic/cardboard
 	mat_id = "cardboard"
@@ -1091,13 +1044,12 @@
 	material_flags = MATERIAL_ORGANIC
 
 	New()
-		..()
-		setProperty("density", 20)
-		setProperty("hard", 5)
+		setProperty("density", 25)
+		setProperty("hard", 25)
 		setProperty("flammable", 67)
 		addTrigger(triggersOnBlobHit, new /datum/materialProc/cardboard_blob_hit())
 		addTrigger(triggersOnHit, new /datum/materialProc/cardboard_on_hit())
-
+		return ..()
 
 /datum/material/organic/chitin
 	mat_id = "chitin"
@@ -1107,10 +1059,9 @@
 	material_flags = MATERIAL_ORGANIC | MATERIAL_METAL
 
 	New()
-		..()
 		setProperty("density", 25)
 		setProperty("hard", 65)
-
+		return ..()
 
 /datum/material/organic/beeswax
 	mat_id = "beeswax"
@@ -1120,10 +1071,9 @@
 	material_flags = MATERIAL_ORGANIC
 
 	New()
-		..()
 		setProperty("density", 15)
 		setProperty("hard", 15)
-
+		return ..()
 
 /datum/material/organic/honey
 	mat_id = "honey"
@@ -1135,13 +1085,12 @@
 	edible = TRUE
 
 	New()
-		..()
 		setProperty("density", 20)
 		setProperty("hard", 5)
 		setProperty("flammable", 30)
 		// addTrigger(triggersOnEat, new /datum/materialProc/oneat_honey())
 		// maybe make it sticky somehow?
-
+		return ..()
 
 /datum/material/organic/frozenfart
 	mat_id = "frozenfart"
@@ -1151,13 +1100,12 @@
 	material_flags = MATERIAL_ORGANIC
 
 	New()
-		..()
 		setProperty("density", 30)
 		setProperty("hard", 30)
 		setProperty("thermal", 10)
 		addTrigger(triggersOnAdd, new /datum/materialProc/ffart_add())
 		addTrigger(triggersPickup, new /datum/materialProc/ffart_pickup())
-
+		return ..()
 
 /datum/material/organic/hamburgris
 	mat_id = "hamburgris"
@@ -1167,7 +1115,6 @@
 	material_flags = MATERIAL_ORGANIC
 
 	New()
-		..()
 		setProperty("density", 65)
 		setProperty("corrosion", 75)
 		setProperty("permeable", 25)
@@ -1176,7 +1123,7 @@
 		setProperty("flammable", 10)
 		addTrigger(triggersOnLife, new /datum/materialProc/generic_reagent_onlife("cholesterol", 1))
 
-
+		return ..()
 
 /datum/material/organic/pizza
 	mat_id = "pizza"
@@ -1190,9 +1137,8 @@
 	edible = 1
 
 	New()
-		..()
 		setProperty("hard", 2)
-
+		return ..()
 
 /datum/material/organic/coral
 	mat_id = "coral"
@@ -1204,10 +1150,9 @@
 	texture_blend = ICON_OVERLAY
 
 	New()
-		..()
 		setProperty("density", 5)
 		setProperty("hard", 50)
-
+		return ..()
 
 
 // Fabrics
@@ -1230,12 +1175,11 @@
 	material_flags = MATERIAL_RUBBER
 
 	New()
-		..()
 		setProperty("density", 5)
 		setProperty("hard", 5)
 		setProperty("electrical", 29)
 		setProperty("thermal", 45)
-
+		return ..()
 
 /datum/material/fabric/synthrubber
 	mat_id = "synthrubber"
@@ -1245,12 +1189,11 @@
 	material_flags = MATERIAL_RUBBER
 
 	New()
-		..()
 		setProperty("density", 26)
 		setProperty("hard", 11)
 		setProperty("electrical", 20)
 		setProperty("thermal", 40)
-
+		return ..()
 
 /datum/material/fabric/synthblubber //it had to be done
 	mat_id = "synthblubber"
@@ -1260,12 +1203,11 @@
 	material_flags = MATERIAL_RUBBER
 
 	New()
-		..()
 		setProperty("density", 55)
 		setProperty("hard", 10)
 		setProperty("electrical", 14)
 		setProperty("thermal", 30)
-
+		return ..()
 
 /datum/material/fabric/cloth/leather
 	mat_id = "leather"
@@ -1275,12 +1217,11 @@
 	material_flags = MATERIAL_CLOTH
 
 	New()
-		..()
 		setProperty("density", 65)
 		setProperty("hard", 5)
 		setProperty("thermal", 29)
 		setProperty("electrical", 32)
-
+		return ..()
 
 /datum/material/fabric/cloth/synthleather
 	mat_id = "synthleather"
@@ -1290,42 +1231,39 @@
 	material_flags = MATERIAL_CLOTH
 
 	New()
-		..()
 		setProperty("density", 60)
 		setProperty("hard", 10)
 		setProperty("thermal", 35)
 		setProperty("electrical", 32)
+		return ..()
 
-
-/datum/material/fabric/cloth/brullbarhide
-	mat_id = "brullbarhide"
-	name = "brullbar hide"
-	desc = "The hide of a fearsome brullbar!"
+/datum/material/fabric/cloth/wendigohide
+	mat_id = "wendigohide"
+	name = "wendigo hide"
+	desc = "The hide of a fearsome wendigo!"
 	color = "#CCCCCC"
 	material_flags = MATERIAL_CLOTH
 
 	New()
-		..()
 		setProperty("density", 5)
 		setProperty("hard", 5)
 		setProperty("thermal", 20)
 		setProperty("electrical", 45)
+		return ..()
 
-
-/datum/material/fabric/cloth/brullbarhide/king
-	mat_id = "kingbrullbarhide"
-	name = "king brullbar hide"
-	desc = "The hide of a terrifying brullbar king!!!"
+/datum/material/fabric/cloth/wendigohide/king
+	mat_id = "kingwendigohide"
+	name = "king wendigo hide"
+	desc = "The hide of a terrifying wendigo king!!!"
 	color = "#EFEEEE"
 	material_flags = MATERIAL_CLOTH
 
 	New()
-		..()
 		setProperty("density", 30)
 		setProperty("hard", 30)
 		setProperty("thermal", 10)
 		setProperty("electrical", 45)
-
+		return ..()
 
 /datum/material/fabric/cloth/cotton
 	mat_id = "cotton"
@@ -1335,13 +1273,12 @@
 	material_flags = MATERIAL_CLOTH
 
 	New()
-		..()
 		setProperty("density", 16)
 		setProperty("hard", 16)
 		setProperty("thermal", 38)
 		setProperty("flammable", 70)
 		setProperty("electrical", 45)
-
+		return ..()
 
 /datum/material/fabric/cloth/fibrilith
 	mat_id = "fibrilith"
@@ -1351,19 +1288,17 @@
 	material_flags = MATERIAL_CLOTH | MATERIAL_CRYSTAL
 
 	New()
-		..()
 		setProperty("density", 30)
 		setProperty("hard", 30)
 		setProperty("thermal", 20)
 		setProperty("flammable", 10)
 		setProperty("permeable", 30)
 		setProperty("electrical", 45)
-
+		return ..()
 
 	New()
-		..()
 		addTrigger(triggersOnLife, new /datum/materialProc/generic_itchy_onlife())
-
+		return ..()
 
 /datum/material/fabric/cloth/spidersilk
 	mat_id = "spidersilk"
@@ -1373,13 +1308,12 @@
 	material_flags = MATERIAL_CLOTH
 
 	New()
-		..()
 		setProperty("density", 70)
 		setProperty("hard", 1)
 		setProperty("thermal", 40)
 		setProperty("flammable", 70)
 		setProperty("electrical", 60)
-
+		return ..()
 
 /datum/material/fabric/cloth/carbonfibre
 	mat_id = "carbonfibre"
@@ -1389,14 +1323,13 @@
 	material_flags = MATERIAL_CLOTH
 
 	New()
-		..()
 		setProperty("density", 70)
 		setProperty("hard", 60)
 		setProperty("thermal", 90)
 		setProperty("stability", 33)
 		setProperty("permeable", 85)
 		setProperty("electrical", 65)
-
+		return ..()
 
 /datum/material/fabric/cloth/hauntium
 	mat_id = "hauntium"
@@ -1407,7 +1340,6 @@
 	material_flags = MATERIAL_CLOTH | MATERIAL_METAL | MATERIAL_ENERGY
 
 	New()
-		..()
 		setProperty("density", 10)
 		setProperty("hard", 10)
 		setProperty("stability", 100)
@@ -1415,7 +1347,7 @@
 		setProperty("permeable", 10)
 		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
-
+		return ..()
 
 /datum/material/fabric/cloth/ectofibre
 	mat_id = "ectofibre"
@@ -1426,7 +1358,6 @@
 	alpha = 128
 
 	New()
-		..()
 		setProperty("density", 70)
 		setProperty("hard", 10)
 		setProperty("thermal", 90)
@@ -1434,7 +1365,7 @@
 		setProperty("radioactive", 30)
 		setProperty("electrical", 75)
 		addTrigger(triggersOnLife, new /datum/materialProc/generic_itchy_onlife())
-
+		return ..()
 
 /datum/material/fabric/cloth/dyneema
 	mat_id = "dyneema"
@@ -1444,13 +1375,12 @@
 	material_flags = MATERIAL_CLOTH
 
 	New()
-		..()
 		setProperty("density", 70)
 		setProperty("hard", 60)
 		setProperty("corrosion", 65)
 		setProperty("stability", 80)
 		setProperty("electrical", 65)
-
+		return ..()
 
 
 /datum/material/fabric/cloth/beewool
@@ -1463,13 +1393,12 @@
 	texture_blend = ICON_OVERLAY
 
 	New()
-		..()
 		setProperty("hard", 21)
 		setProperty("density", 21)
 		setProperty("flammable", 65)
 		setProperty("electrical", 29)
 		setProperty("thermal", 75)
-
+		return ..()
 
 /datum/material/energy
 	material_flags = MATERIAL_ENERGY
@@ -1481,11 +1410,11 @@
 	color = "#ccffcc"
 
 	New()
-		..()
-		setProperty("density", 3)
-		setProperty("hard", 5)
+		setProperty("density", 1)
+		setProperty("hard", 1)
 		setProperty("stability", 3)
 		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
+		return ..()
 
 /datum/material/energy/negativematter
 	mat_id = "negativematter"
@@ -1494,9 +1423,8 @@
 	color = list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
 
 	New()
-		..()
 		addTrigger(triggersOnAdd, new /datum/materialProc/negative_add())
-
+		return ..()
 
 
 

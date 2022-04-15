@@ -7,9 +7,9 @@
 /obj/item/roboupgrade/spectro/upgrade_activate(var/mob/living/silicon/robot/user as mob)
 	if (..())
 		return
-	APPLY_ATOM_PROPERTY(user, PROP_MOB_SPECTRO, src)
+	APPLY_MOB_PROPERTY(user, PROP_SPECTRO, src)
 
 /obj/item/roboupgrade/spectro/upgrade_deactivate(var/mob/living/silicon/robot/user as mob)
 	if (..())
 		return
-	REMOVE_ATOM_PROPERTY(user, PROP_MOB_SPECTRO, src)
+	REMOVE_MOB_PROPERTY(user, PROP_SPECTRO, src)

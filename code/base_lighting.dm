@@ -48,6 +48,5 @@
 		if (z == AST_ZLEVEL) return
 		#endif
 
-		// space handles its own lighting via simple lights which already cover the turf itself too
-		if (!istype(src, /turf/space) && !A.force_fullbright && fullbright) // if the area's fullbright we'll use a single overlay on the area instead
+		if (!A.force_fullbright && fullbright) // if the area's fullbright we'll use a single overlay on the area instead
 			overlays += /image/fullbright

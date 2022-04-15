@@ -21,11 +21,11 @@
 		src.bioHolder.AddEffect("breathless", 0, 0, 0, 1)
 		src.bioHolder.AddEffect("rad_resist", 0, 0, 0, 1)
 		src.bioHolder.AddEffect("detox", 0, 0, 0, 1)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "slasher_stun_resistance", 80)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "slasher_stun_resistance", 80)
+		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST, "slasher_stun_resistance", 80)
+		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "slasher_stun_resistance", 80)
 		START_TRACKING
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_SELF_HARM, src)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
+		APPLY_MOB_PROPERTY(src, PROP_NO_SELF_HARM, src)
+		APPLY_MOB_PROPERTY(src, PROP_AI_UNTRACKABLE, src)
 
 	Life()
 		..()
@@ -66,10 +66,10 @@
 					src.setStatus("incorporeal", duration = INFINITE_STATUS)
 					src.set_density(FALSE)
 					src.visible_message("<span class='alert'>[src] disappears!</span>")
-					APPLY_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE, src)
-					APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
-					APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
-					APPLY_ATOM_PROPERTY(src, PROP_MOB_NOCLIP, src)
+					APPLY_MOB_PROPERTY(src, PROP_NEVER_DENSE, src)
+					APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+					APPLY_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS, src)
+					APPLY_MOB_PROPERTY(src, PROP_NOCLIP, src)
 					src.nodamage = TRUE
 					src.alpha = 160
 					src.see_invisible = INVIS_GHOST
@@ -88,10 +88,10 @@
 				SPAWN(1.5 SECONDS)
 					src.delStatus("incorporeal")
 					src.set_density(TRUE)
-					REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
-					REMOVE_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE, src)
-					REMOVE_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
-					REMOVE_ATOM_PROPERTY(src, PROP_MOB_NOCLIP, src)
+					REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
+					REMOVE_MOB_PROPERTY(src, PROP_NEVER_DENSE, src)
+					REMOVE_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS, src)
+					REMOVE_MOB_PROPERTY(src, PROP_NOCLIP, src)
 					src.alpha = 254
 					src.see_invisible = INVIS_NONE
 					src.visible_message("<span class='alert'>[src] appears out of the shadows!</span>")
@@ -201,27 +201,27 @@
 				M.change_misstep_chance(30)
 				if(prob(33))
 					M.emote("faint")
-					M.setStatusMin("weakened", 4 SECONDS)
+					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS))
 				else
 					M.emote("tremble")
 				sleep(20 SECONDS)
 				boutput(M, __red("<span class='notice'>You feel like you can't control your legs!</span>"))
 				if(prob(50))
 					M.emote("shudder")
-					M.setStatusMin("weakened", 1 SECONDS)
-					M.setStatusMin("paralysis", 1 SECONDS)
+					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 1 SECONDS))
+					M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 1 SECONDS))
 					M.force_laydown_standup()
 				else
 					M.emote("faint")
-					M.setStatusMin("weakened", 8 SECONDS)
+					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 8 SECONDS))
 				M.change_misstep_chance(40)
 				sleep(10 SECONDS)
 				M.change_misstep_chance(-70)
 				boutput(M, __red("<span class='notice'>You collapse!</span>"))
 				M.emote("scream")
 				M.emote("faint")
-				M.setStatusMin("weakened", 8 SECONDS)
-				M.setStatusMin("paralysis", 8 SECONDS)
+				M.setStatus("weakened", max(M.getStatusDuration("weakened"), 8 SECONDS))
+				M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 8 SECONDS))
 				sleep(8 SECONDS)
 
 				var/turf/T = get_turf(M)
@@ -247,7 +247,7 @@
 					if(O2)
 						qdel(O2)
 
-				APPLY_ATOM_PROPERTY(M, PROP_MOB_NO_SELF_HARM, src)
+				APPLY_MOB_PROPERTY(M, PROP_NO_SELF_HARM, src)
 				playsound(M, "sound/effects/ghost.ogg", 45, 0)
 				var/mob/dead/observer/O = M.ghostize()
 				if(!O)
@@ -296,7 +296,7 @@
 					remove_equipment(M)
 					return
 				WG.mind.transfer_to(M)
-				REMOVE_ATOM_PROPERTY(M, PROP_MOB_NO_SELF_HARM, src)
+				REMOVE_MOB_PROPERTY(M, PROP_NO_SELF_HARM, src)
 				qdel(WG)
 				remove_equipment(M)
 
@@ -392,9 +392,9 @@
 				src.tracked_blood = list("bDNA" = src.last_bdna, "btype" = src.last_btype, "count" = INFINITY)
 				src.track_blood()
 				trailing_blood = TRUE
-				APPLY_ATOM_PROPERTY(src, PROP_MOB_BLOOD_TRACKING_ALWAYS, src)
+				APPLY_MOB_PROPERTY(src, PROP_BLOOD_TRACKING_ALWAYS, src)
 			else
-				REMOVE_ATOM_PROPERTY(src, PROP_MOB_BLOOD_TRACKING_ALWAYS, src)
+				REMOVE_MOB_PROPERTY(src, PROP_BLOOD_TRACKING_ALWAYS, src)
 				src.tracked_blood = null
 				trailing_blood = FALSE
 
@@ -599,13 +599,13 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 			return TRUE
 		if(isdead(M))
 			if(ishuman(M) && M.hasStatus("soulstolen"))
-				if (BOUNDS_DIST(W, M) > 0)
+				if (get_dist(W, M) > 1)
 					boutput(src.holder.owner, "<span class='alert'>You must be closer in order to steal [M]'s soul.</span>")
 					return TRUE
 				else
 					return W.soulStealSetup(M, TRUE)
 			else if(ishuman(M) && (M.mind && M.mind.soul >= 100))
-				if (BOUNDS_DIST(W, M) > 0)
+				if (get_dist(W, M) > 1)
 					boutput(src.holder.owner, "<span class='alert'>You must be closer in order to steal [M]'s soul.</span>")
 					return TRUE
 				else

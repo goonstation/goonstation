@@ -37,14 +37,14 @@
 	on_transplant(var/mob/M as mob)
 		..()
 		if (src.robotic)
-			APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, icon_state, 2)
+			APPLY_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, icon_state, 2)
 			src.donor.add_stam_mod_max(icon_state, 10)
 		return
 
 	on_removal()
 		if (donor)
 			if (src.robotic)
-				REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, icon_state)
+				REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, icon_state)
 				src.donor.remove_stam_mod_max(icon_state)
 		..()
 		return
@@ -236,11 +236,21 @@
 	mats = 6
 	temp_tolerance = T0C+500
 	var/overloading = 0
-	var/grace_period = 30
 	safe_oxygen_min = 9
 	safe_co2_max = 18
 	safe_toxins_max = 5		//making it a lot higher than regular, because even doubling the regular value is pitifully low. This is still reasonably low, but it might be noticable
 	rad_immune = TRUE
+
+/obj/item/organ/lung/synth
+	name = "synthlungs"
+	icon_state = "plant"
+	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream."
+	synthetic = 1
+	failure_disease = /datum/ailment/disease/respiratory_failure
+	var/overloading = 0
+	New()
+		..()
+		src.icon_state = pick("plant_lung_t", "plant_lung_t_bloom")
 
 	add_ability(var/datum/abilityHolder/aholder, var/abil)
 		if (!ispath(abil, /datum/targetable/organAbility/rebreather) || !aholder)
@@ -273,16 +283,12 @@
 			return 0
 
 		if(overloading)
-			src.grace_period = max(grace_period - 3 * mult, 0)
-			if(grace_period <= 5)
-				src.take_damage(0, 1 * mult)
-		else
-			src.grace_period = min(grace_period + 1 * mult, initial(src.grace_period))
+			src.take_damage(0, 1 * mult)
 		return 1
 
 	disposing()
 		if(donor)
-			REMOVE_ATOM_PROPERTY(donor, PROP_MOB_REBREATHING, "cyberlungs")
+			REMOVE_MOB_PROPERTY(donor, PROP_REBREATHING, "cyberlungs")
 		..()
 
 	emag_act(mob/user, obj/item/card/emag/E)
@@ -292,17 +298,6 @@
 	demag(mob/user)
 		..()
 		organ_abilities = initial(organ_abilities)
-
-/obj/item/organ/lung/synth
-	name = "synthlungs"
-	icon_state = "plant"
-	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream."
-	synthetic = 1
-	failure_disease = /datum/ailment/disease/respiratory_failure
-
-	New()
-		..()
-		src.icon_state = pick("plant_lung_t", "plant_lung_t_bloom")
 
 /obj/item/organ/lung/synth/left
 	name = "left lung"

@@ -17,6 +17,11 @@
 	var/amount_per_transfer_from_this = 10
 	var/capacity
 
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/cargotele))
+			W:cargoteleport(src, user)
+		return
+
 	New()
 		..()
 		src.create_reagents(4000)
@@ -62,7 +67,7 @@
 		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/machinery/hydro_mister) && !istype(over_object, /obj/item/tank/jetpack/backtank))
 			return ..()
 
-		if (BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
+		if (get_dist(usr, src) > 1 || get_dist(usr, over_object) > 1)
 			boutput(usr, "<span class='alert'>That's too far!</span>")
 			return
 
@@ -429,10 +434,10 @@
 		if (!isliving(user))
 			boutput(user, "<span class='alert'>Excuse me you are dead, get your gross dead hands off that!</span>")
 			return
-		if (BOUNDS_DIST(user, src) > 0)
+		if (get_dist(user,src) > 1)
 			boutput(user, "<span class='alert'>You need to move closer to [src] to do that.</span>")
 			return
-		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
+		if (get_dist(O,src) > 1 || get_dist(O,user) > 1)
 			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
 			return
 		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) || istype(O, /obj/item/reagent_containers/food/snacks/mushroom/) || istype(O, /obj/item/seed/) || istype(O, /obj/item/plant/))
@@ -513,10 +518,10 @@
 		if (!isliving(user))
 			user.show_text("It's probably a bit too late for you to drink your problems away.", "red")
 			return
-		if (BOUNDS_DIST(user, src) > 0)
+		if (get_dist(user,src) > 1)
 			user.show_text("You need to move closer to [src] to do that.", "red")
 			return
-		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
+		if (get_dist(O,src) > 1 || get_dist(O,user) > 1)
 			user.show_text("[O] is too far away to load into [src]!", "red")
 			return
 

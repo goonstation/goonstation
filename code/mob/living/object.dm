@@ -96,12 +96,12 @@
 
 		src.visible_message("<span class='alert'><b>[possessed] comes to life!</b></span>") // was [src] but: "the living space thing comes alive!"
 		animate_levitate(src, -1, 20, 1)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "living_object", 100)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "living_object", 100)
+		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST, "living_object", 1000)
+		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "living_object", 1000)
 
 	disposing()
-		REMOVE_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "living_object")
-		REMOVE_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "living_object")
+		REMOVE_MOB_PROPERTY(src, PROP_STUN_RESIST, "living_object")
+		REMOVE_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "living_object")
 		..()
 
 	equipped()
@@ -212,14 +212,14 @@
 	click(atom/target, params)
 		if (target == src)
 			if (canattack)
-				src.item.AttackSelf(src)
+				src.item.attack_self(src)
 			else
 				if(!isitem(src.item))
 					src.item.Attackhand(src)
 				else //This shouldnt ever happen.
 					src.item.Attackby(src.item, src)
 		else
-			if(src.a_intent == INTENT_GRAB && istype(target, /atom/movable) && BOUNDS_DIST(src, target) == 0)
+			if(src.a_intent == INTENT_GRAB && istype(target, /atom/movable) && get_dist(src, target) <= 1)
 				var/atom/movable/M = target
 				if(ismob(target) || !M.anchored)
 					src.visible_message("<span class='alert'>[src] grabs [target]!</span>")

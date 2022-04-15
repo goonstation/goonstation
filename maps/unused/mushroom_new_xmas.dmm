@@ -6151,11 +6151,24 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload_foyer)
+"anj" = (
+/obj/table/reinforced,
+/obj/item/aiModule/freeform,
+/obj/item/aiModule/rename,
+/turf/simulated/floor/purple,
+/area/station/turret_protected/ai_upload_foyer)
 "ank" = (
 /obj/table/reinforced,
 /obj/item/aiModule/makeCaptain,
 /obj/item/aiModule/oneHuman,
 /obj/item/aiModule/conservePower,
+/turf/simulated/floor/purple,
+/area/station/turret_protected/ai_upload_foyer)
+"anl" = (
+/obj/table/reinforced,
+/obj/item/aiModule/reset,
+/obj/item/aiModule/notHuman,
+/obj/item/aiModule/protectStation,
 /turf/simulated/floor/purple,
 /area/station/turret_protected/ai_upload_foyer)
 "anm" = (
@@ -6174,6 +6187,12 @@
 	},
 /obj/cable,
 /obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"ano" = (
+/obj/table/auto,
+/obj/item/aiModule/reset,
+/obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "anp" = (
@@ -6644,6 +6663,23 @@
 /obj/storage/closet/office,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
+"aop" = (
+/obj/rack,
+/obj/item/circuitboard/aiupload,
+/obj/item/circuitboard/teleporter,
+/obj/item/circuitboard/card,
+/obj/item/circuitboard/robot_module_rewriter,
+/obj/item/circuitboard/cloning,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
+/obj/machinery/camera{
+	c_tag = "Technical Storage";
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "aoq" = (
 /obj/rack,
 /obj/item/circuitboard/arcade,
@@ -8000,6 +8036,11 @@
 	d1 = 2;
 	d2 = 8
 	},
+/turf/simulated/floor/purple,
+/area/station/turret_protected/ai_upload)
+"arr" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/aiupload,
 /turf/simulated/floor/purple,
 /area/station/turret_protected/ai_upload)
 "ars" = (
@@ -10484,6 +10525,22 @@
 	dir = 1
 	},
 /area/station/medical/robotics)
+"awQ" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/obj/machinery/light{
+	dir = 1;
+	name = "light fixture"
+	},
+/turf/simulated/floor/blueblack/corner,
+/area/station/medical/robotics)
 "awR" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/research)
@@ -10876,6 +10933,18 @@
 	d2 = 2
 	},
 /obj/item/wirecutters,
+/turf/simulated/floor/grime,
+/area/station/storage/warehouse)
+"axR" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "axS" = (
@@ -25119,7 +25188,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "baV" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/decal/skeleton,
 /obj/item/clothing/suit/chef,
 /obj/item/clothing/head/chefhat,
 /obj/decal/cleanable/cobweb,
@@ -27275,7 +27344,7 @@
 /area/station/security/brig)
 "bfw" = (
 /turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bfx" = (
 /obj/machinery/bot/secbot/beepsky,
 /obj/item/clothing/suit/bedsheet,
@@ -27534,7 +27603,7 @@
 /area/station/security/brig)
 "bfZ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bga" = (
 /turf/space,
 /area/station/turret_protected/ai)
@@ -27627,7 +27696,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bgn" = (
 /turf/simulated/floor/red/side{
 	dir = 9
@@ -27635,7 +27704,7 @@
 /area/station/security/brig)
 "bgo" = (
 /turf/simulated/floor/caution/west,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bgp" = (
 /obj/lattice,
 /turf/space,
@@ -27717,7 +27786,7 @@
 	},
 /obj/storage/secure/crate/plasma/armory/anti_biological,
 /turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bgy" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -27732,7 +27801,7 @@
 /obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/machinery/light,
 /turf/simulated/floor/caution/west,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bgA" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -30109,7 +30178,9 @@
 /turf/simulated/wall/asteroid,
 /area/space)
 "blb" = (
-/turf/space/asteroid,
+/turf/space{
+	icon_state = "aplaceholder"
+	},
 /area/space)
 "blc" = (
 /turf/simulated/shuttle/wall{
@@ -31307,7 +31378,7 @@
 "bnN" = (
 /obj/storage/secure/crate/gear/armory/grenades,
 /turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bnO" = (
 /obj/storage/secure/closet/security/armory{
 	req_access_txt = "37"
@@ -31315,7 +31386,7 @@
 /obj/item/gun/kinetic/flaregun,
 /obj/item/ammo/bullets/flare,
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bnP" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
@@ -34554,11 +34625,6 @@
 /obj/item/camera,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
-"dXI" = (
-/obj/table/reinforced,
-/obj/item/aiModule/freeform,
-/turf/simulated/floor/purple,
-/area/station/turret_protected/ai_upload_foyer)
 "fuh" = (
 /obj/table/wood/auto,
 /obj/item/camera{
@@ -34575,11 +34641,6 @@
 	icon_state = "carpetS"
 	},
 /area/station/security/detectives_office)
-"giE" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/lawrack,
-/turf/simulated/floor/purple,
-/area/station/turret_protected/ai_upload)
 "gNK" = (
 /obj/rack,
 /obj/item/camera,
@@ -34625,18 +34686,6 @@
 /obj/item/card_box/plain,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
-"mgZ" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/turf/simulated/floor/grime,
-/area/station/storage/warehouse)
 "nup" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -34656,27 +34705,6 @@
 	dir = 4
 	},
 /area/station/science/teleporter)
-"nEG" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/machinery/light{
-	dir = 1;
-	name = "light fixture"
-	},
-/turf/simulated/floor/blueblack/corner,
-/area/station/medical/robotics)
-"qZK" = (
-/obj/table/auto,
-/obj/item/clothing/glasses/meson,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
 "rqc" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -34712,28 +34740,6 @@
 /obj/item/camera,
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/captain)
-"uHg" = (
-/obj/table/reinforced,
-/obj/item/aiModule/notHuman,
-/obj/item/aiModule/protectStation,
-/turf/simulated/floor/purple,
-/area/station/turret_protected/ai_upload_foyer)
-"wpM" = (
-/obj/rack,
-/obj/item/circuitboard/teleporter,
-/obj/item/circuitboard/card,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
-/obj/machinery/camera{
-	c_tag = "Technical Storage";
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
 
 (1,1,1) = {"
 aaa
@@ -52516,7 +52522,7 @@ alr
 alr
 amo
 amN
-qZK
+ano
 anQ
 aon
 aoO
@@ -52972,7 +52978,7 @@ amp
 amO
 anp
 amO
-wpM
+aop
 aoO
 aql
 bpS
@@ -59800,7 +59806,7 @@ auE
 auE
 auE
 axm
-mgZ
+axR
 auE
 auE
 auE
@@ -63411,7 +63417,7 @@ aaa
 aaa
 aaa
 amK
-dXI
+anj
 anN
 aok
 anN
@@ -63865,7 +63871,7 @@ aaa
 aaa
 aaa
 amK
-uHg
+anl
 anN
 aok
 anN
@@ -66370,7 +66376,7 @@ apl
 apk
 aqj
 aqf
-giE
+arr
 arT
 ast
 apk
@@ -66608,7 +66614,7 @@ asN
 asM
 avO
 awr
-nEG
+awQ
 axv
 axv
 ayT

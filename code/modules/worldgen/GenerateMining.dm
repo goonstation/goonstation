@@ -1,6 +1,7 @@
 #define ISDISTEDGE(A, D) (((A.x > (world.maxx - D) || A.x <= D)||(A.y > (world.maxy - D) || A.y <= D))?1:0) //1 if A is within D tiles range from edge of the map.
 
 var/list/miningModifiers = list()
+var/list/miningModifiersUsed = list()//Assoc list, type:times used
 
 //Notes:
 //Anything not encased in an area inside a prefab may be replaced with asteroids during generation. In other words, everything not inside that area is considered "transparent"
@@ -85,12 +86,10 @@ var/list/miningModifiers = list()
 	var/endFill = -1 //Reduce minSolid by this much in the last few passes (produces tighter corridors)
 	var/passTwoRange = 2 //Range Threshold for second pass (fill pass, see fillLarge). The higher the number, the larger the cavern needs to be before it is filled in.
 
-	var/width = length(L)
-	var/height = length(L[1])
 	var/count = 0
 	for(var/xx=-1, xx<=1, xx++)
 		for(var/yy=-1, yy<=1, yy++)
-			if(currentX+xx <= width && currentX+xx >= 1 && currentY+yy <= height && currentY+yy >= 1)
+			if(currentX+xx <= world.maxx && currentX+xx >= 1 && currentY+yy <= world.maxy && currentY+yy >= 1)
 				count += L[currentX+xx][currentY+yy]
 			else //OOB, count as wall.
 				count += default
@@ -100,7 +99,7 @@ var/list/miningModifiers = list()
 		for(var/xx=-passTwoRange, xx<=passTwoRange, xx++)
 			for(var/yy=-passTwoRange, yy<=passTwoRange, yy++)
 				if(abs(xx)==passTwoRange && abs(yy)==passTwoRange) continue //Skip diagonals for this one. Better results
-				if(currentX+xx <= width && currentX+xx >= 1 && currentY+yy <= height && currentY+yy >= 1)
+				if(currentX+xx <= world.maxx && currentX+xx >= 1 && currentY+yy <= world.maxy && currentY+yy >= 1)
 					count2 += L[currentX+xx][currentY+yy]
 				else //OOB, count as wall.
 					count2 += default
@@ -109,35 +108,23 @@ var/list/miningModifiers = list()
 
 /datum/mapGenerator/seaCaverns //Cellular automata based generator. Produces cavern-like maps. Empty space is filled with asteroid floor.
 	generate(var/list/miningZ, var/z_level = AST_ZLEVEL, var/generate_borders = TRUE)
-		var/width = world.maxx
-		var/height = world.maxy
-		var/n_iterations = 5
-
-		#ifdef UPSCALED_MAP
-		n_iterations = 3
-		width /= 2
-		height /= 2
-		#endif
-
-		var/map[width][height]
-		for(var/x=1,x<=width,x++)
-			for(var/y=1,y<=height,y++)
+		var/map[world.maxx][world.maxy]
+		for(var/x=1,x<=world.maxx,x++)
+			for(var/y=1,y<=world.maxy,y++)
 				map[x][y] = pick(90;1,100;0) //Initialize randomly.
 
-		for(var/i=0, i<n_iterations, i++) //5 Passes to smooth it out.
-			var/mapnew[width][height]
-			for(var/x=1,x<=width,x++)
-				for(var/y=1,y<=height,y++)
+		for(var/i=0, i<5, i++) //5 Passes to smooth it out.
+			var/mapnew[world.maxx][world.maxy]
+			for(var/x=1,x<=world.maxx,x++)
+				for(var/y=1,y<=world.maxy,y++)
 					mapnew[x][y] = CAGetSolid(map, x, y, i)
 					LAGCHECK(LAG_REALTIME)
 			map = mapnew
 
 		for(var/x=1,x<=world.maxx,x++)
 			for(var/y=1,y<=world.maxy,y++)
-				var/map_x = clamp(round(x / world.maxx * width), 1, width)
-				var/map_y = clamp(round(y / world.maxy * height), 1, height)
 				var/turf/T = locate(x,y,z_level)
-				if(map[map_x][map_y] && !ISDISTEDGE(T, 3) && T.loc && ((T.loc.type == /area/space) || istype(T.loc , /area/allowGenerate)) )
+				if(map[x][y] && !ISDISTEDGE(T, 3) && T.loc && ((T.loc.type == /area/space) || istype(T.loc , /area/allowGenerate)) )
 					var/turf/simulated/wall/asteroid/N = T.ReplaceWith(/turf/simulated/wall/asteroid/dark, FALSE, TRUE, FALSE, TRUE)
 					N.quality = rand(-101,101)
 					generated.Add(N)
@@ -209,9 +196,6 @@ var/list/miningModifiers = list()
 /datum/mapGenerator/asteroidsDistance //Generates a bunch of asteroids based on distance to seed/center. Super simple.
 	generate(var/list/miningZ)
 		var/numAsteroidSeed = AST_SEEDS + rand(1, 5)
-		#ifdef UPSCALED_MAP
-		numAsteroidSeed *= 4
-		#endif
 		for(var/i=0, i<numAsteroidSeed, i++)
 			var/turf/X = pick(miningZ)
 			var/quality = rand(-101,101)
@@ -283,6 +267,7 @@ var/list/miningModifiers = list()
 		return miningZ
 
 /proc/makeMiningLevel()
+	var/list/miningZ = list()
 	var/startTime = world.timeofday
 	if(world.maxz < AST_ZLEVEL)
 		boutput(world, "<span class='alert'>Skipping Mining Generation!</span>")
@@ -290,17 +275,14 @@ var/list/miningModifiers = list()
 	else
 		boutput(world, "<span class='alert'>Generating Mining Level ...</span>")
 
-	var/list/miningZ = block(locate(1, 1, AST_ZLEVEL), locate(world.maxx, world.maxy, AST_ZLEVEL))
+	for(var/turf/T)
+		if(T.z == AST_ZLEVEL)
+			miningZ.Add(T)
 
 	var/num_to_place = AST_NUMPREFABS + rand(0,AST_NUMPREFABSEXTRA)
-	#ifdef UPSCALED_MAP
-	num_to_place *= 3
-	#endif
 	for (var/n = 1, n <= num_to_place, n++)
 		game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
-		var/datum/mapPrefab/mining/M = pick_map_prefab(/datum/mapPrefab/mining,
-			wanted_tags = map_currently_underwater ? list("underwater") : null,
-			unwanted_tags = map_currently_underwater ? null : list("underwater"))
+		var/datum/generatorPrefab/M = pickPrefab()
 		if (M)
 			var/maxX = (world.maxx - M.prefabSizeX - AST_MAPBORDER)
 			var/maxY = (world.maxy - M.prefabSizeY - AST_MAPBORDER)
@@ -323,8 +305,6 @@ var/list/miningModifiers = list()
 	var/datum/mapGenerator/D
 
 	if(map_currently_underwater)
-		bioluminescent_algae = new()
-		bioluminescent_algae.setup()
 		D = new/datum/mapGenerator/seaCaverns()
 	else
 		D = new/datum/mapGenerator/asteroidsDistance()
@@ -346,37 +326,40 @@ var/list/miningModifiers = list()
 
 	hotspot_controller.generate_map()
 
-var/global/datum/bioluminescent_algae/bioluminescent_algae
-/datum/bioluminescent_algae
-	/// our randomized seed values
-	var/list/seeds
-	///the random offset applied to square coordinates, causes intermingling at biome borders
-	var/const/random_square_drift = 2
-	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
-	var/perlin_zoom = 65
-	///The absolute lowest a color value can be, e.g. if the noise at the coords was 0. To help give us bright vibrant colors
-	var/const/color_alpha = 30
+/proc/pickPrefab()
+	var/list/eligible = list()
+	var/list/required = list()
 
-	proc/setup()
-		seeds = list()
-		seeds["hue"] = rand(0, 50000)
-		seeds["saturation"] = rand(0, 50000)
-		seeds["value"] = rand(0, 50000)
-		seeds["salinity"] = rand(0, 50000)
+	for(var/datum/generatorPrefab/M in miningModifiers)
+		if(M.underwater != map_currently_underwater) continue
+		if(M.type in miningModifiersUsed)
+			if(M.required) continue
+			if(M.maxNum != -1)
+				if(miningModifiersUsed[M.type] >= M.maxNum)
+					continue
+				else
+					eligible.Add(M)
+					eligible[M] = M.probability
+			else
+				eligible.Add(M)
+				eligible[M] = M.probability
+		else
+			eligible.Add(M)
+			eligible[M] = M.probability
+			if(M.required) required.Add(M)
 
-	proc/get_color(atom/A)
-		var/drift_x = (A.x + rand(-random_square_drift, random_square_drift)) / perlin_zoom
-		var/drift_y = (A.y + rand(-random_square_drift, random_square_drift)) / perlin_zoom
-
-		var/salinity = text2num(rustg_noise_get_at_coordinates("[seeds["salinity"]]", "[drift_x]", "[drift_y]"))
-		if (salinity > 0.25) // no algae for you :(
-			return
-		var/hue_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["hue"]]", "[drift_x]", "[drift_y]"))
-		var/saturation_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["saturation"]]", "[drift_x]", "[drift_y]"))
-		var/value_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["value"]]", "[drift_x]", "[drift_y]"))
-
-
-		var/list/color_vals
-		color_vals = hsv2rgblist(hue_multiplier * 360, (saturation_multiplier * 25) + 60, (value_multiplier * 15) + 85)
-		color_vals += color_alpha
-		return color_vals
+	if(required.len)
+		var/datum/generatorPrefab/P = required[1]
+		miningModifiersUsed.Add(P.type)
+		miningModifiersUsed[P.type] = 1
+		return P
+	else
+		if(eligible.len)
+			var/datum/generatorPrefab/P = weighted_pick(eligible)
+			if(P.type in miningModifiersUsed)
+				miningModifiersUsed[P.type] = (miningModifiersUsed[P.type] + 1)
+			else
+				miningModifiersUsed.Add(P.type)
+				miningModifiersUsed[P.type] = 1
+			return P
+		else return null

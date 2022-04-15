@@ -34,11 +34,11 @@
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the output target for [src].</span>")
 			return
 
-		if(BOUNDS_DIST(over_object, src) > 0)
+		if(get_dist(over_object,src) > 1)
 			boutput(usr, "<span class='alert'>[src] is too far away from the target!</span>")
 			return
 
-		if(BOUNDS_DIST(over_object, usr) > 0)
+		if(get_dist(over_object,usr) > 1)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -84,7 +84,7 @@
 			boutput(user, "<span class='alert'>You can't quick-load that.</span>")
 			return
 
-		if(BOUNDS_DIST(O, user) > 0)
+		if(!IN_RANGE(O, user, 1))
 			boutput(user, "<span class='alert'>You are too far away!</span>")
 			return
 
@@ -296,7 +296,7 @@
 		if (!src.output_target)
 			return src.loc
 
-		if (BOUNDS_DIST(src.output_target, src) > 0)
+		if (get_dist(src.output_target,src) > 1)
 			src.output_target = null
 			return src.loc
 

@@ -1,8 +1,6 @@
 /mob/dead
 	stat = 2
 	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
-	///Our corpse, if one exists
-	var/mob/living/corpse
 
 // dead
 /mob/dead/New()

@@ -1,11 +1,4 @@
 ABSTRACT_TYPE(/datum/req_contract/aid)
-/**
- * Aid contracts are a class of standard (market-listed) contract.
- * Uniquely among contracts, aid contracts can't be pinned due to their urgency. Requirements and flavor text should convey this urgency.
- *
- * These should -usually- be fairly ordinary supplies that a fast-moving Quartermasters' office can scrounge up with relatively little aid.
- * Anything more difficult to respond to in short order, or prepare in advance, should yield significantly more cash.
- */
 /datum/req_contract/aid //in your final hour, astral wolf...
 	req_class = AID_CONTRACT
 
@@ -333,12 +326,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 /datum/rc_entry/reagent/fuel
 	name = "welding-grade liquid fuel"
-	chem_ids = "fuel"
+	chemname = "fuel"
 	feemod = 6
 
 /datum/rc_entry/reagent/coffee
 	name = "coffee"
-	chem_ids = list(
+	chemname = list(
 		"coffee",
 		"coffee_fresh",
 		"espresso",

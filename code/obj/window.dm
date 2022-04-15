@@ -7,7 +7,7 @@
 	stops_space_move = 1
 	dir = 5 //full tile
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	text = "<font color=#aaf>#"
 	var/health = 30
@@ -27,7 +27,6 @@
 	var/default_reinforcement = null
 	var/reinf = 0 // cant figure out how to remove this without the map crying aaaaa - ISN
 	var/deconstruct_time = 0//20
-	var/image/connect_image = null
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
 	anchored = 1
@@ -44,7 +43,6 @@
 		if (default_reinforcement)
 			src.reinforcement = getMaterial(default_reinforcement)
 		onMaterialChanged()
-		src.UpdateIcon()
 
 		// The health multiplier var wasn't implemented at all, apparently (Convair880)?
 		if (src.health_multiplier != 1 && src.health_multiplier > 0)
@@ -117,7 +115,7 @@
 		name = initial(name)
 
 		if (istype(src.material))
-			health_max = material.hasProperty("density") ? round(material.getProperty("density") * 3) : health_max
+			health_max = material.hasProperty("density") ? round(max(material.getProperty("density"), 100) * 1.5) : health_max
 			health = health_max
 			cut_resist = material.hasProperty("hard") ? material.getProperty("hard")*2 : cut_resist
 			blunt_resist = material.hasProperty("density") ? material.getProperty("density")*2 : blunt_resist
@@ -129,6 +127,8 @@
 				opacity = 1 // useless opaque window
 			else
 				opacity = 0
+
+			name = "[getQualityName(material.quality)] [material.name] " + name
 
 		if (istype(reinforcement))
 			if(reinforcement.hasProperty("density"))
@@ -178,6 +178,8 @@
 			return
 
 		amount = get_damage_after_percentage_based_armor_reduction(cut_resist,amount)
+		if (src.quality < 10)
+			amount += rand(1,3)
 
 		if (amount <= 0)
 			return
@@ -191,6 +193,8 @@
 			return
 
 		amount = get_damage_after_percentage_based_armor_reduction(stab_resist,amount)
+		if (src.quality < 10)
+			amount += rand(1,3)
 
 		if (amount <= 0)
 			return
@@ -262,7 +266,7 @@
 		if (damage < 1)
 			return
 
-		..()
+		if(src.material) src.material.triggerOnBullet(src, src, P)
 
 		switch(P.proj_data.damage_type)
 			if(D_KINETIC)
@@ -271,6 +275,7 @@
 				damage_piercing(damage*2)
 			if(D_ENERGY)
 				damage_heat(damage / 5)
+		return
 
 	reagent_act(var/reagent_id,var/volume)
 		if (..())
@@ -307,7 +312,7 @@
 			var/obj/projectile/P = mover
 			if(P.proj_data.window_pass)
 				return 1
-		if (!is_cardinal(dir))
+		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST)
 			return 0 //full tile window, you can't move into it!
 		if(get_dir(loc, mover) & dir)
 
@@ -317,22 +322,18 @@
 
 	gas_cross(turf/target)
 		. = TRUE
-		if (!is_cardinal(dir) || get_dir(loc, target) & dir)
+		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || get_dir(loc, target) & dir)
 			. = ..()
 
-	Uncross(atom/movable/O, do_bump = TRUE)
+	CheckExit(atom/movable/O as mob|obj, target as turf)
 		if (!src.density)
 			return 1
 		if(istype(O, /obj/projectile))
 			var/obj/projectile/P = O
 			if(P.proj_data.window_pass)
 				return 1
-		if (!is_cardinal(dir))
-			return 1 // let people move out of full tile windows
-		if (get_dir(loc, O.movement_newloc) & src.dir)
-			. = 0
-			UNCROSS_BUMP_CHECK(O)
-			return
+		if (get_dir(loc, target) & src.dir)
+			return 0
 		return 1
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
@@ -448,7 +449,7 @@
 
 		else if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
-			if (ishuman(G.affecting) && BOUNDS_DIST(G.affecting, src) == 0)
+			if (ishuman(G.affecting) && get_dist(G.affecting, src) <= 1)
 				src.visible_message("<span class='alert'><B>[user] slams [G.affecting]'s head into [src]!</B></span>")
 				logTheThing("combat", user, G.affecting, "slams [constructTarget(user,"combat")]'s head into [src]")
 				playsound(src.loc, src.hitsound , 100, 1)
@@ -549,13 +550,13 @@
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, the_window) > 0 || the_window == null || owner == null || the_tool == null)
+		if(get_dist(owner, the_window) > 1 || the_window == null || owner == null || the_tool == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, the_window) > 0 || the_window == null || owner == null || the_tool == null)
+		if(get_dist(owner, the_window) > 1 || the_window == null || owner == null || the_tool == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		boutput(owner, "<span class='notice'>Now disassembling [the_window]</span>")
@@ -563,7 +564,7 @@
 
 	onEnd()
 		..()
-		if(BOUNDS_DIST(owner, the_window) > 0 || the_window == null || owner == null || the_tool == null)
+		if(get_dist(owner, the_window) > 1 || the_window == null || owner == null || the_tool == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(ismob(owner))
@@ -720,15 +721,13 @@
 	object_flags = 0 // so they don't inherit the HAS_DIRECTIONAL_BLOCKING flag from thindows
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
-	var/mod = "W-"
+	var/mod = null
 	var/list/connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood, /turf/simulated/wall/auto/marsoutpost,
 		/turf/simulated/shuttle/wall, /turf/unsimulated/wall, /turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner,
 		/obj/machinery/door, /obj/window, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,
-		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
+		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/jen/red, /turf/simulated/wall/auto/jen/green, /turf/simulated/wall/auto/jen/yellow, /turf/simulated/wall/auto/jen/cyan, /turf/simulated/wall/auto/jen/purple,  /turf/simulated/wall/auto/jen/blue,
+		/turf/simulated/wall/auto/reinforced/jen, /turf/simulated/wall/auto/reinforced/jen/red, /turf/simulated/wall/auto/reinforced/jen/green, /turf/simulated/wall/auto/reinforced/jen/yellow, /turf/simulated/wall/auto/reinforced/jen/cyan, /turf/simulated/wall/auto/reinforced/jen/purple, /turf/simulated/wall/auto/reinforced/jen/blue,
 		/turf/unsimulated/wall/auto/supernorn/wood, /turf/unsimulated/wall/auto/adventure/shuttle/dark, /turf/simulated/wall/auto/reinforced/old, /turf/unsimulated/wall/auto/lead/blue, /turf/unsimulated/wall/auto/adventure/old, /turf/unsimulated/wall/auto/adventure/mars/interior, /turf/unsimulated/wall/auto/adventure/shuttle, /turf/unsimulated/wall/auto/reinforced/supernorn)
-
-	var/list/connects_to_exceptions = list(/obj/window/cubicle, /obj/window/reinforced)
-	var/list/connects_with_overlay_exceptions = list(/obj/window, /obj/machinery/door/poddoor )
 	alpha = 160
 	the_tuff_stuff
 		explosion_resistance = 3
@@ -750,21 +749,24 @@
 	update_icon()
 		if (!src.anchored)
 			icon_state = "[mod]0"
-			src.UpdateOverlays(null, "connect")
 			return
 
-		var/connectdir = get_connected_directions_bitflag(connects_to, connects_to_exceptions, connect_diagonal=1)
-		var/overlaydir = get_connected_directions_bitflag(connects_to, mergeLists(connects_to_exceptions, connects_with_overlay_exceptions), connect_diagonal=1)
-
-		src.icon_state = "[mod][connectdir]"
-		if (overlaydir)
-			if (!src.connect_image)
-				src.connect_image = image(src.icon, "overlay-[overlaydir]")
-			else
-				src.connect_image.icon_state = "overlay-[overlaydir]"
-				src.UpdateOverlays(src.connect_image, "connect")
-		else
-			src.UpdateOverlays(null, "connect")
+		var/builtdir = 0
+		for (var/dir in cardinal)
+			var/turf/T = get_step(src, dir)
+			if (T && (T.type in connects_to))
+				builtdir |= dir
+			else if (islist(connects_to) && length(connects_to))
+				for (var/i=1, i <= connects_to.len, i++)
+					var/atom/A = locate(connects_to[i]) in T
+					if (!isnull(A))
+						if (istype(A, /atom/movable))
+							var/atom/movable/M = A
+							if (!M.anchored)
+								continue
+						builtdir |= dir
+						break
+		src.icon_state = "[mod][builtdir]"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (..(W, user))
@@ -780,7 +782,7 @@
 
 /obj/window/auto/reinforced
 	icon_state = "mapwin_r"
-	mod = "R-"
+	mod = "R"
 	default_reinforcement = "steel"
 	health = 50
 	health_max = 50
@@ -803,7 +805,7 @@
 
 	attack_hand(mob/user as mob)
 		if(!ON_COOLDOWN(user, "glass_tap", 5 SECONDS))
-			src.visible_message("<span class='alert'><b>[user]</b> knocks on [src].</span>")
+			src.visible_message("<span class='alert'><b>[usr]</b> knocks on [src].</span>")
 			playsound(src.loc, src.hitsound, 100, 1)
 			sleep(0.3 SECONDS)
 			playsound(src.loc, src.hitsound, 100, 1)
@@ -861,7 +863,7 @@
 
 /obj/window/auto/crystal/reinforced
 	icon_state = "mapwin_r"
-	mod = "R-"
+	mod = "R"
 	default_reinforcement = "steel"
 	health = 100
 	health_max = 100

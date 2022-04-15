@@ -178,13 +178,12 @@
 		if("add_voice")
 			if(length(src.voices) >= src.max_voices)
 				return FALSE
-			var/name = strip_html(input("Enter voice name:", "Voice name"))
+			var/name = input("Enter voice name:", "Voice name")
 			if(!name)
 				return FALSE
 			phrase_log.log_phrase("voice-radiostation", name, no_duplicates=TRUE)
 			if(length(name) > FULLNAME_MAX)
 				name = copytext(name, 1, FULLNAME_MAX)
-			name = strip_html(name)
 			var/accent = input("Pick an accent:", "Accent") as null|anything in list("none") + src.accents
 			if(accent == "none")
 				accent = null
@@ -217,7 +216,7 @@
 			. = TRUE
 		if("say")
 			src.say_popup = FALSE
-			var/message = strip_html(params["message"])
+			var/message = html_encode(params["message"])
 			if(src.selected_voice <= 0 || src.selected_voice > length(voices))
 				usr.say(message)
 				return TRUE
@@ -408,51 +407,51 @@ ABSTRACT_TYPE(/obj/item/record/random)
 	record_name = "chill track #4"
 	song = "sound/radio_station/music/chill_4.ogg"
 
-/obj/item/record/random/january
+/obj/item/record/january
 	record_name = "january"
 	song = "sound/radio_station/music/january.xm"
 
-/obj/item/record/random/february
+/obj/item/record/february
 	record_name = "february"
 	song = "sound/radio_station/music/february.xm"
 
-/obj/item/record/random/march
+/obj/item/record/march
 	record_name = "march"
 	song = "sound/radio_station/music/march.xm"
 
-/obj/item/record/random/april
+/obj/item/record/april
 	record_name = "april"
 	song = "sound/radio_station/music/april.xm"
 
-/obj/item/record/random/may
+/obj/item/record/may
 	record_name = "may"
 	song = "sound/radio_station/music/may.xm"
 
-/obj/item/record/random/june
+/obj/item/record/june
 	record_name = "june"
 	song = "sound/radio_station/music/june.xm"
 
-/obj/item/record/random/july
+/obj/item/record/july
 	record_name = "july"
 	song = "sound/radio_station/music/july.xm"
 
-/obj/item/record/random/august
+/obj/item/record/august
 	record_name = "august"
 	song = "sound/radio_station/music/august.xm"
 
-/obj/item/record/random/september
+/obj/item/record/september
 	record_name = "september"
 	song = "sound/radio_station/music/september.xm"
 
-/obj/item/record/random/october
+/obj/item/record/october
 	record_name = "october"
 	song = "sound/radio_station/music/october.xm"
 
-/obj/item/record/random/november
+/obj/item/record/november
 	record_name = "november"
 	song = "sound/radio_station/music/november.xm"
 
-/obj/item/record/random/december
+/obj/item/record/december
 	record_name = "december"
 	song = "sound/radio_station/music/december.xm"
 
@@ -713,20 +712,20 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	icon_state = "sleeve_[rand(4,36)]"
 
 /obj/item/storage/box/record/radio/one
-	spawn_contents = list(/obj/item/record/random/january,
-	/obj/item/record/random/february,
-	/obj/item/record/random/march,
-	/obj/item/record/random/april,
-	/obj/item/record/random/may,
-	/obj/item/record/random/june)
+	spawn_contents = list(/obj/item/record/january,
+	/obj/item/record/february,
+	/obj/item/record/march,
+	/obj/item/record/april,
+	/obj/item/record/may,
+	/obj/item/record/june)
 
 /obj/item/storage/box/record/radio/two
-	spawn_contents = list(/obj/item/record/random/july,
-	/obj/item/record/random/august,
-	/obj/item/record/random/september,
-	/obj/item/record/random/october,
-	/obj/item/record/random/november,
-	/obj/item/record/random/december)
+	spawn_contents = list(/obj/item/record/july,
+	/obj/item/record/august,
+	/obj/item/record/september,
+	/obj/item/record/october,
+	/obj/item/record/november,
+	/obj/item/record/december)
 
 /obj/item/storage/box/record/radio/nostalgic
 	name = "\improper Nostalgic Dance record sleeve"

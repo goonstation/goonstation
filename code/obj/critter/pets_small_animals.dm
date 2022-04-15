@@ -402,7 +402,7 @@
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (istype(W, /obj/item/card/emag))
-			emag_act(user, W)
+			emag_act(usr, W)
 		else
 			..()
 
@@ -913,7 +913,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		if (M.singing)
 			if (M.singing & BAD_SINGING || M.singing & LOUD_SINGING)
 				SPAWN(0.3 SECONDS)
-					if(BOUNDS_DIST(src, M) == 0)
+					if(get_dist(src,M) <= 1)
 						src.CritterAttack(M)
 					else
 						flick("[src.species]-flaploop", src)
@@ -999,7 +999,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			else
 				return
 		if (src.new_treasure && src.treasure_loc)
-			if ((BOUNDS_DIST(src, src.treasure_loc) == 0) && (src.new_treasure.loc == src.treasure_loc))
+			if ((get_dist(src, src.treasure_loc) <= 1) && (src.new_treasure.loc == src.treasure_loc))
 				src.visible_message("\The [src] picks up [src.new_treasure]!")
 				src.new_treasure.set_loc(src)
 				src.treasure = src.new_treasure

@@ -307,7 +307,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	is_friend(var/mob/living/C)
 		if (!C.ckey || !C.mind)
 			return 1
-		if (C.mind?.special_role != "Syndicate")
+		if (C.mind?.special_role == "NanoTrasen")
 			return 1
 		else
 			return 0
@@ -339,7 +339,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	is_friend(var/mob/living/C)
 		if (!C.ckey || !C.mind)
 			return 1
-		if (C.mind.special_role != "NanoTrasen")
+		if (C.mind.special_role == "Syndicate")
 			return 1
 		else
 			return 0
@@ -379,7 +379,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 			if (isnull(assigned_id))
 				if (istype(I))
-					boutput(user, "<span class='notice'>[ship]'s locking mechinism recognizes [I] as its key!</span>")
+					boutput(usr, "<span class='notice'>[ship]'s locking mechinism recognizes [I] as its key!</span>")
 					playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
 					assigned_id = I
 					team_num = get_team(I)
@@ -389,7 +389,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			if (istype(I))
 				if (I == assigned_id || get_team(I) == team_num)
 					ship.locked = !ship.locked
-					boutput(user, "<span class='alert'>[ship] is now [ship.locked ? "locked" : "unlocked"]!</span>")
+					boutput(usr, "<span class='alert'>[ship] is now [ship.locked ? "locked" : "unlocked"]!</span>")
 
 
 

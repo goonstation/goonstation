@@ -111,6 +111,7 @@
 	var/master_reagent_id = 0
 
 	var/can_update = 1 //flag is set to 0 temporarily when doing a split operation
+	var/waitforit = 0 //prevent smoke from being inhaled during the creation process
 	var/draining = 0
 	var/queued_drains = 0 // how many tiles to drain on next update?
 	var/turf/last_drain = 0 // tile from which we should try to drain from
@@ -134,7 +135,7 @@
 		processing_fluid_spreads -= src
 		processing_fluid_drains -= src
 
-		members.Cut()
+		members = 0
 
 		reagents.my_group = null
 		reagents = null
@@ -157,6 +158,7 @@
 		last_drain = 0
 		master_reagent_id = 0
 		drains_floor = 1
+		waitforit = 0
 		..()
 
 	New()
@@ -592,6 +594,7 @@
 	proc/spread(var/fluids_to_create) //spread in respect to members
 		.= 0 //return created fluids
 		var/obj/fluid/F
+		src.waitforit = 1 //don't breathe in the gas on inital spread - causes runtimes with small volumes
 		var/membercount = length(src.members)
 		for (var/i = 1, i <= membercount, i++)
 			LAGCHECK(LAG_HIGH)
@@ -617,7 +620,7 @@
 					if (F.blood_type && !C.blood_type)
 						C.blood_type = F.blood_type
 
-					members |= C
+					members += C
 					.++
 
 				if ((membercount + .)<=0) //this can happen somehow
@@ -633,6 +636,7 @@
 
 			if (. >= fluids_to_create)
 				break
+		src.waitforit = 0
 
 	proc/drain(var/obj/fluid/drain_source, var/fluids_to_remove, var/atom/transfer_to = 0, var/remove_reagent = 1) //basically a reverse spread with drain_source as the center
 		if (!drain_source || drain_source.group != src) return
@@ -644,7 +648,7 @@
 			if (transfer_to && transfer_to.reagents && src.reagents)
 				src.reagents.trans_to_direct(transfer_to.reagents,min(fluids_to_remove * amt_per_tile, src.reagents.total_volume))
 				src.contained_amt = src.reagents.total_volume
-			else if(remove_reagent)
+			else
 				src.reagents.remove_any(fluids_to_remove * amt_per_tile)
 
 			src.update_loop()

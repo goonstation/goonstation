@@ -245,13 +245,11 @@
 		if (!can_track(tracking))
 			failedToTrack = 1
 
-		#ifndef UPSCALED_MAP
 		if(!failedToTrack) //We don't have a premature failure
 			failedToTrack = 1 //Assume failure
 			var/turf/T = get_turf(tracking)
 			if (T.cameras && length(T.cameras))
 				failedToTrack = 0
-		#endif
 
 		if (failedToTrack)
 			cease_track_temporary()

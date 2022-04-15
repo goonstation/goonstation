@@ -431,7 +431,7 @@ Buildable meters
 	if(!isturf(user.loc))
 		return
 
-	if(BOUNDS_DIST(F, user) > 0)
+	if(get_dist(F,user) > 1)
 		boutput(user, "You can't place the control on from this distance.")
 		return
 

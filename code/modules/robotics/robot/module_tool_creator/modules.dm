@@ -52,7 +52,7 @@
 // botanist. chef. janitor.
 /datum/robot/module_tool_creator/recursive/module/civilian
 	definitions = list(
-		/obj/item/extinguisher/large,
+		/obj/item/extinguisher, // TODO: make large version
 		/obj/item/pen, // TODO: make more versatile version
 		/obj/item/seedplanter,
 		/obj/item/plantanalyzer,
@@ -77,7 +77,7 @@
 	definitions = list(
 		/obj/item/device/light/flashlight,
 		/obj/item/tool/omnitool/silicon,
-		/obj/item/device/analyzer/healthanalyzer/upgraded,
+		/obj/item/device/analyzer/healthanalyzer/borg,
 		/obj/item/device/reagentscanner,
 		/obj/item/device/analyzer/atmospheric/upgraded,
 		/obj/item/robojumper,
@@ -123,9 +123,6 @@
 		/obj/item/rcd,
 		/obj/item/lamp_manufacturer,
 		/obj/item/deconstructor/borg,
-		#ifdef MAP_OVERRIDE_OSHAN
-			/obj/item/mining_tool/power_shovel/borg,
-		#endif
 		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
 		/datum/robot/module_tool_creator/item_type/amount/steel_rod,
 		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,

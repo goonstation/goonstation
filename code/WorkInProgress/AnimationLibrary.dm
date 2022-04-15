@@ -30,34 +30,6 @@
 	animate(A, color=list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1), time=time, easing=SINE_EASING)
 	return
 
-/proc/animate_fade_from_drug_1(var/atom/A, var/time=5) //This smoothly fades from animated_fade_drug_inbetween_1 to normal colors
-	if (!istype(A) && !isclient(A))
-		return
-	A.color = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1)
-	animate(A, color=list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1), time=time, easing=SINE_EASING)
-	return
-
-/proc/animate_fade_from_drug_2(var/atom/A, var/time=5) //This smoothly fades from animated_fade_drug_inbetween_2 to normal colors
-	if (!istype(A) && !isclient(A))
-		return
-	A.color = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1)
-	animate(A, color=list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1), time=time, easing=SINE_EASING)
-	return
-
-/proc/animate_fade_drug_inbetween_1(var/atom/A, var/time=5) //This fades from red being green, green being blue and blue being red to red being blue, green being red and blue being green
-	if (!istype(A) && !isclient(A))
-		return
-	A.color = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1)
-	animate(A, color=list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1), time=time, easing=SINE_EASING)
-	return
-
-/proc/animate_fade_drug_inbetween_2(var/atom/A, var/time=5) //This fades from rred being blue, green being red and blue being green to red being green, green being blue and blue being red
-	if (!istype(A) && !isclient(A))
-		return
-	A.color = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1)
-	animate(A, color=list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1), time=time, easing=SINE_EASING)
-	return
-
 /proc/animate_melt_pixel(var/atom/A)
 	if (!istype(A))
 		return
@@ -1157,40 +1129,6 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			qdel(swirl)
 	return
 
-/proc/showswirl_out(var/atom/target, var/play_sound = TRUE)
-	if (!target)
-		return
-	var/turf/target_turf = get_turf(target)
-	if (!target_turf)
-		return
-	var/obj/decal/teleport_swirl/swirl/ = new /obj/decal/teleport_swirl/out
-	swirl.set_loc(target_turf)
-	swirl.pixel_y = 10
-	if (play_sound)
-		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
-	SPAWN(1.5 SECONDS)
-		if (swirl)
-			swirl.pixel_y = 0
-			qdel(swirl)
-	return
-
-/proc/showswirl_error(var/atom/target, var/play_sound = TRUE)
-	if (!target)
-		return
-	var/turf/target_turf = get_turf(target)
-	if (!target_turf)
-		return
-	var/obj/decal/teleport_swirl/swirl/ = new /obj/decal/teleport_swirl/error
-	swirl.set_loc(target_turf)
-	swirl.pixel_y = 10
-	if (play_sound)
-		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
-	SPAWN(1.5 SECONDS)
-		if (swirl)
-			swirl.pixel_y = 0
-			qdel(swirl)
-	return
-
 /proc/leaveresidual(var/atom/target)
 	if (!target)
 		return
@@ -1305,7 +1243,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	lightbeam.alpha = 0
 	if (ismob(A))
 		var/mob/M = A
-		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
+		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 	playsound(A.loc,"sound/voice/heavenly3.ogg",50,0)
 	animate(lightbeam, alpha=255, time=45)
 	animate(A,alpha=255,time=45)
@@ -1319,7 +1257,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	qdel(lightbeam)
 	if (ismob(A))
 		var/mob/M = A
-		REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
+		REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 
 /obj/effects/heavenly_light
 	icon = 'icons/obj/large/32x192.dmi'
@@ -1342,7 +1280,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	A.density = FALSE
 	if (ismob(A))
 		var/mob/M = A
-		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
+		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 	if (play_sound)
 		playsound(center,"sound/effects/darkspawn.ogg",50,0)
 	SPAWN(5 SECONDS)
@@ -1366,7 +1304,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		A.density = original_density
 		if (ismob(A))
 			var/mob/M = A
-			REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
+			REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 		for (var/turf/T in block(TA, TB))
 			animate(T, transform = null, pixel_x = 0, pixel_y = 0, 7.5 SECONDS, easing = SINE_EASING)
 		sleep(7.5 SECONDS)
@@ -1598,7 +1536,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_stomp(atom/A, stomp_height=8, stomps=3, stomp_duration=0.7 SECONDS)
 	var/mob/M = A
 	if(ismob(A))
-		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "hatstomp")
+		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, "hatstomp")
 		M.update_canmove()
 	var/one_anim_duration = stomp_duration / 2 / stomps
 	for(var/i = 0 to stomps - 1)
@@ -1609,7 +1547,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		animate(time=one_anim_duration, pixel_y=0, easing=SINE_EASING | EASE_IN)
 	if(ismob(A))
 		SPAWN(stomp_duration)
-			REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "hatstomp")
+			REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, "hatstomp")
 			M.update_canmove()
 
 

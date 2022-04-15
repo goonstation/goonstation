@@ -203,13 +203,6 @@
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
-/obj/item/pinpointer/identificationcomputer
-	name = "pinpointer (identification computer)"
-	desc = "Points in the direction of the portable identification computer."
-	icon_state = "id_pinoff"
-	icon_type = "id"
-	target_criteria = /obj/machinery/computer/card/portable
-
 /obj/item/pinpointer/teg_semi
 	name = "pinpointer (prototype semiconductor)"
 	desc = "Points in the direction of the NT Prototype Semiconductor."
@@ -244,6 +237,7 @@
 	hudarrow_color = "#ffffff"
 	is_syndicate = 1
 	desc = "This little bad-boy has been pre-programmed to display the general direction of any assassination target you choose."
+	contraband = 3
 
 	attack_self(mob/user)
 		if(!active)

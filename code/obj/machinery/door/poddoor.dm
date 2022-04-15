@@ -4,7 +4,7 @@
 	icon_state = "pdoor1"
 	icon_base = "pdoor"
 	cant_emag = 1
-	layer = (GRILLE_LAYER + 0.01)
+	layer = 2.8
 	object_flags = 0
 
 	health = 1800

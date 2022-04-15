@@ -1,4 +1,3 @@
-ABSTRACT_TYPE(/datum/cookingrecipe)
 /datum/cookingrecipe
 	var/item1 = null
 	var/item2 = null
@@ -458,14 +457,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/sandwich/elvis_meat_h
 	useshumanmeat = 1
-
-/datum/cookingrecipe/c_butty
-	item1 = /obj/item/reagent_containers/food/snacks/breadslice
-	amt1 = 2
-	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
-	item3 = /obj/item/reagent_containers/food/snacks/fries
-	cookbonus = 7
-	output = /obj/item/reagent_containers/food/snacks/sandwich/c_butty
 
 /datum/cookingrecipe/elviswich_m_m
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice/elvis
@@ -1186,12 +1177,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/pumpkin
 
-/datum/cookingrecipe/pie_chocolate
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
-	item2 = /obj/item/reagent_containers/food/snacks/candy/chocolate
-	cookbonus = 10
-	output = /obj/item/reagent_containers/food/snacks/pie/chocolate
-
 /datum/cookingrecipe/pie_cream
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
@@ -1310,6 +1295,13 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item2 = /obj/item/clothing/head/butt
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/pie/ass
+
+/datum/cookingrecipe/pie_chocolate
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/candy/chocolate
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/pie/chocolate
 
 /datum/cookingrecipe/pot_pie
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s

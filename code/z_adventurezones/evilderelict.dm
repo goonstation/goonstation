@@ -18,7 +18,7 @@ var/maniac_previous_victim = "Unknown"
 
 	proc/process()
 		if(target)
-			if (BOUNDS_DIST(src, src.target) == 0)
+			if (get_dist(src, src.target) <= 1)
 				proximity_act()
 
 			var/dist = get_dist(src, src.target)
@@ -60,8 +60,8 @@ var/maniac_previous_victim = "Unknown"
 				var/mob/dead/observer/ghost = new/mob/dead/observer
 				for(var/turf/T in landmarks[LANDMARK_EVIL_CHEF_CORPSE])
 					ghost.set_loc(T)
-					new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(T,target)
-
+					var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(T)
+					meat.name = "[victimname] meat"
 				ghost.ckey = victimkey
 				ghost.name = victimname // should've added this sooner
 				ghost.real_name = victimname

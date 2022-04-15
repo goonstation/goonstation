@@ -27,12 +27,8 @@
 		if (!src.throwing && !src.lying && isturf(NewLoc))
 			var/turf/T = NewLoc
 			if (T.turf_flags & MOB_SLIP)
-				var/wet_adjusted = T.wet
-				if (traitHolder?.hasTrait("super_slips") && T.wet) //non-zero wet
-					wet_adjusted = max(wet_adjusted, 2) //whee
-
-				switch (wet_adjusted)
-					if (1) //ATM only the ancient mop does this
+				switch (T.wet)
+					if (1)
 						if (locate(/obj/item/clothing/under/towel) in T)
 							src.inertia_dir = 0
 							T.wet = 0
@@ -58,13 +54,6 @@
 						var/atom/target = get_edge_target_turf(src, src.dir)
 						src.throw_at(target, 30, 1, throw_type = THROW_SLIP)
 						random_brute_damage(src, 10)
-
-		var/turf/T = NewLoc
-		if(T.sticky)
-			if(src.getStatusDuration("slowed")<1)
-				boutput(src, "<span class='notice'>You get slowed down by the sticky floor!</span>")
-			if(src.getStatusDuration("slowed")< 30 SECONDS)
-				src.changeStatus("slowed", 2 SECONDS, optional = 2)
 
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
@@ -206,7 +195,7 @@
 	if (..())
 		return
 
-	if (HAS_ATOM_PROPERTY(src, PROP_MOB_BREATHLESS))
+	if (HAS_MOB_PROPERTY(src, PROP_BREATHLESS))
 		src.oxyloss = 0
 		return
 

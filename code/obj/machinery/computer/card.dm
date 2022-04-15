@@ -44,9 +44,6 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY
-	stamina_damage = 40
-	stamina_cost = 17
-	stamina_crit_chance = 10
 
 	burn_point = 2500
 	burn_output = 2500
@@ -430,12 +427,7 @@
 				logTheThing("station", usr, null, "changes the assignment on the ID card (<b>[src.modify.registered]</b>) from <b>[src.modify.assignment]</b> to <b>[t1]</b>.")
 				playsound(src.loc, "keyboard", 50, 1, -15)
 			else
-				// preserve accesses which are otherwise unobtainable
-				var/bonus_access = list()
-				for (var/access in src.modify.access)
-					if (!(access in get_all_accesses())) //fuck this proc name
-						bonus_access += list(access)
-				src.modify.access = get_access(t1) + bonus_access
+				src.modify.access = get_access(t1)
 				logTheThing("station", usr, null, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to <b>[t1]</b>.")
 
 			//Wire: This possibly happens after the input() above, so we re-do the initial checks

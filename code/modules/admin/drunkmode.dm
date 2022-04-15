@@ -22,6 +22,7 @@ var/list/dangerousVerbs = list(\
 
 //Shitguy stuff
 /client/proc/debug_variables,\
+/client/proc/cmd_mass_modify_object_variables,\
 /client/proc/cmd_debug_mutantrace,\
 /client/proc/cmd_debug_del_all,\
 /client/proc/general_report,\

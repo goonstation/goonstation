@@ -23,11 +23,10 @@
 		if (!ignore_checks && (get_dist(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))
 			return "[jointext(., "")]<br><span class='alert'><B>[src.name]</B> is too far away to see clearly.</span>"
 
-	if(src.face_visible() && src.bioHolder.mobAppearance.flavor_text)
-		try
-			. = "<br>[src.bioHolder.mobAppearance.flavor_text]"
-		catch
-			//nop
+	try
+		. = "<br>[src.bioHolder.mobAppearance.flavor_text]"
+	catch
+		//nop
 
 	. +=  "<br><span class='notice'>*---------*</span>"
 

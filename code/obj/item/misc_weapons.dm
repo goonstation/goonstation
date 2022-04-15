@@ -34,7 +34,6 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	health = 7
 	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
@@ -103,11 +102,8 @@
 		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
-		AddComponent(/datum/component/itemblock/saberblock, .proc/can_reflect)
+		AddComponent(/datum/component/itemblock/saberblock)
 		BLOCK_SETUP(BLOCK_SWORD)
-
-/obj/item/sword/proc/can_reflect()
-	return src.active
 
 /obj/item/sword/attack(mob/target, mob/user, def_zone, is_special = 0)
 	if(active)
@@ -436,9 +432,6 @@
 	inactive_stamina_dmg = 30
 	hit_type = DAMAGE_BLUNT
 
-	can_reflect()
-		return FALSE
-
 	get_desc()
 		..()
 		. += "It is set to [src.active ? "on" : "off"]."
@@ -708,8 +701,6 @@
 /obj/item/knife/butcher/throw_impact(atom/A, datum/thrown_thing/thr)
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if (C.spellshield)
-			return ..()
 		if (ismob(usr))
 			A:lastattacker = usr
 			A:lastattackertime = world.time
@@ -737,8 +728,17 @@
 		else
 			if (src.makemeat)
 				logTheThing("combat", user, C, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
-				for (var/i in 0 to 2)
-					new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C),C)
+				var/sourcename = C.real_name
+				var/sourcejob = "Stowaway"
+				if (C.mind && C.mind.assigned_role)
+					sourcejob = C.mind.assigned_role
+				else if (C.ghost && C.ghost.mind && C.ghost.mind.assigned_role)
+					sourcejob = C.ghost.mind.assigned_role
+				for (var/i=0, i<3, i++)
+					var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C))
+					meat.name = sourcename + meat.name
+					meat.subjectname = sourcename
+					meat.subjectjob = sourcejob
 				if (C.mind)
 					C.ghostize()
 					qdel(C)
@@ -860,10 +860,9 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "fireaxe"
 	item_state = "fireaxe"
-	hitsound = null
 	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY | ONBELT
 	object_flags = NO_ARM_ATTACH
-	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items do 4 times as much damage to doors.
+	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items to 4 times as much damage to doors.
 	hit_type = DAMAGE_CUT
 	click_delay = 10
 	two_handed = 0
@@ -915,11 +914,6 @@
 		src.two_handed = 0
 		set_values()
 		return ..()
-
-	attack(mob/target, mob/user) // custom hit sounds so we can get nice n meaty
-		..()
-		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 25 * (1 + src.two_handed), pitch=0.7) // magic numbers abound. trial and error
-		playsound(target, 'sound/impact_sounds/Generic_Hit_3.ogg', 18 * (1 + src.two_handed), pitch=0.55)
 
 	New()
 		..()
@@ -1043,10 +1037,6 @@
 /obj/item/katana/attack(mob/target as mob, mob/user as mob, def_zone, is_special = 0)
 	if(!ishuman(target)) //only humans can currently be dismembered
 		return ..()
-	if (target.nodamage)
-		return ..()
-	if (target.spellshield)
-		return ..()
 	var/zoney = user.zone_sel.selecting
 	var/mob/living/carbon/human/H = target
 	if (handle_parry(H, user))
@@ -1082,7 +1072,7 @@
 
 /// Checks if the target is facing in some way away from the user. Or they're lying down
 /obj/item/katana/proc/SeverButtStuff(var/mob/living/carbon/human/target, var/mob/user)
-	if(ismob(target) && (BOUNDS_DIST(target, user) == 0) && (target.dir == user.dir || target.lying))
+	if(ismob(target) && IN_RANGE(target, user, 1) && (target.dir == user.dir || target.lying))
 		if(target.organHolder?.tail)
 			target.organHolder.drop_and_throw_organ("tail", dist = 5, speed = 1, showtext = 1)
 		else if(target.organHolder?.butt)
@@ -1504,28 +1494,17 @@ obj/item/whetstone
 
 	var/mode = 1
 	var/maximum_force = 100
-	var/swipe_color = "#0081DF"
-	var/stab_color = "#FF0000"
 
 	New()
 		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.setItemSpecial(/datum/item_special/swipe)
-		src.update_special_color()
 		AddComponent(/datum/component/itemblock/saberblock)
 		BLOCK_SETUP(BLOCK_SWORD)
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
-
-/obj/item/heavy_power_sword/proc/update_special_color()
-	var/datum/item_special/swipe/swipe = src.special
-	var/datum/item_special/rangestab/stab = src.special
-	if (istype(swipe))
-		swipe.swipe_color = src.swipe_color
-	else if (istype(stab))
-		stab.stab_color = src.stab_color
 
 /obj/item/heavy_power_sword/attack(mob/M as mob, mob/user as mob, def_zone)
 
@@ -1557,16 +1536,17 @@ obj/item/whetstone
 			icon_state = "hadar_sword1"
 			item_state = "hadar_sword1"
 			src.mode = 2
+			user.update_inhands()
 			src.setItemSpecial(/datum/item_special/rangestab)
+			tooltip_rebuild = TRUE
 		if(2)
 			boutput(user, "<span class='alert'>[src] transforms in order to swing wide!</span>")
 			icon_state = "hadar_sword2"
 			item_state = "hadar_sword2"
 			src.mode = 1
+			user.update_inhands()
 			src.setItemSpecial(/datum/item_special/swipe)
-	user.update_inhands()
-	tooltip_rebuild = TRUE
-	src.update_special_color()
+			tooltip_rebuild = TRUE
 	..()
 
 // Battering ram - a door breeching melee tool for the armory
@@ -1581,7 +1561,6 @@ obj/item/whetstone
 
 	tool_flags = TOOL_CHOPPING //to chop through doors
 	hit_type = DAMAGE_BLUNT
-	health = 10
 	w_class = W_CLASS_NORMAL
 	two_handed = 1
 	click_delay = 30

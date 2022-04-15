@@ -125,16 +125,6 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	frame_path = /obj/disposalpipe/loafer
 
-/******************** AI Law Rack *******************/
-
-/datum/manufacture/mechanics/lawrack
-	name = "AI Law Rack Mount"
-	item_paths = list("MET-1", "MET-2", "INS-1" , "CON-1")
-	item_amounts = list(20,5,10,10)
-	time = 60 SECONDS
-	create = 1
-	frame_path = /obj/machinery/lawrack
-
 /******************** AI display (temp) *******************/
 
 /datum/manufacture/mechanics/ai_status_display
@@ -1336,42 +1326,6 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Tool"
 
-/datum/manufacture/borg_linker
-	name = "AI Linker"
-	item_paths = list("MET-1","CRY-1","CON-1")
-	item_amounts = list(2,1,2)
-	item_outputs = list(/obj/item/device/borg_linker)
-	time = 15 SECONDS
-	create = 1
-	category = "Tool"
-
-/datum/manufacture/asimov_laws
-	name = "Standard Asimov Law Module Set"
-	item_paths = list("MET-2")
-	item_amounts = list(30)
-	item_outputs = list(/obj/item/aiModule/asimov1,/obj/item/aiModule/asimov2,/obj/item/aiModule/asimov3)
-	time = 60 SECONDS
-	create = 1
-	category = "Component"
-
-/datum/manufacture/corporate_laws
-	name = "Nanotrasen Law Module Set"
-	item_paths = list("MET-2")
-	item_amounts = list(30)
-	item_outputs = list(/obj/item/aiModule/nanotrasen1,/obj/item/aiModule/nanotrasen2,/obj/item/aiModule/nanotrasen3)
-	time = 60 SECONDS
-	create = 1
-	category = "Component"
-
-/datum/manufacture/robocop_laws
-	name = "RoboCop Law Module Set"
-	item_paths = list("MET-2")
-	item_amounts = list(40)
-	item_outputs = list(/obj/item/aiModule/robocop1,/obj/item/aiModule/robocop2,/obj/item/aiModule/robocop3,/obj/item/aiModule/robocop4)
-	time = 60 SECONDS
-	create = 1
-	category = "Component"
-
 // Robotics Research
 
 /datum/manufacture/implanter
@@ -2108,15 +2062,6 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Clothing"
 
-/datum/manufacture/hat_purple
-	name = "Purple Hat"
-	item_paths = list("FAB-1")
-	item_amounts = list(2)
-	item_outputs = list(/obj/item/clothing/head/purple)
-	time = 2 SECONDS
-	create = 1
-	category = "Clothing"
-
 /datum/manufacture/hat_tophat
 	name = "Top Hat"
 	item_paths = list("FAB-1")
@@ -2185,16 +2130,6 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/color/blue)
-	time = 5 SECONDS
-	create = 1
-	category = "Clothing"
-
-
-/datum/manufacture/jumpsuit_purple
-	name = "Purple Jumpsuit"
-	item_paths = list("FAB-1")
-	item_amounts = list(4)
-	item_outputs = list(/obj/item/clothing/under/color/purple)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2563,6 +2498,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 ABSTRACT_TYPE(/datum/manufacture/sub)
 
+#ifdef UNDERWATER_MAP
+
 /datum/manufacture/sub/parts
 	name = "Minisub Frame Kit"
 	item_paths = list("MET-2")
@@ -2598,6 +2535,7 @@ ABSTRACT_TYPE(/datum/manufacture/sub)
 	time = 5 SECONDS
 	create = 1
 	category = "Component"
+#endif
 
 ABSTRACT_TYPE(/datum/manufacture/putt)
 

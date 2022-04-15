@@ -327,7 +327,7 @@
 		var/turf/dest_t = dest
 		if (from_t == dest_t)
 			return
-		if (BOUNDS_DIST(from_t, dest_t) > 0)
+		if (get_dist(from_t, dest_t) > 1)
 			return
 		if (istype(from_t) && istype(dest_t))
 			var/knock_dir = get_dir(from_t, dest_t)

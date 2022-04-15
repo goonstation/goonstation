@@ -85,7 +85,7 @@
 
 /obj/item/storage/secure/attack_hand(mob/user as mob)
 	if (src.loc == user && src.locked == 1)
-		boutput(user, "<span class='alert'>[src] is locked and cannot be opened!</span>")
+		boutput(usr, "<span class='alert'>[src] is locked and cannot be opened!</span>")
 		return
 	return ..()
 
@@ -226,7 +226,7 @@
 */
 /obj/item/storage/secure/Topic(href, href_list)
 	..()
-	if ((usr.stat || usr.restrained()) || (BOUNDS_DIST(src, usr) > 0))
+	if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
 		return
 
 	if ("enter" in href_list)

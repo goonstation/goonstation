@@ -181,12 +181,6 @@ function output(message, group, skipNonEssential, forceScroll) {
     if (typeof group === 'undefined') {
         group = '';
     }
-    if (typeof skipNonEssential === 'string' || skipNonEssential instanceof String) {
-        skipNonEssential = parseInt(skipNonEssential);
-    }
-    if (typeof forceScroll === 'string' || forceScroll instanceof String) {
-        forceScroll = parseInt(forceScroll);
-    }
 
 
     //Stuff we do along with appending a message
@@ -314,7 +308,7 @@ function outputBatch(messages) {
     var shouldScroll = bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance;
 
     for (var i = 0; i < list.length; i++) {
-        output(list[i].message, list[i].group, i < list.length - 1, shouldScroll || list[i].forceScroll);
+        output(list[i].message, list[i].group, i < list.length - 1, shouldScroll);
     }
 }
 

@@ -94,10 +94,6 @@
 			src.botcard.access = get_access(src.access_lookup)
 			src.botnet_id = format_net_id("\ref[src]")
 
-		#ifdef ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
-		START_TRACKING_CAT(TR_CAT_DELETE_ME)
-		#endif
-
 	disposing()
 		botcard = null
 		qdel(chat_text)
@@ -270,7 +266,7 @@
 
 /obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=60)
 	var/target_turf = get_pathable_turf(the_target)
-	if((BOUNDS_DIST(the_target, src) == 0))
+	if(IN_RANGE(the_target, src, 1))
 		return
 	if(src.bot_mover?.the_target == target_turf)
 		return 0
@@ -320,11 +316,6 @@
 			master.moving = FALSE
 		src.master = null
 		src.the_target = null
-
-		#ifdef ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
-		STOP_TRACKING_CAT(TR_CAT_DELETE_ME)
-		#endif
-
 		..()
 
 	proc/master_move()

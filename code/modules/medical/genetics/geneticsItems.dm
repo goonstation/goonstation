@@ -114,7 +114,7 @@
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || injector == null)
+		if(get_dist(owner, target) > 1 || target == null || owner == null || injector == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/living/ownerMob = owner
@@ -124,7 +124,7 @@
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || injector == null)
+		if(get_dist(owner, target) > 1 || target == null || owner == null || injector == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/living/ownerMob = owner

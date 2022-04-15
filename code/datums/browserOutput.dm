@@ -265,8 +265,7 @@ var/global
 				if (jumptarget)
 					src.owner.jumptoturf(get_turf(jumptarget))
 		if ("get")
-			if (tgui_alert(src.owner, "Are you sure you want to get [targetMob]?", "Confirmation", list("Yes", "No")) == "Yes")
-				src.owner.Getmob(targetMob)
+			src.owner.Getmob(targetMob)
 		if ("boot")
 			src.owner.cmd_boot(targetMob)
 		if ("ban")
@@ -284,7 +283,7 @@ var/global
 				src.owner.mob:insert_observer(targetMob)
 		if ("teleport")
 			if (istype(src.owner.mob, /mob/dead/target_observer))
-				qdel(src.owner.mob)
+				src.owner.mob:stop_observing()
 			if(istype(src.owner.mob, /mob/dead/observer))
 				src.owner.mob.set_loc(get_turf(targetMob))
 
@@ -386,17 +385,17 @@ var/global
 
 		return "<img style=\"position: relative; left: -1px; bottom: -3px;\" class=\"icon [obj:icon_state]\" src=\"data:image/png;base64,[baseData]\" />"
 
-/proc/boutput(target = 0, message = "", group = "", forceScroll=FALSE)
+/proc/boutput(target = 0, message = "", group = "")
 	if (target == world)
 		for (var/client/C in clients)
-			boutput(C, message, group, forceScroll)
+			boutput(C, message)
 		return
 
 	//If the target is a list, attempt to send the message to each item in the list
 	//(it's up to the caller to ensure the list contains actual things we can send to)
 	if (islist(target))
 		for (var/T in target)
-			boutput(T, message, group, forceScroll)
+			boutput(T, message)
 		return
 
 	//Otherwise, we're good to throw it at the user
@@ -435,7 +434,7 @@ var/global
 
 				if (C.chatOutput.burstCount > CHAT_BURST_START)
 					C.chatOutput.burstQueue = list(
-						list("message" = message, "group" = group, "forceScroll" = forceScroll)
+						list("message" = message, "group" = group)
 					)
 					SPAWN(CHAT_BURST_TIME)
 						target << output(list2params(list(
@@ -446,9 +445,7 @@ var/global
 
 			target << output(list2params(list(
 				message,
-				group,
-				0,
-				forceScroll
+				group
 			)), "browseroutput:output")
 
 //Aliases for boutput

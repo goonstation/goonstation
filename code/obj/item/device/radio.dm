@@ -74,13 +74,12 @@ var/list/headset_channel_lookup
 
 /obj/item/device/radio/proc/set_secure_frequencies()
 	if(istype(src.secure_frequencies))
-		if (!istype(src.secure_connections))
-			src.secure_connections = list()
 		for (var/sayToken in src.secure_frequencies)
 			var/frequency_id = src.secure_frequencies["[sayToken]"]
 			if (frequency_id)
-				if (!src.secure_connections["[sayToken]"])
-					src.secure_connections["[sayToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[frequency_id]", frequency_id)
+				if (!istype(src.secure_connections))
+					src.secure_connections = list()
+				src.secure_connections["[sayToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[frequency_id]", frequency_id)
 			else
 				src.secure_frequencies -= "[sayToken]"
 
@@ -1096,7 +1095,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 //Must be standing next to it to talk into it
 /obj/item/device/radio/intercom/loudspeaker/hear_talk(mob/M as mob, msgs, real_name, lang_id)
 	if (src.broadcasting)
-		if (BOUNDS_DIST(src, M) == 0)
+		if (get_dist(src, M) <= 1)
 			talk_into(M, msgs, null, real_name, lang_id)
 
 /obj/item/device/radio/intercom/loudspeaker/examine()

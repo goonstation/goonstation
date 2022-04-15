@@ -1175,17 +1175,17 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		count = 7
 		types = list(/obj/critter/spider,/obj/critter/spider/baby,/obj/critter/spider/ice,/obj/critter/spider/ice/baby)
 
-	brullbar
-		name = "Brullbar"
+	wendigo
+		name = "Wendigo"
 		point_cost = 4
 		count = 2
-		types = list(/obj/critter/brullbar)
+		types = list(/obj/critter/wendigo)
 
-	brullbarking
-		name = "Brullbar King"
+	wendigoking
+		name = "Wendigo King"
 		point_cost = 6
 		count = 0.05
-		types = list(/obj/critter/brullbar/king)
+		types = list(/obj/critter/wendigo/king)
 
 	badbot
 		name = "Security Zapbot"

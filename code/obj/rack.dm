@@ -3,12 +3,10 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack_base"
 	density = 1
-	layer = STORAGE_LAYER
 	flags = FPRINT | NOSPLASH
 	anchored = 1.0
 	desc = "A metal frame used to hold objects. Can be wrenched and made portable."
 	event_handler_flags = USE_FLUID_ENTER
-
 	proc/rackbreak()
 		icon_state += "-broken"
 		src.set_density(0)
@@ -138,7 +136,7 @@
 
 	onUpdate()
 		..()
-		if (the_rack == null || the_tool == null || owner == null || BOUNDS_DIST(owner, the_rack) > 0)
+		if (the_rack == null || the_tool == null || owner == null || get_dist(owner, the_rack) > 1)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

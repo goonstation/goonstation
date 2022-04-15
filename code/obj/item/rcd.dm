@@ -49,7 +49,6 @@ Broken RCD + Effects
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	health = 7
 	w_class = W_CLASS_NORMAL
 	m_amt = 50000
 
@@ -227,7 +226,7 @@ Broken RCD + Effects
 			boutput(user, "\The [src] won't work here for some reason. Oh well!")
 			return
 
-		if (BOUNDS_DIST(get_turf(src), get_turf(A)) > 0)
+		if (get_dist(get_turf(src), get_turf(A)) > 1)
 			return
 
 		switch(src.mode)
@@ -736,7 +735,7 @@ Broken RCD + Effects
 
 
 	afterattack(atom/A, mob/user as mob)
-		if (BOUNDS_DIST(get_turf(src), get_turf(A)) > 0)
+		if (get_dist(get_turf(src), get_turf(A)) > 1)
 			return
 		if (mode == RCD_MODE_WINDOWS)
 			if (istype(A, /turf/simulated/floor) || istype(A, /obj/grille/))
@@ -775,7 +774,6 @@ Broken RCD + Effects
 
 /obj/item/rcd/material/cardboard
 	name = "cardboard rapid construction Device"
-	icon_state = "base_cardboard"
 	desc = "Also known as a C-RCD, this device is able to rapidly construct cardboard props."
 	mats = list("DEN-3" = 10, "POW-2" = 10, "cardboard" = 30)
 	force = 0
@@ -867,7 +865,6 @@ Broken RCD + Effects
 	anchored = 0.0
 	m_amt = 30000
 	g_amt = 15000
-	health = 6
 	var/matter = 10
 
 	get_desc()
@@ -1026,7 +1023,7 @@ Broken RCD + Effects
 				A.pixel_y = rand(-4,4)
 			else if (isliving(A))
 				shake_camera(A, 8, 32)
-				A.ex_act( BOUNDS_DIST(src, A) > 0 ? 3 : 1 )
+				A.ex_act( get_dist(src, A) > 1 ? 3 : 1 )
 
 			else if (istype(A, /obj) && (A != src))
 

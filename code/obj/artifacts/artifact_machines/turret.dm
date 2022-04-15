@@ -11,7 +11,6 @@
 /datum/artifact/turret
 	associated_object = /obj/machinery/artifact/turret
 	type_name = "Turret"
-	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 200
 	validtypes = list("wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
@@ -77,11 +76,11 @@
 
 	proc/target_is_valid(var/mob/living/M,var/obj/O)
 		if (!M || !O)
-			return FALSE
-		if (isdead(M) || isintangible(M))
-			return FALSE
+			return 0
+		if (isdead(M))
+			return 0
 		if (M == friend)
-			return FALSE
+			return 0
 		if (get_dist(M,O) > shot_range)
-			return FALSE
-		return TRUE
+			return 0
+		return 1

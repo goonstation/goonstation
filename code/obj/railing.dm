@@ -8,7 +8,7 @@
 	layer = OBJ_LAYER
 	color = "#ffffff"
 	flags = FPRINT | USEDELAY | ON_BORDER
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	dir = SOUTH
 	custom_suicide = 1
@@ -101,14 +101,12 @@
 			return !density
 		return 1
 
-	Uncross(atom/movable/O, do_bump = TRUE)
+	CheckExit(atom/movable/O as mob|obj, target as turf)
 		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced)  || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
-			. = 1
-		else if (dir & get_dir(O.loc, O.movement_newloc))
-			. = 0
-		else
-			. = 1
-		UNCROSS_BUMP_CHECK(O)
+			return 1
+		if (dir & get_dir(O.loc, target))
+			return 0
+		return 1
 
 	attackby(obj/item/W as obj, mob/user)
 		if (isweldingtool(W))
@@ -157,7 +155,7 @@
 	proc/try_vault(mob/user, use_owner_dir = FALSE)
 		if (railing_is_broken(src))
 			user.show_text("[src] is broken! All you can really do is break it down...", "red")
-		else if(!actions.hasAction(user, "railing_jump"))
+		else
 			actions.start(new /datum/action/bar/icon/railing_jump(user, src, use_owner_dir), user)
 
 	reinforced
@@ -237,7 +235,7 @@
 				if (H.traitHolder.hasTrait("athletic"))
 					modifier++
 					is_athletic_jump = 1
-				modifier += GET_ATOM_PROPERTY(H, PROP_MOB_VAULT_SPEED)
+				modifier += GET_MOB_PROPERTY(H, PROP_VAULT_SPEED)
 				duration = round(duration / modifier)
 		if (The_Railing)
 			the_railing = The_Railing
@@ -256,14 +254,14 @@
 	onUpdate()
 		..()
 		// you gotta hold still to jump!
-		if (BOUNDS_DIST(ownerMob, the_railing) > 0)
+		if (get_dist(ownerMob, the_railing) > 1)
 			interrupt(INTERRUPT_ALWAYS)
 			ownerMob.show_text("Your jump was interrupted!", "red")
 			return
 
 	onStart()
 		..()
-		if (BOUNDS_DIST(ownerMob, the_railing) > 0 || the_railing == null || ownerMob == null)
+		if (get_dist(ownerMob, the_railing) > 1 || the_railing == null || ownerMob == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		for(var/mob/O in AIviewers(ownerMob))
@@ -363,14 +361,14 @@
 
 	onUpdate()
 		..()
-		if (tool == null || the_railing == null || owner == null || BOUNDS_DIST(owner, the_railing) > 0)
+		if (tool == null || the_railing == null || owner == null || get_dist(owner, the_railing) > 1)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		//featuring code shamelessly copypasted from table.dm because fuuuuuuuck
 		..()
-		if (BOUNDS_DIST(ownerMob, the_railing) > 0 || the_railing == null || ownerMob == null)
+		if (get_dist(ownerMob, the_railing) > 1 || the_railing == null || ownerMob == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!tool)

@@ -34,7 +34,7 @@
 	name = "Memorial Plaque"
 
 	examine(mob/user)
-		boutput(user, "Here lies [user.real_name]. Loved by all. R.I.P.")
+		boutput(usr, "Here lies [user.real_name]. Loved by all. R.I.P.")
 
 /*
  *	Spooky TOMBSTONE.  It is a tombstone.
@@ -73,7 +73,7 @@
 	var/teleport_next_switch = 0 //Should we hop somewhere else next switch?
 
 	attack_ai(mob/user as mob)
-		if(BOUNDS_DIST(src, user) == 0)
+		if(get_dist(src, user) <= 1)
 			return attack_hand(user)
 		else
 			boutput(user, "This jukebox is too old to be controlled remotely.")

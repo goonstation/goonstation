@@ -257,31 +257,18 @@ TYPEINFO(/datum/component/mechanics_holder)
 		if("Trigger")
 			SEND_SIGNAL(A, _COMSIG_MECHCOMP_LINK, parent, user)
 		if("Receiver")
-			link_devices(comsig_target, A, user) //What do you want, an invitation? No signal needed!
+			link_devices(null, A, user) //What do you want, an invitation? No signal needed!
 		if("*CANCEL*")
 			return
 	return
 
 //We are in the scope of the receiver-component, our argument is the trigger
 //This feels weird/backwards, but it results in fewer SEND_SIGNALS & var/lists
-/datum/component/mechanics_holder/proc/link_devices(atom/comsig_target, atom/trigger, mob/user)
+/datum/component/mechanics_holder/proc/link_devices(var/comsig_target, atom/trigger, mob/user)
 	var/atom/receiver = parent
-	if(trigger == comsig_target)
-		boutput(user, "<span class='alert'>Can not connect a component to itself.</span>")
-		return
 	if(trigger in src.connected_outgoing)
 		boutput(user, "<span class='alert'>Can not create a direct loop between 2 components.</span>")
 		return
-	if(trigger.loc != comsig_target.loc)
-		var/obj/item/storage/mechanics/cabinet = null
-		if(istype(comsig_target.loc, /obj/item/storage/mechanics))
-			cabinet = comsig_target.loc
-		if(istype(trigger.loc, /obj/item/storage/mechanics))
-			cabinet = trigger.loc
-		if(cabinet)
-			if(!cabinet.anchored)
-				boutput(user,"<span class='alert'>Cannot create connection through an unsecured component housing</span>")
-				return
 	if(!IN_RANGE(receiver, trigger, WIDE_TILE_WIDTH))
 		boutput(user, "<span class='alert'>These two components are too far apart to connect.</span>")
 		return
@@ -322,7 +309,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 	// check if the multitool has a connector component - if so, we are connecting components, not configuring!
 	var/datum/component/mechanics_connector/connector = W.GetComponent(/datum/component/mechanics_connector)
 	if(connector)
-		src.link_devices(comsig_target, connector.connectee, user)
+		src.link_devices(null, connector.connectee, user)
 		return TRUE
 	if(istype(comsig_target, /obj/machinery/door))
 		var/obj/machinery/door/hacked_door = comsig_target

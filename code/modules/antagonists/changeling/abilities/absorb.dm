@@ -20,20 +20,20 @@
 	onUpdate()
 		..()
 
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour)
+		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		var/mob/ownerMob = owner
 		var/obj/item/grab/G = ownerMob.equipped()
 
-		if (!istype(G) || G.affecting != target || G.state == GRAB_PASSIVE)
+		if (!istype(G) || G.affecting != target || G.state < 1)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour)
+		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -44,7 +44,7 @@
 		..()
 
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && BOUNDS_DIST(owner, target) == 0 && devour)
+		if(owner && ownerMob && target && get_dist(owner, target) <= 1 && devour)
 			var/datum/abilityHolder/changeling/C = devour.holder
 			if (istype(C))
 				C.addDna(target)
@@ -116,14 +116,14 @@
 	onUpdate()
 		..()
 
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour || !devour.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		var/mob/ownerMob = owner
 		var/obj/item/grab/G = ownerMob.equipped()
 
-		if (!istype(G) || G.affecting != target || G.state < GRAB_CHOKE)
+		if (!istype(G) || G.affecting != target || G.state != 3)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -143,11 +143,12 @@
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour || !devour.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		var/mob/ownerMob = owner
+		target.vamp_beingbitten = 1
 
 		if (isliving(target))
 			target:was_harmed(owner, special = "ling")
@@ -163,7 +164,9 @@
 		..()
 
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && BOUNDS_DIST(owner, target) == 0 && devour)
+		if (target)
+			target.vamp_beingbitten = 0
+		if(owner && ownerMob && target && get_dist(owner, target) <= 1 && devour)
 			var/datum/abilityHolder/changeling/C = devour.holder
 			if (istype(C))
 				C.addDna(target)
@@ -179,6 +182,7 @@
 
 	onInterrupt()
 		..()
+		target.vamp_beingbitten = 0
 		boutput(owner, "<span class='alert'>Our absorbtion of [target] has been interrupted!</span>")
 
 /datum/targetable/changeling/absorb

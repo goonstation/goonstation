@@ -1646,7 +1646,7 @@
 /area/station/maintenance/solar/west)
 "adU" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/computer/stockexchange{
 	icon_state = "QMreq";
@@ -1938,7 +1938,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -2684,7 +2684,7 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/janitor/office)
@@ -2729,7 +2729,7 @@
 /area/station/maintenance/northeast)
 "age" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/light/small{
 	dir = 1;
@@ -3271,7 +3271,7 @@
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/mousetraps,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/grime,
 /area/station/janitor/office)
@@ -4692,7 +4692,7 @@
 /area/station/quartermaster/storage)
 "akJ" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -5994,11 +5994,24 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/turret_protected/ai_upload_foyer)
+"anj" = (
+/obj/table/reinforced,
+/obj/item/aiModule/freeform,
+/obj/item/aiModule/rename,
+/turf/simulated/floor/purple,
+/area/station/turret_protected/ai_upload_foyer)
 "ank" = (
 /obj/table/reinforced,
 /obj/item/aiModule/makeCaptain,
 /obj/item/aiModule/oneHuman,
 /obj/item/aiModule/conservePower,
+/turf/simulated/floor/purple,
+/area/station/turret_protected/ai_upload_foyer)
+"anl" = (
+/obj/table/reinforced,
+/obj/item/aiModule/reset,
+/obj/item/aiModule/notHuman,
+/obj/item/aiModule/protectStation,
 /turf/simulated/floor/purple,
 /area/station/turret_protected/ai_upload_foyer)
 "anm" = (
@@ -6015,6 +6028,12 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/reinforced,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"ano" = (
+/obj/table/auto,
+/obj/item/aiModule/reset,
+/obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "anp" = (
@@ -6469,6 +6488,23 @@
 	dir = 2;
 	name = "S APC";
 	pixel_y = -24
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"aop" = (
+/obj/rack,
+/obj/item/circuitboard/aiupload,
+/obj/item/circuitboard/teleporter,
+/obj/item/circuitboard/card,
+/obj/item/circuitboard/robot_module_rewriter,
+/obj/item/circuitboard/cloning,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
+/obj/machinery/camera{
+	c_tag = "Technical Storage";
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -7369,7 +7405,7 @@
 /area/station/turret_protected/ai_upload_foyer)
 "aqC" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (WEST)";
@@ -7756,6 +7792,11 @@
 	d1 = 2;
 	d2 = 8
 	},
+/turf/simulated/floor/purple,
+/area/station/turret_protected/ai_upload)
+"arr" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/aiupload,
 /turf/simulated/floor/purple,
 /area/station/turret_protected/ai_upload)
 "ars" = (
@@ -9192,7 +9233,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (WEST)";
@@ -10234,6 +10275,22 @@
 /obj/item/staple_gun,
 /turf/simulated/floor,
 /area/station/medical/robotics)
+"awQ" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/obj/machinery/light{
+	dir = 1;
+	name = "light fixture"
+	},
+/turf/simulated/floor,
+/area/station/medical/robotics)
 "awR" = (
 /turf/simulated/wall,
 /area/station/medical/research)
@@ -10611,6 +10668,18 @@
 	d2 = 2
 	},
 /obj/item/wirecutters,
+/turf/simulated/floor/grime,
+/area/station/storage/warehouse)
+"axR" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "axS" = (
@@ -23766,7 +23835,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "aZN" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/decal/skeleton,
 /obj/item/clothing/suit/chef,
 /obj/item/clothing/head/chefhat,
 /obj/decal/cleanable/cobweb,
@@ -26614,7 +26683,7 @@
 	name = "very r wall";
 	explosion_resistance = 15
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bga" = (
 /turf/space,
 /area/station/turret_protected/ai)
@@ -26713,16 +26782,16 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bgn" = (
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bgo" = (
 /obj/storage/secure/closet/security/armory{
 	req_access_txt = "37"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bgp" = (
 /obj/lattice,
 /turf/space,
@@ -26819,7 +26888,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bgz" = (
 /obj/machinery/light,
 /turf/space,
@@ -27067,7 +27136,7 @@
 	explosion_resistance = 15;
 	name = "very r wall"
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bhb" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -28958,7 +29027,9 @@
 /turf/simulated/wall/asteroid,
 /area/space)
 "blb" = (
-/turf/space/asteroid,
+/turf/space{
+	icon_state = "aplaceholder"
+	},
 /area/space)
 "blc" = (
 /turf/simulated/shuttle/wall{
@@ -29707,71 +29778,6 @@
 	},
 /turf/space,
 /area/space)
-"bZw" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/turf/simulated/floor/grime,
-/area/station/storage/warehouse)
-"eAo" = (
-/obj/table/reinforced,
-/obj/item/aiModule/freeform,
-/turf/simulated/floor/purple,
-/area/station/turret_protected/ai_upload_foyer)
-"lpd" = (
-/obj/rack,
-/obj/item/circuitboard/teleporter,
-/obj/item/circuitboard/card,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
-/obj/machinery/camera{
-	c_tag = "Technical Storage";
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
-"oqQ" = (
-/obj/table/auto,
-/obj/item/clothing/glasses/meson,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
-"oBC" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/lawrack,
-/turf/simulated/floor/purple,
-/area/station/turret_protected/ai_upload)
-"tfW" = (
-/obj/table/reinforced,
-/obj/item/aiModule/notHuman,
-/obj/item/aiModule/protectStation,
-/turf/simulated/floor/purple,
-/area/station/turret_protected/ai_upload_foyer)
-"xSB" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/machinery/light{
-	dir = 1;
-	name = "light fixture"
-	},
-/turf/simulated/floor,
-/area/station/medical/robotics)
 
 (1,1,1) = {"
 aaa
@@ -47554,7 +47560,7 @@ alr
 alr
 amo
 amN
-oqQ
+ano
 anQ
 aon
 aoO
@@ -48010,7 +48016,7 @@ amp
 amO
 anp
 amO
-lpd
+aop
 aoO
 apr
 app
@@ -54838,7 +54844,7 @@ auE
 auE
 auE
 axm
-bZw
+axR
 auE
 auE
 auE
@@ -58449,7 +58455,7 @@ aaa
 aaa
 aaa
 amK
-eAo
+anj
 anN
 aok
 anN
@@ -58903,7 +58909,7 @@ aaa
 aaa
 aaa
 amK
-tfW
+anl
 anN
 aok
 anN
@@ -61408,7 +61414,7 @@ apl
 apk
 aqj
 aqf
-oBC
+arr
 arT
 ast
 apk
@@ -61646,7 +61652,7 @@ asN
 asM
 avO
 awr
-xSB
+awQ
 axs
 ayf
 ayB

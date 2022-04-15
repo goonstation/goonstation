@@ -1053,7 +1053,9 @@
 	},
 /area/space)
 "cK" = (
-/turf/space/asteroid,
+/turf/space{
+	icon_state = "aplaceholder"
+	},
 /area/space)
 "cL" = (
 /obj/lattice{

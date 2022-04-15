@@ -33,7 +33,7 @@ var/mutable_appearance/fluid_ma
 	desc = "It's a free-flowing liquid state of matter!"
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "15"
-	anchored = 2
+	anchored = 1
 	mouse_opacity = 1
 	layer = FLUID_LAYER
 
@@ -138,13 +138,6 @@ var/mutable_appearance/fluid_ma
 				src.HasEntered(O,O.loc)
 		*/
 
-	proc/trigger_fluid_enter()
-		for(var/atom/A in src.loc)
-			if (src.group && !src.group.disposed && A.event_handler_flags & USE_FLUID_ENTER)
-				A.EnteredFluid(src, src.loc)
-		if(src.group && !src.group.disposed)
-			src.loc?.EnteredFluid(src, src.loc)
-
 	proc/turf_remove_cleanup(turf/the_turf)
 		the_turf.active_liquid = null
 
@@ -205,7 +198,7 @@ var/mutable_appearance/fluid_ma
 		if (istype(W,/obj/item/rcd) || istype(W,/obj/item/tile) || istype(W,/obj/item/sheet) || ispryingtool(W) || istype(W,/obj/item/pen))
 			var/turf/T = get_turf(src)
 			T.Attackby(W,user)
-			W.AfterAttack(T,user)
+			W.afterattack(T,user)
 			return
 
 		.= ..()
@@ -225,7 +218,7 @@ var/mutable_appearance/fluid_ma
 	//incorporate touch_modifier?
 	Crossed(atom/movable/A)
 		..()
-		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid)  || src.group.disposed || istype(src, /obj/fluid/airborne))
+		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid) || istype(src, /obj/fluid/airborne))
 			return
 
 		my_depth_level = last_depth_level
@@ -321,9 +314,7 @@ var/mutable_appearance/fluid_ma
 
 	var/spawned_any = 0
 	proc/update() //returns list of created fluid tiles
-		if (!src.group || src.group.disposed) //uh oh
-			src.removed()
-			return
+		if (!src.group) return
 		.= list()
 		last_spread_was_blocked = 1
 		src.touched_channel = 0
@@ -333,6 +324,10 @@ var/mutable_appearance/fluid_ma
 		var/turf/t
 		if(!waterflow_enabled) return
 		for( var/dir in cardinal )
+			LAGCHECK(LAG_MED)
+			if (!src.group)
+				src.removed()
+				return
 			blocked_perspective_objects["[dir]"] = 0
 			t = get_step( src, dir )
 			if (!t) //the fuck? how
@@ -353,6 +348,7 @@ var/mutable_appearance/fluid_ma
 				var/suc = 1
 				var/push_thing = 0
 				for(var/obj/thing in t.contents)
+					LAGCHECK(LAG_HIGH)
 					var/found = 0
 					if (IS_SOLID_TO_FLUID(thing))
 						found = 1
@@ -372,12 +368,13 @@ var/mutable_appearance/fluid_ma
 							suc=0
 							break
 
-				if(suc && src.group && !src.group.disposed) //group went missing? ok im doin a check here lol
+				if(suc && src.group) //group went missing? ok im doin a check here lol
+					LAGCHECK(LAG_HIGH)
 					spawned_any = 1
 					src.icon_state = "15"
 					var/obj/fluid/F = new /obj/fluid
 					F.set_up(t,0)
-					if (!F || !src.group || src.group.disposed) continue //set_up may decide to remove F
+					if (!F || !src.group) continue //set_up may decide to remove F
 
 					F.amt = src.group.amt_per_tile
 					F.name = src.name
@@ -392,13 +389,12 @@ var/mutable_appearance/fluid_ma
 					F.movement_speed_mod = src.movement_speed_mod
 
 					if (src.group)
-						src.group.add(F, src.group.amt_per_tile)
 						F.group = src.group
+						. += F
 					else
 						var/datum/fluid_group/FG = new
 						FG.add(F, src.group.amt_per_tile)
 						F.group = FG
-					. += F
 
 					F.done_init()
 
@@ -413,7 +409,10 @@ var/mutable_appearance/fluid_ma
 						else
 							step_away(push_thing,src)
 
-					F.trigger_fluid_enter()
+					for(var/atom/A in F.loc)
+						if (A.event_handler_flags & USE_FLUID_ENTER)
+							A.EnteredFluid(F, F.loc)
+					F.loc.EnteredFluid(F, F.loc)
 
 		if (spawned_any && prob(40))
 			playsound( src.loc, 'sound/misc/waterflow.ogg', 30,0.7,7)

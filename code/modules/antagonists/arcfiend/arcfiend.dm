@@ -79,7 +79,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	cast(atom/target)
 		. = ..()
 		if (target == holder.owner) return
-		if (!(BOUNDS_DIST(holder.owner, target) == 0)) return TRUE
+		if (!IN_RANGE(holder.owner, target, 1)) return TRUE
 		if (isnpcmonkey(target))
 			boutput(holder.owner, "<span class='alert'>This creature lacks sufficient energy to consume.")
 			return
@@ -119,13 +119,13 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 	onUpdate()
 		..()
-		if(!(BOUNDS_DIST(user, target) == 0))
+		if(!IN_RANGE(user, target, 1))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onStart()
 		..()
 		P.spawning = initial(P.spawning)
-		if(!(BOUNDS_DIST(user, target) == 0))
+		if(!IN_RANGE(user, target, 1))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.loopStart()
@@ -135,7 +135,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		. = ..()
 
 	onEnd()
-		if(!(BOUNDS_DIST(user, target) == 0))
+		if(!IN_RANGE(user, target, 1))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 
@@ -186,7 +186,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 					smes.charge -= SMES_DRAIN_RATE
 					points_gained = SAP_LIMIT_APC
 			else
-				if (!target_apc?.cell || target_apc.cell.charge <= ((target_apc.cell.maxcharge / POWER_CELL_CHARGE_PERCENT_MINIMUM) + POWER_CELL_DRAIN_RATE)) //not enough power
+				if (!target_apc.cell || target_apc.cell.charge <= ((target_apc.cell.maxcharge / POWER_CELL_CHARGE_PERCENT_MINIMUM) + POWER_CELL_DRAIN_RATE)) //not enough power
 					boutput(holder.owner, "<span class='alert'>[target] doesn't have enough energy for you to absorb!")
 					interrupt(INTERRUPT_ALWAYS)
 					return
@@ -227,7 +227,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	cast(atom/target)
 		. = ..()
 		if (target == holder.owner) return TRUE
-		if (!(BOUNDS_DIST(holder.owner, target) == 0)) return TRUE
+		if (!IN_RANGE(holder.owner, target, 1)) return TRUE
 		if (ismob(target))
 			var/mob/M = target
 			M.shock(holder.owner, wattage, ignore_gloves = TRUE)
@@ -361,7 +361,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 	cast(atom/target)
 		. = ..()
-		if (!(BOUNDS_DIST(holder.owner, target) == 0)) return TRUE
+		if (!IN_RANGE(holder.owner, target, 1)) return TRUE
 		if (ishuman(target))
 			if (target == holder.owner)
 				self_cast(target)
@@ -405,7 +405,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 	onUpdate(timePassed)
 		..()
-		if(!(BOUNDS_DIST(user, target) == 0))
+		if(!IN_RANGE(user, target, 1))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!ON_COOLDOWN(owner, "jolt", 1 SECOND))
@@ -421,7 +421,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	onStart()
 		..()
 		P.spawning = initial(P.spawning)
-		if(!(BOUNDS_DIST(user, target) == 0))
+		if(!IN_RANGE(user, target, 1))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -448,7 +448,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	name = "Ride The Lightning"
 	desc = "Expend energy to travel through electrical cables"
 	icon_state = "voltron"
-	cooldown = 1 SECONDS
+	cooldown = 0 SECONDS
 	pointCost = 75
 	var/active = FALSE
 	var/view_range = 2
@@ -500,7 +500,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 	proc/handle_move()
 		var/turf/user_turf = get_turf(holder.owner)
-		if (isrestrictedz(user_turf.z) || is_incapacitated(holder.owner))
+		if (isrestrictedz(user_turf) || is_incapacitated(holder.owner))
 			deactivate()
 			active = FALSE
 			return
@@ -526,6 +526,8 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	proc/deactivate()
 		boutput(holder.owner, __red("You are ejected from the cable!"))
 		active = FALSE
+		//ensure points cost is set back to where it belongs
+		pointCost = initial(pointCost)
 		var/atom/movable/screen/ability/topBar/B = src.object
 		B.update_cooldown_cost()
 
@@ -534,11 +536,6 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		qdel(D)
 		D = null
 		holder.owner.delStatus("ev_voltron")
-
-	tryCast(atom/target, params)
-		. = ..()
-		//restore points cost when deactivating
-		if(!pointCost) pointCost = initial(pointCost)
 
 	proc/send_images_to_client()
 		if ((!holder.owner?.client) || (!isalive(holder.owner)) || (isrestrictedz(holder.owner.z)))

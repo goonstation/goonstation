@@ -1,10 +1,5 @@
 // p much straight up copied from secbot code =I
 
-
-//don't attack mobs in santuary zones. attacking non-mobs there is fine
-//we can only attack people in pods etc if we're also in the pod etc
-#define ATTACK_CHECK(target) ((!(get_area(target)):sanctuary || !ismob(target)) && (isturf(target:loc) || target:loc == src.loc))
-
 /obj/critter/
 	name = "critter"
 	desc = "you shouldnt be able to see this"
@@ -19,7 +14,6 @@
 	var/is_template = 0
 	var/alive = 1
 	var/health = 10
-	var/maxhealth = 100
 
 	// "sleeping" is a special state that sleeps for 10 cycles, wakes up, sleeps again unless someone is found
 	// "hibernating" is another special state where it does nothing unless explicitly woken up
@@ -39,9 +33,9 @@
 	var/opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	var/frustration = 0
 	var/last_found = null
-	var/atom/movable/target = null
+	var/target = null
 	var/oldtarget_name = null
-	var/atom/target_lastloc = null
+	var/target_lastloc = null
 	var/atkcarbon = 0
 	var/atksilicon = 0
 	var/atcritter = 0
@@ -254,14 +248,14 @@
 
 		if (istype(W, /obj/item/reagent_containers/food/snacks) || istype(W, /obj/item/seed))
 			boutput(user, "You offer [src] [W].")
-			if (!do_mob(user, src, 1 SECOND) || BOUNDS_DIST(user, src) > 0)
+			if (!do_mob(user, src, 1 SECOND) || get_dist(user, src) > 1)
 				if (user && ismob(user))
 					user.show_text("You were interrupted!", "red")
 				return
 			if (src.feed_text)
 				src.visible_message("<span class='notice'>[src] [src.feed_text]</span>")
 			eat_twitch(src)
-			src.health = min(src.maxhealth, src.health + health_gain_from_food)
+			src.health += src.health_gain_from_food
 			user.drop_item()
 			qdel(W)
 			return
@@ -545,7 +539,7 @@
 
 		for (var/client/C)
 			var/mob/M = C.mob
-			if (M && src.z == M.z && GET_DIST(src, M) <= 10)
+			if (M && src.z == M.z && get_dist(src,M) <= 10)
 				if (isliving(M))
 					waking = 1
 					break
@@ -580,10 +574,15 @@
 
 		for (var/client/C)
 			var/mob/M = C.mob
-			if (M && src.z == M.z && GET_DIST(src, M) <= 10)
+			if (M && src.z == M.z && get_dist(src,M) <= 10)
 				if (isliving(M))
 					stay_awake = 1
 					break
+
+		//for(var/mob/living/M in range(10, src))
+		//	if(M.client)
+		//		stay_awake = 1
+		//		break
 
 		if(!stay_awake)
 			sleeping = 10
@@ -598,8 +597,8 @@
 	proc/process()
 		if (is_template || task == "hibernating")
 			return 0
-		if (!src.alive)
-			return 0
+		if (!src.alive) return 0
+
 		if(sleeping > 0)
 			sleeping--
 			return 0
@@ -623,7 +622,7 @@
 				src.attack = 0
 				src.target = null
 
-				walk_to(src, 0)
+				walk_to(src,0)
 
 				if (src.aggressive) seek_target()
 				if (src.wanderer && src.mobile && !src.target) src.task = "wandering"
@@ -638,7 +637,7 @@
 					src.task = "thinking"
 
 					if (mobile)
-						walk_to(src, 0)
+						walk_to(src,0)
 
 				var/atom/current_target
 				if (src.target)
@@ -655,7 +654,8 @@
 						else if (current_target == src.food_target)
 							src.task = "eating"
 						else
-							if(ATTACK_CHECK(current_target))
+							var/turf/t = get_turf(current_target)
+							if( !t.loc:sanctuary || !istype(current_target, /mob) )
 								ChaseAttack(current_target)
 							src.task = "attacking"
 							src.anchored = 1
@@ -710,7 +710,7 @@
 							qdel(src.food_target)
 						src.task = "thinking"
 						src.food_target = null
-						src.health = min(src.maxhealth, src.health + health_gain_from_food)
+						src.health += src.health_gain_from_food
 
 			if ("chasing corpse")
 
@@ -755,7 +755,8 @@
 					if (get_dist(src, src.target) <= src.attack_range)
 						var/mob/living/carbon/M = src.target
 						if (!src.attacking)
-							if(ATTACK_CHECK(src.target))
+							var/turf/t = get_turf(src.target)
+							if( !t.loc:sanctuary || !istype(M) )
 								CritterAttack(src.target)
 								if (src)
 									attack_twitch(src)
@@ -902,10 +903,12 @@
 		src.tokenized_message(death_text)
 
 	proc/ChaseAttack(mob/M)
+
 		src.visible_message("<span class='combat'><B>[src]</B> [src.chase_text] [src.target]!</span>")
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
+		//playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
 
 	proc/CritterAttack(mob/M)
 		src.attacking = 1
@@ -1144,5 +1147,3 @@
 	else
 		boutput(src, "[C] isn't alive, you goof!")
 		return
-
-#undef ATTACK_CHECK

@@ -436,7 +436,7 @@
 						return
 					phrase_log.log_phrase("emote", input)
 					message = "<B>[src]</B> [input]"
-					maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(input, "</i>$1<i>")]</I>"
+					maptext_out = "<I>[input]</I>"
 					custom = copytext(input, 1, 10)
 
 			if ("customv")
@@ -448,7 +448,7 @@
 				param = sanitize(html_encode(param))
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
-				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
+				maptext_out = "<I>[param]</I>"
 				m_type = 1
 				custom = copytext(param, 1, 10)
 
@@ -460,7 +460,7 @@
 				param = sanitize(html_encode(param))
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
-				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
+				maptext_out = "<I>[param]</I>"
 				m_type = 2
 				custom = copytext(param, 1, 10)
 
@@ -471,7 +471,7 @@
 				param = sanitize(html_encode(param))
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
-				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
+				maptext_out = "<I>[param]</I>"
 				m_type = 1 // default to visible
 				custom = copytext(param, 1, 10)
 
@@ -1672,7 +1672,7 @@
 
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
-					var/list/combatflipped = list()
+					var/combatflip = 0
 					//TODO: space flipping
 					//if ((!src.restrained()) && (!src.lying) && (istype(src.loc, /turf/space)))
 					//	message = "<B>[src]</B> does a flip!"
@@ -1746,17 +1746,15 @@
 									continue
 								if (!G.affecting) //Wire note: Fix for Cannot read null.loc
 									continue
-								if (G.affecting in combatflipped)
-									continue
 								if (src.a_intent == INTENT_HELP)
 									M.emote("flip", 1) // make it voluntary so there's a cooldown and stuff
 									continue
 								flipped_a_guy = TRUE
 								var/suplex_result = src.do_suplex(G)
 								if(suplex_result)
-									combatflipped |= G.affecting
+									combatflip |= TRUE
 									message = suplex_result
-								if(!length(combatflipped))
+								if(!combatflip)
 									var/turf/oldloc = src.loc
 									var/turf/newloc = G.affecting.loc
 									var/mob/tmob = G.affecting
@@ -1768,8 +1766,6 @@
 									if(!istype(oldloc) || !istype(newloc))
 										do_flip = FALSE
 									if(do_flip && (!oldloc.Enter(tmob) || !newloc.Enter(src)))
-										do_flip = FALSE
-									if(do_flip && !(BOUNDS_DIST(newloc, oldloc) == 0))
 										do_flip = FALSE
 									if(do_flip)
 										for(var/atom/movable/obstacle in oldloc)
@@ -1793,13 +1789,11 @@
 								for (var/mob/living/M in view(1, null))
 									if (M == src)
 										continue
-									if (M in combatflipped)
-										continue
 									if (src.reagents && src.reagents.get_reagent_amount("ethanol") > 10)
 										if (!iswrestler(src) && src.traitHolder && !src.traitHolder.hasTrait("glasscannon"))
 											src.remove_stamina(STAMINA_FLIP_COST)
 											src.stamina_stun()
-										combatflipped |= M
+										combatflip = 1
 										message = "<span class='alert'><B>[src]</B> flips into [M]!</span>"
 										logTheThing("combat", src, M, "flips into [constructTarget(M,"combat")]")
 										src.changeStatus("weakened", 6 SECONDS)
@@ -1812,7 +1806,7 @@
 									else
 										message = "<B>[src]</B> flips in [M]'s general direction."
 									break
-					if(length(combatflipped))
+					if(combatflip)
 						actions.interrupt(src, INTERRUPT_ACT)
 					if (src.lying)
 						message = "<B>[src]</B> flops on the floor like a fish."
@@ -2111,7 +2105,7 @@
 						I = P.ID_card
 				if(H && (!H.limbs.l_arm || !H.limbs.r_arm || H.restrained()))
 					src.show_text("You can't do that without free arms!")
-				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isconspirator(H) || isnukeop(H) || isnukeopgunbot(H) || ASS_JAM || istype(src.head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
+				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isnukeop(H) || isnukeopgunbot(H) || ASS_JAM || istype(src.head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
 					var/obj/item/card/id/dabbing_license/dab_id = null
 					if(istype(I, /obj/item/card/id/dabbing_license)) // if we are using a dabbing license, save it so we can increment stats
 						dab_id = I
@@ -2292,7 +2286,7 @@
 	torso.render_source = src.render_target
 	torso.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "torso"))
 	torso.appearance_flags = KEEP_APART
-	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "dabbify")
+	APPLY_MOB_PROPERTY(src, PROP_CANTMOVE, "dabbify")
 	src.update_canmove()
 	src.set_dir(SOUTH)
 	src.dir_locked = TRUE
@@ -2315,15 +2309,15 @@
 		qdel(torso)
 		qdel(right_arm)
 		qdel(left_arm)
-		REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "dabbify")
+		REMOVE_MOB_PROPERTY(src, PROP_CANTMOVE, "dabbify")
 		src.update_canmove()
 		src.dir_locked = FALSE
 		src.render_target = "\ref[src]"
 
 /mob/living/proc/do_suplex(obj/item/grab/G)
-	if (!(G.state >= GRAB_STRONG && isturf(src.loc) && isturf(G.affecting.loc)))
+	if (!(G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc)))
 		return null
-	if(!(BOUNDS_DIST(src, G.affecting) == 0))
+	if(!IN_RANGE(src, G.affecting, 1))
 		return null
 
 	var/obj/table/tabl = locate() in src.loc.contents
@@ -2344,23 +2338,25 @@
 	G.affecting.lastattacker = src
 	G.affecting.lastattackertime = world.time
 	if (iswrestler(src))
-		G.affecting.changeStatus("weakened", max(G.affecting.getStatusDuration("weakened"), 4.4 SECONDS))
-		G.affecting.force_laydown_standup()
-		G.affecting.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
-		src.changeStatus("weakened", 1.5 SECONDS)
+		if (prob(50))
+			G.affecting.ex_act(3) // this is hilariously overpowered, but WHATEVER!!!
+		else
+			G.affecting.changeStatus("weakened", 5 SECONDS)
+			G.affecting.force_laydown_standup()
+			G.affecting.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 	else
 		src.changeStatus("weakened", 3.9 SECONDS)
 
 		if (client?.hellbanned)
 			src.changeStatus("weakened", 4 SECONDS)
-		G.affecting.changeStatus("weakened", max(G.affecting.getStatusDuration("weakened"), 4.4 SECONDS))
+		if (G.affecting && !G.affecting.hasStatus("weakened"))
+			G.affecting.changeStatus("weakened", 4.5 SECONDS)
 
 
 		G.affecting.force_laydown_standup()
-		SPAWN(0.8 SECONDS) //let us do that combo shit people like with throwing
+		SPAWN(1 SECOND) //let us do that combo shit people like with throwing
 			src.force_laydown_standup()
-			qdel(G)
 
 		G.affecting.TakeDamage("head", 9, 0, 0, DAMAGE_BLUNT)
 		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)

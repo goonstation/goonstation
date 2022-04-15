@@ -11,8 +11,6 @@
 	var/allow_blind_sight = 0
 	wear_layer = MOB_GLASSES_LAYER
 	block_vision = 0
-	duration_remove = 1.5 SECONDS
-	duration_put = 1.5 SECONDS
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
 	compatible_species = list("human", "cow", "werewolf", "flubber")
@@ -84,10 +82,10 @@
 			if (istype(H.glasses, /obj/item/clothing/glasses/meson)) //hamdling of the rest is done in life.dm
 				if (src.on)
 					H.vision.set_scan(1)
-					APPLY_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
+					APPLY_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
 				else
 					H.vision.set_scan(0)
-					REMOVE_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
+					REMOVE_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
 
 	equipped(var/mob/living/user, var/slot)
 		..()
@@ -95,7 +93,7 @@
 			return
 		if (slot == SLOT_GLASSES && on)
 			user.vision.set_scan(1)
-			APPLY_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
+			APPLY_MOB_PROPERTY(user, PROP_MESONVISION, src)
 
 	unequipped(var/mob/living/user)
 		..()
@@ -105,7 +103,7 @@
 
 	unequipped(mob/user)
 		. = ..()
-		REMOVE_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
+		REMOVE_MOB_PROPERTY(user, PROP_MESONVISION, src)
 
 /obj/item/clothing/glasses/meson/abilities = list(/obj/ability_button/meson_toggle)
 
@@ -130,11 +128,11 @@
 
 	equipped(mob/user, slot)
 		. = ..()
-		APPLY_ATOM_PROPERTY(user, PROP_MOB_GHOSTVISION, src)
+		APPLY_MOB_PROPERTY(user, PROP_GHOSTVISION, src)
 
 	unequipped(mob/user)
 		. = ..()
-		REMOVE_ATOM_PROPERTY(user, PROP_MOB_GHOSTVISION, src)
+		REMOVE_MOB_PROPERTY(user, PROP_GHOSTVISION, src)
 
 /obj/item/clothing/glasses/regular/ecto/goggles
 	name = "ectoplasmoleic imager"
@@ -229,16 +227,16 @@
 	equipped(mob/user, slot)
 		. = ..()
 		if(upgraded)
-			APPLY_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
+			APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 		else
-			APPLY_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION, src)
+			APPLY_MOB_PROPERTY(user, PROP_THERMALVISION, src)
 
 	unequipped(mob/user)
 		. = ..()
 		if(upgraded)
-			REMOVE_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
+			REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 		else
-			REMOVE_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION, src)
+			REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION, src)
 
 	emp_act()
 		if (ishuman(src.loc))
@@ -249,17 +247,17 @@
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
 				if(upgraded)
-					REMOVE_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION_MK2, src)
+					REMOVE_MOB_PROPERTY(H, PROP_THERMALVISION_MK2, src)
 				else
-					REMOVE_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION, src)
+					REMOVE_MOB_PROPERTY(H, PROP_THERMALVISION, src)
 
 				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 					if(H.glasses == src)
 						if(upgraded)
-							APPLY_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION_MK2, src)
+							APPLY_MOB_PROPERTY(H, PROP_THERMALVISION_MK2, src)
 						else
-							APPLY_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION, src)
+							APPLY_MOB_PROPERTY(H, PROP_THERMALVISION, src)
 		return
 
 /obj/item/clothing/glasses/thermal/traitor //sees people through walls
@@ -486,11 +484,11 @@
 
 	equipped(mob/user, slot)
 		. = ..()
-		APPLY_ATOM_PROPERTY(user, PROP_MOB_SPECTRO, src)
+		APPLY_MOB_PROPERTY(user, PROP_SPECTRO, src)
 
 	unequipped(mob/user)
 		. = ..()
-		REMOVE_ATOM_PROPERTY(user, PROP_MOB_SPECTRO, src)
+		REMOVE_MOB_PROPERTY(user, PROP_SPECTRO, src)
 
 /obj/item/clothing/glasses/spectro/monocle //used for bartender job reward
 	name = "spectroscopic monocle"
@@ -576,11 +574,11 @@
 
 	equipped(mob/user, slot)
 		. = ..()
-		APPLY_ATOM_PROPERTY(user, PROP_MOB_NIGHTVISION, src)
+		APPLY_MOB_PROPERTY(user, PROP_NIGHTVISION, src)
 
 	unequipped(mob/user)
 		. = ..()
-		REMOVE_ATOM_PROPERTY(user, PROP_MOB_NIGHTVISION, src)
+		REMOVE_MOB_PROPERTY(user, PROP_NIGHTVISION, src)
 
 	emp_act()
 		if (ishuman(src.loc))

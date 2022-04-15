@@ -94,7 +94,6 @@
 /datum/aiTask/timed/wander/on_tick()
 	. = ..()
 	holder.stop_move()
-	holder.owner.move_dir = null // clear out direction so it doesn't get latched when client is attached
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TARGETED TASK
@@ -158,7 +157,7 @@
 			else
 				next = move_target
 			walk_to(holder.owner, next, 0, 4)
-			if(BOUNDS_DIST(get_turf(holder.owner), next) == 0)
+			if(get_dist(get_turf(holder.owner), next) <= 1)
 				fails = 0
 			else
 				// we aren't where we ought to be

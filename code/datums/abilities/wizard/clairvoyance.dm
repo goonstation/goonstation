@@ -24,14 +24,14 @@
 		if (!length(targets))
 			return
 		targets = sortNames(targets)
-		var/input = tgui_input_list(holder.owner, "Select target", "Clairvoyance", targets)
+		var/input = input(holder.owner, "Select target", "Clairvoyance") as null|anything in targets
 		var/mob/M = targets[input]
-		if (isnull(M) || !holder?.owner)
+		if (!M || !holder?.owner)
 			return
 
 		var/turf/T = get_turf(M)
 		var/area/A = get_area(M)
-		if (isnull(T))
+		if (!T)
 			boutput(holder.owner, "<span class='alert'>[M] appears to be trapped in some sort of Schrödinger's cat-like existence neither truly residing in nor completely removed from the universe!</span>")
 			return //oh shit they're in null space
 

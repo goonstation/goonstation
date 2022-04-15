@@ -31,10 +31,10 @@
 
 	equipped(mob/user)
 		. = ..()
-		APPLY_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
+		APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 
 	unequipped(mob/user)
-		REMOVE_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
+		REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 		. = ..()
 
 /obj/item/clothing/under/gimmick/hunter

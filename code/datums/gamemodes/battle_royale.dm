@@ -46,13 +46,6 @@ var/global/list/datum/mind/battle_pass_holders = list()
 				player.mind.special_role = ROLE_BATTLER
 				living_battlers.Add(player.mind)
 
-	for (var/turf/space/space in world)
-		LAGCHECK(LAG_LOW)
-		if(space.icon_state != "darkvoid")
-			space.icon_state = "darkvoid"
-			space.icon = 'icons/turf/floors.dmi'
-			space.name = "void"
-
 	storm = new /datum/random_event/special/battlestorm()
 	dropper = new/datum/random_event/special/supplydrop()
 
@@ -103,31 +96,16 @@ var/global/list/datum/mind/battle_pass_holders = list()
 				qdel(MAC)
 			if (/obj/machinery/networked/telepad)
 				qdel(MAC)
-			if (/obj/machinery/portable_atmospherics/canister/sleeping_agent)
-				qdel(MAC)
-			if (/obj/machinery/portable_atmospherics/canister/toxins)
-				qdel(MAC)
 
-	hide_weapons_everywhere(length(living_battlers))
+	hide_weapons_everywhere()
 	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
 	next_drop = world.time + rand(MIN_TIME_BETWEEN_SUPPLY_DROPS,MAX_TIME_BETWEEN_SUPPLY_DROPS)
 
-	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
-	ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Battle Royale","BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.",1,true,true)
+	ticker.centralized_ai_laws.replace_inherent_law(1, "BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.")
+	ticker.centralized_ai_laws.replace_inherent_law(2, "")
+	ticker.centralized_ai_laws.replace_inherent_law(3, "")
 
 	emergency_shuttle.disabled = 1
-
-	for(var/x in 1 to world.maxx)
-		var/turf/T = locate(x, 1, Z_LEVEL_STATION)
-		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
-		T = locate(x, world.maxy - 2, Z_LEVEL_STATION)	// Why is the Z change edge not at the actual edge??
-		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
-
-	for(var/y in 1 to world.maxy)
-		var/turf/T = locate(1, y, Z_LEVEL_STATION)
-		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
-		T = locate(world.maxx - 2, y, Z_LEVEL_STATION)	// Why is the Z change edge not at the actual edge??
-		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
 	return 1
 
 
@@ -172,9 +150,6 @@ var/global/list/datum/mind/battle_pass_holders = list()
 			someone_died++
 	if(someone_died && living_battlers.len <= 5)
 		command_alert("[living_battlers.len] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
-		if (!emergency_shuttle.online)
-			emergency_shuttle.incall()
-			command_alert("The escape shuttle has been automatically called. Escape on the shuttle, kill everyone else or die!","Escape Shuttle")
 	else if(someone_died && living_battlers.len % 10 == 0)
 		command_alert("[living_battlers.len] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
 	if(living_battlers.len <= 1)
@@ -216,38 +191,25 @@ var/global/list/datum/mind/battle_pass_holders = list()
 					var/turf/T = get_turf(H)
 					if (T.z != Z_LEVEL_STATION)
 						var/area/GA = get_area(T)
-						var/safe_area = FALSE
+						var/no_tick_damage = FALSE
 						for (var/EA in excluded_areas)
 							if(istype(GA, EA))
-								safe_area = TRUE
+								no_tick_damage = TRUE
 								break
-						if (!safe_area)
-							boutput(H, "<span class='alert'>You were outside the [station_or_ship()] during a Battle Royale!</span>")
-							H.gib()
+						if (!no_tick_damage)
+							boutput(H, "<span class='alert'>You are outside the battle area! Return to the station!</span>")
+							random_brute_damage(H, 8, 0)
 
-	// Is it time for a storm?
-	if (src.next_storm != null)
-		// Game ending storm
-		if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
-			if (emergency_shuttle.timeleft() < 60)
-				storm.event_effect(TRUE)
-				src.next_storm = null
-				SPAWN(65 SECONDS)
-					emergency_shuttle.endtime = ticker.round_elapsed_ticks + (20 MINUTES / (1 SECOND))*10
-		else if(src.next_storm < world.time)
-			// Regular storm
-			src.next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
-			if (emergency_shuttle.online && (emergency_shuttle.location == SHUTTLE_LOC_CENTCOM))
-				if (emergency_shuttle.endtime > 0)
-					return
-			else
-				storm.event_effect()
-				SPAWN(85 SECONDS)
-					var/you_died_good_work = recently_deceased.len > 0 ? "The following players recently died: " : ""
-					for(var/datum/mind/M in recently_deceased)
-						you_died_good_work += " [M.current.name],"
-					recently_deceased = list()
-					command_alert("The BATTLE STORM has ended. You can run around wherever now. [you_died_good_work]", "All Clear")
+	// Is it time for a storm
+	if(src.next_storm < world.time)
+		src.next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
+		storm.event_effect()
+		SPAWN(85 SECONDS)
+			var/you_died_good_work = recently_deceased.len > 0 ? "The following players recently died: " : ""
+			for(var/datum/mind/M in recently_deceased)
+				you_died_good_work += " [M.current.name],"
+			recently_deceased = list()
+			command_alert("The BATTLE STORM has ended. You can run around wherever now. [you_died_good_work]", "All Clear")
 
 	// Is it time for a supply drop?
 	if(src.next_drop < world.time)
@@ -256,7 +218,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 
 
 // Does what it says on the tin
-proc/hide_weapons_everywhere(var/total_battlers = 1)
+proc/hide_weapons_everywhere()
 	boutput(world, "<span class='notice'>Now hiding a shitton of goodies on the [station_or_ship()]. Please be patient!</span>")
 	// Replace all lockers with generic syndicate to clear out junk items, remove sec lockers so it's not too much of a hot spot
 	// Im stealing the list of items from the surplus crate so this check needs to happen
@@ -295,10 +257,10 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	/datum/syndicate_buylist/traitor/mindslave_module,
 	/datum/syndicate_buylist/traitor/deluxe_mindslave_module,
 	/datum/syndicate_buylist/surplus/cybereye_kit_sechud,
-	/datum/syndicate_buylist/generic/head_rev/revflash,
-	/datum/syndicate_buylist/generic/head_rev/revflashbang,
-	/datum/syndicate_buylist/generic/head_rev/revsign,
-	/datum/syndicate_buylist/generic/head_rev/rev_normal_flash,
+	/datum/syndicate_buylist/generic/revflash,
+	/datum/syndicate_buylist/generic/revflashbang,
+	/datum/syndicate_buylist/generic/revsign,
+	/datum/syndicate_buylist/generic/rev_normal_flash,
 	/datum/syndicate_buylist/traitor/kudzuseed,
 	/datum/syndicate_buylist/traitor/moonshine)
 
@@ -361,35 +323,20 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	chest_supplies.Add(/obj/item/clothing/head/helmet/football)
 	chest_supplies.Add(/obj/item/clothing/head/helmet/batman)
 
-	var/total_storage
-	switch(total_battlers)
-		if(100 to 999)
-			total_storage = 0.1
-		if(70 to 99)
-			total_storage = 0.2
-		if(50 to 69)
-			total_storage = 0.3
-		if(0 to 49)
-			total_storage = 0.4
-
-	var/total_utility
 	for_by_tcl(S, /obj/storage)
 		var/turf/T = get_turf(S)
 		if (T.z != Z_LEVEL_STATION)
 			continue
-		if (istype(S, /obj/storage/secure/closet) || istype(S, /obj/storage/closet) || istype(S, /obj/storage/crate) || istype(S, /obj/storage/cart))
+		if (istype(S, /obj/storage/secure/closet) || istype(S, /obj/storage/closet) || istype(S, /obj/storage/crate))
 			qdel(S)
 			var/rand_storage = rand()
-			if (rand_storage <= total_storage)
-				if (total_utility < 30)
-					if (prob((100 - ((total_storage + 0.1) * 100))))
-						total_utility++
-						if (prob(50))
-							new /obj/storage/closet/emergency(T)
-						else
-							new /obj/storage/closet/fire(T)
+			if (rand_storage <= 0.4)
+				continue
+			else if (rand_storage <= 0.5)
+				if (prob(50))
+					new /obj/storage/closet/emergency(T)
 				else
-					continue
+					new /obj/storage/closet/fire(T)
 			else
 				if (prob(50))
 					var/obj/storage/closet/locker = new /obj/storage/closet/syndicate(T)

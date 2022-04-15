@@ -281,7 +281,7 @@ Contents:
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(user, target) > 0 || get_dist(A, target) > 0 || user == null || target == null)
+		if(get_dist(user, target) > 1 || get_dist(A, target) > 0 || user == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		target.temperature -= 5
@@ -313,14 +313,14 @@ Contents:
 			outline:color = target.color
 		icon_image.color =  target.color
 		border.UpdateOverlays(icon_image, "action_icon")
-		if(BOUNDS_DIST(user, target) > 0 || user == null || target == null)
+		if(get_dist(user, target) > 1 || user == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.loopStart()
 		return
 
 	onEnd()
-		if(BOUNDS_DIST(user, target) > 0 || user == null || target == null || !user.find_in_hand(H))
+		if(get_dist(user, target) > 1 || user == null || target == null || !user.find_in_hand(H))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -468,7 +468,7 @@ Contents:
 			K = pick(src.contents)
 			if(istype(K))
 				K.set_real_color()
-			user.put_in_hand_or_eject(K)
+			usr.put_in_hand_or_eject(K)
 
 	process(mult)
 		for(var/obj/O in contents)

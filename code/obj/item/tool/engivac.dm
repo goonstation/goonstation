@@ -139,7 +139,7 @@ obj/item/engivac/attack_hand(mob/living/user as mob)
 obj/item/engivac/attack_self(mob/user)
 	..()
 	var/list/options = list("Toggle collecting building materials", "Toggle collecting debris",held_toolbox ? "Toggle floor tile auto-placement" : null, held_toolbox ? "Remove Toolbox" : null)
-	var/input = input(user,"Select option:","Option") in options
+	var/input = input(usr,"Select option:","Option") in options
 	switch(input)
 		if ("Toggle collecting building materials")
 			collect_buildmats = !collect_buildmats
@@ -229,7 +229,7 @@ obj/item/engivac/proc/find_crud_on_turf(turf/target_turf)
 obj/item/engivac/proc/attempt_fill(obj/item/target)
 	if (!target)
 		return FALSE
-	if (BOUNDS_DIST(target, src) > 0) //I'm sure smartasses will find a way
+	if (get_dist(target, src) > 1) //I'm sure smartasses will find a way
 		return FALSE
 	var/succeeded = FALSE
 	var/list/toolbox_contents = held_toolbox.get_contents()

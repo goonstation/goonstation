@@ -111,7 +111,21 @@
 			user, "<span class='notice'>You begin inserting [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>",\
 			H, "<span class='notice'>[H == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s needle into your arm.</span>")
 			logTheThing("combat", user, H, "tries to hook up an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
-			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/reagent_containers/iv_drip/proc/insert_needle, list(H, user), src.icon, src.icon_state, null, null)
+
+			if (H != user)
+				if (!do_mob(user, H, 50))
+					user.show_text("You were interrupted!", "red")
+					return
+			else if (!do_after(H, 1.5 SECONDS))
+				H.show_text("You were interrupted!", "red")
+				return
+
+			src.patient = H
+			H.tri_message("<span class='notice'><b>[user]</b> inserts [src]'s needle into [H == user ? "[his_or_her(H)]" : "[H]'s"] arm.</span>",\
+			user, "<span class='notice'>You insert [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>",\
+			H, "<span class='notice'>[H == user ? "You insert" : "<b>[user]</b> inserts"] [src]'s needle into your arm.</span>")
+			logTheThing("combat", user, H, "connects an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
+			src.start_transfusion()
 			return
 
 	attackby(obj/A as obj, mob/user as mob)
@@ -129,7 +143,7 @@
 			src.stop_transfusion()
 			return
 
-		if ((!src.stand && !in_interact_range(src, src.patient)) || (src.stand && !in_interact_range(src.stand, src.patient)))
+		if ((!src.stand && get_dist(src, src.patient) > 1) || (src.stand && get_dist(src.stand, src.patient) > 1))
 			var/fluff = pick("pulled", "yanked", "ripped")
 			src.patient.visible_message("<span class='alert'><b>[src]'s needle gets [fluff] out of [src.patient]'s arm!</b></span>",\
 			"<span class='alert'><b>[src]'s needle gets [fluff] out of your arm!</b></span>")
@@ -169,14 +183,6 @@
 			// actual transfer
 			transfer_blood(src.patient, src, src.amount_per_transfer_from_this)
 			return
-
-	proc/insert_needle(var/mob/living/carbon/human/H as mob, mob/living/carbon/user as mob)
-		src.patient = H
-		H.tri_message("<span class='notice'><b>[user]</b> inserts [src]'s needle into [H == user ? "[his_or_her(H)]" : "[H]'s"] arm.</span>",\
-		user, "<span class='notice'>You insert [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>",\
-		H, "<span class='notice'>[H == user ? "You insert" : "<b>[user]</b> inserts"] [src]'s needle into your arm.</span>")
-		logTheThing("combat", user, H, "connects an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
-		src.start_transfusion()
 
 	proc/start_transfusion()
 		src.in_use = 1
@@ -266,7 +272,7 @@
 			return
 		else if (src.IV)
 			//src.IV.Attackby(W, user)
-			W.AfterAttack(src.IV, user)
+			W.afterattack(src.IV, user)
 			return
 		else
 			return ..()
@@ -291,7 +297,7 @@
 				src.IV.attack(over_object, usr)
 				return
 			else if (src.IV && over_object == src)
-				src.IV.AttackSelf(usr)
+				src.IV.attack_self(usr)
 				return
 			else if (istype(over_object, /obj/stool/bed) || istype(over_object, /obj/stool/chair) || istype(over_object, /obj/machinery/optable))
 				if (A == src.paired_obj && src.detach_from())

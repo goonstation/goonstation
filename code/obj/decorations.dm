@@ -304,14 +304,12 @@
 		src.set_density(0)
 		src.desc = "The scattered remains of a once-beautiful bonsai tree."
 		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 0)
-		// The bonsai tree goes to the deadbar because of course it does, except when there is no deadbar of course
-		var/list/afterlife_turfs = get_area_turfs(/area/afterlife/bar)
-		if(length(afterlife_turfs))
-			var/obj/shrub/captainshrub/C = new /obj/shrub/captainshrub
-			C.overlays += image('icons/misc/32x64.dmi',"halo")
-			C.set_loc(pick(afterlife_turfs))
-			C.anchored = 0
-			C.set_density(0)
+		// The bonsai tree goes to the deadbar because of course it does
+		var/obj/shrub/captainshrub/C = new /obj/shrub/captainshrub
+		C.overlays += image('icons/misc/32x64.dmi',"halo")
+		C.set_loc(pick(get_area_turfs(/area/afterlife/bar)))
+		C.anchored = 0
+		C.set_density(0)
 		for (var/mob/living/M in mobs)
 			if (M.mind && M.mind.assigned_role == "Captain")
 				boutput(M, "<span class='alert'>You suddenly feel hollow. Something very dear to you has been lost.</span>")
@@ -712,81 +710,14 @@
 	star_red
 		icon = 'icons/misc/galactic_objects_large.dmi'
 		icon_state = "star-red"
-		name = "Shidd"
+		name = "Fugg"
 		desc = "A dying red subgiant star shrouded in cast-off shells of gas."
 
 	star_blue
 		icon = 'icons/misc/galactic_objects_large.dmi'
 		icon_state = "star-blue"
-		name = "Fugg"
+		name = "Shidd"
 		desc = "A blazing young blue star."
-
-
-	domus_dei
-		icon_state = "domusDei"
-		name = "Domus Dei"
-		pixel_x = -256
-		pixel_y = -256
-
-	quadriga
-		icon_state = "quadriga"
-		name = "Quadriga"
-		pixel_x = -256
-		pixel_y = -256
-
-	mundus
-		icon_state = "mundus"
-		name = "Mundus"
-		pixel_x = -256
-		pixel_y = -256
-
-	iustitia
-		icon_state = "iustitia"
-		name = "Iustitia"
-		pixel_x = -256
-		pixel_y = -256
-
-	iudicium
-		icon_state = "iudicium"
-		name = "Iudicium"
-		pixel_x = -256
-		pixel_y = -256
-
-	fortuna
-		icon_state = "fortuna"
-		name = "Fortuna"
-		pixel_x = -256
-		pixel_y = -256
-
-	fatuus
-		icon_state = "fatuus"
-		name = "Fatuus"
-		pixel_x = -256
-		pixel_y = -256
-
-	magus
-		icon_state = "magus"
-		name = "Magus"
-		pixel_x = -256
-		pixel_y = -256
-
-	regis
-		icon_state ="regis"
-		name = "Regis"
-		pixel_x = -256
-		pixel_y = -256
-
-	amantes
-		icon_state = "amantes"
-		name = "Amantes"
-		pixel_x = -256
-		pixel_y = -256
-
-	antistes
-		icon_state = "antistes"
-		name = "Antistes"
-		pixel_x = -256
-		pixel_y = -256
 
 	station
 		name = "Space Station 14"
@@ -999,14 +930,6 @@ obj/decoration/ceilingfan
 	density = 1
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "syndiepc1"
-
-	New()
-		..()
-		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-
-	disposing()
-		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		..()
 
 	syndiepc2
 		icon_state = "syndiepc2"

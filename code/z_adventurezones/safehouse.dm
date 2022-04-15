@@ -26,6 +26,7 @@
 	asteroiddoors
 		name = "Safehouse (asteroid doors)"
 		icon_state = "green"
+		force_fullbright = 1
 
 //TURFS
 
@@ -105,7 +106,7 @@
 		bioHolder.mobAppearance.underwear = "none"
 		bioHolder.mobAppearance.u_color = "#FFFFFF"
 		bioHolder.Uid = bioHolder.CreateUid()
-		bioHolder.build_fingerprints()
+		bioHolder.uid_hash = md5(bioHolder.Uid)
 		. = ..()
 
 obj/item/reagent_containers/iv_drip/dead_exec

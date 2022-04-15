@@ -33,7 +33,6 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	tool_flags = TOOL_SNIPPING
 	force = 8.0
-	health = 6
 	w_class = W_CLASS_TINY
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
@@ -78,7 +77,6 @@
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_CUTTING
 	force = 7.0
-	health = 6
 	w_class = W_CLASS_TINY
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
@@ -117,17 +115,12 @@
 	name = "hair dye bottle"
 	desc = "Used to dye hair a different color. Seems to be made of tough, unshatterable plastic."
 	icon = 'icons/obj/barber_shop.dmi'
-	icon_state = "dye"
+	icon_state = "dye-e"
 	flags = FPRINT | TABLEPASS
 	//Default Colors
 	var/customization_first_color = "#FFFFFF"
 	var/uses_left
 	var/hair_group = 1
-	var/image/dye_image
-
-	New()
-		dye_image = image(src.icon, "dye_color", -1)
-		..()
 
 	attack(mob/M as mob, mob/user as mob)
 		if(dye_hair(M, user, src))
@@ -240,7 +233,7 @@
 				famtofuckup.emote("scream")
 			boutput(user, "And now you're out of dye. Well done.")
 			src.uses_left = 0
-			src.ClearSpecificOverlays("dye_color")
+			src.icon_state= "dye-e"
 
 		if(passed_dye_roll)
 			switch(bottle.hair_group)
@@ -281,14 +274,14 @@
 			if (bottle.hair_group == ALL_HAIR)
 				boutput(user, "That was a big dyejob! It used the whole bottle!")
 				src.uses_left = 0
-				src.ClearSpecificOverlays("dye_color")
+				src.icon_state= "dye-e"
 			else if(src.uses_left > 1 && is_barber && bottle.hair_group != ALL_HAIR)
 				src.uses_left --
 				boutput(user, "Hey, there's still some dye left in the bottle! Looks about [get_english_num(src.uses_left)] third\s full!")
 			else
 				boutput(user, "You used the whole bottle!")
 				src.uses_left = 0
-				src.ClearSpecificOverlays("dye_color")
+				src.icon_state= "dye-e"
 
 		M.update_colorful_parts()
 	return 1
@@ -383,7 +376,7 @@
 			boutput(usr, "<span class='alert'>You are unable to dispense anything, since the controls are physical levers which don't go through any other kind of input.</span>")
 			return
 
-		if ((usr.contents.Find(src) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))))
+		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))
 			src.add_dialog(usr)
 
 			if (href_list["eject"])
@@ -398,13 +391,12 @@
 					if(new_dye)
 						bottle.customization_first_color = new_dye
 						bottle.uses_left = 3
-						bottle.dye_image.color = bottle.customization_first_color
-						bottle.UpdateOverlays(bottle.dye_image, "dye_color")
+						bottle.icon_state = "dye-f"
 					src.updateDialog()
 			if(href_list["emptyb"])
 				if(src.bottle)
 					bottle.uses_left = 0
-					bottle.ClearSpecificOverlays("dye_color")
+					bottle.icon_state = "dye-e"
 				src.updateDialog()
 
 			src.add_fingerprint(usr)

@@ -21,7 +21,6 @@
 
 /obj/item/plant/herb
 	name = "herb base"
-	health = 4
 	burn_point = 330
 	burn_output = 800
 	burn_possible = 2
@@ -227,10 +226,6 @@
 	name = "grass"
 	desc = "Fresh free-range spacegrass."
 	icon_state = "grass"
-
-	attack_hand(mob/user)
-		. = ..()
-		game_stats.Increment("grass_touched")
 
 /obj/item/plant/herb/contusine
 	name = "contusine leaves"

@@ -98,19 +98,19 @@
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
-			boutput(user, "<span class='notice'>You swipe the ID card in the card reader.</span>")
+			boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(I:registered)
 			if(account)
-				var/enterpin = user.enter_pin("Card Reader")
+				var/enterpin = usr.enter_pin("Card Reader")
 				if (enterpin == I:pin)
-					boutput(user, "<span class='notice'>Card authorized.</span>")
+					boutput(usr, "<span class='notice'>Card authorized.</span>")
 					src.scan = I
 				else
-					boutput(user, "<span class='alert'>Pin number incorrect.</span>")
+					boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
 					src.scan = null
 			else
-				boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
+				boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
 				src.scan = null
 
 	attack_hand(var/mob/user as mob)
@@ -509,7 +509,7 @@
 	///////////////////////////////////
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
-		if(BOUNDS_DIST(O, user) > 0) return
+		if(get_dist(O,user) > 1) return
 		if(!isliving(user)) return
 		if(!src.scan)
 			boutput(user, "<span class='alert'>You have to scan your ID first!</span>")

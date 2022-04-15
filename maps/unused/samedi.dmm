@@ -6,7 +6,9 @@
 /turf/simulated/wall/asteroid,
 /area/space)
 "aac" = (
-/turf/space/asteroid,
+/turf/space{
+	icon_state = "aplaceholder"
+	},
 /area/space)
 "aad" = (
 /obj/grille/steel,
@@ -13593,7 +13595,7 @@
 /area/station/security/main)
 "aDW" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aDX" = (
 /obj/machinery/power/smes{
 	charge = 2e+007;
@@ -14148,7 +14150,7 @@
 	d2 = 8
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aFi" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -14587,7 +14589,7 @@
 "aGa" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -14837,7 +14839,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aGG" = (
 /obj/storage/secure/crate/weapon/armory/phaser,
 /obj/cable{
@@ -14846,7 +14848,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aGH" = (
 /obj/storage/secure/crate/weapon/armory/pod_weapons,
 /obj/machinery/light{
@@ -14857,7 +14859,7 @@
 	},
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aGI" = (
 /obj/table/auto,
 /obj/machinery/light{
@@ -15413,7 +15415,7 @@
 	},
 /obj/item/reagent_containers/food/snacks/plant/lemon,
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aHX" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6;
@@ -15421,7 +15423,7 @@
 	level = 2
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aHY" = (
 /obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/machinery/camera{
@@ -15438,7 +15440,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aHZ" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -15451,7 +15453,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aIa" = (
 /obj/machinery/door/airlock/pyro/command{
 	aiControlDisabled = 1;
@@ -15467,7 +15469,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aIb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16047,22 +16049,22 @@
 /obj/item/clothing/glasses/thermal,
 /obj/item/clothing/glasses/thermal,
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aJo" = (
 /obj/machinery/atmospherics/valve{
 	name = "Brig Suppression System"
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aJp" = (
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aJq" = (
 /obj/storage/secure/crate/gear/armory/grenades,
 /obj/machinery/power/apc/autoname_east/noaicontrol,
 /obj/cable,
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aJr" = (
 /obj/stool/chair/comfy,
 /obj/landmark/start{
@@ -16575,14 +16577,14 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aKz" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aKA" = (
 /obj/table/reinforced/auto,
 /obj/item/gun/kinetic/riot40mm{
@@ -16592,7 +16594,7 @@
 /obj/item/ammo/bullets/smoke,
 /obj/item/gun/kinetic/riot40mm,
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aKB" = (
 /obj/table/reinforced/auto,
 /obj/item/chem_grenade/flashbang,
@@ -16608,7 +16610,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aKC" = (
 /obj/table/wood/round/auto,
 /obj/cable{
@@ -17716,7 +17718,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aMU" = (
 /obj/machinery/atmospherics/valve{
 	name = "Chapel Repressurization"
@@ -26584,6 +26586,14 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
+"bgo" = (
+/obj/table/auto,
+/obj/item/storage/box/PDAbox,
+/obj/item/aiModule/reset,
+/obj/item/circuitboard/aiupload,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/carpet/blue,
+/area/station/bridge)
 "bgp" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
@@ -32187,6 +32197,31 @@
 	},
 /turf/simulated/floor/sandytile,
 /area/station/hallway/primary/east)
+"bsE" = (
+/obj/table/auto,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	pixel_y = 24
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/item/clothing/glasses/visor,
+/obj/item/device/radio/headset/deaf,
+/obj/item/robodefibrillator,
+/obj/item/device/analyzer/healthanalyzer/borg,
+/obj/item/clothing/glasses/healthgoggles,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/turf/simulated/floor/specialroom/medbay{
+	dir = 2
+	},
+/area/station/medical/head)
 "bsF" = (
 /obj/machinery/sleep_console{
 	icon_state = "sleeperconsole";
@@ -33674,7 +33709,7 @@
 /obj/item/parts/robot_parts/robot_frame,
 /obj/item/parts/robot_parts/leg/left,
 /obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/chest,
 /obj/item/parts/robot_parts/head,
 /obj/item/parts/robot_parts/arm/left,
 /obj/item/parts/robot_parts/arm/right,
@@ -39511,6 +39546,13 @@
 	dir = 8
 	},
 /area/station/turret_protected/ai_upload)
+"bJN" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/rename,
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/turret_protected/ai_upload)
 "bJO" = (
 /obj/machinery/power/solar/east,
 /obj/cable{
@@ -39847,6 +39889,25 @@
 	},
 /turf/simulated/floor/blueblack{
 	dir = 8
+	},
+/area/station/turret_protected/ai_upload)
+"bKx" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/aiupload{
+	dir = 8
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/blueblack{
+	dir = 4
 	},
 /area/station/turret_protected/ai_upload)
 "bKy" = (
@@ -42483,7 +42544,7 @@
 	pixel_y = 1
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -43025,7 +43086,7 @@
 	pixel_y = 21
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/storage/crate/furnacefuel,
 /turf/simulated/floor/plating,
@@ -44791,7 +44852,7 @@
 /area/research_outpost/hangar)
 "bUk" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/shuttlebay,
 /area/research_outpost/hangar)
@@ -44843,7 +44904,7 @@
 /area/research_outpost)
 "bUp" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -45031,6 +45092,13 @@
 /turf/simulated/floor/green/side{
 	dir = 10
 	},
+/area/station/turret_protected/Zeta)
+"bUM" = (
+/obj/table/auto,
+/obj/item/circuitboard/aiupload,
+/obj/item/aiModule/reset,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/green/side,
 /area/station/turret_protected/Zeta)
 "bUN" = (
 /obj/machinery/light,
@@ -46069,6 +46137,19 @@
 	},
 /turf/space,
 /area/station/solar/south)
+"bXc" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/protectStation,
+/obj/item/aiModule/conservePower,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/obj/item/aiModule/reset,
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/station/turret_protected/ai_upload)
 "bXd" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -46166,7 +46247,7 @@
 /obj/table/auto,
 /obj/random_item_spawner/tools,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
@@ -47400,7 +47481,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "bZZ" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/decal/skeleton,
 /turf/simulated/floor/plating/airless/asteroid{
 	name = "asteroid"
 	},
@@ -49278,36 +49359,6 @@
 	dir = 1
 	},
 /area/station/science/teleporter)
-"iTP" = (
-/obj/table/auto,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/green/side,
-/area/station/turret_protected/Zeta)
-"kYE" = (
-/obj/table/auto,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/item/clothing/glasses/visor,
-/obj/item/device/radio/headset/deaf,
-/obj/item/robodefibrillator,
-/obj/item/device/analyzer/healthanalyzer/upgraded,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-4";
-	pixel_y = 0
-	},
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/head)
 "kYK" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -49364,49 +49415,6 @@
 	dir = 6
 	},
 /area/station/science/teleporter)
-"ntL" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/lawrack{
-	dir = 8
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/turret_protected/ai_upload)
-"oIY" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/protectStation,
-/obj/item/aiModule/conservePower,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
-/area/station/turret_protected/ai_upload)
-"pQB" = (
-/obj/table/reinforced/auto,
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/turret_protected/ai_upload)
-"pZQ" = (
-/obj/table/auto,
-/obj/item/storage/box/PDAbox,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/carpet/blue,
-/area/station/bridge)
 "rTs" = (
 /obj/table/wood/auto,
 /obj/item/device/camera_viewer,
@@ -79488,7 +79496,7 @@ aVm
 beL
 bga
 bhw
-kYE
+bsE
 bkf
 blt
 bhw
@@ -88607,7 +88615,7 @@ bRE
 bSw
 bTg
 bSx
-iTP
+bUM
 bPT
 bVO
 bSp
@@ -89754,7 +89762,7 @@ baW
 bct
 bdD
 beV
-pZQ
+bgo
 bhG
 bjj
 bkt
@@ -114869,7 +114877,7 @@ bHA
 bJb
 bJM
 bKw
-oIY
+bXc
 bMi
 bNb
 bIl
@@ -115773,8 +115781,8 @@ bEF
 bHD
 bIo
 bNe
-pQB
-ntL
+bJN
+bKx
 bLu
 bMk
 bEF

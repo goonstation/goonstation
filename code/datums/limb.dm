@@ -235,22 +235,7 @@
 		else
 			reloaded_at = ticker.round_elapsed_ticks + reload_time
 
-	attack_hand(atom/target, mob/user, var/reach, params, location, control)
-		return
-
-	help(mob/living/target, mob/living/user)
-		return
-
-	disarm(mob/living/target, mob/living/user)
-		src.point_blank(target, user)
-
-	grab(mob/living/target, mob/living/user)
-		return
-
 	harm(mob/living/target, mob/living/user)
-		src.point_blank(target, user)
-
-	proc/point_blank(mob/living/target, mob/living/user)
 		if (reloaded_at > ticker.round_elapsed_ticks && !current_shots)
 			boutput(user, "<span class='alert'>The [holder.name] is [reloading_str]!</span>")
 			return
@@ -264,12 +249,12 @@
 				var/obj/projectile/P = initialize_projectile_pixel(user, proj, target, 0, 0)
 				if (!P)
 					return FALSE
-				if(BOUNDS_DIST(user, target) == 0)
+				if(get_dist(user,target) <= 1)
 					P.was_pointblank = 1
 					hit_with_existing_projectile(P, target) // Includes log entry.
 				else
 					P.launch()
-			user.visible_message("<b class='alert'>[user] shoots [target] point-blank with the [holder.name]!</b>")
+			user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
 			next_shot_at = ticker.round_elapsed_ticks + cooldown
 			if (!current_shots)
 				reloaded_at = ticker.round_elapsed_ticks + reload_time
@@ -428,7 +413,7 @@
 		if (holder?.remove_object && istype(holder.remove_object))
 			target.Attackby(holder.remove_object, user, params, location, control)
 			if (target)
-				holder.remove_object.AfterAttack(target, src, reach)
+				holder.remove_object.afterattack(target, src, reach)
 
 /datum/limb/bear
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
@@ -578,9 +563,7 @@
 		// Werewolves and shamblers grab aggressively by default.
 		var/obj/item/grab/GD = user.equipped()
 		if (GD && istype(GD) && (GD.affecting && GD.affecting == target))
-			GD.state = GRAB_STRONG
-			APPLY_ATOM_PROPERTY(target, PROP_MOB_CANTMOVE, GD)
-			target.update_canmove()
+			GD.state = GRAB_AGGRESSIVE
 			GD.UpdateIcon()
 			user.visible_message("<span class='alert'>[user] grabs hold of [target] aggressively!</span>")
 
@@ -674,8 +657,8 @@
 			target.changeStatus("weakened", 2 SECONDS)
 		user.lastattacked = target
 
-/datum/limb/brullbar
-	var/log_name = "brullbar limbs"
+/datum/limb/wendigo
+	var/log_name = "wendigo limbs"
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
 			return
@@ -752,7 +735,7 @@
 			target.changeStatus("weakened", (4 * quality) SECONDS)
 		user.lastattacked = target
 
-/datum/limb/brullbar/severed_werewolf
+/datum/limb/wendigo/severed_werewolf
 	log_name = "severed werewolf limb"
 
 // Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears, which are currently commented out. Go there to make use of this.
@@ -937,9 +920,7 @@
 		var/obj/item/grab/GD = user.equipped()
 		if (GD && istype(GD) && (GD.affecting && GD.affecting == target))
 			target.changeStatus("stunned", 2 SECONDS)
-			GD.state = GRAB_STRONG
-			APPLY_ATOM_PROPERTY(target, PROP_MOB_CANTMOVE, GD)
-			target.update_canmove()
+			GD.state = GRAB_AGGRESSIVE
 			GD.UpdateIcon()
 			user.visible_message("<span class='alert'>[user] grabs hold of [target] aggressively!</span>")
 
@@ -1377,7 +1358,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 				var/obj/item/O = target
 				var/can_pickup = 1
 
-				if (issmallanimal(user))
+				if (issmallanimal(usr))
 					var/mob/living/critter/small_animal/C = user
 					if (C.ghost_spawned && ghostcritter_blocked[O.type])
 						can_pickup = 0
@@ -1443,7 +1424,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 		..()
 
 	disarm(mob/target, var/mob/living/user)
-		if (issmallanimal(user) && iscarbon(target))
+		if (issmallanimal(usr) && iscarbon(target))
 			user.lastattacked = target
 			var/mob/living/critter/small_animal/C = user
 			if (C.ghost_spawned)

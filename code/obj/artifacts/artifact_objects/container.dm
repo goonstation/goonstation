@@ -46,7 +46,6 @@
 /datum/artifact/container
 	associated_object = /obj/artifact/container
 	type_name = "Container"
-	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 450
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,

@@ -3,7 +3,6 @@
 /* -------------------- Food -------------------- */
 /* ============================================== */
 
-ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 /obj/item/reagent_containers/food
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	var/heal_amt = 0
@@ -92,7 +91,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 /* -------------------- Snacks -------------------- */
 /* ================================================ */
 
-ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 /obj/item/reagent_containers/food/snacks
 	name = "snack"
 	desc = "yummy"
@@ -236,8 +234,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				src.take_a_bite(M, user)
 				return 1
 			if (check_target_immunity(M))
-				user.visible_message("<span class='alert'>[user] tries to feed [M] [src], but fails!</span>", "<span class='alert'>You try to feed [M] [src], but fail!</span>")
-				return 0
+				user.visible_message("<span class='alert'>You try to feed [M] [src], but fail!</span>")
 			else if(!M.can_eat(src))
 				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src], but they can't eat that!</span>",\
 				user, "<span class='alert'>You try to feed [M] [src], but they can't eat that!</span>",\
@@ -278,7 +275,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		consumer.nutrition += src.heal_amt * 10
 		src.heal(consumer)
 		playsound(consumer.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
-		on_bite(consumer, feeder)
+		on_bite(consumer)
 		if (src.festivity)
 			modify_christmas_cheer(src.festivity)
 		if (!src.amount)
@@ -359,7 +356,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 
 
-	proc/on_bite(mob/eater, mob/feeder)
+	proc/on_bite(mob/eater)
 		//if (reagents?.total_volume)
 		//	reagents.reaction(M, INGEST)
 		//	reagents.trans_to(M, reagents.total_volume/(src.amount ? src.amount : 1))
@@ -389,7 +386,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
 		eat_twitch(eater)
-		eater.on_eat(src, feeder)
+		eater.on_eat(src)
 
 	proc/on_finish(mob/eater)
 		return
@@ -433,7 +430,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				src.reagents.reaction(owner, INGEST, src.reagents.total_volume)
 				src.did_react = 1
 
-			src.reagents.trans_to(owner, process_rate, HAS_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) ? GET_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) : 1)
+			src.reagents.trans_to(owner, process_rate, HAS_MOB_PROPERTY(owner, PROP_DIGESTION_EFFICIENCY) ? GET_MOB_PROPERTY(owner, PROP_DIGESTION_EFFICIENCY) : 1)
 
 			if (src.reagents.total_volume <= 0)
 				owner.stomach_process -= src
@@ -567,9 +564,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src].</span>")
 				logTheThing("combat", user, M, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
-				if (check_target_immunity(M))
-					user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src], but fails!.</span>", "<span class='alert'>You try to force [M] to drink [src], but fail!</span>")
-					return
+
 				if (!do_mob(user, M))
 					if (user && ismob(user))
 						user.show_text("You were interrupted!", "red")
@@ -1225,7 +1220,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			return
 
 		var/selection = input(user, "What do you want to do with [src]?") as null|anything in choices
-		if (isnull(selection) || BOUNDS_DIST(src, user) > 0)
+		if (isnull(selection) || get_dist(src, user) > 1)
 			return
 
 		var/obj/item/remove_thing

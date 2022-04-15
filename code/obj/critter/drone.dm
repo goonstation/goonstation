@@ -5,7 +5,7 @@
 	icon_state = "drone"
 	density = 1
 	health = 65
-	maxhealth = 65 // for damage description
+	var/maxhealth = 65 // for damage description
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
@@ -276,7 +276,7 @@
 
 			for (var/client/C)
 				var/mob/M = C.mob
-				if (M && src.z == M.z && GET_DIST(src, M) <= 10)
+				if (M && src.z == M.z && get_dist(src,M) <= 10)
 					if (isliving(M))
 						waking = 1
 						break
@@ -288,7 +288,7 @@
 
 			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				var/atom/A = atom
-				if (A && src.z == A.z && GET_DIST(src, A) <= 10)
+				if (A && src.z == A.z && get_dist(src,A) <= 10)
 					waking = 1
 					break
 
@@ -314,7 +314,7 @@
 
 			for (var/client/C)
 				var/mob/M = C.mob
-				if (M && src.z == M.z && GET_DIST(src, M) <= 10)
+				if (M && src.z == M.z && get_dist(src,M) <= 10)
 					if (isliving(M))
 						stay_awake = 1
 						break
@@ -326,7 +326,7 @@
 
 			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				var/atom/A = atom
-				if (A && src.z == A.z && GET_DIST(src, A) <= 10)
+				if (A && src.z == A.z && get_dist(src,A) <= 10)
 					stay_awake = 1
 					break
 
@@ -399,11 +399,11 @@
 			if("attacking")
 				if(prob(15)) walk_rand(src,4) // juke around and dodge shots
 				// see if he got away
-				if ((BOUNDS_DIST(src, src.target) > 0) || ((src.target:loc != src.target_lastloc)))
+				if ((get_dist(src, src.target) > 1) || ((src.target:loc != src.target_lastloc)))
 					src.anchored = 0
 					src.task = "chasing"
 				else
-					if (BOUNDS_DIST(src, src.target) == 0)
+					if (get_dist(src, src.target) <= 1)
 						var/mob/living/carbon/M = src.target
 						if (!src.attacking) CritterAttack(src.target)
 						if (!src.aggressive)
@@ -1199,7 +1199,7 @@
 	beeptext = "neighs"
 	beepsound = 'sound/vox/na.ogg' //how is nay or neigh not a thing in vox?
 	alertsound1 = 'sound/effects/mag_pandroar.ogg'
-	alertsound2 = 'sound/voice/animal/brullbar_roar.ogg'
+	alertsound2 = 'sound/voice/animal/wendigo_roar.ogg'
 	projectile_type = /datum/projectile/bullet/autocannon/huge
 	current_projectile = new/datum/projectile/bullet/autocannon/huge
 	sphere_projectile = new/datum/projectile/laser/precursor/sphere
@@ -1265,8 +1265,8 @@
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "minisyndie"
 	density = 1
-	health = 8
-	maxhealth = 8
+	health = 5
+	maxhealth = 5 // for damage description
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
@@ -1284,10 +1284,10 @@
 	beeptext = "prepares to finish the fight!"
 	beepsound = 0
 	alertsound1 = 0
-	var/bulletcount = 0
+
 	alertsound2 = 0
-	projectile_type = /datum/projectile/bullet/bullet_22
-	current_projectile = new/datum/projectile/bullet/bullet_22
+	projectile_type = /datum/projectile/bullet/revolver_357
+	current_projectile = new/datum/projectile/bullet/revolver_357
 	attack_cooldown = 20
 	mats = 12 //this should be funny
 
@@ -1297,8 +1297,6 @@
 		..()
 		voice_gender = pick("male","female")
 		name = "miniature Syndicate Operative"
-		bulletcount = rand(4, 6) // don't give them too many bullets!
-
 
 	select_target(var/atom/newtarget)
 		..()
@@ -1310,18 +1308,16 @@
 	CritterDeath()
 		if(dying) return
 		playsound(src, 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
+		src.visible_message("[src] emits a very small clicking noise.")
 		icon_state = dead_state
-		SPAWN(0.5 SECONDS)// for the dramatic effect
+		SPAWN(0.5 SECONDS)
 			explosion(src, get_turf(src), -1, -1, 2, 3)
 		..()
 
 	Shoot(var/target, var/start, var/user, var/bullet = 0)
 		..()
-		bulletcount--
-		if(bulletcount<=0)// out of ammo? bedtime
-			SPAWN(0.5 SECONDS)
-				src.visible_message("[src] runs out of ammo!")
-				task = "sleeping"
-				src.health = 0
-				src.CritterDeath()
+		SPAWN(0.5 SECONDS)
+			task = "sleeping"
+			src.health = 0
+			src.CritterDeath()
 

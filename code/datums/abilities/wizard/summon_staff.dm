@@ -24,8 +24,7 @@
 			boutput(M, __red("Not when you're incapacitated or restrained."))
 			return 1
 
-		if(!istype(get_area(M), /area/sim/gunsim)) // Avoid dead chat spam
-			M.say("KOMH HEIRE")
+		M.say("KOMH HEIRE")
 		..()
 
 		var/list/staves = list()

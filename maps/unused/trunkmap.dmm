@@ -148,7 +148,9 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aaz" = (
-/turf/space/asteroid,
+/turf/space{
+	icon_state = "aplaceholder"
+	},
 /area/space)
 "aaB" = (
 /obj/grille/steel,
@@ -293,7 +295,9 @@
 	name = "Mining Outpost"
 	},
 /obj/lattice,
-/turf/space/asteroid,
+/turf/space{
+	icon_state = "aplaceholder"
+	},
 /area/space)
 "aaT" = (
 /obj/landmark/magnet_shield,
@@ -3567,6 +3571,10 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/turf/simulated/floor/white,
+/area/russian)
+"akA" = (
+/obj/decal/sink,
 /turf/simulated/floor/white,
 /area/russian)
 "akB" = (
@@ -8192,6 +8200,7 @@
 /area/station/storage/tech)
 "aza" = (
 /obj/table/auto,
+/obj/item/aiModule/reset,
 /obj/item/peripheral/printer,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -9305,6 +9314,13 @@
 /obj/item/device/audio_log,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"aDw" = (
+/obj/rack{
+	dir = 4
+	},
+/obj/item/circuitboard/aiupload,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "aDx" = (
 /obj/rack{
 	dir = 4
@@ -9922,6 +9938,18 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
+"aFD" = (
+/obj/machinery/camera{
+	c_tag = "Genetic Research East"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/computer/aiupload,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aFE" = (
@@ -11766,6 +11794,7 @@
 /area/station/maintenance/west)
 "aMn" = (
 /obj/table/auto,
+/obj/item/aiModule/rename,
 /obj/item/aiModule/freeform,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -11781,6 +11810,7 @@
 "aMp" = (
 /obj/table/auto,
 /obj/item/aiModule/oneHuman,
+/obj/item/aiModule/reset,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aMq" = (
@@ -27620,7 +27650,7 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "cAW" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/small{
@@ -28170,7 +28200,7 @@
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "eqo" = (
 /turf/simulated/floor{
 	icon_state = "carpetS"
@@ -28358,7 +28388,7 @@
 	},
 /obj/machinery/vending/security_ammo,
 /turf/simulated/floor/caution/west,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "eVc" = (
 /obj/machinery/door/window/northleft,
 /turf/simulated/floor/carpet/grime,
@@ -28511,7 +28541,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "foT" = (
 /obj/table/auto,
 /obj/disposalpipe/segment,
@@ -28696,7 +28726,7 @@
 	name = "Sorry"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "fXy" = (
 /obj/table/auto,
 /obj/disposalpipe/segment,
@@ -28794,7 +28824,7 @@
 /obj/table/reinforced/auto,
 /obj/item/clothing/ears/earmuffs,
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "gnZ" = (
 /obj/machinery/power/smes,
 /obj/cable{
@@ -29033,11 +29063,11 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "gRU" = (
 /obj/rack,
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "gVo" = (
 /obj/item/device/radio/intercom{
 	frequency = 1357;
@@ -29106,7 +29136,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "hqW" = (
 /obj/table/auto,
 /obj/item/assembly/time_ignite,
@@ -29210,7 +29240,7 @@
 	name = "Fire Range Robot"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "hGL" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -29367,7 +29397,7 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "ifu" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -29562,7 +29592,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "iHg" = (
 /obj/grille/steel,
 /obj/window/reinforced/south,
@@ -29593,7 +29623,7 @@
 /area/station/security/hos)
 "iJI" = (
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "iKX" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -29760,6 +29790,12 @@
 	},
 /turf/simulated/wall,
 /area/station/maintenance/disposal)
+"jos" = (
+/obj/decal/sink,
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
+/area/station/science/chemistry)
 "jrX" = (
 /obj/cable{
 	d2 = 2;
@@ -30127,7 +30163,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "khc" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
@@ -30190,7 +30226,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/red/side,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "ksA" = (
 /turf/simulated/floor/darkpurple,
 /area/station/teleporter)
@@ -30721,7 +30757,7 @@
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "loK" = (
 /obj/cable{
 	d1 = 2;
@@ -30746,7 +30782,7 @@
 /area/station/maintenance/southwest)
 "luc" = (
 /turf/simulated/wall/r_wall,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "lxz" = (
 /obj/cable{
 	d2 = 2;
@@ -30855,7 +30891,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "lVv" = (
 /turf/simulated/shuttle/wall{
 	dir = 0;
@@ -30970,7 +31006,7 @@
 /obj/machinery/light,
 /obj/cable,
 /turf/simulated/floor/red/side,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "mdm" = (
 /obj/machinery/vending/cards,
 /turf/simulated/floor,
@@ -31050,12 +31086,6 @@
 	dir = 1
 	},
 /area/station/teleporter)
-"mpp" = (
-/obj/decal/fakeobjects/sink,
-/turf/simulated/floor/purple/side{
-	dir = 4
-	},
-/area/station/science/chemistry)
 "mqQ" = (
 /obj/pool{
 	dir = 4;
@@ -31108,11 +31138,11 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "mzR" = (
 /obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "mBg" = (
 /obj/cable{
 	d1 = 1;
@@ -31805,7 +31835,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "oYc" = (
 /obj/cable{
 	d1 = 1;
@@ -31985,7 +32015,7 @@
 /turf/simulated/floor/red/side{
 	dir = 6
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "pDU" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -32046,7 +32076,7 @@
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "pPx" = (
 /obj/grille/steel,
 /obj/window/reinforced/west,
@@ -32214,7 +32244,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "qqf" = (
 /obj/grille/steel,
 /obj/window/reinforced/south,
@@ -32355,18 +32385,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
-"qCX" = (
-/obj/machinery/camera{
-	c_tag = "Genetic Research East"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/lawrack,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "qEo" = (
 /obj/stool/bed,
 /obj/machinery/light/small{
@@ -32914,7 +32932,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "rXN" = (
 /obj/machinery/camera{
 	c_tag = "Atmospherics Southeast";
@@ -33021,10 +33039,6 @@
 	},
 /turf/space,
 /area/station/security/prison)
-"seX" = (
-/obj/decal/fakeobjects/sink,
-/turf/simulated/floor/white,
-/area/russian)
 "sfI" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -33206,10 +33220,10 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "sUS" = (
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "sWl" = (
 /obj/cable{
 	d1 = 1;
@@ -33229,7 +33243,7 @@
 /obj/machinery/recharger,
 /obj/cable,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "sYn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -33430,13 +33444,13 @@
 /area/station/teleporter)
 "twS" = (
 /turf/simulated/wall,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "txG" = (
 /obj/table/auto,
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "txY" = (
 /obj/machinery/camera{
 	c_tag = "Test Chamber West";
@@ -33518,7 +33532,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "tFL" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -33549,7 +33563,7 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "tJk" = (
 /obj/machinery/door/poddoor{
 	id = "sciencedriver";
@@ -33612,7 +33626,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "tRv" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -34004,7 +34018,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "uza" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
@@ -34024,7 +34038,7 @@
 "uCj" = (
 /obj/table/auto,
 /turf/simulated/floor/red/side,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "uDx" = (
 /obj/grille/steel,
 /obj/window/reinforced/south,
@@ -34139,7 +34153,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "uWM" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -34161,7 +34175,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/east,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "uYx" = (
 /obj/cable{
 	d1 = 4;
@@ -34783,7 +34797,7 @@
 "wVf" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "wWu" = (
 /obj/stool,
 /obj/cable{
@@ -34878,7 +34892,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "xxA" = (
 /obj/cable{
 	d1 = 4;
@@ -35061,7 +35075,7 @@
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "xYh" = (
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -35181,7 +35195,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "ylN" = (
 /obj/cable{
 	d1 = 4;
@@ -59775,7 +59789,7 @@ aaa
 ayd
 ayZ
 aAO
-aHE
+aDw
 aFv
 aHE
 aHY
@@ -67326,7 +67340,7 @@ ayg
 azg
 aAT
 aDC
-qCX
+aFD
 aIk
 aJL
 aJL
@@ -90923,7 +90937,7 @@ esB
 bBK
 sHS
 nnw
-mpp
+jos
 oVY
 avV
 kzS
@@ -115257,7 +115271,7 @@ aaR
 abh
 akq
 abD
-seX
+akA
 abD
 abD
 abD

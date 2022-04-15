@@ -4,7 +4,6 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "satchel"
 	flags = ONBELT
-	health = 6
 	w_class = W_CLASS_TINY
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 	var/maxitems = 50
@@ -114,7 +113,7 @@
 
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
-		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0)
+		if (!in_interact_range(src, user)  || !IN_RANGE(user, O, 1))
 			return
 		var/proceed = 0
 		for(var/check_path in src.allowed)

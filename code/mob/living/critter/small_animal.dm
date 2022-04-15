@@ -1183,8 +1183,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.remove_stam_mod_max("small_animal")
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
-		if(act == "flip" && istype(src.equipped(), /obj/item/grab) && src.emote_check(voluntary, 50))
-			return src.do_suplex(src.equipped())
+		if(act == "flip" && istype(src.equipped(), /obj/item/grab))
+			if(!ON_COOLDOWN(src, "suplex", 2 SECONDS))
+				return src.do_suplex(src.equipped())
 		return null
 
 /* -------------------- Seagull -------------------- */
@@ -1412,7 +1413,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/cockroach
 	name = "cockroach"
 	real_name = "cockroach"
-	blood_id = "hemolymph"
 	desc = "An unpleasant insect that lives in filthy places."
 	icon_state = "roach"
 	icon_state_dead = "roach-dead"
@@ -1480,7 +1480,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/scorpion
 	name = "scorpion"
 	real_name = "scorpion"
-	blood_id = "hemolymph"
 	desc = "Ack! Get it away! AAAAAAAA."
 	icon_state = "spacescorpion"
 	icon_state_dead = "spacescorpion-dead"
@@ -1529,7 +1528,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/cockroach/robo
 	name = "roboroach"
 	real_name = "roboroach"
-	blood_id = "oil"
 	desc = "The vermin of the future!"
 	health_brute = 10
 	health_burn = 10
@@ -2227,7 +2225,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/butterfly
 	name = "butterfly"
 	real_name = "butterfly"
-	blood_id = "hemolymph"
 	desc = "It's a beautiful butterfly! How did it get here?"
 	hand_count = 2
 	icon_state = "butterfly1"
@@ -2530,7 +2527,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/screams/Robot_Scream_2.ogg', 50, 1, 0.1, 2.6, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, "sound/voice/screams/Robot_scream_2.ogg", 50, 1, 0.1, 2.6, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> squeaks!</span>"
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
@@ -2611,7 +2608,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	New()
 		..()
 		if(pick_random_icon_state)
-			icon_state = pick("bee", "buddy", "kitten", "monkey", "possum", "brullbar", "bunny", "penguin")
+			icon_state = pick("bee", "buddy", "kitten", "monkey", "possum", "wendigo", "bunny", "penguin")
 		icon_state_alive = src.icon_state
 		icon_state_dead = src.icon_state
 
@@ -2779,7 +2776,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.setup_overlays()*/
 		src.real_name = "[pick_string("mentor_mice_prefixes.txt", "mentor_mouse_prefix")] [src.name]"
 		src.name = src.real_name
-		abilityHolder.addAbility(/datum/targetable/critter/mentordisappear)
 
 	setup_overlays()
 		if(!src.colorkey_overlays)
@@ -2881,24 +2877,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if(src.client && src.client && !src.client.is_mentor())
 			src.make_critter(/mob/living/critter/small_animal/mouse/weak)
 			return
-
-/datum/targetable/critter/mentordisappear
-	name = "Vanish"
-	desc = "Leave your body and return to ghost form"
-	icon_state = "mentordisappear"
-
-
-	cast(mob/target)
-
-		var/mob/living/M = holder.owner
-		if (!holder)
-			return 1
-		M.visible_message("<span class='alert'><B>[M] does a funny little jiggle with their body and then vanishes into thin air!</B></span>") // MY ASCENSION BEGINS
-		M.ghostize()
-		qdel(M)
-		logTheThing("admin", src, null, "turned from a mentor mouse to a ghost") // I can remove this but it seems like a good thing to have
-
-
 
 /mob/living/critter/small_animal/mouse/weak/mentor/admin
 	name = "admin mouse"
@@ -3023,7 +3001,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/trilobite
 	name = "trilobite"
 	real_name = "trilobite"
-	blood_id = "hemolymph"
 	desc = "This is an alien trilobite."
 	icon_state = "trilobite"
 	icon_state_dead = "trilobite-dead"
@@ -3231,7 +3208,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				if (!G.affecting)
 					continue
 				animate_spin(src, prob(50) ? "L" : "R", 1, 0)
-				if (G.state >= GRAB_STRONG && isturf(src.loc) && isturf(G.affecting.loc))
+				if (G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc))
 					src.emote("scream")
 					logTheThing("combat", src, G.affecting, "crunches [constructTarget(G.affecting,"combat")] [log_loc(src)]")
 					M.lastattacker = src

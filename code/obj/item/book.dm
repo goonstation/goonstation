@@ -310,12 +310,6 @@ Custom Books
 	icon_state = "bookcc"
 	file_path = "strings/books/DNDrulebook.txt"
 
-/obj/item/paper/book/from_file/MONOrules
-	name = "MONO card game rules"
-	desc = "A pamphlet describing the rules of MONO, the family-friendly and legally distinct card game for all ages!"
-	icon_state = "paper"
-	file_path = "strings/books/MONOrules.txt"
-
 /******************** OTHER BOOKS ********************/
 /obj/item/diary
 	name = "Beepsky's private journal"
@@ -433,20 +427,6 @@ Custom Books
 	name = "A SYNDIE'S GUIDE TO DOING YOUR FUCKING JOB"
 	icon_state = "syndiebook"
 	file_path = "strings/books/syndies_guide.txt"
-
-	New()
-		..()
-		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-
-	disposing()
-		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		..()
-
-	stolen //crew obtainable version
-
-		New()
-			..()
-			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE) //ugly but oh well
 
 /obj/item/paper/book/from_file/zoo_diary
 	name = "grimy diary"

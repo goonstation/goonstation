@@ -6,5 +6,6 @@
 
 /proc/initialize_worldgen()
 	for(var/turf/U in worldgenCandidates)
-		U.generate_worldgen()
-		LAGCHECK(LAG_REALTIME)
+		if (U) //may be deleted lol
+			U.generate_worldgen()
+			LAGCHECK(LAG_REALTIME)

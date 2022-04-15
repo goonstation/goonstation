@@ -16,7 +16,6 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 /obj/item/circuitboard
 	density = 0
 	anchored = 0
-	health = 6
 	w_class = W_CLASS_SMALL
 	name = "Circuit board"
 	icon = 'icons/obj/module.dmi'
@@ -32,7 +31,9 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 /obj/item/circuitboard/security
 	name = "Circuit board (Security)"
 	computertype = "/obj/machinery/computer/security"
-
+/obj/item/circuitboard/aiupload
+	name = "Circuit board (AI Upload)"
+	computertype = "/obj/machinery/computer/aiupload"
 //obj/item/circuitboard/med_data
 //	name = "Circuit board (Medical)"
 //	computertype = "/obj/machinery/computer/med_data"

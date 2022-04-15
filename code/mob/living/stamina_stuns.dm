@@ -57,7 +57,7 @@
 
 //Returns the total modifier for stamina max
 /mob/proc/get_stun_resist_mod()
-	return min(GET_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST), clamp(GET_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX), 80, 100)) + 0
+	return clamp(GET_MOB_PROPERTY(src, PROP_STUN_RESIST), 80, GET_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX))
 
 //Restores stamina
 /mob/proc/add_stamina(var/x)
@@ -153,7 +153,7 @@
 		src.changeStatus("stunned", STAMINA_STUN_ON_CRIT_SEV)
 		#endif
 		#if STAMINA_NEG_CRIT_KNOCKOUT == 1
-		if(!src.getStatusDuration("weakened") && isalive(src))
+		if(!src.getStatusDuration("weakened"))
 			src.visible_message("<span class='alert'>[src] collapses!</span>")
 			src.changeStatus("weakened", (STAMINA_STUN_CRIT_TIME) SECONDS)
 		#endif
@@ -178,7 +178,7 @@
 		var/chance = STAMINA_SCALING_KNOCKOUT_BASE
 		chance += (src.stamina / STAMINA_NEG_CAP) * STAMINA_SCALING_KNOCKOUT_SCALER
 		if(prob(chance))
-			if(!src.getStatusDuration("weakened") && isalive(src))
+			if(!src.getStatusDuration("weakened"))
 				src.visible_message("<span class='alert'>[src] collapses!</span>")
 				src.changeStatus("weakened", (STAMINA_STUN_TIME * stunmult) SECONDS)
 				src.force_laydown_standup()
@@ -190,13 +190,13 @@
 #define DISORIENT_EAR 4
 
 /mob/proc/get_disorient_protection()
-	return min(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY), clamp(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY_MAX), 90, 100)) + 0
+	return clamp(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_BODY), 90, GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_BODY_MAX))
 
 /mob/proc/get_disorient_protection_eye()
-	return min(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_EYE), clamp(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_EYE_MAX), 90, 100)) + 0
+	return clamp(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EYE), 90, GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EYE_MAX))
 
 /mob/proc/get_disorient_protection_ear()
-	return min(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_EAR), clamp(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_EAR_MAX), 90, 100)) + 0
+	return clamp(GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EAR), 90, GET_MOB_PROPERTY(src, PROP_DISORIENT_RESIST_EAR_MAX))
 
 
 /mob/proc/force_laydown_standup() //the real force laydown lives in Life.dm

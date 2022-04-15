@@ -1,5 +1,4 @@
 /proc/bug_report_form(mob/user, easteregg_chance=0)
-	var/client/user_client = user.client
 	var/datum/tgui_bug_report_form/form = new
 	form.ui_interact(user)
 	UNTIL(form.done || form.closed)
@@ -30,7 +29,7 @@
 
 [form.data["additional"]]
 
-Reported by: [user_client.key]
+Reported by: [user.key]
 On server: [global.config.server_name]
 Round log date: [global.roundLog_date]
 Reported on: [time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]
@@ -43,12 +42,12 @@ Reported on: [time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]
 	if (!form.disposed)
 		qdel(form)
 	if(success)
-		tgui_alert(user_client.mob, "Issue reported!", "Issue reported!")
+		tgui_alert(user, "Issue reported!", "Issue reported!")
 		if(prob(easteregg_chance))
-			var/obj/critter/roach/actual_bug = new(user_client.mob.loc)
+			var/obj/critter/roach/actual_bug = new(user.loc)
 			actual_bug.name = title
 	else
-		tgui_alert(user_client.mob, "There has been an issue with reporting your bug, please try again later!", "Issue not reported!")
+		tgui_alert(user, "There has been an issue with reporting your bug, please try again later!", "Issue not reported!")
 
 /datum/tgui_bug_report_form
 	/// Boolean field describing if the bug report form was closed by the user.

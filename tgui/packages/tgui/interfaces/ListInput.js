@@ -179,7 +179,7 @@ export const ListInput = (props, context) => {
       height={325}>
       {timeout !== undefined && <Loader value={timeout} />}
       <Window.Content
-        onkeydown={handleKeyDown}>
+        onKeyDown={handleKeyDown}>
         <Stack fill vertical>
           <Stack.Item grow>
             <Section
@@ -216,9 +216,7 @@ export const ListInput = (props, context) => {
                   id={button}
                   selected={selectedButton === button}
                   onComponentDidMount={node => {
-                    let searchBarInput = showSearchBar ? document.getElementById("search_bar").getElementsByTagName('input')[0] : null;
-                    let searchBarFocused = document.activeElement === searchBarInput;
-                    if (selectedButton === button && !searchBarFocused) {
+                    if (selectedButton === button) {
                       node.focus();
                     }
                   }}

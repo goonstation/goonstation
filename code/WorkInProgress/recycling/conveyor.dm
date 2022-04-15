@@ -65,7 +65,6 @@
 
 	for (var/obj/machinery/conveyor_switch/S as anything in linked_switches) //conveyor switch could've been exploded
 		S.conveyors -= src
-	id = null
 	..()
 
 	// set the dir and target turf depending on the operating direction
@@ -151,7 +150,7 @@
 		var/mob/M = AM
 		if(istype(M) && M.buckled == src) //Transfer the buckle
 			M.buckled = next_conveyor
-		if(!next_conveyor.operating || next_conveyor.status & NOPOWER)
+		if(!next_conveyor.operating)
 			walk(AM, 0)
 			return
 
@@ -210,7 +209,7 @@
 		return
 	if (user.pulling.anchored)
 		return
-	if ((user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0))
+	if ((user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
 		return
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
@@ -268,7 +267,7 @@
 	desc = "A diverter arm for a conveyor belt."
 	anchored = 1
 	layer = FLY_LAYER
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 	var/obj/machinery/conveyor/conv // the conveyor this diverter works on
 	var/deployed = 0	// true if diverter arm is extended
 	var/operating = 0	// true if arm is extending/contracting
@@ -370,15 +369,13 @@
 	return(direct != turn(divert_from,180))
 
 // don't allow movement through the arm if deployed
-/obj/machinery/diverter/Uncross(atom/movable/O, do_bump=TRUE)
-	var/direct = get_dir(O, O.movement_newloc)
+/obj/machinery/diverter/CheckExit(atom/movable/O, var/turf/target)
+	var/direct = get_dir(O, target)
 	if(direct == turn(divert_to,180))	// prevent movement through body of diverter
-		. = 0
-	else if(!deployed)
-		. = 1
-	else
-		. = direct != divert_from
-	UNCROSS_BUMP_CHECK(O)
+		return 0
+	if(!deployed)
+		return 1
+	return(direct != divert_from)
 
 
 
@@ -409,7 +406,7 @@
 		START_TRACKING
 		UpdateIcon()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", .proc/trigger)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
 		conveyors = list()
 		SPAWN(0.5 SECONDS)
 			link_conveyors()

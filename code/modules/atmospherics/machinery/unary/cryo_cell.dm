@@ -10,6 +10,7 @@
 	var/on = 0
 	var/datum/light/light
 	var/ARCHIVED(temperature)
+	var/obj/overlay/O1 = null
 	var/mob/occupant = null
 	var/obj/item/beaker = null
 	var/show_beaker_contents = 0
@@ -48,7 +49,6 @@
 			if(target.initialize_directions & get_dir(target,src))
 				node = target
 				break
-		build_icon()
 
 	disposing()
 		for (var/mob/M in src)
@@ -94,7 +94,7 @@
 		if (!istype(target) || isAI(user))
 			return
 
-		if (!can_reach(user, target) || !can_reach(target, src) || !can_reach(user, src))
+		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
 			return
 
 		if (target == user)
@@ -109,16 +109,12 @@
 				if (can_operate(user,target))
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)
-
-	Exited(atom/movable/AM, atom/newloc)
-		..()
-		if (AM == occupant && newloc != src)
-			src.go_out()
+		return
 
 	proc/can_operate(var/mob/M, var/mob/living/target)
 		if (!isalive(M))
 			return 0
-		if (BOUNDS_DIST(src, M) > 0)
+		if (get_dist(src,M) > 1)
 			return 0
 		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
 			return 0
@@ -192,7 +188,7 @@
 			return "<B>Reagent Scan : </B>[ reagent_scan_active ? "<A href='?src=\ref[src];reagent_scan_active=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];reagent_scan_active=1'>On</A>"]"
 
 	Topic(href, href_list)
-		if (( usr.using_dialog_of(src) && ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))) || (isAI(usr)))
+		if (( usr.using_dialog_of(src) && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
 			if(href_list["start"])
 				src.on = !src.on
 				build_icon()
@@ -215,8 +211,6 @@
 
 	attackby(var/obj/item/G as obj, var/mob/user as mob)
 		if(istype(G, /obj/item/reagent_containers/glass))
-			if (G.cant_drop)
-				boutput(user, "<span class='alert'>You can't put that in \the [src] while it's attached to you!")
 			if(src.beaker)
 				user.show_text("A beaker is already loaded into the machine.", "red")
 				return
@@ -263,14 +257,12 @@
 				playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
 				user.u_equip(G)
 				G.set_loc(src)
-				build_icon()
 		else if (istype(G, /obj/item/wrench))
 			if (!src.defib)
 				boutput(user, "<span class='alert'>[src] does not have a Defibrillator installed.</span>")
 			else
 				src.defib.set_loc(src.loc)
 				src.defib = null
-				build_icon()
 				src.visible_message("<span class='alert'>[user] removes the Defibrillator from [src].</span>")
 				playsound(src.loc ,"sound/items/Ratchet.ogg", 50, 1)
 		else if (istype(G, /obj/item/device/analyzer/healthanalyzer))
@@ -304,21 +296,9 @@
 		build_icon()
 		qdel(G)
 
-	proc/shock_icon()
-		var/fake_overlay = new /obj/shock_overlay(src.loc)
-		src.vis_contents += fake_overlay
-		SPAWN(1 SECOND)
-			src.vis_contents -= fake_overlay
-			qdel(fake_overlay)
-			if(!src.defib)
-				src.UpdateOverlays(null, "defib")
-				return
-			src.UpdateOverlays(src.SafeGetOverlayImage("defib", 'icons/obj/Cryogenic2.dmi', "defib-off", 2, pixel_y=-32), "defib")
-		SPAWN(src.defib.charge_time)
-			if(!src.defib)
-				src.UpdateOverlays(null, "defib")
-				return
-			src.UpdateOverlays(src.SafeGetOverlayImage("defib", 'icons/obj/Cryogenic2.dmi', "defib-on", 2, pixel_y=-32), "defib")
+
+	proc/add_overlays()
+		src.overlays = list(O1)
 
 	proc/build_icon()
 		if(on)
@@ -330,15 +310,15 @@
 		else
 			light.disable()
 			icon_state = "celltop-p"
+		O1 = new /obj/overlay(  )
+		O1.icon = 'icons/obj/Cryogenic2.dmi'
 		if(src.node)
-			src.UpdateOverlays(src.SafeGetOverlayImage("bottom", 'icons/obj/Cryogenic2.dmi', "cryo_bottom_[src.on]", 1, pixel_y=-32), "bottom")
+			O1.icon_state = "cryo_bottom_[src.on]"
 		else
-			src.UpdateOverlays(src.SafeGetOverlayImage("bottom", 'icons/obj/Cryogenic2.dmi', "cryo_bottom", 1, pixel_y=-32), "bottom")
+			O1.icon_state = "cryo_bottom"
+		O1.pixel_y = -32.0
 		src.pixel_y = 32
-		if(src.defib)
-			src.UpdateOverlays(src.SafeGetOverlayImage("defib", 'icons/obj/Cryogenic2.dmi', "defib-on", 2, pixel_y=-32), "defib")
-		else
-			src.UpdateOverlays(null, "defib")
+		add_overlays()
 
 	proc/process_occupant()
 		if(TOTAL_MOLES(air_contents) < 10)
@@ -389,13 +369,14 @@
 		if(!( src.occupant ))
 			return
 		for (var/obj/O in src)
-			if (!ishuman(O))
+			if (O == src.beaker)
 				continue
 			O.set_loc(get_turf(src))
 		if (src.occupant.loc == src)
 			src.occupant.set_loc(src.loc)
 		src.occupant = null
 		build_icon()
+		return
 
 	verb/move_eject()
 		set src in oview(1)
@@ -404,6 +385,7 @@
 			return
 		src.go_out()
 		add_fingerprint(usr)
+		return
 
 	verb/move_inside()
 		set src in oview(1)
@@ -429,8 +411,13 @@
 			O.set_loc(get_turf(src))
 		src.add_fingerprint(usr)
 		build_icon()
+		return
 
-/obj/shock_overlay
-	icon = 'icons/obj/Cryogenic2.dmi'
-	layer = 3
-	icon_state = "defib-shock"
+/datum/data/function/proc/reset()
+	return
+
+/datum/data/function/proc/r_input(href, href_list, mob/user as mob)
+	return
+
+/datum/data/function/proc/display()
+	return

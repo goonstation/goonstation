@@ -262,11 +262,6 @@
 		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS)
 
-	technical_assistant
-		icon_state = "pda-e" //tech ass is too broad to have a set cartridge but should get alerts
-		mailgroups = list(MGD_STATIONREPAIR,MGD_PARTY)
-		alertgroups = list(MGA_MAIL,MGA_RADIO)
-
 	mining
 		icon_state = "pda-e"
 		mailgroups = list(MGD_MINING,MGD_PARTY)
@@ -494,12 +489,6 @@
 		a:hover   { background-color: [src.link_color];   color: [src.bg_color]; }
 
 	</style>
-	<script>
-		function updateScroll() {window.name = document.documentElement.scrollTop || document.body.scrollTop;}
-		window.addEventListener("beforeunload", updateScroll);
-		window.addEventListener("scroll", updateScroll);
-		window.addEventListener("load", function() {document.documentElement.scrollTop = document.body.scrollTop = window.name;});
-	</script>
 </head>
 <body>"}
 
@@ -538,7 +527,7 @@
 
 /obj/item/device/pda2/Topic(href, href_list)
 	..()
-	if (usr.contents.Find(src) || usr.contents.Find(src.master) || ((istype(src.loc, /turf) || isAI(usr)) && ( BOUNDS_DIST(src, usr) == 0 || isAI(usr) )))
+	if (usr.contents.Find(src) || usr.contents.Find(src.master) || ((istype(src.loc, /turf) || isAI(usr)) && ( get_dist(src, usr) <= 1 || isAI(usr) )))
 		if(!can_act(usr))
 			return
 

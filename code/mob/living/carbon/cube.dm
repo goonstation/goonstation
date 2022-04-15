@@ -141,7 +141,7 @@
 					if(src.emote_check(voluntary, 10))
 						message = "<B>[src]</B> jiggles like only a meat cube can."
 				else
-					if (voluntary) src.show_text("Invalid Emote: [act]")
+					src.show_text("Invalid Emote: [act]")
 		if (message && isalive(src))
 			logTheThing("say", src, null, "EMOTE: [message]")
 			if (m_type & 1)
@@ -218,7 +218,7 @@
 		real_name = "metal cube"
 		desc = "unfortunate"
 		icon_state = "metalcube-squish"
-		sound_scream = 'sound/voice/screams/Robot_Scream_2.ogg'
+		sound_scream = "sound/voice/screams/Robot_Scream_2.ogg"
 		custom_gib_handler = /proc/robogibs
 
 		get_cube_idle()

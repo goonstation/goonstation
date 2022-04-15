@@ -15,8 +15,6 @@
 	icon_override = "civ"
 	icon_tooltip = "Civilian"
 	wear_layer = MOB_EARS_LAYER
-	duration_remove = 1.5 SECONDS
-	duration_put = 1.5 SECONDS
 	var/haswiretap
 	hardened = 0
 

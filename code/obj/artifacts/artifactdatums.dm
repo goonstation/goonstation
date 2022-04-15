@@ -9,9 +9,6 @@ ABSTRACT_TYPE(/datum/artifact/)
 	var/rarity_weight = 0
 	/// the name for this artifact type, used for displaying it visually (for instance in analysis forms)
 	var/type_name = "buggy artifact code"
-	/// the size category of the artifact
-	// this could probably be determined via the icon of the associated_object type right now, but that'd be weird and dumb
-	var/type_size = ARTIFACT_SIZE_LARGE
 	/// the artifact origin (martian, eldritch, etc...)
 	var/datum/artifact_origin/artitype = null
 	/// the list of options for the origin from which to pick from
@@ -48,8 +45,6 @@ ABSTRACT_TYPE(/datum/artifact/)
 	var/scramblechance = 10
 	/// used to set straight icon_states on activation instead of fx overlays
 	var/nofx = 0
-	/// special_addendum for ArtifactLogs() proc
-	var/log_addendum = null
 
 	/// the list of all the artifacts faults
 	var/list/faults = list()
@@ -125,7 +120,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 		if (!O)
 			return 1
 		O.add_fingerprint(usr)
-		ArtifactLogs(usr, null, O, "activated", log_addendum, istype(src, /datum/artifact/bomb/) ? 1 : 0)
+		ArtifactLogs(usr, null, O, "activated", null, istype(src, /datum/artifact/bomb/) ? 1 : 0)
 		return 0
 
 	/// What the artifact does once when deactivated.
@@ -133,7 +128,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 		if (!O)
 			return 1
 		O.add_fingerprint(usr)
-		ArtifactLogs(usr, null, O, "deactivated", log_addendum, 0)
+		ArtifactLogs(usr, null, O, "deactivated", null, 0)
 		return 0
 
 	/// What activated artifact machines do each processing tick.

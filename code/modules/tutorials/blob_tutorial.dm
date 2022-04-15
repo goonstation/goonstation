@@ -1,27 +1,46 @@
-/area/blob/tutorial_zone
-	name = "Blob Tutorial Zone"
+/area/blob/tutorial_zone_1
+	name = "Blob Tutorial Zone 1"
 	icon_state = "yellow"
 	sound_group = "blob1"
 	dont_log_combat = TRUE
 
+/area/blob/tutorial_zone_2
+	name = "Blob Tutorial Zone 2"
+	icon_state = "green"
+	sound_group = "blob2"
+	dont_log_combat = TRUE
+
+/area/blob/tutorial_zone_3
+	name = "Blob Tutorial Zone 3"
+	icon_state = "blue"
+	sound_group = "blob3"
+	dont_log_combat = TRUE
+
+var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blob/tutorial_zone_2, /area/blob/tutorial_zone_3)
+
 /datum/tutorial_base/blob
 	name = "Blob tutorial"
+	var/tutorial_area_type = null
+	var/area/tutorial_area = null
 	var/mob/living/intangible/blob_overmind/bowner = null
 	var/turf/initial_turf = null
-	var/datum/allocated_region/region
 
 	New()
 		..()
 		AddBlobSteps(src)
-		src.region = get_singleton(/datum/mapPrefab/allocated/blob_tutorial).load()
-		logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Got bottom left corner [log_loc(src.region.bottom_left)]")
-		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_START])
-			if(region.turf_in_region(T))
-				initial_turf = T
-				break
-		if (!initial_turf)
-			logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Tutorial failed setup: missing landmark.")
-			throw EXCEPTION("Okay who removed the goddamn blob tutorial landmark")
+		if (blob_tutorial_areas.len)
+			tutorial_area_type = pick(blob_tutorial_areas)
+			blob_tutorial_areas -= tutorial_area_type
+			tutorial_area = locate(tutorial_area_type) in world
+			logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Got area [tutorial_area]")
+			if (tutorial_area)
+				for(var/turf/T in landmarks[LANDMARK_TUTORIAL_START])
+					if(T.loc == tutorial_area)
+						initial_turf = T
+						break
+				if (!initial_turf)
+					logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Tutorial failed setup: missing landmark.")
+					throw EXCEPTION("Okay who removed the goddamn blob tutorial landmark")
 
 	Start()
 		if (!initial_turf)
@@ -68,8 +87,8 @@
 			qdel(src)
 
 	disposing()
-		qdel(src.region)
-		landmarks[LANDMARK_TUTORIAL_START] -= src.initial_turf
+		if (tutorial_area_type)
+			blob_tutorial_areas += tutorial_area_type
 		..()
 
 /datum/tutorialStep/blob
@@ -409,7 +428,7 @@
 
 		PerformAction(var/action, var/context)
 			var/datum/tutorial_base/blob/MT = tutorial
-			if (!MT.region.turf_in_region(get_turf(context)) || !istype(context, /turf/simulated/floor)) //Stop the player from suicide by cordon
+			if (!(context in MT.tutorial_area) || !istype(context, /turf/simulated/floor)) //Stop the player from suicide by cordon
 				return 0
 			else if (action == "clickmove" && context == target)
 				finished = 1
@@ -505,7 +524,8 @@
 				return 1
 			if (I.disposed)
 				return 1
-			if (locate(/obj/blob/deposit) in /area/blob/tutorial_zone)
+			var/datum/tutorial_base/blob/MT = tutorial
+			if (locate(/obj/blob/deposit) in MT.tutorial_area)
 				return 1
 			return 0
 

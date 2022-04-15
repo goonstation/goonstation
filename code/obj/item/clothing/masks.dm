@@ -183,11 +183,11 @@
 
 		equipped(mob/user, slot)
 			. = ..()
-			APPLY_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
+			APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 
 		unequipped(mob/user)
 			. = ..()
-			REMOVE_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
+			REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 
 	postpossession
 		name = "worn gas mask"
@@ -211,14 +211,6 @@
 	syndicate
 		name = "syndicate field protective mask"
 		item_function_flags = IMMUNE_TO_ACID
-
-		New()
-			..()
-			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-
-		disposing()
-			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-			..()
 
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"
@@ -507,7 +499,7 @@
 	burn_point = 220
 	burn_output = 900
 	burn_possible = 1
-	health = 3
+	health = 10
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/pen))

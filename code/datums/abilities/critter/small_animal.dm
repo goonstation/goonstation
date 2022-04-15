@@ -39,7 +39,7 @@
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (BOUNDS_DIST(holder.owner, target) > 0)
+		if (get_dist(holder.owner, target) > 1)
 			boutput(holder.owner, __red("That is too far away to peck."))
 			return 1
 
@@ -112,7 +112,7 @@
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (BOUNDS_DIST(holder.owner, target) > 0)
+		if (get_dist(holder.owner, target) > 1)
 			boutput(holder.owner, __red("That is too far away to pounce on."))
 			return 1
 		var/mob/MT = target
@@ -151,7 +151,7 @@
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (BOUNDS_DIST(holder.owner, target) > 0)
+		if (get_dist(holder.owner, target) > 1)
 			boutput(holder.owner, __red("That is too far away to trip."))
 			return 1
 		var/mob/MT = target
@@ -191,7 +191,7 @@
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (BOUNDS_DIST(holder.owner, target) > 0)
+		if (get_dist(holder.owner, target) > 1)
 			boutput(holder.owner, __red("That is too far away to sting."))
 			return 1
 		var/mob/MT = target
@@ -244,7 +244,7 @@
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (BOUNDS_DIST(holder.owner, target) > 0)
+		if (get_dist(holder.owner, target) > 1)
 			boutput(holder.owner, __red("That is too far away to grab."))
 			return 1
 		var/mob/MT = target
@@ -255,9 +255,9 @@
 		MT.TakeDamageAccountArmor("All", 0, 0, rand(5,15), DAMAGE_STAB)
 		MT.changeStatus("weakened", 6 SECONDS)
 		MT.force_laydown_standup()
-		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "pincergrab")
+		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, "pincergrab")
 		SPAWN(6 SECONDS)
-			REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "pincergrab")
+			REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, "pincergrab")
 		return 0
 
 /datum/targetable/critter/hootat

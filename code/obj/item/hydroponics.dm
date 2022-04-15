@@ -179,26 +179,28 @@
 			var/mob/living/carbon/C = target
 			if (isdead(C))
 				logTheThing("combat", user, C, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
+				var/sourcename = C.real_name
+				var/sourcejob = "Stowaway"
+				if (C.mind && C.mind.assigned_role)
+					sourcejob = C.mind.assigned_role
+				else if (C.ghost && C.ghost.mind && C.ghost.mind.assigned_role)
+					sourcejob = C.ghost.mind.assigned_role
 				for (var/i=0, i<3, i++)
-					new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C),C)
+					var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C))
+					meat.name = sourcename + meat.name
+					meat.subjectname = sourcename
+					meat.subjectjob = sourcejob
 				if (C.mind)
 					C.ghostize()
 					qdel(C)
 				else
 					qdel(C)
-				return
+			else
+				C.changeStatus("weakened", 3 SECONDS)
 
 		if (!ishuman(target))
-			target.changeStatus("weakened", 3 SECONDS)
 			return ..()
 
-		if (target.nodamage)
-			return ..()
-
-		if (target.spellshield)
-			return ..()
-
-		target.changeStatus("weakened", 3 SECONDS)
 		var/mob/living/carbon/human/H = target
 		if(prob(35))
 			gibs(target.loc, blood_DNA=H.bioHolder.Uid, blood_type=H.bioHolder.bloodType, headbits=FALSE, source=H)
@@ -396,7 +398,7 @@
 	mats = 4
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		if (BOUNDS_DIST(A, user) > 0)
+		if (get_dist(A, user) > 1)
 			return
 
 		boutput(user, scan_plant(A, user, visible = 1)) // Replaced with global proc (Convair880).
@@ -416,7 +418,7 @@
 	attack_self(var/mob/user as mob)
 		playsound(src.loc, "sound/machines/click.ogg", 100, 1)
 		var/holder = src.loc
-		var/datum/plant/pick = tgui_input_list(user, "Which seed do you want?", "Portable Seed Fabricator", hydro_controls.vendable_plants)
+		var/datum/plant/pick = tgui_input_list(usr, "Which seed do you want?", "Portable Seed Fabricator", hydro_controls.vendable_plants)
 		if (src.loc != holder)
 			return
 		src.selected = pick

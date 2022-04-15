@@ -100,8 +100,7 @@
 				src.grenade = CG
 				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
 
-				if(CG.is_dangerous)
-					message_admins("[key_name(user)] rigs [src] with [CG] at [log_loc(user)].")
+				message_admins("[key_name(user)] rigs [src] with [CG] at [log_loc(user)].")
 				logTheThing("bombing", user, null, "rigs [src] with [CG] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/old_grenade/) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
@@ -113,8 +112,7 @@
 				src.grenade_old = OG
 				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
 
-				if(OG.is_dangerous)
-					message_admins("[key_name(user)] rigs [src] with [OG] at [log_loc(user)].")
+				message_admins("[key_name(user)] rigs [src] with [OG] at [log_loc(user)].")
 				logTheThing("bombing", user, null, "rigs [src] with [OG] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/pipebomb/bomb) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
@@ -358,8 +356,8 @@
 			var/obj/effects/explosion/E = new /obj/effects/explosion(get_turf(src.loc))
 			E.fingerprintslast = src.fingerprintslast
 			playsound(src.loc, 'sound/voice/farts/superfart.ogg', 100, 1)
-			qdel(src.buttbomb)
 			src.buttbomb = null
+			qdel(src.buttbomb)
 		clear_armer()
 		return
 

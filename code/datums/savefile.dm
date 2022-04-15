@@ -11,18 +11,15 @@
 
 /datum/preferences/proc
 
-	savefile_path(var/key)
-		return "data/player_saves/[copytext(ckey(key), 1, 2)]/[ckey(key)].sav"
+	savefile_path(client/user)
+		return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey].sav"
 
 
 	// returnSaveFile returns the file rather than writing it
 	// used for cloud saves
-	savefile_save(key, profileNum = 1, returnSavefile = 0)
-		if (key)
-			if (IsGuestKey(key))
-				return 0
-		else if (!returnSavefile) // if we don't have a user and we're trying to write it, it isn't going to work
-			CRASH("Tried to write a preferences savefile with no user specified.")
+	savefile_save(client/user, profileNum = 1, returnSavefile = 0)
+		if (IsGuestKey(user.key))
+			return 0
 
 		profileNum = clamp(profileNum, 1, SAVEFILE_PROFILES_MAX)
 
@@ -30,7 +27,7 @@
 		if (returnSavefile)
 			F = new /savefile
 		else
-			F = new /savefile(src.savefile_path(key), -1)
+			F = new /savefile(src.savefile_path(user), -1)
 		F.Lock(-1)
 
 		F["version"] << SAVEFILE_VERSION_MAX
@@ -138,30 +135,27 @@
 
 
 
-	// loads the savefile corresponding to the client's ckey
+	// loads the savefile corresponding to the mob's ckey
 	// if silent=true, report incompatible savefiles
 	// returns 1 if loaded (or file was incompatible)
 	// returns 0 if savefile did not exist
 	savefile_load(client/user, var/profileNum = 1, var/savefile/loadFrom = null)
-		if (user) // bypass these checks if we're loading from a savefile and don't have a user
-			if (!isclient(user))
-				CRASH("[user] isnt a client. please give me a client. please. i beg you.")
+		if (ismob(user))
+			CRASH("[user] isnt a client. please give me a client. please. i beg you.")
 
-			if (IsGuestKey(user.key))
-				return 0
+		if (IsGuestKey(user.key))
+			return 0
 
 		var/savefile/F
 		var/path
 		if (loadFrom)
 			F = loadFrom
-		else if (user)
-			path = savefile_path(user.ckey)
+		else
+			path = savefile_path(user)
 			if (!fexists(path))
 				return 0
 			profileNum = clamp(profileNum, 1, SAVEFILE_PROFILES_MAX)
 			F = new /savefile(path, -1)
-		else
-			CRASH("Tried to load a savefile with no passed user and no savefile to load from!")
 
 		var/version = null
 		F["version"] >> version
@@ -354,7 +348,7 @@
 		if (!src.traitPreferences.isValid())
 			src.traitPreferences.traits_selected.Cut()
 			src.traitPreferences.calcTotal()
-			alert(user, "Your traits couldn't be loaded. Please reselect your traits.")
+			alert(usr, "Your traits couldn't be loaded. Please reselect your traits.")
 
 
 		if(!src.radio_music_volume) // We can take this out some time, when we're decently sure that most people will have this var set to something
@@ -390,7 +384,7 @@
 
 		LAGCHECK(LAG_REALTIME)
 
-		var/path = savefile_path(user.ckey)
+		var/path = savefile_path(user)
 
 		if (!fexists(path))
 			return 0
@@ -411,19 +405,17 @@
 
 		return profile_name
 
-	/// Save a character profile to the cloud.
-	/// load_from (if not null) is the ckey to load this profile from. Can be used to load profiles from another ckey.
-	cloudsave_load(client/user, var/name, var/load_from)
-		if (user) // bypass these checks if we're loading from an arbitrary key
-			if(user && isnull( user.player.cloudsaves ))
-				return "Failed to retrieve cloud data, try rejoining."
 
-			if (IsGuestKey(user.key))
-				return 0
+	cloudsave_load( client/user, var/name )
+		if(isnull( user.player.cloudsaves ))
+			return "Failed to retrieve cloud data, try rejoining."
+
+		if (IsGuestKey(user.key))
+			return 0
 
 		// Fetch via HTTP from goonhub
 		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?get&ckey=[ckey(load_from) || user.ckey]&name=[url_encode(name)]&api_key=[config.spacebee_api_key]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?get&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.spacebee_api_key]", "", "")
 		request.begin_async()
 		UNTIL(request.is_complete())
 		var/datum/http_response/response = request.into_response()
@@ -440,35 +432,30 @@
 		save.ImportText( "/", ret["savedata"] )
 		return src.savefile_load(user, 1, save)
 
-	/// Save a character profile to the cloud.
-	/// save_to (if not null) is the ckey to save this profile to. Can be used to save profiles to another ckey.
-	cloudsave_save(client/user, var/name, var/save_to)
-		if (user) // bypass these checks if we're saving to an arbitrary key
-			if(isnull( user.player.cloudsaves ))
-				return "Failed to retrieve cloud data, try rejoining."
-			if (IsGuestKey( user.key ))
-				return 0
-			if (save_to)
-				CRASH("Tried to save a cloud save with a client and a key to save to specified- need one or the")
+	cloudsave_save( client/user, var/name )
+		if(isnull( user.player.cloudsaves ))
+			return "Failed to retrieve cloud data, try rejoining."
+		if (IsGuestKey( user.key ))
+			return 0
 
-		var/savefile/save = src.savefile_save(ckey(save_to) || user.ckey, 1, 1)
+		var/savefile/save = src.savefile_save( user, 1, 1 )
 		var/exported = save.ExportText()
 
 		// Fetch via HTTP from goonhub
 		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?put&ckey=[ckey(save_to) || user.ckey]&name=[url_encode(name)]&api_key=[config.spacebee_api_key]&data=[url_encode(exported)]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?put&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.spacebee_api_key]&data=[url_encode(exported)]", "", "")
 		request.begin_async()
 		UNTIL(request.is_complete())
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)
-			logTheThing("debug", null, null, "<b>cloudsave_load:</b> Failed to contact goonhub. u: [save_to || user.ckey]")
+			logTheThing("debug", null, null, "<b>cloudsave_load:</b> Failed to contact goonhub. u: [user.ckey]")
 			return
 
 		var/list/ret = json_decode(response.body)
 		if( ret["status"] == "error" )
 			return ret["error"]["error"]
-		user?.player.cloudsaves[ name ] = length( exported )
+		user.player.cloudsaves[ name ] = length( exported )
 		return 1
 
 	cloudsave_delete( client/user, var/name )

@@ -443,7 +443,6 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 
 	Del()
 		STOP_TRACKING
-		dispose()
 		..()
 
 /area/space // the base area you SHOULD be using for space/ocean/etc.
@@ -470,9 +469,8 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			return
 		if (ismob(O))
 			var/mob/jerk = O
-			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_ATOM_PROPERTY(jerk, PROP_MOB_NOCLIP)))
+			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_MOB_PROPERTY(jerk, PROP_NOCLIP)))
 				return
-			logTheThing("combat", jerk, null, "(of type [jerk.type]) was ghosted by a CORDON at [log_loc(jerk)]")
 			setdead(jerk)
 			jerk.remove()
 		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect))
@@ -523,14 +521,14 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			return
 		if (ismob(O))
 			var/mob/jerk = O
-			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_ATOM_PROPERTY(jerk, PROP_MOB_NOCLIP)))
+			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_MOB_PROPERTY(jerk, PROP_NOCLIP)))
 				return
-			logTheThing("combat", jerk, null, "(of type [jerk.type]) was ghosted by the area that kills you if you enter it at [log_loc(jerk)]")
 			setdead(jerk)
 			jerk.remove()
 		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect) && !istype(O, /obj/landmark))
 			qdel(O)
-		. = ..()
+		return
+
 /area/battle_royale_spawn //People entering VR or exiting VR with stupid exploits are jerks.
 	name = "Battle Royale warp zone"
 	skip_sims = 1
@@ -1233,8 +1231,6 @@ ABSTRACT_TYPE(/area/prefab)
 	icon_state = "orange"
 	requires_power = FALSE
 
-/area/prefab/vault
-	name = "Secure Vault"
 /area/prefab/discount_dans_asteroid
 	name = "Discount Dan's Delivery Asteroid"
 	icon_state = "orange"
@@ -1294,10 +1290,7 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/lesbeeans/exterior
 	name = "Lesbian Bee Farm"
 	icon_state = "park"
-
-/area/prefab/crashed_hop_shuttle
-	name = "HoP Shuttle"
-	icon_state = "purple"
+	force_fullbright = 1
 
 /area/prefab/silverglass
 	name = "Silverglass Platform"
@@ -2374,21 +2367,27 @@ ABSTRACT_TYPE(/area/station/com_dish)
 	name = "Communications Dish"
 	icon_state = "yellow"
 	requires_power = FALSE
-	#ifdef UNDERWATER_MAP
-	ambient_light = OCEAN_LIGHT
-	#endif
 
 /area/station/com_dish/comdish
 	name = "Communications Dish"
 	icon_state = "yellow"
+#ifndef UNDERWATER_MAP
+	force_fullbright = 1 // ????
+#endif
 
 /area/station/com_dish/auxdish
 	name = "Auxilary Communications Dish"
 	icon_state = "yellow"
+#ifndef UNDERWATER_MAP
+	force_fullbright = 1
+#endif
 
 /area/station/com_dish/research_outpost
 	name = "Research Outpost Communications Dish"
 	icon_state = "yellow"
+#ifndef UNDERWATER_MAP
+	force_fullbright = 1
+#endif
 
 ABSTRACT_TYPE(/area/station/engine)
 /area/station/engine
@@ -2720,6 +2719,11 @@ ABSTRACT_TYPE(/area/station/security)
 /area/station/security/checkpoint/research
 		name = "Research Security Checkpoint"
 
+/area/station/security/armory //what the fuck this is not the real armory???
+	name = "Armory" //ai_monitored/armory is, shitty ass code
+	icon_state = "armory"
+	sound_environment = 2
+
 /area/station/security/prison
 	name = "Prison Station"
 	icon_state = "brig"
@@ -2812,6 +2816,7 @@ ABSTRACT_TYPE(/area/station/solar)
 /area/station/solar
 	requires_power = 0
 	luminosity = 1
+	force_fullbright = 1
 	workplace = 1
 	do_not_irradiate = 1
 
@@ -3061,10 +3066,6 @@ ABSTRACT_TYPE(/area/station/chapel)
 	name = "Northeast Area"
 	do_not_irradiate = 1;
 
-/area/station/storage/hydroponics
-	name = "Hydroponics Storage"
-	icon_state = "pink"
-
 ABSTRACT_TYPE(/area/station/hangar)
 /area/station/hangar
 	name = "Hangar"
@@ -3117,7 +3118,6 @@ ABSTRACT_TYPE(/area/station/hangar)
 /area/station/ranch
 	name = "Ranch"
 	icon_state = "ranch"
-	workplace = 1
 
 ABSTRACT_TYPE(/area/station/garden)
 /area/station/garden
@@ -3140,6 +3140,7 @@ ABSTRACT_TYPE(/area/station/garden)
 	name = "Habitat Dome"
 	icon_state = "aviary"
 	sound_environment = 15
+	force_fullbright = 1
 
 /area/station/garden/zen
 	name = "Zen Garden"
@@ -3149,6 +3150,7 @@ ABSTRACT_TYPE(/area/station/garden)
 ABSTRACT_TYPE(/area/station/catwalk)
 /area/station/catwalk
 	icon_state = "yellow"
+	force_fullbright = 1
 	requires_power = FALSE
 
 /area/station/catwalk/north
@@ -3249,6 +3251,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	icon_state = "yellow"
 	requires_power = 0
 	luminosity = 1
+	force_fullbright = 1
 
 /// Nukeops spawn station
 /area/syndicate_station
@@ -3354,7 +3357,6 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 ABSTRACT_TYPE(/area/station/turret_protected)
 /area/station/turret_protected
 	name = "Turret Protected Area"
-	expandable = FALSE
 	spy_secure_area = TRUE
 	var/list/obj/machinery/turret/turret_list = list()
 	var/obj/machinery/camera/motion/motioncamera = null
@@ -3435,6 +3437,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	icon_state = "AIt"
 	requires_power = 0
 	sound_environment = 12
+	force_fullbright = 1
 
 /area/station/turret_protected/AIbasecore2
 	name = "AI Core 2"
@@ -3527,6 +3530,7 @@ ABSTRACT_TYPE(/area/mining)
 /area/mining/mainasteroid
 	name = "Main Asteroid"
 	icon_state = "green"
+	force_fullbright = 1
 
 /area/prefab/tunnelsnake
 	name = "Tunnel Snake Mining Rig"

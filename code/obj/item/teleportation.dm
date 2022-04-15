@@ -118,7 +118,6 @@ Frequency:
 	icon_state = "hand_tele"
 	item_state = "electronic"
 	throwforce = 5
-	health = 5
 	w_class = W_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5

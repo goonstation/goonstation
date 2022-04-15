@@ -13,7 +13,6 @@ TILES
 	icon = 'icons/obj/metal.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "tile"
-	health = 2
 	w_class = W_CLASS_NORMAL
 	m_amt = 937.5
 	throw_speed = 5

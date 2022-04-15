@@ -110,7 +110,7 @@
 		if (src.debugmode)
 			open_wire_panel(user)
 			return
-		if (!user.mind || BOUNDS_DIST(src, user) > 0)
+		if (!user.mind || get_dist(src, user) > 1)
 			return
 
 		user.lastattacked = src
@@ -163,7 +163,7 @@
 				src.UpdateOverlays(src.image_light, "light")
 			src.det_time = TIME + src.timer_default
 			src.add_simple_light("nuke", list(255, 127, 127, 127))
-			command_alert("\A [src] has been armed in [isturf(src.loc) ? get_area(src) : src.loc]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [get_area(src)] to disarm the bomb immediately.", "Nuclear Weapon Detected")
+			command_alert("\A [src] has been armed in [get_area(src)]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [get_area(src)] to disarm the bomb immediately.", "Nuclear Weapon Detected")
 			playsound_global(world, "sound/machines/bomb_planted.ogg", 90)
 			logTheThing("bombing", user, null, "armed [src] at [log_loc(src)].")
 			gamemode?.shuttle_available = FALSE
@@ -238,9 +238,13 @@
 					// Give the player a notice so they realize what has happened
 					boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
 					return
+				//else if (istype(W,/obj/item/wirecutters/))
+				//	user.visible_message("<b>[user]</b> opens up [src]'s wiring panel and takes a look.")
+				//	open_wire_panel(user)
+				//	return
 
 		if (istype(W, /obj/item/wrench/battle) && src._health <= src._max_health)
-			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[user] repairs the [src]!", null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[usr] repairs the [src]!", null)
 			return
 
 		if (W && !(istool(W, TOOL_SCREWING | TOOL_SNIPPING) || istype(W, /obj/item/disk/data/floppy/read_only/authentication)))
@@ -261,7 +265,13 @@
 		return
 
 	ex_act(severity)
-		// No more suicide-bombing the nuke.
+		/*switch(severity) // No more suicide-bombing the nuke.
+			if(1)
+				src.take_damage(80)
+			if(2)
+				src.take_damage(50)
+			if(3)
+				src.take_damage(20)*/
 		return
 
 	blob_act(var/power)
@@ -278,10 +288,10 @@
 
 		if(src.material) src.material.triggerOnBullet(src, src, P)
 
-		if (damage <= 0)
+		if (!damage)
 			return
 		if(P.proj_data.damage_type == D_KINETIC || (P.proj_data.damage_type == D_ENERGY && damage))
-			src.take_damage(damage / 3)
+			src.take_damage(damage / 1.7)
 		else if (P.proj_data.damage_type == D_PIERCING)
 			src.take_damage(damage)
 
@@ -392,7 +402,7 @@
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, the_bomb) > 0 || the_bomb == null || owner == null)
+		if(get_dist(owner, the_bomb) > 1 || the_bomb == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -402,7 +412,7 @@
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, the_bomb) > 0 || the_bomb == null || owner == null)
+		if(get_dist(owner, the_bomb) > 1 || the_bomb == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

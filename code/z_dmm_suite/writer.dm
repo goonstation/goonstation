@@ -161,7 +161,7 @@ dmm_suite/proc
 	to file or read into another position on the map.
 	*/
 	writeDimensions(startX, startY, startZ, width, height, depth, list/templates, list/templateBuffer)
-		var/list/dmmText = list("//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE\n")
+		var dmmText = ""
 		// Compile List of Keys mapped to Models
 		var keyLength = round/*floor*/(
 			1 + log(
@@ -171,22 +171,28 @@ dmm_suite/proc
 		var/list/keys[templates.len]
 		for(var/keyPos = 1 to templates.len)
 			keys[keyPos] = computeKeyIndex(keyPos, keyLength)
-			dmmText += {""[keys[keyPos]]" = (\n[templates[keyPos]])\n"}
+			dmmText += {""[keys[keyPos]]" = ([templates[keyPos]])\n"}
 		// Compile Level Grid Text
 		for(var/posZ = 0 to depth-1)
-			for(var/posX = 0 to width-1)
-				dmmText += "\n([posX + 1],1,[posZ+1]) = {\"\n"
-				var/list/joinGrid = list() // Joining a list is faster than generating strings
-				for(var/posY = height-1 to 0 step -1)
+			if(posZ)
+				dmmText += "\n"
+			dmmText += "\n(1,1,[posZ+1]) = {\"\n"
+			var/list/joinGrid = list() // Joining a list is faster than generating strings
+			for(var/posY = height-1 to 0 step -1)
+				var/list/joinLine = list()
+				for(var/posX = 0 to width-1)
 					var/compoundIndex = 1 + (posX) + (posY*width) + (posZ*width*height)
 					var/keyNumber = templateBuffer[compoundIndex]
 					var/tempKey = keys[keyNumber]
-					joinGrid.Add(tempKey)
+					joinLine.Add(tempKey)
+					//dmmText += "[tempKey]"
 					sleep(-1)
-				dmmText += {"[list2text(joinGrid, "\n")]\n\"}"}
+				joinGrid.Add(list2text(joinLine, ""))
 				sleep(-1)
+			dmmText += {"[list2text(joinGrid, "\n")]\n\"}"}
+			sleep(-1)
 		//
-		return jointext(dmmText, "")
+		return dmmText
 
 	/*-- makeTemplate --------------------------------
 	Generates a DMM model string from all contents of
@@ -201,34 +207,34 @@ dmm_suite/proc
 				if(O.loc != model) continue
 				if(istype(O, /obj/overlay) || !(flags & DMM_IGNORE_OVERLAYS)) continue
 				if(istype(O, /obj/particle)) continue
-				objTemplate += "[O.type][checkAttributes(O)],\n"
+				objTemplate += "[O.type][checkAttributes(O)],"
 		// Add Mob
 		var mobTemplate = ""
 		for(var/mob/M in model.contents)
 			if(M.loc != model) continue
 			if(M.client)
 				if(!(flags & DMM_IGNORE_PLAYERS))
-					mobTemplate += "[M.type][checkAttributes(M)],\n"
+					mobTemplate += "[M.type][checkAttributes(M)],"
 			else
 				if(!(flags & DMM_IGNORE_NPCS))
-					mobTemplate += "[M.type][checkAttributes(M)],\n"
+					mobTemplate += "[M.type][checkAttributes(M)],"
 		// Add Turf Template
 		var/skip_area = 0
 		var turfTemplate = ""
 		if(!(flags & DMM_IGNORE_TURFS))
 			for(var/appearance in model.underlays)
 				var /mutable_appearance/underlay = new(appearance)
-				turfTemplate = "[/turf/dmm_suite/underlay][checkAttributes(underlay)],\n[turfTemplate]"
+				turfTemplate = "[/turf/dmm_suite/underlay][checkAttributes(underlay)],[turfTemplate]"
 			if(istype(model, /turf/space))
 				if(flags & DMM_IGNORE_SPACE)
 					skip_area = 1
-					turfTemplate += "[/turf/dmm_suite/clear_turf],\n"
+					turfTemplate += "[/turf/dmm_suite/clear_turf],"
 				else
-					turfTemplate += "[model.type],\n"
+					turfTemplate += "[model.type],"
 			else
-				turfTemplate += "[model.type][checkAttributes(model)],\n"
+				turfTemplate += "[model.type][checkAttributes(model)],"
 		else
-			turfTemplate = "[/turf/dmm_suite/clear_turf],\n"
+			turfTemplate = "[/turf/dmm_suite/clear_turf],"
 		// Add Area Template
 		var areaTemplate = ""
 		if(!(flags & DMM_IGNORE_AREAS) && !skip_area)
@@ -256,17 +262,17 @@ dmm_suite/proc
 				continue
 			// Format different types of values
 			if(istext(A.vars[V])) // Text
-				if(saving) attributesText += ";\n\t"
+				if(saving) attributesText += "; "
 				var/val = replacetext(A.vars[V], {"""}, {"\\""}) // escape quotes
 				val = replacetext(val, "\n", "\\n")
 				attributesText += {"[V] = "[val]""}
 			else if(isnum(A.vars[V]) || ispath(A.vars[V])) // Numbers & Type Paths
-				if(saving) attributesText += ";\n\t"
+				if(saving) attributesText += "; "
 				attributesText += {"[V] = [A.vars[V]]"}
 			else if(isicon(A.vars[V]) || isfile(A.vars[V])) // Icons & Files
 				var filePath = "[A.vars[V]]"
 				if(!length(filePath)) continue // Bail on dynamic icons
-				if(saving) attributesText += ";\n\t"
+				if(saving) attributesText += "; "
 				attributesText += {"[V] = '[A.vars[V]]'"}
 			else // Otherwise, Bail
 				continue
@@ -275,7 +281,7 @@ dmm_suite/proc
 		//
 		if(!saving)
 			return
-		return "{\n\t[attributesText]\n\t}"
+		return "{[attributesText]}"
 
 	/*-- computeKeyIndex -----------------------------
 	Generates a DMM model index string of given length

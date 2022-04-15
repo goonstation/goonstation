@@ -7,7 +7,7 @@
 	density = 0
 	mats = 25
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
-	_health = 25
+	_health = 50
 	color = null
 	var/can_talk_across_z_levels = 0
 	var/phone_id = null
@@ -155,9 +155,6 @@
 		..()
 		src._health -= P.force
 		attack_particle(user,src)
-		user.lastattacked = src
-		hit_twitch(src)
-		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 		if(src._health <= 0)
 			if(src.linked)
 				hang_up()
@@ -322,7 +319,7 @@
 		if(!src.parent)
 			qdel(src)
 			return
-		if(src.parent.answered == 1 && BOUNDS_DIST(src, src.parent) > 0)
+		if(src.parent.answered == 1 && get_dist(src,src.parent) > 1)
 			boutput(src.holder,"<span class='alert'>The phone cord reaches it limit and the handset is yanked back to its base!</span>")
 			src.holder.drop_item(src)
 			src.parent.hang_up()

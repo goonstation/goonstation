@@ -1,7 +1,16 @@
 #define CRYOSLEEP_DELAY 5 MINUTES
 #define CRYOTRON_MESSAGE_DELAY 3 SECONDS
 
-//Latejoin spawn point thing, for gracefully leaving rounds. Also replaces the arrivals shuttle on some maps.
+/obj/cryotron_spawner
+	New()
+		..()
+		SPAWN(1 SECOND)
+#ifdef RP_MODE
+			new /obj/cryotron(src.loc)
+#endif
+			qdel(src)
+
+//Special destiny spawn point doodad
 /obj/cryotron
 	name = "industrial cryogenic sleep unit"
 	desc = "The terminus of a large underfloor cryogenic storage complex."
@@ -33,11 +42,7 @@
 		// and stops the "decompression" from coming out the left side
 		START_TRACKING
 		processing_items += src
-		x += -bound_x / world.icon_size
-		#ifdef UPSCALED_MAP
-		pixel_x = -64
-		#endif
-
+		x += 1
 
 	disposing()
 		STOP_TRACKING
@@ -183,56 +188,40 @@
 		return 0
 
 	proc/mob_can_enter_storage(var/mob/living/L as mob, var/mob/user as mob)
-		// Game hasn't started
 		if (!ticker)
 			boutput(L, "<b>You can't enter cryogenic storage before the game's started!</b>")
 			boutput(user, "<b>You can't put someone in cryogenic storage before the game's started!</b>")
-			return FALSE
-		// It's a battle royale
+			return 0
 		if(master_mode == "battle_royale")
 			boutput(L, "<b>The high levels of BATTLE ENERGY in this area prevent the use of cryogenic storage! Get your ass out there and fight, coward!</b>")
 			boutput(user, "<b>The high levels of BATTLE ENERGY in this area prevent the use of cryogenic storage!</b>")
-			return FALSE
-		// Non-living mob (by type)
-		if (!istype(L))
-			boutput(L, "<b>You won't fit in the cryogenic storage!</b>")
-			boutput(user, "<b>That won't fit in the cryogenic storage!</b>")
-			return FALSE
-		// Dead person entering/being put in storage
-		if (isdead(L))
+		if (!istype(L) || isdead(L))
 			boutput(L, "<b>You have to be alive to enter cryogenic storage!</b>")
 			boutput(user, "<b>You can't put someone in cryogenic storage if they aren't alive!</b>")
-			return FALSE
-		// Incapacitated or restrained person trying to enter storage on their own
-		if (!user && (L.stat || L.restrained() || L.getStatusDuration("paralysis") || L.sleeping))
+			return 0
+		if (L.stat || L.restrained() || L.getStatusDuration("paralysis") || L.sleeping)
 			boutput(L, "<b>You can't enter cryogenic storage while incapacitated!</b>")
-			return FALSE
-		// Incapacitated or restrained person trying to put someone else in
+			boutput(user, "<b>You can't put someone in cryogenic storage while they're incapacitated or restrained!</b>")
+			return 0
 		if (user && (user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping))
 			boutput(user, "<b>You can't put someone in cryogenic storage while you're incapacitated or restrained!</b>")
-			return FALSE
-		// Person entering is too far away
-		if (BOUNDS_DIST(src, L) > 0)
+			return 0
+		if (get_dist(src, L) > 1)
 			boutput(L, "<b>You need to be closer to [src] to enter cryogenic storage!</b>")
 			boutput(user, "<b>[L] needs to be closer to [src] for you to put them in cryogenic storage!</b>")
-			return FALSE
-		// Person putting other person in is too far away
-		if (user && BOUNDS_DIST(src, user) > 0)
+			return 0
+		if (user && get_dist(src, user) > 1)
 			boutput(user, "<b>You need to be closer to [src] to put someone in cryogenic storage!</b>")
-			return FALSE
+			return 0
 		var/mob/living/silicon/R = L
-		// That's a goddamn robot
 		if (istype(R))
-			// That's the goddamn AI
 			if (R.mainframe || isAI(R) || isshell(R))
 				boutput(user, "<b>You can't put the AI in cryogenic storage!</b>")
-				return FALSE
-			// That's a goddamn cyborg
+				return 0
 			if (!isrobot(R) && !isghostdrone(R))
 				boutput(user, "<b>You can't put that machine in cryogenic storage!</b>")
-				return FALSE
-		// Gratz
-		return TRUE
+				return 0
+		return 1
 
 	proc/exit_prompt(var/mob/living/user as mob)
 		if (!user || !stored_mobs.Find(user))
@@ -252,7 +241,8 @@
 						time_left_message = "[minutes] minute[s_es(minutes)] and [time_left_message]"
 
 					boutput(user, "<b>You must wait at least [time_left_message] until you can leave cryosleep.</b>")
-					return FALSE
+					user.last_cryotron_message = ticker.round_elapsed_ticks
+					return 0
 		if (alert(user, "Would you like to leave cryogenic storage?", "Confirmation", "Yes", "No") == "No")
 			return 0
 		if (user.loc != src || !stored_mobs.Find(user))
@@ -291,9 +281,6 @@
 			return ..()
 
 	attack_ai(mob/user as mob)
-		if(isAIeye(user))
-			boutput(user, "<span class='alert'>An incorporeal manifestation of an artificial intelligence's presence can't enter \the [src]!</span>")
-			return FALSE
 		if (!enter_prompt(user))
 			return ..()
 
@@ -309,24 +296,24 @@
 	proc/insert_prompt(mob/target, mob/user)
 		if (target.client || !target.ckey)
 			boutput(user, "<span class='alert'>You can't force someone into cryosleep if they're still logged in or are an NPC!</span>")
-			return FALSE
+			return 0
 		else if (alert(user, "Would you like to put [target] into cryogenic storage? They will be able to leave it immediately if they log back in.", "Confirmation", "Yes", "No") == "Yes")
 			if (!src.mob_can_enter_storage(target, user))
-				return FALSE
+				return 0
 			else
-				src.add_person_to_storage(target, FALSE)
+				src.add_person_to_storage(target, 0)
 				src.visible_message("<span class='alert'><b>[user] forces [target] into [src]!</b></span>")
-				return TRUE
-		return FALSE
+				return 1
+		return 0
 
 	relaymove(var/mob/user as mob, dir)
-		if (ON_COOLDOWN(user, "cryotron_move", CRYOTRON_MESSAGE_DELAY))
+		if ((user.last_cryotron_message + CRYOTRON_MESSAGE_DELAY) > ticker.round_elapsed_ticks)
 			return ..()
 		if (!exit_prompt(user))
 			return ..()
 
 	MouseDrop_T(atom/target, mob/user as mob)
-		if (ishuman(target) && isrobot(user) && BOUNDS_DIST(src, user) == 0 && BOUNDS_DIST(src, target) == 0 && BOUNDS_DIST(user, target) == 0)
+		if (ishuman(target) && isrobot(user) && get_dist(src, user) <= 1 && get_dist(src, target) <= 1 && get_dist(user, target) <= 1)
 			insert_prompt(target, user)
 			return
 		return ..()

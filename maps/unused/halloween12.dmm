@@ -8321,6 +8321,11 @@
 "apT" = (
 /turf/simulated/wall,
 /area/station/storage/emergency2)
+"apU" = (
+/obj/decal/skeleton,
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/plating,
+/area/station/storage/emergency2)
 "apV" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -9811,7 +9816,7 @@
 /area/station/crew_quarters/quarters)
 "atm" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/crate,
 /obj/item/clothing/under/gimmick/princess,
@@ -12481,6 +12486,7 @@
 	icon_state = "tabledir";
 	dir = 10
 	},
+/obj/item/aiModule/reset,
 /obj/item/disk/data/cartridge/atmos,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/light/small{
@@ -13028,6 +13034,14 @@
 /area/station/storage/tech)
 "azQ" = (
 /obj/item/screwdriver,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"azR" = (
+/obj/rack,
+/obj/item/circuitboard/robot_module_rewriter,
+/obj/item/circuitboard/cloning,
+/obj/item/circuitboard/aiupload,
+/obj/item/circuitboard/card,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "azS" = (
@@ -15936,6 +15950,7 @@
 /obj/item/aiModule/freeform,
 /obj/item/aiModule/protectStation,
 /obj/item/aiModule/conservePower,
+/obj/item/aiModule/rename,
 /obj/machinery/door/window/northleft,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload{
@@ -15959,6 +15974,7 @@
 /obj/item/aiModule/oneHuman,
 /obj/item/aiModule/notHuman,
 /obj/item/aiModule/makeCaptain,
+/obj/item/aiModule/reset,
 /obj/machinery/door/window/northright,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload{
@@ -21134,7 +21150,7 @@
 /area/station/security/hos)
 "aPj" = (
 /turf/simulated/wall/r_wall,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aPk" = (
 /obj/closet/l3closet,
 /turf/simulated/floor/white,
@@ -21358,6 +21374,12 @@
 	dir = 4
 	},
 /area/station/hallway/primary/east)
+"aPK" = (
+/obj/decal/skeleton{
+	desc = "Um.  Uh.  Oh dear."
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig)
 "aPL" = (
 /turf/simulated/floor/plating,
 /area/station/security/brig)
@@ -21447,14 +21469,14 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aPX" = (
 /obj/machinery/camera/motion{
 	c_tag = "Armory";
 	dir = 2
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aPY" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -21470,7 +21492,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aPZ" = (
 /obj/secure_closet/animal,
 /turf/simulated/floor/white,
@@ -21667,7 +21689,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aQw" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -21675,10 +21697,10 @@
 	d2 = 8
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aQx" = (
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aQy" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -21689,7 +21711,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aQz" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -21806,6 +21828,19 @@
 "aQL" = (
 /mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/circuit,
+/area/station/turret_protected/AIbasecore1{
+	name = "Upload Station"
+	})
+"aQM" = (
+/obj/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/computer/aiupload,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor,
 /area/station/turret_protected/AIbasecore1{
 	name = "Upload Station"
 	})
@@ -21949,7 +21984,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aRf" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -21965,7 +22000,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/caution/west,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "aRg" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -27378,7 +27413,7 @@
 /area/station/crew_quarters/juryroom)
 "bcc" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/juryroom)
@@ -27714,7 +27749,7 @@
 "bcM" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -31175,7 +31210,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
@@ -39337,7 +39372,9 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bCE" = (
-/turf/space/asteroid,
+/turf/space{
+	icon_state = "aplaceholder"
+	},
 /area/space)
 "bCF" = (
 /turf/simulated/wall/asteroid{
@@ -42053,6 +42090,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/evilreaver/security)
+"bJt" = (
+/obj/decal/skeleton{
+	density = 0;
+	desc = "Huh, this isn't trash.";
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "victim2";
+	name = "trash incinerator";
+	opacity = 0;
+	tag = "icon-body2"
+	},
+/turf/simulated/floor/grime,
+/area/evilreaver/security)
 "bJu" = (
 /obj/secure_closet/personal,
 /turf/simulated/floor/grime,
@@ -42702,6 +42751,21 @@
 /obj/machinery/door/window/southright,
 /turf/simulated/floor/grime,
 /area/evilreaver/security)
+"bKQ" = (
+/obj/decal/sink,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/specialroom/cafeteria{
+	dir = 1
+	},
+/area/evilreaver/bar)
+"bKR" = (
+/obj/decal/oven,
+/obj/item/reagent_containers/food/snacks/cake/meat,
+/obj/item/crowbar,
+/turf/simulated/floor/specialroom/cafeteria{
+	dir = 1
+	},
+/area/evilreaver/bar)
 "bKS" = (
 /obj/table/woodentable{
 	tag = "icon-woodentable (SOUTHWEST)";
@@ -43032,6 +43096,19 @@
 /obj/item/baton,
 /turf/simulated/floor/grime,
 /area/evilreaver/security)
+"bLG" = (
+/obj/decal/cleanable/blood,
+/obj/decal/skeleton{
+	desc = "The head seems to be gone.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body2";
+	name = "corpse";
+	tag = "icon-body2"
+	},
+/turf/simulated/floor/specialroom/cafeteria{
+	dir = 1
+	},
+/area/evilreaver/bar)
 "bLH" = (
 /obj/kitchenspike,
 /turf/simulated/floor/specialroom/cafeteria{
@@ -43671,6 +43748,20 @@
 /turf/simulated/floor/blue/side{
 	dir = 9
 	},
+/area/evilreaver)
+"bNh" = (
+/obj/decal/skeleton{
+	density = 1;
+	desc = "There seems to be a lot of flesh wedged in this airlock.";
+	icon = 'icons/misc/evilreaverstation.dmi';
+	icon_state = "victim1";
+	name = "bloody mess";
+	opacity = 1;
+	tag = "icon-body2"
+	},
+/obj/spook,
+/obj/effect_sparker,
+/turf/simulated/floor/grime,
 /area/evilreaver)
 "bNi" = (
 /obj/grille/steel,
@@ -45482,6 +45573,14 @@
 /obj/decal/cleanable/blood,
 /obj/decal/cleanable/ash,
 /turf/simulated/floor/scorched,
+/area/evilreaver/toxins)
+"bRq" = (
+/obj/decal/cleanable/blood,
+/obj/decal/skeleton{
+	name = "scorched remains"
+	},
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/scorched2,
 /area/evilreaver/toxins)
 "bRr" = (
 /obj/cable{
@@ -47423,6 +47522,15 @@
 /obj/securearea,
 /turf/space,
 /area/space)
+"bVV" = (
+/obj/decal/skeleton{
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body1";
+	name = "corpse";
+	tag = "icon-body1"
+	},
+/turf/space,
+/area/space)
 "bVW" = (
 /obj/item/electronics/battery,
 /turf/space,
@@ -48309,7 +48417,9 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bXR" = (
-/turf/space/asteroid,
+/turf/space{
+	icon_state = "aplaceholder"
+	},
 /turf/simulated/wall/asteroid{
 	dir = 9;
 	icon_state = "astedge"
@@ -49906,7 +50016,9 @@
 /turf/simulated/wall,
 /area/mining/exit_east)
 "cby" = (
-/turf/space/asteroid,
+/turf/space{
+	icon_state = "aplaceholder"
+	},
 /turf/simulated/wall/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
@@ -49914,7 +50026,9 @@
 /area/space)
 "cbz" = (
 /obj/lattice,
-/turf/space/asteroid,
+/turf/space{
+	icon_state = "aplaceholder"
+	},
 /area/space)
 "cbA" = (
 /turf/space,
@@ -50533,7 +50647,9 @@
 /turf/simulated/wall/asteroid,
 /area/space)
 "ccR" = (
-/turf/space/asteroid,
+/turf/space{
+	icon_state = "aplaceholder"
+	},
 /turf/simulated/wall/asteroid{
 	dir = 4;
 	icon_state = "astedge"
@@ -51974,6 +52090,11 @@
 	},
 /turf/simulated/wall/asteroid,
 /area/space)
+"cfV" = (
+/obj/decal/skeleton,
+/obj/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "cfW" = (
 /obj/landmark{
 	icon_state = "mining6";
@@ -52259,6 +52380,15 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
+/area/space)
+"cgC" = (
+/obj/decal/skeleton,
+/obj/item/oreprospector,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
+"cgD" = (
+/obj/decal/skeleton,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "cgE" = (
 /obj/landmark{
@@ -55661,6 +55791,20 @@
 /obj/item/gun/russianrevolver,
 /turf/simulated/floor/carpet,
 /area/crunch)
+"cnI" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/window/cubicle,
+/obj/decal/skeleton{
+	desc = "The remains of a human. The skull has a hole in it.  An extra one, I mean.";
+	layer = 2.5;
+	pixel_y = 8
+	},
+/obj/decal/cleanable/blood/splatter,
+/obj/spook,
+/turf/simulated/floor/carpet,
+/area/crunch)
 "cnJ" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -56957,6 +57101,12 @@
 	},
 /turf/simulated/floor,
 /area/crunch)
+"cqU" = (
+/obj/decal/cleanable/blood/splatter,
+/obj/decal/skeleton,
+/obj/spook,
+/turf/simulated/floor/white,
+/area/crunch)
 "cqV" = (
 /obj/table{
 	tag = "icon-tabledir";
@@ -57147,53 +57297,6 @@
 	},
 /turf/simulated/floor/delivery,
 /area/crunch)
-"cBF" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/decal/cleanable/blood,
-/turf/simulated/floor/plating,
-/area/station/storage/emergency2)
-"dsE" = (
-/obj/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/machinery/lawrack,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/turret_protected/AIbasecore1{
-	name = "Upload Station"
-	})
-"dGr" = (
-/obj/decal/fakeobjects/sink,
-/obj/decal/cleanable/cobweb,
-/turf/simulated/floor/specialroom/cafeteria{
-	dir = 1
-	},
-/area/evilreaver/bar)
-"eQO" = (
-/obj/decal/fakeobjects/skeleton{
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body1";
-	name = "corpse";
-	tag = "icon-body1"
-	},
-/turf/space,
-/area/space)
-"glO" = (
-/obj/decal/cleanable/blood,
-/obj/decal/fakeobjects/skeleton{
-	desc = "The head seems to be gone.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body2";
-	name = "corpse";
-	tag = "icon-body2"
-	},
-/turf/simulated/floor/specialroom/cafeteria{
-	dir = 1
-	},
-/area/evilreaver/bar)
 "gus" = (
 /obj/table{
 	tag = "icon-tabledir (SOUTHEAST)";
@@ -57209,96 +57312,12 @@
 /obj/item/camera,
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
-"gFb" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/item/oreprospector,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
-"gLN" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Um.  Uh.  Oh dear."
-	},
-/turf/simulated/floor/plating,
-/area/station/security/brig)
-"ijM" = (
-/obj/decal/cleanable/blood,
-/obj/decal/fakeobjects/skeleton{
-	name = "scorched remains"
-	},
-/obj/decal/cleanable/ash,
-/turf/simulated/floor/scorched2,
-/area/evilreaver/toxins)
-"jYd" = (
-/obj/decal/fakeobjects/skeleton,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
-"lKW" = (
-/obj/rack,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/item/circuitboard/card,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
-"oZy" = (
-/obj/decal/fakeobjects/oven,
-/obj/item/reagent_containers/food/snacks/cake/meat,
-/obj/item/crowbar,
-/turf/simulated/floor/specialroom/cafeteria{
-	dir = 1
-	},
-/area/evilreaver/bar)
-"qay" = (
-/obj/stool/chair{
-	dir = 8
-	},
-/obj/window/cubicle,
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of a human. The skull has a hole in it.  An extra one, I mean.";
-	layer = 2.5;
-	pixel_y = 8
-	},
-/obj/decal/cleanable/blood/splatter,
-/obj/spook,
-/turf/simulated/floor/carpet,
-/area/crunch)
-"rqv" = (
-/obj/decal/fakeobjects/skeleton{
-	density = 0;
-	desc = "Huh, this isn't trash.";
-	icon = 'icons/misc/evilreaverstation.dmi';
-	icon_state = "victim2";
-	name = "trash incinerator";
-	opacity = 0;
-	tag = "icon-body2"
-	},
-/turf/simulated/floor/grime,
-/area/evilreaver/security)
 "tSA" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
-"ufN" = (
-/obj/decal/fakeobjects/skeleton{
-	density = 1;
-	desc = "There seems to be a lot of flesh wedged in this airlock.";
-	icon = 'icons/misc/evilreaverstation.dmi';
-	icon_state = "victim1";
-	name = "bloody mess";
-	opacity = 1;
-	tag = "icon-body2"
-	},
-/obj/spook,
-/obj/effect_sparker,
-/turf/simulated/floor/grime,
-/area/evilreaver)
-"vNG" = (
-/obj/decal/cleanable/blood/splatter,
-/obj/decal/fakeobjects/skeleton,
-/obj/spook,
-/turf/simulated/floor/white,
-/area/crunch)
 "wdb" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -57315,11 +57334,6 @@
 	icon_state = "carpetS"
 	},
 /area/station/security/detectives_office)
-"xEr" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 
 (1,1,1) = {"
 aaa
@@ -82419,7 +82433,7 @@ aaa
 aaa
 aPD
 aQi
-dsE
+aQM
 aRD
 aSz
 aTv
@@ -83044,7 +83058,7 @@ alv
 alO
 alO
 aly
-cBF
+apU
 apT
 are
 arT
@@ -87372,7 +87386,7 @@ axB
 ayc
 ayJ
 azp
-lKW
+azR
 aAu
 azh
 aAl
@@ -87865,7 +87879,7 @@ aNv
 aOy
 aOO
 aPf
-gLN
+aPK
 aQk
 aPL
 aRJ
@@ -180026,7 +180040,7 @@ bPX
 bQn
 bQM
 bRe
-ijM
+bRq
 bMJ
 bRP
 bSi
@@ -186183,7 +186197,7 @@ bVD
 bVD
 aab
 aaa
-eQO
+bVV
 aaa
 aaa
 aaa
@@ -187051,7 +187065,7 @@ bIU
 bIU
 bIU
 bIU
-ufN
+bNh
 bNz
 bNS
 bOn
@@ -189989,7 +190003,7 @@ bFM
 bIr
 bIE
 bIX
-rqv
+bJt
 bIJ
 bIX
 bKC
@@ -194079,10 +194093,10 @@ bGb
 bGb
 bKo
 bKE
-dGr
+bKQ
 bLk
 bLk
-glO
+bLG
 bKE
 bMe
 bMs
@@ -194306,7 +194320,7 @@ bGb
 bJN
 bHV
 bKE
-oZy
+bKR
 bLk
 bLv
 bLk
@@ -280807,7 +280821,7 @@ bCJ
 bCJ
 cfU
 bYo
-xEr
+cfV
 bYo
 bCJ
 bCJ
@@ -281028,7 +281042,7 @@ aaa
 bCG
 bCJ
 bYo
-xEr
+cfV
 bYo
 bCJ
 bCJ
@@ -282177,7 +282191,7 @@ cfv
 cgz
 cgz
 bCJ
-gFb
+cgC
 bYo
 bCR
 bCM
@@ -282632,7 +282646,7 @@ cgz
 bCJ
 cgq
 cgb
-jYd
+cgD
 bYo
 bCO
 aaa
@@ -330496,7 +330510,7 @@ cmY
 cng
 cno
 cnx
-qay
+cnI
 cnM
 cmf
 cmf
@@ -331899,7 +331913,7 @@ cqC
 cpg
 cmf
 cpg
-vNG
+cqU
 cpg
 cmd
 clR

@@ -179,7 +179,9 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/space)
 "aaz" = (
-/turf/space/asteroid,
+/turf/space{
+	icon_state = "aplaceholder"
+	},
 /area/space)
 "aaA" = (
 /obj/grille/steel,
@@ -278,7 +280,9 @@
 	name = "Mining Outpost"
 	},
 /obj/lattice,
-/turf/space/asteroid,
+/turf/space{
+	icon_state = "aplaceholder"
+	},
 /area/space)
 "aaJ" = (
 /obj/landmark/magnet_shield,
@@ -2419,6 +2423,10 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/turf/simulated/floor/white,
+/area/russian)
+"aff" = (
+/obj/decal/sink,
 /turf/simulated/floor/white,
 /area/russian)
 "afg" = (
@@ -6497,6 +6505,7 @@
 /area/station/storage/tech)
 "aon" = (
 /obj/table/auto,
+/obj/item/aiModule/reset,
 /obj/item/peripheral/printer,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -7350,6 +7359,13 @@
 /obj/item/device/audio_log,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"aqk" = (
+/obj/rack{
+	dir = 4
+	},
+/obj/item/circuitboard/aiupload,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "aql" = (
 /obj/rack{
 	dir = 4
@@ -7749,6 +7765,19 @@
 	d2 = 2
 	},
 /obj/machinery/power/data_terminal,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
+"arp" = (
+/obj/machinery/camera{
+	network = "SS13";
+	c_tag = "Genetic Research East"
+	},
+/obj/cable{
+	icon_state = "1-2";
+	d1 = 1;
+	d2 = 2
+	},
+/obj/machinery/computer/aiupload,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "arq" = (
@@ -9111,6 +9140,7 @@
 /area/station/maintenance/west)
 "auy" = (
 /obj/table/auto,
+/obj/item/aiModule/rename,
 /obj/item/aiModule/freeform,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -9126,6 +9156,7 @@
 "auA" = (
 /obj/table/auto,
 /obj/item/aiModule/oneHuman,
+/obj/item/aiModule/reset,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "auB" = (
@@ -24262,6 +24293,10 @@
 /obj/stool,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
+"beB" = (
+/obj/decal/sink,
+/turf/simulated/floor/white,
+/area/station/science/chemistry)
 "beC" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -31640,25 +31675,25 @@
 /area/station/engine/engineering)
 "btT" = (
 /turf/simulated/wall/r_wall,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "btU" = (
 /obj/storage/secure/closet/security/armory,
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "btV" = (
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "btW" = (
 /obj/rack,
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "btX" = (
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "btY" = (
 /turf/simulated/wall/asteroid{
 	icon_state = "ast1"
@@ -31671,7 +31706,7 @@
 	name = "Sorry"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bua" = (
 /turf/simulated/wall/r_wall,
 /area/station/security/prison)
@@ -31731,19 +31766,19 @@
 	name = "Fire Range Robot"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bui" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/ears/earmuffs,
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "buj" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "buk" = (
 /turf/simulated/wall,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bul" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor,
@@ -31854,7 +31889,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "buu" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -31867,7 +31902,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "buv" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -31875,7 +31910,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "buw" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -31887,7 +31922,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "bux" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -31895,7 +31930,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/caution/east,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "buy" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -31912,7 +31947,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "buz" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -31923,7 +31958,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "buA" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -31945,7 +31980,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "buB" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -32097,18 +32132,18 @@
 /obj/machinery/recharger,
 /obj/cable,
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "buR" = (
 /obj/table/auto,
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "buS" = (
 /obj/table/auto,
 /obj/machinery/recharger,
 /obj/machinery/light,
 /obj/cable,
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "buT" = (
 /obj/cable{
 	d1 = 1;
@@ -32120,7 +32155,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "buU" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -32132,7 +32167,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/caution/east,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "buV" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -32153,7 +32188,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "buW" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -32165,7 +32200,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "buX" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -32191,7 +32226,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/security/armory)
 "buY" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -34678,7 +34713,9 @@
 	},
 /area/station/security/hos)
 "bAg" = (
-/turf/space/asteroid,
+/turf/space{
+	icon_state = "aplaceholder"
+	},
 /area/syndicate_station)
 "bAh" = (
 /turf/simulated/floor{
@@ -34848,23 +34885,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"gxL" = (
-/obj/machinery/camera{
-	network = "SS13";
-	c_tag = "Genetic Research East"
-	},
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/obj/machinery/lawrack,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
-"ocN" = (
-/obj/decal/fakeobjects/sink,
-/turf/simulated/floor/white,
-/area/russian)
 "rEU" = (
 /obj/table/auto,
 /obj/item/storage/photo_album{
@@ -34873,10 +34893,6 @@
 /obj/item/camera,
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
-"uvc" = (
-/obj/decal/fakeobjects/sink,
-/turf/simulated/floor/white,
-/area/station/science/chemistry)
 "uQc" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
@@ -41552,7 +41568,7 @@ aaa
 anL
 aom
 aoZ
-asg
+aqk
 arh
 asg
 asp
@@ -47228,7 +47244,7 @@ anO
 aot
 ape
 aqq
-gxL
+arp
 ass
 atx
 atx
@@ -64975,7 +64991,7 @@ bbU
 aWT
 bdt
 bdY
-uvc
+beB
 bfi
 bbV
 bfD
@@ -78049,7 +78065,7 @@ aaG
 aaN
 aeV
 aba
-ocN
+aff
 aba
 aba
 aba

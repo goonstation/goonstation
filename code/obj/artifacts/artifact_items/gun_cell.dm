@@ -63,7 +63,6 @@
 /datum/artifact/energyammo
 	associated_object = /obj/item/ammo/power_cell/self_charging/artifact
 	type_name = "Small power cell"
-	type_size = ARTIFACT_SIZE_TINY
 	rarity_weight = 0
 	validtypes = list("ancient","eldritch","precursor")
 	automatic_activation = 1

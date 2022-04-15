@@ -13,7 +13,7 @@
 	/obj/item/toy/plush/small/kitten,\
 	/obj/item/toy/plush/small/monkey,\
 	/obj/item/toy/plush/small/possum,\
-	/obj/item/toy/plush/small/brullbar,\
+	/obj/item/toy/plush/small/wendigo,\
 	/obj/item/toy/plush/small/bunny,\
 	/obj/item/toy/plush/small/penguin)
 	var/list/prizes_rare = list(/obj/item/toy/plush/small/bee/cute,\
@@ -79,7 +79,6 @@
 	id = "claw_machine"
 	icon = 'icons/obj/plushies.dmi'
 	icon_state = "claw_action"
-	resumable = FALSE
 	var/mob/M
 	var/obj/submachine/claw_machine/CM
 
@@ -90,7 +89,7 @@
 
 /datum/action/bar/icon/claw_machine/onUpdate()
 	..()
-	if(BOUNDS_DIST(M, CM) > 0 || M == null || CM == null)
+	if(get_dist(M, CM) > 1 || M == null || CM == null)
 		interrupt(INTERRUPT_ALWAYS)
 		return
 	if(prob(10) && !M.traitHolder?.hasTrait("claw"))
@@ -99,6 +98,10 @@
 		interrupt(INTERRUPT_ALWAYS)
 		return
 
+/datum/action/bar/icon/claw_machine/onResume()
+	..()
+	state = ACTIONSTATE_DELETE
+
 /datum/action/bar/icon/claw_machine/onInterrupt()
 	..()
 	CM.busy = 0
@@ -106,7 +109,7 @@
 
 /datum/action/bar/icon/claw_machine/onStart()
 	..()
-	if(BOUNDS_DIST(M, CM) > 0 || M == null || CM == null)
+	if(get_dist(M, CM) > 1 || M == null || CM == null)
 		interrupt(INTERRUPT_ALWAYS)
 		return
 	playsound(CM, 'sound/machines/capsulebuy.ogg', 80, 1)
@@ -115,7 +118,7 @@
 
 /datum/action/bar/icon/claw_machine/onEnd()
 	..()
-	if(BOUNDS_DIST(M, CM) > 0 || M == null || CM == null)
+	if(get_dist(M, CM) > 1 || M == null || CM == null)
 		interrupt(INTERRUPT_ALWAYS)
 		return
 	CM.busy = 0
@@ -153,7 +156,7 @@
 /obj/item/toy/plush/proc/say_something(mob/user as mob)
 	var/message = input("What should [src] say?")
 	message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
-	if (!message || BOUNDS_DIST(src, user) > 0)
+	if (!message || get_dist(src, user) > 1)
 		return
 	logTheThing("say", user, null, "makes [src] say, \"[message]\"")
 	user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
@@ -217,9 +220,9 @@
 	name = "possum plush toy"
 	icon_state = "possum"
 
-/obj/item/toy/plush/small/brullbar
-	name = "brullbar plush toy"
-	icon_state = "brullbar"
+/obj/item/toy/plush/small/wendigo
+	name = "wendigo plush toy"
+	icon_state = "wendigo"
 
 /obj/item/toy/plush/small/bunny
 	name = "bunny plush toy"

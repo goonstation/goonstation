@@ -4,11 +4,10 @@
 	density = 1
 	anchored = 1
 	mats = 10
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "geneman-on"
-	flags = NOSPLASH | FPRINT
-	event_handler_flags = NO_MOUSEDROP_QOL
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	flags = NOSPLASH
 	var/mode = "overview"
 	var/list/seeds = list()
 	var/seedfilter = null
@@ -241,7 +240,7 @@
 		onclose(user, "rextractor")
 
 	Topic(href, href_list)
-		if((BOUNDS_DIST(usr, src) > 0) && !issilicon(usr) && !isAI(usr))
+		if((get_dist(usr,src) > 1) && !issilicon(usr) && !isAI(usr))
 			boutput(usr, "<span class='alert'>You need to be closer to the machine to do that!</span>")
 			return
 		if(href_list["page"])
@@ -459,10 +458,6 @@
 			// Get the seeds being spliced first
 			var/obj/item/seed/seed1 = src.splicing1
 			var/obj/item/seed/seed2 = src.splicing2
-
-			// How the fuck
-			if (!seed1 || !seed2)
-				return
 
 			// Now work out whether we fail to splice or not based on species compatability
 			// And the health of the two seeds you're using
@@ -690,7 +685,7 @@
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!O || !user)
 			return
-		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0)
+		if (!in_interact_range(src, user)  || !IN_RANGE(user, O, 1))
 			return
 		if (!isitem(O))
 			return
@@ -1123,7 +1118,7 @@
 			onclose(user, "fabpanel")
 
 	Topic(href, href_list)
-		if(BOUNDS_DIST(usr, src) > 0 && !issilicon(usr) && !isAI(usr))
+		if(get_dist(usr,src) > 1 && !issilicon(usr) && !isAI(usr))
 			boutput(usr, "<span class='alert'>You need to be closer to the vendor to do that!</span>")
 			return
 

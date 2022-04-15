@@ -88,7 +88,7 @@
 		dat += "Finds tiles: \[<A href='?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A>\]<BR>"
 		dat += "Make single pieces of metal into tiles when empty: \[<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>\]"
 
-	if (user.client?.tooltipHolder)
+	if (user.client.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
 			"params" = params,
 			"title" = "Repairbot v1.0 controls",
@@ -211,7 +211,7 @@
 				else if (D == src.oldtarget || should_ignore_tile(D))
 					continue
 				// Floorbot doesnt like space, so it won't accept space tiles without some kind of not-space next to it. Or they're right up against it. Or already on space.
-				else if ((BOUNDS_DIST(get_turf(src), get_turf(D)) == 0) || get_pathable_turf(D)) // silly little things
+				else if (IN_RANGE(get_turf(src), get_turf(D), 1) || get_pathable_turf(D)) // silly little things
 					src.floorbottargets |= coord
 					return D
 
@@ -281,9 +281,6 @@
 	if (!src.on || src.repairing || !isturf(src.loc))
 		return
 
-	if (src.target?.disposed || !isturf(get_turf(src.target)))
-		src.target = null
-
 	// Invalid targets may not be unreachable anymore. Clear list periodically.
 	if (src.clear_invalid_targets && !ON_COOLDOWN(src, FLOORBOT_CLEARTARGET_COOLDOWN, src.clear_invalid_targets_interval))
 		src.targets_invalid = list()
@@ -305,7 +302,7 @@
 
 	if (src.target)
 		// are we there yet
-		if ((BOUNDS_DIST(get_turf(src), get_turf(src.target)) == 0))
+		if (IN_RANGE(get_turf(src), get_turf(src.target), 1))
 			do_the_thing()
 			return
 

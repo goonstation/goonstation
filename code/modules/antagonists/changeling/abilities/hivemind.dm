@@ -78,6 +78,7 @@
 			use_mob.client.mob = spider
 		H.hivemind -= use_mob
 		H.hivemind += spider
+		spider.real_name = use_mob.real_name
 		spider.hivemind_owner = H
 
 		if (arm_type && istype(arm_type, /obj/item/parts/robot_parts))
@@ -177,6 +178,7 @@
 			use_mob.client.mob = spider
 		H.hivemind -= use_mob
 		H.hivemind += spider
+		spider.real_name = use_mob.real_name
 		spider.hivemind_owner = H
 
 		spider.Browse(grabResource("html/mindslave/eyespider.html"),"window=antagTips;size=600x400;title=Antagonist Tips")
@@ -273,6 +275,7 @@
 			use_mob.client.mob = spider
 		H.hivemind -= use_mob
 		H.hivemind += spider
+		spider.real_name = use_mob.real_name
 		spider.hivemind_owner = H
 
 		spider.Browse(grabResource("html/mindslave/legworm.html"),"window=antagTips;size=600x400;title=Antagonist Tips")
@@ -357,6 +360,7 @@
 			use_mob.client.mob = crab
 		H.hivemind -= use_mob
 		H.hivemind += crab
+		crab.real_name = use_mob.real_name
 		crab.hivemind_owner = H
 
 		crab.Browse(grabResource("html/mindslave/eyespider.html"),"window=antagTips;size=600x400;title=Antagonist Tips")
@@ -399,7 +403,7 @@
 		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
 		if (!message)
 			return
-		logTheThing("say", holder.owner, holder.owner.name, "<b>(HIVESAY):</b> [message]")
+		logTheThing("say", holder.owner, holder.owner.name, "[message]")
 		//logTheThing("diary", holder.owner, null, "(HIVEMIND): [message]", "hivesay")
 		.= holder.owner.say_hive(message, holder)
 

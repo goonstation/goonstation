@@ -19,7 +19,7 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/const/min_revheads = 3
 	var/const/max_revheads = 5
-	var/const/pop_divisor = 15
+	var/const/pop_divisor = 20
 	var/win_check_freq = 30 SECONDS //frequency of checks on the win conditions
 	var/round_limit = 40 MINUTES //see post_setup
 	var/endthisshit = 0

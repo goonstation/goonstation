@@ -329,7 +329,7 @@
 			src.transforming = 1
 			src.canmove = 0
 			src.icon = null
-			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
+			APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 			if (src.mind || src.client)
 				src.ghostize()
 			qdel(src)
@@ -466,60 +466,3 @@
 			if(prob(chance))
 				var/mob/living/carbon/human/normal/H = new(T)
 				H.JobEquipSpawned(job_name)
-
-
-
-
-/obj/storage/closet/extradimensional
-	var/datum/allocated_region/region
-
-	New()
-		..()
-		region = global.region_allocator.allocate(9, 9)
-		region.clean_up(/turf/unsimulated/floor/setpieces/gauntlet)
-
-		for(var/x in 2 to region.width - 1)
-			var/turf/T = region.turf_at(x, 2)
-			new/obj/decal/nothing{dir=NORTH}(T)
-			new /obj/map/light/brightwhite(T)
-			T.warptarget = src
-
-			T = region.turf_at(x, region.height - 1)
-			new/obj/decal/nothing{dir=SOUTH}(T)
-			new /obj/map/light/brightwhite(T)
-			T.warptarget = src
-
-		for(var/y in 2 to region.height - 1)
-			var/turf/T = region.turf_at(2, y)
-			new/obj/decal/nothing{dir=WEST}(T)
-			new /obj/map/light/brightwhite(T)
-			T.warptarget = src
-
-			T = region.turf_at(region.width - 1, y)
-			new/obj/decal/nothing{dir=EAST}(T)
-			new /obj/map/light/brightwhite(T)
-			T.warptarget = src
-
-	disposing()
-		for(var/x in 1 to region.width)
-			for(var/y in 1 to region.height)
-				var/turf/T = region.turf_at(x, y)
-				for(var/atom/movable/AM in T)
-					if(!AM.anchored)
-						AM.set_loc(src.loc)
-		qdel(region)
-		..()
-
-	close(entangleLogic)
-		. = ..()
-		if(!entangleLogic)
-			for(var/atom/movable/AM in src)
-				var/turf/T = region.turf_at(rand(3, region.width - 2), rand(3, region.height - 2))
-				AM.set_loc(T)
-
-	Entered(atom/movable/Obj, OldLoc)
-		. = ..()
-		var/turf/old_turf = OldLoc
-		if(open && istype(old_turf) && region.turf_in_region(old_turf))
-			Obj.set_loc(src.loc)
-

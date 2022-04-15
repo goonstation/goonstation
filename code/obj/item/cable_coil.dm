@@ -88,11 +88,11 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	proc/use(var/used)
 		if (src.amount < used)
 			return 0
-		amount -= used
-		if (src.amount <= 0)
+		else if (src.amount == used)
 			qdel(src)
 			return 1
 		else
+			amount -= used
 			UpdateIcon()
 			return 1
 
@@ -204,7 +204,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	else
 		turf_place_between(source, target)
 
-	if (!src.amount || QDELETED(src))
+	if (!src.amount)
 		M.move_laying = null
 		boutput(M, "<span class='alert'>Your cable coil runs out!</span>")
 		return
@@ -216,7 +216,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	else
 		turf_place_between(target, source)
 
-	if (!src.amount || QDELETED(src))
+	if (!src.amount)
 		M.move_laying = null
 		boutput(M, "<span class='alert'>Your cable coil runs out!</span>")
 		return
@@ -235,7 +235,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 /obj/item/cable_coil/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W) && src.amount > 1)
 		src.amount--
-		take(1, user.loc)
+		take(1, usr.loc)
 		boutput(user, "You cut a piece off the [base_name].")
 		src.UpdateIcon()
 		return
@@ -285,7 +285,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		return
 	if (!isturf(B) || !(istype(B,/turf/simulated/floor) || istype(B,/turf/space/fluid)))
 		return
-	if (BOUNDS_DIST(A, B) > 0)
+	if (get_dist(A, B) > 1)
 		return
 	if (A.intact)
 		return
@@ -314,7 +314,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	if (!isturf(T) || T.intact)		// sanity checks, also stop use interacting with T-scanner revealed cable
 		return
 
-	if (BOUNDS_DIST(C, B) > 0)		// make sure it's close enough
+	if (get_dist(C, B) > 1)		// make sure it's close enough
 		return
 
 	if (B == T)		// do nothing if we clicked a cable we're standing on
@@ -356,7 +356,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	if (!(istype(F,/turf/simulated/floor) || istype(F,/turf/space/fluid)))
 		return
 
-	if (BOUNDS_DIST(F, user) > 0)
+	if (get_dist(F,user) > 1)
 		boutput(user, "You can't lay cable at a place that far away.")
 		return
 
@@ -399,7 +399,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	if (!isturf(T) || T.intact)		// sanity checks, also stop use interacting with T-scanner revealed cable
 		return
 
-	if (BOUNDS_DIST(C, user) > 0)		// make sure it's close enough
+	if (get_dist(C, user) > 1)		// make sure it's close enough
 		boutput(user, "You can't lay cable at a place that far away.")
 		return
 

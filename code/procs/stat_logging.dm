@@ -231,8 +231,16 @@
 	else
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			var/laws[] = new()
-			if(aiPlayer.law_rack_connection)
-				laws = aiPlayer.law_rack_connection.format_for_irc()
+			if (ticker.centralized_ai_laws.zeroth)
+				laws["0"] = ticker.centralized_ai_laws.zeroth
+
+			var/list/suppliedLaws = ticker.centralized_ai_laws.supplied
+			var/count = 4
+			for (var/i = 1, i <= suppliedLaws.len, i++)
+				var/lawText = suppliedLaws[i]
+				if (length(lawText) > 0)
+					laws["[count]"] = lawText
+					count++
 
 			for (var/key in laws)
 				var/message[] = new()

@@ -215,16 +215,15 @@
 		if (istype(A, /obj/itemspecialeffect))
 			var/obj/itemspecialeffect/E = A
 			return (E.can_clash && world.time != E.create_time && E.clash_time > 0 && world.time <= E.create_time + E.clash_time)
-		.= ((istype(A, /obj/critter) || (isliving(A) && !isintangible(A)) || istype(A, /obj/machinery/bot)) && A != usr && A != user)
+		.= ((istype(A, /obj/critter) || (isliving(A)) || istype(A, /obj/machinery/bot)) && A != usr && A != user)
 
-	proc/showEffect(var/name = null, var/direction = NORTH, var/mob/user, color="#FFFFFF", alpha=255)
+	proc/showEffect(var/name = null, var/direction = NORTH, var/mob/user, alpha=255)
 		if(name == null || master == null) return
 		if(!user) user = usr
 		var/obj/itemspecialeffect/E = new /obj/itemspecialeffect
 		if(src.animation_color)
 			E.color = src.animation_color
 		E.alpha = alpha
-		E.color = color
 		E.setup(get_turf(user))
 		E.set_dir(direction)
 		E.icon_state = name
@@ -485,8 +484,6 @@
 	name = "Stab"
 	desc = "Attack with a 2 tile range."
 
-	var/stab_color = "#FFFFFF"
-
 	onAdd()
 		if(master)
 			//cooldown = master.click_delay
@@ -504,7 +501,7 @@
 			var/turf/one = get_step(master, direction)
 			var/turf/two = get_step(one, direction)
 
-			showEffect("spear", direction, color=src.stab_color)
+			showEffect("spear", direction)
 
 			var/hit = 0
 			for(var/turf/T in list(one, two))

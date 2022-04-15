@@ -7,7 +7,6 @@
 	item_state = "helmet"
 	desc = "Somewhat protects your head from being bashed in."
 	protective_temperature = 500
-	duration_remove = 5 SECONDS
 
 	setupProperties()
 		..()
@@ -315,10 +314,10 @@
 					if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)) //handling of the rest is done in life.dm
 						if (src.on)
 							H.vision.set_scan(1)
-							APPLY_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
+							APPLY_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
 						else
 							H.vision.set_scan(0)
-							REMOVE_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
+							REMOVE_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
 
 			equipped(var/mob/living/user, var/slot)
 				..()
@@ -326,14 +325,14 @@
 					return
 				if (slot == SLOT_HEAD && on)
 					user.vision.set_scan(1)
-					APPLY_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
+					APPLY_MOB_PROPERTY(user, PROP_MESONVISION, src)
 
 			unequipped(var/mob/living/user)
 				..()
 				if(!isliving(user))
 					return
 				user.vision.set_scan(0)
-				REMOVE_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
+				REMOVE_MOB_PROPERTY(user, PROP_MESONVISION, src)
 
 		medic
 			name = "specialist health monitor"

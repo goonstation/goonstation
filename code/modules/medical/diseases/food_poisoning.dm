@@ -4,7 +4,6 @@
 	spread = "Non-Contagious"
 	cure = "Sleep"
 	associated_reagent = "salmonella"
-	reagentcure = list("spaceacillin")
 	affected_species = list("Human")
 //
 /datum/ailment/disease/food_poisoning/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)

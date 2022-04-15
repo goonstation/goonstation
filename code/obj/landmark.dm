@@ -20,7 +20,7 @@ proc/pick_landmark(name, default=null)
 	ex_act()
 		return
 
-/obj/landmark/proc/init(delay_qdel=FALSE)
+/obj/landmark/proc/init()
 	if(src.add_to_landmarks)
 		if(!landmarks)
 			landmarks = list()
@@ -29,15 +29,12 @@ proc/pick_landmark(name, default=null)
 			landmarks[name] = list()
 		landmarks[name][src.loc] = src.data
 	if(src.deleted_on_start)
-		if(delay_qdel)
-			SPAWN(0)
-				qdel(src)
-		else
-			qdel(src)
+		qdel(src)
 
 /obj/landmark/New()
 	if(current_state > GAME_STATE_MAP_LOAD)
-		src.init(delay_qdel=TRUE)
+		SPAWN(0)
+			src.init()
 		..()
 	else
 		src.init()
@@ -199,13 +196,6 @@ var/global/list/job_start_locations = list()
 			src.type_to_spawn = name_to_type[src.name]
 		if(isnull(src.type_to_spawn))
 			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
-
-		#ifdef BAD_MONKEY_NO_BANANA
-		if (findtext("[src.type_to_spawn]", "monkey")) //ugly
-			qdel(src)
-			return
-		#endif
-
 		new type_to_spawn(src.loc)
 		qdel(src)
 

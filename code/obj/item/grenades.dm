@@ -29,7 +29,6 @@ PIPE BOMBS + CONSTRUCTION
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
-	duration_put = 0.25 SECONDS //crime
 	var/is_dangerous = TRUE
 	var/sound_armed = null
 	var/icon_state_armed = null
@@ -63,7 +62,7 @@ PIPE BOMBS + CONSTRUCTION
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
 		if (src.state)
 			return
-		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc) || !src.state )
+		if (get_dist(user, target) <= 1 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc) || !src.state )
 			return
 		if (user.equipped() == src)
 			if (!src.state)
@@ -232,13 +231,18 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				elecflash(src,power = 4)
 				qdel(src)
 				return
-			for (var/atom/movable/X in orange(9, T))
-				if (istypes(X, list(/obj/machinery/containment_field, /obj/machinery/field_generator, /obj/fluid, /obj/effect, /obj/overlay)))
+			for (var/atom/X in orange(9, T))
+				if (istype(X,/obj/machinery/containment_field))
 					continue
-				var/area/t = get_area(X)
-				if(t?.sanctuary) continue
-				if (prob(50) && X.anchored != 2)
-					step_towards(X,src)
+				if (istype(X,/obj/machinery/field_generator))
+					continue
+				if (istype(X,/turf))
+					continue
+				if (istype(X, /obj))
+					var/area/t = get_area(X)
+					if(t?.sanctuary) continue
+					if (prob(50) && X:anchored != 2)
+						step_towards(X,src)
 		qdel(src)
 		return
 
@@ -393,7 +397,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	is_syndicate = 0
 	sound_armed = "sound/weapons/pindrop.ogg"
 	icon_state_armed = "fragnade1"
-	var/custom_projectile_type = /datum/projectile/bullet/stinger_ball
+	var/custom_projectile_type = null
 	var/pellets_to_fire = 20
 
 	prime()
@@ -438,7 +442,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "fragnade-alt"
 	icon_state_armed = "fragnade-alt1"
 	var/datum/effects/system/bad_smoke_spread/smoke
-	custom_projectile_type = /datum/projectile/bullet/grenade_fragment
 
 	New()
 		..()
@@ -677,11 +680,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 	New()
 		..()
-		#ifdef UPSCALED_MAP
-		destination = locate(40 * 2,19 * 2,2)
-		#else
 		destination = locate(40,19,2)
-		#endif
 
 	primed
 		state = 1
@@ -693,7 +692,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			state = 1
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc))
+		if (get_dist(user, target) <= 1 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc))
 			return
 		if (istype(target, /obj/item/storage)) return ..()
 		if (src.state == 0)
@@ -832,8 +831,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				M << S
 
 	attack_self(mob/user as mob)
-		if (user.equipped() == src && !armed)
-			src.arm(user)
+		if (usr.equipped() == src && !armed)
+			src.arm(usr)
 			logGrenade(user)
 			armed = 1
 
@@ -1400,7 +1399,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 /obj/item/pipebomb
 	icon = 'icons/obj/items/assemblies.dmi'
 	item_state = "r_hands"
-	duration_put = 0.5 SECONDS //crime
 
 /obj/item/pipebomb/frame
 	name = "pipe frame"

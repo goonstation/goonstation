@@ -641,7 +641,7 @@
 
 		var/turf/turftarget = get_turf(target)
 
-		if(turftarget == loc || BOUNDS_DIST(src, target) > 0) return
+		if(turftarget == loc || get_dist(src,target) > 1) return
 
 		if(!user.mind || !user.mind.gang)
 			boutput(user, "<span class='alert'>You aren't in a gang, why would you do that?</span>")
@@ -714,7 +714,7 @@
 			..()
 			throw e
 
-		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
+		if(get_dist(owner, target_turf) > 1 || target_turf == null || !owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -724,7 +724,7 @@
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
+		if(get_dist(owner, target_turf) > 1 || target_turf == null || !owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -741,7 +741,7 @@
 
 	onEnd()
 		..()
-		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
+		if(get_dist(owner, target_turf) > 1 || target_turf == null || !owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -876,7 +876,7 @@
 
 	Topic(href, href_list)
 		..()
-		if ((usr.stat || usr.restrained()) || (BOUNDS_DIST(src, usr) > 0))
+		if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
 			return
 
 		if (href_list["get_gear"])
@@ -939,7 +939,7 @@
 		if(!user)
 			return 0
 		if (user.mind && user.mind.gang != src.gang)
-			boutput(user, "<span class='alert'>You are not a member of this gang, you cannot add items to it.</span>")
+			boutput(usr, "<span class='alert'>You are not a member of this gang, you cannot add items to it.</span>")
 			return 0
 
 		//cash score
@@ -1071,7 +1071,7 @@
 				if (G.affecting == mode.kidnapping_target)		//Can only shove the target in, nobody else. target must be not dead and must have a kill or pin grab on em.
 					if (G.affecting.stat == 2)
 						boutput(user, "<span class='alert'>[G.affecting] is dead, you can't kidnap a dead person!</span>")
-					else if (G.state < GRAB_AGGRESSIVE)
+					else if (G.state < 3)
 						boutput(user, "<span class='alert'>You'll need a stronger grip to successfully kinapp this person!")
 					else
 						user.visible_message("<span class='notice'>[user] shoves [G.affecting] into [src]!</span></span>")

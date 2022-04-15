@@ -16,9 +16,6 @@
 		y_min = world.maxy
 		if (!map_icon)
 			map_icon = icon('icons/obj/station_map.dmi', "blank")
-			#ifdef UPSCALED_MAP
-			map_icon.Scale(world.maxx, world.maxy)
-			#endif
 			render_map()
 			zoom_map()
 			pixel_y += 20 //magic numbers because ByondUI mis-aligns by a few pixels
@@ -26,19 +23,14 @@
 		icon = map_icon
 
 	Click(location, control, params)
-		if (!isAI(usr)) //only for AI use
+		if (!isAIeye(usr)) //no humans teleporting
 			return
 		var/list/param_list = params2list(params)
 		if ("left" in param_list)
 			var/x = text2num(param_list["icon-x"])
 			var/y = text2num(param_list["icon-y"])
 			var/turf/clicked = locate(x, y, Z_LEVEL_STATION)
-			if (isAIeye(usr))
-				usr.loc = clicked
-			else
-				var/mob/living/silicon/ai/mainframe = usr
-				mainframe.eye_view() //pop out to eye first
-				mainframe.eyecam.loc = clicked //then tele it, not our core
+			usr.loc = clicked
 		if ("right" in param_list)
 			return TRUE
 

@@ -108,7 +108,6 @@
 	temperature = 10+T0C
 
 	Entered(var/mob/M)
-		. = ..()
 		if (istype(M,/mob/dead) || istype(M,/mob/wraith) || istype(M,/mob/living/intangible) || istype(M, /obj/lattice))
 			return
 		if(!ismob(M))
@@ -697,7 +696,7 @@
 		src.tag = "cave[id][src.icon_state == "cave_entrance" ? 0 : 1]"
 
 	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
+		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1)
 			return
 
 		var/obj/cave_entrance/otherEntrance = locate("cave[id][src.icon_state == "cave_entrance"]")
@@ -1171,7 +1170,7 @@
 
 	Bumped(mob/user as mob)
 		if(busy) return
-		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		src.add_dialog(user)
 		busy = 1
 		showswirl(user.loc)
@@ -1297,7 +1296,7 @@
 
 	onUpdate()
 		..()
-		if (thecrate == null || the_tool == null || owner == null || BOUNDS_DIST(owner, thecrate) > 0)
+		if (thecrate == null || the_tool == null || owner == null || get_dist(owner, thecrate) > 1)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

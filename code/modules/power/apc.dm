@@ -534,7 +534,7 @@ var/zapLimiter = 0
 		else if (setup_networkapc > 1)
 			boutput(user, "This APC doesn't have a local interface.")
 		else
-			if(src.allowed(user))
+			if(src.allowed(usr))
 				locked = !locked
 				boutput(user, "You [ locked ? "lock" : "unlock"] the APC interface.")
 				UpdateIcon()

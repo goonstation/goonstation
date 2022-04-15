@@ -82,12 +82,12 @@
 					return
 				else
 					// insert cell
-					var/obj/item/cell/C = user.equipped()
+					var/obj/item/cell/C = usr.equipped()
 					if(istype(C))
 						user.drop_item()
 						cell = C
 						C.set_loc(src)
-						C.add_fingerprint(user)
+						C.add_fingerprint(usr)
 
 						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 			else
@@ -308,12 +308,12 @@
 					return
 				else
 					// insert cell
-					var/obj/item/cell/C = user.equipped()
+					var/obj/item/cell/C = usr.equipped()
 					if(istype(C))
 						user.drop_item()
 						cell = C
 						C.set_loc(src)
-						C.add_fingerprint(user)
+						C.add_fingerprint(usr)
 
 						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 			else

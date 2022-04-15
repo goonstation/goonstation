@@ -152,19 +152,19 @@
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || A == null)
+		if(get_dist(owner, O) > 1 || O == null || owner == null || A == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || A == null)
+		if(get_dist(owner, O) > 1 || O == null || owner == null || A == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || A == null)
+		if(get_dist(owner, O) > 1 || O == null || owner == null || A == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (ismob(owner))

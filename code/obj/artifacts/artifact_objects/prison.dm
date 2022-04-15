@@ -5,7 +5,6 @@
 /datum/artifact/prison
 	associated_object = /obj/artifact/prison
 	type_name = "Prison"
-	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
 	min_triggers = 2
 	max_triggers = 2
@@ -15,14 +14,11 @@
 	react_xray = list(15,90,90,11,"HOLLOW")
 	touch_descriptors = list("You seem to have a little difficulty taking your hand off its surface.")
 	var/mob/living/prisoner = null
-	var/living = FALSE
 	var/imprison_time = 0
 
 	New()
 		..()
 		imprison_time = rand(5 SECONDS, 2 MINUTES)
-		if (prob(10))
-			living = TRUE
 
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
@@ -33,10 +29,7 @@
 			return
 		if (isliving(user))
 			O.visible_message("<span class='alert'><b>[O]</b> suddenly pulls [user.name] inside and slams shut!</span>")
-			if (src.living)
-				new /mob/living/object/artifact(O, user)
-			else
-				user.set_loc(O)
+			user.set_loc(O)
 			O.ArtifactFaultUsed(user)
 			prisoner = user
 			SPAWN(imprison_time)
@@ -46,10 +39,6 @@
 	effect_deactivate(obj/O)
 		if (..())
 			return
-		if (living && istype(O.loc, /mob/living/object))
-			var/mob/living/object/mob = O.loc
-			mob.visible_message("<span class='alert'>[prisoner.name] is ejected from [mob] and regains control of their body.</span>")
-			mob.death(FALSE)
 		if (prisoner?.loc == O)
 			prisoner.set_loc(get_turf(O))
 			O.visible_message("<span class='alert'><b>[O]</b> releases [prisoner.name] and shuts down!</span>")
@@ -58,14 +47,3 @@
 		for(var/atom/movable/I in (O.contents-O.vis_contents))
 			I.set_loc(get_turf(O))
 		prisoner = null
-
-/mob/living/object/artifact
-
-	New()
-		..()
-		qdel(src.hud) // no escape!!!
-
-	click(atom/target, params)
-		if (target == src) // no recursive living objects ty
-			return
-		..()

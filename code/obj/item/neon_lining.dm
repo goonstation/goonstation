@@ -167,7 +167,7 @@
 	if (!istype(F,/turf/simulated/floor))
 		return
 
-	if (BOUNDS_DIST(F, user) > 0)
+	if (get_dist(F,user) > 1)
 		boutput(user, "You can't lay neon lining at a place that far away.")
 		return
 

@@ -86,7 +86,7 @@
 		if(!isliving(usr))
 			return
 
-		if(BOUNDS_DIST(src, usr) > 0)
+		if(get_dist(src, usr) > 1)
 			boutput(usr, "<span class='alert'>You need to be closer to empty \the [src] out!</span>")
 			return
 

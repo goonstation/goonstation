@@ -168,8 +168,7 @@
 	/obj/item/clothing/suit/space/engineer,
 	/obj/item/clothing/head/helmet/space/engineer,
 #endif
-	/obj/item/device/radio/headset/command/ce,
-	/obj/item/paper/manufacturer_blueprint/lawrack)
+	/obj/item/device/radio/headset/command/ce)
 
 /* ==================== */
 /* ----- Security ----- */
@@ -303,7 +302,7 @@
 			return
 		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
 			return
-		if (BOUNDS_DIST(src, usr) > 0)
+		if (get_dist(src, usr) > 1)
 			usr.show_text("You are too far away to do this!", "red")
 			return
 		if (get_dist(over_object, src) > 5)
@@ -461,7 +460,7 @@
 	icon_state = "science"
 	icon_closed = "science"
 	icon_opened = "secure_white-open"
-	req_access = list(access_research)
+	req_access = list(access_tox_storage)
 
 /obj/storage/secure/closet/research/uniform
 	name = "science uniform locker"

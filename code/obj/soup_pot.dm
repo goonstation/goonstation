@@ -116,7 +116,7 @@
 			else
 				pot.Attackby(W,user)
 				if(!pot.my_soup)
-					W.AfterAttack(pot,user) // ????
+					W.afterattack(pot,user) // ????
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/soup_pot) && in_interact_range(W, user) && in_interact_range(src, user) && !isintangible(user))

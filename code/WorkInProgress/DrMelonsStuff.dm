@@ -184,7 +184,7 @@
 		return
 
 	MouseDrop_T(mob/living/carbon/human/target, mob/user)
-		if (src.myuser || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
+		if (src.myuser || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
 			return
 
 		var/msg
@@ -220,7 +220,7 @@
     set name = "Draw A Bath" // idea: emagging bathtub makes the bath spit out a photo of itself when you draw a bath?
     set src in oview(1)
     set category = "Local"
-    if (BOUNDS_DIST(usr, src) == 0 && !usr.stat)
+    if (get_dist(usr, src) <= 1 && !usr.stat)
         src.reagents.add_reagent(default_reagent,120)
         usr.visible_message("<span class='notice'>[usr] draws a bath.</span>",\
         "<span class='success'>You draw a nice bath!</span>")

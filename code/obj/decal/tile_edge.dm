@@ -170,7 +170,7 @@
 	density = 1
 	anchored = 1
 	dir = NORTH
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 
 	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
@@ -180,16 +180,14 @@
 		else
 			return 1
 
-	Uncross(atom/movable/O, do_bump = TRUE)
+	CheckExit(atom/movable/O as mob|obj, target as turf)
 		if (!src.density)
-			. = 1
-		else if (istype(O, /obj/projectile))
-			. = 1
-		else if (get_dir(O.loc, O.movement_newloc) & src.dir)
-			. = !density
-		else
-			. = 1
-		UNCROSS_BUMP_CHECK(O)
+			return 1
+		if (istype(O, /obj/projectile))
+			return 1
+		if (get_dir(O.loc, target) & src.dir)
+			return 0
+		return 1
 
 /obj/decal/stage_edge/alt
 	name = "edge"

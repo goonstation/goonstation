@@ -502,9 +502,9 @@
 		if(holder && src.holder.level >= LEVEL_ADMIN)
 			var/target = href_list["CallProc"] == "global" ? null : locate(href_list["CallProc"])
 			if("proc_ref" in href_list)
-				src.doCallProc(target, locate(href_list["proc_ref"]))
+				doCallProc(target, locate(href_list["proc_ref"]))
 			else
-				src.doCallProc(target)
+				doCallProc(target)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to call a proc on something all rude-like.")
 		return
@@ -690,7 +690,7 @@
 			if (D)
 				var/datum/C = D.vars[href_list["procCall"]]
 				if (istype(C, /datum))
-					src.doCallProc(C)
+					doCallProc(C)
 		else
 			debug_variables(locate(href_list["Vars"]))
 	else
@@ -729,11 +729,13 @@
 		if (tgui_alert(usr, "Modifying this variable might break pixel movement. Don't edit this unless you know what you're doing. Continue?", "Confirmation", list("Yes", "No")) == "No")
 			return
 
+	var/default
 	var/var_value = D == "GLOB" ? global.vars[variable] : D.vars[variable]
 	if( istype(var_value, /datum/admins) || istype(D, /datum/admins) || var_value == logs || var_value == logs["audit"] )
 		src.audit(AUDIT_ACCESS_DENIED, "tried to assign a value to a forbidden variable.")
 		boutput(src, "You can't set that value.")
 		return
+	var/dir
 
 	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Administrator")))
 		boutput(usr, "<span class='alert'>You do not have access to edit this variable!</span>")
@@ -748,7 +750,88 @@
 		message_admins("[key_name(usr)] tried to varedit [D.type] but was denied.") //If someone tries this let's make sure we all know it.
 		return
 
-	var/default = suggest_input_type(var_value, variable)
+
+	if (isnull(var_value))
+		boutput(usr, "Unable to determine variable type.")
+
+	else if (istype(var_value, /matrix))
+		boutput(usr, "Variable appears to be <b>MATRIX</b>.")
+		default = "matrix"
+
+	else if (isnum(var_value))
+		boutput(usr, "Variable appears to be <b>NUM</b>.")
+		default = "num"
+		dir = 1
+
+	else if (is_valid_color_string(var_value))
+		boutput(usr, "Variable appears to be <b>COLOR</b>.")
+		default = "color"
+
+	else if (istext(var_value))
+		boutput(usr, "Variable appears to be <b>TEXT</b>.")
+		default = "text"
+
+	else if (isloc(var_value))
+		boutput(usr, "Variable appears to be <b>REFERENCE</b>.")
+		default = "reference"
+
+	else if (isicon(var_value))
+		boutput(usr, "Variable appears to be <b>ICON</b>.")
+		//var_value = "[bicon(var_value)]"
+		default = "icon"
+
+	else if (istype(var_value,/atom) || istype(var_value,/datum))
+		boutput(usr, "Variable appears to be <b>TYPE</b>.")
+		default = "type"
+
+	else if (islist(var_value))
+		boutput(usr, "Variable appears to be <b>LIST</b>.")
+		default = "list"
+	else if (isclient(var_value))
+		boutput(usr, "Variable appears to be <b>CLIENT</b>.")
+		default = "cancel"
+
+
+	else
+		boutput(usr, "Variable appears to be <b>FILE</b>.")
+		default = "file"
+
+	boutput(usr, "\"<tt>[variable]</tt>\" contains: [var_value]")
+	if(dir)
+		switch(var_value)
+			if(1)
+				dir = "NORTH"
+			if(2)
+				dir = "SOUTH"
+			if(4)
+				dir = "EAST"
+			if(8)
+				dir = "WEST"
+			if(5)
+				dir = "NORTHEAST"
+			if(6)
+				dir = "SOUTHEAST"
+			if(9)
+				dir = "NORTHWEST"
+			if(10)
+				dir = "SOUTHWEST"
+			else
+				dir = null
+		if(dir)
+			boutput(usr, "If a direction, direction is: [dir]")
+
+	var/list/classes = list("text", "num","num adjust","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list", "matrix","null", "ref", "restore to default")
+	if(variable=="filters" && !istype(D, /image))
+		default = "filter editor"
+		classes += default
+	else if(variable=="particles")
+		default = "particle editor"
+		classes += default
+	var/class = input("What kind of variable?","Variable Type",default) as null|anything in classes
+
+
+	if(!class)
+		return
 
 	var/original_name
 	if(D == "GLOB")
@@ -759,71 +842,328 @@
 		else
 			original_name = D:name
 
-	var/datum/data_input_result/result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_NUM_ADJUST, DATA_INPUT_TYPE, DATA_INPUT_MOB_REFERENCE, \
-											DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_ICON, DATA_INPUT_FILE, \
-											DATA_INPUT_COLOR, DATA_INPUT_LIST_EDIT, DATA_INPUT_JSON, DATA_INPUT_LIST_BUILD, DATA_INPUT_MATRIX, \
-											DATA_INPUT_NULL, DATA_INPUT_REF, DATA_INPUT_RESTORE, DATA_INPUT_PARTICLE_EDITOR, DATA_INPUT_FILTER_EDITOR), \
-											default = var_value, default_type = default)
-
-	switch(result.output_type) // specified cases are special handling. everything in the `else` is generic cases
-
-		if (null)
-			return
-
-		if (DATA_INPUT_RESTORE)
-			if (set_global)
+	var/oldVal = D == "GLOB" ? global.vars[variable] : D.vars[variable]
+	switch(class)
+		if("null")
+			if(set_global)
 				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = null
 					LAGCHECK(LAG_LOW)
-					x.vars[variable] = initial(x.vars[variable])
 			else
-				if (D == "GLOB")
+				if(D == "GLOB")
+					global.vars[variable] = null
+				else
+					D.vars[variable] = null
+		if("ref")
+			if (!(src.holder.rank in list("Host", "Coder", "Administrator")))
+				boutput( src, "<span class='alert'>This can super break shit so you can't use this. Sorry.</span> ")
+				return
+			var/theref = input("What ref?") as null|text
+			if(theref)
+				var/thing = locate(theref)
+				if(!thing)
+					thing = locate("\[[theref]\]")
+				if(!thing)
+					boutput(src, "<span class='alert'>Bad ref or couldn't find that thing. Drats.</span>")
+					return
+				if(set_global)
+					for(var/datum/x as anything in find_all_by_type(D.type))
+						x.vars[variable] = thing
+						LAGCHECK(LAG_LOW)
+				else
+					if(D == "GLOB")
+						global.vars[variable] = thing
+					else
+						D.vars[variable] = thing
+
+		if("list")
+			if(D == "GLOB")
+				mod_list(global.vars[variable])
+			else
+				mod_list(D.vars[variable])
+			//return <- Way to screw up logging
+
+		if("json")
+			var/val = input("Enter json:", "JSON", json_encode(D.vars[variable])) as text|null
+			if(!isnull(val))
+				val = json_decode(val)
+				if(!isnull(val))
+					if(set_global)
+						for(var/datum/x as anything in find_all_by_type(D.type))
+							x.vars[variable] = val
+							LAGCHECK(LAG_LOW)
+					else
+						if(D == "GLOB")
+							global.vars[variable] = val
+						else
+							D.vars[variable] = val
+
+		if("restore to default")
+			if(set_global)
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = initial(x.vars[variable])
+					LAGCHECK(LAG_LOW)
+			else
+				if(D == "GLOB")
 					global.vars[variable] = initial(global.vars[variable])
 				else
 					D.vars[variable] = initial(D.vars[variable])
 
-		if (DATA_INPUT_FILTER_EDITOR)
-			if(src.holder)
-				src.holder.filteriffic = new /datum/filter_editor(D)
-				src.holder.filteriffic.ui_interact(mob)
-
-		if (DATA_INPUT_PARTICLE_EDITOR)
-			if(src.holder)
-				src.holder.particool = new /datum/particle_editor(D)
-				src.holder.particool.ui_interact(mob)
-
-		if (DATA_INPUT_NUM_ADJUST)
-			if (!isnum(var_value))
-				boutput(src, "<span class='alert'>You can't adjust a non-num, silly.</span>")
-				return
-			if (set_global)
-				for(var/datum/x as anything in find_all_by_type(D.type))
-					LAGCHECK(LAG_LOW)
-					x.vars[variable] += result.output
+		if("edit referenced object")
+			if(D == "GLOB")
+				return .(global.vars[variable])
 			else
-				if (D == "GLOB")
-					global.vars[variable] += result.output
-				else
-					D.vars[variable] += result.output
+				return .(D.vars[variable])
 
-		else
+		if("create new list")
 			if(set_global)
 				for(var/datum/x as anything in find_all_by_type(D.type))
-					x.vars[variable] = result.output
+					x.vars[variable] = list()
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
-					global.vars[variable] = result.output
+					global.vars[variable] = list()
 				else
-					D.vars[variable] = result.output
+					D.vars[variable] = list()
+
+		if("text")
+			var/theInput = input("Enter new text:","[variable]", D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|message
+			if(theInput == null) return
+			if(set_global)
+				if(isclient(D))
+					for(var/client/x)
+						x.vars[variable] = theInput
+						LAGCHECK(LAG_LOW)
+				else
+					for(var/datum/x as anything in find_all_by_type(D.type))
+						x.vars[variable] = theInput
+						LAGCHECK(LAG_LOW)
+			else
+				if(D == "GLOB")
+					global.vars[variable] = theInput
+				else
+					D.vars[variable] = theInput
+
+		if("num")
+			var/theInput = input("Enter new number:","[variable]", D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|num
+			if(theInput == null) return
+			if(set_global)
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = theInput
+					LAGCHECK(LAG_LOW)
+			else
+				if(D == "GLOB")
+					global.vars[variable] = theInput
+				else
+					D.vars[variable] = theInput
+
+		if("num adjust")
+			if(!isnum(oldVal)) return
+			var/val = input("Enter value to adjust by:","[variable]", D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|num
+			if(!isnull(val))
+				if(set_global)
+					for(var/datum/x as anything in find_all_by_type(D.type))
+						x.vars[variable] += val
+						LAGCHECK(LAG_LOW)
+				else
+					if(D == "GLOB")
+						global.vars[variable] += val
+					else
+						D.vars[variable] += val
+
+		if("type")
+			boutput(usr, "<span class='hint'>Type part of the path of the type.</span>")
+			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
+			if (typename)
+				var/match = get_one_match(typename, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
+				if (match)
+					if (set_global)
+						for(var/datum/x as anything in find_all_by_type(D.type))
+							LAGCHECK(LAG_LOW)
+							x.vars[variable] = match
+					else
+						if(D == "GLOB")
+							global.vars[variable] = match
+						else
+							D.vars[variable] = match
+
+		if("reference")
+			var/theInput = input("Select reference:","[variable]", D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|mob|obj|turf|area in world
+			if(theInput == null) return
+			if(set_global)
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = theInput
+					LAGCHECK(LAG_LOW)
+			else
+				if(D == "GLOB")
+					global.vars[variable] = theInput
+				else
+					D.vars[variable] = theInput
+
+		if("mob reference")
+			var/theInput = input("Select reference:","[variable]", D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|mob in world
+			if(theInput == null) return
+			if(set_global)
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = theInput
+					LAGCHECK(LAG_LOW)
+			else
+				if(D == "GLOB")
+					global.vars[variable] = theInput
+				else
+					D.vars[variable] = theInput
+
+		if("file")
+			var/theInput = input("Pick file:","[variable]",D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|file
+			if(theInput == null) return
+			if(set_global)
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = theInput
+					LAGCHECK(LAG_LOW)
+			else
+				if(D == "GLOB")
+					global.vars[variable] = theInput
+				else
+					D.vars[variable] = theInput
+
+		if("icon")
+			var/theInput = input("Pick icon:","[variable]",D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|icon
+			if(theInput == null) return
+			if(set_global)
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = theInput
+					LAGCHECK(LAG_LOW)
+			else
+				if(D == "GLOB")
+					global.vars[variable] = theInput
+				else
+					D.vars[variable] = theInput
+
+		if("color")
+			var/theInput = input("Pick color:","[variable]",D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|color
+			if(theInput == null) return
+			if(set_global)
+				if(isclient(D))
+					for(var/client/x)
+						x.vars[variable] = theInput
+						LAGCHECK(LAG_LOW)
+				else
+					for(var/datum/x as anything in find_all_by_type(D.type))
+						x.vars[variable] = theInput
+						LAGCHECK(LAG_LOW)
+			else
+				if(D == "GLOB")
+					global.vars[variable] = theInput
+				else
+					D.vars[variable] = theInput
+
+		if("matrix")
+			var/matrix/DM = D == "GLOB" ? global.vars[variable] : D.vars[variable]	//default matrix
+			var/default_matrix_text
+			if (istype(DM))
+				default_matrix_text = "[DM.a],[DM.b],[DM.c],[DM.d],[DM.e],[DM.f]"
+
+			var/theInput = input("Create a matrix:  (format: \"a,b,c,d,e,f\" without quotes). Must have a leading 0 for decimals:","[variable]", default_matrix_text) as null|message
+			if(theInput == null) return
 
 
+			var/regex/R = new("(\\w*\\.*\\w+)(,|$)", "gi")
+			var/list/MV = list()
+			var/i = 1
+			while (R.Find(theInput))
+				if (i <= 6)
+					var/temp = R.group[1]
+					MV.Add(text2num(temp))
+					i++
+
+
+			var/matrix/M
+			if (MV.len >= 6)
+				M = matrix(MV[1],MV[2],MV[3],MV[4],MV[5],MV[6])
+			else
+				return
+
+			if(set_global)
+				for(var/datum/x as anything in find_all_by_type(D.type))
+					x.vars[variable] = M
+					LAGCHECK(LAG_LOW)
+			else
+				if(D == "GLOB")
+					global.vars[variable] = M
+				else
+					D.vars[variable] = M
+
+
+		if("turf by coordinates")
+			var/x = input("X coordinate", "Set to turf at \[_, ?, ?\]", 1) as num
+			var/y = input("Y coordinate", "Set to turf at \[[x], _, ?\]", 1) as num
+			var/z = input("Z coordinate", "Set to turf at \[[x], [y], _\]", 1) as num
+			var/turf/T = locate(x, y, z)
+			if (istype(T))
+				if (set_global)
+					for(var/datum/q as anything in find_all_by_type(D.type))
+						LAGCHECK(LAG_LOW)
+						q.vars[variable] = T
+				else
+					if(D == "GLOB")
+						global.vars[variable] = T
+					else
+						D.vars[variable] = T
+			else
+				boutput(usr, "<span class='alert'>Invalid coordinates!</span>")
+				return
+
+		if("reference picker")
+			boutput(usr, "<span class='hint'>Click the mob, object or turf to use as a reference.</span>")
+			var/mob/M = usr
+			if (istype(M))
+				var/datum/targetable/refpicker/R
+				if (set_global)
+					R = new /datum/targetable/refpicker/global()
+				else
+					R = new()
+				R.target = D
+				R.varname = variable
+				M.targeting_ability = R
+				M.update_cursor()
+				return
+
+		if ("new instance of a type")
+			boutput(usr, "<span class='notice'>Type part of the path of type of thing to instantiate.</span>")
+			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
+			if (typename)
+				var/basetype = /obj
+				if (src.holder.rank in list("Host", "Coder", "Administrator"))
+					basetype = /datum
+				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
+				if (match)
+					if (set_global)
+						for(var/datum/x as anything in find_all_by_type(D.type))
+							LAGCHECK(LAG_LOW)
+							x.vars[variable] = new match(x)
+					else
+						if(D == "GLOB")
+							global.vars[variable] = new match()
+						else
+
+							D.vars[variable] = new match(D)
+			else
+				return
+		if ("filter editor")
+			if(src.holder)
+				src.holder.filteriffic = new /datum/filter_editor(D)
+				src.holder.filteriffic.ui_interact(mob)
+		if ("particle editor")
+			if(src.holder)
+				src.holder.particool = new /datum/particle_editor(D)
+				src.holder.particool.ui_interact(mob)
 
 	logTheThing("admin", src, null, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""))
 	logTheThing("diary", src, null, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), "admin")
 	message_admins("[key_name(src)] modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), 1)
 	SPAWN(0)
 		if (istype(D, /datum))
-			D.onVarChanged(variable, var_value, D.vars[variable])
+			D.onVarChanged(variable, oldVal, D.vars[variable])
 	if(src.refresh_varedit_onchange)
 		src.debug_variables(D)
 

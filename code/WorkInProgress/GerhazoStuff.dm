@@ -54,7 +54,7 @@
 
 		if(deflecting_sword)
 			if(deflecting_sword.active == 0)  // turn the sword on if it's off
-				deflecting_sword.AttackSelf(src)
+				deflecting_sword.attack_self(src)
 				src.visible_message("<span class='alert'>[src] instinctively switches his [deflecting_sword] on in response to the incoming [P.name]!</span>")
 			var/datum/abilityHolder/cyalume_knight/my_ability_holder = src.get_ability_holder(/datum/abilityHolder/cyalume_knight)
 			var/force_drain_multiplier = 0.3  // projectile's damage(power) is multiplied by this and then subtracted from ability holder's points
@@ -242,7 +242,7 @@
 		// assuming no super weird things happened, the sword should be on the ground at this point
 		for(var/i=0, i<100, i++)
 			step_to(sword, my_mob)
-			if (BOUNDS_DIST(sword, my_mob) == 0)
+			if (get_dist(sword,my_mob) <= 1)
 				playsound(my_mob, 'sound/effects/throw.ogg', 50, 1)
 				sword.set_loc(get_turf(my_mob))
 				if (my_mob.put_in_hand(sword))

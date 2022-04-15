@@ -98,19 +98,6 @@ datum
 			thirst_value = 0.75
 			value = 3 // 1 2
 
-		fooddrink/milk/blue_milk
-			name = "blue milk"
-			id = "blue_milk"
-			fluid_r = 196
-			fluid_g = 196
-			fluid_b = 248
-			transparency = 255
-			taste = "oily and sweet."
-			description = "Smells like blueberries and tastes worse."
-			reagent_state = LIQUID
-			thirst_value = 0.75
-			value = 3 // 1 2
-
 		fooddrink/milk/milk_punch
 			name = "milk punch"
 			id = "milk_punch"
@@ -653,7 +640,13 @@ datum
 						H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/dreads
 						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/fullbeard
 						H.real_name = "Captain [H.real_name]"
-
+						if (H.wear_id)
+							if (istype(H.wear_id, /obj/item/card/id))
+								H.wear_id:registered = H.real_name
+								H.wear_id:name = "[H.real_name]'s ID ([H.wear_id:assignment])"
+							else if (istype(H.wear_id, /obj/item/device/pda2) && H.wear_id:ID_card)
+								H.wear_id:ID_card:registered = H.real_name
+								H.wear_id:ID_card:name = "[H.real_name]'s ID ([H.wear_id:ID_card:assignment])"
 						if(!istype(H.glasses, /obj/item/clothing/glasses/eyepatch))
 							var/obj/item/old_glasses = H.glasses
 							if(istype(old_glasses))
@@ -1600,7 +1593,7 @@ datum
 				if(probmult(15))
 					M.emote(pick("cough","sneeze","gasp"))
 				if(probmult(20))
-					M.setStatusMin("stunned", 3 SECONDS * mult)
+					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS * mult))
 				if(prob(40))
 					random_burn_damage(M, 2 * mult)
 				if(probmult(0.2 * volume))
@@ -1831,17 +1824,6 @@ datum
 			reagent_state = LIQUID
 			taste = "overwhelming"
 
-		fooddrink/alcoholic/romulale
-			name = "Romulale"
-			id = "romulale"
-			fluid_r = 20
-			fluid_g = 168
-			fluid_b = 240
-			alch_strength = 0.8
-			description = "Illegal in some jurisdictions."
-			reagent_state = LIQUID
-			taste ="medicinal"
-
 		fooddrink/sodawater
 			name = "soda water"
 			id = "sodawater"
@@ -2007,14 +1989,14 @@ datum
 					M.stuttering += rand(0,5)
 					if(prob(10))
 						M.emote(pick("choke","gasp","cough"))
-						M.setStatusMin("stunned", 1 SECOND * mult)
+						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 1 SECOND * mult))
 						M.take_oxygen_deprivation(rand(0,10) * mult)
 						M.bodytemperature += rand(5,20) * mult
 				M.stuttering += rand(0,2)
 				M.bodytemperature += rand(0,3) * mult
 				if(prob(10))
 					M.emote(pick("cough"))
-					M.setStatusMin("stunned", 1 SECOND * mult)
+					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 1 SECOND * mult))
 				..()
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -2234,18 +2216,17 @@ datum
 			stun_resist = 7
 			taste = "bitter"
 			threshold = THRESHOLD_INIT
-			var/caffeine_rush = 2
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush", src.caffeine_rush)
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "consumable_good", 2)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush")
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "consumable_good")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2274,10 +2255,23 @@ datum
 			fluid_b = 14
 			thirst_value = 0.25
 			energy_value = 0.8
-			caffeine_rush = 3
+			var/caffeine_rush = 3
+			var/caffeine_jitters = 10
 			stun_resist = 10
 			taste = "rich and fragrant"
 			threshold = THRESHOLD_INIT
+
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "caffeine rush", src.caffeine_rush)
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "caffeine rush")
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
@@ -2289,7 +2283,6 @@ datum
 			description = "An expresso is a strong black coffee with more stupid."
 			taste = "coffee yum"
 			stun_resist = 25
-			caffeine_rush = 4
 			threshold = THRESHOLD_INIT
 			var/killer = 0
 
@@ -2308,6 +2301,7 @@ datum
 			id = "decafespresso"
 			description = "A decaf espresso contains less caffeine than a regular espresso."
 			caffeine_rush = 2
+			caffeine_jitters = 5
 			addiction_prob = 1
 			addiction_prob2 = 5
 			energy_value = 0
@@ -2331,7 +2325,6 @@ datum
 			stun_resist = 25
 			taste = "supercharged"
 			threshold = THRESHOLD_INIT
-			caffeine_rush = 3
 
 
 			cross_threshold_over()
@@ -2904,8 +2897,8 @@ datum
 					if (prob(5))
 						boutput(M, "<span class='alert'>You feel a sharp pain in your chest!</span>")
 						M.take_oxygen_deprivation(25 * mult)
-						M.setStatusMin("stunned", 10 SECONDS * mult)
-						M.setStatusMin("paralysis", 6 SECONDS * mult)
+						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 10 SECONDS * mult))
+						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 6 SECONDS * mult))
 				else
 					depletion_rate = 0.2 * mult
 				..()
@@ -3014,7 +3007,7 @@ datum
 						M.take_toxin_damage(rand(2.4) * mult)
 					if (prob(7))
 						boutput(M, "<span class='alert'>A horrible migraine overpowers you.</span>")
-						M.setStatusMin("stunned", 4 SECONDS * mult)
+						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 4 SECONDS * mult))
 				..()
 
 		fooddrink/egg
@@ -3111,7 +3104,7 @@ datum
 						M.visible_message("<span class='alert'><b>[M.name]</b> suddenly starts salivating.</span>")
 						M.emote("drool")
 						M.change_misstep_chance(10 * mult)
-						M.setStatusMin("weakened", 2 SECONDS * mult)
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 2 SECONDS * mult))
 					else if(effect <= 3)
 						M.visible_message("<span class='alert'><b>[M.name]</b> begins to reminisce about food.</span>")
 						M.changeStatus("stunned", 2 SECONDS * mult)
@@ -3124,16 +3117,16 @@ datum
 					if(effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]</b> enters a food coma!</span>")
 						M.emote("faint")
-						M.setStatusMin("paralysis", 6 SECONDS * mult)
+						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 6 SECONDS * mult))
 					else if(effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> wants more delicious food!</span>")
 						M.emote("scream")
-						M.setStatusMin("stunned", 5 SECONDS * mult)
+						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 5 SECONDS * mult))
 					else if(effect <= 8)
 						M.visible_message("<span class='alert'><b>[M.name]</b> appears extremely depressed.</span>")
 						M.emote("moan")
 						M.change_misstep_chance(25 * mult)
-						M.setStatusMin("weakened", 7 SECONDS * mult)
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 7 SECONDS * mult))
 
 		fooddrink/pepperoni //Hukhukhuk presents. pepperoni and acetone
 			name = "pepperoni"
@@ -3584,7 +3577,7 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "tripletriple", 3333)
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "tripletriple", 3333)
 					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
 				..()
 
@@ -3592,7 +3585,7 @@ datum
 				if (ismob(holder.my_atom))
 					var/mob/M = holder.my_atom
 					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
-					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "tripletriple")
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "tripletriple")
 				..()
 
 			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
@@ -3725,85 +3718,6 @@ datum
 			viscosity = 0.1
 			taste = "refreshing"
 
-		fooddrink/laurapalmer
-			name = "laura palmer"
-			id = "laurapalmer"
-			fluid_r = 132
-			fluid_g = 110
-			fluid_b = 41
-			transparency = 200
-			taste = "bittersweet."
-			description = "A mixture of half lemonade and half coffee."
-			reagent_state = LIQUID
-			thirst_value = 0.75
-
-		fooddrink/pine_ginger
-			name = "pine-ginger"
-			id = "pine_ginger"
-			fluid_r = 230
-			fluid_g = 210
-			fluid_b = 90
-			transparency = 220
-			taste = "sweet and fruity"
-			reagent_state = LIQUID
-			thirst_value = 0.8
-
-		fooddrink/vermont_breeze
-			name = "vermont breeze"
-			id = "vermont_breeze"
-			fluid_r = 220
-			fluid_g = 200
-			fluid_b = 80
-			transparency = 195
-			taste = "sweet and sour"
-			reagent_state = LIQUID
-			thirst_value = 0.8
-
-		fooddrink/sail_boat
-			name = "sail boat"
-			id = "sail_boat"
-			fluid_r = 160
-			fluid_g = 220
-			fluid_b = 90
-			transparency = 160
-			taste = "sour and fizzy"
-			reagent_state = LIQUID
-			thirst_value = 0.8
-
-		fooddrink/catamount
-			name = "catamount"
-			id = "catamount"
-			fluid_r = 230
-			fluid_g = 100
-			fluid_b = 60
-			transparency = 200
-			taste = "sweet and fruity"
-			reagent_state = LIQUID
-			thirst_value = 0.8
-
-		fooddrink/tea/sun_tea
-			name = "sun tea"
-			id = "sun_tea"
-			fluid_r = 139
-			fluid_g = 110
-			fluid_b = 54
-			transparency = 220
-			taste = "aromatic and citrusy"
-			reagent_state = LIQUID
-			thirst_value = 0.8
-
-		fooddrink/cafe_gele
-			name = "cafe gele"
-			id = "cafe_gele"
-			fluid_r = 140
-			fluid_g = 110
-			fluid_b = 30
-			transparency = 220
-			taste = "bittersweet"
-			reagent_state = LIQUID
-			thirst_value = 0.8
-
-
 		fooddrink/temp_bioeffect
 			var/bioeffect_id = null
 
@@ -3839,16 +3753,6 @@ datum
 			fluid_b = 0
 			transparency = 20
 			bioeffect_id = "accent_swedish"
-
-		fooddrink/temp_bioeffect/innitium
-			name = "innitium"
-			id = "innitium"
-			description = "A real bri'ish substance, innit bruv?"
-			fluid_r = 0
-			fluid_g = 35
-			fluid_b = 121
-			transparency = 60
-			bioeffect_id = "accent_chav"
 
 		fooddrink/temp_bioeffect/caledonium
 			name = "caledonium"
@@ -4054,7 +3958,7 @@ datum
 				if(prob(50))
 					boutput(M, "<span class='alert'>Your throat burns furiously!</span>")
 					M.emote(pick("scream","cry","choke","gasp"))
-					M.setStatusMin("stunned", 2 SECONDS * mult)
+					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
 				if(probmult(8))
 					boutput(M, "<span class='alert'>Why!? WHY!?</span>")
 				if(probmult(8))

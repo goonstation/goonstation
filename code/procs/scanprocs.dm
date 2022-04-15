@@ -432,7 +432,7 @@
 	record_prog.active1 = GR
 	record_prog.active2 = MR
 	record_prog.mode = 1
-	pda.AttackSelf(usr)
+	pda.attack_self(usr)
 
 /proc/scan_reagents(var/atom/A as turf|obj|mob, var/show_temp = 1, var/single_line = 0, var/visible = 0, var/medical = 0)
 	if (!A)
@@ -510,11 +510,11 @@
 			if (WG.glove_ID)
 				glove_data += "[WG.glove_ID] (<span class='notice'>[H]'s worn [WG.name]</span>)"
 			if (!WG.hide_prints)
-				fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.bioHolder.fingerprints]"
+				fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.bioHolder.uid_hash]"
 			else
 				fingerprint_data += "<br><span class='notice'>Unable to scan [H]'s fingerprints.</span>"
 		else
-			fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.bioHolder.fingerprints]"
+			fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.bioHolder.uid_hash]"
 
 		if (H.gunshot_residue) // Left by firing a kinetic gun.
 			forensic_data += "<br><span class='notice'>Gunshot residue found.</span>"

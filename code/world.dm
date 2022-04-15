@@ -65,25 +65,18 @@ var/global/mob/twitch_mob = 0
 	if (!fexists(path))
 		return null
 
-	var/savefile/F = new /savefile(path, 10)
-	if (!F)
-		logTheThing("debug", null, null, "Failed to load intra round value \"[field]\". Save file exists but may be locked by another process.")
-		return
+	var/savefile/F = new /savefile(path, -1)
 	F["[field]"] >> .
 
 /world/proc/save_intra_round_value(var/field, var/value)
 	if (!field || isnull(value))
 		return -1
 
-	var/savefile/F = new /savefile("data/intra_round.sav", 10)
-	if (!F)
-		logTheThing("debug", null, null, "Unable to save intra round value to field \"[field]\". Save file may be locked by another process.")
-		return
-	if (F.Lock(10))
-		F["[field]"] << value
-		return 0
-	else
-		logTheThing("debug", null, null, "Unable to save intra round value to field \"[field]\". Failed to obtain an exclusive save file lock.")
+	var/savefile/F = new /savefile("data/intra_round.sav", -1)
+	F.Lock(-1)
+
+	F["[field]"] << value
+	return 0
 
 /world/proc/load_motd()
 	join_motd = grabResource("html/motd.html")
@@ -169,7 +162,6 @@ var/f_color_selector_handler/F_Color_Selector
 		world.log << ""
 #endif
 
-		Z_LOG_DEBUG("Preload", "  radio")
 		radio_controller = new /datum/controller/radio()
 
 		Z_LOG_DEBUG("Preload", "Loading config...")
@@ -223,10 +215,8 @@ var/f_color_selector_handler/F_Color_Selector
 		Z_LOG_DEBUG("Preload", "Building material cache...")
 		buildMaterialCache()			//^^
 
-		// no log because this is functionally instant
-		global_signal_holder = new
-
 		Z_LOG_DEBUG("Preload", "Starting controllers")
+		Z_LOG_DEBUG("Preload", "  radio")
 
 		Z_LOG_DEBUG("Preload", "  data_core")
 		data_core = new /datum/datacore()
@@ -263,8 +253,6 @@ var/f_color_selector_handler/F_Color_Selector
 		ghost_notifier = new /datum/ghost_notification_controller()
 		Z_LOG_DEBUG("Preload", "  respawn_controller")
 		respawn_controller = new /datum/respawn_controls()
-		Z_LOG_DEBUG("Preload", " cargo_pad_manager")
-		cargo_pad_manager = new /datum/cargo_pad_manager()
 
 		Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 		hydro_controls.set_up()
@@ -282,6 +270,11 @@ var/f_color_selector_handler/F_Color_Selector
 				if initial(foobar.variable) == Arg
 					do_thing
 		*/
+
+		Z_LOG_DEBUG("Preload", "  /datum/generatorPrefab")
+		for(var/A in childrentypesof(/datum/generatorPrefab))
+			var/datum/generatorPrefab/R = new A()
+			miningModifiers.Add(R)
 
 		Z_LOG_DEBUG("Preload", "  /datum/faction")
 		for(var/A in childrentypesof(/datum/faction))
@@ -344,7 +337,6 @@ var/f_color_selector_handler/F_Color_Selector
 		..()
 
 /world/New()
-	current_state = GAME_STATE_WORLD_NEW
 	Z_LOG_DEBUG("World/New", "World New()")
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	tick_lag = MIN_TICKLAG//0.4//0.25
@@ -512,6 +504,10 @@ var/f_color_selector_handler/F_Color_Selector
 		bust_lights()
 		master_mode = "disaster" // heh pt. 2
 
+	UPDATE_TITLE_STATUS("Lighting up")
+	Z_LOG_DEBUG("World/Init", "RobustLight2 init...")
+	RL_Start()
+
 	//SpyStructures and caches live here
 	UPDATE_TITLE_STATUS("Updating cache")
 	Z_LOG_DEBUG("World/Init", "Building various caches...")
@@ -538,14 +534,6 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
 	makeMiningLevel()
 	#endif
-
-	UPDATE_TITLE_STATUS("Lighting up")
-	Z_LOG_DEBUG("World/Init", "RobustLight2 init...")
-	RL_Start()
-
-	UPDATE_TITLE_STATUS("Building random station rooms")
-	Z_LOG_DEBUG("World/Init", "Setting up random rooms...")
-	buildRandomRooms()
 
 	UPDATE_TITLE_STATUS("Initializing biomes")
 	Z_LOG_DEBUG("World/Init", "Setting up biomes...")
@@ -581,11 +569,6 @@ var/f_color_selector_handler/F_Color_Selector
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
 	Z_LOG_DEBUG("World/Init", "Now in pre-game state.")
-
-	#ifndef LIVE_SERVER
-	for (var/thing in by_cat[TR_CAT_DELETE_ME])
-		qdel(thing)
-	#endif
 
 #ifdef MOVING_SUB_MAP
 	Z_LOG_DEBUG("World/Init", "Making Manta start moving...")
@@ -648,9 +631,6 @@ var/f_color_selector_handler/F_Color_Selector
 	processScheduler.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
-	global.save_noticeboards()
-	for_by_tcl(canvas, /obj/item/canvas/big_persistent)
-		canvas.save()
 	global.phrase_log.save()
 	for_by_tcl(P, /datum/player)
 		P.on_round_end()
@@ -1294,11 +1274,10 @@ var/f_color_selector_handler/F_Color_Selector
 								<a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
 							</div>
 						</div>
-						"}, forceScroll=TRUE)
+						"})
 					M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
 					logTheThing("admin_help", null, M, "Discord: [nick] PM'd [constructTarget(M,"admin_help")]: [msg]")
 					logTheThing("diary", null, M, "Discord: [nick] PM'd [constructTarget(M,"diary")]: [msg]", "ahelp")
-					M.client.make_sure_chat_is_open()
 					for (var/client/C)
 						if (C.holder && C.key != M.key)
 							if (C.player_mode && !C.player_mode_ahelp)
@@ -1500,9 +1479,8 @@ var/f_color_selector_handler/F_Color_Selector
 			//Tells shitbee what the current AI laws are (if there are any custom ones)
 			if ("ailaws")
 				if (current_state > GAME_STATE_PREGAME)
-					var/ircmsg[] = new()
-					ircmsg["laws"] = ticker.ai_law_rack_manager.format_for_logs(glue = "\n", round_end = TRUE, include_link = FALSE)
-					return ircbot.response(ircmsg)
+					var/list/laws = ticker.centralized_ai_laws.format_for_irc()
+					return ircbot.response(laws)
 				else
 					return 0
 

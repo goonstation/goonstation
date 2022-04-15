@@ -54,7 +54,7 @@
 		src.attacking = 1
 		src.visible_message("<span class='combat'><B>[src]</B> starts trying to eat [M]!</span>")
 		SPAWN(7 SECONDS)
-			if (BOUNDS_DIST(src, M) == 0 && ((M:loc == target_lastloc)) && src.alive) // added a health check so dead maneaters stop eating people - cogwerks
+			if (get_dist(src, M) <= 1 && ((M:loc == target_lastloc)) && src.alive) // added a health check so dead maneaters stop eating people - cogwerks
 				if(iscarbon(M))
 					src.visible_message("<span class='combat'><B>[src]</B> ravenously wolfs down [M]!</span>")
 					logTheThing("combat", M, null, "was devoured by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
@@ -64,7 +64,7 @@
 					M.transforming = 1
 					M.canmove = 0
 					M.icon = null
-					APPLY_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
+					APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 					if(ishuman(M))
 						animation = new(src.loc)
 						animation.icon_state = "blank"

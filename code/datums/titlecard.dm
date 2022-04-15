@@ -46,8 +46,6 @@
 			C << browse(last_pregame_html, "window=pregameBrowser")
 			if(C)
 				winshow(C, "pregameBrowser", 1)
-				var/mob/new_player/new_player = C.mob
-				new_player.pregameBrowserLoaded = TRUE
 	pregameHTML = last_pregame_html
 
 /datum/titlecard/proc/set_maptext(id, text)
@@ -61,9 +59,7 @@
 	if (last_pregame_html == pregameHTML)
 		for(var/client/C)
 			if(istype(C.mob, /mob/new_player))
-				var/mob/new_player/new_player = C.mob
-				if(new_player.pregameBrowserLoaded)
-					C << output(list2params(list(id, text)), "pregameBrowser:set_area")
+				C << output(list2params(list(id, text)), "pregameBrowser:set_area")
 
 /client/verb/send_lobby_text()
 	set name = ".send-lobby-text"
@@ -84,10 +80,8 @@
 	if(current_state <= GAME_STATE_PREGAME)
 		return
 #endif
-	var/mob/new_player/new_player = C.mob
-	if(istype(new_player) && new_player.pregameBrowserLoaded)
-		for (var/id in maptext_areas)
-			C << output(list2params(list(id, maptext_areas[id])), "pregameBrowser:set_area")
+	for (var/id in maptext_areas)
+		C << output(list2params(list(id, maptext_areas[id])), "pregameBrowser:set_area")
 
 ///old title card turf
 /obj/titlecard

@@ -15,7 +15,7 @@
 	soundproofing = 3
 	throwforce = 50 //ouch
 	can_flip_bust = 1
-	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT  | NO_MOUSEDROP_QOL
 
 	get_desc()
 		. = ..()
@@ -35,9 +35,9 @@
 			return 1
 		return ..()
 
-	Uncross(atom/movable/O, do_bump = TRUE)
+	CheckExit(atom/movable/O as mob|obj, target as turf)
 		if(istype(O, /obj/projectile))
-			. = 1
+			return 1
 		return ..()
 
 // Gore delivers new crates - woo!
@@ -261,7 +261,7 @@
 				new /obj/critter/spirit( src )
 			return 1
 
-	open(entanglelogic, mob/user)
+	open()
 		..()
 		if(!triggered)
 			triggered = 1
@@ -273,7 +273,11 @@
 	var/static/list/possible_items = list()
 	grab_stuff_on_spawn = FALSE
 
-	proc/spawn_items(mob/owner, obj/item/uplink/owner_uplink)
+	New()
+		..()
+		spawn_items()
+
+	proc/spawn_items(var/mob/owner)
 		#define NESTED_SCALING_FACTOR 0.8
 		if (istype(src.loc, /obj/storage/crate/syndicate_surplus)) //if someone got lucky and rolled a surplus inside a surplus, scale the inner one (and its contents) down
 			src.nest_amt++
@@ -282,34 +286,28 @@
 
 		if (islist(syndi_buylist_cache) && !length(possible_items))
 			for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
-				if(!isnull(owner_uplink) && !(S.can_buy & owner_uplink.purchase_flags)) //You can get anything (not usually excluded from surplus crates) from any gamemode if you spawn this without an uplink
-					continue
+				var/blocked = 0
+				if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && length(S.blockedmode))
+					for (var/V in S.blockedmode)
+						if (ispath(V) && istype(ticker.mode, V))
+							blocked = 1
+							break
 
-				if (!S.not_in_crates)
+				if (blocked == 0 && !S.not_in_crates)
 					possible_items += S
 
 		if (islist(possible_items) && length(possible_items))
-			var/list/crate_contents = list()
 			while(telecrystals < 18)
 				var/datum/syndicate_buylist/item_datum = pick(possible_items)
-				crate_contents += item_datum.name
 				if(telecrystals + item_datum.cost > 24) continue
 				var/obj/item/I = new item_datum.item(src)
 				I.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the contents if we're nested
 				if (owner)
-					item_datum.run_on_spawn(I, owner, TRUE, owner_uplink)
+					item_datum.run_on_spawn(I, owner, TRUE)
 					if (owner.mind)
 						owner.mind.traitor_crate_items += item_datum
 				telecrystals += item_datum.cost
-			var/str_contents = kText.list2text(crate_contents, ", ")
-			logTheThing("debug", owner, null, "surplus crate contains: [str_contents] at [log_loc(src)]")
 		#undef NESTED_SCALING_FACTOR
-
-/obj/storage/crate/syndicate_surplus/spawnable
-
-	New()
-		..()
-		spawn_items() //null owner/uplink, so pulls from all possible items
 
 /obj/storage/crate/pizza
 	name = "pizza box"
@@ -548,7 +546,7 @@
 		/obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut,
 		/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector,
 		/obj/item/clothing/glasses/healthgoggles/upgraded,
-		/obj/item/device/analyzer/healthanalyzer/upgraded,
+		/obj/item/device/analyzer/healthanalyzer/borg,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
 		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,
@@ -559,7 +557,7 @@
 		name = "Class Crate - Field Medic"
 		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies."
 		spawn_contents = list(/obj/item/clothing/glasses/healthgoggles/upgraded,
-		/obj/item/device/analyzer/healthanalyzer/upgraded,
+		/obj/item/device/analyzer/healthanalyzer/borg,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
 		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,
@@ -773,7 +771,7 @@
 
 	cargonia
 		spawn_contents = list(/obj/item/radio_tape/advertisement/cargonia,
-		/obj/item/clothing/under/rank/cargo,/obj/decal/fakeobjects/skeleton)
+		/obj/item/clothing/under/rank/cargo,/obj/decal/skeleton)
 
 	escape
 		spawn_contents = list(/obj/item/sea_ladder,

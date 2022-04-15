@@ -6,7 +6,6 @@
 /datum/artifact/activator_key
 	associated_object = /obj/item/artifact/activator_key
 	type_name = "Activator Key"
-	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 200
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	automatic_activation = 1

@@ -139,7 +139,7 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 		if(index <= src.overlays.len)
 			src.overlays.Cut(index, index+1) //Fuck yoooou byond (this gotta be by index or it'll fail if the same thing's in overlays several times)
 		else
-			stack_trace("Overlays on [src.type] were modified by non-UpdateOverlays method. Ref: \ref[src]")
+			stack_trace("Overlays on [src.type] were modified by non-UpdateOverlays method.")
 
 		prev_data[P_INDEX] = 0
 		for(var/ikey in overlay_refs) //Because we're storing the position of each overlay in the list we need to shift our indices down to stay synched
@@ -199,10 +199,10 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 	else
 		. = null
 
-/atom/proc/SafeGetOverlayImage(var/key, var/image_file as file, var/icon_state as text, var/layer as num|null, var/pixel_x as num|null, var/pixel_y as num|null)
+/atom/proc/SafeGetOverlayImage(var/key, var/image_file as file, var/icon_state as text, var/layer as num|null)
 	var/image/I = GetOverlayImage(key)
 	if(!I)
-		I = image(image_file, icon_state, layer, pixel_x = pixel_x, pixel_y = pixel_y)
+		I = image(image_file, icon_state, layer)
 	else
 		//Ok, apparently modifying anything pertaining to the image appearance causes a hubbub, thanks byand
 		if(I.icon != image_file)
@@ -213,10 +213,6 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 
 		if(layer && layer != I.layer)
 			I.layer = layer
-		if(pixel_x && pixel_x != I.pixel_x)
-			I.pixel_x = pixel_x
-		if(pixel_y && pixel_y != I.pixel_y)
-			I.pixel_y = pixel_y
 	return I
 
 
