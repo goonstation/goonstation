@@ -1465,7 +1465,6 @@
 			var/mob/M = src.loc
 			M.u_equip(src)
 
-
 			//mbc GC tooltips (this wont 100% kill tooltip deletions but itll help?
 			if	(M.client && M.client.tooltipHolder)
 				for (var/datum/tooltip/tip in M.client.tooltipHolder.tooltips)
