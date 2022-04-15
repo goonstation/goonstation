@@ -47,12 +47,12 @@
 	var/datum/db_record/account = null
 	var/last_relaymove_time
 	var/is_short = 0 // can you not stand in it?  ie, crates?
-	var/open_fail_prob = 50
 	var/crunches_contents = 0 // for the syndicate trashcart & hotdog stand
 	var/crunches_deliciously = 0 // :I
 	var/owner_ckey = null // owner of the crunchy cart, so they don't get crunched
 	var/opening_anim = null
 	var/closing_anim = null
+	var/last_attackhand = 0
 
 	var/list/spawn_contents = list() // maybe better than just a bunch of stuff in New()?
 	var/made_stuff
@@ -175,12 +175,23 @@
 	alter_health()
 		. = get_turf(src)
 
+	Click(location, control, params)
+		// lets you open when inside of it
+		if((usr in src) && can_act(usr))
+			src.Attackhand(usr)
+			return
+		. = ..()
+
 	relaymove(mob/user as mob)
 		if (is_incapacitated(user))
 			return
 		if (world.time < (src.last_relaymove_time + RELAYMOVE_DELAY))
 			return
 		src.last_relaymove_time = world.time
+
+		if (src.legholes)
+			step(src,user.dir)
+			return
 
 		if (!src.open(user=user))
 			if (!src.is_short && src.legholes)
@@ -209,19 +220,16 @@
 
 			return
 
-		else if (prob(src.open_fail_prob))
-			if (src.legholes)
-				step(src,user.dir)
-			user.show_text("You kick at [src], but it doesn't budge!", "red")
-			return
-
 		// if all else fails:
 		src.open(user=user)
 		src.visible_message("<span class='alert'><b>[user]</b> kicks [src] open!</span>")
 
 	attack_hand(mob/user as mob)
+		if(world.time == src.last_attackhand) // prevent double-attackhand when entering
+			return
 		if (!in_interact_range(src, user))
 			return
+		src.last_attackhand = world.time
 
 		interact_particle(user,src)
 		add_fingerprint(user)
