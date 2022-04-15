@@ -5200,6 +5200,8 @@
 	},
 /obj/cable,
 /obj/landmark/gps_waypoint,
+/obj/machinery/navbeacon/mule/podbay_north/south,
+/obj/decal/mule/beacon,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -5801,6 +5803,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/decal/mule/dropoff,
 /turf/simulated/floor/yellow/side,
 /area/station/storage/auxillary{
 	name = "Tool Storage"
@@ -11425,6 +11428,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
+"dcM" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/navbeacon/mule/market_north/west,
+/obj/decal/mule/beacon,
+/turf/simulated/floor/greenwhite/other,
+/area/station/crew_quarters/market)
 "dcW" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg{
@@ -14947,6 +14958,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/decal/mule/dropoff,
 /turf/simulated/floor/escape{
 	dir = 10
 	},
@@ -17304,6 +17316,13 @@
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
+"eLS" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/decal/mule/dropoff,
+/turf/simulated/floor/greenwhite/other,
+/area/station/crew_quarters/market)
 "eMq" = (
 /obj/machinery/light/emergency,
 /turf/simulated/floor/red/side,
@@ -20671,6 +20690,7 @@
 /obj/item/device/radio/intercom/engineering{
 	dir = 4
 	},
+/obj/decal/mule/dropoff,
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
@@ -21223,6 +21243,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/navbeacon/mule/ranch_north,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "fPJ" = (
@@ -22721,6 +22742,7 @@
 	dir = 8;
 	pixel_x = -16
 	},
+/obj/decal/mule/dropoff,
 /turf/simulated/floor/orangeblack/side{
 	dir = 10
 	},
@@ -23108,6 +23130,12 @@
 	dir = 9
 	},
 /area/station/bridge/customs)
+"gvy" = (
+/obj/disposalpipe/segment/mail,
+/obj/decal/mule/beacon,
+/obj/machinery/navbeacon/mule/engineering_north/west,
+/turf/simulated/floor/black,
+/area/station/engine/engineering)
 "gvE" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -25985,6 +26013,8 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/navbeacon/mule/QM2_north/east,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "hml" = (
@@ -29277,6 +29307,11 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"iiN" = (
+/obj/disposalpipe/segment,
+/obj/machinery/navbeacon/mule/crewA_north,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/quarters)
 "iiY" = (
 /obj/lattice{
 	dir = 4;
@@ -35100,7 +35135,7 @@
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/quartersB)
 "jYD" = (
-/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/decal/mule/dropoff,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "jZz" = (
@@ -36311,6 +36346,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
 "ktA" = (
+/obj/machinery/navbeacon/mule/chapel_north/south,
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 5
 	},
@@ -40122,6 +40158,8 @@
 	},
 /area/station/bridge/customs)
 "lBr" = (
+/obj/machinery/navbeacon/mule/research_north/west,
+/obj/decal/mule/beacon,
 /turf/simulated/floor/purpleblack{
 	dir = 5
 	},
@@ -40737,6 +40775,8 @@
 	icon_state = "check1"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/machinery/navbeacon/mule/catering_north/west,
+/obj/decal/mule/beacon,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -42667,6 +42707,7 @@
 /obj/disposalpipe/switch_junction/left/east{
 	mail_tag = "genetics"
 	},
+/obj/decal/mule/dropoff,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -44927,6 +44968,12 @@
 	icon_state = "12"
 	},
 /area/station/medical/asylum/rec)
+"mVU" = (
+/obj/decal/mule/dropoff,
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/station/science/lobby)
 "mWf" = (
 /obj/wingrille_spawn/auto/tuff,
 /obj/cable{
@@ -46660,6 +46707,8 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/navbeacon/mule/hallway_escape_north/south,
+/obj/decal/mule/beacon,
 /turf/simulated/floor/escape/corner{
 	dir = 8
 	},
@@ -47904,6 +47953,7 @@
 	icon_state = "check1"
 	},
 /obj/disposalpipe/segment/transport,
+/obj/decal/mule/dropoff,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -70377,6 +70427,7 @@
 	codes_txt = "delivery;dir=4";
 	location = "QM #1"
 	},
+/obj/machinery/bot/mulebot/QM1,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "uku" = (
@@ -70604,6 +70655,8 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/machinery/navbeacon/mule/medbay_north/west,
+/obj/decal/mule/beacon,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -78147,6 +78200,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/machinery/navbeacon/mule/hydroponics_north/east,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "wue" = (
@@ -78422,6 +78476,7 @@
 	icon_state = "pipe-c";
 	name = "kitchen freezer pipe"
 	},
+/obj/machinery/navbeacon/mule/cafeteria_north/west,
 /turf/simulated/floor/wood/eight{
 	dir = 1
 	},
@@ -80843,6 +80898,8 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/machinery/navbeacon/mule/toolstorage_north/south,
+/obj/decal/mule/beacon,
 /turf/simulated/floor,
 /area/station/storage/auxillary{
 	name = "Tool Storage"
@@ -113896,7 +113953,7 @@ cPO
 tFK
 wBI
 xhW
-cPO
+iiN
 rBs
 rAk
 esb
@@ -133634,7 +133691,7 @@ qiH
 vOr
 orj
 dRf
-onh
+mVU
 bpt
 tMS
 xSA
@@ -137469,7 +137526,7 @@ klB
 xFa
 yhM
 acl
-uDq
+eLS
 iHR
 mmX
 qyi
@@ -137771,7 +137828,7 @@ uBg
 wLV
 plv
 dmD
-uDq
+dcM
 wst
 wst
 wst
@@ -138420,7 +138477,7 @@ qxQ
 cxk
 glC
 jYD
-glC
+jYD
 bnb
 bnb
 wWh
@@ -142049,7 +142106,7 @@ nAN
 pVT
 dqc
 ceA
-ceA
+gvy
 bRC
 gCI
 vqi
