@@ -500,6 +500,16 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
+		blue_milk
+			name = "Blue Milk"
+			id = "blue milk"
+			result = "blue_milk"
+			required_reagents = list("milk" = 1, "juice_blueberry" = 1)
+			result_amount = 2
+			mix_phrase = "The mixture turns a pale blue color."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
 		milk_punch
 			name = "Milk Punch"
 			id = "milk_punch"
@@ -613,6 +623,21 @@ datum
 			required_reagents = list("lemonade" = 1, "sweet_tea" = 1)
 			result_amount = 2
 
+		laurapalmer
+			name = "Laura Palmer"
+			id = "laurapalmer"
+			result = "laurapalmer"
+			required_reagents = list("lemonade" = 1, "coffee" = 1)
+			result_amount = 2
+			mix_phrase = "The coffee and lemonade mix together. Damn fine."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		laurapalmer/laurapalmer2
+			id = "laurapalmer2"
+			required_reagents = list("lemonade" = 1, "coffee_fresh" = 1)
+			result_amount = 2
+
 		eggnog
 			name = "Eggnog"
 			id = "eggnog"
@@ -649,6 +674,61 @@ datum
 			required_reagents = list("mint" = 1, "tea" = 1)
 			result_amount = 2
 			mix_phrase = "The tea somehow smells even more refreshing than before."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		sun_tea
+			name = "sun tea"
+			id = "sun_tea"
+			result = "sun_tea"
+			required_reagents = list("tea" = 3, "juice_orange" = 1, "sugar" = 1)
+			result_amount = 5
+			mix_phrase = "The tea takes on a sweet, summery smell."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		catamount
+			name = "catamount"
+			id = "catamount"
+			result = "catamount"
+			required_reagents = list("juice_orange" = 1, "grenadine" = 1, "ginger_ale" = 4, "ice" = 2)
+			result_amount = 8
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		pine_ginger
+			name = "pine-ginger"
+			id = "pine_ginger"
+			result = "pine_ginger"
+			required_reagents = list("juice_pineapple" = 2, "ice" = 1, "ginger_ale" = 1)
+			result_amount = 4
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		sail_boat
+			name = "sail boat"
+			id = "sail_boat"
+			result = "sail_boat"
+			required_reagents = list("juice_lime" = 1, "ginger_ale" = 4, "ice" = 1)
+			result_amount = 6
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		vermont_breeze
+			name = "vermont breeze"
+			id = "vermont_breeze"
+			result = "vermont_breeze"
+			required_reagents = list("lemonade" = 4, "grenadine" = 1, "tonic" = 1)
+			result_amount = 6
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		cafe_gele
+			name = "cafe gele"
+			id = "cafe_gele"
+			result = "cafe_gele"
+			required_reagents = list("coffee_fresh" = 6, "vanilla" = 1, "sugar" = 1)
+			result_amount = 8
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
@@ -1653,6 +1733,16 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
+		romulale
+			name = "Romulale"
+			id = "romulale"
+			result = "romulale"
+			required_reagents =list("juice_blueberry" = 1, "juice_blueraspberry" = 1, "beer" = 2)
+			result_amount = 4
+			mix_phrase = "A strong smell comes from the solution."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
 		phil_collins
 			name = "Phil Collins"
 			id = "philcollins"
@@ -1833,6 +1923,21 @@ datum
 			result_amount = 3
 			mix_phrase = "An iridescent black chemical forms in the container."
 
+		hemodissolve // denaturing hemolymph
+			name = "Copper"
+			id = "copper"
+			result = "copper"
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			required_reagents = list("hemolymph" = 5, "cleaner" = 1,  "acetone" = 1)
+			required_temperature = T0C + 30 // just a little bit of heat
+			result_amount = 1
+			mix_phrase = "The hemolymph bubbles as a black precipitate falls out of the solution, denaturing into basic components."
+			on_reaction(var/datum/reagents/holder, created_volume)
+				holder.add_reagent("meat_slurry", created_volume)// meat slurry, since animal tissue
+				holder.add_reagent("saline", 2*created_volume)//  saline-glucose solution, since blood
+				holder.add_reagent("spaceacillin", created_volume)//  spaceacillin, since hemolymph is used for bacterial tests IRL
+				holder.add_reagent("denatured_enzyme", created_volume)// and just some random biological chemicals for good measure
+
 		mutagen
 			name = "Unstable mutagen"
 			id = "mutagen"
@@ -1900,22 +2005,15 @@ datum
 			mix_phrase = "The mixture yields a colorless, odorless liquid."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
-			on_reaction(var/datum/reagents/holder)
+			on_reaction(var/datum/reagents/holder, created_volume)
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in all_viewers(null, location))
 					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
 				if(holder?.my_atom?.is_open_container())
 					// A slightly less stupid way of smoking contents. Maybe.
 					var/datum/reagents/smokeContents = new/datum/reagents/
-					smokeContents.add_reagent("sarin", holder.reagent_list["sarin"].volume / 6)
-					//particleMaster.SpawnSystem(new /datum/particleSystem/chemSmoke(location, smokeContents, 10, 2))
+					smokeContents.add_reagent("sarin", created_volume / 6)
 					smoke_reaction(smokeContents, 2, location)
-					/*
-					for(var/mob/living/carbon/human/H in range(location, 2)) // nurfed.
-						if(ishuman(H))
-							if(!H.wear_mask)
-								H.reagents.add_reagent("sarin",4) // griff
-					*/
 					return
 
 
@@ -2015,6 +2113,14 @@ datum
 			required_reagents = list("water" = 1, "silicon" = 1, "oxygen" = 1)
 			result_amount = 3
 			mix_phrase = "The substance turns a striking cyan and becomes oily."
+
+		glue
+			name = "Space Glue"
+			id = "spaceglue"
+			result = "spaceglue"
+			required_reagents = list("plasma" = 1, "phenol" = 1, "oxygen" = 1, "hydrogen" = 1, "formaldehyde" = 1)
+			result_amount = 5
+			mix_phrase = "The substance turns a dull yellow and becomes thick and sticky."
 
 		superlube
 			name = "Organic Superlube"

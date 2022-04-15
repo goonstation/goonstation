@@ -363,9 +363,6 @@
 	else if (src.det && W && istool(W, TOOL_PULSING | TOOL_SNIPPING))
 		src.Attackhand(user)
 
-	else if (istype(W, /obj/item/cargotele))
-		W:cargoteleport(src, user)
-		return
 	else if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
 		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
@@ -377,6 +374,10 @@
 			elecflash(src)
 	else if(!iswrenchingtool(W) && !istype(W, /obj/item/tank) && !istype(W, /obj/item/device/analyzer/atmospheric) && !istype(W, /obj/item/device/pda2))
 		src.visible_message("<span class='alert'>[user] hits the [src] with a [W]!</span>")
+		user.lastattacked = src
+		attack_particle(user,src)
+		hit_twitch(src)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 		logTheThing("combat", user, null, "attacked [src] [log_atmos(src)] with [W] at [log_loc(src)].")
 		src.health -= W.force
 		healthcheck(user)
@@ -472,7 +473,7 @@
 			src.det.failsafe_engage()
 			. = TRUE
 		if("trigger")
-			src.det.trigger.attack_self(usr)
+			src.det.trigger.AttackSelf(usr)
 			. = TRUE
 		if("timer")
 			if(!src.det.part_fs.timing)

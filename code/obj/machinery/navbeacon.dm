@@ -10,6 +10,7 @@
 	level = 1		// underfloor
 	layer = 2.5 // TODO layer whatever
 	anchored = 1
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/open = 0		// true if cover is open
 	var/locked = 1		// true if controls are locked
@@ -706,6 +707,36 @@ Transponder Codes:<UL>"}
 			codes_txt = "delivery;dir=8"
 	hallway_central_north
 		location = "Central Primary Hallway"
+		codes_txt = "delivery;dir=1"
+
+		east
+			codes_txt = "delivery;dir=4"
+		south
+			codes_txt = "delivery;dir=2"
+		west
+			codes_txt = "delivery;dir=8"
+	ranch_north
+		location = "Ranch"
+		codes_txt = "delivery;dir=1"
+
+		east
+			codes_txt = "delivery;dir=4"
+		south
+			codes_txt = "delivery;dir=2"
+		west
+			codes_txt = "delivery;dir=8"
+	pool_north
+		location = "Pool"
+		codes_txt = "delivery;dir=1"
+
+		east
+			codes_txt = "delivery;dir=4"
+		south
+			codes_txt = "delivery;dir=2"
+		west
+			codes_txt = "delivery;dir=8"
+	news_office
+		location = "News Office"
 		codes_txt = "delivery;dir=1"
 
 		east

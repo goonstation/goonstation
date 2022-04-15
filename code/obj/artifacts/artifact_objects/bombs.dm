@@ -2,6 +2,7 @@
 
 ABSTRACT_TYPE(/datum/artifact/bomb)
 /datum/artifact/bomb
+	type_size = ARTIFACT_SIZE_LARGE
 	associated_object = null
 	rarity_weight = 0
 	validtypes = list("ancient","eldritch","precursor")
@@ -118,7 +119,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			return 1
 
 		// Added (Convair880).
-		ArtifactLogs(usr, null, O, "detonated", null, 1)
+		ArtifactLogs(usr, null, O, "detonated", log_addendum, 1)
 
 		return 0
 
@@ -265,6 +266,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					continue
 				looper--
 				payload_reagents += reagent
+			log_addendum = "Payload: [kText.list2text(payload_reagents, ", ")]"
 
 		recharge_delay = rand(300,800)
 
@@ -432,6 +434,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 		warning_initial = "appears to be turning into [mat.name]."
 		warning_final = "begins transmuting nearby matter into [mat.name]!"
+		log_addendum = "Material: [mat.name]"
 
 		var/matR = GetRedPart(mat.color)
 		var/matG = GetGreenPart(mat.color)
@@ -466,7 +469,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				if(!smoothEdge && prob(distPercent))
 					continue
 				if(istype(G, /mob))
-					if(!istype(G, /mob/living)) // not stuff like ghosts, please
+					if(!isliving(G) || isintangible(G)) // not stuff like ghosts, please
 						continue
 					var/mob/M = G
 					switch(affects_organic)

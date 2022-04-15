@@ -197,6 +197,9 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			pompS
 				name = "Pompadour: Greaser Shine"
 				id = "pompS"
+			shavedhead
+				name = "Shaved Head"
+				id = "shavedhead"
 			shortflip
 				name = "Punky Flip"
 				id = "shortflip"
@@ -559,6 +562,9 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 		fullbeard
 			name = "Full Beard"
 			id = "fullbeard"
+		fiveoclock
+			name = "Five O'Clock Shadow"
+			id = "fiveoclock"
 		gt
 			name = "Goatee"
 			id = "gt"

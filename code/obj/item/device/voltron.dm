@@ -21,7 +21,7 @@
 			img = image('icons/effects/effects.dmi',src ,"energyorb")
 			target << img
 		RegisterSignal(the_user, list(COMSIG_MOB_DROPPED), .proc/handle_dropped_item)
-		APPLY_MOB_PROPERTY(the_user, PROP_CANTTHROW, src)
+		APPLY_ATOM_PROPERTY(the_user, PROP_MOB_CANTTHROW, src)
 
 		//SPAWN(0) check() but why
 
@@ -66,7 +66,7 @@
 
 	disposing()
 		the_user?.client.images -= cableimgs
-		REMOVE_MOB_PROPERTY(the_user, PROP_CANTTHROW, src)
+		REMOVE_ATOM_PROPERTY(the_user, PROP_MOB_CANTTHROW, src)
 		the_user = null
 		return ..()
 

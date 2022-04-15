@@ -367,12 +367,7 @@
 	laces = LACES_NONE
 	step_sound = "step_flipflop"
 	step_priority = STEP_PRIORITY_LOW
-
-	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
-		. = ..()
-		if (prob(75))
-			source.show_message(text("<span class='alert'>\The [src] writhes in your hands as though they are alive! They just barely wriggle out of your grip!</span>"), 1)
-			. = 0
+	duration_remove = 10 SECONDS
 
 /obj/item/clothing/shoes/tourist
 	name = "flip-flops"
@@ -446,7 +441,7 @@
 
 /obj/item/clothing/shoes/swat/knight // so heavy you can't get shoved!
 	name = "combat sabatons"
-	desc = "Massive, armored footwear for syndicate super-heavies."
+	desc = "Massive, magnetic, slip-resistant armored footwear for syndicate super-heavies."
 	icon_state = "swatheavy"
 	magnetic = 1
 	c_flags = NOSLIP

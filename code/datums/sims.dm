@@ -399,7 +399,8 @@
 				showOwner("<span class='alert'><b>You can't take being so bored anymore!</b></span>")
 				if (ishuman(holder.owner))
 					var/mob/living/carbon/human/H = holder.owner
-					H.gib()
+					H.death()
+					logTheThing("combat", usr, null, "died from the sims fun motive at [log_loc(H)].")
 
 		onLife()
 			if (value < 10)

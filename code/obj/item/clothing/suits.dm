@@ -1040,6 +1040,8 @@
 	item_state = "s_suit"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
+	duration_remove = 6 SECONDS
+	duration_put = 6 SECONDS
 	permeability_coefficient = 0.1
 	protective_temperature = 1000
 
@@ -1549,17 +1551,12 @@
 	permeability_coefficient = 0.01
 	body_parts_covered = TORSO|LEGS|ARMS
 	contraband = 4
+	duration_remove = 10 SECONDS
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 90)
 		setProperty("heatprot", 30)
-
-	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
-		. = ..()
-		if ( . &&prob(75))
-			source.show_message(text("<span class='alert'>\The [src] writhes in your hands as though it is alive! It just barely wriggles out of your grip!</span>"), 1)
-			.  = 0
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
