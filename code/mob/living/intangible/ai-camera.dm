@@ -490,7 +490,7 @@
 		set category = "AI Commands"
 		mainframe?.open_map()
 
-	verb/change_name()
+	verb/rename_self()
 		set category = "AI Commands"
 		set name = "Change Designation"
 		set desc = "Change your name."
