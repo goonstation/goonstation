@@ -304,20 +304,46 @@ ABSTRACT_TYPE(/datum/req_contract)
 			src.payout += rce.feemod * rce.count
 
 	proc/requisify(obj/storage/crate/sell_crate)
-		var/contents = list() //everything in crate
+		var/contents_index = list() //registry of everything in crate, including contents of item containers within it
 		var/contents_to_cull = list() //things consumed to fulfill the requisition, extras are sent back
 		var/successes_needed = length(src.rc_entries) //decremented with each successful fulfillment, reach 0 to win
 
-		contents += sell_crate.contents
-		for(var/obj/item/storage/S in contents)
-			contents |= S.get_all_contents()
+		contents_index += sell_crate.contents
+
+		for(var/obj/item/storage/S in sell_crate.contents)
+			contents_index += S.get_all_contents()
 
 		. = REQ_RETURN_NOSALE //by default return no success
-		for(var/atom/A in contents)
+
+		//item boxes can require evaluation of items that don't physically exist, so they need special logic
+		for(var/obj/item/item_box/IB in contents_index)
+			LAGCHECK(LAG_LOW)
+			contents_index -= IB
+			if(IB.item_amount < 1) return //no empty or infinite box evals
+			contents_index += IB.contents //evaluate real items through conventional means
+			var/illusory_contents = IB.item_amount - length(IB.contents) //how many nonexistent items we have to iterate over
+			var/box_satisfies = FALSE
+
+			if(illusory_contents && IB.contained_item)
+				var/testbench_item = new IB.contained_item //create a temporary example item to check
+				while(illusory_contents > 0)
+					illusory_contents--
+					for(var/datum/rc_entry/shoppin in rc_entries)
+						if(shoppin.rc_eval(testbench_item))
+							box_satisfies = TRUE
+				qdel(testbench_item)
+
+			if(box_satisfies)
+				contents_to_cull += IB
+
+		for(var/atom/A in contents_index)
 			LAGCHECK(LAG_LOW)
 			for(var/datum/rc_entry/shoppin in rc_entries)
 				if(shoppin.rc_eval(A)) //found something that the requisition asked for, let it know
-					contents_to_cull |= A
+					if(A.loc != sell_crate && isobj(A.loc)) //if you sent your stuff in an item container, it'll be kept
+						contents_to_cull |= A.loc
+					else
+						contents_to_cull += A
 
 		for(var/datum/rc_entry/shopped in rc_entries)
 			if(shopped.rollcount >= shopped.count)
@@ -325,7 +351,7 @@ ABSTRACT_TYPE(/datum/req_contract)
 
 		if(!successes_needed)
 			if(src.req_code == "REQ-THIRDPARTY") //third party sales do not preserve leftover items, returns are only done if there is an item reward
-				for(var/atom/X in contents)
+				for(var/atom/X in contents_index)
 					if(X) qdel(X)
 				return REQ_RETURN_FULLSALE
 			if(src.pinned) shippingmarket.has_pinned_contract = FALSE //tell shipping market pinned contract was fulfilled

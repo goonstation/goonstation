@@ -308,7 +308,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 		if (prob(70)) //pizza party
 			src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pizza,rand(2,3)*6)
-			src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/cola,rand(4,8)*10)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/cola,rand(10,20)*10)
 
 		switch (rand(1, 50)) //Special Outcomes Zone
 			if (1)
