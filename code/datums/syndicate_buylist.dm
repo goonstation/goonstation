@@ -124,7 +124,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/storage/backpack/chameleon
 	cost = 1
 	desc = "A full ensemble of clothing made of advanced fibres that can change colour to suit the needs of the wearer. Comes in a backpack that itelf can be disguised in the same manner. Do not expose to electromagnetic interference."
-	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/generic/syndicard
 	name = "Agent Card"
