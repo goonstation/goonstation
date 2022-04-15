@@ -81,7 +81,6 @@
 
 // Moves this down from ai.dm so AI shells and AI-controlled cyborgs can use it too.
 // Also made it a little more functional and less buggy (Convair880).
-#define SORT "* Sort alphabetically..."
 #define STUNNED (src.stat || src.getStatusDuration("stunned") || src.getStatusDuration("weakened")) || (src.dependent && (src.mainframe.stat || src.mainframe.getStatusDuration("stunned") || src.mainframe.getStatusDuration("weakened")))
 /mob/living/silicon/proc/open_nearest_door_silicon()
 	if (!src || !issilicon(src))
@@ -94,15 +93,8 @@
 		usr.show_text("You cannot use this command when your shell or mainframe is incapacitated.", "red")
 		return
 
-	var/list/creatures = get_mobs_trackable_by_AI()
-	var/target_name = input(usr, "Open doors nearest to which creature?") as null|anything in creatures
-
-	// Sort alphabetically if so desired.
-	if (target_name == SORT)
-		creatures.Remove(SORT)
-
-		creatures = sortList(creatures)
-		target_name = input(usr, "Open doors nearest to which creature?") as null|anything in creatures
+	var/list/creatures = sortList(get_mobs_trackable_by_AI())
+	var/target_name = tgui_input_list(usr, "Open doors nearest to which creature?", "Open Door", creatures)
 
 	if (!target_name)
 		return
@@ -113,23 +105,20 @@
 	var/list/valid_doors = list()
 	for (var/obj/machinery/door/D in view(target_name, 1))
 		if (istype(D, /obj/machinery/door/airlock))
-			valid_doors["[D.name] #[valid_doors.len + 1] at [get_area(D)]"] += D // Don't remove the #[number] part here.
+			valid_doors["[D.name] #[length(valid_doors) + 1] at [get_area(D)]"] += D // Don't remove the #[number] part here.
 		else if (istype(D, /obj/machinery/door/window))
-			valid_doors["[D.name] #[valid_doors.len + 1] at [get_area(D)]"] += D
+			valid_doors["[D.name] #[length(valid_doors) + 1] at [get_area(D)]"] += D
 		else
 			continue
-
 	// Attempt to open said doors.
 	var/obj/machinery/door/our_door
-	if (!valid_doors.len)
+	if (!length(valid_doors))
 		usr.show_text("Couldn't find a controllable airlock near [target_name].", "red")
 		return
-	else
-		var/t1 = input(usr, "Please select a door to control.", "Target Selection") as null|anything in valid_doors
-		if (!t1)
-			return
-		else
-			our_door = valid_doors[t1]
+	var/t1 = tgui_input_list(usr, "Please select a door to control.", "Target Selection", valid_doors)
+	if (!t1)
+		return
+	our_door = valid_doors[t1]
 
 	if (STUNNED)
 		usr.show_text("You cannot use this command when your shell or mainframe is incapacitated.", "red")
@@ -146,36 +135,21 @@
 	if (istype(our_door, /obj/machinery/door/airlock/))
 		var/obj/machinery/door/airlock/A = our_door
 		if (A.canAIControl())
-			if (alert("This door is located in [get_area(A)]. Open it?","Airlock: \"[A.name]\"","Yes","No") == "Yes")
-				if (STUNNED)
-					usr.show_text("You cannot use this command when your shell or mainframe is incapacitated.", "red")
-					return
-				if (get_dist(A, target_name) > 3) // Let's be a bit lenient.
-					usr.show_text("[target_name] is too far away from the target airlock.", "red")
-					return
-				if (A.open())
-					boutput(usr, "<span class='notice'>[A.name] opened successfully.</span>")
-				else
-					boutput(usr, "<span class='alert'>Attempt to open [A.name] failed. It may require manual repairs.</span>")
+			if (A.open())
+				boutput(usr, "<span class='notice'>[A.name] opened successfully.</span>")
+			else
+				boutput(usr, "<span class='alert'>Attempt to open [A.name] failed. It may require manual repairs.</span>")
 		else
 			boutput(usr, "<span class='alert'>Cannot interface with airlock \"[A.name]\". It may require manual repairs.</span>")
 
 	else if (istype(our_door, /obj/machinery/door/window))
-		if (alert("This door is located in [get_area(our_door)]. Open it?","Airlock: \"[our_door.name]\"","Yes","No") == "Yes")
-			if (STUNNED)
-				usr.show_text("You cannot use this command when your shell or mainframe is incapacitated.", "red")
-				return
-			if (get_dist(our_door, target_name) > 3) // Let's be a bit lenient.
-				usr.show_text("[target_name] is too far away from the target airlock.", "red")
-				return
-			if (our_door.open())
-				boutput(usr, "<span class='notice'>[our_door.name] opened successfully.</span>")
-			else
-				boutput(usr, "<span class='alert'>Attempt to open [our_door.name] failed.</span>")
+		if (our_door.open())
+			boutput(usr, "<span class='notice'>[our_door.name] opened successfully.</span>")
+		else
+			boutput(usr, "<span class='alert'>Attempt to open [our_door.name] failed.</span>")
 
 	return
 #undef STUNNED
-#undef SORT
 
 /mob/living/silicon/proc/damage_mob(var/brute = 0, var/fire = 0, var/tox = 0)
 	return

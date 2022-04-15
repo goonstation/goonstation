@@ -2005,7 +2005,11 @@ obj/machinery/door/airlock
 			if(!src.arePowerSystemsOn() || (status & NOPOWER))
 				boutput(user, "The door has no power - you can't electrify it.")
 				return
-			if(alert("Are you sure? Electricity might harm a human!",,"No","Yes") == "Yes") // fix for holding spacebar clicking yes
+
+			while (user.client.check_key(KEY_SHOCK))
+				sleep(0.2 SECONDS) // num seems to work fine
+
+			if (tgui_alert(user, "Are you sure? Electricity might harm a human!", "Electrification Confirmation", list("Yes", "No")) == "Yes")
 				shock_temp(user)
 
 /obj/machinery/door/airlock/ui_interact(mob/user, datum/tgui/ui)
