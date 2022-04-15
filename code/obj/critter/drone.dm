@@ -1325,7 +1325,11 @@
 				src.health = 0
 				src.CritterDeath()
 
-/obj/critter/gunbot/drone/buzzdrone/sawfly // the sawfly. For their undeployed check grenades.dm
+/obj/critter/gunbot/drone/buzzdrone/sawfly // the sawfly. For their undeployed form check grenades.dm
+
+	//sawfly todo:
+	// make it so they can get ressurected after they die
+	// also make it so, if you're a friend, they can be turned back into a grenade
 
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
 	name = "Sawfly"
@@ -1337,7 +1341,7 @@
 	current_projectile = new/datum/projectile/laser/drill/sawfly
 	//angertext = "detects the presence of"
 	smashes_shit = 0
-	droploot = /obj/item/survival_machete
+	droploot = /obj/item/survival_machete //change this later
 	health = 70
 	maxhealth = 70
 	firevuln = 0.5
@@ -1346,12 +1350,12 @@
 	atksilicon = 0
 	firevuln = 0
 	atk_delay = 5
-	attack_cooldown = 10
+	attack_cooldown = 8
 	seekrange = 15
 	var/deathtimer = 0 // for catastrophic failure on death
 
 	New()
-		..() // todo: add most recently touched to friends
+		..()
 		deathtimer = rand(2, 5)
 		death_text = "[src] jutters and falls from the air, whirring to a stop"
 		name = "Sawfly [pick(sawflynames)]-[rand(1,999)]"
@@ -1379,7 +1383,7 @@
 				src.visible_message("<span class='alert'>[src]'s IFF subsystem recognize an ally!")
 				friends += C
 				continue
-		..()// call yer mom and pops, drone
+		..()// call mom and pops
 
 	CritterAttack(atom/M)
 		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends)) // BE. A. GOOD. DRONE.
@@ -1430,7 +1434,7 @@
 		//	new drop2(Ts)
 		//	make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
 
-		if(prob(90))// Time to enact a tiny bit of vengance on your killer
+		if(prob(90))// become totally unreusable and enact vengance- change probilities later
 			if(prob(50))// do you get a warning or not?
 				src.visible_message("<span class='alert'>[src] makes a [pick("gentle hiss", "odd drone", "slight whir", "weird thump", "barely audible grinding sound")]...")
 			SPAWN(deathtimer SECONDS)// wait for it...

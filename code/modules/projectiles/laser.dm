@@ -503,8 +503,8 @@ toxic - poisons
 		damtype = DAMAGE_CUT
 		shot_sound = null
 		hit_human_sound = "sound/machines/chainsaw_green.ogg"
-		power = 20
-		dissipation_rate = 20
+		power = 15
+		dissipation_rate = 15
 		sname = "Whirring Blades"
 
 		on_hit(atom/hit)
