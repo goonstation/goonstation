@@ -652,6 +652,7 @@
 
 		src.UpdateIcon()
 		playsound(src.loc, src.close_sound, volume, 1, -3)
+		SEND_SIGNAL(src, COMSIG_STORAGE_CLOSED)
 		return 1
 
 	proc/recalcPClass()

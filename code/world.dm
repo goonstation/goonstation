@@ -575,6 +575,11 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
 	map_settings.init()
 
+	//#ifndef GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
+	Z_LOG_DEBUG("World/Init", "Initializing region allocator...")
+	global.region_allocator.add_z_level()
+	//#endif
+
 	Z_LOG_DEBUG("World/Init", "Generating AI station map...")
 	ai_station_map = new
 
