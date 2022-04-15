@@ -1573,3 +1573,87 @@
 
 	CritterAttack(mob/M)
 		src.task = "chasing"
+
+
+/*/obj/critter/sawfly// critter version
+
+	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta",)
+	name = "Sawfly"
+	desc = "A cheap antipersonnel drone of syndicate origin."
+	icon_state = "sawfly"
+	beeptext = "BEEEEEP"
+	dead_state = "sawflydead"
+	//projectile_type = /datum/projectile/laser/drill/sawfly
+	//current_projectile = new/datum/projectile/laser/drill/sawfly
+	angertext = "detects the presence of"
+	//smashes_shit = 0
+	droploot = /obj/item/survival_machete
+	health = 70
+	//maxhealth = 70
+	firevuln = 0.5
+	brutevuln = 1.2 // from brute damage they only have 50 hp
+	can_revive = 1
+	atksilicon = 0
+	firevuln = 0
+	atk_delay = 15
+	var/deathtimer = 0 // for catastrophic failure on death
+
+	New()
+		..()
+		deathtimer = rand(2, 5)
+		death_text = "[src] jutters and falls from the air, whirring to a stop"
+		name = "Microdrone unit [pick(sawflynames)]-[rand(1,999)]"
+		beeptext = "[pick(list("beeps", "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs"))]"
+
+	CritterAttack(mob/M)
+		random_brute_damage(target, 35,1)
+
+	CritterDeath() // was a good life. goodnight <3
+		if (!src.alive) return
+		..()
+		if (get_area(src) != colosseum_controller.colosseum)
+			var/turf/Ts = get_turf(src)
+			make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
+			//new drop1(Ts)
+			make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
+
+		// since they're a child of a child of a child of a child
+		// and I don't know if they each all call parent,
+		// I'm just gonna say fuck all that and copy the critter death code
+		SHOULD_CALL_PARENT(TRUE)
+		if (!src.alive) return
+
+		#ifdef COMSIG_OBJ_CRITTER_DEATH
+		SEND_SIGNAL(src, COMSIG_OBJ_CRITTER_DEATH)
+		#endif
+
+		if (!dead_state)
+			src.icon_state = "[initial(src.icon_state)]-dead"
+		else
+			src.icon_state = dead_state
+		src.alive = 0
+		src.anchored = 0
+		src.set_density(0)
+		walk_to(src,0) //halt walking
+		report_death()
+		src.tokenized_message(death_text)
+		//	var/obj/item/drop1 = pick(/obj/item/electronics/battery,/obj/item/electronics/board,/obj/item/electronics/buzzer,/obj/item/electronics/frame,/obj/item/electronics/resistor,/obj/item/electronics/screen,/obj/item/electronics/relay, /obj/item/parts/robot_parts/arm/left/standard, /obj/item/parts/robot_parts/arm/right/standard)
+		//var/obj/item/drop2 = pick(/obj/item/electronics/battery,/obj/item/electronics/board,/obj/item/electronics/buzzer,/obj/item/electronics/frame,/obj/item/electronics/resistor,/obj/item/electronics/screen,/obj/item/electronics/relay, /obj/item/parts/robot_parts/arm/left/standard, /obj/item/parts/robot_parts/arm/right/standard)
+		//	new drop2(Ts)
+		//	make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
+
+		if(prob(90))// Time to enact a tiny bit of vengance on your killer
+			if(prob(50))// do you get a warning or not?
+				src.visible_message("<span class='alert'>[src] makes a [pick("gentle hiss", "odd drone", "slight whir", "weird thump", "barely audible grinding sound")]...")
+			SPAWN(deathtimer SECONDS)// wait for it...
+				if(prob(50))// it catches on fire!
+					src.visible_message("<span class='alert'>[src]'s [pick("blade motor", "core", "head", "engine", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!")
+					fireflash(src,1,TRUE)
+
+				if(prob(50))// it blows up!
+					src.visible_message("<span class='alert'>[src]'s [pick("blade motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!")
+					SPAWN(0.5 SECONDS)// wait for iiiittttt...
+						explosion(src, get_turf(src), 1, 2, 1, 0) // KERBLOOEY!
+
+				qdel(src)*/
+

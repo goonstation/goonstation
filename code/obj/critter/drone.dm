@@ -1325,9 +1325,9 @@
 				src.health = 0
 				src.CritterDeath()
 
-/obj/critter/gunbot/drone/buzzdrone/sawfly
+/obj/critter/gunbot/drone/buzzdrone/sawfly // the sawfly. For their undeployed check grenades.dm
 
-	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta",)
+	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
 	name = "Sawfly"
 	desc = "A cheap antipersonnel drone of syndicate origin."
 	icon_state = "sawfly"
@@ -1338,15 +1338,20 @@
 	//angertext = "detects the presence of"
 	smashes_shit = 0
 	droploot = /obj/item/survival_machete
-	health = 40
-	maxhealth = 40
+	health = 70
+	maxhealth = 70
+	firevuln = 0.5
+	brutevuln = 1.2 // from brute damage sources they only have 50 hp
 	can_revive = 1
 	atksilicon = 0
 	firevuln = 0
-	atk_delay = 15
+	atk_delay = 5
+	seekrange = 15
+	var/deathtimer = 0 // for catastrophic failure on death
 
 	New()
 		..()
+		deathtimer = rand(2, 5)
 		death_text = "[src] jutters and falls from the air, whirring to a stop"
 		name = "Microdrone unit [pick(sawflynames)]-[rand(1,999)]"
 		beeptext = "[pick(list("beeps", "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs"))]"
@@ -1384,5 +1389,31 @@
 		//var/obj/item/drop2 = pick(/obj/item/electronics/battery,/obj/item/electronics/board,/obj/item/electronics/buzzer,/obj/item/electronics/frame,/obj/item/electronics/resistor,/obj/item/electronics/screen,/obj/item/electronics/relay, /obj/item/parts/robot_parts/arm/left/standard, /obj/item/parts/robot_parts/arm/right/standard)
 		//	new drop2(Ts)
 		//	make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
-		//SPAWN(0)
-			//elecflash(src,2) change out with fire?
+
+		if(prob(90))// Time to enact a tiny bit of vengance on your killer
+			if(prob(50))// do you get a warning or not?
+				src.visible_message("<span class='alert'>[src] makes a [pick("gentle hiss", "odd drone", "slight whir", "weird thump", "barely audible grinding sound")]...")
+			SPAWN(deathtimer SECONDS)// wait for it...
+				if(prob(50))// it catches on fire!
+					src.visible_message("<span class='alert'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!")
+					fireflash(src,1,TRUE)
+
+				if(prob(90))// it blows up!
+					src.visible_message("<span class='alert'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!")
+					//SPAWN(0.5 SECONDS)// wait for iiiittttt...
+					explosion(src, get_turf(src), -1,-1, 2, 3)
+					explosion(src, get_turf(src), 2, 2, 2, 3) // KERBLOOEY!
+					elecflash(src,2)
+				qdel(src)
+
+	seek_target()
+		src.anchored = 0
+		for (var/mob/living/C in view(src.seekrange,src))
+			if (C in src.friends) continue
+			if (istraitor(C) || isnukeop(C) || isspythief(C)) // frens :)
+				src.visible_message("<span class='alert'>[src]'s IFF subsystem recognize a nonhostile")
+				friends += C
+				continue
+		..()// call yer mom and pops, drone
+
+

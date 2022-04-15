@@ -159,13 +159,14 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 /obj/item/old_grenade/spawner/sawfly
 	name = "Compact sawfly"
 	desc = "A self-deploying area antipersonnel robot. It's folded up and offline..."
+	det_time = 1 SECONDS // it's fast
 	icon_state = "sawfly"
 	icon_state_armed = "sawfly1"
 	payload = /obj/critter/gunbot/drone/buzzdrone/sawfly
 	is_dangerous = TRUE
 
-	prime() // we only want one drone
-		var/turf/T = ..()
+	prime() // we only want one drone, rewrite old proc
+		var/turf/T =  get_turf(src)
 		if (T)
 			new /obj/critter/gunbot/drone/buzzdrone/sawfly(T)// this is probably a shitty way of doing it but it works
 		qdel(src)

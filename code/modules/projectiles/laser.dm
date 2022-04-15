@@ -510,8 +510,15 @@ toxic - poisons
 		on_hit(atom/hit)
 
 			if (istype(hit,/obj/critter/gunbot/drone))//NO FRIENDLY FIRE YOU STUPID FUCKING DRONES
+				var/obj/critter/gunbot/drone/D
+				D.health+=36 // hopefully negate damage
+				D.maxhealth+=36
 				return
 			..()
+			if (ishuman(hit))
+				var/mob/living/carbon/human/M = hit
+				take_bleeding_damage(M, null, 15, damtype)
+
 /datum/projectile/laser/alastor
 	name = "laser"
 	icon = 'icons/obj/projectiles.dmi'
