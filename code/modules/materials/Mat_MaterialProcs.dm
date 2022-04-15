@@ -529,7 +529,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if (prob(20))
 			boutput(attacker, "<span class='alert'>[owner] slips right out of your hand!</span>")
 			owner.set_loc(attacker.loc)
-			owner.dropped()
+			owner.dropped(attacker)
 		return
 
 /datum/materialProc/slippery_entered

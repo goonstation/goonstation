@@ -29,6 +29,7 @@
 	var/icon_welded = "welded-closet"
 	var/open_sound = "sound/machines/click.ogg"
 	var/close_sound = "sound/machines/click.ogg"
+	var/volume = 15
 	var/max_capacity = 100 //Won't close past this many items.
 	var/open = 0
 	var/welded = 0
@@ -46,12 +47,12 @@
 	var/datum/db_record/account = null
 	var/last_relaymove_time
 	var/is_short = 0 // can you not stand in it?  ie, crates?
-	var/open_fail_prob = 50
 	var/crunches_contents = 0 // for the syndicate trashcart & hotdog stand
 	var/crunches_deliciously = 0 // :I
 	var/owner_ckey = null // owner of the crunchy cart, so they don't get crunched
 	var/opening_anim = null
 	var/closing_anim = null
+	var/last_attackhand = 0
 
 	var/list/spawn_contents = list() // maybe better than just a bunch of stuff in New()?
 	var/made_stuff
@@ -174,12 +175,23 @@
 	alter_health()
 		. = get_turf(src)
 
+	Click(location, control, params)
+		// lets you open when inside of it
+		if((usr in src) && can_act(usr))
+			src.Attackhand(usr)
+			return
+		. = ..()
+
 	relaymove(mob/user as mob)
 		if (is_incapacitated(user))
 			return
 		if (world.time < (src.last_relaymove_time + RELAYMOVE_DELAY))
 			return
 		src.last_relaymove_time = world.time
+
+		if (src.legholes)
+			step(src,user.dir)
+			return
 
 		if (!src.open(user=user))
 			if (!src.is_short && src.legholes)
@@ -208,19 +220,16 @@
 
 			return
 
-		else if (prob(src.open_fail_prob))
-			if (src.legholes)
-				step(src,user.dir)
-			user.show_text("You kick at [src], but it doesn't budge!", "red")
-			return
-
 		// if all else fails:
 		src.open(user=user)
 		src.visible_message("<span class='alert'><b>[user]</b> kicks [src] open!</span>")
 
 	attack_hand(mob/user as mob)
+		if(world.time == src.last_attackhand) // prevent double-attackhand when entering
+			return
 		if (!in_interact_range(src, user))
 			return
+		src.last_attackhand = world.time
 
 		interact_particle(user,src)
 		add_fingerprint(user)
@@ -336,6 +345,19 @@
 
 		else
 			return ..()
+
+	onMaterialChanged()
+		. = ..()
+		if(isnull(src.material))
+			return
+		var/found_negative = (src.material.mat_id == "negativematter")
+		if(!found_negative)
+			for(var/datum/material/parent_mat in src.material.parent_materials)
+				if(parent_mat.mat_id == "negativematter")
+					found_negative = TRUE
+					break
+		if(found_negative)
+			src.AddComponent(/datum/component/extradimensional_storage)
 
 	proc/weld_action(obj/item/W, mob/user)
 		if(src.open)
@@ -580,7 +602,7 @@
 		src.open = 1
 		src.UpdateIcon()
 		p_class = initial(p_class)
-		playsound(src.loc, src.open_sound, 15, 1, -3)
+		playsound(src.loc, src.open_sound, volume, 1, -3)
 		return 1
 
 	proc/close(var/entangleLogic)
@@ -642,7 +664,8 @@
 			entangled.open(1)
 
 		src.UpdateIcon()
-		playsound(src.loc, src.close_sound, 15, 1, -3)
+		playsound(src.loc, src.close_sound, volume, 1, -3)
+		SEND_SIGNAL(src, COMSIG_STORAGE_CLOSED)
 		return 1
 
 	proc/recalcPClass()

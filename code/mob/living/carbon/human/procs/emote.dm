@@ -614,6 +614,7 @@
 					SPAWN(1 SECOND)
 						src.wear_mask.set_loc(src.loc)
 						src.wear_mask = null
+						logTheThing("combat", src, null, "was gibbed by emoting uguu at [log_loc(src)].")
 						src.gib()
 						return
 				else
@@ -677,6 +678,7 @@
 						src.say ("M'lady")
 						SPAWN(1 SECOND)
 							src.add_karma(-10)
+							logTheThing("combat", src, null, "was gibbed by emoting fedora tipping at [log_loc(src)].")
 							src.gib()
 
 			if ("hatstomp", "stomphat")

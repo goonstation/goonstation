@@ -414,7 +414,7 @@
 			W.amount = 0
 			boutput(user, "<span class='notice'>You insert [W].</span>")
 			user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 			qdel( W )
 			src.generate_HTML(1)
 			return

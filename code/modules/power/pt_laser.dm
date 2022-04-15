@@ -586,11 +586,13 @@
 			make_cleanable( /obj/decal/cleanable/ash,src.loc)
 			L.unlock_medal("For Your Ohm Good", 1)
 			L.visible_message("<b>[L.name] is vaporised by the [src]!</b>")
+			logTheThing("combat", L, null, "was elecgibbed by the PTL at [log_loc(L)].")
 			L.elecgib()
 			return 1 //tells the caller to remove L from the laser's affecting_mobs
 		if(1e11+1 to INFINITY) //you really, REALLY fucked up this time buddy
 			L.unlock_medal("For Your Ohm Good", 1)
 			L.visible_message("<b>[L.name] is detonated by the [src]!</b>")
+			logTheThing("combat", L, null, "was explosively gibbed by the PTL at [log_loc(L)].")
 			L.blowthefuckup(min(1+round(power/1e12),20),0)
 			return 1 //tells the caller to remove L from the laser's affecting_mobs
 

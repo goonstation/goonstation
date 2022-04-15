@@ -1026,7 +1026,7 @@ WET FLOOR SIGN
 				old_trashbag.set_loc(user.loc)
 				user.put_in_hand_or_drop(old_trashbag)
 			user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 			src.tooltip_rebuild = 1
 		else if(istype(W, /obj/item/reagent_containers/glass/bucket))
 			if(isnull(src.bucket))
@@ -1041,7 +1041,7 @@ WET FLOOR SIGN
 				old_bucket.set_loc(user.loc)
 				user.put_in_hand_or_drop(old_bucket)
 			user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 			src.tooltip_rebuild = 1
 		else
 			. = ..()
@@ -1129,7 +1129,7 @@ WET FLOOR SIGN
 								if(!I.cant_drop)
 									I.set_loc(M.loc)
 									M.u_equip(I)
-									I.dropped()
+									I.dropped(user)
 									boutput(M, "<span class='alert'>Your [I] is pulled from your hands by the force of [user]'s [master].</span>")
 				new/obj/effect/suck(T, get_dir(T, last))
 				last = T

@@ -71,16 +71,17 @@
 		src.change_outfit(which)
 
 	proc/change_outfit(var/datum/chameleon_jumpsuit_pattern/T)
-		src.name = T.name
-		src.desc = T.desc
-		src.icon_state = T.icon_state
-		src.item_state = T.item_state
-		src.icon = T.sprite_item
-		src.wear_image_icon = T.sprite_worn
-		src.inhand_image_icon = T.sprite_hand
-		src.wear_image = image(wear_image_icon)
-		src.inhand_image = image(inhand_image_icon)
-		usr.set_clothing_icon_dirty()
+		if (T)
+			src.name = T.name
+			src.desc = T.desc
+			src.icon_state = T.icon_state
+			src.item_state = T.item_state
+			src.icon = T.sprite_item
+			src.wear_image_icon = T.sprite_worn
+			src.inhand_image_icon = T.sprite_hand
+			src.wear_image = image(wear_image_icon)
+			src.inhand_image = image(inhand_image_icon)
+			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_jumpsuit_pattern
 	var/name = "black jumpsuit"
@@ -365,17 +366,18 @@
 		src.change_outfit(which)
 
 	proc/change_outfit(var/datum/chameleon_hat_pattern/T)
-		src.name = T.name
-		src.desc = T.desc
-		src.icon_state = T.icon_state
-		src.item_state = T.item_state
-		src.icon = T.sprite_item
-		src.wear_image_icon = T.sprite_worn
-		src.inhand_image_icon = T.sprite_hand
-		src.wear_image = image(wear_image_icon)
-		src.inhand_image = image(inhand_image_icon)
-		src.seal_hair = T.seal_hair
-		usr.set_clothing_icon_dirty()
+		if (T)
+			src.name = T.name
+			src.desc = T.desc
+			src.icon_state = T.icon_state
+			src.item_state = T.item_state
+			src.icon = T.sprite_item
+			src.wear_image_icon = T.sprite_worn
+			src.inhand_image_icon = T.sprite_hand
+			src.wear_image = image(wear_image_icon)
+			src.inhand_image = image(inhand_image_icon)
+			src.seal_hair = T.seal_hair
+			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_hat_pattern
 	var/name = "hat"
@@ -600,17 +602,18 @@
 		src.change_outfit(which)
 
 	proc/change_outfit(var/datum/chameleon_suit_pattern/T)
-		src.name = T.name
-		src.desc = T.desc
-		src.icon_state = T.icon_state
-		src.item_state = T.item_state
-		src.icon = T.sprite_item
-		src.over_hair = T.over_hair
-		src.wear_image_icon = T.sprite_worn
-		src.inhand_image_icon = T.sprite_hand
-		src.wear_image = image(wear_image_icon)
-		src.inhand_image = image(inhand_image_icon)
-		usr.set_clothing_icon_dirty()
+		if (T)
+			src.name = T.name
+			src.desc = T.desc
+			src.icon_state = T.icon_state
+			src.item_state = T.item_state
+			src.icon = T.sprite_item
+			src.over_hair = T.over_hair
+			src.wear_image_icon = T.sprite_worn
+			src.inhand_image_icon = T.sprite_hand
+			src.wear_image = image(wear_image_icon)
+			src.inhand_image = image(inhand_image_icon)
+			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_suit_pattern
 	var/name = "hoodie"
@@ -902,16 +905,17 @@
 		src.change_outfit(which)
 
 	proc/change_outfit(var/datum/chameleon_glasses_pattern/T)
-		src.name = T.name
-		src.desc = T.desc
-		src.icon_state = T.icon_state
-		src.item_state = T.item_state
-		src.icon = T.sprite_item
-		src.wear_image_icon = T.sprite_worn
-		src.inhand_image_icon = T.sprite_hand
-		src.wear_image = image(wear_image_icon)
-		src.inhand_image = image(inhand_image_icon)
-		usr.set_clothing_icon_dirty()
+		if (T)
+			src.name = T.name
+			src.desc = T.desc
+			src.icon_state = T.icon_state
+			src.item_state = T.item_state
+			src.icon = T.sprite_item
+			src.wear_image_icon = T.sprite_worn
+			src.inhand_image_icon = T.sprite_hand
+			src.wear_image = image(wear_image_icon)
+			src.inhand_image = image(inhand_image_icon)
+			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_glasses_pattern
 	var/name = "prescription glasses"
@@ -1032,17 +1036,18 @@
 		src.change_outfit(which)
 
 	proc/change_outfit(var/datum/chameleon_shoes_pattern/T)
-		src.name = T.name
-		src.desc = T.desc
-		src.icon_state = T.icon_state
-		src.item_state = T.item_state
-		src.icon = T.sprite_item
-		src.wear_image_icon = T.sprite_worn
-		src.inhand_image_icon = T.sprite_hand
-		src.wear_image = image(wear_image_icon)
-		src.inhand_image = image(inhand_image_icon)
-		src.step_sound = T.step_sound
-		usr.set_clothing_icon_dirty()
+		if (T)
+			src.name = T.name
+			src.desc = T.desc
+			src.icon_state = T.icon_state
+			src.item_state = T.item_state
+			src.icon = T.sprite_item
+			src.wear_image_icon = T.sprite_worn
+			src.inhand_image_icon = T.sprite_hand
+			src.wear_image = image(wear_image_icon)
+			src.inhand_image = image(inhand_image_icon)
+			src.step_sound = T.step_sound
+			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_shoes_pattern
 	var/name = "black shoes"
@@ -1180,8 +1185,6 @@
 			P.sprite_hand = U.inhand_image_icon
 			src.clothing_choices += P
 			P.print_type = U.material_prints
-			P.hide_prints = U.hide_prints
-			P.scramble_prints = U.scramble_prints
 
 			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
 
@@ -1195,7 +1198,6 @@
 			inhand_image = image(inhand_image_icon)
 			src.icon_state = "psyche"
 			src.item_state = "psyche"
-			src.hide_prints = 1
 			src.material_prints = "high-tech rainbow flashing nanofibers"
 			M.set_clothing_icon_dirty()
 
@@ -1205,7 +1207,7 @@
 		set category = "Local"
 		set src in usr
 
-		var/datum/chameleon_shoes_pattern/which = tgui_input_list(usr, "Change the shoes to which pattern?", "Chameleon Shoes", clothing_choices)
+		var/datum/chameleon_shoes_pattern/which = tgui_input_list(usr, "Change the shoes to which pattern?", "Chameleon Gloves", clothing_choices)
 
 		if(!which)
 			return
@@ -1213,19 +1215,18 @@
 		src.change_outfit(which)
 
 	proc/change_outfit(var/datum/chameleon_gloves_pattern/T)
-		src.name = T.name
-		src.desc = T.desc
-		src.icon_state = T.icon_state
-		src.item_state = T.item_state
-		src.icon = T.sprite_item
-		src.wear_image_icon = T.sprite_worn
-		src.inhand_image_icon = T.sprite_hand
-		src.wear_image = image(wear_image_icon)
-		src.inhand_image = image(inhand_image_icon)
-		src.material_prints = T.print_type
-		src.hide_prints = T.hide_prints
-		src.scramble_prints = T.scramble_prints
-		usr.set_clothing_icon_dirty()
+		if (T)
+			src.name = T.name
+			src.desc = T.desc
+			src.icon_state = T.icon_state
+			src.item_state = T.item_state
+			src.icon = T.sprite_item
+			src.wear_image_icon = T.sprite_worn
+			src.inhand_image_icon = T.sprite_hand
+			src.wear_image = image(wear_image_icon)
+			src.inhand_image = image(inhand_image_icon)
+			src.material_prints = T.print_type
+			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_gloves_pattern
 	var/name = "Black Gloves"
@@ -1360,16 +1361,17 @@
 		src.change_outfit(which)
 
 	proc/change_outfit(var/datum/chameleon_belt_pattern/T)
-		src.name = T.name
-		src.desc = T.desc
-		src.icon_state = T.icon_state
-		src.item_state = T.item_state
-		src.icon = T.sprite_item
-		src.wear_image_icon = T.sprite_worn
-		src.inhand_image_icon = T.sprite_hand
-		src.wear_image = image(wear_image_icon)
-		src.inhand_image = image(inhand_image_icon)
-		usr.set_clothing_icon_dirty()
+		if (T)
+			src.name = T.name
+			src.desc = T.desc
+			src.icon_state = T.icon_state
+			src.item_state = T.item_state
+			src.icon = T.sprite_item
+			src.wear_image_icon = T.sprite_worn
+			src.inhand_image_icon = T.sprite_hand
+			src.wear_image = image(wear_image_icon)
+			src.inhand_image = image(inhand_image_icon)
+			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_belt_pattern
 	var/name = "utility belt"
@@ -1502,16 +1504,17 @@
 		src.change_outfit(which)
 
 	proc/change_outfit(var/datum/chameleon_backpack_pattern/T)
-		src.name = T.name
-		src.desc = T.desc
-		src.icon_state = T.icon_state
-		src.item_state = T.item_state
-		src.icon = T.sprite_item
-		src.wear_image_icon = T.sprite_worn
-		src.inhand_image_icon = T.sprite_hand
-		src.wear_image = image(wear_image_icon)
-		src.inhand_image = image(inhand_image_icon)
-		usr.set_clothing_icon_dirty()
+		if (T)
+			src.name = T.name
+			src.desc = T.desc
+			src.icon_state = T.icon_state
+			src.item_state = T.item_state
+			src.icon = T.sprite_item
+			src.wear_image_icon = T.sprite_worn
+			src.inhand_image_icon = T.sprite_hand
+			src.wear_image = image(wear_image_icon)
+			src.inhand_image = image(inhand_image_icon)
+			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_backpack_pattern
 	var/name = "backpack"

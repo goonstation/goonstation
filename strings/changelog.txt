@@ -1,4 +1,13 @@
 
+(t)fri apr 15 22
+(u)Flappybat
+(p)8198
+(e)|
+(+)Lockers, fridges and coffins now have unique opening and closing sounds.
+(u)TheMightyAltroll
+(p)8203
+(e)|
+(+)Added a new sound to flamethrowers to make them sound properly terrifying.
 (t)thu apr 14 22
 (u)Wisemonster
 (p)8152
