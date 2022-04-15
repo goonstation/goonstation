@@ -84,7 +84,7 @@
 		if(current_state > GAME_STATE_WORLD_INIT)
 			for(var/dir in cardinal)
 				var/turf/T = get_step(src, dir)
-				if(T?.ocean_canpass() && !istype(T, /turf/space))
+				if(istype(T) && T.ocean_canpass() && !istype(T, /turf/space))
 					src.tilenotify(T)
 					break
 
