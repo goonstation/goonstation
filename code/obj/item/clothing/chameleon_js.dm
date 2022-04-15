@@ -1180,8 +1180,6 @@
 			P.sprite_hand = U.inhand_image_icon
 			src.clothing_choices += P
 			P.print_type = U.material_prints
-			P.hide_prints = U.hide_prints
-			P.scramble_prints = U.scramble_prints
 
 			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
 
