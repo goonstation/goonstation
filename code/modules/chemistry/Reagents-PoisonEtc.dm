@@ -564,6 +564,7 @@ datum
 						B.desc = "This bee looks very much like [M.real_name]. How peculiar."
 						B.beeKid = "#ffdddd"
 						B.UpdateIcon()
+						logTheThing("combat", M, null, "was gibbed by reagent [name].")
 						M.gib()
 				..()
 
@@ -725,6 +726,7 @@ datum
 								bleed(H, 500, 5) // you'll be gibbed in a moment you don't need it anyway
 								H.visible_message("<span class='alert'><B>A huge bee bursts out of [H]! OH FUCK!</B></span>")
 								qdel(H.organHolder.heart)
+								logTheThing("combat", H, null, "was gibbed by reagent [name].")
 								H.gib()
 				..()
 
@@ -1213,6 +1215,7 @@ datum
 					M.make_jittery(1000)
 					SPAWN(rand(20, 100))
 						if (M) //ZeWaka: Fix for null.gib
+							logTheThing("combat", M, null, "was gibbed by reagent [name].")
 							M.gib()
 					return
 
