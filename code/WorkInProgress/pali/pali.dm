@@ -474,4 +474,3 @@
 	New()
 		..()
 		src.setMaterial(getMaterial("negativematter"))
-		src.AddComponent(/datum/component/extradimensional_storage)

@@ -346,6 +346,19 @@
 		else
 			return ..()
 
+	onMaterialChanged()
+		. = ..()
+		if(isnull(src.material))
+			return
+		var/found_negative = (src.material.mat_id == "negativematter")
+		if(!found_negative)
+			for(var/datum/material/parent_mat in src.material.parent_materials)
+				if(parent_mat.mat_id == "negativematter")
+					found_negative = TRUE
+					break
+		if(found_negative)
+			src.AddComponent(/datum/component/extradimensional_storage)
+
 	proc/weld_action(obj/item/W, mob/user)
 		if(src.open)
 			return
