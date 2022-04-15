@@ -9923,7 +9923,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi';
 	icon_state = "broken";
 	name = "broken cloning display";
-	desc = "You can faintly see the helix of DNA strands burned-into the screen.";
+	desc = "You faintly see the double-helix of DNA strands burned into the screen.";
 	density = 1
 	},
 /turf/simulated/floor/airless/plating/damaged1,
@@ -21581,8 +21581,7 @@
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "oldlapb";
 	name = "smashed relay controller";
-	desc = "This thing looks thrashed...";
-	pixel_x = 1
+	desc = "The casing appears to have dozens of small holes bored into it."pixel_x = 1
 	},
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedmedicalship)
