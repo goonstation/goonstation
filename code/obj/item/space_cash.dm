@@ -102,7 +102,7 @@
 		if(src.amount > 1)
 			src.visible_message("[src] melds together into a single credit. What?")
 			src.desc += " It looks all melted together or something."
-			src.amount = 1
+			src.change_stack_amount(-(src.amount-1))
 			update_stack_appearance()
 
 //	attack_self(mob/user as mob)
