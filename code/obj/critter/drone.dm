@@ -1346,17 +1346,57 @@
 	atksilicon = 0
 	firevuln = 0
 	atk_delay = 5
+	attack_cooldown = 10
 	seekrange = 15
 	var/deathtimer = 0 // for catastrophic failure on death
 
 	New()
-		..()
+		..() // todo: add most recently touched to friends
 		deathtimer = rand(2, 5)
 		death_text = "[src] jutters and falls from the air, whirring to a stop"
-		name = "Microdrone unit [pick(sawflynames)]-[rand(1,999)]"
+		name = "Sawfly [pick(sawflynames)]-[rand(1,999)]"
 		beeptext = "[pick(list("beeps", "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs"))]"
 
-	CritterDeath()
+	ChaseAttack(atom/M) // overriding these procs so the drone is nicer >:(
+		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends))
+		//	src.task = "thinking"
+			return
+		if(target && !attacking)
+			attacking = 1
+			src.visible_message("<span class='alert'><b>[src]</b> flies at [M]!</span>")
+			walk_to(src, src.target,1,4)
+			var/tturf = get_turf(M)
+			Shoot(tturf, src.loc, src)
+			SPAWN(attack_cooldown)
+				attacking = 0
+			return
+
+	seek_target()
+		src.anchored = 0
+		for (var/mob/living/C in view(src.seekrange,src))
+			if (C in src.friends) continue
+			if (istraitor(C) || isnukeop(C) || isspythief(C)) // frens :)
+				src.visible_message("<span class='alert'>[src]'s IFF subsystem recognize an ally!")
+				friends += C
+				continue
+		..()// call yer mom and pops, drone
+
+	CritterAttack(atom/M)
+		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends)) // BE. A. GOOD. DRONE.
+		//	src.task = "thinking" // think about your actions
+			return
+		if(target && !attacking)
+			attacking = 1
+			//playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
+			src.visible_message("<span class='alert'><b>[src]</b> [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "hacks", "slashes",))] [M]!</span>")
+			var/tturf = get_turf(M)
+			Shoot(tturf, src.loc, src)
+			SPAWN(attack_cooldown)
+				attacking = 0
+		return
+
+
+	CritterDeath() // rip lil guy
 		if (!src.alive) return
 		..()
 		if (get_area(src) != colosseum_controller.colosseum)
@@ -1398,22 +1438,11 @@
 					src.visible_message("<span class='alert'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!")
 					fireflash(src,1,TRUE)
 
-				if(prob(90))// it blows up!
+				else //(prob(50))// it blows up!
 					src.visible_message("<span class='alert'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!")
 					//SPAWN(0.5 SECONDS)// wait for iiiittttt...
-					explosion(src, get_turf(src), -1,-1, 2, 3)
-					explosion(src, get_turf(src), 2, 2, 2, 3) // KERBLOOEY!
+					//explosion(src, get_turf(src), -1,-1, 2, 3)
+					explosion(src, get_turf(src), 0, 1, 2, 3) // KERBLOOEY!
 					elecflash(src,2)
 				qdel(src)
-
-	seek_target()
-		src.anchored = 0
-		for (var/mob/living/C in view(src.seekrange,src))
-			if (C in src.friends) continue
-			if (istraitor(C) || isnukeop(C) || isspythief(C)) // frens :)
-				src.visible_message("<span class='alert'>[src]'s IFF subsystem recognize a nonhostile")
-				friends += C
-				continue
-		..()// call yer mom and pops, drone
-
 

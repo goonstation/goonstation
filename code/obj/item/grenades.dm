@@ -159,7 +159,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 /obj/item/old_grenade/spawner/sawfly
 	name = "Compact sawfly"
 	desc = "A self-deploying area antipersonnel robot. It's folded up and offline..."
-	det_time = 1 SECONDS // it's fast
+	det_time = 1 SECONDS // slower reaction time = better
+	throwforce = 7
 	icon_state = "sawfly"
 	icon_state_armed = "sawfly1"
 	payload = /obj/critter/gunbot/drone/buzzdrone/sawfly
