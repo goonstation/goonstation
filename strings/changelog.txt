@@ -1,5 +1,11 @@
 
 (t)thu apr 14 22
+(u)Flappybat
+(p)8071
+(e)🆕⚖|feature, balance
+(*)Closets and lockers can now be broken open by hitting them with items or shooting with projectiles. Lockers have between 100HP and 300HP depending on their security. Energy weapons and low damage items are less effective against them.
+(*)HoS, Armory and Confiscated item lockers are reinforced and can only be broken open with explosives and higher damage kinetics.
+(*)Secure lockers started bolted to the floor. They must be unbolted with a wrench to be moved.
 (u)Flaborized
 (p)7469
 (e)🆕🎨|feature, sprites
