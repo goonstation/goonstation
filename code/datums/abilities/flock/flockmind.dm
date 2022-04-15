@@ -150,10 +150,10 @@
 	if(..())
 		return TRUE
 
-	var/mob/M = target
+	var/M = target
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
 
-	if (!isliving(M) || isflock(M) || isintangible(M))
+	if (!(isliving(M) || iscritter(M)) || isflock(M) || isintangible(M))
 		boutput(F, "<span class='alert'>That isn't a valid target.</span>")
 		return TRUE
 

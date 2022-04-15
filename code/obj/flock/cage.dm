@@ -3,18 +3,18 @@
 /////////////////////////////////////////////////////////////////////////////////
 // it's just an ice cube, but stronger and it looks different
 // and eats people, i guess, too
-/obj/icecube/flockdrone
+/obj/flock_structure/cage
 	name = "weird energy cage"
 	desc = "You can see the person inside being rapidly taken apart by fibrous mechanisms. You ought to do something about that."
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "cage"
+	flock_id = "matter reprocessor"
 	flags = USEDELAY
-	steam_on_death = 0
 	health = 30
-	var/health_max = 30
+	health_max = 30
 	alpha = 192
-	var/datum/flock/flock
-	var/mob/living/occupant = null // todo: make this work with more than just humans (borgs, critters, probably not cubes)
+	anchored = FALSE
+	var/atom/occupant = null
 	var/obj/target = null
 	var/eating_occupant = 0
 	var/initial_volume = 200
@@ -27,19 +27,38 @@
 	mat_changeappearance = 0
 
 
-	New(loc, mob/living/iced as mob, datum/flock/F=null)
-		..()
-		src.flock = F
+	New(loc, var/atom/iced, datum/flock/F=null)
+		..(loc,F)
+		if(iced && !isAI(iced) && !isblob(iced) && !iswraith(iced))
+			if(istype(iced.loc, /obj/flock_structure/cage)) //Already in a cube?
+				qdel(src)
+				return
+
+			if(!(ismob(iced) || iscritter(iced)))
+				qdel(src)
+				return
+			iced:set_loc(src)
+
+			boutput(iced, "<span class='alert'>You are trapped within [src]!</span>") // since this is used in at least two places to trap people in things other than ice cubes
+
 		var/datum/reagents/R = new /datum/reagents(initial_volume)
 		src.reagents = R
 		R.my_atom = src //grumble
 		if(iced)
-			iced.addOverlayComposition(/datum/overlayComposition/flockmindcircuit)
+			if(istype(iced,/mob/living))
+				var/mob/living/M = iced
+				M.addOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 			occupant = iced
-		processing_items |= src
-		src.setMaterial(getMaterial("gnesis"))
-		src.health = src.health_max
-		src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)
+
+		UpdateIcon()
+
+	update_icon()
+		. = ..()
+		src.underlays = list()
+		for(var/atom/O in src.contents)
+			src.underlays += O.appearance
+		UpdateOverlays(image(src.icon,src.icon_state,layer = EFFECTS_LAYER_UNDER_1),"icecube_layer")
+
 
 	proc/getHumanPiece(var/mob/living/carbon/human/H)
 		// prefer inventory items before limbs, and limbs before organs
@@ -59,16 +78,16 @@
 			else
 				items += I
 		// only take the brain as the very last thing
-		if(organs.len >= 2)
+		if(length(organs) >= 2)
 			organs -= brain
-		if(items.len >= 1)
+		if(length(items))
 			eating_occupant = 0
 			target = pick(items)
 			H.remove_item(target)
 			playsound(src, "sound/weapons/nano-blade-1.ogg", 50, 1)
 			boutput(H, "<span class='alert'>[src] pulls [target] from you and begins to rip it apart.</span>")
 			src.visible_message("<span class='alert'>[src] pulls [target] from [H] and begins to rip it apart.</span>")
-		else if(limbs.len >= 1)
+		else if(length(limbs))
 			eating_occupant = 1
 			target = pick(limbs)
 			H.limbs.sever(target)
@@ -77,7 +96,7 @@
 			playsound(src, "sound/impact_sounds/Flesh_Tear_1.ogg", 80, 1)
 			boutput(H, "<span class='alert bold'>[src] wrenches your [initial(target.name)] clean off and begins peeling it apart! Fuck!</span>")
 			src.visible_message("<span class='alert bold'>[src] wrenches [target.name] clean off and begins peeling it apart!</span>")
-		else if(organs.len >= 1)
+		else if(length(organs))
 			eating_occupant = 1
 			target = pick(organs)
 			H.drop_organ(target)
@@ -89,13 +108,65 @@
 		else
 			H.gib()
 			occupant = null
-			underlays -= H
+			playsound(src, "sound/impact_sounds/Flesh_Tear_2.ogg", 80, 1)
+			src.visible_message("<span class='alert bold'>[src] rips what's left of its occupant to shreds!</span>")
+
+	proc/getRobotPiece(mob/living/silicon/robot/R)
+		// prefer inventory items before limbs, and limbs before organs
+		var/list/organs = list()
+		var/list/limbs = list()
+		var/list/items = list()
+		var/obj/item/organ/brain/brain = null
+		for(var/obj/item/I in R.contents)
+			if(istype(I, /obj/item/parts/robot_parts/head) || istype(I, /obj/item/parts/robot_parts/chest))
+				continue // taking container organs is kinda too cheap
+			if(istype(I, /obj/item/organ) || istype(I, /obj/item/clothing/head/butt))
+				organs += I
+				if(istype(I, /obj/item/organ/brain))
+					brain = I
+			else if(istype(I, /obj/item/parts))
+				limbs += I
+			else if(istype(I,/obj/item/clothing))
+				items += I
+			//anything else is gonna be a borg tool, so ignore those
+
+		// only take the brain as the very last thing
+		if(length(organs) >= 2)
+			organs -= brain
+		if(length(items))
+			eating_occupant = 0
+			target = pick(items)
+			R.remove_item(target)
+			playsound(src, "sound/weapons/nano-blade-1.ogg", 50, 1)
+			boutput(R, "<span class='alert'>[src] pulls [target] from you and begins to rip it apart.</span>")
+			src.visible_message("<span class='alert'>[src] pulls [target] from [R] and begins to rip it apart.</span>")
+		else if(length(limbs))
+			eating_occupant = 1
+			target = pick(limbs)
+			R.compborg_lose_limb(target)
+			R.emote("scream")
+			random_brute_damage(R, 20)
+			playsound(src, "sound/impact_sounds/Flesh_Tear_1.ogg", 80, 1)
+			boutput(R, "<span class='alert bold'>[src] wrenches your [initial(target.name)] clean off and begins peeling it apart! Fuck!</span>")
+			src.visible_message("<span class='alert bold'>[src] wrenches [target.name] clean off and begins peeling it apart!</span>")
+		else if(length(organs))
+			eating_occupant = 1
+			target = pick(organs)
+			R.compborg_lose_limb(target)
+			R.emote("scream")
+			random_brute_damage(R, 20)
+			playsound(src, "sound/impact_sounds/Flesh_Tear_2.ogg", 80, 1)
+			boutput(R, "<span class='alert bold'>[src] tears out your [initial(target.name)]! OH GOD!</span>")
+			src.visible_message("<span class='alert bold'>[src] tears out [target.name]!</span>")
+		else
+			R.gib()
+			occupant = null
 			playsound(src, "sound/impact_sounds/Flesh_Tear_2.ogg", 80, 1)
 			src.visible_message("<span class='alert bold'>[src] rips what's left of its occupant to shreds!</span>")
 
 	Enter(atom/movable/O)
 		. = ..()
-		underlays += O
+		UpdateIcon()
 
 	proc/spawnEgg()
 		src.visible_message("<span class='notice'>[src] spits out a device!</span>")
@@ -105,12 +176,6 @@
 		egg.throw_at(target, 12, 3)
 
 	process()
-		// consume any fluid near us
-		var/turf/T = get_turf(src)
-		if(T?.active_liquid)
-			var/obj/fluid/F = T.active_liquid
-			F.group.drain(F, 15, src)
-
 		// process fluids into stuff
 		if(reagents.has_reagent(target_fluid, create_egg_at_fluid))
 			reagents.remove_reagent(target_fluid, create_egg_at_fluid)
@@ -122,7 +187,7 @@
 			var/list/edibles = list()
 			for(var/obj/O in src.contents)
 				edibles += O
-			if(edibles.len >= 1)
+			if(length(edibles))
 				target = pick(edibles)
 				eating_occupant = 0
 				playsound(src, "sound/weapons/nano-blade-1.ogg", 50, 1)
@@ -130,64 +195,116 @@
 					boutput(occupant, "<span class='notice'>[src] begins to process [target].</span>")
 			else if(occupant && ishuman(occupant))
 				var/mob/living/carbon/human/H = occupant
-				getHumanPiece(H)
-			else if(occupant)
-				occupant.gib() // sorry buddy but if you're some freaky-deaky cube thing or some other weird living thing we can't be doing with this now
+				getHumanPiece(H) //cut off a human part and add it to contents, set it to target
+			else if(occupant && isrobot(occupant))
+				var/mob/living/silicon/robot/H = occupant
+				getRobotPiece(H) //cut off a robot part and add it to contents, set it to target
+			else if(isliving(occupant))
+				eating_occupant = TRUE
+				var/mob/living/M = occupant
+				target = M //set target to the mob
+			else if(iscritter(occupant))
+				eating_occupant = TRUE
+				var/obj/critter/C = occupant
+				C.CritterDeath() //kill obj/critters immediately because their behaviour is jank and awful
+				target = C //set target to the critter
+
 			if(target)
 				target.set_loc(src)
 		else
-			underlays -= target
 			if(hasvar(target, "health"))
 				var/absorption = min(absorb_per_process_tick, target:health)
 				target:health -= absorption
 				reagents.add_reagent(target_fluid, absorption * 2)
 				if(target:health <= 0)
-					reagents.add_reagent(target_fluid, 10)
-					qdel(target)
-					target = null
+					if(isliving(target))
+						var/mob/living/M = target
+						M.set_loc(src.loc) //kick it out and gib it
+						M.gib()
+						occupant = null
+						playsound(src, "sound/impact_sounds/Flesh_Tear_2.ogg", 80, 1)
+						src.visible_message("<span class='alert bold'>[src] rips what's left of its occupant to shreds!</span>")
+					else
+						if(iscritter(target))
+							occupant = null
+							playsound(src, "sound/impact_sounds/Flesh_Tear_2.ogg", 80, 1)
+							src.visible_message("<span class='alert bold'>[src] rips what's left of its occupant to shreds!</span>")
+						target.set_loc(null)
+						qdel(target)
+						target = null
 			else
 				reagents.add_reagent(target_fluid, 10)
 				qdel(target)
 				target = null
+
+		UpdateIcon()
+
 		if(occupant)
-			underlays -= occupant
-			underlays += occupant
 			if(eating_occupant && prob(20))
 				boutput(occupant, "<span class='flocksay italics'>[pick_string("flockmind.txt", "flockmind_conversion")]</span>")
-		if(src.contents.len <= 0 && reagents.get_reagent_amount(target_fluid) < 50)
-			if(reagents.has_reagent(target_fluid)) // flood the area with our unprocessed contents
+		if(!length(src.contents) && reagents.get_reagent_amount(target_fluid) < create_egg_at_fluid)
+			if(reagents.has_reagent(target_fluid)) // dump out our excess resources as a cache
 				playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 80, 1)
-				T.fluid_react_single(reagents.get_reagent_amount(target_fluid))
+				var/obj/item/flockcache/x = new(src.loc)
+				x.resources = reagents.get_reagent_amount(target_fluid)
+				reagents.del_reagent(target_fluid,x.resources)
 			qdel(src)
 
 	disposing()
 		playsound(src, "sound/impact_sounds/Energy_Hit_2.ogg", 80, 1)
-		processing_items -= src
-		occupant?.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
+		if (src.reagents) //spill out your contents
+			src.reagents.reaction(src.loc)
+
+		if(istype(occupant,/mob/living))
+			var/mob/living/M = occupant
+			M?.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
+
+		for(var/atom/movable/AM in src)
+			if(ismob(AM))
+				var/mob/M = AM
+				M.visible_message("<span class='alert'><b>[M]</b> breaks out of [src]!</span>","<span class='alert'>You break out of [src]!</span>")
+			AM.set_loc(src.loc)
 		..()
 
-/obj/icecube/flockdrone/special_desc(dist, mob/user)
-	if(isflock(user))
-		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Matter Reprocessor
-		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
-		<br><span class='bold'>Volume:</span> [src.reagents.get_reagent_amount(src.target_fluid)]
-		<br><span class='bold'>Needed volume:</span> [src.create_egg_at_fluid]
-		<br><span class='bold'>###=-</span></span>"}
-	else
-		return null // give the standard description
+	relaymove(mob/user as mob)
+		if (user.stat)
+			return
 
-/obj/icecube/flockdrone/attack_hand(mob/user as mob)
-	if (user.a_intent == INTENT_HARM)
-		user.visible_message("<span class='alert'><b>[user]</b> kicks [src]!</span>", "<span class='alert'>You kick [src]!</span>")
-		attack_particle(user, src)
-		user.lastattacked = src
-		takeDamage(2)
-		playsound(src, "sound/impact_sounds/Crystal_Hit_1.ogg", 25, 1)
+		if(prob(25))
+			takeDamage("brute",1)
+		return
 
-/obj/icecube/flockdrone/attackby(obj/item/W as obj, mob/user as mob)
-	user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [W]!</span>", "<span class='alert'>You hit [src] with [W]!</span>")
-	attack_particle(user, src)
-	user.lastattacked = src
-	takeDamage(W.force)
-	playsound(src, "sound/impact_sounds/Crystal_Hit_1.ogg", 25, 1)
+	takeDamage(var/damageType, var/amount)
+		..(damageType,amount)
+		var/wiggle = 3
+		SPAWN(0)
+			while(wiggle > 0)
+				wiggle--
+				src.pixel_x = rand(-2,2)
+				src.pixel_y = rand(-2,2)
+				sleep(0.5)
+			src.pixel_x = 0
+			src.pixel_y = 0
+
+	checkhealth()
+		if(src.health <= 0)
+			qdel(src)
+
+	mob_flip_inside(var/mob/user)
+		..(user)
+		user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
+		src.takeDamage("brute",6)
+
+	special_desc(dist, mob/user)
+		if(isflock(user))
+			return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+			<br><span class='bold'>ID:</span> Matter Reprocessor
+			<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
+			<br><span class='bold'>Volume:</span> [src.reagents.get_reagent_amount(src.target_fluid)]
+			<br><span class='bold'>Needed volume:</span> [src.create_egg_at_fluid]
+			<br><span class='bold'>###=-</span></span>"}
+		else
+			return null // give the standard description
+
+
+
