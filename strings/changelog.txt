@@ -1,5 +1,9 @@
 
 (t)thu apr 14 22
+(u)Wisemonster
+(p)7797
+(e)🗺|mapping
+(*)Nanotrasen has added the necessary systems to Oshan for mulebots to function! (Mulebot included)
 (u)Flappybat
 (p)8071
 (e)🆕⚖|feature, balance
