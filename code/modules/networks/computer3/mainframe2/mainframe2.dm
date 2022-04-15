@@ -161,7 +161,7 @@
 		if(status & BROKEN)
 			return
 
-		if (istype(src.loc, /turf) && get_dist(src, usr) <= 1)
+		if (istype(src.loc, /turf) && BOUNDS_DIST(src, usr) == 0)
 			if (usr.stat || usr.restrained())
 				return
 
@@ -174,7 +174,7 @@
 					return
 
 				//Ai/cyborgs cannot physically remove a memory board from a room away.
-				if(issilicon(usr) && get_dist(src, usr) > 1)
+				if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 					boutput(usr, "<span class='alert'>You cannot physically touch the board.</span>")
 					return
 

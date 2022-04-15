@@ -20,8 +20,6 @@
 
 	initialize()
 		armory_area = get_area_by_type(/area/station/ai_monitored/armory)
-		if (!armory_area || armory_area.contents.len <= 1)
-			armory_area = get_area_by_type(/area/station/security/armory)
 
 		src.net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, control_frequency)
@@ -209,7 +207,7 @@
 
 	if(authed && (access_maxsec in W:access))
 		var/choice = alert(user, "Would you like to unauthorize security's access to riot gear?", "Armory Unauthorization", "Unauthorize", "No")
-		if(get_dist(user, src) > 1) return
+		if(BOUNDS_DIST(user, src) > 0) return
 		src.add_fingerprint(user)
 		switch(choice)
 			if("Unauthorize")
@@ -230,7 +228,8 @@
 		src.authorized_registered = list()
 
 	var/choice = alert(user, text("Would you like to authorize access to riot gear? [] authorization\s are still needed.", src.auth_need - src.authorized.len), "Armory Auth", "Authorize", "Repeal")
-	if(get_dist(user, src) > 1) return
+	if(BOUNDS_DIST(user, src) > 0 || src.authorized)
+		return
 	src.add_fingerprint(user)
 	switch(choice)
 		if("Authorize")

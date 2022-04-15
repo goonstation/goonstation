@@ -6,6 +6,7 @@
 	flags = FPRINT | USEDELAY
 	anchored = 1.0
 	stops_space_move = 1
+	status = REQ_PHYSICAL_ACCESS
 	var/datum/effects/system/ion_trail_follow/ion_trail = null
 	var/mob/pilot = null //The mob which actually flys the ship
 	var/capacity = 3 //How many passengers the ship can hold
@@ -192,7 +193,7 @@
 
 	updateDialog()
 		for(var/client/C)
-			if (C.mob && C.mob.using_dialog_of(src) && get_dist(C.mob,src) <= 1)
+			if (C.mob && C.mob.using_dialog_of(src) && BOUNDS_DIST(C.mob, src) == 0)
 				src.open_parts_panel(C.mob)
 
 	Topic(href, href_list)
@@ -1189,15 +1190,8 @@
 		logTheThing("vehicle", M, src.name, "is ejected from pod: <b>[constructTarget(src.name,"vehicle")]</b> when it blew up!")
 
 		src.leave_pod(M)
-		//var/atom/target = get_edge_target_turf(M,pick(alldirs))
-		//SPAWN(0)
-		//M.throw_at(target, 10, 2)
-		SPAWN(0)
-		step_rand(M, 0)
-		step_rand(M, 0)
-		step_rand(M, 0)
-		step_rand(M, 0)
-		step_rand(M, 0)
+		var/atom/target = get_edge_cheap(M, src.dir)
+		M.throw_at(target, 10, 2)
 
 
 /////////////////////////////////////////////////////////////////////
@@ -1812,12 +1806,17 @@
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		name = "syndicate minisub"
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
 		src.components += src.lock
 		myhud.update_systems()
 		myhud.update_states()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 /obj/machinery/vehicle/tank/minisub/mining
 	body_type = "minisub"

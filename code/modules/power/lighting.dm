@@ -508,6 +508,12 @@
 			name = "very harsh incandescent light fixture"
 			light_type = /obj/item/light/tube/harsh/very
 
+	broken
+
+		New()
+			..()
+			current_lamp.light_status = LIGHT_BROKEN
+
 	small
 		icon_state = "bulb1"
 		base_state = "bulb"

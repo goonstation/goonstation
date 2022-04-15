@@ -223,14 +223,14 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "aranesp", 15)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "aranesp", 15)
 					M.add_stam_mod_max("aranesp", 25)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "aranesp")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "aranesp")
 					M.remove_stam_mod_max("aranesp")
 				..()
 
@@ -242,7 +242,7 @@ datum
 				if (probmult(8)) boutput(M, "<span class='notice'>You feel [pick("really buff", "on top of the world","like you're made of steel", "food_energized", "invigorated", "full of energy")]!</span>")
 				if (prob(5))
 					boutput(M, "<span class='alert'>You cannot breathe!</span>")
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
+					M.setStatusMin("stunned", 2 SECONDS * mult)
 					M.take_oxygen_deprivation(15 * mult)
 					M.losebreath += (1 * mult)
 				..()
@@ -277,20 +277,20 @@ datum
 			transparency = 200
 			value = 66 // vOv
 			//addiction_prob = 25
-			stun_resist = 1000
+			stun_resist = 100
 			threshold = THRESHOLD_INIT
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "omegazine", 500)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "omegazine", 500)
 					M.add_stam_mod_max("omegazine", 500)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "omegazine")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "omegazine")
 					M.remove_stam_mod_max("omegazine")
 				..()
 
@@ -313,7 +313,7 @@ datum
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 1 * mult)
 					if (probmult(10))
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 4 SECONDS))
+						M.setStatusMin("stunned", 4 SECONDS)
 				..()
 				return
 
@@ -797,6 +797,92 @@ datum
 				id = "invislube"
 				visible = 0
 
+		glue
+			name = "space glue"
+			id = "spaceglue"
+			description = "Industrial superglue that is sure to stick to everything."
+			reagent_state = LIQUID
+			depletion_rate = 0.6
+			fluid_r = 230
+			fluid_b = 60
+			fluid_g = 230
+			transparency = 180
+			viscosity = 0.8
+			block_slippy = 1
+			var/counter
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
+				if(method == TOUCH)
+					var/mob/living/L = M
+					. = 0
+
+					if(L.getStatusDuration("slowed")>=10 SECONDS)
+						L.setStatusMin("staggered", (0.3 SECONDS)*volume_passed)
+						if(!ON_COOLDOWN(M, "stuck in glue", 15 SECOND))
+							boutput(M, "<span class='notice'>You get stuck in the glue!</span>")
+					else
+						L.changeStatus("slowed", min((0.4 SECONDS)*volume_passed, 10 SECONDS))
+				return
+
+			reaction_turf(var/turf/target, var/volume)
+				var/list/covered = holder.covered_turf()
+				var/turf/simulated/T = target
+				var/volume_mult = 1
+
+				if (length(covered))
+					if (volume/covered.len < 2) //reduce time based on dilution
+						volume_mult = min(volume / 9, 1)
+
+				if (istype(T))
+					if(T.sticky == TRUE) return
+					var/wet = image('icons/effects/water.dmi',"sticky_floor")
+					T.UpdateOverlays(wet, "wet_overlay")
+					T.sticky = TRUE
+					T.wet = 0
+					SPAWN(80 SECONDS * volume_mult)
+						T.UpdateOverlays(null, "wet_overlay")
+						T.sticky = FALSE
+				return
+
+			on_mob_life(var/mob/M, var/mult = 1, var/method, var/volume_passed)
+				if (!M) M = holder.my_atom
+				if (!counter) counter = 1
+				switch(counter += (1 * mult))
+					if(20 to INFINITY)
+						M.druggy = max(M.druggy, 15)
+						if (M.canmove && prob(20))
+							M.change_misstep_chance(5 * mult)
+						if(probmult(5)) M.emote(pick("twitch","drool","moan"))
+
+				..()
+				return
+
+			reaction_obj(obj/O, volume)
+				if(volume < 5)
+					return
+				if(isgrab(O))
+					return
+				if(O.GetComponent(/datum/component/glued) || O.GetComponent(/datum/component/glue_ready))
+					return
+				if(O.invisibility >= INVIS_ALWAYS_ISH)
+					return
+				var/silent = FALSE
+				var/list/covered = holder.covered_turf()
+				if (length(covered) > 5)
+					silent = TRUE
+				volume /= max(length(covered), 1)
+				if(istype(holder, /datum/reagents/fluid_group))
+					volume = min(volume, src.volume / (2 + 3 / length(covered)))
+				if(volume < 5)
+					return
+				O.AddComponent(/datum/component/glue_ready, volume * 5 SECONDS, 5 SECONDS)
+				var/turf/T = get_turf(O)
+				if(!silent)
+					T.visible_message("<span class='notice'>\The [O] is coated in a layer of glue!</span>")
+				if(istype(holder, /datum/reagents/fluid_group))
+					holder.remove_reagent(src.id, min(volume, src.volume - 4))
+
 // metal foaming agent
 // this is lithium hydride. Add other recipies (e.g. MiH + H2O -> MiOH + H2) eventually
 
@@ -863,16 +949,32 @@ datum
 				..()
 				return
 
+			proc/unglue_attached_to(atom/A)
+				var/atom/Aloc = isturf(A) ? A : A.loc
+				for(var/atom/movable/AM in Aloc)
+					var/datum/component/glued/glued_comp = AM.GetComponent(/datum/component/glued)
+					if(glued_comp?.glued_to == A)
+						qdel(glued_comp)
+
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if (method == TOUCH)
 					remove_stickers(M, volume)
+				unglue_attached_to(M)
 
 			reaction_obj(var/obj/O, var/volume)
 				remove_stickers(O, volume)
+				var/datum/component/glued/glued_comp = O.GetComponent(/datum/component/glued)
+				if(glued_comp)
+					qdel(glued_comp)
+				var/datum/component/glue_ready/glue_ready_comp = O.GetComponent(/datum/component/glue_ready)
+				if(glue_ready_comp)
+					qdel(glue_ready_comp)
+				unglue_attached_to(O)
 
 			reaction_turf(var/turf/T, var/volume)
 				remove_stickers(T, volume)
+				unglue_attached_to(T)
 
 			proc/remove_stickers(var/atom/target, var/volume)
 				var/can_remove_amt = volume / 10
@@ -1232,8 +1334,8 @@ datum
 						M.changeStatus("weakened", 3 SECONDS * mult)
 						M.changeStatus("muted", 3 SECONDS * mult)
 				if (counter >= 19 && !fakedeathed)
-					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 3 SECONDS * mult))
-					M.setStatus("muted", max(M.getStatusDuration("muted"), 3 SECONDS * mult))
+					M.setStatusMin("weakened", 3 SECONDS * mult)
+					M.setStatusMin("muted", 3 SECONDS * mult)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
 					playsound(M, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
@@ -1432,7 +1534,7 @@ datum
 
 				else if (probmult(4))
 					M.visible_message("<span class='alert'><B>[M]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
-					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 15 SECONDS * mult))
+					M.setStatusMin("weakened", 15 SECONDS * mult)
 					M.make_jittery(1000)
 					SPAWN(rand(20, 100))
 						var/turf/Mturf = get_turf(M)
@@ -1471,7 +1573,7 @@ datum
 					random_brute_damage(M, 2 * mult)
 				else if (probmult(4))
 					M.visible_message("<span class='alert'><B>[M]</B> starts hooting violently!</span>", "You feel as if your body is hooting itself apart!")
-					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 15 SECONDS * mult))
+					M.setStatusMin("weakened", 15 SECONDS * mult)
 					M.make_jittery(1000)
 					SPAWN(rand(20, 100))
 						M.owlgib(control_chance = 100)
@@ -1674,7 +1776,7 @@ datum
 					random_brute_damage(M, 5 * mult)
 					M.emote("scream")
 					M.emote("twitch")
-					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 2 SECONDS * mult))
+					M.setStatusMin("weakened", 2 SECONDS * mult)
 					M.visible_message("<span class='alert'><b>[M.name]</b> tears at their own skin!</span>",\
 					"<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] GET THEM OUT![pick("", "!", "!!", "!!!", "!!!!")]</span>")
 				else if (prob(10))
@@ -1867,7 +1969,7 @@ datum
 		pollen
 			name = "pollenium"
 			id = "pollen"
-			description = "A pollen-derivative with a number of proteins and other nutrients vital to space bee health. Not palatable for humans, but at least Russian dissidents have never been killed with it."
+			description = "A pollen-derivative with a number of proteins and other nutrients vital to space bee health. Not palatable for humans."
 			reagent_state = SOLID
 			fluid_r = 191
 			fluid_g = 191
@@ -1888,7 +1990,7 @@ datum
 						boutput(M, "<span class='notice'>That tasted amazing!</span>")
 					else
 						boutput(M, "<span class='alert'>Ugh! Eating that was a terrible idea!</span>")
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 3 SECONDS))
+						M.setStatusMin("weakened", 3 SECONDS)
 
 		martian_flesh
 			name = "martian flesh"
@@ -1907,16 +2009,16 @@ datum
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					if (ismartian(M))
-						APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "reagent_martian_flesh", 15)
-						APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "reagent_martian_flesh", 15)
+						APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "reagent_martian_flesh", 15)
+						APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "reagent_martian_flesh", 15)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					if (ismartian(M))
-						REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "reagent_martian_flesh")
-						REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "reagent_martian_flesh")
+						REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "reagent_martian_flesh")
+						REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "reagent_martian_flesh")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1952,7 +2054,7 @@ datum
 				else
 					if(method == INGEST)
 						boutput(M, "<span class='alert bold'>OH FUCK [pick("IT'S MOVING IN YOUR INSIDES", "IT TASTES LIKE ANGRY MUTANT BROCCOLI", "IT HURTS IT HURTS", "THIS WAS A BAD IDEA", "IT'S LIKE ALIEN GENOCIDE IN YOUR MOUTH AND EVERYONE'S DEAD", "IT'S BITING BACK", "IT'S CRAWLING INTO YOUR THROAT", "IT'S PULLING AT YOUR TEETH")]!!</span>")
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 3 SECONDS))
+						M.setStatusMin("weakened", 3 SECONDS)
 						M.emote("scream")
 					if(method == TOUCH)
 						boutput(M, "<span class='alert'>Well, that was gross.</span>")
@@ -1967,8 +2069,8 @@ datum
 			fluid_b = 109
 			transparency = 192
 			viscosity = 0.3
-			depletion_rate = 0.05
-			var/conversion_rate = 2
+			depletion_rate = 0.25
+			var/conversion_rate = 1
 			var/list/sounds = list("sound/machines/ArtifactFea1.ogg", "sound/machines/ArtifactFea2.ogg", "sound/machines/ArtifactFea3.ogg",
 							"sound/misc/flockmind/flockmind_cast.ogg", "sound/misc/flockmind/flockmind_caw.ogg",
 							"sound/misc/flockmind/flockdrone_beep1.ogg", "sound/misc/flockmind/flockdrone_beep2.ogg", "sound/misc/flockmind/flockdrone_beep3.ogg", "sound/misc/flockmind/flockdrone_beep4.ogg",
@@ -1984,16 +2086,23 @@ datum
 			proc/process_reactions()
 				// consume fellow reagents
 				if (istype(holder))
-					var/otherReagents = FALSE
-					for(var/reagent_id in holder.reagent_list)
-						if(reagent_id != id)
-							holder.remove_reagent(reagent_id, conversion_rate)
+					var/list/otherReagents = holder.reagent_list.Copy()
+					otherReagents -= src.id
+					if(ishuman(holder?.my_atom))
+						var/mob/living/carbon/human/H = holder.my_atom
+						if(H.blood_volume >= conversion_rate)
+							otherReagents += "blood_placeholder"
+
+					if(length(otherReagents) > 0)
+						var/targetReagent = pick(otherReagents) //pick one reagent and convert it
+						if(targetReagent != "blood_placeholder") //blood is handled in on_mob_life
+							holder.remove_reagent(targetReagent, conversion_rate)
 							holder.add_reagent(id, conversion_rate)
-							otherReagents = TRUE
-					if(!otherReagents)
+					else
 						// we ate them all, time to die
 						if(holder?.my_atom?.material?.mat_id == "gnesis") // gnesis material prevents coag. gnesis from evaporating
 							return
+
 						holder.remove_reagent(id, conversion_rate)
 
 			// let's put more teeth into this.
@@ -2005,9 +2114,9 @@ datum
 					// i'm sorry sir but your blood counts as raw materials
 					var/mob/living/carbon/human/H = M
 					var/amt = conversion_rate * mult
-					if(H.blood_volume >= amt)
+					if(H.blood_volume >= amt && holder.get_reagent_amount(src.id) > 50)
 						H.blood_volume -= amt
-					H.reagents.add_reagent(id, amt)
+						H.reagents.add_reagent(id, amt)
 					if(holder.get_reagent_amount(src.id) > 300)
 						// oh no
 						if(probmult(1)) // i hate you all, players
@@ -2145,13 +2254,13 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_flip", 2)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_flip", 2)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_flip")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_flip")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2222,7 +2331,7 @@ datum
 					if (effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]</b> can't seem to control their legs!</span>")
 						M.change_misstep_chance(33 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 3 SECONDS * mult))
+						M.setStatusMin("weakened", 3 SECONDS * mult)
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")
 						M.drop_item()
@@ -2241,7 +2350,7 @@ datum
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'><b>[M.name]</b> falls to the floor and flails uncontrollably!</span>")
 						M.make_jittery(5)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 6 SECONDS * mult))
+						M.setStatusMin("weakened", 6 SECONDS * mult)
 					else if (effect <= 7)
 						M.emote("laugh")
 
@@ -2265,13 +2374,13 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_glowing_flip", 4)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_glowing_flip", 4)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_glowing_flip")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_glowing_flip")
 				..()
 
 
@@ -2417,7 +2526,7 @@ datum
 				var/effect = ..(severity, M)
 				if (severity == 1)
 					if(effect <= 4)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
+						M.setStatusMin("weakened", 5 SECONDS * mult)
 					else if (effect <= 8)
 						M.change_misstep_chance(12 * mult)
 						M.make_dizzy(5 * mult)
@@ -2425,7 +2534,7 @@ datum
 						M.emote("faint")
 				else if (severity == 2)
 					if(effect <= 6)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
+						M.setStatusMin("weakened", 5 SECONDS * mult)
 					else if (effect <= 12)
 						M.change_misstep_chance(12 * mult)
 						M.make_dizzy(5 * mult)
@@ -2684,13 +2793,13 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_GHOSTVISION, src)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_GHOSTVISION, src)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_GHOSTVISION, src)
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_GHOSTVISION, src)
 				..()
 
 		voltagen
@@ -3082,6 +3191,16 @@ datum
 				holder.del_reagent(id)
 				holder.del_reagent("blood")
 
+		blood/hemolymph
+			name = "hemolymph"
+			id = "hemolymph"
+			//taste = "metallic yet slightly bitter"
+			description = "Hemolymph is a blood-like bodily fluid found in many invertibrates that derives its blue-green color from the presence of copper proteins."
+			reagent_state = LIQUID
+			fluid_r = 6
+			fluid_b = 161
+			fluid_g = 125
+
 
 		vomit
 			name = "vomit"
@@ -3288,17 +3407,6 @@ datum
 			fluid_g = 254
 			fluid_b = 254
 			transparency = 50
-
-		glue
-			name = "glue"
-			id = "glue"
-			description = "Hopefully you weren't the kind of kid to eat this stuff."
-			reagent_state = LIQUID
-			fluid_r = 250
-			fluid_g = 250
-			fluid_b = 250
-			transparency = 255
-			viscosity = 0.7
 
 		magnesium_chloride
 			name = "magnesium chloride"
@@ -4013,7 +4121,7 @@ datum
 
 	proc/process()
 		while (!disposed)
-			if (get_dist(src, src.deathtarget) <= 1)
+			if (BOUNDS_DIST(src, src.deathtarget) == 0)
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span class='alert'><B>[src]</B> flips up, over and behind [deathtarget] and punches them in the groin before rolling under the floortiles!</span>", 1)
 
@@ -4022,8 +4130,8 @@ datum
 				sleep(1 SECOND)
 				playsound(src.loc, pick(sounds_punch), 50, 1, -1)
 				deathtarget.emote("scream")
-				deathtarget.setStatus("stunned", max(deathtarget.getStatusDuration("stunned"), 5 SECONDS))
-				deathtarget.setStatus("weakened", max(deathtarget.getStatusDuration("weakened"), 5 SECONDS))
+				deathtarget.setStatusMin("stunned", 5 SECONDS)
+				deathtarget.setStatusMin("weakened", 5 SECONDS)
 				deathtarget.unlock_medal("OW! MY BALLS!", 1)
 				var/deathturf = get_turf(src)
 				animate_slide(deathturf, 0, -24, 25)

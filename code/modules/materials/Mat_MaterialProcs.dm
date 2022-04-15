@@ -49,8 +49,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/ethereal_add
 	desc = "It is almost impossible to grasp."
 	max_generations = 1
-
 	execute(var/atom/owner)
+		APPLY_ATOM_PROPERTY(owner, PROP_ATOM_NEVER_DENSE, "ethereal")
 		owner.set_density(0)
 		return
 
@@ -65,7 +65,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			I.set_loc(get_turf(I))
 		return
 
-/datum/materialProc/wendigo_temp_onlife
+/datum/materialProc/brullbar_temp_onlife
 	desc = "It feels furry."
 
 	execute(var/mob/M, var/obj/item/I, mult)
@@ -314,6 +314,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/telecrystal_entered
 	execute(var/atom/owner, var/atom/movable/entering)
+		if (isobserver(entering) || isintangible(entering))
+			return
 		var/turf/T = get_turf(entering)
 		if(prob(50) && owner && isturf(owner) && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(entering), rand(-2, 2), rand(-2, 2))

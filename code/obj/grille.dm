@@ -139,7 +139,7 @@
 			cut_resist = material.hasProperty("hard") ? material.getProperty("hard") : cut_resist
 			blunt_resist = material.hasProperty("density") ? material.getProperty("density") : blunt_resist
 			corrode_resist = material.hasProperty("corrosion") ? material.getProperty("corrosion") : corrode_resist
-			//temp_resist = material.hasProperty(PROP_MELTING) ? material.getProperty(PROP_MELTING) : temp_resist
+			//temp_resist = material.hasProperty(PROP_MOB_MELTING) ? material.getProperty(PROP_MOB_MELTING) : temp_resist
 			if (blunt_resist != 0) blunt_resist /= 2
 
 	damage_blunt(var/amount)
@@ -150,19 +150,6 @@
 			if (amount >= health_max / 2)
 				qdel(src)
 			return
-
-		var/armor = 0
-
-		if (src.material)
-			armor = blunt_resist
-
-			if (src.material.quality >= 25)
-				armor += src.material.quality * 0.25
-			else if (src.quality < 10)
-				armor = 0
-				//amount += rand(1,3)
-
-			amount -= armor
 
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
@@ -237,8 +224,6 @@
 
 		src.damage_blunt(5)
 
-		return
-
 	blob_act(var/power)
 		src.damage_blunt(3 * power / 20)
 
@@ -255,7 +240,28 @@
 			if(3.0)
 				src.damage_blunt(7)
 				src.damage_heat(7)
-		return
+
+	bullet_act(obj/projectile/P)
+		..()
+		var/damage_unscaled = P.power * P.proj_data.ks_ratio //stam component does nothing- can't tase a grille
+		switch(P.proj_data.damage_type)
+			if (D_PIERCING)
+				src.damage_blunt(damage_unscaled)
+				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
+			if (D_BURNING)
+				src.damage_heat(damage_unscaled / 2)
+			if (D_KINETIC)
+				src.damage_blunt(damage_unscaled / 2)
+				if (damage_unscaled > 10)
+					var/datum/effects/system/spark_spread/sparks = new /datum/effects/system/spark_spread
+					sparks.set_up(2, null, src) //sparks fly!
+					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 40, 1)
+			if (D_ENERGY)
+				src.damage_heat(damage_unscaled / 4)
+			if (D_SPECIAL) //random guessing
+				src.damage_blunt(damage_unscaled / 4)
+				src.damage_heat(damage_unscaled / 8)
+			//nothing for radioactive (useless) or slashing (unimplemented)
 
 	reagent_act(var/reagent_id,var/volume)
 		if (..())
@@ -285,28 +291,22 @@
 		else if (isobj(AM))
 			var/obj/O = AM
 			if (O.throwforce)
-				damage_blunt(blunt_resist ? max(0.5, O.throwforce / blunt_resist) : 0.5) // we don't want people screaming right through these and you can still get through them by kicking/cutting/etc
+				damage_blunt((max(1, O.throwforce * (1 - (blunt_resist / 100)))) / 2) // we don't want people screaming right through these and you can still get through them by kicking/cutting/etc
 		return
 
 	attack_hand(mob/user)
-		if (!islist(user)) //mbc : what the fuck. who is passing a list as an arg here. WHY. WHY i cant find it
-			user.lastattacked = src
 		if(!shock(user, 70))
 			var/damage = 1
-			var/dam_type = "blunt"
 			var/text = "[user.kickMessage] [src]"
 
-			if (user.is_hulk() && damage < 5)
+			if (user.is_hulk())
 				damage = 10
 				text = "smashes [src] with incredible strength"
 
 			src.visible_message("<span class='alert'><b>[user]</b> [text]!</span>")
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
 
-			if (dam_type == "slashing")
-				damage_slashing(damage)
-			else
-				damage_blunt(damage)
+			damage_blunt(damage)
 
 	attackby(obj/item/W, mob/user)
 		// Things that won't electrocute you
@@ -325,24 +325,7 @@
 				var/obj/window/WI
 				var/win_thin = 0
 				var/win_dir = 2
-//				var/turf/UT = get_turf(user)
 				var/turf/ST = get_turf(src)
-
-/*
-				if (UT && isturf(UT) && ST && isturf(ST))
-					// We're inside the grill.
-					if (UT == ST)
-						win_dir = usr.dir
-						win_thin = 1
-					// We're trying to install a window while standing on an adjacent tile, so make it face the mob.
-					else
-						win_dir = turn(usr.dir, 180)
-						if (win_dir in list(NORTH, EAST, SOUTH, WEST))
-							win_thin = 1
-
-				win_thin = 0 //mbc : nah this is annoying. you can just make a thindow using the popup menu and push it into place anyway.
-							 singh : if you're gonna disable it like this why not just comment out the entire thing and save the pointless checks
-*/
 
 				if (ST && isturf(ST))
 					if (S.reinforcement)
@@ -379,7 +362,10 @@
 			else
 				..()
 				return
-
+		else if (istype(W, /obj/item/gun))
+			var/obj/item/gun/G = W
+			G.shoot_point_blank(src, user)
+			return
 		// electrocution check
 
 		var/OSHA_is_crying = 1
@@ -390,7 +376,7 @@
 		if ((src.material && src.material.hasProperty("electrical") && src.material.getProperty("electrical") > 30))
 			dmg_mod = 60 - src.material.getProperty("electrical")
 
-		if (OSHA_is_crying && IN_RANGE(src, user, 1) && shock(user, 100 - dmg_mod))
+		if (OSHA_is_crying && (BOUNDS_DIST(src, user) == 0) && shock(user, 100 - dmg_mod))
 			return
 
 		// Things that will electrocute you
@@ -535,12 +521,15 @@
 
 	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
+			var/obj/projectile/P = mover
 			if (density)
-				return prob(50)
-			return 1
+				if(P.proj_data.damage_type & D_RADIOACTIVE) // this shit isn't lead-lined
+					return TRUE
+				return prob(max(25, 1 - P.power))//big bullet = more chance to hit grille. 25% minimum
+			return TRUE
 
 		if (density && istype(mover, /obj/window))
-			return 1
+			return TRUE
 
 		return ..()
 
@@ -551,7 +540,7 @@
 				if (!isliving(AM) || isintangible(AM)) // I assume this was left out by accident (Convair880).
 					return
 				var/mob/M = AM
-				if (M.client && M.client.flying || (ismob(M) && HAS_MOB_PROPERTY(M, PROP_NOCLIP))) // noclip
+				if (M.client && M.client.flying || (ismob(M) && HAS_ATOM_PROPERTY(M, PROP_MOB_NOCLIP))) // noclip
 					return
 				var/s_chance = 10
 				if (M.m_intent != "walk") // move carefully

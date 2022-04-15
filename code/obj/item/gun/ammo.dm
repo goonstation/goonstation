@@ -51,6 +51,7 @@
 	var/amount_left = 0.0
 	var/max_amount = 1000
 	var/unusualCell
+	var/refillable = TRUE
 	ammo_type = new/datum/projectile/bullet
 
 	var/ammo_cat = null
@@ -449,7 +450,7 @@
 /obj/item/ammo/bullets/lmg
 	sname = "7.62×51mm NATO"
 	name = "LMG belt"
-	desc = "A belt of 7.62 LMG rounds. They have less gunpowder in them to prevent overheating and cookoffs."
+	desc = "A belt of 7.62 LMG rounds. They have much less gunpowder in them to prevent overheating and cookoffs."
 	ammo_type = new/datum/projectile/bullet/lmg
 	icon_state = "lmg_ammo"
 	icon_empty = "lmg_ammo-0"
@@ -482,7 +483,8 @@
 
 	smg
 		name = "9mm SMG magazine"
-		desc = "An extended 9mm magazine."
+		desc = "An extended 9mm magazine for a sub machine gun."
+		icon_state = "smg_magazine"
 		amount_left = 30.0
 		max_amount = 30.0
 		ammo_cat = AMMO_SMG_9MM
@@ -576,12 +578,7 @@
 	max_amount = 6
 	ammo_cat = AMMO_FOAMDART
 	ammo_type = new/datum/projectile/bullet/foamdart
-
-	update_icon()
-		if(amount_left == 0)
-			qdel(src)
-		else
-			..()
+	delete_on_reload = TRUE
 
 //0.40
 /obj/item/ammo/bullets/blow_darts
@@ -1033,7 +1030,7 @@
 /obj/item/ammo/bullets/meowitzer
 	sname = "meowitzer"
 	name = "meowitzer"
-	desc = "A box containg a single meowitzer. It's shaking violently and feels warm to the touch. You probably don't want to be anywhere near this when it goes off. Wait is that a cat?"
+	desc = "A box containg a single meowitzer. It's shaking violently and feels warm to the touch. You probably don't want to be anywhere near this when it goes off. Wait, is that a cat?"
 	icon_state = "meow_ammo"
 	icon_empty = "meow_ammo-0"
 	amount_left = 1
@@ -1042,6 +1039,23 @@
 	ammo_cat = AMMO_HOWITZER
 	w_class = W_CLASS_NORMAL
 
+/obj/item/ammo/bullets/meowitzer/inert
+	sname = "inert meowitzer"
+	name = "inert meowitzer"
+	desc = "A box containg a single meowitzer. It's softly purring and feels cool to the touch. Wait, is that a cat?"
+	ammo_type = new/datum/projectile/special/meowitzer/inert
+
+/obj/item/ammo/bullets/howitzer
+	sname = "howitzer"
+	name = "howitzer shell"
+	desc = "A carton containing a single 120mm shell. It's huge."
+	icon_state = "meow_ammo"
+	icon_empty = "meow_ammo-0"
+	amount_left = 1
+	max_amount = 1
+	ammo_type = new/datum/projectile/bullet/howitzer
+	ammo_cat = AMMO_HOWITZER
+	w_class = W_CLASS_NORMAL
 //////////////////////////////////// Power cells for eguns //////////////////////////
 
 /obj/item/ammo/power_cell
@@ -1104,6 +1118,9 @@
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			. += "There are [ret["charge"]]/[ret["max_charge"]] PU left!"
 
+
+/obj/item/ammo/power_cell/empty
+	charge = 0
 
 /obj/item/ammo/power_cell/med_power
 	name = "Power Cell - 200"
@@ -1202,7 +1219,6 @@
 	g_amt = 38000
 	charge = 100.0
 	max_charge = 100.0
-	recharge_rate = 7.5
 
 /obj/item/ammo/power_cell/self_charging/ntso_baton
 	name = "Power Cell - NTSO Stun Baton"
@@ -1221,6 +1237,12 @@
 	charge = 250.0
 	max_charge = 250.0
 	recharge_rate = 6
+
+/obj/item/ammo/power_cell/self_charging/ntso_signifer/bad
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 150PU."
+	charge = 150.0
+	max_charge = 150.0
+	recharge_rate = 4
 
 /obj/item/ammo/power_cell/self_charging/medium
 	name = "Power Cell - Hicap RTG"
@@ -1260,17 +1282,17 @@
 	max_charge = 300.0
 	recharge_rate = 10.0
 
+/obj/item/ammo/power_cell/self_charging/lawbringer/bad
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 175PU."
+	max_charge = 175.0
+	recharge_rate = 6.0
+
 /obj/item/ammo/power_cell/self_charging/howitzer
 	name = "Miniaturized SMES"
 	desc = "This thing is huge! How did you even lift it put it into the gun?"
 	charge = 2500.0
 	max_charge = 2500.0
 
-/obj/item/ammo/bullets/meowitzer/inert
-	sname = "inert meowitzer"
-	name = "inert meowitzer"
-	desc = "A box containg a single inert meowitzer. It appears to be softly purring. Wait is that a cat?"
-	ammo_type = new/datum/projectile/special/meowitzer/inert
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND
@@ -1290,20 +1312,20 @@
 
 	onUpdate()
 		..()
-		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+		if(BOUNDS_DIST(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+		if(BOUNDS_DIST(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		return
 
 	onEnd()
 		..()
-		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+		if(BOUNDS_DIST(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return

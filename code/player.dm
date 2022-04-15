@@ -139,8 +139,8 @@
 			decoded_json = json_decode(json)
 		else
 			decoded_json = list()
-		// need to wrap the clouddata within index named cdata
-		decoded_json["[ckey(ckey)]"] = list(cdata = clouddata)
+
+		decoded_json["[ckey(ckey)]"] = clouddata
 		//t2f appends, but need to to replace
 		fdel("data/simulated_cloud.json")
 		text2file(json_encode(decoded_json),"data/simulated_cloud.json")
@@ -149,15 +149,15 @@
 
 	/// Sets a cloud key value pair and sends it to goonhub for a target ckey
 	proc/cloud_put_target(target, key, value)
-		var/list/data = cloud_fetch_target_data_only(target)
+		var/list/data = cloud_fetch_target_ckey(target)
 		if(!data)
 			return FALSE
-		data[key] = "[value]"
+		data[key] = "[json_encode(value)]"
 
 #ifdef LIVE_SERVER
 		// Via rust-g HTTP
 		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[target]&key=[url_encode(key)]&value=[url_encode(data[key])]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[ckey(target)]&key=[url_encode(key)]&value=[url_encode(data[key])]", "", "")
 		request.begin_async()
 #else
 		var/json = null
@@ -167,8 +167,7 @@
 			decoded_json = json_decode(json)
 		else
 			decoded_json = list()
-		// need to wrap the clouddata within index named cdata
-		decoded_json["[ckey(target)]"] = list(cdata = data)
+		decoded_json["[ckey(target)]"] = data
 		//t2f appends, but need to to replace
 		fdel("data/simulated_cloud.json")
 		text2file(json_encode(decoded_json),"data/simulated_cloud.json")

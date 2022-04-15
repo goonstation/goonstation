@@ -378,7 +378,7 @@ WET FLOOR SIGN
 			var/turf/U = get_turf(A)
 
 			if (do_after(user, 4 SECONDS))
-				if (get_dist(A, user) > 1)
+				if (BOUNDS_DIST(A, user) > 0)
 					user.show_text("You were interrupted.", "red")
 					return
 				user.show_text("You have finished mopping!", "blue")
@@ -565,7 +565,7 @@ WET FLOOR SIGN
 			selection = choices[1]
 		else
 			selection = input(user, "What do you want to do with [src]?", "Selection") as null|anything in choices
-		if (isnull(selection) || user.equipped() != src || get_dist(user, target) > 1)
+		if (isnull(selection) || user.equipped() != src || BOUNDS_DIST(user, target) > 0)
 			return
 
 		switch (selection)
@@ -840,6 +840,7 @@ WET FLOOR SIGN
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "handvac"
 	mats = list("bamboo"=3, "MET-1"=10)
+	health = 7
 	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	item_function_flags = USE_SPECIALS_ON_ALL_INTENTS
@@ -953,7 +954,7 @@ WET FLOOR SIGN
 	proc/suck(turf/T, mob/user)
 		. = TRUE
 		var/success = FALSE
-		if(T.active_airborne_liquid)
+		if(T.active_airborne_liquid && T.active_airborne_liquid.group)
 			if(isnull(src.bucket))
 				boutput(user, "<span class='alert'>\The [src] tries to suck up \the [T.active_airborne_liquid] but has no bucket!</span>")
 				. = FALSE
@@ -997,11 +998,13 @@ WET FLOOR SIGN
 				. = FALSE
 			else
 				for(var/obj/item/I as anything in items_to_suck)
-					I.set_loc(get_turf(user))
+					if(!I.anchored)
+						I.set_loc(get_turf(user))
 				success = TRUE
 				SPAWN(0.5 SECONDS)
 					for(var/obj/item/I as anything in items_to_suck) // yes, this can go over capacity of the bag, that's intended
-						I.set_loc(src.trashbag)
+						if(!I.anchored)
+							I.set_loc(src.trashbag)
 					src.trashbag.calc_w_class(null)
 					if(src.trashbag.current_stuff >= src.trashbag.max_stuff)
 						boutput(user, "<span class='notice'>[src]'s [src.trashbag] is now full.</span>")
@@ -1079,7 +1082,7 @@ WET FLOOR SIGN
 		if(!isturf(user.loc)) return
 		var/turf/target_turf = get_turf(target)
 		var/turf/master_turf = get_turf(master)
-		if(params["left"] && master && (get_dist(master_turf, target_turf) > 1 || ismob(target) && target != user))
+		if(params["left"] && master && (BOUNDS_DIST(master_turf, target_turf) > 0 || ismob(target) && target != user))
 			if(ON_COOLDOWN(master, "suck", src.cooldown)) return
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
