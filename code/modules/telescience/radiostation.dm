@@ -891,6 +891,14 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	Voiceover by Cenith of the Black Pants Legion<br>
 	Musical backing is "Inspretional Wave" by khalafnasirs 2020 (CC-BY-NC 3.0)"}
 
+/obj/item/radio_tape/advertisement/cloning_psa_ovr
+	name = "compact tape - 'Relayed Cloning PSA'"
+	audio = "sound/radio_station/adverts/cloning_psa_ovrmind.ogg"
+	name_of_thing = "Cloning Public Service Announcement"
+	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
+	Voiceover by Neskah<br>
+	Musical backing is "Information Superhighway" by Neskah"}
+
 /obj/item/radio_tape/advertisement/captain_psa
 	name = "compact tape - 'Captain's Training Program'"
 	audio = "sound/radio_station/adverts/captain_training.ogg"

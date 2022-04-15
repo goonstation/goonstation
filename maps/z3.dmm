@@ -9897,9 +9897,15 @@
 	},
 /area/abandonedmedicalship)
 "aHg" = (
-/obj/machinery/sleeper{
-	dir = 8
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/cloning.dmi';
+	icon_state = "grinderb";
+	name = "broken enzymatic reclaimer";
+	desc = "Through the shattered glass, you can make out a mishmash of hair and bone.";
+	density = 1;
+	anchored = 1
 	},
+/obj/decal/cleanable/blood/gibs,
 /turf/simulated/floor/plating/airless,
 /area/abandonedmedicalship)
 "aHh" = (
@@ -9911,13 +9917,15 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "aHi" = (
-/obj/computerframe{
-	desc = "It is highly unlikely that this still works.";
-	icon = 'icons/obj/computer.dmi';
-	icon_state = "datamedb";
-	name = "smashed computer"
-	},
 /obj/map/light/white,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	icon = 'icons/obj/Cryogenic2.dmi';
+	icon_state = "broken";
+	name = "broken cloning display";
+	desc = "You can faintly see the helix of DNA strands burned-into the screen.";
+	density = 1
+	},
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "aHj" = (
@@ -21565,12 +21573,16 @@
 /area/abandonedmedicalship)
 "jqq" = (
 /obj/table/auto,
+/obj/item/radio_tape/advertisement/cloning_psa_ovr{
+	pixel_x = -9;
+	pixel_y = 7
+	},
 /obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
 	icon = 'icons/obj/computer.dmi';
-	icon_state = "old0";
-	name = "broken computer"
+	icon_state = "oldlapb";
+	name = "smashed relay controller";
+	desc = "This thing looks thrashed...";
+	pixel_x = 1
 	},
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedmedicalship)
