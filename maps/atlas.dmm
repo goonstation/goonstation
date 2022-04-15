@@ -1222,6 +1222,11 @@
 /obj/item/scissors,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
+"cZ" = (
+/obj/machinery/navbeacon/mule/catering_north/south,
+/obj/decal/mule/beacon,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "da" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -1460,6 +1465,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/decal/mule/dropoff,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -1468,6 +1474,8 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/decal/mule/beacon,
+/obj/machinery/navbeacon/mule/QM1_north/west,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -1906,6 +1914,12 @@
 	dir = 4
 	},
 /area/station/quartermaster/office)
+"eQ" = (
+/obj/decal/mule/dropoff,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 1
+	},
+/area/station/chapel/sanctuary)
 "eR" = (
 /obj/stool/chair/blue{
 	dir = 1
@@ -2026,6 +2040,11 @@
 	dir = 5
 	},
 /area/station/security/main)
+"fg" = (
+/obj/machinery/navbeacon/mule/hallway_escape_north/west,
+/obj/decal/mule/beacon,
+/turf/simulated/floor/white/checker,
+/area/station/hallway/secondary/exit)
 "fh" = (
 /obj/machinery/light_switch/auto,
 /obj/item/fish/bass,
@@ -8413,6 +8432,8 @@
 /area/space)
 "us" = (
 /obj/disposalpipe/segment,
+/obj/machinery/navbeacon/mule/bridge_north/south,
+/obj/decal/mule/beacon,
 /turf/simulated/floor/blue,
 /area/station/bridge)
 "ut" = (
@@ -8723,6 +8744,7 @@
 "vb" = (
 /obj/machinery/light_switch/auto,
 /obj/disposalpipe/segment,
+/obj/decal/mule/dropoff,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -10321,6 +10343,10 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
+"yW" = (
+/obj/decal/mule/dropoff,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "yX" = (
 /turf/space,
 /area/shuttle_sound_spawn)
@@ -10883,6 +10909,10 @@
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon5,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"Aw" = (
+/obj/decal/mule/dropoff,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "Ax" = (
 /obj/machinery/atmospherics/valve,
 /turf/simulated/floor/engine,
@@ -11123,6 +11153,8 @@
 /area/station/bridge/united_command)
 "AZ" = (
 /obj/landmark/gps_waypoint,
+/obj/machinery/navbeacon/mule/toolstorage_north,
+/obj/decal/mule/beacon,
 /turf/simulated/floor/black,
 /area/station/storage/tools)
 "Bb" = (
@@ -11721,6 +11753,8 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west,
+/obj/machinery/navbeacon/mule/medbay_north/south,
+/obj/decal/mule/beacon,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "CF" = (
@@ -12334,6 +12368,13 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/lounge)
+"En" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/mule/dropoff,
+/turf/simulated/floor/orangeblack,
+/area/station/engine/engineering)
 "Eo" = (
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -12677,6 +12718,8 @@
 /area/station/science/chemistry)
 "Fm" = (
 /obj/machinery/light_switch/auto,
+/obj/machinery/navbeacon/mule/research_north/south,
+/obj/decal/mule/beacon,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -13145,6 +13188,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/decal/mule/dropoff,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -17443,6 +17487,8 @@
 /area/station/crew_quarters/catering)
 "QT" = (
 /obj/landmark/gps_waypoint,
+/obj/machinery/navbeacon/mule/chapel_north/south,
+/obj/decal/mule/beacon,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
@@ -17569,6 +17615,13 @@
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/caution/north,
 /area/station/engine/hotloop)
+"Ri" = (
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/obj/machinery/navbeacon/mule/ranch_north/south,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "Rk" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1;
@@ -18837,6 +18890,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge/united_command)
+"UX" = (
+/obj/decal/mule/dropoff,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "UZ" = (
 /obj/machinery/door/airlock/pyro/external{
 	req_access_txt = "40"
@@ -19106,6 +19163,13 @@
 "VI" = (
 /turf/simulated/floor,
 /area/station/hangar/main)
+"VJ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/mule/dropoff,
+/turf/simulated/floor/white/checker,
+/area/station/hallway/secondary/exit)
 "VK" = (
 /obj/storage/secure/closet/security/equipment,
 /obj/machinery/light{
@@ -19267,6 +19331,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"We" = (
+/obj/decal/mule/dropoff,
+/turf/simulated/floor/black,
+/area/station/storage/tools)
 "Wg" = (
 /turf/simulated/floor/red,
 /area/station/bridge/united_command)
@@ -19928,6 +19996,11 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
+"XU" = (
+/obj/machinery/navbeacon/mule/cafeteria_north/east,
+/obj/decal/mule/beacon,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "XX" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -20354,6 +20427,20 @@
 /obj/machinery/phone,
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/security/main)
+"YZ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	light_type = /obj/item/light/tube/yellowish;
+	pixel_x = 10
+	},
+/obj/machinery/navbeacon/mule/engineering_north/south,
+/obj/decal/mule/beacon,
+/turf/simulated/floor/orangeblack,
+/area/station/engine/engineering)
 "Za" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8;
@@ -60076,8 +60163,8 @@ qf
 rc
 sm
 tw
-sm
-vE
+YZ
+En
 wF
 pk
 zc
@@ -66101,7 +66188,7 @@ ax
 aa
 Aq
 gl
-gt
+We
 AZ
 gt
 Qo
@@ -66731,7 +66818,7 @@ Bo
 BW
 Rn
 wS
-EL
+Ri
 EL
 Fr
 AC
@@ -68844,7 +68931,7 @@ AH
 TS
 yF
 CE
-yF
+Aw
 DZ
 Bx
 Bx
@@ -70027,8 +70114,8 @@ ei
 eV
 eX
 XI
-eX
-eX
+cZ
+yW
 jF
 jB
 kt
@@ -70642,7 +70729,7 @@ nJ
 oB
 pt
 nJ
-nJ
+XU
 qy
 fl
 mO
@@ -70944,7 +71031,7 @@ sv
 ot
 ot
 ot
-nJ
+UX
 tN
 ig
 sY
@@ -74853,7 +74940,7 @@ cR
 br
 ce
 cH
-cH
+VJ
 dO
 es
 ez
@@ -75155,7 +75242,7 @@ aR
 bs
 VF
 cf
-cf
+fg
 ek
 et
 cf
@@ -76071,7 +76158,7 @@ bn
 iO
 jO
 QT
-kG
+eQ
 ct
 tQ
 ct
