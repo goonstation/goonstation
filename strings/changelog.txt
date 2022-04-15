@@ -1,4 +1,9 @@
 
+(t)fri apr 15 22
+(u)TheMightyAltroll
+(p)8203
+(e)|
+(+)Added a new sound to flamethrowers to make them sound properly terrifying.
 (t)thu apr 14 22
 (u)Wisemonster
 (p)8152
