@@ -18,7 +18,7 @@ mob/new_player
 
 	anchored = 1	//  don't get pushed around
 
-	var/chui/window/spend_spacebux/bank_menu
+	var/datum/spend_spacebux/bank_menu
 
 	New()
 		. = ..()
@@ -619,7 +619,7 @@ a.latejoin-card:hover {
 		src.Browse(dat, "window=latechoices;size=800x666")
 		if(!bank_menu)
 			bank_menu = new
-		bank_menu.Subscribe( usr.client )
+		bank_menu.ui_interact(usr ,null)
 
 	proc/create_character(var/datum/job/J, var/allow_late_antagonist = 0)
 		if (!src || !src.mind || !src.client)
@@ -849,9 +849,9 @@ a.latejoin-card:hover {
 				if (usr.client) winset(src, "joinmenu.button_cancel", "is-disabled=false;is-visible=true")
 				if (usr.client) winset(src, "joinmenu.button_ready_antag", "is-disabled=true")
 				usr.Browse(null, "window=mob_occupation")
-
-				bank_menu = new
-				bank_menu.Subscribe( usr.client )
+				if(!bank_menu)
+					bank_menu = new
+				bank_menu.ui_interact( usr, null )
 				src.client.loadResources()
 		else
 			LateChoices()

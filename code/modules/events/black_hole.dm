@@ -78,6 +78,7 @@
 				qdel(A)
 			else if (isliving(A))
 				var/mob/living/L = A
+				logTheThing("combat", L, null, "was elecgibbed by [src] ([src.type]) at [log_loc(L)].")
 				L.elecgib()
 				src.get_fed(10)
 
@@ -129,6 +130,7 @@
 
 	Bumped(atom/A)
 		if (isliving(A))
+			logTheThing("combat", A, null, "was gibbed by [src] ([src.type]) at [log_loc(A)].")
 			A:gib()
 		else if(isobj(A))
 			var/obj/O = A

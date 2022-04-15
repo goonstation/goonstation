@@ -691,6 +691,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			src.visible_message("<span class='combat'><B>[src]</B> stares at [M], channeling its newfound power!</span>")
 			SPAWN(1 SECOND)
 				boutput(M, "<span class='alert'><BIG><B>[voidSpeak("WELP, GUESS YOU SHOULDN'T BELIEVE EVERYTHING YOU READ!")]</B></BIG></span>")
+				logTheThing("combat", M, null, "was deleted by using a void crown on [src] at [log_loc(src)].")
 				var/mob/dead/observer/O = M.ghostize()
 				if(O)
 					O.set_loc(M.loc)

@@ -563,24 +563,16 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		Ov.icon = 'icons/effects/214x246.dmi'
 		Ov.icon_state = "explosion"
 
-		var/list/throwjunk = list() //List of stuff to throw as if the explosion knocked it around.
-		var/cutoff = 0 //So we don't freak out and throw more than ~25 things and act like the old mass driver bug.
-		for(var/obj/item/I in src.owner)
-			cutoff++
-			I.set_loc(T)
-			if(cutoff <= 25)
-				throwjunk += I
-
-		for(var/obj/O in throwjunk) //Throw this junk around
-			var/edge = get_edge_target_turf(T, pick(alldirs))
-			O.throw_at(edge, 80, 4)
-
 		SPAWN(0) //Delete the overlay when finished with it.
 			sleep(1.5 SECONDS)
 			qdel(Ov)
 
 		T.hotspot_expose(800,125)
 		explosion_new(src, T, 7 * ., 1) //The . is the tally of explosionPower in this poor slob.
+		if (ishuman(src.owner))
+			var/mob/living/carbon/human/H = src.owner
+			H.dump_contents_chance = 80 //hee hee
+		src.owner?.gib() //yer DEAD
 
 /obj/item/implant/revenge/microbomb/hunter
 	power = 4
@@ -595,18 +587,20 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	on_death()
 		. = ..()
 		elecflash(src, ., . * 2, TRUE)
-		for (var/mob/living/M in orange(. + 1, src.owner))
+		for (var/mob/living/M in orange(. / 6 + 1, src.owner))
 			if (!isintangible(M))
-				arcFlash(src.owner, M, (250000 / get_dist(src.owner, M)) * .) // need to adjust the damage on these a bit- probably bump the lower end, lower the top end idk
-		for (var/obj/machinery/machine in orange(round(. / 2) + 1)) // machinery around you also zaps people, based on the amount of power in the grid
-			if (prob(. * 8))
+				var/dist = get_dist(src.owner, M) + 1
+				// arcflash uses some fucked up thresholds so trust me on this one
+				arcFlash(src.owner, M, (40000 * (4 - (0.4 * dist * log(dist)))) * (15 * log(.) + 3))
+		for (var/obj/machinery/machine in orange(round(. / 6) + 1)) // machinery around you also zaps people, based on the amount of power in the grid
+			if (prob(. * 7))
 				var/mob/living/target
-				for (var/mob/living/L in orange(machine, 1)) //TODO this could probably be 2 at the risk of More Lag
+				for (var/mob/living/L in orange(machine, 2))
 					if (!isintangible(L))
 						target = L
 						break
 				if (target)
-					arcFlash(src, target, 100000) //TODO scale this with powergrid... somehow. get area APC
+					arcFlash(src, target, 100000) //TODO scale this with powergrid... somehow. get area APC or smth
 
 		src.owner?.elecgib()
 

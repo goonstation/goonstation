@@ -1,4 +1,75 @@
 
+(t)fri apr 15 22
+(u)Flappybat
+(p)8198
+(e)|
+(+)Lockers, fridges and coffins now have unique opening and closing sounds.
+(u)TheMightyAltroll
+(p)8203
+(e)|
+(+)Added a new sound to flamethrowers to make them sound properly terrifying.
+(t)thu apr 14 22
+(u)Wisemonster
+(p)8152
+(e)🆕🗺|feature, mapping
+(+)Horizon has recently been fitted with the proper systems to allow mule bots to function. Additionally, a mule bot was found in storage and added to cargo. (Some assembly required).
+(u)Wisemonster
+(p)7797
+(e)🗺|mapping
+(+)Nanotrasen has added the necessary systems to Oshan for mulebots to function! (Mulebot included)
+(u)Flappybat
+(p)8071
+(e)🆕⚖|feature, balance
+(*)Closets and lockers can now be broken open by hitting them with items or shooting with projectiles. Lockers have between 100HP and 300HP depending on their security. Energy weapons and low damage items are less effective against them.
+(*)HoS, Armory and Confiscated item lockers are reinforced and can only be broken open with explosives and higher damage kinetics.
+(*)Secure lockers started bolted to the floor. They must be unbolted with a wrench to be moved.
+(u)Flaborized
+(p)7469
+(e)🆕🎨|feature, sprites
+(*)The traitor chameleon jumpsuit is now a full chameleon outfit, allowing you to further your diabolical disguises! It comes with a remote that lets you quickly swap the costume to all match a particular job.
+(u)pali
+(p)8204
+(e)|
+(*)Fingerprint IDs should now be slightly easier to remember
+(u)Gannets
+(p)8185
+(e)⚖|balance
+(*)Nuclear Operatives now spawn wearing Hi-grip Assault Boots. They have also been removed from the Syndicate Weapons Vendor purchase list.
+(t)tue apr 12 22
+(u)Sovexe
+(p)7984
+(e)🆕🎨|feature, sprites
+(*)The trench can now spawn patches of vibrantly colored bioluminescent algae on its walls. Sprite by Waffleloffle
+(u)None
+(p)8166
+(e)|
+(*)Revhead scaling has been adjusted to where you should actually see more then 3 revheads on higherpops. Please yell or something if there's you believe theres an imbalance of revheads.
+(u)glowbold
+(p)8110
+(e)🆕|feature
+(+)You can now mine for buttcoin.
+(u)Amylizzle
+(p)8142
+(e)📄|tgui
+(*)Spacebux purchase menu is all nice and shiny now. With icons!
+(t)mon apr 11 22
+(u)aloe
+(+)Flyzapper implants have had their range lowered but should be generally stronger
+(u)aloe
+(+)Dead emagged/syndicate borgs now drop emagged/syndicate frames
+(u)pali
+(*)You can now pin canvases onto noticeboards. These should persist across rounds just like other pinned stuff. I recommend using a labeller to give them descriptive names first.
+(u)tarmunora
+(e)⚖|balance
+(*)Most power-cell using guns and stun batons deployed from frames (i.e.: mechscanned) come with a smaller (and initially empty) power cell.
+(t)sun apr 10 22
+(u)Walpvrgis
+(p)8161
+(e)|
+(+)You can now buy ashtrays at cigarette vending machines.
+(u)TTerc
+(e)🆕|feature
+(*)Airlocks, lockers and crates now have new fancy welding animations and actionbars! They also take 2 seconds to weld/unweld now.
 (t)sat apr 09 22
 (u)LeahTheTech
 (p)7489

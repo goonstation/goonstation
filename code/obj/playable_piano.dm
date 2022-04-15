@@ -3,6 +3,7 @@
 	desc = "Designed to interface the player piano."
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "piano_key"
+	w_class = W_CLASS_TINY
 
 /obj/player_piano //this is the big boy im pretty sure all this code is garbage
 	name = "player piano"
@@ -152,7 +153,7 @@
 		else //just in case
 			return
 
-	mouse_drop(obj/player_piano/piano, null)//, var/src_location, var/control_orig, var/control_new, var/params)
+	mouse_drop(obj/player_piano/piano)
 		if (!istype(usr, /mob/living))
 			return
 		if (usr.stat)
@@ -163,8 +164,12 @@
 		ENSURE_TYPE(piano)
 		if (!piano)
 			return
+		if (piano == src)
+			boutput(usr, "<span class='alert'>You can't link a piano with itself!</span>")
+			return
 		if (piano.is_busy || src.is_busy)
 			boutput(usr, "<span class='alert'>You can't link a busy piano!</span>")
+			return
 		if (piano.panel_exposed && panel_exposed)
 			usr.visible_message("[usr] links the pianos.", "You link the pianos!")
 			src.add_piano(piano)
@@ -279,8 +284,9 @@
 				UpdateIcon(0)
 				return
 			sleep((timing * 10)) //to get delay into 10ths of a second
-			var/sound_name = "sound/piano/"
-			sound_name += "[compiled_notes[curr_note]].ogg"
+			if (!curr_note) // else we get runtimes when the piano is reset while playing
+				return
+			var/sound_name = "sound/piano/[compiled_notes[curr_note]].ogg"
 			playsound(src, sound_name, note_volumes[curr_note],0,10,0)
 
 	proc/reset_piano(var/disposing) //so i dont have to have duplicate code for multiool pulsing and piano key

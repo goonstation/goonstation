@@ -258,7 +258,12 @@
 			var/turf/T = get_turf(src)
 			for(var/obj/item/parts/robot_parts/R in src.contents)
 				R.set_loc(T)
-			new /obj/item/parts/robot_parts/robot_frame(T)
+			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
+
+			if (src.emagged)
+				frame.emagged = TRUE
+			if (src.syndicate)
+				frame.syndicate = TRUE
 
 			src.ghostize()
 			qdel(src)

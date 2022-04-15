@@ -66,6 +66,7 @@
 				return
 			else
 				boutput(user, "<span class='alert'>Your hubris will not be tolerated.</span>")
+				logTheThing("user", user, null, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
 				user.gib()
 				qdel(W)
 				return
