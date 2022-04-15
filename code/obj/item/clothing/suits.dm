@@ -1317,12 +1317,12 @@
 				setProperty("rangedprot", 0.4)
 
 			if(renf.hasProperty("density"))
-				prot = round(((renf.getProperty("density") / 24)+2), 0.5)// for MELEE- scaling of protection/density with formula y=(x/24)+2
+				prot = round(((renf.getProperty("density") / 20)+2), 0.5)// for MELEE- scaling of protection/density with formula y=(x/20)+2
 				prot = clamp(prot, 2, 6)// it shouldn't be outside these two numbers but just in case
 				setProperty("meleeprot", prot)
 
 				 // for MOVESPEED
-				var/clunk = round((((renf.getProperty("density")/33) /10)+0.3), 0.1) // one-line fuckyou code that scales speed between 0.3 and 0.7
+				var/clunk = round((((renf.getProperty("density")/20) /10)+0.3), 0.1) // one-line fuckyou code that scales speed between 0.3 and 0.7
 				clunk = clamp(clunk, 0.3, 0.7) // again, keep it safe
 				setProperty("space_movespeed", clunk)
 
