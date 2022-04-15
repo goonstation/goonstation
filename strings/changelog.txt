@@ -1,6 +1,10 @@
 
 (t)thu apr 14 22
 (u)Wisemonster
+(p)8152
+(e)🆕🗺|feature, mapping
+(*)Horizon has recently been fitted with the proper systems to allow mule bots to function. Additionally, a mule bot was found in storage and added to cargo. (Some assembly required).
+(u)Wisemonster
 (p)7797
 (e)🗺|mapping
 (*)Nanotrasen has added the necessary systems to Oshan for mulebots to function! (Mulebot included)
