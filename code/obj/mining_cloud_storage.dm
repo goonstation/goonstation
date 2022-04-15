@@ -206,7 +206,7 @@
 			amount_loaded++
 			if (user && R)
 				user.u_equip(R)
-				R.dropped()
+				R.dropped(user)
 		else if(R.amount>1)
 			R.set_loc(src)
 			for(R.amount,R.amount > 0, R.amount--)
@@ -215,7 +215,7 @@
 				amount_loaded++
 			if (user && R)
 				user.u_equip(R)
-				R.dropped()
+				R.dropped(user)
 			qdel(R)
 		update_ore_amount(R.material_name,amount_loaded,R)
 		tgui_process.update_uis(src)

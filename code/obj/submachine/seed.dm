@@ -660,7 +660,7 @@
 			W.set_loc(src)
 			if (istype(W, /obj/item/seed/)) src.seeds += W
 			else src.extractables += W
-			W.dropped()
+			W.dropped(user)
 			src.updateUsrDialog()
 			return
 

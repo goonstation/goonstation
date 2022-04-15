@@ -56,7 +56,7 @@
 					M.HealDamage("All", 100, 100)
 				user.u_equip(W)
 				W.set_loc(src)
-				W.dropped()
+				W.dropped(user)
 				src.cooktime = 0
 				src.grillitem = W
 				src.on = 1
@@ -118,7 +118,7 @@
 		src.visible_message("<span class='notice'>[user] slaps [W] onto the [src].</span>")
 		user.u_equip(W)
 		W.set_loc(src)
-		W.dropped()
+		W.dropped(user)
 		src.cooktime = 0
 		src.grillitem = W
 		src.on = 1
