@@ -4019,6 +4019,13 @@ datum
 						O.visible_message("<span class='alert'>The [O] fails to muster up the effort to become delicious!</span>")
 					return
 				else
+					if(isitem(O))
+						var/obj/item/I = O
+						if(I.amount > 1)
+							var/obj/item/split_item = I.split_stack(1)
+							split_item.set_loc(get_turf(I))
+							O = split_item
+
 					O.setMaterial(getMaterial("pizza"))
 
 		fooddrink/friedessence
