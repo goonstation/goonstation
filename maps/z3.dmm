@@ -21581,7 +21581,8 @@
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "oldlapb";
 	name = "smashed relay controller";
-	desc = "The casing appears to have dozens of small holes bored into it."pixel_x = 1
+	desc = "The casing appears to have dozens of small holes bored into it.";
+	pixel_x = 1
 	},
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedmedicalship)
