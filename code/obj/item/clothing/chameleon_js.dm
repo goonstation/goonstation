@@ -1193,7 +1193,6 @@
 			inhand_image = image(inhand_image_icon)
 			src.icon_state = "psyche"
 			src.item_state = "psyche"
-			src.hide_prints = 1
 			src.material_prints = "high-tech rainbow flashing nanofibers"
 			M.set_clothing_icon_dirty()
 
@@ -1203,7 +1202,7 @@
 		set category = "Local"
 		set src in usr
 
-		var/datum/chameleon_shoes_pattern/which = tgui_input_list(usr, "Change the shoes to which pattern?", "Chameleon Shoes", clothing_choices)
+		var/datum/chameleon_shoes_pattern/which = tgui_input_list(usr, "Change the shoes to which pattern?", "Chameleon Gloves", clothing_choices)
 
 		if(!which)
 			return
@@ -1221,8 +1220,6 @@
 		src.wear_image = image(wear_image_icon)
 		src.inhand_image = image(inhand_image_icon)
 		src.material_prints = T.print_type
-		src.hide_prints = T.hide_prints
-		src.scramble_prints = T.scramble_prints
 		usr.set_clothing_icon_dirty()
 
 /datum/chameleon_gloves_pattern
