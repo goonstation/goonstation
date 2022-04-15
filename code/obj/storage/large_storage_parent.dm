@@ -29,6 +29,7 @@
 	var/icon_welded = "welded-closet"
 	var/open_sound = "sound/machines/click.ogg"
 	var/close_sound = "sound/machines/click.ogg"
+	var/volume = 15
 	var/max_capacity = 100 //Won't close past this many items.
 	var/open = 0
 	var/welded = 0
@@ -580,7 +581,7 @@
 		src.open = 1
 		src.UpdateIcon()
 		p_class = initial(p_class)
-		playsound(src.loc, src.open_sound, 15, 1, -3)
+		playsound(src.loc, src.open_sound, volume, 1, -3)
 		return 1
 
 	proc/close(var/entangleLogic)
@@ -642,7 +643,7 @@
 			entangled.open(1)
 
 		src.UpdateIcon()
-		playsound(src.loc, src.close_sound, 15, 1, -3)
+		playsound(src.loc, src.close_sound, volume, 1, -3)
 		return 1
 
 	proc/recalcPClass()
