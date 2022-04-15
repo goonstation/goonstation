@@ -1465,7 +1465,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/mule/dropoff,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -1474,8 +1473,6 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/decal/mule/beacon,
-/obj/machinery/navbeacon/mule/QM1_north/west,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -3181,6 +3178,7 @@
 	},
 /area/station/engine/elect)
 "it" = (
+/obj/decal/mule/dropoff,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
@@ -3188,6 +3186,10 @@
 "iu" = (
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/machinery/conveyor_switch{
+	id = "delivery";
+	name = "delivery conveyor switch"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
@@ -3520,10 +3522,8 @@
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "jl" = (
-/obj/machinery/conveyor_switch{
-	id = "delivery";
-	name = "delivery conveyor switch"
-	},
+/obj/machinery/navbeacon/mule/QM1_north,
+/obj/decal/mule/beacon,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "jm" = (
