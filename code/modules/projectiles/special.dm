@@ -1051,7 +1051,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "chembolt"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "extinguish"
-	shot_sound = "sound/weapons/flamethrower.ogg"
+	shot_sound = 'sound/weapons/flamethrower.ogg'
 	power = 0
 	cost = 1
 	damage_type = D_SPECIAL
