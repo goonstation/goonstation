@@ -1465,11 +1465,6 @@
 			var/mob/M = src.loc
 			M.u_equip(src)
 
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.chest_item == src)
-					H.chest_item = null
-					H.chest_item_sewn = 0
 
 			//mbc GC tooltips (this wont 100% kill tooltip deletions but itll help?
 			if	(M.client && M.client.tooltipHolder)

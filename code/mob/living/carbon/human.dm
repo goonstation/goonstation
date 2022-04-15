@@ -3114,7 +3114,7 @@
 	if (M && M.zone_sel && M.zone_sel.selecting == "chest" && src.chest_item != null && (src.chest_item in src.contents))
 		logTheThing("combat", M, src, "activates [src.chest_item] embedded in [src]'s chest cavity at [log_loc(src)]")
 		SPAWN(0) //might sleep/input/etc, and we don't want to hold anything up
-			activate_chest_item()
+			src.chest_item.AttackSelf(src)
 	return
 
 /mob/living/carbon/human/proc/chest_item_dump_reagents_on_flip()
@@ -3185,18 +3185,16 @@
 		// Make copy of item on ground
 		var/obj/item/outChestItem = src.chest_item
 		outChestItem.set_loc(get_turf(src))
-		activate_chest_item()
+		src.chest_item.AttackSelf(src)
 		src.chest_item = null
 		return
-	activate_chest_item()
-
-///Little wrapper proc to clean up the reference in case AttackSelf moves the chest item outside the mob (items that dispose inside the mob get handled in /obj/item/disposing())
-/mob/living/carbon/human/proc/activate_chest_item() //For edge cases like mousetrap roller assemblies
 	src.chest_item.AttackSelf(src)
-	SPAWN(1 SECOND)
-		if (chest_item?.loc != src)
-			chest_item = null
-			chest_item_sewn = 0
+
+///Clear chest item if it escapes/gets disposed
+/mob/living/carbon/human/Exited(atom/movable/thing)
+	if (thing == chest_item)
+		chest_item = null
+		chest_item_sewn = 0
 
 /mob/living/carbon/human/attackby(obj/item/W, mob/M)
 	if (src.parry_or_dodge(M))
