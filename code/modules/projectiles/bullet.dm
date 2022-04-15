@@ -922,7 +922,7 @@ datum/projectile/bullet/autocannon
 		var/max_turn_rate = 20
 		var/type_to_seek = /obj/critter/gunbot/drone //what are we going to seek
 		precalculated = 0
-		disruption = INFINITY //distrupt every system at once
+		disruption = INFINITY //disrupt every system at once
 		on_hit(atom/hit, angle, var/obj/projectile/P)
 			if (P.data)
 				..()
