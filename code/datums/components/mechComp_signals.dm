@@ -334,7 +334,8 @@ TYPEINFO(/datum/component/mechanics_holder)
 			return
 	if(length(src.configs))
 		var/selected_config = input("Select a config to modify!", "Config", null) as null|anything in src.configs
-		if(selected_config && in_interact_range(parent, user))
+		if (!in_interact_range(parent, user)) return TRUE
+		if(selected_config)
 			switch(selected_config)
 				if(SET_SEND)
 					var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
@@ -349,6 +350,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 					if(istype(parent, /atom))
 						var/atom/AP = parent
 						boutput(user, "<span class='notice'>You disconnect [AP.name].</span>")
+					return TRUE
 				if(CONNECT_COMP)
 					W.AddComponent(/datum/component/mechanics_connector, src.parent)
 					boutput(user, "<span class='notice'>Your [W] will now link other mechanics components to [src.parent]! Use it in hand to stop linking!</span>")

@@ -120,10 +120,10 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discretely fits inside most masks, and can be removed with wirecutters."
 
 /datum/syndicate_buylist/generic/chamsuit
-	name = "Chameleon Jumpsuit"
-	item = /obj/item/clothing/under/chameleon
+	name = "Chameleon Outfit"
+	item = /obj/item/storage/backpack/chameleon
 	cost = 1
-	desc = "A jumpsuit made of advanced fibres that can change colour to suit the needs of the wearer. Do not expose to electromagnetic interference."
+	desc = "A full ensemble of clothing made of advanced fibres that can change colour to suit the needs of the wearer. Comes in a backpack that itelf can be disguised in the same manner. Do not expose to electromagnetic interference."
 
 /datum/syndicate_buylist/generic/syndicard
 	name = "Agent Card"

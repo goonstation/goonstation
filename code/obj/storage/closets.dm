@@ -7,6 +7,8 @@
 	open_sound = 'sound/misc/locker_open.ogg'
 	close_sound = 'sound/misc/locker_close.ogg'
 	volume = 70
+	_max_health = LOCKER_HEALTH_WEAK
+	_health = LOCKER_HEALTH_WEAK
 
 	New()
 		. = ..()
@@ -15,6 +17,60 @@
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+	bullet_act(var/obj/projectile/P)
+		var/damage = 0
+		if (!P || !istype(P.proj_data,/datum/projectile/))
+			return
+		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
+		if (damage < 1)
+			return
+
+		switch(P.proj_data.damage_type)
+			if(D_KINETIC)
+				take_damage(damage, P)
+			if(D_PIERCING)
+				take_damage(damage, P)
+			if(D_ENERGY)
+				take_damage(damage / 2, P)
+		return
+
+	proc/take_damage(var/amount, var/obj/projectile/P)
+		if (!P)
+			message_admins("P Gone")
+			return
+		if (!isnum(amount) || amount <= 0)
+			return
+		src._health -= amount
+		if(_health <= 0)
+			_health = 0
+			if (isnull(P))
+				logTheThing("combat", src, null, "is hit and broken open by a projectile at [log_loc(src)]. No projectile data.]")
+			else
+				var/shooter_data = null
+				var/vehicle
+				if (P.mob_shooter)
+					shooter_data = P.mob_shooter
+				else if (ismob(P.shooter))
+					var/mob/M = P.shooter
+					shooter_data = M
+				var/obj/machinery/vehicle/V
+				if (istype(P.shooter,/obj/machinery/vehicle/))
+					V = P.shooter
+					if (!shooter_data)
+						shooter_data = V.pilot
+					vehicle = 1
+				if(shooter_data)
+					logTheThing("combat", shooter_data, src, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+				else
+					logTheThing("combat", src, null, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+			break_open()
+
+	proc/break_open()
+		src.welded = 0
+		src.unlock()
+		src.open()
+		playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
 
 /obj/storage/closet/emergency
 	name = "emergency supplies closet"
