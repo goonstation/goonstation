@@ -1,5 +1,9 @@
 
 (t)thu apr 14 22
+(u)Flaborized
+(p)7469
+(e)🆕🎨|feature, sprites
+(*)The traitor chameleon jumpsuit is now a full chameleon outfit, allowing you to further your diabolical disguises! It comes with a remote that lets you quickly swap the costume to all match a particular job.
 (u)pali
 (p)8204
 (e)|
