@@ -1489,7 +1489,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				flush(M, mult, 3, flushed_reagents)
+				flush(M, mult, 8, flushed_reagents)
 				if (M.get_toxin_damage() <= 25)
 					M.take_toxin_damage(-2 * mult)
 				..()
