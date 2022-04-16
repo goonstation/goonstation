@@ -18,6 +18,7 @@ TYPEINFO(/datum/component/extradimensional_storage)
 		src.default_init_region()
 	RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/on_entered)
 	RegisterSignal(parent, COMSIG_STORAGE_CLOSED, .proc/on_closed)
+	RegisterSignal(parent, COMSIG_PARENT_PRE_DISPOSING, .proc/on_disposing)
 
 /datum/component/extradimensional_storage/proc/default_init_region()
 	var/obj/storage/parent = src.parent
@@ -56,6 +57,9 @@ TYPEINFO(/datum/component/extradimensional_storage)
 	for(var/atom/movable/AM in parent)
 		var/turf/T = region.turf_at(rand(3, region.width - 2), rand(3, region.height - 2))
 		AM.set_loc(T)
+
+/datum/component/extradimensional_storage/proc/on_disposing()
+	qdel(src)
 
 /datum/component/extradimensional_storage/UnregisterFromParent()
 	var/obj/storage/parent = src.parent
