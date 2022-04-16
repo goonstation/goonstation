@@ -1714,6 +1714,7 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "standard-frame"
 	density = 1
+	material_amt = 0.3
 	var/wrenched = FALSE
 	var/glassed = FALSE
 	var/boardinstalled = FALSE
