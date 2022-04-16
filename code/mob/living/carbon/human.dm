@@ -3192,6 +3192,7 @@
 
 ///Clear chest item if it escapes/gets disposed
 /mob/living/carbon/human/Exited(atom/movable/thing)
+	..()
 	if (thing == chest_item)
 		chest_item = null
 		chest_item_sewn = 0
