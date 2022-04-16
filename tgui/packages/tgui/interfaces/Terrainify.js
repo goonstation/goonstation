@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2021 @Azrun
+ * Copyright (c) 2022 @Azrun
  * SPDX-License-Identifier: MIT
  */
 
 import { toFixed } from 'common/math';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Flex, Section, Tooltip } from '../components';
+import { useBackend } from '../backend';
+import { Box, Button, Flex, Section } from '../components';
 import { Window } from '../layouts';
-import { logger } from '../logging';
-
 
 export const TerrainChoice = props => {
   const {
@@ -185,21 +183,17 @@ export const Terrainify = (props, context) => {
                 cars={cars}
                 onToggleFabricators={handleToggleFabs}
                 onToggleCars={handleToggleCars} />
-
               <TerrainToggles
                 typeData={typeData}
                 terrain={terrain}
                 activeToggles={activeToggles}
                 onToggle={handleToggleGeneric}
               />
-
-
               <TerrainOptions
                 typeData={typeData}
                 terrain={terrain}
                 activeOptions={activeOptions}
                 onSelect={handleOptionGeneric} />
-
             </Flex.Item>
           </Flex>
           <Box m={1}>
