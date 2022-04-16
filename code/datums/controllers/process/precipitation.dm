@@ -4,7 +4,7 @@
 
 	setup()
 		name = "Precipitation"
-		schedule_interval = 5 SECONDS
+		schedule_interval = 6 SECONDS
 
 	copyStateFrom(datum/controller/process/target)
 		var/datum/controller/process/precipitation/old_process = target

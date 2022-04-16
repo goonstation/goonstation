@@ -74,8 +74,6 @@ particles/rain
 			var/turf/T = P.loc
 			for(var/atom/movable/AM in T)
 				if(!(AM.event_handler_flags & USE_FLUID_ENTER)) continue
-				//if(!isobj(AM) && !ismob(AM) ) continue
-				//if (istype(AM, /obj/overlay) || istype(AM, /obj/effects) || istype(AM, /obj/fluid)) continue
 
 				if(!ON_COOLDOWN(AM, "precipitation_cd_\ref[src]", src.cooldown))
 					src.reagents.copy_to(R)
