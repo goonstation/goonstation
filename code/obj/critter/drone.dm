@@ -1331,7 +1331,7 @@
 	// make it so they can get ressurected after they die
 	// also make it so, if you're a friend, they can be turned back into a grenade
 
-	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
+
 	name = "Sawfly"
 	desc = "A cheap antipersonnel drone of syndicate origin."
 	icon_state = "sawfly"
@@ -1342,8 +1342,8 @@
 	//angertext = "detects the presence of"
 	smashes_shit = 0
 	droploot = /obj/item/survival_machete //change this later
-	health = 70
-	maxhealth = 70
+	health = 50
+	maxhealth = 50
 	firevuln = 0.5
 	brutevuln = 1.2 // from brute damage sources they only have 50 hp
 	can_revive = 1
@@ -1353,12 +1353,15 @@
 	attack_cooldown = 8
 	seekrange = 15
 	var/deathtimer = 0 // for catastrophic failure on death
+	var/isnew = TRUE // for reuse
+	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
 
 	New()
 		..()
 		deathtimer = rand(2, 5)
 		death_text = "[src] jutters and falls from the air, whirring to a stop"
-		name = "Sawfly [pick(sawflynames)]-[rand(1,999)]"
+		if(isnew)
+			name = "Sawfly [pick(sawflynames)]-[rand(1,999)]"
 		beeptext = "[pick(list("beeps", "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs"))]"
 
 	ChaseAttack(atom/M) // overriding these procs so the drone is nicer >:(
@@ -1434,19 +1437,31 @@
 		//	new drop2(Ts)
 		//	make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
 
-		if(prob(90))// become totally unreusable and enact vengance- change probilities later
-			if(prob(50))// do you get a warning or not?
-				src.visible_message("<span class='alert'>[src] makes a [pick("gentle hiss", "odd drone", "slight whir", "weird thump", "barely audible grinding sound")]...")
+		if(prob(10))// become totally unreusable and enact vengance- change probilities later
+			src.visible_message("<span class='combat'>[src] makes a [pick("gentle hiss", "odd drone", "slight whir", "weird thump", "barely audible grinding sound")]...")
+
 			SPAWN(deathtimer SECONDS)// wait for it...
 				if(prob(50))// it catches on fire!
-					src.visible_message("<span class='alert'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!")
+					src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!")
 					fireflash(src,1,TRUE)
 
 				else //(prob(50))// it blows up!
-					src.visible_message("<span class='alert'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!")
+					src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!")
 					//SPAWN(0.5 SECONDS)// wait for iiiittttt...
 					//explosion(src, get_turf(src), -1,-1, 2, 3)
 					explosion(src, get_turf(src), 0, 1, 2, 3) // KERBLOOEY!
 					elecflash(src,2)
 				qdel(src)
+
+	attack_hand(var/mob/user as mob)
+		if (istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends))
+			if (user.a_intent == INTENT_HELP)
+				boutput(user, "You collapse [src].")
+				var/obj/item/old_grenade/spawner/sawfly/reused/N = new /obj/item/old_grenade/spawner/sawfly/reused(get_turf(src))
+				// give it the old name and health
+				N.name = "Compact [name]"
+				N.tempname = src.name
+				N.temphp = src.health
+				qdel(src)
+		..()
 
