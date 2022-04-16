@@ -7,8 +7,31 @@
 
 import { Box, ColorBox, Flex, Icon, NoticeBox, Section, Tooltip } from '../../components';
 import { freezeTemperature } from './temperatureUtils';
+import { BoxProps } from '../../components/Box';
+import { BooleanLike } from 'common/react';
+import { InfernoNode } from 'inferno';
 
-export const NoContainer = {
+interface ReagentContainer {
+  name: string;
+  id?: string;
+  maxVolume: number;
+  totalVolume: number;
+  finalColor: string;
+  temperature?: number;
+  contents?: Reagent[];
+  fake?: BooleanLike;
+}
+
+interface Reagent {
+  name: string;
+  id: string;
+  volume: number;
+  colorR: number;
+  colorG: number;
+  colorB: number;
+}
+
+export const NoContainer: ReagentContainer = {
   name: "No Beaker Inserted",
   id: "inserted",
   maxVolume: 100,
@@ -18,8 +41,15 @@ export const NoContainer = {
   fake: true,
 };
 
-export const ReagentGraph = props => {
+interface ReagentInfoProps extends BoxProps {
+  container: ReagentContainer;
+}
+
+interface ReagentGraphProps extends ReagentInfoProps {}
+
+export const ReagentGraph = (props: ReagentGraphProps) => {
   const {
+    className = '',
     container,
     height,
     ...rest
@@ -62,7 +92,7 @@ export const ReagentGraph = props => {
             content={
               <Box>
                 <ColorBox color={finalColor} /> Current Mixture Color
-              </Box>
+              </Box> as unknown as string // Elements/InfernoNodes work in Tooltip.content anyways.
             }
             position="bottom">
             <Box height="14px" // same height as a Divider
@@ -84,8 +114,13 @@ export const ReagentGraph = props => {
   );
 };
 
-export const ReagentList = props => {
+interface ReagentListProps extends ReagentInfoProps {
+  renderButtons(reagent: Reagent): InfernoNode;
+}
+
+export const ReagentList = (props: ReagentListProps) => {
   const {
+    className = '',
     container,
     renderButtons,
     height,
