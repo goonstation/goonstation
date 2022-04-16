@@ -36,15 +36,12 @@
 	shield_on()
 		if (PCEL && PCEL.charge > 0) //first, try to activate off cell power
 			generate_shield()
-			return
 		else //no cell power? attempt to grid boot
 			if (!line_powered()) //no cell, no grid, no activation
 				src.power_usage = 0
-				return
 			else //activate off line power
 				generate_shield()
 				src.power_usage = get_draw()
-				return
 
 
 	pulse(var/mob/user)
