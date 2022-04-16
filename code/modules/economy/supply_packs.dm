@@ -806,6 +806,14 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/wooden
 	containername = "Robuddy Kit"
 
+/datum/supply_packs/meteor
+	name = "Meteor Shield System"
+	desc = "It'll do in a pinch but your ship should really have it's own shields."
+	contains = list(/obj/machinery/shieldgenerator/meteorshield = 4)
+	cost = 2500
+	containertype = /obj/storage/crate/wooden
+	containername = "Meteor Shield System"
+
 /datum/supply_packs/reclaimer
 	name = "Reclaimed Reclaimer"
 	desc = "Jeez, be more careful with it next time!"
@@ -1619,14 +1627,6 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/crate/wooden
 	containername = "Atmospherics Supplies"
 
-/datum/supply_packs/complex/meteor
-	name = "Meteor Shield System"
-	desc = "It'll do in a pinch but your ship should really have it's own shields. Soldering required."
-	frames = list(/obj/machinery/shieldgenerator/meteorshield = 4)
-	cost = 2500
-	containertype = /obj/storage/crate/wooden
-	containername = "Meteor Shield System"
-
 /datum/supply_packs/complex/winter
 	name = "Cold Weather Gear"
 	desc = "Warm winter gear to ward off the winter chills."
@@ -1637,13 +1637,12 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 
 /datum/supply_packs/complex/hydrostarter
 	name = "Hydroponics: Starter Crate"
-	desc = "x2 Watering Cans, x4 Compost Bags, x2 Weedkiller bottles, x2 Plant Analyzers, x4 Plant Trays frames"
+	desc = "x2 Watering Cans, x4 Compost Bags, x2 Weedkiller bottles, x2 Plant Analyzers, x4 Plant Tray frames"
 	category = "Civilian Department"
 	contains = list(/obj/item/reagent_containers/glass/wateringcan = 2,
 					/obj/item/reagent_containers/glass/compostbag = 4,
 					/obj/item/reagent_containers/glass/bottle/weedkiller = 2,
-					/obj/item/plantanalyzer = 2,
-					/obj/machinery/plantpot = 4)
+					/obj/item/plantanalyzer = 2)
 	frames = list(/obj/machinery/plantpot = 4)
 	cost = 500
 	containertype = /obj/storage/crate
