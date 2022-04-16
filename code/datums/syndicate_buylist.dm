@@ -177,6 +177,21 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 1
 	desc = "A pack of Syndicool Lights exploding trick cigarettes. Due to the use of a military-grade explosive, please do not attempt to smoke these after lighting."
 
+/datum/syndicate_buylist/generic/sawfly
+	name = "Compact Sawfly"
+	item = /obj/item/old_grenade/spawner/sawfly
+	cost = 2
+	vr_allowed = 0
+	desc = "A small antipersonnel robot that will not attack anyone of syndicate affiliation. It can be folded up after use."
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_HEAD_REV
+
+/datum/syndicate_buylist/generic/sawflymany
+	name = "Cluster Sawfly deployer"
+	item = /obj/item/old_grenade/spawner/sawflycluster
+	cost = 7
+	vr_allowed = 0
+	desc = "An assembly of five antipersonnel robot that will not attack anyone of syndicate affiliation. They can be individually folded up after use."
+	can_buy = UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 /datum/syndicate_buylist/generic/dnascram
 	name = "DNA Scrambler"
 	item = /obj/item/genetics_injector/dna_scrambler
@@ -272,6 +287,8 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	vr_allowed = 0
 	desc = "A rather volatile pipe bomb packed with miniature syndicate troops."
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
+
 
 /datum/syndicate_buylist/traitor/champrojector
 	name = "Chameleon Projector"

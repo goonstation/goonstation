@@ -195,7 +195,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	name = "Cluster sawfly"
 	desc = "Jesus christ, this thing looks like someone drew it in five minutes. You hope it works."
 	det_time = 2 SECONDS // slower reaction time = better
-	throwforce = 15
+	throwforce = 10
 	icon_state = "clusterfly"
 	icon_state_armed = "sawfly1"
 	payload = /obj/critter/gunbot/drone/buzzdrone/sawfly

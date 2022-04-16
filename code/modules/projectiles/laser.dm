@@ -500,7 +500,7 @@ toxic - poisons
 
 	sawfly// sawfly weapon
 		name = "Whirring Blades"
-		damtype = DAMAGE_CUT
+		damtype = D_PIERCING // their main use is to buy time from secoffs, can't have armor making them useless
 		shot_sound = null
 		hit_human_sound = "sound/machines/chainsaw_green.ogg"
 		power = 12

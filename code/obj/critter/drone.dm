@@ -1333,7 +1333,7 @@
 
 
 	name = "Sawfly"
-	desc = "A cheap antipersonnel drone of syndicate origin."
+	desc = "A folding antipersonnel drone of syndicate origin. It looks duitiful"
 	icon_state = "sawfly"
 	beeptext = "BEEEEEP"
 	dead_state = "sawflydead"
@@ -1341,7 +1341,7 @@
 	current_projectile = new/datum/projectile/laser/drill/sawfly
 	//angertext = "detects the presence of"
 	smashes_shit = 0
-	droploot = /obj/item/survival_machete //change this later
+	//droploot = /obj/item/survival_machete //change this later
 	health = 50
 	maxhealth = 50
 	firevuln = 0.5
@@ -1403,6 +1403,7 @@
 		return
 
 
+
 	CritterDeath() // rip lil guy
 		if (!src.alive) return
 		..()
@@ -1437,21 +1438,20 @@
 		//	new drop2(Ts)
 		//	make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
 
-		if(prob(10))// become totally unreusable and enact vengance- change probilities later
+		if(prob(20))// chance to inflict further havoc on the station
 			src.visible_message("<span class='combat'>[src] makes a [pick("gentle hiss", "odd drone", "slight whir", "weird thump", "barely audible grinding sound")]...")
 
-			SPAWN(deathtimer SECONDS)// wait for it...
-				if(prob(50))// it catches on fire!
-					src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!")
-					fireflash(src,1,TRUE)
+			if(prob(66))// it catches on fire!
+				src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!")
+				fireflash(src,1,TRUE)
 
-				else //(prob(50))// it blows up!
-					src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!")
-					//SPAWN(0.5 SECONDS)// wait for iiiittttt...
-					//explosion(src, get_turf(src), -1,-1, 2, 3)
-					explosion(src, get_turf(src), 0, 1, 2, 3) // KERBLOOEY!
-					elecflash(src,2)
-				qdel(src)
+			else //(prob(50))// it blows up!
+				src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!")
+				//SPAWN(0.5 SECONDS)// wait for iiiittttt...
+				//explosion(src, get_turf(src), -1,-1, 2, 3)
+				explosion(src, get_turf(src), 0, 0.5, 2, 3) // KERBLOOEY!
+				elecflash(src,2)
+		qdel(src)
 
 	attack_hand(var/mob/user as mob)
 		if (istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends))
@@ -1464,4 +1464,6 @@
 				N.temphp = src.health
 				qdel(src)
 		..()
+
+
 
