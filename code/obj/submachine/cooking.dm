@@ -551,6 +551,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/moon_pie(src)
 			src.recipes += new /datum/cookingrecipe/granola_bar(src)
 			src.recipes += new /datum/cookingrecipe/biscuit(src)
+			src.recipes += new /datum/cookingrecipe/dog_biscuit(src)
 			src.recipes += new /datum/cookingrecipe/hardtack(src)
 			src.recipes += new /datum/cookingrecipe/macguffin(src)
 			src.recipes += new /datum/cookingrecipe/eggsalad(src)
