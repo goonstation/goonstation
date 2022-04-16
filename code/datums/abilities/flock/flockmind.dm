@@ -218,18 +218,19 @@
 
 /datum/targetable/flockmindAbility/splitDrone/cast(mob/living/critter/flock/drone/target)
 	if(..())
-		return 1
+		return TRUE
 	if(!istype(target))
-		return 1
-	// sanity check: don't remove our last complex drone
+		return TRUE
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
-	if(!F?.flock || F.flock != target.flock)
-		boutput(holder.owner, "<span class='notice'>The drone does not respond to your command.</span>")
-		return 1
+	if(!F.flock || F.flock != target.flock)
+		boutput(F, "<span class='notice'>The drone does not respond to your command.</span>")
+		return TRUE
+	if (isdead(target))
+		return TRUE
 	if(F.flock.getComplexDroneCount() == 1)
-		boutput(holder.owner, "<span class='alert'>That's your last complex drone. Diffracting it would be suicide.</span>")
-		return 1
-	boutput(holder.owner, "<span class='notice'>You diffract the drone.</span>")
+		boutput(F, "<span class='alert'>That's your last complex drone. Diffracting it would be suicide.</span>")
+		return TRUE
+	boutput(F, "<span class='notice'>You diffract the drone.</span>")
 	target.split_into_bits()
 
 
