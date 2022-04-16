@@ -90,6 +90,7 @@
 					return
 				playsound(user, "sound/items/Screwdriver2.ogg", 65, 1)
 				src.anchored = 0
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 				user.visible_message("[user] loosens the piano's castors!", "You loosen the piano's castors!")
 				return
 			else

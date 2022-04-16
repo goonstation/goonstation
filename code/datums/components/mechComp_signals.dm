@@ -285,6 +285,14 @@ TYPEINFO(/datum/component/mechanics_holder)
 	if(!IN_RANGE(receiver, trigger, WIDE_TILE_WIDTH))
 		boutput(user, "<span class='alert'>These two components are too far apart to connect.</span>")
 		return
+	var/atom/movable/moveable_target = comsig_target
+	if(istype(moveable_target) && !moveable_target.anchored)
+		boutput(user, "<span class='alert'>[moveable_target] must be anchored to connect it.</span>")
+		return
+	var/atom/movable/moveable_trigger = trigger
+	if(istype(moveable_trigger) && !moveable_trigger.anchored)
+		boutput(user, "<span class='alert'>[moveable_trigger] must be anchored to connect it.</span>")
+		return
 	if(!src.inputs.len)
 		boutput(user, "<span class='alert'>[receiver.name] has no input slots. Can not connect [trigger.name] as Trigger.</span>")
 		return
