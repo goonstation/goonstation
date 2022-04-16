@@ -1,5 +1,8 @@
 
 (t)sat apr 16 22
+(u)UrsulaMajor
+(e)🐛|bug
+(+)Martian Psychics will properly gib you again.
 (u)BatElite
 (p)8029
 (e)🆕|feature
