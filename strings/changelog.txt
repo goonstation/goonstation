@@ -1,5 +1,9 @@
 
 (t)sat apr 16 22
+(u)BatElite
+(p)8029
+(e)🆕|feature
+(+)EMPs now delete some of a cloner's records.
 (u)glowbold
 (p)7853
 (e)🆕🎨|feature, sprites
