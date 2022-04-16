@@ -292,12 +292,12 @@
 	#endif
 	SEND_SIGNAL(src, COMSIG_ATOM_CROSSED, AM)
 
-/atom/Entered(atom/movable/AM)
+/atom/Entered(atom/movable/AM, atom/OldLoc)
 	SHOULD_CALL_PARENT(TRUE)
 	#ifdef SPACEMAN_DMM //im cargo culter
 	..()
 	#endif
-	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM)
+	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, OldLoc)
 
 /atom/proc/ProximityLeave(atom/movable/AM as mob|obj)
 	return
@@ -940,10 +940,7 @@
 
 //reason for having this proc is explained below
 /atom/proc/set_density(var/newdensity)
-	src.density = newdensity
-
-/atom/movable/set_density(var/newdensity)
-	..()
+	src.density = HAS_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE) ? 0 : newdensity
 
 // standardized damage procs
 

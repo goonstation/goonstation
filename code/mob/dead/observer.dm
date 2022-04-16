@@ -303,10 +303,10 @@
 				our_ghost.alpha = 0
 			src.ghost = our_ghost
 
-		if (isghostrestrictedz(our_ghost.z) && !restricted_z_allowed(our_ghost, get_turf(our_ghost)) && !(src.client?.holder))
-			our_ghost.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
-		else
+		if (!isghostrestrictedz(our_ghost.z) || (isghostrestrictedz(our_ghost.z) && (restricted_z_allowed(our_ghost, get_area(our_ghost)) || (src.client && src.client.holder)))) //TODO make restructed_z_allowed handle all of this
 			our_ghost.set_loc(get_turf(src))
+		else
+			our_ghost.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 
 		// step 2: make sure they actually make it to the ghost
 		if (src.mind)
@@ -808,8 +808,6 @@ mob/dead/observer/proc/insert_observer(var/atom/target)
 		mind.transfer_to(newobs)
 	else if (src.client) //Wire: Fix for Cannot modify null.mob.
 		src.client.mob = newobs
-	if (isghostrestrictedz(newobs.z) && !restricted_z_allowed(newobs, get_turf(newobs)) && !(src.client && src.client.holder))
-		newobs.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 
 mob/dead/observer/proc/insert_slasher_observer(var/atom/target) //aaaaaa i had to create a new proc aaaaaa
 	var/mob/dead/target_observer/slasher_ghost/newobs = new /mob/dead/target_observer/slasher_ghost
@@ -830,6 +828,4 @@ mob/dead/observer/proc/insert_slasher_observer(var/atom/target) //aaaaaa i had t
 	else if (src.client)
 		src.client.mob = newobs
 	set_loc(newobs)
-	if (isghostrestrictedz(newobs.z) && !restricted_z_allowed(newobs, get_turf(newobs)) && !(src.client && src.client.holder))
-		newobs.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 	return newobs

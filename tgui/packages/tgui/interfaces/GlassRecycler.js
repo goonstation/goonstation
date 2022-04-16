@@ -1,11 +1,10 @@
-import { Fragment } from 'inferno';
-import { useBackend, useLocalState } from "../backend";
-import { Box, Button, Divider, Flex, Section, Stack } from "../components";
-import { Window } from "../layouts";
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Divider, Flex, Section, Stack } from '../components';
+import { Window } from '../layouts';
 
 import { capitalize, pluralize } from './common/stringUtils';
 
-const GlassRecyclerProductEntry = (props, context) => {
+const GlassRecyclerProductEntry = (props) => {
   const {
     product: {
       name,
@@ -17,7 +16,7 @@ const GlassRecyclerProductEntry = (props, context) => {
   } = props;
 
   return (
-    <Fragment>
+    <>
       <Flex direction="row" align="center">
         <Flex.Item>
           <img
@@ -43,11 +42,11 @@ const GlassRecyclerProductEntry = (props, context) => {
         </Flex.Item>
       </Flex>
       <Divider />
-    </Fragment>
+    </>
   );
 };
 
-export const GlassRecycler = (props, context) => {
+export const GlassRecycler = (_props, context) => {
   const { act, data } = useBackend(context);
   const {
     glassAmt,
@@ -60,7 +59,8 @@ export const GlassRecycler = (props, context) => {
     <Window
       title="Glass Recycler"
       width={300}
-      height={400}>
+      height={400}
+    >
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
@@ -83,24 +83,24 @@ export const GlassRecycler = (props, context) => {
             <Section
               fill
               scrollable
-              title="Products">
-              {products.map(product => {
-                const {
-                  type,
-                  cost,
-                } = product;
-                if (filterAvailable && (glassAmt < cost)) {
-                  return;
-                }
-
-                return (
-                  <GlassRecyclerProductEntry
-                    key={type}
-                    product={product}
-                    disabled={glassAmt < cost}
-                    onClick={() => act('create', { type })} />
-                );
-              })}
+              title="Products"
+            >
+              {products
+                .filter(({ cost }) => !filterAvailable || (glassAmt >= cost))
+                .map(product => {
+                  const {
+                    cost,
+                    type,
+                  } = product;
+                  return (
+                    <GlassRecyclerProductEntry
+                      key={type}
+                      product={product}
+                      disabled={glassAmt < cost}
+                      onClick={() => act('create', { type })}
+                    />
+                  );
+                })}
             </Section>
           </Stack.Item>
         </Stack>

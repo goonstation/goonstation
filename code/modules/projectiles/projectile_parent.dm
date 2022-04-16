@@ -653,6 +653,9 @@ datum/projectile/bullet/autocannon/huge
 datum/projectile/bullet/cannon
 	impact_range = 8
 
+datum/projectile/bullet/howitzer
+	impact_range = 28
+
 datum/projectile/bullet/glitch
 	impact_range = 4
 

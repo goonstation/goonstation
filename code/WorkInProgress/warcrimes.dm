@@ -406,7 +406,7 @@ var/fartcount = 0
 			boutput(M, "<span class='notice'><b>You offer [W] to [src]</b> </span>")
 			M.u_equip(W)
 			W.set_loc(src)
-			W.dropped()
+			W.dropped(M)
 			src.drop_item()
 			src.put_in_hand_or_drop(W)
 

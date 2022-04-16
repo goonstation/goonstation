@@ -167,7 +167,7 @@
 		send_the_damn_icon(user)
 		var/mult = src.display_mult
 
-		var/isadmin = user?.client?.holder.level >= LEVEL_MOD
+		var/isadmin = user?.client?.holder?.level >= LEVEL_MOD
 
 		var/dat = {"
 <!doctype html>
