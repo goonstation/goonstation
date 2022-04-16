@@ -526,18 +526,22 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 		if("fabricator")
 			fabricator = !fabricator
+			. = TRUE
 
 		if("cars")
 			cars = !cars
+			. = TRUE
 
 		if("toggle")
 			if(params["toggle"] in active_terrain.additional_toggles)
 				src.active_toggles[params["toggle"]] = !src.active_toggles[params["toggle"]]
+				. = TRUE
 
 		if("option")
 			if(params["key"] in active_terrain.additional_options)
 				if(params["value"] in active_terrain.additional_options[params["key"]])
 					active_options[params["key"]] = params["value"]
+					. = TRUE
 
 		if("activate")
 			var/convert_params = list()
@@ -548,6 +552,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			if(T)
 				T.convert_station_level(convert_params, ui)
 				T.terrainify_lock = null
+				. = TRUE
 
 
 #undef TERRAINIFY_VEHICLE_FABS
