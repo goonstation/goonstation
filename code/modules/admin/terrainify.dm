@@ -142,6 +142,30 @@ ABSTRACT_TYPE(/datum/terrainify)
 		else
 			. = TRUE
 
+/datum/terrainify/desertify
+	name = "Desert Station"
+	desc = "Turn space into into a nice desert full of sand and stones."
+
+	convert_station_level(params, datum/tgui/ui)
+		if(..())
+			var/const/ambient_light = "#cfcfcf"
+			station_repair.station_generator = new/datum/map_generator/desert_generator
+			station_repair.ambient_light = new /image/ambient
+			station_repair.ambient_light.color = ambient_light
+
+			var/list/space = list()
+			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+				space += S
+			station_repair.station_generator.generate_terrain(space)
+			for (var/turf/S in space)
+				S.UpdateOverlays(station_repair.ambient_light, "ambient")
+
+			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
+
+			logTheThing("admin", ui.user, null, "turned space into a desert.")
+			logTheThing("diary", ui.user, null, "turned space into a desert.", "admin")
+			message_admins("[key_name(ui.user)] turned space into a desert.")
+
 
 /datum/terrainify/void
 	name = "Void Station"

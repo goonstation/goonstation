@@ -431,6 +431,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\hud\wraith.dm"
 #include "code\datums\hud\zone_sel.dm"
 #include "code\datums\mapgen\_MapGenerator.dm"
+#include "code\datums\mapgen\DesertGenerator.dm"
 #include "code\datums\mapgen\IceMoonGenerator.dm"
 #include "code\datums\mapgen\JungleGenerator.dm"
 #include "code\datums\mapgen\MarsGenerator.dm"
