@@ -243,7 +243,7 @@
 		else if (delta > 0)
 			var/datum/ore_cloud_data/OCD = new /datum/ore_cloud_data
 			OCD.amount += delta
-			OCD.for_sale = 0
+			OCD.for_sale = 1
 			OCD.price = 0
 			OCD.stats = get_ore_properties(ore)
 			ores[material_name] = OCD
