@@ -1,5 +1,14 @@
 
 (t)sat apr 16 22
+(u)Flourish
+(e)🆕|feature
+(+)You can now make dog biscuits; granola bar + meat paste + peanut butter, 6 seconds on low in the oven.
+(u)Flourish
+(e)🆕|feature
+(+)Statues can now be destroyed with large explosions.
+(u)Flourish
+(e)⛔|removal
+(+)Removed corpse Spacebux purchase.
 (u)Azrun and Jan.antilles
 (p)5797
 (e)🆕🎨|feature, sprites
