@@ -303,6 +303,7 @@
 		return the_text
 
 	Cross(atom/movable/mover)
+		if(!src.density) return 1
 		if(istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
 			if(P.proj_data.window_pass)
