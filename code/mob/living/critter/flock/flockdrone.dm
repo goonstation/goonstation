@@ -134,6 +134,12 @@
 		// don't know how this happened but you need a controller right now
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
 	if(controller)
+		if (src.floorrunning)
+			src.end_floorrunning()
+			if (istype(src.loc, /turf/simulated/floor/feather))
+				var/turf/simulated/floor/feather/floor = src.loc
+				if (floor.on && !floor.connected)
+					floor.off()
 		// move controller out
 		controller.set_loc(get_turf(src))
 		// move us over to the controller
