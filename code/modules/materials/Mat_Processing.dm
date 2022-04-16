@@ -154,7 +154,7 @@
 			boutput(user, "<span class='notice'>You put \the [W] into \the [src].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
-			W.dropped()
+			W.dropped(user)
 			return
 
 		return
@@ -247,7 +247,7 @@
 		if(W in user && !W.cant_drop)
 			user.u_equip(W)
 			W.set_loc(src.loc)
-			W.dropped()
+			W.dropped(user)
 
 
 		//if (istype(W, /obj/item/raw_material/) || istype(W, /obj/item/sheet/) || istype(W, /obj/item/rods/) || istype(W, /obj/item/tile/) || istype(W, /obj/item/cable_coil))
@@ -267,7 +267,7 @@
 		user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
 		user.u_equip(O)
 		O.set_loc(src)
-		O.dropped()
+		O.dropped(user)
 		var/staystill = user.loc
 		for(var/obj/item/M in view(1,user))
 			if (!M || M.loc == user)

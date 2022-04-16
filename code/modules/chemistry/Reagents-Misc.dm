@@ -1538,6 +1538,8 @@ datum
 					M.make_jittery(1000)
 					SPAWN(rand(20, 100))
 						var/turf/Mturf = get_turf(M)
+						if (ishuman(M))
+							logTheThing("combat", M, null, "was transformed into a dog by reagent [name] at [log_loc(M)].")
 						M.gib()
 						new /obj/critter/dog/george (Mturf)
 					return
@@ -1576,6 +1578,8 @@ datum
 					M.setStatusMin("weakened", 15 SECONDS * mult)
 					M.make_jittery(1000)
 					SPAWN(rand(20, 100))
+						if (ishuman(M))
+							logTheThing("combat", M, null, "was owlgibbed by reagent [name] at [log_loc(M)].")
 						M.owlgib(control_chance = 100)
 					return
 				..()
@@ -2123,6 +2127,7 @@ datum
 							H.visible_message("<span class='alert bold'>[H] is torn apart from the inside as some weird floaty thing rips its way out of their body! Holy fuck!!</span>")
 							var/mob/living/critter/flock/bit/B = new()
 							B.set_loc(get_turf(H))
+							logTheThing("combat", H, null, "was gibbed by reagent [name] at [log_loc(H)].")
 							H.gib()
 					else
 						// DO SPOOKY THINGS
@@ -3363,6 +3368,8 @@ datum
 				one_with_everything(M)
 				#else
 				M.ex_act(1)
+				if (ishuman(M))
+					logTheThing("combat", M, null, "was gibbed by reagent [name] at [log_loc(M)].")
 				M.gib()
 				#endif
 				M.reagents.del_reagent(src.id)
@@ -3395,6 +3402,8 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
 				M.ex_act(1)
+				if (isliving(M))
+					logTheThing("combat", M, null, "was gibbed by reagent [name] at [log_loc(M)].")
 				M.gib()
 				M.reagents.del_reagent(src.id)
 

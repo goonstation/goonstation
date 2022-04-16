@@ -500,7 +500,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 	proc/handle_move()
 		var/turf/user_turf = get_turf(holder.owner)
-		if (isrestrictedz(user_turf) || is_incapacitated(holder.owner))
+		if (isrestrictedz(user_turf.z) || is_incapacitated(holder.owner))
 			deactivate()
 			active = FALSE
 			return

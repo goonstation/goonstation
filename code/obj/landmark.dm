@@ -20,7 +20,7 @@ proc/pick_landmark(name, default=null)
 	ex_act()
 		return
 
-/obj/landmark/proc/init()
+/obj/landmark/proc/init(delay_qdel=FALSE)
 	if(src.add_to_landmarks)
 		if(!landmarks)
 			landmarks = list()
@@ -29,12 +29,15 @@ proc/pick_landmark(name, default=null)
 			landmarks[name] = list()
 		landmarks[name][src.loc] = src.data
 	if(src.deleted_on_start)
-		qdel(src)
+		if(delay_qdel)
+			SPAWN(0)
+				qdel(src)
+		else
+			qdel(src)
 
 /obj/landmark/New()
 	if(current_state > GAME_STATE_MAP_LOAD)
-		SPAWN(0)
-			src.init()
+		src.init(delay_qdel=TRUE)
 		..()
 	else
 		src.init()

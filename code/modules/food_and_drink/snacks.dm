@@ -2212,7 +2212,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			user.u_equip(W)
 			W.set_loc(src)
 			src.wrapped = W
-			W.dropped()
+			W.dropped(user)
 
 			if (W.w_class > (src.maximum_wrapped_size / 2))
 				src.name = "[W.name] eggroll"

@@ -888,7 +888,7 @@
 		if (src.is_valid(W))
 			W.set_loc(src)
 			if (user) user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 			. = TRUE
 
 	attackby(obj/item/W as obj, mob/user as mob)

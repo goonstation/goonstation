@@ -902,7 +902,7 @@
 					playsound(src.loc, src.sound_grump, 50, 1)
 					boutput(user, "<span class='alert'>The manufacturer rejects the blueprint, as it already knows it.</span>")
 					return
-			BP.dropped()
+			BP.dropped(user)
 			src.download += BP.blueprint
 			src.visible_message("<span class='alert'>[src] emits a pleased chime!</span>")
 			playsound(src.loc, src.sound_happy, 50, 1)
@@ -1035,7 +1035,7 @@
 				src.beaker = W
 				if (user && W)
 					user.u_equip(W)
-					W.dropped()
+					W.dropped(user)
 
 		else if (istype(W,/obj/item/disk/data/floppy))
 			if (src.manudrive)
@@ -1044,7 +1044,7 @@
 				src.manudrive = W
 				if (user && W)
 					user.u_equip(W)
-					W.dropped()
+					W.dropped(user)
 				for (var/datum/computer/file/manudrive/MD in src.manudrive.root.contents)
 					src.drive_recipes = MD.drivestored
 			else
@@ -1053,7 +1053,7 @@
 				src.manudrive = W
 				if (user && W)
 					user.u_equip(W)
-					W.dropped()
+					W.dropped(user)
 				for (var/datum/computer/file/manudrive/MD in src.manudrive.root.contents)
 					src.drive_recipes = MD.drivestored
 
@@ -1862,7 +1862,7 @@
 
 		if (user)
 			user.u_equip(O)
-			O.dropped()
+			O.dropped(user)
 
 		if (istype(O, src.base_material_class) && O.material)
 			var/obj/item/material_piece/P = O

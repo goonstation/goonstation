@@ -1045,7 +1045,17 @@
 	desc = "A box containg a single meowitzer. It's softly purring and feels cool to the touch. Wait, is that a cat?"
 	ammo_type = new/datum/projectile/special/meowitzer/inert
 
-
+/obj/item/ammo/bullets/howitzer
+	sname = "howitzer"
+	name = "howitzer shell"
+	desc = "A carton containing a single 120mm shell. It's huge."
+	icon_state = "meow_ammo"
+	icon_empty = "meow_ammo-0"
+	amount_left = 1
+	max_amount = 1
+	ammo_type = new/datum/projectile/bullet/howitzer
+	ammo_cat = AMMO_HOWITZER
+	w_class = W_CLASS_NORMAL
 //////////////////////////////////// Power cells for eguns //////////////////////////
 
 /obj/item/ammo/power_cell

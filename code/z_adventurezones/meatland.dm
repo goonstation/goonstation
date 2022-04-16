@@ -1529,6 +1529,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			else
 				L.visible_message("<span class='alert'><b>[L] is gored by [src]!</b></span>", "<span class='alert'><b>OH SHIT</b></span>")
 				playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+				logTheThing("combat", L, null, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
 				L.gib()
 
 		src.icon_state = "fangdoor1"

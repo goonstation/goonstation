@@ -618,6 +618,7 @@
 			for (var/mob/living/M in get_center())
 				if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 				if(prob(69))								//Nice.
+					logTheThing("user", M, null, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
 					M.gib()
 				else
 					random_brute_damage(M, 120)
