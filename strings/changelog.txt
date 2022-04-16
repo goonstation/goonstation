@@ -1,5 +1,9 @@
 
 (t)sat apr 16 22
+(u)RSG250
+(p)7048
+(e)⚖|balance
+(+)Buffed Matsci shoes and Cleats Kick bonus. Cleats are now stronger than cow feet. FOOTBALL.
 (u)UrsulaMajor
 (e)🐛|bug
 (+)Martian Psychics will properly gib you again.
