@@ -303,7 +303,6 @@ datum
 				if ((reagent_id != id) && ((reagent_id in flush_specific_reagents) || (!flush_specific_reagents)))//checks if there's a specific reagent list to flush or if it should flush all reagents.
 					amount = amount * mult * M.reagents.reagent_list[reagent_id].flushing_multiplier
 					holder.remove_reagent(reagent_id, amount)
-			return
 
 		// reagent state helper procs
 
