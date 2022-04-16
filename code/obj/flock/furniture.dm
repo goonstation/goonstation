@@ -216,6 +216,7 @@
 	desc = "It pulses and flares to a strange rhythm."
 	icon_state = "flock_floor1"
 	base_state = "flock_floor"
+	plane = PLANE_FLOOR
 	brightness = 1.2
 	power_usage = 0
 	on = 1
