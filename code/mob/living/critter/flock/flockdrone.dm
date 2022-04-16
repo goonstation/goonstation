@@ -627,7 +627,7 @@
 	var/mob/living/critter/flock/bit/B
 	// get candidate places to move them
 	var/turf/T = get_turf(src)
-	var/list/candidate_turfs = getNeighbors(T, alldirs)
+	var/list/candidate_turfs = getneighbours(src)
 	for(var/i=1 to num_bits)
 		B = new(get_turf(src), F = src.flock)
 		src.flock?.registerUnit(B)
