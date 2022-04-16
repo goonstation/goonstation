@@ -638,7 +638,7 @@
 		if (!isliving(M) && !iswraith(M) && !isAI(M))
 			continue
 		// admins aren't observable unless they're in player mode
-		if (M.client.holder && !M.client.player_mode)
+		if (C.holder && !C.player_mode)
 			continue
 		// remove any secret mobs that someone is controlling
 		if (M.unobservable)
