@@ -11,7 +11,6 @@
 	flock_id = "Second-Stage Assembler"
 	build_time = 6
 	health = 30 // fragile little thing
-	compute = 1 //just to make sure that you don't die seconds before a drone hatches
 	var/decal_made = 0 // for splashing stuff on throw
 
 /obj/flock_structure/egg/New(var/atom/location, var/datum/flock/F=null)

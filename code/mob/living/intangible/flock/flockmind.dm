@@ -58,9 +58,14 @@
 
 /mob/living/intangible/flock/flockmind/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
-		return 1
-	if (src.started && src.flock && src.flock.total_compute() <= 0)
-		src.death() // get rekt
+		return TRUE
+	if (src.started && src.flock)
+		if (src.flock.getComplexDroneCount())
+			return
+		for (var/obj/flock_structure/s in src.flock.structures)
+			if (istype(s, /obj/flock_structure/egg) || istype(s, /obj/flock_structure/rift))
+				return
+		src.death()
 
 /mob/living/intangible/flock/flockmind/proc/spawnEgg()
 	if(src.flock)
