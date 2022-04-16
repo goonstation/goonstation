@@ -166,3 +166,39 @@ export const ReagentList = (props: ReagentListProps) => {
     </Section>
   );
 };
+
+const reagentCheck = (a: Reagent, b: Reagent): boolean => {
+  if (a.volume !== b.volume
+      || a.name !== b.name
+      || a.id !== b.id
+      || a.colorR !== b.colorR
+      || a.colorG !== b.colorG
+      || a.colorB !== b.colorB) return true; // a property used by ReagentGraph/List has changed, update
+  return false;
+};
+
+const containerCheck = (a: ReagentContainer, b: ReagentContainer): boolean => {
+  if (a === b) return false; // same object or both null, no update
+  if (a === null || b === null) return true; // only one object is null, update
+  if (a.totalVolume !== b.totalVolume
+      || a.finalColor !== b.finalColor
+      || a.maxVolume !== b.maxVolume
+      || a.name !== b.name) return true; // a property used by ReagentGraph/List has changed, update
+  if (a.contents?.length !== b.contents?.length) return true; // different number of reagents, update
+  for (const i in a) {
+    if (reagentCheck(a[i], b[i])) return true; // one of the reagents has changed, update
+  }
+  return false;
+};
+
+ReagentGraph.defaultHooks = {
+  onComponentShouldUpdate: (lastProps: ReagentInfoProps, nextProps: ReagentInfoProps) => {
+    return containerCheck(lastProps.container, nextProps.container);
+  },
+};
+
+ReagentList.defaultHooks = {
+  onComponentShouldUpdate: (lastProps: ReagentInfoProps, nextProps: ReagentInfoProps) => {
+    return containerCheck(lastProps.container, nextProps.container);
+  },
+};
