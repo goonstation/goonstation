@@ -1,5 +1,10 @@
 
 (t)sat apr 16 22
+(u)glowbold
+(p)7853
+(e)🆕🎨|feature, sprites
+(*)Bathtubs now apply reagents to occupants as turf fluid puddles would - but you can only drown while laying.
+(+)Bathtubs now have a tap, visually fill up over time, and occupants now appear under the fluid.
 (u)NightmarechaMillian
 (p)7367
 (e)🆕🎨⚖|feature, sprites, balance
