@@ -68,7 +68,7 @@ datum
 						M.HealDamage("All", 1 * mult, 1 * mult)
 						if(probmult(15))
 							boutput(H, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
-				flush(M, mult, 5, flushed_reagents)
+				flush(M,5 * mult, flushed_reagents)
 				..()
 				return
 
@@ -1190,7 +1190,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				flush(M, mult, 8)
+				flush(M, 8 * mult)
 				if(M.health > 10)
 					M.take_toxin_damage(2 * mult)
 				if(probmult(20))
@@ -2404,7 +2404,7 @@ datum
 					description = initial(description)
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				flush(M, mult, 1, flushed_reagents)//Tea is good for you!
+				flush(M, 1 * mult, flushed_reagents)//Tea is good for you!
 				..()
 				return
 
