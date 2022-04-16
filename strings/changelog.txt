@@ -1,5 +1,9 @@
 
 (t)fri apr 15 22
+(u)Wisemonster
+(p)8218
+(e)🆕🗺|feature, mapping
+(*)NanoTrasen has added the proper systems to Clarion to allow mule bot to function. Cargo will now have a use for that mule bot they have in storage.
 (u)Ikea
 (p)8183
 (e)|
