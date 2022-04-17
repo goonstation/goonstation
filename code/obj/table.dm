@@ -220,10 +220,10 @@
 
 			if (user.a_intent == "harm")
 				src.harm_slam(user, grabbed)
-				logTheThing("combat", user, grabbed, "slams [constructTarget(grabbed,"combat")] onto a table")
+				logTheThing("combat", user, grabbed, "slams [constructTarget(grabbed,"combat")] onto a table at [log_loc(grabbed)]")
 			else
 				src.gentle_slam(user, grabbed)
-				logTheThing("station", user, grabbed, "puts [constructTarget(grabbed,"combat")] onto a table at")
+				logTheThing("station", user, grabbed, "puts [constructTarget(grabbed,"combat")] onto a table at [log_loc(grabbed)]")
 			qdel(W)
 			return
 
