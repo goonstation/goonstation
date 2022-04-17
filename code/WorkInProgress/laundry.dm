@@ -84,15 +84,14 @@
 			for (var/obj/item/clothing/C in src.contents)
 				C.stains = null
 				C.UpdateName()
-			if (src.occupant)
-				H.clean_forensic()
-				H.delStatus("marker_painted")
 			src.cycle = POST
 			src.cycle_current = 0
 			src.visible_message("[src] lets out a happy beep!")
 			playsound(src, "sound/machines/ding.ogg", 50, 1)
 			if(src.occupant) // If someone is inside we eject immediatly so as to not keep people hostage
 				H.changeStatus("weakened", 1 SECONDS)
+				H.make_dizzy(15) //Makes you dizzy for fifteen seconds due to the spinning
+				H.change_misstep_chance(65)
 				src.open = 1
 				src.unload()
 				src.cycle = PRE
@@ -126,6 +125,8 @@
 			src.cycle = WASH
 			if (src.occupant)
 				src.visible_message("[src] clicks locked, grumps a bit and starts its washing cycle.")
+				H.clean_forensic()
+				H.delStatus("marker_painted")
 			else
 				src.visible_message("[src] clicks locked and sloshes a bit as it starts its washing cycle.")
 			playsound(src, "sound/machines/click.ogg", 50, 1)
@@ -186,23 +187,26 @@
 	src.show_window(user)
 
 /obj/submachine/laundry_machine/proc/force_into_machine(obj/item/grab/W as obj, mob/user as mob)
-	if(W?.affecting && (BOUNDS_DIST(user, src) == 0))
-		user.visible_message("<span class='alert'>[user] shoves [W.affecting] into the laundry machine and turns it on!</span>")
-		src.add_fingerprint(user)
-		logTheThing("combat", user, W.affecting, "forced [constructTarget(W.affecting,"combat")] into a laundry machine at [log_loc(src)].")
-		W.affecting.set_loc(src)
-		src.open = 0
-		src.on = 1
-		var/mob/M = W.affecting
-		src.occupant = M
-		src.update_icon()
-		if (!processing_items.Find(src))
-			processing_items.Add(src)
-		var/mob/living/L = user
+	if (src.on == 0)
+		if(W?.affecting && (BOUNDS_DIST(user, src) == 0))
+			user.visible_message("<span class='alert'>[user] shoves [W.affecting] into the laundry machine and turns it on!</span>")
+			src.add_fingerprint(user)
+			logTheThing("combat", user, W.affecting, "forced [constructTarget(W.affecting,"combat")] into a laundry machine at [log_loc(src)].")
+			W.affecting.set_loc(src)
+			src.open = 0
+			src.on = 1
+			var/mob/M = W.affecting
+			src.occupant = M
+			src.update_icon()
+			if (!processing_items.Find(src))
+				processing_items.Add(src)
+			var/mob/living/L = user
 
-		if (L.pulling == W.affecting)
-			L.remove_pulling()
-		qdel(W)
+			if (L.pulling == W.affecting)
+				L.remove_pulling()
+			qdel(W)
+	else //Prevents stuffing more than one person in at a time
+		user.visible_message("<span class='alert'>[user] tries to shove [W.affecting] into the laundry machine but it was already running.</span>")
 
 /obj/submachine/laundry_machine/proc/generate_html()
 	src.HTML = "<center><big><b>WashMan 550</b></big></center><hr><br>"
