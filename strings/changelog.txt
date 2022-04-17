@@ -1,5 +1,9 @@
 
 (t)sat apr 16 22
+(u)Bartimeus973
+(p)8197
+(e)|
+(+)Some bulky cargo orders now come as frames.
 (u)RSG250
 (p)7048
 (e)⚖|balance
