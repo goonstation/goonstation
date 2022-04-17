@@ -186,7 +186,8 @@
 		return ..()
 
 	attach(mob/living/carbon/human/attachee, mob/attacher, both_legs)
-		if (..()) // A successful attachment
+		. = ..()
+		if (.) // A successful attachment
 			if(ismob(attachee) && attachee?.bioHolder) // Whose limb is this?
 				if(isnull(src.original_holder)) // Limb never had an original owner?
 					src.original_holder = attachee // Now it does
