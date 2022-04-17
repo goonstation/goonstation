@@ -1,14 +1,16 @@
-/obj/machinery/cruiser/test
+/obj/machinery/cruiser/syndicate
 	name = "Experimental BX-1 Cruiser"
 	desc = "An experimental type of syndicate cruiser based on drone technology."
 	interior_area = /area/cruiser/syndicate
 	upper_area = /area/cruiser/syndicate/upper
+	prefab_type = /datum/mapPrefab/allocated/cruiser_syndicate
 
-/obj/machinery/cruiser/test2
+/obj/machinery/cruiser/nanotrasen
 	name = "Experimental BX-2 Cruiser"
 	desc = "An experimental type of syndicate cruiser based on drone technology."
 	interior_area = /area/cruiser/nanotrasen
 	upper_area = /area/cruiser/nanotrasen/upper
+	prefab_type = /datum/mapPrefab/allocated/cruiser_nanotrasen
 
 /obj/cruiser_shield_visual//This is dumb but required because icons and images don't animate properly as overlays AND their icon_state cannot be changed properly once added (images)
 	name = ""
@@ -92,6 +94,8 @@
 
 	var/ramming = 0 //How many ramming hits we have left.
 
+	var/datum/mapPrefab/allocated/prefab_type = null
+	var/datum/allocated_region/region
 	var/area/cruiser/interior_area //interior area to use for this cruiser
 	var/area/cruiser/upper_area // upper deck area
 	var/obj/cruiser_camera_dummy/camera //used to control camera position
@@ -106,6 +110,9 @@
 
 	var/list/pooList = list()
 	var/list/interiorViewers = list()
+
+	var/turf/entrance
+	var/turf/center
 
 	proc/internal_sound(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch)
 		playsound(source, soundin, vol, vary, extrarange, pitch)
@@ -191,24 +198,37 @@
 
 	New()
 		..()
-		if(interior_area)
-			interior_area = locate(interior_area)
-			interior_area.ship = src
-		else
-			qdel(src)
-		if(upper_area)
-			var/area/cruiser/up_area = locate(src.upper_area)
-			up_area.ship = src
+
+		var/datum/mapPrefab/allocated/prefab = get_singleton(src.prefab_type)
+		src.region = prefab.load()
+		for(var/x in 1 to src.region.width)
+			for(var/y in 1 to src.region.height)
+				var/turf/T = src.region.turf_at(x, y)
+				if(istype(T.loc, src.interior_area))
+					src.interior_area = T.loc
+					src.interior_area.ship = src
+				else if(istype(T.loc, src.upper_area))
+					src.upper_area = T.loc
+					src.upper_area.ship = src
+
+		if(!istype(interior_area))
+			CRASH("No interior area found for cruiser")
 
 		shield_obj = new(src.loc)
 		var/matrix/mtx = new
-		var/turf/center
+
 		for(var/turf/T in landmarks[LANDMARK_CRUISER_CENTER])
-			if(istype(T.loc, upper_area))
+			if(T.loc == upper_area)
 				center = T
 				break
-		for(var/turf/T in get_area_turfs(upper_area))
+		for(var/turf/T in landmarks[LANDMARK_CRUISER_ENTRANCE])
+			if(T.loc == interior_area)
+				entrance = T
+				break
+
+		for(var/turf/T in upper_area)
 			var/obj/overlay/pooObj = new
+			pooObj.mouse_opacity = FALSE
 			pooObj.screen_loc = "CENTER,CENTER"
 			mtx.Reset()
 			mtx.Translate( (T.x - center.x) * world.icon_size, (T.y - center.y) * world.icon_size)
@@ -239,9 +259,17 @@
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 
+		landmarks[LANDMARK_CRUISER_CENTER] -= src.center
+		landmarks[LANDMARK_CRUISER_ENTRANCE] -= src.entrance
+
+		src.region.move_movables_to(src.loc)
+		src.region.clean_up(/turf/space, /turf/space)
+
+		qdel(src.region)
+
 		qdel(camera)
-		if(interior_area)
-			interior_area = null
+		interior_area = null
+		upper_area = null
 		..()
 
 	attack_hand(mob/user as mob)
@@ -664,6 +692,8 @@
 		if(interior_area)
 			for(var/obj/machinery/cruiser_status_panel/S in interior_area)
 				S.setValues(percent_health, percent_shields, percent_power)
+			for(var/obj/machinery/cruiser_status_panel/S in upper_area)
+				S.setValues(percent_health, percent_shields, percent_power)
 		return
 
 	proc/receiveMovement(var/direction)
@@ -775,11 +805,6 @@
 
 	proc/enterShip(atom/movable/O as obj, mob/user as mob)
 		if(!interior_area || O == src) return
-		var/turf/entrance
-		for(var/turf/T in landmarks[LANDMARK_CRUISER_ENTRANCE])
-			if(T.loc == interior_area)
-				entrance = T
-				break
 
 		if(entrance)
 			if(BOUNDS_DIST(O, getExitLoc()) == 0)
@@ -1393,6 +1418,10 @@
 
 /obj/ladder/cruiser
 	id = "cruiser"
+
+	New()
+		..()
+		src.update_id("[src.id][src.x][src.z][world.time]")
 
 	climb(mob/user as mob)
 		..()
