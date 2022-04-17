@@ -1,5 +1,9 @@
 
 (t)sat apr 16 22
+(u)Kubius
+(p)8193
+(e)🆕|feature
+(*)QM requisitions have received a buff / balancing pass, and a new civilian contract variant.
 (u)Bartimeus973
 (p)8197
 (e)|
