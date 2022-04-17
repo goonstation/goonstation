@@ -259,6 +259,9 @@
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 
+		qdel(src.shield_obj)
+		src.shield_obj = null
+
 		landmarks[LANDMARK_CRUISER_CENTER] -= src.center
 		landmarks[LANDMARK_CRUISER_ENTRANCE] -= src.entrance
 
