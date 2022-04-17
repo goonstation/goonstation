@@ -31,7 +31,9 @@ var/datum/station_zlevel_repair/station_repair = new
 				if(src.weather_img)
 					T.UpdateOverlays(src.weather_img, "weather")
 				if(src.weather_effect)
-					new src.weather_effect(T)
+					var/obj/effects/E = locate(src.weather_effect) in T
+					if(!E)
+						new src.weather_effect(T)
 
 	proc/clean_up_station_level(replace_with_cars, add_sub)
 		mass_driver_fixup()
