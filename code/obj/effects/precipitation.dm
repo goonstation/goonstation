@@ -86,6 +86,7 @@ particles/rain
 			LAGCHECK(LAG_REALTIME)
 
 	proc/cross_check(atom/A)
+		if(isintangible(A)) return
 		if(prob(probability) && !ON_COOLDOWN(A, "precipitation_cd_\ref[src]", src.cooldown))
 			if(src.reagents.total_volume)
 				var/datum/reagents/R = new
