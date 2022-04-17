@@ -1,3 +1,6 @@
+(t)sun apr 17 22
+(u)yellow
+(*)Create Command Alert verb now allows you to input a custom origin to the alert. Leaving it blank will set it to Central Command Update
 (t)sun apr 10 22
 (u)Azrun
 (*)New precipitation build mode.
