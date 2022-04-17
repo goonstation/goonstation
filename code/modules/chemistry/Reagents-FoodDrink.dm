@@ -51,6 +51,7 @@ datum
 			thirst_value = 0.6
 			bladder_value = -0.2
 			viscosity = 0.3
+			var/list/flushed_reagents = list("capsaicin")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
@@ -67,8 +68,7 @@ datum
 						M.HealDamage("All", 1 * mult, 1 * mult)
 						if(probmult(15))
 							boutput(H, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
-				if (M.reagents.has_reagent("capsaicin"))
-					M.reagents.remove_reagent("capsaicin", 5 * mult)
+				flush(M,5 * mult, flushed_reagents)
 				..()
 				return
 
@@ -1186,9 +1186,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				for(var/reagent_id in M.reagents.reagent_list)
-					if(reagent_id != id)
-						M.reagents.remove_reagent(reagent_id, 8 * mult)
+				flush(M, 8 * mult)
 				if(M.health > 10)
 					M.take_toxin_damage(2 * mult)
 				if(probmult(20))
@@ -2388,6 +2386,7 @@ datum
 			addiction_prob2 = 1
 			addiction_min = 10
 			minimum_reaction_temperature = -INFINITY
+			var/list/flushed_reagents = list("toxin","toxic_slurry")
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if (exposed_temperature <= T0C + 7)
@@ -2401,10 +2400,7 @@ datum
 					description = initial(description)
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if (holder.has_reagent("toxin")) //Tea is good for you!!
-					holder.remove_reagent("toxin", 1 * mult)
-				if (holder.has_reagent("toxic_slurry"))
-					holder.remove_reagent("toxic_slurry", 1 * mult)
+				flush(M, 1 * mult, flushed_reagents)//Tea is good for you!
 				..()
 				return
 

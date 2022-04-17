@@ -56,6 +56,34 @@ particles/rain
 		LAZYLISTINIT(effects)
 		if(start)
 			propogate_controller(get_turf(start), start.type)
+		START_TRACKING
+
+	disposing()
+		for(var/obj/effects/precipitation/P in effects )
+			qdel(P)
+		if (!isnull(reagents))
+			qdel(reagents)
+			reagents = null
+		STOP_TRACKING
+		..()
+
+	proc/process()
+		if(!src.reagents.total_volume) return
+		var/datum/reagents/R = new
+		for(var/obj/effects/precipitation/P in effects)
+			var/turf/T = P.loc
+			for(var/atom/movable/AM in T)
+				if(!(AM.event_handler_flags & USE_FLUID_ENTER)) continue
+
+				if(!ON_COOLDOWN(AM, "precipitation_cd_\ref[src]", src.cooldown))
+					src.reagents.copy_to(R)
+					R.reaction(AM, TOUCH)
+				if(max_pool_depth && !ON_COOLDOWN(T, "precipitation_cd_\ref[src]", src.cooldown))
+					if(T.active_liquid?.group.amt_per_tile > max_pool_depth)
+						continue
+					src.reagents.copy_to(R)
+					R.reaction(T, TOUCH)
+			LAGCHECK(LAG_REALTIME)
 
 	proc/cross_check(atom/A)
 		if(prob(probability) && !ON_COOLDOWN(A, "precipitation_cd_\ref[src]", src.cooldown))
@@ -119,14 +147,6 @@ particles/rain
 		for(var/obj/effects/precipitation/P in effects)
 			qdel(P)
 		lock_deletion = FALSE
-
-	disposing()
-		for(var/obj/effects/precipitation/P in effects )
-			qdel(P)
-		if (!isnull(reagents))
-			qdel(reagents)
-			reagents = null
-		..()
 
 	proc/update()
 		if(shared_particle)

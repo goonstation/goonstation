@@ -2975,14 +2975,12 @@ datum
 			transparency = 170
 			hygiene_value = 0.3
 			thirst_value = -0.098
+			var/list/flushed_reagents = list("THC","CBD")
 
 			on_mob_life(var/mob/M, var/mult = 1) // cogwerks note. making atrazine toxic
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(2 * mult)
-				if(holder.has_reagent("THC"))
-					holder.remove_reagent("THC", 1)
-				if(holder.has_reagent("CBD"))
-					holder.remove_reagent("CBD", 1)
+				flush(M, 2 * mult, flushed_reagents)
 				..()
 				return
 
