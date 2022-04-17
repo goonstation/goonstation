@@ -509,8 +509,8 @@
 			boutput(user, "<span class='notice'>You flatten the [src] into a long sheet.</span>")
 			if (prob(25))
 				JOB_XP(user, "Chef", 1)
-			var/obj/item/reagent_containers/food/snacks/ingredient/dough/D = new /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/sheet(W.loc)
-			user.put_in_hand_or_drop(D)
+			var/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/noodles = new /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/sheet(W.loc)
+			user.put_in_hand_or_drop(noodles)
 			qdel(src)
 		else ..()
 
