@@ -138,7 +138,7 @@
 			else
 				M = T
 		else
-			boutput(holder.owner, "<span class='alert'>Absorbing [src] does not satisfy your ethereal taste.</span>")
+			boutput(holder.owner, "<span class='alert'>Absorbing [T] does not satisfy your ethereal taste.</span>")
 			return 1
 
 		if (!M && !error)
@@ -147,44 +147,80 @@
 		if (!M && error)
 			boutput(holder.owner, "<span class='alert'>[pick("This body is too decrepit to be of any use.", "This corpse has already been run through the wringer.", "There's nothing useful left.", "This corpse is worthless now.")]</span>")
 			return 1
+
+		actions.start(new/datum/action/bar/icon/absorb_corpse(M,src), M)
 		logTheThing("combat", usr, null, "absorbs the corpse of [key_name(M)] as a wraith.")
-
-		//Make the corpse all grody and skeleton-y
-		M.decomp_stage = 4
-		if (M.organHolder && M.organHolder.brain)
-			qdel(M.organHolder.brain)
-		M.set_face_icon_dirty()
-		M.set_body_icon_dirty()
-		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(M.x, M.y, M.z)))
-
-		holder.regenRate *= 2.0
-		holder.owner:onAbsorb(M)
-		//Messages for everyone!
-		boutput(holder.owner, "<span class='alert'><strong>[pick("You draw the essence of death out of [M]'s corpse!", "You drain the last scraps of life out of [M]'s corpse!")]</strong></span>")
-		playsound(M, "sound/voice/wraith/wraithsoulsucc[rand(1, 2)].ogg", 60, 0)
-		for (var/mob/living/V in viewers(7, holder.owner))
-			boutput(V, "<span class='alert'><strong>[pick("Black smoke rises from [M]'s corpse! Freaky!", "[M]'s corpse suddenly rots to nothing but bone in moments!")]</strong></span>")
-
-
 		return 0
-
 
 	doCooldown()         //This makes it so wraith early game is much faster but hits a wall of high absorb cooldowns after ~5 corpses
 		if (!holder)	 //so wraiths don't hit scientific notation rates of regen without playing perfectly for a million years
-			return
+			return		 //Edit: corpsecount is now added in absorb_corpse. - Josephin
 		var/datum/abilityHolder/wraith/W = holder
 		if (istype(W))
 			if (W.corpsecount == 0)
 				cooldown = 45 SECONDS
-				W.corpsecount += 1
 			else
 				cooldown += W.corpsecount * 150
-				W.corpsecount += 1
 		last_cast = world.time + cooldown
 		holder.updateButtons()
 		SPAWN(cooldown + 5)
 			holder.updateButtons()
 
+/datum/action/bar/icon/absorb_corpse
+	duration = 10 SECONDS
+	interrupt_flags = INTERRUPT_ACT | INTERRUPT_ACTION | INTERRUPT_MOVE
+	id = "wraith_absorbCorpse"
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "wraith"
+	var/mob/living/carbon/human/M
+	var/datum/targetable/wraithAbility/absorbCorpse/absorb
+
+	New(U, wraith)
+		M = U
+		absorb = wraith
+		..()
+
+
+	onUpdate()
+		..()
+		var/datum/abilityHolder/W = absorb.holder
+		if(W == null || M == null)
+			interrupt(INTERRUPT_ALWAYS)
+			boutput(W, __red("Your attempt to draw essence from the corpse was interrupted!"))
+			return
+
+	onStart()
+		..()
+		var/datum/abilityHolder/W = absorb.holder
+		if(W == null || M == null)
+			interrupt(INTERRUPT_ALWAYS)
+			boutput(W, __red("Your attempt to draw essence from the corpse was interrupted!"))
+			return
+		boutput(W, __red("You start sucking the essence out of [M]'s corpse!"))
+		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 12, locate(M.x, M.y, M.z)))
+		for (var/mob/living/V in viewers(7, W.owner))
+			boutput(V, "Black smoke rises from [M]'s corpse! Freaky!")
+
+
+	onEnd()
+		..()
+		var/datum/abilityHolder/wraithHolder = absorb.holder
+		M.decomp_stage = 4
+		if (M.organHolder && M.organHolder.brain)
+			qdel(M.organHolder.brain)
+		M.set_face_icon_dirty()
+		M.set_body_icon_dirty()
+
+		wraithHolder.regenRate *= 2.0
+		wraithHolder.owner:onAbsorb(M)
+		//Messages for everyone!
+		boutput(wraithHolder.owner, "<span class='alert'><strong>[pick("You draw the essence of death out of [M]'s corpse!", "You drain the last scraps of life out of [M]'s corpse!")]</strong></span>")
+		playsound(M, "sound/voice/wraith/wraithsoulsucc[rand(1, 2)].ogg", 60, 0)
+		for (var/mob/living/V in viewers(7, wraithHolder.owner))
+			boutput(V, "[M]'s corpse suddenly rots to nothing but bone!")
+		var/datum/abilityHolder/wraith/wraithCorpse = absorb.holder
+		wraithCorpse.corpsecount += 1
+		return
 
 /datum/targetable/wraithAbility/possessObject
 	name = "Possess Object"
@@ -213,7 +249,7 @@
 		SPAWN(45 SECONDS)
 			if (O)
 				boutput(O, "<span class='alert'>You feel your control of this vessel slipping away!</span>")
-		SPAWN(60 SECONDS) //time limit on possession: 1 minute
+		SPAWN(60 SECONDS) //time limit on poss/datum/targetable/wraithAbility/proc/absorbCorpseession: 1 minute
 			if (O)
 				boutput(O, "<span class='alert'><strong>Your control is wrested away! The item is no longer yours.</strong></span>")
 				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithleaveobject.ogg", 50, 0)
