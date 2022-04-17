@@ -253,7 +253,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			LAGCHECK(LAG_LOW)
 			var/datum/powernet/PN = E.get_direct_powernet()
 			if(PN?.avail <= 0)
-				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning")
+				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning", alert_origin = ALERT_STATION)
 			break
 
 	for(var/turf/T in job_start_locations["AI"])
