@@ -163,6 +163,7 @@ particles/rain
 obj/effects/precipitation
 	anchored = 2
 	var/datum/precipitation_controller/PC
+	event_handler_flags = 0
 
 	Crossed(var/atom/A)
 		..()
