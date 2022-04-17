@@ -1,5 +1,29 @@
 
 (t)sat apr 16 22
+(u)RSG250
+(p)7048
+(e)⚖|balance
+(+)Buffed Matsci shoes and Cleats Kick bonus. Cleats are now stronger than cow feet. FOOTBALL.
+(u)UrsulaMajor
+(e)🐛|bug
+(+)Martian Psychics will properly gib you again.
+(u)BatElite
+(p)8029
+(e)🆕|feature
+(+)EMPs now delete some of a cloner's records.
+(u)glowbold
+(p)7853
+(e)🆕🎨|feature, sprites
+(*)Bathtubs now apply reagents to occupants as turf fluid puddles would - but you can only drown while laying.
+(+)Bathtubs now have a tap, visually fill up over time, and occupants now appear under the fluid.
+(u)NightmarechaMillian
+(p)7367
+(e)🆕🎨⚖|feature, sprites, balance
+(*)Matsci spacesuits have been given a massive facelift and their properties have been heavily reworked. See minor changes for a full list of how this is determined.
+(+)Helmet melee protection is based off the density of the visor's crystal
+(+)Suit bullet protection is based off the density of the fabric's material
+(+)Suit melee protection is based off the density of the reinforcement's material starting at -2, but cannot go above -6 damage
+(+)Suit movespeed is dependent on the reinforcement's density, but cannot exceed the range of 0.3-0.7
 (u)Flourish
 (e)🆕|feature
 (+)You can now make dog biscuits; granola bar + meat paste + peanut butter, 6 seconds on low in the oven.
