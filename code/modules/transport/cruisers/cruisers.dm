@@ -196,6 +196,9 @@
 			interior_area.ship = src
 		else
 			qdel(src)
+		if(upper_area)
+			var/area/cruiser/up_area = locate(src.upper_area)
+			up_area.ship = src
 
 		shield_obj = new(src.loc)
 		var/matrix/mtx = new
@@ -1390,24 +1393,16 @@
 
 /obj/ladder/cruiser
 	id = "cruiser"
-	var/obj/machinery/cruiser/ship
-
-	New()
-		..()
-		var/area/cruiser/A = get_area(src)
-		if (istype(A, /area/cruiser))
-			ship = A.ship
-		else
-			qdel(src)
 
 	climb(mob/user as mob)
 		..()
+		var/area/cruiser/ar = get_area(src)
 		if (src.icon_state == "ladder") // going down to lower deck
-			ship.unsubscribe_interior(user)
-			user.set_eye(user)
+			ar.ship.unsubscribe_interior(user)
+			user.set_eye(null)
 		else // going up to upper deck
-			ship.subscribe_interior(user)
-			user.set_eye(ship)
+			ar.ship.subscribe_interior(user)
+			user.set_eye(ar.ship)
 
 /obj/ladder/cruiser/syndicate
 	id = "cruiser_syndicate"
