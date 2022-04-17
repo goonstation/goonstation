@@ -1725,7 +1725,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\procs\bug_report.dm"
 #include "code\procs\church_name.dm"
 #include "code\procs\command_alert.dm"
-#include "code\procs\command_name.dm"
 #include "code\procs\computer_id.dm"
 #include "code\procs\crew_credits.dm"
 #include "code\procs\currency_name.dm"
