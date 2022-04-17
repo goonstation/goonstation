@@ -487,6 +487,7 @@ datum
 
 			reaction_obj(var/obj/O, var/volume)
 				if (volume < 5 || istype(O, /obj/critter) || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility) return
+				return_if_overlay_or_effect()
 				O.visible_message("<span class='alert'>The [O] comes to life!</span>")
 				var/obj/critter/livingobj/L = new/obj/critter/livingobj(O.loc)
 				O.set_loc(L)
