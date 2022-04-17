@@ -148,8 +148,7 @@
 			boutput(holder.owner, "<span class='alert'>[pick("This body is too decrepit to be of any use.", "This corpse has already been run through the wringer.", "There's nothing useful left.", "This corpse is worthless now.")]</span>")
 			return 1
 
-		actions.start(new/datum/action/bar/icon/absorb_corpse(M,src), M)
-		logTheThing("combat", usr, null, "absorbs the corpse of [key_name(M)] as a wraith.")
+		actions.start(new/datum/action/bar/private/icon/absorb_corpse(M,src), M)
 		return 0
 
 	doCooldown()         //This makes it so wraith early game is much faster but hits a wall of high absorb cooldowns after ~5 corpses
@@ -166,7 +165,7 @@
 		SPAWN(cooldown + 5)
 			holder.updateButtons()
 
-/datum/action/bar/icon/absorb_corpse
+/datum/action/bar/private/icon/absorb_corpse
 	duration = 10 SECONDS
 	interrupt_flags = INTERRUPT_ACT | INTERRUPT_ACTION | INTERRUPT_MOVE
 	id = "wraith_absorbCorpse"
@@ -205,6 +204,7 @@
 	onEnd()
 		..()
 		var/datum/abilityHolder/wraithHolder = absorb.holder
+		logTheThing("combat", src, null, "absorbs the corpse of [key_name(M)] as a wraith.")
 		M.decomp_stage = 4
 		if (M.organHolder && M.organHolder.brain)
 			qdel(M.organHolder.brain)
