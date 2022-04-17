@@ -1,5 +1,9 @@
 
 (t)sat apr 16 22
+(u)Yellow/Myco
+(p)8168
+(e)|
+(*)Adds names to where the announcements for anomalies/weather events/command updates are coming from.
 (u)Kubius
 (p)8193
 (e)🆕|feature
