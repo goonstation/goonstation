@@ -83,7 +83,7 @@
 		if (istype(W, /obj/item/reagent_containers/pill))
 			user.u_equip(W)
 			W.set_loc(src)
-			W.dropped()
+			W.dropped(user)
 			boutput(user, "<span class='notice'>You put [W] in [src].</span>")
 			rebuild_desc()
 		else ..()
@@ -136,7 +136,7 @@
 			if (P in user)
 				continue
 			P.set_loc(src)
-			P.dropped()
+			P.dropped(user)
 			src.rebuild_desc()
 			sleep(0.2 SECONDS)
 			if (user.loc != staystill)

@@ -384,7 +384,7 @@
 				SPAWN(1 SECOND)
 					src.emote_allowed = 1
 		else
-			src.show_text("Invalid Emote: [act]")
+			if (voluntary) src.show_text("Invalid Emote: [act]")
 			return
 
 	if ((message && isalive(src)))
@@ -1026,7 +1026,7 @@ Frequency:
 		if (istype(aiMainframe))
 			aiMainframe.show_laws(0, src)
 		else
-			ticker.centralized_ai_laws.show_laws(src)
+			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
 
 		return
 

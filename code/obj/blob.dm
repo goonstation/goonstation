@@ -551,7 +551,7 @@
 		if (overmind != user)
 			return
 		if (isitem(O))
-			if (get_dist(O, src) > 1)
+			if (BOUNDS_DIST(O, src) > 0)
 				return
 			var/datum/blob_ability/devour_item/D = overmind.get_ability(/datum/blob_ability/devour_item)
 			if (D)
@@ -1120,8 +1120,8 @@
 	gen_rate_value = 0
 	can_absorb = 0
 	opacity = 1
-	health = 85
-	health_max = 85
+	health = 40
+	health_max = 40
 	gas_impermeable = TRUE
 
 	bullet_act(var/obj/projectile/P)
@@ -1312,6 +1312,8 @@
 	armor = 1
 	can_absorb = 0
 	gas_impermeable = TRUE
+	health = 40
+	health_max = 40
 
 	take_damage(amount, mult, damtype, mob/user)
 		if (damtype == "burn")

@@ -945,8 +945,8 @@ proc/Create_Tommyname()
 /obj/item/garrote/try_grab(var/mob/living/target, var/mob/living/assailant)
 	if(..())
 		assailant.visible_message("<span class='combat bold'>[assailant] wraps \the [src] around [target]'s neck!</span>")
-		chokehold.state = GRAB_NECK
-		chokehold.upgrade_to_kill()
+		chokehold.state = GRAB_AGGRESSIVE
+		chokehold.upgrade_to_choke()
 		update_state()
 
 // Drop the grab
@@ -1029,7 +1029,7 @@ proc/Create_Tommyname()
 
 	proc/check_conditions()
 		. = 0
-		if(get_dist(owner, target) > 1 || !target || !owner || !the_garrote || !the_garrote.wire_readied)
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || !the_garrote || !the_garrote.wire_readied)
 			interrupt(INTERRUPT_ALWAYS)
 			. = 1
 
@@ -1061,7 +1061,7 @@ proc/Create_Tommyname()
 			qdel(src)
 			return 1
 
-		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && get_dist(assailant, affecting) > 1) )
+		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && BOUNDS_DIST(assailant, affecting) > 0) )
 			qdel(src)
 			return 1
 

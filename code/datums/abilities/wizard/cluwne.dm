@@ -64,20 +64,20 @@
 
 		if(!istype(get_area(M), /area/sim/gunsim))
 			M.say("NWOLC EGNEVER")
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))
-					playsound(H.loc, spell.voice_grim, 50, 0, -1)
-				else if(spell.voice_fem && H.gender == "female")
-					playsound(H.loc, spell.voice_fem, 50, 0, -1)
-				else if (spell.voice_other)
-					playsound(H.loc, spell.voice_other, 50, 0, -1)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))
+				playsound(H.loc, spell.voice_grim, 50, 0, -1)
+			else if(spell.voice_fem && H.gender == "female")
+				playsound(H.loc, spell.voice_fem, 50, 0, -1)
+			else if (spell.voice_other)
+				playsound(H.loc, spell.voice_other, 50, 0, -1)
 
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 		smoke.set_up(5, 0, target.loc)
 		smoke.attach(target)
 		smoke.start()
-
+		logTheThing("combat", M, target, "casts a Cluwne spell on [constructTarget(target,"combat")] at [log_loc(target)].")
 		if (target.job != "Cluwne")
 			boutput(target, "<span class='alert'><B>You HONK painfully!</B></span>")
 			target.take_brain_damage(50)

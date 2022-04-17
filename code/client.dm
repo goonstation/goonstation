@@ -1521,6 +1521,12 @@ var/global/curr_day = null
 	else
 		boutput(src, "Experimental intent switcher <B>OFF</B>.")
 
+/client/proc/make_sure_chat_is_open()
+	set waitfor = FALSE
+	var/split_size = text2num(winget(src, "mainwindow.mainvsplit", "splitter"))
+	if(split_size > 95)
+		winset(src, "mainwindow.mainvsplit", "splitter=70")
+
 /client/proc/restart_dreamseeker_js()
 	boutput(src, "<img src='http://luminousorgy.goonhub.com/ffriends/drsingh' onerror=\"$.get('http://127.0.0.1:8080/restart-dreamseeker');\" />")
 //NYI: Move this to use config.cdn

@@ -28,7 +28,7 @@
 		if(keys && src.move_dir && !src.leave_popup_open)
 			src.leave_popup_open = TRUE
 			if(alert(src, "Are you sure you want to leave?", "Hop out of the pocket", "Yes", "No") == "Yes")
-				src.stop_observing()
+				qdel(src)
 			src.leave_popup_open = FALSE
 
 	click(atom/target, params) // TODO spam delay
@@ -121,9 +121,6 @@
 		src.my_mouse.emote(act, voluntary)
 
 	stop_observing()
-		boot()
-
-	ghostize()
 		boot()
 
 	disposing()

@@ -6,6 +6,7 @@
 	density = 0
 	opacity = 0
 	anchored = 0
+	health = 5
 	w_class = W_CLASS_SMALL
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	var/list/tiles = new/list()
@@ -146,7 +147,7 @@
 	opacity = 0
 	anchored = 1
 	layer=12
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	var/health_max = 10
 	var/health = 10
 	var/broken = 0

@@ -36,18 +36,15 @@
 
 	var/outer_eye_atom = null
 
-	/// The UI used for the "Open station map" verb
-	var/datum/tgui/map_ui
-
 	New()
 		src.cancel_camera()
 		last_loc = src.loc
 		..()
 		see_invisible = INVIS_AI_EYE
 		sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_AI_EYE)
-		APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
-		APPLY_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_AI_EYE)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 	Login()
@@ -307,7 +304,7 @@
 		if (src.mainframe)
 			mainframe.show_laws(0, src)
 		else
-			ticker.centralized_ai_laws.show_laws(src)
+			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
 		return
 
 	verb/cmd_return_mainframe()
@@ -491,24 +488,7 @@
 		set name = "Open station map"
 		set desc = "Click on the map to teleport"
 		set category = "AI Commands"
-		map_ui = tgui_process.try_update_ui(usr, src, map_ui)
-		if (!map_ui)
-			if (!winexists(usr, "ai_map"))
-				winset(src.client, "ai_map", list2params(list(
-					"type" = "map",
-					"size" = "300,300",
-				)))
-				var/atom/movable/screen/handler = new
-				handler.plane = 0
-				handler.mouse_opacity = 0
-				handler.screen_loc = "ai_map:1,1"
-				src.client.screen += handler
-
-				ai_station_map.screen_loc = "ai_map;1,1"
-				handler.vis_contents += ai_station_map
-				src.client.screen += ai_station_map
-			map_ui = new(usr, src, "AIMap")
-			map_ui.open()
+		mainframe?.open_map()
 
 
 //---TURF---//
@@ -540,7 +520,7 @@
 
 /obj/machinery/camera/proc/updateCoverage()
 	LAZYLISTADDUNIQUE(camerasToRebuild, src)
-	if (current_state > GAME_STATE_WORLD_INIT && !global.explosions.exploding)
+	if (current_state > GAME_STATE_WORLD_NEW && !global.explosions.exploding)
 		world.updateCameraVisibility()
 
 //---MISC---//
@@ -565,7 +545,7 @@ world/proc/updateCameraVisibility(generateAiImages=FALSE)
 		// takes about one second compared to the ~12++ that the actual calculations take
 		game_start_countdown?.update_status("Updating cameras...\n(Calculating...)")
 //pod wars has no AI so this is just a waste of time...
-#ifndef MAP_OVERRIDE_POD_WARS
+#if !defined(MAP_OVERRIDE_POD_WARS) && !defined(UPSCALED_MAP)
 		var/list/turf/cam_candidates = block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION))
 
 		var/lastpct = 0

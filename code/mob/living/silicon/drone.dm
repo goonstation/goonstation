@@ -194,7 +194,7 @@
 
 			target.Attackby(equipped, src)
 			if (equipped)
-				equipped.afterattack(target, src, reach)
+				equipped.AfterAttack(target, src, reach)
 
 			if (src.lastattacked == target && use_delay) //If lastattacked was set, this must be a combat action!! Use combat click delay.
 				src.next_click = world.time + (equipped ? max(equipped.click_delay,src.combat_click_delay) : src.combat_click_delay)
@@ -443,7 +443,8 @@
 		else if(istype(W, /obj/item/cable_coil) && construct_stage == 2)
 			var/obj/item/cable_coil/C = W
 			src.visible_message("<b>[user]</b> adds [C] to [src].")
-			cable_type = C.take(1, src)
+			cable_type = C.split_stack(1)
+			cable_type.set_loc(src)
 			change_stage(3)
 
 		else if(istype(W, /obj/item/device/radio) && construct_stage == 3)

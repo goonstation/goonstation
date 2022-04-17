@@ -245,8 +245,12 @@ var/datum/score_tracker/score_tracker
 					most_damaged_escapee = M
 
 				var/cash_total = get_cash_in_thing(M)
-				if (richest_total < cash_total)
-					richest_total = cash_total
+				var/bank_account = data_core.bank.find_record("name", M.real_name)
+				var/bank_total = 0
+				if(bank_account)
+					bank_total = bank_account["current_money"]
+				if (richest_total < (cash_total + bank_total))
+					richest_total = cash_total + bank_total
 					richest_escapee = M
 
 		command_pets_escaped = list()

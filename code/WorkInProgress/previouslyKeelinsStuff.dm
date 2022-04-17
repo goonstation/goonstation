@@ -441,6 +441,7 @@ var/reverse_mode = 0
 									boutput(user, "<span class='alert'>The relic explodes violently!</span>")
 									var/obj/effects/explosion/E = new/obj/effects/explosion( get_turf(src) )
 									E.fingerprintslast = src.fingerprintslast
+									logTheThing("user", user, null, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
 									user:gib()
 									qdel(src)
 								if (4)
@@ -448,6 +449,7 @@ var/reverse_mode = 0
 									using = 1
 									harmless_smoke_puff( get_turf(src) )
 									playsound(user, "sound/effects/ghost2.ogg", 60, 0)
+									logTheThing("user", user, null, "was killed by [src] ([src.type]) at [log_loc(user)].")
 									user.flash(60)
 									var/mob/oldmob = user
 									oldmob.ghostize()
@@ -473,76 +475,6 @@ var/reverse_mode = 0
 			elecflash(src)
 		SPAWN(rand(10,300))
 			src.sparks()
-
-/proc/set_on_all()
-	var/type = input(usr, "Typepath:")
-	type = text2path(type)
-	if (!type) return
-
-	var/varname = input(usr, "Varname:")
-	var/thetype = input(usr,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference","icon","random-number","random-color")
-	if (!thetype) return
-
-	var/thevalue = null
-	var/minrnd = null
-	var/maxrnd = null
-	var/is_icon = 0
-	switch(thetype)
-		if ("text")
-			thevalue = input(usr,"Enter variable value:" ,"Value", "value") as text
-		if ("number")
-			thevalue = input(usr,"Enter variable value:" ,"Value", 123) as num
-		if ("mob-reference")
-			thevalue = input(usr,"Enter variable value:" ,"Value") as mob in world
-		if ("obj-reference")
-			thevalue = input(usr,"Enter variable value:" ,"Value") as obj in world
-		if ("turf-reference")
-			thevalue = input(usr,"Enter variable value:" ,"Value") as turf in world
-		if ("icon")
-			thevalue = input(usr,"Select icon:" ,"Value") as icon
-			is_icon = 1
-		if ("random-number")
-			minrnd = input(usr,"Min:" ,"Value", 0) as num
-			maxrnd = input(usr,"Max:" ,"Value", 0) as num
-			thevalue = 1
-		if ("random-color")
-			thevalue = rgb(rand(0,255),rand(0,255),rand(0,255))
-
-	if (thevalue == null && !is_icon) return
-
-	var/oldVal = null
-
-	if (ispath(type, /client))
-		for(var/client/C in clients)
-			if (minrnd != null || maxrnd != null)
-				C.vars[varname] = rand(minrnd,maxrnd)
-			else
-				C.vars[varname] = thevalue
-		return
-
-	for(var/datum/A in world)
-		LAGCHECK(LAG_LOW)
-		if (!istype(A,type)) continue
-		oldVal = A.vars[varname]
-		if (minrnd != null || maxrnd != null)
-			A.vars[varname] = rand(minrnd,maxrnd)
-		else
-			A.vars[varname] = thevalue
-		A.onVarChanged(varname, oldVal, A.vars[varname])
-		if (thetype == "random-color")
-			thevalue = rgb(rand(0,255),rand(0,255),rand(0,255))
-		sleep(0.1 SECONDS)
-/*
-	if (minrnd != null || maxrnd != null)
-		logTheThing("admin", usr, null, "randomized all [type]s [varname] from [minrnd] to [maxrnd].")
-		logTheThing("diary", usr, null, "randomized all [type]s [varname] from [minrnd] to [maxrnd].", "admin")
-		message_admins("[key_name(usr)] randomized all [type]s [varname] from [minrnd] to [maxrnd].")
-	else
-		logTheThing("admin", usr, null, "modified all [type]s [varname] to [thevalue].")
-		logTheThing("diary", usr, null, "modified all [type]s [varname] to [thevalue].", "admin")
-		message_admins("[key_name(usr)] modified all [type]s [varname] to [thevalue].")
-*/
-	return
 
 /proc/testa()
 	fake_attack(usr)
@@ -593,7 +525,7 @@ var/reverse_mode = 0
 	if (!my_target)
 		qdel(src)
 		return
-	if (get_dist(src,my_target) > 1)
+	if (BOUNDS_DIST(src, my_target) > 0)
 		step_towards(src,my_target)
 	else
 		if (prob(15))

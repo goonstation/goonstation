@@ -234,15 +234,16 @@
 
 			update_shipping_data()
 
+	proc/calculate_artifact_price(var/modifier, var/correctness)
+		return ((modifier**2) * 20000 * correctness)
+
 	proc/sell_artifact(obj/sell_art, var/datum/artifact/sell_art_datum)
 		var/price = 0
 		var/modifier = sell_art_datum.get_rarity_modifier()
+		var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
 
 		// calculate price
-		price = modifier*modifier * 20000
-		var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
-		if(pap?.lastAnalysis)
-			price *= pap.lastAnalysis
+		price = calculate_artifact_price(modifier, max(pap?.lastAnalysis, 1))
 		price *= randfloat(0.9, 1.3)
 		price = round(price, 5)
 
@@ -418,6 +419,7 @@
 					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="[returnmsg]")
 					pdaSignal.transmission_method = TRANSMISSION_RADIO
 					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+					return
 			if(req_contracts.Find(contract_to_clear))
 				req_contracts -= contract_to_clear
 				complete_orders += contract_to_clear
@@ -484,24 +486,6 @@
 						P.close()
 
 		shipped_thing.throw_at(target, 100, 1)
-
-	proc/clear_path_to_market()
-		var/list/turf/to_clear = get_path_to_market()
-		for(var/turf/T as anything in to_clear)
-			//Wacks asteroids and skip normal turfs that belong
-			if(istype(T, /turf/simulated/wall/asteroid))
-				var/turf/simulated/wall/asteroid/AST = T
-				AST.destroy_asteroid(dropOre=FALSE)
-				continue
-			else if(!istype(T, /turf/unsimulated))
-				continue
-
-			//Uh, make sure we don't block the shipping lanes!
-			for(var/atom/A in T)
-				if(A.density)
-					qdel(A)
-
-			LAGCHECK(LAG_MED)
 
 	proc/get_path_to_market()
 		var/list/bounds = get_area_turfs(/area/supply/delivery_point)

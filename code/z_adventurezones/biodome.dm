@@ -420,6 +420,7 @@ SYNDICATE DRONE FACTORY AREAS
 					H.unkillable = 0
 				if(!M.stat) M.emote("scream")
 				src.visible_message("<span class='alert'><B>[M]</B> falls into the [src] and melts away!</span>")
+				logTheThing("combat", M, null, "was firegibbed by [src] ([src.type]) at [log_loc(M)].")
 				M.firegib() // thanks ISN!
 		else
 			src.visible_message("<span class='alert'><B>[O]</B> falls into the [src] and melts away!</span>")
@@ -1004,7 +1005,7 @@ SYNDICATE DRONE FACTORY AREAS
 	var/datum/light/light
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(get_dist(target,user) > 1)
+		if(BOUNDS_DIST(target, user) > 0)
 			return
 		return
 

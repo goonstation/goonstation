@@ -25,19 +25,19 @@
 	on_transplant(mob/M)
 		. = ..()
 		if(!broken)
-			APPLY_MOB_PROPERTY(M, PROP_METABOLIC_RATE, src, chem_metabolism_modifier)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, src, chem_metabolism_modifier)
 
 	on_removal()
-		REMOVE_MOB_PROPERTY(src.donor, PROP_METABOLIC_RATE, src)
+		REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_METABOLIC_RATE, src)
 		. = ..()
 
 	unbreakme()
 		if(..() && donor)
-			APPLY_MOB_PROPERTY(src.donor, PROP_METABOLIC_RATE, src, chem_metabolism_modifier)
+			APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_METABOLIC_RATE, src, chem_metabolism_modifier)
 
 	breakme()
 		if(..() && donor)
-			REMOVE_MOB_PROPERTY(src.donor, PROP_METABOLIC_RATE, src)
+			REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_METABOLIC_RATE, src)
 
 	on_broken(var/mult = 1)
 		if (!holder.get_working_kidney_amt())

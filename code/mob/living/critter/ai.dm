@@ -34,6 +34,10 @@ var/list/ai_move_scheduled = list()
 			M.skipped_mobs_list |= SKIPPED_AI_MOBS_LIST
 			LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, M)
 
+		if(owner?.abilityHolder)
+			if(!owner.abilityHolder.getAbility(/datum/targetable/ai_toggle))
+				owner.abilityHolder.addAbility(/datum/targetable/ai_toggle)
+
 	disposing()
 		..()
 		stop_move()

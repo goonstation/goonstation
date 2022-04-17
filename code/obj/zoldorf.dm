@@ -393,9 +393,9 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 				user << output(list2params(list("add",null,null,weapon.amount)),"Zoldorf.browser:updatecredits")
 			updateui(user)
 			weapon.amount = 0
-			usr.visible_message("<span class='notice'><b>[src.name] magically vacuums up [user.name]'s credits!</b></span>","<span class='notice'><b>Poof! The great [src.name] has made your credits disappear! Just kidding they're in the booth.</b></span>")
-			usr.u_equip(weapon)
-			weapon.dropped()
+			user.visible_message("<span class='notice'><b>[src.name] magically vacuums up [user.name]'s credits!</b></span>","<span class='notice'><b>Poof! The great [src.name] has made your credits disappear! Just kidding they're in the booth.</b></span>")
+			user.u_equip(weapon)
+			weapon.dropped(user)
 			qdel(weapon)
 
 		else if(istype(weapon, /obj/item/zolscroll)) //handling handing of contracts to begin the usurping process

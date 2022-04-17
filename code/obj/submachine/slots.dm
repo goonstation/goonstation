@@ -132,23 +132,23 @@
 		else
 			var/obj/item/card/id/idcard = I
 			boutput(user, "<span class='notice'>You insert your ID card.</span>")
-			usr.drop_item()
+			user.drop_item()
 			I.set_loc(src)
 			if(!idcard.registered)
-				boutput(usr, "<span class='alert'>No account data found!</span>")
-				usr.put_in_hand_or_eject(I)
+				boutput(user, "<span class='alert'>No account data found!</span>")
+				user.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
 			var/enterpin = user.enter_pin("Enter PIN")
 			if (enterpin != idcard.pin)
 				boutput(user, "<span class='alert'>Pin number incorrect.</span>")
-				usr.put_in_hand_or_eject(I)
+				user.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
 			src.accessed_record = FindBankAccountByName(idcard.registered)
 			if(isnull(src.accessed_record))
 				boutput(user, "<span class='alert'>That card has no bank account associated.</span>")
-				usr.put_in_hand_or_eject(I)
+				user.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
 			boutput(user, "<span class='notice'>Card authorized.</span>")
@@ -174,12 +174,12 @@
 		win_sound = "sound/misc/airraid_loop_short.ogg"
 		exclamation = "JACKPOT! "
 		amount = 300 * wager
-		command_alert("Congratulations to [src.scan.registered] on winning a Jackpot of [amount] credits!", "Jackpot Winner")
+		command_alert("Congratulations to [src.scan.registered] on winning a Jackpot of [amount] credits!", "Jackpot Winner", alert_origin = ALERT_STATION)
 	else if (roll <= 5) //4 - 400
 		win_sound =  "sound/misc/klaxon.ogg"
 		exclamation = "Big Winner! "
 		amount = 100 * wager
-		command_alert("Congratulations to [src.scan.registered] on winning [amount] credits!", "Big Winner")
+		command_alert("Congratulations to [src.scan.registered] on winning [amount] credits!", "Big Winner", alert_origin = ALERT_STATION)
 	else if (roll <= 15) //10 - 500    (Plus additional 5 - 250 if wager <= 250)
 		win_sound =  "sound/musical_instruments/Bell_Huge_1.ogg"
 		exclamation = "Big Winner! "
@@ -229,7 +229,7 @@
 			onclose(user, "slotmachine")
 
 	Topic(href, href_list)
-		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (BOUNDS_DIST(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
@@ -322,7 +322,7 @@
 			onclose(user, "slotmachine")
 
 	Topic(href, href_list)
-		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (BOUNDS_DIST(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return

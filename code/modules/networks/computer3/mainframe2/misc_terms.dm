@@ -269,7 +269,7 @@
 				return
 
 			//Ai/cyborgs cannot physically remove a tape from a room away.
-			if(issilicon(usr) && get_dist(src, usr) > 1)
+			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 				return
 
@@ -742,7 +742,7 @@
 		if(user.lying || user.stat)
 			return 1
 
-		if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user))
+		if ((BOUNDS_DIST(src, user) > 0 || !istype(src.loc, /turf)) && !issilicon(user))
 			return 1
 
 		src.add_dialog(user)
@@ -784,7 +784,7 @@
 		if (href_list["tank"])
 
 			//Ai/cyborgs cannot physically remove a tape from a room away.
-			if(issilicon(usr) && get_dist(src, usr) > 1)
+			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 				return
 
@@ -1277,11 +1277,11 @@
 						message_admins(admessage)
 						//World announcement.
 						if(station_or_ship() == "ship")
-							command_alert("The ship's self-destruct sequence has been activated, please evacuate the ship or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated")
+							command_alert("The ship's self-destruct sequence has been activated, please evacuate the ship or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated", alert_origin = ALERT_STATION)
 							playsound_global(world, "sound/machines/engine_alert2.ogg", 40)
 							return
 						if(station_or_ship() == "station")
-							command_alert("The station's self-destruct sequence has been activated, please evacuate the station or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated")
+							command_alert("The station's self-destruct sequence has been activated, please evacuate the station or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated", alert_origin = ALERT_STATION)
 							playsound_global(world, "sound/machines/engine_alert2.ogg", 40)
 							return
 					if("deact")
@@ -1819,7 +1819,7 @@
 
 		if (href_list["unjam"])
 			if(src.jam)
-				if(get_dist(src,usr) > 1)
+				if(BOUNDS_DIST(src, usr) > 0)
 					boutput(usr, "You are too far away to unjam it.")
 					return
 				src.jam = 0
@@ -2174,7 +2174,7 @@
 		if(user.lying || user.stat)
 			return 1
 
-		if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user))
+		if ((BOUNDS_DIST(src, user) > 0 || !istype(src.loc, /turf)) && !issilicon(user))
 			return 1
 
 		src.add_dialog(user)
@@ -2228,7 +2228,7 @@
 		src.add_dialog(usr)
 
 		if (href_list["document"])
-			if(issilicon(usr) && get_dist(src, usr) > 1)
+			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, "<span class='alert'>There is no electronic control over the actual document.</span>")
 				return
 
@@ -3455,7 +3455,7 @@
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!istype(O,/obj/) || O.anchored) return
-		if (get_dist(src,O) > 1 || !isturf(O.loc)) return
+		if (BOUNDS_DIST(src, O) > 0 || !isturf(O.loc)) return
 		if (!in_interact_range(user, O) || !in_interact_range(user, src) || !isalive(user)) return
 		if (src.dragload)
 			if (src.contents.len)
@@ -3479,7 +3479,7 @@
 
 	proc/ejectContents(var/mob/unloader, var/target_location)
 		if (!istype(target_location, /turf/)) return
-		if (get_dist(src,target_location) > 1) return
+		if (BOUNDS_DIST(src, target_location) > 0) return
 		if (!in_interact_range(unloader, target_location) || !in_interact_range(unloader, src) || !isalive(unloader)) return
 		if (src.active)
 			boutput(unloader, "<span class='alert'>You can't unload it while it's active!</span>")
@@ -4812,14 +4812,14 @@
 		..()
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 0", "fire0")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", "fire1")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", "fire2")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", "fire3")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", "fire4")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", "fire5")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", "fire6")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", "fire7")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 0", .proc/fire0)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", .proc/fire1)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", .proc/fire2)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", .proc/fire3)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", .proc/fire4)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", .proc/fire5)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", .proc/fire6)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", .proc/fire7)
 
 	return_html_interface()
 		. = {"<b>INPUT STATUS</b>

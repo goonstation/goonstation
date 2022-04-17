@@ -15,7 +15,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 ///This proc handles the creation of a turf of a specific biome type
 /datum/biome/proc/generate_turf(var/turf/gen_turf)
-	gen_turf.ReplaceWith(turf_type)
+	gen_turf.ReplaceWith(turf_type, handle_dir=FALSE)
 
 	if(length(fauna_types) && prob(fauna_density))
 		var/mob/fauna = weighted_pick(fauna_types)
@@ -40,6 +40,13 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 	turf_type = /turf/unsimulated/floor/auto/sand
 	flora_types = list(/obj/stone/random = 100, /obj/decal/fakeobjects/smallrocks = 100)
 	flora_density = 1
+
+	fauna_types = list(/obj/critter/spacescorpion=15, /obj/critter/spacerattlesnake=1, /mob/living/critter/small_animal/armadillo/ai_controlled=1, /obj/critter/spacebee=5)
+	fauna_density = 0.2
+
+/datum/biome/desert/rough
+	turf_type = /turf/unsimulated/floor/auto/sand/rough
+	flora_density = 5
 
 /datum/biome/snow
 	turf_type = /turf/unsimulated/floor/auto/snow
@@ -70,17 +77,24 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 /datum/biome/jungle
 	turf_type = /turf/unsimulated/floor/auto/grass/leafy
-	flora_types = list(/obj/tree1/elm_random = 50, /obj/shrub/random = 100, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
+	flora_types = list(/obj/tree1/elm_random = 75, /obj/shrub/random = 150, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10, /obj/machinery/plantpot/bareplant/swamp_flora = 1)
 	flora_density = 40
 
 /datum/biome/jungle/deep
 	flora_density = 65
+
+	fauna_types = list(/mob/living/critter/small_animal/dragonfly/ai_controlled=50, /mob/living/critter/small_animal/firefly/lightning=2, /mob/living/critter/small_animal/firefly/pyre=1, /mob/living/critter/small_animal/firefly=10)
+	fauna_density = 0.8
 
 /datum/biome/wasteland
 	turf_type = /turf/unsimulated/greek/beach
 
 /datum/biome/water
 	turf_type = /turf/unsimulated/floor/auto/swamp
+
+/datum/biome/water/swamp
+	fauna_types = list(/mob/living/critter/small_animal/dragonfly/ai_controlled=10, /mob/living/critter/small_animal/firefly/lightning/ai_controlled=1, /mob/living/critter/small_animal/firefly/pyre/ai_controlled=1, /mob/living/critter/small_animal/firefly/ai_controlled=30)
+	fauna_density = 0.5
 
 /datum/biome/water/clear
 	turf_type = /turf/unsimulated/floor/auto/water
@@ -93,3 +107,6 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 /datum/biome/mountain
 	turf_type = /turf/simulated/wall/asteroid/mountain
+
+/datum/biome/mountain/desert
+	turf_type = /turf/simulated/wall/asteroid/mountain/desert

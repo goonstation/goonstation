@@ -117,6 +117,7 @@
 		else
 			src.icon_state = "mason_jar"
 
+	suicide_in_hand = FALSE
 	custom_suicide = TRUE
 	suicide(mob/user)
 		if(length(src.contents) > 0)
@@ -180,7 +181,7 @@ proc/generate_backup_jars()
 		else
 			tries_left--
 	tries_left = 50
-	while(length(by_type[/obj/item/reagent_containers/glass/jar]) < DEFAULT_JAR_COUNT)
+	while(length(by_type[/obj/item/reagent_containers/glass/jar]) < DEFAULT_JAR_COUNT && tries_left > 0)
 		var/turf/simulated/floor/T = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION)
 		if(istype(T))
 			new/obj/item/reagent_containers/glass/jar(T)
