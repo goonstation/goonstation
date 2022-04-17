@@ -498,8 +498,10 @@
 // also maybe we've just had environmental damage, who knows
 /mob/living/critter/flock/drone/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
-	var/prev_damaged = src.damaged
 	src.check_health()
+	if (brute <= 0 && burn <= 0 && tox <= 0)
+		return
+	var/prev_damaged = src.damaged
 	if(!isdead(src) && src.is_npc)
 		// if we've been damaged a new stage, call it out
 		if(prev_damaged != src.damaged && src.damaged > 0)
@@ -842,6 +844,8 @@
 	if(isflock(F))
 		if(F.get_health_percentage() >= 1.0)
 			boutput(user, "<span class='alert'>They don't need to be repaired, they're in perfect condition.</span>")
+			return
+		if (isdead(F))
 			return
 		if(user.resources < 10)
 			boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")

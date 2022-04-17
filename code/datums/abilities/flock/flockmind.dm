@@ -202,6 +202,8 @@
 	if (target.get_health_percentage() >= 1)
 		boutput(holder.owner, "<span class='notice'>[target.real_name] has no damage!</span>")
 		return TRUE
+	if (isdead(target))
+		return TRUE
 
 	playsound(holder.owner, "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
 	boutput(holder.owner, "<span class='notice'>You focus the flock's efforts on fixing [target.real_name]</span>")

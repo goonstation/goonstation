@@ -391,6 +391,8 @@
 					D.icon_state = "door1"//make it not look broke
 			else
 				T.HealDamage("All", T.health_brute / 3, T.health_burn / 3)
+				if (T.is_npc)
+					T.ai.interrupt()
 			F.pay_resources(10)
 
 /////////////////////////////////////////////////////////////////////////////////
