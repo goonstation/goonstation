@@ -659,6 +659,8 @@ butcher
 					if(harvest_target.loc == holder.owner) //checks hand for card to allow taking from pockets/storage
 						holder.owner.u_equip(harvest_target)
 					holder.owner.put_in_hand_or_drop(harvest_target)
+				else if (istype(harvest_target, /obj/item/bell))
+					holder.owner.put_in_hand_or_drop(harvest_target)
 				else if(istype(harvest_target, /obj/item/paper_bin))
 					// special consideration because these things can empty out
 					var/obj/item/paper_bin/P = harvest_target
