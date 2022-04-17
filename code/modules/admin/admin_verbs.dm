@@ -391,6 +391,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_modify_market_variables,
 		/client/proc/BK_finance_debug,
 		/client/proc/BK_alter_funds,
+		/client/proc/TestMarketReq,
 		/client/proc/debug_pools,
 		/client/proc/debug_variables,
 		/client/proc/debug_global_variable,
