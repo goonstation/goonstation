@@ -203,3 +203,12 @@
 //compute - override if behaviour is weird
 /mob/living/intangible/flock/proc/compute_provided()
 	return src.compute
+
+//moved from flockmind to allow traces to teleport
+/mob/living/intangible/flock/flockmind/Topic(href, href_list)
+	if(href_list["origin"])
+		var/atom/movable/origin = locate(href_list["origin"])
+		if(!QDELETED(origin))
+			src.set_loc(get_turf(origin))
+			if (href_list["ping"])
+				origin.AddComponent(/datum/component/flock_ping)

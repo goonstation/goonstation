@@ -24,7 +24,6 @@
 	var/snooping = 0 //are both sides of communication currently accessible?
 	var/datum/tgui/flockpanel
 
-
 /datum/flock/New()
 	..()
 	src.name = "[pick(consonants_lower)][pick(vowels_lower)].[pick(consonants_lower)][pick(vowels_lower)]"
@@ -202,20 +201,103 @@
 		return
 	src.flockmind = F
 
+//since flocktraces need to be given their flock in New this is useful for debug
+/datum/flock/proc/spawnTrace()
+	var/mob/living/intangible/flock/trace/T = new(usr.loc, src)
+	return T
+
 /datum/flock/proc/addTrace(var/mob/living/intangible/flock/trace/T)
 	if(!T)
 		return
 	src.traces |= T
 	var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
-	aH.updateCompute()
+	aH?.updateCompute()
 
 /datum/flock/proc/removeTrace(var/mob/living/intangible/flock/trace/T)
 	if(!T)
 		return
 	src.traces -= T
 	var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
-	aH.updateCompute()
+	aH?.updateCompute()
 
+/datum/flock/proc/ping(var/atom/target, var/mob/living/intangible/flock/pinger)
+	//awful typecheck because turfs and movables have vis_contents defined seperately because god hates us
+	if (!istype(pinger) || (!istype(target, /atom/movable) && !istype(target, /turf)))
+		return
+
+	target.AddComponent(/datum/component/flock_ping)
+
+	for (var/mob/living/intangible/flock/F in (src.traces + src.flockmind))
+		if (F != pinger)
+			var/image/arrow = image(icon = 'icons/mob/screen1.dmi', icon_state = "arrow", loc = F, layer = HUD_LAYER)
+			arrow.color = "#00ff9dff"
+			arrow.pixel_y = 20
+			arrow.transform = matrix(arrow.transform, 2,2, MATRIX_SCALE)
+			var/angle = 180 + get_angle(F, target)
+			arrow.transform = matrix(arrow.transform, angle, MATRIX_ROTATE)
+			F.client?.images += arrow
+			animate(arrow, time = 3 SECONDS, alpha = 0)
+			SPAWN(3 SECONDS)
+				F.client?.images -= arrow
+				qdel(arrow)
+		var/class = "flocksay ping [istype(F, /mob/living/intangible/flock/flockmind) ? "flockmindsay" : ""]"
+		var/prefix = "<span class='bold'>\[[src.name]\] </span><span class='name'>[pinger.name]</span>"
+		boutput(F, "<span class='[class]'><a href='?src=\ref[F];origin=\ref[target];ping=[TRUE]'>[prefix]: Interrupt request, target: [target] in [get_area(target)].</a></span>")
+	playsound_global(src.traces + src.flockmind, "sound/misc/flockmind/ping.ogg", 50, 0.5)
+
+//is this a weird use case for components? probably, but it's kinda neat
+/datum/component/flock_ping
+	dupe_mode = COMPONENT_DUPE_UNIQUE
+
+	var/const/duration = 5 SECOND
+	var/end_time = -1
+	var/obj/dummy = null
+
+	Initialize()
+		if (!ismovable(parent) && !isturf(parent))
+			return COMPONENT_INCOMPATIBLE
+
+	RegisterWithParent()
+		//this cast looks horribly unsafe, but we've guaranteed that parent is a type with vis_contents in Initialize
+		var/atom/movable/target = parent
+
+		src.end_time = TIME + duration
+
+		dummy = new()
+		dummy.layer = target.layer
+		dummy.plane = PLANE_FLOCKVISION
+		dummy.invisibility = INVIS_FLOCKMIND
+		dummy.appearance_flags = PIXEL_SCALE | RESET_TRANSFORM | RESET_COLOR | PASS_MOUSE
+		dummy.icon = target.icon
+		dummy.icon_state = target.icon_state
+		target.render_target = ref(parent)
+		dummy.render_source = target.render_target
+		dummy.add_filter("outline", 1, outline_filter(size=1,color="#00ff9d"))
+		target.vis_contents += dummy
+
+		play_animation()
+
+		SPAWN(0)
+			while(TIME < src.end_time)
+				var/delta = src.end_time - TIME
+				sleep(min(src.duration, delta))
+			qdel(src)
+
+	//when a new ping component is added, reset the original's duration
+	InheritComponent(datum/component/flock_ping/C, i_am_original)
+		if (i_am_original)
+			play_animation()
+			src.end_time = TIME + duration
+
+	disposing()
+		qdel(dummy)
+		. = ..()
+
+	proc/play_animation()
+		animate(dummy, time = duration/9, alpha = 100)
+		for (var/i in 1 to 4)
+			animate(time = duration/9, alpha = 255)
+			animate(time = duration/9, alpha = 100)
 // ANNOTATIONS
 
 // currently both flockmind and player units get the same annotations: what tiles are marked for conversion, and who is shitlisted

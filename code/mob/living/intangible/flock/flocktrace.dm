@@ -27,7 +27,8 @@
 		src.flock.addTrace(src)
 	else
 		src.death() // f u
-	src.abilityHolder.addAbility(/datum/targetable/flockmindAbility/createStructure)
+	src.addAbility(/datum/targetable/flockmindAbility/designateEnemy)
+	src.addAbility(/datum/targetable/flockmindAbility/ping)
 
 /mob/living/intangible/flock/trace/proc/describe_state()
 	var/state = list()
@@ -71,7 +72,7 @@
 	if (..(parent))
 		return 1
 	var/datum/abilityHolder/flockmind/aH = src.abilityHolder
-	aH.updateCompute()
+	aH?.updateCompute()
 	if (src.flock && src.flock.total_compute() < src.flock.used_compute())
 		boutput(src, "<span class='alert'>The Flock has insufficient compute to sustain your consciousness!</span>")
 		src.death() // get rekt

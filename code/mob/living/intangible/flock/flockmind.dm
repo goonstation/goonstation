@@ -27,6 +27,7 @@
 	src.flock.registerFlockmind(src)
 	src.flock.showAnnotations(src)
 	src.addAbility(/datum/targetable/flockmindAbility/spawnEgg)
+	src.addAbility(/datum/targetable/flockmindAbility/ping)
 
 /mob/living/intangible/flock/flockmind/special_desc(dist, mob/user)
   if(isflock(user))
@@ -114,12 +115,6 @@
 	animate_bumble(O) // bob up and down
 	O.alpha = 160
 	return O
-
-/mob/living/intangible/flock/flockmind/Topic(href, href_list)
-	if(href_list["origin"])
-		var/atom/movable/origin = locate(href_list["origin"])
-		if(!QDELETED(origin))
-			src.set_loc(get_turf(origin))
 
 
 /mob/living/intangible/flock/flockmind/proc/partition()
