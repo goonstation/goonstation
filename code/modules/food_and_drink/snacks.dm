@@ -2838,22 +2838,22 @@
 	food_effects = list("food_brute","food_tox","food_warm")
 
 /obj/item/reagent_containers/food/snacks/proc/random_tender_firstname()
-	.= pick(list("chicken","chiccy","chikin","chicke","chucken","chucken","chickeen"))
+	.= pick(list("chicken","chiccy","chikin","chicke","chucken","chucken","chickeen","chimken",))
 /obj/item/reagent_containers/food/snacks/proc/random_tender_lastname()
-	.= pick(list("tender","tendie","tenderloin","finger","goujon","filet","tendieloin","tendar","tenderino",))
+	.= pick(list("tender","tenderloin","finger","goujon","filet","tendar","tenderino",))
 
 /obj/item/reagent_containers/food/snacks/ingredient/chickentender
 	name = "chicken tender"
-	desc = "For good boys only."
+	desc = "Unbelievable! This is real chicken!"
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "tendie"
+	icon_state = "tender"
 	heal_amt = 2
 	amount = 2
 	food_effects = list("food_all")
 	on_reagent_change()
 		..()
 		if (src.reagents && src.reagents.total_volume)
-			var/image/dip = image('icons/obj/foodNdrink/food_snacks.dmi', "tendie-overlay")
+			var/image/dip = image('icons/obj/foodNdrink/food_snacks.dmi', "tender-overlay")
 			dip.color = src.reagents.get_average_color().to_rgba()
 			src.UpdateOverlays(dip, "dip")
 		else
