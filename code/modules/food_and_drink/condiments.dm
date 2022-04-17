@@ -54,6 +54,7 @@
 	initial_reagents = "soysauce"
 
 	heal(var/mob/M)
+		. = ..()	
 		boutput(M, "<span class='alert'>FUCK, SALTY!</span>")
 		M.emote("scream")
 
