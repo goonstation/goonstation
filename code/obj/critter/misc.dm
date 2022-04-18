@@ -1605,12 +1605,7 @@
 		src.UpdateOverlays(overlayprimary, "bottomdetail")
 		src.UpdateOverlays(overlaysecondary, "topdetail")
 
-	patrol_step()
-		if (!mobile)
-			return
-
-		var/turf/moveto = locate(src.x + rand(-1,1),src.y + rand(-1, 1),src.z)
-		if (isturf(moveto) && !moveto.density) patrol_to(moveto)
+	process()
 		currentsteps++
 
 		if (currentsteps >= maxsteps)
@@ -1619,6 +1614,7 @@
 		if (prob(70))
 			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
 			make_cleanable(/obj/decal/cleanable/blood/splatter,src.loc)
+		..()
 
 	CritterDeath()
 		if (tail_memory)
