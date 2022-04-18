@@ -76,7 +76,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			user.visible_message("<span class='alert'><b>[user] inserts [W] into [src]!</b></span>")
-			update_icon()
+			UpdateIcon()
 			return
 	else if (istype(W, /obj/item/tank/plasma))
 		if (TOTAL_PL_TANKS < initial(src.pltanks))
@@ -84,7 +84,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			user.visible_message("<span class='alert'><b>[user] inserts [W] into [src]!</b></span>")
-			update_icon()
+			UpdateIcon()
 			return
 	..()
 
@@ -153,7 +153,7 @@
 				use_power(5)
 				usr.put_in_hand_or_eject(newtank)
 			. = TRUE
-	update_icon()
+	UpdateIcon()
 
 #undef TOTAL_O2_TANKS
 #undef TOTAL_PL_TANKS
