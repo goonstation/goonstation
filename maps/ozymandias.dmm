@@ -11,11 +11,10 @@
 /area/space)
 "aav" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/drinks/bowl,
-/obj/item/reagent_containers/food/snacks/cereal_box,
 /obj/machinery/recharger/wall{
 	pixel_y = 30
 	},
+/obj/machinery/coffeemaker,
 /turf/simulated/floor/grey,
 /area/station/mining/staff_room)
 "aaA" = (
@@ -885,13 +884,6 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
-"ana" = (
-/obj/decal/tile_edge/line/white{
-	dir = 8;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/sanitary/blue,
-/area/space)
 "and" = (
 /obj/machinery/fluid_canister,
 /obj/disposalpipe/segment/food{
@@ -4838,7 +4830,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/circuit/white,
-/area/space)
+/area/station/crewquarters/cryotron)
 "bwX" = (
 /obj/table/wood/auto,
 /obj/bedsheetbin,
@@ -7043,6 +7035,13 @@
 "cem" = (
 /obj/table/auto,
 /obj/machinery/computer/security/wooden_tv/small,
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = -15
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = -13;
+	pixel_y = -10
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/hallway/secondary/construction2{
 	icon_state = "crewquarters";
@@ -7350,16 +7349,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/north)
-"cii" = (
-/obj/decal/tile_edge/line/white{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/sanitary/blue,
-/area/space)
 "cil" = (
 /obj/airbridge_controller{
 	id = "vigilatornord";
@@ -19399,9 +19388,10 @@
 /area/station/crew_quarters/quartersA)
 "fuC" = (
 /obj/table/wood/auto,
-/obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = -10
+/obj/machinery/coffeemaker,
+/obj/drink_rack/mug{
+	pixel_x = -26;
+	pixel_y = 4
 	},
 /turf/simulated/floor/grey,
 /area/station/engine/engineering/private)
@@ -20042,12 +20032,6 @@
 /area/station/crew_quarters/juryroom{
 	name = "Jury Sequestration"
 	})
-"fCW" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/sanitary/blue,
-/area/space)
 "fCY" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4
@@ -24769,7 +24753,7 @@
 	icon_state = "line4"
 	},
 /turf/simulated/floor/circuit/white,
-/area/space)
+/area/station/crewquarters/cryotron)
 "gMQ" = (
 /obj/stool/chair/couch{
 	desc = "It's comfortable, but has an aura of unease about it, like somebody's watching you the moment you sit down.";
@@ -29855,7 +29839,7 @@
 "igF" = (
 /obj/machinery/sleeper/compact,
 /turf/simulated/floor/sanitary/blue,
-/area/space)
+/area/station/crewquarters/cryotron)
 "igH" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -30973,7 +30957,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/sanitary/blue,
-/area/space)
+/area/station/crewquarters/cryotron)
 "iwV" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/table/reinforced/auto,
@@ -31852,7 +31836,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/crewquarters/cryotron)
 "iHo" = (
 /obj/machinery/atmospherics/pipe/manifold/north,
 /turf/simulated/floor/grime,
@@ -34722,8 +34706,14 @@
 /area/station/security/main)
 "jvA" = (
 /obj/table/auto,
-/obj/item/storage/box/plates,
-/obj/item/storage/box/cutlery,
+/obj/item/storage/box/plates{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/storage/box/cutlery{
+	pixel_x = -8;
+	pixel_y = 5
+	},
 /obj/machinery/recharger/wall{
 	pixel_y = 30
 	},
@@ -36470,11 +36460,11 @@
 /area/station/engine/elect)
 "jTS" = (
 /obj/table/auto,
-/obj/random_item_spawner/desk_stuff,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/machinery/coffeemaker,
 /turf/simulated/floor/carpet/grime,
 /area/station/hallway/secondary/construction2{
 	icon_state = "crewquarters";
@@ -40314,6 +40304,19 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/grey,
 /area/station/chapel/sanctuary)
+"kTt" = (
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 5
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/hor)
 "kTw" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10
@@ -40858,7 +40861,7 @@
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
-/area/space)
+/area/station/crewquarters/cryotron)
 "laa" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -44158,6 +44161,7 @@
 	name = "wooden table"
 	},
 /obj/machinery/light,
+/obj/machinery/coffeemaker/research,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "lPn" = (
@@ -46697,7 +46701,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/sanitary/blue,
-/area/space)
+/area/station/crewquarters/cryotron)
 "mwT" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -53668,6 +53672,7 @@
 	pixel_x = -7;
 	pixel_y = 3
 	},
+/obj/machinery/light/emergency,
 /turf/simulated/floor/grey,
 /area/station/engine/engineering/private)
 "opP" = (
@@ -58675,9 +58680,6 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
-"pGO" = (
-/turf/simulated/floor/sanitary/blue,
-/area/space)
 "pHc" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/machinery/light/small,
@@ -67143,6 +67145,11 @@
 "rQZ" = (
 /obj/table/auto,
 /obj/item/paper/book/from_file/the_trial,
+/obj/item/pen,
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 14;
+	pixel_y = 8
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/hallway/secondary/construction2{
 	icon_state = "crewquarters";
@@ -77713,6 +77720,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"utV" = (
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/engineering/private)
 "uuk" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -78850,7 +78862,7 @@
 /obj/machinery/disposal/transport,
 /obj/disposalpipe/trunk/east,
 /turf/simulated/floor/sanitary/blue,
-/area/space)
+/area/station/crewquarters/cryotron)
 "uHr" = (
 /obj/machinery/door_control/podbay/catering/new_walls/east,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -84399,7 +84411,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/sanitary/blue,
-/area/space)
+/area/station/crewquarters/cryotron)
 "vWF" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/green,
@@ -88303,6 +88315,10 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/drink_rack/mug{
+	pixel_x = -6;
+	pixel_y = 32
+	},
 /turf/simulated/floor/grey,
 /area/station/mining/staff_room)
 "wRA" = (
@@ -89482,7 +89498,7 @@
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
-/area/space)
+/area/station/crewquarters/cryotron)
 "xfT" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/grey,
@@ -127570,7 +127586,7 @@ bJI
 nxz
 csf
 iNo
-iNo
+kTt
 lPk
 wqR
 vXi
@@ -129710,10 +129726,10 @@ lAq
 hTi
 mVA
 vMi
-asq
-asq
-asq
-asq
+uDd
+uDd
+uDd
+uDd
 uDd
 uDd
 uDd
@@ -130012,10 +130028,10 @@ hTi
 hTi
 mVA
 vMi
-asq
+uDd
 mwS
 igF
-asq
+uDd
 oSQ
 kMD
 aFA
@@ -130315,9 +130331,9 @@ hTi
 mVA
 eOF
 kZT
-fCW
+szc
 iwS
-cii
+mQk
 mQk
 jxH
 szc
@@ -130616,10 +130632,10 @@ mVA
 hTi
 jXB
 vMi
-asq
+uDd
 gMP
 bwR
-asq
+uDd
 nyl
 mAy
 kjm
@@ -130918,10 +130934,10 @@ mVA
 hTi
 rMa
 vbT
-asq
+uDd
 gMP
 bwR
-asq
+uDd
 aWd
 mAy
 bGI
@@ -131220,10 +131236,10 @@ mVA
 hTi
 mVA
 vMi
-asq
+uDd
 gMP
 bwR
-asq
+uDd
 aWd
 mAy
 kjm
@@ -131523,9 +131539,9 @@ hTi
 mVA
 vMi
 xfN
-pGO
+kjm
 vWB
-ana
+aqT
 aqT
 fGX
 kjm
@@ -131824,10 +131840,10 @@ hTi
 hTi
 rqS
 vMi
-asq
+uDd
 uHm
 igF
-asq
+uDd
 hXJ
 nLc
 cHc
@@ -132126,10 +132142,10 @@ mPr
 mPr
 mPr
 pwd
-asq
+uDd
 iHm
-asq
-asq
+uDd
+uDd
 uDd
 uDd
 uDd
@@ -168937,7 +168953,7 @@ sBq
 xbg
 cwK
 cwK
-cwK
+utV
 moU
 oAK
 dRl
