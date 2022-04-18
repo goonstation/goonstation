@@ -31,7 +31,9 @@ var/datum/station_zlevel_repair/station_repair = new
 				if(src.weather_img)
 					T.UpdateOverlays(src.weather_img, "weather")
 				if(src.weather_effect)
-					new src.weather_effect(T)
+					var/obj/effects/E = locate(src.weather_effect) in T
+					if(!E)
+						new src.weather_effect(T)
 
 	proc/clean_up_station_level(replace_with_cars, add_sub)
 		mass_driver_fixup()
@@ -87,6 +89,8 @@ var/datum/station_zlevel_repair/station_repair = new
 
 			//Uh, make sure we don't block the shipping lanes!
 			for(var/atom/A in T)
+				if(ismob(A) || iscritter(A)) // Lets not just KILL people... ha hahah HA
+					continue
 				if(A.density)
 					qdel(A)
 

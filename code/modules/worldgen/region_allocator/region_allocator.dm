@@ -134,15 +134,26 @@ var/global/datum/region_allocator/region_allocator = new
 		global.region_allocator.allocated_regions -= src
 
 	proc/clean_up(turf/main_turf=/turf/space, turf/edge_turf=/turf/cordon, area/main_area=/area/space)
+		if(ispath(main_area))
+			main_area = new main_area(null)
 		for(var/x in 1 to width)
 			for(var/y in 1 to height)
 				var/turf/T = turf_at(x, y)
 				var/target_type = (x == 1 || y == 1 || x == width || y == height) ? edge_turf : main_turf
-				T.ReplaceWith(target_type, FALSE, FALSE, FALSE, force=TRUE)
-				new main_area(T)
+				T = T.ReplaceWith(target_type, FALSE, FALSE, FALSE, force=TRUE)
+				if(!isnull(main_area))
+					main_area.contents += T
 				for(var/atom/movable/AM in T)
 					if(!istype(AM, /obj/overlay/tile_effect))
 						qdel(AM)
+
+	proc/move_movables_to(atom/destination)
+		for(var/x in 1 to src.width)
+			for(var/y in 1 to src.height)
+				var/turf/T = src.turf_at(x, y)
+				for(var/atom/movable/AM in T)
+					if(!AM.anchored)
+						AM.set_loc(destination)
 
 	/**
 	 * Given local coordinates (x, y) returns you a turf at these coordinates in the region.
