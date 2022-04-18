@@ -2695,6 +2695,13 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "jurysequ";
+	name = "Jury Sequestration Shutter";
+	opacity = 0
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/juryroom{
 	name = "Jury Sequestration"
@@ -8196,6 +8203,7 @@
 	name = "med-sci checkpoint chute"
 	},
 /obj/disposalpipe/trunk/west,
+/obj/machinery/light/emergency,
 /turf/simulated/floor/grey,
 /area/station/security/processing)
 "csu" = (
@@ -17719,10 +17727,6 @@
 	},
 /obj/disposalpipe/segment/brig{
 	dir = 1
-	},
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 10
 	},
 /obj/storage/closet/wardrobe/orange,
 /turf/simulated/floor/redblack/corner{
@@ -28457,6 +28461,19 @@
 	},
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
+"hKo" = (
+/obj/disposalpipe/segment/brig{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line1"
+	},
+/turf/simulated/floor,
+/area/station/security/brig)
 "hKp" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -37478,12 +37495,11 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
-/obj/machinery/light/emergency{
-	dir = 1;
-	pixel_y = 16
-	},
 /obj/landmark/start{
 	name = "Security Assistant"
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
 	},
 /turf/simulated/floor/grey,
 /area/station/security/processing)
@@ -41720,6 +41736,26 @@
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/north)
+"lla" = (
+/obj/disposalpipe/segment/brig{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door_control{
+	id = "jurysequ";
+	name = "Jury Sequestration Shutters";
+	pixel_x = 23
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/brig)
 "llr" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -43961,6 +43997,13 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/security,
 /obj/firedoor_spawn,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "jurysequ";
+	name = "Jury Sequestration Shutter";
+	opacity = 0
+	},
 /turf/simulated/floor/grey,
 /area/station/security/processing)
 "lNB" = (
@@ -54323,6 +54366,10 @@
 	},
 /obj/table/wood/round/auto,
 /obj/item/paper/book/from_file/space_law,
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
 /turf/simulated/floor/red/corner{
 	dir = 4
 	},
@@ -73187,6 +73234,10 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line1"
+	},
 /turf/simulated/floor,
 /area/station/security/brig)
 "toW" = (
@@ -86540,9 +86591,6 @@
 	},
 /obj/disposalpipe/segment/brig{
 	dir = 8
-	},
-/obj/machinery/firealarm{
-	pixel_y = 24
 	},
 /obj/landmark/start{
 	name = "Security Assistant"
@@ -144758,8 +144806,8 @@ oLO
 tDr
 eKZ
 muN
-muN
-muN
+hKo
+lla
 toR
 lTM
 wxr
@@ -146576,7 +146624,7 @@ gCw
 tSW
 aNa
 uLp
-wpK
+mNp
 wxK
 uCn
 bue
