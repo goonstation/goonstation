@@ -97,11 +97,19 @@
 #define COMSIG_ATOM_MOUSEDROP "atom_mousedrop"
 /// When something is dragged onto an atom (object, usr)
 #define COMSIG_ATOM_MOUSEDROP_T "atom_mousedrop_t"
+/// When the atom is a source of an explosion (object, args_to_explode_at)
+#define COMSIG_ATOM_EXPLODE "atom_explode"
+/// When the atom somewhere (possibly nested deep) in contents is a source of an explosion (object, args_to_explode_at)
+#define COMSIG_ATOM_EXPLODE_INSIDE "atom_explode_inside"
+/// When something enters the contents of this atom (i.e. Entered())
+#define COMSIG_ATOM_ENTERED "atom_entered"
 
 // ---- atom/movable signals ----
 
 /// when an AM moves (thing, previous_loc, direction)
 #define COMSIG_MOVABLE_MOVED "mov_moved"
+/// when a movable is about to move, return true to prevent (thing, new_loc, direction)
+#define COMSIG_MOVABLE_BLOCK_MOVE "mov_block_moved"
 /// when an AM moves (thing, previous_loc)
 #define COMSIG_MOVABLE_SET_LOC "mov_set_loc"
 /// when an AM ends throw (thing, /datum/thrown_thing)
@@ -235,9 +243,9 @@
 // ---- mob/living signals ----
 /// When a Life tick occurs
 #define COMSIG_LIVING_LIFE_TICK "human_life_tick"
-// ---- mob property signals ----
+// ---- atom property signals ----
 /// When invisibility of a mob gets updated (old_value)
-#define COMSIG_MOB_PROP_INVISIBILITY "mob_prop_invis"
+#define COMSIG_ATOM_PROP_MOB_INVISIBILITY "atom_prop_invis"
 
 // ---- attack_X signals ----
 
@@ -331,6 +339,11 @@
 #define CELL_SUFFICIENT_CHARGE 8
 #define CELL_RETURNED_LIST 16
 #define CELL_FULL 32
+
+// ---- obj/storage signals ----
+
+/// When the storage closes
+#define COMSIG_STORAGE_CLOSED "storage_closed"
 
 // ---- area signals ----
 /// area's active var set to true (when a client enters)

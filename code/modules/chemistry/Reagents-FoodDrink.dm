@@ -51,6 +51,7 @@ datum
 			thirst_value = 0.6
 			bladder_value = -0.2
 			viscosity = 0.3
+			var/list/flushed_reagents = list("capsaicin")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
@@ -67,8 +68,7 @@ datum
 						M.HealDamage("All", 1 * mult, 1 * mult)
 						if(probmult(15))
 							boutput(H, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
-				if (M.reagents.has_reagent("capsaicin"))
-					M.reagents.remove_reagent("capsaicin", 5 * mult)
+				flush(M,5 * mult, flushed_reagents)
 				..()
 				return
 
@@ -105,7 +105,7 @@ datum
 			fluid_g = 196
 			fluid_b = 248
 			transparency = 255
-			taste = "oily and sweet."
+			taste = "oily and sweet"
 			description = "Smells like blueberries and tastes worse."
 			reagent_state = LIQUID
 			thirst_value = 0.75
@@ -646,6 +646,7 @@ datum
 						H.visible_message("<span class='alert'><b>[H] explodes in a shower of gibs, hair and piracy!</b></span>","<span class='alert'><b>Oh god, too much hair!</b></span>")
 						new /obj/item/clothing/glasses/eyepatch(get_turf(H))
 						new /obj/item/clothing/mask/moustache(get_turf(H))
+						logTheThing("combat", src, null, "was gibbed by the reagent [name].")
 						H.gib()
 						return
 					if(H.bioHolder.mobAppearance.customization_first.id != "dreads" || H.bioHolder.mobAppearance.customization_second.id != "fullbeard")
@@ -653,13 +654,7 @@ datum
 						H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/dreads
 						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/fullbeard
 						H.real_name = "Captain [H.real_name]"
-						if (H.wear_id)
-							if (istype(H.wear_id, /obj/item/card/id))
-								H.wear_id:registered = H.real_name
-								H.wear_id:name = "[H.real_name]'s ID ([H.wear_id:assignment])"
-							else if (istype(H.wear_id, /obj/item/device/pda2) && H.wear_id:ID_card)
-								H.wear_id:ID_card:registered = H.real_name
-								H.wear_id:ID_card:name = "[H.real_name]'s ID ([H.wear_id:ID_card:assignment])"
+
 						if(!istype(H.glasses, /obj/item/clothing/glasses/eyepatch))
 							var/obj/item/old_glasses = H.glasses
 							if(istype(old_glasses))
@@ -1129,6 +1124,7 @@ datum
 								boutput(M, "<span class='alert'><b>IT BURNS!!!!</b></span>")
 								sleep(0.2 SECONDS)
 								M.visible_message("<span class='alert'>[M] is consumed in flames!</span>")
+								logTheThing("combat", M, null, "was fire-gibbed by the reagent [name].")
 								M.firegib()
 
 				..()
@@ -1190,9 +1186,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				for(var/reagent_id in M.reagents.reagent_list)
-					if(reagent_id != id)
-						M.reagents.remove_reagent(reagent_id, 8 * mult)
+				flush(M, 8 * mult)
 				if(M.health > 10)
 					M.take_toxin_damage(2 * mult)
 				if(probmult(20))
@@ -1606,7 +1600,7 @@ datum
 				if(probmult(15))
 					M.emote(pick("cough","sneeze","gasp"))
 				if(probmult(20))
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS * mult))
+					M.setStatusMin("stunned", 3 SECONDS * mult)
 				if(prob(40))
 					random_burn_damage(M, 2 * mult)
 				if(probmult(0.2 * volume))
@@ -2013,14 +2007,14 @@ datum
 					M.stuttering += rand(0,5)
 					if(prob(10))
 						M.emote(pick("choke","gasp","cough"))
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 1 SECOND * mult))
+						M.setStatusMin("stunned", 1 SECOND * mult)
 						M.take_oxygen_deprivation(rand(0,10) * mult)
 						M.bodytemperature += rand(5,20) * mult
 				M.stuttering += rand(0,2)
 				M.bodytemperature += rand(0,3) * mult
 				if(prob(10))
 					M.emote(pick("cough"))
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 1 SECOND * mult))
+					M.setStatusMin("stunned", 1 SECOND * mult)
 				..()
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -2240,17 +2234,18 @@ datum
 			stun_resist = 7
 			taste = "bitter"
 			threshold = THRESHOLD_INIT
+			var/caffeine_rush = 2
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "consumable_good", 2)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush", src.caffeine_rush)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "consumable_good")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2279,23 +2274,10 @@ datum
 			fluid_b = 14
 			thirst_value = 0.25
 			energy_value = 0.8
-			var/caffeine_rush = 3
-			var/caffeine_jitters = 10
+			caffeine_rush = 3
 			stun_resist = 10
 			taste = "rich and fragrant"
 			threshold = THRESHOLD_INIT
-
-			cross_threshold_over()
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "caffeine rush", src.caffeine_rush)
-				..()
-
-			cross_threshold_under()
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "caffeine rush")
-				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
@@ -2307,6 +2289,7 @@ datum
 			description = "An expresso is a strong black coffee with more stupid."
 			taste = "coffee yum"
 			stun_resist = 25
+			caffeine_rush = 4
 			threshold = THRESHOLD_INIT
 			var/killer = 0
 
@@ -2325,7 +2308,6 @@ datum
 			id = "decafespresso"
 			description = "A decaf espresso contains less caffeine than a regular espresso."
 			caffeine_rush = 2
-			caffeine_jitters = 5
 			addiction_prob = 1
 			addiction_prob2 = 5
 			energy_value = 0
@@ -2349,6 +2331,7 @@ datum
 			stun_resist = 25
 			taste = "supercharged"
 			threshold = THRESHOLD_INIT
+			caffeine_rush = 3
 
 
 			cross_threshold_over()
@@ -2403,6 +2386,7 @@ datum
 			addiction_prob2 = 1
 			addiction_min = 10
 			minimum_reaction_temperature = -INFINITY
+			var/list/flushed_reagents = list("toxin","toxic_slurry")
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if (exposed_temperature <= T0C + 7)
@@ -2416,10 +2400,7 @@ datum
 					description = initial(description)
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if (holder.has_reagent("toxin")) //Tea is good for you!!
-					holder.remove_reagent("toxin", 1 * mult)
-				if (holder.has_reagent("toxic_slurry"))
-					holder.remove_reagent("toxic_slurry", 1 * mult)
+				flush(M, 1 * mult, flushed_reagents)//Tea is good for you!
 				..()
 				return
 
@@ -2921,8 +2902,8 @@ datum
 					if (prob(5))
 						boutput(M, "<span class='alert'>You feel a sharp pain in your chest!</span>")
 						M.take_oxygen_deprivation(25 * mult)
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 10 SECONDS * mult))
-						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 6 SECONDS * mult))
+						M.setStatusMin("stunned", 10 SECONDS * mult)
+						M.setStatusMin("paralysis", 6 SECONDS * mult)
 				else
 					depletion_rate = 0.2 * mult
 				..()
@@ -3031,7 +3012,7 @@ datum
 						M.take_toxin_damage(rand(2.4) * mult)
 					if (prob(7))
 						boutput(M, "<span class='alert'>A horrible migraine overpowers you.</span>")
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 4 SECONDS * mult))
+						M.setStatusMin("stunned", 4 SECONDS * mult)
 				..()
 
 		fooddrink/egg
@@ -3128,7 +3109,7 @@ datum
 						M.visible_message("<span class='alert'><b>[M.name]</b> suddenly starts salivating.</span>")
 						M.emote("drool")
 						M.change_misstep_chance(10 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 2 SECONDS * mult))
+						M.setStatusMin("weakened", 2 SECONDS * mult)
 					else if(effect <= 3)
 						M.visible_message("<span class='alert'><b>[M.name]</b> begins to reminisce about food.</span>")
 						M.changeStatus("stunned", 2 SECONDS * mult)
@@ -3141,16 +3122,16 @@ datum
 					if(effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]</b> enters a food coma!</span>")
 						M.emote("faint")
-						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 6 SECONDS * mult))
+						M.setStatusMin("paralysis", 6 SECONDS * mult)
 					else if(effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> wants more delicious food!</span>")
 						M.emote("scream")
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 5 SECONDS * mult))
+						M.setStatusMin("stunned", 5 SECONDS * mult)
 					else if(effect <= 8)
 						M.visible_message("<span class='alert'><b>[M.name]</b> appears extremely depressed.</span>")
 						M.emote("moan")
 						M.change_misstep_chance(25 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 7 SECONDS * mult))
+						M.setStatusMin("weakened", 7 SECONDS * mult)
 
 		fooddrink/pepperoni //Hukhukhuk presents. pepperoni and acetone
 			name = "pepperoni"
@@ -3601,7 +3582,7 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "tripletriple", 3333)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "tripletriple", 3333)
 					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
 				..()
 
@@ -3609,7 +3590,7 @@ datum
 				if (ismob(holder.my_atom))
 					var/mob/M = holder.my_atom
 					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "tripletriple")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "tripletriple")
 				..()
 
 			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
@@ -3749,7 +3730,7 @@ datum
 			fluid_g = 110
 			fluid_b = 41
 			transparency = 200
-			taste = "bittersweet."
+			taste = "bittersweet"
 			description = "A mixture of half lemonade and half coffee."
 			reagent_state = LIQUID
 			thirst_value = 0.75
@@ -4036,6 +4017,13 @@ datum
 						O.visible_message("<span class='alert'>The [O] fails to muster up the effort to become delicious!</span>")
 					return
 				else
+					if(isitem(O))
+						var/obj/item/I = O
+						if(I.amount > 1)
+							var/obj/item/split_item = I.split_stack(1)
+							split_item.set_loc(get_turf(I))
+							O = split_item
+
 					O.setMaterial(getMaterial("pizza"))
 
 		fooddrink/friedessence
@@ -4071,7 +4059,7 @@ datum
 				if(prob(50))
 					boutput(M, "<span class='alert'>Your throat burns furiously!</span>")
 					M.emote(pick("scream","cry","choke","gasp"))
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
+					M.setStatusMin("stunned", 2 SECONDS * mult)
 				if(probmult(8))
 					boutput(M, "<span class='alert'>Why!? WHY!?</span>")
 				if(probmult(8))
@@ -4093,6 +4081,7 @@ datum
 								boutput(M, "<span class='alert'><b>IT BURNS!!!!</b></span>")
 								sleep(0.2 SECONDS)
 								M.visible_message("<span class='alert'>[M] is consumed in flames!</span>")
+								logTheThing("combat", M, null, "was fire-gibbed by the reagent [name].")
 								M.firegib()
 				..()
 

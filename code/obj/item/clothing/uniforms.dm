@@ -16,10 +16,10 @@
 	burn_point = 400
 	burn_output = 800
 	burn_possible = 1
-	health = 50
+	health = 10
 	var/team_num
 
-	duration_remove = 6.5 SECONDS
+	duration_remove = 7.5 SECONDS
 
 	setupProperties()
 		..()

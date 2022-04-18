@@ -395,6 +395,9 @@ CONTAINS:
 		if (src.defibrillate(M, user, src.emagged, src.makeshift, src.cell))
 			JOB_XP(user, "Medical Doctor", 5)
 			src.charged = 0
+			if(istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
+				var/obj/machinery/atmospherics/unary/cryo_cell/cryo = src.loc
+				cryo.shock_icon()
 			set_icon_state("[src.icon_base]-shock")
 			SPAWN(1 SECOND)
 				set_icon_state("[src.icon_base]-off")
@@ -413,6 +416,9 @@ CONTAINS:
 			return 0
 		playsound(src.loc, "sound/impact_sounds/Energy_Hit_3.ogg", 75, 1, pitch = 0.92)
 		src.charged = 0
+		if(istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
+			var/obj/machinery/atmospherics/unary/cryo_cell/cryo = src.loc
+			cryo.shock_icon()
 		set_icon_state("[src.icon_base]-shock")
 		SPAWN(1 SECOND)
 			set_icon_state("[src.icon_base]-off")
@@ -466,8 +472,9 @@ CONTAINS:
 			shockcure = 1
 			break
 
-	user.visible_message("<span class='alert'><b>[user]</b> places the electrodes of [src] onto [user == patient ? "[his_or_her(user)] own" : "[patient]'s"] [suiciding ? "eyes" : "chest"]!</span>",\
-	"<span class='alert'>You place the electrodes of [src] onto [user == patient ? "your own" : "[patient]'s"] [suiciding ? "eyes" : "chest"]!</span>")
+	if(!istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
+		user.visible_message("<span class='alert'><b>[user]</b> places the electrodes of [src] onto [user == patient ? "[his_or_her(user)] own" : "[patient]'s"] [suiciding ? "eyes" : "chest"]!</span>",\
+		"<span class='alert'>You place the electrodes of [src] onto [user == patient ? "your own" : "[patient]'s"] [suiciding ? "eyes" : "chest"]!</span>")
 
 	if (emagged || (patient.health < 0 && !faulty) || (shockcure && !faulty) || (faulty && prob(25 + suiciding)) || (suiciding && prob(44)))
 
@@ -639,7 +646,7 @@ CONTAINS:
 
 	emag_act()
 		..()
-		defib.emag_act()
+		return defib?.emag_act()
 
 	disposing()
 		if (defib)
@@ -655,7 +662,7 @@ CONTAINS:
 
 	process()
 		if (src.defib && src.defib.loc != src)
-			if (get_dist(get_turf(src.defib), get_turf(src)) > 1)
+			if (BOUNDS_DIST(get_turf(src.defib), get_turf(src)) > 0)
 				if (isliving(src.defib.loc))
 					put_back_defib(src.defib.loc)
 		..()
@@ -881,7 +888,7 @@ CONTAINS:
 
 	onUpdate()
 		..()
-		if (get_dist(owner, target) > 1 || target == null || owner == null || tool == null)
+		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || tool == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -893,7 +900,7 @@ CONTAINS:
 
 	onStart()
 		..()
-		if (get_dist(owner, target) > 1 || !ishuman(target) || owner == null || tool == null)
+		if (BOUNDS_DIST(owner, target) > 0 || !ishuman(target) || owner == null || tool == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -907,7 +914,7 @@ CONTAINS:
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if (owner && ownerMob && target && tool && tool == ownerMob.equipped() && get_dist(owner, target) <= 1)
+		if (owner && ownerMob && target && tool && tool == ownerMob.equipped() && BOUNDS_DIST(owner, target) == 0)
 			if (zone && surgery_status)
 				target.visible_message("<span class='success'>[owner] [vrb]es the surgical incisions on [owner == target ? his_or_her(owner) : "[target]'s"] [zone_sel2name[zone]] closed with [tool].</span>",
 				"<span class='success'>[owner == target ? "You [vrb]e" : "[owner] [vrb]es"] the surgical incisions on your [zone_sel2name[zone]] closed with [tool].</span>")
@@ -1018,7 +1025,7 @@ CONTAINS:
 						H.visible_message("<span class='alert'><b>[src] runs out of blood!</b></span>")
 						src.in_use = 0
 						break
-					if (get_dist(src, H) > 1)
+					if (BOUNDS_DIST(src, H) > 0)
 						var/fluff = pick("pulled", "yanked", "ripped")
 						H.visible_message("<span class='alert'><b>[src]'s needle gets [fluff] out of [H]'s arm!</b></span>", \
 						"<span class='alert'><b>[src]'s needle gets [fluff] out of your arm!</b></span>")
@@ -1178,7 +1185,7 @@ CONTAINS:
 		else if (!(over_object == usr))
 			return
 		..()
-		if (!length(src.contents) && usr.can_use_hands() && isalive(usr) && IN_RANGE(src, usr, 1) && !issilicon(usr))
+		if (!length(src.contents) && usr.can_use_hands() && isalive(usr) && BOUNDS_DIST(src, usr) == 0 && !issilicon(usr))
 			if (src.icon_state != "bodybag")
 				usr.visible_message("<b>[usr]</b> folds up [src].",\
 				"You fold up [src].")
@@ -1589,6 +1596,9 @@ keeping this here because I want to make something else with it eventually
 		if (iswrenchingtool(W))
 			actions.start(new /datum/action/bar/icon/furniture_deconstruct(src, W, 30), user)
 			return
+		else if (istype(W, /obj/item/mechanics))
+			user.show_text("[W] slips off [src].")
+			return ..()
 		else if (src.place_on(W, user, params))
 			user.show_text("You place [W] on [src].")
 			src.attach(W)
@@ -1617,6 +1627,8 @@ keeping this here because I want to make something else with it eventually
 
 	proc/attach(obj/item/I as obj)
 		if(I.anchored) return
+		else if (istype(I, /obj/item/mechanics))
+			return
 		src.attached_objs.Add(I) // attach the item to the table
 		I.glide_size = 0 // required for smooth movement with the tray
 		// register for pickup, register for being pulled off the table, register for item deletion while attached to table

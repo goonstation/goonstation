@@ -41,7 +41,7 @@ Contains:
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (istype(A, /turf))
-			if (get_dist(A,user) > 1) // Scanning for COOL LORE SECRETS over the camera network is fun, but so is drinking and driving.
+			if (BOUNDS_DIST(A, user) > 0) // Scanning for COOL LORE SECRETS over the camera network is fun, but so is drinking and driving.
 				return
 			if(A.interesting && src.on)
 				animate_scanning(A, "#7693d3")
@@ -92,7 +92,7 @@ Contains:
 					our_mob.playsound_local(A, "sound/machines/ping.ogg", 55, 1)
 				if(ismob(A))
 					var/mob/M = A
-					if(M?.invisibility != INVIS_CLOAK || !IN_RANGE(src, M, 1))
+					if(M?.invisibility != INVIS_CLOAK || !(BOUNDS_DIST(src, M) == 0))
 						continue
 				else if(isobj(A))
 					var/obj/O = A
@@ -178,14 +178,14 @@ that cannot be itched
 
 	pixelaction(atom/target, params, mob/user, reach)
 		if(distancescan)
-			if(!IN_RANGE(user, target, 1) && IN_RANGE(user, target, 3))
+			if(!(BOUNDS_DIST(user, target) == 0) && IN_RANGE(user, target, 3))
 				user.visible_message("<span class='notice'><b>[user]</b> takes a distant forensic scan of [target].</span>")
 				boutput(user, scan_forensic(target, visible = 1))
 				src.add_fingerprint(user)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 
-		if (get_dist(A,user) > 1 || istype(A, /obj/ability_button)) // Scanning for fingerprints over the camera network is fun, but doesn't really make sense (Convair880).
+		if (BOUNDS_DIST(A, user) > 0 || istype(A, /obj/ability_button)) // Scanning for fingerprints over the camera network is fun, but doesn't really make sense (Convair880).
 			return
 
 		user.visible_message("<span class='alert'><b>[user]</b> has scanned [A].</span>")
@@ -346,7 +346,7 @@ that cannot be itched
 
 
 
-/obj/item/device/analyzer/healthanalyzer/borg
+/obj/item/device/analyzer/healthanalyzer/upgraded
 	icon_state = "health"
 	reagent_upgrade = 1
 	reagent_scan = 1
@@ -455,7 +455,7 @@ that cannot be itched
 	// Distance upgrade action code
 	pixelaction(atom/target, params, mob/user, reach)
 		var/turf/T = get_turf(target)
-		if ((analyzer_upgrade == 1) && (get_dist(user, T)>1))
+		if ((analyzer_upgrade == 1) && (BOUNDS_DIST(user, T) > 0))
 			user.visible_message("<span class='notice'><b>[user]</b> takes a distant atmospheric reading of [T].</span>")
 			boutput(user, scan_atmospheric(T, visible = 1))
 			src.add_fingerprint(user)
@@ -480,7 +480,7 @@ that cannot be itched
 		addUpgrade(src, W, user, src.analyzer_upgrade)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		if (get_dist(A, user) > 1 || istype(A, /obj/ability_button))
+		if (BOUNDS_DIST(A, user) > 0 || istype(A, /obj/ability_button))
 			return
 
 		if (istype(A, /obj) || isturf(A))
@@ -600,7 +600,7 @@ that cannot be itched
 				if (M.gloves)
 					R["fingerprint"] = "Unknown"
 				else
-					R["fingerprint"] = M.bioHolder.uid_hash
+					R["fingerprint"] = M.bioHolder.fingerprints
 				R["p_stat"] = "Active"
 				R["m_stat"] = "Stable"
 				src.active1 = R
@@ -618,7 +618,7 @@ that cannot be itched
 			if (M.gloves)
 				src.active1["fingerprint"] = "Unknown"
 			else
-				src.active1["fingerprint"] = M.bioHolder.uid_hash
+				src.active1["fingerprint"] = M.bioHolder.fingerprints
 			src.active1["p_stat"] = "Active"
 			src.active1["m_stat"] = "Stable"
 			data_core.general.add_record(src.active1)
@@ -763,12 +763,12 @@ that cannot be itched
 	// i dunno, who knows. at least you'd be able to take stock easier.
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		if (get_dist(A,user) > 1)
+		if (BOUNDS_DIST(A, user) > 0)
 			return
 
 		var/datum/artifact/art = null
+		var/obj/O = A
 		if (isobj(A))
-			var/obj/O = A
 			art = O.artifact
 		else
 			// objs only
@@ -777,10 +777,18 @@ that cannot be itched
 		var/sell_value = 0
 		var/out_text = ""
 		if (art)
-			// TODO: Artifact valuation
-			// shippingmarket.sell_artifact(AM, art)
-			boutput(user, "<span class='alert'>Artifact appraisal not yet available. Coming Soon&trade;!</span>")
-			return
+			var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in O.vis_contents
+			if (pap?.artifactType)
+				out_text = "<strong>The following values depend on correct analysis of the artifact<br>Average price for [pap.artifactType] type artifacts</strong><br>"
+				// the unrandomized sell value for an artifact of the type detailed on the form, with perfect analysis
+				sell_value = shippingmarket.calculate_artifact_price(artifact_controls.artifact_types_from_name[pap.artifactType].get_rarity_modifier(), 3)
+				sell_value = round(sell_value, 5)
+			else if (pap)
+				boutput(user, "<span class='alert'>Attached Analysis Form&trade; needs to be filled out!</span>")
+				return
+			else
+				boutput(user, "<span class='alert'>Artifact appraisal is only possible via an attached Analysis Form&trade;!</span>")
+				return
 
 		else if (istype(A, /obj/storage/crate))
 			sell_value = -1
@@ -825,6 +833,8 @@ that cannot be itched
 			var/image/chat_maptext/chat_text = null
 			var/popup_text = "<span class='ol c pixel'[sell_value == 0 ? " style='color: #bbbbbb;'>No value" : ">$[round(sell_value)]"]</span>"
 			chat_text = make_chat_maptext(A, popup_text, alpha = 180, force = 1, time = 1.5 SECONDS)
+			// many of the artifacts are upside down and stuff, it makes text a bit hard to read!
+			chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
 			if (chat_text)
 				// don't bother bumping up other things
 				chat_text.show_to(user.client)

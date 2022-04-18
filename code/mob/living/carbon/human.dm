@@ -195,13 +195,13 @@
 		sims = new /datum/simsHolder/human(src)
 #endif
 
-	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",10)
+	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_mon)
 
-	health_implant = image('icons/effects/healthgoggles.dmi',src,"100",10)
+	health_implant = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_implant)
 
-	arrestIcon = image('icons/effects/sechud.dmi',src,null,10)
+	arrestIcon = image('icons/effects/sechud.dmi',src,null,EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_image(arrestIcon)
 
 	src.organHolder = new(src)
@@ -234,11 +234,11 @@
 	// for pope
 	if (microbombs_4_everyone)
 		if (isnum(microbombs_4_everyone))
-			var/obj/item/implant/microbomb/MB = new (src)
-			MB.explosionPower = microbombs_4_everyone
-			MB.implanted = 1
+			var/obj/item/implant/revenge/microbomb/MB = new (src)
+			MB.power = microbombs_4_everyone
+			MB.implanted = TRUE
 			src.implant.Add(MB)
-			INVOKE_ASYNC(MB, /obj/item/implant/microbomb.proc/implanted, src)
+			INVOKE_ASYNC(MB, /obj/item/implant/revenge/microbomb.proc/implanted, src)
 
 	src.text = "<font color=#[random_hex(3)]>@"
 	src.update_colorful_parts()
@@ -651,19 +651,25 @@
 				emote("deathgasp")
 				src.visible_message("<span class='alert'><B>[src]</B> head starts to shift around!</span>")
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
-				var/datum/mind/M = src.mind
-				sleep(20 SECONDS)
-				if(!M || M.disposed || M.current != src || isalive(src))
-					return
-				if (M.current)
-					M.current.show_text("<b>We released a headspider, using up some of our DNA reserves.</b>", "blue")
-				src.visible_message("<span class='alert'><B>[src]</B> head detaches, sprouts legs and wanders off looking for food!</span>")
-				//make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards
-				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(get_turf(src))
+				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(src) //we spawn the headspider inside this dude immediately.
+				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, .proc/remove) //if this dude gets grindered or cremated or whatever, we go with it
+				src.mind?.transfer_to(HS) //ok we're a headspider now
 				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
-				M.transfer_to(HS)
-				HS.owner = M //In case we ghosted ourselves then the body won't hold the mind. Bad times.
 				HS.changeling = C
+				// alright everything to do with headspiders is a blasted hellscape but here's what goes on here
+				// we don't want to actually give the headspider access to the changeling abilityholder, because that would let it use all the abilities
+				// which leads to bugs and is generally bad. So we remove the HUD from corpsey over here, tell the abilityholder (C) that the headspider owns it,
+				// but we do NOT tell the headspider it has access to the abilities.
+				src.detach_hud(C.hud)
+				C.owner = HS
+				C.reassign_hivemind_target_mob()
+				sleep(20 SECONDS)
+				if(HS.disposed || !HS.mind || HS.mind.disposed || isdead(HS)) // we went somewhere else, or suicided, or something idk
+					return
+				boutput(HS, "<b class = 'hint'>We released a headspider, using up some of our DNA reserves.</b>")
+				HS.set_loc(get_turf(src)) //be free!!!
+				src.visible_message("<span class='alert'><B>[src]</B>'s head detaches, sprouts legs and wanders off looking for food!</span>")
+				//make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards
 				remove_ability_holder(/datum/abilityHolder/changeling/)
 
 				if(src.client)
@@ -672,10 +678,6 @@
 
 				logTheThing("combat", src, null, "became a headspider at [log_loc(src)].")
 
-
-				HS.changeling.transferOwnership(HS)
-				HS.changeling.owner = HS
-				HS.changeling.reassign_hivemind_target_mob()
 				if(src.wear_mask)
 					var/obj/item/dropped_mask = src.wear_mask
 					src.u_equip(dropped_mask)
@@ -694,10 +696,6 @@
 					dropped_earwear.set_loc(src.loc)
 				var/obj/item/organ/head/organ_head = src.organHolder.drop_organ("head")
 				qdel(organ_head)
-
-				//HS.process() //A little kickstart to get you out into the big world (and some chump), li'l guy! O7
-
-				return
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			NORMAL BUSINESS
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -878,7 +876,7 @@
 	else
 		src.unkillable = 0
 		src.spell_soulguard = 0
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 		SPAWN(2.2 SECONDS) // Has to at least match the organ/limb replacement stuff (Convair880).
 			if (src) qdel(src)
 
@@ -1006,7 +1004,7 @@
 	..()
 	var/turf/thrown_from = get_turf(src)
 	src.throw_mode_off()
-	if (HAS_MOB_PROPERTY(src, PROP_CANTTHROW))
+	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTTHROW))
 		return
 	if (src.stat)
 		return
@@ -1352,7 +1350,7 @@
 	..()
 	if (M != usr) return
 	if (usr == src) return
-	if (get_dist(usr,src) > 1) return
+	if (BOUNDS_DIST(usr, src) > 0) return
 	if (!M.can_strip(src)) return
 	if (LinkBlocked(usr.loc,src.loc)) return
 	if (isAI(usr) || isAI(src)) return
@@ -2638,7 +2636,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (ishuman(src))
 		animation = new(src.loc)
@@ -2890,13 +2888,13 @@
 			return
 
 	if (mutantrace?.override_attack)
-		mutantrace.custom_attack(target)
-	else
-		var/obj/item/parts/arm = null
-		if (limbs) //Wire: fix for null.r_arm and null.l_arm
-			arm = hand ? limbs.l_arm : limbs.r_arm // I'm so sorry I couldent kill all this shitcode at once
-		if (arm)
-			arm.limb_data.attack_hand(target, src, can_reach(src, target), params, location, control)
+		if(mutantrace.custom_attack(target))
+			return
+	var/obj/item/parts/arm = null
+	if (limbs) //Wire: fix for null.r_arm and null.l_arm
+		arm = hand ? limbs.l_arm : limbs.r_arm // I'm so sorry I couldent kill all this shitcode at once
+	if (arm)
+		arm.limb_data.attack_hand(target, src, can_reach(src, target), params, location, control)
 
 /mob/living/carbon/human/hand_range_attack(atom/target, params, location, control, origParams)
 	//This looks bad but it really isn't anymore. <3
@@ -2934,7 +2932,7 @@
 /mob/living/carbon/human/attack_hand(mob/M)
 	if(ishuman(M) && M == src && M.a_intent == "harm")
 		var/mob/living/carbon/human/H = M
-		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+		if(HAS_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM))
 			boutput(H, "You can't bring yourself to attack yourself!")
 			return
 	..()
@@ -2947,7 +2945,7 @@
 		return
 	if(ishuman(M) && M == src && (W.force > 0))
 		var/mob/living/carbon/human/H = M
-		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+		if(HAS_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM))
 			boutput(H, "You can't bring yourself to attack yourself!")
 			return
 	..()
@@ -3116,7 +3114,7 @@
 	if (M && M.zone_sel && M.zone_sel.selecting == "chest" && src.chest_item != null && (src.chest_item in src.contents))
 		logTheThing("combat", M, src, "activates [src.chest_item] embedded in [src]'s chest cavity at [log_loc(src)]")
 		SPAWN(0) //might sleep/input/etc, and we don't want to hold anything up
-			src.chest_item.attack_self(src)
+			src.chest_item.AttackSelf(src)
 	return
 
 /mob/living/carbon/human/proc/chest_item_dump_reagents_on_flip()
@@ -3187,10 +3185,17 @@
 		// Make copy of item on ground
 		var/obj/item/outChestItem = src.chest_item
 		outChestItem.set_loc(get_turf(src))
-		src.chest_item.attack_self(src)
+		src.chest_item.AttackSelf(src)
 		src.chest_item = null
 		return
-	src.chest_item.attack_self(src)
+	src.chest_item.AttackSelf(src)
+
+///Clear chest item if it escapes/gets disposed
+/mob/living/carbon/human/Exited(atom/movable/thing)
+	..()
+	if (thing == chest_item)
+		chest_item = null
+		chest_item_sewn = 0
 
 /mob/living/carbon/human/attackby(obj/item/W, mob/M)
 	if (src.parry_or_dodge(M))

@@ -181,15 +181,7 @@
 		return walls
 
 	proc/check_for_unacceptable_content()
-		var/turf/origin = get_turf(src)
-		for (var/turf/T in block(locate(origin.x - 1, origin.y - 1, origin.z), locate(origin.x + width, origin.y + height, origin.z)))
-			var/mob/M = locate() in T //living
-			if (M)
-				return 1
-			var/obj/machinery/vehicle/V = locate() in T
-			if (V)
-				return 1
-		return 0
+		mining_controls.magnet_area.check_for_unacceptable_content()
 
 	proc/UL()
 		var/turf/origin = get_turf(src)
@@ -505,6 +497,7 @@
 		playsound(src.loc, src.sound_destroyed, 50, 2)
 		overlays = list()
 		damage_overlays = list()
+		linked_chassis?.linked_magnet = null
 		linked_chassis = null
 		active_overlay = null
 		sound_activate = null
@@ -962,7 +955,7 @@
 #endif
 	icon = 'icons/turf/asteroid.dmi'
 	icon_state = "ast1"
-	plane = PLANE_FLOOR
+	plane = PLANE_WALL
 	var/stone_color = "#CCCCCC"
 
 #ifdef UNDERWATER_MAP
@@ -999,6 +992,24 @@
 		fullbright = 0
 		luminosity = 1
 
+		space_overlays()
+			. = ..()
+			if (length(space_overlays))
+				var/list/color_vals = bioluminescent_algae?.get_color(src)
+				if (length(color_vals))
+					var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
+					algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
+					UpdateOverlays(algea, "glow_algae")
+					add_medium_light("glow_algae", color_vals)
+
+		destroy_asteroid(dropOre)
+			ClearSpecificOverlays("glow_algae")
+			remove_medium_light("glow_algae")
+			var/list/turf/neighbors = getNeighbors(src, alldirs)
+			for (var/turf/T as anything in neighbors)
+				if (!length(T.medium_lights)) continue
+				T.update_medium_light_visibility()
+			. = ..()
 	lighted
 		fullbright = 1
 
@@ -1236,7 +1247,7 @@
 			var/image/edge_overlay = image('icons/turf/asteroid.dmi', "edge[get_dir(A,src)]")
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.layer = src.layer + 1
-			edge_overlay.plane = PLANE_FLOOR
+			edge_overlay.plane = PLANE_WALL
 			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
 			A.overlays += edge_overlay
@@ -1438,7 +1449,7 @@
 		update_icon()
 
 			return
-		apply_edge_overlay()
+		apply_edge_overlay(thedir, space)
 			return
 		space_overlays()
 			return
@@ -1490,14 +1501,16 @@
 		SPAWN(0)
 			if (istype(src)) //Wire note: just roll with this ok
 				for (var/turf/simulated/wall/asteroid/A in orange(src,1))
-					src.apply_edge_overlay(get_dir(src, A))
+					src.apply_edge_overlay(get_dir(src, A), space=FALSE)
 				for (var/turf/space/A in orange(src,1))
-					src.apply_edge_overlay(get_dir(src, A))
+					src.apply_edge_overlay(get_dir(src, A), space=TRUE)
 
-	proc/apply_edge_overlay(var/thedir) //For overlays ON THE FLOOR TILE
+	proc/apply_edge_overlay(var/thedir, space) //For overlays ON THE FLOOR TILE
 		var/image/dig_overlay = image('icons/turf/asteroid.dmi', "edge[thedir]")
 		dig_overlay.color = src.stone_color
 		dig_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+		if(!space)
+			dig_overlay.plane = PLANE_WALL
 		//dig_overlay.layer = src.layer + 1
 		src.overlays += dig_overlay
 
@@ -1521,6 +1534,7 @@
 	icon_state = "pickaxe"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "pick"
+	health = 8
 	w_class = W_CLASS_NORMAL
 	flags = ONBELT
 	force = 7
@@ -2012,9 +2026,8 @@ obj/item/clothing/gloves/concussive
 			H_temp.remove_object(cargo)
 
 		// And logs for good measure (Convair880).
-		var/obj/storage/S
-		if (istype(cargo, /obj/storage)) // Other containers (e.g. prison artifacts) can hold mobs too.
-			S = cargo
+		var/obj/storage/S = cargo
+		ENSURE_TYPE(S)
 
 		for (var/mob/M in cargo.contents)
 			if (M)

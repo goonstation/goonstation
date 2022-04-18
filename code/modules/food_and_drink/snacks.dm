@@ -403,7 +403,7 @@
 		icon_state = "dog-biscuit"
 		frosted = 1
 		amount = 5
-		heal_amt = 3 //for pugs only. Strong, but there's no recipe for these (just the one you start with).
+		heal_amt = 3 //for pugs only!
 		initial_volume = 20
 		initial_reagents = list("meat_slurry" = 10)
 		food_effects = list("food_hp_up_big", "food_energized_big")
@@ -509,6 +509,7 @@
 		food_effects = list("food_refreshed_big")
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 /obj/item/reagent_containers/food/snacks/soup
 	name = "soup"
 	desc = "A soup of indeterminable type."
@@ -1394,7 +1395,7 @@
 
 		var/frosting_type = null
 		frosting_type = input("Which frosting style would you like?", "Frosting Style", null) as null|anything in frosting_styles
-		if(frosting_type && (get_dist(src, user) <= 1))
+		if(frosting_type && (BOUNDS_DIST(src, user) == 0))
 			frosting_type = src.frosting_styles[frosting_type]
 			var/datum/color/average = tube.reagents.get_average_color()
 			var/image/frosting_overlay = new(src.icon, frosting_type)
@@ -2211,7 +2212,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			src.wrapped = W
-			W.dropped()
+			W.dropped(user)
 
 			if (W.w_class > (src.maximum_wrapped_size / 2))
 				src.name = "[W.name] eggroll"

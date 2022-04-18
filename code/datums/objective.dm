@@ -1135,8 +1135,8 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 /datum/objective/conspiracy/vandalize
 	explanation_text = "Vandalize as much of the station as possible without killing anyone."
 
-/datum/objective/conspiracy/frame
-	explanation_text = "Murder the diner patrons and frame a non-conspirator for it."
+// /datum/objective/conspiracy/frame
+// 	explanation_text = "Murder the diner patrons and frame a non-conspirator for it."
 
 /datum/objective/conspiracy/quiz
 	explanation_text = "Host an insane life-or-death quiz show and kidnap non-conspirators to serve as contestants."
@@ -1153,26 +1153,34 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 /datum/objective/conspiracy/technology
 	explanation_text = "Rid the station of any sort of advanced technology and promote an austere and simple lifestyle."
 
-/datum/objective/conspiracy/curfew
-	explanation_text = "Establish a curfew for the station. Those wandering outside of crew quarters after curfew must be harassed and detained."
+// /datum/objective/conspiracy/curfew
+// 	explanation_text = "Establish a curfew for the station. Those wandering outside of crew quarters after curfew must be harassed and detained."
 
-/datum/objective/conspiracy/party
-	explanation_text = "Throw a surprise party for the rest of the crew."
+// /datum/objective/conspiracy/party
+// 	explanation_text = "Throw a surprise party for the rest of the crew."
 
-/datum/objective/conspiracy/birthday
-	explanation_text = "Throw a birthday party for Shitty Bill."
+// /datum/objective/conspiracy/birthday
+// 	explanation_text = "Throw a birthday party for Shitty Bill."
 
-/datum/objective/conspiracy/teaparty
-	explanation_text = "Host a murder mystery tea party."
+// /datum/objective/conspiracy/teaparty
+// 	explanation_text = "Host a murder mystery tea party."
 
 /datum/objective/conspiracy/embezzle
 	explanation_text = "Embezzle as much money as possible from the station accounts."
 
 /datum/objective/conspiracy/swap
-	explanation_text = "Swap the locations of two entire departments, their staff, and their equipment."
+	set_up()
+		//leaving out some of the more impossible ones like medical and security
+		var/list/departments = list("Genetics", "Robotics", "Cargo", "Mining", "Engineering", "Research", "Catering", "Botany")
 
-/datum/objective/conspiracy/jones
-	explanation_text = "Murder Jones and frame George for it."
+		var/department1 = pick(departments)
+		var/department2 = pick(departments)
+		while (department1 == department2)
+			department2 = pick(departments)
+		explanation_text = "Swap the locations of [department1] and [department2], complete with their staff and equipment."
+
+// /datum/objective/conspiracy/jones
+// 	explanation_text = "Murder Jones and frame George for it."
 
 /datum/objective/conspiracy/remodel
 	explanation_text = "Completely remodel the entire station."
@@ -1189,23 +1197,85 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 /datum/objective/conspiracy/dresscode
 	explanation_text = "Write up a new dress code for the station and enforce it on all crew."
 
-/datum/objective/conspiracy/dnd
-	explanation_text = "Start a D&D campaign and force crewmembers to participate."
+// /datum/objective/conspiracy/dnd
+// 	explanation_text = "Start a D&D campaign and force crewmembers to participate."
 
-/datum/objective/conspiracy/play
-	explanation_text = "Organize a play or musical and persuade crewmembers to participate by offering notions of fame and grandeur."
+// /datum/objective/conspiracy/play
+// 	explanation_text = "Organize a play or musical and persuade crewmembers to participate by offering notions of fame and grandeur."
 
 /datum/objective/conspiracy/flat
 	explanation_text = "Convince the crew that the station and in fact all of space is flat."
 
-/datum/objective/conspiracy/heisenbee
-	explanation_text = "Explain to the crew how, yes, Heisenbee really was framed by the Chompski brothers."
+// /datum/objective/conspiracy/heisenbee
+// 	explanation_text = "Explain to the crew how, yes, Heisenbee really was framed by the Chompski brothers."
 
 /datum/objective/conspiracy/centcom
 	explanation_text = "Convince the crew that Central Command has forsaken them."
 
 /datum/objective/conspiracy/spacelaw
 	explanation_text = "Establish and enforce a set of station protocols and policies."
+
+/datum/objective/conspiracy/discountdan
+	set_up()
+		explanation_text = "Transfer ownership of the station to [pick("Discount Dan", "the Space Wizards Federation", "Bombini")]. Ensure all the crew are loyal and the station is branded correctly."
+
+/datum/objective/conspiracy/cult
+	set_up()
+		//not including many of the "pets" that are often murdered immediately (Mr. Rathen, Remy etc.)
+		var/list/deities = list("Heisenbee", "Morty", "Dr. Acula", "Monsieur Stirstir", "Jones the cat", "Sylvester", "Hooty McJudgementowl", "the AI", "Discount Dan")
+		if (map_settings.name != "OSHAN") //pretty sure OSHAN is the only map with no engine
+			deities += "the engine"
+		explanation_text = "Start a cult worshipping [pick(deities)]."
+
+/datum/objective/conspiracy/underwater
+#ifdef UNDERWATER_MAP
+	explanation_text = "Convince the crew that the station is in space."
+#else
+	explanation_text = "Convince the crew that the station is underwater."
+#endif
+
+/datum/objective/conspiracy/imposters //sus
+	explanation_text = "Replace as many members of command with imposters as possible."
+
+/datum/objective/conspiracy/crime
+	explanation_text = "Set yourselves up as vigilantes and arrest people for made up crimes."
+
+/datum/objective/conspiracy/inspectors
+	explanation_text = "Pose as a team of undercover Nanotrasen inspectors and make an example out of anyone you deem incompetent or too competent at their job."
+
+/datum/objective/conspiracy/material
+	set_up()
+		var/list/materials = list()
+		if (rand(0,1)) //50/50 whether it's an ore material or something else
+			for (var/mtype in childrentypesof(/datum/commodity/ore))
+				var/datum/commodity/ore/material = new mtype
+				if (material.comname == "Gold Nugget")
+					materials += "Gold"
+					continue
+				materials += material.comname
+		else
+			materials += list("Glass", "Water", "Rubber", "Rock", "Flesh")
+#ifdef UNDERWATER_MAP
+		//but if we're underwater there's always a decent chance it's coral
+		materials += list("Coral", "Coral", "Coral")
+#endif
+		var/material1 = pick(materials)
+		var/material2 = pick(materials)
+		while (material1 == material2)
+			material2 = pick(materials)
+		explanation_text = "Turn as much of the station as you can into [material1] and [material2], including anyone who gets in your way."
+
+/datum/objective/conspiracy/organs
+	explanation_text = "Remind the crew of their own mortality by stockpiling as many of their organs as you can."
+
+/datum/objective/conspiracy/replace
+	explanation_text = "Replace the employees of an entire department with conspirators."
+
+/datum/objective/conspiracy/spike_food
+	explanation_text = "Make sure all available food and water is chemically spiked."
+
+/datum/objective/conspiracy/petty
+	explanation_text = "Turn command against each other for petty reasons."
 
 /datum/objective/conspiracy/framemurder
 	var/datum/mind/target

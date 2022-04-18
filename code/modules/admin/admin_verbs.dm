@@ -167,6 +167,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_show_player_compids,
 		/client/proc/give_mass_medals,
 		/client/proc/copy_medals,
+		/client/proc/copy_cloud_saves,
 
 		/client/proc/cmd_dispatch_observe_to_ghosts,
 		/client/proc/waddle_walking,
@@ -304,7 +305,6 @@ var/list/admin_verbs = list(
 		/verb/adminCreateBlueprint,
 		/verb/adminDeleteBlueprint,
 		/client/proc/toggle_text_mode,
-		/client/proc/cmd_mass_modify_object_variables,
 		/client/proc/cmd_debug_mutantrace,
 		/client/proc/cmd_admin_rejuvenate,
 		/client/proc/cmd_admin_drop_everything,
@@ -391,6 +391,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_modify_market_variables,
 		/client/proc/BK_finance_debug,
 		/client/proc/BK_alter_funds,
+		/client/proc/TestMarketReq,
 		/client/proc/debug_pools,
 		/client/proc/debug_variables,
 		/client/proc/debug_global_variable,
@@ -1376,8 +1377,8 @@ var/list/fun_images = list()
 	if (src.stealth || src.alt_key)
 		show_other_key = 1
 
-	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>ADMIN([show_other_key ? src.fakekey : src.key])</span> says, <span class='message'>\"[msg]\"</span></span></i>"
-	var/adminrendered = "<i><span class='game say'>Robotic Talk, <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, <span class='message'>\"[msg]\"</span></span></i>"
+	var/rendered = "<span class='game roboticsay'>Robotic Talk, <span class='name'>ADMIN([show_other_key ? src.fakekey : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
+	var/adminrendered = "<span class='game roboticsay'>Robotic Talk, <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, <span class='message'>\"[msg]\"</span></span>"
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -1929,6 +1930,8 @@ var/list/fun_images = list()
 				C << browse(pregameHTML, "window=pregameBrowser")
 				if(C)
 					winshow(C, "pregameBrowser", 1)
+					var/mob/new_player/new_player = C.mob
+					new_player.pregameBrowserLoaded = TRUE
 
 /client/proc/implant_all()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -1952,8 +1955,8 @@ var/list/fun_images = list()
 	if (microbombs_4_everyone > 0)
 		var/implanted = 0
 		for (var/mob/living/carbon/human/H in mobs)
-			var/obj/item/implant/microbomb/MB = new (H)
-			MB.explosionPower = microbombs_4_everyone
+			var/obj/item/implant/revenge/microbomb/MB = new (H)
+			MB.power = microbombs_4_everyone
 			MB.implanted = 1
 			H.implant.Add(MB)
 			MB.implanted(H, 0)

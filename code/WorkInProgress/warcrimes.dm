@@ -197,9 +197,9 @@ var/fartcount = 0
 			if(target)
 				if(isdead(target))
 					target = null
-				if(get_dist(src, target) > 1)
+				if(BOUNDS_DIST(src, target) > 0)
 					step_to(src, target, 1)
-				if(get_dist(src, target) <= 1 && !LinkBlocked(src.loc, target.loc))
+				if(BOUNDS_DIST(src, target) == 0 && !LinkBlocked(src.loc, target.loc))
 					var/obj/item/W = src.equipped()
 					if (!src.restrained())
 						if(W)
@@ -406,7 +406,7 @@ var/fartcount = 0
 			boutput(M, "<span class='notice'><b>You offer [W] to [src]</b> </span>")
 			M.u_equip(W)
 			W.set_loc(src)
-			W.dropped()
+			W.dropped(M)
 			src.drop_item()
 			src.put_in_hand_or_drop(W)
 

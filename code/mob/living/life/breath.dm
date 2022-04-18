@@ -102,10 +102,16 @@
 			return // no breathing inside possessed objects
 		else if (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			return
+		else if (istype(owner.loc, /obj/machinery/bathtub) && owner.lying)
+			var/obj/machinery/bathtub/B = owner.loc
+			if (B.reagents.total_volume > B.suffocation_volume)
+				var/obj/fluid/F = new // used for underwater breathing check
+				F.reagents = owner.loc.reagents
+				underwater = F
 
 		//if (istype(loc, /obj/machinery/clonepod)) return
 
-		if (HAS_MOB_PROPERTY(owner, PROP_REBREATHING))
+		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING))
 			return
 
 		// Changelings generally can't take OXY/LOSEBREATH damage...except when they do.
@@ -115,7 +121,7 @@
 		// If you have the breathless effect, same deal - you'd never heal oxy damage
 		// If your mutant race doesn't need oxygen from breathing, ya no losebreath
 		// so, now you do
-		if (ischangeling(owner) || HAS_MOB_PROPERTY(owner, PROP_BREATHLESS))
+		if (ischangeling(owner) || HAS_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS))
 			if (owner.losebreath)
 				owner.losebreath = 0
 			if (owner.get_oxygen_deprivation())

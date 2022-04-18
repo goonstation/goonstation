@@ -27,8 +27,12 @@
 		if (!src.throwing && !src.lying && isturf(NewLoc))
 			var/turf/T = NewLoc
 			if (T.turf_flags & MOB_SLIP)
-				switch (T.wet)
-					if (1)
+				var/wet_adjusted = T.wet
+				if (traitHolder?.hasTrait("super_slips") && T.wet) //non-zero wet
+					wet_adjusted = max(wet_adjusted, 2) //whee
+
+				switch (wet_adjusted)
+					if (1) //ATM only the ancient mop does this
 						if (locate(/obj/item/clothing/under/towel) in T)
 							src.inertia_dir = 0
 							T.wet = 0
@@ -78,6 +82,7 @@
 				playsound(user.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 50, 1)
 
 				if(prob(get_brute_damage() - 50))
+					logTheThing("combat", user, src, "gibs [constructTarget(src,"combat")] breaking out of their stomach at [log_loc(src)].")
 					src.gib()
 
 /mob/living/carbon/gib(give_medal, include_ejectables)
@@ -202,7 +207,7 @@
 	if (..())
 		return
 
-	if (HAS_MOB_PROPERTY(src, PROP_BREATHLESS))
+	if (HAS_ATOM_PROPERTY(src, PROP_MOB_BREATHLESS))
 		src.oxyloss = 0
 		return
 

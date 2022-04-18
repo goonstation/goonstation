@@ -88,8 +88,8 @@
 
 		src.visible_message("<span class='alert'><b>[src.possessed_thing] comes to life!</b></span>") // was [src] but: "the living space thing comes alive!"
 		animate_levitate(src, -1, 20, 1)
-		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST, "living_object", 100)
-		APPLY_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "living_object", 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "living_object", 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "living_object", 100)
 
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		src.possessed_thing.MouseDrop(over_object, src_location, over_location, over_control, params)
@@ -98,8 +98,8 @@
 		return src.possessed_thing._MouseDrop_T(dropped, user)
 
 	disposing()
-		REMOVE_MOB_PROPERTY(src, PROP_STUN_RESIST, "living_object")
-		REMOVE_MOB_PROPERTY(src, PROP_STUN_RESIST_MAX, "living_object")
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "living_object")
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "living_object")
 		..()
 
 	Exited(var/atom/movable/AM, var/atom/newloc)
