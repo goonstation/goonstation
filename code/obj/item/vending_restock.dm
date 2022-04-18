@@ -58,6 +58,12 @@
 	desc = "A cartridge that restocks cola vending machines."
 	vendingType = "cola"
 
+/obj/item/vending/restock_cartridge/electronics
+	name = "electronics restock cartridge"
+	icon_state = "electronics"
+	desc = "A cartridge that restocks electronics vending machines."
+	vendingType = "electronics"
+
 /obj/item/vending/restock_cartridge/mechanics
 	name = "mechanics restock cartridge"
 	icon_state = "mechanics"
