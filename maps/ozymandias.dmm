@@ -73971,7 +73971,7 @@
 /obj/disposalpipe/segment/transport{
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/yellow/checker,
+/turf/simulated/floor/caution/westeast,
 /area/station/hydroponics/bay)
 "tyo" = (
 /obj/wingrille_spawn/auto,
