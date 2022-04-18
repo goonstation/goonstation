@@ -1573,3 +1573,57 @@
 
 	CritterAttack(mob/M)
 		src.task = "chasing"
+
+/obj/critter/livingtail
+	name = "Living tail"
+	desc = "A twitching saurian tail, you feel mildly uncomfortable looking at it."
+	icon_state = "twitchytail"
+	density = 1
+	health = 30
+	wanderer = 1
+	firevuln = 1
+	brutevuln = 1
+	butcherable = 0
+	flags = NOSPLASH | TABLEPASS
+	maxhealth = 60
+
+	var/obj/item/organ/tail/lizard/tail_memory = null
+	var/maxsteps
+	var/currentsteps = 0
+	var/primary_color =	"#21a833"
+	var/secondary_color = "#000000"
+
+	New()
+		..()
+		maxsteps = rand(10,20)
+
+	proc/setup_overlays()
+		var/image/overlayprimary = image('icons/misc/critter.dmi', "twitchytail_colorkey1")
+		overlayprimary.color = primary_color
+		var/image/overlaysecondary = image('icons/misc/critter.dmi', "twitchytail_colorkey2")
+		overlaysecondary.color = secondary_color
+		src.UpdateOverlays(overlayprimary, "bottomdetail")
+		src.UpdateOverlays(overlaysecondary, "topdetail")
+
+	patrol_step()
+		if (!mobile)
+			return
+
+		var/turf/moveto = locate(src.x + rand(-1,1),src.y + rand(-1, 1),src.z)
+		if (isturf(moveto) && !moveto.density) patrol_to(moveto)
+		currentsteps++
+
+		if (currentsteps >= maxsteps)
+			CritterDeath()
+
+		if (prob(70))
+			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+			make_cleanable(/obj/decal/cleanable/blood/splatter,src.loc)
+
+	CritterDeath()
+		if (tail_memory)
+			tail_memory.set_loc(get_turf(src))
+		else
+			new/obj/item/organ/tail/lizard(get_turf(src))
+		qdel(src)
+		..()
