@@ -16,7 +16,7 @@
 <li><b>4 Wild cards</b></li>
 <li><b>4 Wild Draw 4 cards</b></li>
 </ul>
-<p> The 4 main suits are based of origins, Namely artifact origins, 4 main origins are used in mono: Eldritch, Martian, Precursor, and Wizard. Although there are also Wild card types within the deck,S they are not considered a suit.</p>
+<p> The 4 main suits are based of origins, Namely artifact origins, 4 main origins are used in mono: Eldritch, Martian, Precursor, and Wizard. Although there are also Wild card types within the deck, they are not considered a suit.</p>
 <h2>Objective</h2>
 <p>The first player to play all of their cards within a round scores a number of points depending on the number of cards currently possessed by other players. The first player to 500 points wins the game.</p>
 
