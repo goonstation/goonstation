@@ -1679,7 +1679,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream","croak")
 				if (src.emote_check(voluntary, 50))
-					if (prob(0.1))
+					if (prob(1))
 						playsound(src, frog_sound, 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 						return "<span class='emote'><b>[src]</b> makes a horrifying noise!</span>"
 					else
