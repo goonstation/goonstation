@@ -105,7 +105,7 @@ datum
 			fluid_g = 196
 			fluid_b = 248
 			transparency = 255
-			taste = "oily and sweet."
+			taste = "oily and sweet"
 			description = "Smells like blueberries and tastes worse."
 			reagent_state = LIQUID
 			thirst_value = 0.75
@@ -3730,7 +3730,7 @@ datum
 			fluid_g = 110
 			fluid_b = 41
 			transparency = 200
-			taste = "bittersweet."
+			taste = "bittersweet"
 			description = "A mixture of half lemonade and half coffee."
 			reagent_state = LIQUID
 			thirst_value = 0.75
