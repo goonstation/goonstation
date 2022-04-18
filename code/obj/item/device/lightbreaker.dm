@@ -35,13 +35,12 @@
 		return
 
 	proc/activate(mob/user as mob)
-		var/area/a = get_area(user)
-		if(a?.sanctuary)
-			boutput(user, "<span class='alert'>This doesn't seem to work here!</span>")
-			return 0
 		playsound(src.loc, "sound/effects/light_breaker.ogg", 75, 1, 5)
 		for (var/obj/machinery/light/L in view(7, user))
 			if (L.status == 2 || L.status == 1)
+				continue
+			var/area/A = get_area(L)
+			if(A?.sanctuary || istype(A, /area/syndicate_station))
 				continue
 			L.broken(1)
 
