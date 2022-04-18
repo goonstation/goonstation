@@ -4188,6 +4188,10 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/staff)
+"blr" = (
+/obj/item/space_thing,
+/turf/simulated/floor/plating/airless/asteroid/dark,
+/area/space)
 "blu" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/grey,
@@ -57174,6 +57178,10 @@
 "pmd" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"pmf" = (
+/obj/item/mining_tools/pick,
+/turf/simulated/floor/plating/airless/asteroid/dark,
+/area/space)
 "pmg" = (
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/research)
@@ -60427,10 +60435,6 @@
 /obj/cable{
 	icon_state = "1-10"
 	},
-/obj/item/space_thing{
-	pixel_x = -15;
-	pixel_y = -10
-	},
 /obj/decal/cleanable/ash,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -61447,6 +61451,10 @@
 	dir = 1
 	},
 /area/station/science/lobby)
+"qud" = (
+/obj/item/raw_material/rock,
+/turf/simulated/floor/plating/airless/asteroid/dark,
+/area/space)
 "quj" = (
 /obj/machinery/light{
 	dir = 8;
@@ -61879,6 +61887,10 @@
 	icon_state = "2-9"
 	},
 /obj/decal/cleanable/ash,
+/obj/item/toy/gooncode{
+	pixel_x = -15;
+	pixel_y = 12
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "qBb" = (
@@ -68040,6 +68052,15 @@
 /obj/machinery/light,
 /turf/simulated/floor/caution/east,
 /area/station/mining/refinery)
+"sbB" = (
+/obj/item/paper{
+	info = "DO NOT TOUCH - H.M.";
+	name = "odd note";
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/turf/simulated/floor/plating/airless/asteroid/dark,
+/area/space)
 "sbP" = (
 /obj/stool/bench/blue/auto,
 /obj/machinery/light{
@@ -172098,10 +172119,10 @@ aJu
 aJu
 aJu
 epP
-epP
-epP
-epP
-epP
+aZN
+aZN
+aZN
+pmf
 epP
 epP
 epP
@@ -172399,12 +172420,12 @@ aJu
 aJu
 aJu
 aJu
+aZN
+aZN
 epP
-epP
-epP
-epP
-epP
-epP
+sbB
+aZN
+qud
 epP
 epP
 epP
@@ -172704,9 +172725,9 @@ aJu
 epP
 epP
 epP
-epP
-epP
-epP
+qud
+blr
+aZN
 epP
 epP
 epP
@@ -173007,8 +173028,8 @@ epP
 epP
 epP
 epP
-epP
-epP
+aZN
+aZN
 epP
 epP
 epP
