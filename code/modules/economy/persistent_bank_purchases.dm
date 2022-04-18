@@ -35,6 +35,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/limbless,\
 	new /datum/bank_purchaseable/legless,\
 	new /datum/bank_purchaseable/space_diner,\
+	new /datum/bank_purchaseable/tele_malfunction,\
 	new /datum/bank_purchaseable/mail_order,\
 	new /datum/bank_purchaseable/missile_arrival,\
 	new /datum/bank_purchaseable/lunchbox,\
@@ -466,6 +467,23 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			for(var/turf/T in get_area_turfs(/area/diner/dining, 1))
 				start = T
 				break
+			if (!start)
+				return 0
+			if (istype(M.loc, /obj/storage)) // for stowaways
+				var/obj/storage/S = M.loc
+				S.set_loc(start)
+			else
+				M.set_loc(start)
+			return 1
+
+	tele_malfunction
+		name = "Teleporter Malfunction"
+		cost = 5000
+		icon = 'icons/obj/adventurezones/void.dmi'
+		icon_state = "fissure"
+
+		Create(var/mob/living/M)
+			var/list/start = get_turf(locate(/obj/dfissure_from)) //VOID starting location
 			if (!start)
 				return 0
 			if (istype(M.loc, /obj/storage)) // for stowaways
