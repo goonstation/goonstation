@@ -174,6 +174,7 @@
 	name = "Partition Mind"
 	desc = "Divide and conquer."
 	icon_state = "awaken_drone"
+	cooldown = 60 SECONDS
 	targeted = 0
 
 /datum/targetable/flockmindAbility/partitionMind/cast(atom/target)
@@ -193,6 +194,7 @@
 	name = "Concentrated Repair Burst"
 	desc = "Fully heal a drone through acceleration of its repair processes."
 	icon_state = "heal_drone"
+	cooldown = 20 SECONDS
 
 /datum/targetable/flockmindAbility/healDrone/cast(mob/living/critter/flock/drone/target)
 	if(..())
@@ -217,6 +219,7 @@
 	name = "Diffract Drone"
 	desc = "Split a drone into flockbits, mindless automata that only convert whatever they find."
 	icon_state = "diffract"
+	cooldown = 0
 
 /datum/targetable/flockmindAbility/splitDrone/cast(mob/living/critter/flock/drone/target)
 	if(..())
@@ -242,6 +245,7 @@
 	name = "Gatecrash"
 	desc = "Force open every door in radio range (if it can be opened by radio transmissions)."
 	icon_state = "open_door"
+	cooldown = 10 SECONDS
 	targeted = 0
 
 /datum/targetable/flockmindAbility/doorsOpen/cast(atom/target)
@@ -270,6 +274,7 @@
 	name = "Radio Stun Burst"
 	desc = "Overwhelm the radio headsets of everyone nearby. Will not work on broken or non-existent headsets."
 	icon_state = "radio_stun"
+	cooldown = 20 SECONDS
 	targeted = 0
 
 /datum/targetable/flockmindAbility/radioStun/cast(atom/target)
@@ -376,7 +381,7 @@
 	name = "Fabricate Structure"
 	desc = "Create a structure tealprint for your drones to construct onto."
 	icon_state = "fabstructure"
-	cooldown = 4 SECONDS
+	cooldown = 0
 	targeted = 0
 
 /datum/targetable/flockmindAbility/createStructure/cast()
