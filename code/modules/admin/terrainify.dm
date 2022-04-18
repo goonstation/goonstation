@@ -89,6 +89,8 @@ var/datum/station_zlevel_repair/station_repair = new
 
 			//Uh, make sure we don't block the shipping lanes!
 			for(var/atom/A in T)
+				if(ismob(A) || iscritter(A)) // Lets not just KILL people... ha hahah HA
+					continue
 				if(A.density)
 					qdel(A)
 
