@@ -1,12 +1,4 @@
-// These are so niche that I'm just putting them here
-
-/// Is a possessed object
-#define islivingobject(x) (istype(x, /mob/living/object))
-
-/// This is for objects which have some sort of prerequisite for people to use them. Allows you to bypass those checks if
-/// the user is the possessed version of the object being interacted with
-#define IS_LIVING_OBJECT_USING_SELF(x) (islivingobject(x) && x:possessed_thing == src)
-
+//TODO: let living objects use special attacks that would be cool as hell
 /obj/item/attackdummy
 	name = "attack dummy"
 	hit_type = DAMAGE_BLUNT
@@ -37,15 +29,14 @@
 			src.possessed_item = possessed
 		src.possessed_thing = possessed
 
-		if (istype(src.possessed_thing, /obj/machinery/the_singularity))
-			event_handler_flags |= IMMUNE_SINGULARITY
-
 		src.hud = new(src)
 		src.attach_hud(hud)
 		src.zone_sel = new(src)
 		src.attach_hud(zone_sel)
 
-		message_admins("[key_name(controller)] possessed [possessed_thing] at [log_loc(loc)].")
+		if (controller)
+			message_admins("[key_name(controller)] possessed [possessed_thing] at [log_loc(loc)].")
+
 		if (src.possessed_item)
 			src.possessed_item.cant_drop = TRUE
 			src.max_health = 25 * src.possessed_item.w_class
@@ -58,7 +49,7 @@
 				src.max_health = 100
 				src.health = 100
 			else
-				stack_trace("Tried to create a possessed object from invalid atom [src.possessed_thing] of type [src.possessed_thing.type]!")
+				stack_trace("Tried to create a possessed object from invalid thing [src.possessed_thing] of type [src.possessed_thing.type]!")
 				boutput(controller, "<h3 class='alert'>Uh oh, you tried to possess something illegal! Here's a toolbox instead!</h3>")
 				src.possessed_thing = new /obj/item/storage/toolbox/artistic
 
@@ -74,6 +65,11 @@
 		src.set_density(possessed_thing.density)
 		src.RL_SetOpacity(possessed_thing.opacity)
 		src.create_submerged_images()
+		src.flags = possessed_thing.flags
+		src.event_handler_flags = src.flags
+		//this is a mistake
+		src.bound_height = possesed_thing.bound_height
+		src.bound_width = possesed_thing.bound_width
 
 		//Relay these signals
 		RegisterSignal(src.possessed_thing, COMSIG_ATOM_POST_UPDATE_ICON, /atom/proc/UpdateIcon)
@@ -86,10 +82,10 @@
 			src.owner.set_loc(src)
 			src.owner.mind.transfer_to(src)
 
-		src.visible_message("<span class='alert'><b>[src.possessed_thing] comes to life!</b></span>") // was [src] but: "the living space thing comes alive!"
+		src.visible_message("<span class='alert'><b>[src.possessed_thing] comes to life!</b></span>")
 		animate_levitate(src, -1, 20, 1)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "living_object", 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "living_object", 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "living_object", 100)
 
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		src.possessed_thing.MouseDrop(over_object, src_location, over_location, over_control, params)
@@ -207,14 +203,15 @@
 
 	click(atom/target, params)
 		if (target == src)
-			if (possessed_item)
-				var/obj/item/possessed_item = src.possessed_thing
-				possessed_item.attack_self(src)
-			else
-				src.possessed_thing.Attackhand(src)
+			src.self_interact()
 		else
 			. = ..()
 
+	proc/self_interact()
+		if (src.possessed_item)
+			src.possessed_item.AttackSelf(src)
+		else
+			src.possessed_thing.Attackhand(src)
 		//To reflect updates of the items appearance etc caused by interactions.
 		src.update_density()
 		src.item_position_check()
@@ -236,6 +233,8 @@
 				mind.transfer_to(src.owner)
 			else if (src.client)
 				src.client.mob = src.owner
+			else
+				src.owner.key = src.key
 		else
 			if(src.mind || src.client)
 				var/mob/dead/observer/O = new/mob/dead/observer()
@@ -284,7 +283,7 @@
 	can_strip()
 		return FALSE
 
-	Cross(atom/movable/mover) //CLOSETS MADE ME DO IT OK (also makes radioactive possessed items work as you'd expect)
+	Cross(atom/movable/mover) //Makes radioactive stuff work. Also glass shards and whatever
 		return src.possessed_thing.Cross(mover)
 
 	update_icon()
@@ -304,3 +303,61 @@
 	///Update the density of ourselves
 	proc/update_density()
 		src.density = src.possessed_thing.density
+
+
+// Extremely simple AI for living objects.
+// Essentially:
+// 1. Is there a person to hit? If yes, go hit the closest person. If no, wander around
+// 2. Repeat
+/datum/aiHolder/living_object
+	exclude_from_mobs_list = TRUE
+
+
+/datum/aiTask/timed/targeted/living_object
+	name = "attack"
+	minimum_task_ticks = 8
+	maximum_task_ticks = 20
+
+/datum/aiTask/timed/targeted/living_object/get_targets()
+	var/list/humans = list() // Only care about humans since that's all wraiths eat
+	for (var/mob/living/carbon/human/H in View(src.target_range, src))
+		if (isalive(H) && !H.nodamage)
+			humans += H
+	return humans
+
+/datum/aiTask/timed/targeted/living_object/evaluate()
+
+
+/datum/aiTask/timed/targeted/living_object/on_tick() //TODO make sure we don't keep beating dead dudes
+	if (BOUNDS_DIST(holder.target, holder.owner))
+		holder.move_to(holder.target)
+	process_special_intent()
+	owncritter.hud.update_intent()
+	if ()
+
+/// For items with special intent, bodypart, etc targeting requirements. Mostly for batons, but do tack on any other edge cases.
+/datum/aiTask/timed/targeted/living_object/proc/process_special_intent()
+	var/mob/living/object/spooker = holder.owner
+	if (istype(spooker.possessed_thing, /obj/item/baton))
+		var/obj/item/baton/bat = spooker.possessed_thing
+		if (!bat.is_active)
+			spooker.self_interact() // (attempt to) turn that shit on
+		if (!(SEND_SIGNAL(bat, COMSIG_CELL_CHECK_CHARGE, bat.cost_normal) & CELL_SUFFICIENT_CHARGE)) // Not enough charge for a hit
+			spooker.set_a_intent(INTENT_HARM) // harmbaton
+		else
+			spooker.set_a_intent(INTENT_DISARM) // have charge, baton normally
+	else if (istype(spooker.possessed_thing, /obj/item/sword))
+		var/obj/item/sword/saber = spooker.possessed_thing
+		if (!saber.active)
+			spooker.self_interact // turn that sword on
+		spooker.set_a_intent(INTENT_HARM)
+	else if(istype(spooker.possessed_thing, /obj/item/gun))
+		var/obj/item/gun/pew = spooker.possessed_thing
+		if (pew.canshoot())
+			spooker.set_a_intent(INTENT_HARM) // we can shoot, so... shoot
+		else
+			spooker.set_a_intent(INTENT_HELP) // otherwise go on help for gun whipping
+	else
+		spooker.set_a_intent(INTENT_HARM)
+
+	//TODO katana limb targeting, make guns fire at range?, c saber deflect (if possible i forget if arbitrary mobs can block)
