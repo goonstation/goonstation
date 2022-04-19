@@ -42,11 +42,12 @@
 			if (!isnull(W))
 				W.attack(src, user, (user.zone_sel && user.zone_sel.selecting ? user.zone_sel.selecting : null), is_special) // def_zone var was apparently useless because the only thing that ever passed def_zone anything was shitty bill when he attacked people
 				if (W && user != src) //ZeWaka: Fix for cannot read null.hide_attack
+					var/anim_mult = clamp(0.5, W.force / 10, 4)
 					if (!W.hide_attack)
 						attack_particle(user,src)
-						attack_twitch(user)
+						attack_twitch(user, anim_mult, anim_mult)
 					else if (W.hide_attack == 2)
-						attack_twitch(user)
+						attack_twitch(user, anim_mult, , anim_mult)
 
 
 				if (W.force)
