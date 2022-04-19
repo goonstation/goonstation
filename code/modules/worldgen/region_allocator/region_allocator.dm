@@ -124,7 +124,7 @@ var/global/datum/region_allocator/region_allocator = new
 		ASSERT(node.state == NODE_STATE_FREE)
 		node.set_state(NODE_STATE_USED)
 		src.node = node
-		global.region_allocator.allocated_regions[get_weakref(src)] = 1
+		global.region_allocator.allocated_regions += get_weakref(src)
 
 	proc/free()
 		PRIVATE_PROC(TRUE)
