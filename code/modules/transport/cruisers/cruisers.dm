@@ -265,7 +265,7 @@
 		landmarks[LANDMARK_CRUISER_CENTER] -= src.center
 		landmarks[LANDMARK_CRUISER_ENTRANCE] -= src.entrance
 
-		for(var/obj/machinery/cruiser_destroyable/cruiser_pod/C in src.interior_area)
+		for(var/obj/machinery/cruiser_destroyable/cruiser_pod/C in src.upper_area)
 			for(var/mob/M in C)
 				C.exitPod(M)
 		src.region.move_movables_to(src.loc)
