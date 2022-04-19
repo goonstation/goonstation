@@ -533,8 +533,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				source.visible_message("<span class='alert'><b>[source][big_message]!</b></span>")
 			else
 				source.visible_message("[source][small_message].")
-			logTheThing("bombing", source, null, "triggered \a [src] on death at [log_loc(source)].")
-			message_admins("[key_name(source)] triggered \a [src] on death at [log_loc(source)].")
+			var/area/A = get_area(source)
+			if (!A.dont_log_combat)
+				logTheThing("bombing", source, null, "triggered \a [src] on death at [log_loc(source)].")
+				message_admins("[key_name(source)] triggered \a [src] on death at [log_loc(source)].")
 
 /obj/item/implant/revenge/microbomb
 	name = "microbomb implant"
