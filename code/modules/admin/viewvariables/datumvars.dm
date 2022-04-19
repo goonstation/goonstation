@@ -429,6 +429,14 @@
 	if(name == "filters")
 		html += " <a href='byond://?src=\ref[src];Filterrific=\ref[fullvar]' style='font-size:0.65em;'>filterrific</a>"
 
+	if(istype(value, /datum/weakref))
+		var/datum/weakref/weakref = value
+		var/datum/deref = weakref.deref()
+		if(isnull(deref))
+			html += " <span style='font-size:0.65em;'>INVALID</span>"
+		else
+			html += " <a href='byond://?src=\ref[src];Vars=\ref[deref]' style='font-size:0.65em;'>\ref[deref]</a>"
+
 	html += "</td></tr>"
 
 	return html
