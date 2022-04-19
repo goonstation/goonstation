@@ -641,7 +641,7 @@ ABSTRACT_TYPE(/obj/item/record/random/funkymusic)
 	song = "sound/radio_station/music/jazz4.ogg"
 
 /obj/item/record/random/funkymusic/jazz5
-	record_name = "Someone here, is a murderer"
+	record_name = "Someone Here, is a Murderer"
 	song = "sound/radio_station/music/jazz5.ogg"
 
 /obj/item/record/random/funkymusic/jazz6
