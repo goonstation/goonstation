@@ -27974,9 +27974,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/stool/chair{
-	dir = 1
-	},
+/obj/stool/chair,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "hCV" = (
@@ -117238,7 +117236,7 @@ kqJ
 urd
 mfV
 pkd
-uVg
+tZX
 kDV
 kDV
 kDV
