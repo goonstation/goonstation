@@ -48,6 +48,12 @@
 	else
 		..()
 
+/mob/living/critter/flock/bit/bullet_act(var/obj/projectile/P)
+	if(istype(P.proj_data, /datum/projectile/energy_bolt/flockdrone))
+		src.visible_message("<span class='notice'>[src] harmlessly absorbs [P].</span>")
+		return
+	..()
+
 /mob/living/critter/flock/bit/setup_hands()
 	..()
 	var/datum/handHolder/HH = hands[1]

@@ -195,7 +195,7 @@
 
 /obj/flock_structure/ex_act(severity)
 	src.report_attack()
-	
+
 	var/damage = 0
 	var/damage_mult = 1
 	switch(severity)
@@ -210,7 +210,10 @@
 			damage_mult = 2
 	src.takeDamage("mixed", damage * damage_mult)
 
-/obj/flock_structure/bullet_act(var/obj/projectile/P)
+/obj/flock_structure/bullet_act(obj/projectile/P)
+	if (istype(P.proj_data, /datum/projectile/energy_bolt/flockdrone))
+		return
+
 	src.report_attack()
 
 	var/damage = round((P.power*P.proj_data.ks_ratio), 1.0) // stuns will do nothing

@@ -322,3 +322,8 @@
 	if (user.a_intent != INTENT_HARM)
 		return
 	..()
+
+/obj/grille/flock/bullet_act(obj/projectile/P)
+	if (istype(P.proj_data, /datum/projectile/energy_bolt/flockdrone))
+		return
+	..()

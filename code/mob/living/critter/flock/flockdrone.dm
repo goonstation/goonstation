@@ -458,7 +458,7 @@
 	if(floorrunning)
 		return // haha fuck you i'm in the FLOOR
 	if(istype(P.proj_data, /datum/projectile/energy_bolt/flockdrone))
-		src.visible_message("<span class='notice'>[src] harmlessly absorbs the [P].</span>")
+		src.visible_message("<span class='notice'>[src] harmlessly absorbs [P].</span>")
 	else
 		..()
 		var/mob/attacker = P.shooter

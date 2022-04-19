@@ -95,6 +95,11 @@
 /obj/machinery/door/feather/attack_hand(mob/user as mob)
 	return src.Attackby(null, user)
 
+/obj/machinery/door/feather/bullet_act(obj/projectile/P)
+	if (istype(P.proj_data, /datum/projectile/energy_bolt/flockdrone))
+		return
+	..()
+
 /obj/machinery/door/feather/allowed(mob/M)
 	return isflock(M) // haha fuck you everyone else
 
