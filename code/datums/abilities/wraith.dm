@@ -138,7 +138,7 @@
 			else
 				M = T
 		else
-			boutput(holder.owner, "<span class='alert'>Absorbing [T] does not satisfy your ethereal taste.</span>")
+			boutput(holder.owner, "<span class='alert'>Absorbing [src] does not satisfy your ethereal taste.</span>")
 			return 1
 
 		if (!M && !error)
@@ -252,7 +252,7 @@
 		SPAWN(45 SECONDS)
 			if (O)
 				boutput(O, "<span class='alert'>You feel your control of this vessel slipping away!</span>")
-		SPAWN(60 SECONDS) //time limit on poss/datum/targetable/wraithAbility/proc/absorbCorpseession: 1 minute
+		SPAWN(60 SECONDS) //time limit on possession: 1 minute
 			if (O)
 				boutput(O, "<span class='alert'><strong>Your control is wrested away! The item is no longer yours.</strong></span>")
 				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithleaveobject.ogg", 50, 0)
