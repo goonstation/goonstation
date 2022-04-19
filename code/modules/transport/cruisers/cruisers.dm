@@ -844,19 +844,39 @@
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "eshuttle_transit"
 	var/obj/machinery/cruiser/ship
+	var/is_upper = FALSE
 	requires_power = 1
+
+	Entered(var/atom/movable/A, atom/oldloc)
+		. = ..()
+		if(!src.is_upper || !ismob(A))
+			return
+		var/mob/user = A
+		src.ship.subscribe_interior(user)
+		user.set_eye(src.ship)
+
+	Exited(atom/movable/A)
+		. = ..()
+		if(!ismob(A))
+			return
+		var/mob/user = A
+		src.ship.unsubscribe_interior(user)
+		user.set_eye(null)
+
 /area/cruiser/syndicate/lower
 	name = "Syndicate cruiser interior"
 	sound_group = "cruiser_syndicate"
 /area/cruiser/syndicate/upper
 	name = "Syndicate cruiser interior"
 	sound_group = "cruiser_syndicate"
+	is_upper = TRUE
 /area/cruiser/nanotrasen/lower
 	name = "Nanotrasen cruiser interior"
 	sound_group = "cruiser_nanotrasen"
 /area/cruiser/nanotrasen/upper
 	name = "Nanotrasen cruiser interior"
 	sound_group = "cruiser_nanotrasen"
+	is_upper = TRUE
 
 
 /obj/cruiser_camera_dummy
@@ -1429,16 +1449,6 @@
 	New()
 		..()
 		src.update_id("[src.id][src.x][src.z][world.time]")
-
-	climb(mob/user as mob)
-		..()
-		var/area/cruiser/ar = get_area(src)
-		if (src.icon_state == "ladder") // going down to lower deck
-			ar.ship.unsubscribe_interior(user)
-			user.set_eye(null)
-		else // going up to upper deck
-			ar.ship.subscribe_interior(user)
-			user.set_eye(ar.ship)
 
 /obj/ladder/cruiser/syndicate
 	id = "cruiser_syndicate"
