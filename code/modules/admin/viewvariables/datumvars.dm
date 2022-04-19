@@ -360,7 +360,10 @@
 		usr << browse_rsc(I, rname)
 		html += "\[[name]\]</th><td>(<span class='value'>[value]</span>) <img class=icon src=\"[rname]\">"
 		#else
-		html += "\[[name]\]</th><td>/icon (<em class='value'>[value]</em>)"
+		if(istype(value, /icon))
+			html += "\[[name]\]</th><td>/icon (<em class='value'><a href='byond://?src=\ref[src];Download=\ref[value]'>[value]</a></em>)"
+		else
+			html += "\[[name]\]</th><td>/icon (<em class='value'>[value]</em>)"
 		#endif
 
 /*	else if (istype(value, /image))
@@ -570,6 +573,14 @@
 			src.holder.filteriffic.ui_interact(mob)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to open filterrific on something all rude-like.")
+		return
+	if (href_list["Download"])
+		USR_ADMIN_ONLY
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/datum/D = locate(href_list["Download"])
+			src << ftp(D)
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to download a var of something all rude-like.")
 		return
 	if (href_list["Delete"])
 		USR_ADMIN_ONLY
