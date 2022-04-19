@@ -508,6 +508,19 @@
 		else
 			..()
 
+	attack_hand(mob/M as mob)
+		if ((M.a_intent != INTENT_HARM) && (M in src.friends))
+			if(M.a_intent == INTENT_HELP && src.aggressive)
+				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
+				src.aggressive = FALSE
+				src.task = "thinking"
+				return
+			else if((M.a_intent == INTENT_DISARM || M.a_intent == INTENT_GRAB) && !src.aggressive)
+				src.visible_message("<span class='notice'>[M] shakes [src] to awaken it's killer instincts!</span>")
+				src.aggressive = TRUE
+				src.task = "thinking"
+				return
+		..()
 
 	ChaseAttack(mob/M)
 		..()
