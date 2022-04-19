@@ -201,15 +201,13 @@
 
 		var/datum/mapPrefab/allocated/prefab = get_singleton(src.prefab_type)
 		src.region = prefab.load()
-		for(var/x in 1 to src.region.width)
-			for(var/y in 1 to src.region.height)
-				var/turf/T = src.region.turf_at(x, y)
-				if(istype(T.loc, src.interior_area))
-					src.interior_area = T.loc
-					src.interior_area.ship = src
-				else if(istype(T.loc, src.upper_area))
-					src.upper_area = T.loc
-					src.upper_area.ship = src
+		for(var/turf/T in REGION_TILES(src.region))
+			if(istype(T.loc, src.interior_area))
+				src.interior_area = T.loc
+				src.interior_area.ship = src
+			else if(istype(T.loc, src.upper_area))
+				src.upper_area = T.loc
+				src.upper_area.ship = src
 
 		if(!istype(interior_area))
 			CRASH("No interior area found for cruiser")
