@@ -176,17 +176,21 @@
 	icon_state = "awaken_drone"
 	cooldown = 60 SECONDS
 	targeted = 0
+	///Are we still waiting for ghosts to respond
+	var/waiting = FALSE
 
 /datum/targetable/flockmindAbility/partitionMind/cast(atom/target)
-	if(..())
+	if(waiting || ..())
 		return TRUE
 
 	if(!holder.pointCheck(100))
 		return TRUE
 
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
-
-	return F.partition()
+	waiting = TRUE
+	SPAWN(0)
+		F.partition()
+		waiting = FALSE
 
 /////////////////////////////////////////
 
