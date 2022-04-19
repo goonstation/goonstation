@@ -165,7 +165,7 @@
 		SPAWN(cooldown + 5)
 			holder.updateButtons()
 
-/datum/action/bar/icon/absorb_corpse
+/datum/action/bar/icon/absorb_corpse //Yes this will be private, this is just for testing purposes.
 	duration = 10 SECONDS
 	interrupt_flags = INTERRUPT_ACT | INTERRUPT_ACTION | INTERRUPT_MOVE
 	id = "wraith_absorbCorpse"
