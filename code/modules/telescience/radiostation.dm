@@ -618,6 +618,40 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	record_name = "Biodome"
 	song = "sound/radio_station/music/biodome.ogg"
 
+ABSTRACT_TYPE(/obj/item/record/random/funkymusic)
+/obj/item/record/random/funkymusic
+	New()
+		. = ..()
+		src.desc += {" This record has more scratches on it than a crazy cat person. Perhaps put a coin on the record arm."}
+
+/obj/item/record/random/funkymusic/jazz1
+	record_name = "All Access"
+	song = "sound/radio_station/music/jazz1.ogg"
+
+/obj/item/record/random/funkymusic/jazz2
+	record_name = "License to Honk"
+	song = "sound/radio_station/music/jazz2.ogg"
+
+/obj/item/record/random/funkymusic/jazz3
+	record_name = "Shotstar"
+	song = "sound/radio_station/music/jazz3.ogg"
+
+/obj/item/record/random/funkymusic/jazz4
+	record_name = "Ballad of the Dream Bee"
+	song = "sound/radio_station/music/jazz4.ogg"
+
+/obj/item/record/random/funkymusic/jazz5
+	record_name = "Someone here, is a murderer"
+	song = "sound/radio_station/music/jazz5.ogg"
+
+/obj/item/record/random/funkymusic/jazz6
+	record_name = "Cryosleep"
+	song = "sound/radio_station/music/jazz6.ogg"
+
+/obj/item/record/random/funkymusic/jazz7
+	record_name = "Sharp 5"
+	song = "sound/radio_station/music/jazz7.ogg"
+
 /obj/item/record/spacebux/New()
 	..()
 	var/obj/item/record/record_type = pick(concrete_typesof(/obj/item/record/random))
@@ -767,6 +801,17 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	/obj/item/record/random/notaquario/beaches,
 	/obj/item/record/random/notaquario/floaty,
 	/obj/item/record/random/notaquario/biodome)
+
+/obj/item/storage/box/record/funkymusic
+    name = "\improper The Funky Music"
+    desc = "A strangely familiar face adorns the cover. It has been foretold that one day, someone would play this."
+    spawn_contents = list(/obj/item/record/random/funkymusic/jazz1,
+    /obj/item/record/random/funkymusic/jazz2,
+    /obj/item/record/random/funkymusic/jazz3,
+    /obj/item/record/random/funkymusic/jazz4,
+    /obj/item/record/random/funkymusic/jazz5,
+    /obj/item/record/random/funkymusic/jazz6,
+    /obj/item/record/random/funkymusic/jazz7)
 
 /obj/item/storage/box/record/radio/host
 	desc = "A sleeve of exclusive radio station songs."

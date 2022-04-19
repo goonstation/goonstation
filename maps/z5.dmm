@@ -708,6 +708,9 @@
 /area/diner/hangar)
 "cr" = (
 /obj/table/wood/round/auto,
+/obj/item/storage/box/record/funkymusic{
+	icon_state = "sleeve_37"
+	},
 /turf/simulated/floor/carpet/green/fancy,
 /area/diner/motel/observatory)
 "cs" = (
