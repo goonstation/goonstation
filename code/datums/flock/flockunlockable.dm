@@ -52,4 +52,4 @@ ABSTRACT_TYPE(/datum/unlockable_flock_structure)
 	structType = /obj/flock_structure/compute
 
 	check_unlocked()
-		return src.my_flock.hasAchieved("cheatmode")
+		return src.my_flock.hasAchieved("all_structures")
