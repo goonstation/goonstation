@@ -39,6 +39,7 @@
 	name = "Kudzu Outbreak"
 	centcom_headline = "Plant Outbreak"
 	centcom_message = "Rapidly expanding plant organism detected aboard the station. All personnel must contain the outbreak."
+	centcom_origin = ALERT_STATION
 	message_delay = 2 MINUTES
 	wont_occur_past_this_time = 40 MINUTES
 	customization_available = 1

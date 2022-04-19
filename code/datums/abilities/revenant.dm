@@ -549,6 +549,7 @@
 					H.emote("scream")
 				if (iterations > 12 && prob((iterations - 12) * 5))
 					H.visible_message("<span class='alert'>[H]'s body gives in to the telekinetic grip!</span>", "<span class='alert'>You are completely crushed.</span>")
+					logTheThing("combat", holder.owner, H, "gibs [constructTarget(H,"combat")] with the Revenant crush ability at [log_loc(holder.owner)].")
 					H.gib()
 					return
 				sleep(0.7 SECONDS)

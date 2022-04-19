@@ -551,6 +551,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/moon_pie(src)
 			src.recipes += new /datum/cookingrecipe/granola_bar(src)
 			src.recipes += new /datum/cookingrecipe/biscuit(src)
+			src.recipes += new /datum/cookingrecipe/dog_biscuit(src)
 			src.recipes += new /datum/cookingrecipe/hardtack(src)
 			src.recipes += new /datum/cookingrecipe/macguffin(src)
 			src.recipes += new /datum/cookingrecipe/eggsalad(src)
@@ -1037,7 +1038,7 @@ table#cooktime a#start {
 			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
-			W.dropped()
+			W.dropped(user)
 			return
 
 	mouse_drop(over_object, src_location, over_location)
@@ -1144,7 +1145,7 @@ var/list/mixer_recipes = list()
 		user.visible_message("<span class='notice'>[user] puts [W] into the [src].</span>")
 		user.u_equip(W)
 		W.set_loc(src)
-		W.dropped()
+		W.dropped(user)
 
 	attack_hand(var/mob/user as mob)
 		if (!src.working)

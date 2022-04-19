@@ -633,6 +633,7 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/lead)
 /turf/unsimulated/wall/auto/lead/blue
 	icon_state = "mapiconb"
 	mod = "leadb-"
+	connects_to_exceptions = list(/obj/window/auto) // fixes shuttle wall alignment
 
 /turf/unsimulated/wall/auto/lead/gray
 	icon_state = "mapicong"

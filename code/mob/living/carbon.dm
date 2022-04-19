@@ -82,6 +82,7 @@
 				playsound(user.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 50, 1)
 
 				if(prob(get_brute_damage() - 50))
+					logTheThing("combat", user, src, "gibs [constructTarget(src,"combat")] breaking out of their stomach at [log_loc(src)].")
 					src.gib()
 
 /mob/living/carbon/gib(give_medal, include_ejectables)

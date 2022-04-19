@@ -875,6 +875,10 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/frenchberet)
 		name = "Strawberry Beret"
 		path = /obj/item/clothing/head/frenchberet/strawberry
 
+	blueberry
+		name = "Blueberry Beret"
+		path = /obj/item/clothing/head/frenchberet/blueberry
+
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/basecap)
 /datum/clothingbooth_item/head/basecap
 	name = "Baseball Cap"

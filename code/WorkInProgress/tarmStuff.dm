@@ -32,6 +32,14 @@
 		..()
 		setProperty("movespeed", 0.3)
 
+	flashy
+		icon_state = "lasercannon-anim"
+
+		shoot(target, start, mob/user, POX, POY, is_dual_wield)
+			if(src.canshoot())
+				flick("lasercannon-fire", src)
+			. = ..()
+
 /datum/projectile/special/target_designator
 	sname = "foo"
 	name = "bar"

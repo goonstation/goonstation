@@ -77,7 +77,7 @@
 
 		src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 		user.u_equip(W)
-		W.dropped()
+		W.dropped(user)
 		src.start_frying(W)
 		SubscribeToProcess()
 
