@@ -148,7 +148,7 @@
 			boutput(holder.owner, "<span class='alert'>[pick("This body is too decrepit to be of any use.", "This corpse has already been run through the wringer.", "There's nothing useful left.", "This corpse is worthless now.")]</span>")
 			return 1
 
-		actions.start(new/datum/action/bar/private/icon/absorb_corpse(M,src), M)
+		actions.start(new/datum/action/bar/icon/absorb_corpse(M,src,holder.owner), M)
 		return 0
 
 	doCooldown()         //This makes it so wraith early game is much faster but hits a wall of high absorb cooldowns after ~5 corpses
@@ -165,7 +165,7 @@
 		SPAWN(cooldown + 5)
 			holder.updateButtons()
 
-/datum/action/bar/private/icon/absorb_corpse
+/datum/action/bar/icon/absorb_corpse
 	duration = 10 SECONDS
 	interrupt_flags = INTERRUPT_ACT | INTERRUPT_ACTION | INTERRUPT_MOVE
 	id = "wraith_absorbCorpse"
@@ -173,29 +173,33 @@
 	icon_state = "wraith"
 	var/mob/living/carbon/human/M
 	var/datum/targetable/wraithAbility/absorbCorpse/absorb
+	var/mob/living/wraith/wraithState
+	var/static/turf/wraith_loc = get_turf(wraithState)
 
-	New(U, wraith)
+	New(U, Absorb)
 		M = U
-		absorb = wraith
+		absorb = Absorb
 		..()
 
 
 	onUpdate()
 		..()
 		var/datum/abilityHolder/W = absorb.holder
-		if(W == null || M == null)
+		var/datum/abilityHolder/wraith = absorb.holder.owner
+		if(W == null || M == null || wraith_loc != get_turf(wraithState))
 			interrupt(INTERRUPT_ALWAYS)
-			boutput(W, __red("Your attempt to draw essence from the corpse was interrupted!"))
+			boutput(wraith, __red("Your attempt to draw essence from the corpse was interrupted!"))
 			return
 
 	onStart()
 		..()
 		var/datum/abilityHolder/W = absorb.holder
+		var/datum/abilityHolder/wraith = absorb.holder.owner
 		if(W == null || M == null)
 			interrupt(INTERRUPT_ALWAYS)
-			boutput(W, __red("Your attempt to draw essence from the corpse was interrupted!"))
+			boutput(wraith, __red("Your attempt to draw essence from the corpse was interrupted!"))
 			return
-		boutput(W, __red("You start sucking the essence out of [M]'s corpse!"))
+		boutput(wraith, __red("You start sucking the essence out of [M]'s corpse!"))
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 12, locate(M.x, M.y, M.z)))
 		for (var/mob/living/V in viewers(7, W.owner))
 			boutput(V, "Black smoke rises from [M]'s corpse! Freaky!")
@@ -204,7 +208,7 @@
 	onEnd()
 		..()
 		var/datum/abilityHolder/wraithHolder = absorb.holder
-		logTheThing("combat", src, null, "absorbs the corpse of [key_name(M)] as a wraith.")
+		logTheThing("combat", wraithHolder, null, "absorbs the corpse of [key_name(M)] as a wraith.")
 		M.decomp_stage = 4
 		if (M.organHolder && M.organHolder.brain)
 			qdel(M.organHolder.brain)
