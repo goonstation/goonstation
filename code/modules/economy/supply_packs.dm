@@ -1176,8 +1176,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 /datum/supply_packs/electronics_vending_restock
 	name = "Electronics Vending Machine Restocking Pack"
 	desc = "Various Vending Machine Restock Cartridges for electronics"
-	contains = list(/obj/item/vending/restock_cartridge/electronics,
-					/obj/item/vending/restock_cartridge/mechanics,
+	contains = list(/obj/item/vending/restock_cartridge/mechanics,
 					/obj/item/vending/restock_cartridge/computer3,
 					/obj/item/vending/restock_cartridge/floppy,
 					/obj/item/vending/restock_cartridge/pda)
