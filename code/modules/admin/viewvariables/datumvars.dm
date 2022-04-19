@@ -426,6 +426,9 @@
 	if(name == "particles")
 		html += " <a href='byond://?src=\ref[src];Particool=\ref[fullvar]' style='font-size:0.65em;'>particool</b></a>"
 
+	if(name == "filters")
+		html += " <a href='byond://?src=\ref[src];Filterrific=\ref[fullvar]' style='font-size:0.65em;'>filterrific</b></a>"
+
 	html += "</td></tr>"
 
 	return html
@@ -550,6 +553,15 @@
 			src.holder.particool.ui_interact(mob)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to open particool on something all rude-like.")
+		return
+	if (href_list["Filterrific"])
+		USR_ADMIN_ONLY
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/datum/D = locate(href_list["Filterrific"])
+			src.holder.filteriffic = new /datum/filter_editor(D)
+			src.holder.filteriffic.ui_interact(mob)
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to open filterrific on something all rude-like.")
 		return
 	if (href_list["Delete"])
 		USR_ADMIN_ONLY
