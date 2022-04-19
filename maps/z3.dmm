@@ -22415,12 +22415,6 @@
 /obj/structure/woodwall,
 /turf/simulated/floor/plating/airless,
 /area/derelict_ai_sat)
-"qum" = (
-/turf/space,
-/turf/simulated/floor/stairs{
-	dir = 1
-	},
-/area/mining/hangar)
 "qyC" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -71589,7 +71583,7 @@ vjf
 iZr
 vjf
 iZr
-qum
+vjf
 rbG
 rbG
 maw
