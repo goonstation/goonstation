@@ -148,7 +148,7 @@
 			boutput(holder.owner, "<span class='alert'>[pick("This body is too decrepit to be of any use.", "This corpse has already been run through the wringer.", "There's nothing useful left.", "This corpse is worthless now.")]</span>")
 			return 1
 
-		actions.start(new/datum/action/bar/icon/absorb_corpse(M,src,holder.owner), M)
+		actions.start(new/datum/action/bar/icon/absorb_corpse(M,src,get_turf(holder.owner)), M)
 		return 0
 
 	doCooldown()         //This makes it so wraith early game is much faster but hits a wall of high absorb cooldowns after ~5 corpses
@@ -173,8 +173,7 @@
 	icon_state = "wraith"
 	var/mob/living/carbon/human/M
 	var/datum/targetable/wraithAbility/absorbCorpse/absorb
-	var/mob/living/wraith/wraithState
-	var/static/turf/wraith_loc = get_turf(wraithState)
+	var/turf/wraith_loc
 
 	New(U, Absorb)
 		M = U
@@ -186,7 +185,7 @@
 		..()
 		var/datum/abilityHolder/W = absorb.holder
 		var/datum/abilityHolder/wraith = absorb.holder.owner
-		if(W == null || M == null || wraith_loc != get_turf(wraithState))
+		if(W == null || M == null || wraith_loc != get_turf(absorb.holder.owner.loc))
 			interrupt(INTERRUPT_ALWAYS)
 			boutput(wraith, __red("Your attempt to draw essence from the corpse was interrupted!"))
 			return
